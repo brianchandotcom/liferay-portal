@@ -18,8 +18,8 @@ import com.liferay.adaptive.media.AMAttribute;
 import com.liferay.adaptive.media.AdaptiveMedia;
 import com.liferay.adaptive.media.image.mime.type.AMImageMimeTypeProvider;
 import com.liferay.adaptive.media.image.service.AMImageEntryLocalService;
-import com.liferay.adaptive.media.image.size.AMImageSizeProvider;
 import com.liferay.adaptive.media.image.validator.AMImageValidator;
+import com.liferay.document.library.configuration.DLFileEntryConfiguration;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalService;
 import com.liferay.document.library.kernel.util.RawMetadataProcessor;
@@ -32,6 +32,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.dynamic.data.mapping.util.comparator.StructureStructureKeyComparator;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -47,14 +48,19 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sergio González
  * @author Roberto Díaz
  */
-@Component(service = AMImageValidator.class)
+@Component(
+	configurationPid = "com.liferay.document.library.configuration.DLFileEntryConfiguration",
+	service = AMImageValidator.class
+)
 public class AMImageValidatorImpl implements AMImageValidator {
 
 	@Override
@@ -104,11 +110,13 @@ public class AMImageValidatorImpl implements AMImageValidator {
 
 	@Override
 	public boolean isValid(FileVersion fileVersion) {
-		long imageMaxSize = _amImageSizeProvider.getImageMaxSize();
+		long previewableProcessorMaxSize =
+			_dlFileEntryConfiguration.previewableProcessorMaxSize();
 
-		if ((imageMaxSize != -1) &&
-			((imageMaxSize == 0) || (fileVersion.getSize() == 0) ||
-			 (fileVersion.getSize() >= imageMaxSize))) {
+		if ((previewableProcessorMaxSize != -1) &&
+			((previewableProcessorMaxSize == 0) ||
+			 (fileVersion.getSize() == 0) ||
+			 (fileVersion.getSize() >= previewableProcessorMaxSize))) {
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(
@@ -133,6 +141,13 @@ public class AMImageValidatorImpl implements AMImageValidator {
 		}
 
 		return true;
+	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_dlFileEntryConfiguration = ConfigurableUtil.createConfigurable(
+			DLFileEntryConfiguration.class, properties);
 	}
 
 	protected void setAMImageEntryLocalService(
@@ -275,10 +290,9 @@ public class AMImageValidatorImpl implements AMImageValidator {
 	private AMImageMimeTypeProvider _amImageMimeTypeProvider;
 
 	@Reference
-	private AMImageSizeProvider _amImageSizeProvider;
-
-	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
+
+	private volatile DLFileEntryConfiguration _dlFileEntryConfiguration;
 
 	@Reference
 	private DLFileEntryMetadataLocalService _dlFileEntryMetadataLocalService;

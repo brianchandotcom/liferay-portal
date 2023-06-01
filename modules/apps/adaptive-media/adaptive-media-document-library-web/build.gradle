@@ -5,4 +5,5 @@ dependencies {
 	compileOnly project(":apps:adaptive-media:adaptive-media-api")
 	compileOnly project(":apps:adaptive-media:adaptive-media-image-api")
 	compileOnly project(":apps:document-library:document-library-api")
+	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 }

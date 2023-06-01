@@ -185,7 +185,7 @@ public class RenderLayoutStructureTagTest {
 				new MockHttpServletResponse();
 
 			RenderLayoutStructureTag renderLayoutStructureTag =
-				_getRenderLayoutStructureTag(
+				_getRenderLayoutStructureTagDefaultSegmentsExperience(
 					layout, mockHttpServletRequest, mockHttpServletResponse);
 
 			renderLayoutStructureTag.doTag(
@@ -245,7 +245,7 @@ public class RenderLayoutStructureTagTest {
 				new MockHttpServletResponse();
 
 			RenderLayoutStructureTag renderLayoutStructureTag =
-				_getRenderLayoutStructureTag(
+				_getRenderLayoutStructureTagDefaultSegmentsExperience(
 					layout, mockHttpServletRequest, mockHttpServletResponse);
 
 			renderLayoutStructureTag.doTag(
@@ -298,7 +298,7 @@ public class RenderLayoutStructureTagTest {
 				new MockHttpServletResponse();
 
 			RenderLayoutStructureTag renderLayoutStructureTag =
-				_getRenderLayoutStructureTag(
+				_getRenderLayoutStructureTagDefaultSegmentsExperience(
 					layout, mockHttpServletRequest, mockHttpServletResponse);
 
 			renderLayoutStructureTag.doTag(
@@ -344,7 +344,7 @@ public class RenderLayoutStructureTagTest {
 				new MockHttpServletResponse();
 
 			RenderLayoutStructureTag renderLayoutStructureTag =
-				_getRenderLayoutStructureTag(
+				_getRenderLayoutStructureTagDefaultSegmentsExperience(
 					layout, mockHttpServletRequest, mockHttpServletResponse);
 
 			renderLayoutStructureTag.doTag(
@@ -446,21 +446,31 @@ public class RenderLayoutStructureTagTest {
 
 	private RenderLayoutStructureTag _getRenderLayoutStructureTag(
 		Layout layout, MockHttpServletRequest mockHttpServletRequest,
-		MockHttpServletResponse mockHttpServletResponse) {
+		MockHttpServletResponse mockHttpServletResponse,
+		long selectedSegmentsExperienceId) {
 
 		RenderLayoutStructureTag renderLayoutStructureTag =
 			new RenderLayoutStructureTag();
 
 		renderLayoutStructureTag.setLayoutStructure(
 			_layoutStructureProvider.getLayoutStructure(
-				layout.getPlid(),
-				_segmentsExperienceLocalService.
-					fetchDefaultSegmentsExperienceId(layout.getPlid())));
+				layout.getPlid(), selectedSegmentsExperienceId));
 		renderLayoutStructureTag.setPageContext(
 			new MockPageContext(
 				null, mockHttpServletRequest, mockHttpServletResponse));
 
 		return renderLayoutStructureTag;
+	}
+
+	private RenderLayoutStructureTag
+		_getRenderLayoutStructureTagDefaultSegmentsExperience(
+			Layout layout, MockHttpServletRequest mockHttpServletRequest,
+			MockHttpServletResponse mockHttpServletResponse) {
+
+		return _getRenderLayoutStructureTag(
+			layout, mockHttpServletRequest, mockHttpServletResponse,
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				layout.getPlid()));
 	}
 
 	@Inject

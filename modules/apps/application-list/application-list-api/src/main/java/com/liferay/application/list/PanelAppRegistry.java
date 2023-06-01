@@ -18,6 +18,7 @@ import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReference
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -39,9 +40,6 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
@@ -126,7 +124,8 @@ public class PanelAppRegistry {
 			panelApps,
 			panelApp -> {
 				try {
-					PanelAppShowFilter panelAppShowFilter = _panelAppShowFilter;
+					PanelAppShowFilter panelAppShowFilter =
+						_panelAppShowFilterSnapshot.get();
 
 					if (panelAppShowFilter == null) {
 						return panelApp.isShow(permissionChecker, group);
@@ -226,15 +225,12 @@ public class PanelAppRegistry {
 	private static final Log _log = LogFactoryUtil.getLog(
 		PanelAppRegistry.class);
 
+	private static final Snapshot<PanelAppShowFilter>
+		_panelAppShowFilterSnapshot = new Snapshot<>(
+			PanelAppRegistry.class, PanelAppShowFilter.class, null, true);
+
 	@Reference
 	private GroupProvider _groupProvider;
-
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	private volatile PanelAppShowFilter _panelAppShowFilter;
 
 	@Reference
 	private PortletLocalService _portletLocalService;

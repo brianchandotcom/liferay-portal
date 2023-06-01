@@ -159,9 +159,7 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 			PortalWebResourcesUtil.getPortalWebResources(
 				PortalWebResourceConstants.RESOURCE_TYPE_JS);
 
-		if ((_bundleContext == null) || (_portal == null) ||
-			(portalWebResources == null)) {
-
+		if (portalWebResources == null) {
 			return null;
 		}
 

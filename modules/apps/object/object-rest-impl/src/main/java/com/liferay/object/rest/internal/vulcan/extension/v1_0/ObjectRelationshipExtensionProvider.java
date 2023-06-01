@@ -76,7 +76,7 @@ public class ObjectRelationshipExtensionProvider
 			nestedFieldName -> {
 				ObjectRelationship objectRelationship =
 					_objectRelationshipLocalService.
-						fetchObjectRelationshipByObjectDefinitionId1(
+						fetchObjectRelationshipByObjectDefinitionId(
 							objectDefinition.getObjectDefinitionId(),
 							nestedFieldName);
 
@@ -99,6 +99,23 @@ public class ObjectRelationshipExtensionProvider
 					relatedObjectDefinition.isUnmodifiableSystemObject()) {
 
 					return null;
+				}
+
+				if (_isManyToOneRelationship(
+						objectDefinition, objectRelationship,
+						relatedObjectDefinition)) {
+
+					DefaultObjectEntryManager defaultObjectEntryManager =
+						DefaultObjectEntryManagerProvider.provide(
+							_objectEntryManagerRegistry.getObjectEntryManager(
+								objectDefinition.getStorageType()));
+
+					return defaultObjectEntryManager.
+						fetchRelatedManytoOneObjectEntry(
+							_getDefaultDTOConverterContext(
+								objectDefinition, getPrimaryKey(entity), null),
+							objectDefinition, getPrimaryKey(entity),
+							objectRelationship.getName());
 				}
 
 				DefaultObjectEntryManager defaultObjectEntryManager =
@@ -304,6 +321,25 @@ public class ObjectRelationshipExtensionProvider
 
 		return _objectDefinitionLocalService.getObjectDefinition(
 			relatedObjectDefinitionId);
+	}
+
+	private boolean _isManyToOneRelationship(
+		ObjectDefinition objectDefinition,
+		ObjectRelationship objectRelationship,
+		ObjectDefinition relatedObjectDefinition) {
+
+		if (Objects.equals(
+				objectRelationship.getType(),
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY) &&
+			(objectRelationship.getObjectDefinitionId1() ==
+				relatedObjectDefinition.getObjectDefinitionId()) &&
+			(objectRelationship.getObjectDefinitionId2() ==
+				objectDefinition.getObjectDefinitionId())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private void _relateNestedObjectEntry(

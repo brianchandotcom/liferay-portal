@@ -397,7 +397,7 @@ const MillerColumnsItem = ({
 			)}
 
 			<ClayLayout.ContentCol className="c-pl-1" expand>
-				<h4 className="list-group-title text-truncate-inline">
+				<div className="list-group-title text-truncate-inline">
 					{viewUrl ? (
 						<ClayLink
 							aria-label={
@@ -423,10 +423,10 @@ const MillerColumnsItem = ({
 							symbol="warning-full"
 						/>
 					) : null}
-				</h4>
+				</div>
 
 				{description && (
-					<h5 className="d-flex list-group-subtitle small">
+					<div className="d-flex h5 list-group-subtitle small">
 						<span className="text-truncate">{description}</span>
 
 						{states.map((state) => (
@@ -438,7 +438,7 @@ const MillerColumnsItem = ({
 								{state.label}
 							</ClayLabel>
 						))}
-					</h5>
+					</div>
 				)}
 			</ClayLayout.ContentCol>
 

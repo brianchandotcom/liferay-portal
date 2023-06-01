@@ -208,6 +208,14 @@ public enum StoreArea {
 		return sb.toString();
 	}
 
+	public String relocate(String name, StoreArea storeArea) {
+		if (!name.startsWith(_namespace)) {
+			return storeArea._namespace + StringPool.SLASH + name;
+		}
+
+		return storeArea._namespace + name.substring(_namespace.length());
+	}
+
 	private StoreArea(String namespace) {
 		_namespace = namespace;
 	}

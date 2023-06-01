@@ -157,6 +157,16 @@ public class PortalAddressOSGiCommands {
 					Country country = _countryLocalService.getCountryByName(
 						companyId, name);
 
+					country = _countryLocalService.updateCountry(
+						country.getCountryId(),
+						countryJSONObject.getString("a2"),
+						countryJSONObject.getString("a3"), country.isActive(),
+						country.isBillingAllowed(),
+						countryJSONObject.getString("idd"), name,
+						countryJSONObject.getString("number"),
+						country.getPosition(), country.isShippingAllowed(),
+						country.isSubjectToVAT());
+
 					_processCountryRegions(country);
 				}
 				else {

@@ -32,6 +32,9 @@ import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -39,7 +42,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
 
 import java.util.Collections;
 import java.util.List;
@@ -58,12 +60,14 @@ public class DLSelectFolderDisplayContext {
 
 	public DLSelectFolderDisplayContext(
 		DLAppService dlAppService, Folder folder,
+		ModelResourcePermission<Folder> folderModelResourcePermission,
 		HttpServletRequest httpServletRequest, PortletURL portletURL,
 		long repositoryId, long selectedFolderId, long selectedRepositoryId,
 		boolean showGroupSelector) {
 
 		_dlAppService = dlAppService;
 		_folder = folder;
+		_folderModelResourcePermission = folderModelResourcePermission;
 		_httpServletRequest = httpServletRequest;
 		_portletURL = portletURL;
 		_repositoryId = repositoryId;
@@ -249,7 +253,7 @@ public class DLSelectFolderDisplayContext {
 
 	public boolean hasAddFolderPermission() throws PortalException {
 		if (_isAddFolderButtonVisible() &&
-			DLFolderPermission.contains(
+			_contains(
 				_themeDisplay.getPermissionChecker(), getRepositoryId(),
 				getFolderId(), ActionKeys.ADD_FOLDER)) {
 
@@ -275,6 +279,16 @@ public class DLSelectFolderDisplayContext {
 
 	public boolean isShowGroupSelector() {
 		return _showGroupSelector;
+	}
+
+	private boolean _contains(
+			PermissionChecker permissionChecker, long groupId, long folderId,
+			String actionId)
+		throws PortalException {
+
+		return ModelResourcePermissionUtil.contains(
+			_folderModelResourcePermission, permissionChecker, groupId,
+			folderId, actionId);
 	}
 
 	private PortletURL _getFolderPortletURL(
@@ -320,6 +334,8 @@ public class DLSelectFolderDisplayContext {
 
 	private final DLAppService _dlAppService;
 	private final Folder _folder;
+	private final ModelResourcePermission<Folder>
+		_folderModelResourcePermission;
 	private final HttpServletRequest _httpServletRequest;
 	private final PortletURL _portletURL;
 	private final long _repositoryId;

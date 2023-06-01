@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.RepositoryLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -158,6 +159,7 @@ public class DLFolderItemSelectorView
 			DLSelectFolderDisplayContext.class.getName(),
 			new DLSelectFolderDisplayContext(
 				_dlAppService, _fetchFolder(folderId),
+				_folderModelResourcePermission,
 				(HttpServletRequest)servletRequest, portletURL, repositoryId,
 				itemSelectorCriterion.getSelectedFolderId(),
 				itemSelectorCriterion.getSelectedRepositoryId(),
@@ -240,6 +242,11 @@ public class DLFolderItemSelectorView
 
 	@Reference
 	private DLAppService _dlAppService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.kernel.repository.model.Folder)"
+	)
+	private ModelResourcePermission<Folder> _folderModelResourcePermission;
 
 	@Reference
 	private GroupService _groupService;

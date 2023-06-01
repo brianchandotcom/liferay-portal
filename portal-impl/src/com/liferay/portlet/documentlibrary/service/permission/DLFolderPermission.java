@@ -78,16 +78,6 @@ public class DLFolderPermission implements BaseModelPermissionChecker {
 			permissionChecker, folder, actionId);
 	}
 
-	public static boolean contains(
-			PermissionChecker permissionChecker, long groupId, long folderId,
-			String actionId)
-		throws PortalException {
-
-		return ModelResourcePermissionUtil.contains(
-			_folderModelResourcePermission, permissionChecker, groupId,
-			folderId, actionId);
-	}
-
 	@Override
 	public void checkBaseModel(
 			PermissionChecker permissionChecker, long groupId, long primaryKey,

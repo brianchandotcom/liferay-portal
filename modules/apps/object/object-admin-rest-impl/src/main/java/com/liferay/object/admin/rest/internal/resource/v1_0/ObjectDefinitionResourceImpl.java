@@ -14,6 +14,7 @@
 
 package com.liferay.object.admin.rest.internal.resource.v1_0;
 
+import com.liferay.account.model.AccountEntry;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.notification.service.NotificationTemplateLocalService;
@@ -40,6 +41,7 @@ import com.liferay.object.admin.rest.resource.v1_0.ObjectViewResource;
 import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.exception.ObjectDefinitionEnableLocalizationException;
 import com.liferay.object.exception.ObjectDefinitionStorageTypeException;
 import com.liferay.object.service.ObjectActionLocalService;
@@ -87,9 +89,12 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -328,7 +333,7 @@ public class ObjectDefinitionResourceImpl
 		}
 
 		_addObjectDefinitionResources(
-			objectDefinition.getObjectActions(),
+			Collections.emptySet(), objectDefinition.getObjectActions(),
 			serviceBuilderObjectDefinition.getObjectDefinitionId(),
 			objectDefinition.getObjectLayouts(),
 			objectDefinition.getObjectRelationships(),
@@ -570,6 +575,10 @@ public class ObjectDefinitionResourceImpl
 		ObjectRelationship[] objectRelationships =
 			objectDefinition.getObjectRelationships();
 
+		Set<String> accountEntryRestrictedObjectRelationshipsNames =
+			_getAccountEntryRestrictedObjectRelationshipsNames(
+				serviceBuilderObjectDefinition, objectRelationships);
+
 		if (objectRelationships != null) {
 			_objectRelationshipLocalService.deleteObjectRelationships(
 				objectDefinitionId, false);
@@ -590,8 +599,9 @@ public class ObjectDefinitionResourceImpl
 		}
 
 		_addObjectDefinitionResources(
-			objectActions, objectDefinitionId, objectLayouts,
-			objectRelationships, objectValidationRules, objectViews);
+			accountEntryRestrictedObjectRelationshipsNames, objectActions,
+			objectDefinitionId, objectLayouts, objectRelationships,
+			objectValidationRules, objectViews);
 
 		return _toObjectDefinition(serviceBuilderObjectDefinition);
 	}
@@ -635,6 +645,7 @@ public class ObjectDefinitionResourceImpl
 	}
 
 	private void _addObjectDefinitionResources(
+			Set<String> accountEntryRestrictedObjectRelationshipsNames,
 			ObjectAction[] objectActions, long objectDefinitionId,
 			ObjectLayout[] objectLayouts,
 			ObjectRelationship[] objectRelationships,
@@ -680,9 +691,18 @@ public class ObjectDefinitionResourceImpl
 				).build();
 
 			for (ObjectRelationship objectRelationship : objectRelationships) {
-				objectRelationshipResource.
-					postObjectDefinitionObjectRelationship(
-						objectDefinitionId, objectRelationship);
+				objectRelationship =
+					objectRelationshipResource.
+						postObjectDefinitionObjectRelationship(
+							objectDefinitionId, objectRelationship);
+
+				if (accountEntryRestrictedObjectRelationshipsNames.contains(
+						objectRelationship.getName())) {
+
+					_objectDefinitionLocalService.enableAccountEntryRestricted(
+						_objectRelationshipLocalService.getObjectRelationship(
+							objectRelationship.getId()));
+				}
 			}
 		}
 
@@ -717,6 +737,64 @@ public class ObjectDefinitionResourceImpl
 					objectDefinitionId, objectView);
 			}
 		}
+	}
+
+	private Set<String> _getAccountEntryRestrictedObjectRelationshipsNames(
+		com.liferay.object.model.ObjectDefinition objectDefinition1,
+		ObjectRelationship[] objectRelationships) {
+
+		if ((objectDefinition1 == null) ||
+			!objectDefinition1.isUnmodifiableSystemObject() ||
+			(objectRelationships == null) ||
+			!StringUtil.equals(
+				objectDefinition1.getClassName(),
+				AccountEntry.class.getName())) {
+
+			return Collections.emptySet();
+		}
+
+		Set<String> accountEntryRestrictedObjectRelationshipsNames =
+			new HashSet<>();
+
+		for (ObjectRelationship objectRelationship : objectRelationships) {
+			if (!StringUtil.equals(
+					objectRelationship.getTypeAsString(),
+					ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
+
+				continue;
+			}
+
+			com.liferay.object.model.ObjectDefinition objectDefinition2 =
+				_objectDefinitionLocalService.fetchObjectDefinition(
+					objectRelationship.getObjectDefinitionId2());
+
+			if ((objectDefinition2 == null) ||
+				!objectDefinition2.getAccountEntryRestricted()) {
+
+				continue;
+			}
+
+			com.liferay.object.model.ObjectRelationship
+				serviceBuilderObjectRelationship =
+					_objectRelationshipLocalService.
+						fetchObjectRelationshipByObjectDefinitionId1(
+							objectDefinition1.getObjectDefinitionId(),
+							objectRelationship.getName());
+
+			if (serviceBuilderObjectRelationship == null) {
+				continue;
+			}
+
+			if (serviceBuilderObjectRelationship.getObjectFieldId2() ==
+					objectDefinition2.
+						getAccountEntryRestrictedObjectFieldId()) {
+
+				accountEntryRestrictedObjectRelationshipsNames.add(
+					objectRelationship.getName());
+			}
+		}
+
+		return accountEntryRestrictedObjectRelationshipsNames;
 	}
 
 	private ObjectDefinition _toObjectDefinition(

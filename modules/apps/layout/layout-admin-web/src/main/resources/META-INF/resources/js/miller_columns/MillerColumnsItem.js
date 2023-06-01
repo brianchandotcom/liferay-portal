@@ -20,6 +20,7 @@ import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
 import ClayLink from '@clayui/link';
 import classNames from 'classnames';
+import {sub} from 'frontend-js-web';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {useDrag, useDrop} from 'react-dnd';
 import {getEmptyImage} from 'react-dnd-html5-backend';
@@ -374,10 +375,8 @@ const MillerColumnsItem = ({
 			ref={ref}
 			verticalAlign="center"
 		>
-			<a className="miller-columns-item-mask" href={url}>
-				<span className="c-inner sr-only">{`${Liferay.Language.get(
-					'select'
-				)} ${title}`}</span>
+			<a className="miller-columns-item-mask" href={url} role="button">
+				<span className="c-inner sr-only">{title}</span>
 			</a>
 
 			{draggable && (
@@ -389,6 +388,11 @@ const MillerColumnsItem = ({
 			{selectable && (
 				<ClayLayout.ContentCol>
 					<ClayCheckbox
+						aria-label={sub(
+							Liferay.Language.get('select-x'),
+							title
+						)}
+						className="c-mb-0"
 						defaultChecked={checked}
 						name={`${namespace}rowIds`}
 						value={itemId}

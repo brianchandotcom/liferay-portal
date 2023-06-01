@@ -48,6 +48,7 @@ import com.liferay.object.internal.uad.exporter.ObjectEntryUADExporter;
 import com.liferay.object.internal.workflow.ObjectEntryWorkflowHandler;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectLayout;
+import com.liferay.object.related.models.ManyToOneObjectRelatedModelsProvider;
 import com.liferay.object.related.models.ObjectRelatedModelsPredicateProvider;
 import com.liferay.object.related.models.ObjectRelatedModelsProvider;
 import com.liferay.object.rest.context.path.RESTContextPathResolver;
@@ -310,7 +311,10 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					_objectFieldLocalService, _objectRelationshipLocalService),
 				null),
 			_bundleContext.registerService(
-				ObjectRelatedModelsProvider.class,
+				new String[] {
+					ManyToOneObjectRelatedModelsProvider.class.getName(),
+					ObjectRelatedModelsProvider.class.getName()
+				},
 				new ObjectEntry1toMObjectRelatedModelsProviderImpl(
 					objectDefinition, _objectEntryService,
 					_objectFieldLocalService, _objectRelationshipLocalService),

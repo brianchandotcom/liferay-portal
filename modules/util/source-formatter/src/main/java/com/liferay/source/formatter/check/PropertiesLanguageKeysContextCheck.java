@@ -38,15 +38,6 @@ public class PropertiesLanguageKeysContextCheck extends BaseFileCheck {
 			return content;
 		}
 
-		_checkLanguageKeysContext(fileName, absolutePath, content);
-
-		return content;
-	}
-
-	private void _checkLanguageKeysContext(
-			String fileName, String absolutePath, String content)
-		throws IOException {
-
 		Properties properties = new Properties();
 
 		properties.load(new StringReader(content));
@@ -92,6 +83,8 @@ public class PropertiesLanguageKeysContextCheck extends BaseFileCheck {
 						bracketsContent, "'"));
 			}
 		}
+
+		return content;
 	}
 
 	private static final String _FORBIDDEN_CONTEXT_NAMES_KEY =

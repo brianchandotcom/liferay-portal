@@ -60,6 +60,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.EscapableObject;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -69,6 +70,7 @@ import java.time.Month;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -412,6 +414,34 @@ public class AccountEntryUserRelLocalServiceImpl
 		}
 
 		return false;
+	}
+
+	public void setAccountEntryUserRels(
+			long accountEntryId, long[] accountUserIds)
+		throws PortalException {
+
+		if (accountUserIds == null) {
+			return;
+		}
+
+		Set<Long> newAccountUserIdsSet = SetUtil.fromArray(accountUserIds);
+
+		Set<Long> oldAccountUserIdsSet = SetUtil.fromCollection(
+			ListUtil.toList(
+				getAccountEntryUserRelsByAccountEntryId(accountEntryId),
+				AccountEntryUserRel::getAccountUserId));
+
+		Set<Long> removeAccountUserIdsSet = new HashSet<>(oldAccountUserIdsSet);
+
+		removeAccountUserIdsSet.removeAll(newAccountUserIdsSet);
+
+		deleteAccountEntryUserRels(
+			accountEntryId, ArrayUtil.toLongArray(removeAccountUserIdsSet));
+
+		newAccountUserIdsSet.removeAll(oldAccountUserIdsSet);
+
+		addAccountEntryUserRels(
+			accountEntryId, ArrayUtil.toLongArray(newAccountUserIdsSet));
 	}
 
 	@Override

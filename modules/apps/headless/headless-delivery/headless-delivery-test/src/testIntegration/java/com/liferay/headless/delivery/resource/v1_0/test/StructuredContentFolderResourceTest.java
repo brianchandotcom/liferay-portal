@@ -15,12 +15,24 @@
 package com.liferay.headless.delivery.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.depot.service.DepotEntryLocalServiceUtil;
 import com.liferay.headless.delivery.client.dto.v1_0.StructuredContentFolder;
+import com.liferay.headless.delivery.client.pagination.Page;
+import com.liferay.headless.delivery.client.pagination.Pagination;
+import com.liferay.headless.delivery.client.resource.v1_0.StructuredContentFolderResource;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.Collections;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -29,6 +41,36 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class StructuredContentFolderResourceTest
 	extends BaseStructuredContentFolderResourceTestCase {
+
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		_irrelevantJournalFolder = JournalTestUtil.addFolder(
+			irrelevantGroup.getGroupId(), RandomTestUtil.randomString());
+
+		testDepotEntry = DepotEntryLocalServiceUtil.addDepotEntry(
+			Collections.singletonMap(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
+			null,
+			new ServiceContext() {
+				{
+					setCompanyId(testGroup.getCompanyId());
+					setUserId(TestPropsValues.getUserId());
+				}
+			});
+	}
+
+	@Override
+	@Test
+	public void testGetStructuredContentFolderStructuredContentFoldersPage()
+		throws Exception {
+
+		super.testGetStructuredContentFolderStructuredContentFoldersPage();
+
+		_testGetStructuredContentFolderStructuredContentFoldersPageWithProfileURL();
+	}
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
@@ -168,5 +210,51 @@ public class StructuredContentFolderResourceTest
 			}
 		};
 	}
+
+	private void _testGetStructuredContentFolderStructuredContentFoldersPageWithProfileURL()
+		throws Exception {
+
+		StructuredContentFolder structuredContentFolder =
+			_randomStructuredContentFolder();
+
+		StructuredContentFolder postStructuredContentFolder =
+			structuredContentFolderResource.
+				postAssetLibraryStructuredContentFolder(
+					testDepotEntry.getDepotEntryId(), structuredContentFolder);
+
+		StructuredContentFolderResource.Builder builder =
+			StructuredContentFolderResource.builder();
+
+		structuredContentFolderResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
+			LocaleUtil.getDefault()
+		).parameters(
+			"nestedFields", "profileURL"
+		).build();
+
+		Page<StructuredContentFolder> page =
+			structuredContentFolderResource.
+				getAssetLibraryStructuredContentFoldersPage(
+					testDepotEntry.getDepotEntryId(), null, null, null, null,
+					Pagination.of(1, 10), null);
+
+		Assert.assertEquals(1, page.getTotalCount());
+
+		Assert.assertEquals(
+			postStructuredContentFolder.getId(),
+			page.fetchFirstItem(
+			).getId());
+
+		Assert.assertEquals(
+			"/web/test",
+			page.fetchFirstItem(
+			).getCreator(
+			).getProfileURL());
+
+		assertValid(page);
+	}
+
+	private JournalFolder _irrelevantJournalFolder;
 
 }

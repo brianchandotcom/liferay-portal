@@ -617,26 +617,18 @@ definition {
 		}
 
 		task ("View both web contents shown in collection items when select Anyone personalized variation") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = ${siteURLKey});
-
 			AssetListsAdmin.viewContent(
-				assetListTitle = "Dynamic Collection",
-				assetTitleList = "Web Content Title 1,Web Content Title 2");
+				assetTitleList = "Web Content Title 1,Web Content Title 2",
+				personalizedVariation = "Anyone");
 		}
 
 		task ("View only the web content with tag is shown in collection items when select New Segment personalized variation") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = ${siteURLKey});
-
 			AssetListsAdmin.viewContent(
-				assetListTitle = "Dynamic Collection",
 				assetTitle = "Web Content Title 2",
 				assetType = "Web Content Article",
 				personalizedVariation = "New Segment");
 
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = ${siteURLKey});
-
 			AssetListsAdmin.viewNoContent(
-				assetListTitle = "Dynamic Collection",
 				assetTitle = "Web Content Title 1",
 				assetType = "Web Content Article",
 				personalizedVariation = "New Segment");

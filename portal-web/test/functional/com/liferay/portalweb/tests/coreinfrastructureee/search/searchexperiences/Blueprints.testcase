@@ -4318,7 +4318,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Modal#BODY",
-			value1 = "boost-all-keywords-match");
+			value1 = "Boost All Keywords Match");
 	}
 
 	test ViewElementsAdminTableValues {

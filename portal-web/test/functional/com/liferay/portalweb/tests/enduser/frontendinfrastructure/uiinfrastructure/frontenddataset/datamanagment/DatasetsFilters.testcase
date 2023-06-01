@@ -149,6 +149,22 @@ definition {
 		}
 	}
 
+	@description = "LPS-176184. Confirm that the text 'Select' is labeling the  'Filter By Field'"
+	@priority = 5
+	test CanCreateFilters {
+		task ("And adds a new filter") {
+			FrontendDataSetAdmin.createFilters(
+				filterName = "Test Filter",
+				key_filterList = "id");
+		}
+
+		task ("Then asserts the selected option is actually displayed") {
+			AssertElementPresent(
+				chosenFilter = "id",
+				key_tableColumn = 1,
+				key_tableRow = 1,
+				locator1 = "FrontendDataSetAdmin#FILTER_TABLE_CELL");
+		}
 	}
 
 	@description = "LPS-176184. Confirm that 'Filter By' field cannot be empty"

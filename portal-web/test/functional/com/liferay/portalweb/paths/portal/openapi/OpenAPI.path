@@ -63,7 +63,7 @@
 </tr>
 <tr>
 	<td>RESPONSE_BODY</td>
-	<td>//div[contains(@id,'${method}')]//td[contains(.,'Response body')]//div[contains(@class,'highlight-code')]</td>
+	<td>//div[contains(@id,'${method}')]//td[contains(.,'Response body')]//code[contains(@class,'language-json')]</td>
 	<td></td>
 </tr>
 <tr>

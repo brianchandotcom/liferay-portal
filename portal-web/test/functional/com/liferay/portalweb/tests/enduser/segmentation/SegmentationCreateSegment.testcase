@@ -2025,7 +2025,7 @@ definition {
 
 			Segmentation.addProperties(propertyOption = "User Group");
 
-			Segmentation.fillProperty(chooseItem = "UG UserGroup Name");
+			Segmentation.fillProperty(selectCard = "UG UserGroup Name");
 
 			Segmentation.fillTitle(titleField = "AddSegmentByUserUserGroup Test");
 

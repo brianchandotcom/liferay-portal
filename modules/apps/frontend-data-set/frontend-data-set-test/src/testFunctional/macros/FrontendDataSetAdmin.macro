@@ -85,6 +85,20 @@ definition {
 		}
 	}
 
+	macro createASort {
+		LexiconEntry.gotoAdd();
+
+		Select(
+			locator1 = "FrontendDataSetAdmin#FIELD_SELECT",
+			value1 = ${key_field});
+
+		Select(
+			locator1 = "FrontendDataSetAdmin#SORTING_SELECT",
+			value1 = ${key_sorting});
+
+		PortletEntry.save();
+	}
+
 	macro createDataSet {
 		if (isSet(key_name)) {
 			var key_datasetNameList = ${key_name};

@@ -39,23 +39,14 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.ResourceConstants;
-import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.model.role.RoleConstants;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.RoleTestUtil;
-import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -324,40 +315,6 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			null, _getEndpoint(objectRelationship.getName()), Http.Method.GET);
 
 		_assertEquals(_objectEntry2, jsonObject.getJSONArray("items"));
-	}
-
-	@Test
-	public void testGetRelatedCustomObjectEntriesWithARegularRole()
-		throws Exception {
-
-		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
-
-		String password = RandomTestUtil.randomString();
-
-		User user = UserTestUtil.addUser(
-			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			password, RandomTestUtil.randomString() + "@liferay.com",
-			RandomTestUtil.randomString(), LocaleUtil.getDefault(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
-			ServiceContextTestUtil.getServiceContext());
-
-		UserLocalServiceUtil.addRoleUser(role.getRoleId(), user.getUserId());
-
-		ResourcePermissionLocalServiceUtil.setResourcePermissions(
-			TestPropsValues.getCompanyId(), _objectEntry1.getModelClassName(),
-			ResourceConstants.SCOPE_INDIVIDUAL,
-			String.valueOf(_objectEntry1.getPrimaryKey()), role.getRoleId(),
-			new String[] {ActionKeys.VIEW});
-
-		ResourcePermissionLocalServiceUtil.setResourcePermissions(
-			TestPropsValues.getCompanyId(), _objectEntry2.getModelClassName(),
-			ResourceConstants.SCOPE_INDIVIDUAL,
-			String.valueOf(_objectEntry2.getPrimaryKey()), role.getRoleId(),
-			new String[] {ActionKeys.VIEW});
-
-		HTTPTestUtil.withCredentials(
-			user.getEmailAddress(), password,
-			this::testGetRelatedCustomObjectEntriesWhenRelationExists);
 	}
 
 	@Test

@@ -14,6 +14,9 @@ package org.eclipse.osgi.internal.serviceregistry;
 import java.security.*;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.ConcurrentSkipListMap;
+import java.util.concurrent.atomic.AtomicLong;
 import org.eclipse.osgi.container.Module;
 import org.eclipse.osgi.container.ModuleRevision;
 import org.eclipse.osgi.framework.eventmgr.*;
@@ -50,27 +53,23 @@ public class ServiceRegistry {
 	 * in the natural order of ServiceRegistrationImpl and also are sets in that
 	 * there must be no two entries in a List which are equal.
 	 */
-	/* @GuardedBy("this") */
-	private final Map<String, List<ServiceRegistrationImpl<?>>> publishedServicesByClass;
+	private final Map<String, List<ServiceRegistrationImpl<?>>> publishedServicesByClass = new ConcurrentHashMap<>();
 
 	/** All published services. 
 	 * The List is both sorted in the natural order of ServiceRegistrationImpl and also is a
 	 * set in that there must be no two entries in the List which are equal.
 	 */
-	/* @GuardedBy("this") */
-	private final List<ServiceRegistrationImpl<?>> allPublishedServices;
+	private final Set<ServiceRegistrationImpl<?>> allPublishedServices = Collections.newSetFromMap(new ConcurrentSkipListMap<>());
 
 	/** Published services by BundleContextImpl.  
 	 * The {@literal List<ServiceRegistrationImpl<?>>}s are NOT sorted 
 	 * and also are sets in that
 	 * there must be no two entries in a List which are equal.
 	 */
-	/* @GuardedBy("this") */
-	private final Map<BundleContextImpl, List<ServiceRegistrationImpl<?>>> publishedServicesByContext;
+	private final Map<BundleContextImpl, Queue<ServiceRegistrationImpl<?>>> publishedServicesByContext = new ConcurrentHashMap<>();
 
 	/** next free service id. */
-	/* @GuardedBy("this") */
-	private long serviceid;
+	private final AtomicLong serviceid = new AtomicLong(1);
 
 	/** Active Service Listeners.
 	 * {@literal Map<BundleContextImpl,CopyOnWriteIdentityMap<ServiceListener,FilteredServiceListener>>}.
@@ -94,10 +93,6 @@ public class ServiceRegistry {
 	public ServiceRegistry(EquinoxContainer container) {
 		this.container = container;
 		this.debug = container.getConfiguration().getDebug();
-		serviceid = 1;
-		publishedServicesByClass = new HashMap<>(initialCapacity);
-		publishedServicesByContext = new HashMap<>(initialCapacity);
-		allPublishedServices = new ArrayList<>(initialCapacity);
 		serviceEventListeners = new ConcurrentHashMap<>(initialCapacity);
 		Module systemModule = container.getStorage().getModuleContainer().getModule(0);
 		systemBundleContext = (BundleContextImpl) systemModule.getBundle().getBundleContext();
@@ -951,10 +946,8 @@ public class ServiceRegistry {
 	 * 
 	 * @return next service id.
 	 */
-	synchronized long getNextServiceId() {
-		long id = serviceid;
-		serviceid = id + 1;
-		return id;
+	long getNextServiceId() {
+		return serviceid.getAndIncrement();
 	}
 
 	/**
@@ -963,37 +956,42 @@ public class ServiceRegistry {
 	 * @param context The BundleContext of the bundle registering the service.
 	 * @param registration The new ServiceRegistration.
 	 */
-	/* @GuardedBy("this") */
 	void addServiceRegistration(BundleContextImpl context, ServiceRegistrationImpl<?> registration) {
-		assert Thread.holdsLock(this);
 		// Add the ServiceRegistrationImpl to the list of Services published by BundleContextImpl.
-		List<ServiceRegistrationImpl<?>> contextServices = publishedServicesByContext.get(context);
+		Queue<ServiceRegistrationImpl<?>> contextServices = publishedServicesByContext.get(context);
 		if (contextServices == null) {
-			contextServices = new ArrayList<>(initialSubCapacity);
-			publishedServicesByContext.put(context, contextServices);
+			contextServices = new ConcurrentLinkedQueue<>();
+
+			Queue<ServiceRegistrationImpl<?>> previousContextServices =
+				publishedServicesByContext.putIfAbsent(context, contextServices);
+
+			if (previousContextServices != null) {
+				contextServices = previousContextServices;
+			}
 		}
 		// The list is NOT sorted, so we just add
 		contextServices.add(registration);
 
 		// Add the ServiceRegistrationImpl to the list of Services published by Class Name.
-		int insertIndex;
 		for (String clazz : registration.getClasses()) {
-			List<ServiceRegistrationImpl<?>> services = publishedServicesByClass.get(clazz);
+			publishedServicesByClass.compute(
+				clazz,
+				(className, services) -> {
+					if (services == null) {
+						return Collections.singletonList(registration);
+					}
 
-			if (services == null) {
-				services = new ArrayList<>(initialSubCapacity);
-				publishedServicesByClass.put(clazz, services);
-			}
+					services = new ArrayList<>(services);
 
-			// The list is sorted, so we must find the proper location to insert
-			insertIndex = -Collections.binarySearch(services, registration) - 1;
-			services.add(insertIndex, registration);
+					int insertIndex = -Collections.binarySearch(services, registration) - 1;
+
+					services.add(insertIndex, registration);
+
+					return services;
+				});
 		}
 
-		// Add the ServiceRegistrationImpl to the list of all published Services.
-		// The list is sorted, so we must find the proper location to insert
-		insertIndex = -Collections.binarySearch(allPublishedServices, registration) - 1;
-		allPublishedServices.add(insertIndex, registration);
+		allPublishedServices.add(registration);
 	}
 
 	/**
@@ -1002,29 +1000,32 @@ public class ServiceRegistry {
 	 * @param context The BundleContext of the bundle registering the service.
 	 * @param registration The modified ServiceRegistration.
 	 */
-	/* @GuardedBy("this") */
 	void modifyServiceRegistration(BundleContextImpl context, ServiceRegistrationImpl<?> registration) {
-		assert Thread.holdsLock(this);
 		// The list of Services published by BundleContextImpl is not sorted, so
 		// we do not need to modify it.
 
 		// Remove the ServiceRegistrationImpl from the list of Services published by Class Name
 		// and then add at the correct index.
-		int insertIndex;
 		for (String clazz : registration.getClasses()) {
-			List<ServiceRegistrationImpl<?>> services = publishedServicesByClass.get(clazz);
-			services.remove(registration);
-			// The list is sorted, so we must find the proper location to insert
-			insertIndex = -Collections.binarySearch(services, registration) - 1;
-			services.add(insertIndex, registration);
+			publishedServicesByClass.compute(
+				clazz,
+				(className, services) -> {
+					services = new ArrayList<>(services);
+
+					services.remove(registration);
+
+					// The list is sorted, so we must find the proper location to insert
+					int insertIndex = -Collections.binarySearch(services, registration) - 1;
+					services.add(insertIndex, registration);
+
+					return services;
+				});
 		}
 
 		// Remove the ServiceRegistrationImpl from the list of all published Services
 		// and then add at the correct index.
 		allPublishedServices.remove(registration);
-		// The list is sorted, so we must find the proper location to insert
-		insertIndex = -Collections.binarySearch(allPublishedServices, registration) - 1;
-		allPublishedServices.add(insertIndex, registration);
+		allPublishedServices.add(registration);
 	}
 
 	/**
@@ -1033,22 +1034,28 @@ public class ServiceRegistry {
 	 * @param context The BundleContext of the bundle registering the service.
 	 * @param registration The ServiceRegistration to remove.
 	 */
-	/* @GuardedBy("this") */
 	void removeServiceRegistration(BundleContextImpl context, ServiceRegistrationImpl<?> registration) {
-		assert Thread.holdsLock(this);
 		// Remove the ServiceRegistrationImpl from the list of Services published by BundleContextImpl.
-		List<ServiceRegistrationImpl<?>> contextServices = publishedServicesByContext.get(context);
+		Queue<ServiceRegistrationImpl<?>> contextServices = publishedServicesByContext.get(context);
 		if (contextServices != null) {
 			contextServices.remove(registration);
 		}
 
 		// Remove the ServiceRegistrationImpl from the list of Services published by Class Name.
 		for (String clazz : registration.getClasses()) {
-			List<ServiceRegistrationImpl<?>> services = publishedServicesByClass.get(clazz);
-			services.remove(registration);
-			if (services.isEmpty()) { // remove empty list
-				publishedServicesByClass.remove(clazz);
-			}
+			publishedServicesByClass.compute(
+				clazz,
+				(className, services) -> {
+					services = new ArrayList<>(services);
+
+					services.remove(registration);
+
+					if (services.isEmpty()) {
+						return null;
+					}
+
+					return services;
+				});
 		}
 
 		// Remove the ServiceRegistrationImpl from the list of all published Services.
@@ -1070,28 +1077,27 @@ public class ServiceRegistry {
 			clazz = filterImpl.getRequiredObjectClass();
 		}
 
-		List<ServiceRegistrationImpl<?>> result;
-		synchronized (this) {
-			if (clazz == null) { /* all services */
-				result = allPublishedServices;
-			} else {
-				/* services registered under the class name */
-				result = publishedServicesByClass.get(clazz);
-			}
+		Collection<ServiceRegistrationImpl<?>> result;
 
-			if ((result == null) || result.isEmpty()) {
-				List<ServiceRegistrationImpl<?>> empty = Collections.<ServiceRegistrationImpl<?>> emptyList();
-				return empty;
-			}
-
-			if (filter == null) {
-				return new ArrayList<>(result);
-			}
-
-			result = new LinkedList<>(result); /* make a new list since we don't want to change the real list */
+		if (clazz == null) { /* all services */
+			result = allPublishedServices;
+		} else {
+			/* services registered under the class name */
+			result = publishedServicesByClass.get(clazz);
 		}
 
-		for (Iterator<ServiceRegistrationImpl<?>> iter = result.iterator(); iter.hasNext();) {
+		if ((result == null) || result.isEmpty()) {
+			List<ServiceRegistrationImpl<?>> empty = Collections.<ServiceRegistrationImpl<?>> emptyList();
+			return empty;
+		}
+
+		if (filter == null) {
+			return new ArrayList<>(result);
+		}
+
+		List<ServiceRegistrationImpl<?>> listResult = new LinkedList<>(result); /* make a new list since we don't want to change the real list */
+
+		for (Iterator<ServiceRegistrationImpl<?>> iter = listResult.iterator(); iter.hasNext();) {
 			ServiceRegistrationImpl<?> registration = iter.next();
 			ServiceReferenceImpl<?> reference;
 			try {
@@ -1104,7 +1110,7 @@ public class ServiceRegistry {
 				iter.remove();
 			}
 		}
-		return result;
+		return listResult;
 	}
 
 	/**
@@ -1113,8 +1119,8 @@ public class ServiceRegistry {
 	 * @param context The BundleContext for which to return Service Registrations.
 	 * @return List<ServiceRegistrationImpl>
 	 */
-	private synchronized List<ServiceRegistrationImpl<?>> lookupServiceRegistrations(BundleContextImpl context) {
-		List<ServiceRegistrationImpl<?>> result = publishedServicesByContext.get(context);
+	private List<ServiceRegistrationImpl<?>> lookupServiceRegistrations(BundleContextImpl context) {
+		Queue<ServiceRegistrationImpl<?>> result = publishedServicesByContext.get(context);
 
 		if ((result == null) || result.isEmpty()) {
 			List<ServiceRegistrationImpl<?>> empty = Collections.<ServiceRegistrationImpl<?>> emptyList();
@@ -1129,7 +1135,7 @@ public class ServiceRegistry {
 	 * 
 	 * @param context The BundleContext for which to remove Service Registrations.
 	 */
-	private synchronized void removeServiceRegistrations(BundleContextImpl context) {
+	private void removeServiceRegistrations(BundleContextImpl context) {
 		publishedServicesByContext.remove(context);
 	}
 

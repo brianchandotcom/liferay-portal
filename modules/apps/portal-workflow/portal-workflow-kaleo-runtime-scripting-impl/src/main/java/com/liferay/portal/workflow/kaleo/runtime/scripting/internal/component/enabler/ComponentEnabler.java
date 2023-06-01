@@ -17,7 +17,7 @@ package com.liferay.portal.workflow.kaleo.runtime.scripting.internal.component.e
 import com.liferay.osgi.util.ComponentUtil;
 import com.liferay.portal.rules.engine.RulesEngine;
 import com.liferay.portal.workflow.kaleo.runtime.scripting.internal.action.DRLActionExecutor;
-import com.liferay.portal.workflow.kaleo.runtime.scripting.internal.assignment.DRLScriptingKaleoTaskAssignmentSelector;
+import com.liferay.portal.workflow.kaleo.runtime.scripting.internal.assignment.DRLScriptingAssigneeSelector;
 import com.liferay.portal.workflow.kaleo.runtime.scripting.internal.condition.DRLConditionEvaluator;
 import com.liferay.portal.workflow.kaleo.runtime.scripting.internal.notification.recipient.script.DRLNotificationRecipientEvaluator;
 import com.liferay.portal.workflow.kaleo.runtime.scripting.internal.util.RulesEngineExecutor;
@@ -38,8 +38,7 @@ public class ComponentEnabler {
 			RulesEngine.class, null, componentContext, DRLActionExecutor.class,
 			DRLConditionEvaluator.class,
 			DRLNotificationRecipientEvaluator.class,
-			DRLScriptingKaleoTaskAssignmentSelector.class,
-			RulesEngineExecutor.class);
+			DRLScriptingAssigneeSelector.class, RulesEngineExecutor.class);
 	}
 
 }

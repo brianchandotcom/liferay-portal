@@ -58,12 +58,11 @@ public class MultiLanguageKaleoTaskAssignmentSelectorTest {
 			multiLanguageKaleoTaskAssignmentSelector =
 				_getMultiLanguageKaleoTaskAssignmentSelector();
 
-		TestJavaScriptingKaleoTaskAssignmentSelector
-			testJavaScriptingKaleoTaskAssignmentSelector =
-				_getTestJavaScriptingKaleoTaskAssignmentSelector();
+		TestJavaScriptingAssigneeSelector testJavaScriptingAssigneeSelector =
+			_getTestJavaScriptingAssigneeSelector();
 
 		multiLanguageKaleoTaskAssignmentSelector.addKaleoTaskAssignmentSelector(
-			testJavaScriptingKaleoTaskAssignmentSelector,
+			testJavaScriptingAssigneeSelector,
 			HashMapBuilder.put(
 				"scripting.language", (Object)"java"
 			).build());
@@ -71,8 +70,7 @@ public class MultiLanguageKaleoTaskAssignmentSelectorTest {
 		Collection<KaleoTaskAssignment> kaleoTaskAssignments =
 			multiLanguageKaleoTaskAssignmentSelector.getKaleoTaskAssignments(
 				_getKaleoTaskAssignment(
-					testJavaScriptingKaleoTaskAssignmentSelector.getClass(),
-					"java"),
+					testJavaScriptingAssigneeSelector.getClass(), "java"),
 				_getExecutionContext());
 
 		Assert.assertEquals(
@@ -148,8 +146,8 @@ public class MultiLanguageKaleoTaskAssignmentSelectorTest {
 		return multiLanguageKaleoTaskAssignmentSelector;
 	}
 
-	private TestJavaScriptingKaleoTaskAssignmentSelector
-		_getTestJavaScriptingKaleoTaskAssignmentSelector() {
+	private TestJavaScriptingAssigneeSelector
+		_getTestJavaScriptingAssigneeSelector() {
 
 		KaleoTaskAssignmentFactory kaleoTaskAssignmentFactory = Mockito.mock(
 			KaleoTaskAssignmentFactory.class);
@@ -160,15 +158,15 @@ public class MultiLanguageKaleoTaskAssignmentSelectorTest {
 			new KaleoTaskAssignmentImpl()
 		);
 
-		return new TestJavaScriptingKaleoTaskAssignmentSelector();
+		return new TestJavaScriptingAssigneeSelector();
 	}
 
 	private static final long _USER_ID = RandomTestUtil.randomLong();
 
-	private static class TestJavaScriptingKaleoTaskAssignmentSelector
+	private static class TestJavaScriptingAssigneeSelector
 		implements ScriptingAssigneeSelector {
 
-		public TestJavaScriptingKaleoTaskAssignmentSelector() {
+		public TestJavaScriptingAssigneeSelector() {
 			Mockito.when(
 				_user.getUserId()
 			).thenReturn(

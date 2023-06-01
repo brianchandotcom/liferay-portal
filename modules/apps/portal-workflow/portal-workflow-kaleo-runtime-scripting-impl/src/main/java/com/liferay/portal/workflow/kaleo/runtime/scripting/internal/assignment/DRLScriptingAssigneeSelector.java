@@ -32,8 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 	enabled = false, property = "scripting.language=drl",
 	service = ScriptingAssigneeSelector.class
 )
-public class DRLScriptingKaleoTaskAssignmentSelector
-	implements ScriptingAssigneeSelector {
+public class DRLScriptingAssigneeSelector implements ScriptingAssigneeSelector {
 
 	@Override
 	public Map<String, ?> getAssignees(

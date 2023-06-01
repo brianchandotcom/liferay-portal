@@ -15,7 +15,7 @@
 import ClayAlert from '@clayui/alert';
 import ClayBreadcrumb from '@clayui/breadcrumb';
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
-import ClayDropDown, {ClayDropDownWithItems} from '@clayui/drop-down';
+import ClayDropDown from '@clayui/drop-down';
 import ClayEmptyState from '@clayui/empty-state';
 import {ClayCheckbox, ClayInput, ClayToggle} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
@@ -27,17 +27,13 @@ import ClayNavigationBar from '@clayui/navigation-bar';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import ClaySticker from '@clayui/sticker';
 import ClayTable from '@clayui/table';
-import ClayToolbar from '@clayui/toolbar';
 import classNames from 'classnames';
 import {ManagementToolbar} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {CSSTransition} from 'react-transition-group';
 
-import ChangeTrackingComments from '../components/ChangeTrackingComments';
-import MoveChangesModal from '../components/MoveChangesModal';
 import WorkflowStatusLabel from '../components/WorkflowStatusLabel';
-import ManageCollaborators from '../components/manage-collaborators-modal/ManageCollaborators';
 import ChangeTrackingRenderView from './ChangeTrackingRenderView';
 
 const DIRECTION_NEXT = 'next';
@@ -98,47 +94,30 @@ const DrilldownMenu = ({
 export default function ChangeTrackingChangesView({
 	changeTypesFromURL,
 	changes,
-	collaboratorsData,
 	columnFromURL,
 	contextView,
 	ctCollectionId,
-	ctCollections,
 	ctMappingInfos,
-	currentUserId,
 	dataURL,
 	defaultLocale,
-	deleteCTCommentURL,
 	deltaFromURL,
-	description,
 	discardURL,
-	dropdownItems,
 	entryFromURL,
 	expired,
-	getCTCommentsURL,
 	keywordsFromURL,
 	modelData,
-	moveChangesURL,
-	name,
 	namespace,
 	navigationFromURL,
 	orderByTypeFromURL,
 	pageFromURL,
-	publishURL,
-	rescheduleURL,
-	revertURL,
-	scheduleURL,
 	showAllItemsEnabled,
 	showHideableFromURL,
 	siteNames,
 	sitesFromURL,
 	spritemap,
-	statusLabel,
-	statusStyle,
 	total,
 	typeNames,
 	typesFromURL,
-	unscheduleURL,
-	updateCTCommentURL,
 	userInfo,
 	usersFromURL,
 }) {
@@ -225,7 +204,6 @@ export default function ChangeTrackingChangesView({
 
 	const basePathRef = useRef(pathname + '?' + params.toString());
 
-	const commentsCacheRef = useRef({});
 	const renderCacheRef = useRef({});
 
 	const getNodeId = useCallback(
@@ -553,7 +531,6 @@ export default function ChangeTrackingChangesView({
 		? true
 		: !!showHideableFromURL;
 
-	const [allChecked, setAllChecked] = useState(false);
 	const [ascendingState, setAscendingState] = useState(
 		orderByTypeFromURL !== ORDER_BY_TYPE_DESC
 	);
@@ -570,8 +547,6 @@ export default function ChangeTrackingChangesView({
 	const [menu, setMenu] = useState(MENU_ROOT);
 	const [resultsKeywords, setResultsKeywords] = useState(keywordsFromURL);
 	const [searchMobile, setSearchMobile] = useState(false);
-	const [selectedChanges, setSelectedChanges] = useState([]);
-	const [showComments, setShowComments] = useState(false);
 
 	const getFilters = useCallback(
 		(changeTypes, sites, types, users) => {
@@ -1704,7 +1679,7 @@ export default function ChangeTrackingChangesView({
 
 				rows.push(
 					<ClayTable.Row divider>
-						<ClayTable.Cell colSpan={7}>
+						<ClayTable.Cell colSpan={6}>
 							{node.typeName}
 						</ClayTable.Cell>
 					</ClayTable.Row>
@@ -1716,37 +1691,6 @@ export default function ChangeTrackingChangesView({
 					className="cursor-pointer"
 					onClick={() => navigate(node.nodeId)}
 				>
-					<ClayTable.Cell
-						onClick={(event) => event.stopPropagation()}
-					>
-						<ClayCheckbox
-							disabled={allChecked}
-							id={i}
-							onChange={(event) => {
-								if (event.target.checked) {
-									setSelectedChanges([
-										...selectedChanges,
-										{
-											ctEntryId: node.ctEntryId,
-											modelClassNameId:
-												node.modelClassNameId,
-											modelClassPK: node.modelClassPK,
-										},
-									]);
-								}
-								else {
-									setSelectedChanges(
-										selectedChanges.filter(
-											(selectedChange) =>
-												selectedChange.ctEntryId !==
-												node.ctEntryId
-										)
-									);
-								}
-							}}
-						/>
-					</ClayTable.Cell>
-
 					<ClayTable.Cell>
 						{node.userId && node.userId > 0 && (
 							<ClaySticker
@@ -2078,7 +2022,7 @@ export default function ChangeTrackingChangesView({
 				<ClayTable.Row>
 					<ClayTable.Cell
 						className="publications-header-td"
-						colSpan={7}
+						colSpan={6}
 					>
 						<ManagementToolbar.Container>
 							{renderFilterDropdown()}
@@ -2194,7 +2138,7 @@ export default function ChangeTrackingChangesView({
 				<ClayTable.Row>
 					<ClayTable.Cell
 						className="publications-header-td"
-						colSpan={renderState.nav === NAVIGATION_DATA ? 7 : 1}
+						colSpan={renderState.nav === NAVIGATION_DATA ? 6 : 1}
 					>
 						<ClayNavigationBar spritemap={spritemap}>
 							<ClayNavigationBar.Item
@@ -2610,7 +2554,7 @@ export default function ChangeTrackingChangesView({
 			return (
 				<ClayTable.Head>
 					<ClayTable.Row>
-						<ClayTable.Cell colSpan={7}>
+						<ClayTable.Cell colSpan={6}>
 							<ClayEmptyState
 								description={Liferay.Language.get(
 									'there-are-no-changes-to-display-in-this-view'
@@ -2627,36 +2571,6 @@ export default function ChangeTrackingChangesView({
 		return (
 			<ClayTable.Head>
 				<ClayTable.Row>
-					<ClayTable.Cell headingCell>
-						<ClayCheckbox
-							onChange={(event) => {
-								if (event.target.checked) {
-									const nodes = filterDisplayNodes(
-										renderState.changes
-									);
-
-									const allChanges = [];
-
-									for (let i = 0; i < nodes.length; i++) {
-										allChanges.push({
-											ctEntryId: nodes[i].ctEntryId,
-											modelClassNameId:
-												nodes[i].modelClassNameId,
-											modelClassPK: nodes[i].modelClassPK,
-										});
-									}
-
-									setSelectedChanges(allChanges);
-									setAllChecked(true);
-								}
-								else {
-									setSelectedChanges([]);
-									setAllChecked(false);
-								}
-							}}
-						/>
-					</ClayTable.Cell>
-
 					<ClayTable.Cell headingCell>
 						{getColumnHeader(
 							COLUMN_USER,
@@ -2825,246 +2739,11 @@ export default function ChangeTrackingChangesView({
 		);
 	};
 
-	const renderToolbarAction = (displayType, label, symbol, url) => {
-		if (!url) {
-			return '';
-		}
-
-		return (
-			<ClayToolbar.Item>
-				<a
-					className={classNames(
-						'btn btn-' + displayType + ' btn-sm',
-						{
-							disabled:
-								(!total && !ctMappingInfos.length) || expired,
-						}
-					)}
-					href={setParameter(
-						url,
-						'redirect',
-						window.location.pathname + window.location.search
-					)}
-				>
-					<span className="inline-item inline-item-before">
-						<ClayIcon spritemap={spritemap} symbol={symbol} />
-					</span>
-
-					{label}
-				</a>
-			</ClayToolbar.Item>
-		);
-	};
-
-	const renderPublicationsToolbar = () => {
-		return (
-			<ClayToolbar className="publications-tbar" light>
-				<div className="container-fluid container-fluid-max-xl">
-					<ClayToolbar.Nav>
-						<ClayToolbar.Item className="text-left" expand>
-							<ClayToolbar.Section>
-								<div className="publication-name">
-									<span>{name}</span>
-
-									<ClayLabel
-										displayType={statusStyle}
-										spritemap={spritemap}
-									>
-										{statusLabel}
-									</ClayLabel>
-								</div>
-
-								<div className="publication-description">
-									{description}
-								</div>
-							</ClayToolbar.Section>
-						</ClayToolbar.Item>
-
-						<ClayToolbar.Item>
-							<ManageCollaborators {...collaboratorsData} />
-						</ClayToolbar.Item>
-
-						{Liferay.FeatureFlags['LPS-171364'] && publishURL ? (
-							<ClayToolbar.Item>
-								<MoveChangesModal
-									changes={
-										renderState.node.modelClassNameId
-											? [
-													{
-														ctEntryId:
-															renderState.node
-																.ctEntryId,
-														modelClassNameId:
-															renderState.node
-																.modelClassNameId,
-														modelClassPK:
-															renderState.node
-																.modelClassPK,
-													},
-											  ]
-											: selectedChanges
-									}
-									ctCollectionId={ctCollectionId}
-									moveChangesURL={moveChangesURL}
-									namespace={namespace}
-									publications={ctCollections}
-									spritemap={spritemap}
-								/>
-							</ClayToolbar.Item>
-						) : (
-							''
-						)}
-
-						{renderToolbarAction(
-							'secondary',
-							Liferay.Language.get('schedule'),
-							'calendar',
-							scheduleURL
-						)}
-
-						{renderToolbarAction(
-							'primary',
-							Liferay.Language.get('publish'),
-							'change',
-							publishURL
-						)}
-
-						{renderToolbarAction(
-							'secondary',
-							Liferay.Language.get('unschedule'),
-							'times-circle',
-							unscheduleURL
-						)}
-
-						{renderToolbarAction(
-							'primary',
-							Liferay.Language.get('reschedule'),
-							'calendar',
-							rescheduleURL
-						)}
-
-						{renderToolbarAction(
-							'secondary',
-							Liferay.Language.get('revert'),
-							'undo',
-							revertURL
-						)}
-
-						<ClayToolbar.Item
-							data-tooltip-align="top"
-							title={Liferay.Language.get('comments')}
-						>
-							<ClayButton
-								className={classNames(
-									'nav-link nav-link-monospaced',
-									{
-										active: showComments,
-									}
-								)}
-								displayType="unstyled"
-								onClick={() => setShowComments(!showComments)}
-							>
-								<ClayIcon
-									spritemap={spritemap}
-									symbol="comments"
-								/>
-							</ClayButton>
-						</ClayToolbar.Item>
-
-						{dropdownItems && !!dropdownItems.length && (
-							<ClayToolbar.Item>
-								<ClayDropDownWithItems
-									items={dropdownItems}
-									spritemap={spritemap}
-									trigger={
-										<ClayButtonWithIcon
-											displayType="unstyled"
-											small
-											spritemap={spritemap}
-											symbol="ellipsis-v"
-										/>
-									}
-								/>
-							</ClayToolbar.Item>
-						)}
-					</ClayToolbar.Nav>
-				</div>
-			</ClayToolbar>
-		);
-	};
-
 	return (
 		<>
-			{renderPublicationsToolbar()}
 			{renderResultsBar()}
-			<div
-				className={classNames('sidenav-container sidenav-right', {
-					closed: !showComments,
-					open: showComments,
-				})}
-			>
-				<div
-					className="info-panel sidenav-menu-slider"
-					style={
-						showComments
-							? {
-									'height': '85vh',
-									'min-height': '485px',
-									'width': '320px',
-							  }
-							: {}
-					}
-				>
-					<div
-						className="sidebar sidebar-light sidenav-menu"
-						style={
-							showComments
-								? {
-										'height': '100%',
-										'min-height': '485px',
-										'width': '320px',
-								  }
-								: {}
-						}
-					>
-						{showComments && (
-							<ChangeTrackingComments
-								ctEntryId={0}
-								currentUserId={currentUserId}
-								deleteCommentURL={deleteCTCommentURL}
-								getCache={() => {
-									return commentsCacheRef.current['0'];
-								}}
-								getCommentsURL={getCTCommentsURL}
-								keyParam=""
-								setShowComments={setShowComments}
-								spritemap={spritemap}
-								updateCache={(data) => {
-									const cacheData = JSON.parse(
-										JSON.stringify(data)
-									);
 
-									cacheData.updatedCommentId = null;
-
-									commentsCacheRef.current['0'] = cacheData;
-								}}
-								updateCommentURL={updateCTCommentURL}
-							/>
-						)}
-					</div>
-				</div>
-
-				<div
-					className="sidenav-content"
-					style={
-						showComments
-							? {'min-height': '485px', 'padding-right': '320px'}
-							: {}
-					}
-				>
-					{!loading ? renderMainContent() : <ClayLoadingIndicator />}
-				</div>
-			</div>
+			{!loading ? renderMainContent() : <ClayLoadingIndicator />}
 		</>
 	);
 }

@@ -23,11 +23,22 @@ renderResponse.setTitle(LanguageUtil.get(request, "review-changes"));
 
 portletDisplay.setURLBack(viewChangesDisplayContext.getBackURL());
 portletDisplay.setShowBackIcon(true);
+
+Map<String, Object> reactData = viewChangesDisplayContext.getReactData();
 %>
 
 <div class="publications-view-changes-wrapper">
-	<react:component
-		module="publications/js/views/ChangeTrackingChangesView"
-		props="<%= viewChangesDisplayContext.getReactData() %>"
-	/>
+	<div>
+		<react:component
+			module="publications/js/views/ChangeTrackingChangesToolbar"
+			props="<%= reactData %>"
+		/>
+	</div>
+
+	<div>
+		<react:component
+			module="publications/js/views/ChangeTrackingChangesView"
+			props="<%= reactData %>"
+		/>
+	</div>
 </div>

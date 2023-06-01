@@ -55,7 +55,7 @@ export async function createNewUser(requestBody: requestBody) {
   try {
     const response = await fetch(`/o/headless-admin-user/v1.0/user-accounts`, {
       headers: {
-        accept: 'application/json',
+        "accept": 'application/json',
         'Content-Type': 'application/json',
         'x-csrf-token': Liferay.authToken,
       },
@@ -82,7 +82,7 @@ export async function addExistentUserIntoAccount(
       `/o/headless-admin-user/v1.0/accounts/${accountId}/user-accounts/by-email-address/${userEmail}`,
       {
         headers: {
-          accept: 'application/json',
+          "accept": 'application/json',
           'x-csrf-token': Liferay.authToken,
         },
         method: 'POST',
@@ -138,7 +138,7 @@ export async function callRolesApi(
     `/o/headless-admin-user/v1.0/accounts/${accountId}/account-roles/${roleId}/user-accounts/${userId}`,
     {
       headers: {
-        accept: 'application/json',
+        "accept": 'application/json',
         'Content-Type': 'application/json',
         'x-csrf-token': Liferay.authToken,
       },
@@ -163,21 +163,21 @@ export async function addAdditionalInfo(
   roles: string
 ) {
   const additionalInfoBody = {
-    acceptInviteStatus: acceptInviteStatus,
-    r_userToUserAddInfo_userId: r_userToUserAddInfo_userId,
-    inviteURL: inviteURL,
-    publisherName: publisherName,
+    acceptInviteStatus,
+    r_userToUserAddInfo_userId,
+    inviteURL,
+    publisherName,
     r_accountToUserAdditionalInfos_accountEntryId: publisherId,
-    emailOfMember: emailOfMember,
-    mothersName: mothersName,
-    userFirstName: userFirstName,
-    inviterName: inviterName,
-    roles: roles,
+    emailOfMember,
+    mothersName,
+    userFirstName,
+    inviterName,
+    roles,
   };
 
   const response = await fetch(`/o/c/useradditionalinfos/`, {
     headers: {
-      accept: 'application/json',
+      "accept": 'application/json',
       'Content-Type': 'application/json',
       'x-csrf-token': Liferay.authToken,
     },

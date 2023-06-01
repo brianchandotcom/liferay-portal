@@ -37,6 +37,7 @@ export function LoadingPage({appTitle, appVersion}: LoadingPageProps) {
 
 				<span className="loading-page-text">
 					<strong>{appVersion}</strong> is being sent to{' '}
+
 					<strong>Liferay</strong>
 				</span>
 			</div>

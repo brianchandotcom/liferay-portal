@@ -117,7 +117,7 @@ const AddFDSViewModalContent = ({
 	return (
 		<>
 			<ClayModal.Header>
-				{Liferay.Language.get('new-dataset-view')}
+				{Liferay.Language.get('new-data-set-view')}
 			</ClayModal.Header>
 
 			<ClayModal.Body>
@@ -232,7 +232,7 @@ const FDSViews = ({
 	}) => {
 		openModal({
 			bodyHTML: Liferay.Language.get(
-				'deleting-a-dataset-view-is-an-action-that-cannot-be-reversed'
+				'deleting-a-data-set-view-is-an-action-that-cannot-be-reversed'
 			),
 			buttons: [
 				{
@@ -272,14 +272,14 @@ const FDSViews = ({
 				},
 			],
 			status: 'danger',
-			title: Liferay.Language.get('delete-dataset-view'),
+			title: Liferay.Language.get('delete-data-set-view'),
 		});
 	};
 
 	const creationMenu = {
 		primaryItems: [
 			{
-				label: Liferay.Language.get('new-dataset-view'),
+				label: Liferay.Language.get('new-data-set-view'),
 				onClick: ({loadData}: {loadData: Function}) => {
 					openModal({
 						contentComponent: ({

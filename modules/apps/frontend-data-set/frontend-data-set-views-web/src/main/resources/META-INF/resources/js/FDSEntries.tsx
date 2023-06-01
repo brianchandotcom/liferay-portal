@@ -566,7 +566,7 @@ const AddFDSEntryModalContent = ({
 	return (
 		<>
 			<ClayModal.Header>
-				{Liferay.Language.get('new-dataset')}
+				{Liferay.Language.get('new-data-set')}
 			</ClayModal.Header>
 
 			<ClayModal.Body>
@@ -711,7 +711,7 @@ const FDSEntries = ({
 	const creationMenu = {
 		primaryItems: [
 			{
-				label: Liferay.Language.get('new-dataset'),
+				label: Liferay.Language.get('new-data-set'),
 				onClick: ({loadData}: {loadData: Function}) => {
 					openModal({
 						contentComponent: ({
@@ -754,7 +754,7 @@ const FDSEntries = ({
 	}) => {
 		openModal({
 			bodyHTML: Liferay.Language.get(
-				'deleting-a-dataset-is-an-action-that-cannot-be-reversed'
+				'deleting-a-data-set-is-an-action-that-cannot-be-reversed'
 			),
 			buttons: [
 				{
@@ -794,7 +794,7 @@ const FDSEntries = ({
 				},
 			],
 			status: 'danger',
-			title: Liferay.Language.get('delete-dataset'),
+			title: Liferay.Language.get('delete-data-set'),
 		});
 	};
 

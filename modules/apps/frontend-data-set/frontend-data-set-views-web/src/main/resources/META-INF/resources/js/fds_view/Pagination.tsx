@@ -161,7 +161,7 @@ function Pagination({
 
 				<div className="sheet-text">
 					{Liferay.Language.get(
-						'dataset-view-pagination-description'
+						'data-set-view-pagination-description'
 					)}
 				</div>
 			</ClayLayout.SheetHeader>

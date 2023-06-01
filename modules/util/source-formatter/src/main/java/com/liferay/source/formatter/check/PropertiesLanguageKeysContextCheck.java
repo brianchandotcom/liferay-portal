@@ -14,17 +14,15 @@
 
 package com.liferay.source.formatter.check;
 
-import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
 import java.io.StringReader;
 
 import java.util.Enumeration;
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Qi Zhang
@@ -36,90 +34,66 @@ public class PropertiesLanguageKeysContextCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws IOException {
 
-		_languageKeyWordsCheck(fileName, content);
+		_checkLanguageKeysContext(fileName, absolutePath, content);
 
 		return content;
 	}
 
-	private boolean _isContinuousString(String context) {
-		if (ArrayUtil.contains(_ALLOW_CONTEXT, context)) {
-			return false;
-		}
-
-		for (int i = 0; i < (context.length() - 1); i++) {
-			if ((context.charAt(i) + 1) == context.charAt(i + 1)) {
-				continue;
-			}
-
-			return false;
-		}
-
-		return true;
-	}
-
-	private void _languageKeyWordsCheck(String fileName, String content)
+	private void _checkLanguageKeysContext(
+			String fileName, String absolutePath, String content)
 		throws IOException {
 
 		Properties properties = new Properties();
 
 		properties.load(new StringReader(content));
 
-		Enumeration<?> enumeration = properties.propertyNames();
+		Enumeration<String> enumeration =
+			(Enumeration<String>)properties.propertyNames();
 
 		while (enumeration.hasMoreElements()) {
-			String key = (String)enumeration.nextElement();
+			String key = enumeration.nextElement();
 
-			char lastChar = key.charAt(key.length() - 1);
+			Matcher matcher = _languageKeyPattern.matcher(key);
 
-			int pos = -1;
-
-			if (lastChar == CharPool.CLOSE_BRACKET) {
-				pos = key.lastIndexOf(CharPool.OPEN_BRACKET);
-			}
-
-			if (pos == -1) {
+			if (!matcher.matches()) {
 				continue;
 			}
 
-			String context = key.substring(pos);
-
-			if (context.matches("\\[[-\\.\\w+]*\\]")) {
-				context = context.substring(1, context.length() - 1);
-			}
-			else {
-				continue;
-			}
-
-			if (StringUtil.count(key.substring(0, pos), CharPool.PERIOD) > 0) {
-				continue;
+			if (properties.containsKey(matcher.group(1))) {
+				addMessage(
+					fileName,
+					StringBundler.concat(
+						"The Key '", matcher.group(1),
+						"' should with [context] to indicate specific ",
+						"meaning"));
 			}
 
-			if (ArrayUtil.contains(_UNQUALIFIED_CONTEXT, context) ||
-				context.matches("\\d+") || context.matches("\\.+") ||
-				_isContinuousString(context)) {
+			String bracketsContent = matcher.group(3);
+
+			if ((bracketsContent.length() == 0) ||
+				((bracketsContent.length() == 1) &&
+				 !bracketsContent.equals("n") &&
+				 !bracketsContent.equals("v")) ||
+				bracketsContent.matches("(\\d+)") ||
+				getAttributeValues(
+					_FORBIDDEN_CONTEXT_NAMES_KEY, absolutePath
+				).contains(
+					bracketsContent
+				)) {
 
 				addMessage(
 					fileName,
 					StringBundler.concat(
 						"The Key '", key, "' contain unqualified context for '",
-						context, "'"));
-			}
-
-			key = key.substring(0, pos);
-
-			if (Validator.isNotNull(properties.get(key))) {
-				addMessage(
-					fileName,
-					StringBundler.concat(
-						"The Key '", key,
-						"' should with [context] to indicate specific ",
-						"meaning"));
+						bracketsContent, "'"));
 			}
 		}
 	}
 
-	private static final String[] _ALLOW_CONTEXT = {"de", "n", "v"};
+	private static final String _FORBIDDEN_CONTEXT_NAMES_KEY =
+		"forbiddenContextNames";
 
-	private static final String[] _UNQUALIFIED_CONTEXT = {"", "null"};
+	private static final Pattern _languageKeyPattern = Pattern.compile(
+		"([\\s\\S]+)(\\[([\\s\\S]*)\\])");
 
 }

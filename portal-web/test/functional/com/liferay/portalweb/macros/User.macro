@@ -772,6 +772,24 @@ definition {
 		}
 	}
 
+	macro assertScreenNameDisabled {
+		AssertClick(
+			key_assetTitle = "Information",
+			locator1 = "NavBar#ASSET_TITLE",
+			value1 = "Information");
+
+		AssertElementPresent(locator1 = "UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD_DISABLED");
+	}
+
+	macro assertSection {
+		for (var sectionName : list ${sectionName}) {
+			AssertClick(
+				key_assetTitle = ${sectionName},
+				locator1 = "NavBar#ASSET_TITLE",
+				value1 = ${sectionName});
+		}
+	}
+
 	macro assignAccountCP {
 		User.openUsersAdmin();
 

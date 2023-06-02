@@ -47,6 +47,7 @@ import {
 	publisherRoles,
 } from '../PublishedAppsDashboardPage/PublishedDashboardPageUtil';
 import {
+	customerPermissionDescriptions,
 	initialAccountState,
 	initialDashboardNavigationItems,
 	memberTableHeaders,
@@ -54,6 +55,7 @@ import {
 } from './PurchasedDashboardPageUtil';
 
 import './PurchasedAppsDashboardPage.scss';
+import { MembersPage } from '../MembersPage/MembersPage';
 
 export interface PurchasedAppProps {
 	name: string;
@@ -347,6 +349,7 @@ export function PurchasedAppsDashboardPage() {
 							dateCreated: member.dateCreated,
 							email: member.emailAddress,
 							image: member.image,
+							isInvitedMember:false,
 							isCustomerAccount: false,
 							isPublisherAccount: false,
 							lastLoginDate: member.lastLoginDate,
@@ -482,32 +485,13 @@ export function PurchasedAppsDashboardPage() {
 			)}
 
 			{!loading && selectedNavigationItem === 'Members' && (
-				<DashboardPage
-					dashboardNavigationItems={dashboardNavigationItems}
-					messages={memberMessages}
-				>
-					{selectedMember ? (
-						<MemberProfile
-							member={selectedMember}
-							setSelectedMember={setSelectedMember}
-						></MemberProfile>
-					) : (
-						<DashboardTable<MemberProps>
-							emptyStateMessage={memberMessages.emptyStateMessage}
-							icon={membersIcon}
-							items={members}
-							tableHeaders={memberTableHeaders}
-						>
-							{(item) => (
-								<DashboardMemberTableRow
-									item={item}
-									key={item.name}
-									onSelectedMemberChange={setSelectedMember}
-								/>
-							)}
-						</DashboardTable>
-					)}
-				</DashboardPage>
+				<MembersPage
+				dashboardNavigationItems={dashboardNavigationItems}
+				listOfRoles={customerRoles}
+				rolesPermissionDescription={customerPermissionDescriptions}
+				icon={membersIcon}
+				selectedAccount={selectedAccount}
+				></MembersPage>
 			)}
 		</div>
 	);

@@ -4,7 +4,7 @@ definition {
 		var key_option = ${key_option};
 
 		Type(
-			locator1 = "FrontendDataSetAdmin#NEW_FILTER_SELECT_OPTION",
+			locator1 = "FrontendDataSetAdmin#FILTER_BY_DROPDOWN",
 			value1 = ${key_option});
 	}
 

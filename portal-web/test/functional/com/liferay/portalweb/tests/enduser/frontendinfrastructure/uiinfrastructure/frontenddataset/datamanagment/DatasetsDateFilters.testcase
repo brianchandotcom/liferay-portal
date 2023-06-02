@@ -65,9 +65,7 @@ definition {
 		}
 
 		task ("And adds 'dateCreated' to the filter") {
-			Type(
-				locator1 = "FrontendDataSetAdmin#FILTER_BY_DROPDOWN",
-				value1 = "dateCreated");
+			FrontendDataSet.chooseOptionNewFilterDropdown(key_option = "dateCreated");
 		}
 
 		task ("Then 'From' field is present") {
@@ -97,9 +95,7 @@ definition {
 		}
 
 		task ("And adds 'dateCreated' to the filter") {
-			Type(
-				locator1 = "FrontendDataSetAdmin#FILTER_BY_DROPDOWN",
-				value1 = "dateCreated");
+			FrontendDataSet.chooseOptionNewFilterDropdown(key_option = "dateCreated");
 		}
 
 		task ("And clicks on From field datepicker") {
@@ -145,9 +141,7 @@ definition {
 		}
 
 		task ("And adds 'dateCreated' to the filter") {
-			Type(
-				locator1 = "FrontendDataSetAdmin#FILTER_BY_DROPDOWN",
-				value1 = "dateCreated");
+			FrontendDataSet.chooseOptionNewFilterDropdown(key_option = "dateCreated");
 		}
 
 		task ("Then the default value is 'YYYY-MM-DD' in 'From' field") {
@@ -179,9 +173,7 @@ definition {
 		}
 
 		task ("And adds 'dateCreated' to the filter") {
-			Type(
-				locator1 = "FrontendDataSetAdmin#FILTER_BY_DROPDOWN",
-				value1 = "dateCreated");
+			FrontendDataSet.chooseOptionNewFilterDropdown(key_option = "dateCreated");
 		}
 
 		task ("And selects a date on From field") {
@@ -215,9 +207,7 @@ definition {
 		}
 
 		task ("And adds 'dateCreated' to the filter") {
-			Type(
-				locator1 = "FrontendDataSetAdmin#FILTER_BY_DROPDOWN",
-				value1 = "dateCreated");
+			FrontendDataSet.chooseOptionNewFilterDropdown(key_option = "dateCreated");
 		}
 
 		task ("And selects a date on From field") {
@@ -232,11 +222,11 @@ definition {
 			AssertVisible(locator1 = "FrontendDataSetAdmin#NEW_FILTER_INVALID_DATE");
 		}
 
-		task("When the user tries to save the date filter") {
+		task ("When the user tries to save the date filter") {
 			Click(locator1 = "FrontendDataSetAdmin#NEW_FILTER_SAVE_BUTTON");
 		}
 
-		task("Then assert it's not possible to save a date filter with an invalid date range") {
+		task ("Then assert it's not possible to save a date filter with an invalid date range") {
 			Alert.viewRequestFailedToComplete();
 		}
 	}
@@ -255,9 +245,7 @@ definition {
 		}
 
 		task ("And adds dateCreated to the filter") {
-			Type(
-				locator1 = "FrontendDataSetAdmin#FILTER_BY_DROPDOWN",
-				value1 = "dateCreated");
+			FrontendDataSet.chooseOptionNewFilterDropdown(key_option = "dateCreated");
 		}
 
 		task ("And selects a date on From field") {

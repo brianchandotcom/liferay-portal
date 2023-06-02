@@ -648,7 +648,5 @@ upgrade.database.auto.run=false</echo>
 			file.suffix.bat="${file.suffix.bat}"
 			expect.file="execute-all-pending-upgrades-from-gogo-shell.expect"
 		/>
-
-		<clean-database-upgrade-client />
 	</target>
 </project>

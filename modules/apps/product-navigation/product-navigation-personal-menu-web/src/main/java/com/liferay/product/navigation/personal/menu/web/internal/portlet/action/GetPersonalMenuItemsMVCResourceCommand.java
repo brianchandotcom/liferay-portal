@@ -147,6 +147,8 @@ public class GetPersonalMenuItemsMVCResourceCommand
 
 		JSONArray jsonArray = JSONUtil.put(
 			JSONUtil.put(
+				"data-senna-off", true
+			).put(
 				"href", realUserURL
 			).put(
 				"label",

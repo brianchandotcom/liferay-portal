@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
-import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -59,6 +58,7 @@ import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -539,21 +539,13 @@ public class EditFragmentEntryDisplayContext {
 				() -> {
 					FragmentEntry fragmentEntry = getFragmentEntry();
 
-					LiferayPortletURL renderFragmentEntryURL =
-						(LiferayPortletURL)_renderResponse.createResourceURL();
-
-					renderFragmentEntryURL.setResourceID(
-						"/fragment/render_fragment_entry");
-					renderFragmentEntryURL.setParameter(
-						"fragmentEntryId",
-						String.valueOf(fragmentEntry.getFragmentEntryId()));
-					renderFragmentEntryURL.setParameter(
+					return HttpComponentsUtil.addParameters(
+						_themeDisplay.getPathMain() +
+							"/portal/fragment/render_fragment_entry",
+						"groupId", _themeDisplay.getScopeGroupId(),
+						"fragmentEntryId", fragmentEntry.getFragmentEntryId(),
 						"fragmentEntryKey",
 						fragmentEntry.getFragmentEntryKey());
-					renderFragmentEntryURL.setWindowState(
-						LiferayWindowState.POP_UP);
-
-					return renderFragmentEntryURL.toString();
 				}
 			).build()
 		).build();

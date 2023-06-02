@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Portal Tools DB Partition Virtual Instance Migration
-Bundle-SymbolicName: com.liferay.portal.tools.db.partition.virtual.instance.migration
-Bundle-Version: 1.0.0
-Main-Class: com.liferay.portal.tools.db.partition.virtual.instance.migration.VirtualInstanceMigration

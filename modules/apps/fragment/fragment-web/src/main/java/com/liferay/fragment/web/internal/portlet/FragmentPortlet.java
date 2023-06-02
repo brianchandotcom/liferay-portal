@@ -17,6 +17,7 @@ package com.liferay.fragment.web.internal.portlet;
 import com.liferay.fragment.constants.FragmentActionKeys;
 import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
+import com.liferay.fragment.helper.DefaultInputFragmentEntryConfigurationProvider;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.renderer.FragmentRendererController;
@@ -109,6 +110,9 @@ public class FragmentPortlet extends MVCPortlet {
 		}
 
 		renderRequest.setAttribute(
+			DefaultInputFragmentEntryConfigurationProvider.class.getName(),
+			_defaultInputFragmentEntryConfigurationProvider);
+		renderRequest.setAttribute(
 			FragmentWebKeys.FRAGMENT_COLLECTION_CONTRIBUTOR_TRACKER,
 			_fragmentCollectionContributorRegistry);
 		renderRequest.setAttribute(
@@ -180,6 +184,10 @@ public class FragmentPortlet extends MVCPortlet {
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private DefaultInputFragmentEntryConfigurationProvider
+		_defaultInputFragmentEntryConfigurationProvider;
 
 	@Reference
 	private FragmentCollectionContributorRegistry

@@ -838,6 +838,17 @@ definition {
 		}
 	}
 
+	macro assertDownloadedFileContentNotExist {
+		var fileContent = TestCase.getTempFileContent(fileName = ${fileName});
+
+		if (!(contains(${fileContent}, ${downloadedContent}))) {
+			echo("The downloaded file content doesn't contain the specific file content.");
+		}
+		else {
+			fail("The downloaded file content matches the specific file content.");
+		}
+	}
+
 	macro assertFileExtensionFromTempFolder {
 		var downloadedFile = TestCase.getDownloadedTempFileName(fileNamePattern = ${downloadedFile});
 

@@ -184,6 +184,143 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-180465 TC-1 and TC-2. Verify Audit data could be filtered by Site ID and export Audit log with SiteIDs listed in the exported CSV file."
+	@priority = 5
+	test AuditDataCanBeFilteredBySiteID {
+		property custom.properties = "feature.flag.LPS-177194=true";
+		property osgi.module.configuration.file.names = "com.liferay.portal.security.audit.router.configuration.PersistentAuditMessageProcessorConfiguration.config";
+		property osgi.module.configurations = "enabled=B\"true\"";
+		property test.name.skip.portal.instance = "Audit#AuditDataCanBeFilteredBySiteID";
+
+		task ("Given a new Object definition with site scope is created") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "MyObject",
+				objectName = "MyObject",
+				pluralLabelName = "MyObject");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "My Object Field",
+				fieldName = "myObjectField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "MyObject");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectSystemObject(label = "MyObject");
+
+			CreateObject.selectScope(fieldLabel = "Site");
+
+			Check.checkToggleSwitch(locator1 = "ObjectPortlet#VIEW_WIDGET_BUTTON");
+
+			Check.checkToggleSwitch(locator1 = "ObjectPortlet#ENABLE_ENTRY_HISTORY_BUTTON");
+
+			CreateObject.saveObject();
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "MyObject");
+
+			var objectId = JSONObject.getObjectId(objectName = "MyObject");
+		}
+
+		task ("And add object widget to widget page and create a new record on each site") {
+			for (var count : list "A,B") {
+				HeadlessSite.addSite(siteName = "Site ${count}");
+
+				JSONLayout.addPublicLayout(
+					groupName = "Site ${count}",
+					layoutName = "Object Page ${count}");
+
+				Navigator.gotoSitePage(
+					pageName = "Object Page ${count}",
+					siteName = "Site ${count}");
+
+				Portlet.addPG(
+					pageName = "Object Page ${count}",
+					portletName = "MyObject");
+
+				Navigator.gotoSitePage(
+					pageName = "Object Page ${count}",
+					siteName = "Site ${count}");
+
+				LexiconEntry.gotoAdd();
+
+				ObjectPortlet.typeCustomField(
+					customField = "My Object Field",
+					entry = "Test Content ${count}");
+
+				PortletEntry.save();
+
+				Navigator.gotoSitePage(
+					pageName = "Object Page ${count}",
+					siteName = "Site ${count}");
+
+				ObjectPortlet.viewEntry(entry = "Test Content ${count}");
+			}
+
+			var groupId1 = JSONGroupAPI._getGroupIdByName(
+				groupName = "Site A",
+				site = "true");
+			var groupId2 = JSONGroupAPI._getGroupIdByName(
+				groupName = "Site B",
+				site = "true");
+		}
+
+		task ("When you search for SiteID of Site A and export audit events") {
+			Audit.openAuditAdmin();
+
+			var resourceName = "com.liferay.object.model.ObjectDefinition#${objectId}";
+
+			Audit.searchCP(
+				groupId = ${groupId1},
+				match = "All",
+				searchTerm = ${groupId1});
+
+			Audit.exportAuditEvents();
+
+			AssertConfirm.assertConfirmationNoError(value1 = "Warning: This CSV file contains user supplied inputs. Opening a CSV file in a spreadsheet program may be dangerous.");
+
+			DownloadTempFile();
+
+			DMDocument.assertFileNameFromTempFolder(fileName = "audit_events.csv");
+		}
+
+		task ("Then verify that only Site A related entry is returning to the result table") {
+			AssertTextEquals(
+				key_resourceAction = "ADD",
+				key_resourceName = ${resourceName},
+				locator1 = "AuditReports#REPORTS_TABLE_RESOURCE_ACTION",
+				value1 = "ADD");
+
+			AssertElementNotPresent(
+				key_resourceAction = "ADD",
+				locator1 = "AuditReports#REPORTS_TABLE_RESOURCE_ACTION_2");
+
+			Audit.viewAuditDetails(
+				additionalInformation = "myObjectField,Test Content",
+				groupId = ${groupId1},
+				key_resourceAction = "ADD",
+				key_resourceName = "ObjectDefinition#${objectId}",
+				resourceAction = "ADD",
+				resourceName = "ObjectDefinition#${objectId}",
+				userName = "Test Test");
+		}
+
+		task ("And verify it only contains Site A related entry in the exported CSV log file") {
+			var fileContent = TestCase.getTempFileContent(fileName = "audit_events.csv");
+
+			echo(${fileContent});
+
+			DMDocument.assertDownloadedFileContent(
+				downloadedContent = ${groupId1},
+				fileName = "audit_events.csv");
+
+			DMDocument.assertDownloadedFileContentNotExist(
+				downloadedContent = ${groupId2},
+				fileName = "audit_events.csv");
+		}
+	}
+
 	@description = "This is a use case for LPS-174421 TC-1. Verify that the user is able to export the filtered audit data as a CSV format file."
 	@priority = 5
 	test CanExportCSVFilteredAuditDataFile {

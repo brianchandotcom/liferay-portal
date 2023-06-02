@@ -16,6 +16,7 @@ package com.liferay.item.selector.web.internal;
 
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
 import com.liferay.item.selector.TableItemView;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchEntry;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.taglib.search.StatusSearchEntry;
@@ -88,6 +89,9 @@ public class DefaultTableItemView implements TableItemView {
 						locale,
 						System.currentTimeMillis() - modifiedDate.getTime(),
 						true)));
+		}
+		else {
+			modifiedDateSearchEntry.setName(StringPool.BLANK);
 		}
 
 		searchEntries.add(modifiedDateSearchEntry);

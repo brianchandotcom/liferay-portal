@@ -8,8 +8,8 @@ definition {
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "Site Initializer Testray";
 
-	var caseType = "Case Type 1";
 	var caseName = "Case 1";
+	var caseType = "Case Type 1";
 	var componentName = "Component 1";
 	var projectName = "Project 1";
 	var teamName = "Team 1";

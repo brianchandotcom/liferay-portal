@@ -15,7 +15,6 @@ definition {
 	var productVersion = "1.2";
 	var projectName = "Project 1";
 	var routineName = "Routine 1";
-	var suiteName = "Suite 1";
 	var teamName = "Team 1";
 	var testSiteName = "Testray 2";
 

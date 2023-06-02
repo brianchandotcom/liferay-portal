@@ -114,7 +114,7 @@ class SegmentEditor extends React.Component<ISegmentEditorProps> {
 			criteriaString: buildQueryString([criteria]),
 			description: '',
 			includeAnonymousUsers,
-			name,
+			name: name.trim(),
 			segmentType: SegmentTypes.Dynamic
 		};
 

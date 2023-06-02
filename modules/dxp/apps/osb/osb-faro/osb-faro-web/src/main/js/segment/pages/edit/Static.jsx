@@ -40,7 +40,7 @@ export class StaticSegmentEdit extends React.Component {
 	createStaticSegment(form) {
 		return this.updateSegment({
 			changeset: this.state.changeset,
-			name: form.name,
+			name: form.name.trim(),
 			segmentType: SegmentTypes.Static
 		});
 	}

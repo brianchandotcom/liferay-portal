@@ -22,6 +22,7 @@ import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.persistence.ExpandoRowPersistence;
 import com.liferay.expando.kernel.service.persistence.ExpandoValuePersistence;
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.Validator;
@@ -33,6 +34,7 @@ import java.util.List;
  * @author Raymond Augé
  * @author Brian Wing Shun Chan
  */
+@CTAware(onProduction = true)
 public class ExpandoTableLocalServiceImpl
 	extends ExpandoTableLocalServiceBaseImpl {
 

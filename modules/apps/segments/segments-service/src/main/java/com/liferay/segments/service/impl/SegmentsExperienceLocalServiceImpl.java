@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -694,9 +693,6 @@ public class SegmentsExperienceLocalServiceImpl
 					" already exists");
 		}
 	}
-
-	@Reference
-	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
 	private Language _language;

@@ -183,6 +183,14 @@ public class QuestionsPortlet extends MVCPortlet {
 		renderRequest.setAttribute(
 			QuestionsWebKeys.TRUSTED_USER, _isTrustedUser(renderRequest));
 
+		PermissionChecker permissionChecker =
+			themeDisplay.getPermissionChecker();
+
+		renderRequest.setAttribute(
+			QuestionsWebKeys.CONTENT_REVIEWER_USER,
+			permissionChecker.isContentReviewer(
+				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId()));
+
 		super.doView(renderRequest, renderResponse);
 	}
 

@@ -14,9 +14,10 @@
 
 package com.liferay.portal.tools.db.partition.virtual.instance.migrator.internal.util;
 
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.tools.db.partition.virtual.instance.migrator.internal.recorder.Recorder;
 import com.liferay.portal.tools.db.partition.virtual.instance.migrator.internal.release.Release;
-import com.liferay.portal.kernel.version.Version;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -152,7 +153,8 @@ public class Validator {
 
 		if (!failedServletContextNames.isEmpty()) {
 			recorder.registerErrors(
-				failedServletContextNames, message.replace("?", "source"));
+				failedServletContextNames,
+				StringUtil.replace(message, '?', "source"));
 		}
 
 		failedServletContextNames = DatabaseUtil.getFailedServletContextNames(
@@ -160,7 +162,8 @@ public class Validator {
 
 		if (!failedServletContextNames.isEmpty()) {
 			recorder.registerErrors(
-				failedServletContextNames, message.replace("?", "destination"));
+				failedServletContextNames,
+				StringUtil.replace(message, '?', "destination"));
 		}
 	}
 

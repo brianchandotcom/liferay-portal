@@ -19,15 +19,12 @@ import com.liferay.oauth2.provider.scope.liferay.spi.ApplicationDescriptorLocato
 import com.liferay.oauth2.provider.scope.spi.application.descriptor.ApplicationDescriptor;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.osgi.util.service.Snapshot;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Tomas Polesovsky
@@ -44,7 +41,7 @@ public class ApplicationDescriptorLocatorImpl
 			_serviceTrackerMap.getService(applicationName);
 
 		if (applicationDescriptor == null) {
-			return _defaultApplicationDescriptor;
+			return _defaultApplicationDescriptorSnapshot.get();
 		}
 
 		return applicationDescriptor;
@@ -62,12 +59,10 @@ public class ApplicationDescriptorLocatorImpl
 		_serviceTrackerMap.close();
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY, target = "(default=true)"
-	)
-	private volatile ApplicationDescriptor _defaultApplicationDescriptor;
+	private static final Snapshot<ApplicationDescriptor>
+		_defaultApplicationDescriptorSnapshot = new Snapshot<>(
+			ApplicationDescriptorLocatorImpl.class, ApplicationDescriptor.class,
+			"(default=true)", true);
 
 	private ServiceTrackerMap<String, ApplicationDescriptor> _serviceTrackerMap;
 

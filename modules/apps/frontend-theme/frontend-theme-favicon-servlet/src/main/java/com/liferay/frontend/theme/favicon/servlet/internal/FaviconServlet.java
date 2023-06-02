@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
 		"osgi.http.whiteboard.servlet.name=com.liferay.frontend.theme.favicon.servlet.internal.FaviconServlet",
 		"osgi.http.whiteboard.servlet.pattern=/favicon/*"
 	},
-	service = {FaviconServlet.class, Servlet.class}
+	service = Servlet.class
 )
 public class FaviconServlet extends HttpServlet {
 

@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
 		"osgi.http.whiteboard.servlet.pattern=/js/resolved-module/*",
 		"service.ranking:Integer=" + (Integer.MAX_VALUE - 1000)
 	},
-	service = {BuiltInJSResolvedModuleServlet.class, Servlet.class}
+	service = Servlet.class
 )
 public class BuiltInJSResolvedModuleServlet extends BaseBuiltInJSModuleServlet {
 

@@ -46,6 +46,63 @@ components:
                 status:
                     $ref: "#/components/schemas/Status"
                     readOnly: true
+            type: object
+        CTEntry:
+            properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
+                changeType:
+                    format: int32
+                    readOnly: true
+                    type: integer
+                ctCollectionId:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                dateCreated:
+                    format: date-time
+                    readOnly: true
+                    type: string
+                dateModified:
+                    format: date-time
+                    readOnly: true
+                    type: string
+                hideable:
+                    readOnly: true
+                    type: boolean
+                id:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                modelClassNameId:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                modelClassPK:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                ownerName:
+                    readOnly: true
+                    type: string
+                siteName:
+                    readOnly: true
+                    type: string
+                status:
+                    $ref: "#/components/schemas/Status"
+                    readOnly: true
+                title:
+                    readOnly: true
+                    type: string
+                typeName:
+                    readOnly: true
+                    type: string
+            type: object
         Status:
             properties:
                 code:
@@ -232,6 +289,49 @@ paths:
                         application/json: {}
                         application/xml: {}
             tags: ["CTCollection"]
+    "/ct-collections/{id}/ct-entries":
+        get:
+            operationId: getCTCollectionCTEntriesPage
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  schema:
+                      type: string
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/CTEntry"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/CTEntry"
+                                type: array
+            tags: ["CTEntry"]
     "/ct-collections/{id}/publish":
         post:
             operationId: postCTCollectionPublish
@@ -270,3 +370,23 @@ paths:
                         application/json: {}
                         application/xml: {}
             tags: ["CTCollection"]
+    "/ct-entries/{id}":
+        get:
+            operationId: getCTEntry
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/CTEntry"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/CTEntry"
+            tags: ["CTEntry"]

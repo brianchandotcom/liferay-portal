@@ -1,0 +1,48 @@
+{
+	"@generated": "6d1a8e2def663eb983b07e8d4ecb584f9e51e90d",
+	"@overrides": {
+	},
+	"@readonly": "** AUTO-GENERATED: DO NOT EDIT OUTSIDE @overrides **",
+	"@see": "https://git.io/JY2EA",
+	"compilerOptions": {
+		"allowSyntheticDefaultImports": true,
+		"baseUrl": ".",
+		"composite": true,
+		"jsx": "react",
+		"module": "es6",
+		"moduleResolution": "node",
+		"outDir": "./types",
+		"paths": {
+			"@liferay/frontend-data-set-web": [
+				"../../../frontend-data-set/frontend-data-set-web/src/main/resources/META-INF/resources/index.d.ts"
+			],
+			"frontend-js-web": [
+				"../../../frontend-js/frontend-js-web/src/main/resources/META-INF/resources/index.d.ts"
+			]
+		},
+		"sourceMap": false,
+		"strict": true,
+		"target": "es6",
+		"tsBuildInfoFile": "tmp/tsconfig.tsbuildinfo",
+		"typeRoots": [
+			"../../../../node_modules/@types",
+			"./node_modules/@types"
+		]
+	},
+	"exclude": [
+		"test/**/*",
+		"**/__tests__/**"
+	],
+	"include": [
+		"src/**/*",
+		"../../../../global.d.ts"
+	],
+	"references": [
+		{
+			"path": "../../../frontend-data-set/frontend-data-set-web"
+		},
+		{
+			"path": "../../../frontend-js/frontend-js-web"
+		}
+	]
+}

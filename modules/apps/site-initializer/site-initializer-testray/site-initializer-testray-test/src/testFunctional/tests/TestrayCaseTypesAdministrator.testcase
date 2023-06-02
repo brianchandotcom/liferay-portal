@@ -27,7 +27,9 @@ definition {
 	}
 
 	tearDown {
-		Testray.testrayApisTearDown();
+		task ("Delete Testray Site and Client Extensions") {
+			Testray.testrayApisTearDown();
+		}
 
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 

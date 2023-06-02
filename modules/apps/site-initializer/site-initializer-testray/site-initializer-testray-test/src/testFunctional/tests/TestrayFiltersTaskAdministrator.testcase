@@ -168,43 +168,45 @@ definition {
 	}
 
 	tearDown {
-		JSONTestrayAPI.deleteObjectViaAPI(
-			object = "subtasks",
-			objectName = "Subtask_1");
+		task ("Delete task, routine, component, case type, factor category and project via API, Testray Site and Client Extensions") {
+			JSONTestrayAPI.deleteObjectViaAPI(
+				object = "subtasks",
+				objectName = "Subtask_1");
 
-		JSONTestrayAPI.deleteObjectViaAPI(
-			object = "subtasks",
-			objectName = "Subtask_2");
+			JSONTestrayAPI.deleteObjectViaAPI(
+				object = "subtasks",
+				objectName = "Subtask_2");
 
-		JSONTestrayAPI.deleteObjectViaAPI(
-			object = "tasks",
-			objectName = ${taskName});
+			JSONTestrayAPI.deleteObjectViaAPI(
+				object = "tasks",
+				objectName = ${taskName});
 
-		JSONTestrayAPI.deleteObjectViaAPI(
-			object = "tasks",
-			objectName = "Task_2");
+			JSONTestrayAPI.deleteObjectViaAPI(
+				object = "tasks",
+				objectName = "Task_2");
 
-		JSONTestrayAPI.deleteObjectViaAPI(
-			object = "routines",
-			objectName = ${routineName});
+			JSONTestrayAPI.deleteObjectViaAPI(
+				object = "routines",
+				objectName = ${routineName});
 
-		JSONTestrayAPI.deleteObjectViaAPI(
-			object = "routines",
-			objectName = "Routine 2");
+			JSONTestrayAPI.deleteObjectViaAPI(
+				object = "routines",
+				objectName = "Routine 2");
 
-		JSONTestrayAPI.deleteObjectViaAPI(
-			object = "casetypes",
-			objectName = ${caseType});
+			JSONTestrayAPI.deleteObjectViaAPI(
+				object = "casetypes",
+				objectName = ${caseType});
 
-		JSONTestrayAPI.deleteObjectViaAPI(
-			object = "factorcategories",
-			objectName = "Category 1");
+			JSONTestrayAPI.deleteObjectViaAPI(
+				object = "factorcategories",
+				objectName = "Category 1");
 
-		JSONTestrayAPI.deleteProject(projectName = ${projectName});
+			JSONTestrayAPI.deleteProject(projectName = ${projectName});
 
-		JSONTestrayAPI.deleteProject(projectName = "Project 2");
+			JSONTestrayAPI.deleteProject(projectName = "Project 2");
 
-		Testray.testrayApisTearDown();
+			Testray.testrayApisTearDown();
+		}
 
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 

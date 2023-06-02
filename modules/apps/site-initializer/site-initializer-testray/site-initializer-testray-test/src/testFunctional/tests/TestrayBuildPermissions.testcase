@@ -80,7 +80,7 @@ definition {
 				userLoginFullName = "test test");
 		}
 
-		task ("Delete case type, factor categorie and project, Testray Site and Client Extensions") {
+		task ("Delete case type, factor categorie and project via API, Testray Site and Client Extensions") {
 			JSONTestrayAPI.deleteObjectViaAPI(
 				object = "casetypes",
 				objectName = ${caseType});
@@ -91,11 +91,7 @@ definition {
 
 			JSONTestrayAPI.deleteProject(projectName = ${projectName});
 
-			Testray.tearDownCP();
-
-			ClientExtensionGeneral.goToRemoteAppsPortlet();
-
-			ClientExtensionGeneral.deleteRemoteApp(tableEntry = "Testray");
+			Testray.testrayApisTearDown();
 		}
 
 		var testPortalInstance = PropsUtil.get("test.portal.instance");

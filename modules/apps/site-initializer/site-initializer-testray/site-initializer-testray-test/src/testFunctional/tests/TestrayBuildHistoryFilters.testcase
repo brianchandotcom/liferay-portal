@@ -94,23 +94,25 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		task ("Delete routine, case type, factor categorie and project via API, Testray Site and Client Extensions") {
+			var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		JSONTestrayAPI.deleteObjectViaAPI(
-			object = "routines",
-			objectName = ${routineName});
+			JSONTestrayAPI.deleteObjectViaAPI(
+				object = "routines",
+				objectName = ${routineName});
 
-		JSONTestrayAPI.deleteObjectViaAPI(
-			object = "casetypes",
-			objectName = ${caseType});
+			JSONTestrayAPI.deleteObjectViaAPI(
+				object = "casetypes",
+				objectName = ${caseType});
 
-		JSONTestrayAPI.deleteObjectViaAPI(
-			object = "factorcategories",
-			objectName = "Category 1");
+			JSONTestrayAPI.deleteObjectViaAPI(
+				object = "factorcategories",
+				objectName = "Category 1");
 
-		JSONTestrayAPI.deleteProject(projectName = ${projectName});
+			JSONTestrayAPI.deleteProject(projectName = ${projectName});
 
-		Testray.testrayApisTearDown();
+			Testray.testrayApisTearDown();
+		}
 
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();

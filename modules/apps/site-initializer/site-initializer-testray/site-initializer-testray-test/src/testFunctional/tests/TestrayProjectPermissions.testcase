@@ -39,7 +39,7 @@ definition {
 				userLoginFullName = "test test");
 		}
 
-		task ("Delete all objects, Testray Site and Client Extensions") {
+		task ("Delete project, Testray Site and Client Extensions") {
 			JSONTestrayAPI.deleteProject(projectName = ${projectName});
 
 			Testray.testrayApisTearDown();

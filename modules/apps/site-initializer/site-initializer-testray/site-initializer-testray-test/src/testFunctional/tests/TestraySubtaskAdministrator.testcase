@@ -130,35 +130,39 @@ definition {
 	}
 
 	tearDown {
-		JSONTestrayAPI.deleteObjectViaAPI(
-			object = "subtasks",
-			objectName = "Subtask_1");
+		task ("Delete subtask, task, routine, case type, factor category and project via API") {
+			JSONTestrayAPI.deleteObjectViaAPI(
+				object = "subtasks",
+				objectName = "Subtask_1");
 
-		JSONTestrayAPI.deleteObjectViaAPI(
-			object = "subtasks",
-			objectName = "Subtask_2");
+			JSONTestrayAPI.deleteObjectViaAPI(
+				object = "subtasks",
+				objectName = "Subtask_2");
 
-		JSONTestrayAPI.deleteObjectViaAPI(
-			object = "tasks",
-			objectName = ${taskName});
+			JSONTestrayAPI.deleteObjectViaAPI(
+				object = "tasks",
+				objectName = ${taskName});
 
-		JSONTestrayAPI.deleteObjectViaAPI(
-			object = "routines",
-			objectName = ${routineName});
+			JSONTestrayAPI.deleteObjectViaAPI(
+				object = "routines",
+				objectName = ${routineName});
 
-		JSONTestrayAPI.deleteObjectViaAPI(
-			object = "casetypes",
-			objectName = ${caseType});
+			JSONTestrayAPI.deleteObjectViaAPI(
+				object = "casetypes",
+				objectName = ${caseType});
 
-		JSONTestrayAPI.deleteObjectViaAPI(
-			object = "factorcategories",
-			objectName = "Category 1");
+			JSONTestrayAPI.deleteObjectViaAPI(
+				object = "factorcategories",
+				objectName = "Category 1");
 
-		JSONTestrayAPI.deleteProject(projectName = ${projectName});
+			JSONTestrayAPI.deleteProject(projectName = ${projectName});
+		}
 
-		JSONUser.deleteUserByEmailAddress(userEmailAddress = "user@liferay.com");
+		task ("Delete user via API, Testray Site and Client Extensions") {
+			JSONUser.deleteUserByEmailAddress(userEmailAddress = "user@liferay.com");
 
-		Testray.testrayApisTearDown();
+			Testray.testrayApisTearDown();
+		}
 
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 

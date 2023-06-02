@@ -38,9 +38,11 @@ definition {
 	}
 
 	tearDown {
-		JSONUser.deleteUserByEmailAddress(userEmailAddress = "user@liferay.com");
+		task ("Delete user via API, Testray Site and Client Extensions") {
+			JSONUser.deleteUserByEmailAddress(userEmailAddress = "user@liferay.com");
 
-		Testray.testrayApisTearDown();
+			Testray.testrayApisTearDown();
+		}
 
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 

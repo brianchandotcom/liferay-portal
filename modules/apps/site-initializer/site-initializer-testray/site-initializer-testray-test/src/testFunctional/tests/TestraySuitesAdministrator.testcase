@@ -38,9 +38,11 @@ definition {
 	}
 
 	tearDown {
-		JSONTestrayAPI.deleteProject(projectName = ${projectName});
+		task ("Delete project via API, Testray Site and Client Extensions") {
+			JSONTestrayAPI.deleteProject(projectName = ${projectName});
 
-		Testray.testrayApisTearDown();
+			Testray.testrayApisTearDown();
+		}
 
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 

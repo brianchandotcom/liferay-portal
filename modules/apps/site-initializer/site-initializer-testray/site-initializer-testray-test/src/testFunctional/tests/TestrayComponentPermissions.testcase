@@ -50,14 +50,10 @@ definition {
 				userLoginFullName = "test test");
 		}
 
-		task ("Delete all objects, Testray Site and Client Extensions") {
+		task ("Delete project via API, Testray Site and Client Extensions") {
 			JSONTestrayAPI.deleteProject(projectName = ${projectName});
 
-			Testray.tearDownCP();
-
-			ClientExtensionGeneral.goToRemoteAppsPortlet();
-
-			ClientExtensionGeneral.deleteRemoteApp(tableEntry = "Testray");
+			Testray.testrayApisTearDown();
 		}
 
 		var testPortalInstance = PropsUtil.get("test.portal.instance");

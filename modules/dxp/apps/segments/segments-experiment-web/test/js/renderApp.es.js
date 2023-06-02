@@ -71,12 +71,12 @@ const _runExperimentMockGenerator = (segmentsExperiment) => ({status}) =>
 	});
 
 export default function renderApp({
-	plid = '',
+	APIService = {},
 	initialGoals = segmentsGoals,
 	initialExperimentHistory = [],
 	initialSegmentsExperiment,
 	initialSegmentsVariants = [],
-	APIService = {},
+	plid = '',
 	selectedSegmentsExperienceId,
 	type = 'content',
 	winnerSegmentsVariantId = null,

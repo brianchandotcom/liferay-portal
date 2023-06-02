@@ -143,8 +143,7 @@ public class FriendlyURLServlet extends HttpServlet {
 			}
 
 			redirectProviderRedirect = _getRedirectProviderRedirect(
-				group.getGroupId(), httpServletRequest, layoutFriendlyURL,
-				_redirectProviderSnapshot.get());
+				group.getGroupId(), httpServletRequest, layoutFriendlyURL);
 
 			if ((redirectProviderRedirect != null) &&
 				!_isSkipRedirect(httpServletRequest)) {
@@ -839,7 +838,9 @@ public class FriendlyURLServlet extends HttpServlet {
 
 	private Redirect _getRedirectProviderRedirect(
 		long groupId, HttpServletRequest httpServletRequest,
-		String layoutFriendlyURL, RedirectProvider redirectProvider) {
+		String layoutFriendlyURL) {
+
+		RedirectProvider redirectProvider = _redirectProviderSnapshot.get();
 
 		if ((redirectProvider == null) ||
 			LiferayWindowState.isExclusive(httpServletRequest) ||

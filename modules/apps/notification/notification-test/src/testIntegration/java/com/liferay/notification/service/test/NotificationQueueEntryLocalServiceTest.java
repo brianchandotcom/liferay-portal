@@ -25,6 +25,7 @@ import com.liferay.notification.model.NotificationRecipient;
 import com.liferay.notification.model.NotificationRecipientSetting;
 import com.liferay.notification.service.NotificationQueueEntryLocalService;
 import com.liferay.notification.service.test.util.NotificationTemplateUtil;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -57,7 +58,7 @@ public class NotificationQueueEntryLocalServiceTest {
 		new LiferayIntegrationTestRule();
 
 	@BeforeClass
-	public static void setUpClass() throws Exception {
+	public static void setUpClass() {
 		_notificationRecipientSettings = Arrays.asList(
 			NotificationTemplateUtil.createNotificationRecipientSetting(
 				"bcc", "bcc@liferay.com"),
@@ -79,88 +80,44 @@ public class NotificationQueueEntryLocalServiceTest {
 			_notificationQueueEntryLocalService.
 				getNotificationQueueEntriesCount());
 
-		try {
-			_notificationQueueEntryLocalService.addNotificationQueueEntry(
-				NotificationTemplateUtil.createNotificationContext(
-					Arrays.asList(
-						NotificationTemplateUtil.
-							createNotificationRecipientSetting(
-								"fromName", "From name"),
-						NotificationTemplateUtil.
-							createNotificationRecipientSetting(
-								"to", "to@liferay.com")),
-					NotificationConstants.TYPE_EMAIL));
+		_assertFailure(
+			NotificationRecipientSettingValueException.FromMustNotBeNull.class,
+			"From is null",
+			() -> _addNotificationQueueEntry(
+				Arrays.asList(
+					NotificationTemplateUtil.createNotificationRecipientSetting(
+						"fromName", "From name"),
+					NotificationTemplateUtil.createNotificationRecipientSetting(
+						"to", "to@liferay.com"))));
 
-			Assert.fail();
-		}
-		catch (NotificationRecipientSettingValueException.FromMustNotBeNull
-					notificationRecipientSettingValueException) {
-
-			Assert.assertEquals(
-				"From is null",
-				notificationRecipientSettingValueException.getMessage());
-		}
-
-		try {
-			_notificationQueueEntryLocalService.addNotificationQueueEntry(
-				NotificationTemplateUtil.createNotificationContext(
-					Arrays.asList(
-						NotificationTemplateUtil.
-							createNotificationRecipientSetting(
-								"from", "from@liferay.com"),
-						NotificationTemplateUtil.
-							createNotificationRecipientSetting(
-								"to", "to@liferay.com")),
-					NotificationConstants.TYPE_EMAIL));
-
-			Assert.fail();
-		}
-		catch (NotificationRecipientSettingValueException.FromNameMustNotBeNull
-					notificationRecipientSettingValueException) {
-
-			Assert.assertEquals(
-				"From name is null",
-				notificationRecipientSettingValueException.getMessage());
-		}
+		_assertFailure(
+			NotificationRecipientSettingValueException.FromNameMustNotBeNull.
+				class,
+			"From name is null",
+			() -> _addNotificationQueueEntry(
+				Arrays.asList(
+					NotificationTemplateUtil.createNotificationRecipientSetting(
+						"from", "from@liferay.com"),
+					NotificationTemplateUtil.createNotificationRecipientSetting(
+						"to", "to@liferay.com"))));
 
 		User user = TestPropsValues.getUser();
 
-		try {
-			_notificationQueueEntryLocalService.addNotificationQueueEntry(
+		_assertFailure(
+			NotificationQueueEntrySubjectException.class, "Subject is null",
+			() -> _notificationQueueEntryLocalService.addNotificationQueueEntry(
 				NotificationTemplateUtil.createNotificationContext(
-					user, null, null, null, NotificationConstants.TYPE_EMAIL));
+					user, null, null, null, NotificationConstants.TYPE_EMAIL)));
 
-			Assert.fail();
-		}
-		catch (NotificationQueueEntrySubjectException
-					notificationQueueEntrySubjectException) {
-
-			Assert.assertEquals(
-				"Subject is null",
-				notificationQueueEntrySubjectException.getMessage());
-		}
-
-		try {
-			_notificationQueueEntryLocalService.addNotificationQueueEntry(
-				NotificationTemplateUtil.createNotificationContext(
-					Arrays.asList(
-						NotificationTemplateUtil.
-							createNotificationRecipientSetting(
-								"from", "from@liferay.com"),
-						NotificationTemplateUtil.
-							createNotificationRecipientSetting(
-								"fromName", "From Name")),
-					NotificationConstants.TYPE_EMAIL));
-
-			Assert.fail();
-		}
-		catch (NotificationRecipientSettingValueException.ToMustNotBeNull
-					notificationRecipientSettingValueException) {
-
-			Assert.assertEquals(
-				"To is null",
-				notificationRecipientSettingValueException.getMessage());
-		}
+		_assertFailure(
+			NotificationRecipientSettingValueException.ToMustNotBeNull.class,
+			"To is null",
+			() -> _addNotificationQueueEntry(
+				Arrays.asList(
+					NotificationTemplateUtil.createNotificationRecipientSetting(
+						"from", "from@liferay.com"),
+					NotificationTemplateUtil.createNotificationRecipientSetting(
+						"fromName", "From Name"))));
 
 		String body = StringUtil.randomString();
 		String subject = StringUtil.randomString();
@@ -205,7 +162,7 @@ public class NotificationQueueEntryLocalServiceTest {
 	@Test
 	public void testDeleteNotificationQueueEntry() throws Exception {
 		NotificationQueueEntry notificationQueueEntry =
-			_addNotificationQueueEntry();
+			_addNotificationQueueEntry(_notificationRecipientSettings);
 
 		_notificationQueueEntryLocalService.deleteNotificationQueueEntry(
 			notificationQueueEntry.getNotificationQueueEntryId());
@@ -219,54 +176,61 @@ public class NotificationQueueEntryLocalServiceTest {
 	@Test
 	public void testResendNotificationQueueEntry() throws Exception {
 		NotificationQueueEntry notificationQueueEntry =
-			_addNotificationQueueEntry();
+			_addNotificationQueueEntry(_notificationRecipientSettings);
 
-		notificationQueueEntry =
-			_notificationQueueEntryLocalService.updateStatus(
-				notificationQueueEntry.getNotificationQueueEntryId(),
-				NotificationQueueEntryConstants.STATUS_SENT);
+		long notificationQueueEntryId =
+			notificationQueueEntry.getNotificationQueueEntryId();
 
-		try {
-			_notificationQueueEntryLocalService.resendNotificationQueueEntry(
-				notificationQueueEntry.getNotificationQueueEntryId());
+		_notificationQueueEntryLocalService.updateStatus(
+			notificationQueueEntryId,
+			NotificationQueueEntryConstants.STATUS_SENT);
 
-			Assert.fail();
-		}
-		catch (NotificationQueueEntryStatusException
-					notificationQueueEntryStatusException) {
+		_assertFailure(
+			NotificationQueueEntryStatusException.class,
+			"Notification queue entry " + notificationQueueEntryId +
+				" has already been sent",
+			() ->
+				_notificationQueueEntryLocalService.
+					resendNotificationQueueEntry(notificationQueueEntryId));
 
-			Assert.assertEquals(
-				"Notification queue entry " +
-					notificationQueueEntry.getNotificationQueueEntryId() +
-						" has already been sent",
-				notificationQueueEntryStatusException.getMessage());
-		}
-
-		notificationQueueEntry =
-			_notificationQueueEntryLocalService.updateStatus(
-				notificationQueueEntry.getNotificationQueueEntryId(),
-				NotificationQueueEntryConstants.STATUS_FAILED);
-
-		notificationQueueEntry =
-			_notificationQueueEntryLocalService.resendNotificationQueueEntry(
-				notificationQueueEntry.getNotificationQueueEntryId());
-
-		notificationQueueEntry =
-			_notificationQueueEntryLocalService.updateStatus(
-				notificationQueueEntry.getNotificationQueueEntryId(),
-				NotificationQueueEntryConstants.STATUS_UNSENT);
+		_notificationQueueEntryLocalService.updateStatus(
+			notificationQueueEntryId,
+			NotificationQueueEntryConstants.STATUS_FAILED);
 
 		_notificationQueueEntryLocalService.resendNotificationQueueEntry(
-			notificationQueueEntry.getNotificationQueueEntryId());
+			notificationQueueEntryId);
+
+		_notificationQueueEntryLocalService.updateStatus(
+			notificationQueueEntryId,
+			NotificationQueueEntryConstants.STATUS_UNSENT);
+
+		_notificationQueueEntryLocalService.resendNotificationQueueEntry(
+			notificationQueueEntryId);
 	}
 
-	private NotificationQueueEntry _addNotificationQueueEntry()
+	private NotificationQueueEntry _addNotificationQueueEntry(
+			List<NotificationRecipientSetting> notificationRecipientSettings)
 		throws Exception {
 
 		return _notificationQueueEntryLocalService.addNotificationQueueEntry(
 			NotificationTemplateUtil.createNotificationContext(
-				_notificationRecipientSettings,
+				notificationRecipientSettings,
 				NotificationConstants.TYPE_EMAIL));
+	}
+
+	private void _assertFailure(
+		Class<?> clazz, String message,
+		UnsafeSupplier<Object, Exception> unsafeSupplier) {
+
+		try {
+			unsafeSupplier.get();
+
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			Assert.assertTrue(clazz.isInstance(exception));
+			Assert.assertEquals(exception.getMessage(), message);
+		}
 	}
 
 	private static List<NotificationRecipientSetting>

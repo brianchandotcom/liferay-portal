@@ -34,6 +34,13 @@ public class UpgradeJavaExtractTextCheck {
 	public void method() {
 
 		String content = HtmlUtil.extractText(testEntry.getContent());
+		String content2 =
+			HtmlUtil.extractText(testEntry.getContent());
+
+		if(true){
+			String content3 = HtmlUtil.extractText(
+				testEntry.getContent());
+		}
 	}
 
 	@Reference

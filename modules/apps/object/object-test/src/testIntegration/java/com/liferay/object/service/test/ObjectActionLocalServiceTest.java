@@ -37,6 +37,7 @@ import com.liferay.object.exception.ObjectActionLabelException;
 import com.liferay.object.exception.ObjectActionNameException;
 import com.liferay.object.exception.ObjectActionParametersException;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
+import com.liferay.object.field.setting.builder.ObjectFieldSettingBuilder;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
@@ -139,6 +140,18 @@ public class ObjectActionLocalServiceTest {
 		_objectDefinition = ObjectDefinitionTestUtil.addObjectDefinition(
 			false, _objectDefinitionLocalService,
 			Arrays.asList(
+				ObjectFieldUtil.createObjectField(
+					ObjectFieldConstants.BUSINESS_TYPE_DATE_TIME,
+					ObjectFieldConstants.DB_TYPE_DATE_TIME, true, true, null,
+					"Time", "time",
+					Collections.singletonList(
+						new ObjectFieldSettingBuilder(
+						).name(
+							"timeStorage"
+						).value(
+							"useInputAsEntered"
+						).build()),
+					false),
 				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 					ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
@@ -317,6 +330,13 @@ public class ObjectActionLocalServiceTest {
 					"name", "firstName"
 				).put(
 					"value", "Peter"
+				),
+				JSONUtil.put(
+					"inputAsValue", true
+				).put(
+					"name", "time"
+				).put(
+					"value", "2023-06-01 06:42:08.0"
 				)
 			).toString()
 		).build();
@@ -447,12 +467,14 @@ public class ObjectActionLocalServiceTest {
 					objectEntry.getExternalReferenceCode(),
 					objectAction5.getName());
 
+			Map<String, Serializable> values =
+				_objectEntryLocalService.getValues(
+					objectEntry.getObjectEntryId());
+
 			Assert.assertEquals(
-				"Peter",
-				MapUtil.getString(
-					_objectEntryLocalService.getValues(
-						objectEntry.getObjectEntryId()),
-					"firstName"));
+				"Peter", MapUtil.getString(values, "firstName"));
+			Assert.assertEquals(
+				"2023-06-01 06:42:08.0", MapUtil.getString(values, "time"));
 
 			// Delete object entry
 

@@ -49,7 +49,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -116,9 +115,8 @@ public class SaveVariantSegmentsExperienceMVCActionCommandTest {
 
 		SegmentsExperiment segmentsExperiment =
 			_segmentsExperimentLocalService.addSegmentsExperiment(
-				defaultSegmentsExperienceId,
-				_portal.getClassNameId(Layout.class), _layout.getPlid(),
-				"AB test", "A/B test description",
+				defaultSegmentsExperienceId, _layout.getPlid(), "AB test",
+				"A/B test description",
 				SegmentsExperimentConstants.Goal.BOUNCE_RATE.getLabel(),
 				StringPool.BLANK, _serviceContext);
 
@@ -314,9 +312,6 @@ public class SaveVariantSegmentsExperienceMVCActionCommandTest {
 		type = MVCActionCommand.class
 	)
 	private MVCActionCommand _mvcActionCommand;
-
-	@Inject
-	private Portal _portal;
 
 	@Inject
 	private PortletLocalService _portletLocalService;

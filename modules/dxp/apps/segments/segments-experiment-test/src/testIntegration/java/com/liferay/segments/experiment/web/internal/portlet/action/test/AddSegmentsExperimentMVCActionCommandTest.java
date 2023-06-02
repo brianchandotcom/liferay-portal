@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -125,8 +124,6 @@ public class AddSegmentsExperimentMVCActionCommandTest {
 			SegmentsExperiment segmentsExperiment =
 				_segmentsExperimentLocalService.fetchSegmentsExperiment(
 					segmentsExperience.getSegmentsExperienceId(),
-					_classNameLocalService.getClassNameId(
-						Layout.class.getName()),
 					segmentsExperience.getPlid(),
 					new int[] {
 						SegmentsExperimentConstants.Status.DRAFT.getValue()
@@ -199,11 +196,7 @@ public class AddSegmentsExperimentMVCActionCommandTest {
 			WebKeys.THEME_DISPLAY, _getThemeDisplay());
 
 		mockLiferayPortletActionRequest.setParameter(
-			"classNameId",
-			String.valueOf(
-				_classNameLocalService.getClassNameId(Layout.class.getName())));
-		mockLiferayPortletActionRequest.setParameter(
-			"classPK", String.valueOf(segmentsExperience.getPlid()));
+			"plid", String.valueOf(segmentsExperience.getPlid()));
 		mockLiferayPortletActionRequest.setParameter(
 			"description", description);
 		mockLiferayPortletActionRequest.setParameter("goal", goal);
@@ -226,9 +219,6 @@ public class AddSegmentsExperimentMVCActionCommandTest {
 
 		return themeDisplay;
 	}
-
-	@Inject
-	private ClassNameLocalService _classNameLocalService;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

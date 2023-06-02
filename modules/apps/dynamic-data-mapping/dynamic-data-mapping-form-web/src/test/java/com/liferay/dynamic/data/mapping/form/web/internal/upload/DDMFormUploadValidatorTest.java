@@ -18,8 +18,9 @@ import com.liferay.document.library.kernel.exception.FileExtensionException;
 import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.document.library.kernel.exception.InvalidFileException;
 import com.liferay.dynamic.data.mapping.form.web.internal.configuration.DDMFormWebConfiguration;
-import com.liferay.dynamic.data.mapping.form.web.internal.configuration.activator.DDMFormWebConfigurationActivator;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
@@ -37,7 +38,6 @@ import org.mockito.Mockito;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Carolina Barbosa
@@ -49,23 +49,19 @@ public class DDMFormUploadValidatorTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@BeforeClass
-	public static void setUpClass() {
+	public static void setUpClass() throws Exception {
 		_frameworkUtilMockedStatic.when(
 			() -> FrameworkUtil.getBundle(Mockito.any())
 		).thenReturn(
 			_bundleContext.getBundle()
 		);
 
-		_setUpDDMFormWebConfigurationActivator();
+		_setUpConfigurationProvider();
 	}
 
 	@AfterClass
 	public static void tearDownClass() {
 		_frameworkUtilMockedStatic.close();
-
-		if (_serviceRegistration != null) {
-			_serviceRegistration.unregister();
-		}
 	}
 
 	@Test(expected = InvalidFileException.class)
@@ -93,21 +89,19 @@ public class DDMFormUploadValidatorTest {
 		DDMFormUploadValidator.validateFileSize(_mockFile(24), "test.jpg");
 	}
 
-	private static void _setUpDDMFormWebConfigurationActivator() {
-		DDMFormWebConfigurationActivator ddmFormWebConfigurationActivator =
-			new DDMFormWebConfigurationActivator();
-
-		DDMFormWebConfiguration ddmFormWebConfiguration =
+	private static void _setUpConfigurationProvider() throws Exception {
+		Mockito.doReturn(
 			ConfigurableUtil.createConfigurable(
-				DDMFormWebConfiguration.class, new HashMapDictionary<>());
+				DDMFormWebConfiguration.class, new HashMapDictionary<>())
+		).when(
+			_configurationProvider
+		).getCompanyConfiguration(
+			Mockito.any(Class.class), Mockito.anyLong()
+		);
 
 		ReflectionTestUtil.setFieldValue(
-			ddmFormWebConfigurationActivator, "_ddmFormWebConfiguration",
-			ddmFormWebConfiguration);
-
-		_serviceRegistration = _bundleContext.registerService(
-			DDMFormWebConfigurationActivator.class,
-			ddmFormWebConfigurationActivator, null);
+			ConfigurationProviderUtil.class, "_configurationProvider",
+			_configurationProvider);
 	}
 
 	private File _mockFile(long length) {
@@ -126,9 +120,9 @@ public class DDMFormUploadValidatorTest {
 
 	private static final BundleContext _bundleContext =
 		SystemBundleUtil.getBundleContext();
+	private static final ConfigurationProvider _configurationProvider =
+		Mockito.mock(ConfigurationProvider.class);
 	private static final MockedStatic<FrameworkUtil>
 		_frameworkUtilMockedStatic = Mockito.mockStatic(FrameworkUtil.class);
-	private static ServiceRegistration<DDMFormWebConfigurationActivator>
-		_serviceRegistration;
 
 }

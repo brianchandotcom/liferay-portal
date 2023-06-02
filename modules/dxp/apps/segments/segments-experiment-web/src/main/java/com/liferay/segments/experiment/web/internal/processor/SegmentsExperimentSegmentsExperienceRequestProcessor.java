@@ -371,6 +371,22 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 	private void _unsetCookies(
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
+
+		Cookie[] cookies = httpServletRequest.getCookies();
+
+		if (ArrayUtil.isEmpty(cookies)) {
+			return;
+		}
+
+		for (Cookie cookie : cookies) {
+			if (StringUtil.startsWith(
+					cookie.getName(), _AB_TEST_VARIANT_ID_COOKIE_PREFIX)) {
+
+				CookiesManagerUtil.deleteCookies(
+					CookiesManagerUtil.getDomain(httpServletRequest),
+					httpServletRequest, httpServletResponse, cookie.getName());
+			}
+		}
 	}
 
 	private static final String _AB_TEST_VARIANT_ID_COOKIE_PREFIX =

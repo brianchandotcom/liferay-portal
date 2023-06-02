@@ -4,6 +4,7 @@ Bundle-Version: 1.0.0
 Import-Package:\
 	com.liferay.counter.kernel.service;version="[2.1.0,9999.0.0)",\
 	com.liferay.portal.kernel.dao.db,\
+	com.liferay.portal.kernel.model;version="[29.0.0,9999.0.0)",\
 	com.liferay.portal.kernel.service;version="[22.0.0,9999.0.0)",\
 	com.liferay.portal.kernel.service.persistence;version="[21.0.0,9999.0.0)",\
 	com.liferay.portal.kernel.util;version="[59.0.0,9999.0.0)",\

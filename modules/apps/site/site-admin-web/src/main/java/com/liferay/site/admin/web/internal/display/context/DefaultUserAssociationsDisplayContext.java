@@ -105,9 +105,7 @@ public class DefaultUserAssociationsDisplayContext {
 		).buildString();
 	}
 
-	public SearchContainer<Role> getSiteRolesSearchContainer()
-		throws PortalException {
-
+	public SearchContainer<Role> getSiteRolesSearchContainer() {
 		SearchContainer<Role> siteRolesSearchContainer =
 			new SearchContainer<>();
 
@@ -119,7 +117,11 @@ public class DefaultUserAssociationsDisplayContext {
 			0L);
 
 		for (long defaultSiteRoleId : defaultSiteRoleIds) {
-			roles.add(RoleLocalServiceUtil.getRole(defaultSiteRoleId));
+			Role role = RoleLocalServiceUtil.fetchRole(defaultSiteRoleId);
+
+			if (role != null) {
+				roles.add(role);
+			}
 		}
 
 		siteRolesSearchContainer.setResultsAndTotal(roles);
@@ -127,9 +129,7 @@ public class DefaultUserAssociationsDisplayContext {
 		return siteRolesSearchContainer;
 	}
 
-	public SearchContainer<Team> getTeamsSearchContainer()
-		throws PortalException {
-
+	public SearchContainer<Team> getTeamsSearchContainer() {
 		SearchContainer<Team> teamsSearchContainer = new SearchContainer<>();
 
 		List<Team> teams = new ArrayList<>();
@@ -139,7 +139,11 @@ public class DefaultUserAssociationsDisplayContext {
 			0L);
 
 		for (long defaultTeamId : defaultTeamIds) {
-			teams.add(TeamLocalServiceUtil.getTeam(defaultTeamId));
+			Team team = TeamLocalServiceUtil.fetchTeam(defaultTeamId);
+
+			if (team != null) {
+				teams.add(team);
+			}
 		}
 
 		teamsSearchContainer.setResultsAndTotal(teams);

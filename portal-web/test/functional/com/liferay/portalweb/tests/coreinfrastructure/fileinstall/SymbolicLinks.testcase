@@ -6,14 +6,6 @@ definition {
 	property portal.upstream = "true";
 	property testray.main.component.name = "File Install";
 
-	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
-		if (${testPortalInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-	}
-
 	@priority = 4
 	test SetLiferayHomeToASymbolicLink {
 		property skip.start.app.server = "true";
@@ -38,6 +30,10 @@ definition {
 			password = "test",
 			specificURL = "http://localhost:8080",
 			userEmailAddress = "test@liferay.com");
+
+		Portlet.shutdownServer();
+
+		AntCommands.runCommand("build-test.xml", "delete-symbolic-link -Dsymbolic.link=${symbolicLink}");
 	}
 
 }

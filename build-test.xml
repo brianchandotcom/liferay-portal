@@ -9470,6 +9470,10 @@ org.apache.catalina.tribes.level = FINE]]>
 		</execute>
 	</target>
 
+	<target name="delete-symbolic-link">
+		<symlink action="delete" link="${symbolic.link}" />
+	</target>
+
 	<target name="deploy-commerce-license-xml">
 		<if>
 			<matches pattern="https?://" string="${test.commerce.license.url}" />

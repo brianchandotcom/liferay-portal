@@ -1219,14 +1219,19 @@ public class ObjectDefinitionLocalServiceTest {
 				ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE,
 				Collections.emptyList());
 
-		ObjectField objectField1 =
-			_objectFieldLocalService.addCustomObjectField(
-				null, TestPropsValues.getUserId(), 0,
-				objectDefinition1.getObjectDefinitionId(),
-				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-				ObjectFieldConstants.DB_TYPE_STRING, false, false, null,
-				LocalizedMapUtil.getLocalizedMap("Charlie"), false, "charlie",
-				true, false, Collections.emptyList());
+		ObjectField objectField1 = ObjectFieldUtil.addCustomObjectField(
+			new TextObjectFieldBuilder(
+			).userId(
+				TestPropsValues.getUserId()
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).name(
+				StringUtil.randomId()
+			).objectDefinitionId(
+				objectDefinition1.getObjectDefinitionId()
+			).required(
+				true
+			).build());
 
 		objectDefinition1 =
 			_objectDefinitionLocalService.
@@ -1251,14 +1256,19 @@ public class ObjectDefinitionLocalServiceTest {
 			_objectDefinitionLocalService.addObjectDefinition(
 				RandomTestUtil.randomString(), user.getUserId());
 
-		ObjectField objectField2 =
-			_objectFieldLocalService.addCustomObjectField(
-				null, TestPropsValues.getUserId(), 0,
-				objectDefinition2.getObjectDefinitionId(),
-				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-				ObjectFieldConstants.DB_TYPE_STRING, false, false, null,
-				LocalizedMapUtil.getLocalizedMap("Charlie"), false, "charlie",
-				true, false, Collections.emptyList());
+		ObjectField objectField2 = ObjectFieldUtil.addCustomObjectField(
+			new TextObjectFieldBuilder(
+			).userId(
+				TestPropsValues.getUserId()
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).name(
+				StringUtil.randomId()
+			).objectDefinitionId(
+				objectDefinition2.getObjectDefinitionId()
+			).required(
+				true
+			).build());
 
 		objectDefinition2 =
 			_objectDefinitionLocalService.
@@ -1277,14 +1287,19 @@ public class ObjectDefinitionLocalServiceTest {
 				ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE,
 				Collections.emptyList());
 
-		ObjectField objectField3 =
-			_objectFieldLocalService.addCustomObjectField(
-				null, TestPropsValues.getUserId(), 0,
-				objectDefinition3.getObjectDefinitionId(),
-				ObjectFieldConstants.BUSINESS_TYPE_DATE,
-				ObjectFieldConstants.DB_TYPE_DATE, false, false, null,
-				LocalizedMapUtil.getLocalizedMap("Charlie"), false, "charlie",
-				true, false, Collections.emptyList());
+		ObjectField objectField3 = ObjectFieldUtil.addCustomObjectField(
+			new DateObjectFieldBuilder(
+			).userId(
+				TestPropsValues.getUserId()
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).name(
+				StringUtil.randomId()
+			).objectDefinitionId(
+				objectDefinition3.getObjectDefinitionId()
+			).required(
+				true
+			).build());
 
 		try {
 			objectDefinition3 =

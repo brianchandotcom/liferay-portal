@@ -71,6 +71,9 @@ definition {
 	@description = "Add child site in child site."
 	@priority = 4
 	test AddChildChildSite {
+		var randomChildSiteName = StringUtil.randomString(8);
+		var grandchildSiteName = StringUtil.randomString(8);
+
 		task ("Add a site") {
 			HeadlessSite.addSite(siteName = ${randomSiteName});
 		}
@@ -78,28 +81,28 @@ definition {
 		task ("Add a child site to the site") {
 			HeadlessSite.addSite(
 				parentSiteName = ${randomSiteName},
-				siteName = "Child Site Name");
+				siteName = ${randomChildSiteName});
 		}
 
 		task ("Add a child site to the child site") {
 			HeadlessSite.addSite(
 				grandParentSiteName = ${randomSiteName},
-				parentSiteName = "Child Site Name",
-				siteName = "Grandchild Site Name");
+				parentSiteName = ${randomChildSiteName},
+				siteName = ${grandchildSiteName});
 		}
 
 		task ("View the child site to the site") {
 			Site.openSitesAdmin();
 
 			Site.viewChildCP(
-				childSiteName = "Child Site Name",
+				childSiteName = ${randomChildSiteName},
 				siteName = ${randomSiteName});
 		}
 
 		task ("View the child site to the child site") {
 			Site.viewChildCP(
-				childSiteName = "Grandchild Site Name",
-				siteName = "Child Site Name");
+				childSiteName = ${grandchildSiteName},
+				siteName = ${randomChildSiteName});
 		}
 	}
 
@@ -398,6 +401,7 @@ definition {
 		property test.name.skip.portal.instance = "Sites#ViewContentSharingDisabledAcrossSitesViaAP";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
+		var randomChildSiteName = StringUtil.randomString(8);
 
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Sharing",
@@ -416,10 +420,10 @@ definition {
 
 		HeadlessSite.addSite(
 			parentSiteName = ${randomSiteName},
-			siteName = "Child SiteName");
+			siteName = ${randomChildSiteName});
 
 		JSONLayout.addPublicLayout(
-			groupName = "Child SiteName",
+			groupName = ${randomChildSiteName},
 			layoutName = "WC Test Page",
 			parentGroupName = ${randomSiteName});
 
@@ -429,12 +433,12 @@ definition {
 			widgetName = "Asset Publisher");
 
 		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Child SiteName",
+			groupName = ${randomChildSiteName},
 			layoutName = "WC Test Page",
 			parentGroupName = ${randomSiteName},
 			widgetName = "Web Content Display");
 
-		Navigator.openSiteURL(siteName = "Child SiteName");
+		Navigator.openSiteURL(siteName = ${randomChildSiteName});
 
 		WebContentDisplayPortlet.add(
 			webContentContent = "WC WebContent Content",
@@ -447,7 +451,7 @@ definition {
 		Navigator.openSiteURL(siteName = ${randomSiteName});
 
 		AssetPublisherPortlet.configureSiteScopePG(
-			siteName = "Child SiteName",
+			siteName = ${randomChildSiteName},
 			siteScopeType = "Child Site");
 
 		Navigator.openSiteURL(siteName = ${randomSiteName});
@@ -463,7 +467,7 @@ definition {
 			assetContent = "WC WebContent Content",
 			assetTitle = "WC WebContent Title",
 			siteScope1 = ${randomSiteName},
-			siteScope2 = "Child SiteName");
+			siteScope2 = ${randomChildSiteName});
 
 		Navigator.openSiteURL(siteName = ${randomSiteName});
 
@@ -473,12 +477,12 @@ definition {
 			siteScope = ${randomSiteName});
 
 		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Child SiteName",
+			groupName = ${randomChildSiteName},
 			layoutName = "WC Test Page",
 			parentGroupName = ${randomSiteName},
 			widgetName = "Asset Publisher");
 
-		Navigator.openSiteURL(siteName = "Child SiteName");
+		Navigator.openSiteURL(siteName = ${randomChildSiteName});
 
 		AssetPublisherPortlet.configureSiteScopePG(
 			siteName = ${randomSiteName},
@@ -491,13 +495,13 @@ definition {
 			contentSharingAcrossSitesEnabled = "false",
 			liferaySiteName = ${siteName});
 
-		Navigator.openSiteURL(siteName = "Child SiteName");
+		Navigator.openSiteURL(siteName = ${randomChildSiteName});
 
 		AssetPublisherPortlet.viewContentSharingPG(
 			assetContent = "Blogs Entry Content",
 			assetTitle = "Blogs Entry Title",
 			siteScope1 = ${randomSiteName},
-			siteScope2 = "Child SiteName");
+			siteScope2 = ${randomChildSiteName});
 	}
 
 	@description = "This is a test case for LRQA-6014. Enable Content Sharing in instance level and view child Sites display content from parent Sites."
@@ -594,7 +598,8 @@ definition {
 	@description = "View parent site in child site's Sites Directory."
 	@priority = 4
 	test ViewDisplayParentSiteViaSitesDirectory {
-		Site.openSitesAdmin();
+		var randomChildSiteName = StringUtil.randomString(8);
+		var grandchildSiteName = StringUtil.randomString(8);
 
 		task ("Add a site and a public page in it") {
 			HeadlessSite.addSite(siteName = ${randomSiteName});
@@ -607,10 +612,10 @@ definition {
 		task ("Add a child site to the site and a public page in it") {
 			HeadlessSite.addSite(
 				parentSiteName = ${randomSiteName},
-				siteName = "Child SiteName");
+				siteName = ${randomChildSiteName});
 
 			JSONLayout.addPublicLayout(
-				groupName = "Child SiteName",
+				groupName = ${randomChildSiteName},
 				layoutName = "Site Page",
 				parentGroupName = ${randomSiteName});
 		}
@@ -618,31 +623,31 @@ definition {
 		task ("Add a child site to the child site and a public page in it") {
 			HeadlessSite.addSite(
 				grandParentSiteName = ${randomSiteName},
-				parentSiteName = "Child SiteName",
-				siteName = "Child ChildSiteName");
+				parentSiteName = ${randomChildSiteName},
+				siteName = ${grandchildSiteName});
 
 			JSONLayout.addPublicLayout(
 				grandParentGroupName = ${randomSiteName},
-				groupName = "Child ChildSiteName",
+				groupName = ${grandchildSiteName},
 				layoutName = "Site Page",
-				parentGroupName = "Child SiteName");
+				parentGroupName = ${randomChildSiteName});
 		}
 
 		task ("View the child site and child site of the child site") {
 			Site.openSitesAdmin();
 
 			Site.viewChildCP(
-				childSiteName = "Child SiteName",
+				childSiteName = ${randomChildSiteName},
 				siteName = ${randomSiteName});
 
 			Site.viewChildCP(
-				childSiteName = "Child ChildSiteName",
-				siteName = "Child SiteName");
+				childSiteName = ${grandchildSiteName},
+				siteName = ${randomChildSiteName});
 		}
 
 		task ("Add a Sites Directory to child site public page") {
 			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Child SiteName",
+				groupName = ${randomChildSiteName},
 				layoutName = "Site Page",
 				parentGroupName = ${randomSiteName},
 				widgetName = "Sites Directory");
@@ -651,7 +656,7 @@ definition {
 		task ("Go to child site public page") {
 			Navigator.gotoSitePage(
 				pageName = "Site Page",
-				siteName = "Child SiteName");
+				siteName = ${randomChildSiteName});
 		}
 
 		task ("Configure Sites Directory to display in Parent Level") {
@@ -661,7 +666,7 @@ definition {
 		task ("View parent site displayed") {
 			Navigator.gotoSitePage(
 				pageName = "Site Page",
-				siteName = "Child SiteName");
+				siteName = ${randomChildSiteName});
 
 			SitesDirectory.viewDescriptivePG(siteName = ${randomSiteName});
 		}
@@ -670,6 +675,11 @@ definition {
 	@description = "View sites in child site's Sites Directory."
 	@priority = 4
 	test ViewSiteHierarchiesViaSitesDirectory {
+		var randomChildSiteName1 = StringUtil.randomString(8);
+		var randomChildSiteName2 = StringUtil.randomString(8);
+		var grandchildSiteName1 = StringUtil.randomString(8);
+		var grandchildSiteName2 = StringUtil.randomString(8);
+
 		task ("Add a site and a public page in it") {
 			HeadlessSite.addSite(siteName = ${randomSiteName});
 
@@ -681,10 +691,10 @@ definition {
 		task ("Add a child site to the site and a public page in it") {
 			HeadlessSite.addSite(
 				parentSiteName = ${randomSiteName},
-				siteName = "Child Site1Name");
+				siteName = ${randomChildSiteName1});
 
 			JSONLayout.addPublicLayout(
-				groupName = "Child Site1Name",
+				groupName = ${randomChildSiteName1},
 				layoutName = "Site Page",
 				parentGroupName = ${randomSiteName});
 		}
@@ -692,43 +702,43 @@ definition {
 		task ("Add a child site to the child site and a public page in it") {
 			HeadlessSite.addSite(
 				grandParentSiteName = ${randomSiteName},
-				parentSiteName = "Child Site1Name",
-				siteName = "Child ChildSite1Name");
+				parentSiteName = ${randomChildSiteName1},
+				siteName = ${grandchildSiteName1});
 
 			JSONLayout.addPublicLayout(
 				grandParentGroupName = ${randomSiteName},
-				groupName = "Child ChildSite1Name",
+				groupName = ${grandchildSiteName1},
 				layoutName = "Site Page",
-				parentGroupName = "Child Site1Name");
+				parentGroupName = ${randomChildSiteName1});
 		}
 
 		task ("Add another child site to the child site and a public page in it") {
 			HeadlessSite.addSite(
 				grandParentSiteName = ${randomSiteName},
-				parentSiteName = "Child Site1Name",
-				siteName = "Child ChildSite2Name");
+				parentSiteName = ${randomChildSiteName1},
+				siteName = ${grandchildSiteName2});
 
 			JSONLayout.addPublicLayout(
 				grandParentGroupName = ${randomSiteName},
-				groupName = "Child ChildSite2Name",
+				groupName = ${grandchildSiteName2},
 				layoutName = "Site Page",
-				parentGroupName = "Child Site1Name");
+				parentGroupName = ${randomChildSiteName1});
 		}
 
 		task ("Add another child site to the site and a public page in it") {
 			HeadlessSite.addSite(
 				parentSiteName = ${randomSiteName},
-				siteName = "Child Site2Name");
+				siteName = ${randomChildSiteName2});
 
 			JSONLayout.addPublicLayout(
-				groupName = "Child Site2Name",
+				groupName = ${randomChildSiteName2},
 				layoutName = "Site Page",
 				parentGroupName = ${randomSiteName});
 		}
 
 		task ("Add a Sites Directory to the first child site public page") {
 			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Child Site1Name",
+				groupName = ${randomChildSiteName1},
 				layoutName = "Site Page",
 				parentGroupName = ${randomSiteName},
 				widgetName = "Sites Directory");
@@ -737,7 +747,7 @@ definition {
 		task ("Go to first child site page") {
 			Navigator.gotoSitePage(
 				pageName = "Site Page",
-				siteName = "Child Site1Name");
+				siteName = ${randomChildSiteName1});
 		}
 
 		task ("Configure Sites Directory to display in Top Level") {
@@ -747,7 +757,7 @@ definition {
 		task ("Go to first child site page") {
 			Navigator.gotoSitePage(
 				pageName = "Site Page",
-				siteName = "Child Site1Name");
+				siteName = ${randomChildSiteName1});
 		}
 
 		task ("View Top level site displayed") {
@@ -761,7 +771,7 @@ definition {
 		task ("Go to first child site page") {
 			Navigator.gotoSitePage(
 				pageName = "Site Page",
-				siteName = "Child Site1Name");
+				siteName = ${randomChildSiteName1});
 		}
 
 		task ("View Parent level site displayed") {
@@ -775,13 +785,13 @@ definition {
 		task ("Go to first child site page") {
 			Navigator.gotoSitePage(
 				pageName = "Site Page",
-				siteName = "Child Site1Name");
+				siteName = ${randomChildSiteName1});
 		}
 
 		task ("View Siblings sites displayed") {
-			SitesDirectory.viewDescriptivePG(siteName = "Child Site1Name");
+			SitesDirectory.viewDescriptivePG(siteName = ${randomChildSiteName1});
 
-			SitesDirectory.viewDescriptivePG(siteName = "Child Site2Name");
+			SitesDirectory.viewDescriptivePG(siteName = ${randomChildSiteName2});
 		}
 
 		task ("Configure Sites Directory to display in Children") {
@@ -791,28 +801,28 @@ definition {
 		task ("Go to first child site page") {
 			Navigator.gotoSitePage(
 				pageName = "Site Page",
-				siteName = "Child Site1Name");
+				siteName = ${randomChildSiteName1});
 		}
 
 		task ("View child sites displayed") {
-			SitesDirectory.viewDescriptivePG(siteName = "Child ChildSite1Name");
+			SitesDirectory.viewDescriptivePG(siteName = ${grandchildSiteName1});
 
-			SitesDirectory.viewDescriptivePG(siteName = "Child ChildSite2Name");
+			SitesDirectory.viewDescriptivePG(siteName = ${grandchildSiteName2});
 		}
 
 		task ("Add a Sites Directory to the first child site of first child site") {
 			JSONLayout.addWidgetToPublicLayout(
 				grandParentGroupName = ${randomSiteName},
-				groupName = "Child ChildSite1Name",
+				groupName = ${grandchildSiteName1},
 				layoutName = "Site Page",
-				parentGroupName = "Child Site1Name",
+				parentGroupName = ${randomChildSiteName1},
 				widgetName = "Sites Directory");
 		}
 
 		task ("Go to first child child site page") {
 			Navigator.gotoSitePage(
 				pageName = "Site Page",
-				siteName = "Child ChildSite1Name");
+				siteName = ${grandchildSiteName1});
 		}
 
 		task ("Configure Sites Directory to display in Top Level") {
@@ -822,7 +832,7 @@ definition {
 		task ("Go to first child child site page") {
 			Navigator.gotoSitePage(
 				pageName = "Site Page",
-				siteName = "Child ChildSite1Name");
+				siteName = ${grandchildSiteName1});
 		}
 
 		task ("View Top level site displayed") {
@@ -836,13 +846,13 @@ definition {
 		task ("Go to first child child site page") {
 			Navigator.gotoSitePage(
 				pageName = "Site Page",
-				siteName = "Child ChildSite1Name");
+				siteName = ${grandchildSiteName1});
 		}
 
 		task ("View Parent level sites displayed") {
-			SitesDirectory.viewDescriptivePG(siteName = "Child Site1Name");
+			SitesDirectory.viewDescriptivePG(siteName = ${randomChildSiteName1});
 
-			SitesDirectory.viewDescriptivePG(siteName = "Child Site2Name");
+			SitesDirectory.viewDescriptivePG(siteName = ${randomChildSiteName2});
 		}
 
 		task ("Configure Sites Directory to display in Siblings") {
@@ -852,13 +862,13 @@ definition {
 		task ("Go to first child child site page") {
 			Navigator.gotoSitePage(
 				pageName = "Site Page",
-				siteName = "Child ChildSite1Name");
+				siteName = ${grandchildSiteName1});
 		}
 
 		task ("View Siblings sites displayed") {
-			SitesDirectory.viewDescriptivePG(siteName = "Child ChildSite1Name");
+			SitesDirectory.viewDescriptivePG(siteName = ${grandchildSiteName1});
 
-			SitesDirectory.viewDescriptivePG(siteName = "Child ChildSite2Name");
+			SitesDirectory.viewDescriptivePG(siteName = ${grandchildSiteName2});
 		}
 
 		task ("Configure Sites Directory to display in Children") {
@@ -868,7 +878,7 @@ definition {
 		task ("Configure Sites Directory to display in Children") {
 			Navigator.gotoSitePage(
 				pageName = "Site Page",
-				siteName = "Child ChildSite1Name");
+				siteName = ${grandchildSiteName1});
 		}
 
 		task ("View no site fits this level") {

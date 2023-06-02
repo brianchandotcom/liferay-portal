@@ -21,6 +21,8 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
+		var childSiteName = StringUtil.randomString(8);
+
 		task ("Add a site via JSON") {
 			HeadlessSite.addSite(siteName = ${randomSiteName});
 		}
@@ -33,7 +35,7 @@ definition {
 
 			Site.addBlankCP(
 				parentSiteName = ${randomSiteName},
-				siteName = "Child SiteName");
+				siteName = ${childSiteName});
 		}
 
 		task ("View child site added") {
@@ -43,7 +45,7 @@ definition {
 				portlet = "Sites");
 
 			Site.viewChildCP(
-				childSiteName = "Child SiteName",
+				childSiteName = ${childSiteName},
 				siteName = ${randomSiteName});
 		}
 	}

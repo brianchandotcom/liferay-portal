@@ -17,7 +17,6 @@ package com.liferay.change.tracking.rest.internal.resource.v1_0;
 import com.liferay.change.tracking.constants.CTActionKeys;
 import com.liferay.change.tracking.mapping.CTMappingTableInfo;
 import com.liferay.change.tracking.rest.dto.v1_0.CTCollection;
-import com.liferay.change.tracking.rest.internal.dto.v1_0.converter.CTCollectionDTOConverter;
 import com.liferay.change.tracking.rest.internal.odata.entity.v1_0.CTCollectionEntityModel;
 import com.liferay.change.tracking.rest.internal.util.v1_0.PublishUtil;
 import com.liferay.change.tracking.rest.resource.v1_0.CTCollectionResource;
@@ -40,6 +39,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -324,8 +324,12 @@ public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 	private static final EntityModel _entityModel =
 		new CTCollectionEntityModel();
 
-	@Reference
-	private CTCollectionDTOConverter _ctCollectionDTOConverter;
+	@Reference(
+		target = "(component.name=com.liferay.change.tracking.rest.internal.dto.v1_0.converter.CTCollectionDTOConverter)"
+	)
+	private DTOConverter
+		<com.liferay.change.tracking.model.CTCollection, CTCollection>
+			_ctCollectionDTOConverter;
 
 	@Reference
 	private CTCollectionLocalService _ctCollectionLocalService;

@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "dto.class.name=com.liferay.change.tracking.model.CTCollection",
-	service = {CTCollectionDTOConverter.class, DTOConverter.class}
+	service = DTOConverter.class
 )
 public class CTCollectionDTOConverter
 	implements DTOConverter

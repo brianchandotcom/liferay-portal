@@ -19,9 +19,11 @@ import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfi
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
 import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -943,12 +945,19 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	public String[] getTempFileNames(long groupId, String folderName)
 		throws PortalException {
 
-		GroupPermissionUtil.check(
-			getPermissionChecker(), groupId, ActionKeys.EXPORT_IMPORT_LAYOUTS);
+		Group group = _groupLocalService.getGroup(groupId);
 
-		return TempFileEntryUtil.getTempFileNames(
-			groupId, getUserId(),
-			DigesterUtil.digestHex(Digester.SHA_256, folderName));
+		GroupPermissionUtil.check(
+			getPermissionChecker(), group, ActionKeys.EXPORT_IMPORT_LAYOUTS);
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					group.getCtCollectionId())) {
+
+			return TempFileEntryUtil.getTempFileNames(
+				groupId, getUserId(),
+				DigesterUtil.digestHex(Digester.SHA_256, folderName));
+		}
 	}
 
 	/**

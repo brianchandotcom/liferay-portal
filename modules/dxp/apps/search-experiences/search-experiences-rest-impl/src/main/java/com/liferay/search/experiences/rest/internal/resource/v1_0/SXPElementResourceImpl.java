@@ -40,7 +40,6 @@ import com.liferay.search.experiences.constants.SXPActionKeys;
 import com.liferay.search.experiences.constants.SXPConstants;
 import com.liferay.search.experiences.rest.dto.v1_0.ElementDefinition;
 import com.liferay.search.experiences.rest.dto.v1_0.FieldSet;
-import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPElement;
 import com.liferay.search.experiences.rest.dto.v1_0.UiConfiguration;
 import com.liferay.search.experiences.rest.dto.v1_0.util.ElementDefinitionUtil;
@@ -97,7 +96,7 @@ public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
 
 	@Override
 	public SXPElement getSXPElementByExternalReferenceCode(
-		String externalReferenceCode)
+			String externalReferenceCode)
 		throws Exception {
 
 		return _sxpElementDTOConverter.toDTO(
@@ -313,6 +312,25 @@ public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
 	@Override
 	public SXPElement postSXPElementValidate(String json) throws Exception {
 		return SXPElementUtil.toSXPElement(json);
+	}
+
+	public SXPElement putSXPElementByExternalReferenceCode(
+			String externalReferenceCode, SXPElement sxpElement)
+		throws Exception {
+
+		com.liferay.search.experiences.model.SXPElement
+			serviceBuilderSxpElement =
+				_sxpElementService.getSXPElementByExternalReferenceCode(
+					contextCompany.getCompanyId(), externalReferenceCode);
+
+		sxpElement.setExternalReferenceCode(externalReferenceCode);
+
+		if (serviceBuilderSxpElement != null) {
+			return patchSXPElement(
+				serviceBuilderSxpElement.getSXPElementId(), sxpElement);
+		}
+
+		return postSXPElement(sxpElement);
 	}
 
 	private String _getElementDefinitionJSON(SXPElement sxpElement) {

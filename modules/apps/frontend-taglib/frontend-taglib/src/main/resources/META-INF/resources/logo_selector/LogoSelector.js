@@ -20,6 +20,7 @@ import React, {useEffect, useState} from 'react';
 export default function LogoSelector({
 	defaultLogoURL,
 	description,
+	disabled,
 	label,
 	logoName: initialLogoName,
 	logoURL: initialLogoURL,
@@ -142,6 +143,7 @@ export default function LogoSelector({
 							label
 						)}
 						className="flex-shrink-0 mr-2"
+						disabled={disabled}
 						displayType="secondary"
 						onClick={onChangeLogo}
 						symbol="change"
@@ -151,7 +153,7 @@ export default function LogoSelector({
 					<ClayButtonWithIcon
 						aria-label={sub(Liferay.Language.get('clear-x'), label)}
 						className="flex-shrink-0"
-						disabled={logoURL === defaultLogoURL}
+						disabled={logoURL === defaultLogoURL || disabled}
 						displayType="secondary"
 						onClick={onClearLogo}
 						symbol="times-circle"

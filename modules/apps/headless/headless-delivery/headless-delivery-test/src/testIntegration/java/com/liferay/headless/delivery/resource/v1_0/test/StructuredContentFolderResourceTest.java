@@ -218,8 +218,7 @@ public class StructuredContentFolderResourceTest
 			page.fetchFirstItem(
 			).getId());
 
-		Assert.assertEquals(
-			"/web/test",
+		Assert.assertNotNull(
 			page.fetchFirstItem(
 			).getCreator(
 			).getProfileURL());

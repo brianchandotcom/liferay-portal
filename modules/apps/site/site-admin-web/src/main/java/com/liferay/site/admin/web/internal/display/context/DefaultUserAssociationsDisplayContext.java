@@ -14,6 +14,8 @@
 
 package com.liferay.site.admin.web.internal.display.context;
 
+import com.liferay.item.selector.ItemSelector;
+import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -24,6 +26,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.TeamLocalServiceUtil;
@@ -31,6 +34,7 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.site.teams.item.selector.criterion.SiteTeamsItemSelectorCriterion;
 
 import javax.portlet.PortletResponse;
 
@@ -42,9 +46,10 @@ import javax.servlet.http.HttpServletRequest;
 public class DefaultUserAssociationsDisplayContext {
 
 	public DefaultUserAssociationsDisplayContext(
-		HttpServletRequest httpServletRequest) {
+		HttpServletRequest httpServletRequest, ItemSelector itemSelector) {
 
 		_httpServletRequest = httpServletRequest;
+		_itemSelector = itemSelector;
 
 		_groupTypeSettingsUnicodeProperties =
 			(UnicodeProperties)httpServletRequest.getAttribute(
@@ -89,18 +94,18 @@ public class DefaultUserAssociationsDisplayContext {
 		return PortalUtil.getPortletNamespace(selectTeamPortletId);
 	}
 
-	public String getSelectTeamURL() throws PortalException {
-		return PortletURLBuilder.create(
-			PortletProviderUtil.getPortletURL(
-				_httpServletRequest, Team.class.getName(),
-				PortletProvider.Action.BROWSE)
-		).setParameter(
-			"eventName", _liferayPortletResponse.getNamespace() + "selectTeam"
-		).setParameter(
-			"groupId", _liveGroupId
-		).setWindowState(
-			LiferayWindowState.POP_UP
-		).buildString();
+	public String getSelectTeamURL() {
+		SiteTeamsItemSelectorCriterion siteTeamsItemSelectorCriterion =
+			new SiteTeamsItemSelectorCriterion();
+
+		siteTeamsItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			new UUIDItemSelectorReturnType());
+
+		return String.valueOf(
+			_itemSelector.getItemSelectorURL(
+				RequestBackedPortletURLFactoryUtil.create(_httpServletRequest),
+				_liferayPortletResponse.getNamespace() + "selectTeam",
+				siteTeamsItemSelectorCriterion));
 	}
 
 	public SearchContainer<Role> getSiteRolesSearchContainer() {
@@ -134,6 +139,7 @@ public class DefaultUserAssociationsDisplayContext {
 
 	private final UnicodeProperties _groupTypeSettingsUnicodeProperties;
 	private final HttpServletRequest _httpServletRequest;
+	private final ItemSelector _itemSelector;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final long _liveGroupId;
 

@@ -268,17 +268,18 @@ DefaultUserAssociationsDisplayContext defaultUserAssociationsDisplayContext = (D
 		);
 
 		Liferay.Util.openSelectionModal({
+			id: '<portlet:namespace />selectTeam',
 			onSelect: function (event) {
-				const entityId = event.entityid;
+				const valueJSON = JSON.parse(event.value);
 
 				const rowColumns = [
-					Liferay.Util.escape(event.entityname),
+					Liferay.Util.escape(valueJSON.name),
 					'<button aria-label="<%= LanguageUtil.get(request, "remove") %>" class="btn btn-monospaced btn-outline-borderless btn-outline-secondary float-right lfr-portal-tooltip modify-link" data-rowId="' +
-						entityId +
+						valueJSON.teamId +
 						'" title="<%= LanguageUtil.get(request, "remove") %>" type="button"><%= UnicodeFormatter.toString(removeRoleIcon) %></button>',
 				];
 
-				teamsSearchContainer.addRow(rowColumns, entityId);
+				teamsSearchContainer.addRow(rowColumns, valueJSON.teamId);
 
 				teamsSearchContainer.updateDataStore();
 			},

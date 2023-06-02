@@ -1115,9 +1115,9 @@ definition {
 	}
 
 	macro searchCP {
-		Search.searchCP(searchTerm = "Site Name");
+		Search.searchCP(searchTerm = ${siteName});
 
-		Site.viewSearchResultsCP(siteName = "Site Name");
+		Site.viewSearchResultsCP(siteName = ${siteName});
 	}
 
 	macro searchMemberCP {

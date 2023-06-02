@@ -244,6 +244,7 @@ public class OracleDB extends BaseDB {
 		}
 	}
 
+	@Override
 	protected boolean isSupportsDuplicatedIndexName() {
 		return _SUPPORTS_DUPLICATED_INDEX_NAME;
 	}

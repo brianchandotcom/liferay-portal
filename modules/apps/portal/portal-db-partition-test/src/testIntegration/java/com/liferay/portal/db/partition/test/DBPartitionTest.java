@@ -190,7 +190,7 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 
 		long companyId = RandomTestUtil.randomLong();
 
-		String orphanedPartition = _DB_PARTITION_SCHEMA_NAME_PREFIX + companyId;
+		boolean orphanedDBPartition = false;
 
 		String webId = "test.com";
 
@@ -202,22 +202,22 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 			try (Connection connection = DataAccess.getConnection();
 				PreparedStatement preparedStatement =
 					connection.prepareStatement(
-						"select schema_name from information_schema.schemata;");
+						StringBundler.concat(
+							"select schema_name from ",
+							"information_schema.schemata where schema_name = '",
+							_DB_PARTITION_SCHEMA_NAME_PREFIX + companyId, "'"));
 				ResultSet resultSet = preparedStatement.executeQuery()) {
 
-				String partition = null;
+				orphanedDBPartition = resultSet.next();
 
-				while (resultSet.next()) {
-					partition = resultSet.getString(1);
-
-					if (partition.equals(orphanedPartition)) {
-						removeDBPartitions(new long[] {companyId}, false);
-
-						break;
-					}
+				if (orphanedDBPartition) {
+					Assert.fail("The DB partition was not removed");
 				}
-
-				Assert.assertNotEquals(partition, orphanedPartition);
+			}
+		}
+		finally {
+			if (orphanedDBPartition) {
+				removeDBPartitions(new long[] {companyId}, false);
 			}
 		}
 	}

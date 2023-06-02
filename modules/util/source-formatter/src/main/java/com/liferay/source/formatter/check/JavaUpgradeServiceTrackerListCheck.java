@@ -60,6 +60,6 @@ public class JavaUpgradeServiceTrackerListCheck extends BaseJavaTermCheck {
 	}
 
 	private static final Pattern _serviceTrackerListVariablePattern =
-		Pattern.compile("ServiceTrackerList\\s*<((.+), .+)>");
+		Pattern.compile("ServiceTrackerList\\s*<(.+, (.+))>");
 
 }

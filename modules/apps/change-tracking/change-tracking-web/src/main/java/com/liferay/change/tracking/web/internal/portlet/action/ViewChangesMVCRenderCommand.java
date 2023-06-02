@@ -37,6 +37,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -106,9 +108,10 @@ public class ViewChangesMVCRenderCommand implements MVCRenderCommand {
 				new ViewChangesDisplayContext(
 					activeCtCollectionId, _basePersistenceRegistry,
 					_ctClosureFactory, ctCollection, _ctCollectionLocalService,
-					_ctConfiguration, _ctDisplayRendererRegistry,
-					_ctEntryLocalService, _ctSchemaVersionLocalService,
-					_groupLocalService, _language, _portal,
+					_getCTConfiguration(themeDisplay.getCompanyId()),
+					_ctDisplayRendererRegistry, _ctEntryLocalService,
+					_ctSchemaVersionLocalService, _groupLocalService, _language,
+					_portal,
 					new PublicationsDisplayContext(
 						_ctCollectionLocalService, _ctCollectionService,
 						_ctDisplayRendererRegistry, _ctEntryLocalService,
@@ -136,8 +139,20 @@ public class ViewChangesMVCRenderCommand implements MVCRenderCommand {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_ctConfiguration = ConfigurableUtil.createConfigurable(
+		_defaultCTConfiguration = ConfigurableUtil.createConfigurable(
 			CTConfiguration.class, properties);
+	}
+
+	private CTConfiguration _getCTConfiguration(long companyId) {
+		try {
+			return _configurationProvider.getCompanyConfiguration(
+				CTConfiguration.class, companyId);
+		}
+		catch (ConfigurationException configurationException) {
+			_log.error(configurationException);
+		}
+
+		return _defaultCTConfiguration;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -150,6 +165,9 @@ public class ViewChangesMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private BasePersistenceRegistry _basePersistenceRegistry;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private CTClosureFactory _ctClosureFactory;
@@ -166,8 +184,6 @@ public class ViewChangesMVCRenderCommand implements MVCRenderCommand {
 	@Reference
 	private CTCollectionService _ctCollectionService;
 
-	private volatile CTConfiguration _ctConfiguration;
-
 	@Reference
 	private CTDisplayRendererRegistry _ctDisplayRendererRegistry;
 
@@ -179,6 +195,8 @@ public class ViewChangesMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private CTSchemaVersionLocalService _ctSchemaVersionLocalService;
+
+	private volatile CTConfiguration _defaultCTConfiguration;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

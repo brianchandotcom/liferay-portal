@@ -197,47 +197,12 @@
 	<target name="check-upgrade-client-gogoshell">
 		<get-database-upgrade-client-paths />
 
-		<parallel failonany="true">
-			<java
-				dir="${db.upgrade.client.home}"
-				fork="true"
-				jar="${db.upgrade.client.jar}"
-				timeout="900000"
-			>
-				<arg value="-s" />
-			</java>
+		<run-expect
+            db.upgrade.client.home="${db.upgrade.client.home}"
+            file.suffix.bat="${file.suffix.bat}"
+            expect.file="check-upgrade-client-gogo-shell-connection.expect"
 
-			<sequential>
-				<waitfor maxwait="900000" timeoutproperty="gogoshell.not.started">
-					<resourcecontains
-						resource="${db.upgrade.client.log}"
-						substring="Connecting to Gogo shell"
-					/>
-				</waitfor>
-
-				<sleep seconds="20" />
-
-				<if>
-					<isset property="gogoshell.not.started" />
-					<then>
-						<fail message="The Gogo shell failed to open before the test timed out." />
-					</then>
-					<elseif>
-						<resourcecontains
-							resource="${db.upgrade.client.log}"
-							substring="Unable to open Gogo shell"
-						/>
-						<then>
-							<fail message="The Gogo shell connection failed" />
-						</then>
-					</elseif>
-				</if>
-
-				<echo>A Gogo shell opened successfully.</echo>
-			</sequential>
-		</parallel>
-
-		<stop-one-java-process process.name="jar" />
+		/>
 	</target>
 
 	<target name="check-upgrade-client-gogoshell-command-output">

@@ -25,7 +25,8 @@ public class UpgradeJavaServiceTrackerListCheck {
         <ServiceConnectionProvider> _serviceTrackerList2;
     private ServiceTrackerList<Indexer<?>> _serviceTrackerList3;
     private ServiceTrackerList<? extends Indexer> _serviceTrackerList4;
-    private ServiceTrackerList <CTEventListener> _serviceTrackerList5;
+    private ServiceTrackerList<CTEventListenerB> _serviceTrackerList5;
+    private ServiceTrackerList <CTEventListener> _serviceTrackerList6;
     private ServiceTrackerMap<Long, CTService<?>> _serviceTrackerMap;
 
 }

@@ -185,7 +185,7 @@ public abstract class BaseDBPartitionTestCase {
 			DBPartitionUtil.class, "_DATABASE_PARTITION_ENABLED", true);
 		ReflectionTestUtil.setFieldValue(
 			DBPartitionUtil.class, "_DATABASE_PARTITION_SCHEMA_NAME_PREFIX",
-			_DB_PARTITION_SCHEMA_NAME_PREFIX);
+			_DATABASE_PARTITION_SCHEMA_NAME_PREFIX);
 		ReflectionTestUtil.setFieldValue(
 			DBPartitionUtil.class, "_DATABASE_PARTITION_THREAD_POOL_ENABLED",
 			true);
@@ -231,7 +231,7 @@ public abstract class BaseDBPartitionTestCase {
 				"_DATABASE_PARTITION_SCHEMA_NAME_PREFIX") + companyId;
 		}
 
-		return _DB_PARTITION_SCHEMA_NAME_PREFIX + companyId;
+		return _DATABASE_PARTITION_SCHEMA_NAME_PREFIX + companyId;
 	}
 
 	protected static void insertPartitionRequiredData() throws Exception {
@@ -381,7 +381,7 @@ public abstract class BaseDBPartitionTestCase {
 		GetterUtil.getBoolean(
 			PropsUtil.get("database.partition.migrate.enabled"));
 
-	private static final String _DB_PARTITION_SCHEMA_NAME_PREFIX =
+	private static final String _DATABASE_PARTITION_SCHEMA_NAME_PREFIX =
 		"lpartitiontest_";
 
 	private static final DataSource _currentDataSource =

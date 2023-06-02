@@ -50,6 +50,7 @@ export default function ProductMenuTree({portletNamespace, ...props}) {
 		moveItemURL,
 		pagesTreeURL,
 		productMenuPortletURL,
+		siteTemplate = false,
 		stagingEnabled,
 		viewInPageAdministrationURL,
 	} = config;
@@ -97,6 +98,7 @@ export default function ProductMenuTree({portletNamespace, ...props}) {
 							maxPageSize,
 							moveItemURL,
 							namespace: portletNamespace,
+							siteTemplate,
 							stagingEnabled,
 						}}
 						isPrivateLayoutsTree={isPrivateLayoutsTree}

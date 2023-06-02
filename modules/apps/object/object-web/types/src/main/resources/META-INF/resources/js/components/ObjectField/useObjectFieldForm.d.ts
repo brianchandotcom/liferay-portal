@@ -42,8 +42,6 @@ export declare function useObjectFieldForm({
 			objectFieldName: unknown;
 			objectRelationshipName: unknown;
 			output: unknown;
-			readOnly: unknown;
-			readOnlyScript: unknown;
 			script: unknown;
 			showCounter: unknown;
 			showFilesInDocumentsAndMedia: unknown;

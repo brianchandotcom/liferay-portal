@@ -16,14 +16,14 @@
 
 interface ReadOnlyContainerProps {
 	disabled?: boolean;
-	objectFieldSettings: ObjectFieldSetting[];
 	requiredField: boolean;
 	setValues: (value: Partial<ObjectField>) => void;
+	values: Partial<ObjectField>;
 }
 export declare function ReadOnlyContainer({
 	disabled,
-	objectFieldSettings,
 	requiredField,
 	setValues,
+	values,
 }: ReadOnlyContainerProps): JSX.Element;
 export {};

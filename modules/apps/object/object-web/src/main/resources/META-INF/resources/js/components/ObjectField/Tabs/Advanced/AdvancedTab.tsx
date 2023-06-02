@@ -43,11 +43,9 @@ export function AdvancedTab({
 						values.businessType === 'Aggregation' ||
 						values.businessType === 'Formula'
 					}
-					objectFieldSettings={
-						values.objectFieldSettings as ObjectFieldSetting[]
-					}
 					requiredField={values.required as boolean}
 					setValues={setValues}
+					values={values}
 				/>
 			)}
 

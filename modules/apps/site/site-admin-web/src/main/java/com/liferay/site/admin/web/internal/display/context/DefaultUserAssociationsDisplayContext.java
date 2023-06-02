@@ -14,6 +14,7 @@
 
 package com.liferay.site.admin.web.internal.display.context;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Role;
@@ -30,9 +31,6 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.portlet.PortletResponse;
 
@@ -109,22 +107,13 @@ public class DefaultUserAssociationsDisplayContext {
 		SearchContainer<Role> siteRolesSearchContainer =
 			new SearchContainer<>();
 
-		List<Role> roles = new ArrayList<>();
-
-		long[] defaultSiteRoleIds = StringUtil.split(
-			_groupTypeSettingsUnicodeProperties.getProperty(
-				"defaultSiteRoleIds"),
-			0L);
-
-		for (long defaultSiteRoleId : defaultSiteRoleIds) {
-			Role role = RoleLocalServiceUtil.fetchRole(defaultSiteRoleId);
-
-			if (role != null) {
-				roles.add(role);
-			}
-		}
-
-		siteRolesSearchContainer.setResultsAndTotal(roles);
+		siteRolesSearchContainer.setResultsAndTotal(
+			TransformUtil.transformToList(
+				StringUtil.split(
+					_groupTypeSettingsUnicodeProperties.getProperty(
+						"defaultSiteRoleIds"),
+					0L),
+				RoleLocalServiceUtil::fetchRole));
 
 		return siteRolesSearchContainer;
 	}
@@ -132,21 +121,13 @@ public class DefaultUserAssociationsDisplayContext {
 	public SearchContainer<Team> getTeamsSearchContainer() {
 		SearchContainer<Team> teamsSearchContainer = new SearchContainer<>();
 
-		List<Team> teams = new ArrayList<>();
-
-		long[] defaultTeamIds = StringUtil.split(
-			_groupTypeSettingsUnicodeProperties.getProperty("defaultTeamIds"),
-			0L);
-
-		for (long defaultTeamId : defaultTeamIds) {
-			Team team = TeamLocalServiceUtil.fetchTeam(defaultTeamId);
-
-			if (team != null) {
-				teams.add(team);
-			}
-		}
-
-		teamsSearchContainer.setResultsAndTotal(teams);
+		teamsSearchContainer.setResultsAndTotal(
+			TransformUtil.transformToList(
+				StringUtil.split(
+					_groupTypeSettingsUnicodeProperties.getProperty(
+						"defaultTeamIds"),
+					0L),
+				TeamLocalServiceUtil::fetchTeam));
 
 		return teamsSearchContainer;
 	}

@@ -352,6 +352,12 @@ type RoleBrief = {
 	name: string;
 };
 
+type PermissionDescription = {
+	permissionName:string;
+	permissionTooltip:string;
+	permitedRoles:string[];
+};
+
 type SKU = {
 	cost: number;
 	customFields?: CustomField[];

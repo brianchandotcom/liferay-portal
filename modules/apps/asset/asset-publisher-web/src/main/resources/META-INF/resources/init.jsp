@@ -88,7 +88,6 @@ page import="com.liferay.portal.kernel.security.permission.ResourceActionsUtil" 
 page import="com.liferay.portal.kernel.service.ClassNameLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.GroupLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil" %><%@
-page import="com.liferay.portal.kernel.servlet.MultiSessionMessages" %><%@
 page import="com.liferay.portal.kernel.servlet.SessionMessages" %><%@
 page import="com.liferay.portal.kernel.trash.TrashHandler" %><%@
 page import="com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil" %><%@

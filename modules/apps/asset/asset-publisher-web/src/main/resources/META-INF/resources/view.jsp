@@ -22,8 +22,6 @@ assetPublisherDisplayContext.setPageKeywords();
 if (assetPublisherDisplayContext.isEnableTagBasedNavigation() && !assetPublisherDisplayContext.isSelectionStyleAssetList() && assetPublisherDisplayContext.isSelectionStyleManual() && (ArrayUtil.isNotEmpty(assetPublisherDisplayContext.getAllAssetCategoryIds()) || ArrayUtil.isNotEmpty(assetPublisherDisplayContext.getAllAssetTagNames()))) {
 	assetPublisherDisplayContext.setSelectionStyle(AssetPublisherSelectionStyleConstants.TYPE_DYNAMIC);
 }
-
-String friendlyURLChangedMessage = GetterUtil.getString(MultiSessionMessages.get(renderRequest, "friendlyURLChangedAssetPublisher"));
 %>
 
 <liferay-ui:success key='<%= AssetPublisherPortletKeys.ASSET_PUBLISHER + "requestProcessed" %>' message="your-request-completed-successfully" />
@@ -166,15 +164,3 @@ SearchContainer<AssetEntry> searchContainer = assetPublisherDisplayContext.getSe
 		window.location.hash = assetEntryId;
 	}
 </aui:script>
-
-<c:if test="<%= Validator.isNotNull(friendlyURLChangedMessage) %>">
-	<aui:script>
-		Liferay.Util.openToast({
-			message: '<%= friendlyURLChangedMessage %>',
-			toastProps: {
-				autoClose: 20000,
-			},
-			type: 'warning',
-		});
-	</aui:script>
-</c:if>

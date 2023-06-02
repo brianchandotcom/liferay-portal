@@ -33,7 +33,13 @@ export default function PagesTree({
 	selectedLayoutId,
 	selectedLayoutPath,
 }) {
-	const {loadMoreItemsURL, maxPageSize, moveItemURL, namespace} = config;
+	const {
+		loadMoreItemsURL,
+		maxPageSize,
+		moveItemURL,
+		namespace,
+		siteTemplate,
+	} = config;
 
 	const onLoadMore = useCallback(
 		(item) => {
@@ -122,6 +128,7 @@ export default function PagesTree({
 					<TreeItem
 						config={config}
 						expand={expand}
+						isSiteTemplate={siteTemplate}
 						item={item}
 						load={load}
 						namespace={namespace}
@@ -140,9 +147,25 @@ PagesTree.propTypes = {
 	selectedLayoutId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
-function TreeItem({config, expand, item, load, namespace, selectedLayoutId}) {
+function TreeItem({
+	config,
+	expand,
+	isSiteTemplate,
+	item,
+	load,
+	namespace,
+	selectedLayoutId,
+}) {
 	const stackAnchorRef = useRef(null);
 	const itemAnchorRef = useRef(null);
+
+	const warningMessage = isSiteTemplate
+		? Liferay.Language.get(
+				'there-is-a-page-with-the-same-friendly-url-in-a-site-using-this-site-template'
+		  )
+		: Liferay.Language.get(
+				'there-is-a-page-with-the-same-friendly-url-in-the-site-template'
+		  );
 
 	return (
 		<ClayTreeView.Item
@@ -233,15 +256,33 @@ function TreeItem({config, expand, item, load, namespace, selectedLayoutId}) {
 						<div className="align-items-center d-flex pl-2">
 							{item.regularURL ? (
 								<a
-									className="flex-grow-1 text-decoration-none text-truncate w-100"
-									data-tooltip-floating="true"
+									aria-label={
+										Liferay.FeatureFlags['LPS-174471'] &&
+										item.urlConflict
+											? `${item.name}. ${warningMessage}`
+											: item.name
+									}
+									className="flex-grow-1 text-decoration-none text-truncate-inline"
 									href={item.regularURL}
 									ref={itemAnchorRef}
 									tabIndex="-1"
 									target={item.target}
-									title={item.name}
 								>
-									{item.name}
+									<span
+										className="text-truncate"
+										data-title={item.name}
+									>
+										{item.name}
+									</span>
+
+									{Liferay.FeatureFlags['LPS-174471'] &&
+									item.urlConflict ? (
+										<ClayIcon
+											className="align-self-center flex-shrink-0 icon-warning lfr-portal-tooltip"
+											data-title={warningMessage}
+											symbol="warning-full"
+										/>
+									) : null}
 								</a>
 							) : (
 								<span>{item.name}</span>

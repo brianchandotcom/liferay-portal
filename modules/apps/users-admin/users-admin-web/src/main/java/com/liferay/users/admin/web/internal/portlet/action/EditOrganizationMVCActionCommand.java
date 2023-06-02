@@ -187,7 +187,7 @@ public class EditOrganizationMVCActionCommand
 			actionRequest, "organizationId");
 
 		long parentOrganizationId = ParamUtil.getLong(
-			actionRequest, "parentOrganizationSearchContainerPrimaryKeys",
+			actionRequest, "parentOrganizationId",
 			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID);
 		String name = ParamUtil.getString(actionRequest, "name");
 		long statusId = ParamUtil.getLong(actionRequest, "statusId");

@@ -148,7 +148,7 @@ public class OrganizationActionDropdownItems {
 								_renderResponse.createRenderURL(),
 								"mvcRenderCommandName",
 								"/users_admin/edit_organization",
-								"parentOrganizationSearchContainerPrimaryKeys",
+								"parentOrganizationId",
 								_organization.getOrganizationId(), "backURL",
 								_themeDisplay.getURLCurrent(), "type",
 								childrenType);

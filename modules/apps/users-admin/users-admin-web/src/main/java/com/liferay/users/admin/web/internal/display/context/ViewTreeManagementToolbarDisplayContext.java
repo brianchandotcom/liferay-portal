@@ -247,7 +247,7 @@ public class ViewTreeManagementToolbarDisplayContext {
 							).setBackURL(
 								currentURL.toString()
 							).setParameter(
-								"parentOrganizationSearchContainerPrimaryKeys",
+								"parentOrganizationId",
 								_organization.getOrganizationId()
 							).setParameter(
 								"type", organizationType

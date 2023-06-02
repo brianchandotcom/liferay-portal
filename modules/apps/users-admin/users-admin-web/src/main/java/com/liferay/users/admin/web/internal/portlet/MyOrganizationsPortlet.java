@@ -75,8 +75,7 @@ public class MyOrganizationsPortlet extends UsersAdminPortlet {
 
 				if (organizationId == 0) {
 					long parentOrganizationId = ParamUtil.getLong(
-						renderRequest,
-						"parentOrganizationSearchContainerPrimaryKeys");
+						renderRequest, "parentOrganizationId");
 
 					if (parentOrganizationId > 0) {
 						_organizationPermission.check(

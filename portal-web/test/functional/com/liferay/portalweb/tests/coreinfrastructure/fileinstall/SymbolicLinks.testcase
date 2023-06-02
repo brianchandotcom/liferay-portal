@@ -22,12 +22,13 @@ definition {
 		property testcase.url = "http://www.example.com";
 
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
+		var projectDir = PropsUtil.get("project.dir");
 
-		var symbolicLink = "${liferayHome}/temp";
+		var symbolicLink = "${projectDir}/temp-bundles-symlink";
 
 		AntCommands.runCommand("build-test.xml", "create-symbolic-link -Dsymbolic.link=${symbolicLink} -Dsymbolic.link.resource=${liferayHome}");
 
-		AntCommands.runCommand("build-test.xml", "portal-ext-properties-update -Dadd.new.properties=true -Dupdate.properties=liferay.home=${symbolicLink}");
+		AntCommands.runCommand("build-test.xml", "portal-ext-properties-update -Dupdate.properties=liferay.home=${symbolicLink} -Dupdate.properties.original=liferay.home=${liferayHome}");
 
 		Portlet.startServer(keepOSGiState = "true");
 

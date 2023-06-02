@@ -18,29 +18,25 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Localization;
 
-import java.util.Locale;
-
 import org.osgi.service.component.annotations.Component;
-import com.liferay.portal.kernel.util.HtmlParser;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Nícolas Moura
  */
 @Component(
-	property = "indexer.class.name=com.liferay.source.formatter.dependencies.upgrade.UpgradeJavaExtractTextCheck",
-	service = UpgradeJavaExtractTextCheck.class
+	property = "indexer.class.name=com.liferay.source.formatter.dependencies.upgrade.UpgradeJavaExtractTextMethodCheck",
+	service = UpgradeJavaExtractTextMethodCheck.class
 )
-public class UpgradeJavaExtractTextCheck {
+public class UpgradeJavaExtractTextMethodCheck {
 
 	public void method() {
 
-		String content = _htmlParser.extractText(testEntry.getContent());
+		String content = HtmlUtil.extractText(testEntry.getContent());
 		String content2 =
-			_htmlParser.extractText(testEntry.getContent());
+			HtmlUtil.extractText(testEntry.getContent());
 
 		if(true){
-			String content3 = _htmlParser.extractText(
+			String content3 = HtmlUtil.extractText(
 				testEntry.getContent());
 		}
 	}
@@ -50,7 +46,4 @@ public class UpgradeJavaExtractTextCheck {
 
 	@Reference
 	private Localization _localization;
-
-	@Reference
-	private HtmlParser _htmlParser;
 }

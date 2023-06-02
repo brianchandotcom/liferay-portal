@@ -24,7 +24,7 @@ import java.util.regex.Pattern;
 /**
  * @author Nícolas Moura
  */
-public class UpgradeJavaExtractTextCheck extends BaseFileCheck {
+public class UpgradeJavaExtractTextMethodCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(

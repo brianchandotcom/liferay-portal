@@ -177,7 +177,7 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 					partition = resultSet.getString(1);
 
 					if (partition.equals(orphanedPartition)) {
-						removeDBPartition(companyId, false);
+						removeDBPartitions(new long[] {companyId}, false);
 
 						break;
 					}

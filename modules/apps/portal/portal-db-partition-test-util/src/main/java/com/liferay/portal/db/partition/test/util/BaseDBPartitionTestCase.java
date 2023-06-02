@@ -265,7 +265,11 @@ public abstract class BaseDBPartitionTestCase {
 		}
 	}
 
-	protected static void removeDBPartition(long companyId, boolean migrate)
+	protected static void removeDBPartitions(boolean migrate) throws Exception {
+		removeDBPartitions(COMPANY_IDS, migrate);
+	}
+
+	protected static void removeDBPartitions(long[] companyIds, boolean migrate)
 		throws Exception {
 
 		CurrentConnection defaultCurrentConnection =
@@ -282,34 +286,7 @@ public abstract class BaseDBPartitionTestCase {
 				CurrentConnectionUtil.class, "_currentConnection",
 				currentConnection);
 
-			DBPartitionUtil.removeDBPartition(companyId);
-		}
-		finally {
-			ReflectionTestUtil.setFieldValue(
-				CurrentConnectionUtil.class, "_currentConnection",
-				defaultCurrentConnection);
-
-			ReflectionTestUtil.setFieldValue(
-				DBPartitionUtil.class, "_DATABASE_PARTITION_MIGRATE_ENABLED",
-				_DEFAULT_MIGRATE_SETTING);
-		}
-	}
-
-	protected static void removeDBPartitions(boolean migrate) throws Exception {
-		CurrentConnection defaultCurrentConnection =
-			CurrentConnectionUtil.getCurrentConnection();
-
-		try {
-			CurrentConnection currentConnection = dataSource -> connection;
-
-			ReflectionTestUtil.setFieldValue(
-				DBPartitionUtil.class, "_DATABASE_PARTITION_MIGRATE_ENABLED",
-				migrate);
-			ReflectionTestUtil.setFieldValue(
-				CurrentConnectionUtil.class, "_currentConnection",
-				currentConnection);
-
-			for (long companyId : COMPANY_IDS) {
+			for (long companyId : companyIds) {
 				DBPartitionUtil.removeDBPartition(companyId);
 			}
 		}
@@ -320,7 +297,7 @@ public abstract class BaseDBPartitionTestCase {
 
 			ReflectionTestUtil.setFieldValue(
 				DBPartitionUtil.class, "_DATABASE_PARTITION_MIGRATE_ENABLED",
-				_DEFAULT_MIGRATE_SETTING);
+				_DATABASE_PARTITION_MIGRATE_ENABLED);
 		}
 	}
 
@@ -400,12 +377,12 @@ public abstract class BaseDBPartitionTestCase {
 		};
 	}
 
-	private static final String _DB_PARTITION_SCHEMA_NAME_PREFIX =
-		"lpartitiontest_";
-
-	private static final boolean _DEFAULT_MIGRATE_SETTING =
+	private static final boolean _DATABASE_PARTITION_MIGRATE_ENABLED =
 		GetterUtil.getBoolean(
 			PropsUtil.get("database.partition.migrate.enabled"));
+
+	private static final String _DB_PARTITION_SCHEMA_NAME_PREFIX =
+		"lpartitiontest_";
 
 	private static final DataSource _currentDataSource =
 		ReflectionTestUtil.getFieldValue(DBInitUtil.class, "_dataSource");

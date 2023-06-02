@@ -67,6 +67,7 @@ function SelectEntityInput({
 								valueJSON.name || valueJSON.segmentsEntryName,
 							value:
 								valueJSON.segmentsEntryId ||
+								valueJSON.teamId ||
 								valueJSON.userGroupId,
 						});
 					}

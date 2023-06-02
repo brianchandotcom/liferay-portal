@@ -120,10 +120,11 @@ public class GCSStore implements Store, StoreAreaProcessor {
 		}
 
 		Bucket bucket = _gcsStore.get(_gcsStoreConfiguration.bucketName());
-		List<BlobId> deletedBlobIds = new ArrayList<>();
 		int deletedBlobQuota = Math.max(deletionQuota, 1);
+		int deletedBlobsCount = 0;
 		Instant instant = Instant.now();
 		String lastVisitedBlobName = startOffset;
+		StorageBatch storageBatch = _gcsStore.batch();
 
 		int pageSize = deletedBlobQuota * 2;
 		int visitedPageLimit = Math.max(deletedBlobQuota / 10, 10);
@@ -148,9 +149,10 @@ public class GCSStore implements Store, StoreAreaProcessor {
 					temporalAmount);
 
 				if (actualDeletionInstant.isBefore(instant)) {
-					deletedBlobIds.add(blob.getBlobId());
+					storageBatch.delete(blob.getBlobId());
 
 					deletedBlobQuota--;
+					deletedBlobsCount++;
 				}
 
 				emptyPage = false;
@@ -158,10 +160,12 @@ public class GCSStore implements Store, StoreAreaProcessor {
 				lastVisitedBlobName = blob.getName();
 			}
 
-			if (deletedBlobIds.size() >= _DELETED_BATCH_SIZE) {
-				_gcsStore.delete(deletedBlobIds);
+			if (deletedBlobsCount >= _DELETED_BATCH_SIZE) {
+				storageBatch.submit();
 
-				deletedBlobIds.clear();
+				deletedBlobsCount = 0;
+
+				storageBatch = _gcsStore.batch();
 			}
 
 			if (emptyPage) {
@@ -173,8 +177,8 @@ public class GCSStore implements Store, StoreAreaProcessor {
 			visitedPageLimit--;
 		}
 
-		if (!deletedBlobIds.isEmpty()) {
-			_gcsStore.delete(deletedBlobIds);
+		if (deletedBlobsCount > 0) {
+			storageBatch.submit();
 		}
 
 		return lastVisitedBlobName;
@@ -217,16 +221,17 @@ public class GCSStore implements Store, StoreAreaProcessor {
 				Instant evictionInstant = updateTimeInstant.plus(
 					temporalAmount);
 
-				if (evictionInstant.isBefore(instant) &&
-					copy(
+				if (evictionInstant.isBefore(instant)) {
+					boolean copied = copy(
 						blob.getName(),
-						StoreArea.NEW.relocate(
-							blob.getName(), StoreArea.LIVE))) {
+						StoreArea.NEW.relocate(blob.getName(), StoreArea.LIVE));
 
-					storageBatch.delete(blob.getBlobId());
+					if (copied) {
+						storageBatch.delete(blob.getBlobId());
 
-					evictedBlobQuota--;
-					evictedBlobsCount++;
+						evictedBlobQuota--;
+						evictedBlobsCount++;
+					}
 				}
 
 				emptyPage = false;

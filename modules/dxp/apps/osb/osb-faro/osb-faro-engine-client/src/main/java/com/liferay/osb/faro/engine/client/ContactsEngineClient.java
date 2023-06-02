@@ -363,7 +363,10 @@ public interface ContactsEngineClient {
 		int cur, int delta, List<OrderByField> orderByFields);
 
 	public long getIndividualsCount(
-		FaroProject faroProject, boolean includeAnonymousUsers, Date startDate);
+		FaroProject faroProject, boolean includeAnonymousUsers);
+
+	public long getIndividualsCreatedSinceCount(
+		FaroProject faroProject, Date startDate);
 
 	public Results<Distribution> getIndividualsDistribution(
 		FaroProject faroProject, String channelId, String fieldMappingFieldName,

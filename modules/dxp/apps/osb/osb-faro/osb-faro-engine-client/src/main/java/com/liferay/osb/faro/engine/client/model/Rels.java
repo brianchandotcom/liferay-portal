@@ -148,6 +148,9 @@ public interface Rels {
 
 	public static final String INDIVIDUALS_COUNT = "individuals-count";
 
+	public static final String INDIVIDUALS_CREATED_SINCE_COUNT =
+		"individuals-created-since-count";
+
 	public static final String INDIVIDUALS_DISTRIBUTION =
 		"individuals-distribution";
 

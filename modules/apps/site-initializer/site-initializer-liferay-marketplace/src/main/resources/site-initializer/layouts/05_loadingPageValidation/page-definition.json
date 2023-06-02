@@ -3,6 +3,9 @@
 		"pageElements": [
 			{
 				"definition": {
+					"fragmentStyle": {
+						"marginTop": "15%"
+					},
 					"indexed": true,
 					"layout": {
 						"opacity": 100,

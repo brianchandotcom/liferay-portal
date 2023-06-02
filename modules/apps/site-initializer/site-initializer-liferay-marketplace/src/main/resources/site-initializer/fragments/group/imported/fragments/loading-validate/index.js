@@ -32,20 +32,19 @@ const getUserAccountsById = async () => {
 					'content-type': 'application/json',
 					'x-csrf-token': Liferay.authToken,
 				},
-				method: 'GET',
 			}
 		);
 
 		if (response.ok) {
-			const userData = await response.json();
-			userData?.items?.map((data) => {
-				if (data.acceptInviteStatus === false) {
-					userAdditionalInfosId = data.id;
-					getMyUserAccount(data);
-					const arrayRoles = data.roles.split('/');
+			const userAdditionalInfos = await response.json();
+			for (const userInfo of userAdditionalInfos?.items || []) {
+				if (userInfo.acceptInviteStatus === false) {
+					userAdditionalInfosId = userInfo.id;
+					getMyUserAccount(userInfo);
+					const arrayRoles = userInfo.roles.split('/');
 					userRoles = arrayRoles.filter((role) => role !== '');
 				}
-			});
+			}
 		}
 		else {
 			console.error('Failed to fetch user data:', response.status);
@@ -65,7 +64,6 @@ const getMyUserAccount = async (userAdditional) => {
 					'content-type': 'application/json',
 					'x-csrf-token': Liferay.authToken,
 				},
-				method: 'GET',
 			}
 		);
 
@@ -136,7 +134,6 @@ const getRolesId = async (accountId, myUserId) => {
 					'content-type': 'application/json',
 					'x-csrf-token': Liferay.authToken,
 				},
-				method: 'GET',
 			}
 		);
 
@@ -210,8 +207,8 @@ const updateInviteStatus = async () => {
 			}
 		);
 		if (response.ok) {
-			const jsonJserAccountData = JSON.stringify(userAccountData);
-			localStorage.setItem('userAccountData', jsonJserAccountData);
+			const userAccountJsonData = JSON.stringify(userAccountData);
+			localStorage.setItem('userAccountData', userAccountJsonData);
 			window.location.href = `${Liferay.ThemeDisplay.getPortalURL()}${getSiteURL()}/dashboard`;
 		}
 		else {

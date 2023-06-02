@@ -13,20 +13,27 @@
  */
 
 const messageReceived = localStorage.getItem('userAccountData');
-const data = JSON.parse(messageReceived);
 
-const loggedUser = document.querySelector('.logged-user');
-loggedUser.textContent = data.userName;
+if (messageReceived) {
+	const data = JSON.parse(messageReceived);
+	const loggedUserContainer = document.querySelector('.logged-user');
+	const accountNameAssociated = document.querySelector('.account-name');
 
-const accountNameAssociated = document.querySelector('.account-name');
-accountNameAssociated.textContent = data.accountName;
+	if (loggedUserContainer) {
+		loggedUserContainer.textContent = data.userName;
+	}
 
-if (data) {
-	const modal = document.getElementsByClassName('alert-info')[0];
-	modal.classList.replace('d-none', 'd-show');
+	if (accountNameAssociated) {
+		accountNameAssociated.textContent = data.accountName;
+	}
 
-	setTimeout(() => {
-		modal.classList.replace('d-show', 'd-none');
-	}, 4000);
-	localStorage.removeItem('userAccountData');
+	if (data) {
+		const modal = document.querySelector('.notification-welcome');
+		modal.classList.replace('d-none', 'd-show');
+
+		setTimeout(() => {
+			modal.classList.replace('d-show', 'd-none');
+		}, 4000);
+		localStorage.removeItem('userAccountData');
+	}
 }

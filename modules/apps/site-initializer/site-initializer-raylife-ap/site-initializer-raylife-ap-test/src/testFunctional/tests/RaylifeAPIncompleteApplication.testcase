@@ -135,4 +135,48 @@ definition {
 		}
 	}
 
+	@description = "Story id: LPS-159542 | Test Summary: Verify if inside the application details view when user click on EDIT APPLICATION, the page redirects you to the contact info page, to finish the flow."
+	@priority = 3
+	test AssertRedirectToContactInfoPage {
+		property test.name.skip.portal.instance = "RaylifeAPIncompleteApplication#AssertRedirectToContactInfoPage";
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		task ("Given that an user started a new application flow") {
+			RaylifeApplicationModal.openNewApplicationFlow(
+				insurance = "Personal",
+				product = "Auto");
+		}
+
+		task ("When the user completes the Contact Info forms and close the form") {
+			RaylifeApplicationModal.typeAllNewApplicationContactInfoFields(
+				apt = 0000,
+				city = "New York",
+				emailAddress = "test@liferay.com",
+				firstName = "Testing",
+				lastName = "Model",
+				phoneNumber = 0123456789,
+				state = "NY",
+				streetAddress = "Address",
+				zipCode = 12345);
+
+			Button.click(button = "Exit");
+		}
+
+		task ("And go to the datails page of the new incomplete application") {
+			RaylifeAPNavigator.gotoSidebarItem(itemName = "Applications");
+
+			RaylifeAP.search(searchTerm = "AP");
+
+			RaylifeAP.clickInApplicationNumber(
+				product = "Auto",
+				status = "Incomplete");
+		}
+
+		task ("Then assert if by clicking the button 'edit application' the user is redirected to the contact info form page to finsih the flow") {
+			Button.click(button = "Edit Application");
+
+			AssertElementPresent(locator1 = "RaylifeAP#CONTACT_HEADER");
+		}
+	}
 }

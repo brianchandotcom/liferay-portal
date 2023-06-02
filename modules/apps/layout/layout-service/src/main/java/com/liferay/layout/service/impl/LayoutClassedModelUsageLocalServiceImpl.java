@@ -180,7 +180,7 @@ public class LayoutClassedModelUsageLocalServiceImpl
 		long classNameId, long classPK) {
 
 		return layoutClassedModelUsagePersistence.dslQueryCount(
-			DSLQueryFactoryUtil.selectDistinct(
+			DSLQueryFactoryUtil.countDistinct(
 				LayoutClassedModelUsageTable.INSTANCE.plid
 			).from(
 				LayoutClassedModelUsageTable.INSTANCE

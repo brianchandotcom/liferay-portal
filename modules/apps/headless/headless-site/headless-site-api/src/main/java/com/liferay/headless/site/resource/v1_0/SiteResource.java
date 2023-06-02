@@ -54,6 +54,9 @@ public interface SiteResource {
 
 	public Site postSite(Site site) throws Exception;
 
+	public Site putSite(String key, MultipartBody multipartBody)
+		throws Exception;
+
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {
 	}

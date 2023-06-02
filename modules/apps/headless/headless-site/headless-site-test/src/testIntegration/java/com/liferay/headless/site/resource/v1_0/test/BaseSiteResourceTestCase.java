@@ -212,6 +212,38 @@ public abstract class BaseSiteResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@Test
+	public void testPutSite() throws Exception {
+		Site postSite = testPutSite_addSite();
+
+		Site randomSite = randomSite();
+
+		Map<String, File> multipartFiles = getMultipartFiles();
+
+		Site putSite = siteResource.putSite(
+			postSite.getKey(), randomSite, multipartFiles);
+
+		assertEquals(randomSite, putSite);
+		assertValid(putSite);
+
+		Site getSite = testPutSite_getSite(putSite.getKey());
+
+		assertEquals(randomSite, getSite);
+		assertValid(getSite);
+
+		assertValid(getSite, multipartFiles);
+	}
+
+	protected Site testPutSite_getSite(String key) {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Site testPutSite_addSite() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected Site testGraphQLSite_addSite() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");

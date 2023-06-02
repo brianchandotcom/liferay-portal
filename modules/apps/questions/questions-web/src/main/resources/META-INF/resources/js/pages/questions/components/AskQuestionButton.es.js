@@ -5,9 +5,13 @@
 
 import ClayButton from '@clayui/button';
 import {ClayInput} from '@clayui/form';
-import React from 'react';
+import React, {useContext} from 'react';
+
+import {AppContext} from '../../../AppContext.es';
 
 export default function AskQuestionButton({navigateToNewQuestion}) {
+	const context = useContext(AppContext);
+
 	return (
 		<ClayInput.GroupItem shrink>
 			<ClayButton
@@ -15,7 +19,10 @@ export default function AskQuestionButton({navigateToNewQuestion}) {
 				displayType="primary"
 				onClick={navigateToNewQuestion}
 			>
-				{Liferay.Language.get('ask-question')}
+				{Liferay.FeatureFlags['LPS-185892'] &&
+				context.showFeatureRequestText
+					? Liferay.Language.get('feature-request')
+					: Liferay.Language.get('ask-question')}
 			</ClayButton>
 		</ClayInput.GroupItem>
 	);

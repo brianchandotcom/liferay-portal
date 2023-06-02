@@ -192,11 +192,11 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 
 		String orphanedPartition = _DB_PARTITION_SCHEMA_NAME_PREFIX + companyId;
 
-		String webId = "foo.uniform.com";
+		String webId = "test.com";
 
 		try {
 			_companyLocalService.addCompany(
-				companyId, webId, webId, "test.com", 0, true);
+				companyId, webId, webId, webId, 0, true);
 		}
 		catch (Exception exception) {
 			try (Connection connection = DataAccess.getConnection();

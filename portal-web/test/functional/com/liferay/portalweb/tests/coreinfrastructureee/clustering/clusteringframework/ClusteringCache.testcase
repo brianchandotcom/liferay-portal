@@ -117,6 +117,10 @@ definition {
 
 		Clustering.deployClusteringModule(nodePort = 9080);
 
+		Clustering.viewTextPresentOnSpecificNode(
+			expectedText = "STARTED com.liferay.portal.cluster.multiple.sample.web",
+			nodePort = 9080);
+
 		Navigator.openNodePort(nodePort = 8080);
 
 		Navigator.gotoPage(pageName = "Session Replication Test");

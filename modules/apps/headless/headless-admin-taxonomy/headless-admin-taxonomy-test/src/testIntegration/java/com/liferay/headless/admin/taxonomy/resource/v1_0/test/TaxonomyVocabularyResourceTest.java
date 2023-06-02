@@ -17,9 +17,13 @@ package com.liferay.headless.admin.taxonomy.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.taxonomy.client.dto.v1_0.AssetType;
 import com.liferay.headless.admin.taxonomy.client.dto.v1_0.TaxonomyVocabulary;
+import com.liferay.headless.admin.taxonomy.client.problem.Problem;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import org.junit.Assert;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -28,6 +32,39 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class TaxonomyVocabularyResourceTest
 	extends BaseTaxonomyVocabularyResourceTestCase {
+
+	@Override
+	@Test
+	public void testDeleteAssetLibraryTaxonomyVocabularyByExternalReferenceCode()
+		throws Exception {
+
+		super.testDeleteAssetLibraryTaxonomyVocabularyByExternalReferenceCode();
+
+		testDeleteAssetLibraryTaxonomyVocabularyByExternalReferenceCode_addTaxonomyVocabulary();
+
+		String externalReferenceCode = StringUtil.toLowerCase(
+			RandomTestUtil.randomString());
+
+		try {
+			taxonomyVocabularyResource.
+				deleteAssetLibraryTaxonomyVocabularyByExternalReferenceCode(
+					testDeleteAssetLibraryTaxonomyVocabularyByExternalReferenceCode_getAssetLibraryId(),
+					externalReferenceCode);
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("NOT_FOUND", problem.getStatus());
+			Assert.assertEquals(
+				StringBundler.concat(
+					"No AssetVocabulary exists with the key {",
+					"externalReferenceCode=", externalReferenceCode,
+					", groupId=", testDepotEntry.getGroupId(), "}"),
+				problem.getTitle());
+		}
+	}
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {

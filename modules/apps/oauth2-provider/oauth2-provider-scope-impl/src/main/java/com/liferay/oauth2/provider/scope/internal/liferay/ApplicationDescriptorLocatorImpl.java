@@ -40,11 +40,11 @@ public class ApplicationDescriptorLocatorImpl
 		ApplicationDescriptor applicationDescriptor =
 			_serviceTrackerMap.getService(applicationName);
 
-		if (applicationDescriptor == null) {
-			return _defaultApplicationDescriptorSnapshot.get();
+		if (applicationDescriptor != null) {
+			return applicationDescriptor;
 		}
 
-		return applicationDescriptor;
+		return _defaultApplicationDescriptorSnapshot.get();
 	}
 
 	@Activate

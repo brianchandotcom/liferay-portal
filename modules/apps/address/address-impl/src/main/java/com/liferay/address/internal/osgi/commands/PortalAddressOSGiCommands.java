@@ -89,38 +89,7 @@ public class PortalAddressOSGiCommands {
 			JSONObject countryJSONObject = countriesJSONArray.getJSONObject(i);
 
 			try {
-				String name = countryJSONObject.getString("name");
-
-				ServiceContext serviceContext = new ServiceContext();
-
-				serviceContext.setCompanyId(companyId);
-
-				User guestUser = company.getGuestUser();
-
-				serviceContext.setUserId(guestUser.getUserId());
-
-				Country country = _countryLocalService.addCountry(
-					countryJSONObject.getString("a2"),
-					countryJSONObject.getString("a3"), true, true,
-					countryJSONObject.getString("idd"), name,
-					countryJSONObject.getString("number"), 0, true, false,
-					countryJSONObject.getBoolean("zipRequired"),
-					serviceContext);
-
-				Map<String, String> titleMap = new HashMap<>();
-
-				for (Locale locale :
-						_language.getCompanyAvailableLocales(companyId)) {
-
-					titleMap.put(
-						_language.getLanguageId(locale),
-						country.getName(locale));
-				}
-
-				_countryLocalService.updateCountryLocalizations(
-					country, titleMap);
-
-				_processCountryRegions(country);
+				_addNewCountry(company, countryJSONObject);
 			}
 			catch (Exception exception) {
 				_log.error(exception);
@@ -170,41 +139,49 @@ public class PortalAddressOSGiCommands {
 					_processCountryRegions(country);
 				}
 				else {
-					ServiceContext serviceContext = new ServiceContext();
-
-					serviceContext.setCompanyId(companyId);
-
-					User guestUser = company.getGuestUser();
-
-					serviceContext.setUserId(guestUser.getUserId());
-
-					Country country = _countryLocalService.addCountry(
-						countryJSONObject.getString("a2"),
-						countryJSONObject.getString("a3"), true, true,
-						countryJSONObject.getString("idd"), name,
-						countryJSONObject.getString("number"), 0, true, false,
-						countryJSONObject.getBoolean("zipRequired"),
-						serviceContext);
-
-					Map<String, String> titleMap = new HashMap<>();
-
-					for (Locale locale :
-							_language.getCompanyAvailableLocales(companyId)) {
-
-						titleMap.put(
-							_language.getLanguageId(locale),
-							country.getName(locale));
-					}
-
-					_countryLocalService.updateCountryLocalizations(
-						country, titleMap);
-
-					_processCountryRegions(country);
+					_addNewCountry(company, countryJSONObject);
 				}
 			}
 			catch (Exception exception) {
 				_log.error(exception);
 			}
+		}
+	}
+
+	private void _addNewCountry(Company company, JSONObject countryJSONObject) {
+		try {
+			ServiceContext serviceContext = new ServiceContext();
+
+			serviceContext.setCompanyId(company.getCompanyId());
+
+			User guestUser = company.getGuestUser();
+
+			serviceContext.setUserId(guestUser.getUserId());
+
+			Country country = _countryLocalService.addCountry(
+				countryJSONObject.getString("a2"),
+				countryJSONObject.getString("a3"), true, true,
+				countryJSONObject.getString("idd"),
+				countryJSONObject.getString("name"),
+				countryJSONObject.getString("number"), 0, true, false,
+				countryJSONObject.getBoolean("zipRequired"), serviceContext);
+
+			Map<String, String> titleMap = new HashMap<>();
+
+			for (Locale locale :
+					_language.getCompanyAvailableLocales(
+						company.getCompanyId())) {
+
+				titleMap.put(
+					_language.getLanguageId(locale), country.getName(locale));
+			}
+
+			_countryLocalService.updateCountryLocalizations(country, titleMap);
+
+			_processCountryRegions(country);
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException);
 		}
 	}
 

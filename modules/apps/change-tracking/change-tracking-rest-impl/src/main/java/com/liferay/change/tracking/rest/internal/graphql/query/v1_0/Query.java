@@ -15,7 +15,9 @@
 package com.liferay.change.tracking.rest.internal.graphql.query.v1_0;
 
 import com.liferay.change.tracking.rest.dto.v1_0.CTCollection;
+import com.liferay.change.tracking.rest.dto.v1_0.CTEntry;
 import com.liferay.change.tracking.rest.resource.v1_0.CTCollectionResource;
+import com.liferay.change.tracking.rest.resource.v1_0.CTEntryResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.search.Sort;
@@ -53,6 +55,14 @@ public class Query {
 
 		_ctCollectionResourceComponentServiceObjects =
 			ctCollectionResourceComponentServiceObjects;
+	}
+
+	public static void setCTEntryResourceComponentServiceObjects(
+		ComponentServiceObjects<CTEntryResource>
+			ctEntryResourceComponentServiceObjects) {
+
+		_ctEntryResourceComponentServiceObjects =
+			ctEntryResourceComponentServiceObjects;
 	}
 
 	/**
@@ -94,6 +104,44 @@ public class Query {
 			ctCollectionResource -> ctCollectionResource.getCTCollection(id));
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {ctCollectionIdCTEntries(filter: ___, id: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public CTEntryPage ctCollectionIdCTEntries(
+			@GraphQLName("id") String id, @GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_ctEntryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			ctEntryResource -> new CTEntryPage(
+				ctEntryResource.getCtCollectionIdCTEntriesPage(
+					id, search,
+					_filterBiFunction.apply(ctEntryResource, filterString),
+					Pagination.of(page, pageSize),
+					_sortsBiFunction.apply(ctEntryResource, sortsString))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cTEntry(id: ___){actions, changeType, ctCollectionId, dateCreated, dateModified, hideable, id, modelClassNameId, modelClassPK, ownerName, siteName, status, title, typeName}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public CTEntry cTEntry(@GraphQLName("id") Long id) throws Exception {
+		return _applyComponentServiceObjects(
+			_ctEntryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			ctEntryResource -> ctEntryResource.getCTEntry(id));
+	}
+
 	@GraphQLName("CTCollectionPage")
 	public class CTCollectionPage {
 
@@ -112,6 +160,39 @@ public class Query {
 
 		@GraphQLField
 		protected java.util.Collection<CTCollection> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
+	@GraphQLName("CTEntryPage")
+	public class CTEntryPage {
+
+		public CTEntryPage(Page ctEntryPage) {
+			actions = ctEntryPage.getActions();
+
+			items = ctEntryPage.getItems();
+			lastPage = ctEntryPage.getLastPage();
+			page = ctEntryPage.getPage();
+			pageSize = ctEntryPage.getPageSize();
+			totalCount = ctEntryPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map<String, String>> actions;
+
+		@GraphQLField
+		protected java.util.Collection<CTEntry> items;
 
 		@GraphQLField
 		protected long lastPage;
@@ -161,8 +242,23 @@ public class Query {
 		ctCollectionResource.setRoleLocalService(_roleLocalService);
 	}
 
+	private void _populateResourceContext(CTEntryResource ctEntryResource)
+		throws Exception {
+
+		ctEntryResource.setContextAcceptLanguage(_acceptLanguage);
+		ctEntryResource.setContextCompany(_company);
+		ctEntryResource.setContextHttpServletRequest(_httpServletRequest);
+		ctEntryResource.setContextHttpServletResponse(_httpServletResponse);
+		ctEntryResource.setContextUriInfo(_uriInfo);
+		ctEntryResource.setContextUser(_user);
+		ctEntryResource.setGroupLocalService(_groupLocalService);
+		ctEntryResource.setRoleLocalService(_roleLocalService);
+	}
+
 	private static ComponentServiceObjects<CTCollectionResource>
 		_ctCollectionResourceComponentServiceObjects;
+	private static ComponentServiceObjects<CTEntryResource>
+		_ctEntryResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
 	private com.liferay.portal.kernel.model.Company _company;

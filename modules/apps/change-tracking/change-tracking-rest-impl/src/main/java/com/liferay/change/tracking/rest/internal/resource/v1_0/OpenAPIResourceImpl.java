@@ -96,6 +96,8 @@ public class OpenAPIResourceImpl {
 		{
 			add(CTCollectionResourceImpl.class);
 
+			add(CTEntryResourceImpl.class);
+
 			add(OpenAPIResourceImpl.class);
 		}
 	};

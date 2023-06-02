@@ -291,7 +291,7 @@ paths:
             tags: ["CTCollection"]
     "/ct-collections/{id}/ct-entries":
         get:
-            operationId: getCTCollectionCTEntriesPage
+            operationId: getCtCollectionIdCTEntriesPage
             parameters:
                 - in: path
                   name: id

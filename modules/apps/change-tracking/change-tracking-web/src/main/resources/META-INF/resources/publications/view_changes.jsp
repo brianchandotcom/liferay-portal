@@ -35,7 +35,7 @@ Map<String, Object> reactData = viewChangesDisplayContext.getReactData();
 		/>
 	</div>
 
-	<div>
+	<div class="sidenav-content">
 		<react:component
 			module="publications/js/views/ChangeTrackingChangesView"
 			props="<%= reactData %>"

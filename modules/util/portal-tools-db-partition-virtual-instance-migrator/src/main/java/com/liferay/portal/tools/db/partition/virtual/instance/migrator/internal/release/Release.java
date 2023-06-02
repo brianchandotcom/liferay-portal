@@ -14,7 +14,7 @@
 
 package com.liferay.portal.tools.db.partition.virtual.instance.migrator.internal.release;
 
-import com.liferay.portal.tools.db.partition.virtual.instance.migrator.internal.version.Version;
+import com.liferay.portal.kernel.version.Version;
 
 import java.util.Objects;
 

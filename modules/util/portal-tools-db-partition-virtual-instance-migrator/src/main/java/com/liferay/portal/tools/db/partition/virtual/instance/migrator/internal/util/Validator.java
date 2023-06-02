@@ -16,7 +16,7 @@ package com.liferay.portal.tools.db.partition.virtual.instance.migrator.internal
 
 import com.liferay.portal.tools.db.partition.virtual.instance.migrator.internal.recorder.Recorder;
 import com.liferay.portal.tools.db.partition.virtual.instance.migrator.internal.release.Release;
-import com.liferay.portal.tools.db.partition.virtual.instance.migrator.internal.version.Version;
+import com.liferay.portal.kernel.version.Version;
 
 import java.sql.Connection;
 import java.sql.SQLException;

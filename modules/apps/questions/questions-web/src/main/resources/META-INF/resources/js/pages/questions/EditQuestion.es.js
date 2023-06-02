@@ -42,6 +42,21 @@ export default withRouter(
 			},
 		});
 
+		const BuildTitleButton = () => {
+			if (context.trustedUser && !context.showFeatureRequestText) {
+				return Liferay.Language.get('update-your-question');
+			}
+
+			if (
+				Liferay.FeatureFlags['LPS-185892'] &&
+				context.showFeatureRequestText
+			) {
+				return Liferay.Language.get('update-your-request');
+			}
+
+			return Liferay.Language.get('submit-for-workflow');
+		};
+
 		useEffect(() => {
 			if (data.messageBoardThreadByFriendlyUrlPath) {
 				editorRef.current.setContent(
@@ -157,13 +172,7 @@ export default withRouter(
 									).then(() => history.goBack());
 								}}
 							>
-								{context.trustedUser
-									? Liferay.Language.get(
-											'update-your-question'
-									  )
-									: Liferay.Language.get(
-											'submit-for-workflow'
-									  )}
+								<BuildTitleButton />
 							</ClayButton>
 
 							<Link

@@ -48,6 +48,8 @@ catch (Exception exception) {
 		>
 			<aui:input name="preferences--showCardsForTopicNavigation--" type="checkbox" value="<%= questionsConfiguration.showCardsForTopicNavigation() %>" />
 
+			<aui:input name="preferences--showFeatureRequestText--" type="checkbox" value="<%= questionsConfiguration.showFeatureRequestText() %>" />
+
 			<div class="form-group">
 				<aui:input label="root-topic-id" name="rootTopicName" type="resource" value="<%= rootTopicName %>" />
 

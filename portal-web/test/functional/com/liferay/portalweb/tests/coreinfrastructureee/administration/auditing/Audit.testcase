@@ -327,6 +327,262 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-180466 TC-1 and TC3. Verify that Audit event stores that specific event with the info of the site."
+	@priority = 5
+	test CanStoreSiteIDForAuditEvent {
+		property custom.properties = "feature.flag.LPS-177194=true";
+		property osgi.module.configuration.file.names = "com.liferay.portal.security.audit.router.configuration.PersistentAuditMessageProcessorConfiguration.config";
+		property osgi.module.configurations = "enabled=B\"true\"";
+		property test.name.skip.portal.instance = "Audit#CanStoreSiteIDForAuditEvent";
+
+		task ("Given a new Object definition with site scope is created") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "MyObject",
+				objectName = "MyObject",
+				pluralLabelName = "MyObject");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "My Object Field",
+				fieldName = "myObjectField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "MyObject");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectSystemObject(label = "MyObject");
+
+			CreateObject.selectScope(fieldLabel = "Site");
+
+			Check.checkToggleSwitch(locator1 = "ObjectPortlet#VIEW_WIDGET_BUTTON");
+
+			Check.checkToggleSwitch(locator1 = "ObjectPortlet#ENABLE_ENTRY_HISTORY_BUTTON");
+
+			CreateObject.saveObject();
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "MyObject");
+
+			var objectId = JSONObject.getObjectId(objectName = "MyObject");
+		}
+
+		task ("And the widget named after the Object to a page on new site is added") {
+			HeadlessSite.addSite(siteName = "Site Name");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Object Page");
+
+			Navigator.gotoSitePage(
+				pageName = "Object Page",
+				siteName = "Site Name");
+
+			Portlet.addPG(
+				pageName = "Object Page",
+				portletName = "MyObject");
+
+			var groupId = JSONGroupAPI._getGroupIdByName(
+				groupName = "Site Name",
+				site = "true");
+		}
+
+		task ("When use the widget to create a new record") {
+			Navigator.gotoSitePage(
+				pageName = "Object Page",
+				siteName = "Site Name");
+
+			LexiconEntry.gotoAdd();
+
+			ObjectPortlet.typeCustomField(
+				customField = "My Object Field",
+				entry = "Test Content");
+
+			PortletEntry.save();
+
+			Navigator.gotoSitePage(
+				pageName = "Object Page",
+				siteName = "Site Name");
+
+			ObjectPortlet.viewEntry(entry = "Test Content");
+		}
+
+		task ("Then you should see the groupId in the audit event") {
+			Audit.openAuditAdmin();
+
+			var resourceName = "com.liferay.object.model.ObjectDefinition#${objectId}";
+
+			AssertElementPresent(
+				key_resourceAction = "ADD",
+				key_resourceName = ${resourceName},
+				locator1 = "AuditReports#REPORTS_TABLE_RESOURCE_NAME");
+
+			Audit.viewAuditDetails(
+				additionalInformation = "myObjectField,Test Content",
+				groupId = ${groupId},
+				key_resourceAction = "ADD",
+				key_resourceName = "ObjectDefinition#${objectId}",
+				resourceAction = "ADD",
+				resourceName = "ObjectDefinition#${objectId}",
+				userName = "Test Test");
+		}
+
+		task ("When search the groupId in the advanced search") {
+			Audit.openAuditAdmin();
+
+			Audit.searchCP(
+				groupId = ${groupId},
+				match = "All",
+				searchTerm = ${groupId});
+		}
+
+		task ("Then the relevant audit events should display") {
+			AssertTextEquals(
+				key_resourceAction = "ADD",
+				key_resourceName = ${resourceName},
+				locator1 = "AuditReports#REPORTS_TABLE_RESOURCE_ACTION",
+				value1 = "ADD");
+		}
+	}
+
+	@description = "This is a use case for LPS-180466 TC-2. Verify that Audit event stores that specific event with the info of the site on virtual instance."
+	@priority = 5
+	test CanStoreSiteIDForAuditEventOnVirtualInstance {
+		property custom.properties = "feature.flag.LPS-177194=true";
+		property osgi.module.configuration.file.names = "com.liferay.portal.security.audit.router.configuration.PersistentAuditMessageProcessorConfiguration.config";
+		property osgi.module.configurations = "enabled=B\"true\"";
+		property test.name.skip.portal.instance = "Audit#CanStoreSiteIDForAuditEventOnVirtualInstance";
+
+		task ("Given a new Object definition with site scope is created on virtual instance") {
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.able.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
+
+			User.firstLoginPG(
+				password = "test",
+				userEmailAddress = "test@www.able.com",
+				virtualHostsURL = "http://www.able.com:8080");
+
+			ObjectAdmin.openObjectAdmin(baseURL = "http://www.able.com:8080");
+
+			ObjectAdmin.addNewObject(
+				fieldLabelName = "MyObject",
+				pluralLabelName = "MyObject");
+
+			CreateObject.saveObject();
+
+			ObjectPortlet.selectSystemObject(label = "MyObject");
+
+			CreateObject.selectScope(fieldLabel = "Site");
+
+			Check.checkToggleSwitch(locator1 = "ObjectPortlet#VIEW_WIDGET_BUTTON");
+
+			Check.checkToggleSwitch(locator1 = "ObjectPortlet#ENABLE_ENTRY_HISTORY_BUTTON");
+
+			CreateObject.saveObject();
+
+			ObjectAdmin.openObjectAdmin(baseURL = "http://www.able.com:8080");
+
+			ObjectPortlet.selectCustomObject(label = "MyObject");
+
+			ObjectAdmin.goToFieldsTab();
+
+			ObjectAdmin.addObjectFieldViaUI(
+				fieldLabel = "My Object Field",
+				fieldName = "myObjectField",
+				fieldType = "Text");
+
+			Refresh();
+
+			ObjectAdmin.assertObjectField(
+				fieldLabel = "My Object Field",
+				fieldType = "Text");
+
+			ObjectAdmin.goToDetailsTab();
+
+			ObjectAdmin.publishObjectViaUI();
+
+			var objectId = JSONObject.getObjectId(
+				objectName = "MyObject",
+				userEmailAddress = "test@www.able.com",
+				virtualHost = "www.able.com");
+		}
+
+		task ("And the widget named after the Object to a page on new site is added on virtual instance") {
+			HeadlessSite.addSite(
+				portalURL = "http://www.able.com:8080",
+				siteName = "Site Name",
+				userEmailAddress = "test@www.able.com",
+				userPassword = "test");
+
+			PagesAdmin.openPagesAdmin(
+				baseURL = "http://www.able.com:8080",
+				siteURLKey = "site-name");
+
+			PagesAdmin.addPage(
+				pageName = "Object Page",
+				sitePageType = "Widget Page");
+
+			Navigator.gotoSitePage(
+				baseURL = "http://www.able.com:8080",
+				pageName = "Object Page",
+				siteName = "Site Name");
+
+			Portlet.addPG(
+				pageName = "Object Page",
+				portletName = "MyObject");
+
+			var groupId = JSONGroupAPI._getGroupIdByNameViaOtherUser(
+				creatorEmailAddress = "test@www.able.com",
+				groupName = "Site Name",
+				portalInstanceName = "www.able.com",
+				portalURL = "http://www.able.com:8080",
+				site = "true");
+		}
+
+		task ("When use the widget to create a new record on virtual instance") {
+			Navigator.gotoSitePage(
+				baseURL = "http://www.able.com:8080",
+				pageName = "Object Page",
+				siteName = "Site Name");
+
+			LexiconEntry.gotoAdd();
+
+			ObjectPortlet.typeCustomField(
+				customField = "My Object Field",
+				entry = "Test Content");
+
+			PortletEntry.save();
+
+			Navigator.gotoSitePage(
+				baseURL = "http://www.able.com:8080",
+				pageName = "Object Page",
+				siteName = "Site Name");
+
+			ObjectPortlet.viewEntry(entry = "Test Content");
+		}
+
+		task ("Then you should see the groupId in the audit event on virtual instance") {
+			Audit.openAuditAdmin(baseURL = "http://www.able.com:8080");
+
+			var resourceName = "com.liferay.object.model.ObjectDefinition#${objectId}";
+
+			AssertElementPresent(
+				key_resourceAction = "ADD",
+				key_resourceName = ${resourceName},
+				locator1 = "AuditReports#REPORTS_TABLE_RESOURCE_NAME");
+
+			Audit.viewAuditDetails(
+				additionalInformation = "myObjectField,Test Content",
+				groupId = ${groupId},
+				key_resourceAction = "ADD",
+				key_resourceName = "ObjectDefinition#${objectId}",
+				resourceAction = "ADD",
+				resourceName = "ObjectDefinition#${objectId}",
+				userName = "Test Test");
+		}
+	}
+
 	@description = "This is a use case for LPS-150300. Verify that Console outputs the correct clientIP when reading of the X-Forwarded-For http header."
 	@priority = 5
 	test VerifyCorrectClientIP {

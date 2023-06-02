@@ -379,7 +379,6 @@ definition {
 			creatorPassword = ${creatorPassword},
 			portalInstanceName = ${portalInstanceName},
 			portalURL = ${portalURL});
-
 		var parentGroupId = JSONGroupSetter.setParentGroupId(
 			grandParentGroupName = ${grandParentGroupName},
 			parentGroupName = ${parentGroupName},

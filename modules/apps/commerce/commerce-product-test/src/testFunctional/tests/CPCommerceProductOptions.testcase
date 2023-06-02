@@ -1460,6 +1460,113 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-11553. If a product with variants follows a product without stock, only the product without stock shows the unavailable label"
+	@priority = 5
+	test CanViewProductWithStockAvailableWhenItFollowsAProductWithoutStock {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "true";
+
+		task ("Given a Minium site with a buyer user is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And an SKU Contributor option with two values is assigned to the 'Ball Joints' product") {
+			CommerceNavigator.goToProductOptionsAdminViaURL();
+
+			CPCommerceCatalog.newOptionsEntry(
+				optionDescription = "Test Description",
+				optionFieldType = "Select from List",
+				optionName = "Size",
+				skuContributor = "true");
+
+			Button.clickSave();
+
+			CPCommerceCatalog.addOptionValues(optionValuesList = "Value1:0,Value2:0");
+
+			Button.clickSave();
+
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "Ball Joints");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			CommerceRelations.assignSingleRelationToProductsEntry(
+				entryName = "Size",
+				title = "Add Options");
+		}
+
+		task ("And generates all SKUs combinations from the 'SKUs' tab") {
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceSKUs.generateAllSkuCombinations();
+		}
+
+		task ("When the inventory quantity of a warehouse for the two SKUs is set to 6") {
+			for (var warehouseItemSku : list "VALUE1,VALUE2") {
+				CommerceJSONWarehousesAndInventoriesAPI._addWarehouseItem(
+					warehouseItemQuantity = 6,
+					warehouseItemSku = ${warehouseItemSku},
+					warehouseName = "Italy");
+			}
+		}
+
+		task ("And the inventory quantity of the 'ABS Sensor' product is set to 0") {
+			for (var warehouseName : list "Italy,United States - Northeast,United States - Southwest") {
+				CommerceJSONWarehousesAndInventoriesAPI._patchWarehouseItem(
+					productSku = "MIN93015",
+					quantity = 0,
+					warehouseName = ${warehouseName});
+			}
+		}
+
+		task ("And the buyer navigates to the Minium Catalog page") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("Then the availability for 'ABS Sensor' is unavailable and there is no availability label for 'Ball Joints'") {
+			CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
+
+			AssertElementPresent(
+				key_productName = "ABS Sensor",
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_UNAVAILABLE_LABEL");
+
+			AssertElementNotPresent(
+				key_productName = "Ball Joints",
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_UNAVAILABLE_LABEL");
+
+			AssertElementNotPresent(
+				key_productName = "Ball Joints",
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_AVAILABLE_LABEL");
+		}
+
+		task ("And the availability for 'Ball Joints' is available on the product details page") {
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "Ball Joints");
+
+			AssertElementPresent(
+				key_availability = "Available",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_AVAILABILITY");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-6017. CreateAnOptionForAllTheFieldType"
 	@priority = 5
 	test CreateAnOptionForAllTheFieldType {

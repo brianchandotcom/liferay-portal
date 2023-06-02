@@ -224,7 +224,7 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 
 		for (Cookie cookie : cookies) {
 			if (Objects.equals(
-					cookie.getName(), _AB_TEST_VARIANT_ID_COOKIE_NAME)) {
+					cookie.getName(), _AB_TEST_VARIANT_ID_COOKIE_PREFIX)) {
 
 				return cookie;
 			}
@@ -332,7 +332,7 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 		long segmentsExperienceId) {
 
 		Cookie abTestVariantIdCookie = new Cookie(
-			_AB_TEST_VARIANT_ID_COOKIE_NAME,
+			_AB_TEST_VARIANT_ID_COOKIE_PREFIX,
 			_getSegmentsExperienceKey(segmentsExperienceId));
 
 		String domain = CookiesManagerUtil.getDomain(httpServletRequest);
@@ -364,8 +364,8 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 			httpServletRequest, httpServletResponse, cookie.getName());
 	}
 
-	private static final String _AB_TEST_VARIANT_ID_COOKIE_NAME =
-		"ab_test_variant_id";
+	private static final String _AB_TEST_VARIANT_ID_COOKIE_PREFIX =
+		"ab_test_variant_id_";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SegmentsExperimentSegmentsExperienceRequestProcessor.class);

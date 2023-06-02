@@ -383,13 +383,11 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Design");
 
-		Navigator.gotoNavTab(navTab = "Look and Feel");
-
 		Theme.configureLookAndFeelSpecificLook();
 
 		Click(
 			key_text = "Change Current Theme",
-			locator1 = "Button#ANY");
+			locator1 = "Button#ANY_ENABLED");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -424,13 +422,11 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Design");
 
-		Navigator.gotoNavTab(navTab = "Look and Feel");
-
 		Theme.configureLookAndFeelSpecificLook();
 
 		Click(
 			key_text = "Change Current Theme",
-			locator1 = "Button#ANY");
+			locator1 = "Button#ANY_ENABLED");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -443,6 +439,7 @@ definition {
 	@priority = 3
 	test EnableBlacklistedModuleAfterShutdown {
 		property osgi.modules.includes = "frontend-taglib-clay-sample-web";
+		property test.name.skip.portal.instance = "BundleBlacklist#EnableBlacklistedModuleAfterShutdown";
 
 		task ("Given a blacklisted module") {
 			OSGiConfig.deployOSGiConfigFile(
@@ -642,13 +639,11 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Design");
 
-		Navigator.gotoNavTab(navTab = "Look and Feel");
-
 		Theme.configureLookAndFeelSpecificLook();
 
 		Click(
 			key_text = "Change Current Theme",
-			locator1 = "Button#ANY");
+			locator1 = "Button#ANY_ENABLED");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 

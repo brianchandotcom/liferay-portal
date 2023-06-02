@@ -17,25 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-long liveGroupId = (long)request.getAttribute("site.liveGroupId");
-
-UnicodeProperties groupTypeSettingsUnicodeProperties = (UnicodeProperties)request.getAttribute("site.groupTypeSettings");
-
-List<Role> defaultSiteRoles = new ArrayList<>();
-
-long[] defaultSiteRoleIds = StringUtil.split(groupTypeSettingsUnicodeProperties.getProperty("defaultSiteRoleIds"), 0L);
-
-for (long defaultSiteRoleId : defaultSiteRoleIds) {
-	defaultSiteRoles.add(RoleLocalServiceUtil.getRole(defaultSiteRoleId));
-}
-
-List<Team> defaultTeams = new ArrayList<>();
-
-long[] defaultTeamIds = StringUtil.split(groupTypeSettingsUnicodeProperties.getProperty("defaultTeamIds"), 0L);
-
-for (long defaultTeamId : defaultTeamIds) {
-	defaultTeams.add(TeamLocalServiceUtil.getTeam(defaultTeamId));
-}
+DefaultUserAssociationsDisplayContext defaultUserAssociationsDisplayContext = (DefaultUserAssociationsDisplayContext)request.getAttribute(DefaultUserAssociationsDisplayContext.class.getName());
 %>
 
 <liferay-util:buffer
@@ -78,12 +60,8 @@ for (long defaultTeamId : defaultTeamIds) {
 	emptyResultsMessage="none"
 	headerNames="title,null"
 	id="siteRolesSearchContainer"
-	total="<%= defaultSiteRoles.size() %>"
+	searchContainer="<%= defaultUserAssociationsDisplayContext.getSiteRolesSearchContainer() %>"
 >
-	<liferay-ui:search-container-results
-		results="<%= defaultSiteRoles %>"
-	/>
-
 	<liferay-ui:search-container-row
 		className="com.liferay.portal.kernel.model.Role"
 		keyProperty="roleId"
@@ -144,12 +122,8 @@ for (long defaultTeamId : defaultTeamIds) {
 	emptyResultsMessage="none"
 	headerNames="title,null"
 	id="teamsSearchContainer"
-	total="<%= defaultTeams.size() %>"
+	searchContainer="<%= defaultUserAssociationsDisplayContext.getTeamsSearchContainer() %>"
 >
-	<liferay-ui:search-container-results
-		results="<%= defaultTeams %>"
-	/>
-
 	<liferay-ui:search-container-row
 		className="com.liferay.portal.kernel.model.Team"
 		keyProperty="teamId"
@@ -183,25 +157,6 @@ for (long defaultTeamId : defaultTeamIds) {
 </liferay-ui:search-container>
 
 <aui:script use="liferay-search-container">
-
-	<%
-	PortletURL selectSiteRoleURL = PortletURLBuilder.create(
-		PortletProviderUtil.getPortletURL(request, Role.class.getName(), PortletProvider.Action.BROWSE)
-	).setParameter(
-		"eventName", liferayPortletResponse.getNamespace() + "selectSiteRole"
-	).setParameter(
-		"groupId", liveGroupId
-	).setParameter(
-		"roleType", RoleConstants.TYPE_SITE
-	).setParameter(
-		"step", "2"
-	).setWindowState(
-		LiferayWindowState.POP_UP
-	).buildPortletURL();
-
-	String selectSiteRolePortletId = PortletProviderUtil.getPortletId(Role.class.getName(), PortletProvider.Action.BROWSE);
-	%>
-
 	const siteRolesSearchContainer = Liferay.SearchContainer.get(
 		'<portlet:namespace />siteRolesSearchContainer'
 	);
@@ -237,10 +192,12 @@ for (long defaultTeamId : defaultTeamIds) {
 			'<portlet:namespace />siteRolesSearchContainerPrimaryKeys'
 		).value;
 
-		const uri = new URL('<%= selectSiteRoleURL.toString() %>');
+		const uri = new URL(
+			'<%= defaultUserAssociationsDisplayContext.getSelectSiteRoleURL() %>'
+		);
 
 		uri.searchParams.set(
-			'<%= PortalUtil.getPortletNamespace(selectSiteRolePortletId) %>roleIds',
+			'<%= defaultUserAssociationsDisplayContext.getSelectSiteRolePortletNamespace() %>roleIds',
 			ids
 		);
 
@@ -265,20 +222,6 @@ for (long defaultTeamId : defaultTeamIds) {
 			url: uri.toString(),
 		});
 	});
-
-	<%
-	PortletURL selectTeamURL = PortletURLBuilder.create(
-		PortletProviderUtil.getPortletURL(request, Team.class.getName(), PortletProvider.Action.BROWSE)
-	).setParameter(
-		"eventName", liferayPortletResponse.getNamespace() + "selectTeam"
-	).setParameter(
-		"groupId", liveGroupId
-	).setWindowState(
-		LiferayWindowState.POP_UP
-	).buildPortletURL();
-
-	String selectTeamPortletId = PortletProviderUtil.getPortletId(Team.class.getName(), PortletProvider.Action.BROWSE);
-	%>
 
 	const teamsSearchContainer = Liferay.SearchContainer.get(
 		'<portlet:namespace />teamsSearchContainer'
@@ -315,10 +258,12 @@ for (long defaultTeamId : defaultTeamIds) {
 			'<portlet:namespace />teamsSearchContainerPrimaryKeys'
 		).value;
 
-		const uri = new URL('<%= selectTeamURL.toString() %>');
+		const uri = new URL(
+			'<%= defaultUserAssociationsDisplayContext.getSelectTeamURL() %>'
+		);
 
 		uri.searchParams.set(
-			'<%= PortalUtil.getPortletNamespace(selectTeamPortletId) %>teamIds',
+			'<%= defaultUserAssociationsDisplayContext.getSelectTeamPortletNamespace() %>teamIds',
 			ids
 		);
 

@@ -53,6 +53,20 @@ public class SiteSerDes {
 
 		sb.append("{");
 
+		if (site.getExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(site.getExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (site.getFriendlyUrlPath() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -179,6 +193,15 @@ public class SiteSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		if (site.getExternalReferenceCode() == null) {
+			map.put("externalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"externalReferenceCode",
+				String.valueOf(site.getExternalReferenceCode()));
+		}
+
 		if (site.getFriendlyUrlPath() == null) {
 			map.put("friendlyUrlPath", null);
 		}
@@ -256,7 +279,12 @@ public class SiteSerDes {
 			Site site, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "friendlyUrlPath")) {
+			if (Objects.equals(jsonParserFieldName, "externalReferenceCode")) {
+				if (jsonParserFieldValue != null) {
+					site.setExternalReferenceCode((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "friendlyUrlPath")) {
 				if (jsonParserFieldValue != null) {
 					site.setFriendlyUrlPath((String)jsonParserFieldValue);
 				}

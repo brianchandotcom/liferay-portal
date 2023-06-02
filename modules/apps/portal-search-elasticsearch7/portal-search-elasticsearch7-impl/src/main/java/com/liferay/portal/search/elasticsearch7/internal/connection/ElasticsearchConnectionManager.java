@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.connection;
 
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cluster.ClusterExecutor;
@@ -42,9 +43,6 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Michael C. Han
@@ -141,7 +139,7 @@ public class ElasticsearchConnectionManager
 
 		CrossClusterReplicationConfigurationHelper
 			currentCrossClusterReplicationConfigurationHelper =
-				crossClusterReplicationConfigurationHelper;
+				_crossClusterReplicationConfigurationHelperSnapshot.get();
 
 		if (localClusterNode == null) {
 			if (currentCrossClusterReplicationConfigurationHelper == null) {
@@ -221,7 +219,7 @@ public class ElasticsearchConnectionManager
 	public boolean isCrossClusterReplicationEnabled() {
 		CrossClusterReplicationConfigurationHelper
 			currentCrossClusterReplicationConfigurationHelper =
-				crossClusterReplicationConfigurationHelper;
+				_crossClusterReplicationConfigurationHelperSnapshot.get();
 
 		if (currentCrossClusterReplicationConfigurationHelper == null) {
 			return false;
@@ -366,14 +364,6 @@ public class ElasticsearchConnectionManager
 		return getElasticsearchConnection(remoteClusterConnectionId);
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected volatile CrossClusterReplicationConfigurationHelper
-		crossClusterReplicationConfigurationHelper;
-
 	@Reference
 	protected volatile ElasticsearchConfigurationWrapper
 		elasticsearchConfigurationWrapper;
@@ -433,6 +423,11 @@ public class ElasticsearchConnectionManager
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ElasticsearchConnectionManager.class);
+
+	private static final Snapshot<CrossClusterReplicationConfigurationHelper>
+		_crossClusterReplicationConfigurationHelperSnapshot = new Snapshot<>(
+			ElasticsearchConnectionManager.class,
+			CrossClusterReplicationConfigurationHelper.class, null, true);
 
 	@Reference
 	private ClusterExecutor _clusterExecutor;

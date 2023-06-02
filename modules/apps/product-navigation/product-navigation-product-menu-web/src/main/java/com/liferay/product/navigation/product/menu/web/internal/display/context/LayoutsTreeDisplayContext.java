@@ -298,6 +298,13 @@ public class LayoutsTreeDisplayContext {
 			"pagesTreeURL", _getPagesTreeURL()
 		).put(
 			"productMenuPortletURL", _getProductMenuPortletURL()
+		).put(
+			"siteTemplate",
+			() -> {
+				Group group = _themeDisplay.getScopeGroup();
+
+				return group.isLayoutSetPrototype();
+			}
 		).build();
 
 		if (_isSiteNavigationMenu()) {

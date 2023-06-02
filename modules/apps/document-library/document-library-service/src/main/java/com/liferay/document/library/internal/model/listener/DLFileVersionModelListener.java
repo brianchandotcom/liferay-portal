@@ -83,24 +83,15 @@ public class DLFileVersionModelListener
 		throws ModelListenerException {
 
 		try {
-			dlFileVersion = _dlFileVersionLocalService.fetchDLFileVersion(
-				dlFileVersion.getFileVersionId());
-
-			if (dlFileVersion == null) {
-				return;
-			}
-
 			if (Objects.equals(
 					DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION,
 					dlFileVersion.getVersion())) {
 
 				DLFileVersion latestFileVersion =
-					_dlFileVersionLocalService.fetchLatestFileVersion(
+					_dlFileVersionLocalService.getLatestFileVersion(
 						dlFileVersion.getFileEntryId(), true);
 
-				if (latestFileVersion != null) {
-					_cleanUpFileVersion(latestFileVersion.getFileVersionId());
-				}
+				_cleanUpFileVersion(latestFileVersion.getFileVersionId());
 			}
 
 			_cleanUpFileVersion(dlFileVersion.getFileVersionId());

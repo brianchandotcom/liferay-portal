@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.theme.ThemeUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.servlet.RequestDispatcher;
@@ -94,11 +95,19 @@ public class RenderFragmentEntryStrutsAction implements StrutsAction {
 
 		requestDispatcher.include(httpServletRequest, pipingServletResponse);
 
-		Document document = Jsoup.parse(
-			ThemeUtil.include(
-				httpServletRequest.getServletContext(), httpServletRequest,
-				httpServletResponse, "portal_normal.ftl", layoutSet.getTheme(),
-				false));
+		String content = ThemeUtil.include(
+			httpServletRequest.getServletContext(), httpServletRequest,
+			httpServletResponse, "portal_normal.ftl", layoutSet.getTheme(),
+			false);
+
+		if (Validator.isNull(content)) {
+			ServletResponseUtil.write(
+				httpServletResponse, unsyncStringWriter.toString());
+
+			return null;
+		}
+
+		Document document = Jsoup.parse(content);
 
 		Element bodyElement = document.body();
 

@@ -11,19 +11,29 @@
 
 import React, {createContext, useReducer} from 'react';
 
+interface Action {
+	type: 'ADD_WARNING' | null;
+}
+
+interface State {
+	publishedToday: boolean;
+	warning: boolean;
+}
+
 const ADD_WARNING = 'ADD_WARNING';
 
-const INITIAL_STATE = {
+const INITIAL_STATE: State = {
 	publishedToday: false,
 	warning: false,
 };
 
-const noop = () => {};
+export const StoreDispatchContext = React.createContext<React.Dispatch<Action>>(
+	() => {}
+);
 
-export const StoreDispatchContext = React.createContext(() => {});
-export const StoreStateContext = createContext([INITIAL_STATE, noop]);
+export const StoreStateContext = createContext<State>(INITIAL_STATE);
 
-function reducer(state = INITIAL_STATE, action) {
+function reducer(state = INITIAL_STATE, action: Action) {
 	let nextState = state;
 
 	switch (action.type) {
@@ -37,7 +47,12 @@ function reducer(state = INITIAL_STATE, action) {
 	return nextState;
 }
 
-export function StoreContextProvider({children, value}) {
+interface Props {
+	children: React.ReactNode;
+	value: object;
+}
+
+export function StoreContextProvider({children, value}: Props) {
 	const [state, dispatch] = useReducer(reducer, {...INITIAL_STATE, ...value});
 
 	return (

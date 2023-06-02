@@ -9,13 +9,30 @@
  * distribution rights of the Software.
  */
 
-export const initialState = {
+interface State {
+	data: object | null;
+	error: string | null;
+	loading: boolean;
+}
+
+interface Action {
+	data?: ActionData;
+	error?: string;
+	type: 'LOAD_DATA' | 'SET_ERROR' | 'SET_DATA' | null;
+}
+
+interface ActionData {
+	error: string;
+	publishDate: string;
+}
+
+export const initialState: State = {
 	data: null,
 	error: null,
 	loading: false,
 };
 
-export function dataReducer(state, action) {
+export function dataReducer(state: State, action: Action) {
 	switch (action.type) {
 		case 'LOAD_DATA':
 			return {
@@ -35,8 +52,9 @@ export function dataReducer(state, action) {
 				data: {
 					...action.data,
 					publishedToday:
+						action.data &&
 						new Date().toDateString() ===
-						new Date(action.data?.publishDate).toDateString(),
+							new Date(action.data.publishDate).toDateString(),
 				},
 				error: action.data?.error,
 				loading: false,

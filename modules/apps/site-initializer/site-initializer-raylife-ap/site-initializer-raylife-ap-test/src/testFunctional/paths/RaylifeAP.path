@@ -44,6 +44,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTACT_HEADER</td>
+	<td>//div[contains(@class, 'mx-1 mx-md-8')]//div[contains(text(), 'Contact Information')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TABLE_ELEMENT_BY_POSITION</td>
 	<td>//*[contains(@class, 'table-responsive')]/tbody/tr[${key_linePosition}]/td[${key_colunmPosition}]//*[contains(text(),'${key_text}')]</td>
 	<td></td>

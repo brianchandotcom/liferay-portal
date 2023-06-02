@@ -1,0 +1,14 @@
+{
+	"dependencies": {
+		"@liferay/frontend-data-set-web": "*",
+		"frontend-js-web": "*"
+	},
+	"name": "@liferay/headless-builder-web",
+	"private": true,
+	"scripts": {
+		"build": "liferay-npm-scripts build",
+		"checkFormat": "liferay-npm-scripts check",
+		"format": "liferay-npm-scripts fix"
+	},
+	"version": "1.0.0"
+}

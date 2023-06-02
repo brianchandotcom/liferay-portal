@@ -1588,7 +1588,7 @@
 			<category name="Upgrade" />
 			<description name="Performs upgrade checks for `java` files" />
 		</check>
-		<check name="UpgradeJavaExtractTextCheck">
+		<check name="UpgradeJavaExtractTextMethodCheck">
 			<category name="Upgrade" />
 			<description name="Replaces the references of the method `HtmlUtil.extractText(` with the method `extractText(` of `HtmlParser` class" />
 		</check>

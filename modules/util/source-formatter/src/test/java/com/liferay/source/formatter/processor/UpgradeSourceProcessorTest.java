@@ -64,8 +64,8 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
-	public void testUpgradeJavaExtractTextCheck() throws Exception {
-		test("upgrade/UpgradeJavaExtractTextCheck.testjava");
+	public void testUpgradeJavaExtractTextMethodCheck() throws Exception {
+		test("upgrade/UpgradeJavaExtractTextMethodCheck.testjava");
 	}
 
 	@Test

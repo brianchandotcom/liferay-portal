@@ -14,35 +14,42 @@
 
 package com.liferay.source.formatter.dependencies.upgrade;
 
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Localization;
 
-import java.util.Locale;
-
 import org.osgi.service.component.annotations.Component;
-import com.liferay.portal.kernel.util.HtmlParser;
 import org.osgi.service.component.annotations.Reference;
+import com.liferay.portal.kernel.util.HtmlParser;
 
 /**
  * @author Nícolas Moura
  */
 @Component(
-	property = "indexer.class.name=com.liferay.source.formatter.dependencies.upgrade.UpgradeJavaExtractTextCheck",
-	service = UpgradeJavaExtractTextCheck.class
+	property = "indexer.class.name=com.liferay.source.formatter.dependencies.upgrade.UpgradeJavaExtractTextMethodCheck",
+	service = UpgradeJavaExtractTextMethodCheck.class
 )
-public class UpgradeJavaExtractTextCheck {
+public class UpgradeJavaExtractTextMethodCheck {
 
 	public void method() {
 
-		String content = _htmlParser.extractText(testEntry.getContent());
+		// Tests direct method call
+
+		_htmlParser.extractText(testEntry.getContent());
+
+		if (true) {
+
+			// Test method with variable declaration with a larger tabulation
+			// and a line break
+
+			String contentVariableLineBreak = _htmlParser.extractText(
+				testEntry.getContent());
+		}
 	}
 
 	@Reference
-	private Language _language;
-
-	@Reference
 	private Localization _localization;
+
+	// Tests adding the new reference after the end of the file
 
 	@Reference
 	private HtmlParser _htmlParser;

@@ -17,8 +17,6 @@ package com.liferay.portal.search.web.portlet.shared.search;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.search.web.search.request.SearchSettings;
 
-import java.util.Optional;
-
 import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
 
@@ -36,7 +34,7 @@ public interface PortletSharedSearchSettings extends SearchSettings {
 
 	public String getPortletId();
 
-	public Optional<PortletPreferences> getPortletPreferencesOptional();
+	public PortletPreferences getPortletPreferences();
 
 	public RenderRequest getRenderRequest();
 

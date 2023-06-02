@@ -346,7 +346,7 @@ public class ExperimentUtilTest {
 			RandomTestUtil.randomLong()
 		).when(
 			segmentsExperiment
-		).getClassPK();
+		).getPlid();
 
 		Mockito.doReturn(
 			RandomTestUtil.randomString()

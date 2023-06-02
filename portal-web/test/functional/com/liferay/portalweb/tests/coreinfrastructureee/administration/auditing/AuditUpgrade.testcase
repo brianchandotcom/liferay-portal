@@ -1,0 +1,82 @@
+@component-name = "portal-upgrades"
+definition {
+
+	property ci.retries.disabled = "true";
+	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.component.names = "Audit";
+	property testray.main.component.name = "Upgrades Security";
+
+	setUp {
+		SignIn.signIn();
+
+		SearchAdministration.executeReindex();
+	}
+
+	@description = "This is a use case for LPS-180466 TC4. The groudId should display in audit event after upgrading from 7.4.13."
+	@priority = 5
+	test ViewAuditEventAfterUpgrade7413U33 {
+		property custom.properties = "feature.flag.LPS-177194=true";
+		property data.archive.type = "data-archive-audit-object";
+		property osgi.module.configuration.file.names = "com.liferay.portal.security.audit.router.configuration.PersistentAuditMessageProcessorConfiguration.config";
+		property osgi.module.configurations = "enabled=B\"true\"";
+		property portal.version = "7.4.13.u33";
+
+		task ("Given get objectId and groupId and enable entry history") {
+			var objectId = JSONObject.getObjectId(objectName = "MyObject");
+			var groupId = JSONGroupAPI._getGroupIdByName(
+				groupName = "Site Name",
+				site = "true");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectSystemObject(label = "MyObject");
+
+			Check.checkToggleSwitch(locator1 = "ObjectPortlet#ENABLE_ENTRY_HISTORY_BUTTON");
+
+			CreateObject.saveObject();
+		}
+
+		task ("When use the widget to create a new record") {
+			Navigator.gotoSitePage(
+				pageName = "Object Page",
+				siteName = "Site Name");
+
+			LexiconEntry.gotoAdd();
+
+			ObjectPortlet.typeCustomField(
+				customField = "My Object Field",
+				entry = "Test Content");
+
+			PortletEntry.save();
+
+			Navigator.gotoSitePage(
+				pageName = "Object Page",
+				siteName = "Site Name");
+
+			ObjectPortlet.viewEntry(entry = "Test Content");
+		}
+
+		task ("Then you should see the groupId in the audit event") {
+			Audit.openAuditAdmin();
+
+			var resourceName = "com.liferay.object.model.ObjectDefinition#${objectId}";
+
+			AssertElementPresent(
+				key_resourceAction = "ADD",
+				key_resourceName = ${resourceName},
+				locator1 = "AuditReports#REPORTS_TABLE_RESOURCE_NAME");
+
+			Audit.viewAuditDetails(
+				additionalInformation = "myObjectField,Test Content",
+				groupId = ${groupId},
+				key_resourceAction = "ADD",
+				key_resourceName = "ObjectDefinition#${objectId}",
+				resourceAction = "ADD",
+				resourceName = "ObjectDefinition#${objectId}",
+				userName = "Test Test");
+		}
+	}
+
+}

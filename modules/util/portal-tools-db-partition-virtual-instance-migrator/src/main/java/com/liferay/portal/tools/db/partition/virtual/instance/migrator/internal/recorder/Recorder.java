@@ -14,6 +14,8 @@
 
 package com.liferay.portal.tools.db.partition.virtual.instance.migrator.internal.recorder;
 
+import com.liferay.petra.string.StringBundler;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,7 +55,8 @@ public class Recorder {
 
 	public void registerErrors(List<String> moduleNames, String message) {
 		for (String moduleName : moduleNames) {
-			_errors.add("Module " + moduleName + " " + message);
+			_errors.add(
+				StringBundler.concat("Module ", moduleName, " ", message));
 		}
 	}
 
@@ -63,7 +66,8 @@ public class Recorder {
 
 	public void registerWarnings(List<String> moduleNames, String message) {
 		for (String moduleName : moduleNames) {
-			_warnings.add("Module " + moduleName + " " + message);
+			_warnings.add(
+				StringBundler.concat("Module ", moduleName, " ", message));
 		}
 	}
 

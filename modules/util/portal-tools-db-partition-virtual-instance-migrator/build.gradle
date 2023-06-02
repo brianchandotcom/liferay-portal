@@ -1,10 +1,10 @@
 dependencies {
 	compileInclude group: "commons-cli", name: "commons-cli", version: "1.4"
 	compileInclude group: "mysql", name: "mysql-connector-java", version: "8.0.29"
-	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
-	compileOnly group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"
-	compileOnly group: "com.liferay", name: "com.liferay.petra.string", version: "5.0.1"
 
+	compileOnly group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"
+	compileOnly group: "com.liferay", name: "com.liferay.petra.string", version: "5.3.0"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "org.mockito", name: "mockito-core", version: "4.5.1"
 }
 

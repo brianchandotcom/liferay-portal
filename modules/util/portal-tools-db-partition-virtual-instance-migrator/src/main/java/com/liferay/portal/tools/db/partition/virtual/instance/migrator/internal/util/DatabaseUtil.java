@@ -14,8 +14,9 @@
 
 package com.liferay.portal.tools.db.partition.virtual.instance.migrator.internal.util;
 
-import com.liferay.portal.tools.db.partition.virtual.instance.migrator.internal.release.Release;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.version.Version;
+import com.liferay.portal.tools.db.partition.virtual.instance.migrator.internal.release.Release;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -300,11 +301,11 @@ public class DatabaseUtil {
 		throws SQLException {
 
 		if (databaseMetaData.storesLowerCaseIdentifiers()) {
-			return name.toLowerCase();
+			return StringUtil.toLowerCase(name);
 		}
 
 		if (databaseMetaData.storesUpperCaseIdentifiers()) {
-			return name.toUpperCase();
+			return StringUtil.toUpperCase(name);
 		}
 
 		return name;

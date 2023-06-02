@@ -4,8 +4,4 @@
 	<checkstyle>
 		<suppress checks="CompanyIterationCheck" files="src/main/java/com/liferay/portal/tools/db/partition/virtual/instance/migrator/internal/util/DatabaseUtil\.java" />
 	</checkstyle>
-	<source-check>
-		<suppress checks="StringMethodsCheck" files="src/main/java/com/liferay/portal/tools/db/partition/virtual/instance/migrator/internal/util/DatabaseUtil\.java" />
-		<suppress checks="StringMethodsCheck" files="src/main/java/com/liferay/portal/tools/db/partition/virtual/instance/migrator/internal/util/Validator\.java" />
-	</source-check>
 </suppressions>

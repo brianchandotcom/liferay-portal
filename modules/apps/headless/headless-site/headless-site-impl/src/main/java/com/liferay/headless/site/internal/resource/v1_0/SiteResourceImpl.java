@@ -75,6 +75,60 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 		}
 	}
 
+	@Override
+	public Site putSite(String key, MultipartBody multipartBody)
+		throws Exception {
+
+		Group group = null;
+
+		if (key == null) {
+			group = _addGroup(
+				multipartBody.getValueAsInstance("site", Site.class));
+		}
+		else {
+			group = _groupService.getGroup(contextCompany.getCompanyId(), key);
+
+			if (!group.isSite()) {
+				throw new IllegalArgumentException(
+					"No site was found for key " + key);
+			}
+
+			_groupPermission.check(
+				PermissionThreadLocal.getPermissionChecker(), group,
+				ActionKeys.UPDATE);
+		}
+
+		File tempFile = FileUtil.createTempFile(
+			multipartBody.getBinaryFileAsBytes("file"));
+
+		File tempDir = FileUtil.createTempFolder();
+
+		try {
+			FileUtil.unzip(tempFile, tempDir);
+
+			SiteInitializer siteInitializer = _siteInitializerFactory.create(
+				new File(tempDir, "site-initializer"),
+				group.getName(LocaleUtil.getDefault()));
+
+			siteInitializer.initialize(group.getGroupId());
+		}
+		finally {
+			FileUtil.deltree(tempFile);
+			FileUtil.deltree(tempDir);
+		}
+
+		Group finalGroup = group;
+
+		return new Site() {
+			{
+				friendlyUrlPath = finalGroup.getFriendlyURL();
+				id = finalGroup.getGroupId();
+				key = finalGroup.getGroupKey();
+				name = finalGroup.getName(LocaleUtil.getDefault());
+			}
+		};
+	}
+
 	private Group _addGroup(Site site) throws Exception {
 		if (Validator.isNull(site.getTemplateKey()) &&
 			Validator.isNotNull(site.getTemplateType())) {

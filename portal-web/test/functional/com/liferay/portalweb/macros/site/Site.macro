@@ -684,7 +684,7 @@ definition {
 	macro deleteCP {
 		var key_siteName = ${siteName};
 
-		Search.searchCP(searchTerm = "Name");
+		Search.searchCP(searchTerm = ${siteName});
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Sites#SITE_TABLE_NAME",

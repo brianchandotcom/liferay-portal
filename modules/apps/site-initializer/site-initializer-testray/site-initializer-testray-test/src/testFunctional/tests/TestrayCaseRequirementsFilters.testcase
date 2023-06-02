@@ -29,7 +29,7 @@ definition {
 				templateType = "Site Initializer");
 		}
 
-		task ("create all objects: projects, teams, components, cases, requirements") {
+		task ("create project, team, component, case, requirement via API") {
 			JSONTestray.addProject(
 				projectDescription = "Project Description 1",
 				projectName = ${projectName});
@@ -68,7 +68,7 @@ definition {
 				requirementName = "Requirement 2");
 		}
 
-		task ("Go to the Requirements page") {
+		task ("Go to the Requirements tab") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
 			Testray.changePagination(

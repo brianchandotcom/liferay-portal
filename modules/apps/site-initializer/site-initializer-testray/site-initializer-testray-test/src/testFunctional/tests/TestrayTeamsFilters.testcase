@@ -35,7 +35,7 @@ definition {
 				templateType = "Site Initializer");
 		}
 
-		task ("create all objects: projects, routine, teams, components, cases, case type, enviroment factors, product version, build, category, options, run and case results") {
+		task ("create project, routine, team, component, case, case type, enviroment factor, product version, build, category, option, run and case result via API") {
 			JSONTestray.addProject(
 				projectDescription = "Project Description 1",
 				projectName = ${projectName});
@@ -112,7 +112,7 @@ definition {
 				runName = "Run 2");
 		}
 
-		task ("Go to the case history page") {
+		task ("Go to the team tab") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
 			Testray.changePagination(

@@ -27,7 +27,7 @@ definition {
 				templateType = "Site Initializer");
 		}
 
-		task ("Given that a Testray project and team are created") {
+		task ("Create a Project and team via API") {
 			JSONTestray.addProject(
 				projectDescription = "Project Description 1",
 				projectName = ${projectName});

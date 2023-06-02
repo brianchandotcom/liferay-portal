@@ -36,7 +36,7 @@ definition {
 				templateType = "Site Initializer");
 		}
 
-		task ("Setup for SubtaskAPI") {
+		task ("create project, routine, team, component, case, case type, enviroment factor, product version, build, category, option, run, case result, task and subtask via API") {
 			JSONTestray.addProject(
 				projectDescription = "Project Description 1",
 				projectName = ${projectName});
@@ -168,7 +168,7 @@ definition {
 	}
 
 	tearDown {
-		task ("Delete task, routine, component, case type, factor category and project via API, Testray Site and Client Extensions") {
+		task ("Delete subtask, task, routine, case type, factor category and project via API, Testray Site and Client Extensions") {
 			JSONTestrayAPI.deleteObjectViaAPI(
 				object = "subtasks",
 				objectName = "Subtask_1");

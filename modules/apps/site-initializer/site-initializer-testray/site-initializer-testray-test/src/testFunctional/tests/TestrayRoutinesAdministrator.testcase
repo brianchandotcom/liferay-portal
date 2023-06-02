@@ -27,7 +27,7 @@ definition {
 				templateType = "Site Initializer");
 		}
 
-		task ("Go to Testray, Create Project and change pagination") {
+		task ("Create project and case type via API and go to Testray Site") {
 			JSONTestray.addProject(
 				projectDescription = "Project Description 1",
 				projectName = ${projectName});

@@ -25,7 +25,7 @@ definition {
 				templateType = "Site Initializer");
 		}
 
-		task ("Create a case type via API") {
+		task ("Create factor category via API") {
 			JSONTestray.addFactorCategory(categoryName = ${categoryName});
 		}
 	}

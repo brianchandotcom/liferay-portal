@@ -32,7 +32,7 @@ definition {
 				templateType = "Site Initializer");
 		}
 
-		task ("Setup for template") {
+		task ("Create project, team, component, routine, case type, case, environment factor and product version via API") {
 			JSONTestray.addProject(
 				projectDescription = "Project Description 1",
 				projectName = ${projectName});
@@ -73,7 +73,7 @@ definition {
 				valuePagination = 150);
 		}
 
-		task ("Go to project and routine") {
+		task ("Go to routine page") {
 			Testray.goToProjectPage(projectName = ${projectName});
 
 			TestrayRoutines.goToRoutine(routineName = ${routineName});

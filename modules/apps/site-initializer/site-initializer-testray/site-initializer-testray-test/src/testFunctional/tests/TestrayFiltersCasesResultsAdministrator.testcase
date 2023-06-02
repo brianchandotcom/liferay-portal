@@ -35,7 +35,7 @@ definition {
 				templateType = "Site Initializer");
 		}
 
-		task ("Setup for case results") {
+		task ("create project, routine, team, component, case, case type, enviroment factor, product version, build, category, option, run and case result via API") {
 			JSONTestray.addProject(
 				projectDescription = "Project Description 1",
 				projectName = ${projectName});

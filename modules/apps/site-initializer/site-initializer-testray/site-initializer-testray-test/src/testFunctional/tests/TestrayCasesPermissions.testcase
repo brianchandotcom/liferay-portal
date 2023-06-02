@@ -26,7 +26,7 @@ definition {
 			Testray.addTestraySite(siteName = ${testSiteName});
 		}
 
-		task ("create all objects: project, team, component and case") {
+		task ("create project, team, component, case type and case via API") {
 			JSONTestray.addProject(
 				projectDescription = "Project Description 1",
 				projectName = ${projectName});

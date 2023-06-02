@@ -93,8 +93,6 @@ public class DLFileVersionModelListener
 
 				_cleanUpFileVersion(latestFileVersion.getFileVersionId());
 			}
-
-			_cleanUpFileVersion(dlFileVersion.getFileVersionId());
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException);

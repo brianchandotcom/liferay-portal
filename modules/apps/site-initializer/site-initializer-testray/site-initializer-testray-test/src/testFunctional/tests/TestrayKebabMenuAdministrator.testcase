@@ -122,6 +122,8 @@ definition {
 
 			JSONTestrayAPI.deleteProject(projectName = ${projectName});
 
+			JSONTestrayAPI.deleteProject(projectName = "Project 2");
+
 			Testray.testrayApisTearDown();
 		}
 

@@ -269,6 +269,10 @@ definition {
 
 			Button.click(button = "Assign to Me");
 
+			WaitForElementPresent(
+				key_text = "Complete Test",
+				locator1 = "Button#ANY");
+
 			Button.click(button = "Complete Test");
 		}
 

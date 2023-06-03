@@ -14,6 +14,7 @@
 
 package com.liferay.organizations.item.selector.web.internal.display.context;
 
+import com.liferay.organizations.item.selector.OrganizationItemSelectorCriterion;
 import com.liferay.organizations.item.selector.web.internal.search.OrganizationItemSelectorChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -40,10 +41,12 @@ import javax.servlet.http.HttpServletRequest;
 public class OrganizationItemSelectorViewDisplayContext {
 
 	public OrganizationItemSelectorViewDisplayContext(
+		OrganizationItemSelectorCriterion organizationItemSelectorCriterion,
 		OrganizationLocalService organizationLocalService,
 		UsersAdmin usersAdmin, HttpServletRequest httpServletRequest,
 		PortletURL portletURL) {
 
+		_organizationItemSelectorCriterion = organizationItemSelectorCriterion;
 		_organizationLocalService = organizationLocalService;
 		_usersAdmin = usersAdmin;
 		_portletURL = portletURL;
@@ -95,16 +98,15 @@ public class OrganizationItemSelectorViewDisplayContext {
 
 		_searchContainer.setRowChecker(
 			new OrganizationItemSelectorChecker(
-				_renderResponse, _getCheckedOrganizationIds()));
+				_renderResponse,
+				_organizationItemSelectorCriterion.
+					getSelectedOrganizationIds()));
 
 		return _searchContainer;
 	}
 
-	private long[] _getCheckedOrganizationIds() {
-		return ParamUtil.getLongValues(
-			_renderRequest, "checkedOrganizationIds");
-	}
-
+	private final OrganizationItemSelectorCriterion
+		_organizationItemSelectorCriterion;
 	private final OrganizationLocalService _organizationLocalService;
 	private final PortletURL _portletURL;
 	private final RenderRequest _renderRequest;

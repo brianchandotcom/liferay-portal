@@ -15,7 +15,6 @@
 package com.liferay.wiki.editor.configuration.internal.item.selector;
 
 import com.liferay.item.selector.ItemSelectorReturnType;
-import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewReturnTypeProvider;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.wiki.item.selector.constants.WikiItemSelectorViewConstants;
@@ -23,7 +22,6 @@ import com.liferay.wiki.item.selector.constants.WikiItemSelectorViewConstants;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Roberto Díaz
@@ -44,10 +42,5 @@ public class WikiAttachmentsItemSelectorViewReturnTypeProvider
 
 		return supportedItemSelectorReturnTypes;
 	}
-
-	@Reference(
-		target = "(item.selector.view.key=" + WikiItemSelectorViewConstants.ITEM_SELECTOR_VIEW_KEY + ")"
-	)
-	private ItemSelectorView<?> _itemSelectorView;
 
 }

@@ -119,7 +119,8 @@ public class BlogsAggregatorExportImportPortletPreferencesProcessorTest {
 
 		_organization.setUuid(exportedOrganizationId);
 
-		OrganizationLocalServiceUtil.updateOrganization(_organization);
+		_organization = OrganizationLocalServiceUtil.updateOrganization(
+			_organization);
 
 		// Test the import
 

@@ -553,7 +553,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 			if (!content.equals(updatedContent)) {
 				entry.setContent(updatedContent);
 
-				_blogsEntryLocalService.updateBlogsEntry(entry);
+				entry = _blogsEntryLocalService.updateBlogsEntry(entry);
 			}
 		}
 		else {

@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String organizationItemSelectorURL = (String)request.getAttribute(RecentBloggersWebKeys.ORGANIZATION_ITEM_SELECTOR_URL);
+
 String organizationName = StringPool.BLANK;
 
 Organization organization = null;
@@ -73,12 +75,17 @@ if (organizationId > 0) {
 								var form = document.getElementById('<portlet:namespace />fm');
 
 								if (form) {
+									const valueJSON = JSON.parse(event.value);
+
 									var organizationId = form.querySelector(
 										'#<portlet:namespace />organizationId'
 									);
 
 									if (organizationId) {
-										organizationId.setAttribute('value', event.entityid);
+										organizationId.setAttribute(
+											'value',
+											valueJSON.organizationId
+										);
 									}
 
 									var organizationName = form.querySelector(
@@ -86,10 +93,7 @@ if (organizationId > 0) {
 									);
 
 									if (organizationName) {
-										organizationName.setAttribute(
-											'value',
-											event.entityname
-										);
+										organizationName.setAttribute('value', valueJSON.name);
 									}
 
 									Liferay.Util.toggleDisabled(
@@ -98,25 +102,10 @@ if (organizationId > 0) {
 									);
 								}
 							},
-
-							<%
-							String portletId = PortletProviderUtil.getPortletId(User.class.getName(), PortletProvider.Action.VIEW);
-							%>
-
-							selectEventName:
-								'<%= PortalUtil.getPortletNamespace(portletId) %>selectOrganization',
+							selectEventName: '<portlet:namespace />selectOrganization',
 							title:
 								'<liferay-ui:message arguments="organization" key="select-x" />',
-
-							<%
-							PortletURL selectOrganizationURL = PortletURLBuilder.create(
-								PortletProviderUtil.getPortletURL(request, Organization.class.getName(), PortletProvider.Action.BROWSE)
-							).setWindowState(
-								LiferayWindowState.POP_UP
-							).buildPortletURL();
-							%>
-
-							url: '<%= selectOrganizationURL.toString() %>',
+							url: '<%= organizationItemSelectorURL %>',
 						});
 					}
 				);

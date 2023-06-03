@@ -18,6 +18,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Http;
@@ -44,6 +45,24 @@ public class LearnMessageUtil {
 		JSONObject jsonObject = getJSONObject(resource);
 
 		return new LearnMessage(jsonObject, key, languageId);
+	}
+
+	public static JSONObject getReactDataJSONObject(String resource) {
+		JSONObject learnMessageJSONObject = getJSONObject(resource);
+
+		return JSONUtil.put(resource, learnMessageJSONObject);
+	}
+
+	public static JSONObject getReactDataJSONObject(String[] resources) {
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		for (String resource : resources) {
+			JSONObject learnMessageJSONObject = getJSONObject(resource);
+
+			jsonObject.put(resource, learnMessageJSONObject);
+		}
+
+		return jsonObject;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

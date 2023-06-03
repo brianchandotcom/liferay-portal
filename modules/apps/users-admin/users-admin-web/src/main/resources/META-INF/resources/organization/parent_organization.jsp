@@ -85,12 +85,6 @@ if (parentOrganizationId != OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID
 	<liferay-ui:message arguments="<%= mnhc.getType() %>" key="an-organization-of-type-x-cannot-have-children" />
 </liferay-ui:error>
 
-<portlet:renderURL var="selectOrganizationRenderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-	<portlet:param name="p_u_i_d" value='<%= (selUser == null) ? "0" : String.valueOf(selUser.getUserId()) %>' />
-	<portlet:param name="mvcPath" value="/select_organization.jsp" />
-	<portlet:param name="organizationId" value="<%= String.valueOf(organizationId) %>" />
-</portlet:renderURL>
-
 <div>
 	<react:component
 		module="js/ParentOrganization"
@@ -100,7 +94,7 @@ if (parentOrganizationId != OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID
 			).put(
 				"parentOrganizationId", (parentOrganization != null) ? parentOrganization.getOrganizationId() : ""
 			).put(
-				"selectOrganizationRenderURL", selectOrganizationRenderURL.toString()
+				"selectOrganizationRenderURL", userDisplayContext.getOrganizationItemSelectorURL()
 			).build()
 		%>'
 	/>

@@ -18,6 +18,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
+import com.liferay.organizations.item.selector.OrganizationItemSelectorCriterion;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -39,12 +40,14 @@ import com.liferay.portal.kernel.security.membershippolicy.RoleMembershipPolicyU
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
+import com.liferay.portal.kernel.service.OrganizationServiceUtil;
 import com.liferay.portal.kernel.service.PasswordPolicyLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserGroupGroupRoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -132,6 +135,26 @@ public class UserDisplayContext {
 
 		return UserGroupGroupRoleLocalServiceUtil.getUserGroupGroupRolesByUser(
 			_selUser.getUserId());
+	}
+
+	public String getOrganizationItemSelectorURL() throws PortalException {
+		ItemSelector itemSelector =
+			(ItemSelector)_httpServletRequest.getAttribute(
+				ItemSelector.class.getName());
+
+		OrganizationItemSelectorCriterion organizationItemSelectorCriterion =
+			new OrganizationItemSelectorCriterion();
+
+		organizationItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			new UUIDItemSelectorReturnType());
+		organizationItemSelectorCriterion.setSelectedOrganizationIds(
+			_getSelectedOrganizationIds());
+
+		return String.valueOf(
+			itemSelector.getItemSelectorURL(
+				RequestBackedPortletURLFactoryUtil.create(_httpServletRequest),
+				_liferayPortletResponse.getNamespace() + "selectOrganization",
+				organizationItemSelectorCriterion));
 	}
 
 	public List<UserGroupRole> getOrganizationRoles() throws PortalException {
@@ -314,6 +337,27 @@ public class UserDisplayContext {
 
 		return GroupLocalServiceUtil.getOrganizationsRelatedGroups(
 			organizations);
+	}
+
+	private long[] _getSelectedOrganizationIds() throws PortalException {
+		long[] selectedOrganizationIds = new long[0];
+
+		if (_selUser != null) {
+			selectedOrganizationIds = _selUser.getOrganizationIds();
+		}
+
+		long organizationId = ParamUtil.getLong(
+			_httpServletRequest, "organizationId");
+
+		Organization organization = OrganizationServiceUtil.fetchOrganization(
+			organizationId);
+
+		if (organization == null) {
+			return selectedOrganizationIds;
+		}
+
+		return ArrayUtil.append(
+			selectedOrganizationIds, organization.getOrganizationId());
 	}
 
 	private List<UserGroupRole> _getUserGroupRoles() throws PortalException {

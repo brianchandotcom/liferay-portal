@@ -208,10 +208,12 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 		if (selectOrganizationLink) {
 			selectOrganizationLink.on('click', (event) => {
 				Util.openSelectionModal({
-					onSelect: (selectedItem) => {
-						if (selectedItem) {
-							const entityId = selectedItem.entityid;
-							const entityName = A.Escape.html(selectedItem.entityname);
+					onSelect: (event) => {
+						if (event) {
+							const selectedItem = JSON.parse(event.value);
+
+							const entityId = selectedItem.organizationId;
+							const entityName = A.Escape.html(selectedItem.name);
 							const label = Liferay.Util.sub(
 								'<liferay-ui:message key="remove-x" />',
 								entityName
@@ -248,13 +250,9 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 						}
 					},
 					selectEventName: '<portlet:namespace />selectOrganization',
-					selectedData: <%= Arrays.toString(selUser.getOrganizationIds()) %>.map(
-						String
-					),
 					title:
 						'<liferay-ui:message arguments="organization" key="select-x" />',
-					url:
-						'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_organization.jsp" /><portlet:param name="p_u_i_d" value='<%= (selUser == null) ? "0" : String.valueOf(selUser.getUserId()) %>' /></portlet:renderURL>',
+					url: '<%= userDisplayContext.getOrganizationItemSelectorURL() %>',
 				});
 			});
 		}

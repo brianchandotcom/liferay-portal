@@ -17,6 +17,7 @@ package com.liferay.users.admin.web.internal.frontend.taglib.servlet.taglib;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -182,6 +183,8 @@ public class OrganizationScreenNavigationRegistrar {
 
 	private OrganizationScreenNavigationEntry.Builder _getBuilder() {
 		return OrganizationScreenNavigationEntry.builder(
+		).itemSelector(
+			_itemSelector
 		).jspRenderer(
 			_jspRenderer
 		).organizationService(
@@ -209,6 +212,9 @@ public class OrganizationScreenNavigationRegistrar {
 
 	@Reference
 	private GroupPermission _groupPermission;
+
+	@Reference
+	private ItemSelector _itemSelector;
 
 	@Reference
 	private JSPRenderer _jspRenderer;

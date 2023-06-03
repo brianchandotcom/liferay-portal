@@ -30,10 +30,12 @@ export default function ParentOrganization({
 
 	const onChangeParentOrganization = () => {
 		openSelectionModal({
-			onSelect(event) {
+			onSelect(selectedItem) {
+				const itemValue = JSON.parse(selectedItem.value);
+
 				setValues({
-					label: event.entityname,
-					parentOrganizationId: event.entityid,
+					label: itemValue.name,
+					parentOrganizationId: itemValue.organizationId,
 				});
 			},
 			selectEventName: `${portletNamespace}selectOrganization`,

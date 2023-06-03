@@ -14,6 +14,7 @@
 
 package com.liferay.site.memberships.web.internal.portlet;
 
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.exception.MembershipRequestCommentsException;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.NoSuchRoleException;
@@ -340,6 +341,16 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 			userIds, group.getGroupId(), roleId);
 	}
 
+	@Override
+	public void render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		renderRequest.setAttribute(ItemSelector.class.getName(), _itemSelector);
+
+		super.render(renderRequest, renderResponse);
+	}
+
 	public void replyMembershipRequest(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -456,6 +467,9 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 
 		return siteMembershipsDisplayContext.getGroup();
 	}
+
+	@Reference
+	private ItemSelector _itemSelector;
 
 	@Reference
 	private MembershipRequestService _membershipRequestService;

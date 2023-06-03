@@ -51,7 +51,13 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 					const input = document.createElement('input');
 
 					input.name = `${portletNamespace}rowIds`;
-					input.value = selectedItems.map((item) => item.value);
+					input.value = selectedItems
+						.map((item) => {
+							const selectedValue = JSON.parse(item.value);
+
+							return selectedValue.organizationId;
+						})
+						.join(',');
 
 					addGroupOrganizationsFm.appendChild(input);
 

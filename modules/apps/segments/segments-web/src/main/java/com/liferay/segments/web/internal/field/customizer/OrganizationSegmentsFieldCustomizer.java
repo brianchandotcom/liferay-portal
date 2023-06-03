@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
-import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -102,12 +101,11 @@ public class OrganizationSegmentsFieldCustomizer
 				getSelectEntityTitle(
 					_portal.getLocale(portletRequest),
 					Organization.class.getName()),
-				PortletURLBuilder.create(
+				String.valueOf(
 					_itemSelector.getItemSelectorURL(
 						RequestBackedPortletURLFactoryUtil.create(
 							portletRequest),
-						"selectEntity", organizationItemSelectorCriterion)
-				).buildString(),
+						"selectEntity", organizationItemSelectorCriterion)),
 				true);
 		}
 		catch (Exception exception) {

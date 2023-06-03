@@ -102,6 +102,14 @@ public class ServiceUpdateCheck extends BaseCheck {
 
 		int size = variableCallerDetailASTList.size();
 
+		for (DetailAST variableCallerDetailAST : variableCallerDetailASTList) {
+			if (hasParentWithTokenType(
+					variableCallerDetailAST, TokenTypes.LAMBDA)) {
+
+				return;
+			}
+		}
+
 		for (int i = 0; i < size; i++) {
 			if (!equals(variableCallerDetailASTList.get(i), nameDetailAST)) {
 				continue;

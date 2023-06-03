@@ -9,7 +9,7 @@
 	<@liferay_util["include"] page=top_head_include />
 </head>
 
-<#if is_login_page && themeDisplay.isSignedIn()>
+<#if validator.isNotNull(redirect_url) && is_login_page && themeDisplay.isSignedIn()>
 
 	<#-- Instant redirect, when the page is hit directly or refreshed -->
 

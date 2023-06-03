@@ -22,6 +22,7 @@ import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.util.CommerceAccountHelper;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
@@ -89,6 +90,13 @@ public class CommerceThemeMiniumHttpHelper {
 
 	public String getRedirectURL(HttpServletRequest httpServletRequest)
 		throws PortalException {
+
+		if (Validator.isNotNull(
+				httpServletRequest.getAttribute(
+					NoSuchLayoutException.class.getName()))) {
+
+			return StringPool.BLANK;
+		}
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(

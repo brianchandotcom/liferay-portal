@@ -103,7 +103,7 @@ public class AccountRoleLocalServiceImpl
 
 		role.setClassPK(accountRole.getAccountRoleId());
 
-		_roleLocalService.updateRole(role);
+		role = _roleLocalService.updateRole(role);
 
 		_resourceLocalService.addResources(
 			role.getCompanyId(), 0, userId, AccountRole.class.getName(),

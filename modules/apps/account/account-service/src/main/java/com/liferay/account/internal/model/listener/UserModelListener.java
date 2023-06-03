@@ -42,8 +42,9 @@ public class UserModelListener extends BaseModelListener<User> {
 		for (AccountEntryUserRel accountEntryUserRel : accountEntryUserRels) {
 			accountEntryUserRel.setAccountUserId(UserConstants.USER_ID_DEFAULT);
 
-			_accountEntryUserRelLocalService.updateAccountEntryUserRel(
-				accountEntryUserRel);
+			accountEntryUserRel =
+				_accountEntryUserRelLocalService.updateAccountEntryUserRel(
+					accountEntryUserRel);
 
 			_accountEntryUserRelLocalService.deleteAccountEntryUserRel(
 				accountEntryUserRel);

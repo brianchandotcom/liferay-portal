@@ -95,6 +95,7 @@ public class OrganizationSegmentsFieldCustomizer
 
 			organizationItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 				Collections.singletonList(new UUIDItemSelectorReturnType()));
+			organizationItemSelectorCriterion.setMultiSelection(true);
 
 			return new Field.SelectEntity(
 				"selectEntity",

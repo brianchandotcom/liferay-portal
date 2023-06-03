@@ -41,14 +41,30 @@ function SelectEntityInput({
 			openSelectionModal({
 				buttonAddLabel: Liferay.Language.get('select'),
 				multiple: true,
-				onSelect: (selectedItems) => {
-					if (selectedItems) {
-						const selectedValues = selectedItems.map((item) => ({
-							displayValue: item.name,
-							value: item.id,
-						}));
+				onSelect: (event) => {
+					if (event) {
+						if (Array.isArray(event)) {
+							const selectedValues = event.map((item) => ({
+								displayValue: item.name,
+								value: item.id,
+							}));
 
-						onChange(selectedValues);
+							onChange(selectedValues);
+						}
+						else {
+							const selectedItems = event.value;
+
+							const selectedValues = selectedItems.map((item) => {
+								const selectedValue = JSON.parse(item);
+
+								return {
+									displayValue: selectedValue.name,
+									value: selectedValue.organizationId,
+								};
+							});
+
+							onChange(selectedValues);
+						}
 					}
 				},
 				selectEventName: id,

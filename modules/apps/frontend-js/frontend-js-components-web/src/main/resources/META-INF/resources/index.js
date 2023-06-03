@@ -12,6 +12,11 @@
  * details.
  */
 
+export {
+	default as LearnMessage,
+	LearnResourcesContext,
+} from './learn_message/LearnMessage';
+
 export {default as Treeview} from './treeview/Treeview';
 
 export {default as ManagementToolbar} from './management_toolbar/ManagementToolbar';

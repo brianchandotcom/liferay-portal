@@ -35,6 +35,8 @@ if (organizationId == 0) {
 		organizationId = group.getOrganizationId();
 	}
 }
+
+BlogsAggregatorViewDisplayContext blogsAggregatorViewDisplayContext = new BlogsAggregatorViewDisplayContext(request, renderRequest, renderResponse);
 %>
 
 <%@ include file="/blogs_aggregator/init-ext.jsp" %>

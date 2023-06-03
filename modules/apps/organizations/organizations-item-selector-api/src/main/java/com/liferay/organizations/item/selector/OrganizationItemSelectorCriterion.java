@@ -21,4 +21,15 @@ import com.liferay.item.selector.BaseItemSelectorCriterion;
  */
 public class OrganizationItemSelectorCriterion
 	extends BaseItemSelectorCriterion {
+
+	public boolean isMultiSelection() {
+		return _multiSelection;
+	}
+
+	public void setMultiSelection(boolean multiSelection) {
+		_multiSelection = multiSelection;
+	}
+
+	private boolean _multiSelection;
+
 }

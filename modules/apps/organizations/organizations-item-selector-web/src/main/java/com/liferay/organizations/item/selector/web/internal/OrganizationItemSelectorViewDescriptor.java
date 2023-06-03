@@ -18,6 +18,7 @@ import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
 import com.liferay.item.selector.TableItemView;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
+import com.liferay.organizations.item.selector.OrganizationItemSelectorCriterion;
 import com.liferay.organizations.item.selector.web.internal.display.context.OrganizationItemSelectorViewDisplayContext;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -30,9 +31,11 @@ public class OrganizationItemSelectorViewDescriptor
 	implements ItemSelectorViewDescriptor<Organization> {
 
 	public OrganizationItemSelectorViewDescriptor(
+		OrganizationItemSelectorCriterion organizationItemSelectorCriterion,
 		OrganizationItemSelectorViewDisplayContext
 			organizationItemSelectorViewDisplayContext) {
 
+		_organizationItemSelectorCriterion = organizationItemSelectorCriterion;
 		_organizationItemSelectorViewDisplayContext =
 			organizationItemSelectorViewDisplayContext;
 	}
@@ -70,6 +73,11 @@ public class OrganizationItemSelectorViewDescriptor
 	}
 
 	@Override
+	public boolean isMultipleSelection() {
+		return _organizationItemSelectorCriterion.isMultiSelection();
+	}
+
+	@Override
 	public boolean isShowBreadcrumb() {
 		return false;
 	}
@@ -79,6 +87,8 @@ public class OrganizationItemSelectorViewDescriptor
 		return true;
 	}
 
+	private final OrganizationItemSelectorCriterion
+		_organizationItemSelectorCriterion;
 	private final OrganizationItemSelectorViewDisplayContext
 		_organizationItemSelectorViewDisplayContext;
 

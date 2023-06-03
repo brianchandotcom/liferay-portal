@@ -87,6 +87,7 @@ public class OrganizationItemSelectorView
 			organizationItemSelectorCriterion, portletURL,
 			itemSelectedEventName, search,
 			new OrganizationItemSelectorViewDescriptor(
+				organizationItemSelectorCriterion,
 				organizationItemSelectorViewDisplayContext));
 	}
 

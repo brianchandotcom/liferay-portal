@@ -39,14 +39,12 @@ public class OrganizationsUserCard
 	extends BaseBaseClayCard implements UserCard {
 
 	public OrganizationsUserCard(
-		Organization organization, boolean showActions,
-		RenderRequest renderRequest, RenderResponse renderResponse,
-		RowChecker rowChecker) {
+		Organization organization, RenderRequest renderRequest,
+		RenderResponse renderResponse, RowChecker rowChecker) {
 
 		super(organization, rowChecker);
 
 		_organization = organization;
-		_showActions = showActions;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 
@@ -55,10 +53,6 @@ public class OrganizationsUserCard
 
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
-		if (!_showActions) {
-			return null;
-		}
-
 		try {
 			OrganizationActionDropdownItemsProvider
 				organizationActionDropdownItemsProvider =
@@ -99,6 +93,5 @@ public class OrganizationsUserCard
 	private final Organization _organization;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final boolean _showActions;
 
 }

@@ -69,8 +69,6 @@ OrganizationsDisplayContext organizationsDisplayContext = new OrganizationsDispl
 
 						<%
 						String displayStyle = organizationsDisplayContext.getDisplayStyle();
-
-						boolean selectOrganizations = false;
 						%>
 
 						<c:choose>
@@ -78,7 +76,7 @@ OrganizationsDisplayContext organizationsDisplayContext = new OrganizationsDispl
 								<liferay-ui:search-container-column-text>
 									<clay:user-card
 										propsTransformer="js/OrganizationCardPropsTransformer"
-										userCard="<%= new OrganizationsUserCard(organization, !selectOrganizations, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
+										userCard="<%= new OrganizationsUserCard(organization, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
 									/>
 								</liferay-ui:search-container-column-text>
 							</c:when>
@@ -108,20 +106,17 @@ OrganizationsDisplayContext organizationsDisplayContext = new OrganizationsDispl
 									</h6>
 								</liferay-ui:search-container-column-text>
 
-								<c:if test="<%= !selectOrganizations %>">
+								<%
+								OrganizationActionDropdownItemsProvider organizationActionDropdownItemsProvider = new OrganizationActionDropdownItemsProvider(organization, renderRequest, renderResponse);
+								%>
 
-									<%
-									OrganizationActionDropdownItemsProvider organizationActionDropdownItemsProvider = new OrganizationActionDropdownItemsProvider(organization, renderRequest, renderResponse);
-									%>
-
-									<liferay-ui:search-container-column-text>
-										<clay:dropdown-actions
-											aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
-											dropdownItems="<%= organizationActionDropdownItemsProvider.getActionDropdownItems() %>"
-											propsTransformer="js/OrganizationDropdownDefaultPropsTransformer"
-										/>
-									</liferay-ui:search-container-column-text>
-								</c:if>
+								<liferay-ui:search-container-column-text>
+									<clay:dropdown-actions
+										aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
+										dropdownItems="<%= organizationActionDropdownItemsProvider.getActionDropdownItems() %>"
+										propsTransformer="js/OrganizationDropdownDefaultPropsTransformer"
+									/>
+								</liferay-ui:search-container-column-text>
 							</c:when>
 							<c:otherwise>
 								<liferay-ui:search-container-column-text
@@ -162,20 +157,17 @@ OrganizationsDisplayContext organizationsDisplayContext = new OrganizationsDispl
 									value="<%= UsersAdmin.ORGANIZATION_COUNTRY_NAME_ACCESSOR.get(organization) %>"
 								/>
 
-								<c:if test="<%= !selectOrganizations %>">
+								<%
+								OrganizationActionDropdownItemsProvider organizationActionDropdownItemsProvider = new OrganizationActionDropdownItemsProvider(organization, renderRequest, renderResponse);
+								%>
 
-									<%
-									OrganizationActionDropdownItemsProvider organizationActionDropdownItemsProvider = new OrganizationActionDropdownItemsProvider(organization, renderRequest, renderResponse);
-									%>
-
-									<liferay-ui:search-container-column-text>
-										<clay:dropdown-actions
-											aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
-											dropdownItems="<%= organizationActionDropdownItemsProvider.getActionDropdownItems() %>"
-											propsTransformer="js/OrganizationDropdownDefaultPropsTransformer"
-										/>
-									</liferay-ui:search-container-column-text>
-								</c:if>
+								<liferay-ui:search-container-column-text>
+									<clay:dropdown-actions
+										aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
+										dropdownItems="<%= organizationActionDropdownItemsProvider.getActionDropdownItems() %>"
+										propsTransformer="js/OrganizationDropdownDefaultPropsTransformer"
+									/>
+								</liferay-ui:search-container-column-text>
 							</c:otherwise>
 						</c:choose>
 					</liferay-ui:search-container-row>

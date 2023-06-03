@@ -92,6 +92,8 @@ public interface Job {
 
 	public boolean isValidationRequired();
 
+	public boolean testHotfixChanges();
+
 	public boolean testJaCoCoCodeCoverage();
 
 	public boolean testReleaseBundle();

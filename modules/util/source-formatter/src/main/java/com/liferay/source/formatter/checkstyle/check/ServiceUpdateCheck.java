@@ -49,7 +49,7 @@ public class ServiceUpdateCheck extends BaseCheck {
 		Matcher matcher = _serviceUpdatePattern.matcher(s);
 
 		if (!matcher.matches() ||
-			!StringUtil.equalsIgnoreCase(matcher.group(1), matcher.group(3))) {
+			!StringUtil.equalsIgnoreCase(matcher.group(1), matcher.group(4))) {
 
 			return;
 		}
@@ -161,6 +161,6 @@ public class ServiceUpdateCheck extends BaseCheck {
 		"update.call.reassign";
 
 	private static final Pattern _serviceUpdatePattern = Pattern.compile(
-		"_?(\\w+?)(Local)?Service\\.update([A-Z]\\w+)");
+		"_?(\\w+?)(Local)?Service(Util)?\\.update([A-Z]\\w+)");
 
 }

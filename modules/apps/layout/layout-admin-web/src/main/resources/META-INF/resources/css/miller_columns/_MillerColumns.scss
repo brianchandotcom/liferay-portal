@@ -71,6 +71,10 @@
 		color: $gray-500;
 		cursor: move;
 		top: 2px;
+
+		+ .autofit-col {
+			padding-bottom: 6px;
+		}
 	}
 
 	&:not(.dragging) .miller-columns-item-mask {
@@ -93,13 +97,9 @@
 		top: 2px;
 	}
 
-	.icon-warning,
-	.list-group-title {
-		z-index: 2;
-	}
-
 	.icon-warning {
 		margin-top: 1px;
+		z-index: 2;
 	}
 }
 

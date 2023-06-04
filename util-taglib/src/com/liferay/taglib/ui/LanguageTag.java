@@ -15,7 +15,6 @@
 package com.liferay.taglib.ui;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateManagerUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.LanguageEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -129,15 +128,6 @@ public class LanguageTag extends IncludeTag {
 		_languageIds = null;
 		_name = "languageId";
 		_useNamespace = true;
-	}
-
-	protected String getDisplayStyle() {
-		if (Validator.isNotNull(_ddmTemplateKey)) {
-			return PortletDisplayTemplateManagerUtil.getDisplayStyle(
-				_ddmTemplateKey);
-		}
-
-		return null;
 	}
 
 	protected long getDisplayStyleGroupId() {
@@ -293,10 +283,10 @@ public class LanguageTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
 		httpServletRequest.setAttribute(
+			"liferay-ui:language:ddmTemplateKey", _ddmTemplateKey);
+		httpServletRequest.setAttribute(
 			"liferay-ui:language:displayCurrentLocale",
 			String.valueOf(_displayCurrentLocale));
-		httpServletRequest.setAttribute(
-			"liferay-ui:language:displayStyle", getDisplayStyle());
 		httpServletRequest.setAttribute(
 			"liferay-ui:language:displayStyleGroupId",
 			getDisplayStyleGroupId());

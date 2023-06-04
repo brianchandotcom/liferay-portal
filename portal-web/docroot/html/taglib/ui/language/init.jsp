@@ -16,8 +16,7 @@
 
 <%@ include file="/html/taglib/init.jsp" %>
 
-<%@ page import="com.liferay.dynamic.data.mapping.kernel.DDMTemplate" %><%@
-page import="com.liferay.portal.kernel.servlet.taglib.ui.LanguageEntry" %>
+<%@ page import="com.liferay.portal.kernel.servlet.taglib.ui.LanguageEntry" %>
 
 <%
 String displayStyle = GetterUtil.getString((String)request.getAttribute("liferay-ui:language:displayStyle"));

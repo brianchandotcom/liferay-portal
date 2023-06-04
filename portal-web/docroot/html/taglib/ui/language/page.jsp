@@ -31,16 +31,5 @@ Map<String, Object> contextObjects = HashMapBuilder.<String, Object>put(
 %>
 
 <c:if test="<%= !languageEntries.isEmpty() %>">
-
-	<%
-	String renderedDDMTemplate = StringPool.BLANK;
-
-	DDMTemplate portletDisplayDDMTemplate = PortletDisplayTemplateManagerUtil.getDDMTemplate(displayStyleGroupId, PortalUtil.getClassNameId(LanguageEntry.class), displayStyle, true);
-
-	if (portletDisplayDDMTemplate != null) {
-		renderedDDMTemplate = PortletDisplayTemplateManagerUtil.renderDDMTemplate(request, response, portletDisplayDDMTemplate.getTemplateId(), languageEntries, contextObjects);
-	}
-	%>
-
-	<%= renderedDDMTemplate %>
+	<%= PortletDisplayTemplateManagerUtil.renderDDMTemplate(PortalUtil.getClassNameId(LanguageEntry.class), contextObjects, displayStyle, languageEntries, displayStyleGroupId, request, response, true) %>
 </c:if>

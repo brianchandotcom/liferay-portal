@@ -16,6 +16,7 @@ package com.liferay.portlet.display.template;
 
 import com.liferay.portal.kernel.template.BaseTemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
+import com.liferay.portlet.display.template.util.PortletDisplayTemplateUtil;
 
 import java.util.Locale;
 import java.util.Map;
@@ -31,8 +32,10 @@ public abstract class BasePortletDisplayTemplateHandler
 			long classPK, String language, Locale locale)
 		throws Exception {
 
-		return PortletDisplayTemplateManagerUtil.getTemplateVariableGroups(
-			language);
+		PortletDisplayTemplate portletDisplayTemplate =
+			PortletDisplayTemplateUtil.getPortletDisplayTemplate();
+
+		return portletDisplayTemplate.getTemplateVariableGroups(language);
 	}
 
 	@Override

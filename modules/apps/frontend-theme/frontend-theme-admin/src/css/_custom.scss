@@ -31,7 +31,7 @@ body {
 			max-width: map-get($container-max-widths, xl);
 			position: relative;
 
-			.custom-control {
+			.custom-control:not(.custom-checkbox) {
 				margin-bottom: 8px;
 			}
 		}

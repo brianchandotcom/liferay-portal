@@ -16,20 +16,21 @@
 
 <%@ include file="/html/taglib/ui/language/init.jsp" %>
 
-<%
-Map<String, Object> contextObjects = HashMapBuilder.<String, Object>put(
-	"formAction", formAction
-).put(
-	"formName", formName
-).put(
-	"languageId", languageId
-).put(
-	"name", name
-).put(
-	"namespace", namespace
-).build();
-%>
-
 <c:if test="<%= !languageEntries.isEmpty() %>">
+
+	<%
+	Map<String, Object> contextObjects = HashMapBuilder.<String, Object>put(
+		"formAction", formAction
+	).put(
+		"formName", formName
+	).put(
+		"languageId", languageId
+	).put(
+		"name", name
+	).put(
+		"namespace", namespace
+	).build();
+	%>
+
 	<%= PortletDisplayTemplateManagerUtil.renderDDMTemplate(PortalUtil.getClassNameId(LanguageEntry.class), contextObjects, displayStyle, languageEntries, displayStyleGroupId, request, response, true) %>
 </c:if>

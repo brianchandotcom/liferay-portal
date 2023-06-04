@@ -23,9 +23,8 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portlet.display.template.PortletDisplayTemplate;
+import com.liferay.portlet.display.template.util.PortletDisplayTemplateUtil;
 import com.liferay.site.navigation.breadcrumb.web.internal.configuration.SiteNavigationBreadcrumbPortletInstanceConfiguration;
-import com.liferay.site.navigation.breadcrumb.web.internal.portlet.display.template.PortletDisplayTemplateUtil;
 import com.liferay.site.navigation.taglib.servlet.taglib.util.BreadcrumbEntriesUtil;
 
 import java.util.HashMap;
@@ -180,17 +179,14 @@ public class SiteNavigationBreadcrumbDisplayContext {
 	}
 
 	public String renderDDMTemplate() throws Exception {
-		PortletDisplayTemplate portletDisplayTemplate =
-			PortletDisplayTemplateUtil.getPortletDisplayTemplate();
-
 		DDMTemplate portletDisplayDDMTemplate =
-			portletDisplayTemplate.getPortletDisplayTemplateDDMTemplate(
+			PortletDisplayTemplateUtil.getPortletDisplayTemplateDDMTemplate(
 				getDisplayStyleGroupId(),
 				PortalUtil.getClassNameId(BreadcrumbEntry.class),
 				getDisplayStyle(), true);
 
 		if (portletDisplayDDMTemplate != null) {
-			return portletDisplayTemplate.renderDDMTemplate(
+			return PortletDisplayTemplateUtil.renderDDMTemplate(
 				_httpServletRequest, _httpServletResponse,
 				portletDisplayDDMTemplate.getTemplateId(),
 				getBreadcrumbEntries(), new HashMap<>());

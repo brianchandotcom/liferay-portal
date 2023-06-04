@@ -94,15 +94,8 @@ public class NavigationMenuTag extends IncludeTag {
 
 	@Override
 	public int processEndTag() throws Exception {
-		PortletDisplayTemplate portletDisplayTemplate =
-			PortletDisplayTemplateUtil.getPortletDisplayTemplate();
-
-		if (portletDisplayTemplate == null) {
-			return EVAL_PAGE;
-		}
-
 		DDMTemplate portletDisplayDDMTemplate =
-			portletDisplayTemplate.getPortletDisplayTemplateDDMTemplate(
+			PortletDisplayTemplateUtil.getPortletDisplayTemplateDDMTemplate(
 				getDisplayStyleGroupId(),
 				ClassNameLocalServiceUtil.getClassNameId(NavItem.class),
 				getDisplayStyle(), true);
@@ -137,9 +130,9 @@ public class NavigationMenuTag extends IncludeTag {
 		HttpServletResponse httpServletResponse =
 			(HttpServletResponse)pageContext.getResponse();
 
-		String result = portletDisplayTemplate.renderDDMTemplate(
-			httpServletRequest, httpServletResponse, portletDisplayDDMTemplate,
-			navItems,
+		String result = PortletDisplayTemplateUtil.renderDDMTemplate(
+			httpServletRequest, httpServletResponse,
+			portletDisplayDDMTemplate.getTemplateId(), navItems,
 			HashMapBuilder.<String, Object>put(
 				"branchNavItems", branchNavItems
 			).put(

@@ -14,19 +14,13 @@
 
 package com.liferay.portlet.display.template.internal;
 
-import com.liferay.dynamic.data.mapping.kernel.DDMTemplate;
-import com.liferay.portal.kernel.model.ModelWrapper;
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateManager;
-import com.liferay.portal.kernel.template.TemplateVariableGroup;
-import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.model.adapter.ModelAdapterUtil;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
-
-import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -42,64 +36,26 @@ public class PortletDisplayTemplateManagerImpl
 	implements PortletDisplayTemplateManager {
 
 	@Override
-	public DDMTemplate getDDMTemplate(
-		long groupId, long classNameId, String displayStyle,
-		boolean useDefault) {
+	public String renderDDMTemplate(
+			long classNameId, Map<String, Object> contextObjects,
+			String ddmTemplateKey, List<?> entries, long groupId,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, boolean useDefault)
+		throws Exception {
 
-		com.liferay.dynamic.data.mapping.model.DDMTemplate ddmTemplate =
+		DDMTemplate ddmTemplate =
 			_portletDisplayTemplate.getPortletDisplayTemplateDDMTemplate(
-				groupId, classNameId, displayStyle, useDefault);
+				groupId, classNameId, DISPLAY_STYLE_PREFIX + ddmTemplateKey,
+				useDefault);
 
 		if (ddmTemplate == null) {
-			return null;
+			return StringPool.BLANK;
 		}
-
-		return ModelAdapterUtil.adapt(
-			_ddmTemplateProxyProviderFunction, ddmTemplate);
-	}
-
-	@Override
-	public String getDisplayStyle(String ddmTemplateKey) {
-		return _portletDisplayTemplate.getDisplayStyle(ddmTemplateKey);
-	}
-
-	@Override
-	public Map<String, TemplateVariableGroup> getTemplateVariableGroups(
-		String language) {
-
-		return _portletDisplayTemplate.getTemplateVariableGroups(language);
-	}
-
-	@Override
-	public String renderDDMTemplate(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, DDMTemplate ddmTemplate,
-			List<?> entries, Map<String, Object> contextObjects)
-		throws Exception {
 
 		return _portletDisplayTemplate.renderDDMTemplate(
 			httpServletRequest, httpServletResponse,
-			ModelAdapterUtil.adapt(
-				com.liferay.dynamic.data.mapping.model.DDMTemplate.class,
-				ddmTemplate),
-			entries, contextObjects);
+			ddmTemplate.getTemplateId(), entries, contextObjects);
 	}
-
-	@Override
-	public String renderDDMTemplate(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, long templateId,
-			List<?> entries, Map<String, Object> contextObjects)
-		throws Exception {
-
-		return _portletDisplayTemplate.renderDDMTemplate(
-			httpServletRequest, httpServletResponse, templateId, entries,
-			contextObjects);
-	}
-
-	private static final Function<InvocationHandler, DDMTemplate>
-		_ddmTemplateProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
-			DDMTemplate.class, ModelWrapper.class);
 
 	@Reference
 	private PortletDisplayTemplate _portletDisplayTemplate;

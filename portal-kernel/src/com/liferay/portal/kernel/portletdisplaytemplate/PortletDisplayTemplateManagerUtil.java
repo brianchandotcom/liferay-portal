@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.portletdisplaytemplate;
 
-import com.liferay.dynamic.data.mapping.kernel.DDMTemplate;
-import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 import java.util.List;
@@ -29,45 +27,16 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class PortletDisplayTemplateManagerUtil {
 
-	public static DDMTemplate getDDMTemplate(
-		long groupId, long classNameId, String displayStyle,
-		boolean useDefault) {
-
-		return _portletDisplayTemplateManager.getDDMTemplate(
-			groupId, classNameId, displayStyle, useDefault);
-	}
-
-	public static String getDisplayStyle(String ddmTemplateKey) {
-		return _portletDisplayTemplateManager.getDisplayStyle(ddmTemplateKey);
-	}
-
-	public static Map<String, TemplateVariableGroup> getTemplateVariableGroups(
-		String language) {
-
-		return _portletDisplayTemplateManager.getTemplateVariableGroups(
-			language);
-	}
-
 	public static String renderDDMTemplate(
+			long classNameId, Map<String, Object> contextObjects,
+			String ddmTemplateKey, List<?> entries, long groupId,
 			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, DDMTemplate ddmTemplate,
-			List<?> entries, Map<String, Object> contextObjects)
+			HttpServletResponse httpServletResponse, boolean useDefault)
 		throws Exception {
 
 		return _portletDisplayTemplateManager.renderDDMTemplate(
-			httpServletRequest, httpServletResponse, ddmTemplate, entries,
-			contextObjects);
-	}
-
-	public static String renderDDMTemplate(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, long templateId,
-			List<?> entries, Map<String, Object> contextObjects)
-		throws Exception {
-
-		return _portletDisplayTemplateManager.renderDDMTemplate(
-			httpServletRequest, httpServletResponse, templateId, entries,
-			contextObjects);
+			classNameId, contextObjects, ddmTemplateKey, entries, groupId,
+			httpServletRequest, httpServletResponse, useDefault);
 	}
 
 	private static volatile PortletDisplayTemplateManager

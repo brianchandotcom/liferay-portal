@@ -14,9 +14,6 @@
 
 package com.liferay.portal.kernel.portletdisplaytemplate;
 
-import com.liferay.dynamic.data.mapping.kernel.DDMTemplate;
-import com.liferay.portal.kernel.template.TemplateVariableGroup;
-
 import java.util.List;
 import java.util.Map;
 
@@ -35,25 +32,11 @@ public interface PortletDisplayTemplateManager {
 
 	public static final String ENTRIES = "entries";
 
-	public DDMTemplate getDDMTemplate(
-		long groupId, long classNameId, String displayStyle,
-		boolean useDefault);
-
-	public String getDisplayStyle(String ddmTemplateKey);
-
-	public Map<String, TemplateVariableGroup> getTemplateVariableGroups(
-		String language);
-
 	public String renderDDMTemplate(
+			long classNameId, Map<String, Object> contextObjects,
+			String ddmTemplateKey, List<?> entries, long groupId,
 			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, DDMTemplate ddmTemplate,
-			List<?> entries, Map<String, Object> contextObjects)
-		throws Exception;
-
-	public String renderDDMTemplate(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, long templateId,
-			List<?> entries, Map<String, Object> contextObjects)
+			HttpServletResponse httpServletResponse, boolean useDefault)
 		throws Exception;
 
 }

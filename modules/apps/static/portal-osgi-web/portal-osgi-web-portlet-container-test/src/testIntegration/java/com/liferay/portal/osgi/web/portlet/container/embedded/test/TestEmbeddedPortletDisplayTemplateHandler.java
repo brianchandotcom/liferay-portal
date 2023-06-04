@@ -14,9 +14,9 @@
 
 package com.liferay.portal.osgi.web.portlet.container.embedded.test;
 
-import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.osgi.web.portlet.container.test.TestPortlet;
+import com.liferay.portlet.display.template.BasePortletDisplayTemplateHandler;
 
 import java.util.Locale;
 

@@ -15,7 +15,6 @@
 package com.liferay.portal.search.web.internal.tag.facet.portlet.display.template;
 
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.Portal;
@@ -24,6 +23,7 @@ import com.liferay.portal.search.web.internal.facet.display.context.AssetTagsSea
 import com.liferay.portal.search.web.internal.facet.display.context.BucketDisplayContext;
 import com.liferay.portal.search.web.internal.tag.facet.constants.TagFacetPortletKeys;
 import com.liferay.portal.search.web.internal.tag.facet.portlet.TagFacetPortlet;
+import com.liferay.portlet.display.template.BasePortletDisplayTemplateHandler;
 import com.liferay.portlet.display.template.constants.PortletDisplayTemplateConstants;
 
 import java.util.List;

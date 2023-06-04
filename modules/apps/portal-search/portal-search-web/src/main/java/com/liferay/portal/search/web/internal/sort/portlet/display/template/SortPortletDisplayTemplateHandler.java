@@ -15,7 +15,6 @@
 package com.liferay.portal.search.web.internal.sort.portlet.display.template;
 
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.Portal;
@@ -23,6 +22,7 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.search.web.internal.sort.constants.SortPortletKeys;
 import com.liferay.portal.search.web.internal.sort.display.context.SortDisplayContext;
 import com.liferay.portal.search.web.internal.sort.display.context.SortTermDisplayContext;
+import com.liferay.portlet.display.template.BasePortletDisplayTemplateHandler;
 import com.liferay.portlet.display.template.constants.PortletDisplayTemplateConstants;
 
 import java.util.List;

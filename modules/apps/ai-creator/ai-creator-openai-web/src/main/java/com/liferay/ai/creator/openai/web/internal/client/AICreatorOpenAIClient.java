@@ -20,15 +20,19 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.InputStream;
 
 import java.net.HttpURLConnection;
+
+import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -39,7 +43,9 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = AICreatorOpenAIClient.class)
 public class AICreatorOpenAIClient {
 
-	public String getCompletion(String apiKey, String content)
+	public String getCompletion(
+			String apiKey, String content, Locale locale, String tone,
+			int words)
 		throws Exception {
 
 		Http.Options options = new Http.Options();
@@ -50,7 +56,21 @@ public class AICreatorOpenAIClient {
 		options.setBody(
 			JSONUtil.put(
 				"messages",
-				JSONUtil.put(
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"content",
+						_language.format(
+							locale,
+							"i-want-you-to-create-a-text-using-x-as-the-" +
+								"language,-of-approximately-x-words,-and-" +
+									"using-a-x-tone",
+							new String[] {
+								LocaleUtil.getLocaleDisplayName(locale, locale),
+								String.valueOf(words), tone
+							})
+					).put(
+						"role", "system"
+					),
 					JSONUtil.put(
 						"content", content
 					).put(
@@ -155,5 +175,8 @@ public class AICreatorOpenAIClient {
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private Language _language;
 
 }

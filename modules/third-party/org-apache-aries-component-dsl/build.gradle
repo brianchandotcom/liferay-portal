@@ -1,0 +1,22 @@
+import com.liferay.gradle.plugins.patcher.PatchTask
+
+apply plugin: "com.liferay.patcher"
+apply plugin: "nebula.optional-base"
+
+task deployJar(type: Copy)
+task patch(type: PatchTask)
+
+dependencies {
+	compileOnly group: "org.apache.aries.component-dsl", name: "org.apache.aries.component-dsl.component-dsl", version: "1.2.2", transitive: false
+	compileOnly group: "org.osgi", name: "osgi.core", transitive: false, version: "6.0.0"
+}
+
+patch {
+	ext {
+		autoClean = false
+	}
+
+	fileNames "org/apache/aries/component/dsl/OSGi.java"
+
+	originalLibModuleName = "org.apache.aries.component-dsl.component-dsl"
+}

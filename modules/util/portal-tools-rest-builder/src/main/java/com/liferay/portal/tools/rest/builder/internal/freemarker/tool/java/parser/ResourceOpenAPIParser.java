@@ -66,6 +66,38 @@ import java.util.function.Consumer;
  */
 public class ResourceOpenAPIParser {
 
+	public static String getActionResourceName(
+		List<JavaMethodSignature> javaMethodSignatures, String propertyName) {
+
+		for (JavaMethodSignature javaMethodSignature : javaMethodSignatures) {
+			String methodName = javaMethodSignature.getMethodName();
+			String schemaName = javaMethodSignature.getSchemaName();
+
+			if (StringUtil.equals(propertyName, "delete")) {
+				if (StringUtil.equals(methodName, "delete" + schemaName)) {
+					return methodName;
+				}
+			}
+			else if (StringUtil.equals(propertyName, "get")) {
+				if (StringUtil.equals(methodName, "get" + schemaName)) {
+					return methodName;
+				}
+			}
+			else if (StringUtil.equals(propertyName, "update")) {
+				if (StringUtil.equals(methodName, "patch" + schemaName)) {
+					return methodName;
+				}
+			}
+			else if (StringUtil.equals(propertyName, "replace")) {
+				if (StringUtil.equals(methodName, "put" + schemaName)) {
+					return methodName;
+				}
+			}
+		}
+
+		return null;
+	}
+
 	public static List<JavaMethodSignature> getJavaMethodSignatures(
 		ConfigYAML configYAML, OpenAPIYAML openAPIYAML, String schemaName) {
 

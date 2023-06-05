@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.Validator_IW;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.FreeMarkerTool;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodSignature;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.util.OpenAPIParserUtil;
+import com.liferay.portal.tools.rest.builder.internal.freemarker.util.ConfigUtil;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.util.FreeMarkerUtil;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.util.OpenAPIUtil;
 import com.liferay.portal.tools.rest.builder.internal.util.FileUtil;
@@ -330,6 +331,15 @@ public class RESTBuilder {
 					schemaName,
 					_getRelatedSchemaNames(allSchemas, javaMethodSignatures));
 
+				if (ConfigUtil.isVersionCompatible(_configYAML, 3)) {
+					_createBaseDTOActionMetadataProviderFile(
+						context, escapedVersion, schemaName);
+					_createDTOActionMetadataProviderFile(
+						context, escapedVersion, schemaName);
+					_createDTOActionProviderFile(
+						context, escapedVersion, schemaName);
+				}
+
 				_createBaseResourceImplFile(
 					context, escapedVersion, schemaName);
 				_createLiberalPermissionCheckerFile(context);
@@ -503,6 +513,26 @@ public class RESTBuilder {
 			file,
 			FreeMarkerUtil.processTemplate(
 				_copyrightFile, "application", context));
+	}
+
+	private void _createBaseDTOActionMetadataProviderFile(
+			Map<String, Object> context, String escapedVersion,
+			String schemaName)
+		throws Exception {
+
+		File file = new File(
+			StringBundler.concat(
+				_configYAML.getImplDir(), "/",
+				StringUtil.replace(_configYAML.getApiPackagePath(), '.', '/'),
+				"/internal/dto/", escapedVersion, "/action/metadata/Base",
+				schemaName, "DTOActionMetadataProvider.java"));
+
+		_files.add(file);
+
+		FileUtil.write(
+			file,
+			FreeMarkerUtil.processTemplate(
+				_copyrightFile, "base_dto_action_metadata_provider", context));
 	}
 
 	private void _createBaseResourceImplFile(
@@ -774,6 +804,50 @@ public class RESTBuilder {
 			file,
 			FreeMarkerUtil.processTemplate(
 				_copyrightFile, "client_unsafe_supplier", context));
+	}
+
+	private void _createDTOActionMetadataProviderFile(
+			Map<String, Object> context, String escapedVersion,
+			String schemaName)
+		throws Exception {
+
+		File file = new File(
+			StringBundler.concat(
+				_configYAML.getImplDir(), "/",
+				StringUtil.replace(_configYAML.getApiPackagePath(), '.', '/'),
+				"/internal/dto/", escapedVersion, "/action/metadata/",
+				schemaName, "DTOActionMetadataProvider.java"));
+
+		_files.add(file);
+
+		if (file.exists()) {
+			return;
+		}
+
+		FileUtil.write(
+			file,
+			FreeMarkerUtil.processTemplate(
+				_copyrightFile, "dto_action_metadata_provider", context));
+	}
+
+	private void _createDTOActionProviderFile(
+			Map<String, Object> context, String escapedVersion,
+			String schemaName)
+		throws Exception {
+
+		File file = new File(
+			StringBundler.concat(
+				_configYAML.getImplDir(), "/",
+				StringUtil.replace(_configYAML.getApiPackagePath(), '.', '/'),
+				"/internal/dto/", escapedVersion, "/action/", schemaName,
+				"DTOActionProvider.java"));
+
+		_files.add(file);
+
+		FileUtil.write(
+			file,
+			FreeMarkerUtil.processTemplate(
+				_copyrightFile, "dto_action_provider", context));
 	}
 
 	private void _createDTOFile(

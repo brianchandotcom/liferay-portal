@@ -335,9 +335,11 @@ public class ExecutePoshiElement extends PoshiElement {
 
 		String assignmentsString = ListUtil.toString(assignments);
 
-		if ((assignments.size() > 1) &&
-			assignmentsString.matches("(?s)\\w+\\s*=.+") &&
-			!isConditionValidInParent((PoshiElement)getParent())) {
+		if (((assignments.size() == 1) &&
+			 assignmentsString.startsWith("table = '''")) ||
+			((assignments.size() > 1) &&
+			 assignmentsString.matches("(?s)\\w+\\s*=.+") &&
+			 !isConditionValidInParent((PoshiElement)getParent()))) {
 
 			multilineSnippet = true;
 		}

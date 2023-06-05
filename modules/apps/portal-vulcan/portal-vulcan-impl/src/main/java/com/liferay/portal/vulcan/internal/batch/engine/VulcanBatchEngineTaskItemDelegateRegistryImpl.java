@@ -85,6 +85,8 @@ public class VulcanBatchEngineTaskItemDelegateRegistryImpl
 		new HashMap<>();
 	private final Map<String, Boolean> _batchPlannerImportEnabledMap =
 		new HashMap<>();
+	private final Map<Long, Map<String, VulcanBatchEngineTaskItemDelegate<?>>>
+		_companyScopedVulcanBatchEngineTaskItemDelegateMap = new HashMap<>();
 	private ServiceTracker<?, ?> _serviceTracker;
 	private final Map<String, VulcanBatchEngineTaskItemDelegate<?>>
 		_vulcanBatchEngineTaskItemDelegateMap = new HashMap<>();
@@ -118,8 +120,32 @@ public class VulcanBatchEngineTaskItemDelegateRegistryImpl
 					serviceReference.getProperty(
 						"batch.planner.import.enabled")));
 
-			_vulcanBatchEngineTaskItemDelegateMap.put(
-				entityClassName, vulcanBatchEngineTaskItemDelegate);
+			Object companyIdProperty = serviceReference.getProperty(
+				"companyId");
+
+			if (companyIdProperty == null) {
+				_vulcanBatchEngineTaskItemDelegateMap.put(
+					entityClassName, vulcanBatchEngineTaskItemDelegate);
+			}
+			else {
+				long companyId = GetterUtil.getLong(companyIdProperty);
+
+				Map<String, VulcanBatchEngineTaskItemDelegate<?>>
+					companyVulcanBatchEngineTaskItemDelegateMap =
+						_companyScopedVulcanBatchEngineTaskItemDelegateMap.get(
+							companyId);
+
+				if (companyVulcanBatchEngineTaskItemDelegateMap == null) {
+					companyVulcanBatchEngineTaskItemDelegateMap =
+						new HashMap<>();
+
+					_companyScopedVulcanBatchEngineTaskItemDelegateMap.put(
+						companyId, companyVulcanBatchEngineTaskItemDelegateMap);
+				}
+
+				companyVulcanBatchEngineTaskItemDelegateMap.put(
+					entityClassName, vulcanBatchEngineTaskItemDelegate);
+			}
 
 			return vulcanBatchEngineTaskItemDelegate;
 		}
@@ -146,7 +172,21 @@ public class VulcanBatchEngineTaskItemDelegateRegistryImpl
 
 			_batchPlannerImportEnabledMap.remove(entityClassName);
 
-			_vulcanBatchEngineTaskItemDelegateMap.remove(entityClassName);
+			Object companyIdProperty = serviceReference.getProperty(
+				"companyId");
+
+			if (companyIdProperty == null) {
+				_vulcanBatchEngineTaskItemDelegateMap.remove(entityClassName);
+			}
+			else {
+				Map<String, VulcanBatchEngineTaskItemDelegate<?>>
+					companyVulcanBatchEngineTaskItemDelegateMap =
+						_companyScopedVulcanBatchEngineTaskItemDelegateMap.get(
+							GetterUtil.getLong(companyIdProperty));
+
+				companyVulcanBatchEngineTaskItemDelegateMap.remove(
+					entityClassName);
+			}
 		}
 
 		private VulcanBatchEngineTaskItemDelegateServiceTrackerCustomizer(

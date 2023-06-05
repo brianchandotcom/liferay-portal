@@ -33,7 +33,7 @@ function MappingPanel({
 	name,
 	fields,
 	field: initialField,
-	fieldType,
+	fieldTypes = [],
 	source,
 	onSelect = noop,
 	clearSelectionOnClose = false,
@@ -126,7 +126,7 @@ function MappingPanel({
 							displayType="primary"
 							onClick={handleOnSelect}
 						>
-							{fieldType === FIELD_TYPES.TEXT
+							{fieldTypes.includes(FIELD_TYPES.TEXT)
 								? Liferay.Language.get('add-field')
 								: Liferay.Language.get('map-content')}
 						</ClayButton>
@@ -143,7 +143,7 @@ MappingPanel.propTypes = {
 		key: PropTypes.string,
 		label: PropTypes.string,
 	}),
-	fieldType: PropTypes.string,
+	fieldTypes: PropTypes.array,
 	fields: PropTypes.arrayOf(
 		PropTypes.shape({
 			key: PropTypes.string,

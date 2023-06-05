@@ -24,7 +24,7 @@ const fieldTemplate = (key, label) => ` $\{${key}:${sanitizeLabel(label)}} `;
 
 function MappingInput({
 	component,
-	fieldType,
+	fieldTypes,
 	fields,
 	helpMessage,
 	label,
@@ -91,7 +91,7 @@ function MappingInput({
 				<ClayInput.GroupItem shrink>
 					<MappingPanel
 						clearSelectionOnClose
-						fieldType={fieldType}
+						fieldTypes={fieldTypes}
 						fields={fields}
 						isActive={isActive}
 						name={name}

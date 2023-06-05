@@ -83,6 +83,11 @@ definition {
 			locator1 = "RaylifeAP#MENU_SIDEBAR");
 	}
 
+	macro assertVisibleSidebar {
+		AssertVisible(
+			locator1 = "RaylifeAP#POLICY_DETAIL_TITLE");
+	}
+
 	@summary = "Click on a kebab button from an application in the application table"
 	macro clickInApplicationKebabOption {
 		Click(
@@ -101,6 +106,22 @@ definition {
 			key_status = ${status},
 			locator1 = "RaylifeAP#APPLICATIONS_NUMBER_WITH_STATUS");
 	}
+
+	macro clickOnClaimNumber {
+		Click(
+			locator1 = "RaylifeAP#CLAIM_NUMBER");
+	}
+
+	macro clickOnBackToClaimsPage {
+		Click(
+			locator1 = "RaylifeAP#CLAIM_BACK_BUTTON");
+	}
+
+	macro clickOnPolicyNumberOnClaimDetais {
+		Click(
+			locator1 = "RaylifeAP#POLICY_DETAIL_REDIRECT");
+	}
+
 
 	macro clickOnAllAplications {
 		Button.click(button = "All Applications");

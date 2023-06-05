@@ -44,6 +44,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>POLICY_NUMBER</td>
+	<td>//*[contains(@class, 'icon-shortcut')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>POLICY_DETAIL_REDIRECT</td>
 	<td>//*[contains(@class,'component-button')]</td>
 	<td></td>

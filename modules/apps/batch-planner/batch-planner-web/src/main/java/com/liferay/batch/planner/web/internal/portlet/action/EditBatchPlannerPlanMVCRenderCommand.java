@@ -75,13 +75,13 @@ public class EditBatchPlannerPlanMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	private Map<String, String> _getInternalClassNameCategories(
-		boolean export) {
+		boolean export, long companyId) {
 
 		Map<String, String> internalClassNameCategories = new HashMap<>();
 
 		for (String entityClassName :
-				_vulcanBatchEngineTaskItemDelegateRegistry.
-					getEntityClassNames()) {
+				_vulcanBatchEngineTaskItemDelegateRegistry.getEntityClassNames(
+					companyId)) {
 
 			if (!_isBatchPlannerEnabled(entityClassName, export)) {
 				continue;
@@ -90,7 +90,8 @@ public class EditBatchPlannerPlanMVCRenderCommand implements MVCRenderCommand {
 			VulcanBatchEngineTaskItemDelegate
 				vulcanBatchEngineTaskItemDelegate =
 					_vulcanBatchEngineTaskItemDelegateRegistry.
-						getVulcanBatchEngineTaskItemDelegate(entityClassName);
+						getVulcanBatchEngineTaskItemDelegate(
+							companyId, entityClassName);
 
 			internalClassNameCategories.put(
 				entityClassName,
@@ -134,11 +135,13 @@ public class EditBatchPlannerPlanMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	private String _render(RenderRequest renderRequest) throws PortalException {
+		long companyId = _portal.getCompanyId(renderRequest);
+
 		boolean export = _isExport(
 			ParamUtil.getString(renderRequest, "navigation"));
 
 		Map<String, String> internalClassNameCategories =
-			_getInternalClassNameCategories(export);
+			_getInternalClassNameCategories(export, companyId);
 
 		long batchPlannerPlanId = ParamUtil.getLong(
 			renderRequest, "batchPlannerPlanId");
@@ -149,8 +152,8 @@ public class EditBatchPlannerPlanMVCRenderCommand implements MVCRenderCommand {
 					WebKeys.PORTLET_DISPLAY_CONTEXT,
 					new EditBatchPlannerPlanDisplayContext(
 						_batchPlannerPlanService.getBatchPlannerPlans(
-							_portal.getCompanyId(renderRequest), true, true,
-							QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
+							companyId, true, true, QueryUtil.ALL_POS,
+							QueryUtil.ALL_POS, null),
 						internalClassNameCategories, renderRequest, null));
 
 				return "/export/edit_batch_planner_plan.jsp";

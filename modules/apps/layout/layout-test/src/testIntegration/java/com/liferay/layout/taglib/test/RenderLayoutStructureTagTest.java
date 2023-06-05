@@ -690,8 +690,6 @@ public class RenderLayoutStructureTagTest {
 	private JournalArticle _addJournalArticle(DDMStructure ddmStructure)
 		throws Exception {
 
-		String content = DDMStructureTestUtil.getSampleStructuredContent();
-
 		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
 			_group.getGroupId(), ddmStructure.getStructureId(),
 			PortalUtil.getClassNameId(JournalArticle.class));
@@ -707,7 +705,8 @@ public class RenderLayoutStructureTagTest {
 			true, JournalArticleConstants.VERSION_DEFAULT,
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomLocaleStringMap(), content,
+			RandomTestUtil.randomLocaleStringMap(),
+			DDMStructureTestUtil.getSampleStructuredContent(),
 			ddmStructure.getStructureId(), ddmTemplate.getTemplateKey(), null,
 			displayDateCalendar.get(Calendar.MONTH),
 			displayDateCalendar.get(Calendar.DAY_OF_MONTH),

@@ -213,8 +213,6 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 			if ((cachedTestBaseDir == null) ||
 				!cachedTestBaseDir.equals(testBaseDir)) {
 
-				_testBaseDirAtomicReference.set(testBaseDir);
-
 				PortalGitWorkingDirectory portalGitWorkingDirectory =
 					portalTestClassJob.getPortalGitWorkingDirectory();
 
@@ -274,6 +272,8 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 				catch (Exception exception) {
 					throw new RuntimeException(exception);
 				}
+
+				_testBaseDirAtomicReference.set(testBaseDir);
 			}
 
 			try {

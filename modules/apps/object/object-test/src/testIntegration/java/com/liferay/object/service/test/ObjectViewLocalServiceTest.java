@@ -405,7 +405,7 @@ public class ObjectViewLocalServiceTest {
 			listTypeDefinition.getListTypeDefinitionId());
 
 		return ObjectDefinitionTestUtil.addObjectDefinition(
-			_objectDefinitionLocalService,
+			false, _objectDefinitionLocalService,
 			Arrays.asList(
 				objectField,
 				ObjectFieldUtil.createObjectField(
@@ -650,7 +650,7 @@ public class ObjectViewLocalServiceTest {
 
 		ObjectDefinition objectDefinition1 =
 			ObjectDefinitionTestUtil.addObjectDefinition(
-				_objectDefinitionLocalService,
+				false, _objectDefinitionLocalService,
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,

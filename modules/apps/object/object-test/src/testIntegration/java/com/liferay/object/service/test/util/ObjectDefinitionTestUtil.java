@@ -49,24 +49,25 @@ public class ObjectDefinitionTestUtil {
 	}
 
 	public static ObjectDefinition addObjectDefinition(
-			ObjectDefinitionLocalService objectDefinitionLocalService)
-		throws Exception {
-
-		return addObjectDefinition(objectDefinitionLocalService, null);
-	}
-
-	public static ObjectDefinition addObjectDefinition(
+			boolean enableLocalization,
 			ObjectDefinitionLocalService objectDefinitionLocalService,
 			List<ObjectField> objectFields)
 		throws Exception {
 
 		return objectDefinitionLocalService.addCustomObjectDefinition(
-			TestPropsValues.getUserId(), false, false,
+			TestPropsValues.getUserId(), false, enableLocalization,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			"A" + RandomTestUtil.randomString(), null, null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			ObjectDefinitionConstants.SCOPE_COMPANY,
 			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT, objectFields);
+	}
+
+	public static ObjectDefinition addObjectDefinition(
+			ObjectDefinitionLocalService objectDefinitionLocalService)
+		throws Exception {
+
+		return addObjectDefinition(false, objectDefinitionLocalService, null);
 	}
 
 	public static ObjectDefinition addUnmodifiableSystemObjectDefinition(

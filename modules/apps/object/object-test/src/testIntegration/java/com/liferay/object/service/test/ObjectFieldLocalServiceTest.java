@@ -137,7 +137,7 @@ public class ObjectFieldLocalServiceTest {
 		AssertUtils.assertFailure(
 			ObjectDefinitionEnableLocalizationException.class, null,
 			() -> ObjectDefinitionTestUtil.addObjectDefinition(
-				_objectDefinitionLocalService,
+				false, _objectDefinitionLocalService,
 				Arrays.asList(
 					new TextObjectFieldBuilder(
 					).labelMap(
@@ -155,7 +155,7 @@ public class ObjectFieldLocalServiceTest {
 			ObjectFieldListTypeDefinitionIdException.class,
 			"List type definition ID is 0",
 			() -> ObjectDefinitionTestUtil.addObjectDefinition(
-				_objectDefinitionLocalService,
+				false, _objectDefinitionLocalService,
 				Arrays.asList(
 					new MultiselectPicklistObjectFieldBuilder(
 					).labelMap(
@@ -172,7 +172,7 @@ public class ObjectFieldLocalServiceTest {
 			"Only LongText,RichText and Text business types support " +
 				"localization",
 			() -> ObjectDefinitionTestUtil.addObjectDefinition(
-				_objectDefinitionLocalService,
+				false, _objectDefinitionLocalService,
 				Arrays.asList(
 					new DateObjectFieldBuilder(
 					).labelMap(
@@ -190,7 +190,7 @@ public class ObjectFieldLocalServiceTest {
 			ObjectFieldLocalizedException.class,
 			"Localized object fields must not be required",
 			() -> ObjectDefinitionTestUtil.addObjectDefinition(
-				_objectDefinitionLocalService,
+				true, _objectDefinitionLocalService,
 				Arrays.asList(
 					new TextObjectFieldBuilder(
 					).labelMap(
@@ -217,7 +217,7 @@ public class ObjectFieldLocalServiceTest {
 			AssertUtils.assertFailure(
 				ObjectFieldNameException.class, "Reserved name " + reservedName,
 				() -> ObjectDefinitionTestUtil.addObjectDefinition(
-					_objectDefinitionLocalService,
+					false, _objectDefinitionLocalService,
 					Arrays.asList(
 						new TextObjectFieldBuilder(
 						).labelMap(
@@ -237,7 +237,7 @@ public class ObjectFieldLocalServiceTest {
 			"The value " + defaultValue +
 				" of setting defaultValue is invalid for object field picklist",
 			() -> ObjectDefinitionTestUtil.addObjectDefinition(
-				_objectDefinitionLocalService,
+				false, _objectDefinitionLocalService,
 				Arrays.asList(
 					new PicklistObjectFieldBuilder(
 					).labelMap(
@@ -271,7 +271,7 @@ public class ObjectFieldLocalServiceTest {
 			"The value " + uniqueValues +
 				" of setting uniqueValues is invalid for object field text",
 			() -> ObjectDefinitionTestUtil.addObjectDefinition(
-				_objectDefinitionLocalService,
+				false, _objectDefinitionLocalService,
 				Arrays.asList(
 					new TextObjectFieldBuilder(
 					).labelMap(
@@ -294,7 +294,7 @@ public class ObjectFieldLocalServiceTest {
 			"The value expressionBuilder of setting defaultValueType is " +
 				"invalid for object field picklist",
 			() -> ObjectDefinitionTestUtil.addObjectDefinition(
-				_objectDefinitionLocalService,
+				false, _objectDefinitionLocalService,
 				Arrays.asList(
 					new PicklistObjectFieldBuilder(
 					).labelMap(
@@ -333,7 +333,7 @@ public class ObjectFieldLocalServiceTest {
 			"The settings acceptedFileExtensions, fileSource, " +
 				"maximumFileSize are required for object field upload",
 			() -> ObjectDefinitionTestUtil.addObjectDefinition(
-				_objectDefinitionLocalService,
+				false, _objectDefinitionLocalService,
 				Arrays.asList(
 					new AttachmentObjectFieldBuilder(
 					).labelMap(
@@ -348,7 +348,7 @@ public class ObjectFieldLocalServiceTest {
 			"The settings defaultValue, defaultValueType are required for " +
 				"object field picklist",
 			() -> ObjectDefinitionTestUtil.addObjectDefinition(
-				_objectDefinitionLocalService,
+				false, _objectDefinitionLocalService,
 				Arrays.asList(
 					new PicklistObjectFieldBuilder(
 					).labelMap(
@@ -368,7 +368,7 @@ public class ObjectFieldLocalServiceTest {
 			ObjectFieldSettingValueException.MissingRequiredValues.class,
 			"The settings maxLength are required for object field text",
 			() -> ObjectDefinitionTestUtil.addObjectDefinition(
-				_objectDefinitionLocalService,
+				false, _objectDefinitionLocalService,
 				Arrays.asList(
 					new TextObjectFieldBuilder(
 					).labelMap(
@@ -390,7 +390,7 @@ public class ObjectFieldLocalServiceTest {
 			ObjectFieldSettingValueException.MissingRequiredValues.class,
 			"The settings timeStorage are required for object field datetime",
 			() -> ObjectDefinitionTestUtil.addObjectDefinition(
-				_objectDefinitionLocalService,
+				false, _objectDefinitionLocalService,
 				Collections.singletonList(
 					new ObjectFieldBuilder(
 					).businessType(
@@ -412,7 +412,7 @@ public class ObjectFieldLocalServiceTest {
 			ObjectFieldSettingNameException.NotAllowedNames.class,
 			"The settings anySetting are not allowed for object field text",
 			() -> ObjectDefinitionTestUtil.addObjectDefinition(
-				_objectDefinitionLocalService,
+				false, _objectDefinitionLocalService,
 				Arrays.asList(
 					new TextObjectFieldBuilder(
 					).labelMap(
@@ -441,7 +441,7 @@ public class ObjectFieldLocalServiceTest {
 			"The settings defaultValue, defaultValueType are not allowed for " +
 				"object field text",
 			() -> ObjectDefinitionTestUtil.addObjectDefinition(
-				_objectDefinitionLocalService,
+				false, _objectDefinitionLocalService,
 				Arrays.asList(
 					new TextObjectFieldBuilder(
 					).labelMap(
@@ -476,7 +476,7 @@ public class ObjectFieldLocalServiceTest {
 			ObjectFieldSettingNameException.NotAllowedNames.class,
 			"The settings maxLength are not allowed for object field text",
 			() -> ObjectDefinitionTestUtil.addObjectDefinition(
-				_objectDefinitionLocalService,
+				false, _objectDefinitionLocalService,
 				Arrays.asList(
 					new TextObjectFieldBuilder(
 					).labelMap(
@@ -498,7 +498,7 @@ public class ObjectFieldLocalServiceTest {
 			ObjectFieldSettingNameException.NotAllowedNames.class,
 			"The settings maxLength are not allowed for object field text",
 			() -> ObjectDefinitionTestUtil.addObjectDefinition(
-				_objectDefinitionLocalService,
+				false, _objectDefinitionLocalService,
 				Arrays.asList(
 					new TextObjectFieldBuilder(
 					).labelMap(
@@ -528,7 +528,7 @@ public class ObjectFieldLocalServiceTest {
 			ObjectFieldStateException.class,
 			"Object field must be required when the state is true",
 			() -> ObjectDefinitionTestUtil.addObjectDefinition(
-				_objectDefinitionLocalService,
+				false, _objectDefinitionLocalService,
 				Arrays.asList(
 					new PicklistObjectFieldBuilder(
 					).labelMap(
@@ -665,7 +665,7 @@ public class ObjectFieldLocalServiceTest {
 
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionTestUtil.addObjectDefinition(
-				_objectDefinitionLocalService,
+				false, _objectDefinitionLocalService,
 				Collections.singletonList(
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
@@ -765,7 +765,7 @@ public class ObjectFieldLocalServiceTest {
 
 		ObjectDefinition customObjectDefinition =
 			ObjectDefinitionTestUtil.addObjectDefinition(
-				_objectDefinitionLocalService,
+				false, _objectDefinitionLocalService,
 				Collections.singletonList(
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
@@ -940,7 +940,7 @@ public class ObjectFieldLocalServiceTest {
 
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionTestUtil.addObjectDefinition(
-				_objectDefinitionLocalService,
+				false, _objectDefinitionLocalService,
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
@@ -1236,7 +1236,7 @@ public class ObjectFieldLocalServiceTest {
 
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionTestUtil.addObjectDefinition(
-				_objectDefinitionLocalService,
+				false, _objectDefinitionLocalService,
 				Arrays.asList(
 					objectFieldBuilder.userId(
 						TestPropsValues.getUserId()
@@ -1646,7 +1646,7 @@ public class ObjectFieldLocalServiceTest {
 	private ObjectDefinition _publishCustomObjectDefinition() throws Exception {
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionTestUtil.addObjectDefinition(
-				_objectDefinitionLocalService,
+				false, _objectDefinitionLocalService,
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,

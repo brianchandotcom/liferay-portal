@@ -523,7 +523,7 @@ public class ObjectEntryLocalServiceSearchObjectEntriesTest {
 		throws Exception {
 
 		_objectDefinition = ObjectDefinitionTestUtil.addObjectDefinition(
-			_objectDefinitionLocalService, Arrays.asList(objectField));
+			false, _objectDefinitionLocalService, Arrays.asList(objectField));
 
 		_objectDefinition.setTitleObjectFieldId(_getTitleObjectFieldId());
 

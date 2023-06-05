@@ -97,7 +97,7 @@ public class ObjectRelationshipLocalServiceTest {
 	@Before
 	public void setUp() throws Exception {
 		_objectDefinition1 = ObjectDefinitionTestUtil.addObjectDefinition(
-			_objectDefinitionLocalService,
+			false, _objectDefinitionLocalService,
 			Arrays.asList(
 				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
@@ -110,7 +110,7 @@ public class ObjectRelationshipLocalServiceTest {
 				_objectDefinition1.getObjectDefinitionId());
 
 		_objectDefinition2 = ObjectDefinitionTestUtil.addObjectDefinition(
-			_objectDefinitionLocalService,
+			false, _objectDefinitionLocalService,
 			Arrays.asList(
 				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
@@ -590,7 +590,7 @@ public class ObjectRelationshipLocalServiceTest {
 
 		ObjectDefinition relatedObjectDefinition =
 			ObjectDefinitionTestUtil.addObjectDefinition(
-				_objectDefinitionLocalService,
+				false, _objectDefinitionLocalService,
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,

@@ -63,7 +63,7 @@ public class ObjectValidationRuleLocalServiceTest {
 	@Before
 	public void setUp() throws Exception {
 		_objectDefinition = ObjectDefinitionTestUtil.addObjectDefinition(
-			_objectDefinitionLocalService,
+			false, _objectDefinitionLocalService,
 			Arrays.asList(
 				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_TEXT,

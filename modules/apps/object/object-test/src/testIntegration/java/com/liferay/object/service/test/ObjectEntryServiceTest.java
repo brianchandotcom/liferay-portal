@@ -92,7 +92,7 @@ public class ObjectEntryServiceTest {
 			TestPropsValues.getCompanyId());
 
 		_objectDefinition = ObjectDefinitionTestUtil.addObjectDefinition(
-			_objectDefinitionLocalService,
+			false, _objectDefinitionLocalService,
 			Arrays.asList(
 				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_TEXT,

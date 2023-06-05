@@ -1776,7 +1776,7 @@ public class ObjectDefinitionLocalServiceTest {
 
 		ObjectDefinition objectDefinition2 =
 			ObjectDefinitionTestUtil.addObjectDefinition(
-				_objectDefinitionLocalService,
+				false, _objectDefinitionLocalService,
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,

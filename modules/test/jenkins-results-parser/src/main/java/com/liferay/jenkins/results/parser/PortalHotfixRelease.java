@@ -14,12 +14,17 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.File;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -87,6 +92,50 @@ public class PortalHotfixRelease {
 		return jsonObject;
 	}
 
+	public Set<String> getModifiedPackageNames() {
+		Set<String> packageNames = new HashSet<>();
+
+		PortalRelease portalRelease = getPortalRelease();
+
+		if (portalRelease == null) {
+			return packageNames;
+		}
+
+		String portalVersion = portalRelease.getPortalVersion();
+
+		if (portalVersion.startsWith("7.3") ||
+			portalVersion.startsWith("7.4")) {
+
+			packageNames = _getJSONPackageNames();
+		}
+		else {
+			return packageNames;
+		}
+
+		Set<String> modifiedPackageNames = new HashSet<>();
+
+		for (String packageName : packageNames) {
+			if (JenkinsResultsParserUtil.isNullOrEmpty(packageName)) {
+				continue;
+			}
+
+			if (packageName.contains("/")) {
+				packageName = packageName.substring(
+					packageName.lastIndexOf("/") + 1);
+			}
+
+			Matcher matcher = _packageNamePattern.matcher(packageName);
+
+			if (!matcher.find()) {
+				continue;
+			}
+
+			modifiedPackageNames.add(matcher.group("packageName"));
+		}
+
+		return modifiedPackageNames;
+	}
+
 	public PortalFixpackRelease getPortalFixpackRelease() {
 		return _portalFixpackRelease;
 	}
@@ -127,6 +176,88 @@ public class PortalHotfixRelease {
 		return _portalRelease;
 	}
 
+	private JSONObject _getFixpackDocumentationJSONObject() {
+		synchronized (_portalHotfixReleaseURL) {
+			if (_fixpackDocumentationJSONObject != null) {
+				return _fixpackDocumentationJSONObject;
+			}
+
+			File tempDir = new File(
+				JenkinsResultsParserUtil.getDistinctTimeStamp());
+
+			try {
+				tempDir.mkdirs();
+
+				File hotfixFile = new File(tempDir, "hotfix.zip");
+
+				JenkinsResultsParserUtil.toFile(
+					getPortalHotfixReleaseURL(), hotfixFile);
+
+				JenkinsResultsParserUtil.unzip(hotfixFile, tempDir);
+
+				File fixpackDocumentationFile = new File(
+					tempDir, "fixpack_documentation.json");
+
+				if (!fixpackDocumentationFile.exists()) {
+					return null;
+				}
+
+				_fixpackDocumentationJSONObject = new JSONObject(
+					JenkinsResultsParserUtil.read(fixpackDocumentationFile));
+
+				return _fixpackDocumentationJSONObject;
+			}
+			catch (Exception exception) {
+				return null;
+			}
+			finally {
+				JenkinsResultsParserUtil.delete(tempDir);
+			}
+		}
+	}
+
+	private Set<String> _getJSONPackageNames() {
+		Set<String> packageNames = new HashSet<>();
+
+		JSONObject fixpackDocumentationJSONObject =
+			_getFixpackDocumentationJSONObject();
+
+		if (fixpackDocumentationJSONObject == null) {
+			return packageNames;
+		}
+
+		JSONObject filesJSONObject =
+			fixpackDocumentationJSONObject.getJSONObject("files");
+
+		JSONArray jarFilesJSONArray = filesJSONObject.getJSONArray("jar_files");
+
+		for (int i = 0; i < jarFilesJSONArray.length(); i++) {
+			JSONObject jarFileJSONObject = jarFilesJSONArray.getJSONObject(i);
+
+			packageNames.add(jarFileJSONObject.optString("new_name"));
+		}
+
+		JSONArray lpkgFilesJSONArray = filesJSONObject.getJSONArray(
+			"lpkg_files");
+
+		for (int i = 0; i < lpkgFilesJSONArray.length(); i++) {
+			JSONObject lpkgFilesJSONObject = lpkgFilesJSONArray.getJSONObject(
+				i);
+
+			JSONArray modifiedJarsJSONArray = lpkgFilesJSONObject.getJSONArray(
+				"modified_jars");
+
+			for (int j = 0; j < modifiedJarsJSONArray.length(); j++) {
+				JSONObject modifiedJarJSONObject =
+					modifiedJarsJSONArray.getJSONObject(j);
+
+				packageNames.add(modifiedJarJSONObject.optString("new_name"));
+			}
+		}
+
+		return packageNames;
+	}
+
 	private URL _getURL(String urlString) {
 		try {
 			return new URL(urlString);
@@ -139,7 +270,10 @@ public class PortalHotfixRelease {
 	private static final Pattern _hotfixURLPattern = Pattern.compile(
 		"https?://.+/(?<hotfixName>liferay-(hotfix|security-de|security-dxp)-" +
 			"(?<hotfixVersion>\\d+)(-\\d{6}-\\d)?-\\d{4})");
+	private static final Pattern _packageNamePattern = Pattern.compile(
+		"(?<packageName>[\\.\\w]+|[\\-\\w]+)(-\\d.*)?\\.jar");
 
+	private JSONObject _fixpackDocumentationJSONObject;
 	private final PortalFixpackRelease _portalFixpackRelease;
 	private final URL _portalHotfixReleaseURL;
 	private final PortalRelease _portalRelease;

@@ -16,6 +16,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>DELETE_NOTIFICATION_IN_QUEUE</td>
+		<td>//div[@class='dnd-td'][contains(.,'${key_text}')]//following-sibling::div//*[contains(@class, 'icon-trash')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>DATA_SOURCE_ATTACHMENTS</td>
 		<td>//div[@tabindex='0']//span[contains(.,'${key_dataSource}')]</td>
 		<td></td>

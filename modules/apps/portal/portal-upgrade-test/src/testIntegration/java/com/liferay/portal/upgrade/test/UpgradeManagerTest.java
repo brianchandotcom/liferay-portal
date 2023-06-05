@@ -26,6 +26,7 @@ import java.lang.management.ManagementFactory;
 import javax.management.MBeanServer;
 import javax.management.ObjectName;
 
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -34,7 +35,10 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.runtime.ServiceComponentRuntime;
 import org.osgi.util.promise.Promise;
 
@@ -60,6 +64,18 @@ public class UpgradeManagerTest {
 		ReflectionTestUtil.setFieldValue(
 			PropsValues.class, "UPGRADE_DATABASE_AUTO_RUN",
 			_originalUpgradeDatabaseAutoRun);
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		Promise<?> promise = _serviceComponentRuntime.disableComponent(
+			_serviceComponentRuntime.getComponentDescriptionDTO(
+				FrameworkUtil.getBundle(_upgradeRecorder.getClass()),
+				"com.liferay.portal.upgrade.internal.jmx.UpgradeManager"));
+
+		promise.getValue();
+
+		_upgradeManager = null;
 	}
 
 	@Test
@@ -150,22 +166,31 @@ public class UpgradeManagerTest {
 		promise.getValue();
 	}
 
-	private String _upgradeManagerInvoke(String methodName) {
+	private String _upgradeManagerInvoke(String methodName) throws Exception {
+		if (_upgradeManager == null) {
+			Bundle bundle = FrameworkUtil.getBundle(
+				_upgradeRecorder.getClass());
+
+			BundleContext bundleContext = bundle.getBundleContext();
+
+			ServiceReference<?>[] serviceReferences =
+				bundleContext.getServiceReferences(
+					"javax.management.DynamicMBean",
+					"(component.name=com.liferay.portal.upgrade.internal.jmx." +
+						"UpgradeManager)");
+
+			_upgradeManager = bundleContext.getService(serviceReferences[0]);
+		}
+
 		return ReflectionTestUtil.invoke(
 			_upgradeManager, methodName, new Class<?>[0], null);
 	}
 
 	private static boolean _originalUpgradeDatabaseAutoRun;
+	private static Object _upgradeManager;
 
 	@Inject
 	private ServiceComponentRuntime _serviceComponentRuntime;
-
-	@Inject(
-		blocking = false,
-		filter = "component.name=com.liferay.portal.upgrade.internal.jmx.UpgradeManager",
-		type = Inject.NoType.class
-	)
-	private Object _upgradeManager;
 
 	@Inject(
 		filter = "component.name=com.liferay.portal.upgrade.internal.recorder.UpgradeRecorder",

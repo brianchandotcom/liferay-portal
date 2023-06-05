@@ -1936,7 +1936,7 @@ definition {
 
 			Segmentation.addProperties(propertyOption = "Team");
 
-			Segmentation.fillProperty(selectLink = "Site Team Name");
+			Segmentation.fillProperty(selectEntry = "Site Team Name");
 
 			Segmentation.fillTitle(titleField = "AddSegmentByUserTeam Test");
 
@@ -3212,7 +3212,7 @@ definition {
 
 			Segmentation.addProperties(propertyOption = "Team");
 
-			Segmentation.fillProperty(selectLink = "Test Site Name");
+			Segmentation.fillProperty(selectEntry = "Test Site Name");
 
 			Segmentation.fillTitle(titleField = "Validade Team Segment");
 

@@ -57,6 +57,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
  * @author Raymond Augé
  * @author Gregory Amerson
  * @author Brian Wing Shun Chan
+ * @author Allen Ziegenfus
  */
 @Configuration
 @EnableWebSecurity
@@ -167,7 +168,7 @@ public class LiferayOAuth2ResourceServerEnableWebSecurity {
 		).and(
 		).authorizeHttpRequests(
 			customizer -> customizer.antMatchers(
-				"/ready"
+				_serverPublicEndpoints
 			).permitAll(
 			).anyRequest(
 			).authenticated()
@@ -201,6 +202,9 @@ public class LiferayOAuth2ResourceServerEnableWebSecurity {
 
 	@Value("${com.liferay.lxc.dxp.server.protocol}")
 	private String _lxcDXPServerProtocol;
+
+	@Value("${server.public.endpoints:}")
+	private String[] _serverPublicEndpoints;
 
 	private class ClientIdOAuth2TokenValidator
 		implements OAuth2TokenValidator<Jwt> {

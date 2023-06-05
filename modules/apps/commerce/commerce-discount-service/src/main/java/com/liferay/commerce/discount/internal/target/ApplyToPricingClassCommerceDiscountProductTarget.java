@@ -14,18 +14,9 @@
 
 package com.liferay.commerce.discount.internal.target;
 
-import com.liferay.commerce.discount.model.CommerceDiscount;
-import com.liferay.commerce.discount.model.CommerceDiscountRel;
-import com.liferay.commerce.discount.service.CommerceDiscountRelLocalService;
 import com.liferay.commerce.discount.target.CommerceDiscountProductTarget;
-import com.liferay.commerce.pricing.model.CommercePricingClass;
 import com.liferay.commerce.pricing.service.CommercePricingClassLocalService;
 import com.liferay.commerce.product.model.CPDefinition;
-import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.portal.kernel.search.BooleanClauseOccur;
-import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.filter.BooleanFilter;
-import com.liferay.portal.kernel.search.filter.ExistsFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -38,52 +29,29 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CommerceDiscountProductTarget.class)
 public class ApplyToPricingClassCommerceDiscountProductTarget
-	implements CommerceDiscountProductTarget {
+	extends BaseCommerceDiscountProductTarget {
+
+	public static final String
+		COMMERCE_DISCOUNT_TARGET_COMMERCE_PRICING_CLASS_IDS =
+			"commerce_discount_target_commerce_pricing_class_ids";
 
 	@Override
-	public void contributeDocument(
-		Document document, CommerceDiscount commerceDiscount) {
-
-		document.addKeyword(
-			"commerce_discount_target_commerce_pricing_class_ids",
-			TransformUtil.transformToLongArray(
-				_commerceDiscountRelLocalService.getCommerceDiscountRels(
-					commerceDiscount.getCommerceDiscountId(),
-					CommercePricingClass.class.getName()),
-				CommerceDiscountRel::getClassPK));
+	public String getFieldName() {
+		return COMMERCE_DISCOUNT_TARGET_COMMERCE_PRICING_CLASS_IDS;
 	}
 
 	@Override
-	public void postProcessContextBooleanFilter(
-		BooleanFilter contextBooleanFilter, CPDefinition cpDefinition) {
+	public Filter getFilter(CPDefinition cpDefinition) {
+		TermsFilter termsFilter = new TermsFilter(getFieldName());
 
-		long[] pricingClassIds =
-			_commercePricingClassLocalService.
-				getCommercePricingClassByCPDefinition(
-					cpDefinition.getCPDefinitionId());
+		termsFilter.addValues(
+			ArrayUtil.toStringArray(
+				_commercePricingClassLocalService.
+					getCommercePricingClassByCPDefinition(
+						cpDefinition.getCPDefinitionId())));
 
-		TermsFilter termsFilter = new TermsFilter(
-			"commerce_discount_target_commerce_pricing_class_ids");
-
-		termsFilter.addValues(ArrayUtil.toStringArray(pricingClassIds));
-
-		Filter existFilter = new ExistsFilter(
-			"commerce_discount_target_commerce_pricing_class_ids");
-
-		BooleanFilter existBooleanFilter = new BooleanFilter();
-
-		existBooleanFilter.add(existFilter, BooleanClauseOccur.MUST_NOT);
-
-		BooleanFilter fieldBooleanFilter = new BooleanFilter();
-
-		fieldBooleanFilter.add(existBooleanFilter, BooleanClauseOccur.SHOULD);
-		fieldBooleanFilter.add(termsFilter, BooleanClauseOccur.SHOULD);
-
-		contextBooleanFilter.add(fieldBooleanFilter, BooleanClauseOccur.MUST);
+		return termsFilter;
 	}
-
-	@Reference
-	private CommerceDiscountRelLocalService _commerceDiscountRelLocalService;
 
 	@Reference
 	private CommercePricingClassLocalService _commercePricingClassLocalService;

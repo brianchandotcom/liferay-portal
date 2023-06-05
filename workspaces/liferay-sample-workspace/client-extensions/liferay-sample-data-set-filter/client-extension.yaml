@@ -1,0 +1,7 @@
+assemble:
+    - from: build
+      into: static
+liferay-sample-data-set-filter:
+    name: Liferay Sample Data Set Filter
+    type: dataSetFilter
+    url: index.js

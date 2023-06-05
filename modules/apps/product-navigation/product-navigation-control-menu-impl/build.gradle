@@ -4,5 +4,6 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:product-navigation:product-navigation-control-menu-api")
+	compileOnly project(":apps:site:site-api")
 	compileOnly project(":core:osgi-service-tracker-collections")
 }

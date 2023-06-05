@@ -298,6 +298,14 @@ public class CommerceInventoryBookedQuantityLocalServiceWrapper
 	}
 
 	@Override
+	public int getCommerceBookedQuantity(
+		long companyId, long commerceChannelGroupId, String sku) {
+
+		return _commerceInventoryBookedQuantityLocalService.
+			getCommerceBookedQuantity(companyId, commerceChannelGroupId, sku);
+	}
+
+	@Override
 	public int getCommerceBookedQuantity(long companyId, String sku) {
 		return _commerceInventoryBookedQuantityLocalService.
 			getCommerceBookedQuantity(companyId, sku);

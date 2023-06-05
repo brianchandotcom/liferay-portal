@@ -17,7 +17,7 @@ definition {
 
 	macro addFieldsTeamMembersExtra {
 		if (!(isSet(position))) {
-			var position = "0";
+			var position = 0;
 		}
 
 		Type(

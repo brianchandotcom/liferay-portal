@@ -54,7 +54,7 @@ definition {
 	@ignore = "true"
 	@priority = 4
 	test CanViewConfirmSuccessfulMessage {
-		
+
 		// Needs refactor since it depends on example FIFA account
 
 		task ("Given a user signs in on OKTA to update the Customer Portal") {

@@ -19,8 +19,9 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountGroupRel;
 import com.liferay.account.service.AccountGroupRelService;
 import com.liferay.account.service.AccountGroupService;
+import com.liferay.headless.admin.user.dto.v1_0.Account;
 import com.liferay.headless.admin.user.dto.v1_0.AccountGroup;
-import com.liferay.headless.admin.user.internal.dto.v1_0.converter.AccountResourceDTOConverter;
+import com.liferay.headless.admin.user.internal.dto.v1_0.converter.constants.DTOConverterConstants;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.admin.user.internal.odata.entity.v1_0.AccountGroupEntityModel;
 import com.liferay.headless.admin.user.resource.v1_0.AccountGroupResource;
@@ -40,6 +41,7 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
+import com.liferay.portal.vulcan.dto.converter.util.DTOConverterUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
@@ -71,7 +73,9 @@ public class AccountGroupResourceImpl extends BaseAccountGroupResourceImpl {
 			String externalReferenceCode)
 		throws Exception {
 
-		deleteAccountGroup(getAccountGroupId(externalReferenceCode));
+		deleteAccountGroup(
+			DTOConverterUtil.getModelPrimaryKey(
+				_accountGroupResourceDTOConverter, externalReferenceCode));
 	}
 
 	@Override
@@ -83,9 +87,11 @@ public class AccountGroupResourceImpl extends BaseAccountGroupResourceImpl {
 
 		AccountGroupRel accountGroupRel =
 			_accountGroupRelService.fetchAccountGroupRel(
-				getAccountGroupId(externalReferenceCode),
+				DTOConverterUtil.getModelPrimaryKey(
+					_accountGroupResourceDTOConverter, externalReferenceCode),
 				AccountEntry.class.getName(),
-				_accountResourceDTOConverter.getAccountEntryId(
+				DTOConverterUtil.getModelPrimaryKey(
+					_accountResourceDTOConverter,
 					accountExternalReferenceCode));
 
 		if (accountGroupRel != null) {
@@ -109,8 +115,8 @@ public class AccountGroupResourceImpl extends BaseAccountGroupResourceImpl {
 		throws Exception {
 
 		return getAccountAccountGroupsPage(
-			_accountResourceDTOConverter.getAccountEntryId(
-				accountExternalReferenceCode),
+			DTOConverterUtil.getModelPrimaryKey(
+				_accountResourceDTOConverter, accountExternalReferenceCode),
 			pagination);
 	}
 
@@ -125,16 +131,9 @@ public class AccountGroupResourceImpl extends BaseAccountGroupResourceImpl {
 			String externalReferenceCode)
 		throws Exception {
 
-		return getAccountGroup(getAccountGroupId(externalReferenceCode));
-	}
-
-	public long getAccountGroupId(String externalReferenceCode)
-		throws Exception {
-
-		com.liferay.account.model.AccountGroup accountGroup =
-			_accountGroupResourceDTOConverter.getObject(externalReferenceCode);
-
-		return accountGroup.getAccountGroupId();
+		return getAccountGroup(
+			DTOConverterUtil.getModelPrimaryKey(
+				_accountGroupResourceDTOConverter, externalReferenceCode));
 	}
 
 	@Override
@@ -208,10 +207,11 @@ public class AccountGroupResourceImpl extends BaseAccountGroupResourceImpl {
 		throws Exception {
 
 		_accountGroupRelService.addAccountGroupRel(
-			getAccountGroupId(externalReferenceCode),
+			DTOConverterUtil.getModelPrimaryKey(
+				_accountGroupResourceDTOConverter, externalReferenceCode),
 			AccountEntry.class.getName(),
-			_accountResourceDTOConverter.getAccountEntryId(
-				accountExternalReferenceCode));
+			DTOConverterUtil.getModelPrimaryKey(
+				_accountResourceDTOConverter, accountExternalReferenceCode));
 	}
 
 	@Override
@@ -234,7 +234,9 @@ public class AccountGroupResourceImpl extends BaseAccountGroupResourceImpl {
 		throws Exception {
 
 		return putAccountGroup(
-			getAccountGroupId(externalReferenceCode), accountGroup);
+			DTOConverterUtil.getModelPrimaryKey(
+				_accountGroupResourceDTOConverter, externalReferenceCode),
+			accountGroup);
 	}
 
 	private Page<AccountGroup> _getAccountGroups(
@@ -357,7 +359,7 @@ public class AccountGroupResourceImpl extends BaseAccountGroupResourceImpl {
 	private AccountGroupRelService _accountGroupRelService;
 
 	@Reference(
-		target = "(component.name=com.liferay.headless.admin.user.internal.dto.v1_0.converter.AccountGroupResourceDTOConverter)"
+		target = DTOConverterConstants.ACCOUNT_GROUP_RESOURCE_DTO_CONVERTER
 	)
 	private DTOConverter<com.liferay.account.model.AccountGroup, AccountGroup>
 		_accountGroupResourceDTOConverter;
@@ -365,8 +367,8 @@ public class AccountGroupResourceImpl extends BaseAccountGroupResourceImpl {
 	@Reference
 	private AccountGroupService _accountGroupService;
 
-	@Reference
-	private AccountResourceDTOConverter _accountResourceDTOConverter;
+	@Reference(target = DTOConverterConstants.ACCOUNT_RESOURCE_DTO_CONVERTER)
+	private DTOConverter<AccountEntry, Account> _accountResourceDTOConverter;
 
 	private final EntityModel _entityModel = new AccountGroupEntityModel();
 

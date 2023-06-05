@@ -2164,21 +2164,6 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals(count, _count());
 	}
 
-	private void _assertFailure(
-		Class<?> clazz, String message,
-		UnsafeSupplier<Object, Exception> unsafeSupplier) {
-
-		try {
-			unsafeSupplier.get();
-
-			Assert.fail();
-		}
-		catch (Exception exception) {
-			Assert.assertTrue(clazz.isInstance(exception));
-			Assert.assertEquals(exception.getMessage(), message);
-		}
-	}
-
 	private void _assertKeywords(String keywords, int count) throws Exception {
 		BaseModelSearchResult<ObjectEntry> baseModelSearchResult =
 			_objectEntryLocalService.searchObjectEntries(

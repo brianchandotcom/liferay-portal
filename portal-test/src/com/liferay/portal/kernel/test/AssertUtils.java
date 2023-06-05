@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.test;
 
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -114,6 +115,30 @@ public class AssertUtils {
 		Assert.assertEquals(
 			StringUtil.merge(expectedStringArray),
 			StringUtil.merge(actualStringArray));
+	}
+
+	public static void assertFailure(
+		Class<?> clazz, String message,
+		UnsafeSupplier<Object, Exception> unsafeSupplier) {
+
+		try {
+			unsafeSupplier.get();
+
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			if (clazz != null) {
+				Assert.assertTrue(clazz.isInstance(exception));
+			}
+
+			Assert.assertEquals(exception.getMessage(), message);
+		}
+	}
+
+	public static void assertFailure(
+		String message, UnsafeSupplier<Object, Exception> unsafeSupplier) {
+
+		assertFailure(null, message, unsafeSupplier);
 	}
 
 	public static void assertLessThan(

@@ -217,21 +217,6 @@ public class NotificationQueueEntryLocalServiceTest {
 				NotificationConstants.TYPE_EMAIL));
 	}
 
-	private void _assertFailure(
-		Class<?> clazz, String message,
-		UnsafeSupplier<Object, Exception> unsafeSupplier) {
-
-		try {
-			unsafeSupplier.get();
-
-			Assert.fail();
-		}
-		catch (Exception exception) {
-			Assert.assertTrue(clazz.isInstance(exception));
-			Assert.assertEquals(exception.getMessage(), message);
-		}
-	}
-
 	private static List<NotificationRecipientSetting>
 		_notificationRecipientSettings = new ArrayList<>();
 

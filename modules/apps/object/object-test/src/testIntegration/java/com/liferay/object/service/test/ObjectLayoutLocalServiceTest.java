@@ -591,21 +591,6 @@ public class ObjectLayoutLocalServiceTest {
 		return objectLayoutTab;
 	}
 
-	private void _assertFailure(
-		Class<?> clazz, String message,
-		UnsafeSupplier<Object, Exception> unsafeSupplier) {
-
-		try {
-			unsafeSupplier.get();
-
-			Assert.fail();
-		}
-		catch (Exception exception) {
-			Assert.assertTrue(clazz.isInstance(exception));
-			Assert.assertEquals(message, exception.getMessage());
-		}
-	}
-
 	private void _assertObjectLayout(ObjectLayout objectLayout) {
 		List<ObjectLayoutTab> objectLayoutTabs =
 			objectLayout.getObjectLayoutTabs();

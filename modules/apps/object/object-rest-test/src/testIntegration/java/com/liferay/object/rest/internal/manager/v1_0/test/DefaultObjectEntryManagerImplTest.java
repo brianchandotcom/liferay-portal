@@ -2560,19 +2560,6 @@ public class DefaultObjectEntryManagerImplTest {
 		}
 	}
 
-	private void _assertFailure(
-		String message, UnsafeSupplier<Object, Exception> unsafeSupplier) {
-
-		try {
-			unsafeSupplier.get();
-
-			Assert.fail();
-		}
-		catch (Exception exception) {
-			Assert.assertEquals(exception.getMessage(), message);
-		}
-	}
-
 	private void _assertLocalizedValues(
 			Map<String, Object> expectedLocalizedValues, String languageId,
 			long objectEntryId)

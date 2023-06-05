@@ -1582,21 +1582,6 @@ public class ObjectFieldLocalServiceTest {
 				objectField.getDBTableName(), objectField.getDBColumnName()));
 	}
 
-	private void _assertFailure(
-		Class<?> clazz, String expectedMessage,
-		UnsafeSupplier<Object, Exception> unsafeSupplier) {
-
-		try {
-			unsafeSupplier.get();
-
-			Assert.fail();
-		}
-		catch (Exception exception) {
-			Assert.assertEquals(expectedMessage, exception.getMessage());
-			Assert.assertTrue(clazz.isInstance(exception));
-		}
-	}
-
 	private void _assertObjectEntryDefaultValue(
 			String expectedDefaultValue, ObjectField objectField,
 			Map<String, Serializable> values)

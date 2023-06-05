@@ -1573,21 +1573,6 @@ public class ObjectDefinitionLocalServiceTest {
 		}
 	}
 
-	private void _assertFailure(
-		Class<?> clazz, String message,
-		UnsafeSupplier<Object, Exception> unsafeSupplier) {
-
-		try {
-			unsafeSupplier.get();
-
-			Assert.fail();
-		}
-		catch (Exception exception) {
-			Assert.assertTrue(clazz.isInstance(exception));
-			Assert.assertEquals(exception.getMessage(), message);
-		}
-	}
-
 	private void _assertObjectField(
 			ObjectDefinition objectDefinition, String dbColumnName,
 			String dbType, String name, boolean required)

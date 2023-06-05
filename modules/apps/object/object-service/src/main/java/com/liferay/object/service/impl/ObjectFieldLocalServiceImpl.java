@@ -1270,11 +1270,6 @@ public class ObjectFieldLocalServiceImpl
 			return;
 		}
 
-		if (required) {
-			throw new ObjectFieldLocalizedException(
-				"Localized object fields must not be required");
-		}
-
 		if (!businessType.equals(
 				ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT) &&
 			!businessType.equals(
@@ -1292,6 +1287,11 @@ public class ObjectFieldLocalServiceImpl
 
 		if (!objectDefinition.isEnableLocalization()) {
 			throw new ObjectDefinitionEnableLocalizationException();
+		}
+
+		if (required) {
+			throw new ObjectFieldLocalizedException(
+				"Localized object fields must not be required");
 		}
 	}
 

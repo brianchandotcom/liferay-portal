@@ -134,8 +134,8 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 				_deepPaginationConfigurationWrapper.getEnableDeepPagination()) {
 
 				hits = _searchWithDeepPagination(
-					end, query, searchContext, searchRequest,
-					searchResponseBuilder, start);
+					query, searchContext, searchRequest, searchResponseBuilder,
+					start, end);
 			}
 			else {
 				hits = _search(
@@ -616,9 +616,8 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 	}
 
 	private Hits _searchWithDeepPagination(
-		int end, Query query, SearchContext searchContext,
-		SearchRequest searchRequest,
-		SearchResponseBuilder searchResponseBuilder, int start) {
+		Query query, SearchContext searchContext, SearchRequest searchRequest,
+		SearchResponseBuilder searchResponseBuilder, int start, int end) {
 
 		SearchSearchRequest searchSearchRequest =
 			_createSearchSearchRequestWithDeepPagination(
@@ -632,7 +631,7 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		try {
 			if (end > maxResultWindow) {
 				SearchHit lastSearchHit = _getLastSearchHit(
-					start, searchSearchRequest, maxResultWindow);
+					maxResultWindow, searchSearchRequest, start);
 
 				if (lastSearchHit == null) {
 					return new HitsImpl();

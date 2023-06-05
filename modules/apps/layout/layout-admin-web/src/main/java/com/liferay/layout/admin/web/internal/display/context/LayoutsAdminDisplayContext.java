@@ -323,6 +323,30 @@ public class LayoutsAdminDisplayContext {
 			selectEventName, cetItemSelectorCriterion);
 	}
 
+	public Long getConfigLayoutPlid() {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-153951")) {
+			return getSelPlid();
+		}
+
+		Layout selLayout = getSelLayout();
+
+		if (selLayout == null) {
+			return getSelPlid();
+		}
+
+		if (selLayout.isDraftLayout()) {
+			return selLayout.getPlid();
+		}
+
+		Layout draftLayout = selLayout.fetchDraftLayout();
+
+		if (draftLayout == null) {
+			return selLayout.getPlid();
+		}
+
+		return draftLayout.getPlid();
+	}
+
 	public String getConfigurationTitle(Layout layout, Locale locale) {
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			LayoutPageTemplateEntryLocalServiceUtil.

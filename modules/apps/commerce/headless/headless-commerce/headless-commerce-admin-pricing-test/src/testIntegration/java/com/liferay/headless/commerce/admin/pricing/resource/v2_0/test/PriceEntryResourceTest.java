@@ -298,13 +298,13 @@ public class PriceEntryResourceTest extends BasePriceEntryResourceTestCase {
 
 		PriceEntry randomPriceEntry = randomPriceEntry();
 
-		randomPriceEntry.setPriceOnApplication(true);
-
 		PriceEntry postPriceEntry =
 			priceEntryResource.postPriceListIdPriceEntry(
 				_commercePriceList.getCommercePriceListId(), randomPriceEntry);
 
-		Assert.assertEquals(postPriceEntry.getPriceOnApplication(), false);
+		Assert.assertEquals(
+			postPriceEntry.getPriceOnApplication(),
+			randomPriceEntry.getPriceOnApplication());
 	}
 
 	@DeleteAfterTestRun

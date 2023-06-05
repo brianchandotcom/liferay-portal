@@ -58,13 +58,13 @@ public class VirtualInstanceMigrator {
 				CommandLine commandLine = commandLineParser.parse(
 					options, args);
 
-				String sourceJdbcUrl = commandLine.getOptionValue(
+				String sourceJdbcURL = commandLine.getOptionValue(
 					"source-jdbc-url");
 				String sourceUser = commandLine.getOptionValue("source-user");
 				String sourcePassword = commandLine.getOptionValue(
 					"source-password");
 
-				String destinationJdbcUrl = commandLine.getOptionValue(
+				String destinationJdbcURL = commandLine.getOptionValue(
 					"destination-jdbc-url");
 				String destinationUser = commandLine.getOptionValue(
 					"destination-user");
@@ -73,7 +73,7 @@ public class VirtualInstanceMigrator {
 
 				try {
 					_sourceConnection = DriverManager.getConnection(
-						sourceJdbcUrl, sourceUser, sourcePassword);
+						sourceJdbcURL, sourceUser, sourcePassword);
 				}
 				catch (SQLException sqlException) {
 					System.err.println(
@@ -86,7 +86,7 @@ public class VirtualInstanceMigrator {
 
 				try {
 					_destinationConnection = DriverManager.getConnection(
-						destinationJdbcUrl, destinationUser,
+						destinationJdbcURL, destinationUser,
 						destinationPassword);
 				}
 				catch (SQLException sqlException) {
@@ -179,7 +179,7 @@ public class VirtualInstanceMigrator {
 
 		options.addRequiredOption(
 			"d", "destination-jdbc-url", true,
-			"Set the JDBC url for the destination database.");
+			"Set the JDBC URL for the destination database.");
 		options.addRequiredOption(
 			"dp", "destination-password", true,
 			"Set the destination database user password.");
@@ -193,7 +193,7 @@ public class VirtualInstanceMigrator {
 		options.addOption("h", "help", false, "Print help message.");
 		options.addRequiredOption(
 			"s", "source-jdbc-url", true,
-			"Set the JDBC url for the source database.");
+			"Set the JDBC URL for the source database.");
 		options.addRequiredOption(
 			"sp", "source-password", true,
 			"Set the source database user password.");

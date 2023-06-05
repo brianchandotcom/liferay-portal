@@ -50,7 +50,6 @@ import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
-import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -257,30 +256,7 @@ public class RenderLayoutStructureTagTest {
 				layout.getPlid());
 
 		_createLayoutStructure(
-			layout,
-			layoutStructure -> {
-				CollectionStyledLayoutStructureItem
-					collectionStyledLayoutStructureItem =
-						(CollectionStyledLayoutStructureItem)
-							layoutStructure.
-								addCollectionStyledLayoutStructureItem(
-									layoutStructure.getMainItemId(), 0);
-
-				collectionStyledLayoutStructureItem.setCollectionJSONObject(
-					JSONUtil.put(
-						"classNameId",
-						_portal.getClassNameId(AssetListEntry.class)
-					).put(
-						"classPK", assetListEntry.getAssetListEntryId()
-					).put(
-						"itemType", JournalArticle.class.getName()
-					).put(
-						"type", InfoListItemSelectorReturnType.class.getName()
-					));
-				collectionStyledLayoutStructureItem.setListStyle(
-					"com.liferay.journal.web.internal.info.list.renderer." +
-						"BulletedJournalArticleBasicInfoListRenderer");
-			},
+			assetListEntry.getAssetListEntryId(), layout,
 			segmentsExperience.getSegmentsExperienceId());
 
 		MockHttpServletRequest mockHttpServletRequest =
@@ -370,30 +346,7 @@ public class RenderLayoutStructureTagTest {
 				layout.getPlid());
 
 		_createLayoutStructure(
-			layout,
-			layoutStructure -> {
-				CollectionStyledLayoutStructureItem
-					collectionStyledLayoutStructureItem =
-						(CollectionStyledLayoutStructureItem)
-							layoutStructure.
-								addCollectionStyledLayoutStructureItem(
-									layoutStructure.getMainItemId(), 0);
-
-				collectionStyledLayoutStructureItem.setCollectionJSONObject(
-					JSONUtil.put(
-						"classNameId",
-						_portal.getClassNameId(AssetListEntry.class)
-					).put(
-						"classPK", assetListEntry.getAssetListEntryId()
-					).put(
-						"itemType", JournalArticle.class.getName()
-					).put(
-						"type", InfoListItemSelectorReturnType.class.getName()
-					));
-				collectionStyledLayoutStructureItem.setListStyle(
-					"com.liferay.journal.web.internal.info.list.renderer." +
-						"BulletedJournalArticleBasicInfoListRenderer");
-			},
+			assetListEntry.getAssetListEntryId(), layout,
 			segmentsExperience.getSegmentsExperienceId());
 
 		MockHttpServletRequest mockHttpServletRequest =
@@ -478,30 +431,7 @@ public class RenderLayoutStructureTagTest {
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		_createLayoutStructure(
-			layout,
-			layoutStructure -> {
-				CollectionStyledLayoutStructureItem
-					collectionStyledLayoutStructureItem =
-						(CollectionStyledLayoutStructureItem)
-							layoutStructure.
-								addCollectionStyledLayoutStructureItem(
-									layoutStructure.getMainItemId(), 0);
-
-				collectionStyledLayoutStructureItem.setCollectionJSONObject(
-					JSONUtil.put(
-						"classNameId",
-						_portal.getClassNameId(AssetListEntry.class)
-					).put(
-						"classPK", assetListEntry.getAssetListEntryId()
-					).put(
-						"itemType", JournalArticle.class.getName()
-					).put(
-						"type", InfoListItemSelectorReturnType.class.getName()
-					));
-				collectionStyledLayoutStructureItem.setListStyle(
-					"com.liferay.journal.web.internal.info.list.renderer." +
-						"BulletedJournalArticleBasicInfoListRenderer");
-			},
+			assetListEntry.getAssetListEntryId(), layout,
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
 				layout.getPlid()));
 
@@ -822,9 +752,7 @@ public class RenderLayoutStructureTagTest {
 	}
 
 	private void _createLayoutStructure(
-			Layout layout,
-			UnsafeConsumer<LayoutStructure, Exception> layoutStructureConsumer,
-			long segmentsExperienceId)
+			long assetListEntryId, Layout layout, long segmentsExperienceId)
 		throws Exception {
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
@@ -835,7 +763,25 @@ public class RenderLayoutStructureTagTest {
 		LayoutStructure layoutStructure = LayoutStructure.of(
 			layoutPageTemplateStructure.getDefaultSegmentsExperienceData());
 
-		layoutStructureConsumer.accept(layoutStructure);
+		CollectionStyledLayoutStructureItem
+			collectionStyledLayoutStructureItem =
+				(CollectionStyledLayoutStructureItem)
+					layoutStructure.addCollectionStyledLayoutStructureItem(
+						layoutStructure.getMainItemId(), 0);
+
+		collectionStyledLayoutStructureItem.setCollectionJSONObject(
+			JSONUtil.put(
+				"classNameId", _portal.getClassNameId(AssetListEntry.class)
+			).put(
+				"classPK", assetListEntryId
+			).put(
+				"itemType", JournalArticle.class.getName()
+			).put(
+				"type", InfoListItemSelectorReturnType.class.getName()
+			));
+		collectionStyledLayoutStructureItem.setListStyle(
+			"com.liferay.journal.web.internal.info.list.renderer." +
+				"BulletedJournalArticleBasicInfoListRenderer");
 
 		_layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructureData(

@@ -101,6 +101,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TABLE_ENTRY_TITLE_SPECIAL</td>
+	<td>//tr[@data-qa-id='row']//td[contains(@class,'title') or contains(@class,'table')]/a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TABLE_ENTRY_TITLE_INDEXED</td>
 	<td>xpath=(//tr[@data-qa-id='row'])[${index}]//td[contains(@class,'title')][normalize-space()='${key_tableEntry}'] | (//tbody//tr)[${index}][.//*[normalize-space(text())='${key_tableEntry}']]</td>
 	<td></td>

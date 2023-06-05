@@ -370,6 +370,24 @@ definition {
 		}
 	}
 
+	macro openOrCloseCollapseField {
+		if (${key_status} == "Open") {
+			if (IsVisible(locator1 = "ClientExtension#COLLAPSE_ICON_CLOSED", value1 = ${key_fieldName})) {
+				Click(
+					locator1 = "ClientExtension#COLLAPSE_ICON_CLOSED",
+					value1 = ${key_fieldName});
+			}
+		}
+
+		if (${key_status} == "Close") {
+			if (IsVisible(locator1 = "ClientExtension#COLLAPSE_ICON_OPEN", value1 = ${key_fieldName})) {
+				Click(
+					locator1 = "ClientExtension#COLLAPSE_ICON_OPEN",
+					value1 = ${key_fieldName});
+			}
+		}
+	}
+
 	macro tearDown {
 		ClientExtensionGeneral.goToRemoteAppsPortlet();
 

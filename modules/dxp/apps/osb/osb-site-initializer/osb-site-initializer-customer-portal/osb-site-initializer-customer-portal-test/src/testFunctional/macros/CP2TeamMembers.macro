@@ -16,6 +16,20 @@ definition {
 	}
 
 	macro addFieldsTeamMembersExtra {
+		if (!(isSet(position))) {
+			var position = "0";
+		}
+
+		Type(
+			key_fieldNumber = ${position},
+			locator1 = "CP2TeamMembers#FIRST_NAME_FIELD",
+			value1 = ${firstName});
+
+		Type(
+			key_fieldNumber = ${position},
+			locator1 = "CP2TeamMembers#LAST_NAME_FIELD",
+			value1 = ${lastName});
+
 		Type(
 			key_fieldNumber = ${position},
 			locator1 = "CP2TeamMembers#EMAIL_FIELD",

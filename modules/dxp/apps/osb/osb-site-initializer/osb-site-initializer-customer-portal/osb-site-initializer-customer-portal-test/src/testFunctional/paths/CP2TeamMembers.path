@@ -27,12 +27,22 @@
 </tr>
 <tr>
 	<td>EMAIL_FIELD</td>
-	<td>//input[contains(@name, 'invites[${key_fieldNumber}]')]</td>
+	<td>//input[contains(@name, 'invites[${key_fieldNumber}].email')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIRST_NAME_FIELD</td>
+	<td>//input[contains(@name, 'invites[${key_fieldNumber}].givenName')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ICON_CHECK</td>
 	<td>//td[contains(@class, 'table-column-text-center')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LAST_NAME_FIELD</td>
+	<td>//input[contains(@name, 'invites[${key_fieldNumber}].familyName')]</td>
 	<td></td>
 </tr>
 <tr>

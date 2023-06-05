@@ -573,10 +573,10 @@ public class LayoutsAdminDisplayContext {
 		).put(
 			"faviconFileEntryId",
 			() -> {
-				Layout selLayout = getSelLayout();
+				Layout configLayout = getConfigLayout();
 
-				if (selLayout != null) {
-					return selLayout.getFaviconFileEntryId();
+				if (configLayout != null) {
+					return configLayout.getFaviconFileEntryId();
 				}
 
 				LayoutSet selLayoutSet = getSelLayoutSet();
@@ -598,9 +598,9 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public String getFaviconTitle() {
-		if (getSelLayout() != null) {
+		if (getConfigLayout() != null) {
 			return FaviconUtil.getFaviconTitle(
-				_cetManager, getSelLayout(), themeDisplay.getLocale());
+				_cetManager, getConfigLayout(), themeDisplay.getLocale());
 		}
 
 		return FaviconUtil.getFaviconTitle(
@@ -610,8 +610,9 @@ public class LayoutsAdminDisplayContext {
 	public String getFaviconURL() {
 		String faviconURL = StringPool.BLANK;
 
-		if (getSelLayout() != null) {
-			faviconURL = FaviconUtil.getFaviconURL(_cetManager, getSelLayout());
+		if (getConfigLayout() != null) {
+			faviconURL = FaviconUtil.getFaviconURL(
+				_cetManager, getConfigLayout());
 		}
 
 		if (Validator.isNotNull(faviconURL)) {
@@ -1392,11 +1393,11 @@ public class LayoutsAdminDisplayContext {
 		String className = LayoutSet.class.getName();
 		long classPK = setLayoutSet.getLayoutSetId();
 
-		Layout selLayout = getSelLayout();
+		Layout configLayout = getConfigLayout();
 
-		if (selLayout != null) {
+		if (configLayout != null) {
 			className = Layout.class.getName();
-			classPK = selLayout.getPlid();
+			classPK = configLayout.getPlid();
 		}
 
 		ClientExtensionEntryRel clientExtensionEntryRel =
@@ -1447,14 +1448,14 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public String getThemeFaviconCETExternalReferenceCode() {
-		Layout selLayout = getSelLayout();
+		Layout configLayout = getConfigLayout();
 
-		if (selLayout != null) {
+		if (configLayout != null) {
 			ClientExtensionEntryRel clientExtensionEntryRel =
 				ClientExtensionEntryRelLocalServiceUtil.
 					fetchClientExtensionEntryRel(
 						PortalUtil.getClassNameId(Layout.class),
-						selLayout.getPlid(),
+						configLayout.getPlid(),
 						ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
 
 			if (clientExtensionEntryRel != null) {
@@ -1663,10 +1664,10 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public boolean isClearFaviconButtonEnabled() {
-		Layout selLayout = getSelLayout();
+		Layout configLayout = getConfigLayout();
 
-		if (selLayout != null) {
-			if (selLayout.getFaviconFileEntryId() > 0) {
+		if (configLayout != null) {
+			if (configLayout.getFaviconFileEntryId() > 0) {
 				return true;
 			}
 
@@ -1674,7 +1675,7 @@ public class LayoutsAdminDisplayContext {
 				ClientExtensionEntryRelLocalServiceUtil.
 					fetchClientExtensionEntryRel(
 						PortalUtil.getClassNameId(Layout.class),
-						selLayout.getPlid(),
+						configLayout.getPlid(),
 						ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
 
 			if (clientExtensionEntryRel != null) {
@@ -2047,21 +2048,21 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	private String _getDefaultFaviconTitle() {
-		Layout selLayout = getSelLayout();
+		Layout configLayout = getConfigLayout();
 
-		if (selLayout != null) {
+		if (configLayout != null) {
 			if (hasEditableMasterLayout() &&
-				(selLayout.getMasterLayoutPlid() > 0)) {
+				(configLayout.getMasterLayoutPlid() > 0)) {
 
 				Layout masterLayout = LayoutLocalServiceUtil.fetchLayout(
-					selLayout.getMasterLayoutPlid());
+					configLayout.getMasterLayoutPlid());
 
 				if (masterLayout != null) {
 					ClientExtensionEntryRel clientExtensionEntryRel =
 						ClientExtensionEntryRelLocalServiceUtil.
 							fetchClientExtensionEntryRel(
 								PortalUtil.getClassNameId(Layout.class),
-								selLayout.getPlid(),
+								configLayout.getPlid(),
 								ClientExtensionEntryConstants.
 									TYPE_THEME_FAVICON);
 

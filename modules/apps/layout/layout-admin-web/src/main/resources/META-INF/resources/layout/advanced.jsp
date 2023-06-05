@@ -17,9 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
-Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
+Layout configLayout = layoutsAdminDisplayContext.getConfigLayout();
 
-UnicodeProperties layoutTypeSettingsUnicodeProperties = selLayout.getTypeSettingsProperties();
+UnicodeProperties layoutTypeSettingsUnicodeProperties = configLayout.getTypeSettingsProperties();
 %>
 
 <liferay-ui:error-marker
@@ -27,7 +27,7 @@ UnicodeProperties layoutTypeSettingsUnicodeProperties = selLayout.getTypeSetting
 	value="advanced"
 />
 
-<aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
+<aui:model-context bean="<%= configLayout %>" model="<%= Layout.class %>" />
 
 <liferay-ui:error exception="<%= ImageTypeException.class %>" message="please-enter-a-file-with-a-valid-file-type" />
 
@@ -36,11 +36,11 @@ Group group = layoutsAdminDisplayContext.getGroup();
 %>
 
 <c:if test="<%= !group.isLayoutPrototype() %>">
-	<div class="alert alert-warning layout-prototype-info-message <%= selLayout.isLayoutPrototypeLinkActive() ? StringPool.BLANK : "hide" %>">
+	<div class="alert alert-warning layout-prototype-info-message <%= configLayout.isLayoutPrototypeLinkActive() ? StringPool.BLANK : "hide" %>">
 		<liferay-ui:message arguments='<%= new String[] {LanguageUtil.get(request, "inherit-changes"), "General"} %>' key="some-page-settings-are-unavailable-because-x-is-enabled" translateArguments="<%= false %>" />
 	</div>
 
-	<aui:input cssClass="propagatable-field" disabled="<%= selLayout.isLayoutPrototypeLinkActive() %>" helpMessage="query-string-help" label="query-string" name="TypeSettingsProperties--query-string--" size="30" type="text" value='<%= GetterUtil.getString(layoutTypeSettingsUnicodeProperties.getProperty("query-string")) %>' />
+	<aui:input cssClass="propagatable-field" disabled="<%= configLayout.isLayoutPrototypeLinkActive() %>" helpMessage="query-string-help" label="query-string" name="TypeSettingsProperties--query-string--" size="30" type="text" value='<%= GetterUtil.getString(layoutTypeSettingsUnicodeProperties.getProperty("query-string")) %>' />
 </c:if>
 
 <%
@@ -53,11 +53,11 @@ String targetType = GetterUtil.getString(layoutTypeSettingsUnicodeProperties.get
 		<aui:option label="new-tab" selected='<%= Objects.equals(targetType, "useNewTab") %>' value="useNewTab" />
 	</aui:select>
 
-	<aui:input cssClass="propagatable-field" disabled="<%= selLayout.isLayoutPrototypeLinkActive() %>" id="target" label="target" name="TypeSettingsProperties--target--" size="15" type="text" value='<%= GetterUtil.getString(layoutTypeSettingsUnicodeProperties.getProperty("target")) %>' wrapperCssClass='<%= Objects.equals(targetType, "useNewTab") ? "hide" : "w-50" %>' />
+	<aui:input cssClass="propagatable-field" disabled="<%= configLayout.isLayoutPrototypeLinkActive() %>" id="target" label="target" name="TypeSettingsProperties--target--" size="15" type="text" value='<%= GetterUtil.getString(layoutTypeSettingsUnicodeProperties.getProperty("target")) %>' wrapperCssClass='<%= Objects.equals(targetType, "useNewTab") ? "hide" : "w-50" %>' />
 </div>
 
 <liferay-frontend:logo-selector
-	currentLogoURL='<%= (selLayout.getIconImageId() == 0) ? themeDisplay.getPathThemeImages() + "/spacer.png" : themeDisplay.getPathImage() + "/logo?img_id=" + selLayout.getIconImageId() + "&t=" + WebServerServletTokenUtil.getToken(selLayout.getIconImageId()) %>'
+	currentLogoURL='<%= (configLayout.getIconImageId() == 0) ? themeDisplay.getPathThemeImages() + "/spacer.png" : themeDisplay.getPathImage() + "/logo?img_id=" + configLayout.getIconImageId() + "&t=" + WebServerServletTokenUtil.getToken(configLayout.getIconImageId()) %>'
 	defaultLogoURL='<%= themeDisplay.getPathThemeImages() + "/spacer.png" %>'
 	description='<%= LanguageUtil.get(request, "this-icon-will-be-shown-in-the-navigation-menu") %>'
 	label='<%= LanguageUtil.get(request, "icon") %>'

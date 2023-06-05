@@ -17,12 +17,12 @@
 <%@ include file="/init.jsp" %>
 
 <%
-Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
+Layout configLayout = layoutsAdminDisplayContext.getConfigLayout();
 
 UnicodeProperties layoutTypeSettingsUnicodeProperties = null;
 
-if (selLayout != null) {
-	layoutTypeSettingsUnicodeProperties = selLayout.getTypeSettingsProperties();
+if (configLayout != null) {
+	layoutTypeSettingsUnicodeProperties = configLayout.getTypeSettingsProperties();
 }
 %>
 
@@ -31,7 +31,7 @@ if (selLayout != null) {
 	value="javascript"
 />
 
-<aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
+<aui:model-context bean="<%= configLayout %>" model="<%= Layout.class %>" />
 
 <%
 LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLookAndFeelDisplayContext(request, layoutsAdminDisplayContext, liferayPortletResponse);
@@ -44,7 +44,7 @@ LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLook
 >
 	<react:component
 		module="js/layout/look_and_feel/GlobalJSCETsConfiguration"
-		props="<%= layoutLookAndFeelDisplayContext.getGlobalJSCETsConfigurationProps(Layout.class.getName(), selLayout.getPlid()) %>"
+		props="<%= layoutLookAndFeelDisplayContext.getGlobalJSCETsConfigurationProps(Layout.class.getName(), configLayout.getPlid()) %>"
 	/>
 </liferay-frontend:fieldset>
 
@@ -53,7 +53,7 @@ LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLook
 	collapsible="<%= true %>"
 	label="custom-javascript"
 >
-	<aui:input cssClass="propagatable-field" disabled="<%= layoutsAdminDisplayContext.isReadOnly() || selLayout.isLayoutPrototypeLinkActive() %>" label="javascript" name="TypeSettingsProperties--javascript--" placeholder="javascript" type="textarea" value='<%= layoutTypeSettingsUnicodeProperties.getProperty("javascript") %>' wrap="soft" wrapperCssClass="c-mb-0" />
+	<aui:input cssClass="propagatable-field" disabled="<%= layoutsAdminDisplayContext.isReadOnly() || configLayout.isLayoutPrototypeLinkActive() %>" label="javascript" name="TypeSettingsProperties--javascript--" placeholder="javascript" type="textarea" value='<%= layoutTypeSettingsUnicodeProperties.getProperty("javascript") %>' wrap="soft" wrapperCssClass="c-mb-0" />
 
 	<p class="text-secondary">
 		<liferay-ui:message key="this-javascript-code-is-executed-at-the-bottom-of-the-page" />

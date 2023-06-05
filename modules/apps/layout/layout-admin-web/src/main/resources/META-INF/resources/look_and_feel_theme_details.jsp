@@ -19,7 +19,7 @@
 <%
 String themeId = ParamUtil.getString(request, "themeId");
 
-Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
+Layout configLayout = layoutsAdminDisplayContext.getConfigLayout();
 LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 
 Theme selTheme = null;
@@ -34,9 +34,9 @@ if (Validator.isNotNull(themeId)) {
 	useDefaultThemeSettings = true;
 }
 else {
-	if (selLayout != null) {
-		selTheme = selLayout.getTheme();
-		selColorScheme = selLayout.getColorScheme();
+	if (configLayout != null) {
+		selTheme = configLayout.getTheme();
+		selColorScheme = configLayout.getColorScheme();
 	}
 	else {
 		selTheme = selLayoutSet.getTheme();
@@ -105,8 +105,8 @@ String styleBookWarningMessage = layoutsAdminDisplayContext.getStyleBookWarningM
 					value = selTheme.getSetting(entry.getKey());
 				}
 				else {
-					if (selLayout != null) {
-						value = selLayout.getThemeSetting(entry.getKey(), "regular");
+					if (configLayout != null) {
+						value = configLayout.getThemeSetting(entry.getKey(), "regular");
 					}
 					else {
 						value = selLayoutSet.getThemeSetting(entry.getKey(), "regular");

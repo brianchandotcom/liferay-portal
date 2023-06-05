@@ -23,7 +23,7 @@ LayoutSet layoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 
 Theme rootTheme = layoutSet.getTheme();
 
-Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
+Layout configLayout = layoutsAdminDisplayContext.getConfigLayout();
 
 PortletURL redirectURL = layoutsAdminDisplayContext.getRedirectURL();
 %>
@@ -33,7 +33,7 @@ PortletURL redirectURL = layoutsAdminDisplayContext.getRedirectURL();
 	value="look-and-feel"
 />
 
-<aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
+<aui:model-context bean="<%= configLayout %>" model="<%= Layout.class %>" />
 
 <liferay-util:buffer
 	var="rootNodeNameLink"
@@ -64,7 +64,7 @@ else {
 
 <div id="<portlet:namespace />themeContainer">
 	<clay:radio
-		checked="<%= selLayout.isInheritLookAndFeel() %>"
+		checked="<%= configLayout.isInheritLookAndFeel() %>"
 		disabled="<%= layoutsAdminDisplayContext.isReadOnly() %>"
 		id='<%= liferayPortletResponse.getNamespace() + "regularInheritLookAndFeel" %>'
 		label="<%= taglibLabel %>"
@@ -73,7 +73,7 @@ else {
 	/>
 
 	<clay:radio
-		checked="<%= !selLayout.isInheritLookAndFeel() %>"
+		checked="<%= !configLayout.isInheritLookAndFeel() %>"
 		disabled="<%= layoutsAdminDisplayContext.isReadOnly() %>"
 		id='<%= liferayPortletResponse.getNamespace() + "regularUniqueLookAndFeel" %>'
 		label='<%= LanguageUtil.get(request, "define-a-custom-theme-for-this-page") %>'
@@ -82,7 +82,7 @@ else {
 	/>
 
 	<c:if test="<%= !group.isLayoutPrototype() %>">
-		<div class="lfr-inherit-theme-options <%= selLayout.isInheritLookAndFeel() ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />inheritThemeOptions">
+		<div class="lfr-inherit-theme-options <%= configLayout.isInheritLookAndFeel() ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />inheritThemeOptions">
 			<liferay-util:include page="/look_and_feel_themes.jsp" servletContext="<%= application %>">
 				<liferay-util:param name="companyId" value="<%= String.valueOf(group.getCompanyId()) %>" />
 				<liferay-util:param name="editable" value="<%= Boolean.FALSE.toString() %>" />
@@ -91,7 +91,7 @@ else {
 		</div>
 	</c:if>
 
-	<div class="lfr-inherit-theme-options <%= !selLayout.isInheritLookAndFeel() ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />themeOptions">
+	<div class="lfr-inherit-theme-options <%= !configLayout.isInheritLookAndFeel() ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />themeOptions">
 		<liferay-util:include page="/look_and_feel_themes.jsp" servletContext="<%= application %>" />
 	</div>
 </div>
@@ -123,7 +123,7 @@ else {
 
 	const sheet = themeContainer.closest('.sheet');
 
-	if (<%= selLayout.getMasterLayoutPlid() > 0 %>) {
+	if (<%= configLayout.getMasterLayoutPlid() > 0 %>) {
 		sheet.classList.add('hide');
 		sheet.setAttribute('aria-hidden', 'true');
 	}

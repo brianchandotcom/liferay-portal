@@ -22,13 +22,13 @@ String themeId = ParamUtil.getString(request, "themeId");
 
 Theme selTheme = null;
 
-Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
+Layout configLayout = layoutsAdminDisplayContext.getConfigLayout();
 
 if (Validator.isNotNull(themeId) && Validator.isNotNull(companyId)) {
 	selTheme = ThemeLocalServiceUtil.getTheme(companyId, themeId);
 }
-else if (selLayout == null) {
-	selTheme = selLayout.getTheme();
+else if (configLayout == null) {
+	selTheme = configLayout.getTheme();
 }
 
 PluginPackage selPluginPackage = selTheme.getPluginPackage();
@@ -95,7 +95,7 @@ PluginPackage selPluginPackage = selTheme.getPluginPackage();
 </c:if>
 
 <%
-ColorScheme selColorScheme = selLayout.getColorScheme();
+ColorScheme selColorScheme = configLayout.getColorScheme();
 
 List<ColorScheme> colorSchemes = selTheme.getColorSchemes();
 %>

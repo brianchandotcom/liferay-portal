@@ -155,14 +155,16 @@ public class LayoutLookAndFeelDisplayContext {
 					return StringPool.BLANK;
 				}
 
-				Layout selLayout = _layoutsAdminDisplayContext.getSelLayout();
+				Layout configLayout =
+					_layoutsAdminDisplayContext.getConfigLayout();
 
 				Layout masterLayout = LayoutLocalServiceUtil.getLayout(
-					selLayout.getMasterLayoutPlid());
+					configLayout.getMasterLayoutPlid());
 
 				String editLayoutURL = HttpComponentsUtil.addParameter(
 					HttpComponentsUtil.addParameter(
-						PortalUtil.getLayoutFullURL(selLayout, _themeDisplay),
+						PortalUtil.getLayoutFullURL(
+							configLayout, _themeDisplay),
 						"p_l_mode", Constants.EDIT),
 					"p_l_back_url",
 					ParamUtil.getString(_httpServletRequest, "redirect"));
@@ -182,10 +184,10 @@ public class LayoutLookAndFeelDisplayContext {
 			"masterLayoutPlid",
 			() -> {
 				if (hasMasterLayout()) {
-					Layout selLayout =
-						_layoutsAdminDisplayContext.getSelLayout();
+					Layout configLayout =
+						_layoutsAdminDisplayContext.getConfigLayout();
 
-					return String.valueOf(selLayout.getMasterLayoutPlid());
+					return String.valueOf(configLayout.getMasterLayoutPlid());
 				}
 
 				return StringPool.BLANK;
@@ -201,13 +203,13 @@ public class LayoutLookAndFeelDisplayContext {
 		String masterLayoutName = LanguageUtil.get(
 			_httpServletRequest, "blank");
 
-		Layout selLayout = _layoutsAdminDisplayContext.getSelLayout();
+		Layout configLayout = _layoutsAdminDisplayContext.getConfigLayout();
 
-		if (selLayout.getMasterLayoutPlid() > 0) {
+		if (configLayout.getMasterLayoutPlid() > 0) {
 			LayoutPageTemplateEntry layoutPageTemplateEntry =
 				LayoutPageTemplateEntryLocalServiceUtil.
 					fetchLayoutPageTemplateEntryByPlid(
-						selLayout.getMasterLayoutPlid());
+						configLayout.getMasterLayoutPlid());
 
 			if (layoutPageTemplateEntry != null) {
 				masterLayoutName = layoutPageTemplateEntry.getName();
@@ -249,9 +251,10 @@ public class LayoutLookAndFeelDisplayContext {
 		).put(
 			"styleBookEntryId",
 			() -> {
-				Layout selLayout = _layoutsAdminDisplayContext.getSelLayout();
+				Layout configLayout =
+					_layoutsAdminDisplayContext.getConfigLayout();
 
-				return String.valueOf(selLayout.getStyleBookEntryId());
+				return String.valueOf(configLayout.getStyleBookEntryId());
 			}
 		).put(
 			"styleBookEntryName", getStyleBookEntryName()
@@ -259,12 +262,12 @@ public class LayoutLookAndFeelDisplayContext {
 	}
 
 	public String getStyleBookEntryName() {
-		Layout selLayout = _layoutsAdminDisplayContext.getSelLayout();
+		Layout configLayout = _layoutsAdminDisplayContext.getConfigLayout();
 
 		StyleBookEntry defaultStyleBookEntry =
-			DefaultStyleBookEntryUtil.getDefaultStyleBookEntry(selLayout);
+			DefaultStyleBookEntryUtil.getDefaultStyleBookEntry(configLayout);
 
-		if (selLayout.getStyleBookEntryId() > 0) {
+		if (configLayout.getStyleBookEntryId() > 0) {
 			return defaultStyleBookEntry.getName();
 		}
 
@@ -273,7 +276,7 @@ public class LayoutLookAndFeelDisplayContext {
 		}
 
 		if (hasEditableMasterLayout() &&
-			(selLayout.getMasterLayoutPlid() > 0)) {
+			(configLayout.getMasterLayoutPlid() > 0)) {
 
 			return LanguageUtil.get(_httpServletRequest, "styles-from-master");
 		}
@@ -372,13 +375,13 @@ public class LayoutLookAndFeelDisplayContext {
 
 		boolean hasMasterLayout = false;
 
-		Layout selLayout = _layoutsAdminDisplayContext.getSelLayout();
+		Layout configLayout = _layoutsAdminDisplayContext.getConfigLayout();
 
-		if (selLayout.getMasterLayoutPlid() > 0) {
+		if (configLayout.getMasterLayoutPlid() > 0) {
 			LayoutPageTemplateEntry layoutPageTemplateEntry =
 				LayoutPageTemplateEntryLocalServiceUtil.
 					fetchLayoutPageTemplateEntryByPlid(
-						selLayout.getMasterLayoutPlid());
+						configLayout.getMasterLayoutPlid());
 
 			if (layoutPageTemplateEntry != null) {
 				hasMasterLayout = true;
@@ -456,14 +459,16 @@ public class LayoutLookAndFeelDisplayContext {
 							_getLayoutRootNodeName(), false)));
 			}
 
-			Layout layout = _layoutsAdminDisplayContext.getSelLayout();
+			Layout configLayout = _layoutsAdminDisplayContext.getConfigLayout();
 
-			if ((layout != null) && (layout.getMasterLayoutPlid() > 0)) {
+			if ((configLayout != null) &&
+				(configLayout.getMasterLayoutPlid() > 0)) {
+
 				clientExtensionEntryRels =
 					ClientExtensionEntryRelLocalServiceUtil.
 						getClientExtensionEntryRels(
 							PortalUtil.getClassNameId(Layout.class),
-							layout.getMasterLayoutPlid(), type);
+							configLayout.getMasterLayoutPlid(), type);
 
 				for (ClientExtensionEntryRel clientExtensionEntryRel :
 						clientExtensionEntryRels) {

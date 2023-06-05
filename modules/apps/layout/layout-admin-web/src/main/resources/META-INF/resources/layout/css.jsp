@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
+Layout configLayout = layoutsAdminDisplayContext.getConfigLayout();
 
 LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLookAndFeelDisplayContext(request, layoutsAdminDisplayContext, liferayPortletResponse);
 %>
@@ -40,7 +40,7 @@ LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLook
 >
 	<react:component
 		module="js/layout/look_and_feel/GlobalCSSCETsConfiguration"
-		props="<%= layoutLookAndFeelDisplayContext.getGlobalCSSCETsConfigurationProps(Layout.class.getName(), selLayout.getPlid()) %>"
+		props="<%= layoutLookAndFeelDisplayContext.getGlobalCSSCETsConfigurationProps(Layout.class.getName(), configLayout.getPlid()) %>"
 	/>
 </liferay-frontend:fieldset>
 
@@ -52,7 +52,7 @@ LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLook
 	>
 		<react:component
 			module="js/layout/look_and_feel/ThemeSpritemapCETsConfiguration"
-			props="<%= layoutLookAndFeelDisplayContext.getThemeSpritemapCETConfigurationProps(Layout.class.getName(), selLayout.getPlid()) %>"
+			props="<%= layoutLookAndFeelDisplayContext.getThemeSpritemapCETConfigurationProps(Layout.class.getName(), configLayout.getPlid()) %>"
 		/>
 	</liferay-frontend:fieldset>
 </c:if>
@@ -63,13 +63,13 @@ LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLook
 	label="custom-css"
 >
 	<clay:alert
-		cssClass='<%= selLayout.isInheritLookAndFeel() ? StringPool.BLANK : "d-none" %>'
+		cssClass='<%= configLayout.isInheritLookAndFeel() ? StringPool.BLANK : "d-none" %>'
 		displayType="info"
 		id='<%= liferayPortletResponse.getNamespace() + "regularCssAlert" %>'
 		message='<%= LanguageUtil.get(request, "custom-css-is-disabled-when-using-the-inherited-theme") %>'
 	/>
 
-	<aui:input disabled="<%= selLayout.isInheritLookAndFeel() || layoutsAdminDisplayContext.isReadOnly() %>" label="css" name="regularCss" type="textarea" value="<%= selLayout.getCssText() %>" wrapperCssClass="c-mb-0" />
+	<aui:input disabled="<%= configLayout.isInheritLookAndFeel() || layoutsAdminDisplayContext.isReadOnly() %>" label="css" name="regularCss" type="textarea" value="<%= configLayout.getCssText() %>" wrapperCssClass="c-mb-0" />
 
 	<p class="text-secondary">
 		<liferay-ui:message key="this-css-is-loaded-after-the-theme" />

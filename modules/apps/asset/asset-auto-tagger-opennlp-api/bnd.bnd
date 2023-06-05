@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Asset Auto Tagger OpenNLP API
-Bundle-SymbolicName: com.liferay.asset.auto.tagger.opennlp.api
-Bundle-Version: 4.0.7
-Export-Package: com.liferay.asset.auto.tagger.opennlp

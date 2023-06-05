@@ -366,7 +366,6 @@ const FragmentEditor = ({
 							css={previewData.css}
 							html={previewData.html}
 							js={previewData.js}
-							namespace={namespace}
 							urls={urls}
 						/>
 					</div>

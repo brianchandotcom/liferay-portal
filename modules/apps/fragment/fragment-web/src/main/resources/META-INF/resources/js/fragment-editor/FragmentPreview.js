@@ -63,14 +63,7 @@ const stopEventPropagation = (event) => {
 	event.stopPropagation();
 };
 
-const FragmentPreview = ({
-	configuration,
-	css,
-	html,
-	js,
-	namespace,
-	urls = {},
-}) => {
+const FragmentPreview = ({configuration, css, html, js, urls = {}}) => {
 	const iframeRef = useRef();
 	const ref = useRef();
 
@@ -88,10 +81,10 @@ const FragmentPreview = ({
 
 				const formData = new FormData();
 
-				formData.append(`${namespace}configuration`, configuration);
-				formData.append(`${namespace}css`, createFile('css', css));
-				formData.append(`${namespace}html`, createFile('html', html));
-				formData.append(`${namespace}js`, createFile('js', js));
+				formData.append(`configuration`, configuration);
+				formData.append(`css`, createFile('css', css));
+				formData.append(`html`, createFile('html', html));
+				formData.append(`js`, createFile('js', js));
 
 				fetch(urls.render, {
 					body: formData,

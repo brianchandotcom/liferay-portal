@@ -1,0 +1,66 @@
+@component-name = "portal-object"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Object";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		ObjectAdmin.deleteAllCustomObjectsViaAPI();
+
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "LPS-143068 - Verify a custom object entry with a date and time field can be created"
+	@priority = 5
+	test CanAddEntry {
+		property portal.acceptance = "true";
+
+		task ("Given a custom object with a date and time field and the time storage set to user input") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 186246",
+				objectName = "CustomObject186246",
+				pluralLabelName = "Custom Objects 186246");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 186246");
+
+			ObjectAdmin.goToFieldsTab();
+
+			ObjectAdmin.addObjectFieldViaUI(
+				fieldLabel = "Custom Date Time",
+				fieldTimeStorage = "Use Input as Entered",
+				fieldType = "Date and Time",
+				sorting = "Convert to UTC");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject186246");
+		}
+
+		task ("When the user adds an object entry") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject186246");
+
+			ObjectPortlet.addSingleFieldEntryViaUI(entry = "06/01/2023 09:00 AM");
+
+			Navigator.gotoBack();
+		}
+
+		task ("Then the date and time seen on the table") {
+			AssertElementPresent(
+				key_fieldLabel = "Jun 1, 2023, 9:00 AM",
+				locator1 = "ObjectAdmin#VIEW_OBJECT_FIELD_LABEL");
+		}
+	}
+
+
+}

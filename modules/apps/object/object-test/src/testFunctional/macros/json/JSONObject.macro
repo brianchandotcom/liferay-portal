@@ -372,6 +372,33 @@ definition {
 					}'
 			''';
 		}
+		else if (${fieldBusinessType} == "DateTime") {
+			var curl = '''
+				${portalURL}/o/object-admin/v1.0/object-definitions/${objectId}/object-fields \
+					-H 'Content-Type: application/json' \
+					-u ${userEmailAddress}:${userPassword} \
+					-d '{
+						"type": "${fieldType}",
+						"businessType": "${fieldBusinessType}",
+						"indexed": ${indexed},
+						"indexedAsKeyword": ${indexedAsKeyword},
+						"label": {
+							"en_US": "${fieldLabelName}"
+						},
+						"listTypeDefinitionId": 0,
+						"name": "${fieldName}",
+						"objectFieldSettings": [
+							
+							{
+								"name": "timeStorage",
+								"value": "${timeStorageOption}"
+							}
+							
+						],
+						"required": ${isRequired}
+					}'
+			''';
+		}
 		else {
 			var curl = '''
 				${portalURL}/o/object-admin/v1.0/object-definitions/${objectId}/object-fields \

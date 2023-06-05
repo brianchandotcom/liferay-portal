@@ -119,6 +119,7 @@ definition {
 			outputOption = ${outputOption},
 			picklistName = ${picklistName},
 			showFilesInDocumentsAndMedia = ${showFilesInDocumentsAndMedia},
+			timeStorageOption = ${timeStorageOption},
 			userEmailAddress = ${userEmailAddress},
 			userPassword = ${userPassword});
 	}
@@ -138,6 +139,16 @@ definition {
 
 		if (isSet(fieldType)) {
 			ObjectField.selectType(fieldType = ${fieldType});
+
+			if (${fieldType} == "Date and Time") {
+				Click(
+					key_sorting = ${sorting},
+					locator1 = "ObjectCustomViews#EDIT_SORTING");
+
+				Click(
+					key_fieldType = ${fieldTimeStorage},
+					locator1 = "ObjectField#TYPE_OPTION");
+			}
 
 			if (${fieldType} == "Attachment") {
 				Click(locator1 = "ObjectField#REQUEST_FILES_INPUT");

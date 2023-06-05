@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.field.type.CategoriesInfoFieldType;
+import com.liferay.info.field.type.HTMLInfoFieldType;
 import com.liferay.info.field.type.ImageInfoFieldType;
 import com.liferay.info.field.type.TagsInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
@@ -116,7 +117,7 @@ public class KBArticleInfoItemFormProviderTest {
 		infoField = iterator.next();
 
 		Assert.assertEquals(
-			TextInfoFieldType.INSTANCE, infoField.getInfoFieldType());
+			HTMLInfoFieldType.INSTANCE, infoField.getInfoFieldType());
 		Assert.assertEquals("content", infoField.getName());
 		Assert.assertFalse(infoField.isLocalizable());
 

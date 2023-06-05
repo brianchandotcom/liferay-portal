@@ -42,6 +42,7 @@ import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.util.JournalContent;
 import com.liferay.journal.util.JournalHelper;
 import com.liferay.journal.web.internal.info.item.JournalArticleInfoItemFields;
+import com.liferay.layout.page.template.info.item.provider.DisplayPageInfoItemFieldSetProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
@@ -95,6 +96,12 @@ public class JournalArticleInfoItemFieldValuesProvider
 					JournalArticle.class.getName(),
 					journalArticle.getResourcePrimKey())
 			).infoFieldValues(
+				_displayPageInfoItemFieldSetProvider.getInfoFieldValues(
+					JournalArticle.class.getName(),
+					journalArticle.getResourcePrimKey(),
+					String.valueOf(journalArticle.getDDMStructureId()),
+					_getThemeDisplay())
+			).infoFieldValues(
 				_expandoInfoItemFieldSetProvider.getInfoFieldValues(
 					JournalArticle.class.getName(), journalArticle)
 			).infoFieldValues(
@@ -118,6 +125,9 @@ public class JournalArticleInfoItemFieldValuesProvider
 		catch (NoSuchInfoItemException noSuchInfoItemException) {
 			throw new RuntimeException(
 				"Caught unexpected exception", noSuchInfoItemException);
+		}
+		catch (Exception exception) {
+			throw new RuntimeException("Unexpected exception", exception);
 		}
 	}
 
@@ -424,6 +434,10 @@ public class JournalArticleInfoItemFieldValuesProvider
 	@Reference
 	private DDMFormValuesInfoFieldValuesProvider
 		_ddmFormValuesInfoFieldValuesProvider;
+
+	@Reference
+	private DisplayPageInfoItemFieldSetProvider
+		_displayPageInfoItemFieldSetProvider;
 
 	@Reference
 	private ExpandoInfoItemFieldSetProvider _expandoInfoItemFieldSetProvider;

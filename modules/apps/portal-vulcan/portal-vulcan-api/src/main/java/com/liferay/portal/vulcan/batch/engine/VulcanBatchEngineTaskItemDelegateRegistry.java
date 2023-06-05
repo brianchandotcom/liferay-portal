@@ -32,7 +32,13 @@ public interface VulcanBatchEngineTaskItemDelegateRegistry {
 	public VulcanBatchEngineTaskItemDelegate
 		getVulcanBatchEngineTaskItemDelegate(String entityClassName);
 
+	public boolean isBatchPlannerExportEnabled(
+		long companyId, String entityClassName);
+
 	public boolean isBatchPlannerExportEnabled(String entityClassName);
+
+	public boolean isBatchPlannerImportEnabled(
+		long companyId, String entityClassName);
 
 	public boolean isBatchPlannerImportEnabled(String entityClassName);
 

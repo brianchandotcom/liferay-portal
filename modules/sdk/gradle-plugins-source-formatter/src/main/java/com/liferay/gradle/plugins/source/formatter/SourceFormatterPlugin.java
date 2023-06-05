@@ -116,6 +116,13 @@ public class SourceFormatterPlugin implements Plugin<Project> {
 
 		formatSourceTask.setClasspath(classpath);
 
+		String checkNames = GradleUtil.getTaskPrefixedProperty(
+			formatSourceTask, "source.check.names");
+
+		if (Validator.isNotNull(checkNames)) {
+			formatSourceTask.setCheckNames(checkNames.split(","));
+		}
+
 		String fileExtensions = GradleUtil.getTaskPrefixedProperty(
 			formatSourceTask, "file.extensions");
 

@@ -7,9 +7,10 @@ definition {
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "OSB Site Initializer Customer Portal";
 
+	var testAccount = "Test Account LXC - SM";
 	var testSiteName = "Customer Portal Site";
 	var testSiteURL = "customer-portal-site";
-	var testAccount = "Test Account LXC - SM";
+	var testProduct = "LXC - SM";
 
 	setUp {
 		task ("Set up instance and sign in") {
@@ -69,12 +70,17 @@ definition {
 			CustomerPortal.clickOnStartProjectSetup();
 
 			CP2TeamMembers.addFieldsTeamMembersExtra(
-				position = 0,
+				firstName = "Test",
+				lastName = "Testing",
 				positionNumber = 0,
 				rowEmail = "test01@liferay.com",
 				rowRole = "User");
 
 			CP2TeamMembers.clickTeamMembersSendInvitation();
+
+			WaitForElementPresent(
+				locator1 = "CustomerPortalSite#MODAL_PAGE",
+				modal = "Set up ${testProduct}");
 		}
 
 		task ("Assert that the guest user is being shown") {

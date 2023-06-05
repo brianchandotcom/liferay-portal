@@ -43,7 +43,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-149758 | Test Summary: Verify if team members with the role Partner Managers can invite users"
-	@priority = 5
+	@priority = 4
 	test CanViewPartnerManagerInviteUsers {
 		property portal.upstream = "quarantine";
 
@@ -89,7 +89,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-149761 | Test Summary: Verify if team members with the role Partner Managers can remove team members"
-	@priority = 5
+	@priority = 3
 	test RemovingTeamMembers {
 		property portal.upstream = "quarantine";
 

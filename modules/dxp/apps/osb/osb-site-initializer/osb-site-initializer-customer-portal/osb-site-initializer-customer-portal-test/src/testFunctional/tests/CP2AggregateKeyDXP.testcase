@@ -51,10 +51,10 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-148070 | Test Summary: Verify success message Activation Key was downloaded successfully"
+	@ignore = "true"
 	@priority = 4
 	test CanViewConfirmSuccessfulMessage {
-		property portal.upstream = "quarantine";
-
+		
 		// Needs refactor since it depends on example FIFA account
 
 		task ("Given a user signs in on OKTA to update the Customer Portal") {

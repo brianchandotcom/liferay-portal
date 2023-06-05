@@ -46,7 +46,7 @@ definition {
 	@description = "Automation ID: LPS-150641 | Test Summary: Verify if when the user successfully downloads a key, shows the message Activation key details successfully exported"
 	@ignore = "true"
 	@priority = 3
-	test AssertTheActivationKeyDownloadMessage {
+	test AssertTheActivationKeyDownload {
 
 		// Needs refactor since it depends on example NASA ICE account
 

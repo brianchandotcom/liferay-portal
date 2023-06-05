@@ -52,13 +52,13 @@ public class CleanUpDeletedStoreAreaSchedulerJobConfiguration
 	public UnsafeConsumer<Long, Exception>
 		getCompanyJobExecutorUnsafeConsumer() {
 
-		return this::_cleanUpDeletedStoreArea;
+		return this::_cleanUpStorageAreas;
 	}
 
 	@Override
 	public UnsafeRunnable<Exception> getJobExecutorUnsafeRunnable() {
 		return () -> _companyLocalService.forEachCompanyId(
-			this::_cleanUpDeletedStoreArea);
+			this::_cleanUpStorageAreas);
 	}
 
 	@Override
@@ -75,7 +75,7 @@ public class CleanUpDeletedStoreAreaSchedulerJobConfiguration
 			StoreAreaConfiguration.class, properties);
 	}
 
-	private void _cleanUpDeletedStoreArea(Long companyId) {
+	private void _cleanUpDeletedStoreArea(long companyId) {
 		_startOffsets.put(
 			companyId,
 			_storeAreaProcessor.cleanUpDeletedStoreArea(
@@ -83,6 +83,21 @@ public class CleanUpDeletedStoreAreaSchedulerJobConfiguration
 				name -> !_isDLFileVersionReferenced(companyId, name),
 				Duration.ofDays(_storeAreaConfiguration.evictionAge()),
 				_startOffsets.getOrDefault(companyId, StringPool.BLANK)));
+	}
+
+	private void _cleanUpNewStoreArea(long companyId) {
+		_startOffsets.put(
+			companyId,
+			_storeAreaProcessor.cleanUpNewStoreArea(
+				companyId, _storeAreaConfiguration.deletionQuota(),
+				name -> !_isDLFileVersionReferenced(companyId, name),
+				Duration.ofDays(_storeAreaConfiguration.evictionAge()),
+				_startOffsets.getOrDefault(companyId, StringPool.BLANK)));
+	}
+
+	private void _cleanUpStorageAreas(long companyId) {
+		_cleanUpDeletedStoreArea(companyId);
+		_cleanUpNewStoreArea(companyId);
 	}
 
 	private boolean _isDLFileVersionReferenced(Long companyId, String name) {

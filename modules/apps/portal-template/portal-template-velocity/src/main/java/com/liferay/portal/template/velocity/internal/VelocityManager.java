@@ -254,7 +254,9 @@ public class VelocityManager extends BaseTemplateManager {
 	@Reference(service = VelocityTemplateContextHelper.class)
 	private TemplateContextHelper _templateContextHelper;
 
-	@Reference(service = VelocityTemplateResourceLoader.class)
+	@Reference(
+		target = "(component.name=com.liferay.portal.template.velocity.internal.VelocityTemplateResourceLoader)"
+	)
 	private TemplateResourceLoader _templateResourceLoader;
 
 	private VelocityEngine _velocityEngine;

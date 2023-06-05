@@ -31,11 +31,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Igor Spasic
  * @author Peter Fellwock
  */
-@Component(
-	service = {
-		TemplateResourceLoader.class, VelocityTemplateResourceLoader.class
-	}
-)
+@Component(service = TemplateResourceLoader.class)
 public class VelocityTemplateResourceLoader extends BaseTemplateResourceLoader {
 
 	@Activate

@@ -32,7 +32,7 @@ export default function OpenGraphMapping({
 			fields={fields}
 			inputs={[
 				{
-					fieldTypes: ['text'],
+					fieldTypes: ['html', 'text'],
 					helpMessage: lang.sub(
 						Liferay.Language.get(
 							'map-a-x-field-it-will-be-used-as-x'
@@ -46,7 +46,7 @@ export default function OpenGraphMapping({
 				},
 				{
 					component: 'textarea',
-					fieldTypes: ['text'],
+					fieldTypes: ['html', 'text'],
 					helpMessage: lang.sub(
 						Liferay.Language.get(
 							'map-a-x-field-it-will-be-used-as-x'
@@ -73,7 +73,7 @@ export default function OpenGraphMapping({
 				},
 				{
 					component: 'textarea',
-					fieldTypes: ['text'],
+					fieldTypes: ['html', 'text'],
 					helpMessage: lang.sub(
 						Liferay.Language.get(
 							'map-a-x-field-it-will-be-used-as-x'

@@ -30,7 +30,7 @@ export default function SeoMapping({
 			fields={fields}
 			inputs={[
 				{
-					fieldTypes: ['text'],
+					fieldTypes: ['html', 'text'],
 					helpMessage: lang.sub(
 						Liferay.Language.get(
 							'map-a-x-field-it-will-be-used-as-x'
@@ -44,7 +44,7 @@ export default function SeoMapping({
 				},
 				{
 					component: 'textarea',
-					fieldTypes: ['text'],
+					fieldTypes: ['html', 'text'],
 					helpMessage: lang.sub(
 						Liferay.Language.get(
 							'map-a-x-field-it-will-be-used-as-x'

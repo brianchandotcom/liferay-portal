@@ -119,6 +119,7 @@ import java.sql.ResultSet;
 import java.sql.Timestamp;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -805,6 +806,49 @@ public class ObjectEntryLocalServiceTest {
 			).build());
 
 		_assertCount(4);
+
+		// Date time must be in the future
+
+		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(
+			"yyyy-MM-dd HH:mm");
+
+		_objectValidationRuleLocalService.addObjectValidationRule(
+			TestPropsValues.getUserId(),
+			_objectDefinition.getObjectDefinitionId(), true,
+			ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
+			LocalizedMapUtil.getLocalizedMap("Date time must be in the future"),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			String.format(
+				"futureDates(time, \"%s\")",
+				dateTimeFormatter.format(LocalDateTime.now())));
+
+		_assertFailure(
+			ModelListenerException.class,
+			ObjectValidationRuleEngineException.InvalidFields.class.getName() +
+				": Date time must be in the future",
+			() -> _addObjectEntry(
+				HashMapBuilder.<String, Serializable>put(
+					"birthday", "2000-12-25"
+				).put(
+					"emailAddressRequired", "bob@liferay.com"
+				).put(
+					"listTypeEntryKeyRequired", "listTypeEntryKey1"
+				).put(
+					"time", "2000-12-25 08:50"
+				).build()));
+
+		_addObjectEntry(
+			HashMapBuilder.<String, Serializable>put(
+				"birthday", "2000-12-25"
+			).put(
+				"emailAddressRequired", "bob@liferay.com"
+			).put(
+				"listTypeEntryKeyRequired", "listTypeEntryKey1"
+			).put(
+				"time", dateTimeFormatter.format(LocalDateTime.now())
+			).build());
+
+		_assertCount(5);
 	}
 
 	@Test

@@ -643,6 +643,29 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-185339. Verify that the country Côte d'Ivoire should appear properly."
+	@priority = 5
+	test CanSearchCountry {
+		property test.name.skip.portal.instance = "CountriesManagement#CanSearchCountry";
+
+		task ("Given that a user is in the Countries Management portlet") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Countries Management");
+		}
+
+		task ("When search country name") {
+			Search.searchCP(searchTerm = "Côte d'Ivoire");
+		}
+
+		task ("Then the country is appear properly") {
+			AssertTextEquals(
+				locator1 = "LexiconTable#TABLE_ENTRY_TITLE_SPECIAL",
+				value1 = "Côte d'Ivoire");
+		}
+	}
+
 	@description = "Canceling region creation will not save it"
 	@priority = 3
 	test ClickingCancelOrBackWillNotSaveRegion {

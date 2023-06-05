@@ -255,6 +255,8 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		jsonObject.put(
 			"segments", segmentJSONArray
 		).put(
+			"test_hotfix_changes", testHotfixChanges
+		).put(
 			"test_release_bundle", testReleaseBundle
 		).put(
 			"test_relevant_changes", testRelevantChanges
@@ -370,6 +372,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 			}
 		}
 
+		testHotfixChanges = jsonObject.getBoolean("test_hotfix_changes");
 		testRelevantChanges = jsonObject.getBoolean("test_relevant_changes");
 		testReleaseBundle = jsonObject.getBoolean("test_release_bundle");
 		testRelevantIntegrationUnitOnly = jsonObject.getBoolean(
@@ -403,6 +406,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 			testSuiteName = null;
 		}
 
+		_setTestHotfixChanges();
 		_setTestReleaseBundle();
 		_setTestRelevantChanges();
 
@@ -793,6 +797,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	protected JSONObject jsonObject;
 	protected final PortalGitWorkingDirectory portalGitWorkingDirectory;
 	protected final PortalTestClassJob portalTestClassJob;
+	protected boolean testHotfixChanges;
 	protected boolean testReleaseBundle;
 	protected boolean testRelevantChanges;
 	protected boolean testRelevantIntegrationUnitOnly;
@@ -1141,6 +1146,12 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 
 	private void _setIncludeStableTestSuite() {
 		includeStableTestSuite = testRelevantChanges;
+	}
+
+	private void _setTestHotfixChanges() {
+		Job job = getJob();
+
+		testHotfixChanges = job.testHotfixChanges();
 	}
 
 	private void _setTestReleaseBundle() {

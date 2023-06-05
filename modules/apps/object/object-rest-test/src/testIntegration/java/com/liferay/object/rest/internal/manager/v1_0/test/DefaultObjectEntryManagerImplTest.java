@@ -63,7 +63,6 @@ import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
-import com.liferay.object.rest.petra.sql.dsl.expression.FilterPredicateFactory;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldService;
@@ -298,8 +297,6 @@ public class DefaultObjectEntryManagerImplTest {
 					true
 				).name(
 					"localizedLongTextObjectFieldName"
-				).objectFieldSettings(
-					Collections.emptyList()
 				).build(),
 				new PicklistObjectFieldBuilder(
 				).indexed(
@@ -334,8 +331,6 @@ public class DefaultObjectEntryManagerImplTest {
 					true
 				).name(
 					"localizedRichTextObjectFieldName"
-				).objectFieldSettings(
-					Collections.emptyList()
 				).build(),
 				new TextObjectFieldBuilder(
 				).indexed(
@@ -356,8 +351,6 @@ public class DefaultObjectEntryManagerImplTest {
 					true
 				).name(
 					"localizedTextObjectFieldName"
-				).objectFieldSettings(
-					Collections.emptyList()
 				).build()));
 
 		ObjectRelationship objectRelationship1 =
@@ -406,8 +399,6 @@ public class DefaultObjectEntryManagerImplTest {
 							RandomTestUtil.randomString())
 					).name(
 						"textObjectFieldName"
-					).objectFieldSettings(
-						Collections.emptyList()
 					).build()));
 
 		ObjectDefinition accountEntryObjectDefinition =
@@ -2858,9 +2849,6 @@ public class DefaultObjectEntryManagerImplTest {
 
 	@Inject
 	private DLURLHelper _dlURLHelper;
-
-	@Inject
-	private FilterPredicateFactory _filterPredicateFactory;
 
 	@Inject
 	private GroupLocalService _groupLocalService;

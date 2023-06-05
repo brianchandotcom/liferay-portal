@@ -25,12 +25,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Istvan Sajtos
  */
-@Component(
-	service = {
-		OpenIdConnectSessionProvider.class,
-		OpenIdConnectSessionProviderImpl.class
-	}
-)
+@Component(service = OpenIdConnectSessionProvider.class)
 public class OpenIdConnectSessionProviderImpl
 	implements OpenIdConnectSessionProvider {
 

@@ -49,7 +49,7 @@ import org.osgi.service.component.annotations.Reference;
 		"servlet-filter-name=SSO OpenId Connect Auto Login Filter",
 		"url-pattern=" + OpenIdConnectConstants.REDIRECT_URL_PATTERN
 	},
-	service = {Filter.class, OpenIdConnectAutoLoginFilter.class}
+	service = Filter.class
 )
 public class OpenIdConnectAutoLoginFilter extends AutoLoginFilter {
 

@@ -32,9 +32,6 @@ public class ComponentEnabler {
 		if (PropsValues.UPGRADE_DATABASE_AUTO_RUN) {
 			componentContext.enableComponent(UpgradeManager.class.getName());
 		}
-		else {
-			componentContext.disableComponent(UpgradeManager.class.getName());
-		}
 	}
 
 }

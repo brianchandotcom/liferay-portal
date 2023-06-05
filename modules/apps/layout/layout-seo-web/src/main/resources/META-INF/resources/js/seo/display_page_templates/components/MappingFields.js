@@ -27,6 +27,7 @@ function MappingFields({fields, inputs, selectedSource}) {
 
 		return props.fieldTypes.includes(FIELD_TYPES.TEXT) ? (
 			<MappingInput
+				fieldTypes={props.fieldTypes}
 				fields={filteredFields}
 				key={props.name}
 				selectedSource={selectedSource}
@@ -34,6 +35,7 @@ function MappingFields({fields, inputs, selectedSource}) {
 			/>
 		) : (
 			<MappingSelector
+				fieldTypes={props.fieldTypes}
 				fields={filteredFields}
 				key={props.name}
 				selectedSource={selectedSource}

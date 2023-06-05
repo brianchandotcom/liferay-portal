@@ -20,6 +20,7 @@ import {UNMAPPED_OPTION} from '../constants';
 import MappingPanel from './MappingPanel';
 
 function MappingSelector({
+	fieldTypes = [],
 	fields: initialFields,
 	helpMessage,
 	label,
@@ -71,6 +72,7 @@ function MappingSelector({
 				<ClayInput.GroupItem shrink>
 					<MappingPanel
 						field={field}
+						fieldTypes={fieldTypes}
 						fields={fields}
 						isActive={isActive}
 						name={name}
@@ -89,6 +91,7 @@ function MappingSelector({
 }
 
 MappingSelector.propTypes = {
+	fieldTypes: PropTypes.array,
 	helpMessage: PropTypes.string,
 	name: PropTypes.string.isRequired,
 	selectedFieldKey: PropTypes.string,

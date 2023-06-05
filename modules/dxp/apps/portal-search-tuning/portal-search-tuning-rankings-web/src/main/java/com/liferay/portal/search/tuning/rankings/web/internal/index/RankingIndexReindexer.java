@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Bryan Engler
  */
-@Component(service = {IndexReindexer.class, RankingIndexReindexer.class})
+@Component(service = IndexReindexer.class)
 public class RankingIndexReindexer implements IndexReindexer {
 
 	@Override

@@ -24,10 +24,10 @@ import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.spi.reindexer.IndexReindexer;
 import com.liferay.portal.search.tuning.rankings.storage.RankingsDatabaseImporter;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.DocumentToRankingTranslator;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.Ranking;
-import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingIndexReindexer;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexName;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexNameBuilder;
 import com.liferay.portal.search.tuning.rankings.web.internal.storage.helper.RankingJSONStorageHelper;
@@ -70,8 +70,10 @@ public class RankingsDatabaseImporterImpl implements RankingsDatabaseImporter {
 	@Reference
 	protected RankingIndexNameBuilder rankingIndexNameBuilder;
 
-	@Reference
-	protected RankingIndexReindexer rankingIndexReindexer;
+	@Reference(
+		target = "(component.name=com.liferay.portal.search.tuning.rankings.web.internal.index.RankingIndexReindexer)"
+	)
+	protected IndexReindexer rankingIndexReindexer;
 
 	@Reference
 	protected RankingJSONStorageHelper rankingJSONStorageHelper;

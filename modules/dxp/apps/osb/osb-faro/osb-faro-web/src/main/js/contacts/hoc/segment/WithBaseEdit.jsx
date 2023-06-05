@@ -223,7 +223,7 @@ export default WrappedComponent => {
 					return segment;
 				})
 				.catch(error => {
-					const {alertType, message} = ERRORS[error.messageKey];
+					const {alertType, message} = ERRORS[error.message];
 
 					addAlert({
 						alertType,

@@ -91,10 +91,16 @@ export default request => {
 		if (status === 204) {
 			return {};
 		} else if (status === 400 || status === 500) {
-			const {field, localizedMessage} = parseFromJSON(response);
+			const {field, localizedMessage, messageKey} = parseFromJSON(
+				response
+			);
 
 			if (field) {
 				throw new ValidationError(field, localizedMessage);
+			}
+
+			if (messageKey) {
+				throw new Error(messageKey);
 			}
 
 			throw new Error(

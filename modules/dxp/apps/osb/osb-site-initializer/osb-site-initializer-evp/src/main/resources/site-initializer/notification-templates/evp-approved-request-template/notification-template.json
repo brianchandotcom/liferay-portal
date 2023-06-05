@@ -1,0 +1,23 @@
+{
+	"description": "",
+	"editorType": "richText",
+	"name": "EVP Approved Request Template",
+	"recipientType": "email",
+	"recipients": [
+		{
+			"bcc": "",
+			"cc": "",
+			"from": "from@example.com",
+			"fromName": {
+				"en-US": "EVP"
+			},
+			"to": {
+				"en-US": "to@example.com"
+			}
+		}
+	],
+	"subject": {
+		"en_US": "EVP Request Update"
+	},
+	"type": "email"
+}

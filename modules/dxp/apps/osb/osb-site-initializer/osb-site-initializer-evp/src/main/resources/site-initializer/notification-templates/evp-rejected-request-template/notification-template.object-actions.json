@@ -1,0 +1,14 @@
+[
+	{
+		"active": true,
+		"conditionExpression": "requestStatus == \"rejected\" AND requestStatus != oldValue(\"requestStatus\")",
+		"externalReferenceCode": "EVP-REQUEST-NOTIFICATION-03",
+		"label": {
+			"en_US": "EVP Rejected Request Template"
+		},
+		"name": "EVPRejectedRequestTemplate",
+		"objectActionExecutorKey": "notification",
+		"objectActionTriggerKey": "onAfterUpdate",
+		"objectDefinitionId": "[$OBJECT_DEFINITION_ID:EVPRequest$]"
+	}
+]

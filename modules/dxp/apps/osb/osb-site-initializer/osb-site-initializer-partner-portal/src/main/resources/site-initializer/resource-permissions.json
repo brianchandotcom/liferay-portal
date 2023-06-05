@@ -79,6 +79,14 @@
 			"VIEW"
 		],
 		"resourceName": "com.liferay.list.type.model.ListTypeDefinition",
+		"roleName": "Partner Sales User (PSU)",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"resourceName": "com.liferay.list.type.model.ListTypeDefinition",
 		"roleName": "Channel Marketing Manager (CMM)",
 		"scope": 1
 	},

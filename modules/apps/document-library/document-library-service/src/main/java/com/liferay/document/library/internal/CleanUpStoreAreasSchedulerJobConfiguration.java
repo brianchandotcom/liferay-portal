@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 	configurationPid = "com.liferay.document.library.internal.configuration.StoreAreaConfiguration",
 	service = SchedulerJobConfiguration.class
 )
-public class CleanUpDeletedStoreAreaSchedulerJobConfiguration
+public class CleanUpStoreAreasSchedulerJobConfiguration
 	implements SchedulerJobConfiguration {
 
 	@Override
@@ -79,7 +79,7 @@ public class CleanUpDeletedStoreAreaSchedulerJobConfiguration
 		_startOffsets.put(
 			companyId,
 			_storeAreaProcessor.cleanUpDeletedStoreArea(
-				companyId, _storeAreaConfiguration.deletionQuota(),
+				companyId, _storeAreaConfiguration.evictionQuota(),
 				name -> !_isDLFileVersionReferenced(companyId, name),
 				Duration.ofDays(_storeAreaConfiguration.evictionAge()),
 				_startOffsets.getOrDefault(companyId, StringPool.BLANK)));
@@ -89,7 +89,7 @@ public class CleanUpDeletedStoreAreaSchedulerJobConfiguration
 		_startOffsets.put(
 			companyId,
 			_storeAreaProcessor.cleanUpNewStoreArea(
-				companyId, _storeAreaConfiguration.deletionQuota(),
+				companyId, _storeAreaConfiguration.evictionQuota(),
 				name -> !_isDLFileVersionReferenced(companyId, name),
 				Duration.ofDays(_storeAreaConfiguration.evictionAge()),
 				_startOffsets.getOrDefault(companyId, StringPool.BLANK)));

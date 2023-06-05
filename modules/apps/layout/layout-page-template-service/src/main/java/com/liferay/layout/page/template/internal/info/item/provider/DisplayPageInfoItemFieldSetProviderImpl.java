@@ -71,7 +71,9 @@ public class DisplayPageInfoItemFieldSetProviderImpl
 			String infoItemFormVariationKey, ThemeDisplay themeDisplay)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-183727")) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-183727") ||
+			(themeDisplay == null)) {
+
 			return Collections.emptyList();
 		}
 

@@ -24,7 +24,7 @@ type requestBody = {
   password: string;
 };
 
-export const getSiteURL = () => {
+const getSiteURL = () => {
   const layoutRelativeURL = Liferay.ThemeDisplay.getLayoutRelativeURL();
 
   if (layoutRelativeURL.includes('web')) {
@@ -53,11 +53,11 @@ export async function getAccountRolesOnAPI(accountId: number) {
 
 export async function createNewUser(requestBody: requestBody) {
   try {
-    const response = await fetch(`/o/headless-admin-user/v1.0/user-accounts`, {
+    await fetch(`/o/headless-admin-user/v1.0/user-accounts`, {
       body: JSON.stringify(requestBody),
       headers: {
-        accept: 'application/json',
         'Content-Type': 'application/json',
+        accept: 'application/json',
         'x-csrf-token': Liferay.authToken,
       },
       method: 'POST',
@@ -78,7 +78,7 @@ export async function addExistentUserIntoAccount(
   userEmail: string
 ) {
   try {
-    const response = await fetch(
+    await fetch(
       `/o/headless-admin-user/v1.0/accounts/${accountId}/user-accounts/by-email-address/${userEmail}`,
       {
         headers: {
@@ -90,11 +90,7 @@ export async function addExistentUserIntoAccount(
     );
   } catch (error) {
     <ClayAlert.ToastContainer>
-      <ClayAlert
-        autoClose={5000}
-        displayType="danger"
-        title="error"
-      ></ClayAlert>
+      <ClayAlert autoClose={5000} displayType="danger" title="error" />
     </ClayAlert.ToastContainer>;
   }
 }
@@ -119,11 +115,7 @@ export async function getUserByEmail(userEmail: String) {
     }
   } catch (error) {
     <ClayAlert.ToastContainer>
-      <ClayAlert
-        autoClose={5000}
-        displayType="danger"
-        title="error"
-      ></ClayAlert>
+      <ClayAlert autoClose={5000} displayType="danger" title="error" />
     </ClayAlert.ToastContainer>;
   }
 }
@@ -133,20 +125,17 @@ export async function callRolesApi(
   roleId: number,
   userId: number
 ) {
-  const response = await fetch(
+  await fetch(
     `/o/headless-admin-user/v1.0/accounts/${accountId}/account-roles/${roleId}/user-accounts/${userId}`,
     {
       headers: {
-        accept: 'application/json',
         'Content-Type': 'application/json',
+        accept: 'application/json',
         'x-csrf-token': Liferay.authToken,
       },
       method: 'POST',
     }
   );
-  if (response.ok) {
-    return;
-  }
 }
 
 export async function addAdditionalInfo(
@@ -184,3 +173,5 @@ export async function addAdditionalInfo(
     method: 'POST',
   });
 }
+
+export { getSiteURL };

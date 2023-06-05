@@ -19,7 +19,7 @@ interface ILiferay {
 		getCompanyGroupId: () => string;
 		getCompanyId: () => string;
 		getLanguageId: () => string;
-		getLayoutRelativeURL : () => string;
+		getLayoutRelativeURL: () => string;
 		getPathContext: () => string;
 		getPathThemeImages: () => string;
 		getPortalURL: () => string;

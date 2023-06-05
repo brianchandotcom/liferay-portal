@@ -13,7 +13,7 @@
  */
 
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import {useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 
 import {DashboardMemberTableRow} from '../../components/DashboardTable/DashboardMemberTableRow';
 import {
@@ -55,6 +55,16 @@ const memberTableHeaders: TableHeaders = [
 	},
 ];
 
+const memberMessages = {
+	description: 'Manage users in your development team and invite new ones',
+	emptyStateMessage: {
+		description1: 'Create new members and they will show up here.',
+		description2: 'Click on “New Member” to start.',
+		title: 'No Members Yet',
+	},
+	title: 'Members',
+};
+
 export function MembersPage({
 	dashboardNavigationItems,
 	icon,
@@ -65,30 +75,22 @@ export function MembersPage({
 	const [members, setMembers] = useState<MemberProps[]>(Array<MemberProps>());
 	const [selectedMember, setSelectedMember] = useState<MemberProps>();
 
-	const memberMessages = {
-		description:
-			'Manage users in your development team and invite new ones',
-		emptyStateMessage: {
-			description1: 'Create new members and they will show up here.',
-			description2: 'Click on “New Member” to start.',
-			title: 'No Members Yet',
+	const getRolesList = useCallback(
+		(accountBriefs: AccountBrief[]) => {
+			const rolesList: string[] = [];
+
+			const accountBrief = accountBriefs.find(
+				(accountBrief) => accountBrief.id === selectedAccount.id
+			);
+
+			accountBrief?.roleBriefs.forEach((role: RoleBrief) => {
+				rolesList.push(role.name);
+			});
+
+			return rolesList.join(', ');
 		},
-		title: 'Members',
-	};
-
-	function getRolesList(accountBriefs: AccountBrief[]) {
-		const rolesList: string[] = [];
-
-		const accountBrief = accountBriefs.find(
-			(accountBrief) => accountBrief.id === selectedAccount.id
-		);
-
-		accountBrief?.roleBriefs.forEach((role: RoleBrief) => {
-			rolesList.push(role.name);
-		});
-
-		return rolesList.join(', ');
-	}
+		[selectedAccount.id]
+	);
 
 	useEffect(() => {
 		(async () => {
@@ -166,28 +168,35 @@ export function MembersPage({
 
 			let filteredMembersList: MemberProps[] = [];
 
-      filteredMembersList = membersList.filter((member: MemberProps) => {
-        if (
-          member.accountBriefs.find(
-            (accountBrief: AccountBriefProps) =>
-              accountBrief.externalReferenceCode ===
-              selectedAccount.externalReferenceCode
-          ) &&
-          member.isPublisherAccount
-        ) {
-          return true;
-        }
-        
-        return false;
-      });
+			filteredMembersList = membersList.filter((member: MemberProps) => {
+				if (
+					member.accountBriefs.find(
+						(accountBrief: AccountBriefProps) =>
+							accountBrief.externalReferenceCode ===
+							selectedAccount.externalReferenceCode
+					) &&
+					member.isPublisherAccount
+				) {
+					return true;
+				}
 
-      setMembers(filteredMembersList);
-    })();
-  }, [visible,selectedAccount]);
+				return false;
+			});
+
+			setMembers(filteredMembersList);
+		})();
+	}, [visible, selectedAccount, getRolesList]);
 
 	return (
 		<>
-			{!loading ? (
+			{loading ? (
+				<ClayLoadingIndicator
+					className="members-page-loading-indicator"
+					displayType="primary"
+					shape="circle"
+					size="md"
+				/>
+			) : (
 				<DashboardPage
 					buttonMessage="+ New Member"
 					dashboardNavigationItems={dashboardNavigationItems}
@@ -200,35 +209,22 @@ export function MembersPage({
 							setSelectedMember={setSelectedMember}
 						></MemberProfile>
 					) : (
-						<>
-							<DashboardTable<MemberProps>
-								emptyStateMessage={
-									memberMessages.emptyStateMessage
-								}
-								icon={icon}
-								items={members}
-								tableHeaders={memberTableHeaders}
-							>
-								{(member) => (
-									<DashboardMemberTableRow
-										item={member}
-										key={member.name}
-										onSelectedMemberChange={
-											setSelectedMember
-										}
-									/>
-								)}
-							</DashboardTable>
-						</>
+						<DashboardTable<MemberProps>
+							emptyStateMessage={memberMessages.emptyStateMessage}
+							icon={icon}
+							items={members}
+							tableHeaders={memberTableHeaders}
+						>
+							{(member) => (
+								<DashboardMemberTableRow
+									item={member}
+									key={member.name}
+									onSelectedMemberChange={setSelectedMember}
+								/>
+							)}
+						</DashboardTable>
 					)}
 				</DashboardPage>
-			) : (
-				<ClayLoadingIndicator
-					className="members-page-loading-indicator"
-					displayType="primary"
-					shape="circle"
-					size="md"
-				/>
 			)}
 
 			{visible && (

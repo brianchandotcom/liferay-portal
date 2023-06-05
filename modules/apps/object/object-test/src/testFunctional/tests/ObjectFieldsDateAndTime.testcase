@@ -62,5 +62,72 @@ definition {
 		}
 	}
 
+	@description = "LPS-143068  - Verify the date and time are adjusted to the user's time zone"
+	@priority = 5
+	test CanSeeDifferentTimeZone {
+		property portal.acceptance = "true";
+
+		task ("Given a custom object with a date and time field as UTC and an object entry") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 186248",
+				objectName = "CustomObject186248",
+				pluralLabelName = "Custom Objects 186248");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "DateTime",
+				fieldLabelName = "Custom Date Time",
+				fieldName = "customDateTime",
+				fieldType = "DateTime",
+				isRequired = "false",
+				objectName = "CustomObject186248",
+				timeStorageOption = "convertToUTC");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject186248");
+
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customDateTime",
+				objectName = "CustomObject186248",
+				value = "2023-06-01T12:00:00.000Z");
+		}
+
+		task ("And given a user with a different time zone") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "Administrator",
+				userEmailAddress = "userea@liferay.com");
+
+			User.openUsersAdmin();
+
+			UserNavigator.gotoUser(userScreenName = "usersn");
+
+			UserNavigator.gotoDisplaySettings();
+
+			Select(
+				locator1 = "Select#TIME_ZONE",
+				value1 = "(UTC -03:00) Brasilia Time");
+
+			PortletEntry.save();
+
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("When the user views the entry") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject186248");
+		}
+
+		task ("Then the time is adjusted to the user's time zone") {
+			AssertElementPresent(
+				key_fieldLabel = "Jun 1, 2023, 9:00 AM",
+				locator1 = "ObjectAdmin#VIEW_OBJECT_FIELD_LABEL");
+		}
+	}
+
 
 }

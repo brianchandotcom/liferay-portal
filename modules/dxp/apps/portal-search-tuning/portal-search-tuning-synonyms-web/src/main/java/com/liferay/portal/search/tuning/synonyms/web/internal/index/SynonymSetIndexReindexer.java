@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Bryan Engler
  */
-@Component(service = {IndexReindexer.class, SynonymSetIndexReindexer.class})
+@Component(service = IndexReindexer.class)
 public class SynonymSetIndexReindexer implements IndexReindexer {
 
 	@Override

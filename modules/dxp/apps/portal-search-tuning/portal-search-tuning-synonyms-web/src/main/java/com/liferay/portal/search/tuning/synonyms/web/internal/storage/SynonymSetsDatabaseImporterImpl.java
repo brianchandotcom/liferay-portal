@@ -24,12 +24,12 @@ import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.spi.reindexer.IndexReindexer;
 import com.liferay.portal.search.tuning.synonyms.index.name.SynonymSetIndexName;
 import com.liferay.portal.search.tuning.synonyms.index.name.SynonymSetIndexNameBuilder;
 import com.liferay.portal.search.tuning.synonyms.storage.SynonymSetsDatabaseImporter;
 import com.liferay.portal.search.tuning.synonyms.web.internal.index.DocumentToSynonymSetTranslator;
 import com.liferay.portal.search.tuning.synonyms.web.internal.index.SynonymSet;
-import com.liferay.portal.search.tuning.synonyms.web.internal.index.SynonymSetIndexReindexer;
 import com.liferay.portal.search.tuning.synonyms.web.internal.storage.helper.SynonymSetJSONStorageHelper;
 
 import java.util.List;
@@ -74,8 +74,10 @@ public class SynonymSetsDatabaseImporterImpl
 	@Reference
 	protected SynonymSetIndexNameBuilder synonymSetIndexNameBuilder;
 
-	@Reference
-	protected SynonymSetIndexReindexer synonymSetIndexReindexer;
+	@Reference(
+		target = "(component.name=com.liferay.portal.search.tuning.synonyms.web.internal.index.SynonymSetIndexReindexer)"
+	)
+	protected IndexReindexer synonymSetIndexReindexer;
 
 	@Reference
 	protected SynonymSetJSONStorageHelper synonymSetJSONStorageHelper;

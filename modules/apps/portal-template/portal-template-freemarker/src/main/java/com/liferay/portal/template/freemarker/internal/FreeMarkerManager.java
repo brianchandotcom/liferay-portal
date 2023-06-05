@@ -594,7 +594,9 @@ public class FreeMarkerManager extends BaseTemplateManager {
 	private final Map<String, TemplateModel> _templateModels =
 		new ConcurrentHashMap<>();
 
-	@Reference(service = FreeMarkerTemplateResourceLoader.class)
+	@Reference(
+		target = "(component.name=com.liferay.portal.template.freemarker.internal.FreeMarkerTemplateResourceLoader)"
+	)
 	private TemplateResourceLoader _templateResourceLoader;
 
 	private volatile Map<String, AtomicInteger> _timeoutTemplateCounters;

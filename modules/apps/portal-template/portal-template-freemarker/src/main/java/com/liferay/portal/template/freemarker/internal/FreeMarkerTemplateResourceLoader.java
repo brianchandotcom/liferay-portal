@@ -30,11 +30,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Igor Spasic
  */
-@Component(
-	service = {
-		FreeMarkerTemplateResourceLoader.class, TemplateResourceLoader.class
-	}
-)
+@Component(service = TemplateResourceLoader.class)
 public class FreeMarkerTemplateResourceLoader
 	extends BaseTemplateResourceLoader {
 

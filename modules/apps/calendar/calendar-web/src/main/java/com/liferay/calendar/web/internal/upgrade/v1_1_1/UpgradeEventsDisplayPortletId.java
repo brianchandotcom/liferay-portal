@@ -180,8 +180,9 @@ public class UpgradeEventsDisplayPortletId extends BasePortletIdUpgradeProcess {
 
 		portletPreferences.setPortletId(newPortletId);
 
-		_portletPreferencesLocalService.updatePortletPreferences(
-			portletPreferences);
+		portletPreferences =
+			_portletPreferencesLocalService.updatePortletPreferences(
+				portletPreferences);
 
 		_portletPreferencesLocalService.updatePreferences(
 			portletPreferences.getOwnerId(), portletPreferences.getOwnerType(),

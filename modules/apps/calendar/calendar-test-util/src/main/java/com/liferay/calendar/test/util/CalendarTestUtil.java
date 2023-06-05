@@ -104,7 +104,7 @@ public class CalendarTestUtil {
 		if (timeZone != null) {
 			calendar.setTimeZoneId(timeZone.getID());
 
-			CalendarLocalServiceUtil.updateCalendar(calendar);
+			calendar = CalendarLocalServiceUtil.updateCalendar(calendar);
 		}
 
 		return calendar;

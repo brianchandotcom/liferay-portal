@@ -30,8 +30,6 @@ import java.util.Map;
 
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
-import javax.ws.rs.container.ContainerResponseContext;
-import javax.ws.rs.container.ContainerResponseFilter;
 import javax.ws.rs.container.ResourceInfo;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Request;
@@ -47,11 +45,10 @@ import org.osgi.service.component.annotations.ServiceScope;
 		"osgi.jaxrs.application.select=(!(liferay.access.control.disable=true))",
 		"osgi.jaxrs.extension=true", "osgi.jaxrs.name=Liferay.Access.Control"
 	},
-	scope = ServiceScope.PROTOTYPE,
-	service = {ContainerRequestFilter.class, ContainerResponseFilter.class}
+	scope = ServiceScope.PROTOTYPE, service = ContainerRequestFilter.class
 )
-public class AccessControlledContainerRequestResponseFilter
-	implements ContainerRequestFilter, ContainerResponseFilter {
+public class AccessControlledContainerRequestFilter
+	implements ContainerRequestFilter {
 
 	@Override
 	public void filter(ContainerRequestContext containerRequestContext)
@@ -69,39 +66,6 @@ public class AccessControlledContainerRequestResponseFilter
 		}
 
 		_accessControlAdvisor.accept(method, new Object[0], accessControlled);
-	}
-
-	@Override
-	public void filter(
-			ContainerRequestContext containerRequestContext,
-			ContainerResponseContext containerResponseContext)
-		throws IOException {
-
-		_decrementServiceDepth();
-	}
-
-	private void _decrementServiceDepth() {
-		AccessControlContext accessControlContext =
-			AccessControlUtil.getAccessControlContext();
-
-		if (accessControlContext == null) {
-			return;
-		}
-
-		Map<String, Object> settings = accessControlContext.getSettings();
-
-		Integer serviceDepth = (Integer)settings.get(
-			AccessControlContext.Settings.SERVICE_DEPTH.toString());
-
-		if (serviceDepth == null) {
-			return;
-		}
-
-		serviceDepth--;
-
-		settings.put(
-			AccessControlContext.Settings.SERVICE_DEPTH.toString(),
-			serviceDepth);
 	}
 
 	private void _incrementServiceDepth() {

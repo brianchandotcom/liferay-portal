@@ -226,9 +226,10 @@ public class UserAccountResourceImpl
 
 		AccountEntryUserRel accountEntryUserRel =
 			_accountEntryUserRelLocalService.getAccountEntryUserRel(
-				_accountResourceDTOConverter.getAccountEntryId(
-					accountExternalReferenceCode),
-				_userResourceDTOConverter.getUserId(externalReferenceCode));
+				DTOConverterUtil.getModelPrimaryKey(
+					_accountResourceDTOConverter, accountExternalReferenceCode),
+				DTOConverterUtil.getModelPrimaryKey(
+					_userResourceDTOConverter, externalReferenceCode));
 
 		return _toUserAccount(
 			_userService.getUserById(accountEntryUserRel.getAccountUserId()));

@@ -174,8 +174,8 @@ public class OrganizationResourceImpl
 		throws Exception {
 
 		AccountEntry accountEntry = _accountEntryService.getAccountEntry(
-			_accountResourceDTOConverter.getAccountEntryId(
-				externalReferenceCode));
+			DTOConverterUtil.getModelPrimaryKey(
+				_accountResourceDTOConverter, externalReferenceCode));
 
 		AccountEntryOrganizationRel accountEntryOrganizationRel =
 			_accountEntryOrganizationRelService.getAccountEntryOrganizationRel(

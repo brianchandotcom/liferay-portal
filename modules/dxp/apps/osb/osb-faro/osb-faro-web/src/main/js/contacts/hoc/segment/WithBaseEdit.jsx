@@ -16,6 +16,25 @@ import {Routes, SEGMENTS, toRoute} from 'shared/util/router';
 import {Segment} from 'shared/util/records';
 import {SegmentTypes} from 'shared/util/constants';
 
+const MessageKeys = {
+	NameCannotBeBlank: 'name-cannot-be-blank',
+	NameIsAlreadyUsed: 'name-is-already-used'
+};
+
+const ERRORS = {
+	[MessageKeys.NameCannotBeBlank]: {
+		alertType: Alert.Types.Error,
+		message: Liferay.Language.get('name-cannot-be-blank')
+	},
+
+	[MessageKeys.NameIsAlreadyUsed]: {
+		alertType: Alert.Types.Warning,
+		message: Liferay.Language.get(
+			'this-segment-name-is-currently-in-use.-please-try-a-different-one'
+		)
+	}
+};
+
 export default WrappedComponent => {
 	class BaseEdit extends React.Component {
 		static contextType = ChannelContext;
@@ -203,10 +222,12 @@ export default WrappedComponent => {
 
 					return segment;
 				})
-				.catch(() => {
+				.catch(error => {
+					const {alertType, message} = ERRORS[error.messageKey];
+
 					addAlert({
-						alertType: Alert.Types.Error,
-						message: Liferay.Language.get('error')
+						alertType,
+						message
 					});
 
 					setSubmitting(false);

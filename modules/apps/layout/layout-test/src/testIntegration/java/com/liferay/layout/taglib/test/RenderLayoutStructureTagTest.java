@@ -15,6 +15,17 @@
 package com.liferay.layout.taglib.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
+import com.liferay.asset.list.model.AssetListEntry;
+import com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel;
+import com.liferay.asset.list.service.AssetListEntryLocalService;
+import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalService;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
+import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
 import com.liferay.info.exception.InfoFormException;
 import com.liferay.info.exception.InfoFormValidationException;
 import com.liferay.info.field.InfoField;
@@ -23,21 +34,34 @@ import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.info.test.util.MockInfoServiceRegistrationHolder;
 import com.liferay.info.test.util.model.MockObject;
+import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
+import com.liferay.journal.constants.JournalArticleConstants;
+import com.liferay.journal.constants.JournalFolderConstants;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.layout.page.template.info.item.capability.EditPageInfoItemCapability;
+import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.layout.provider.LayoutStructureProvider;
 import com.liferay.layout.taglib.servlet.taglib.RenderLayoutStructureTag;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
@@ -55,14 +79,26 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.segments.constants.SegmentsEntryConstants;
+import com.liferay.segments.criteria.Criteria;
+import com.liferay.segments.criteria.CriteriaSerializer;
+import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
+import com.liferay.segments.model.SegmentsEntry;
+import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
+import com.liferay.segments.test.util.SegmentsTestUtil;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Locale;
 
 import org.junit.After;
@@ -150,6 +186,148 @@ public class RenderLayoutStructureTagTest {
 
 		Assert.assertEquals(
 			"removed-template-id", layoutTypePortlet.getLayoutTemplateId());
+	}
+
+	@Test
+	public void testRenderCollectionStyledLayoutStructureItemSelectingSegmentsExperienceWithDifferentSegmentsEntry()
+		throws Exception {
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+			_group.getGroupId(), JournalArticle.class.getName());
+
+		JournalArticle expectedJournalArticle1 = _addJournalArticle(
+			ddmStructure);
+
+		AssetEntry assetEntry1 = _assetEntryLocalService.fetchEntry(
+			JournalArticle.class.getName(),
+			expectedJournalArticle1.getResourcePrimKey());
+
+		JournalArticle expectedJournalArticle2 = _addJournalArticle(
+			ddmStructure);
+
+		AssetEntry assetEntry2 = _assetEntryLocalService.fetchEntry(
+			JournalArticle.class.getName(),
+			expectedJournalArticle2.getResourcePrimKey());
+
+		SegmentsEntry segmentsEntry1 = _addSegmentsEntryByFirstName(
+			_group.getGroupId(), "Test");
+
+		AssetListEntry assetListEntry =
+			_assetListEntryLocalService.addAssetListEntry(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(),
+				AssetListEntryTypeConstants.TYPE_MANUAL, _serviceContext);
+
+		_assetListEntryLocalService.addAssetEntrySelections(
+			assetListEntry.getAssetListEntryId(),
+			new long[] {assetEntry1.getEntryId()},
+			SegmentsEntryConstants.ID_DEFAULT, _serviceContext);
+
+		_assetListEntryLocalService.addAssetEntrySelections(
+			assetListEntry.getAssetListEntryId(),
+			new long[] {assetEntry2.getEntryId()},
+			segmentsEntry1.getSegmentsEntryId(), _serviceContext);
+
+		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel1 =
+			_assetListEntrySegmentsEntryRelLocalService.
+				getAssetListEntrySegmentsEntryRel(
+					assetListEntry.getAssetListEntryId(),
+					SegmentsEntryConstants.ID_DEFAULT);
+
+		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel2 =
+			_assetListEntrySegmentsEntryRelLocalService.
+				getAssetListEntrySegmentsEntryRel(
+					assetListEntry.getAssetListEntryId(),
+					segmentsEntry1.getSegmentsEntryId());
+
+		_assetListEntrySegmentsEntryRelLocalService.updateVariationsPriority(
+			new long[] {
+				assetListEntrySegmentsEntryRel2.
+					getAssetListEntrySegmentsEntryRelId(),
+				assetListEntrySegmentsEntryRel1.
+					getAssetListEntrySegmentsEntryRelId()
+			});
+
+		SegmentsEntry segmentsEntry2 = _addSegmentsEntryByFirstName(
+			_group.getGroupId(), "User");
+
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.addSegmentsExperience(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				segmentsEntry2.getSegmentsEntryId(), layout.getPlid(),
+				RandomTestUtil.randomLocaleStringMap(), true,
+				new UnicodeProperties(true),
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		_createLayoutStructure(
+			layout,
+			layoutStructure -> {
+				CollectionStyledLayoutStructureItem
+					collectionStyledLayoutStructureItem =
+						(CollectionStyledLayoutStructureItem)
+							layoutStructure.
+								addCollectionStyledLayoutStructureItem(
+									layoutStructure.getMainItemId(), 0);
+
+				collectionStyledLayoutStructureItem.setCollectionJSONObject(
+					JSONUtil.put(
+						"classNameId",
+						_portal.getClassNameId(AssetListEntry.class)
+					).put(
+						"classPK", assetListEntry.getAssetListEntryId()
+					).put(
+						"itemType", JournalArticle.class.getName()
+					).put(
+						"type", InfoListItemSelectorReturnType.class.getName()
+					));
+
+				collectionStyledLayoutStructureItem.setListStyle(
+					"com.liferay.journal.web.internal.info.list.renderer." +
+						"BulletedJournalArticleBasicInfoListRenderer");
+			},
+			segmentsExperience.getSegmentsExperienceId());
+
+		MockHttpServletRequest mockHttpServletRequest =
+			_getMockHttpServletRequest(layout);
+
+		mockHttpServletRequest.addParameter(
+			"segmentsExperienceId",
+			String.valueOf(segmentsExperience.getSegmentsExperienceId()));
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		RenderLayoutStructureTag renderLayoutStructureTag =
+			_getRenderLayoutStructureTag(
+				layout, mockHttpServletRequest, mockHttpServletResponse,
+				segmentsExperience.getSegmentsExperienceId());
+
+		renderLayoutStructureTag.doTag(
+			mockHttpServletRequest, mockHttpServletResponse);
+
+		List<JournalArticle> actualJournalArticles =
+			(List<JournalArticle>)mockHttpServletRequest.getAttribute(
+				"liferay-info:info-list-grid:infoListObjects");
+
+		Assert.assertNotNull(actualJournalArticles);
+
+		Assert.assertEquals(
+			actualJournalArticles.toString(), 1, actualJournalArticles.size());
+
+		JournalArticle actualJournalArticle1 = actualJournalArticles.get(0);
+
+		if (FeatureFlagManagerUtil.isEnabled("LPS-183723")) {
+			Assert.assertEquals(
+				expectedJournalArticle1.getArticleId(),
+				actualJournalArticle1.getArticleId());
+		}
+		else {
+			Assert.assertEquals(
+				expectedJournalArticle2.getArticleId(),
+				actualJournalArticle1.getArticleId());
+		}
 	}
 
 	@Test
@@ -376,6 +554,52 @@ public class RenderLayoutStructureTagTest {
 		}
 	}
 
+	private JournalArticle _addJournalArticle(DDMStructure ddmStructure)
+		throws Exception {
+
+		String content = DDMStructureTestUtil.getSampleStructuredContent();
+
+		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
+			_group.getGroupId(), ddmStructure.getStructureId(),
+			PortalUtil.getClassNameId(JournalArticle.class));
+
+		Calendar displayDateCalendar = new GregorianCalendar();
+
+		displayDateCalendar.setTime(new Date());
+
+		return _journalArticleLocalService.addArticle(
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASS_NAME_ID_DEFAULT, 0, StringPool.BLANK,
+			true, JournalArticleConstants.VERSION_DEFAULT,
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(), content,
+			ddmStructure.getStructureId(), ddmTemplate.getTemplateKey(), null,
+			displayDateCalendar.get(Calendar.MONTH),
+			displayDateCalendar.get(Calendar.DAY_OF_MONTH),
+			displayDateCalendar.get(Calendar.YEAR),
+			displayDateCalendar.get(Calendar.HOUR_OF_DAY),
+			displayDateCalendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true, 0, 0,
+			0, 0, 0, true, true, false, null, null, null, null,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+	}
+
+	private SegmentsEntry _addSegmentsEntryByFirstName(
+			long groupId, String firstName)
+		throws Exception {
+
+		Criteria criteria = new Criteria();
+
+		_segmentsCriteriaContributor.contribute(
+			criteria, String.format("(firstName eq '%s')", firstName),
+			Criteria.Conjunction.AND);
+
+		return SegmentsTestUtil.addSegmentsEntry(
+			groupId, CriteriaSerializer.serialize(criteria),
+			User.class.getName());
+	}
+
 	private void _assertErrorMessage(
 		String content, String expectedErrorMessage) {
 
@@ -393,6 +617,34 @@ public class RenderLayoutStructureTagTest {
 			"<p>InputName:" + infoField.getName() + "</p>";
 
 		Assert.assertTrue(content.contains(expectedInfoFieldInput));
+	}
+
+	private void _createLayoutStructure(
+			Layout layout,
+			UnsafeConsumer<LayoutStructure, Exception> layoutStructureConsumer,
+			long segmentsExperienceId)
+		throws Exception {
+
+		if (segmentsExperienceId <= 0) {
+			segmentsExperienceId =
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(layout.getPlid());
+		}
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			LayoutPageTemplateStructureLocalServiceUtil.
+				fetchLayoutPageTemplateStructure(
+					_group.getGroupId(), layout.getPlid());
+
+		LayoutStructure layoutStructure = LayoutStructure.of(
+			layoutPageTemplateStructure.getDefaultSegmentsExperienceData());
+
+		layoutStructureConsumer.accept(layoutStructure);
+
+		_layoutPageTemplateStructureLocalService.
+			updateLayoutPageTemplateStructureData(
+				_group.getGroupId(), layout.getPlid(), segmentsExperienceId,
+				layoutStructure.toString());
 	}
 
 	private LayoutStructure _getDefaultMasterLayoutStructure() {
@@ -474,6 +726,16 @@ public class RenderLayoutStructureTagTest {
 	}
 
 	@Inject
+	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Inject
+	private AssetListEntryLocalService _assetListEntryLocalService;
+
+	@Inject
+	private AssetListEntrySegmentsEntryRelLocalService
+		_assetListEntrySegmentsEntryRelLocalService;
+
+	@Inject
 	private CompanyLocalService _companyLocalService;
 
 	@Inject
@@ -483,13 +745,26 @@ public class RenderLayoutStructureTagTest {
 	private Group _group;
 
 	@Inject
+	private JournalArticleLocalService _journalArticleLocalService;
+
+	@Inject
 	private LayoutLocalService _layoutLocalService;
+
+	@Inject
+	private LayoutPageTemplateStructureLocalService
+		_layoutPageTemplateStructureLocalService;
 
 	@Inject
 	private LayoutStructureProvider _layoutStructureProvider;
 
 	@Inject
 	private Portal _portal;
+
+	@Inject(
+		filter = "segments.criteria.contributor.key=user",
+		type = SegmentsCriteriaContributor.class
+	)
+	private SegmentsCriteriaContributor _segmentsCriteriaContributor;
 
 	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;

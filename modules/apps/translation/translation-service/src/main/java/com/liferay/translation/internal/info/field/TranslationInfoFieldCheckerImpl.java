@@ -15,6 +15,7 @@
 package com.liferay.translation.internal.info.field;
 
 import com.liferay.info.field.InfoField;
+import com.liferay.info.field.type.HTMLInfoFieldType;
 import com.liferay.info.field.type.NumberInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.translation.info.field.TranslationInfoFieldChecker;
@@ -37,6 +38,8 @@ public class TranslationInfoFieldCheckerImpl
 		}
 
 		if (Objects.equals(
+				infoField.getInfoFieldType(), HTMLInfoFieldType.INSTANCE) ||
+			Objects.equals(
 				infoField.getInfoFieldType(), NumberInfoFieldType.INSTANCE) ||
 			Objects.equals(
 				infoField.getInfoFieldType(), TextInfoFieldType.INSTANCE)) {

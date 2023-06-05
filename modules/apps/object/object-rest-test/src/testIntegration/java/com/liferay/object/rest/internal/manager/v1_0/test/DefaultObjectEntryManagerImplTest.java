@@ -69,7 +69,6 @@ import com.liferay.object.service.ObjectFieldService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectFilterLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
-import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
@@ -91,6 +90,7 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.constants.TestDataConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -831,7 +831,7 @@ public class DefaultObjectEntryManagerImplTest {
 		_accountEntryUserRelLocalService.addAccountEntryUserRel(
 			accountEntry1.getAccountEntryId(), _user.getUserId());
 
-		_assertFailure(
+		AssertUtils.assertFailure(
 			StringBundler.concat(
 				"User ", _user.getUserId(),
 				" must have ADD_OBJECT_ENTRY permission for ",
@@ -848,7 +848,7 @@ public class DefaultObjectEntryManagerImplTest {
 
 		AccountEntry accountEntry2 = _addAccountEntry();
 
-		_assertFailure(
+		AssertUtils.assertFailure(
 			StringBundler.concat(
 				"User ", _user.getUserId(),
 				" does not have access to account entry ",
@@ -858,7 +858,7 @@ public class DefaultObjectEntryManagerImplTest {
 		_accountEntryUserRelLocalService.addAccountEntryUserRel(
 			accountEntry2.getAccountEntryId(), _user.getUserId());
 
-		_assertFailure(
+		AssertUtils.assertFailure(
 			StringBundler.concat(
 				"User ", _user.getUserId(),
 				" must have ADD_OBJECT_ENTRY permission for ",
@@ -883,7 +883,7 @@ public class DefaultObjectEntryManagerImplTest {
 
 		_assignOrganizationRole(organization1, _accountManagerRole, _user);
 
-		_assertFailure(
+		AssertUtils.assertFailure(
 			StringBundler.concat(
 				"User ", _user.getUserId(),
 				" must have ADD_OBJECT_ENTRY permission for ",
@@ -894,7 +894,7 @@ public class DefaultObjectEntryManagerImplTest {
 
 		_addObjectEntry(accountEntry1);
 
-		_assertFailure(
+		AssertUtils.assertFailure(
 			StringBundler.concat(
 				"User ", _user.getUserId(),
 				" does not have access to account entry ",
@@ -932,7 +932,7 @@ public class DefaultObjectEntryManagerImplTest {
 
 		_assignOrganizationRole(organization1, _accountManagerRole, _user);
 
-		_assertFailure(
+		AssertUtils.assertFailure(
 			StringBundler.concat(
 				"User ", _user.getUserId(),
 				" must have ADD_OBJECT_ENTRY permission for ",
@@ -943,7 +943,7 @@ public class DefaultObjectEntryManagerImplTest {
 
 		_addObjectEntry(accountEntry1);
 
-		_assertFailure(
+		AssertUtils.assertFailure(
 			StringBundler.concat(
 				"User ", _user.getUserId(),
 				" does not have access to account entry ",
@@ -2092,7 +2092,7 @@ public class DefaultObjectEntryManagerImplTest {
 			ResourceConstants.SCOPE_COMPANY, String.valueOf(_companyId),
 			role.getRoleId(), ActionKeys.UPDATE);
 
-		_assertFailure(
+		AssertUtils.assertFailure(
 			StringBundler.concat(
 				"User ", _user.getUserId(), " must have UPDATE permission for ",
 				_objectDefinition3.getClassName(), StringPool.SPACE,
@@ -2134,7 +2134,7 @@ public class DefaultObjectEntryManagerImplTest {
 			_simpleDTOConverterContext, _objectDefinition3,
 			objectEntry1.getId(), objectEntry1);
 
-		_assertFailure(
+		AssertUtils.assertFailure(
 			StringBundler.concat(
 				"User ", _user.getUserId(), " must have UPDATE permission for ",
 				_objectDefinition3.getClassName(), StringPool.SPACE,
@@ -2163,7 +2163,7 @@ public class DefaultObjectEntryManagerImplTest {
 			accountEntry2.getAccountEntryId(),
 			organization2.getOrganizationId());
 
-		_assertFailure(
+		AssertUtils.assertFailure(
 			StringBundler.concat(
 				"User ", _user.getUserId(), " must have UPDATE permission for ",
 				_objectDefinition3.getClassName(), StringPool.SPACE,
@@ -2204,7 +2204,7 @@ public class DefaultObjectEntryManagerImplTest {
 
 		_assertObjectEntriesSize(1);
 
-		_assertFailure(
+		AssertUtils.assertFailure(
 			StringBundler.concat(
 				"User ", _user.getUserId(), " must have UPDATE permission for ",
 				_objectDefinition3.getClassName(), StringPool.SPACE,
@@ -2219,7 +2219,7 @@ public class DefaultObjectEntryManagerImplTest {
 			_simpleDTOConverterContext, _objectDefinition3,
 			objectEntry1.getId(), objectEntry1);
 
-		_assertFailure(
+		AssertUtils.assertFailure(
 			"The object field r_oneToManyRelationshipName_accountEntryId is " +
 				"unmodifiable because it is the account entry restrictor",
 			() -> _defaultObjectEntryManager.updateObjectEntry(

@@ -44,7 +44,6 @@ import com.liferay.object.service.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.system.BaseSystemObjectDefinitionManager;
 import com.liferay.object.system.JaxRsApplicationDescriptor;
 import com.liferay.petra.function.UnsafeConsumer;
-import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.string.StringBundler;
@@ -61,6 +60,7 @@ import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.model.UserNotificationEventTable;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -106,14 +106,14 @@ public class ObjectDefinitionLocalServiceTest {
 
 		// Label is null
 
-		_assertFailure(
+		AssertUtils.assertFailure(
 			ObjectDefinitionLabelException.class,
 			"Label is null for locale " + LocaleUtil.US.getDisplayName(),
 			() -> _addCustomObjectDefinition("", "Test", "Tests"));
 
 		// Name is null
 
-		_assertFailure(
+		AssertUtils.assertFailure(
 			ObjectDefinitionNameException.class, "Name is null",
 			() -> _addCustomObjectDefinition("Test", "", "Tests"));
 
@@ -122,19 +122,19 @@ public class ObjectDefinitionLocalServiceTest {
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			_addCustomObjectDefinition(" Test "));
 
-		_assertFailure(
+		AssertUtils.assertFailure(
 			ObjectDefinitionNameException.class,
 			"Name must only contain letters and digits",
 			() -> _addCustomObjectDefinition("Tes t"));
 
-		_assertFailure(
+		AssertUtils.assertFailure(
 			ObjectDefinitionNameException.class,
 			"Name must only contain letters and digits",
 			() -> _addCustomObjectDefinition("Tes-t"));
 
 		// The first character of a name must be an upper case letter
 
-		_assertFailure(
+		AssertUtils.assertFailure(
 			ObjectDefinitionNameException.class,
 			"The first character of a name must be an upper case letter",
 			() -> _addCustomObjectDefinition("test"));
@@ -145,7 +145,7 @@ public class ObjectDefinitionLocalServiceTest {
 			_addCustomObjectDefinition(
 				"A123456789a123456789a123456789a1234567891"));
 
-		_assertFailure(
+		AssertUtils.assertFailure(
 			ObjectDefinitionNameException.class,
 			"Name must be less than 41 characters",
 			() -> _addCustomObjectDefinition(
@@ -172,7 +172,7 @@ public class ObjectDefinitionLocalServiceTest {
 				TestPropsValues.getUserId(),
 				objectDefinition.getObjectDefinitionId());
 
-		_assertFailure(
+		AssertUtils.assertFailure(
 			ObjectDefinitionNameException.class, "Duplicate name C_Test",
 			() -> _addCustomObjectDefinition("Test"));
 
@@ -180,14 +180,14 @@ public class ObjectDefinitionLocalServiceTest {
 
 		// Plural label is null
 
-		_assertFailure(
+		AssertUtils.assertFailure(
 			ObjectDefinitionPluralLabelException.class,
 			"Plural label is null for locale " + LocaleUtil.US.getDisplayName(),
 			() -> _addCustomObjectDefinition("Test", "Test", ""));
 
 		// Scope is null
 
-		_assertFailure(
+		AssertUtils.assertFailure(
 			ObjectDefinitionScopeException.class, "Scope is null",
 			() -> _objectDefinitionLocalService.addCustomObjectDefinition(
 				TestPropsValues.getUserId(), false, false,
@@ -206,7 +206,7 @@ public class ObjectDefinitionLocalServiceTest {
 
 		String scope = RandomTestUtil.randomString();
 
-		_assertFailure(
+		AssertUtils.assertFailure(
 			ObjectDefinitionScopeException.class,
 			"No object scope provider found with key " + scope,
 			() -> _objectDefinitionLocalService.addCustomObjectDefinition(
@@ -222,7 +222,7 @@ public class ObjectDefinitionLocalServiceTest {
 						RandomTestUtil.randomString(),
 						StringUtil.randomId()))));
 
-		_assertFailure(
+		AssertUtils.assertFailure(
 			ObjectDefinitionScopeException.class,
 			StringBundler.concat(
 				"Scope \"", ObjectDefinitionConstants.SCOPE_SITE,
@@ -725,7 +725,7 @@ public class ObjectDefinitionLocalServiceTest {
 
 		// Label is null
 
-		_assertFailure(
+		AssertUtils.assertFailure(
 			ObjectDefinitionLabelException.class,
 			"Label is null for locale " + LocaleUtil.US.getDisplayName(),
 			() -> _addSystemObjectDefinition(
@@ -733,18 +733,18 @@ public class ObjectDefinitionLocalServiceTest {
 
 		// Name is null
 
-		_assertFailure(
+		AssertUtils.assertFailure(
 			ObjectDefinitionNameException.class, "Name is null",
 			() -> _addSystemObjectDefinition(""));
 
 		// Name must not start with "C_"
 
-		_assertFailure(
+		AssertUtils.assertFailure(
 			ObjectDefinitionNameException.class,
 			"System object definition names must not start with \"C_\"",
 			() -> _addSystemObjectDefinition("C_Test"));
 
-		_assertFailure(
+		AssertUtils.assertFailure(
 			ObjectDefinitionNameException.class,
 			"System object definition names must not start with \"C_\"",
 			() -> _addSystemObjectDefinition("c_Test"));
@@ -754,19 +754,19 @@ public class ObjectDefinitionLocalServiceTest {
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			_addSystemObjectDefinition(" Test "));
 
-		_assertFailure(
+		AssertUtils.assertFailure(
 			ObjectDefinitionNameException.class,
 			"Name must only contain letters and digits",
 			() -> _addSystemObjectDefinition("Tes t"));
 
-		_assertFailure(
+		AssertUtils.assertFailure(
 			ObjectDefinitionNameException.class,
 			"Name must only contain letters and digits",
 			() -> _addSystemObjectDefinition("Tes-t"));
 
 		// The first character of a name must be an upper case letter
 
-		_assertFailure(
+		AssertUtils.assertFailure(
 			ObjectDefinitionNameException.class,
 			"The first character of a name must be an upper case letter",
 			() -> _addSystemObjectDefinition("test"));
@@ -777,7 +777,7 @@ public class ObjectDefinitionLocalServiceTest {
 			_addSystemObjectDefinition(
 				"A123456789a123456789a123456789a1234567891"));
 
-		_assertFailure(
+		AssertUtils.assertFailure(
 			ObjectDefinitionNameException.class,
 			"Name must be less than 41 characters",
 			() -> _addSystemObjectDefinition(
@@ -787,7 +787,7 @@ public class ObjectDefinitionLocalServiceTest {
 
 		ObjectDefinition objectDefinition = _addSystemObjectDefinition("Test");
 
-		_assertFailure(
+		AssertUtils.assertFailure(
 			ObjectDefinitionNameException.class, "Duplicate name Test",
 			() -> _addSystemObjectDefinition("Test"));
 
@@ -795,7 +795,7 @@ public class ObjectDefinitionLocalServiceTest {
 
 		// Plural label is null
 
-		_assertFailure(
+		AssertUtils.assertFailure(
 			ObjectDefinitionPluralLabelException.class,
 			"Plural label is null for locale " + LocaleUtil.US.getDisplayName(),
 			() -> _addSystemObjectDefinition(
@@ -803,7 +803,7 @@ public class ObjectDefinitionLocalServiceTest {
 
 		// Scope is null
 
-		_assertFailure(
+		AssertUtils.assertFailure(
 			ObjectDefinitionScopeException.class, "Scope is null",
 			() ->
 				ObjectDefinitionTestUtil.addUnmodifiableSystemObjectDefinition(
@@ -820,7 +820,7 @@ public class ObjectDefinitionLocalServiceTest {
 
 		String scope = RandomTestUtil.randomString();
 
-		_assertFailure(
+		AssertUtils.assertFailure(
 			ObjectDefinitionScopeException.class,
 			"No object scope provider found with key " + scope,
 			() ->
@@ -836,7 +836,7 @@ public class ObjectDefinitionLocalServiceTest {
 
 		// Version must greater than 0
 
-		_assertFailure(
+		AssertUtils.assertFailure(
 			ObjectDefinitionVersionException.class,
 			"System object definition versions must greater than 0",
 			() ->
@@ -851,7 +851,7 @@ public class ObjectDefinitionLocalServiceTest {
 					_objectDefinitionLocalService,
 					Collections.<ObjectField>emptyList()));
 
-		_assertFailure(
+		AssertUtils.assertFailure(
 			ObjectDefinitionVersionException.class,
 			"System object definition versions must greater than 0",
 			() ->

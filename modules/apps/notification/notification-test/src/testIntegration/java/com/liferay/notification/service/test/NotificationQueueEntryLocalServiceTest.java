@@ -25,8 +25,8 @@ import com.liferay.notification.model.NotificationRecipient;
 import com.liferay.notification.model.NotificationRecipientSetting;
 import com.liferay.notification.service.NotificationQueueEntryLocalService;
 import com.liferay.notification.service.test.util.NotificationTemplateUtil;
-import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -80,7 +80,7 @@ public class NotificationQueueEntryLocalServiceTest {
 			_notificationQueueEntryLocalService.
 				getNotificationQueueEntriesCount());
 
-		_assertFailure(
+		AssertUtils.assertFailure(
 			NotificationRecipientSettingValueException.FromMustNotBeNull.class,
 			"From is null",
 			() -> _addNotificationQueueEntry(
@@ -89,7 +89,7 @@ public class NotificationQueueEntryLocalServiceTest {
 						"fromName", "From Name"),
 					NotificationTemplateUtil.createNotificationRecipientSetting(
 						"to", "to@liferay.com"))));
-		_assertFailure(
+		AssertUtils.assertFailure(
 			NotificationRecipientSettingValueException.FromNameMustNotBeNull.
 				class,
 			"From name is null",
@@ -102,13 +102,13 @@ public class NotificationQueueEntryLocalServiceTest {
 
 		User user = TestPropsValues.getUser();
 
-		_assertFailure(
+		AssertUtils.assertFailure(
 			NotificationQueueEntrySubjectException.class, "Subject is null",
 			() -> _notificationQueueEntryLocalService.addNotificationQueueEntry(
 				NotificationTemplateUtil.createNotificationContext(
 					user, null, null, null, NotificationConstants.TYPE_EMAIL)));
 
-		_assertFailure(
+		AssertUtils.assertFailure(
 			NotificationRecipientSettingValueException.ToMustNotBeNull.class,
 			"To is null",
 			() -> _addNotificationQueueEntry(
@@ -184,7 +184,7 @@ public class NotificationQueueEntryLocalServiceTest {
 			notificationQueueEntryId,
 			NotificationQueueEntryConstants.STATUS_SENT);
 
-		_assertFailure(
+		AssertUtils.assertFailure(
 			NotificationQueueEntryStatusException.class,
 			"Notification queue entry " + notificationQueueEntryId +
 				" was already sent",

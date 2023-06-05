@@ -63,9 +63,7 @@ public class AssignAsUsedCheck extends BaseAsUsedCheck {
 
 		DetailAST nameDetailAST = assignDetailAST.getFirstChild();
 
-		if ((nameDetailAST == null) ||
-			(nameDetailAST.getType() != TokenTypes.IDENT)) {
-
+		if (nameDetailAST.getType() != TokenTypes.IDENT) {
 			return;
 		}
 

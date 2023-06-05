@@ -75,20 +75,12 @@ public class AccountSelectorTag extends IncludeTag {
 				return super.doStartTag();
 			}
 
-			_addCommerceOrderURL = _getAddCommerceOrderURL(httpServletRequest);
-			_editOrderURL = _getEditOrderURL(httpServletRequest);
-
+			_accountEntry = commerceContext.getAccountEntry();
 			_accountEntryAllowedTypes =
 				commerceContext.getAccountEntryAllowedTypes();
-
-			_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 			_addCommerceOrderURL = _getAddCommerceOrderURL(httpServletRequest);
-
-			_accountEntry = commerceContext.getAccountEntry();
 			_commerceOrder = commerceContext.getCommerceOrder();
-
+			_editOrderURL = _getEditOrderURL(httpServletRequest);
 			_setCurrentAccountURL =
 				PortalUtil.getPortalURL(httpServletRequest) +
 					PortalUtil.getPathContext() +

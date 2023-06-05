@@ -71,9 +71,7 @@ CommerceChannel commerceChannel = commerceOrderContentDisplayContext.fetchCommer
 			'#<portlet:namespace />commerceOrderTypeId'
 		).value;
 
-		var isAddToCart = '<%= addToCart %>';
-
-		if (isAddToCart === 'true') {
+		if (<%= addToCart %>) {
 			window.parent.Liferay.fire(events.ADD_ITEM_TO_CART, {orderTypeId});
 
 			window.parent.Liferay.fire(events.CLOSE_MODAL, {

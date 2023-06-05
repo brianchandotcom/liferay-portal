@@ -180,6 +180,21 @@
 	<td>//div[contains(@class,'input-checkbox')]//input[contains(@id, 'enableSVG')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>COLLAPSE_ICON_OPEN</td>
+	<td>//span[contains(.,'${key_fieldName}')]/../*[*[name()='svg'][contains(@class,'lexicon-icon-angle-down')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COLLAPSE_ICON_CLOSED</td>
+	<td>//span[contains(.,'${key_fieldName}')]/../*[*[name()='svg'][contains(@class,'lexicon-icon-angle-right')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ANY_FIELD</td>
+	<td>//div[label[contains(.,'${key_fieldName}')]]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

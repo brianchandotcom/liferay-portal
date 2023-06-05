@@ -14,7 +14,6 @@
 
 package com.liferay.asset.auto.tagger.opennlp.internal;
 
-import com.liferay.asset.auto.tagger.opennlp.OpenNLPDocumentAssetAutoTagger;
 import com.liferay.asset.auto.tagger.opennlp.internal.configuration.OpenNLPDocumentAssetAutoTaggerCompanyConfiguration;
 import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -52,16 +51,9 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Cristina González
  */
-@Component(
-	service = {
-		OpenNLPDocumentAssetAutoTagger.class,
-		OpenNLPDocumentAssetAutoTaggerImpl.class
-	}
-)
-public class OpenNLPDocumentAssetAutoTaggerImpl
-	implements OpenNLPDocumentAssetAutoTagger {
+@Component(service = OpenNLPDocumentAssetAutoTagger.class)
+public class OpenNLPDocumentAssetAutoTagger {
 
-	@Override
 	public Collection<String> getTagNames(
 			long companyId, String content, Locale locale, String mimeType)
 		throws Exception {
@@ -69,7 +61,6 @@ public class OpenNLPDocumentAssetAutoTaggerImpl
 		return getTagNames(companyId, () -> content, locale, mimeType);
 	}
 
-	@Override
 	public Collection<String> getTagNames(
 			long companyId, String content, String mimeType)
 		throws Exception {

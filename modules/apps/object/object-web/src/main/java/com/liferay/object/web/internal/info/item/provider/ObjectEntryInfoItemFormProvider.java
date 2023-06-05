@@ -222,10 +222,7 @@ public class ObjectEntryInfoItemFormProvider
 
 			finalStep.attribute(
 				LongTextInfoFieldType.MAX_LENGTH,
-				_getMaxLength(objectField, 65000)
-			).attribute(
-				LongTextInfoFieldType.MULTILINE, true
-			);
+				_getMaxLength(objectField, 65000));
 		}
 		else if (Objects.equals(
 					objectField.getBusinessType(),

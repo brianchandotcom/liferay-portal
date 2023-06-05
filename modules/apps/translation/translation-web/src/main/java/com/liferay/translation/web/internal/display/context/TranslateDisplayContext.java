@@ -179,7 +179,9 @@ public class TranslateDisplayContext {
 
 							Map<String, Object> editorConfiguration = null;
 
-							if (isHTMLInfoFieldType(infoField)) {
+							boolean html = isHTMLInfoFieldType(infoField);
+
+							if (html) {
 								editorConfiguration = _getInfoFieldEditorConfig(
 									infoFieldId);
 							}
@@ -187,7 +189,7 @@ public class TranslateDisplayContext {
 							return HashMapBuilder.<String, Object>put(
 								"editorConfiguration", editorConfiguration
 							).put(
-								"html", isHTMLInfoFieldType(infoField)
+								"html", html
 							).put(
 								"id", infoFieldId
 							).put(
@@ -195,6 +197,7 @@ public class TranslateDisplayContext {
 								infoField.getLabel(_themeDisplay.getLocale())
 							).put(
 								"multiline",
+								html ||
 								getBooleanValue(
 									infoField, TextInfoFieldType.MULTILINE)
 							).put(

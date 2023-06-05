@@ -63,6 +63,8 @@ SearchResultsPortletPreferences searchResultsPortletPreferences = new SearchResu
 					refreshURL="<%= configurationRenderURL %>"
 				/>
 			</div>
+
+			<aui:input helpMessage="show-default-empty-result-message-help" label="show-default-empty-result-message" name="<%= PortletPreferencesJspUtil.getInputName(SearchResultsPortletPreferences.PREFERENCE_KEY_SHOW_EMPTY_RESULT_MESSAGE) %>" type="checkbox" value="<%= searchResultsPortletPreferences.isShowEmptyResultMessage() %>" />
 		</liferay-frontend:fieldset>
 
 		<liferay-frontend:fieldset

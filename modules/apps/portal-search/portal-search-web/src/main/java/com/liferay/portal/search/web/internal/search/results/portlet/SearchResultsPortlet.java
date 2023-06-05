@@ -265,6 +265,9 @@ public class SearchResultsPortlet extends MVCPortlet {
 		searchResultsPortletDisplayContext.setTotalHits(
 			searchResponse.getTotalHits());
 
+		searchResultsPortletDisplayContext.setShowEmptyResultMessage(
+			searchResultsPortletPreferences.isShowEmptyResultMessage());
+
 		return searchResultsPortletDisplayContext;
 	}
 

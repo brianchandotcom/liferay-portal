@@ -114,6 +114,10 @@ public class SearchResultsPortletDisplayContext implements Serializable {
 		return _renderNothing;
 	}
 
+	public boolean isShowEmptyResultMessage() {
+		return _showEmptyResultMessage;
+	}
+
 	public void setDocuments(List<Document> documents) {
 		_documents = documents;
 	}
@@ -142,6 +146,10 @@ public class SearchResultsPortletDisplayContext implements Serializable {
 
 		_searchResultSummaryDisplayContexts =
 			searchResultSummaryDisplayContexts;
+	}
+
+	public void setShowEmptyResultMessage(boolean showEmptyResultMessage) {
+		_showEmptyResultMessage = showEmptyResultMessage;
 	}
 
 	public void setTotalHits(int totalHits) {
@@ -174,6 +182,7 @@ public class SearchResultsPortletDisplayContext implements Serializable {
 	private SearchResultsSummariesHolder _searchResultsSummariesHolder;
 	private List<SearchResultSummaryDisplayContext>
 		_searchResultSummaryDisplayContexts;
+	private boolean _showEmptyResultMessage;
 	private int _totalHits;
 
 }

@@ -30,10 +30,14 @@ import {Button, Input, Select} from '../../../components';
 import getInitialDXPAdmin from '../../../utils/getInitialDXPAdmin';
 import getKebabCase from '../../../utils/getKebabCase';
 import Layout from '../Layout';
+
 import AdminInputs from './AdminInputs';
 
 const INITIAL_SETUP_ADMIN_COUNT = 1;
 const MAXIMUM_NUMBER_OF_CHARACTERS = 77;
+
+const HA_DR_FILTER = 'HA DR';
+const STD_DR_FILTER = 'Std DR';
 
 const SetupDXPCloudPage = ({
 	client,
@@ -54,19 +58,22 @@ const SetupDXPCloudPage = ({
 	const [selectedVersion, setSelectedVersion] = useState(dxpVersion || '');
 	const {data} = useQuery(getDXPCloudPageInfo, {
 		variables: {
-			accountSubscriptionsFilter: `(accountKey eq '${project.accountKey}') and (hasDisasterDataCenterRegion eq true)`,
+			accountSubscriptionsFilter: `(accountKey eq '${project.accountKey}') and (hasDisasterDataCenterRegion eq true or (name eq '${HA_DR_FILTER}' or name eq '${STD_DR_FILTER}'))`,
 		},
 	});
+
 	useEffect(() => {
 		const fetchListTypeDefinitions = async () => {
-			const {data} = await client.query({
+			const {data: typeDefinitionResponse} = await client.query({
 				query: getListTypeDefinitions,
 				variables: {
 					filter: `name eq '${listType}'`,
 				},
 			});
 
-			const items = data?.listTypeDefinitions?.items[0]?.listTypeEntries;
+			const items =
+				typeDefinitionResponse?.listTypeDefinitions?.items[0]
+					?.listTypeEntries;
 
 			if (items?.length) {
 				const sortedItems = [...items].sort();
@@ -91,7 +98,7 @@ const SetupDXPCloudPage = ({
 		[data]
 	);
 
-	const hasDisasterRecovery = !!data?.c?.accountSubscriptions?.items?.length;
+	const hasDisasterRecovery = data?.c?.accountSubscriptions?.totalCount > 0;
 
 	useEffect(() => {
 		if (dXPCDataCenterRegions.length) {
@@ -103,11 +110,10 @@ const SetupDXPCloudPage = ({
 			if (hasDisasterRecovery) {
 				setFieldValue(
 					'dxp.disasterDataCenterRegion',
-					dXPCDataCenterRegions[0].value
+					dXPCDataCenterRegions[1].value
 				);
 			}
 		}
-
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [dXPCDataCenterRegions, hasDisasterRecovery]);
 
@@ -122,14 +128,16 @@ const SetupDXPCloudPage = ({
 		const dxp = values?.dxp;
 
 		const getDXPCloudActivationSubmitedStatus = async (accountKey) => {
-			const {data} = await client.query({
+			const {data: dxpCloudEnvironmentData} = await client.query({
 				query: getDXPCloudEnvironment,
 				variables: {
 					filter: `accountKey eq '${accountKey}'`,
 				},
 			});
-			if (data) {
-				const status = !!data.c?.dXPCloudEnvironments?.items?.length;
+
+			if (dxpCloudEnvironmentData) {
+				const status = !!dxpCloudEnvironmentData.c?.dXPCloudEnvironments
+					?.items?.length;
 
 				return status;
 			}
@@ -140,12 +148,13 @@ const SetupDXPCloudPage = ({
 		const alreadySubmitted = await getDXPCloudActivationSubmitedStatus(
 			project.accountKey
 		);
+
 		if (alreadySubmitted) {
 			setFormAlreadySubmitted(true);
 		}
 
 		if (!alreadySubmitted && dxp) {
-			const {data} = await client.mutate({
+			const {data: addDXPCloudEnvironmentResponse} = await client.mutate({
 				context: {
 					displaySuccess: false,
 					type: 'liferay-rest',
@@ -163,9 +172,11 @@ const SetupDXPCloudPage = ({
 				},
 			});
 
-			if (data) {
+			if (addDXPCloudEnvironmentResponse) {
 				const dxpCloudEnvironmentId =
-					data?.createDXPCloudEnvironment?.id;
+					addDXPCloudEnvironmentResponse?.createDXPCloudEnvironment
+						?.id;
+
 				await Promise.all(
 					dxp.admins.map(({email, firstName, github, lastName}) =>
 						client.mutate({
@@ -308,7 +319,15 @@ const SetupDXPCloudPage = ({
 										'primary-data-center-region'
 									)}
 									name="dxp.dataCenterRegion"
-									options={dXPCDataCenterRegions}
+									options={dXPCDataCenterRegions.map(
+										(option) => ({
+											...option,
+											disabled:
+												option.value ===
+												values.dxp
+													.disasterDataCenterRegion,
+										})
+									)}
 									required
 								/>
 
@@ -317,7 +336,14 @@ const SetupDXPCloudPage = ({
 										groupStyle="mb-0 pt-2"
 										label="Disaster Recovery Data Center Region"
 										name="dxp.disasterDataCenterRegion"
-										options={dXPCDataCenterRegions}
+										options={dXPCDataCenterRegions.map(
+											(option) => ({
+												...option,
+												disabled:
+													option.value ===
+													values.dxp.dataCenterRegion,
+											})
+										)}
 										required
 									/>
 								)}

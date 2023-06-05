@@ -21,6 +21,7 @@ export const getDXPCloudPageInfo = gql`
 					hasDisasterDataCenterRegion
 					name
 				}
+				totalCount
 			}
 
 			dXPCDataCenterRegions(sort: "name:asc") {
@@ -29,6 +30,7 @@ export const getDXPCloudPageInfo = gql`
 					name
 					value
 				}
+				totalCount
 			}
 		}
 	}
@@ -104,6 +106,7 @@ export const getAccountSubscriptions = gql`
 					startDate
 					subscriptionStatus
 				}
+				totalCount
 			}
 		}
 	}

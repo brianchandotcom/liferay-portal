@@ -517,7 +517,7 @@ public class PullRequestPortalTopLevelBuild
 
 		try {
 			_stableJob = JobFactory.newJob(
-				buildProfile, jobName, null, null, branchName, null,
+				buildProfile, jobName, null, null, null, branchName, null,
 				repositoryName, stableTestSuiteName, branchName);
 
 			BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase();

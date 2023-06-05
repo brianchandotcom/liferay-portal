@@ -26,9 +26,6 @@ import com.liferay.mail.kernel.template.MailTemplateFactoryUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.audit.AuditException;
-import com.liferay.portal.kernel.audit.AuditMessage;
-import com.liferay.portal.kernel.audit.AuditRouterUtil;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
@@ -63,8 +60,6 @@ import com.liferay.portal.kernel.exception.UserPasswordException;
 import com.liferay.portal.kernel.exception.UserReminderQueryException;
 import com.liferay.portal.kernel.exception.UserScreenNameException;
 import com.liferay.portal.kernel.exception.UserSmsException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -5686,7 +5681,13 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				PwdAuthenticator.pretendToAuthenticate();
 			}
 
-			_onUserDoesNotExist(authType, companyId, login, headerMap);
+			try {
+				AuthPipeline.onUserDoesNotExist(
+					authType, companyId, login, headerMap, parameterMap);
+			}
+			catch (Exception exception) {
+				_log.error(exception);
+			}
 
 			return Authenticator.DNE;
 		}
@@ -6025,7 +6026,13 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		Map<String, String[]> headerMap, Map<String, String[]> parameterMap) {
 
 		if (user == null) {
-			_onUserDoesNotExist(authType, companyId, login, headerMap);
+			try {
+				AuthPipeline.onUserDoesNotExist(
+					authType, companyId, login, headerMap, parameterMap);
+			}
+			catch (Exception exception) {
+				_log.error(exception);
+			}
 
 			return Authenticator.DNE;
 		}
@@ -6050,7 +6057,13 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			user = userPersistence.fetchByPrimaryKey(user.getUserId());
 
 			if (user == null) {
-				_onUserDoesNotExist(authType, companyId, login, headerMap);
+				try {
+					AuthPipeline.onUserDoesNotExist(
+						authType, companyId, login, headerMap, parameterMap);
+				}
+				catch (Exception exception) {
+					_log.error(exception);
+				}
 
 				return Authenticator.DNE;
 			}
@@ -7102,49 +7115,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		}
 
 		return newEncPwd.equals(user.getPassword());
-	}
-
-	private void _onUserDoesNotExist(
-		String authType, long companyId, String login,
-		Map<String, String[]> headerMap) {
-
-		try {
-			AuditMessage auditMessage = null;
-
-			if (authType.equals(CompanyConstants.AUTH_TYPE_EA) ||
-				authType.equals(CompanyConstants.AUTH_TYPE_ID) ||
-				authType.equals(CompanyConstants.AUTH_TYPE_SN)) {
-
-				auditMessage = new AuditMessage(
-					"LOGIN_DNE", companyId, 0, null, User.class.getName(), "0",
-					null,
-					JSONUtil.put(
-						"authType", authType
-					).put(
-						"headers", JSONFactoryUtil.serialize(headerMap)
-					).put(
-						"reason", "Failed to authenticate - User Does Not Exist"
-					));
-
-				auditMessage.setUserLogin(login);
-			}
-
-			if (auditMessage == null) {
-				return;
-			}
-
-			AuditRouterUtil.route(auditMessage);
-		}
-		catch (AuditException auditException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to route audit message", auditException);
-			}
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-		}
 	}
 
 	private void _sendNotificationEmail(

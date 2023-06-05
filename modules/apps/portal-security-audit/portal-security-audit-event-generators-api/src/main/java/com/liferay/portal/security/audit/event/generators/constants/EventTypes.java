@@ -32,6 +32,8 @@ public interface EventTypes {
 
 	public static final String LOGIN = "LOGIN";
 
+	public static final String LOGIN_DNE = "LOGIN_DNE";
+
 	public static final String LOGIN_FAILURE = "LOGIN_FAILURE";
 
 	public static final String LOGOUT = "LOGOUT";

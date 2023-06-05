@@ -665,9 +665,59 @@ public class ObjectEntryLocalServiceTest {
 	@Test
 	public void testAddObjectEntryWithObjectValidationRule() throws Exception {
 
-		// Field must be an email address
+		// Date time must be in the future
+
+		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(
+			"yyyy-MM-dd HH:mm");
 
 		ObjectValidationRule objectValidationRule =
+			_objectValidationRuleLocalService.addObjectValidationRule(
+				TestPropsValues.getUserId(),
+				_objectDefinition.getObjectDefinitionId(), true,
+				ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
+				LocalizedMapUtil.getLocalizedMap(
+					"Date time must be in the future"),
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				String.format(
+					"futureDates(time, \"%s\")",
+					dateTimeFormatter.format(LocalDateTime.now())));
+
+		_assertFailure(
+			ModelListenerException.class,
+			ObjectValidationRuleEngineException.InvalidFields.class.getName() +
+				": Date time must be in the future",
+			() -> _addObjectEntry(
+				HashMapBuilder.<String, Serializable>put(
+					"emailAddressRequired", RandomTestUtil.randomString()
+				).put(
+					"listTypeEntryKeyRequired", "listTypeEntryKey1"
+				).put(
+					"time", "2000-12-25 08:50"
+				).build()));
+
+		_addObjectEntry(
+			HashMapBuilder.<String, Serializable>put(
+				"emailAddressRequired", RandomTestUtil.randomString()
+			).put(
+				"listTypeEntryKeyRequired", "listTypeEntryKey1"
+			).put(
+				"time", dateTimeFormatter.format(LocalDateTime.now())
+			).build());
+
+		_assertCount(1);
+
+		_objectValidationRuleLocalService.updateObjectValidationRule(
+			objectValidationRule.getObjectValidationRuleId(), false,
+			ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			String.format(
+				"futureDates(time, \"%s\")",
+				dateTimeFormatter.format(LocalDateTime.now())));
+
+		// Field must be an email address
+
+		objectValidationRule =
 			_objectValidationRuleLocalService.addObjectValidationRule(
 				TestPropsValues.getUserId(),
 				_objectDefinition.getObjectDefinitionId(), true,
@@ -699,7 +749,7 @@ public class ObjectEntryLocalServiceTest {
 				"listTypeEntryKeyRequired", "listTypeEntryKey1"
 			).build());
 
-		_assertCount(1);
+		_assertCount(2);
 
 		// Deactivate object validation rule
 
@@ -719,7 +769,7 @@ public class ObjectEntryLocalServiceTest {
 				"listTypeEntryKeyRequired", "listTypeEntryKey1"
 			).build());
 
-		_assertCount(2);
+		_assertCount(3);
 
 		// Must be over 18 years old
 
@@ -759,7 +809,7 @@ public class ObjectEntryLocalServiceTest {
 				"listTypeEntryKeyRequired", "listTypeEntryKey1"
 			).build());
 
-		_assertCount(3);
+		_assertCount(4);
 
 		// Names must be equals
 
@@ -803,49 +853,6 @@ public class ObjectEntryLocalServiceTest {
 				"listTypeEntryKeyRequired", "listTypeEntryKey1"
 			).put(
 				"middleName", "Doe"
-			).build());
-
-		_assertCount(4);
-
-		// Date time must be in the future
-
-		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(
-			"yyyy-MM-dd HH:mm");
-
-		_objectValidationRuleLocalService.addObjectValidationRule(
-			TestPropsValues.getUserId(),
-			_objectDefinition.getObjectDefinitionId(), true,
-			ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
-			LocalizedMapUtil.getLocalizedMap("Date time must be in the future"),
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			String.format(
-				"futureDates(time, \"%s\")",
-				dateTimeFormatter.format(LocalDateTime.now())));
-
-		_assertFailure(
-			ModelListenerException.class,
-			ObjectValidationRuleEngineException.InvalidFields.class.getName() +
-				": Date time must be in the future",
-			() -> _addObjectEntry(
-				HashMapBuilder.<String, Serializable>put(
-					"birthday", "2000-12-25"
-				).put(
-					"emailAddressRequired", "bob@liferay.com"
-				).put(
-					"listTypeEntryKeyRequired", "listTypeEntryKey1"
-				).put(
-					"time", "2000-12-25 08:50"
-				).build()));
-
-		_addObjectEntry(
-			HashMapBuilder.<String, Serializable>put(
-				"birthday", "2000-12-25"
-			).put(
-				"emailAddressRequired", "bob@liferay.com"
-			).put(
-				"listTypeEntryKeyRequired", "listTypeEntryKey1"
-			).put(
-				"time", dateTimeFormatter.format(LocalDateTime.now())
 			).build());
 
 		_assertCount(5);

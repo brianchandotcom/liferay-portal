@@ -17,6 +17,7 @@ package com.liferay.analytics.message.storage.service.persistence;
 import com.liferay.analytics.message.storage.exception.NoSuchAssociationException;
 import com.liferay.analytics.message.storage.model.AnalyticsAssociation;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import java.util.Date;
 
@@ -35,7 +36,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface AnalyticsAssociationPersistence
-	extends BasePersistence<AnalyticsAssociation> {
+	extends BasePersistence<AnalyticsAssociation>,
+			CTPersistence<AnalyticsAssociation> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

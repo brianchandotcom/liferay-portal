@@ -37,6 +37,9 @@ public class AnalyticsDeleteMessageTable
 	public final Column<AnalyticsDeleteMessageTable, Long> mvccVersion =
 		createColumn(
 			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<AnalyticsDeleteMessageTable, Long> ctCollectionId =
+		createColumn(
+			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<AnalyticsDeleteMessageTable, Long>
 		analyticsDeleteMessageId = createColumn(
 			"analyticsDeleteMessageId", Long.class, Types.BIGINT,

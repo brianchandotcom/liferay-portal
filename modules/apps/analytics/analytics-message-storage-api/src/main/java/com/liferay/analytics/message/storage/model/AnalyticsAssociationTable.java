@@ -37,6 +37,9 @@ public class AnalyticsAssociationTable
 	public final Column<AnalyticsAssociationTable, Long> mvccVersion =
 		createColumn(
 			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<AnalyticsAssociationTable, Long> ctCollectionId =
+		createColumn(
+			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<AnalyticsAssociationTable, Long>
 		analyticsAssociationId = createColumn(
 			"analyticsAssociationId", Long.class, Types.BIGINT,

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 
@@ -36,7 +37,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface AnalyticsDeleteMessageModel
-	extends BaseModel<AnalyticsDeleteMessage>, MVCCModel, ShardedModel {
+	extends BaseModel<AnalyticsDeleteMessage>, CTModel<AnalyticsDeleteMessage>,
+			MVCCModel, ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -49,6 +51,7 @@ public interface AnalyticsDeleteMessageModel
 	 *
 	 * @return the primary key of this analytics delete message
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -56,6 +59,7 @@ public interface AnalyticsDeleteMessageModel
 	 *
 	 * @param primaryKey the primary key of this analytics delete message
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -73,6 +77,22 @@ public interface AnalyticsDeleteMessageModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this analytics delete message.
+	 *
+	 * @return the ct collection ID of this analytics delete message
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this analytics delete message.
+	 *
+	 * @param ctCollectionId the ct collection ID of this analytics delete message
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the analytics delete message ID of this analytics delete message.

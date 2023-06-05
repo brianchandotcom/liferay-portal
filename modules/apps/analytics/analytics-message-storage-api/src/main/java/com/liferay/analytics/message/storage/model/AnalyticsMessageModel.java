@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.sql.Blob;
 
@@ -38,7 +39,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface AnalyticsMessageModel
-	extends BaseModel<AnalyticsMessage>, MVCCModel, ShardedModel {
+	extends BaseModel<AnalyticsMessage>, CTModel<AnalyticsMessage>, MVCCModel,
+			ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -51,6 +53,7 @@ public interface AnalyticsMessageModel
 	 *
 	 * @return the primary key of this analytics message
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -58,6 +61,7 @@ public interface AnalyticsMessageModel
 	 *
 	 * @param primaryKey the primary key of this analytics message
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -75,6 +79,22 @@ public interface AnalyticsMessageModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this analytics message.
+	 *
+	 * @return the ct collection ID of this analytics message
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this analytics message.
+	 *
+	 * @param ctCollectionId the ct collection ID of this analytics message
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the analytics message ID of this analytics message.

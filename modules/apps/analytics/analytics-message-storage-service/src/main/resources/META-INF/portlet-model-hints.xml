@@ -3,6 +3,7 @@
 <model-hints>
 	<model name="com.liferay.analytics.message.storage.model.AnalyticsAssociation">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="analyticsAssociationId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="createDate" type="Date" />
@@ -15,6 +16,7 @@
 	</model>
 	<model name="com.liferay.analytics.message.storage.model.AnalyticsDeleteMessage">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="analyticsDeleteMessageId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
@@ -27,6 +29,7 @@
 	</model>
 	<model name="com.liferay.analytics.message.storage.model.AnalyticsMessage">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="analyticsMessageId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />

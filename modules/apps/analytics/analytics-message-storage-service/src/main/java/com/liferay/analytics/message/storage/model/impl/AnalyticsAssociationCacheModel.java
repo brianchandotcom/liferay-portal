@@ -78,10 +78,12 @@ public class AnalyticsAssociationCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", analyticsAssociationId=");
 		sb.append(analyticsAssociationId);
 		sb.append(", companyId=");
@@ -111,6 +113,7 @@ public class AnalyticsAssociationCacheModel
 			new AnalyticsAssociationImpl();
 
 		analyticsAssociationImpl.setMvccVersion(mvccVersion);
+		analyticsAssociationImpl.setCtCollectionId(ctCollectionId);
 		analyticsAssociationImpl.setAnalyticsAssociationId(
 			analyticsAssociationId);
 		analyticsAssociationImpl.setCompanyId(companyId);
@@ -159,6 +162,8 @@ public class AnalyticsAssociationCacheModel
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 
+		ctCollectionId = objectInput.readLong();
+
 		analyticsAssociationId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
@@ -177,6 +182,8 @@ public class AnalyticsAssociationCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		objectOutput.writeLong(analyticsAssociationId);
 
@@ -206,6 +213,7 @@ public class AnalyticsAssociationCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public long analyticsAssociationId;
 	public long companyId;
 	public long createDate;

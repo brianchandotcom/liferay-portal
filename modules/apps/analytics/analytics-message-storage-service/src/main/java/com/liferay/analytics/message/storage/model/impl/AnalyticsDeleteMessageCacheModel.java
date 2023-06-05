@@ -78,10 +78,12 @@ public class AnalyticsDeleteMessageCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", analyticsDeleteMessageId=");
 		sb.append(analyticsDeleteMessageId);
 		sb.append(", companyId=");
@@ -107,6 +109,7 @@ public class AnalyticsDeleteMessageCacheModel
 			new AnalyticsDeleteMessageImpl();
 
 		analyticsDeleteMessageImpl.setMvccVersion(mvccVersion);
+		analyticsDeleteMessageImpl.setCtCollectionId(ctCollectionId);
 		analyticsDeleteMessageImpl.setAnalyticsDeleteMessageId(
 			analyticsDeleteMessageId);
 		analyticsDeleteMessageImpl.setCompanyId(companyId);
@@ -144,6 +147,8 @@ public class AnalyticsDeleteMessageCacheModel
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 
+		ctCollectionId = objectInput.readLong();
+
 		analyticsDeleteMessageId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
@@ -159,6 +164,8 @@ public class AnalyticsDeleteMessageCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		objectOutput.writeLong(analyticsDeleteMessageId);
 
@@ -179,6 +186,7 @@ public class AnalyticsDeleteMessageCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public long analyticsDeleteMessageId;
 	public long companyId;
 	public long userId;

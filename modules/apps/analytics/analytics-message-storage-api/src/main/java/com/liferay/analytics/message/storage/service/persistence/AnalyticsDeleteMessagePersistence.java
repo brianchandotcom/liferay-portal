@@ -17,6 +17,7 @@ package com.liferay.analytics.message.storage.service.persistence;
 import com.liferay.analytics.message.storage.exception.NoSuchDeleteMessageException;
 import com.liferay.analytics.message.storage.model.AnalyticsDeleteMessage;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import java.util.Date;
 
@@ -35,7 +36,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface AnalyticsDeleteMessagePersistence
-	extends BasePersistence<AnalyticsDeleteMessage> {
+	extends BasePersistence<AnalyticsDeleteMessage>,
+			CTPersistence<AnalyticsDeleteMessage> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

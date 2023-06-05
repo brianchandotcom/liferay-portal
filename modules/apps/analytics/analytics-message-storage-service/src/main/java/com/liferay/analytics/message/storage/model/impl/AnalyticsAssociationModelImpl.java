@@ -70,10 +70,10 @@ public class AnalyticsAssociationModelImpl
 	public static final String TABLE_NAME = "AnalyticsAssociation";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"analyticsAssociationId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"userId", Types.BIGINT},
-		{"associationClassName", Types.VARCHAR},
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"analyticsAssociationId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"userId", Types.BIGINT}, {"associationClassName", Types.VARCHAR},
 		{"associationClassPK", Types.BIGINT}, {"className", Types.VARCHAR},
 		{"classPK", Types.BIGINT}
 	};
@@ -83,6 +83,7 @@ public class AnalyticsAssociationModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("analyticsAssociationId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -95,7 +96,7 @@ public class AnalyticsAssociationModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AnalyticsAssociation (mvccVersion LONG default 0 not null,analyticsAssociationId LONG not null primary key,companyId LONG,createDate DATE null,modifiedDate DATE null,userId LONG,associationClassName VARCHAR(75) null,associationClassPK LONG,className VARCHAR(75) null,classPK LONG)";
+		"create table AnalyticsAssociation (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,analyticsAssociationId LONG not null,companyId LONG,createDate DATE null,modifiedDate DATE null,userId LONG,associationClassName VARCHAR(75) null,associationClassPK LONG,className VARCHAR(75) null,classPK LONG,primary key (analyticsAssociationId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table AnalyticsAssociation";
@@ -256,6 +257,8 @@ public class AnalyticsAssociationModelImpl
 			attributeGetterFunctions.put(
 				"mvccVersion", AnalyticsAssociation::getMvccVersion);
 			attributeGetterFunctions.put(
+				"ctCollectionId", AnalyticsAssociation::getCtCollectionId);
+			attributeGetterFunctions.put(
 				"analyticsAssociationId",
 				AnalyticsAssociation::getAnalyticsAssociationId);
 			attributeGetterFunctions.put(
@@ -299,6 +302,10 @@ public class AnalyticsAssociationModelImpl
 				"mvccVersion",
 				(BiConsumer<AnalyticsAssociation, Long>)
 					AnalyticsAssociation::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"ctCollectionId",
+				(BiConsumer<AnalyticsAssociation, Long>)
+					AnalyticsAssociation::setCtCollectionId);
 			attributeSetterBiConsumers.put(
 				"analyticsAssociationId",
 				(BiConsumer<AnalyticsAssociation, Long>)
@@ -354,6 +361,20 @@ public class AnalyticsAssociationModelImpl
 		}
 
 		_mvccVersion = mvccVersion;
+	}
+
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_ctCollectionId = ctCollectionId;
 	}
 
 	@Override
@@ -611,6 +632,7 @@ public class AnalyticsAssociationModelImpl
 			new AnalyticsAssociationImpl();
 
 		analyticsAssociationImpl.setMvccVersion(getMvccVersion());
+		analyticsAssociationImpl.setCtCollectionId(getCtCollectionId());
 		analyticsAssociationImpl.setAnalyticsAssociationId(
 			getAnalyticsAssociationId());
 		analyticsAssociationImpl.setCompanyId(getCompanyId());
@@ -635,6 +657,8 @@ public class AnalyticsAssociationModelImpl
 
 		analyticsAssociationImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
+		analyticsAssociationImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		analyticsAssociationImpl.setAnalyticsAssociationId(
 			this.<Long>getColumnOriginalValue("analyticsAssociationId"));
 		analyticsAssociationImpl.setCompanyId(
@@ -733,6 +757,8 @@ public class AnalyticsAssociationModelImpl
 			new AnalyticsAssociationCacheModel();
 
 		analyticsAssociationCacheModel.mvccVersion = getMvccVersion();
+
+		analyticsAssociationCacheModel.ctCollectionId = getCtCollectionId();
 
 		analyticsAssociationCacheModel.analyticsAssociationId =
 			getAnalyticsAssociationId();
@@ -848,6 +874,7 @@ public class AnalyticsAssociationModelImpl
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private long _analyticsAssociationId;
 	private long _companyId;
 	private Date _createDate;
@@ -888,6 +915,7 @@ public class AnalyticsAssociationModelImpl
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
+		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put(
 			"analyticsAssociationId", _analyticsAssociationId);
 		_columnOriginalValues.put("companyId", _companyId);
@@ -914,23 +942,25 @@ public class AnalyticsAssociationModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("analyticsAssociationId", 2L);
+		columnBitmasks.put("ctCollectionId", 2L);
 
-		columnBitmasks.put("companyId", 4L);
+		columnBitmasks.put("analyticsAssociationId", 4L);
 
-		columnBitmasks.put("createDate", 8L);
+		columnBitmasks.put("companyId", 8L);
 
-		columnBitmasks.put("modifiedDate", 16L);
+		columnBitmasks.put("createDate", 16L);
 
-		columnBitmasks.put("userId", 32L);
+		columnBitmasks.put("modifiedDate", 32L);
 
-		columnBitmasks.put("associationClassName", 64L);
+		columnBitmasks.put("userId", 64L);
 
-		columnBitmasks.put("associationClassPK", 128L);
+		columnBitmasks.put("associationClassName", 128L);
 
-		columnBitmasks.put("className", 256L);
+		columnBitmasks.put("associationClassPK", 256L);
 
-		columnBitmasks.put("classPK", 512L);
+		columnBitmasks.put("className", 512L);
+
+		columnBitmasks.put("classPK", 1024L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

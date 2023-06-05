@@ -36,6 +36,9 @@ public class AnalyticsMessageTable extends BaseTable<AnalyticsMessageTable> {
 
 	public final Column<AnalyticsMessageTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<AnalyticsMessageTable, Long> ctCollectionId =
+		createColumn(
+			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<AnalyticsMessageTable, Long> analyticsMessageId =
 		createColumn(
 			"analyticsMessageId", Long.class, Types.BIGINT,

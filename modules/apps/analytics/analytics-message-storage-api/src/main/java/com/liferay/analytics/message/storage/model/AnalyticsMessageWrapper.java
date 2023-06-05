@@ -22,6 +22,8 @@ import java.sql.Blob;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * <p>
@@ -45,6 +47,7 @@ public class AnalyticsMessageWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
+		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put("analyticsMessageId", getAnalyticsMessageId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -61,6 +64,12 @@ public class AnalyticsMessageWrapper
 
 		if (mvccVersion != null) {
 			setMvccVersion(mvccVersion);
+		}
+
+		Long ctCollectionId = (Long)attributes.get("ctCollectionId");
+
+		if (ctCollectionId != null) {
+			setCtCollectionId(ctCollectionId);
 		}
 
 		Long analyticsMessageId = (Long)attributes.get("analyticsMessageId");
@@ -143,6 +152,16 @@ public class AnalyticsMessageWrapper
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
+	}
+
+	/**
+	 * Returns the ct collection ID of this analytics message.
+	 *
+	 * @return the ct collection ID of this analytics message
+	 */
+	@Override
+	public long getCtCollectionId() {
+		return model.getCtCollectionId();
 	}
 
 	/**
@@ -241,6 +260,16 @@ public class AnalyticsMessageWrapper
 	}
 
 	/**
+	 * Sets the ct collection ID of this analytics message.
+	 *
+	 * @param ctCollectionId the ct collection ID of this analytics message
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		model.setCtCollectionId(ctCollectionId);
+	}
+
+	/**
 	 * Sets the mvcc version of this analytics message.
 	 *
 	 * @param mvccVersion the mvcc version of this analytics message
@@ -293,6 +322,20 @@ public class AnalyticsMessageWrapper
 	@Override
 	public String toXmlString() {
 		return model.toXmlString();
+	}
+
+	@Override
+	public Map<String, Function<AnalyticsMessage, Object>>
+		getAttributeGetterFunctions() {
+
+		return model.getAttributeGetterFunctions();
+	}
+
+	@Override
+	public Map<String, BiConsumer<AnalyticsMessage, Object>>
+		getAttributeSetterBiConsumers() {
+
+		return model.getAttributeSetterBiConsumers();
 	}
 
 	@Override

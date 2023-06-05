@@ -70,10 +70,10 @@ public class AnalyticsMessageModelImpl
 	public static final String TABLE_NAME = "AnalyticsMessage";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"analyticsMessageId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"body", Types.BLOB}
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"analyticsMessageId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"body", Types.BLOB}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -81,6 +81,7 @@ public class AnalyticsMessageModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("analyticsMessageId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
@@ -90,7 +91,7 @@ public class AnalyticsMessageModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AnalyticsMessage (mvccVersion LONG default 0 not null,analyticsMessageId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,body BLOB)";
+		"create table AnalyticsMessage (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,analyticsMessageId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,body BLOB,primary key (analyticsMessageId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table AnalyticsMessage";
 
@@ -232,6 +233,8 @@ public class AnalyticsMessageModelImpl
 			attributeGetterFunctions.put(
 				"mvccVersion", AnalyticsMessage::getMvccVersion);
 			attributeGetterFunctions.put(
+				"ctCollectionId", AnalyticsMessage::getCtCollectionId);
+			attributeGetterFunctions.put(
 				"analyticsMessageId", AnalyticsMessage::getAnalyticsMessageId);
 			attributeGetterFunctions.put(
 				"companyId", AnalyticsMessage::getCompanyId);
@@ -263,6 +266,10 @@ public class AnalyticsMessageModelImpl
 				"mvccVersion",
 				(BiConsumer<AnalyticsMessage, Long>)
 					AnalyticsMessage::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"ctCollectionId",
+				(BiConsumer<AnalyticsMessage, Long>)
+					AnalyticsMessage::setCtCollectionId);
 			attributeSetterBiConsumers.put(
 				"analyticsMessageId",
 				(BiConsumer<AnalyticsMessage, Long>)
@@ -305,6 +312,20 @@ public class AnalyticsMessageModelImpl
 		}
 
 		_mvccVersion = mvccVersion;
+	}
+
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_ctCollectionId = ctCollectionId;
 	}
 
 	@Override
@@ -501,6 +522,7 @@ public class AnalyticsMessageModelImpl
 		AnalyticsMessageImpl analyticsMessageImpl = new AnalyticsMessageImpl();
 
 		analyticsMessageImpl.setMvccVersion(getMvccVersion());
+		analyticsMessageImpl.setCtCollectionId(getCtCollectionId());
 		analyticsMessageImpl.setAnalyticsMessageId(getAnalyticsMessageId());
 		analyticsMessageImpl.setCompanyId(getCompanyId());
 		analyticsMessageImpl.setUserId(getUserId());
@@ -518,6 +540,8 @@ public class AnalyticsMessageModelImpl
 
 		analyticsMessageImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
+		analyticsMessageImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		analyticsMessageImpl.setAnalyticsMessageId(
 			this.<Long>getColumnOriginalValue("analyticsMessageId"));
 		analyticsMessageImpl.setCompanyId(
@@ -618,6 +642,8 @@ public class AnalyticsMessageModelImpl
 
 		analyticsMessageCacheModel.mvccVersion = getMvccVersion();
 
+		analyticsMessageCacheModel.ctCollectionId = getCtCollectionId();
+
 		analyticsMessageCacheModel.analyticsMessageId = getAnalyticsMessageId();
 
 		analyticsMessageCacheModel.companyId = getCompanyId();
@@ -646,11 +672,15 @@ public class AnalyticsMessageModelImpl
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("{\"mvccVersion\": ");
 
 		sb.append(getMvccVersion());
+
+		sb.append(", \"ctCollectionId\": ");
+
+		sb.append(getCtCollectionId());
 
 		sb.append(", \"analyticsMessageId\": ");
 
@@ -685,6 +715,7 @@ public class AnalyticsMessageModelImpl
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private long _analyticsMessageId;
 	private long _companyId;
 	private long _userId;
@@ -721,6 +752,7 @@ public class AnalyticsMessageModelImpl
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
+		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put("analyticsMessageId", _analyticsMessageId);
 		_columnOriginalValues.put("companyId", _companyId);
 		_columnOriginalValues.put("userId", _userId);
@@ -741,17 +773,19 @@ public class AnalyticsMessageModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("analyticsMessageId", 2L);
+		columnBitmasks.put("ctCollectionId", 2L);
 
-		columnBitmasks.put("companyId", 4L);
+		columnBitmasks.put("analyticsMessageId", 4L);
 
-		columnBitmasks.put("userId", 8L);
+		columnBitmasks.put("companyId", 8L);
 
-		columnBitmasks.put("userName", 16L);
+		columnBitmasks.put("userId", 16L);
 
-		columnBitmasks.put("createDate", 32L);
+		columnBitmasks.put("userName", 32L);
 
-		columnBitmasks.put("body", 64L);
+		columnBitmasks.put("createDate", 64L);
+
+		columnBitmasks.put("body", 128L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

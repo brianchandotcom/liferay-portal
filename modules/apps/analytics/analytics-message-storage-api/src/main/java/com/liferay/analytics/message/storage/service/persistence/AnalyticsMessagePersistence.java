@@ -17,6 +17,7 @@ package com.liferay.analytics.message.storage.service.persistence;
 import com.liferay.analytics.message.storage.exception.NoSuchMessageException;
 import com.liferay.analytics.message.storage.model.AnalyticsMessage;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -33,7 +34,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface AnalyticsMessagePersistence
-	extends BasePersistence<AnalyticsMessage> {
+	extends BasePersistence<AnalyticsMessage>, CTPersistence<AnalyticsMessage> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

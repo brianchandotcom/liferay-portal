@@ -23,6 +23,7 @@ import com.liferay.analytics.message.storage.service.persistence.AnalyticsDelete
 import com.liferay.analytics.message.storage.service.persistence.AnalyticsDeleteMessageUtil;
 import com.liferay.analytics.message.storage.service.persistence.impl.constants.AnalyticsPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
@@ -37,6 +38,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -50,7 +52,13 @@ import java.lang.reflect.InvocationHandler;
 
 import java.sql.Timestamp;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.EnumMap;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -170,18 +178,21 @@ public class AnalyticsDeleteMessagePersistenceImpl
 		OrderByComparator<AnalyticsDeleteMessage> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			AnalyticsDeleteMessage.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByCompanyId;
 				finderArgs = new Object[] {companyId};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByCompanyId;
 			finderArgs = new Object[] {
 				companyId, start, end, orderByComparator
@@ -190,7 +201,7 @@ public class AnalyticsDeleteMessagePersistenceImpl
 
 		List<AnalyticsDeleteMessage> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<AnalyticsDeleteMessage>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -246,7 +257,7 @@ public class AnalyticsDeleteMessagePersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(finderPath, finderArgs, list);
 				}
 			}
@@ -556,11 +567,21 @@ public class AnalyticsDeleteMessagePersistenceImpl
 	 */
 	@Override
 	public int countByCompanyId(long companyId) {
-		FinderPath finderPath = _finderPathCountByCompanyId;
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			AnalyticsDeleteMessage.class);
 
-		Object[] finderArgs = new Object[] {companyId};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByCompanyId;
+
+			finderArgs = new Object[] {companyId};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -584,7 +605,9 @@ public class AnalyticsDeleteMessagePersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				finderCache.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
 				throw processException(exception);
@@ -683,6 +706,9 @@ public class AnalyticsDeleteMessagePersistenceImpl
 		OrderByComparator<AnalyticsDeleteMessage> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			AnalyticsDeleteMessage.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
@@ -693,7 +719,7 @@ public class AnalyticsDeleteMessagePersistenceImpl
 
 		List<AnalyticsDeleteMessage> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<AnalyticsDeleteMessage>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -768,7 +794,7 @@ public class AnalyticsDeleteMessagePersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(finderPath, finderArgs, list);
 				}
 			}
@@ -1107,11 +1133,21 @@ public class AnalyticsDeleteMessagePersistenceImpl
 	 */
 	@Override
 	public int countByC_GtM(long companyId, Date modifiedDate) {
-		FinderPath finderPath = _finderPathWithPaginationCountByC_GtM;
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			AnalyticsDeleteMessage.class);
 
-		Object[] finderArgs = new Object[] {companyId, _getTime(modifiedDate)};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathWithPaginationCountByC_GtM;
+
+			finderArgs = new Object[] {companyId, _getTime(modifiedDate)};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1150,7 +1186,9 @@ public class AnalyticsDeleteMessagePersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				finderCache.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
 				throw processException(exception);
@@ -1188,6 +1226,10 @@ public class AnalyticsDeleteMessagePersistenceImpl
 	 */
 	@Override
 	public void cacheResult(AnalyticsDeleteMessage analyticsDeleteMessage) {
+		if (analyticsDeleteMessage.getCtCollectionId() != 0) {
+			return;
+		}
+
 		entityCache.putResult(
 			AnalyticsDeleteMessageImpl.class,
 			analyticsDeleteMessage.getPrimaryKey(), analyticsDeleteMessage);
@@ -1214,6 +1256,10 @@ public class AnalyticsDeleteMessagePersistenceImpl
 
 		for (AnalyticsDeleteMessage analyticsDeleteMessage :
 				analyticsDeleteMessages) {
+
+			if (analyticsDeleteMessage.getCtCollectionId() != 0) {
+				continue;
+			}
 
 			if (entityCache.getResult(
 					AnalyticsDeleteMessageImpl.class,
@@ -1363,7 +1409,9 @@ public class AnalyticsDeleteMessagePersistenceImpl
 					analyticsDeleteMessage.getPrimaryKeyObj());
 			}
 
-			if (analyticsDeleteMessage != null) {
+			if ((analyticsDeleteMessage != null) &&
+				ctPersistenceHelper.isRemove(analyticsDeleteMessage)) {
+
 				session.delete(analyticsDeleteMessage);
 			}
 		}
@@ -1439,7 +1487,13 @@ public class AnalyticsDeleteMessagePersistenceImpl
 		try {
 			session = openSession();
 
-			if (isNew) {
+			if (ctPersistenceHelper.isInsert(analyticsDeleteMessage)) {
+				if (!isNew) {
+					session.evict(
+						AnalyticsDeleteMessageImpl.class,
+						analyticsDeleteMessage.getPrimaryKeyObj());
+				}
+
 				session.save(analyticsDeleteMessage);
 			}
 			else {
@@ -1452,6 +1506,16 @@ public class AnalyticsDeleteMessagePersistenceImpl
 		}
 		finally {
 			closeSession(session);
+		}
+
+		if (analyticsDeleteMessage.getCtCollectionId() != 0) {
+			if (isNew) {
+				analyticsDeleteMessage.setNew(false);
+			}
+
+			analyticsDeleteMessage.resetOriginalValues();
+
+			return analyticsDeleteMessage;
 		}
 
 		entityCache.putResult(
@@ -1511,6 +1575,44 @@ public class AnalyticsDeleteMessagePersistenceImpl
 	/**
 	 * Returns the analytics delete message with the primary key or returns <code>null</code> if it could not be found.
 	 *
+	 * @param primaryKey the primary key of the analytics delete message
+	 * @return the analytics delete message, or <code>null</code> if a analytics delete message with the primary key could not be found
+	 */
+	@Override
+	public AnalyticsDeleteMessage fetchByPrimaryKey(Serializable primaryKey) {
+		if (ctPersistenceHelper.isProductionMode(
+				AnalyticsDeleteMessage.class, primaryKey)) {
+
+			return super.fetchByPrimaryKey(primaryKey);
+		}
+
+		AnalyticsDeleteMessage analyticsDeleteMessage = null;
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			analyticsDeleteMessage = (AnalyticsDeleteMessage)session.get(
+				AnalyticsDeleteMessageImpl.class, primaryKey);
+
+			if (analyticsDeleteMessage != null) {
+				cacheResult(analyticsDeleteMessage);
+			}
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+
+		return analyticsDeleteMessage;
+	}
+
+	/**
+	 * Returns the analytics delete message with the primary key or returns <code>null</code> if it could not be found.
+	 *
 	 * @param analyticsDeleteMessageId the primary key of the analytics delete message
 	 * @return the analytics delete message, or <code>null</code> if a analytics delete message with the primary key could not be found
 	 */
@@ -1519,6 +1621,104 @@ public class AnalyticsDeleteMessagePersistenceImpl
 		long analyticsDeleteMessageId) {
 
 		return fetchByPrimaryKey((Serializable)analyticsDeleteMessageId);
+	}
+
+	@Override
+	public Map<Serializable, AnalyticsDeleteMessage> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys) {
+
+		if (ctPersistenceHelper.isProductionMode(
+				AnalyticsDeleteMessage.class)) {
+
+			return super.fetchByPrimaryKeys(primaryKeys);
+		}
+
+		if (primaryKeys.isEmpty()) {
+			return Collections.emptyMap();
+		}
+
+		Map<Serializable, AnalyticsDeleteMessage> map =
+			new HashMap<Serializable, AnalyticsDeleteMessage>();
+
+		if (primaryKeys.size() == 1) {
+			Iterator<Serializable> iterator = primaryKeys.iterator();
+
+			Serializable primaryKey = iterator.next();
+
+			AnalyticsDeleteMessage analyticsDeleteMessage = fetchByPrimaryKey(
+				primaryKey);
+
+			if (analyticsDeleteMessage != null) {
+				map.put(primaryKey, analyticsDeleteMessage);
+			}
+
+			return map;
+		}
+
+		if ((databaseInMaxParameters > 0) &&
+			(primaryKeys.size() > databaseInMaxParameters)) {
+
+			Iterator<Serializable> iterator = primaryKeys.iterator();
+
+			while (iterator.hasNext()) {
+				Set<Serializable> page = new HashSet<>();
+
+				for (int i = 0;
+					 (i < databaseInMaxParameters) && iterator.hasNext(); i++) {
+
+					page.add(iterator.next());
+				}
+
+				map.putAll(fetchByPrimaryKeys(page));
+			}
+
+			return map;
+		}
+
+		StringBundler sb = new StringBundler((primaryKeys.size() * 2) + 1);
+
+		sb.append(getSelectSQL());
+		sb.append(" WHERE ");
+		sb.append(getPKDBName());
+		sb.append(" IN (");
+
+		for (Serializable primaryKey : primaryKeys) {
+			sb.append((long)primaryKey);
+
+			sb.append(",");
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		sb.append(")");
+
+		String sql = sb.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query query = session.createQuery(sql);
+
+			for (AnalyticsDeleteMessage analyticsDeleteMessage :
+					(List<AnalyticsDeleteMessage>)query.list()) {
+
+				map.put(
+					analyticsDeleteMessage.getPrimaryKeyObj(),
+					analyticsDeleteMessage);
+
+				cacheResult(analyticsDeleteMessage);
+			}
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+
+		return map;
 	}
 
 	/**
@@ -1586,25 +1786,28 @@ public class AnalyticsDeleteMessagePersistenceImpl
 		OrderByComparator<AnalyticsDeleteMessage> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			AnalyticsDeleteMessage.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindAll;
 				finderArgs = FINDER_ARGS_EMPTY;
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<AnalyticsDeleteMessage> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<AnalyticsDeleteMessage>)finderCache.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -1642,7 +1845,7 @@ public class AnalyticsDeleteMessagePersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(finderPath, finderArgs, list);
 				}
 			}
@@ -1675,8 +1878,15 @@ public class AnalyticsDeleteMessagePersistenceImpl
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			AnalyticsDeleteMessage.class);
+
+		Long count = null;
+
+		if (productionMode) {
+			count = (Long)finderCache.getResult(
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+		}
 
 		if (count == null) {
 			Session session = null;
@@ -1689,8 +1899,10 @@ public class AnalyticsDeleteMessagePersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				finderCache.putResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
+				if (productionMode) {
+					finderCache.putResult(
+						_finderPathCountAll, FINDER_ARGS_EMPTY, count);
+				}
 			}
 			catch (Exception exception) {
 				throw processException(exception);
@@ -1719,8 +1931,64 @@ public class AnalyticsDeleteMessagePersistenceImpl
 	}
 
 	@Override
-	protected Map<String, Integer> getTableColumnsMap() {
+	public Set<String> getCTColumnNames(
+		CTColumnResolutionType ctColumnResolutionType) {
+
+		return _ctColumnNamesMap.getOrDefault(
+			ctColumnResolutionType, Collections.emptySet());
+	}
+
+	@Override
+	public List<String> getMappingTableNames() {
+		return _mappingTableNames;
+	}
+
+	@Override
+	public Map<String, Integer> getTableColumnsMap() {
 		return AnalyticsDeleteMessageModelImpl.TABLE_COLUMNS_MAP;
+	}
+
+	@Override
+	public String getTableName() {
+		return "AnalyticsDeleteMessage";
+	}
+
+	@Override
+	public List<String[]> getUniqueIndexColumnNames() {
+		return _uniqueIndexColumnNames;
+	}
+
+	private static final Map<CTColumnResolutionType, Set<String>>
+		_ctColumnNamesMap = new EnumMap<CTColumnResolutionType, Set<String>>(
+			CTColumnResolutionType.class);
+	private static final List<String> _mappingTableNames =
+		new ArrayList<String>();
+	private static final List<String[]> _uniqueIndexColumnNames =
+		new ArrayList<String[]>();
+
+	static {
+		Set<String> ctControlColumnNames = new HashSet<String>();
+		Set<String> ctIgnoreColumnNames = new HashSet<String>();
+		Set<String> ctStrictColumnNames = new HashSet<String>();
+
+		ctControlColumnNames.add("mvccVersion");
+		ctControlColumnNames.add("ctCollectionId");
+		ctStrictColumnNames.add("companyId");
+		ctStrictColumnNames.add("userId");
+		ctStrictColumnNames.add("createDate");
+		ctIgnoreColumnNames.add("modifiedDate");
+		ctStrictColumnNames.add("className");
+		ctStrictColumnNames.add("classPK");
+
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.CONTROL, ctControlColumnNames);
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.PK,
+			Collections.singleton("analyticsDeleteMessageId"));
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.STRICT, ctStrictColumnNames);
 	}
 
 	/**
@@ -1810,6 +2078,9 @@ public class AnalyticsDeleteMessagePersistenceImpl
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		super.setSessionFactory(sessionFactory);
 	}
+
+	@Reference
+	protected CTPersistenceHelper ctPersistenceHelper;
 
 	@Reference
 	protected EntityCache entityCache;

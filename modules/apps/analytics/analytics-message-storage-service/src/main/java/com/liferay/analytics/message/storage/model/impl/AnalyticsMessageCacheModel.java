@@ -78,10 +78,12 @@ public class AnalyticsMessageCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", analyticsMessageId=");
 		sb.append(analyticsMessageId);
 		sb.append(", companyId=");
@@ -101,6 +103,7 @@ public class AnalyticsMessageCacheModel
 		AnalyticsMessageImpl analyticsMessageImpl = new AnalyticsMessageImpl();
 
 		analyticsMessageImpl.setMvccVersion(mvccVersion);
+		analyticsMessageImpl.setCtCollectionId(ctCollectionId);
 		analyticsMessageImpl.setAnalyticsMessageId(analyticsMessageId);
 		analyticsMessageImpl.setCompanyId(companyId);
 		analyticsMessageImpl.setUserId(userId);
@@ -128,6 +131,8 @@ public class AnalyticsMessageCacheModel
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 
+		ctCollectionId = objectInput.readLong();
+
 		analyticsMessageId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
@@ -140,6 +145,8 @@ public class AnalyticsMessageCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		objectOutput.writeLong(analyticsMessageId);
 
@@ -158,6 +165,7 @@ public class AnalyticsMessageCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public long analyticsMessageId;
 	public long companyId;
 	public long userId;

@@ -23,6 +23,7 @@ import com.liferay.analytics.message.storage.service.persistence.AnalyticsAssoci
 import com.liferay.analytics.message.storage.service.persistence.AnalyticsAssociationUtil;
 import com.liferay.analytics.message.storage.service.persistence.impl.constants.AnalyticsPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
@@ -37,6 +38,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -50,7 +52,13 @@ import java.lang.reflect.InvocationHandler;
 
 import java.sql.Timestamp;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.EnumMap;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -182,18 +190,21 @@ public class AnalyticsAssociationPersistenceImpl
 
 		associationClassName = Objects.toString(associationClassName, "");
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			AnalyticsAssociation.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByC_A;
 				finderArgs = new Object[] {companyId, associationClassName};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByC_A;
 			finderArgs = new Object[] {
 				companyId, associationClassName, start, end, orderByComparator
@@ -202,7 +213,7 @@ public class AnalyticsAssociationPersistenceImpl
 
 		List<AnalyticsAssociation> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<AnalyticsAssociation>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -276,7 +287,7 @@ public class AnalyticsAssociationPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(finderPath, finderArgs, list);
 				}
 			}
@@ -621,11 +632,21 @@ public class AnalyticsAssociationPersistenceImpl
 	public int countByC_A(long companyId, String associationClassName) {
 		associationClassName = Objects.toString(associationClassName, "");
 
-		FinderPath finderPath = _finderPathCountByC_A;
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			AnalyticsAssociation.class);
 
-		Object[] finderArgs = new Object[] {companyId, associationClassName};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByC_A;
+
+			finderArgs = new Object[] {companyId, associationClassName};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -664,7 +685,9 @@ public class AnalyticsAssociationPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				finderCache.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
 				throw processException(exception);
@@ -780,6 +803,9 @@ public class AnalyticsAssociationPersistenceImpl
 
 		associationClassName = Objects.toString(associationClassName, "");
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			AnalyticsAssociation.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
@@ -791,7 +817,7 @@ public class AnalyticsAssociationPersistenceImpl
 
 		List<AnalyticsAssociation> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<AnalyticsAssociation>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -883,7 +909,7 @@ public class AnalyticsAssociationPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(finderPath, finderArgs, list);
 				}
 			}
@@ -1262,13 +1288,23 @@ public class AnalyticsAssociationPersistenceImpl
 
 		associationClassName = Objects.toString(associationClassName, "");
 
-		FinderPath finderPath = _finderPathWithPaginationCountByC_GtM_A;
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			AnalyticsAssociation.class);
 
-		Object[] finderArgs = new Object[] {
-			companyId, _getTime(modifiedDate), associationClassName
-		};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathWithPaginationCountByC_GtM_A;
+
+			finderArgs = new Object[] {
+				companyId, _getTime(modifiedDate), associationClassName
+			};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -1322,7 +1358,9 @@ public class AnalyticsAssociationPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				finderCache.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
 				throw processException(exception);
@@ -1446,20 +1484,23 @@ public class AnalyticsAssociationPersistenceImpl
 
 		associationClassName = Objects.toString(associationClassName, "");
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			AnalyticsAssociation.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByC_A_A;
 				finderArgs = new Object[] {
 					companyId, associationClassName, associationClassPK
 				};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByC_A_A;
 			finderArgs = new Object[] {
 				companyId, associationClassName, associationClassPK, start, end,
@@ -1469,7 +1510,7 @@ public class AnalyticsAssociationPersistenceImpl
 
 		List<AnalyticsAssociation> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<AnalyticsAssociation>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -1549,7 +1590,7 @@ public class AnalyticsAssociationPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(finderPath, finderArgs, list);
 				}
 			}
@@ -1921,13 +1962,23 @@ public class AnalyticsAssociationPersistenceImpl
 
 		associationClassName = Objects.toString(associationClassName, "");
 
-		FinderPath finderPath = _finderPathCountByC_A_A;
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			AnalyticsAssociation.class);
 
-		Object[] finderArgs = new Object[] {
-			companyId, associationClassName, associationClassPK
-		};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByC_A_A;
+
+			finderArgs = new Object[] {
+				companyId, associationClassName, associationClassPK
+			};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -1970,7 +2021,9 @@ public class AnalyticsAssociationPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				finderCache.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
 				throw processException(exception);
@@ -2011,6 +2064,10 @@ public class AnalyticsAssociationPersistenceImpl
 	 */
 	@Override
 	public void cacheResult(AnalyticsAssociation analyticsAssociation) {
+		if (analyticsAssociation.getCtCollectionId() != 0) {
+			return;
+		}
+
 		entityCache.putResult(
 			AnalyticsAssociationImpl.class,
 			analyticsAssociation.getPrimaryKey(), analyticsAssociation);
@@ -2035,6 +2092,10 @@ public class AnalyticsAssociationPersistenceImpl
 
 		for (AnalyticsAssociation analyticsAssociation :
 				analyticsAssociations) {
+
+			if (analyticsAssociation.getCtCollectionId() != 0) {
+				continue;
+			}
 
 			if (entityCache.getResult(
 					AnalyticsAssociationImpl.class,
@@ -2182,7 +2243,9 @@ public class AnalyticsAssociationPersistenceImpl
 					analyticsAssociation.getPrimaryKeyObj());
 			}
 
-			if (analyticsAssociation != null) {
+			if ((analyticsAssociation != null) &&
+				ctPersistenceHelper.isRemove(analyticsAssociation)) {
+
 				session.delete(analyticsAssociation);
 			}
 		}
@@ -2256,7 +2319,13 @@ public class AnalyticsAssociationPersistenceImpl
 		try {
 			session = openSession();
 
-			if (isNew) {
+			if (ctPersistenceHelper.isInsert(analyticsAssociation)) {
+				if (!isNew) {
+					session.evict(
+						AnalyticsAssociationImpl.class,
+						analyticsAssociation.getPrimaryKeyObj());
+				}
+
 				session.save(analyticsAssociation);
 			}
 			else {
@@ -2269,6 +2338,16 @@ public class AnalyticsAssociationPersistenceImpl
 		}
 		finally {
 			closeSession(session);
+		}
+
+		if (analyticsAssociation.getCtCollectionId() != 0) {
+			if (isNew) {
+				analyticsAssociation.setNew(false);
+			}
+
+			analyticsAssociation.resetOriginalValues();
+
+			return analyticsAssociation;
 		}
 
 		entityCache.putResult(
@@ -2327,12 +2406,146 @@ public class AnalyticsAssociationPersistenceImpl
 	/**
 	 * Returns the analytics association with the primary key or returns <code>null</code> if it could not be found.
 	 *
+	 * @param primaryKey the primary key of the analytics association
+	 * @return the analytics association, or <code>null</code> if a analytics association with the primary key could not be found
+	 */
+	@Override
+	public AnalyticsAssociation fetchByPrimaryKey(Serializable primaryKey) {
+		if (ctPersistenceHelper.isProductionMode(
+				AnalyticsAssociation.class, primaryKey)) {
+
+			return super.fetchByPrimaryKey(primaryKey);
+		}
+
+		AnalyticsAssociation analyticsAssociation = null;
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			analyticsAssociation = (AnalyticsAssociation)session.get(
+				AnalyticsAssociationImpl.class, primaryKey);
+
+			if (analyticsAssociation != null) {
+				cacheResult(analyticsAssociation);
+			}
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+
+		return analyticsAssociation;
+	}
+
+	/**
+	 * Returns the analytics association with the primary key or returns <code>null</code> if it could not be found.
+	 *
 	 * @param analyticsAssociationId the primary key of the analytics association
 	 * @return the analytics association, or <code>null</code> if a analytics association with the primary key could not be found
 	 */
 	@Override
 	public AnalyticsAssociation fetchByPrimaryKey(long analyticsAssociationId) {
 		return fetchByPrimaryKey((Serializable)analyticsAssociationId);
+	}
+
+	@Override
+	public Map<Serializable, AnalyticsAssociation> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys) {
+
+		if (ctPersistenceHelper.isProductionMode(AnalyticsAssociation.class)) {
+			return super.fetchByPrimaryKeys(primaryKeys);
+		}
+
+		if (primaryKeys.isEmpty()) {
+			return Collections.emptyMap();
+		}
+
+		Map<Serializable, AnalyticsAssociation> map =
+			new HashMap<Serializable, AnalyticsAssociation>();
+
+		if (primaryKeys.size() == 1) {
+			Iterator<Serializable> iterator = primaryKeys.iterator();
+
+			Serializable primaryKey = iterator.next();
+
+			AnalyticsAssociation analyticsAssociation = fetchByPrimaryKey(
+				primaryKey);
+
+			if (analyticsAssociation != null) {
+				map.put(primaryKey, analyticsAssociation);
+			}
+
+			return map;
+		}
+
+		if ((databaseInMaxParameters > 0) &&
+			(primaryKeys.size() > databaseInMaxParameters)) {
+
+			Iterator<Serializable> iterator = primaryKeys.iterator();
+
+			while (iterator.hasNext()) {
+				Set<Serializable> page = new HashSet<>();
+
+				for (int i = 0;
+					 (i < databaseInMaxParameters) && iterator.hasNext(); i++) {
+
+					page.add(iterator.next());
+				}
+
+				map.putAll(fetchByPrimaryKeys(page));
+			}
+
+			return map;
+		}
+
+		StringBundler sb = new StringBundler((primaryKeys.size() * 2) + 1);
+
+		sb.append(getSelectSQL());
+		sb.append(" WHERE ");
+		sb.append(getPKDBName());
+		sb.append(" IN (");
+
+		for (Serializable primaryKey : primaryKeys) {
+			sb.append((long)primaryKey);
+
+			sb.append(",");
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		sb.append(")");
+
+		String sql = sb.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query query = session.createQuery(sql);
+
+			for (AnalyticsAssociation analyticsAssociation :
+					(List<AnalyticsAssociation>)query.list()) {
+
+				map.put(
+					analyticsAssociation.getPrimaryKeyObj(),
+					analyticsAssociation);
+
+				cacheResult(analyticsAssociation);
+			}
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+
+		return map;
 	}
 
 	/**
@@ -2400,25 +2613,28 @@ public class AnalyticsAssociationPersistenceImpl
 		OrderByComparator<AnalyticsAssociation> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			AnalyticsAssociation.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindAll;
 				finderArgs = FINDER_ARGS_EMPTY;
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<AnalyticsAssociation> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<AnalyticsAssociation>)finderCache.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -2456,7 +2672,7 @@ public class AnalyticsAssociationPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(finderPath, finderArgs, list);
 				}
 			}
@@ -2489,8 +2705,15 @@ public class AnalyticsAssociationPersistenceImpl
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			AnalyticsAssociation.class);
+
+		Long count = null;
+
+		if (productionMode) {
+			count = (Long)finderCache.getResult(
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+		}
 
 		if (count == null) {
 			Session session = null;
@@ -2503,8 +2726,10 @@ public class AnalyticsAssociationPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				finderCache.putResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
+				if (productionMode) {
+					finderCache.putResult(
+						_finderPathCountAll, FINDER_ARGS_EMPTY, count);
+				}
 			}
 			catch (Exception exception) {
 				throw processException(exception);
@@ -2533,8 +2758,66 @@ public class AnalyticsAssociationPersistenceImpl
 	}
 
 	@Override
-	protected Map<String, Integer> getTableColumnsMap() {
+	public Set<String> getCTColumnNames(
+		CTColumnResolutionType ctColumnResolutionType) {
+
+		return _ctColumnNamesMap.getOrDefault(
+			ctColumnResolutionType, Collections.emptySet());
+	}
+
+	@Override
+	public List<String> getMappingTableNames() {
+		return _mappingTableNames;
+	}
+
+	@Override
+	public Map<String, Integer> getTableColumnsMap() {
 		return AnalyticsAssociationModelImpl.TABLE_COLUMNS_MAP;
+	}
+
+	@Override
+	public String getTableName() {
+		return "AnalyticsAssociation";
+	}
+
+	@Override
+	public List<String[]> getUniqueIndexColumnNames() {
+		return _uniqueIndexColumnNames;
+	}
+
+	private static final Map<CTColumnResolutionType, Set<String>>
+		_ctColumnNamesMap = new EnumMap<CTColumnResolutionType, Set<String>>(
+			CTColumnResolutionType.class);
+	private static final List<String> _mappingTableNames =
+		new ArrayList<String>();
+	private static final List<String[]> _uniqueIndexColumnNames =
+		new ArrayList<String[]>();
+
+	static {
+		Set<String> ctControlColumnNames = new HashSet<String>();
+		Set<String> ctIgnoreColumnNames = new HashSet<String>();
+		Set<String> ctStrictColumnNames = new HashSet<String>();
+
+		ctControlColumnNames.add("mvccVersion");
+		ctControlColumnNames.add("ctCollectionId");
+		ctStrictColumnNames.add("companyId");
+		ctStrictColumnNames.add("createDate");
+		ctIgnoreColumnNames.add("modifiedDate");
+		ctStrictColumnNames.add("userId");
+		ctStrictColumnNames.add("associationClassName");
+		ctStrictColumnNames.add("associationClassPK");
+		ctStrictColumnNames.add("className");
+		ctStrictColumnNames.add("classPK");
+
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.CONTROL, ctControlColumnNames);
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.PK,
+			Collections.singleton("analyticsAssociationId"));
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.STRICT, ctStrictColumnNames);
 	}
 
 	/**
@@ -2664,6 +2947,9 @@ public class AnalyticsAssociationPersistenceImpl
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		super.setSessionFactory(sessionFactory);
 	}
+
+	@Reference
+	protected CTPersistenceHelper ctPersistenceHelper;
 
 	@Reference
 	protected EntityCache entityCache;

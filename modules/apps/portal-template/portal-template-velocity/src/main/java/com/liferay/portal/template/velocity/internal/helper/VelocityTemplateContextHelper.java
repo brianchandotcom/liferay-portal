@@ -57,7 +57,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.portal.template.velocity.configuration.VelocityEngineConfiguration",
-	service = {TemplateContextHelper.class, VelocityTemplateContextHelper.class}
+	service = TemplateContextHelper.class
 )
 public class VelocityTemplateContextHelper extends TemplateContextHelper {
 

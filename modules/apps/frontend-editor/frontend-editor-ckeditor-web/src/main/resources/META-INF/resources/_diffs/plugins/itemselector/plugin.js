@@ -265,7 +265,14 @@
 						callback(imageSrc, selectedItem);
 					}
 					else {
-						let elementOuterHtml = '<img src="' + imageSrc + '">';
+						const editorContent = document.getElementById(
+							`${editor.id}_contents`
+						);
+
+						const editorContentHeight = editorContent.getBoundingClientRect()
+							.height;
+
+						let elementOuterHtml = `<img src="${imageSrc}" height="${editorContentHeight}">`;
 
 						if (instance._isEmptySelection(editor)) {
 							elementOuterHtml += '<br />';

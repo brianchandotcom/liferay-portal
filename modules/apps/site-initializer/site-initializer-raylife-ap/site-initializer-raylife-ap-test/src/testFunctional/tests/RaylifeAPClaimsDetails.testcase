@@ -19,18 +19,24 @@ definition {
 		}
 
 		task ("Create a new Raylife AP Site") {
-			Site.openSitesAdmin();
-
 			Raylife.createRaylifeSite(siteName = "Raylife D2C");
 
 			Raylife.createRaylifeSite(siteName = "Raylife AP");
+		}
+
+		task ("Login as Scott Producer because of roles and permissions") {
+			User.logoutPG();
+
+			RaylifeAP.userLoginInRaylife(email = "scott.producer");
+
+			RaylifeAP.goToRaylifeUserProfileMenu(raylifeSite = "Raylife AP");
 		}
 	}
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-        RaylifeAP.deleteAllCreatedEntries(searchTerm = "Testing");
+		RaylifeAP.deleteAllCreatedEntries(searchTerm = "Testing");
 
 		RaylifeAP.tearDownCP();
 
@@ -48,8 +54,6 @@ definition {
 		property test.name.skip.portal.instance = "RaylifeAPClaimsDetails#CanUserAccessPolicyDetails";
 
 		task ("Given I go to the Applications page") {
-			ApplicationsMenu.gotoSite(site = "Raylife AP");
-
 			RaylifeAPNavigator.gotoSidebarItem(itemName = "Claims");
 		}
 
@@ -57,25 +61,23 @@ definition {
 			RaylifeAP.clickOnClaimNumber();
 		}
 
-		task ("Then go back to Policy Detail Page") {
+		task ("And go back to Policy Detail Page") {
 			RaylifeAP.clickOnPolicyNumberOnClaimDetais();
+
+			Navigator.selectSpecificWindow(windowTitle = "Policy Details - Raylife AP - Liferay DXP");
 		}
 
 		task ("Then validate if the user are on Policy Detail Page") {
-			RaylifeAP.assertPolicyDetailPage();	
+			RaylifeAP.assertPolicyDetailPage();
 		}
-
 	}
 
 	@description = "Story ID: LPS-160816 | Test Summary: Verify if the user can navigate back to the Claims dashboard in the upper left corner."
-	@ignore = "Test Stub"
 	@priority = 4
 	test CanUserCanGoBackToClaimsPage {
 		property test.name.skip.portal.instance = "RaylifeAPClaimsDetails#CanUserCanGoBackToClaimsPage";
 
 		task ("Given I go to the Applications page") {
-			ApplicationsMenu.gotoSite(site = "Raylife AP");
-
 			RaylifeAPNavigator.gotoSidebarItem(itemName = "Claims");
 		}
 
@@ -83,7 +85,7 @@ definition {
 			RaylifeAP.clickOnClaimNumber();
 		}
 
-		task ("Then go back to Claims Page") {
+		task ("And go back to Claims Page") {
 			RaylifeAP.clickOnBackToClaimsPage();
 		}
 
@@ -93,14 +95,11 @@ definition {
 	}
 
 	@description = "Story ID: LPS-160816 | Test Summary: Verify if a claim with the settled status, the status is displayed green and theres settled date and settled amount displayed."
-	@ignore = "Test Stub"
 	@priority = 4
 	test VerifyDisplayedStatusGreen {
 		property test.name.skip.portal.instance = "RaylifeAPClaimsDetails#VerifyDisplayedStatusGreen";
 
 		task ("Given I go to the Applications page") {
-			ApplicationsMenu.gotoSite(site = "Raylife AP");
-
 			RaylifeAPNavigator.gotoSidebarItem(itemName = "Claims");
 		}
 
@@ -108,21 +107,17 @@ definition {
 			RaylifeAP.clickOnClaimNumber();
 		}
 
-		task ("Validate the Settled Status") {
+		task ("Validate the Settled green Status") {
 			RaylifeAP.assertSettledStatus();
 		}
-
 	}
 
 	@description = "Story ID: LPS-160816 | Test Summary: Verify if a claim with the Not Settled status, only the submitted date appears."
-	@ignore = "Test Stub"
 	@priority = 4
 	test VerifyStatusNotSettled {
 		property test.name.skip.portal.instance = "RaylifeAPClaimsDetails#VerifyStatusNotSettled";
 
 		task ("Given I go to the Applications page") {
-			ApplicationsMenu.gotoSite(site = "Raylife AP");
-
 			RaylifeAPNavigator.gotoSidebarItem(itemName = "Claims");
 		}
 
@@ -133,7 +128,6 @@ definition {
 		task ("Validate the Settled Status") {
 			RaylifeAP.assertSettledStatus();
 		}
-
 	}
 
 }

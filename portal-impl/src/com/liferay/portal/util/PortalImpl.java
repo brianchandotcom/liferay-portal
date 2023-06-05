@@ -23,6 +23,8 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.layout.admin.kernel.model.LayoutTypePortletConstants;
+import com.liferay.layout.utility.page.kernel.StatusLayoutUtilityPageEntryRequestContributorRegistryUtil;
+import com.liferay.layout.utility.page.kernel.request.contributor.StatusLayoutUtilityPageEntryRequestContributor;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.string.CharPool;
@@ -6818,6 +6820,17 @@ public class PortalImpl implements Portal {
 			dynamicRequest.setParameter("groupId", StringPool.BLANK);
 			dynamicRequest.setParameter("layoutId", StringPool.BLANK);
 			dynamicRequest.setParameter("privateLayout", StringPool.BLANK);
+
+			StatusLayoutUtilityPageEntryRequestContributor
+				statusLayoutUtilityPageEntryRequestContributor =
+					StatusLayoutUtilityPageEntryRequestContributorRegistryUtil.
+						getStatusLayoutUtilityPageEntryRequestContributor(
+							status);
+
+			if (statusLayoutUtilityPageEntryRequestContributor != null) {
+				statusLayoutUtilityPageEntryRequestContributor.
+					addAttributesAndParameters(dynamicRequest);
+			}
 
 			httpServletRequest = dynamicRequest;
 

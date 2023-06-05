@@ -24,7 +24,7 @@ public class TextInfoFieldType implements InfoFieldType {
 
 	public static final TextInfoFieldType INSTANCE = new TextInfoFieldType();
 
-	public static final Attribute<NumberInfoFieldType, Long> MAX_LENGTH =
+	public static final Attribute<TextInfoFieldType, Long> MAX_LENGTH =
 		new Attribute<>();
 
 	public static final Attribute<TextInfoFieldType, Boolean> MULTILINE =

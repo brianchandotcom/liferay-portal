@@ -25,7 +25,7 @@
 										"key": "awaitingApprovalOnEvp"
 									},
 									{
-										"key": "awaitingFinanceReview"
+										"key": "awaitingFinanceApproval"
 									},
 									{
 										"key": "awaitingMoreInfoFromEmployee"
@@ -42,7 +42,7 @@
 										"key": "rejected"
 									},
 									{
-										"key": "awaitingFinanceReview"
+										"key": "awaitingFinanceApproval"
 									},
 									{
 										"key": "awaitingMoreInfoFromEmployee"
@@ -53,7 +53,7 @@
 								]
 							},
 							{
-								"key": "awaitingFinanceReview",
+								"key": "awaitingFinanceApproval",
 								"objectStateTransitions": [
 									{
 										"key": "rejected"
@@ -79,7 +79,7 @@
 										"key": "awaitingApprovalOnEvp"
 									},
 									{
-										"key": "awaitingFinanceReview"
+										"key": "awaitingFinanceApproval"
 									},
 									{
 										"key": "verified"
@@ -96,7 +96,7 @@
 										"key": "awaitingApprovalOnEvp"
 									},
 									{
-										"key": "awaitingFinanceReview"
+										"key": "awaitingFinanceApproval"
 									},
 									{
 										"key": "awaitingMoreInfoFromEmployee"

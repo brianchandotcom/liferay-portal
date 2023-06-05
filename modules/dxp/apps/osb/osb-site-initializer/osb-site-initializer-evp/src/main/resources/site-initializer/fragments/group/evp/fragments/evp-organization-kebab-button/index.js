@@ -22,11 +22,11 @@ const updateStatus = async (key, name, message) => {
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	await fetch(`/o/c/evporganizations/${organizationID}`, {
 		body: `{
+		"messageEVPManager":"${message}",
 		"organizationStatus":{
 		   "key":"${key}",
 		   "name":"${name}"
-		},
-		"messageEVPManager":"${message}"
+		}
 	 }`,
 		headers: {
 			'content-type': 'application/json',

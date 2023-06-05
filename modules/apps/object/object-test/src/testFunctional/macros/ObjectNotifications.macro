@@ -70,6 +70,12 @@ definition {
 		Click(locator1 = "ObjectNotifications#FIELD_ATTACHMENTS_OBJECT_SELECT_FIELD");
 	}
 
+	macro deleteNotificationEntry {
+		Click(
+			key_text = ${triggerBy},
+			locator1 = "ObjectNotifications#DELETE_NOTIFICATION_IN_QUEUE");
+	}
+
 	macro deleteNotificationTemplate {
 		Click(
 			key_objectLabel = ${templateName},
@@ -78,19 +84,6 @@ definition {
 		MenuItem.clickNoError(menuItem = "Delete");
 
 		Alert.viewSuccessMessage();
-	}
-
-	macro deleteQueue {
-		if (IsElementPresent(key_statusName = ${status}, locator1 = "ObjectNotifications#NOTIFICATION_STATUS")) {
-			Click(
-				key_text = ${triggerBy},
-				locator1 = "Icon#ANY_VERTICAL_ELLIPSIS");
-
-			MenuItem.clickNoError(menuItem = "Delete");
-		}
-		else {
-			Click(locator1 = "Icon#MOVE_TO_RECYCLE_BIN");
-		}
 	}
 
 	macro editNotificationTemplate {

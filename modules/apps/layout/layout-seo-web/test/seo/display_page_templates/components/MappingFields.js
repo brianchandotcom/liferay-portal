@@ -28,14 +28,14 @@ const baseProps = {
 	],
 	inputs: [
 		{
-			fieldType: 'image',
+			fieldTypes: ['image'],
 			helpMessage: 'help message for input image with default value',
 			label: 'Image with default value',
 			name: 'image_small',
 			selectedFieldKey: 'field-3',
 		},
 		{
-			fieldType: 'image',
+			fieldTypes: ['image'],
 			helpMessage: 'help message for input image',
 			label: 'Image for social share',
 			name: 'image',

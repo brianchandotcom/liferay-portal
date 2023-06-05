@@ -19,7 +19,7 @@ import React from 'react';
 import MappingSelector from '../../../../src/main/resources/META-INF/resources/js/seo/display_page_templates/components/MappingSelector';
 
 const baseProps = {
-	fieldType: 'image',
+	fieldTypes: ['image'],
 	fields: [
 		{key: 'field-1', label: 'Field 1', type: 'text'},
 		{key: 'field-2', label: 'Field 2', type: 'text'},
@@ -200,7 +200,7 @@ describe('MappingSelector', () => {
 		beforeEach(() => {
 			result = renderComponent({
 				...baseProps,
-				fieldType: 'image',
+				fieldTypes: ['image'],
 				selectedFieldKey: undefined,
 			});
 

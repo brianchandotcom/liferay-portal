@@ -19,7 +19,7 @@ import React from 'react';
 import MappingInput from '../../../../src/main/resources/META-INF/resources/js/seo/display_page_templates/components/MappingInput';
 
 const baseProps = {
-	fieldType: 'text',
+	fieldTypes: ['text'],
 	fields: [
 		{key: 'field-1', label: 'Field 1', type: 'text'},
 		{key: 'field-2', label: 'Field 2', type: 'text'},

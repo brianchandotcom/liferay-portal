@@ -1194,12 +1194,6 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			DLFolder dlFolder, boolean includeTrashedEntries)
 		throws PortalException {
 
-		// Resources
-
-		_resourceLocalService.deleteResource(
-			dlFolder.getCompanyId(), DLFolder.class.getName(),
-			ResourceConstants.SCOPE_INDIVIDUAL, dlFolder.getFolderId());
-
 		// WebDAVProps
 
 		WebDAVProps webDAVProps = _webDAVPropsPersistence.fetchByC_C(
@@ -1253,6 +1247,12 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		// Folder
 
 		dlFolderPersistence.remove(dlFolder);
+
+		// Resources
+
+		_resourceLocalService.deleteResource(
+			dlFolder.getCompanyId(), DLFolder.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL, dlFolder.getFolderId());
 
 		// Directory
 

@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -72,7 +71,6 @@ public class NotificationQueueEntryLocalServiceTest {
 				"to", "to@liferay.com"));
 	}
 
-	@FeatureFlags("LPS-178816")
 	@Test
 	public void testAddNotificationQueueEntry() throws Exception {
 		Assert.assertEquals(

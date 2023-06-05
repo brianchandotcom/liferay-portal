@@ -29,7 +29,6 @@ import com.liferay.notification.service.NotificationQueueEntryService;
 import com.liferay.notification.type.NotificationType;
 import com.liferay.notification.type.NotificationTypeServiceTracker;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -118,10 +117,6 @@ public class NotificationQueueEntryResourceImpl
 	public NotificationQueueEntry postNotificationQueueEntry(
 			NotificationQueueEntry notificationQueueEntry)
 		throws Exception {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-178816")) {
-			throw new UnsupportedOperationException();
-		}
 
 		if (!StringUtil.equals(
 				notificationQueueEntry.getType(),
@@ -224,13 +219,8 @@ public class NotificationQueueEntryResourceImpl
 				id =
 					serviceBuilderNotificationQueueEntry.
 						getNotificationQueueEntryId();
-
-				if (FeatureFlagManagerUtil.isEnabled("LPS-178816")) {
-					recipients = notificationType.toRecipients(
-						notificationRecipient.
-							getNotificationRecipientSettings());
-				}
-
+				recipients = notificationType.toRecipients(
+					notificationRecipient.getNotificationRecipientSettings());
 				recipientsSummary = notificationType.getRecipientSummary(
 					serviceBuilderNotificationQueueEntry);
 				sentDate = serviceBuilderNotificationQueueEntry.getSentDate();

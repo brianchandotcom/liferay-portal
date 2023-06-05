@@ -34,7 +34,7 @@
 			<finder-column name="type" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="AnnouncementsEntry" remote-service="true" uad-application-name="Announcement" uad-dir-path="../modules/apps/announcements/announcements-uad/src/main/java" uad-package-path="com.liferay.announcements" uuid="true">
+	<entity change-tracking-enabled="true" local-service="true" name="AnnouncementsEntry" remote-service="true" uad-application-name="Announcement" uad-dir-path="../modules/apps/announcements/announcements-uad/src/main/java" uad-package-path="com.liferay.announcements" uuid="true">
 
 		<!-- PK fields -->
 
@@ -97,7 +97,7 @@
 			<finder-column name="alert" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="AnnouncementsFlag" remote-service="true" uad-application-name="Announcement" uad-dir-path="../modules/apps/announcements/announcements-uad/src/main/java" uad-package-path="com.liferay.announcements">
+	<entity change-tracking-enabled="true" local-service="true" name="AnnouncementsFlag" remote-service="true" uad-application-name="Announcement" uad-dir-path="../modules/apps/announcements/announcements-uad/src/main/java" uad-package-path="com.liferay.announcements">
 
 		<!-- PK fields -->
 

@@ -35,6 +35,7 @@ import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.BeforeClass;
@@ -101,6 +102,11 @@ public class DLStoreStoreAreaTest {
 			).put(
 				"serviceAccountKey", ""
 			).build());
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		ConfigurationTestUtil.deleteConfiguration(_configuration);
 	}
 
 	@Test

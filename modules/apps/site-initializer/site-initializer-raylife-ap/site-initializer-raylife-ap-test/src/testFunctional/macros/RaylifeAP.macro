@@ -14,6 +14,11 @@ definition {
 		AssertElementNotPresent(locator1 = ${applicationvalue});
 	}
 
+	@summary = "This macro verifies if the claim number is visible"
+	macro assertClaimNumberVisible {
+		AssertVisible(locator1 = "RaylifeAP#CLAIM_NUMBER");
+	}
+
 	macro assertFieldRequiredMessage {
 		AssertElementPresent(
 			key_field = ${field},
@@ -35,11 +40,21 @@ definition {
 			locator1 = "RaylifeAP#COMPONENT_HEADER");
 	}
 
+	@summary = "This macro verifies if the user is on policy detais page"
+	macro assertPolicyDetailPage {
+		AssertVisible(locator1 = "RaylifeAP#POLICY_DETAIL_TITLE");
+	}
+
 	@summary = "This macro asserts the number of entries shown in the table"
 	macro assertQuantity {
 		var key_quantity = ${text};
 
 		AssertVisible(locator1 = "RaylifeAP#ASSERT_QUANTITY");
+	}
+
+	@summary = "This macro verifies if the settled status is settled"
+	macro assertSettledStatus {
+		AssertVisible(locator1 = "RaylifeAP#SETTLED_STATUS");
 	}
 
 	@summary = "Assert element present in the table"
@@ -83,11 +98,6 @@ definition {
 			locator1 = "RaylifeAP#MENU_SIDEBAR");
 	}
 
-	macro assertVisibleSidebar {
-		AssertVisible(
-			locator1 = "RaylifeAP#POLICY_DETAIL_TITLE");
-	}
-
 	@summary = "Click on a kebab button from an application in the application table"
 	macro clickInApplicationKebabOption {
 		Click(
@@ -107,29 +117,28 @@ definition {
 			locator1 = "RaylifeAP#APPLICATIONS_NUMBER_WITH_STATUS");
 	}
 
-	macro clickOnClaimNumber {
-		Click(
-			locator1 = "RaylifeAP#CLAIM_NUMBER");
-	}
-
-	macro clickOnBackToClaimsPage {
-		Click(
-			locator1 = "RaylifeAP#CLAIM_BACK_BUTTON");
-	}
-
-	macro clickOnPolicyNumberOnClaimDetais {
-		Click(
-			locator1 = "RaylifeAP#POLICY_DETAIL_REDIRECT");
-	}
-
-
 	macro clickOnAllAplications {
 		Button.click(button = "All Applications");
+	}
+
+	@summary = "This macro goes back on claim detais to claims page"
+	macro clickOnBackToClaimsPage {
+		Click(locator1 = "RaylifeAP#CLAIM_BACK_BUTTON");
+	}
+
+	@summary = "This macro access claim details"
+	macro clickOnClaimNumber {
+		Click(locator1 = "RaylifeAP#CLAIM_NUMBER");
 	}
 
 	@summary = "This macro enables and disables the filter"
 	macro clickOnFilter {
 		Click(locator1 = "RaylifeAP#ICON_FILTER");
+	}
+
+	@summary = "This macro access policy detais on claim details"
+	macro clickOnPolicyNumberOnClaimDetais {
+		Click(locator1 = "RaylifeAP#POLICY_NUMBER");
 	}
 
 	@summary = "Click in a task option in Ralife AP Main page"

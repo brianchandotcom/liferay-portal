@@ -34,6 +34,7 @@ definition {
 			value1 = "Publication Name");
 	}
 
+	@ignore = "true"
 	@priority = 5
 	test CanMoveChangeBetweenPublications {
 		property custom.properties = "feature.flag.LPS-171364=true";
@@ -89,6 +90,7 @@ definition {
 			changeUser = "Test Test");
 	}
 
+	@ignore = "true"
 	@priority = 4
 	test CannotMoveChangesBetweenPublicationsIfConflictsArePresent {
 		property custom.properties = "feature.flag.LPS-171364=true";

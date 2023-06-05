@@ -26,6 +26,7 @@ import React, {
 
 import './styles/main.scss';
 
+import ClayButton from '@clayui/button';
 import ClayEmptyState from '@clayui/empty-state';
 
 import FrontendDataSetContext from './FrontendDataSetContext';
@@ -63,6 +64,7 @@ const FrontendDataSet = ({
 	customDataRenderers,
 	customViews,
 	customViewsEnabled,
+	emptyState,
 	filters: initialFilters,
 	formId,
 	formName,
@@ -486,6 +488,23 @@ const FrontendDataSet = ({
 						style={style}
 						{...currentViewProps}
 					/>
+				) : emptyState ? (
+					<ClayEmptyState
+						description={Liferay.Language.get(
+							'start-creating-one-to-show-your-data'
+						)}
+						imgSrc={`${themeDisplay.getPathThemeImages()}/states/empty_state.gif`}
+						title={emptyState.title}
+					>
+						<ClayButton
+							displayType="secondary"
+							onClick={() => {
+								creationMenu.primaryItems[0].onClick(loadData);
+							}}
+						>
+							{emptyState.button}
+						</ClayButton>
+					</ClayEmptyState>
 				) : (
 					<ClayEmptyState
 						description={Liferay.Language.get(

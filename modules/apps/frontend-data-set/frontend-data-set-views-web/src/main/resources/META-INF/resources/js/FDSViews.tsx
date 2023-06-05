@@ -333,6 +333,10 @@ const FDSViews = ({
 			{...FDS_DEFAULT_PROPS}
 			apiURL={`${API_URL.FDS_VIEWS}/?filter=(${OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW_ID} eq '${fdsEntryId}')`}
 			creationMenu={creationMenu}
+			emptyState={{
+				button: Liferay.Language.get('new-dataset-view'),
+				title: Liferay.Language.get('no-views-created'),
+			}}
 			id={`${namespace}FDSViews`}
 			itemsActions={[
 				{

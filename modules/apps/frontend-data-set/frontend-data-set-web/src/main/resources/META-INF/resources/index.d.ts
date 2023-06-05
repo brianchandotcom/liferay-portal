@@ -23,6 +23,7 @@ export function FrontendDataSet({
 	customDataRenderers,
 	customViews,
 	customViewsEnabled,
+	emptyState,
 	filters,
 	formId,
 	formName,
@@ -124,6 +125,10 @@ export interface IFrontendDataSetProps {
 	customDataRenderers?: any;
 	customViews?: string;
 	customViewsEnabled?: boolean;
+	emptyState?: {
+		button?: string;
+		title?: string;
+	};
 	enableInlineAddModeSetting?: {
 		defaultBodyContent?: object;
 	};

@@ -983,6 +983,10 @@ const FDSEntries = ({
 				customDataRenderers={{
 					viewsCount: ViewsCountRenderer,
 				}}
+				emptyState={{
+					button: Liferay.Language.get('new-dataset'),
+					title: Liferay.Language.get('no-datasets-created'),
+				}}
 				id={`${namespace}FDSEntries`}
 				itemsActions={[
 					{

@@ -25,6 +25,7 @@ import com.liferay.info.field.InfoField;
 import com.liferay.info.field.type.BooleanInfoFieldType;
 import com.liferay.info.field.type.DateInfoFieldType;
 import com.liferay.info.field.type.GridInfoFieldType;
+import com.liferay.info.field.type.HTMLInfoFieldType;
 import com.liferay.info.field.type.ImageInfoFieldType;
 import com.liferay.info.field.type.InfoFieldType;
 import com.liferay.info.field.type.NumberInfoFieldType;
@@ -108,13 +109,6 @@ public class DDMFormFieldInfoFieldConverterImpl
 		}
 
 		if (Objects.equals(
-				ddmFormField.getType(), DDMFormFieldTypeConstants.RICH_TEXT)) {
-
-			finalStep.attribute(TextInfoFieldType.HTML, true);
-			finalStep.attribute(TextInfoFieldType.MULTILINE, true);
-		}
-
-		if (Objects.equals(
 				ddmFormField.getType(), DDMFormFieldTypeConstants.SELECT)) {
 
 			finalStep.attribute(
@@ -186,7 +180,7 @@ public class DDMFormFieldInfoFieldConverterImpl
 			return DateInfoFieldType.INSTANCE;
 		}
 		else if (Objects.equals(
-			ddmFormFieldType, DDMFormFieldTypeConstants.GRID)) {
+					ddmFormFieldType, DDMFormFieldTypeConstants.GRID)) {
 
 			return GridInfoFieldType.INSTANCE;
 		}
@@ -206,6 +200,12 @@ public class DDMFormFieldInfoFieldConverterImpl
 
 			return NumberInfoFieldType.INSTANCE;
 		}
+		else if (Objects.equals(
+					ddmFormField.getType(),
+					DDMFormFieldTypeConstants.RICH_TEXT)) {
+
+			return HTMLInfoFieldType.INSTANCE;
+		}
 
 		return TextInfoFieldType.INSTANCE;
 	}
@@ -214,6 +214,7 @@ public class DDMFormFieldInfoFieldConverterImpl
 		if (Objects.equals(infoFieldType, BooleanInfoFieldType.INSTANCE) ||
 			Objects.equals(infoFieldType, SelectInfoFieldType.INSTANCE) ||
 			Objects.equals(infoFieldType, DateInfoFieldType.INSTANCE) ||
+			Objects.equals(infoFieldType, HTMLInfoFieldType.INSTANCE) ||
 			Objects.equals(infoFieldType, ImageInfoFieldType.INSTANCE) ||
 			Objects.equals(infoFieldType, NumberInfoFieldType.INSTANCE) ||
 			Objects.equals(infoFieldType, TextInfoFieldType.INSTANCE)) {

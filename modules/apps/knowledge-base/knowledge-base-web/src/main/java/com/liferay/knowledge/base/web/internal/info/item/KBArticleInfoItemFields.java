@@ -16,6 +16,7 @@ package com.liferay.knowledge.base.web.internal.info.item;
 
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.type.DateInfoFieldType;
+import com.liferay.info.field.type.HTMLInfoFieldType;
 import com.liferay.info.field.type.ImageInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.localized.InfoLocalizedValue;
@@ -44,13 +45,11 @@ public class KBArticleInfoItemFields {
 			InfoLocalizedValue.localize(
 				KBArticleInfoItemFields.class, "author-profile-image")
 		).build();
-	public static final InfoField<TextInfoFieldType> contentInfoField =
+	public static final InfoField<HTMLInfoFieldType> contentInfoField =
 		BuilderHolder._builder.infoFieldType(
-			TextInfoFieldType.INSTANCE
+			HTMLInfoFieldType.INSTANCE
 		).name(
 			"content"
-		).attribute(
-			TextInfoFieldType.HTML, true
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.localize(
 				KBArticleInfoItemFields.class, "content")

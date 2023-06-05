@@ -19,7 +19,7 @@ import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldSet;
 import com.liferay.info.field.InfoFieldValue;
-import com.liferay.info.field.type.TextInfoFieldType;
+import com.liferay.info.field.type.HTMLInfoFieldType;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
@@ -105,14 +105,12 @@ public class TemplateInfoItemFieldSetProviderImpl
 
 		return InfoField.builder(
 		).infoFieldType(
-			TextInfoFieldType.INSTANCE
+			HTMLInfoFieldType.INSTANCE
 		).namespace(
 			PortletDisplayTemplate.DISPLAY_STYLE_PREFIX
 		).name(
 			PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
 				templateEntry.getTemplateEntryId()
-		).attribute(
-			TextInfoFieldType.HTML, true
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.<String>builder(
 			).defaultLocale(

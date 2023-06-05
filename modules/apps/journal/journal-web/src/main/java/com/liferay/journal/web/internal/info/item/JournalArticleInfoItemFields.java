@@ -16,6 +16,7 @@ package com.liferay.journal.web.internal.info.item;
 
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.type.DateInfoFieldType;
+import com.liferay.info.field.type.HTMLInfoFieldType;
 import com.liferay.info.field.type.ImageInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.field.type.URLInfoFieldType;
@@ -54,13 +55,11 @@ public class JournalArticleInfoItemFields {
 			InfoLocalizedValue.localize(
 				JournalArticleInfoItemFields.class, "create-date")
 		).build();
-	public static final InfoField<TextInfoFieldType> descriptionInfoField =
+	public static final InfoField<HTMLInfoFieldType> descriptionInfoField =
 		BuilderHolder._builder.infoFieldType(
-			TextInfoFieldType.INSTANCE
+			HTMLInfoFieldType.INSTANCE
 		).name(
 			"description"
-		).attribute(
-			TextInfoFieldType.HTML, true
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.localize(
 				JournalArticleInfoItemFields.class, "description")

@@ -26,7 +26,7 @@ import com.liferay.info.display.request.attributes.contributor.InfoDisplayReques
 import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
-import com.liferay.info.field.type.TextInfoFieldType;
+import com.liferay.info.field.type.HTMLInfoFieldType;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceRegistry;
@@ -317,13 +317,11 @@ public class JournalArticleInfoItemFieldValuesProvider
 		return new InfoFieldValue<>(
 			InfoField.builder(
 			).infoFieldType(
-				TextInfoFieldType.INSTANCE
+				HTMLInfoFieldType.INSTANCE
 			).namespace(
 				StringPool.BLANK
 			).name(
 				fieldName
-			).attribute(
-				TextInfoFieldType.HTML, true
 			).labelInfoLocalizedValue(
 				InfoLocalizedValue.localize(getClass(), fieldName)
 			).build(),

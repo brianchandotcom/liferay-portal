@@ -17,6 +17,7 @@ package com.liferay.blogs.web.internal.info.item;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.type.DateInfoFieldType;
+import com.liferay.info.field.type.HTMLInfoFieldType;
 import com.liferay.info.field.type.ImageInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.field.type.URLInfoFieldType;
@@ -45,13 +46,11 @@ public class BlogsEntryInfoItemFields {
 			InfoLocalizedValue.localize(
 				BlogsEntryInfoItemFields.class, "author-profile-image")
 		).build();
-	public static final InfoField<TextInfoFieldType> contentInfoField =
+	public static final InfoField<HTMLInfoFieldType> contentInfoField =
 		BuilderHolder._builder.infoFieldType(
-			TextInfoFieldType.INSTANCE
+			HTMLInfoFieldType.INSTANCE
 		).name(
 			"content"
-		).attribute(
-			TextInfoFieldType.HTML, true
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.localize(
 				BlogsEntryInfoItemFields.class, "content")

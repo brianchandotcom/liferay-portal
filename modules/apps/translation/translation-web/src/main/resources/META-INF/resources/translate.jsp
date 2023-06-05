@@ -136,7 +136,7 @@ renderResponse.setTitle(translateDisplayContext.getTitle());
 
 							<%
 							for (InfoField<TextInfoFieldType> infoField : infoFields) {
-								boolean html = translateDisplayContext.getBooleanValue(infoField, TextInfoFieldType.HTML);
+								boolean html = translateDisplayContext.isHTMLInfoFieldType(infoField);
 								String label = translateDisplayContext.getInfoFieldLabel(infoField);
 								boolean multiline = translateDisplayContext.getBooleanValue(infoField, TextInfoFieldType.MULTILINE);
 

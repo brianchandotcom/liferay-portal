@@ -21,6 +21,8 @@ import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
 import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.info.field.InfoField;
+import com.liferay.info.field.type.HTMLInfoFieldType;
+import com.liferay.info.field.type.InfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.petra.function.UnsafeSupplier;
@@ -53,7 +55,7 @@ public class InfoFieldUtil {
 			FragmentRendererController fragmentRendererController,
 			Layout layout, long segmentsExperienceId,
 			UnsafeTriConsumer
-				<String, InfoField<TextInfoFieldType>,
+				<String, InfoField<?>,
 				 UnsafeSupplier<JSONObject, JSONException>, E> consumer)
 		throws E {
 
@@ -138,12 +140,12 @@ public class InfoFieldUtil {
 			httpServletResponse);
 	}
 
-	private static InfoField<TextInfoFieldType> _getInfoField(
+	private static InfoField<?> _getInfoField(
 		long fragmentEntryLinkId, String name, String type) {
 
 		return InfoField.builder(
 		).infoFieldType(
-			TextInfoFieldType.INSTANCE
+			_getInfoFieldType(type)
 		).namespace(
 			FragmentEntryLink.class.getSimpleName()
 		).name(
@@ -152,17 +154,15 @@ public class InfoFieldUtil {
 			InfoLocalizedValue.singleValue(name)
 		).localizable(
 			true
-		).attribute(
-			TextInfoFieldType.HTML, _isHtml(type)
 		).build();
 	}
 
-	private static boolean _isHtml(String type) {
+	private static InfoFieldType _getInfoFieldType(String type) {
 		if (type.equals("html") || type.equals("rich-text")) {
-			return true;
+			return HTMLInfoFieldType.INSTANCE;
 		}
 
-		return false;
+		return TextInfoFieldType.INSTANCE;
 	}
 
 	private static boolean _isTextFieldType(String type) {

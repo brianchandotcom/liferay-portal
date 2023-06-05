@@ -16,6 +16,7 @@ package com.liferay.asset.categories.admin.web.internal.info.item;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.info.field.InfoField;
+import com.liferay.info.field.type.HTMLInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.localized.InfoLocalizedValue;
 
@@ -24,13 +25,11 @@ import com.liferay.info.localized.InfoLocalizedValue;
  */
 public class AssetCategoryInfoItemFields {
 
-	public static final InfoField<TextInfoFieldType> descriptionInfoField =
+	public static final InfoField<HTMLInfoFieldType> descriptionInfoField =
 		BuilderHolder._builder.infoFieldType(
-			TextInfoFieldType.INSTANCE
+			HTMLInfoFieldType.INSTANCE
 		).name(
 			"description"
-		).attribute(
-			TextInfoFieldType.HTML, true
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.localize(
 				AssetCategoryInfoItemFields.class, "description")

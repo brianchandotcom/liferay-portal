@@ -18,6 +18,7 @@ import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldSet;
 import com.liferay.info.field.InfoFieldSetEntry;
 import com.liferay.info.field.InfoFieldValue;
+import com.liferay.info.field.type.HTMLInfoFieldType;
 import com.liferay.info.field.type.InfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.form.InfoForm;
@@ -142,6 +143,14 @@ public class ViewTranslationDisplayContext {
 
 	public Locale getTargetLocale() {
 		return _translationSnapshot.getTargetLocale();
+	}
+
+	public boolean isHTMLInfoFieldType(InfoField infoField) {
+		if (infoField.getInfoFieldType() instanceof HTMLInfoFieldType) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private final HttpServletRequest _httpServletRequest;

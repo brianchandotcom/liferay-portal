@@ -18,6 +18,7 @@ import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldSet;
 import com.liferay.info.field.InfoFieldSetEntry;
 import com.liferay.info.field.InfoFieldValue;
+import com.liferay.info.field.type.HTMLInfoFieldType;
 import com.liferay.info.field.type.InfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.form.InfoForm;
@@ -178,9 +179,7 @@ public class TranslateDisplayContext {
 
 							Map<String, Object> editorConfiguration = null;
 
-							if (getBooleanValue(
-									infoField, TextInfoFieldType.HTML)) {
-
+							if (isHTMLInfoFieldType(infoField)) {
 								editorConfiguration = _getInfoFieldEditorConfig(
 									infoFieldId);
 							}
@@ -188,9 +187,7 @@ public class TranslateDisplayContext {
 							return HashMapBuilder.<String, Object>put(
 								"editorConfiguration", editorConfiguration
 							).put(
-								"html",
-								getBooleanValue(
-									infoField, TextInfoFieldType.HTML)
+								"html", isHTMLInfoFieldType(infoField)
 							).put(
 								"id", infoFieldId
 							).put(
@@ -420,6 +417,14 @@ public class TranslateDisplayContext {
 
 	public boolean isAutoTranslateEnabled() throws PortalException {
 		if (_booleanUnsafeSupplier.get() && hasTranslationPermission()) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isHTMLInfoFieldType(InfoField infoField) {
+		if (infoField.getInfoFieldType() instanceof HTMLInfoFieldType) {
 			return true;
 		}
 

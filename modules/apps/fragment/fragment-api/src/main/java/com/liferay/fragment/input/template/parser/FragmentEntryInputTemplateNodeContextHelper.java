@@ -306,6 +306,13 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 			}
 		}
 		else if (infoField.getInfoFieldType() instanceof
+					LongTextInfoFieldType) {
+
+			inputTemplateNode.addAttribute(
+				"maxLength",
+				infoField.getAttribute(LongTextInfoFieldType.MAX_LENGTH));
+		}
+		else if (infoField.getInfoFieldType() instanceof
 					MultiselectInfoFieldType) {
 
 			List<InputTemplateNode.Option> options = new ArrayList<>();
@@ -410,10 +417,7 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 
 			inputTemplateNode.addAttribute("options", options);
 		}
-		else if (infoField.getInfoFieldType() instanceof
-					LongTextInfoFieldType ||
-				 infoField.getInfoFieldType() instanceof TextInfoFieldType) {
-
+		else if (infoField.getInfoFieldType() instanceof TextInfoFieldType) {
 			inputTemplateNode.addAttribute(
 				"maxLength",
 				infoField.getAttribute(TextInfoFieldType.MAX_LENGTH));

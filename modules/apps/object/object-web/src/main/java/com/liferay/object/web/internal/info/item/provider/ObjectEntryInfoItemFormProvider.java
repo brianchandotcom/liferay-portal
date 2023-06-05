@@ -19,6 +19,7 @@ import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldSet;
 import com.liferay.info.field.InfoFieldSetEntry;
 import com.liferay.info.field.type.FileInfoFieldType;
+import com.liferay.info.field.type.LongTextInfoFieldType;
 import com.liferay.info.field.type.MultiselectInfoFieldType;
 import com.liferay.info.field.type.NumberInfoFieldType;
 import com.liferay.info.field.type.RelationshipInfoFieldType;
@@ -220,9 +221,10 @@ public class ObjectEntryInfoItemFormProvider
 					ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT)) {
 
 			finalStep.attribute(
-				TextInfoFieldType.MAX_LENGTH, _getMaxLength(objectField, 65000)
+				LongTextInfoFieldType.MAX_LENGTH,
+				_getMaxLength(objectField, 65000)
 			).attribute(
-				TextInfoFieldType.MULTILINE, true
+				LongTextInfoFieldType.MULTILINE, true
 			);
 		}
 		else if (Objects.equals(

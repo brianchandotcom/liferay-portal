@@ -1466,6 +1466,7 @@
 	},
 	{
 		"actionIds": [
+			"ADD_OBJECT_ENTRY",
 			"UPDATE",
 			"VIEW",
 			"DELETE"
@@ -1473,18 +1474,6 @@
 		"primKey": "0",
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:ActivitySF$]",
 		"roleName": "Channel Marketing Manager (CMM)",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"ADD_OBJECT_ENTRY",
-			"VIEW",
-			"UPDATE",
-			"DELETE"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:ActivitySF$]",
-		"roleName": "Administrator",
 		"scope": 1
 	},
 	{
@@ -1501,6 +1490,7 @@
 	},
 	{
 		"actionIds": [
+			"ADD_OBJECT_ENTRY",
 			"UPDATE",
 			"VIEW",
 			"DELETE"
@@ -1536,6 +1526,7 @@
 	},
 	{
 		"actionIds": [
+			"ADD_OBJECT_ENTRY",
 			"UPDATE",
 			"VIEW",
 			"DELETE"
@@ -1547,6 +1538,7 @@
 	},
 	{
 		"actionIds": [
+			"ADD_OBJECT_ENTRY",
 			"UPDATE",
 			"VIEW",
 			"DELETE"
@@ -1558,6 +1550,7 @@
 	},
 	{
 		"actionIds": [
+			"ADD_OBJECT_ENTRY",
 			"UPDATE",
 			"VIEW",
 			"DELETE"
@@ -1570,18 +1563,6 @@
 	{
 		"actionIds": [
 			"ADD_OBJECT_ENTRY",
-			"VIEW",
-			"UPDATE",
-			"DELETE"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:MDFClaimSF$]",
-		"roleName": "Administrator",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"ADD_OBJECT_ENTRY",
 			"UPDATE",
 			"VIEW",
 			"DELETE"
@@ -1605,6 +1586,7 @@
 	},
 	{
 		"actionIds": [
+			"ADD_OBJECT_ENTRY",
 			"UPDATE",
 			"VIEW",
 			"DELETE"
@@ -1616,6 +1598,7 @@
 	},
 	{
 		"actionIds": [
+			"ADD_OBJECT_ENTRY",
 			"UPDATE",
 			"VIEW",
 			"DELETE"
@@ -1623,18 +1606,6 @@
 		"primKey": "0",
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:MDFRequestSF$]",
 		"roleName": "Channel Marketing Director (CMD)",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"ADD_OBJECT_ENTRY",
-			"VIEW",
-			"UPDATE",
-			"DELETE"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:MDFRequestSF$]",
-		"roleName": "Administrator",
 		"scope": 1
 	},
 	{
@@ -1799,18 +1770,6 @@
 		"actionIds": [
 			"ADD_OBJECT_ENTRY",
 			"VIEW",
-			"UPDATE",
-			"DELETE"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:OpportunitySF$]",
-		"roleName": "Administrator",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"ADD_OBJECT_ENTRY",
-			"VIEW",
 			"UPDATE"
 		],
 		"primKey": "0",
@@ -1890,18 +1849,6 @@
 		"primKey": "0",
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:ProjectSF$]",
 		"roleName": "Channel Finance Manager (CFM)",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"ADD_OBJECT_ENTRY",
-			"VIEW",
-			"UPDATE",
-			"DELETE"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:ProjectSF$]",
-		"roleName": "Administrator",
 		"scope": 1
 	},
 	{

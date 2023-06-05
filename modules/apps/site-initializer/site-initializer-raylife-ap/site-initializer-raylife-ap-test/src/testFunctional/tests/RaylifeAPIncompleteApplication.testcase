@@ -116,10 +116,11 @@ definition {
 
 		task ("Then assert if summary information are displayed") {
 			var table = '''
-                | Address | Address          | 
-                | Name    | Testing          |
-                | Email   | test@liferay.com |
-                | Phone   | 0123456789       | ''';
+				| Address | Address          |
+				| Name    | Testing          |
+				| Email   | test@liferay.com |
+				| Phone   | 0123456789       |
+			''';
 
 			var rawTable = TableUtil.newTable(${table});
 

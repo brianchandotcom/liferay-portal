@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstant
 import com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplay;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -110,6 +111,9 @@ public class PortletImportBackgroundTaskExecutor
 			}
 			finally {
 				FileUtil.delete(file);
+
+				PortletFileRepositoryUtil.deletePortletFileEntry(
+					attachmentsFileEntry.getFileEntryId());
 			}
 		}
 

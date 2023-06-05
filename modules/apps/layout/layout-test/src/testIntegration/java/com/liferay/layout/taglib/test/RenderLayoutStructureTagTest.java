@@ -252,12 +252,9 @@ public class RenderLayoutStructureTagTest {
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		SegmentsExperience segmentsExperience =
-			_segmentsExperienceLocalService.addSegmentsExperience(
-				TestPropsValues.getUserId(), _group.getGroupId(),
-				segmentsEntry2.getSegmentsEntryId(), layout.getPlid(),
-				RandomTestUtil.randomLocaleStringMap(), true,
-				new UnicodeProperties(true),
-				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+			SegmentsTestUtil.addSegmentsExperience(
+				_group.getGroupId(), segmentsEntry2.getSegmentsEntryId(),
+				layout.getPlid());
 
 		_createLayoutStructure(
 			layout,
@@ -368,12 +365,9 @@ public class RenderLayoutStructureTagTest {
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		SegmentsExperience segmentsExperience =
-			_segmentsExperienceLocalService.addSegmentsExperience(
-				TestPropsValues.getUserId(), _group.getGroupId(),
-				segmentsEntry.getSegmentsEntryId(), layout.getPlid(),
-				RandomTestUtil.randomLocaleStringMap(), true,
-				new UnicodeProperties(true),
-				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+			SegmentsTestUtil.addSegmentsExperience(
+				_group.getGroupId(), segmentsEntry.getSegmentsEntryId(),
+				layout.getPlid());
 
 		_createLayoutStructure(
 			layout,

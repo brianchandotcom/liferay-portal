@@ -1,21 +1,14 @@
-<#if !entries?has_content>
-	<div class="sheet">
-		<@liferay_frontend["empty-result-message"]
-			description='${languageUtil.format(locale, "no-results-were-found-that-matched-the-keywords-x", "<strong>" + htmlUtil.escape(searchResultsPortletDisplayContext.getKeywords()) + "</strong>", false)}'
-			title='${languageUtil.format(request, "no-results-were-found", false)}'
-		/>
-	</div>
-<#else>
-	<div class="c-mb-4 c-mt-4 search-total-label">
-		<#if searchContainer.getTotal() == 1>
-			${languageUtil.format(locale, "x-result-for-x", [searchContainer.getTotal(), "<strong>" + htmlUtil.escape(searchResultsPortletDisplayContext.getKeywords()) + "</strong>"], false)}
-		<#else>
-			${languageUtil.format(locale, "x-results-for-x", [searchContainer.getTotal(), "<strong>" + htmlUtil.escape(searchResultsPortletDisplayContext.getKeywords()) + "</strong>"], false)}
-		</#if>
-	</div>
+<div class="c-mb-4 c-mt-4 search-total-label">
+	<#if searchContainer.getTotal() == 1>
+		${languageUtil.format(locale, "x-result-for-x", [searchContainer.getTotal(), "<strong>" + htmlUtil.escape(searchResultsPortletDisplayContext.getKeywords()) + "</strong>"], false)}
+	<#else>
+		${languageUtil.format(locale, "x-results-for-x", [searchContainer.getTotal(), "<strong>" + htmlUtil.escape(searchResultsPortletDisplayContext.getKeywords()) + "</strong>"], false)}
+	</#if>
+</div>
 
-	<div class="display-list">
-		<ul class="list-group" id="search-results-display-list">
+<div class="display-list">
+	<ul class="list-group" id="search-results-display-list">
+		<#if entries?has_content>
 			<#list entries as entry>
 				<li class="list-group-item list-group-item-flex">
 					<div class="autofit-col">
@@ -167,26 +160,26 @@
 					</div>
 				</li>
 			</#list>
-		</ul>
-	</div>
 
-	<@liferay_aui.form useNamespace=false>
-		<@liferay_ui["search-paginator"]
-			id="${namespace + 'searchContainerTag'}"
-			markupView="lexicon"
-			searchContainer=searchContainer
-		/>
-	</@liferay_aui.form>
+			<@liferay_aui.form useNamespace=false>
+				<@liferay_ui["search-paginator"]
+					id="${namespace + 'searchContainerTag'}"
+					markupView="lexicon"
+					searchContainer=searchContainer
+				/>
+			</@liferay_aui.form>
+		</#if>
+	</ul>
+</div>
 
-	<@liferay_aui.script use="aui-base">
-		A.one('#search-results-display-list').delegate(
-			'click',
-			function(event) {
-				var currentTarget = event.currentTarget;
+<@liferay_aui.script use="aui-base">
+	A.one('#search-results-display-list').delegate(
+		'click',
+		function(event) {
+			var currentTarget = event.currentTarget;
 
-				currentTarget.siblings('.search-results-list').toggleClass('hide');
-			},
-			'.expand-details'
-		);
-	</@liferay_aui.script>
-</#if>
+			currentTarget.siblings('.search-results-list').toggleClass('hide');
+		},
+		'.expand-details'
+	);
+</@liferay_aui.script>

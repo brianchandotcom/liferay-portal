@@ -1,0 +1,31 @@
+diff --git a/org/apache/aries/component/dsl/OSGi.java b/org/apache/aries/component/dsl/OSGi.java
+index 0d20246121de..019dc6a475fe 100644
+--- a/org/apache/aries/component/dsl/OSGi.java
++++ b/org/apache/aries/component/dsl/OSGi.java
+@@ -73,10 +73,10 @@ import java.util.Arrays;
+ import java.util.Collection;
+ import java.util.Collections;
+ import java.util.Dictionary;
+-import java.util.HashMap;
+ import java.util.List;
+ import java.util.ListIterator;
+ import java.util.Map;
++import java.util.concurrent.ConcurrentHashMap;
+ import java.util.concurrent.atomic.AtomicInteger;
+ import java.util.concurrent.atomic.AtomicReference;
+ import java.util.function.BiFunction;
+@@ -725,7 +725,7 @@ public interface OSGi<T> extends OSGiRunnable<T> {
+ 		Function<T, OSGi<K>> mapper, BiFunction<K, OSGi<T>, OSGi<S>> fun) {
+ 
+ 		return fromOsgiRunnable((bundleContext, op) -> {
+-			HashMap<K, Pad<T, S>> pads = new HashMap<>();
++			Map<K, Pad<T, S>> pads = new ConcurrentHashMap<>();
+ 
+ 			OSGiResult result = run(
+ 				bundleContext,
+@@ -758,3 +758,4 @@ public interface OSGi<T> extends OSGiRunnable<T> {
+ 	}
+ 
+ }
++/* @generated */
+\ No newline at end of file

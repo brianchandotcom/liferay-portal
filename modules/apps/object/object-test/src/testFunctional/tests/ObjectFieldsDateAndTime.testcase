@@ -129,5 +129,53 @@ definition {
 		}
 	}
 
+	@description = "LPS-143068 - Verify a custom object entry with a date and time field can be updated"
+	@priority = 5
+	test CanUpdateEntry {
+		property portal.acceptance = "true";
+
+		task ("Given a custom object with a date and time field and an object entry") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 186247",
+				objectName = "CustomObject186247",
+				pluralLabelName = "Custom Objects 186247");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "DateTime",
+				fieldLabelName = "Custom Date Time",
+				fieldName = "customDateTime",
+				fieldType = "DateTime",
+				isRequired = "false",
+				objectName = "CustomObject186247",
+				timeStorageOption = "convertToUTC");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject186247");
+
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customDateTime",
+				objectName = "CustomObject186247",
+				value = "2023-06-01T12:00:00.000Z");
+		}
+
+		task ("When the user updates the entry") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject186247");
+
+			ObjectPortlet.viewEntryDetails(entry = "Jun 1, 2023, 12:00 PM");
+
+			Type(
+				locator1 = "ObjectPortlet#VIEW_EMPTY_LABEL_IN_DATE_ENTRY",
+				value1 = "07/02/2024 10:00 PM");
+
+			PortletEntry.save();
+
+			Navigator.gotoBack();
+		}
+
+		task ("Then the date and time are updated on the table") {
+			AssertElementPresent(
+				key_fieldLabel = "Jul 2, 2024, 10:00 PM",
+				locator1 = "ObjectAdmin#VIEW_OBJECT_FIELD_LABEL");
+		}
+	}
 
 }

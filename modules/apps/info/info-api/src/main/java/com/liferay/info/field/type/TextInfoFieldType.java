@@ -19,9 +19,6 @@ package com.liferay.info.field.type;
  */
 public class TextInfoFieldType implements InfoFieldType {
 
-	public static final Attribute<TextInfoFieldType, Boolean> HTML =
-		new Attribute<>();
-
 	public static final TextInfoFieldType INSTANCE = new TextInfoFieldType();
 
 	public static final Attribute<TextInfoFieldType, Long> MAX_LENGTH =

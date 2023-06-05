@@ -33,7 +33,7 @@ import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldSet;
 import com.liferay.info.field.InfoFieldValue;
-import com.liferay.info.field.type.TextInfoFieldType;
+import com.liferay.info.field.type.HTMLInfoFieldType;
 import com.liferay.info.localized.bundle.FunctionInfoLocalizedValue;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalFolderConstants;
@@ -65,7 +65,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.DateUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
@@ -116,6 +115,14 @@ public class TemplateInfoItemFieldSetProviderTest {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
+
+	public boolean isHTMLInfoFieldType(InfoField infoField) {
+		if (infoField.getInfoFieldType() instanceof HTMLInfoFieldType) {
+			return true;
+		}
+
+		return false;
+	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -187,8 +194,7 @@ public class TemplateInfoItemFieldSetProviderTest {
 		InfoField infoField = infoFields.get(0);
 
 		Assert.assertTrue(
-			GetterUtil.getBoolean(
-				infoField.getAttribute(TextInfoFieldType.HTML)));
+			infoField.getInfoFieldType() instanceof HTMLInfoFieldType);
 		Assert.assertEquals(
 			infoFields.toString(),
 			PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
@@ -230,8 +236,7 @@ public class TemplateInfoItemFieldSetProviderTest {
 		InfoField infoField = infoFields.get(0);
 
 		Assert.assertTrue(
-			GetterUtil.getBoolean(
-				infoField.getAttribute(TextInfoFieldType.HTML)));
+			infoField.getInfoFieldType() instanceof HTMLInfoFieldType);
 		Assert.assertEquals(
 			infoFields.toString(),
 			PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
@@ -290,8 +295,7 @@ public class TemplateInfoItemFieldSetProviderTest {
 		InfoField infoField = infoFieldValue.getInfoField();
 
 		Assert.assertTrue(
-			GetterUtil.getBoolean(
-				infoField.getAttribute(TextInfoFieldType.HTML)));
+			infoField.getInfoFieldType() instanceof HTMLInfoFieldType);
 		Assert.assertEquals(
 			infoField.toString(),
 			PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +

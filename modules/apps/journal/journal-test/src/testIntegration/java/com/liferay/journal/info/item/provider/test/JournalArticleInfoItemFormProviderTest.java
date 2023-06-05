@@ -24,6 +24,7 @@ import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.field.type.CategoriesInfoFieldType;
 import com.liferay.info.field.type.DateInfoFieldType;
+import com.liferay.info.field.type.HTMLInfoFieldType;
 import com.liferay.info.field.type.ImageInfoFieldType;
 import com.liferay.info.field.type.NumberInfoFieldType;
 import com.liferay.info.field.type.SelectInfoFieldType;
@@ -148,12 +149,9 @@ public class JournalArticleInfoItemFormProviderTest {
 		infoField = iterator.next();
 
 		Assert.assertEquals(
-			TextInfoFieldType.INSTANCE, infoField.getInfoFieldType());
+			HTMLInfoFieldType.INSTANCE, infoField.getInfoFieldType());
 		Assert.assertEquals("description", infoField.getName());
 		Assert.assertTrue(infoField.isLocalizable());
-
-		Assert.assertTrue(
-			(Boolean)infoField.getAttribute(TextInfoFieldType.HTML));
 
 		infoField = iterator.next();
 
@@ -179,15 +177,9 @@ public class JournalArticleInfoItemFormProviderTest {
 		infoField = iterator.next();
 
 		Assert.assertEquals(
-			TextInfoFieldType.INSTANCE, infoField.getInfoFieldType());
+			HTMLInfoFieldType.INSTANCE, infoField.getInfoFieldType());
 		Assert.assertEquals("HTML", infoField.getName());
 		Assert.assertTrue(infoField.isLocalizable());
-
-		Assert.assertTrue(
-			(Boolean)infoField.getAttribute(TextInfoFieldType.HTML));
-
-		Assert.assertTrue(
-			(Boolean)infoField.getAttribute(TextInfoFieldType.MULTILINE));
 
 		infoField = iterator.next();
 
@@ -240,7 +232,6 @@ public class JournalArticleInfoItemFormProviderTest {
 
 		infoField = iterator.next();
 
-		Assert.assertNull(infoField.getAttribute(TextInfoFieldType.HTML));
 		Assert.assertTrue(
 			(Boolean)infoField.getAttribute(TextInfoFieldType.MULTILINE));
 		Assert.assertEquals(

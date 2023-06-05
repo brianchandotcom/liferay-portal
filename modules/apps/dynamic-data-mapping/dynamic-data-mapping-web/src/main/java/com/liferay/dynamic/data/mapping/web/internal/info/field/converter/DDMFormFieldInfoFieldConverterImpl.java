@@ -186,6 +186,11 @@ public class DDMFormFieldInfoFieldConverterImpl
 			return DateInfoFieldType.INSTANCE;
 		}
 		else if (Objects.equals(
+			ddmFormFieldType, DDMFormFieldTypeConstants.GRID)) {
+
+			return GridInfoFieldType.INSTANCE;
+		}
+		else if (Objects.equals(
 					ddmFormFieldType, DDMFormFieldTypeConstants.IMAGE)) {
 
 			return ImageInfoFieldType.INSTANCE;
@@ -200,11 +205,6 @@ public class DDMFormFieldInfoFieldConverterImpl
 					ddmFormFieldType, DDMFormFieldTypeConstants.NUMERIC)) {
 
 			return NumberInfoFieldType.INSTANCE;
-		}
-		else if (Objects.equals(
-					ddmFormFieldType, DDMFormFieldTypeConstants.GRID)) {
-
-			return GridInfoFieldType.INSTANCE;
 		}
 
 		return TextInfoFieldType.INSTANCE;

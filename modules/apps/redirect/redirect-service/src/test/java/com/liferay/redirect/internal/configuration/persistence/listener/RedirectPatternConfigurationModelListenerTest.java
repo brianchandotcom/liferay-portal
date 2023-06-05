@@ -38,7 +38,7 @@ public class RedirectPatternConfigurationModelListenerTest {
 		_redirectPatternConfigurationModelListener.onBeforeSave(
 			StringUtil.randomString(),
 			HashMapDictionaryBuilder.<String, Object>put(
-				"patternStrings", new String[] {"*** abc"}
+				"patternStrings", new String[] {"*** abc all"}
 			).build());
 	}
 

@@ -337,6 +337,15 @@ public class DLFileVersionPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_SU() throws Exception {
+		_persistence.countByC_SU(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByC_SU(0L, "null");
+
+		_persistence.countByC_SU(0L, (String)null);
+	}
+
+	@Test
 	public void testCountByC_NotS() throws Exception {
 		_persistence.countByC_NotS(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());

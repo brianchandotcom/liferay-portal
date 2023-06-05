@@ -23,6 +23,11 @@ public interface ExportImportServiceConfigurationWhitelistedURLPatternsHelper {
 
 	public void rebuildURLPatternMapper(long companyId) throws Exception;
 
+	public void rebuildURLPatternMapper(
+			long companyId,
+			ExportImportServiceConfiguration exportImportServiceConfiguration)
+		throws Exception;
+
 	public void rebuildURLPatternMappers();
 
 }

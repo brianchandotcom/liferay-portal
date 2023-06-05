@@ -70,9 +70,20 @@ public class ExportImportServiceConfigurationWhitelistedURLPatternsHelperImpl
 
 	@Override
 	public void rebuildURLPatternMapper(long companyId) throws Exception {
-		ExportImportServiceConfiguration exportImportServiceConfiguration =
-			_configurationProvider.getCompanyConfiguration(
-				ExportImportServiceConfiguration.class, companyId);
+		rebuildURLPatternMapper(companyId, null);
+	}
+
+	@Override
+	public void rebuildURLPatternMapper(
+			long companyId,
+			ExportImportServiceConfiguration exportImportServiceConfiguration)
+		throws Exception {
+
+		if (exportImportServiceConfiguration == null) {
+			exportImportServiceConfiguration =
+				_configurationProvider.getCompanyConfiguration(
+					ExportImportServiceConfiguration.class, companyId);
+		}
 
 		String[] whitelistedURLPatterns =
 			exportImportServiceConfiguration.whitelistedURLPatterns();

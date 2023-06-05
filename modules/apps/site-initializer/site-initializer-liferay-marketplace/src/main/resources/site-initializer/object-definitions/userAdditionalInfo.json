@@ -47,9 +47,9 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Publisher Name"
+				"en_US": "Account Name"
 			},
-			"name": "publisherName",
+			"name": "accountName",
 			"required": false,
 			"type": "String"
 		},

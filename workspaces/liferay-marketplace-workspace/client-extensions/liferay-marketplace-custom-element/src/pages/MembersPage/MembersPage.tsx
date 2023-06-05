@@ -79,6 +79,7 @@ export function MembersPage({
   const [loading] = useState<boolean>(false);
   const [members, setMembers] = useState<MemberProps[]>(Array<MemberProps>());
   const [selectedMember, setSelectedMember] = useState<MemberProps>();
+  const [isCurrentUserAdmin, setIsCurrentUserAdmin] = useState<boolean>(false);
 
   const getRolesList = useCallback(
     (accountBriefs: AccountBrief[]) => {
@@ -153,8 +154,8 @@ export function MembersPage({
             dateCreated: member.dateCreated,
             email: member.emailAddress,
             image: member.image,
-            isInvitedMember: false,
             isCustomerAccount: false,
+            isInvitedMember: false,
             isPublisherAccount: false,
             lastLoginDate: member.lastLoginDate,
             name: member.name,
@@ -163,6 +164,17 @@ export function MembersPage({
           } as MemberProps;
         }
       );
+
+      adminRoles.forEach((adminRole) => {
+        if (
+          currentUserAccountBriefs.roleBriefs.find(
+            (role: { name: string }) => role.name === adminRole
+          )
+        ) {
+          currentUserAccount.isAdminAccount = true;
+          setIsCurrentUserAdmin(true);
+        }
+      });
 
       membersList.forEach((member: MemberProps) => {
         const rolesList = member.role.split(', ');
@@ -205,16 +217,9 @@ export function MembersPage({
 
   return (
     <>
-      {loading ? (
-        <ClayLoadingIndicator
-          className="members-page-loading-indicator"
-          displayType="primary"
-          shape="circle"
-          size="md"
-        />
-      ) : (
+      {!loading ? (
         <DashboardPage
-          buttonMessage="+ New Member"
+          buttonMessage={isCurrentUserAdmin ? '+ New Member' : ''}
           dashboardNavigationItems={dashboardNavigationItems}
           messages={memberMessages}
           onButtonClick={() => setVisible(true)}
@@ -225,22 +230,31 @@ export function MembersPage({
               setSelectedMember={setSelectedMember}
             ></MemberProfile>
           ) : (
-            <DashboardTable<MemberProps>
-              emptyStateMessage={memberMessages.emptyStateMessage}
-              icon={icon}
-              items={members}
-              tableHeaders={memberTableHeaders}
-            >
-              {(member) => (
-                <DashboardMemberTableRow
-                  item={member}
-                  key={member.name}
-                  onSelectedMemberChange={setSelectedMember}
-                />
-              )}
-            </DashboardTable>
+            <>
+              <DashboardTable<MemberProps>
+                emptyStateMessage={memberMessages.emptyStateMessage}
+                icon={icon}
+                items={members}
+                tableHeaders={memberTableHeaders}
+              >
+                {(member) => (
+                  <DashboardMemberTableRow
+                    item={member}
+                    key={member.name}
+                    onSelectedMemberChange={setSelectedMember}
+                  />
+                )}
+              </DashboardTable>
+            </>
           )}
         </DashboardPage>
+      ) : (
+        <ClayLoadingIndicator
+          className="members-page-loading-indicator"
+          displayType="primary"
+          shape="circle"
+          size="md"
+        />
       )}
 
       {visible && (

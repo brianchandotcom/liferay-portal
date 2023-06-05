@@ -160,7 +160,7 @@ export const initialAccountsState: Account[] = [
 
 export const publisherRoles = ['Account Administrator', 'App Editor'];
 
-export const publishedPermissionDescriptions: PermissionDescription[] = [
+export const publisherPermissionDescriptions: PermissionDescription[] = [
   {
     permissionName: 'Create new apps',
     permissionTooltip: 'Create and submit new apps and versions',

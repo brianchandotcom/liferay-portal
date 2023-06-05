@@ -192,7 +192,11 @@ public class RenderLayoutStructureTagTest {
 	public void testRenderCollectionStyledLayoutStructureItemSelectingSegmentsExperienceWithDifferentSegmentsEntry()
 		throws Exception {
 
-		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+		AssetListEntry assetListEntry =
+			_assetListEntryLocalService.addAssetListEntry(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(),
+				AssetListEntryTypeConstants.TYPE_MANUAL, _serviceContext);
 
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
 			_group.getGroupId(), JournalArticle.class.getName());
@@ -204,6 +208,11 @@ public class RenderLayoutStructureTagTest {
 			JournalArticle.class.getName(),
 			expectedJournalArticle1.getResourcePrimKey());
 
+		_assetListEntryLocalService.addAssetEntrySelections(
+			assetListEntry.getAssetListEntryId(),
+			new long[] {assetEntry1.getEntryId()},
+			SegmentsEntryConstants.ID_DEFAULT, _serviceContext);
+
 		JournalArticle expectedJournalArticle2 = _addJournalArticle(
 			ddmStructure);
 
@@ -212,17 +221,6 @@ public class RenderLayoutStructureTagTest {
 			expectedJournalArticle2.getResourcePrimKey());
 
 		SegmentsEntry segmentsEntry1 = _addSegmentsEntryByFirstName("Test");
-
-		AssetListEntry assetListEntry =
-			_assetListEntryLocalService.addAssetListEntry(
-				TestPropsValues.getUserId(), _group.getGroupId(),
-				RandomTestUtil.randomString(),
-				AssetListEntryTypeConstants.TYPE_MANUAL, _serviceContext);
-
-		_assetListEntryLocalService.addAssetEntrySelections(
-			assetListEntry.getAssetListEntryId(),
-			new long[] {assetEntry1.getEntryId()},
-			SegmentsEntryConstants.ID_DEFAULT, _serviceContext);
 
 		_assetListEntryLocalService.addAssetEntrySelections(
 			assetListEntry.getAssetListEntryId(),
@@ -250,6 +248,8 @@ public class RenderLayoutStructureTagTest {
 			});
 
 		SegmentsEntry segmentsEntry2 = _addSegmentsEntryByFirstName("User");
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		SegmentsExperience segmentsExperience =
 			_segmentsExperienceLocalService.addSegmentsExperience(
@@ -280,7 +280,6 @@ public class RenderLayoutStructureTagTest {
 					).put(
 						"type", InfoListItemSelectorReturnType.class.getName()
 					));
-
 				collectionStyledLayoutStructureItem.setListStyle(
 					"com.liferay.journal.web.internal.info.list.renderer." +
 						"BulletedJournalArticleBasicInfoListRenderer");
@@ -310,7 +309,6 @@ public class RenderLayoutStructureTagTest {
 				"liferay-info:info-list-grid:infoListObjects");
 
 		Assert.assertNotNull(actualJournalArticles);
-
 		Assert.assertEquals(
 			actualJournalArticles.toString(), 1, actualJournalArticles.size());
 
@@ -332,7 +330,11 @@ public class RenderLayoutStructureTagTest {
 	public void testRenderCollectionStyledLayoutStructureItemSelectingSegmentsExperienceWithSameSegmentsEntry()
 		throws Exception {
 
-		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+		AssetListEntry assetListEntry =
+			_assetListEntryLocalService.addAssetListEntry(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(),
+				AssetListEntryTypeConstants.TYPE_MANUAL, _serviceContext);
 
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
 			_group.getGroupId(), JournalArticle.class.getName());
@@ -344,6 +346,11 @@ public class RenderLayoutStructureTagTest {
 			JournalArticle.class.getName(),
 			expectedJournalArticle1.getResourcePrimKey());
 
+		_assetListEntryLocalService.addAssetEntrySelections(
+			assetListEntry.getAssetListEntryId(),
+			new long[] {assetEntry1.getEntryId()},
+			SegmentsEntryConstants.ID_DEFAULT, _serviceContext);
+
 		JournalArticle expectedJournalArticle2 = _addJournalArticle(
 			ddmStructure);
 
@@ -353,21 +360,12 @@ public class RenderLayoutStructureTagTest {
 
 		SegmentsEntry segmentsEntry = _addSegmentsEntryByFirstName("Test");
 
-		AssetListEntry assetListEntry =
-			_assetListEntryLocalService.addAssetListEntry(
-				TestPropsValues.getUserId(), _group.getGroupId(),
-				RandomTestUtil.randomString(),
-				AssetListEntryTypeConstants.TYPE_MANUAL, _serviceContext);
-
-		_assetListEntryLocalService.addAssetEntrySelections(
-			assetListEntry.getAssetListEntryId(),
-			new long[] {assetEntry1.getEntryId()},
-			SegmentsEntryConstants.ID_DEFAULT, _serviceContext);
-
 		_assetListEntryLocalService.addAssetEntrySelections(
 			assetListEntry.getAssetListEntryId(),
 			new long[] {assetEntry2.getEntryId()},
 			segmentsEntry.getSegmentsEntryId(), _serviceContext);
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		SegmentsExperience segmentsExperience =
 			_segmentsExperienceLocalService.addSegmentsExperience(
@@ -398,7 +396,6 @@ public class RenderLayoutStructureTagTest {
 					).put(
 						"type", InfoListItemSelectorReturnType.class.getName()
 					));
-
 				collectionStyledLayoutStructureItem.setListStyle(
 					"com.liferay.journal.web.internal.info.list.renderer." +
 						"BulletedJournalArticleBasicInfoListRenderer");
@@ -428,7 +425,6 @@ public class RenderLayoutStructureTagTest {
 				"liferay-info:info-list-grid:infoListObjects");
 
 		Assert.assertNotNull(actualJournalArticles);
-
 		Assert.assertEquals(
 			actualJournalArticles.toString(), 1, actualJournalArticles.size());
 
@@ -450,7 +446,11 @@ public class RenderLayoutStructureTagTest {
 	public void testRenderCollectionStyledLayoutStructureItemWithoutSelectingSegmentsExperience()
 		throws Exception {
 
-		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+		AssetListEntry assetListEntry =
+			_assetListEntryLocalService.addAssetListEntry(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(),
+				AssetListEntryTypeConstants.TYPE_MANUAL, _serviceContext);
 
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
 			_group.getGroupId(), JournalArticle.class.getName());
@@ -462,6 +462,11 @@ public class RenderLayoutStructureTagTest {
 			JournalArticle.class.getName(),
 			expectedJournalArticle1.getResourcePrimKey());
 
+		_assetListEntryLocalService.addAssetEntrySelections(
+			assetListEntry.getAssetListEntryId(),
+			new long[] {assetEntry1.getEntryId()},
+			SegmentsEntryConstants.ID_DEFAULT, _serviceContext);
+
 		JournalArticle expectedJournalArticle2 = _addJournalArticle(
 			ddmStructure);
 
@@ -471,21 +476,12 @@ public class RenderLayoutStructureTagTest {
 
 		SegmentsEntry segmentsEntry = _addSegmentsEntryByFirstName("Test");
 
-		AssetListEntry assetListEntry =
-			_assetListEntryLocalService.addAssetListEntry(
-				TestPropsValues.getUserId(), _group.getGroupId(),
-				RandomTestUtil.randomString(),
-				AssetListEntryTypeConstants.TYPE_MANUAL, _serviceContext);
-
-		_assetListEntryLocalService.addAssetEntrySelections(
-			assetListEntry.getAssetListEntryId(),
-			new long[] {assetEntry1.getEntryId()},
-			SegmentsEntryConstants.ID_DEFAULT, _serviceContext);
-
 		_assetListEntryLocalService.addAssetEntrySelections(
 			assetListEntry.getAssetListEntryId(),
 			new long[] {assetEntry2.getEntryId()},
 			segmentsEntry.getSegmentsEntryId(), _serviceContext);
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		_createLayoutStructure(
 			layout,
@@ -508,7 +504,6 @@ public class RenderLayoutStructureTagTest {
 					).put(
 						"type", InfoListItemSelectorReturnType.class.getName()
 					));
-
 				collectionStyledLayoutStructureItem.setListStyle(
 					"com.liferay.journal.web.internal.info.list.renderer." +
 						"BulletedJournalArticleBasicInfoListRenderer");
@@ -533,7 +528,6 @@ public class RenderLayoutStructureTagTest {
 				"liferay-info:info-list-grid:infoListObjects");
 
 		Assert.assertNotNull(actualJournalArticles);
-
 		Assert.assertEquals(
 			actualJournalArticles.toString(), 1, actualJournalArticles.size());
 

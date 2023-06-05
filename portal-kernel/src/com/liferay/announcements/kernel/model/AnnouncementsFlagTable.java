@@ -36,6 +36,9 @@ public class AnnouncementsFlagTable extends BaseTable<AnnouncementsFlagTable> {
 	public final Column<AnnouncementsFlagTable, Long> mvccVersion =
 		createColumn(
 			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<AnnouncementsFlagTable, Long> ctCollectionId =
+		createColumn(
+			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<AnnouncementsFlagTable, Long> flagId = createColumn(
 		"flagId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<AnnouncementsFlagTable, Long> companyId = createColumn(

@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * <p>
@@ -43,6 +45,7 @@ public class AnnouncementsFlagWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
+		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put("flagId", getFlagId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -59,6 +62,12 @@ public class AnnouncementsFlagWrapper
 
 		if (mvccVersion != null) {
 			setMvccVersion(mvccVersion);
+		}
+
+		Long ctCollectionId = (Long)attributes.get("ctCollectionId");
+
+		if (ctCollectionId != null) {
+			setCtCollectionId(ctCollectionId);
 		}
 
 		Long flagId = (Long)attributes.get("flagId");
@@ -121,6 +130,16 @@ public class AnnouncementsFlagWrapper
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
+	}
+
+	/**
+	 * Returns the ct collection ID of this announcements flag.
+	 *
+	 * @return the ct collection ID of this announcements flag
+	 */
+	@Override
+	public long getCtCollectionId() {
+		return model.getCtCollectionId();
 	}
 
 	/**
@@ -219,6 +238,16 @@ public class AnnouncementsFlagWrapper
 	}
 
 	/**
+	 * Sets the ct collection ID of this announcements flag.
+	 *
+	 * @param ctCollectionId the ct collection ID of this announcements flag
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		model.setCtCollectionId(ctCollectionId);
+	}
+
+	/**
 	 * Sets the entry ID of this announcements flag.
 	 *
 	 * @param entryId the entry ID of this announcements flag
@@ -291,6 +320,20 @@ public class AnnouncementsFlagWrapper
 	@Override
 	public String toXmlString() {
 		return model.toXmlString();
+	}
+
+	@Override
+	public Map<String, Function<AnnouncementsFlag, Object>>
+		getAttributeGetterFunctions() {
+
+		return model.getAttributeGetterFunctions();
+	}
+
+	@Override
+	public Map<String, BiConsumer<AnnouncementsFlag, Object>>
+		getAttributeSetterBiConsumers() {
+
+		return model.getAttributeSetterBiConsumers();
 	}
 
 	@Override

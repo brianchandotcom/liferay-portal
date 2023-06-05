@@ -125,6 +125,8 @@ public class AnnouncementsEntryPersistenceTest {
 
 		newAnnouncementsEntry.setMvccVersion(RandomTestUtil.nextLong());
 
+		newAnnouncementsEntry.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newAnnouncementsEntry.setUuid(RandomTestUtil.randomString());
 
 		newAnnouncementsEntry.setCompanyId(RandomTestUtil.nextLong());
@@ -166,6 +168,9 @@ public class AnnouncementsEntryPersistenceTest {
 		Assert.assertEquals(
 			existingAnnouncementsEntry.getMvccVersion(),
 			newAnnouncementsEntry.getMvccVersion());
+		Assert.assertEquals(
+			existingAnnouncementsEntry.getCtCollectionId(),
+			newAnnouncementsEntry.getCtCollectionId());
 		Assert.assertEquals(
 			existingAnnouncementsEntry.getUuid(),
 			newAnnouncementsEntry.getUuid());
@@ -314,12 +319,12 @@ public class AnnouncementsEntryPersistenceTest {
 
 	protected OrderByComparator<AnnouncementsEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"AnnouncementsEntry", "mvccVersion", true, "uuid", true, "entryId",
-			true, "companyId", true, "userId", true, "userName", true,
-			"createDate", true, "modifiedDate", true, "classNameId", true,
-			"classPK", true, "title", true, "url", true, "type", true,
-			"displayDate", true, "expirationDate", true, "priority", true,
-			"alert", true);
+			"AnnouncementsEntry", "mvccVersion", true, "ctCollectionId", true,
+			"uuid", true, "entryId", true, "companyId", true, "userId", true,
+			"userName", true, "createDate", true, "modifiedDate", true,
+			"classNameId", true, "classPK", true, "title", true, "url", true,
+			"type", true, "displayDate", true, "expirationDate", true,
+			"priority", true, "alert", true);
 	}
 
 	@Test
@@ -542,6 +547,8 @@ public class AnnouncementsEntryPersistenceTest {
 		AnnouncementsEntry announcementsEntry = _persistence.create(pk);
 
 		announcementsEntry.setMvccVersion(RandomTestUtil.nextLong());
+
+		announcementsEntry.setCtCollectionId(RandomTestUtil.nextLong());
 
 		announcementsEntry.setUuid(RandomTestUtil.randomString());
 

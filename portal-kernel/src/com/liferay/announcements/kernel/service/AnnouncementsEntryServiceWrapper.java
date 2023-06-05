@@ -14,6 +14,7 @@
 
 package com.liferay.announcements.kernel.service;
 
+import com.liferay.announcements.kernel.model.AnnouncementsEntry;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
@@ -38,7 +39,7 @@ public class AnnouncementsEntryServiceWrapper
 	}
 
 	@Override
-	public com.liferay.announcements.kernel.model.AnnouncementsEntry addEntry(
+	public AnnouncementsEntry addEntry(
 			long classNameId, long classPK, String title, String content,
 			String url, String type, java.util.Date displayDate,
 			java.util.Date expirationDate, int priority, boolean alert)
@@ -57,8 +58,7 @@ public class AnnouncementsEntryServiceWrapper
 	}
 
 	@Override
-	public com.liferay.announcements.kernel.model.AnnouncementsEntry getEntry(
-			long entryId)
+	public AnnouncementsEntry getEntry(long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _announcementsEntryService.getEntry(entryId);
@@ -75,11 +75,10 @@ public class AnnouncementsEntryServiceWrapper
 	}
 
 	@Override
-	public com.liferay.announcements.kernel.model.AnnouncementsEntry
-			updateEntry(
-				long entryId, String title, String content, String url,
-				String type, java.util.Date displayDate,
-				java.util.Date expirationDate, int priority)
+	public AnnouncementsEntry updateEntry(
+			long entryId, String title, String content, String url, String type,
+			java.util.Date displayDate, java.util.Date expirationDate,
+			int priority)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _announcementsEntryService.updateEntry(

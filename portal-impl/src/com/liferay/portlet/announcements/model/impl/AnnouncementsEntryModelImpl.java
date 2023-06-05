@@ -76,15 +76,16 @@ public class AnnouncementsEntryModelImpl
 	public static final String TABLE_NAME = "AnnouncementsEntry";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"entryId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
-		{"title", Types.VARCHAR}, {"content", Types.CLOB},
-		{"url", Types.VARCHAR}, {"type_", Types.VARCHAR},
-		{"displayDate", Types.TIMESTAMP}, {"expirationDate", Types.TIMESTAMP},
-		{"priority", Types.INTEGER}, {"alert", Types.BOOLEAN}
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"uuid_", Types.VARCHAR}, {"entryId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"classNameId", Types.BIGINT},
+		{"classPK", Types.BIGINT}, {"title", Types.VARCHAR},
+		{"content", Types.CLOB}, {"url", Types.VARCHAR},
+		{"type_", Types.VARCHAR}, {"displayDate", Types.TIMESTAMP},
+		{"expirationDate", Types.TIMESTAMP}, {"priority", Types.INTEGER},
+		{"alert", Types.BOOLEAN}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -92,6 +93,7 @@ public class AnnouncementsEntryModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("entryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -112,7 +114,7 @@ public class AnnouncementsEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AnnouncementsEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,entryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,title VARCHAR(75) null,content TEXT null,url STRING null,type_ VARCHAR(75) null,displayDate DATE null,expirationDate DATE null,priority INTEGER,alert BOOLEAN)";
+		"create table AnnouncementsEntry (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,entryId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,title VARCHAR(75) null,content TEXT null,url STRING null,type_ VARCHAR(75) null,displayDate DATE null,expirationDate DATE null,priority INTEGER,alert BOOLEAN,primary key (entryId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table AnnouncementsEntry";
 
@@ -298,6 +300,8 @@ public class AnnouncementsEntryModelImpl
 
 			attributeGetterFunctions.put(
 				"mvccVersion", AnnouncementsEntry::getMvccVersion);
+			attributeGetterFunctions.put(
+				"ctCollectionId", AnnouncementsEntry::getCtCollectionId);
 			attributeGetterFunctions.put("uuid", AnnouncementsEntry::getUuid);
 			attributeGetterFunctions.put(
 				"entryId", AnnouncementsEntry::getEntryId);
@@ -349,6 +353,10 @@ public class AnnouncementsEntryModelImpl
 				"mvccVersion",
 				(BiConsumer<AnnouncementsEntry, Long>)
 					AnnouncementsEntry::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"ctCollectionId",
+				(BiConsumer<AnnouncementsEntry, Long>)
+					AnnouncementsEntry::setCtCollectionId);
 			attributeSetterBiConsumers.put(
 				"uuid",
 				(BiConsumer<AnnouncementsEntry, String>)
@@ -437,6 +445,21 @@ public class AnnouncementsEntryModelImpl
 		}
 
 		_mvccVersion = mvccVersion;
+	}
+
+	@JSON
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_ctCollectionId = ctCollectionId;
 	}
 
 	@JSON
@@ -895,6 +918,7 @@ public class AnnouncementsEntryModelImpl
 			new AnnouncementsEntryImpl();
 
 		announcementsEntryImpl.setMvccVersion(getMvccVersion());
+		announcementsEntryImpl.setCtCollectionId(getCtCollectionId());
 		announcementsEntryImpl.setUuid(getUuid());
 		announcementsEntryImpl.setEntryId(getEntryId());
 		announcementsEntryImpl.setCompanyId(getCompanyId());
@@ -925,6 +949,8 @@ public class AnnouncementsEntryModelImpl
 
 		announcementsEntryImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
+		announcementsEntryImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		announcementsEntryImpl.setUuid(
 			this.<String>getColumnOriginalValue("uuid_"));
 		announcementsEntryImpl.setEntryId(
@@ -1051,6 +1077,8 @@ public class AnnouncementsEntryModelImpl
 			new AnnouncementsEntryCacheModel();
 
 		announcementsEntryCacheModel.mvccVersion = getMvccVersion();
+
+		announcementsEntryCacheModel.ctCollectionId = getCtCollectionId();
 
 		announcementsEntryCacheModel.uuid = getUuid();
 
@@ -1214,6 +1242,7 @@ public class AnnouncementsEntryModelImpl
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private String _uuid;
 	private long _entryId;
 	private long _companyId;
@@ -1264,6 +1293,7 @@ public class AnnouncementsEntryModelImpl
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
+		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put("uuid_", _uuid);
 		_columnOriginalValues.put("entryId", _entryId);
 		_columnOriginalValues.put("companyId", _companyId);
@@ -1307,39 +1337,41 @@ public class AnnouncementsEntryModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("uuid_", 2L);
+		columnBitmasks.put("ctCollectionId", 2L);
 
-		columnBitmasks.put("entryId", 4L);
+		columnBitmasks.put("uuid_", 4L);
 
-		columnBitmasks.put("companyId", 8L);
+		columnBitmasks.put("entryId", 8L);
 
-		columnBitmasks.put("userId", 16L);
+		columnBitmasks.put("companyId", 16L);
 
-		columnBitmasks.put("userName", 32L);
+		columnBitmasks.put("userId", 32L);
 
-		columnBitmasks.put("createDate", 64L);
+		columnBitmasks.put("userName", 64L);
 
-		columnBitmasks.put("modifiedDate", 128L);
+		columnBitmasks.put("createDate", 128L);
 
-		columnBitmasks.put("classNameId", 256L);
+		columnBitmasks.put("modifiedDate", 256L);
 
-		columnBitmasks.put("classPK", 512L);
+		columnBitmasks.put("classNameId", 512L);
 
-		columnBitmasks.put("title", 1024L);
+		columnBitmasks.put("classPK", 1024L);
 
-		columnBitmasks.put("content", 2048L);
+		columnBitmasks.put("title", 2048L);
 
-		columnBitmasks.put("url", 4096L);
+		columnBitmasks.put("content", 4096L);
 
-		columnBitmasks.put("type_", 8192L);
+		columnBitmasks.put("url", 8192L);
 
-		columnBitmasks.put("displayDate", 16384L);
+		columnBitmasks.put("type_", 16384L);
 
-		columnBitmasks.put("expirationDate", 32768L);
+		columnBitmasks.put("displayDate", 32768L);
 
-		columnBitmasks.put("priority", 65536L);
+		columnBitmasks.put("expirationDate", 65536L);
 
-		columnBitmasks.put("alert", 131072L);
+		columnBitmasks.put("priority", 131072L);
+
+		columnBitmasks.put("alert", 262144L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

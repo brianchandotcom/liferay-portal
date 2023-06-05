@@ -126,6 +126,8 @@ public class AnnouncementsFlagPersistenceTest {
 
 		newAnnouncementsFlag.setMvccVersion(RandomTestUtil.nextLong());
 
+		newAnnouncementsFlag.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newAnnouncementsFlag.setCompanyId(RandomTestUtil.nextLong());
 
 		newAnnouncementsFlag.setUserId(RandomTestUtil.nextLong());
@@ -144,6 +146,9 @@ public class AnnouncementsFlagPersistenceTest {
 		Assert.assertEquals(
 			existingAnnouncementsFlag.getMvccVersion(),
 			newAnnouncementsFlag.getMvccVersion());
+		Assert.assertEquals(
+			existingAnnouncementsFlag.getCtCollectionId(),
+			newAnnouncementsFlag.getCtCollectionId());
 		Assert.assertEquals(
 			existingAnnouncementsFlag.getFlagId(),
 			newAnnouncementsFlag.getFlagId());
@@ -212,9 +217,9 @@ public class AnnouncementsFlagPersistenceTest {
 
 	protected OrderByComparator<AnnouncementsFlag> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"AnnouncementsFlag", "mvccVersion", true, "flagId", true,
-			"companyId", true, "userId", true, "createDate", true, "entryId",
-			true, "value", true);
+			"AnnouncementsFlag", "mvccVersion", true, "ctCollectionId", true,
+			"flagId", true, "companyId", true, "userId", true, "createDate",
+			true, "entryId", true, "value", true);
 	}
 
 	@Test
@@ -504,6 +509,8 @@ public class AnnouncementsFlagPersistenceTest {
 		AnnouncementsFlag announcementsFlag = _persistence.create(pk);
 
 		announcementsFlag.setMvccVersion(RandomTestUtil.nextLong());
+
+		announcementsFlag.setCtCollectionId(RandomTestUtil.nextLong());
 
 		announcementsFlag.setCompanyId(RandomTestUtil.nextLong());
 

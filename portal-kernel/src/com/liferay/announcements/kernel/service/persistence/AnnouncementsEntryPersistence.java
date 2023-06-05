@@ -17,6 +17,7 @@ package com.liferay.announcements.kernel.service.persistence;
 import com.liferay.announcements.kernel.exception.NoSuchEntryException;
 import com.liferay.announcements.kernel.model.AnnouncementsEntry;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -33,7 +34,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface AnnouncementsEntryPersistence
-	extends BasePersistence<AnnouncementsEntry> {
+	extends BasePersistence<AnnouncementsEntry>,
+			CTPersistence<AnnouncementsEntry> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

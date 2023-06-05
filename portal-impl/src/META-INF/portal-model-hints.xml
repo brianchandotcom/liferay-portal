@@ -40,6 +40,7 @@
 	</model>
 	<model name="com.liferay.announcements.kernel.model.AnnouncementsEntry">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="entryId" type="long" />
 		<field name="companyId" type="long" />
@@ -69,6 +70,7 @@
 	</model>
 	<model name="com.liferay.announcements.kernel.model.AnnouncementsFlag">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="flagId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />

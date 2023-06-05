@@ -17,6 +17,8 @@ package com.liferay.osb.faro.web.internal.exception;
 import com.liferay.osb.faro.engine.client.exception.FaroEngineClientException;
 import com.liferay.osb.faro.engine.client.model.ErrorResponse;
 import com.liferay.osb.faro.web.internal.util.JSONUtil;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -36,8 +38,23 @@ public class FaroEngineClientExceptionMapper
 		Response.ResponseBuilder responseBuilder = null;
 
 		try {
-			ErrorResponse errorResponse = JSONUtil.readValue(
-				faroEngineClientException.getMessage(), ErrorResponse.class);
+			ErrorResponse errorResponse = null;
+
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				faroEngineClientException.getMessage());
+
+			if (jsonObject.get("errorAttributes") != null) {
+				JSONObject errorAttributes = (JSONObject)jsonObject.get(
+					"errorAttributes");
+
+				errorResponse = JSONUtil.readValue(
+					errorAttributes.toString(), ErrorResponse.class);
+			}
+			else {
+				errorResponse = JSONUtil.readValue(
+					faroEngineClientException.getMessage(),
+					ErrorResponse.class);
+			}
 
 			if (errorResponse.getStatus() !=
 					Response.Status.INTERNAL_SERVER_ERROR.getStatusCode()) {
@@ -46,8 +63,9 @@ public class FaroEngineClientExceptionMapper
 
 				ErrorResponse wrappedErrorResponse = new ErrorResponse();
 
-				wrappedErrorResponse.setMessage(
-					JSONUtil.writeValueAsString(errorResponse));
+				wrappedErrorResponse.setMessage(errorResponse.getMessage());
+				wrappedErrorResponse.setMessageKey(
+					errorResponse.getMessageKey());
 				wrappedErrorResponse.setStatus(
 					Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
 				wrappedErrorResponse.setTimestamp(System.currentTimeMillis());

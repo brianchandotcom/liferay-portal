@@ -397,10 +397,10 @@ public class PoshiRunnerExecutor {
 		}
 
 		if (varValue instanceof String) {
-			varValue = _poshiVariablesContext.replaceExecuteVars(
+			varValue = _poshiVariablesContext.replaceCommandVars(
 				(String)varValue);
 
-			varValue = _poshiVariablesContext.replaceCommandVars(
+			varValue = _poshiVariablesContext.replaceExecuteVars(
 				(String)varValue);
 
 			if (varValue instanceof String) {

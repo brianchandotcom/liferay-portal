@@ -502,7 +502,8 @@ public class RenderLayoutStructureTagTest {
 					"com.liferay.journal.web.internal.info.list.renderer." +
 						"BulletedJournalArticleBasicInfoListRenderer");
 			},
-			-1);
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				layout.getPlid()));
 
 		MockHttpServletRequest mockHttpServletRequest =
 			_getMockHttpServletRequest(layout);
@@ -825,12 +826,6 @@ public class RenderLayoutStructureTagTest {
 			UnsafeConsumer<LayoutStructure, Exception> layoutStructureConsumer,
 			long segmentsExperienceId)
 		throws Exception {
-
-		if (segmentsExperienceId <= 0) {
-			segmentsExperienceId =
-				_segmentsExperienceLocalService.
-					fetchDefaultSegmentsExperienceId(layout.getPlid());
-		}
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			LayoutPageTemplateStructureLocalServiceUtil.

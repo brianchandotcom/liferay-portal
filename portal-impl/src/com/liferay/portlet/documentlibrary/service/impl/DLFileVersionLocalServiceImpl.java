@@ -132,6 +132,11 @@ public class DLFileVersionLocalServiceImpl
 	}
 
 	@Override
+	public int getFileVersionsCount(long companyId, String storeUUID) {
+		return dlFileVersionPersistence.countByC_SU(companyId, storeUUID);
+	}
+
+	@Override
 	public DLFileVersion getLatestFileVersion(
 			long fileEntryId, boolean excludeWorkingCopy)
 		throws PortalException {

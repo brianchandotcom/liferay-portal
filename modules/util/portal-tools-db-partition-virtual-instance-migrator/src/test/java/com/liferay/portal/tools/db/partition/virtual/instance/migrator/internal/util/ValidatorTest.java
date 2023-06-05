@@ -65,7 +65,7 @@ public class ValidatorTest {
 		_executeAndAssert(
 			true, false,
 			Arrays.asList(
-				"ERROR: WebId " + _TEST_WEB_ID +
+				"[ERROR] WebId " + _TEST_WEB_ID +
 					" already exists in destination database"));
 	}
 
@@ -83,7 +83,7 @@ public class ValidatorTest {
 		_executeAndAssert(
 			true, false,
 			Arrays.asList(
-				"ERROR: Module module2.service needs to be upgraded in " +
+				"[ERROR] Module module2.service needs to be upgraded in " +
 					"destination database before the migration"));
 	}
 
@@ -98,9 +98,9 @@ public class ValidatorTest {
 		_executeAndAssert(
 			true, false,
 			Arrays.asList(
-				"ERROR: Module module1 has a failed Release state in the " +
+				"[ERROR] Module module1 has a failed Release state in the " +
 					"destination database",
-				"ERROR: Module module2 has a failed Release state in the " +
+				"[ERROR] Module module2 has a failed Release state in the " +
 					"destination database"));
 	}
 
@@ -115,9 +115,9 @@ public class ValidatorTest {
 		_executeAndAssert(
 			true, false,
 			Arrays.asList(
-				"ERROR: Module module1 has a failed Release state in the " +
+				"[ERROR] Module module1 has a failed Release state in the " +
 					"source database",
-				"ERROR: Module module2 has a failed Release state in the " +
+				"[ERROR] Module module2 has a failed Release state in the " +
 					"source database"));
 	}
 
@@ -128,7 +128,7 @@ public class ValidatorTest {
 		_executeAndAssert(
 			true, false,
 			Arrays.asList(
-				"ERROR: Module module1 needs to be upgraded in source " +
+				"[ERROR] Module module1 needs to be upgraded in source " +
 					"database before the migration"));
 	}
 
@@ -139,8 +139,7 @@ public class ValidatorTest {
 		_executeAndAssert(
 			false, true,
 			Arrays.asList(
-				"WARNING: Module module1 is not present in the source " +
-					"database"));
+				"[WARN] Module module1 is not present in the source database"));
 	}
 
 	@Test
@@ -150,7 +149,7 @@ public class ValidatorTest {
 		_executeAndAssert(
 			true, false,
 			Arrays.asList(
-				"ERROR: Module module2.service needs to be installed in the " +
+				"[ERROR] Module module2.service needs to be installed in the " +
 					"source database before the migration"));
 	}
 
@@ -161,7 +160,7 @@ public class ValidatorTest {
 		_executeAndAssert(
 			false, true,
 			Arrays.asList(
-				"WARNING: Module module1 is not present in the destination " +
+				"[WARN] Module module1 is not present in the destination " +
 					"database"));
 	}
 
@@ -176,9 +175,8 @@ public class ValidatorTest {
 		_executeAndAssert(
 			false, true,
 			Arrays.asList(
-				"WARNING: Table table4 is not present in source database",
-				"WARNING: Table table2 is not present in destination " +
-					"database"));
+				"[WARN] Table table4 is not present in source database",
+				"[WARN] Table table2 is not present in destination database"));
 	}
 
 	@Test
@@ -192,9 +190,8 @@ public class ValidatorTest {
 		_executeAndAssert(
 			false, true,
 			Arrays.asList(
-				"WARNING: Table table2 is not present in destination database",
-				"WARNING: Table table5 is not present in destination " +
-					"database"));
+				"[WARN] Table table2 is not present in destination database",
+				"[WARN] Table table5 is not present in destination database"));
 	}
 
 	@Test
@@ -208,8 +205,8 @@ public class ValidatorTest {
 		_executeAndAssert(
 			false, true,
 			Arrays.asList(
-				"WARNING: Table table2 is not present in source database",
-				"WARNING: Table table5 is not present in source database"));
+				"[WARN] Table table2 is not present in source database",
+				"[WARN] Table table5 is not present in source database"));
 	}
 
 	@Test
@@ -219,7 +216,7 @@ public class ValidatorTest {
 		_executeAndAssert(
 			true, false,
 			Arrays.asList(
-				"ERROR: Module module2 needs to be verified in the " +
+				"[ERROR] Module module2 needs to be verified in the " +
 					"destination database before the migration"));
 	}
 
@@ -230,7 +227,7 @@ public class ValidatorTest {
 		_executeAndAssert(
 			true, false,
 			Arrays.asList(
-				"ERROR: Module module2.service needs to be verified in the " +
+				"[ERROR] Module module2.service needs to be verified in the " +
 					"source database before the migration"));
 	}
 

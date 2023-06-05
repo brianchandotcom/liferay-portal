@@ -37,10 +37,10 @@ public interface StoreAreaConfiguration {
 	public int cleanUpInterval();
 
 	@Meta.AD(
-		deflt = "100", description = "store-area-deletion-quota-help",
-		name = "store-area-deletion-quota", required = false
+		deflt = "100", description = "store-area-eviction-quota-help",
+		name = "store-area-eviction-quota", required = false
 	)
-	public int deletionQuota();
+	public int evictionQuota();
 
 	@Meta.AD(
 		deflt = "31", description = "store-area-eviction-age-help",

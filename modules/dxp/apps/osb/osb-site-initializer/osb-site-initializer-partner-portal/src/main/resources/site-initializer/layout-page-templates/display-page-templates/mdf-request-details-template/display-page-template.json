@@ -3,5 +3,5 @@
 		"className": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:MDFRequest$]"
 	},
 	"defaultTemplate": true,
-	"name": "MDF Request Details"
+	"name": "MDF Request Details Template"
 }

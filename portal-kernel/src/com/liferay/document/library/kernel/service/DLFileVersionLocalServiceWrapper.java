@@ -406,6 +406,12 @@ public class DLFileVersionLocalServiceWrapper
 	}
 
 	@Override
+	public int getFileVersionsCount(long companyId, String storeUUID) {
+		return _dlFileVersionLocalService.getFileVersionsCount(
+			companyId, storeUUID);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 		getIndexableActionableDynamicQuery() {
 

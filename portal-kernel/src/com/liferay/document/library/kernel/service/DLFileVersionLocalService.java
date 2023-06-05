@@ -325,6 +325,9 @@ public interface DLFileVersionLocalService
 	public int getFileVersionsCount(long fileEntryId, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getFileVersionsCount(long companyId, String storeUUID);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

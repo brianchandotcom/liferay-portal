@@ -1059,6 +1059,196 @@ public class DLFileVersionUtil {
 	}
 
 	/**
+	 * Returns all the document library file versions where companyId = &#63; and storeUUID = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param storeUUID the store uuid
+	 * @return the matching document library file versions
+	 */
+	public static List<DLFileVersion> findByC_SU(
+		long companyId, String storeUUID) {
+
+		return getPersistence().findByC_SU(companyId, storeUUID);
+	}
+
+	/**
+	 * Returns a range of all the document library file versions where companyId = &#63; and storeUUID = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DLFileVersionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param storeUUID the store uuid
+	 * @param start the lower bound of the range of document library file versions
+	 * @param end the upper bound of the range of document library file versions (not inclusive)
+	 * @return the range of matching document library file versions
+	 */
+	public static List<DLFileVersion> findByC_SU(
+		long companyId, String storeUUID, int start, int end) {
+
+		return getPersistence().findByC_SU(companyId, storeUUID, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the document library file versions where companyId = &#63; and storeUUID = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DLFileVersionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param storeUUID the store uuid
+	 * @param start the lower bound of the range of document library file versions
+	 * @param end the upper bound of the range of document library file versions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching document library file versions
+	 */
+	public static List<DLFileVersion> findByC_SU(
+		long companyId, String storeUUID, int start, int end,
+		OrderByComparator<DLFileVersion> orderByComparator) {
+
+		return getPersistence().findByC_SU(
+			companyId, storeUUID, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the document library file versions where companyId = &#63; and storeUUID = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DLFileVersionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param storeUUID the store uuid
+	 * @param start the lower bound of the range of document library file versions
+	 * @param end the upper bound of the range of document library file versions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching document library file versions
+	 */
+	public static List<DLFileVersion> findByC_SU(
+		long companyId, String storeUUID, int start, int end,
+		OrderByComparator<DLFileVersion> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByC_SU(
+			companyId, storeUUID, start, end, orderByComparator,
+			useFinderCache);
+	}
+
+	/**
+	 * Returns the first document library file version in the ordered set where companyId = &#63; and storeUUID = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param storeUUID the store uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching document library file version
+	 * @throws NoSuchFileVersionException if a matching document library file version could not be found
+	 */
+	public static DLFileVersion findByC_SU_First(
+			long companyId, String storeUUID,
+			OrderByComparator<DLFileVersion> orderByComparator)
+		throws com.liferay.document.library.kernel.exception.
+			NoSuchFileVersionException {
+
+		return getPersistence().findByC_SU_First(
+			companyId, storeUUID, orderByComparator);
+	}
+
+	/**
+	 * Returns the first document library file version in the ordered set where companyId = &#63; and storeUUID = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param storeUUID the store uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching document library file version, or <code>null</code> if a matching document library file version could not be found
+	 */
+	public static DLFileVersion fetchByC_SU_First(
+		long companyId, String storeUUID,
+		OrderByComparator<DLFileVersion> orderByComparator) {
+
+		return getPersistence().fetchByC_SU_First(
+			companyId, storeUUID, orderByComparator);
+	}
+
+	/**
+	 * Returns the last document library file version in the ordered set where companyId = &#63; and storeUUID = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param storeUUID the store uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching document library file version
+	 * @throws NoSuchFileVersionException if a matching document library file version could not be found
+	 */
+	public static DLFileVersion findByC_SU_Last(
+			long companyId, String storeUUID,
+			OrderByComparator<DLFileVersion> orderByComparator)
+		throws com.liferay.document.library.kernel.exception.
+			NoSuchFileVersionException {
+
+		return getPersistence().findByC_SU_Last(
+			companyId, storeUUID, orderByComparator);
+	}
+
+	/**
+	 * Returns the last document library file version in the ordered set where companyId = &#63; and storeUUID = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param storeUUID the store uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching document library file version, or <code>null</code> if a matching document library file version could not be found
+	 */
+	public static DLFileVersion fetchByC_SU_Last(
+		long companyId, String storeUUID,
+		OrderByComparator<DLFileVersion> orderByComparator) {
+
+		return getPersistence().fetchByC_SU_Last(
+			companyId, storeUUID, orderByComparator);
+	}
+
+	/**
+	 * Returns the document library file versions before and after the current document library file version in the ordered set where companyId = &#63; and storeUUID = &#63;.
+	 *
+	 * @param fileVersionId the primary key of the current document library file version
+	 * @param companyId the company ID
+	 * @param storeUUID the store uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next document library file version
+	 * @throws NoSuchFileVersionException if a document library file version with the primary key could not be found
+	 */
+	public static DLFileVersion[] findByC_SU_PrevAndNext(
+			long fileVersionId, long companyId, String storeUUID,
+			OrderByComparator<DLFileVersion> orderByComparator)
+		throws com.liferay.document.library.kernel.exception.
+			NoSuchFileVersionException {
+
+		return getPersistence().findByC_SU_PrevAndNext(
+			fileVersionId, companyId, storeUUID, orderByComparator);
+	}
+
+	/**
+	 * Removes all the document library file versions where companyId = &#63; and storeUUID = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param storeUUID the store uuid
+	 */
+	public static void removeByC_SU(long companyId, String storeUUID) {
+		getPersistence().removeByC_SU(companyId, storeUUID);
+	}
+
+	/**
+	 * Returns the number of document library file versions where companyId = &#63; and storeUUID = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param storeUUID the store uuid
+	 * @return the number of matching document library file versions
+	 */
+	public static int countByC_SU(long companyId, String storeUUID) {
+		return getPersistence().countByC_SU(companyId, storeUUID);
+	}
+
+	/**
 	 * Returns all the document library file versions where companyId = &#63; and status &ne; &#63;.
 	 *
 	 * @param companyId the company ID

@@ -363,6 +363,10 @@ public class DLFileVersionLocalServiceUtil {
 		return getService().getFileVersionsCount(fileEntryId, status);
 	}
 
+	public static int getFileVersionsCount(long companyId, String storeUUID) {
+		return getService().getFileVersionsCount(companyId, storeUUID);
+	}
+
 	public static
 		com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 			getIndexableActionableDynamicQuery() {

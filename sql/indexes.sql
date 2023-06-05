@@ -167,6 +167,7 @@ create unique index IX_DD2033A4 on DLFileShortcut (uuid_[$COLUMN_LENGTH:75$], gr
 
 create index IX_97782D6C on DLFileVersion (companyId, ctCollectionId);
 create index IX_808EF252 on DLFileVersion (companyId, status, ctCollectionId);
+create index IX_9940AF5C on DLFileVersion (companyId, storeUUID[$COLUMN_LENGTH:255$], ctCollectionId);
 create index IX_759EF1C5 on DLFileVersion (fileEntryId, ctCollectionId);
 create index IX_C97C4DAB on DLFileVersion (fileEntryId, status, ctCollectionId);
 create unique index IX_10E504DF on DLFileVersion (fileEntryId, version[$COLUMN_LENGTH:75$], ctCollectionId);

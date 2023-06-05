@@ -77,7 +77,7 @@ public class VirtualInstanceMigrator {
 				}
 				catch (SQLException sqlException) {
 					System.err.println(
-						"ERROR: Unable to get source database connection " +
+						"[ERROR] Unable to get source database connection " +
 							"with the specified parameters:");
 					sqlException.printStackTrace();
 
@@ -91,7 +91,7 @@ public class VirtualInstanceMigrator {
 				}
 				catch (SQLException sqlException) {
 					System.err.println(
-						"ERROR: Unable to get destination database " +
+						"[ERROR] Unable to get destination database " +
 							"connection with the specified parameters:");
 					sqlException.printStackTrace();
 
@@ -106,7 +106,7 @@ public class VirtualInstanceMigrator {
 
 				if (!DatabaseUtil.isSingleVirtualInstance(_sourceConnection)) {
 					System.err.println(
-						"ERROR: Source database has several instances. That " +
+						"[ERROR] Source database has several instances. That " +
 							"is not supported by the tool");
 
 					_exitWithCode(ErrorCodes.SOURCE_MULTI_INSTANCES);
@@ -114,7 +114,7 @@ public class VirtualInstanceMigrator {
 
 				if (!DatabaseUtil.isDefaultPartition(_destinationConnection)) {
 					System.err.println(
-						"ERROR: Destination database is not the default " +
+						"[ERROR] Destination database is not the default " +
 							"partition");
 
 					_exitWithCode(ErrorCodes.DESTINATION_NOT_DEFAULT);
@@ -132,7 +132,7 @@ public class VirtualInstanceMigrator {
 			}
 			catch (ParseException parseException) {
 				System.err.println(
-					"ERROR: Unable to parse command line properties: " +
+					"[ERROR] Unable to parse command line properties: " +
 						parseException.getMessage());
 				System.err.println();
 
@@ -149,7 +149,7 @@ public class VirtualInstanceMigrator {
 			_exitWithCode(ErrorCodes.SUCCESS);
 		}
 		catch (Exception exception) {
-			System.err.println("Unexpected error:");
+			System.err.println("[ERROR] Unexpected error:");
 			exception.printStackTrace();
 			_exitWithCode(ErrorCodes.UNEXPECTED_ERROR);
 		}

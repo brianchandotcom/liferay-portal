@@ -211,8 +211,7 @@ public class RenderLayoutStructureTagTest {
 			JournalArticle.class.getName(),
 			expectedJournalArticle2.getResourcePrimKey());
 
-		SegmentsEntry segmentsEntry1 = _addSegmentsEntryByFirstName(
-			_group.getGroupId(), "Test");
+		SegmentsEntry segmentsEntry1 = _addSegmentsEntryByFirstName("Test");
 
 		AssetListEntry assetListEntry =
 			_assetListEntryLocalService.addAssetListEntry(
@@ -250,8 +249,7 @@ public class RenderLayoutStructureTagTest {
 					getAssetListEntrySegmentsEntryRelId()
 			});
 
-		SegmentsEntry segmentsEntry2 = _addSegmentsEntryByFirstName(
-			_group.getGroupId(), "User");
+		SegmentsEntry segmentsEntry2 = _addSegmentsEntryByFirstName("User");
 
 		SegmentsExperience segmentsExperience =
 			_segmentsExperienceLocalService.addSegmentsExperience(
@@ -353,8 +351,7 @@ public class RenderLayoutStructureTagTest {
 			JournalArticle.class.getName(),
 			expectedJournalArticle2.getResourcePrimKey());
 
-		SegmentsEntry segmentsEntry = _addSegmentsEntryByFirstName(
-			_group.getGroupId(), "Test");
+		SegmentsEntry segmentsEntry = _addSegmentsEntryByFirstName("Test");
 
 		AssetListEntry assetListEntry =
 			_assetListEntryLocalService.addAssetListEntry(
@@ -472,8 +469,7 @@ public class RenderLayoutStructureTagTest {
 			JournalArticle.class.getName(),
 			expectedJournalArticle2.getResourcePrimKey());
 
-		SegmentsEntry segmentsEntry = _addSegmentsEntryByFirstName(
-			_group.getGroupId(), "Test");
+		SegmentsEntry segmentsEntry = _addSegmentsEntryByFirstName("Test");
 
 		AssetListEntry assetListEntry =
 			_assetListEntryLocalService.addAssetListEntry(
@@ -803,8 +799,7 @@ public class RenderLayoutStructureTagTest {
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 	}
 
-	private SegmentsEntry _addSegmentsEntryByFirstName(
-			long groupId, String firstName)
+	private SegmentsEntry _addSegmentsEntryByFirstName(String firstName)
 		throws Exception {
 
 		Criteria criteria = new Criteria();
@@ -814,7 +809,7 @@ public class RenderLayoutStructureTagTest {
 			Criteria.Conjunction.AND);
 
 		return SegmentsTestUtil.addSegmentsEntry(
-			groupId, CriteriaSerializer.serialize(criteria),
+			_group.getGroupId(), CriteriaSerializer.serialize(criteria),
 			User.class.getName());
 	}
 

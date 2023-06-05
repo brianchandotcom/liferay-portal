@@ -150,10 +150,15 @@ public class DefaultCommerceInventoryMethodImpl
 	public int getStockQuantity(
 		long companyId, long commerceChannelGroupId, String sku) {
 
-		return Math.min(
+		int stockQuantity =
 			_commerceInventoryWarehouseItemService.getStockQuantity(
-				companyId, commerceChannelGroupId, sku),
-			getStockQuantity(companyId, sku));
+				companyId, commerceChannelGroupId, sku);
+
+		int commerceBookedQuantity =
+			_commerceBookedQuantityLocalService.getCommerceBookedQuantity(
+				companyId, commerceChannelGroupId, sku);
+
+		return stockQuantity - commerceBookedQuantity;
 	}
 
 	@Override

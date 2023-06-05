@@ -917,6 +917,26 @@ definition {
 			locator1 = "Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX");
 	}
 
+	@description = "This is a use case for LPS-179997 - Content Page Editor Control Panel Preferences is not created in Production."
+	@priority = 2
+	test ContentPageEditorControlPanelPreferencesCannotBeCreatedInProduction {
+		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Home",
+			siteName = "Guest");
+
+		GoBack();
+
+		PublicationsNavigator.gotoReviewChanges(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication Name");
+
+		AssertElementPresent(locator1 = "PublicationsChanges#MESSAGE_NO_CHANGES");
+	}
+
 	@priority = 4
 	test DiscardSubsetsofChangesInPublication {
 		JSONPublications.addPublication(publicationName = "Publication Name");

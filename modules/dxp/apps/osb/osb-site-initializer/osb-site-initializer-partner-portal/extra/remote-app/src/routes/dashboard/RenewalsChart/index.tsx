@@ -135,9 +135,7 @@ export default function () {
 					className="border-brand-primary-darken-1 mt-2 text-brand-primary-darken-1"
 					displayType="secondary"
 					onClick={() =>
-						Liferay.Util.navigate(
-							`${siteURL}/sales/renewal-opportunities`
-						)
+						Liferay.Util.navigate(`${siteURL}/sales/renewals`)
 					}
 					type="button"
 				>

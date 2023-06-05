@@ -34,7 +34,7 @@ public class Recorder {
 
 	public void printErrors() {
 		for (String error : _errors) {
-			System.out.println("ERROR: " + error);
+			System.out.println("[ERROR] " + error);
 		}
 	}
 
@@ -45,7 +45,7 @@ public class Recorder {
 
 	public void printWarnings() {
 		for (String warning : _warnings) {
-			System.out.println("WARNING: " + warning);
+			System.out.println("[WARN] " + warning);
 		}
 	}
 

@@ -21,7 +21,7 @@
 	value="basic-settings"
 />
 
-<aui:model-context bean="<%= layoutsAdminDisplayContext.getSelLayout() %>" model="<%= Layout.class %>" />
+<aui:model-context bean="<%= layoutsAdminDisplayContext.getLayout() %>" model="<%= Layout.class %>" />
 
 <%
 LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLookAndFeelDisplayContext(request, layoutsAdminDisplayContext, liferayPortletResponse);

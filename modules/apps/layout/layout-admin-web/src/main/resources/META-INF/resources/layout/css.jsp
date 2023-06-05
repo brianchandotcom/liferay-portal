@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
+Layout selLayout = layoutsAdminDisplayContext.getLayout();
 
 LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLookAndFeelDisplayContext(request, layoutsAdminDisplayContext, liferayPortletResponse);
 %>

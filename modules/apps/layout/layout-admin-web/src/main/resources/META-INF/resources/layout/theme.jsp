@@ -23,7 +23,7 @@ LayoutSet layoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 
 Theme rootTheme = layoutSet.getTheme();
 
-Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
+Layout selLayout = layoutsAdminDisplayContext.getLayout();
 
 PortletURL redirectURL = layoutsAdminDisplayContext.getRedirectURL();
 %>

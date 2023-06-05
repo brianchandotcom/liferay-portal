@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
+Layout selLayout = layoutsAdminDisplayContext.getLayout();
 
 UnicodeProperties layoutTypeSettingsUnicodeProperties = selLayout.getTypeSettingsProperties();
 %>

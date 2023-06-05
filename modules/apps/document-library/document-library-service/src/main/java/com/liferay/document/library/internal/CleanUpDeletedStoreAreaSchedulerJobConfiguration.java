@@ -15,6 +15,7 @@
 package com.liferay.document.library.internal;
 
 import com.liferay.document.library.internal.configuration.StoreAreaConfiguration;
+import com.liferay.document.library.kernel.service.DLFileVersionLocalService;
 import com.liferay.document.library.kernel.store.StoreAreaProcessor;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeRunnable;
@@ -79,13 +80,33 @@ public class CleanUpDeletedStoreAreaSchedulerJobConfiguration
 			companyId,
 			_storeAreaProcessor.cleanUpDeletedStoreArea(
 				companyId, _storeAreaConfiguration.deletionQuota(),
-				name -> true,
+				name -> !_isDLFileVersionReferenced(companyId, name),
 				Duration.ofDays(_storeAreaConfiguration.evictionAge()),
 				_startOffsets.getOrDefault(companyId, StringPool.BLANK)));
 	}
 
+	private boolean _isDLFileVersionReferenced(Long companyId, String name) {
+		int pos = name.lastIndexOf(StringPool.TILDE);
+
+		if (pos == -1) {
+			return true;
+		}
+
+		int fileVersionsCount = _dlFileVersionLocalService.getFileVersionsCount(
+			companyId, name.substring(pos + 1));
+
+		if (fileVersionsCount > 0) {
+			return true;
+		}
+
+		return false;
+	}
+
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private DLFileVersionLocalService _dlFileVersionLocalService;
 
 	private Map<Long, String> _startOffsets;
 	private StoreAreaConfiguration _storeAreaConfiguration;

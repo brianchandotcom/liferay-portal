@@ -15,7 +15,12 @@
 package com.liferay.commerce.inventory.engine.test;
 
 import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.model.AccountEntry;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.commerce.account.test.util.CommerceAccountTestUtil;
+import com.liferay.commerce.context.CommerceContext;
+import com.liferay.commerce.currency.model.CommerceCurrency;
+import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
 import com.liferay.commerce.inventory.engine.CommerceInventoryEngine;
 import com.liferay.commerce.inventory.exception.DuplicateCommerceInventoryWarehouseException;
 import com.liferay.commerce.inventory.exception.DuplicateCommerceInventoryWarehouseItemException;
@@ -26,6 +31,8 @@ import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem;
 import com.liferay.commerce.inventory.service.CommerceInventoryBookedQuantityLocalService;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseItemLocalService;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseLocalService;
+import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.product.constants.CommerceChannelConstants;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
@@ -33,13 +40,17 @@ import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.service.CommerceChannelRelLocalServiceUtil;
+import com.liferay.commerce.service.CommerceOrderItemLocalService;
+import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.test.util.CommerceInventoryTestUtil;
+import com.liferay.commerce.test.util.context.TestCommerceContext;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -48,6 +59,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -86,12 +98,27 @@ public class CommerceInventoryEngineTest {
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group.getCompanyId(), _group.getGroupId(), _user.getUserId());
 
+		try {
+			_accountEntry = CommerceAccountTestUtil.addPersonAccountEntry(
+				_user.getUserId(), _serviceContext);
+		}
+		catch (Exception exception) {
+			_accountEntry = CommerceAccountTestUtil.getPersonAccountEntry(
+				_user.getUserId());
+		}
+
+		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
+			_group.getCompanyId());
+
 		_commerceChannel = _commerceChannelLocalService.addCommerceChannel(
 			StringPool.BLANK, AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
 			_group.getGroupId(),
 			_group.getName(_serviceContext.getLanguageId()) + " Portal",
 			CommerceChannelConstants.CHANNEL_TYPE_SITE, null, StringPool.BLANK,
 			_serviceContext);
+
+		_commerceContext = new TestCommerceContext(
+			null, _commerceCurrency, _commerceChannel, _user, _group, null);
 
 		_cpInstance1 = CommerceInventoryTestUtil.addRandomCPInstanceSku(
 			_group.getGroupId());
@@ -332,15 +359,34 @@ public class CommerceInventoryEngineTest {
 
 		int bookQuantity = 5;
 
+		CommerceOrder commerceOrder =
+			_commerceOrderLocalService.addCommerceOrder(
+				_user.getUserId(), _commerceChannel.getGroupId(),
+				_accountEntry.getAccountEntryId(),
+				_commerceCurrency.getCommerceCurrencyId(), 0);
+
+		_commerceOrders.add(commerceOrder);
+
+		CommerceOrderItem commerceOrderItem =
+			_commerceOrderItemLocalService.addCommerceOrderItem(
+				_user.getUserId(), commerceOrder.getCommerceOrderId(),
+				_cpInstance1.getCPInstanceId(), null, bookQuantity, 0, 0,
+				_commerceContext, _serviceContext);
+
 		CommerceInventoryBookedQuantity commerceBookedQuantity =
 			_commerceBookedQuantityLocalService.addCommerceBookedQuantity(
 				_user.getUserId(), _cpInstance1.getSku(), bookQuantity, null,
 				Collections.emptyMap());
 
+		commerceOrderItem =
+			_commerceOrderItemLocalService.updateCommerceOrderItem(
+				commerceOrderItem.getCommerceOrderItemId(),
+				commerceBookedQuantity.getCommerceInventoryBookedQuantityId());
+
 		Assert.assertEquals(
 			_commerceInventoryWarehouseItem1.getQuantity() - bookQuantity,
 			_commerceInventoryEngine.getStockQuantity(
-				_group.getCompanyId(), _cpInstance1.getGroupId(),
+				commerceOrderItem.getCompanyId(), _cpInstance1.getGroupId(),
 				_commerceChannel.getGroupId(), _cpInstance1.getSku()));
 
 		_commerceInventoryEngine.consumeQuantity(
@@ -903,6 +949,8 @@ public class CommerceInventoryEngineTest {
 
 	private static User _user;
 
+	private AccountEntry _accountEntry;
+
 	@Inject
 	private CommerceInventoryBookedQuantityLocalService
 		_commerceBookedQuantityLocalService;
@@ -911,6 +959,11 @@ public class CommerceInventoryEngineTest {
 
 	@Inject
 	private CommerceChannelLocalService _commerceChannelLocalService;
+
+	private CommerceContext _commerceContext;
+
+	@DeleteAfterTestRun
+	private CommerceCurrency _commerceCurrency;
 
 	@Inject
 	private CommerceInventoryEngine _commerceInventoryEngine;
@@ -924,6 +977,15 @@ public class CommerceInventoryEngineTest {
 	@Inject
 	private CommerceInventoryWarehouseLocalService
 		_commerceInventoryWarehouseLocalService;
+
+	@Inject
+	private CommerceOrderItemLocalService _commerceOrderItemLocalService;
+
+	@Inject
+	private CommerceOrderLocalService _commerceOrderLocalService;
+
+	@DeleteAfterTestRun
+	private List<CommerceOrder> _commerceOrders = new ArrayList<>();
 
 	private CPInstance _cpInstance1;
 	private CPInstance _cpInstance2;

@@ -83,7 +83,7 @@ public class EditBatchPlannerPlanMVCRenderCommand implements MVCRenderCommand {
 				_vulcanBatchEngineTaskItemDelegateRegistry.getEntityClassNames(
 					companyId)) {
 
-			if (!_isBatchPlannerEnabled(entityClassName, export)) {
+			if (!_isBatchPlannerEnabled(entityClassName, export, companyId)) {
 				continue;
 			}
 
@@ -115,15 +115,15 @@ public class EditBatchPlannerPlanMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	private boolean _isBatchPlannerEnabled(
-		String entityClassName, boolean export) {
+		String entityClassName, boolean export, long companyId) {
 
 		if (export) {
 			return _vulcanBatchEngineTaskItemDelegateRegistry.
-				isBatchPlannerExportEnabled(entityClassName);
+				isBatchPlannerExportEnabled(companyId, entityClassName);
 		}
 
 		return _vulcanBatchEngineTaskItemDelegateRegistry.
-			isBatchPlannerImportEnabled(entityClassName);
+			isBatchPlannerImportEnabled(companyId, entityClassName);
 	}
 
 	private boolean _isExport(String value) {

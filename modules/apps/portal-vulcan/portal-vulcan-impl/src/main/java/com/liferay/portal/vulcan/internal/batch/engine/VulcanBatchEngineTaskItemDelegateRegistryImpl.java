@@ -19,6 +19,7 @@ import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegateRegistry;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -42,6 +43,50 @@ public class VulcanBatchEngineTaskItemDelegateRegistryImpl
 	@Override
 	public Set<String> getEntityClassNames() {
 		return _vulcanBatchEngineTaskItemDelegateMap.keySet();
+	}
+
+	@Override
+	public Set<String> getEntityClassNames(long companyId) {
+		Set<String> entityClassNames = new HashSet<>();
+
+		entityClassNames.addAll(_vulcanBatchEngineTaskItemDelegateMap.keySet());
+
+		Map<String, VulcanBatchEngineTaskItemDelegate<?>>
+			companyVulcanBatchEngineTaskItemDelegateMap =
+				_companyScopedVulcanBatchEngineTaskItemDelegateMap.get(
+					companyId);
+
+		if (companyVulcanBatchEngineTaskItemDelegateMap != null) {
+			entityClassNames.addAll(
+				companyVulcanBatchEngineTaskItemDelegateMap.keySet());
+		}
+
+		return entityClassNames;
+	}
+
+	@Override
+	public VulcanBatchEngineTaskItemDelegate<?>
+		getVulcanBatchEngineTaskItemDelegate(
+			long companyId, String entityClassName) {
+
+		VulcanBatchEngineTaskItemDelegate<?> vulcanBatchEngineTaskItemDelegate =
+			_vulcanBatchEngineTaskItemDelegateMap.get(entityClassName);
+
+		if (vulcanBatchEngineTaskItemDelegate != null) {
+			return vulcanBatchEngineTaskItemDelegate;
+		}
+
+		Map<String, VulcanBatchEngineTaskItemDelegate<?>>
+			companyVulcanBatchEngineTaskItemDelegateMap =
+				_companyScopedVulcanBatchEngineTaskItemDelegateMap.get(
+					companyId);
+
+		if (companyVulcanBatchEngineTaskItemDelegateMap != null) {
+			return companyVulcanBatchEngineTaskItemDelegateMap.get(
+				entityClassName);
+		}
+
+		return null;
 	}
 
 	@Override

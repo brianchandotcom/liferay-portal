@@ -1,5 +1,4 @@
 dependencies {
-	testIntegrationCompile project(":apps:asset:asset-auto-tagger-google-cloud-natural-language-api")
 	testIntegrationCompile project(":apps:portal-configuration:portal-configuration-test-util")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

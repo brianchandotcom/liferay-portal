@@ -14,7 +14,6 @@
 
 package com.liferay.asset.auto.tagger.google.cloud.natural.language.internal;
 
-import com.liferay.asset.auto.tagger.google.cloud.natural.language.GCloudNaturalLanguageDocumentAssetAutoTagger;
 import com.liferay.asset.auto.tagger.google.cloud.natural.language.internal.configuration.GCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration;
 import com.liferay.asset.auto.tagger.google.cloud.natural.language.internal.constants.GCloudNaturalLanguageDocumentAssetAutoTaggerConstants;
 import com.liferay.asset.auto.tagger.google.cloud.natural.language.internal.util.GCloudNaturalLanguageUtil;
@@ -49,16 +48,9 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Cristina González
  */
-@Component(
-	service = {
-		GCloudNaturalLanguageDocumentAssetAutoTagger.class,
-		GCloudNaturalLanguageDocumentAssetAutoTaggerImpl.class
-	}
-)
-public class GCloudNaturalLanguageDocumentAssetAutoTaggerImpl
-	implements GCloudNaturalLanguageDocumentAssetAutoTagger {
+@Component(service = GCloudNaturalLanguageDocumentAssetAutoTagger.class)
+public class GCloudNaturalLanguageDocumentAssetAutoTagger {
 
-	@Override
 	public Collection<String> getTagNames(
 			long companyId, String content, Locale locale, String mimeType)
 		throws Exception {
@@ -66,7 +58,6 @@ public class GCloudNaturalLanguageDocumentAssetAutoTaggerImpl
 		return getTagNames(companyId, () -> content, locale, mimeType);
 	}
 
-	@Override
 	public Collection<String> getTagNames(
 			long companyId, String content, String mimeType)
 		throws Exception {

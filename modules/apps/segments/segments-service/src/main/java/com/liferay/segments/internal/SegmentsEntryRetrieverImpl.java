@@ -68,7 +68,11 @@ public class SegmentsEntryRetrieverImpl implements SegmentsEntryRetriever {
 			return _portal.getDefaultCompanyId();
 		}
 
-		Group group = _groupLocalService.getGroup(groupId);
+		Group group = _groupLocalService.fetchGroup(groupId);
+
+		if (group == null) {
+			return _portal.getDefaultCompanyId();
+		}
 
 		return group.getCompanyId();
 	}

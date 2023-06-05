@@ -91,16 +91,7 @@ public class DLFileVersionModelListener
 					_dlFileVersionLocalService.getLatestFileVersion(
 						dlFileVersion.getFileEntryId(), true);
 
-				FileVersion fileVersion = _dlAppLocalService.getFileVersion(
-					latestFileVersion.getFileVersionId());
-
-				for (DLProcessor dlProcessor :
-						_dlProcessorServiceTrackerMap.values()) {
-
-					if (dlProcessor.isSupported(fileVersion)) {
-						dlProcessor.cleanUp(fileVersion);
-					}
-				}
+				_cleanUpFileVersion(latestFileVersion.getFileVersionId());
 			}
 		}
 		catch (PortalException portalException) {
@@ -113,6 +104,19 @@ public class DLFileVersionModelListener
 		_dlProcessorServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, DLProcessor.class, "type");
+	}
+
+	private void _cleanUpFileVersion(long fileVersionId)
+		throws PortalException {
+
+		FileVersion fileVersion = _dlAppLocalService.getFileVersion(
+			fileVersionId);
+
+		for (DLProcessor dlProcessor : _dlProcessorServiceTrackerMap.values()) {
+			if (dlProcessor.isSupported(fileVersion)) {
+				dlProcessor.cleanUp(fileVersion);
+			}
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

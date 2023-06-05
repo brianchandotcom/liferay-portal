@@ -22,6 +22,8 @@ import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFileVersionLocalService;
 import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.document.library.kernel.util.DLProcessor;
+import com.liferay.document.library.model.DLFileVersionPreview;
+import com.liferay.document.library.service.DLFileVersionPreviewLocalService;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.exception.ModelListenerException;
@@ -61,6 +63,15 @@ public class DLFileVersionModelListener
 					dlFileVersion.getStoreFileName());
 			}
 
+			DLFileVersionPreview dlFileVersionPreview =
+				_dlFileVersionPreviewLocalService.fetchDLFileVersionPreview(
+					dlFileVersion.getFileEntryId(),
+					dlFileVersion.getFileVersionId());
+
+			if (dlFileVersionPreview != null) {
+				_dlFileVersionPreviewLocalService.deleteDLFileVersionPreview(
+					dlFileVersionPreview);
+			}
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException);
@@ -115,6 +126,9 @@ public class DLFileVersionModelListener
 
 	@Reference
 	private DLFileVersionLocalService _dlFileVersionLocalService;
+
+	@Reference
+	private DLFileVersionPreviewLocalService _dlFileVersionPreviewLocalService;
 
 	private ServiceTrackerMap<String, DLProcessor>
 		_dlProcessorServiceTrackerMap;

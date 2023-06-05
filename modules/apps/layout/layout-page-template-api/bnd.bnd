@@ -5,6 +5,7 @@ Export-Package:\
 	com.liferay.layout.page.template.constants,\
 	com.liferay.layout.page.template.exception,\
 	com.liferay.layout.page.template.info.item.capability,\
+	com.liferay.layout.page.template.info.item.provider,\
 	com.liferay.layout.page.template.model,\
 	com.liferay.layout.page.template.serializer,\
 	com.liferay.layout.page.template.service,\

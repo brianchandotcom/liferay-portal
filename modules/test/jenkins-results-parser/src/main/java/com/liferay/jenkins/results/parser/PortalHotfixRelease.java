@@ -20,9 +20,13 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.dom4j.Document;
+import org.dom4j.Element;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -108,6 +112,12 @@ public class PortalHotfixRelease {
 
 			packageNames = _getJSONPackageNames();
 		}
+		else if (portalVersion.startsWith("7.2") ||
+				 portalVersion.startsWith("7.1") ||
+				 portalVersion.startsWith("7.0")) {
+
+			packageNames = _getXMLPackageNames();
+		}
 		else {
 			return packageNames;
 		}
@@ -174,6 +184,48 @@ public class PortalHotfixRelease {
 
 	public PortalRelease getPortalRelease() {
 		return _portalRelease;
+	}
+
+	private Element _getFixpackDocumentationElement() {
+		synchronized (_portalHotfixReleaseURL) {
+			if (_fixpackDocumentationElement != null) {
+				return _fixpackDocumentationElement;
+			}
+
+			File tempDir = new File(
+				JenkinsResultsParserUtil.getDistinctTimeStamp());
+
+			try {
+				tempDir.mkdirs();
+
+				File hotfixFile = new File(tempDir, "hotfix.zip");
+
+				JenkinsResultsParserUtil.toFile(
+					getPortalHotfixReleaseURL(), hotfixFile);
+
+				JenkinsResultsParserUtil.unzip(hotfixFile, tempDir);
+
+				File fixpackDocumentationFile = new File(
+					tempDir, "fixpack_documentation.xml");
+
+				if (!fixpackDocumentationFile.exists()) {
+					return null;
+				}
+
+				Document document = Dom4JUtil.parse(
+					JenkinsResultsParserUtil.read(fixpackDocumentationFile));
+
+				_fixpackDocumentationElement = document.getRootElement();
+
+				return _fixpackDocumentationElement;
+			}
+			catch (Exception exception) {
+				return null;
+			}
+			finally {
+				JenkinsResultsParserUtil.delete(tempDir);
+			}
+		}
 	}
 
 	private JSONObject _getFixpackDocumentationJSONObject() {
@@ -267,12 +319,35 @@ public class PortalHotfixRelease {
 		}
 	}
 
+	private Set<String> _getXMLPackageNames() {
+		Set<String> packageNames = new HashSet<>();
+
+		Element fixpackDocumentationElement = _getFixpackDocumentationElement();
+
+		if (fixpackDocumentationElement == null) {
+			return packageNames;
+		}
+
+		Element checksumsElement = fixpackDocumentationElement.element(
+			"checksums");
+
+		List<Element> fileChecksumElements = checksumsElement.elements(
+			"file-checksum");
+
+		for (Element fileChecksumElement : fileChecksumElements) {
+			packageNames.add(fileChecksumElement.attributeValue("file"));
+		}
+
+		return packageNames;
+	}
+
 	private static final Pattern _hotfixURLPattern = Pattern.compile(
 		"https?://.+/(?<hotfixName>liferay-(hotfix|security-de|security-dxp)-" +
 			"(?<hotfixVersion>\\d+)(-\\d{6}-\\d)?-\\d{4})");
 	private static final Pattern _packageNamePattern = Pattern.compile(
 		"(?<packageName>[\\.\\w]+|[\\-\\w]+)(-\\d.*)?\\.jar");
 
+	private Element _fixpackDocumentationElement;
 	private JSONObject _fixpackDocumentationJSONObject;
 	private final PortalFixpackRelease _portalFixpackRelease;
 	private final URL _portalHotfixReleaseURL;

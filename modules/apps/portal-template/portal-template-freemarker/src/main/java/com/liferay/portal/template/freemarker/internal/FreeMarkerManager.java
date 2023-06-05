@@ -588,7 +588,9 @@ public class FreeMarkerManager extends BaseTemplateManager {
 	@Reference
 	private TemplateClassResolver _templateClassResolver;
 
-	@Reference(service = FreeMarkerTemplateContextHelper.class)
+	@Reference(
+		target = "(component.name=com.liferay.portal.template.freemarker.internal.helper.FreeMarkerTemplateContextHelper)"
+	)
 	private TemplateContextHelper _templateContextHelper;
 
 	private final Map<String, TemplateModel> _templateModels =

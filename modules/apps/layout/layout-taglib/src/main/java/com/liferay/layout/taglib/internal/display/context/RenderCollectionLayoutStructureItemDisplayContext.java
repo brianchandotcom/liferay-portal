@@ -675,10 +675,8 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 			_themeDisplay.getScopeGroupId(), _themeDisplay.getUserId(),
 			requestContextMapper.map(_httpServletRequest));
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-183723")) {
-			_segmentsEntryIds = _filterSegmentsEntryIds(
-				layoutListRetriever, listObjectReference, _segmentsEntryIds);
-		}
+		_segmentsEntryIds = _filterSegmentsEntryIds(
+			layoutListRetriever, listObjectReference, _segmentsEntryIds);
 
 		return _segmentsEntryIds;
 	}

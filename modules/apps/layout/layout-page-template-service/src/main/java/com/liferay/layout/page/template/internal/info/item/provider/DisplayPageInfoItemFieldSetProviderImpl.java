@@ -29,12 +29,14 @@ import com.liferay.layout.page.template.info.item.provider.DisplayPageInfoItemFi
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -68,6 +70,10 @@ public class DisplayPageInfoItemFieldSetProviderImpl
 			String itemClassName, long itemClassPK,
 			String infoItemFormVariationKey, ThemeDisplay themeDisplay)
 		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-183727")) {
+			return Collections.emptyList();
+		}
 
 		List<InfoFieldValue<Object>> infoFieldValues = new ArrayList<>();
 

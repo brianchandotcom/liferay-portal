@@ -45,6 +45,7 @@ import com.liferay.journal.web.internal.info.item.JournalArticleInfoItemFields;
 import com.liferay.layout.page.template.info.item.provider.DisplayPageInfoItemFieldSetProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
@@ -302,7 +303,9 @@ public class JournalArticleInfoItemFieldValuesProvider
 					JournalArticleInfoItemFields.publishDateInfoField,
 					journalArticle.getDisplayDate()));
 
-			if (themeDisplay != null) {
+			if ((themeDisplay != null) &&
+				!FeatureFlagManagerUtil.isEnabled("LPS-183727")) {
+
 				journalArticleFieldValues.add(
 					new InfoFieldValue<>(
 						JournalArticleInfoItemFields.displayPageURLInfoField,

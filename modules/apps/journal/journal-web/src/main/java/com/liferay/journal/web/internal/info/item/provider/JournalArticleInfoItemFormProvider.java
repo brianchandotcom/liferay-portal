@@ -36,6 +36,7 @@ import com.liferay.layout.page.template.info.item.provider.DisplayPageInfoItemFi
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -220,9 +221,17 @@ public class JournalArticleInfoItemFormProvider
 				_templateInfoItemFieldSetProvider.getInfoFieldSet(
 					JournalArticle.class.getName(), formVariationKey)
 			).infoFieldSetEntry(
-				_getDisplayPageInfoFieldSet()
+				unsafeConsumer -> {
+					if (!FeatureFlagManagerUtil.isEnabled("LPS-183727")) {
+						unsafeConsumer.accept(_getDisplayPageInfoFieldSet());
+					}
+				}
 			).infoFieldSetEntry(
-				displayPageInfoFieldSet
+				unsafeConsumer -> {
+					if (FeatureFlagManagerUtil.isEnabled("LPS-183727")) {
+						unsafeConsumer.accept(displayPageInfoFieldSet);
+					}
+				}
 			).infoFieldSetEntry(
 				_getFeaturedImageInfoFieldSet()
 			).infoFieldSetEntry(

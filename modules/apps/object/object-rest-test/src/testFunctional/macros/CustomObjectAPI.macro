@@ -261,6 +261,31 @@ definition {
 		return ${response};
 	}
 
+	macro getObjectEntryErcByName {
+		Variables.assertDefined(parameterList = "${name},${en_US_plural_label}");
+
+		if (isSet(virtualHost)) {
+			if (!(isSet(port))) {
+				var port = 8080;
+			}
+
+			var portalURL = "http://${virtualHost}:${port}";
+		}
+		else {
+			var portalURL = JSONCompany.getPortalURL();
+		}
+
+		var curl = '''
+			${portalURL}/o/c/${en_US_plural_label}?filter=name%20eq%20%27${name}%27 \
+				-H Content-Type: application/json \
+				-u test@liferay.com:test
+		''';
+
+		var objectEntryErc = JSONCurlUtil.get(${curl}, "$.items[?(@['name'] == '${name}')]['externalReferenceCode']");
+
+		return ${objectEntryErc};
+	}
+
 	macro getObjectEntryIdByName {
 		Variables.assertDefined(parameterList = "${name},${en_US_plural_label}");
 

@@ -1,0 +1,24 @@
+definition {
+
+	macro setUpGlobalObjectEntryValues {
+		var employeeId = CustomObjectAPI.getObjectEntryIdByName(
+			en_US_plural_label = "employees",
+			name = "John");
+		var employeeErc = CustomObjectAPI.getObjectEntryErcByName(
+			en_US_plural_label = "employees",
+			name = "John");
+		var managerId = CustomObjectAPI.getObjectEntryIdByName(
+			en_US_plural_label = "managers",
+			name = "Jane");
+		static var staticEmployeeId = ${employeeId};
+		static var staticEmployeeErc = ${employeeErc};
+		static var staticManagerId = ${managerId};
+
+		return ${staticEmployeeId};
+
+		return ${staticEmployeeErc};
+
+		return ${staticManagerId};
+	}
+
+}

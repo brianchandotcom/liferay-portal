@@ -29,7 +29,7 @@ definition {
 		CommerceConfiguration.commerceTearDown();
 	}
 
-	@description = "COMMERCE-11551 | As a buyer user, I want to be able to add to cart a 'Price On Application' sku via Quick Add to Cart"
+	@description = "COMMERCE-11551 | As a buyer user, I want to be able to add to cart a 'Price on Application' sku via Quick Add to Cart"
 	@priority = 5
 	test CanAddPriceOnApplicationSkuViaQuickAdd {
 		property portal.acceptance = "true";
@@ -48,7 +48,7 @@ definition {
 			CommerceSKUs.editSkuPricing(priceOnApplication = "true");
 		}
 
-		task ("When the buyer adds the 'Price On Application' product via Quick Add to Cart") {
+		task ("When the buyer adds the 'Price on Application' product via Quick Add to Cart") {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
@@ -345,11 +345,11 @@ definition {
 			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
 			MouseOver(
-				key_label = "Price On Application",
+				key_label = "Price on Application",
 				locator1 = "CommerceEntry#LABEL_TOOLTIP_ICON");
 
 			VerifyElementPresent(
-				key_label = "Price On Application",
+				key_label = "Price on Application",
 				key_text = "Do not set a base price for this product and instead require that buyers request a quote.",
 				locator1 = "CommerceEntry#LABEL_TOOLTIP_TEXT");
 
@@ -370,7 +370,7 @@ definition {
 			SelectFrame.selectFrameTop();
 		}
 
-		task ("And 'Price On Application' is shown as the active price") {
+		task ("And 'Price on Application' is shown as the active price") {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
@@ -434,7 +434,7 @@ definition {
 		}
 	}
 
-	@description = "COMMERCE-11549 | As an admin user, I want to be able to override 'Price On Application' set for the sku using a Price List"
+	@description = "COMMERCE-11549 | As an admin user, I want to be able to override 'Price on Application' set for the sku using a Price List"
 	@priority = 5
 	test CanPriceListPriceOverridePriceOnApplicationSet {
 		property portal.acceptance = "true";
@@ -488,7 +488,7 @@ definition {
 			CommerceJSONPriceListsAndPromotionsAPI._deleteCommercePriceList(priceListName = "Test Price List");
 		}
 
-		task ("Then 'Price On Application' is shown as the active price") {
+		task ("Then 'Price on Application' is shown as the active price") {
 			Refresh();
 
 			AssertElementPresent(locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE_ON_APPLICATION");
@@ -499,7 +499,7 @@ definition {
 		}
 	}
 
-	@description = "COMMERCE-11550 | As an admin user, I want to be able to override 'Price On Application' set for the sku using a Promotion"
+	@description = "COMMERCE-11550 | As an admin user, I want to be able to override 'Price on Application' set for the sku using a Promotion"
 	@ignore = "true"
 	@priority = 5
 	test CanPromotionPriceOverridePriceOnApplicationSet {
@@ -558,7 +558,7 @@ definition {
 			CommerceJSONPriceListsAndPromotionsAPI._deleteCommercePriceList(priceListName = "Test Promotion");
 		}
 
-		task ("Then 'Price On Application' is shown as the active price") {
+		task ("Then 'Price on Application' is shown as the active price") {
 			Refresh();
 
 			AssertElementPresent(locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE_ON_APPLICATION");
@@ -572,7 +572,7 @@ definition {
 		}
 	}
 
-	@description = "COMMERCE-11619. As a buyer user, I can verify that the Price On Application label is visible on the storefront for a product SKU marked as Price On Application."
+	@description = "COMMERCE-11619. As a buyer user, I can verify that the Price on Application label is visible on the storefront for a product SKU marked as Price on Application."
 	@priority = 5
 	test CanViewPriceOnApplicationLabelOnStoreFront {
 		property portal.acceptance = "true";
@@ -591,7 +591,7 @@ definition {
 			CommerceSKUs.editSkuPricing(priceOnApplication = "true");
 		}
 
-		task ("Then 'Price On Application' is shown as the active price both on the product card and product details page") {
+		task ("Then 'Price on Application' is shown as the active price both on the product card and product details page") {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
@@ -608,7 +608,7 @@ definition {
 			AssertElementPresent(locator1 = "CommerceAccelerators#PRODUCT_DETAILS_PRICE_ON_APPLICATION");
 		}
 
-		task ("When the buyer adds a product with a base price and the one marked as 'Price On Application' to the cart") {
+		task ("When the buyer adds a product with a base price and the one marked as 'Price on Application' to the cart") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
 
 			for (var productName : list "U-Joint,Transmission Cooler Line Assembly") {
@@ -618,7 +618,7 @@ definition {
 			}
 		}
 
-		task ("Then 'Price On Application' label is shown in the Mini Cart for the specific product with an info alert and Submit button is disabled") {
+		task ("Then 'Price on Application' label is shown in the Mini Cart for the specific product with an info alert and Submit button is disabled") {
 			CommerceNavigator.gotoMiniCart();
 
 			AssertElementPresent(
@@ -638,11 +638,11 @@ definition {
 			Button.click(button = "Request a Quote");
 		}
 
-		task ("Then 'Price On Application' label is shown for the order item on the Open Order's Details Page") {
+		task ("Then 'Price on Application' label is shown for the order item on the Open Order's Details Page") {
 			AssertTextEquals(
 				key_productName = "U-Joint",
 				locator1 = "CommerceAccelerators#ORDER_DETAILS_UNIT_PRICE",
-				value1 = "Price On Application");
+				value1 = "Price on Application");
 
 			AssertTextEquals(
 				key_productName = "Transmission Cooler Line Assembly",

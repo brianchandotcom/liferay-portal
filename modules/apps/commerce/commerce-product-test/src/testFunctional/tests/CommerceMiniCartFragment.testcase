@@ -169,7 +169,7 @@ definition {
 		}
 	}
 
-	@description = "COMMERCE-11634. As a buyer user, I can verify that the Price On Application label is visible on the Mini Cart Fragment for a product SKU marked as Price On Application."
+	@description = "COMMERCE-11634. As a buyer user, I can verify that the Price on Application label is visible on the Mini Cart Fragment for a product SKU marked as Price on Application."
 	@priority = 4
 	test CanViewPriceOnApplicationLabelOnMiniCartFragment {
 		property portal.acceptance = "false";
@@ -205,7 +205,7 @@ definition {
 			CommerceSKUs.editSkuPricing(priceOnApplication = "true");
 		}
 
-		task ("When buyer adds the product marked as Price On Application to the cart") {
+		task ("When buyer adds the product marked as Price on Application to the cart") {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
@@ -220,7 +220,7 @@ definition {
 				locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON");
 		}
 
-		task ("Then 'Price On Application' label is shown in the Mini Cart Fragment for the specific product with an info alert and Submit button is disabled") {
+		task ("Then 'Price on Application' label is shown in the Mini Cart Fragment for the specific product with an info alert and Submit button is disabled") {
 			CommerceEntry.gotoMenuTab(menuTab = "Test Mini Cart Fragment Page");
 
 			CommerceNavigator.gotoMiniCart();

@@ -415,7 +415,7 @@ definition {
 		}
 	}
 
-	@description = "COMMERCE-11635. As a buyer user, I can verify that the Price On Application label is visible on the Price Fragment for a product SKU marked as Price On Application."
+	@description = "COMMERCE-11635. As a buyer user, I can verify that the Price on Application label is visible on the Price Fragment for a product SKU marked as Price on Application."
 	@priority = 4
 	test CanViewPriceOnApplicationLabelOnPriceFragment {
 		property portal.acceptance = "false";
@@ -475,7 +475,7 @@ definition {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/u-joint");
 		}
 
-		task ("Then 'Price On Application' is shown as the active price on the Price Fragment") {
+		task ("Then 'Price on Application' is shown as the active price on the Price Fragment") {
 			AssertElementPresent(locator1 = "CommerceAccelerators#PRODUCT_DETAILS_PRICE_ON_APPLICATION");
 		}
 	}

@@ -202,7 +202,7 @@
 </tr>
 <tr>
 	<td>PRODUCT_CARD_PRICE_ON_APPLICATION</td>
-	<td>//p[@title='${key_productName}']/..//span[(@class='price-value')][normalize-space(text())='Price On Application']</td>
+	<td>//p[@title='${key_productName}']/..//span[(@class='price-value')][normalize-space(text())='Price on Application']</td>
 	<td></td>
 </tr>
 <tr>

@@ -129,12 +129,12 @@ definition {
 		if (isSet(priceOnApplication)) {
 			if (${priceOnApplication} == "true") {
 				Check.checkToggleSwitch(
-					key_toggleSwitchLabel = "Price On Application",
+					key_toggleSwitchLabel = "Price on Application",
 					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 			}
 			else {
 				Uncheck.uncheckToggleSwitch(
-					key_toggleSwitchLabel = "Price On Application",
+					key_toggleSwitchLabel = "Price on Application",
 					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 			}
 		}

@@ -49,6 +49,7 @@ import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -899,6 +900,30 @@ public class LayoutsAdminDisplayContext {
 			String.valueOf(layout.getPlid()),
 			LiferayWindowState.POP_UP.toString(), null,
 			themeDisplay.getRequest());
+	}
+
+	public Long getPlid() {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-153951")) {
+			return getSelPlid();
+		}
+
+		Layout selLayout = getSelLayout();
+
+		if (selLayout == null) {
+			return getSelPlid();
+		}
+
+		if (selLayout.isDraftLayout()) {
+			return selLayout.getPlid();
+		}
+
+		Layout draftLayout = selLayout.fetchDraftLayout();
+
+		if (draftLayout == null) {
+			return selLayout.getPlid();
+		}
+
+		return draftLayout.getPlid();
 	}
 
 	public List<BreadcrumbEntry> getPortletBreadcrumbEntries()

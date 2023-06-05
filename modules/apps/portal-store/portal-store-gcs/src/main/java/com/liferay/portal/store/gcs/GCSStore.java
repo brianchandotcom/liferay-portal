@@ -113,24 +113,34 @@ public class GCSStore implements Store, StoreAreaProcessor {
 
 	@Override
 	public String cleanUpDeletedStoreArea(
-		long companyId, int deletionQuota, TemporalAmount temporalAmount,
-		String startOffset) {
+		long companyId, int deletionQuota, Predicate<String> predicate,
+		TemporalAmount temporalAmount, String startOffset) {
 
 		return _processStoreArea(
-			StoreArea.DELETED, companyId, deletionQuota, blob -> true,
-			temporalAmount, startOffset);
+			StoreArea.DELETED, companyId, deletionQuota,
+			blob -> predicate.test(blob.getName()), temporalAmount,
+			startOffset);
 	}
 
 	@Override
 	public String cleanUpNewStoreArea(
-		long companyId, int evictionQuota, TemporalAmount temporalAmount,
-		String startOffset) {
+		long companyId, int evictionQuota, Predicate<String> predicate,
+		TemporalAmount temporalAmount, String startOffset) {
 
 		return _processStoreArea(
 			StoreArea.NEW, companyId, evictionQuota,
-			blob -> copy(
-				blob.getName(),
-				StoreArea.NEW.relocate(blob.getName(), StoreArea.LIVE)),
+			blob -> {
+				if (predicate.test(blob.getName())) {
+					return copy(
+						blob.getName(),
+						StoreArea.NEW.relocate(
+							blob.getName(), StoreArea.DELETED));
+				}
+
+				return copy(
+					blob.getName(),
+					StoreArea.NEW.relocate(blob.getName(), StoreArea.LIVE));
+			},
 			temporalAmount, startOffset);
 	}
 

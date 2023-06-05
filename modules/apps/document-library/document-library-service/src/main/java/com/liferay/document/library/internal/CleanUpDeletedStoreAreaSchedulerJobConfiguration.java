@@ -79,6 +79,7 @@ public class CleanUpDeletedStoreAreaSchedulerJobConfiguration
 			companyId,
 			_storeAreaProcessor.cleanUpDeletedStoreArea(
 				companyId, _storeAreaConfiguration.deletionQuota(),
+				name -> true,
 				Duration.ofDays(_storeAreaConfiguration.evictionAge()),
 				_startOffsets.getOrDefault(companyId, StringPool.BLANK)));
 	}

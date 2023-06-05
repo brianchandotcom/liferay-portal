@@ -568,6 +568,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					).put(
 						"batch.planner.import.enabled", "true"
 					).put(
+						"companyId", objectDefinition.getCompanyId()
+					).put(
 						"entity.class.name",
 						ObjectEntry.class.getName() + "#" + osgiJaxRsName
 					).put(

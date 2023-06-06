@@ -18,27 +18,6 @@ html#{$cadmin-selector} {
 			z-index: $control-menu-zindex;
 		}
 
-		.control-menu-icon,
-		.control-menu-icon .dropdown-toggle {
-			border-radius: 4px;
-			display: inline-block;
-			height: 32px;
-			line-height: 32px;
-			text-align: center;
-			transition: box-shadow 0.15s ease-in-out;
-			width: 32px;
-
-			&:focus {
-				box-shadow: $control-menu-focus-box-shadow;
-				outline: 0;
-			}
-
-			.portlet-options {
-				display: flex;
-				height: 32px;
-			}
-		}
-
 		.control-menu-level-1 {
 			> .container-fluid {
 				padding: 8px;

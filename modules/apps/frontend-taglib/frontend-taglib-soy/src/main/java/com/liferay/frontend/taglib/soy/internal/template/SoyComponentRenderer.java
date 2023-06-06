@@ -24,7 +24,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -42,15 +41,10 @@ public class SoyComponentRenderer {
 
 		SoyComponentRendererHelper soyComponentRendererHelper =
 			new SoyComponentRendererHelper(
-				_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
-					httpServletRequest),
 				httpServletRequest, componentDescriptor, context, _portal);
 
 		soyComponentRendererHelper.renderSoyComponent(writer);
 	}
-
-	@Reference
-	private AbsolutePortalURLBuilderFactory _absolutePortalURLBuilderFactory;
 
 	@Reference
 	private Portal _portal;

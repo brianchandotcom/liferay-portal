@@ -19,14 +19,14 @@ if (context.defaultEventHandler) {
 			if ($WRAPPER) {
 				Liferay.component(
 					'$ID',
-					new $MODULE(context, '#$ID'),
+					new $MODULE.default(context, '#$ID'),
 					componentConfig
 				);
 			}
 			else {
 				Liferay.component(
 					'$ID',
-					new $MODULE(context),
+					new $MODULE.default(context),
 					componentConfig
 				);
 			}
@@ -37,14 +37,14 @@ else {
 	if ($WRAPPER) {
 		Liferay.component(
 			'$ID',
-			new $MODULE(context, '#$ID'),
+			new $MODULE.default(context, '#$ID'),
 			componentConfig
 		);
 	}
 	else {
 		Liferay.component(
 			'$ID',
-			new $MODULE(context),
+			new $MODULE.default(context),
 			componentConfig
 		);
 	}

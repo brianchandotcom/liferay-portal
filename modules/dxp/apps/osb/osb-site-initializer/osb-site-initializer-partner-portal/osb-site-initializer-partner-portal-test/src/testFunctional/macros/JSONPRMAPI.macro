@@ -323,6 +323,7 @@ definition {
 					"externalReferenceCode":"${mdfExternalReferenceCode}",
 					"externalReferenceCodeSF":"${mdfExternalReferenceCode}",
 					"liferayBusinessSalesGoals":"${goalsOptions}",
+					"liferayBusinessSalesGoalsOther":"",
 					"liferaysUserIdSF":${userId},
 					"maxDateActivity":"${endDate}",
 					"mdfRequestStatus":{
@@ -385,6 +386,7 @@ definition {
 					},
 					"emailAddress":"${userEmailAddress}",
 					"liferayBusinessSalesGoals":"${goalsOptions}",
+					"liferayBusinessSalesGoalsOther":"",
 					"liferaysUserIdSF":${userId},
 					"maxDateActivity":"${endDate}",
 					"mdfRequestStatus":{

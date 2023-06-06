@@ -192,19 +192,19 @@
 												"fragmentLink": {
 													"href": {
 														"value_i18n": {
-															"ar_SA": "https://partner.liferay.com/documents/72519/1450806/Liferay+Solution+Partner+Program+Guide+2023.pdf/22a6eca6-1b1b-6f37-9b0c-441ba069ef6b?t=1671150824668",
-															"ca_ES": "https://partner.liferay.com/documents/72519/1450806/Liferay+Solution+Partner+Program+Guide+2023.pdf/22a6eca6-1b1b-6f37-9b0c-441ba069ef6b?t=1671150824668",
-															"de_DE": "https://partner.liferay.com/documents/72519/1450806/Liferay+Solution+Partner+Program+Guide+2023.pdf/22a6eca6-1b1b-6f37-9b0c-441ba069ef6b?t=1671150824668",
-															"en_US": "https://partner.liferay.com/documents/72519/1450806/Liferay+Solution+Partner+Program+Guide+2023.pdf/22a6eca6-1b1b-6f37-9b0c-441ba069ef6b?t=1671150824668",
-															"es_ES": "https://partner.liferay.com/documents/72519/1450806/Liferay+Solution+Partner+Program+Guide+2023.pdf/22a6eca6-1b1b-6f37-9b0c-441ba069ef6b?t=1671150824668",
-															"fi_FI": "https://partner.liferay.com/documents/72519/1450806/Liferay+Solution+Partner+Program+Guide+2023.pdf/22a6eca6-1b1b-6f37-9b0c-441ba069ef6b?t=1671150824668",
-															"fr_FR": "https://partner.liferay.com/documents/72519/1450806/Liferay+Solution+Partner+Program+Guide+2023.pdf/22a6eca6-1b1b-6f37-9b0c-441ba069ef6b?t=1671150824668",
-															"hu_HU": "https://partner.liferay.com/documents/72519/1450806/Liferay+Solution+Partner+Program+Guide+2023.pdf/22a6eca6-1b1b-6f37-9b0c-441ba069ef6b?t=1671150824668",
-															"ja_JP": "https://partner.liferay.com/documents/72519/1450806/Liferay+Solution+Partner+Program+Guide+2023.pdf/22a6eca6-1b1b-6f37-9b0c-441ba069ef6b?t=1671150824668",
-															"nl_NL": "https://partner.liferay.com/documents/72519/1450806/Liferay+Solution+Partner+Program+Guide+2023.pdf/22a6eca6-1b1b-6f37-9b0c-441ba069ef6b?t=1671150824668",
-															"pt_BR": "https://partner.liferay.com/documents/72519/1450806/Liferay+Solution+Partner+Program+Guide+2023.pdf/22a6eca6-1b1b-6f37-9b0c-441ba069ef6b?t=1671150824668",
-															"sv_SE": "https://partner.liferay.com/documents/72519/1450806/Liferay+Solution+Partner+Program+Guide+2023.pdf/22a6eca6-1b1b-6f37-9b0c-441ba069ef6b?t=1671150824668",
-															"zh_CN": "https://partner.liferay.com/documents/72519/1450806/Liferay+Solution+Partner+Program+Guide+2023.pdf/22a6eca6-1b1b-6f37-9b0c-441ba069ef6b?t=1671150824668"
+															"ar_SA": "[$DOCUMENT_URL:/site-initializer/documents/group/marketing-resources-pdf/partner-marketing-program-guide.pdf$]",
+															"ca_ES": "[$DOCUMENT_URL:/site-initializer/documents/group/marketing-resources-pdf/partner-marketing-program-guide.pdf$]",
+															"de_DE": "[$DOCUMENT_URL:/site-initializer/documents/group/marketing-resources-pdf/partner-marketing-program-guide.pdf$]",
+															"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/marketing-resources-pdf/partner-marketing-program-guide.pdf$]",
+															"es_ES": "[$DOCUMENT_URL:/site-initializer/documents/group/marketing-resources-pdf/partner-marketing-program-guide.pdf$]",
+															"fi_FI": "[$DOCUMENT_URL:/site-initializer/documents/group/marketing-resources-pdf/partner-marketing-program-guide.pdf$]",
+															"fr_FR": "[$DOCUMENT_URL:/site-initializer/documents/group/marketing-resources-pdf/partner-marketing-program-guide.pdf$]",
+															"hu_HU": "[$DOCUMENT_URL:/site-initializer/documents/group/marketing-resources-pdf/partner-marketing-program-guide.pdf$]",
+															"ja_JP": "[$DOCUMENT_URL:/site-initializer/documents/group/marketing-resources-pdf/partner-marketing-program-guide.pdf$]",
+															"nl_NL": "[$DOCUMENT_URL:/site-initializer/documents/group/marketing-resources-pdf/partner-marketing-program-guide.pdf$]",
+															"pt_BR": "[$DOCUMENT_URL:/site-initializer/documents/group/marketing-resources-pdf/partner-marketing-program-guide.pdf$]",
+															"sv_SE": "[$DOCUMENT_URL:/site-initializer/documents/group/marketing-resources-pdf/partner-marketing-program-guide.pdf$]",
+															"zh_CN": "[$DOCUMENT_URL:/site-initializer/documents/group/marketing-resources-pdf/partner-marketing-program-guide.pdf$]"
 														}
 													},
 													"target": "Blank"

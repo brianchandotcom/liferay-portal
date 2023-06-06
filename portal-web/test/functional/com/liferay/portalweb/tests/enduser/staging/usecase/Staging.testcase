@@ -268,6 +268,39 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-146160 : Verify Admin can enable local staging on the inherited site even site template propagation is disabled.The testcase is blocked by LPS-146160."
+	@priority = 4
+	test CanEnableLocalStagingOnInheritedSite {
+		property test.name.skip.portal.instance = "Staging#CanEnableLocalStagingOnInheritedSite";
+
+		task ("Given: Create a site with new site template with disable llow site administrators to modify pages associated with this site template, even when propagation of changes is enabled and Ready for Propagation,the testcase is blocked by LPS-146160.") {
+			SiteTemplates.addCP(
+				disableChanges = "true",
+				disablePropagation = "true",
+				siteTemplateName = "Site Template Name1");
+
+			SiteTemplates.addSitePageViaSiteTemplateCP(
+				pageName = "Widget Page Name",
+				siteTemplateName = "Site Template Name1");
+
+			Site.openSitesAdmin();
+
+			Site.addCP(
+				siteName = "Site Name1",
+				siteTemplateName = "Site Template Name1",
+				siteTemplateTab = "Custom Site Templates",
+				siteType = "Site Template");
+		}
+
+		task ("When: Enable local staging for site") {
+			Staging.openStagingAdmin(siteURLKey = "site-name1");
+		}
+
+		task ("Then: Verify user is able to enable local staging on inherited site.") {
+			Staging.activateStagingCP(siteName = "Site Name1");
+		}
+	}
+
 	@description = "This is a use case for LPS-159626. Verify that can publish web content with URL references to live via remote staging."
 	@priority = 3
 	test CanPublishWCWithURLReferenceViaRemoteStaging {

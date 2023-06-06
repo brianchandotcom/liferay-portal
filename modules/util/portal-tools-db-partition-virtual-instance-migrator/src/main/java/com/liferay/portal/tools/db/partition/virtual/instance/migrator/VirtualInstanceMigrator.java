@@ -149,7 +149,7 @@ public class VirtualInstanceMigrator {
 			_exitWithCode(ErrorCodes.SUCCESS);
 		}
 		catch (Exception exception) {
-			System.err.println("[ERROR] Unexpected error:");
+			System.err.println("Unexpected error:");
 			exception.printStackTrace();
 			_exitWithCode(ErrorCodes.UNEXPECTED_ERROR);
 		}

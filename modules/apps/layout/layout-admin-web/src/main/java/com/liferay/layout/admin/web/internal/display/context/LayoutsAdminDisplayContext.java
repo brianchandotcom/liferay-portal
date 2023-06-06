@@ -40,6 +40,7 @@ import com.liferay.layout.admin.web.internal.util.FaviconUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
+import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
 import com.liferay.layout.theme.item.selector.criterion.LayoutThemeItemSelectorCriterion;
 import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.layout.util.comparator.LayoutCreateDateComparator;
@@ -104,7 +105,6 @@ import com.liferay.portal.util.RobotsUtil;
 import com.liferay.site.display.context.GroupDisplayContextHelper;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalServiceUtil;
-import com.liferay.sites.kernel.util.SitesUtil;
 import com.liferay.taglib.security.PermissionsURLTag;
 
 import java.io.IOException;
@@ -136,12 +136,14 @@ public class LayoutsAdminDisplayContext {
 	public LayoutsAdminDisplayContext(
 		ItemSelector itemSelector, LayoutActionsHelper layoutActionsHelper,
 		LayoutCopyHelper layoutCopyHelper,
+		LayoutSetPrototypeHelper layoutSetPrototypeHelper,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
 		_itemSelector = itemSelector;
 		_layoutActionsHelper = layoutActionsHelper;
 		_layoutCopyHelper = layoutCopyHelper;
+		_layoutSetPrototypeHelper = layoutSetPrototypeHelper;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 
@@ -371,13 +373,15 @@ public class LayoutsAdminDisplayContext {
 		Group group = getSelGroup();
 
 		if (layoutSet.isLayoutSetPrototypeLinkEnabled()) {
-			_conflictPlids = SitesUtil.getConflictingPlidsOfLayoutSetGroup(
-				group.getGroupId());
+			_conflictPlids =
+				_layoutSetPrototypeHelper.getConflictingPlidsOfLayoutSetGroup(
+					group.getGroupId());
 		}
 		else if (group.isLayoutSetPrototype()) {
 			_conflictPlids =
-				SitesUtil.getConflictingPlidsOfLayoutSetPrototypeGroup(
-					group.getGroupId());
+				_layoutSetPrototypeHelper.
+					getConflictingPlidsOfLayoutSetPrototypeGroup(
+						group.getGroupId());
 		}
 		else {
 			_conflictPlids = new HashSet<>();
@@ -2283,6 +2287,7 @@ public class LayoutsAdminDisplayContext {
 	private final LayoutActionsHelper _layoutActionsHelper;
 	private final LayoutCopyHelper _layoutCopyHelper;
 	private Long _layoutId;
+	private final LayoutSetPrototypeHelper _layoutSetPrototypeHelper;
 	private SearchContainer<Layout> _layoutsSearchContainer;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;

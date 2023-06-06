@@ -20,6 +20,7 @@ import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.layout.admin.web.internal.action.provider.LayoutActionProvider;
 import com.liferay.layout.admin.web.internal.helper.LayoutActionsHelper;
 import com.liferay.layout.security.permission.resource.LayoutContentModelResourcePermission;
+import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
 import com.liferay.layout.util.LayoutsTree;
 import com.liferay.layout.util.template.LayoutConverterRegistry;
 import com.liferay.petra.string.StringBundler;
@@ -171,12 +172,15 @@ public class LayoutsTreeImpl implements LayoutsTree {
 		Set<Long> conflictPlids = new HashSet<>();
 
 		if (layoutSet.isLayoutSetPrototypeLinkEnabled()) {
-			conflictPlids = _sites.getConflictingPlidsOfLayoutSetGroup(
-				group.getGroupId());
+			conflictPlids =
+				_layoutSetPrototypeHelper.getConflictingPlidsOfLayoutSetGroup(
+					group.getGroupId());
 		}
 		else if (group.isLayoutSetPrototype()) {
-			conflictPlids = _sites.getConflictingPlidsOfLayoutSetPrototypeGroup(
-				group.getGroupId());
+			conflictPlids =
+				_layoutSetPrototypeHelper.
+					getConflictingPlidsOfLayoutSetPrototypeGroup(
+						group.getGroupId());
 		}
 
 		return conflictPlids;
@@ -547,6 +551,9 @@ public class LayoutsTreeImpl implements LayoutsTree {
 
 	@Reference
 	private LayoutSetLocalService _layoutSetLocalService;
+
+	@Reference
+	private LayoutSetPrototypeHelper _layoutSetPrototypeHelper;
 
 	@Reference
 	private SiteNavigationMenuLocalService _siteNavigationMenuLocalService;

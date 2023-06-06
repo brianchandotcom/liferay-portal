@@ -92,19 +92,23 @@ public class CompanyServiceUtil {
 	 * @param maxUsers the max number of company users (optionally
 	 <code>0</code>)
 	 * @param active whether the company is active
-	 * @param emailAdmin Email set to the admin user of the company
-	 * @param passwordAdmin Password set to the admin user of the company
+	 * @param defaultAdminPassword Password set to the admin user of the company
+	 * @param defaultAdminEmailAddress Email set to the admin user of the company
 	 * @return the company
 	 */
 	public static Company addCompany(
 			String webId, String virtualHost, String mx, int maxUsers,
-			boolean active, String screenNameAdmin, String emailAdmin,
-			String passwordAdmin, String firstNameAdmin, String lastNameAdmin)
+			boolean active, String defaultAdminPassword,
+			String defaultAdminScreenName, String defaultAdminEmailAddress,
+			String defaultAdminFirstName, String defaultAdminMiddleName,
+			String defaultAdminLastName)
 		throws PortalException {
 
 		return getService().addCompany(
-			webId, virtualHost, mx, maxUsers, active, screenNameAdmin,
-			emailAdmin, passwordAdmin, firstNameAdmin, lastNameAdmin);
+			webId, virtualHost, mx, maxUsers, active, defaultAdminPassword,
+			defaultAdminScreenName, defaultAdminEmailAddress,
+			defaultAdminFirstName, defaultAdminMiddleName,
+			defaultAdminLastName);
 	}
 
 	public static Company deleteCompany(long companyId) throws PortalException {

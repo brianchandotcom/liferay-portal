@@ -105,15 +105,17 @@ public interface CompanyService extends BaseService {
 	 * @param maxUsers the max number of company users (optionally
 	 <code>0</code>)
 	 * @param active whether the company is active
-	 * @param emailAdmin Email set to the admin user of the company
-	 * @param passwordAdmin Password set to the admin user of the company
+	 * @param defaultAdminPassword Password set to the admin user of the company
+	 * @param defaultAdminEmailAddress Email set to the admin user of the company
 	 * @return the company
 	 */
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
 	public Company addCompany(
 			String webId, String virtualHost, String mx, int maxUsers,
-			boolean active, String screenNameAdmin, String emailAdmin,
-			String passwordAdmin, String firstNameAdmin, String lastNameAdmin)
+			boolean active, String defaultAdminPassword,
+			String defaultAdminScreenName, String defaultAdminEmailAddress,
+			String defaultAdminFirstName, String defaultAdminMiddleName,
+			String defaultAdminLastName)
 		throws PortalException;
 
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)

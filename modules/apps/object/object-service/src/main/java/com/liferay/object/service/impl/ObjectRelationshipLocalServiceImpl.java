@@ -797,6 +797,8 @@ public class ObjectRelationshipLocalServiceImpl
 		objectField.setIndexedLanguageId(null);
 		objectField.setLabelMap(labelMap, LocaleUtil.getSiteDefault());
 		objectField.setName(dbColumnName);
+		objectField.setReadOnly(ObjectFieldConstants.READ_ONLY_FALSE);
+		objectField.setReadOnlyConditionExpression(StringPool.BLANK);
 		objectField.setRelationshipType(type);
 		objectField.setRequired(false);
 

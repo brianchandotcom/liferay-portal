@@ -544,9 +544,7 @@ public class ObjectDefinitionLocalServiceImpl
 		ObjectDefinition objectDefinition = getObjectDefinition(
 			objectField.getObjectDefinitionId());
 
-		if (objectDefinition.isDefaultStorageType() ||
-			objectDefinition.isAccountEntryRestricted()) {
-
+		if (objectDefinition.isDefaultStorageType()) {
 			return objectDefinition;
 		}
 

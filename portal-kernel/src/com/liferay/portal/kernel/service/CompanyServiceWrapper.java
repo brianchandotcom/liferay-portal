@@ -40,7 +40,6 @@ public class CompanyServiceWrapper
 	 * @param webId the company's web domain
 	 * @param virtualHost the company's virtual host name
 	 * @param mx the company's mail domain
-	 * @param system whether the company is the very first company (i.e., the
 	 * @param maxUsers the max number of company users (optionally
 	 <code>0</code>)
 	 * @param active whether the company is active
@@ -63,7 +62,6 @@ public class CompanyServiceWrapper
 	 * @param webId the company's web domain
 	 * @param virtualHost the company's virtual host name
 	 * @param mx the company's mail domain
-	 * @param system whether the company is the very first company (i.e., the
 	 * @param maxUsers the max number of company users (optionally
 	 <code>0</code>)
 	 * @param active whether the company is active
@@ -77,6 +75,33 @@ public class CompanyServiceWrapper
 
 		return _companyService.addCompany(
 			webId, virtualHost, mx, maxUsers, active);
+	}
+
+	/**
+	 * Adds a company.
+	 *
+	 * @param webId the company's web domain
+	 * @param virtualHost the company's virtual host name
+	 * @param mx the company's mail domain
+	 * @param maxUsers the max number of company users (optionally
+	 <code>0</code>)
+	 * @param active whether the company is active
+	 * @param emailAdmin Email set to the admin user of the company
+	 * @param passwordAdmin Password set to the admin user of the company
+	 * @return the company
+	 */
+	@Override
+	public com.liferay.portal.kernel.model.Company addCompany(
+			java.lang.String webId, java.lang.String virtualHost,
+			java.lang.String mx, int maxUsers, boolean active,
+			java.lang.String screenNameAdmin, java.lang.String emailAdmin,
+			java.lang.String passwordAdmin, java.lang.String firstNameAdmin,
+			java.lang.String lastNameAdmin)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _companyService.addCompany(
+			webId, virtualHost, mx, maxUsers, active, screenNameAdmin,
+			emailAdmin, passwordAdmin, firstNameAdmin, lastNameAdmin);
 	}
 
 	@Override

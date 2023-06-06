@@ -416,7 +416,7 @@ definition {
 		var key_filterName = ${filterName};
 
 		if (!(isSet(key_dropdownName))) {
-			var key_dropdownName = "Filter and Order";
+			var key_dropdownName = "Order";
 		}
 
 		Click(locator1 = "ACSegments#FILTER_AND_ORDER_BUTTON");

@@ -109,19 +109,6 @@
 			background-color: #fff;
 			flex: 1;
 			overflow: hidden;
-
-			.dataset-display {
-				height: 100%;
-
-				&-content-wrapper,
-				&-wrapper {
-					height: 100%;
-				}
-
-				& > form {
-					height: 100%;
-				}
-			}
 		}
 	}
 

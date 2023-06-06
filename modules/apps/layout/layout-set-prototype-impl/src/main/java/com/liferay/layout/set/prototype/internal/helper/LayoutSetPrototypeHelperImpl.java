@@ -20,12 +20,13 @@ import com.liferay.portal.kernel.model.GroupTable;
 import com.liferay.portal.kernel.model.LayoutSetPrototypeTable;
 import com.liferay.portal.kernel.model.LayoutSetTable;
 import com.liferay.portal.kernel.model.LayoutTable;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 
 import java.util.HashSet;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -41,7 +42,7 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 		Set<Long> plids = new HashSet<>();
 
 		plids.addAll(
-			LayoutLocalServiceUtil.dslQuery(
+			_layoutLocalService.dslQuery(
 				DSLQueryFactoryUtil.selectDistinct(
 					LayoutTable.INSTANCE.plid
 				).from(
@@ -107,7 +108,7 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 		Set<Long> plids = new HashSet<>();
 
 		plids.addAll(
-			LayoutLocalServiceUtil.dslQuery(
+			_layoutLocalService.dslQuery(
 				DSLQueryFactoryUtil.selectDistinct(
 					LayoutTable.INSTANCE.plid
 				).from(
@@ -162,5 +163,8 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 
 		return plids;
 	}
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 }

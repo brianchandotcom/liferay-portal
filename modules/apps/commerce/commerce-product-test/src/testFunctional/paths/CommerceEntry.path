@@ -686,6 +686,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MODAL_DATASET_ROW_ITEM</td>
+	<td>//div[contains(@class,'modal-iframe-content')]//div[@class='dnd-tbody']//div[@class='dnd-tr' and contains(.,'${key_entry}')]/div[${key_index}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENTRY_NAME_BODY_VERTICAL_ELLIPSIS</td>
 	<td>//div[@class='data-set-wrapper' or @class='searchcontainer-content']//a[text()='${key_entryName}']/../../following-sibling::div//button</td>
 	<td></td>

@@ -4667,6 +4667,44 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
+	public void testPutCustomObjectEntryWithNestedCustomObjectEntriesByExternalReferenceCode()
+		throws Exception {
+
+		// Many to many
+
+		_objectRelationship1 = ObjectRelationshipTestUtil.addObjectRelationship(
+			_objectDefinition1, _objectDefinition2, TestPropsValues.getUserId(),
+			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+
+		_testPutCustomObjectEntryWithNestedCustomObjectEntriesByExternalReferenceCode(
+			false);
+
+		_objectRelationshipLocalService.deleteObjectRelationship(
+			_objectRelationship1);
+
+		// Many to one
+
+		_objectRelationship1 = ObjectRelationshipTestUtil.addObjectRelationship(
+			_objectDefinition2, _objectDefinition1, TestPropsValues.getUserId(),
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		_testPutCustomObjectEntryWithNestedCustomObjectEntriesByExternalReferenceCode(
+			true);
+
+		_objectRelationshipLocalService.deleteObjectRelationship(
+			_objectRelationship1);
+
+		// One to many
+
+		_objectRelationship1 = ObjectRelationshipTestUtil.addObjectRelationship(
+			_objectDefinition1, _objectDefinition2, TestPropsValues.getUserId(),
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		_testPutCustomObjectEntryWithNestedCustomObjectEntriesByExternalReferenceCode(
+			false);
+	}
+
+	@Test
 	public void testPutCustomObjectEntryWithNestedCustomObjectEntriesInManyToManyRelationship()
 		throws Exception {
 
@@ -5337,6 +5375,91 @@ public class ObjectEntryResourceTest {
 			Http.Method.POST);
 
 		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
+	}
+
+	private void
+			_testPutCustomObjectEntryWithNestedCustomObjectEntriesByExternalReferenceCode(
+				boolean manyToOne)
+		throws Exception {
+
+		JSONObject objectEntryJSONObject = JSONUtil.put(
+			_objectRelationship1.getName(),
+			() -> {
+				if (manyToOne) {
+					return JSONFactoryUtil.createJSONObject(
+						JSONUtil.put(
+							_OBJECT_FIELD_NAME_2, RandomTestUtil.randomString()
+						).put(
+							"externalReferenceCode", _ERC_VALUE_1
+						).toString());
+				}
+
+				return _createObjectEntriesJSONArray(
+					new String[] {_ERC_VALUE_1, _ERC_VALUE_2},
+					_OBJECT_FIELD_NAME_2,
+					new String[] {
+						RandomTestUtil.randomString(),
+						RandomTestUtil.randomString()
+					});
+			});
+
+		JSONObject jsonObject = HTTPTestUtil.invoke(
+			objectEntryJSONObject.toString(),
+			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
+
+		JSONObject newObjectEntryJSONObject = JSONUtil.put(
+			_objectRelationship1.getName(),
+			() -> {
+				if (manyToOne) {
+					return JSONFactoryUtil.createJSONObject(
+						JSONUtil.put(
+							_OBJECT_FIELD_NAME_2, _NEW_OBJECT_FIELD_VALUE_1
+						).put(
+							"externalReferenceCode", _ERC_VALUE_1
+						).toString());
+				}
+
+				return _createObjectEntriesJSONArray(
+					new String[] {_ERC_VALUE_1}, _OBJECT_FIELD_NAME_2,
+					new String[] {_NEW_OBJECT_FIELD_VALUE_1});
+			});
+
+		jsonObject = HTTPTestUtil.invoke(
+			newObjectEntryJSONObject.toString(),
+			StringBundler.concat(
+				_objectDefinition1.getRESTContextPath(),
+				"/by-external-reference-code/",
+				jsonObject.getString("externalReferenceCode")),
+			Http.Method.PUT);
+
+		Assert.assertEquals(
+			0,
+			jsonObject.getJSONObject(
+				"status"
+			).get(
+				"code"
+			));
+
+		if (manyToOne) {
+			_assertObjectEntryField(
+				jsonObject.getJSONObject(
+					StringBundler.concat(
+						"r_", _objectRelationship1.getName(), "_",
+						StringUtil.replaceLast(
+							_objectDefinition2.getPKObjectFieldName(), "Id",
+							""))),
+				_OBJECT_FIELD_NAME_2, _NEW_OBJECT_FIELD_VALUE_1);
+		}
+		else {
+			JSONArray nestedObjectEntriesJSONArray = jsonObject.getJSONArray(
+				_objectRelationship1.getName());
+
+			Assert.assertEquals(1, nestedObjectEntriesJSONArray.length());
+
+			_assertObjectEntryField(
+				(JSONObject)nestedObjectEntriesJSONArray.get(0),
+				_OBJECT_FIELD_NAME_2, _NEW_OBJECT_FIELD_VALUE_1);
+		}
 	}
 
 	private JSONObject _toEmbeddedTaxonomyCategoryJSONObject(

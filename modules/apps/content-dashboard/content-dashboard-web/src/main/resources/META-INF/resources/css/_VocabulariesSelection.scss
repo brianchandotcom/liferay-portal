@@ -4,10 +4,6 @@
 html#{$cadmin-selector} {
 	.cadmin {
 		.vocabularies-selection {
-			&-wrapper {
-				height: 285px;
-			}
-
 			&-loader {
 				top: 50%;
 				transform: translateY(-50%);

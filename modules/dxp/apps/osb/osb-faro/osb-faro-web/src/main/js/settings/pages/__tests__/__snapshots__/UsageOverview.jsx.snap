@@ -71,7 +71,7 @@ exports[`UsageOverview should render 1`] = `
                   class="metric-breakdown"
                 >
                   <div
-                    class="sticker sticker-root sticker-static sticker-rounded sticker-light"
+                    class="sticker sticker-root sticker-static sticker-rounded sticker-dark"
                   >
                     <svg
                       class="lexicon-icon lexicon-icon-ac-individual icon-root"
@@ -138,7 +138,7 @@ exports[`UsageOverview should render 1`] = `
                   class="metric-breakdown"
                 >
                   <div
-                    class="sticker sticker-root sticker-static sticker-rounded sticker-light"
+                    class="sticker sticker-root sticker-static sticker-rounded sticker-dark"
                   >
                     <svg
                       class="lexicon-icon lexicon-icon-faro-page-views icon-root"

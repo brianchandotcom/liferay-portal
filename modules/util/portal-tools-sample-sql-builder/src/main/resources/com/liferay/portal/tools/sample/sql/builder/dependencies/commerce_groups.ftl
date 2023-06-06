@@ -250,13 +250,13 @@
 
 		${dataFactory.toInsertSQL(commerceShippingFixedOptionModel)}
 
-		<#list dataFactory.newCommerceOrderModels(commerceChannelGroupModel.groupId, commerceAccountEntryModels[0].accountEntryId, commerceCurrencyModel.commerceCurrencyId, addressModels[0].addressId, addressModels[0].addressId, commerceShippingMethodModel.commerceShippingMethodId, "Standard Delivery", 8) as cancelledCommerceOrderModel>
+		<#list dataFactory.newCommerceOrderModels(commerceChannelGroupModel.groupId, commerceAccountEntryModels[0].accountEntryId, commerceCurrencyModel.commerceCurrencyId, commerceShippingMethodModel.commerceShippingMethodId, 8) as cancelledCommerceOrderModel>
 			${dataFactory.toInsertSQL(cancelledCommerceOrderModel)}
 
 			${dataFactory.toInsertSQL(dataFactory.newCommerceOrderItemModel(cancelledCommerceOrderModel, commercePriceListModel.commercePriceListId, cProductModels[0]))}
 		</#list>
 
-		<#list dataFactory.newCommerceOrderModels(commerceChannelGroupModel.groupId, commerceAccountEntryModels[0].accountEntryId, commerceCurrencyModel.commerceCurrencyId, addressModels[0].addressId, addressModels[0].addressId, commerceShippingMethodModel.commerceShippingMethodId, "Standard Delivery", 1) as pendingCommerceOrderModel>
+		<#list dataFactory.newCommerceOrderModels(commerceChannelGroupModel.groupId, commerceAccountEntryModels[0].accountEntryId, commerceCurrencyModel.commerceCurrencyId, commerceShippingMethodModel.commerceShippingMethodId, 1) as pendingCommerceOrderModel>
 			${dataFactory.toInsertSQL(pendingCommerceOrderModel)}
 
 			<#assign

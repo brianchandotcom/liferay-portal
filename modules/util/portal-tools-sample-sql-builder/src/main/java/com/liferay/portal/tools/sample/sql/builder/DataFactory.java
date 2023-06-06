@@ -1894,6 +1894,17 @@ public class DataFactory {
 
 	public List<CommerceOrderModel> newCommerceOrderModels(
 		long groupId, long accountEntryId, long commerceCurrencyId,
+		long commerceShippingMethodId, int orderStatus) {
+
+		return newCommerceOrderModels(
+			groupId, accountEntryId, commerceCurrencyId,
+			_firstAddressModel.getAddressId(),
+			_firstAddressModel.getAddressId(), commerceShippingMethodId,
+			"Standard Delivery", orderStatus);
+	}
+
+	public List<CommerceOrderModel> newCommerceOrderModels(
+		long groupId, long accountEntryId, long commerceCurrencyId,
 		long billingAddressId, long shippingAddressId,
 		long commerceShippingMethodId, String commerceShippingOptionName,
 		int orderStatus) {

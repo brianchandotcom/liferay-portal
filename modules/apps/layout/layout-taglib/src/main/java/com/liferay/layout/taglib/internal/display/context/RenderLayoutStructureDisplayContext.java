@@ -67,6 +67,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -505,6 +506,28 @@ public class RenderLayoutStructureDisplayContext {
 		}
 
 		return null;
+	}
+
+	public Map<String, Object> getInfoItemActionComponentContext() {
+		return HashMapBuilder.<String, Object>put(
+			"executeInfoItemActionURL",
+			() -> {
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)_httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				StringBundler sb = new StringBundler(6);
+
+				sb.append(PortalUtil.getPortalURL(_httpServletRequest));
+				sb.append(_themeDisplay.getPathMain());
+				sb.append("/portal/execute_info_item_action?p_l_mode=");
+				sb.append(getLayoutMode());
+				sb.append("&plid=");
+				sb.append(themeDisplay.getPlid());
+
+				return sb.toString();
+			}
+		).build();
 	}
 
 	public String getLayoutMode() {

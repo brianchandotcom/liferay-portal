@@ -5,39 +5,39 @@ definition {
 	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.component.names = "Frontend Dataset";
-	property testray.main.component.name = "Frontend Dataset";
+	property testray.component.names = "Frontend Data Set";
+	property testray.main.component.name = "Frontend Data Set";
 
 	setUp {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
 
-		task ("Given access Datasets admin page") {
+		task ("Given access to the Data Sets admin page") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Object",
 				panel = "Control Panel",
-				portlet = "Datasets");
+				portlet = "Data Sets");
 		}
 	}
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		FrontendDataSetAdmin.deleteAllDatasetEntries();
+		FrontendDataSetAdmin.deleteAllDataSetEntries();
 
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
-	@description = "Blocked by LPS-187299. Confirm that the user can change the pagination on the dataset admin page"
+	@description = "Blocked by LPS-187299. Confirm that the user can change the pagination on the data set admin page"
 	@ignore = "true"
 	@priority = 4
 	test CanChangePaginationInAdminPage {
 		task ("Given create 6 data sets") {
 			FrontendDataSetAdmin.createDataSet(
-				key_datasetNameList = "Test Dataset 1,Test Dataset 2,Test Dataset 3,Test Dataset 4,Test Dataset 5,Test Dataset 6",
+				key_dataSetNameList = "Test Data Set 1,Test Data Set 2,Test Data Set 3,Test Data Set 4,Test Data Set 5,Test Data Set 6",
 				key_type = "/c/fdsentries");
 		}
 
@@ -46,7 +46,7 @@ definition {
 		}
 
 		task ("Then confirm that only 4 entries are displayed") {
-			FrontendDataSetAdmin.assertDataSetEntry(key_dataSetNameList = "Test Dataset 1,Test Dataset 2,Test Dataset 3,Test Dataset 4");
+			FrontendDataSetAdmin.assertDataSetEntry(key_dataSetNameList = "Test Data Set 1,Test Data Set 2,Test Data Set 3,Test Data Set 4");
 
 			Pagination.viewResults(results = "Showing 1 to 4 of 6 entries.");
 		}
@@ -56,7 +56,7 @@ definition {
 		}
 
 		task ("Then 2 entries are displayed") {
-			FrontendDataSetAdmin.assertDataSetEntry(key_dataSetNameList = "Test Dataset 5,Test Dataset 6");
+			FrontendDataSetAdmin.assertDataSetEntry(key_dataSetNameList = "Test Data Set 5,Test Data Set 6");
 
 			Pagination.viewResults(results = "Showing 5 to 6 of 6 entries.");
 		}
@@ -67,13 +67,13 @@ definition {
 	test CanCreateDataSet {
 		task ("When Create a DataSet ") {
 			FrontendDataSetAdmin.createDataSet(
-				key_name = "Test Dataset",
+				key_name = "Test Data Set",
 				key_type = "/c/fdsentries");
 		}
 
 		task ("Then Confirm the name as expected") {
 			AssertElementPresent(
-				key_itemName = "Test Dataset",
+				key_itemName = "Test Data Set",
 				locator1 = "FrontendDataSetAdmin#TABLE_CELL");
 		}
 
@@ -84,30 +84,30 @@ definition {
 		}
 	}
 
-	@description = "LPS-172398. Confirm that the dataset can be delete"
+	@description = "LPS-172398. Confirm that the data set can be deleted"
 	@priority = 5
 	test CanDeleteDataSet {
-		task ("When the user goes to add Datasets") {
+		task ("When the user goes to add data sets") {
 			FrontendDataSetAdmin.createDataSet(
-				key_name = "Test Dataset",
+				key_name = "Test Data Set",
 				key_type = "/c/fdsentries");
 		}
 
-		task ("And the user deletes a dataset") {
-			FrontendDataSetAdmin.deleteDataSet(entry = "Test Dataset");
+		task ("And the user deletes a data set") {
+			FrontendDataSetAdmin.deleteDataSet(entry = "Test Data Set");
 		}
 
-		task ("Then The dataset is not present in the data set Admin page") {
+		task ("Then The data set is not present in the Data Sets admin page") {
 			AssertElementPresent(
 				locator1 = "Message#EMPTY_STATE_INFO",
 				value1 = "No Results Found");
 		}
 	}
 
-	@description = "Needs refactor after LPS-183512 is fixed | LPS-175990. Confirm the error message that appears when the user tries to create a dataset entry with more than 280 characters in the name field"
+	@description = "Needs refactor after LPS-183512 is fixed | LPS-175990. Confirm the error message that appears when the user tries to create a data set entry with more than 280 characters in the name field"
 	@priority = 3
 	test CannotExceed280Characters {
-		task ("When the user goes to add Datasets") {
+		task ("When the user goes to add data sets") {
 			LexiconEntry.gotoAdd();
 		}
 
@@ -133,15 +133,15 @@ definition {
 	@description = "LPS-172398. Confirm that the options view and Delete is present and is visible after clicking the ellipsis button."
 	@priority = 3
 	test DeleteAndViewAreAvailable {
-		task ("When The user goes to add a new Dataset") {
+		task ("When The user goes to add a new data set") {
 			FrontendDataSetAdmin.createDataSet(
-				key_name = "Test Dataset",
+				key_name = "Test Data Set",
 				key_type = "/c/fdsentries");
 		}
 
 		task ("And opening the dropdown menu") {
 			Click(
-				key_entry = "Test Dataset",
+				key_entry = "Test Data Set",
 				locator1 = "ObjectPortlet#ENTRY_KEBAB_MENU");
 		}
 
@@ -155,7 +155,7 @@ definition {
 	@description = "LPS-175990. Confirm the error message that appears when the user tries to create a data set entry without the filled name"
 	@priority = 3
 	test ErrorAppearsWhenNameBlank {
-		task ("When the user goes to add Datasets") {
+		task ("When the user goes to add data sets") {
 			LexiconEntry.gotoAdd();
 		}
 
@@ -177,12 +177,12 @@ definition {
 	@description = "LPS-175990. Confirm the error message that appears when the user tries to create a Data Set without the filled provider"
 	@priority = 3
 	test ErrorAppearsWhenProviderBlank {
-		task ("When the user goes to add Datasets") {
+		task ("When the user goes to add data sets") {
 			LexiconEntry.gotoAdd();
 		}
 
-		task ("And filling the field name with 'Test Dataset'") {
-			PortletEntry.inputName(name = "Test Dataset");
+		task ("And filling the field name with 'Test Data Set'") {
+			PortletEntry.inputName(name = "Test Data Set");
 		}
 
 		task ("And clicking on the Save button") {
@@ -199,12 +199,12 @@ definition {
 	@description = "LPS-175990. Confirm that the user can cancel the creation of a data set entry"
 	@priority = 5
 	test NotCreatedAfterCancel {
-		task ("When The user goes to add Datasets") {
+		task ("When The user goes to add data sets") {
 			LexiconEntry.gotoAdd();
 		}
 
-		task ("And fills the field name with name 'Test Dataset'") {
-			PortletEntry.inputName(name = "Test Dataset");
+		task ("And fills the field name with name 'Test Data Set'") {
+			PortletEntry.inputName(name = "Test Data Set");
 		}
 
 		task ("And choose the Provider called /c/fdsentries ") {
@@ -217,73 +217,73 @@ definition {
 				locator1 = "Button#ANY_SECONDARY");
 		}
 
-		task ("Then Confirm that the dataset was not created") {
+		task ("Then Confirm that the data set was not created") {
 			AssertElementNotPresent(
-				key_itemName = "Test Dataset",
+				key_itemName = "Test Data Set",
 				locator1 = "FrontendDataSetAdmin#TABLE_CELL");
 		}
 	}
 
 	@description = "LPS-172398. Confirm that the data set was not deleted after clicking CANCEL in the modal"
 	@priority = 5
-	test NotDeleteDatasetAfterCancel {
-		task ("When the user goes to add Datasets") {
+	test NotDeleteDataSetAfterCancel {
+		task ("When the user goes to add data sets") {
 			FrontendDataSetAdmin.createDataSet(
-				key_name = "Test Dataset",
+				key_name = "Test Data Set",
 				key_type = "/c/fdsentries");
 		}
 
-		task ("And the user deletes a dataset") {
+		task ("And the user deletes a data set") {
 			Click(
-				key_entry = "Test Dataset",
+				key_entry = "Test Data Set",
 				locator1 = "ObjectPortlet#ENTRY_KEBAB_MENU");
 
 			ClickNoError(locator1 = "ObjectPortlet#DELETE_ENTRY_BUTTON");
 
 			AssertElementPresent(
-				key_modalText = "Deleting a dataset is an action that cannot be reversed. The content will be deleted and some dataset fragments may not be displayed.",
+				key_modalText = "Deleting a data set is an action that cannot be reversed. The content will be deleted and some data set fragments may not be displayed.",
 				locator1 = "FrontendDataSetAdmin#DELETE_DATA_SET_MODAL_BODY");
 
 			Button.clickCancel();
 		}
 
-		task ("Then The dataset is not present in the data set Admin page") {
+		task ("Then The data set is not present in the Data Sets admin page") {
 			AssertElementPresent(
-				key_itemName = "Test Dataset",
+				key_itemName = "Test Data Set",
 				locator1 = "FrontendDataSetAdmin#TABLE_CELL");
 		}
 	}
 
 	@description = "LPS-172398. Confirm that the data set was not deleted after clicking clicks on the 'X' button in the modal"
 	@priority = 5
-	test NotDeleteDatasetAfterCloseButton {
-		task ("When The user goes to add a new Dataset") {
+	test NotDeleteDataSetAfterCloseButton {
+		task ("When The user goes to add a new data set") {
 			FrontendDataSetAdmin.createDataSet(
-				key_name = "Test Dataset",
+				key_name = "Test Data Set",
 				key_type = "/c/fdsentries");
 		}
 
-		task ("And When the user deletes a dataset") {
+		task ("And When the user deletes a data set") {
 			Click(
-				key_entry = "Test Dataset",
+				key_entry = "Test Data Set",
 				locator1 = "ObjectPortlet#ENTRY_KEBAB_MENU");
 
 			ClickNoError(locator1 = "ObjectPortlet#DELETE_ENTRY_BUTTON");
 
 			AssertElementPresent(
-				key_modalText = "Deleting a dataset is an action that cannot be reversed. The content will be deleted and some dataset fragments may not be displayed.",
+				key_modalText = "Deleting a data set is an action that cannot be reversed. The content will be deleted and some data set fragments may not be displayed.",
 				locator1 = "FrontendDataSetAdmin#DELETE_DATA_SET_MODAL_BODY");
 		}
 
 		task ("And When the user clicks on the 'X' button in the modal") {
 			Click(
-				key_modalTitle = "Delete Dataset",
+				key_modalTitle = "Delete Data Set",
 				locator1 = "Button#CLOSE_MODAL");
 		}
 
-		task ("Then The dataset is present in the data set Admin page") {
+		task ("Then The data set is present in the Data Sets admin page") {
 			AssertElementPresent(
-				key_itemName = "Test Dataset",
+				key_itemName = "Test Data Set",
 				locator1 = "FrontendDataSetAdmin#TABLE_CELL");
 		}
 	}
@@ -297,7 +297,7 @@ definition {
 				key_type = "/c/fdsentries");
 		}
 
-		task ("Then confirm that the dataset is created and if the name is provided as expected") {
+		task ("Then confirm that the data set is created and if the name is provided as expected") {
 			AssertElementPresent(
 				key_itemName = "Data Set ~!@#$%^&*(){}[].<>/? name",
 				locator1 = "FrontendDataSetAdmin#TABLE_CELL");

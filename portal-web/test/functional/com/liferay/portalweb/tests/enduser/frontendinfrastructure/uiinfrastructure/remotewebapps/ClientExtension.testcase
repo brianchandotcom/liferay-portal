@@ -81,7 +81,7 @@ definition {
 	@refactordone
 	test CanBeDeleted {
 		property portal.acceptance = "true";
-		property testray.component.names = "Frontend Dataset,Remote Apps";
+		property testray.component.names = "Frontend Data Set,Remote Apps";
 
 		var remoteAppName = "My New Remote App To Delete";
 
@@ -183,7 +183,7 @@ definition {
 		property environment.acceptance = "true";
 		property operating.system.types = "alpine,amazonlinux,centos,debian,fedora,orcllinux,osx,redhat,rockylinux,solaris,suse,ubuntu,windows";
 		property portal.acceptance = "true";
-		property testray.component.names = "Frontend Dataset,Remote Apps";
+		property testray.component.names = "Frontend Data Set,Remote Apps";
 
 		task ("Create Vanilla Counter as a Custom Element") {
 			ClientExtensionGeneral.goToRemoteAppsPortlet();
@@ -226,7 +226,7 @@ definition {
 		property skip.clean-app-server-deploy-dir = "true";
 		property test.assert.warning.exceptions = "true";
 		property test.name.skip.portal.instance = "ClientExtension#CustomElementCanBeCreatedInNonRootContext";
-		property testray.component.names = "Client Extensions,Frontend Dataset";
+		property testray.component.names = "Client Extensions,Frontend Data Set";
 
 		task ("Given a non-root portal context") {
 			var portalURL = JSONCompany.getPortalURL();
@@ -781,7 +781,7 @@ definition {
 	@priority = 5
 	test IFrameCanBeCreated {
 		property portal.acceptance = "true";
-		property testray.component.names = "Frontend Dataset,Remote Apps";
+		property testray.component.names = "Frontend Data Set,Remote Apps";
 
 		ClientExtensionGeneral.goToRemoteAppsPortlet();
 

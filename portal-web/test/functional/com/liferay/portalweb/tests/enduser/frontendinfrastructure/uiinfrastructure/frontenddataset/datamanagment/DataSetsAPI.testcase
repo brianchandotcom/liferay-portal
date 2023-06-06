@@ -5,8 +5,8 @@ definition {
 	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.component.names = "Frontend Dataset";
-	property testray.main.component.name = "Frontend Dataset";
+	property testray.component.names = "Frontend Data Set";
+	property testray.main.component.name = "Frontend Data Set";
 
 	setUp {
 		TestCase.setUpPortalInstance();
@@ -17,35 +17,35 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		FrontendDataSetAdmin.deleteAllDatasetEntries();
+		FrontendDataSetAdmin.deleteAllDataSetEntries();
 
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
-	@description = "LPS-175990. Confirm that the user can create a dataset view via API"
+	@description = "LPS-175990. Confirm that the user can create a data set view via API"
 	@priority = 5
-	test CanCreateDatasetEntryViaAPI {
+	test CanCreateDataSetEntryViaAPI {
 		task ("Given creating a Data Set via API") {
-			FrontendDataSetAdmin.goToDatasetAdminPage();
+			FrontendDataSetAdmin.goToDataSetsAdminPage();
 
-			FrontendDataSetAdmin.createDatasetEntryViaAPI(
-				datasetName = "Dataset Test",
+			FrontendDataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Data Set Test",
 				restApplication = "/c/fdsentries");
 		}
 
-		task ("and given access Datasets admin page") {
-			FrontendDataSetAdmin.goToDatasetAdminPage();
+		task ("and given access to the Data Sets admin page") {
+			FrontendDataSetAdmin.goToDataSetsAdminPage();
 
 			WaitForElementPresent(
-				key_itemName = "Dataset Test",
+				key_itemName = "Data Set Test",
 				locator1 = "FrontendDataSetAdmin#TABLE_CELL");
 		}
 
 		task ("Then the data set is shown in the list") {
 			AssertElementPresent(
-				key_itemName = "Dataset Test",
+				key_itemName = "Data Set Test",
 				locator1 = "FrontendDataSetAdmin#TABLE_CELL");
 		}
 	}
@@ -54,25 +54,25 @@ definition {
 	@priority = 4
 	test CanCreateViewsThroughAPI {
 		task ("Given creating a Data Set via API") {
-			FrontendDataSetAdmin.goToDatasetAdminPage();
+			FrontendDataSetAdmin.goToDataSetsAdminPage();
 
-			FrontendDataSetAdmin.createDatasetEntryViaAPI(
-				datasetName = "Dataset Test",
+			FrontendDataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Data Set Test",
 				restApplication = "/c/fdsentries");
 		}
 
-		task ("And a dataset view created via api") {
+		task ("And a data set view created via api") {
 			FrontendDataSetAdmin.createFDSViewViaAPI(
-				datasetName = "Dataset Test",
+				dataSetName = "Data Set Test",
 				dataSetViewDescription = "FDSViewDescription",
 				key_dataSetViewNameList = "View Test");
 		}
 
-		task ("When access to View page of the dataset created.") {
-			FrontendDataSetAdmin.goToDatasetViewAdminPage(datasetName = "Dataset Test");
+		task ("When access to View page of the data set created.") {
+			FrontendDataSetAdmin.goToDataSetViewAdminPage(dataSetName = "Data Set Test");
 		}
 
-		task ("Then Confirm the dataset view was created.") {
+		task ("Then Confirm the data set view was created.") {
 			FrontendDataSetAdmin.assertDataSetView(key_dataSetViewNameList = "View Test");
 		}
 	}

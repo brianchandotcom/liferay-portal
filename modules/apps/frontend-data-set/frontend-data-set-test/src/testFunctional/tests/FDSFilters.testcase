@@ -5,15 +5,15 @@ definition {
 	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.component.names = "Frontend Dataset";
-	property testray.main.component.name = "Frontend Dataset";
+	property testray.component.names = "Frontend Data Set";
+	property testray.main.component.name = "Frontend Data Set";
 
 	setUp {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
 
-		task ("Given Frontend Dataset sample portlet") {
+		task ("Given Frontend Data Set sample portlet") {
 			JSONLayout.addPublicLayout(
 				groupName = "Guest",
 				layoutName = "Frontend Data Set Test Page");
@@ -310,7 +310,7 @@ definition {
 	@description = "LPS-150047. Assert filter is preloaded when entering on a FDS page for first time."
 	@priority = 5
 	test WillRenderAsInitialState {
-		task ("And When viewing FDS Sample portlet dataset") {
+		task ("And When viewing FDS Sample portlet data set") {
 			Click(
 				key_sampleTab = "Customized",
 				locator1 = "FrontendDataSet#FDS_DATASET");

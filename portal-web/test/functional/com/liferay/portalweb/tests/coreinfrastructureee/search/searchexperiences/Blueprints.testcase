@@ -5,7 +5,7 @@ definition {
 	property portal.suite.search.engine = "elasticsearch7";
 	property portal.upstream = "true";
 	property test.run.environment = "EE";
-	property testray.component.names = "Frontend Dataset";
+	property testray.component.names = "Frontend Data Set";
 	property testray.main.component.name = "Search Experiences";
 
 	setUp {

@@ -5,19 +5,19 @@ definition {
 	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.component.names = "Frontend Dataset";
-	property testray.main.component.name = "Frontend Dataset";
+	property testray.component.names = "Frontend Data Set";
+	property testray.main.component.name = "Frontend Data Set";
 
 	setUp {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
 
-		task ("Given access Datasets admin page") {
+		task ("Given access to the Data Sets admin page") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Object",
 				panel = "Control Panel",
-				portlet = "Datasets");
+				portlet = "Data Sets");
 		}
 	}
 
@@ -34,7 +34,7 @@ definition {
 	test CanDisplayHeadlessDeliveryAPIResources {
 		property test.name.skip.portal.instance = "FrontendDataSetAdminSearch#CanDisplayHeadlessDeliveryAPIResources";
 
-		task ("When go to add Datasets") {
+		task ("When go to add data sets") {
 			LexiconEntry.gotoAdd();
 		}
 
@@ -66,7 +66,7 @@ definition {
 	test CanReturnAMatchedResult {
 		property test.name.skip.portal.instance = "FrontendDataSetAdminSearch#CanReturnAMatchedResult";
 
-		task ("When go to add Datasets") {
+		task ("When go to add data sets") {
 			LexiconEntry.gotoAdd();
 		}
 
@@ -86,7 +86,7 @@ definition {
 	@description = "LPS-172882: Display no matched result in new FDS View modal"
 	@priority = 4
 	test CanReturnNoMatchedResults {
-		task ("When go to add Datasets") {
+		task ("When go to add data sets") {
 			LexiconEntry.gotoAdd();
 		}
 

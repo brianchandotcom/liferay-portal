@@ -27,7 +27,6 @@ import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalSer
 import com.liferay.exportimport.kernel.service.ExportImportLocalServiceUtil;
 import com.liferay.exportimport.kernel.service.ExportImportServiceUtil;
 import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
-import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.EventsProcessorUtil;
@@ -47,16 +46,12 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
-import com.liferay.portal.kernel.model.GroupTable;
 import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
-import com.liferay.portal.kernel.model.LayoutSetPrototypeTable;
-import com.liferay.portal.kernel.model.LayoutSetTable;
-import com.liferay.portal.kernel.model.LayoutTable;
 import com.liferay.portal.kernel.model.LayoutType;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Organization;
@@ -130,11 +125,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.portlet.PortletPreferences;
@@ -739,136 +732,6 @@ public class SitesImpl implements Sites {
 		}
 
 		return ArrayUtil.toArray(ArrayUtil.toLongArray(groupIds));
-	}
-
-	@Override
-	public Set<Long> getConflictingPlidsOfLayoutSetGroup(long groupId) {
-		LayoutTable tempLayoutTable = LayoutTable.INSTANCE.as(
-			"tempLayoutTable");
-
-		Set<Long> plids = new HashSet<>();
-
-		plids.addAll(
-			LayoutLocalServiceUtil.dslQuery(
-				DSLQueryFactoryUtil.selectDistinct(
-					LayoutTable.INSTANCE.plid
-				).from(
-					LayoutTable.INSTANCE
-				).innerJoinON(
-					LayoutSetTable.INSTANCE,
-					LayoutSetTable.INSTANCE.companyId.eq(
-						LayoutTable.INSTANCE.companyId
-					).and(
-						LayoutSetTable.INSTANCE.groupId.eq(
-							LayoutTable.INSTANCE.groupId)
-					).and(
-						LayoutSetTable.INSTANCE.privateLayout.eq(
-							LayoutTable.INSTANCE.privateLayout)
-					)
-				).innerJoinON(
-					LayoutSetPrototypeTable.INSTANCE,
-					LayoutSetPrototypeTable.INSTANCE.companyId.eq(
-						LayoutSetTable.INSTANCE.companyId
-					).and(
-						LayoutSetPrototypeTable.INSTANCE.uuid.eq(
-							LayoutSetTable.INSTANCE.layoutSetPrototypeUuid)
-					)
-				).innerJoinON(
-					GroupTable.INSTANCE,
-					GroupTable.INSTANCE.companyId.eq(
-						LayoutSetPrototypeTable.INSTANCE.companyId
-					).and(
-						GroupTable.INSTANCE.classPK.eq(
-							LayoutSetPrototypeTable.INSTANCE.
-								layoutSetPrototypeId)
-					)
-				).innerJoinON(
-					tempLayoutTable,
-					tempLayoutTable.companyId.eq(
-						GroupTable.INSTANCE.companyId
-					).and(
-						tempLayoutTable.groupId.eq(GroupTable.INSTANCE.groupId)
-					).and(
-						tempLayoutTable.friendlyURL.eq(
-							LayoutTable.INSTANCE.friendlyURL)
-					)
-				).where(
-					LayoutTable.INSTANCE.groupId.eq(
-						groupId
-					).and(
-						LayoutTable.INSTANCE.system.eq(false)
-					).and(
-						LayoutTable.INSTANCE.sourcePrototypeLayoutUuid.isNull()
-					)
-				)));
-
-		return plids;
-	}
-
-	@Override
-	public Set<Long> getConflictingPlidsOfLayoutSetPrototypeGroup(
-		long groupId) {
-
-		LayoutTable tempLayoutTable = LayoutTable.INSTANCE.as(
-			"tempLayoutTable");
-
-		Set<Long> plids = new HashSet<>();
-
-		plids.addAll(
-			LayoutLocalServiceUtil.dslQuery(
-				DSLQueryFactoryUtil.selectDistinct(
-					LayoutTable.INSTANCE.plid
-				).from(
-					LayoutTable.INSTANCE
-				).innerJoinON(
-					GroupTable.INSTANCE,
-					GroupTable.INSTANCE.companyId.eq(
-						LayoutTable.INSTANCE.companyId
-					).and(
-						GroupTable.INSTANCE.groupId.eq(
-							LayoutTable.INSTANCE.groupId)
-					)
-				).innerJoinON(
-					LayoutSetPrototypeTable.INSTANCE,
-					LayoutSetPrototypeTable.INSTANCE.companyId.eq(
-						GroupTable.INSTANCE.companyId
-					).and(
-						LayoutSetPrototypeTable.INSTANCE.layoutSetPrototypeId.
-							eq(GroupTable.INSTANCE.classPK)
-					)
-				).innerJoinON(
-					LayoutSetTable.INSTANCE,
-					LayoutSetTable.INSTANCE.companyId.eq(
-						LayoutSetPrototypeTable.INSTANCE.companyId
-					).and(
-						LayoutSetTable.INSTANCE.layoutSetPrototypeUuid.eq(
-							LayoutSetPrototypeTable.INSTANCE.uuid)
-					)
-				).innerJoinON(
-					tempLayoutTable,
-					tempLayoutTable.companyId.eq(
-						LayoutSetTable.INSTANCE.companyId
-					).and(
-						tempLayoutTable.groupId.eq(
-							LayoutSetTable.INSTANCE.groupId)
-					).and(
-						tempLayoutTable.privateLayout.eq(
-							LayoutSetTable.INSTANCE.privateLayout)
-					).and(
-						tempLayoutTable.friendlyURL.eq(
-							LayoutTable.INSTANCE.friendlyURL)
-					).and(
-						tempLayoutTable.sourcePrototypeLayoutUuid.isNull()
-					)
-				).where(
-					LayoutTable.INSTANCE.groupId.eq(
-						groupId
-					).and(
-						LayoutTable.INSTANCE.system.eq(false)
-					)
-				)));
-
-		return plids;
 	}
 
 	@Override

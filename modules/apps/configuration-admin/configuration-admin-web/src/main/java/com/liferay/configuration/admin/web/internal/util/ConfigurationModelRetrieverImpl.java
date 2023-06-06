@@ -14,6 +14,7 @@
 
 package com.liferay.configuration.admin.web.internal.util;
 
+import com.liferay.configuration.admin.web.internal.display.context.ConfigurationScopeDisplayContext;
 import com.liferay.configuration.admin.web.internal.model.ConfigurationModel;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -222,12 +223,16 @@ public class ConfigurationModelRetrieverImpl
 
 		List<ConfigurationModel> factoryInstances = new ArrayList<>();
 
+		ConfigurationScopeDisplayContext configurationScopeDisplayContext =
+			new ConfigurationScopeDisplayContext(scope, scopePK);
+
 		for (Configuration configuration : configurations) {
 			ConfigurationModel curConfigurationModel = new ConfigurationModel(
 				configuration.getBundleLocation(),
 				factoryConfigurationModel.getBundleSymbolicName(),
 				factoryConfigurationModel.getClassLoader(), configuration,
-				factoryConfigurationModel, false);
+				configurationScopeDisplayContext, factoryConfigurationModel,
+				false);
 
 			factoryInstances.add(curConfigurationModel);
 		}
@@ -289,10 +294,14 @@ public class ConfigurationModelRetrieverImpl
 
 		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
 
+		ConfigurationScopeDisplayContext configurationScopeDisplayContext =
+			new ConfigurationScopeDisplayContext(scope, scopePK);
+
 		ConfigurationModel configurationModel = new ConfigurationModel(
 			StringPool.QUESTION, bundle.getSymbolicName(),
 			bundleWiring.getClassLoader(),
 			getConfiguration(pid, scope, scopePK),
+			configurationScopeDisplayContext,
 			extendedMetaTypeInformation.getObjectClassDefinition(pid, locale),
 			factory);
 

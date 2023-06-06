@@ -14,6 +14,7 @@
 
 package com.liferay.configuration.admin.web.internal.model;
 
+import com.liferay.configuration.admin.web.internal.display.context.ConfigurationScopeDisplayContext;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition.Scope;
@@ -54,6 +55,7 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 			configurationModel.getBundleLocation(),
 			configurationModel.getBundleSymbolicName(),
 			configurationModel.getClassLoader(), configuration,
+			configurationModel.getConfigurationScopeDisplayContext(),
 			configurationModel.getExtendedObjectClassDefinition(),
 			configurationModel.isFactory());
 	}
@@ -61,6 +63,7 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 	public ConfigurationModel(
 		String bundleLocation, String bundleSymbolicName,
 		ClassLoader classLoader, Configuration configuration,
+		ConfigurationScopeDisplayContext configurationScopeDisplayContext,
 		ExtendedObjectClassDefinition extendedObjectClassDefinition,
 		boolean factory) {
 
@@ -68,6 +71,7 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 		_bundleSymbolicName = bundleSymbolicName;
 		_classLoader = classLoader;
 		_configuration = configuration;
+		_configurationScopeDisplayContext = configurationScopeDisplayContext;
 		_extendedObjectClassDefinition = extendedObjectClassDefinition;
 		_factory = factory;
 
@@ -93,7 +97,7 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 
 		this(
 			bundleLocation, bundleSymbolicName,
-			ConfigurationModel.class.getClassLoader(), configuration,
+			ConfigurationModel.class.getClassLoader(), configuration, null,
 			extendedObjectClassDefinition, factory);
 	}
 
@@ -132,6 +136,12 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 
 	public Configuration getConfiguration() {
 		return _configuration;
+	}
+
+	public ConfigurationScopeDisplayContext
+		getConfigurationScopeDisplayContext() {
+
+		return _configurationScopeDisplayContext;
 	}
 
 	@Override
@@ -407,6 +417,8 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 	private final ClassLoader _classLoader;
 	private final Configuration _configuration;
 	private Map<String, Object> _configurationOverrideProperties;
+	private final ConfigurationScopeDisplayContext
+		_configurationScopeDisplayContext;
 	private final ExtendedObjectClassDefinition _extendedObjectClassDefinition;
 	private final Map<String, String> _extensionAttributes;
 	private final boolean _factory;

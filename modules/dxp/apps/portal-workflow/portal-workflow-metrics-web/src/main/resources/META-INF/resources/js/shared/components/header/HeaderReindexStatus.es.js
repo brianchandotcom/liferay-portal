@@ -26,16 +26,14 @@ const HeaderReindexStatus = ({container}) => {
 					elementId="headerReindexStatus"
 					position="after"
 				>
-					<div className="control-menu-icon px-2">
-						<span
-							aria-hidden="true"
-							className="loading-animation loading-animation-sm m-0"
-							data-tooltip-align="bottom"
-							title={Liferay.Language.get(
-								'the-workflow-metrics-data-is-currently-reindexing'
-							)}
-						></span>
-					</div>
+					<span
+						aria-hidden="true"
+						className="c-m-0 c-pr-2 loading-animation loading-animation-sm"
+						data-tooltip-align="bottom"
+						title={Liferay.Language.get(
+							'the-workflow-metrics-data-is-currently-reindexing'
+						)}
+					></span>
 				</Portal>
 			)}
 		</>

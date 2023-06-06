@@ -19,6 +19,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
@@ -59,13 +60,22 @@ import com.liferay.portal.search.engine.adapter.snapshot.SnapshotRepositoryDetai
 import com.liferay.portal.search.engine.adapter.snapshot.SnapshotState;
 import com.liferay.portal.search.index.IndexNameBuilder;
 
+import java.io.IOException;
+
+import java.nio.charset.StandardCharsets;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import org.elasticsearch.action.ingest.PutPipelineRequest;
+import org.elasticsearch.client.IngestClient;
+import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.Strings;
+import org.elasticsearch.common.bytes.BytesArray;
+import org.elasticsearch.xcontent.XContentType;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -131,6 +141,8 @@ public class ElasticsearchSearchEngine implements SearchEngine {
 
 		RestHighLevelClient restHighLevelClient =
 			_elasticsearchConnectionManager.getRestHighLevelClient();
+
+		_putTimestampPipeline(restHighLevelClient);
 
 		_indexFactory.createIndices(restHighLevelClient.indices(), companyId);
 
@@ -333,6 +345,39 @@ public class ElasticsearchSearchEngine implements SearchEngine {
 		}
 
 		return true;
+	}
+
+	private void _putTimestampPipeline(
+		RestHighLevelClient restHighLevelClient) {
+
+		String source = JSONUtil.put(
+			"description", "Adds timestamp to documents"
+		).put(
+			"processors",
+			JSONUtil.put(
+				JSONUtil.put(
+					"set",
+					JSONUtil.put(
+						"field", "_source.timestamp"
+					).put(
+						"value", "{{{_ingest.timestamp}}}"
+					)))
+		).toString();
+
+		PutPipelineRequest putPipelineRequest = new PutPipelineRequest(
+			"timestamp",
+			new BytesArray(source.getBytes(StandardCharsets.UTF_8)),
+			XContentType.JSON);
+
+		IngestClient ingestClient = restHighLevelClient.ingest();
+
+		try {
+			ingestClient.putPipeline(
+				putPipelineRequest, RequestOptions.DEFAULT);
+		}
+		catch (IOException ioException) {
+			_log.error("Unable to put timestamp pipline", ioException);
+		}
 	}
 
 	private void _validateBackupName(String backupName) throws SearchException {

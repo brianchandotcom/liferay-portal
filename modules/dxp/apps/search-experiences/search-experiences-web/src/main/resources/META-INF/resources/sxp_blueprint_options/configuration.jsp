@@ -34,9 +34,9 @@
 				<span aria-hidden="true" class="loading-animation"></span>
 
 				<%
-				long sxpBlueprintId = PrefsParamUtil.getLong(portletPreferences, request, "sxpBlueprintId");
+				String sxpBlueprintExternalReferenceCode = PrefsParamUtil.getString(portletPreferences, request, "sxpBlueprintExternalReferenceCode");
 
-				SXPBlueprint sxpBlueprint = SXPBlueprintLocalServiceUtil.fetchSXPBlueprint(sxpBlueprintId);
+				SXPBlueprint sxpBlueprint = SXPBlueprintLocalServiceUtil.fetchSXPBlueprintByExternalReferenceCode(sxpBlueprintExternalReferenceCode, themeDisplay.getCompanyId());
 				%>
 
 				<react:component
@@ -45,7 +45,7 @@
 						HashMapBuilder.<String, Object>put(
 							"initialFederatedSearchKey", SXPBlueprintOptionsPortletPreferencesUtil.getValue(portletPreferences, "federatedSearchKey")
 						).put(
-							"initialSXPBlueprintId", SXPBlueprintOptionsPortletPreferencesUtil.getValue(portletPreferences, "sxpBlueprintId")
+							"initialSXPBlueprintExternalReferenceCode", SXPBlueprintOptionsPortletPreferencesUtil.getValue(portletPreferences, "sxpBlueprintExternalReferenceCode")
 						).put(
 							"initialSXPBlueprintTitle", (sxpBlueprint != null) ? HtmlUtil.escape(sxpBlueprint.getTitle(locale)) : StringPool.BLANK
 						).put(
@@ -55,7 +55,7 @@
 						).put(
 							"preferenceKeyFederatedSearchKey", _getInputName("federatedSearchKey")
 						).put(
-							"preferenceKeySXPBlueprintId", _getInputName("sxpBlueprintId")
+							"preferenceKeySXPBlueprintExternalReferenceCode", _getInputName("sxpBlueprintExternalReferenceCode")
 						).build()
 					%>'
 				/>

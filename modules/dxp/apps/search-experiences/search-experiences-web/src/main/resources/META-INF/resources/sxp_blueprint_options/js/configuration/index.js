@@ -23,17 +23,20 @@ import SelectSXPBlueprintModal from './SelectSXPBlueprintModal';
 
 const Configuration = ({
 	initialFederatedSearchKey = '',
-	initialSXPBlueprintId = '',
+	initialSXPBlueprintExternalReferenceCode = '',
 	initialSXPBlueprintTitle = '',
 	learnMessages,
 	portletNamespace,
 	preferenceKeyFederatedSearchKey,
-	preferenceKeySXPBlueprintId,
+	preferenceKeySXPBlueprintExternalReferenceCode,
 }) => {
 	const [federatedSearchKey, setFederatedSearchKey] = useState(
 		initialFederatedSearchKey
 	);
-	const [sxpBlueprintId, setSXPBlueprintId] = useState(initialSXPBlueprintId);
+	const [
+		sxpBlueprintExternalReferenceCode,
+		setSXPBlueprintExternalReferenceCode,
+	] = useState(initialSXPBlueprintExternalReferenceCode);
 	const [sxpBlueprintTitle, setSXPBlueprintTitle] = useState(
 		initialSXPBlueprintTitle
 	);
@@ -53,7 +56,7 @@ const Configuration = ({
 	};
 
 	const _handleClickRemove = () => {
-		setSXPBlueprintId('');
+		setSXPBlueprintExternalReferenceCode('');
 		setSXPBlueprintTitle('');
 	};
 
@@ -61,8 +64,8 @@ const Configuration = ({
 		setVisibleModal(true);
 	};
 
-	const _handleSubmitModal = (id, title) => {
-		setSXPBlueprintId(id);
+	const _handleSubmitModal = (externalReferenceCode, title) => {
+		setSXPBlueprintExternalReferenceCode(externalReferenceCode);
 		setSXPBlueprintTitle(title);
 	};
 
@@ -73,14 +76,16 @@ const Configuration = ({
 					observer={observer}
 					onClose={onClose}
 					onSubmit={_handleSubmitModal}
-					selectedId={sxpBlueprintId}
+					selectedExternalReferenceCode={
+						sxpBlueprintExternalReferenceCode
+					}
 				/>
 			)}
 
 			<ClayInput
-				name={`${portletNamespace}${preferenceKeySXPBlueprintId}`}
+				name={`${portletNamespace}${preferenceKeySXPBlueprintExternalReferenceCode}`}
 				type="hidden"
-				value={sxpBlueprintId}
+				value={sxpBlueprintExternalReferenceCode}
 			/>
 
 			<ClayForm.Group>

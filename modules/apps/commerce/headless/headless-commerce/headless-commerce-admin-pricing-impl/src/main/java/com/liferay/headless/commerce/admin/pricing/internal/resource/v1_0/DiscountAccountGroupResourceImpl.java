@@ -24,6 +24,7 @@ import com.liferay.headless.commerce.admin.pricing.dto.v1_0.DiscountAccountGroup
 import com.liferay.headless.commerce.admin.pricing.internal.util.v1_0.DiscountAccountGroupUtil;
 import com.liferay.headless.commerce.admin.pricing.resource.v1_0.DiscountAccountGroupResource;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
+import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -43,7 +44,11 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/discount-account-group.properties",
-	scope = ServiceScope.PROTOTYPE, service = DiscountAccountGroupResource.class
+	scope = ServiceScope.PROTOTYPE,
+	service = {
+		DiscountAccountGroupResource.class,
+		VulcanBatchEngineTaskItemDelegate.class
+	}
 )
 public class DiscountAccountGroupResourceImpl
 	extends BaseDiscountAccountGroupResourceImpl {

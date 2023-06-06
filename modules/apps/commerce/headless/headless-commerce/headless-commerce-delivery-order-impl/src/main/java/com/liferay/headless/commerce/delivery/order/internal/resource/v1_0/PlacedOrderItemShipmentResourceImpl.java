@@ -27,6 +27,7 @@ import com.liferay.headless.commerce.delivery.order.internal.dto.v1_0.converter.
 import com.liferay.headless.commerce.delivery.order.resource.v1_0.PlacedOrderItemShipmentResource;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
@@ -46,7 +47,10 @@ import org.osgi.service.component.annotations.ServiceScope;
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/placed-order-item-shipment.properties",
 	scope = ServiceScope.PROTOTYPE,
-	service = {NestedFieldSupport.class, PlacedOrderItemShipmentResource.class}
+	service = {
+		NestedFieldSupport.class, PlacedOrderItemShipmentResource.class,
+		VulcanBatchEngineTaskItemDelegate.class
+	}
 )
 public class PlacedOrderItemShipmentResourceImpl
 	extends BasePlacedOrderItemShipmentResourceImpl

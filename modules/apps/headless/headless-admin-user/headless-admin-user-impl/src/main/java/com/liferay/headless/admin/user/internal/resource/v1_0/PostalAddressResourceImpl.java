@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.service.AddressLocalService;
 import com.liferay.portal.kernel.service.AddressService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.service.permission.CommonPermission;
+import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.pagination.Page;
 
@@ -41,7 +42,10 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/postal-address.properties",
-	scope = ServiceScope.PROTOTYPE, service = PostalAddressResource.class
+	scope = ServiceScope.PROTOTYPE,
+	service = {
+		PostalAddressResource.class, VulcanBatchEngineTaskItemDelegate.class
+	}
 )
 public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 

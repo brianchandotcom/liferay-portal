@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
@@ -55,7 +56,10 @@ import org.osgi.service.component.annotations.ServiceScope;
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/pin.properties",
 	scope = ServiceScope.PROTOTYPE,
-	service = {NestedFieldSupport.class, PinResource.class}
+	service = {
+		NestedFieldSupport.class, PinResource.class,
+		VulcanBatchEngineTaskItemDelegate.class
+	}
 )
 @CTAware
 public class PinResourceImpl

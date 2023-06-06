@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.odata.entity.DoubleEntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.entity.StringEntityField;
+import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -48,7 +49,8 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/country.properties",
-	scope = ServiceScope.PROTOTYPE, service = CountryResource.class
+	scope = ServiceScope.PROTOTYPE,
+	service = {CountryResource.class, VulcanBatchEngineTaskItemDelegate.class}
 )
 public class CountryResourceImpl extends BaseCountryResourceImpl {
 

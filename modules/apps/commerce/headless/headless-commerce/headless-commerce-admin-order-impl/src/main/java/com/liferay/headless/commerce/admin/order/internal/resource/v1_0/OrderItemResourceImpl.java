@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.expando.ExpandoBridgeIndexer;
+import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
@@ -74,7 +75,10 @@ import org.osgi.service.component.annotations.ServiceScope;
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/order-item.properties",
 	scope = ServiceScope.PROTOTYPE,
-	service = {NestedFieldSupport.class, OrderItemResource.class}
+	service = {
+		NestedFieldSupport.class, OrderItemResource.class,
+		VulcanBatchEngineTaskItemDelegate.class
+	}
 )
 public class OrderItemResourceImpl
 	extends BaseOrderItemResourceImpl implements NestedFieldSupport {

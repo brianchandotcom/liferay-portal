@@ -30,6 +30,7 @@ import com.liferay.headless.form.resource.v1_0.FormResource;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -46,7 +47,8 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/form.properties",
-	scope = ServiceScope.PROTOTYPE, service = FormResource.class
+	scope = ServiceScope.PROTOTYPE,
+	service = {FormResource.class, VulcanBatchEngineTaskItemDelegate.class}
 )
 @Deprecated
 public class FormResourceImpl extends BaseFormResourceImpl {

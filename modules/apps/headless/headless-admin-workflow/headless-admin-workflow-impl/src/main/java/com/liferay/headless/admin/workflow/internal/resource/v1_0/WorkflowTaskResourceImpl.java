@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.workflow.WorkflowTaskAssignee;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactory;
 import com.liferay.portal.kernel.workflow.search.WorkflowModelSearchResult;
+import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -66,7 +67,10 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/workflow-task.properties",
-	scope = ServiceScope.PROTOTYPE, service = WorkflowTaskResource.class
+	scope = ServiceScope.PROTOTYPE,
+	service = {
+		VulcanBatchEngineTaskItemDelegate.class, WorkflowTaskResource.class
+	}
 )
 @CTAware
 public class WorkflowTaskResourceImpl extends BaseWorkflowTaskResourceImpl {

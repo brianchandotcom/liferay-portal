@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
@@ -50,7 +51,10 @@ import org.osgi.service.component.annotations.ServiceScope;
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/object-view.properties",
 	scope = ServiceScope.PROTOTYPE,
-	service = {NestedFieldSupport.class, ObjectViewResource.class}
+	service = {
+		NestedFieldSupport.class, ObjectViewResource.class,
+		VulcanBatchEngineTaskItemDelegate.class
+	}
 )
 public class ObjectViewResourceImpl
 	extends BaseObjectViewResourceImpl implements NestedFieldSupport {

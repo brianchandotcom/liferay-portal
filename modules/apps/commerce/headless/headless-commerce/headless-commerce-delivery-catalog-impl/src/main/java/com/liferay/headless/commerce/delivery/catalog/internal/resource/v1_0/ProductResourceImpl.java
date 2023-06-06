@@ -53,6 +53,7 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -74,7 +75,8 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/product.properties",
-	scope = ServiceScope.PROTOTYPE, service = ProductResource.class
+	scope = ServiceScope.PROTOTYPE,
+	service = {ProductResource.class, VulcanBatchEngineTaskItemDelegate.class}
 )
 @CTAware
 public class ProductResourceImpl extends BaseProductResourceImpl {

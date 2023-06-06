@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUti
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
@@ -65,7 +66,10 @@ import org.osgi.service.component.annotations.ServiceScope;
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/sku.properties",
 	scope = ServiceScope.PROTOTYPE,
-	service = {NestedFieldSupport.class, SkuResource.class}
+	service = {
+		NestedFieldSupport.class, SkuResource.class,
+		VulcanBatchEngineTaskItemDelegate.class
+	}
 )
 @CTAware
 public class SkuResourceImpl

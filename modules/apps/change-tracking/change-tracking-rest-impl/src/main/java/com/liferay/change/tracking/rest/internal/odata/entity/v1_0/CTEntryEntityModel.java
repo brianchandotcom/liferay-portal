@@ -48,7 +48,10 @@ public class CTEntryEntityModel implements EntityModel {
 			new StringEntityField("ownerName", locale -> Field.USER_NAME),
 			new StringEntityField("siteName", locale -> "groupName"),
 			new IntegerEntityField("status", locale -> Field.STATUS),
-			new StringEntityField("title", locale -> Field.TITLE));
+			new EntityField(
+				"title", EntityField.Type.STRING,
+				locale -> Field.getSortableFieldName(Field.TITLE),
+				locale -> Field.TITLE, String::valueOf));
 	}
 
 	@Override

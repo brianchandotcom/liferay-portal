@@ -167,6 +167,9 @@ public class CTEntryModelDocumentContributor
 			}
 		}
 
+		document.addLocalizedKeyword(
+			Field.getSortableFieldName(Field.TITLE),
+			_getTitleMap(locales, model, ctEntry.getModelClassNameId()));
 		document.addLocalizedText(
 			Field.TITLE,
 			_getTitleMap(locales, model, ctEntry.getModelClassNameId()));

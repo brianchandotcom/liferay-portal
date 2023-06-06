@@ -20,11 +20,12 @@ import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.action.executor.InfoItemActionExecutor;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -86,6 +87,8 @@ public class ExecuteInfoItemActionStrutsAction implements StrutsAction {
 				new ClassPKInfoItemIdentifier(
 					ParamUtil.getLong(httpServletRequest, "classPK")),
 				ParamUtil.getString(httpServletRequest, "fieldId"));
+
+			ServletResponseUtil.write(httpServletResponse, "{}");
 		}
 		catch (InfoItemActionExecutionException
 					infoItemActionExecutionException) {
@@ -94,9 +97,13 @@ public class ExecuteInfoItemActionStrutsAction implements StrutsAction {
 				_log.debug(infoItemActionExecutionException);
 			}
 
-			SessionErrors.add(
-				httpServletRequest, infoItemActionExecutionException.getClass(),
-				infoItemActionExecutionException);
+			ServletResponseUtil.write(
+				httpServletResponse,
+				JSONUtil.put(
+					"error",
+					infoItemActionExecutionException.getLocalizedMessage(
+						httpServletRequest.getLocale())
+				).toString());
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -106,9 +113,13 @@ public class ExecuteInfoItemActionStrutsAction implements StrutsAction {
 			InfoItemActionExecutionException infoItemActionExecutionException =
 				new InfoItemActionExecutionException();
 
-			SessionErrors.add(
-				httpServletRequest, infoItemActionExecutionException.getClass(),
-				infoItemActionExecutionException);
+			ServletResponseUtil.write(
+				httpServletResponse,
+				JSONUtil.put(
+					"error",
+					infoItemActionExecutionException.getLocalizedMessage(
+						httpServletRequest.getLocale())
+				).toString());
 		}
 
 		return null;

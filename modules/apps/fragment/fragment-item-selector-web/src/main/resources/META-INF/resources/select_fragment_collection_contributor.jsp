@@ -20,6 +20,10 @@
 DefaultFragmentDisplayContext defaultFragmentDisplayContext = new DefaultFragmentDisplayContext(request, liferayPortletRequest, liferayPortletResponse);
 %>
 
+<clay:management-toolbar
+	managementToolbarDisplayContext="<%= new FragmentCollectionContributorsItemSelectorViewManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, defaultFragmentDisplayContext.getFragmentCollectionContributorsSearchContainer()) %>"
+/>
+
 <clay:container-fluid
 	id='<%= liferayPortletResponse.getNamespace() + "fragmentsContainer" %>'
 >

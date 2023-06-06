@@ -1,0 +1,41 @@
+[
+	{
+		"accountBriefs": [
+			{
+				"externalReferenceCode": "TESTACCOUNT1"
+			}
+		],
+		"alternateName": "Employee ",
+		"emailAddress": "employee@liferay.com",
+		"externalReferenceCode": "TESTUSER1",
+		"familyName": "User",
+		"givenName": "Employee",
+		"password": "test"
+	},
+	{
+		"accountBriefs": [
+			{
+				"externalReferenceCode": "TESTACCOUNT1"
+			}
+		],
+		"alternateName": "Manager ",
+		"emailAddress": "manager@liferay.com",
+		"externalReferenceCode": "TESTUSER2",
+		"familyName": "User",
+		"givenName": "Manager",
+		"password": "test"
+	},
+	{
+		"accountBriefs": [
+			{
+				"externalReferenceCode": "TESTACCOUNT1"
+			}
+		],
+		"alternateName": "Finance ",
+		"emailAddress": "finance@liferay.com",
+		"externalReferenceCode": "TESTUSER3",
+		"familyName": "User",
+		"givenName": "Finance",
+		"password": "test"
+	}
+]

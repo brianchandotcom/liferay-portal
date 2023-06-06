@@ -1,0 +1,20 @@
+[
+	{
+		"emailAddress": "employee@liferay.com",
+		"roles": [
+			"Employee"
+		]
+	},
+	{
+		"emailAddress": "manager@liferay.com",
+		"roles": [
+			"EVP Manager"
+		]
+	},
+	{
+		"emailAddress": "finance@liferay.com",
+		"roles": [
+			"Finance User"
+		]
+	}
+]

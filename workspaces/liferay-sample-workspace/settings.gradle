@@ -10,11 +10,11 @@ buildscript {
 		mavenLocal()
 
 		maven {
-			url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+			url new File(rootProject.projectDir, "../../.m2-tmp")
 		}
 
 		maven {
-			url new File(rootProject.projectDir, "../../.m2-tmp")
+			url "https://repository-cdn.liferay.com/nexus/content/groups/public"
 		}
 	}
 }

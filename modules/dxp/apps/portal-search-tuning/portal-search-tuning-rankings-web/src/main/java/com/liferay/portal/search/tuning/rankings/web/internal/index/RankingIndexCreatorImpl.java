@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.index.CreateIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.DeleteIndexRequest;
+import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexRequest;
+import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexResponse;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexName;
 
 import org.osgi.service.component.annotations.Component;
@@ -45,10 +47,18 @@ public class RankingIndexCreatorImpl implements RankingIndexCreator {
 
 	@Override
 	public void delete(RankingIndexName rankingIndexName) {
-		DeleteIndexRequest deleteIndexRequest = new DeleteIndexRequest(
-			rankingIndexName.getIndexName());
+		IndicesExistsIndexRequest indicesExistsIndexRequest =
+			new IndicesExistsIndexRequest(rankingIndexName.getIndexName());
 
-		_searchEngineAdapter.execute(deleteIndexRequest);
+		IndicesExistsIndexResponse indicesExistsIndexResponse =
+			_searchEngineAdapter.execute(indicesExistsIndexRequest);
+
+		if (indicesExistsIndexResponse.isExists()) {
+			DeleteIndexRequest deleteIndexRequest = new DeleteIndexRequest(
+				rankingIndexName.getIndexName());
+
+			_searchEngineAdapter.execute(deleteIndexRequest);
+		}
 	}
 
 	private static final String _INDEX_SETTINGS_RESOURCE_NAME =

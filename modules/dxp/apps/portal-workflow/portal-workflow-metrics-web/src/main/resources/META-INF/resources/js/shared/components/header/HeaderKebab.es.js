@@ -36,25 +36,24 @@ const HeaderKebab = ({kebabItems = []}) => {
 			elementId="headerKebab"
 			position="before"
 		>
-			<div className="control-menu-icon">
-				<ClayDropDown
-					active={active}
-					onActiveChange={setActive}
-					trigger={
-						<ClayButton
-							className="component-action"
-							displayType="unstyled"
-							monospaced
-						>
-							<ClayIcon symbol="ellipsis-v" />
-						</ClayButton>
-					}
-				>
-					{kebabItems.map((kebabItem, index) => (
-						<HeaderKebab.Item {...kebabItem} key={index} />
-					))}
-				</ClayDropDown>
-			</div>
+			<ClayDropDown
+				active={active}
+				onActiveChange={setActive}
+				trigger={
+					<ClayButton
+						className="component-action"
+						displayType="unstyled"
+						monospaced
+						size="sm"
+					>
+						<ClayIcon symbol="ellipsis-v" />
+					</ClayButton>
+				}
+			>
+				{kebabItems.map((kebabItem, index) => (
+					<HeaderKebab.Item {...kebabItem} key={index} />
+				))}
+			</ClayDropDown>
 		</Portal>
 	);
 };

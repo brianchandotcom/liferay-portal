@@ -15,6 +15,10 @@
 package com.liferay.source.formatter.check;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -45,8 +49,15 @@ public class PropertiesLanguageKeysContextCheck extends BaseFileCheck {
 		Enumeration<String> enumeration =
 			(Enumeration<String>)properties.propertyNames();
 
+		int depth = GetterUtil.getInteger(
+			getAttributeValue(_DEPTH_KEY, "1", absolutePath));
+
 		while (enumeration.hasMoreElements()) {
 			String key = enumeration.nextElement();
+
+			if (StringUtil.count(key, StringPool.DASH) != (depth - 1)) {
+				continue;
+			}
 
 			Matcher matcher = _languageKeyPattern.matcher(key);
 
@@ -69,7 +80,10 @@ public class PropertiesLanguageKeysContextCheck extends BaseFileCheck {
 				((bracketsContent.length() == 1) &&
 				 !bracketsContent.equals("n") &&
 				 !bracketsContent.equals("v")) ||
-				bracketsContent.matches("(\\d+)") ||
+				(bracketsContent.matches("\\d+") &&
+				 !ArrayUtil.contains(
+					 _HTTP_STATUS_CODE,
+					 GetterUtil.getInteger(bracketsContent))) ||
 				getAttributeValues(
 					_FORBIDDEN_CONTEXT_NAMES_KEY, absolutePath
 				).contains(
@@ -87,8 +101,17 @@ public class PropertiesLanguageKeysContextCheck extends BaseFileCheck {
 		return content;
 	}
 
+	private static final String _DEPTH_KEY = "depth";
+
 	private static final String _FORBIDDEN_CONTEXT_NAMES_KEY =
 		"forbiddenContextNames";
+
+	private static final int[] _HTTP_STATUS_CODE = {
+		100, 101, 102, 200, 201, 202, 203, 204, 205, 206, 207, 301, 302, 303,
+		304, 305, 307, 401, 402, 403, 404, 405, 406, 407, 408, 409, 410, 411,
+		412, 413, 414, 415, 416, 417, 419, 420, 422, 423, 424, 429, 500, 501,
+		502, 503, 504, 505, 507
+	};
 
 	private static final Pattern _languageKeyPattern = Pattern.compile(
 		"([\\s\\S]+)(\\[([\\s\\S]*)\\])");

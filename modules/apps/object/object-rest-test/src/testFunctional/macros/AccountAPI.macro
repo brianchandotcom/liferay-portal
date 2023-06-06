@@ -30,6 +30,14 @@ definition {
 		var curl = AccountAPI._curlAccount();
 		var body = '''"name": "${name}"''';
 
+		if (isSet(externalReferenceCode)) {
+			var body = StringUtil.add(${body}, ",\"externalReferenceCode\":\"${externalReferenceCode}\"", " ");
+		}
+
+		if (isSet(description)) {
+			var body = StringUtil.add(${body}, ",\"description\":\"${description}\"", " ");
+		}
+
 		var curl = StringUtil.add(${curl}, "-d {${body}}", " ");
 
 		var response = JSONCurlUtil.post(${curl});
@@ -45,6 +53,14 @@ definition {
 		var curl = AccountAPI._curlAccount(accountId = ${accountId});
 
 		JSONCurlUtil.delete(${curl});
+	}
+
+	macro getAccounts {
+		var curl = AccountAPI._curlAccount();
+
+		var response = JSONCurlUtil.get(${curl});
+
+		return ${response};
 	}
 
 	macro getRelationshipByAccountId {
@@ -86,6 +102,16 @@ definition {
 		static var staticAccountId = ${accountId};
 
 		return ${staticAccountId};
+	}
+
+	macro tearDownAllAccounts {
+		var response = AccountAPI.getAccounts();
+
+		var accountIds = JSONUtil.getWithJSONPath(${response}, "$..items[*].id");
+
+		for (var accountId : list ${accountIds}) {
+			AccountAPI.deleteAccount(accountId = ${accountId});
+		}
 	}
 
 }

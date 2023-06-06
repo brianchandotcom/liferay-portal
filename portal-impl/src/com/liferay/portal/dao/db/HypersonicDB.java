@@ -79,6 +79,10 @@ public class HypersonicDB extends BaseDB {
 		return _HYPERSONIC;
 	}
 
+	protected boolean isSupportsDuplicatedIndexName() {
+		return _SUPPORTS_DUPLICATED_INDEX_NAME;
+	}
+
 	@Override
 	protected String reword(String data) throws IOException {
 		try (UnsyncBufferedReader unsyncBufferedReader =
@@ -150,5 +154,7 @@ public class HypersonicDB extends BaseDB {
 	private static final int[] _SQL_VARCHAR_SIZES = {
 		SQL_VARCHAR_MAX_SIZE, SQL_VARCHAR_MAX_SIZE
 	};
+
+	private static final boolean _SUPPORTS_DUPLICATED_INDEX_NAME = false;
 
 }

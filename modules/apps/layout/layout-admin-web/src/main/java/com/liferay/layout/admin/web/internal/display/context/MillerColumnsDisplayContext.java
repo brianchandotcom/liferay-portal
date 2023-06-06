@@ -181,7 +181,7 @@ public class MillerColumnsDisplayContext {
 
 		Set<Long> conflictPlids = new HashSet<>();
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-174471")) {
+		if (FeatureFlagManagerUtil.isEnabled("LPS-174417")) {
 			conflictPlids = _layoutsAdminDisplayContext.getConflictPlids();
 		}
 

@@ -702,10 +702,10 @@ definition {
 
 		ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
 
-		ACSegments.addSegmentField(segmentField = "fullName");
+		ACSegments.addSegmentField(segmentField = "givenName");
 
 		ACSegments.editFormControlCriterion(
-			criterionName = "fullName",
+			criterionName = "givenName",
 			option = "is unknown");
 
 		ACSegments.saveSegment();
@@ -923,13 +923,13 @@ definition {
 			ACSegments.includeAnonymous();
 		}
 
-		task ("Add an fullName criteria from Individual Attributes") {
+		task ("Add an givenName criteria from Individual Attributes") {
 			ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
 
-			ACSegments.addSegmentField(segmentField = "fullName");
+			ACSegments.addSegmentField(segmentField = "givenName");
 
 			ACSegments.editFormControlCriterion(
-				criterionName = "fullName",
+				criterionName = "givenName",
 				option = "is unknown");
 		}
 

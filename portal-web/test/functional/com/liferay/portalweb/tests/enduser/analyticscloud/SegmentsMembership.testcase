@@ -465,10 +465,10 @@ definition {
 
 			ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
 
-			ACSegments.addSegmentField(segmentField = "fullName");
+			ACSegments.addSegmentField(segmentField = "givenName");
 
 			ACSegments.editFormControlCriterion(
-				criterionName = "fullName",
+				criterionName = "givenName",
 				option = "is unknown");
 		}
 

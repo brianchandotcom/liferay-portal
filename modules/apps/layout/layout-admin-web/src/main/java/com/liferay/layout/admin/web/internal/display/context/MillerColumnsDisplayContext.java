@@ -47,11 +47,10 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.LayoutTypeControllerTracker;
 
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -179,7 +178,7 @@ public class MillerColumnsDisplayContext {
 			_layoutsAdminDisplayContext.getSelGroupId(), privateLayout,
 			parentLayoutId, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		Set<Long> conflictPlids = new HashSet<>();
+		List<Long> conflictPlids = new ArrayList<>();
 
 		if (FeatureFlagManagerUtil.isEnabled("LPS-174417")) {
 			conflictPlids = _layoutsAdminDisplayContext.getConflictPlids();

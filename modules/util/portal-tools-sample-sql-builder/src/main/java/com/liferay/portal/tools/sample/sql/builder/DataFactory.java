@@ -902,20 +902,6 @@ public class DataFactory {
 		return addressModel;
 	}
 
-	public List<AddressModel> newAddressModels(
-		List<AccountEntryModel> accountEntryModels, long countryId) {
-
-		List<AddressModel> addressModels = new ArrayList<>();
-
-		for (AccountEntryModel accountEntryModel : accountEntryModels) {
-			addressModels.add(
-				newAddressModel(
-					accountEntryModel.getAccountEntryId(), countryId));
-		}
-
-		return addressModels;
-	}
-
 	public List<AssetCategoryModel> newAssetCategoryModels(
 		long groupId, List<AssetVocabularyModel> assetVocabularyModels) {
 

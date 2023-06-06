@@ -147,7 +147,7 @@
 </tr>
 <tr>
 	<td>ENABLE_CHECKBOX</td>
-	<td>//tr[contains(@data-name,'${key_checkboxName}')]//input[contains(@type,'checkbox')]</td>
+	<td>//tr[contains(@data-name,'${key_checkboxName}')]//input[contains(@type,'checkbox')] | //tr[contains(@data-value,'"name":"${key_checkboxName}"')]//input[contains(@type,'checkbox')]</td>
 	<td></td>
 </tr>
 <tr>

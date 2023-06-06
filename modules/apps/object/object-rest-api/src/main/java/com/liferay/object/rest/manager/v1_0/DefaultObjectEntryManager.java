@@ -48,6 +48,12 @@ public interface DefaultObjectEntryManager extends ObjectEntryManager {
 			ObjectDefinition objectDefinition, long objectEntryId)
 		throws Exception;
 
+	public void disassociateRelatedModels(
+			long primaryKey, ObjectDefinition objectDefinition,
+			ObjectRelationship objectRelationship,
+			ObjectDefinition relatedObjectDefinition, long userId)
+		throws Exception;
+
 	public void executeObjectAction(
 			DTOConverterContext dtoConverterContext, String objectActionName,
 			ObjectDefinition objectDefinition, long objectEntryId)

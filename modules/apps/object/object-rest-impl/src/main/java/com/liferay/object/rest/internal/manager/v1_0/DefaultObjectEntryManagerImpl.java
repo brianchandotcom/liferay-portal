@@ -239,6 +239,46 @@ public class DefaultObjectEntryManagerImpl
 	}
 
 	@Override
+	public void disassociateRelatedModels(
+			long primaryKey, ObjectDefinition objectDefinition,
+			ObjectRelationship objectRelationship,
+			ObjectDefinition relatedObjectDefinition, long userId)
+		throws Exception {
+
+		ObjectRelatedModelsProvider objectRelatedModelsProvider =
+			_objectRelatedModelsProviderRegistry.getObjectRelatedModelsProvider(
+				relatedObjectDefinition.getClassName(),
+				relatedObjectDefinition.getCompanyId(),
+				objectRelationship.getType());
+
+		if ((objectRelationship.getObjectDefinitionId1() !=
+				objectDefinition.getObjectDefinitionId()) &&
+			Objects.equals(
+				ObjectRelationshipConstants.TYPE_MANY_TO_MANY,
+				objectRelationship.getType())) {
+
+			objectRelationship =
+				_objectRelationshipLocalService.getObjectRelationship(
+					objectDefinition.getObjectDefinitionId(),
+					objectRelationship.getName());
+		}
+
+		for (Object objectRelatedModel :
+				objectRelatedModelsProvider.getRelatedModels(
+					GroupThreadLocal.getGroupId(),
+					objectRelationship.getObjectRelationshipId(), primaryKey,
+					-1, -1)) {
+
+			com.liferay.object.model.ObjectEntry relatedObjectEntry =
+				(com.liferay.object.model.ObjectEntry)objectRelatedModel;
+
+			objectRelatedModelsProvider.disassociateRelatedModels(
+				userId, objectRelationship.getObjectRelationshipId(),
+				primaryKey, relatedObjectEntry.getObjectEntryId());
+		}
+	}
+
+	@Override
 	public void executeObjectAction(
 			DTOConverterContext dtoConverterContext, String objectActionName,
 			ObjectDefinition objectDefinition, long objectEntryId)

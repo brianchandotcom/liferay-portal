@@ -465,9 +465,9 @@ export function PublishedAppsDashboardPage() {
 			{!loading && selectedNavigationItem === 'Members' && (
 				<MembersPage
 					dashboardNavigationItems={dashboardNavigationItems}
+					icon={membersIcon}
 					listOfRoles={publisherRoles}
 					rolesPermissionDescription={publisherPermissionDescriptions}
-					icon={membersIcon}
 					selectedAccount={selectedAccount}
 					setShowDashboardNavigation={setShowDashboardNavigation}
 				/>

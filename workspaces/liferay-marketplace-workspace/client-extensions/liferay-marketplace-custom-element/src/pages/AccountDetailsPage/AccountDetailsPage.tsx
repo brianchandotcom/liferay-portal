@@ -270,12 +270,19 @@ export function AccountDetailsPage({
 
 									<td className="account-details-body-table-description">
 										{address.streetAddressLine1}
+
 										{', '}
+
 										{address.addressLocality}
+
 										{', '}
+
 										{address.addressRegion}{' '}
+
 										{address.postalCode}
+
 										{', '}
+
 										{address.addressCountry}
 									</td>
 								</tr>

@@ -487,9 +487,9 @@ export function PurchasedAppsDashboardPage() {
 			{!loading && selectedNavigationItem === 'Members' && (
 				<MembersPage
 				dashboardNavigationItems={dashboardNavigationItems}
+				icon={membersIcon}
 				listOfRoles={customerRoles}
 				rolesPermissionDescription={customerPermissionDescriptions}
-				icon={membersIcon}
 				selectedAccount={selectedAccount}
 				></MembersPage>
 			)}

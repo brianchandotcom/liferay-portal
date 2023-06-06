@@ -35,7 +35,7 @@ export default function EmptyAuditBarChart({learnHowLink}) {
 	return (
 		<>
 			<ClayEmptyState
-				className="empty-state text-center"
+				className="empty-state position-absolute text-center"
 				description={description}
 				title={Liferay.Language.get('there-is-no-data')}
 			/>

@@ -274,7 +274,7 @@ export default function AuditBarChart({namespace, rtl, vocabularies}) {
 		<>
 			{!!Object.keys(checkboxes).length && noCheckboxesChecked && (
 				<ClayEmptyState
-					className="empty-state no-categories-selected text-center"
+					className="empty-state no-categories-selected position-absolute text-center"
 					description={Liferay.Language.get(
 						'select-categories-from-the-checkboxes-in-the-legend-above'
 					)}

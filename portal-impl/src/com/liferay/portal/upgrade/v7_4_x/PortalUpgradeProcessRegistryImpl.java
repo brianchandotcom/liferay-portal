@@ -307,8 +307,7 @@ public class PortalUpgradeProcessRegistryImpl
 		upgradeVersionTreeMap.put(
 			new Version(26, 3, 0),
 			new CTModelUpgradeProcess(
-				"AnnouncementsEntry",
-				"AnnouncementsFlag"));
+				"AnnouncementsEntry", "AnnouncementsFlag"));
 	}
 
 }

@@ -48,8 +48,14 @@ definition {
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 
-		task ("Verify that is possible to navigate in different pages") {
-			PRMNavigator.viewPage(pageList = "Home,Marketing,Sales,Enablement,Dashboard");
+		for (var pageName : list "Home,Marketing,Sales,Enablement,Resources") {
+			PRMNavigator.goToNavItem(navItem = ${pageName});
+
+			PRMNavigator.assertActiveBreadcrumb(activeItem = ${pageName});
+
+			var pageName = StringUtil.lowerCase(${pageName});
+
+			AssertLocation.assertPartialLocation(value1 = ${pageName});
 		}
 	}
 

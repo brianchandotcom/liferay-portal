@@ -16,6 +16,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>COMMENT_BODY</td>
+	<td>//div[contains(@class,'questions')]//div[contains(@class,'questions-article-body')]//p[contains(.,'${key_commentBodyContent}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ASK_QUESTION_BUTTON</td>
 	<td>//*[contains(@class,'btn btn-primary') and contains(text(),'Ask Question')]</td>
 	<td></td>
@@ -58,6 +63,11 @@
 <tr>
 	<td>EDIT_ANSWER</td>
 	<td>//a[@class='text-reset' and contains(text(),'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDIT_COMMENT</td>
+	<td>//div[contains(@class,'questions-reply')]//a[normalize-space()='Edit']</td>
 	<td></td>
 </tr>
 <tr>

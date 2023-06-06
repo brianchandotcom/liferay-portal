@@ -65,30 +65,13 @@ definition {
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 
-		task ("Given that the Manager user is logged in and goes to MDF listing page") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "cmm@liferaytest.com",
-				userLoginFullName = "Channel Marketing Manager");
-
+		task ("Given that the PMU goes to the created MDF") {
 			PRMNavigator.openSitePage(pageName = "MDF Requests");
-		}
 
-		task ("And the manager approves the MDF") {
 			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
-
-			PRMMDFRequest.changeMDFStatus(statusButton = "Approve");
 		}
 
-		task ("And the partner logs in and go to Partner Portal") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "pmu@partner.com",
-				userLoginFullName = "Partner Marketing User");
-
-			PRMNavigator.openSitePage(pageName = "MDF Requests");
-		}
-
-		task ("And the partner user makes two claims") {
-			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
+		task ("And creates two claims") {
 
 			PRMMDFClaim.createNewClaim(
 				listLeads = "Document_1.xlsx",
@@ -102,7 +85,7 @@ definition {
 				thirdInvoice = "Document_1.png");
 		}
 
-		task ("When the manager logs in and go to Partner Portal") {
+		task ("When the CMM logs in and go to Claim Listing Page") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "cmm@liferaytest.com",
 				userLoginFullName = "Channel Marketing Manager");
@@ -131,8 +114,8 @@ definition {
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 
-		task ("Given a new account is created") {
-			JSONPRM.addAccount(accountName = "Company Name 2");
+		task ("Given that a new account is created") {
+			JSONPRM.updateAccount(accountName = "Company Name 2");
 
 			JSONAccountEntryUser.addExistUsertoAccount(
 				accountEntryName = "Company Name 2",
@@ -152,7 +135,7 @@ definition {
 				secondBudgetValueList = 1000);
 		}
 
-		task ("And the Manager user is logged in and goes to MDF listing page") {
+		task ("And the CMM user is logged in and goes to MDF listing page") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "cmm@liferaytest.com",
 				userLoginFullName = "Channel Marketing Manager");
@@ -160,11 +143,7 @@ definition {
 			PRMNavigator.openSitePage(pageName = "MDF Requests");
 		}
 
-		task ("And the manager approves the MDF's") {
-			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
-
-			PRMMDFRequest.changeMDFStatus(key_statusButton = "Approve");
-
+		task ("And the CMM approves the MDF's") {
 			PRMNavigator.openSitePage(pageName = "MDF Requests");
 
 			PRMMDFRequest.goToMDF(campaignName = "Campaign Name 1");
@@ -172,7 +151,7 @@ definition {
 			PRMMDFRequest.changeMDFStatus(key_statusButton = "Approve");
 		}
 
-		task ("And the partner logs in and go to Partner Portal") {
+		task ("And the PMU logs in and go to Partner Portal") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "pmu@partner.com",
 				userLoginFullName = "Partner Marketing User");
@@ -180,7 +159,7 @@ definition {
 			PRMNavigator.openSitePage(pageName = "MDF Requests");
 		}
 
-		task ("And the partner user makes two Claims for 'Campaign Name' MDF") {
+		task ("And the PMU user makes two claims for 'Campaign Name' MDF") {
 			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
 
 			PRMMDFClaim.createNewClaim(
@@ -195,11 +174,9 @@ definition {
 				thirdInvoice = "Document_1.png");
 		}
 
-		task ("And the Partner goes to MDF listing page") {
+		task ("And the PMU user makes two Claims for 'Campaign Name 1' MDF") {
 			PRMNavigator.openSitePage(pageName = "MDF Requests");
-		}
-
-		task ("And the partner user makes two Claims for 'Campaign Name 1' MDF") {
+			
 			PRMMDFRequest.goToMDF(campaignName = "Campaign Name 1");
 
 			PRMMDFClaim.createNewClaim(
@@ -214,7 +191,7 @@ definition {
 				thirdInvoice = "Document_1.png");
 		}
 
-		task ("And the Manager user is logged in and goes to Claim listing page") {
+		task ("And the CMM user goes to Claim Listing Page") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "cmm@liferaytest.com",
 				userLoginFullName = "Channel Marketing Manager");
@@ -222,9 +199,8 @@ definition {
 			PRMNavigator.openSitePage(pageName = "MDF Claims");
 		}
 
-		task ("When the manager filters the Claims by account 'Company Name 1'") {
+		task ("When the CMM filters the Claims by account 'Company Name 1'") {
 			PRMMDFClaim.filterClaimID(
-				buttonOption = "Filter",
 				checkboxName = "Company Name 1",
 				optionDropdown = "Partner");
 		}
@@ -236,14 +212,14 @@ definition {
 		task ("Then the information about the filtered Claims will be inside the file") {
 			PRMMDFRequest.viewExportedMDF(
 				fileContentList = "Company Name 1",
-				fileName = "MDF Claim.csv");
+				fileName = "MDF Claim.csv",
+				fileContentNotPresent = "Company Name 2");
 		}
 
-		task ("When the manager filters the Claims by account 'Company Name 2'") {
+		task ("When the CMM filters the Claims by account 'Company Name 2'") {
 			Refresh();
 
 			PRMMDFClaim.filterClaimID(
-				buttonOption = "Filter",
 				checkboxName = "Company Name 2",
 				optionDropdown = "Partner");
 		}
@@ -255,7 +231,8 @@ definition {
 		task ("Then the information about the filtered Claims will be inside the file") {
 			PRMMDFRequest.viewExportedMDF(
 				fileContentList = "Company Name 2",
-				fileName = "MDF Claim.csv");
+				fileName = "MDF Claim.csv",
+				fileContentNotPresent = "Company Name 1");
 		}
 	}
 
@@ -267,29 +244,13 @@ definition {
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 
-		task ("Given that the Manager user is logged in and goes to MDF listing page") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "cmm@liferaytest.com",
-				userLoginFullName = "Channel Marketing Manager");
-
+		task ("Given that the PMU goes to the created MDF") {
 			PRMNavigator.openSitePage(pageName = "MDF Requests");
-		}
 
-		task ("And the manager approves the MDF") {
 			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
-
-			PRMMDFRequest.changeMDFStatus(statusButton = "Approve");
 		}
 
-		task ("And the partner logs in and go to Partner Portal") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "pmu@partner.com",
-				userLoginFullName = "Partner Marketing User");
-
-			PRMNavigator.openSitePage(pageName = "MDF Requests");
-		}
-
-		task ("And the partner user makes two claims") {
+		task ("And creates two claims") {
 			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
 
 			PRMMDFClaim.createNewClaim(
@@ -304,7 +265,7 @@ definition {
 				thirdInvoice = "Document_1.png");
 		}
 
-		task ("When the manager logs in and go to Partner Portal") {
+		task ("When the CMM logs in and go to Partner Portal") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "cmm@liferaytest.com",
 				userLoginFullName = "Channel Marketing Manager");
@@ -312,12 +273,12 @@ definition {
 			PRMNavigator.openSitePage(pageName = "MDF Claims");
 		}
 
-		task ("And get the Claim IDs") {
+		task ("And get the Claim Id's") {
 			var firstID = PRMMDFClaim.getClaimID(claimIndex = 1);
 			var secondID = PRMMDFClaim.getClaimID(claimIndex = 2);
 		}
 
-		task ("When the manager search for the first ID") {
+		task ("When the CMM search for the first ID") {
 			PRMMDFClaim.searchClaim(claimID = ${firstID});
 		}
 
@@ -328,10 +289,11 @@ definition {
 		task ("Then the information about the searched Claim should be inside the downloaded file") {
 			PRMMDFRequest.viewExportedMDF(
 				fileContentList = ${firstID},
-				fileName = "MDF Claim.csv");
+				fileName = "MDF Claim.csv",
+				fileContentNotPresent = ${secondID});
 		}
 
-		task ("When the manager search for the second ID") {
+		task ("When the CMM search for the second ID") {
 			PRMMDFClaim.searchClaim(claimID = ${secondID});
 		}
 
@@ -342,7 +304,8 @@ definition {
 		task ("Then the information about the searched Claim should be inside the downloaded file") {
 			PRMMDFRequest.viewExportedMDF(
 				fileContentList = ${secondID},
-				fileName = "MDF Claim.csv");
+				fileName = "MDF Claim.csv",
+				fileContentNotPresent = ${firstID});
 		}
 	}
 
@@ -354,33 +317,13 @@ definition {
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 
-		task ("Given that the manager user is logged in and goes to MDF listing page") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "cmm@liferaytest.com",
-				userLoginFullName = "Channel Marketing Manager");
-
-			PRMNavigator.openSitePage(pageName = "MDF Requests");
-		}
-
-		task ("And the manager approves the MDF") {
-			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
-
-			PRMMDFRequest.changeMDFStatus(statusButton = "Approve");
-		}
-
-		task ("And the partner logs in") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "pmu@partner.com",
-				userLoginFullName = "Partner Marketing User");
-		}
-
-		task ("And go to the approved MDF") {
+		task ("Given that the PMU goes to the created MDF") {
 			PRMNavigator.openSitePage(pageName = "MDF Requests");
 
 			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
 		}
 
-		task ("When the partner claim all MDF Activities") {
+		task ("When the PMU claim all MDF Activities") {
 			PRMMDFClaim.createNewClaim(
 				activityIndex = "0,1",
 				listLeads = "Document_1.xls",
@@ -388,7 +331,7 @@ definition {
 				thirdInvoice = "Document_1.pdf");
 		}
 
-		task ("Then the Claim Type is Full") {
+		task ("Then the 'Claim Type' will be 'Full'") {
 			PRMMDFClaim.viewClaimType(claimType = "Full");
 		}
 	}
@@ -401,40 +344,20 @@ definition {
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 
-		task ("Given that the manager user is logged in and goes to MDF listing page") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "cmm@liferaytest.com",
-				userLoginFullName = "Channel Marketing Manager");
-
-			PRMNavigator.openSitePage(pageName = "MDF Requests");
-		}
-
-		task ("And the manager approves the MDF") {
-			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
-
-			PRMMDFRequest.changeMDFStatus(statusButton = "Approve");
-		}
-
-		task ("And the partner logs in") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "pmu@partner.com",
-				userLoginFullName = "Partner Marketing User");
-		}
-
-		task ("And go to the approved MDF") {
+		task ("Given that the PMU goes to the created MDF") {
 			PRMNavigator.openSitePage(pageName = "MDF Requests");
 
 			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
 		}
 
-		task ("When the partner claim just one MDF Activity") {
+		task ("When the PMU claims just one MDF Activity") {
 			PRMMDFClaim.createNewClaim(
 				listLeads = "Document_1.xls",
 				reimbursementInvoice = "Document_1.png",
 				thirdInvoice = "Document_1.pdf");
 		}
 
-		task ("Then the Claim Type is Partial") {
+		task ("Then the 'C'laim Type' will be 'Partial'") {
 			PRMMDFClaim.viewClaimType(claimType = "Partial");
 		}
 	}
@@ -574,19 +497,13 @@ definition {
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 
-		task ("Given that the manager goes to the created MDF and approve it") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "cmm@liferaytest.com",
-				userLoginFullName = "Channel Marketing Manager");
-
+		task ("Given that the PMU goes to the created MDF") {
 			PRMNavigator.openSitePage(pageName = "MDF Requests");
 
 			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
-
-			PRMMDFRequest.changeMDFStatus(statusButton = "Approve");
 		}
 
-		task ("When the manager goes to create a new Claim") {
+		task ("When the PMU goes to create a new Claim") {
 			Button.click(button = "New Claim");
 
 			PRMMDFClaim.fillActivityFields(

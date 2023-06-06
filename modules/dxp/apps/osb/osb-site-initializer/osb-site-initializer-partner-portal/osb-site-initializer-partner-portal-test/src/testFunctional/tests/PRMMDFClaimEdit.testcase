@@ -195,21 +195,59 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-183233. Verify that the CMM can edit the claim in 'Approved' status"
+	@priority = 5
+	test CMMCanEditClaimInApprovedStatus {
+		property test.name.skip.portal.instance = "PRMMDFClaimEdit#CMMCanEditClaimInApprovedStatus";
+
+		task ("Given that the partner creates a new claim") {
+			PRMNavigator.openSitePage(pageName = "MDF Requests");
+
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
+
+			PRMMDFClaim.createNewClaim(
+				listLeads = "Document_1.xlsx",
+				reimbursementInvoice = "Document_1.png",
+				thirdInvoice = "Document_1.jpg");
+
+			task ("The Claim ID is saved in a variable") {
+				PRMMDFClaim.getClaimIdOnDetailPage(index = 1);
+			}
 		}
 
-		task ("And when the manager moves the claim to Claim Paid") {
+		task ("When the CMM goes to the created claim and change the status to 'Approved") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "cmm@liferaytest.com",
+				userLoginFullName = "Channel Marketing Manager");
+
 			JSONPRM.changeClaimStatus(
 				claimId = ${staticClaimId1},
-				claimStatus = "Claim Paid",
+				claimStatus = "Approved",
 				userEmailAddress = "cmm@liferaytest.com");
-		}
 
-		task ("And the partner goes to the claim") {
 			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
 		}
 
-		task ("Then the 'Edit' button is not visible") {
-			PRMMDFClaimEdit.buttonIsNotVisible();
+		task ("And edit the claim, changing the activity attachment") {
+			PRMMDFClaim.editButton();
+
+			PRMMDFClaimEdit.editClaim(
+				activityName = "Activity Name",
+				newAttachment = "Document_2.jpg");
+		}
+
+		task ("And go to the claim detail page") {
+			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
+
+			PRMMDFClaim.activityCollapse(activityName = "Activity Name");
+		}
+
+		task ("Then the new attachment is displayed") {
+			PRMMDFClaim.viewAttachmentPresent(attachmentName = "Document_2.jpg");
+		}
+
+		task ("And the old attachment isn't displayed") {
+			PRMMDFClaim.viewAttachmentNotPresent(attachmentName = "Document_1.png");
 		}
 	}
 

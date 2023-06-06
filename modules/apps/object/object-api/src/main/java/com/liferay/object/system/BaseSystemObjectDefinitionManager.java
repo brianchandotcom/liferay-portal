@@ -100,20 +100,22 @@ public abstract class BaseSystemObjectDefinitionManager
 	}
 
 	protected ObjectField createObjectField(
-		String businessType, String dbType, String labelKey, String name,
-		boolean required, boolean system) {
+		String externalReferenceCode, String businessType, String dbType,
+		String labelKey, String name, boolean required, boolean system) {
 
 		return createObjectField(
-			businessType, null, dbType, labelKey, name, required, system);
+			externalReferenceCode, businessType, null, dbType, labelKey, name,
+			required, system);
 	}
 
 	protected ObjectField createObjectField(
-		String businessType, String dbColumnName, String dbType,
-		String labelKey, String name, boolean required, boolean system) {
+		String externalReferenceCode, String businessType, String dbColumnName,
+		String dbType, String labelKey, String name, boolean required,
+		boolean system) {
 
 		return ObjectFieldUtil.createObjectField(
-			0, businessType, dbColumnName, dbType, false, false, null,
-			_translate(labelKey), name, required, system);
+			externalReferenceCode, 0, businessType, dbColumnName, dbType, false,
+			false, null, _translate(labelKey), name, required, system);
 	}
 
 	protected Map<String, String> getLanguageIdMap(

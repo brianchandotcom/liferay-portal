@@ -46,16 +46,16 @@ public class ObjectFieldUtil {
 	}
 
 	public static ObjectField createObjectField(
-		long listTypeDefinitionId, String businessType, String dbColumnName,
-		String dbType, boolean indexed, boolean indexedAsKeyword,
-		String indexedLanguageId, String label, String name, boolean required,
-		boolean system) {
+		String externalReferenceCode, long listTypeDefinitionId,
+		String businessType, String dbColumnName, String dbType,
+		boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
+		String label, String name, boolean required, boolean system) {
 
 		return createObjectField(
-			businessType, dbColumnName, dbType, indexed, indexedAsKeyword,
-			indexedLanguageId, label, listTypeDefinitionId, name,
-			Collections.emptyList(), ObjectFieldConstants.READ_ONLY_FALSE, null,
-			required, system);
+			externalReferenceCode, businessType, dbColumnName, dbType, indexed,
+			indexedAsKeyword, indexedLanguageId, label, listTypeDefinitionId,
+			name, Collections.emptyList(), ObjectFieldConstants.READ_ONLY_FALSE,
+			null, required, system);
 	}
 
 	public static ObjectField createObjectField(
@@ -64,7 +64,7 @@ public class ObjectFieldUtil {
 		String name, boolean required) {
 
 		return createObjectField(
-			0, businessType, null, dbType, indexed, indexedAsKeyword,
+			null, 0, businessType, null, dbType, indexed, indexedAsKeyword,
 			indexedLanguageId, label, name, required, false);
 	}
 
@@ -75,7 +75,7 @@ public class ObjectFieldUtil {
 		boolean required) {
 
 		return createObjectField(
-			businessType, null, dbType, indexed, indexedAsKeyword,
+			null, businessType, null, dbType, indexed, indexedAsKeyword,
 			indexedLanguageId, label, 0, name, objectFieldSettings,
 			ObjectFieldConstants.READ_ONLY_FALSE, null, required, false);
 	}
@@ -87,15 +87,42 @@ public class ObjectFieldUtil {
 	}
 
 	public static ObjectField createObjectField(
-		String businessType, String dbColumnName, String dbType,
-		boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
-		String label, long listTypeDefinitionId, String name,
-		List<ObjectFieldSetting> objectFieldSettings, String readOnly,
-		String readOnlyConditionExpression, boolean required, boolean system) {
+		String businessType, String dbType, String name,
+		List<ObjectFieldSetting> objectFieldSettings) {
+
+		return createObjectField(
+			null, businessType, null, dbType, false, false, null, name, 0, name,
+			objectFieldSettings, ObjectFieldConstants.READ_ONLY_FALSE, null,
+			false, false);
+	}
+
+	public static ObjectField createObjectField(
+		String businessType, String dbType, String label, String name) {
+
+		return createObjectField(businessType, dbType, label, name, false);
+	}
+
+	public static ObjectField createObjectField(
+		String businessType, String dbType, String label, String name,
+		boolean required) {
+
+		return createObjectField(
+			null, 0, businessType, null, dbType, false, false, null, label,
+			name, required, false);
+	}
+
+	public static ObjectField createObjectField(
+		String externalReferenceCode, String businessType, String dbColumnName,
+		String dbType, boolean indexed, boolean indexedAsKeyword,
+		String indexedLanguageId, String label, long listTypeDefinitionId,
+		String name, List<ObjectFieldSetting> objectFieldSettings,
+		String readOnly, String readOnlyConditionExpression, boolean required,
+		boolean system) {
 
 		ObjectField objectField = ObjectFieldLocalServiceUtil.createObjectField(
 			0);
 
+		objectField.setExternalReferenceCode(externalReferenceCode);
 		objectField.setListTypeDefinitionId(listTypeDefinitionId);
 		objectField.setBusinessType(businessType);
 		objectField.setDBColumnName(dbColumnName);
@@ -115,38 +142,13 @@ public class ObjectFieldUtil {
 	}
 
 	public static ObjectField createObjectField(
-		String businessType, String dbType, String name,
-		List<ObjectFieldSetting> objectFieldSettings) {
-
-		return createObjectField(
-			businessType, null, dbType, false, false, null, name, 0, name,
-			objectFieldSettings, ObjectFieldConstants.READ_ONLY_FALSE, null,
-			false, false);
-	}
-
-	public static ObjectField createObjectField(
-		String businessType, String dbType, String label, String name) {
-
-		return createObjectField(businessType, dbType, label, name, false);
-	}
-
-	public static ObjectField createObjectField(
-		String businessType, String dbType, String label, String name,
-		boolean required) {
-
-		return createObjectField(
-			0, businessType, null, dbType, false, false, null, label, name,
-			required, false);
-	}
-
-	public static ObjectField createObjectField(
 		String businessType, String dbType, String label, String name,
 		List<ObjectFieldSetting> objectFieldSettings) {
 
 		return createObjectField(
-			businessType, null, dbType, false, false, null, label, 0, name,
-			objectFieldSettings, ObjectFieldConstants.READ_ONLY_FALSE, null,
-			false, false);
+			null, businessType, null, dbType, false, false, null, label, 0,
+			name, objectFieldSettings, ObjectFieldConstants.READ_ONLY_FALSE,
+			null, false, false);
 	}
 
 }

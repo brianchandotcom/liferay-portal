@@ -79,26 +79,19 @@ public class LayoutSetPrototypeFriendlyURLConflictDetectionTest {
 
 		String[] names = RandomTestUtil.randomStrings(3);
 
-		for (String name : names) {
-			LayoutTestUtil.addTypePortletLayout(
-				_group.getGroupId(), name, false);
-		}
-
-		for (int i = 0; i < names.length; ++i) {
-			LayoutTestUtil.addTypePortletLayout(
-				_group.getGroupId(), RandomTestUtil.randomString(5), false);
-		}
-
 		List<Layout> prototypeLayouts = new ArrayList<>(names.length);
 
 		for (String name : names) {
+			LayoutTestUtil.addTypePortletLayout(
+				_group.getGroupId(), name, false);
+			LayoutTestUtil.addTypePortletLayout(
+				_group.getGroupId(), RandomTestUtil.randomString(5), false);
+
 			Layout prototypeLayout = LayoutTestUtil.addTypePortletLayout(
 				_layoutSetPrototypeGroup.getGroupId(), name, true);
 
 			prototypeLayouts.add(prototypeLayout);
-		}
 
-		for (int i = 0; i < names.length; ++i) {
 			LayoutTestUtil.addTypePortletLayout(
 				_layoutSetPrototypeGroup.getGroupId(),
 				RandomTestUtil.randomString(5), true);
@@ -133,19 +126,11 @@ public class LayoutSetPrototypeFriendlyURLConflictDetectionTest {
 				_group.getGroupId(), name, false);
 
 			siteLayouts.add(siteLayout);
-		}
 
-		for (int i = 0; i < names.length; ++i) {
 			LayoutTestUtil.addTypePortletLayout(
 				_group.getGroupId(), RandomTestUtil.randomString(5), false);
-		}
-
-		for (String name : names) {
 			LayoutTestUtil.addTypePortletLayout(
 				_layoutSetPrototypeGroup.getGroupId(), name, true);
-		}
-
-		for (int i = 0; i < names.length; ++i) {
 			LayoutTestUtil.addTypePortletLayout(
 				_layoutSetPrototypeGroup.getGroupId(),
 				RandomTestUtil.randomString(5), true);

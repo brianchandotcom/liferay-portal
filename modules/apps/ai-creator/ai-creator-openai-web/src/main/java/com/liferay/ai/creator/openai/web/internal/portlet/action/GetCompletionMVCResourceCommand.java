@@ -19,11 +19,13 @@ import com.liferay.ai.creator.openai.web.internal.client.AICreatorOpenAIClient;
 import com.liferay.ai.creator.openai.web.internal.constants.AICreatorOpenAIPortletKeys;
 import com.liferay.ai.creator.openai.web.internal.exception.AICreatorOpenAIClientException;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ResourceRequest;
@@ -52,6 +54,59 @@ public class GetCompletionMVCResourceCommand extends BaseMVCResourceCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		if (!_aiCreatorOpenAIConfigurationManager.isAICreatorOpenAIGroupEnabled(
+				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId())) {
+
+			JSONPortletResponseUtil.writeJSON(
+				resourceRequest, resourceResponse,
+				JSONUtil.put(
+					"error",
+					JSONUtil.put(
+						"message",
+						_language.get(
+							themeDisplay.getLocale(),
+							"openai-is-disabled.-enable-openai-from-settings-" +
+								"page-or-contact-your-admin"))));
+
+			return;
+		}
+
+		String apiKey =
+			_aiCreatorOpenAIConfigurationManager.getAICreatorOpenAIGroupAPIKey(
+				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId());
+
+		if (Validator.isNull(apiKey)) {
+			JSONPortletResponseUtil.writeJSON(
+				resourceRequest, resourceResponse,
+				JSONUtil.put(
+					"error",
+					JSONUtil.put(
+						"message",
+						_language.get(
+							themeDisplay.getLocale(),
+							"api-authentication-is-needed-to-use-this-" +
+								"feature.-add-an-api-key-from-settings-page-" +
+									"or-contact-your-admin"))));
+
+			return;
+		}
+
+		String content = ParamUtil.getString(resourceRequest, "content");
+
+		if (Validator.isNull(content)) {
+			JSONPortletResponseUtil.writeJSON(
+				resourceRequest, resourceResponse,
+				JSONUtil.put(
+					"error",
+					JSONUtil.put(
+						"message",
+						_language.format(
+							themeDisplay.getLocale(), "the-x-is-required",
+							"content"))));
+
+			return;
+		}
+
 		try {
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,
@@ -60,16 +115,10 @@ public class GetCompletionMVCResourceCommand extends BaseMVCResourceCommand {
 					JSONUtil.put(
 						"content",
 						aiCreatorOpenAIClient.getCompletion(
-							_aiCreatorOpenAIConfigurationManager.
-								getAICreatorOpenAIGroupAPIKey(
-									themeDisplay.getCompanyId(),
-									themeDisplay.getScopeGroupId()),
-							ParamUtil.getString(resourceRequest, "content"),
-							themeDisplay.getLocale(),
+							apiKey, content, themeDisplay.getLocale(),
 							ParamUtil.getString(
 								resourceRequest, "tone", "formal"),
-							ParamUtil.getInteger(
-								resourceRequest, "words")))));
+							ParamUtil.getInteger(resourceRequest, "words")))));
 		}
 		catch (AICreatorOpenAIClientException aiCreatorOpenAIClientException) {
 			JSONPortletResponseUtil.writeJSON(
@@ -87,5 +136,8 @@ public class GetCompletionMVCResourceCommand extends BaseMVCResourceCommand {
 	@Reference
 	private AICreatorOpenAIConfigurationManager
 		_aiCreatorOpenAIConfigurationManager;
+
+	@Reference
+	private Language _language;
 
 }

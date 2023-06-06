@@ -18,7 +18,6 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -26,10 +25,8 @@ import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.repository.capabilities.RelatedModelCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.BaseIndexer;
-import com.liferay.portal.kernel.search.BaseRelatedEntryIndexer;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
@@ -39,7 +36,6 @@ import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.QueryConfig;
-import com.liferay.portal.kernel.search.RelatedEntryIndexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Summary;
@@ -82,12 +78,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Bruno Farache
  * @author Raymond Augé
  */
-@Component(
-	property = "related.entry.indexer.class.name=com.liferay.wiki.model.WikiPage",
-	service = {Indexer.class, RelatedEntryIndexer.class}
-)
-public class WikiPageIndexer
-	extends BaseIndexer<WikiPage> implements RelatedEntryIndexer {
+@Component(service = Indexer.class)
+public class WikiPageIndexer extends BaseIndexer<WikiPage> {
 
 	public static final String CLASS_NAME = WikiPage.class.getName();
 
@@ -99,51 +91,6 @@ public class WikiPageIndexer
 		setDefaultSelectedLocalizedFieldNames(Field.CONTENT, Field.TITLE);
 		setFilterSearch(true);
 		setPermissionAware(true);
-	}
-
-	@Override
-	public void addRelatedClassNames(
-			BooleanFilter contextBooleanFilter, SearchContext searchContext)
-		throws Exception {
-
-		_relatedEntryIndexer.addRelatedClassNames(
-			contextBooleanFilter, searchContext);
-	}
-
-	@Override
-	public void addRelatedEntryFields(Document document, Object object)
-		throws Exception {
-
-		long classPK = 0;
-
-		if (object instanceof Comment) {
-			Comment comment = (Comment)object;
-
-			classPK = comment.getClassPK();
-		}
-		else if (object instanceof FileEntry) {
-			FileEntry fileEntry = (FileEntry)object;
-
-			RelatedModelCapability relatedModelCapability =
-				fileEntry.getRepositoryCapability(RelatedModelCapability.class);
-
-			classPK = relatedModelCapability.getClassPK(fileEntry);
-		}
-
-		WikiPage page = null;
-
-		try {
-			page = _wikiPageLocalService.getPage(classPK);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-
-			return;
-		}
-
-		document.addKeyword(Field.NODE_ID, page.getNodeId());
 	}
 
 	@Override
@@ -167,11 +114,6 @@ public class WikiPageIndexer
 		WikiPage page = _wikiPageLocalService.getPage(classPK);
 
 		return isVisible(page.getStatus(), status);
-	}
-
-	@Override
-	public boolean isVisibleRelatedEntry(long classPK, int status) {
-		return true;
 	}
 
 	@Override
@@ -237,10 +179,6 @@ public class WikiPageIndexer
 					searchContext.getKeywords(), StringPool.SPACE)));
 
 		return hits;
-	}
-
-	@Override
-	public void updateFullQuery(SearchContext searchContext) {
 	}
 
 	@Activate
@@ -438,9 +376,6 @@ public class WikiPageIndexer
 
 	@Reference
 	private Localization _localization;
-
-	private final RelatedEntryIndexer _relatedEntryIndexer =
-		new BaseRelatedEntryIndexer();
 
 	@Reference
 	private SearchLocalizationHelper _searchLocalizationHelper;

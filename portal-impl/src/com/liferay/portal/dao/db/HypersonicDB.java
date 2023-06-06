@@ -61,8 +61,7 @@ public class HypersonicDB extends BaseDB {
 		String tableName, String newTableName) {
 
 		return StringBundler.concat(
-			"create table ", newTableName, " as (select * from ", tableName,
-			") without data");
+			"create table ", newTableName, " (like ", tableName, ")");
 	}
 
 	@Override

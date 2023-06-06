@@ -18,7 +18,7 @@ export default ({segmentType, state}) => {
 	return (
 		<Sticker
 			className='segment-sticker-root'
-			display={disabled ? 'warning' : 'light'}
+			display={disabled ? 'warning' : 'dark'}
 			symbol={getSymbol()}
 		/>
 	);

@@ -159,17 +159,8 @@ $productMenuWidth: 320px;
 		}
 
 		.contextual-sidebar-content {
-			margin-top: $toolbarHeight;
-
-			@include media-breakpoint-up(lg) {
-				margin-top: $toolbarDesktopHeight;
-			}
-
 			@include media-breakpoint-down(md) {
 				> .container-fluid {
-					margin: 0;
-					padding: 0;
-
 					> .sheet {
 						border: none;
 						border-radius: 0;

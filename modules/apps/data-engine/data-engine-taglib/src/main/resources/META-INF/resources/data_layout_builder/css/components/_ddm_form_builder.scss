@@ -1,4 +1,12 @@
+@import 'atlas-variables';
+
 .data-engine-form-builder {
+	margin-top: 110px;
+
+	@include media-breakpoint-up(lg) {
+		margin-top: 64px;
+	}
+
 	> .sheet {
 		margin-top: 0;
 		padding: 0;

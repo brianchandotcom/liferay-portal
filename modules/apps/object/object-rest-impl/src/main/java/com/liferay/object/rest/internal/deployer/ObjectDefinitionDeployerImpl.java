@@ -378,6 +378,68 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				return serviceRegistrationsMap;
 			});
 
+		properties = HashMapDictionaryBuilder.<String, Object>put(
+			"api.version", "v1.0"
+		).put(
+			"batch.engine.entity.class.name",
+			ObjectEntry.class.getName() + "#" + osgiJaxRsName
+		).put(
+			"batch.engine.task.item.delegate", "true"
+		).put(
+			"batch.engine.task.item.delegate.name", osgiJaxRsName
+		).put(
+			"batch.planner.export.enabled", "true"
+		).put(
+			"batch.planner.import.enabled", "true"
+		).put(
+			"companyId", companyIds
+		).put(
+			"entity.class.name",
+			ObjectEntry.class.getName() + "#" + osgiJaxRsName
+		).put(
+			"osgi.jaxrs.application.select",
+			"(osgi.jaxrs.name=" + osgiJaxRsName + ")"
+		).put(
+			"osgi.jaxrs.resource", "true"
+		).build();
+
+		_objectEntryResourceProperties.put(restContextPath, properties);
+
+		ServiceRegistration<ObjectEntryResource>
+			objectEntryResourceServiceRegistration =
+				_objectEntryResourceServiceRegistrations.get(restContextPath);
+
+		if (objectEntryResourceServiceRegistration == null) {
+			_objectEntryResourceServiceRegistrations.put(
+				restContextPath,
+				_bundleContext.registerService(
+					ObjectEntryResource.class,
+					new PrototypeServiceFactory<ObjectEntryResource>() {
+
+						@Override
+						public ObjectEntryResource getService(
+							Bundle bundle,
+							ServiceRegistration<ObjectEntryResource>
+								serviceRegistration) {
+
+							return _createObjectEntryResourceImpl();
+						}
+
+						@Override
+						public void ungetService(
+							Bundle bundle,
+							ServiceRegistration<ObjectEntryResource>
+								serviceRegistration,
+							ObjectEntryResource objectEntryResource) {
+						}
+
+					},
+					properties));
+		}
+		else {
+			objectEntryResourceServiceRegistration.setProperties(properties);
+		}
+
 		_serviceRegistrationsMap.computeIfAbsent(
 			restContextPath,
 			key -> Arrays.asList(
@@ -531,52 +593,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 						"resource.locator.key",
 						objectDefinition.getRESTContextPath() + "/" +
 							objectDefinition.getShortName()
-					).build()),
-				_bundleContext.registerService(
-					ObjectEntryResource.class,
-					new PrototypeServiceFactory<ObjectEntryResource>() {
-
-						@Override
-						public ObjectEntryResource getService(
-							Bundle bundle,
-							ServiceRegistration<ObjectEntryResource>
-								serviceRegistration) {
-
-							return _createObjectEntryResourceImpl();
-						}
-
-						@Override
-						public void ungetService(
-							Bundle bundle,
-							ServiceRegistration<ObjectEntryResource>
-								serviceRegistration,
-							ObjectEntryResource objectEntryResource) {
-						}
-
-					},
-					HashMapDictionaryBuilder.<String, Object>put(
-						"api.version", "v1.0"
-					).put(
-						"batch.engine.entity.class.name",
-						ObjectEntry.class.getName() + "#" + osgiJaxRsName
-					).put(
-						"batch.engine.task.item.delegate", "true"
-					).put(
-						"batch.engine.task.item.delegate.name", osgiJaxRsName
-					).put(
-						"batch.planner.export.enabled", "true"
-					).put(
-						"batch.planner.import.enabled", "true"
-					).put(
-						"companyId", objectDefinition.getCompanyId()
-					).put(
-						"entity.class.name",
-						ObjectEntry.class.getName() + "#" + osgiJaxRsName
-					).put(
-						"osgi.jaxrs.application.select",
-						"(osgi.jaxrs.name=" + osgiJaxRsName + ")"
-					).put(
-						"osgi.jaxrs.resource", "true"
 					).build())));
 	}
 
@@ -701,6 +717,13 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 				serviceRegistration.setProperties(
 					_applicationProperties.get(restContextPath));
+
+				serviceRegistration =
+					_objectEntryResourceServiceRegistrations.get(
+						restContextPath);
+
+				serviceRegistration.setProperties(
+					_objectEntryResourceProperties.get(restContextPath));
 			}
 		}
 	}
@@ -755,6 +778,13 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	private void _unregisterApplication(String restContextPath) {
 		ServiceRegistration<?> serviceRegistration1 =
 			_applicationServiceRegistrations.remove(restContextPath);
+
+		if (serviceRegistration1 != null) {
+			serviceRegistration1.unregister();
+		}
+
+		serviceRegistration1 = _objectEntryResourceServiceRegistrations.remove(
+			restContextPath);
 
 		if (serviceRegistration1 != null) {
 			serviceRegistration1.unregister();
@@ -834,6 +864,11 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	@Reference
 	private ObjectEntryOpenAPIResourceProvider
 		_objectEntryOpenAPIResourceProvider;
+
+	private final Map<String, Dictionary<String, Object>>
+		_objectEntryResourceProperties = new HashMap<>();
+	private final Map<String, ServiceRegistration<ObjectEntryResource>>
+		_objectEntryResourceServiceRegistrations = new HashMap<>();
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;

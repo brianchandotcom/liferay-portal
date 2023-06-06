@@ -239,33 +239,70 @@ definition {
 				newAttachment = "Document_2.jpg");
 		}
 
-		task ("When the manager changes the claim status to 'In Finance Review' and navigate to it") {
+	@description = "This is a test for LPS-181360. Verify that the Edit button is not displayed to partner in status different from 'Draft' and 'Request More Info'"
+	@priority = 5
+	test EditButtonIsDisplayedInSpecificStatusToPartner {
+		property test.name.skip.portal.instance = "PRMMDFClaimEdit#EditButtonIsDisplayedInSpecificStatus";
+
+		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
+
+		task ("Given that a new claim is created") {
+			PRMMDFClaim.createNewClaim(
+				listLeads = "Document_1.xlsx",
+				reimbursementInvoice = "Document_1.png",
+				thirdInvoice = "Document_1.png");
+
+			task ("The Claim ID is saved in a variable") {
+				PRMMDFClaim.getClaimIdOnDetailPage(index = 1);
+			}
+		}
+
+		task ("When the manager approves the created Claim") {
+			JSONPRM.changeClaimStatus(
+				claimId = ${staticClaimId1},
+				claimStatus = "Approved",
+				userEmailAddress = "cmm@liferaytest.com");
+		}
+
+		task ("And the partner goes to the approved claim") {
+			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
+		}
+
+		task ("Then the 'Edit' button is not visible") {
+			PRMMDFClaimEdit.buttonIsNotVisible();
+		}
+
+		task ("And when the manager moves the claim to Finance Review") {
 			JSONPRM.changeClaimStatus(
 				claimId = ${staticClaimId1},
 				claimStatus = "In Finance Review",
 				userEmailAddress = "cmm@liferaytest.com");
+		}
 
+		task ("And the partner goes to the claim") {
 			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
 		}
 
-		task ("Then he is able to edit the claim") {
-			PRMMDFClaimEdit.editButton();
-
-			PRMMDFClaimEdit.editClaim(
-				activityName = "Activity Name",
-				newAttachment = "Document_2.jpg");
+		task ("Then the 'Edit' button is not visible") {
+			PRMMDFClaimEdit.buttonIsNotVisible();
 		}
 
-		task ("When the manager changes the claim status to 'Claim Paid' and navigate to it") {
+		task ("And when the manager moves the claim to Claim Paid") {
 			JSONPRM.changeClaimStatus(
 				claimId = ${staticClaimId1},
 				claimStatus = "Claim Paid",
 				userEmailAddress = "cmm@liferaytest.com");
+		}
 
+		task ("And the partner goes to the claim") {
 			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
 		}
 
-		task ("Then he is able to edit the claim") {
+		task ("Then the 'Edit' button is not visible") {
+			PRMMDFClaimEdit.buttonIsNotVisible();
+		}
+	}
+
 			PRMMDFClaimEdit.editButton();
 
 			PRMMDFClaimEdit.editClaim(

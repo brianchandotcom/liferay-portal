@@ -29,8 +29,12 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+
+import java.text.Format;
 
 import java.util.List;
 import java.util.Locale;
@@ -66,6 +70,15 @@ public class CPDefinitionItemSelectorViewDisplayContext
 
 	public CPType getCPType(String name) {
 		return _cpTypeRegistry.getCPType(name);
+	}
+
+	public String getModifiedDate(
+		CPDefinition cpDefinition, ThemeDisplay themeDisplay) {
+
+		Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(
+			themeDisplay.getLocale(), themeDisplay.getTimeZone());
+
+		return dateFormatDateTime.format(cpDefinition.getModifiedDate());
 	}
 
 	@Override

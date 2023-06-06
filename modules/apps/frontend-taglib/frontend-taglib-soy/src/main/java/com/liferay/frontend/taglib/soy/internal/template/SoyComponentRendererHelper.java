@@ -81,8 +81,7 @@ public class SoyComponentRendererHelper {
 		if (_componentDescriptor.isRenderJavascript()) {
 			if (ESImportUtil.isESImport(_componentDescriptor.getModule())) {
 				_renderEcmaScript(writer);
-			}
-			else {
+			} else {
 				_renderJavaScript(writer);
 			}
 		}
@@ -144,17 +143,15 @@ public class SoyComponentRendererHelper {
 	}
 
 	private void _renderEcmaScript(Writer writer) throws IOException {
-
 		// AMD requires and ES imports
 
 		List<AMDRequire> amdRequires = new ArrayList<>();
-
 		List<ESImport> esImports = new ArrayList<>();
 
 		esImports.add(
 			ESImportUtil.getESImport(
 				_absolutePortalURLBuilder, "componentModule",
-				_componentDescriptor.getModule()));
+					_componentDescriptor.getModule()));
 
 		for (String dependency : _componentDescriptor.getDependencies()) {
 			if (ESImportUtil.isESImport(dependency)) {

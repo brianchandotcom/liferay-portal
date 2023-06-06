@@ -69,7 +69,6 @@ public class GetLayoutChildrenMVCActionCommand extends BaseMVCActionCommand {
 		LayoutsAdminDisplayContext layoutsAdminDisplayContext =
 			new LayoutsAdminDisplayContext(
 				_itemSelector, layoutActionsHelper, _layoutCopyHelper,
-				_layoutSetPrototypeHelper,
 				_portal.getLiferayPortletRequest(actionRequest),
 				_portal.getLiferayPortletResponse(actionResponse));
 
@@ -79,7 +78,7 @@ public class GetLayoutChildrenMVCActionCommand extends BaseMVCActionCommand {
 					_portal.getHttpServletRequest(actionRequest),
 					layoutActionsHelper, layoutsAdminDisplayContext,
 					_translationURLProvider),
-				layoutsAdminDisplayContext,
+				_layoutSetPrototypeHelper, layoutsAdminDisplayContext,
 				_portal.getLiferayPortletRequest(actionRequest),
 				_portal.getLiferayPortletResponse(actionResponse));
 

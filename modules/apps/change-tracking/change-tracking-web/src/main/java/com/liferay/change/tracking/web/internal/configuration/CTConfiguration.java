@@ -33,11 +33,21 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface CTConfiguration {
 
 	@Meta.AD(
-		deflt = "1000", name = "context-view-limit-count", required = false
+		deflt = "1000", description = "context-view-limit-count-help",
+		name = "context-view-limit-count", required = false
 	)
 	public int contextViewLimitCount();
 
-	@Meta.AD(deflt = "true", name = "show-all-items-enabled", required = false)
+	@Meta.AD(
+		deflt = "true", description = "context-view-include-production-help",
+		name = "context-view-include-production", required = false
+	)
+	public boolean contextViewIncludeProduction();
+
+	@Meta.AD(
+		deflt = "true", description = "show-all-items-enabled-help",
+		name = "show-all-items-enabled", required = false
+	)
 	public boolean showAllItemsEnabled();
 
 }

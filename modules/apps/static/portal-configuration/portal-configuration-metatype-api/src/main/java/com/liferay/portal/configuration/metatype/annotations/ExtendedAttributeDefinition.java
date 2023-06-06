@@ -43,4 +43,6 @@ public @interface ExtendedAttributeDefinition {
 
 	public boolean requiredInput() default false;
 
+	public String visibilityControllerKey() default "";
+
 }

@@ -143,7 +143,8 @@ public class CETFDSActionProvider implements FDSActionProvider {
 				"/client_extension_admin/export"
 			).buildString());
 		dropdownItem.setIcon("export");
-		dropdownItem.setLabel(_getMessage(httpServletRequest, "export"));
+		dropdownItem.setLabel(
+			_getMessage(httpServletRequest, "export-as-json"));
 	}
 
 	private void _buildViewClientExtensionEntryAction(

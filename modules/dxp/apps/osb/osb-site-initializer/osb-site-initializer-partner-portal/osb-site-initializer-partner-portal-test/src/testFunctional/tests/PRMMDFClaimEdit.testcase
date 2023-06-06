@@ -307,12 +307,10 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-181361. Verify that Managers can edit Claim in any status"
+	@description = "This is a test for LPS-183236. Verify that the CMM can edit the claim in 'In Director Review' status"
 	@priority = 5
-	test ManagerCanEditClaimInAnyStatus {
-		property test.name.skip.portal.instance = "PRMMDFClaimEdit#ManagerCanEditClaimInAnyStatus";
-
-		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
+	test CMMCanEditClaimInDirectorReviewStatus {
+		property test.name.skip.portal.instance = "PRMMDFClaimEdit#CMMCanEditClaimInDirectorReviewStatus";
 
 		task ("Given that the partner creates a new claim") {
 			PRMNavigator.openSitePage(pageName = "MDF Requests");
@@ -329,23 +327,41 @@ definition {
 			}
 		}
 
-		task ("When the manager goes to the created claim in 'Pending Marketing Review' status") {
+		task ("When the CMM goes to the created claim and change the status to 'In Director Review") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "cmm@liferaytest.com",
 				userLoginFullName = "Channel Marketing Manager");
 
+			JSONPRM.changeClaimStatus(
+				claimId = ${staticClaimId1},
+				claimStatus = "In Director Review",
+				userEmailAddress = "cmm@liferaytest.com");
+
 			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
 		}
 
-		task ("Then he is able to edit the claim") {
-			PRMMDFClaimEdit.editButton();
+		task ("And edit the claim, changing the activity attachment") {
+			PRMMDFClaim.editButton();
 
 			PRMMDFClaimEdit.editClaim(
 				activityName = "Activity Name",
 				newAttachment = "Document_2.jpg");
 		}
 
-		task ("When the manager changes the claim status to 'Approved' and navigate to it") {
+		task ("And go to the claim detail page") {
+			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
+
+			PRMMDFClaim.activityCollapse(activityName = "Activity Name");
+		}
+
+		task ("Then the new attachment is displayed") {
+			PRMMDFClaim.viewAttachmentPresent(attachmentName = "Document_2.jpg");
+		}
+
+		task ("And the old attachment isn't displayed") {
+			PRMMDFClaim.viewAttachmentNotPresent(attachmentName = "Document_1.png");
+		}
+	}
 			JSONPRM.changeClaimStatus(
 				claimId = ${staticClaimId1},
 				claimStatus = "Approved",

@@ -14,7 +14,7 @@
 
 package com.liferay.portal.template.react.renderer.internal;
 
-import com.liferay.frontend.js.loader.modules.extender.esm.ESImportUtil;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -57,22 +57,37 @@ public class ReactRendererUtil {
 		List<ESImport> esImports = new ArrayList<>();
 
 		esImports.add(
-			ESImportUtil.getESImport(
-				absolutePortalURLBuilder,
-				"{render} from portal-template-react-renderer-impl"));
+			new ESImport(
+				absolutePortalURLBuilder.forESModule(
+					"portal-template-react-renderer-impl", "index.js"
+				).build(),
+				"render"));
+
+		String module = componentDescriptor.getModule();
+
+		String[] parts = module.split(" from ");
 
 		esImports.add(
-			ESImportUtil.getESImport(
-				absolutePortalURLBuilder, "componentModule",
-				componentDescriptor.getModule()));
+			new ESImport(
+				"componentModule",
+				absolutePortalURLBuilder.forESModule(
+					parts[1], "index.js"
+				).build(),
+				_getSymbolName(parts[0])));
 
 		String propsTransformer = componentDescriptor.getPropsTransformer();
 
 		if (Validator.isNotNull(propsTransformer)) {
 			if (propsTransformer.contains(" from ")) {
+				parts = propsTransformer.split(" from ");
+
 				esImports.add(
-					ESImportUtil.getESImport(
-						absolutePortalURLBuilder, propsTransformer));
+					new ESImport(
+						"propsTransformer",
+						absolutePortalURLBuilder.forESModule(
+							parts[1], "index.js"
+						).build(),
+						_getSymbolName(parts[0])));
 			}
 			else {
 				amdRequires.add(
@@ -207,6 +222,23 @@ public class ReactRendererUtil {
 				javascriptSB.toString(), dependenciesSB.toString(),
 				ScriptData.ModulesType.ES6);
 		}
+	}
+
+	private static String _getSymbolName(String importedSymbol) {
+		importedSymbol = importedSymbol.trim();
+
+		if ((importedSymbol.charAt(0) != CharPool.OPEN_CURLY_BRACE) ||
+			(importedSymbol.charAt(importedSymbol.length() - 1) !=
+				CharPool.CLOSE_CURLY_BRACE)) {
+
+			throw new IllegalArgumentException(
+				"Invalid import syntax: " + importedSymbol);
+		}
+
+		importedSymbol = importedSymbol.substring(
+			1, importedSymbol.length() - 1);
+
+		return importedSymbol.trim();
 	}
 
 }

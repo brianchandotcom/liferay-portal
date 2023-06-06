@@ -227,12 +227,12 @@ public class ObjectEntryLocalServiceTest {
 					ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
 					"Last Name", "lastName", false),
 				ObjectFieldUtil.createObjectField(
-					_listTypeDefinition.getListTypeDefinitionId(),
+					null, _listTypeDefinition.getListTypeDefinitionId(),
 					ObjectFieldConstants.BUSINESS_TYPE_PICKLIST, null,
 					ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
 					"List Type Entry Key", "listTypeEntryKey", false, false),
 				ObjectFieldUtil.createObjectField(
-					_listTypeDefinition.getListTypeDefinitionId(),
+					null, _listTypeDefinition.getListTypeDefinitionId(),
 					ObjectFieldConstants.BUSINESS_TYPE_PICKLIST, null,
 					ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
 					"List Type Entry Key Required", "listTypeEntryKeyRequired",
@@ -242,7 +242,7 @@ public class ObjectEntryLocalServiceTest {
 					ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
 					"Middle Name", "middleName", false),
 				ObjectFieldUtil.createObjectField(
-					_listTypeDefinition.getListTypeDefinitionId(),
+					null, _listTypeDefinition.getListTypeDefinitionId(),
 					ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST,
 					null, ObjectFieldConstants.DB_TYPE_STRING, true, false,
 					null, "Multiple List Type Entries Key",

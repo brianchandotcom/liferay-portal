@@ -182,7 +182,7 @@ public class ObjectEntryResourceTest {
 					"Text", "String", true, true, null,
 					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME_1, false),
 				ObjectFieldUtil.createObjectField(
-					_listTypeDefinition.getListTypeDefinitionId(),
+					null, _listTypeDefinition.getListTypeDefinitionId(),
 					ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST,
 					null, ObjectFieldConstants.DB_TYPE_STRING, true, false,
 					null, RandomTestUtil.randomString(),
@@ -197,7 +197,7 @@ public class ObjectEntryResourceTest {
 					"Text", "String", true, true, null,
 					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME_2, false),
 				ObjectFieldUtil.createObjectField(
-					_listTypeDefinition.getListTypeDefinitionId(),
+					null, _listTypeDefinition.getListTypeDefinitionId(),
 					ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST,
 					null, ObjectFieldConstants.DB_TYPE_STRING, true, false,
 					null, RandomTestUtil.randomString(),
@@ -212,7 +212,7 @@ public class ObjectEntryResourceTest {
 					"Text", "String", true, true, null,
 					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME_3, false),
 				ObjectFieldUtil.createObjectField(
-					_listTypeDefinition.getListTypeDefinitionId(),
+					null, _listTypeDefinition.getListTypeDefinitionId(),
 					ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST,
 					null, ObjectFieldConstants.DB_TYPE_STRING, true, false,
 					null, RandomTestUtil.randomString(),
@@ -227,7 +227,7 @@ public class ObjectEntryResourceTest {
 					"Text", "String", true, true, null,
 					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME_4, false),
 				ObjectFieldUtil.createObjectField(
-					_listTypeDefinition.getListTypeDefinitionId(),
+					null, _listTypeDefinition.getListTypeDefinitionId(),
 					ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST,
 					null, ObjectFieldConstants.DB_TYPE_STRING, true, false,
 					null, RandomTestUtil.randomString(),
@@ -3714,7 +3714,7 @@ public class ObjectEntryResourceTest {
 						ObjectFieldConstants.DB_TYPE_DOUBLE, true, false, null,
 						"Height", "height", false),
 					ObjectFieldUtil.createObjectField(
-						listTypeDefinition.getListTypeDefinitionId(),
+						null, listTypeDefinition.getListTypeDefinitionId(),
 						ObjectFieldConstants.BUSINESS_TYPE_PICKLIST, null,
 						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
 						"List Type Entry Key", "listTypeEntryKey", false,

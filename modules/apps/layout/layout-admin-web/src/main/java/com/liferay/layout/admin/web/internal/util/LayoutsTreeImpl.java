@@ -57,7 +57,6 @@ import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 import com.liferay.sites.kernel.util.Sites;
 import com.liferay.translation.security.permission.TranslationPermission;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -181,7 +180,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPS-174417")) {
-			return new ArrayList<>();
+			return Collections.emptyList();
 		}
 
 		LayoutSet layoutSet = _layoutSetLocalService.fetchLayoutSet(

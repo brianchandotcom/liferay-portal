@@ -14,7 +14,8 @@
 
 package com.liferay.portal.workflow.metrics.internal.search.index;
 
-import com.liferay.portal.workflow.metrics.search.index.name.WorkflowMetricsIndexNameBuilder;
+import com.liferay.portal.search.index.IndexNameBuilder;
+import com.liferay.portal.workflow.metrics.search.index.constants.WorkflowMetricsIndexEntityNameConstants;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -31,7 +32,8 @@ public class NodeWorkflowMetricsIndexImpl
 
 	@Override
 	public String getIndexName(long companyId) {
-		return _workflowMetricsIndexNameBuilder.getIndexName(companyId);
+		return _indexNameBuilder.getIndexName(companyId) +
+			WorkflowMetricsIndexEntityNameConstants.SUFFIX_NODE;
 	}
 
 	@Override
@@ -39,7 +41,7 @@ public class NodeWorkflowMetricsIndexImpl
 		return "WorkflowMetricsNodeType";
 	}
 
-	@Reference(target = "(workflow.metrics.index.entity.name=node)")
-	private WorkflowMetricsIndexNameBuilder _workflowMetricsIndexNameBuilder;
+	@Reference
+	private IndexNameBuilder _indexNameBuilder;
 
 }

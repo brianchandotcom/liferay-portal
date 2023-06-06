@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskContextM
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -35,7 +34,7 @@ import com.liferay.portal.workflow.metrics.rest.internal.dto.v1_0.util.IndexUtil
 import com.liferay.portal.workflow.metrics.rest.internal.resource.exception.IndexKeyException;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.IndexResource;
 import com.liferay.portal.workflow.metrics.search.background.task.WorkflowMetricsBackgroundTaskExecutorNames;
-import com.liferay.portal.workflow.metrics.search.index.name.WorkflowMetricsIndexNameBuilder;
+import com.liferay.portal.workflow.metrics.search.index.constants.WorkflowMetricsIndexEntityNameConstants;
 import com.liferay.portal.workflow.metrics.search.index.reindexer.WorkflowMetricsReindexerRegistry;
 
 import java.io.Serializable;
@@ -43,13 +42,9 @@ import java.io.Serializable;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 import org.osgi.service.component.annotations.ServiceScope;
 
 /**
@@ -94,12 +89,11 @@ public class IndexResourceImpl extends BaseIndexResourceImpl {
 				transform(
 					indexEntityNames,
 					indexEntityName -> {
-						IndexNameBuilder indexNameBuilder =
-							_workflowMetricsIndexNameBuilderMap.get(
-								indexEntityName);
-
-						return indexNameBuilder.getIndexName(
+						String indexName = _indexNameBuilder.getIndexName(
 							contextCompany.getCompanyId());
+
+						return indexName +
+							_indexNameSuffixMap.get(indexEntityName);
 					},
 					String.class)));
 	}
@@ -129,37 +123,6 @@ public class IndexResourceImpl extends BaseIndexResourceImpl {
 				"workflow.metrics.index.key", index.getKey()
 			).build(),
 			new ServiceContext());
-	}
-
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void addWorkflowMetricsIndexNameBuilder(
-		WorkflowMetricsIndexNameBuilder workflowMetricsIndexNameBuilder,
-		Map<String, Object> properties) {
-
-		String workflowMetricsIndexEntityName = GetterUtil.getString(
-			properties.get("workflow.metrics.index.entity.name"));
-
-		if (Validator.isNull(workflowMetricsIndexEntityName)) {
-			return;
-		}
-
-		_workflowMetricsIndexNameBuilderMap.put(
-			workflowMetricsIndexEntityName, workflowMetricsIndexNameBuilder);
-	}
-
-	protected void removeWorkflowMetricsIndexNameBuilder(
-		WorkflowMetricsIndexNameBuilder workflowMetricsIndexNameBuilder,
-		Map<String, Object> properties) {
-
-		String workflowMetricsIndexEntityName = GetterUtil.getString(
-			properties.get("workflow.metrics.index.entity.name"));
-
-		_workflowMetricsIndexNameBuilderMap.remove(
-			workflowMetricsIndexEntityName);
 	}
 
 	private String _getBackgroundTaskName(Index index) {
@@ -194,11 +157,31 @@ public class IndexResourceImpl extends BaseIndexResourceImpl {
 		return new String[0];
 	}
 
-	private static final Map<String, WorkflowMetricsIndexNameBuilder>
-		_workflowMetricsIndexNameBuilderMap = new ConcurrentHashMap<>();
+	private static final Map<String, String> _indexNameSuffixMap =
+		HashMapBuilder.put(
+			"instance", WorkflowMetricsIndexEntityNameConstants.SUFFIX_INSTANCE
+		).put(
+			"node", WorkflowMetricsIndexEntityNameConstants.SUFFIX_NODE
+		).put(
+			"process", WorkflowMetricsIndexEntityNameConstants.SUFFIX_PROCESS
+		).put(
+			"sla-instance-result",
+			WorkflowMetricsIndexEntityNameConstants.SUFFIX_SLA_INSTANCE_RESULT
+		).put(
+			"sla-task-result",
+			WorkflowMetricsIndexEntityNameConstants.SUFFIX_SLA_TASK_RESULT
+		).put(
+			"task", WorkflowMetricsIndexEntityNameConstants.SUFFIX_TASK
+		).put(
+			"transition",
+			WorkflowMetricsIndexEntityNameConstants.SUFFIX_TRANSITION
+		).build();
 
 	@Reference
 	private BackgroundTaskLocalService _backgroundTaskLocalService;
+
+	@Reference
+	private IndexNameBuilder _indexNameBuilder;
 
 	@Reference
 	private Language _language;

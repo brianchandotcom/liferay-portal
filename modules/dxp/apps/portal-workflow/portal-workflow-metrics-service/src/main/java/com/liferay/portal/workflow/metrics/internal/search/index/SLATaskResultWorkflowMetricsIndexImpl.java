@@ -14,7 +14,8 @@
 
 package com.liferay.portal.workflow.metrics.internal.search.index;
 
-import com.liferay.portal.workflow.metrics.search.index.name.WorkflowMetricsIndexNameBuilder;
+import com.liferay.portal.search.index.IndexNameBuilder;
+import com.liferay.portal.workflow.metrics.search.index.constants.WorkflowMetricsIndexEntityNameConstants;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -31,7 +32,8 @@ public class SLATaskResultWorkflowMetricsIndexImpl
 
 	@Override
 	public String getIndexName(long companyId) {
-		return _workflowMetricsIndexNameBuilder.getIndexName(companyId);
+		return _indexNameBuilder.getIndexName(companyId) +
+			WorkflowMetricsIndexEntityNameConstants.SUFFIX_SLA_TASK_RESULT;
 	}
 
 	@Override
@@ -39,7 +41,7 @@ public class SLATaskResultWorkflowMetricsIndexImpl
 		return "WorkflowMetricsSLATaskResultType";
 	}
 
-	@Reference(target = "(workflow.metrics.index.entity.name=sla-task-result)")
-	private WorkflowMetricsIndexNameBuilder _workflowMetricsIndexNameBuilder;
+	@Reference
+	private IndexNameBuilder _indexNameBuilder;
 
 }

@@ -35,11 +35,12 @@ import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
+import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.query.TermsQuery;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition;
-import com.liferay.portal.workflow.metrics.search.index.name.WorkflowMetricsIndexNameBuilder;
+import com.liferay.portal.workflow.metrics.search.index.constants.WorkflowMetricsIndexEntityNameConstants;
 import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionLocalService;
 
 import java.util.ArrayList;
@@ -141,9 +142,12 @@ public class WorkflowMetricsSLADefinitionTransformer {
 
 		searchSearchRequest.addAggregation(nameTermsAggregation);
 
+		String indexName = _indexNameBuilder.getIndexName(
+			workflowMetricsSLADefinition.getCompanyId());
+
 		searchSearchRequest.setIndexNames(
-			_nodeWorkflowMetricsIndexNameBuilder.getIndexName(
-				workflowMetricsSLADefinition.getCompanyId()));
+			indexName + WorkflowMetricsIndexEntityNameConstants.SUFFIX_NODE);
+
 		searchSearchRequest.setQuery(
 			_createNodeBooleanQuery(
 				currentProcessVersion, latestProcessVersion,
@@ -259,9 +263,8 @@ public class WorkflowMetricsSLADefinitionTransformer {
 	@Reference
 	private Aggregations _aggregations;
 
-	@Reference(target = "(workflow.metrics.index.entity.name=node)")
-	private WorkflowMetricsIndexNameBuilder
-		_nodeWorkflowMetricsIndexNameBuilder;
+	@Reference
+	private IndexNameBuilder _indexNameBuilder;
 
 	@Reference
 	private Queries _queries;

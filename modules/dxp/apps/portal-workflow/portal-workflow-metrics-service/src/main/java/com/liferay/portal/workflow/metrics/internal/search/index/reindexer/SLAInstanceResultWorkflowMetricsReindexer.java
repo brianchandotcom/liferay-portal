@@ -29,11 +29,12 @@ import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
+import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.workflow.metrics.internal.background.task.WorkflowMetricsSLAProcessBackgroundTaskHelper;
 import com.liferay.portal.workflow.metrics.internal.search.index.SLAInstanceResultWorkflowMetricsIndexer;
-import com.liferay.portal.workflow.metrics.search.index.name.WorkflowMetricsIndexNameBuilder;
+import com.liferay.portal.workflow.metrics.search.index.constants.WorkflowMetricsIndexEntityNameConstants;
 import com.liferay.portal.workflow.metrics.search.index.reindexer.WorkflowMetricsReindexer;
 
 import org.osgi.service.component.annotations.Component;
@@ -69,8 +70,8 @@ public class SLAInstanceResultWorkflowMetricsReindexer
 	private void _creatDefaultDocuments(long companyId) {
 		if (!_searchCapabilities.isWorkflowMetricsSupported() ||
 			!_hasIndex(
-				_processWorkflowMetricsIndexNameBuilder.getIndexName(
-					companyId))) {
+				_indexNameBuilder.getIndexName(companyId) +
+					WorkflowMetricsIndexEntityNameConstants.SUFFIX_PROCESS)) {
 
 			return;
 		}
@@ -78,7 +79,8 @@ public class SLAInstanceResultWorkflowMetricsReindexer
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
 		searchSearchRequest.setIndexNames(
-			_processWorkflowMetricsIndexNameBuilder.getIndexName(companyId));
+			_indexNameBuilder.getIndexName(companyId) +
+				WorkflowMetricsIndexEntityNameConstants.SUFFIX_PROCESS);
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
@@ -139,9 +141,8 @@ public class SLAInstanceResultWorkflowMetricsReindexer
 			SLAInstanceResultWorkflowMetricsReindexer.class,
 			WorkflowMetricsSLAProcessBackgroundTaskHelper.class, null, true);
 
-	@Reference(target = "(workflow.metrics.index.entity.name=process)")
-	private WorkflowMetricsIndexNameBuilder
-		_processWorkflowMetricsIndexNameBuilder;
+	@Reference
+	private IndexNameBuilder _indexNameBuilder;
 
 	@Reference
 	private Queries _queries;

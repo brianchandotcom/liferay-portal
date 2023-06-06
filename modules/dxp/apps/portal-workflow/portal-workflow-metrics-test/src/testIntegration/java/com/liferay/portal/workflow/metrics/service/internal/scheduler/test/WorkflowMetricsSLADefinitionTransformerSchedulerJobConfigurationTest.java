@@ -21,10 +21,11 @@ import com.liferay.portal.kernel.scheduler.SchedulerJobConfiguration;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinitionVersion;
-import com.liferay.portal.workflow.metrics.search.index.name.WorkflowMetricsIndexNameBuilder;
+import com.liferay.portal.workflow.metrics.search.index.constants.WorkflowMetricsIndexEntityNameConstants;
 import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionLocalService;
 import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionVersionLocalService;
 import com.liferay.portal.workflow.metrics.service.util.BaseWorkflowMetricsTestCase;
@@ -47,14 +48,14 @@ public class
 	public void testTransform1() throws Exception {
 		assertCount(
 			4,
-			_nodeWorkflowMetricsIndexNameBuilder.getIndexName(
-				workflowDefinition.getCompanyId()),
+			_indexNameBuilder.getIndexName(workflowDefinition.getCompanyId()) +
+				WorkflowMetricsIndexEntityNameConstants.SUFFIX_NODE,
 			"WorkflowMetricsNodeType", "companyId",
 			workflowDefinition.getCompanyId(), "deleted", false, "processId",
 			workflowDefinition.getWorkflowDefinitionId(), "version", "1.0");
 		assertCount(
-			_processWorkflowMetricsIndexNameBuilder.getIndexName(
-				workflowDefinition.getCompanyId()),
+			_indexNameBuilder.getIndexName(workflowDefinition.getCompanyId()) +
+				WorkflowMetricsIndexEntityNameConstants.SUFFIX_PROCESS,
 			"WorkflowMetricsProcessType", "active", true, "companyId",
 			workflowDefinition.getCompanyId(), "processId",
 			workflowDefinition.getWorkflowDefinitionId(), "version", "1.0");
@@ -71,15 +72,15 @@ public class
 		updateWorkflowDefinition();
 
 		assertCount(
-			_processWorkflowMetricsIndexNameBuilder.getIndexName(
-				workflowDefinition.getCompanyId()),
+			_indexNameBuilder.getIndexName(workflowDefinition.getCompanyId()) +
+				WorkflowMetricsIndexEntityNameConstants.SUFFIX_PROCESS,
 			"WorkflowMetricsProcessType", "active", true, "companyId",
 			workflowDefinition.getCompanyId(), "processId",
 			workflowDefinition.getWorkflowDefinitionId(), "version", "2.0");
 		assertCount(
 			4,
-			_nodeWorkflowMetricsIndexNameBuilder.getIndexName(
-				workflowDefinition.getCompanyId()),
+			_indexNameBuilder.getIndexName(workflowDefinition.getCompanyId()) +
+				WorkflowMetricsIndexEntityNameConstants.SUFFIX_NODE,
 			"WorkflowMetricsNodeType", "companyId",
 			workflowDefinition.getCompanyId(), "deleted", false, "processId",
 			workflowDefinition.getWorkflowDefinitionId(), "version", "2.0");
@@ -112,14 +113,14 @@ public class
 	public void testTransform2() throws Exception {
 		assertCount(
 			4,
-			_nodeWorkflowMetricsIndexNameBuilder.getIndexName(
-				workflowDefinition.getCompanyId()),
+			_indexNameBuilder.getIndexName(workflowDefinition.getCompanyId()) +
+				WorkflowMetricsIndexEntityNameConstants.SUFFIX_NODE,
 			"WorkflowMetricsNodeType", "companyId",
 			workflowDefinition.getCompanyId(), "deleted", false, "processId",
 			workflowDefinition.getWorkflowDefinitionId(), "version", "1.0");
 		assertCount(
-			_processWorkflowMetricsIndexNameBuilder.getIndexName(
-				workflowDefinition.getCompanyId()),
+			_indexNameBuilder.getIndexName(workflowDefinition.getCompanyId()) +
+				WorkflowMetricsIndexEntityNameConstants.SUFFIX_PROCESS,
 			"WorkflowMetricsProcessType", "active", true, "companyId",
 			workflowDefinition.getCompanyId(), "processId",
 			workflowDefinition.getWorkflowDefinitionId(), "version", "1.0");
@@ -140,15 +141,15 @@ public class
 				"single-approver-updated-workflow-definition.xml"));
 
 		assertCount(
-			_processWorkflowMetricsIndexNameBuilder.getIndexName(
-				workflowDefinition.getCompanyId()),
+			_indexNameBuilder.getIndexName(workflowDefinition.getCompanyId()) +
+				WorkflowMetricsIndexEntityNameConstants.SUFFIX_PROCESS,
 			"WorkflowMetricsProcessType", "active", true, "companyId",
 			workflowDefinition.getCompanyId(), "deleted", false, "processId",
 			workflowDefinition.getWorkflowDefinitionId(), "version", "2.0");
 		assertCount(
 			4,
-			_nodeWorkflowMetricsIndexNameBuilder.getIndexName(
-				workflowDefinition.getCompanyId()),
+			_indexNameBuilder.getIndexName(workflowDefinition.getCompanyId()) +
+				WorkflowMetricsIndexEntityNameConstants.SUFFIX_NODE,
 			"WorkflowMetricsNodeType", "companyId",
 			workflowDefinition.getCompanyId(), "deleted", false, "processId",
 			workflowDefinition.getWorkflowDefinitionId(), "version", "2.0");
@@ -177,13 +178,8 @@ public class
 			workflowMetricsSLADefinitionVersion.getStatus());
 	}
 
-	@Inject(filter = "workflow.metrics.index.entity.name=node")
-	private WorkflowMetricsIndexNameBuilder
-		_nodeWorkflowMetricsIndexNameBuilder;
-
-	@Inject(filter = "workflow.metrics.index.entity.name=process")
-	private WorkflowMetricsIndexNameBuilder
-		_processWorkflowMetricsIndexNameBuilder;
+	@Inject
+	private IndexNameBuilder _indexNameBuilder;
 
 	@Inject(
 		filter = "component.name=*.WorkflowMetricsSLADefinitionTransformerSchedulerJobConfiguration"

@@ -28,6 +28,7 @@ import com.liferay.portal.search.aggregation.bucket.TermsAggregationResult;
 import com.liferay.portal.search.engine.adapter.search.SearchRequestExecutor;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
+import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.query.TermsQuery;
@@ -36,7 +37,7 @@ import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Assignee;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.AssigneeBulkSelection;
 import com.liferay.portal.workflow.metrics.rest.internal.dto.v1_0.util.AssigneeUtil;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.AssigneeResource;
-import com.liferay.portal.workflow.metrics.search.index.name.WorkflowMetricsIndexNameBuilder;
+import com.liferay.portal.workflow.metrics.search.index.constants.WorkflowMetricsIndexEntityNameConstants;
 
 import java.util.Comparator;
 import java.util.List;
@@ -70,8 +71,8 @@ public class AssigneeResourceImpl extends BaseAssigneeResourceImpl {
 		searchSearchRequest.addAggregation(termsAggregation);
 
 		searchSearchRequest.setIndexNames(
-			_taskWorkflowMetricsIndexNameBuilder.getIndexName(
-				contextCompany.getCompanyId()));
+			_indexNameBuilder.getIndexName(contextCompany.getCompanyId()) +
+				WorkflowMetricsIndexEntityNameConstants.SUFFIX_TASK);
 		searchSearchRequest.setQuery(
 			_createTasksBooleanQuery(
 				assigneeBulkSelection.getInstanceIds(), processId));
@@ -138,6 +139,9 @@ public class AssigneeResourceImpl extends BaseAssigneeResourceImpl {
 	private Aggregations _aggregations;
 
 	@Reference
+	private IndexNameBuilder _indexNameBuilder;
+
+	@Reference
 	private Language _language;
 
 	@Reference
@@ -148,10 +152,6 @@ public class AssigneeResourceImpl extends BaseAssigneeResourceImpl {
 
 	@Reference
 	private SearchRequestExecutor _searchRequestExecutor;
-
-	@Reference(target = "(workflow.metrics.index.entity.name=task)")
-	private WorkflowMetricsIndexNameBuilder
-		_taskWorkflowMetricsIndexNameBuilder;
 
 	@Reference
 	private UserLocalService _userLocalService;

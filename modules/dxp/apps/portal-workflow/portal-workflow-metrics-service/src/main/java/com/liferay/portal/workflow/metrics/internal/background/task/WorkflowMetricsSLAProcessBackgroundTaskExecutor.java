@@ -42,6 +42,7 @@ import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
+import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.query.RangeTermQuery;
@@ -59,7 +60,7 @@ import com.liferay.portal.workflow.metrics.internal.sla.processor.WorkflowMetric
 import com.liferay.portal.workflow.metrics.internal.sla.processor.WorkflowMetricsSLATaskResult;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinitionVersion;
-import com.liferay.portal.workflow.metrics.search.index.name.WorkflowMetricsIndexNameBuilder;
+import com.liferay.portal.workflow.metrics.search.index.constants.WorkflowMetricsIndexEntityNameConstants;
 import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionLocalService;
 import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionVersionLocalService;
 import com.liferay.portal.workflow.metrics.sla.processor.WorkflowMetricsSLAStatus;
@@ -294,7 +295,8 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
 		searchSearchRequest.setIndexNames(
-			_nodeWorkflowMetricsIndexNameBuilder.getIndexName(companyId));
+			_indexNameBuilder.getIndexName(companyId) +
+				WorkflowMetricsIndexEntityNameConstants.SUFFIX_NODE);
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
@@ -332,8 +334,9 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
 		searchSearchRequest.setIndexNames(
-			_slaInstanceResultWorkflowMetricsIndexNameBuilder.getIndexName(
-				companyId));
+			_indexNameBuilder.getIndexName(companyId) +
+				WorkflowMetricsIndexEntityNameConstants.
+					SUFFIX_SLA_INSTANCE_RESULT);
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
@@ -398,7 +401,8 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 
 		searchSearchRequest.addSorts(_sorts.field("instanceId", SortOrder.ASC));
 		searchSearchRequest.setIndexNames(
-			_taskWorkflowMetricsIndexNameBuilder.getIndexName(companyId));
+			_indexNameBuilder.getIndexName(companyId) +
+				WorkflowMetricsIndexEntityNameConstants.SUFFIX_TASK);
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
@@ -512,9 +516,13 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
 		searchSearchRequest.addSorts(_sorts.field("instanceId", SortOrder.ASC));
+
+		String indexName = _indexNameBuilder.getIndexName(
+			workflowMetricsSLADefinitionVersion.getCompanyId());
+
 		searchSearchRequest.setIndexNames(
-			_instanceWorkflowMetricsIndexNameBuilder.getIndexName(
-				workflowMetricsSLADefinitionVersion.getCompanyId()));
+			indexName +
+				WorkflowMetricsIndexEntityNameConstants.SUFFIX_INSTANCE);
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
@@ -691,6 +699,8 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 		long companyId, long endInstanceId, long slaDefinitionId,
 		long startInstanceId) {
 
+		String indexName = _indexNameBuilder.getIndexName(companyId);
+
 		UpdateByQueryDocumentRequest updateByQueryDocumentRequest =
 			new UpdateByQueryDocumentRequest(
 				_queries.rangeTerm(
@@ -701,8 +711,8 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 						"ctx._source['slaDefinitionIds'] = [];",
 						"ctx._source.slaDefinitionIds.add(", slaDefinitionId,
 						")")),
-				_instanceWorkflowMetricsIndexNameBuilder.getIndexName(
-					companyId));
+				indexName +
+					WorkflowMetricsIndexEntityNameConstants.SUFFIX_INSTANCE);
 
 		if (PortalRunMode.isTestMode()) {
 			updateByQueryDocumentRequest.setRefresh(true);
@@ -717,19 +727,14 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 	private final DateTimeFormatter _dateTimeFormatter =
 		DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
 
+	@Reference
+	private IndexNameBuilder _indexNameBuilder;
+
 	@Reference(target = "(workflow.metrics.index.entity.name=instance)")
 	private WorkflowMetricsIndex _instanceWorkflowMetricsIndex;
 
-	@Reference(target = "(workflow.metrics.index.entity.name=instance)")
-	private WorkflowMetricsIndexNameBuilder
-		_instanceWorkflowMetricsIndexNameBuilder;
-
 	@Reference(target = ModuleServiceLifecycle.PORTLETS_INITIALIZED)
 	private ModuleServiceLifecycle _moduleServiceLifecycle;
-
-	@Reference(target = "(workflow.metrics.index.entity.name=node)")
-	private WorkflowMetricsIndexNameBuilder
-		_nodeWorkflowMetricsIndexNameBuilder;
 
 	@Reference
 	private Queries _queries;
@@ -747,22 +752,12 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 	private SLAInstanceResultWorkflowMetricsIndexer
 		_slaInstanceResultWorkflowMetricsIndexer;
 
-	@Reference(
-		target = "(workflow.metrics.index.entity.name=sla-instance-result)"
-	)
-	private WorkflowMetricsIndexNameBuilder
-		_slaInstanceResultWorkflowMetricsIndexNameBuilder;
-
 	@Reference
 	private SLATaskResultWorkflowMetricsIndexer
 		_slaTaskResultWorkflowMetricsIndexer;
 
 	@Reference
 	private Sorts _sorts;
-
-	@Reference(target = "(workflow.metrics.index.entity.name=task)")
-	private WorkflowMetricsIndexNameBuilder
-		_taskWorkflowMetricsIndexNameBuilder;
 
 	@Reference
 	private WorkflowMetricsSLADefinitionLocalService

@@ -33,11 +33,12 @@ import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
+import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.workflow.metrics.internal.configuration.WorkflowMetricsConfiguration;
 import com.liferay.portal.workflow.metrics.internal.sla.transformer.WorkflowMetricsSLADefinitionTransformer;
-import com.liferay.portal.workflow.metrics.search.index.name.WorkflowMetricsIndexNameBuilder;
+import com.liferay.portal.workflow.metrics.search.index.constants.WorkflowMetricsIndexEntityNameConstants;
 
 import java.util.Map;
 
@@ -97,8 +98,8 @@ public class WorkflowMetricsSLADefinitionTransformerSchedulerJobConfiguration
 
 		IndicesExistsIndexRequest indicesExistsIndexRequest =
 			new IndicesExistsIndexRequest(
-				_processWorkflowMetricsIndexNameBuilder.getIndexName(
-					companyId));
+				_indexNameBuilder.getIndexName(companyId) +
+					WorkflowMetricsIndexEntityNameConstants.SUFFIX_PROCESS);
 
 		IndicesExistsIndexResponse indicesExistsIndexResponse =
 			_searchEngineAdapter.execute(indicesExistsIndexRequest);
@@ -114,7 +115,8 @@ public class WorkflowMetricsSLADefinitionTransformerSchedulerJobConfiguration
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
 		searchSearchRequest.setIndexNames(
-			_processWorkflowMetricsIndexNameBuilder.getIndexName(companyId));
+			_indexNameBuilder.getIndexName(companyId) +
+				WorkflowMetricsIndexEntityNameConstants.SUFFIX_PROCESS);
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
@@ -149,9 +151,8 @@ public class WorkflowMetricsSLADefinitionTransformerSchedulerJobConfiguration
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
-	@Reference(target = "(workflow.metrics.index.entity.name=process)")
-	private WorkflowMetricsIndexNameBuilder
-		_processWorkflowMetricsIndexNameBuilder;
+	@Reference
+	private IndexNameBuilder _indexNameBuilder;
 
 	@Reference
 	private Queries _queries;

@@ -14,11 +14,11 @@
 
 package com.liferay.sharing.web.internal.display.context.util;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.servlet.taglib.ui.JavaScriptMenuItem;
-import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
+import com.liferay.sharing.display.context.util.SharingDropdownItemFactory;
 import com.liferay.sharing.display.context.util.SharingJavaScriptFactory;
-import com.liferay.sharing.display.context.util.SharingMenuItemFactory;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -26,45 +26,51 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Adolfo Pérez
+ * @author Joao Victor Alves
  */
-@Component(service = SharingMenuItemFactory.class)
-public class SharingMenuItemFactoryImpl
-	extends BaseSharingItemFactory implements SharingMenuItemFactory {
+@Component(service = SharingDropdownItemFactory.class)
+public class SharingDropdownItemFactoryImpl
+	extends BaseSharingItemFactory implements SharingDropdownItemFactory {
 
 	@Override
-	public MenuItem createManageCollaboratorsMenuItem(
+	public DropdownItem createManageCollaboratorsDropdownItem(
 			String className, long classPK,
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		JavaScriptMenuItem javaScriptMenuItem = new JavaScriptMenuItem();
+		return DropdownItemBuilder.setHref(
+			() -> {
+				String manageCollaboratorsOnClickMethod =
+					_sharingJavaScriptFactory.
+						createManageCollaboratorsOnClickMethod(
+							className, classPK, httpServletRequest);
 
-		javaScriptMenuItem.setKey("#manage-collaborators");
-		javaScriptMenuItem.setLabel(
-			getManageCollaboratorsLabel(httpServletRequest));
-		javaScriptMenuItem.setOnClick(
-			_sharingJavaScriptFactory.createManageCollaboratorsOnClickMethod(
-				className, classPK, httpServletRequest));
-
-		return javaScriptMenuItem;
+				return "javascript:" + manageCollaboratorsOnClickMethod;
+			}
+		).setLabel(
+			getManageCollaboratorsLabel(httpServletRequest)
+		).build();
 	}
 
 	@Override
-	public MenuItem createShareMenuItem(
+	public DropdownItem createShareDropdownItem(
 			String className, long classPK,
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		JavaScriptMenuItem javaScriptMenuItem = new JavaScriptMenuItem();
+		return DropdownItemBuilder.setHref(
+			() -> {
+				String sharingOnClickMethod =
+					_sharingJavaScriptFactory.createSharingOnClickMethod(
+						className, classPK, httpServletRequest);
 
-		javaScriptMenuItem.setKey("#share");
-		javaScriptMenuItem.setLabel(getSharingLabel(httpServletRequest));
-		javaScriptMenuItem.setOnClick(
-			_sharingJavaScriptFactory.createSharingOnClickMethod(
-				className, classPK, httpServletRequest));
-
-		return javaScriptMenuItem;
+				return "javascript:" + sharingOnClickMethod;
+			}
+		).setIcon(
+			"share"
+		).setLabel(
+			getSharingLabel(httpServletRequest)
+		).build();
 	}
 
 	@Reference

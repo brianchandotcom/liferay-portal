@@ -303,11 +303,45 @@ definition {
 		}
 	}
 
-			PRMMDFClaimEdit.editButton();
+	@description = "This is a test for LPS-181362. Verify that is not possible to edit the MDF Claim when all required fields are not filled"
+	@priority = 5
+	test IsNotPossibleToEditClaimWithoutFillAllRequiredFields {
+		property test.name.skip.portal.instance = "PRMMDFClaimEdit#IsNotPossibleToEditClaimWithoutFillAllRequiredFields";
 
-			PRMMDFClaimEdit.editClaim(
-				activityName = "Activity Name",
-				newAttachment = "Document_2.jpg");
+		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
+
+		task ("Given that the partner creates a new claim") {
+			PRMMDFClaim.createNewClaim(
+				listLeads = "Document_1.xlsx",
+				reimbursementInvoice = "Document_1.png",
+				thirdInvoice = "Document_1.jpg");
+
+			task ("The Claim ID is saved in a variable") {
+				PRMMDFClaim.getClaimIdOnDetailPage(index = 1);
+			}
+		}
+
+		task ("And the Manager approves the created Claim") {
+			JSONPRM.changeClaimStatus(
+				claimId = ${staticClaimId1},
+				claimStatus = "More Info Requested",
+				userEmailAddress = "cmm@liferaytest.com");
+		}
+
+		task ("And the partner goes to edit the approved claim") {
+			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
+
+			PRMMDFClaimEdit.editButton();
+		}
+
+		task ("When the partner don't fill all mandatory fields of a new activity") {
+			PRMMDFClaim.fillActivityFields(
+				activityIndex = 1,
+				listLeads = "Document_1.xlsx");
+		}
+
+		task ("Then the 'Submit' button remains disabled") {
+			PRMMDFRequest.viewDisabledButton(buttonName = "Submit");
 		}
 	}
 

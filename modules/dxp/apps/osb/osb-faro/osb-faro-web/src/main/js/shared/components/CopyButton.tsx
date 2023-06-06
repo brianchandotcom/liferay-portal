@@ -37,7 +37,7 @@ const CopyButton: React.FC<ICopyButtonProps> = ({
 			title={Liferay.Language.get('click-to-copy')}
 			{...otherProps}
 		>
-			{buttonText || <ClayIcon className='icon-root' symbol='paste' />}
+			{buttonText || <ClayIcon className='icon-root' symbol='copy' />}
 		</ClayButton>
 	);
 };

@@ -251,14 +251,16 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-181362. Verify that is not possible to edit the MDF Claim when all required fields are not filled"
+	@description = "This is a test for LPS-183238. Verify that the CMM can edit the claim in 'Canceled' status"
 	@priority = 5
-	test IsNotPossibleToEditClaimWithoutFillAllRequiredFields {
-		property test.name.skip.portal.instance = "PRMMDFClaimEdit#IsNotPossibleToEditClaimWithoutFillAllRequiredFields";
-
-		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
+	test CMMCanEditClaimInCanceledStatus {
+		property test.name.skip.portal.instance = "PRMMDFClaimEdit#CMMCanEditClaimInCanceledStatus";
 
 		task ("Given that the partner creates a new claim") {
+			PRMNavigator.openSitePage(pageName = "MDF Requests");
+
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
+
 			PRMMDFClaim.createNewClaim(
 				listLeads = "Document_1.xlsx",
 				reimbursementInvoice = "Document_1.png",
@@ -269,27 +271,39 @@ definition {
 			}
 		}
 
-		task ("And the Manager approves the created Claim") {
+		task ("When the CMM goes to the created claim and change the status to 'Cancled") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "cmm@liferaytest.com",
+				userLoginFullName = "Channel Marketing Manager");
+
 			JSONPRM.changeClaimStatus(
 				claimId = ${staticClaimId1},
-				claimStatus = "More Info Requested",
+				claimStatus = "Cancled",
 				userEmailAddress = "cmm@liferaytest.com");
+
+			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
 		}
 
-		task ("And the partner goes to edit the approved claim") {
+		task ("And edit the claim, changing the activity attachment") {
+			PRMMDFClaim.editButton();
+
+			PRMMDFClaimEdit.editClaim(
+				activityName = "Activity Name",
+				newAttachment = "Document_2.jpg");
+		}
+
+		task ("And go to the claim detail page") {
 			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
 
-			PRMMDFClaimEdit.editButton();
+			PRMMDFClaim.activityCollapse(activityName = "Activity Name");
 		}
 
-		task ("When the partner don't fill all mandatory fields of a new activity") {
-			PRMMDFClaim.fillActivityFields(
-				activityIndex = 1,
-				thirdInvoice = "Document_1.jpg");
+		task ("Then the new attachment is displayed") {
+			PRMMDFClaim.viewAttachmentPresent(attachmentName = "Document_2.jpg");
 		}
 
-		task ("Then the 'Submit' button remains disabled") {
-			PRMMDFRequest.viewDisabledButton(buttonName = "Submit");
+		task ("And the old attachment isn't displayed") {
+			PRMMDFClaim.viewAttachmentNotPresent(attachmentName = "Document_1.png");
 		}
 	}
 

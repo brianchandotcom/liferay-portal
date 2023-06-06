@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -409,8 +410,12 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 
 		List<String> list = new ArrayList<>();
 
-		if (portalBatchTestSelector.isEmpty()) {
-			return list;
+		if (JenkinsResultsParserUtil.isNullOrEmpty(portalBatchTestSelector)) {
+			if (!_isModulesBatch()) {
+				return list;
+			}
+
+			_setBuildStartProperty("PORTAL_BATCH_TEST_SELECTOR", "**/*");
 		}
 
 		BatchTestClassGroup batchTestClassGroup =
@@ -443,6 +448,65 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 		}
 
 		return list;
+	}
+
+	private boolean _isFunctionalBatch() {
+		String portalBatchName = getBuildParameter(
+			_NAME_BUILD_PARAMETER_PORTAL_BATCH);
+
+		if (portalBatchName.startsWith("functional")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isJUnitBatch() {
+		String portalBatchName = getBuildParameter(
+			_NAME_BUILD_PARAMETER_PORTAL_BATCH);
+
+		if (portalBatchName.startsWith("integration") ||
+			portalBatchName.startsWith("modules-integration") ||
+			portalBatchName.startsWith("modules-unit") ||
+			portalBatchName.startsWith("unit")) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isModulesBatch() {
+		String portalBatchName = getBuildParameter(
+			_NAME_BUILD_PARAMETER_PORTAL_BATCH);
+
+		if (portalBatchName.startsWith("js-unit") ||
+			portalBatchName.startsWith("modules-compile") ||
+			portalBatchName.startsWith("modules-semantic-versioning") ||
+			portalBatchName.startsWith("rest-builder") ||
+			portalBatchName.startsWith("service-builder")) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private void _setBuildStartProperty(
+		String propertyName, String propertyValue) {
+
+		BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase();
+
+		Properties startProperties = new Properties();
+
+		if (buildDatabase.hasProperties("start.properties")) {
+			startProperties.putAll(
+				buildDatabase.getProperties("start.properties"));
+		}
+
+		startProperties.put(propertyName, propertyValue);
+
+		buildDatabase.putProperties("start.properties", startProperties);
 	}
 
 	private void _validateBuildParameterJenkinsGitHubURL() {
@@ -519,12 +583,7 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 		String portalBatchName = getBuildParameter(
 			_NAME_BUILD_PARAMETER_PORTAL_BATCH);
 
-		if (!portalBatchName.startsWith("integration") &&
-			!portalBatchName.startsWith("functional") &&
-			!portalBatchName.startsWith("modules-integration") &&
-			!portalBatchName.startsWith("modules-unit") &&
-			!portalBatchName.startsWith("unit")) {
-
+		if (!_isFunctionalBatch() && !_isJUnitBatch()) {
 			return;
 		}
 

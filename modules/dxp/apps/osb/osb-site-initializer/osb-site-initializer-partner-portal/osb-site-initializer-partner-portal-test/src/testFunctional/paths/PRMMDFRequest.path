@@ -77,7 +77,7 @@
 </tr>
 <tr>
 	<td>SUMMARY_FIELD</td>
-	<td>//th//span[@class='text-truncate'][text()='${key_fieldName}']//ancestor::tr//th//span[@class='text-truncate'][contains(text(),'${key_fieldValue}')]</td>
+	<td>//th//span[@class='text-truncate'][text()='${key_fieldName}']//ancestor::tr//th//*[@class='text-truncate'][contains(text(),'${key_fieldValue}')] | //th//span[@class='text-truncate'][text()='${key_fieldName}']//ancestor::tr//th//*[@class='text-wrap'][contains(text(),'${key_fieldValue}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -102,7 +102,7 @@
 </tr>
 <tr>
 	<td>STATUS_INFO</td>
-	<td>//div[contains(@class,'mdf-request-manager-status')]//p[contains(text(), '${key_value}')]</td>
+	<td>//div[contains(@class,'mdf-request-manager-status')]//*[contains(text(), '${key_value}')]</td>
 	<td></td>
 </tr>
 <tr>

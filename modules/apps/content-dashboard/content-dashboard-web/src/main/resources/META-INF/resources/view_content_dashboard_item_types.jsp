@@ -21,8 +21,6 @@ ContentDashboardItemSubtypeItemSelectorViewDisplayContext contentDashboardItemSu
 %>
 
 <section class="h-100">
-	<span aria-hidden="true" class="c-mt-0 loading-animation tree-filter-loader"></span>
-
 	<react:component
 		module="js/components/SelectTypeAndSubtype"
 		props="<%= contentDashboardItemSubtypeItemSelectorViewDisplayContext.getData() %>"

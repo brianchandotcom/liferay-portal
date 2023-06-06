@@ -17,7 +17,7 @@
 					{
 						"definition": {
 							"fragment": {
-								"key": "loading-validate",
+								"key": "loading",
 								"siteKey": "[$GROUP_KEY$]"
 							},
 							"fragmentConfig": {

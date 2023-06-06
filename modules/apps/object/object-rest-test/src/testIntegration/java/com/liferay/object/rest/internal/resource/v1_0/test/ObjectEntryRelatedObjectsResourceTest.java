@@ -1155,6 +1155,9 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			JSONArray relatedSystemObjectEntriesJSONArray =
 				jsonObject.getJSONArray(objectRelationship.getName());
 
+			Assert.assertEquals(
+				1, relatedSystemObjectEntriesJSONArray.length());
+
 			_assertSystemObjectEntry(
 				relatedSystemObjectEntriesJSONArray.getJSONObject(0),
 				_SYSTEM_OBJECT_FIELD_NAME_2, systemObjectFieldValue,

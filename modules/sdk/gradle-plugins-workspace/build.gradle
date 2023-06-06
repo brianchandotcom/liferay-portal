@@ -66,20 +66,6 @@ copyDistBundleZipPluginsSdk {
 	into "src/gradleTest/distBundleZip/plugins-sdk"
 }
 
-copyHotFixZip {
-	ext {
-		autoClean = false
-	}
-
-	dependsOn downloadHotFixZip
-
-	from {
-		downloadHotFixZip.dest
-	}
-
-	into "src/gradleTest/startDockerContainerWithPatch/configs/common/patching"
-}
-
 copyGradleTestDependencies {
 	duplicatesStrategy = DuplicatesStrategy.INCLUDE
 
@@ -113,6 +99,20 @@ copyGradleTestProjects {
 	}
 
 	into "src/gradleTest/excludePatterns"
+}
+
+copyHotFixZip {
+	ext {
+		autoClean = false
+	}
+
+	dependsOn downloadHotFixZip
+
+	from {
+		downloadHotFixZip.dest
+	}
+
+	into "src/gradleTest/startDockerContainerWithPatch/configs/common/patching"
 }
 
 copyRepo {

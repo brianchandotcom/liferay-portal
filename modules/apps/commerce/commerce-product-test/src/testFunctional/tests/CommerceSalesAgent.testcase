@@ -542,7 +542,7 @@ definition {
 	@description = "COMMERCE-11509. As a sales agent, I want to be able to mark a quote as processed in the store-front"
 	@priority = 5
 	test CanSalesAgentProcessQuote {
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 
 		task ("Given 'Allow Request a Quote on a Fully Priced Cart' is enabled for the site") {
 			CommerceChannels.openChannelsAdmin();
@@ -591,12 +591,12 @@ definition {
 				Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/pending-orders");
 
 				WaitForElementPresent(
-					key_orderId = ${orderId},
-					locator1 = "CommerceOrders#PENDING_ORDERS_VIEW_BUTTON_BY_ID");
+					currentOrderId = ${orderId},
+					locator1 = "CommerceOrders#SELECT_ORDER_FROM_LIST");
 
-				Click.clickAt(
-					key_orderId = ${orderId},
-					locator1 = "CommerceOrders#PENDING_ORDERS_VIEW_BUTTON_BY_ID");
+				Click(
+					currentOrderId = ${orderId},
+					locator1 = "CommerceOrders#SELECT_ORDER_FROM_LIST");
 
 				CommerceOrders.createQuoteRequest(
 					quoteRequestValue = "I kindly request a quote for this product.",

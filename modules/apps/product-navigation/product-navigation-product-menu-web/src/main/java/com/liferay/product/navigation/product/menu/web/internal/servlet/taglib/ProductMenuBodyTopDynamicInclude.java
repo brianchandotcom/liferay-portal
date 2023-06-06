@@ -37,7 +37,7 @@ import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.applications.menu.configuration.ApplicationsMenuInstanceConfiguration;
-import com.liferay.product.navigation.control.menu.util.ProductNavigationControlMenuManager;
+import com.liferay.product.navigation.control.menu.manager.ProductNavigationControlMenuManager;
 import com.liferay.product.navigation.product.menu.constants.ProductNavigationProductMenuPortletKeys;
 import com.liferay.taglib.portletext.RuntimeTag;
 import com.liferay.taglib.servlet.PageContextFactoryUtil;

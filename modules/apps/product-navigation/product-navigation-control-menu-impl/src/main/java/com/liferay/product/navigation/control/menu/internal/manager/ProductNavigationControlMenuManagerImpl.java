@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.product.navigation.control.menu.internal.util;
+package com.liferay.product.navigation.control.menu.internal.manager;
 
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.product.navigation.control.menu.util.ProductNavigationControlMenuManager;
+import com.liferay.product.navigation.control.menu.manager.ProductNavigationControlMenuManager;
 import com.liferay.site.configuration.MenuAccessConfiguration;
 
 import java.util.Objects;

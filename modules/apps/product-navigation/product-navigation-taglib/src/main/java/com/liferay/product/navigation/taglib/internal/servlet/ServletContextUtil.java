@@ -17,9 +17,9 @@ package com.liferay.product.navigation.taglib.internal.servlet;
 import com.liferay.application.list.PanelAppRegistry;
 import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.osgi.util.service.Snapshot;
+import com.liferay.product.navigation.control.menu.manager.ProductNavigationControlMenuManager;
 import com.liferay.product.navigation.control.menu.util.ProductNavigationControlMenuCategoryRegistry;
 import com.liferay.product.navigation.control.menu.util.ProductNavigationControlMenuEntryRegistry;
-import com.liferay.product.navigation.control.menu.util.ProductNavigationControlMenuManager;
 
 import javax.servlet.ServletContext;
 

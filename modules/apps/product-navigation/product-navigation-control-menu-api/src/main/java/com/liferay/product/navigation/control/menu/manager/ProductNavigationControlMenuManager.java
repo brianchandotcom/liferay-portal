@@ -12,17 +12,14 @@
  * details.
  */
 
-package com.liferay.product.navigation.control.menu.util;
+package com.liferay.product.navigation.control.menu.manager;
 
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Mikel Lorza
  */
-@ProviderType
 public interface ProductNavigationControlMenuManager {
 
 	public boolean isShowControlMenu(Group group, Layout layout, long userId);

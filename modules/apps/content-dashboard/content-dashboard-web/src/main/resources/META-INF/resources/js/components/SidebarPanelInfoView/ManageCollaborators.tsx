@@ -49,7 +49,7 @@ const ManageCollaborators = ({
 		fetchButton();
 	}, [fetchSharingCollaboratorsURL, onError]);
 
-	return <div className="manage-collaborators mt-4" ref={elementRef} />;
+	return <div className="c-mt-4 manage-collaborators" ref={elementRef} />;
 };
 
 interface IProps {

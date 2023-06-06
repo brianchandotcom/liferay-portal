@@ -79,27 +79,23 @@ public class SearchResultsPortletSharedSearchContributor
 		searchRequestBuilder.paginationStartParameterName(
 			paginationStartParameterName);
 
-		String paginationDeltaString = portletSharedSearchSettings.getParameter(
-			searchResultsPortletPreferences.getPaginationDeltaParameterName());
-
-		Integer paginationDelta = (paginationDeltaString != null) ?
-			Integer.valueOf(paginationDeltaString) :
-				searchResultsPortletPreferences.getPaginationDelta();
+		int paginationDelta = GetterUtil.getInteger(
+			portletSharedSearchSettings.getParameter(
+				searchResultsPortletPreferences.
+					getPaginationDeltaParameterName()),
+			searchResultsPortletPreferences.getPaginationDelta());
 
 		portletSharedSearchSettings.setPaginationDelta(paginationDelta);
 		searchRequestBuilder.size(paginationDelta);
 
-		String paginationStartParameterValue =
+		int paginationStart = GetterUtil.getInteger(
 			portletSharedSearchSettings.getParameter(
-				paginationStartParameterName);
+				paginationStartParameterName));
 
-		if (paginationStartParameterValue != null) {
-			portletSharedSearchSettings.setPaginationStart(
-				GetterUtil.getInteger(paginationStartParameterValue));
+		if (paginationStart > 0) {
+			portletSharedSearchSettings.setPaginationStart(paginationStart);
 
-			searchRequestBuilder.from(
-				(Integer.valueOf(paginationStartParameterValue) - 1) *
-					paginationDelta);
+			searchRequestBuilder.from((paginationStart - 1) * paginationDelta);
 		}
 	}
 

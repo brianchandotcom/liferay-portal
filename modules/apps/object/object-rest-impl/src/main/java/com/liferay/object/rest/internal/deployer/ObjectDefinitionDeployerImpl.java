@@ -712,18 +712,13 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			companyIds.remove(String.valueOf(companyId));
 
 			if (!companyIds.isEmpty()) {
-				ServiceRegistration<?> serviceRegistration =
-					_applicationServiceRegistrations.get(restContextPath);
+				_updateServiceRegistrationProperties(
+					restContextPath, _applicationProperties,
+					(Map)_applicationServiceRegistrations);
 
-				serviceRegistration.setProperties(
-					_applicationProperties.get(restContextPath));
-
-				serviceRegistration =
-					_objectEntryResourceServiceRegistrations.get(
-						restContextPath);
-
-				serviceRegistration.setProperties(
-					_objectEntryResourceProperties.get(restContextPath));
+				_updateServiceRegistrationProperties(
+					restContextPath, _objectEntryResourceProperties,
+					(Map)_objectEntryResourceServiceRegistrations);
 			}
 		}
 	}
@@ -800,6 +795,16 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				serviceRegistration2.unregister();
 			}
 		}
+	}
+
+	private void _updateServiceRegistrationProperties(
+		String key, Map<String, Dictionary<String, Object>> propertiesMap,
+		Map<String, ServiceRegistration<?>> serviceRegistrationMap) {
+
+		ServiceRegistration<?> serviceRegistration = serviceRegistrationMap.get(
+			key);
+
+		serviceRegistration.setProperties(propertiesMap.get(key));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

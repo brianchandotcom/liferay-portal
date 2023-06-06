@@ -3,6 +3,24 @@
 <project basedir="." name="portal-test-workspace" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-test.xml" />
 
+	<macrodef name="configure-init-gradle">
+		<attribute name="workspace.name" />
+
+		<sequential>
+			<var name="init.gradle.file" unset="true" />
+
+			<echo file="${project.dir}/workspaces/@{workspace.name}/init.gradle">allprojects {
+	repositories {
+		maven {
+			url new File(rootProject.projectDir, "../../.m2-tmp")
+		}
+	}
+}</echo>
+
+			<property name="init.gradle.file" value="${project.dir}/workspaces/@{workspace.name}/init.gradle" />
+		</sequential>
+	</macrodef>
+
 	<macrodef name="deploy-workspace-client-extension">
 		<attribute default="" name="virtual.instance.id" />
 		<attribute name="workspace.client.extension.name" />
@@ -71,18 +89,26 @@
 				</then>
 			</if>
 
+			<configure-init-gradle workspace.name="${workspace.name}" />
+
 			<if>
 				<available file="${workspace.client.extension.dir}" />
 				<then>
-					<gradle-execute dir="${workspace.client.extension.dir}" task="clean" />
+					<gradle-execute dir="${workspace.client.extension.dir}" task="clean">
+						<arg value="--init-script=${init.gradle.file}" />
+					</gradle-execute>
 
 					<if>
 						<available file="${workspace.client.extension.dir}/client-extension.poshi.yaml" />
 						<then>
-							<gradle-execute dir="${project.dir}/workspaces/${workspace.name}" task=":client-extensions:@{workspace.client.extension.name}:deployPoshi" />
+							<gradle-execute dir="${project.dir}/workspaces/${workspace.name}" task=":client-extensions:@{workspace.client.extension.name}:deployPoshi">
+								<arg value="--init-script=${init.gradle.file}" />
+							</gradle-execute>
 						</then>
 						<else>
-							<gradle-execute dir="${project.dir}/workspaces/${workspace.name}" task=":client-extensions:@{workspace.client.extension.name}:deploy" />
+							<gradle-execute dir="${project.dir}/workspaces/${workspace.name}" task=":client-extensions:@{workspace.client.extension.name}:deploy">
+								<arg value="--init-script=${init.gradle.file}" />
+							</gradle-execute>
 						</else>
 					</if>
 
@@ -167,7 +193,13 @@
 
 			<parallel>
 				<daemons>
-					<gradle-execute dir="${workspace.client.extension.dir}" task="bootRun" />
+					<sequential>
+						<configure-init-gradle workspace.name="${workspace.name}" />
+
+						<gradle-execute dir="${workspace.client.extension.dir}" task="bootRun">
+							<arg value="--init-script=${init.gradle.file}" />
+						</gradle-execute>
+					</sequential>
 				</daemons>
 
 				<sequential>

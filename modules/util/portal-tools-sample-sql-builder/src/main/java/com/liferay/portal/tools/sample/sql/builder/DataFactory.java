@@ -895,6 +895,10 @@ public class DataFactory {
 		addressModel.setUuid(uuid);
 		addressModel.setExternalReferenceCode(uuid);
 
+		if (_firstAddressModel == null) {
+			_firstAddressModel = addressModel;
+		}
+
 		return addressModel;
 	}
 
@@ -7509,6 +7513,7 @@ public class DataFactory {
 	private final String _dlDDMStructureContent;
 	private final String _dlDDMStructureLayoutContent;
 	private final SimpleCounter _dlFileEntryIdCounter;
+	private AddressModel _firstAddressModel;
 	private final List<String> _firstNames;
 	private final FriendlyURLNormalizer _friendlyURLNormalizer;
 	private final SimpleCounter _futureDateCounter;

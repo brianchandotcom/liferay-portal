@@ -36,10 +36,8 @@ const HeaderBackButton = ({basePath, container}) => {
 			container={container}
 			elementId="backButton"
 		>
-			<Link className="control-menu-icon" to={backPath}>
-				<span className="icon-monospaced">
-					<ClayIcon symbol="angle-left" />
-				</span>
+			<Link className="btn-monospaced btn-sm" to={backPath}>
+				<ClayIcon symbol="angle-left" />
 			</Link>
 		</Portal>
 	);

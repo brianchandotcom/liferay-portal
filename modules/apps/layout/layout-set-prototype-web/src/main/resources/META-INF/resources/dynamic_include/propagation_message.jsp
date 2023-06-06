@@ -21,11 +21,11 @@ PropagationMessageDisplayContext propagationMessageDisplayContext = new Propagat
 %>
 
 <li class="control-menu-nav-item">
-	<liferay-ui:icon
-		cssClass="control-menu-icon icon-monospaced"
+	<clay:button
+		displayType="unstyled"
 		icon="merge"
-		label="<%= false %>"
-		markupView="lexicon"
+		monospaced="<%= true %>"
+		small="<%= true %>"
 	/>
 
 	<react:component

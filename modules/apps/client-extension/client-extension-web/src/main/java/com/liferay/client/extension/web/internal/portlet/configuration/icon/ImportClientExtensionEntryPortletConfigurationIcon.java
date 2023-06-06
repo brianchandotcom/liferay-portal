@@ -15,6 +15,7 @@
 package com.liferay.client.extension.web.internal.portlet.configuration.icon;
 
 import com.liferay.client.extension.web.internal.constants.ClientExtensionAdminPortletKeys;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
@@ -61,7 +62,7 @@ public class ImportClientExtensionEntryPortletConfigurationIcon
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
-		return true;
+		return FeatureFlagManagerUtil.isEnabled("LPS-182184");
 	}
 
 	@Override

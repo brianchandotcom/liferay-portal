@@ -71,6 +71,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DISABLE_SHOW_ALL_ITEMS_TOGGLE</td>
+	<td>//label[contains(@class,'simple-toggle-switch disabled')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DISCARD_CHANGE_BUTTON</td>
 	<td>//li[contains(.,'${key_changeTitle}') and contains(.,'${key_changeCategory}')]//a[contains(.,'Discard Change')]</td>
 	<td></td>

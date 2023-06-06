@@ -255,23 +255,14 @@ public class SystemObjectEntryItemSelectorView
 			User user = _userLocalService.fetchUser(
 				PrincipalThreadLocal.getUserId());
 
-			Map<String, Object> objectEntryValues =
-				ObjectEntryValuesUtil.getObjectEntryValues(
-					_baseModel, _dtoConverterRegistry,
-					_objectDefinition.getName(),
-					_systemObjectDefinitionManagerRegistry, user);
-
-			String userLanguageId = null;
-
-			if (user != null) {
-				userLanguageId = user.getLanguageId();
-			}
+			Map<String, Object> values = ObjectEntryValuesUtil.getValues(
+				_baseModel, _dtoConverterRegistry, _objectDefinition.getName(),
+				_systemObjectDefinitionManagerRegistry, user);
 
 			return String.valueOf(
 				ObjectEntryValuesUtil.getTitleFieldValue(
-					objectField.getBusinessType(),
-					objectEntryValues.get(objectField.getName()),
-					userLanguageId));
+					objectField.getBusinessType(), user,
+					values.get(objectField.getName())));
 		}
 
 		@Override

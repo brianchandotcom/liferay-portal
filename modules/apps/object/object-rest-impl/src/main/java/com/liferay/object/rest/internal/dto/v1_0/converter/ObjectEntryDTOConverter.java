@@ -67,7 +67,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -206,33 +205,42 @@ public class ObjectEntryDTOConverter
 
 					if (objectDefinition.isUnmodifiableSystemObject()) {
 						if (FeatureFlagManagerUtil.isEnabled("LPS-183882")) {
-							Map<String, Object> dtoModel =
-								ObjectEntryValuesUtil.getObjectEntryValues(
-									objectDefinition.getCompanyId(),
+							SystemObjectDefinitionManager
+								systemObjectDefinitionManager =
+									_systemObjectDefinitionManagerRegistry.
+										getSystemObjectDefinitionManager(
+											objectDefinition.getName());
+
+							Map<String, Object> values =
+								ObjectEntryValuesUtil.getValues(
+									systemObjectDefinitionManager.
+										getBaseModelByExternalReferenceCode(
+											systemObjectDefinitionManager.
+												getExternalReferenceCode(
+													primaryKey),
+											objectDefinition.getCompanyId()),
 									dtoConverterContext.
 										getDTOConverterRegistry(),
-									objectDefinition.getName(), primaryKey,
+									objectDefinition.getName(),
 									_systemObjectDefinitionManagerRegistry,
 									dtoConverterContext.getUser());
 
-							if (dtoModel != null) {
+							if (values != null) {
 								ObjectField objectField =
 									_objectFieldLocalService.fetchObjectField(
 										objectDefinition.
 											getTitleObjectFieldId());
 
-								User user = dtoConverterContext.getUser();
-
-								dtoModel.put(
+								values.put(
 									objectField.getName(),
 									ObjectEntryValuesUtil.getTitleFieldValue(
 										objectField.getBusinessType(),
-										dtoModel.get(objectField.getName()),
-										user.getLanguageId()));
+										dtoConverterContext.getUser(),
+										values.get(objectField.getName())));
 							}
 
 							relatedObjectEntryAtomicReference.set(
-								(Serializable)dtoModel);
+								(Serializable)values);
 						}
 						else {
 							relatedObjectEntryAtomicReference.set(

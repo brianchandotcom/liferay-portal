@@ -18,10 +18,9 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectField;
-import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -44,7 +43,39 @@ import java.util.Map;
  */
 public class ObjectEntryValuesUtil {
 
-	public static Map<String, Object> getObjectEntryValues(
+	public static Object getTitleFieldValue(
+		String businessType, User user, Object value) {
+
+		if (StringUtil.equals(
+				businessType, ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN)) {
+
+			return GetterUtil.getBoolean(value);
+		}
+
+		if (!(value instanceof Map)) {
+			return value;
+		}
+
+		Map<String, Object> localizedValues = (Map<String, Object>)value;
+
+		String siteDefaultLanguageId = LanguageUtil.getLanguageId(
+			LocaleUtil.getSiteDefault());
+
+		if (localizedValues.containsKey(siteDefaultLanguageId)) {
+			return localizedValues.get(siteDefaultLanguageId);
+		}
+
+		if ((user != null) &&
+			localizedValues.containsKey(user.getLanguageId())) {
+
+			return localizedValues.get(user.getLanguageId());
+		}
+
+		return localizedValues.get(
+			LanguageUtil.getLanguageId(LocaleUtil.getDefault()));
+	}
+
+	public static Map<String, Object> getValues(
 		BaseModel<?> baseModel, DTOConverterRegistry dtoConverterRegistry,
 		String objectDefinitionName,
 		SystemObjectDefinitionManagerRegistry
@@ -52,69 +83,23 @@ public class ObjectEntryValuesUtil {
 		User user) {
 
 		try {
-			Object dtoModel = ObjectEntryDTOConverterUtil.toDTO(
+			Object dto = ObjectEntryDTOConverterUtil.toDTO(
 				baseModel, dtoConverterRegistry,
 				systemObjectDefinitionManagerRegistry.
 					getSystemObjectDefinitionManager(objectDefinitionName),
 				user);
 
-			return ObjectMapperUtil.readValue(Map.class, dtoModel.toString());
+			if (Validator.isNull(dto)) {
+				return new HashMap<>();
+			}
+
+			return ObjectMapperUtil.readValue(Map.class, dto.toString());
 		}
 		catch (Exception exception) {
 			_log.error(exception);
 		}
 
 		return new HashMap<>();
-	}
-
-	public static Map<String, Object> getObjectEntryValues(
-			long companyId, DTOConverterRegistry dtoConverterRegistry,
-			String objectDefinitionName, long primaryKey,
-			SystemObjectDefinitionManagerRegistry
-				systemObjectDefinitionManagerRegistry,
-			User user)
-		throws PortalException {
-
-		SystemObjectDefinitionManager systemObjectDefinitionManager =
-			systemObjectDefinitionManagerRegistry.
-				getSystemObjectDefinitionManager(objectDefinitionName);
-
-		return getObjectEntryValues(
-			systemObjectDefinitionManager.getBaseModelByExternalReferenceCode(
-				systemObjectDefinitionManager.getExternalReferenceCode(
-					primaryKey),
-				companyId),
-			dtoConverterRegistry, objectDefinitionName,
-			systemObjectDefinitionManagerRegistry, user);
-	}
-
-	public static Object getTitleFieldValue(
-		String businessType, Object value, String userLanguageId) {
-
-		if (value instanceof Map) {
-			Map<String, Object> localizedValues = (Map<String, Object>)value;
-
-			String siteDefaultLanguageId = String.valueOf(
-				LocaleUtil.getSiteDefault());
-
-			if (localizedValues.containsKey(siteDefaultLanguageId)) {
-				value = localizedValues.get(siteDefaultLanguageId);
-			}
-			else if (localizedValues.containsKey(userLanguageId)) {
-				value = localizedValues.get(userLanguageId);
-			}
-			else {
-				value = localizedValues.get(
-					String.valueOf(LocaleUtil.getDefault()));
-			}
-		}
-		else if (StringUtil.equals(
-					businessType, ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN)) {
-
-			value = Boolean.parseBoolean(String.valueOf(value));
-		}
-
-		return value;
 	}
 
 	public static String getValueString(

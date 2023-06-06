@@ -412,18 +412,6 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 			return StringUtil.replaceLast(fieldName, "creator", "creator.name");
 		}
 
-		if (!fieldName.contains("CPDefinition")) {
-			if (fieldName.contains(".createDate")) {
-				return StringUtil.replaceLast(
-					fieldName, "createDate", "dateCreated");
-			}
-
-			if (fieldName.contains(".modifiedDate")) {
-				return StringUtil.replace(
-					fieldName, "modifiedDate", "dateModified");
-			}
-		}
-
 		if (Objects.equals(
 				businessType, ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
 

@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 
 import java.util.List;
@@ -90,8 +89,6 @@ public class SystemRelatedModelsFDSDataProvider
 		long objectEntryId = ParamUtil.getLong(
 			httpServletRequest, "objectEntryId");
 
-		User user = _userLocalService.getUser(PrincipalThreadLocal.getUserId());
-
 		return TransformUtil.transform(
 			(List<BaseModel<?>>)objectRelatedModelsProvider.getRelatedModels(
 				objectScopeProvider.getGroupId(httpServletRequest),
@@ -99,43 +96,31 @@ public class SystemRelatedModelsFDSDataProvider
 				fdsPagination.getStartPosition(),
 				fdsPagination.getEndPosition()),
 			relatedModel -> {
-				String businessType = null;
+				ObjectField titleObjectField =
+					_objectFieldLocalService.fetchObjectField(
+						objectDefinition.getTitleObjectFieldId());
 
-				String objectFieldName =
-					objectDefinition.getPKObjectFieldDBColumnName();
-
-				if (objectDefinition.getTitleObjectFieldId() > 0) {
-					ObjectField objectField =
-						_objectFieldLocalService.getObjectField(
-							objectDefinition.getTitleObjectFieldId());
-
-					businessType = objectField.getBusinessType();
-					objectFieldName = objectField.getName();
+				if (titleObjectField == null) {
+					titleObjectField =
+						_objectFieldLocalService.fetchObjectField(
+							objectDefinition.getObjectDefinitionId(), "id");
 				}
 
-				Map<String, Object> objectEntryValues =
-					ObjectEntryValuesUtil.getObjectEntryValues(
-						relatedModel, _dtoConverterRegistry,
-						objectDefinition.getName(),
-						_systemObjectDefinitionManagerRegistry, user);
+				User user = _userLocalService.getUser(
+					PrincipalThreadLocal.getUserId());
 
-				if (!StringUtil.equals(
-						objectDefinition.getName(), "CPDefinition")) {
-
-					objectEntryValues.put(
-						"createDate", objectEntryValues.get("dateCreated"));
-					objectEntryValues.put(
-						"modifiedDate", objectEntryValues.get("dateModified"));
-				}
+				Map<String, Object> values = ObjectEntryValuesUtil.getValues(
+					relatedModel, _dtoConverterRegistry,
+					objectDefinition.getName(),
+					_systemObjectDefinitionManagerRegistry, user);
 
 				return new RelatedModel(
 					objectDefinition.getClassName(),
-					GetterUtil.getLong(objectEntryValues.get("id")),
+					GetterUtil.getLong(values.get("id")),
 					String.valueOf(
 						ObjectEntryValuesUtil.getTitleFieldValue(
-							businessType,
-							objectEntryValues.get(objectFieldName),
-							user.getLanguageId())),
+							titleObjectField.getBusinessType(), user,
+							values.get(titleObjectField.getName()))),
 					true);
 			});
 	}

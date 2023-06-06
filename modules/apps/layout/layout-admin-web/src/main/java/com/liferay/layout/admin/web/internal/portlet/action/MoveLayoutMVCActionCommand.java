@@ -21,6 +21,7 @@ import com.liferay.layout.admin.web.internal.display.context.MillerColumnsDispla
 import com.liferay.layout.admin.web.internal.handler.LayoutExceptionRequestHandler;
 import com.liferay.layout.admin.web.internal.helper.LayoutActionsHelper;
 import com.liferay.layout.admin.web.internal.servlet.taglib.util.LayoutActionDropdownItemsProvider;
+import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
 import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.layout.util.template.LayoutConverterRegistry;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -107,7 +108,8 @@ public class MoveLayoutMVCActionCommand extends BaseAddLayoutMVCActionCommand {
 			LayoutsAdminDisplayContext layoutsAdminDisplayContext =
 				new LayoutsAdminDisplayContext(
 					_itemSelector, layoutActionsHelper, _layoutCopyHelper,
-					liferayPortletRequest, liferayPortletResponse);
+					_layoutSetPrototypeHelper, liferayPortletRequest,
+					liferayPortletResponse);
 
 			JSONObject jsonObject = JSONUtil.put(
 				"layoutColumns",
@@ -154,6 +156,9 @@ public class MoveLayoutMVCActionCommand extends BaseAddLayoutMVCActionCommand {
 
 	@Reference
 	private LayoutService _layoutService;
+
+	@Reference
+	private LayoutSetPrototypeHelper _layoutSetPrototypeHelper;
 
 	@Reference
 	private Portal _portal;

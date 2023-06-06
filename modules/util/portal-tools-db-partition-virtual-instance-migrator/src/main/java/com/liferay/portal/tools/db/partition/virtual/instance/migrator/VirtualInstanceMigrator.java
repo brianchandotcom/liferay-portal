@@ -46,7 +46,7 @@ public class VirtualInstanceMigrator {
 
 				helpFormatter.printHelp(
 					"Liferay Portal Tools DB Partition Virtual Instance " +
-						"Migration",
+						"Migrator",
 					options);
 
 				return;
@@ -140,7 +140,7 @@ public class VirtualInstanceMigrator {
 
 				helpFormatter.printHelp(
 					"Liferay Portal Tools DB Partition Virtual Instance " +
-						"Migration",
+						"Migrator",
 					options);
 
 				_exitWithCode(ErrorCodes.BAD_INPUT_ARGUMENTS);

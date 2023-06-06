@@ -270,7 +270,7 @@ const DownloadSpreadsheetButton = ({fileURL, total}) => {
 				<ClayTooltipProvider>
 					<ClayButtonWithIcon
 						borderless
-						className="ml-2"
+						className="c-ml-2"
 						data-tooltip-align="top"
 						displayType="secondary"
 						onClick={handleCancelRequest}

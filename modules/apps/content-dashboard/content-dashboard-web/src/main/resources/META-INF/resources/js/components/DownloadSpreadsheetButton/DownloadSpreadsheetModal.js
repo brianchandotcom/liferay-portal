@@ -63,7 +63,7 @@ const DownloadSpreadsheetModal = ({
 								>
 									{disableSecondaryButton && (
 										<ClayLoadingIndicator
-											className="m-0 mr-2"
+											className="c-mr-2 m-0"
 											small
 										/>
 									)}

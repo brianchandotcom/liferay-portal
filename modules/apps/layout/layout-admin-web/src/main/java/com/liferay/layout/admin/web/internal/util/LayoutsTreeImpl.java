@@ -444,6 +444,9 @@ public class LayoutsTreeImpl implements LayoutsTree {
 		).put(
 			"hasChildren", layout.hasChildren()
 		).put(
+			"hasDuplicatedFriendlyURL",
+			duplicatedFriendlyURLPlids.contains(layout.getPlid())
+		).put(
 			"icon", layout.getIcon()
 		).put(
 			"id", layout.getLayoutId()
@@ -495,8 +498,6 @@ public class LayoutsTreeImpl implements LayoutsTree {
 			"title", HtmlUtil.escapeAttribute(layoutName)
 		).put(
 			"type", layout.getType()
-		).put(
-			"urlConflict", duplicatedFriendlyURLPlids.contains(layout.getPlid())
 		);
 
 		LayoutRevision layoutRevision = LayoutStagingUtil.getLayoutRevision(

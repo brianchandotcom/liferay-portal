@@ -230,6 +230,20 @@ public class MillerColumnsDisplayContext {
 			LayoutType layoutType = layout.getLayoutType();
 
 			layoutJSONObject.put(
+				"hasDuplicatedFriendlyURL",
+				() -> {
+					if (!FeatureFlagManagerUtil.isEnabled("LPS-174417")) {
+						return false;
+					}
+
+					List<Long> duplicatedFriendlyURLPlids =
+						_layoutsAdminDisplayContext.
+							getDuplicatedFriendlyURLPlids();
+
+					return duplicatedFriendlyURLPlids.contains(
+						layout.getPlid());
+				}
+			).put(
 				"parentable", layoutType.isParentable()
 			).put(
 				"quickActions", _getQuickActionsJSONArray(layout)
@@ -254,20 +268,6 @@ public class MillerColumnsDisplayContext {
 				).setParameter(
 					"selPlid", layout.getPlid()
 				).buildString()
-			).put(
-				"urlConflict",
-				() -> {
-					if (!FeatureFlagManagerUtil.isEnabled("LPS-174417")) {
-						return false;
-					}
-
-					List<Long> duplicatedFriendlyURLPlids =
-						_layoutsAdminDisplayContext.
-							getDuplicatedFriendlyURLPlids();
-
-					return duplicatedFriendlyURLPlids.contains(
-						layout.getPlid());
-				}
 			).put(
 				"viewUrl",
 				_layoutsAdminDisplayContext.getEditOrViewLayoutURL(layout)

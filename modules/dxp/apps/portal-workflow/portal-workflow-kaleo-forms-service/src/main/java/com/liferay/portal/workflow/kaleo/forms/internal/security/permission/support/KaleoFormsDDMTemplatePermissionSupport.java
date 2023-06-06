@@ -14,28 +14,20 @@
 
 package com.liferay.portal.workflow.kaleo.forms.internal.security.permission.support;
 
-import com.liferay.dynamic.data.mapping.util.DDMStructurePermissionSupport;
 import com.liferay.dynamic.data.mapping.util.DDMTemplatePermissionSupport;
 import com.liferay.portal.workflow.kaleo.forms.constants.KaleoFormsConstants;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Inácio Nery
+ * @author Joao Victor Alves
  */
 @Component(
 	property = "model.class.name=com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess",
-	service = {
-		DDMStructurePermissionSupport.class, DDMTemplatePermissionSupport.class
-	}
+	service = DDMTemplatePermissionSupport.class
 )
-public class KaleoFormsDDMPermissionSupport
-	implements DDMStructurePermissionSupport, DDMTemplatePermissionSupport {
-
-	@Override
-	public String getResourceName() {
-		return KaleoFormsConstants.RESOURCE_NAME;
-	}
+public class KaleoFormsDDMTemplatePermissionSupport
+	implements DDMTemplatePermissionSupport {
 
 	@Override
 	public String getResourceName(long classNameId) {

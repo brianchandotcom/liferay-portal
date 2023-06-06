@@ -252,7 +252,7 @@ public interface ObjectDefinitionLocalService
 			ObjectRelationship objectRelationship)
 		throws PortalException;
 
-	public ObjectDefinition enableSalesForceAccountEntryRestricted(
+	public ObjectDefinition enableAccountEntryRestrictedForExternalStorageType(
 			ObjectField objectField)
 		throws PortalException;
 

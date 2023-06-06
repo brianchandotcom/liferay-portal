@@ -189,11 +189,6 @@ public class ConfigurationVisibilityUtil {
 				ConfigurationVisibilityController service =
 					bundleContext.getService(serviceReference);
 
-				Class<? extends ConfigurationVisibilityController> clazz =
-					service.getClass();
-
-				emitter.emit(clazz.getName());
-
 				String key = service.getKey();
 
 				if (!Validator.isBlank(key)) {

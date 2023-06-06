@@ -24,7 +24,9 @@ import java.io.Serializable;
 public interface ConfigurationVisibilityController {
 
 	public default String getKey() {
-		return null;
+		Class<? extends ConfigurationVisibilityController> clazz = getClass();
+
+		return clazz.getName();
 	}
 
 	public boolean isVisible(

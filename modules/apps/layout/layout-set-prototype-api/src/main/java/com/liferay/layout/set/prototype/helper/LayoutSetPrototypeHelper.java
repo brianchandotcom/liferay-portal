@@ -14,6 +14,10 @@
 
 package com.liferay.layout.set.prototype.helper;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.model.LayoutSetPrototype;
+
 import java.util.List;
 
 /**
@@ -21,9 +25,10 @@ import java.util.List;
  */
 public interface LayoutSetPrototypeHelper {
 
-	public List<Long> getConflictingPlidsOfLayoutSetGroup(long groupId);
+	public List<Long> getDuplicatedFriendlyURLPlids(LayoutSet layoutSet);
 
-	public List<Long> getConflictingPlidsOfLayoutSetPrototypeGroup(
-		long groupId);
+	public List<Long> getDuplicatedFriendlyURLPlids(
+			LayoutSetPrototype layoutSetPrototype)
+		throws PortalException;
 
 }

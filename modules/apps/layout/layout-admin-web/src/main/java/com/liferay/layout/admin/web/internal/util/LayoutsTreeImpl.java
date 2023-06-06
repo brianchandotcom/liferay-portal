@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
+import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -104,9 +105,9 @@ public class LayoutsTreeImpl implements LayoutsTree {
 
 		JSONArray jsonArray = _getLayoutsJSONArray(
 			_getAncestorLayouts(httpServletRequest), false,
-			_getConflictPlids(groupId, privateLayout), expandedLayoutIds,
-			groupId, httpServletRequest, includeActions, incomplete,
-			layoutActionsHelper, loadMore,
+			_getDuplicatedFriendlyURLPlids(groupId, privateLayout),
+			expandedLayoutIds, groupId, httpServletRequest, includeActions,
+			incomplete, layoutActionsHelper, loadMore,
 			_isPaginationEnabled(httpServletRequest), paginationJSONObject,
 			parentLayoutId, privateLayout, themeDisplay);
 
@@ -157,35 +158,6 @@ public class LayoutsTreeImpl implements LayoutsTree {
 		return ancestorLayouts;
 	}
 
-	private List<Long> _getConflictPlids(long groupId, boolean privateLayout)
-		throws Exception {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-174417")) {
-			return new ArrayList<>();
-		}
-
-		LayoutSet layoutSet = _layoutSetLocalService.fetchLayoutSet(
-			groupId, privateLayout);
-
-		Group group = layoutSet.getGroup();
-
-		List<Long> conflictPlids = new ArrayList<>();
-
-		if (layoutSet.isLayoutSetPrototypeLinkEnabled()) {
-			conflictPlids =
-				_layoutSetPrototypeHelper.getConflictingPlidsOfLayoutSetGroup(
-					group.getGroupId());
-		}
-		else if (group.isLayoutSetPrototype()) {
-			conflictPlids =
-				_layoutSetPrototypeHelper.
-					getConflictingPlidsOfLayoutSetPrototypeGroup(
-						group.getGroupId());
-		}
-
-		return conflictPlids;
-	}
-
 	private Layout _getDraftLayout(Layout layout) {
 		if (!layout.isTypeContent()) {
 			return null;
@@ -204,14 +176,45 @@ public class LayoutsTreeImpl implements LayoutsTree {
 		return null;
 	}
 
+	private List<Long> _getDuplicatedFriendlyURLPlids(
+			long groupId, boolean privateLayout)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-174417")) {
+			return new ArrayList<>();
+		}
+
+		LayoutSet layoutSet = _layoutSetLocalService.fetchLayoutSet(
+			groupId, privateLayout);
+
+		Group group = layoutSet.getGroup();
+
+		List<Long> duplicatedFriendlyURLPlids = new ArrayList<>();
+
+		if (layoutSet.isLayoutSetPrototypeLinkEnabled()) {
+			duplicatedFriendlyURLPlids =
+				_layoutSetPrototypeHelper.getDuplicatedFriendlyURLPlids(
+					layoutSet);
+		}
+		else if (group.isLayoutSetPrototype()) {
+			duplicatedFriendlyURLPlids =
+				_layoutSetPrototypeHelper.getDuplicatedFriendlyURLPlids(
+					_layoutSetPrototypeLocalService.fetchLayoutSetPrototype(
+						group.getClassPK()));
+		}
+
+		return duplicatedFriendlyURLPlids;
+	}
+
 	private JSONArray _getLayoutsJSONArray(
 			List<Layout> ancestorLayouts, boolean childLayout,
-			List<Long> conflictPlids, Set<Long> expandedLayoutIds, long groupId,
-			HttpServletRequest httpServletRequest, boolean includeActions,
-			boolean incomplete, LayoutActionsHelper layoutActionsHelper,
-			boolean loadMore, boolean paginationEnabled,
-			JSONObject paginationJSONObject, long parentLayoutId,
-			boolean privateLayout, ThemeDisplay themeDisplay)
+			List<Long> duplicatedFriendlyURLPlids, Set<Long> expandedLayoutIds,
+			long groupId, HttpServletRequest httpServletRequest,
+			boolean includeActions, boolean incomplete,
+			LayoutActionsHelper layoutActionsHelper, boolean loadMore,
+			boolean paginationEnabled, JSONObject paginationJSONObject,
+			long parentLayoutId, boolean privateLayout,
+			ThemeDisplay themeDisplay)
 		throws Exception {
 
 		int count = _layoutService.getLayoutsCount(
@@ -256,20 +259,21 @@ public class LayoutsTreeImpl implements LayoutsTree {
 					VirtualLayout virtualLayout = (VirtualLayout)layout;
 
 					childLayoutsJSONArray = _getLayoutsJSONArray(
-						ancestorLayouts, true, conflictPlids, expandedLayoutIds,
-						virtualLayout.getSourceGroupId(), httpServletRequest,
-						includeActions, incomplete, layoutActionsHelper,
-						loadMore, paginationEnabled, paginationJSONObject,
-						virtualLayout.getLayoutId(),
+						ancestorLayouts, true, duplicatedFriendlyURLPlids,
+						expandedLayoutIds, virtualLayout.getSourceGroupId(),
+						httpServletRequest, includeActions, incomplete,
+						layoutActionsHelper, loadMore, paginationEnabled,
+						paginationJSONObject, virtualLayout.getLayoutId(),
 						virtualLayout.isPrivateLayout(), themeDisplay);
 				}
 				else {
 					childLayoutsJSONArray = _getLayoutsJSONArray(
-						ancestorLayouts, true, conflictPlids, expandedLayoutIds,
-						groupId, httpServletRequest, includeActions, incomplete,
-						layoutActionsHelper, loadMore, paginationEnabled,
-						paginationJSONObject, layout.getLayoutId(),
-						layout.isPrivateLayout(), themeDisplay);
+						ancestorLayouts, true, duplicatedFriendlyURLPlids,
+						expandedLayoutIds, groupId, httpServletRequest,
+						includeActions, incomplete, layoutActionsHelper,
+						loadMore, paginationEnabled, paginationJSONObject,
+						layout.getLayoutId(), layout.isPrivateLayout(),
+						themeDisplay);
 				}
 			}
 			else {
@@ -295,8 +299,9 @@ public class LayoutsTreeImpl implements LayoutsTree {
 					afterDeleteSelectedLayout,
 					_layoutService.getLayoutsCount(
 						groupId, privateLayout, layout.getLayoutId()),
-					childLayoutsJSONArray, conflictPlids, httpServletRequest,
-					includeActions, layout, layoutActionsHelper, themeDisplay));
+					childLayoutsJSONArray, duplicatedFriendlyURLPlids,
+					httpServletRequest, includeActions, layout,
+					layoutActionsHelper, themeDisplay));
 
 			if (includeActions) {
 				afterDeleteSelectedLayout = layout;
@@ -376,7 +381,8 @@ public class LayoutsTreeImpl implements LayoutsTree {
 
 	private JSONObject _toJSONObject(
 			Layout afterDeleteSelectedLayout, long childLayoutsCount,
-			JSONArray childLayoutsJSONArray, List<Long> conflictPlids,
+			JSONArray childLayoutsJSONArray,
+			List<Long> duplicatedFriendlyURLPlids,
 			HttpServletRequest httpServletRequest, boolean includeActions,
 			Layout layout, LayoutActionsHelper layoutActionsHelper,
 			ThemeDisplay themeDisplay)
@@ -494,7 +500,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 		).put(
 			"type", layout.getType()
 		).put(
-			"urlConflict", conflictPlids.contains(layout.getPlid())
+			"urlConflict", duplicatedFriendlyURLPlids.contains(layout.getPlid())
 		);
 
 		LayoutRevision layoutRevision = LayoutStagingUtil.getLayoutRevision(
@@ -554,6 +560,9 @@ public class LayoutsTreeImpl implements LayoutsTree {
 
 	@Reference
 	private LayoutSetPrototypeHelper _layoutSetPrototypeHelper;
+
+	@Reference
+	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
 
 	@Reference
 	private SiteNavigationMenuLocalService _siteNavigationMenuLocalService;

@@ -74,6 +74,7 @@ import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetBranchLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
+import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
@@ -362,32 +363,6 @@ public class LayoutsAdminDisplayContext {
 		).buildString();
 	}
 
-	public List<Long> getConflictPlids() {
-		if (_conflictPlids != null) {
-			return _conflictPlids;
-		}
-
-		LayoutSet layoutSet = getSelLayoutSet();
-		Group group = getSelGroup();
-
-		if (layoutSet.isLayoutSetPrototypeLinkEnabled()) {
-			_conflictPlids =
-				_layoutSetPrototypeHelper.getConflictingPlidsOfLayoutSetGroup(
-					group.getGroupId());
-		}
-		else if (group.isLayoutSetPrototype()) {
-			_conflictPlids =
-				_layoutSetPrototypeHelper.
-					getConflictingPlidsOfLayoutSetPrototypeGroup(
-						group.getGroupId());
-		}
-		else {
-			_conflictPlids = new ArrayList<>();
-		}
-
-		return _conflictPlids;
-	}
-
 	public String getCopyLayoutActionURL(
 		boolean copyPermissions, long sourcePlid) {
 
@@ -514,6 +489,32 @@ public class LayoutsAdminDisplayContext {
 		return LayoutLocalServiceUtil.updateStatus(
 			draftLayout.getUserId(), draftLayout.getPlid(),
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
+	}
+
+	public List<Long> getDuplicatedFriendlyURLPlids() throws PortalException {
+		if (_duplicatedFriendlyURLPlids != null) {
+			return _duplicatedFriendlyURLPlids;
+		}
+
+		LayoutSet layoutSet = getSelLayoutSet();
+		Group group = getSelGroup();
+
+		if (layoutSet.isLayoutSetPrototypeLinkEnabled()) {
+			_duplicatedFriendlyURLPlids =
+				_layoutSetPrototypeHelper.getDuplicatedFriendlyURLPlids(
+					layoutSet);
+		}
+		else if (group.isLayoutSetPrototype()) {
+			_duplicatedFriendlyURLPlids =
+				_layoutSetPrototypeHelper.getDuplicatedFriendlyURLPlids(
+					LayoutSetPrototypeLocalServiceUtil.fetchLayoutSetPrototype(
+						group.getClassPK()));
+		}
+		else {
+			_duplicatedFriendlyURLPlids = new ArrayList<>();
+		}
+
+		return _duplicatedFriendlyURLPlids;
 	}
 
 	public String getEditLayoutURL(Layout layout) throws Exception {
@@ -2274,8 +2275,8 @@ public class LayoutsAdminDisplayContext {
 	private Long _activeLayoutSetBranchId;
 	private String _backURL;
 	private final CETManager _cetManager;
-	private List<Long> _conflictPlids;
 	private String _displayStyle;
+	private List<Long> _duplicatedFriendlyURLPlids;
 	private Boolean _firstColumn;
 	private final GroupDisplayContextHelper _groupDisplayContextHelper;
 	private Boolean _hasEditableMasterLayout;

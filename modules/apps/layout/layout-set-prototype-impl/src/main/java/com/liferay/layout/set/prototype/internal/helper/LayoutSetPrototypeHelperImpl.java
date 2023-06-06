@@ -16,7 +16,10 @@ package com.liferay.layout.set.prototype.internal.helper;
 
 import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.GroupTable;
+import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.model.LayoutSetPrototypeTable;
 import com.liferay.portal.kernel.model.LayoutSetTable;
 import com.liferay.portal.kernel.model.LayoutTable;
@@ -34,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 
 	@Override
-	public List<Long> getConflictingPlidsOfLayoutSetGroup(long groupId) {
+	public List<Long> getDuplicatedFriendlyURLPlids(LayoutSet layoutSet) {
 		LayoutTable tempLayoutTable = LayoutTable.INSTANCE.as(
 			"tempLayoutTable");
 
@@ -82,7 +85,7 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 				)
 			).where(
 				LayoutTable.INSTANCE.groupId.eq(
-					groupId
+					layoutSet.getGroupId()
 				).and(
 					LayoutTable.INSTANCE.system.eq(false)
 				).and(
@@ -92,8 +95,9 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 	}
 
 	@Override
-	public List<Long> getConflictingPlidsOfLayoutSetPrototypeGroup(
-		long groupId) {
+	public List<Long> getDuplicatedFriendlyURLPlids(
+			LayoutSetPrototype layoutSetPrototype)
+		throws PortalException {
 
 		LayoutTable tempLayoutTable = LayoutTable.INSTANCE.as(
 			"tempLayoutTable");
@@ -143,7 +147,7 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 				)
 			).where(
 				LayoutTable.INSTANCE.groupId.eq(
-					groupId
+					layoutSetPrototype.getGroupId()
 				).and(
 					LayoutTable.INSTANCE.system.eq(false)
 				)

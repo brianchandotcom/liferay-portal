@@ -3,7 +3,7 @@
 exports[`SegmentSticker should render 1`] = `
 <div>
   <div
-    class="sticker sticker-root sticker-static segment-sticker-root sticker-rounded sticker-light"
+    class="sticker sticker-root sticker-static segment-sticker-root sticker-rounded sticker-dark"
   >
     <svg
       class="lexicon-icon lexicon-icon-individual-static-segment icon-root"

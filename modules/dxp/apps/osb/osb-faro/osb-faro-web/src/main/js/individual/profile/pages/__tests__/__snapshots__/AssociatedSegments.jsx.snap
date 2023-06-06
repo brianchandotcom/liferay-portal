@@ -191,7 +191,7 @@ exports[`IndividualAssociatedSegments should render 1`] = `
                     class="icon-container"
                   >
                     <div
-                      class="sticker sticker-root sticker-static segment-sticker-root sticker-rounded sticker-light"
+                      class="sticker sticker-root sticker-static segment-sticker-root sticker-rounded sticker-dark"
                     >
                       <svg
                         class="lexicon-icon lexicon-icon-individual-dynamic-segment icon-root"

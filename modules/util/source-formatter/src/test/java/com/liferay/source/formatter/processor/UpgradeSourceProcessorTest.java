@@ -69,6 +69,13 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testUpgradeJavaServiceReferenceAnnotationCheck()
+		throws Exception {
+
+		test("upgrade/UpgradeJavaServiceReferenceAnnotationCheck.testjava");
+	}
+
+	@Test
 	public void testUpgradeJavaServiceTrackerListCheck() throws Exception {
 		test("upgrade/UpgradeJavaServiceTrackerListCheck.testjava");
 	}

@@ -6,6 +6,7 @@
 package com.liferay.headless.delivery.client.serdes.v1_0;
 
 import com.liferay.headless.delivery.client.dto.v1_0.Creator;
+import com.liferay.headless.delivery.client.dto.v1_0.UserGroupInformation;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -152,6 +153,29 @@ public class CreatorSerDes {
 			sb.append("\"");
 		}
 
+		if (creator.getUserGroupInformations() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"userGroupInformations\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < creator.getUserGroupInformations().length;
+				 i++) {
+
+				sb.append(
+					String.valueOf(creator.getUserGroupInformations()[i]));
+
+				if ((i + 1) < creator.getUserGroupInformations().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -227,6 +251,15 @@ public class CreatorSerDes {
 			map.put("profileURL", String.valueOf(creator.getProfileURL()));
 		}
 
+		if (creator.getUserGroupInformations() == null) {
+			map.put("userGroupInformations", null);
+		}
+		else {
+			map.put(
+				"userGroupInformations",
+				String.valueOf(creator.getUserGroupInformations()));
+		}
+
 		return map;
 	}
 
@@ -285,6 +318,28 @@ public class CreatorSerDes {
 			else if (Objects.equals(jsonParserFieldName, "profileURL")) {
 				if (jsonParserFieldValue != null) {
 					creator.setProfileURL((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "userGroupInformations")) {
+
+				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					UserGroupInformation[] userGroupInformationsArray =
+						new UserGroupInformation[jsonParserFieldValues.length];
+
+					for (int i = 0; i < userGroupInformationsArray.length;
+						 i++) {
+
+						userGroupInformationsArray[i] =
+							UserGroupInformationSerDes.toDTO(
+								(String)jsonParserFieldValues[i]);
+					}
+
+					creator.setUserGroupInformations(
+						userGroupInformationsArray);
 				}
 			}
 		}

@@ -547,11 +547,16 @@ public class ObjectRelationshipLocalServiceTest {
 				objectDefinition2.getExtensionDBTableName(),
 				objectFieldNamePrefix +
 					objectDefinition1.getPKObjectFieldName()));
-		Assert.assertNotNull(
-			_objectFieldLocalService.fetchObjectField(
-				objectDefinition2.getObjectDefinitionId(),
-				objectFieldNamePrefix +
-					objectDefinition1.getPKObjectFieldName()));
+
+		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
+			objectDefinition2.getObjectDefinitionId(),
+			objectFieldNamePrefix + objectDefinition1.getPKObjectFieldName());
+
+		Assert.assertNotNull(objectField);
+
+		Assert.assertTrue(
+			_hasIndex(
+				objectField.getDBTableName(), objectField.getDBColumnName()));
 
 		ObjectFieldSetting objectFieldSetting =
 			_objectFieldSettingLocalService.fetchObjectFieldSetting(

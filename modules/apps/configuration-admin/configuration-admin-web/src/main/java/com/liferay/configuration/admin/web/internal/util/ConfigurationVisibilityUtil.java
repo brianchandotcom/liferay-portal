@@ -79,6 +79,24 @@ public class ConfigurationVisibilityUtil {
 		return true;
 	}
 
+	public static boolean isVisibleByKey(
+		String visibilityControllerKey,
+		ExtendedObjectClassDefinition.Scope scope, Serializable scopePK) {
+
+		if (Validator.isNull(visibilityControllerKey)) {
+			return true;
+		}
+
+		ConfigurationVisibilityController configurationVisibilityController =
+			_serviceTrackerMap.getService(visibilityControllerKey);
+
+		if (configurationVisibilityController == null) {
+			return true;
+		}
+
+		return configurationVisibilityController.isVisible(scope, scopePK);
+	}
+
 	private static Class<?> _getClass(Bundle bundle, String pid) {
 		try {
 			return bundle.loadClass(pid);

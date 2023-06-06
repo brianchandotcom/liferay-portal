@@ -159,7 +159,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 	private Set<Long> _getConflictPlids(long groupId, boolean privateLayout)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-174471")) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-174417")) {
 			return new HashSet<>();
 		}
 

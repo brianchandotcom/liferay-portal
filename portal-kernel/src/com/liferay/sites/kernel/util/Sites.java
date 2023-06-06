@@ -32,7 +32,6 @@ import java.io.Serializable;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
@@ -162,10 +161,6 @@ public interface Sites {
 		throws PortalException;
 
 	public Long[] filterGroups(List<Group> groups, String[] names);
-
-	public Set<Long> getConflictingPlidsOfLayoutSetGroup(long groupId);
-
-	public Set<Long> getConflictingPlidsOfLayoutSetPrototypeGroup(long groupId);
 
 	public Layout getLayoutSetPrototypeLayout(Layout layout);
 

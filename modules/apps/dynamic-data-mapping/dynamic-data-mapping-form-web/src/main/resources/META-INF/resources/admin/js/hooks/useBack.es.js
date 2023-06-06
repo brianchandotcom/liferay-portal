@@ -78,7 +78,7 @@ export function useBack() {
 		onBack,
 		true,
 		document.querySelector(
-			`#${portletNamespace}controlMenu .sites-control-group span .control-menu-icon`
+			`#${portletNamespace}controlMenu .sites-control-group span .lfr-icon-item`
 		)
 	);
 }

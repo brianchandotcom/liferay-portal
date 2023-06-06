@@ -66,7 +66,6 @@ definition {
 				additionalOptions = "6.x to DXP Migration/Upgrade,Migration from competitor platform",
 				campaignDescription = "Campaign Description",
 				campaignName = "Campaign Name",
-				countryName = "Global",
 				goalsOptions = "Lead generation",
 				targetMarketOptions = "Education,Energy",
 				targetRolesOptions = "Administrator");
@@ -160,33 +159,23 @@ definition {
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 
-		task ("Given I go to add three new MDF Requests") {
+		task ("Given that some MDF's are created") {
 			for (var n : list "1,2,3") {
-				PRMNavigator.goToNavItem(navItem = "Marketing");
-
-				PRMMarketing.gotoAddNewMDF();
-
-				PRMMDFRequest.createNewRequest(
-					accountName = "Company Name 1",
-					activityDescription = "Activity Description",
-					activityName = "Activity Name 1",
-					budgetList = "Sponsorship Fee-2000",
-					campaignDescription = "Campaign Description",
-					campaignName = "Campaign Name ${n}",
-					countryName = "Global",
-					followUpStrategy = "test",
-					goalsOptions = "Lead generation",
-					leadFollowUpList = "Other",
-					leadList = "No",
-					tactic = "Other",
-					targetMarketOptions = "Education,Energy",
-					targetOfLeads = "test",
-					targetRolesOptions = "Administrator",
-					typeOfActivity = "Miscellaneous Marketing");
+				JSONPRM.createMDFRequest(
+					accountEntryName = "Company Name 1",
+					campaignName = "Campaign Name ${n}");
 			}
 		}
 
-		task ("When I click on the 'Export MDF Report' button") {
+		task ("And the CMM is logged in") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "cmm@liferaytest.com",
+				userLoginFullName = "Channel Marketing Manager");
+
+			PRMNavigator.openSitePage(pageName = "MDF Requests");
+		}
+
+		task ("When the CMM clicks on the 'Export MDF Report' button") {
 			Button.click(button = "Export MDF Report");
 		}
 
@@ -204,12 +193,18 @@ definition {
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 
-		task ("Given a new account is created") {
-			JSONPRM.addAccount(accountName = "Company Name 2");
+		task ("Given that a new account is created") {
+			JSONPRM.updateAccount(accountName = "Company Name 2");
 
-			JSONAccountEntryUser.addExistUsertoAccount(
-				accountEntryName = "Company Name 2",
-				userEmailAddress = "pmu@partner.com");
+			task ("The users are associated with the created accound") {
+				JSONAccountEntryUser.addExistUsertoAccount(
+					accountEntryName = "Company Name 2",
+					userEmailAddress = "pmu@partner.com");
+
+				JSONAccountEntryUser.addExistUsertoAccount(
+					accountEntryName = "Company Name 2",
+					userEmailAddress = "cmm@liferaytest.com");
+			}
 		}
 
 		task ("And two MDF's are created with different accounts") {
@@ -222,48 +217,48 @@ definition {
 				campaignName = "Campaign Name 2");
 		}
 
-		task ("And I go to MDF Listing Page") {
-			PRMUtils.gotoPRM();
+		task ("And the CMM goes to the MDF Listing Page") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "cmm@liferaytest.com",
+				userLoginFullName = "Channel Marketing Manager");
 
-			PRMHomePage.gotoQuickLinksOption(
-				buttonLink = "mdf",
-				buttonText = "MDF");
+			PRMNavigator.openSitePage(pageName = "MDF Requests");
 		}
 
-		task ("When I filter the MDF by Account and selects 'Company Name 1") {
-			PRMMDFRequest.FilterMDF(
+		task ("When the CMM filter the MDFs by Account and selects 'Company Name 1") {
+			PRMMDFRequest.filterMDF(
 				checkboxName = "Company Name 1",
-				filterType = "Partner",
-				keyFilter = "Filter");
+				filterOption = "Partner");
 		}
 
-		task ("And I click on the 'Export MDF Report' button") {
+		task ("And clicks on 'Export MDF Report' button") {
 			Button.click(button = "Export MDF Report");
 		}
 
 		task ("Then the information of the visible MDF's will be inside the exported file") {
 			PRMMDFRequest.viewExportedMDF(
 				fileContentList = "Campaign Name 1",
-				fileName = "MDF Requests.csv");
+				fileName = "MDF Requests.csv",
+				fileContentNotPresent = "Campaign Name 2");
 		}
 
-		task ("When I filter the MDF by Account and selects 'Company Name 2") {
+		task ("When the CMM filter the MDFs by Account and selects 'Company Name 2") {
 			Refresh();
 
-			PRMMDFRequest.FilterMDF(
+			PRMMDFRequest.filterMDF(
 				checkboxName = "Company Name 2",
-				filterType = "Partner",
-				keyFilter = "Filter");
+				filterOption = "Partner");
 		}
 
-		task ("And I click on the 'Export MDF Report' button") {
+		task ("And clicks on 'Export MDF Report' button") {
 			Button.click(button = "Export MDF Report");
 		}
 
 		task ("Then the information of the visible MDF's will be inside the exported file") {
 			PRMMDFRequest.viewExportedMDF(
 				fileContentList = "Campaign Name 2",
-				fileName = "MDF Requests.csv");
+				fileName = "MDF Requests.csv",
+				fileContentNotPresent = "Campaign Name 1");
 		}
 	}
 
@@ -272,7 +267,7 @@ definition {
 	test CanExportSearchedMDFs {
 		property solutions.acceptance = "true";
 
-		task ("Given a new account is created") {
+		task ("Given that a new account is created") {
 			JSONPRM.addAccount(accountName = "Company Name 2");
 
 			JSONAccountEntryUser.addExistUsertoAccount(
@@ -280,7 +275,7 @@ definition {
 				userEmailAddress = "pmu@partner.com");
 		}
 
-		task ("And I add two different MDF's") {
+		task ("And the PMU add two different MDF's") {
 			JSONPRM.createMDFRequest(
 				accountEntryName = "Company Name 1",
 				campaignName = "Campaign Name 1");
@@ -290,40 +285,42 @@ definition {
 				campaignName = "Campaign Name 2");
 		}
 
-		task ("And I go to MDF Listing Page") {
-			PRMUtils.gotoPRM();
+		task ("And the CMM goes to the MDF Listing Page") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "cmm@liferaytest.com",
+				userLoginFullName = "Channel Marketing Manager");
 
-			PRMHomePage.gotoQuickLinksOption(
-				buttonLink = "mdf",
-				buttonText = "MDF");
+			PRMNavigator.openSitePage(pageName = "MDF Requests");
 		}
 
-		task ("When I search for the first MDF") {
+		task ("When the CMM searchs for the first MDF") {
 			PRMMDFRequest.searchMDF(campaignName = "Campaign Name 1");
 		}
 
-		task ("And I click on the 'Export MDF Report' button") {
+		task ("And clicks on the 'Export MDF Report' button") {
 			Button.click(button = "Export MDF Report");
 		}
 
 		task ("Then the information of the searched MDF will be inside the exported file") {
 			PRMMDFRequest.viewExportedMDF(
 				fileContentList = "Campaign Name 1",
-				fileName = "MDF Requests.csv");
+				fileName = "MDF Requests.csv",
+				fileContentNotPresent = "Campaign Name 2");
 		}
 
-		task ("When I search for the second MDF") {
+		task ("When the CMM	searchs for the second MDF") {
 			PRMMDFRequest.searchMDF(campaignName = "Campaign Name 2");
 		}
 
-		task ("And I click on the 'Export MDF Report' button") {
+		task ("And clicks on the 'Export MDF Report' button") {
 			Button.click(button = "Export MDF Report");
 		}
 
 		task ("Then the information of the searched MDF will be inside the exported file") {
 			PRMMDFRequest.viewExportedMDF(
 				fileContentList = "Campaign Name 2",
-				fileName = "MDF Requests.csv");
+				fileName = "MDF Requests.csv",
+				fileContentNotPresent = "Campaign Name 1");
 		}
 	}
 
@@ -345,7 +342,6 @@ definition {
 				additionalOptions = "6.x to DXP Migration/Upgrade,Migration from competitor platform",
 				campaignDescription = "Campaign Description",
 				campaignName = "Campaign Name",
-				countryName = "Global",
 				goalsOptions = "Lead generation",
 				targetMarketOptions = "Education,Energy",
 				targetRolesOptions = "Administrator");
@@ -364,7 +360,6 @@ definition {
 				accountName = "Company Name 1",
 				additionalOptions = "6.x to DXP Migration/Upgrade,Migration from competitor platform",
 				campaignName = "Campaign Name",
-				countryName = "Global",
 				goalsOptions = "Lead generation",
 				targetMarketOptions = "Education,Energy",
 				targetRolesOptions = "Administrator");
@@ -405,7 +400,6 @@ definition {
 				additionalOptions = "6.x to DXP Migration/Upgrade,Migration from competitor platform",
 				campaignDescription = "Campaign Description",
 				campaignName = "Campaign Name",
-				countryName = "Global",
 				goalsOptions = "Lead generation",
 				targetMarketOptions = "Education,Energy",
 				targetRolesOptions = "Administrator");
@@ -449,7 +443,6 @@ definition {
 				accountName = "Company Name 1",
 				campaignDescription = "Campaign Description",
 				campaignName = "Campaign Name",
-				countryName = "Global",
 				goalsOptions = "Lead generation",
 				targetMarketOptions = "Education,Energy",
 				targetRolesOptions = "Administrator");
@@ -489,7 +482,6 @@ definition {
 				budgetList = "Sponsorship Fee-2000",
 				campaignDescription = "Campaign Description",
 				campaignName = "Campaign Name 1",
-				countryName = "Global",
 				followUpStrategy = "test",
 				goalsOptions = "Lead generation",
 				leadFollowUpList = "Other",
@@ -519,7 +511,6 @@ definition {
 		task ("Given I go to add a new MDF Request") {
 			var accountName = "Company Name 1";
 			var campaignName = "Campaign Name";
-			var countryName = "Global";
 			var campaignDescription = "Campaign Description";
 			var goalsOptions = "Lead generation";
 			var targetMarketOptions = "Education";
@@ -543,7 +534,6 @@ definition {
 				budgetValueList = ${budgetValueList},
 				campaignDescription = ${campaignDescription},
 				campaignName = ${campaignName},
-				countryName = ${countryName},
 				endDate = ${endDate},
 				expenseOption = ${expenseOption},
 				goalsOptions = ${goalsOptions},
@@ -581,7 +571,6 @@ definition {
 			PRMMDFRequest.viewMDFCompanyDetails(
 				accountName = ${accountName},
 				campaignName = ${campaignName},
-				countryName = ${countryName},
 				goalsOptions = ${goalsOptions},
 				targetMarketOptions = ${targetMarketOptions},
 				targetRolesOptions = ${targetRolesOptions});
@@ -605,7 +594,6 @@ definition {
 				accountName = "Company Name 1",
 				campaignDescription = "Campaign Description",
 				campaignName = "Campaign Name",
-				countryName = "Global",
 				goalsOptions = "Lead generation",
 				targetMarketOptions = "Education,Energy",
 				targetRolesOptions = "Administrator");
@@ -644,38 +632,16 @@ definition {
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 
-		task ("Given I go to add a new MDF Request") {
+		task ("Given that the PMU adds a new MDF Request") {
 			PRMUtils.gotoPRM();
 
-			PRMNavigator.goToNavItem(navItem = "Marketing");
-
-			PRMMarketing.gotoAddNewMDF();
-
-			PRMMDFRequest.createNewRequest(
-				accountName = "Company Name 1",
-				activityDescription = "Activity Description",
-				activityName = "Activity Name 1",
-				budgetList = "Sponsorship Fee-2000",
-				campaignDescription = "Campaign Description",
-				campaignName = "Campaign Name",
-				countryName = "Global",
-				followUpStrategy = "test",
-				goalsOptions = "Lead generation",
-				leadFollowUpList = "Other",
-				leadList = "No",
-				tactic = "Other",
-				targetMarketOptions = "Education,Energy",
-				targetOfLeads = "test",
-				targetRolesOptions = "Administrator",
-				typeOfActivity = "Miscellaneous Marketing");
+			JSONPRM.createMDFRequest(
+				accountEntryName = "Company Name 1",
+				campaignName = "Campaign Name");
 		}
 
-		task ("When the partner goes to the MDF Detail page") {
-			PRMUtils.gotoPRM();
-
-			PRMHomePage.gotoQuickLinksOption(
-				buttonLink = "mdf",
-				buttonText = "MDF");
+		task ("When the PMU goes to the MDF Detail page") {
+			PRMNavigator.openSitePage(pageName = "MDF Requests");
 
 			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
 		}
@@ -684,30 +650,26 @@ definition {
 			PRMMDFRequest.CanNotViewStateManager();
 		}
 
-		task ("When the Manager goes to the MDF Detail page") {
+		task ("When the CMM goes to the MDF Detail page") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "cmm@liferaytest.com",
 				userLoginFullName = "Channel Marketing Manager");
 
-			PRMUtils.gotoPRM();
-
-			PRMHomePage.gotoQuickLinksOption(
-				buttonLink = "mdf",
-				buttonText = "MDF");
+			PRMNavigator.openSitePage(pageName = "MDF Requests");
 
 			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
 		}
 
 		task ("Then the State Manager is visible") {
-			PRMMDFRequest.viewMDFStatus(key_status = "Pending Marketing Review");
+			PRMMDFRequest.viewMDFStatus(mdfStatus = "Pending Marketing Review");
 
 			PRMMDFRequest.viewStateManager();
 		}
 
-		task ("And the Manager can change the MDF Status") {
+		task ("And the CMM can change the MDF Status") {
 			PRMMDFRequest.changeMDFStatus(statusButton = "Approve");
 
-			PRMMDFRequest.viewMDFStatus(key_status = "Approved");
+			PRMMDFRequest.viewMDFStatus(mdfStatus = "Approved");
 		}
 	}
 
@@ -726,7 +688,6 @@ definition {
 				accountName = "Company Name 1",
 				campaignDescription = "Campaign Description",
 				campaignName = "Campaign Name",
-				countryName = "Global",
 				goalsOptions = "Lead generation",
 				targetMarketOptions = "Education,Energy",
 				targetRolesOptions = "Administrator");
@@ -764,7 +725,6 @@ definition {
 
 		var accountName = "Company Name 1";
 		var campaignName = "Campaign Name";
-		var countryName = "Global";
 		var goalsOptions = "Lead generation";
 		var targetMarketOptions = "Education";
 		var targetRolesOptions = "Administrator";
@@ -788,7 +748,6 @@ definition {
 				additionalOptions = ${additionalOptions},
 				campaignDescription = "Campaign Description",
 				campaignName = ${campaignName},
-				countryName = ${countryName},
 				goalsOptions = ${goalsOptions},
 				targetMarketOptions = ${targetMarketOptions},
 				targetRolesOptions = ${targetRolesOptions});
@@ -816,7 +775,6 @@ definition {
 				accountName = ${accountName},
 				campaignDescription = "Campaign Description",
 				campaignName = ${campaignName},
-				countryName = ${countryName},
 				goalsOptions = ${goalsOptions},
 				targetMarketOptions = ${targetMarketOptions},
 				targetRolesOptions = ${targetRolesOptions});
@@ -856,7 +814,6 @@ definition {
 				additionalOptions = "6.x to DXP Migration/Upgrade,Migration from competitor platform",
 				campaignDescription = "Campaign Description",
 				campaignName = "Campaign Name",
-				countryName = "Global",
 				goalsOptions = "Lead generation",
 				targetMarketOptions = "Education,Energy",
 				targetRolesOptions = "Administrator");
@@ -896,7 +853,6 @@ definition {
 				additionalOptions = "6.x to DXP Migration/Upgrade,Migration from competitor platform",
 				campaignDescription = "Campaign Description",
 				campaignName = "Campaign Name",
-				countryName = "Global",
 				goalsOptions = "Lead generation",
 				targetMarketOptions = "Education,Energy",
 				targetRolesOptions = "Administrator");
@@ -959,7 +915,6 @@ definition {
 				budgetList = "Sponsorship Fee-2000,Room Rental-3000",
 				campaignDescription = "Campaign Description",
 				campaignName = ${campaignName},
-				countryName = "Global",
 				followUpStrategy = "test",
 				goalsOptions = "Lead generation",
 				leadFollowUpList = "Other",
@@ -1118,7 +1073,6 @@ definition {
 				budgetList = "Sponsorship Fee-20000,Room Rental-10050",
 				campaignDescription = "Campaign Description",
 				campaignName = "Campaign Name",
-				countryName = "Global",
 				followUpStrategy = "test",
 				goalsOptions = "Lead generation",
 				leadFollowUpList = "Other",
@@ -1137,7 +1091,7 @@ definition {
 		}
 
 		task ("Then I can see that the status will be 'Marketing Director Review'") {
-			PRMMDFRequest.viewMDFStatus(key_status = "Marketing Director Review");
+			PRMMDFRequest.viewMDFStatus(mdfStatus = "Marketing Director Review");
 		}
 	}
 
@@ -1157,7 +1111,6 @@ definition {
 				budgetList = "Sponsorship Fee-20000,Room Rental-9000",
 				campaignDescription = "Campaign Description",
 				campaignName = "Campaign Name",
-				countryName = "Global",
 				followUpStrategy = "test",
 				goalsOptions = "Lead generation",
 				leadFollowUpList = "Other",
@@ -1176,7 +1129,7 @@ definition {
 		}
 
 		task ("Then I can see that the status will be 'Pending Marketing Review'") {
-			PRMMDFRequest.viewMDFStatus(key_status = "Pending Marketing Review");
+			PRMMDFRequest.viewMDFStatus(mdfStatus = "Pending Marketing Review");
 		}
 	}
 

@@ -15,11 +15,11 @@ definition {
 			User.firstLoginPG();
 		}
 
-		task ("Create a new Partner Portal Site and connect with Salesforce") {
-			PRMUtils.addSite();
+		// task ("Create a new Partner Portal Site and connect with Salesforce") {
+		// 	PRMUtils.addSite();
 
-			PRMUtils.connectWithSalesforce();
-		}
+		// 	PRMUtils.connectWithSalesforce();
+		// }
 
 		task ("Update the account with Salesforce fields") {
 			JSONPRM.updateAccount();
@@ -58,16 +58,16 @@ definition {
 		}
 	}
 
-	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+	// tearDown {
+	// 	var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if (${testPortalInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			PRMUtils.tearDown();
-		}
-	}
+	// 	if (${testPortalInstance} == "true") {
+	// 		PortalInstances.tearDownCP();
+	// 	}
+	// 	else {
+	// 		PRMUtils.tearDown();
+	// 	}
+	// }
 
 	@description = "This is a test for LPS-181363. Verify that its possible to unselect an activity when editing"
 	@ignore = "true"

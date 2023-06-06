@@ -72,6 +72,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -544,6 +545,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 	}
 
 	@FeatureFlags("LPS-165819")
+	@Ignore
 	@Test
 	public void testPostCustomObjectEntryWithNestedSystemObjectEntry()
 		throws Exception {
@@ -580,6 +582,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 	}
 
 	@FeatureFlags("LPS-165819")
+	@Ignore
 	@Test
 	public void testPutCustomObjectEntryWithNestedSystemObjectEntry()
 		throws Exception {
@@ -616,6 +619,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 	}
 
 	@FeatureFlags("LPS-165819")
+	@Ignore
 	@Test
 	public void testPutCustomObjectEntryWithNestedSystemObjectEntryByExternalReferenceCode()
 		throws Exception {

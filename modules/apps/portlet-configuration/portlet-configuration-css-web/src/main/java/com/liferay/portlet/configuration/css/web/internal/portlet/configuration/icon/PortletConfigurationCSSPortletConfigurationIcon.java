@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfiguration
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.configuration.css.web.internal.constants.PortletConfigurationCSSPortletKeys;
 
@@ -55,7 +56,7 @@ public class PortletConfigurationCSSPortletConfigurationIcon
 		try {
 			return PortletURLBuilder.create(
 				PortletURLFactoryUtil.create(
-					portletRequest,
+					_portal.getHttpServletRequest(portletRequest),
 					PortletConfigurationCSSPortletKeys.
 						PORTLET_CONFIGURATION_CSS,
 					PortletRequest.RENDER_PHASE)
@@ -116,5 +117,8 @@ public class PortletConfigurationCSSPortletConfigurationIcon
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private Portal _portal;
 
 }

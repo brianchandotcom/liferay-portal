@@ -34,11 +34,11 @@ export default function PagesTree({
 	selectedLayoutPath,
 }) {
 	const {
+		isLayoutSetPrototype,
 		loadMoreItemsURL,
 		maxPageSize,
 		moveItemURL,
 		namespace,
-		siteTemplate,
 	} = config;
 
 	const onLoadMore = useCallback(
@@ -128,7 +128,7 @@ export default function PagesTree({
 					<TreeItem
 						config={config}
 						expand={expand}
-						isSiteTemplate={siteTemplate}
+						isLayoutSetPrototype={isLayoutSetPrototype}
 						item={item}
 						load={load}
 						namespace={namespace}

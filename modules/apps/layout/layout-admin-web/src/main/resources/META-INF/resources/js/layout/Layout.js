@@ -192,12 +192,12 @@ export default function ({
 	props: {
 		breadcrumbEntries,
 		getItemChildrenURL,
+		isLayoutSetPrototype = false,
 		isPrivateLayoutsEnabled,
 		languageId,
 		layoutColumns,
 		moveItemURL,
 		searchContainerId,
-		siteTemplate = false,
 	},
 }) {
 	return (
@@ -205,8 +205,8 @@ export default function ({
 			getItemChildrenURL={getItemChildrenURL}
 			initialBreadcrumbEntries={breadcrumbEntries}
 			initialLayoutColumns={layoutColumns}
+			isLayoutSetPrototype={isLayoutSetPrototype}
 			isPrivateLayoutsEnabled={isPrivateLayoutsEnabled}
-			isSiteTemplate={siteTemplate}
 			languageId={languageId}
 			moveItemURL={moveItemURL}
 			namespace={namespace}

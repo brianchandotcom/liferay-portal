@@ -45,12 +45,12 @@ export default function ProductMenuTree({portletNamespace, ...props}) {
 		administrationPortletURL,
 		configureLayoutSetURL,
 		findLayoutsURL,
+		isLayoutSetPrototype = false,
 		loadMoreItemsURL,
 		maxPageSize,
 		moveItemURL,
 		pagesTreeURL,
 		productMenuPortletURL,
-		siteTemplate = false,
 		stagingEnabled,
 		viewInPageAdministrationURL,
 	} = config;
@@ -94,11 +94,11 @@ export default function ProductMenuTree({portletNamespace, ...props}) {
 				) : (
 					<PagesTree
 						config={{
+							isLayoutSetPrototype,
 							loadMoreItemsURL,
 							maxPageSize,
 							moveItemURL,
 							namespace: portletNamespace,
-							siteTemplate,
 							stagingEnabled,
 						}}
 						isPrivateLayoutsTree={isPrivateLayoutsTree}

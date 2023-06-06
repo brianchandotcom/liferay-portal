@@ -16,6 +16,7 @@ package com.liferay.search.experiences.internal.blueprint.search.spi.searcher;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -48,10 +49,41 @@ public class SXPBlueprintSearchRequestContributor
 		SearchRequestBuilder searchRequestBuilder =
 			_searchRequestBuilderFactory.builder(searchRequest);
 
+		_contributeSXPBlueprintExternalReferenceCode(searchRequestBuilder);
 		_contributeSXPBlueprintId(searchRequestBuilder);
 		_contributeSXPBlueprintJSON(searchRequestBuilder);
 
 		return searchRequestBuilder.build();
+	}
+
+	private void _contributeSXPBlueprintExternalReferenceCode(
+		SearchRequestBuilder searchRequestBuilder) {
+
+		Object object = searchRequestBuilder.withSearchContextGet(
+			searchContext -> searchContext.getAttribute(
+				"search.experiences.blueprint.erc"));
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Search experiences blueprint External Reference Code " +
+					object);
+		}
+
+		if (object == null) {
+		}
+		else if (object instanceof String) {
+			String string = (String)object;
+
+			if (Validator.isNotNull(string)) {
+				_enhanceWithExternalReferenceCode(
+					searchRequestBuilder, StringUtil.split(string));
+			}
+		}
+		else {
+			throw new IllegalArgumentException(
+				"Invalid search experiences blueprint External Reference " +
+					"Code " + object);
+		}
 	}
 
 	private void _contributeSXPBlueprintId(
@@ -68,13 +100,13 @@ public class SXPBlueprintSearchRequestContributor
 		if (object == null) {
 		}
 		else if (object instanceof Number) {
-			_enhance(searchRequestBuilder, GetterUtil.getLong(object));
+			_enhanceWithId(searchRequestBuilder, GetterUtil.getLong(object));
 		}
 		else if (object instanceof String) {
 			String string = (String)object;
 
 			if (Validator.isNotNull(string)) {
-				_enhance(
+				_enhanceWithId(
 					searchRequestBuilder,
 					GetterUtil.getLongValues(StringUtil.split(string)));
 			}
@@ -120,7 +152,55 @@ public class SXPBlueprintSearchRequestContributor
 		}
 	}
 
-	private void _enhance(
+	private void _enhanceWithExternalReferenceCode(
+		SearchRequestBuilder searchRequestBuilder,
+		String... sxpBlueprintExternalReferenceCodes) {
+
+		RuntimeException runtimeException = new RuntimeException();
+
+		for (String sxpBlueprintExternalReferenceCode :
+				sxpBlueprintExternalReferenceCodes) {
+
+			if (sxpBlueprintExternalReferenceCode == null) {
+				continue;
+			}
+
+			Object companyId = searchRequestBuilder.withSearchContextGet(
+				SearchContext::getCompanyId);
+
+			SXPBlueprint sxpBlueprint =
+				_sxpBlueprintLocalService.
+					fetchSXPBlueprintByExternalReferenceCode(
+						sxpBlueprintExternalReferenceCode,
+						GetterUtil.getLong(companyId));
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("Search experiences blueprint " + sxpBlueprint);
+			}
+
+			try {
+				if (sxpBlueprint != null) {
+					_sxpBlueprintSearchRequestEnhancer.enhance(
+						searchRequestBuilder, sxpBlueprint);
+				}
+			}
+			catch (Exception exception) {
+				runtimeException.addSuppressed(exception);
+			}
+		}
+
+		if (ArrayUtil.isNotEmpty(runtimeException.getSuppressed())) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(runtimeException);
+			}
+		}
+
+		if (SXPExceptionUtil.hasErrors(runtimeException)) {
+			throw runtimeException;
+		}
+	}
+
+	private void _enhanceWithId(
 		SearchRequestBuilder searchRequestBuilder, long... sxpBlueprintIds) {
 
 		RuntimeException runtimeException = new RuntimeException();

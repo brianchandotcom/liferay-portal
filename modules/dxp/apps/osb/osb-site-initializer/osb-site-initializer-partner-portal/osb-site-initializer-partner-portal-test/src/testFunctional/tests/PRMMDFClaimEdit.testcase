@@ -78,40 +78,67 @@ definition {
 
 	}
 
-	@description = "This is a test for LPS-181360. Verify that the Edit button is not displayed to partner in status different from 'Draft' and 'Request More Info'"
+	@description = "This is a test for LPS-183234. Verify that the CFM can edit the claim in 'Claim Paid' status"
 	@priority = 5
-	test EditButtonIsDisplayedInSpecificStatusToPartner {
-		property test.name.skip.portal.instance = "PRMMDFClaimEdit#EditButtonIsDisplayedInSpecificStatus";
+	test CFMCanEditClaimInClaimdPaidStatus {
+		property test.name.skip.portal.instance = "PRMMDFClaimEdit#CFMCanEditClaimInClaimdPaidStatus";
 
-		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
+		task ("Given that the PMU creates a new claim") {
+			PRMNavigator.openSitePage(pageName = "MDF Requests");
 
-		task ("Given that a new claim is created") {
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
+
 			PRMMDFClaim.createNewClaim(
 				listLeads = "Document_1.xlsx",
 				reimbursementInvoice = "Document_1.png",
-				thirdInvoice = "Document_1.png");
+				thirdInvoice = "Document_1.jpg");
 
 			task ("The Claim ID is saved in a variable") {
 				PRMMDFClaim.getClaimIdOnDetailPage(index = 1);
 			}
 		}
 
-		task ("When the manager approves the created Claim") {
+		task ("When the CFM goes to the created claim and change the status to 'Claim Paid") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "cfm@liferaytest.com",
+				userLoginFullName = "Channel Finance Manager");
+
 			JSONPRM.changeClaimStatus(
 				claimId = ${staticClaimId1},
-				claimStatus = "Approved",
+				claimStatus = "In Finance Review",
 				userEmailAddress = "cmm@liferaytest.com");
-		}
 
-		task ("And the partner goes to the approved claim") {
 			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
+
+			PRMMDFClaim.changeClaimStatus(
+				amountReceived = 500,
+				checkNumber = 001,
+				statusButton = "Claim Paid");
 		}
 
-		task ("Then the 'Edit' button is not visible") {
-			PRMMDFClaimEdit.buttonIsNotVisible();
+		task ("And edit the claim, changing the activity attachment") {
+			PRMMDFClaim.editButton();
+
+			PRMMDFClaimEdit.editClaim(
+				activityName = "Activity Name",
+				newAttachment = "Document_2.jpg");
 		}
 
-		task ("And when the manager moves the claim to Finance Review") {
+		task ("And go to the claim detail page") {
+			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
+
+			PRMMDFClaim.activityCollapse(activityName = "Activity Name");
+		}
+
+		task ("Then the new attachment is displayed") {
+			PRMMDFClaim.viewAttachmentPresent(attachmentName = "Document_2.jpg");
+		}
+
+		task ("And the old attachment isn't displayed") {
+			PRMMDFClaim.viewAttachmentNotPresent(attachmentName = "Document_1.png");
+		}
+	}
+
 			JSONPRM.changeClaimStatus(
 				claimId = ${staticClaimId1},
 				claimStatus = "In Finance Review",

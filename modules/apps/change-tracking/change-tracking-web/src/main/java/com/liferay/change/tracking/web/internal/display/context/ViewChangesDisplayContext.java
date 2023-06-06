@@ -159,6 +159,10 @@ public class ViewChangesDisplayContext {
 	}
 
 	public Map<String, Object> getReactData() throws Exception {
+		if (_reactData != null) {
+			return _reactData;
+		}
+
 		JSONObject contextViewJSONObject = null;
 
 		CTClosure ctClosure = null;
@@ -268,7 +272,7 @@ public class ViewChangesDisplayContext {
 			}
 		}
 
-		return HashMapBuilder.<String, Object>put(
+		_reactData = HashMapBuilder.<String, Object>put(
 			"changes",
 			() -> {
 				JSONArray changesJSONArray = JSONFactoryUtil.createJSONArray();
@@ -773,6 +777,8 @@ public class ViewChangesDisplayContext {
 		).put(
 			"usersFromURL", ParamUtil.getString(_renderRequest, "users")
 		).build();
+
+		return _reactData;
 	}
 
 	private JSONObject _getContextViewJSONObject(
@@ -1297,6 +1303,7 @@ public class ViewChangesDisplayContext {
 	private final Portal _portal;
 	private final PublicationsDisplayContext _publicationsDisplayContext;
 	private final PublishScheduler _publishScheduler;
+	private Map<String, Object> _reactData;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private final ThemeDisplay _themeDisplay;

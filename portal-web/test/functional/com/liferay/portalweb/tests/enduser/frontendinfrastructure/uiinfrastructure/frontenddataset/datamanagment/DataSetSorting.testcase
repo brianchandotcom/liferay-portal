@@ -5,8 +5,8 @@ definition {
 	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.component.names = "Frontend Dataset";
-	property testray.main.component.name = "Frontend Dataset";
+	property testray.component.names = "Frontend Data Set";
+	property testray.main.component.name = "Frontend Data Set";
 
 	setUp {
 		TestCase.setUpPortalInstance();
@@ -14,20 +14,20 @@ definition {
 		User.firstLoginPG();
 
 		task ("When Create a DataSet ") {
-			FrontendDataSetAdmin.goToDatasetAdminPage();
+			FrontendDataSetAdmin.goToDataSetsAdminPage();
 
 			FrontendDataSetAdmin.createDataSet(
-				key_name = "Test Dataset",
+				key_name = "Test Data Set",
 				key_type = "/c/fdssorts");
 
 			Refresh();
 		}
 
-		task ("When go to the View page of the dataset created.") {
-			FrontendDataSetAdmin.goToViews(dataSetName = "Test Dataset");
+		task ("When go to the View page of the data set created.") {
+			FrontendDataSetAdmin.goToViews(dataSetName = "Test Data Set");
 		}
 
-		task ("And adding a dataset view") {
+		task ("And adding a data set view") {
 			FrontendDataSetAdmin.createDataSetView(
 				description = "View Description",
 				key_name = "View Test");
@@ -43,9 +43,9 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		FrontendDataSetAdmin.deleteAllDatasetViews();
+		FrontendDataSetAdmin.deleteAllDataSetViews();
 
-		FrontendDataSetAdmin.deleteAllDatasetEntries();
+		FrontendDataSetAdmin.deleteAllDataSetEntries();
 
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();

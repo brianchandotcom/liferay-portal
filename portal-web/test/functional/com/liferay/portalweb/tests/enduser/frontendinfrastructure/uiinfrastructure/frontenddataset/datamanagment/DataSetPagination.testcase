@@ -5,26 +5,26 @@ definition {
 	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.component.names = "Frontend Dataset";
-	property testray.main.component.name = "Frontend Dataset";
+	property testray.component.names = "Frontend Data Set";
+	property testray.main.component.name = "Frontend Data Set";
 
 	setUp {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
 
-		task ("Given access to the Datasets admin page") {
-			FrontendDataSetAdmin.goToDatasetAdminPage();
+		task ("Given access to the Data Sets admin page") {
+			FrontendDataSetAdmin.goToDataSetsAdminPage();
 		}
 
-		task ("The user goes to add a new Dataset") {
+		task ("The user goes to add a new data set") {
 			FrontendDataSetAdmin.createDataSet(
-				key_name = "Test Dataset",
+				key_name = "Test Data Set",
 				key_type = "/c/fdsentries");
 		}
 
 		task ("Add a new view") {
-			FrontendDataSetAdmin.goToViews(dataSetName = "Test Dataset");
+			FrontendDataSetAdmin.goToViews(dataSetName = "Test Data Set");
 
 			FrontendDataSetAdmin.createDataSetView(
 				description = "Test Description",
@@ -41,7 +41,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		FrontendDataSetAdmin.deleteAllDatasetEntries();
+		FrontendDataSetAdmin.deleteAllDataSetEntries();
 
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();

@@ -5,7 +5,7 @@ definition {
 	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.component.names = "Frontend Dataset";
+	property testray.component.names = "Frontend Data Set";
 	property testray.main.component.name = "User Interface";
 
 	setUp {

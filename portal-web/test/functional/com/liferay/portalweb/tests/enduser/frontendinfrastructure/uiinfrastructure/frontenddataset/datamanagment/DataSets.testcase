@@ -5,8 +5,8 @@ definition {
 	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.component.names = "Frontend Dataset";
-	property testray.main.component.name = "Frontend Dataset";
+	property testray.component.names = "Frontend Data Set";
+	property testray.main.component.name = "Frontend Data Set";
 
 	setUp {
 		TestCase.setUpPortalInstance();
@@ -14,25 +14,25 @@ definition {
 		User.firstLoginPG();
 
 		task ("Given creating a Data Set via API") {
-			FrontendDataSetAdmin.goToDatasetAdminPage();
+			FrontendDataSetAdmin.goToDataSetsAdminPage();
 
-			FrontendDataSetAdmin.createDatasetEntryViaAPI(
-				datasetName = "Dataset Fields Test",
+			FrontendDataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Data Set Fields Test",
 				restApplication = "/headless-admin-taxonomy/v1.0",
 				restEndpoint = "/",
 				restSchema = "TaxonomyCategory");
 		}
 
-		task ("And a dataset view created via api") {
+		task ("And a data set view created via api") {
 			FrontendDataSetAdmin.createFDSViewViaAPI(
-				datasetName = "Dataset Fields Test",
+				dataSetName = "Data Set Fields Test",
 				dataSetViewDescription = "FDSViewDescription",
 				key_dataSetViewNameList = "View Fields Test");
 		}
 
-		task ("When go to the View page of the dataset created.") {
+		task ("When go to the View page of the data set created.") {
 			FrontendDataSetAdmin.goToSpecificViewPage(
-				datasetName = "Dataset Fields Test",
+				dataSetName = "Data Set Fields Test",
 				key_viewName = "View Fields Test");
 		}
 
@@ -44,7 +44,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		FrontendDataSetAdmin.deleteAllDatasetEntries();
+		FrontendDataSetAdmin.deleteAllDataSetEntries();
 
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();

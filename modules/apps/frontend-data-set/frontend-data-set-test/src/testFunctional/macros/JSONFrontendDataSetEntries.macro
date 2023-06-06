@@ -1,8 +1,8 @@
 definition {
 
 	@summary = "This calls the JSON WS API to add a DataSet"
-	macro _createDatasetEntry {
-		Variables.assertDefined(parameterList = "${datasetName},${restApplication},${restEndpoint},${restSchema}");
+	macro _createDataSetEntry {
+		Variables.assertDefined(parameterList = "${dataSetName},${restApplication},${restEndpoint},${restSchema}");
 
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -20,7 +20,7 @@ definition {
 				-H accept: application/json \
 				-H Content-Type: application/json \
 				-d {
-					"label": "${datasetName}",
+					"label": "${dataSetName}",
 					"restApplication": "${restApplication}",
 					"restEndpoint": "${restEndpoint}",
 					"restSchema": "${restSchema}"
@@ -29,15 +29,15 @@ definition {
 
 		JSONCurlUtil.post(${curl});
 
-		var datasetEntriestIdList = JSONFrontendDatasetEntries._getDatasetEntryIds();
+		var dataSetEntriestIdList = JSONFrontendDataSetEntries._getDataSetEntryIds();
 
-		if (${datasetEntriestIdList} == "") {
-			fail("FAIL. No Dataset entry was created");
+		if (${dataSetEntriestIdList} == "") {
+			fail("FAIL. No DataSet entry was created");
 		}
 	}
 
 	macro _createFDSViewViaAPI {
-		Variables.assertDefined(parameterList = "${datasetName},${dataSetViewName}");
+		Variables.assertDefined(parameterList = "${dataSetName},${dataSetViewName}");
 
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -53,9 +53,9 @@ definition {
 			var dataSetViewDescription = "";
 		}
 
-		var datasetEntryId = JSONFrontendDatasetEntries._getDatasetEntryIdByName(datasetName = ${datasetName});
+		var dataSetEntryId = JSONFrontendDataSetEntries._getDataSetEntryIdByName(dataSetName = ${dataSetName});
 
-		if (${datasetEntryId} != "") {
+		if (${dataSetEntryId} != "") {
 			var curl = '''
 				${portalURL}/o/c/fdsviews \
 					-u ${userEmailAddress}:${userPassword} \
@@ -67,14 +67,14 @@ definition {
 						"defaultItemsPerPage": 0,
 						"listOfItemsPerPage": "string",
 						"label": "${dataSetViewName}",
-						"r_fdsEntryFDSViewRelationship_c_fdsEntryId": ${datasetEntryId}
+						"r_fdsEntryFDSViewRelationship_c_fdsEntryId": ${dataSetEntryId}
 					}
 			''';
 
 			JSONCurlUtil.post(${curl});
 		}
 		else {
-			echo("FAIL. No datasets was found");
+			echo("FAIL. No data sets was found");
 		}
 	}
 
@@ -90,12 +90,12 @@ definition {
 			var userPassword = "test";
 		}
 
-		if (!(isSet(datasetEntriesIdList))) {
-			var datasetEntriesIdList = JSONFrontendDatasetEntries._getDatasetEntryIds();
+		if (!(isSet(dataSetEntriesIdList))) {
+			var dataSetEntriesIdList = JSONFrontendDataSetEntries._getDataSetEntryIds();
 		}
 
-		if (${datasetEntriesIdList} != "") {
-			for (var dataSetEntryId : list ${datasetEntriesIdList}) {
+		if (${dataSetEntriesIdList} != "") {
+			for (var dataSetEntryId : list ${dataSetEntriesIdList}) {
 				var curl = '''
 					${portalURL}/o/c/fdsentries/${dataSetEntryId} \
 						-u ${userEmailAddress}:${userPassword}
@@ -105,7 +105,7 @@ definition {
 			}
 		}
 		else {
-			echo("FAIL. No Datasets entries to be deleted");
+			echo("FAIL. No DataSets entries to be deleted");
 		}
 	}
 
@@ -121,14 +121,14 @@ definition {
 			var userPassword = "test";
 		}
 
-		if (!(isSet(datasetViewsIdList))) {
-			var datasetViewsIdList = JSONFrontendDatasetEntries._getDatasetViewsIds();
+		if (!(isSet(dataSetViewsIdList))) {
+			var dataSetViewsIdList = JSONFrontendDataSetEntries._getDataSetViewsIds();
 		}
 
-		if (${datasetViewsIdList} != "") {
-			for (var datasetViewsIds : list ${datasetViewsIdList}) {
+		if (${dataSetViewsIdList} != "") {
+			for (var dataSetViewsIds : list ${dataSetViewsIdList}) {
 				var curl = '''
-					${portalURL}/o/c/fdsviews/${datasetViewsIds} \
+					${portalURL}/o/c/fdsviews/${dataSetViewsIds} \
 						-u ${userEmailAddress}:${userPassword}
 				''';
 
@@ -136,12 +136,12 @@ definition {
 			}
 		}
 		else {
-			echo("FAIL. No Datasets Views to be deleted");
+			echo("FAIL. No Data Sets Views to be deleted");
 		}
 	}
 
-	macro _getDatasetEntryIdByName {
-		Variables.assertDefined(parameterList = ${datasetName});
+	macro _getDataSetEntryIdByName {
+		Variables.assertDefined(parameterList = ${dataSetName});
 
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -158,17 +158,17 @@ definition {
 				-u ${userEmailAddress}:${userPassword}
 		''';
 
-		var datasetEntryId = JSONCurlUtil.get(${curl}, "$.items[?(@.label=='${datasetName}')].id");
+		var dataSetEntryId = JSONCurlUtil.get(${curl}, "$.items[?(@.label=='${dataSetName}')].id");
 
-		if (${datasetEntryId} == "") {
-			fail("FAIL. No datasets was found");
+		if (${dataSetEntryId} == "") {
+			fail("FAIL. No data sets was found");
 		}
 		else {
-			return ${datasetEntryId};
+			return ${dataSetEntryId};
 		}
 	}
 
-	macro _getDatasetEntryIds {
+	macro _getDataSetEntryIds {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (!(isSet(userEmailAddress))) {
@@ -186,18 +186,18 @@ definition {
 
 		var siteId = JSONCurlUtil.get(${curl}, "$..items[0].creator.id");
 
-		var datasetEntryIds = JSONCurlUtil.get(${curl}, "$.items[?(@.id!='${siteId}')].id");
+		var dataSetEntryIds = JSONCurlUtil.get(${curl}, "$.items[?(@.id!='${siteId}')].id");
 
-		if (${datasetEntryIds} == "") {
-			fail("FAIL. No datasets was found");
+		if (${dataSetEntryIds} == "") {
+			fail("FAIL. No data sets was found");
 		}
 		else {
-			return ${datasetEntryIds};
+			return ${dataSetEntryIds};
 		}
 	}
 
-	macro _getDatasetViewIdByName {
-		Variables.assertDefined(parameterList = ${datasetViewsNameList});
+	macro _getDataSetViewIdByName {
+		Variables.assertDefined(parameterList = ${dataSetViewsNameList});
 
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -213,23 +213,23 @@ definition {
 			${portalURL}/o/c/fdsviews \
 				-u ${userEmailAddress}:${userPassword}
 		''';
-		var datasetViewsIds = "";
+		var dataSetViewsIds = "";
 
-		for (var datasetViewName : list ${datasetViewsNameList}) {
-			var datasetViewId = JSONCurlUtil.get(${curl}, "$.items[?(@.label=='${datasetViewName}')].id");
+		for (var dataSetViewName : list ${dataSetViewsNameList}) {
+			var dataSetViewId = JSONCurlUtil.get(${curl}, "$.items[?(@.label=='${dataSetViewName}')].id");
 
-			var datasetViewsIds = StringUtil.add(${datasetViewsIds}, "${datasetViewId},");
+			var dataSetViewsIds = StringUtil.add(${dataSetViewsIds}, "${dataSetViewId},");
 		}
 
-		if (${datasetViewsIds} == "") {
-			fail("FAIL. No dataset views were found");
+		if (${dataSetViewsIds} == "") {
+			fail("FAIL. No data set views were found");
 		}
 		else {
-			return ${datasetViewsIds};
+			return ${dataSetViewsIds};
 		}
 	}
 
-	macro _getDatasetViewsIds {
+	macro _getDataSetViewsIds {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (!(isSet(userEmailAddress))) {
@@ -247,9 +247,9 @@ definition {
 
 		var siteId = JSONCurlUtil.get(${curl}, "$..items[0].creator.id");
 
-		var datasetViewsIds = JSONCurlUtil.get(${curl}, "$.items[?(@.id!='${siteId}')].id");
+		var dataSetViewsIds = JSONCurlUtil.get(${curl}, "$.items[?(@.id!='${siteId}')].id");
 
-		return ${datasetViewsIds};
+		return ${dataSetViewsIds};
 	}
 
 }

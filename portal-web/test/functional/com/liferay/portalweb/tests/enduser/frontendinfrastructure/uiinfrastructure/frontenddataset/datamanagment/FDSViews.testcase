@@ -5,8 +5,8 @@ definition {
 	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.component.names = "Frontend Dataset";
-	property testray.main.component.name = "Frontend Dataset";
+	property testray.component.names = "Frontend Data Set";
+	property testray.main.component.name = "Frontend Data Set";
 
 	setUp {
 		TestCase.setUpPortalInstance();
@@ -14,33 +14,33 @@ definition {
 		User.firstLoginPG();
 
 		task ("Given creating a Data Set via API") {
-			FrontendDataSetAdmin.goToDatasetAdminPage();
+			FrontendDataSetAdmin.goToDataSetsAdminPage();
 
-			FrontendDataSetAdmin.createDatasetEntryViaAPI(
-				datasetName = "Dataset Test",
+			FrontendDataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Data Set Test",
 				restApplication = "/c/fdsentries");
 
 			Refresh();
 		}
 
-		task ("When go to the View page of the dataset created.") {
-			FrontendDataSetAdmin.goToViews(dataSetName = "Dataset Test");
+		task ("When go to the View page of the data set created.") {
+			FrontendDataSetAdmin.goToViews(dataSetName = "Data Set Test");
 		}
 	}
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		FrontendDataSetAdmin.deleteAllDatasetViews();
+		FrontendDataSetAdmin.deleteAllDataSetViews();
 
-		FrontendDataSetAdmin.deleteAllDatasetEntries();
+		FrontendDataSetAdmin.deleteAllDataSetEntries();
 
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
-	@description = "LPS-172396. Confirm that a dataset view can be deleted"
+	@description = "LPS-172396. Confirm that a data set view can be deleted"
 	@priority = 5
 	test AssertNumberOfCharactersExceededInNameField {
 		task ("And Clicking add button") {
@@ -125,11 +125,11 @@ definition {
 	test CanAssertPagination {
 		task ("And Adding a 6 view called 'View Test 1', 'View Test 2'... and Filling the description field with 'Test Description'") {
 			FrontendDataSetAdmin.createFDSViewViaAPI(
-				datasetName = "Dataset Test",
+				dataSetName = "Data Set Test",
 				dataSetViewDescription = "Test Description",
 				key_dataSetViewNameList = "View Test 1,View Test 2,View Test 3,View Test 4,View Test 5,View Test 6");
 
-			FrontendDataSetAdmin.goToDatasetViewAdminPage(datasetName = "Dataset Test");
+			FrontendDataSetAdmin.goToDataSetViewAdminPage(dataSetName = "Data Set Test");
 		}
 
 		task ("And Change the pagination to 4 items") {
@@ -145,7 +145,7 @@ definition {
 		}
 
 		task ("When the user deletes two Views") {
-			FrontendDataSetAdmin.deleteDataSetViewViaAPI(datasetViewsNameList = "View Test 1,View Test 2");
+			FrontendDataSetAdmin.deleteDataSetViewViaAPI(dataSetViewsNameList = "View Test 1,View Test 2");
 		}
 
 		task ("Then Confirm that only one page is displayed") {
@@ -158,11 +158,11 @@ definition {
 	test CanAssertPaginationOnFDSViewsPage {
 		task ("When Adding a 6 view called 'View Test 1', 'View Test 2'... and Filling the description field with 'Test Description'") {
 			FrontendDataSetAdmin.createFDSViewViaAPI(
-				datasetName = "Dataset Test",
+				dataSetName = "Data Set Test",
 				dataSetViewDescription = "Test Description",
 				key_dataSetViewNameList = "View Test 1,View Test 2,View Test 3,View Test 4,View Test 5,View Test 6");
 
-			FrontendDataSetAdmin.goToDatasetViewAdminPage(datasetName = "Dataset Test");
+			FrontendDataSetAdmin.goToDataSetViewAdminPage(dataSetName = "Data Set Test");
 		}
 
 		task ("And changing the page to 4 entries.") {
@@ -186,7 +186,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-176189. Confirm that the dataset view deletion is recoverable"
+	@description = "LPS-176189. Confirm that the data set view deletion is recoverable"
 	@priority = 5
 	test CanCancelDeletionOnCancelButton {
 		task ("When Add a new view") {
@@ -205,7 +205,7 @@ definition {
 			Button.clickCancel();
 		}
 
-		task ("Then the dataset View is not deleted") {
+		task ("Then the data set view is not deleted") {
 			AssertElementPresent(
 				key_itemName = "View Test",
 				locator1 = "FrontendDataSetAdmin#NAME_OF_VIEWS");
@@ -229,17 +229,17 @@ definition {
 			ClickNoError(locator1 = "ObjectPortlet#DELETE_ENTRY_BUTTON");
 
 			AssertElementPresent(
-				key_modalText = "Deleting a dataset view is an action that cannot be reversed. The content will be deleted and some dataset fragments may not be displayed.",
+				key_modalText = "Deleting a data set view is an action that cannot be reversed. The content will be deleted and some data set fragments may not be displayed.",
 				locator1 = "FrontendDataSetAdmin#DELETE_DATA_SET_MODAL_BODY");
 		}
 
 		task ("And When the user clicks on the 'X' button in the modal") {
 			Click(
-				key_modalTitle = "Delete Dataset View",
+				key_modalTitle = "Delete Data Set View",
 				locator1 = "Button#CLOSE_MODAL");
 		}
 
-		task ("Then The dataset is present in the data set Admin page") {
+		task ("Then The data set is present in the Data Sets admin page") {
 			FrontendDataSetAdmin.assertDataSetView(key_dataSetViewNameList = "View Test");
 		}
 	}
@@ -324,7 +324,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-176189. Confirm that a dataset view can be deleted"
+	@description = "LPS-176189. Confirm that a data set view can be deleted"
 	@priority = 5
 	test CanDeleteView {
 		task ("When Add a new view") {
@@ -341,7 +341,7 @@ definition {
 			Alert.viewSuccessMessage();
 		}
 
-		task ("And The dataset View is not present in the data set View page") {
+		task ("And The data set View is not present in the data set View page") {
 			AssertTextEquals(
 				locator1 = "Message#EMPTY_STATE_INFO",
 				value1 = "No Results Found");
@@ -351,7 +351,7 @@ definition {
 	@description = "LPS-172396. Assert that the user can edit or delet view"
 	@priority = 5
 	test CanEditOrDeleteView {
-		task ("When go to the View page of the dataset created, and click save button") {
+		task ("When go to the View page of the data set created, and click save button") {
 			FrontendDataSetAdmin.createDataSetView(
 				description = "Description Test",
 				key_name = "View Test");
@@ -373,7 +373,7 @@ definition {
 	@description = "LPS-172396. Confirm that the user can edit a view"
 	@priority = 5
 	test CanEditView {
-		task ("When go to the View page of the dataset created, and click save button") {
+		task ("When go to the View page of the data set created, and click save button") {
 			FrontendDataSetAdmin.createDataSetView(
 				description = "Description Test",
 				key_name = "View Test");
@@ -386,7 +386,7 @@ definition {
 				key_oldName = "View Test");
 		}
 
-		task ("Then The dataset is present in the data set Admin page") {
+		task ("Then The data set is present in the Data Sets admin page") {
 			FrontendDataSetAdmin.assertDataSetView(key_dataSetViewNameList = "View Test edited");
 
 			FrontendDataSetAdmin.assertDataSetViewDescription(key_dataSetViewDescriptionList = "Test Description edited");
@@ -452,7 +452,7 @@ definition {
 				key_name = "View Test");
 		}
 
-		task ("And back to the Datasets admin page") {
+		task ("And back to the Data Sets admin page") {
 			Navigator.gotoBack();
 		}
 
@@ -464,17 +464,17 @@ definition {
 
 		task ("When go to View admin page") {
 			Click(
-				key_entry = "Dataset Test",
+				key_entry = "Data Set Test",
 				locator1 = "ObjectPortlet#ENTRY_KEBAB_MENU");
 
 			Click(locator1 = "FrontendDataSetAdmin#VIEW_ENTRY_BUTTON");
 		}
 
 		task ("And the user deletes a View created") {
-			FrontendDataSetAdmin.deleteDataSetViewViaAPI(datasetViewsNameList = "View Test");
+			FrontendDataSetAdmin.deleteDataSetViewViaAPI(dataSetViewsNameList = "View Test");
 		}
 
-		task ("And back to the Datasets admin page") {
+		task ("And back to the Data Sets admin page") {
 			Navigator.gotoBack();
 		}
 

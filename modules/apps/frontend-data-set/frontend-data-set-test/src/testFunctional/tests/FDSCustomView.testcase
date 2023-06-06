@@ -6,13 +6,13 @@ definition {
 	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.component.names = "Frontend Dataset";
-	property testray.main.component.name = "Frontend Dataset";
+	property testray.component.names = "Frontend Data Set";
+	property testray.main.component.name = "Frontend Data Set";
 
 	setUp {
 		TestCase.setUpPortalInstance();
 
-		task ("Given Custom view enabled for a dataset display instance") {
+		task ("Given Custom view enabled for a data set display instance") {
 			User.firstLoginPG();
 
 			JSONLayout.addPublicLayout(
@@ -102,7 +102,7 @@ definition {
 	@description = "LPS-158545. Assert that it's possible to create A new custom view and selected as current view"
 	@priority = 4
 	test CanBeSaved {
-		task ("When Make some changes to dataset display") {
+		task ("When Make some changes to data set display") {
 			FDSFilters.editFilters(
 				key_disableFilters = "Blue,Green,Yellow",
 				key_enableFilters = "Red",
@@ -194,7 +194,7 @@ definition {
 			FDSCustomView.createNewView(entryName = "FrontendDataSet View");
 		}
 
-		task ("When Make some changes to dataset display (filter, sorting, page size or visible columns if data display in table)") {
+		task ("When Make some changes to data set display (filter, sorting, page size or visible columns if data display in table)") {
 			FDSFilters.editFilters(
 				key_disableFilters = "Blue,Green,Yellow",
 				key_enableFilters = "Red",
@@ -311,7 +311,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-162792. Frontend Dataset - column labels are not localized "
+	@description = "LPS-162792. Frontend Data Set - column labels are not localized "
 	@priority = 4
 	test ManagementBarCanBeLocalized {
 		task ("And Given: site URL localized to Spanish //localhost:8080/es/ and when on a customized tab view") {

@@ -109,15 +109,15 @@ definition {
 
 	macro createDataSet {
 		if (isSet(key_name)) {
-			var key_datasetNameList = ${key_name};
+			var key_dataSetNameList = ${key_name};
 		}
 
-		for (var key_datasetName : list ${key_datasetNameList}) {
+		for (var key_dataSetName : list ${key_dataSetNameList}) {
 			LexiconEntry.gotoAdd();
 
 			Type(
 				locator1 = "TextInput#NAME",
-				value1 = ${key_datasetName});
+				value1 = ${key_dataSetName});
 
 			FrontendDataSetAdmin.selectProvider(key_type = ${key_type});
 
@@ -125,14 +125,14 @@ definition {
 		}
 	}
 
-	macro createDatasetEntryViaAPI {
+	macro createDataSetEntryViaAPI {
 		if (${restApplication} == "/c/fdsentries") {
 			var restSchema = "FDSEntry";
 			var restEndpoint = "/";
 		}
 
-		JSONFrontendDatasetEntries._createDatasetEntry(
-			datasetName = ${datasetName},
+		JSONFrontendDataSetEntries._createDataSetEntry(
+			dataSetName = ${dataSetName},
 			restApplication = ${restApplication},
 			restEndpoint = ${restEndpoint},
 			restSchema = ${restSchema});
@@ -160,8 +160,8 @@ definition {
 
 	macro createFDSViewViaAPI {
 		for (var key_dataSetViewName : list ${key_dataSetViewNameList}) {
-			JSONFrontendDatasetEntries._createFDSViewViaAPI(
-				datasetName = ${datasetName},
+			JSONFrontendDataSetEntries._createFDSViewViaAPI(
+				dataSetName = ${dataSetName},
 				dataSetViewDescription = ${dataSetViewDescription},
 				dataSetViewName = ${key_dataSetViewName});
 		}
@@ -181,11 +181,11 @@ definition {
 		}
 	}
 
-	macro deleteAllDatasetEntries {
-		FrontendDataSetAdmin.goToDatasetAdminPage();
+	macro deleteAllDataSetEntries {
+		FrontendDataSetAdmin.goToDataSetsAdminPage();
 
 		if (IsElementPresent(key_itemName = "", locator1 = "FrontendDataSetAdmin#TABLE_CELL")) {
-			JSONFrontendDatasetEntries._deleteFDSEntry();
+			JSONFrontendDataSetEntries._deleteFDSEntry();
 
 			Refresh();
 		}
@@ -195,14 +195,14 @@ definition {
 			value1 = "No Results Found");
 	}
 
-	macro deleteAllDatasetViews {
-		var datasetViewsIdList = JSONFrontendDatasetEntries._getDatasetViewsIds();
+	macro deleteAllDataSetViews {
+		var dataSetViewsIdList = JSONFrontendDataSetEntries._getDataSetViewsIds();
 
-		if (${datasetViewsIdList} != "") {
-			JSONFrontendDatasetEntries._deleteFDSViews();
+		if (${dataSetViewsIdList} != "") {
+			JSONFrontendDataSetEntries._deleteFDSViews();
 		}
 		else {
-			echo("No Datasets Views to be deleted");
+			echo("No DataSets Views to be deleted");
 		}
 	}
 
@@ -214,7 +214,7 @@ definition {
 		ClickNoError(locator1 = "ObjectPortlet#DELETE_ENTRY_BUTTON");
 
 		AssertElementPresent(
-			key_modalText = "Deleting a dataset is an action that cannot be reversed. The content will be deleted and some dataset fragments may not be displayed.",
+			key_modalText = "Deleting a data set is an action that cannot be reversed. The content will be deleted and some data set fragments may not be displayed.",
 			locator1 = "FrontendDataSetAdmin#DELETE_DATA_SET_MODAL_BODY");
 
 		Button.clickDelete();
@@ -228,7 +228,7 @@ definition {
 		ClickNoError(locator1 = "ObjectPortlet#DELETE_ENTRY_BUTTON");
 
 		AssertElementPresent(
-			key_modalText = "Deleting a dataset view is an action that cannot be reversed. The content will be deleted and some dataset fragments may not be displayed.",
+			key_modalText = "Deleting a data set view is an action that cannot be reversed. The content will be deleted and some data set fragments may not be displayed.",
 			locator1 = "FrontendDataSetAdmin#DELETE_DATA_SET_MODAL_BODY");
 
 		Button.clickDelete();
@@ -251,11 +251,11 @@ definition {
 	}
 
 	macro deleteDataSetViewViaAPI {
-		var datasetViewsIdList = JSONFrontendDatasetEntries._getDatasetViewIdByName(datasetViewsNameList = ${datasetViewsNameList});
+		var dataSetViewsIdList = JSONFrontendDataSetEntries._getDataSetViewIdByName(dataSetViewsNameList = ${dataSetViewsNameList});
 
-		echo(${datasetViewsIdList});
+		echo(${dataSetViewsIdList});
 
-		JSONFrontendDatasetEntries._deleteFDSViews(datasetViewsIdList = ${datasetViewsIdList});
+		JSONFrontendDataSetEntries._deleteFDSViews(dataSetViewsIdList = ${dataSetViewsIdList});
 
 		Refresh();
 	}
@@ -282,18 +282,18 @@ definition {
 		Navigator.gotoBack();
 	}
 
-	macro goToDatasetAdminPage {
+	macro goToDataSetsAdminPage {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=com_liferay_frontend_data_set_views_web_internal_portlet_FDSViewsPortlet");
 	}
 
-	macro goToDatasetViewAdminPage {
-		var datasetEntryId = JSONFrontendDatasetEntries._getDatasetEntryIdByName(datasetName = ${datasetName});
+	macro goToDataSetViewAdminPage {
+		var dataSetEntryId = JSONFrontendDataSetEntries._getDataSetEntryIdByName(dataSetName = ${dataSetName});
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=com_liferay_frontend_data_set_views_web_internal_portlet_FDSViewsPortlet&p_p_lifecycle=0&_com_liferay_frontend_data_set_views_web_internal_portlet_FDSViewsPortlet_mvcPath=%2Ffds_views.jsp&_com_liferay_frontend_data_set_views_web_internal_portlet_FDSViewsPortlet_fdsEntryId=${datasetEntryId}");
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=com_liferay_frontend_data_set_views_web_internal_portlet_FDSViewsPortlet&p_p_lifecycle=0&_com_liferay_frontend_data_set_views_web_internal_portlet_FDSViewsPortlet_mvcPath=%2Ffds_views.jsp&_com_liferay_frontend_data_set_views_web_internal_portlet_FDSViewsPortlet_fdsEntryId=${dataSetEntryId}");
 	}
 
 	macro goToSpecificViewPage {
-		FrontendDataSetAdmin.goToDatasetViewAdminPage(datasetName = ${datasetName});
+		FrontendDataSetAdmin.goToDataSetViewAdminPage(dataSetName = ${dataSetName});
 
 		Click(
 			key_name = ${key_viewName},

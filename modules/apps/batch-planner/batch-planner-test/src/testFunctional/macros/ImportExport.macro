@@ -367,11 +367,7 @@ definition {
 
 		ImportExport.mapImport(fieldMappings = ${fieldMappings});
 
-		Button.click(button = "Next");
-
-		Button.click(button = "Start Import");
-
-		WaitForElementPresent(locator1 = "ImportExport#EXECUTION_SUCCESS");
+		ImportExport.startImport();
 
 		Click(locator1 = "Button#CLOSE");
 	}
@@ -447,6 +443,14 @@ definition {
 		Select(
 			locator1 = "ImportExport#IMPORT_STRATEGY",
 			value1 = ${strategyType});
+	}
+
+	macro startImport {
+		Button.click(button = "Next");
+
+		Button.click(button = "Start Import");
+
+		WaitForElementPresent(locator1 = "ImportExport#EXECUTION_SUCCESS");
 	}
 
 	macro unzipDownloadedExportFile {

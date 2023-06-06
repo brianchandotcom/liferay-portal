@@ -327,6 +327,7 @@ definition {
 	macro getIdOfCreatedBlogPosting {
 		var response = BlogPostingAPI._createBlogPosting(
 			articleBody = ${articleBody},
+			externalReferenceCode = ${externalReferenceCode},
 			headline = ${headline});
 
 		var blogPostingId = JSONPathUtil.getIdValue(response = ${response});

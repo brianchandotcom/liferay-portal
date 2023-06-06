@@ -373,7 +373,9 @@ definition {
 	}
 
 	macro openAuditGraphConfiguration {
-		Click(locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_BUTTON");
+		Click(
+			key_text = "cog",
+			locator1 = "Icon#ANY");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 	}

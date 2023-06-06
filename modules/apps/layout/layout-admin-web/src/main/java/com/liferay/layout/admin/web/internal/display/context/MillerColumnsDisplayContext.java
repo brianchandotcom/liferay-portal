@@ -47,7 +47,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.LayoutTypeControllerTracker;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -178,13 +177,6 @@ public class MillerColumnsDisplayContext {
 			_layoutsAdminDisplayContext.getSelGroupId(), privateLayout,
 			parentLayoutId, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		List<Long> duplicatedFriendlyURLPlids = new ArrayList<>();
-
-		if (FeatureFlagManagerUtil.isEnabled("LPS-174417")) {
-			duplicatedFriendlyURLPlids =
-				_layoutsAdminDisplayContext.getDuplicatedFriendlyURLPlids();
-		}
-
 		for (Layout layout : layouts) {
 			if (_layoutsAdminDisplayContext.getActiveLayoutSetBranchId() > 0) {
 				LayoutRevision layoutRevision =
@@ -264,7 +256,18 @@ public class MillerColumnsDisplayContext {
 				).buildString()
 			).put(
 				"urlConflict",
-				duplicatedFriendlyURLPlids.contains(layout.getPlid())
+				() -> {
+					if (!FeatureFlagManagerUtil.isEnabled("LPS-174417")) {
+						return false;
+					}
+
+					List<Long> duplicatedFriendlyURLPlids =
+						_layoutsAdminDisplayContext.
+							getDuplicatedFriendlyURLPlids();
+
+					return duplicatedFriendlyURLPlids.contains(
+						layout.getPlid());
+				}
 			).put(
 				"viewUrl",
 				_layoutsAdminDisplayContext.getEditOrViewLayoutURL(layout)

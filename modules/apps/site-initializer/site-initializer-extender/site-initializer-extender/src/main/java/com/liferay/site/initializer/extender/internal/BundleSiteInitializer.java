@@ -1414,7 +1414,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			}
 			else {
 				_objectDefinitionLocalService.
-					enableSalesForceAccountEntryRestricted(
+					enableAccountEntryRestrictedForExternalStorageType(
 						serviceBuilderObjectField);
 			}
 		}

@@ -12,4 +12,11 @@
  * details.
  */
 
-export default function App(): null;
+/// <reference types="react" />
+
+interface AppProps {
+	apiURL: string;
+	portletId: string;
+}
+export default function App({apiURL, portletId}: AppProps): JSX.Element;
+export {};

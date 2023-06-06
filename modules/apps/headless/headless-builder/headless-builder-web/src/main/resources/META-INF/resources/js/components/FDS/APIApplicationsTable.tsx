@@ -12,15 +12,25 @@
  * details.
  */
 
+import {FrontendDataSet} from '@liferay/frontend-data-set-web';
 import React from 'react';
 
-import APIApplications from './APIApplications';
+import {getAPIApplicationsFDSProps} from './fdsUtils/fdsProps';
 
-interface AppProps {
+interface APIApplicationsTableProps {
 	apiURL: string;
 	portletId: string;
+	readOnly: boolean;
 }
 
-export default function App({apiURL, portletId}: AppProps) {
-	return <APIApplications apiURL={apiURL} portletId={portletId} />;
+export default function APIApplicationsTable({
+	apiURL,
+	portletId,
+	readOnly,
+}: APIApplicationsTableProps) {
+	return (
+		<FrontendDataSet
+			{...getAPIApplicationsFDSProps(apiURL, portletId, readOnly)}
+		/>
+	);
 }

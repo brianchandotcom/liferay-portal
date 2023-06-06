@@ -12,15 +12,16 @@
  * details.
  */
 
-import React from 'react';
+/// <reference types="react" />
 
-import APIApplications from './APIApplications';
-
-interface AppProps {
+interface APIApplicationsTableProps {
 	apiURL: string;
 	portletId: string;
+	readOnly: boolean;
 }
-
-export default function App({apiURL, portletId}: AppProps) {
-	return <APIApplications apiURL={apiURL} portletId={portletId} />;
-}
+export default function APIApplicationsTable({
+	apiURL,
+	portletId,
+	readOnly,
+}: APIApplicationsTableProps): JSX.Element;
+export {};

@@ -12,15 +12,9 @@
  * details.
  */
 
-import React from 'react';
-
-import APIApplications from './APIApplications';
-
-interface AppProps {
-	apiURL: string;
-	portletId: string;
-}
-
-export default function App({apiURL, portletId}: AppProps) {
-	return <APIApplications apiURL={apiURL} portletId={portletId} />;
-}
+import {IFrontendDataSetProps} from '@liferay/frontend-data-set-web';
+export declare function getAPIApplicationsFDSProps(
+	apiURL: string,
+	portletId: string,
+	readOnly: boolean
+): IFrontendDataSetProps;

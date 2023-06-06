@@ -14,13 +14,22 @@
 
 import React from 'react';
 
-import APIApplications from './APIApplications';
+import APIApplicationsTable from './FDS/APIApplicationsTable';
 
-interface AppProps {
+interface APIApplicationsProps {
 	apiURL: string;
 	portletId: string;
 }
 
-export default function App({apiURL, portletId}: AppProps) {
-	return <APIApplications apiURL={apiURL} portletId={portletId} />;
+export default function APIApplications({
+	apiURL,
+	portletId,
+}: APIApplicationsProps) {
+	return (
+		<APIApplicationsTable
+			apiURL={apiURL}
+			portletId={portletId}
+			readOnly={false}
+		/>
+	);
 }

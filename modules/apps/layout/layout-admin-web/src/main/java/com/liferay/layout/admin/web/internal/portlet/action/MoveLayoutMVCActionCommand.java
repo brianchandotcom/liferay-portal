@@ -108,8 +108,7 @@ public class MoveLayoutMVCActionCommand extends BaseAddLayoutMVCActionCommand {
 			LayoutsAdminDisplayContext layoutsAdminDisplayContext =
 				new LayoutsAdminDisplayContext(
 					_itemSelector, layoutActionsHelper, _layoutCopyHelper,
-					_layoutSetPrototypeHelper, liferayPortletRequest,
-					liferayPortletResponse);
+					liferayPortletRequest, liferayPortletResponse);
 
 			JSONObject jsonObject = JSONUtil.put(
 				"layoutColumns",
@@ -121,6 +120,7 @@ public class MoveLayoutMVCActionCommand extends BaseAddLayoutMVCActionCommand {
 									liferayPortletRequest),
 								layoutActionsHelper, layoutsAdminDisplayContext,
 								_translationURLProvider),
+							_layoutSetPrototypeHelper,
 							layoutsAdminDisplayContext, liferayPortletRequest,
 							liferayPortletResponse);
 

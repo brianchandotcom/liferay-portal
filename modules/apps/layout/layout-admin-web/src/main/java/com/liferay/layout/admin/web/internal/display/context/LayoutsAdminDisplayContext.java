@@ -40,7 +40,6 @@ import com.liferay.layout.admin.web.internal.util.FaviconUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
-import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
 import com.liferay.layout.theme.item.selector.criterion.LayoutThemeItemSelectorCriterion;
 import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.layout.util.comparator.LayoutCreateDateComparator;
@@ -74,7 +73,6 @@ import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetBranchLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
-import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
@@ -135,14 +133,12 @@ public class LayoutsAdminDisplayContext {
 	public LayoutsAdminDisplayContext(
 		ItemSelector itemSelector, LayoutActionsHelper layoutActionsHelper,
 		LayoutCopyHelper layoutCopyHelper,
-		LayoutSetPrototypeHelper layoutSetPrototypeHelper,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
 		_itemSelector = itemSelector;
 		_layoutActionsHelper = layoutActionsHelper;
 		_layoutCopyHelper = layoutCopyHelper;
-		_layoutSetPrototypeHelper = layoutSetPrototypeHelper;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 
@@ -489,32 +485,6 @@ public class LayoutsAdminDisplayContext {
 		return LayoutLocalServiceUtil.updateStatus(
 			draftLayout.getUserId(), draftLayout.getPlid(),
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
-	}
-
-	public List<Long> getDuplicatedFriendlyURLPlids() throws PortalException {
-		if (_duplicatedFriendlyURLPlids != null) {
-			return _duplicatedFriendlyURLPlids;
-		}
-
-		LayoutSet layoutSet = getSelLayoutSet();
-		Group group = getSelGroup();
-
-		if (layoutSet.isLayoutSetPrototypeLinkEnabled()) {
-			_duplicatedFriendlyURLPlids =
-				_layoutSetPrototypeHelper.getDuplicatedFriendlyURLPlids(
-					layoutSet);
-		}
-		else if (group.isLayoutSetPrototype()) {
-			_duplicatedFriendlyURLPlids =
-				_layoutSetPrototypeHelper.getDuplicatedFriendlyURLPlids(
-					LayoutSetPrototypeLocalServiceUtil.fetchLayoutSetPrototype(
-						group.getClassPK()));
-		}
-		else {
-			_duplicatedFriendlyURLPlids = new ArrayList<>();
-		}
-
-		return _duplicatedFriendlyURLPlids;
 	}
 
 	public String getEditLayoutURL(Layout layout) throws Exception {
@@ -2276,7 +2246,6 @@ public class LayoutsAdminDisplayContext {
 	private String _backURL;
 	private final CETManager _cetManager;
 	private String _displayStyle;
-	private List<Long> _duplicatedFriendlyURLPlids;
 	private Boolean _firstColumn;
 	private final GroupDisplayContextHelper _groupDisplayContextHelper;
 	private Boolean _hasEditableMasterLayout;
@@ -2286,7 +2255,6 @@ public class LayoutsAdminDisplayContext {
 	private final LayoutActionsHelper _layoutActionsHelper;
 	private final LayoutCopyHelper _layoutCopyHelper;
 	private Long _layoutId;
-	private final LayoutSetPrototypeHelper _layoutSetPrototypeHelper;
 	private SearchContainer<Layout> _layoutsSearchContainer;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;

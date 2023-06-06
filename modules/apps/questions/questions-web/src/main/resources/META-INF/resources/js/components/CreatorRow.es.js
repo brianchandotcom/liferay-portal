@@ -43,8 +43,11 @@ export default withRouter(
 
 				{Liferay.FeatureFlags['LPS-185892'] &&
 					contentReviewerUser &&
-					creator.userGroupInfos &&
-					creator.userGroupInfos[0]?.name}
+					creator.userGroupsInformation
+						?.map(
+							(userGroupInformation) => userGroupInformation.name
+						)
+						.join(', ')}
 			</div>
 
 			<UserPopover creator={creator} statistics={creatorStatistics} />

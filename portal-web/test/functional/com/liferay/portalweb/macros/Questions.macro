@@ -452,6 +452,22 @@ definition {
 			locator1 = "Questions#ANSWER_BODY");
 	}
 
+	macro editComment {
+		Click(locator1 = "Questions#EDIT_COMMENT");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
+		Type(
+			locator1 = "CKEditor#BODY",
+			value1 = ${contentField});
+
+		SelectFrame(value1 = "relative=top");
+
+		Click(
+			key_text = "Update Your Comment",
+			locator1 = "Button#ANY");
+	}
+
 	macro editQuestion {
 		Questions.gotoDetails(
 			questionTabField = "Questions",

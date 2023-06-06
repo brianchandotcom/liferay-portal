@@ -90,7 +90,7 @@ export default class UsageMetric extends React.Component {
 				<h3 className='metric-name'>{getPropLabel(metricType)}</h3>
 
 				<div className='metric-breakdown'>
-					<Sticker display='light' symbol={getPropIcon(metricType)} />
+					<Sticker display='dark' symbol={getPropIcon(metricType)} />
 
 					<div className='metric-breakdown-content'>
 						<div>

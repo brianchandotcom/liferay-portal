@@ -16,7 +16,6 @@ package com.liferay.segments.asah.connector.internal.asset.list.asset.entry.quer
 
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.list.asset.entry.query.processor.AssetListAssetEntryQueryProcessor;
-import com.liferay.asset.list.constants.AssetListPortletKeys;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -32,10 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Sarai Díaz
  */
-@Component(
-	property = "javax.portlet.name=" + AssetListPortletKeys.ASSET_LIST,
-	service = AssetListAssetEntryQueryProcessor.class
-)
+@Component(service = AssetListAssetEntryQueryProcessor.class)
 public class AsahInterestTermAssetListAssetEntryQueryProcessor
 	implements AssetListAssetEntryQueryProcessor {
 

@@ -143,6 +143,13 @@ public class MillerColumnsDisplayContext {
 			).put(
 				"getItemChildrenURL", getLayoutChildrenURL()
 			).put(
+				"isLayoutSetPrototype",
+				() -> {
+					Group group = _themeDisplay.getScopeGroup();
+
+					return group.isLayoutSetPrototype();
+				}
+			).put(
 				"isPrivateLayoutsEnabled",
 				() -> {
 					Group group = _themeDisplay.getScopeGroup();
@@ -158,13 +165,6 @@ public class MillerColumnsDisplayContext {
 				_layoutsAdminDisplayContext.getMoveLayoutColumnItemURL()
 			).put(
 				"searchContainerId", "pages"
-			).put(
-				"siteTemplate",
-				() -> {
-					Group group = _themeDisplay.getScopeGroup();
-
-					return group.isLayoutSetPrototype();
-				}
 			).build()
 		).build();
 	}

@@ -295,16 +295,16 @@ public class LayoutsTreeDisplayContext {
 				return findLayoutsURL.toString();
 			}
 		).put(
-			"pagesTreeURL", _getPagesTreeURL()
-		).put(
-			"productMenuPortletURL", _getProductMenuPortletURL()
-		).put(
-			"siteTemplate",
+			"isLayoutSetPrototype",
 			() -> {
 				Group group = _themeDisplay.getScopeGroup();
 
 				return group.isLayoutSetPrototype();
 			}
+		).put(
+			"pagesTreeURL", _getPagesTreeURL()
+		).put(
+			"productMenuPortletURL", _getProductMenuPortletURL()
 		).build();
 
 		if (_isSiteNavigationMenu()) {

@@ -1592,6 +1592,10 @@
 			<category name="Upgrade" />
 			<description name="Replaces the references of the method `HtmlUtil.extractText(` with the method `extractText(` of `HtmlParser` class" />
 		</check>
+		<check name="UpgradeJavaServiceReferenceAnnotationCheck">
+			<category name="Upgrade" />
+			<description name="Run code migration to replace '@ServiceReference' by '@Reference'" />
+		</check>
 		<check name="UpgradeVelocityCommentMigrationCheck">
 			<category name="Upgrade" />
 			<description name="Run code migration of comments from a Velocity file to a Freemarker file with the syntax replacements" />

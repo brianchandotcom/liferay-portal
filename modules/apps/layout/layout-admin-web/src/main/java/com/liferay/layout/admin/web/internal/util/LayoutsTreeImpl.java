@@ -186,23 +186,20 @@ public class LayoutsTreeImpl implements LayoutsTree {
 		LayoutSet layoutSet = _layoutSetLocalService.fetchLayoutSet(
 			groupId, privateLayout);
 
+		if (layoutSet.isLayoutSetPrototypeLinkEnabled()) {
+			return _layoutSetPrototypeHelper.getDuplicatedFriendlyURLPlids(
+				layoutSet);
+		}
+
 		Group group = layoutSet.getGroup();
 
-		List<Long> duplicatedFriendlyURLPlids = new ArrayList<>();
-
-		if (layoutSet.isLayoutSetPrototypeLinkEnabled()) {
-			duplicatedFriendlyURLPlids =
-				_layoutSetPrototypeHelper.getDuplicatedFriendlyURLPlids(
-					layoutSet);
-		}
-		else if (group.isLayoutSetPrototype()) {
-			duplicatedFriendlyURLPlids =
-				_layoutSetPrototypeHelper.getDuplicatedFriendlyURLPlids(
-					_layoutSetPrototypeLocalService.fetchLayoutSetPrototype(
-						group.getClassPK()));
+		if (group.isLayoutSetPrototype()) {
+			return _layoutSetPrototypeHelper.getDuplicatedFriendlyURLPlids(
+				_layoutSetPrototypeLocalService.fetchLayoutSetPrototype(
+					group.getClassPK()));
 		}
 
-		return duplicatedFriendlyURLPlids;
+		return Collections.emptyList();
 	}
 
 	private JSONArray _getLayoutsJSONArray(

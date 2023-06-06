@@ -21,7 +21,7 @@ ContentDashboardItemSubtypeItemSelectorViewDisplayContext contentDashboardItemSu
 %>
 
 <section class="h-100">
-	<span aria-hidden="true" class="loading-animation mt-0 tree-filter-loader"></span>
+	<span aria-hidden="true" class="c-mt-0 loading-animation tree-filter-loader"></span>
 
 	<react:component
 		module="js/components/SelectTypeAndSubtype"

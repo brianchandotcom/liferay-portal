@@ -14,7 +14,6 @@
 
 package com.liferay.saml.internal.servlet.filter;
 
-import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -29,7 +28,6 @@ import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.servlet.filters.absoluteredirects.AbsoluteRedirectsResponse;
 import com.liferay.saml.constants.SamlWebKeys;
 import com.liferay.saml.runtime.configuration.SamlProviderConfiguration;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
@@ -106,35 +104,8 @@ public class SpSsoSamlPortalFilter extends BaseSamlPortalFilter {
 			httpServletRequest);
 
 		if (requestPath.equals("/c/portal/login")) {
-			User user = _portal.initUser(httpServletRequest);
-
-			if (!user.isDefaultUser()) {
-				String redirect = ParamUtil.getString(
-					httpServletRequest, "redirect");
-
-				redirect = _portal.escapeRedirect(redirect);
-
-				if (Validator.isNull(redirect)) {
-					redirect = _portal.getPathMain();
-				}
-
-				if (redirect.charAt(0) == CharPool.SLASH) {
-					String portalURL = _portal.getPortalURL(
-						httpServletRequest, httpServletRequest.isSecure());
-
-					if (Validator.isNotNull(portalURL)) {
-						redirect = portalURL.concat(redirect);
-					}
-				}
-
-				if (!(httpServletResponse instanceof
-						AbsoluteRedirectsResponse)) {
-
-					httpServletResponse = new AbsoluteRedirectsResponse(
-						httpServletRequest, httpServletResponse);
-				}
-
-				httpServletResponse.sendRedirect(redirect);
+			if (_portal.getUser(httpServletRequest) != null) {
+				filterChain.doFilter(httpServletRequest, httpServletResponse);
 
 				return;
 			}

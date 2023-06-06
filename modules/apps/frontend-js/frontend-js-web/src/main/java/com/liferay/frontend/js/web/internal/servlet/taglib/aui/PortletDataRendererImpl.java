@@ -73,30 +73,17 @@ public class PortletDataRendererImpl implements PortletDataRenderer {
 
 		if (!esImportsMap.isEmpty()) {
 			for (ESImport esImport : esImportsMap.values()) {
-				writer.write("import ");
+				writer.write("import {");
+				writer.write(esImport.getSymbol());
 
-				String symbol = esImport.getSymbol();
 				String alias = esImport.getAlias();
 
-				if (!Validator.isBlank(symbol)) {
-					writer.write(StringPool.OPEN_CURLY_BRACE);
-					writer.write(symbol);
-
-					if (!Validator.isBlank(alias) &&
-							!Objects.equals(alias, symbol)) {
-
-						writer.write(" as ");
-						writer.write(alias);
-					}
-
-					writer.write("} from ");
-				}
-				else if (!Validator.isBlank(alias)) {
+				if (!alias.equals(esImport.getSymbol())) {
+					writer.write(" as ");
 					writer.write(alias);
-					writer.write(" from ");
 				}
 
-				writer.write(StringPool.APOSTROPHE);
+				writer.write("} from '");
 				writer.write(esImport.getModule());
 				writer.write("';\n");
 			}
@@ -249,18 +236,15 @@ public class PortletDataRendererImpl implements PortletDataRenderer {
 
 					String alias = esImport.getAlias();
 
-					if (!Validator.isBlank(alias)) {
-						if (usedAliases.containsKey(alias)) {
-							IntegerWrapper integerWrapper =
-								usedAliases.get(alias);
+					if (usedAliases.containsKey(alias)) {
+						IntegerWrapper integerWrapper = usedAliases.get(alias);
 
-							alias += integerWrapper.getValue();
+						alias += integerWrapper.getValue();
 
-							integerWrapper.increment();
-						}
-						else {
-							usedAliases.put(alias, new IntegerWrapper(0));
-						}
+						integerWrapper.increment();
+					}
+					else {
+						usedAliases.put(alias, new IntegerWrapper(0));
 					}
 
 					esImportsMap.put(

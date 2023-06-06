@@ -14,6 +14,7 @@
 
 import {IFrontendDataSetProps} from '@liferay/frontend-data-set-web';
 
+import {getAPIApplicationsFDSFilters} from './fdsFilters';
 import {itemPathRenderer, itemStatusRenderer} from './fdsRenderers';
 
 export function getAPIApplicationsFDSProps(
@@ -40,6 +41,7 @@ export function getAPIApplicationsFDSProps(
 			itemPathRenderer,
 			itemStatusRenderer,
 		},
+		filters: getAPIApplicationsFDSFilters(),
 		id: portletId,
 		itemsActions: [
 			{

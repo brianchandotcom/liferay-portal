@@ -56,8 +56,8 @@ import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 import com.liferay.sites.kernel.util.Sites;
 import com.liferay.translation.security.permission.TranslationPermission;
 
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -157,11 +157,11 @@ public class LayoutsTreeImpl implements LayoutsTree {
 		return ancestorLayouts;
 	}
 
-	private Set<Long> _getConflictPlids(long groupId, boolean privateLayout)
+	private List<Long> _getConflictPlids(long groupId, boolean privateLayout)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPS-174417")) {
-			return new HashSet<>();
+			return new ArrayList<>();
 		}
 
 		LayoutSet layoutSet = _layoutSetLocalService.fetchLayoutSet(
@@ -169,7 +169,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 
 		Group group = layoutSet.getGroup();
 
-		Set<Long> conflictPlids = new HashSet<>();
+		List<Long> conflictPlids = new ArrayList<>();
 
 		if (layoutSet.isLayoutSetPrototypeLinkEnabled()) {
 			conflictPlids =
@@ -206,7 +206,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 
 	private JSONArray _getLayoutsJSONArray(
 			List<Layout> ancestorLayouts, boolean childLayout,
-			Set<Long> conflictPlids, Set<Long> expandedLayoutIds, long groupId,
+			List<Long> conflictPlids, Set<Long> expandedLayoutIds, long groupId,
 			HttpServletRequest httpServletRequest, boolean includeActions,
 			boolean incomplete, LayoutActionsHelper layoutActionsHelper,
 			boolean loadMore, boolean paginationEnabled,
@@ -376,7 +376,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 
 	private JSONObject _toJSONObject(
 			Layout afterDeleteSelectedLayout, long childLayoutsCount,
-			JSONArray childLayoutsJSONArray, Set<Long> conflictPlids,
+			JSONArray childLayoutsJSONArray, List<Long> conflictPlids,
 			HttpServletRequest httpServletRequest, boolean includeActions,
 			Layout layout, LayoutActionsHelper layoutActionsHelper,
 			ThemeDisplay themeDisplay)

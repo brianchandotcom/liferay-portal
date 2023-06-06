@@ -112,13 +112,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 import java.util.TreeMap;
 
 import javax.portlet.ActionRequest;
@@ -364,7 +362,7 @@ public class LayoutsAdminDisplayContext {
 		).buildString();
 	}
 
-	public Set<Long> getConflictPlids() {
+	public List<Long> getConflictPlids() {
 		if (_conflictPlids != null) {
 			return _conflictPlids;
 		}
@@ -384,7 +382,7 @@ public class LayoutsAdminDisplayContext {
 						group.getGroupId());
 		}
 		else {
-			_conflictPlids = new HashSet<>();
+			_conflictPlids = new ArrayList<>();
 		}
 
 		return _conflictPlids;
@@ -2276,7 +2274,7 @@ public class LayoutsAdminDisplayContext {
 	private Long _activeLayoutSetBranchId;
 	private String _backURL;
 	private final CETManager _cetManager;
-	private Set<Long> _conflictPlids;
+	private List<Long> _conflictPlids;
 	private String _displayStyle;
 	private Boolean _firstColumn;
 	private final GroupDisplayContextHelper _groupDisplayContextHelper;

@@ -88,6 +88,25 @@ public class UserAccountTestUtil {
 		};
 	}
 
+	public static JSONObject updateUserAccountByExternalReferenceCodeJSONObject(
+			SystemObjectDefinitionManager systemObjectDefinitionManager,
+			JSONObject userAccountJSONObject, Map<String, Serializable> values)
+		throws Exception {
+
+		UserAccount userAccount = randomUserAccount();
+
+		JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
+			systemObjectDefinitionManager.getJaxRsApplicationDescriptor();
+
+		return HTTPTestUtil.invoke(
+			_toBody(userAccount, values),
+			StringBundler.concat(
+				jaxRsApplicationDescriptor.getRESTContextPath(),
+				"/by-external-reference-code/",
+				userAccountJSONObject.get("externalReferenceCode")),
+			Http.Method.PUT);
+	}
+
 	public static JSONObject updateUserAccountJSONObject(
 			SystemObjectDefinitionManager systemObjectDefinitionManager,
 			JSONObject userAccountJSONObject, Map<String, Serializable> values)

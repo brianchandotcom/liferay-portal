@@ -69,10 +69,10 @@ definition {
 			ACUtils.setItemName(itemName = "New Segment Test");
 		}
 
-		task ("Add a birthDate and createDate field") {
+		task ("Add a birthDate and modifiedDate field") {
 			ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
 
-			for (var criteriaName : list "birthDate,createDate") {
+			for (var criteriaName : list "birthDate,modifiedDate") {
 				ACSegments.addSegmentField(segmentField = ${criteriaName});
 			}
 
@@ -83,7 +83,7 @@ definition {
 			ACSegments.viewSegmentCriteriaIndividualAttributes(attributeName = "birthDate");
 
 			ACSegments.viewSegmentCriteriaIndividualAttributes(
-				attributeName = "createDate",
+				attributeName = "modifiedDate",
 				index = 2);
 		}
 

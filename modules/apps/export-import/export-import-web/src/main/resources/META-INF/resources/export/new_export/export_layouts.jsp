@@ -128,6 +128,9 @@ renderResponse.setTitle(!configuredExport ? LanguageUtil.get(request, "new-custo
 		<liferay-ui:error exception="<%= LARFileNameException.class %>" message="please-enter-a-file-with-a-valid-file-name" />
 
 		<div class="export-dialog-tree">
+			<div class="alert alert-warning">
+				<liferay-ui:message key="export-process-deletion-warning-message" />
+			</div>
 			<div class="sheet">
 				<div class="panel-group panel-group-flush">
 					<aui:fieldset>

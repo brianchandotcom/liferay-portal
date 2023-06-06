@@ -18,6 +18,10 @@ import ClayModal, { useModal } from '@clayui/modal';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import './inviteMemberModal.scss';
+
+import { DisplayType } from '@clayui/alert';
+import ClayIcon from '@clayui/icon';
+
 import { Liferay } from '../../liferay/liferay';
 import { getMyUserAccount } from '../../utils/api';
 import { createPassword } from '../../utils/createPassword';
@@ -36,6 +40,7 @@ interface InviteMemberModalProps {
   listOfRoles: string[];
   rolesPermissionDescription: PermissionDescription[];
   selectedAccount: Account;
+  renderToast: (message: string, title: string, type: DisplayType) => void;
 }
 
 interface CheckboxRole {
@@ -48,6 +53,7 @@ const listOfRoles = ['Account Administrator', 'App Editor'];
 export function InviteMemberModal({
   handleClose,
   listOfRoles,
+  renderToast,
   rolesPermissionDescription,
   selectedAccount,
 }: InviteMemberModalProps) {
@@ -104,6 +110,19 @@ export function InviteMemberModal({
     return checkedRole;
   };
 
+  const checkIfUserIsInvited = (user: UserAccount, accountId: number) => {
+    const userAccountBrief = user.accountBriefs.find(
+      (accountBrief) => accountBrief.id === accountId
+    );
+
+    if (userAccountBrief) {
+      console.log(userAccountBrief);
+
+      return true;
+    } else {
+      return false;
+    }
+  };
   const addAccountRolesToUser = async (user: UserAccount) => {
     for (const checkboxRole of checkboxRoles) {
       if (checkboxRole.isChecked) {
@@ -125,38 +144,56 @@ export function InviteMemberModal({
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    let user: UserAccount;
-
-    if (formValid) {
-      user = await getUserByEmail(formFields.email);
-      if (!user) {
-        await createNewUser(jsonBody);
-      }
-
-      user = await getUserByEmail(formFields.email);
-
-      const myUser = await getMyUserAccount();
-
-      await addExistentUserIntoAccount(selectedAccount.id, formFields.email);
-      await addAccountRolesToUser(user);
-      await addAdditionalInfo(
-        false,
-        user.id,
-        selectedAccount.name,
-        selectedAccount.id,
-        formFields.email,
-        userPassword,
-        formFields.firstName,
-        myUser.givenName,
-        Liferay.ThemeDisplay.getPortalURL() +
-          '/c/login?redirect=' +
-          getSiteURL() +
-          '/loadingpagevalidation',
-        getCheckedRoles()
-      );
-
-      onClose();
+    if (!formValid) {
+      return;
     }
+
+    // eslint-disable-next-line prefer-const
+    let [user, myUser] = await Promise.all([
+      getUserByEmail(formFields.email),
+      getMyUserAccount(),
+    ]);
+
+    if (user) {
+      if (checkIfUserIsInvited(user, selectedAccount.id)) {
+        renderToast(
+          "There's already a user with this email invited to this account",
+          '',
+          'danger'
+        );
+
+        return onClose();
+      }
+    } else {
+      user = await createNewUser(jsonBody);
+    }
+
+    await addExistentUserIntoAccount(selectedAccount.id, formFields.email);
+    await addAccountRolesToUser(user);
+
+    await addAdditionalInfo({
+      acceptInviteStatus: false,
+      accountName: selectedAccount.name,
+      emailOfMember: formFields.email,
+      inviteURL:
+        Liferay.ThemeDisplay.getPortalURL() +
+        '/c/login?redirect=' +
+        getSiteURL(),
+      inviterName: myUser.givenName,
+      mothersName: userPassword,
+      r_accountToUserAdditionalInfos_accountEntryId: selectedAccount.id,
+      r_userToUserAddInfo_userId: user.id,
+      roles: getCheckedRoles(),
+      userFirstName: formFields.firstName,
+    });
+
+    renderToast(
+      'invited succesfully',
+      `${user.givenName} ${user.familyName}`,
+      'success'
+    );
+
+    onClose();
   };
 
   const validateForm = (checkboxValues: CheckboxRole[]) => {

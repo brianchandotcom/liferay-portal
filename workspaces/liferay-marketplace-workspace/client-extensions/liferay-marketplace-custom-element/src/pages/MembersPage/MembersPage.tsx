@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayAlert, { DisplayType } from '@clayui/alert';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import { useCallback, useEffect, useState } from 'react';
 
@@ -80,23 +81,37 @@ export function MembersPage({
   const [members, setMembers] = useState<MemberProps[]>(Array<MemberProps>());
   const [selectedMember, setSelectedMember] = useState<MemberProps>();
   const [isCurrentUserAdmin, setIsCurrentUserAdmin] = useState<boolean>(false);
+  const [toastItems, setToastItems] = useState<
+    { message: string; title?: string; type: DisplayType }[]
+  >([]);
 
-  const getRolesList = useCallback(
-    (accountBriefs: AccountBrief[]) => {
-      const rolesList: string[] = [];
+  const renderToast = (message: string, title: string, type: DisplayType) => {
+    setToastItems([...toastItems, { message, title, type }]);
+  };
 
-      const accountBrief = accountBriefs.find(
-        (accountBrief) => accountBrief.id === selectedAccount.id
-      );
-
-      accountBrief?.roleBriefs.forEach((role: RoleBrief) => {
-        rolesList.push(role.name);
-      });
-
-      return rolesList.join(', ');
+  const memberMessages = {
+    description: 'Manage users in your development team and invite new ones',
+    emptyStateMessage: {
+      description1: 'Create new members and they will show up here.',
+      description2: 'Click on “New Member” to start.',
+      title: 'No Members Yet',
     },
-    [selectedAccount.id]
-  );
+    title: 'Members',
+  };
+
+  function getRolesList(accountBriefs: AccountBrief[]) {
+    const rolesList: string[] = [];
+
+    const accountBrief = accountBriefs.find(
+      (accountBrief) => accountBrief.id === selectedAccount.id
+    );
+
+    accountBrief?.roleBriefs.forEach((role: RoleBrief) => {
+      rolesList.push(role.name);
+    });
+
+    return rolesList.join(', ');
+  }
 
   useEffect(() => {
     (async () => {
@@ -141,6 +156,7 @@ export function MembersPage({
             )
           ) {
             currentUserAccount.isAdminAccount = true;
+            setIsCurrentUserAdmin(true);
           }
         });
       }
@@ -154,8 +170,8 @@ export function MembersPage({
             dateCreated: member.dateCreated,
             email: member.emailAddress,
             image: member.image,
-            isCustomerAccount: false,
             isInvitedMember: false,
+            isCustomerAccount: false,
             isPublisherAccount: false,
             lastLoginDate: member.lastLoginDate,
             name: member.name,
@@ -164,17 +180,6 @@ export function MembersPage({
           } as MemberProps;
         }
       );
-
-      adminRoles.forEach((adminRole) => {
-        if (
-          currentUserAccountBriefs.roleBriefs.find(
-            (role: { name: string }) => role.name === adminRole
-          )
-        ) {
-          currentUserAccount.isAdminAccount = true;
-          setIsCurrentUserAdmin(true);
-        }
-      });
 
       membersList.forEach((member: MemberProps) => {
         const rolesList = member.role.split(', ');
@@ -213,7 +218,7 @@ export function MembersPage({
 
       setMembers(filteredMembersList);
     })();
-  }, [visible, selectedAccount, getRolesList]);
+  }, [visible, selectedAccount]);
 
   return (
     <>

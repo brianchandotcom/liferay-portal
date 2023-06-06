@@ -24,9 +24,7 @@ definition {
 
 	@summary = "Cannot view Manager Status Button on MDF Request detail page"
 	macro CanNotViewStateManager {
-		AssertElementNotPresent(
-			key_statusButton = "Approve",
-			locator1 = "PRMMDFRequest#STATUS_BUTTON");
+		AssertElementNotPresent(locator1 = "PRMMDFRequest#STATUS_DROPDOWN");
 	}
 
 	@summary = "Change MDF status"
@@ -34,9 +32,7 @@ definition {
 		var key_statusButton = ${statusButton};
 
 		if (${statusButton} == "Cancel") {
-			ClickNoError(
-				buttonId = "status-cancel",
-				locator1 = "Button#BUTTON_ID");
+			ClickNoError(locator1 = "Button#CANCEL");
 		}
 		else {
 			ScrollWebElementIntoView(locator1 = "PRMMDFRequest#STATUS_DROPDOWN");
@@ -48,7 +44,7 @@ definition {
 				locator1 = "PRMMDFRequest#STATUS_OPTION_DROPDOWN");
 		}
 
-		if ((${statusButton} == "Request More Info") || (${statusButton} == "Marketing Director Review") || (${statusButton} == "Reject")) {
+		if ((${statusButton} == "Request More Info") || (${statusButton} == "Marketing Director Review") || (${statusButton} == "Rejected")) {
 			if (!(isSet(statusChangeMotivation))) {
 				var statusChangeMotivation = "Status Change Motivation";
 			}
@@ -73,7 +69,6 @@ definition {
 			additionalOptions = ${additionalOptions},
 			campaignDescription = ${campaignDescription},
 			campaignName = ${campaignName},
-			countryName = ${countryName},
 			goalsOptions = ${goalsOptions},
 			targetMarketOptions = ${targetMarketOptions},
 			targetRolesOptions = ${targetRolesOptions});
@@ -128,16 +123,7 @@ definition {
 	}
 
 	macro editButton {
-		if (isSet(manager)) {
-			var roleName = "manager";
-		}
-		else {
-			var roleName = "user";
-		}
-
-		Click(
-			key_roleName = ${roleName},
-			locator1 = "PRMMDFRequest#EDIT_MDF_BUTTON");
+		Click(locator1 = "PRMMDFRequest#EDIT_MDF_BUTTON");
 	}
 
 	@summary = "Verify that is possible edit some MDF informations "
@@ -147,7 +133,6 @@ definition {
 			additionalOptions = ${additionalOptions},
 			campaignDescription = ${campaignDescription},
 			campaignName = ${campaignName},
-			countryName = ${countryName},
 			goalsOptions = ${goalsOptions},
 			targetMarketOptions = ${targetMarketOptions},
 			targetRolesOptions = ${targetRolesOptions});
@@ -159,7 +144,6 @@ definition {
 			additionalOptions = ${additionalOptions},
 			campaignDescription = ${campaignDescription},
 			campaignName = ${campaignName},
-			countryName = ${countryName},
 			goalsOptions = ${goalsOptions},
 			targetMarketOptions = ${targetMarketOptions},
 			targetRolesOptions = ${targetRolesOptions});
@@ -292,13 +276,13 @@ definition {
 	}
 
 	@summary = "Filter the MDF Listing by the selected option"
-	macro FilterMDF {
+	macro filterMDF {
 		Click(
-			key_filterOption = ${keyFilter},
+			key_filterOption = ${filterOption},
 			locator1 = "AppBuilder#CHOOSE_SEARCH_FILTER_BY_OPTION");
 
 		Click(
-			key_partnerOptions = ${filterType},
+			key_partnerOptions = "Filter",
 			locator1 = "PRMMDFRequest#FILTER_TYPE");
 
 		Click.clickAtNotVisible(
@@ -628,6 +612,21 @@ definition {
 			}
 		}
 
+		if(isSet(fileContentNotPresent)) {
+			var directoryPath = PropsUtil.get("output.dir.name");
+
+			var fileContent = FileUtil.read("${directoryPath}/${fileName}");
+
+			if (contains(${fileContent}, ${fileContentItem})) {
+				echo(${fileContent});
+
+				fail("The string '${fileContentItem}' exists on this file");
+			}
+			else {
+				echo("The string '${fileContentItem}' doesn't exists on this file");
+			}
+		}
+
 		FileUtil.delete("${directoryPath}/${fileName}");
 	}
 
@@ -641,16 +640,6 @@ definition {
 		AssertElementPresent(
 			key_fieldName = "Company Name",
 			key_fieldValue = ${accountName},
-			locator1 = "PRMMDFRequest#SUMMARY_FIELD");
-
-		ScrollWebElementIntoView(
-			key_fieldName = "Region",
-			key_fieldValue = ${countryName},
-			locator1 = "PRMMDFRequest#SUMMARY_FIELD");
-
-		AssertElementPresent(
-			key_fieldName = "Region",
-			key_fieldValue = ${countryName},
 			locator1 = "PRMMDFRequest#SUMMARY_FIELD");
 
 		ScrollWebElementIntoView(
@@ -827,7 +816,7 @@ definition {
 	@summary = "View MDF actual Status on MDF Request detail page "
 	macro viewMDFStatus {
 		AssertElementPresent(
-			key_value = ${key_status},
+			key_value = ${mdfStatus},
 			locator1 = "PRMMDFRequest#STATUS_INFO");
 	}
 
@@ -840,9 +829,7 @@ definition {
 
 	@summary = "Verify that the state manager is present on MDF Request detail page"
 	macro viewStateManager {
-		AssertElementPresent(
-			key_statusButton = "Approve",
-			locator1 = "PRMMDFRequest#STATUS_BUTTON");
+		AssertElementPresent(locator1 = "PRMMDFRequest#STATUS_DROPDOWN");
 	}
 
 }

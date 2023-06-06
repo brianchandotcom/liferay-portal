@@ -42,11 +42,6 @@ public class VulcanBatchEngineTaskItemDelegateRegistryImpl
 	implements VulcanBatchEngineTaskItemDelegateRegistry {
 
 	@Override
-	public Set<String> getEntityClassNames() {
-		return _vulcanBatchEngineTaskItemDelegateMap.keySet();
-	}
-
-	@Override
 	public Set<String> getEntityClassNames(long companyId) {
 		Set<String> entityClassNames = new HashSet<>();
 
@@ -91,13 +86,6 @@ public class VulcanBatchEngineTaskItemDelegateRegistryImpl
 	}
 
 	@Override
-	public VulcanBatchEngineTaskItemDelegate<?>
-		getVulcanBatchEngineTaskItemDelegate(String entityClassName) {
-
-		return _vulcanBatchEngineTaskItemDelegateMap.get(entityClassName);
-	}
-
-	@Override
 	public boolean isBatchPlannerExportEnabled(
 		long companyId, String entityClassName) {
 
@@ -115,11 +103,6 @@ public class VulcanBatchEngineTaskItemDelegateRegistryImpl
 	}
 
 	@Override
-	public boolean isBatchPlannerExportEnabled(String entityClassName) {
-		return _batchPlannerExportEnabledMap.get(entityClassName);
-	}
-
-	@Override
 	public boolean isBatchPlannerImportEnabled(
 		long companyId, String entityClassName) {
 
@@ -134,11 +117,6 @@ public class VulcanBatchEngineTaskItemDelegateRegistryImpl
 			_companyScopedBatchPlannerImportEnabledMap.get(companyId);
 
 		return companyBatchPlannerImportEnabledMap.get(entityClassName);
-	}
-
-	@Override
-	public boolean isBatchPlannerImportEnabled(String entityClassName) {
-		return _batchPlannerImportEnabledMap.get(entityClassName);
 	}
 
 	@Activate

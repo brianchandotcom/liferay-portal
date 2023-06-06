@@ -19,10 +19,10 @@ definition {
 			PRMUtils.addSite();
 		}
 
-		task ("Go to Partner Portal and login with the created user") {
+		task ("Login as Partner Sales User and go to Partner Portal") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "psu@liferay.com",
-				userLoginFullName = "psu");
+				userLoginEmailAddress = "psu@partner.com",
+				userLoginFullName = "Partner Sales User");
 
 			PRMUtils.gotoPRM();
 		}

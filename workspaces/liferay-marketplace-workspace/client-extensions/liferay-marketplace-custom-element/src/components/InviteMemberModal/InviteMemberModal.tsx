@@ -18,9 +18,6 @@ import ClayModal, {useModal} from '@clayui/modal';
 import {useEffect, useState} from 'react';
 
 import './inviteMemberModal.scss';
-import { Liferay } from '../../liferay/liferay';
-import { getMyUserAccount } from '../../utils/api';
-import { createPassword } from '../../utils/createPassword';
 import {
   addAdditionalInfo,
   addExistentUserIntoAccount,
@@ -30,6 +27,9 @@ import {
   getSiteURL,
 	getUserByEmail,
 } from './services';
+import { getMyUserAccount } from '../../utils/api';
+import { createPassword } from '../../utils/createPassword';
+import { Liferay } from '../../liferay/liferay';
 
 interface InviteMemberModalProps {
 	handleClose: () => void;
@@ -86,7 +86,6 @@ export function InviteMemberModal({
         checkedRole = checkedRole + checkboxRole.roleName + '/';
       }
     }
-
     return checkedRole;
   };
 
@@ -114,7 +113,7 @@ export function InviteMemberModal({
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    const form = event.target as HTMLFormElement;
+    let form = event.target as HTMLFormElement;
     let user: UserAccount;
     if (formValid) {
       user = await getUserByEmail(formFields.email);
@@ -253,38 +252,34 @@ export function InviteMemberModal({
                   Role
                 </ClayModal.Title>
               </ClayModal.TitleSection>
-
               <hr className="solid"></hr>
             </div>
-
             <div>
               {listOfRoles.map((role, index) => {
                 return (
                   <ClayCheckbox
-                    checked={checkboxRoles[index]?.isChecked}
                     label={role}
+                    checked={checkboxRoles[index]?.isChecked}
+                    value={role}
                     onChange={() => handleCheck(role)}
                     required={!formValid}
-                    value={role}
                   />
                 );
               })}
             </div>
           </ClayForm.Group>
-
           <ClayButton.Group
             className="d-flex justify-content-between justify-content-lg-end modal-footer"
             spaced
           >
             <ClayButton
               className="cancelButton"
-              onClick={() => onClose()}
               outline={true}
               type="button"
+              onClick={() => onClose()}
             >
               Cancel
             </ClayButton>
-
             <ClayButton type="submit">Send Invite</ClayButton>
           </ClayButton.Group>
         </ClayForm>

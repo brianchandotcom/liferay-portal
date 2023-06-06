@@ -13,13 +13,28 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>SELECT_ACTION_TYPE_VALUE</td>
+		<td>//input[@placeholder="Choose an Action" and contains(@value, ${value1})]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>SELECT_OPTION_TYPE</td>
 		<td>//input[@placeholder="Choose an Option"]</td>
 		<td></td>
 	</tr>
 	<tr>
+		<td>SELECT_OPTION_TYPE_VALUE</td>
+		<td>//input[@placeholder="Choose an Option" and contains(@value, ${value1})]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>SELECT_TRIGGER</td>
 		<td>//input[@placeholder="Choose a Trigger"]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>SELECT_TRIGGER_VALUE</td>
+		<td>//input[contains(@placeholder,'Choose a Trigger') and contains(@value, ${value1})]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -35,6 +50,11 @@
 	<tr>
 		<td>INPUT_EXPRESSION</td>
 		<td>//input[(@placeholder="Create an expression.")]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>INPUT_EXPRESSION_VALUE</td>
+		<td>//input[(@placeholder="Create an expression.") and contains(@value, ${value1})]</td>
 		<td></td>
 	</tr>
 	<tr>

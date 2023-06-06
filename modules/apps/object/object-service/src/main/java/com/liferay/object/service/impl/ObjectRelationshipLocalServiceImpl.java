@@ -813,15 +813,23 @@ public class ObjectRelationshipLocalServiceImpl
 				NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME,
 			StringUtil.replaceLast(objectField.getName(), "Id", "ERC"));
 
-		if (objectDefinition2.isApproved()) {
-			runSQL(
-				DynamicObjectDefinitionTableUtil.getAlterTableAddColumnSQL(
-					dbTableName, objectField.getDBColumnName(), "Long"));
+		if (!objectDefinition2.isApproved()) {
+			return objectField;
+		}
 
-			if (_objectDefinitionLocalService != null) {
-				_objectDefinitionLocalService.deployObjectDefinition(
-					objectDefinition2);
-			}
+		runSQL(
+			DynamicObjectDefinitionTableUtil.getAlterTableAddColumnSQL(
+				dbTableName, objectField.getDBColumnName(), "Long"));
+
+		IndexMetadata indexMetadata =
+			IndexMetadataFactoryUtil.createIndexMetadata(
+				false, dbTableName, objectField.getDBColumnName());
+
+		runSQL(indexMetadata.getCreateSQL(null));
+
+		if (_objectDefinitionLocalService != null) {
+			_objectDefinitionLocalService.deployObjectDefinition(
+				objectDefinition2);
 		}
 
 		return objectField;

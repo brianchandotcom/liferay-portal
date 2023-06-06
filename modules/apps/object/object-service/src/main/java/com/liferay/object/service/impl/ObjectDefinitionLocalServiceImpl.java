@@ -1107,17 +1107,33 @@ public class ObjectDefinitionLocalServiceImpl
 		runSQL(dynamicObjectDefinitionTable.getCreateTableSQL());
 
 		for (ObjectField objectField : objectFields) {
-			if (GetterUtil.getBoolean(
-					ObjectFieldSettingUtil.getValue(
-						ObjectFieldSettingConstants.NAME_UNIQUE_VALUES,
-						objectField))) {
+			boolean indexable = false;
+			boolean unique = false;
 
-				IndexMetadata indexMetadata =
-					IndexMetadataFactoryUtil.createIndexMetadata(
-						true, dbTableName, objectField.getDBColumnName());
+			if (StringUtil.equals(
+					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {
 
-				runSQL(indexMetadata.getCreateSQL(null));
+				indexable = true;
 			}
+			else if (GetterUtil.getBoolean(
+						ObjectFieldSettingUtil.getValue(
+							ObjectFieldSettingConstants.NAME_UNIQUE_VALUES,
+							objectField))) {
+
+				indexable = true;
+				unique = true;
+			}
+
+			if (!indexable) {
+				continue;
+			}
+
+			IndexMetadata indexMetadata =
+				IndexMetadataFactoryUtil.createIndexMetadata(
+					unique, dbTableName, objectField.getDBColumnName());
+
+			runSQL(indexMetadata.getCreateSQL(null));
 		}
 	}
 

@@ -15,6 +15,7 @@
 package com.liferay.configuration.admin.web.internal.util;
 
 import com.liferay.configuration.admin.definition.ConfigurationFieldOptionsProvider;
+import com.liferay.configuration.admin.web.internal.display.context.ConfigurationScopeDisplayContext;
 import com.liferay.configuration.admin.web.internal.model.ConfigurationModel;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
@@ -550,6 +551,23 @@ public class ConfigurationModelToDDMFormConverter {
 		if (ArrayUtil.contains(hiddenFieldKeys, attributeDefinition.getID()) ||
 			ArrayUtil.contains(
 				hiddenFieldKeys, attributeDefinition.getName())) {
+
+			ddmFormField.setVisibilityExpression("FALSE");
+
+			return;
+		}
+
+		ConfigurationScopeDisplayContext configurationScopeDisplayContext =
+			_configurationModel.getConfigurationScopeDisplayContext();
+
+		Map<String, String> extensionAttributes = _getExtensionAttributes(
+			attributeDefinition);
+
+		if ((configurationScopeDisplayContext != null) &&
+			!ConfigurationVisibilityUtil.isVisibleByKey(
+				extensionAttributes.get("visibility-controller-key"),
+				configurationScopeDisplayContext.getScope(),
+				configurationScopeDisplayContext.getScopePK())) {
 
 			ddmFormField.setVisibilityExpression("FALSE");
 		}

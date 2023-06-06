@@ -7,5 +7,7 @@ dependencies {
 	compileOnly project(":apps:export-import:export-import-api")
 	compileOnly project(":apps:layout:layout-set-prototype-api")
 	compileOnly project(":apps:xstream:xstream-configurator-api")
+	compileOnly project(":core:petra:petra-function")
+	compileOnly project(":core:petra:petra-sql-dsl-api")
 	compileOnly project(":core:petra:petra-string")
 }

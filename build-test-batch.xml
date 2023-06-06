@@ -6834,7 +6834,7 @@ information. Make sure to commit in all format-javadoc results.
 				<if>
 					<equals arg1="${project.templates.test}" arg2="true" />
 					<then>
-						<gradle-execute dir="modules/sdk/project-templates" task="install">
+						<gradle-execute dir="modules/sdk/project-templates" task="publishToMavenLocal">
 							<arg value="--continue" />
 							<arg value="-Dbuild.exclude.ant.plugin=true" />
 							<arg if:set="project.templates.test.builds" value="-Dproject.templates.test.builds=${project.templates.test.builds}" />

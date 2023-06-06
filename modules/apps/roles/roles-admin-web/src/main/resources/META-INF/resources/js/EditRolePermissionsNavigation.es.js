@@ -28,14 +28,14 @@ export default function EditRolePermissionsNavigation({
 	const debouncedFilterQuery = useDebounce(filterQuery, 200);
 
 	const handleItemClick = useCallback(
-		(item, portletNamespace) => {
+		(item) => {
 			const method = `${portletNamespace}loadContent`;
 
 			window[method](item.resourceURL);
 
 			setActiveItemId(item.id);
 		},
-		[setActiveItemId]
+		[portletNamespace, setActiveItemId]
 	);
 
 	const processItems = useCallback(
@@ -66,8 +66,10 @@ export default function EditRolePermissionsNavigation({
 
 				if (showItem) {
 					const processedItem = {
+						className,
 						id,
 						label,
+						resourceURL,
 					};
 
 					const active = activeItemId
@@ -78,15 +80,6 @@ export default function EditRolePermissionsNavigation({
 						hasActiveChild = true;
 
 						processedItem.active = true;
-					}
-
-					if (className) {
-						processedItem.className = className;
-					}
-
-					if (resourceURL) {
-						processedItem.onClick = () =>
-							handleItemClick(item, portletNamespace);
 					}
 
 					if (childItems) {
@@ -125,7 +118,7 @@ export default function EditRolePermissionsNavigation({
 
 			return [processedItems, processedExpandedKeys, hasActiveChild];
 		},
-		[activeItemId, debouncedFilterQuery, handleItemClick, portletNamespace]
+		[activeItemId, debouncedFilterQuery]
 	);
 
 	const [processedItems, processedExpandedKeys] = useMemo(
@@ -160,7 +153,17 @@ export default function EditRolePermissionsNavigation({
 					onExpandedChange={setExpandedKeys}
 				>
 					{(item) => (
-						<ClayVerticalNav.Item {...item}>
+						<ClayVerticalNav.Item
+							active={item.active}
+							className={item.className}
+							items={item.items}
+							key={item.id}
+							onClick={
+								item.resourceURL
+									? () => handleItemClick(item)
+									: undefined
+							}
+						>
 							{item.label}
 						</ClayVerticalNav.Item>
 					)}

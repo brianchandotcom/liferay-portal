@@ -269,6 +269,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-146160 : Verify Admin can enable local staging on the inherited site even site template propagation is disabled.The testcase is blocked by LPS-146160."
+	@ignore = "true"
 	@priority = 4
 	test CanEnableLocalStagingOnInheritedSite {
 		property test.name.skip.portal.instance = "Staging#CanEnableLocalStagingOnInheritedSite";

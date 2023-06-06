@@ -580,9 +580,6 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 	}
 
 	private void _validateBuildParameterPortalBatchTestSelector() {
-		String portalBatchName = getBuildParameter(
-			_NAME_BUILD_PARAMETER_PORTAL_BATCH);
-
 		if (!_isFunctionalBatch() && !_isJUnitBatch()) {
 			return;
 		}
@@ -590,14 +587,17 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 		String portalBatchTestSelector = getBuildParameter(
 			_NAME_BUILD_PARAMETER_PORTAL_BATCH_TEST_SELECTOR);
 
-		if ((portalBatchTestSelector == null) ||
-			portalBatchTestSelector.isEmpty()) {
-
-			failBuildRunner(
-				JenkinsResultsParserUtil.combine(
-					_NAME_BUILD_PARAMETER_PORTAL_BATCH_TEST_SELECTOR,
-					" is required for ", portalBatchName));
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(portalBatchTestSelector)) {
+			return;
 		}
+
+		String portalBatchName = getBuildParameter(
+			_NAME_BUILD_PARAMETER_PORTAL_BATCH);
+
+		failBuildRunner(
+			JenkinsResultsParserUtil.combine(
+				_NAME_BUILD_PARAMETER_PORTAL_BATCH_TEST_SELECTOR,
+				" is required for ", portalBatchName));
 	}
 
 	private void _validateBuildParameterPortalBranchSHAs() {

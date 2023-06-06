@@ -20,32 +20,39 @@
 DefaultFragmentDisplayContext defaultFragmentDisplayContext = new DefaultFragmentDisplayContext(request, liferayPortletRequest, liferayPortletResponse);
 %>
 
-<clay:management-toolbar
-	managementToolbarDisplayContext="<%= new FragmentCollectionContributorsItemSelectorViewManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, defaultFragmentDisplayContext.getFragmentCollectionContributorsSearchContainer()) %>"
-/>
-
-<clay:container-fluid
-	id='<%= liferayPortletResponse.getNamespace() + "fragmentsContainer" %>'
->
-	<liferay-ui:search-container
-		emptyResultsMessage="no-fragment-collection-was-found"
-		id="fragment-collections"
-		searchContainer="<%= defaultFragmentDisplayContext.getFragmentCollectionContributorsSearchContainer() %>"
-	>
-		<liferay-ui:search-container-row
-			className="com.liferay.fragment.contributor.FragmentCollectionContributor "
-			modelVar="fragmentCollectionContributor"
-		>
-			<liferay-ui:search-container-column-text>
-				<clay:horizontal-card
-					horizontalCard="<%= new FragmentCollectionContributorHorizontalCard(fragmentCollectionContributor, currentURLObj) %>"
-				/>
-			</liferay-ui:search-container-column-text>
-		</liferay-ui:search-container-row>
-
-		<liferay-ui:search-iterator
-			displayStyle="icon"
-			markupView="lexicon"
+<c:choose>
+	<c:when test="<%= Validator.isNotNull(defaultFragmentDisplayContext.getFragmentCollectionKey()) %>">
+		<liferay-util:include page="/select_contributed_fragment.jsp" servletContext="<%= application %>" />
+	</c:when>
+	<c:otherwise>
+		<clay:management-toolbar
+			managementToolbarDisplayContext="<%= new FragmentCollectionContributorsItemSelectorViewManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, defaultFragmentDisplayContext.getFragmentCollectionContributorsSearchContainer()) %>"
 		/>
-	</liferay-ui:search-container>
-</clay:container-fluid>
+
+		<clay:container-fluid
+			id='<%= liferayPortletResponse.getNamespace() + "fragmentsContainer" %>'
+		>
+			<liferay-ui:search-container
+				emptyResultsMessage="no-fragment-collection-was-found"
+				id="fragment-collections"
+				searchContainer="<%= defaultFragmentDisplayContext.getFragmentCollectionContributorsSearchContainer() %>"
+			>
+				<liferay-ui:search-container-row
+					className="com.liferay.fragment.contributor.FragmentCollectionContributor "
+					modelVar="fragmentCollectionContributor"
+				>
+					<liferay-ui:search-container-column-text>
+						<clay:horizontal-card
+							horizontalCard="<%= new FragmentCollectionContributorHorizontalCard(fragmentCollectionContributor, currentURLObj) %>"
+						/>
+					</liferay-ui:search-container-column-text>
+				</liferay-ui:search-container-row>
+
+				<liferay-ui:search-iterator
+					displayStyle="icon"
+					markupView="lexicon"
+				/>
+			</liferay-ui:search-container>
+		</clay:container-fluid>
+	</c:otherwise>
+</c:choose>

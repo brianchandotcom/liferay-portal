@@ -111,6 +111,46 @@ public class DefaultFragmentDisplayContext {
 		return _fragmentCollectionSearchContainer;
 	}
 
+	public String getFragmentCollectionKey() {
+		if (_fragmentCollectionKey != null) {
+			return _fragmentCollectionKey;
+		}
+
+		_fragmentCollectionKey = ParamUtil.getString(
+			_httpServletRequest, "fragmentCollectionKey");
+
+		return _fragmentCollectionKey;
+	}
+
+	public SearchContainer<FragmentEntry> getFragmentsSearchContainer() {
+		if (_fragmentsSearchContainer != null) {
+			return _fragmentsSearchContainer;
+		}
+
+		FragmentCollectionContributor fragmentCollectionContributor =
+			_fragmentCollectionContributorRegistry.
+				getFragmentCollectionContributor(getFragmentCollectionKey());
+
+		List<FragmentEntry> fragmentEntries = ListUtil.filter(
+			fragmentCollectionContributor.getFragmentEntries(
+				_fragmentItemSelectorCriterion.getType(),
+				_themeDisplay.getLocale()),
+			fragmentEntry -> _filterInputTypes(
+				fragmentEntry, _fragmentItemSelectorCriterion.getInputTypes()));
+
+		SearchContainer<FragmentEntry> searchContainer = new SearchContainer<>(
+			_liferayPortletRequest,
+			PortletURLUtil.getCurrent(
+				_liferayPortletRequest, _liferayPortletResponse),
+			null, null);
+
+		searchContainer.setResultsAndTotal(fragmentEntries);
+
+		_fragmentsSearchContainer = searchContainer;
+
+		return _fragmentsSearchContainer;
+	}
+
 	private boolean _filterInputTypes(
 		FragmentEntry fragmentEntry, Set<String> inputTypes) {
 
@@ -139,9 +179,11 @@ public class DefaultFragmentDisplayContext {
 
 	private final FragmentCollectionContributorRegistry
 		_fragmentCollectionContributorRegistry;
+	private String _fragmentCollectionKey;
 	private SearchContainer<FragmentCollectionContributor>
 		_fragmentCollectionSearchContainer;
 	private final FragmentItemSelectorCriterion _fragmentItemSelectorCriterion;
+	private SearchContainer<FragmentEntry> _fragmentsSearchContainer;
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;

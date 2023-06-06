@@ -260,7 +260,7 @@ definition {
 			Workflow.assignTaskToUser(
 				assetTitle = ${instanceNameNumber},
 				assetType = "Blogs Entry",
-				assigneeName = "test (TEST Test)",
+				assigneeName = "test (Test Test)",
 				workflowTask = "Review");
 		}
 

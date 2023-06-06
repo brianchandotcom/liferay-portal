@@ -1503,6 +1503,71 @@ definition {
 		}
 	}
 
+	macro viewObjectAction {
+		ObjectAdmin.goToActionDetails(viewEntry = ${viewEntry});
+
+		ObjectAdmin.viewDetails();
+
+		SelectFrame.selectFrameNoLoading(locator1 = "ObjectAction#IFRAME_SIDE_PANEL");
+
+		if (isSet(actionLabel)) {
+			AssertElementPresent(
+				locator1 = "ObjectAdmin#ACTION_LABEL_FIELD",
+				value1 = ${actionLabel});
+		}
+
+		if (isSet(actionName)) {
+			AssertElementPresent(
+				locator1 = "ObjectAdmin#ACTION_NAME_FIELD",
+				value1 = ${actionName});
+		}
+
+		if (isSet(actionDescription)) {
+			AssertElementPresent(
+				locator1 = "ObjectAdmin#ACTION_DESCRIPTION_FIELD",
+				value1 = ${actionDescription});
+		}
+
+		if (isSet(active)) {
+			if (${active} == "true") {
+				CreateObject.checkToggleActive();
+			}
+			else if (${active} == "false") {
+				CreateObject.checkToggleInactive();
+			}
+		}
+
+		Click(
+			key_tabName = "Action Builder",
+			locator1 = "ObjectAction#TAB_GENERIC");
+
+		if (isSet(whenAction)) {
+			WaitForElementPresent(
+				locator1 = "ObjectAction#SELECT_TRIGGER_VALUE",
+				value1 = ${whenAction});
+		}
+
+		if (isSet(inputExpression)) {
+			WaitForElementPresent(
+				locator1 = "ObjectAction#INPUT_EXPRESSION_VALUE",
+				value1 = ${inputExpression});
+		}
+
+		if (isSet(thenAction)) {
+			WaitForElementPresent(
+				locator1 = "ObjectAction#SELECT_ACTION_TYPE_VALUE",
+				value1 = ${thenAction});
+		}
+
+		if (${thenAction} == "Notification") {
+			WaitForElementPresent(
+				locator1 = "ObjectAction#SELECT_OPTION_TYPE_VALUE",
+				value1 = ${notificationName});
+		}
+
+		Button.clickSave();
+	}
+
 	macro viewObjectPresentOnSite {
 		ProductMenuHelper.openProductMenu();
 

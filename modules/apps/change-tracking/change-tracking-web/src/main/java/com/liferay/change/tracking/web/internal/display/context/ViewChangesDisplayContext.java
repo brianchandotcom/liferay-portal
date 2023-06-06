@@ -36,6 +36,7 @@ import com.liferay.change.tracking.web.internal.security.permission.resource.CTC
 import com.liferay.change.tracking.web.internal.security.permission.resource.CTPermission;
 import com.liferay.change.tracking.web.internal.util.PublicationsPortletURLUtil;
 import com.liferay.petra.lang.HashUtil;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -175,8 +176,24 @@ public class ViewChangesDisplayContext {
 			(ctEntriesCount <= _ctConfiguration.contextViewLimitCount())) {
 
 			try {
-				ctClosure = _ctClosureFactory.create(
-					_ctCollection.getCtCollectionId());
+				if (_ctConfiguration.contextViewIncludeProduction()) {
+					ctClosure = _ctClosureFactory.create(
+						_ctCollection.getCtCollectionId());
+				}
+				else {
+					ctClosure = _ctClosureFactory.create(
+						_ctCollection.getCtCollectionId(),
+						new HashSet<>(
+							_ctEntryLocalService.dslQuery(
+								DSLQueryFactoryUtil.selectDistinct(
+									CTEntryTable.INSTANCE.modelClassNameId
+								).from(
+									CTEntryTable.INSTANCE
+								).where(
+									CTEntryTable.INSTANCE.ctCollectionId.eq(
+										_ctCollection.getCtCollectionId())
+								))));
+				}
 			}
 			catch (Exception exception) {
 				contextViewJSONObject = JSONUtil.put(

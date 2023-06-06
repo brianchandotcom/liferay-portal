@@ -164,6 +164,9 @@ public class AnnotationsExtendedAttributeDefinition
 						"required-input",
 						String.valueOf(
 							extendedAttributeDefinition.requiredInput())
+					).put(
+						"visibility-controller-key",
+						extendedAttributeDefinition.visibilityControllerKey()
 					).build());
 			}
 		}

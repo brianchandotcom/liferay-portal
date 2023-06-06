@@ -77,11 +77,9 @@ public class LayoutSetPrototypeFriendlyURLConflictDetectionTest {
 
 		setLinkEnabled();
 
-		String[] names = RandomTestUtil.randomStrings(3);
+		List<Layout> layouts = new ArrayList<>();
 
-		List<Layout> prototypeLayouts = new ArrayList<>(names.length);
-
-		for (String name : names) {
+		for (String name : RandomTestUtil.randomStrings(3)) {
 			LayoutTestUtil.addTypePortletLayout(
 				_group.getGroupId(), name, false);
 			LayoutTestUtil.addTypePortletLayout(
@@ -90,7 +88,7 @@ public class LayoutSetPrototypeFriendlyURLConflictDetectionTest {
 			Layout prototypeLayout = LayoutTestUtil.addTypePortletLayout(
 				_layoutSetPrototypeGroup.getGroupId(), name, true);
 
-			prototypeLayouts.add(prototypeLayout);
+			layouts.add(prototypeLayout);
 
 			LayoutTestUtil.addTypePortletLayout(
 				_layoutSetPrototypeGroup.getGroupId(),
@@ -102,12 +100,12 @@ public class LayoutSetPrototypeFriendlyURLConflictDetectionTest {
 				_layoutSetPrototype);
 
 		Assert.assertEquals(
-			duplicatedFriendlyURLPlids.toString(), names.length,
+			duplicatedFriendlyURLPlids.toString(), 3,
 			duplicatedFriendlyURLPlids.size());
 
-		for (Layout prototypeLayout : prototypeLayouts) {
+		for (Layout layout : layouts) {
 			Assert.assertTrue(
-				duplicatedFriendlyURLPlids.contains(prototypeLayout.getPlid()));
+				duplicatedFriendlyURLPlids.contains(layout.getPlid()));
 		}
 	}
 
@@ -117,15 +115,13 @@ public class LayoutSetPrototypeFriendlyURLConflictDetectionTest {
 
 		setLinkEnabled();
 
-		String[] names = RandomTestUtil.randomStrings(3);
+		List<Layout> layouts = new ArrayList<>();
 
-		List<Layout> siteLayouts = new ArrayList<>(names.length);
-
-		for (String name : names) {
-			Layout siteLayout = LayoutTestUtil.addTypePortletLayout(
+		for (String name : RandomTestUtil.randomStrings(3)) {
+			Layout layout = LayoutTestUtil.addTypePortletLayout(
 				_group.getGroupId(), name, false);
 
-			siteLayouts.add(siteLayout);
+			layouts.add(layout);
 
 			LayoutTestUtil.addTypePortletLayout(
 				_group.getGroupId(), RandomTestUtil.randomString(5), false);
@@ -141,12 +137,12 @@ public class LayoutSetPrototypeFriendlyURLConflictDetectionTest {
 				_group.getPublicLayoutSet());
 
 		Assert.assertEquals(
-			duplicatedFriendlyURLPlids.toString(), names.length,
+			duplicatedFriendlyURLPlids.toString(), 3,
 			duplicatedFriendlyURLPlids.size());
 
-		for (Layout siteLayout : siteLayouts) {
+		for (Layout layout : layouts) {
 			Assert.assertTrue(
-				duplicatedFriendlyURLPlids.contains(siteLayout.getPlid()));
+				duplicatedFriendlyURLPlids.contains(layout.getPlid()));
 		}
 	}
 

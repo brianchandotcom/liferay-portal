@@ -14,15 +14,16 @@
 
 package com.liferay.layout.set.prototype.helper;
 
-import java.util.Set;
+import java.util.List;
 
 /**
  * @author Eudaldo Alonso
  */
 public interface LayoutSetPrototypeHelper {
 
-	public Set<Long> getConflictingPlidsOfLayoutSetGroup(long groupId);
+	public List<Long> getConflictingPlidsOfLayoutSetGroup(long groupId);
 
-	public Set<Long> getConflictingPlidsOfLayoutSetPrototypeGroup(long groupId);
+	public List<Long> getConflictingPlidsOfLayoutSetPrototypeGroup(
+		long groupId);
 
 }

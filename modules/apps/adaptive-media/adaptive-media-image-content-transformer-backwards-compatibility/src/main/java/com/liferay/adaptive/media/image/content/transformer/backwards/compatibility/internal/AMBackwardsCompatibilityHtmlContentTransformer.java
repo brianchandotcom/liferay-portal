@@ -87,9 +87,7 @@ public class AMBackwardsCompatibilityHtmlContentTransformer
 			imgElement.replaceWith(_parseNode(replacement));
 		}
 
-		Element body = document.body();
-
-		return body.html();
+		return document.html();
 	}
 
 	@Override

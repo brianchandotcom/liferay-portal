@@ -861,6 +861,7 @@ const FDSEntries = ({
 						onClick: onDeleteClick,
 					},
 				]}
+				sorting={[{direction: 'desc', key: 'dateCreated'}]}
 				style="fluid"
 				views={views}
 				{...PAGINATION_PROPS}

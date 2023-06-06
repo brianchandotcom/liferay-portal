@@ -1,4 +1,6 @@
 Bundle-Name: Liferay Fragment Item Selector API
 Bundle-SymbolicName: com.liferay.fragment.item.selector.api
 Bundle-Version: 4.0.5
-Export-Package: com.liferay.fragment.item.selector.criterion
+Export-Package:\
+	com.liferay.fragment.item.selector,\
+	com.liferay.fragment.item.selector.criterion

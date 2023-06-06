@@ -809,18 +809,22 @@ const FDSEntries = ({
 						contentRenderer: 'actionLink',
 						fieldName: 'label',
 						label: Liferay.Language.get('name'),
+						sortable: true,
 					},
 					{
 						fieldName: 'restApplication',
 						label: Liferay.Language.get('rest-application'),
+						sortable: true,
 					},
 					{
 						fieldName: 'restSchema',
 						label: Liferay.Language.get('rest-schema'),
+						sortable: true,
 					},
 					{
 						fieldName: 'restEndpoint',
 						label: Liferay.Language.get('rest-endpoint'),
+						sortable: true,
 					},
 					{
 						contentRenderer: 'viewsCount',
@@ -831,6 +835,7 @@ const FDSEntries = ({
 						contentRenderer: 'dateTime',
 						fieldName: 'dateModified',
 						label: Liferay.Language.get('modified-date'),
+						sortable: true,
 					},
 				],
 			},

@@ -27,6 +27,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -276,6 +278,38 @@ public class Creator implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String profileURL;
 
+	@Schema(description = "A list of userGroups information.")
+	@Valid
+	public UserGroupInformation[] getUserGroupInformations() {
+		return userGroupInformations;
+	}
+
+	public void setUserGroupInformations(
+		UserGroupInformation[] userGroupInformations) {
+
+		this.userGroupInformations = userGroupInformations;
+	}
+
+	@JsonIgnore
+	public void setUserGroupInformations(
+		UnsafeSupplier<UserGroupInformation[], Exception>
+			userGroupInformationsUnsafeSupplier) {
+
+		try {
+			userGroupInformations = userGroupInformationsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(description = "A list of userGroups information.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected UserGroupInformation[] userGroupInformations;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -409,6 +443,26 @@ public class Creator implements Serializable {
 			sb.append(_escape(profileURL));
 
 			sb.append("\"");
+		}
+
+		if (userGroupInformations != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"userGroupInformations\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < userGroupInformations.length; i++) {
+				sb.append(String.valueOf(userGroupInformations[i]));
+
+				if ((i + 1) < userGroupInformations.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		sb.append("}");

@@ -178,10 +178,11 @@ public class MillerColumnsDisplayContext {
 			_layoutsAdminDisplayContext.getSelGroupId(), privateLayout,
 			parentLayoutId, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		List<Long> conflictPlids = new ArrayList<>();
+		List<Long> duplicatedFriendlyURLPlids = new ArrayList<>();
 
 		if (FeatureFlagManagerUtil.isEnabled("LPS-174417")) {
-			conflictPlids = _layoutsAdminDisplayContext.getConflictPlids();
+			duplicatedFriendlyURLPlids =
+				_layoutsAdminDisplayContext.getDuplicatedFriendlyURLPlids();
 		}
 
 		for (Layout layout : layouts) {
@@ -262,7 +263,8 @@ public class MillerColumnsDisplayContext {
 					"selPlid", layout.getPlid()
 				).buildString()
 			).put(
-				"urlConflict", conflictPlids.contains(layout.getPlid())
+				"urlConflict",
+				duplicatedFriendlyURLPlids.contains(layout.getPlid())
 			).put(
 				"viewUrl",
 				_layoutsAdminDisplayContext.getEditOrViewLayoutURL(layout)

@@ -43,6 +43,8 @@ import com.liferay.document.library.util.DLFileEntryTypeUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -78,10 +80,11 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.concurrent.CopyOnWriteArrayList;
 
+import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
@@ -146,11 +149,20 @@ public class AssetListAssetEntryProviderImpl
 
 	@Activate
 	@Modified
-	protected void activate(Map<String, Object> properties)
+	protected void activate(
+			BundleContext bundleContext, Map<String, Object> properties)
 		throws ConfigurationException {
 
 		_assetListConfiguration = ConfigurableUtil.createConfigurable(
 			AssetListConfiguration.class, properties);
+
+		_serviceTrackerList = ServiceTrackerListFactory.open(
+			bundleContext, AssetListAssetEntryQueryProcessor.class);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerList.close();
 	}
 
 	protected AssetEntryQuery getAssetEntryQuery(
@@ -944,8 +956,7 @@ public class AssetListAssetEntryProviderImpl
 		AssetEntryQuery assetEntryQuery) {
 
 		for (AssetListAssetEntryQueryProcessor
-				assetListAssetEntryQueryProcessor :
-					_assetListAssetEntryQueryProcessors) {
+				assetListAssetEntryQueryProcessor : _serviceTrackerList) {
 
 			assetListAssetEntryQueryProcessor.processAssetEntryQuery(
 				companyId, userId, unicodeProperties, assetEntryQuery);
@@ -1119,8 +1130,6 @@ public class AssetListAssetEntryProviderImpl
 	@Reference
 	private AssetHelper _assetHelper;
 
-	private final List<AssetListAssetEntryQueryProcessor>
-		_assetListAssetEntryQueryProcessors = new CopyOnWriteArrayList<>();
 	private volatile AssetListConfiguration _assetListConfiguration;
 
 	@Reference
@@ -1149,5 +1158,8 @@ public class AssetListAssetEntryProviderImpl
 
 	@Reference
 	private Portal _portal;
+
+	private volatile ServiceTrackerList<AssetListAssetEntryQueryProcessor>
+		_serviceTrackerList;
 
 }

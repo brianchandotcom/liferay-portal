@@ -61,9 +61,12 @@ definition {
 
 		WaitForElementPresent(locator1 = "SetupWizard#BASIC_CONFIGURATION");
 
-		SikuliAssertElementPresent(locator1 = "SetupWizard#SETUP_WIZARD_BASIC_CONFIGURATION_PNG");
-
 		takeScreenshot();
+
+		// Temporarily remove sikuli assertion until fix in LRQA-65984
+
+		//SikuliAssertElementPresent(locator1 = "SetupWizard#SETUP_WIZARD_BASIC_CONFIGURATION_PNG");
+
 	}
 
 	@priority = 4

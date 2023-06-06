@@ -197,7 +197,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-150163 | Test Summary: Verify if the Activation form link works"
-	@priority = 5
+	@priority = 3
 	test IfActivationFormLinkWorks {
 		task ("Change the user role in the project") {
 			Account.openAccountsAdmin();

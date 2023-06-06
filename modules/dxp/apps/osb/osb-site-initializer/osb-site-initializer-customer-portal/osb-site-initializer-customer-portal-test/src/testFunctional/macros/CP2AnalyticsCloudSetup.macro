@@ -82,6 +82,8 @@ definition {
 		CP2AnalyticsCloudSetup.typeSetupAnalyticsCloudInfoFields(
 			label = "email",
 			value = "test@liferay.com");
+
+		CustomerPortal.assertButtonIsActive(text = "Submit");
 	}
 
 	macro typeSetupAnalyticsCloudInfoFields {

@@ -138,8 +138,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		InfoItemFormProvider<ObjectEntry> infoItemFormProvider =
 			new ObjectEntryInfoItemFormProvider(
 				objectDefinition, _infoItemFieldReaderFieldSetProvider,
-				_listTypeEntryLocalService, _objectDefinitionLocalService,
-				_objectFieldLocalService, _objectFieldSettingLocalService,
+				_listTypeEntryLocalService, _objectActionLocalService,
+				_objectDefinitionLocalService, _objectFieldLocalService,
+				_objectFieldSettingLocalService,
 				_objectRelationshipLocalService, _objectScopeProviderRegistry,
 				_restContextPathResolverRegistry,
 				_templateInfoItemFieldSetProvider, _userLocalService);
@@ -219,10 +220,10 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					_assetDisplayPageFriendlyURLProvider, _dlAppLocalService,
 					_dlFileEntryLocalService, _dlURLHelper,
 					_infoItemFieldReaderFieldSetProvider, _jsonFactory,
-					_listTypeEntryLocalService, objectDefinition,
-					_objectDefinitionLocalService, _objectEntryLocalService,
-					_objectEntryManagerRegistry, _objectFieldLocalService,
-					_objectRelationshipLocalService,
+					_listTypeEntryLocalService, _objectActionLocalService,
+					objectDefinition, _objectDefinitionLocalService,
+					_objectEntryLocalService, _objectEntryManagerRegistry,
+					_objectFieldLocalService, _objectRelationshipLocalService,
 					_templateInfoItemFieldSetProvider, _userLocalService),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"company.id", objectDefinition.getCompanyId()

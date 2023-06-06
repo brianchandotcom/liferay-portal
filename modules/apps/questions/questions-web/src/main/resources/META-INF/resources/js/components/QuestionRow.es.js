@@ -42,7 +42,9 @@ export default function QuestionRow({
 				portraitURL: question.creator.image,
 				userId: String(question.creator.id),
 				...(Liferay.FeatureFlags['LPS-185892'] && {
-					userGroups: question.creator?.userGroupInfos[0]?.name,
+					userGroups: question.creator?.userGroupsInformation?.map(
+						(userGroupInformation) => userGroupInformation.name
+					),
 				}),
 		  }
 		: {
@@ -51,7 +53,7 @@ export default function QuestionRow({
 				portraitURL: '',
 				userId: '0',
 				...(Liferay.FeatureFlags['LPS-185892'] && {
-					userGroups: '',
+					userGroups: null,
 				}),
 		  };
 
@@ -203,18 +205,20 @@ export default function QuestionRow({
 
 						{Liferay.FeatureFlags['LPS-185892'] &&
 							!!isContentReviewerUser &&
-							!!creatorInformation.userGroups && (
-								<ClayLabel
-									className="mb-2"
-									displayType={
-										creatorInformation.userGroups ===
-										'Partner'
-											? 'info'
-											: 'warning'
-									}
-								>
-									{creatorInformation.userGroups}
-								</ClayLabel>
+							creatorInformation.userGroups?.map(
+								(userGroup, index) => (
+									<ClayLabel
+										className="mb-2 mr-1"
+										displayType={
+											userGroup === 'Partner'
+												? 'info'
+												: 'warning'
+										}
+										key={index}
+									>
+										{userGroup}
+									</ClayLabel>
+								)
 							)}
 					</Link>
 

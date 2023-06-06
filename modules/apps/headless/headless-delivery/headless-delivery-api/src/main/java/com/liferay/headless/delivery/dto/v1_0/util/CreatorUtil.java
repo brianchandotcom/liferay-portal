@@ -34,6 +34,7 @@ public class CreatorUtil {
 				contentType = "UserAccount";
 				familyName = user.getLastName();
 				givenName = user.getFirstName();
+
 				id = user.getUserId();
 				name = user.getFullName();
 

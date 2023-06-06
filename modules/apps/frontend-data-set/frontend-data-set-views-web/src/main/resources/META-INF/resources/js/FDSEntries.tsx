@@ -42,7 +42,12 @@ type FDSEntryType = {
 			href: string;
 			method: string;
 		};
+		update: {
+			href: string;
+			method: string;
+		};
 	};
+	externalReferenceCode: string;
 	id: string;
 	label: string;
 	restApplication: string;
@@ -798,6 +803,115 @@ const FDSEntries = ({
 		});
 	};
 
+	const RenameFDSEntryModalContent = ({
+		closeModal,
+		itemData,
+		loadData,
+		namespace,
+	}: {
+		closeModal: Function;
+		itemData: FDSEntryType;
+		loadData: Function;
+		namespace: string;
+	}) => {
+		const [fdsEntryNameValue, setFdsEntryNameValue] = useState('');
+
+		function saveFDSEntryRename() {
+			fetch(itemData.actions.update.href, {
+				body: JSON.stringify({
+					externalReferenceCode: itemData.externalReferenceCode,
+					label: fdsEntryNameValue,
+				}),
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json',
+				},
+				method: itemData.actions.update.method,
+			})
+				.then(() => {
+					closeModal();
+
+					openToast({
+						message: Liferay.Language.get(
+							'your-request-completed-successfully'
+						),
+						type: 'success',
+					});
+
+					loadData();
+				})
+				.catch(() =>
+					openToast({
+						message: Liferay.Language.get(
+							'your-request-failed-to-complete'
+						),
+						type: 'danger',
+					})
+				);
+		}
+
+		return (
+			<>
+				<ClayModal.Header>
+					{Liferay.Language.get('rename-dataset')}
+				</ClayModal.Header>
+
+				<ClayModal.Body>
+					<ClayForm.Group>
+						<label htmlFor={`${namespace}fdsRenameInput`}>
+							{Liferay.Language.get('name')}
+						</label>
+
+						<ClayInput
+							id={`${namespace}fdsRenameInput`}
+							onChange={(event) =>
+								setFdsEntryNameValue(event.target.value)
+							}
+							type="text"
+							value={fdsEntryNameValue}
+						/>
+					</ClayForm.Group>
+				</ClayModal.Body>
+
+				<ClayModal.Footer
+					last={
+						<ClayButton.Group spaced>
+							<ClayButton onClick={saveFDSEntryRename}>
+								{Liferay.Language.get('save')}
+							</ClayButton>
+
+							<ClayButton
+								displayType="secondary"
+								onClick={() => closeModal()}
+							>
+								{Liferay.Language.get('cancel')}
+							</ClayButton>
+						</ClayButton.Group>
+					}
+				/>
+			</>
+		);
+	};
+
+	const onRenameClick = ({
+		itemData,
+		loadData,
+	}: {
+		itemData: FDSEntryType;
+		loadData: Function;
+	}) => {
+		openModal({
+			contentComponent: ({closeModal}: {closeModal: Function}) => (
+				<RenameFDSEntryModalContent
+					closeModal={closeModal}
+					itemData={itemData}
+					loadData={loadData}
+					namespace={namespace}
+				/>
+			),
+		});
+	};
+
 	const views = [
 		{
 			contentRenderer: 'table',
@@ -859,6 +973,11 @@ const FDSEntries = ({
 						icon: 'view',
 						label: Liferay.Language.get('view'),
 						onClick: onViewClick,
+					},
+					{
+						icon: 'pencil',
+						label: Liferay.Language.get('rename'),
+						onClick: onRenameClick,
 					},
 					{
 						icon: 'trash',

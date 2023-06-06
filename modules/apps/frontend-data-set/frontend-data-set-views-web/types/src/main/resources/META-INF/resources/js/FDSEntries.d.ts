@@ -12,8 +12,6 @@
  * details.
  */
 
-/// <reference types="react" />
-
 import '../css/FDSEntries.scss';
 import {OBJECT_RELATIONSHIP} from './Constants';
 import {FDSViewType} from './FDSViews';
@@ -24,7 +22,12 @@ declare type FDSEntryType = {
 			href: string;
 			method: string;
 		};
+		update: {
+			href: string;
+			method: string;
+		};
 	};
+	externalReferenceCode: string;
 	id: string;
 	label: string;
 	restApplication: string;

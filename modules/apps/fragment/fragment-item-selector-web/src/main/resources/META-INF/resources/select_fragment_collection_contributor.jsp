@@ -32,6 +32,10 @@ DefaultFragmentDisplayContext defaultFragmentDisplayContext = new DefaultFragmen
 		<clay:container-fluid
 			id='<%= liferayPortletResponse.getNamespace() + "fragmentsContainer" %>'
 		>
+			<liferay-site-navigation:breadcrumb
+				breadcrumbEntries="<%= defaultFragmentDisplayContext.getBreadcrumbEntries() %>"
+			/>
+
 			<liferay-ui:search-container
 				emptyResultsMessage="no-fragment-collection-was-found"
 				id="fragment-collections"

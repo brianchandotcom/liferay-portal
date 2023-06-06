@@ -68,14 +68,14 @@ public class LayoutSetPrototypeFriendlyURLConflictDetectionTest {
 
 		_layoutSetPrototypeGroup = _layoutSetPrototype.getGroup();
 
-		setLinkEnabled(true);
+		setLinkEnabled();
 	}
 
 	@Test
 	public void testLayoutSetPrototypeLayoutMultipleFriendlyURLConflictDetectionFromPrototype()
 		throws Exception {
 
-		setLinkEnabled(true);
+		setLinkEnabled();
 
 		String[] names = RandomTestUtil.randomStrings(3);
 
@@ -130,7 +130,7 @@ public class LayoutSetPrototypeFriendlyURLConflictDetectionTest {
 	public void testLayoutSetPrototypeLayoutMultipleFriendlyURLConflictDetectionFromSite()
 		throws Exception {
 
-		setLinkEnabled(true);
+		setLinkEnabled();
 
 		String[] names = RandomTestUtil.randomStrings(3);
 
@@ -181,12 +181,12 @@ public class LayoutSetPrototypeFriendlyURLConflictDetectionTest {
 		}
 	}
 
-	protected void setLinkEnabled(boolean linkEnabled) throws Exception {
+	protected void setLinkEnabled() throws Exception {
 		MergeLayoutPrototypesThreadLocal.clearMergeComplete();
 
 		SitesUtil.updateLayoutSetPrototypesLinks(
 			_group, _layoutSetPrototype.getLayoutSetPrototypeId(), 0,
-			linkEnabled, false);
+			true, false);
 
 		Thread.sleep(2000);
 	}

@@ -247,10 +247,10 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 			}
 			else {
 				layoutTypeSettingsUnicodeProperties.putAll(
-					formTypeSettingsUnicodeProperties);
+					layout.getTypeSettingsProperties());
 
 				layoutTypeSettingsUnicodeProperties.putAll(
-					layout.getTypeSettingsProperties());
+					formTypeSettingsUnicodeProperties);
 			}
 
 			layout = _layoutService.updateLayout(

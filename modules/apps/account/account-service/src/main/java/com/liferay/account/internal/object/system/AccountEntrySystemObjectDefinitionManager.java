@@ -120,10 +120,13 @@ public class AccountEntrySystemObjectDefinitionManager
 	@Override
 	public List<ObjectField> getObjectFields() {
 		return Arrays.asList(
-			createObjectField("Text", "String", "name", "name", true, true),
 			createObjectField(
-				"Text", "String", "description", "description", false, true),
-			createObjectField("Text", "String", "type", "type", true, true));
+				"NAME", "Text", "String", "name", "name", true, true),
+			createObjectField(
+				"DESCRIPTION", "Text", "String", "description", "description",
+				false, true),
+			createObjectField(
+				"TYPE", "Text", "String", "type", "type", true, true));
 	}
 
 	@Override

@@ -122,24 +122,26 @@ public class UserSystemObjectDefinitionManager
 	public List<ObjectField> getObjectFields() {
 		return Arrays.asList(
 			createObjectField(
-				"Text", "middleName", "String", "middle-name", "additionalName",
-				false, true),
+				"ADDITIONAL_NAME", "Text", "middleName", "String",
+				"middle-name", "additionalName", false, true),
 			createObjectField(
-				"Text", "screenName", "String", "screen-name", "alternateName",
-				true, true),
+				"ALTERNATE_NAME", "Text", "screenName", "String", "screen-name",
+				"alternateName", true, true),
 			createObjectField(
-				"Text", "String", "email-address", "emailAddress", true, true),
+				"EMAIL_ADDRESS", "Text", "String", "email-address",
+				"emailAddress", true, true),
 			createObjectField(
-				"Text", "lastName", "String", "last-name", "familyName", true,
-				true),
+				"FAMILY_NAME", "Text", "lastName", "String", "last-name",
+				"familyName", true, true),
 			createObjectField(
-				"Text", "firstName", "String", "first-name", "givenName", true,
-				true),
+				"GIVEN_NAME", "Text", "firstName", "String", "first-name",
+				"givenName", true, true),
 			createObjectField(
-				"Date", "lastLoginDate", "Date", "last-login-date",
-				"lastLoginDate", false, true),
+				"LAST_LOGIN_DATE", "Date", "lastLoginDate", "Date",
+				"last-login-date", "lastLoginDate", false, true),
 			createObjectField(
-				"Text", "uuid_", "String", "uuid", "uuid", false, true));
+				"UUID", "Text", "uuid_", "String", "uuid", "uuid", false,
+				true));
 	}
 
 	@Override

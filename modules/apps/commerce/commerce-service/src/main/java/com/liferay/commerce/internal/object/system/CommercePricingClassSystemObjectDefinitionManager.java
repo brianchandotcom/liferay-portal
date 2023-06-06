@@ -126,11 +126,13 @@ public class CommercePricingClassSystemObjectDefinitionManager
 	public List<ObjectField> getObjectFields() {
 		return Arrays.asList(
 			createObjectField(
-				"Text", "String", "description", "description", false, true),
-			createObjectField(
-				"Integer", "Integer", "number-of-products", "productsCount",
+				"DESCRIPTION", "Text", "String", "description", "description",
 				false, true),
-			createObjectField("Text", "String", "title", "title", true, true));
+			createObjectField(
+				"PRODUCTS_COUNT", "Integer", "Integer", "number-of-products",
+				"productsCount", false, true),
+			createObjectField(
+				"TITLE", "Text", "String", "title", "title", true, true));
 	}
 
 	@Override

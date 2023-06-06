@@ -126,24 +126,28 @@ public class CommerceOrderSystemObjectDefinitionManager
 	public List<ObjectField> getObjectFields() {
 		return Arrays.asList(
 			createObjectField(
-				"LongInteger", "Long", "account-id", "accountId", true, true),
+				"ACCOUNT_ID", "LongInteger", "Long", "account-id", "accountId",
+				true, true),
 			createObjectField(
-				"LongInteger", "Long", "channel-id", "channelId", true, true),
+				"CHANNEL_ID", "LongInteger", "Long", "channel-id", "channelId",
+				true, true),
 			createObjectField(
-				"Text", "String", "currency-code", "currencyCode", true, true),
+				"CURRENCY_CODE", "Text", "String", "currency-code",
+				"currencyCode", true, true),
 			createObjectField(
-				"Integer", "Integer", "order-status", "orderStatus", true,
-				true),
+				"ORDER_STATUS", "Integer", "Integer", "order-status",
+				"orderStatus", true, true),
 			createObjectField(
-				"Text", "orderTypeExternalReferenceCode", "String",
+				"ORDER_TYPE_EXTERNAL_REFERENCE_CODE", "Text",
+				"orderTypeExternalReferenceCode", "String",
 				"orderTypeExternalReferenceCode",
 				"orderTypeExternalReferenceCode", false, true),
 			createObjectField(
-				"LongInteger", "orderTypeId", "Long", "order-type-id",
-				"orderTypeId", false, true),
+				"ORDER_TYPE_ID", "LongInteger", "orderTypeId", "Long",
+				"order-type-id", "orderTypeId", false, true),
 			createObjectField(
-				"PrecisionDecimal", "BigDecimal", "shipping-amount",
-				"shippingAmount", true, true));
+				"SHIPPING_AMOUNT", "PrecisionDecimal", "BigDecimal",
+				"shipping-amount", "shippingAmount", true, true));
 	}
 
 	@Override

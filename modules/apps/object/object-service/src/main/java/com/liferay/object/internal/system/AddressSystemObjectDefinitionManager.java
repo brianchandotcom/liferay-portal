@@ -111,10 +111,11 @@ public class AddressSystemObjectDefinitionManager
 	@Override
 	public List<ObjectField> getObjectFields() {
 		return Arrays.asList(
-			createObjectField("Text", "String", "name", "name", true, true),
 			createObjectField(
-				"Text", "street1", "String", "street1", "streetAddressLine1",
-				true, true));
+				"NAME", "Text", "String", "name", "name", true, true),
+			createObjectField(
+				"STREET_ADDRESS_LINE_1", "Text", "street1", "String", "street1",
+				"streetAddressLine1", true, true));
 	}
 
 	@Override

@@ -137,11 +137,14 @@ public class ESImportUtilTest {
 	@Test
 	public void testIsESImport() {
 		Assert.assertTrue(
-			ESImportUtil.isESImport("{something} from a-package/index.js"));
+			ESImportUtil.isESImport("from my-nice-package/index.js"));
+
 		Assert.assertTrue(
 			ESImportUtil.isESImport("aName from my-nice-package/index.js"));
+
 		Assert.assertTrue(
-			ESImportUtil.isESImport("from my-nice-package/index.js"));
+			ESImportUtil.isESImport("{something} from a-package/index.js"));
+
 		Assert.assertFalse(
 			ESImportUtil.isESImport("frontend-taglib-clay@1.1.0/index.js"));
 	}

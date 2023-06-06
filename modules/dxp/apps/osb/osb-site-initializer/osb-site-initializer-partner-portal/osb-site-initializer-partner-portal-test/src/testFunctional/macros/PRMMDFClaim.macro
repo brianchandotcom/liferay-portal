@@ -108,6 +108,11 @@ definition {
 			locator1 = "Header#H1_TITLE");
 	}
 
+	@summary = "Click on 'Edit' button inside claim detail page"
+	macro editButton {
+		Click(locator1 = "PRMMDFClaim#EDIT_BUTTON");
+	}
+
 	@summary = "Fill the fields related to activity in claim form"
 	macro fillActivityFields {
 		if (!(isSet(activityIndex))) {
@@ -117,6 +122,10 @@ definition {
 		if (!(isSet(budgetIndex))) {
 			var budgetIndex = 0;
 		}
+
+		WaitForElementPresent(
+			key_title = "Reimbursement Claim",
+			locator1 = "Header#H2_TITLE");
 
 		for (var actvIndex : list ${activityIndex}) {
 			Click.javaScriptClick(
@@ -168,14 +177,16 @@ definition {
 	@summary = "Filter the claim by Company Name"
 	macro filterClaimID {
 		Click(
-			key_filterOption = ${buttonOption},
+			key_filterOption = "Filter",
 			locator1 = "AppBuilder#CHOOSE_SEARCH_FILTER_BY_OPTION");
 
 		Click(
 			key_filterOption = ${optionDropdown},
 			locator1 = "PRMMDFRequest#DROPDOWN_OPTIONS");
 
-		Click.clickAtNotVisible(locator1 = "PRMMDFClaim#CHECKBOX_OPTIONS");
+		Click.clickAtNotVisible(
+			locator1 = "PRMMDFClaim#CHECKBOX_OPTION",
+			key_checkboxName = ${checkboxName});
 
 		Click.clickAtNotVisible(locator1 = "PRMMDFClaim#APPLY_BUTTON");
 	}
@@ -212,33 +223,6 @@ definition {
 			static var staticClaimId2 = ${claimId};
 
 			return ${staticClaimId2};
-		}
-	}
-
-	@summary = "Partially create a new claim on the MDF details page"
-	macro partialNewClaim {
-		Button.click(button = "New Claim");
-
-		WaitForPageLoad();
-
-		if (!(isSet(activityIndex))) {
-			var activityIndex = 0;
-		}
-
-		if (!(isSet(budgetIndex))) {
-			var budgetIndex = 0;
-		}
-
-		for (var actvIndex : list ${activityIndex}) {
-			Click.javaScriptClick(
-				key_fieldName = "activities[${actvIndex}].selected",
-				locator1 = "Checkbox#CHECKBOX_NAME");
-
-			for (var bdgtIndex : list ${budgetIndex}) {
-				Click.javaScriptClick(
-					key_fieldName = "activities[${actvIndex}].budgets[${bdgtIndex}].selected",
-					locator1 = "Checkbox#CHECKBOX_NAME");
-			}
 		}
 	}
 

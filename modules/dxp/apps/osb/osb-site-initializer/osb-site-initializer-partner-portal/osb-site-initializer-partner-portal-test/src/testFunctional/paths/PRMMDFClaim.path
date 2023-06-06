@@ -37,12 +37,12 @@
 </tr>
 <tr>
 	<td>VIEW_CLAIM_BUTTON</td>
-	<td>//div[contains(@class,'claims-list')]//div[contains(text(),'Claim ')][contains(.,'${key_claimId}')]//following-sibling::div/*[contains(text(),'View')]</td>
+	<td>//div[contains(@class,'claims-list')]//div[contains(text(),'Claim ')][contains(.,'${key_claimId}')]//following-sibling::div//*[contains(text(),'View')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CHECKBOX_OPTIONS</td>
-	<td>//div[contains(@class,'show')]//label[contains(.,'${checkboxName}')]//input[@type='checkbox']</td>
+	<td>CHECKBOX_OPTIONS/td>
+	<td>//div[contains(@class,'show')]//label[contains(.,'${key_checkboxName}')]//input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>

@@ -511,7 +511,7 @@ definition {
 		task ("And the partner goes to edit the approved claim") {
 			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
 
-			PRMMDFClaimEdit.editButton();
+			PRMMDFClaim.editButton();
 		}
 
 		task ("When the partner don't fill all mandatory fields of a new activity") {
@@ -545,7 +545,7 @@ definition {
 		task ("And the partner goes to edit the claim") {
 			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
 
-			PRMMDFClaimEdit.editButton();
+			PRMMDFClaim.editButton();
 		}
 
 		task ("When the partner change one attachment of the budget") {
@@ -599,7 +599,7 @@ definition {
 		task ("And the partner goes to edit the approved claim") {
 			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
 
-			PRMMDFClaimEdit.editButton();
+			PRMMDFClaim.editButton();
 		}
 
 		task ("When the partner change one attachment of the budget") {

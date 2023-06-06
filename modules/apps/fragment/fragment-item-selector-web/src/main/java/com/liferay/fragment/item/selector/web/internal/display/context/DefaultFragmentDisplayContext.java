@@ -32,6 +32,8 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
@@ -144,11 +146,31 @@ public class DefaultFragmentDisplayContext {
 				_liferayPortletRequest, _liferayPortletResponse),
 			null, null);
 
+		if (isSearch()) {
+			fragmentEntries = ListUtil.filter(
+				fragmentEntries,
+				contributedEntry -> {
+					String lowerCaseName = StringUtil.toLowerCase(
+						contributedEntry.getName());
+
+					return lowerCaseName.contains(
+						StringUtil.toLowerCase(_getKeywords()));
+				});
+		}
+
 		searchContainer.setResultsAndTotal(fragmentEntries);
 
 		_fragmentsSearchContainer = searchContainer;
 
 		return _fragmentsSearchContainer;
+	}
+
+	public boolean isSearch() {
+		if (Validator.isNotNull(_getKeywords())) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private boolean _filterInputTypes(
@@ -174,6 +196,16 @@ public class DefaultFragmentDisplayContext {
 		}
 	}
 
+	private String _getKeywords() {
+		if (_keywords != null) {
+			return _keywords;
+		}
+
+		_keywords = ParamUtil.getString(_httpServletRequest, "keywords");
+
+		return _keywords;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultFragmentDisplayContext.class.getName());
 
@@ -185,6 +217,7 @@ public class DefaultFragmentDisplayContext {
 	private final FragmentItemSelectorCriterion _fragmentItemSelectorCriterion;
 	private SearchContainer<FragmentEntry> _fragmentsSearchContainer;
 	private final HttpServletRequest _httpServletRequest;
+	private String _keywords;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final ThemeDisplay _themeDisplay;

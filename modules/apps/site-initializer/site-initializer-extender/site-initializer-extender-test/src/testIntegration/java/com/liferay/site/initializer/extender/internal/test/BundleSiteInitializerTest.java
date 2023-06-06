@@ -1948,7 +1948,7 @@ public class BundleSiteInitializerTest {
 			objectDefinition4.getAccountEntryRestrictedObjectFieldId() > 0);
 		Assert.assertTrue(objectDefinition4.isEnableCategorization());
 		Assert.assertTrue(objectDefinition4.isEnableComments());
-		Assert.assertEquals("default", objectDefinition4.getStorageType());
+		Assert.assertTrue(objectDefinition4.isDefaultStorageType());
 		Assert.assertFalse(objectDefinition4.isSystem());
 		Assert.assertEquals(
 			objectDefinition4.getStatus(), WorkflowConstants.STATUS_APPROVED);
@@ -1960,7 +1960,7 @@ public class BundleSiteInitializerTest {
 		Assert.assertTrue(objectDefinition5.isAccountEntryRestricted());
 		Assert.assertTrue(
 			objectDefinition5.getAccountEntryRestrictedObjectFieldId() > 0);
-		Assert.assertEquals("default", objectDefinition5.getStorageType());
+		Assert.assertTrue(objectDefinition5.isDefaultStorageType());
 		Assert.assertFalse(objectDefinition5.isSystem());
 		Assert.assertEquals(
 			objectDefinition5.getStatus(), WorkflowConstants.STATUS_APPROVED);

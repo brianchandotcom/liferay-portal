@@ -1206,7 +1206,8 @@ public class ObjectDefinitionLocalServiceTest {
 	}
 
 	@Test
-	public void testEnableSalesForceAccountEntryRestricted() throws Exception {
+	public void testEnableAccountEntryRestrictedForExternalStorageType()
+		throws Exception {
 
 		// Enabling account restriction to a custom salesforce object definition
 
@@ -1235,7 +1236,8 @@ public class ObjectDefinitionLocalServiceTest {
 
 		objectDefinition1 =
 			_objectDefinitionLocalService.
-				enableSalesForceAccountEntryRestricted(objectField1);
+				enableAccountEntryRestrictedForExternalStorageType(
+					objectField1);
 
 		Assert.assertTrue(objectDefinition1.isAccountEntryRestricted());
 		Assert.assertTrue(
@@ -1248,7 +1250,7 @@ public class ObjectDefinitionLocalServiceTest {
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition1);
 
 		// Enabling account restriction for default storage object definition
-		// using sales force method
+		// using salesforce method
 
 		User user = TestPropsValues.getUser();
 
@@ -1272,7 +1274,8 @@ public class ObjectDefinitionLocalServiceTest {
 
 		objectDefinition2 =
 			_objectDefinitionLocalService.
-				enableSalesForceAccountEntryRestricted(objectField2);
+				enableAccountEntryRestrictedForExternalStorageType(
+					objectField2);
 
 		Assert.assertFalse(objectDefinition2.isAccountEntryRestricted());
 
@@ -1304,7 +1307,8 @@ public class ObjectDefinitionLocalServiceTest {
 		try {
 			objectDefinition3 =
 				_objectDefinitionLocalService.
-					enableSalesForceAccountEntryRestricted(objectField3);
+					enableAccountEntryRestrictedForExternalStorageType(
+						objectField3);
 
 			Assert.fail();
 		}

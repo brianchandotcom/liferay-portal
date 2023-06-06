@@ -49,13 +49,13 @@ public class PropertiesLanguageKeysContextCheck extends BaseFileCheck {
 		Enumeration<String> enumeration =
 			(Enumeration<String>)properties.propertyNames();
 
-		int depth = GetterUtil.getInteger(
-			getAttributeValue(_DEPTH_KEY, "1", absolutePath));
+		int contextDepth = GetterUtil.getInteger(
+			getAttributeValue(_CONTEXT_DEPTH_KEY, "1", absolutePath));
 
 		while (enumeration.hasMoreElements()) {
 			String key = enumeration.nextElement();
 
-			if (StringUtil.count(key, StringPool.DASH) != (depth - 1)) {
+			if (StringUtil.count(key, StringPool.DASH) != (contextDepth - 1)) {
 				continue;
 			}
 
@@ -101,7 +101,7 @@ public class PropertiesLanguageKeysContextCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private static final String _DEPTH_KEY = "depth";
+	private static final String _CONTEXT_DEPTH_KEY = "contextDepth";
 
 	private static final String _FORBIDDEN_CONTEXT_NAMES_KEY =
 		"forbiddenContextNames";

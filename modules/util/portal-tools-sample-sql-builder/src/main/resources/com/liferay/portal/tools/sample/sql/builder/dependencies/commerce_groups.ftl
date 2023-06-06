@@ -4,6 +4,8 @@
 
 		commerceGroupModels = dataFactory.newCommerceGroupModels()
 
+		commerceCurrencyModel = dataFactory.newCommerceCurrencyModel()
+
 		commerceChannelModels = dataFactory.newCommerceChannelModels(commerceGroupModels, commerceCurrencyModel)
 
 		commerceChannelGroupModels = dataFactory.newCommerceChannelGroupModels(commerceChannelModels)
@@ -18,10 +20,16 @@
 
 		cpTaxCategoryModel = dataFactory.newCPTaxCategoryModel()
 
+		countryModel = dataFactory.newCountryModel()
+
 		addressModels = dataFactory.newAddressModels(commerceAccountEntryModels, countryModel.countryId)
 
 		commerceShippingMethodModels = dataFactory.newCommerceShippingMethodModels(commerceChannelGroupModels)
 	/>
+
+	${dataFactory.toInsertSQL(commerceCurrencyModel)}
+
+	${dataFactory.toInsertSQL(countryModel)}
 
 	<#list commerceAccountEntryModels as commerceAccountEntryModel>
 		${dataFactory.toInsertSQL(commerceAccountEntryModel)}

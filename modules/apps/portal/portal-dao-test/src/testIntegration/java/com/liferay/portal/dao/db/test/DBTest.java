@@ -395,6 +395,10 @@ public class DBTest {
 			indexNamePrefix = "TMP_";
 		}
 
+		Assert.assertArrayEquals(
+			new String[] {_dbInspector.normalizeName("id")},
+			_db.getPrimaryKeyColumnNames(_connection, _TABLE_NAME_2));
+
 		Assert.assertTrue(
 			_dbInspector.hasIndex(
 				_TABLE_NAME_2, indexNamePrefix + _INDEX_NAME));

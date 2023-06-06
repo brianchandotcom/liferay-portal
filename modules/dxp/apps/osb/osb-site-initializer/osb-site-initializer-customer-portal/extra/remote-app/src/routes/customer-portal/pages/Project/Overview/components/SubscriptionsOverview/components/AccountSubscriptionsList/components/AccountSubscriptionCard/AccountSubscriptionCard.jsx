@@ -30,6 +30,8 @@ const AccountSubscriptionCard = ({
 	onClick,
 	...accountSubscription
 }) => {
+	const instanceSize = Number(accountSubscription.instanceSize ?? 0);
+
 	const getDatesDisplay = () =>
 		`${getDateCustomFormat(
 			accountSubscription.startDate,
@@ -76,11 +78,13 @@ const AccountSubscriptionCard = ({
 					{loading ? (
 						<Skeleton className="mb-1" height={13} width={80} />
 					) : (
-						<p className="mb-1 text-center text-neutral-7 text-paragraph-sm">
-							{`${i18n.translate('instance-size')}: `}
+						instanceSize > 0 && (
+							<p className="mb-1 text-center text-neutral-7 text-paragraph-sm">
+								{`${i18n.translate('instance-size')}: `}
 
-							{accountSubscription.instanceSize}
-						</p>
+								{accountSubscription.instanceSize}
+							</p>
+						)
 					)}
 
 					{loading ? (

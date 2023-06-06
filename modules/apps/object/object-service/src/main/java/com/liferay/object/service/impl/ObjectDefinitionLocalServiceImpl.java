@@ -979,7 +979,8 @@ public class ObjectDefinitionLocalServiceImpl
 					objectField.isSystem()) {
 
 					_objectFieldLocalService.addOrUpdateSystemObjectField(
-						userId, objectDefinition.getObjectDefinitionId(),
+						objectField.getExternalReferenceCode(), userId,
+						objectDefinition.getObjectDefinitionId(),
 						objectField.getBusinessType(),
 						objectField.getDBColumnName(),
 						objectDefinition.getDBTableName(),

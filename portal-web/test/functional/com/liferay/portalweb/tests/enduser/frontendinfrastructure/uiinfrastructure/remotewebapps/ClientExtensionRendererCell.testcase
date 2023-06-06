@@ -40,4 +40,32 @@ definition {
 		}
 	}
 
+	@description = "LPS-175155. Verify if is possible create a Renderer Cell via OSGI"
+	@priority = 4
+	test CanCreateCellRendererViaOSGI {
+		property fdsCellRenderer.client.extension.created = "true";
+		property test.name.skip.portal.instance = "ClientExtensionOSGI#CanCreateCellRendererViaApi";
+
+		task ("Given creating a Cell Renderer via OSGI") {
+			ClientExtension.createGlobalVariableClientExtensionType(type = "fdsCellRenderer");
+
+			ClientExtension.checkConfigFileCreatedProperly();
+		}
+
+		task ("And access Client Extension admin page") {
+			ClientExtensionGeneral.goToRemoteAppsPortlet();
+		}
+
+		task ("When the user search for the OSGI cell renderer name on Client Extension search bar") {
+			Search.searchCP(searchTerm = "Change Date Format");
+		}
+
+		task ("Then only the cell renderer created by OSGI is displayed") {
+			AssertElementNotPresent(
+				key_tableEntryName = "Configured From",
+				locator1 = "ClientExtension#TABLE_ENTRY_NAME_REMOTE_TABLE",
+				value1 = "Workspace");
+		}
+	}
+
 }

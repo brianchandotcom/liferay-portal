@@ -50,7 +50,7 @@ const List = ({items, schema}) => {
 };
 
 const Title = ({item, title, titleRenderer}) => {
-	const TitleRendererComponent = titleRenderer.component;
+	const TitleRendererComponent = titleRenderer?.component;
 
 	if (TitleRendererComponent) {
 		return <TitleRendererComponent itemData={item} />;

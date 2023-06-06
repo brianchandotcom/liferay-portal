@@ -14,14 +14,18 @@
 
 package com.liferay.frontend.taglib.chart.servlet.taglib.soy.base;
 
+import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
+import com.liferay.frontend.taglib.chart.internal.js.loader.modules.extender.npm.NPMResolverProvider;
 import com.liferay.frontend.taglib.chart.model.ChartConfig;
 import com.liferay.frontend.taglib.soy.servlet.taglib.TemplateRendererTag;
+import com.liferay.frontend.taglib.util.TagAccessor;
+import com.liferay.frontend.taglib.util.TagResourceHandler;
 import com.liferay.petra.string.StringPool;
 
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Chema Balsas
@@ -31,8 +35,6 @@ public abstract class BaseChartTag extends TemplateRendererTag {
 	public BaseChartTag(String moduleBaseName, String templateNamespace) {
 		_moduleBaseName = moduleBaseName;
 		_templateNamespace = templateNamespace;
-
-		setDependencies(Collections.emptySet());
 	}
 
 	@Override
@@ -44,15 +46,22 @@ public abstract class BaseChartTag extends TemplateRendererTag {
 			setTemplateNamespace("ClayChart.render");
 		}
 
+		_tagResourceHandler.outputNPMStyleSheet("clay-charts/lib/css/main.css");
+		_tagResourceHandler.outputNPMResource("clay-charts/lib/svg/tiles.svg");
 
 		return super.doStartTag();
 	}
 
 	@Override
 	public String getModule() {
-		return
-			StringPool.OPEN_CURLY_BRACE + _moduleBaseName +
-				"} from frontend-taglib-chart/exports/clay-charts.js";
+		NPMResolver npmResolver = NPMResolverProvider.getNPMResolver();
+
+		if (npmResolver == null) {
+			return StringPool.BLANK;
+		}
+
+		return npmResolver.resolveModuleName(
+			"clay-charts/lib/" + _moduleBaseName);
 	}
 
 	public void setConfig(ChartConfig<?> chartConfig) {
@@ -61,32 +70,32 @@ public abstract class BaseChartTag extends TemplateRendererTag {
 		}
 	}
 
-	@Override
-	public void setDependencies(Set<String> dependencies) {
-		dependencies = new HashSet<>(dependencies);
-
-		dependencies.add(
-			"from frontend-taglib-chart/exports/clay-charts$lib$css$" +
-				"main.css.js");
-		dependencies.add(
-			"from frontend-taglib-chart/exports/clay-charts$lib$svg$" +
-				"tiles.svg.js");
-
-		super.setDependencies(dependencies);
-	}
-
 	public void setId(String id) {
 		putValue("id", id);
 	}
 
-	@Override
-	protected void cleanUp() {
-		super.cleanUp();
-
-		setDependencies(Collections.emptySet());
+	private PageContext _getPageContext() {
+		return pageContext;
 	}
 
 	private final String _moduleBaseName;
+
+	private final TagResourceHandler _tagResourceHandler =
+		new TagResourceHandler(
+			BaseChartTag.class,
+			new TagAccessor() {
+
+				@Override
+				public PageContext getPageContext() {
+					return BaseChartTag.this._getPageContext();
+				}
+
+				@Override
+				public HttpServletRequest getRequest() {
+					return BaseChartTag.this.getRequest();
+				}
+
+			});
 
 	private final String _templateNamespace;
 

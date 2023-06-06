@@ -31,14 +31,6 @@
 
 	${dataFactory.toInsertSQL(countryModel)}
 
-	<#list commerceAccountEntryModels as commerceAccountEntryModel>
-		${dataFactory.toInsertSQL(commerceAccountEntryModel)}
-
-		${dataFactory.toInsertSQL(dataFactory.newAccountEntryUserRelModel(sampleUserModel, commerceAccountEntryModel.accountEntryId))}
-
-		${dataFactory.toInsertSQL(dataFactory.newCommerceAccountEntryGroupModel(commerceAccountEntryModel))}
-	</#list>
-
 	<#list addressModels as addressModel>
 		${dataFactory.toInsertSQL(addressModel)}
 	</#list>
@@ -174,6 +166,12 @@
 	</#list>
 
 	<#list commerceAccountEntryModels as commerceAccountEntryModel>
+		${dataFactory.toInsertSQL(commerceAccountEntryModel)}
+
+		${dataFactory.toInsertSQL(dataFactory.newAccountEntryUserRelModel(sampleUserModel, commerceAccountEntryModel.accountEntryId))}
+
+		${dataFactory.toInsertSQL(dataFactory.newCommerceAccountEntryGroupModel(commerceAccountEntryModel))}
+
 		<#assign
 			addressModel = addressModels[commerceAccountEntryModel?index]
 

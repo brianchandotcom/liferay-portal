@@ -21,6 +21,7 @@ import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
+import com.liferay.info.field.type.ActionInfoFieldType;
 import com.liferay.info.field.type.ImageInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.field.type.URLInfoFieldType;
@@ -33,13 +34,16 @@ import com.liferay.info.type.KeyLocalizedLabelPair;
 import com.liferay.info.type.WebImage;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
+import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
+import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -95,6 +99,7 @@ public class ObjectEntryInfoItemFieldValuesProvider
 		InfoItemFieldReaderFieldSetProvider infoItemFieldReaderFieldSetProvider,
 		JSONFactory jsonFactory,
 		ListTypeEntryLocalService listTypeEntryLocalService,
+		ObjectActionLocalService objectActionLocalService,
 		ObjectDefinition objectDefinition,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectEntryLocalService objectEntryLocalService,
@@ -113,6 +118,7 @@ public class ObjectEntryInfoItemFieldValuesProvider
 			infoItemFieldReaderFieldSetProvider;
 		_jsonFactory = jsonFactory;
 		_listTypeEntryLocalService = listTypeEntryLocalService;
+		_objectActionLocalService = objectActionLocalService;
 		_objectDefinition = objectDefinition;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectEntryLocalService = objectEntryLocalService;
@@ -329,6 +335,14 @@ public class ObjectEntryInfoItemFieldValuesProvider
 					objectEntry.getObjectDefinitionId(), false),
 				objectEntry.getValues()));
 
+		if (FeatureFlagManagerUtil.isEnabled("LPS-169992")) {
+			objectEntryFieldValues.addAll(
+				_getObjectActionsInfoFieldValues(
+					_objectActionLocalService.getObjectActions(
+						_objectDefinition.getObjectDefinitionId(),
+						ObjectActionTriggerConstants.KEY_STANDALONE)));
+		}
+
 		return objectEntryFieldValues;
 	}
 
@@ -382,6 +396,40 @@ public class ObjectEntryInfoItemFieldValuesProvider
 				objectEntry.getProperties()));
 
 		return objectEntryFieldValues;
+	}
+
+	private List<InfoFieldValue<Object>> _getObjectActionsInfoFieldValues(
+		List<ObjectAction> objectActions) {
+
+		List<InfoFieldValue<Object>> objectActionsInfoFieldValues =
+			new ArrayList<>();
+
+		for (ObjectAction objectAction : objectActions) {
+			InfoLocalizedValue<String> actionLabelInfoLocalizedValue =
+				InfoLocalizedValue.<String>builder(
+				).defaultLocale(
+					LocaleUtil.fromLanguageId(
+						objectAction.getDefaultLanguageId())
+				).values(
+					objectAction.getLabelMap()
+				).build();
+
+			objectActionsInfoFieldValues.add(
+				new InfoFieldValue<>(
+					InfoField.builder(
+					).infoFieldType(
+						ActionInfoFieldType.INSTANCE
+					).namespace(
+						ObjectAction.class.getSimpleName()
+					).name(
+						objectAction.getName()
+					).labelInfoLocalizedValue(
+						actionLabelInfoLocalizedValue
+					).build(),
+					actionLabelInfoLocalizedValue));
+		}
+
+		return objectActionsInfoFieldValues;
 	}
 
 	private List<InfoFieldValue<Object>> _getObjectFieldsInfoFieldValues(
@@ -665,6 +713,7 @@ public class ObjectEntryInfoItemFieldValuesProvider
 		_infoItemFieldReaderFieldSetProvider;
 	private final JSONFactory _jsonFactory;
 	private final ListTypeEntryLocalService _listTypeEntryLocalService;
+	private final ObjectActionLocalService _objectActionLocalService;
 	private final ObjectDefinition _objectDefinition;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectEntryLocalService _objectEntryLocalService;

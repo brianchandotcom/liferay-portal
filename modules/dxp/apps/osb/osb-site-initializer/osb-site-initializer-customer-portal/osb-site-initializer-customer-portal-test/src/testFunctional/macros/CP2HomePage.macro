@@ -7,6 +7,11 @@ definition {
 		AssertVisible(locator1 = "CP2HomePage#WELCOME_PAGE");
 	}
 
+	@summary = "This macro asserts that the onboarding modal is not present"
+	macro assertModalNotPresent {
+		AssertElementNotPresent(locator1 = "CP2HomePage#ONBOARDING_MODAL");
+	}
+
 	@summary = "This macro opens the Cookie Policy link on the home page of the site"
 	macro clickAtCookiePoliceLink {
 		Click(locator1 = "CP2HomePage#COOKIE_LINK");

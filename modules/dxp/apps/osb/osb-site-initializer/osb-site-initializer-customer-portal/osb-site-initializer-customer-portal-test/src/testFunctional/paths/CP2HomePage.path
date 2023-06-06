@@ -26,6 +26,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ONBOARDING_MODAL</td>
+	<td>//*[contains(@class, 'onboarding')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>WELCOME_PAGE</td>
 	<td>//*[contains(@class,'customer-portal')]//*[contains(text(), '${key_title}')]</td>
 	<td></td>

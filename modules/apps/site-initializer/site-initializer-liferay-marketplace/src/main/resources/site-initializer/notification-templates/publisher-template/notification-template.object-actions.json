@@ -1,11 +1,11 @@
 [
 	{
 		"active": true,
-		"externalReferenceCode": "MARKETPLACE-OBJECT-ACTION-1",
+		"externalReferenceCode": "MKT-PUBLISHER-ACTION",
 		"label": {
-			"en_US": "Notification Invite MarketPlace Action"
+			"en_US": "Invite Publisher MarketPlace"
 		},
-		"name": "NotificationInviteMarketPlaceAction",
+		"name": "InvitePublisherMarketPlace",
 		"objectActionExecutorKey": "notification",
 		"objectActionTriggerKey": "onAfterAdd",
 		"objectDefinitionId": "[$OBJECT_DEFINITION_ID:UserAdditionalInfo$]"

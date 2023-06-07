@@ -12,7 +12,7 @@ package org.eclipse.osgi.internal.loader.sources;
 
 import java.net.URL;
 import java.util.*;
-import org.eclipse.osgi.framework.util.KeyedHashSet;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * This class is used to optimize finding provided-packages for a bundle.
@@ -21,7 +21,7 @@ import org.eclipse.osgi.framework.util.KeyedHashSet;
  * be done again.
  */
 public class NullPackageSource extends PackageSource {
-	static KeyedHashSet sources;
+	private static final Map<String, NullPackageSource> sources = new ConcurrentHashMap<>();
 
 	private NullPackageSource(String name) {
 		super(name);
@@ -47,15 +47,8 @@ public class NullPackageSource extends PackageSource {
 		return null;
 	}
 
-	public static synchronized NullPackageSource getNullPackageSource(String name) {
-		if (sources == null)
-			sources = new KeyedHashSet();
-		NullPackageSource result = (NullPackageSource) sources.getByKey(name);
-		if (result != null)
-			return result;
-		result = new NullPackageSource(name);
-		sources.add(result);
-		return result;
+	public static NullPackageSource getNullPackageSource(String name) {
+		return sources.computeIfAbsent(name, NullPackageSource::new);
 	}
 
 	@Override
@@ -63,3 +56,4 @@ public class NullPackageSource extends PackageSource {
 		return Collections.<String> emptyList();
 	}
 }
+/* @generated */

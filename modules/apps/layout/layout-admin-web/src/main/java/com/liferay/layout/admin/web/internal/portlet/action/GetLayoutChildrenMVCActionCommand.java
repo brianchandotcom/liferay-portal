@@ -20,6 +20,7 @@ import com.liferay.layout.admin.web.internal.display.context.LayoutsAdminDisplay
 import com.liferay.layout.admin.web.internal.display.context.MillerColumnsDisplayContext;
 import com.liferay.layout.admin.web.internal.helper.LayoutActionsHelper;
 import com.liferay.layout.admin.web.internal.servlet.taglib.util.LayoutActionDropdownItemsProvider;
+import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
 import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.layout.util.template.LayoutConverterRegistry;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -77,7 +78,7 @@ public class GetLayoutChildrenMVCActionCommand extends BaseMVCActionCommand {
 					_portal.getHttpServletRequest(actionRequest),
 					layoutActionsHelper, layoutsAdminDisplayContext,
 					_translationURLProvider),
-				layoutsAdminDisplayContext,
+				_layoutSetPrototypeHelper, layoutsAdminDisplayContext,
 				_portal.getLiferayPortletRequest(actionRequest),
 				_portal.getLiferayPortletResponse(actionResponse));
 
@@ -106,6 +107,9 @@ public class GetLayoutChildrenMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutSetPrototypeHelper _layoutSetPrototypeHelper;
 
 	@Reference
 	private Portal _portal;

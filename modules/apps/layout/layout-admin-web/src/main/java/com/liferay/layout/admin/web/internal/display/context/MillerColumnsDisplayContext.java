@@ -16,7 +16,10 @@ package com.liferay.layout.admin.web.internal.display.context;
 
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.layout.admin.web.internal.servlet.taglib.util.LayoutActionDropdownItemsProvider;
+import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -26,6 +29,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutRevision;
+import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetBranch;
 import com.liferay.portal.kernel.model.LayoutType;
 import com.liferay.portal.kernel.model.LayoutTypeController;
@@ -35,6 +39,7 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetBranchLocalServiceUtil;
+import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -59,11 +64,13 @@ public class MillerColumnsDisplayContext {
 
 	public MillerColumnsDisplayContext(
 		LayoutActionDropdownItemsProvider layoutActionDropdownItemsProvider,
+		LayoutSetPrototypeHelper layoutSetPrototypeHelper,
 		LayoutsAdminDisplayContext layoutsAdminDisplayContext,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
 		_layoutActionDropdownItemsProvider = layoutActionDropdownItemsProvider;
+		_layoutSetPrototypeHelper = layoutSetPrototypeHelper;
 		_layoutsAdminDisplayContext = layoutsAdminDisplayContext;
 		_liferayPortletResponse = liferayPortletResponse;
 
@@ -139,6 +146,13 @@ public class MillerColumnsDisplayContext {
 				"breadcrumbEntries", _getBreadcrumbEntriesJSONArray()
 			).put(
 				"getItemChildrenURL", getLayoutChildrenURL()
+			).put(
+				"isLayoutSetPrototype",
+				() -> {
+					Group group = _themeDisplay.getScopeGroup();
+
+					return group.isLayoutSetPrototype();
+				}
 			).put(
 				"isPrivateLayoutsEnabled",
 				() -> {
@@ -222,6 +236,19 @@ public class MillerColumnsDisplayContext {
 			LayoutType layoutType = layout.getLayoutType();
 
 			layoutJSONObject.put(
+				"hasDuplicatedFriendlyURL",
+				() -> {
+					if (!FeatureFlagManagerUtil.isEnabled("LPS-174417")) {
+						return false;
+					}
+
+					List<Long> duplicatedFriendlyURLPlids =
+						_getDuplicatedFriendlyURLPlids();
+
+					return duplicatedFriendlyURLPlids.contains(
+						layout.getPlid());
+				}
+			).put(
 				"parentable", layoutType.isParentable()
 			).put(
 				"quickActions", _getQuickActionsJSONArray(layout)
@@ -327,6 +354,37 @@ public class MillerColumnsDisplayContext {
 		}
 
 		return breadcrumbEntriesJSONArray;
+	}
+
+	private List<Long> _getDuplicatedFriendlyURLPlids() throws PortalException {
+		if (_duplicatedFriendlyURLPlids != null) {
+			return _duplicatedFriendlyURLPlids;
+		}
+
+		LayoutSet layoutSet = _layoutsAdminDisplayContext.getSelLayoutSet();
+
+		if (layoutSet.isLayoutSetPrototypeLinkEnabled()) {
+			_duplicatedFriendlyURLPlids =
+				_layoutSetPrototypeHelper.getDuplicatedFriendlyURLPlids(
+					layoutSet);
+
+			return _duplicatedFriendlyURLPlids;
+		}
+
+		Group group = _layoutsAdminDisplayContext.getSelGroup();
+
+		if (group.isLayoutSetPrototype()) {
+			_duplicatedFriendlyURLPlids =
+				_layoutSetPrototypeHelper.getDuplicatedFriendlyURLPlids(
+					LayoutSetPrototypeLocalServiceUtil.fetchLayoutSetPrototype(
+						group.getClassPK()));
+
+			return _duplicatedFriendlyURLPlids;
+		}
+
+		_duplicatedFriendlyURLPlids = Collections.emptyList();
+
+		return _duplicatedFriendlyURLPlids;
 	}
 
 	private JSONArray _getFirstLayoutColumnJSONArray() throws Exception {
@@ -573,10 +631,12 @@ public class MillerColumnsDisplayContext {
 		return draftLayout.hasScopeGroup();
 	}
 
+	private List<Long> _duplicatedFriendlyURLPlids;
 	private final HttpServletRequest _httpServletRequest;
 	private final LayoutActionDropdownItemsProvider
 		_layoutActionDropdownItemsProvider;
 	private final LayoutsAdminDisplayContext _layoutsAdminDisplayContext;
+	private final LayoutSetPrototypeHelper _layoutSetPrototypeHelper;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final ThemeDisplay _themeDisplay;
 

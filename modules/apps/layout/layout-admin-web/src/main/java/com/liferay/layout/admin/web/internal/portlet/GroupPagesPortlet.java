@@ -33,6 +33,7 @@ import com.liferay.layout.page.template.exception.DuplicateLayoutPageTemplateCol
 import com.liferay.layout.page.template.exception.LayoutPageTemplateCollectionNameException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
 import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.layout.util.template.LayoutConverterRegistry;
 import com.liferay.petra.lang.SafeCloseable;
@@ -239,7 +240,7 @@ public class GroupPagesPortlet extends MVCPortlet {
 				LayoutAdminWebKeys.MILLER_COLUMNS_DISPLAY_CONTEXT,
 				new MillerColumnsDisplayContext(
 					layoutActionDropdownItemsProvider,
-					layoutsAdminDisplayContext,
+					_layoutSetPrototypeHelper, layoutsAdminDisplayContext,
 					_portal.getLiferayPortletRequest(renderRequest),
 					_portal.getLiferayPortletResponse(renderResponse)));
 			renderRequest.setAttribute(
@@ -319,6 +320,9 @@ public class GroupPagesPortlet extends MVCPortlet {
 
 	@Reference
 	private LayoutPrototypeLocalService _layoutPrototypeLocalService;
+
+	@Reference
+	private LayoutSetPrototypeHelper _layoutSetPrototypeHelper;
 
 	private volatile LayoutUtilityPageThumbnailConfiguration
 		_layoutUtilityPageThumbnailConfiguration;

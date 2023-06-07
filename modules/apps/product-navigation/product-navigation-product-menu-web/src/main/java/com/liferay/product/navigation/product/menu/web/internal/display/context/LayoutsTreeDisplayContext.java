@@ -295,6 +295,13 @@ public class LayoutsTreeDisplayContext {
 				return findLayoutsURL.toString();
 			}
 		).put(
+			"isLayoutSetPrototype",
+			() -> {
+				Group group = _themeDisplay.getScopeGroup();
+
+				return group.isLayoutSetPrototype();
+			}
+		).put(
 			"pagesTreeURL", _getPagesTreeURL()
 		).put(
 			"productMenuPortletURL", _getProductMenuPortletURL()

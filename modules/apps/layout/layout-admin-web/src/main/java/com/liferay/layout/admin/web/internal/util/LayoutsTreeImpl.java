@@ -20,24 +20,30 @@ import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.layout.admin.web.internal.action.provider.LayoutActionProvider;
 import com.liferay.layout.admin.web.internal.helper.LayoutActionsHelper;
 import com.liferay.layout.security.permission.resource.LayoutContentModelResourcePermission;
+import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
 import com.liferay.layout.util.LayoutsTree;
 import com.liferay.layout.util.template.LayoutConverterRegistry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutBranch;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutRevision;
+import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.impl.VirtualLayout;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
+import com.liferay.portal.kernel.service.LayoutSetLocalService;
+import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -48,6 +54,7 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
+import com.liferay.sites.kernel.util.Sites;
 import com.liferay.translation.security.permission.TranslationPermission;
 
 import java.util.Collections;
@@ -96,9 +103,10 @@ public class LayoutsTreeImpl implements LayoutsTree {
 			paginationJSON);
 
 		JSONArray jsonArray = _getLayoutsJSONArray(
-			_getAncestorLayouts(httpServletRequest), false, expandedLayoutIds,
-			groupId, httpServletRequest, includeActions, incomplete,
-			layoutActionsHelper, loadMore,
+			_getAncestorLayouts(httpServletRequest), false,
+			_getDuplicatedFriendlyURLPlids(groupId, privateLayout),
+			expandedLayoutIds, groupId, httpServletRequest, includeActions,
+			incomplete, layoutActionsHelper, loadMore,
 			_isPaginationEnabled(httpServletRequest), paginationJSONObject,
 			parentLayoutId, privateLayout, themeDisplay);
 
@@ -167,14 +175,42 @@ public class LayoutsTreeImpl implements LayoutsTree {
 		return null;
 	}
 
+	private List<Long> _getDuplicatedFriendlyURLPlids(
+			long groupId, boolean privateLayout)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-174417")) {
+			return Collections.emptyList();
+		}
+
+		LayoutSet layoutSet = _layoutSetLocalService.fetchLayoutSet(
+			groupId, privateLayout);
+
+		if (layoutSet.isLayoutSetPrototypeLinkEnabled()) {
+			return _layoutSetPrototypeHelper.getDuplicatedFriendlyURLPlids(
+				layoutSet);
+		}
+
+		Group group = layoutSet.getGroup();
+
+		if (group.isLayoutSetPrototype()) {
+			return _layoutSetPrototypeHelper.getDuplicatedFriendlyURLPlids(
+				_layoutSetPrototypeLocalService.fetchLayoutSetPrototype(
+					group.getClassPK()));
+		}
+
+		return Collections.emptyList();
+	}
+
 	private JSONArray _getLayoutsJSONArray(
 			List<Layout> ancestorLayouts, boolean childLayout,
-			Set<Long> expandedLayoutIds, long groupId,
-			HttpServletRequest httpServletRequest, boolean includeActions,
-			boolean incomplete, LayoutActionsHelper layoutActionsHelper,
-			boolean loadMore, boolean paginationEnabled,
-			JSONObject paginationJSONObject, long parentLayoutId,
-			boolean privateLayout, ThemeDisplay themeDisplay)
+			List<Long> duplicatedFriendlyURLPlids, Set<Long> expandedLayoutIds,
+			long groupId, HttpServletRequest httpServletRequest,
+			boolean includeActions, boolean incomplete,
+			LayoutActionsHelper layoutActionsHelper, boolean loadMore,
+			boolean paginationEnabled, JSONObject paginationJSONObject,
+			long parentLayoutId, boolean privateLayout,
+			ThemeDisplay themeDisplay)
 		throws Exception {
 
 		int count = _layoutService.getLayoutsCount(
@@ -219,20 +255,21 @@ public class LayoutsTreeImpl implements LayoutsTree {
 					VirtualLayout virtualLayout = (VirtualLayout)layout;
 
 					childLayoutsJSONArray = _getLayoutsJSONArray(
-						ancestorLayouts, true, expandedLayoutIds,
-						virtualLayout.getSourceGroupId(), httpServletRequest,
-						includeActions, incomplete, layoutActionsHelper,
-						loadMore, paginationEnabled, paginationJSONObject,
-						virtualLayout.getLayoutId(),
+						ancestorLayouts, true, duplicatedFriendlyURLPlids,
+						expandedLayoutIds, virtualLayout.getSourceGroupId(),
+						httpServletRequest, includeActions, incomplete,
+						layoutActionsHelper, loadMore, paginationEnabled,
+						paginationJSONObject, virtualLayout.getLayoutId(),
 						virtualLayout.isPrivateLayout(), themeDisplay);
 				}
 				else {
 					childLayoutsJSONArray = _getLayoutsJSONArray(
-						ancestorLayouts, true, expandedLayoutIds, groupId,
-						httpServletRequest, includeActions, incomplete,
-						layoutActionsHelper, loadMore, paginationEnabled,
-						paginationJSONObject, layout.getLayoutId(),
-						layout.isPrivateLayout(), themeDisplay);
+						ancestorLayouts, true, duplicatedFriendlyURLPlids,
+						expandedLayoutIds, groupId, httpServletRequest,
+						includeActions, incomplete, layoutActionsHelper,
+						loadMore, paginationEnabled, paginationJSONObject,
+						layout.getLayoutId(), layout.isPrivateLayout(),
+						themeDisplay);
 				}
 			}
 			else {
@@ -258,8 +295,9 @@ public class LayoutsTreeImpl implements LayoutsTree {
 					afterDeleteSelectedLayout,
 					_layoutService.getLayoutsCount(
 						groupId, privateLayout, layout.getLayoutId()),
-					childLayoutsJSONArray, httpServletRequest, includeActions,
-					layout, layoutActionsHelper, themeDisplay));
+					childLayoutsJSONArray, duplicatedFriendlyURLPlids,
+					httpServletRequest, includeActions, layout,
+					layoutActionsHelper, themeDisplay));
 
 			if (includeActions) {
 				afterDeleteSelectedLayout = layout;
@@ -340,6 +378,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 	private JSONObject _toJSONObject(
 			Layout afterDeleteSelectedLayout, long childLayoutsCount,
 			JSONArray childLayoutsJSONArray,
+			List<Long> duplicatedFriendlyURLPlids,
 			HttpServletRequest httpServletRequest, boolean includeActions,
 			Layout layout, LayoutActionsHelper layoutActionsHelper,
 			ThemeDisplay themeDisplay)
@@ -404,6 +443,9 @@ public class LayoutsTreeImpl implements LayoutsTree {
 			}
 		).put(
 			"hasChildren", layout.hasChildren()
+		).put(
+			"hasDuplicatedFriendlyURL",
+			duplicatedFriendlyURLPlids.contains(layout.getPlid())
 		).put(
 			"icon", layout.getIcon()
 		).put(
@@ -511,7 +553,19 @@ public class LayoutsTreeImpl implements LayoutsTree {
 	private LayoutService _layoutService;
 
 	@Reference
+	private LayoutSetLocalService _layoutSetLocalService;
+
+	@Reference
+	private LayoutSetPrototypeHelper _layoutSetPrototypeHelper;
+
+	@Reference
+	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
+
+	@Reference
 	private SiteNavigationMenuLocalService _siteNavigationMenuLocalService;
+
+	@Reference
+	private Sites _sites;
 
 	@Reference
 	private Staging _staging;

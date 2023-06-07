@@ -53,10 +53,12 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-182807. Verify that managers can edit MDF in Approved status"
+	@description = "This is a test for LPS-182807. Verify that the CMM can edit MDF in Approved status"
 	@priority = 5
-	test ManagerCanEditMDFInApprovedStatus {
-		task ("Given that the manager goes to the submitted MDF") {
+	test CMMCanEditMDFInApprovedStatus {
+		property test.name.skip.portal.instance = "PRMMDFRequestEdit#CMMCanEditMDFInApprovedStatus";
+
+		task ("Given that the CMM goes to the submitted MDF") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "cmm@liferaytest.com",
 				userLoginFullName = "cmm");
@@ -68,8 +70,8 @@ definition {
 			PRMMDFRequest.changeMDFStatus(statusButton = "Approve");
 		}
 
-		task ("When the manager edit the MDF informations and submit it") {
-			PRMMDFRequest.editButton(manager = "true");
+		task ("When the CMM edit the MDF informations and submit it") {
+			PRMMDFRequest.editButton();
 
 			PRMMDFRequest.editMDF(
 				campaignName = "Campaign Name Edited",
@@ -89,10 +91,12 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-182809. Verify that managers can edit MDF in Canceled status"
+	@description = "This is a test for LPS-182809. Verify that the CMM can edit MDF in Canceled status"
 	@priority = 5
-	test ManagerCanEditMDFInCanceledStatus {
-		task ("Given that the manager goes to the submitted MDF") {
+	test CMMCanEditMDFInCanceledStatus {
+		property test.name.skip.portal.instance = "PRMMDFRequestEdit#CMMCanEditMDFInCanceledStatus";
+
+		task ("Given that the CMM goes to the submitted MDF") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "cmm@liferaytest.com",
 				userLoginFullName = "cmm");
@@ -104,8 +108,8 @@ definition {
 			PRMMDFRequest.changeMDFStatus(statusButton = "Cancel");
 		}
 
-		task ("When the manager edit the MDF informations and submit it") {
-			PRMMDFRequest.editButton(manager = "true");
+		task ("When the CMM edit the MDF informations and submit it") {
+			PRMMDFRequest.editButton();
 
 			PRMMDFRequest.editMDF(
 				campaignName = "Campaign Name Edited",
@@ -125,10 +129,12 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-179227. Verify that managers can edit MDF in Marketing Director Review status"
+	@description = "This is a test for LPS-179227. Verify that the CMM can edit MDF in Marketing Director Review status"
 	@priority = 5
-	test ManagerCanEditMDFInMarketingDirectorReviewStatus {
-		task ("Given that the manager goes to the submitted MDF") {
+	test CMMCanEditMDFInMarketingDirectorReviewStatus {
+		property test.name.skip.portal.instance = "PRMMDFRequestEdit#CMMCanEditMDFInMarketingDirectorReviewStatus";
+
+		task ("Given that the CMM goes to the submitted MDF") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "cmm@liferaytest.com",
 				userLoginFullName = "cmm");
@@ -140,8 +146,8 @@ definition {
 			PRMMDFRequest.changeMDFStatus(statusButton = "Marketing Director Review");
 		}
 
-		task ("When the manager edit the MDF informations and submit it") {
-			PRMMDFRequest.editButton(manager = "true");
+		task ("When the CMM edit the MDF informations and submit it") {
+			PRMMDFRequest.editButton();
 
 			PRMMDFRequest.editMDF(
 				campaignName = "Campaign Name Edited",
@@ -161,10 +167,12 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-182806. Verify that managers can edit MDF in Pending Marketing Review status"
+	@description = "This is a test for LPS-182806. Verify that the CMM can edit MDF in Pending Marketing Review status"
 	@priority = 5
-	test ManagerCanEditMDFInPendingMarketingReviewStatus {
-		task ("Given that the manager goes to the submitted MDF, which is as 'Pending Marketing Review'") {
+	test CMMCanEditMDFInPendingMarketingReviewStatus {
+		property test.name.skip.portal.instance = "PRMMDFRequestEdit#CMMCanEditMDFInPendingMarketingReviewStatus";
+
+		task ("Given that the CMM goes to the submitted MDF, which is as 'Pending Marketing Review'") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "cmm@liferaytest.com",
 				userLoginFullName = "cmm");
@@ -172,8 +180,8 @@ definition {
 			PRMNavigator.gotoMDF(requestId = ${staticRequestId});
 		}
 
-		task ("When the manager edit the MDF informations and submit it") {
-			PRMMDFRequest.editButton(manager = "true");
+		task ("When the CMM edit the MDF informations and submit it") {
+			PRMMDFRequest.editButton();
 
 			PRMMDFRequest.editMDF(
 				campaignName = "Campaign Name Edited",
@@ -193,10 +201,12 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-182808. Verify that managers can edit MDF in Rejected status"
+	@description = "This is a test for LPS-182808. Verify that the CMM can edit MDF in Rejected status"
 	@priority = 5
-	test ManagerCanEditMDFInRejectedStatus {
-		task ("Given that the manager goes to the submitted MDF") {
+	test CMMCanEditMDFInRejectedStatus {
+		property test.name.skip.portal.instance = "PRMMDFRequestEdit#CMMCanEditMDFInRejectedStatus";
+
+		task ("Given that the CMM goes to the submitted MDF") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "cmm@liferaytest.com",
 				userLoginFullName = "cmm");
@@ -205,11 +215,11 @@ definition {
 		}
 
 		task ("And change the MDF status") {
-			PRMMDFRequest.changeMDFStatus(statusButton = "Reject");
+			PRMMDFRequest.changeMDFStatus(statusButton = "Rejected");
 		}
 
-		task ("When the manager edit the MDF informations and submit it") {
-			PRMMDFRequest.editButton(manager = "true");
+		task ("When the CMM edit the MDF informations and submit it") {
+			PRMMDFRequest.editButton();
 
 			PRMMDFRequest.editMDF(
 				campaignName = "Campaign Name Edited",

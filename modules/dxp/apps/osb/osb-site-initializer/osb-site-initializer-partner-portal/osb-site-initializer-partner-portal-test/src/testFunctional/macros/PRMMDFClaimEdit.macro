@@ -41,11 +41,6 @@ definition {
 		}
 	}
 
-	@summary = "Click on 'Edit' button inside claim detail page"
-	macro editButton {
-		Click(locator1 = "PRMMDFClaim#EDIT_BUTTON");
-	}
-
 	@summary = "Edit the claim, changing some informations or adding new"
 	macro editClaim {
 		if (!(isSet(activityIndex))) {
@@ -74,6 +69,8 @@ definition {
 		}
 
 		Button.clickSubmitButton();
+
+		Alert.viewSuccessMessage();
 	}
 
 	@summary = "Go to the claim via UI, clicking on 'View' button"

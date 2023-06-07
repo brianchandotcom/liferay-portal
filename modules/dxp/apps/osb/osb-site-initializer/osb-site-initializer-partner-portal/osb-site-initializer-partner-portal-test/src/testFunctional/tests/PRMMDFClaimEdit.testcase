@@ -78,6 +78,347 @@ definition {
 
 	}
 
+	@description = "This is a test for LPS-183234. Verify that the CFM can edit the claim in 'Claim Paid' status"
+	@priority = 5
+	test CFMCanEditClaimInClaimdPaidStatus {
+		property test.name.skip.portal.instance = "PRMMDFClaimEdit#CFMCanEditClaimInClaimdPaidStatus";
+
+		task ("Given that the PMU creates a new claim") {
+			PRMNavigator.openSitePage(pageName = "MDF Requests");
+
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
+
+			PRMMDFClaim.createNewClaim(
+				listLeads = "Document_1.xlsx",
+				reimbursementInvoice = "Document_1.png",
+				thirdInvoice = "Document_1.jpg");
+
+			task ("The Claim ID is saved in a variable") {
+				PRMMDFClaim.getClaimIdOnDetailPage(index = 1);
+			}
+		}
+
+		task ("When the CFM goes to the created claim and change the status to 'Claim Paid") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "cfm@liferaytest.com",
+				userLoginFullName = "Channel Finance Manager");
+
+			JSONPRM.changeClaimStatus(
+				claimId = ${staticClaimId1},
+				claimStatus = "In Finance Review",
+				userEmailAddress = "cmm@liferaytest.com");
+
+			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
+
+			PRMMDFClaim.changeClaimStatus(
+				amountReceived = 500,
+				checkNumber = 001,
+				statusButton = "Claim Paid");
+		}
+
+		task ("And edit the claim, changing the activity attachment") {
+			PRMMDFClaim.editButton();
+
+			PRMMDFClaimEdit.editClaim(
+				activityName = "Activity Name",
+				newAttachment = "Document_2.jpg");
+		}
+
+		task ("And go to the claim detail page") {
+			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
+
+			PRMMDFClaim.activityCollapse(activityName = "Activity Name");
+		}
+
+		task ("Then the new attachment is displayed") {
+			PRMMDFClaim.viewAttachmentPresent(attachmentName = "Document_2.jpg");
+		}
+
+		task ("And the old attachment isn't displayed") {
+			PRMMDFClaim.viewAttachmentNotPresent(attachmentName = "Document_1.png");
+		}
+	}
+
+	@description = "This is a test for LPS-183235. Verify that the CFM can edit the claim in 'In Finance Review' status"
+	@priority = 5
+	test CFMCanEditClaimInFinanceReviewStatus {
+		property test.name.skip.portal.instance = "PRMMDFClaimEdit#CFMCanEditClaimInFinanceReviewStatus";
+
+		task ("Given that the partner creates a new claim") {
+			PRMNavigator.openSitePage(pageName = "MDF Requests");
+
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
+
+			PRMMDFClaim.createNewClaim(
+				listLeads = "Document_1.xlsx",
+				reimbursementInvoice = "Document_1.png",
+				thirdInvoice = "Document_1.jpg");
+
+			task ("The Claim ID is saved in a variable") {
+				PRMMDFClaim.getClaimIdOnDetailPage(index = 1);
+			}
+		}
+
+		task ("When the CFM goes to the created claim and change the status to 'In Finance Review") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "cfm@liferaytest.com",
+				userLoginFullName = "Channel Finance Manager");
+
+			JSONPRM.changeClaimStatus(
+				claimId = ${staticClaimId1},
+				claimStatus = "In Finance Review",
+				userEmailAddress = "cmm@liferaytest.com");
+
+			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
+		}
+
+		task ("And edit the claim, changing the activity attachment") {
+			PRMMDFClaim.editButton();
+
+			PRMMDFClaimEdit.editClaim(
+				activityName = "Activity Name",
+				newAttachment = "Document_2.jpg");
+		}
+
+		task ("And go to the claim detail page") {
+			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
+
+			PRMMDFClaim.activityCollapse(activityName = "Activity Name");
+		}
+
+		task ("Then the new attachment is displayed") {
+			PRMMDFClaim.viewAttachmentPresent(attachmentName = "Document_2.jpg");
+		}
+
+		task ("And the old attachment isn't displayed") {
+			PRMMDFClaim.viewAttachmentNotPresent(attachmentName = "Document_1.png");
+		}
+	}
+
+	@description = "This is a test for LPS-183233. Verify that the CMM can edit the claim in 'Approved' status"
+	@priority = 5
+	test CMMCanEditClaimInApprovedStatus {
+		property test.name.skip.portal.instance = "PRMMDFClaimEdit#CMMCanEditClaimInApprovedStatus";
+
+		task ("Given that the partner creates a new claim") {
+			PRMNavigator.openSitePage(pageName = "MDF Requests");
+
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
+
+			PRMMDFClaim.createNewClaim(
+				listLeads = "Document_1.xlsx",
+				reimbursementInvoice = "Document_1.png",
+				thirdInvoice = "Document_1.jpg");
+
+			task ("The Claim ID is saved in a variable") {
+				PRMMDFClaim.getClaimIdOnDetailPage(index = 1);
+			}
+		}
+
+		task ("When the CMM goes to the created claim and change the status to 'Approved") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "cmm@liferaytest.com",
+				userLoginFullName = "Channel Marketing Manager");
+
+			JSONPRM.changeClaimStatus(
+				claimId = ${staticClaimId1},
+				claimStatus = "Approved",
+				userEmailAddress = "cmm@liferaytest.com");
+
+			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
+		}
+
+		task ("And edit the claim, changing the activity attachment") {
+			PRMMDFClaim.editButton();
+
+			PRMMDFClaimEdit.editClaim(
+				activityName = "Activity Name",
+				newAttachment = "Document_2.jpg");
+		}
+
+		task ("And go to the claim detail page") {
+			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
+
+			PRMMDFClaim.activityCollapse(activityName = "Activity Name");
+		}
+
+		task ("Then the new attachment is displayed") {
+			PRMMDFClaim.viewAttachmentPresent(attachmentName = "Document_2.jpg");
+		}
+
+		task ("And the old attachment isn't displayed") {
+			PRMMDFClaim.viewAttachmentNotPresent(attachmentName = "Document_1.png");
+		}
+	}
+
+	@description = "This is a test for LPS-183238. Verify that the CMM can edit the claim in 'Canceled' status"
+	@priority = 5
+	test CMMCanEditClaimInCanceledStatus {
+		property test.name.skip.portal.instance = "PRMMDFClaimEdit#CMMCanEditClaimInCanceledStatus";
+
+		task ("Given that the partner creates a new claim") {
+			PRMNavigator.openSitePage(pageName = "MDF Requests");
+
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
+
+			PRMMDFClaim.createNewClaim(
+				listLeads = "Document_1.xlsx",
+				reimbursementInvoice = "Document_1.png",
+				thirdInvoice = "Document_1.jpg");
+
+			task ("The Claim ID is saved in a variable") {
+				PRMMDFClaim.getClaimIdOnDetailPage(index = 1);
+			}
+		}
+
+		task ("When the CMM goes to the created claim and change the status to 'Cancled") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "cmm@liferaytest.com",
+				userLoginFullName = "Channel Marketing Manager");
+
+			JSONPRM.changeClaimStatus(
+				claimId = ${staticClaimId1},
+				claimStatus = "Cancled",
+				userEmailAddress = "cmm@liferaytest.com");
+
+			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
+		}
+
+		task ("And edit the claim, changing the activity attachment") {
+			PRMMDFClaim.editButton();
+
+			PRMMDFClaimEdit.editClaim(
+				activityName = "Activity Name",
+				newAttachment = "Document_2.jpg");
+		}
+
+		task ("And go to the claim detail page") {
+			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
+
+			PRMMDFClaim.activityCollapse(activityName = "Activity Name");
+		}
+
+		task ("Then the new attachment is displayed") {
+			PRMMDFClaim.viewAttachmentPresent(attachmentName = "Document_2.jpg");
+		}
+
+		task ("And the old attachment isn't displayed") {
+			PRMMDFClaim.viewAttachmentNotPresent(attachmentName = "Document_1.png");
+		}
+	}
+
+	@description = "This is a test for LPS-183236. Verify that the CMM can edit the claim in 'In Director Review' status"
+	@priority = 5
+	test CMMCanEditClaimInDirectorReviewStatus {
+		property test.name.skip.portal.instance = "PRMMDFClaimEdit#CMMCanEditClaimInDirectorReviewStatus";
+
+		task ("Given that the partner creates a new claim") {
+			PRMNavigator.openSitePage(pageName = "MDF Requests");
+
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
+
+			PRMMDFClaim.createNewClaim(
+				listLeads = "Document_1.xlsx",
+				reimbursementInvoice = "Document_1.png",
+				thirdInvoice = "Document_1.jpg");
+
+			task ("The Claim ID is saved in a variable") {
+				PRMMDFClaim.getClaimIdOnDetailPage(index = 1);
+			}
+		}
+
+		task ("When the CMM goes to the created claim and change the status to 'In Director Review") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "cmm@liferaytest.com",
+				userLoginFullName = "Channel Marketing Manager");
+
+			JSONPRM.changeClaimStatus(
+				claimId = ${staticClaimId1},
+				claimStatus = "In Director Review",
+				userEmailAddress = "cmm@liferaytest.com");
+
+			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
+		}
+
+		task ("And edit the claim, changing the activity attachment") {
+			PRMMDFClaim.editButton();
+
+			PRMMDFClaimEdit.editClaim(
+				activityName = "Activity Name",
+				newAttachment = "Document_2.jpg");
+		}
+
+		task ("And go to the claim detail page") {
+			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
+
+			PRMMDFClaim.activityCollapse(activityName = "Activity Name");
+		}
+
+		task ("Then the new attachment is displayed") {
+			PRMMDFClaim.viewAttachmentPresent(attachmentName = "Document_2.jpg");
+		}
+
+		task ("And the old attachment isn't displayed") {
+			PRMMDFClaim.viewAttachmentNotPresent(attachmentName = "Document_1.png");
+		}
+	}
+
+	@description = "This is a test for LPS-183237. Verify that the CMM can edit the claim in 'Rejected' status"
+	@priority = 5
+	test CMMCanEditClaimInRejectedStatus {
+		property test.name.skip.portal.instance = "PRMMDFClaimEdit#CMMCanEditClaimInRejectedStatus";
+
+		task ("Given that the partner creates a new claim") {
+			PRMNavigator.openSitePage(pageName = "MDF Requests");
+
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
+
+			PRMMDFClaim.createNewClaim(
+				listLeads = "Document_1.xlsx",
+				reimbursementInvoice = "Document_1.png",
+				thirdInvoice = "Document_1.jpg");
+
+			task ("The Claim ID is saved in a variable") {
+				PRMMDFClaim.getClaimIdOnDetailPage(index = 1);
+			}
+		}
+
+		task ("When the CMM goes to the created claim and change the status to 'Rejected") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "cmm@liferaytest.com",
+				userLoginFullName = "Channel Marketing Manager");
+
+			JSONPRM.changeClaimStatus(
+				claimId = ${staticClaimId1},
+				claimStatus = "Rejected",
+				userEmailAddress = "cmm@liferaytest.com");
+
+			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
+		}
+
+		task ("And edit the claim, changing the activity attachment") {
+			PRMMDFClaim.editButton();
+
+			PRMMDFClaimEdit.editClaim(
+				activityName = "Activity Name",
+				newAttachment = "Document_2.jpg");
+		}
+
+		task ("And go to the claim detail page") {
+			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
+
+			PRMMDFClaim.activityCollapse(activityName = "Activity Name");
+		}
+
+		task ("Then the new attachment is displayed") {
+			PRMMDFClaim.viewAttachmentPresent(attachmentName = "Document_2.jpg");
+		}
+
+		task ("And the old attachment isn't displayed") {
+			PRMMDFClaim.viewAttachmentNotPresent(attachmentName = "Document_1.png");
+		}
+	}
+
 	@description = "This is a test for LPS-181360. Verify that the Edit button is not displayed to partner in status different from 'Draft' and 'Request More Info'"
 	@priority = 5
 	test EditButtonIsDisplayedInSpecificStatusToPartner {
@@ -170,107 +511,17 @@ definition {
 		task ("And the partner goes to edit the approved claim") {
 			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
 
-			PRMMDFClaimEdit.editButton();
+			PRMMDFClaim.editButton();
 		}
 
 		task ("When the partner don't fill all mandatory fields of a new activity") {
 			PRMMDFClaim.fillActivityFields(
 				activityIndex = 1,
-				thirdInvoice = "Document_1.jpg");
+				listLeads = "Document_1.xlsx");
 		}
 
 		task ("Then the 'Submit' button remains disabled") {
 			PRMMDFRequest.viewDisabledButton(buttonName = "Submit");
-		}
-	}
-
-	@description = "This is a test for LPS-181361. Verify that Managers can edit Claim in any status"
-	@priority = 5
-	test ManagerCanEditClaimInAnyStatus {
-		property test.name.skip.portal.instance = "PRMMDFClaimEdit#ManagerCanEditClaimInAnyStatus";
-
-		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
-
-		task ("Given that the partner creates a new claim") {
-			PRMNavigator.openSitePage(pageName = "MDF Requests");
-
-			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
-
-			PRMMDFClaim.createNewClaim(
-				listLeads = "Document_1.xlsx",
-				reimbursementInvoice = "Document_1.png",
-				thirdInvoice = "Document_1.jpg");
-
-			task ("The Claim ID is saved in a variable") {
-				PRMMDFClaim.getClaimIdOnDetailPage(index = 1);
-			}
-		}
-
-		task ("When the manager goes to the created claim in 'Pending Marketing Review' status") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "cmm@liferaytest.com",
-				userLoginFullName = "Channel Marketing Manager");
-
-			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
-		}
-
-		task ("Then he is able to edit the claim") {
-			PRMMDFClaimEdit.editButton();
-
-			PRMMDFClaimEdit.editClaim(
-				activityName = "Activity Name",
-				newAttachment = "Document_2.jpg");
-		}
-
-		task ("When the manager changes the claim status to 'Approved' and navigate to it") {
-			JSONPRM.changeClaimStatus(
-				claimId = ${staticClaimId1},
-				claimStatus = "Approved",
-				userEmailAddress = "cmm@liferaytest.com");
-
-			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
-		}
-
-		task ("Then he is able to edit the claim") {
-			PRMMDFClaimEdit.editButton();
-
-			PRMMDFClaimEdit.editClaim(
-				activityName = "Activity Name",
-				newAttachment = "Document_2.jpg");
-		}
-
-		task ("When the manager changes the claim status to 'In Finance Review' and navigate to it") {
-			JSONPRM.changeClaimStatus(
-				claimId = ${staticClaimId1},
-				claimStatus = "In Finance Review",
-				userEmailAddress = "cmm@liferaytest.com");
-
-			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
-		}
-
-		task ("Then he is able to edit the claim") {
-			PRMMDFClaimEdit.editButton();
-
-			PRMMDFClaimEdit.editClaim(
-				activityName = "Activity Name",
-				newAttachment = "Document_2.jpg");
-		}
-
-		task ("When the manager changes the claim status to 'Claim Paid' and navigate to it") {
-			JSONPRM.changeClaimStatus(
-				claimId = ${staticClaimId1},
-				claimStatus = "Claim Paid",
-				userEmailAddress = "cmm@liferaytest.com");
-
-			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
-		}
-
-		task ("Then he is able to edit the claim") {
-			PRMMDFClaimEdit.editButton();
-
-			PRMMDFClaimEdit.editClaim(
-				activityName = "Activity Name",
-				newAttachment = "Document_2.jpg");
 		}
 	}
 
@@ -294,7 +545,7 @@ definition {
 		task ("And the partner goes to edit the claim") {
 			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
 
-			PRMMDFClaimEdit.editButton();
+			PRMMDFClaim.editButton();
 		}
 
 		task ("When the partner change one attachment of the budget") {
@@ -348,7 +599,7 @@ definition {
 		task ("And the partner goes to edit the approved claim") {
 			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
 
-			PRMMDFClaimEdit.editButton();
+			PRMMDFClaim.editButton();
 		}
 
 		task ("When the partner change one attachment of the budget") {

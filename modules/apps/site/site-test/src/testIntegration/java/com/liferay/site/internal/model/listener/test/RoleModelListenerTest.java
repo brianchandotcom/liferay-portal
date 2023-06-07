@@ -86,19 +86,15 @@ public class RoleModelListenerTest {
 		_roleLocalService.addRole(
 			TestPropsValues.getUserId(), null, 0, StringUtil.randomString(),
 			null, null, RoleConstants.TYPE_ACCOUNT, null, serviceContext);
-
 		_roleLocalService.addRole(
 			TestPropsValues.getUserId(), null, 0, StringUtil.randomString(),
 			null, null, RoleConstants.TYPE_DEPOT, null, serviceContext);
-
 		_roleLocalService.addRole(
 			TestPropsValues.getUserId(), null, 0, StringUtil.randomString(),
 			null, null, RoleConstants.TYPE_PROVIDER, null, serviceContext);
-
 		_roleLocalService.addRole(
 			TestPropsValues.getUserId(), null, 0, StringUtil.randomString(),
 			null, null, RoleConstants.TYPE_ORGANIZATION, null, serviceContext);
-
 		_roleLocalService.addRole(
 			TestPropsValues.getUserId(), null, 0, StringUtil.randomString(),
 			null, null, RoleConstants.TYPE_PUBLICATIONS, null, serviceContext);
@@ -122,7 +118,6 @@ public class RoleModelListenerTest {
 			TestPropsValues.getUserId(), null, 0, StringUtil.randomString(),
 			null, null, RoleConstants.TYPE_REGULAR, null,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-
 		Role role2 = _roleLocalService.addRole(
 			TestPropsValues.getUserId(), null, 0, StringUtil.randomString(),
 			null, null, RoleConstants.TYPE_SITE, null,

@@ -257,6 +257,21 @@ public abstract class GroupLocalServiceBaseImpl
 		return groupPersistence.fetchByUuid_C_First(uuid, companyId, null);
 	}
 
+	@Override
+	public Group fetchGroupByExternalReferenceCode(
+		String externalReferenceCode, long companyId) {
+
+		return groupPersistence.fetchByERC_C(externalReferenceCode, companyId);
+	}
+
+	@Override
+	public Group getGroupByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return groupPersistence.findByERC_C(externalReferenceCode, companyId);
+	}
+
 	/**
 	 * Returns the group with the primary key.
 	 *

@@ -12,10 +12,12 @@
 		<permissions>
 			<supports>
 				<action-key>ADD_PUBLICATION</action-key>
+				<action-key>ADD_REMOTE</action-key>
 				<action-key>ADD_TEMPLATE</action-key>
 				<action-key>PERMISSIONS</action-key>
 			</supports>
 			<guest-unsupported>
+				<action-key>ADD_REMOTE</action-key>
 				<action-key>ADD_TEMPLATE</action-key>
 				<action-key>PERMISSIONS</action-key>
 			</guest-unsupported>
@@ -62,6 +64,27 @@
 				<action-key>DELETE</action-key>
 				<action-key>PERMISSIONS</action-key>
 				<action-key>PUBLISH</action-key>
+				<action-key>UPDATE</action-key>
+				<action-key>VIEW</action-key>
+			</guest-unsupported>
+		</permissions>
+	</model-resource>
+	<model-resource>
+		<model-name>com.liferay.change.tracking.model.CTRemote</model-name>
+		<portlet-ref>
+			<portlet-name>com_liferay_change_tracking_web_portlet_PublicationsPortlet</portlet-name>
+		</portlet-ref>
+		<weight>2</weight>
+		<permissions>
+			<supports>
+				<action-key>DELETE</action-key>
+				<action-key>PERMISSIONS</action-key>
+				<action-key>UPDATE</action-key>
+				<action-key>VIEW</action-key>
+			</supports>
+			<guest-unsupported>
+				<action-key>DELETE</action-key>
+				<action-key>PERMISSIONS</action-key>
 				<action-key>UPDATE</action-key>
 				<action-key>VIEW</action-key>
 			</guest-unsupported>

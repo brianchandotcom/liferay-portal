@@ -21,6 +21,8 @@ public class CTActionKeys {
 
 	public static final String ADD_PUBLICATION = "ADD_PUBLICATION";
 
+	public static final String ADD_REMOTE = "ADD_REMOTE";
+
 	public static final String ADD_TEMPLATE = "ADD_TEMPLATE";
 
 	public static final String PUBLISH = "PUBLISH";

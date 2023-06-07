@@ -23,6 +23,7 @@ patch {
 	fileNames "org/eclipse/osgi/internal/loader/BundleLoader.java"
 	fileNames "org/eclipse/osgi/internal/loader/ModuleClassLoader.java"
 	fileNames "org/eclipse/osgi/internal/loader/classpath/ClasspathManager.java"
+	fileNames "org/eclipse/osgi/internal/loader/sources/NullPackageSource.java"
 	fileNames "org/eclipse/osgi/internal/loader/sources/PackageSource.java"
 	fileNames "org/eclipse/osgi/internal/log/LoggerContextTargetMap.java"
 	fileNames "org/eclipse/osgi/internal/serviceregistry/ServiceRegistrationImpl.java"

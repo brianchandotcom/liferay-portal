@@ -1612,6 +1612,152 @@ definition {
 		}
 	}
 
+	@description = "This is a test for the COMMERCE-11644. Verify that for the product relations an media tab the date is using the correct format"
+	@priority = 5
+	test CanProductMediaAndRelationShowCorrectDateFormat {
+		property portal.acceptance = "true";
+
+		task ("Given 2 products are created") {
+			for (var productName : list "Simple,Relation") {
+				CommerceJSONProductsAPI._addCommerceProduct(
+					catalogName = "Master",
+					productDescription = "Full Description",
+					productName = "${productName} Product",
+					productType = "Simple",
+					purchasable = "true",
+					shortDescription = "Short Description");
+			}
+
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "Simple Product");
+		}
+
+		task ("And a new image is added") {
+			CommerceEntry.gotoMenuTab(menuTab = "Media");
+
+			CommerceProductImages.addProductImages(
+				imageTitles = "Black",
+				validationImage = "true");
+		}
+
+		task ("Then the date of the new entry is using the correct format") {
+			var imageDiplayDate = CommerceJSONProductsAPI.getCommerceProductMediaFieldValues(
+				jsonPath = "$..['displayDate']",
+				productName = "Simple Product",
+				type = "images");
+
+			var imageDiplayDate = DateUtil.format(${imageDiplayDate}, "yyyy-MM-dd'T'HH:mm:ss'Z'", "MMM d, yyyy");
+
+			for (var dateKeyWords : list "Seconds,Minutes,Hours,Days,Months") {
+				AssertElementNotPresent(
+					key_columnNumber = 3,
+					key_productName = "Commerce_Black",
+					key_value = "${dateKeyWords} Ago",
+					locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT");
+			}
+
+			AssertElementPresent(
+				key_columnNumber = 3,
+				key_productName = "Commerce_Black",
+				key_value = ${imageDiplayDate},
+				locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT");
+		}
+
+		task ("And a new attachment is added") {
+			CommerceProductImages.addAttachmentImages(imageTitles = "White");
+		}
+
+		task ("Then the date of the new entry is using the correct format") {
+			var attachmentDiplayDate = CommerceJSONProductsAPI.getCommerceProductMediaFieldValues(
+				jsonPath = "$..['displayDate']",
+				productName = "Simple Product",
+				type = "attachment");
+
+			var attachmentDiplayDate = DateUtil.format(${attachmentDiplayDate}, "yyyy-MM-dd'T'HH:mm:ss'Z'", "MMM d, yyyy");
+
+			for (var dateKeyWords : list "Seconds,Minutes,Hours,Days,Months") {
+				AssertElementNotPresent(
+					key_columnNumber = 3,
+					key_productName = "Commerce_White",
+					key_value = "${dateKeyWords} Ago",
+					locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT");
+			}
+
+			AssertElementPresent(
+				key_columnNumber = 3,
+				key_productName = "Commerce_White",
+				key_value = ${attachmentDiplayDate},
+				locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT");
+		}
+
+		task ("And during the process to add a new product relation") {
+			CommerceEntry.gotoMenuTab(menuTab = "Product Relations");
+
+			Click(locator1 = "Button#PLUS");
+
+			Click(
+				key_selectAction = "Add Up-Sell Product",
+				locator1 = "FormViewBuilder#FIELD_ELLIPSIS_ACTION_FIELDSET");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_IFRAME");
+
+			Type(
+				locator1 = "CommerceEntry#SEARCH_PRODUCT_RELATIONS",
+				value1 = "Relation Product");
+
+			KeyPress(
+				locator1 = "CommerceEntry#SEARCH_PRODUCT_RELATIONS",
+				value1 = "\RETURN");
+		}
+
+		task ("Then the date for all the possible product relation is using the correct format") {
+			for (var dateKeyWords : list "Seconds Ago,Minutes Ago,Hours Ago,Days Ago,Months Ago") {
+				AssertElementNotPresent(
+					key_columnNumber = 6,
+					key_productName = "Relation Product",
+					key_value = ${dateKeyWords},
+					locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT_RELATIONS");
+			}
+
+			var currentDate = DateUtil.getFormattedCurrentDate("MMM dd", "GMT");
+
+			AssertElementPresent(
+				key_columnNumber = 6,
+				key_productName = "Relation Product",
+				key_value = ${currentDate},
+				locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT_RELATIONS");
+
+			Check.checkToggleSwitch(
+				locator1 = "CommerceAccelerators#SELECT_PRODUCT_RELATIONS",
+				productName = "Relation Product");
+
+			SelectFrameTop();
+
+			Button.clickAdd();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("And the date for the new created relation iis using the correct date format") {
+			for (var dateKeyWords : list "Seconds Ago,Minutes Ago,Hours Ago,Days Ago,Months Ago") {
+				AssertElementNotPresent(
+					key_columnNumber = 4,
+					key_productName = "Relation Product",
+					key_value = ${dateKeyWords},
+					locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT");
+			}
+
+			var currentDate = DateUtil.getFormattedCurrentDate("MMM d", "GMT");
+
+			AssertElementPresent(
+				key_columnNumber = 4,
+				key_productName = "Relation Product",
+				key_value = ${currentDate},
+				locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT");
+		}
+	}
+
 	@description = "This is a test for bug COMMERCE-9546. Verify a product image converted in base64 can be uploaded via headless API with the extension setted"
 	@priority = 4
 	test CanUploadProductBase64ImageViaAPI {

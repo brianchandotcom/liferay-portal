@@ -2,12 +2,9 @@
 
 @import 'management-toolbar';
 
-.side-panel-iframe__tabs {
-	background-color: $white;
-	padding: 0.5rem 1rem 0;
-
-	.nav-link {
-		padding: 1rem;
+.lfr-objects__side-panel-content {
+	.nav-tabs + .tab-content .tab-pane {
+		padding: 0;
 	}
 }
 

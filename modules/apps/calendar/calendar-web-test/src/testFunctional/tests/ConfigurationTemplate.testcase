@@ -19,20 +19,20 @@ definition {
 		HeadlessSite.addSite(siteName = "Test Site Name");
 
 		JSONLayout.addPublicLayout(
-			groupName = "Guest",
+			groupName = "Test Site Name",
 			layoutName = "Calendar Page");
 
 		JSONLayout.updateLayoutTemplateOfPublicLayout(
-			groupName = "Guest",
+			groupName = "Test Site Name",
 			layoutName = "Calendar Page",
 			layoutTemplate = "1 Column");
 
 		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Guest",
+			groupName = "Test Site Name",
 			layoutName = "Calendar Page",
 			widgetName = "Calendar");
 
-		Navigator.openSpecificURL(url = "${portalURL}/web/guest/calendar-page");
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/calendar-page");
 	}
 
 	tearDown {
@@ -42,14 +42,6 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			Navigator.gotoPage(pageName = "Calendar Page");
-
-			JSONCalendar.tearDown();
-
-			CalendarConfiguration.tearDown();
-
-			PagesAdmin.tearDownCP();
-
 			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 		}
 	}

@@ -349,8 +349,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8683 | Test Summary: Check fieldBlurred triggers when a previously focused field loses focus and check its properties (see reference document in comments)"
+	@ignore = "true"
 	@priority = 5
 	test CheckFieldBlurredWhenFieldLosesFocus {
+
+		// AC Bug: Unable to search using special characters
+		// AC Bug ticket: LRAC-13715
+
 		property proxy.server.enabled = "true";
 
 		task ("Get formId of form") {

@@ -36,6 +36,11 @@ task runGradleTest
 allprojects {
 	apply plugin: "com.liferay.plugin"
 
+	tasks.withType(JavaCompile) {
+		sourceCompatibility = JavaVersion.VERSION_1_8
+		targetCompatibility = JavaVersion.VERSION_1_8
+	}
+
 	repositories {
 		maven {
 			url "https://repository-cdn.liferay.com/nexus/content/groups/public"

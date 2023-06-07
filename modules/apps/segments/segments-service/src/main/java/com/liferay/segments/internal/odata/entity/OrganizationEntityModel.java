@@ -50,6 +50,9 @@ public class OrganizationEntityModel extends BaseExpandoEntityModel {
 				locale -> Field.getSortableFieldName(Field.MODIFIED_DATE),
 				locale -> Field.MODIFIED_DATE),
 			new IdEntityField(
+				"assetCategoryIds", locale -> Field.ASSET_CATEGORY_IDS,
+				String::valueOf),
+			new IdEntityField(
 				"assetTagIds", locale -> Field.ASSET_TAG_IDS, String::valueOf),
 			new IdEntityField(
 				"classPK", locale -> Field.ORGANIZATION_ID, String::valueOf),

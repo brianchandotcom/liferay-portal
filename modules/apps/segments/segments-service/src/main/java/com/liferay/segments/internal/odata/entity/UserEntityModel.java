@@ -57,6 +57,9 @@ public class UserEntityModel extends BaseExpandoEntityModel {
 				"ancestorOrganizationIds", locale -> "ancestorOrganizationIds",
 				String::valueOf),
 			new IdEntityField(
+				"assetCategoryIds", locale -> Field.ASSET_CATEGORY_IDS,
+				String::valueOf),
+			new IdEntityField(
 				"assetTagIds", locale -> Field.ASSET_TAG_IDS, String::valueOf),
 			new IdEntityField(
 				"classPK", locale -> Field.USER_ID, String::valueOf),

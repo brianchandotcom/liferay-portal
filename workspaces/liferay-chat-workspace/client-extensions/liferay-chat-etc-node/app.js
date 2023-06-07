@@ -1,16 +1,18 @@
-/**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
- */
+/* ***************************************************
+*               Liferay Chat Server                  *
+* ****************************************************
+* A Web Socket-based chat server has been developed  *
+* to facilitate message exchange functionality for a *
+* Liferay chat application. This server is designed  *
+* to exclusively handle message identifier           *
+* information, such as user IDs and message IDs,     *
+* while refraining from receiving any actual message *
+* content.                                           *
+* ****************************************************
+* Authors:                                           *
+*   - Mahmoud Hussein Tayem                          *
+*   - Mumen Hussein Tayem                            *
+* ***************************************************/
 import express from 'express';
 import { Server } from 'http';
 import { Server as SocketServer } from 'socket.io';

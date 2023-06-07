@@ -581,6 +581,29 @@ definition {
 		return ${curl};
 	}
 
+	macro _getCommerceProductAttachments {
+		Variables.assertDefined(parameterList = ${productName});
+
+		var baseURL = ${baseURL};
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var productId = CommerceJSONProductsAPI._getProductId(productName = ${productName});
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-catalog/v1.0/products/${productId}/attachments \
+				-u ${userLoginInfo} \
+				-H 'accept: application/json' \
+		''';
+
+		var responseBody = JSONCurlUtil.get(${curl});
+
+		return ${responseBody};
+	}
+
 	macro _getCommerceProductCategoryUsingProductERC {
 		Variables.assertDefined(parameterList = ${productERC});
 
@@ -657,6 +680,29 @@ definition {
 		}
 
 		return ${productImageIds};
+	}
+
+	macro _getCommerceProductImages {
+		Variables.assertDefined(parameterList = ${productName});
+
+		var baseURL = ${baseURL};
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var productId = CommerceJSONProductsAPI._getProductId(productName = ${productName});
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-catalog/v1.0/products/${productId}/images \
+				-u ${userLoginInfo} \
+				-H 'accept: application/json' \
+		''';
+
+		var responseBody = JSONCurlUtil.get(${curl});
+
+		return ${responseBody};
 	}
 
 	macro _getCommerceProductImageURL {
@@ -1419,6 +1465,24 @@ definition {
 		var skuId = JSONUtil.getWithJSONPath(${responseBody}, "$..['id']");
 
 		return ${skuId};
+	}
+
+	macro getCommerceProductMediaFieldValues {
+		Variables.assertDefined(parameterList = "${jsonPath},${productName}");
+
+		if (${type} == "images") {
+			var responseBody = CommerceJSONProductsAPI._getCommerceProductImages(productName = ${productName});
+		}
+
+		if (${type} == "attachment") {
+			var responseBody = CommerceJSONProductsAPI._getCommerceProductAttachments(productName = ${productName});
+		}
+
+		var fieldValues = JSONUtil.getWithJSONPath(${responseBody}, ${jsonPath});
+
+		echo("Field: ${fieldValues}");
+
+		return ${fieldValues};
 	}
 
 	macro getProductField {

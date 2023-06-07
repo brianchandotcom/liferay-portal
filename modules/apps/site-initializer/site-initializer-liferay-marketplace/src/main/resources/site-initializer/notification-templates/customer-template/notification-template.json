@@ -1,0 +1,23 @@
+{
+	"description": "",
+	"editorType": "richText",
+	"name": "Invite Customer MarketPlace Template",
+	"recipientType": "email",
+	"recipients": [
+		{
+			"bcc": "",
+			"cc": "",
+			"from": "[%USERADDITIONALINFO_AUTHOR_EMAIL_ADDRESS%]",
+			"fromName": {
+				"en-US": "[%USERADDITIONALINFO_AUTHOR_EMAIL_ADDRESS%]"
+			},
+			"to": {
+				"en-US": "[%USERADDITIONALINFO_EMAILOFMEMBER%]"
+			}
+		}
+	],
+	"subject": {
+		"en_US": "Liferay Marketplace - Invitation from [%CURRENT_USER_FIRST_NAME%] [%CURRENT_USER_MIDDLE_NAME%] [%CURRENT_USER_LAST_NAME%]"
+	},
+	"type": "email"
+}

@@ -580,7 +580,12 @@ const MoveButton = ({
 					type: node.type,
 				})
 			}
-			onFocus={(event) => event.stopPropagation()}
+			onFocus={(event) => {
+				buttonRef.current
+					?.closest('.treeview-link')
+					?.classList.remove('focus');
+				event.stopPropagation();
+			}}
 			onKeyDown={onKeyDown}
 			ref={buttonRef}
 			title={sub(Liferay.Language.get('move-x'), [node.name])}

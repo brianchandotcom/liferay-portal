@@ -1158,6 +1158,25 @@ definition {
 		WaitForElementNotPresent(locator1 = "Message#SUCCESS");
 	}
 
+	macro removeEntryEligibility {
+		CommerceNavigator.gotoEntry(entryName = ${entryName});
+
+		Navigator.gotoNavTab(navTab = "Eligibility");
+
+		Click(
+			key_value = ${channelEligibility},
+			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Remove");
+
+		CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
+
+		AssertElementNotPresent(
+			key_entryName = ${channelEligibility},
+			key_table = "Channels",
+			locator1 = "CommerceEntry#TABLE_ELIGIBILITY_ENTRY");
+	}
+
 	macro saveEntry {
 		Button.clickSave();
 

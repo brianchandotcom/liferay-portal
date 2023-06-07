@@ -410,7 +410,7 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		return new String[] {indexName};
 	}
 
-	private SearchHit _getLastSearchHit(
+	private SearchHit _skipToLastSearch(
 		int maxResultWindow, SearchSearchRequest searchSearchRequest,
 		int start) {
 
@@ -627,7 +627,7 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 
 		try {
 			if (end > maxResultWindow) {
-				SearchHit lastSearchHit = _getLastSearchHit(
+				SearchHit lastSearchHit = _skipToLastSearch(
 					maxResultWindow, searchSearchRequest, start);
 
 				if (lastSearchHit == null) {

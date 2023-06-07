@@ -56,6 +56,7 @@ import java.net.URLConnection;
 
 import java.util.Calendar;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -276,16 +277,21 @@ public class AttachmentUtil {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		ServiceContext cloneServiceContext =
+		ServiceContext dlFileEntryCloneServiceContext =
 			(ServiceContext)serviceContext.clone();
 
-		cloneServiceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+		dlFileEntryCloneServiceContext.setExpandoBridgeAttributes(
+			new LinkedHashMap<>());
+
+		dlFileEntryCloneServiceContext.setWorkflowAction(
+			WorkflowConstants.ACTION_PUBLISH);
 
 		long fileEntryId = GetterUtil.getLong(attachment.getFileEntryId());
 
 		if (fileEntryId == 0) {
 			FileEntry fileEntry = addFileEntry(
-				attachment, uniqueFileNameProvider, cloneServiceContext);
+				attachment, uniqueFileNameProvider,
+				dlFileEntryCloneServiceContext);
 
 			if (fileEntry != null) {
 				fileEntryId = fileEntry.getFileEntryId();
@@ -297,8 +303,14 @@ public class AttachmentUtil {
 				ActionKeys.VIEW);
 		}
 
+		ServiceContext cloneServiceContext =
+			(ServiceContext)serviceContext.clone();
+
+		cloneServiceContext.setTimeZone(serviceContext.getTimeZone());
+		cloneServiceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+
 		Calendar displayCalendar = CalendarFactoryUtil.getCalendar(
-			serviceContext.getTimeZone());
+			cloneServiceContext.getTimeZone());
 
 		if (attachment.getDisplayDate() != null) {
 			displayCalendar = DateConfigUtil.convertDateToCalendar(
@@ -308,7 +320,7 @@ public class AttachmentUtil {
 		DateConfig displayDateConfig = new DateConfig(displayCalendar);
 
 		Calendar expirationCalendar = CalendarFactoryUtil.getCalendar(
-			serviceContext.getTimeZone());
+			cloneServiceContext.getTimeZone());
 
 		expirationCalendar.add(Calendar.MONTH, 1);
 

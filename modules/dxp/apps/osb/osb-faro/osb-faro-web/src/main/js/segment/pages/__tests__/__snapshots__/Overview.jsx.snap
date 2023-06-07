@@ -91,7 +91,7 @@ exports[`SegmentOverview should render 1`] = `
           class="card-footer"
         >
           <a
-            class="button-root link-unstyled"
+            class="button-root c-link link-secondary text-decoration-none"
             href="/workspace/23/contacts/segments/test/interests"
           >
             View All Interests

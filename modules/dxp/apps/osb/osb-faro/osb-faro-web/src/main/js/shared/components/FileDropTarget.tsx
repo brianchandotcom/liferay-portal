@@ -238,6 +238,7 @@ export class FileDropTarget extends React.Component<IFileDropTargetProps> {
 					>
 						<ClayButton
 							className='button-root'
+							displayType='secondary'
 							onClick={this.handleFileSelector}
 							size='sm'
 						>

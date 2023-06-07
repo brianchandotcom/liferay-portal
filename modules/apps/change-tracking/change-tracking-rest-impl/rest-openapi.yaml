@@ -141,6 +141,45 @@ components:
                 status:
                     $ref: "#/components/schemas/Status"
                     readOnly: true
+        CTRemote:
+            # @review
+            description:
+                Another server to create and publish publications.
+            properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
+                dateCreated:
+                    description:
+                        The remote's creation date.
+                    format: date-time
+                    readOnly: true
+                    type: string
+                dateModified:
+                    description:
+                        The last time any of the remote's fields were changed.
+                    format: date-time
+                    readOnly: true
+                    type: string
+                description:
+                    type: string
+                id:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                name:
+                    type: string
+                ownerName:
+                    description:
+                        The remote's creator.
+                    readOnly: true
+                    type: string
+                url:
+                    type: string
         Status:
             properties:
                 code:
@@ -517,3 +556,146 @@ paths:
                         application/json: {}
                         application/xml: {}
             tags: ["CTProcess"]
+    "/ct-remotes":
+        get:
+            operationId: getCTRemotesPage
+            parameters:
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/CTRemote"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/CTRemote"
+                                type: array
+            tags: ["CTRemote"]
+        post:
+            operationId: postCTRemote
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/CTRemote"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/CTRemote"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/CTRemote"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/CTRemote"
+            tags: ["CTRemote"]
+    "/ct-remotes/{id}":
+        delete:
+            operationId: deleteCTRemote
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["CTRemote"]
+        get:
+            operationId: getCTRemote
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/CTRemote"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/CTRemote"
+            tags: ["CTRemote"]
+        patch:
+            operationId: patchCTRemote
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/CTRemote"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/CTRemote"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/CTRemote"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/CTRemote"
+            tags: ["CTRemote"]
+        put:
+            operationId: putCTRemote
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/CTRemote"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/CTRemote"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/CTRemote"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/CTRemote"
+            tags: ["CTRemote"]

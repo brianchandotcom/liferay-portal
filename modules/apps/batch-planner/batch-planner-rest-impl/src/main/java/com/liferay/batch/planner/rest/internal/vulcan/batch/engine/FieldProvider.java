@@ -60,6 +60,20 @@ public class FieldProvider {
 			});
 	}
 
+	public List<Field> getFields(long companyId, String internalClassName)
+		throws Exception {
+
+		OpenAPIYAML openAPIYAML = _openAPIYAMLProvider.getOpenAPIYAML(
+			companyId, internalClassName);
+
+		Map<String, Field> dtoEntityFields = OpenAPIUtil.getDTOEntityFields(
+			internalClassName.substring(
+				internalClassName.lastIndexOf(StringPool.PERIOD) + 1),
+			openAPIYAML);
+
+		return new ArrayList<>(dtoEntityFields.values());
+	}
+
 	public List<Field> getFields(
 			long companyId, String objectDefinitionName, UriInfo uriInfo)
 		throws Exception {
@@ -76,18 +90,6 @@ public class FieldProvider {
 			uriInfo);
 
 		return new ArrayList<>(fields.values());
-	}
-
-	public List<Field> getFields(String internalClassName) throws Exception {
-		OpenAPIYAML openAPIYAML = _openAPIYAMLProvider.getOpenAPIYAML(
-			internalClassName);
-
-		Map<String, Field> dtoEntityFields = OpenAPIUtil.getDTOEntityFields(
-			internalClassName.substring(
-				internalClassName.lastIndexOf(StringPool.PERIOD) + 1),
-			openAPIYAML);
-
-		return new ArrayList<>(dtoEntityFields.values());
 	}
 
 	@Reference

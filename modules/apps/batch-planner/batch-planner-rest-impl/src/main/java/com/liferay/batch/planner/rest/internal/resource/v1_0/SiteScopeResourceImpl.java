@@ -53,7 +53,7 @@ public class SiteScopeResourceImpl extends BaseSiteScopeResourceImpl {
 		List<String> entityScopes = null;
 
 		OpenAPIYAML openAPIYAML = _openAPIYAMLProvider.getOpenAPIYAML(
-			internalClassName);
+			contextCompany.getCompanyId(), internalClassName);
 
 		String simpleInternalClassName = internalClassName.substring(
 			internalClassName.lastIndexOf(StringPool.PERIOD) + 1);

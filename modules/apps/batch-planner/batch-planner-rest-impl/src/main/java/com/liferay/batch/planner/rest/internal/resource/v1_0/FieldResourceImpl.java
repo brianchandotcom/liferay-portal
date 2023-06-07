@@ -68,7 +68,8 @@ public class FieldResourceImpl extends BaseFieldResourceImpl {
 		int idx = internalClassName.indexOf(StringPool.POUND);
 
 		if (idx < 0) {
-			return _fieldProvider.getFields(internalClassName);
+			return _fieldProvider.getFields(
+				contextCompany.getCompanyId(), internalClassName);
 		}
 
 		return _fieldProvider.getFields(

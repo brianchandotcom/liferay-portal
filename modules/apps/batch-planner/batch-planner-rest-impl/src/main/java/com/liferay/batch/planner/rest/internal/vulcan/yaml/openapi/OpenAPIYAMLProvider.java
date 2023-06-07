@@ -33,12 +33,13 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = OpenAPIYAMLProvider.class)
 public class OpenAPIYAMLProvider {
 
-	public OpenAPIYAML getOpenAPIYAML(String internalClassName)
+	public OpenAPIYAML getOpenAPIYAML(long companyId, String internalClassName)
 		throws Exception {
 
 		VulcanBatchEngineTaskItemDelegate vulcanBatchEngineTaskItemDelegate =
 			_vulcanBatchEngineTaskItemDelegateRegistry.
-				getVulcanBatchEngineTaskItemDelegate(internalClassName);
+				getVulcanBatchEngineTaskItemDelegate(
+					companyId, internalClassName);
 
 		Response response = _openAPIResource.getOpenAPI(
 			Collections.singleton(

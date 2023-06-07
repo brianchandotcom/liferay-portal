@@ -1,4 +1,8 @@
 .modal-container {
+	.modal-body {
+		border-top: none;
+	}
+
 	.modal-footer,
 	.modal-header {
 		&:not(.border) {

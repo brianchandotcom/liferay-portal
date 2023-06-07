@@ -1,0 +1,92 @@
+{
+	"object-fields": [
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "49583a65-9d53-b19f-5654-debcb628753b",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Name"
+			},
+			"name": "name",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "deb2134a-1ed6-ba79-c208-82a0dc8d4c1c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Total Cost"
+			},
+			"name": "totalCost",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "Boolean",
+			"externalReferenceCode": "b9bc1465-e8bb-1915-fca6-da71e5d0c9d0",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Selected"
+			},
+			"name": "selected",
+			"required": false,
+			"type": "Boolean"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Picklist",
+			"externalReferenceCode": "8923a32c-6a65-48e8-a4fd-417704a923c9",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Currency"
+			},
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Currencies$]",
+			"name": "currency",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "Long",
+			"businessType": "Attachment",
+			"externalReferenceCode": "7691c886-86af-42c8-9e7b-932006be529a",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "List of Qualified Leads"
+			},
+			"name": "listOfQualifiedLeads",
+			"objectFieldSettings": [
+				{
+					"name": "acceptedFileExtensions",
+					"value": "csv, xlsx, xls"
+				},
+				{
+					"name": "maximumFileSize",
+					"value": "3"
+				},
+				{
+					"name": "fileSource",
+					"value": "userComputer"
+				},
+				{
+					"name": "showFilesInDocumentsAndMedia",
+					"value": "true"
+				},
+				{
+					"name": "storageDLFolderPath",
+					"value": "/MDFClaimActivity"
+				}
+			],
+			"required": false,
+			"type": "Long"
+		}
+	],
+	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:MDFClaimActivity$]"
+}

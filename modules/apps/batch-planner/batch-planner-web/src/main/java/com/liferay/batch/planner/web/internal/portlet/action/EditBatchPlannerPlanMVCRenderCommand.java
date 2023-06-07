@@ -75,7 +75,7 @@ public class EditBatchPlannerPlanMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	private Map<String, String> _getInternalClassNameCategories(
-		boolean export, long companyId) {
+		long companyId, boolean export) {
 
 		Map<String, String> internalClassNameCategories = new HashMap<>();
 
@@ -83,7 +83,7 @@ public class EditBatchPlannerPlanMVCRenderCommand implements MVCRenderCommand {
 				_vulcanBatchEngineTaskItemDelegateRegistry.getEntityClassNames(
 					companyId)) {
 
-			if (!_isBatchPlannerEnabled(entityClassName, export, companyId)) {
+			if (!_isBatchPlannerEnabled(companyId, entityClassName, export)) {
 				continue;
 			}
 
@@ -115,7 +115,7 @@ public class EditBatchPlannerPlanMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	private boolean _isBatchPlannerEnabled(
-		String entityClassName, boolean export, long companyId) {
+		long companyId, String entityClassName, boolean export) {
 
 		if (export) {
 			return _vulcanBatchEngineTaskItemDelegateRegistry.
@@ -141,7 +141,7 @@ public class EditBatchPlannerPlanMVCRenderCommand implements MVCRenderCommand {
 			ParamUtil.getString(renderRequest, "navigation"));
 
 		Map<String, String> internalClassNameCategories =
-			_getInternalClassNameCategories(export, companyId);
+			_getInternalClassNameCategories(companyId, export);
 
 		long batchPlannerPlanId = ParamUtil.getLong(
 			renderRequest, "batchPlannerPlanId");

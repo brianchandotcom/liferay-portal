@@ -1,3 +1,0 @@
-liferay-sample-etc-spring-boot-oauth-application-user-agent:
-    .serviceAddress: localhost:58081
-    .serviceScheme: http

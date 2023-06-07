@@ -3,6 +3,8 @@ assemble:
           - "**/*.js"
           - package.json
 liferay-sample-node-oauth-application-user-agent:
+    .serviceAddress: localhost:3001
+    .serviceScheme: http
     name: Liferay Sample Node OAuth Application User Agent
     scopes:
         - Liferay.Headless.Admin.Workflow.everything

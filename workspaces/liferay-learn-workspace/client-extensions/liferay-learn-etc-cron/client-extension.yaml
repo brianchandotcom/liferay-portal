@@ -2,6 +2,8 @@ assemble:
     - from: assets
     - fromTask: bootJar
 liferay-learn-etc-cron-oauth-application-headless-server:
+    .serviceAddress: localhost:8080
+    .serviceScheme: http
     name: Liferay Learn Etc Cron Oauth Application Headless Server
     scopes:
         - Liferay.Data.Engine.REST.everything

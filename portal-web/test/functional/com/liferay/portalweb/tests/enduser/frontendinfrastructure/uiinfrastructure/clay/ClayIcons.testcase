@@ -40,7 +40,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-152271 Verify that flag icons are present when clicking on localization button. Temporarily manually verify takescreenshot until we prove ocular can work in consistent and stable way."
+	@description = "LPS-142346 Verify that flag icons are present when clicking on localization button. Temporarily manually verify takescreenshot until we prove ocular can work in consistent and stable way."
 	@priority = 5
 	test FlagIconsCanRender {
 		property portal.acceptance = "true";

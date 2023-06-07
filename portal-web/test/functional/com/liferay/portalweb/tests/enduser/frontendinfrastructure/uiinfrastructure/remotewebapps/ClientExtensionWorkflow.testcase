@@ -21,7 +21,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-147201. Verify approved remote app portlet can be added to page"
+	@description = "LPS-141280. Verify approved remote app portlet can be added to page"
 	@priority = 4
 	test AdminCanApproveRemotePortlet {
 		task ("Apply workflow approval process to remote apps") {
@@ -97,7 +97,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-147197. Verify rejected remote app portlet cannot be added to page"
+	@description = "LPS-141280. Verify rejected remote app portlet cannot be added to page"
 	@priority = 5
 	test AdminCanRejectRemotePortlet {
 		task ("Given workflow approval process applied to remote apps") {
@@ -171,7 +171,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-147198. Verify remote app entry workflow can be configured at instance level"
+	@description = "LPS-141280. Verify remote app entry workflow can be configured at instance level"
 	@priority = 5
 	test CanConfigureWorkflowInstanceLevel {
 		task ("Navigate to workflow configuration") {
@@ -199,7 +199,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-147202. Verify admin can receive notification request to approve remote app"
+	@description = "LPS-141280. Verify admin can receive notification request to approve remote app"
 	@priority = 4
 	test CanSendWorkflowNotification {
 		task ("Apply workflow approval process to remote apps") {
@@ -242,7 +242,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-147200. Verify pending remote app portlet cannot be added to page"
+	@description = "LPS-141280. Verify pending remote app portlet cannot be added to page"
 	@priority = 4
 	test PendingRemoteAppCannotBeAddedToPage {
 		task ("Apply workflow approval process to remote apps") {

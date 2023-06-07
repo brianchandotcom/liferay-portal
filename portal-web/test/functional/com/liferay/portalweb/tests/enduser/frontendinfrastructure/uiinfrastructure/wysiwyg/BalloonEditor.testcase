@@ -43,7 +43,7 @@ definition {
 		}
 	}
 
-	@description = "Assert alignment options with an image"
+	@description = "LPS-121553. Assert alignment options with an image"
 	@priority = 4
 	@refactordone
 	test CanAlignImage {
@@ -87,7 +87,7 @@ definition {
 		}
 	}
 
-	@description = "Assert alignment options with a video"
+	@description = "LPS-121553. Assert alignment options with a video"
 	@priority = 4
 	@refactordone
 	test CanAlignVideo {
@@ -137,7 +137,7 @@ definition {
 		}
 	}
 
-	@description = "Assert toolbar with hyperlink icon is present"
+	@description = "LPS-121553. Assert toolbar with hyperlink icon is present"
 	@priority = 4
 	@refactordone
 	test CanEditHyperlink {
@@ -182,7 +182,7 @@ definition {
 		}
 	}
 
-	@description = "Assert table option enabled in the toolbar"
+	@description = "LPS-121553. Assert table option enabled in the toolbar"
 	@priority = 4
 	@refactordone
 	test CanEditTable {
@@ -227,7 +227,7 @@ definition {
 		}
 	}
 
-	@description = "Assert text edition enabled in the table"
+	@description = "LPS-121553. Assert text edition enabled in the table"
 	@priority = 4
 	@refactordone
 	test CanEditTextInTable {
@@ -254,7 +254,7 @@ definition {
 		}
 	}
 
-	@description = "Assert text edit function (bold, italic, underline, numbered/bulleted list, block styles)"
+	@description = "LPS-121553. Assert text edit function (bold, italic, underline, numbered/bulleted list, block styles)"
 	@priority = 5
 	@refactordone
 	test CanFormatText {

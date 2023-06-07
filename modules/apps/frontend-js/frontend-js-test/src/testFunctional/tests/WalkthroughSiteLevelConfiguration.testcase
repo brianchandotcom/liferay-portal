@@ -41,7 +41,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-159841. Walkthrough does not show when disabled."
+	@description = "LPS-150905. Walkthrough does not show when disabled."
 	@priority = 5
 	test CanBeDisabled {
 		property portal.acceptance = "true";
@@ -69,7 +69,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-159838. Can enable walkthrough in System Settings."
+	@description = "LPS-150905. Can enable walkthrough in System Settings."
 	@priority = 5
 	test CanBeEnabled {
 		property portal.acceptance = "true";
@@ -89,7 +89,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-159839. JSON can be configured on System Settings."
+	@description = "LPS-150905. JSON can be configured on System Settings."
 	@priority = 5
 	test JSONCanBeConfigured {
 		property portal.acceptance = "true";
@@ -111,7 +111,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-159840. JSON can be updated."
+	@description = "LPS-150905. JSON can be updated."
 	@priority = 5
 	test JSONCanBeUpdated {
 		property portal.acceptance = "true";
@@ -141,7 +141,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-159836. Walkthrough displays when defined for a site."
+	@description = "LPS-150905. Walkthrough displays when defined for a site."
 	@priority = 5
 	test WillDisplayWhenDefinedForSite {
 		property portal.acceptance = "true";
@@ -180,7 +180,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-159837. Walkthrough will not display when not defined for a site."
+	@description = "LPS-150905. Walkthrough will not display when not defined for a site."
 	@priority = 5
 	test WillNotDisplayWhenNotDefinedForSite {
 		property portal.acceptance = "true";

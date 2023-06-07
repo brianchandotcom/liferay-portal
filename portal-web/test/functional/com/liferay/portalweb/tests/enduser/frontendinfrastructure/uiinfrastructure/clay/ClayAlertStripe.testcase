@@ -44,7 +44,7 @@ definition {
 		}
 	}
 
-	@description = "Verify stripe alert contains close button"
+	@description = "LRQA-65932. Verify stripe alert contains close button"
 	@priority = 5
 	test CanDisplayCloseButton {
 		task ("When the alert is a stripe variation") {

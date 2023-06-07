@@ -45,7 +45,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-170536. Request Invalid IP Can Return Error Connection Refused."
+	@description = "LPS-169541. Request Invalid IP Can Return Error Connection Refused."
 	@priority = 3
 	test RequestInvalidIPCanReturnErrorConnectionRefused {
 		task ("When open action list dropdown menu in 1st row item. And When access async connection refused to request invalid ip address") {
@@ -61,7 +61,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-170537. Request Non Existing Resource Can Return Error Not Found."
+	@description = "LPS-169541. Request Non Existing Resource Can Return Error Not Found."
 	@priority = 3
 	test RequestNonExistingResourceCanReturnErrorNotFound {
 		task ("When open action list dropdown menu in 1st row item. And When access async success action item to request a resource that does not exist") {
@@ -77,7 +77,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-170535. Request Valid IP Can Return Success."
+	@description = "LPS-169541. Request Valid IP Can Return Success."
 	@priority = 3
 	test RequestValidIPCanReturnSuccess {
 		task ("When open action list dropdown menu in 1st row item. And When access async success action item to request valid ip address") {

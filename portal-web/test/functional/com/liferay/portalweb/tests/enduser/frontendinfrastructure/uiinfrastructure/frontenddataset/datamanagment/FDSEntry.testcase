@@ -31,7 +31,7 @@ definition {
 		}
 	}
 
-	@description = "Confirm that the user can change the pagination on the dataset admin page"
+	@description = "LPS-175990. Confirm that the user can change the pagination on the dataset admin page"
 	@priority = 4
 	test CanChangePaginationInAdminPage {
 		task ("Given create 6 data sets") {
@@ -61,7 +61,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-178773 Confirm that the user can create a data set entry"
+	@description = "LPS-175990. Confirm that the user can create a data set entry"
 	@priority = 5
 	test CanCreateDataSet {
 		task ("When Create a DataSet ") {
@@ -83,7 +83,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-179521. Confirm that the dataset can be delete"
+	@description = "LPS-172398. Confirm that the dataset can be delete"
 	@priority = 5
 	test CanDeleteDataSet {
 		task ("When the user goes to add Datasets") {
@@ -103,7 +103,7 @@ definition {
 		}
 	}
 
-	@description = "Needs refactor after LPS-183512 is fixed | LPS-178779. Confirm the error message that appears when the user tries to create a dataset entry with more than 280 characters in the name field"
+	@description = "Needs refactor after LPS-183512 is fixed | LPS-175990. Confirm the error message that appears when the user tries to create a dataset entry with more than 280 characters in the name field"
 	@priority = 3
 	test CannotExceed280Characters {
 		task ("When the user goes to add Datasets") {
@@ -129,7 +129,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-179768. Confirm that the options view and Delete is present and is visible after clicking the ellipsis button."
+	@description = "LPS-172398. Confirm that the options view and Delete is present and is visible after clicking the ellipsis button."
 	@priority = 3
 	test DeleteAndViewAreAvailable {
 		task ("When The user goes to add a new Dataset") {
@@ -151,7 +151,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-178778. Confirm the error message that appears when the user tries to create a data set entry without the filled name"
+	@description = "LPS-175990. Confirm the error message that appears when the user tries to create a data set entry without the filled name"
 	@priority = 3
 	test ErrorAppearsWhenNameBlank {
 		task ("When the user goes to add Datasets") {
@@ -173,7 +173,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-178775. Confirm the error message that appears when the user tries to create a Data Set without the filled provider"
+	@description = "LPS-175990. Confirm the error message that appears when the user tries to create a Data Set without the filled provider"
 	@priority = 3
 	test ErrorAppearsWhenProviderBlank {
 		task ("When the user goes to add Datasets") {
@@ -195,7 +195,7 @@ definition {
 		}
 	}
 
-	@description = "Confirm that the user can cancel the creation of a data set entry"
+	@description = "LPS-175990. Confirm that the user can cancel the creation of a data set entry"
 	@priority = 5
 	test NotCreatedAfterCancel {
 		task ("When The user goes to add Datasets") {
@@ -223,7 +223,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-179526. Confirm that the data set was not deleted after clicking CANCEL in the modal"
+	@description = "LPS-172398. Confirm that the data set was not deleted after clicking CANCEL in the modal"
 	@priority = 5
 	test NotDeleteDatasetAfterCancel {
 		task ("When the user goes to add Datasets") {
@@ -253,7 +253,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-179527. Confirm that the data set was not deleted after clicking clicks on the 'X' button in the modal"
+	@description = "LPS-172398. Confirm that the data set was not deleted after clicking clicks on the 'X' button in the modal"
 	@priority = 5
 	test NotDeleteDatasetAfterCloseButton {
 		task ("When The user goes to add a new Dataset") {
@@ -287,7 +287,7 @@ definition {
 		}
 	}
 
-	@description = "Needs refactor after LPS-183512 is fixed | LPS-179056. Confirm that the user can create a data set entry with special chatacters"
+	@description = "Needs refactor after LPS-183512 is fixed | LPS-175990. Confirm that the user can create a data set entry with special chatacters"
 	@priority = 5
 	test WithSpecialCharacters {
 		task ("When Create a DataSet") {

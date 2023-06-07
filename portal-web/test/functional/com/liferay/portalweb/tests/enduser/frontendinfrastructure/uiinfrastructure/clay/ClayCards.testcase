@@ -46,7 +46,7 @@ definition {
 		}
 	}
 
-	@description = "LRQA-66243: Assert active state of Selectable Image Card when checkbox was clicked"
+	@description = "LRQA-55800. Assert active state of Selectable Image Card when checkbox was clicked"
 	@priority = 3
 	test ActiveStateSelectableImageCard {
 		task ("Click at checkbok for active Card") {
@@ -66,7 +66,7 @@ definition {
 		}
 	}
 
-	@description = "LRQA-66243: Assert that appends the href value to current URL: #image-card-href when click on Card Title"
+	@description = "LRQA-55800. Assert that appends the href value to current URL: #image-card-href when click on Card Title"
 	@priority = 5
 	test ChangingURLWhenClickCardTitle {
 		task ("Click on card title") {
@@ -81,7 +81,7 @@ definition {
 		}
 	}
 
-	@description = "LRQA-66243: Assert that appends the href value to current URL: #1 when add on Group 1 - Option 1"
+	@description = "LRQA-55800. Assert that appends the href value to current URL: #1 when add on Group 1 - Option 1"
 	@priority = 5
 	test ChangingURLWhenSelectCardGroup {
 		task ("Select the Group 1 - Option 1") {
@@ -97,7 +97,7 @@ definition {
 		}
 	}
 
-	@description = "LRQA-66243: Assert default state (not checked) of Selectable Image Card"
+	@description = "LRQA-55800. Assert default state (not checked) of Selectable Image Card"
 	@priority = 3
 	test CheckDefaultStateSelectableImageCard {
 		task ("Check default state of Selectable Image Card") {

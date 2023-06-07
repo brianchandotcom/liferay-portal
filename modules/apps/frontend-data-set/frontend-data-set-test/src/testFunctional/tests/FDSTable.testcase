@@ -44,7 +44,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-165727. Assert the details shown in the FDS table"
+	@description = "LPS-162792. Assert the details shown in the FDS table"
 	@priority = 4
 	test HeadersCanBeLocalized {
 		task ("And Given: site URL localized to Spanish //localhost:8080/es/*") {

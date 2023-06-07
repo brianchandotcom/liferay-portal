@@ -42,7 +42,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-146034. Verifies admin component displays it's default theme after applying a theme"
+	@description = "LPS-122068. Verifies admin component displays it's default theme after applying a theme"
 	@priority = 5
 	test CanDisplayDefaultTheme {
 		task ("When assert classic theme background color") {
@@ -100,7 +100,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-146450. Verifies admin component CSS can be overridden"
+	@description = "LPS-122068. Verifies admin component CSS can be overridden"
 	@priority = 4
 	test CssCanBeOverridden {
 		task ("When assert cadmin default theme is applied to a component") {

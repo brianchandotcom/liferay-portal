@@ -42,6 +42,7 @@ definition {
 		}
 	}
 
+	@description = "LPS-121932. Verify if the user can select from auto complete"
 	@priority = 3
 	@refactordone
 	test CanSelectFromAutoComplete {

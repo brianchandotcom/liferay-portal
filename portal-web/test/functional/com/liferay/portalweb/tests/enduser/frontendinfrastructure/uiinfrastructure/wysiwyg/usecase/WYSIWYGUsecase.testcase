@@ -27,7 +27,7 @@ definition {
 		}
 	}
 
-	@description = "Ignored due to LPS-185764"
+	@description = "Ignored due to LPS-185764 | LRQA-67229. Verify if aad blog entry with image via blog images is possible"
 	@ignore = "true"
 	@priority = 4
 	@refactordone
@@ -81,7 +81,7 @@ definition {
 		BlogsEntry.viewInlineImage(uploadFileName = "Document_1");
 	}
 
-	@description = "Verify existing text can be formatted as a hyperlink"
+	@description = "LPS-110663. Verify existing text can be formatted as a hyperlink"
 	@priority = 4
 	@refactordone
 	test CanAddHyperlinkToExistingText {
@@ -110,6 +110,7 @@ definition {
 			locator1 = "CKEditor#BODY_TEXT_HREF");
 	}
 
+	@description = "LRQA-67229. Verify if add web content article with image via URL is possible"
 	@priority = 4
 	@refactordone
 	test CanAddWebContentArticleWithImageViaURL {
@@ -331,7 +332,7 @@ definition {
 		takeScreenshot();
 	}
 
-	@description = "Verify source content can be previewed"
+	@description = "LRQA-67229. Verify source content can be previewed"
 	@priority = 4
 	@refactordone
 	test CanEditTextInPreviewSourceContent {
@@ -385,7 +386,7 @@ definition {
 		AssertElementPresent(locator1 = "//h1[normalize-space(text())='Sample document for editor area test edit']");
 	}
 
-	@description = "Verify source content can be previewed"
+	@description = "LPS-110663. Verify source content can be previewed"
 	@priority = 4
 	@refactordone
 	test CanPreviewSourceContent {
@@ -437,7 +438,7 @@ definition {
 
 	}
 
-	@description = "Verify styled content can be added from source view"
+	@description = "LRQA-67229. Verify styled content can be added from source view"
 	@priority = 4
 	@refactordone
 	test CanViewSourceCodeFormattedInTextView {
@@ -475,7 +476,7 @@ definition {
 		AssertElementPresent(locator1 = "//p[normalize-space(text())='sample text']");
 	}
 
-	@description = "Verify that basic CKEditor toolbar is present on DM"
+	@description = "LPS-127012. Verify that basic CKEditor toolbar is present on DM"
 	@priority = 3
 	@refactorneeded
 	test DMCanFormatTextWithEditorToolbar {

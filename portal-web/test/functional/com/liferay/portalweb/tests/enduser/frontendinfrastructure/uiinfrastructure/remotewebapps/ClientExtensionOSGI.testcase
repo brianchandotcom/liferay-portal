@@ -28,7 +28,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-169554 Access the osgi deployed custom element and assert that field information is displayed correctly and not editable"
+	@description = "LPS-155413. Access the osgi deployed custom element and assert that field information is displayed correctly and not editable"
 	@priority = 4
 	test FieldsAreNotEditableWhenAccessed {
 		property custom.element.client.extension.created = "true";
@@ -63,7 +63,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-169551: Verify that view button is visible"
+	@description = "LPS-155413. Verify that view button is visible"
 	@priority = 3
 	test HasViewAction {
 		property custom.element.client.extension.created = "true";
@@ -82,7 +82,7 @@ definition {
 		}
 	}
 
-	@description = "Verify that the Workspace label is present when a client extension is created through osgi"
+	@description = "LPS-154725. Verify that the Workspace label is present when a client extension is created through osgi"
 	@priority = 3
 	test OsgiClientExtensionWorkspaceLabelIsPresent {
 		property custom.element.client.extension.created = "true";
@@ -97,7 +97,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-169552 Select view action from Remote app and assert that field information is displayed correctly and not editable"
+	@description = "LPS-155413. Select view action from Remote app and assert that field information is displayed correctly and not editable"
 	@priority = 3
 	test ViewActionCanDisplayFieldsAsNotEditable {
 		property custom.element.client.extension.created = "true";

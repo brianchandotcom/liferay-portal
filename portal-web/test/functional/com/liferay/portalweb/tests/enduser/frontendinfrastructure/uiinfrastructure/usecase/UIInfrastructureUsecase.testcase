@@ -25,7 +25,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-95157. Verify control menu on an admin page is styled correctly after refreshing page"
+	@description = "LPS-95157. Verify control menu on an admin page is styled correctly after refreshing page"
 	@priority = 5
 	@refactordone
 	test AdminPageCanDisplayStyleCorrectlyAfterPageRefresh {
@@ -54,7 +54,7 @@ definition {
 		takeScreenshot();
 	}
 
-	@description = "Smoke test to verify portlet configuration is available, look and feel is available"
+	@description = "LRQA-55778. Smoke test to verify portlet configuration is available, look and feel is available"
 	@priority = 5
 	@refactordone
 	test CanConfigurePortletUI {
@@ -117,7 +117,7 @@ definition {
 		}
 	}
 
-	@description = "Smoke test to verify portlet can be dragged and dropped"
+	@description = "LRQA-55778. Smoke test to verify portlet can be dragged and dropped"
 	@priority = 5
 	@refactordone
 	test CanDragAndDropPortlet {
@@ -159,7 +159,7 @@ definition {
 		}
 	}
 
-	@description = "Smoke test to verify portlet can be removed"
+	@description = "LRQA-55778. Smoke test to verify portlet can be removed"
 	@priority = 5
 	@refactordone
 	test CanRemovePortlet {
@@ -193,7 +193,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-70390."
+	@description = "LPS-70390. Non ascii characters would be displayed correctly, when SPA is turned off"
 	@priority = 4
 	@refactordone
 	test CanViewNonASCIICharactersWithSPADisabled {
@@ -290,7 +290,7 @@ definition {
 		takeScreenshot();
 	}
 
-	@description = "This is a use case for LPS-95157. Verify control menu on home page is styled correctly after refreshing page."
+	@description = "LPS-95157. Verify control menu on home page is styled correctly after refreshing page."
 	@priority = 5
 	@refactordone
 	test SitePageCanDisplayStyleCorrectlyAfterPageRefresh {

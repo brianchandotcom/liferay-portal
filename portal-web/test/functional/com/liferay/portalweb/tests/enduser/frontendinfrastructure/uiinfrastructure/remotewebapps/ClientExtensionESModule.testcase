@@ -50,7 +50,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-165438. When add a remote app in the html <script> tag with src is rendered as a module type"
+	@description = "LPS-144267. When add a remote app in the html <script> tag with src is rendered as a module type"
 	@priority = 5
 	test CanRenderCustomElementAsModuleType {
 		task ("When Navigate to remote app portlet page") {

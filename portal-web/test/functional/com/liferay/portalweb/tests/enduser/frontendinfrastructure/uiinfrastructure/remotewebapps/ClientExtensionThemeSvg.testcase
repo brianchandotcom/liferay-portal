@@ -36,7 +36,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-178000. Verify that new SVG spritemap is applied on the page"
+	@description = "LPS-166479. Verify that new SVG spritemap is applied on the page"
 	@priority = 3
 	test CanExtendSvgFileFromDM {
 		property custom.properties = "feature.flag.LPS-166479=true";
@@ -79,7 +79,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-177980. Verify that new SVG spritemap file from external site is applied on the page"
+	@description = "LPS-173318. Verify that new SVG spritemap file from external site is applied on the page"
 	@priority = 3
 	test CanExtendSvgFileFromExternalSite {
 		property custom.properties = "feature.flag.LPS-166479=true";

@@ -46,7 +46,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-159575 Automation Test Creation - Allow users to delete their custom views"
+	@description = "LPS-114812. Allow users to delete their custom views"
 	@priority = 5
 	test CanBeDeleted {
 		task ("Given A custom view is created") {
@@ -62,7 +62,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-164617. Assert it is possible to edit the view settings of a custom view"
+	@description = "LPS-158545. Assert it is possible to edit the view settings of a custom view"
 	@priority = 4
 	test CanBeEdited {
 		task ("And Given a custom view is created and selected") {
@@ -99,7 +99,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-164616. Assert that it's possible to create A new custom view and selected as current view"
+	@description = "LPS-158545. Assert that it's possible to create A new custom view and selected as current view"
 	@priority = 4
 	test CanBeSaved {
 		task ("When Make some changes to dataset display") {
@@ -152,7 +152,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-160159. Assert that it's possible to select a new custom view and selected the default view"
+	@description = "LPS-130101. Assert that it's possible to select a new custom view and selected the default view"
 	@priority = 4
 	test CanBeSelected {
 		task ("And Given FDS sample portlet deployed and given customized tab active") {
@@ -187,7 +187,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-164618. Assert that it's possible can edit a new instance was previously created"
+	@description = "LPS-158545. Assert that it's possible can edit a new instance was previously created"
 	@priority = 4
 	test CanCreateMultiple {
 		task ("And Given A custom view is created and selected") {
@@ -241,7 +241,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-168120. Allow users to rename a custom view"
+	@description = "LPS-163823. Allow users to rename a custom view"
 	@priority = 4
 	test CanUpdateName {
 		task ("And Given created custom view") {
@@ -259,7 +259,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-165672 - Simplify how actions are shown in the custom views section"
+	@description = "LPS-164691. Simplify how actions are shown in the custom views section"
 	@priority = 3
 	test HasActionsOnlyOnEllipsis {
 		task ("And Given created custom view") {
@@ -293,7 +293,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-164616. Assert that it's possible to create A new custom view and selected as current view"
+	@description = "LPS-163823. Assert that it's possible to create A new custom view and selected as current view"
 	@priority = 4
 	test HasOptionToEditName {
 		task ("And Given created custom view") {
@@ -311,7 +311,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-164602 Frontend Dataset - column labels are not localized "
+	@description = "LPS-162792. Frontend Dataset - column labels are not localized "
 	@priority = 4
 	test ManagementBarCanBeLocalized {
 		task ("And Given: site URL localized to Spanish //localhost:8080/es/ and when on a customized tab view") {

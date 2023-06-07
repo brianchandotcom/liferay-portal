@@ -36,7 +36,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-164437. The JSON URL can be saved."
+	@description = "LPS-158545. The JSON URL can be saved."
 	@priority = 3
 	test CanBeSaved {
 		property portal.acceptance = "true";
@@ -98,7 +98,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-164436. The non-deleted field value can be retained."
+	@description = "LPS-152023. The non-deleted field value can be retained."
 	@priority = 3
 	test CanRetainNonDeletedFieldValue {
 		property portal.acceptance = "true";
@@ -154,7 +154,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-164433. The JSON URL can be can be repeated."
+	@description = "LPS-152023. The JSON URL can be can be repeated."
 	@priority = 3
 	test CSSURLCanBeRepeated {
 		property portal.acceptance = "true";
@@ -199,7 +199,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-164433. The JSON URL can be can be repeatably clicked."
+	@description = "LPS-152023. The JSON URL can be can be repeatably clicked."
 	@priority = 3
 	test JSURLCanBeRepeated {
 		property portal.acceptance = "true";
@@ -244,7 +244,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-164435. The JSON URL can be can be repeatably clicked."
+	@description = "LPS-152023. The JSON URL can be can be repeatably clicked."
 	@priority = 3
 	test JSURLCanBeRepeatedMultipleTimes {
 		property portal.acceptance = "true";

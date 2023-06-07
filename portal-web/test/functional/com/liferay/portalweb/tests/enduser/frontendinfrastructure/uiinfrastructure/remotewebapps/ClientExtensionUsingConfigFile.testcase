@@ -37,6 +37,7 @@ definition {
 		}
 	}
 
+	@description = "LPS-154274. Provisioning client extensions from external systems - Iframe"
 	@priority = 5
 	test CanUseOsgiClientExtensionIframeAsPortlet {
 		property iframe.client.extension.created = "true";
@@ -59,6 +60,7 @@ definition {
 		}
 	}
 
+	@description = "LPS-154274. Provisioning client extensions from external systems - Custom Element"
 	@priority = 5
 	test OsgiClientExtensionOfTypeCustomElementRendersCorrectlyWhenPlacedOnWidgetPage {
 		property custom.element.client.extension.created = "true";

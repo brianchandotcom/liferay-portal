@@ -44,7 +44,7 @@ definition {
 		}
 	}
 
-	@description = "Verify alert contains all required attributes: icon, type text, and description"
+	@description = "LRQA-65932. Verify alert contains all required attributes: icon, type text, and description"
 	@priority = 5
 	test CanDisplayAllAttributes {
 		task ("When the alert contains all attributes") {
@@ -75,7 +75,7 @@ definition {
 		}
 	}
 
-	@description = "Verify the keyword is semi-bold when alert contains status icon and keyword"
+	@description = "LRQA-65932. Verify the keyword is semi-bold when alert contains status icon and keyword"
 	@priority = 4
 	test KeywordCanDisplayInSemibold {
 		task ("When alert contains status icon and keyword") {

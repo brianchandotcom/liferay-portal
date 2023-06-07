@@ -21,7 +21,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-165439. I'm able to see references to import map by default on DOM"
+	@description = "LPS-144267. I'm able to see references to import map by default on DOM"
 	@priority = 5
 	test CanGenerateTheAMDToESMBridge {
 		task ("When navigate to home page") {
@@ -35,7 +35,7 @@ definition {
 		}
 	}
 
-	@description = "Verify user can configure AMD loader log level"
+	@description = "IFI-847. Verify user can configure AMD loader log level"
 	@priority = 5
 	@refactordone
 	test LogLevelCanBeConfigured {

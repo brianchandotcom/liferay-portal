@@ -42,7 +42,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-148143. Validates language can be added to translation list."
+	@description = "LPS-140069. Validates language can be added to translation list."
 	@priority = 3
 	test CanAddLanguageToTranslationList {
 		task ("Given manage translations modal") {
@@ -72,7 +72,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-147612. Validates translation can be synced in selector and text field."
+	@description = "LPS-133329. Validates translation can be synced in selector and text field."
 	@priority = 3
 	test CanBeSyncedOnSelectedAndTranslatedLanguages {
 		task ("When input different language text in aui tag field") {
@@ -124,7 +124,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-148142. Validates Manage Translations cancel add language by click cancel button."
+	@description = "LPS-140069. Validates Manage Translations cancel add language by click cancel button."
 	@priority = 3
 	test CancelAddLanguageByClickCancelButton {
 		task ("Given manage translations modal") {
@@ -152,7 +152,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-148142. Validates Manage Translations cancel add language by click somewhere outside the modal."
+	@description = "LPS-140069. Validates Manage Translations cancel add language by click somewhere outside the modal."
 	@priority = 3
 	test CancelAddLanguageByClickSomewhereOutsideModal {
 		task ("Given manage translations modal") {
@@ -182,7 +182,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-147946. Validates language can be deleted from the Manage Translation list."
+	@description = "LPS-133329. Validates language can be deleted from the Manage Translation list."
 	@priority = 3
 	test CanDeleteLanguageFromManageTranslationsList {
 		task ("Given manage translations modal") {
@@ -214,7 +214,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-147499. Verifies default options are present in translation manager language menu."
+	@description = "LPS-133329. Verifies default options are present in translation manager language menu."
 	@priority = 3
 	test CanDisplayDefaultLanguageDropdownOptionsOnly {
 		task ("When select translation language dropdown") {
@@ -244,7 +244,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-147946. Validates languages are searchable from the Manage Translations list."
+	@description = "LPS-133329. Validates languages are searchable from the Manage Translations list."
 	@priority = 3
 	test CanSearchLanguageFromManageTranslationsList {
 		task ("Given manage translations modal") {
@@ -268,7 +268,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-148144. Validates language status is not translated after deleting and re-adding language on modal."
+	@description = "LPS-140069. Validates language status is not translated after deleting and re-adding language on modal."
 	@priority = 3
 	test DeletedTranslatedLanguageDoesNotHaveTranslatedStatus {
 		task ("When input different language text in aui tag field") {
@@ -311,7 +311,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-148144. Validates language status is still translated after not saving deleted translation."
+	@description = "LPS-140069. Validates language status is still translated after not saving deleted translation."
 	@priority = 3
 	test NotSavingDeletedTranslatedLanguageStillHasTranslatedStatus {
 		task ("When input different language text in aui tag field") {

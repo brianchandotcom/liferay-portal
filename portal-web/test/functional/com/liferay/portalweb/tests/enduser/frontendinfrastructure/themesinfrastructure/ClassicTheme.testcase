@@ -23,7 +23,7 @@ definition {
 		}
 	}
 
-	@description = "Verify custom look and feel Settings can be applied to page"
+	@description = "LRQA-67229. Verify custom look and feel Settings can be applied to page"
 	@priority = 5
 	@refactordone
 	test CanConfigureLookAndFeelSettingsOnSinglePage {

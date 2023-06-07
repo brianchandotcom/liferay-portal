@@ -36,7 +36,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-141236. Verify remote app can be displayed under a portlet category"
+	@description = "LPS-139377. Verify remote app can be displayed under a portlet category"
 	@priority = 3
 	test CanBeAssignedAPortletCategory {
 		property portal.acceptance = "true";
@@ -76,7 +76,7 @@ definition {
 		}
 	}
 
-	@description = "Verify remote app can be deleted"
+	@description = "LPS-114812. Verify remote app can be deleted"
 	@priority = 5
 	@refactordone
 	test CanBeDeleted {
@@ -96,7 +96,7 @@ definition {
 		ClientExtensionGeneral.viewEmptyRemoteTable();
 	}
 
-	@description = "Add Client Extension with DB Partitioning enabled."
+	@description = "LPS-153716. Add Client Extension with DB Partitioning enabled."
 	@priority = 5
 	test CanBeDisplayedWithDBPartitioning {
 		property database.partition.enabled = "true";
@@ -120,7 +120,7 @@ definition {
 		}
 	}
 
-	@description = "Verify that the client extension is not available on the workflow page"
+	@description = "LPS-141280. Verify that the client extension is not available on the workflow page"
 	@priority = 3
 	test CannotConfigureWorkflowSiteLevel {
 		task ("Given go to Workflow page") {
@@ -141,7 +141,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-162031. The site administrator could add a CSS remote app."
+	@description = "LPS-162031. The site administrator could add a CSS remote app."
 	@priority = 3
 	test CSSCanBeCreated {
 		task ("Given a site administrator accesses to the Client Extensions admin") {
@@ -216,7 +216,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-158083 Remote App using non-root portal context"
+	@description = "LPS-158083. Remote App using non-root portal context"
 	@priority = 4
 	test CustomElementCanBeCreatedInNonRootContext {
 		property app.server.types = "tomcat";
@@ -287,7 +287,7 @@ definition {
 		}
 	}
 
-	@description = "Verify that remote app of type Custom Element can be deleted"
+	@description = "LPS-139377. Verify that remote app of type Custom Element can be deleted"
 	@priority = 4
 	test CustomElementCanBeDeleted {
 		property portal.acceptance = "true";
@@ -310,7 +310,7 @@ definition {
 		}
 	}
 
-	@description = "Verify that remote app of type Custom Element can be displayed by portlet"
+	@description = "LPS-139377. Verify that remote app of type Custom Element can be displayed by portlet"
 	@priority = 5
 	test CustomElementCanBeDisplayedByPortlet {
 		property portal.acceptance = "true";
@@ -352,7 +352,7 @@ definition {
 		}
 	}
 
-	@description = "Verify that remote app of type Custom Element can be edited"
+	@description = "LPS-139377. Verify that remote app of type Custom Element can be edited"
 	@priority = 4
 	test CustomElementCanBeEdited {
 		property portal.acceptance = "true";
@@ -398,7 +398,7 @@ definition {
 		}
 	}
 
-	@description = "Verify that remote app of type Custom Element can be instanceable in a Content Page"
+	@description = "LPS-139377. Verify that remote app of type Custom Element can be instanceable in a Content Page"
 	@priority = 3
 	test CustomElementCanBeInstanceable {
 		property portal.acceptance = "true";
@@ -459,7 +459,7 @@ definition {
 		}
 	}
 
-	@description = "Verify remote app can be configured one its portlet name has been changed"
+	@description = "LPS-158832. Verify remote app can be configured one its portlet name has been changed"
 	@priority = 3
 	test CustomElementCanConfigurePortletName {
 		property portal.acceptance = "true";
@@ -519,7 +519,7 @@ definition {
 		}
 	}
 
-	@description = "Verify that remote app of type Custom Element can displayed properties in HTML"
+	@description = "LPS-139377. Verify that remote app of type Custom Element can displayed properties in HTML"
 	@priority = 3
 	test CustomElementCanInjectHTMLProperties {
 		property portal.acceptance = "true";
@@ -549,7 +549,7 @@ definition {
 		}
 	}
 
-	@description = "Verify that remote app of type Custom Element can save multiple URLs"
+	@description = "LPS-139377. Verify that remote app of type Custom Element can save multiple URLs"
 	@priority = 4
 	test CustomElementCanSaveMultipleURLs {
 		property portal.acceptance = "true";
@@ -571,7 +571,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-159013 ES module custom element portlets render incorrect script node when dragged in the UI"
+	@description = "LPS-159013. ES module custom element portlets render incorrect script node when dragged in the UI"
 	@priority = 4
 	test CustomElementRendersCorrectlyWhenPlacedOnWidgetPage {
 		property portal.acceptance = "true";
@@ -616,7 +616,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-165425. Validate that HTML eror is thrown if left empty."
+	@description = "LPS-154719. Validate that HTML eror is thrown if left empty."
 	@priority = 3
 	test ErrorAppearsWhenHTMLBlank {
 		task ("Given Add Custom Element Client Extensions admin page") {
@@ -644,7 +644,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-163525. Validate Client Extensions UI has an understandable error message when user inputs an invalid URL."
+	@description = "LPS-154718. Validate Client Extensions UI has an understandable error message when user inputs an invalid URL."
 	@priority = 4
 	test HasAnUnderstandableErrorMessageWhenURLInvalid {
 		task ("Given Add IFrame Client Extensions") {
@@ -673,7 +673,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-163525. Validate Client Extensions UI has a clear error message when all the mandatory fields are empty."
+	@description = "LPS-154718. Validate Client Extensions UI has a clear error message when all the mandatory fields are empty."
 	@priority = 4
 	test HasMandatoryFieldErrorMessagesWhenEmpty {
 		task ("Given Add IFrame Client Extensions admin page") {
@@ -704,7 +704,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-165745. Error thrown when HTML Element contains empty/white space."
+	@description = "LPS-154719. Error thrown when HTML Element contains empty/white space."
 	@priority = 3
 	test HTMLElementConatinsInvlaidCharacters {
 		task ("Given Add Custom Element Client Extensions") {
@@ -727,7 +727,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-165835. Error thrown when HTML Element doesn't have at least one hyphen."
+	@description = "LPS-154719. Error thrown when HTML Element doesn't have at least one hyphen."
 	@priority = 3
 	test HTMLElementMustHaveOneHyphen {
 		task ("Given Add Custom Element Client Extensions") {
@@ -750,7 +750,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-165834. Error thrown when HTML Element doesn't start with a lowercase letter."
+	@description = "LPS-154719. Error thrown when HTML Element doesn't start with a lowercase letter."
 	@priority = 3
 	test HTMLElementMustStartWithLowercase {
 		task ("Given Add Custom Element Client Extensions") {
@@ -777,7 +777,7 @@ definition {
 		}
 	}
 
-	@description = "Verify an iframe remote app can be created"
+	@description = "LPS-114812. Verify an iframe remote app can be created"
 	@priority = 5
 	test IFrameCanBeCreated {
 		property portal.acceptance = "true";
@@ -794,7 +794,7 @@ definition {
 		ClientExtensionGeneral.viewTableEntryName(entryName = "Test Remote App");
 	}
 
-	@description = "Verify that remote app type IFrame can display property fields"
+	@description = "LPS-139377. Verify that remote app type IFrame can display property fields"
 	@priority = 4
 	test IframeTypeCanDisplayProperFields {
 		property portal.acceptance = "true";
@@ -824,7 +824,7 @@ definition {
 			locator1 = "TextInput#ANY");
 	}
 
-	@description = "LPS-177996 | Created (theme SVG extensions), the theme SVG extensions admin page lists the name and type"
+	@description = "LPS-166479. Created (theme SVG extensions), the theme SVG extensions admin page lists the name and type"
 	@priority = 4
 	test ThemeSvgTypeCanBeCreated {
 		property custom.properties = "feature.flag.LPS-166479=true";
@@ -850,7 +850,7 @@ definition {
 		}
 	}
 
-	@description = "Verify that the UI label is present when a client extension is not created through osgi"
+	@description = "LPS-154725. Verify that the UI label is present when a client extension is not created through osgi"
 	@priority = 3
 	test UILabelIsPresent {
 		task ("Given a created Client Extension") {

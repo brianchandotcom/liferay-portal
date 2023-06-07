@@ -51,7 +51,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-142107. Verifies a11y tool can be disabled."
+	@description = "LPS-121559. Verifies a11y tool can be disabled."
 	@priority = 5
 	test CanBeDisabledWithDevelopment {
 		property osgi.module.configuration.file.names = "com.liferay.frontend.js.a11y.web.internal.configuration.FFA11yConfiguration.config";
@@ -78,7 +78,7 @@ definition {
 		takeScreenshot();
 	}
 
-	@description = "LPS-142329. Verifies 2 occurrences of the same violation are listed in the side panel."
+	@description = "LPS-121559. Verifies 2 occurrences of the same violation are listed in the side panel."
 	@ignore = "true"
 	@priority = 3
 	test CanDetectMultipleOccurencesOfSameViolations {
@@ -148,7 +148,7 @@ definition {
 		takeScreenshot();
 	}
 
-	@description = "LPS-140736. Ensures there is no accessibility side panel on a page with no violations."
+	@description = "LPS-121559. Ensures there is no accessibility side panel on a page with no violations."
 	@priority = 5
 	test CanDetectNoViolations {
 		property osgi.module.configuration.file.names = "com.liferay.frontend.js.a11y.web.internal.configuration.FFA11yConfiguration.config";
@@ -179,7 +179,7 @@ definition {
 		takeScreenshot();
 	}
 
-	@description = "Verifies a11y tool can be deployed and detect an a11y violation"
+	@description = "LPS-121559. Verifies a11y tool can be deployed and detect an a11y violation"
 	@ignore = "true"
 	@priority = 5
 	test CanDetectViolation {
@@ -207,7 +207,7 @@ definition {
 		takeScreenshot();
 	}
 
-	@description = "LPS-142325. Verifies a rule violation will be detected when a fragment with a violation is added to a page with no violations."
+	@description = "LPS-121559. Verifies a rule violation will be detected when a fragment with a violation is added to a page with no violations."
 	@ignore = "true"
 	@priority = 4
 	test CanDetectViolationInDynamicPage {
@@ -259,7 +259,7 @@ definition {
 		takeScreenshot();
 	}
 
-	@description = "LPS-142324. Verifies the correct target and code is displayed."
+	@description = "LPS-121559. Verifies the correct target and code is displayed."
 	@ignore = "true"
 	@priority = 4
 	test CanDisplayTargetCode {
@@ -315,7 +315,7 @@ definition {
 		takeScreenshot();
 	}
 
-	@description = "LPS-142330. Verifies the correct target and code is displayed for the second occurrence."
+	@description = "LPS-121559. Verifies the correct target and code is displayed for the second occurrence."
 	@ignore = "true"
 	@priority = 3
 	test CanDisplayTargetCodeOfSecondViolation {
@@ -363,7 +363,7 @@ definition {
 		takeScreenshot();
 	}
 
-	@description = "LPS-142327. Verifies the pop up displays detail information about the violation."
+	@description = "LPS-121559. Verifies the pop up displays detail information about the violation."
 	@ignore = "true"
 	@priority = 3
 	test CanDisplayViolationDetailsInPopUp {
@@ -415,7 +415,7 @@ definition {
 		takeScreenshot();
 	}
 
-	@description = "LPS-142323. Verifies the side panel shows the violation occurrence when clicked from pop up."
+	@description = "LPS-121559. Verifies the side panel shows the violation occurrence when clicked from pop up."
 	@ignore = "true"
 	@priority = 4
 	test CanDisplayViolationDetailsInSidePanel {
@@ -451,7 +451,7 @@ definition {
 		takeScreenshot();
 	}
 
-	@description = "LPS-142322. Verifies side panel displays information about a violation rule."
+	@description = "LPS-121559. Verifies side panel displays information about a violation rule."
 	@ignore = "true"
 	@priority = 4
 	test CanDisplayViolationRuleDetails {
@@ -511,7 +511,7 @@ definition {
 		takeScreenshot();
 	}
 
-	@description = "LPS-142331 Assert that user can filter violations by all impact."
+	@description = "LPS-121559 Assert that user can filter violations by all impact."
 	@ignore = "true"
 	@priority = 3
 	test CanFilterViolationsByAllImpact {
@@ -549,7 +549,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-141820. Verifies violations can be filtered by 'Critical' only. Also verifies all violations are present when unfiltered."
+	@description = "LPS-121559. Verifies violations can be filtered by 'Critical' only. Also verifies all violations are present when unfiltered."
 	@ignore = "true"
 	@priority = 5
 	test CanFilterViolationsByCriticalImpactOnly {
@@ -647,7 +647,7 @@ definition {
 		takeScreenshot();
 	}
 
-	@description = "LPS-141734. Verifies impact and category filters are available."
+	@description = "LPS-121559. Verifies impact and category filters are available."
 	@ignore = "true"
 	@priority = 5
 	test CanFilterViolationsByImpactAndCategory {
@@ -677,7 +677,7 @@ definition {
 		takeScreenshot();
 	}
 
-	@description = "LPS-142318. Verifies multiple violations are highlighted with an icon."
+	@description = "LPS-121559. Verifies multiple violations are highlighted with an icon."
 	@ignore = "true"
 	@priority = 4
 	test CanHighlightMultipleViolations {
@@ -741,7 +741,7 @@ definition {
 		takeScreenshot();
 	}
 
-	@description = "LPS-142328. Verifies the popup panel will close when click outside of it."
+	@description = "LPS-121559. Verifies the popup panel will close when click outside of it."
 	@ignore = "true"
 	@priority = 3
 	test CanViewViolations {
@@ -769,7 +769,7 @@ definition {
 		takeScreenshot();
 	}
 
-	@description = "LPS-142333. To assert that filters reset to default after page refresh."
+	@description = "LPS-121559. To assert that filters reset to default after page refresh."
 	@ignore = "true"
 	@priority = 2
 	test FiltersAreResetToDefaultAfterPageRefresh {
@@ -807,7 +807,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-142271. Verifies violations are sorted by descending impact."
+	@description = "LPS-121559. Verifies violations are sorted by descending impact."
 	@ignore = "true"
 	@priority = 4
 	test OrdersViolationsByDescendingImpact {
@@ -859,7 +859,7 @@ definition {
 		takeScreenshot();
 	}
 
-	@description = "LPS-141455. Verifies the side panel appears with violation(s)."
+	@description = "LPS-121559. Verifies the side panel appears with violation(s)."
 	@ignore = "true"
 	@priority = 5
 	test ShowsSidePanelWithViolation {

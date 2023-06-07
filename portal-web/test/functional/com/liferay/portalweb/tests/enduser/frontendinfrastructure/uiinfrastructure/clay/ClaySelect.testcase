@@ -42,7 +42,7 @@ definition {
 		}
 	}
 
-	@description = "Verify clay multiple select API options can be configured"
+	@description = "LPS-121932. Verify clay multiple select API options can be configured"
 	@priority = 5
 	@refactordone
 	test MultipleCanBeConfigured {
@@ -73,7 +73,7 @@ definition {
 			locator1 = "ClaySamplePortlet#SELECTOR");
 	}
 
-	@description = "Verify clay regular select API options can be configured"
+	@description = "LPS-121932. Verify clay regular select API options can be configured"
 	@priority = 5
 	@refactordone
 	test RegularCanBeConfigured {

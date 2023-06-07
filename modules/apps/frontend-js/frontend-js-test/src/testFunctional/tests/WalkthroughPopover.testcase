@@ -47,7 +47,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-154368. Assert component will switch to hotspot mode in the current step when closing popover."
+	@description = "LPS-150906. Assert component will switch to hotspot mode in the current step when closing popover."
 	@priority = 5
 	test CanBeClosed {
 		task ("Given click hotspot element") {
@@ -63,7 +63,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-154643. Assert popover mode contains content."
+	@description = "LPS-150906. Assert popover mode contains content."
 	@priority = 5
 	test CanDisplayContent {
 		task ("When click hotspot element") {
@@ -77,7 +77,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-154645. Assert popover contains a button to transition to previous step."
+	@description = "LPS-150906. Assert popover contains a button to transition to previous step."
 	@priority = 5
 	test CanDisplayPreviousButtonOnIntermediateStep {
 		task ("And Given popover mode") {
@@ -109,7 +109,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-154644. Assert popover mode can display step number."
+	@description = "LPS-150906. Assert popover mode can display step number."
 	@priority = 4
 	test CanDisplayStepNumber {
 		task ("And given click hotspot element") {
@@ -129,7 +129,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-154642. Assert popover mode contains a title."
+	@description = "LPS-150906. Assert popover mode contains a title."
 	@priority = 5
 	test CanDisplayTitle {
 		task ("When click hotspot element") {
@@ -143,7 +143,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-154641. Assert a dark background overlay can be toggled."
+	@description = "LPS-150906. Assert a dark background overlay can be toggled."
 	@priority = 3
 	test CanHaveADarkBackgroundOverlay {
 		task ("When click hotspot element") {
@@ -160,7 +160,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-154640. Assert popover mode can have a shadow around element."
+	@description = "LPS-150906. Assert popover mode can have a shadow around element."
 	@priority = 2
 	test CanHaveAShadowAroundElement {
 		task ("When click hotspot element until Step 4") {
@@ -182,7 +182,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-154649. Assert hotspot can transition back to previous step if next element doesn't exist on the page."
+	@description = "LPS-150906. Assert hotspot can transition back to previous step if next element doesn't exist on the page."
 	@priority = 3
 	test CanReturnToPreviousStepIfElementDoesNotExist {
 		task ("Given JSON file includes an element that does not exist on the page/sample portlet") {
@@ -202,7 +202,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-154648. Assert close button on final step can reset walkthrough process."
+	@description = "LPS-150906. Assert close button on final step can reset walkthrough process."
 	@priority = 5
 	test CloseButtonOnFinalStepCanResetTheProcess {
 		task ("And popover mode") {
@@ -240,7 +240,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-154646. Assert 1st step popover does not contain a button to transition to previous step."
+	@description = "LPS-150906. Assert 1st step popover does not contain a button to transition to previous step."
 	@priority = 5
 	test FirstStepDoesNotHavePreviousStepButton {
 		task ("And Given popover mode") {
@@ -278,7 +278,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-154647. Assert intermediate step displays previous and next step button."
+	@description = "LPS-150906. Assert intermediate step displays previous and next step button."
 	@priority = 5
 	test IntermediateStepHasPreviousAndNextStepPresent {
 		task ("And popover mode") {
@@ -310,7 +310,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-154639. Assert component will switch to hotspot mode in the 2nd step when closing 2nd popover."
+	@description = "LPS-150906. Assert component will switch to hotspot mode in the 2nd step when closing 2nd popover."
 	@priority = 5
 	test WhenClosedCanTransitionToHotSpotModeOnCurrentStepElement {
 		task ("Given click hotspot element") {

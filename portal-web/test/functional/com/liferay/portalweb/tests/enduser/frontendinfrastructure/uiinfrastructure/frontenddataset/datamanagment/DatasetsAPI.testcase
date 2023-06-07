@@ -24,7 +24,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-178777. Confirm that the user can create a dataset view via API"
+	@description = "LPS-175990. Confirm that the user can create a dataset view via API"
 	@priority = 5
 	test CanCreateDatasetEntryViaAPI {
 		task ("Given creating a Data Set via API") {

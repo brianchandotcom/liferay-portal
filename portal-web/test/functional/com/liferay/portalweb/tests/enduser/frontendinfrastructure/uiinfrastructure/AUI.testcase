@@ -23,7 +23,7 @@ definition {
 		}
 	}
 
-	@description = "Verify portal can be enabled to preload AUI modules"
+	@description = "LPS-108266. Verify portal can be enabled to preload AUI modules"
 	@priority = 5
 	@refactordone
 	test CanBeEnabledToPreloadModules {

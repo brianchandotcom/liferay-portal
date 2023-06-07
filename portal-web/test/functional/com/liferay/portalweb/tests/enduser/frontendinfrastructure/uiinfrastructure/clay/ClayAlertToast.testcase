@@ -36,7 +36,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-170578 Validate alert toast message does disapear."
+	@description = "LRQA-65932 Validate alert toast message does disapear."
 	@priority = 5
 	test AutoclosesWhenNotHoveredOver {
 		property portal.acceptance = "true";
@@ -73,7 +73,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-170580 - Verify alert in the middle of stack is closed, the others fill the stack"
+	@description = "LRQA-65932 - Verify alert in the middle of stack is closed, the others fill the stack"
 	@priority = 4
 	test CanTransitionToFillGapOfDeletedToast {
 		task ("Given the known first (top) alert position from two stacked toast alert success messages") {
@@ -129,7 +129,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-179234 - Assert after clicking in a link present on a toast alert, the navigation goes to the link"
+	@description = "LRQA-55800 - Assert after clicking in a link present on a toast alert, the navigation goes to the link"
 	@priority = 5
 	test ContainerWithLink {
 		task ("When Click 'Disappears After 10 Seconds' button") {
@@ -159,7 +159,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-170575 - Verify toast alert with no actions disappears after 5 seconds"
+	@description = "LRQA-65932 - Verify toast alert with no actions disappears after 5 seconds"
 	@priority = 5
 	test DisappearsAfter5SecsWithoutActions {
 		task ("When a toast alert appears") {
@@ -184,7 +184,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-170577 - Verify toast alert with action button disappears after 10 seconds"
+	@description = "LRQA-65932 - Verify toast alert with action button disappears after 10 seconds"
 	@priority = 5
 	test DisappearsAfter10SecsWithActions {
 		task ("When a toast alert appears") {
@@ -212,7 +212,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-170578 Validate alert toast message does not disapear when mouse hovers over it."
+	@description = "LRQA-65932 Validate alert toast message does not disapear when mouse hovers over it."
 	@priority = 5
 	test DoesNotAutocloseWhenHoveredOver {
 		property portal.acceptance = "true";
@@ -241,7 +241,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-170579 - Assert that multiples messages can be displayed"
+	@description = "LRQA-65932 - Assert that multiples messages can be displayed"
 	@priority = 5
 	test MultipleContainersCanBeDisplayed {
 		task ("Given the known positions from three stacked toast alert messages") {

@@ -56,7 +56,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-159473. Assert walkthrough can navigate to the next page."
+	@description = "LPS-150895. Assert walkthrough can navigate to the next page."
 	@priority = 5
 	test CanNavigateToNextPage {
 		property portal.acceptance = "true";
@@ -86,7 +86,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-159474. Assert walkthrough can navigate back to the previous page."
+	@description = "LPS-150895. Assert walkthrough can navigate back to the previous page."
 	@priority = 5
 	test CanNavigateToPreviousPage {
 		property portal.acceptance = "true";
@@ -118,7 +118,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-159475. Assert walkthrough can save current step when navigating through different pages."
+	@description = "LPS-150895. Assert walkthrough can save current step when navigating through different pages."
 	@priority = 4
 	test CurrentStepIsSavedWhenNavigatingPages {
 		var portalURL = PropsUtil.get("portal.url");
@@ -154,7 +154,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-159476. Assert walkthrough can save current step when user signs in and out."
+	@description = "LPS-150895. Assert walkthrough can save current step when user signs in and out."
 	@priority = 3
 	test CurrentStepIsSavedWhenUserSignsInAndOut {
 		var portalURL = PropsUtil.get("portal.url");

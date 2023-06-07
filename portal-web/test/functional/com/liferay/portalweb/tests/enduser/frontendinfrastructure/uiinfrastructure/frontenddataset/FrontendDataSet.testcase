@@ -47,7 +47,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-147914: Verify alert message is present when action button is clicked"
+	@description = "LPS-144477. Verify alert message is present when action button is clicked"
 	@priority = 4
 	test ActionsCanBeCustomized {
 		task ("When Click on 1st action button in FDS sample") {

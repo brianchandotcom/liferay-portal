@@ -45,7 +45,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-155309. Assert all filters can be removed."
+	@description = "LPS-150047. Assert all filters can be removed."
 	@priority = 4
 	test AllFiltersCanBeRemoved {
 		task ("When there is a filter already established") {
@@ -71,7 +71,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-155305. Assert results can be correctly filtered when selecting available filters."
+	@description = "LPS-150047. Assert results can be correctly filtered when selecting available filters."
 	@priority = 5
 	test AvailableFiltersCanBeApplied {
 		task ("When click on the filter button") {
@@ -97,7 +97,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-155313. Assert results can be correctly filtered when exclude is enabled."
+	@description = "LPS-150047. Assert results can be correctly filtered when exclude is enabled."
 	@priority = 5
 	test ExcludeCanBeEnabled {
 		task ("When click on the filter button") {
@@ -125,7 +125,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-155306. Assert results can be correctly filtered by editing the filter summary boxes."
+	@description = "LPS-150047. Assert results can be correctly filtered by editing the filter summary boxes."
 	@priority = 5
 	test FilterCanBeEdited {
 		task ("When there is a filter already established") {
@@ -173,7 +173,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-155310. Assert results can be correctly filtered when searching for a filter."
+	@description = "LPS-150047. Assert results can be correctly filtered when searching for a filter."
 	@priority = 5
 	test FilterCanBeSearched {
 		task ("When click on the filter button") {
@@ -203,7 +203,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-155311. Assert the filter cannot be filtered by searching."
+	@description = "LPS-150047. Assert the filter cannot be filtered by searching."
 	@priority = 3
 	test FilterNotFound {
 		task ("When clicking on the filter button") {
@@ -225,7 +225,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-155303. Assert management bar will render."
+	@description = "LPS-150047. Assert management bar will render."
 	@priority = 3
 	test ManagementBarWillRender {
 		task ("Then the Management Bar will be displayed correctly") {
@@ -235,7 +235,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-155308. Assert one filter can be removed."
+	@description = "LPS-150047. Assert one filter can be removed."
 	@priority = 4
 	test OneFilterCanBeRemoved {
 		task ("When there are several filters already established") {
@@ -279,7 +279,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-155312. Assert results can be correctly filtered when using the status filter."
+	@description = "LPS-150047. Assert results can be correctly filtered when using the status filter."
 	@priority = 5
 	test StatusFilterCanBeAdded {
 		task ("Given no filters applied") {
@@ -307,7 +307,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-155304. Assert filter is preloaded when entering on a FDS page for first time."
+	@description = "LPS-150047. Assert filter is preloaded when entering on a FDS page for first time."
 	@priority = 5
 	test WillRenderAsInitialState {
 		task ("And When viewing FDS Sample portlet dataset") {

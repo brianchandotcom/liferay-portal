@@ -29,7 +29,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-174054: Display a list of headless resources in new FDS View modal"
+	@description = "LPS-172882: Display a list of headless resources in new FDS View modal"
 	@priority = 5
 	test CanDisplayHeadlessDeliveryAPIResources {
 		property test.name.skip.portal.instance = "FrontendDataSetAdminSearch#CanDisplayHeadlessDeliveryAPIResources";
@@ -61,7 +61,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-175205: Display matched result in new FDS View modal"
+	@description = "LPS-172882: Display matched result in new FDS View modal"
 	@priority = 3
 	test CanReturnAMatchedResult {
 		property test.name.skip.portal.instance = "FrontendDataSetAdminSearch#CanReturnAMatchedResult";
@@ -83,7 +83,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-175206: Display no matched result in new FDS View modal"
+	@description = "LPS-172882: Display no matched result in new FDS View modal"
 	@priority = 4
 	test CanReturnNoMatchedResults {
 		task ("When go to add Datasets") {

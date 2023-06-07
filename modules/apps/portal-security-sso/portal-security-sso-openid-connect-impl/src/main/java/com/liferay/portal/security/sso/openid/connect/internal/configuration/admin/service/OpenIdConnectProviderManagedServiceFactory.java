@@ -163,7 +163,7 @@ public class OpenIdConnectProviderManagedServiceFactory
 			String clientName = jsonObject.getString("client_name", null);
 
 			if (clientName != null) {
-				clientName = clientName.substring(10);
+				clientName = clientName.substring(_CLIENT_TO.length());
 			}
 
 			oAuthClientEntryIds.put(
@@ -297,7 +297,7 @@ public class OpenIdConnectProviderManagedServiceFactory
 			return null;
 		}
 
-		return "Client to " + providerName;
+		return _CLIENT_TO + providerName;
 	}
 
 	private String _generateInfoJSON(Dictionary<String, ?> properties) {
@@ -589,6 +589,8 @@ public class OpenIdConnectProviderManagedServiceFactory
 			}
 		}
 	}
+
+	private static final String _CLIENT_TO = "Client to ";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		OpenIdConnectProviderManagedServiceFactory.class);

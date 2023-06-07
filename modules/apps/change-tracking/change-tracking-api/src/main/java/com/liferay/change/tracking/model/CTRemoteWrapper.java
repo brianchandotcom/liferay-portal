@@ -217,6 +217,11 @@ public class CTRemoteWrapper
 		return model.getUserId();
 	}
 
+	@Override
+	public String getUserName() {
+		return model.getUserName();
+	}
+
 	/**
 	 * Returns the user uuid of this ct remote.
 	 *

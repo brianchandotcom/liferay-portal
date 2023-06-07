@@ -59,6 +59,13 @@ public class CTRemoteLocalServiceUtil {
 		return getService().addCTRemote(ctRemote);
 	}
 
+	public static CTRemote addCTRemote(
+			long userId, String name, String description, String url)
+		throws PortalException {
+
+		return getService().addCTRemote(userId, name, description, url);
+	}
+
 	/**
 	 * Creates a new ct remote with the primary key. Does not add the ct remote to the database.
 	 *
@@ -241,6 +248,12 @@ public class CTRemoteLocalServiceUtil {
 		return getService().getCTRemotes(start, end);
 	}
 
+	public static List<CTRemote> getCTRemotes(
+		long companyId, int start, int end) {
+
+		return getService().getCTRemotes(companyId, start, end);
+	}
+
 	/**
 	 * Returns the number of ct remotes.
 	 *
@@ -287,6 +300,13 @@ public class CTRemoteLocalServiceUtil {
 	 */
 	public static CTRemote updateCTRemote(CTRemote ctRemote) {
 		return getService().updateCTRemote(ctRemote);
+	}
+
+	public static CTRemote updateCTRemote(
+			long ctRemoteId, String name, String description, String url)
+		throws PortalException {
+
+		return getService().updateCTRemote(ctRemoteId, name, description, url);
 	}
 
 	public static CTRemoteLocalService getService() {

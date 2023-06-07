@@ -34,6 +34,47 @@ public class CTRemoteServiceWrapper
 		_ctRemoteService = ctRemoteService;
 	}
 
+	@Override
+	public com.liferay.change.tracking.model.CTRemote addCTRemote(
+			String name, String description, String url)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _ctRemoteService.addCTRemote(name, description, url);
+	}
+
+	@Override
+	public com.liferay.change.tracking.model.CTRemote deleteCTRemote(
+			com.liferay.change.tracking.model.CTRemote ctRemote)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _ctRemoteService.deleteCTRemote(ctRemote);
+	}
+
+	@Override
+	public com.liferay.change.tracking.model.CTRemote deleteCTRemote(
+			long ctRemoteId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _ctRemoteService.deleteCTRemote(ctRemoteId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.change.tracking.model.CTRemote>
+		getCTRemotes(
+			String keywords, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.change.tracking.model.CTRemote>
+					orderByComparator) {
+
+		return _ctRemoteService.getCTRemotes(
+			keywords, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getCTRemotesCount(String keywords) {
+		return _ctRemoteService.getCTRemotesCount(keywords);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -42,6 +83,15 @@ public class CTRemoteServiceWrapper
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _ctRemoteService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.change.tracking.model.CTRemote updateCTRemote(
+			long ctRemoteId, String name, String description, String url)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _ctRemoteService.updateCTRemote(
+			ctRemoteId, name, description, url);
 	}
 
 	@Override

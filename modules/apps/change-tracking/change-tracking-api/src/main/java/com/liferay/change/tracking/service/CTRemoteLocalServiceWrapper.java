@@ -54,6 +54,15 @@ public class CTRemoteLocalServiceWrapper
 		return _ctRemoteLocalService.addCTRemote(ctRemote);
 	}
 
+	@Override
+	public com.liferay.change.tracking.model.CTRemote addCTRemote(
+			long userId, String name, String description, String url)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _ctRemoteLocalService.addCTRemote(
+			userId, name, description, url);
+	}
+
 	/**
 	 * Creates a new ct remote with the primary key. Does not add the ct remote to the database.
 	 *
@@ -274,6 +283,13 @@ public class CTRemoteLocalServiceWrapper
 		return _ctRemoteLocalService.getCTRemotes(start, end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.change.tracking.model.CTRemote>
+		getCTRemotes(long companyId, int start, int end) {
+
+		return _ctRemoteLocalService.getCTRemotes(companyId, start, end);
+	}
+
 	/**
 	 * Returns the number of ct remotes.
 	 *
@@ -327,6 +343,15 @@ public class CTRemoteLocalServiceWrapper
 		com.liferay.change.tracking.model.CTRemote ctRemote) {
 
 		return _ctRemoteLocalService.updateCTRemote(ctRemote);
+	}
+
+	@Override
+	public com.liferay.change.tracking.model.CTRemote updateCTRemote(
+			long ctRemoteId, String name, String description, String url)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _ctRemoteLocalService.updateCTRemote(
+			ctRemoteId, name, description, url);
 	}
 
 	@Override

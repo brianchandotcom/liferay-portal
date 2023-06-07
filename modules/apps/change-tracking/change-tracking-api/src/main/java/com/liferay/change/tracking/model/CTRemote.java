@@ -56,4 +56,6 @@ public interface CTRemote extends CTRemoteModel, PersistedModel {
 
 		};
 
+	public String getUserName();
+
 }

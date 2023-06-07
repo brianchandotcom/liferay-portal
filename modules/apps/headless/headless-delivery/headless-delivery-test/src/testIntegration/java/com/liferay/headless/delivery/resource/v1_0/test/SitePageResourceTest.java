@@ -14,6 +14,9 @@
 
 package com.liferay.headless.delivery.resource.v1_0.test;
 
+import com.fasterxml.jackson.databind.MapperFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.entry.rel.service.AssetEntryAssetCategoryRelLocalService;
 import com.liferay.asset.kernel.model.AssetCategory;
@@ -27,8 +30,15 @@ import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.test.util.DLTestUtil;
+import com.liferay.fragment.constants.FragmentConstants;
+import com.liferay.fragment.model.FragmentCollection;
+import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.service.FragmentCollectionLocalService;
+import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.headless.delivery.client.dto.v1_0.ContentDocument;
 import com.liferay.headless.delivery.client.dto.v1_0.OpenGraphSettings;
+import com.liferay.headless.delivery.client.dto.v1_0.PageDefinition;
+import com.liferay.headless.delivery.client.dto.v1_0.PageElement;
 import com.liferay.headless.delivery.client.dto.v1_0.PagePermission;
 import com.liferay.headless.delivery.client.dto.v1_0.PageSettings;
 import com.liferay.headless.delivery.client.dto.v1_0.ParentSitePage;
@@ -48,6 +58,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLo
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -279,6 +290,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		_testPostSiteSitePageFailurePagePermissionsActionKeyNonexisting();
 		_testPostSiteSitePageSuccessInvalidParentSitePage();
 		_testPostSiteSitePageSuccessKeywords();
+		_testPostSiteSitePageSuccessPageDefinition();
 		_testPostSiteSitePageSuccessPagePermissions();
 		_testPostSiteSitePageSuccessPagePermissionsActionKeysEmpty();
 		_testPostSiteSitePageSuccessPagePermissionsEmpty();
@@ -705,6 +717,114 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			Assert.assertTrue(
 				ArrayUtil.contains(tags, StringUtil.toLowerCase(keyword)));
 		}
+	}
+
+	private void _testPostSiteSitePageSuccessPageDefinition() throws Exception {
+		SitePage randomSitePage = randomSitePage();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(testGroup.getGroupId());
+
+		FragmentCollection fragmentCollection =
+			_fragmentCollectionLocalService.addFragmentCollection(
+				testGroup.getCreatorUserId(), testGroup.getGroupId(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				serviceContext);
+
+		FragmentEntry fragmentEntry =
+			_fragmentEntryLocalService.addFragmentEntry(
+				TestPropsValues.getUserId(), testGroup.getGroupId(),
+				fragmentCollection.getFragmentCollectionId(), null,
+				RandomTestUtil.randomString(), StringPool.BLANK,
+				"<lfr-editable id=\"fragmentEditableId\" type=\"text\">" +
+					"Default Fragment Text</lfr-editable>",
+				StringPool.BLANK, false, null, null, 0,
+				FragmentConstants.TYPE_COMPONENT, null,
+				WorkflowConstants.STATUS_APPROVED, serviceContext);
+
+		PageElement originalFragmentPageElement = new PageElement() {
+			{
+				definition = JSONUtil.put(
+					"fragment",
+					JSONUtil.put(
+						"key", fragmentEntry.getFragmentEntryKey()
+					).put(
+						"siteKey", testGroup.getGroupKey()
+					)
+				).put(
+					"fragmentConfig", JSONFactoryUtil.createJSONObject()
+				).put(
+					"fragmentFields",
+					JSONUtil.put(
+						JSONUtil.put(
+							"id", "fragmentEditableId"
+						).put(
+							"value",
+							JSONUtil.put(
+								"fragmentLink",
+								JSONFactoryUtil.createJSONObject()
+							).put(
+								"text",
+								JSONUtil.put(
+									"value_i18n",
+									JSONUtil.put(
+										"en_US", "English Text"
+									).put(
+										"es_ES", "Spanish Text"
+									))
+							)
+						))
+				).put(
+					"indexed", true
+				);
+				type = Type.FRAGMENT;
+			}
+		};
+
+		randomSitePage.setPageDefinition(
+			new PageDefinition() {
+				{
+					pageElement = new PageElement() {
+						{
+							type = Type.ROOT;
+
+							setPageElements(
+								() -> new PageElement[] {
+									originalFragmentPageElement
+								});
+						}
+					};
+				}
+			});
+
+		SitePage postSitePage = testPostSiteSitePage_addSitePage(
+			randomSitePage);
+
+		PageDefinition pageDefinition = postSitePage.getPageDefinition();
+
+		Assert.assertNotNull(pageDefinition);
+
+		PageElement rootPageElement = pageDefinition.getPageElement();
+
+		Assert.assertNotNull(rootPageElement);
+
+		Assert.assertEquals(PageElement.Type.ROOT, rootPageElement.getType());
+
+		PageElement[] pageElements = rootPageElement.getPageElements();
+
+		Assert.assertNotNull(pageElements);
+
+		Assert.assertEquals(pageElements.toString(), 1, pageElements.length);
+
+		PageElement actualFragmentPageElement = pageElements[0];
+
+		JSONObject originalDefinitionJSONObject =
+			(JSONObject)originalFragmentPageElement.getDefinition();
+
+		Assert.assertEquals(
+			_objectMapper.readTree(originalDefinitionJSONObject.toString()),
+			_objectMapper.readTree(
+				(String)actualFragmentPageElement.getDefinition()));
 	}
 
 	private void _testPostSiteSitePageSuccessPagePermissions()
@@ -1472,6 +1592,12 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
 	@Inject
+	private FragmentCollectionLocalService _fragmentCollectionLocalService;
+
+	@Inject
+	private FragmentEntryLocalService _fragmentEntryLocalService;
+
+	@Inject
 	private GroupLocalService _groupLocalService;
 
 	@Inject
@@ -1487,6 +1613,12 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 	@Inject
 	private LayoutsImporter _layoutsImporter;
+
+	private final ObjectMapper _objectMapper = new ObjectMapper() {
+		{
+			configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
+		}
+	};
 
 	@Inject
 	private ResourceActionLocalService _resourceActionLocalService;

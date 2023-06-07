@@ -16,7 +16,26 @@ import ClayLink from '@clayui/link';
 import getCN from 'classnames';
 import React, {useContext} from 'react';
 
-export const LearnResourcesContext = React.createContext({});
+export const LearnResourcesContext = React.createContext<
+	Partial<ILearnResourceContext>
+>({});
+
+interface ILearnResourceLocaleItem {
+	message: string;
+	url?: string;
+}
+
+interface ILearnResourceKeyItem {
+	[locale: string]: ILearnResourceLocaleItem;
+}
+
+interface ILearnResourceItem {
+	[resourceKey: string]: ILearnResourceKeyItem;
+}
+
+interface ILearnResourceContext {
+	[learnResourceName: string]: ILearnResourceItem;
+}
 
 interface IProps {
 	className?: string;
@@ -62,7 +81,9 @@ export default function LearnMessage({
 	resourceKey,
 	...otherProps
 }: IProps) {
-	const learnResourcesContext: any = useContext(LearnResourcesContext);
+	const learnResourcesContext = useContext(
+		LearnResourcesContext
+	) as ILearnResourceContext;
 
 	const resourceKeyObject = learnResourcesContext[resource][resourceKey] || {
 		en_US: {},

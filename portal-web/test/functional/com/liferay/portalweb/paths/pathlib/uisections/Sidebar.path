@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>ACTIVE_TAB</td>
-	<td>//div[contains(@class,'sidebar')]//*[@*='${key_tabName}'][contains(@aria-pressed,'true')]</td>
+	<td>//div[contains(@class,'sidebar')]//*[@*='${key_tabName}'][contains(@aria-pressed,'true')] | //div[contains(@class,'sidebar')]//*[@*='${key_tabName}'][contains(@aria-selected,'true')]</td>
 	<td></td>
 </tr>
 <tr>

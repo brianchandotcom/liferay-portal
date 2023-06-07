@@ -52,7 +52,7 @@
 </tr>
 <tr>
 	<td>SIDEBAR_BUTTON</td>
-	<td>//div[contains(@class,'multi-panel-sidebar')]//ul[contains(@class,'tbar-nav')]//button[contains(@title,'${key_sidebarButton}')]</td>
+	<td>//div[contains(@class,'multi-panel-sidebar')]//button[contains(@class, 'tbar-btn') and contains(@data-panel-id,'${key_sidebarButton}')]</td>
 	<td></td>
 </tr>
 <tr>

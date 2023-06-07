@@ -485,7 +485,7 @@ export default class Toolbar extends React.Component {
 							<SubnavTbar.Item>
 								<ClayButton
 									className='button-root'
-									display='secondary'
+									displayType='link'
 									key='FILTER_CLEAR'
 									onClick={this.handleClearAllFilters}
 									size='sm'

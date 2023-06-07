@@ -24,6 +24,7 @@ const KeyInputs = ({id}) => {
 				<Input
 					label={i18n.translate('host-name')}
 					name={`keys[${id}].hostName`}
+					required
 					type="text"
 					validations={[(value) => isValidHost(value)]}
 				/>

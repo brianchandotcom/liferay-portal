@@ -20,9 +20,8 @@ export const ACTIVATION_KEYS_LICENSE_FILTER_TYPES = {
 		);
 	},
 	all: () => true,
-	expired: ({active, expirationDate}) =>
-		active === true && new Date(expirationDate) < new Date(),
-	notActivated: ({active}) => {
-		return active === false;
+	expired: ({expirationDate}) => new Date(expirationDate) < new Date(),
+	notActivated: ({startDate}) => {
+		return new Date(startDate) > new Date();
 	},
 };

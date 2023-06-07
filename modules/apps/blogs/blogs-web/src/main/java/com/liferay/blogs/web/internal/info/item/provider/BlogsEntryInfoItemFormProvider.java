@@ -24,7 +24,10 @@ import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.field.reader.InfoItemFieldReaderFieldSetProvider;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
+import com.liferay.layout.page.template.info.item.provider.DisplayPageInfoItemFieldSetProvider;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
@@ -51,7 +54,9 @@ public class BlogsEntryInfoItemFormProvider
 	public InfoForm getInfoForm() {
 		return _getInfoForm(
 			_assetEntryInfoItemFieldSetProvider.getInfoFieldSet(
-				BlogsEntry.class.getName()));
+				BlogsEntry.class.getName()),
+			_displayPageInfoItemFieldSetProvider.getInfoFieldSet(
+				BlogsEntry.class.getName(), StringPool.BLANK, 0));
 	}
 
 	@Override
@@ -60,7 +65,9 @@ public class BlogsEntryInfoItemFormProvider
 			return _getInfoForm(
 				_assetEntryInfoItemFieldSetProvider.getInfoFieldSet(
 					_assetEntryLocalService.getEntry(
-						BlogsEntry.class.getName(), blogsEntry.getEntryId())));
+						BlogsEntry.class.getName(), blogsEntry.getEntryId())),
+				_displayPageInfoItemFieldSetProvider.getInfoFieldSet(
+					BlogsEntry.class.getName(), StringPool.BLANK, 0));
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(
@@ -74,7 +81,9 @@ public class BlogsEntryInfoItemFormProvider
 	public InfoForm getInfoForm(String formVariationKey, long groupId) {
 		return _getInfoForm(
 			_assetEntryInfoItemFieldSetProvider.getInfoFieldSet(
-				BlogsEntry.class.getName(), 0, groupId));
+				BlogsEntry.class.getName(), 0, groupId),
+			_displayPageInfoItemFieldSetProvider.getInfoFieldSet(
+				BlogsEntry.class.getName(), StringPool.BLANK, groupId));
 	}
 
 	private InfoFieldSet _getBasicInformationInfoFieldSet() {
@@ -136,7 +145,10 @@ public class BlogsEntryInfoItemFormProvider
 		).build();
 	}
 
-	private InfoForm _getInfoForm(InfoFieldSet assetEntryInfoFieldSet) {
+	private InfoForm _getInfoForm(
+		InfoFieldSet assetEntryInfoFieldSet,
+		InfoFieldSet displayPageInfoFieldSet) {
+
 		Set<Locale> availableLocales = _language.getAvailableLocales();
 
 		InfoLocalizedValue.Builder infoLocalizedValueBuilder =
@@ -161,7 +173,17 @@ public class BlogsEntryInfoItemFormProvider
 			_templateInfoItemFieldSetProvider.getInfoFieldSet(
 				BlogsEntry.class.getName())
 		).infoFieldSetEntry(
-			_getDisplayPageInfoFieldSet()
+			unsafeConsumer -> {
+				if (!FeatureFlagManagerUtil.isEnabled("LPS-183727")) {
+					unsafeConsumer.accept(_getDisplayPageInfoFieldSet());
+				}
+			}
+		).infoFieldSetEntry(
+			unsafeConsumer -> {
+				if (FeatureFlagManagerUtil.isEnabled("LPS-183727")) {
+					unsafeConsumer.accept(displayPageInfoFieldSet);
+				}
+			}
 		).infoFieldSetEntry(
 			_getConfigurationInfoFieldSet()
 		).infoFieldSetEntry(
@@ -182,6 +204,10 @@ public class BlogsEntryInfoItemFormProvider
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference
+	private DisplayPageInfoItemFieldSetProvider
+		_displayPageInfoItemFieldSetProvider;
 
 	@Reference
 	private ExpandoInfoItemFieldSetProvider _expandoInfoItemFieldSetProvider;

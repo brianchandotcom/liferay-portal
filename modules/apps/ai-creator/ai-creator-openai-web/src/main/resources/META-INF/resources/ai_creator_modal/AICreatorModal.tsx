@@ -13,8 +13,9 @@
  */
 
 import ClayForm from '@clayui/form';
+import {Container} from '@clayui/layout';
 import ClayLink from '@clayui/link';
-import ClayModal, {useModal} from '@clayui/modal';
+import classNames from 'classnames';
 import React, {FormEvent, useState} from 'react';
 
 import {ErrorMessage} from './ErrorMessage';
@@ -25,7 +26,6 @@ import {TextContent} from './TextContent';
 
 interface Props {
 	namespace: string;
-	onClose: () => void;
 }
 
 type RequestStatus =
@@ -34,11 +34,10 @@ type RequestStatus =
 	| {errorMessage: string; type: 'error'}
 	| {text: string; type: 'success'};
 
-export function AICreatorModal({namespace, onClose}: Props) {
-	const {observer, onClose: closeModal} = useModal({
-		defaultOpen: true,
-		onClose,
-	});
+export default function AICreatorModal({namespace}: Props) {
+	const closeModal = () => {
+		alert('close');
+	};
 
 	const [status, setStatus] = useState<RequestStatus>({type: 'idle'});
 
@@ -61,21 +60,22 @@ export function AICreatorModal({namespace, onClose}: Props) {
 	};
 
 	return (
-		<ClayModal observer={observer} size="lg">
-			<ClayModal.Header>
-				{Liferay.Language.get('ai-creator')}
-			</ClayModal.Header>
-
+		<>
 			{status.type === 'loading' ? <LoadingMessage /> : null}
 
-			<ClayForm onSubmit={onSubmit}>
+			<ClayForm
+				className={classNames('h-100', {
+					'sr-only': status.type === 'loading',
+				})}
+				onSubmit={onSubmit}
+			>
 				<fieldset
-					className={status.type === 'loading' ? 'sr-only' : ''}
+					className="d-flex flex-column h-100"
 					disabled={status.type === 'loading'}
 				>
 					{status.type === 'error' ? <ErrorMessage /> : null}
 
-					<ClayModal.Body>
+					<Container className="c-p-4 flex-grow-1" fluid>
 						<FormContent namespace={namespace} />
 
 						{status.type === 'success' ? (
@@ -92,27 +92,21 @@ export function AICreatorModal({namespace, onClose}: Props) {
 								)}
 							</ClayLink>
 						</ClayForm.Group>
-					</ClayModal.Body>
+					</Container>
 
-					<ClayModal.Footer
-						last={
-							<FormFooter
-								onAdd={onAdd}
-								onClose={closeModal}
-								showAddButton={
-									status.type === 'success' &&
-									Boolean(status.text)
-								}
-								showCreateButton={
-									status.type === 'idle' ||
-									status.type === 'error'
-								}
-								showRetryButton={status.type === 'success'}
-							/>
+					<FormFooter
+						onAdd={onAdd}
+						onClose={closeModal}
+						showAddButton={
+							status.type === 'success' && Boolean(status.text)
 						}
+						showCreateButton={
+							status.type === 'idle' || status.type === 'error'
+						}
+						showRetryButton={status.type === 'success'}
 					/>
 				</fieldset>
 			</ClayForm>
-		</ClayModal>
+		</>
 	);
 }

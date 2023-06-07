@@ -12,31 +12,36 @@
  * details.
  */
 
-import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import React from 'react';
 
 export function ErrorMessage() {
 	return (
-		<ClayAlert
-			className="c-mb-1"
-			displayType="danger"
-			title={Liferay.Language.get('error')}
-			variant="stripe"
+		<div
+			className="alert alert-danger alert-dismissible alert-fluid c-mb-1"
+			role="alert"
 		>
-			<span className="c-pr-2 d-inline-block">
-				{Liferay.Language.get(
-					'openai-is-experiencing-issues-on-their-servers'
-				)}
-			</span>
-
-			<ClayButton
-				className="btn-link text-underline"
-				displayType="unstyled"
-				type="submit"
-			>
-				{Liferay.Language.get('retry-your-request')}
-			</ClayButton>
-		</ClayAlert>
+			<div className="c-px-4 c-py-3">
+				<span className="alert-indicator">
+					<ClayIcon symbol="exclamation-full" />
+				</span>
+				<strong className="lead">
+					{Liferay.Language.get('error')}
+				</strong>{' '}
+				<span className="d-inline-block">
+					{Liferay.Language.get(
+						'openai-is-experiencing-issues-on-their-servers'
+					)}
+				</span>{' '}
+				<ClayButton
+					className="btn-link text-underline"
+					displayType="unstyled"
+					type="submit"
+				>
+					{Liferay.Language.get('retry-your-request')}
+				</ClayButton>
+			</div>
+		</div>
 	);
 }

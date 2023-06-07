@@ -72,7 +72,10 @@ export function FormFooter({
 	}
 
 	return (
-		<ClayButton.Group className="c-px-2" spaced>
+		<ClayButton.Group
+			className="border-top c-px-4 c-py-3 justify-content-end"
+			spaced
+		>
 			{children}
 		</ClayButton.Group>
 	);

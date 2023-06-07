@@ -16,10 +16,6 @@
 
 interface Props {
 	namespace: string;
-	onClose: () => void;
 }
-export declare function AICreatorModal({
-	namespace,
-	onClose,
-}: Props): JSX.Element;
+export default function AICreatorModal({namespace}: Props): JSX.Element;
 export {};

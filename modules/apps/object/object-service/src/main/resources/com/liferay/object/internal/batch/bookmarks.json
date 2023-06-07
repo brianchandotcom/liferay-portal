@@ -22,12 +22,12 @@
 	"items": [
 		{
 			"accountEntryRestricted": false,
-			"externalReferenceCode": "MSOD_BOOKMARKS_ENTRY",
+			"externalReferenceCode": "MSOD_BOOKMARKS",
 			"label": {
 				"en_US": "Bookmarks"
 			},
 			"modifiable": true,
-			"name": "bookmarksEntry",
+			"name": "bookmarks",
 			"objectFields": [
 				{
 					"DBType": "Clob",

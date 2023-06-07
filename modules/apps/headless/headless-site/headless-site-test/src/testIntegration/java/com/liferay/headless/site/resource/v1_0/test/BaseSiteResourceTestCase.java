@@ -49,6 +49,8 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
+import java.io.File;
+
 import java.lang.reflect.Method;
 
 import java.text.DateFormat;
@@ -178,6 +180,7 @@ public abstract class BaseSiteResourceTestCase {
 
 		Site site = randomSite();
 
+		site.setExternalReferenceCode(regex);
 		site.setFriendlyUrlPath(regex);
 		site.setKey(regex);
 		site.setName(regex);
@@ -190,6 +193,7 @@ public abstract class BaseSiteResourceTestCase {
 
 		site = SiteSerDes.toDTO(json);
 
+		Assert.assertEquals(regex, site.getExternalReferenceCode());
 		Assert.assertEquals(regex, site.getFriendlyUrlPath());
 		Assert.assertEquals(regex, site.getKey());
 		Assert.assertEquals(regex, site.getName());
@@ -221,12 +225,12 @@ public abstract class BaseSiteResourceTestCase {
 		Map<String, File> multipartFiles = getMultipartFiles();
 
 		Site putSite = siteResource.putSite(
-			postSite.getKey(), randomSite, multipartFiles);
+			postSite.getExternalReferenceCode(), randomSite, multipartFiles);
 
 		assertEquals(randomSite, putSite);
 		assertValid(putSite);
 
-		Site getSite = testPutSite_getSite(putSite.getKey());
+		Site getSite = testPutSite_getSite(putSite.getExternalReferenceCode());
 
 		assertEquals(randomSite, getSite);
 		assertValid(getSite);
@@ -234,7 +238,7 @@ public abstract class BaseSiteResourceTestCase {
 		assertValid(getSite, multipartFiles);
 	}
 
-	protected Site testPutSite_getSite(String key) {
+	protected Site testPutSite_getSite(String externalReferenceCode) {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
@@ -317,6 +321,16 @@ public abstract class BaseSiteResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (site.getExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("friendlyUrlPath", additionalAssertFieldName)) {
 				if (site.getFriendlyUrlPath() == null) {
 					valid = false;
@@ -379,6 +393,13 @@ public abstract class BaseSiteResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+	}
+
+	protected void assertValid(Site site, Map<String, File> multipartFiles)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected void assertValid(Page<Site> page) {
@@ -482,6 +503,19 @@ public abstract class BaseSiteResourceTestCase {
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						site1.getExternalReferenceCode(),
+						site2.getExternalReferenceCode())) {
+
+					return false;
+				}
+
+				continue;
+			}
 
 			if (Objects.equals("friendlyUrlPath", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
@@ -661,6 +695,14 @@ public abstract class BaseSiteResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
+		if (entityFieldName.equals("externalReferenceCode")) {
+			sb.append("'");
+			sb.append(String.valueOf(site.getExternalReferenceCode()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("friendlyUrlPath")) {
 			sb.append("'");
 			sb.append(String.valueOf(site.getFriendlyUrlPath()));
@@ -720,6 +762,11 @@ public abstract class BaseSiteResourceTestCase {
 			"Invalid entity field " + entityFieldName);
 	}
 
+	protected Map<String, File> getMultipartFiles() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected String invoke(String query) throws Exception {
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
@@ -760,6 +807,8 @@ public abstract class BaseSiteResourceTestCase {
 	protected Site randomSite() throws Exception {
 		return new Site() {
 			{
+				externalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				friendlyUrlPath = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();

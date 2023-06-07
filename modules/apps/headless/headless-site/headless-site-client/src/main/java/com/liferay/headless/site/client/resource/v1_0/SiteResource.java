@@ -17,6 +17,9 @@ package com.liferay.headless.site.client.resource.v1_0;
 import com.liferay.headless.site.client.dto.v1_0.Site;
 import com.liferay.headless.site.client.http.HttpInvoker;
 import com.liferay.headless.site.client.problem.Problem;
+import com.liferay.headless.site.client.serdes.v1_0.SiteSerDes;
+
+import java.io.File;
 
 import java.util.LinkedHashMap;
 import java.util.Locale;
@@ -43,11 +46,14 @@ public interface SiteResource {
 	public HttpInvoker.HttpResponse postSiteHttpResponse(Site site)
 		throws Exception;
 
-	public Site putSite(String key, Site site, Map<String, File> multipartFiles)
+	public Site putSite(
+			String externalReferenceCode, Site site,
+			Map<String, File> multipartFiles)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse putSiteHttpResponse(
-			String key, Site site, Map<String, File> multipartFiles)
+			String externalReferenceCode, Site site,
+			Map<String, File> multipartFiles)
 		throws Exception;
 
 	public static class Builder {
@@ -205,8 +211,7 @@ public interface SiteResource {
 			}
 
 			try {
-				return com.liferay.headless.site.client.serdes.v1_0.SiteSerDes.
-					toDTO(content);
+				return SiteSerDes.toDTO(content);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -255,11 +260,12 @@ public interface SiteResource {
 		}
 
 		public Site putSite(
-				String key, Site site, Map<String, File> multipartFiles)
+				String externalReferenceCode, Site site,
+				Map<String, File> multipartFiles)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse = putSiteHttpResponse(
-				key, site, multipartFiles);
+				externalReferenceCode, site, multipartFiles);
 
 			String content = httpResponse.getContent();
 
@@ -321,7 +327,8 @@ public interface SiteResource {
 		}
 
 		public HttpInvoker.HttpResponse putSiteHttpResponse(
-				String key, Site site, Map<String, File> multipartFiles)
+				String externalReferenceCode, Site site,
+				Map<String, File> multipartFiles)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -356,9 +363,9 @@ public interface SiteResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-site/v1.0/sites/{key}");
+						"/o/headless-site/v1.0/sites/{externalReferenceCode}");
 
-			httpInvoker.path("key", key);
+			httpInvoker.path("externalReferenceCode", externalReferenceCode);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

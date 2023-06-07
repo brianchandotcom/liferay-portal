@@ -2815,7 +2815,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		JSONObject bodyJSONObject = _jsonFactory.createJSONObject();
 
 		Enumeration<URL> enumeration = _bundle.findEntries(
-			resourcePath, "*.html", false);
+			resourcePath, "*.html", true);
 
 		if (enumeration == null) {
 			return;

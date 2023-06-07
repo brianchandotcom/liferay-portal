@@ -50,12 +50,15 @@ public class PropertiesLanguageKeysContextCheck extends BaseFileCheck {
 			(Enumeration<String>)properties.propertyNames();
 
 		int contextDepth = GetterUtil.getInteger(
-			getAttributeValue(_CONTEXT_DEPTH_KEY, "1", absolutePath));
+			getAttributeValue(_CONTEXT_DEPTH_KEY, absolutePath));
 
 		while (enumeration.hasMoreElements()) {
 			String key = enumeration.nextElement();
 
-			if (StringUtil.count(key, StringPool.DASH) != (contextDepth - 1)) {
+			if ((contextDepth != 0) &&
+				((StringUtil.count(key, StringPool.DASH) + 1) !=
+					contextDepth)) {
+
 				continue;
 			}
 

@@ -251,8 +251,8 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 	}
 
 	private void _addClientExtensionEntryRel(
-		String cetExternalReferenceCode, Layout layout, String type,
-		long userId) {
+		String cetExternalReferenceCode, Layout layout,
+		ServiceContext serviceContext, String type, long userId) {
 
 		CET cet = _cetManager.getCET(
 			layout.getCompanyId(), cetExternalReferenceCode);
@@ -266,7 +266,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 				userId, layout.getGroupId(),
 				_portal.getClassNameId(Layout.class.getName()),
 				layout.getPlid(), cetExternalReferenceCode, type, null,
-				ServiceContextThreadLocal.getServiceContext());
+				serviceContext);
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException);
@@ -1677,8 +1677,8 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			else if (favIconMap.containsKey("externalReferenceCode")) {
 				_addClientExtensionEntryRel(
 					String.valueOf(favIconMap.get("externalReferenceCode")),
-					layout, ClientExtensionEntryConstants.TYPE_THEME_FAVICON,
-					userId);
+					layout, ServiceContextThreadLocal.getServiceContext(),
+					ClientExtensionEntryConstants.TYPE_THEME_FAVICON, userId);
 			}
 		}
 

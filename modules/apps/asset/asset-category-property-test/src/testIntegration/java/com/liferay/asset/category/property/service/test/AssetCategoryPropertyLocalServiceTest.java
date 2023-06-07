@@ -25,6 +25,7 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -39,6 +40,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -187,6 +189,47 @@ public class AssetCategoryPropertyLocalServiceTest {
 		_assetCategoryPropertyLocalService.addCategoryProperty(
 			TestPropsValues.getUserId(), assetCategory.getCategoryId(),
 			RandomTestUtil.randomString(), StringPool.BLANK);
+	}
+
+	@Test
+	public void testGetCategoryPropertyValues() throws PortalException {
+		Map<Locale, String> titleMap = HashMapBuilder.put(
+			LocaleUtil.US, RandomTestUtil.randomString()
+		).build();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyLocalService.addVocabulary(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), titleMap, null, null,
+				serviceContext);
+
+		AssetCategory assetCategory = _assetCategoryLocalService.addCategory(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
+			serviceContext);
+
+		AssetCategoryProperty assetCategoryProperty =
+			_assetCategoryPropertyLocalService.addCategoryProperty(
+				TestPropsValues.getUserId(), assetCategory.getCategoryId(),
+				"keyToBeFound", "someValue");
+
+		_assetCategoryPropertyLocalService.addCategoryProperty(
+			TestPropsValues.getUserId(), assetCategory.getCategoryId(),
+			"keyNotToBeFound", "anotherValue");
+
+		List<AssetCategoryProperty> categoryPropertyValues =
+			_assetCategoryPropertyLocalService.getCategoryPropertyValues(
+				_group.getGroupId(), assetCategoryProperty.getKey());
+
+		Assert.assertEquals(
+			categoryPropertyValues.get(
+				0
+			).getKey(),
+			assetCategoryProperty.getKey());
 	}
 
 	@Inject

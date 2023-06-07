@@ -18,8 +18,11 @@ import com.liferay.asset.category.property.exception.CategoryPropertyKeyExceptio
 import com.liferay.asset.category.property.exception.CategoryPropertyValueException;
 import com.liferay.asset.category.property.exception.DuplicateCategoryPropertyException;
 import com.liferay.asset.category.property.model.AssetCategoryProperty;
+import com.liferay.asset.category.property.model.AssetCategoryPropertyTable;
 import com.liferay.asset.category.property.service.base.AssetCategoryPropertyLocalServiceBaseImpl;
+import com.liferay.asset.kernel.model.AssetCategoryTable;
 import com.liferay.asset.util.AssetHelper;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
@@ -138,7 +141,24 @@ public class AssetCategoryPropertyLocalServiceImpl
 	public List<AssetCategoryProperty> getCategoryPropertyValues(
 		long groupId, String key) {
 
-		return assetCategoryPropertyFinder.findByG_K(groupId, key);
+		return assetCategoryPropertyPersistence.dslQuery(
+			DSLQueryFactoryUtil.selectDistinct(
+				AssetCategoryPropertyTable.INSTANCE
+			).from(
+				AssetCategoryPropertyTable.INSTANCE
+			).innerJoinON(
+				AssetCategoryTable.INSTANCE,
+				AssetCategoryTable.INSTANCE.categoryId.eq(
+					AssetCategoryPropertyTable.INSTANCE.categoryId)
+			).where(
+				AssetCategoryTable.INSTANCE.groupId.eq(
+					groupId
+				).and(
+					AssetCategoryPropertyTable.INSTANCE.key.eq(key)
+				)
+			).orderBy(
+				AssetCategoryPropertyTable.INSTANCE.value.ascending()
+			));
 	}
 
 	@Override

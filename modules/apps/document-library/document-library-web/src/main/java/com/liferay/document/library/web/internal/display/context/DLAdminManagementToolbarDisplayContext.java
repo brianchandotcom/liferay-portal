@@ -570,18 +570,6 @@ public class DLAdminManagementToolbarDisplayContext
 				return null;
 			}
 		).setParameter(
-			"deltaEntry",
-			() -> {
-				int deltaEntry = ParamUtil.getInteger(
-					_httpServletRequest, "deltaEntry");
-
-				if (deltaEntry > 0) {
-					return deltaEntry;
-				}
-
-				return null;
-			}
-		).setParameter(
 			"extension",
 			() -> {
 				String[] extensions = _getExtensions();
@@ -809,9 +797,6 @@ public class DLAdminManagementToolbarDisplayContext
 	}
 
 	private PortletURL _getCurrentSortingURL() {
-		int deltaEntry = ParamUtil.getInteger(
-			_httpServletRequest, "deltaEntry");
-
 		PortletURL sortingURL = _liferayPortletResponse.createRenderURL();
 
 		long folderId = _getFolderId();
@@ -826,10 +811,6 @@ public class DLAdminManagementToolbarDisplayContext
 		}
 
 		sortingURL.setParameter("navigation", _getNavigation());
-
-		if (deltaEntry > 0) {
-			sortingURL.setParameter("deltaEntry", String.valueOf(deltaEntry));
-		}
 
 		sortingURL.setParameter("folderId", String.valueOf(folderId));
 		sortingURL.setParameter(

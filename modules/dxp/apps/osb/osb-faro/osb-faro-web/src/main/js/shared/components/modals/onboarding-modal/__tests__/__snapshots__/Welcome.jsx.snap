@@ -48,7 +48,7 @@ exports[`Welcome renders 1`] = `
       class="modal-footer d-flex justify-content-center"
     >
       <button
-        class="button-root btn btn-secondary"
+        class="button-root btn btn-primary"
         type="button"
       >
         Next

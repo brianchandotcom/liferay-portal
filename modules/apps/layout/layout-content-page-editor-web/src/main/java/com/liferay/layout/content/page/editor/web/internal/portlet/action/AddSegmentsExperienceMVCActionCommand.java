@@ -90,8 +90,8 @@ public class AddSegmentsExperienceMVCActionCommand
 			plid, segmentsExperiment);
 
 		SegmentsExperienceUtil.copySegmentsExperienceData(
-			plid, _commentManager, groupId, _portletRegistry,
-			baseSegmentsExperienceId,
+			_commentManager, groupId, _layoutLocalService.getLayout(plid),
+			_portletRegistry, baseSegmentsExperienceId,
 			segmentsExperience.getSegmentsExperienceId(),
 			className -> serviceContext, _portal.getUserId(actionRequest));
 
@@ -278,8 +278,8 @@ public class AddSegmentsExperienceMVCActionCommand
 
 		if (draftLayout != null) {
 			SegmentsExperienceUtil.copySegmentsExperienceData(
-				draftLayout.getPlid(), _commentManager, groupId,
-				_portletRegistry, baseSegmentsExperienceId,
+				_commentManager, groupId, draftLayout, _portletRegistry,
+				baseSegmentsExperienceId,
 				segmentsExperience.getSegmentsExperienceId(),
 				className -> serviceContext, serviceContext.getUserId());
 		}

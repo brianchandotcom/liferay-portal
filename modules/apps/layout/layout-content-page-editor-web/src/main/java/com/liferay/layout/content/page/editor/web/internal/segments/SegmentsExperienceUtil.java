@@ -70,7 +70,7 @@ import javax.servlet.http.HttpServletRequest;
 public class SegmentsExperienceUtil {
 
 	public static void copySegmentsExperienceData(
-			long plid, CommentManager commentManager, long groupId,
+			CommentManager commentManager, long groupId, Layout layout,
 			PortletRegistry portletRegistry, long sourceSegmentsExperienceId,
 			long targetSegmentsExperienceId,
 			Function<String, ServiceContext> serviceContextFunction,
@@ -83,7 +83,7 @@ public class SegmentsExperienceUtil {
 			CopyLayoutThreadLocal.setCopyLayout(true);
 
 			_copyLayoutData(
-				plid, commentManager, groupId, portletRegistry,
+				commentManager, groupId, layout, portletRegistry,
 				sourceSegmentsExperienceId, targetSegmentsExperienceId,
 				serviceContextFunction, userId);
 		}
@@ -187,7 +187,7 @@ public class SegmentsExperienceUtil {
 	}
 
 	private static void _copyLayoutData(
-			long plid, CommentManager commentManager, long groupId,
+			CommentManager commentManager, long groupId, Layout layout,
 			PortletRegistry portletRegistry, long sourceSegmentsExperienceId,
 			long targetSegmentsExperienceId,
 			Function<String, ServiceContext> serviceContextFunction,
@@ -196,16 +196,16 @@ public class SegmentsExperienceUtil {
 
 		LayoutStructure layoutStructure =
 			LayoutStructureUtil.getLayoutStructure(
-				groupId, plid, sourceSegmentsExperienceId);
+				groupId, layout.getPlid(), sourceSegmentsExperienceId);
 
 		JSONObject dataJSONObject = _updateLayoutDataJSONObject(
-			plid, commentManager, layoutStructure, groupId, portletRegistry,
+			commentManager, groupId, layout, layoutStructure, portletRegistry,
 			sourceSegmentsExperienceId, serviceContextFunction,
 			targetSegmentsExperienceId, userId);
 
 		LayoutPageTemplateStructureLocalServiceUtil.
 			updateLayoutPageTemplateStructureData(
-				groupId, plid, targetSegmentsExperienceId,
+				groupId, layout.getPlid(), targetSegmentsExperienceId,
 				dataJSONObject.toString());
 	}
 
@@ -336,9 +336,9 @@ public class SegmentsExperienceUtil {
 	}
 
 	private static JSONObject _updateLayoutDataJSONObject(
-			long plid, CommentManager commentManager,
-			LayoutStructure layoutStructure, long groupId,
-			PortletRegistry portletRegistry, long sourceSegmentsExperienceId,
+			CommentManager commentManager, long groupId, Layout layout,
+			LayoutStructure layoutStructure, PortletRegistry portletRegistry,
+			long sourceSegmentsExperienceId,
 			Function<String, ServiceContext> serviceContextFunction,
 			long targetSegmentsExperienceId, long userId)
 		throws PortalException {
@@ -346,7 +346,7 @@ public class SegmentsExperienceUtil {
 		List<FragmentEntryLink> fragmentEntryLinks =
 			FragmentEntryLinkLocalServiceUtil.
 				getFragmentEntryLinksBySegmentsExperienceId(
-					groupId, sourceSegmentsExperienceId, plid);
+					groupId, sourceSegmentsExperienceId, layout.getPlid());
 
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
 			if (fragmentEntryLink.isDeleted()) {
@@ -382,7 +382,8 @@ public class SegmentsExperienceUtil {
 			newFragmentEntryLink.setEditableValues(
 				_getNewEditableValues(
 					fragmentEntryLink.getEditableValues(),
-					fragmentEntryLink.getNamespace(), newNamespace, plid));
+					fragmentEntryLink.getNamespace(), newNamespace,
+					layout.getPlid()));
 
 			newFragmentEntryLink.setNamespace(newNamespace);
 
@@ -402,7 +403,8 @@ public class SegmentsExperienceUtil {
 				serviceContextFunction);
 
 			_copyPortletPreferences(
-				fragmentEntryLink, newFragmentEntryLink, plid, portletRegistry);
+				fragmentEntryLink, newFragmentEntryLink, layout.getPlid(),
+				portletRegistry);
 		}
 
 		return layoutStructure.toJSONObject();

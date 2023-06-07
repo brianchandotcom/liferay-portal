@@ -96,9 +96,8 @@ public class DuplicateSegmentsExperienceMVCActionCommand
 				serviceContext);
 
 		SegmentsExperienceUtil.copySegmentsExperienceData(
-			themeDisplay.getPlid(), _commentManager,
-			themeDisplay.getScopeGroupId(), _portletRegistry,
-			segmentsExperienceId,
+			_commentManager, themeDisplay.getScopeGroupId(),
+			themeDisplay.getLayout(), _portletRegistry, segmentsExperienceId,
 			duplicatedSegmentsExperience.getSegmentsExperienceId(),
 			className -> serviceContext, themeDisplay.getUserId());
 

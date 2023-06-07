@@ -88,11 +88,6 @@ public class PanelGroupTag extends BaseContainerTag {
 	}
 
 	@Override
-	protected String getHydratedModuleName() {
-		return "{PanelGroup} from frontend-taglib-clay";
-	}
-
-	@Override
 	protected Map<String, Object> prepareProps(Map<String, Object> props) {
 		props.put("fluid", _fluid);
 		props.put("fluidFirst", _fluidFirst);

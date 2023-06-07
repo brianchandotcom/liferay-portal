@@ -43,7 +43,7 @@ exports[`NumberBreakdown should render 1`] = `
       class="options-footer"
     >
       <button
-        class="button-root btn btn-block btn-secondary"
+        class="button-root btn btn-block btn-primary"
         type="submit"
       >
         Done

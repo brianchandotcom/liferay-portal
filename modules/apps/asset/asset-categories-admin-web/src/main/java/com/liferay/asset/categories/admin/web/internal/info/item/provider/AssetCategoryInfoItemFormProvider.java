@@ -21,6 +21,9 @@ import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.field.reader.InfoItemFieldReaderFieldSetProvider;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
+import com.liferay.layout.page.template.info.item.provider.DisplayPageInfoItemFieldSetProvider;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
@@ -59,7 +62,20 @@ public class AssetCategoryInfoItemFormProvider
 			_templateInfoItemFieldSetProvider.getInfoFieldSet(
 				AssetCategory.class.getName())
 		).infoFieldSetEntry(
-			_getDisplayPageInfoFieldSet()
+			unsafeConsumer -> {
+				if (!FeatureFlagManagerUtil.isEnabled("LPS-183727")) {
+					unsafeConsumer.accept(_getDisplayPageInfoFieldSet());
+				}
+			}
+		).infoFieldSetEntry(
+			unsafeConsumer -> {
+				if (FeatureFlagManagerUtil.isEnabled("LPS-183727")) {
+					unsafeConsumer.accept(
+						_displayPageInfoItemFieldSetProvider.getInfoFieldSet(
+							AssetCategory.class.getName(), StringPool.BLANK,
+							0));
+				}
+			}
 		).infoFieldSetEntry(
 			_infoItemFieldReaderFieldSetProvider.getInfoFieldSet(
 				AssetCategory.class.getName())
@@ -95,6 +111,10 @@ public class AssetCategoryInfoItemFormProvider
 			"display-page"
 		).build();
 	}
+
+	@Reference
+	private DisplayPageInfoItemFieldSetProvider
+		_displayPageInfoItemFieldSetProvider;
 
 	@Reference
 	private InfoItemFieldReaderFieldSetProvider

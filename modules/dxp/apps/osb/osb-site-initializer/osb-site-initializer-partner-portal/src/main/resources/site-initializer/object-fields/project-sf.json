@@ -1,0 +1,84 @@
+{
+	"object-fields": [
+		{
+			"DBType": "Clob",
+			"businessType": "LongText",
+			"externalReferenceCode": "Additional_Details__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Additional Information About The Opportunity"
+			},
+			"name": "additionalInformationAboutTheOpportunity",
+			"required": false,
+			"type": "Clob"
+		},
+		{
+			"DBType": "Clob",
+			"businessType": "LongText",
+			"externalReferenceCode": "Project_Solution_Use_Case__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Project Need"
+			},
+			"name": "projectNeed",
+			"required": false,
+			"type": "Clob"
+		},
+		{
+			"DBType": "Clob",
+			"businessType": "LongText",
+			"externalReferenceCode": "Project_Solution_Type__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Project Solution Categories"
+			},
+			"name": "projectCategories",
+			"required": false,
+			"type": "Clob"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "MDF_Request_Activity__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "MDF Activity Name"
+			},
+			"name": "mdfActivityName",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "Project_Roadmap__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Project Timeline"
+			},
+			"name": "projectTimeline",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Picklist",
+			"externalReferenceCode": "CurrencyIsoCode",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Currency"
+			},
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Currencies$]",
+			"name": "currency",
+			"required": false,
+			"type": "String"
+		}
+	],
+	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:ProjectSF$]"
+}

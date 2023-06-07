@@ -52,7 +52,7 @@ import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 
 /**
- * @author Lourdes Fernández Besada
+ * @author Mikel Lorza
  */
 @FeatureFlags("LPS-176136")
 @RunWith(Arquillian.class)

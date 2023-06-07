@@ -79,7 +79,7 @@ public class MenuAccessConfigurationManagerTest {
 		_menuAccessConfigurationManager.addAccessRoleToControlMenu(role);
 
 		_assertMenuAccessConfiguration(
-			new String[] {String.valueOf(role.getRoleId())}, true);
+			new String[] {String.valueOf(role.getRoleId())});
 	}
 
 	@Test
@@ -102,7 +102,7 @@ public class MenuAccessConfigurationManagerTest {
 		_menuAccessConfigurationManager.deleteRoleAccessToControlMenu(role2);
 
 		_assertMenuAccessConfiguration(
-			new String[] {String.valueOf(role1.getRoleId())}, true);
+			new String[] {String.valueOf(role1.getRoleId())});
 	}
 
 	@Test
@@ -112,13 +112,11 @@ public class MenuAccessConfigurationManagerTest {
 		_menuAccessConfigurationManager.updateMenuAccessConfiguration(
 			_group.getGroupId(), expectedAccessToControlMenuRoleIds, true);
 
-		_assertMenuAccessConfiguration(
-			expectedAccessToControlMenuRoleIds, true);
+		_assertMenuAccessConfiguration(expectedAccessToControlMenuRoleIds);
 	}
 
 	private void _assertMenuAccessConfiguration(
-			String[] expectedAccessToControlMenuRoleIds,
-			boolean expectedShowControlMenuByRole)
+			String[] expectedAccessToControlMenuRoleIds)
 		throws Exception {
 
 		String filterString = StringBundler.concat(
@@ -147,8 +145,7 @@ public class MenuAccessConfigurationManagerTest {
 			expectedAccessToControlMenuRoleIds,
 			actualAccessToControlMenuRoleIds);
 
-		Assert.assertEquals(
-			expectedShowControlMenuByRole,
+		Assert.assertTrue(
 			GetterUtil.getBoolean(properties.get("showControlMenuByRole")));
 	}
 

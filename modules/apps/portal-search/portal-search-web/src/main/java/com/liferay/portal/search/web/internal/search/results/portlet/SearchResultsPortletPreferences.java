@@ -43,6 +43,9 @@ public interface SearchResultsPortletPreferences {
 	public static final String PREFERENCE_KEY_SHOW_EMPTY_RESULT_MESSAGE =
 		"showEmptyResultMessage";
 
+	public static final String PREFERENCE_KEY_SHOW_PAGINATION =
+		"showPagination";
+
 	public static final String PREFERENCE_KEY_VIEW_IN_CONTEXT = "viewInContext";
 
 	public String getFederatedSearchKey();
@@ -60,6 +63,8 @@ public interface SearchResultsPortletPreferences {
 	public boolean isHighlightEnabled();
 
 	public boolean isShowEmptyResultMessage();
+
+	public boolean isShowPagination();
 
 	public boolean isViewInContext();
 

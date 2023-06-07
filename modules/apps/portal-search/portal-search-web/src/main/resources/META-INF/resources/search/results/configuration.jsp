@@ -65,6 +65,8 @@ SearchResultsPortletPreferences searchResultsPortletPreferences = new SearchResu
 			</div>
 
 			<aui:input helpMessage="show-default-empty-result-message-help" label="show-default-empty-result-message" name="<%= PortletPreferencesJspUtil.getInputName(SearchResultsPortletPreferences.PREFERENCE_KEY_SHOW_EMPTY_RESULT_MESSAGE) %>" type="checkbox" value="<%= searchResultsPortletPreferences.isShowEmptyResultMessage() %>" />
+
+			<aui:input helpMessage="show-default-pagination-help" label="show-default-pagination" name="<%= PortletPreferencesJspUtil.getInputName(SearchResultsPortletPreferences.PREFERENCE_KEY_SHOW_PAGINATION) %>" type="checkbox" value="<%= searchResultsPortletPreferences.isShowPagination() %>" />
 		</liferay-frontend:fieldset>
 
 		<liferay-frontend:fieldset

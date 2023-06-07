@@ -99,6 +99,13 @@ public class SearchResultsPortletPreferencesImpl
 	}
 
 	@Override
+	public boolean isShowPagination() {
+		return getBoolean(
+			SearchResultsPortletPreferences.PREFERENCE_KEY_SHOW_PAGINATION,
+			true);
+	}
+
+	@Override
 	public boolean isViewInContext() {
 		return getBoolean(
 			SearchResultsPortletPreferences.PREFERENCE_KEY_VIEW_IN_CONTEXT,

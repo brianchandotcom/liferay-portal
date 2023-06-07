@@ -268,6 +268,9 @@ public class SearchResultsPortlet extends MVCPortlet {
 		searchResultsPortletDisplayContext.setShowEmptyResultMessage(
 			searchResultsPortletPreferences.isShowEmptyResultMessage());
 
+		searchResultsPortletDisplayContext.setShowPagination(
+			searchResultsPortletPreferences.isShowPagination());
+
 		return searchResultsPortletDisplayContext;
 	}
 

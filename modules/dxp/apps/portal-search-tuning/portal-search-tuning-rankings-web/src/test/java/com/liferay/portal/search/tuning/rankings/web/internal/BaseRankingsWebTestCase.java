@@ -44,6 +44,8 @@ import com.liferay.portal.search.engine.adapter.document.GetDocumentResponse;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.search.engine.adapter.index.CreateIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.DeleteIndexRequest;
+import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexRequest;
+import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexResponse;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.filter.ComplexQueryPart;
@@ -635,6 +637,23 @@ public abstract class BaseRankingsWebTestCase {
 			searchEngineAdapter
 		).execute(
 			(DeleteDocumentRequest)Mockito.any()
+		);
+
+		IndicesExistsIndexResponse indicesExistsIndexResponse = Mockito.mock(
+			IndicesExistsIndexResponse.class);
+
+		Mockito.doReturn(
+			true
+		).when(
+			indicesExistsIndexResponse
+		).isExists();
+
+		Mockito.doReturn(
+			indicesExistsIndexResponse
+		).when(
+			searchEngineAdapter
+		).execute(
+			(IndicesExistsIndexRequest)Mockito.any()
 		);
 	}
 

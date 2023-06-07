@@ -120,7 +120,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-176189 Confirm that when adding several views, pagination is displayed correctly when placing as 4 items"
+	@description = "LPS-176189. Confirm that when adding several views, pagination is displayed correctly when placing as 4 items"
 	@priority = 5
 	test CanAssertPagination {
 		task ("And Adding a 6 view called 'View Test 1', 'View Test 2'... and Filling the description field with 'Test Description'") {
@@ -443,7 +443,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-176189  Confirm that the view was really deleted"
+	@description = "LPS-176189. Confirm that the view was really deleted"
 	@priority = 5
 	test CanUpdateNumberOfViews {
 		task ("When Add a new view") {
@@ -485,7 +485,7 @@ definition {
 		}
 	}
 
-	@description = "Needs refactor after LPS-183512 is fixed | LPS-172396 Confirm that special characters are confirmed in the display name on the page "
+	@description = "Needs refactor after LPS-183512 is fixed | LPS-172396. Confirm that special characters are confirmed in the display name on the page "
 	@priority = 4
 	test CanUseSpecialCharactersInNameField {
 		task ("When Clicking add button, and Filling the Name field with, and Clicking Save button") {

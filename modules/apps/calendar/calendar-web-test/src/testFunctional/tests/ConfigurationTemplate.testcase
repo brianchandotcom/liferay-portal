@@ -16,6 +16,8 @@ definition {
 
 		User.firstLoginPG();
 
+		HeadlessSite.addSite(siteName = "Test Site Name");
+
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Calendar Page");
@@ -47,6 +49,8 @@ definition {
 			CalendarConfiguration.tearDown();
 
 			PagesAdmin.tearDownCP();
+
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 		}
 	}
 

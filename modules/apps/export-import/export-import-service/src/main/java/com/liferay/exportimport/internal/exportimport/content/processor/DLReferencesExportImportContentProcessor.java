@@ -871,7 +871,7 @@ public class DLReferencesExportImportContentProcessor
 
 	private static final Pattern _uuidPattern = Pattern.compile(
 		"[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-" +
-			"[a-fA-F0-9]{12}");
+			"[a-fA-F0-9]{12}(?=[&,?]|$)");
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

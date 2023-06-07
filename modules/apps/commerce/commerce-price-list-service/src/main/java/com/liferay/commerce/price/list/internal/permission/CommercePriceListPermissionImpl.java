@@ -14,13 +14,23 @@
 
 package com.liferay.commerce.price.list.internal.permission;
 
+import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.permission.CommercePriceListPermission;
 import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
+import com.liferay.commerce.product.model.CommerceCatalog;
+import com.liferay.commerce.product.service.CommerceCatalogLocalService;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.ArrayUtil;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -127,10 +137,42 @@ public class CommercePriceListPermissionImpl
 			return true;
 		}
 
+		if (actionId.equals(ActionKeys.UPDATE) ||
+			actionId.equals(ActionKeys.VIEW)) {
+
+			CommerceCatalog commerceCatalog =
+				_commerceCatalogLocalService.fetchCommerceCatalogByGroupId(
+					commercePriceList.getGroupId());
+
+			if (commerceCatalog != null) {
+				List<AccountEntry> accountEntries =
+					_accountEntryLocalService.getUserAccountEntries(
+						permissionChecker.getUserId(), 0L, StringPool.BLANK,
+						new String[] {
+							AccountConstants.ACCOUNT_ENTRY_TYPE_SUPPLIER
+						},
+						QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+				for (AccountEntry accountEntry : accountEntries) {
+					if (commerceCatalog.getAccountEntryId() ==
+							accountEntry.getAccountEntryId()) {
+
+						return true;
+					}
+				}
+			}
+		}
+
 		return permissionChecker.hasPermission(
 			commercePriceList.getGroupId(), CommercePriceList.class.getName(),
 			commercePriceList.getCommercePriceListId(), actionId);
 	}
+
+	@Reference
+	private AccountEntryLocalService _accountEntryLocalService;
+
+	@Reference
+	private CommerceCatalogLocalService _commerceCatalogLocalService;
 
 	@Reference
 	private CommercePriceListLocalService _commercePriceListLocalService;

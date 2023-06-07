@@ -65,6 +65,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CountDownLatch;
 
 import javax.portlet.PortletPreferences;
 
@@ -357,6 +358,8 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 					configurationBeanClass.getClassLoader()),
 				SettingsLocatorHelperImpl.this);
 
+		CountDownLatch countDownLatch = new CountDownLatch(1);
+
 		ServiceRegistration<?> managedServiceServiceRegistration =
 			_bundleContext.registerService(
 				ManagedService.class,
@@ -372,9 +375,18 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 							ConfigurableUtil.createConfigurable(
 								configurationBeanClass, properties),
 							_portalPropertiesSettings));
+
+					countDownLatch.countDown();
 				},
 				MapUtil.singletonDictionary(
 					Constants.SERVICE_PID, configurationPid));
+
+		try {
+			countDownLatch.await();
+		}
+		catch (InterruptedException interruptedException) {
+			_log.error(interruptedException);
+		}
 
 		ScopedConfigurationManagedServiceFactory
 			scopedConfigurationManagedServiceFactory =

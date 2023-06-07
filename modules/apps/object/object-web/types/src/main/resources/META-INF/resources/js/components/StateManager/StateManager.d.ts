@@ -14,7 +14,7 @@
 
 /// <reference types="react" />
 
-import {IField} from '../../utils/fds';
+import {IFDSTableProps} from '../../utils/fds';
 export default function StateManager({
 	apiURL,
 	creationMenu,
@@ -24,4 +24,4 @@ export default function StateManager({
 	objectDefinitionExternalReferenceCode,
 	style,
 	url,
-}: IField): JSX.Element;
+}: IFDSTableProps): JSX.Element;

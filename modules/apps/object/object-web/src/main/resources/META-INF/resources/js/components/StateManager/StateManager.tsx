@@ -22,7 +22,7 @@ import {API, getLocalizableLabel} from '@liferay/object-js-components-web';
 import React, {useEffect, useState} from 'react';
 
 import {
-	IField,
+	IFDSTableProps,
 	defaultDataSetProps,
 	fdsItem,
 	formatActionURL,
@@ -41,7 +41,7 @@ export default function StateManager({
 	objectDefinitionExternalReferenceCode,
 	style,
 	url,
-}: IField) {
+}: IFDSTableProps) {
 	const [creationLanguageId, setCreationLanguageId] = useState<
 		Liferay.Language.Locale
 	>();

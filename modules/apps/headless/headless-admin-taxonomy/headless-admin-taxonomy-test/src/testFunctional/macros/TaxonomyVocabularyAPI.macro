@@ -211,6 +211,23 @@ definition {
 		}
 	}
 
+	macro deleteAllTaxonomyVocabulary {
+		Variables.assertDefined(parameterList = ${groupName});
+
+		var response = TaxonomyVocabularyAPI.getTaxonomyVocabularyWithDifferentParameters(groupName = ${groupName});
+
+		var taxonomyVocabularyErcList = JSONUtil.getWithJSONPath(${response}, "$..items[*].externalReferenceCode");
+
+		for (var taxonomyVocabularyErc : list ${taxonomyVocabularyErcList}) {
+			var curl = TaxonomyVocabularyAPI._curlTaxonomyVocabulary(
+				depotName = ${depotName},
+				externalReferenceCode = ${taxonomyVocabularyErc},
+				groupName = ${groupName});
+
+			JSONCurlUtil.delete(${curl});
+		}
+	}
+
 	macro deleteTaxonomyVocabularyByErc {
 		Variables.assertDefined(parameterList = ${externalReferenceCode});
 

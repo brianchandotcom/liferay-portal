@@ -334,43 +334,7 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 	private Keyword _toKeyword(AssetTag assetTag) throws Exception {
 		return _keywordDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				contextAcceptLanguage.isAcceptAllLanguages(),
-				HashMapBuilder.put(
-					"delete",
-					addAction(
-						ActionKeys.MANAGE_TAG, assetTag.getTagId(),
-						"deleteKeyword", assetTag.getUserId(),
-						AssetTagsPermission.RESOURCE_NAME,
-						assetTag.getGroupId())
-				).put(
-					"get",
-					addAction(
-						ActionKeys.MANAGE_TAG, assetTag.getTagId(),
-						"getKeyword", assetTag.getUserId(),
-						AssetTagsPermission.RESOURCE_NAME,
-						assetTag.getGroupId())
-				).put(
-					"replace",
-					addAction(
-						ActionKeys.MANAGE_TAG, assetTag.getTagId(),
-						"putKeyword", assetTag.getUserId(),
-						AssetTagsPermission.RESOURCE_NAME,
-						assetTag.getGroupId())
-				).put(
-					"subscribe",
-					addAction(
-						ActionKeys.SUBSCRIBE, assetTag.getTagId(),
-						"putKeywordSubscribe", assetTag.getUserId(),
-						AssetTagsPermission.RESOURCE_NAME,
-						assetTag.getGroupId())
-				).put(
-					"unsubscribe",
-					addAction(
-						ActionKeys.SUBSCRIBE, assetTag.getTagId(),
-						"putKeywordUnsubscribe", assetTag.getUserId(),
-						AssetTagsPermission.RESOURCE_NAME,
-						assetTag.getGroupId())
-				).build(),
+				contextAcceptLanguage.isAcceptAllLanguages(), null,
 				_dtoConverterRegistry, assetTag.getTagId(),
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser),

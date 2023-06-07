@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.vulcan.action.DTOActionProvider;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.util.GroupUtil;
@@ -55,7 +56,10 @@ public class KeywordDTOConverter implements DTOConverter<AssetTag, Keyword> {
 
 		return new Keyword() {
 			{
-				actions = dtoConverterContext.getActions();
+				actions = _dtoActionProvider.getActions(
+					assetTag.getGroupId(), assetTag.getTagId(),
+					dtoConverterContext.getUriInfo(),
+					dtoConverterContext.getUserId());
 				assetLibraryKey = GroupUtil.getAssetLibraryKey(group);
 				dateCreated = assetTag.getCreateDate();
 				dateModified = assetTag.getModifiedDate();
@@ -99,6 +103,11 @@ public class KeywordDTOConverter implements DTOConverter<AssetTag, Keyword> {
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference(
+		target = "(dto.class.name=com.liferay.headless.admin.taxonomy.dto.v1_0.Keyword)"
+	)
+	private DTOActionProvider _dtoActionProvider;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

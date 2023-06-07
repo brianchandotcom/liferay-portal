@@ -91,6 +91,18 @@ create table CTProcess (
 	type_ INTEGER
 );
 
+create table CTRemote (
+	mvccVersion LONG default 0 not null,
+	ctRemoteId LONG not null primary key,
+	companyId LONG,
+	userId LONG,
+	createDate DATE null,
+	modifiedDate DATE null,
+	name VARCHAR(75) null,
+	description VARCHAR(75) null,
+	url VARCHAR(75) null
+);
+
 create table CTSchemaVersion (
 	mvccVersion LONG default 0 not null,
 	schemaVersionId LONG not null primary key,

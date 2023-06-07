@@ -20,4 +20,6 @@ create index IX_7523B0A4 on CTProcess (companyId);
 create index IX_46BA2033 on CTProcess (ctCollectionId, type_);
 create index IX_5F9B5D3E on CTProcess (userId);
 
+create index IX_9B9391EB on CTRemote (companyId);
+
 create index IX_687AE35C on CTSchemaVersion (companyId);

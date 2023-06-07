@@ -95,6 +95,17 @@
 		<field name="backgroundTaskId" type="long" />
 		<field name="type" type="int" />
 	</model>
+	<model name="com.liferay.change.tracking.model.CTRemote">
+		<field name="mvccVersion" type="long" />
+		<field name="ctRemoteId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="name" type="String" />
+		<field name="description" type="String" />
+		<field name="url" type="String" />
+	</model>
 	<model name="com.liferay.change.tracking.model.CTSchemaVersion">
 		<field name="mvccVersion" type="long" />
 		<field name="schemaVersionId" type="long" />

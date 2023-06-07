@@ -243,6 +243,7 @@ create index IX_121A14F7 on Group_ (companyId, parentGroupId, site, ctCollection
 create index IX_162053E9 on Group_ (companyId, parentGroupId, site, inheritContent, ctCollectionId);
 create index IX_4108074A on Group_ (companyId, site, active_, ctCollectionId);
 create index IX_CFE2671B on Group_ (companyId, site, ctCollectionId);
+create unique index IX_74161B4F on Group_ (externalReferenceCode[$COLUMN_LENGTH:75$], companyId, ctCollectionId);
 create index IX_8060F096 on Group_ (liveGroupId, ctCollectionId);
 create index IX_5263ACD8 on Group_ (type_, active_, ctCollectionId);
 create index IX_21CBD878 on Group_ (uuid_[$COLUMN_LENGTH:75$], companyId, ctCollectionId);

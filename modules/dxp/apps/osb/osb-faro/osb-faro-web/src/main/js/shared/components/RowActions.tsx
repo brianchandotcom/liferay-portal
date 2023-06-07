@@ -23,7 +23,7 @@ const RowActions: React.FC<IRowActionsProps> = ({
 	<>
 		{!!quickActions?.length && (
 			<div className='quick-action-menu'>
-				{quickActions.map(({href, iconSymbol, label}) =>
+				{quickActions.map(({href, iconSymbol, label, onClick}) =>
 					href ? (
 						<ClayLink
 							aria-label={label}
@@ -47,6 +47,7 @@ const RowActions: React.FC<IRowActionsProps> = ({
 							data-tooltip
 							displayType='unstyled'
 							key={label}
+							onClick={onClick}
 							title={label}
 						>
 							<ClayIcon

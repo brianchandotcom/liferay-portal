@@ -416,10 +416,7 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 
 		int documentsToSkip = 0;
 
-		if (start < maxResultWindow) {
-			searchSearchRequest.setStart(start - 1);
-		}
-		else {
+		if (start > maxResultWindow) {
 			searchSearchRequest.setStart(maxResultWindow - 1);
 
 			documentsToSkip = start % maxResultWindow;

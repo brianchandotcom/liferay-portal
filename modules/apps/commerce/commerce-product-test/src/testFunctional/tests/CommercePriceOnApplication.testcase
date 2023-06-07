@@ -261,6 +261,72 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-11296. As buyer, I can verify that, after submitting a quote request, I will be redirected to Open Order's Page once Reorder button is clicked."
+	@priority = 5
+	test CanBeRedirectedToOpenOrdersUponClickingReorderButton {
+		property portal.acceptance = "true";
+
+		task ("Given 'Allow Request a Quote on a Fully Priced Cart' is enabled for the site") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Request a Quote",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			Button.clickSave();
+		}
+
+		task ("When the buyer user requests a quote for an order") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = 1);
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
+
+			Click(
+				key_orderAuthor = "Buyer User",
+				locator1 = "CommerceAccelerators#ORDERS_ENTRY_VIEW_BUTTON");
+
+			CommerceOrders.createQuoteRequest(
+				quoteRequestValue = "I kindly request a quote for this product.",
+				requestAQuoteInOpenOrdersPage = "true");
+		}
+
+		task ("Then upon clicking the 'Reorder' button, is redirected to Open Order's Page to start the checkout or request a quote for the new order") {
+			Click(
+				key_text = "Reorder",
+				locator1 = "Button#ANY");
+
+			CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
+
+			var orderIds = CommerceJSONOrdersAPI._getCommerceOrderIds(orderCount = 2);
+
+			var quoteRequestedOrderId = StringUtil.extractFirst(${orderIds}, ",");
+			var openOrderId = StringUtil.extractLast(${orderIds}, ",");
+
+			TestUtils.assertNotEquals(
+				actual = ${openOrderId},
+				expected = ${quoteRequestedOrderId});
+
+			AssertElementPresent(
+				key_text = "Request a Quote",
+				locator1 = "Button#ANY");
+
+			AssertElementPresent(
+				key_text = "Checkout",
+				locator1 = "Button#ANY");
+		}
+	}
+
 	@description = "COMMERCE-11277. As a buyer user, I can create a Quote Request in the Open Order's Details Page by entering a personal message."
 	@priority = 5
 	test CanCreateQuoteRequest {

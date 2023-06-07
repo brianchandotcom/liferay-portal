@@ -6,6 +6,6 @@ application:
     name: "Liferay.Headless.Admin.Taxonomy"
 author: "Javier Gamarra"
 clientDir: "../headless-admin-taxonomy-client/src/main/java"
-compatibilityVersion: 2
+compatibilityVersion: 3
 forcePredictableOperationId: true
 testDir: "../headless-admin-taxonomy-test/src/testIntegration/java"

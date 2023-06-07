@@ -16,6 +16,7 @@ package com.liferay.segments.simulation.web.internal.application.list;
 
 import com.liferay.application.list.BaseJSPPanelApp;
 import com.liferay.application.list.PanelApp;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
@@ -63,6 +64,10 @@ public class SegmentsSimulationPanelApp extends BaseJSPPanelApp {
 	public String getLabel(Locale locale) {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
+
+		if (FeatureFlagManagerUtil.isEnabled("LPS-186155")) {
+			return _language.get(resourceBundle, "page-content");
+		}
 
 		return _language.get(resourceBundle, "segments");
 	}

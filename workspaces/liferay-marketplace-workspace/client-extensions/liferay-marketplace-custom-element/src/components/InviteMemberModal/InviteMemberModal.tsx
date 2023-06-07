@@ -38,17 +38,15 @@ import {
 interface InviteMemberModalProps {
   handleClose: () => void;
   listOfRoles: string[];
+  renderToast: (message: string, title: string, type: DisplayType) => void;
   rolesPermissionDescription: PermissionDescription[];
   selectedAccount: Account;
-  renderToast: (message: string, title: string, type: DisplayType) => void;
 }
 
 interface CheckboxRole {
   isChecked: boolean;
   roleName: string;
 }
-
-const listOfRoles = ['Account Administrator', 'App Editor'];
 
 export function InviteMemberModal({
   handleClose,
@@ -66,6 +64,7 @@ export function InviteMemberModal({
     firstName: '',
     lastName: '',
   });
+
   const [checkboxRoles, setCheckboxRoles] = useState<CheckboxRole[]>([]);
   const [formValid, setFormValid] = useState<boolean>(false);
 
@@ -82,10 +81,11 @@ export function InviteMemberModal({
     const mapRoles = listOfRoles.map((role) => {
       return { isChecked: false, roleName: role };
     });
+
     setCheckboxRoles(mapRoles);
     getAccountRoles();
     setUserPassword(createPassword());
-  }, [getAccountRoles]);
+  }, [getAccountRoles, listOfRoles]);
 
   const jsonBody = useMemo(
     () => ({
@@ -110,19 +110,9 @@ export function InviteMemberModal({
     return checkedRole;
   };
 
-  const checkIfUserIsInvited = (user: UserAccount, accountId: number) => {
-    const userAccountBrief = user.accountBriefs.find(
-      (accountBrief) => accountBrief.id === accountId
-    );
+  const checkIfUserIsInvited = (user: UserAccount, accountId: number) =>
+    !!user.accountBriefs.find((accountBrief) => accountBrief.id === accountId);
 
-    if (userAccountBrief) {
-      console.log(userAccountBrief);
-
-      return true;
-    } else {
-      return false;
-    }
-  };
   const addAccountRolesToUser = async (user: UserAccount) => {
     for (const checkboxRole of checkboxRoles) {
       if (checkboxRole.isChecked) {
@@ -298,7 +288,7 @@ export function InviteMemberModal({
                 </ClayModal.Title>
               </ClayModal.TitleSection>
 
-              <hr className="solid"></hr>
+              <hr className="solid" />
             </div>
 
             <div>
@@ -306,6 +296,7 @@ export function InviteMemberModal({
                 return (
                   <ClayCheckbox
                     checked={checkboxRoles[index]?.isChecked}
+                    key={index}
                     label={role}
                     onChange={() => handleCheck(role)}
                     required={!formValid}
@@ -325,23 +316,19 @@ export function InviteMemberModal({
 
             <hr className="solid"></hr>
 
-            {rolesPermissionDescription.map((rolePermission) => {
-              let showCheckIcon = false;
-              checkboxRoles.map((checkedRole) => {
-                if (
+            {rolesPermissionDescription.map((rolePermission, index) => {
+              const showCheckIcon = checkboxRoles.some(
+                (checkedRole) =>
                   checkedRole.isChecked &&
                   rolePermission.permitedRoles.includes(checkedRole.roleName)
-                ) {
-                  showCheckIcon = true;
-                }
-              });
+              );
 
               return (
-                <div className="p-2 text-muted">
+                <div className="p-2 text-muted" key={index}>
                   <ClayIcon
                     className={showCheckIcon ? 'text-success mr-2' : 'mr-2'}
                     symbol={showCheckIcon ? 'check' : 'block'}
-                  ></ClayIcon>
+                  />
 
                   {rolePermission.permissionName}
                 </div>

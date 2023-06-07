@@ -3525,7 +3525,7 @@ definition {
 
 		AssertElementPresent(
 			key_fieldFieldLabel = "图片",
-			key_image = "Document_1.jpeg",
+			key_image = "document_1-jpeg",
 			locator1 = "WCEditWebContent#IMAGE_PICKER_PREVIEW");
 	}
 

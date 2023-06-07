@@ -35,6 +35,12 @@ import com.liferay.client.extension.service.ClientExtensionEntryRelLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.test.util.DLTestUtil;
+import com.liferay.expando.kernel.model.ExpandoBridge;
+import com.liferay.expando.kernel.model.ExpandoColumnConstants;
+import com.liferay.expando.kernel.model.ExpandoTable;
+import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
+import com.liferay.expando.kernel.service.ExpandoTableLocalService;
+import com.liferay.expando.kernel.service.ExpandoTableLocalServiceUtil;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
@@ -42,6 +48,8 @@ import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.headless.delivery.client.dto.v1_0.ClientExtension;
 import com.liferay.headless.delivery.client.dto.v1_0.ContentDocument;
+import com.liferay.headless.delivery.client.dto.v1_0.CustomField;
+import com.liferay.headless.delivery.client.dto.v1_0.CustomValue;
 import com.liferay.headless.delivery.client.dto.v1_0.OpenGraphSettings;
 import com.liferay.headless.delivery.client.dto.v1_0.PageDefinition;
 import com.liferay.headless.delivery.client.dto.v1_0.PageElement;
@@ -82,6 +90,9 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
@@ -97,6 +108,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
@@ -114,6 +126,7 @@ import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.io.InputStream;
+import java.io.Serializable;
 
 import java.net.URLEncoder;
 
@@ -122,6 +135,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
@@ -301,6 +315,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		_testPostSiteSitePageFailureFriendlyURLTooShort();
 		_testPostSiteSitePageFailurePageDefinitionSettingsClientExtensions();
 		_testPostSiteSitePageFailurePagePermissionsActionKeyNonexisting();
+		_testPostSiteSitePageSuccessCustomFields();
 		_testPostSiteSitePageSuccessInvalidParentSitePage();
 		_testPostSiteSitePageSuccessKeywords();
 		_testPostSiteSitePageSuccessPageDefinition();
@@ -731,6 +746,72 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			Problem problem = problemException.getProblem();
 
 			Assert.assertEquals("NOT_FOUND", problem.getStatus());
+		}
+	}
+
+	private void _testPostSiteSitePageSuccessCustomFields() throws Exception {
+		SitePage randomSitePage = randomSitePage();
+
+		PermissionChecker originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		try {
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
+
+			ExpandoTable expandoTable =
+				_expandoTableLocalService.addDefaultTable(
+					PortalUtil.getDefaultCompanyId(), Layout.class.getName());
+
+			String randomExpandoAttributeName = RandomTestUtil.randomString();
+
+			_expandoColumnLocalService.addColumn(
+				expandoTable.getTableId(), randomExpandoAttributeName,
+				ExpandoColumnConstants.STRING, StringPool.BLANK);
+
+			try {
+				String randomCustomValue = RandomTestUtil.randomString();
+
+				randomSitePage.setCustomFields(
+					new CustomField[] {
+						new CustomField() {
+							{
+								customValue = new CustomValue() {
+									{
+										data = randomCustomValue;
+									}
+								};
+								name = randomExpandoAttributeName;
+							}
+						}
+					});
+
+				SitePage postSitePage = testPostSiteSitePage_addSitePage(
+					randomSitePage);
+
+				Layout layout = _layoutLocalService.fetchLayout(
+					postSitePage.getId());
+
+				Assert.assertNotNull(layout);
+
+				ExpandoBridge expandoBridge = layout.getExpandoBridge();
+
+				Assert.assertNotNull(expandoBridge);
+
+				Map<String, Serializable> attributes =
+					expandoBridge.getAttributes();
+
+				Assert.assertEquals(
+					attributes.get(randomExpandoAttributeName),
+					randomCustomValue);
+			}
+			finally {
+				ExpandoTableLocalServiceUtil.deleteTable(expandoTable);
+			}
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(
+				originalPermissionChecker);
 		}
 	}
 
@@ -1850,6 +1931,12 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	private static final String _CLASS_NAME_EXCEPTION_MAPPER =
 		"com.liferay.headless.delivery.internal.resource.v1_0." +
 			"SitePageResourceImpl";
+
+	@Inject
+	private static ExpandoColumnLocalService _expandoColumnLocalService;
+
+	@Inject
+	private static ExpandoTableLocalService _expandoTableLocalService;
 
 	@Inject
 	private AssetCategoryLocalService _assetCategoryLocalService;

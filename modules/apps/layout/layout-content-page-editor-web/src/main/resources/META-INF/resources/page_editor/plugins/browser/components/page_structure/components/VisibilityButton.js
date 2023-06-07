@@ -73,6 +73,11 @@ export default function VisibilityButton({
 					});
 				}
 			}}
+			tabIndex={
+				document.activeElement.dataset.id?.includes(node.id)
+					? '0'
+					: '-1'
+			}
 		>
 			<ClayIcon
 				symbol={node.hidden || node.hiddenAncestor ? 'hidden' : 'view'}

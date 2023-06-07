@@ -87,6 +87,11 @@ export default function StructureTreeNodeActions({
 				}}
 				ref={alignElementRef}
 				size="sm"
+				tabIndex={
+					document.activeElement.dataset.id?.includes(item.id)
+						? '0'
+						: '-1'
+				}
 				title={Liferay.Language.get('options')}
 			>
 				<ClayIcon symbol="ellipsis-v" />

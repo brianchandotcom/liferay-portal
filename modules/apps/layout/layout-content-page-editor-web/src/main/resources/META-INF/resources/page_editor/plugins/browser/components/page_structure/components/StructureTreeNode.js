@@ -588,6 +588,11 @@ const MoveButton = ({
 			}}
 			onKeyDown={onKeyDown}
 			ref={buttonRef}
+			tabIndex={
+				document.activeElement.dataset.id?.includes(node.id)
+					? '0'
+					: '-1'
+			}
 			title={sub(Liferay.Language.get('move-x'), [node.name])}
 		>
 			<ClayIcon symbol="drag" />

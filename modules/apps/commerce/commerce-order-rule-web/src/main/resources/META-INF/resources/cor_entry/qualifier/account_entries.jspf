@@ -20,7 +20,7 @@
 	<liferay-frontend:component
 		context='<%=
 			HashMapBuilder.<String, Object>put(
-				"datasetId", COREntryFDSNames.COR_ENTRY_QUALIFIER_ACCOUNT_ENTRIES
+				"dataSetId", COREntryFDSNames.COR_ENTRY_QUALIFIER_ACCOUNT_ENTRIES
 			).put(
 				"orderRuleExternalReferenceCode", HtmlUtil.escapeJS(corEntry.getExternalReferenceCode())
 			).put(

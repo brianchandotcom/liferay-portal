@@ -117,7 +117,7 @@ String type = BeanParamUtil.getString(commerceDiscountRule, request, "type");
 						'<liferay-ui:message key="your-request-completed-successfully" />'
 					);
 
-					window.parent.Liferay.fire(events.UPDATE_DATASET_DISPLAY, {
+					window.parent.Liferay.fire(events.FDS_UPDATE_DISPLAY, {
 						id: '<%= CommercePricingFDSNames.DISCOUNT_RULES %>',
 					});
 

@@ -288,7 +288,7 @@ CommerceOrder commerceOrder = commerceOrderContentDisplayContext.getCommerceOrde
 				summary.default('summary', 'summary-root', {
 					apiUrl:
 						'/o/headless-commerce-admin-order/v1.0/orders/<%= commerceOrderContentDisplayContext.getCommerceOrderId() %>',
-					datasetDisplayId: '<%= CommerceOrderFDSNames.PLACED_ORDER_ITEMS %>',
+					dataSetDisplayId: '<%= CommerceOrderFDSNames.PLACED_ORDER_ITEMS %>',
 					portletId: '<%= portletDisplay.getRootPortletId() %>',
 				});
 			</aui:script>

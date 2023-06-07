@@ -41,7 +41,7 @@
 						categoryData
 					)
 						.then(() => {
-							Liferay.fire(events.UPDATE_DATASET_DISPLAY, {
+							Liferay.fire(events.FDS_UPDATE_DISPLAY, {
 								id: '<%= CommercePricingFDSNames.DISCOUNT_CATEGORIES %>',
 							});
 						})
@@ -63,7 +63,7 @@
 						'<%= LanguageUtil.get(request, "category-selected") %>',
 					itemsKey: 'id',
 					itemCreation: false,
-					linkedDatasetsId: ['<%= CommercePricingFDSNames.DISCOUNT_CATEGORIES %>'],
+					linkedDataSetsId: ['<%= CommercePricingFDSNames.DISCOUNT_CATEGORIES %>'],
 					onItemSelected: selectItem,
 					pageSize: 10,
 					panelHeaderLabel: '<%= LanguageUtil.get(request, "select-category") %>',

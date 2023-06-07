@@ -226,7 +226,7 @@ if ((cpDefinition != null) && (cpDefinition.getExpirationDate() != null)) {
 								method: 'POST',
 							}
 						).then(() => {
-							Liferay.fire(events.UPDATE_DATASET_DISPLAY, {
+							Liferay.fire(events.FDS_UPDATE_DISPLAY, {
 								id:
 									'<%= CommerceProductFDSNames.PRODUCT_DEFINITION_SPECIFICATIONS %>',
 							});
@@ -280,7 +280,7 @@ if ((cpDefinition != null) && (cpDefinition.getExpirationDate() != null)) {
 						itemSelectedMessage:
 							'<%= LanguageUtil.get(request, "specification-selected") %>',
 						itemsKey: 'id',
-						linkedDatasetsId: [
+						linkedDataSetsId: [
 							'<%= CommerceProductFDSNames.PRODUCT_DEFINITION_SPECIFICATIONS %>',
 						],
 						multiSelectableEntries: true,

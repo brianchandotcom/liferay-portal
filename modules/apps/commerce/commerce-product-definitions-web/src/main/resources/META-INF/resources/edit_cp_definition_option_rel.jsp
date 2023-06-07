@@ -118,10 +118,10 @@ String defaultLanguageId = cpDefinitionOptionRelDisplayContext.getCatalogDefault
 			>
 
 				<%
-				String datasetDisplayId = CommerceProductFDSNames.PRODUCT_OPTION_VALUES;
+				String dataSetDisplayId = CommerceProductFDSNames.PRODUCT_OPTION_VALUES;
 
 				if (cpDefinitionOptionRel.isPriceTypeStatic()) {
-					datasetDisplayId = CommerceProductFDSNames.PRODUCT_OPTION_VALUES_STATIC;
+					dataSetDisplayId = CommerceProductFDSNames.PRODUCT_OPTION_VALUES_STATIC;
 				}
 				%>
 
@@ -133,7 +133,7 @@ String defaultLanguageId = cpDefinitionOptionRelDisplayContext.getCatalogDefault
 					%>'
 					creationMenu="<%= cpDefinitionOptionRelDisplayContext.getCreationMenu() %>"
 					dataProviderKey="<%= CommerceProductFDSNames.PRODUCT_OPTION_VALUES %>"
-					id="<%= datasetDisplayId %>"
+					id="<%= dataSetDisplayId %>"
 					itemsPerPage="<%= 10 %>"
 					selectedItemsKey="cpdefinitionOptionValueRelId"
 				/>

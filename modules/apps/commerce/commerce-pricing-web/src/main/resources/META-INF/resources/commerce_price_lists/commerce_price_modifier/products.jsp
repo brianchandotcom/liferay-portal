@@ -50,7 +50,7 @@ long commercePriceModifierId = commercePriceListDisplayContext.getCommercePriceM
 						productData
 					)
 						.then(() => {
-							Liferay.fire(events.UPDATE_DATASET_DISPLAY, {
+							Liferay.fire(events.FDS_UPDATE_DISPLAY, {
 								id:
 									'<%= CommercePricingFDSNames.PRICE_MODIFIER_PRODUCT_DEFINITIONS %>',
 							});
@@ -70,7 +70,7 @@ long commercePriceModifierId = commercePriceListDisplayContext.getCommercePriceM
 					getSelectedItems: getSelectedItems,
 					inputPlaceholder: '<%= LanguageUtil.get(request, "find-a-product") %>',
 					itemSelectedMessage: '<%= LanguageUtil.get(request, "product-selected") %>',
-					linkedDatasetsId: [
+					linkedDataSetsId: [
 						'<%= CommercePricingFDSNames.PRICE_MODIFIER_PRODUCT_DEFINITIONS %>',
 					],
 					itemCreation: false,

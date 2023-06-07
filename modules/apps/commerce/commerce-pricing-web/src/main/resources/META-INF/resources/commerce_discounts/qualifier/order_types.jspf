@@ -41,7 +41,7 @@
 						orderTypeData
 					)
 						.then(() => {
-							Liferay.fire(events.UPDATE_DATASET_DISPLAY, {
+							Liferay.fire(events.FDS_UPDATE_DISPLAY, {
 								id:
 									'<%= CommercePricingFDSNames.DISCOUNT_QUALIFIER_ORDER_TYPES %>',
 							});
@@ -61,7 +61,7 @@
 					inputPlaceholder: '<%= LanguageUtil.get(request, "find-an-order-type") %>',
 					itemSelectedMessage:
 						'<%= LanguageUtil.get(request, "order-type-selected") %>',
-					linkedDatasetsId: [
+					linkedDataSetsId: [
 						'<%= CommercePricingFDSNames.DISCOUNT_QUALIFIER_ORDER_TYPES %>',
 					],
 					itemCreation: false,

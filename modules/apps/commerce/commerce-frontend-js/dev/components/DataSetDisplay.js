@@ -18,11 +18,11 @@ import React from 'react';
 
 import '../../src/main/resources/META-INF/resources/styles/main.scss';
 
-const datasetDisplayLauncher = (...data) => render(FrontendDataSet, ...data);
+const dataSetDisplayLauncher = (...data) => render(FrontendDataSet, ...data);
 
 const fluidDataSetProps = {
 	activeViewSettings: {},
-	apiURL: '/dataset-display-nested-items',
+	apiURL: '/data-set-display-nested-items',
 	appURL: '/o/frontend-taglib-clay/app',
 	bulkActions: [
 		{
@@ -204,7 +204,7 @@ const fluidDataSetProps = {
 
 const emailsDataSetProps = {
 	activeViewSettings: {},
-	apiURL: '/dataset-display-email-data',
+	apiURL: '/data-set-display-email-data',
 	creationMenuItems: [
 		{
 			href: '/standard/edit',
@@ -216,7 +216,7 @@ const emailsDataSetProps = {
 			target: 'modal',
 		},
 	],
-	id: 'emailsDatasetDIsplay',
+	id: 'emailsDataSetDisplay',
 	pageSize: 5,
 	pagination: {
 		deltas: [
@@ -256,7 +256,7 @@ const emailsDataSetProps = {
 
 const selectableTableProps = {
 	activeViewSettings: {},
-	apiURL: '/dataset-display-selectable-data',
+	apiURL: '/data-set-display-selectable-data',
 	formId: 'form-id',
 	id: 'tableTest',
 	pageSize: 5,
@@ -583,7 +583,7 @@ const productsDataSetProps = {
 	inlineEditingSettings: true,
 	itemsActions: [
 		{
-			href: '/dataset-display.html',
+			href: '/data-set-display.html',
 			icon: 'pencil',
 			id: 'edit',
 			label: 'Edit',
@@ -820,32 +820,32 @@ const priceListsDataSetProps = {
 	],
 };
 
-datasetDisplayLauncher(
+dataSetDisplayLauncher(
 	ordersDataSetProps,
-	document.getElementById('orders-dataset-display-root')
+	document.getElementById('orders-data-set-display-root')
 );
 
-datasetDisplayLauncher(
+dataSetDisplayLauncher(
 	productsDataSetProps,
-	document.getElementById('products-dataset-display-root')
+	document.getElementById('products-data-set-display-root')
 );
 
-datasetDisplayLauncher(
+dataSetDisplayLauncher(
 	priceListsDataSetProps,
-	document.getElementById('price-list-dataset-display-root')
+	document.getElementById('price-list-data-set-display-root')
 );
 
-datasetDisplayLauncher(
+dataSetDisplayLauncher(
 	fluidDataSetProps,
-	document.getElementById('fluid-dataset-display-root')
+	document.getElementById('fluid-data-set-display-root')
 );
 
-datasetDisplayLauncher(
+dataSetDisplayLauncher(
 	selectableTableProps,
-	document.getElementById('selectable-dataset-display-root')
+	document.getElementById('selectable-data-set-display-root')
 );
 
-datasetDisplayLauncher(
+dataSetDisplayLauncher(
 	emailsDataSetProps,
-	document.getElementById('emails-dataset-display-root')
+	document.getElementById('emails-data-set-display-root')
 );

@@ -12,11 +12,11 @@
  * details.
  */
 
+import {FDS_EVENT} from '@liferay/frontend-data-set-web';
 import {fetch} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
-import {DATASET_ACTION_PERFORMED} from '../../utilities/eventsDefinitions';
 import {fetchParams} from '../../utilities/index';
 import {
 	showErrorNotification,
@@ -71,8 +71,8 @@ function ItemFinder(props) {
 			.getSelectedItems()
 			.then((selectedItems = []) => setSelectedItems(selectedItems));
 
-		function handleDatasetActions(event) {
-			if (props.linkedDatasetsId.includes(event.id)) {
+		function handleDataSetActions(event) {
+			if (props.linkedDataSetsId.includes(event.id)) {
 				props
 					.getSelectedItems()
 					.then((selectedItems = []) =>
@@ -81,10 +81,10 @@ function ItemFinder(props) {
 			}
 		}
 
-		Liferay.on(DATASET_ACTION_PERFORMED, handleDatasetActions);
+		Liferay.on(FDS_EVENT.ACTION_PERFORMED, handleDataSetActions);
 
 		return () =>
-			Liferay.detach(DATASET_ACTION_PERFORMED, handleDatasetActions);
+			Liferay.detach(FDS_EVENT.ACTION_PERFORMED, handleDataSetActions);
 	}, [props, props.getSelectedItems]);
 
 	function selectItem(itemId) {
@@ -153,7 +153,7 @@ ItemFinder.propTypes = {
 	itemCreation: PropTypes.bool,
 	itemSelectedMessage: PropTypes.string,
 	itemsKey: PropTypes.string.isRequired,
-	linkedDatasetsId: PropTypes.arrayOf(PropTypes.string),
+	linkedDataSetsId: PropTypes.arrayOf(PropTypes.string),
 	multiSelectableEntries: PropTypes.bool,
 	onItemCreated: PropTypes.func.isRequired,
 	onItemSelected: PropTypes.func.isRequired,

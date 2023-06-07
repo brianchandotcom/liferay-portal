@@ -60,7 +60,7 @@ CProduct cProduct = cpDefinition.getCProduct();
 								return Promise.reject(data.errorDescription);
 							});
 						}
-						Liferay.fire(events.UPDATE_DATASET_DISPLAY, {
+						Liferay.fire(events.FDS_UPDATE_DISPLAY, {
 							id: '<%= CommercePricingFDSNames.PRODUCT_PRICING_CLASSES %>',
 						});
 						return null;
@@ -111,7 +111,7 @@ CProduct cProduct = cpDefinition.getCProduct();
 					itemSelectedMessage:
 						'<%= LanguageUtil.get(request, "product-group-selected") %>',
 					itemsKey: 'id',
-					linkedDatasetsId: [
+					linkedDataSetsId: [
 						'<%= CommercePricingFDSNames.PRODUCT_PRICING_CLASSES %>',
 					],
 					onItemCreated: addNewItem,

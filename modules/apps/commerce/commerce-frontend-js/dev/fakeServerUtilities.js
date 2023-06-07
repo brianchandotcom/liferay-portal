@@ -17,7 +17,7 @@ function defineServerResponses(app) {
 		res.json({});
 	});
 
-	app.get('/dataset-display-nested-items', (_, res) => {
+	app.get('/data-set-display-nested-items', (_, res) => {
 		res.json({
 			items: [
 				{
@@ -279,7 +279,7 @@ function defineServerResponses(app) {
 		});
 	});
 
-	app.get('/dataset-display-selectable-data', (_, res) => {
+	app.get('/data-set-display-selectable-data', (_, res) => {
 		res.json({
 			items: [
 				{
@@ -395,7 +395,7 @@ function defineServerResponses(app) {
 		});
 	});
 
-	app.get('/dataset-display-email-data', (_, res) => {
+	app.get('/data-set-display-email-data', (_, res) => {
 		res.json({
 			items: [
 				{

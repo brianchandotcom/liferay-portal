@@ -48,7 +48,7 @@ long commercePriceModifierId = commercePriceListDisplayContext.getCommercePriceM
 				productGroupData
 			)
 				.then(() => {
-					Liferay.fire(events.UPDATE_DATASET_DISPLAY, {
+					Liferay.fire(events.FDS_UPDATE_DISPLAY, {
 						id:
 							'<%= CommercePricingFDSNames.PRICE_MODIFIER_PRICING_CLASSES %>',
 					});
@@ -71,7 +71,7 @@ long commercePriceModifierId = commercePriceListDisplayContext.getCommercePriceM
 				'<%= LanguageUtil.get(request, "product-group-selected") %>',
 			itemsKey: 'id',
 			itemCreation: false,
-			linkedDatasetsId: [
+			linkedDataSetsId: [
 				'<%= CommercePricingFDSNames.PRICE_MODIFIER_PRICING_CLASSES %>',
 			],
 			onItemSelected: selectItem,

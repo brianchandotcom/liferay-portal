@@ -29,9 +29,9 @@ module.exports = [
 		page: 'autocomplete.html',
 	},
 	{
-		entry: 'DatasetDisplay',
-		name: 'Dataset display',
-		page: 'dataset-display.html',
+		entry: 'DataSetDisplay',
+		name: 'Data Set Display',
+		page: 'data-set-display.html',
 	},
 	{
 		entry: 'Dropdown',

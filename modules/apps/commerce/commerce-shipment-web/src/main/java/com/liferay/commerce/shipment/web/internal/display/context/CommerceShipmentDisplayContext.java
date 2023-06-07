@@ -208,18 +208,6 @@ public class CommerceShipmentDisplayContext
 			cpRequestHelper.getCompanyId(), true);
 	}
 
-	public String getDatasetView() throws PortalException {
-		CommerceShipment commerceShipment = getCommerceShipment();
-
-		if (commerceShipment.getStatus() >
-				CommerceShipmentConstants.SHIPMENT_STATUS_READY_TO_BE_SHIPPED) {
-
-			return CommerceShipmentFDSNames.SHIPPED_SHIPMENT_ITEMS;
-		}
-
-		return CommerceShipmentFDSNames.PROCESSING_SHIPMENT_ITEMS;
-	}
-
 	public String getDescriptiveShippingAddress() throws PortalException {
 		CommerceShipment commerceShipment = getCommerceShipment();
 
@@ -235,6 +223,18 @@ public class CommerceShipmentDisplayContext
 
 		return _commerceAddressFormatter.getDescriptiveAddress(
 			commerceAddress, true);
+	}
+
+	public String getFDSName() throws PortalException {
+		CommerceShipment commerceShipment = getCommerceShipment();
+
+		if (commerceShipment.getStatus() >
+				CommerceShipmentConstants.SHIPMENT_STATUS_READY_TO_BE_SHIPPED) {
+
+			return CommerceShipmentFDSNames.SHIPPED_SHIPMENT_ITEMS;
+		}
+
+		return CommerceShipmentFDSNames.PROCESSING_SHIPMENT_ITEMS;
 	}
 
 	public List<HeaderActionModel> getHeaderActionModels()

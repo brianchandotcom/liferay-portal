@@ -13,11 +13,11 @@
  */
 
 import ClayLoadingIndicator from '@clayui/loading-indicator';
+import {FDS_EVENT} from '@liferay/frontend-data-set-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useState} from 'react';
 
 import AJAX from '../../utilities/AJAX/index';
-import {DATASET_DISPLAY_UPDATED} from '../../utilities/eventsDefinitions';
 
 function SummaryItemDividerVariant() {
 	return (
@@ -107,7 +107,7 @@ SummaryItem.propTypes = {
 function Summary({
 	apiUrl,
 	dataMapper,
-	datasetDisplayId,
+	dataSetDisplayId,
 	isLoading,
 	items = [],
 	summaryData,
@@ -121,26 +121,26 @@ function Summary({
 
 	const refreshData = useCallback(
 		({id = null}) => {
-			if (!id || datasetDisplayId !== id) {
+			if (!id || dataSetDisplayId !== id) {
 				return AJAX.GET(apiUrl).then((data) =>
 					setSummaryItems(mapDataToLayout(data))
 				);
 			}
 		},
-		[apiUrl, datasetDisplayId, mapDataToLayout]
+		[apiUrl, dataSetDisplayId, mapDataToLayout]
 	);
 
 	useEffect(() => {
-		if (!!apiUrl && !!datasetDisplayId) {
-			Liferay.on(DATASET_DISPLAY_UPDATED, refreshData);
+		if (!!apiUrl && !!dataSetDisplayId) {
+			Liferay.on(FDS_EVENT.DISPLAY_UPDATED, refreshData);
 
 			refreshData({});
 
-			return () => Liferay.detach(DATASET_DISPLAY_UPDATED, refreshData);
+			return () => Liferay.detach(FDS_EVENT.DISPLAY_UPDATED, refreshData);
 		}
 
 		return () => {};
-	}, [apiUrl, datasetDisplayId, refreshData]);
+	}, [apiUrl, dataSetDisplayId, refreshData]);
 
 	useEffect(() => {
 		if (!!summaryData && !!Object.keys(summaryData).length) {
@@ -212,7 +212,7 @@ Summary.defaultProps = {
 Summary.propTypes = {
 	apiUrl: PropTypes.string,
 	dataMapper: PropTypes.func,
-	datasetDisplayId: PropTypes.string,
+	dataSetDisplayId: PropTypes.string,
 	isLoading: PropTypes.bool,
 	items: PropTypes.array,
 	summaryData: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),

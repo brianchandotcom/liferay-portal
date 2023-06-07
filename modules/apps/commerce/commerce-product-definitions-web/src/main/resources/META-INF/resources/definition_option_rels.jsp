@@ -62,7 +62,7 @@ CPDefinition cpDefinition = cpDefinitionOptionRelDisplayContext.getCPDefinition(
 						});
 					})
 					.then((e) => {
-						Liferay.fire(events.UPDATE_DATASET_DISPLAY, {
+						Liferay.fire(events.FDS_UPDATE_DISPLAY, {
 							id: '<%= CommerceProductFDSNames.PRODUCT_OPTIONS %>',
 						});
 						return null;
@@ -115,7 +115,7 @@ CPDefinition cpDefinition = cpDefinitionOptionRelDisplayContext.getCPDefinition(
 				itemCreatedMessage: '<%= LanguageUtil.get(request, "option-created") %>',
 				itemSelectedMessage: '<%= LanguageUtil.get(request, "option-selected") %>',
 				itemsKey: 'id',
-				linkedDatasetsId: ['<%= CommerceProductFDSNames.PRODUCT_OPTIONS %>'],
+				linkedDataSetsId: ['<%= CommerceProductFDSNames.PRODUCT_OPTIONS %>'],
 				multiSelectableEntries: true,
 				onItemCreated: addNewItem,
 				onItemSelected: selectItem,

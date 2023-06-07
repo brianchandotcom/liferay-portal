@@ -94,7 +94,7 @@ launcher('itemFinder', 'item-finder-root-id', {
 	getSelectedItems,
 	itemCreation: false,
 	itemsKey: 'id',
-	linkedDatasetsId: ['test'],
+	linkedDataSetsId: ['test'],
 	onItemCreated: addNewItem,
 	onItemSelected: selectItem,
 	pageSize: 5,

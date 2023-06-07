@@ -36,7 +36,7 @@
 
 			return CommerceDiscountAccountsResource.addDiscountAccount(id, accountData)
 				.then(() => {
-					Liferay.fire(events.UPDATE_DATASET_DISPLAY, {
+					Liferay.fire(events.FDS_UPDATE_DISPLAY, {
 						id:
 							'<%= CommercePricingFDSNames.DISCOUNT_QUALIFIER_ACCOUNTS %>',
 					});
@@ -57,7 +57,7 @@
 			itemCreation: false,
 			itemSelectedMessage: '<%= LanguageUtil.get(request, "account-selected") %>',
 			itemsKey: 'id',
-			linkedDatasetsId: [
+			linkedDataSetsId: [
 				'<%= CommercePricingFDSNames.DISCOUNT_QUALIFIER_ACCOUNTS %>',
 			],
 			onItemSelected: selectItem,

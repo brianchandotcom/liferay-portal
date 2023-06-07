@@ -14,10 +14,10 @@
 
 import ServiceProvider from 'commerce-frontend-js/ServiceProvider/index';
 import itemFinder from 'commerce-frontend-js/components/item_finder/entry';
-import {UPDATE_DATASET_DISPLAY} from 'commerce-frontend-js/utilities/eventsDefinitions';
+import {FDS_UPDATE_DISPLAY} from 'commerce-frontend-js/utilities/eventsDefinitions';
 
 export default function ({
-	datasetId,
+	dataSetId,
 	orderRuleExternalReferenceCode,
 	orderRuleId,
 	rootPortletId,
@@ -36,8 +36,8 @@ export default function ({
 		return orderRuleAccountGroupsResource
 			.addOrderRuleAccountGroup(orderRuleId, accountGroupData)
 			.then(() => {
-				Liferay.fire(UPDATE_DATASET_DISPLAY, {
-					id: datasetId,
+				Liferay.fire(FDS_UPDATE_DISPLAY, {
+					id: dataSetId,
 				});
 			});
 	}
@@ -49,7 +49,7 @@ export default function ({
 		itemCreation: false,
 		itemSelectedMessage: Liferay.Language.get('account-group-selected'),
 		itemsKey: 'id',
-		linkedDatasetsId: [datasetId],
+		linkedDataSetsId: [dataSetId],
 		onItemSelected: selectItem,
 		pageSize: 10,
 		panelHeaderLabel: Liferay.Language.get('add-account-groups'),

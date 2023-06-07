@@ -1,5 +1,5 @@
 dependencies {
-	compileOnly group: "com.liferay", name: "org.eclipse.osgi", version: "3.13.0.LIFERAY-PATCHED-16"
+	compileOnly group: "com.liferay", name: "org.eclipse.osgi", version: "3.13.0.LIFERAY-PATCHED-17"
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":core:osgi-service-tracker-collections")
 }

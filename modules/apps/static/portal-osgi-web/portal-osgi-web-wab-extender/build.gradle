@@ -3,7 +3,7 @@ dependencies {
 
 	compileOnly group: "com.liferay", name: "biz.aQute.bnd.annotation", version: "4.2.0.LIFERAY-PATCHED-2"
 	compileOnly group: "com.liferay", name: "org.eclipse.equinox.http.servlet", version: "1.2.2.v20211118-0920.LIFERAY-PATCHED-1"
-	compileOnly group: "com.liferay", name: "org.eclipse.osgi", version: "3.13.0.LIFERAY-PATCHED-16"
+	compileOnly group: "com.liferay", name: "org.eclipse.osgi", version: "3.13.0.LIFERAY-PATCHED-17"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "commons-fileupload", name: "commons-fileupload", version: "1.3.3"

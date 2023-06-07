@@ -1,3 +1,0 @@
-liferay-learn-etc-cron-oauth-application-headless-server:
-    .serviceAddress: localhost:8080
-    .serviceScheme: http

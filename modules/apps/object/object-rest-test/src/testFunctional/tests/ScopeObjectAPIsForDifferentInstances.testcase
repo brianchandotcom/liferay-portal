@@ -110,9 +110,10 @@ definition {
 				resourceCheckList = "C_Test.everything",
 				resourcePanels = "C_Test");
 
-			ObjectDefinitionAPI.createObjectEntryWithName(
+			CustomObjectAPI.createObjectEntryWithFields(
 				en_US_plural_label = "tests",
-				name = "Object Entry in Default Instance",
+				fieldName = "name",
+				fieldValue = "Object Entry in Default Instance",
 				scopeKey = "true",
 				token = ${defaultInstanceToken});
 		}

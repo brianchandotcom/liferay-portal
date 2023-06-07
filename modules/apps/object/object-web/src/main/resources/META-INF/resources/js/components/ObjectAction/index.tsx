@@ -163,7 +163,7 @@ export default function Action({
 			onSubmit={handleSubmit}
 			title={Liferay.Language.get('new-action')}
 		>
-			<ClayTabs className="side-panel-iframe__tabs">
+			<ClayTabs>
 				{TABS.map((label, index) => (
 					<ClayTabs.Item
 						active={activeIndex === index}

@@ -1,0 +1,14 @@
+assemble:
+    - include:
+          - "**/*.js"
+          - package.json
+liferay-chat-node-oauth-application-user-agent:
+    name: Liferay Sample Node OAuth Application User Agent
+    scopes:
+        - Liferay.Headless.Admin.Workflow.everything
+    type: oAuthApplicationUserAgent
+liferay-sample-node-object-action-1:
+    name: Liferay Sample Node Object Action 1
+    oAuth2ApplicationExternalReferenceCode: liferay-chat-node-oauth-application-user-agent
+    resourcePath: /socket.io/
+    type: objectAction

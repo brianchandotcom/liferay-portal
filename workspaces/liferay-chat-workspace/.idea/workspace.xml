@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="769514c4-dac4-4a35-b7e4-31df3e08aee7" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client-extensions/liferay-chat-etc-node/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client-extensions/liferay-chat-etc-node/LCP.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client-extensions/liferay-chat-etc-node/app.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client-extensions/liferay-chat-etc-node/client-extension.dev.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client-extensions/liferay-chat-etc-node/client-extension.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client-extensions/liferay-chat-etc-node/config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client-extensions/liferay-chat-etc-node/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client-extensions/liferay-chat-etc-node/util/SocketClient.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client-extensions/liferay-chat-etc-node/util/configTreePath.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client-extensions/liferay-chat-etc-node/util/liferay-oauth2-resource-server.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client-extensions/liferay-chat-etc-node/util/logger.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-extensions/liferay-chat-socket-server/Dockerfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-extensions/liferay-chat-socket-server/LCP.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-extensions/liferay-chat-socket-server/assets/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-extensions/liferay-chat-socket-server/assets/server.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-extensions/liferay-chat-socket-server/client-extension.yaml" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$/client-extensions/liferay-chat-etc-node">
+          <activation />
+        </task>
+        <task path="$PROJECT_DIR$/client-extensions/liferay-chat-socket-server">
+          <activation />
+        </task>
+        <task path="$PROJECT_DIR$/client-extensions/liferay-chat-batch">
+          <activation />
+        </task>
+        <task path="$PROJECT_DIR$/client-extensions/liferay-chat-custom-element">
+          <activation />
+        </task>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="liferay-chat-workspace" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="liferay-chat-workspace" type="f1a62948:ProjectNode" />
+                <item name="client-extensions" type="2d1252cf:ModuleNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="liferay-chat-workspace" type="f1a62948:ProjectNode" />
+                <item name="client-extensions" type="2d1252cf:ModuleNode" />
+                <item name="liferay-chat-etc-node" type="2d1252cf:ModuleNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="liferay-chat-workspace" type="f1a62948:ProjectNode" />
+                <item name="client-extensions" type="2d1252cf:ModuleNode" />
+                <item name="liferay-chat-etc-node" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="liferay-chat-workspace" type="f1a62948:ProjectNode" />
+                <item name="client-extensions" type="2d1252cf:ModuleNode" />
+                <item name="liferay-chat-etc-node" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="liferay-chat-workspace" type="f1a62948:ProjectNode" />
+                <item name="client-extensions" type="2d1252cf:ModuleNode" />
+                <item name="liferay-chat-etc-node" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="other" type="c8890929:TasksNode$1" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2QsbjqzIYRqv5nI73bM31FJN9C5" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/mahmoudtayem/Documents/GitHub/Brian/liferay-portal/workspaces/liferay-chat-workspace&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;configurable.group.tools&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RunManager" selected="Gradle.liferay-chat-workspace:client-extensions:liferay-chat-etc-node [build]">
+    <configuration name="liferay-chat-workspace:client-extensions:liferay-chat-batch [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/client-extensions/liferay-chat-batch" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="build" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="liferay-chat-workspace:client-extensions:liferay-chat-custom-element [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/client-extensions/liferay-chat-custom-element" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="build" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="liferay-chat-workspace:client-extensions:liferay-chat-etc-node [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/client-extensions/liferay-chat-etc-node" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="build" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="liferay-chat-workspace:client-extensions:liferay-chat-etc-node [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/client-extensions/liferay-chat-etc-node" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="clean" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="liferay-chat-workspace:client-extensions:liferay-chat-etc-node [deploy]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/client-extensions/liferay-chat-etc-node" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="deploy" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="LiferayDockerServerConfiguration" factoryName="Liferay Docker Server">
+      <option name="passParentEnvironments" value="true" />
+      <option name="workspaceLocation" value="$PROJECT_DIR$" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.liferay-chat-workspace:client-extensions:liferay-chat-etc-node [build]" />
+        <item itemvalue="Gradle.liferay-chat-workspace:client-extensions:liferay-chat-etc-node [clean]" />
+        <item itemvalue="Gradle.liferay-chat-workspace:client-extensions:liferay-chat-etc-node [deploy]" />
+        <item itemvalue="Gradle.liferay-chat-workspace:client-extensions:liferay-chat-custom-element [build]" />
+        <item itemvalue="Gradle.liferay-chat-workspace:client-extensions:liferay-chat-batch [build]" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="769514c4-dac4-4a35-b7e4-31df3e08aee7" name="Changes" comment="" />
+      <created>1686145373686</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1686145373686</updated>
+      <workItem from="1686145374755" duration="5328000" />
+      <workItem from="1686159822232" duration="1623000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

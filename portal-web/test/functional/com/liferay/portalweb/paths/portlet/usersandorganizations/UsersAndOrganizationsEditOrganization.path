@@ -27,18 +27,13 @@
 <!--PARENT_ORGANIZATION-->
 
 <tr>
-	<td>PARENT_ORGANIZATION_TABLE_NAME</td>
-	<td>//div[contains(@id,'parentOrganizationSearchContainer')]//tr/td[1]//a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PARENT_ORGANIZATION_TABLE_TYPE</td>
-	<td>//div[contains(@id,'parentOrganizationSearchContainer')]//tr/td[2]//a</td>
+	<td>PARENT_ORGANIZATION_NAME</td>
+	<td>//input[contains(@id,'parentOrganization')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PARENT_ORGANIZATION_SELECT_BUTTON</td>
-	<td>//button[contains(@class,'modify-link') and contains(@aria-label,'Change Parent Organization')]</td>
+	<td>//button[contains(@class,'btn') and contains(@aria-label,'Change Parent Organization')]</td>
 	<td></td>
 </tr>
 <tr>

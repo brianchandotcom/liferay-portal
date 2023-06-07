@@ -83,6 +83,14 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributor
 			return;
 		}
 
+		String pathProxy = _portal.getPathProxy();
+
+		if (Validator.isNotNull(pathProxy) &&
+			currentURL.startsWith(pathProxy)) {
+
+			currentURL = currentURL.substring(pathProxy.length());
+		}
+
 		String contextPath = dynamicRequest.getContextPath();
 
 		if (Validator.isNotNull(contextPath) &&

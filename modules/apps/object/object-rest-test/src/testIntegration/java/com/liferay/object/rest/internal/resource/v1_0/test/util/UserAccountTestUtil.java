@@ -88,6 +88,24 @@ public class UserAccountTestUtil {
 		};
 	}
 
+	public static JSONObject updateUserAccountJSONObject(
+			SystemObjectDefinitionManager systemObjectDefinitionManager,
+			JSONObject userAccountJSONObject, Map<String, Serializable> values)
+		throws Exception {
+
+		UserAccount userAccount = randomUserAccount();
+
+		JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
+			systemObjectDefinitionManager.getJaxRsApplicationDescriptor();
+
+		return HTTPTestUtil.invoke(
+			_toBody(userAccount, values),
+			StringBundler.concat(
+				jaxRsApplicationDescriptor.getRESTContextPath(),
+				StringPool.SLASH, userAccountJSONObject.get("id")),
+			Http.Method.PUT);
+	}
+
 	public static JSONObject updateUserAccountJSONObjectByExternalReferenceCode(
 			SystemObjectDefinitionManager systemObjectDefinitionManager,
 			JSONObject userAccountJSONObject, Map<String, Serializable> values)
@@ -104,24 +122,6 @@ public class UserAccountTestUtil {
 				jaxRsApplicationDescriptor.getRESTContextPath(),
 				"/by-external-reference-code/",
 				userAccountJSONObject.get("externalReferenceCode")),
-			Http.Method.PUT);
-	}
-
-	public static JSONObject updateUserAccountJSONObject(
-			SystemObjectDefinitionManager systemObjectDefinitionManager,
-			JSONObject userAccountJSONObject, Map<String, Serializable> values)
-		throws Exception {
-
-		UserAccount userAccount = randomUserAccount();
-
-		JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
-			systemObjectDefinitionManager.getJaxRsApplicationDescriptor();
-
-		return HTTPTestUtil.invoke(
-			_toBody(userAccount, values),
-			StringBundler.concat(
-				jaxRsApplicationDescriptor.getRESTContextPath(),
-				StringPool.SLASH, userAccountJSONObject.get("id")),
 			Http.Method.PUT);
 	}
 

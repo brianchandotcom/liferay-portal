@@ -426,23 +426,26 @@ const RequestList: React.FC<IRequestListProps> = ({
 
 					return (
 						status === GDPRRequestStatuses.Completed && (
-							<ClayLink
-								button
-								className='button-root'
+							<a
+								className='btn btn-secondary btn-sm button-root'
 								{...(!itemsSelected && {
 									href: `/o/proxy/download/data-control-tasks/${id}?projectGroupId=${groupId}`
 								})}
-								aria-disabled={itemsSelected}
-								displayType='secondary'
 								onClick={() =>
 									analytics.track(
 										'Downloaded User Data Request'
 									)
 								}
-								small
+								onKeyDown={() =>
+									analytics.track(
+										'Downloaded User Data Request'
+									)
+								}
+								role='button'
+								tabIndex={0}
 							>
 								{Liferay.Language.get('download')}
-							</ClayLink>
+							</a>
 						)
 					);
 				}}

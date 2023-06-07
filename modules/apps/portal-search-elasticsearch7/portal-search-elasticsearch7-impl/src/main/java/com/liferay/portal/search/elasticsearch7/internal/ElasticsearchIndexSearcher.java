@@ -642,7 +642,9 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 				searchSearchRequest.setStart(start);
 			}
 
-			searchSearchRequest.setSize(end - start);
+			int maxSize = Math.min((end - start), maxResultWindow);
+
+			searchSearchRequest.setSize(maxSize);
 
 			searchSearchResponse = _searchEngineAdapter.execute(
 				searchSearchRequest);

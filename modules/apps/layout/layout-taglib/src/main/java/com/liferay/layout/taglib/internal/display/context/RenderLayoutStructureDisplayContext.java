@@ -355,9 +355,22 @@ public class RenderLayoutStructureDisplayContext {
 		DefaultFragmentRendererContext defaultFragmentRendererContext =
 			new DefaultFragmentRendererContext(fragmentEntryLink);
 
-		defaultFragmentRendererContext.setContextInfoItemReference(
+		InfoItemReference infoItemReference =
 			(InfoItemReference)_httpServletRequest.getAttribute(
-				InfoDisplayWebKeys.INFO_ITEM_REFERENCE));
+				InfoDisplayWebKeys.INFO_ITEM_REFERENCE);
+
+		if (infoItemReference == null) {
+			InfoItemDetails infoItemDetails =
+				(InfoItemDetails)_httpServletRequest.getAttribute(
+					InfoDisplayWebKeys.INFO_ITEM_DETAILS);
+
+			if (infoItemDetails != null) {
+				infoItemReference = infoItemDetails.getInfoItemReference();
+			}
+		}
+
+		defaultFragmentRendererContext.setContextInfoItemReference(
+			infoItemReference);
 		defaultFragmentRendererContext.setLocale(_themeDisplay.getLocale());
 
 		Layout layout = _themeDisplay.getLayout();

@@ -37,7 +37,7 @@ interface ILearnResourceContext {
 	[learnResourceName: string]: ILearnResourceItem;
 }
 
-interface IProps {
+interface IProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
 	className?: string;
 
 	/**

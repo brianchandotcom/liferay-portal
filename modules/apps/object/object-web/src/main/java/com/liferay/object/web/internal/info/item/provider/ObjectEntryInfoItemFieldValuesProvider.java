@@ -32,6 +32,7 @@ import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.info.type.KeyLocalizedLabelPair;
 import com.liferay.info.type.WebImage;
+import com.liferay.layout.page.template.info.item.provider.DisplayPageInfoItemFieldSetProvider;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
@@ -93,6 +94,7 @@ public class ObjectEntryInfoItemFieldValuesProvider
 
 	public ObjectEntryInfoItemFieldValuesProvider(
 		AssetDisplayPageFriendlyURLProvider assetDisplayPageFriendlyURLProvider,
+		DisplayPageInfoItemFieldSetProvider displayPageInfoItemFieldSetProvider,
 		DLAppLocalService dlAppLocalService,
 		DLFileEntryLocalService dlFileEntryLocalService,
 		DLURLHelper dlURLHelper,
@@ -111,6 +113,8 @@ public class ObjectEntryInfoItemFieldValuesProvider
 
 		_assetDisplayPageFriendlyURLProvider =
 			assetDisplayPageFriendlyURLProvider;
+		_displayPageInfoItemFieldSetProvider =
+			displayPageInfoItemFieldSetProvider;
 		_dlAppLocalService = dlAppLocalService;
 		_dlFileEntryLocalService = dlFileEntryLocalService;
 		_dlURLHelper = dlURLHelper;
@@ -131,19 +135,30 @@ public class ObjectEntryInfoItemFieldValuesProvider
 
 	@Override
 	public InfoItemFieldValues getInfoItemFieldValues(ObjectEntry objectEntry) {
-		return InfoItemFieldValues.builder(
-		).infoFieldValues(
-			_getInfoFieldValues(objectEntry)
-		).infoFieldValues(
-			_infoItemFieldReaderFieldSetProvider.getInfoFieldValues(
-				objectEntry.getModelClassName(), objectEntry)
-		).infoFieldValues(
-			_templateInfoItemFieldSetProvider.getInfoFieldValues(
-				objectEntry.getModelClassName(), objectEntry)
-		).infoItemReference(
-			new InfoItemReference(
-				objectEntry.getModelClassName(), objectEntry.getObjectEntryId())
-		).build();
+		try {
+			return InfoItemFieldValues.builder(
+			).infoFieldValues(
+				_getInfoFieldValues(objectEntry)
+			).infoFieldValues(
+				_displayPageInfoItemFieldSetProvider.getInfoFieldValues(
+					objectEntry.getModelClassName(),
+					objectEntry.getObjectEntryId(), StringPool.BLANK,
+					_getThemeDisplay())
+			).infoFieldValues(
+				_infoItemFieldReaderFieldSetProvider.getInfoFieldValues(
+					objectEntry.getModelClassName(), objectEntry)
+			).infoFieldValues(
+				_templateInfoItemFieldSetProvider.getInfoFieldValues(
+					objectEntry.getModelClassName(), objectEntry)
+			).infoItemReference(
+				new InfoItemReference(
+					objectEntry.getModelClassName(),
+					objectEntry.getObjectEntryId())
+			).build();
+		}
+		catch (Exception exception) {
+			throw new RuntimeException("Unexpected exception", exception);
+		}
 	}
 
 	private List<InfoFieldValue<Object>> _getAttachmentInfoFieldValues(
@@ -322,7 +337,9 @@ public class ObjectEntryInfoItemFieldValuesProvider
 
 		ThemeDisplay themeDisplay = _getThemeDisplay();
 
-		if (themeDisplay != null) {
+		if ((themeDisplay != null) &&
+			!FeatureFlagManagerUtil.isEnabled("LPS-183727")) {
+
 			objectEntryFieldValues.add(
 				new InfoFieldValue<>(
 					ObjectEntryInfoItemFields.displayPageURLInfoField,
@@ -695,6 +712,8 @@ public class ObjectEntryInfoItemFieldValuesProvider
 
 	private final AssetDisplayPageFriendlyURLProvider
 		_assetDisplayPageFriendlyURLProvider;
+	private final DisplayPageInfoItemFieldSetProvider
+		_displayPageInfoItemFieldSetProvider;
 	private final DLAppLocalService _dlAppLocalService;
 	private final DLFileEntryLocalService _dlFileEntryLocalService;
 	private final DLURLHelper _dlURLHelper;

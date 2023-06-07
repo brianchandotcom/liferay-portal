@@ -43,6 +43,7 @@ import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelect
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.page.template.info.item.capability.DisplayPageInfoItemCapability;
 import com.liferay.layout.page.template.info.item.capability.EditPageInfoItemCapability;
+import com.liferay.layout.page.template.info.item.provider.DisplayPageInfoItemFieldSetProvider;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
 import com.liferay.object.model.ObjectDefinition;
@@ -137,7 +138,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 		InfoItemFormProvider<ObjectEntry> infoItemFormProvider =
 			new ObjectEntryInfoItemFormProvider(
-				objectDefinition, _infoItemFieldReaderFieldSetProvider,
+				_displayPageInfoItemFieldSetProvider, objectDefinition,
+				_infoItemFieldReaderFieldSetProvider,
 				_listTypeEntryLocalService, _objectActionLocalService,
 				_objectDefinitionLocalService, _objectFieldLocalService,
 				_objectFieldSettingLocalService,
@@ -217,7 +219,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			_bundleContext.registerService(
 				InfoItemFieldValuesProvider.class,
 				new ObjectEntryInfoItemFieldValuesProvider(
-					_assetDisplayPageFriendlyURLProvider, _dlAppLocalService,
+					_assetDisplayPageFriendlyURLProvider,
+					_displayPageInfoItemFieldSetProvider, _dlAppLocalService,
 					_dlFileEntryLocalService, _dlURLHelper,
 					_infoItemFieldReaderFieldSetProvider, _jsonFactory,
 					_listTypeEntryLocalService, _objectActionLocalService,
@@ -470,6 +473,10 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		target = "(info.item.capability.key=" + DisplayPageInfoItemCapability.KEY + ")"
 	)
 	private InfoItemCapability _displayPageInfoItemCapability;
+
+	@Reference
+	private DisplayPageInfoItemFieldSetProvider
+		_displayPageInfoItemFieldSetProvider;
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;

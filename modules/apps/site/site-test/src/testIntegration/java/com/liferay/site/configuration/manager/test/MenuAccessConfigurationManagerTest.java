@@ -76,14 +76,10 @@ public class MenuAccessConfigurationManagerTest {
 	public void testAddAccessRoleToControlMenu() throws Exception {
 		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
-		String[] expectedAccessToControlMenuRoleIds = {
-			String.valueOf(role.getRoleId())
-		};
-
 		_menuAccessConfigurationManager.addAccessRoleToControlMenu(role);
 
 		_assertMenuAccessConfiguration(
-			expectedAccessToControlMenuRoleIds, true);
+			new String[] {String.valueOf(role.getRoleId())}, true);
 	}
 
 	@Test
@@ -103,14 +99,10 @@ public class MenuAccessConfigurationManagerTest {
 				"showControlMenuByRole", true
 			).build());
 
-		String[] expectedAccessToControlMenuRoleIds = {
-			String.valueOf(role1.getRoleId())
-		};
-
 		_menuAccessConfigurationManager.deleteRoleAccessToControlMenu(role2);
 
 		_assertMenuAccessConfiguration(
-			expectedAccessToControlMenuRoleIds, true);
+			new String[] {String.valueOf(role1.getRoleId())}, true);
 	}
 
 	@Test

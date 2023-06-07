@@ -639,6 +639,7 @@ definition {
 			en_US_plural_label = ${en_US_plural_label},
 			name = ${name},
 			requiredStringFieldName = ${requiredStringFieldName},
+			scope = ${scope},
 			token = ${token},
 			virtualHost = ${virtualHost});
 

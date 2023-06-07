@@ -8,7 +8,7 @@
 	position: fixed;
 	transition: width 0.2s ease-out;
 	width: $sidebarOpenWidth;
-	z-index: 1030;
+	z-index: 1000;
 
 	&.collapsed {
 		width: $sidebarClosedWidth;

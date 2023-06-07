@@ -40,6 +40,7 @@ import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.headless.delivery.client.dto.v1_0.ClientExtension;
 import com.liferay.headless.delivery.client.dto.v1_0.ContentDocument;
 import com.liferay.headless.delivery.client.dto.v1_0.OpenGraphSettings;
 import com.liferay.headless.delivery.client.dto.v1_0.PageDefinition;
@@ -300,6 +301,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		_testPostSiteSitePageSuccessInvalidParentSitePage();
 		_testPostSiteSitePageSuccessKeywords();
 		_testPostSiteSitePageSuccessPageDefinition();
+		_testPostSiteSitePageSuccessPageDefinitionSettingsClientExtensions();
 		_testPostSiteSitePageSuccessPageDefinitionSettingsFaviconFromClientExtension();
 		_testPostSiteSitePageSuccessPageDefinitionSettingsFaviconFromDocument();
 		_testPostSiteSitePageSuccessPagePermissions();
@@ -852,6 +854,78 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			_objectMapper.readTree(originalDefinitionJSONObject.toString()),
 			_objectMapper.readTree(
 				(String)actualFragmentPageElement.getDefinition()));
+	}
+
+	private void _testPostSiteSitePageSuccessPageDefinitionSettingsClientExtensions()
+		throws Exception {
+
+		SitePage randomSitePage = randomSitePage();
+
+		ClientExtensionEntry globalCSSClientExtensionEntry =
+			_addClientExtension(ClientExtensionEntryConstants.TYPE_GLOBAL_CSS);
+
+		ClientExtensionEntry globalJSClientExtensionEntry = _addClientExtension(
+			ClientExtensionEntryConstants.TYPE_GLOBAL_JS);
+
+		randomSitePage.setPageDefinition(
+			new PageDefinition() {
+				{
+					settings = new Settings() {
+						{
+							setGlobalCSSClientExtensions(
+								new ClientExtension[] {
+									new ClientExtension() {
+										{
+											externalReferenceCode =
+												globalCSSClientExtensionEntry.
+													getExternalReferenceCode();
+										}
+									}
+								});
+							setGlobalJSClientExtensions(
+								new ClientExtension[] {
+									new ClientExtension() {
+										{
+											externalReferenceCode =
+												globalJSClientExtensionEntry.
+													getExternalReferenceCode();
+										}
+									}
+								});
+						}
+					};
+				}
+			});
+
+		SitePage postSitePage = testPostSiteSitePage_addSitePage(
+			randomSitePage);
+
+		Layout layout = _layoutLocalService.fetchLayout(postSitePage.getId());
+
+		Assert.assertNotNull(layout);
+
+		ClientExtensionEntryRel globalCSSClientExtensionEntryRel =
+			_clientExtensionEntryRelLocalService.fetchClientExtensionEntryRel(
+				_portal.getClassNameId(Layout.class.getName()),
+				layout.getPlid(),
+				ClientExtensionEntryConstants.TYPE_GLOBAL_CSS);
+
+		Assert.assertNotNull(globalCSSClientExtensionEntryRel);
+
+		Assert.assertEquals(
+			globalCSSClientExtensionEntry.getExternalReferenceCode(),
+			globalCSSClientExtensionEntryRel.getCETExternalReferenceCode());
+
+		ClientExtensionEntryRel globalJSClientExtensionEntryRel =
+			_clientExtensionEntryRelLocalService.fetchClientExtensionEntryRel(
+				_portal.getClassNameId(Layout.class.getName()),
+				layout.getPlid(), ClientExtensionEntryConstants.TYPE_GLOBAL_JS);
+
+		Assert.assertNotNull(globalJSClientExtensionEntryRel);
+
+		Assert.assertEquals(
+			globalJSClientExtensionEntry.getExternalReferenceCode(),
+			globalJSClientExtensionEntryRel.getCETExternalReferenceCode());
 	}
 
 	private void _testPostSiteSitePageSuccessPageDefinitionSettingsFaviconFromClientExtension()

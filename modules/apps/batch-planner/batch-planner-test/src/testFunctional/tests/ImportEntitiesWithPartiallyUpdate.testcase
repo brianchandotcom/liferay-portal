@@ -1,0 +1,171 @@
+@component-name = "portal-batch-engine"
+definition {
+
+	property custom.properties = "feature.flag.COMMERCE-8087=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Batch Engine";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		BatchPlanner.batchPlannerTearDown();
+
+		AccountAPI.tearDownAllAccounts();
+
+		BlogPostingAPI.deleteAllBlogPostings();
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@priority = 3
+	test CannotUpdateRecordWithOnlyAddNewRecords {
+		task ("Given a blog posting is created") {
+			var blogPostingId = BlogPostingAPI.getIdOfCreatedBlogPosting(
+				articleBody = "myArticleBody",
+				externalReferenceCode = "myErc",
+				headline = "headline of my blog posting");
+		}
+
+		task ("And Given new import file in import/export center") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.gotoImport();
+		}
+
+		task ("And Given "Stop the import on error" unchecked with Only Add New Records and valid JSON file with blog posting entry with existing externalReferenceCode") {
+			ImportExport.configureImport(
+				entityType = "BlogPosting (v1_0 - Liferay Headless Delivery)",
+				fieldMappings = "articleBody:articleBody,headline:headline,externalReferenceCode:externalReferenceCode",
+				fileName = "json_blogPosting_import.json",
+				importStrategy = "Only Add New Records",
+				stopImportOnError = "false");
+		}
+
+		task ("When importing file with Next button") {
+			ImportExport.startImport();
+		}
+
+		task ("Then blog posting is not updated") {
+			var blogPostingData = BlogPostingAPI.getBlogPostingDataToString();
+
+			TestUtils.assertEquals(
+				actual = ${blogPostingData},
+				expected = "headline of my blog posting,myArticleBody,myErc");
+		}
+
+		task ("And Then new blog posting entry is created") {
+			var actualNumberOfBlogPostings = BlogPostingAPI.getNumberOfBlogPostingsCreated();
+
+			TestUtils.assertEquals(
+				actual = ${actualNumberOfBlogPostings},
+				expected = 2);
+		}
+	}
+
+	@priority = 4
+	test CanPartialUpdateAndCreateEntriesFromJsonWithAddOrUpdateRecordsUpdateChangedRecordFields {
+		property portal.acceptance = "true";
+
+		task ("Given an account without description field value is created") {
+			AccountAPI.createAccount(
+				externalReferenceCode = 101,
+				name = "Test Business Account");
+		}
+
+		task ("And Given new import file in import/export center") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.gotoImport();
+		}
+
+		task ("And Given Add or Update records with Update Changed Record Fields selectd include uploading valid JSON file with 3 accounts including existing one with only required fields") {
+			ImportExport.configureImport(
+				entityType = "Account (v1_0 - Liferay Headless Admin User)",
+				fieldMappings = "name:name,type:type,externalReferenceCode:externalReferenceCode",
+				fileName = "json_account_import.json",
+				importStrategy = "Add or Update Records",
+				updateStrategy = "Update changed Record Fields");
+		}
+
+		task ("When importing file with Next button") {
+			ImportExport.startImport();
+		}
+
+		task ("Then existing account is updated the description field value not emptied") {
+			var response = AccountAPI.getAccounts();
+
+			var accountDescription = JSONUtil.getWithJSONPath(${response}, "$..items[?(@.name == 'Test Business Account')].description");
+
+			TestUtils.assertEquals(
+				actual = ${accountDescription},
+				expected = "Test Business Account Description");
+		}
+
+		task ("And Then new account is created") {
+			var actualNumberOfAccounts = JSONUtil.getWithJSONPath(${response}, "$..totalCount");
+
+			TestUtils.assertEquals(
+				actual = ${actualNumberOfAccounts},
+				expected = 3);
+		}
+	}
+
+	@priority = 4
+	test CanUpdateAndCreateEntriesFromJsonWithAddOrUpdateRecordsOverwrite {
+		property portal.acceptance = "true";
+
+		task ("Given an account with description field value is created") {
+			AccountAPI.createAccount(
+				description = "Test Business Account Description",
+				externalReferenceCode = 101,
+				name = "Test Business Account");
+		}
+
+		task ("And Given new import file in import/export center") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.gotoImport();
+		}
+
+		task ("And Given Add or Update records and Overwrite Records by default selected with uploading valid JSON file with 2 accounts including existing one with only required fields") {
+			ImportExport.configureImport(
+				entityType = "Account (v1_0 - Liferay Headless Admin User)",
+				fieldMappings = "name:name,externalReferenceCode:externalReferenceCode",
+				fileName = "json_account_import_name_only.json",
+				importStrategy = "Add or Update Records",
+				updateStrategy = "Overwrite Records");
+		}
+
+		task ("When importing file with Next button") {
+			ImportExport.startImport();
+		}
+
+		task ("Then existing account is updated with the description field empty") {
+			var response = AccountAPI.getAccounts();
+
+			var accountDescription = JSONUtil.getWithJSONPath(${response}, "$..items[?(@.name == 'Test Business Account')].description");
+
+			TestUtils.assertEquals(
+				actual = ${accountDescription},
+				expected = "");
+		}
+
+		task ("And Then new account is created") {
+			var actualNumberOfAccounts = JSONUtil.getWithJSONPath(${response}, "$..totalCount");
+
+			TestUtils.assertEquals(
+				actual = ${actualNumberOfAccounts},
+				expected = 2);
+		}
+	}
+
+}

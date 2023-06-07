@@ -1,0 +1,12 @@
+[
+	{
+		"articleBody": "myArticleBody",
+		"externalReferenceCode": "myErc",
+		"headline": "headline of my second blog posting"
+	},
+	{
+		"articleBody": "secondArticleBody",
+		"externalReferenceCode": "secondErc",
+		"headline": "update headline of my blog posting"
+	}
+]

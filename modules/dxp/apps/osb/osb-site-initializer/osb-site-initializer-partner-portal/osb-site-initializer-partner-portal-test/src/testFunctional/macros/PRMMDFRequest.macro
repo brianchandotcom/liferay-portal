@@ -612,7 +612,7 @@ definition {
 			}
 		}
 
-		if(isSet(fileContentNotPresent)) {
+		if (isSet(fileContentNotPresent)) {
 			var directoryPath = PropsUtil.get("output.dir.name");
 
 			var fileContent = FileUtil.read("${directoryPath}/${fileName}");

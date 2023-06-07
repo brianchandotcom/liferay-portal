@@ -105,7 +105,7 @@ definition {
 			PRMNavigator.openSitePage(pageName = "MDF Requests");
 
 			PRMMDFRequest.goToMDF(campaignName = "Campaign Name 1");
-		
+
 			PRMMDFRequest.changeMDFStatus(statusButton = "Approve");
 		}
 

@@ -238,8 +238,8 @@ definition {
 		task ("Then the information of the visible MDF's will be inside the exported file") {
 			PRMMDFRequest.viewExportedMDF(
 				fileContentList = "Campaign Name 1",
-				fileName = "MDF Requests.csv",
-				fileContentNotPresent = "Campaign Name 2");
+				fileContentNotPresent = "Campaign Name 2",
+				fileName = "MDF Requests.csv");
 		}
 
 		task ("When the CMM filter the MDFs by Account and selects 'Company Name 2") {
@@ -257,8 +257,8 @@ definition {
 		task ("Then the information of the visible MDF's will be inside the exported file") {
 			PRMMDFRequest.viewExportedMDF(
 				fileContentList = "Campaign Name 2",
-				fileName = "MDF Requests.csv",
-				fileContentNotPresent = "Campaign Name 1");
+				fileContentNotPresent = "Campaign Name 1",
+				fileName = "MDF Requests.csv");
 		}
 	}
 
@@ -304,8 +304,8 @@ definition {
 		task ("Then the information of the searched MDF will be inside the exported file") {
 			PRMMDFRequest.viewExportedMDF(
 				fileContentList = "Campaign Name 1",
-				fileName = "MDF Requests.csv",
-				fileContentNotPresent = "Campaign Name 2");
+				fileContentNotPresent = "Campaign Name 2",
+				fileName = "MDF Requests.csv");
 		}
 
 		task ("When the CMM	searchs for the second MDF") {
@@ -319,8 +319,8 @@ definition {
 		task ("Then the information of the searched MDF will be inside the exported file") {
 			PRMMDFRequest.viewExportedMDF(
 				fileContentList = "Campaign Name 2",
-				fileName = "MDF Requests.csv",
-				fileContentNotPresent = "Campaign Name 1");
+				fileContentNotPresent = "Campaign Name 1",
+				fileName = "MDF Requests.csv");
 		}
 	}
 

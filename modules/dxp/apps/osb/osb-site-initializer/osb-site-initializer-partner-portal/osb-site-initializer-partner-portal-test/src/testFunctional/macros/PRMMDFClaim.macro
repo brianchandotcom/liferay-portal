@@ -185,8 +185,8 @@ definition {
 			locator1 = "PRMMDFRequest#DROPDOWN_OPTIONS");
 
 		Click.clickAtNotVisible(
-			locator1 = "PRMMDFClaim#CHECKBOX_OPTION",
-			key_checkboxName = ${checkboxName});
+			key_checkboxName = ${checkboxName},
+			locator1 = "PRMMDFClaim#CHECKBOX_OPTION");
 
 		Click.clickAtNotVisible(locator1 = "PRMMDFClaim#APPLY_BUTTON");
 	}

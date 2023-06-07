@@ -72,7 +72,6 @@ definition {
 		}
 
 		task ("And creates two claims") {
-
 			PRMMDFClaim.createNewClaim(
 				listLeads = "Document_1.xlsx",
 				reimbursementInvoice = "Document_1.png",
@@ -176,7 +175,7 @@ definition {
 
 		task ("And the PMU user makes two Claims for 'Campaign Name 1' MDF") {
 			PRMNavigator.openSitePage(pageName = "MDF Requests");
-			
+
 			PRMMDFRequest.goToMDF(campaignName = "Campaign Name 1");
 
 			PRMMDFClaim.createNewClaim(
@@ -212,8 +211,8 @@ definition {
 		task ("Then the information about the filtered Claims will be inside the file") {
 			PRMMDFRequest.viewExportedMDF(
 				fileContentList = "Company Name 1",
-				fileName = "MDF Claim.csv",
-				fileContentNotPresent = "Company Name 2");
+				fileContentNotPresent = "Company Name 2",
+				fileName = "MDF Claim.csv");
 		}
 
 		task ("When the CMM filters the Claims by account 'Company Name 2'") {
@@ -231,8 +230,8 @@ definition {
 		task ("Then the information about the filtered Claims will be inside the file") {
 			PRMMDFRequest.viewExportedMDF(
 				fileContentList = "Company Name 2",
-				fileName = "MDF Claim.csv",
-				fileContentNotPresent = "Company Name 1");
+				fileContentNotPresent = "Company Name 1",
+				fileName = "MDF Claim.csv");
 		}
 	}
 
@@ -289,8 +288,8 @@ definition {
 		task ("Then the information about the searched Claim should be inside the downloaded file") {
 			PRMMDFRequest.viewExportedMDF(
 				fileContentList = ${firstID},
-				fileName = "MDF Claim.csv",
-				fileContentNotPresent = ${secondID});
+				fileContentNotPresent = ${secondID},
+				fileName = "MDF Claim.csv");
 		}
 
 		task ("When the CMM search for the second ID") {
@@ -304,8 +303,8 @@ definition {
 		task ("Then the information about the searched Claim should be inside the downloaded file") {
 			PRMMDFRequest.viewExportedMDF(
 				fileContentList = ${secondID},
-				fileName = "MDF Claim.csv",
-				fileContentNotPresent = ${firstID});
+				fileContentNotPresent = ${firstID},
+				fileName = "MDF Claim.csv");
 		}
 	}
 

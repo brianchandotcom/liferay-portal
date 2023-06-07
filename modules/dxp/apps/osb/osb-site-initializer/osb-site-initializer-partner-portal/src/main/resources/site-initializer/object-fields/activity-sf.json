@@ -1,0 +1,125 @@
+{
+	"object-fields": [
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "MDF_Request__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "MDF Request External Reference Code"
+			},
+			"name": "mdfRequestExternalReferenceCode",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "Total_Cost__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Total Cost of Expense"
+			},
+			"name": "totalCostOfExpense",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "Description__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Description"
+			},
+			"name": "description",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "Requested_Amount__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "MDF Requested Amount"
+			},
+			"name": "mdfRequestAmount",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "Date",
+			"businessType": "Date",
+			"externalReferenceCode": "Start_Date__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Start Date"
+			},
+			"name": "startDate",
+			"required": false,
+			"type": "Date"
+		},
+		{
+			"DBType": "Date",
+			"businessType": "Date",
+			"externalReferenceCode": "End_Date__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "End Date"
+			},
+			"name": "endDate",
+			"required": false,
+			"type": "Date"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Picklist",
+			"externalReferenceCode": "CurrencyIsoCode",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Currency"
+			},
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Currencies$]",
+			"name": "currency",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Picklist",
+			"externalReferenceCode": "Tactic__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Tactic"
+			},
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Tactic$]",
+			"name": "tactic",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Picklist",
+			"externalReferenceCode": "Activity_Type__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Type Of Activity"
+			},
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Type Of Activity$]",
+			"name": "typeActivity",
+			"required": false,
+			"type": "String"
+		}
+	],
+	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:ActivitySF$]"
+}

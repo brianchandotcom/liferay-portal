@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -244,7 +245,7 @@ public class FunctionObjectEntryManagerImpl
 		throws Exception {
 
 		return _portalCatapult.launch(
-			_companyId,
+			_companyId, Http.Method.POST,
 			_functionObjectEntryManagerConfiguration.
 				oAuth2ApplicationExternalReferenceCode(),
 			payloadJSONObject, resourcePath, userId);

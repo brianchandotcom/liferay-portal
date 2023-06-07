@@ -16,6 +16,7 @@ package com.liferay.portal.catapult;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.Http;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -27,7 +28,8 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface PortalCatapult {
 
 	public byte[] launch(
-			long companyId, String oAuth2ApplicationExternalReferenceCode,
+			long companyId, Http.Method method,
+			String oAuth2ApplicationExternalReferenceCode,
 			JSONObject payloadJSONObject, String resourcePath, long userId)
 		throws PortalException;
 

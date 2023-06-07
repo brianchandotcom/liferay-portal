@@ -40,7 +40,8 @@ import org.osgi.service.component.annotations.Reference;
 public class PortalCatapultImpl implements PortalCatapult {
 
 	public byte[] launch(
-			long companyId, String oAuth2ApplicationExternalReferenceCode,
+			long companyId, Http.Method method,
+			String oAuth2ApplicationExternalReferenceCode,
 			JSONObject payloadJSONObject, String resourcePath, long userId)
 		throws PortalException {
 
@@ -59,7 +60,7 @@ public class PortalCatapultImpl implements PortalCatapult {
 
 		options.setLocation(_getLocation(oAuth2Application, resourcePath));
 
-		options.setMethod(Http.Method.POST);
+		options.setMethod(method);
 
 		_localOAuthClient.consumeAccessToken(
 			accessToken -> options.addHeader(

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Http;
 
 import java.util.Map;
 
@@ -64,7 +65,7 @@ public class FunctionNotificationType extends BaseNotificationType {
 			notificationRecipient.getNotificationRecipientSettings());
 
 		_portalCatapult.launch(
-			_companyId,
+			_companyId, Http.Method.POST,
 			_functionNotificationTypeConfiguration.
 				oAuth2ApplicationExternalReferenceCode(),
 			_jsonFactory.createJSONObject(

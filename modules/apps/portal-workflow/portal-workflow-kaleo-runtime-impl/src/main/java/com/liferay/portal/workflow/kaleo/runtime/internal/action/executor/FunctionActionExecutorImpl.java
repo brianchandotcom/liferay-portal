@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.workflow.WorkflowTaskAssignee;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 import com.liferay.portal.workflow.kaleo.model.KaleoAction;
@@ -180,7 +181,7 @@ public class FunctionActionExecutorImpl implements ActionExecutor {
 		}
 
 		_portalCatapult.launch(
-			_companyId,
+			_companyId, Http.Method.POST,
 			_functionActionExecutorImplConfiguration.
 				oAuth2ApplicationExternalReferenceCode(),
 			payloadJSONObject,

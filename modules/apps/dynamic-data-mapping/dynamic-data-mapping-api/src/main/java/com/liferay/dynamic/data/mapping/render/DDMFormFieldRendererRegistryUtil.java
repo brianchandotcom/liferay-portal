@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.render;
 
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
+import com.liferay.osgi.util.service.Snapshot;
 
 /**
  * @author Pablo Carvalho
@@ -24,15 +24,16 @@ public class DDMFormFieldRendererRegistryUtil {
 	public static DDMFormFieldRenderer getDDMFormFieldRenderer(
 		String ddmFormFieldType) {
 
-		return _ddmFormFieldRendererRegistry.getDDMFormFieldRenderer(
+		DDMFormFieldRendererRegistry ddmFormFieldRendererRegistry =
+			_ddmFormFieldRendererRegistrySnapshot.get();
+
+		return ddmFormFieldRendererRegistry.getDDMFormFieldRenderer(
 			ddmFormFieldType);
 	}
 
-	private static volatile DDMFormFieldRendererRegistry
-		_ddmFormFieldRendererRegistry =
-			ServiceProxyFactory.newServiceTrackedInstance(
-				DDMFormFieldRendererRegistry.class,
-				DDMFormFieldRendererRegistryUtil.class,
-				"_ddmFormFieldRendererRegistry", true);
+	private static final Snapshot<DDMFormFieldRendererRegistry>
+		_ddmFormFieldRendererRegistrySnapshot = new Snapshot<>(
+			DDMFormFieldRendererRegistryUtil.class,
+			DDMFormFieldRendererRegistry.class);
 
 }

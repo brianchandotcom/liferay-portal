@@ -43,7 +43,7 @@ definition {
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
-		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
+		LexiconEntry.gotoEntry(rowEntry = "Blogs Entry Title");
 
 		BlogsEntry.viewEntryCP(
 			entryContent = "Blogs Entry Content",

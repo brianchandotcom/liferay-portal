@@ -797,7 +797,9 @@ database.type=postgresql
 			</then>
 			<elseif>
 				<equals arg1="${database.version}" arg2="2019" />
-				<var name="database.sqlserver.docker.image" value="mcr.microsoft.com/mssql/server:2019-GA-ubuntu-16.04" />
+				<then>
+					<var name="database.sqlserver.docker.image" value="mcr.microsoft.com/mssql/server:2019-GA-ubuntu-16.04" />
+				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${database.version}" arg2="2022" />

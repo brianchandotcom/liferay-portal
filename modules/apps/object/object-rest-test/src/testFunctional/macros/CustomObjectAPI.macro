@@ -28,8 +28,12 @@ definition {
 		}
 
 		if (isSet(scopeKey)) {
+			if (!(isSet(groupName))) {
+				var groupName = "Guest";
+			}
+
 			var scopeKey = JSONGroupAPI._getGroupIdByNameNoSelenium(
-				groupName = "Guest",
+				groupName = ${groupName},
 				site = "true");
 
 			var api = StringUtil.add(${api}, "/scopes/${scopeKey}", "");
@@ -219,6 +223,7 @@ definition {
 			externalReferenceCode = ${externalReferenceCode},
 			fieldName = ${fieldName},
 			fieldValue = ${fieldValue},
+			groupName = ${groupName},
 			keywords = ${keywords},
 			scopeKey = ${scopeKey},
 			secondFieldValue = ${secondFieldValue},

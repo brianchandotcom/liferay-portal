@@ -136,6 +136,7 @@ const Assets: React.FC<IAssetsProps> = ({className, currentUser, router}) => {
 											<ClayLink
 												button
 												className='button-root'
+												displayType='primary'
 												href={toRoute(
 													Routes.SETTINGS_ADD_DATA_SOURCE,
 													{

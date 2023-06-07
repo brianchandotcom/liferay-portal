@@ -139,6 +139,9 @@ http.host: ["_local_", "_site_"]
 ingest.geoip.downloader.enabled: false
 xpack.license.self_generated.type: trial
 xpack.security.enabled: false</echo>
+
+			<echo file="${elasticsearch.dir}/config/jvm.options.d/jvm.options">${line.separator}-Xms2g
+-Xmx2g</echo>
 		</sequential>
 	</macrodef>
 

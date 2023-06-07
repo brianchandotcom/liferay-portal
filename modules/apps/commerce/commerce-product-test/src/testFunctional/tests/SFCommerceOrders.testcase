@@ -1248,6 +1248,8 @@ definition {
 			key_text = "Reorder",
 			locator1 = "Button#ANY");
 
+		Button.click(button = "Checkout");
+
 		for (var iterator : list "1,2,3,4,5") {
 			if (${iterator} == 2) {
 				Click(

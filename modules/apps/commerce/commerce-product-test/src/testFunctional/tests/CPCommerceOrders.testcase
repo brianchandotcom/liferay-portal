@@ -1377,10 +1377,12 @@ definition {
 				locator1 = "Button#ANY");
 		}
 
-		task ("And if the buyer click on the 'Reorder' the checkout start again") {
+		task ("And if the buyer click on the 'Reorder' is redirected to Open Order's Page to start the checkout") {
 			Click(
 				key_text = "Reorder",
 				locator1 = "Button#ANY");
+
+			Button.click(button = "Checkout");
 
 			CommerceCheckout.setAddress(
 				newAddressAddress = "Test Address",

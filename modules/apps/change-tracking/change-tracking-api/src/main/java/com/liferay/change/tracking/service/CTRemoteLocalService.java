@@ -75,6 +75,7 @@ public interface CTRemoteLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public CTRemote addCTRemote(CTRemote ctRemote);
 
+	@Indexable(type = IndexableType.REINDEX)
 	public CTRemote addCTRemote(
 			long userId, String name, String description, String url)
 		throws PortalException;
@@ -272,6 +273,7 @@ public interface CTRemoteLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public CTRemote updateCTRemote(CTRemote ctRemote);
 
+	@Indexable(type = IndexableType.REINDEX)
 	public CTRemote updateCTRemote(
 			long ctRemoteId, String name, String description, String url)
 		throws PortalException;

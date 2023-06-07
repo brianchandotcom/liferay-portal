@@ -27,6 +27,7 @@ interface INoResultsDisplayIcon
 
 const NoResultsDisplayIcon: React.FC<INoResultsDisplayIcon> = ({
 	border = true,
+	size = Sizes.XXXLarge,
 	symbol
 }) => {
 	const classes = getCN('no-results-icon', {
@@ -35,7 +36,10 @@ const NoResultsDisplayIcon: React.FC<INoResultsDisplayIcon> = ({
 
 	return (
 		<div className={classes}>
-			<ClayIcon className='icon-root icon-size-xxxl' symbol={symbol} />
+			<ClayIcon
+				className={getCN('icon-root', {[`icon-size-${size}`]: size})}
+				symbol={symbol}
+			/>
 		</div>
 	);
 };

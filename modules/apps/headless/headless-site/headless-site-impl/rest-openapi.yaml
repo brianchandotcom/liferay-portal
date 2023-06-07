@@ -5,6 +5,10 @@ components:
             description:
                 Represents the site being created.
             properties:
+                externalReferenceCode:
+                    description:
+                        The optional external key of this account.
+                    type: string
                 friendlyUrlPath:
                     readOnly: true
                     type: string
@@ -78,14 +82,14 @@ paths:
                         default response
             # @review
             tags: ["Site"]
-    /sites/{key}:
+    /sites/{externalReferenceCode}:
         put:
             description:
                 Adds or update a new site
             operationId: putSite
             parameters:
                 - in: path
-                  name: key
+                  name: externalReferenceCode
                   required: true
                   schema:
                       type: string

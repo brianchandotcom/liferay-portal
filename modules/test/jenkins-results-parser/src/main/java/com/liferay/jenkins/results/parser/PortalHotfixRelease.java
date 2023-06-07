@@ -112,9 +112,9 @@ public class PortalHotfixRelease {
 
 			packageNames = _getJSONPackageNames();
 		}
-		else if (portalVersion.startsWith("7.2") ||
+		else if (portalVersion.startsWith("7.0") ||
 				 portalVersion.startsWith("7.1") ||
-				 portalVersion.startsWith("7.0")) {
+				 portalVersion.startsWith("7.2")) {
 
 			packageNames = _getXMLPackageNames();
 		}

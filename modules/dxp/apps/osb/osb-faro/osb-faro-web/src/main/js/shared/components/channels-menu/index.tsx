@@ -105,7 +105,7 @@ export const ChannelsMenu: React.FC<IChannelsMenuProps> = ({
 								formProps={{
 									onSubmit: e => e.preventDefault()
 								}}
-								onChange={e => setSearchTerm(e.target.value)}
+								onChange={setSearchTerm}
 								placeholder={Liferay.Language.get('search')}
 								value={searchTerm}
 							/>

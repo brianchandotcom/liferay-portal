@@ -41,9 +41,11 @@ import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.field.reader.InfoItemFieldReaderFieldSetProvider;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
+import com.liferay.layout.page.template.info.item.provider.DisplayPageInfoItemFieldSetProvider;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -83,6 +85,11 @@ public class CPDefinitionInfoItemFieldValuesProvider
 				_expandoInfoItemFieldSetProvider.getInfoFieldValues(
 					CPDefinition.class.getName(), cpDefinition)
 			).infoFieldValues(
+				_displayPageInfoItemFieldSetProvider.getInfoFieldValues(
+					CPDefinition.class.getName(),
+					cpDefinition.getCPDefinitionId(), StringPool.BLANK,
+					_getThemeDisplay())
+			).infoFieldValues(
 				_templateInfoItemFieldSetProvider.getInfoFieldValues(
 					CPDefinition.class.getName(), cpDefinition)
 			).infoFieldValues(
@@ -96,6 +103,9 @@ public class CPDefinitionInfoItemFieldValuesProvider
 		}
 		catch (NoSuchInfoItemException noSuchInfoItemException) {
 			return ReflectionUtil.throwException(noSuchInfoItemException);
+		}
+		catch (Exception exception) {
+			throw new RuntimeException("Unexpected exception", exception);
 		}
 	}
 
@@ -330,7 +340,9 @@ public class CPDefinitionInfoItemFieldValuesProvider
 					CPDefinitionInfoItemFields.incompleteInfoField,
 					cpDefinition.isIncomplete()));
 
-			if (themeDisplay != null) {
+			if ((themeDisplay != null) &&
+				!FeatureFlagManagerUtil.isEnabled("LPS-183727")) {
+
 				cpDefinitionInfoFieldValues.add(
 					new InfoFieldValue<>(
 						CPDefinitionInfoItemFields.inventoryInfoField,
@@ -578,6 +590,17 @@ public class CPDefinitionInfoItemFieldValuesProvider
 		return cpInstance.getSku();
 	}
 
+	private ThemeDisplay _getThemeDisplay() {
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if (serviceContext != null) {
+			return serviceContext.getThemeDisplay();
+		}
+
+		return null;
+	}
+
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;
 
@@ -610,6 +633,10 @@ public class CPDefinitionInfoItemFieldValuesProvider
 
 	@Reference
 	private CPInstanceHelper _cpInstanceHelper;
+
+	@Reference
+	private DisplayPageInfoItemFieldSetProvider
+		_displayPageInfoItemFieldSetProvider;
 
 	@Reference
 	private ExpandoInfoItemFieldSetProvider _expandoInfoItemFieldSetProvider;

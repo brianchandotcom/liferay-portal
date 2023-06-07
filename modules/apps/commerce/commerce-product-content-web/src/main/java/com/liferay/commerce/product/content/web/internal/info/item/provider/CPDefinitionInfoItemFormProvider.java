@@ -24,8 +24,11 @@ import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.field.reader.InfoItemFieldReaderFieldSetProvider;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
+import com.liferay.layout.page.template.info.item.provider.DisplayPageInfoItemFieldSetProvider;
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -55,7 +58,9 @@ public class CPDefinitionInfoItemFormProvider
 	public InfoForm getInfoForm() {
 		return _getInfoForm(
 			_assetEntryInfoItemFieldSetProvider.getInfoFieldSet(
-				CPDefinition.class.getName()));
+				CPDefinition.class.getName()),
+			_displayPageInfoItemFieldSetProvider.getInfoFieldSet(
+				CPDefinition.class.getName(), StringPool.BLANK, 0));
 	}
 
 	@Override
@@ -65,7 +70,9 @@ public class CPDefinitionInfoItemFormProvider
 				_assetEntryInfoItemFieldSetProvider.getInfoFieldSet(
 					_assetEntryLocalService.getEntry(
 						CPDefinition.class.getName(),
-						cpDefinition.getCPDefinitionId())));
+						cpDefinition.getCPDefinitionId())),
+				_displayPageInfoItemFieldSetProvider.getInfoFieldSet(
+					CPDefinition.class.getName(), StringPool.BLANK, 0));
 		}
 		catch (PortalException portalException) {
 			_log.error(
@@ -80,7 +87,9 @@ public class CPDefinitionInfoItemFormProvider
 	public InfoForm getInfoForm(String formVariationKey, long groupId) {
 		return _getInfoForm(
 			_assetEntryInfoItemFieldSetProvider.getInfoFieldSet(
-				CPDefinition.class.getName(), 0, groupId));
+				CPDefinition.class.getName(), 0, groupId),
+			_displayPageInfoItemFieldSetProvider.getInfoFieldSet(
+				CPDefinition.class.getName(), StringPool.BLANK, groupId));
 	}
 
 	private InfoFieldSet _getBasicInformationInfoFieldSet() {
@@ -239,7 +248,10 @@ public class CPDefinitionInfoItemFormProvider
 		).build();
 	}
 
-	private InfoForm _getInfoForm(InfoFieldSet assetEntryInfoFieldSet) {
+	private InfoForm _getInfoForm(
+		InfoFieldSet assetEntryInfoFieldSet,
+		InfoFieldSet displayPageInfoFieldSet) {
+
 		Set<Locale> availableLocales = _language.getAvailableLocales();
 
 		InfoLocalizedValue.Builder<String> infoLocalizedValueBuilder =
@@ -271,7 +283,17 @@ public class CPDefinitionInfoItemFormProvider
 		).infoFieldSetEntry(
 			_getDetailedInformationInfoFieldSet()
 		).infoFieldSetEntry(
-			_getDisplayPageInfoFieldSet()
+			unsafeConsumer -> {
+				if (!FeatureFlagManagerUtil.isEnabled("LPS-183727")) {
+					unsafeConsumer.accept(_getDisplayPageInfoFieldSet());
+				}
+			}
+		).infoFieldSetEntry(
+			unsafeConsumer -> {
+				if (FeatureFlagManagerUtil.isEnabled("LPS-183727")) {
+					unsafeConsumer.accept(displayPageInfoFieldSet);
+				}
+			}
 		).infoFieldSetEntry(
 			_getScheduleInfoFieldSet()
 		).labelInfoLocalizedValue(
@@ -303,6 +325,10 @@ public class CPDefinitionInfoItemFormProvider
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference
+	private DisplayPageInfoItemFieldSetProvider
+		_displayPageInfoItemFieldSetProvider;
 
 	@Reference
 	private ExpandoInfoItemFieldSetProvider _expandoInfoItemFieldSetProvider;

@@ -58,9 +58,10 @@ public class JavaSourceUtil extends SourceUtil {
 			String packageName = getPackageName(content);
 
 			return StringUtil.replace(
-				content, packageName,
+				content, packageName + StringPool.SEMICOLON,
 				StringBundler.concat(
-					packageName, StringPool.NEW_LINE, StringPool.NEW_LINE,
+					packageName, StringPool.SEMICOLON, StringPool.NEW_LINE,
+					StringPool.NEW_LINE,
 					StringUtil.merge(neededImports, StringPool.NEW_LINE)));
 		}
 

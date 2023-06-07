@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -54,6 +55,8 @@ import javax.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 import org.osgi.service.component.annotations.ServiceScope;
 
 /**
@@ -216,22 +219,20 @@ public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 					}
 
 					return addAction(
-						ActionKeys.UPDATE, "postCTCollectionCheckout",
-						CTCollection.class.getName(),
-						ctCollection.getCtCollectionId());
+						ActionKeys.UPDATE, ctCollection.getCtCollectionId(),
+						"postCTCollectionCheckout",
+						_ctCollectionModelResourcePermission);
 				}
 			).put(
 				"delete",
 				() -> addAction(
-					ActionKeys.DELETE, "deleteCTCollection",
-					CTCollection.class.getName(),
-					ctCollection.getCtCollectionId())
+					ActionKeys.DELETE, ctCollection.getCtCollectionId(),
+					"deleteCTCollection", _ctCollectionModelResourcePermission)
 			).put(
 				"get",
 				addAction(
-					ActionKeys.VIEW, "getCTCollection",
-					CTCollection.class.getName(),
-					ctCollection.getCtCollectionId())
+					ActionKeys.VIEW, ctCollection.getCtCollectionId(),
+					"getCTCollection", _ctCollectionModelResourcePermission)
 			).put(
 				"permissions",
 				() -> {
@@ -242,9 +243,9 @@ public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 					}
 
 					return addAction(
-						ActionKeys.PERMISSIONS, "patchCTCollection",
-						CTCollection.class.getName(),
-						ctCollection.getCtCollectionId());
+						ActionKeys.PERMISSIONS,
+						ctCollection.getCtCollectionId(), "patchCTCollection",
+						_ctCollectionModelResourcePermission);
 				}
 			).put(
 				"publish",
@@ -254,9 +255,9 @@ public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 					}
 
 					return addAction(
-						CTActionKeys.PUBLISH, "postCTCollectionPublish",
-						CTCollection.class.getName(),
-						ctCollection.getCtCollectionId());
+						CTActionKeys.PUBLISH, ctCollection.getCtCollectionId(),
+						"postCTCollectionPublish",
+						_ctCollectionModelResourcePermission);
 				}
 			).put(
 				"schedule",
@@ -268,16 +269,15 @@ public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 					}
 
 					return addAction(
-						CTActionKeys.PUBLISH, "postCTCollectionSchedulePublish",
-						CTCollection.class.getName(),
-						ctCollection.getCtCollectionId());
+						CTActionKeys.PUBLISH, ctCollection.getCtCollectionId(),
+						"postCTCollectionSchedulePublish",
+						_ctCollectionModelResourcePermission);
 				}
 			).put(
 				"update",
 				() -> addAction(
-					ActionKeys.UPDATE, "putCTCollection",
-					CTCollection.class.getName(),
-					ctCollection.getCtCollectionId())
+					ActionKeys.UPDATE, ctCollection.getCtCollectionId(),
+					"putCTCollection", _ctCollectionModelResourcePermission)
 			).build(),
 			null, contextHttpServletRequest, ctCollection.getCtCollectionId(),
 			contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
@@ -333,6 +333,15 @@ public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 
 	@Reference
 	private CTCollectionLocalService _ctCollectionLocalService;
+
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(model.class.name=com.liferay.change.tracking.model.CTCollection)"
+	)
+	private volatile ModelResourcePermission
+		<com.liferay.change.tracking.model.CTCollection>
+			_ctCollectionModelResourcePermission;
 
 	@Reference
 	private CTCollectionService _ctCollectionService;

@@ -117,8 +117,6 @@ definition {
 	@description = "LRQA-71891 - Verify that the user can filter by Name"
 	@priority = 2
 	test CanFilterByTemplateName {
-		property portal.upstream = "quarantine";
-
 		Portlet.gotoPortletOptions(
 			portletName = "Calendar",
 			portletOption = "Configuration Templates");

@@ -109,6 +109,20 @@ public class SXPBlueprintResourceTest extends BaseSXPBlueprintResourceTestCase {
 	@Ignore
 	@Override
 	@Test
+	public void testGraphQLGetSXPBlueprintByExternalReferenceCode()
+		throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetSXPBlueprintByExternalReferenceCodeNotFound()
+		throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
 	public void testGraphQLGetSXPBlueprintNotFound() throws Exception {
 	}
 

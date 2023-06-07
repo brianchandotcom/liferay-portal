@@ -951,10 +951,9 @@ definition {
 			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME",
 			value1 = ${userGroupName});
 
-		AssertClick(
-			key_dmDocumentTypeName = ${userGroupName},
-			locator1 = "DocumentsAndMediaSelectDocument#DOCUMENTS_TABLE_CHOOSE",
-			value1 = "Choose");
+		Click(
+			key_card = ${userGroupName},
+			locator1 = "Card#CARD");
 
 		SelectFrame(value1 = "relative=top");
 

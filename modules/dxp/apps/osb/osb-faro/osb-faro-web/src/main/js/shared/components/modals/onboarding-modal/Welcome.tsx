@@ -30,7 +30,7 @@ const Welcome: React.FC<IWelcomeProps> = ({onClose, onNext}) => (
 			<ClayButton
 				autoFocus
 				className='button-root'
-				displayType='secondary'
+				displayType='primary'
 				onClick={() => onNext()}
 			>
 				{Liferay.Language.get('next')}

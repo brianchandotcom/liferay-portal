@@ -24,16 +24,18 @@ const FilterInfo: React.FC<IFilterInfoProps> = ({
 		<div className='filter-name d-flex align-items-center justify-content-between'>
 			{name}
 
-			<ClayButton
-				aria-label={Liferay.Language.get('edit')}
-				borderless
-				className='button-root'
-				displayType='secondary'
-				onClick={() => onEditClick(name)}
-				size='sm'
-			>
-				<ClayIcon className='icon-root' symbol='pencil' />
-			</ClayButton>
+			{onEditClick && (
+				<ClayButton
+					aria-label={Liferay.Language.get('edit')}
+					borderless
+					className='button-root'
+					displayType='secondary'
+					onClick={() => onEditClick(name)}
+					size='sm'
+				>
+					<ClayIcon className='icon-root' symbol='pencil' />
+				</ClayButton>
+			)}
 		</div>
 
 		{showDescription && (

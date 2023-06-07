@@ -1,0 +1,18 @@
+{
+	"object-fields": [
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "e97ab323-e4cd-4320-82f2-ef41ec48e55f",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Object"
+			},
+			"name": "object",
+			"required": true,
+			"type": "String"
+		}
+	],
+	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:PermissionAction$]"
+}

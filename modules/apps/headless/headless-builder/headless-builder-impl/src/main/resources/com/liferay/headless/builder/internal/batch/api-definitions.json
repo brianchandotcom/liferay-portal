@@ -28,13 +28,13 @@
 					"DBType": "String",
 					"businessType": "Picklist",
 					"defaultValue": "ascending",
-					"externalReferenceCode": "MSOD_SORT_ORDER_FIELD",
+					"externalReferenceCode": "ORDER",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
 						"en_US": "Order"
 					},
-					"listTypeDefinitionExternalReferenceCode": "MSOD_SORT_ORDER_PICKLIST",
+					"listTypeDefinitionExternalReferenceCode": "ORDER_PICKLIST",
 					"name": "order",
 					"objectFieldSettings": [
 						{
@@ -69,7 +69,7 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "MSOD_SORT_OBJECT_FIELD_FIELD",
+					"externalReferenceCode": "OBJECT_FIELD_ERC",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
@@ -105,7 +105,7 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "MSOD_FILTER_OBJECT_FIELD_FIELD",
+					"externalReferenceCode": "OBJECT_FIELD_ERC",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
@@ -120,7 +120,7 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "MSOD_FILTER_ODATA_FIELD",
+					"externalReferenceCode": "ODATA_FILTER",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
@@ -156,7 +156,7 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "MSOD_ENDPOINT_DESCRIPTION_FIELD",
+					"externalReferenceCode": "DESCRIPTION",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
@@ -172,13 +172,13 @@
 					"DBType": "String",
 					"businessType": "Picklist",
 					"defaultValue": "get",
-					"externalReferenceCode": "MSOD_ENDPOINT_HTTP_METHOD_FIELD",
+					"externalReferenceCode": "HTTP_METHOD",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
 						"en_US": "HTTPMethod"
 					},
-					"listTypeDefinitionExternalReferenceCode": "MSOD_ENDPOINT_HTTP_METHOD_PICKLIST",
+					"listTypeDefinitionExternalReferenceCode": "HTTP_METHOD_PICKLIST",
 					"name": "hTTPMethod",
 					"objectFieldSettings": [
 						{
@@ -202,7 +202,7 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "MSOD_ENDPOINT_NAME_FIELD",
+					"externalReferenceCode": "NAME",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
@@ -217,7 +217,7 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "MSOD_ENDPOINT_PATH_FIELD",
+					"externalReferenceCode": "PATH",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
@@ -233,13 +233,13 @@
 					"DBType": "String",
 					"businessType": "Picklist",
 					"defaultValue": "instance",
-					"externalReferenceCode": "MSOD_ENDPOINT_SCOPE_FIELD",
+					"externalReferenceCode": "SCOPE",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
 						"en_US": "Scope"
 					},
-					"listTypeDefinitionExternalReferenceCode": "MSOD_ENDPOINT_SCOPE_PICKLIST",
+					"listTypeDefinitionExternalReferenceCode": "SCOPE_PICKLIST",
 					"name": "scope",
 					"objectFieldSettings": [
 						{
@@ -328,7 +328,7 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "MSOD_PROPERTY_DESCRIPTION_FIELD",
+					"externalReferenceCode": "DESCRIPTION",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
@@ -343,7 +343,7 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "MSOD_PROPERTY_OBJECT_FIELD_FIELD",
+					"externalReferenceCode": "OBJECT_FIELD_ERC",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
@@ -358,7 +358,7 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "MSOD_PROPERTY_NAME_FIELD",
+					"externalReferenceCode": "NAME",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
@@ -373,7 +373,7 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "MSOD_PROPERTY_OBJECT_RELATIONSHIP_FIELD",
+					"externalReferenceCode": "OBJECT_RELATIONSHIPS",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
@@ -388,7 +388,7 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "MSOD_PROPERTY_PARENT_PROPERTY_FIELD",
+					"externalReferenceCode": "PARENT_PROPERTY_ERC",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
@@ -442,7 +442,7 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "MSOD_SCHEMA_DESCRIPTION_FIELD",
+					"externalReferenceCode": "DESCRIPTION",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
@@ -457,7 +457,7 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "MSOD_SCHEMA_OBJECT_DEFINITION_FIELD",
+					"externalReferenceCode": "MAIN_OBJECT_DEFINITION_ERC",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
@@ -472,7 +472,7 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "MSOD_SCHEMA_NAME_FIELD",
+					"externalReferenceCode": "NAME",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
@@ -541,13 +541,13 @@
 					"DBType": "String",
 					"businessType": "Picklist",
 					"defaultValue": "draft",
-					"externalReferenceCode": "MSOD_APPLICATION_STATUS_FIELD",
+					"externalReferenceCode": "STATUS",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
 						"en_US": "Application status"
 					},
-					"listTypeDefinitionExternalReferenceCode": "MSOD_APPLICATION_STATUS_PICKLIST",
+					"listTypeDefinitionExternalReferenceCode": "STATUS_PICKLIST",
 					"name": "applicationStatus",
 					"objectFieldSettings": [
 						{
@@ -582,7 +582,7 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "MSOD_APPLICATION_BASE_URL_FIELD",
+					"externalReferenceCode": "BASE_URL",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "",
@@ -604,7 +604,7 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "MSOD_APPLICATION_DESCRIPTION_FIELD",
+					"externalReferenceCode": "DESCRIPTION",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
@@ -620,7 +620,7 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "MSOD_APPLICATION_NAME_FIELD",
+					"externalReferenceCode": "TITLE",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
@@ -636,7 +636,7 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "MSOD_APPLICATION_VERSION_FIELD",
+					"externalReferenceCode": "VERSION",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
@@ -683,7 +683,7 @@
 			"panelCategoryKey": "",
 			"parameterRequired": false,
 			"pluralLabel": {
-				"en_US": "Api Applications"
+				"en_US": "API Applications"
 			},
 			"portlet": false,
 			"scope": "company",

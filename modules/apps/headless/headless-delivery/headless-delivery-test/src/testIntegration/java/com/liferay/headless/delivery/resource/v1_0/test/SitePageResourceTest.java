@@ -52,11 +52,13 @@ import com.liferay.headless.delivery.client.dto.v1_0.SEOSettings;
 import com.liferay.headless.delivery.client.dto.v1_0.Settings;
 import com.liferay.headless.delivery.client.dto.v1_0.SiteMapSettings;
 import com.liferay.headless.delivery.client.dto.v1_0.SitePage;
+import com.liferay.headless.delivery.client.dto.v1_0.SitePageNavigationMenuSettings;
 import com.liferay.headless.delivery.client.dto.v1_0.TaxonomyCategoryBrief;
 import com.liferay.headless.delivery.client.dto.v1_0.TaxonomyCategoryReference;
 import com.liferay.headless.delivery.client.pagination.Page;
 import com.liferay.headless.delivery.client.problem.Problem;
 import com.liferay.headless.delivery.client.resource.v1_0.SitePageResource;
+import com.liferay.layout.admin.kernel.model.LayoutTypePortletConstants;
 import com.liferay.layout.importer.LayoutsImporter;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
@@ -313,6 +315,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		_testPostSiteSitePageSuccessPagePermissionsRoleOwnerMissing();
 		_testPostSiteSitePageSuccessPageSettingsOpenGraphSettings();
 		_testPostSiteSitePageSuccessPageSettingsSeoSettings();
+		_testPostSiteSitePageSuccessPageSettingsSiteNavigationMenuSettings();
 		_testPostSiteSitePageSuccessParentSitePage();
 		_testPostSiteSitePageSuccessParentSitePageNonexisting();
 		_testPostSiteSitePageSuccessTaxonomyCategoryBriefNonexisting();
@@ -1479,6 +1482,50 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		Assert.assertEquals(
 			pageSettings.getSeoSettings(), postPageSettings.getSeoSettings());
+	}
+
+	private void _testPostSiteSitePageSuccessPageSettingsSiteNavigationMenuSettings()
+		throws Exception {
+
+		SitePage randomSitePage = randomSitePage();
+
+		String randomQueryString = RandomTestUtil.randomString();
+		String randomTarget = RandomTestUtil.randomString();
+
+		PageSettings pageSettings = new PageSettings() {
+			{
+				sitePageNavigationMenuSettings =
+					new SitePageNavigationMenuSettings() {
+						{
+							queryString = randomQueryString;
+							target = randomTarget;
+						}
+					};
+			}
+		};
+
+		randomSitePage.setPageSettings(pageSettings);
+
+		SitePage postSitePage = testPostSiteSitePage_addSitePage(
+			randomSitePage);
+
+		Layout layout = _layoutLocalService.fetchLayout(postSitePage.getId());
+
+		Assert.assertNotNull(layout);
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			layout.getTypeSettingsProperties();
+
+		Assert.assertEquals(
+			typeSettingsUnicodeProperties.get(
+				LayoutTypePortletConstants.QUERY_STRING),
+			randomQueryString);
+		Assert.assertEquals(
+			typeSettingsUnicodeProperties.get(
+				LayoutTypePortletConstants.TARGET),
+			randomTarget);
+
+		Assert.assertNull(typeSettingsUnicodeProperties.get("targetType"));
 	}
 
 	private void _testPostSiteSitePageSuccessParentSitePage() throws Exception {

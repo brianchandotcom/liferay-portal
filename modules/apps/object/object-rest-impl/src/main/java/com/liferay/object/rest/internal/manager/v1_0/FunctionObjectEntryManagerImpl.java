@@ -74,6 +74,7 @@ public class FunctionObjectEntryManagerImpl
 
 		return _toObjectEntry(
 			_launch(
+				Http.Method.POST,
 				_toJSONObject(
 					dtoConverterContext, scopeKey
 				).put(
@@ -100,6 +101,7 @@ public class FunctionObjectEntryManagerImpl
 			dtoConverterContext.getUser());
 
 		_launch(
+			Http.Method.DELETE,
 			_toJSONObject(
 				dtoConverterContext, scopeKey
 			).put(
@@ -127,6 +129,7 @@ public class FunctionObjectEntryManagerImpl
 
 		return _toObjectEntries(
 			_launch(
+				Http.Method.GET,
 				_toJSONObject(
 					dtoConverterContext, scopeKey
 				).put(
@@ -167,6 +170,7 @@ public class FunctionObjectEntryManagerImpl
 
 		return _toObjectEntry(
 			_launch(
+				Http.Method.GET,
 				_toJSONObject(
 					dtoConverterContext, scopeKey
 				).put(
@@ -213,6 +217,7 @@ public class FunctionObjectEntryManagerImpl
 
 		return _toObjectEntry(
 			_launch(
+				Http.Method.PUT,
 				_toJSONObject(
 					dtoConverterContext, scopeKey
 				).put(
@@ -241,11 +246,12 @@ public class FunctionObjectEntryManagerImpl
 	}
 
 	private byte[] _launch(
-			JSONObject payloadJSONObject, String resourcePath, long userId)
+			Http.Method method, JSONObject payloadJSONObject,
+			String resourcePath, long userId)
 		throws Exception {
 
 		return _portalCatapult.launch(
-			_companyId, Http.Method.POST,
+			_companyId, method,
 			_functionObjectEntryManagerConfiguration.
 				oAuth2ApplicationExternalReferenceCode(),
 			payloadJSONObject, resourcePath, userId);

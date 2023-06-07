@@ -20,8 +20,11 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.io.IOException;
 
@@ -55,16 +58,35 @@ public abstract class BaseCopyEntryMVCActionCommand
 	}
 
 	@Reference
+	protected GroupLocalService groupLocalService;
+
+	@Reference
 	protected JSONFactory jsonFactory;
 
 	@Reference
 	protected Language language;
+
+	private void _checkDestinationRepositoryId(ActionRequest actionRequest)
+		throws PortalException {
+
+		long destinationRepositoryId = ParamUtil.getLong(
+			actionRequest, "destinationRepositoryId");
+
+		Group group = groupLocalService.fetchGroup(destinationRepositoryId);
+
+		if ((group != null) && group.isStaged() && !group.isStagingGroup()) {
+			throw new PortalException(
+				"cannot-copy-entries-to-the-live-version-of-a-group");
+		}
+	}
 
 	private void _copyEntry(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws IOException {
 
 		try {
+			_checkDestinationRepositoryId(actionRequest);
+
 			doCopyEntry(actionRequest);
 
 			JSONPortletResponseUtil.writeJSON(

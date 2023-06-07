@@ -602,6 +602,10 @@
 			<category name="Styling" />
 			<description name="Applies rules to enforce consistency in code style." />
 		</check>
+		<check name="JavaUpgradeModelPermissionsCheck">
+			<category name="Upgrade" />
+			<description name="Replace setGroupPermissions and setGuestPermissions by new implementation" />
+		</check>
 		<check name="JavaUpgradeServiceTrackerListCheck">
 			<category name="Upgrade" />
 			<description name="Replace the number of generic type arguments in ServiceTrackerList" />

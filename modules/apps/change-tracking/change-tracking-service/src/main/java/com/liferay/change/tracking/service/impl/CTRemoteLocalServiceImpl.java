@@ -21,6 +21,8 @@ import com.liferay.json.storage.service.JSONStorageEntryLocalService;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
@@ -40,6 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class CTRemoteLocalServiceImpl extends CTRemoteLocalServiceBaseImpl {
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CTRemote addCTRemote(
 			long userId, String name, String description, String url)
@@ -79,6 +82,7 @@ public class CTRemoteLocalServiceImpl extends CTRemoteLocalServiceBaseImpl {
 		return ctRemotePersistence.findByCompanyId(companyId, start, end);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CTRemote updateCTRemote(
 			long ctRemoteId, String name, String description, String url)

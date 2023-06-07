@@ -12,6 +12,7 @@ dependencies {
 	testIntegrationCompile project(":apps:document-library:document-library-test-util")
 	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")
+	testIntegrationCompile project(":apps:fragment:fragment-api")
 	testIntegrationCompile project(":apps:headless:headless-delivery:headless-delivery-api")
 	testIntegrationCompile project(":apps:headless:headless-delivery:headless-delivery-client")
 	testIntegrationCompile project(":apps:journal:journal-api")

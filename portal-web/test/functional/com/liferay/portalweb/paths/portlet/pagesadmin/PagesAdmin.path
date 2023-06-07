@@ -119,7 +119,7 @@
 </tr>
 <tr>
 	<td>LIST_GROUP_ITEM_PAGE_TYPE</td>
-	<td>//*[contains(@class,'list-group-item')]//h5[contains(.,'${key_pageType}')]/../ h4[contains(.,'${key_pageName}')]</td>
+	<td>//*[contains(@class,'list-group-item')]//div[contains(@class,'list-group-title')][contains(.,'${key_pageName}')]//following-sibling::div[contains(@class,'list-group-subtitle')][normalize-space()='${key_pageType}']</td>
 	<td></td>
 </tr>
 <tr>

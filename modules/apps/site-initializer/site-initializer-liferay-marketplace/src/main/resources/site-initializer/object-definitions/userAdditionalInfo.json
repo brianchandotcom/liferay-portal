@@ -1,7 +1,7 @@
 {
 	"accountEntryRestricted": true,
 	"enableCategorization": true,
-	"externalReferenceCode": "MARKETPLACE-OBJECT-DEFINITION-1",
+	"externalReferenceCode": "MARKETPLACE-USER-ADDITIONAL",
 	"label": {
 		"en_US": "User Additional Info"
 	},

@@ -51,6 +51,14 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(them
 
 	<div class="export-dialog-tree">
 		<clay:container-fluid>
+			<div class="alert alert-warning">
+				<liferay-ui:message key="import-lar-file-deletion-warning-message" />
+			</div>
+
+			<div class="alert alert-warning">
+				<liferay-ui:message key="import-process-deletion-warning-message" />
+			</div>
+
 			<div class="sheet">
 				<div class="panel-group panel-group-flush">
 					<aui:fieldset cssClass="options-group" label="file">

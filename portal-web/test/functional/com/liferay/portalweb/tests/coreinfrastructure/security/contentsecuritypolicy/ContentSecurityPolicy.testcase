@@ -47,9 +47,9 @@ definition {
 
 		task ("When add the OSGI configuration file") {
 			ContentSecurityPolicy.deployInstanceConfigFile(
-				osgiConfigFileName = "com.liferay.portal.security.content.security.policy.internal.configuration.ContentSecurityPolicyConfiguration.scoped~instance.config",
+				osgiConfigFileName = "com.liferay.portal.security.content.security.policy.internal.configuration.ContentSecurityPolicyConfiguration.scoped~instance~level.config",
 				portalInstanceName = "www.able.com");
-			
+
 			OSGiConfig.waitForOSGiConfig();
 		}
 
@@ -59,7 +59,7 @@ definition {
 			AssertTextPresent(
 				locator1 = "ContentSecurityPolicy#CONTENT_SECURITY_POLICY_TEXT",
 				value1 = "img-src http://www.able.com");
-			
+
 			AssertTextPresent(
 				locator1 = "ContentSecurityPolicy#EXCLUDED_PATHS_TEXT",
 				value1 = "/c/portal/layout");
@@ -134,6 +134,53 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-179901. TC-2. Verify the CSP configuration could be loaded from OSGi configuration file."
+	@priority = 5
+	test VerifyCSPSiteSettingsCanBeLoadedFromOSGiFile {
+		property test.name.skip.portal.instance = "ContentSecurityPolicy#VerifyCSPSiteSettingsCanBeLoadedFromOSGiFile";
+
+		task ("Given Add new site and add a new virtual host as SiteURL") {
+			HeadlessSite.addSite(siteName = "Site Name");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Test Page");
+
+			Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+
+			Site.addVirtualHostsURLCP(
+				pageVirtualHosts = "true",
+				pageVirtualHostURL = "www.able.com");
+		}
+
+		task ("When add the OSGI configuration file") {
+			ContentSecurityPolicy.deploySiteConfigFile(
+				groupName = "Site Name",
+				osgiConfigFileName = "com.liferay.portal.security.content.security.policy.internal.configuration.ContentSecurityPolicyConfiguration.scoped~site~level.config");
+
+			UserBar.signOut();
+
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "http://www.able.com:8080",
+				userEmailAddress = "test@liferay.com");
+		}
+
+		task ("Then: The preconfigured value is present at Site Settings.") {
+			ContentSecurityPolicy.goToContentSecurityPolicySiteSettings(
+				baseURL = "http://www.able.com:8080",
+				siteURLKey = "site-name");
+
+			AssertTextPresent(
+				locator1 = "ContentSecurityPolicy#CONTENT_SECURITY_POLICY_TEXT",
+				value1 = "img-src http://www.able.com");
+
+			AssertTextPresent(
+				locator1 = "ContentSecurityPolicy#EXCLUDED_PATHS_TEXT",
+				value1 = "/c/portal/layout");
+		}
+	}
+
 	@description = "This is a use case for LPS-179552. TC-1. Verify if 'nonce' value is added to all script and link HTML elements of the page."
 	@priority = 5
 	test VerifyNonceIsAddedWhenCSPIsEnabled {
@@ -178,13 +225,87 @@ definition {
 		task ("When: Add '/web/guest' as Excluded URI Path.") {
 			ContentSecurityPolicy.goToContentSecurityPolicyInstanceSettings(baseURL = "http://www.able.com:8080");
 
-			ContentSecurityPolicy.configureCSP(
-				excludedPaths = "/c/portal/layout");
+			ContentSecurityPolicy.configureCSP(excludedPaths = "/c/portal/layout");
 		}
 
 		task ("Then: Verify 'nonce' value isn't added to script and link HTML elements of the page.") {
 			Navigator.openSpecificURL(url = "http://www.able.com:8080");
-			
+
+			var pageSource = selenium.getHtmlSource();
+
+			TestUtils.assertNotContain(
+				actual = ${pageSource},
+				expected = "script nonce");
+
+			TestUtils.assertNotContain(
+				actual = ${pageSource},
+				expected = "link nonce");
+		}
+	}
+
+	@description = "This is a use case for LPS-179901. TC-1. Verify if 'nonce' value is added to all script and link HTML elements of the site page."
+	@priority = 5
+	test VerifyNonceIsAddedWhenCSPIsEnabledAtSiteLevel {
+		property test.name.skip.portal.instance = "ContentSecurityPolicy#VerifyNonceIsAddedWhenCSPIsEnabledAtSiteLevel";
+
+		task ("Given Add new site and add a new virtual host as SiteURL") {
+			HeadlessSite.addSite(siteName = "Site Name");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Test Page");
+
+			Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+
+			Site.addVirtualHostsURLCP(
+				pageVirtualHosts = "true",
+				pageVirtualHostURL = "www.able.com");
+
+			UserBar.signOut();
+
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "http://www.able.com:8080",
+				userEmailAddress = "test@liferay.com");
+		}
+
+		task ("And: Enable CSP at Site level.") {
+			ContentSecurityPolicy.goToContentSecurityPolicySiteSettings(
+				baseURL = "http://www.able.com:8080",
+				siteURLKey = "site-name");
+
+			ContentSecurityPolicy.configureCSP(
+				csp = "img-src http://www.able.com",
+				enableCSP = "true");
+		}
+
+		task ("When: Navigate to default site page and check HTML page source.") {
+			Navigator.openSpecificURL(url = "http://www.able.com:8080");
+		}
+
+		task ("Then: Verify 'nonce' value is added to script and link HTML elements of the page.") {
+			var pageSource = selenium.getHtmlSource();
+
+			TestUtils.assertPartialEquals(
+				actual = ${pageSource},
+				expected = "script nonce");
+
+			TestUtils.assertPartialEquals(
+				actual = ${pageSource},
+				expected = "link nonce");
+		}
+
+		task ("When: Add '/web/guest' as Excluded URI Path.") {
+			ContentSecurityPolicy.goToContentSecurityPolicySiteSettings(
+				baseURL = "http://www.able.com:8080",
+				siteURLKey = "site-name");
+
+			ContentSecurityPolicy.configureCSP(excludedPaths = "/c/portal/layout");
+		}
+
+		task ("Then: Verify 'nonce' value isn't added to script and link HTML elements of the page.") {
+			Navigator.openSpecificURL(url = "http://www.able.com:8080");
+
 			var pageSource = selenium.getHtmlSource();
 
 			TestUtils.assertNotContain(

@@ -47,6 +47,7 @@ import java.security.MessageDigest;
 
 import java.util.Dictionary;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -140,6 +141,34 @@ public class OpenIdConnectProviderManagedServiceFactory
 						company.getCompanyId(), null, "", properties);
 				}
 			});
+
+		List<OAuthClientEntry> oAuthClientEntries =
+			_oAuthClientEntryLocalService.getCompanyOAuthClientEntries(
+				company.getCompanyId());
+
+		for (OAuthClientEntry oAuthClientEntry : oAuthClientEntries) {
+			Map<String, Long> oAuthClientEntryIds = _oAuthClientEntryIds.get(
+				company.getCompanyId());
+
+			if (oAuthClientEntryIds == null) {
+				oAuthClientEntryIds = new HashMap<>();
+
+				_oAuthClientEntryIds.put(
+					company.getCompanyId(), oAuthClientEntryIds);
+			}
+
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
+				oAuthClientEntry.getInfoJSON());
+
+			String clientName = jsonObject.getString("client_name", null);
+
+			if (clientName != null) {
+				clientName = clientName.substring(10);
+			}
+
+			oAuthClientEntryIds.put(
+				clientName, oAuthClientEntry.getOAuthClientEntryId());
+		}
 	}
 
 	@Override

@@ -569,6 +569,7 @@ const MoveButton = ({
 			className="mr-2 sr-only sr-only-focusable"
 			disabled={node.isMasterItem || node.hiddenAncestor}
 			displayType="unstyled"
+			onBlur={(event) => event.stopPropagation()}
 			onClick={() =>
 				setMovementSource({
 					fragmentEntryType,

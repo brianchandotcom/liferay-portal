@@ -109,11 +109,6 @@ public class SXPBlueprintLocalServiceImpl
 	}
 
 	@Override
-	public List<SXPBlueprint> getSXPBlueprints(long companyId) {
-		return sxpBlueprintPersistence.findByCompanyId(companyId);
-	}
-
-	@Override
 	public void deleteCompanySXPBlueprints(long companyId)
 		throws PortalException {
 
@@ -154,6 +149,11 @@ public class SXPBlueprintLocalServiceImpl
 	}
 
 	@Override
+	public List<SXPBlueprint> getSXPBlueprints(long companyId) {
+		return sxpBlueprintPersistence.findByCompanyId(companyId);
+	}
+
+	@Override
 	public int getSXPBlueprintsCount(long companyId) {
 		return sxpBlueprintPersistence.countByCompanyId(companyId);
 	}
@@ -165,7 +165,7 @@ public class SXPBlueprintLocalServiceImpl
 		_companyLocalService.forEachCompanyId(
 			companyId -> {
 				List<SXPBlueprint> sxpBlueprints =
-					super.sxpBlueprintPersistence.findByCompanyId(companyId);
+					sxpBlueprintLocalService.getSXPBlueprints(companyId);
 
 				for (SXPBlueprint sxpBlueprint : sxpBlueprints) {
 					_registerCollectionProvider(sxpBlueprint);

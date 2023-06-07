@@ -100,6 +100,7 @@ import org.gradle.api.tasks.bundling.Compression;
 import org.gradle.api.tasks.bundling.Tar;
 import org.gradle.api.tasks.bundling.Zip;
 import org.gradle.language.base.plugins.LifecycleBasePlugin;
+import org.gradle.util.Path;
 
 /**
  * @author Andrea Di Giorgi
@@ -1086,7 +1087,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 				@Override
 				public void execute(Project project) {
-					_configureDownloadTask(download, workspaceExtension);
+					_configureDownloadTask(project, download, workspaceExtension);
 				}
 
 			});
@@ -1750,7 +1751,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 				}));
 	}
 
-	private void _configureDownloadTask(
+	private void _configureDownloadTask(Project project, 
 		Download download, WorkspaceExtension workspaceExtension) {
 
 		File destinationDir = workspaceExtension.getBundleCacheDir();
@@ -1769,9 +1770,22 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			if (bundleURLString.startsWith("file:")) {
 				URL url = new URL(bundleURLString);
 
-				File file = new File(url.getFile());
+				Path bundleFilePath = Path.path(url.getPath());
 
-				file = file.getAbsoluteFile();
+				File file = null;
+
+				if (bundleFilePath.isAbsolute()){
+					file = new File(url.getFile());
+
+					file = file.getAbsoluteFile();
+				}
+				else{
+					file = project.file(url.getFile());
+				}
+
+				if (Objects.isNull(file)){
+					return;
+				}
 
 				URI uri = file.toURI();
 

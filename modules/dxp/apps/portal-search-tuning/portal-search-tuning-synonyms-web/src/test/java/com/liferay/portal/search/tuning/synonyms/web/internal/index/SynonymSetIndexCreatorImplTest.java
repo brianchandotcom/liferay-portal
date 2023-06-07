@@ -15,6 +15,7 @@
 package com.liferay.portal.search.tuning.synonyms.web.internal.index;
 
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.search.engine.adapter.document.DocumentResponse;
 import com.liferay.portal.search.engine.adapter.index.CreateIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.DeleteIndexRequest;
 import com.liferay.portal.search.tuning.synonyms.index.name.SynonymSetIndexName;
@@ -61,6 +62,8 @@ public class SynonymSetIndexCreatorImplTest extends BaseSynonymsWebTestCase {
 
 	@Test
 	public void testDelete() {
+		setUpSearchEngineAdapter((DocumentResponse)null);
+
 		_synonymSetIndexCreatorImpl.delete(
 			Mockito.mock(SynonymSetIndexName.class));
 

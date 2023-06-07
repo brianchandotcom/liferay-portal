@@ -26,21 +26,9 @@ import aQute.bnd.annotation.metatype.Meta;
 public interface FunctionObjectEntryManagerConfiguration {
 
 	@Meta.AD
-	public String deleteObjectEntryResourcePath();
-
-	@Meta.AD
-	public String getObjectEntriesResourcePath();
-
-	@Meta.AD
-	public String getObjectEntryResourcePath();
-
-	@Meta.AD
 	public String oAuth2ApplicationExternalReferenceCode();
 
 	@Meta.AD
-	public String postObjectEntryResourcePath();
-
-	@Meta.AD
-	public String putObjectEntryResourcePath();
+	public String resourcePath();
 
 }

@@ -17,6 +17,7 @@ package com.liferay.sample;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import net.datafaker.Faker;
 import net.datafaker.providers.base.Name;
@@ -47,90 +48,167 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ObjectEntryManager1RestController extends BaseRestController {
 
-	@DeleteMapping
+	@DeleteMapping(
+		"/${objectDefinitionExternalReferenceCode}/${externalReferenceCode}"
+	)
 	public ResponseEntity<String> delete(
 		@AuthenticationPrincipal Jwt jwt,
+		@PathVariable String objectDefinitionExternalReferenceCode,
 		@PathVariable String externalReferenceCode) {
 
 		log(jwt, _log);
 
-		JSONObject jsonObject = _jsonObjects.remove(externalReferenceCode);
+		Map<String, JSONObject> objectEntryJSONObjects =
+			_getObjectEntryJSONObjects(objectDefinitionExternalReferenceCode);
 
-		return new ResponseEntity<>(String.valueOf(jsonObject), HttpStatus.OK);
+		JSONObject objectEntryJSONObject = objectEntryJSONObjects.remove(
+			externalReferenceCode);
+
+		if (objectEntryJSONObject == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+
+		return new ResponseEntity<>(
+			objectEntryJSONObject.toString(), HttpStatus.OK);
 	}
 
-	@GetMapping
-	public ResponseEntity<String> get(@AuthenticationPrincipal Jwt jwt) {
+	@GetMapping("/${objectDefinitionExternalReferenceCode}")
+	public ResponseEntity<String> get(
+		@AuthenticationPrincipal Jwt jwt,
+		@PathVariable String objectDefinitionExternalReferenceCode) {
+
 		log(jwt, _log);
+
+		Map<String, JSONObject> objectEntryJSONObjects =
+			_getObjectEntryJSONObjects(objectDefinitionExternalReferenceCode);
 
 		return new ResponseEntity<>(
 			new JSONObject(
 			).put(
-				"items", _jsonObjects.values()
+				"items", objectEntryJSONObjects.values()
 			).put(
-				"totalCount", _jsonObjects.size()
+				"totalCount", objectEntryJSONObjects.size()
 			).toString(),
 			HttpStatus.OK);
 	}
 
-	@GetMapping("/${externalReferenceCode}")
+	@GetMapping(
+		"/${objectDefinitionExternalReferenceCode}/${externalReferenceCode}"
+	)
 	public ResponseEntity<String> get(
 		@AuthenticationPrincipal Jwt jwt,
+		@PathVariable String objectDefinitionExternalReferenceCode,
 		@PathVariable String externalReferenceCode) {
 
 		log(jwt, _log);
 
-		JSONObject jsonObject = _jsonObjects.get(externalReferenceCode);
+		Map<String, JSONObject> objectEntryJSONObjects =
+			_getObjectEntryJSONObjects(objectDefinitionExternalReferenceCode);
 
-		return new ResponseEntity<>(String.valueOf(jsonObject), HttpStatus.OK);
+		JSONObject objectEntryJSONObject = objectEntryJSONObjects.get(
+			externalReferenceCode);
+
+		if (objectEntryJSONObject == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+
+		return new ResponseEntity<>(
+			objectEntryJSONObject.toString(), HttpStatus.OK);
 	}
 
-	@PostMapping
+	@PostMapping("/${objectDefinitionExternalReferenceCode}")
 	public ResponseEntity<String> post(
 		@AuthenticationPrincipal Jwt jwt,
-		@PathVariable String externalReferenceCode, @RequestBody String json) {
+		@PathVariable String objectDefinitionExternalReferenceCode,
+		@RequestBody String json) {
 
 		log(jwt, _log, json);
 
-		if (_jsonObjects.containsKey(externalReferenceCode)) {
+		Map<String, JSONObject> objectEntryJSONObjects =
+			_getObjectEntryJSONObjects(objectDefinitionExternalReferenceCode);
+
+		JSONObject objectEntryJSONObject = _getObjectEntryJSONObject(json);
+
+		String externalReferenceCode = objectEntryJSONObject.getString(
+			"externalReferenceCode");
+
+		if ((externalReferenceCode == null) ||
+			externalReferenceCode.isEmpty()) {
+
+			externalReferenceCode = String.valueOf(UUID.randomUUID());
+
+			objectEntryJSONObject.put(
+				"externalReferenceCode", externalReferenceCode);
+		}
+
+		if (objectEntryJSONObjects.containsKey(externalReferenceCode)) {
 			return new ResponseEntity<>(json, HttpStatus.CONFLICT);
 		}
 
-		JSONObject jsonObject = new JSONObject(json);
+		objectEntryJSONObjects.put(
+			externalReferenceCode, objectEntryJSONObject);
 
-		_jsonObjects.put(externalReferenceCode, jsonObject);
-
-		return new ResponseEntity<>(json, HttpStatus.OK);
+		return new ResponseEntity<>(
+			objectEntryJSONObject.toString(), HttpStatus.OK);
 	}
 
-	@PutMapping
+	@PutMapping(
+		"/${objectDefinitionExternalReferenceCode}/${externalReferenceCode}"
+	)
 	public ResponseEntity<String> put(
 		@AuthenticationPrincipal Jwt jwt,
+		@PathVariable String objectDefinitionExternalReferenceCode,
 		@PathVariable String externalReferenceCode, @RequestBody String json) {
 
 		log(jwt, _log, json);
 
-		if (!_jsonObjects.containsKey(externalReferenceCode)) {
+		Map<String, JSONObject> objectEntryJSONObjects =
+			_getObjectEntryJSONObjects(objectDefinitionExternalReferenceCode);
+
+		if (!objectEntryJSONObjects.containsKey(externalReferenceCode)) {
 			return new ResponseEntity<>(json, HttpStatus.NOT_FOUND);
 		}
 
-		JSONObject jsonObject = new JSONObject(json);
+		JSONObject objectEntryJSONObject = _getObjectEntryJSONObject(json);
 
 		Faker faker = new Faker();
 
 		Name name = faker.name();
 
-		jsonObject.put(
+		objectEntryJSONObject.put(
 			"creator", Collections.singletonMap("name", name.fullName()));
 
-		_jsonObjects.put(externalReferenceCode, jsonObject);
+		objectEntryJSONObjects.put(
+			externalReferenceCode, objectEntryJSONObject);
 
-		return new ResponseEntity<>(jsonObject.toString(), HttpStatus.OK);
+		return new ResponseEntity<>(
+			objectEntryJSONObject.toString(), HttpStatus.OK);
+	}
+
+	private JSONObject _getObjectEntryJSONObject(String json) {
+		JSONObject jsonObject = new JSONObject(json);
+
+		JSONObject objectEntryJSONObject = jsonObject.getJSONObject(
+			"objectEntry");
+
+		if (objectEntryJSONObject == null) {
+			throw new IllegalArgumentException("Object entry is null");
+		}
+
+		return objectEntryJSONObject;
+	}
+
+	private Map<String, JSONObject> _getObjectEntryJSONObjects(
+		String objectDefinitionExternalReferenceCode) {
+
+		return _objectEntryJSONObjectsMap.computeIfAbsent(
+			objectDefinitionExternalReferenceCode, key -> new HashMap<>());
 	}
 
 	private static final Log _log = LogFactory.getLog(
 		ObjectEntryManager1RestController.class);
 
-	private static final Map<String, JSONObject> _jsonObjects = new HashMap<>();
+	private static final Map<String, Map<String, JSONObject>>
+		_objectEntryJSONObjectsMap = new HashMap<>();
 
 }

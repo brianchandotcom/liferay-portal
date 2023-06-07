@@ -32,6 +32,7 @@ import com.liferay.headless.delivery.dto.v1_0.CustomMetaTag;
 import com.liferay.headless.delivery.dto.v1_0.MasterPage;
 import com.liferay.headless.delivery.dto.v1_0.OpenGraphSettings;
 import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
+import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.headless.delivery.dto.v1_0.PagePermission;
 import com.liferay.headless.delivery.dto.v1_0.PageSettings;
 import com.liferay.headless.delivery.dto.v1_0.ParentSitePage;
@@ -47,11 +48,15 @@ import com.liferay.headless.delivery.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.SitePageEntityModel;
 import com.liferay.headless.delivery.resource.v1_0.SitePageResource;
 import com.liferay.layout.admin.kernel.model.LayoutTypePortletConstants;
+import com.liferay.layout.importer.LayoutsImporter;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.service.LayoutSEOEntryService;
 import com.liferay.layout.util.LayoutCopyHelper;
+import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.ServicePreAction;
@@ -464,6 +469,8 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 			typeSettingsUnicodeProperties.toString(), hidden, friendlyUrlMap, 0,
 			_createServiceContext(siteId, sitePage));
 
+		_importPageDefinition(layout, sitePage.getPageDefinition());
+
 		layout = _updateLayoutSettings(layout, sitePage.getPageDefinition());
 
 		Layout draftLayout = _updateDraftLayout(layout);
@@ -761,6 +768,31 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 
 		return _segmentsExperienceLocalService.getSegmentsExperience(
 			segmentsExperienceIds[0]);
+	}
+
+	private void _importPageDefinition(
+			Layout layout, PageDefinition pageDefinition)
+		throws Exception {
+
+		if (pageDefinition == null) {
+			return;
+		}
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					layout.getGroupId(), layout.getPlid());
+
+		LayoutStructure layoutStructure = LayoutStructure.of(
+			layoutPageTemplateStructure.getDefaultSegmentsExperienceData());
+
+		PageElement pageElement = pageDefinition.getPageElement();
+
+		if ((layoutStructure != null) && (pageElement != null)) {
+			_layoutsImporter.importPageElement(
+				layout, layoutStructure, layoutStructure.getMainItemId(),
+				pageElement.toString(), 0);
+		}
 	}
 
 	private boolean _isEmbeddedPageDefinition() {
@@ -1233,10 +1265,17 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 		_layoutPageTemplateEntryLocalService;
 
 	@Reference
+	private LayoutPageTemplateStructureLocalService
+		_layoutPageTemplateStructureLocalService;
+
+	@Reference
 	private LayoutSEOEntryService _layoutSEOEntryService;
 
 	@Reference
 	private LayoutService _layoutService;
+
+	@Reference
+	private LayoutsImporter _layoutsImporter;
 
 	@Reference
 	private Portal _portal;

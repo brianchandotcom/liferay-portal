@@ -373,26 +373,27 @@ definition {
 	@description = "Automation ID: LPS-146849 | Test Summary: Verify if Link 'Finish Activation' hidden to requestor and user roles"
 	@priority = 5
 	test NoLinkIsDisplayedWhenYouAreARequesterOrUserRoles {
-		task ("Go to CP2.0 and join a project") {
+		task ("Given the user go to CP2.0 and join a project") {
 			CP2Utils.goToCustomerPortalSiteWithRefresh();
 
 			CustomerPortal.enterOnProject(title = ${testAccount});
 		}
 
-		task ("Going through onboarding") {
+		if (IsElementPresent(key_text = "Start Project Setup", locator1 = "Button#ANY")) {
 			CP2Utils.onboardingFlow();
 		}
+		else {
+			task ("When go to the product activation page") {
+				CP2NavigationMenu.goToProductActivation();
 
-		task ("Go to the product activation page") {
-			CP2NavigationMenu.goToProductActivation();
+				CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
+			}
 
-			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
-		}
-
-		task ("Assert that the Finish Activation link is not present on the card") {
-			AssertElementNotPresent(
-				locator1 = "CustomerPortalSite#FINISH_ACTIVATION",
-				value1 = "Finish Activation");
+			task ("Then assert that the Finish Activation link is not present on the card") {
+				AssertElementNotPresent(
+					locator1 = "CustomerPortalSite#FINISH_ACTIVATION",
+					value1 = "Finish Activation");
+			}
 		}
 	}
 

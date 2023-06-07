@@ -12,7 +12,7 @@
  * details.
  */
 
-import {Liferay} from './liferay';
+import {Liferay} from './liferay.js';
 
 const {REACT_APP_LIFERAY_HOST = window.location.origin} = process.env;
 

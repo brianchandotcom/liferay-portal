@@ -452,6 +452,7 @@ UpgradeGradleIncludeResourceCheck | [Upgrade](upgrade_checks.markdown#upgrade-ch
 UpgradeJavaAddFolderParameterCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | .bnd, .gradle, .java or .vm | Fill the new parameter of the method `addFolder` of `JournalFolderService`, `JournalFolderLocalService`, and `JournalFolderLocalServiceUtil` classes |
 UpgradeJavaCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | .bnd, .gradle, .java or .vm | Performs upgrade checks for `java` files |
 UpgradeJavaExtractTextMethodCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | .bnd, .gradle, .java or .vm | Replaces the references of the method `HtmlUtil.extractText(` with the method `extractText(` of `HtmlParser` class |
+UpgradeJavaServiceReferenceAnnotationCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | .bnd, .gradle, .java or .vm | Run code migration to replace '@ServiceReference' by '@Reference' |
 [UpgradeProcessCheck](check/upgrade_process_check.markdown#upgradeprocesscheck) | [Performance](performance_checks.markdown#performance-checks) | .java | Performs several checks on `*UpgradeProcess` classes. |
 UpgradeRemovedAPICheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | .java | Finds cases where calls are made to removed API after an upgrade. |
 UpgradeVelocityCommentMigrationCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | .bnd, .gradle, .java or .vm | Run code migration of comments from a Velocity file to a Freemarker file with the syntax replacements |

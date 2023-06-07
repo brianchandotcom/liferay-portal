@@ -448,10 +448,8 @@ const FixPackSelect: FC<React.HTMLAttributes<HTMLElement>> = () => {
 				</div>
 
 				<div className='fix-pack-button'>
-					<ClayLink
-						button
-						className='button-root more-information-link mt-4'
-						displayType='secondary'
+					<a
+						className='btn btn-secondary button-root more-information-link mt-4'
 						href={DXP_VERSIONS[dxpVersion].url}
 						target='_blank'
 					>
@@ -461,7 +459,7 @@ const FixPackSelect: FC<React.HTMLAttributes<HTMLElement>> = () => {
 						/>
 
 						{Liferay.Language.get('download')}
-					</ClayLink>
+					</a>
 				</div>
 			</div>
 		</>

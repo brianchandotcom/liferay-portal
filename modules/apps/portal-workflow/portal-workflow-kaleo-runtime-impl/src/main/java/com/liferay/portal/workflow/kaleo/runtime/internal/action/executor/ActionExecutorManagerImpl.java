@@ -104,13 +104,8 @@ public class ActionExecutorManagerImpl implements ActionExecutorManager {
 			bundleContext, ActionExecutor.class, null,
 			ServiceReferenceMapperFactory.create(
 				bundleContext,
-				(actionExecutor, emitter) -> {
-					for (String actionExecutorKey :
-							actionExecutor.getActionExecutorKeys()) {
-
-						emitter.emit(actionExecutorKey);
-					}
-				}));
+				(actionExecutor, emitter) -> emitter.emit(
+					actionExecutor.getActionExecutorKey())));
 	}
 
 	@Deactivate

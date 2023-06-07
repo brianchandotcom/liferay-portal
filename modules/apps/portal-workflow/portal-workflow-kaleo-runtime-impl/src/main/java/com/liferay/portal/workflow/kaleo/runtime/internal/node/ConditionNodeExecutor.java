@@ -60,23 +60,16 @@ public class ConditionNodeExecutor extends BaseNodeExecutor {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, ConditionEvaluator.class, "(scripting.language=*)",
 			(serviceReference, emitter) -> {
-				Object propertyValue = serviceReference.getProperty(
-					"scripting.language");
-
 				ConditionEvaluator conditionEvaluator =
 					bundleContext.getService(serviceReference);
 
 				try {
-					for (String scriptingLanguage :
-							GetterUtil.getStringValues(
-								propertyValue,
-								new String[] {String.valueOf(propertyValue)})) {
-
-						emitter.emit(
-							_getConditionEvaluatorKey(
-								scriptingLanguage,
-								ClassUtil.getClassName(conditionEvaluator)));
-					}
+					emitter.emit(
+						_getConditionEvaluatorKey(
+							GetterUtil.getString(
+								serviceReference.getProperty(
+									"scripting.language")),
+							ClassUtil.getClassName(conditionEvaluator)));
 				}
 				catch (KaleoDefinitionValidationException
 							kaleoDefinitionValidationException) {

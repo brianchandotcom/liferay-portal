@@ -111,24 +111,17 @@ public class ScriptNotificationRecipientBuilder
 			bundleContext, NotificationRecipientEvaluator.class,
 			"(scripting.language=*)",
 			(serviceReference, emitter) -> {
-				Object propertyValue = serviceReference.getProperty(
-					"scripting.language");
-
 				NotificationRecipientEvaluator notificationRecipientEvaluator =
 					bundleContext.getService(serviceReference);
 
 				try {
-					for (String scriptingLanguage :
-							GetterUtil.getStringValues(
-								propertyValue,
-								new String[] {String.valueOf(propertyValue)})) {
-
-						emitter.emit(
-							_getNotificationRecipientEvaluatorKey(
-								scriptingLanguage,
-								ClassUtil.getClassName(
-									notificationRecipientEvaluator)));
-					}
+					emitter.emit(
+						_getNotificationRecipientEvaluatorKey(
+							GetterUtil.getString(
+								serviceReference.getProperty(
+									"scripting.language")),
+							ClassUtil.getClassName(
+								notificationRecipientEvaluator)));
 				}
 				catch (KaleoDefinitionValidationException
 							kaleoDefinitionValidationException) {

@@ -153,8 +153,8 @@ public class ActionExecutorManagerImplTest {
 		}
 
 		@Override
-		public String[] getActionExecutorKeys() {
-			return new String[] {"java"};
+		public String getActionExecutorKey() {
+			return "java";
 		}
 
 		public boolean isExecuted() {

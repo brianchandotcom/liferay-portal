@@ -14,6 +14,7 @@
 
 package com.liferay.object.web.internal.object.entries.display.context;
 
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.object.display.context.ObjectEntryDisplayContext;
@@ -42,13 +43,16 @@ public class ObjectEntryDisplayContextFactory {
 		HttpServletRequest httpServletRequest) {
 
 		return new ObjectEntryDisplayContextImpl(
-			_ddmFormRenderer, httpServletRequest, _itemSelector,
-			_objectDefinitionLocalService, _objectEntryManagerRegistry,
-			_objectEntryLocalService, _objectEntryService,
-			_objectFieldBusinessTypeRegistry, _objectFieldLocalService,
-			_objectLayoutLocalService, _objectRelationshipLocalService,
-			_objectScopeProviderRegistry);
+			_ddmExpressionFactory, _ddmFormRenderer, httpServletRequest,
+			_itemSelector, _objectDefinitionLocalService,
+			_objectEntryManagerRegistry, _objectEntryLocalService,
+			_objectEntryService, _objectFieldBusinessTypeRegistry,
+			_objectFieldLocalService, _objectLayoutLocalService,
+			_objectRelationshipLocalService, _objectScopeProviderRegistry);
 	}
+
+	@Reference
+	private DDMExpressionFactory _ddmExpressionFactory;
 
 	@Reference
 	private DDMFormRenderer _ddmFormRenderer;

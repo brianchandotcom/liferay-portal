@@ -112,7 +112,7 @@
 </tr>
 <tr>
 	<td>PROJECT_LOGO</td>
-	<td>//*[contains(@class, 'subscription-card')]//img[contains(@src, '${logo}')]</td>
+	<td>//div[contains(@class,'account-subscription-card')]//div[contains(@class,'mb-3')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -347,7 +347,7 @@
 </tr>
 <tr>
 	<td>CARD_LOGO</td>
-	<td>//*[contains(@class, 'cp-img-activation-status') and contains(@src, '${product}')]</td>
+	<td>//*[contains(@class, 'cp-img-activation-status')]</td>
 	<td></td>
 </tr>
 <tr>

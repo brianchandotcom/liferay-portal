@@ -2,6 +2,7 @@
 definition {
 
 	property ci.retries.disabled = "true";
+	property custom.properties = "feature.flag.LPS-134060=true";
 	property portal.release = "false";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Content Security Policy";
@@ -25,6 +26,46 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-179552. TC-2. Verify the CSP configuration could be loaded from OSGi configuration file."
+	@priority = 5
+	test VerifyCSPConfigurationCanBeLoadedFromOSGiFile {
+		property test.name.skip.portal.instance = "ContentSecurityPolicy#VerifyCSPConfigurationCanBeLoadedFromOSGiFile";
+
+		task ("Given Add virtual instance and enable CSP at Instance level") {
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.able.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
+
+			UserBar.signOut();
+
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "http://www.able.com:8080",
+				userEmailAddress = "test@www.able.com");
+		}
+
+		task ("When add the OSGI configuration file") {
+			ContentSecurityPolicy.deployInstanceConfigFile(
+				osgiConfigFileName = "com.liferay.portal.security.content.security.policy.internal.configuration.ContentSecurityPolicyConfiguration.scoped~instance.config",
+				portalInstanceName = "www.able.com");
+			
+			OSGiConfig.waitForOSGiConfig();
+		}
+
+		task ("Then: The preconfigured value is present at Instance Settings.") {
+			ContentSecurityPolicy.goToContentSecurityPolicyInstanceSettings(baseURL = "http://www.able.com:8080");
+
+			AssertTextPresent(
+				locator1 = "ContentSecurityPolicy#CONTENT_SECURITY_POLICY_TEXT",
+				value1 = "img-src http://www.able.com");
+			
+			AssertTextPresent(
+				locator1 = "ContentSecurityPolicy#EXCLUDED_PATHS_TEXT",
+				value1 = "/c/portal/layout");
+		}
+	}
+
 	@description = "This is a use case for LPS-182349. TC-3. Verify the prespecified Content Security Policy settings could be configured at Instance level using Web ID."
 	@priority = 4
 	test VerifyCSPCouldConfiguredByWebId {
@@ -32,6 +73,8 @@ definition {
 
 		task ("Add the OSGI configuration file") {
 			ContentSecurityPolicy.deployInstanceConfigFile(osgiConfigFileName = "com.liferay.portal.security.content.security.policy.configuration.ContentSecurityPolicyConfiguration.scoped~custom-image-source-webid.config");
+
+			OSGiConfig.waitForOSGiConfig();
 		}
 
 		task ("When: The Instance Administrator opens the Content Security Policy settings at Instance level.") {
@@ -64,6 +107,8 @@ definition {
 
 		task ("Add the OSGI configuration file") {
 			ContentSecurityPolicy.deployInstanceConfigFile(osgiConfigFileName = "com.liferay.portal.security.content.security.policy.configuration.ContentSecurityPolicyConfiguration.scoped~custom-image-source.config");
+
+			OSGiConfig.waitForOSGiConfig();
 		}
 
 		task ("When: The Instance Administrator opens the Content Security Policy settings at Instance level.") {
@@ -86,6 +131,69 @@ definition {
 			TestUtils.assertPartialEquals(
 				actual = ${response},
 				expected = "Content-Security-Policy: img-src domain.example.com");
+		}
+	}
+
+	@description = "This is a use case for LPS-179552. TC-1. Verify if 'nonce' value is added to all script and link HTML elements of the page."
+	@priority = 5
+	test VerifyNonceIsAddedWhenCSPIsEnabled {
+		property test.name.skip.portal.instance = "ContentSecurityPolicy#VerifyNonceIsAddedWhenCSPIsEnabled";
+
+		task ("Given Add virtual instance and enable CSP at Instance level") {
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.able.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
+
+			UserBar.signOut();
+
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "http://www.able.com:8080",
+				userEmailAddress = "test@www.able.com");
+
+			ContentSecurityPolicy.goToContentSecurityPolicyInstanceSettings(baseURL = "http://www.able.com:8080");
+
+			ContentSecurityPolicy.configureCSP(
+				csp = "img-src http://www.able.com",
+				enableCSP = "true");
+		}
+
+		task ("When: Navigate to default site page and check HTML page source.") {
+			Navigator.openSpecificURL(url = "http://www.able.com:8080");
+		}
+
+		task ("Then: Verify 'nonce' value is added to script and link HTML elements of the page.") {
+			var pageSource = selenium.getHtmlSource();
+
+			TestUtils.assertPartialEquals(
+				actual = ${pageSource},
+				expected = "script nonce");
+
+			TestUtils.assertPartialEquals(
+				actual = ${pageSource},
+				expected = "link nonce");
+		}
+
+		task ("When: Add '/web/guest' as Excluded URI Path.") {
+			ContentSecurityPolicy.goToContentSecurityPolicyInstanceSettings(baseURL = "http://www.able.com:8080");
+
+			ContentSecurityPolicy.configureCSP(
+				excludedPaths = "/c/portal/layout");
+		}
+
+		task ("Then: Verify 'nonce' value isn't added to script and link HTML elements of the page.") {
+			Navigator.openSpecificURL(url = "http://www.able.com:8080");
+			
+			var pageSource = selenium.getHtmlSource();
+
+			TestUtils.assertNotContain(
+				actual = ${pageSource},
+				expected = "script nonce");
+
+			TestUtils.assertNotContain(
+				actual = ${pageSource},
+				expected = "link nonce");
 		}
 	}
 

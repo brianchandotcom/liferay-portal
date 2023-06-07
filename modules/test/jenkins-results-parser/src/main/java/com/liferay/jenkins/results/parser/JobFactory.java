@@ -191,13 +191,6 @@ public class JobFactory {
 	public static Job newJob(Build build) {
 		TopLevelBuild topLevelBuild = build.getTopLevelBuild();
 
-		String portalUpstreamBranchName = topLevelBuild.getParameterValue(
-			"PORTAL_UPSTREAM_BRANCH_NAME");
-
-		if (JenkinsResultsParserUtil.isNullOrEmpty(portalUpstreamBranchName)) {
-			portalUpstreamBranchName = topLevelBuild.getBranchName();
-		}
-
 		PortalHotfixRelease portalHotfixRelease = null;
 
 		if (build instanceof PortalHotfixReleaseBuild) {
@@ -206,6 +199,13 @@ public class JobFactory {
 
 			portalHotfixRelease =
 				portalHotfixReleaseBuild.getPortalHotfixRelease();
+		}
+
+		String portalUpstreamBranchName = topLevelBuild.getParameterValue(
+			"PORTAL_UPSTREAM_BRANCH_NAME");
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(portalUpstreamBranchName)) {
+			portalUpstreamBranchName = topLevelBuild.getBranchName();
 		}
 
 		return _newJob(

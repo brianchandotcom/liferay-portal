@@ -8,6 +8,7 @@ dependencies {
 	testIntegrationCompile project(":apps:asset:asset-entry-rel-api")
 	testIntegrationCompile project(":apps:asset:asset-list-api")
 	testIntegrationCompile project(":apps:blogs:blogs-api")
+	testIntegrationCompile project(":apps:client-extension:client-extension-api")
 	testIntegrationCompile project(":apps:depot:depot-api")
 	testIntegrationCompile project(":apps:document-library:document-library-test-util")
 	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")

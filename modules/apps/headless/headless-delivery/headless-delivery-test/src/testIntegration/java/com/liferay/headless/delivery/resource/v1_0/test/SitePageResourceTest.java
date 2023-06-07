@@ -27,6 +27,11 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
+import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
+import com.liferay.client.extension.model.ClientExtensionEntry;
+import com.liferay.client.extension.model.ClientExtensionEntryRel;
+import com.liferay.client.extension.service.ClientExtensionEntryLocalService;
+import com.liferay.client.extension.service.ClientExtensionEntryRelLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.test.util.DLTestUtil;
@@ -43,6 +48,7 @@ import com.liferay.headless.delivery.client.dto.v1_0.PagePermission;
 import com.liferay.headless.delivery.client.dto.v1_0.PageSettings;
 import com.liferay.headless.delivery.client.dto.v1_0.ParentSitePage;
 import com.liferay.headless.delivery.client.dto.v1_0.SEOSettings;
+import com.liferay.headless.delivery.client.dto.v1_0.Settings;
 import com.liferay.headless.delivery.client.dto.v1_0.SiteMapSettings;
 import com.liferay.headless.delivery.client.dto.v1_0.SitePage;
 import com.liferay.headless.delivery.client.dto.v1_0.TaxonomyCategoryBrief;
@@ -87,8 +93,10 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.test.log.LogCapture;
@@ -108,6 +116,7 @@ import java.net.URLEncoder;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -291,6 +300,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		_testPostSiteSitePageSuccessInvalidParentSitePage();
 		_testPostSiteSitePageSuccessKeywords();
 		_testPostSiteSitePageSuccessPageDefinition();
+		_testPostSiteSitePageSuccessPageDefinitionSettingsFaviconFromClientExtension();
+		_testPostSiteSitePageSuccessPageDefinitionSettingsFaviconFromDocument();
 		_testPostSiteSitePageSuccessPagePermissions();
 		_testPostSiteSitePageSuccessPagePermissionsActionKeysEmpty();
 		_testPostSiteSitePageSuccessPagePermissionsEmpty();
@@ -343,6 +354,22 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		throws Exception {
 
 		return SegmentsEntryConstants.KEY_DEFAULT;
+	}
+
+	private ClientExtensionEntry _addClientExtension(String type)
+		throws Exception {
+
+		return _clientExtensionEntryLocalService.addClientExtensionEntry(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			StringPool.BLANK,
+			Collections.singletonMap(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
+			StringPool.BLANK, StringPool.BLANK, type,
+			UnicodePropertiesBuilder.create(
+				true
+			).put(
+				"url", "http://localhost"
+			).buildString());
 	}
 
 	private Layout _addLayout(Group group) throws Exception {
@@ -825,6 +852,86 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			_objectMapper.readTree(originalDefinitionJSONObject.toString()),
 			_objectMapper.readTree(
 				(String)actualFragmentPageElement.getDefinition()));
+	}
+
+	private void _testPostSiteSitePageSuccessPageDefinitionSettingsFaviconFromClientExtension()
+		throws Exception {
+
+		SitePage randomSitePage = randomSitePage();
+
+		ClientExtensionEntry clientExtensionEntry = _addClientExtension(
+			ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
+
+		randomSitePage.setPageDefinition(
+			new PageDefinition() {
+				{
+					settings = new Settings() {
+						{
+							setFavIcon(
+								JSONUtil.put(
+									"externalReferenceCode",
+									clientExtensionEntry.
+										getExternalReferenceCode()));
+						}
+					};
+				}
+			});
+
+		SitePage postSitePage = testPostSiteSitePage_addSitePage(
+			randomSitePage);
+
+		Layout layout = _layoutLocalService.fetchLayout(postSitePage.getId());
+
+		Assert.assertNotNull(layout);
+
+		ClientExtensionEntryRel clientExtensionEntryRel =
+			_clientExtensionEntryRelLocalService.fetchClientExtensionEntryRel(
+				_portal.getClassNameId(Layout.class.getName()),
+				layout.getPlid(),
+				ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
+
+		Assert.assertNotNull(clientExtensionEntryRel);
+
+		Assert.assertEquals(
+			clientExtensionEntry.getExternalReferenceCode(),
+			clientExtensionEntryRel.getCETExternalReferenceCode());
+	}
+
+	private void _testPostSiteSitePageSuccessPageDefinitionSettingsFaviconFromDocument()
+		throws Exception {
+
+		SitePage randomSitePage = randomSitePage();
+
+		DLFolder dlFolder = DLTestUtil.addDLFolder(testGroup.getGroupId());
+
+		DLFileEntry dlFileEntry = DLTestUtil.addDLFileEntry(
+			dlFolder.getFolderId());
+
+		randomSitePage.setPageDefinition(
+			new PageDefinition() {
+				{
+					settings = new Settings() {
+						{
+							setFavIcon(
+								JSONUtil.put(
+									"contentType", "Document"
+								).put(
+									"id", dlFileEntry.getFileEntryId()
+								));
+						}
+					};
+				}
+			});
+
+		SitePage postSitePage = testPostSiteSitePage_addSitePage(
+			randomSitePage);
+
+		Layout layout = _layoutLocalService.fetchLayout(postSitePage.getId());
+
+		Assert.assertNotNull(layout);
+
+		Assert.assertEquals(
+			dlFileEntry.getFileEntryId(), layout.getFaviconFileEntryId());
 	}
 
 	private void _testPostSiteSitePageSuccessPagePermissions()
@@ -1592,6 +1699,13 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
 	@Inject
+	private ClientExtensionEntryLocalService _clientExtensionEntryLocalService;
+
+	@Inject
+	private ClientExtensionEntryRelLocalService
+		_clientExtensionEntryRelLocalService;
+
+	@Inject
 	private FragmentCollectionLocalService _fragmentCollectionLocalService;
 
 	@Inject
@@ -1619,6 +1733,9 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 		}
 	};
+
+	@Inject
+	private Portal _portal;
 
 	@Inject
 	private ResourceActionLocalService _resourceActionLocalService;

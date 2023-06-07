@@ -14,9 +14,53 @@
 
 package com.liferay.headless.admin.taxonomy.internal.dto.v1_0.action.metadata;
 
+import com.liferay.headless.admin.taxonomy.internal.resource.v1_0.KeywordResourceImpl;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.vulcan.action.ActionInfo;
+import com.liferay.portlet.asset.service.permission.AssetTagsPermission;
+
 /**
- * @author Javier Gamarra
+ * @author Carlos Correa
  */
 public class KeywordDTOActionMetadataProvider
 	extends BaseKeywordDTOActionMetadataProvider {
+
+	public KeywordDTOActionMetadataProvider() {
+		registerActionInfo(
+			"subscribe",
+			new ActionInfo(
+				ActionKeys.SUBSCRIBE, KeywordResourceImpl.class,
+				"putKeywordSubscribe"));
+		registerActionInfo(
+			"unsubscribe",
+			new ActionInfo(
+				ActionKeys.SUBSCRIBE, KeywordResourceImpl.class,
+				"putKeywordUnsubscribe"));
+	}
+
+	@Override
+	public String getPermissionName() {
+		return AssetTagsPermission.RESOURCE_NAME;
+	}
+
+	@Override
+	protected String getDeleteActionKey() {
+		return ActionKeys.MANAGE_TAG;
+	}
+
+	@Override
+	protected String getGetActionKey() {
+		return ActionKeys.MANAGE_TAG;
+	}
+
+	@Override
+	protected String getReplaceActionKey() {
+		return ActionKeys.MANAGE_TAG;
+	}
+
+	@Override
+	protected String getUpdateResourceMethodName() {
+		return null;
+	}
+
 }

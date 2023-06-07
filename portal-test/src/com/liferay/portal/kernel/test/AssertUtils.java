@@ -127,18 +127,9 @@ public class AssertUtils {
 			Assert.fail();
 		}
 		catch (Exception exception) {
-			if (clazz != null) {
-				Assert.assertTrue(clazz.isInstance(exception));
-			}
-
+			Assert.assertTrue(clazz.isInstance(exception));
 			Assert.assertEquals(exception.getMessage(), message);
 		}
-	}
-
-	public static void assertFailure(
-		String message, UnsafeSupplier<Object, Exception> unsafeSupplier) {
-
-		assertFailure(null, message, unsafeSupplier);
 	}
 
 	public static void assertLessThan(

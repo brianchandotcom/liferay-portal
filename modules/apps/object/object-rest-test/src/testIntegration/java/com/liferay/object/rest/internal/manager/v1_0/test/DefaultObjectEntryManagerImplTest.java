@@ -38,6 +38,8 @@ import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectFilterConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.exception.NoSuchObjectEntryException;
+import com.liferay.object.exception.ObjectDefinitionAccountEntryRestrictedException;
+import com.liferay.object.exception.ObjectEntryValuesException;
 import com.liferay.object.exception.ObjectRelationshipDeletionTypeException;
 import com.liferay.object.exception.RequiredObjectRelationshipException;
 import com.liferay.object.field.builder.AggregationObjectFieldBuilder;
@@ -79,6 +81,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -832,6 +835,7 @@ public class DefaultObjectEntryManagerImplTest {
 			accountEntry1.getAccountEntryId(), _user.getUserId());
 
 		AssertUtils.assertFailure(
+			PrincipalException.MustHavePermission.class,
 			StringBundler.concat(
 				"User ", _user.getUserId(),
 				" must have ADD_OBJECT_ENTRY permission for ",
@@ -849,6 +853,7 @@ public class DefaultObjectEntryManagerImplTest {
 		AccountEntry accountEntry2 = _addAccountEntry();
 
 		AssertUtils.assertFailure(
+			ObjectDefinitionAccountEntryRestrictedException.class,
 			StringBundler.concat(
 				"User ", _user.getUserId(),
 				" does not have access to account entry ",
@@ -859,6 +864,7 @@ public class DefaultObjectEntryManagerImplTest {
 			accountEntry2.getAccountEntryId(), _user.getUserId());
 
 		AssertUtils.assertFailure(
+			PrincipalException.MustHavePermission.class,
 			StringBundler.concat(
 				"User ", _user.getUserId(),
 				" must have ADD_OBJECT_ENTRY permission for ",
@@ -884,6 +890,7 @@ public class DefaultObjectEntryManagerImplTest {
 		_assignOrganizationRole(organization1, _accountManagerRole, _user);
 
 		AssertUtils.assertFailure(
+			PrincipalException.MustHavePermission.class,
 			StringBundler.concat(
 				"User ", _user.getUserId(),
 				" must have ADD_OBJECT_ENTRY permission for ",
@@ -895,6 +902,7 @@ public class DefaultObjectEntryManagerImplTest {
 		_addObjectEntry(accountEntry1);
 
 		AssertUtils.assertFailure(
+			ObjectDefinitionAccountEntryRestrictedException.class,
 			StringBundler.concat(
 				"User ", _user.getUserId(),
 				" does not have access to account entry ",
@@ -933,6 +941,7 @@ public class DefaultObjectEntryManagerImplTest {
 		_assignOrganizationRole(organization1, _accountManagerRole, _user);
 
 		AssertUtils.assertFailure(
+			PrincipalException.MustHavePermission.class,
 			StringBundler.concat(
 				"User ", _user.getUserId(),
 				" must have ADD_OBJECT_ENTRY permission for ",
@@ -944,6 +953,7 @@ public class DefaultObjectEntryManagerImplTest {
 		_addObjectEntry(accountEntry1);
 
 		AssertUtils.assertFailure(
+			ObjectDefinitionAccountEntryRestrictedException.class,
 			StringBundler.concat(
 				"User ", _user.getUserId(),
 				" does not have access to account entry ",
@@ -2093,6 +2103,7 @@ public class DefaultObjectEntryManagerImplTest {
 			role.getRoleId(), ActionKeys.UPDATE);
 
 		AssertUtils.assertFailure(
+			PrincipalException.MustHavePermission.class,
 			StringBundler.concat(
 				"User ", _user.getUserId(), " must have UPDATE permission for ",
 				_objectDefinition3.getClassName(), StringPool.SPACE,
@@ -2135,6 +2146,7 @@ public class DefaultObjectEntryManagerImplTest {
 			objectEntry1.getId(), objectEntry1);
 
 		AssertUtils.assertFailure(
+			PrincipalException.MustHavePermission.class,
 			StringBundler.concat(
 				"User ", _user.getUserId(), " must have UPDATE permission for ",
 				_objectDefinition3.getClassName(), StringPool.SPACE,
@@ -2164,6 +2176,7 @@ public class DefaultObjectEntryManagerImplTest {
 			organization2.getOrganizationId());
 
 		AssertUtils.assertFailure(
+			PrincipalException.MustHavePermission.class,
 			StringBundler.concat(
 				"User ", _user.getUserId(), " must have UPDATE permission for ",
 				_objectDefinition3.getClassName(), StringPool.SPACE,
@@ -2205,6 +2218,7 @@ public class DefaultObjectEntryManagerImplTest {
 		_assertObjectEntriesSize(1);
 
 		AssertUtils.assertFailure(
+			PrincipalException.MustHavePermission.class,
 			StringBundler.concat(
 				"User ", _user.getUserId(), " must have UPDATE permission for ",
 				_objectDefinition3.getClassName(), StringPool.SPACE,
@@ -2220,6 +2234,8 @@ public class DefaultObjectEntryManagerImplTest {
 			objectEntry1.getId(), objectEntry1);
 
 		AssertUtils.assertFailure(
+			ObjectEntryValuesException.UnmodifiableAccountEntryObjectField.
+				class,
 			"The object field r_oneToManyRelationshipName_accountEntryId is " +
 				"unmodifiable because it is the account entry restrictor",
 			() -> _defaultObjectEntryManager.updateObjectEntry(

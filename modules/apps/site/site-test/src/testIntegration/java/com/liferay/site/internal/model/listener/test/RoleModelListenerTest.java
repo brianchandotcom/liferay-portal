@@ -76,28 +76,28 @@ public class RoleModelListenerTest {
 			).put(
 				"showControlMenuByRole", true
 			).build());
+
+		_serviceContext = ServiceContextTestUtil.getServiceContext(
+			_group.getGroupId());
 	}
 
 	@Test
 	public void testAddOtherRoleTypes() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
-
 		_roleLocalService.addRole(
 			TestPropsValues.getUserId(), null, 0, StringUtil.randomString(),
-			null, null, RoleConstants.TYPE_ACCOUNT, null, serviceContext);
+			null, null, RoleConstants.TYPE_ACCOUNT, null, _serviceContext);
 		_roleLocalService.addRole(
 			TestPropsValues.getUserId(), null, 0, StringUtil.randomString(),
-			null, null, RoleConstants.TYPE_DEPOT, null, serviceContext);
+			null, null, RoleConstants.TYPE_DEPOT, null, _serviceContext);
 		_roleLocalService.addRole(
 			TestPropsValues.getUserId(), null, 0, StringUtil.randomString(),
-			null, null, RoleConstants.TYPE_PROVIDER, null, serviceContext);
+			null, null, RoleConstants.TYPE_PROVIDER, null, _serviceContext);
 		_roleLocalService.addRole(
 			TestPropsValues.getUserId(), null, 0, StringUtil.randomString(),
-			null, null, RoleConstants.TYPE_ORGANIZATION, null, serviceContext);
+			null, null, RoleConstants.TYPE_ORGANIZATION, null, _serviceContext);
 		_roleLocalService.addRole(
 			TestPropsValues.getUserId(), null, 0, StringUtil.randomString(),
-			null, null, RoleConstants.TYPE_PUBLICATIONS, null, serviceContext);
+			null, null, RoleConstants.TYPE_PUBLICATIONS, null, _serviceContext);
 
 		_assertConfiguration(new String[0]);
 	}
@@ -106,8 +106,7 @@ public class RoleModelListenerTest {
 	public void testAddRole() throws Exception {
 		Role role = _roleLocalService.addRole(
 			TestPropsValues.getUserId(), null, 0, StringUtil.randomString(),
-			null, null, RoleConstants.TYPE_SITE, null,
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+			null, null, RoleConstants.TYPE_SITE, null, _serviceContext);
 
 		_assertConfiguration(new String[] {String.valueOf(role.getRoleId())});
 	}
@@ -116,12 +115,10 @@ public class RoleModelListenerTest {
 	public void testDeleteRole() throws Exception {
 		Role role1 = _roleLocalService.addRole(
 			TestPropsValues.getUserId(), null, 0, StringUtil.randomString(),
-			null, null, RoleConstants.TYPE_REGULAR, null,
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+			null, null, RoleConstants.TYPE_REGULAR, null, _serviceContext);
 		Role role2 = _roleLocalService.addRole(
 			TestPropsValues.getUserId(), null, 0, StringUtil.randomString(),
-			null, null, RoleConstants.TYPE_SITE, null,
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+			null, null, RoleConstants.TYPE_SITE, null, _serviceContext);
 
 		_assertConfiguration(
 			new String[] {
@@ -180,5 +177,7 @@ public class RoleModelListenerTest {
 
 	@Inject
 	private RoleLocalService _roleLocalService;
+
+	private ServiceContext _serviceContext;
 
 }

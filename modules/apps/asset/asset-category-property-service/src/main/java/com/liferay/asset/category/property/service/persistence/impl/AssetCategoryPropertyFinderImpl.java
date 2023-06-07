@@ -41,49 +41,8 @@ public class AssetCategoryPropertyFinderImpl
 	extends AssetCategoryPropertyFinderBaseImpl
 	implements AssetCategoryPropertyFinder {
 
-	public static final String COUNT_BY_G_K =
-		AssetCategoryPropertyFinder.class.getName() + ".countByG_K";
-
 	public static final String FIND_BY_G_K =
 		AssetCategoryPropertyFinder.class.getName() + ".findByG_K";
-
-	@Override
-	public int countByG_K(long groupId, String key) {
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			String sql = _customSQL.get(getClass(), COUNT_BY_G_K);
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addScalar(COUNT_COLUMN_NAME, Type.LONG);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(groupId);
-			queryPos.add(key);
-
-			Iterator<Long> iterator = sqlQuery.iterate();
-
-			if (iterator.hasNext()) {
-				Long count = iterator.next();
-
-				if (count != null) {
-					return count.intValue();
-				}
-			}
-
-			return 0;
-		}
-		catch (Exception exception) {
-			throw new SystemException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
 
 	@Override
 	public List<AssetCategoryProperty> findByG_K(long groupId, String key) {

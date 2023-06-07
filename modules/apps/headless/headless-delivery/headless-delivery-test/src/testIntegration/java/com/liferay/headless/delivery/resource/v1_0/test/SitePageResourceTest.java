@@ -297,6 +297,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		_testPostSiteSitePageFailureFriendlyURLEndsWithSlash();
 		_testPostSiteSitePageFailureFriendlyURLTooLong();
 		_testPostSiteSitePageFailureFriendlyURLTooShort();
+		_testPostSiteSitePageFailurePageDefinitionSettingsClientExtensions();
 		_testPostSiteSitePageFailurePagePermissionsActionKeyNonexisting();
 		_testPostSiteSitePageSuccessInvalidParentSitePage();
 		_testPostSiteSitePageSuccessKeywords();
@@ -653,6 +654,53 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
 			Assert.assertEquals("LayoutNameException", problem.getType());
 		}
+	}
+
+	private void _testPostSiteSitePageFailurePageDefinitionSettingsClientExtensions()
+		throws Exception {
+
+		SitePage randomSitePage = randomSitePage();
+
+		ClientExtensionEntry globalCSSClientExtensionEntry =
+			_addClientExtension(ClientExtensionEntryConstants.TYPE_GLOBAL_CSS);
+
+		randomSitePage.setPageDefinition(
+			new PageDefinition() {
+				{
+					settings = new Settings() {
+						{
+							setGlobalJSClientExtensions(
+								new ClientExtension[] {
+									new ClientExtension() {
+										{
+											externalReferenceCode =
+												globalCSSClientExtensionEntry.
+													getExternalReferenceCode();
+										}
+									}
+								});
+						}
+					};
+				}
+			});
+
+		SitePage postSitePage = testPostSiteSitePage_addSitePage(
+			randomSitePage);
+
+		Layout layout = _layoutLocalService.fetchLayout(postSitePage.getId());
+
+		Assert.assertNotNull(layout);
+
+		Assert.assertNull(
+			_clientExtensionEntryRelLocalService.fetchClientExtensionEntryRel(
+				_portal.getClassNameId(Layout.class.getName()),
+				layout.getPlid(),
+				ClientExtensionEntryConstants.TYPE_GLOBAL_CSS));
+		Assert.assertNull(
+			_clientExtensionEntryRelLocalService.fetchClientExtensionEntryRel(
+				_portal.getClassNameId(Layout.class.getName()),
+				layout.getPlid(),
+				ClientExtensionEntryConstants.TYPE_GLOBAL_JS));
 	}
 
 	private void _testPostSiteSitePageFailurePagePermissionsActionKeyNonexisting()

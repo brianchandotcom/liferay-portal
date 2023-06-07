@@ -354,7 +354,7 @@ definition {
 		MessageboardsPortlet.ViewMessageEmailTemplate(
 			content = "[$MESSAGE_SIBLINGS$] [$MESSAGE_USER_NAME$] NEW [$MESSAGE_BODY$] Reply",
 			messageAddedEmail = "true",
-			messageBody = "There is 1 new reply in the thread,[$ROOT_MESSAGE_BODY$],[$MESSAGE_PARENT$],1 New Comment,[$MESSAGE_PARENT$],Replies To Last Message",
+			messageBody = "There is 1 new message,[$ROOT_MESSAGE_BODY$],[$MESSAGE_PARENT$],1 New Comment,[$MESSAGE_PARENT$],Replies To Last Message",
 			messageSubject = "[$MESSAGE_SUBJECT$]",
 			messageURL = "[$MESSAGE_URL$]",
 			siteURLKey = "guest");
@@ -368,7 +368,7 @@ definition {
 
 		MessageboardsPortlet.ViewMessageEmailTemplate(
 			content = "[$MESSAGE_SIBLINGS$] [$MESSAGE_USER_NAME$] EDITED [$MESSAGE_BODY$] Reply",
-			messageBody = "1 new reply was edited,[$ROOT_MESSAGE_BODY$],[$MESSAGE_PARENT$],1 Edited Comment,[$MESSAGE_PARENT$],Replies To Last Message",
+			messageBody = "1 new message was updated,[$ROOT_MESSAGE_BODY$],[$MESSAGE_PARENT$],1 Edited Comment,[$MESSAGE_PARENT$],Replies To Last Message",
 			messageSubject = "[$MESSAGE_SUBJECT$]",
 			messageURL = "[$MESSAGE_URL$]",
 			siteURLKey = "guest");

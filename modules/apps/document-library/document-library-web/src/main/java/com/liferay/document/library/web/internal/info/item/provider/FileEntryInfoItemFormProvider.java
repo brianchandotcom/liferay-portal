@@ -34,7 +34,10 @@ import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.field.reader.InfoItemFieldReaderFieldSetProvider;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
+import com.liferay.layout.page.template.info.item.provider.DisplayPageInfoItemFieldSetProvider;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -73,7 +76,10 @@ public class FileEntryInfoItemFormProvider
 			return _getInfoForm(
 				_assetEntryInfoItemFieldSetProvider.getInfoFieldSet(
 					DLFileEntryConstants.getClassName()),
-				0, 0);
+				0,
+				_displayPageInfoItemFieldSetProvider.getInfoFieldSet(
+					DLFileEntryConstants.getClassName(), StringPool.BLANK, 0),
+				0);
 		}
 		catch (NoSuchFormVariationException noSuchFormVariationException) {
 			throw new RuntimeException(noSuchFormVariationException);
@@ -103,7 +109,11 @@ public class FileEntryInfoItemFormProvider
 					_assetEntryLocalService.getEntry(
 						DLFileEntryConstants.getClassName(),
 						fileEntry.getFileEntryId())),
-				ddmStructureId, fileEntryTypeId);
+				ddmStructureId,
+				_displayPageInfoItemFieldSetProvider.getInfoFieldSet(
+					DLFileEntryConstants.getClassName(),
+					String.valueOf(fileEntryTypeId), 0),
+				fileEntryTypeId);
 		}
 		catch (NoSuchFormVariationException noSuchFormVariationException) {
 			throw new RuntimeException(noSuchFormVariationException);
@@ -133,7 +143,11 @@ public class FileEntryInfoItemFormProvider
 			_assetEntryInfoItemFieldSetProvider.getInfoFieldSet(
 				DLFileEntryConstants.getClassName(),
 				GetterUtil.getLong(formVariationKey), groupId),
-			ddmStructureId, GetterUtil.getLong(formVariationKey));
+			ddmStructureId,
+			_displayPageInfoItemFieldSetProvider.getInfoFieldSet(
+				DLFileEntryConstants.getClassName(),
+				String.valueOf(ddmStructureId), groupId),
+			GetterUtil.getLong(formVariationKey));
 	}
 
 	private DDMStructure _fetchDDMStructure(long fileEntryTypeId) {
@@ -231,7 +245,7 @@ public class FileEntryInfoItemFormProvider
 
 	private InfoForm _getInfoForm(
 			InfoFieldSet assetEntryInfoFieldSet, long ddmStructureId,
-			long fileEntryTypeId)
+			InfoFieldSet displayPageInfoFieldSet, long fileEntryTypeId)
 		throws NoSuchFormVariationException {
 
 		Set<Locale> availableLocales = _language.getAvailableLocales();
@@ -261,7 +275,17 @@ public class FileEntryInfoItemFormProvider
 					}
 				}
 			).infoFieldSetEntry(
-				_getDisplayPageInfoFieldSet()
+				unsafeConsumer -> {
+					if (!FeatureFlagManagerUtil.isEnabled("LPS-183727")) {
+						unsafeConsumer.accept(_getDisplayPageInfoFieldSet());
+					}
+				}
+			).infoFieldSetEntry(
+				unsafeConsumer -> {
+					if (FeatureFlagManagerUtil.isEnabled("LPS-183727")) {
+						unsafeConsumer.accept(displayPageInfoFieldSet);
+					}
+				}
 			).infoFieldSetEntry(
 				_expandoInfoItemFieldSetProvider.getInfoFieldSet(
 					DLFileEntryConstants.getClassName())
@@ -359,6 +383,10 @@ public class FileEntryInfoItemFormProvider
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Reference
+	private DisplayPageInfoItemFieldSetProvider
+		_displayPageInfoItemFieldSetProvider;
 
 	@Reference
 	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;

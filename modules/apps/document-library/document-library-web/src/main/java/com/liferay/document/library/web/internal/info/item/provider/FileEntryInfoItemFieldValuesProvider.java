@@ -38,8 +38,10 @@ import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.field.reader.InfoItemFieldReaderFieldSetProvider;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.type.WebImage;
+import com.liferay.layout.page.template.info.item.provider.DisplayPageInfoItemFieldSetProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -80,6 +82,8 @@ public class FileEntryInfoItemFieldValuesProvider
 			).infoFieldValues(
 				_getDDMStructureInfoFieldValues(fileEntry)
 			).infoFieldValues(
+				_getDisplayPageInfoFieldValues(fileEntry)
+			).infoFieldValues(
 				_getExpandoInfoFieldValues(fileEntry)
 			).infoFieldValues(
 				_infoItemFieldReaderFieldSetProvider.getInfoFieldValues(
@@ -96,6 +100,9 @@ public class FileEntryInfoItemFieldValuesProvider
 		catch (PortalException portalException) {
 			throw new RuntimeException(
 				"Caught unexpected exception", portalException);
+		}
+		catch (Exception exception) {
+			throw new RuntimeException("Unexpected exception", exception);
 		}
 	}
 
@@ -155,6 +162,22 @@ public class FileEntryInfoItemFieldValuesProvider
 			catch (PortalException portalException) {
 				throw new RuntimeException(portalException);
 			}
+		}
+
+		return Collections.emptyList();
+	}
+
+	private List<InfoFieldValue<Object>> _getDisplayPageInfoFieldValues(
+			FileEntry fileEntry)
+		throws Exception {
+
+		if (fileEntry.getModel() instanceof DLFileEntry) {
+			DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
+
+			return _displayPageInfoItemFieldSetProvider.getInfoFieldValues(
+				DLFileEntry.class.getName(), dlFileEntry.getFileEntryId(),
+				String.valueOf(dlFileEntry.getFileEntryTypeId()),
+				_getThemeDisplay());
 		}
 
 		return Collections.emptyList();
@@ -309,7 +332,9 @@ public class FileEntryInfoItemFieldValuesProvider
 					FileEntryInfoItemFields.previewImageInfoField,
 					imagePreviewURLWebImage));
 
-			if (themeDisplay != null) {
+			if ((themeDisplay != null) &&
+				!FeatureFlagManagerUtil.isEnabled("LPS-183727")) {
+
 				fileEntryFieldValues.add(
 					new InfoFieldValue<>(
 						FileEntryInfoItemFields.displayPageURLInfoField,
@@ -358,6 +383,10 @@ public class FileEntryInfoItemFieldValuesProvider
 
 	@Reference
 	private DDMStorageEngineManager _ddmStorageEngineManager;
+
+	@Reference
+	private DisplayPageInfoItemFieldSetProvider
+		_displayPageInfoItemFieldSetProvider;
 
 	@Reference
 	private DLFileEntryMetadataLocalService _dlFileEntryMetadataLocalService;

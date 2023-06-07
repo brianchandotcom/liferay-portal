@@ -42,8 +42,8 @@ definition {
 		SelectFrame.selectSecondFrame(locator1 = "IFrame#MODAL_BODY");
 
 		Click(
-			key_roleTitle = ${organizationName},
-			locator1 = "UsersAndOrganizationsEditUser#ROLES_REGULAR_SELECT_CHOOSE_BUTTON");
+			key_tableEntry = ${organizationName},
+			locator1 = "LexiconTable#TABLE_ENTRY_TITLE");
 
 		SelectFrame(value1 = "relative=top");
 

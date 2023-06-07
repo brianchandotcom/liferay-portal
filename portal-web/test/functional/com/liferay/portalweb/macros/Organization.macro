@@ -521,12 +521,8 @@ definition {
 			value1 = ${suborgType});
 
 		AssertTextEquals(
-			locator1 = "UsersAndOrganizationsEditOrganization#PARENT_ORGANIZATION_TABLE_NAME",
+			locator1 = "UsersAndOrganizationsEditOrganization#PARENT_ORGANIZATION_NAME",
 			value1 = ${orgName});
-
-		AssertTextEquals(
-			locator1 = "UsersAndOrganizationsEditOrganization#PARENT_ORGANIZATION_TABLE_TYPE",
-			value1 = ${orgType});
 	}
 
 	macro viewUser {

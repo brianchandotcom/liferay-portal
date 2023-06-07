@@ -250,6 +250,20 @@ public class SearchRequestExecutorFixture {
 		return _defaultFacetTranslator;
 	}
 
+	private ClosePointInTimeRequestExecutor
+		_createClosePointInTimeRequestExecutor(
+			ElasticsearchClientResolver elasticsearchClientResolver) {
+
+		ClosePointInTimeRequestExecutor closePointInTimeRequestExecutor =
+			new ClosePointInTimeRequestExecutorImpl();
+
+		ReflectionTestUtil.setFieldValue(
+			closePointInTimeRequestExecutor, "_elasticsearchClientResolver",
+			elasticsearchClientResolver);
+
+		return closePointInTimeRequestExecutor;
+	}
+
 	private CountSearchRequestExecutor _createCountSearchRequestExecutor(
 		ElasticsearchClientResolver elasticsearchClientResolver,
 		CommonSearchSourceBuilderAssembler commonSearchSourceBuilderAssembler,
@@ -341,6 +355,10 @@ public class SearchRequestExecutorFixture {
 		SearchRequestExecutor searchRequestExecutor =
 			new ElasticsearchSearchRequestExecutor();
 
+		ReflectionTestUtil.setFieldValue(
+			searchRequestExecutor, "_closePointInTimeRequestExecutor",
+			_createClosePointInTimeRequestExecutor(
+				elasticsearchClientResolver));
 		ReflectionTestUtil.setFieldValue(
 			searchRequestExecutor, "_countSearchRequestExecutor",
 			_createCountSearchRequestExecutor(

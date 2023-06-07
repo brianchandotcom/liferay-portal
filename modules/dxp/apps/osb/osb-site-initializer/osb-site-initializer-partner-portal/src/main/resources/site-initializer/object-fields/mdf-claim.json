@@ -1,0 +1,307 @@
+{
+	"object-fields": [
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "b0dd4ffa-ffce-1f54-e2a9-040bf13516a4",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Company Name"
+			},
+			"name": "companyName",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "2e44bf2a-734c-ad8b-6d27-020feffbca22",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "External Reference Code SF"
+			},
+			"name": "externalReferenceCodeSF",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "BigDecimal",
+			"businessType": "PrecisionDecimal",
+			"externalReferenceCode": "79da1510-5081-43ef-5d12-a49dd92f0741",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "MDF Request Total Cost of Expense"
+			},
+			"name": "mdfRequestTotalCostOfExpense",
+			"required": false,
+			"type": "BigDecimal"
+		},
+		{
+			"DBType": "BigDecimal",
+			"businessType": "PrecisionDecimal",
+			"externalReferenceCode": "039f6da5-ec52-904a-ce28-fbe9b68e5a4a",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Total MDF Requested Amount"
+			},
+			"name": "totalMDFRequestedAmount",
+			"required": false,
+			"type": "BigDecimal"
+		},
+		{
+			"DBType": "Boolean",
+			"externalReferenceCode": "72fb6b32-2845-91ae-a9ef-eb7f592dd013",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Partial"
+			},
+			"name": "partial",
+			"required": false,
+			"type": "Boolean"
+		},
+		{
+			"DBType": "BigDecimal",
+			"businessType": "PrecisionDecimal",
+			"externalReferenceCode": "e4c313f9-0700-e435-baef-fd940901a09d",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Total Claim Amount"
+			},
+			"name": "totalClaimAmount",
+			"required": false,
+			"type": "BigDecimal"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "8491c70a-7000-7d1c-8278-b4b703af1219",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Payment Received"
+			},
+			"name": "paymentReceived",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "d0b70d9b-1ebc-495e-96b6-bba23c479cd3",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Check Number"
+			},
+			"name": "checkNumber",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Picklist",
+			"defaultValue": "pendingMarketingReview",
+			"externalReferenceCode": "9f8bc3c6-b270-0377-c65d-1df3eacbb112",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "MDF Claim Status"
+			},
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:MDF Claim Status$]",
+			"name": "mdfClaimStatus",
+			"objectFieldSettings": [
+				{
+					"name": "stateFlow",
+					"value": {
+						"objectStates": [
+							{
+								"key": "pendingMarketingReview",
+								"objectStateTransitions": [
+									{
+										"key": "approved"
+									},
+									{
+										"key": "inFinanceReview"
+									},
+									{
+										"key": "moreInfoRequested"
+									},
+									{
+										"key": "rejected"
+									},
+									{
+										"key": "inDirectorReview"
+									}
+								]
+							},
+							{
+								"key": "approved",
+								"objectStateTransitions": [
+									{
+										"key": "inFinanceReview"
+									},
+									{
+										"key": "canceled"
+									}
+								]
+							},
+							{
+								"key": "claimPaid",
+								"objectStateTransitions": [
+								]
+							},
+							{
+								"key": "inFinanceReview",
+								"objectStateTransitions": [
+									{
+										"key": "approved"
+									},
+									{
+										"key": "claimPaid"
+									},
+									{
+										"key": "moreInfoRequested"
+									},
+									{
+										"key": "rejected"
+									},
+									{
+										"key": "inDirectorReview"
+									}
+								]
+							},
+							{
+								"key": "moreInfoRequested",
+								"objectStateTransitions": [
+									{
+										"key": "pendingMarketingReview"
+									},
+									{
+										"key": "approved"
+									},
+									{
+										"key": "claimPaid"
+									},
+									{
+										"key": "inFinanceReview"
+									},
+									{
+										"key": "rejected"
+									},
+									{
+										"key": "draft"
+									}
+								]
+							},
+							{
+								"key": "rejected",
+								"objectStateTransitions": [
+									{
+										"key": "pendingMarketingReview"
+									}
+								]
+							},
+							{
+								"key": "draft",
+								"objectStateTransitions": [
+									{
+										"key": "pendingMarketingReview"
+									},
+									{
+										"key": "canceled"
+									}
+								]
+							},
+							{
+								"key": "inDirectorReview",
+								"objectStateTransitions": [
+									{
+										"key": "approved"
+									},
+									{
+										"key": "inFinanceReview"
+									},
+									{
+										"key": "rejected"
+									},
+									{
+										"key": "moreInfoRequested"
+									}
+								]
+							},
+							{
+								"key": "canceled",
+								"objectStateTransitions": [
+									{
+										"key": "approved"
+									}
+								]
+							}
+						]
+					}
+				}
+			],
+			"required": true,
+			"state": true,
+			"system": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Picklist",
+			"externalReferenceCode": "8c25f49f-b973-4810-9cc4-5fd7c1779fee",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Currency"
+			},
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Currencies$]",
+			"name": "currency",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "Long",
+			"businessType": "Attachment",
+			"externalReferenceCode": "85657c8c-9ed5-41ea-a884-70bcce804b3f",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Reimbursement Invoice"
+			},
+			"name": "reimbursementInvoice",
+			"objectFieldSettings": [
+				{
+					"name": "acceptedFileExtensions",
+					"value": "jpeg, jpg, pdf, png, tiff, doc, docx"
+				},
+				{
+					"name": "maximumFileSize",
+					"value": "3"
+				},
+				{
+					"name": "fileSource",
+					"value": "userComputer"
+				},
+				{
+					"name": "showFilesInDocumentsAndMedia",
+					"value": "true"
+				},
+				{
+					"name": "storageDLFolderPath",
+					"value": "/MDFClaim"
+				}
+			],
+			"required": false,
+			"type": "Long"
+		}
+	],
+	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:MDFClaim$]"
+}

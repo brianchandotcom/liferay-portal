@@ -1282,6 +1282,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT_RELATIONS</td>
+	<td>//div[@class='commerce-product-definition-title' and contains(.,'${key_productName}')]/../../td[${key_columnNumber}][contains(text(),'${key_value}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TABLE_SEARCH_BY_NAME_AND_CONTENT</td>
 	<td>//div[@class='dnd-td' and contains(.,'${key_productName}')]/following-sibling::div[contains(text(),'${key_value}')]</td>
 	<td></td>

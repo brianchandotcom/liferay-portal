@@ -56,7 +56,7 @@ boolean hasPermission = commercePricingClassCPDefinitionDisplayContext.hasPermis
 							productData
 						)
 							.then(() => {
-								Liferay.fire(events.UPDATE_DATASET_DISPLAY, {
+								Liferay.fire(events.FDS_UPDATE_DISPLAY, {
 									id:
 										'<%= CommercePricingFDSNames.PRICING_CLASSES_PRODUCT_DEFINITIONS %>',
 								});
@@ -76,7 +76,7 @@ boolean hasPermission = commercePricingClassCPDefinitionDisplayContext.hasPermis
 						getSelectedItems: getSelectedItems,
 						inputPlaceholder: '<%= LanguageUtil.get(request, "find-a-product") %>',
 						itemSelectedMessage: '<%= LanguageUtil.get(request, "product-selected") %>',
-						linkedDatasetsId: [
+						linkedDataSetsId: [
 							'<%= CommercePricingFDSNames.PRICING_CLASSES_PRODUCT_DEFINITIONS %>',
 						],
 						itemCreation: false,

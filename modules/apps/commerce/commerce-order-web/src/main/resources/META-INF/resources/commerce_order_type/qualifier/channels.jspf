@@ -22,7 +22,7 @@
 			HashMapBuilder.<String, Object>put(
 				"commerceOrderTypeId", commerceOrderTypeId
 			).put(
-				"datasetId", CommerceOrderFDSNames.ORDER_TYPE_QUALIFIER_CHANNELS
+				"dataSetId", CommerceOrderFDSNames.ORDER_TYPE_QUALIFIER_CHANNELS
 			).put(
 				"orderTypeExternalReferenceCode", HtmlUtil.escapeJS(commerceOrderType.getExternalReferenceCode())
 			).put(

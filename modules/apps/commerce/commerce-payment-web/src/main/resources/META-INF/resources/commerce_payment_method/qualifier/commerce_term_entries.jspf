@@ -22,7 +22,7 @@
 			HashMapBuilder.<String, Object>put(
 				"apiUrl", "/o/headless-commerce-admin-order/v1.0/terms?filter=type eq '" + CommerceTermEntryConstants.TYPE_PAYMENT_TERMS + "'"
 			).put(
-				"datasetId", CommercePaymentMethodGroupRelFDSNames.TERM_ENTRIES
+				"dataSetId", CommercePaymentMethodGroupRelFDSNames.TERM_ENTRIES
 			).put(
 				"paymentMethodGroupRelId", commercePaymentMethodGroupRelId
 			).put(

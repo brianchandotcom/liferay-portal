@@ -22,7 +22,7 @@
 			HashMapBuilder.<String, Object>put(
 				"commerceInventoryWarehouseId", commerceInventoryWarehouseId
 			).put(
-				"datasetId", CommerceInventoryWarehouseFDSNames.COMMERCE_INVENTORY_WAREHOUSE_QUALIFIER_CHANNELS
+				"dataSetId", CommerceInventoryWarehouseFDSNames.COMMERCE_INVENTORY_WAREHOUSE_QUALIFIER_CHANNELS
 			).put(
 				"rootPortletId", portletDisplay.getRootPortletId()
 			).put(

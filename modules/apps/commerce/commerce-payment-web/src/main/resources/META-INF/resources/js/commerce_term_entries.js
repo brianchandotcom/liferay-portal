@@ -14,12 +14,12 @@
 
 import ServiceProvider from 'commerce-frontend-js/ServiceProvider/index';
 import itemFinder from 'commerce-frontend-js/components/item_finder/entry';
-import {UPDATE_DATASET_DISPLAY} from 'commerce-frontend-js/utilities/eventsDefinitions';
+import {FDS_UPDATE_DISPLAY} from 'commerce-frontend-js/utilities/eventsDefinitions';
 import {openToast} from 'frontend-js-web';
 
 export default function ({
 	apiUrl,
-	datasetId,
+	dataSetId,
 	paymentMethodGroupRelId,
 	rootPortletId,
 }) {
@@ -37,8 +37,8 @@ export default function ({
 		return paymentMethodGroupRelTermsResource
 			.addPaymentMethodGroupRelTerm(paymentMethodGroupRelId, termData)
 			.then(() => {
-				Liferay.fire(UPDATE_DATASET_DISPLAY, {
-					id: datasetId,
+				Liferay.fire(FDS_UPDATE_DISPLAY, {
+					id: dataSetId,
 				});
 			})
 			.catch((error) => {
@@ -65,7 +65,7 @@ export default function ({
 		itemCreation: false,
 		itemSelectedMessage: Liferay.Language.get('payment-terms-selected'),
 		itemsKey: 'id',
-		linkedDatasetsId: [datasetId],
+		linkedDataSetsId: [dataSetId],
 		onItemSelected: selectItem,
 		pageSize: 10,
 		panelHeaderLabel: Liferay.Language.get('add-payment-terms'),

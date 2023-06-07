@@ -41,7 +41,7 @@
 						accountGroupData
 					)
 						.then(() => {
-							Liferay.fire(events.UPDATE_DATASET_DISPLAY, {
+							Liferay.fire(events.FDS_UPDATE_DISPLAY, {
 								id:
 									'<%= CommercePricingFDSNames.PRICE_LIST_QUALIFIER_ACCOUNT_GROUPS %>',
 							});
@@ -62,7 +62,7 @@
 						'<%= LanguageUtil.get(request, "find-an-account-group") %>',
 					itemSelectedMessage:
 						'<%= LanguageUtil.get(request, "account-group-selected") %>',
-					linkedDatasetsId: [
+					linkedDataSetsId: [
 						'<%= CommercePricingFDSNames.PRICE_LIST_QUALIFIER_ACCOUNT_GROUPS %>',
 					],
 					itemCreation: false,

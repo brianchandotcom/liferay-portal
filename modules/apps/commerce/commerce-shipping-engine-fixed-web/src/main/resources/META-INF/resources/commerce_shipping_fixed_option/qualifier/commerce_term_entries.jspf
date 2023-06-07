@@ -22,7 +22,7 @@
 			HashMapBuilder.<String, Object>put(
 				"apiUrl", "/o/headless-commerce-admin-order/v1.0/terms?filter=type eq '" + CommerceTermEntryConstants.TYPE_DELIVERY_TERMS + "'"
 			).put(
-				"datasetId", CommerceShippingFixedOptionFDSNames.TERM_ENTRIES
+				"dataSetId", CommerceShippingFixedOptionFDSNames.TERM_ENTRIES
 			).put(
 				"rootPortletId", portletDisplay.getRootPortletId()
 			).put(

@@ -20,7 +20,7 @@
 	<liferay-frontend:component
 		context='<%=
 			HashMapBuilder.<String, Object>put(
-				"datasetId", CommerceTermEntryFDSNames.TERM_ENTRY_QUALIFIER_COMMERCE_ORDER_TYPES
+				"dataSetId", CommerceTermEntryFDSNames.TERM_ENTRY_QUALIFIER_COMMERCE_ORDER_TYPES
 			).put(
 				"rootPortletId", portletDisplay.getRootPortletId()
 			).put(

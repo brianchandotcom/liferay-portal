@@ -38,7 +38,7 @@
 
 					return CommerceDiscountSkusResource.addDiscountSku(id, skuData)
 						.then(() => {
-							Liferay.fire(events.UPDATE_DATASET_DISPLAY, {
+							Liferay.fire(events.FDS_UPDATE_DISPLAY, {
 								id: '<%= CommercePricingFDSNames.DISCOUNT_SKUS %>',
 							});
 						})
@@ -58,7 +58,7 @@
 					itemCreation: false,
 					itemSelectedMessage: '<%= LanguageUtil.get(request, "sku-selected") %>',
 					itemsKey: 'id',
-					linkedDatasetsId: ['<%= CommercePricingFDSNames.DISCOUNT_SKUS %>'],
+					linkedDataSetsId: ['<%= CommercePricingFDSNames.DISCOUNT_SKUS %>'],
 					onItemSelected: selectItem,
 					pageSize: 10,
 					panelHeaderLabel: '<%= LanguageUtil.get(request, "add-skus") %>',

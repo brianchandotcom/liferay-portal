@@ -41,7 +41,7 @@
 						accountData
 					)
 						.then(() => {
-							Liferay.fire(events.UPDATE_DATASET_DISPLAY, {
+							Liferay.fire(events.FDS_UPDATE_DISPLAY, {
 								id:
 									'<%= CommercePricingFDSNames.PRICE_LIST_QUALIFIER_ACCOUNTS %>',
 							});
@@ -60,7 +60,7 @@
 					getSelectedItems: getSelectedItems,
 					inputPlaceholder: '<%= LanguageUtil.get(request, "find-an-account") %>',
 					itemSelectedMessage: '<%= LanguageUtil.get(request, "account-selected") %>',
-					linkedDatasetsId: [
+					linkedDataSetsId: [
 						'<%= CommercePricingFDSNames.PRICE_LIST_QUALIFIER_ACCOUNTS %>',
 					],
 					itemCreation: false,

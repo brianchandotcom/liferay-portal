@@ -20,7 +20,7 @@
 	<liferay-frontend:component
 		context='<%=
 			HashMapBuilder.<String, Object>put(
-				"datasetId", CommercePaymentMethodGroupRelFDSNames.ORDER_TYPES
+				"dataSetId", CommercePaymentMethodGroupRelFDSNames.ORDER_TYPES
 			).put(
 				"paymentMethodGroupRelId", commercePaymentMethodGroupRelId
 			).put(

@@ -38,7 +38,7 @@
 
 					return CommerceDiscountProductsResource.addDiscountProduct(id, productData)
 						.then(() => {
-							Liferay.fire(events.UPDATE_DATASET_DISPLAY, {
+							Liferay.fire(events.FDS_UPDATE_DISPLAY, {
 								id:
 									'<%= CommercePricingFDSNames.DISCOUNT_PRODUCT_DEFINITIONS %>',
 							});
@@ -60,7 +60,7 @@
 					itemCreation: false,
 					itemSelectedMessage: '<%= LanguageUtil.get(request, "product-selected") %>',
 					itemsKey: 'id',
-					linkedDatasetsId: [
+					linkedDataSetsId: [
 						'<%= CommercePricingFDSNames.DISCOUNT_PRODUCT_DEFINITIONS %>',
 					],
 					onItemSelected: selectItem,

@@ -140,7 +140,7 @@ public class CommerceTaxFixedRateAddressRelsDisplayContext
 		return creationMenu;
 	}
 
-	public String getDatasetView() throws PortalException {
+	public String getFDSName() throws PortalException {
 		CommerceTaxMethod commerceTaxMethod = getCommerceTaxMethod();
 
 		if (commerceTaxMethod.isPercentage()) {

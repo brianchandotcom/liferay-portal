@@ -194,7 +194,7 @@ public class CommerceOrderImporter {
 				userId, serviceContext.getScopeGroupId(),
 				accountEntry.getAccountEntryId(), 0, 0);
 
-		// We update the order create date to the one in the dataset
+		// We update the order create date to the one in the data set
 
 		long timestamp = GetterUtil.getLong(jsonObject.getString("timestamp"));
 

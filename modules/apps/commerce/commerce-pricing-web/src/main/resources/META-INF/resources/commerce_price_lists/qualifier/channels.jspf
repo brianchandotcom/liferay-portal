@@ -41,7 +41,7 @@
 						channelData
 					)
 						.then(() => {
-							Liferay.fire(events.UPDATE_DATASET_DISPLAY, {
+							Liferay.fire(events.FDS_UPDATE_DISPLAY, {
 								id:
 									'<%= CommercePricingFDSNames.PRICE_LIST_QUALIFIER_CHANNELS %>',
 							});
@@ -60,7 +60,7 @@
 					getSelectedItems: getSelectedItems,
 					inputPlaceholder: '<%= LanguageUtil.get(request, "find-a-channel") %>',
 					itemSelectedMessage: '<%= LanguageUtil.get(request, "channel-selected") %>',
-					linkedDatasetsId: [
+					linkedDataSetsId: [
 						'<%= CommercePricingFDSNames.PRICE_LIST_QUALIFIER_CHANNELS %>',
 					],
 					itemCreation: false,

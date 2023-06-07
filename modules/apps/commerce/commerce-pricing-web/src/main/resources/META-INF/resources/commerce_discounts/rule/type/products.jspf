@@ -58,7 +58,7 @@ String typeSettings = unicodeProperties.getProperty(commerceDiscountRule.getType
 				ruleData
 			)
 				.then((payload) => {
-					Liferay.fire(events.UPDATE_DATASET_DISPLAY, {
+					Liferay.fire(events.FDS_UPDATE_DISPLAY, {
 						id:
 							'<%= CommercePricingFDSNames.DISCOUNT_RULE_PRODUCT_DEFINITIONS %>',
 					});
@@ -85,7 +85,7 @@ String typeSettings = unicodeProperties.getProperty(commerceDiscountRule.getType
 				'/o/headless-commerce-admin-catalog/v1.0/products?nestedFields=catalog',
 			getSelectedItems: getSelectedItems,
 			inputPlaceholder: '<%= LanguageUtil.get(request, "find-a-product") %>',
-			linkedDatasetsId: [
+			linkedDataSetsId: [
 				'<%= CommercePricingFDSNames.DISCOUNT_RULE_PRODUCT_DEFINITIONS %>',
 			],
 			itemCreation: false,

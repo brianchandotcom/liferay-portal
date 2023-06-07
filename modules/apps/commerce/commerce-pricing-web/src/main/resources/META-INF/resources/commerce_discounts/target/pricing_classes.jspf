@@ -39,7 +39,7 @@
 				productGroupData
 			)
 				.then(() => {
-					Liferay.fire(events.UPDATE_DATASET_DISPLAY, {
+					Liferay.fire(events.FDS_UPDATE_DISPLAY, {
 						id: '<%= CommercePricingFDSNames.DISCOUNT_PRICING_CLASSES %>',
 					});
 				})
@@ -61,7 +61,7 @@
 			itemSelectedMessage:
 				'<%= LanguageUtil.get(request, "product-group-selected") %>',
 			itemsKey: 'id',
-			linkedDatasetsId: [
+			linkedDataSetsId: [
 				'<%= CommercePricingFDSNames.DISCOUNT_PRICING_CLASSES %>',
 			],
 			onItemSelected: selectItem,

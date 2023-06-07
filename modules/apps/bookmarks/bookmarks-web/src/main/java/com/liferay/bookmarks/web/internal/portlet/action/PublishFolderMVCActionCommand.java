@@ -17,7 +17,7 @@ package com.liferay.bookmarks.web.internal.portlet.action;
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.service.BookmarksFolderLocalService;
 import com.liferay.exportimport.changeset.Changeset;
-import com.liferay.exportimport.changeset.portlet.action.ExportImportChangesetMVCActionCommand;
+import com.liferay.exportimport.changeset.portlet.action.ExportImportChangesetMVCActionCommandHelper;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -57,7 +57,7 @@ public class PublishFolderMVCActionCommand extends BaseMVCActionCommand {
 				folder.getGroupId(), folder.getFolderId())
 		).build();
 
-		_exportImportChangesetMVCActionCommand.processPublishAction(
+		_exportImportChangesetMVCActionCommandHelper.publish(
 			actionRequest, actionResponse, changeset);
 	}
 
@@ -65,7 +65,7 @@ public class PublishFolderMVCActionCommand extends BaseMVCActionCommand {
 	private BookmarksFolderLocalService _bookmarksFolderLocalService;
 
 	@Reference
-	private ExportImportChangesetMVCActionCommand
-		_exportImportChangesetMVCActionCommand;
+	private ExportImportChangesetMVCActionCommandHelper
+		_exportImportChangesetMVCActionCommandHelper;
 
 }

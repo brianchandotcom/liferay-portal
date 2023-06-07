@@ -19,7 +19,7 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.exportimport.changeset.Changeset;
-import com.liferay.exportimport.changeset.portlet.action.ExportImportChangesetMVCActionCommand;
+import com.liferay.exportimport.changeset.portlet.action.ExportImportChangesetMVCActionCommandHelper;
 import com.liferay.exportimport.kernel.service.StagingLocalService;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleResource;
@@ -368,7 +368,7 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 			Collections::emptyList
 		).build();
 
-		_exportImportChangesetMVCActionCommand.processPublishAction(
+		_exportImportChangesetMVCActionCommandHelper.publish(
 			mockLiferayPortletActionRequest,
 			new MockLiferayPortletActionResponse(), changeset);
 	}
@@ -473,8 +473,8 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 	private CompanyLocalService _companyLocalService;
 
 	@Inject
-	private ExportImportChangesetMVCActionCommand
-		_exportImportChangesetMVCActionCommand;
+	private ExportImportChangesetMVCActionCommandHelper
+		_exportImportChangesetMVCActionCommandHelper;
 
 	@Inject
 	private GroupLocalService _groupLocalService;

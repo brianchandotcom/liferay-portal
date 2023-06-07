@@ -17,7 +17,7 @@ package com.liferay.document.library.web.internal.portlet.action;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.exportimport.changeset.Changeset;
-import com.liferay.exportimport.changeset.portlet.action.ExportImportChangesetMVCActionCommand;
+import com.liferay.exportimport.changeset.portlet.action.ExportImportChangesetMVCActionCommandHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -58,7 +58,7 @@ public class PublishFileShortcutMVCActionCommand extends BaseMVCActionCommand {
 			() -> _fetchFileShortcut(fileShortcutId)
 		).build();
 
-		_exportImportChangesetMVCActionCommand.processPublishAction(
+		_exportImportChangesetMVCActionCommandHelper.publish(
 			actionRequest, actionResponse, changeset);
 	}
 
@@ -84,7 +84,7 @@ public class PublishFileShortcutMVCActionCommand extends BaseMVCActionCommand {
 	private DLAppLocalService _dlAppLocalService;
 
 	@Reference
-	private ExportImportChangesetMVCActionCommand
-		_exportImportChangesetMVCActionCommand;
+	private ExportImportChangesetMVCActionCommandHelper
+		_exportImportChangesetMVCActionCommandHelper;
 
 }

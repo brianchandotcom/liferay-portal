@@ -18,7 +18,7 @@ import com.liferay.blogs.constants.BlogsPortletKeys;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryService;
 import com.liferay.exportimport.changeset.Changeset;
-import com.liferay.exportimport.changeset.portlet.action.ExportImportChangesetMVCActionCommand;
+import com.liferay.exportimport.changeset.portlet.action.ExportImportChangesetMVCActionCommandHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -59,7 +59,7 @@ public class PublishEntryMVCActionCommand extends BaseMVCActionCommand {
 			() -> _fetchEntry(entryId)
 		).build();
 
-		_exportImportChangesetMVCActionCommand.processPublishAction(
+		_exportImportChangesetMVCActionCommandHelper.publish(
 			actionRequest, actionResponse, changeset);
 
 		SessionMessages.add(actionRequest, "blogsEntryPublished");
@@ -86,7 +86,7 @@ public class PublishEntryMVCActionCommand extends BaseMVCActionCommand {
 	private BlogsEntryService _blogsEntryService;
 
 	@Reference
-	private ExportImportChangesetMVCActionCommand
-		_exportImportChangesetMVCActionCommand;
+	private ExportImportChangesetMVCActionCommandHelper
+		_exportImportChangesetMVCActionCommandHelper;
 
 }

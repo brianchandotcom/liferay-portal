@@ -18,7 +18,7 @@ import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.exportimport.changeset.Changeset;
-import com.liferay.exportimport.changeset.portlet.action.ExportImportChangesetMVCActionCommand;
+import com.liferay.exportimport.changeset.portlet.action.ExportImportChangesetMVCActionCommandHelper;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -73,7 +73,7 @@ public class PublishFolderMVCActionCommand extends BaseMVCActionCommand {
 			() -> _getFoldersAndFileEntriesAndFileShortcuts(folder)
 		).build();
 
-		_exportImportChangesetMVCActionCommand.processPublishAction(
+		_exportImportChangesetMVCActionCommandHelper.publish(
 			actionRequest, actionResponse, changeset);
 	}
 
@@ -162,7 +162,7 @@ public class PublishFolderMVCActionCommand extends BaseMVCActionCommand {
 	private DLAppService _dlAppService;
 
 	@Reference
-	private ExportImportChangesetMVCActionCommand
-		_exportImportChangesetMVCActionCommand;
+	private ExportImportChangesetMVCActionCommandHelper
+		_exportImportChangesetMVCActionCommandHelper;
 
 }

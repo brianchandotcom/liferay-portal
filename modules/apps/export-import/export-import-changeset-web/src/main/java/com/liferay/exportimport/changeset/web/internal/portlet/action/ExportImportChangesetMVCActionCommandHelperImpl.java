@@ -19,7 +19,7 @@ import com.liferay.exportimport.changeset.ChangesetManager;
 import com.liferay.exportimport.changeset.constants.ChangesetConstants;
 import com.liferay.exportimport.changeset.constants.ChangesetPortletKeys;
 import com.liferay.exportimport.changeset.exception.ExportImportEntityException;
-import com.liferay.exportimport.changeset.portlet.action.ExportImportChangesetMVCActionCommand;
+import com.liferay.exportimport.changeset.portlet.action.ExportImportChangesetMVCActionCommandHelper;
 import com.liferay.exportimport.constants.ExportImportPortletKeys;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationParameterMapFactory;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactory;
@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.auth.HttpPrincipal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -68,34 +67,13 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Akos Thurzo
  */
-@Component(
-	property = {
-		"javax.portlet.name=" + ChangesetPortletKeys.CHANGESET,
-		"mvc.command.name=/export_import_changeset/export_import_changeset"
-	},
-	service = {
-		ExportImportChangesetMVCActionCommand.class, MVCActionCommand.class
-	}
-)
-public class ExportImportChangesetMVCActionCommandImpl
+@Component(service = ExportImportChangesetMVCActionCommandHelper.class)
+public class ExportImportChangesetMVCActionCommandHelperImpl
 	extends BaseMVCActionCommand
-	implements ExportImportChangesetMVCActionCommand {
+	implements ExportImportChangesetMVCActionCommandHelper {
 
 	@Override
-	public void processExportAction(
-			ActionRequest actionRequest, ActionResponse actionResponse,
-			Changeset changeset)
-		throws Exception {
-
-		_changesetManager.addChangeset(changeset);
-
-		_processExportAndPublishAction(
-			actionRequest, actionResponse, Constants.EXPORT,
-			changeset.getUuid());
-	}
-
-	@Override
-	public void processPublishAction(
+	public void publish(
 			ActionRequest actionRequest, ActionResponse actionResponse,
 			Changeset changeset)
 		throws Exception {

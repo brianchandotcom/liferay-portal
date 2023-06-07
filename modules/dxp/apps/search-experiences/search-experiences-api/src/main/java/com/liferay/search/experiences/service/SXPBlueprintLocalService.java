@@ -304,6 +304,9 @@ public interface SXPBlueprintLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SXPBlueprint> getSXPBlueprints(int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<SXPBlueprint> getSXPBlueprints(long companyId);
+
 	/**
 	 * Returns the number of sxp blueprints.
 	 *

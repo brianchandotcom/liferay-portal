@@ -388,6 +388,13 @@ public class SXPBlueprintLocalServiceWrapper
 		return _sxpBlueprintLocalService.getSXPBlueprints(start, end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.search.experiences.model.SXPBlueprint>
+		getSXPBlueprints(long companyId) {
+
+		return _sxpBlueprintLocalService.getSXPBlueprints(companyId);
+	}
+
 	/**
 	 * Returns the number of sxp blueprints.
 	 *

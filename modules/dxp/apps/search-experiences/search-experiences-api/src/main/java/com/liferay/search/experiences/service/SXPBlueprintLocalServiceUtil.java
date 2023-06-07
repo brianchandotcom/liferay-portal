@@ -342,6 +342,10 @@ public class SXPBlueprintLocalServiceUtil {
 		return getService().getSXPBlueprints(start, end);
 	}
 
+	public static List<SXPBlueprint> getSXPBlueprints(long companyId) {
+		return getService().getSXPBlueprints(companyId);
+	}
+
 	/**
 	 * Returns the number of sxp blueprints.
 	 *

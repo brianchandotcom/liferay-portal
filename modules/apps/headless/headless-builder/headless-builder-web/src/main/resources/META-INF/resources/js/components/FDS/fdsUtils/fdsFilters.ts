@@ -31,5 +31,10 @@ export function getAPIApplicationsFDSFilters() {
 			multiple: false,
 			type: 'selection',
 		},
+		{
+			id: 'dateModified',
+			label: Liferay.Language.get('last-updated'),
+			type: 'dateRange',
+		},
 	];
 }

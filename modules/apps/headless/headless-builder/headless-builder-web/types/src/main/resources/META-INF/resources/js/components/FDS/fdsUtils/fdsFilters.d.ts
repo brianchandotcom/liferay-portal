@@ -12,14 +12,24 @@
  * details.
  */
 
-export declare function getAPIApplicationsFDSFilters(): {
-	autocompleteEnabled: boolean;
-	id: string;
-	items: {
-		label: string;
-		value: string;
-	}[];
-	label: string;
-	multiple: boolean;
-	type: string;
-}[];
+export declare function getAPIApplicationsFDSFilters(): (
+	| {
+			autocompleteEnabled: boolean;
+			id: string;
+			items: {
+				label: string;
+				value: string;
+			}[];
+			label: string;
+			multiple: boolean;
+			type: string;
+	  }
+	| {
+			id: string;
+			label: string;
+			type: string;
+			autocompleteEnabled?: undefined;
+			items?: undefined;
+			multiple?: undefined;
+	  }
+)[];

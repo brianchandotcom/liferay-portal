@@ -487,6 +487,13 @@ public class GroupLocalServiceUtil {
 		return getService().fetchGroup(companyId, groupKey);
 	}
 
+	public static Group fetchGroupByExternalReferenceCode(
+		String externalReferenceCode, long companyId) {
+
+		return getService().fetchGroupByExternalReferenceCode(
+			externalReferenceCode, companyId);
+	}
+
 	/**
 	 * Returns the group with the matching UUID and company.
 	 *
@@ -717,6 +724,14 @@ public class GroupLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getGroup(companyId, groupKey);
+	}
+
+	public static Group getGroupByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().getGroupByExternalReferenceCode(
+			externalReferenceCode, companyId);
 	}
 
 	/**

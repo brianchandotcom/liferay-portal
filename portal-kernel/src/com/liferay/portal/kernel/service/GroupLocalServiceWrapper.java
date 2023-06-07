@@ -542,6 +542,14 @@ public class GroupLocalServiceWrapper
 		return _groupLocalService.fetchGroup(companyId, groupKey);
 	}
 
+	@Override
+	public Group fetchGroupByExternalReferenceCode(
+		String externalReferenceCode, long companyId) {
+
+		return _groupLocalService.fetchGroupByExternalReferenceCode(
+			externalReferenceCode, companyId);
+	}
+
 	/**
 	 * Returns the group with the matching UUID and company.
 	 *
@@ -795,6 +803,15 @@ public class GroupLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _groupLocalService.getGroup(companyId, groupKey);
+	}
+
+	@Override
+	public Group getGroupByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _groupLocalService.getGroupByExternalReferenceCode(
+			externalReferenceCode, companyId);
 	}
 
 	/**

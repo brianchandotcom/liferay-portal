@@ -366,6 +366,10 @@ public interface GroupLocalService
 	@Transactional(enabled = false)
 	public Group fetchGroup(long companyId, String groupKey);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Group fetchGroupByExternalReferenceCode(
+		String externalReferenceCode, long companyId);
+
 	/**
 	 * Returns the group with the matching UUID and company.
 	 *
@@ -566,6 +570,11 @@ public interface GroupLocalService
 	 */
 	@Transactional(enabled = false)
 	public Group getGroup(long companyId, String groupKey)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Group getGroupByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
 		throws PortalException;
 
 	/**

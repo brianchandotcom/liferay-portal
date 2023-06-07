@@ -75,7 +75,7 @@ const NumberBreakdown: React.FC<IBreakdownProps> = ({
 							block
 							className='button-root'
 							disabled={!isValid}
-							displayType='secondary'
+							displayType='primary'
 							type='submit'
 						>
 							{Liferay.Language.get('done')}

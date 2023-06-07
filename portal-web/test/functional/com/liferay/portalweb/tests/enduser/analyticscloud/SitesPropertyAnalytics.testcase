@@ -118,8 +118,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8329 | Test Summary: Assert Chart ticks for Site Metrics standardized"
+	@ignore = "true"
 	@priority = 3
 	test AssertChartTicksSiteMetricsStandardized {
+
+		// AC Refactor: x-axis chart ticks does not appear with no data. Requires past data
+		// AC Refactor ticket: LRAC-13982
+
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 

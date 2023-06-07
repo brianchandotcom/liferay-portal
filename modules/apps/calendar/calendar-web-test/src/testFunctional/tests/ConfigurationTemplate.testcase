@@ -12,27 +12,37 @@ definition {
 	setUp {
 		var portalURL = PropsUtil.get("portal.url");
 
-		TestCase.setUpPortalInstance();
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
 
-		User.firstLoginPG();
+			User.firstLoginPG();
+		}
 
-		HeadlessSite.addSite(siteName = "Test Site Name");
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = "Test Site Name");
+		}
 
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Calendar Page");
+		task ("Add a content page and configure it") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Calendar Page");
 
-		JSONLayout.updateLayoutTemplateOfPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Calendar Page",
-			layoutTemplate = "1 Column");
+			JSONLayout.updateLayoutTemplateOfPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Calendar Page",
+				layoutTemplate = "1 Column");
+		}
 
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Calendar Page",
-			widgetName = "Calendar");
+		task ("Add a calendar widget") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Calendar Page",
+				widgetName = "Calendar");
+		}
 
-		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/calendar-page");
+		task ("Navigate to page") {
+			Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/calendar-page");
+		}
 	}
 
 	tearDown {

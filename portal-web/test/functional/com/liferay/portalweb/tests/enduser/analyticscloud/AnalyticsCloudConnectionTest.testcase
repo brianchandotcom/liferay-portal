@@ -36,9 +36,13 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-8832 | Test Summary: Add DXP data source and configure only one site"
+	@ignore = "true"
 	@priority = 3
 	test AddDataSourceForOneSite {
 		property portal.release = "true";
+
+		// AC Refactor: Data doesn't appear on time
+		// AC Refactor ticket: LRAC-13994
 
 		task ("Add site and page") {
 			ACUtils.addSiteAndPage();

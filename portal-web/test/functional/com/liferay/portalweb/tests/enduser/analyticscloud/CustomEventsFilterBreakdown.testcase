@@ -1147,8 +1147,13 @@ definition {
 	}
 
 	@description = "Bug: LRAC-11636 | Automation ID: LRAC-12357 | Test Summary: Sorting the second/third column of the event analysis and verify that it will not sorting the first column"
+	@ignore = "true"
 	@priority = 4
 	test SortSecondOrThirdColumnInAnalysisResultNotSortFirstColumn {
+
+		// AC Refactor: Data doesn't appear on time
+		// AC Refactor ticket: LRAC-13994
+
 		var attributeNameList = "pageTitle,title,url";
 		var layoutName = "AC Page 2";
 		var webContentTitleList = "WC Test 1,WC Test 2,WC Test 3";

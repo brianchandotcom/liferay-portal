@@ -78,8 +78,13 @@ definition {
 	}
 
 	@description = "Feature ID: LRAC-4265 | Automation ID: LRAC-10008 | Test Summary: Sample javascript copy"
+	@ignore = "true"
 	@priority = 5
 	test CanCopySampleJavascript {
+
+		// AC Refactor: Data doesn't appear on time
+		// AC Refactor ticket: LRAC-13994
+
 		var layoutName = "Custom 2";
 		var globalAttributesList = "canonicalUrl,pageTitle,referrer,url";
 

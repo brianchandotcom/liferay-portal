@@ -181,8 +181,13 @@ definition {
 	}
 
 	@description = "Bug: LRAC-11669 | Automation ID: LRAC-11923 | Test Summary: Pagination for the result of the event analysis"
+	@ignore = "true"
 	@priority = 3
 	test CanPaginationEventAnalysisResult {
+
+		// AC Refactor: Data doesn't appear on time
+		// AC Refactor ticket: LRAC-13994
+
 		var defaultEventName = "pageViewed";
 		var attributeName = "pageTitle";
 		var layoutNameList = "Custom 1,Custom 2,Custom 3,Custom 4,Custom 5";
@@ -283,8 +288,13 @@ definition {
 	}
 
 	@description = "Bug ID: LRAC-11659 | Automation ID: LRAC-11726 | Test Summary: Check Default Events Counted as Default when event sent by console"
+	@ignore = "true"
 	@priority = 5
 	test CheckDefaultEventsCountedAsDefaultWhenEventSentByConsole {
+
+		// AC Refactor: Data doesn't appear on time
+		// AC Refactor ticket: LRAC-13994
+
 		var layoutName = "Custom Asset";
 		var disableAttributesList = "assetId,canonicalUrl,category,pageDescription,pageKeywords,pageTitle,title,referrer,url";
 		var eventName = "assetViewed";

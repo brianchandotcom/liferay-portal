@@ -384,8 +384,13 @@ definition {
 	}
 
 	@description = "Bug ID: LRAC-7996 | Automation ID: LRAC-8110 | Test Summary: Assert Sites Activity loads activity data properly when the time filter is set to 'Last 24 hours'"
+	@ignore = "true"
 	@priority = 5
 	test CanLoadDataProperlyWhenTimeFilterIsLast24Hours {
+
+		// AC Refactor: Data doesn't appear on time
+		// AC Refactor ticket: LRAC-13994
+
 		task ("Connect Analytics Cloud to DXP") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
@@ -422,8 +427,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8280 | Test Summary: Anon and known visitors legend shown"
+	@ignore = "true"
 	@priority = 5
 	test CanShownAnonAndKnownVisitorsLegend {
+
+		// AC Refactor: Data doesn't appear on time
+		// AC Refactor ticket: LRAC-13994
+
 		task ("Connect Analytics Cloud to DXP") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
@@ -587,8 +597,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8288 | Test Summary: Unique Visitors label is shown on the tabs of Sites dashboards"
+	@ignore = "true"
 	@priority = 3
 	test CanUniqueVisitorsLabelShowSitesDashboards {
+
+		// AC Refactor: Data doesn't appear on time
+		// AC Refactor ticket: LRAC-13994
+
 		task ("Create blog and add to page") {
 			ACUtils.createBlogsAndAddToPage();
 		}

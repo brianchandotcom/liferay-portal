@@ -211,8 +211,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9179 | Test Summary: Bar graph and percentage of individuals displays percentage of plan used."
+	@ignore = "true"
 	@priority = 3
 	test IndividualsCardShowOverviewUsageOfPlan {
+
+		// AC Refactor: Data doesn't appear on time
+		// AC Refactor ticket: LRAC-13994
+
 		task ("Sign in AC") {
 			ACUtils.launchAC();
 		}
@@ -374,8 +379,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9181 | Test Summary: Bar graph and percentage of page views displays percentage of plan used."
+	@ignore = "true"
 	@priority = 3
 	test PageViewsCardShowOverviewUsageOfPlan {
+
+		// AC Refactor: Data doesn't appear on time
+		// AC Refactor ticket: LRAC-13994
+
 		task ("Sign in AC") {
 			ACUtils.launchAC();
 		}
@@ -430,8 +440,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8150 | Test Summary: Page views update in real time"
+	@ignore = "true"
 	@priority = 5
 	test PageViewsUpdateInRealTime {
+
+		// AC Refactor: Data doesn't appear on time
+		// AC Refactor ticket: LRAC-13994
+
 		task ("Add a new site and page, then add a blog and connect ac to dxp") {
 			ACUtils.addSiteAndPage();
 

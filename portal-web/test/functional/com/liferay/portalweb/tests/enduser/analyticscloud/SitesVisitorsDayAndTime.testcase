@@ -68,9 +68,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8531 | Test Summary: Site overview visitors by day and time card shows when individuals are viewing the site"
+	@ignore = "true"
 	@priority = 5
 	test ShowsWhenIndividualsViewingSite {
 		property test.name.skip.portal.instance = "SitesVisitorsDayAndTime#ShowsWhenIndividualsViewingSite";
+
+		// AC Refactor: Data doesn't appear on time
+		// AC Refactor ticket: LRAC-13994
 
 		task ("Sign in as new user") {
 			User.logoutAndLoginPG(

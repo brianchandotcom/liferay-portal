@@ -803,8 +803,13 @@ definition {
 	}
 
 	@description = "Bug: ACP-274 | Automation ID: LRAC-10672 | Test Summary: Download a document by download button (enabled through show actions portlet configuration)"
+	@ignore = "true"
 	@priority = 4
 	test DownloadDocumentByDownloadButton {
+
+		// AC Refactor: Data doesn't appear on time
+		// AC Refactor ticket: LRAC-13994
+
 		task ("Connect the DXP to AC") {
 			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}

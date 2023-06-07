@@ -36,9 +36,7 @@ definition {
 
 		ObjectAdmin.deleteAllCustomObjectsViaAPI();
 
-		TaxonomyVocabularyAPI.deleteTaxonomyVocabularyByErc(
-			externalReferenceCode = "erc",
-			groupName = "Guest");
+		TaxonomyVocabularyAPI.deleteAllTaxonomyVocabulary(groupName = "Guest");
 
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
@@ -86,6 +84,108 @@ definition {
 
 	@disable-webdriver = "true"
 	@priority = 4
+	test CanFilterEntriesByTaxonomyCategory {
+		property portal.acceptance = "true";
+
+		task ("And Given object definition 'Student' with name field created") {
+			ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				en_US_label = "student",
+				en_US_plural_label = "students",
+				name = "Student",
+				requiredStringFieldName = "name");
+		}
+
+		task ("And Given Student entry 'Student1' created with {category_childId} associated") {
+			ObjectDefinitionAPI.createObjectEntryWithName(
+				en_US_plural_label = "students",
+				name = "Student1",
+				taxonomyCategoryIds = ${staticChildTaxonomyCategoryId});
+		}
+
+		task ("And Given Student entry 'Student2' created with {category_parentId} associated") {
+			var studentEntryId = ObjectDefinitionAPI.createObjectEntryWithName(
+				en_US_plural_label = "students",
+				name = "Student2",
+				taxonomyCategoryIds = ${staticTaxonomyCategoryId});
+		}
+
+		task ("When requesting getStudentsPage with filter taxonomyCategoryIds/any(k:k eq ${taxonomyCategoryId})") {
+			var response = ObjectDefinitionAPI.getObjectEntries(
+				en_US_plural_label = "students",
+				parameter = "filter=taxonomyCategoryIds%2Fany%28k%3Ak%20eq%20${staticTaxonomyCategoryId}%29");
+		}
+
+		task ("Then I can see 'Student2' entry") {
+			var actualValue = JSONUtil.getWithJSONPath(${response}, "$.items..[?(@.id==${studentEntryId})].name");
+
+			TestUtils.assertEquals(
+				actual = ${actualValue},
+				expected = "Student2");
+		}
+
+		task ("And then totalCount of payload is 1") {
+			var actualValue = JSONUtil.getWithJSONPath(${response}, "$..totalCount");
+
+			TestUtils.assertEquals(
+				actual = ${actualValue},
+				expected = 1);
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 4
+	test CanGetEmbeddedTaxonomyCategoryOfEntriesCollection {
+		property portal.acceptance = "true";
+
+		task ("And Given taxonomyVocabulary with name 'terminology' created") {
+			var responseFromVocabulary = TaxonomyVocabularyAPI.createTaxonomyVocabulary(
+				externalReferenceCode = "erc1",
+				groupName = "Guest",
+				name = "terminology");
+		}
+
+		task ("And Given category with name 'term' in 'terminology' created") {
+			var taxonomyVocabularyId = JSONPathUtil.getIdValue(response = ${responseFromVocabulary});
+
+			var responseFromCategory = TaxonomyCategoryAPI.createTaxonomyCategory(
+				name = "term",
+				taxonomyVocabularyId = ${taxonomyVocabularyId});
+		}
+
+		task ("And Given object definition 'Student' with name field created") {
+			ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				en_US_label = "student",
+				en_US_plural_label = "students",
+				name = "Student",
+				requiredStringFieldName = "name");
+		}
+
+		task ("And Given Student entry created with taxonomyCategoryIds of 'term' and 'category_parent'") {
+			var taxonomyCategoryId = JSONPathUtil.getIdValue(response = ${responseFromCategory});
+
+			var studentEntryId = ObjectDefinitionAPI.createObjectEntryWithName(
+				en_US_plural_label = "students",
+				name = "Tom",
+				taxonomyCategoryIds = "${staticTaxonomyCategoryId},${taxonomyCategoryId}");
+		}
+
+		task ("When requesting getStudentsPage with nestedFields=embeddedTaxonomyCategory") {
+			var response = ObjectDefinitionAPI.getObjectEntries(
+				en_US_plural_label = "students",
+				parameter = "nestedFields=embeddedTaxonomyCategory");
+		}
+
+		task ("Then I can see the embeddedTaxonomyCategory node with information") {
+			var actualValue = JSONUtil.getWithJSONPath(${response}, "$..items[?(@.id==${studentEntryId})].taxonomyCategoryBriefs..embeddedTaxonomyCategory.name");
+
+			TestUtils.assertEquals(
+				actual = ${actualValue},
+				expected = "category_parent,term");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 4
 	test CanGetTaxonomyCategoryBriefsOfEntriesCollection {
 		property portal.acceptance = "true";
 
@@ -114,6 +214,41 @@ definition {
 			TestUtils.assertEquals(
 				actual = ${actualValue},
 				expected = "category_parent");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 4
+	test CanGetTaxonomyCategoryBriefsOfObjectEntry {
+		property portal.acceptance = "true";
+
+		task ("And Given object definition 'Student' with name field created") {
+			ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				en_US_label = "student",
+				en_US_plural_label = "students",
+				name = "Student",
+				requiredStringFieldName = "name");
+		}
+
+		task ("And Given Student entry created with taxonomyCategoryId of 'category_child'") {
+			var studentEntryId = ObjectDefinitionAPI.createObjectEntryWithName(
+				en_US_plural_label = "students",
+				name = "Tom",
+				taxonomyCategoryIds = ${staticChildTaxonomyCategoryId});
+		}
+
+		task ("When requesting getStudent with {studentId}") {
+			var response = CustomObjectAPI.getObjectEntryById(
+				en_US_plural_label = "students",
+				objectEntryId = ${studentEntryId});
+		}
+
+		task ("Then I can see 'category_child' details in the taxonomyCategoryBriefs") {
+			var actualValue = JSONUtil.getWithJSONPath(${response}, "$.[?(@.id==${studentEntryId})].taxonomyCategoryBriefs..taxonomyCategoryName");
+
+			TestUtils.assertEquals(
+				actual = ${actualValue},
+				expected = "category_child");
 		}
 	}
 
@@ -153,6 +288,54 @@ definition {
 		}
 	}
 
+	@description = "LPS-186852. The category to set is not being validated if it belongs to the same site or a parent one"
+	@disable-webdriver = "true"
+	@ignore = "true"
+	@priority = 3
+	test CanUpdateSiteScopedObjectEntryWithTaxonomyCategoryOfDifferentSiteScope {
+		property portal.acceptance = "true";
+
+		task ("And Given object definition 'Student' with name field and Scope: Site created") {
+			ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				en_US_label = "student",
+				en_US_plural_label = "students",
+				name = "Student",
+				requiredStringFieldName = "name",
+				scope = "site");
+		}
+
+		task ("And Given Student entry created") {
+			var responseFromCreate = CustomObjectAPI.createObjectEntryWithFields(
+				en_US_plural_label = "students",
+				fieldName = "name",
+				fieldValue = "Tom",
+				groupName = "Global",
+				scopeKey = "true");
+		}
+
+		task ("When requesting putStudent with {studentId} to associate {category_parentId}") {
+			var studentEntryId = JSONPathUtil.getIdValue(response = ${responseFromCreate});
+
+			CustomObjectAPI.putObjectEntryById(
+				en_US_plural_label = "students",
+				fieldValue = "Tom",
+				objectEntryId = ${studentEntryId},
+				taxonomyCategoryIds = ${staticTaxonomyCategoryId});
+		}
+
+		task ("Then I can see 'category_parent' details in the taxonomyCategoryBriefs of the entry with {studentId}") {
+			var response = CustomObjectAPI.getObjectEntryById(
+				en_US_plural_label = "students",
+				objectEntryId = ${studentEntryId});
+
+			var actualValue = JSONUtil.getWithJSONPath(${response}, "$.[?(@.id==${studentEntryId})].taxonomyCategoryBriefs..taxonomyCategoryName");
+
+			TestUtils.assertEquals(
+				actual = ${actualValue},
+				expected = "category_parent");
+		}
+	}
+
 	@disable-webdriver = "true"
 	@priority = 4
 	test CanUpdateSiteScopedObjectEntryWithTaxonomyCategoryWithinSameScope {
@@ -168,12 +351,16 @@ definition {
 		}
 
 		task ("And Given Student entry created") {
-			var studentEntryId = ObjectDefinitionAPI.createObjectEntryWithName(
+			var responseFromCreate = CustomObjectAPI.createObjectEntryWithFields(
 				en_US_plural_label = "students",
-				name = "Tom");
+				fieldName = "name",
+				fieldValue = "Tom",
+				scopeKey = "true");
 		}
 
 		task ("When requesting putStudent with {studentId} to associate {category_parentId}") {
+			var studentEntryId = JSONPathUtil.getIdValue(response = ${responseFromCreate});
+
 			CustomObjectAPI.putObjectEntryById(
 				en_US_plural_label = "students",
 				fieldValue = "Tom",
@@ -182,9 +369,11 @@ definition {
 		}
 
 		task ("Then I can see 'category_parent' details in the taxonomyCategoryBriefs of the entry with {studentId}") {
-			var response = ObjectDefinitionAPI.getObjectEntries(en_US_plural_label = "students");
+			var response = CustomObjectAPI.getObjectEntryById(
+				en_US_plural_label = "students",
+				objectEntryId = ${studentEntryId});
 
-			var actualValue = JSONUtil.getWithJSONPath(${response}, "$..items[?(@.id==${studentEntryId})].taxonomyCategoryBriefs..taxonomyCategoryName");
+			var actualValue = JSONUtil.getWithJSONPath(${response}, "$.[?(@.id==${studentEntryId})].taxonomyCategoryBriefs..taxonomyCategoryName");
 
 			TestUtils.assertEquals(
 				actual = ${actualValue},

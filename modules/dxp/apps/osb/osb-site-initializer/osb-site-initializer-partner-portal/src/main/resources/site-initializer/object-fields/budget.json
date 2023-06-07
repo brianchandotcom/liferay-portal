@@ -1,0 +1,19 @@
+{
+	"object-fields": [
+		{
+			"DBType": "String",
+			"businessType": "Picklist",
+			"externalReferenceCode": "64638b56-a1b8-dfdf-b266-94f633398240",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Expense"
+			},
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Budget Expenses$]",
+			"name": "expense",
+			"required": false,
+			"type": "String"
+		}
+	],
+	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:Budget$]"
+}

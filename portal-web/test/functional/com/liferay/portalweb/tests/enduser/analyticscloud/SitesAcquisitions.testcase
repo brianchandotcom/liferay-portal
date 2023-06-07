@@ -209,7 +209,6 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8346 | Test Summary: Assert Sites Acquisition card Channels highest session"
-	@ignore "true"
 	@priority = 3
 	test AssertSitesAcquisitionCardChannelsHighestSession {
 
@@ -270,7 +269,6 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8347 | Test Summary: Assert Sites Acquisition card Referrers highest session"
-	@ignore ="true"
 	@priority = 3
 	test AssertSitesAcquisitionCardReferrersHighestSession {
 

@@ -24,7 +24,6 @@ import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -225,18 +224,14 @@ public class SegmentsExperienceUtil {
 	}
 
 	private static String _getNewEditableValues(
-			String editableValues, String namespace, String newNamespace,
-			long plid)
-		throws JSONException {
-
-		JSONObject editableValuesJSONObject = JSONFactoryUtil.createJSONObject(
-			editableValues);
+		JSONObject editableValuesJSONObject, String namespace,
+		String newNamespace, long plid) {
 
 		String instanceId = editableValuesJSONObject.getString("instanceId");
 		String portletId = editableValuesJSONObject.getString("portletId");
 
 		if (Validator.isNull(instanceId) || Validator.isNull(portletId)) {
-			return editableValues;
+			return editableValuesJSONObject.toString();
 		}
 
 		PortletPreferences portletPreferences = _getNewPortletPreferences(
@@ -244,7 +239,7 @@ public class SegmentsExperienceUtil {
 			PortletIdCodec.encode(portletId, instanceId));
 
 		if (portletPreferences == null) {
-			return editableValues;
+			return editableValuesJSONObject.toString();
 		}
 
 		JSONObject newEditableValuesJSONObject = editableValuesJSONObject.put(
@@ -379,11 +374,31 @@ public class SegmentsExperienceUtil {
 
 			String newNamespace = StringUtil.randomId();
 
+			JSONObject editableValuesJSONObject =
+				JSONFactoryUtil.createJSONObject(
+					fragmentEntryLink.getEditableValues());
+
+			String instanceId = editableValuesJSONObject.getString(
+				"instanceId");
+			String portletId = editableValuesJSONObject.getString("portletId");
+
+			long publicLayoutPlid = layout.getPlid();
+
+			if (layout.isDraftLayout()) {
+				publicLayoutPlid = layout.getClassPK();
+			}
+
+			if (SegmentsExperimentLocalServiceUtil.hasSegmentsExperiment(
+					sourceSegmentsExperienceId, publicLayoutPlid, null) &&
+				Validator.isNull(instanceId) && Validator.isNull(portletId)) {
+
+				newNamespace = fragmentEntryLink.getNamespace();
+			}
+
 			newFragmentEntryLink.setEditableValues(
 				_getNewEditableValues(
-					fragmentEntryLink.getEditableValues(),
-					fragmentEntryLink.getNamespace(), newNamespace,
-					layout.getPlid()));
+					editableValuesJSONObject, fragmentEntryLink.getNamespace(),
+					newNamespace, layout.getPlid()));
 
 			newFragmentEntryLink.setNamespace(newNamespace);
 

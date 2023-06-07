@@ -243,7 +243,9 @@ public class ContentFieldUtil {
 
 						String alt = jsonObject.getString("alt");
 
-						if (Validator.isNotNull(alt) && JSONUtil.isJSONObject(alt)) {
+						if (Validator.isNotNull(alt) &&
+							JSONUtil.isJSONObject(alt)) {
+
 							JSONObject altJSONObject = jsonObject.getJSONObject(
 								"alt");
 

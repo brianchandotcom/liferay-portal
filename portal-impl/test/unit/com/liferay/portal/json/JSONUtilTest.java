@@ -15,7 +15,6 @@
 package com.liferay.portal.json;
 
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -147,8 +146,7 @@ public class JSONUtilTest {
 
 		Assert.assertNotNull(jsonArray);
 		Assert.assertEquals(1, jsonArray.length());
-		Assert.assertEquals(
-			"0", jsonArray.getString(0));
+		Assert.assertEquals("0", jsonArray.getString(0));
 
 		jsonArray = JSONUtil.getValueAsJSONArray(
 			_createJSONObject("{\"able\": [0, 1, 2, 3]}"), "JSONArray/able");
@@ -869,7 +867,7 @@ public class JSONUtilTest {
 		return JSONFactoryUtil.createJSONObject();
 	}
 
-	private JSONObject _createJSONObject(String json) throws JSONException {
+	private JSONObject _createJSONObject(String json) throws Exception {
 		return JSONFactoryUtil.createJSONObject(json);
 	}
 

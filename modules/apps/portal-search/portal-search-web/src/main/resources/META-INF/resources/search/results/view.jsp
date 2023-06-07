@@ -18,8 +18,10 @@
 
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
-<%@ taglib uri="http://liferay.com/tld/ddm" prefix="liferay-ddm" %><%@
-taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %>
+<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/ddm" prefix="liferay-ddm" %><%@
+taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
+taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
@@ -77,5 +79,15 @@ SearchContainer<Document> searchContainer = searchResultsPortletDisplayContext.g
 			displayStyleGroupId="<%= searchResultsPortletDisplayContext.getDisplayStyleGroupId() %>"
 			entries="<%= searchResultSummaryDisplayContexts %>"
 		/>
+
+		<c:if test="<%= searchResultsPortletDisplayContext.isShowPagination() %>">
+			<aui:form action="#" useNamespace="<%= false %>">
+				<liferay-ui:search-paginator
+					id='<%= liferayPortletResponse.getNamespace() + "searchContainerTag" %>'
+					markupView="lexicon"
+					searchContainer="<%= searchContainer %>"
+				/>
+			</aui:form>
+		</c:if>
 	</c:otherwise>
 </c:choose>

@@ -84,14 +84,6 @@
 					</div>
 				</li>
 			</#list>
-
-			<@liferay_aui.form useNamespace=false>
-				<@liferay_ui["search-paginator"]
-					id="${namespace + 'searchContainerTag'}"
-					markupView="lexicon"
-					searchContainer=searchContainer
-				/>
-			</@liferay_aui.form>
 		</#if>
 	</ul>
 </div>

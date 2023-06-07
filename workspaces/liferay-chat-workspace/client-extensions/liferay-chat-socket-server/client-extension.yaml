@@ -1,0 +1,11 @@
+assemble:
+    - from: assets
+      into: static
+liferay-chat-socket-server:
+    .serviceAddress: localhost:3000
+    .serviceScheme: http
+    name: Liferay Chat Socket Server
+    scopes:
+        - Liferay.Headless.Admin.User.everything.read
+        - Liferay.Headless.Delivery.everything
+    type: oAuthApplicationHeadlessServer

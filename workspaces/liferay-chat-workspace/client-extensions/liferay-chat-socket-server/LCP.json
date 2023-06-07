@@ -1,0 +1,45 @@
+{
+	"kind": "Deployment",
+	"id": "chatsocketserver",
+	"memory": 1024,
+	"cpu": 2,
+	"scale": 1,
+	"loadBalancer": {
+		"targetPort": 3000,
+		"cdn": false
+	},
+	"readinessProbe": {
+		"httpGet": {
+			"path": "/",
+			"port": 3000
+		},
+		"initialDelaySeconds": 30,
+		"periodSeconds": 10,
+		"timeoutSeconds": 5,
+		"successThreshold": 2
+	},
+	"livenessProbe": {
+		"httpGet": {
+			"path": "/",
+			"port": 3000
+		},
+		"initialDelaySeconds": 120,
+		"timeoutSeconds": 60,
+		"failureThreshold": 5,
+		"periodSeconds": 60
+	},
+	"environments": {
+		"prd": {
+			"loadBalancer": {
+				"targetPort": 3000,
+				"cdn": false
+			}
+		},
+		"dev": {
+			"loadBalancer": {
+				"targetPort": 3000,
+				"cdn": false
+			}
+		}
+	}
+}

@@ -89,60 +89,66 @@ const ExperiencePicker = ({
 	}, []);
 
 	return (
-		<Picker
-			aria-label={Liferay.Language.get('experience-selector')}
-			as={TriggerLabel}
-			disabled={disabled}
-			id="experience-picker"
-			items={segmentsExperiences}
-			onSelectionChange={handleExperienceChange}
-			selectedItem={selectedSegmentsExperience}
-			selectedKey={selectedKey}
-		>
-			{(item) => (
-				<Option
-					aria-describedby={`${item.segmentsExperienceId}-description`}
-					aria-labelledby={`${item.segmentsExperienceId}-title`}
-					key={item.segmentsExperienceId}
-					textValue={item.segmentsExperienceName}
+		<>
+			{(!disabled || !Liferay.FeatureFlags['LPS-186155']) && (
+				<Picker
+					aria-label={Liferay.Language.get('experience-selector')}
+					as={TriggerLabel}
+					disabled={disabled}
+					id="experience-picker"
+					items={segmentsExperiences}
+					onSelectionChange={handleExperienceChange}
+					selectedItem={selectedSegmentsExperience}
+					selectedKey={selectedKey}
 				>
-					<Layout.ContentRow>
-						<Layout.ContentCol className="pl-0" expand>
-							<Text
-								id={`${item.segmentsExperienceId}-title`}
-								size={3}
-								weight="semi-bold"
-							>
-								{item.segmentsExperienceName}
-							</Text>
+					{(item) => (
+						<Option
+							aria-describedby={`${item.segmentsExperienceId}-description`}
+							aria-labelledby={`${item.segmentsExperienceId}-title`}
+							key={item.segmentsExperienceId}
+							textValue={item.segmentsExperienceName}
+						>
+							<Layout.ContentRow>
+								<Layout.ContentCol className="pl-0" expand>
+									<Text
+										id={`${item.segmentsExperienceId}-title`}
+										size={3}
+										weight="semi-bold"
+									>
+										{item.segmentsExperienceName}
+									</Text>
 
-							<Text
-								aria-hidden
-								color="secondary"
-								id={`${item.segmentsExperienceId}-description`}
-								size={3}
-							>
-								{`${Liferay.Language.get('segment')}:
-										${item.segmentsEntryName}`}
-							</Text>
-						</Layout.ContentCol>
+									<Text
+										aria-hidden
+										color="secondary"
+										id={`${item.segmentsExperienceId}-description`}
+										size={3}
+									>
+										{`${Liferay.Language.get('segment')}:
+											${item.segmentsEntryName}`}
+									</Text>
+								</Layout.ContentCol>
 
-						<Layout.ContentCol className="pr-0">
-							<Label
-								aria-hidden
-								className="mr-0"
-								displayType={
-									item.active ? 'success' : 'secondary'
-								}
-								id={`${item.segmentsExperienceId}-status`}
-							>
-								{item.statusLabel}
-							</Label>
-						</Layout.ContentCol>
-					</Layout.ContentRow>
-				</Option>
+								<Layout.ContentCol className="pr-0">
+									<Label
+										aria-hidden
+										className="mr-0"
+										displayType={
+											item.active
+												? 'success'
+												: 'secondary'
+										}
+										id={`${item.segmentsExperienceId}-status`}
+									>
+										{item.statusLabel}
+									</Label>
+								</Layout.ContentCol>
+							</Layout.ContentRow>
+						</Option>
+					)}
+				</Picker>
 			)}
-		</Picker>
+		</>
 	);
 };
 

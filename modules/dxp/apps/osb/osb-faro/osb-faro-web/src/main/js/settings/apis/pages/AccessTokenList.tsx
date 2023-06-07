@@ -190,10 +190,15 @@ const TokenList: React.FC<
 
 							return (
 								<>
-									<CopyButton text={token} />
+									<CopyButton
+										displayType='secondary'
+										text={token}
+									/>
 
 									<ClayButton
 										className='button-root'
+										disabled={loading}
+										displayType='secondary'
 										onClick={() => {
 											open(
 												modalTypes.CONFIRMATION_MODAL,

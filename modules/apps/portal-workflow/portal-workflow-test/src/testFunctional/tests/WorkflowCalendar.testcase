@@ -176,6 +176,8 @@ definition {
 
 		CalendarNavigator.closeModal(modalTitle = "View Event Details");
 
+		Click(locator1 = "Button#CLOSE_IFRAME");
+
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow.assignToMeTaskByActions(
@@ -207,6 +209,8 @@ definition {
 		CalendarEvent.viewStatusViaDetails(status = "PENDING");
 
 		CalendarNavigator.closeModal(modalTitle = "View Event Details");
+
+		Click(locator1 = "UserBar#USER_AVATAR_ICON");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
@@ -343,6 +347,8 @@ definition {
 			eventTitle = "Calendar Event Title",
 			siteCalendarName = ${siteName});
 
+		Click(locator1 = "Button#CLOSE_IFRAME");
+
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow.viewTaskAssignedToMyRoles(
@@ -384,6 +390,8 @@ definition {
 		CalendarEvent.viewSiteRSVPWithUnapprovedWorkflow(
 			eventTitle = "Calendar Event Title",
 			siteCalendarName = ${siteName});
+
+		Click(locator1 = "Button#CLOSE_IFRAME");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
@@ -431,6 +439,8 @@ definition {
 		CalendarEvent.viewSiteRSVPWithUnapprovedWorkflow(
 			eventTitle = "Calendar Event Title",
 			siteCalendarName = ${siteName});
+
+		Click(locator1 = "Button#CLOSE_IFRAME");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 

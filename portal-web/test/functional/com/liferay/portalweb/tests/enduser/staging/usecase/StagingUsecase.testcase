@@ -2218,7 +2218,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-123156"
+	@description = "This is a use case for LPS-123156 and LPS-185203 TC-1: The summary of the failed publishing processes can be viewed."
 	@priority = 5
 	test TrashEntryReferencePublishing {
 		property portal.acceptance = "true";
@@ -2302,10 +2302,31 @@ definition {
 				uncheckSubContent = "Referenced Content");
 		}
 
-		task ("Then: The publish process will fail due to validation error") {
+		task ("Then: The publish process will fail due to validation error and its summary can be viewed.") {
 			Staging.publishToLive(
 				failureExpected = "true",
+				publicationName = "Publication Name",
 				validateErrorMessage = "The publish process did not start due to validation errors.");
+
+			Navigator.openStagingSiteURL(siteName = "Site Name");
+
+			ProductMenu.gotoPortlet(
+				category = "Publishing",
+				portlet = "Staging");
+
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Summary",
+				rowEntry = "Publication Name");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			WaitForElementPresent(
+				key_text = "Pages",
+				locator1 = "Sidebar#SUBTITLE");
+
+			AssertElementPresent(
+				key_text = "Content",
+				locator1 = "Sidebar#SUBTITLE");
 		}
 
 		task ("And: publish only Document and Media from staging") {

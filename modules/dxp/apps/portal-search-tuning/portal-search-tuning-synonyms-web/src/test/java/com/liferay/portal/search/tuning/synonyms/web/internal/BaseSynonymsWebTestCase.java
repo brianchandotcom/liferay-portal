@@ -31,6 +31,8 @@ import com.liferay.portal.search.engine.adapter.document.DocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.DocumentResponse;
 import com.liferay.portal.search.engine.adapter.index.IndexRequest;
 import com.liferay.portal.search.engine.adapter.index.IndexResponse;
+import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexRequest;
+import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexResponse;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.hits.SearchHit;
@@ -246,6 +248,23 @@ public abstract class BaseSynonymsWebTestCase {
 			searchEngineAdapter
 		).execute(
 			(DocumentRequest)Mockito.any()
+		);
+
+		IndicesExistsIndexResponse indicesExistsIndexResponse = Mockito.mock(
+			IndicesExistsIndexResponse.class);
+
+		Mockito.doReturn(
+			true
+		).when(
+			indicesExistsIndexResponse
+		).isExists();
+
+		Mockito.doReturn(
+			indicesExistsIndexResponse
+		).when(
+			searchEngineAdapter
+		).execute(
+			(IndicesExistsIndexRequest)Mockito.any()
 		);
 	}
 

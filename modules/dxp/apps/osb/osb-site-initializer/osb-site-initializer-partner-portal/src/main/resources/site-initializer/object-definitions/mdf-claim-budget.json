@@ -17,66 +17,6 @@
 			"name": "invoiceAmount",
 			"required": false,
 			"type": "String"
-		},
-		{
-			"DBType": "String",
-			"businessType": "Text",
-			"externalReferenceCode": "836a082f-5740-cbf7-39bf-ca1c0f1f0d82",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Expense Name"
-			},
-			"name": "expenseName",
-			"required": false,
-			"type": "String"
-		},
-		{
-			"DBType": "Boolean",
-			"externalReferenceCode": "6117dedb-b451-5b04-2c9f-b953a7f6f314",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Selected"
-			},
-			"name": "selected",
-			"required": false,
-			"type": "Boolean"
-		},
-		{
-			"DBType": "Long",
-			"businessType": "Attachment",
-			"externalReferenceCode": "b5f0b914-9e71-4714-afb4-ff3eb139644d",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Invoice"
-			},
-			"name": "invoice",
-			"objectFieldSettings": [
-				{
-					"name": "acceptedFileExtensions",
-					"value": "jpeg, jpg, pdf, png, tiff, doc, docx"
-				},
-				{
-					"name": "maximumFileSize",
-					"value": "3"
-				},
-				{
-					"name": "fileSource",
-					"value": "userComputer"
-				},
-				{
-					"name": "showFilesInDocumentsAndMedia",
-					"value": "true"
-				},
-				{
-					"name": "storageDLFolderPath",
-					"value": "/MDFClaimBudget"
-				}
-			],
-			"required": false,
-			"type": "Long"
 		}
 	],
 	"panelCategoryKey": "control_panel.object",

@@ -45,6 +45,19 @@ return	aE.isEqualNode(e).toString();
 		}
 	}
 
+	macro assertNotContain {
+		echo(${expected});
+
+		echo(${actual});
+
+		if (!(contains(${actual}, ${expected}))) {
+			echo("PASSED");
+		}
+		else {
+			TestUtils.fail(message = "FAILED: '${actual}' contain expected text '${expected}'");
+		}
+	}
+
 	macro assertNotEquals {
 		echo(${expected});
 

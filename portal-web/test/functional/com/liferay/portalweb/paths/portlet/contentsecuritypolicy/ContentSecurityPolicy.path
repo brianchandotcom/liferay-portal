@@ -16,6 +16,11 @@
 	<td>//div[contains(@data-field-name,'policy')]//div//textarea</td>
 	<td></td>
 </tr>
+<tr>
+	<td>EXCLUDED_PATHS_TEXT</td>
+	<td>//div[contains(@data-field-name,'excludedPaths')]//div//textarea</td>
+	<td></td>
+</tr>
 
 </tbody>
 </table>

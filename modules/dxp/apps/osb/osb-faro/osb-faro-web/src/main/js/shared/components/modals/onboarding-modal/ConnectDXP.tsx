@@ -368,26 +368,17 @@ const Footer: FC<IFooterProps & IConnectDXPProps> = ({
 					</ClayButton>
 				)}
 
-				{!dxpConnected || onboarding ? (
-					<ClayButton
-						className='button-root'
-						disabled={!dxpConnected}
-						displayType='primary'
-						onClick={onboarding ? () => onNext() : onClose}
-					>
-						{Liferay.Language.get('next')}
-					</ClayButton>
-				) : (
-					<ClayLink
-						button
-						className='button-root'
-						displayType='primary'
-						href={getNavHref()}
-						onClick={() => onClose()}
-					>
-						{Liferay.Language.get('done')}
-					</ClayLink>
-				)}
+				<ClayLink
+					button
+					className='button-root'
+					displayType='primary'
+					href={getNavHref()}
+					onClick={() => (onboarding ? onNext() : onClose())}
+				>
+					{onboarding
+						? Liferay.Language.get('next')
+						: Liferay.Language.get('done')}
+				</ClayLink>
 			</div>
 		</Modal.Footer>
 	);

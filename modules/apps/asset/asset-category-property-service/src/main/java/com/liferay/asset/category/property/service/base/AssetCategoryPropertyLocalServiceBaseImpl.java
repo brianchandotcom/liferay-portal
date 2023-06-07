@@ -17,7 +17,6 @@ package com.liferay.asset.category.property.service.base;
 import com.liferay.asset.category.property.model.AssetCategoryProperty;
 import com.liferay.asset.category.property.service.AssetCategoryPropertyLocalService;
 import com.liferay.asset.category.property.service.AssetCategoryPropertyLocalServiceUtil;
-import com.liferay.asset.category.property.service.persistence.AssetCategoryPropertyFinder;
 import com.liferay.asset.category.property.service.persistence.AssetCategoryPropertyPersistence;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
@@ -496,9 +495,6 @@ public abstract class AssetCategoryPropertyLocalServiceBaseImpl
 
 	@Reference
 	protected AssetCategoryPropertyPersistence assetCategoryPropertyPersistence;
-
-	@Reference
-	protected AssetCategoryPropertyFinder assetCategoryPropertyFinder;
 
 	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService

@@ -17,7 +17,6 @@ package com.liferay.asset.category.property.service.base;
 import com.liferay.asset.category.property.model.AssetCategoryProperty;
 import com.liferay.asset.category.property.service.AssetCategoryPropertyService;
 import com.liferay.asset.category.property.service.AssetCategoryPropertyServiceUtil;
-import com.liferay.asset.category.property.service.persistence.AssetCategoryPropertyFinder;
 import com.liferay.asset.category.property.service.persistence.AssetCategoryPropertyPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -128,9 +127,6 @@ public abstract class AssetCategoryPropertyServiceBaseImpl
 
 	@Reference
 	protected AssetCategoryPropertyPersistence assetCategoryPropertyPersistence;
-
-	@Reference
-	protected AssetCategoryPropertyFinder assetCategoryPropertyFinder;
 
 	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService

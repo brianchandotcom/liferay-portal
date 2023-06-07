@@ -19,8 +19,8 @@ package com.liferay.jenkins.results.parser;
  */
 public class JDKFactory {
 
-	public static JDK getJDK(String batchName) {
-		if (batchName.contains("-jdk7")) {
+	public static JDK getJDK(String jdkName) {
+		if (jdkName.contains("jdk7")) {
 			return _jdk7;
 		}
 

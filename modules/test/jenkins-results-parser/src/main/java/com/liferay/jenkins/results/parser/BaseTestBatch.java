@@ -41,7 +41,7 @@ public abstract class BaseTestBatch<T extends BatchBuildData>
 		_batchBuildData = batchBuildData;
 		_workspace = workspace;
 
-		_jdk = JDKFactory.getJDK(batchBuildData.getBatchName());
+		_jdk = JDKFactory.getJDK("jdk8");
 	}
 
 	protected abstract void executeBatch() throws AntException;

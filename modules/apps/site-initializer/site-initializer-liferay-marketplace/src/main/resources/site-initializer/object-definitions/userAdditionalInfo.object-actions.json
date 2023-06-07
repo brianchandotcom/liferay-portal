@@ -5,7 +5,7 @@
 		"description": "",
 		"errorMessage": {
 		},
-		"externalReferenceCode": "MARKETPLACE-OBJECT-ACTION-2",
+		"externalReferenceCode": "MKT-UPDATE-ENTRY",
 		"label": {
 			"en_US": "passwordUpdate"
 		},
@@ -13,7 +13,7 @@
 		"objectActionExecutorKey": "update-object-entry",
 		"objectActionTriggerKey": "onAfterAdd",
 		"parameters": {
-			"objectDefinitionExternalReferenceCode": "MARKETPLACE-OBJECT-DEFINITION-1",
+			"objectDefinitionExternalReferenceCode": "MARKETPLACE-USER-ADDITIONAL",
 			"predefinedValues": [
 				{
 					"businessType": "Text",

@@ -17,9 +17,11 @@ package com.liferay.change.tracking.rest.internal.graphql.query.v1_0;
 import com.liferay.change.tracking.rest.dto.v1_0.CTCollection;
 import com.liferay.change.tracking.rest.dto.v1_0.CTEntry;
 import com.liferay.change.tracking.rest.dto.v1_0.CTProcess;
+import com.liferay.change.tracking.rest.dto.v1_0.CTRemote;
 import com.liferay.change.tracking.rest.resource.v1_0.CTCollectionResource;
 import com.liferay.change.tracking.rest.resource.v1_0.CTEntryResource;
 import com.liferay.change.tracking.rest.resource.v1_0.CTProcessResource;
+import com.liferay.change.tracking.rest.resource.v1_0.CTRemoteResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.search.Sort;
@@ -74,6 +76,14 @@ public class Query {
 
 		_ctProcessResourceComponentServiceObjects =
 			ctProcessResourceComponentServiceObjects;
+	}
+
+	public static void setCTRemoteResourceComponentServiceObjects(
+		ComponentServiceObjects<CTRemoteResource>
+			ctRemoteResourceComponentServiceObjects) {
+
+		_ctRemoteResourceComponentServiceObjects =
+			ctRemoteResourceComponentServiceObjects;
 	}
 
 	/**
@@ -197,6 +207,41 @@ public class Query {
 			_ctProcessResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			ctProcessResource -> ctProcessResource.getCTProcess(ctProcessId));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cTRemotes(page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public CTRemotePage cTRemotes(
+			@GraphQLName("search") String search,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_ctRemoteResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			ctRemoteResource -> new CTRemotePage(
+				ctRemoteResource.getCTRemotesPage(
+					search, Pagination.of(page, pageSize),
+					_sortsBiFunction.apply(ctRemoteResource, sortsString))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cTRemote(id: ___){actions, dateCreated, dateModified, description, id, name, ownerName, url}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public CTRemote cTRemote(@GraphQLName("id") Long id) throws Exception {
+		return _applyComponentServiceObjects(
+			_ctRemoteResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			ctRemoteResource -> ctRemoteResource.getCTRemote(id));
 	}
 
 	@GraphQLTypeExtension(CTProcess.class)
@@ -351,6 +396,39 @@ public class Query {
 
 	}
 
+	@GraphQLName("CTRemotePage")
+	public class CTRemotePage {
+
+		public CTRemotePage(Page ctRemotePage) {
+			actions = ctRemotePage.getActions();
+
+			items = ctRemotePage.getItems();
+			lastPage = ctRemotePage.getLastPage();
+			page = ctRemotePage.getPage();
+			pageSize = ctRemotePage.getPageSize();
+			totalCount = ctRemotePage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map<String, String>> actions;
+
+		@GraphQLField
+		protected java.util.Collection<CTRemote> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
 			_applyComponentServiceObjects(
 				ComponentServiceObjects<T> componentServiceObjects,
@@ -411,12 +489,27 @@ public class Query {
 		ctProcessResource.setRoleLocalService(_roleLocalService);
 	}
 
+	private void _populateResourceContext(CTRemoteResource ctRemoteResource)
+		throws Exception {
+
+		ctRemoteResource.setContextAcceptLanguage(_acceptLanguage);
+		ctRemoteResource.setContextCompany(_company);
+		ctRemoteResource.setContextHttpServletRequest(_httpServletRequest);
+		ctRemoteResource.setContextHttpServletResponse(_httpServletResponse);
+		ctRemoteResource.setContextUriInfo(_uriInfo);
+		ctRemoteResource.setContextUser(_user);
+		ctRemoteResource.setGroupLocalService(_groupLocalService);
+		ctRemoteResource.setRoleLocalService(_roleLocalService);
+	}
+
 	private static ComponentServiceObjects<CTCollectionResource>
 		_ctCollectionResourceComponentServiceObjects;
 	private static ComponentServiceObjects<CTEntryResource>
 		_ctEntryResourceComponentServiceObjects;
 	private static ComponentServiceObjects<CTProcessResource>
 		_ctProcessResourceComponentServiceObjects;
+	private static ComponentServiceObjects<CTRemoteResource>
+		_ctRemoteResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
 	private com.liferay.portal.kernel.model.Company _company;

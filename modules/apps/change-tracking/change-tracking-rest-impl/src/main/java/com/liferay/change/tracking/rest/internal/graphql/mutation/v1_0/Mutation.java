@@ -15,8 +15,10 @@
 package com.liferay.change.tracking.rest.internal.graphql.mutation.v1_0;
 
 import com.liferay.change.tracking.rest.dto.v1_0.CTCollection;
+import com.liferay.change.tracking.rest.dto.v1_0.CTRemote;
 import com.liferay.change.tracking.rest.resource.v1_0.CTCollectionResource;
 import com.liferay.change.tracking.rest.resource.v1_0.CTProcessResource;
+import com.liferay.change.tracking.rest.resource.v1_0.CTRemoteResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.search.Sort;
@@ -63,6 +65,14 @@ public class Mutation {
 
 		_ctProcessResourceComponentServiceObjects =
 			ctProcessResourceComponentServiceObjects;
+	}
+
+	public static void setCTRemoteResourceComponentServiceObjects(
+		ComponentServiceObjects<CTRemoteResource>
+			ctRemoteResourceComponentServiceObjects) {
+
+		_ctRemoteResourceComponentServiceObjects =
+			ctRemoteResourceComponentServiceObjects;
 	}
 
 	@GraphQLField
@@ -263,6 +273,108 @@ public class Mutation {
 		return true;
 	}
 
+	@GraphQLField
+	public Response createCTRemotesPageExportBatch(
+			@GraphQLName("search") String search,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_ctRemoteResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			ctRemoteResource -> ctRemoteResource.postCTRemotesPageExportBatch(
+				search, _sortsBiFunction.apply(ctRemoteResource, sortsString),
+				callbackURL, contentType, fieldNames));
+	}
+
+	@GraphQLField
+	public CTRemote createCTRemote(@GraphQLName("ctRemote") CTRemote ctRemote)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_ctRemoteResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			ctRemoteResource -> ctRemoteResource.postCTRemote(ctRemote));
+	}
+
+	@GraphQLField
+	public Response createCTRemoteBatch(
+			@GraphQLName("ctRemote") CTRemote ctRemote,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_ctRemoteResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			ctRemoteResource -> ctRemoteResource.postCTRemoteBatch(
+				ctRemote, callbackURL, object));
+	}
+
+	@GraphQLField
+	public boolean deleteCTRemote(@GraphQLName("id") Long id) throws Exception {
+		_applyVoidComponentServiceObjects(
+			_ctRemoteResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			ctRemoteResource -> ctRemoteResource.deleteCTRemote(id));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Response deleteCTRemoteBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_ctRemoteResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			ctRemoteResource -> ctRemoteResource.deleteCTRemoteBatch(
+				callbackURL, object));
+	}
+
+	@GraphQLField
+	public CTRemote patchCTRemote(
+			@GraphQLName("id") Long id,
+			@GraphQLName("ctRemote") CTRemote ctRemote)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_ctRemoteResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			ctRemoteResource -> ctRemoteResource.patchCTRemote(id, ctRemote));
+	}
+
+	@GraphQLField
+	public CTRemote updateCTRemote(
+			@GraphQLName("id") Long id,
+			@GraphQLName("ctRemote") CTRemote ctRemote)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_ctRemoteResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			ctRemoteResource -> ctRemoteResource.putCTRemote(id, ctRemote));
+	}
+
+	@GraphQLField
+	public Response updateCTRemoteBatch(
+			@GraphQLName("ctRemote") CTRemote ctRemote,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_ctRemoteResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			ctRemoteResource -> ctRemoteResource.putCTRemoteBatch(
+				ctRemote, callbackURL, object));
+	}
+
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
 			_applyComponentServiceObjects(
 				ComponentServiceObjects<T> componentServiceObjects,
@@ -341,10 +453,31 @@ public class Mutation {
 			_vulcanBatchEngineImportTaskResource);
 	}
 
+	private void _populateResourceContext(CTRemoteResource ctRemoteResource)
+		throws Exception {
+
+		ctRemoteResource.setContextAcceptLanguage(_acceptLanguage);
+		ctRemoteResource.setContextCompany(_company);
+		ctRemoteResource.setContextHttpServletRequest(_httpServletRequest);
+		ctRemoteResource.setContextHttpServletResponse(_httpServletResponse);
+		ctRemoteResource.setContextUriInfo(_uriInfo);
+		ctRemoteResource.setContextUser(_user);
+		ctRemoteResource.setGroupLocalService(_groupLocalService);
+		ctRemoteResource.setRoleLocalService(_roleLocalService);
+
+		ctRemoteResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
+
+		ctRemoteResource.setVulcanBatchEngineImportTaskResource(
+			_vulcanBatchEngineImportTaskResource);
+	}
+
 	private static ComponentServiceObjects<CTCollectionResource>
 		_ctCollectionResourceComponentServiceObjects;
 	private static ComponentServiceObjects<CTProcessResource>
 		_ctProcessResourceComponentServiceObjects;
+	private static ComponentServiceObjects<CTRemoteResource>
+		_ctRemoteResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
 	private com.liferay.portal.kernel.model.Company _company;

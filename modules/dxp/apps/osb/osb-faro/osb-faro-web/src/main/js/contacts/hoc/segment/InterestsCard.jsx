@@ -87,7 +87,8 @@ const InterestsCard = ({channelId, groupId, id}) => (
 		<Card.Footer>
 			<ClayLink
 				className='button-root'
-				displayType='unstyled'
+				decoration='none'
+				displayType='secondary'
 				href={toRoute(Routes.CONTACTS_SEGMENT_INTERESTS, {
 					channelId,
 					groupId,

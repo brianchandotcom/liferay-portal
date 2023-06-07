@@ -210,13 +210,12 @@ exports[`ConnectDXPModal renders 1`] = `
             >
               Cancel
             </button>
-            <button
+            <a
               class="button-root btn btn-primary"
-              disabled=""
-              type="button"
+              href="/workspace/123/settings/data-source"
             >
-              Next
-            </button>
+              Done
+            </a>
           </div>
         </div>
       </div>

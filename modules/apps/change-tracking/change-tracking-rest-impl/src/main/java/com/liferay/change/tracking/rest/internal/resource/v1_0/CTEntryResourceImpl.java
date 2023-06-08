@@ -51,8 +51,8 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class CTEntryResourceImpl extends BaseCTEntryResourceImpl {
 
 	@Override
-	public Page<CTEntry> getCtCollectionIdCTEntriesPage(
-			String ctCollectionId, String search, Filter filter,
+	public Page<CTEntry> getCtCollectionCTEntriesPage(
+			Long ctCollectionId, String search, Filter filter,
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 

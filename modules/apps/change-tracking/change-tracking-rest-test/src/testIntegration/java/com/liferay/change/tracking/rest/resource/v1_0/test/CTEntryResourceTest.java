@@ -55,29 +55,30 @@ public class CTEntryResourceTest extends BaseCTEntryResourceTestCase {
 	}
 
 	@Override
-	protected CTEntry testGetCtCollectionIdCTEntriesPage_addCTEntry(
-			String id, CTEntry ctEntry)
+	protected CTEntry testGetCtCollectionCTEntriesPage_addCTEntry(
+			Long ctCollectionId, CTEntry ctEntry)
 		throws Exception {
 
-		return _addCTEntry(Long.valueOf(id), ctEntry.getTitle());
+		return _addCTEntry(ctCollectionId, ctEntry.getTitle());
 	}
 
 	@Override
-	protected String testGetCtCollectionIdCTEntriesPage_getId()
+	protected Long testGetCtCollectionCTEntriesPage_getCtCollectionId()
 		throws Exception {
 
-		return String.valueOf(_getCTCollectionId());
+		return _getCTCollectionId();
 	}
 
 	@Override
-	protected String testGetCtCollectionIdCTEntriesPage_getIrrelevantId()
+	protected Long
+			testGetCtCollectionCTEntriesPage_getIrrelevantCtCollectionId()
 		throws Exception {
 
 		CTCollection ctCollection = _ctCollectionLocalService.addCTCollection(
 			testCompany.getCompanyId(), testCompany.getUserId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
-		return String.valueOf(ctCollection.getCtCollectionId());
+		return ctCollection.getCtCollectionId();
 	}
 
 	@Override

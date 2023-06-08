@@ -16,7 +16,7 @@ package com.liferay.layout.admin.web.internal.portlet;
 
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
-import com.liferay.portal.kernel.portlet.EditPortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProvider;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -25,14 +25,20 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = "model.class.name=com.liferay.portal.kernel.model.Layout",
-	service = EditPortletProvider.class
+	service = PortletProvider.class
 )
-public class LayoutAdminEditPortletProvider
-	extends BasePortletProvider implements EditPortletProvider {
+public class LayoutAdminEditPortletProvider extends BasePortletProvider {
 
 	@Override
 	public String getPortletName() {
 		return LayoutAdminPortletKeys.GROUP_PAGES;
 	}
+
+	@Override
+	public Action[] getSupportedActions() {
+		return _supportedActions;
+	}
+
+	private final Action[] _supportedActions = {Action.EDIT};
 
 }

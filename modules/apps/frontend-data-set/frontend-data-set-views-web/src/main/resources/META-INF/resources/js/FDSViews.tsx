@@ -353,6 +353,7 @@ const FDSViews = ({
 				},
 			]}
 			views={views}
+			viewsTitle={Liferay.Language.get('views')}
 		/>
 	);
 };

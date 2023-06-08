@@ -115,24 +115,21 @@ public class AssetCategoryPropertyLocalServiceTest {
 
 	@Test
 	public void testGetCategoryPropertyValues() throws Exception {
-		AssetCategoryProperty assetCategoryProperty =
-			_assetCategoryPropertyLocalService.addCategoryProperty(
-				TestPropsValues.getUserId(), _assetCategory.getCategoryId(),
-				"keyToBeFound", "someValue");
-
+		_assetCategoryPropertyLocalService.addCategoryProperty(
+			TestPropsValues.getUserId(), _assetCategory.getCategoryId(),
+			"keyToBeFound", "someValue");
 		_assetCategoryPropertyLocalService.addCategoryProperty(
 			TestPropsValues.getUserId(), _assetCategory.getCategoryId(),
 			"keyNotToBeFound", "anotherValue");
 
 		List<AssetCategoryProperty> categoryPropertyValues =
 			_assetCategoryPropertyLocalService.getCategoryPropertyValues(
-				_group.getGroupId(), assetCategoryProperty.getKey());
+				_group.getGroupId(), "keyToBeFound");
 
-		Assert.assertEquals(
-			categoryPropertyValues.get(
-				0
-			).getKey(),
-			assetCategoryProperty.getKey());
+		AssetCategoryProperty assetCategoryProperty =
+			categoryPropertyValues.get(0);
+
+		Assert.assertEquals("keyToBeFound", assetCategoryProperty.getKey());
 	}
 
 	private AssetCategory _assetCategory;

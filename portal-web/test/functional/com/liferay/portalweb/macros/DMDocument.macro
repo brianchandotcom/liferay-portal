@@ -2519,15 +2519,21 @@ definition {
 	}
 
 	macro selectExtensions {
+		IFrame.selectModalFrame();
+
 		if (${clearAll} == "true") {
 			Click(
 				key_text = "Clear All",
 				locator1 = "Link#ANY");
 		}
 
-		for (var extensionCategory : list ${extensionCategory}) {
+		for (var category : list ${category}) {
+			while (IsElementPresent(locator1 = "Treeview#NODE_COLLAPSED")) {
+				Click(locator1 = "Treeview#NODE_COLLAPSED");
+			}
+
 			Check.checkNotVisible(
-				key_nodeName = ${extensionCategory},
+				key_nodeName = ${category},
 				locator1 = "Treeview#NODE_CHECKBOX");
 		}
 
@@ -3595,30 +3601,6 @@ definition {
 		}
 	}
 
-	macro viewExtensionDetails {
-		IFrame.selectModalFrame();
-
-		for (var extensionCategory : list ${extensionCategory}) {
-			AssertTextEquals(
-				key_nodeName = ${extensionCategory},
-				locator1 = "Treeview#NODE_ITEM",
-				value1 = ${extensionCategory});
-		}
-
-		if (isSet(extensionSubcategory)) {
-			while (IsElementPresent(locator1 = "Treeview#NODE_COLLAPSED")) {
-				Click(locator1 = "Treeview#NODE_COLLAPSED");
-			}
-
-			for (var extensionSubcategory : list ${extensionSubcategory}) {
-				AssertTextEquals(
-					key_nodeName = ${extensionSubcategory},
-					locator1 = "Treeview#SUBNODE_ITEM",
-					value1 = ${extensionSubcategory});
-			}
-		}
-	}
-
 	macro viewFieldLabels {
 		for (var fieldFieldLabels : list ${labels}) {
 			AssertTextEquals.assertPartialText(
@@ -3666,6 +3648,32 @@ definition {
 		AssertVisible(
 			key_dmDocumentSize = ${dmDocumentSize},
 			locator1 = "DocumentsAndMediaDocument#DOCUMENT_DETAILS_SIZE");
+	}
+
+	macro viewFilterByDetails {
+		IFrame.selectModalFrame();
+
+		for (var category : list ${category}) {
+			AssertTextEquals(
+				key_nodeName = ${category},
+				locator1 = "Treeview#NODE_ITEM",
+				value1 = ${category});
+		}
+
+		if (isSet(subcategory)) {
+			while (IsElementPresent(locator1 = "Treeview#NODE_COLLAPSED")) {
+				Click(locator1 = "Treeview#NODE_COLLAPSED");
+			}
+
+			for (var subcategory : list ${subcategory}) {
+				AssertTextEquals(
+					key_nodeName = ${subcategory},
+					locator1 = "Treeview#SUBNODE_ITEM",
+					value1 = ${subcategory});
+			}
+		}
+
+		SelectFrame.selectFrameTop();
 	}
 
 	macro viewFilterSummaryResults {

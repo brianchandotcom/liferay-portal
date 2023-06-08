@@ -17,7 +17,7 @@ package com.liferay.dynamic.data.mapping.form.web.internal.portlet;
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
-import com.liferay.portal.kernel.portlet.BrowsePortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 
 import javax.portlet.Portlet;
@@ -33,10 +33,9 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "model.class.name=com.liferay.dynamic.data.mapping.model.DDMFormInstance",
-	service = BrowsePortletProvider.class
+	service = PortletProvider.class
 )
-public class DDMFormBrowsePortletProvider
-	extends BasePortletProvider implements BrowsePortletProvider {
+public class DDMFormBrowsePortletProvider extends BasePortletProvider {
 
 	@Override
 	public String getPortletName() {
@@ -54,9 +53,16 @@ public class DDMFormBrowsePortletProvider
 		).buildPortletURL();
 	}
 
+	@Override
+	public Action[] getSupportedActions() {
+		return _supportedActions;
+	}
+
 	@Reference(
 		target = "(javax.portlet.name=" + DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_BROWSER + ")"
 	)
 	private Portlet _portlet;
+
+	private final Action[] _supportedActions = {Action.BROWSE};
 
 }

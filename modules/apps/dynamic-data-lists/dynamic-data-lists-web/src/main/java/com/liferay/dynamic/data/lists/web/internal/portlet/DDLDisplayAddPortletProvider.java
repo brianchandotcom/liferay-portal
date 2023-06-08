@@ -17,8 +17,8 @@ package com.liferay.dynamic.data.lists.web.internal.portlet;
 import com.liferay.dynamic.data.lists.constants.DDLPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.portlet.AddPortletProvider;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 
 import javax.portlet.PortletRequest;
@@ -33,10 +33,9 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = "model.class.name=com.liferay.dynamic.data.lists.model.DDLRecord",
-	service = AddPortletProvider.class
+	service = PortletProvider.class
 )
-public class DDLDisplayAddPortletProvider
-	extends BasePortletProvider implements AddPortletProvider {
+public class DDLDisplayAddPortletProvider extends BasePortletProvider {
 
 	@Override
 	public String getPortletName() {
@@ -51,5 +50,12 @@ public class DDLDisplayAddPortletProvider
 		return PortletURLFactoryUtil.create(
 			httpServletRequest, getPortletName(), PortletRequest.RENDER_PHASE);
 	}
+
+	@Override
+	public Action[] getSupportedActions() {
+		return _supportedActions;
+	}
+
+	private final Action[] _supportedActions = {Action.ADD};
 
 }

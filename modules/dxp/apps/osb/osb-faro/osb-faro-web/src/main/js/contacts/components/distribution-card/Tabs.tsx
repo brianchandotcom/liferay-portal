@@ -142,10 +142,7 @@ export default class Tabs extends React.Component<ITabsProps> {
 					onClick={onAdd}
 					size='sm'
 				>
-					<ClayIcon
-						className='icon-root icon-size-sm'
-						symbol='plus'
-					/>
+					<ClayIcon symbol='plus' />
 				</ClayButton>
 			</div>
 		);

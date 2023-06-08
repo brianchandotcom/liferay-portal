@@ -68,7 +68,9 @@ import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -93,103 +95,103 @@ public class FragmentCollectionContributorPropagationTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Test
-	public void testPropagateContributedFragmentEntryThroughMultipleCompanies()
-		throws Exception {
+	@Before
+	public void setUp() throws Exception {
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
 
-		Company company = null;
-		List<ServiceRegistration<?>> serviceRegistrations = new ArrayList<>();
+		_bundleContext = bundle.getBundleContext();
+	}
 
-		try {
-			company = CompanyTestUtil.addCompany();
+	@After
+	public void tearDown() {
+		for (ServiceRegistration<?> serviceRegistration :
+				_serviceRegistrations) {
 
-			int companiesCount = _companyLocalService.getCompaniesCount();
-
-			Assert.assertTrue(companiesCount > 1);
-
-			String fragmentCollectionContributorKey =
-				RandomTestUtil.randomString();
-
-			String fragmentEntryKey = StringBundler.concat(
-				fragmentCollectionContributorKey, StringPool.DASH,
-				RandomTestUtil.randomString());
-
-			_addFragmentEntryLinks(fragmentEntryKey);
-
-			Bundle bundle = FrameworkUtil.getBundle(
-				FragmentCollectionContributorPropagationTest.class);
-
-			BundleContext bundleContext = bundle.getBundleContext();
-
-			TestFragmentEntryProcessor testFragmentEntryProcessor =
-				new TestFragmentEntryProcessor(fragmentEntryKey);
-
-			serviceRegistrations.add(
-				bundleContext.registerService(
-					FragmentEntryProcessor.class, testFragmentEntryProcessor,
-					MapUtil.singletonDictionary(
-						"fragment.entry.processor.priority", 1)));
-
-			String modifiedHTML =
-				"<div>" + RandomTestUtil.randomString() + "</div>";
-
-			ServiceContext originalServiceContext =
-				ServiceContextThreadLocal.getServiceContext();
-
-			try {
-				_setUpServiceContext();
-
-				serviceRegistrations.add(
-					bundleContext.registerService(
-						FragmentCollectionContributor.class,
-						new TestFragmentCollectionContributor(
-							fragmentCollectionContributorKey,
-							HashMapBuilder.put(
-								FragmentConstants.TYPE_COMPONENT,
-								_getFragmentEntry(
-									fragmentEntryKey, modifiedHTML,
-									FragmentConstants.TYPE_COMPONENT)
-							).build()),
-						MapUtil.singletonDictionary(
-							"fragment.collection.key",
-							fragmentCollectionContributorKey)));
-
-				_assertCompanyContext(TestPropsValues.getCompanyId());
-			}
-			finally {
-				ServiceContextThreadLocal.pushServiceContext(
-					originalServiceContext);
-			}
-
-			Map<Long, String> companyIdsMap =
-				testFragmentEntryProcessor.getCompanyIdsMap();
-
-			Assert.assertEquals(
-				companyIdsMap.toString(), companiesCount, companyIdsMap.size());
-
-			_companyLocalService.forEachCompanyId(
-				companyId -> Assert.assertEquals(
-					companyIdsMap.get(companyId), modifiedHTML));
+			serviceRegistration.unregister();
 		}
-		finally {
-			for (ServiceRegistration<?> serviceRegistration :
-					serviceRegistrations) {
 
-				serviceRegistration.unregister();
+		_serviceRegistrations.clear();
+
+		if (_company != null) {
+			try {
+				_companyLocalService.deleteCompany(_company);
 			}
-
-			if (company != null) {
-				try {
-					_companyLocalService.deleteCompany(company);
-				}
-				catch (PortalException portalException) {
-				}
+			catch (PortalException portalException) {
 			}
 		}
 	}
 
+	@Test
+	public void testPropagateContributedFragmentEntryThroughMultipleCompanies()
+		throws Exception {
+
+		_company = CompanyTestUtil.addCompany();
+
+		int companiesCount = _companyLocalService.getCompaniesCount();
+
+		Assert.assertTrue(companiesCount > 1);
+
+		String fragmentCollectionContributorKey = RandomTestUtil.randomString();
+
+		String fragmentEntryKey = StringBundler.concat(
+			fragmentCollectionContributorKey, StringPool.DASH,
+			RandomTestUtil.randomString());
+
+		_addFragmentEntryLinks(fragmentEntryKey);
+
+		TestFragmentEntryProcessor testFragmentEntryProcessor =
+			new TestFragmentEntryProcessor(fragmentEntryKey);
+
+		_serviceRegistrations.add(
+			_bundleContext.registerService(
+				FragmentEntryProcessor.class, testFragmentEntryProcessor,
+				MapUtil.singletonDictionary(
+					"fragment.entry.processor.priority", 1)));
+
+		String modifiedHTML =
+			"<div>" + RandomTestUtil.randomString() + "</div>";
+
+		ServiceContext originalServiceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		try {
+			_setUpServiceContext();
+
+			_serviceRegistrations.add(
+				_bundleContext.registerService(
+					FragmentCollectionContributor.class,
+					new TestFragmentCollectionContributor(
+						fragmentCollectionContributorKey,
+						HashMapBuilder.put(
+							FragmentConstants.TYPE_COMPONENT,
+							_getFragmentEntry(
+								fragmentEntryKey, modifiedHTML,
+								FragmentConstants.TYPE_COMPONENT)
+						).build()),
+					MapUtil.singletonDictionary(
+						"fragment.collection.key",
+						fragmentCollectionContributorKey)));
+
+			_assertCompanyContext(TestPropsValues.getCompanyId());
+		}
+		finally {
+			ServiceContextThreadLocal.pushServiceContext(
+				originalServiceContext);
+		}
+
+		Map<Long, String> companyIdsMap =
+			testFragmentEntryProcessor.getCompanyIdsMap();
+
+		Assert.assertEquals(
+			companyIdsMap.toString(), companiesCount, companyIdsMap.size());
+
+		_companyLocalService.forEachCompanyId(
+			companyId -> Assert.assertEquals(
+				companyIdsMap.get(companyId), modifiedHTML));
+	}
+
 	private void _addFragmentEntryLinks(String fragmentEntryKey)
-		throws PortalException {
+		throws Exception {
 
 		String originalHTML =
 			"<div>" + RandomTestUtil.randomString() + "</div>";
@@ -353,6 +355,9 @@ public class FragmentCollectionContributorPropagationTest {
 		_assertCompanyContext(company.getCompanyId());
 	}
 
+	private BundleContext _bundleContext;
+	private Company _company;
+
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
@@ -377,6 +382,9 @@ public class FragmentCollectionContributorPropagationTest {
 
 	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
+
+	private final List<ServiceRegistration<?>> _serviceRegistrations =
+		new ArrayList<>();
 
 	@Inject
 	private UserLocalService _userLocalService;

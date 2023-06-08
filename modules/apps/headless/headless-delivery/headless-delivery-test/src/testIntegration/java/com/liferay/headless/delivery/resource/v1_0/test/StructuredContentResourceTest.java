@@ -37,6 +37,7 @@ import com.liferay.headless.delivery.client.dto.v1_0.StructuredContentLink;
 import com.liferay.headless.delivery.client.http.HttpInvoker;
 import com.liferay.headless.delivery.client.pagination.Page;
 import com.liferay.headless.delivery.client.pagination.Pagination;
+import com.liferay.headless.delivery.client.problem.Problem;
 import com.liferay.headless.delivery.client.resource.v1_0.StructuredContentResource;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
@@ -177,6 +178,8 @@ public class StructuredContentResourceTest
 
 		super.testGetAssetLibraryStructuredContentByExternalReferenceCode();
 
+		// Uuid as external reference code
+
 		StructuredContent randomStructuredContent = randomStructuredContent();
 
 		randomStructuredContent.setExternalReferenceCode("");
@@ -194,6 +197,31 @@ public class StructuredContentResourceTest
 
 		assertEquals(postStructuredContent, getStructuredContent);
 		assertValid(getStructuredContent);
+
+		// Non-exist external reference code
+
+		String externalReferenceCode = StringUtil.toLowerCase(
+			RandomTestUtil.randomString());
+
+		try {
+			structuredContentResource.
+				getAssetLibraryStructuredContentByExternalReferenceCode(
+					testGetAssetLibraryStructuredContentByExternalReferenceCode_getAssetLibraryId(),
+					externalReferenceCode);
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("NOT_FOUND", problem.getStatus());
+			Assert.assertEquals(
+				StringBundler.concat(
+					"No JournalArticle exists with the key {groupId=",
+					testDepotEntry.getGroupId(), ", externalReferenceCode=",
+					externalReferenceCode, "}"),
+				problem.getTitle());
+		}
 	}
 
 	@Override

@@ -79,13 +79,13 @@ public abstract class BaseCTEntryResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/change-tracking-rest/v1.0/ct-collections/{id}/ct-entries'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/change-tracking-rest/v1.0/ct-collections/{ctCollectionId}/ct-entries'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "id"
+				name = "ctCollectionId"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
@@ -113,13 +113,14 @@ public abstract class BaseCTEntryResourceImpl
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "CTEntry")}
 	)
 	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/ct-collections/{id}/ct-entries")
+	@javax.ws.rs.Path("/ct-collections/{ctCollectionId}/ct-entries")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Page<CTEntry> getCtCollectionIdCTEntriesPage(
+	public Page<CTEntry> getCtCollectionCTEntriesPage(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull @javax.ws.rs.PathParam("id")
-			String id,
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("ctCollectionId")
+			Long ctCollectionId,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("search")
 			String search,
@@ -134,13 +135,13 @@ public abstract class BaseCTEntryResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/change-tracking-rest/v1.0/ct-entries/{id}'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/change-tracking-rest/v1.0/ct-entries/{ctEntryId}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "id"
+				name = "ctEntryId"
 			)
 		}
 	)
@@ -148,13 +149,14 @@ public abstract class BaseCTEntryResourceImpl
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "CTEntry")}
 	)
 	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/ct-entries/{id}")
+	@javax.ws.rs.Path("/ct-entries/{ctEntryId}")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public CTEntry getCTEntry(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull @javax.ws.rs.PathParam("id")
-			Long id)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("ctEntryId")
+			Long ctEntryId)
 		throws Exception {
 
 		return new CTEntry();

@@ -52,8 +52,8 @@ public class CTEntryResourceImpl extends BaseCTEntryResourceImpl {
 
 	@Override
 	public Page<CTEntry> getCtCollectionIdCTEntriesPage(
-			String id, String search, Filter filter, Pagination pagination,
-			Sort[] sorts)
+			String ctCollectionId, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return SearchUtil.search(
@@ -64,7 +64,7 @@ public class CTEntryResourceImpl extends BaseCTEntryResourceImpl {
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),
 			searchContext -> {
-				searchContext.setAttribute("ctCollectionId", id);
+				searchContext.setAttribute("ctCollectionId", ctCollectionId);
 				searchContext.setCompanyId(contextCompany.getCompanyId());
 
 				if (Validator.isNotNull(search)) {

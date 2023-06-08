@@ -102,20 +102,22 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public boolean deleteCTCollection(@GraphQLName("id") Long id)
+	public boolean deleteCTCollection(
+			@GraphQLName("ctCollectionId") Long ctCollectionId)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
 			_ctCollectionResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			ctCollectionResource -> ctCollectionResource.deleteCTCollection(
-				id));
+				ctCollectionId));
 
 		return true;
 	}
 
 	@GraphQLField
 	public Response deleteCTCollectionBatch(
+			@GraphQLName("ctCollectionId") Long ctCollectionId,
 			@GraphQLName("callbackURL") String callbackURL,
 			@GraphQLName("object") Object object)
 		throws Exception {
@@ -125,12 +127,12 @@ public class Mutation {
 			this::_populateResourceContext,
 			ctCollectionResource ->
 				ctCollectionResource.deleteCTCollectionBatch(
-					callbackURL, object));
+					ctCollectionId, callbackURL, object));
 	}
 
 	@GraphQLField
 	public CTCollection patchCTCollection(
-			@GraphQLName("id") Long id,
+			@GraphQLName("ctCollectionId") Long ctCollectionId,
 			@GraphQLName("ctCollection") CTCollection ctCollection)
 		throws Exception {
 
@@ -138,12 +140,12 @@ public class Mutation {
 			_ctCollectionResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			ctCollectionResource -> ctCollectionResource.patchCTCollection(
-				id, ctCollection));
+				ctCollectionId, ctCollection));
 	}
 
 	@GraphQLField
 	public CTCollection updateCTCollection(
-			@GraphQLName("id") Long id,
+			@GraphQLName("ctCollectionId") Long ctCollectionId,
 			@GraphQLName("ctCollection") CTCollection ctCollection)
 		throws Exception {
 
@@ -151,11 +153,12 @@ public class Mutation {
 			_ctCollectionResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			ctCollectionResource -> ctCollectionResource.putCTCollection(
-				id, ctCollection));
+				ctCollectionId, ctCollection));
 	}
 
 	@GraphQLField
 	public Response updateCTCollectionBatch(
+			@GraphQLName("ctCollectionId") Long ctCollectionId,
 			@GraphQLName("ctCollection") CTCollection ctCollection,
 			@GraphQLName("callbackURL") String callbackURL,
 			@GraphQLName("object") Object object)
@@ -165,38 +168,40 @@ public class Mutation {
 			_ctCollectionResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			ctCollectionResource -> ctCollectionResource.putCTCollectionBatch(
-				ctCollection, callbackURL, object));
+				ctCollectionId, ctCollection, callbackURL, object));
 	}
 
 	@GraphQLField
-	public boolean createCTCollectionCheckout(@GraphQLName("id") Long id)
+	public boolean createCTCollectionCheckout(
+			@GraphQLName("ctCollectionId") Long ctCollectionId)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
 			_ctCollectionResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			ctCollectionResource ->
-				ctCollectionResource.postCTCollectionCheckout(id));
+				ctCollectionResource.postCTCollectionCheckout(ctCollectionId));
 
 		return true;
 	}
 
 	@GraphQLField
-	public boolean createCTCollectionPublish(@GraphQLName("id") Long id)
+	public boolean createCTCollectionPublish(
+			@GraphQLName("ctCollectionId") Long ctCollectionId)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
 			_ctCollectionResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			ctCollectionResource ->
-				ctCollectionResource.postCTCollectionPublish(id));
+				ctCollectionResource.postCTCollectionPublish(ctCollectionId));
 
 		return true;
 	}
 
 	@GraphQLField
 	public boolean createCTCollectionSchedulePublish(
-			@GraphQLName("id") Long id,
+			@GraphQLName("ctCollectionId") Long ctCollectionId,
 			@GraphQLName("publishDate") Date publishDate)
 		throws Exception {
 
@@ -205,7 +210,7 @@ public class Mutation {
 			this::_populateResourceContext,
 			ctCollectionResource ->
 				ctCollectionResource.postCTCollectionSchedulePublish(
-					id, publishDate));
+					ctCollectionId, publishDate));
 
 		return true;
 	}

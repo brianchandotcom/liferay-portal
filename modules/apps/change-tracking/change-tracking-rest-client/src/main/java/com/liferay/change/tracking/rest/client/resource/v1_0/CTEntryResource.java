@@ -41,19 +41,19 @@ public interface CTEntryResource {
 		return new Builder();
 	}
 
-	public Page<CTEntry> getCtCollectionIdCTEntriesPage(
-			String id, String search, String filterString,
+	public Page<CTEntry> getCtCollectionCTEntriesPage(
+			Long ctCollectionId, String search, String filterString,
 			Pagination pagination, String sortString)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse getCtCollectionIdCTEntriesPageHttpResponse(
-			String id, String search, String filterString,
+	public HttpInvoker.HttpResponse getCtCollectionCTEntriesPageHttpResponse(
+			Long ctCollectionId, String search, String filterString,
 			Pagination pagination, String sortString)
 		throws Exception;
 
-	public CTEntry getCTEntry(Long id) throws Exception;
+	public CTEntry getCTEntry(Long ctEntryId) throws Exception;
 
-	public HttpInvoker.HttpResponse getCTEntryHttpResponse(Long id)
+	public HttpInvoker.HttpResponse getCTEntryHttpResponse(Long ctEntryId)
 		throws Exception;
 
 	public static class Builder {
@@ -160,14 +160,15 @@ public interface CTEntryResource {
 
 	public static class CTEntryResourceImpl implements CTEntryResource {
 
-		public Page<CTEntry> getCtCollectionIdCTEntriesPage(
-				String id, String search, String filterString,
+		public Page<CTEntry> getCtCollectionCTEntriesPage(
+				Long ctCollectionId, String search, String filterString,
 				Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getCtCollectionIdCTEntriesPageHttpResponse(
-					id, search, filterString, pagination, sortString);
+				getCtCollectionCTEntriesPageHttpResponse(
+					ctCollectionId, search, filterString, pagination,
+					sortString);
 
 			String content = httpResponse.getContent();
 
@@ -229,8 +230,8 @@ public interface CTEntryResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				getCtCollectionIdCTEntriesPageHttpResponse(
-					String id, String search, String filterString,
+				getCtCollectionCTEntriesPageHttpResponse(
+					Long ctCollectionId, String search, String filterString,
 					Pagination pagination, String sortString)
 			throws Exception {
 
@@ -277,9 +278,9 @@ public interface CTEntryResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/change-tracking-rest/v1.0/ct-collections/{id}/ct-entries");
+						"/o/change-tracking-rest/v1.0/ct-collections/{ctCollectionId}/ct-entries");
 
-			httpInvoker.path("id", id);
+			httpInvoker.path("ctCollectionId", ctCollectionId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -287,8 +288,9 @@ public interface CTEntryResource {
 			return httpInvoker.invoke();
 		}
 
-		public CTEntry getCTEntry(Long id) throws Exception {
-			HttpInvoker.HttpResponse httpResponse = getCTEntryHttpResponse(id);
+		public CTEntry getCTEntry(Long ctEntryId) throws Exception {
+			HttpInvoker.HttpResponse httpResponse = getCTEntryHttpResponse(
+				ctEntryId);
 
 			String content = httpResponse.getContent();
 
@@ -349,7 +351,7 @@ public interface CTEntryResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse getCTEntryHttpResponse(Long id)
+		public HttpInvoker.HttpResponse getCTEntryHttpResponse(Long ctEntryId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -376,9 +378,9 @@ public interface CTEntryResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/change-tracking-rest/v1.0/ct-entries/{id}");
+						"/o/change-tracking-rest/v1.0/ct-entries/{ctEntryId}");
 
-			httpInvoker.path("id", id);
+			httpInvoker.path("ctEntryId", ctEntryId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

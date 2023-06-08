@@ -80,62 +80,70 @@ public interface CTCollectionResource {
 			CTCollection ctCollection, String callbackURL, Object object)
 		throws Exception;
 
-	public void deleteCTCollection(Long id) throws Exception;
+	public void deleteCTCollection(Long ctCollectionId) throws Exception;
 
-	public HttpInvoker.HttpResponse deleteCTCollectionHttpResponse(Long id)
+	public HttpInvoker.HttpResponse deleteCTCollectionHttpResponse(
+			Long ctCollectionId)
 		throws Exception;
 
-	public void deleteCTCollectionBatch(String callbackURL, Object object)
+	public void deleteCTCollectionBatch(
+			Long ctCollectionId, String callbackURL, Object object)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse deleteCTCollectionBatchHttpResponse(
-			String callbackURL, Object object)
+			Long ctCollectionId, String callbackURL, Object object)
 		throws Exception;
 
-	public CTCollection getCTCollection(Long id) throws Exception;
+	public CTCollection getCTCollection(Long ctCollectionId) throws Exception;
 
-	public HttpInvoker.HttpResponse getCTCollectionHttpResponse(Long id)
+	public HttpInvoker.HttpResponse getCTCollectionHttpResponse(
+			Long ctCollectionId)
 		throws Exception;
 
-	public CTCollection patchCTCollection(Long id, CTCollection ctCollection)
+	public CTCollection patchCTCollection(
+			Long ctCollectionId, CTCollection ctCollection)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse patchCTCollectionHttpResponse(
-			Long id, CTCollection ctCollection)
+			Long ctCollectionId, CTCollection ctCollection)
 		throws Exception;
 
-	public CTCollection putCTCollection(Long id, CTCollection ctCollection)
+	public CTCollection putCTCollection(
+			Long ctCollectionId, CTCollection ctCollection)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse putCTCollectionHttpResponse(
-			Long id, CTCollection ctCollection)
+			Long ctCollectionId, CTCollection ctCollection)
 		throws Exception;
 
 	public void putCTCollectionBatch(
-			CTCollection ctCollection, String callbackURL, Object object)
+			Long ctCollectionId, CTCollection ctCollection, String callbackURL,
+			Object object)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse putCTCollectionBatchHttpResponse(
-			CTCollection ctCollection, String callbackURL, Object object)
+			Long ctCollectionId, CTCollection ctCollection, String callbackURL,
+			Object object)
 		throws Exception;
 
-	public void postCTCollectionCheckout(Long id) throws Exception;
+	public void postCTCollectionCheckout(Long ctCollectionId) throws Exception;
 
 	public HttpInvoker.HttpResponse postCTCollectionCheckoutHttpResponse(
-			Long id)
+			Long ctCollectionId)
 		throws Exception;
 
-	public void postCTCollectionPublish(Long id) throws Exception;
+	public void postCTCollectionPublish(Long ctCollectionId) throws Exception;
 
-	public HttpInvoker.HttpResponse postCTCollectionPublishHttpResponse(Long id)
+	public HttpInvoker.HttpResponse postCTCollectionPublishHttpResponse(
+			Long ctCollectionId)
 		throws Exception;
 
 	public void postCTCollectionSchedulePublish(
-			Long id, java.util.Date publishDate)
+			Long ctCollectionId, java.util.Date publishDate)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postCTCollectionSchedulePublishHttpResponse(
-			Long id, java.util.Date publishDate)
+			Long ctCollectionId, java.util.Date publishDate)
 		throws Exception;
 
 	public static class Builder {
@@ -695,9 +703,9 @@ public interface CTCollectionResource {
 			return httpInvoker.invoke();
 		}
 
-		public void deleteCTCollection(Long id) throws Exception {
+		public void deleteCTCollection(Long ctCollectionId) throws Exception {
 			HttpInvoker.HttpResponse httpResponse =
-				deleteCTCollectionHttpResponse(id);
+				deleteCTCollectionHttpResponse(ctCollectionId);
 
 			String content = httpResponse.getContent();
 
@@ -758,7 +766,8 @@ public interface CTCollectionResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse deleteCTCollectionHttpResponse(Long id)
+		public HttpInvoker.HttpResponse deleteCTCollectionHttpResponse(
+				Long ctCollectionId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -785,9 +794,9 @@ public interface CTCollectionResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/change-tracking-rest/v1.0/ct-collections/{id}");
+						"/o/change-tracking-rest/v1.0/ct-collections/{ctCollectionId}");
 
-			httpInvoker.path("id", id);
+			httpInvoker.path("ctCollectionId", ctCollectionId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -795,11 +804,13 @@ public interface CTCollectionResource {
 			return httpInvoker.invoke();
 		}
 
-		public void deleteCTCollectionBatch(String callbackURL, Object object)
+		public void deleteCTCollectionBatch(
+				Long ctCollectionId, String callbackURL, Object object)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				deleteCTCollectionBatchHttpResponse(callbackURL, object);
+				deleteCTCollectionBatchHttpResponse(
+					ctCollectionId, callbackURL, object);
 
 			String content = httpResponse.getContent();
 
@@ -850,7 +861,7 @@ public interface CTCollectionResource {
 		}
 
 		public HttpInvoker.HttpResponse deleteCTCollectionBatchHttpResponse(
-				String callbackURL, Object object)
+				Long ctCollectionId, String callbackURL, Object object)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -884,7 +895,9 @@ public interface CTCollectionResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/change-tracking-rest/v1.0/ct-collections/batch");
+						"/o/change-tracking-rest/v1.0/ct-collections/{ctCollectionId}/batch");
+
+			httpInvoker.path("ctCollectionId", ctCollectionId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -892,9 +905,11 @@ public interface CTCollectionResource {
 			return httpInvoker.invoke();
 		}
 
-		public CTCollection getCTCollection(Long id) throws Exception {
+		public CTCollection getCTCollection(Long ctCollectionId)
+			throws Exception {
+
 			HttpInvoker.HttpResponse httpResponse = getCTCollectionHttpResponse(
-				id);
+				ctCollectionId);
 
 			String content = httpResponse.getContent();
 
@@ -955,7 +970,8 @@ public interface CTCollectionResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse getCTCollectionHttpResponse(Long id)
+		public HttpInvoker.HttpResponse getCTCollectionHttpResponse(
+				Long ctCollectionId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -982,9 +998,9 @@ public interface CTCollectionResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/change-tracking-rest/v1.0/ct-collections/{id}");
+						"/o/change-tracking-rest/v1.0/ct-collections/{ctCollectionId}");
 
-			httpInvoker.path("id", id);
+			httpInvoker.path("ctCollectionId", ctCollectionId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -993,11 +1009,11 @@ public interface CTCollectionResource {
 		}
 
 		public CTCollection patchCTCollection(
-				Long id, CTCollection ctCollection)
+				Long ctCollectionId, CTCollection ctCollection)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				patchCTCollectionHttpResponse(id, ctCollection);
+				patchCTCollectionHttpResponse(ctCollectionId, ctCollection);
 
 			String content = httpResponse.getContent();
 
@@ -1059,7 +1075,7 @@ public interface CTCollectionResource {
 		}
 
 		public HttpInvoker.HttpResponse patchCTCollectionHttpResponse(
-				Long id, CTCollection ctCollection)
+				Long ctCollectionId, CTCollection ctCollection)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1088,9 +1104,9 @@ public interface CTCollectionResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/change-tracking-rest/v1.0/ct-collections/{id}");
+						"/o/change-tracking-rest/v1.0/ct-collections/{ctCollectionId}");
 
-			httpInvoker.path("id", id);
+			httpInvoker.path("ctCollectionId", ctCollectionId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -1098,11 +1114,12 @@ public interface CTCollectionResource {
 			return httpInvoker.invoke();
 		}
 
-		public CTCollection putCTCollection(Long id, CTCollection ctCollection)
+		public CTCollection putCTCollection(
+				Long ctCollectionId, CTCollection ctCollection)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse = putCTCollectionHttpResponse(
-				id, ctCollection);
+				ctCollectionId, ctCollection);
 
 			String content = httpResponse.getContent();
 
@@ -1164,7 +1181,7 @@ public interface CTCollectionResource {
 		}
 
 		public HttpInvoker.HttpResponse putCTCollectionHttpResponse(
-				Long id, CTCollection ctCollection)
+				Long ctCollectionId, CTCollection ctCollection)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1193,9 +1210,9 @@ public interface CTCollectionResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/change-tracking-rest/v1.0/ct-collections/{id}");
+						"/o/change-tracking-rest/v1.0/ct-collections/{ctCollectionId}");
 
-			httpInvoker.path("id", id);
+			httpInvoker.path("ctCollectionId", ctCollectionId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -1204,12 +1221,13 @@ public interface CTCollectionResource {
 		}
 
 		public void putCTCollectionBatch(
-				CTCollection ctCollection, String callbackURL, Object object)
+				Long ctCollectionId, CTCollection ctCollection,
+				String callbackURL, Object object)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				putCTCollectionBatchHttpResponse(
-					ctCollection, callbackURL, object);
+					ctCollectionId, ctCollection, callbackURL, object);
 
 			String content = httpResponse.getContent();
 
@@ -1260,7 +1278,8 @@ public interface CTCollectionResource {
 		}
 
 		public HttpInvoker.HttpResponse putCTCollectionBatchHttpResponse(
-				CTCollection ctCollection, String callbackURL, Object object)
+				Long ctCollectionId, CTCollection ctCollection,
+				String callbackURL, Object object)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1294,7 +1313,9 @@ public interface CTCollectionResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/change-tracking-rest/v1.0/ct-collections/batch");
+						"/o/change-tracking-rest/v1.0/ct-collections/{ctCollectionId}/batch");
+
+			httpInvoker.path("ctCollectionId", ctCollectionId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -1302,9 +1323,11 @@ public interface CTCollectionResource {
 			return httpInvoker.invoke();
 		}
 
-		public void postCTCollectionCheckout(Long id) throws Exception {
+		public void postCTCollectionCheckout(Long ctCollectionId)
+			throws Exception {
+
 			HttpInvoker.HttpResponse httpResponse =
-				postCTCollectionCheckoutHttpResponse(id);
+				postCTCollectionCheckoutHttpResponse(ctCollectionId);
 
 			String content = httpResponse.getContent();
 
@@ -1366,7 +1389,7 @@ public interface CTCollectionResource {
 		}
 
 		public HttpInvoker.HttpResponse postCTCollectionCheckoutHttpResponse(
-				Long id)
+				Long ctCollectionId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1393,9 +1416,9 @@ public interface CTCollectionResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/change-tracking-rest/v1.0/ct-collections/{id}/checkout");
+						"/o/change-tracking-rest/v1.0/ct-collections/{ctCollectionId}/checkout");
 
-			httpInvoker.path("id", id);
+			httpInvoker.path("ctCollectionId", ctCollectionId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -1403,9 +1426,11 @@ public interface CTCollectionResource {
 			return httpInvoker.invoke();
 		}
 
-		public void postCTCollectionPublish(Long id) throws Exception {
+		public void postCTCollectionPublish(Long ctCollectionId)
+			throws Exception {
+
 			HttpInvoker.HttpResponse httpResponse =
-				postCTCollectionPublishHttpResponse(id);
+				postCTCollectionPublishHttpResponse(ctCollectionId);
 
 			String content = httpResponse.getContent();
 
@@ -1467,7 +1492,7 @@ public interface CTCollectionResource {
 		}
 
 		public HttpInvoker.HttpResponse postCTCollectionPublishHttpResponse(
-				Long id)
+				Long ctCollectionId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1494,9 +1519,9 @@ public interface CTCollectionResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/change-tracking-rest/v1.0/ct-collections/{id}/publish");
+						"/o/change-tracking-rest/v1.0/ct-collections/{ctCollectionId}/publish");
 
-			httpInvoker.path("id", id);
+			httpInvoker.path("ctCollectionId", ctCollectionId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -1505,11 +1530,12 @@ public interface CTCollectionResource {
 		}
 
 		public void postCTCollectionSchedulePublish(
-				Long id, java.util.Date publishDate)
+				Long ctCollectionId, java.util.Date publishDate)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postCTCollectionSchedulePublishHttpResponse(id, publishDate);
+				postCTCollectionSchedulePublishHttpResponse(
+					ctCollectionId, publishDate);
 
 			String content = httpResponse.getContent();
 
@@ -1572,7 +1598,7 @@ public interface CTCollectionResource {
 
 		public HttpInvoker.HttpResponse
 				postCTCollectionSchedulePublishHttpResponse(
-					Long id, java.util.Date publishDate)
+					Long ctCollectionId, java.util.Date publishDate)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1607,9 +1633,9 @@ public interface CTCollectionResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/change-tracking-rest/v1.0/ct-collections/{id}/schedule-publish");
+						"/o/change-tracking-rest/v1.0/ct-collections/{ctCollectionId}/schedule-publish");
 
-			httpInvoker.path("id", id);
+			httpInvoker.path("ctCollectionId", ctCollectionId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

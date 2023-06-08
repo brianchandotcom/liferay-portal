@@ -201,23 +201,25 @@ public abstract class BaseCTEntryResourceTestCase {
 	}
 
 	@Test
-	public void testGetCtCollectionIdCTEntriesPage() throws Exception {
-		String id = testGetCtCollectionIdCTEntriesPage_getId();
-		String irrelevantId =
-			testGetCtCollectionIdCTEntriesPage_getIrrelevantId();
+	public void testGetCtCollectionCTEntriesPage() throws Exception {
+		Long ctCollectionId =
+			testGetCtCollectionCTEntriesPage_getCtCollectionId();
+		Long irrelevantCtCollectionId =
+			testGetCtCollectionCTEntriesPage_getIrrelevantCtCollectionId();
 
-		Page<CTEntry> page = ctEntryResource.getCtCollectionIdCTEntriesPage(
-			id, null, null, Pagination.of(1, 10), null);
+		Page<CTEntry> page = ctEntryResource.getCtCollectionCTEntriesPage(
+			ctCollectionId, null, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(0, page.getTotalCount());
 
-		if (irrelevantId != null) {
+		if (irrelevantCtCollectionId != null) {
 			CTEntry irrelevantCTEntry =
-				testGetCtCollectionIdCTEntriesPage_addCTEntry(
-					irrelevantId, randomIrrelevantCTEntry());
+				testGetCtCollectionCTEntriesPage_addCTEntry(
+					irrelevantCtCollectionId, randomIrrelevantCTEntry());
 
-			page = ctEntryResource.getCtCollectionIdCTEntriesPage(
-				irrelevantId, null, null, Pagination.of(1, 2), null);
+			page = ctEntryResource.getCtCollectionCTEntriesPage(
+				irrelevantCtCollectionId, null, null, Pagination.of(1, 2),
+				null);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -226,29 +228,32 @@ public abstract class BaseCTEntryResourceTestCase {
 				(List<CTEntry>)page.getItems());
 			assertValid(
 				page,
-				testGetCtCollectionIdCTEntriesPage_getExpectedActions(
-					irrelevantId));
+				testGetCtCollectionCTEntriesPage_getExpectedActions(
+					irrelevantCtCollectionId));
 		}
 
-		CTEntry ctEntry1 = testGetCtCollectionIdCTEntriesPage_addCTEntry(
-			id, randomCTEntry());
+		CTEntry ctEntry1 = testGetCtCollectionCTEntriesPage_addCTEntry(
+			ctCollectionId, randomCTEntry());
 
-		CTEntry ctEntry2 = testGetCtCollectionIdCTEntriesPage_addCTEntry(
-			id, randomCTEntry());
+		CTEntry ctEntry2 = testGetCtCollectionCTEntriesPage_addCTEntry(
+			ctCollectionId, randomCTEntry());
 
-		page = ctEntryResource.getCtCollectionIdCTEntriesPage(
-			id, null, null, Pagination.of(1, 10), null);
+		page = ctEntryResource.getCtCollectionCTEntriesPage(
+			ctCollectionId, null, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(ctEntry1, ctEntry2), (List<CTEntry>)page.getItems());
 		assertValid(
-			page, testGetCtCollectionIdCTEntriesPage_getExpectedActions(id));
+			page,
+			testGetCtCollectionCTEntriesPage_getExpectedActions(
+				ctCollectionId));
 	}
 
 	protected Map<String, Map<String, String>>
-			testGetCtCollectionIdCTEntriesPage_getExpectedActions(String id)
+			testGetCtCollectionCTEntriesPage_getExpectedActions(
+				Long ctCollectionId)
 		throws Exception {
 
 		Map<String, Map<String, String>> expectedActions = new HashMap<>();
@@ -257,7 +262,7 @@ public abstract class BaseCTEntryResourceTestCase {
 	}
 
 	@Test
-	public void testGetCtCollectionIdCTEntriesPageWithFilterDateTimeEquals()
+	public void testGetCtCollectionCTEntriesPageWithFilterDateTimeEquals()
 		throws Exception {
 
 		List<EntityField> entityFields = getEntityFields(
@@ -267,15 +272,18 @@ public abstract class BaseCTEntryResourceTestCase {
 			return;
 		}
 
-		String id = testGetCtCollectionIdCTEntriesPage_getId();
+		Long ctCollectionId =
+			testGetCtCollectionCTEntriesPage_getCtCollectionId();
 
 		CTEntry ctEntry1 = randomCTEntry();
 
-		ctEntry1 = testGetCtCollectionIdCTEntriesPage_addCTEntry(id, ctEntry1);
+		ctEntry1 = testGetCtCollectionCTEntriesPage_addCTEntry(
+			ctCollectionId, ctEntry1);
 
 		for (EntityField entityField : entityFields) {
-			Page<CTEntry> page = ctEntryResource.getCtCollectionIdCTEntriesPage(
-				id, null, getFilterString(entityField, "between", ctEntry1),
+			Page<CTEntry> page = ctEntryResource.getCtCollectionCTEntriesPage(
+				ctCollectionId, null,
+				getFilterString(entityField, "between", ctEntry1),
 				Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -285,7 +293,7 @@ public abstract class BaseCTEntryResourceTestCase {
 	}
 
 	@Test
-	public void testGetCtCollectionIdCTEntriesPageWithFilterDoubleEquals()
+	public void testGetCtCollectionCTEntriesPageWithFilterDoubleEquals()
 		throws Exception {
 
 		List<EntityField> entityFields = getEntityFields(
@@ -295,18 +303,20 @@ public abstract class BaseCTEntryResourceTestCase {
 			return;
 		}
 
-		String id = testGetCtCollectionIdCTEntriesPage_getId();
+		Long ctCollectionId =
+			testGetCtCollectionCTEntriesPage_getCtCollectionId();
 
-		CTEntry ctEntry1 = testGetCtCollectionIdCTEntriesPage_addCTEntry(
-			id, randomCTEntry());
+		CTEntry ctEntry1 = testGetCtCollectionCTEntriesPage_addCTEntry(
+			ctCollectionId, randomCTEntry());
 
 		@SuppressWarnings("PMD.UnusedLocalVariable")
-		CTEntry ctEntry2 = testGetCtCollectionIdCTEntriesPage_addCTEntry(
-			id, randomCTEntry());
+		CTEntry ctEntry2 = testGetCtCollectionCTEntriesPage_addCTEntry(
+			ctCollectionId, randomCTEntry());
 
 		for (EntityField entityField : entityFields) {
-			Page<CTEntry> page = ctEntryResource.getCtCollectionIdCTEntriesPage(
-				id, null, getFilterString(entityField, "eq", ctEntry1),
+			Page<CTEntry> page = ctEntryResource.getCtCollectionCTEntriesPage(
+				ctCollectionId, null,
+				getFilterString(entityField, "eq", ctEntry1),
 				Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -316,7 +326,7 @@ public abstract class BaseCTEntryResourceTestCase {
 	}
 
 	@Test
-	public void testGetCtCollectionIdCTEntriesPageWithFilterStringEquals()
+	public void testGetCtCollectionCTEntriesPageWithFilterStringEquals()
 		throws Exception {
 
 		List<EntityField> entityFields = getEntityFields(
@@ -326,18 +336,20 @@ public abstract class BaseCTEntryResourceTestCase {
 			return;
 		}
 
-		String id = testGetCtCollectionIdCTEntriesPage_getId();
+		Long ctCollectionId =
+			testGetCtCollectionCTEntriesPage_getCtCollectionId();
 
-		CTEntry ctEntry1 = testGetCtCollectionIdCTEntriesPage_addCTEntry(
-			id, randomCTEntry());
+		CTEntry ctEntry1 = testGetCtCollectionCTEntriesPage_addCTEntry(
+			ctCollectionId, randomCTEntry());
 
 		@SuppressWarnings("PMD.UnusedLocalVariable")
-		CTEntry ctEntry2 = testGetCtCollectionIdCTEntriesPage_addCTEntry(
-			id, randomCTEntry());
+		CTEntry ctEntry2 = testGetCtCollectionCTEntriesPage_addCTEntry(
+			ctCollectionId, randomCTEntry());
 
 		for (EntityField entityField : entityFields) {
-			Page<CTEntry> page = ctEntryResource.getCtCollectionIdCTEntriesPage(
-				id, null, getFilterString(entityField, "eq", ctEntry1),
+			Page<CTEntry> page = ctEntryResource.getCtCollectionCTEntriesPage(
+				ctCollectionId, null,
+				getFilterString(entityField, "eq", ctEntry1),
 				Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -347,29 +359,30 @@ public abstract class BaseCTEntryResourceTestCase {
 	}
 
 	@Test
-	public void testGetCtCollectionIdCTEntriesPageWithPagination()
+	public void testGetCtCollectionCTEntriesPageWithPagination()
 		throws Exception {
 
-		String id = testGetCtCollectionIdCTEntriesPage_getId();
+		Long ctCollectionId =
+			testGetCtCollectionCTEntriesPage_getCtCollectionId();
 
-		CTEntry ctEntry1 = testGetCtCollectionIdCTEntriesPage_addCTEntry(
-			id, randomCTEntry());
+		CTEntry ctEntry1 = testGetCtCollectionCTEntriesPage_addCTEntry(
+			ctCollectionId, randomCTEntry());
 
-		CTEntry ctEntry2 = testGetCtCollectionIdCTEntriesPage_addCTEntry(
-			id, randomCTEntry());
+		CTEntry ctEntry2 = testGetCtCollectionCTEntriesPage_addCTEntry(
+			ctCollectionId, randomCTEntry());
 
-		CTEntry ctEntry3 = testGetCtCollectionIdCTEntriesPage_addCTEntry(
-			id, randomCTEntry());
+		CTEntry ctEntry3 = testGetCtCollectionCTEntriesPage_addCTEntry(
+			ctCollectionId, randomCTEntry());
 
-		Page<CTEntry> page1 = ctEntryResource.getCtCollectionIdCTEntriesPage(
-			id, null, null, Pagination.of(1, 2), null);
+		Page<CTEntry> page1 = ctEntryResource.getCtCollectionCTEntriesPage(
+			ctCollectionId, null, null, Pagination.of(1, 2), null);
 
 		List<CTEntry> ctEntries1 = (List<CTEntry>)page1.getItems();
 
 		Assert.assertEquals(ctEntries1.toString(), 2, ctEntries1.size());
 
-		Page<CTEntry> page2 = ctEntryResource.getCtCollectionIdCTEntriesPage(
-			id, null, null, Pagination.of(2, 2), null);
+		Page<CTEntry> page2 = ctEntryResource.getCtCollectionCTEntriesPage(
+			ctCollectionId, null, null, Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -377,8 +390,8 @@ public abstract class BaseCTEntryResourceTestCase {
 
 		Assert.assertEquals(ctEntries2.toString(), 1, ctEntries2.size());
 
-		Page<CTEntry> page3 = ctEntryResource.getCtCollectionIdCTEntriesPage(
-			id, null, null, Pagination.of(1, 3), null);
+		Page<CTEntry> page3 = ctEntryResource.getCtCollectionCTEntriesPage(
+			ctCollectionId, null, null, Pagination.of(1, 3), null);
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(ctEntry1, ctEntry2, ctEntry3),
@@ -386,10 +399,10 @@ public abstract class BaseCTEntryResourceTestCase {
 	}
 
 	@Test
-	public void testGetCtCollectionIdCTEntriesPageWithSortDateTime()
+	public void testGetCtCollectionCTEntriesPageWithSortDateTime()
 		throws Exception {
 
-		testGetCtCollectionIdCTEntriesPageWithSort(
+		testGetCtCollectionCTEntriesPageWithSort(
 			EntityField.Type.DATE_TIME,
 			(entityField, ctEntry1, ctEntry2) -> {
 				BeanTestUtil.setProperty(
@@ -399,10 +412,10 @@ public abstract class BaseCTEntryResourceTestCase {
 	}
 
 	@Test
-	public void testGetCtCollectionIdCTEntriesPageWithSortDouble()
+	public void testGetCtCollectionCTEntriesPageWithSortDouble()
 		throws Exception {
 
-		testGetCtCollectionIdCTEntriesPageWithSort(
+		testGetCtCollectionCTEntriesPageWithSort(
 			EntityField.Type.DOUBLE,
 			(entityField, ctEntry1, ctEntry2) -> {
 				BeanTestUtil.setProperty(ctEntry1, entityField.getName(), 0.1);
@@ -411,10 +424,10 @@ public abstract class BaseCTEntryResourceTestCase {
 	}
 
 	@Test
-	public void testGetCtCollectionIdCTEntriesPageWithSortInteger()
+	public void testGetCtCollectionCTEntriesPageWithSortInteger()
 		throws Exception {
 
-		testGetCtCollectionIdCTEntriesPageWithSort(
+		testGetCtCollectionCTEntriesPageWithSort(
 			EntityField.Type.INTEGER,
 			(entityField, ctEntry1, ctEntry2) -> {
 				BeanTestUtil.setProperty(ctEntry1, entityField.getName(), 0);
@@ -423,10 +436,10 @@ public abstract class BaseCTEntryResourceTestCase {
 	}
 
 	@Test
-	public void testGetCtCollectionIdCTEntriesPageWithSortString()
+	public void testGetCtCollectionCTEntriesPageWithSortString()
 		throws Exception {
 
-		testGetCtCollectionIdCTEntriesPageWithSort(
+		testGetCtCollectionCTEntriesPageWithSort(
 			EntityField.Type.STRING,
 			(entityField, ctEntry1, ctEntry2) -> {
 				Class<?> clazz = ctEntry1.getClass();
@@ -475,7 +488,7 @@ public abstract class BaseCTEntryResourceTestCase {
 			});
 	}
 
-	protected void testGetCtCollectionIdCTEntriesPageWithSort(
+	protected void testGetCtCollectionCTEntriesPageWithSort(
 			EntityField.Type type,
 			UnsafeTriConsumer<EntityField, CTEntry, CTEntry, Exception>
 				unsafeTriConsumer)
@@ -487,7 +500,8 @@ public abstract class BaseCTEntryResourceTestCase {
 			return;
 		}
 
-		String id = testGetCtCollectionIdCTEntriesPage_getId();
+		Long ctCollectionId =
+			testGetCtCollectionCTEntriesPage_getCtCollectionId();
 
 		CTEntry ctEntry1 = randomCTEntry();
 		CTEntry ctEntry2 = randomCTEntry();
@@ -496,14 +510,16 @@ public abstract class BaseCTEntryResourceTestCase {
 			unsafeTriConsumer.accept(entityField, ctEntry1, ctEntry2);
 		}
 
-		ctEntry1 = testGetCtCollectionIdCTEntriesPage_addCTEntry(id, ctEntry1);
+		ctEntry1 = testGetCtCollectionCTEntriesPage_addCTEntry(
+			ctCollectionId, ctEntry1);
 
-		ctEntry2 = testGetCtCollectionIdCTEntriesPage_addCTEntry(id, ctEntry2);
+		ctEntry2 = testGetCtCollectionCTEntriesPage_addCTEntry(
+			ctCollectionId, ctEntry2);
 
 		for (EntityField entityField : entityFields) {
 			Page<CTEntry> ascPage =
-				ctEntryResource.getCtCollectionIdCTEntriesPage(
-					id, null, null, Pagination.of(1, 2),
+				ctEntryResource.getCtCollectionCTEntriesPage(
+					ctCollectionId, null, null, Pagination.of(1, 2),
 					entityField.getName() + ":asc");
 
 			assertEquals(
@@ -511,8 +527,8 @@ public abstract class BaseCTEntryResourceTestCase {
 				(List<CTEntry>)ascPage.getItems());
 
 			Page<CTEntry> descPage =
-				ctEntryResource.getCtCollectionIdCTEntriesPage(
-					id, null, null, Pagination.of(1, 2),
+				ctEntryResource.getCtCollectionCTEntriesPage(
+					ctCollectionId, null, null, Pagination.of(1, 2),
 					entityField.getName() + ":desc");
 
 			assertEquals(
@@ -521,22 +537,23 @@ public abstract class BaseCTEntryResourceTestCase {
 		}
 	}
 
-	protected CTEntry testGetCtCollectionIdCTEntriesPage_addCTEntry(
-			String id, CTEntry ctEntry)
+	protected CTEntry testGetCtCollectionCTEntriesPage_addCTEntry(
+			Long ctCollectionId, CTEntry ctEntry)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected String testGetCtCollectionIdCTEntriesPage_getId()
+	protected Long testGetCtCollectionCTEntriesPage_getCtCollectionId()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected String testGetCtCollectionIdCTEntriesPage_getIrrelevantId()
+	protected Long
+			testGetCtCollectionCTEntriesPage_getIrrelevantCtCollectionId()
 		throws Exception {
 
 		return null;
@@ -571,7 +588,7 @@ public abstract class BaseCTEntryResourceTestCase {
 								"cTEntry",
 								new HashMap<String, Object>() {
 									{
-										put("id", ctEntry.getId());
+										put("ctEntryId", ctEntry.getId());
 									}
 								},
 								getGraphQLFields())),
@@ -580,7 +597,7 @@ public abstract class BaseCTEntryResourceTestCase {
 
 	@Test
 	public void testGraphQLGetCTEntryNotFound() throws Exception {
-		Long irrelevantId = RandomTestUtil.randomLong();
+		Long irrelevantCtEntryId = RandomTestUtil.randomLong();
 
 		Assert.assertEquals(
 			"Not Found",
@@ -590,7 +607,7 @@ public abstract class BaseCTEntryResourceTestCase {
 						"cTEntry",
 						new HashMap<String, Object>() {
 							{
-								put("id", irrelevantId);
+								put("ctEntryId", irrelevantCtEntryId);
 							}
 						},
 						getGraphQLFields())),

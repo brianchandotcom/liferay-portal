@@ -153,14 +153,24 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							CTCollectionResourceImpl.class, "getCTCollection"));
 					put(
-						"query#ctCollectionIdCTEntries",
+						"query#ctCollectionCTEntries",
 						new ObjectValuePair<>(
 							CTEntryResourceImpl.class,
-							"getCtCollectionIdCTEntriesPage"));
+							"getCtCollectionCTEntriesPage"));
 					put(
 						"query#cTEntry",
 						new ObjectValuePair<>(
 							CTEntryResourceImpl.class, "getCTEntry"));
+
+					put(
+						"query#CTEntry.cTCollection",
+						new ObjectValuePair<>(
+							CTCollectionResourceImpl.class, "getCTCollection"));
+					put(
+						"query#CTCollection.ctCollectionCTEntries",
+						new ObjectValuePair<>(
+							CTEntryResourceImpl.class,
+							"getCtCollectionCTEntriesPage"));
 				}
 			};
 

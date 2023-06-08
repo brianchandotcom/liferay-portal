@@ -75,28 +75,33 @@ public interface CTCollectionResource {
 			CTCollection ctCollection, String callbackURL, Object object)
 		throws Exception;
 
-	public void deleteCTCollection(Long id) throws Exception;
+	public void deleteCTCollection(Long ctCollectionId) throws Exception;
 
-	public Response deleteCTCollectionBatch(String callbackURL, Object object)
+	public Response deleteCTCollectionBatch(
+			Long ctCollectionId, String callbackURL, Object object)
 		throws Exception;
 
-	public CTCollection getCTCollection(Long id) throws Exception;
+	public CTCollection getCTCollection(Long ctCollectionId) throws Exception;
 
-	public CTCollection patchCTCollection(Long id, CTCollection ctCollection)
+	public CTCollection patchCTCollection(
+			Long ctCollectionId, CTCollection ctCollection)
 		throws Exception;
 
-	public CTCollection putCTCollection(Long id, CTCollection ctCollection)
+	public CTCollection putCTCollection(
+			Long ctCollectionId, CTCollection ctCollection)
 		throws Exception;
 
 	public Response putCTCollectionBatch(
-			CTCollection ctCollection, String callbackURL, Object object)
+			Long ctCollectionId, CTCollection ctCollection, String callbackURL,
+			Object object)
 		throws Exception;
 
-	public void postCTCollectionCheckout(Long id) throws Exception;
+	public void postCTCollectionCheckout(Long ctCollectionId) throws Exception;
 
-	public void postCTCollectionPublish(Long id) throws Exception;
+	public void postCTCollectionPublish(Long ctCollectionId) throws Exception;
 
-	public void postCTCollectionSchedulePublish(Long id, Date publishDate)
+	public void postCTCollectionSchedulePublish(
+			Long ctCollectionId, Date publishDate)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

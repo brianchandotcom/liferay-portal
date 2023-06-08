@@ -56,12 +56,12 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface CTEntryResource {
 
-	public Page<CTEntry> getCtCollectionIdCTEntriesPage(
-			String id, String search, Filter filter, Pagination pagination,
-			Sort[] sorts)
+	public Page<CTEntry> getCtCollectionCTEntriesPage(
+			Long ctCollectionId, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
 		throws Exception;
 
-	public CTEntry getCTEntry(Long id) throws Exception;
+	public CTEntry getCTEntry(Long ctEntryId) throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {

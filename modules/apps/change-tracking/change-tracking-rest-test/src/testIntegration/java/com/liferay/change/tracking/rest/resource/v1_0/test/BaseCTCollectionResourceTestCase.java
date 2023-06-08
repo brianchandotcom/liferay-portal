@@ -453,9 +453,7 @@ public abstract class BaseCTCollectionResourceTestCase {
 				ctCollection.getId()));
 
 		assertHttpResponseStatusCode(
-			404,
-			ctCollectionResource.getCTCollectionHttpResponse(
-				ctCollection.getId()));
+			404, ctCollectionResource.getCTCollectionHttpResponse(0L));
 	}
 
 	protected CTCollection testDeleteCTCollection_addCTCollection()
@@ -477,7 +475,7 @@ public abstract class BaseCTCollectionResourceTestCase {
 						"deleteCTCollection",
 						new HashMap<String, Object>() {
 							{
-								put("id", ctCollection.getId());
+								put("ctCollectionId", ctCollection.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteCTCollection"));
@@ -487,7 +485,7 @@ public abstract class BaseCTCollectionResourceTestCase {
 					"cTCollection",
 					new HashMap<String, Object>() {
 						{
-							put("id", ctCollection.getId());
+							put("ctCollectionId", ctCollection.getId());
 						}
 					},
 					new GraphQLField("id"))),
@@ -535,7 +533,9 @@ public abstract class BaseCTCollectionResourceTestCase {
 								"cTCollection",
 								new HashMap<String, Object>() {
 									{
-										put("id", ctCollection.getId());
+										put(
+											"ctCollectionId",
+											ctCollection.getId());
 									}
 								},
 								getGraphQLFields())),
@@ -544,7 +544,7 @@ public abstract class BaseCTCollectionResourceTestCase {
 
 	@Test
 	public void testGraphQLGetCTCollectionNotFound() throws Exception {
-		Long irrelevantId = RandomTestUtil.randomLong();
+		Long irrelevantCtCollectionId = RandomTestUtil.randomLong();
 
 		Assert.assertEquals(
 			"Not Found",
@@ -554,7 +554,7 @@ public abstract class BaseCTCollectionResourceTestCase {
 						"cTCollection",
 						new HashMap<String, Object>() {
 							{
-								put("id", irrelevantId);
+								put("ctCollectionId", irrelevantCtCollectionId);
 							}
 						},
 						getGraphQLFields())),
@@ -635,9 +635,7 @@ public abstract class BaseCTCollectionResourceTestCase {
 				ctCollection.getId()));
 
 		assertHttpResponseStatusCode(
-			404,
-			ctCollectionResource.postCTCollectionCheckoutHttpResponse(
-				ctCollection.getId()));
+			404, ctCollectionResource.postCTCollectionCheckoutHttpResponse(0L));
 	}
 
 	protected CTCollection testPostCTCollectionCheckout_addCTCollection()
@@ -659,9 +657,7 @@ public abstract class BaseCTCollectionResourceTestCase {
 				ctCollection.getId()));
 
 		assertHttpResponseStatusCode(
-			404,
-			ctCollectionResource.postCTCollectionPublishHttpResponse(
-				ctCollection.getId()));
+			404, ctCollectionResource.postCTCollectionPublishHttpResponse(0L));
 	}
 
 	protected CTCollection testPostCTCollectionPublish_addCTCollection()
@@ -685,7 +681,7 @@ public abstract class BaseCTCollectionResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			ctCollectionResource.postCTCollectionSchedulePublishHttpResponse(
-				ctCollection.getId(), null));
+				0L, null));
 	}
 
 	protected CTCollection testPostCTCollectionSchedulePublish_addCTCollection()

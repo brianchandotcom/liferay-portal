@@ -14,16 +14,69 @@
 
 import ClayAlert from '@clayui/alert';
 import ClayLink from '@clayui/link';
-import React, {useState} from 'react';
+import {fetch} from 'frontend-js-web';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 function SegmentsAndExperiencesSelector({
+	deactivateSimulationURL,
 	namespace,
 	segmentationEnabled,
 	segmentsCompanyConfigurationURL,
 	segmentsEntries,
 	showEmptyMessage,
+	simulateSegmentsEntriesURL,
 }) {
 	const [alertVisible, setAlertVisible] = useState(!segmentationEnabled);
+
+	const formRef = useRef(null);
+
+	const fetchDeactivateSimulation = useCallback(() => {
+		fetch(deactivateSimulationURL, {
+			body: new FormData(formRef.current),
+			method: 'POST',
+		}).then(() => {
+			const simulationElements = document.querySelectorAll(
+				`#${formRef.current.id} input`
+			);
+
+			for (let i = 0; i < simulationElements.length; i++) {
+				simulationElements[i].setAttribute('checked', false);
+			}
+		});
+	}, [deactivateSimulationURL]);
+
+	const simulateSegmentsEntries = useCallback(() => {
+		fetch(simulateSegmentsEntriesURL, {
+			body: new FormData(formRef.current),
+			method: 'POST',
+		}).then(() => {
+			const iframe = document.querySelector('iframe');
+
+			if (iframe?.contentWindow) {
+				iframe.contentWindow.location.reload();
+			}
+		});
+	}, [simulateSegmentsEntriesURL]);
+
+	useEffect(() => {
+		formRef.current.addEventListener('change', simulateSegmentsEntries);
+
+		const deactivateSimulationEventHandler = Liferay.on(
+			'SimulationMenu:closeSimulationPanel',
+			fetchDeactivateSimulation
+		);
+
+		const openSimulationPanelEventHandler = Liferay.on(
+			'SimulationMenu:openSimulationPanel',
+			simulateSegmentsEntries
+		);
+
+		return () => {
+			deactivateSimulationEventHandler.detach();
+			openSimulationPanelEventHandler.detach();
+			formRef.removeEventListener('change', simulateSegmentsEntries);
+		};
+	}, [fetchDeactivateSimulation, simulateSegmentsEntries]);
 
 	return (
 		<>
@@ -32,7 +85,7 @@ function SegmentsAndExperiencesSelector({
 					{Liferay.Language.get('no-segments-have-been-added-yet')}
 				</p>
 			) : (
-				<form method="post" name="segmentsSimulationFm">
+				<form method="post" name="segmentsSimulationFm" ref={formRef}>
 					<ul className="list-unstyled">
 						{alertVisible && (
 							<ClayAlert

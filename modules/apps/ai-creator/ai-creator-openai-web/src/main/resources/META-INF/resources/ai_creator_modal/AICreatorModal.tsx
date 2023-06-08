@@ -36,7 +36,9 @@ type RequestStatus =
 
 export default function AICreatorModal({namespace}: Props) {
 	const closeModal = () => {
-		alert('close');
+		const opener = Liferay.Util.getOpener();
+
+		opener.Liferay.fire('closeModal');
 	};
 
 	const [status, setStatus] = useState<RequestStatus>({type: 'idle'});

@@ -29,16 +29,12 @@ DefaultFragmentDisplayContext defaultFragmentDisplayContext = new DefaultFragmen
 			managementToolbarDisplayContext="<%= new FragmentCollectionContributorsItemSelectorViewManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, defaultFragmentDisplayContext.getFragmentCollectionContributorsSearchContainer()) %>"
 		/>
 
-		<clay:container-fluid
-			id='<%= liferayPortletResponse.getNamespace() + "fragmentsContainer" %>'
-		>
+		<clay:container-fluid>
 			<liferay-site-navigation:breadcrumb
 				breadcrumbEntries="<%= defaultFragmentDisplayContext.getBreadcrumbEntries() %>"
 			/>
 
 			<liferay-ui:search-container
-				emptyResultsMessage="no-fragment-collection-was-found"
-				id="fragment-collections"
 				searchContainer="<%= defaultFragmentDisplayContext.getFragmentCollectionContributorsSearchContainer() %>"
 			>
 				<liferay-ui:search-container-row

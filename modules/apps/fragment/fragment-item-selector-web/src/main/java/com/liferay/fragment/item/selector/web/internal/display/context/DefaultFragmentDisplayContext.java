@@ -117,34 +117,36 @@ public class DefaultFragmentDisplayContext {
 			return _fragmentCollectionSearchContainer;
 		}
 
-		List<FragmentCollectionContributor> fragmentCollectionContributors =
-			new ArrayList<>();
-
-		for (FragmentCollectionContributor fragmentCollectionContributor :
-				_fragmentCollectionContributorRegistry.
-					getFragmentCollectionContributors()) {
-
-			if (SetUtil.isEmpty(
-					_fragmentItemSelectorCriterion.getInputTypes()) ||
-				ListUtil.exists(
-					fragmentCollectionContributor.getFragmentEntries(
-						_fragmentItemSelectorCriterion.getType(),
-						_themeDisplay.getLocale()),
-					fragmentEntry -> _filterInputTypes(
-						fragmentEntry,
-						_fragmentItemSelectorCriterion.getInputTypes()))) {
-
-				fragmentCollectionContributors.add(
-					fragmentCollectionContributor);
-			}
-		}
-
 		SearchContainer<FragmentCollectionContributor> searchContainer =
 			new SearchContainer<>(
 				_liferayPortletRequest,
 				PortletURLUtil.getCurrent(
 					_liferayPortletRequest, _liferayPortletResponse),
-				null, null);
+				null, "no-fragment-collection-was-found");
+
+		searchContainer.setId("fragmentCollections");
+
+		List<FragmentCollectionContributor> fragmentCollectionContributors =
+			ListUtil.filter(
+				_fragmentCollectionContributorRegistry.
+					getFragmentCollectionContributors(),
+				fragmentCollectionContributor -> {
+					if (SetUtil.isEmpty(
+							_fragmentItemSelectorCriterion.getInputTypes()) ||
+						ListUtil.exists(
+							fragmentCollectionContributor.getFragmentEntries(
+								_fragmentItemSelectorCriterion.getType(),
+								_themeDisplay.getLocale()),
+							fragmentEntry -> _filterInputTypes(
+								fragmentEntry,
+								_fragmentItemSelectorCriterion.
+									getInputTypes()))) {
+
+						return true;
+					}
+
+					return false;
+				});
 
 		searchContainer.setResultsAndTotal(fragmentCollectionContributors);
 
@@ -169,6 +171,14 @@ public class DefaultFragmentDisplayContext {
 			return _fragmentsSearchContainer;
 		}
 
+		SearchContainer<FragmentEntry> searchContainer = new SearchContainer<>(
+			_liferayPortletRequest,
+			PortletURLUtil.getCurrent(
+				_liferayPortletRequest, _liferayPortletResponse),
+			null, "no-fragment-was-found");
+
+		searchContainer.setId("fragments");
+
 		FragmentCollectionContributor fragmentCollectionContributor =
 			_fragmentCollectionContributorRegistry.
 				getFragmentCollectionContributor(getFragmentCollectionKey());
@@ -179,12 +189,6 @@ public class DefaultFragmentDisplayContext {
 				_themeDisplay.getLocale()),
 			fragmentEntry -> _filterInputTypes(
 				fragmentEntry, _fragmentItemSelectorCriterion.getInputTypes()));
-
-		SearchContainer<FragmentEntry> searchContainer = new SearchContainer<>(
-			_liferayPortletRequest,
-			PortletURLUtil.getCurrent(
-				_liferayPortletRequest, _liferayPortletResponse),
-			null, null);
 
 		if (isSearch()) {
 			fragmentEntries = ListUtil.filter(

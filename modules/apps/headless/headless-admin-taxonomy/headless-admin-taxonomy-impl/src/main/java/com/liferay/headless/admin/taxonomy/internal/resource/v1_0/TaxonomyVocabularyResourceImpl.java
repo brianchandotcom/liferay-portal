@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.vulcan.action.DTOActionProvider;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -677,27 +678,10 @@ public class TaxonomyVocabularyResourceImpl
 
 		return new TaxonomyVocabulary() {
 			{
-				actions = HashMapBuilder.<String, Map<String, String>>put(
-					"delete",
-					addAction(
-						ActionKeys.DELETE, assetVocabulary,
-						"deleteTaxonomyVocabulary")
-				).put(
-					"get",
-					addAction(
-						ActionKeys.VIEW, assetVocabulary,
-						"getTaxonomyVocabulary")
-				).put(
-					"replace",
-					addAction(
-						ActionKeys.UPDATE, assetVocabulary,
-						"putTaxonomyVocabulary")
-				).put(
-					"update",
-					addAction(
-						ActionKeys.UPDATE, assetVocabulary,
-						"patchTaxonomyVocabulary")
-				).build();
+				actions = _dtoActionProvider.getActions(
+					assetVocabulary.getGroupId(),
+					assetVocabulary.getVocabularyId(), contextUriInfo,
+					contextUser.getUserId());
 				assetLibraryKey = GroupUtil.getAssetLibraryKey(group);
 				assetTypes = _getAssetTypes(
 					new AssetVocabularySettingsHelper(
@@ -794,6 +778,11 @@ public class TaxonomyVocabularyResourceImpl
 
 	@Reference
 	private AssetVocabularyService _assetVocabularyService;
+
+	@Reference(
+		target = "(dto.class.name=com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyVocabulary)"
+	)
+	private DTOActionProvider _dtoActionProvider;
 
 	@Reference
 	private Portal _portal;

@@ -199,7 +199,7 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 	}
 
 	private static final Pattern _featureFlagPattern1 = Pattern.compile(
-		"\\.feature\\.flag=(.+?)\"");
+		".*feature\\.flag[.=]([A-Z]+-\\d+)");
 	private static final Pattern _featureFlagPattern2 = Pattern.compile(
 		"FeatureFlagManagerUtil\\.isEnabled\\(");
 	private static final Pattern _featureFlagPattern3 = Pattern.compile(

@@ -27,6 +27,9 @@ public class PublicationsFDSNames {
 	public static final String PUBLICATIONS_ONGOING =
 		CTPortletKeys.PUBLICATIONS + "-publicationsOngoing";
 
+	public static final String PUBLICATIONS_REMOTES =
+		CTPortletKeys.PUBLICATIONS + "-publicationsRemotes";
+
 	public static final String PUBLICATIONS_SCHEDULED =
 		CTPortletKeys.PUBLICATIONS + "-publicationsScheduled";
 

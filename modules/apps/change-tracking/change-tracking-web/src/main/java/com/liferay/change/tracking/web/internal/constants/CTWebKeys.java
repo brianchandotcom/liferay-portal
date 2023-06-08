@@ -32,6 +32,8 @@ public interface CTWebKeys {
 
 	public static final String CT_ENTRY_DIFF_DISPLAY = "CT_ENTRY_DIFF_DISPLAY";
 
+	public static final String CT_REMOTE = "CT_REMOTE";
+
 	public static final String DEFAULT_CT_COLLECTION_TEMPLATE =
 		"DEFAULT_CT_COLLECTION_TEMPLATE";
 
@@ -58,6 +60,9 @@ public interface CTWebKeys {
 
 	public static final String VIEW_CONFLICTS_DISPLAY_CONTEXT =
 		"VIEW_CONFLICTS_DISPLAY_CONTEXT";
+
+	public static final String VIEW_CT_REMOTES_DISPLAY_CONTEXT =
+		"VIEW_CT_REMOTES_DISPLAY_CONTEXT";
 
 	public static final String VIEW_DISCARD_DISPLAY_CONTEXT =
 		"VIEW_DISCARD_DISPLAY_CONTEXT";

@@ -2,8 +2,8 @@ package ${package}.portlet;
 
 import ${package}.constants.${className}PortletKeys;
 
-import com.liferay.portal.kernel.portlet.AddPortletProvider;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 import javax.portlet.PortletPreferences;
@@ -15,10 +15,10 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = "model.class.name=com.liferay.asset.kernel.model.AssetEntry",
-	service = AddPortletProvider.class
+	service = PortletProvider.class
 )
 public class ${className}AddPortletProvider
-	extends BasePortletProvider implements AddPortletProvider {
+	extends BasePortletProvider {
 
 	@Override
 	public String getPortletName() {
@@ -34,5 +34,12 @@ public class ${className}AddPortletProvider
 		portletPreferences.setValue("className", className);
 		portletPreferences.setValue("classPK", String.valueOf(classPK));
 	}
+
+	@Override
+	public Action[] getSupportedActions() {
+		return _supportedActions;
+	}
+
+	private final Action[] _supportedActions = {Action.ADD};
 
 }

@@ -1614,6 +1614,10 @@
 			<category name="Upgrade" />
 			<description name="Run code migration to replace '@ServiceReference' by '@Reference'" />
 		</check>
+		<check name="UpgradeSetResultsSetTotalMethodCheck">
+			<category name="Upgrade" />
+			<description name="Run code migration of method searchContainer.setResults to the searchContainer.setResultsAndTotal and delete searchContainer.setTotal" />
+		</check>
 		<check name="UpgradeVelocityCommentMigrationCheck">
 			<category name="Upgrade" />
 			<description name="Run code migration of comments from a Velocity file to a Freemarker file with the syntax replacements" />

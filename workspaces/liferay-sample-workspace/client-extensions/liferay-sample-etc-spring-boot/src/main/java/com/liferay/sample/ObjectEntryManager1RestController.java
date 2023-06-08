@@ -49,7 +49,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ObjectEntryManager1RestController extends BaseRestController {
 
 	@DeleteMapping(
-		"/${objectDefinitionExternalReferenceCode}/${externalReferenceCode}"
+		"/{objectDefinitionExternalReferenceCode}/{externalReferenceCode}"
 	)
 	public ResponseEntity<String> delete(
 		@AuthenticationPrincipal Jwt jwt,
@@ -72,7 +72,7 @@ public class ObjectEntryManager1RestController extends BaseRestController {
 			objectEntryJSONObject.toString(), HttpStatus.OK);
 	}
 
-	@GetMapping("/${objectDefinitionExternalReferenceCode}")
+	@GetMapping("/{objectDefinitionExternalReferenceCode}")
 	public ResponseEntity<String> get(
 		@AuthenticationPrincipal Jwt jwt,
 		@PathVariable String objectDefinitionExternalReferenceCode) {
@@ -93,7 +93,7 @@ public class ObjectEntryManager1RestController extends BaseRestController {
 	}
 
 	@GetMapping(
-		"/${objectDefinitionExternalReferenceCode}/${externalReferenceCode}"
+		"/{objectDefinitionExternalReferenceCode}/{externalReferenceCode}"
 	)
 	public ResponseEntity<String> get(
 		@AuthenticationPrincipal Jwt jwt,
@@ -116,7 +116,7 @@ public class ObjectEntryManager1RestController extends BaseRestController {
 			objectEntryJSONObject.toString(), HttpStatus.OK);
 	}
 
-	@PostMapping("/${objectDefinitionExternalReferenceCode}")
+	@PostMapping("/{objectDefinitionExternalReferenceCode}")
 	public ResponseEntity<String> post(
 		@AuthenticationPrincipal Jwt jwt,
 		@PathVariable String objectDefinitionExternalReferenceCode,
@@ -153,7 +153,7 @@ public class ObjectEntryManager1RestController extends BaseRestController {
 	}
 
 	@PutMapping(
-		"/${objectDefinitionExternalReferenceCode}/${externalReferenceCode}"
+		"/{objectDefinitionExternalReferenceCode}/{externalReferenceCode}"
 	)
 	public ResponseEntity<String> put(
 		@AuthenticationPrincipal Jwt jwt,

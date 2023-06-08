@@ -16,7 +16,7 @@ package com.liferay.product.navigation.product.menu.web.internal.portlet;
 
 import com.liferay.admin.kernel.util.PortalProductMenuApplicationType;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
-import com.liferay.portal.kernel.portlet.ViewPortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.product.navigation.product.menu.constants.ProductNavigationProductMenuPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
@@ -26,15 +26,22 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = "model.class.name=" + PortalProductMenuApplicationType.ProductMenu.CLASS_NAME,
-	service = ViewPortletProvider.class
+	service = PortletProvider.class
 )
 public class ProductNavigationProductMenuViewPortletProvider
-	extends BasePortletProvider implements ViewPortletProvider {
+	extends BasePortletProvider {
 
 	@Override
 	public String getPortletName() {
 		return ProductNavigationProductMenuPortletKeys.
 			PRODUCT_NAVIGATION_PRODUCT_MENU;
 	}
+
+	@Override
+	public Action[] getSupportedActions() {
+		return _supportedActions;
+	}
+
+	private final Action[] _supportedActions = {Action.VIEW};
 
 }

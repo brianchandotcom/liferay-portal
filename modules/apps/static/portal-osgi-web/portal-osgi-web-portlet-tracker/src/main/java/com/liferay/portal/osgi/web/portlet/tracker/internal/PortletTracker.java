@@ -18,7 +18,6 @@ import com.liferay.osgi.util.StringPlus;
 import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.application.type.ApplicationType;
 import com.liferay.portal.kernel.bean.BeanProperties;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -111,7 +110,6 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.http.runtime.HttpServiceRuntime;
-import org.osgi.service.http.runtime.HttpServiceRuntimeConstants;
 import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
@@ -314,20 +312,6 @@ public class PortletTracker
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Activated");
-		}
-
-		List<String> httpServiceEndpoints = StringPlus.asList(
-			properties.get(HttpServiceRuntimeConstants.HTTP_SERVICE_ENDPOINT));
-
-		if (!httpServiceEndpoints.isEmpty()) {
-			_httpServiceEndpoint = httpServiceEndpoints.get(0);
-		}
-
-		if ((_httpServiceEndpoint.length() > 0) &&
-			_httpServiceEndpoint.endsWith("/")) {
-
-			_httpServiceEndpoint = _httpServiceEndpoint.substring(
-				0, _httpServiceEndpoint.length() - 1);
 		}
 	}
 
@@ -1469,7 +1453,6 @@ public class PortletTracker
 	private DelegateProxyFactory _delegateProxyFactory;
 
 	private ExecutorService _executorService;
-	private String _httpServiceEndpoint = StringPool.BLANK;
 
 	@Reference
 	private HttpServiceRuntime _httpServiceRuntime;

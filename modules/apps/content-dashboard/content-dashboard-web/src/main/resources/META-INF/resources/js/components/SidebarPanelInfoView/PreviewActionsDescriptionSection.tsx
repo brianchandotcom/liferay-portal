@@ -40,10 +40,10 @@ const PreviewActionsDescriptionSection = ({
 			)}
 
 			{hasActions && (
-				<div className="sidebar-section">
+				<div className="mt-3 sidebar-section">
 					{downloadURL && (
 						<ClayLink
-							className="btn btn-primary"
+							className="btn btn-primary mr-2"
 							href={downloadURL}
 						>
 							{Liferay.Language.get('download')}

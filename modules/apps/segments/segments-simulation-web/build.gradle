@@ -7,6 +7,7 @@ dependencies {
 	compileOnly project(":apps:application-list:application-list-api")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-clay")
+	compileOnly project(":apps:frontend-taglib:frontend-taglib-react")
 	compileOnly project(":apps:product-navigation:product-navigation-simulation-api")
 	compileOnly project(":apps:segments:segments-api")
 	compileOnly project(":apps:staging:staging-api")

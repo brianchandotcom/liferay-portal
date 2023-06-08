@@ -16,12 +16,15 @@ package com.liferay.segments.simulation.web.internal.display.context;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -29,10 +32,12 @@ import com.liferay.segments.configuration.provider.SegmentsConfigurationProvider
 import com.liferay.segments.constants.SegmentsPortletKeys;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.SegmentsEntryServiceUtil;
+import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 import com.liferay.staging.StagingGroupHelper;
 import com.liferay.staging.StagingGroupHelperUtil;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.RenderResponse;
 
@@ -59,6 +64,27 @@ public class SegmentsSimulationDisplayContext {
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+	}
+
+	public Map<String, Object> getData() throws Exception {
+		return HashMapBuilder.<String, Object>put(
+			"deactivateSimulationURL", getDeactivateSimulationURL()
+		).put(
+			"namespace", getPortletNamespace()
+		).put(
+			"segmentationEnabled", isSegmentationEnabled()
+		).put(
+			"segmentsCompanyConfigurationURL",
+			getSegmentsCompanyConfigurationURL()
+		).put(
+			"segmentsEntries", _getSegmentsEntriesJSONArray()
+		).put(
+			"segmentsExperiences", _getSegmentsExperiencesJSONArray()
+		).put(
+			"showEmptyMessage", isShowEmptyMessage()
+		).put(
+			"simulateSegmentsEntriesURL", getSimulateSegmentsEntriesURL()
+		).build();
 	}
 
 	public String getDeactivateSimulationURL() {
@@ -129,6 +155,39 @@ public class SegmentsSimulationDisplayContext {
 		return _showEmptyMessage;
 	}
 
+	private JSONArray _getSegmentsEntriesJSONArray() throws Exception {
+		if (_segmentsEntriesJSONArray != null) {
+			return _segmentsEntriesJSONArray;
+		}
+
+		_segmentsEntriesJSONArray = JSONUtil.toJSONArray(
+			getSegmentsEntries(),
+			segmentsEntry -> JSONUtil.put(
+				"id", segmentsEntry.getSegmentsEntryId()
+			).put(
+				"name", segmentsEntry.getName(_themeDisplay.getLocale())
+			));
+
+		return _segmentsEntriesJSONArray;
+	}
+
+	private JSONArray _getSegmentsExperiencesJSONArray() throws Exception {
+		if (_segmentsExperiencesJSONArray != null) {
+			return _segmentsExperiencesJSONArray;
+		}
+
+		_segmentsExperiencesJSONArray = JSONUtil.toJSONArray(
+			SegmentsExperienceLocalServiceUtil.getSegmentsExperiences(
+				_themeDisplay.getScopeGroupId(), _themeDisplay.getPlid()),
+			segmentsExperience -> JSONUtil.put(
+				"id", segmentsExperience.getSegmentsExperienceId()
+			).put(
+				"name", segmentsExperience.getName(_themeDisplay.getLocale())
+			));
+
+		return _segmentsExperiencesJSONArray;
+	}
+
 	private long _getStagingAwareGroupId() {
 		if (_groupId != null) {
 			return _groupId;
@@ -151,6 +210,8 @@ public class SegmentsSimulationDisplayContext {
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final SegmentsConfigurationProvider _segmentsConfigurationProvider;
 	private List<SegmentsEntry> _segmentsEntries;
+	private JSONArray _segmentsEntriesJSONArray;
+	private JSONArray _segmentsExperiencesJSONArray;
 	private Boolean _showEmptyMessage;
 	private final ThemeDisplay _themeDisplay;
 

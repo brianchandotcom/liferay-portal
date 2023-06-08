@@ -485,7 +485,7 @@
 
 <tr>
 	<td>ARE_YOU_SURE_DIALOG_BOX_HEADER</td>
-	<td>//div[contains(@class,'modal-header')]/h3[contains(.,'Are you sure?')]</td>
+	<td>//div[contains(@class,'modal-header')]/div[contains(.,'Are you sure?')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -19,7 +19,7 @@ import com.liferay.notifications.web.internal.constants.NotificationsPortletKeys
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
-import com.liferay.portal.kernel.portlet.ViewPortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProvider;
 
 import javax.portlet.PortletURL;
 
@@ -33,10 +33,9 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "model.class.name=com.liferay.portal.kernel.model.UserNotificationEvent",
-	service = ViewPortletProvider.class
+	service = PortletProvider.class
 )
-public class NotificationsViewPortletProvider
-	extends BasePortletProvider implements ViewPortletProvider {
+public class NotificationsViewPortletProvider extends BasePortletProvider {
 
 	@Override
 	public String getPortletName() {
@@ -58,9 +57,16 @@ public class NotificationsViewPortletProvider
 		return getPortletURL(httpServletRequest);
 	}
 
+	@Override
+	public Action[] getSupportedActions() {
+		return _supportedActions;
+	}
+
 	@Reference(
 		target = "(javax.portlet.name=" + NotificationsPortletKeys.NOTIFICATIONS + ")"
 	)
 	private PanelApp _panelApp;
+
+	private final Action[] _supportedActions = {Action.VIEW};
 
 }

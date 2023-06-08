@@ -22,23 +22,24 @@ const mySampleFilter: FDSFilter = ({filter, setFilter}) => {
 	div.className = 'dropdown-item';
 
 	button.className = 'btn btn-block btn-secondary btn-sm mt-2';
-	button.innerText = 'Submit'
-	button.onclick = () => setFilter({
-		odataFilterString: input.value,
-		selectedData: input.value
-	});
+	button.innerText = 'Submit';
+	button.onclick = () =>
+		setFilter({
+			odataFilterString: input.value,
+			selectedData: input.value,
+		});
 
 	if (filter.selectedData) {
 		input.value = filter.selectedData;
 	}
-	
+
 	input.className = 'form-control';
-	input.placeholder = 'Search with Odata'
+	input.placeholder = 'Search with Odata';
 
 	div.appendChild(input);
 	div.appendChild(button);
 
 	return div;
-}
+};
 
 export default mySampleFilter;

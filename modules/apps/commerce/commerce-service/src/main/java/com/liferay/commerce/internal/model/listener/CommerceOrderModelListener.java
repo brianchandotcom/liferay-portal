@@ -64,36 +64,31 @@ public class CommerceOrderModelListener
 							originalCommerceOrder, commerceOrder,
 							customerCommerceOrder);
 
-						_updateShippingAmount(
-							originalCommerceOrder, commerceOrder,
-							customerCommerceOrder);
+						if (_updateShippingAmount(
+								originalCommerceOrder, commerceOrder,
+								customerCommerceOrder) ||
+							_updateShippingDiscountAmount(
+								originalCommerceOrder, commerceOrder,
+								customerCommerceOrder) ||
+							_updateSubtotal(
+								originalCommerceOrder, commerceOrder,
+								customerCommerceOrder) ||
+							_updateSubtotalDiscountAmount(
+								originalCommerceOrder, commerceOrder,
+								customerCommerceOrder) ||
+							_updateTaxAmount(
+								originalCommerceOrder, commerceOrder,
+								customerCommerceOrder) ||
+							_updateTotal(
+								originalCommerceOrder, commerceOrder,
+								customerCommerceOrder) ||
+							_updateTotalDiscountAmount(
+								originalCommerceOrder, commerceOrder,
+								customerCommerceOrder)) {
 
-						_updateShippingDiscountAmount(
-							originalCommerceOrder, commerceOrder,
-							customerCommerceOrder);
-
-						_updateSubtotal(
-							originalCommerceOrder, commerceOrder,
-							customerCommerceOrder);
-
-						_updateSubtotalDiscountAmount(
-							originalCommerceOrder, commerceOrder,
-							customerCommerceOrder);
-
-						_updateTaxAmount(
-							originalCommerceOrder, commerceOrder,
-							customerCommerceOrder);
-
-						_updateTotal(
-							originalCommerceOrder, commerceOrder,
-							customerCommerceOrder);
-
-						_updateTotalDiscountAmount(
-							originalCommerceOrder, commerceOrder,
-							customerCommerceOrder);
-
-						_commerceOrderLocalService.updateCommerceOrder(
-							customerCommerceOrder);
+							_commerceOrderLocalService.updateCommerceOrder(
+								customerCommerceOrder);
+						}
 					}
 					catch (PortalException portalException) {
 						if (_log.isWarnEnabled()) {
@@ -154,16 +149,21 @@ public class CommerceOrderModelListener
 		int newOrderStatus = commerceOrder.getOrderStatus();
 		int originalOrderStatus = originalCommerceOrder.getOrderStatus();
 
-		if ((originalOrderStatus != newOrderStatus) &&
-			(newOrderStatus == CommerceOrderConstants.ORDER_STATUS_COMPLETED) &&
-			_transitionOrderStatusCompleted(customerCommerceOrder)) {
+		if (originalOrderStatus != newOrderStatus) {
+			_commerceOrderEngine.checkCommerceOrderShipmentStatus(
+				customerCommerceOrder);
 
-			_commerceOrderEngine.transitionCommerceOrder(
-				customerCommerceOrder, newOrderStatus, 0);
+			if ((newOrderStatus ==
+					CommerceOrderConstants.ORDER_STATUS_COMPLETED) &&
+				_transitionOrderStatusCompleted(customerCommerceOrder)) {
+
+				_commerceOrderEngine.transitionCommerceOrder(
+					customerCommerceOrder, newOrderStatus, 0);
+			}
 		}
 	}
 
-	private void _updateShippingAmount(
+	private boolean _updateShippingAmount(
 		CommerceOrder originalCommerceOrder, CommerceOrder commerceOrder,
 		CommerceOrder customerCommerceOrder) {
 
@@ -183,10 +183,14 @@ public class CommerceOrderModelListener
 
 			customerCommerceOrder.setShippingAmount(
 				subtractOriginalValue.add(newShippingAmount));
+
+			return true;
 		}
+
+		return false;
 	}
 
-	private void _updateShippingDiscountAmount(
+	private boolean _updateShippingDiscountAmount(
 		CommerceOrder originalCommerceOrder, CommerceOrder commerceOrder,
 		CommerceOrder customerCommerceOrder) {
 
@@ -208,10 +212,14 @@ public class CommerceOrderModelListener
 
 			customerCommerceOrder.setShippingDiscountAmount(
 				subtractOriginalValue.add(newShippingDiscountAmount));
+
+			return true;
 		}
+
+		return false;
 	}
 
-	private void _updateSubtotal(
+	private boolean _updateSubtotal(
 		CommerceOrder originalCommerceOrder, CommerceOrder commerceOrder,
 		CommerceOrder customerCommerceOrder) {
 
@@ -228,10 +236,14 @@ public class CommerceOrderModelListener
 
 			customerCommerceOrder.setSubtotal(
 				subtractOriginalValue.add(newSubtotal));
+
+			return true;
 		}
+
+		return false;
 	}
 
-	private void _updateSubtotalDiscountAmount(
+	private boolean _updateSubtotalDiscountAmount(
 		CommerceOrder originalCommerceOrder, CommerceOrder commerceOrder,
 		CommerceOrder customerCommerceOrder) {
 
@@ -254,10 +266,14 @@ public class CommerceOrderModelListener
 
 			customerCommerceOrder.setSubtotalDiscountAmount(
 				subtractOriginalValue.add(newSubtotalDiscountAmount));
+
+			return true;
 		}
+
+		return false;
 	}
 
-	private void _updateTaxAmount(
+	private boolean _updateTaxAmount(
 		CommerceOrder originalCommerceOrder, CommerceOrder commerceOrder,
 		CommerceOrder customerCommerceOrder) {
 
@@ -274,10 +290,14 @@ public class CommerceOrderModelListener
 
 			customerCommerceOrder.setTaxAmount(
 				subtractOriginalValue.add(newTaxAmount));
+
+			return true;
 		}
+
+		return false;
 	}
 
-	private void _updateTotal(
+	private boolean _updateTotal(
 		CommerceOrder originalCommerceOrder, CommerceOrder commerceOrder,
 		CommerceOrder customerCommerceOrder) {
 
@@ -293,10 +313,14 @@ public class CommerceOrderModelListener
 				originalTotal);
 
 			customerCommerceOrder.setTotal(subtractOriginalValue.add(newTotal));
+
+			return true;
 		}
+
+		return false;
 	}
 
-	private void _updateTotalDiscountAmount(
+	private boolean _updateTotalDiscountAmount(
 		CommerceOrder originalCommerceOrder, CommerceOrder commerceOrder,
 		CommerceOrder customerCommerceOrder) {
 
@@ -318,7 +342,11 @@ public class CommerceOrderModelListener
 
 			customerCommerceOrder.setTotalDiscountAmount(
 				subtractOriginalValue.add(newTotalDiscountAmount));
+
+			return true;
 		}
+
+		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

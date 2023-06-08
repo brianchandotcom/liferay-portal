@@ -67,6 +67,37 @@ public class TaxonomyVocabularyResourceTest
 	}
 
 	@Override
+	@Test
+	public void testGetAssetLibraryTaxonomyVocabularyByExternalReferenceCode()
+		throws Exception {
+
+		super.testGetAssetLibraryTaxonomyVocabularyByExternalReferenceCode();
+
+		String externalReferenceCode = StringUtil.toLowerCase(
+			RandomTestUtil.randomString());
+
+		try {
+			taxonomyVocabularyResource.
+				getAssetLibraryTaxonomyVocabularyByExternalReferenceCode(
+					testGetAssetLibraryTaxonomyVocabularyByExternalReferenceCode_getAssetLibraryId(),
+					externalReferenceCode);
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("NOT_FOUND", problem.getStatus());
+			Assert.assertEquals(
+				StringBundler.concat(
+					"No AssetVocabulary exists with the key {",
+					"externalReferenceCode=", externalReferenceCode,
+					", groupId=", testDepotEntry.getGroupId(), "}"),
+				problem.getTitle());
+		}
+	}
+
+	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"assetTypes", "description", "name"};
 	}

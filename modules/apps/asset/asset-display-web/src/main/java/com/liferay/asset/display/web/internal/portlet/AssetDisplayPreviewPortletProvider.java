@@ -16,7 +16,7 @@ package com.liferay.asset.display.web.internal.portlet;
 
 import com.liferay.asset.display.web.internal.constants.AssetDisplayPortletKeys;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
-import com.liferay.portal.kernel.portlet.PreviewPortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProvider;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -25,14 +25,20 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = "model.class.name=com.liferay.asset.kernel.model.AssetEntry",
-	service = PreviewPortletProvider.class
+	service = PortletProvider.class
 )
-public class AssetDisplayPreviewPortletProvider
-	extends BasePortletProvider implements PreviewPortletProvider {
+public class AssetDisplayPreviewPortletProvider extends BasePortletProvider {
 
 	@Override
 	public String getPortletName() {
 		return AssetDisplayPortletKeys.ASSET_DISPLAY;
 	}
+
+	@Override
+	public Action[] getSupportedActions() {
+		return _supportedActions;
+	}
+
+	private final Action[] _supportedActions = {Action.PREVIEW};
 
 }

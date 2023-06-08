@@ -208,11 +208,11 @@ definition {
 		task ("Configure the Type of Heading as Button Outline Secondary") {
 			PageEditor.gotoConfiguration(fragmentName = "Button");
 
-			PageEditor.configureFragment(type = "Outline Secondary");
+			PageEditor.configureFragment(style = "Outline Secondary");
 
 			PageEditor.viewFragmentStyle(
 				fragmentName = "Button",
-				type = "outline-secondary");
+				style = "outline-secondary");
 		}
 
 		task ("Change to the new style book via Look and Feel") {

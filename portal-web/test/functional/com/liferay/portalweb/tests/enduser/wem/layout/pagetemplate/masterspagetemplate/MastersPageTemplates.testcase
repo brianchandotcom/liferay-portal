@@ -65,7 +65,7 @@ definition {
 
 			PageEditor.configureFragment(
 				size = "Large",
-				type = "Link");
+				style = "Link");
 
 			PageEditor.gotoStyle(fragmentName = "Button");
 
@@ -96,7 +96,7 @@ definition {
 			PageEditor.viewFragmentStyle(
 				fragmentName = "Button",
 				size = "lg",
-				type = "link");
+				style = "link");
 
 			AssertCssValue(
 				key_fragmentName = "button",

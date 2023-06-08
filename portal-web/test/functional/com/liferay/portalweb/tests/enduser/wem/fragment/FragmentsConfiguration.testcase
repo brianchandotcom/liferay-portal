@@ -842,24 +842,24 @@ main();
 			PageEditor.viewFragmentStyle(
 				fragmentName = "Fragment-Name",
 				size = "nm",
-				type = "primary");
+				style = "primary");
 		}
 
 		task ("Configure the fragment") {
 			PageEditor.gotoConfiguration(fragmentName = "Fragment Name");
 
-			PageEditor.configureFragment(type = "Link");
+			PageEditor.configureFragment(style = "Link");
 
 			PageEditor.gotoStyle(fragmentName = "Fragment Name");
 
-			PageEditor.configureFragment(size = "Large");
+			PageEditor.configureFragment(style = "Large");
 		}
 
 		task ("View the fragment styles") {
 			PageEditor.viewFragmentStyle(
 				fragmentName = "Fragment-Name",
 				size = "lg",
-				type = "link");
+				style = "link");
 
 			PageEditor.publish();
 		}
@@ -872,7 +872,7 @@ main();
 			PageEditor.viewFragmentStyle(
 				fragmentName = "Fragment-Name",
 				size = "lg",
-				type = "link");
+				style = "link");
 		}
 	}
 

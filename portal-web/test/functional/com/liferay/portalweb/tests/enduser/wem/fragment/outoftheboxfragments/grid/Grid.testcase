@@ -490,7 +490,7 @@ definition {
 
 			PageEditor.configureFragment(
 				size = "Large",
-				type = "Link");
+				style = "Link");
 
 			PageEditor.gotoStyle(fragmentName = "Button");
 
@@ -502,7 +502,7 @@ definition {
 				alignment = "center",
 				fragmentName = "Button",
 				size = "lg",
-				type = "link");
+				style = "link");
 		}
 
 		task ("Resize the modules") {
@@ -547,7 +547,7 @@ definition {
 				alignment = "center",
 				fragmentName = "Button",
 				size = "lg",
-				type = "link");
+				style = "link");
 		}
 
 		task ("Assert the width of modules in view mode") {
@@ -599,7 +599,7 @@ definition {
 			PageEditor.viewFragmentStyle(
 				fragmentName = "Button",
 				size = "lg",
-				type = "link");
+				style = "link");
 		}
 	}
 

@@ -220,7 +220,7 @@ definition {
 			PageEditor.viewFragmentStyle(
 				fragmentName = "Button",
 				size = "lg",
-				type = "link");
+				style = "link");
 		}
 
 		task ("Assert styles of Card in view mode") {
@@ -361,7 +361,7 @@ definition {
 				fragmentName = "Button",
 				marginBottom = 1,
 				size = "lg",
-				type = "link");
+				style = "link");
 		}
 
 		task ("Assert styles of Card in edit mode") {

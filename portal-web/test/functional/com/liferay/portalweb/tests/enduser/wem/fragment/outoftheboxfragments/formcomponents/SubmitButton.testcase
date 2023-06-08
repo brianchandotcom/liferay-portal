@@ -84,11 +84,11 @@ definition {
 			task ("Change the Type of Submit Button to Secondary") {
 				PageEditor.gotoConfiguration(fragmentName = "Submit Button");
 
-				PageEditor.configureFragment(type = "Secondary");
+				PageEditor.configureFragment(style = "Secondary");
 
 				PageEditor.viewFragmentStyle(
 					fragmentName = "Button",
-					type = "secondary");
+					style = "secondary");
 			}
 
 			task ("Change the Size of Submit Button to Small") {

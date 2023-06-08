@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.site.navigation.constants.SiteNavigationConstants;
 import com.liferay.site.navigation.constants.SiteNavigationMenuPortletKeys;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
@@ -134,11 +135,24 @@ public class SiteNavigationMenuExportImportPortletPreferencesProcessor
 
 			long siteNavigationMenuId = 0;
 
+			long originalPlid = MapUtil.getLong(
+				portletDataContext.getParameterMap(), "preferencePlid");
+
 			List<com.liferay.portal.kernel.model.PortletPreferences>
+				serviceBuilderPortletPreferencesList;
+
+			if (originalPlid == PortletKeys.PREFS_PLID_SHARED) {
+				serviceBuilderPortletPreferencesList =
+					_portletPreferencesLocalService.getPortletPreferences(
+						PortletKeys.PREFS_PLID_SHARED,
+						portletDataContext.getPortletId());
+			}
+			else {
 				serviceBuilderPortletPreferencesList =
 					_portletPreferencesLocalService.getPortletPreferences(
 						portletDataContext.getPlid(),
 						portletDataContext.getPortletId());
+			}
 
 			if (!serviceBuilderPortletPreferencesList.isEmpty()) {
 				com.liferay.portal.kernel.model.PortletPreferences

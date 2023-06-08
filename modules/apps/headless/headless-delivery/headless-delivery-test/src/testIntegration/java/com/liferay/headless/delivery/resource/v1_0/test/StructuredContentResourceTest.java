@@ -622,7 +622,8 @@ public class StructuredContentResourceTest
 					testPutAssetLibraryStructuredContentByExternalReferenceCode_getAssetLibraryId(),
 					externalReferenceCode, randomStructuredContent2);
 
-		Assert.assertNotEquals(putStructuredContent1, putStructuredContent2);
+		Assert.assertNotEquals(
+			putStructuredContent1.getId(), putStructuredContent2.getId());
 		Assert.assertEquals(
 			putStructuredContent1.getTitle(), putStructuredContent2.getTitle());
 		Assert.assertEquals(

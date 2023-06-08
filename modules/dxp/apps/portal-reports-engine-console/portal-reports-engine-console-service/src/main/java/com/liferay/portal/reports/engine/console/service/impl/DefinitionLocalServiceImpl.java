@@ -292,10 +292,10 @@ public class DefinitionLocalServiceImpl extends DefinitionLocalServiceBaseImpl {
 	@Reference
 	private ResourceLocalService _resourceLocalService;
 
-	@Reference
-	private UserLocalService _userLocalService;
-
 	@Reference(target = "(default=true)")
 	private Store _store;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

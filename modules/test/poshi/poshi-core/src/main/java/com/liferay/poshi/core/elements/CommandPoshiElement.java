@@ -132,57 +132,32 @@ public class CommandPoshiElement extends PoshiElement {
 
 			String commandType = blockNameMatcher.group(2);
 
-			if (commandType.equals("macro")) {
-				String arguments = getParentheticalContent(
+			if (commandType.equals("function") || commandType.equals("macro")) {
+				String argumentsValue = getParentheticalContent(
 					blockNameMatcher.group(4));
 
-				if (Validator.isNull(arguments)) {
+				if (Validator.isNull(argumentsValue)) {
 					StringBuilder sb = new StringBuilder();
 
-					for (String argument :
-							generateRequiredArguments(blockContent)) {
-
+					for (String argument : _getArguments(blockContent)) {
 						sb.append(argument);
-						sb.append(" = null,");
+
+						if (commandType.equals("macro")) {
+							sb.append(" = null");
+						}
+
+						sb.append(",");
 					}
 
-					String newArguments = sb.toString();
-
-					if (!newArguments.isEmpty()) {
-						addAttribute(
-							"arguments",
-							newArguments.substring(
-								0, newArguments.length() - 1));
+					if (sb.length() > 0) {
+						sb.setLength(sb.length() - 1);
 					}
+
+					argumentsValue = sb.toString();
 				}
-				else {
-					addAttribute("arguments", arguments);
-				}
-			}
-			else if (commandType.equals("function")) {
-				String arguments = getParentheticalContent(
-					blockNameMatcher.group(4));
 
-				if (Validator.isNull(arguments)) {
-					StringBuilder sb = new StringBuilder();
-
-					for (String argument :
-							generateRequiredArguments(blockContent)) {
-
-						sb.append(argument + ",");
-					}
-
-					String requiredArguments = sb.toString();
-
-					if (!requiredArguments.isEmpty()) {
-						addAttribute(
-							"arguments",
-							requiredArguments.substring(
-								0, requiredArguments.length() - 1));
-					}
-				}
-				else {
-					addAttribute("arguments", arguments);
+				if (!argumentsValue.isEmpty()) {
+					addAttribute("arguments", argumentsValue);
 				}
 			}
 		}

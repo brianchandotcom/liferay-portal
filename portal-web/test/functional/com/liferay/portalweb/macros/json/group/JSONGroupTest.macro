@@ -9,10 +9,6 @@ definition {
 
 		JSONGroup.addGroup(groupName = "group name 2");
 
-		JSONGroup.addChildGroup(
-			groupName = "child group name",
-			parentGroupName = "group name");
-
 		// User
 
 		JSONUser.addUser(

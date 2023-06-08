@@ -28,10 +28,10 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.KeyValuePairComparator;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
@@ -161,11 +161,11 @@ public class AssetCategoriesNavigationDisplayContext {
 		}
 		else {
 			_ddmTemplateAssetVocabularies = TransformUtil.transformToList(
-				assetVocabularyIds,
+				StringUtil.split(StringUtil.merge(assetVocabularyIds), 0L),
 				assetVocabularyId -> {
 					try {
 						return AssetVocabularyServiceUtil.fetchVocabulary(
-							GetterUtil.getLongStrict(assetVocabularyId));
+							assetVocabularyId);
 					}
 					catch (PrincipalException principalException) {
 						if (_log.isWarnEnabled()) {

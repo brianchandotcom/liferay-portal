@@ -354,6 +354,7 @@ const FDSViews = ({
 			]}
 			sorting={[{direction: 'desc', key: 'dateModified'}]}
 			views={views}
+			viewsTitle={Liferay.Language.get('views')}
 		/>
 	);
 };

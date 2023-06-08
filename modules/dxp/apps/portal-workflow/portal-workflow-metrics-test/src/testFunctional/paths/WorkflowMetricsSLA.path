@@ -22,7 +22,7 @@
 </tr>
 <tr>
 	<td>METRICS_MENU_SLA</td>
-	<td>//div[contains(@class, 'control-menu-icon')]</td>
+	<td>//div[contains(@class, 'control-menu-nav-item')]//button</td>
 	<td></td>
 </tr>
 <tr>

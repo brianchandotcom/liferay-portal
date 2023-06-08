@@ -17,7 +17,7 @@ package com.liferay.portal.template.react.renderer.internal;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.servlet.taglib.aui.AMDRequire;
 import com.liferay.portal.kernel.servlet.taglib.aui.ESImport;
@@ -46,8 +46,9 @@ public class ReactRendererUtil {
 	public static void renderEcmaScript(
 			AbsolutePortalURLBuilder absolutePortalURLBuilder,
 			ComponentDescriptor componentDescriptor,
-			HttpServletRequest httpServletRequest, String placeholderId,
-			Portal portal, Map<String, Object> props, Writer writer)
+			HttpServletRequest httpServletRequest, JSONFactory jsonFactory,
+			String placeholderId, Portal portal, Map<String, Object> props,
+			Writer writer)
 		throws IOException {
 
 		List<AMDRequire> amdRequires = new ArrayList<>();
@@ -95,7 +96,7 @@ public class ReactRendererUtil {
 			}
 		}
 
-		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
+		JSONSerializer jsonSerializer = jsonFactory.createJSONSerializer();
 
 		contentSB.append("render(componentModule, ");
 
@@ -147,7 +148,7 @@ public class ReactRendererUtil {
 
 	public static void renderJavaScript(
 			ComponentDescriptor componentDescriptor, Map<String, Object> props,
-			HttpServletRequest httpServletRequest,
+			HttpServletRequest httpServletRequest, JSONFactory jsonFactory,
 			String npmResolvedPackageName, String placeholderId, Portal portal,
 			Writer writer)
 		throws IOException {
@@ -171,7 +172,7 @@ public class ReactRendererUtil {
 			dependenciesSB.append(placeholderId);
 		}
 
-		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
+		JSONSerializer jsonSerializer = jsonFactory.createJSONSerializer();
 
 		StringBundler javascriptSB = new StringBundler(13);
 

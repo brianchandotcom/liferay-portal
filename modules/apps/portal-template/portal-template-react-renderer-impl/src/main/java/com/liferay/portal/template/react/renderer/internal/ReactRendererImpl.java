@@ -15,6 +15,7 @@
 package com.liferay.portal.template.react.renderer.internal;
 
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolvedPackageNameUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -56,7 +57,8 @@ public class ReactRendererImpl implements ReactRenderer {
 			ReactRendererUtil.renderEcmaScript(
 				_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
 					httpServletRequest),
-				componentDescriptor, httpServletRequest, placeholderId, _portal,
+				componentDescriptor, httpServletRequest, _jsonFactory,
+				placeholderId, _portal,
 				_prepareProps(componentDescriptor, data, httpServletRequest),
 				writer);
 		}
@@ -64,7 +66,7 @@ public class ReactRendererImpl implements ReactRenderer {
 			ReactRendererUtil.renderJavaScript(
 				componentDescriptor,
 				_prepareProps(componentDescriptor, data, httpServletRequest),
-				httpServletRequest,
+				httpServletRequest, _jsonFactory,
 				NPMResolvedPackageNameUtil.get(_servletContext), placeholderId,
 				_portal, writer);
 		}
@@ -131,6 +133,9 @@ public class ReactRendererImpl implements ReactRenderer {
 
 	@Reference
 	private AbsolutePortalURLBuilderFactory _absolutePortalURLBuilderFactory;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Portal _portal;

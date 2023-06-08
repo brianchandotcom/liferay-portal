@@ -79,7 +79,7 @@ public class CommandPoshiElement extends PoshiElement {
 		List<String> simpleAnnotations = new ArrayList<>();
 
 		if (blockName.contains("macro") && !blockName.contains("@summary")) {
-			addAttribute("summary", "default summary");
+			addAttribute("summary", "Default summary");
 		}
 
 		while (poshiScriptAnnotationMatcher.find()) {

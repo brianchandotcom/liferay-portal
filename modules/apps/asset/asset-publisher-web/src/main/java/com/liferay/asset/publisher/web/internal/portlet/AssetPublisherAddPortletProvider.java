@@ -17,10 +17,9 @@ package com.liferay.asset.publisher.web.internal.portlet;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.portlet.AddPortletProvider;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
-import com.liferay.portal.kernel.portlet.ViewPortletProvider;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 
 import javax.portlet.PortletRequest;
@@ -35,11 +34,9 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = "model.class.name=com.liferay.asset.kernel.model.AssetEntry",
-	service = {AddPortletProvider.class, ViewPortletProvider.class}
+	service = PortletProvider.class
 )
-public class AssetPublisherAddPortletProvider
-	extends BasePortletProvider
-	implements AddPortletProvider, ViewPortletProvider {
+public class AssetPublisherAddPortletProvider extends BasePortletProvider {
 
 	@Override
 	public String getPortletName() {
@@ -65,5 +62,12 @@ public class AssetPublisherAddPortletProvider
 		return PortletURLFactoryUtil.create(
 			httpServletRequest, getPortletName(), PortletRequest.RENDER_PHASE);
 	}
+
+	@Override
+	public Action[] getSupportedActions() {
+		return _supportedActions;
+	}
+
+	private final Action[] _supportedActions = {Action.ADD, Action.VIEW};
 
 }

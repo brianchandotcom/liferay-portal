@@ -16,7 +16,7 @@ package com.liferay.asset.categories.selector.web.internal.portlet;
 
 import com.liferay.asset.categories.selector.web.internal.constants.AssetCategoriesSelectorPortletKeys;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
-import com.liferay.portal.kernel.portlet.BrowsePortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProvider;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -25,14 +25,21 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = "model.class.name=com.liferay.asset.kernel.model.AssetCategory",
-	service = BrowsePortletProvider.class
+	service = PortletProvider.class
 )
 public class AssetCategoriesSelectorBrowserPortletProvider
-	extends BasePortletProvider implements BrowsePortletProvider {
+	extends BasePortletProvider {
 
 	@Override
 	public String getPortletName() {
 		return AssetCategoriesSelectorPortletKeys.ASSET_CATEGORIES_SELECTOR;
 	}
+
+	@Override
+	public Action[] getSupportedActions() {
+		return _supportedActions;
+	}
+
+	private final Action[] _supportedActions = {Action.BROWSE};
 
 }

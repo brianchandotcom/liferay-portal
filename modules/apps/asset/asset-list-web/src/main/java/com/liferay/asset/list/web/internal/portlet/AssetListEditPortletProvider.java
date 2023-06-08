@@ -17,7 +17,7 @@ package com.liferay.asset.list.web.internal.portlet;
 import com.liferay.asset.list.constants.AssetListPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
-import com.liferay.portal.kernel.portlet.EditPortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 
 import javax.portlet.PortletURL;
@@ -31,10 +31,9 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = "model.class.name=com.liferay.asset.list.model.AssetListEntry",
-	service = EditPortletProvider.class
+	service = PortletProvider.class
 )
-public class AssetListEditPortletProvider
-	extends BasePortletProvider implements EditPortletProvider {
+public class AssetListEditPortletProvider extends BasePortletProvider {
 
 	@Override
 	public String getPortletName() {
@@ -51,5 +50,12 @@ public class AssetListEditPortletProvider
 			"/edit_asset_list_entry.jsp"
 		).buildPortletURL();
 	}
+
+	@Override
+	public Action[] getSupportedActions() {
+		return _supportedActions;
+	}
+
+	private final Action[] _supportedActions = {Action.EDIT};
 
 }

@@ -67,7 +67,7 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 	@Override
 	public Site postSite(Site site) throws Exception {
 		try {
-			Group group = _addGroup(site);
+			Group group = _addGroup(site.getExternalReferenceCode(), site);
 
 			return new Site() {
 				{
@@ -93,6 +93,7 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 
 		if (group == null) {
 			group = _addGroup(
+				externalReferenceCode,
 				multipartBody.getValueAsInstance("site", Site.class));
 		}
 		else {
@@ -137,7 +138,9 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 		};
 	}
 
-	private Group _addGroup(Site site) throws Exception {
+	private Group _addGroup(String externalReferenceCode, Site site)
+		throws Exception {
+
 		if (Validator.isNull(site.getTemplateKey()) &&
 			Validator.isNotNull(site.getTemplateType())) {
 
@@ -199,7 +202,7 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
 		try {
-			return _addGroup(site, serviceContext);
+			return _addGroup(externalReferenceCode, site, serviceContext);
 		}
 		catch (Exception exception) {
 
@@ -214,7 +217,9 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 		}
 	}
 
-	private Group _addGroup(Site site, ServiceContext serviceContext)
+	private Group _addGroup(
+			String externalReferenceCode, Site site,
+			ServiceContext serviceContext)
 		throws Exception {
 
 		long parentGroupId = GroupConstants.DEFAULT_PARENT_GROUP_ID;
@@ -245,10 +250,11 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 			}
 		}
 
-		Group group = _groupService.addGroup(
-			parentGroupId, GroupConstants.DEFAULT_LIVE_GROUP_ID, nameMap, null,
-			type, true, GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, null,
-			true, false, true, serviceContext);
+		Group group = _groupService.addOrUpdateGroup(
+			externalReferenceCode, parentGroupId,
+			GroupConstants.DEFAULT_LIVE_GROUP_ID, nameMap, null, type, true,
+			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, null, true, false,
+			true, serviceContext);
 
 		LiveUsers.joinGroup(
 			contextCompany.getCompanyId(), group.getGroupId(),

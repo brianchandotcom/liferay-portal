@@ -2553,45 +2553,35 @@ public class DDMStorageLinkPersistenceImpl
 		}
 
 		if (list == null) {
-			StringBundler sb = new StringBundler();
-
-			sb.append(_SQL_SELECT_DDMSTORAGELINK_WHERE);
-
-			if (structureVersionIds.length > 0) {
-				sb.append("(");
-
-				sb.append(
-					_FINDER_COLUMN_STRUCTUREVERSIONID_STRUCTUREVERSIONID_7);
-
-				sb.append(StringUtil.merge(structureVersionIds));
-
-				sb.append(")");
-
-				sb.append(")");
-			}
-
-			sb.setStringAt(
-				removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(DDMStorageLinkModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
 			try {
-				session = openSession();
+				if ((start == QueryUtil.ALL_POS) &&
+					(end == QueryUtil.ALL_POS) &&
+					(databaseInMaxParameters > 0) &&
+					(structureVersionIds.length > databaseInMaxParameters)) {
 
-				Query query = session.createQuery(sql);
+					list = new ArrayList<DDMStorageLink>();
 
-				list = (List<DDMStorageLink>)QueryUtil.list(
-					query, getDialect(), start, end);
+					long[][] structureVersionIdsPages =
+						(long[][])ArrayUtil.split(
+							structureVersionIds, databaseInMaxParameters);
+
+					for (long[] structureVersionIdsPage :
+							structureVersionIdsPages) {
+
+						list.addAll(
+							_findByStructureVersionId(
+								structureVersionIdsPage, start, end,
+								orderByComparator));
+					}
+
+					Collections.sort(list, orderByComparator);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = _findByStructureVersionId(
+						structureVersionIds, start, end, orderByComparator);
+				}
 
 				cacheResult(list);
 
@@ -2604,9 +2594,61 @@ public class DDMStorageLinkPersistenceImpl
 			catch (Exception exception) {
 				throw processException(exception);
 			}
-			finally {
-				closeSession(session);
-			}
+		}
+
+		return list;
+	}
+
+	private List<DDMStorageLink> _findByStructureVersionId(
+		long[] structureVersionIds, int start, int end,
+		OrderByComparator<DDMStorageLink> orderByComparator) {
+
+		List<DDMStorageLink> list = null;
+
+		StringBundler sb = new StringBundler();
+
+		sb.append(_SQL_SELECT_DDMSTORAGELINK_WHERE);
+
+		if (structureVersionIds.length > 0) {
+			sb.append("(");
+
+			sb.append(_FINDER_COLUMN_STRUCTUREVERSIONID_STRUCTUREVERSIONID_7);
+
+			sb.append(StringUtil.merge(structureVersionIds));
+
+			sb.append(")");
+
+			sb.append(")");
+		}
+
+		sb.setStringAt(
+			removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
+
+		if (orderByComparator != null) {
+			appendOrderByComparator(
+				sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+		}
+		else {
+			sb.append(DDMStorageLinkModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query query = session.createQuery(sql);
+
+			list = (List<DDMStorageLink>)QueryUtil.list(
+				query, getDialect(), start, end);
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
 		}
 
 		return list;
@@ -2720,36 +2762,28 @@ public class DDMStorageLinkPersistenceImpl
 		}
 
 		if (count == null) {
-			StringBundler sb = new StringBundler();
-
-			sb.append(_SQL_COUNT_DDMSTORAGELINK_WHERE);
-
-			if (structureVersionIds.length > 0) {
-				sb.append("(");
-
-				sb.append(
-					_FINDER_COLUMN_STRUCTUREVERSIONID_STRUCTUREVERSIONID_7);
-
-				sb.append(StringUtil.merge(structureVersionIds));
-
-				sb.append(")");
-
-				sb.append(")");
-			}
-
-			sb.setStringAt(
-				removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
 			try {
-				session = openSession();
+				if ((databaseInMaxParameters > 0) &&
+					(structureVersionIds.length > databaseInMaxParameters)) {
 
-				Query query = session.createQuery(sql);
+					count = Long.valueOf(0);
 
-				count = (Long)query.uniqueResult();
+					long[][] structureVersionIdsPages =
+						(long[][])ArrayUtil.split(
+							structureVersionIds, databaseInMaxParameters);
+
+					for (long[] structureVersionIdsPage :
+							structureVersionIdsPages) {
+
+						count += Long.valueOf(
+							_countByStructureVersionId(
+								structureVersionIdsPage));
+					}
+				}
+				else {
+					count = Long.valueOf(
+						_countByStructureVersionId(structureVersionIds));
+				}
 
 				if (productionMode) {
 					finderCache.putResult(
@@ -2760,9 +2794,49 @@ public class DDMStorageLinkPersistenceImpl
 			catch (Exception exception) {
 				throw processException(exception);
 			}
-			finally {
-				closeSession(session);
-			}
+		}
+
+		return count.intValue();
+	}
+
+	private int _countByStructureVersionId(long[] structureVersionIds) {
+		Long count = null;
+
+		StringBundler sb = new StringBundler();
+
+		sb.append(_SQL_COUNT_DDMSTORAGELINK_WHERE);
+
+		if (structureVersionIds.length > 0) {
+			sb.append("(");
+
+			sb.append(_FINDER_COLUMN_STRUCTUREVERSIONID_STRUCTUREVERSIONID_7);
+
+			sb.append(StringUtil.merge(structureVersionIds));
+
+			sb.append(")");
+
+			sb.append(")");
+		}
+
+		sb.setStringAt(
+			removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
+
+		String sql = sb.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query query = session.createQuery(sql);
+
+			count = (Long)query.uniqueResult();
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
 		}
 
 		return count.intValue();

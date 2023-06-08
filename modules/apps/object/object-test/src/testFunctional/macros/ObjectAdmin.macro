@@ -413,7 +413,7 @@ definition {
 				locator1 = "Button#TAB_SUBMIT_BTN");
 
 			if (${isCollapsible} == "Yes") {
-				Check.checkToggleSwitch(locator1 = "CreateObject#TOGGLE_COLLAPSIBLE");
+				Check.checkToggleSwitch(locator1 = "ObjectCustomValidation#ACTIVE_VALIDATION_TOGGLE");
 			}
 
 			if (isSet(fieldList)) {

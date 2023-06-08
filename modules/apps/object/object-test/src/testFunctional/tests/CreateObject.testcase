@@ -3375,9 +3375,9 @@ definition {
 
 		ObjectAdmin.addLayoutBlockViaUI(blockName = "Block Name");
 
-		CreateObject.checkToggleCollapsible();
+		Check.checkToggleSwitch(locator1 = "ObjectCustomValidation#ACTIVE_VALIDATION_TOGGLE");
 
-		AssertChecked.assertCheckedNotVisible(locator1 = "CreateObject#TOGGLE_COLLAPSIBLE");
+		AssertChecked.assertCheckedNotVisible(locator1 = "ObjectCustomValidation#ACTIVE_VALIDATION_TOGGLE");
 	}
 
 	@description = "LPS-135389 - Verify it is possible to set a different language value for a Field Label"

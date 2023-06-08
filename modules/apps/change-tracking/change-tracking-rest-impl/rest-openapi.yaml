@@ -184,12 +184,12 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/CTCollection"
             tags: ["CTCollection"]
-    "/ct-collections/{id}":
+    "/ct-collections/{ctCollectionId}":
         delete:
             operationId: deleteCTCollection
             parameters:
                 - in: path
-                  name: id
+                  name: ctCollectionId
                   required: true
                   schema:
                       format: int64
@@ -204,7 +204,7 @@ paths:
             operationId: getCTCollection
             parameters:
                 - in: path
-                  name: id
+                  name: ctCollectionId
                   required: true
                   schema:
                       format: int64
@@ -223,7 +223,7 @@ paths:
             operationId: patchCTCollection
             parameters:
                 - in: path
-                  name: id
+                  name: ctCollectionId
                   required: true
                   schema:
                       format: int64
@@ -250,7 +250,7 @@ paths:
             operationId: putCTCollection
             parameters:
                 - in: path
-                  name: id
+                  name: ctCollectionId
                   required: true
                   schema:
                       format: int64
@@ -273,12 +273,12 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/CTCollection"
             tags: ["CTCollection"]
-    "/ct-collections/{id}/checkout":
+    "/ct-collections/{ctCollectionId}/checkout":
         post:
             operationId: postCTCollectionCheckout
             parameters:
                 - in: path
-                  name: id
+                  name: ctCollectionId
                   required: true
                   schema:
                       format: int64
@@ -289,15 +289,16 @@ paths:
                         application/json: {}
                         application/xml: {}
             tags: ["CTCollection"]
-    "/ct-collections/{id}/ct-entries":
+    "/ct-collections/{ctCollectionId}/ct-entries":
         get:
-            operationId: getCtCollectionIdCTEntriesPage
+            operationId: getCtCollectionCTEntriesPage
             parameters:
                 - in: path
-                  name: id
+                  name: ctCollectionId
                   required: true
                   schema:
-                      type: string
+                      format: int64
+                      type: integer
                 - in: query
                   name: filter
                   schema:
@@ -332,12 +333,12 @@ paths:
                                     $ref: "#/components/schemas/CTEntry"
                                 type: array
             tags: ["CTEntry"]
-    "/ct-collections/{id}/publish":
+    "/ct-collections/{ctCollectionId}/publish":
         post:
             operationId: postCTCollectionPublish
             parameters:
                 - in: path
-                  name: id
+                  name: ctCollectionId
                   required: true
                   schema:
                       format: int64
@@ -348,12 +349,12 @@ paths:
                         application/json: {}
                         application/xml: {}
             tags: ["CTCollection"]
-    "/ct-collections/{id}/schedule-publish":
+    "/ct-collections/{ctCollectionId}/schedule-publish":
         post:
             operationId: postCTCollectionSchedulePublish
             parameters:
                 - in: path
-                  name: id
+                  name: ctCollectionId
                   required: true
                   schema:
                       format: int64
@@ -370,12 +371,12 @@ paths:
                         application/json: {}
                         application/xml: {}
             tags: ["CTCollection"]
-    "/ct-entries/{id}":
+    "/ct-entries/{ctEntryId}":
         get:
             operationId: getCTEntry
             parameters:
                 - in: path
-                  name: id
+                  name: ctEntryId
                   required: true
                   schema:
                       format: int64

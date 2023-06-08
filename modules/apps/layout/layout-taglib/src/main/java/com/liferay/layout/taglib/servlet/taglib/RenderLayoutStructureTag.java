@@ -136,6 +136,10 @@ public class RenderLayoutStructureTag extends IncludeTag {
 		setServletContext(ServletContextUtil.getServletContext());
 	}
 
+	public void setRenderActionHandler(boolean renderActionHandler) {
+		_renderActionHandler = renderActionHandler;
+	}
+
 	public void setShowPreview(boolean showPreview) {
 		_showPreview = showPreview;
 	}
@@ -147,6 +151,7 @@ public class RenderLayoutStructureTag extends IncludeTag {
 		_layoutStructure = null;
 		_mainItemId = null;
 		_mode = FragmentEntryLinkConstants.VIEW;
+		_renderActionHandler = true;
 		_showPreview = false;
 	}
 
@@ -174,17 +179,19 @@ public class RenderLayoutStructureTag extends IncludeTag {
 				renderLayoutStructureDisplayContext.getMainChildrenItemIds(),
 				renderLayoutStructureDisplayContext);
 
-			ComponentTag componentTag = new ComponentTag();
+			if (_renderActionHandler) {
+				ComponentTag componentTag = new ComponentTag();
 
-			componentTag.setComponentId("infoItemActionComponent");
-			componentTag.setContext(
-				renderLayoutStructureDisplayContext.
-					getInfoItemActionComponentContext());
+				componentTag.setComponentId("infoItemActionComponent");
+				componentTag.setContext(
+					renderLayoutStructureDisplayContext.
+						getInfoItemActionComponentContext());
 
-			componentTag.setModule(
-				"render_layout_structure/js/InfoItemActionHandler");
+				componentTag.setModule(
+					"render_layout_structure/js/InfoItemActionHandler");
 
-			componentTag.doTag(pageContext);
+				componentTag.doTag(pageContext);
+			}
 		}
 
 		return SKIP_BODY;
@@ -1401,6 +1408,7 @@ public class RenderLayoutStructureTag extends IncludeTag {
 	private LayoutStructure _layoutStructure;
 	private String _mainItemId;
 	private String _mode = FragmentEntryLinkConstants.VIEW;
+	private boolean _renderActionHandler = true;
 	private boolean _showPreview;
 
 }

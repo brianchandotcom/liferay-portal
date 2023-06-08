@@ -7,7 +7,6 @@
 html#{$cadmin-selector} {
 	.cadmin {
 		.audit-graph {
-			position: relative;
 			&-loading {
 				min-height: 304px;
 			}
@@ -49,7 +48,6 @@ html#{$cadmin-selector} {
 		.empty-state {
 			left: 50%;
 			max-width: 350px;
-			position: absolute;
 			transform: translate(-40%, 70%);
 			z-index: 1;
 		}

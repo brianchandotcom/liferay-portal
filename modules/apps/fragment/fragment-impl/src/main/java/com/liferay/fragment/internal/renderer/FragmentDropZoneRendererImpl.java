@@ -50,6 +50,7 @@ public class FragmentDropZoneRendererImpl implements FragmentDropZoneRenderer {
 
 			renderLayoutStructureTag.setMainItemId(mainItemId);
 			renderLayoutStructureTag.setMode(mode);
+			renderLayoutStructureTag.setRenderActionHandler(false);
 			renderLayoutStructureTag.setShowPreview(showPreview);
 
 			renderLayoutStructureTag.doTag(

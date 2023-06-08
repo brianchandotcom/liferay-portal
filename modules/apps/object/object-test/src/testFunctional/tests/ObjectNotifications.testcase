@@ -259,7 +259,7 @@ definition {
 		task ("When the notification is generated and then deleted") {
 			Notifications.goToNotificationQueueAdmin();
 
-			ObjectNotifications.deleteQueue(
+			ObjectNotifications.deleteNotificationEntry(
 				status = "Unsent",
 				triggerBy = "CustomObject161922");
 		}

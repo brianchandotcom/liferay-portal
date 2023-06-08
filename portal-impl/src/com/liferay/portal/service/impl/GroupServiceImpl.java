@@ -135,6 +135,87 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 			active, serviceContext);
 	}
 
+	@Override
+	public Group addOrUpdateGroup(
+			String externalReferenceCode, long parentGroupId, long liveGroupId,
+			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+			int type, boolean manualMembership, int membershipRestriction,
+			String friendlyURL, boolean site, boolean inheritContent,
+			boolean active, ServiceContext serviceContext)
+		throws Exception {
+
+		User user = getUser();
+
+		Group group = groupPersistence.fetchByERC_C(
+			externalReferenceCode, user.getCompanyId());
+
+		if (group == null) {
+			if (parentGroupId == GroupConstants.DEFAULT_PARENT_GROUP_ID) {
+				PortalPermissionUtil.check(
+					getPermissionChecker(), ActionKeys.ADD_COMMUNITY);
+			}
+			else {
+				GroupPermissionUtil.check(
+					getPermissionChecker(), parentGroupId,
+					ActionKeys.ADD_COMMUNITY);
+			}
+		}
+		else {
+			GroupPermissionUtil.check(
+				getPermissionChecker(), group, ActionKeys.UPDATE);
+
+			if (group.getParentGroupId() != parentGroupId) {
+				if (parentGroupId == GroupConstants.DEFAULT_PARENT_GROUP_ID) {
+					PortalPermissionUtil.check(
+						getPermissionChecker(), ActionKeys.ADD_COMMUNITY);
+				}
+				else {
+					GroupPermissionUtil.check(
+						getPermissionChecker(), parentGroupId,
+						ActionKeys.ADD_COMMUNITY);
+				}
+			}
+
+			if (group.isSite()) {
+				Group oldGroup = group;
+
+				List<AssetCategory> oldAssetCategories =
+					_assetCategoryLocalService.getCategories(
+						Group.class.getName(), group.getGroupId());
+
+				List<AssetTag> oldAssetTags = _assetTagLocalService.getTags(
+					Group.class.getName(), group.getGroupId());
+
+				ExpandoBridge oldExpandoBridge = oldGroup.getExpandoBridge();
+
+				Map<String, Serializable> oldExpandoAttributes =
+					oldExpandoBridge.getAttributes();
+
+				group = groupLocalService.addOrUpdateGroup(
+					externalReferenceCode, getUserId(), parentGroupId, null, 0,
+					liveGroupId, nameMap, descriptionMap, type,
+					manualMembership, membershipRestriction, friendlyURL, site,
+					inheritContent, active, serviceContext);
+
+				SiteMembershipPolicyUtil.verifyPolicy(
+					group, oldGroup, oldAssetCategories, oldAssetTags,
+					oldExpandoAttributes, null);
+
+				return group;
+			}
+		}
+
+		group = groupLocalService.addOrUpdateGroup(
+			externalReferenceCode, getUserId(), parentGroupId, null, 0,
+			liveGroupId, nameMap, descriptionMap, type, manualMembership,
+			membershipRestriction, friendlyURL, site, inheritContent, active,
+			serviceContext);
+
+		SiteMembershipPolicyUtil.verifyPolicy(group);
+
+		return group;
+	}
+
 	/**
 	 * Adds the groups to the role.
 	 *

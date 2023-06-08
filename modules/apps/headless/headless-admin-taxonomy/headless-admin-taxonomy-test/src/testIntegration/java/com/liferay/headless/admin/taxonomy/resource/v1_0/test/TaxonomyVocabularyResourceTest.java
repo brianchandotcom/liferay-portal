@@ -166,6 +166,69 @@ public class TaxonomyVocabularyResourceTest
 	}
 
 	@Override
+	@Test
+	public void testGetSiteTaxonomyVocabulariesPage() throws Exception {
+		super.testGetSiteTaxonomyVocabulariesPage();
+
+		testGetSiteTaxonomyVocabulariesPage_addTaxonomyVocabulary(
+			testGetSiteTaxonomyVocabulariesPage_getSiteId(),
+			randomTaxonomyVocabulary());
+
+		Page<TaxonomyVocabulary> page =
+			taxonomyVocabularyResource.getSiteTaxonomyVocabulariesPage(
+				testGetSiteTaxonomyVocabulariesPage_getSiteId(), null, null,
+				null, Pagination.of(1, 10), null);
+
+		Assert.assertEquals(1, page.getTotalCount());
+
+		assertValid(
+			page,
+			HashMapBuilder.<String, Map<String, String>>put(
+				"create",
+				HashMapBuilder.put(
+					"href",
+					StringBundler.concat(
+						"http://localhost:8080/o/headless-admin-taxonomy/v1.0",
+						"/sites/",
+						testGetSiteTaxonomyVocabulariesPage_getSiteId(),
+						"/taxonomy-vocabularies")
+				).put(
+					"method", "POST"
+				).build()
+			).put(
+				"createBatch",
+				HashMapBuilder.put(
+					"href",
+					StringBundler.concat(
+						"http://localhost:8080/o/headless-admin-taxonomy/v1.0",
+						"/sites/",
+						testGetSiteTaxonomyVocabulariesPage_getSiteId(),
+						"/taxonomy-vocabularies/batch")
+				).put(
+					"method", "POST"
+				).build()
+			).put(
+				"deleteBatch",
+				HashMapBuilder.put(
+					"href",
+					"http://localhost:8080/o/headless-admin-taxonomy/v1.0" +
+						"/taxonomy-vocabularies/batch"
+				).put(
+					"method", "DELETE"
+				).build()
+			).put(
+				"updateBatch",
+				HashMapBuilder.put(
+					"href",
+					"http://localhost:8080/o/headless-admin-taxonomy/v1.0" +
+						"/taxonomy-vocabularies/batch"
+				).put(
+					"method", "PUT"
+				).build()
+			).build());
+	}
+
+	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"assetTypes", "description", "name"};
 	}

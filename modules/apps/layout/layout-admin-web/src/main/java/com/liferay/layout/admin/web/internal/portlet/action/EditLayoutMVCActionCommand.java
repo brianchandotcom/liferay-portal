@@ -188,7 +188,7 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 					formTypeSettingsUnicodeProperties.get(
 						Sites.LAYOUT_UPDATEABLE));
 
-				layout = _layoutService.updateLayout(
+				_layoutService.updateLayout(
 					groupId, layout.isPrivateLayout(),
 					draftLayout.getLayoutId(), draftLayout.getParentLayoutId(),
 					nameMap, draftLayout.getTitleMap(),

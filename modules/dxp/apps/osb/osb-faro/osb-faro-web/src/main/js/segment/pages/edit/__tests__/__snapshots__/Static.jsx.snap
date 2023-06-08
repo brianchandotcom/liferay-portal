@@ -220,7 +220,7 @@ exports[`StaticSegmentEdit should render 1`] = `
                       class="no-results-icon no-results-icon-border"
                     >
                       <svg
-                        class="lexicon-icon lexicon-icon-ac-individual icon-root icon-size-xxxl"
+                        class="lexicon-icon lexicon-icon-ac-individual icon-root icon-size-xxl"
                         role="presentation"
                       >
                         <use

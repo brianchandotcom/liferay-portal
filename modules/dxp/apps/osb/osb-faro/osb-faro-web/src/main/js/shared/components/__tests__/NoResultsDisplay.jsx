@@ -59,7 +59,7 @@ describe('NoResultsDisplay', () => {
 		);
 
 		expect(
-			container.querySelector('.lexicon-icon-home.icon-size-xxxl')
+			container.querySelector('.lexicon-icon-home.icon-size-sm')
 		).toBeTruthy();
 	});
 });

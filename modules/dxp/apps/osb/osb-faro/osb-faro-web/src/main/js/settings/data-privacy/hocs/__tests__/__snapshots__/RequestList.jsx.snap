@@ -455,9 +455,10 @@ exports[`RequestList should render 1`] = `
             >
               <span>
                 <a
-                  aria-disabled="false"
-                  class="button-root btn btn-sm btn-secondary"
+                  class="btn btn-secondary btn-sm button-root"
                   href="/o/proxy/download/data-control-tasks/4?projectGroupId=23"
+                  role="button"
+                  tabindex="0"
                 >
                   Download
                 </a>
@@ -627,9 +628,10 @@ exports[`RequestList should render 1`] = `
             >
               <span>
                 <a
-                  aria-disabled="false"
-                  class="button-root btn btn-sm btn-secondary"
+                  class="btn btn-secondary btn-sm button-root"
                   href="/o/proxy/download/data-control-tasks/70?projectGroupId=23"
+                  role="button"
+                  tabindex="0"
                 >
                   Download
                 </a>

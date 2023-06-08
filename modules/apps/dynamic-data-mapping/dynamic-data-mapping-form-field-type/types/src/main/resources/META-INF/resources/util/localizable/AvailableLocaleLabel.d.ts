@@ -12,6 +12,8 @@
  * details.
  */
 
+/// <reference types="react" />
+
 interface AvailableLocaleLabelProps {
 	isDefault?: boolean;
 	isSubmitLabel: boolean;

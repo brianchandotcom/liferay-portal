@@ -14,8 +14,7 @@
 
 package com.liferay.document.library.kernel.util;
 
-import com.liferay.document.library.kernel.store.DLStoreRequest;
-import com.liferay.document.library.kernel.store.DLStoreUtil;
+import com.liferay.document.library.kernel.store.Store;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.petra.string.StringBundler;
@@ -36,6 +35,7 @@ import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
@@ -43,10 +43,9 @@ import com.liferay.portal.kernel.xml.Element;
 import java.awt.image.RenderedImage;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-
-import java.nio.file.Files;
 
 import java.util.List;
 import java.util.Map;
@@ -93,18 +92,10 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 	public static void deleteFiles() {
 		CompanyLocalServiceUtil.forEachCompanyId(
 			companyId -> {
-				try {
-					DLStoreUtil.deleteDirectory(
-						companyId, REPOSITORY_ID, PREVIEW_PATH);
+				_store.deleteDirectory(companyId, REPOSITORY_ID, PREVIEW_PATH);
 
-					DLStoreUtil.deleteDirectory(
-						companyId, REPOSITORY_ID, THUMBNAIL_PATH);
-				}
-				catch (PortalException portalException) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(portalException);
-					}
-				}
+				_store.deleteDirectory(
+					companyId, REPOSITORY_ID, THUMBNAIL_PATH);
 			});
 	}
 
@@ -236,22 +227,10 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 			long companyId, String dirName, String filePath, File srcFile)
 		throws PortalException {
 
-		try {
-			long size = -1;
-
-			if (srcFile.exists()) {
-				size = Files.size(srcFile.toPath());
-			}
-
-			DLStoreUtil.addFile(
-				DLStoreRequest.builder(
-					companyId, REPOSITORY_ID, filePath
-				).className(
-					this
-				).size(
-					size
-				).build(),
-				srcFile);
+		try (InputStream inputStream = new FileInputStream(srcFile)) {
+			_store.addFile(
+				companyId, REPOSITORY_ID, filePath, Store.VERSION_DEFAULT,
+				inputStream);
 		}
 		catch (IOException ioException) {
 			throw new PortalException(ioException);
@@ -263,12 +242,8 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 			InputStream inputStream)
 		throws PortalException {
 
-		DLStoreUtil.addFile(
-			DLStoreRequest.builder(
-				companyId, REPOSITORY_ID, filePath
-			).className(
-				this
-			).build(),
+		_store.addFile(
+			companyId, REPOSITORY_ID, filePath, Store.VERSION_DEFAULT,
 			inputStream);
 	}
 
@@ -350,16 +325,9 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 	protected void deletePreviews(
 		long companyId, long groupId, long fileEntryId, long fileVersionId) {
 
-		try {
-			DLStoreUtil.deleteDirectory(
-				companyId, REPOSITORY_ID,
-				getPreviewFilePath(groupId, fileEntryId, fileVersionId, null));
-		}
-		catch (PortalException portalException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(portalException);
-			}
-		}
+		_store.deleteDirectory(
+			companyId, REPOSITORY_ID,
+			getPreviewFilePath(groupId, fileEntryId, fileVersionId, null));
 	}
 
 	protected void deleteThumbnail(
@@ -367,13 +335,10 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		String thumbnailType, int index) {
 
 		try {
-			String thumbnailFilePath = getThumbnailFilePath(
-				groupId, fileEntryId, fileVersionId, thumbnailType, index);
-
-			DLStoreUtil.deleteDirectory(
-				companyId, REPOSITORY_ID, thumbnailFilePath);
-
-			DLStoreUtil.deleteFile(companyId, REPOSITORY_ID, thumbnailFilePath);
+			_store.deleteDirectory(
+				companyId, REPOSITORY_ID,
+				getThumbnailFilePath(
+					groupId, fileEntryId, fileVersionId, thumbnailType, index));
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -418,9 +383,9 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 			FileVersion fileVersion, int index, String type)
 		throws PortalException {
 
-		return DLStoreUtil.getFileAsStream(
+		return _store.getFileAsStream(
 			fileVersion.getCompanyId(), CompanyConstants.SYSTEM,
-			getPreviewFilePath(fileVersion, index, type));
+			getPreviewFilePath(fileVersion, index, type), StringPool.BLANK);
 	}
 
 	protected InputStream doGetPreviewAsStream(
@@ -434,7 +399,7 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		throws Exception {
 
 		try {
-			String[] fileNames = DLStoreUtil.getFileNames(
+			String[] fileNames = _store.getFileNames(
 				fileVersion.getCompanyId(), REPOSITORY_ID,
 				getPathSegment(fileVersion, true));
 
@@ -459,9 +424,9 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 			FileVersion fileVersion, int index, String type)
 		throws PortalException {
 
-		return DLStoreUtil.getFileSize(
+		return _store.getFileSize(
 			fileVersion.getCompanyId(), CompanyConstants.SYSTEM,
-			getPreviewFilePath(fileVersion, index, type));
+			getPreviewFilePath(fileVersion, index, type), StringPool.BLANK);
 	}
 
 	protected long doGetPreviewFileSize(FileVersion fileVersion, String type)
@@ -476,9 +441,9 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 
 		String type = getThumbnailType(fileVersion);
 
-		return DLStoreUtil.getFileAsStream(
+		return _store.getFileAsStream(
 			fileVersion.getCompanyId(), CompanyConstants.SYSTEM,
-			getThumbnailFilePath(fileVersion, type, index));
+			getThumbnailFilePath(fileVersion, type, index), StringPool.BLANK);
 	}
 
 	protected long doGetThumbnailFileSize(FileVersion fileVersion, int index)
@@ -486,9 +451,9 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 
 		String type = getThumbnailType(fileVersion);
 
-		return DLStoreUtil.getFileSize(
+		return _store.getFileSize(
 			fileVersion.getCompanyId(), CompanyConstants.SYSTEM,
-			getThumbnailFilePath(fileVersion, type, index));
+			getThumbnailFilePath(fileVersion, type, index), StringPool.BLANK);
 	}
 
 	protected abstract void doImportGeneratedFiles(
@@ -920,9 +885,9 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 	protected boolean hasPreview(FileVersion fileVersion, String type)
 		throws Exception {
 
-		if (DLStoreUtil.hasFile(
+		if (_store.hasFile(
 				fileVersion.getCompanyId(), REPOSITORY_ID,
-				getPreviewFilePath(fileVersion, type))) {
+				getPreviewFilePath(fileVersion, type), Store.VERSION_DEFAULT)) {
 
 			return true;
 		}
@@ -952,9 +917,10 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		try {
 			String imageType = getThumbnailType(fileVersion);
 
-			return DLStoreUtil.hasFile(
+			return _store.hasFile(
 				fileVersion.getCompanyId(), REPOSITORY_ID,
-				getThumbnailFilePath(fileVersion, imageType, index));
+				getThumbnailFilePath(fileVersion, imageType, index),
+				Store.VERSION_DEFAULT);
 		}
 		catch (Exception exception) {
 			_log.error(exception);
@@ -1266,5 +1232,10 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLPreviewableProcessor.class);
+
+	private static volatile Store _store =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			Store.class, DLPreviewableProcessor.class, "_store",
+			"(default=true)", true);
 
 }

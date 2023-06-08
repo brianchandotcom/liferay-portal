@@ -16,7 +16,7 @@ package com.liferay.portlet.documentlibrary.util;
 
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLProcessorConstants;
-import com.liferay.document.library.kernel.store.DLStoreUtil;
+import com.liferay.document.library.kernel.store.Store;
 import com.liferay.document.library.kernel.util.DLPreviewableProcessor;
 import com.liferay.document.library.kernel.util.ImageProcessor;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -381,9 +381,10 @@ public class ImageProcessorImpl
 
 			String type = getPreviewType(fileVersion);
 
-			if (!DLStoreUtil.hasFile(
+			if (!_store.hasFile(
 					fileVersion.getCompanyId(), REPOSITORY_ID,
-					getPreviewFilePath(fileVersion, type))) {
+					getPreviewFilePath(fileVersion, type),
+					Store.VERSION_DEFAULT)) {
 
 				return false;
 			}
@@ -491,6 +492,10 @@ public class ImageProcessorImpl
 			ServiceProxyFactory.newServiceTrackedInstance(
 				FileVersionPreviewEventListener.class, ImageProcessorImpl.class,
 				"_fileVersionPreviewEventListener", false, false);
+	private static volatile Store _store =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			Store.class, ImageProcessorImpl.class, "_store", "(default=true)",
+			true);
 
 	private final List<Long> _fileVersionIds = new Vector<>();
 	private final Set<String> _imageMimeTypes = SetUtil.fromArray(

@@ -8,7 +8,13 @@ Export-Package:\
 	com.liferay.osb.faro.contacts.service,\
 	com.liferay.osb.faro.contacts.service.persistence
 Import-Package:\
+	com.liferay.portal.kernel.annotation,\
+	com.liferay.portal.kernel.bean,\
+	com.liferay.portal.kernel.exception,\
+	com.liferay.portal.kernel.log,\
 	com.liferay.portal.kernel.model;version="[29.0.0,9999.0.0)",\
+	com.liferay.portal.kernel.search,\
+	com.liferay.portal.kernel.security,\
 	com.liferay.portal.kernel.service;version="[22.0.0,9999.0.0)",\
 	com.liferay.portal.kernel.service.persistence;version="[21.0.0,9999.0.0)",\
 	com.liferay.portal.kernel.util;version="[59.0.0,9999.0.0)",\

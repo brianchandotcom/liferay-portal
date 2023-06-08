@@ -189,6 +189,8 @@ Import-Package:\
 	\
 	!sun.security.*,\
 	\
+	com.liferay.portal.kernel.json;version="[12.0.0,9999.0.0)",\
+	com.liferay.portal.kernel.log,\
 	com.liferay.portal.kernel.model;version="[29.0.0,9999.0.0)",\
 	com.liferay.portal.kernel.service;version="[22.0.0,9999.0.0)",\
 	com.liferay.portal.kernel.util;version="[59.0.0,9999.0.0)",\

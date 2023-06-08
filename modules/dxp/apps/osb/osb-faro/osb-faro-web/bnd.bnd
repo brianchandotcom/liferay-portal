@@ -11,8 +11,12 @@ Import-Package:\
 	com.liferay.document.library.kernel.service;version="[11.1.0,9999.0.0)",\
 	com.liferay.expando.kernel.service;version="[1.8.0,9999.0.0)",\
 	com.liferay.oauth2.provider.service;version="[3.0.0,9999.0.0)",\
+	com.liferay.portal.kernel.io,\
+	com.liferay.portal.kernel.json;version="[12.0.0,9999.0.0)",\
+	com.liferay.portal.kernel.log,\
 	com.liferay.portal.kernel.model;version="[29.0.0,9999.0.0)",\
 	com.liferay.portal.kernel.portlet,\
+	com.liferay.portal.kernel.repository,\
 	com.liferay.portal.kernel.service;version="[22.0.0,9999.0.0)",\
 	com.liferay.portal.kernel.servlet;version="[11.0.0,9999.0.0)",\
 	com.liferay.portal.kernel.util;version="[59.0.0,9999.0.0)",\

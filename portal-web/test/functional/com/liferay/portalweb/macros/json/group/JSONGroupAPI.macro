@@ -531,4 +531,37 @@ definition {
 		return ${groupId};
 	}
 
+	@summary = "Get the groupId from any existing parent or child site by using groupName but not invoking selenium methods"
+	macro _getSiteIdByGroupKeyNoSelenium {
+		Variables.assertDefined(parameterList = ${groupName});
+
+		if (!(isSet(portalURL))) {
+			var portalURL = JSONCompany.getPortalURL();
+		}
+
+		var companyId = JSONCompany.getCompanyIdNoSelenium(
+			portalURL = ${portalURL},
+			token = ${token});
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
+		var curl = '''
+			${portalURL}/api/jsonws/group/get-group \
+				-u ${userLoginInfo} \
+				-d companyId=${companyId} \
+				-d groupKey=${groupName}
+		''';
+
+		if (isSet(token)) {
+			var curl = StringUtil.add(${curl}, " -H 'Authorization: Bearer ${token}'", "");
+		}
+
+		var groupId = JSONCurlUtil.post(${curl}, "$.[?(@['groupKey'] == '${groupName}')]['groupId']");
+
+		if (${groupId} == "") {
+			fail("FAIL. Cannot find group.");
+		}
+
+		return ${groupId};
+	}
+
 }

@@ -112,6 +112,10 @@ definition {
 				-u ${creatorEmailAddress}:${creatorPassword}
 		''';
 
+		if (isSet(token)) {
+			var curl = StringUtil.add(${curl}, " -H 'Authorization: Bearer ${token}'", "");
+		}
+
 		var companyId = JSONCurlUtil.get(${curl}, "$['companyId']");
 
 		return ${companyId};

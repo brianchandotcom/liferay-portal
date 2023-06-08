@@ -1,5 +1,11 @@
 definition {
 
+	macro activityCheckbox {
+		Click.javaScriptClick(
+			key_fieldName = "activities[${activityIndex}].selected",
+			locator1 = "Checkbox#CHECKBOX_NAME");
+	}
+
 	@summary = "Open/close the activity details"
 	macro activityCollapse {
 		Click(
@@ -128,9 +134,7 @@ definition {
 			locator1 = "Header#H2_TITLE");
 
 		for (var actvIndex : list ${activityIndex}) {
-			Click.javaScriptClick(
-				key_fieldName = "activities[${actvIndex}].selected",
-				locator1 = "Checkbox#CHECKBOX_NAME");
+			PRMMDFClaim.activityCheckbox(activityIndex = ${actvIndex});
 
 			for (var bdgtIndex : list ${budgetIndex}) {
 				Click.javaScriptClick(

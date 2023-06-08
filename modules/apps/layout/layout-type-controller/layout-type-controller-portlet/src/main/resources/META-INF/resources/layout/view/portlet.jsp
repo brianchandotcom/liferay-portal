@@ -56,4 +56,6 @@ String ppid = ParamUtil.getString(request, "p_p_id");
 	</c:otherwise>
 </c:choose>
 
-<liferay-layout:layout-common />
+<liferay-layout:layout-common
+	displaySessionMessages="<%= true %>"
+/>

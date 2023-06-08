@@ -17,8 +17,8 @@ package com.liferay.site.navigation.breadcrumb.web.internal.portlet;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
-import com.liferay.portal.kernel.portlet.ViewPortletProvider;
 import com.liferay.site.navigation.breadcrumb.web.internal.constants.SiteNavigationBreadcrumbPortletKeys;
 
 import javax.portlet.PortletRequest;
@@ -33,10 +33,10 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = "model.class.name=com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry",
-	service = ViewPortletProvider.class
+	service = PortletProvider.class
 )
 public class SiteNavigationBreadcrumbEntryViewPortletProvider
-	extends BasePortletProvider implements ViewPortletProvider {
+	extends BasePortletProvider {
 
 	@Override
 	public String getPortletName() {
@@ -51,5 +51,12 @@ public class SiteNavigationBreadcrumbEntryViewPortletProvider
 		return PortletURLFactoryUtil.create(
 			httpServletRequest, getPortletName(), PortletRequest.RENDER_PHASE);
 	}
+
+	@Override
+	public Action[] getSupportedActions() {
+		return _supportedActions;
+	}
+
+	private final Action[] _supportedActions = {Action.VIEW};
 
 }

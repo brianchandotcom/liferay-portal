@@ -15,7 +15,7 @@
 package com.liferay.site.navigation.admin.web.internal.portlet;
 
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
-import com.liferay.portal.kernel.portlet.EditPortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.site.navigation.admin.constants.SiteNavigationAdminPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
@@ -25,14 +25,21 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = "model.class.name=com.liferay.site.navigation.model.SiteNavigationMenu",
-	service = EditPortletProvider.class
+	service = PortletProvider.class
 )
 public class SiteNavigationAdminEditPortletProvider
-	extends BasePortletProvider implements EditPortletProvider {
+	extends BasePortletProvider {
 
 	@Override
 	public String getPortletName() {
 		return SiteNavigationAdminPortletKeys.SITE_NAVIGATION_ADMIN;
 	}
+
+	@Override
+	public Action[] getSupportedActions() {
+		return _supportedActions;
+	}
+
+	private final Action[] _supportedActions = {Action.EDIT};
 
 }

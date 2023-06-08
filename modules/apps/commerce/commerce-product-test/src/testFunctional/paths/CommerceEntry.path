@@ -556,6 +556,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PRICE_LISTS_PRICE_SETTINGS_DISABLED</td>
+	<td>//fieldset[@class='price-entry-price-settings disabled'] | //fieldset[contains(@id,'price-settings') and @disabled]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>COST_FIELD</td>
 	<td>//div/input[contains(@id,'cost')]</td>
 	<td></td>

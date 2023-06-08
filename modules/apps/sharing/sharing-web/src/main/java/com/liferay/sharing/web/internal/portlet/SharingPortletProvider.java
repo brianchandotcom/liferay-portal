@@ -15,7 +15,7 @@
 package com.liferay.sharing.web.internal.portlet;
 
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
-import com.liferay.portal.kernel.portlet.EditPortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.sharing.constants.SharingPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
@@ -25,14 +25,20 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = "model.class.name=com.liferay.sharing.model.SharingEntry",
-	service = EditPortletProvider.class
+	service = PortletProvider.class
 )
-public class SharingPortletProvider
-	extends BasePortletProvider implements EditPortletProvider {
+public class SharingPortletProvider extends BasePortletProvider {
 
 	@Override
 	public String getPortletName() {
 		return SharingPortletKeys.SHARING;
 	}
+
+	@Override
+	public Action[] getSupportedActions() {
+		return _supportedActions;
+	}
+
+	private final Action[] _supportedActions = {Action.EDIT};
 
 }

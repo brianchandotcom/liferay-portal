@@ -17,7 +17,7 @@ package com.liferay.sharing.web.internal.portlet;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
-import com.liferay.portal.kernel.portlet.PreviewPortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.sharing.web.internal.constants.SharingPortletKeys;
 
@@ -32,10 +32,9 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = "model.class.name=com.liferay.sharing.model.SharingEntry",
-	service = PreviewPortletProvider.class
+	service = PortletProvider.class
 )
-public class SharedAssetsPreviewPortletProvider
-	extends BasePortletProvider implements PreviewPortletProvider {
+public class SharedAssetsPreviewPortletProvider extends BasePortletProvider {
 
 	@Override
 	public String getPortletName() {
@@ -53,5 +52,12 @@ public class SharedAssetsPreviewPortletProvider
 			"/sharing/view_sharing_entry"
 		).buildPortletURL();
 	}
+
+	@Override
+	public Action[] getSupportedActions() {
+		return _supportedActions;
+	}
+
+	private final Action[] _supportedActions = {Action.PREVIEW};
 
 }

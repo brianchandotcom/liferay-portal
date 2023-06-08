@@ -475,6 +475,16 @@ const NameLabel = React.forwardRef(
 								onEditName(name);
 							}
 
+							if (
+								event.key === 'Enter' ||
+								event.key === 'Escape' ||
+								event.key === 'Tab'
+							) {
+								inputRef.current
+									.closest('.treeview-link')
+									.focus();
+							}
+
 							if (!event.key.match(/[a-z0-9-_ ]/gi)) {
 								event.preventDefault();
 							}

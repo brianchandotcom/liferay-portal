@@ -21,15 +21,21 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.taglib.aui.ScriptTag;
 import com.liferay.taglib.portletext.RuntimeTag;
 import com.liferay.taglib.util.IncludeTag;
+
+import java.util.Iterator;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -137,6 +143,14 @@ public class LayoutCommonTag extends IncludeTag {
 			jspWriter.write("</div></div>");
 		}
 
+		String scriptBodyContent = _getSessionMessagesScriptBodyContent();
+
+		if (Validator.isNotNull(scriptBodyContent)) {
+			ScriptTag.doTag(
+				null, null, "liferay-util", scriptBodyContent, bodyContent,
+				pageContext);
+		}
+
 		jspWriter.write("<form action=\"#\" aria-hidden=\"true\" ");
 		jspWriter.write("class=\"hide\" id=\"hrefFm\" method=\"post\" ");
 		jspWriter.write("name=\"hrefFm\"><span></span><button hidden ");
@@ -149,6 +163,60 @@ public class LayoutCommonTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
+	}
+
+	private String _getScript(String message, String type) {
+		StringBundler sb = new StringBundler(7);
+
+		sb.append("Liferay.Util.openToast({autoClose: 10000, message: '");
+		sb.append(message);
+		sb.append("', title: '");
+		sb.append(LanguageUtil.get(getRequest(), type));
+		sb.append(":', type: '");
+		sb.append(type);
+		sb.append("',});");
+
+		return sb.toString();
+	}
+
+	private String _getSessionMessagesScriptBodyContent() {
+		if (!_displaySessionMessages) {
+			return null;
+		}
+
+		HttpServletRequest httpServletRequest = getRequest();
+
+		if (SessionMessages.isEmpty(httpServletRequest)) {
+			return null;
+		}
+
+		StringBundler sb = new StringBundler();
+
+		Iterator<String> iterator = SessionMessages.iterator(
+			httpServletRequest);
+
+		while (iterator.hasNext()) {
+			String key = iterator.next();
+
+			if (Validator.isNull(key) || !key.endsWith("requestProcessed")) {
+				continue;
+			}
+
+			String successMessage = (String)SessionMessages.get(
+				httpServletRequest, key);
+
+			if (Validator.isNull(successMessage) ||
+				Objects.equals(successMessage, "request_processed") ||
+				Objects.equals(successMessage, key)) {
+
+				successMessage = LanguageUtil.get(
+					httpServletRequest, "your-request-completed-successfully");
+			}
+
+			sb.append(_getScript(successMessage, "success"));
+		}
+
+		return sb.toString();
 	}
 
 	private static final String[] _LAYOUT_STATIC_PORTLETS_ALL =

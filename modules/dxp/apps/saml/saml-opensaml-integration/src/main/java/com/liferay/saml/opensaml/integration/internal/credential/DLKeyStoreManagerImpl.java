@@ -15,9 +15,9 @@
 package com.liferay.saml.opensaml.integration.internal.credential;
 
 import com.liferay.document.library.kernel.exception.NoSuchFileException;
-import com.liferay.document.library.kernel.store.DLStoreRequest;
-import com.liferay.document.library.kernel.store.DLStoreUtil;
+import com.liferay.document.library.kernel.store.Store;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
@@ -29,8 +29,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 
-import java.nio.file.Files;
-
 import java.security.KeyStore;
 import java.security.KeyStoreException;
 
@@ -39,6 +37,7 @@ import java.util.Map;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mika Koivisto
@@ -53,8 +52,9 @@ public class DLKeyStoreManagerImpl extends BaseKeyStoreManagerImpl {
 	public KeyStore getKeyStore() throws KeyStoreException {
 		KeyStore keyStore = KeyStore.getInstance(getSamlKeyStoreType());
 
-		try (InputStream inputStream = DLStoreUtil.getFileAsStream(
-				getCompanyId(), CompanyConstants.SYSTEM, _SAML_KEYSTORE_PATH)) {
+		try (InputStream inputStream = _store.getFileAsStream(
+				getCompanyId(), CompanyConstants.SYSTEM, _SAML_KEYSTORE_PATH,
+				StringPool.BLANK)) {
 
 			String samlKeyStorePassword = getSamlKeyStorePassword();
 
@@ -104,24 +104,18 @@ public class DLKeyStoreManagerImpl extends BaseKeyStoreManagerImpl {
 				new FileOutputStream(tempFile),
 				samlKeyStorePassword.toCharArray());
 
-			if (DLStoreUtil.hasFile(
+			if (_store.hasFile(
 					getCompanyId(), CompanyConstants.SYSTEM,
-					_SAML_KEYSTORE_PATH)) {
+					_SAML_KEYSTORE_PATH, Store.VERSION_DEFAULT)) {
 
-				DLStoreUtil.deleteFile(
+				_store.deleteDirectory(
 					getCompanyId(), CompanyConstants.SYSTEM,
 					_SAML_KEYSTORE_PATH);
 			}
 
-			DLStoreUtil.addFile(
-				DLStoreRequest.builder(
-					getCompanyId(), CompanyConstants.SYSTEM, _SAML_KEYSTORE_PATH
-				).className(
-					this
-				).size(
-					Files.size(tempFile.toPath())
-				).build(),
-				new FileInputStream(tempFile));
+			_store.addFile(
+				getCompanyId(), CompanyConstants.SYSTEM, _SAML_KEYSTORE_PATH,
+				Store.VERSION_DEFAULT, new FileInputStream(tempFile));
 		}
 		finally {
 			tempFile.delete();
@@ -138,5 +132,8 @@ public class DLKeyStoreManagerImpl extends BaseKeyStoreManagerImpl {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLKeyStoreManagerImpl.class);
+
+	@Reference(target = "(default=true)")
+	private Store _store;
 
 }

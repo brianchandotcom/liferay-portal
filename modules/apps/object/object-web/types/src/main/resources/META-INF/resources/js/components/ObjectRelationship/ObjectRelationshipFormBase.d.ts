@@ -14,6 +14,19 @@
 
 import {FormError} from '@liferay/object-js-components-web';
 import React from 'react';
+interface ObjectRelationshipFormBaseProps {
+	errors: FormError<ObjectRelationship>;
+	ffOneToOneRelationshipConfigurationEnabled?: boolean;
+	handleChange: React.ChangeEventHandler<HTMLInputElement>;
+	readonly?: boolean;
+	setValues: (values: Partial<ObjectRelationship>) => void;
+	values: Partial<ObjectRelationship>;
+}
+interface UseObjectRelationshipFormProps {
+	initialValues: Partial<ObjectRelationship>;
+	onSubmit: (relationship: ObjectRelationship) => void;
+	parameterRequired: boolean;
+}
 export declare enum ObjectRelationshipType {
 	MANY_TO_MANY = 'manyToMany',
 	ONE_TO_MANY = 'oneToMany',
@@ -23,7 +36,7 @@ export declare function useObjectRelationshipForm({
 	initialValues,
 	onSubmit,
 	parameterRequired,
-}: IUseObjectRelationshipForm): {
+}: UseObjectRelationshipFormProps): {
 	errors: FormError<ObjectRelationship>;
 	handleChange: React.ChangeEventHandler<HTMLInputElement>;
 	handleSubmit: React.FormEventHandler<HTMLFormElement>;
@@ -37,18 +50,5 @@ export declare function ObjectRelationshipFormBase({
 	readonly,
 	setValues,
 	values,
-}: IPros): JSX.Element;
-interface IUseObjectRelationshipForm {
-	initialValues: Partial<ObjectRelationship>;
-	onSubmit: (relationship: ObjectRelationship) => void;
-	parameterRequired: boolean;
-}
-interface IPros {
-	errors: FormError<ObjectRelationship>;
-	ffOneToOneRelationshipConfigurationEnabled?: boolean;
-	handleChange: React.ChangeEventHandler<HTMLInputElement>;
-	readonly?: boolean;
-	setValues: (values: Partial<ObjectRelationship>) => void;
-	values: Partial<ObjectRelationship>;
-}
+}: ObjectRelationshipFormBaseProps): JSX.Element;
 export {};

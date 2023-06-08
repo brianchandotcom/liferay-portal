@@ -29,6 +29,21 @@ import React, {useEffect, useMemo, useState} from 'react';
 
 import {defaultLanguageId} from '../../utils/constants';
 
+interface ObjectRelationshipFormBaseProps {
+	errors: FormError<ObjectRelationship>;
+	ffOneToOneRelationshipConfigurationEnabled?: boolean;
+	handleChange: React.ChangeEventHandler<HTMLInputElement>;
+	readonly?: boolean;
+	setValues: (values: Partial<ObjectRelationship>) => void;
+	values: Partial<ObjectRelationship>;
+}
+
+interface UseObjectRelationshipFormProps {
+	initialValues: Partial<ObjectRelationship>;
+	onSubmit: (relationship: ObjectRelationship) => void;
+	parameterRequired: boolean;
+}
+
 export enum ObjectRelationshipType {
 	MANY_TO_MANY = 'manyToMany',
 	ONE_TO_MANY = 'oneToMany',
@@ -61,7 +76,7 @@ export function useObjectRelationshipForm({
 	initialValues,
 	onSubmit,
 	parameterRequired,
-}: IUseObjectRelationshipForm) {
+}: UseObjectRelationshipFormProps) {
 	const validate = (relationship: Partial<ObjectRelationship>) => {
 		const errors: FormError<ObjectRelationship> = {};
 
@@ -110,7 +125,7 @@ export function ObjectRelationshipFormBase({
 	readonly,
 	setValues,
 	values,
-}: IPros) {
+}: ObjectRelationshipFormBaseProps) {
 	const [creationLanguageId, setCreationLanguageId] = useState<
 		Liferay.Language.Locale
 	>();
@@ -129,16 +144,14 @@ export function ObjectRelationshipFormBase({
 		return [types, types.find(({value}) => value === values.type)?.label];
 	}, [ffOneToOneRelationshipConfigurationEnabled, values.type]);
 
-	useEffect(() => {
-		const makeFetch = async () => {
-			const objectDefinition = await API.getObjectDefinitionByExternalReferenceCode(
-				values.objectDefinitionExternalReferenceCode1!
-			);
-
-			setCreationLanguageId(objectDefinition.defaultLanguageId);
-		};
-		makeFetch();
-	}, [values]);
+	const filteredRelationships = useMemo(() => {
+		return filterArrayByQuery({
+			array: objectDefinitions,
+			creationLanguageId,
+			query,
+			str: 'label',
+		});
+	}, [creationLanguageId, objectDefinitions, query]);
 
 	useEffect(() => {
 		const fetchObjectDefinitions = async () => {
@@ -191,16 +204,7 @@ export function ObjectRelationshipFormBase({
 			fetchObjectDefinitions();
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [readonly, values.objectDefinitionId1]);
-
-	const filteredRelationships = useMemo(() => {
-		return filterArrayByQuery({
-			array: objectDefinitions,
-			creationLanguageId,
-			query,
-			str: 'label',
-		});
-	}, [creationLanguageId, objectDefinitions, query]);
+	}, [readonly, values.objectDefinitionExternalReferenceCode1]);
 
 	return (
 		<>
@@ -266,19 +270,4 @@ export function ObjectRelationshipFormBase({
 			</AutoComplete>
 		</>
 	);
-}
-
-interface IUseObjectRelationshipForm {
-	initialValues: Partial<ObjectRelationship>;
-	onSubmit: (relationship: ObjectRelationship) => void;
-	parameterRequired: boolean;
-}
-
-interface IPros {
-	errors: FormError<ObjectRelationship>;
-	ffOneToOneRelationshipConfigurationEnabled?: boolean;
-	handleChange: React.ChangeEventHandler<HTMLInputElement>;
-	readonly?: boolean;
-	setValues: (values: Partial<ObjectRelationship>) => void;
-	values: Partial<ObjectRelationship>;
 }

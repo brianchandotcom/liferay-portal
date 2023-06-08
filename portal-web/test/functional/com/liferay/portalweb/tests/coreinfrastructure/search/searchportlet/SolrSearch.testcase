@@ -693,7 +693,7 @@ definition {
 
 	@priority = 4
 	test SearchContentPagesSmoke {
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -759,14 +759,14 @@ definition {
 	@description = "This test will set up a search page and search on a newly added site. It will also use different scopes to assert search results for assets from multiple sites"
 	@priority = 4
 	test SearchDifferentScopesViaNewSite {
-		JSONGroup.addGroup(groupName = "Site Name 1");
+		HeadlessSite.addSite(siteName = "Site Name 1");
 
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
 			groupName = "Guest",
 			title = "Apple");
 
-		JSONGroup.addGroup(groupName = "Site Name 2");
+		HeadlessSite.addSite(siteName = "Site Name 2");
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -775,7 +775,7 @@ definition {
 			mimeType = "application/docx",
 			sourceFileName = "Document_1.docx");
 
-		JSONGroup.addGroup(groupName = "Site Name 3");
+		HeadlessSite.addSite(siteName = "Site Name 3");
 
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -838,7 +838,7 @@ definition {
 			mimeType = "application/docx",
 			sourceFileName = "Document_1.docx");
 
-		JSONGroup.addGroup(groupName = "Test Site");
+		HeadlessSite.addSite(siteName = "Test Site");
 
 		JSONBlog.addEntry(
 			entryContent = "This is a blog about Potatoes",
@@ -961,7 +961,7 @@ definition {
 	@description = "This is a use case for LPS-81931"
 	@priority = 5
 	test SearchGlobalTemplateSmoke {
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry 1 Content",
@@ -1491,7 +1491,7 @@ definition {
 
 	@priority = 4
 	test ViewStagedAndLiveContentInSearchResults {
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
 

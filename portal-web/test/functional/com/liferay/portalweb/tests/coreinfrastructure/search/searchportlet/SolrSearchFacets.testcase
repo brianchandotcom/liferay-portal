@@ -467,7 +467,7 @@ definition {
 			groupName = "Guest",
 			title = "orange");
 
-		JSONGroup.addGroup(groupName = "New Site");
+		HeadlessSite.addSite(siteName = "New Site");
 
 		JSONBlog.addEntry(
 			assetTagNames = "sweet",

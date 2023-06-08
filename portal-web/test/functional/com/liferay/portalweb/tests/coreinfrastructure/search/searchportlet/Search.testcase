@@ -30,7 +30,7 @@ definition {
 
 		var portalURL = PropsUtil.get("portal.url");
 
-		JSONGroup.addGroup(groupName = "Test Site Name");
+		HeadlessSite.addSite(siteName = "Test Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
@@ -1631,7 +1631,7 @@ definition {
 
 	@priority = 4
 	test SearchContentPagesSmoke {
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
 
@@ -1692,14 +1692,14 @@ definition {
 	@description = "This test will set up a search page and search on a newly added site. It will also use different scopes to assert search results for assets from multiple sites"
 	@priority = 4
 	test SearchDifferentScopesViaNewSite {
-		JSONGroup.addGroup(groupName = "Site Name 1");
+		HeadlessSite.addSite(siteName = "Site Name 1");
 
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
 			groupName = "Guest",
 			title = "Apple");
 
-		JSONGroup.addGroup(groupName = "Site Name 2");
+		HeadlessSite.addSite(siteName = "Site Name 2");
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -1708,7 +1708,7 @@ definition {
 			mimeType = "application/docx",
 			sourceFileName = "Document_1.docx");
 
-		JSONGroup.addGroup(groupName = "Site Name 3");
+		HeadlessSite.addSite(siteName = "Site Name 3");
 
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -1790,7 +1790,7 @@ definition {
 			mimeType = "application/msword",
 			sourceFileName = "Document_1.doc");
 
-		JSONGroup.addGroup(groupName = "Test Site");
+		HeadlessSite.addSite(siteName = "Test Site");
 
 		JSONBlog.addEntry(
 			entryContent = "This is a blog about Potatoes",
@@ -1921,7 +1921,7 @@ definition {
 	test SearchGlobalTemplateSmoke {
 		property portal.acceptance = "true";
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry 1 Content",
@@ -2785,7 +2785,7 @@ definition {
 
 	@priority = 4
 	test ViewStagedAndLiveContentInSearchResults {
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
 

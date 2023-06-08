@@ -342,7 +342,7 @@ definition {
 	@priority = 4
 	test CanViewFromOtherSitesWithDocumentsWidget {
 		for (var siteName : list "Site Name 1,Site Name 2,Site Name 3") {
-			JSONGroup.addGroup(groupName = ${siteName});
+			HeadlessSite.addSite(siteName = ${siteName});
 		}
 
 		var count = 0;
@@ -984,7 +984,7 @@ definition {
 	@priority = 4
 	test ViewWithDifferentScope {
 		for (var siteName : list "Site Name 1,Site Name 2,Site Name 3") {
-			JSONGroup.addGroup(groupName = ${siteName});
+			HeadlessSite.addSite(siteName = ${siteName});
 		}
 
 		var count = 0;

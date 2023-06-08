@@ -892,7 +892,7 @@ definition {
 		property portal.acceptance = "true";
 
 		for (var siteName : list "Community,Engineering,Product") {
-			JSONGroup.addGroup(groupName = ${siteName});
+			HeadlessSite.addSite(siteName = ${siteName});
 
 			JSONWebcontent.addWebContent(
 				content = "Web Content",
@@ -1388,7 +1388,7 @@ definition {
 	test CanOrderSiteFacetTerms {
 		task ("Add Sites") {
 			for (var siteName : list "Sales,Community,Product,Engineering") {
-				JSONGroup.addGroup(groupName = ${siteName});
+				HeadlessSite.addSite(siteName = ${siteName});
 			}
 		}
 
@@ -2594,7 +2594,7 @@ definition {
 			groupName = "Guest",
 			title = "orange");
 
-		JSONGroup.addGroup(groupName = "New Site");
+		HeadlessSite.addSite(siteName = "New Site");
 
 		JSONBlog.addEntry(
 			assetTagNames = "sweet",

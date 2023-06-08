@@ -890,7 +890,7 @@ definition {
 			groupName = "Guest",
 			title = "Liferay Journal");
 
-		JSONGroup.addGroup(groupName = "New Site");
+		HeadlessSite.addSite(siteName = "New Site");
 
 		JSONWebcontent.addWebContent(
 			content = "WC Content",

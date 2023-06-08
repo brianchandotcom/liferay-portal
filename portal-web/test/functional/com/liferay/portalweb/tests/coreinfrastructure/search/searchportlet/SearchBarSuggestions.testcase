@@ -526,7 +526,7 @@ definition {
 			groupName = "Guest",
 			title = "Apple");
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -616,7 +616,7 @@ definition {
 			mimeType = "application/msword",
 			sourceFileName = "Document_1.doc");
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",

@@ -52,6 +52,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.LiferayFileItemException;
 import com.liferay.portal.kernel.upload.UploadException;
@@ -442,6 +443,12 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 
 		if (hideDefaultSuccessMessage) {
 			hideDefaultSuccessMessage(actionRequest);
+		}
+		else {
+			SessionMessages.remove(
+				_portal.getHttpServletRequest(actionRequest),
+				_portal.getPortletId(actionRequest) +
+					SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE);
 		}
 	}
 

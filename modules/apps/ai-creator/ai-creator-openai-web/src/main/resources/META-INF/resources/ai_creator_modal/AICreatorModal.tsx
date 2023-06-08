@@ -115,7 +115,10 @@ export default function AICreatorModal({
 						<ErrorMessage message={status.errorMessage} />
 					) : null}
 
-					<Container className="c-p-4 flex-grow-1" fluid>
+					<Container
+						className="c-p-4 flex-grow-1 overflow-auto"
+						fluid
+					>
 						<FormContent portletNamespace={portletNamespace} />
 
 						{status.type === 'success' ? (
@@ -125,7 +128,7 @@ export default function AICreatorModal({
 							/>
 						) : null}
 
-						<ClayForm.Group>
+						<ClayForm.Group className="c-mb-0">
 							<ClayLink href="#">
 								{Liferay.Language.get(
 									'learn-more-about-openai-integration'
@@ -134,17 +137,21 @@ export default function AICreatorModal({
 						</ClayForm.Group>
 					</Container>
 
-					<FormFooter
-						onAdd={onAdd}
-						onClose={closeModal}
-						showAddButton={
-							status.type === 'success' && Boolean(status.text)
-						}
-						showCreateButton={
-							status.type === 'idle' || status.type === 'error'
-						}
-						showRetryButton={status.type === 'success'}
-					/>
+					<div className="d-flex flex-column flex-shrink-0">
+						<FormFooter
+							onAdd={onAdd}
+							onClose={closeModal}
+							showAddButton={
+								status.type === 'success' &&
+								Boolean(status.text)
+							}
+							showCreateButton={
+								status.type === 'idle' ||
+								status.type === 'error'
+							}
+							showRetryButton={status.type === 'success'}
+						/>
+					</div>
 				</fieldset>
 			</ClayForm>
 		</>

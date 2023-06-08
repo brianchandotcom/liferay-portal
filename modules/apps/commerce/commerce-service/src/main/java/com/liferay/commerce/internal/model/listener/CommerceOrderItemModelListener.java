@@ -91,6 +91,8 @@ public class CommerceOrderItemModelListener
 					originalCommerceOrderItem.getShippedQuantity();
 				int newShippedQuantity = commerceOrderItem.getShippedQuantity();
 
+				boolean toBeUpdate = false;
+
 				if (originalShippedQuantity != newShippedQuantity) {
 					int commerceShippedQuantity =
 						customerCommerceOrderItem.getShippedQuantity();
@@ -98,12 +100,16 @@ public class CommerceOrderItemModelListener
 					customerCommerceOrderItem.setShippedQuantity(
 						commerceShippedQuantity - originalShippedQuantity +
 							newShippedQuantity);
+
+					toBeUpdate = true;
 				}
 
 				int newQuantity = commerceOrderItem.getQuantity();
 
 				if (newQuantity != originalCommerceOrderItem.getQuantity()) {
 					customerCommerceOrderItem.setQuantity(newQuantity);
+
+					toBeUpdate = true;
 				}
 
 				BigDecimal newDiscountAmount =
@@ -124,6 +130,8 @@ public class CommerceOrderItemModelListener
 
 				if (compareUnitPrice != 0) {
 					customerCommerceOrderItem.setUnitPrice(newUnitPrice);
+
+					toBeUpdate = true;
 				}
 
 				BigDecimal newFinalPrice = commerceOrderItem.getFinalPrice();
@@ -133,14 +141,17 @@ public class CommerceOrderItemModelListener
 
 				if (compareFinalPrice != 0) {
 					customerCommerceOrderItem.setFinalPrice(newFinalPrice);
+
+					toBeUpdate = true;
 				}
 
-				customerCommerceOrderItem =
+				if (toBeUpdate) {
 					_commerceOrderItemLocalService.updateCommerceOrderItem(
 						customerCommerceOrderItem);
 
-				_commerceOrderEngine.checkCommerceOrderShipmentStatus(
-					customerCommerceOrderItem.getCommerceOrder());
+					_commerceOrderEngine.checkCommerceOrderShipmentStatus(
+						customerCommerceOrderItem.getCommerceOrder());
+				}
 			}
 		}
 		catch (PortalException portalException) {

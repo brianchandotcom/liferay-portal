@@ -14,14 +14,12 @@
 
 package com.liferay.marketplace.model.impl;
 
-import com.liferay.document.library.kernel.store.DLStoreUtil;
-import com.liferay.document.library.kernel.store.Store;
 import com.liferay.marketplace.internal.bundle.BundleManagerUtil;
 import com.liferay.marketplace.model.Module;
+import com.liferay.marketplace.service.AppLocalServiceUtil;
 import com.liferay.marketplace.service.ModuleLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.plugin.PluginPackageUtil;
@@ -87,9 +85,7 @@ public class AppImpl extends AppBaseImpl {
 
 	@Override
 	public boolean isDownloaded() throws PortalException {
-		return DLStoreUtil.hasFile(
-			getCompanyId(), CompanyConstants.SYSTEM, getFilePath(),
-			Store.VERSION_DEFAULT);
+		return AppLocalServiceUtil.isDownloaded(this);
 	}
 
 	@Override

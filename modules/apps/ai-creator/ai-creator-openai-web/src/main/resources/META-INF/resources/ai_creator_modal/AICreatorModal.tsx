@@ -16,6 +16,7 @@ import ClayForm from '@clayui/form';
 import {Container} from '@clayui/layout';
 import ClayLink from '@clayui/link';
 import classNames from 'classnames';
+import {fetch} from 'frontend-js-web';
 import React, {FormEvent, useState} from 'react';
 
 import {ErrorMessage} from './ErrorMessage';
@@ -59,14 +60,41 @@ export default function AICreatorModal({
 		event.preventDefault();
 		setStatus({type: 'loading'});
 
-		setTimeout(() => {
-			if (Math.random() < 0.5) {
-				setStatus({text: 'Random result', type: 'success'});
-			}
-			else {
-				setStatus({errorMessage: 'Random error', type: 'error'});
-			}
-		}, 3000);
+		const setErrorStatus = (
+			errorMessage = Liferay.Language.get('an-unexpected-error-occurred')
+		) => {
+			setStatus({
+				errorMessage,
+				type: 'error',
+			});
+		};
+
+		fetch(getCompletionURL, {
+			body: new FormData(event.target as HTMLFormElement),
+			method: 'POST',
+		})
+			.then((response) => response.json())
+			.then((json) => {
+				if (json.error) {
+					setErrorStatus(json.error.message);
+				}
+				else if (json.completion?.content) {
+					setStatus({
+						text: json.completion.content,
+						type: 'success',
+					});
+				}
+				else {
+					setErrorStatus();
+				}
+			})
+			.catch((error) => {
+				if (process.env.NODE_ENV === 'developm̀ent') {
+					console.error(error);
+				}
+
+				setErrorStatus();
+			});
 	};
 
 	return (

@@ -186,7 +186,7 @@ public class ObjectFieldLocalServiceTest {
 
 		// Localized object fields must not be required
 
-		_assertFailure(
+		AssertUtils.assertFailure(
 			ObjectFieldLocalizedException.class,
 			"Localized object fields must not be required",
 			() -> ObjectDefinitionTestUtil.addObjectDefinition(

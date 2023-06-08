@@ -17,7 +17,7 @@ package com.liferay.expando.web.internal.portlet;
 import com.liferay.expando.constants.ExpandoPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
-import com.liferay.portal.kernel.portlet.ManagePortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 
 import javax.portlet.PortletURL;
@@ -31,10 +31,9 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = "model.class.name=com.liferay.expando.kernel.model.ExpandoColumn",
-	service = ManagePortletProvider.class
+	service = PortletProvider.class
 )
-public class ExpandoManagePortletProvider
-	extends BasePortletProvider implements ManagePortletProvider {
+public class ExpandoManagePortletProvider extends BasePortletProvider {
 
 	@Override
 	public String getPortletName() {
@@ -51,5 +50,12 @@ public class ExpandoManagePortletProvider
 			"/view_attributes.jsp"
 		).buildPortletURL();
 	}
+
+	@Override
+	public Action[] getSupportedActions() {
+		return _supportedActions;
+	}
+
+	private final Action[] _supportedActions = {Action.MANAGE};
 
 }

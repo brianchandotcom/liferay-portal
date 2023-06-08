@@ -57,21 +57,21 @@ public class AssetCategoryPropertyLocalServiceTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+
+		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
+			_group.getGroupId());
+
+		_assetCategory = AssetTestUtil.addCategory(
+			_group.getGroupId(), assetVocabulary.getVocabularyId());
 	}
 
 	@Test
 	public void testCanAddCategoryPropertyValueWithSpecialCharacters()
 		throws Exception {
 
-		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
-			_group.getGroupId());
-
-		AssetCategory assetCategory = AssetTestUtil.addCategory(
-			_group.getGroupId(), assetVocabulary.getVocabularyId());
-
 		AssetCategoryProperty assetCategoryProperty =
 			_assetCategoryPropertyLocalService.addCategoryProperty(
-				TestPropsValues.getUserId(), assetCategory.getCategoryId(),
+				TestPropsValues.getUserId(), _assetCategory.getCategoryId(),
 				RandomTestUtil.randomString(),
 				String.valueOf(AssetHelper.INVALID_CHARACTERS));
 
@@ -84,17 +84,11 @@ public class AssetCategoryPropertyLocalServiceTest {
 	public void testCannotAddCategoryPropertyWithVeryLongKey()
 		throws Exception {
 
-		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
-			_group.getGroupId());
-
-		AssetCategory assetCategory = AssetTestUtil.addCategory(
-			_group.getGroupId(), assetVocabulary.getVocabularyId());
-
 		int keyMaxLength = ModelHintsUtil.getMaxLength(
 			AssetCategoryProperty.class.getName(), "key");
 
 		_assetCategoryPropertyLocalService.addCategoryProperty(
-			TestPropsValues.getUserId(), assetCategory.getCategoryId(),
+			TestPropsValues.getUserId(), _assetCategory.getCategoryId(),
 			RandomTestUtil.randomString(keyMaxLength + 1),
 			RandomTestUtil.randomString());
 	}
@@ -103,49 +97,31 @@ public class AssetCategoryPropertyLocalServiceTest {
 	public void testCannotAddCategoryPropertyWithVeryLongValue()
 		throws Exception {
 
-		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
-			_group.getGroupId());
-
-		AssetCategory assetCategory = AssetTestUtil.addCategory(
-			_group.getGroupId(), assetVocabulary.getVocabularyId());
-
 		int keyMaxLength = ModelHintsUtil.getMaxLength(
 			AssetCategoryProperty.class.getName(), "value");
 
 		_assetCategoryPropertyLocalService.addCategoryProperty(
-			TestPropsValues.getUserId(), assetCategory.getCategoryId(),
+			TestPropsValues.getUserId(), _assetCategory.getCategoryId(),
 			RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(keyMaxLength + 1));
 	}
 
 	@Test(expected = CategoryPropertyValueException.class)
 	public void testCannotAddEmptyCategoryPropertyValue() throws Exception {
-		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
-			_group.getGroupId());
-
-		AssetCategory assetCategory = AssetTestUtil.addCategory(
-			_group.getGroupId(), assetVocabulary.getVocabularyId());
-
 		_assetCategoryPropertyLocalService.addCategoryProperty(
-			TestPropsValues.getUserId(), assetCategory.getCategoryId(),
+			TestPropsValues.getUserId(), _assetCategory.getCategoryId(),
 			RandomTestUtil.randomString(), StringPool.BLANK);
 	}
 
 	@Test
 	public void testGetCategoryPropertyValues() throws Exception {
-		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
-			_group.getGroupId());
-
-		AssetCategory assetCategory = AssetTestUtil.addCategory(
-			_group.getGroupId(), assetVocabulary.getVocabularyId());
-
 		AssetCategoryProperty assetCategoryProperty =
 			_assetCategoryPropertyLocalService.addCategoryProperty(
-				TestPropsValues.getUserId(), assetCategory.getCategoryId(),
+				TestPropsValues.getUserId(), _assetCategory.getCategoryId(),
 				"keyToBeFound", "someValue");
 
 		_assetCategoryPropertyLocalService.addCategoryProperty(
-			TestPropsValues.getUserId(), assetCategory.getCategoryId(),
+			TestPropsValues.getUserId(), _assetCategory.getCategoryId(),
 			"keyNotToBeFound", "anotherValue");
 
 		List<AssetCategoryProperty> categoryPropertyValues =
@@ -158,6 +134,8 @@ public class AssetCategoryPropertyLocalServiceTest {
 			).getKey(),
 			assetCategoryProperty.getKey());
 	}
+
+	private AssetCategory _assetCategory;
 
 	@Inject
 	private AssetCategoryPropertyLocalService

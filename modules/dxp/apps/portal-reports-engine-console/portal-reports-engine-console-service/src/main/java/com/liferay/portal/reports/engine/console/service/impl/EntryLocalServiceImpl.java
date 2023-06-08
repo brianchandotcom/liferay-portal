@@ -14,8 +14,9 @@
 
 package com.liferay.portal.reports.engine.console.service.impl;
 
-import com.liferay.document.library.kernel.store.DLStoreRequest;
-import com.liferay.document.library.kernel.store.DLStoreUtil;
+import com.liferay.document.library.kernel.store.Store;
+import com.liferay.petra.io.StreamUtil;
+import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.memory.DeleteFileFinalizeAction;
 import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.petra.string.StringBundler;
@@ -189,7 +190,7 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 	public void deleteAttachment(long companyId, String fileName)
 		throws PortalException {
 
-		DLStoreUtil.deleteFile(companyId, CompanyConstants.SYSTEM, fileName);
+		_store.deleteDirectory(companyId, CompanyConstants.SYSTEM, fileName);
 	}
 
 	@Override
@@ -216,7 +217,7 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 
 		// Attachments
 
-		DLStoreUtil.deleteDirectory(
+		_store.deleteDirectory(
 			entry.getCompanyId(), CompanyConstants.SYSTEM,
 			entry.getAttachmentsDir());
 
@@ -251,13 +252,10 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 
 		String[] existingFiles = definition.getAttachmentsFiles();
 
-		byte[] templateFile = DLStoreUtil.getFileAsBytes(
-			definition.getCompanyId(), CompanyConstants.SYSTEM,
-			existingFiles[0]);
-
 		ReportDesignRetriever retriever = new MemoryReportDesignRetriever(
 			reportName + StringPool.PERIOD + entry.getFormat(),
-			definition.getModifiedDate(), templateFile);
+			definition.getModifiedDate(),
+			_getTemplateFileBytes(definition, existingFiles));
 
 		long sourceId = definition.getSourceId();
 
@@ -393,15 +391,16 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 		String fileName =
 			entry.getAttachmentsDir() + StringPool.SLASH + reportName;
 
-		DLStoreUtil.addFile(
-			DLStoreRequest.builder(
-				entry.getCompanyId(), CompanyConstants.SYSTEM, fileName
-			).className(
-				this
-			).size(
-				reportResults.length
-			).build(),
-			reportResults);
+		try (InputStream inputStream = new UnsyncByteArrayInputStream(
+				reportResults)) {
+
+			_store.addFile(
+				entry.getCompanyId(), CompanyConstants.SYSTEM, fileName,
+				Store.VERSION_DEFAULT, inputStream);
+		}
+		catch (IOException ioException) {
+			throw new SystemException(ioException);
+		}
 
 		String[] emailAddresses = StringUtil.split(entry.getEmailDelivery());
 
@@ -440,6 +439,21 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 				groupId, ReportsEngineConsoleConstants.SERVICE_NAME));
 	}
 
+	private byte[] _getTemplateFileBytes(
+			Definition definition, String[] existingFiles)
+		throws PortalException {
+
+		try {
+			return StreamUtil.toByteArray(
+				_store.getFileAsStream(
+					definition.getCompanyId(), CompanyConstants.SYSTEM,
+					existingFiles[0], StringPool.BLANK));
+		}
+		catch (IOException ioException) {
+			throw new SystemException(ioException);
+		}
+	}
+
 	private File _getTemporaryReportFile(
 			Entry entry, String fileName, boolean notification)
 		throws Exception {
@@ -448,8 +462,9 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 			return null;
 		}
 
-		try (InputStream inputStream = DLStoreUtil.getFileAsStream(
-				entry.getCompanyId(), CompanyConstants.SYSTEM, fileName)) {
+		try (InputStream inputStream = _store.getFileAsStream(
+				entry.getCompanyId(), CompanyConstants.SYSTEM, fileName,
+				StringPool.BLANK)) {
 
 			if (inputStream == null) {
 				throw new IOException("Unable to open file " + fileName);
@@ -612,6 +627,9 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 
 	@Reference
 	private SourcePersistence _sourcePersistence;
+
+	@Reference(target = "(default=true)")
+	private Store _store;
 
 	@Reference
 	private TriggerFactory _triggerFactory;

@@ -405,7 +405,7 @@ const MillerColumnsItem = ({
 					{viewUrl ? (
 						<ClayLink
 							aria-label={
-								Liferay.FeatureFlags['LPS-174471'] &&
+								Liferay.FeatureFlags['LPS-174417'] &&
 								hasDuplicatedFriendlyURL
 									? `${title}. ${warningMessage}`
 									: title
@@ -420,7 +420,7 @@ const MillerColumnsItem = ({
 						<span className="text-truncate">{title}</span>
 					)}
 
-					{Liferay.FeatureFlags['LPS-174471'] &&
+					{Liferay.FeatureFlags['LPS-174417'] &&
 					hasDuplicatedFriendlyURL ? (
 						<ClayIcon
 							className="align-self-center c-ml-2 flex-shrink-0 icon-warning lfr-portal-tooltip text-warning"

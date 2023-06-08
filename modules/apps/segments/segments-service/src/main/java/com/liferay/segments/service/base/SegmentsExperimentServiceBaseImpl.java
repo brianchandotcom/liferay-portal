@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.service.SegmentsExperimentService;
 import com.liferay.segments.service.SegmentsExperimentServiceUtil;
-import com.liferay.segments.service.persistence.SegmentsExperimentFinder;
 import com.liferay.segments.service.persistence.SegmentsExperimentPersistence;
 
 import javax.sql.DataSource;
@@ -126,9 +125,6 @@ public abstract class SegmentsExperimentServiceBaseImpl
 
 	@Reference
 	protected SegmentsExperimentPersistence segmentsExperimentPersistence;
-
-	@Reference
-	protected SegmentsExperimentFinder segmentsExperimentFinder;
 
 	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService

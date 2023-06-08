@@ -462,7 +462,13 @@ public class RenderLayoutStructureTag extends IncludeTag {
 						int columnSize = LayoutStructureConstants.COLUMN_SIZES
 							[numberOfColumns - 1][j];
 
-						colTag.setMd(String.valueOf(columnSize));
+						colTag.setCssClass(
+							ResponsiveLayoutStructureUtil.getColumnCssClass(
+								columnSize,
+								collectionStyledLayoutStructureItem.
+									getVerticalAlignment(),
+								collectionStyledLayoutStructureItem.
+									getViewportConfigurationJSONObjects()));
 
 						colTag.setPageContext(pageContext);
 

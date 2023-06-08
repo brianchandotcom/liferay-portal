@@ -57,6 +57,14 @@ public class SXPBlueprintServiceUtil {
 		return getService().deleteSXPBlueprint(sxpBlueprintId);
 	}
 
+	public static SXPBlueprint fetchSXPBlueprintByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().fetchSXPBlueprintByExternalReferenceCode(
+			externalReferenceCode, companyId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

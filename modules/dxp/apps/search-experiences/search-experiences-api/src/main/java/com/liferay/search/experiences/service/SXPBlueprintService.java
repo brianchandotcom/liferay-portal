@@ -63,6 +63,11 @@ public interface SXPBlueprintService extends BaseService {
 	public SXPBlueprint deleteSXPBlueprint(long sxpBlueprintId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SXPBlueprint fetchSXPBlueprintByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException;
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

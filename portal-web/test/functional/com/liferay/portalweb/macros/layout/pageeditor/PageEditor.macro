@@ -1692,11 +1692,11 @@ definition {
 			PageEditor.waitForAutoSave();
 		}
 
-		if (isSet(type)) {
+		if (isSet(style)) {
 			Select(
-				key_fieldLabel = "Type",
+				key_fieldLabel = "Style",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = ${type});
+				value1 = ${style});
 
 			PageEditor.waitForAutoSave();
 		}
@@ -5586,10 +5586,10 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 				styleValue = ${textColor});
 		}
 
-		if (isSet(type)) {
+		if (isSet(style)) {
 			AssertElementPresent(
 				key_fragmentName = StringUtil.lowerCase(${fragmentName}),
-				key_type = ${type},
+				key_type = ${style},
 				locator1 = "Fragment#FRAGMENT_CONFIGURATION_TYPE");
 		}
 	}

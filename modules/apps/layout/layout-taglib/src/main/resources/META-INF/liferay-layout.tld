@@ -44,6 +44,13 @@
 		<name>layout-common</name>
 		<tag-class>com.liferay.layout.taglib.servlet.taglib.LayoutCommonTag</tag-class>
 		<body-content>JSP</body-content>
+		<attribute>
+			<description>Whether to display the session messages. Default is false.</description>
+			<name>displaySessionMessages</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
 	</tag>
 	<tag>
 		<description>Creates a component that renders a list of fragments.</description>

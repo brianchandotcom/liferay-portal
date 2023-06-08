@@ -110,6 +110,23 @@ public class GroupLocalServiceUtil {
 		getService().addOrganizationGroups(organizationId, groupIds);
 	}
 
+	public static Group addOrUpdateGroup(
+			String externalReferenceCode, long userId, long parentGroupId,
+			String className, long classPK, long liveGroupId,
+			Map<java.util.Locale, String> nameMap,
+			Map<java.util.Locale, String> descriptionMap, int type,
+			boolean manualMembership, int membershipRestriction,
+			String friendlyURL, boolean site, boolean inheritContent,
+			boolean active, ServiceContext serviceContext)
+		throws Exception {
+
+		return getService().addOrUpdateGroup(
+			externalReferenceCode, userId, parentGroupId, className, classPK,
+			liveGroupId, nameMap, descriptionMap, type, manualMembership,
+			membershipRestriction, friendlyURL, site, inheritContent, active,
+			serviceContext);
+	}
+
 	public static void addRoleGroup(long roleId, Group group) {
 		getService().addRoleGroup(roleId, group);
 	}

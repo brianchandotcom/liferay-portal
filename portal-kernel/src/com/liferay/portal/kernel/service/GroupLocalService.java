@@ -111,6 +111,15 @@ public interface GroupLocalService
 
 	public void addOrganizationGroups(long organizationId, long[] groupIds);
 
+	public Group addOrUpdateGroup(
+			String externalReferenceCode, long userId, long parentGroupId,
+			String className, long classPK, long liveGroupId,
+			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+			int type, boolean manualMembership, int membershipRestriction,
+			String friendlyURL, boolean site, boolean inheritContent,
+			boolean active, ServiceContext serviceContext)
+		throws Exception;
+
 	public void addRoleGroup(long roleId, Group group);
 
 	public void addRoleGroup(long roleId, long groupId);

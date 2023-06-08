@@ -70,6 +70,21 @@ public class GroupServiceUtil {
 			serviceContext);
 	}
 
+	public static Group addOrUpdateGroup(
+			String externalReferenceCode, long parentGroupId, long liveGroupId,
+			Map<java.util.Locale, String> nameMap,
+			Map<java.util.Locale, String> descriptionMap, int type,
+			boolean manualMembership, int membershipRestriction,
+			String friendlyURL, boolean site, boolean inheritContent,
+			boolean active, ServiceContext serviceContext)
+		throws Exception {
+
+		return getService().addOrUpdateGroup(
+			externalReferenceCode, parentGroupId, liveGroupId, nameMap,
+			descriptionMap, type, manualMembership, membershipRestriction,
+			friendlyURL, site, inheritContent, active, serviceContext);
+	}
+
 	/**
 	 * Adds the groups to the role.
 	 *

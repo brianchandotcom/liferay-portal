@@ -551,6 +551,7 @@ Chrome"
               class="list-group-title text-truncate"
             >
               <a
+                class="text-decoration-none"
                 href="/workspace/23/contacts/individuals/known-individuals/0/interests/Bar0"
               >
                 Bar0

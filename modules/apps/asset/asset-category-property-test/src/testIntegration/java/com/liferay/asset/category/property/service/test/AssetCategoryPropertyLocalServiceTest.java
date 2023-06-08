@@ -130,6 +130,7 @@ public class AssetCategoryPropertyLocalServiceTest {
 			categoryPropertyValues.get(0);
 
 		Assert.assertEquals("keyToBeFound", assetCategoryProperty.getKey());
+		Assert.assertEquals("someValue", assetCategoryProperty.getValue());
 	}
 
 	private AssetCategory _assetCategory;

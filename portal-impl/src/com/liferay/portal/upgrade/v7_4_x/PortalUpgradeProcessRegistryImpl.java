@@ -308,6 +308,10 @@ public class PortalUpgradeProcessRegistryImpl
 			new Version(26, 3, 0),
 			new CTModelUpgradeProcess(
 				"AnnouncementsEntry", "AnnouncementsFlag"));
+
+		upgradeVersionTreeMap.put(
+			new Version(27, 0, 0),
+			new UpgradePortletPreferenceValueBlueprintOptions());
 	}
 
 }

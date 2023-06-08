@@ -60,6 +60,11 @@ public interface CETFactory {
 		ClientExtensionEntryConstants.TYPE_THEME_SPRITEMAP, "LPS-166479"
 	).put(
 
+		// feature.flag.LPS-184016
+
+		ClientExtensionEntryConstants.TYPE_DATA_SET_FILTER, "LPS-184016"
+	).put(
+
 		// feature.flag.LPS-172903
 
 		ClientExtensionEntryConstants.TYPE_JS_IMPORT_MAPS_ENTRY, "LPS-172903"

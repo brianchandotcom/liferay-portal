@@ -1164,11 +1164,15 @@ definition {
 	@description = "This is a test for LPS-152360. There are Copy Page, Permissions, Delete options in page tree and no Permission ellipsis button and Permissions option in configuration view."
 	@priority = 4
 	test ViewEllipsisOptionsInPageTreeAndNoPermissionEllipsisInConfigurationView {
-		task ("Given a content page") {
+		task ("Given a published content page") {
 			JSONLayout.addPublicLayout(
 				groupName = ${randomSiteName},
 				layoutName = "Test Page Name",
 				type = "content");
+
+			JSONLayout.publishLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Page Name");
 		}
 
 		task ("When user goes to the page tree") {
@@ -1182,7 +1186,7 @@ definition {
 		task ("Then there are Copy Page, Permissions, Delete options") {
 			PagesFinder.gotoPageEllipsisItem(
 				item = "Copy Page",
-				pageName = "Test Page Name*");
+				pageName = "Test Page Name");
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -1196,7 +1200,7 @@ definition {
 
 			PagesFinder.gotoPageEllipsisItem(
 				item = "Permissions",
-				pageName = "Test Page Name*");
+				pageName = "Test Page Name");
 
 			IFrame.selectPermissionsFrame();
 
@@ -1210,7 +1214,7 @@ definition {
 
 			PagesFinder.gotoPageEllipsisItem(
 				item = "Permissions",
-				pageName = "Test Page Name*");
+				pageName = "Test Page Name");
 
 			IFrame.selectPermissionsFrame();
 
@@ -1238,7 +1242,7 @@ definition {
 		task ("And Then assert no Permission ellipsis button on the top right with permission option") {
 			PagesFinder.gotoPageEllipsisItem(
 				item = "Configure",
-				pageName = "Test Page Name*");
+				pageName = "Test Page Name");
 
 			AssertElementNotPresent(locator1 = "Icon#CONTROL_MENU_VERTICAL_ELLIPSIS");
 		}

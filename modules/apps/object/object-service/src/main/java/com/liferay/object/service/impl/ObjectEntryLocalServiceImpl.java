@@ -552,6 +552,22 @@ public class ObjectEntryLocalServiceImpl
 			long groupId, long objectRelationshipId, long primaryKey)
 		throws PortalException {
 
+		ObjectRelationship objectRelationship =
+			_objectRelationshipPersistence.findByPrimaryKey(
+				objectRelationshipId);
+
+		ObjectDefinition relatedObjectDefinition =
+			_objectDefinitionPersistence.findByPrimaryKey(
+				objectRelationship.getObjectDefinitionId2());
+
+		if (!Objects.equals(
+				objectRelationship.getType(),
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY) ||
+			!relatedObjectDefinition.isUnmodifiableSystemObject()) {
+
+			throw new UnsupportedOperationException();
+		}
+
 		DSLQuery dslQuery = _getManyToOneObjectEntriesGroupByStep(
 			groupId, objectRelationship, primaryKey,
 			DSLQueryFactoryUtil.selectDistinct(ObjectEntryTable.INSTANCE));
@@ -2231,13 +2247,9 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	private GroupByStep _getManyToOneObjectEntriesGroupByStep(
-			long groupId, long objectRelationshipId, long primaryKey,
-			FromStep fromStep)
+			long groupId, ObjectRelationship objectRelationship,
+			long primaryKey, FromStep fromStep)
 		throws PortalException {
-
-		ObjectRelationship objectRelationship =
-			_objectRelationshipPersistence.findByPrimaryKey(
-				objectRelationshipId);
 
 		DynamicObjectDefinitionTable extensionDynamicObjectDefinitionTable =
 			_getExtensionDynamicObjectDefinitionTable(

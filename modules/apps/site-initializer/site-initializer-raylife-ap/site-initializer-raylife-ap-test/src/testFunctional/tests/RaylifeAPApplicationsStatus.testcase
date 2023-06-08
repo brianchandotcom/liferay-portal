@@ -162,7 +162,7 @@ definition {
 					product = "Auto",
 					status = "Bound");
 			}
-
+     
 			task ("And assert the Detail view page and go back to 'Test Test' User") {
 				AssertElementPresent(
 					key_tabTitle = "App Details",

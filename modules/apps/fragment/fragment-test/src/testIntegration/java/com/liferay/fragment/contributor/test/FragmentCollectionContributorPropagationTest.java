@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUti
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -56,6 +57,10 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.service.impl.ThemeLocalServiceImpl;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
@@ -117,6 +122,103 @@ public class FragmentCollectionContributorPropagationTest {
 				_companyLocalService.deleteCompany(_company);
 			}
 			catch (PortalException portalException) {
+			}
+		}
+	}
+
+	@Test
+	public void testPropagateContributedFragmentEntryThemeNotRegistered()
+		throws Exception {
+
+		Group defaultGroup = _groupLocalService.getGroup(
+			TestPropsValues.getCompanyId(), GroupConstants.GUEST);
+
+		Layout layout = _layoutLocalService.fetchFirstLayout(
+			defaultGroup.getGroupId(), false,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, false);
+
+		LayoutSet layoutSet = layout.getLayoutSet();
+
+		String originalCSS = layoutSet.getCss();
+		String originalColorSchemeId = layoutSet.getColorSchemeId();
+		String originalThemeId = layoutSet.getThemeId();
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				ThemeLocalServiceImpl.class.getName(), LoggerTestUtil.WARN)) {
+
+			_layoutSetLocalService.updateLookAndFeel(
+				defaultGroup.getGroupId(), "not_registered_theme",
+				StringPool.BLANK, StringPool.BLANK);
+
+			String originalHTML =
+				"<div>" + RandomTestUtil.randomString() + "</div>";
+
+			String fragmentCollectionContributorKey =
+				RandomTestUtil.randomString();
+
+			String fragmentEntryKey = StringBundler.concat(
+				fragmentCollectionContributorKey, StringPool.DASH,
+				RandomTestUtil.randomString());
+
+			FragmentEntryLink fragmentEntryLink =
+				_fragmentEntryLinkLocalService.addFragmentEntryLink(
+					TestPropsValues.getUserId(), defaultGroup.getGroupId(), 0,
+					0,
+					_segmentsExperienceLocalService.
+						fetchDefaultSegmentsExperienceId(layout.getPlid()),
+					layout.getPlid(), StringPool.BLANK, originalHTML,
+					StringPool.BLANK, StringPool.BLANK, null, StringPool.BLANK,
+					0, fragmentEntryKey, FragmentConstants.TYPE_COMPONENT,
+					ServiceContextTestUtil.getServiceContext(
+						defaultGroup.getGroupId()));
+
+			Assert.assertEquals(originalHTML, fragmentEntryLink.getHtml());
+
+			TestFragmentEntryProcessor testFragmentEntryProcessor =
+				new TestFragmentEntryProcessor(fragmentEntryKey);
+
+			_serviceRegistrations.add(
+				_bundleContext.registerService(
+					FragmentEntryProcessor.class, testFragmentEntryProcessor,
+					MapUtil.singletonDictionary(
+						"fragment.entry.processor.priority", 1)));
+
+			String modifiedHTML =
+				"<div>" + RandomTestUtil.randomString() + "</div>";
+
+			_serviceRegistrations.add(
+				_bundleContext.registerService(
+					FragmentCollectionContributor.class,
+					new TestFragmentCollectionContributor(
+						fragmentCollectionContributorKey,
+						HashMapBuilder.put(
+							FragmentConstants.TYPE_COMPONENT,
+							_getFragmentEntry(
+								fragmentEntryKey, modifiedHTML,
+								FragmentConstants.TYPE_COMPONENT)
+						).build()),
+					MapUtil.singletonDictionary(
+						"fragment.collection.key",
+						fragmentCollectionContributorKey)));
+
+			Map<Long, String> companyIdsMap =
+				testFragmentEntryProcessor.getCompanyIdsMap();
+
+			Assert.assertEquals(
+				companyIdsMap.get(TestPropsValues.getCompanyId()),
+				modifiedHTML);
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertTrue(logEntries.toString(), logEntries.isEmpty());
+		}
+		finally {
+			try {
+				_layoutSetLocalService.updateLookAndFeel(
+					defaultGroup.getGroupId(), originalThemeId,
+					originalColorSchemeId, originalCSS);
+			}
+			catch (Exception exception) {
 			}
 		}
 	}
@@ -376,6 +478,9 @@ public class FragmentCollectionContributorPropagationTest {
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;
+
+	@Inject
+	private LayoutSetLocalService _layoutSetLocalService;
 
 	@Inject
 	private Portal _portal;

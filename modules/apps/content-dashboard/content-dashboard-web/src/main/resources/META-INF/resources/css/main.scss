@@ -12,20 +12,6 @@ html#{$cadmin-selector} {
 			}
 		}
 
-		.content-dashboard-management-toolbar {
-			.navbar-expand-md .container-fluid {
-				padding: 0;
-			}
-			.navbar-form {
-				padding-right: 0;
-			}
-			@media (min-width: 768px) {
-				.management-bar.navbar-expand-md .navbar-form {
-					padding-right: 0;
-				}
-			}
-		}
-
 		.content-dashboard-checkbox-label {
 			line-height: 1.25rem;
 		}

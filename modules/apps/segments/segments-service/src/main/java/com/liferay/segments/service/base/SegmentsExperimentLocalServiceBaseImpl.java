@@ -52,7 +52,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.service.SegmentsExperimentLocalService;
 import com.liferay.segments.service.SegmentsExperimentLocalServiceUtil;
-import com.liferay.segments.service.persistence.SegmentsExperimentFinder;
 import com.liferay.segments.service.persistence.SegmentsExperimentPersistence;
 
 import java.io.Serializable;
@@ -629,9 +628,6 @@ public abstract class SegmentsExperimentLocalServiceBaseImpl
 
 	@Reference
 	protected SegmentsExperimentPersistence segmentsExperimentPersistence;
-
-	@Reference
-	protected SegmentsExperimentFinder segmentsExperimentFinder;
 
 	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService

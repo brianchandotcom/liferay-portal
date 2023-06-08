@@ -180,6 +180,96 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-11649. Verify that 404 Utility Pages work on Minium site"
+	@priority = 3
+	test CanSee404UtilityPagesWorkOnMiniumSite {
+		property portal.acceptance = "false";
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		task ("Given a Minium Site with an account is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+			CommerceAcceleratorsInitializer.createNewAccountViaFront(accountName = "Commerce Account");
+		}
+
+		task ("And the admin creates a master page template with a Commerce Categories Navigation widget inside of it") {
+			ProductMenu.gotoPortlet(
+				category = "Design",
+				portlet = "Page Templates");
+
+			MastersPageTemplatesAdmin.addMasters(masterLayoutName = "Master Page Template Test");
+
+			PageEditor.addWidget(
+				dropTarget = "Header",
+				portletName = "Commerce Categories Navigation",
+				scope = "Minium");
+		}
+
+		task ("And in the widget configuration the vocabulary is changed to 'Minium'") {
+			Portlet.gotoPortletOptions(
+				portletName = "Commerce Categories Navigation",
+				portletOption = "Configuration");
+
+			CommerceNavigator.changeVocabulary(newVocabularyName = "Minium");
+
+			MastersPageTemplates.publishMaster();
+		}
+
+		task ("And the admin creates a new utility page, selecting the created master for it") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "minium");
+
+			Navigator.gotoNavTab(navTab = "Utility Pages");
+
+			PagesAdmin.addUtilityPage(
+				masterLayoutName = "Master Page Template Test",
+				pageName = "404 Error Utility Page");
+		}
+
+		task ("And a paragraph is added to the 404 page") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Paragraph");
+
+			PageEditor.editFragmentText(
+				fragmentName = "Paragraph",
+				id = "element-text",
+				text = "Paragraph text edited.");
+
+			PageEditor.publish();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("And the newly created 404 is set as default") {
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Mark as Default",
+				rowEntry = "404 Error Utility Page");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("When the admin navigates to the non existent page") {
+			Navigator.openSpecificURL(url = "${portalURL}/web/minium/mynonexistentpage");
+		}
+
+		task ("Then the paragraph is visible inside the page") {
+			AssertElementPresent(
+				key_value = "Paragraph text edited.",
+				locator1 = "CommerceEntry#ASSERT_PARAGRAPH_TEXT");
+		}
+
+		task ("And the Minium Catalog page is not visible") {
+			AssertElementNotPresent(
+				key_title = "Catalog",
+				locator1 = "CommerceAccelerators#MINIUM_PAGE_TITLE");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-7952. Verify user can select, change, and remove a default category display page"
 	@priority = 5
 	test CanSelectChangeAndRemoveDefaultCategoryDisplayPage {

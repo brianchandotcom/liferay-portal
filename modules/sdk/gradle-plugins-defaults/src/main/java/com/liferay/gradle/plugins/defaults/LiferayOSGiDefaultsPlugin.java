@@ -1239,6 +1239,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		jar.setDescription(
 			"Assembles a jar archive containing the compiled JSP classes for " +
 				"this project.");
+		jar.setDuplicatesStrategy(DuplicatesStrategy.INCLUDE);
 		jar.setGroup(BasePlugin.BUILD_GROUP);
 		jar.setIncludeEmptyDirs(false);
 

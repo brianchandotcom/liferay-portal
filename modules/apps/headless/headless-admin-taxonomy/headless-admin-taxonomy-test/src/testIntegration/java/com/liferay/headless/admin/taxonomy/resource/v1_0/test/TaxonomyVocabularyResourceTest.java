@@ -17,10 +17,15 @@ package com.liferay.headless.admin.taxonomy.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.taxonomy.client.dto.v1_0.AssetType;
 import com.liferay.headless.admin.taxonomy.client.dto.v1_0.TaxonomyVocabulary;
+import com.liferay.headless.admin.taxonomy.client.pagination.Page;
+import com.liferay.headless.admin.taxonomy.client.pagination.Pagination;
 import com.liferay.headless.admin.taxonomy.client.problem.Problem;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
+
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -64,6 +69,69 @@ public class TaxonomyVocabularyResourceTest
 					", groupId=", testDepotEntry.getGroupId(), "}"),
 				problem.getTitle());
 		}
+	}
+
+	@Override
+	@Test
+	public void testGetAssetLibraryTaxonomyVocabulariesPage() throws Exception {
+		super.testGetAssetLibraryTaxonomyVocabulariesPage();
+
+		testGetAssetLibraryTaxonomyVocabulariesPage_addTaxonomyVocabulary(
+			testGetAssetLibraryTaxonomyVocabulariesPage_getAssetLibraryId(),
+			randomTaxonomyVocabulary());
+
+		Page<TaxonomyVocabulary> page =
+			taxonomyVocabularyResource.getAssetLibraryTaxonomyVocabulariesPage(
+				testGetAssetLibraryTaxonomyVocabulariesPage_getAssetLibraryId(),
+				null, null, null, Pagination.of(1, 10), null);
+
+		Assert.assertEquals(1, page.getTotalCount());
+
+		assertValid(
+			page,
+			HashMapBuilder.<String, Map<String, String>>put(
+				"create",
+				HashMapBuilder.put(
+					"href",
+					StringBundler.concat(
+						"http://localhost:8080/o/headless-admin-taxonomy/v1.0",
+						"/asset-libraries/",
+						testGetAssetLibraryTaxonomyVocabulariesPage_getAssetLibraryId(),
+						"/taxonomy-vocabularies")
+				).put(
+					"method", "POST"
+				).build()
+			).put(
+				"createBatch",
+				HashMapBuilder.put(
+					"href",
+					StringBundler.concat(
+						"http://localhost:8080/o/headless-admin-taxonomy/v1.0",
+						"/asset-libraries/",
+						testGetAssetLibraryTaxonomyVocabulariesPage_getAssetLibraryId(),
+						"/taxonomy-vocabularies/batch")
+				).put(
+					"method", "POST"
+				).build()
+			).put(
+				"deleteBatch",
+				HashMapBuilder.put(
+					"href",
+					"http://localhost:8080/o/headless-admin-taxonomy/v1.0" +
+						"/taxonomy-vocabularies/batch"
+				).put(
+					"method", "DELETE"
+				).build()
+			).put(
+				"updateBatch",
+				HashMapBuilder.put(
+					"href",
+					"http://localhost:8080/o/headless-admin-taxonomy/v1.0" +
+						"/taxonomy-vocabularies/batch"
+				).put(
+					"method", "PUT"
+				).build()
+			).build());
 	}
 
 	@Override

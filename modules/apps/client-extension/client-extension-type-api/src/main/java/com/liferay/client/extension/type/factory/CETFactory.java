@@ -54,12 +54,24 @@ public interface CETFactory {
 		throws PortalException;
 
 	public final Map<String, String> FEATURE_FLAG_KEYS = HashMapBuilder.put(
+
+		// feature.flag.LPS-172904
+
 		ClientExtensionEntryConstants.TYPE_FDS_CELL_RENDERER, "LPS-172904"
 	).put(
+
+		// feature.flag.LPS-172903
+
 		ClientExtensionEntryConstants.TYPE_JS_IMPORT_MAPS_ENTRY, "LPS-172903"
 	).put(
+
+		// feature.flag.LPS-177027
+
 		ClientExtensionEntryConstants.TYPE_STATIC_CONTENT, "LPS-177027"
 	).put(
+
+		// feature.flag.LPS-166479
+
 		ClientExtensionEntryConstants.TYPE_THEME_SPRITEMAP, "LPS-166479"
 	).build();
 

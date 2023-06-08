@@ -14,7 +14,7 @@
 
 package com.liferay.knowledge.base.internal.upgrade.v1_1_0;
 
-import com.liferay.document.library.kernel.store.DLStore;
+import com.liferay.document.library.kernel.store.Store;
 import com.liferay.knowledge.base.internal.upgrade.v1_1_0.util.KBArticleAttachmentsHelper;
 import com.liferay.knowledge.base.internal.upgrade.v1_1_0.util.KBArticleLatestUpgradeColumnImpl;
 import com.liferay.knowledge.base.internal.upgrade.v1_1_0.util.KBArticleMainUpgradeColumnImpl;
@@ -36,8 +36,8 @@ import com.liferay.portal.kernel.util.StringUtil;
  */
 public class KBArticleUpgradeProcess extends UpgradeProcess {
 
-	public KBArticleUpgradeProcess(DLStore dlStore) {
-		_dlStore = dlStore;
+	public KBArticleUpgradeProcess(Store store) {
+		_store = store;
 	}
 
 	@Override
@@ -82,7 +82,7 @@ public class KBArticleUpgradeProcess extends UpgradeProcess {
 		updateTable(newTableName, tableColumns, tableSqlCreate);
 
 		KBArticleAttachmentsHelper kbArticleAttachmentsHelper =
-			new KBArticleAttachmentsHelper(_dlStore);
+			new KBArticleAttachmentsHelper(_store);
 
 		kbArticleAttachmentsHelper.deleteAttachmentsDirectory(
 			PortalUtil.getDefaultCompanyId());
@@ -160,7 +160,7 @@ public class KBArticleUpgradeProcess extends UpgradeProcess {
 					resourcePrimKeyColumn);
 
 		KBArticleAttachmentsHelper kbArticleAttachmentsHelper =
-			new KBArticleAttachmentsHelper(_dlStore);
+			new KBArticleAttachmentsHelper(_store);
 
 		KBArticleLatestUpgradeColumnImpl kbArticleLatestUpgradeColumnImpl =
 			new KBArticleLatestUpgradeColumnImpl(
@@ -186,6 +186,6 @@ public class KBArticleUpgradeProcess extends UpgradeProcess {
 	private static final Log _log = LogFactoryUtil.getLog(
 		KBArticleUpgradeProcess.class);
 
-	private final DLStore _dlStore;
+	private final Store _store;
 
 }

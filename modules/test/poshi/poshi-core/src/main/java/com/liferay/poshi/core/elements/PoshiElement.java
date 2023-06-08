@@ -318,8 +318,8 @@ public abstract class PoshiElement
 		PoshiProperties poshiProperties = PoshiProperties.getPoshiProperties();
 
 		if (poshiProperties.generateCommandSignature &&
-			(blockName.startsWith("macro") ||
-			 blockName.startsWith("function"))) {
+			(blockName.startsWith("function") ||
+			 blockName.startsWith("macro"))) {
 
 			sb.append("(");
 

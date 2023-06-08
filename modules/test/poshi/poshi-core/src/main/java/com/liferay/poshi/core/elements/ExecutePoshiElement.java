@@ -99,7 +99,9 @@ public class ExecutePoshiElement extends PoshiElement {
 					StringBuilder sb = new StringBuilder();
 
 					sb.append("${");
+
 					sb.append(parameterNames.get(i));
+
 					sb.append("}");
 
 					addAttribute("argument" + (i + 1), sb.toString());

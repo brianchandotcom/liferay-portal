@@ -697,6 +697,7 @@ public class PoshiContext {
 		}
 
 		_readSeleniumFiles();
+
 		_readPoshiFiles(poshiURLs);
 
 		_initComponentCommandNamesMap();

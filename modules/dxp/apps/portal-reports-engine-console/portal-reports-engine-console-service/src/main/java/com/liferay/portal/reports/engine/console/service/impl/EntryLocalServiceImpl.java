@@ -311,6 +311,13 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 	}
 
 	@Override
+	public String[] getAttachmentsFiles(Entry entry) {
+		return _store.getFileNames(
+			entry.getCompanyId(), CompanyConstants.SYSTEM,
+			entry.getAttachmentsDir());
+	}
+
+	@Override
 	public List<Entry> getEntries(
 		long groupId, String definitionName, String userName, Date createDateGT,
 		Date createDateLT, boolean andSearch, int start, int end,

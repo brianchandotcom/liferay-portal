@@ -14,14 +14,13 @@
 
 package com.liferay.portal.reports.engine.console.model.impl;
 
-import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cal.TZSRecurrence;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.reports.engine.console.internal.constants.ReportsEngineDestinationNames;
+import com.liferay.portal.reports.engine.console.service.EntryLocalServiceUtil;
 import com.liferay.portal.reports.engine.console.service.permission.ReportsActionKeys;
 
 /**
@@ -37,8 +36,7 @@ public class EntryImpl extends EntryBaseImpl {
 
 	@Override
 	public String[] getAttachmentsFiles() throws PortalException {
-		return DLStoreUtil.getFileNames(
-			getCompanyId(), CompanyConstants.SYSTEM, getAttachmentsDir());
+		return EntryLocalServiceUtil.getAttachmentsFiles(this);
 	}
 
 	@Override

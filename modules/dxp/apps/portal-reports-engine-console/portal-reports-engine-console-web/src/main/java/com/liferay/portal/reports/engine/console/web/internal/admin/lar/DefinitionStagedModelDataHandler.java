@@ -14,13 +14,14 @@
 
 package com.liferay.portal.reports.engine.console.web.internal.admin.lar;
 
-import com.liferay.document.library.kernel.store.DLStoreUtil;
+import com.liferay.document.library.kernel.store.Store;
 import com.liferay.exportimport.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CompanyConstants;
@@ -124,11 +125,11 @@ public class DefinitionStagedModelDataHandler
 
 			attachmentElement.addAttribute("full-file-name", fullFileName);
 
-			byte[] bytes = DLStoreUtil.getFileAsBytes(
-				definition.getCompanyId(), CompanyConstants.SYSTEM,
-				fullFileName);
-
-			portletDataContext.addZipEntry(binPath, bytes);
+			portletDataContext.addZipEntry(
+				binPath,
+				_store.getFileAsStream(
+					definition.getCompanyId(), CompanyConstants.SYSTEM,
+					fullFileName, StringPool.BLANK));
 		}
 
 		portletDataContext.addClassedModel(
@@ -218,5 +219,8 @@ public class DefinitionStagedModelDataHandler
 
 	@Reference
 	private SourceLocalService _sourceLocalService;
+
+	@Reference(target = "(default=true)")
+	private Store _store;
 
 }

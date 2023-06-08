@@ -89,6 +89,9 @@ public class CatalogResourceImpl
 					externalReferenceCode);
 		}
 
+		_commerceCatalogService.deleteCommerceCatalog(
+			commerceCatalog.getCommerceCatalogId());
+
 		Response.ResponseBuilder responseBuilder = Response.ok();
 
 		return responseBuilder.build();
@@ -96,15 +99,7 @@ public class CatalogResourceImpl
 
 	@Override
 	public Catalog getCatalog(Long id) throws Exception {
-		CommerceCatalog commerceCatalog =
-			_commerceCatalogService.fetchCommerceCatalog(id);
-
-		if (commerceCatalog == null) {
-			throw new NoSuchCatalogException(
-				"Unable to find Catalog with ID: " + id);
-		}
-
-		return _toCatalog(commerceCatalog);
+		return _toCatalog(_commerceCatalogService.getCommerceCatalog(id));
 	}
 
 	@Override
@@ -189,20 +184,8 @@ public class CatalogResourceImpl
 
 	@Override
 	public Response patchCatalog(Long id, Catalog catalog) throws Exception {
-		CommerceCatalog commerceCatalog =
-			_commerceCatalogService.getCommerceCatalog(id);
-
-		_commerceCatalogService.updateCommerceCatalog(
-			commerceCatalog.getCommerceCatalogId(),
-			GetterUtil.get(
-				catalog.getAccountId(), commerceCatalog.getAccountEntryId()),
-			catalog.getName(),
-			GetterUtil.get(
-				catalog.getCurrencyCode(),
-				commerceCatalog.getCommerceCurrencyCode()),
-			GetterUtil.get(
-				catalog.getDefaultLanguageId(),
-				commerceCatalog.getCatalogDefaultLanguageId()));
+		_updateCommerceCatalog(
+			catalog, _commerceCatalogService.getCommerceCatalog(id));
 
 		Response.ResponseBuilder responseBuilder = Response.ok();
 
@@ -223,6 +206,8 @@ public class CatalogResourceImpl
 				"Unable to find catalog with external reference code " +
 					externalReferenceCode);
 		}
+
+		_updateCommerceCatalog(catalog, commerceCatalog);
 
 		Response.ResponseBuilder responseBuilder = Response.ok();
 
@@ -252,7 +237,7 @@ public class CatalogResourceImpl
 				GetterUtil.get(
 					catalog.getAccountId(),
 					commerceCatalog.getAccountEntryId()),
-				catalog.getName(),
+				GetterUtil.get(catalog.getName(), commerceCatalog.getName()),
 				GetterUtil.get(
 					catalog.getCurrencyCode(),
 					commerceCatalog.getCommerceCurrencyCode()),
@@ -301,6 +286,23 @@ public class CatalogResourceImpl
 				commerceCatalog.getCommerceCatalogId(),
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser));
+	}
+
+	private void _updateCommerceCatalog(
+			Catalog catalog, CommerceCatalog commerceCatalog)
+		throws Exception {
+
+		_commerceCatalogService.updateCommerceCatalog(
+			commerceCatalog.getCommerceCatalogId(),
+			GetterUtil.get(
+				catalog.getAccountId(), commerceCatalog.getAccountEntryId()),
+			GetterUtil.get(catalog.getName(), commerceCatalog.getName()),
+			GetterUtil.get(
+				catalog.getCurrencyCode(),
+				commerceCatalog.getCommerceCurrencyCode()),
+			GetterUtil.get(
+				catalog.getDefaultLanguageId(),
+				commerceCatalog.getCatalogDefaultLanguageId()));
 	}
 
 	private static final EntityModel _entityModel = new CatalogEntityModel();

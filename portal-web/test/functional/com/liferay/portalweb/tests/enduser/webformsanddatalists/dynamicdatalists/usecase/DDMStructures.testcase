@@ -37,7 +37,7 @@ definition {
 	test AddWebContentTemplateWithSmallImage {
 		var portalURL = PropsUtil.get("portal.url");
 
-		JSONGroup.addGroup(groupName = "Staging Site Name");
+		HeadlessSite.addSite(siteName = "Staging Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Staging Site Name",
@@ -116,7 +116,7 @@ definition {
 	@description = "This is a use case for LPS-68661 and LPS-77957."
 	@priority = 4
 	test CreateWebContentStructureAndTemplate {
-		JSONGroup.addGroup(groupName = "Staging Site Name");
+		HeadlessSite.addSite(siteName = "Staging Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Staging Site Name",

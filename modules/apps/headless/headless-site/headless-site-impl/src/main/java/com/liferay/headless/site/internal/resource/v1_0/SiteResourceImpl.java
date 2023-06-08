@@ -21,22 +21,30 @@ import com.liferay.portal.events.ThemeServicePreAction;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.permission.GroupPermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.liveusers.LiveUsers;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
+import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.site.initializer.SiteInitializer;
+import com.liferay.site.initializer.SiteInitializerFactory;
 import com.liferay.site.initializer.SiteInitializerRegistry;
 import com.liferay.sites.kernel.util.Sites;
+
+import java.io.File;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -76,21 +84,21 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 	}
 
 	@Override
-	public Site putSite(String key, MultipartBody multipartBody)
+	public Site putSite(
+			String externalReferenceCode, MultipartBody multipartBody)
 		throws Exception {
 
-		Group group = null;
+		Group group = _groupLocalService.fetchGroupByExternalReferenceCode(
+			externalReferenceCode, contextCompany.getCompanyId());
 
-		if (Validator.isNull(key)) {
+		if (group == null) {
 			group = _addGroup(
 				multipartBody.getValueAsInstance("site", Site.class));
 		}
 		else {
-			group = _groupService.getGroup(contextCompany.getCompanyId(), key);
-
 			if (!group.isSite()) {
 				throw new IllegalArgumentException(
-					"No site was found for key " + key);
+					"No site was found for key " + externalReferenceCode);
 			}
 
 			_groupPermission.check(
@@ -294,10 +302,16 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 	private GroupLocalService _groupLocalService;
 
 	@Reference
+	private GroupPermission _groupPermission;
+
+	@Reference
 	private GroupService _groupService;
 
 	@Reference
 	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
+
+	@Reference
+	private SiteInitializerFactory _siteInitializerFactory;
 
 	@Reference
 	private SiteInitializerRegistry _siteInitializerRegistry;

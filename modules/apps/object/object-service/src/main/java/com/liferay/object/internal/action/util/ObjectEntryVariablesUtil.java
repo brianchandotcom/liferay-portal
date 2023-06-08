@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -199,22 +200,23 @@ public class ObjectEntryVariablesUtil {
 		SystemObjectDefinitionManagerRegistry
 			systemObjectDefinitionManagerRegistry) {
 
+		String userId = payloadJSONObject.getString("userId");
+
 		Map<String, Object> allowedVariables =
 			HashMapBuilder.<String, Object>put(
 				"creator",
 				() -> {
 					if (objectDefinition.isUnmodifiableSystemObject()) {
-						return payloadJSONObject.get("userId");
+						return userId;
 					}
 
-					Map<String, Object> objectEntry =
+					return MapUtil.getString(
 						(Map<String, Object>)payloadJSONObject.get(
-							"objectEntry");
-
-					return objectEntry.get("userId");
+							"objectEntry"),
+						"userId");
 				}
 			).put(
-				"currentUserId", payloadJSONObject.get("userId")
+				"currentUserId", userId
 			).build();
 
 		Map<String, Object> variables = new HashMap<>();

@@ -15,8 +15,7 @@
 package com.liferay.marketplace.service.impl;
 
 import com.liferay.document.library.kernel.exception.NoSuchFileException;
-import com.liferay.document.library.kernel.store.DLStoreRequest;
-import com.liferay.document.library.kernel.store.DLStoreUtil;
+import com.liferay.document.library.kernel.store.Store;
 import com.liferay.marketplace.exception.AppPropertiesException;
 import com.liferay.marketplace.exception.AppTitleException;
 import com.liferay.marketplace.exception.AppVersionException;
@@ -51,10 +50,9 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.plugin.PluginPackageUtil;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-
-import java.nio.file.Files;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -108,7 +106,7 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 		// File
 
 		try {
-			DLStoreUtil.deleteFile(
+			_store.deleteDirectory(
 				app.getCompanyId(), CompanyConstants.SYSTEM, app.getFilePath());
 		}
 		catch (Exception exception) {
@@ -259,16 +257,16 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 	public void installApp(long remoteAppId) throws PortalException {
 		App app = appPersistence.findByRemoteAppId(remoteAppId);
 
-		if (!DLStoreUtil.hasFile(
-				app.getCompanyId(), CompanyConstants.SYSTEM,
-				app.getFilePath())) {
+		if (!_store.hasFile(
+				app.getCompanyId(), CompanyConstants.SYSTEM, app.getFilePath(),
+				Store.VERSION_DEFAULT)) {
 
 			throw new NoSuchFileException();
 		}
 
-		try (InputStream inputStream = DLStoreUtil.getFileAsStream(
-				app.getCompanyId(), CompanyConstants.SYSTEM,
-				app.getFilePath())) {
+		try (InputStream inputStream = _store.getFileAsStream(
+				app.getCompanyId(), CompanyConstants.SYSTEM, app.getFilePath(),
+				StringPool.BLANK)) {
 
 			if (inputStream == null) {
 				throw new IOException(
@@ -295,6 +293,13 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 		finally {
 			clearInstalledAppsCache();
 		}
+	}
+
+	@Override
+	public boolean isDownloaded(App app) {
+		return _store.hasFile(
+			app.getCompanyId(), CompanyConstants.SYSTEM, app.getFilePath(),
+			Store.VERSION_DEFAULT);
 	}
 
 	@Override
@@ -382,21 +387,14 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 		// File
 
 		if (file != null) {
-			try {
-				DLStoreUtil.deleteFile(
+			try (InputStream inputStream = new FileInputStream(file)) {
+				_store.deleteDirectory(
 					app.getCompanyId(), CompanyConstants.SYSTEM,
 					app.getFilePath());
 
-				DLStoreUtil.addFile(
-					DLStoreRequest.builder(
-						app.getCompanyId(), CompanyConstants.SYSTEM,
-						app.getFilePath()
-					).className(
-						this
-					).size(
-						Files.size(file.toPath())
-					).build(),
-					file);
+				_store.addFile(
+					app.getCompanyId(), CompanyConstants.SYSTEM,
+					app.getFilePath(), Store.VERSION_DEFAULT, inputStream);
 			}
 			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
@@ -508,6 +506,9 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 	private Portal _portal;
 
 	private Map<String, String> _prepackagedApps;
+
+	@Reference(target = "(default=true)")
+	private Store _store;
 
 	@Reference
 	private UserLocalService _userLocalService;

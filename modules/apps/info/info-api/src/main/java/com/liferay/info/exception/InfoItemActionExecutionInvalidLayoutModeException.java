@@ -22,7 +22,7 @@ import java.util.Locale;
  * @author Rubén Pulido
  */
 public class InfoItemActionExecutionInvalidLayoutModeException
-	extends InfoFormException {
+	extends InfoItemActionExecutionException {
 
 	public String getLocalizedMessage(Locale locale) {
 		return LanguageUtil.get(

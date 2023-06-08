@@ -243,6 +243,18 @@ definition {
 			value1 = "\RETURN");
 	}
 
+	macro viewActivityNotPresent {
+		AssertElementNotPresent(
+			key_activityName = ${activityName},
+			locator1 = "PRMMDFClaim#ACTIVITY_NAME");
+	}
+
+	macro viewActivityPresent {
+		AssertElementPresent(
+			key_activityName = ${activityName},
+			locator1 = "PRMMDFClaim#ACTIVITY_NAME");
+	}
+
 	@summary = "Verify that the attachment is not present"
 	macro viewAttachmentNotPresent {
 		AssertElementNotPresent(

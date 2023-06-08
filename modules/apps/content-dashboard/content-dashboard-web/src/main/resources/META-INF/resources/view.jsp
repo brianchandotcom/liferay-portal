@@ -64,7 +64,7 @@ ContentDashboardAdminDisplayContext contentDashboardAdminDisplayContext = (Conte
 									HashMapBuilder.<String, Object>put(
 										"chartConfigurationURL", contentDashboardAdminDisplayContext.getPortletURL()
 									).put(
-										"portletSelector", "#p_p_id_" + contentDashboardAdminDisplayContext.getPortletDisplayId()
+										"portletId", contentDashboardAdminDisplayContext.getPortletDisplayId()
 									).build()
 								%>'
 								borderless="<%= true %>"

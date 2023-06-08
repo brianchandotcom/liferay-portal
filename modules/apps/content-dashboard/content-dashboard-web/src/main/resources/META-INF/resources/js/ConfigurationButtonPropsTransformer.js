@@ -18,10 +18,12 @@ export default function ({additionalProps, ...props}) {
 	return {
 		...props,
 		onClick() {
-			const {chartConfigurationURL, portletSelector} = additionalProps;
+			const {chartConfigurationURL, portletId} = additionalProps;
 
 			openModal({
-				portletSelector,
+				onClose: () => {
+					Liferay.Portlet.refresh(`#p_p_id_${portletId}_`);
+				},
 				title: Liferay.Language.get('configuration'),
 				url: chartConfigurationURL,
 			});

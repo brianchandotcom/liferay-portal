@@ -70,6 +70,7 @@ import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -278,31 +279,24 @@ public class PriceListResourceImpl extends BasePriceListResourceImpl {
 
 				return addAction(
 					"DELETE", commercePriceList.getCommercePriceListId(),
-					"deletePriceList", commercePriceList.getUserId(),
-					"com.liferay.commerce.price.list.model.CommercePriceList",
-					commercePriceList.getGroupId());
+					"deletePriceList",
+					_commercePriceListModelResourcePermission);
 			}
 		).put(
 			"get",
 			addAction(
 				"VIEW", commercePriceList.getCommercePriceListId(),
-				"getPriceList", commercePriceList.getUserId(),
-				"com.liferay.commerce.price.list.model.CommercePriceList",
-				commercePriceList.getGroupId())
+				"getPriceList", _commercePriceListModelResourcePermission)
 		).put(
 			"permissions",
 			addAction(
 				"PERMISSIONS", commercePriceList.getCommercePriceListId(),
-				"patchPriceList", commercePriceList.getUserId(),
-				"com.liferay.commerce.price.list.model.CommercePriceList",
-				commercePriceList.getGroupId())
+				"patchPriceList", _commercePriceListModelResourcePermission)
 		).put(
 			"update",
 			addAction(
 				"UPDATE", commercePriceList.getCommercePriceListId(),
-				"patchPriceList", commercePriceList.getUserId(),
-				"com.liferay.commerce.price.list.model.CommercePriceList",
-				commercePriceList.getGroupId())
+				"patchPriceList", _commercePriceListModelResourcePermission)
 		).build();
 	}
 
@@ -655,6 +649,12 @@ public class PriceListResourceImpl extends BasePriceListResourceImpl {
 	@Reference
 	private CommercePriceListDiscountRelService
 		_commercePriceListDiscountRelService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.price.list.model.CommercePriceList)"
+	)
+	private ModelResourcePermission<CommercePriceList>
+		_commercePriceListModelResourcePermission;
 
 	@Reference
 	private CommercePriceListOrderTypeRelService

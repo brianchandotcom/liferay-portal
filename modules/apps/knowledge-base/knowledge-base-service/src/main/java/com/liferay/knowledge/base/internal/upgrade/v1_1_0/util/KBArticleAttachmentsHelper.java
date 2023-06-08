@@ -14,8 +14,8 @@
 
 package com.liferay.knowledge.base.internal.upgrade.v1_1_0.util;
 
+import com.liferay.document.library.kernel.store.DLStore;
 import com.liferay.document.library.kernel.store.DLStoreRequest;
-import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
@@ -29,9 +29,13 @@ import com.liferay.portal.kernel.util.FileUtil;
  */
 public class KBArticleAttachmentsHelper {
 
+	public KBArticleAttachmentsHelper(DLStore dlStore) {
+		_dlStore = dlStore;
+	}
+
 	public void deleteAttachmentsDirectory(long companyId) {
 		try {
-			String[] fileNames = DLStoreUtil.getFileNames(
+			String[] fileNames = _dlStore.getFileNames(
 				companyId, CompanyConstants.SYSTEM, "knowledgebase/articles");
 
 			if (fileNames.length > 0) {
@@ -42,7 +46,7 @@ public class KBArticleAttachmentsHelper {
 				return;
 			}
 
-			DLStoreUtil.deleteDirectory(
+			_dlStore.deleteDirectory(
 				companyId, CompanyConstants.SYSTEM, "knowledgebase/articles");
 		}
 		catch (Exception exception) {
@@ -58,7 +62,7 @@ public class KBArticleAttachmentsHelper {
 
 			String newDirName = "knowledgebase/kbarticles/" + folderId;
 
-			String[] fileNames = DLStoreUtil.getFileNames(
+			String[] fileNames = _dlStore.getFileNames(
 				kbArticle.getCompanyId(), CompanyConstants.SYSTEM, oldDirName);
 
 			ServiceContext serviceContext = new ServiceContext();
@@ -68,11 +72,11 @@ public class KBArticleAttachmentsHelper {
 
 			for (String fileName : fileNames) {
 				String shortFileName = FileUtil.getShortFileName(fileName);
-				byte[] bytes = DLStoreUtil.getFileAsBytes(
+				byte[] bytes = _dlStore.getFileAsBytes(
 					kbArticle.getCompanyId(), CompanyConstants.SYSTEM,
 					fileName);
 
-				DLStoreUtil.addFile(
+				_dlStore.addFile(
 					DLStoreRequest.builder(
 						kbArticle.getCompanyId(), CompanyConstants.SYSTEM,
 						newDirName + StringPool.SLASH + shortFileName
@@ -84,7 +88,7 @@ public class KBArticleAttachmentsHelper {
 					bytes);
 			}
 
-			DLStoreUtil.deleteDirectory(
+			_dlStore.deleteDirectory(
 				kbArticle.getCompanyId(), CompanyConstants.SYSTEM, oldDirName);
 
 			if (_log.isInfoEnabled()) {
@@ -98,5 +102,7 @@ public class KBArticleAttachmentsHelper {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		KBArticleAttachmentsHelper.class);
+
+	private final DLStore _dlStore;
 
 }

@@ -14,6 +14,7 @@
 
 package com.liferay.knowledge.base.internal.upgrade.registry;
 
+import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.knowledge.base.internal.upgrade.v2_0_2.KBArticleUpgradeProcess;
 import com.liferay.knowledge.base.internal.upgrade.v3_0_0.util.KBArticleTable;
@@ -62,7 +63,7 @@ public class KnowledgeBaseServiceUpgradeStepRegistrator
 			new com.liferay.knowledge.base.internal.upgrade.v1_1_0.
 				ExpandoTableUpgradeProcess(),
 			new com.liferay.knowledge.base.internal.upgrade.v1_1_0.
-				KBArticleUpgradeProcess(),
+				KBArticleUpgradeProcess(DLStoreUtil.getStore()),
 			new com.liferay.knowledge.base.internal.upgrade.v1_1_0.
 				KBCommentUpgradeProcess(),
 			new com.liferay.knowledge.base.internal.upgrade.v1_1_0.

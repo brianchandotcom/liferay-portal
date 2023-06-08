@@ -41,7 +41,8 @@ page import="com.liferay.portal.util.PropsValues" %>
 
 <%@ page import="java.lang.reflect.Method" %>
 
-<%@ page import="java.util.Date" %><%@
+<%@ page import="java.util.Collection" %><%@
+page import="java.util.Date" %><%@
 page import="java.util.LinkedHashMap" %><%@
 page import="java.util.LinkedHashSet" %><%@
 page import="java.util.List" %><%@

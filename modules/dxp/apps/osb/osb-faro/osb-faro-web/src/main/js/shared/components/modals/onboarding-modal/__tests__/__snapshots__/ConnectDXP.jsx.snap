@@ -91,11 +91,11 @@ exports[`ConnectDXP renders 1`] = `
               type="button"
             >
               <svg
-                class="lexicon-icon lexicon-icon-paste icon-root"
+                class="lexicon-icon lexicon-icon-copy icon-root"
                 role="presentation"
               >
                 <use
-                  xlink:href="#paste"
+                  xlink:href="#copy"
                 />
               </svg>
             </button>

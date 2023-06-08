@@ -16,7 +16,7 @@ package com.liferay.comment.web.internal.portlet;
 
 import com.liferay.comment.web.internal.constants.CommentPortletKeys;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
-import com.liferay.portal.kernel.portlet.ViewPortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProvider;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -25,14 +25,20 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = "model.class.name=com.liferay.portal.kernel.comment.Comment",
-	service = ViewPortletProvider.class
+	service = PortletProvider.class
 )
-public class CommentViewPortletProvider
-	extends BasePortletProvider implements ViewPortletProvider {
+public class CommentViewPortletProvider extends BasePortletProvider {
 
 	@Override
 	public String getPortletName() {
 		return CommentPortletKeys.COMMENT;
 	}
+
+	@Override
+	public Action[] getSupportedActions() {
+		return _supportedActions;
+	}
+
+	private final Action[] _supportedActions = {Action.VIEW};
 
 }

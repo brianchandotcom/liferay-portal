@@ -19,8 +19,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
-import com.liferay.portal.kernel.portlet.ViewPortletProvider;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -36,10 +36,9 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = "model.class.name=com.liferay.blogs.model.BlogsEntry",
-	service = ViewPortletProvider.class
+	service = PortletProvider.class
 )
-public class BlogsViewPortletProvider
-	extends BasePortletProvider implements ViewPortletProvider {
+public class BlogsViewPortletProvider extends BasePortletProvider {
 
 	@Override
 	public String getPortletName() {
@@ -64,5 +63,12 @@ public class BlogsViewPortletProvider
 		return PortletURLFactoryUtil.create(
 			httpServletRequest, getPortletName(), PortletRequest.RENDER_PHASE);
 	}
+
+	@Override
+	public Action[] getSupportedActions() {
+		return _supportedActions;
+	}
+
+	private final Action[] _supportedActions = {Action.VIEW};
 
 }

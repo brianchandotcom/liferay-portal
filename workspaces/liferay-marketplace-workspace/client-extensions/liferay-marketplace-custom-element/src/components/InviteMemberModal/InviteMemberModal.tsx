@@ -34,6 +34,7 @@ import {
   getSiteURL,
   getUserByEmail,
 } from './services';
+import { getAccountGroup } from "../../utils/api";
 
 interface InviteMemberModalProps {
   handleClose: () => void;
@@ -161,14 +162,22 @@ export function InviteMemberModal({
     await addExistentUserIntoAccount(selectedAccount.id, formFields.email);
     await addAccountRolesToUser(user);
 
+    const accountGroups = await getAccountGroup(selectedAccount.id);
+
+    let accountGroupERC: string = "";
+    if (accountGroups?.length > 0) {
+      accountGroupERC = accountGroups[0]?.externalReferenceCode;
+    }
+
     await addAdditionalInfo({
       acceptInviteStatus: false,
+      accountGroupERC:accountGroupERC,
       accountName: selectedAccount.name,
       emailOfMember: formFields.email,
       inviteURL:
         Liferay.ThemeDisplay.getPortalURL() +
         '/c/login?redirect=' +
-        getSiteURL(),
+        getSiteURL() + '/loadingpagevalidation',
       inviterName: myUser.givenName,
       mothersName: userPassword,
       r_accountToUserAdditionalInfos_accountEntryId: selectedAccount.id,

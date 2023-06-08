@@ -725,6 +725,20 @@
 							}
 						],
 						"type": "Section"
+					},
+					{
+						"definition": {
+							"fragment": {
+								"key": "notification-welcome",
+								"siteKey": "marketplace"
+							},
+							"fragmentConfig": {
+							},
+							"fragmentFields": [
+							],
+							"indexed": true
+						},
+						"type": "Fragment"
 					}
 				],
 				"type": "Section"

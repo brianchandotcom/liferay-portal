@@ -1,6 +1,7 @@
 [
 	{
 		"active": true,
+		"conditionExpression": "accountGroupERC == 'MKP-PUBLISHERS-GROUP'",
 		"externalReferenceCode": "MKT-PUBLISHER-ACTION",
 		"label": {
 			"en_US": "Invite Publisher MarketPlace"
@@ -8,6 +9,10 @@
 		"name": "InvitePublisherMarketPlace",
 		"objectActionExecutorKey": "notification",
 		"objectActionTriggerKey": "onAfterAdd",
-		"objectDefinitionId": "[$OBJECT_DEFINITION_ID:UserAdditionalInfo$]"
+		"objectDefinitionId": "[$OBJECT_DEFINITION_ID:UserAdditionalInfo$]",
+		"parameters": {
+			"notificationTemplateExternalReferenceCode": "MARKETPLACE-ACTION-PUBLISHERS",
+			"type": "email"
+		}
 	}
 ]

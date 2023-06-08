@@ -100,6 +100,18 @@
 			"name": "mothersName",
 			"required": false,
 			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Account Group ERC"
+			},
+			"name": "accountGroupERC",
+			"required": false,
+			"type": "String"
 		}
 	],
 	"panelCategoryKey": "control_panel.object",

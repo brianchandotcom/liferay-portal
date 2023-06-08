@@ -1,6 +1,7 @@
 {
 	"description": "",
 	"editorType": "richText",
+	"externalReferenceCode": "MARKETPLACE-ACTION-PUBLISHERS",
 	"name": "Invite Publisher MarketPlace Template",
 	"recipientType": "email",
 	"recipients": [

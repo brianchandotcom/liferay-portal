@@ -14,14 +14,22 @@
 
 package com.liferay.ai.creator.openai.web.internal.editor.configuration;
 
+import com.liferay.ai.creator.openai.web.internal.constants.AICreatorOpenAIPortletKeys;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 import java.util.Map;
+
+import javax.portlet.PortletMode;
+import javax.portlet.PortletModeException;
+import javax.portlet.PortletURL;
+import javax.portlet.WindowStateException;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -44,6 +52,34 @@ public class AICreatorOpenAIEditorConfigContributor
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
+		jsonObject.put(
+			"aiCreatorOpenAIURL",
+			() -> {
+				PortletURL portletURL =
+					requestBackedPortletURLFactory.createControlPanelRenderURL(
+						AICreatorOpenAIPortletKeys.AI_CREATOR_OPENAI,
+						themeDisplay.getScopeGroup(),
+						themeDisplay.getRefererGroupId(), 0);
+
+				try {
+					portletURL.setPortletMode(PortletMode.VIEW);
+				}
+				catch (PortletModeException portletModeException) {
+					throw new SystemException(portletModeException);
+				}
+
+				try {
+					portletURL.setWindowState(LiferayWindowState.POP_UP);
+				}
+				catch (WindowStateException windowStateException) {
+					throw new SystemException(windowStateException);
+				}
+
+				portletURL.setParameter("mvcPath", "/view.jsp");
+
+				return portletURL.toString();
+			}
+		);
 	}
 
 }

@@ -38,8 +38,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8923 | Test Summary: Check vote is triggered when voting and check its properties"
+	@ignore = "true"
 	@priority = 5
 	test CheckVoteEventWhenVotingForBlogAndCheckProperties {
+
+		// AC Bug: Unable to search using special characters
+		// AC Bug ticket: LRAC-13715
+
 		property proxy.server.enabled = "true";
 
 		task ("Add a blog to the page and connect AC to DXP") {
@@ -132,8 +137,13 @@ definition {
 	}
 
 	@description = "Bug: LRAC-11450 | Automation ID: LRAC-11507 | Test Summary: Check vote is triggered when voting for DM and check its properties"
+	@ignore = "true"
 	@priority = 5
 	test CheckVoteEventWhenVotingForDMAndCheckProperties {
+
+		// AC Bug: Unable to search using special characters
+		// AC Bug ticket: LRAC-13715
+
 		property proxy.server.enabled = "true";
 
 		task ("Add a documents and media to the page and connect DXP to AC") {

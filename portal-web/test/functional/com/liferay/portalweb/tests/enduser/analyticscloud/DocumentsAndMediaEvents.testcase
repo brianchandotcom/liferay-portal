@@ -154,8 +154,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8944 | Test Summary: Check documentPreviewed is triggered when viewing the document on a page and has the right parameters"
+	@ignore = "true"
 	@priority = 3
 	test CheckDocumentPreviewedWhenViewOnPageAndCheckParameters {
+
+		// AC Bug: Unable to search using special characters
+		// AC Bug ticket: LRAC-13715
+
 		property proxy.server.enabled = "true";
 
 		task ("Get the Property ID in AC") {

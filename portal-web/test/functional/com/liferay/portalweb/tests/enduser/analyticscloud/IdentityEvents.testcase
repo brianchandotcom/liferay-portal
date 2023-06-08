@@ -367,8 +367,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8715 | Test Summary: Check identity is triggered when logging in after a unintended session close"
+	@ignore = "true"
 	@priority = 3
 	test CheckIdentityTriggeredWhenLoginAfterASessionClose {
+
+		// AC Bug: Unable to search using special characters
+		// AC Bug ticket: LRAC-13715
+
 		property proxy.server.enabled = "true";
 
 		task ("Sign out and Close sessions") {
@@ -422,8 +427,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8714 | Test Summary: Check Identity is triggered when logging out and in again"
+	@ignore = "true"
 	@priority = 3
 	test CheckIdentityTriggeredWhenLogoutAndLoginAgain {
+
+		// AC Bug: Unable to search using special characters
+		// AC Bug ticket: LRAC-13715
+
 		property proxy.server.enabled = "true";
 
 		task ("Get the Property ID in AC") {
@@ -489,8 +499,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8713 | Test Summary: Check Identity triggers upon logging in and check its properties (see reference document in comments)"
+	@ignore = "true"
 	@priority = 5
 	test CheckIdentityUponLogin {
+
+		// AC Bug: Unable to search using special characters
+		// AC Bug ticket: LRAC-13715
+
 		property proxy.server.enabled = "true";
 
 		task ("Sign out") {

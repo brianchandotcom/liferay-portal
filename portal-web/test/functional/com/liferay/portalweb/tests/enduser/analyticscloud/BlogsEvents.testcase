@@ -42,8 +42,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8668 | Test Summary: Check blogClicked is triggered when a blog is clicked within a widget"
+	@ignore = "true"
 	@priority = 3
 	test CheckBlogClickedTriggeredWhenBlogClicked {
+
+		// AC Bug: Unable to search using special characters
+		// AC Bug ticket: LRAC-13715
+
 		property proxy.server.enabled = "true";
 
 		task ("Get the Property ID in AC") {
@@ -116,8 +121,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8661 | Test Summary: Check blogClicked is triggered when a blog entry title is clicked and check its properties (see reference document in comments)"
+	@ignore = "true"
 	@priority = 5
 	test CheckBlogClickedWhenBlogEntryTitleIsClickedAndCheckProperties {
+
+		// AC Bug: Unable to search using special characters
+		// AC Bug ticket: LRAC-13715
+
 		property proxy.server.enabled = "true";
 
 		task ("Get the Property ID in AC") {
@@ -190,8 +200,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8663 | Test Summary: Check blogDepthReached triggers (Level 1)"
+	@ignore = "true"
 	@priority = 5
 	test CheckBlogDepthReachedTo25AndCheckProperties {
+
+		// AC Bug: Unable to search using special characters
+		// AC Bug ticket: LRAC-13715
+
 		property proxy.server.enabled = "true";
 
 		task ("Get the Property ID in AC") {
@@ -265,8 +280,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8664 | Test Summary: Check blogDepthReached triggers (Level 2)"
+	@ignore = "true"
 	@priority = 5
 	test CheckBlogDepthReachedTo50AndCheckProperties {
+
+		// AC Bug: Unable to search using special characters
+		// AC Bug ticket: LRAC-13715
+
 		property proxy.server.enabled = "true";
 
 		task ("Get the Property ID in AC") {
@@ -420,8 +440,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8666 | Test Summary: Check blogDepthReached triggers (Level 4)"
+	@ignore = "true"
 	@priority = 5
 	test CheckBlogDepthReachedTo100AndCheckProperties {
+
+		// AC Bug: Unable to search using special characters
+		// AC Bug ticket: LRAC-13715
+
 		property proxy.server.enabled = "true";
 
 		task ("Get the Property ID in AC") {
@@ -495,8 +520,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8669 | Test Summary: Check blogViewed does not trigger when the blog is visible as a widget in the front page"
+	@ignore = "true"
 	@priority = 2
 	test CheckBlogViewedDoesNotTriggerWhenBlogIsVisible {
+
+		// AC Bug: Unable to search using special characters
+		// AC Bug ticket: LRAC-13715
+
 		property proxy.server.enabled = "true";
 
 		task ("Get the Property ID in AC") {
@@ -547,8 +577,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8662 | Test Summary: Check blogViewed triggers when visiting a DXP blog and check its properties (see reference document in comments)"
+	@ignore = "true"
 	@priority = 5
 	test CheckBlogViewedWhenVisitingDXPBlogAndCheckProperties {
+
+		// AC Bug: Unable to search using special characters
+		// AC Bug ticket: LRAC-13715
+
 		property proxy.server.enabled = "true";
 
 		task ("Get the Property ID in AC") {

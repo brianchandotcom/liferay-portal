@@ -629,8 +629,13 @@ definition {
 	}
 
 	@description = "Feature ID: LRAC-12919 | Automation ID: LRAC-13510 | Test Summary: Check if it is possible to filter the API response data only for the channelID that was chosen"
+	@ignore = "true"
 	@priority = 4
 	test RequestToAccessDataForSpecificChannelID {
+
+		// AC Bug: Unable to search using special characters
+		// AC Bug ticket: LRAC-13715
+
 		var blogsTitleList = "Blog AC Title 1,Blog AC Title 2";
 		var type = "blogs";
 		var range = "rangeKey";

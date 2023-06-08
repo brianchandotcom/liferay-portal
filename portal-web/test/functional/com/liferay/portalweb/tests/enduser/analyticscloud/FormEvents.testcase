@@ -231,8 +231,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8684 | Test Summary: Check fieldBlurred is triggered when navigating the form hitting the tab key"
+	@ignore = "true"
 	@priority = 3
 	test CheckFieldBlurredTriggeredWhenNavigateOutOfFieldViaTabKey {
+
+		// AC Bug: Unable to search using special characters
+		// AC Bug ticket: LRAC-13715
+
 		property proxy.server.enabled = "true";
 
 		task ("Get formId of form") {
@@ -461,8 +466,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8685 | Test Summary: Check fieldFocused is triggered when a field is focused (selected) and check its properties (see reference document in comments)"
+	@ignore = "true"
 	@priority = 3
 	test CheckFieldFocusedTriggeredWhenFieldIsFocused {
+
+		// AC Bug: Unable to search using special characters
+		// AC Bug ticket: LRAC-13715
+
 		property proxy.server.enabled = "true";
 
 		task ("Get formId of form") {
@@ -547,8 +557,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8690 | Test Summary: Check fieldFocused is triggered when navigating the form hitting the tab key"
+	@ignore = "true"
 	@priority = 5
 	test CheckFieldFocusedWhenNavigatingToFieldViaTabKey {
+
+		// AC Bug: Unable to search using special characters
+		// AC Bug ticket: LRAC-13715
+
 		property proxy.server.enabled = "true";
 
 		task ("Get formId of form") {
@@ -648,8 +663,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8691 | Test Summary: Check formSubmitted triggers after submitting a form and check its properties (see reference document in comments)"
+	@ignore = "true"
 	@priority = 5
 	test CheckFormSubmittedAfterSubmittingForm {
+
+		// AC Bug: Unable to search using special characters
+		// AC Bug ticket: LRAC-13715
+
 		property proxy.server.enabled = "true";
 
 		task ("Get formId of form") {
@@ -714,8 +734,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8682 | Test Summary: Check formViewed triggers and check its properties (see reference document in comments)"
+	@ignore = "true"
 	@priority = 5
 	test CheckFormViewedProperties {
+
+		// AC Bug: Unable to search using special characters
+		// AC Bug ticket: LRAC-13715
+
 		property proxy.server.enabled = "true";
 
 		task ("Get formId of form") {
@@ -794,8 +819,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8692 | Test Summary: Check pageViewed is triggered with formViewed"
+	@ignore = "true"
 	@priority = 4
 	test CheckPageViewedIsTriggeredWithFormViewed {
+
+		// AC Bug: Unable to search using special characters
+		// AC Bug ticket: LRAC-13715
+
 		property proxy.server.enabled = "true";
 
 		task ("Get formId of form") {

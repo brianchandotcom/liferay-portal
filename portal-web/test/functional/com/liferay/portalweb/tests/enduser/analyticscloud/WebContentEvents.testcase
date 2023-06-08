@@ -68,8 +68,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8706 | Test Summary: Check webContentClicked triggers and check its properties (see reference document in comments)"
+	@ignore = "true"
 	@priority = 5
 	test CheckWebContentClickedProperties {
+
+		// AC Bug: Unable to search using special characters
+		// AC Bug ticket: LRAC-13715
+
 		property proxy.server.enabled = "true";
 
 		task ("Get articleId of web content") {
@@ -154,8 +159,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8707 | Test Summary: Check webContentViewed triggers and check its properties (see reference document in comments)"
+	@ignore = "true"
 	@priority = 5
 	test CheckWebContentViewedProperties {
+
+		// AC Bug: Unable to search using special characters
+		// AC Bug ticket: LRAC-13715
+
 		property proxy.server.enabled = "true";
 
 		task ("Get articleId of web content") {

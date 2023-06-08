@@ -48,8 +48,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8805 | Test Summary: Check pageDepthReached triggers ([depth] = 25) and check its properties (see reference document in comments)"
+	@ignore = "true"
 	@priority = 5
 	test CheckPageDepthReachedTo25 {
+
+		// AC Bug: Unable to search using special characters
+		// AC Bug ticket: LRAC-13715
+
 		property proxy.server.enabled = "true";
 
 		task ("Add a Blogs widget to page") {
@@ -121,8 +126,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8806 | Test Summary: Check pageDepthReached trigggers ([depth] = 50) and check its properties (see reference document in comments)"
+	@ignore = "true"
 	@priority = 5
 	test CheckPageDepthReachedTo50 {
+
+		// AC Bug: Unable to search using special characters
+		// AC Bug ticket: LRAC-13715
+
 		property proxy.server.enabled = "true";
 
 		task ("Add a Blogs widget to page") {
@@ -194,8 +204,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8807 | Test Summary: Check pageDepthReached trigggers ([depth] = 75) and check its properties (see reference document in comments)"
+	@ignore = "true"
 	@priority = 5
 	test CheckPageDepthReachedTo75 {
+
+		// AC Bug: Unable to search using special characters
+		// AC Bug ticket: LRAC-13715
+
 		property proxy.server.enabled = "true";
 
 		task ("Add a Blogs widget to page") {
@@ -267,8 +282,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8808 | Test Summary: Check pageDepthReached trigggers ([depth] = 100) and check its properties (see reference document in comments)"
+	@ignore = "true"
 	@priority = 5
 	test CheckPageDepthReachedTo100 {
+
+		// AC Bug: Unable to search using special characters
+		// AC Bug ticket: LRAC-13715
+
 		property proxy.server.enabled = "true";
 
 		task ("Add a Blogs widget to page") {
@@ -340,8 +360,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8871 | Test Summary: Check pageDepthReached events trigger when scrolling the page by hitting the Page Dn or the Down arrow keys"
+	@ignore = "true"
 	@priority = 3
 	test CheckPageDepthReachedWhenPressPageDownKey {
+
+		// AC Bug: Unable to search using special characters
+		// AC Bug ticket: LRAC-13715
+
 		property proxy.server.enabled = "true";
 
 		task ("Add a Blogs widget to page") {
@@ -415,8 +440,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8935 | Test Summary: Check all page events can be sent again if the page is refreshed/hard refreshed"
+	@ignore = "true"
 	@priority = 4
 	test CheckPageEventsTriggeredAgainAfterHardRefresh {
+
+		// AC Bug: Unable to search using special characters
+		// AC Bug ticket: LRAC-13715
+
 		property proxy.server.enabled = "true";
 
 		task ("Get the Property ID in AC") {
@@ -499,8 +529,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8802 | Test Summary: Check all page events are triggered over again after a page refresh"
+	@ignore = "true"
 	@priority = 4
 	test CheckPageEventsTriggeredAgainAfterRefresh {
+
+		// AC Bug: Unable to search using special characters
+		// AC Bug ticket: LRAC-13715
+
 		property proxy.server.enabled = "true";
 
 		task ("Get the Property ID in AC") {
@@ -583,8 +618,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8799 | Test Summary: Check pageLoaded triggers when visiting a DXP page and check its properties (see reference document in comments)"
+	@ignore = "true"
 	@priority = 5
 	test CheckPageLoadedWhenViewPage {
+
+		// AC Bug: Unable to search using special characters
+		// AC Bug ticket: LRAC-13715
+
 		property proxy.server.enabled = "true";
 
 		task ("Get the Property ID in AC") {
@@ -640,8 +680,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8870 | Test Summary: Check pageUnloaded does not trigger when coming from untracked or external sites"
+	@ignore = "true"
 	@priority = 4
 	test CheckPageUnLoadedIsNotTriggeredWhenComesFromUntrackedPage {
+
+		// AC Bug: Unable to search using special characters
+		// AC Bug ticket: LRAC-13715
+
 		property proxy.server.enabled = "true";
 
 		task ("Get the Property ID in AC") {
@@ -692,8 +737,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8801 | Test Summary: Check pageUnloaded triggers when leaving a DXPpage and check its properties (see reference document in comments)"
+	@ignore = "true"
 	@priority = 5
 	test CheckPageUnLoadedWhenLeavePage {
+
+		// AC Bug: Unable to search using special characters
+		// AC Bug ticket: LRAC-13715
+
 		property proxy.server.enabled = "true";
 
 		task ("Add the second widget page") {
@@ -757,8 +807,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8800 | Test Summary: Check pageViewed triggers when visiting a DXP page and check its properties (see reference document in comments)"
+	@ignore = "true"
 	@priority = 5
 	test CheckPageViewedWhenViewPage {
+
+		// AC Bug: Unable to search using special characters
+		// AC Bug ticket: LRAC-13715
+
 		property proxy.server.enabled = "true";
 
 		task ("Get the Property ID in AC") {
@@ -809,8 +864,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8804 | Test Summary: Check tabBlurred fires whenever the user navigates to a different tab, window minimized or when the page is unloaded and check its properties (see reference document in comments)"
+	@ignore = "true"
 	@priority = 5
 	test CheckTabBlurredOnlyTriggerIfChangeToUntrackedTab {
+
+		// AC Bug: Unable to search using special characters
+		// AC Bug ticket: LRAC-13715
+
 		property proxy.server.enabled = "true";
 
 		task ("Get site assigned property name and get data source name") {
@@ -905,8 +965,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8869 | Test Summary: Check tabFocused fires once the tab is active and check its properties (see reference document in comments)"
+	@ignore = "true"
 	@priority = 5
 	test CheckTabFocusedOnceTabIsActive {
+
+		// AC Bug: Unable to search using special characters
+		// AC Bug ticket: LRAC-13715
+
 		property proxy.server.enabled = "true";
 
 		task ("Get site assigned property name and get data source name") {

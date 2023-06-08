@@ -100,8 +100,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8973 | Test Summary: Assert the Property Menu after editing a Property"
+	@ignore = "true"
 	@priority = 3
 	test AssertPropertyMenuAfterEditProperty {
+
+		// AC Bug: Unable to search using special characters
+		// AC Bug ticket: LRAC-13715
+
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 

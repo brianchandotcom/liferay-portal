@@ -14,20 +14,32 @@
 
 import React from 'react';
 
-function Comic({oAuth2Client}) {
+import {Liferay} from '../services/liferay/liferay.js';
+
+let oAuth2Client;
+
+try {
+	oAuth2Client = Liferay.OAuth2Client.FromUserAgentApplication(
+		'liferay-sample-node-oauth-application-user-agent'
+	);
+}
+catch (error) {
+	console.error(error);
+}
+
+function Comic() {
 	const [comicData, setComicData] = React.useState(null);
 
 	React.useEffect(() => {
-		const request = oAuth2Client.fetch('/comic').then((comic) => {
+		oAuth2Client
+			?.fetch('/comic')
+			.then((comic) => {
 			setComicData({
 				alt: comic.alt,
 				img: comic.img,
 				title: comic.safe_title,
 			});
 		});
-
-		return () => request.cancel();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	return !comicData ? (

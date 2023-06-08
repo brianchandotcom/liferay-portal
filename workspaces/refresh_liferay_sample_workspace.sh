@@ -134,20 +134,32 @@ EOF
 
 import React from 'react';
 
-function Comic({oAuth2Client}) {
+import {Liferay} from '../services/liferay/liferay.js';
+
+let oAuth2Client;
+
+try {
+	oAuth2Client = Liferay.OAuth2Client.FromUserAgentApplication(
+		'liferay-sample-node-oauth-application-user-agent'
+	);
+}
+catch (error) {
+	console.error(error);
+}
+
+function Comic() {
 	const [comicData, setComicData] = React.useState(null);
 
 	React.useEffect(() => {
-		const request = oAuth2Client.fetch('/comic').then((comic) => {
+		oAuth2Client
+			?.fetch('/comic')
+			.then((comic) => {
 			setComicData({
 				alt: comic.alt,
 				img: comic.img,
 				title: comic.safe_title,
 			});
 		});
-
-		return () => request.cancel();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	return !comicData ? (
@@ -183,7 +195,7 @@ EOF
 
 import React from 'react';
 
-import {Liferay} from '../services/liferay/liferay';
+import {Liferay} from '../services/liferay/liferay.js';
 
 let oAuth2Client;
 
@@ -238,13 +250,13 @@ EOF
 import React from 'react';
 import {createRoot} from 'react-dom/client';
 
-import Comic from './common/components/Comic';
-import DadJoke from './common/components/DadJoke';
-import api from './common/services/liferay/api';
-import {Liferay} from './common/services/liferay/liferay';
-import HelloBar from './routes/hello-bar/pages/HelloBar';
-import HelloFoo from './routes/hello-foo/pages/HelloFoo';
-import HelloWorld from './routes/hello-world/pages/HelloWorld';
+import Comic from './common/components/Comic.js';
+import DadJoke from './common/components/DadJoke.js';
+import api from './common/services/liferay/api.js';
+import {Liferay} from './common/services/liferay/liferay.js';
+import HelloBar from './routes/hello-bar/pages/HelloBar.js';
+import HelloFoo from './routes/hello-foo/pages/HelloFoo.js';
+import HelloWorld from './routes/hello-world/pages/HelloWorld.js';
 
 import './common/styles/index.scss';
 

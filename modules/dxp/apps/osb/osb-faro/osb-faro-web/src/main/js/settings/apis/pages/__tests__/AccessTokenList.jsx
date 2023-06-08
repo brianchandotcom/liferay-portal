@@ -117,7 +117,7 @@ describe('AccessTokenList', () => {
 		jest.runAllTimers();
 
 		expect(
-			getByText(container.querySelector('td:nth-child(4)'), 'Indefinite')
+			getByText(container.querySelector('td:nth-child(3)'), 'Indefinite')
 		).toMatchSnapshot();
 	});
 });

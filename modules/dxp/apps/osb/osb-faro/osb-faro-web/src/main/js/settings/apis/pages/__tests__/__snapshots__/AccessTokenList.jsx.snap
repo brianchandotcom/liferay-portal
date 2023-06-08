@@ -17,11 +17,6 @@ exports[`AccessTokenList should display the "Generate Token" card  above the tab
         <th
           class="table-head-title"
         >
-          Last Seen
-        </th>
-        <th
-          class="table-head-title"
-        >
           Date Created
         </th>
         <th
@@ -65,10 +60,7 @@ exports[`AccessTokenList should display the "Generate Token" card  above the tab
           Jul 10, 2018
         </td>
         <td>
-          Jul 10, 2018
-        </td>
-        <td>
-          Jul 9, 2018
+          Jul 09, 2018
         </td>
         <td
           class="row-inline-actions"
@@ -171,11 +163,6 @@ exports[`AccessTokenList should render 1`] = `
                   <th
                     class="table-head-title"
                   >
-                    Last Seen
-                  </th>
-                  <th
-                    class="table-head-title"
-                  >
                     Date Created
                   </th>
                   <th
@@ -210,10 +197,7 @@ exports[`AccessTokenList should render 1`] = `
                     Jul 10, 2018
                   </td>
                   <td>
-                    Jul 10, 2018
-                  </td>
-                  <td>
-                    Aug 9, 2018
+                    Aug 09, 2018
                   </td>
                   <td
                     class="row-inline-actions"
@@ -278,11 +262,6 @@ exports[`AccessTokenList should show the generated token in a list and the "Gene
         <th
           class="table-head-title"
         >
-          Last Seen
-        </th>
-        <th
-          class="table-head-title"
-        >
           Date Created
         </th>
         <th
@@ -317,10 +296,7 @@ exports[`AccessTokenList should show the generated token in a list and the "Gene
           Jul 10, 2018
         </td>
         <td>
-          Jul 10, 2018
-        </td>
-        <td>
-          Aug 9, 2018
+          Aug 09, 2018
         </td>
         <td
           class="row-inline-actions"

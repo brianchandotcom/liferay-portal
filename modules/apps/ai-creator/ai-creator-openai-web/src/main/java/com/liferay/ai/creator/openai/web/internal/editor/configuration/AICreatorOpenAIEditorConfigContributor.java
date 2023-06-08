@@ -14,12 +14,17 @@
 
 package com.liferay.ai.creator.openai.web.internal.editor.configuration;
 
+import com.liferay.ai.creator.openai.configuration.manager.AICreatorOpenAIConfigurationManager;
 import com.liferay.ai.creator.openai.web.internal.constants.AICreatorOpenAIPortletKeys;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -33,6 +38,7 @@ import javax.portlet.PortletURL;
 import javax.portlet.WindowStateException;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Lourdes Fernández Besada
@@ -52,6 +58,13 @@ public class AICreatorOpenAIEditorConfigContributor
 		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-179483") ||
+			!_isAICreatorOpenAIGroupEnabled(
+				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId())) {
+
+			return;
+		}
 
 		jsonObject.put(
 			"aiCreatorOpenAIURL",
@@ -103,5 +116,31 @@ public class AICreatorOpenAIEditorConfigContributor
 			}
 		);
 	}
+
+	private boolean _isAICreatorOpenAIGroupEnabled(
+		long companyId, long groupId) {
+
+		try {
+			if (_aiCreatorOpenAIConfigurationManager.
+					isAICreatorOpenAIGroupEnabled(companyId, groupId)) {
+
+				return true;
+			}
+		}
+		catch (ConfigurationException configurationException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(configurationException);
+			}
+		}
+
+		return false;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AICreatorOpenAIEditorConfigContributor.class);
+
+	@Reference
+	private AICreatorOpenAIConfigurationManager
+		_aiCreatorOpenAIConfigurationManager;
 
 }

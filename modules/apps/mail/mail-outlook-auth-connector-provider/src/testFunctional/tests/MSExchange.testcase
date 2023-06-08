@@ -18,6 +18,24 @@ definition {
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
+
+		Gmail.gotoHtmlMode();
+
+		if (IsElementNotPresent(locator1 = "Gmail#INBOX")) {
+			Gmail.login(
+				userEmailAddress = PropsUtil.get("email.address.3"),
+				userPassword = PropsUtil.get("email.password.3"));
+
+			WaitForElementPresent(locator1 = "Gmail#INBOX");
+
+			Gmail.gotoHtmlMode();
+		}
+
+		Gmail.deleteSpecificMail(gmailMessageTitleList = "MB Thread Message Subject");
+
+		Gmail.deleteSpecificMail(gmailMessageTitleList = "Your Password Has Been Changed");
+
+		Gmail.deleteSpecificMail(gmailMessageTitleList = "Your New Account");
 	}
 
 	@description = "This is a use case for LPS-183419. Verify users can view and reply to message board threads via email with Microsoft Exchange Server."

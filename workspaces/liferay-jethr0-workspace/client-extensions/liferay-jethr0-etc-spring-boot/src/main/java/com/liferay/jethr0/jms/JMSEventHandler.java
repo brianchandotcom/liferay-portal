@@ -107,6 +107,10 @@ public class JMSEventHandler {
 	private void _eventTriggerBuildCompleted(JSONObject messageJSONObject) {
 		BuildRun buildRun = _getBuildRun(messageJSONObject);
 
+		if (buildRun == null) {
+			return;
+		}
+
 		buildRun.setDuration(_getBuildRunDuration(messageJSONObject));
 		buildRun.setResult(_getBuildRunResult(messageJSONObject));
 		buildRun.setState(BuildRun.State.COMPLETED);
@@ -141,6 +145,10 @@ public class JMSEventHandler {
 
 	private void _eventTriggerBuildStarted(JSONObject messageJSONObject) {
 		BuildRun buildRun = _getBuildRun(messageJSONObject);
+
+		if (buildRun == null) {
+			return;
+		}
 
 		buildRun.setBuildURL(_getBuildURL(messageJSONObject));
 		buildRun.setState(BuildRun.State.RUNNING);
@@ -282,8 +290,13 @@ public class JMSEventHandler {
 		JSONObject parmetersJSONObject = buildJSONObject.getJSONObject(
 			"parameters");
 
-		return _buildRunRepository.getById(
-			parmetersJSONObject.getLong("BUILD_RUN_ID"));
+		String buildRunID = parmetersJSONObject.optString("BUILD_RUN_ID");
+
+		if ((buildRunID == null) || !buildRunID.matches("\\d+")) {
+			return null;
+		}
+
+		return _buildRunRepository.getById(Long.parseLong(buildRunID));
 	}
 
 	private long _getBuildRunDuration(JSONObject messageJSONObject) {

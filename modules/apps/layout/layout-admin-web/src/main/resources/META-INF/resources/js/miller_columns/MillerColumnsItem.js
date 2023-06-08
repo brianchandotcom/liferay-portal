@@ -166,8 +166,8 @@ function filterEmptyGroups(items) {
 const noop = () => {};
 
 const MillerColumnsItem = ({
+	isLayoutSetPrototype,
 	isPrivateLayoutsEnabled,
-	isSiteTemplate,
 	item: {
 		actions = [],
 		active,
@@ -177,6 +177,7 @@ const MillerColumnsItem = ({
 		description,
 		draggable,
 		hasChild,
+		hasDuplicatedFriendlyURL = false,
 		id: itemId,
 		itemIndex,
 		parentId,
@@ -188,7 +189,6 @@ const MillerColumnsItem = ({
 		title,
 		url,
 		viewUrl,
-		urlConflict = false,
 	},
 	items,
 	namespace,
@@ -353,7 +353,7 @@ const MillerColumnsItem = ({
 		}
 	}, [active, dropZone, isOver, itemId, onItemStayHover]);
 
-	const warningMessage = isSiteTemplate
+	const warningMessage = isLayoutSetPrototype
 		? Liferay.Language.get(
 				'there-is-a-page-with-the-same-friendly-url-in-a-site-using-this-site-template'
 		  )
@@ -406,7 +406,7 @@ const MillerColumnsItem = ({
 						<ClayLink
 							aria-label={
 								Liferay.FeatureFlags['LPS-174471'] &&
-								urlConflict
+								hasDuplicatedFriendlyURL
 									? `${title}. ${warningMessage}`
 									: title
 							}
@@ -420,7 +420,8 @@ const MillerColumnsItem = ({
 						<span className="text-truncate">{title}</span>
 					)}
 
-					{Liferay.FeatureFlags['LPS-174471'] && urlConflict ? (
+					{Liferay.FeatureFlags['LPS-174471'] &&
+					hasDuplicatedFriendlyURL ? (
 						<ClayIcon
 							className="align-self-center c-ml-2 flex-shrink-0 icon-warning lfr-portal-tooltip text-warning"
 							data-title={warningMessage}

@@ -70,6 +70,7 @@ const noop = () => {};
 
 const MillerColumns = ({
 	initialColumns = [],
+	isLayoutSetPrototype,
 	isPrivateLayoutsEnabled,
 	namespace,
 	onColumnsChange = noop,
@@ -77,7 +78,6 @@ const MillerColumns = ({
 	onItemStayHover,
 	rtl,
 	searchContainer,
-	isSiteTemplate,
 }) => {
 	const ref = useRef();
 
@@ -269,8 +269,8 @@ const MillerColumns = ({
 					<MillerColumnsColumn
 						columnItems={column.items}
 						columnsContainer={ref}
+						isLayoutSetPrototype={isLayoutSetPrototype}
 						isPrivateLayoutsEnabled={isPrivateLayoutsEnabled}
-						isSiteTemplate={isSiteTemplate}
 						items={items}
 						key={index}
 						namespace={namespace}

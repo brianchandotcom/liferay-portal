@@ -258,7 +258,7 @@ function TreeItem({
 								<a
 									aria-label={
 										Liferay.FeatureFlags['LPS-174471'] &&
-										item.urlConflict
+										item.hasDuplicatedFriendlyURL
 											? `${item.name}. ${warningMessage}`
 											: item.name
 									}
@@ -276,7 +276,7 @@ function TreeItem({
 									</span>
 
 									{Liferay.FeatureFlags['LPS-174471'] &&
-									item.urlConflict ? (
+									item.hasDuplicatedFriendlyURL ? (
 										<ClayIcon
 											className="align-self-center flex-shrink-0 icon-warning lfr-portal-tooltip"
 											data-title={warningMessage}

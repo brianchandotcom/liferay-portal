@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
@@ -350,7 +351,49 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 
 		layoutUtilityPageEntry.setName(name);
 
-		return layoutUtilityPageEntryPersistence.update(layoutUtilityPageEntry);
+		LayoutUtilityPageEntry layoutUtilityPageEntryUpdated =
+			layoutUtilityPageEntryPersistence.update(layoutUtilityPageEntry);
+
+		Map<Locale, String> titleMap = Collections.singletonMap(
+			LocaleUtil.getSiteDefault(), name);
+
+		Layout draftLayout = _layoutLocalService.fetchDraftLayout(
+			layoutUtilityPageEntry.getPlid());
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if (serviceContext == null) {
+			serviceContext = new ServiceContext();
+		}
+
+		serviceContext.setAttribute(
+			"layout.instanceable.allowed", Boolean.TRUE);
+
+		_layoutLocalService.updateLayout(
+			draftLayout.getGroupId(), draftLayout.isPrivateLayout(),
+			draftLayout.getLayoutId(), draftLayout.getParentLayoutId(),
+			titleMap, titleMap, draftLayout.getDescriptionMap(),
+			draftLayout.getKeywordsMap(), draftLayout.getRobotsMap(),
+			draftLayout.getType(), draftLayout.isHidden(),
+			draftLayout.getFriendlyURLMap(), draftLayout.getIconImage(), null,
+			draftLayout.getStyleBookEntryId(),
+			draftLayout.getFaviconFileEntryId(),
+			draftLayout.getMasterLayoutPlid(), serviceContext);
+
+		Layout layout = _layoutLocalService.getLayout(
+			layoutUtilityPageEntry.getPlid());
+
+		_layoutLocalService.updateLayout(
+			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			layout.getParentLayoutId(), titleMap, titleMap,
+			layout.getDescriptionMap(), layout.getKeywordsMap(),
+			layout.getRobotsMap(), layout.getType(), layout.isHidden(),
+			layout.getFriendlyURLMap(), layout.getIconImage(), null,
+			layout.getStyleBookEntryId(), layout.getFaviconFileEntryId(),
+			layout.getMasterLayoutPlid(), serviceContext);
+
+		return layoutUtilityPageEntryUpdated;
 	}
 
 	private Layout _addLayout(

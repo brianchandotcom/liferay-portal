@@ -126,6 +126,10 @@ public class AssetCategoryPropertyLocalServiceTest {
 			_assetCategoryPropertyLocalService.getCategoryPropertyValues(
 				_group.getGroupId(), "keyToBeFound");
 
+		Assert.assertEquals(
+			categoryPropertyValues.toString(), 1,
+			categoryPropertyValues.size());
+
 		AssetCategoryProperty assetCategoryProperty =
 			categoryPropertyValues.get(0);
 

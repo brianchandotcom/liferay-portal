@@ -194,10 +194,12 @@ public class CPDefinitionLinkLocalServiceImpl
 		_expandoRowLocalService.deleteRows(
 			cpDefinitionLink.getCPDefinitionLinkId());
 
-		CProduct cProduct = _cProductPersistence.findByPrimaryKey(
+		CProduct cProduct = _cProductPersistence.fetchByPrimaryKey(
 			cpDefinitionLink.getCProductId());
 
-		_reindexCPDefinition(cProduct.getPublishedCPDefinitionId());
+		if (cProduct != null) {
+			_reindexCPDefinition(cProduct.getPublishedCPDefinitionId());
+		}
 
 		_reindexCPDefinition(cpDefinitionLink.getCPDefinitionId());
 

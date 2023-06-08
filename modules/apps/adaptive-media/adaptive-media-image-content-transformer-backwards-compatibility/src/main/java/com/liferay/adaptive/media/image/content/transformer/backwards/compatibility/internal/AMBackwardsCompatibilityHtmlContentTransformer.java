@@ -87,7 +87,13 @@ public class AMBackwardsCompatibilityHtmlContentTransformer
 			imgElement.replaceWith(_parseNode(replacement));
 		}
 
-		return document.html();
+		if (html.contains("<html>") || html.contains("<head>")) {
+			return document.html();
+		}
+
+		Element body = document.body();
+
+		return body.html();
 	}
 
 	@Override

@@ -31,6 +31,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ASSERT_PARAGRAPH_TEXT</td>
+	<td>//div[contains(@class,'component-paragraph') and contains(.,'${key_value}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ANY_SELECT</td>
 	<td>//div[not(contains(@class,'hide'))]//div[contains(@class,'input-select-wrapper')][label[contains(.,'${key_selectFieldLabel}')]]/select</td>
 	<td></td>

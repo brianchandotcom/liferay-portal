@@ -211,6 +211,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MINIUM_PAGE_TITLE</td>
+	<td>//h1[contains(@class,'lfr-portal-tooltip') and contains(.,'${key_title}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MINIUM_SIDEBAR_USER_AVATAR</td>
 	<td>//div[contains(@class,'minium-user-nav__avatar')]</td>
 	<td></td>

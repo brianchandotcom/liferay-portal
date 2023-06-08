@@ -224,7 +224,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand"
 					name="title"
-					value="<%= HtmlUtil.escape(ListUtil.toString(groupRoles, Role.NAME_ACCESSOR)) %>"
+					value="<%= HtmlUtil.escape(ListUtil.toString(groupRoles, Role.TITLE_ACCESSOR)) %>"
 				>
 					<liferay-ui:icon
 						iconCssClass="<%= RolesAdminUtil.getIconCssClass(groupRoles.get(0)) %>"

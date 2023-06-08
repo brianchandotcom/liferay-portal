@@ -91,7 +91,8 @@ public class ReactRendererUtilTest {
 
 		ComponentDescriptor componentDescriptor = new ComponentDescriptor(
 			"{component} from my-context", "componentId",
-			Arrays.asList("{dep1} from deps-context", "dep2 from deps-context"),
+			Arrays.asList(
+				"{dep1} from deps-context", "{dep2} from deps-context"),
 			false, "{propsTransformer} from props-transformer-context");
 
 		HttpServletRequest httpServletRequest = Mockito.mock(
@@ -185,19 +186,25 @@ public class ReactRendererUtilTest {
 
 		List<ESImport> esImports = jsFragment.getESImports();
 
-		Assert.assertEquals(esImports.toString(), 3, esImports.size());
+		Assert.assertEquals(esImports.toString(), 5, esImports.size());
+
+		_assertESImportEquals(
+			"dep1", "deps-context#index.js", "dep1", esImports.get(0));
+
+		_assertESImportEquals(
+			"dep2", "deps-context#index.js", "dep2", esImports.get(1));
 
 		_assertESImportEquals(
 			"render", "portal-template-react-renderer-impl#index.js", "render",
-			esImports.get(0));
+			esImports.get(2));
 
 		_assertESImportEquals(
 			"componentModule", "my-context#index.js", "component",
-			esImports.get(1));
+			esImports.get(3));
 
 		_assertESImportEquals(
 			"propsTransformer", "props-transformer-context#index.js",
-			"propsTransformer", esImports.get(2));
+			"propsTransformer", esImports.get(4));
 	}
 
 	private void _assertESImportEquals(

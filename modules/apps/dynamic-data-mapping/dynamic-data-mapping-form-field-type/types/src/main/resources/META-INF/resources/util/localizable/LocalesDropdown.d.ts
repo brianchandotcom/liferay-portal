@@ -12,6 +12,8 @@
  * details.
  */
 
+/// <reference types="react" />
+
 interface Locale {
 	displayName: string;
 	icon: string;

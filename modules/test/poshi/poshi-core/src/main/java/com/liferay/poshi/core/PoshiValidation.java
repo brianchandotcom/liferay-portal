@@ -1105,31 +1105,29 @@ public class PoshiValidation {
 		Element commandElement = PoshiContext.getMacroCommandElement(
 			macroName, namespace);
 
-		String requiredArguments = commandElement.attributeValue("arguments");
+		String argumentsValue = commandElement.attributeValue("arguments");
 
-		if (Validator.isNotNull(requiredArguments)) {
-			List<String> requiredArgumentsList = ListUtil.newListFromString(
-				requiredArguments);
+		if (Validator.isNotNull(argumentsValue)) {
+			List<String> arguments = ListUtil.newListFromString(argumentsValue);
 
-			List<PoshiElement> childElements = poshiElement.toPoshiElements(
-				poshiElement.elements());
-			List<String> executeElementArguments = new ArrayList<>();
+			List<PoshiElement> varPoshiElements = poshiElement.toPoshiElements(
+				poshiElement.elements("var"));
+			List<String> variableNames = new ArrayList<>();
 
-			for (PoshiElement childElement : childElements) {
-				executeElementArguments.add(
-					childElement.attributeValue("name"));
+			for (PoshiElement varPoshiElement : varPoshiElements) {
+				variableNames.add(varPoshiElement.attributeValue("name"));
 			}
 
-			for (String requiredArgument : requiredArgumentsList) {
-				if (requiredArgument.contains("= null")) {
+			for (String argument : arguments) {
+				if (argument.matches("[\\w]+[\\s]*=[\\s]*null")) {
 					continue;
 				}
 
-				if (!executeElementArguments.contains(requiredArgument)) {
+				if (!variableNames.contains(argument)) {
 					_exceptions.add(
 						new PoshiElementException(
 							poshiElement, "Macro missing required variable ",
-							requiredArgument));
+							argument));
 				}
 			}
 		}

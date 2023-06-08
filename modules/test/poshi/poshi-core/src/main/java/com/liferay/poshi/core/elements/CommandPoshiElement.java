@@ -57,24 +57,6 @@ public class CommandPoshiElement extends PoshiElement {
 		return null;
 	}
 
-	public List<String> generateRequiredArguments(String blockContent) {
-		Set<String> argumentSet = new HashSet<>();
-		Matcher variableMatcher = _variablePattern.matcher(blockContent);
-
-		while (variableMatcher.find()) {
-			argumentSet.add(variableMatcher.group(1));
-		}
-
-		Matcher declarationMatcher = _declarationVariablePattern.matcher(
-			blockContent);
-
-		while (declarationMatcher.find()) {
-			argumentSet.remove(declarationMatcher.group(1));
-		}
-
-		return new ArrayList<>(argumentSet);
-	}
-
 	@Override
 	public String getPoshiLogDescriptor() {
 		return getBlockName();
@@ -324,6 +306,26 @@ public class CommandPoshiElement extends PoshiElement {
 		return getPoshiScriptKeyword() + " " + attributeValue("name");
 	}
 
+	private List<String> _getArguments(String blockContent) {
+		Set<String> arguments = new HashSet<>();
+
+		Matcher referencedVariableMatcher = _referencedVariablePattern.matcher(
+			blockContent);
+
+		while (referencedVariableMatcher.find()) {
+			arguments.add(referencedVariableMatcher.group(1));
+		}
+
+		Matcher declaredVariableMatcher = _declaredVariablePattern.matcher(
+			blockContent);
+
+		while (declaredVariableMatcher.find()) {
+			arguments.remove(declaredVariableMatcher.group(1));
+		}
+
+		return new ArrayList<>(arguments);
+	}
+
 	private boolean _isElementType(
 		PoshiElement parentPoshiElement, String poshiScript) {
 
@@ -343,9 +345,9 @@ public class CommandPoshiElement extends PoshiElement {
 		"^" + BLOCK_NAME_ANNOTATION_REGEX + _POSHI_SCRIPT_KEYWORD_REGEX +
 			"[\\s]*([\\w]*)[\\s]*(\\(.*\\)|)",
 		Pattern.DOTALL);
-	private static final Pattern _declarationVariablePattern = Pattern.compile(
+	private static final Pattern _declaredVariablePattern = Pattern.compile(
 		"var\\s*(\\S*)\\s*(?>=|:)");
-	private static final Pattern _variablePattern = Pattern.compile(
-		"\\$\\{(\\w*|\\d*)\\}");
+	private static final Pattern _referencedVariablePattern = Pattern.compile(
+		"\\$\\{(\\w*)\\}");
 
 }

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.vulcan.openapi;
 
+import javax.ws.rs.core.UriInfo;
+
 /**
  * @author Carlos Correa
  */
@@ -25,6 +27,10 @@ public class OpenAPIContext {
 
 	public String getPath() {
 		return _path;
+	}
+
+	public UriInfo getUriInfo() {
+		return _uriInfo;
 	}
 
 	public String getVersion() {
@@ -39,12 +45,17 @@ public class OpenAPIContext {
 		_path = path;
 	}
 
+	public void setUriInfo(UriInfo uriInfo) {
+		_uriInfo = uriInfo;
+	}
+
 	public void setVersion(String version) {
 		_version = version;
 	}
 
 	private String _baseURL;
 	private String _path;
+	private UriInfo _uriInfo;
 	private String _version;
 
 }

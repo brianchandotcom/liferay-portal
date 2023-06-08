@@ -26,23 +26,29 @@ import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.change.tracking.spi.display.CTDisplayRendererRegistry;
 import com.liferay.change.tracking.web.internal.constants.PublicationRoleConstants;
 import com.liferay.change.tracking.web.internal.security.permission.resource.CTCollectionPermission;
+import com.liferay.change.tracking.web.internal.security.permission.resource.CTPermission;
 import com.liferay.change.tracking.web.internal.util.PublicationsPortletURLUtil;
+import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PropsValues;
@@ -98,9 +104,15 @@ public class PublicationsDisplayContext extends BasePublicationsDisplayContext {
 		}
 	}
 
+	public String getAPIURL() {
+		return StringBundler.concat(
+			"/o/change-tracking-rest/v1.0/ct-collections?status=",
+			WorkflowConstants.STATUS_DRAFT, "&status=",
+			WorkflowConstants.STATUS_EXPIRED);
+	}
+
 	public Map<String, Object> getCollaboratorsReactData(
-			long ctCollectionId, boolean publicationTemplate)
-		throws PortalException {
+		long ctCollectionId, boolean publicationTemplate) {
 
 		return HashMapBuilder.<String, Object>put(
 			"autocompleteUserURL",
@@ -291,6 +303,27 @@ public class PublicationsDisplayContext extends BasePublicationsDisplayContext {
 		).build();
 	}
 
+	public CreationMenu getCreationMenu() {
+		if (!CTPermission.contains(
+				_themeDisplay.getPermissionChecker(),
+				CTActionKeys.ADD_PUBLICATION)) {
+
+			return null;
+		}
+
+		return CreationMenuBuilder.addPrimaryDropdownItem(
+			dropdownItem -> {
+				dropdownItem.setHref(
+					_renderResponse.createRenderURL(), "mvcRenderCommandName",
+					"/change_tracking/add_ct_collection", "redirect",
+					_themeDisplay.getURLCurrent());
+				dropdownItem.setLabel(
+					_language.get(
+						_httpServletRequest, "create-new-publication"));
+			}
+		).build();
+	}
+
 	public long getCtCollectionId() {
 		return _ctCollectionId;
 	}
@@ -385,6 +418,119 @@ public class PublicationsDisplayContext extends BasePublicationsDisplayContext {
 		}
 
 		return data;
+	}
+
+	public List<FDSActionDropdownItem> getFDSActionDropdownItems() {
+		return ListUtil.fromArray(
+			new FDSActionDropdownItem(
+				PortletURLBuilder.createActionURL(
+					_renderResponse
+				).setActionName(
+					"/change_tracking/checkout_ct_collection"
+				).setRedirect(
+					_themeDisplay.getURLCurrent()
+				).setParameter(
+					"ctCollectionId", "{id}"
+				).buildString(),
+				"radio-button", "checkout",
+				_language.get(_httpServletRequest, "work-on-publication"),
+				"post", "checkout", null),
+			new FDSActionDropdownItem(
+				PortletURLBuilder.createRenderURL(
+					_renderResponse
+				).setMVCRenderCommandName(
+					"/change_tracking/edit_ct_collection"
+				).setRedirect(
+					_themeDisplay.getURLCurrent()
+				).setParameter(
+					"ctCollectionId", "{id}"
+				).buildString(),
+				"pencil", "edit", _language.get(_httpServletRequest, "edit"),
+				"get", "update", null),
+			new FDSActionDropdownItem(
+				PortletURLBuilder.createRenderURL(
+					_renderResponse
+				).setMVCRenderCommandName(
+					"/change_tracking/view_changes"
+				).setParameter(
+					"ctCollectionId", "{id}"
+				).buildString(),
+				"list-ul", "review-changes",
+				_language.get(_httpServletRequest, "review-changes"), "get",
+				"get", null),
+			new FDSActionDropdownItem(
+				PortletURLBuilder.createRenderURL(
+					_renderResponse
+				).setMVCRenderCommandName(
+					"/change_tracking/manage_collaborators"
+				).setRedirect(
+					_themeDisplay.getURLCurrent()
+				).setParameter(
+					"ctCollectionId", "{id}"
+				).setWindowState(
+					LiferayWindowState.POP_UP
+				).buildString(),
+				"users", "invite-users",
+				_language.get(_httpServletRequest, "invite-users"), "get",
+				"permissions", "modal"),
+			new FDSActionDropdownItem(
+				PortletURLBuilder.create(
+					PortalUtil.getControlPanelPortletURL(
+						_httpServletRequest,
+						"com_liferay_portlet_configuration_web_portlet_" +
+							"PortletConfigurationPortlet",
+						ActionRequest.RENDER_PHASE)
+				).setMVCPath(
+					"/edit_permissions.jsp"
+				).setRedirect(
+					_themeDisplay.getURLCurrent()
+				).setParameter(
+					"modelResource", CTCollection.class.getName()
+				).setParameter(
+					"modelResourceDescription", "{name}"
+				).setParameter(
+					"resourcePrimKey", "{id}"
+				).setWindowState(
+					LiferayWindowState.POP_UP
+				).buildString(),
+				"password-policies", "permissions",
+				_language.get(_httpServletRequest, "permissions"), "get",
+				"permissions", "modal-permissions"),
+			new FDSActionDropdownItem(
+				_language.get(
+					_httpServletRequest,
+					"are-you-sure-you-want-to-delete-this-publication"),
+				null, "times-circle", "delete",
+				_language.get(_httpServletRequest, "delete"), "delete",
+				"delete", "headless"),
+			new FDSActionDropdownItem(
+				PortletURLBuilder.createRenderURL(
+					_renderResponse
+				).setMVCRenderCommandName(
+					"/change_tracking/view_conflicts"
+				).setRedirect(
+					_themeDisplay.getURLCurrent()
+				).setParameter(
+					"ctCollectionId", "{id}"
+				).setParameter(
+					"schedule", Boolean.TRUE
+				).buildString(),
+				"calendar", "schedule",
+				_language.get(_httpServletRequest, "schedule"), "get",
+				"schedule", null),
+			new FDSActionDropdownItem(
+				PortletURLBuilder.createRenderURL(
+					_renderResponse
+				).setMVCRenderCommandName(
+					"/change_tracking/view_conflicts"
+				).setRedirect(
+					_themeDisplay.getURLCurrent()
+				).setParameter(
+					"ctCollectionId", "{id}"
+				).buildString(),
+				"change", "publish",
+				_language.get(_httpServletRequest, "publish"), "get", "publish",
+				null));
 	}
 
 	public String getReviewChangesURL(long ctCollectionId) {

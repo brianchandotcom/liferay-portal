@@ -90,6 +90,24 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
+	private void _addAssetEntries(long classNameId, Long companyId)
+		throws Exception {
+
+		long guestUserId = _userLocalService.getGuestUserId(companyId);
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				StringBundler.concat(
+					"select uuid_, id_, groupId, userId, createDate, ",
+					"modifiedDate, name, description from JournalFeed where ",
+					"companyId = ", companyId));
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			while (resultSet.next()) {
+				_addAssetEntry(0, classNameId, guestUserId, resultSet);
+			}
+		}
+	}
+
 	private void _addAssetEntry(
 			long assetCategoryId, long classNameId, long guestUserId,
 			ResultSet resultSet)
@@ -132,26 +150,7 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 				JournalFeed.class.getName());
 
 			_companyLocalService.forEachCompanyId(
-				companyId -> {
-					long guestUserId = _userLocalService.getGuestUserId(
-						companyId);
-
-					try (PreparedStatement preparedStatement =
-							connection.prepareStatement(
-								StringBundler.concat(
-									"select uuid_, id_, groupId, userId, ",
-									"createDate, modifiedDate, name, ",
-									"description from JournalFeed where ",
-									"companyId = ", companyId));
-						ResultSet resultSet =
-							preparedStatement.executeQuery()) {
-
-						while (resultSet.next()) {
-							_addAssetEntry(
-								0, classNameId, guestUserId, resultSet);
-						}
-					}
-				});
+				companyId -> _addAssetEntries(classNameId, companyId));
 		}
 	}
 
@@ -202,6 +201,9 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 							company.getCompanyId());
 
 						if (SetUtil.isEmpty(journalFeedTypes)) {
+							_addAssetEntries(
+								journalFeedClassNameId, company.getCompanyId());
+
 							return;
 						}
 

@@ -15,7 +15,11 @@
 /// <reference types="react" />
 
 interface Props {
-	namespace: string;
+	getCompletionURL: string;
+	portletNamespace: string;
 }
-export default function AICreatorModal({namespace}: Props): JSX.Element;
+export default function AICreatorModal({
+	getCompletionURL,
+	portletNamespace,
+}: Props): JSX.Element;
 export {};

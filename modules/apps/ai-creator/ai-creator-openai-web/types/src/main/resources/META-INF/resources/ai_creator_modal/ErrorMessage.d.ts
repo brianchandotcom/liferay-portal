@@ -14,4 +14,8 @@
 
 /// <reference types="react" />
 
-export declare function ErrorMessage(): JSX.Element;
+interface Props {
+	message: string;
+}
+export declare function ErrorMessage({message}: Props): JSX.Element;
+export {};

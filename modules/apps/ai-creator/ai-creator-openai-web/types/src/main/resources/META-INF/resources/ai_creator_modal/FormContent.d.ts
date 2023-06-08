@@ -15,7 +15,7 @@
 /// <reference types="react" />
 
 interface Props {
-	namespace: string;
+	portletNamespace: string;
 }
-export declare function FormContent({namespace}: Props): JSX.Element;
+export declare function FormContent({portletNamespace}: Props): JSX.Element;
 export {};

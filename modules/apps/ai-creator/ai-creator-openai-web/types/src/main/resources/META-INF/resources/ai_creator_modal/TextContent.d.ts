@@ -16,7 +16,10 @@
 
 interface Props {
 	content: string;
-	namespace: string;
+	portletNamespace: string;
 }
-export declare function TextContent({content, namespace}: Props): JSX.Element;
+export declare function TextContent({
+	content,
+	portletNamespace,
+}: Props): JSX.Element;
 export {};

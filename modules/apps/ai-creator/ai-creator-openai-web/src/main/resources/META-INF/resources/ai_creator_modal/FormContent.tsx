@@ -18,7 +18,7 @@ import ClayLayout from '@clayui/layout';
 import React from 'react';
 
 interface Props {
-	namespace: string;
+	portletNamespace: string;
 }
 
 const TONE_OPTIONS = [
@@ -32,10 +32,10 @@ const TONE_OPTIONS = [
 	value: label,
 }));
 
-export function FormContent({namespace}: Props) {
-	const descriptionId = `${namespace}content`;
-	const toneId = `${namespace}tone`;
-	const wordCountId = `${namespace}words`;
+export function FormContent({portletNamespace}: Props) {
+	const descriptionId = `${portletNamespace}content`;
+	const toneId = `${portletNamespace}tone`;
+	const wordCountId = `${portletNamespace}words`;
 
 	return (
 		<>

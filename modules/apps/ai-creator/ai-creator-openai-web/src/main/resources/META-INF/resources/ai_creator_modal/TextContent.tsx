@@ -17,11 +17,11 @@ import React from 'react';
 
 interface Props {
 	content: string;
-	namespace: string;
+	portletNamespace: string;
 }
 
-export function TextContent({content, namespace}: Props) {
-	const textContentId = `${namespace}content`;
+export function TextContent({content, portletNamespace}: Props) {
+	const textContentId = `${portletNamespace}content`;
 
 	return (
 		<ClayForm.Group>

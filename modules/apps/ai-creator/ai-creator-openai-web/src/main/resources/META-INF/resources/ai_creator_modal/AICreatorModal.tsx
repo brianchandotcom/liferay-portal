@@ -25,7 +25,8 @@ import {LoadingMessage} from './LoadingMessage';
 import {TextContent} from './TextContent';
 
 interface Props {
-	namespace: string;
+	getCompletionURL: string;
+	portletNamespace: string;
 }
 
 type RequestStatus =
@@ -34,7 +35,10 @@ type RequestStatus =
 	| {errorMessage: string; type: 'error'}
 	| {text: string; type: 'success'};
 
-export default function AICreatorModal({namespace}: Props) {
+export default function AICreatorModal({
+	getCompletionURL,
+	portletNamespace,
+}: Props) {
 	const closeModal = () => {
 		const opener = Liferay.Util.getOpener();
 
@@ -82,12 +86,12 @@ export default function AICreatorModal({namespace}: Props) {
 					{status.type === 'error' ? <ErrorMessage /> : null}
 
 					<Container className="c-p-4 flex-grow-1" fluid>
-						<FormContent namespace={namespace} />
+						<FormContent portletNamespace={portletNamespace} />
 
 						{status.type === 'success' ? (
 							<TextContent
 								content={status.text}
-								namespace={namespace}
+								portletNamespace={portletNamespace}
 							/>
 						) : null}
 

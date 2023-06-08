@@ -14,7 +14,7 @@
 
 package com.liferay.portal.reports.engine.console.web.internal.admin.portlet;
 
-import com.liferay.document.library.kernel.store.DLStoreUtil;
+import com.liferay.document.library.kernel.store.Store;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -152,6 +152,9 @@ public class AdminPortlet extends MVCPortlet {
 	@Reference
 	protected SourceLocalService sourceLocalService;
 
+	@Reference(target = "(default=true)")
+	protected Store store;
+
 	private void _serveDownload(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
@@ -163,8 +166,9 @@ public class AdminPortlet extends MVCPortlet {
 
 		String shortFileName = StringUtil.extractLast(
 			fileName, StringPool.SLASH);
-		InputStream inputStream = DLStoreUtil.getFileAsStream(
-			themeDisplay.getCompanyId(), CompanyConstants.SYSTEM, fileName);
+		InputStream inputStream = store.getFileAsStream(
+			themeDisplay.getCompanyId(), CompanyConstants.SYSTEM, fileName,
+			StringPool.BLANK);
 
 		PortletResponseUtil.sendFile(
 			resourceRequest, resourceResponse, shortFileName, inputStream,

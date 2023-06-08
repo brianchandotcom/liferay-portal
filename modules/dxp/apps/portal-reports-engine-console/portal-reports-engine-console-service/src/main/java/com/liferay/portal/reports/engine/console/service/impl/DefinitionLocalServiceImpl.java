@@ -14,8 +14,7 @@
 
 package com.liferay.portal.reports.engine.console.service.impl;
 
-import com.liferay.document.library.kernel.store.DLStoreRequest;
-import com.liferay.document.library.kernel.store.DLStoreUtil;
+import com.liferay.document.library.kernel.store.Store;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -160,8 +159,15 @@ public class DefinitionLocalServiceImpl extends DefinitionLocalServiceBaseImpl {
 			long companyId, String attachmentsDirectory)
 		throws PortalException {
 
-		DLStoreUtil.deleteDirectory(
+		_store.deleteDirectory(
 			companyId, CompanyConstants.SYSTEM, attachmentsDirectory);
+	}
+
+	@Override
+	public String[] getAttachmentsFiles(Definition definition) {
+		return _store.getFileNames(
+			definition.getCompanyId(), CompanyConstants.SYSTEM,
+			definition.getAttachmentsDir());
 	}
 
 	@Override
@@ -236,7 +242,7 @@ public class DefinitionLocalServiceImpl extends DefinitionLocalServiceBaseImpl {
 		if (Validator.isNotNull(fileName) && (inputStream != null)) {
 			long companyId = definition.getCompanyId();
 
-			DLStoreUtil.deleteDirectory(
+			_store.deleteDirectory(
 				companyId, CompanyConstants.SYSTEM,
 				definition.getAttachmentsDir());
 
@@ -268,13 +274,9 @@ public class DefinitionLocalServiceImpl extends DefinitionLocalServiceBaseImpl {
 		String fileLocation = StringBundler.concat(
 			directoryName, StringPool.SLASH, fileName);
 
-		DLStoreUtil.addFile(
-			DLStoreRequest.builder(
-				companyId, CompanyConstants.SYSTEM, fileLocation
-			).className(
-				this
-			).build(),
-			inputStream);
+		_store.addFile(
+			companyId, CompanyConstants.SYSTEM, fileLocation,
+			Store.VERSION_DEFAULT, inputStream);
 	}
 
 	private void _validate(Map<Locale, String> nameMap) throws PortalException {
@@ -292,5 +294,8 @@ public class DefinitionLocalServiceImpl extends DefinitionLocalServiceBaseImpl {
 
 	@Reference
 	private UserLocalService _userLocalService;
+
+	@Reference(target = "(default=true)")
+	private Store _store;
 
 }

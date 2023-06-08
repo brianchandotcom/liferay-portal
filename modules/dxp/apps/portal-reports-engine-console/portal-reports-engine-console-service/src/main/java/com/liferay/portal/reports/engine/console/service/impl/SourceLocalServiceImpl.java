@@ -14,8 +14,10 @@
 
 package com.liferay.portal.reports.engine.console.service.impl;
 
+import com.liferay.document.library.kernel.store.Store;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
@@ -123,6 +125,13 @@ public class SourceLocalServiceImpl extends SourceLocalServiceBaseImpl {
 	}
 
 	@Override
+	public String[] getAttachmentsFiles(Source source) {
+		return _store.getFileNames(
+			source.getCompanyId(), CompanyConstants.SYSTEM,
+			source.getAttachmentsDir());
+	}
+
+	@Override
 	public Source getSource(long sourceId) throws PortalException {
 		return sourcePersistence.findByPrimaryKey(sourceId);
 	}
@@ -201,6 +210,9 @@ public class SourceLocalServiceImpl extends SourceLocalServiceBaseImpl {
 
 	@Reference
 	private ResourceLocalService _resourceLocalService;
+
+	@Reference(target = "(default=true)")
+	private Store _store;
 
 	@Reference
 	private UserLocalService _userLocalService;

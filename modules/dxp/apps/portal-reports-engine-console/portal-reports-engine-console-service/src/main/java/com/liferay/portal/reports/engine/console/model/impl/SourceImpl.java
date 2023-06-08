@@ -14,9 +14,8 @@
 
 package com.liferay.portal.reports.engine.console.model.impl;
 
-import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.CompanyConstants;
+import com.liferay.portal.reports.engine.console.service.SourceLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
@@ -30,8 +29,7 @@ public class SourceImpl extends SourceBaseImpl {
 
 	@Override
 	public String[] getAttachmentsFiles() throws PortalException {
-		return DLStoreUtil.getFileNames(
-			getCompanyId(), CompanyConstants.SYSTEM, getAttachmentsDir());
+		return SourceLocalServiceUtil.getAttachmentsFiles(this);
 	}
 
 }

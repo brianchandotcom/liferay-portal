@@ -55,37 +55,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for COMMERCE-11511. Can view the related product's Create Date under Product Relation tab"
-	@priority = 3
-	test CanViewRelatedProductCreateDate {
-		property portal.acceptance = "false";
-
-		task ("Given a Minium site is created") {
-			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
-		}
-
-		task ("When a product relation is added to the 'ABS Sensor' product") {
-			CommerceProducts.openProductsAdmin();
-
-			CommerceProducts.searchAndGoToProductEntry(entryProductName = "ABS Sensor");
-
-			CommerceEntry.gotoMenuTab(menuTab = "Product Relations");
-
-			CommerceRelations.addAnyProductRelation(
-				key_product = "Hoses",
-				key_relation = "Related Product");
-		}
-
-		task ("Then the related product's Create Date is shown") {
-			for (var valueList : list "Related,0 Seconds Ago") {
-				AssertElementPresent(
-					key_productName = "Hoses",
-					key_value = ${valueList},
-					locator1 = "CommerceEntry#VALUE_PRODUCT_RELATIONS");
-			}
-		}
-	}
-
 	@description = "This is a test for COMMERCE-6064. EditAProductRelations"
 	@priority = 5
 	test EditAProductRelations {

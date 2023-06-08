@@ -1,25 +1,5 @@
 definition {
 
-	@summary = "Add a child group based on Blank"
-	macro addChildGroup {
-		Variables.assertDefined(parameterList = "${groupName},${parentGroupName}");
-
-		var groupDescriptionMap = JSONGroupSetter.setGroupDescriptionMap(groupDescription = ${groupDescription});
-		var groupNameMap = JSONGroupSetter.setGroupNameMap(groupName = ${groupName});
-		var parentGroupId = JSONGroupSetter.setParentGroupId(
-			grandParentGroupName = ${grandParentGroupName},
-			parentGroupName = ${parentGroupName});
-		var type = JSONGroupSetter.setMembershipType(membershipType = ${membershipType});
-		var manualMembership = JSONGroupSetter.setAllowManualMembershipManagement(allowManualMembershipManagement = ${allowManualMembershipManagement});
-
-		JSONGroupAPI._addGroup(
-			groupDescriptionMap = ${groupDescriptionMap},
-			groupNameMap = ${groupNameMap},
-			manualMembership = ${manualMembership},
-			parentGroupId = ${parentGroupId},
-			type = ${type});
-	}
-
 	@summary = "Add a group based on Blank"
 	macro addGroup {
 		Variables.assertDefined(parameterList = ${groupName});

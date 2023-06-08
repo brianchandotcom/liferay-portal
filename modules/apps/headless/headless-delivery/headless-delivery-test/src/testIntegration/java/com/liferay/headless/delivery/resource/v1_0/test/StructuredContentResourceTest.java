@@ -170,6 +170,34 @@ public class StructuredContentResourceTest
 
 	@Override
 	@Test
+	public void testGetAssetLibraryStructuredContentByExternalReferenceCode()
+		throws Exception {
+
+		_useDepotDDMStructureStructureId = true;
+
+		super.testGetAssetLibraryStructuredContentByExternalReferenceCode();
+
+		StructuredContent randomStructuredContent = randomStructuredContent();
+
+		randomStructuredContent.setExternalReferenceCode("");
+
+		StructuredContent postStructuredContent =
+			structuredContentResource.postAssetLibraryStructuredContent(
+				testGetAssetLibraryStructuredContentsPage_getAssetLibraryId(),
+				randomStructuredContent);
+
+		StructuredContent getStructuredContent =
+			structuredContentResource.
+				getAssetLibraryStructuredContentByExternalReferenceCode(
+					testGetAssetLibraryStructuredContentByExternalReferenceCode_getAssetLibraryId(),
+					postStructuredContent.getUuid());
+
+		assertEquals(postStructuredContent, getStructuredContent);
+		assertValid(getStructuredContent);
+	}
+
+	@Override
+	@Test
 	public void testGetSiteStructuredContentsPage() throws Exception {
 		super.testGetSiteStructuredContentsPage();
 

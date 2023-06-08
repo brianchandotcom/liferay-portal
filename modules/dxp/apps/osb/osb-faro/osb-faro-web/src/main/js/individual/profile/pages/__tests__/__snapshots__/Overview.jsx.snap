@@ -395,7 +395,6 @@ Chrome"
                 <a
                   class="button-root page-link btn btn-unstyled"
                   disabled=""
-                  href=""
                 >
                   <svg
                     class="lexicon-icon lexicon-icon-angle-left-small icon-root"
@@ -412,7 +411,6 @@ Chrome"
               >
                 <a
                   class="button-root page-link btn btn-unstyled"
-                  href=""
                 >
                   1
                 </a>
@@ -422,7 +420,6 @@ Chrome"
               >
                 <a
                   class="button-root page-link btn btn-unstyled"
-                  href=""
                 >
                   2
                 </a>
@@ -432,7 +429,6 @@ Chrome"
               >
                 <a
                   class="button-root page-link btn btn-unstyled"
-                  href=""
                 >
                   3
                 </a>
@@ -460,7 +456,6 @@ Chrome"
               >
                 <a
                   class="button-root page-link btn btn-unstyled"
-                  href=""
                 >
                   287
                 </a>
@@ -470,7 +465,6 @@ Chrome"
               >
                 <a
                   class="button-root page-link btn btn-unstyled"
-                  href=""
                 >
                   <svg
                     class="lexicon-icon lexicon-icon-angle-right-small icon-root"

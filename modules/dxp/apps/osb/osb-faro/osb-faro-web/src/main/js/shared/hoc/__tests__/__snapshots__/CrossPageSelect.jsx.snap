@@ -227,7 +227,6 @@ exports[`CrossPageSelect should render the selected list when the user presses t
           <a
             class="button-root page-link btn btn-unstyled"
             disabled=""
-            href=""
           >
             <svg
               class="lexicon-icon lexicon-icon-angle-left-small icon-root"
@@ -244,7 +243,6 @@ exports[`CrossPageSelect should render the selected list when the user presses t
         >
           <a
             class="button-root page-link btn btn-unstyled"
-            href=""
           >
             1
           </a>
@@ -255,7 +253,6 @@ exports[`CrossPageSelect should render the selected list when the user presses t
           <a
             class="button-root page-link btn btn-unstyled"
             disabled=""
-            href=""
           >
             <svg
               class="lexicon-icon lexicon-icon-angle-right-small icon-root"

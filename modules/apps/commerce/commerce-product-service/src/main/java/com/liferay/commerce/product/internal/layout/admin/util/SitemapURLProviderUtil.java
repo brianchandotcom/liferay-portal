@@ -16,7 +16,6 @@ package com.liferay.commerce.product.internal.layout.admin.util;
 
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.HashMap;
@@ -30,8 +29,7 @@ public class SitemapURLProviderUtil {
 
 	protected static Map<Locale, String> getAlternateFriendlyURLs(
 		Map<Locale, String> alternateSiteURLs, long friendlyURLEntryId,
-		FriendlyURLEntryLocalService friendlyURLEntryLocalService,
-		String urlSeparator) {
+		FriendlyURLEntryLocalService friendlyURLEntryLocalService) {
 
 		Map<Locale, String> alternateFriendlyURLs = new HashMap<>();
 
@@ -47,9 +45,7 @@ public class SitemapURLProviderUtil {
 				alternateFriendlyURLs.put(
 					LocaleUtil.fromLanguageId(
 						friendlyURLEntryLocalization.getLanguageId()),
-					StringBundler.concat(
-						alternateSiteURL, urlSeparator,
-						friendlyURLEntryLocalization.getUrlTitle()));
+					alternateSiteURL);
 			}
 		}
 

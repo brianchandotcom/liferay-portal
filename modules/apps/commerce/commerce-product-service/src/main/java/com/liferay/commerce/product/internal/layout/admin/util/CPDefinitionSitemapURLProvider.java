@@ -30,6 +30,7 @@ import com.liferay.commerce.util.CommerceAccountHelper;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.layout.admin.kernel.model.LayoutTypePortletConstants;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
@@ -165,13 +166,16 @@ public class CPDefinitionSitemapURLProvider implements SitemapURLProvider {
 				_portal.getClassNameId(CProduct.class),
 				cpDefinition.getCProductId());
 
+		currentSiteURL = StringBundler.concat(
+			currentSiteURL, urlSeparator, friendlyURLEntry.getUrlTitle());
+
 		Map<Locale, String> alternateFriendlyURLs =
 			SitemapURLProviderUtil.getAlternateFriendlyURLs(
 				_portal.getAlternateURLs(
 					currentSiteURL, themeDisplay, layout,
 					_language.getAvailableLocales(layout.getGroupId())),
 				friendlyURLEntry.getFriendlyURLEntryId(),
-				_friendlyURLEntryLocalService, urlSeparator);
+				_friendlyURLEntryLocalService);
 
 		String productFriendlyURL = alternateFriendlyURLs.get(
 			_portal.getLocale(themeDisplay.getRequest()));

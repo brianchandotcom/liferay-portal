@@ -14,12 +14,16 @@
 
 package com.liferay.segments.manager;
 
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsWebKeys;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
+
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -43,12 +47,27 @@ public class SegmentsExperienceManager {
 			return segmentsExperienceIds[0];
 		}
 
+		return _segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+			_getPlid(httpServletRequest));
+	}
+
+	private long _getPlid(HttpServletRequest httpServletRequest) {
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		return _segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-			themeDisplay.getPlid());
+		if (themeDisplay != null) {
+			Layout layout = themeDisplay.getLayout();
+
+			return layout.getPlid();
+		}
+
+		Map<String, String[]> parameterMap = HttpComponentsUtil.getParameterMap(
+			httpServletRequest.getQueryString());
+
+		String[] plids = parameterMap.get("plid");
+
+		return GetterUtil.getLong(plids[0]);
 	}
 
 	private final SegmentsExperienceLocalService

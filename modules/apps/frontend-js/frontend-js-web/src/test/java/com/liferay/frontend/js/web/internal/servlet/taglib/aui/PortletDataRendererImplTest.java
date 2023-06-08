@@ -39,6 +39,28 @@ public class PortletDataRendererImplTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
+	public void testAliasedESImports() throws Exception {
+		PortletDataRendererImpl portletDataRendererImpl =
+			new PortletDataRendererImpl();
+
+		PortletData portletData = new PortletData();
+
+		portletData.add(
+			new JSFragment(
+				null, null, "content",
+				Arrays.asList(new ESImport("alias", "module", "symbol"))));
+
+		Writer writer = new CharArrayWriter();
+
+		portletDataRendererImpl.write(Arrays.asList(portletData), writer);
+
+		String code = writer.toString();
+
+		Assert.assertTrue(
+			code, code.contains("import {symbol as alias} from 'module';"));
+	}
+
+	@Test
 	public void testAMDCodeIsWrappedInIIFE() throws Exception {
 		PortletDataRendererImpl portletDataRendererImpl =
 			new PortletDataRendererImpl();
@@ -99,6 +121,28 @@ public class PortletDataRendererImplTest {
 		String code = writer.toString();
 
 		Assert.assertTrue(code.contains("{\ncontent\n}\n"));
+	}
+
+	@Test
+	public void testESImports() throws Exception {
+		PortletDataRendererImpl portletDataRendererImpl =
+			new PortletDataRendererImpl();
+
+		PortletData portletData = new PortletData();
+
+		portletData.add(
+			new JSFragment(
+				null, null, "content",
+				Arrays.asList(new ESImport("module", "symbol"))));
+
+		Writer writer = new CharArrayWriter();
+
+		portletDataRendererImpl.write(Arrays.asList(portletData), writer);
+
+		String code = writer.toString();
+
+		Assert.assertTrue(
+			code, code.contains("import {symbol} from 'module';"));
 	}
 
 	@Test
@@ -248,6 +292,28 @@ public class PortletDataRendererImplTest {
 					"(function() {\n", "const react = react0;\n",
 					"const myOpenDialog2 = openDialog;\n", "content3\n",
 					"})();\n")));
+	}
+
+	@Test
+	public void testSameAliasAndSymbolOmitsAlias() throws Exception {
+		PortletDataRendererImpl portletDataRendererImpl =
+			new PortletDataRendererImpl();
+
+		PortletData portletData = new PortletData();
+
+		portletData.add(
+			new JSFragment(
+				null, null, "content",
+				Arrays.asList(new ESImport("symbol", "module", "symbol"))));
+
+		Writer writer = new CharArrayWriter();
+
+		portletDataRendererImpl.write(Arrays.asList(portletData), writer);
+
+		String code = writer.toString();
+
+		Assert.assertTrue(
+			code, code.contains("import {symbol} from 'module';"));
 	}
 
 	@Test

@@ -255,15 +255,20 @@ public class ActionUtil {
 			() -> {
 				UriBuilder uriBuilder = UriInfoUtil.getBaseUriBuilder(uriInfo);
 
-				return uriBuilder.path(
+				uriBuilder = uriBuilder.path(
 					_getVersion(uriInfo)
 				).path(
 					clazz.getSuperclass(), methodName
-				).resolveTemplates(
-					_getParameterMap(
-						clazz, parameterId, methodName, siteId, uriInfo),
-					false
-				).toTemplate();
+				);
+
+				if (parameterId != null) {
+					uriBuilder = uriBuilder.resolveTemplates(
+						_getParameterMap(
+							clazz, parameterId, methodName, siteId, uriInfo),
+						false);
+				}
+
+				return uriBuilder.toTemplate();
 			}
 		).put(
 			"method", httpMethodName

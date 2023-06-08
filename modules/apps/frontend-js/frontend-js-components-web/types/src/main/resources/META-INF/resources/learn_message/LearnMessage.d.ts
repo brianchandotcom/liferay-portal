@@ -12,9 +12,26 @@
  * details.
  */
 
+import ClayLink from '@clayui/link';
 import React from 'react';
-export declare const LearnResourcesContext: React.Context<{}>;
-interface IProps {
+export declare const LearnResourcesContext: React.Context<Partial<
+	ILearnResourceContext
+>>;
+interface ILearnResourceLocaleItem {
+	message: string;
+	url?: string;
+}
+interface ILearnResourceKeyItem {
+	[locale: string]: ILearnResourceLocaleItem;
+}
+interface ILearnResourceItem {
+	[resourceKey: string]: ILearnResourceKeyItem;
+}
+interface ILearnResourceContext {
+	[learnResourceName: string]: ILearnResourceItem;
+}
+declare type ClayLinkProps = React.ComponentProps<typeof ClayLink>;
+interface IProps extends ClayLinkProps {
 	className?: string;
 
 	/**
@@ -33,7 +50,8 @@ interface IProps {
  * object `learnResources` contains the messages and urls and is taken from
  * liferay-portal/learn-resources.
  *
- * Use `LearnResourcesContext` to wrap the entire React App.
+ * Use `LearnResourcesContext` to wrap the entire React App and in the JSP use
+ * `LearnMessageUtil.getReactDataJSONObject` to get the required resources.
  *
  * Example use:
  * <LearnResourcesContext.Provider value={learnResources}>

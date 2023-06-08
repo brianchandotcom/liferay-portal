@@ -34,6 +34,7 @@ import com.liferay.headless.delivery.client.dto.v1_0.ContentFieldValue;
 import com.liferay.headless.delivery.client.dto.v1_0.Geo;
 import com.liferay.headless.delivery.client.dto.v1_0.StructuredContent;
 import com.liferay.headless.delivery.client.dto.v1_0.StructuredContentLink;
+import com.liferay.headless.delivery.client.http.HttpInvoker;
 import com.liferay.headless.delivery.client.pagination.Page;
 import com.liferay.headless.delivery.client.pagination.Pagination;
 import com.liferay.headless.delivery.client.resource.v1_0.StructuredContentResource;
@@ -457,14 +458,14 @@ public class StructuredContentResourceTest
 
 		// Default external reference code and UUID
 
-		StructuredContent randomStructuredContent = randomStructuredContent();
+		StructuredContent randomStructuredContent1 = randomStructuredContent();
 
-		randomStructuredContent.setExternalReferenceCode("");
-		randomStructuredContent.setUuid("");
+		randomStructuredContent1.setExternalReferenceCode("");
+		randomStructuredContent1.setUuid("");
 
 		StructuredContent postStructuredContent1 =
 			testPostAssetLibraryStructuredContent_addStructuredContent(
-				randomStructuredContent);
+				randomStructuredContent1);
 
 		Assert.assertNotNull(postStructuredContent1.getExternalReferenceCode());
 		Assert.assertNotNull(postStructuredContent1.getUuid());
@@ -484,6 +485,28 @@ public class StructuredContentResourceTest
 
 		_testPostAssetLibraryStructuredContent(
 			String.valueOf(postStructuredContent2.getId()));
+
+		// Duplicate external reference code
+
+		StructuredContent randomStructuredContent2 = randomStructuredContent();
+
+		randomStructuredContent2.setExternalReferenceCode(
+			postStructuredContent2.getExternalReferenceCode());
+
+		randomStructuredContent2.setContentStructureId(
+			_depotDDMStructure.getStructureId());
+
+		HttpInvoker.HttpResponse httpResponse =
+			structuredContentResource.
+				postAssetLibraryStructuredContentHttpResponse(
+					testDepotEntry.getDepotEntryId(), randomStructuredContent2);
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				"Duplicate journal article external reference code ",
+				postStructuredContent2.getExternalReferenceCode(), "in group ",
+				testDepotEntry.getGroupId()),
+			httpResponse.getContent());
 	}
 
 	@Override

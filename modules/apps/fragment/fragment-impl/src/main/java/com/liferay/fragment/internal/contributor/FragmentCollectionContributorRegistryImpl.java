@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
+import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
@@ -55,6 +56,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;
 import com.liferay.portal.kernel.servlet.DummyHttpServletResponse;
@@ -451,6 +453,9 @@ public class FragmentCollectionContributorRegistryImpl
 	private PortalPreferencesLocalService _portalPreferencesLocalService;
 
 	private ServiceTrackerMap<String, FragmentCollectionBag> _serviceTrackerMap;
+
+	@Reference
+	private ThemeLocalService _themeLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;
@@ -1134,7 +1139,18 @@ public class FragmentCollectionContributorRegistryImpl
 					(LayoutTypePortlet)layout.getLayoutType());
 				themeDisplay.setLocale(
 					LocaleUtil.fromLanguageId(layout.getDefaultLanguageId()));
-				themeDisplay.setLookAndFeel(layoutSet.getTheme(), null);
+
+				Theme theme = _themeLocalService.fetchTheme(
+					company.getCompanyId(), layoutSet.getThemeId());
+
+				if (theme != null) {
+					themeDisplay.setLookAndFeel(
+						layoutSet.getTheme(), layoutSet.getColorScheme());
+				}
+				else if (_log.isDebugEnabled()) {
+					_log.debug(layoutSet.getThemeId() + " is not registered");
+				}
+
 				themeDisplay.setPlid(layout.getPlid());
 			}
 			else {

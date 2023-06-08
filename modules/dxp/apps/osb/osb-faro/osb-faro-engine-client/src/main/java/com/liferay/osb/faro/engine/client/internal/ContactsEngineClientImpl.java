@@ -1909,11 +1909,11 @@ public class ContactsEngineClientImpl
 			getTemplatedURL(faroProject, Rels.INDIVIDUALS_COUNT),
 			HttpMethod.GET, HttpEntity.EMPTY, Long.class, uriVariables);
 
-		return Optional.ofNullable(
-			responseEntity.getBody()
-		).orElse(
-			0L
-		);
+		if (Validator.isNotNull(responseEntity.getBody())) {
+			return responseEntity.getBody();
+		}
+
+		return 0L;
 	}
 
 	@Override

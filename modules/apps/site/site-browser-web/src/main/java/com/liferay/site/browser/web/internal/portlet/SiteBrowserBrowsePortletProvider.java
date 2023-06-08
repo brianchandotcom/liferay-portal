@@ -15,7 +15,7 @@
 package com.liferay.site.browser.web.internal.portlet;
 
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
-import com.liferay.portal.kernel.portlet.BrowsePortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.site.browser.web.internal.constants.SiteBrowserPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
@@ -25,14 +25,20 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = "model.class.name=com.liferay.portal.kernel.model.Group",
-	service = BrowsePortletProvider.class
+	service = PortletProvider.class
 )
-public class SiteBrowserBrowsePortletProvider
-	extends BasePortletProvider implements BrowsePortletProvider {
+public class SiteBrowserBrowsePortletProvider extends BasePortletProvider {
 
 	@Override
 	public String getPortletName() {
 		return SiteBrowserPortletKeys.SITE_BROWSER;
 	}
+
+	@Override
+	public Action[] getSupportedActions() {
+		return _supportedActions;
+	}
+
+	private final Action[] _supportedActions = {Action.BROWSE};
 
 }

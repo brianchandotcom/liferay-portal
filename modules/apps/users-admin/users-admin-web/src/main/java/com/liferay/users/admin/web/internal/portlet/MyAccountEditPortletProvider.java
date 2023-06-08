@@ -16,9 +16,7 @@ package com.liferay.users.admin.web.internal.portlet;
 
 import com.liferay.admin.kernel.util.PortalMyAccountApplicationType;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
-import com.liferay.portal.kernel.portlet.EditPortletProvider;
-import com.liferay.portal.kernel.portlet.ManagePortletProvider;
-import com.liferay.portal.kernel.portlet.ViewPortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
@@ -28,18 +26,22 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = "model.class.name=" + PortalMyAccountApplicationType.MyAccount.CLASS_NAME,
-	service = {
-		EditPortletProvider.class, ManagePortletProvider.class,
-		ViewPortletProvider.class
-	}
+	service = PortletProvider.class
 )
-public class MyAccountEditPortletProvider
-	extends BasePortletProvider
-	implements EditPortletProvider, ManagePortletProvider, ViewPortletProvider {
+public class MyAccountEditPortletProvider extends BasePortletProvider {
 
 	@Override
 	public String getPortletName() {
 		return UsersAdminPortletKeys.MY_ACCOUNT;
 	}
+
+	@Override
+	public Action[] getSupportedActions() {
+		return _supportedActions;
+	}
+
+	private final Action[] _supportedActions = {
+		Action.EDIT, Action.MANAGE, Action.VIEW
+	};
 
 }

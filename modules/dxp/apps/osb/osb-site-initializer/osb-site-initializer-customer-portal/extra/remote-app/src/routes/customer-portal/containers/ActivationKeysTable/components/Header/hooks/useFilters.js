@@ -79,15 +79,15 @@ export default function useFilters(setFilterTerm, productName, baseFilter) {
 				(accumulatorStatusFilter, status, index) => {
 					let filter = '';
 					if (status === ACTIVATION_STATUS.expired.title) {
-						filter = `(active eq true and expirationDate lt ${now})`;
+						filter = `(expirationDate lt ${now})`;
 					}
 
 					if (status === ACTIVATION_STATUS.activated.title) {
-						filter = `(active eq true and startDate le ${now} and expirationDate gt ${now})`;
+						filter = `(startDate le ${now} and expirationDate gt ${now})`;
 					}
 
 					if (status === ACTIVATION_STATUS.notActivated.title) {
-						filter = `active eq false`;
+						filter = `(startDate gt ${now})`;
 					}
 
 					return `${accumulatorStatusFilter}${

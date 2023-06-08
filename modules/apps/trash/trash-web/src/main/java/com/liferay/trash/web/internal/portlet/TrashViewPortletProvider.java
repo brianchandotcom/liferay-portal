@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
-import com.liferay.portal.kernel.portlet.ViewPortletProvider;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -50,10 +49,9 @@ import org.osgi.service.component.annotations.Reference;
 		"model.class.name=com.liferay.trash.kernel.model.TrashEntry",
 		"model.class.name=com.liferay.trash.model.TrashEntry"
 	},
-	service = ViewPortletProvider.class
+	service = PortletProvider.class
 )
-public class TrashViewPortletProvider
-	extends BasePortletProvider implements ViewPortletProvider {
+public class TrashViewPortletProvider extends BasePortletProvider {
 
 	@Override
 	public String getPortletName() {
@@ -88,8 +86,15 @@ public class TrashViewPortletProvider
 		).buildPortletURL();
 	}
 
+	@Override
+	public Action[] getSupportedActions() {
+		return _supportedActions;
+	}
+
 	@Reference
 	private Portal _portal;
+
+	private final Action[] _supportedActions = {Action.VIEW};
 
 	@Reference
 	private TrashHelper _trashHelper;

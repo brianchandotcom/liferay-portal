@@ -17,6 +17,7 @@ package com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter;
 import com.liferay.commerce.product.model.CPOptionValue;
 import com.liferay.commerce.product.service.CPOptionValueService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.OptionValue;
+import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
@@ -49,6 +50,12 @@ public class OptionValueDTOConverter
 		return new OptionValue() {
 			{
 				actions = dtoConverterContext.getActions();
+				customFields = CustomFieldsUtil.toCustomFields(
+					dtoConverterContext.isAcceptAllLanguages(),
+					CPOptionValue.class.getName(),
+					cpOptionValue.getCPOptionValueId(),
+					cpOptionValue.getCompanyId(),
+					dtoConverterContext.getLocale());
 				externalReferenceCode =
 					cpOptionValue.getExternalReferenceCode();
 				id = cpOptionValue.getCPOptionValueId();

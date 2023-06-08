@@ -22,6 +22,7 @@ import com.liferay.commerce.product.service.CPOptionService;
 import com.liferay.commerce.product.service.CPOptionValueService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Option;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.OptionValue;
+import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.OptionValueResource;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
@@ -31,6 +32,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -41,6 +43,8 @@ import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+
+import java.io.Serializable;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -273,6 +277,12 @@ public class OptionValueResourceImpl
 			CPOption cpOption, OptionValue optionValue)
 		throws Exception {
 
+		ServiceContext serviceContext =
+			_serviceContextHelper.getServiceContext();
+
+		serviceContext.setExpandoBridgeAttributes(
+			_getExpandoBridgeAttributes(optionValue));
+
 		CPOptionValue cpOptionValue =
 			_cpOptionValueService.addOrUpdateCPOptionValue(
 				optionValue.getExternalReferenceCode(),
@@ -304,6 +314,15 @@ public class OptionValueResourceImpl
 				ActionKeys.UPDATE, cpOptionValueId, contextUriInfo,
 				"patchOptionValue", getClass())
 		).build();
+	}
+
+	private Map<String, Serializable> _getExpandoBridgeAttributes(
+		OptionValue optionValue) {
+
+		return CustomFieldsUtil.toMap(
+			CPOptionValue.class.getName(), contextCompany.getCompanyId(),
+			optionValue.getCustomFields(),
+			contextAcceptLanguage.getPreferredLocale());
 	}
 
 	private String _getHttpMethodName(Class<?> clazz, Method method)
@@ -392,12 +411,18 @@ public class OptionValueResourceImpl
 			nameMap = LanguageUtils.getLocalizedMap(name);
 		}
 
+		ServiceContext serviceContext =
+			_serviceContextHelper.getServiceContext();
+
+		serviceContext.setExpandoBridgeAttributes(
+			_getExpandoBridgeAttributes(optionValue));
+
 		cpOptionValue = _cpOptionValueService.updateCPOptionValue(
 			cpOptionValue.getCPOptionValueId(), nameMap,
 			GetterUtil.get(
 				optionValue.getPriority(), cpOptionValue.getPriority()),
 			GetterUtil.get(optionValue.getKey(), cpOptionValue.getKey()),
-			_serviceContextHelper.getServiceContext());
+			serviceContext);
 
 		return _toOptionValue(cpOptionValue.getCPOptionValueId());
 	}

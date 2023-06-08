@@ -26,4 +26,6 @@
 	/>
 </div>
 
-<liferay-layout:layout-common />
+<liferay-layout:layout-common
+	displaySessionMessages="<%= true %>"
+/>

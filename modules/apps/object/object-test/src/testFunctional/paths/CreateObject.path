@@ -66,11 +66,6 @@
 		<td></td>
 	</tr>
 	<tr>
-		<td>TOGGLE_COLLAPSIBLE</td>
-		<td>//input[@aria-label = 'Collapsible']</td>
-		<td></td>
-	</tr>
-	<tr>
 		<td>VIEW_OBJECT_SCOPE</td>
 		<td>//label[contains(.,'Scope')]/following-sibling::div//input</td>
 		<td></td>

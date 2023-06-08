@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
-
+ 
 /**
  * @author Kevin Lee
  */
@@ -98,6 +98,13 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 	@Test
 	public void testUpgradeJavaServiceTrackerListCheck() throws Exception {
 		test("upgrade/UpgradeJavaServiceTrackerListCheck.testjava");
+	}
+
+	@Test
+	public void testUpgradeSetResultsSetTotalMethodCheck() throws Exception {
+		test("upgrade/UpgradeJavaSetResultsSetTotalMethodCheck.testjava");
+		test("upgrade/UpgradeJSPSetResultsSetTotalMethodCheck.testjsp");
+		test("upgrade/UpgradeJSPFSetResultsSetTotalMethodCheck.testjspf");
 	}
 
 	@Test

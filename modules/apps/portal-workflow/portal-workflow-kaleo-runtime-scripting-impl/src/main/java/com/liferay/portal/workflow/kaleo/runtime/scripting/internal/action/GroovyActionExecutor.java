@@ -31,9 +31,9 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  */
 @Component(service = ActionExecutor.class)
-public class ScriptActionExecutor implements ActionExecutor {
+public class GroovyActionExecutor implements ActionExecutor {
 
-	public ScriptActionExecutor() {
+	public GroovyActionExecutor() {
 		_outputObjects.add(WorkflowContextUtil.WORKFLOW_CONTEXT_NAME);
 	}
 

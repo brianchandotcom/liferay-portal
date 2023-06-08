@@ -12,12 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.runtime.scripting.internal.condition;
+package com.liferay.portal.workflow.kaleo.runtime.scripting.internal.notification.recipient.script;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.workflow.kaleo.model.KaleoCondition;
+import com.liferay.portal.workflow.kaleo.model.KaleoNotificationRecipient;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
-import com.liferay.portal.workflow.kaleo.runtime.condition.ConditionEvaluator;
+import com.liferay.portal.workflow.kaleo.runtime.notification.recipient.script.NotificationRecipientEvaluator;
+import com.liferay.portal.workflow.kaleo.runtime.notification.recipient.script.constants.ScriptingNotificationRecipientConstants;
 import com.liferay.portal.workflow.kaleo.runtime.scripting.internal.util.KaleoScriptingEvaluator;
 import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
 
@@ -33,35 +34,29 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  */
 @Component(
-	property = "scripting.language=groovy", service = ConditionEvaluator.class
+	property = "scripting.language=groovy",
+	service = NotificationRecipientEvaluator.class
 )
-public class ScriptingConditionEvaluator implements ConditionEvaluator {
+public class GroovyNotificationRecipientEvaluator
+	implements NotificationRecipientEvaluator {
 
 	@Override
-	public String evaluate(
-			KaleoCondition kaleoCondition, ExecutionContext executionContext)
+	public Map<String, ?> evaluate(
+			KaleoNotificationRecipient kaleoNotificationRecipient,
+			ExecutionContext executionContext)
 		throws PortalException {
 
-		Map<String, Object> results = _kaleoScriptingEvaluator.execute(
-			executionContext, _outputNames, kaleoCondition.getScriptLanguage(),
-			kaleoCondition.getScript());
-
-		String returnValue = (String)results.get(_RETURN_VALUE);
-
-		if (returnValue != null) {
-			return returnValue;
-		}
-
-		throw new IllegalStateException(
-			"Conditional did not return value for script " +
-				kaleoCondition.getScript());
+		return _kaleoScriptingEvaluator.execute(
+			executionContext, _outputNames,
+			kaleoNotificationRecipient.getRecipientScriptLanguage(),
+			kaleoNotificationRecipient.getRecipientScript());
 	}
-
-	private static final String _RETURN_VALUE = "returnValue";
 
 	private static final Set<String> _outputNames = new HashSet<>(
 		Arrays.asList(
-			_RETURN_VALUE, WorkflowContextUtil.WORKFLOW_CONTEXT_NAME));
+			ScriptingNotificationRecipientConstants.ROLES_RECIPIENT,
+			ScriptingNotificationRecipientConstants.USER_RECIPIENT,
+			WorkflowContextUtil.WORKFLOW_CONTEXT_NAME));
 
 	@Reference
 	private KaleoScriptingEvaluator _kaleoScriptingEvaluator;

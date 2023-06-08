@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "scripting.language=groovy",
 	service = KaleoTaskAssignmentSelector.class
 )
-public class ScriptingLanguagesKaleoTaskAssignmentSelector
+public class GroovyScriptingKaleoTaskAssignmentSelector
 	extends BaseKaleoTaskAssignmentSelector {
 
 	@Override

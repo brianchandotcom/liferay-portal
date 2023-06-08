@@ -4,6 +4,8 @@
 @import 'modal';
 @import 'side_panel';
 
+@import 'data_set_views';
+
 .fds {
 	@import 'data_renderers/comment';
 	@import 'data_renderers/quantity_selector';

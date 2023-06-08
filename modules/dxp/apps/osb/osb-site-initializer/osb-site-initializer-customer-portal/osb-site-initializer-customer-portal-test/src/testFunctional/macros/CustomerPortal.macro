@@ -827,8 +827,7 @@ definition {
 	}
 
 	macro viewCardValue {
-		AssertElementPresent(
-			locator1 = "CustomerPortalSite#PROJECT_LOGO");
+		AssertElementPresent(locator1 = "CustomerPortalSite#PROJECT_LOGO");
 
 		AssertElementPresent(
 			cardName = ${cardName},

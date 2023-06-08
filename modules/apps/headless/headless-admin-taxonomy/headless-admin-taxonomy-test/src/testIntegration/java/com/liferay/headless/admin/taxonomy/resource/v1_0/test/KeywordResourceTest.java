@@ -21,7 +21,9 @@ import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.headless.admin.taxonomy.client.dto.v1_0.Keyword;
 import com.liferay.headless.admin.taxonomy.client.pagination.Page;
 import com.liferay.headless.admin.taxonomy.client.pagination.Pagination;
+import com.liferay.headless.admin.taxonomy.client.resource.v1_0.KeywordResource;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Arrays;
@@ -36,6 +38,45 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 public class KeywordResourceTest extends BaseKeywordResourceTestCase {
+
+	@Override
+	@Test
+	public void testGetAssetLibraryKeywordsPage() throws Exception {
+		super.testGetAssetLibraryKeywordsPage();
+
+		// Only name field
+
+		Keyword keyword = testPostAssetLibraryKeyword_addKeyword(
+			randomKeyword());
+
+		KeywordResource.Builder builder = KeywordResource.builder();
+
+		keywordResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
+			LocaleUtil.getDefault()
+		).parameters(
+			"fields", "name"
+		).build();
+
+		Page<Keyword> page = keywordResource.getAssetLibraryKeywordsPage(
+			testDepotEntry.getDepotEntryId(), null, null, null,
+			Pagination.of(1, 10), null);
+
+		Assert.assertEquals(1, page.getTotalCount());
+
+		Keyword getKeyword = new Keyword() {
+			{
+				name = keyword.getName();
+			}
+		};
+
+		assertEquals(getKeyword, page.fetchFirstItem());
+
+		assertValid(page);
+
+		keywordResource.deleteKeyword(keyword.getId());
+	}
 
 	@Override
 	@Test

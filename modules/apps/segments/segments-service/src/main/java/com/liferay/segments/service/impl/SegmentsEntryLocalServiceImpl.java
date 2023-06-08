@@ -77,12 +77,12 @@ public class SegmentsEntryLocalServiceImpl
 	public SegmentsEntry addSegmentsEntry(
 			String segmentsEntryKey, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, boolean active, String criteria,
-			String type, ServiceContext serviceContext)
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		return segmentsEntryLocalService.addSegmentsEntry(
 			segmentsEntryKey, nameMap, descriptionMap, active, criteria, null,
-			type, serviceContext);
+			serviceContext);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -90,7 +90,7 @@ public class SegmentsEntryLocalServiceImpl
 	public SegmentsEntry addSegmentsEntry(
 			String segmentsEntryKey, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, boolean active, String criteria,
-			String source, String type, ServiceContext serviceContext)
+			String source, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Segments entry
@@ -127,7 +127,6 @@ public class SegmentsEntryLocalServiceImpl
 		segmentsEntry.setActive(active);
 		segmentsEntry.setCriteria(criteria);
 		segmentsEntry.setSource(_getSource(criteria, source));
-		segmentsEntry.setType(type);
 
 		segmentsEntry = segmentsEntryPersistence.update(segmentsEntry);
 
@@ -151,8 +150,8 @@ public class SegmentsEntryLocalServiceImpl
 		SegmentsEntry segmentsEntry = getSegmentsEntry(segmentsEntryId);
 
 		_segmentsEntryRelLocalService.addSegmentsEntryRels(
-			segmentsEntryId, _portal.getClassNameId(segmentsEntry.getType()),
-			classPKs, serviceContext);
+			segmentsEntryId, _portal.getClassNameId(User.class), classPKs,
+			serviceContext);
 
 		segmentsEntry.setModifiedDate(
 			serviceContext.getModifiedDate(new Date()));
@@ -248,8 +247,7 @@ public class SegmentsEntryLocalServiceImpl
 		SegmentsEntry segmentsEntry = getSegmentsEntry(segmentsEntryId);
 
 		_segmentsEntryRelLocalService.deleteSegmentsEntryRels(
-			segmentsEntryId, _portal.getClassNameId(segmentsEntry.getType()),
-			classPKs);
+			segmentsEntryId, _portal.getClassNameId(User.class), classPKs);
 
 		segmentsEntry.setModifiedDate(new Date());
 
@@ -299,12 +297,12 @@ public class SegmentsEntryLocalServiceImpl
 
 	@Override
 	public List<SegmentsEntry> getSegmentsEntries(
-		long groupId, String source, String type, int start, int end,
+		long groupId, String source, int start, int end,
 		OrderByComparator<SegmentsEntry> orderByComparator) {
 
-		return segmentsEntryPersistence.findByG_S_T(
-			_portal.getCurrentAndAncestorSiteGroupIds(groupId), source, type,
-			start, end, orderByComparator);
+		return segmentsEntryPersistence.findByG_SRC(
+			_portal.getCurrentAndAncestorSiteGroupIds(groupId), source, start,
+			end, orderByComparator);
 	}
 
 	@Override
@@ -535,7 +533,6 @@ public class SegmentsEntryLocalServiceImpl
 				message.put("companyId", segmentsEntry.getCompanyId());
 				message.put(
 					"segmentsEntryId", segmentsEntry.getSegmentsEntryId());
-				message.put("type", segmentsEntry.getType());
 
 				_messageBus.sendMessage(
 					SegmentsDestinationNames.SEGMENTS_ENTRY_REINDEX, message);

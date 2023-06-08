@@ -607,7 +607,7 @@ definition {
 			roleTitle = "Regular Role");
 
 		for (var letter : list "A,B") {
-			JSONGroup.addGroup(groupName = "Site ${letter}");
+			HeadlessSite.addSite(siteName = "Site ${letter}");
 		}
 
 		ObjectAdmin.gotoRolesAndSelectCustomObject(roleName = "Regular Role");

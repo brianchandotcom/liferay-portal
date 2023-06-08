@@ -648,31 +648,7 @@ public class TaxonomyCategoryResourceImpl
 
 		return _taxonomyCategoryDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				contextAcceptLanguage.isAcceptAllLanguages(),
-				HashMapBuilder.put(
-					"add-category",
-					addAction(
-						ActionKeys.ADD_CATEGORY, assetCategory,
-						"postTaxonomyCategoryTaxonomyCategory")
-				).put(
-					"delete",
-					addAction(
-						ActionKeys.DELETE, assetCategory,
-						"deleteTaxonomyCategory")
-				).put(
-					"get",
-					addAction(
-						ActionKeys.VIEW, assetCategory, "getTaxonomyCategory")
-				).put(
-					"replace",
-					addAction(
-						ActionKeys.UPDATE, assetCategory, "putTaxonomyCategory")
-				).put(
-					"update",
-					addAction(
-						ActionKeys.UPDATE, assetCategory,
-						"patchTaxonomyCategory")
-				).build(),
+				contextAcceptLanguage.isAcceptAllLanguages(), null,
 				_dtoConverterRegistry, assetCategory.getCategoryId(),
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser),

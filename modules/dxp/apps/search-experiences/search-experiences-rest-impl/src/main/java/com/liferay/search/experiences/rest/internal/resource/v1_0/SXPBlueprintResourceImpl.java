@@ -310,8 +310,8 @@ public class SXPBlueprintResourceImpl extends BaseSXPBlueprintResourceImpl {
 
 		com.liferay.search.experiences.model.SXPBlueprint
 			serviceBuilderSxpBlueprint =
-				_sxpBlueprintService.getSXPBlueprintByExternalReferenceCode(
-					contextCompany.getCompanyId(), externalReferenceCode);
+				_sxpBlueprintService.fetchSXPBlueprintByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		sxpBlueprint.setExternalReferenceCode(externalReferenceCode);
 

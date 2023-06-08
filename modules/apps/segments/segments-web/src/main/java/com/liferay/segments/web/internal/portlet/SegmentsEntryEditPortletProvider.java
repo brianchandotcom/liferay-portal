@@ -16,7 +16,7 @@ package com.liferay.segments.web.internal.portlet;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
-import com.liferay.portal.kernel.portlet.EditPortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -35,10 +35,9 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = "model.class.name=com.liferay.segments.model.SegmentsEntry",
-	service = EditPortletProvider.class
+	service = PortletProvider.class
 )
-public class SegmentsEntryEditPortletProvider
-	extends BasePortletProvider implements EditPortletProvider {
+public class SegmentsEntryEditPortletProvider extends BasePortletProvider {
 
 	@Override
 	public String getPortletName() {
@@ -67,5 +66,12 @@ public class SegmentsEntryEditPortletProvider
 			"/segments/edit_segments_entry"
 		).buildPortletURL();
 	}
+
+	@Override
+	public Action[] getSupportedActions() {
+		return _supportedActions;
+	}
+
+	private final Action[] _supportedActions = {Action.EDIT};
 
 }

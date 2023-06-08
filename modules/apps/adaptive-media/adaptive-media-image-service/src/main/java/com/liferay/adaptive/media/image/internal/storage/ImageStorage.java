@@ -15,17 +15,16 @@
 package com.liferay.adaptive.media.image.internal.storage;
 
 import com.liferay.adaptive.media.exception.AMRuntimeException;
-import com.liferay.document.library.kernel.store.DLStoreRequest;
-import com.liferay.document.library.kernel.store.DLStoreUtil;
+import com.liferay.document.library.kernel.store.Store;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 
 import java.io.InputStream;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
@@ -34,29 +33,15 @@ import org.osgi.service.component.annotations.Component;
 public class ImageStorage {
 
 	public void delete(FileVersion fileVersion, String configurationUuid) {
-		try {
-			DLStoreUtil.deleteDirectory(
-				fileVersion.getCompanyId(), CompanyConstants.SYSTEM,
-				AMStoreUtil.getFileVersionPath(fileVersion, configurationUuid));
-		}
-		catch (PortalException portalException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(portalException);
-			}
-		}
+		_store.deleteDirectory(
+			fileVersion.getCompanyId(), CompanyConstants.SYSTEM,
+			AMStoreUtil.getFileVersionPath(fileVersion, configurationUuid));
 	}
 
 	public void delete(long companyId, String configurationUuid) {
-		try {
-			DLStoreUtil.deleteDirectory(
-				companyId, CompanyConstants.SYSTEM,
-				getConfigurationEntryPath(configurationUuid));
-		}
-		catch (PortalException portalException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(portalException);
-			}
-		}
+		_store.deleteDirectory(
+			companyId, CompanyConstants.SYSTEM,
+			getConfigurationEntryPath(configurationUuid));
 	}
 
 	public InputStream getContentInputStream(
@@ -66,9 +51,9 @@ public class ImageStorage {
 			String fileVersionPath = AMStoreUtil.getFileVersionPath(
 				fileVersion, configurationUuid);
 
-			return DLStoreUtil.getFileAsStream(
+			return _store.getFileAsStream(
 				fileVersion.getCompanyId(), CompanyConstants.SYSTEM,
-				fileVersionPath);
+				fileVersionPath, StringPool.BLANK);
 		}
 		catch (PortalException portalException) {
 			throw new AMRuntimeException.IOException(portalException);
@@ -78,17 +63,12 @@ public class ImageStorage {
 	public boolean hasContent(
 		FileVersion fileVersion, String configurationUuid) {
 
-		try {
-			String fileVersionPath = AMStoreUtil.getFileVersionPath(
-				fileVersion, configurationUuid);
+		String fileVersionPath = AMStoreUtil.getFileVersionPath(
+			fileVersion, configurationUuid);
 
-			return DLStoreUtil.hasFile(
-				fileVersion.getCompanyId(), CompanyConstants.SYSTEM,
-				fileVersionPath);
-		}
-		catch (PortalException portalException) {
-			throw new AMRuntimeException.IOException(portalException);
-		}
+		return _store.hasFile(
+			fileVersion.getCompanyId(), CompanyConstants.SYSTEM,
+			fileVersionPath, Store.VERSION_DEFAULT);
 	}
 
 	public void save(
@@ -99,18 +79,9 @@ public class ImageStorage {
 			String fileVersionPath = AMStoreUtil.getFileVersionPath(
 				fileVersion, configurationUuid);
 
-			DLStoreUtil.addFile(
-				DLStoreRequest.builder(
-					fileVersion.getCompanyId(), CompanyConstants.SYSTEM,
-					fileVersionPath
-				).className(
-					this
-				).size(
-					fileVersion.getSize()
-				).sourceFileName(
-					fileVersion.getFileName()
-				).build(),
-				inputStream);
+			_store.addFile(
+				fileVersion.getCompanyId(), CompanyConstants.SYSTEM,
+				fileVersionPath, Store.VERSION_DEFAULT, inputStream);
 		}
 		catch (PortalException portalException) {
 			throw new AMRuntimeException.IOException(portalException);
@@ -121,6 +92,11 @@ public class ImageStorage {
 		return String.format("adaptive/%s", configurationUuid);
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(ImageStorage.class);
+	protected void setStore(Store store) {
+		_store = store;
+	}
+
+	@Reference(target = "(default=true)")
+	private Store _store;
 
 }

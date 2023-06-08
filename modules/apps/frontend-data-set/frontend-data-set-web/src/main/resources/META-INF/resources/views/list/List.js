@@ -8,6 +8,7 @@ import {ClayCheckbox, ClayRadio} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayList from '@clayui/list';
 import ClaySticker from '@clayui/sticker';
+import ClayLayout from '@clayui/layout';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
@@ -16,21 +17,29 @@ import FrontendDataSetContext from '../../FrontendDataSetContext';
 import Actions from '../../actions/Actions';
 import ImageRenderer from '../../cell_renderers/ImageRenderer';
 
-const List = ({items, schema}) => {
+const List = ({items, schema, viewsTitle}) => {
 	const {selectedItemsKey} = useContext(FrontendDataSetContext);
 
 	return items?.length ? (
-		<ClayList>
-			{items.map((item, index) => {
-				return (
-					<ListItem
-						item={item}
-						key={item[selectedItemsKey] || index}
-						schema={schema}
-					/>
-				);
-			})}
-		</ClayList>
+		<div className="data-views-list-sheet">
+			{viewsTitle && 	
+				<div className="data-views-list-header">
+					<h2 className="sheet-title">{viewsTitle}</h2>
+				</div>
+			}
+
+			<ClayList>
+				{items.map((item, index) => {
+					return (
+						<ListItem
+							item={item}
+							key={item[selectedItemsKey] || index}
+							schema={schema}
+						/>
+					);
+				})}
+			</ClayList>
+		</div>
 	) : (
 		<ClayEmptyState
 			description={Liferay.Language.get('sorry,-no-results-were-found')}

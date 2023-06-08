@@ -8,7 +8,6 @@ import React from 'react';
 import URLConstants from 'shared/util/url-constants';
 import {compose, withEmpty, withRequest} from 'shared/hoc';
 import {createOrderIOMap, NAME} from 'shared/util/pagination';
-import {Link} from 'react-router-dom';
 import {PropTypes} from 'prop-types';
 import {Routes, toRoute} from 'shared/util/router';
 
@@ -31,8 +30,9 @@ export const InterestsList = ({channelId, groupId, id, interests}) => (
 			<ListGroup.Item className='interest' key={name}>
 				<ListGroup.ItemTitle className='text-truncate'>
 					{name ? (
-						<Link
-							to={toRoute(
+						<ClayLink
+							decoration='none'
+							href={toRoute(
 								Routes.CONTACTS_INDIVIDUAL_INTEREST_DETAILS,
 								{
 									channelId,
@@ -43,7 +43,7 @@ export const InterestsList = ({channelId, groupId, id, interests}) => (
 							)}
 						>
 							{name}
-						</Link>
+						</ClayLink>
 					) : (
 						name
 					)}

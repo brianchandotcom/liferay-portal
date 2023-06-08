@@ -47,13 +47,20 @@ public class ResponsiveLayoutStructureUtil {
 		ColumnLayoutStructureItem columnLayoutStructureItem,
 		RowStyledLayoutStructureItem rowStyledLayoutStructureItem) {
 
+		return getColumnCssClass(
+			columnLayoutStructureItem.getSize(),
+			rowStyledLayoutStructureItem.getVerticalAlignment(),
+			columnLayoutStructureItem.getViewportConfigurationJSONObjects());
+	}
+
+	public static String getColumnCssClass(
+		int size, String verticalAlignment,
+		Map<String, JSONObject> viewportConfigurationJSONObjects) {
+
 		StringBundler sb = new StringBundler();
 
 		sb.append("col-lg-");
-		sb.append(columnLayoutStructureItem.getSize());
-
-		Map<String, JSONObject> columnViewportConfigurationJSONObjects =
-			columnLayoutStructureItem.getViewportConfigurationJSONObjects();
+		sb.append(size);
 
 		for (ViewportSize viewportSize : _viewportSizes) {
 			if (Objects.equals(viewportSize, ViewportSize.DESKTOP)) {
@@ -62,19 +69,15 @@ public class ResponsiveLayoutStructureUtil {
 
 			int columnSize = GetterUtil.getInteger(
 				getResponsivePropertyValue(
-					viewportSize, columnViewportConfigurationJSONObjects,
-					"size", columnLayoutStructureItem.getSize()));
+					viewportSize, viewportConfigurationJSONObjects, "size",
+					size));
 
 			sb.append(" col");
 			sb.append(viewportSize.getCssClassPrefix());
 			sb.append(columnSize);
 		}
 
-		if ((rowStyledLayoutStructureItem != null) &&
-			Objects.equals(
-				rowStyledLayoutStructureItem.getVerticalAlignment(),
-				"middle")) {
-
+		if (Objects.equals(verticalAlignment, "middle")) {
 			sb.append(" d-flex flex-column ");
 		}
 

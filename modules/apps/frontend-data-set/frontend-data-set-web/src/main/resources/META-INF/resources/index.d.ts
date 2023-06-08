@@ -42,6 +42,7 @@ export function FrontendDataSet({
 	sorting,
 	style,
 	views,
+	viewsTitle
 }: IFrontendDataSetProps): JSX.Element;
 
 export function DateTimeRenderer({
@@ -158,6 +159,7 @@ export interface IFrontendDataSetProps {
 	sorting?: TSorting[];
 	style?: 'default' | 'fluid' | 'stacked';
 	views: TViews[];
+	viewsTitle?: string;
 }
 
 export {INTERNAL_CELL_RENDERERS as FDS_INTERNAL_CELL_RENDERERS} from './cell_renderers/InternalCellRenderer';

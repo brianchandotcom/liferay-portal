@@ -7,17 +7,17 @@
 	"name": "MDFClaim",
 	"objectFields": [
 		{
-			"DBType": "String",
-			"businessType": "Text",
-			"externalReferenceCode": "17123b30-ee57-413b-8aed-71ca50ed04ed",
+			"DBType": "BigDecimal",
+			"businessType": "PrecisionDecimal",
+			"externalReferenceCode": "e4c313f9-0700-e435-baef-fd940901a09d",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "MDF Request External Reference Code"
+				"en_US": "Total Claim Amount"
 			},
-			"name": "mdfRequestExternalReferenceCode",
+			"name": "totalClaimAmount",
 			"required": false,
-			"type": "String"
+			"type": "BigDecimal"
 		}
 	],
 	"panelCategoryKey": "control_panel.object",

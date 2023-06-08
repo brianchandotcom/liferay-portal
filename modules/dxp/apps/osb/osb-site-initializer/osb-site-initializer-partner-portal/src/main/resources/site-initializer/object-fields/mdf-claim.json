@@ -65,19 +65,6 @@
 			"type": "Boolean"
 		},
 		{
-			"DBType": "BigDecimal",
-			"businessType": "PrecisionDecimal",
-			"externalReferenceCode": "e4c313f9-0700-e435-baef-fd940901a09d",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Total Claim Amount"
-			},
-			"name": "totalClaimAmount",
-			"required": false,
-			"type": "BigDecimal"
-		},
-		{
 			"DBType": "String",
 			"businessType": "Text",
 			"externalReferenceCode": "8491c70a-7000-7d1c-8278-b4b703af1219",
@@ -301,6 +288,19 @@
 			],
 			"required": false,
 			"type": "Long"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "17123b30-ee57-413b-8aed-71ca50ed04ed",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "MDF Request External Reference Code"
+			},
+			"name": "mdfRequestExternalReferenceCode",
+			"required": false,
+			"type": "String"
 		}
 	],
 	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:MDFClaim$]"

@@ -17,12 +17,12 @@
 		{
 			"active": true,
 			"enableCategorization": true,
-			"externalReferenceCode": "MSOD_SORT",
+			"externalReferenceCode": "MSOD_API_SORT",
 			"label": {
-				"en_US": "Sort"
+				"en_US": "API Sort"
 			},
 			"modifiable": false,
-			"name": "Sort",
+			"name": "APISort",
 			"objectFields": [
 				{
 					"DBType": "String",
@@ -83,7 +83,7 @@
 				}
 			],
 			"pluralLabel": {
-				"en_US": "Sorts"
+				"en_US": "API Sorts"
 			},
 			"portlet": false,
 			"scope": "company",
@@ -95,12 +95,12 @@
 		{
 			"active": true,
 			"enableCategorization": true,
-			"externalReferenceCode": "MSOD_FILTER",
+			"externalReferenceCode": "MSOD_API_FILTER",
 			"label": {
-				"en_US": "Filter"
+				"en_US": "API Filter"
 			},
 			"modifiable": false,
-			"name": "Filter",
+			"name": "APIFilter",
 			"objectFields": [
 				{
 					"DBType": "String",
@@ -134,7 +134,7 @@
 				}
 			],
 			"pluralLabel": {
-				"en_US": "Sorts"
+				"en_US": "API Filters"
 			},
 			"portlet": false,
 			"scope": "company",
@@ -146,12 +146,12 @@
 		{
 			"active": true,
 			"enableCategorization": true,
-			"externalReferenceCode": "MSOD_ENDPOINT",
+			"externalReferenceCode": "MSOD_API_ENDPOINT",
 			"label": {
-				"en_US": "Endpoint"
+				"en_US": "API Endpoint"
 			},
 			"modifiable": false,
-			"name": "Endpoint",
+			"name": "APIEndpoint",
 			"objectFields": [
 				{
 					"DBType": "String",
@@ -279,8 +279,8 @@
 						"en_US": "Endpoint filters"
 					},
 					"name": "endpointFilters",
-					"objectDefinitionExternalReferenceCode1": "MSOD_ENDPOINT",
-					"objectDefinitionExternalReferenceCode2": "MSOD_FILTER",
+					"objectDefinitionExternalReferenceCode1": "MSOD_API_ENDPOINT",
+					"objectDefinitionExternalReferenceCode2": "MSOD_API_FILTER",
 					"objectDefinitionName2": "Filter",
 					"parameterObjectFieldId": 0,
 					"parameterObjectFieldName": "",
@@ -293,8 +293,8 @@
 						"en_US": "Endpoint sorts"
 					},
 					"name": "endpointSorts",
-					"objectDefinitionExternalReferenceCode1": "MSOD_ENDPOINT",
-					"objectDefinitionExternalReferenceCode2": "MSOD_SORT",
+					"objectDefinitionExternalReferenceCode1": "MSOD_API_ENDPOINT",
+					"objectDefinitionExternalReferenceCode2": "MSOD_API_SORT",
 					"objectDefinitionName2": "Sort",
 					"parameterObjectFieldId": 0,
 					"parameterObjectFieldName": "",
@@ -305,7 +305,7 @@
 			"panelCategoryKey": "",
 			"parameterRequired": false,
 			"pluralLabel": {
-				"en_US": "Endpoints"
+				"en_US": "API Endpoints"
 			},
 			"portlet": false,
 			"scope": "company",
@@ -318,12 +318,12 @@
 			"active": true,
 			"enableCategorization": true,
 			"enableComments": false,
-			"externalReferenceCode": "MSOD_PROPERTY",
+			"externalReferenceCode": "MSOD_API_PROPERTY",
 			"label": {
-				"en_US": "Property"
+				"en_US": "API Property"
 			},
 			"modifiable": false,
-			"name": "Property",
+			"name": "APIProperty",
 			"objectFields": [
 				{
 					"DBType": "String",
@@ -408,8 +408,8 @@
 						"en_US": "Properties"
 					},
 					"name": "properties",
-					"objectDefinitionExternalReferenceCode1": "MSOD_PROPERTY",
-					"objectDefinitionExternalReferenceCode2": "MSOD_PROPERTY",
+					"objectDefinitionExternalReferenceCode1": "MSOD_API_PROPERTY",
+					"objectDefinitionExternalReferenceCode2": "MSOD_API_PROPERTY",
 					"objectDefinitionName2": "Property",
 					"parameterObjectFieldId": 0,
 					"parameterObjectFieldName": "",
@@ -420,7 +420,7 @@
 			"panelCategoryKey": "",
 			"parameterRequired": false,
 			"pluralLabel": {
-				"en_US": "Properties"
+				"en_US": "API Properties"
 			},
 			"portlet": false,
 			"scope": "company",
@@ -432,12 +432,12 @@
 		{
 			"active": true,
 			"enableCategorization": true,
-			"externalReferenceCode": "MSOD_SCHEMA",
+			"externalReferenceCode": "MSOD_API_SCHEMA",
 			"label": {
-				"en_US": "Schema"
+				"en_US": "API Schema"
 			},
 			"modifiable": false,
-			"name": "Schema",
+			"name": "APISchema",
 			"objectFields": [
 				{
 					"DBType": "String",
@@ -492,8 +492,8 @@
 						"en_US": "Schema Properties"
 					},
 					"name": "schemaProperties",
-					"objectDefinitionExternalReferenceCode1": "MSOD_SCHEMA",
-					"objectDefinitionExternalReferenceCode2": "MSOD_PROPERTY",
+					"objectDefinitionExternalReferenceCode1": "MSOD_API_SCHEMA",
+					"objectDefinitionExternalReferenceCode2": "MSOD_API_PROPERTY",
 					"objectDefinitionName2": "Property",
 					"parameterObjectFieldId": 0,
 					"parameterObjectFieldName": "",
@@ -506,8 +506,8 @@
 						"en_US": "Endpoint Response"
 					},
 					"name": "endpointResponse",
-					"objectDefinitionExternalReferenceCode1": "MSOD_SCHEMA",
-					"objectDefinitionExternalReferenceCode2": "MSOD_ENDPOINT",
+					"objectDefinitionExternalReferenceCode1": "MSOD_API_SCHEMA",
+					"objectDefinitionExternalReferenceCode2": "MSOD_API_ENDPOINT",
 					"objectDefinitionName2": "Endpoint",
 					"parameterObjectFieldId": 0,
 					"parameterObjectFieldName": "",
@@ -518,7 +518,7 @@
 			"panelCategoryKey": "",
 			"parameterRequired": false,
 			"pluralLabel": {
-				"en_US": "Schemas"
+				"en_US": "API Schemas"
 			},
 			"portlet": false,
 			"scope": "company",
@@ -658,7 +658,7 @@
 					},
 					"name": "applicationSchemas",
 					"objectDefinitionExternalReferenceCode1": "MSOD_API_APPLICATION",
-					"objectDefinitionExternalReferenceCode2": "MSOD_SCHEMA",
+					"objectDefinitionExternalReferenceCode2": "MSOD_API_SCHEMA",
 					"objectDefinitionName2": "Schema",
 					"parameterObjectFieldId": 0,
 					"parameterObjectFieldName": "",
@@ -672,7 +672,7 @@
 					},
 					"name": "applicationEndpoints",
 					"objectDefinitionExternalReferenceCode1": "MSOD_API_APPLICATION",
-					"objectDefinitionExternalReferenceCode2": "MSOD_ENDPOINT",
+					"objectDefinitionExternalReferenceCode2": "MSOD_API_ENDPOINT",
 					"objectDefinitionName2": "Endpoint",
 					"parameterObjectFieldId": 0,
 					"parameterObjectFieldName": "",

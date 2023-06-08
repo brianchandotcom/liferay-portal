@@ -41,6 +41,14 @@ import javax.servlet.jsp.PageContext;
  */
 public class LayoutCommonTag extends IncludeTag {
 
+	public boolean getDisplaySessionMessages() {
+		return _displaySessionMessages;
+	}
+
+	public void setDisplaySessionMessages(boolean displaySessionMessages) {
+		_displaySessionMessages = displaySessionMessages;
+	}
+
 	@Override
 	public void setPageContext(PageContext pageContext) {
 		super.setPageContext(pageContext);
@@ -52,6 +60,7 @@ public class LayoutCommonTag extends IncludeTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
+		_displaySessionMessages = false;
 		_includeStaticPortlets = false;
 		_includeWebServerDisplayNode = false;
 	}
@@ -150,6 +159,7 @@ public class LayoutCommonTag extends IncludeTag {
 	private static final boolean _WEB_SERVER_DISPLAY_NODE =
 		GetterUtil.getBoolean(PropsUtil.get(PropsKeys.WEB_SERVER_DISPLAY_NODE));
 
+	private boolean _displaySessionMessages;
 	private boolean _includeStaticPortlets;
 	private boolean _includeWebServerDisplayNode;
 

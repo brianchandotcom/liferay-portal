@@ -987,7 +987,7 @@ definition {
 		property test.name.skip.portal.instance = "EventDetails#ViewCalendarEventDetailViaMailLink";
 		property test.smtp.server.enabled = "true";
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
 

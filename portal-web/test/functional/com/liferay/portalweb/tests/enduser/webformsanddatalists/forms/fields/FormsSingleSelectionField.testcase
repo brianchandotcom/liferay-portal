@@ -779,7 +779,7 @@ definition {
 	test SingleSelectionFormFieldAddedBeforeDefaultSiteLanguageToggleCanBeLoaded {
 		property test.name.skip.portal.instance = "FormsSingleSelectionField#SingleSelectionFormFieldAddedBeforeDefaultSiteLanguageToggleCanBeLoaded";
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		ApplicationsMenu.gotoSite(site = "Site Name");
 
@@ -818,7 +818,7 @@ definition {
 	test SingleSelectionFormFieldNameAndOptionsCanBeAddedToNonEnglishDefaultSiteLanguageSite {
 		property test.name.skip.portal.instance = "FormsSingleSelectionField#SingleSelectionFormFieldNameAndOptionsCanBeAddedToNonEnglishDefaultSiteLanguageSite";
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		ApplicationsMenu.gotoSite(site = "Site Name");
 

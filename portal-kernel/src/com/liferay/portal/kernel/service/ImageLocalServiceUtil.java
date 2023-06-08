@@ -229,6 +229,13 @@ public class ImageLocalServiceUtil {
 		return getService().getImage(imageId);
 	}
 
+	public static InputStream getImageInputStream(
+			long companyId, long imageId, String type)
+		throws PortalException {
+
+		return getService().getImageInputStream(companyId, imageId, type);
+	}
+
 	public static Image getImageOrDefault(long imageId) {
 		return getService().getImageOrDefault(imageId);
 	}

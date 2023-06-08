@@ -263,6 +263,10 @@ public class EntryLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static String[] getAttachmentsFiles(Entry entry) {
+		return getService().getAttachmentsFiles(entry);
+	}
+
 	/**
 	 * Returns a range of all the entries.
 	 *

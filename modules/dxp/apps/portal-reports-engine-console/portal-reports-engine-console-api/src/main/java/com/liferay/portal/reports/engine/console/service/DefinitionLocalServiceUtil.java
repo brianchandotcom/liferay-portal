@@ -256,6 +256,10 @@ public class DefinitionLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static String[] getAttachmentsFiles(Definition definition) {
+		return getService().getAttachmentsFiles(definition);
+	}
+
 	/**
 	 * Returns the definition with the primary key.
 	 *

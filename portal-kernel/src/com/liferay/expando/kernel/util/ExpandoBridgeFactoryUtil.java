@@ -42,6 +42,6 @@ public class ExpandoBridgeFactoryUtil {
 	private static volatile ExpandoBridgeFactory _expandoBridgeFactory =
 		ServiceProxyFactory.newServiceTrackedInstance(
 			ExpandoBridgeFactory.class, ExpandoBridgeFactoryUtil.class,
-			"_expandoBridgeFactory", true);
+			"_expandoBridgeFactory", false);
 
 }

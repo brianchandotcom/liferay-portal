@@ -40,8 +40,13 @@ definition {
 	}
 
 	@description = "Story: LRAC-12019 | Automation ID: LRAC-12584 | Test Summary: Can paginate the list of properties"
+	@ignore = "true"
 	@priority = 3
 	test CanPaginatePropertyListInDXP {
+
+		// AC Bug: Properties are unable to be deleted
+		// AC Bug ticket: LRAC-13704
+
 		var firstPageList = "AC Property Pagination 2,AC Property Pagination 3,AC Property Pagination 4,AC Property Pagination 5,AC Property Pagination 6";
 		var secondPageList = "AC Property Pagination 1";
 

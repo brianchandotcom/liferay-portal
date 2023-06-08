@@ -410,50 +410,6 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		return new String[] {indexName};
 	}
 
-	private SearchHit _skipToLastSearch(
-		int maxResultWindow, SearchSearchRequest searchSearchRequest,
-		int start) {
-
-		int documentsToSkip = 0;
-
-		if (start > maxResultWindow) {
-			searchSearchRequest.setStart(maxResultWindow - 1);
-
-			documentsToSkip = start % maxResultWindow;
-		}
-
-		searchSearchRequest.setSize(1);
-
-		SearchSearchResponse searchSearchResponse =
-			_searchEngineAdapter.execute(searchSearchRequest);
-
-		SearchHit lastSearchHit = _getLastSearchHit(searchSearchResponse);
-
-		if (lastSearchHit == null) {
-			return null;
-		}
-
-		int maxResultWindowPages = start / maxResultWindow;
-
-		for (int i = 1; i < maxResultWindowPages; i++) {
-			lastSearchHit = _getLastSearchHit(
-				lastSearchHit.getSortValues(), searchSearchRequest,
-				maxResultWindow);
-
-			if (lastSearchHit == null) {
-				return null;
-			}
-		}
-
-		if (documentsToSkip > 0) {
-			lastSearchHit = _getLastSearchHit(
-				lastSearchHit.getSortValues(), searchSearchRequest,
-				documentsToSkip);
-		}
-
-		return lastSearchHit;
-	}
-
 	private SearchHit _getLastSearchHit(
 		Object[] searchAfter, SearchSearchRequest searchSearchRequest,
 		int size) {
@@ -642,7 +598,7 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 				searchSearchRequest.setStart(start);
 			}
 
-			int maxSize = Math.min((end - start), maxResultWindow);
+			int maxSize = Math.min(end - start, maxResultWindow);
 
 			searchSearchRequest.setSize(maxSize);
 
@@ -705,6 +661,50 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		for (PipelineAggregation aggregation : map.values()) {
 			baseSearchRequest.addPipelineAggregation(aggregation);
 		}
+	}
+
+	private SearchHit _skipToLastSearch(
+		int maxResultWindow, SearchSearchRequest searchSearchRequest,
+		int start) {
+
+		int documentsToSkip = 0;
+
+		if (start > maxResultWindow) {
+			searchSearchRequest.setStart(maxResultWindow - 1);
+
+			documentsToSkip = start % maxResultWindow;
+		}
+
+		searchSearchRequest.setSize(1);
+
+		SearchSearchResponse searchSearchResponse =
+			_searchEngineAdapter.execute(searchSearchRequest);
+
+		SearchHit lastSearchHit = _getLastSearchHit(searchSearchResponse);
+
+		if (lastSearchHit == null) {
+			return null;
+		}
+
+		int maxResultWindowPages = start / maxResultWindow;
+
+		for (int i = 1; i < maxResultWindowPages; i++) {
+			lastSearchHit = _getLastSearchHit(
+				lastSearchHit.getSortValues(), searchSearchRequest,
+				maxResultWindow);
+
+			if (lastSearchHit == null) {
+				return null;
+			}
+		}
+
+		if (documentsToSkip > 0) {
+			lastSearchHit = _getLastSearchHit(
+				lastSearchHit.getSortValues(), searchSearchRequest,
+				documentsToSkip);
+		}
+
+		return lastSearchHit;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

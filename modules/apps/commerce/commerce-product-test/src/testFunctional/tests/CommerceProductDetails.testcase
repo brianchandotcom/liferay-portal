@@ -1546,6 +1546,160 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-11650. As a user, when I place an order with a product that has also stock in a second channel, then the product's stock in the second channel won't be affected by the order made in the first one"
+	@priority = 5
+	test CanCheckoutAProductInAChannelWithoutAffectingAnotherChannelStock {
+		property portal.acceptance = "true";
+
+		task ("Given a Minium site with a buyer user") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And a second Minium site is created and buyer user is associated with it") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(
+				siteName = "Minium 2",
+				siteTemplateName = "Minium");
+
+			JSONUser.addUserToSite(
+				groupName = "Minium 2",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And the Italy warehouse is set eligible for Minium Portal while the Northeast warehouse is set eligible for Minium 2 Portal") {
+			CommerceNavigator.goToWarehousesAdmin();
+
+			LexiconEntry.gotoEntryMenuItemNoError(
+				menuItem = "Delete",
+				rowEntry = "United States - Southwest");
+
+			LexiconEntry.viewNoEntry(rowEntry = "United States - Southwest");
+
+			CommerceEntry.removeEntryEligibility(
+				channelEligibility = "Minium 2 Portal",
+				entryName = "Italy");
+
+			CommerceNavigator.goToWarehousesAdmin();
+
+			CommerceEntry.removeEntryEligibility(
+				channelEligibility = "Minium Portal",
+				entryName = "United States - Northeast");
+		}
+
+		task ("And a product Brake Pads' Low Stock Threshold is set to 1 and Allow Back Orders is enabled") {
+			CommerceJSONProductsAPI._patchCommerceProductConfiguration(
+				allowBackOrder = "true",
+				productName = "Brake Pads");
+
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "Brake Pads");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Configuration");
+
+			Type(
+				key_labelName = "Low Stock Threshold",
+				locator1 = "TextInput#SPECIFIC_LABEL_TEXT_INPUT",
+				value1 = 1);
+
+			Button.clickPublish();
+		}
+
+		task ("And the product's inventory quantity is set to 4 for Italy and 6 for Northeast") {
+			var warehouseList = "4:Italy,6:United States - Northeast";
+
+			for (var warehouse : list ${warehouseList}) {
+				var warehouseName = StringUtil.extractLast(${warehouse}, ":");
+				var warehouseQuantity = StringUtil.extractFirst(${warehouse}, ":");
+
+				CommerceJSONWarehousesAndInventoriesAPI._patchWarehouseItem(
+					productSku = "MIN93018",
+					quantity = ${warehouseQuantity},
+					warehouseName = ${warehouseName});
+			}
+		}
+
+		task ("When the buyer logs in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("Then the Brake Pads' stock quantity is 4 for Minium and 6 for Minium 2 in the product detail page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/brake-pads");
+
+			AssertElementPresent(
+				key_filterOption = "4 in Stock",
+				locator1 = "AppBuilder#CHOOSE_APP_SEARCH_FILTER_BY_OPTION");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium-2/p/brake-pads");
+
+			AssertElementPresent(
+				key_filterOption = "6 in Stock",
+				locator1 = "AppBuilder#CHOOSE_APP_SEARCH_FILTER_BY_OPTION");
+		}
+
+		task ("When the buyer places an order with 11 quantities of Brake Pads on Minium") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/brake-pads");
+
+			Type(
+				key_productName = "Brake Pads",
+				locator1 = "CommerceFrontStore#PRODUCT_DETAILS_QUANTITY_SELECTOR",
+				value1 = 11);
+
+			Click(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE");
+
+			CommerceCheckout.gotoCheckout();
+
+			CommerceCheckout.checkout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				shippingMethod = "Standard");
+		}
+
+		task ("Then the Brake Pads product is unavailable and the stock quantity is -7 for Minium") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/brake-pads");
+
+			AssertElementPresent(
+				key_filterOption = "-7 in Stock",
+				locator1 = "AppBuilder#CHOOSE_APP_SEARCH_FILTER_BY_OPTION");
+
+			AssertElementPresent(
+				key_availability = "Unavailable",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_AVAILABILITY");
+		}
+
+		task ("And the Brake Pads product is available and the stock quantity is 6 for Minium 2") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium-2/p/brake-pads");
+
+			AssertElementPresent(
+				key_filterOption = "6 in Stock",
+				locator1 = "AppBuilder#CHOOSE_APP_SEARCH_FILTER_BY_OPTION");
+
+			AssertElementPresent(
+				key_availability = "Available",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_AVAILABILITY");
+		}
+	}
+
 	@description = "COMMERCE-9675. Users can view and download a product's attachments"
 	@priority = 3
 	test CanDownloadProductAttachments {

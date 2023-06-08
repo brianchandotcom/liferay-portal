@@ -164,14 +164,11 @@ export function InviteMemberModal({
 
     const accountGroups = await getAccountGroup(selectedAccount.id);
 
-    let accountGroupERC: string = "";
-    if (accountGroups?.length > 0) {
-      accountGroupERC = accountGroups[0]?.externalReferenceCode;
-    }
+    const accountGroupERC = accountGroups && accountGroups[0]?.externalReferenceCode;
 
     await addAdditionalInfo({
       acceptInviteStatus: false,
-      accountGroupERC:accountGroupERC,
+      accountGroupERC,
       accountName: selectedAccount.name,
       emailOfMember: formFields.email,
       inviteURL:

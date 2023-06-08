@@ -129,7 +129,9 @@ public class EditMVCActionCommand extends BaseMVCActionCommand {
 
 		Map<String, Serializable> taskContextMap = new HashMap<>();
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-177664")) {
+		if (FeatureFlagManagerUtil.isEnabled("LPS-177664") ||
+			FeatureFlagManagerUtil.isEnabled("LPS-177668")) {
+
 			taskContextMap.put(
 				ReindexBackgroundTaskConstants.EXECUTION_MODE,
 				ParamUtil.getString(actionRequest, "executionMode"));

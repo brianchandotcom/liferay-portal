@@ -25,6 +25,7 @@ const EXECUTE_BUTTON_QUERY_SELECTOR = '.save-server-button';
 const EXECUTION_MODES = {
 	CONCURRENT: 'concurrent',
 	REGULAR: 'regular',
+	SYNC: 'sync',
 };
 
 const SCOPES = {
@@ -86,29 +87,40 @@ function ExecutionOptions({
 
 	return (
 		<div className="execution-scope-sheet sheet sheet-lg">
-			{Liferay.FeatureFlags['LPS-177664'] && isConcurrentModeSupported && (
-				<div className="sheet-section">
-					<h2 className="sheet-title">
-						{Liferay.Language.get('execution-mode')}
-					</h2>
+			{(Liferay.FeatureFlags['LPS-177664'] ||
+				Liferay.FeatureFlags['LPS-177668']) &&
+				isConcurrentModeSupported && (
+					<div className="sheet-section">
+						<h2 className="sheet-title">
+							{Liferay.Language.get('execution-mode')}
+						</h2>
 
-					<ClayRadioGroup
-						name={`${portletNamespace}executionMode`}
-						onChange={_handleExecutionModeChange}
-						value={executionMode}
-					>
-						<ClayRadio
-							label={Liferay.Language.get('regular')}
-							value={EXECUTION_MODES.REGULAR}
-						/>
+						<ClayRadioGroup
+							name={`${portletNamespace}executionMode`}
+							onChange={_handleExecutionModeChange}
+							value={executionMode}
+						>
+							<ClayRadio
+								label={Liferay.Language.get('regular')}
+								value={EXECUTION_MODES.REGULAR}
+							/>
 
-						<ClayRadio
-							label={Liferay.Language.get('concurrent')}
-							value={EXECUTION_MODES.CONCURRENT}
-						/>
-					</ClayRadioGroup>
-				</div>
-			)}
+							{Liferay.FeatureFlags['LPS-177664'] && (
+								<ClayRadio
+									label={Liferay.Language.get('concurrent')}
+									value={EXECUTION_MODES.CONCURRENT}
+								/>
+							)}
+
+							{Liferay.FeatureFlags['LPS-177668'] && (
+								<ClayRadio
+									label={Liferay.Language.get('sync')}
+									value={EXECUTION_MODES.SYNC}
+								/>
+							)}
+						</ClayRadioGroup>
+					</div>
+				)}
 
 			<div className="sheet-section">
 				<h2 className="sheet-title">

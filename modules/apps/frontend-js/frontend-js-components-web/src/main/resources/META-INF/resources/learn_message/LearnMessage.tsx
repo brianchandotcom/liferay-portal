@@ -37,7 +37,9 @@ interface ILearnResourceContext {
 	[learnResourceName: string]: ILearnResourceItem;
 }
 
-interface IProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
+type ClayLinkProps = React.ComponentProps<typeof ClayLink>;
+
+interface IProps extends ClayLinkProps {
 	className?: string;
 
 	/**

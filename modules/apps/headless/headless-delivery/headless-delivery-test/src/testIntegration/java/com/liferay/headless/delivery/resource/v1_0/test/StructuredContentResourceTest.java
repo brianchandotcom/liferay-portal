@@ -222,6 +222,27 @@ public class StructuredContentResourceTest
 					externalReferenceCode, "}"),
 				problem.getTitle());
 		}
+
+		// Non-exist assetLibraryId
+
+		long assetLibraryId = RandomTestUtil.randomLong();
+
+		try {
+			structuredContentResource.
+				getAssetLibraryStructuredContentByExternalReferenceCode(
+					assetLibraryId,
+					postStructuredContent.getExternalReferenceCode());
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("NOT_FOUND", problem.getStatus());
+			Assert.assertEquals(
+				"Unable to get a valid asset library with ID " + assetLibraryId,
+				problem.getTitle());
+		}
 	}
 
 	@Override

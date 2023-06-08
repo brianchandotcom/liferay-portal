@@ -16,6 +16,7 @@ package com.liferay.portal.search.internal.background.task;
 
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
@@ -33,9 +34,12 @@ import com.liferay.portal.kernel.search.background.task.ReindexBackgroundTaskCon
 import com.liferay.portal.kernel.search.background.task.ReindexStatusMessageSender;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.index.SyncReindexManager;
 
 import java.io.Serializable;
 
+import java.util.Collections;
+import java.util.Date;
 import java.util.Map;
 
 import org.osgi.framework.BundleContext;
@@ -136,10 +140,27 @@ public class ReindexSingleIndexerBackgroundTaskExecutor
 
 				searchEngine.initialize(companyId);
 
-				indexWriterHelper.deleteEntityDocuments(
-					companyId, className, true);
+				Date date = null;
+
+				if (_isExecuteSyncReindex(executionMode)) {
+					date = new Date();
+
+					Thread.sleep(1000);
+				}
+				else {
+					indexWriterHelper.deleteEntityDocuments(
+						companyId, className, true);
+				}
 
 				indexer.reindex(new String[] {String.valueOf(companyId)});
+
+				if (_isExecuteSyncReindex(executionMode)) {
+					SyncReindexManager syncReindexManager =
+						_syncReindexManagerSnapshot.get();
+
+					syncReindexManager.deleteStaleDocuments(
+						companyId, date, Collections.singleton(className));
+				}
 			}
 			catch (Exception exception) {
 				_log.error(exception);
@@ -178,6 +199,16 @@ public class ReindexSingleIndexerBackgroundTaskExecutor
 
 	protected ServiceTrackerList<Indexer<?>> systemIndexers;
 
+	private boolean _isExecuteSyncReindex(String executionMode) {
+		if ((_syncReindexManagerSnapshot.get() != null) &&
+			(executionMode != null) && executionMode.equals("sync")) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private boolean _isSystemIndexer(Indexer<?> indexer) {
 		if (systemIndexers.size() > 0) {
 			for (Indexer<?> systemIndexer : systemIndexers) {
@@ -192,5 +223,10 @@ public class ReindexSingleIndexerBackgroundTaskExecutor
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ReindexSingleIndexerBackgroundTaskExecutor.class);
+
+	private static final Snapshot<SyncReindexManager>
+		_syncReindexManagerSnapshot = new Snapshot<>(
+			ReindexSingleIndexerBackgroundTaskExecutor.class,
+			SyncReindexManager.class, null, true);
 
 }

@@ -30,10 +30,14 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.search.index.ConcurrentReindexManager;
+import com.liferay.portal.search.index.SyncReindexManager;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.FutureTask;
@@ -50,13 +54,15 @@ public class SearchEngineInitializer implements Runnable {
 	public SearchEngineInitializer(
 		BundleContext bundleContext, long companyId,
 		ConcurrentReindexManager concurrentReindexManager, String executionMode,
-		PortalExecutorManager portalExecutorManager) {
+		PortalExecutorManager portalExecutorManager,
+		SyncReindexManager syncReindexManager) {
 
 		_bundleContext = bundleContext;
 		_companyId = companyId;
 		_concurrentReindexManager = concurrentReindexManager;
 		_executionMode = executionMode;
 		_portalExecutorManager = portalExecutorManager;
+		_syncReindexManager = syncReindexManager;
 	}
 
 	public void halt() {
@@ -113,6 +119,16 @@ public class SearchEngineInitializer implements Runnable {
 		return false;
 	}
 
+	private boolean _isExecuteSyncReindex() {
+		if ((_syncReindexManager != null) && (_executionMode != null) &&
+			_executionMode.equals("sync")) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private void _reindex(int delay) {
 		if (IndexWriterHelperUtil.isIndexReadOnly()) {
 			return;
@@ -146,8 +162,15 @@ public class SearchEngineInitializer implements Runnable {
 		stopWatch.start();
 
 		try {
+			Date date = null;
+
 			if (_isExecuteConcurrentReindex()) {
 				_concurrentReindexManager.createNextIndex(_companyId);
+			}
+			else if (_isExecuteSyncReindex()) {
+				date = new Date();
+
+				Thread.sleep(1000);
 			}
 			else {
 				SearchEngineHelperUtil.removeCompany(_companyId);
@@ -170,7 +193,11 @@ public class SearchEngineInitializer implements Runnable {
 					"(!(system.index=true))");
 			}
 
+			Set<String> indexerClassNames = new HashSet<>();
+
 			for (Indexer<?> indexer : _indexers) {
+				indexerClassNames.add(indexer.getClassName());
+
 				FutureTask<Void> futureTask = new FutureTask<>(
 					new Callable<Void>() {
 
@@ -215,6 +242,10 @@ public class SearchEngineInitializer implements Runnable {
 				_concurrentReindexManager.replaceCurrentIndexWithNextIndex(
 					_companyId);
 			}
+			else if (_isExecuteSyncReindex()) {
+				_syncReindexManager.deleteStaleDocuments(
+					_companyId, date, indexerClassNames);
+			}
 
 			if (_log.isInfoEnabled()) {
 				_log.info(
@@ -247,5 +278,6 @@ public class SearchEngineInitializer implements Runnable {
 	private boolean _finished;
 	private ServiceTrackerList<Indexer<?>> _indexers;
 	private final PortalExecutorManager _portalExecutorManager;
+	private final SyncReindexManager _syncReindexManager;
 
 }

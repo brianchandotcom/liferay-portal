@@ -16,7 +16,11 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import React from 'react';
 
-export function ErrorMessage() {
+interface Props {
+	message: string;
+}
+
+export function ErrorMessage({message}: Props) {
 	return (
 		<div
 			className="alert alert-danger alert-dismissible alert-fluid c-mb-1"
@@ -29,11 +33,7 @@ export function ErrorMessage() {
 				<strong className="lead">
 					{Liferay.Language.get('error')}
 				</strong>{' '}
-				<span className="d-inline-block">
-					{Liferay.Language.get(
-						'openai-is-experiencing-issues-on-their-servers'
-					)}
-				</span>{' '}
+				<span className="d-inline-block">{message}</span>{' '}
 				<ClayButton
 					className="btn-link text-underline"
 					displayType="unstyled"

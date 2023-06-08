@@ -83,7 +83,9 @@ export default function AICreatorModal({
 					className="d-flex flex-column h-100"
 					disabled={status.type === 'loading'}
 				>
-					{status.type === 'error' ? <ErrorMessage /> : null}
+					{status.type === 'error' ? (
+						<ErrorMessage message={status.errorMessage} />
+					) : null}
 
 					<Container className="c-p-4 flex-grow-1" fluid>
 						<FormContent portletNamespace={portletNamespace} />

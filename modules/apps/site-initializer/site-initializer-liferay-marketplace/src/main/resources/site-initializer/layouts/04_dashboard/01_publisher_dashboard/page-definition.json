@@ -1,6 +1,20 @@
 {
 	"pageElement": {
 		"pageElements": [
+			{
+				"definition": {
+					"fragment": {
+						"key": "notification-welcome",
+						"siteKey": "[$GROUP_KEY$]"
+					},
+					"fragmentConfig": {
+					},
+					"fragmentFields": [
+					],
+					"indexed": true
+				},
+				"type": "Fragment"
+			}
 		],
 		"type": "Root"
 	},

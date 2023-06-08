@@ -1,0 +1,18 @@
+[
+	{
+		"active": true,
+		"conditionExpression": "accountGroupERC == 'MKP-CUSTOMERS-GROUP'",
+		"externalReferenceCode": "MKT-CUSTOMERS-ACTION",
+		"label": {
+			"en_US": "Invite Customer MarketPlace"
+		},
+		"name": "InviteCustomerMarketPlace",
+		"objectActionExecutorKey": "notification",
+		"objectActionTriggerKey": "onAfterAdd",
+		"objectDefinitionId": "[$OBJECT_DEFINITION_ID:UserAdditionalInfo$]",
+		"parameters": {
+			"notificationTemplateExternalReferenceCode": "MARKETPLACE-ACTION-CUSTOMERS",
+			"type": "email"
+		}
+	}
+]

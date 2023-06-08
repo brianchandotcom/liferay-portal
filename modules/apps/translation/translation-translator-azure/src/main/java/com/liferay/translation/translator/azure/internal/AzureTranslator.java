@@ -17,13 +17,13 @@ package com.liferay.translation.translator.azure.internal;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.url.URLBuilder;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -38,13 +38,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
+ * @author Roberto Díaz
  */
 @Component(
 	configurationPid = "com.liferay.translation.translator.azure.internal.configuration.AzureTranslatorConfiguration",
@@ -54,22 +53,35 @@ public class AzureTranslator implements Translator {
 
 	@Override
 	public boolean isEnabled(long companyId) throws ConfigurationException {
-		return _azureTranslatorConfiguration.enabled();
+		AzureTranslatorConfiguration azureTranslatorConfiguration =
+			_configurationProvider.getCompanyConfiguration(
+				AzureTranslatorConfiguration.class, companyId);
+
+		return azureTranslatorConfiguration.enabled();
 	}
 
 	@Override
 	public TranslatorPacket translate(TranslatorPacket translatorPacket)
 		throws PortalException {
 
+		AzureTranslatorConfiguration azureTranslatorConfiguration =
+			_configurationProvider.getCompanyConfiguration(
+				AzureTranslatorConfiguration.class,
+				translatorPacket.getCompanyId());
+
+		if (!azureTranslatorConfiguration.enabled()) {
+			return translatorPacket;
+		}
+
 		try {
 			Http.Options options = new Http.Options();
 
 			options.addHeader(
 				"Ocp-Apim-Subscription-Key",
-				_azureTranslatorConfiguration.subscriptionKey());
+				azureTranslatorConfiguration.subscriptionKey());
 			options.addHeader(
 				"Ocp-Apim-Subscription-Region",
-				_azureTranslatorConfiguration.resourceLocation());
+				azureTranslatorConfiguration.resourceLocation());
 			options.addHeader(
 				HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
 			options.setBody(
@@ -131,13 +143,6 @@ public class AzureTranslator implements Translator {
 		}
 	}
 
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_azureTranslatorConfiguration = ConfigurableUtil.createConfigurable(
-			AzureTranslatorConfiguration.class, properties);
-	}
-
 	private String _getLanguageCode(String languageId) {
 		List<String> list = StringUtil.split(languageId, CharPool.UNDERLINE);
 
@@ -182,7 +187,8 @@ public class AzureTranslator implements Translator {
 		return jsonArray.toString();
 	}
 
-	private volatile AzureTranslatorConfiguration _azureTranslatorConfiguration;
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private Http _http;

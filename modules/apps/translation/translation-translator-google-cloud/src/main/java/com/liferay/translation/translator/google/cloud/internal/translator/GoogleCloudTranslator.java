@@ -50,6 +50,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
+ * @author Roberto Díaz
  */
 @Component(
 	configurationPid = "com.liferay.translation.translator.google.cloud.internal.configuration.GoogleCloudTranslatorConfiguration",
@@ -78,7 +79,12 @@ public class GoogleCloudTranslator implements Translator {
 	public TranslatorPacket translate(TranslatorPacket translatorPacket)
 		throws PortalException {
 
-		if (!isEnabled(translatorPacket.getCompanyId())) {
+		GoogleCloudTranslatorConfiguration googleCloudTranslatorConfiguration =
+			_configurationProvider.getCompanyConfiguration(
+				GoogleCloudTranslatorConfiguration.class,
+				translatorPacket.getCompanyId());
+
+		if (!googleCloudTranslatorConfiguration.enabled()) {
 			return translatorPacket;
 		}
 
@@ -87,7 +93,7 @@ public class GoogleCloudTranslator implements Translator {
 		String targetLanguageCode = _getLanguageCode(
 			translatorPacket.getTargetLanguageId());
 
-		Translate translate = _getTranslate(translatorPacket.getCompanyId());
+		Translate translate = _getTranslate(googleCloudTranslatorConfiguration);
 
 		Set<String> supportedLanguageCodes = SetUtil.fromCollection(
 			TransformUtil.transform(
@@ -148,12 +154,10 @@ public class GoogleCloudTranslator implements Translator {
 		return list.get(0);
 	}
 
-	private Translate _getTranslate(long companyId)
+	private Translate _getTranslate(
+			GoogleCloudTranslatorConfiguration
+				googleCloudTranslatorConfiguration)
 		throws ConfigurationException {
-
-		GoogleCloudTranslatorConfiguration googleCloudTranslatorConfiguration =
-			_configurationProvider.getCompanyConfiguration(
-				GoogleCloudTranslatorConfiguration.class, companyId);
 
 		String serviceAccountPrivateKey =
 			googleCloudTranslatorConfiguration.serviceAccountPrivateKey();

@@ -16,9 +16,9 @@ package com.liferay.translation.translator.aws.internal.translator;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringUtil;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.translation.translator.Translator;
 import com.liferay.translation.translator.TranslatorPacket;
@@ -28,10 +28,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
@@ -41,6 +39,7 @@ import software.amazon.awssdk.services.translate.model.TranslateTextResponse;
 
 /**
  * @author Adolfo Pérez
+ * @author Roberto Díaz
  */
 @Component(
 	configurationPid = "com.liferay.translation.translator.aws.internal.configuration.AWSTranslatorConfiguration",
@@ -50,12 +49,35 @@ public class AWSTranslator implements Translator {
 
 	@Override
 	public boolean isEnabled(long companyId) throws ConfigurationException {
-		return _awsTranslatorConfiguration.enabled();
+		AWSTranslatorConfiguration awsTranslatorConfiguration =
+			_configurationProvider.getCompanyConfiguration(
+				AWSTranslatorConfiguration.class, companyId);
+
+		return awsTranslatorConfiguration.enabled();
 	}
 
 	@Override
 	public TranslatorPacket translate(TranslatorPacket translatorPacket)
 		throws PortalException {
+
+		AWSTranslatorConfiguration awsTranslatorConfiguration =
+			_configurationProvider.getCompanyConfiguration(
+				AWSTranslatorConfiguration.class,
+				translatorPacket.getCompanyId());
+
+		if (!awsTranslatorConfiguration.enabled()) {
+			return translatorPacket;
+		}
+
+		TranslateClient translateClient = TranslateClient.builder(
+		).credentialsProvider(
+			StaticCredentialsProvider.create(
+				AwsBasicCredentials.create(
+					awsTranslatorConfiguration.accessKey(),
+					awsTranslatorConfiguration.secretKey()))
+		).region(
+			Region.of(awsTranslatorConfiguration.region())
+		).build();
 
 		Map<String, String> translatedFieldsMap = new HashMap<>();
 
@@ -69,7 +91,9 @@ public class AWSTranslator implements Translator {
 		fieldsMap.forEach(
 			(key, value) -> translatedFieldsMap.put(
 				key,
-				_translate(value, sourceLanguageCode, targetLanguageCode)));
+				_translate(
+					translateClient, value, sourceLanguageCode,
+					targetLanguageCode)));
 
 		return new TranslatorPacket() {
 
@@ -96,33 +120,6 @@ public class AWSTranslator implements Translator {
 		};
 	}
 
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_awsTranslatorConfiguration = ConfigurableUtil.createConfigurable(
-			AWSTranslatorConfiguration.class, properties);
-
-		if (_awsTranslatorConfiguration.enabled()) {
-			_translateClient = TranslateClient.builder(
-			).credentialsProvider(
-				StaticCredentialsProvider.create(
-					AwsBasicCredentials.create(
-						_awsTranslatorConfiguration.accessKey(),
-						_awsTranslatorConfiguration.secretKey()))
-			).region(
-				Region.of(_awsTranslatorConfiguration.region())
-			).build();
-		}
-		else {
-			_translateClient = null;
-		}
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_translateClient = null;
-	}
-
 	private String _getLanguageCode(String languageId) {
 		List<String> list = StringUtil.split(languageId, CharPool.UNDERLINE);
 
@@ -130,14 +127,15 @@ public class AWSTranslator implements Translator {
 	}
 
 	private String _translate(
-		String text, String sourceLanguageCode, String targetLanguageCode) {
+		TranslateClient translateClient, String text, String sourceLanguageCode,
+		String targetLanguageCode) {
 
 		if (Validator.isBlank(text)) {
 			return text;
 		}
 
 		TranslateTextResponse translateTextResponse =
-			_translateClient.translateText(
+			translateClient.translateText(
 				builder -> builder.sourceLanguageCode(
 					sourceLanguageCode
 				).targetLanguageCode(
@@ -149,7 +147,7 @@ public class AWSTranslator implements Translator {
 		return translateTextResponse.translatedText();
 	}
 
-	private volatile AWSTranslatorConfiguration _awsTranslatorConfiguration;
-	private volatile TranslateClient _translateClient;
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 }

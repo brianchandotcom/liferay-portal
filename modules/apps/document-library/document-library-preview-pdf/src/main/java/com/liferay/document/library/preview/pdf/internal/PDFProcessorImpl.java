@@ -17,7 +17,7 @@ package com.liferay.document.library.preview.pdf.internal;
 import com.liferay.document.library.kernel.document.conversion.DocumentConversionUtil;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLProcessorConstants;
-import com.liferay.document.library.kernel.store.DLStoreUtil;
+import com.liferay.document.library.kernel.store.Store;
 import com.liferay.document.library.kernel.util.DLPreviewableProcessor;
 import com.liferay.document.library.kernel.util.DLProcessor;
 import com.liferay.document.library.kernel.util.DLUtil;
@@ -348,9 +348,9 @@ public class PDFProcessorImpl
 	protected boolean hasPreview(FileVersion fileVersion, String type)
 		throws Exception {
 
-		return DLStoreUtil.hasFile(
+		return _store.hasFile(
 			fileVersion.getCompanyId(), REPOSITORY_ID,
-			getPreviewFilePath(fileVersion, 1));
+			getPreviewFilePath(fileVersion, 1), Store.VERSION_DEFAULT);
 	}
 
 	protected void importPreviews(
@@ -1088,6 +1088,9 @@ public class PDFProcessorImpl
 
 	@Reference
 	private ProcessExecutor _processExecutor;
+
+	@Reference(target = "(default=true)")
+	private Store _store;
 
 	private static class LiferayPDFBoxProcessCallable
 		implements ProcessCallable<String> {

@@ -17,10 +17,8 @@ package com.liferay.portal.model.impl;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.document.library.kernel.store.DLStoreUtil;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.service.ImageLocalServiceUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.util.PropsValues;
@@ -59,24 +57,8 @@ public class ImageImpl extends ImageBaseImpl {
 					dlFileEntry.getDataRepositoryId(), dlFileEntry.getName());
 			}
 			else {
-				Image image = ImageLocalServiceUtil.getImage(imageId);
-
-				if (DLStoreUtil.hasFile(
-						image.getCompanyId(), _REPOSITORY_ID, getFileName())) {
-
-					inputStream = DLStoreUtil.getFileAsStream(
-						image.getCompanyId(), _REPOSITORY_ID, getFileName());
-				}
-				else {
-					if (_log.isDebugEnabled()) {
-						_log.debug(
-							"Get image " + imageId +
-								" from the default company");
-					}
-
-					inputStream = DLStoreUtil.getFileAsStream(
-						0, _REPOSITORY_ID, getFileName());
-				}
+				inputStream = ImageLocalServiceUtil.getImageInputStream(
+					getCompanyId(), imageId, getType());
 			}
 
 			byte[] bytes = FileUtil.getBytes(inputStream);
@@ -94,12 +76,6 @@ public class ImageImpl extends ImageBaseImpl {
 	public void setTextObj(byte[] textObj) {
 		_textObj = textObj;
 	}
-
-	protected String getFileName() {
-		return getImageId() + StringPool.PERIOD + getType();
-	}
-
-	private static final long _REPOSITORY_ID = 0;
 
 	private static final Log _log = LogFactoryUtil.getLog(ImageImpl.class);
 

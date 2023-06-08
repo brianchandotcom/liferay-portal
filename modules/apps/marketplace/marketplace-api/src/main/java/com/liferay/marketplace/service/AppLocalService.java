@@ -304,6 +304,9 @@ public interface AppLocalService
 
 	public void installApp(long remoteAppId) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean isDownloaded(App app);
+
 	public void uninstallApp(long remoteAppId) throws PortalException;
 
 	/**

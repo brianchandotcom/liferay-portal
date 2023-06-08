@@ -294,6 +294,13 @@ public class DefinitionLocalServiceWrapper
 		return _definitionLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public String[] getAttachmentsFiles(
+		com.liferay.portal.reports.engine.console.model.Definition definition) {
+
+		return _definitionLocalService.getAttachmentsFiles(definition);
+	}
+
 	/**
 	 * Returns the definition with the primary key.
 	 *

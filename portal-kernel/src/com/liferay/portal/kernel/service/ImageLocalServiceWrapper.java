@@ -251,6 +251,14 @@ public class ImageLocalServiceWrapper
 	}
 
 	@Override
+	public java.io.InputStream getImageInputStream(
+			long companyId, long imageId, String type)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _imageLocalService.getImageInputStream(companyId, imageId, type);
+	}
+
+	@Override
 	public Image getImageOrDefault(long imageId) {
 		return _imageLocalService.getImageOrDefault(imageId);
 	}

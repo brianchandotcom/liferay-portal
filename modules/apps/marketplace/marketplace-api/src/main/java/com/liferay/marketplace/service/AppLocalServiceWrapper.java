@@ -387,6 +387,11 @@ public class AppLocalServiceWrapper
 	}
 
 	@Override
+	public boolean isDownloaded(com.liferay.marketplace.model.App app) {
+		return _appLocalService.isDownloaded(app);
+	}
+
+	@Override
 	public void uninstallApp(long remoteAppId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

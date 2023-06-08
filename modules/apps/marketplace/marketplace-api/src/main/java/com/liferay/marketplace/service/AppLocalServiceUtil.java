@@ -335,6 +335,10 @@ public class AppLocalServiceUtil {
 		getService().installApp(remoteAppId);
 	}
 
+	public static boolean isDownloaded(App app) {
+		return getService().isDownloaded(app);
+	}
+
 	public static void uninstallApp(long remoteAppId) throws PortalException {
 		getService().uninstallApp(remoteAppId);
 	}

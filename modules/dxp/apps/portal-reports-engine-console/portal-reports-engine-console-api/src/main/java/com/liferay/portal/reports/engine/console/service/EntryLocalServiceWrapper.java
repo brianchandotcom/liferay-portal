@@ -297,6 +297,13 @@ public class EntryLocalServiceWrapper
 		return _entryLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public String[] getAttachmentsFiles(
+		com.liferay.portal.reports.engine.console.model.Entry entry) {
+
+		return _entryLocalService.getAttachmentsFiles(entry);
+	}
+
 	/**
 	 * Returns a range of all the entries.
 	 *

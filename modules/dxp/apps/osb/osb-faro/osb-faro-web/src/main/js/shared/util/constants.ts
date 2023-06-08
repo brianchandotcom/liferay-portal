@@ -34,6 +34,10 @@ export const ENABLE_FORM_ABANDONMENT = false;
 
 export const ENABLE_GLOBAL_FILTER = false;
 
+// LRAC-13781 [BUG] The Last Seen column only displays the creation date of the token
+
+export const ENABLE_LAST_ACCESS_DATE = false;
+
 // LRAC-11571 Disable temporarily Salesforce
 
 export const ENABLE_SALESFORCE = false;

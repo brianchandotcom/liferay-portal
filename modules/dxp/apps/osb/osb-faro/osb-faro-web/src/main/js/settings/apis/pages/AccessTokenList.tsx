@@ -19,7 +19,7 @@ import {close, modalTypes, open} from 'shared/actions/modals';
 import {compose} from 'redux';
 import {connect, ConnectedProps} from 'react-redux';
 import {CUSTOM_DATE_FORMAT} from 'shared/util/date';
-import {ExpirationPeriod} from 'shared/util/constants';
+import {ENABLE_LAST_ACCESS_DATE, ExpirationPeriod} from 'shared/util/constants';
 import {formatDateToTimeZone, getDateNow} from 'shared/util/date';
 import {RootState} from 'shared/store';
 import {sub} from 'shared/util/lang';
@@ -29,6 +29,7 @@ import {
 	withLoading,
 	withQuery
 } from 'shared/hoc';
+import type {Column} from 'shared/components/table/Row';
 
 export const isExpired = (expirationDate: string) =>
 	moment.utc(expirationDate).isSameOrBefore(getDateNow());
@@ -128,62 +129,64 @@ const TokenList: React.FC<
 				{!!tokens.length && (
 					<Table
 						className='mb-0'
-						columns={[
-							{
-								accessor: 'token',
-								cellRenderer: TokenCell,
-								label: Liferay.Language.get('token'),
-								sortable: false
-							},
-							{
-								accessor: 'lastAccessDate',
-								dataFormatter: (val: string) =>
-									formatDateToTimeZone(
-										val,
-										CUSTOM_DATE_FORMAT,
-										timeZoneId
-									),
-								label: Liferay.Language.get('last-seen'),
-								sortable: false
-							},
-							{
-								accessor: 'createDate',
-								dataFormatter: (val: string) =>
-									formatDateToTimeZone(
-										val,
-										CUSTOM_DATE_FORMAT,
-										timeZoneId
-									),
-								label: Liferay.Language.get('date-created'),
-								sortable: false
-							},
-							{
-								accessor: 'expirationDate',
-								cellRenderer: ({data}) => {
-									if (isIndefinite(data)) {
+						columns={
+							[
+								{
+									accessor: 'token',
+									cellRenderer: TokenCell,
+									label: Liferay.Language.get('token'),
+									sortable: false
+								},
+								ENABLE_LAST_ACCESS_DATE && {
+									accessor: 'lastAccessDate',
+									dataFormatter: (val: string) =>
+										formatDateToTimeZone(
+											val,
+											CUSTOM_DATE_FORMAT,
+											timeZoneId
+										),
+									label: Liferay.Language.get('last-seen'),
+									sortable: false
+								},
+								{
+									accessor: 'createDate',
+									dataFormatter: (val: string) =>
+										formatDateToTimeZone(
+											val,
+											CUSTOM_DATE_FORMAT,
+											timeZoneId
+										),
+									label: Liferay.Language.get('date-created'),
+									sortable: false
+								},
+								{
+									accessor: 'expirationDate',
+									cellRenderer: ({data}) => {
+										if (isIndefinite(data)) {
+											return (
+												<td>
+													{Liferay.Language.get(
+														'indefinite'
+													)}
+												</td>
+											);
+										}
+
 										return (
 											<td>
-												{Liferay.Language.get(
-													'indefinite'
+												{formatDateToTimeZone(
+													data.expirationDate,
+													CUSTOM_DATE_FORMAT,
+													timeZoneId
 												)}
 											</td>
 										);
-									}
-
-									return (
-										<td>
-											{formatDateToTimeZone(
-												data.expirationDate,
-												'll',
-												timeZoneId
-											)}
-										</td>
-									);
-								},
-								label: Liferay.Language.get('expiration'),
-								sortable: false
-							}
-						]}
+									},
+									label: Liferay.Language.get('expiration'),
+									sortable: false
+								}
+							].filter(Boolean) as Column[]
+						}
 						items={tokens}
 						renderInlineRowActions={({data: {token}}) => {
 							if (tokenExpired) return null;

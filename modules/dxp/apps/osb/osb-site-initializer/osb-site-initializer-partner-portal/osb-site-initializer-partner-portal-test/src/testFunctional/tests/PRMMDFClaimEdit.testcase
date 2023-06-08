@@ -70,12 +70,54 @@ definition {
 	}
 
 	@description = "This is a test for LPS-181363. Verify that its possible to unselect an activity when editing"
-	@ignore = "true"
 	@priority = 5
 	test CanUnselectClaimedActivity {
+		property test.name.skip.portal.instance = "PRMMDFClaimEdit#CanUnselectClaimedActivity";
 
-		// This is a test for LPS-181363. Verify that its possible to unselect an activity when editing
+		task ("Given that the PMU creates a full claim with two activities") {
+			PRMNavigator.openSitePage(pageName = "MDF Requests");
 
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
+
+			PRMMDFClaim.createNewClaim(
+				activityIndex = "0,1",
+				listLeads = "Document_1.xlsx",
+				reimbursementInvoice = "Document_1.png",
+				thirdInvoice = "Document_1.jpg");
+
+			task ("The Claim ID is saved in a variable") {
+				PRMMDFClaim.getClaimIdOnDetailPage(index = 1);
+			}
+		}
+
+		task ("And the CMM changes the status to 'More Info Requested'") {
+			JSONPRM.changeClaimStatus(
+				claimId = ${staticClaimId1},
+				claimStatus = "More Info Requested",
+				userEmailAddress = "cmm@liferaytest.com");
+		}
+
+		task ("When the PMU goes to edit the created claim and unselect the first activity") {
+			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
+
+			PRMMDFClaim.editButton();
+
+			PRMMDFClaim.activityCheckbox(activityIndex = 0);
+
+			Button.clickSubmitButton();
+
+			Alert.viewSuccessMessage();
+
+			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
+		}
+
+		task ("Then the first activity will not be displayed on Claim Detail Page") {
+			PRMMDFClaim.viewActivityNotPresent(activityName = "Activity Name 1");
+		}
+
+		task ("And the second activity will be displayed on Claim Detail Page") {
+			PRMMDFClaim.viewActivityPresent(activityName = "Activity Name 2");
+		}
 	}
 
 	@description = "This is a test for LPS-183234. Verify that the CFM can edit the claim in 'Claim Paid' status"

@@ -5,7 +5,7 @@ dependencies {
 	compileOnly group: "com.liferay", name: "org.apache.aries.component.dsl", version: "1.2.2.LIFERAY-PATCHED-1"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "com.sun.xml.bind", name: "jaxb-osgi", version: "2.3.4"
-	compileOnly group: "org.apache.aries.jax.rs", name: "org.apache.aries.jax.rs.whiteboard", transitive: false, version: "2.0.0"
+	compileOnly group: "org.apache.aries.jax.rs", name: "org.apache.aries.jax.rs.whiteboard", version: "2.0.0"
 	compileOnly group: "org.apache.commons", name: "commons-lang3", version: "3.9"
 	compileOnly group: "org.apache.cxf", name: "cxf-core", version: "3.4.10"
 	compileOnly group: "org.apache.cxf", name: "cxf-rt-bindings-soap", version: "3.4.10"

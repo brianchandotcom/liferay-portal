@@ -7,7 +7,7 @@ task deployJar(type: Copy)
 task patch(type: PatchTask)
 
 dependencies {
-	compileOnly group: "org.apache.aries.component-dsl", name: "org.apache.aries.component-dsl.component-dsl", version: "1.2.2", transitive: false
+	compileOnly group: "org.apache.aries.component-dsl", name: "org.apache.aries.component-dsl.component-dsl", transitive: false, version: "1.2.2"
 	compileOnly group: "org.osgi", name: "osgi.core", transitive: false, version: "6.0.0"
 }
 

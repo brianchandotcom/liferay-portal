@@ -33,9 +33,9 @@ const TONE_OPTIONS = [
 }));
 
 export function FormContent({namespace}: Props) {
-	const descriptionId = `${namespace}aiCreatorDescription`;
-	const toneId = `${namespace}aiCreatorTone`;
-	const wordCountId = `${namespace}aiCreatorWordCount`;
+	const descriptionId = `${namespace}content`;
+	const toneId = `${namespace}tone`;
+	const wordCountId = `${namespace}words`;
 
 	return (
 		<>
@@ -52,7 +52,8 @@ export function FormContent({namespace}: Props) {
 				</label>
 
 				<ClayInput
-					name={`${namespace}description`}
+					id={descriptionId}
+					name={descriptionId}
 					required
 					type="text"
 				/>
@@ -66,7 +67,8 @@ export function FormContent({namespace}: Props) {
 						</label>
 
 						<ClaySelectWithOption
-							name={`${namespace}tone`}
+							id={toneId}
+							name={toneId}
 							options={TONE_OPTIONS}
 						/>
 					</ClayForm.Group>
@@ -80,8 +82,9 @@ export function FormContent({namespace}: Props) {
 
 						<ClayInput
 							defaultValue="100"
+							id={wordCountId}
 							min="1"
-							name={`${namespace}wordCount`}
+							name={wordCountId}
 							step="1"
 							type="number"
 						/>

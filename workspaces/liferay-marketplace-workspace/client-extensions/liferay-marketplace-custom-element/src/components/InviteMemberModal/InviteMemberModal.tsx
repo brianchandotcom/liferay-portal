@@ -139,32 +139,41 @@ export function InviteMemberModal({
       return;
     }
 
+    const accountGroups = await getAccountGroup(selectedAccount.id);
+    const accountGroupERC = accountGroups && accountGroups[0]?.externalReferenceCode;
+
+    if(!accountGroupERC){
+      renderToast(
+        "To invite a member, the account must be associated with an accountGroup",
+        '',
+        'danger'
+      );
+
+      return onClose();
+    }
+
     // eslint-disable-next-line prefer-const
     let [user, myUser] = await Promise.all([
       getUserByEmail(formFields.email),
       getMyUserAccount(),
     ]);
 
-    if (user) {
-      if (checkIfUserIsInvited(user, selectedAccount.id)) {
-        renderToast(
-          "There's already a user with this email invited to this account",
-          '',
-          'danger'
-        );
-
-        return onClose();
-      }
-    } else {
+    if (user && checkIfUserIsInvited(user, selectedAccount.id)) {
+      renderToast(
+        "There's already a user with this email invited to this account",
+        '',
+        'danger'
+      );
+  
+      return onClose();
+    }
+  
+    if (!user) {
       user = await createNewUser(jsonBody);
     }
 
     await addExistentUserIntoAccount(selectedAccount.id, formFields.email);
     await addAccountRolesToUser(user);
-
-    const accountGroups = await getAccountGroup(selectedAccount.id);
-
-    const accountGroupERC = accountGroups && accountGroups[0]?.externalReferenceCode;
 
     await addAdditionalInfo({
       acceptInviteStatus: false,
@@ -174,10 +183,10 @@ export function InviteMemberModal({
       inviteURL:
         Liferay.ThemeDisplay.getPortalURL() +
         '/c/login?redirect=' +
-        getSiteURL() + '/loadingpagevalidation',
+        getSiteURL() + '/loading',
       inviterName: myUser.givenName,
       mothersName: userPassword,
-      r_accountToUserAdditionalInfos_accountEntryId: selectedAccount.id,
+      r_accountEntryToUserAdditionalInfo_accountEntryId: selectedAccount.id,
       r_userToUserAddInfo_userId: user.id,
       roles: getCheckedRoles(),
       userFirstName: formFields.firstName,

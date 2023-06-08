@@ -44,7 +44,11 @@ export default function AICreatorModal({namespace}: Props) {
 	const [status, setStatus] = useState<RequestStatus>({type: 'idle'});
 
 	const onAdd = () => {
-		alert(JSON.stringify(status, null, 2));
+		if (status.type === 'success') {
+			const opener = Liferay.Util.getOpener();
+
+			opener.Liferay.fire('closeModal', {text: status.text});
+		}
 	};
 
 	const onSubmit = (event: FormEvent) => {

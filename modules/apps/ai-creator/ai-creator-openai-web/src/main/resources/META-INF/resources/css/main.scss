@@ -3,3 +3,7 @@
 html#{$cadmin-selector} .cadmin .portlet-ai-creator-openai .lfr-tooltip-scope {
 	height: 100%;
 }
+
+html#{$cadmin-selector} .cadmin .portlet-ai-creator-openai textarea {
+	white-space: pre-line;
+}

@@ -107,6 +107,20 @@ public class SXPElementResourceTest extends BaseSXPElementResourceTestCase {
 	@Ignore
 	@Override
 	@Test
+	public void testGraphQLGetSXPElementByExternalReferenceCode()
+		throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetSXPElementByExternalReferenceCodeNotFound()
+		throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
 	public void testGraphQLGetSXPElementNotFound() throws Exception {
 	}
 

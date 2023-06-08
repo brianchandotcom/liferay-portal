@@ -1,11 +1,11 @@
 {
 	"description": "",
 	"fragmentCompositionDefinitionPath": "page-definition.json",
-	"friendlyURL": "/loadingPageValidation",
-	"hidden": false,
-	"name": "loadingPageValidation",
+	"friendlyURL": "/loading",
+	"hidden": true,
+	"name": "loading",
 	"name_i18n": {
-		"en_US": "loadingPageValidation"
+		"en_US": "loading"
 	},
 	"permissions": [
 		{

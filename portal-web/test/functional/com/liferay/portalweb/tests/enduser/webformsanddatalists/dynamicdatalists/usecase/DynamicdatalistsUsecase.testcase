@@ -1591,7 +1591,7 @@ definition {
 	@description = "This is a use case for LPS-50557."
 	@priority = 3
 	test CreateSiteAndViewDefaultDataDefinitions {
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		DDLList.openDynamicDataListsAdmin(siteURLKey = "site-name");
 

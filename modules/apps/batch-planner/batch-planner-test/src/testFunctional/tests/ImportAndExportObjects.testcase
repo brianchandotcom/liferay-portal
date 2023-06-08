@@ -245,6 +245,34 @@ definition {
 		}
 	}
 
+	@priority = 3
+	test ExportCustomObjectWithoutObjectEntry {
+		task ("Given a custom object is published") {
+			ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				en_US_label = "student",
+				en_US_plural_label = "students",
+				name = "Student",
+				requiredStringFieldName = "name");
+		}
+
+		task ("When user export custom object with all attribute codes selected") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.exportFile(
+				entityType = "C_Student (v1_0 - Liferay Object REST)",
+				exportFields = "Attribute Code",
+				exportFileFormat = "JSON");
+		}
+
+		task ("Then the zip file contains a related file type export successfully") {
+			ImportExport.unzipDownloadedExportFile();
+		}
+
+		task ("And Then no error in server console") {
+			AssertConsoleTextNotPresent(value1 = "HTTP 404");
+		}
+	}
+
 	@priority = 4
 	test SelectCustomObjectAsEntityType {
 		property portal.acceptance = "true";

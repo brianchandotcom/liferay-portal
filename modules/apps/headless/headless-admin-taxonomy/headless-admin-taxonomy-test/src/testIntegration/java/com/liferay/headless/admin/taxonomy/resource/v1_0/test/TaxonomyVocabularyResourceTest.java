@@ -229,6 +229,31 @@ public class TaxonomyVocabularyResourceTest
 	}
 
 	@Override
+	@Test
+	public void testPutAssetLibraryTaxonomyVocabularyByExternalReferenceCode()
+		throws Exception {
+
+		super.testPutAssetLibraryTaxonomyVocabularyByExternalReferenceCode();
+
+		String externalReferenceCode = StringUtil.toLowerCase(
+			RandomTestUtil.randomString());
+
+		TaxonomyVocabulary taxonomyVocabulary =
+			testPutAssetLibraryTaxonomyVocabularyByExternalReferenceCode_createTaxonomyVocabulary();
+
+		TaxonomyVocabulary putTaxonomyVocabulary =
+			taxonomyVocabularyResource.
+				putAssetLibraryTaxonomyVocabularyByExternalReferenceCode(
+					testPutAssetLibraryTaxonomyVocabularyByExternalReferenceCode_getAssetLibraryId(),
+					externalReferenceCode, taxonomyVocabulary);
+
+		Assert.assertEquals(
+			externalReferenceCode,
+			putTaxonomyVocabulary.getExternalReferenceCode());
+		assertValid(putTaxonomyVocabulary);
+	}
+
+	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"assetTypes", "description", "name"};
 	}

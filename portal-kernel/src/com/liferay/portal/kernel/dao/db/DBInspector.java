@@ -18,7 +18,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -262,7 +261,7 @@ public class DBInspector {
 		return biFunction.apply(DBManagerUtil.getDB(), matcher.group(1));
 	}
 
-	private int _getColumnSize(String columnType) throws UpgradeException {
+	private int _getColumnSize(String columnType) throws Exception {
 		Matcher matcher = _columnSizePattern.matcher(columnType);
 
 		if (!matcher.matches()) {
@@ -276,7 +275,7 @@ public class DBInspector {
 				return Integer.parseInt(columnSize);
 			}
 			catch (NumberFormatException numberFormatException) {
-				throw new UpgradeException(
+				throw new Exception(
 					StringBundler.concat(
 						"Column type ", columnType,
 						" has an invalid column size ", columnSize),

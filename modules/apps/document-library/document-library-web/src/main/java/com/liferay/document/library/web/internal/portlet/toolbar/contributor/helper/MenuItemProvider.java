@@ -368,11 +368,9 @@ public class MenuItemProvider {
 			DLFileEntryType.class.getSimpleName() +
 				fileEntryType.getFileEntryTypeKey());
 		urlMenuItem.setLabel(
-			_language.get(
-				_portal.getHttpServletRequest(portletRequest),
-				fileEntryType.getUnambiguousName(
-					fileEntryTypes, themeDisplay.getScopeGroupId(),
-					themeDisplay.getLocale())));
+			fileEntryType.getUnambiguousName(
+				fileEntryTypes, themeDisplay.getScopeGroupId(),
+				themeDisplay.getLocale()));
 		urlMenuItem.setURL(
 			PortletURLBuilder.create(
 				_getPortletURL(themeDisplay, portletRequest)

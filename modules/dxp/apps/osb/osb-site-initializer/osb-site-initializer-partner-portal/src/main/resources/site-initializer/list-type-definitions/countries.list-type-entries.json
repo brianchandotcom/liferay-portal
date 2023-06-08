@@ -1942,5 +1942,53 @@
 			"en-US": "Zimbabwe"
 		},
 		"type": "string"
+	},
+	{
+		"key": "BQ",
+		"name": "Bonaire, Sint Eustatius and Saba",
+		"name_i18n": {
+			"en-US": "Bonaire, Sint Eustatius and Saba"
+		},
+		"type": "string"
+	},
+	{
+		"key": "CW",
+		"name": "Curaçao",
+		"name_i18n": {
+			"en-US": "Curaçao"
+		},
+		"type": "string"
+	},
+	{
+		"key": "SS",
+		"name": "South Sudan",
+		"name_i18n": {
+			"en-US": "South Sudan"
+		},
+		"type": "string"
+	},
+	{
+		"key": "SX",
+		"name": "Sint Maarten",
+		"name_i18n": {
+			"en-US": "Sint Maarten"
+		},
+		"type": "string"
+	},
+	{
+		"key": "BL",
+		"name": "Saint Barthélemy",
+		"name_i18n": {
+			"en-US": "Saint Barthélemy"
+		},
+		"type": "string"
+	},
+	{
+		"key": "MF",
+		"name": "Saint Martin",
+		"name_i18n": {
+			"en-US": "Saint Martin"
+		},
+		"type": "string"
 	}
 ]

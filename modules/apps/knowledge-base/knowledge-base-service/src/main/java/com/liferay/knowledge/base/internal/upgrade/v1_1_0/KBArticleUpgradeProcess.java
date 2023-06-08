@@ -14,7 +14,7 @@
 
 package com.liferay.knowledge.base.internal.upgrade.v1_1_0;
 
-import com.liferay.knowledge.base.internal.upgrade.v1_1_0.util.KBArticleAttachmentsUtil;
+import com.liferay.knowledge.base.internal.upgrade.v1_1_0.util.KBArticleAttachmentsHelper;
 import com.liferay.knowledge.base.internal.upgrade.v1_1_0.util.KBArticleLatestUpgradeColumnImpl;
 import com.liferay.knowledge.base.internal.upgrade.v1_1_0.util.KBArticleMainUpgradeColumnImpl;
 import com.liferay.knowledge.base.internal.upgrade.v1_1_0.util.KBArticleRootResourcePrimKeyUpgradeColumnImpl;
@@ -76,7 +76,10 @@ public class KBArticleUpgradeProcess extends UpgradeProcess {
 
 		updateTable(newTableName, tableColumns, tableSqlCreate);
 
-		KBArticleAttachmentsUtil.deleteAttachmentsDirectory(
+		KBArticleAttachmentsHelper kbArticleAttachmentsHelper =
+			new KBArticleAttachmentsHelper();
+
+		kbArticleAttachmentsHelper.deleteAttachmentsDirectory(
 			PortalUtil.getDefaultCompanyId());
 	}
 
@@ -151,13 +154,18 @@ public class KBArticleUpgradeProcess extends UpgradeProcess {
 				new KBArticleRootResourcePrimKeyUpgradeColumnImpl(
 					resourcePrimKeyColumn);
 
+		KBArticleAttachmentsHelper kbArticleAttachmentsHelper =
+			new KBArticleAttachmentsHelper();
+
 		KBArticleLatestUpgradeColumnImpl kbArticleLatestUpgradeColumnImpl =
 			new KBArticleLatestUpgradeColumnImpl(
-				kbArticleIdColumn, resourcePrimKeyColumn);
+				kbArticleAttachmentsHelper, kbArticleIdColumn,
+				resourcePrimKeyColumn);
 
 		KBArticleMainUpgradeColumnImpl kbArticleMainUpgradeColumnImpl =
 			new KBArticleMainUpgradeColumnImpl(
-				kbArticleIdColumn, resourcePrimKeyColumn);
+				kbArticleAttachmentsHelper, kbArticleIdColumn,
+				resourcePrimKeyColumn);
 
 		UpgradeTable upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
 			newTableName, tableColumns, kbArticleIdColumn,

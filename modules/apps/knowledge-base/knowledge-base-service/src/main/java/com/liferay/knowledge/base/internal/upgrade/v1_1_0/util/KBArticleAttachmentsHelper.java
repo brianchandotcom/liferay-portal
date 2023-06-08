@@ -27,9 +27,9 @@ import com.liferay.portal.kernel.util.FileUtil;
 /**
  * @author Peter Shin
  */
-public class KBArticleAttachmentsUtil {
+public class KBArticleAttachmentsHelper {
 
-	public static void deleteAttachmentsDirectory(long companyId) {
+	public void deleteAttachmentsDirectory(long companyId) {
 		try {
 			String[] fileNames = DLStoreUtil.getFileNames(
 				companyId, CompanyConstants.SYSTEM, "knowledgebase/articles");
@@ -50,7 +50,7 @@ public class KBArticleAttachmentsUtil {
 		}
 	}
 
-	public static void updateAttachments(KBArticle kbArticle) {
+	public void updateAttachments(KBArticle kbArticle) {
 		try {
 			long folderId = kbArticle.getClassPK();
 
@@ -77,7 +77,7 @@ public class KBArticleAttachmentsUtil {
 						kbArticle.getCompanyId(), CompanyConstants.SYSTEM,
 						newDirName + StringPool.SLASH + shortFileName
 					).className(
-						KBArticleAttachmentsUtil.class.getName()
+						KBArticleAttachmentsHelper.class.getName()
 					).size(
 						bytes.length
 					).build(),
@@ -97,6 +97,6 @@ public class KBArticleAttachmentsUtil {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		KBArticleAttachmentsUtil.class);
+		KBArticleAttachmentsHelper.class);
 
 }

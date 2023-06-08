@@ -26,10 +26,12 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 public class KBArticleMainUpgradeColumnImpl extends BaseUpgradeColumnImpl {
 
 	public KBArticleMainUpgradeColumnImpl(
+		KBArticleAttachmentsHelper kbArticleAttachmentsHelper,
 		UpgradeColumn kbArticleIdColumn, UpgradeColumn resourcePrimKeyColumn) {
 
 		super("main");
 
+		_kbArticleAttachmentsHelper = kbArticleAttachmentsHelper;
 		_kbArticleIdColumn = kbArticleIdColumn;
 		_resourcePrimKeyColumn = resourcePrimKeyColumn;
 	}
@@ -58,11 +60,12 @@ public class KBArticleMainUpgradeColumnImpl extends BaseUpgradeColumnImpl {
 			return Boolean.FALSE;
 		}
 
-		KBArticleAttachmentsUtil.updateAttachments(kbArticle);
+		_kbArticleAttachmentsHelper.updateAttachments(kbArticle);
 
 		return Boolean.TRUE;
 	}
 
+	private final KBArticleAttachmentsHelper _kbArticleAttachmentsHelper;
 	private final UpgradeColumn _kbArticleIdColumn;
 	private final UpgradeColumn _resourcePrimKeyColumn;
 

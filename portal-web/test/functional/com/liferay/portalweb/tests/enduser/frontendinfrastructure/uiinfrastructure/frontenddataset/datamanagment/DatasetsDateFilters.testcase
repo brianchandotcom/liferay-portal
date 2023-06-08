@@ -51,7 +51,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-185344 - Confirms the From and To fields are displayed when creating a new date filter."
+	@description = "LPS-181281. Confirms the From and To fields are displayed when creating a new date filter."
 	@priority = 5
 	test AssertDateFieldsArePresent {
 		task ("And click on the 'Create Filter' button") {
@@ -81,7 +81,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-185348 - Confirms the Clay datepicker can be opened when creating a new date filter."
+	@description = "LPS-181281. Confirms the Clay datepicker can be opened when creating a new date filter."
 	@priority = 5
 	test AssertDateFieldsClayDatePicker {
 		task ("And click on the 'Create Filter' button") {
@@ -127,7 +127,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-185346 - Confirms the date fields values when creating a new date filter are YYYY-MM-DD."
+	@description = "LPS-181281. Confirms the date fields values when creating a new date filter are YYYY-MM-DD."
 	@priority = 3
 	test AssertDateFieldsFormat {
 		task ("And click on the 'Create Filter' button") {
@@ -159,7 +159,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-185354 - Confirms the user can cancel a new date filter creation."
+	@description = "LPS-181281. Confirms the user can cancel a new date filter creation."
 	@priority = 4
 	test CanCancelDateFilterCreation {
 		task ("And click on the Create Filter button") {
@@ -193,7 +193,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-185352 - Confirms the user cannot create a new date filter with invalid date range."
+	@description = "LPS-181281. Confirms the user cannot create a new date filter with invalid date range."
 	@priority = 4
 	test CannotSaveAnInvalidDateRangeInDateFields {
 		task ("And click on the 'Create Filter' button") {
@@ -231,7 +231,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-185357 - Confirms the user can save a new date filter."
+	@description = "LPS-181281. Confirms the user can save a new date filter."
 	@priority = 5
 	test CanSaveDateFilter {
 		task ("And click on the Create Filter button") {

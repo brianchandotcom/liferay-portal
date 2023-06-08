@@ -169,11 +169,11 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 			).put(
 				"createSegmentsVariantURL",
 				() -> PortletURLBuilder.create(
-					_portal.getControlPanelPortletURL(
-						httpServletRequest, group,
+					_portletURLFactory.create(
+						httpServletRequest,
 						ContentPageEditorPortletKeys.
 							CONTENT_PAGE_EDITOR_PORTLET,
-						0, 0, PortletRequest.ACTION_PHASE)
+						PortletRequest.ACTION_PHASE)
 				).setActionName(
 					"/layout_content_page_editor/add_segments_experience"
 				).setGlobalParameter(

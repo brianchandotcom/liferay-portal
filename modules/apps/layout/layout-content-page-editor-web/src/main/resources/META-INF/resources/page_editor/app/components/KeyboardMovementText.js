@@ -12,12 +12,24 @@
  * details.
  */
 
-import React from 'react';
+import React, {useEffect} from 'react';
 
-import {useMovementText} from '../contexts/KeyboardMovementContext';
+import {
+	useMovementText,
+	useSetMovementText,
+} from '../contexts/KeyboardMovementContext';
 
 export default function KeyboardMovementText() {
 	const text = useMovementText();
+	const setText = useSetMovementText();
+
+	useEffect(() => {
+		const timeout = setTimeout(() => setText(''), 1000);
+
+		return () => {
+			clearTimeout(timeout);
+		};
+	}, [text, setText]);
 
 	return text ? (
 		<span aria-live="assertive" className="sr-only">

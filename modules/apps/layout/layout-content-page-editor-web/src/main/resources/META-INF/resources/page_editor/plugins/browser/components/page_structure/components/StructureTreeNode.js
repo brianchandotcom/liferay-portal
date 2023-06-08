@@ -42,6 +42,7 @@ import {
 	useMovementSource,
 	useMovementTarget,
 	useSetMovementSource,
+	useSetMovementText,
 } from '../../../../../app/contexts/KeyboardMovementContext';
 import {
 	useDispatch,
@@ -192,6 +193,7 @@ function StructureTreeNodeContent({
 		(state) => state.selectedViewportSize
 	);
 	const selectItem = useSelectItem();
+	const setText = useSetMovementText();
 
 	const layoutDataRef = useSelectorRef((store) => store.layoutData);
 
@@ -277,6 +279,7 @@ function StructureTreeNodeContent({
 		}
 
 		setEditingNodeId(null);
+		setText(Liferay.Language.get('name-saved'));
 	};
 
 	const handleButtonsKeyDown = (event) => {
@@ -471,10 +474,6 @@ const NameLabel = React.forwardRef(
 							event.stopPropagation();
 						}}
 						onKeyDown={(event) => {
-							if (event.key === 'Enter') {
-								onEditName(name);
-							}
-
 							if (
 								event.key === 'Enter' ||
 								event.key === 'Escape' ||

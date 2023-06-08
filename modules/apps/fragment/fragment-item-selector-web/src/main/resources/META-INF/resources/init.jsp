@@ -28,7 +28,11 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 <%@ page import="com.liferay.fragment.item.selector.web.internal.display.context.ContributedFragmentsItemSelectorViewManagementToolbarDisplayContext" %><%@
 page import="com.liferay.fragment.item.selector.web.internal.display.context.DefaultFragmentDisplayContext" %><%@
 page import="com.liferay.fragment.item.selector.web.internal.display.context.FragmentCollectionContributorsItemSelectorViewManagementToolbarDisplayContext" %><%@
+page import="com.liferay.fragment.item.selector.web.internal.display.context.FragmentCollectionItemSelectorViewManagementToolbarDisplayContext" %><%@
+page import="com.liferay.fragment.item.selector.web.internal.display.context.FragmentDisplayContext" %><%@
+page import="com.liferay.fragment.item.selector.web.internal.display.context.FragmentsItemSelectorViewManagementToolbarDisplayContext" %><%@
 page import="com.liferay.fragment.item.selector.web.internal.frontend.taglib.clay.servlet.FragmentCollectionContributorHorizontalCard" %><%@
+page import="com.liferay.fragment.item.selector.web.internal.frontend.taglib.clay.servlet.FragmentCollectionHorizontalCard" %><%@
 page import="com.liferay.fragment.item.selector.web.internal.frontend.taglib.clay.servlet.FragmentEntryVerticalCard" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %>
 

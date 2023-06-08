@@ -127,7 +127,7 @@ class PaginationItem extends React.Component {
 						className='button-root page-link'
 						disabled={disabled}
 						displayType='unstyled'
-						href={!onChange ? href : ''}
+						href={!onChange ? href : null}
 						onClick={this.handleChange}
 					>
 						{children}

@@ -157,7 +157,7 @@ exports[`SegmentOverview should render 1`] = `
               type="button"
             >
               <svg
-                class="lexicon-icon lexicon-icon-plus icon-root icon-size-sm"
+                class="lexicon-icon lexicon-icon-plus"
                 role="presentation"
               >
                 <use

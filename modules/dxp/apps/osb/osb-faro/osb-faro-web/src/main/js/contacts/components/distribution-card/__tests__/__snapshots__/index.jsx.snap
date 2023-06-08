@@ -29,7 +29,7 @@ exports[`DistributionCard renders /w AddPropertyForm 1`] = `
           type="button"
         >
           <svg
-            class="lexicon-icon lexicon-icon-plus icon-root icon-size-sm"
+            class="lexicon-icon lexicon-icon-plus"
             role="presentation"
           >
             <use
@@ -217,7 +217,7 @@ exports[`DistributionCard renders 1`] = `
           type="button"
         >
           <svg
-            class="lexicon-icon lexicon-icon-plus icon-root icon-size-sm"
+            class="lexicon-icon lexicon-icon-plus"
             role="presentation"
           >
             <use
@@ -306,7 +306,7 @@ exports[`DistributionCard renders empty state via props with noResultsRenderer 1
           type="button"
         >
           <svg
-            class="lexicon-icon lexicon-icon-plus icon-root icon-size-sm"
+            class="lexicon-icon lexicon-icon-plus"
             role="presentation"
           >
             <use

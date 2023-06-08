@@ -1170,21 +1170,16 @@ definition {
 				shippingMethod = "Standard");
 		}
 
-		task ("When user tries to add a new order in the MiniCart") {
-			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+		task ("Then the order item cannot be added to the cart") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
 
-			Select(
+			AssertElementPresent(
 				key_productName = "U-Joint",
-				locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_SELECT_FIELD",
-				value1 = 2);
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_SELECT_FIELD_DISABLED");
 
-			Click(
+			AssertElementPresent(
 				key_productName = "U-Joint",
-				locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON");
-		}
-
-		task ("Then the order item will not be added to the cart") {
-			Alert.viewErrorMessage(errorMessage = "Danger:The specified quantity is unavailable.");
+				locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_DISABLED");
 		}
 	}
 
@@ -1321,21 +1316,16 @@ definition {
 				shippingMethod = "Standard");
 		}
 
-		task ("When user tries to add a new order in the MiniCart") {
-			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+		task ("Then the order item cannot be added to the cart") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
 
-			Type(
+			AssertElementPresent(
 				key_productName = "U-Joint",
-				locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD",
-				value1 = 4);
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD_DISABLED");
 
-			Click(
+			AssertElementPresent(
 				key_productName = "U-Joint",
-				locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON");
-		}
-
-		task ("Then the order item will not be added to the cart") {
-			Alert.viewErrorMessage(errorMessage = "Danger:The specified quantity is unavailable.");
+				locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_DISABLED");
 		}
 	}
 
@@ -1479,16 +1469,16 @@ definition {
 				shippingMethod = "Standard");
 		}
 
-		task ("When user tries to add a new order in the MiniCart") {
-			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+		task ("Then the order item cannot be added to the cart") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
 
-			Click(
+			AssertElementPresent(
 				key_productName = "U-Joint",
-				locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON");
-		}
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD_DISABLED");
 
-		task ("Then the order item will not be added to the cart") {
-			Alert.viewErrorMessage(errorMessage = "Danger:The specified quantity is unavailable.");
+			AssertElementPresent(
+				key_productName = "U-Joint",
+				locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_DISABLED");
 		}
 	}
 
@@ -1625,21 +1615,16 @@ definition {
 				shippingMethod = "Standard");
 		}
 
-		task ("When user tries to add a new order in the MiniCart") {
-			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+		task ("Then the order item cannot be added to the cart") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
 
-			Type(
+			AssertElementPresent(
 				key_productName = "U-Joint",
-				locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD",
-				value1 = 4);
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD_DISABLED");
 
-			Click(
+			AssertElementPresent(
 				key_productName = "U-Joint",
-				locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON");
-		}
-
-		task ("Then the order item will not be added to the cart") {
-			Alert.viewErrorMessage(errorMessage = "Danger:The specified quantity is unavailable.");
+				locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_DISABLED");
 		}
 	}
 

@@ -117,6 +117,8 @@ public class ProductMenuProductNavigationControlMenuEntry
 					"/portlet/product_menu.jsp"
 				).setRedirect(
 					themeDisplay.getURLCurrent()
+				).setBackURL(
+					themeDisplay.getURLCurrent()
 				).setParameter(
 					"selPpid",
 					() -> {

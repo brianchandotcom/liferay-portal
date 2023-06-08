@@ -57,6 +57,25 @@ public class ReactRendererUtil {
 
 		List<ESImport> esImports = new ArrayList<>();
 
+		for (String dependency : componentDescriptor.getDependencies()) {
+			if (dependency.contains(" from ")) {
+				String[] parts = dependency.split(" from ");
+
+				String symbolName = _getSymbolName(parts[0]);
+
+				esImports.add(
+					new ESImport(
+						symbolName,
+						absolutePortalURLBuilder.forESModule(
+							parts[1], "index.js"
+						).build(),
+						symbolName));
+			}
+			else {
+				amdRequires.add(new AMDRequire(dependency));
+			}
+		}
+
 		esImports.add(
 			new ESImport(
 				absolutePortalURLBuilder.forESModule(

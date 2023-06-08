@@ -23,20 +23,23 @@ LayoutSetPrototype layoutSetPrototype = (LayoutSetPrototype)request.getAttribute
 String redirect = (String)request.getAttribute("edit_layout_set_prototype.jsp-redirect");
 
 int mergeFailCount = SitesUtil.getMergeFailCount(layoutSetPrototype);
+
+String randomNamespace = PortalUtil.generateRandomKey(request, "portlet_layout_set_prototypes_merge_alert") + StringPool.UNDERLINE;
 %>
 
 <c:if test="<%= mergeFailCount > PropsValues.LAYOUT_SET_PROTOTYPE_MERGE_FAIL_THRESHOLD %>">
-	<div class="alert alert-warning">
+	<clay:alert>
 		<liferay-ui:message arguments='<%= new Object[] {mergeFailCount, LanguageUtil.get(request, "site-template")} %>' key="the-propagation-of-changes-from-the-x-has-been-disabled-temporarily-after-x-errors" translateArguments="<%= false %>" />
 
 		<liferay-ui:message arguments="site-template" key="click-reset-and-propagate-to-reset-the-failure-count-and-propagate-changes-from-the-x" />
 
-		<%
-		String randomNamespace = PortalUtil.generateRandomKey(request, "portlet_layout_set_prototypes_merge_alert") + StringPool.UNDERLINE;
-		%>
-
-		<aui:button id='<%= randomNamespace + "resetButton" %>' useNamespace="<%= false %>" value="reset-and-propagate" />
-	</div>
+		<clay:button
+			cssClass="c-mt-2"
+			displayType="secondary"
+			id='<%= randomNamespace + "resetButton" %>'
+			label="reset-and-propagate"
+		/>
+	</clay:alert>
 
 	<script>
 		var resetButton = document.getElementById('<%= randomNamespace %>resetButton');
@@ -61,7 +64,9 @@ List<Layout> mergeFailFriendlyURLLayouts = SitesUtil.getMergeFailFriendlyURLLayo
 %>
 
 <c:if test="<%= !mergeFailFriendlyURLLayouts.isEmpty() %>">
-	<div class="alert alert-warning">
+	<clay:alert
+		displayType="warning"
+	>
 		<liferay-ui:message key="some-pages-from-the-site-template-cannot-be-propagated-because-their-friendly-urls-conflict-with-the-following-pages" />
 
 		<liferay-ui:message key="modify-the-friendly-url-of-the-pages-to-allow-their-propagation-from-the-site-template" />
@@ -94,5 +99,5 @@ List<Layout> mergeFailFriendlyURLLayouts = SitesUtil.getMergeFailFriendlyURLLayo
 			%>
 
 		</ul>
-	</div>
+	</clay:alert>
 </c:if>

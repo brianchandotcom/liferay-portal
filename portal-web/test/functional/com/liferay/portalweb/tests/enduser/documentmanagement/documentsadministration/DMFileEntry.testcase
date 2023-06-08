@@ -1241,11 +1241,11 @@ definition {
 		task ("Assert user can choose one of the extensions to filter documents") {
 			ManagementBar.setFilterAndOrder(filterBy = "Extension...");
 
-			DMDocument.viewExtensionDetails(
-				extensionCategory = "Image (1 Item),Spreadsheet (1 Item),Text (1 Item)",
-				extensionSubcategory = "xls,docx");
+			DMDocument.viewFilterByDetails(
+				category = "Image (1 Item),Spreadsheet (1 Item),Text (1 Item)",
+				subcategory = "xls,docx");
 
-			DMDocument.selectExtensions(extensionCategory = "Text (1 Item)");
+			DMDocument.selectExtensions(category = "Text (1 Item)");
 
 			DMDocument.viewFilterSummaryResults(
 				filterScope = "Extension: docx",
@@ -1267,13 +1267,13 @@ definition {
 				active = "true",
 				filterBy = "Extension...");
 
-			DMDocument.viewExtensionDetails(
-				extensionCategory = "Image (1 Item),Spreadsheet (1 Item),Text (1 Item)",
-				extensionSubcategory = "xls,docx");
+			DMDocument.viewFilterByDetails(
+				category = "Image (1 Item),Spreadsheet (1 Item),Text (1 Item)",
+				subcategory = "xls,docx");
 
 			DMDocument.selectExtensions(
-				clearAll = "true",
-				extensionCategory = "Spreadsheet (1 Item),Text (1 Item)");
+				category = "Spreadsheet (1 Item),Text (1 Item)",
+				clearAll = "true");
 
 			DMDocument.viewFilterSummaryResults(
 				filterScope = "Extension: xls,Extension: docx",
@@ -1307,11 +1307,11 @@ definition {
 
 			ManagementBar.setFilterAndOrder(filterBy = "Extension...");
 
-			DMDocument.viewExtensionDetails(
-				extensionCategory = "Image (1 Item),Spreadsheet (1 Item),Text (1 Item)",
-				extensionSubcategory = "xls,docx");
+			DMDocument.viewFilterByDetails(
+				category = "Image (1 Item),Spreadsheet (1 Item),Text (1 Item)",
+				subcategory = "xls,docx");
 
-			DMDocument.selectExtensions(extensionCategory = "Spreadsheet (1 Item),Text (1 Item)");
+			DMDocument.selectExtensions(category = "Spreadsheet (1 Item),Text (1 Item)");
 
 			DMDocument.viewFilterSummaryResults(
 				filterScope = "Extension: docx",
@@ -1468,11 +1468,11 @@ definition {
 		task ("Assert user can choose one subcategory to filter documents") {
 			ManagementBar.setFilterAndOrder(filterBy = "Extension...");
 
-			DMDocument.viewExtensionDetails(
-				extensionCategory = "Image (3 Items),Spreadsheet (2 Items),Text (2 Items),Vectorial (1 Item)",
-				extensionSubcategory = "png,jpg,jpeg,xls,xlsx,doc,docx");
+			DMDocument.viewFilterByDetails(
+				category = "Image (3 Items),Spreadsheet (2 Items),Text (2 Items),Vectorial (1 Item)",
+				subcategory = "png,jpg,jpeg,xls,xlsx,doc,docx");
 
-			DMDocument.selectExtensions(extensionCategory = "xlsx");
+			DMDocument.selectExtensions(category = "xlsx");
 
 			DMDocument.viewFilterSummaryResults(
 				filterScope = "Extension: xlsx",
@@ -1489,13 +1489,13 @@ definition {
 				active = "true",
 				filterBy = "Extension...");
 
-			DMDocument.viewExtensionDetails(
-				extensionCategory = "Image (3 Items),Spreadsheet (2 Items),Text (2 Items),Vectorial (1 Item)",
-				extensionSubcategory = "png,jpg,jpeg,xls,xlsx,doc,docx");
+			DMDocument.viewFilterByDetails(
+				category = "Image (3 Items),Spreadsheet (2 Items),Text (2 Items),Vectorial (1 Item)",
+				subcategory = "png,jpg,jpeg,xls,xlsx,doc,docx");
 
 			DMDocument.selectExtensions(
-				clearAll = "true",
-				extensionCategory = "jpg,jpeg");
+				category = "jpg,jpeg",
+				clearAll = "true");
 
 			DMDocument.viewFilterSummaryResults(
 				filterScope = "Extension: jpg,Extension: jpeg",
@@ -1517,13 +1517,13 @@ definition {
 				active = "true",
 				filterBy = "Extension...");
 
-			DMDocument.viewExtensionDetails(
-				extensionCategory = "Image (3 Items),Spreadsheet (2 Items),Text (2 Items),Vectorial (1 Item)",
-				extensionSubcategory = "png,jpg,jpeg,xls,xlsx,doc,docx");
+			DMDocument.viewFilterByDetails(
+				category = "Image (3 Items),Spreadsheet (2 Items),Text (2 Items),Vectorial (1 Item)",
+				subcategory = "png,jpg,jpeg,xls,xlsx,doc,docx");
 
 			DMDocument.selectExtensions(
-				clearAll = "true",
-				extensionCategory = "jpg,xls");
+				category = "jpg,xls",
+				clearAll = "true");
 
 			DMDocument.viewFilterSummaryResults(
 				filterScope = "Extension: jpg,Extension: xls",
@@ -1545,13 +1545,13 @@ definition {
 				active = "true",
 				filterBy = "Extension...");
 
-			DMDocument.viewExtensionDetails(
-				extensionCategory = "Image (3 Items),Spreadsheet (2 Items),Text (2 Items),Vectorial (1 Item)",
-				extensionSubcategory = "png,jpg,jpeg,xls,xlsx,doc,docx");
+			DMDocument.viewFilterByDetails(
+				category = "Image (3 Items),Spreadsheet (2 Items),Text (2 Items),Vectorial (1 Item)",
+				subcategory = "png,jpg,jpeg,xls,xlsx,doc,docx");
 
 			DMDocument.selectExtensions(
-				clearAll = "true",
-				extensionCategory = "doc,pdf");
+				category = "doc,pdf",
+				clearAll = "true");
 
 			DMDocument.viewFilterSummaryResults(
 				filterScope = "Extension: doc,Extension: pdf",

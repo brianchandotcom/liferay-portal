@@ -10,7 +10,7 @@ definition {
 
 		User.firstLoginPG();
 
-		JSONGroup.addGroup(groupName = "Test Site Name");
+		HeadlessSite.addSite(siteName = "Test Site Name");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 	}
@@ -99,8 +99,6 @@ definition {
 		Site.configureCurrentLanguagesCP(
 			defaultSiteLanguage = "Portuguese (Brazil)",
 			displaySettings = "Display Settings");
-
-		JSONGroup.addGroup(groupName = "Test Site Name");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 

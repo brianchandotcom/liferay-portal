@@ -145,6 +145,123 @@ public class PostgreSQLDB extends BaseDB {
 	}
 
 	@Override
+	protected void createSyncDeleteTrigger(
+			Connection connection, String sourceTableName,
+			String targetTableName, String triggerName,
+			String[] sourcePrimaryKeyColumnNames,
+			String[] targetPrimaryKeyColumnNames)
+		throws Exception {
+
+		StringBundler sb = new StringBundler();
+
+		sb.append("delete from ");
+		sb.append(targetTableName);
+		sb.append(" where ");
+
+		for (int i = 0; i < sourcePrimaryKeyColumnNames.length; i++) {
+			if (i > 0) {
+				sb.append(" and ");
+			}
+
+			sb.append(targetPrimaryKeyColumnNames[i]);
+			sb.append(" = old.");
+			sb.append(sourcePrimaryKeyColumnNames[i]);
+		}
+
+		_createTriggerFunction(connection, triggerName, sb.toString());
+		_createTrigger(
+			connection, triggerName, "after delete", sourceTableName);
+	}
+
+	@Override
+	protected void createSyncInsertTrigger(
+			Connection connection, String sourceTableName,
+			String targetTableName, String triggerName,
+			String[] sourceColumnNames, String[] targetColumnNames,
+			String[] sourcePrimaryKeyColumnNames,
+			String[] targetPrimaryKeyColumnNames)
+		throws Exception {
+
+		StringBundler sb = new StringBundler();
+
+		sb.append("insert into ");
+		sb.append(targetTableName);
+		sb.append(" (");
+		sb.append(StringUtil.merge(targetColumnNames, ", "));
+		sb.append(") values (");
+
+		for (int i = 0; i < sourceColumnNames.length; i++) {
+			if (i > 0) {
+				sb.append(", ");
+			}
+
+			sb.append("new.");
+			sb.append(sourceColumnNames[i]);
+		}
+
+		sb.append(")");
+
+		_createTriggerFunction(connection, triggerName, sb.toString());
+		_createTrigger(
+			connection, triggerName, "after insert", sourceTableName);
+	}
+
+	@Override
+	protected void createSyncUpdateTrigger(
+			Connection connection, String sourceTableName,
+			String targetTableName, String triggerName,
+			String[] sourceColumnNames, String[] targetColumnNames,
+			String[] sourcePrimaryKeyColumnNames,
+			String[] targetPrimaryKeyColumnNames)
+		throws Exception {
+
+		StringBundler sb = new StringBundler();
+
+		sb.append("update ");
+		sb.append(targetTableName);
+		sb.append(" set ");
+
+		for (int i = 0; i < sourceColumnNames.length; i++) {
+			if (i > 0) {
+				sb.append(", ");
+			}
+
+			sb.append(targetColumnNames[i]);
+			sb.append(" = new.");
+			sb.append(sourceColumnNames[i]);
+		}
+
+		sb.append(" where ");
+
+		for (int i = 0; i < sourcePrimaryKeyColumnNames.length; i++) {
+			if (i > 0) {
+				sb.append(" and ");
+			}
+
+			sb.append(targetPrimaryKeyColumnNames[i]);
+			sb.append(" = old.");
+			sb.append(sourcePrimaryKeyColumnNames[i]);
+		}
+
+		_createTriggerFunction(connection, triggerName, sb.toString());
+		_createTrigger(
+			connection, triggerName, "after update", sourceTableName);
+	}
+
+	@Override
+	protected void dropTrigger(
+			Connection connection, String tableName, String triggerName)
+		throws Exception {
+
+		runSQL(
+			connection,
+			StringBundler.concat(
+				"drop trigger ", triggerName, " on ", tableName));
+
+		runSQL(connection, "drop function " + triggerName);
+	}
+
+	@Override
 	protected String getCopyTableStructureSQL(
 		String tableName, String newTableName) {
 
@@ -270,6 +387,35 @@ public class PostgreSQLDB extends BaseDB {
 
 			return sb.toString();
 		}
+	}
+
+	private void _createTrigger(
+			Connection connection, String triggerName, String triggerEvent,
+			String tableName)
+		throws Exception {
+
+		runSQL(
+			connection,
+			StringBundler.concat(
+				"create trigger ", triggerName, " ", triggerEvent, " on ",
+				tableName, " for each row execute procedure ", triggerName,
+				"()"));
+	}
+
+	private void _createTriggerFunction(
+			Connection connection, String functionName,
+			String functionStatement)
+		throws Exception {
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("create function ");
+		sb.append(functionName);
+		sb.append("() returns trigger language plpgsql as $$ begin ");
+		sb.append(functionStatement);
+		sb.append("; return null; end; $$");
+
+		runSQL(connection, sb.toString());
 	}
 
 	private static final String[] _POSTGRESQL = {

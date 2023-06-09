@@ -23,6 +23,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.naming.NamingException;
 
@@ -175,6 +176,11 @@ public interface DB {
 
 	public void setSupportsStringCaseSensitiveQuery(
 		boolean supportsStringCaseSensitiveQuery);
+
+	public AutoCloseable syncTables(
+			Connection connection, String sourceTableName,
+			String targetTableName, Map<String, String> columnNameMap)
+		throws Exception;
 
 	public void updateIndexes(
 			Connection connection, String tablesSQL, String indexesSQL,

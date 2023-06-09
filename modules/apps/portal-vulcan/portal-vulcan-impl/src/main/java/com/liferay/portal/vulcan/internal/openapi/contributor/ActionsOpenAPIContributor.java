@@ -138,12 +138,20 @@ public class ActionsOpenAPIContributor implements OpenAPIContributor {
 
 		Components components = openAPI.getComponents();
 
+		if (components == null) {
+			return individualSchemas;
+		}
+
 		Map<String, Schema> schemas = components.getSchemas();
+
+		if (schemas == null) {
+			return individualSchemas;
+		}
 
 		for (Schema schema : schemas.values()) {
 			Map<String, Schema> properties = schema.getProperties();
 
-			if (!properties.containsKey("actions") ||
+			if ((properties == null) || !properties.containsKey("actions") ||
 				!properties.containsKey("x-class-name")) {
 
 				continue;

@@ -18,6 +18,7 @@ import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfiguration;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryServiceUtil;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
+import com.liferay.document.library.configuration.DLFileOrderConfigurationProvider;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
@@ -125,12 +126,14 @@ public class DLAdminDisplayContext {
 
 	public DLAdminDisplayContext(
 		AssetAutoTaggerConfiguration assetAutoTaggerConfiguration,
+		DLFileOrderConfigurationProvider dlFileOrderConfigurationProvider,
 		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse, TrashHelper trashHelper,
 		VersioningStrategy versioningStrategy) {
 
 		_assetAutoTaggerConfiguration = assetAutoTaggerConfiguration;
+		_dlFileOrderConfigurationProvider = dlFileOrderConfigurationProvider;
 		_httpServletRequest = httpServletRequest;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
@@ -223,7 +226,10 @@ public class DLAdminDisplayContext {
 		}
 
 		if (Validator.isNull(orderByCol)) {
-			orderByCol = _getPortletPreference("order-by-col", "modifiedDate");
+			orderByCol = _getPortletPreference(
+				"order-by-col",
+				_dlFileOrderConfigurationProvider.getGroupOrderByColumn(
+					_themeDisplay.getScopeGroupId()));
 		}
 		else {
 			_setPortletPreference("order-by-col", orderByCol);
@@ -247,7 +253,10 @@ public class DLAdminDisplayContext {
 			_httpServletRequest, "orderByType");
 
 		if (Validator.isNull(orderByType)) {
-			orderByType = _getPortletPreference("order-by-type", "desc");
+			orderByType = _getPortletPreference(
+				"order-by-type",
+				_dlFileOrderConfigurationProvider.getGroupSortBy(
+					_themeDisplay.getScopeGroupId()));
 		}
 		else {
 			_setPortletPreference("order-by-type", orderByType);
@@ -1080,6 +1089,8 @@ public class DLAdminDisplayContext {
 	private final AssetAutoTaggerConfiguration _assetAutoTaggerConfiguration;
 	private boolean _defaultFolderView;
 	private String _displayStyle;
+	private final DLFileOrderConfigurationProvider
+		_dlFileOrderConfigurationProvider;
 	private final DLPortletInstanceSettings _dlPortletInstanceSettings;
 	private final DLPortletInstanceSettingsHelper
 		_dlPortletInstanceSettingsHelper;

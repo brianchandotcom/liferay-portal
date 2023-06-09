@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.search.query.QueryTranslator;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.search.elasticsearch7.internal.SearchHitDocumentTranslatorImpl;
-import com.liferay.portal.search.elasticsearch7.internal.aggregation.ElasticsearchAggregationVisitorFixture;
+import com.liferay.portal.search.elasticsearch7.internal.aggregation.ElasticsearchAggregationTranslatorFixture;
 import com.liferay.portal.search.elasticsearch7.internal.aggregation.pipeline.ElasticsearchPipelineAggregationVisitorFixture;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.elasticsearch7.internal.facet.DefaultFacetTranslator;
@@ -132,9 +132,9 @@ public class SearchRequestExecutorFixture {
 				legacyElasticsearchQueryTranslatorFixture.
 					getElasticsearchQueryTranslator();
 
-		ElasticsearchAggregationVisitorFixture
-			elasticsearchAggregationVisitorFixture =
-				new ElasticsearchAggregationVisitorFixture();
+		ElasticsearchAggregationTranslatorFixture
+			elasticsearchAggregationTranslatorFixture =
+				new ElasticsearchAggregationTranslatorFixture();
 
 		ElasticsearchFilterTranslatorFixture
 			elasticsearchFilterTranslatorFixture =
@@ -150,8 +150,8 @@ public class SearchRequestExecutorFixture {
 
 		ReflectionTestUtil.setFieldValue(
 			commonSearchSourceBuilderAssembler, "_aggregationTranslator",
-			elasticsearchAggregationVisitorFixture.
-				getElasticsearchAggregationVisitor());
+			elasticsearchAggregationTranslatorFixture.
+				getElasticsearchAggregationTranslator());
 		ReflectionTestUtil.setFieldValue(
 			commonSearchSourceBuilderAssembler, "_complexQueryBuilderFactory",
 			complexQueryBuilderFactory);

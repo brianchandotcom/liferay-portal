@@ -1014,6 +1014,18 @@ public class LayoutsAdminDisplayContext {
 		).buildPortletURL();
 	}
 
+	public String getPreviewCurrentDesignURL() {
+		return PortletURLBuilder.createRenderURL(
+			_liferayPortletResponse
+		).setMVCPath(
+			"/preview_current_design.jsp"
+		).setRedirect(
+			themeDisplay.getURLCurrent()
+		).setParameter(
+			"readOnly", true
+		).buildString();
+	}
+
 	public String getPreviewDraftURL(Layout layout) throws PortalException {
 		return PortalUtil.getLayoutFriendlyURL(
 			layout.fetchDraftLayout(), themeDisplay);

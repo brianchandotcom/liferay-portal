@@ -114,21 +114,20 @@ public class GCSStore implements Store, StoreAreaProcessor {
 	@Override
 	public String cleanUpDeletedStoreArea(
 		long companyId, int deletionQuota, Predicate<String> predicate,
-		TemporalAmount temporalAmount, String startOffset) {
+		String startOffset, TemporalAmount temporalAmount) {
 
 		return _processStoreArea(
-			StoreArea.DELETED, companyId, deletionQuota,
-			blob -> predicate.test(blob.getName()), temporalAmount,
-			startOffset);
+			companyId, deletionQuota, blob -> predicate.test(blob.getName()),
+			startOffset, StoreArea.DELETED, temporalAmount);
 	}
 
 	@Override
 	public String cleanUpNewStoreArea(
 		long companyId, int evictionQuota, Predicate<String> predicate,
-		TemporalAmount temporalAmount, String startOffset) {
+		String startOffset, TemporalAmount temporalAmount) {
 
 		return _processStoreArea(
-			StoreArea.NEW, companyId, evictionQuota,
+			companyId, evictionQuota,
 			blob -> {
 				if (predicate.test(blob.getName())) {
 					return copy(
@@ -141,7 +140,7 @@ public class GCSStore implements Store, StoreAreaProcessor {
 					blob.getName(),
 					StoreArea.NEW.relocate(blob.getName(), StoreArea.LIVE));
 			},
-			temporalAmount, startOffset);
+			startOffset, StoreArea.NEW, temporalAmount);
 	}
 
 	@Override
@@ -499,9 +498,9 @@ public class GCSStore implements Store, StoreAreaProcessor {
 	}
 
 	private String _processStoreArea(
-		StoreArea storeArea, long companyId, int evictionQuota,
-		Predicate<Blob> predicate, TemporalAmount temporalAmount,
-		String startOffset) {
+		long companyId, int evictionQuota, Predicate<Blob> predicate,
+		String startOffset, StoreArea storeArea,
+		TemporalAmount temporalAmount) {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPS-174816")) {
 			return StringPool.BLANK;

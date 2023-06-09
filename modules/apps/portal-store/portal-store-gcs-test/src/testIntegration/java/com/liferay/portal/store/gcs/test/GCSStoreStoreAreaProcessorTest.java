@@ -142,8 +142,8 @@ public class GCSStoreStoreAreaProcessorTest {
 					(StoreAreaProcessor)_store;
 
 				storeAreaProcessor.cleanUpDeletedStoreArea(
-					_group.getCompanyId(), 1, name -> true, Duration.ofDays(1),
-					StringPool.BLANK);
+					_group.getCompanyId(), 1, name -> true, StringPool.BLANK,
+					Duration.ofDays(1));
 
 				Assert.assertTrue(
 					_store.hasFile(
@@ -175,8 +175,8 @@ public class GCSStoreStoreAreaProcessorTest {
 
 				do {
 					startOffset = storeAreaProcessor.cleanUpDeletedStoreArea(
-						_group.getCompanyId(), 1, name -> true,
-						Duration.ofDays(-1), startOffset);
+						_group.getCompanyId(), 1, name -> true, startOffset,
+						Duration.ofDays(-1));
 
 					runCount++;
 				}
@@ -214,8 +214,8 @@ public class GCSStoreStoreAreaProcessorTest {
 					(StoreAreaProcessor)_store;
 
 				storeAreaProcessor.cleanUpDeletedStoreArea(
-					_group.getCompanyId(), 1, name -> true, Duration.ofDays(-1),
-					StringPool.BLANK);
+					_group.getCompanyId(), 1, name -> true, StringPool.BLANK,
+					Duration.ofDays(-1));
 
 				Assert.assertFalse(
 					_store.hasFile(
@@ -245,8 +245,8 @@ public class GCSStoreStoreAreaProcessorTest {
 					(StoreAreaProcessor)_store;
 
 				storeAreaProcessor.cleanUpNewStoreArea(
-					_group.getCompanyId(), 1, name -> false, Duration.ofDays(1),
-					StringPool.BLANK);
+					_group.getCompanyId(), 1, name -> false, StringPool.BLANK,
+					Duration.ofDays(1));
 
 				Assert.assertTrue(
 					_store.hasFile(
@@ -278,8 +278,8 @@ public class GCSStoreStoreAreaProcessorTest {
 
 				do {
 					startOffset = storeAreaProcessor.cleanUpNewStoreArea(
-						_group.getCompanyId(), 1, name -> false,
-						Duration.ofDays(-1), startOffset);
+						_group.getCompanyId(), 1, name -> false, startOffset,
+						Duration.ofDays(-1));
 
 					runCount++;
 				}
@@ -328,8 +328,8 @@ public class GCSStoreStoreAreaProcessorTest {
 					(StoreAreaProcessor)_store;
 
 				storeAreaProcessor.cleanUpNewStoreArea(
-					_group.getCompanyId(), 1, name -> false,
-					Duration.ofDays(-1), StringPool.BLANK);
+					_group.getCompanyId(), 1, name -> false, StringPool.BLANK,
+					Duration.ofDays(-1));
 
 				Assert.assertFalse(
 					_store.hasFile(

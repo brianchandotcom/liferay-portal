@@ -25,11 +25,11 @@ public interface StoreAreaProcessor {
 
 	public String cleanUpDeletedStoreArea(
 		long companyId, int deletionQuota, Predicate<String> predicate,
-		TemporalAmount temporalAmount, String startOffset);
+		String startOffset, TemporalAmount temporalAmount);
 
 	public String cleanUpNewStoreArea(
 		long companyId, int evictionQuota, Predicate<String> predicate,
-		TemporalAmount temporalAmount, String startOffset);
+		String startOffset, TemporalAmount temporalAmount);
 
 	public boolean copy(String sourceFileName, String destinationFileName);
 

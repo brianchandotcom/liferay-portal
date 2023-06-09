@@ -81,8 +81,8 @@ public class CleanUpStoreAreasSchedulerJobConfiguration
 			_storeAreaProcessor.cleanUpDeletedStoreArea(
 				companyId, _storeAreaConfiguration.evictionQuota(),
 				name -> !_isDLFileVersionReferenced(companyId, name),
-				Duration.ofDays(_storeAreaConfiguration.evictionAge()),
-				_startOffsets.getOrDefault(companyId, StringPool.BLANK)));
+				_startOffsets.getOrDefault(companyId, StringPool.BLANK),
+				Duration.ofDays(_storeAreaConfiguration.evictionAge())));
 	}
 
 	private void _cleanUpNewStoreArea(long companyId) {
@@ -91,8 +91,8 @@ public class CleanUpStoreAreasSchedulerJobConfiguration
 			_storeAreaProcessor.cleanUpNewStoreArea(
 				companyId, _storeAreaConfiguration.evictionQuota(),
 				name -> !_isDLFileVersionReferenced(companyId, name),
-				Duration.ofDays(_storeAreaConfiguration.evictionAge()),
-				_startOffsets.getOrDefault(companyId, StringPool.BLANK)));
+				_startOffsets.getOrDefault(companyId, StringPool.BLANK),
+				Duration.ofDays(_storeAreaConfiguration.evictionAge())));
 	}
 
 	private void _cleanUpStorageAreas(long companyId) {

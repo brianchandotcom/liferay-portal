@@ -89,6 +89,15 @@ definition {
 		}
 	}
 
+	@description = "LPS-176187. Confirm that the fields Name and Filter by are present in the New Filter modal."
+	@ignore = "true"
+	@priority = 5
+	test CanAssertFieldsIsPresent {
+
+		// TODO LPS-176187 CanAssertFieldsIsPresent pending implementation
+
+	}
+
 	@description = "LPS-176184. Confirm that 'No default filters were created.' and 'Start creating a filter to display specific data' messages are displayed"
 	@priority = 3
 	test CanAssertNoDefaultFilters {
@@ -101,6 +110,51 @@ definition {
 				locator1 = "Message#EMPTY_STATE_TEXT",
 				value1 = "Start creating a Filter to display specific Data.");
 		}
+	}
+
+	@description = "LPS-176187. Confirm that the Selection option is not displayed."
+	@ignore = "true"
+	@priority = 5
+	test CanAssertSelectionIsNotDisplayed {
+
+		// TODO LPS-176187 CanAssertSelectionIsNotDisplayed pending implementation
+
+	}
+
+	@description = "LPS-176187. Confirm that the Selection option has a tooltip with the text message."
+	@ignore = "true"
+	@priority = 3
+	test CanAssertSelectionTooltip {
+
+		// TODO LPS-176187 CanAssertSelectionTooltip pending implementation
+
+	}
+
+	@description = "LPS-176187. Confirm that the Source Option is displayed in the New Filter Modal."
+	@ignore = "true"
+	@priority = 3
+	test CanAssertSourceOption {
+
+		// TODO LPS-176187 CanAssertSourceOption pending implementation
+
+	}
+
+	@description = "LPS-176187. Confirm the text message in the Source Option Tooltip."
+	@ignore = "true"
+	@priority = 3
+	test CanAssertSourceOptionTooltip {
+
+		// TODO LPS-176187 CanAssertSourceOptionTooltip pending implementation
+
+	}
+
+	@description = "LPS-176187. Confirm that the Filter has been created and has the Name and Field Name fields."
+	@ignore = "true"
+	@priority = 5
+	test CanAssertTheFieldsIsDisplayed {
+
+		// TODO LPS-176187 CanAssertTheFieldsIsDisplayed pending implementation
+
 	}
 
 	@description = "LPS-176184. Confirm that the New filter modal is closed and the changes are not applied when canceling on Cancel button"
@@ -125,7 +179,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-176184. Confirm that the New filter modal is closed and the changes are not applied when canceling on Close (X) button"
+	@description = "LPS-176184. Confirm that the New filter modal is closed and the changes are not applied when canceling on Close X button"
 	@priority = 3
 	test CanCancelFilterCreationOnCloseButton {
 		task ("And clicks to add a new filter") {
@@ -149,7 +203,25 @@ definition {
 		}
 	}
 
-	@description = "LPS-176184. Confirm that the text 'Select' is labeling the  'Filter By Field'"
+	@description = "LPS-176187. Confirm the cancellation of the Filter creation with the cancel button."
+	@ignore = "true"
+	@priority = 4
+	test CanCancelOnCancelButton {
+
+		// TODO LPS-176187 CanCancelOnCancelButton pending implementation
+
+	}
+
+	@description = "LPS-176187. Confirm the cancellation of the Filter creation with the close button."
+	@ignore = "true"
+	@priority = 4
+	test CanCancelOnCloseButton {
+
+		// TODO LPS-176187 CanCancelOnCloseButton pending implementation
+
+	}
+
+	@description = "LPS-176184. Confirm that the text Select is labeling the  Filter By Field"
 	@priority = 5
 	test CanCreateFilters {
 		task ("And adds a new filter") {
@@ -185,6 +257,15 @@ definition {
 				key_text = "Save",
 				locator1 = "Button#ANY_DISABLED");
 		}
+	}
+
+	@description = "LPS-176187. Confirm that only one radio button can be selected."
+	@ignore = "true"
+	@priority = 5
+	test CanOnlyOneRadioButtonIsSelected {
+
+		// TODO LPS-176187 CanOnlyOneRadioButtonIsSelected pending implementation
+
 	}
 
 	@description = "LPS-176184. Confirm that is possible search filter when click on search icon"

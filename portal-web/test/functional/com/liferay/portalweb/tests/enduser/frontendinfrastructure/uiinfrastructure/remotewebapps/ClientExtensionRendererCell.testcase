@@ -171,4 +171,29 @@ definition {
 		}
 	}
 
+	@description = "LPS-175155. Verify if cannot publish when JS field are empty"
+	@priority = 5
+	test CannotPublishWhenJSFieldIsEmpty {
+		task ("And types “Change Date Format” on Name field") {
+			Type(
+				key_text = "Name",
+				locator1 = "TextInput#ANY",
+				value1 = "Change Date Format");
+		}
+
+		task ("And types “This Cell Renderer will show the Date in a different format to the default shown by the FDS View.” on Description field") {
+			Type(
+				locator1 = "CKEditor#BODY_FIELD_IFRAME",
+				value1 = "This Cell Renderer will show the Date in a different format to the default shown by the FDS View.");
+		}
+
+		task ("And clicks on Publish button") {
+			Button.clickPublish();
+		}
+
+		task ("Then an error message should be displayed ") {
+			Alert.viewSpecificRequiredField(fieldFieldLabel = "JavaScript URL");
+		}
+	}
+
 }

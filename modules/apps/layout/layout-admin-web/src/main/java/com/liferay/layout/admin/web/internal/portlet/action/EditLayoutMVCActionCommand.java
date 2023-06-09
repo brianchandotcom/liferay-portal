@@ -189,7 +189,7 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 						Sites.LAYOUT_UPDATEABLE));
 
 				draftLayout = _layoutService.updateLayout(
-					groupId, layout.isPrivateLayout(),
+					groupId, draftLayout.isPrivateLayout(),
 					draftLayout.getLayoutId(), draftLayout.getParentLayoutId(),
 					nameMap, draftLayout.getTitleMap(),
 					draftLayout.getDescriptionMap(),

@@ -372,10 +372,10 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 			}
 		}
 
-		testHotfixChanges = jsonObject.getBoolean("test_hotfix_changes");
-		testRelevantChanges = jsonObject.getBoolean("test_relevant_changes");
-		testReleaseBundle = jsonObject.getBoolean("test_release_bundle");
-		testRelevantIntegrationUnitOnly = jsonObject.getBoolean(
+		testHotfixChanges = jsonObject.optBoolean("test_hotfix_changes");
+		testRelevantChanges = jsonObject.optBoolean("test_relevant_changes");
+		testReleaseBundle = jsonObject.optBoolean("test_release_bundle");
+		testRelevantIntegrationUnitOnly = jsonObject.optBoolean(
 			"test_relevant_integration_unit_only");
 
 		if (portalTestClassJob instanceof TestSuiteJob) {

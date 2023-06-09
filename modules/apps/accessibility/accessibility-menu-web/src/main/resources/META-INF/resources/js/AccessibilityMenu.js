@@ -38,6 +38,17 @@ const AccessibilityMenu = ({accessibilitySettings}) => {
 
 		Liferay.on(OPEN_ACCESSIBILITY_MENU_EVENT_NAME, openAccessibilityMenu);
 
+		accessibilitySettings.forEach((setting) => {
+			toggleClassName(
+				setting.className,
+				getSettingValue(
+					setting.defaultValue,
+					setting.sessionClicksValue,
+					setting.key
+				)
+			);
+		});
+
 		return () => {
 			Liferay.detach(
 				OPEN_ACCESSIBILITY_MENU_EVENT_NAME,

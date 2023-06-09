@@ -27,8 +27,6 @@ import ReactDOM from 'react-dom';
 
 import '@testing-library/jest-dom/extend-expect';
 
-global.ResizeObserver = require('resize-observer-polyfill');
-
 const props = {
 	autocompleteUserURL: 'https://liferay.com/admin/autocomplete_user',
 	localizedName: {
@@ -79,7 +77,7 @@ describe('ShareFormModal', () => {
 	});
 
 	it(`doesn't allow users to enter invalid email addresses`, async () => {
-		const {getByRole, getByText, queryByText} = renderShareFormModal({
+		const {getAllByRole, getByText, queryByText} = renderShareFormModal({
 			onClose: jest.fn(),
 		});
 
@@ -87,7 +85,7 @@ describe('ShareFormModal', () => {
 			jest.runAllTimers();
 		});
 
-		const addresses = getByRole('combobox');
+		const [, addresses] = getAllByRole('textbox');
 
 		// Enters the invalid email format
 

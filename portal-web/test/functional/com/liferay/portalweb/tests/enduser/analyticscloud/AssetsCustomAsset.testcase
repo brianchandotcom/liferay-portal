@@ -351,13 +351,8 @@ definition {
 	}
 
 	@description = "Feature ID: LRAC-7532 | Automation ID: LRAC-8543 | Test Summary: Delete one report out of many created"
-	@ignore = "true"
 	@priority = 3
 	test CanDeleteOneReportOutOfManyCreated {
-
-		// AC Refactor: Data doesn't appear on time
-		// AC Refactor ticket: LRAC-13994
-
 		task ("Sign in as new user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "userea@liferay.com",

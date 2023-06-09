@@ -4,11 +4,6 @@ task checkService
 task runGradleTest
 
 allprojects {
-	tasks.withType(JavaCompile) {
-		sourceCompatibility = JavaVersion.VERSION_1_8
-		targetCompatibility = JavaVersion.VERSION_1_8
-	}
-
 	repositories {
 		maven {
 			url "https://repository-cdn.liferay.com/nexus/content/groups/public"

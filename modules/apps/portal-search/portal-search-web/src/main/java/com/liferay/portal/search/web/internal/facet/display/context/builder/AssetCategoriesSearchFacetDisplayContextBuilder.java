@@ -153,19 +153,17 @@ public class AssetCategoriesSearchFacetDisplayContextBuilder
 	}
 
 	public void setParameterValues(String... parameterValues) {
-		if (parameterValues != null) {
-			_selectedCategoryIds = TransformUtil.transformToList(
-				parameterValues,
-				parameterValue -> {
-					long categoryId = GetterUtil.getLong(parameterValue);
+		_selectedCategoryIds = TransformUtil.transformToList(
+			parameterValues,
+			parameterValue -> {
+				long categoryId = GetterUtil.getLong(parameterValue);
 
-					if (categoryId <= 0) {
-						return null;
-					}
+				if (categoryId <= 0) {
+					return null;
+				}
 
-					return categoryId;
-				});
-		}
+				return categoryId;
+			});
 	}
 
 	public void setPortal(Portal portal) {

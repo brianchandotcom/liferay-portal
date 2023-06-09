@@ -125,19 +125,17 @@ public class FolderSearchFacetDisplayContextBuilder {
 	}
 
 	public void setParameterValues(String... parameterValues) {
-		if (parameterValues != null) {
-			_selectedFolderIds = TransformUtil.transformToList(
-				parameterValues,
-				value -> {
-					long folderId = GetterUtil.getLong(value);
+		_selectedFolderIds = TransformUtil.transformToList(
+			parameterValues,
+			value -> {
+				long folderId = GetterUtil.getLong(value);
 
-					if (folderId <= 0) {
-						return null;
-					}
+				if (folderId <= 0) {
+					return null;
+				}
 
-					return folderId;
-				});
-		}
+				return folderId;
+			});
 	}
 
 	protected long getDisplayStyleGroupId() {

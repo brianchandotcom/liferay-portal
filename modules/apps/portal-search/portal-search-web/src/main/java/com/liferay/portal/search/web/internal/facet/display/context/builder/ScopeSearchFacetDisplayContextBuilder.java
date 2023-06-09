@@ -135,19 +135,17 @@ public class ScopeSearchFacetDisplayContextBuilder {
 	}
 
 	public void setParameterValues(String... parameterValues) {
-		if (parameterValues != null) {
-			_selectedGroupIds = TransformUtil.transformToList(
-				parameterValues,
-				value -> {
-					long groupId = GetterUtil.getLong(value);
+		_selectedGroupIds = TransformUtil.transformToList(
+			parameterValues,
+			value -> {
+				long groupId = GetterUtil.getLong(value);
 
-					if (groupId <= 0) {
-						return null;
-					}
+				if (groupId <= 0) {
+					return null;
+				}
 
-					return groupId;
-				});
-		}
+				return groupId;
+			});
 	}
 
 	public void setRequest(HttpServletRequest httpServletRequest) {

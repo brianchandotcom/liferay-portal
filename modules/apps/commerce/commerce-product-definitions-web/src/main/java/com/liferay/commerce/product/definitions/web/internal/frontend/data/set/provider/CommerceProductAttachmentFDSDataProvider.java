@@ -32,10 +32,16 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+
+import java.text.DateFormat;
+import java.text.Format;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -67,6 +73,14 @@ public class CommerceProductAttachmentFDSDataProvider
 
 		Locale locale = _portal.getLocale(httpServletRequest);
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(
+			DateFormat.MEDIUM, DateFormat.MEDIUM, locale,
+			themeDisplay.getTimeZone());
+
 		long cpDefinitionId = ParamUtil.getLong(
 			httpServletRequest, "cpDefinitionId");
 
@@ -97,10 +111,6 @@ public class CommerceProductAttachmentFDSDataProvider
 
 			Date modifiedDate = cpAttachmentFileEntry.getModifiedDate();
 
-			String modifiedDateDescription = _language.getTimeDescription(
-				httpServletRequest,
-				System.currentTimeMillis() - modifiedDate.getTime(), true);
-
 			String statusDisplayStyle = StringPool.BLANK;
 
 			if (cpAttachmentFileEntry.getStatus() ==
@@ -118,9 +128,7 @@ public class CommerceProductAttachmentFDSDataProvider
 							AccountConstants.ACCOUNT_ENTRY_ID_ADMIN,
 							cpAttachmentFileEntryId)),
 					title, extension, cpAttachmentFileEntry.getPriority(),
-					_language.format(
-						httpServletRequest, "x-ago", modifiedDateDescription,
-						false),
+					dateTimeFormat.format(modifiedDate),
 					new LabelField(
 						statusDisplayStyle,
 						_language.get(

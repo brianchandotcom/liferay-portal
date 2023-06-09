@@ -617,7 +617,7 @@ definition {
 				productSKU = "MIN93015",
 				promotionName = "Test Promotion 1");
 		}
-	
+
 		task ("Then the product ABS Sensor has a base price of 30$ but with a promo of 10$") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
 

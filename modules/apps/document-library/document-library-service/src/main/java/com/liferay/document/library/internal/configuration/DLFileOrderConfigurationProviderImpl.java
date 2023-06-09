@@ -15,8 +15,7 @@
 package com.liferay.document.library.internal.configuration;
 
 import com.liferay.document.library.configuration.DLFileOrderConfigurationProvider;
-import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.document.library.internal.configuration.admin.service.DLFileOrderManagedServiceFactory;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -28,61 +27,38 @@ import org.osgi.service.component.annotations.Reference;
 public class DLFileOrderConfigurationProviderImpl
 	implements DLFileOrderConfigurationProvider {
 
-	public String getCompanyOrderByColumn(long companyId)
-		throws ConfigurationException {
-
-		DLFileOrderConfiguration dlFileOrderConfiguration =
-			_configurationProvider.getCompanyConfiguration(
-				DLFileOrderConfiguration.class, companyId);
-
-		return dlFileOrderConfiguration.orderByColumn();
+	@Override
+	public String getCompanyOrderByColumn(long companyId) {
+		return _dlFileOrderManagedServiceFactory.getCompanyOrderByColumn(
+			companyId);
 	}
 
-	public String getCompanySortBy(long companyId)
-		throws ConfigurationException {
-
-		DLFileOrderConfiguration dlFileOrderConfiguration =
-			_configurationProvider.getCompanyConfiguration(
-				DLFileOrderConfiguration.class, companyId);
-
-		return dlFileOrderConfiguration.sortBy();
+	@Override
+	public String getCompanySortBy(long companyId) {
+		return _dlFileOrderManagedServiceFactory.getCompanySortBy(companyId);
 	}
 
-	public String getGroupOrderByColumn(long groupId)
-		throws ConfigurationException {
-
-		DLFileOrderConfiguration dlFileOrderConfiguration =
-			_configurationProvider.getGroupConfiguration(
-				DLFileOrderConfiguration.class, groupId);
-
-		return dlFileOrderConfiguration.orderByColumn();
+	@Override
+	public String getGroupOrderByColumn(long groupId) {
+		return _dlFileOrderManagedServiceFactory.getGroupOrderByColumn(groupId);
 	}
 
-	public String getGroupSortBy(long groupId) throws ConfigurationException {
-		DLFileOrderConfiguration dlFileOrderConfiguration =
-			_configurationProvider.getGroupConfiguration(
-				DLFileOrderConfiguration.class, groupId);
-
-		return dlFileOrderConfiguration.sortBy();
+	@Override
+	public String getGroupSortBy(long groupId) {
+		return _dlFileOrderManagedServiceFactory.getGroupSortBy(groupId);
 	}
 
-	public String getSystemOrderByColumn() throws ConfigurationException {
-		DLFileOrderConfiguration dlFileOrderConfiguration =
-			_configurationProvider.getSystemConfiguration(
-				DLFileOrderConfiguration.class);
-
-		return dlFileOrderConfiguration.orderByColumn();
+	@Override
+	public String getSystemOrderByColumn() {
+		return _dlFileOrderManagedServiceFactory.getSystemOrderByColumn();
 	}
 
-	public String getSystemSortBy() throws ConfigurationException {
-		DLFileOrderConfiguration dlFileOrderConfiguration =
-			_configurationProvider.getSystemConfiguration(
-				DLFileOrderConfiguration.class);
-
-		return dlFileOrderConfiguration.sortBy();
+	@Override
+	public String getSystemSortBy() {
+		return _dlFileOrderManagedServiceFactory.getSystemSortBy();
 	}
 
 	@Reference
-	private ConfigurationProvider _configurationProvider;
+	private DLFileOrderManagedServiceFactory _dlFileOrderManagedServiceFactory;
 
 }

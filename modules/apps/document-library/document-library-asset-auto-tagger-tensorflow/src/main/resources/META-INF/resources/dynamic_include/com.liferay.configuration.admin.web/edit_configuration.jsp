@@ -16,22 +16,17 @@
 
 <%@ include file="/init.jsp" %>
 
-<c:if test="<%= !TensorFlowDownloadUtil.isDownloaded() %>">
+<%
+EditConfigurationDisplayContext editConfigurationDisplayContext = (EditConfigurationDisplayContext)request.getAttribute(EditConfigurationDisplayContext.class.getName());
+%>
 
-	<%
-	TensorFlowImageAssetAutoTagProviderCompanyConfiguration tensorFlowImageAssetAutoTagProviderCompanyConfiguration = (TensorFlowImageAssetAutoTagProviderCompanyConfiguration)request.getAttribute(TensorFlowImageAssetAutoTagProviderCompanyConfiguration.class.getName());
-
-	boolean tensorFlowImageAssetAutoTagProviderEnabled = (tensorFlowImageAssetAutoTagProviderCompanyConfiguration != null) && tensorFlowImageAssetAutoTagProviderCompanyConfiguration.enabled();
-
-	boolean downloadFailed = tensorFlowImageAssetAutoTagProviderEnabled && TensorFlowDownloadUtil.isDownloadFailed();
-	%>
-
-	<aui:alert closeable="<%= false %>" type='<%= downloadFailed ? "danger" : "info" %>'>
+<c:if test="<%= !editConfigurationDisplayContext.isDownloaded() %>">
+	<aui:alert closeable="<%= false %>" type='<%= editConfigurationDisplayContext.isDownloadFailed() ? "danger" : "info" %>'>
 		<c:choose>
-			<c:when test="<%= downloadFailed %>">
+			<c:when test="<%= editConfigurationDisplayContext.isDownloadFailed() %>">
 				<liferay-ui:message key="the-tensorflow-model-could-not-be-downloaded.-please-contact-your-administrator" />
 			</c:when>
-			<c:when test="<%= tensorFlowImageAssetAutoTagProviderEnabled %>">
+			<c:when test="<%= editConfigurationDisplayContext.isTensorFlowImageAssetAutoTagProviderEnabled() %>">
 				<liferay-ui:message key="the-tensorflow-model-is-being-downloaded-in-the-background.-no-tags-will-be-created-until-the-model-is-fully-downloaded" />
 			</c:when>
 			<c:otherwise>

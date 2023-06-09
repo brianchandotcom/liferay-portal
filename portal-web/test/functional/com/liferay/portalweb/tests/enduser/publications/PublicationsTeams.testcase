@@ -28,7 +28,7 @@ definition {
 	@description = "Able to Publish Team with assigned User"
 	@priority = 4
 	test CanPublishTeamWithAssignedUser {
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -84,7 +84,7 @@ definition {
 	@description = "Able to Publish Team with assigned User Group"
 	@priority = 4
 	test CanPublishTeamWithAssignedUserGroup {
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		UserGroup.openUserGroupsAdmin();
 

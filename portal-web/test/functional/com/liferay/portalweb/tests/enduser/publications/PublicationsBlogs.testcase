@@ -32,7 +32,7 @@ definition {
 
 		JSONPublications.selectPublication(publicationName = "Publication Name");
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
 
@@ -76,7 +76,7 @@ definition {
 	@description = "Assert we can publish the publication with an edited blog."
 	@priority = 4
 	test PublishEditedBlogsEntry {
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",

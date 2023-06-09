@@ -247,7 +247,7 @@ definition {
 	@description = "This is the use case for LPS-158789. Allow you to change publication via URL parameter"
 	@priority = 4
 	test CanChangePublicationViaURLParameter {
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -321,7 +321,7 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_1.jpg");
 
-		JSONGroup.addGroup(groupName = "Test Site Name");
+		HeadlessSite.addSite(siteName = "Test Site Name");
 
 		JSONPublications.addPublication(publicationName = "Publication Name");
 
@@ -494,7 +494,7 @@ definition {
 	@description = "This is the use case for LPS-158789."
 	@priority = 4
 	test CannotChangePublicationViaURLWithNonexistentCollectionId {
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -537,7 +537,7 @@ definition {
 	@description = "This is the use case for LPS-183473."
 	@priority = 4
 	test CannotEmptyRecycleBinWithinPublication {
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
@@ -1486,7 +1486,7 @@ definition {
 	@description = "This is the use case for LPS-158789."
 	@priority = 4
 	test UserWithoutAccessCannotChangePublicationViaURL {
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",

@@ -33,7 +33,7 @@ definition {
 
 			JSONPublications.selectPublication(publicationName = "Publication Name");
 
-			JSONGroup.addGroup(groupName = "Test Site Name");
+			HeadlessSite.addSite(siteName = "Test Site Name");
 		}
 
 		task ("Add a web content") {
@@ -129,7 +129,7 @@ definition {
 
 		JSONPublications.selectPublication(publicationName = "Publication Name");
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		task ("Add a Master Page Template with footer fragment") {
 			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
@@ -203,7 +203,7 @@ definition {
 
 			JSONPublications.selectPublication(publicationName = "Test Publication");
 
-			JSONGroup.addGroup(groupName = "Test Site");
+			HeadlessSite.addSite(siteName = "Test Site");
 		}
 
 		task ("Create Style Book with times as Font Family Base") {
@@ -267,7 +267,7 @@ definition {
 		}
 
 		task ("Add new site and go to it") {
-			JSONGroup.addGroup(groupName = "Test Site Name");
+			HeadlessSite.addSite(siteName = "Test Site Name");
 
 			ApplicationsMenu.gotoSite(site = "Test Site Name");
 		}
@@ -344,7 +344,7 @@ definition {
 		JSONPublications.selectPublication(publicationName = "Publication Name");
 
 		task ("Add a content page template") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 
 			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "site-name");
 
@@ -400,7 +400,7 @@ definition {
 
 		JSONPublications.selectPublication(publicationName = "Publication Name");
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		task ("Add a fragment collection") {
 			JSONFragment.addFragmentCollection(
@@ -467,7 +467,7 @@ definition {
 	@priority = 3
 	test CanCreatePagethroughExistingPageTemplateAndPublish {
 		task ("Add a widget page template") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 
 			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "site-name");
 
@@ -633,7 +633,7 @@ definition {
 	test ContentPageChangesCanBeAutomaticallyResolved {
 		property test.assert.warning.exceptions = "true";
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -721,7 +721,7 @@ definition {
 
 		JSONPublications.selectPublication(publicationName = "Publication Name");
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -776,7 +776,7 @@ definition {
 
 	@priority = 4
 	test PublishDeletedPageWithTag {
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -839,7 +839,7 @@ definition {
 
 		JSONPublications.selectPublication(publicationName = "Publication Name");
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONFragment.addFragmentCollection(
 			groupName = "Site Name",
@@ -962,7 +962,7 @@ definition {
 		property custom.properties = "feature.flag.LPS-161033=true";
 
 		task ("Add new site and a new page in it with Documents and Media widget") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 
 			JSONLayout.addPublicLayout(
 				groupName = "Site Name",
@@ -1049,7 +1049,7 @@ definition {
 
 	@priority = 5
 	test ViewPageFriendlyURLAfterRevertingPublication {
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -1113,7 +1113,7 @@ definition {
 	@description = "Widgets pages run into conflicts in a publication"
 	@priority = 3
 	test WidgetPageChangesCanBeAutomaticallyResolved {
-		JSONGroup.addGroup(groupName = "Test Site");
+		HeadlessSite.addSite(siteName = "Test Site");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site",

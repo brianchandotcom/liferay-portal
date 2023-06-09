@@ -97,7 +97,7 @@ definition {
 	test AssertModificationDeletionConflictDisplays {
 		property portal.acceptance = "true";
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentTitle = "DM Document Title",

@@ -52,7 +52,7 @@ definition {
 		property minimum.slave.ram = "24";
 		property test.name.skip.portal.instance = "Publications#CanEnablePublicationsInRemoteLiveSite";
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -209,7 +209,7 @@ definition {
 	test EnableDisablePublicationsViaPublicationsAdmin {
 		property portal.acceptance = "true";
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		Publications.enablePublications();
 

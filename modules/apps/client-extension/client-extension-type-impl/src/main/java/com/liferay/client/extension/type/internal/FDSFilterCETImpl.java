@@ -30,8 +30,7 @@ import javax.portlet.PortletRequest;
 /**
  * @author Bryce Osterhaus
  */
-public class FDSFilterCETImpl
-	extends BaseCETImpl implements FDSFilterCET {
+public class FDSFilterCETImpl extends BaseCETImpl implements FDSFilterCET {
 
 	public FDSFilterCETImpl(ClientExtensionEntry clientExtensionEntry) {
 		super(clientExtensionEntry);

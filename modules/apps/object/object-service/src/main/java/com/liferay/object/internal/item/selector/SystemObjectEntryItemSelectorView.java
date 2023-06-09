@@ -23,6 +23,7 @@ import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
 import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
+import com.liferay.object.entry.util.ObjectEntryDTOConverterUtil;
 import com.liferay.object.entry.util.ObjectEntryValuesUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
@@ -255,7 +256,7 @@ public class SystemObjectEntryItemSelectorView
 			User user = _userLocalService.fetchUser(
 				PrincipalThreadLocal.getUserId());
 
-			Map<String, Object> values = ObjectEntryValuesUtil.getValues(
+			Map<String, Object> values = ObjectEntryDTOConverterUtil.toDTO(
 				_baseModel, _dtoConverterRegistry, _objectDefinition.getName(),
 				_systemObjectDefinitionManagerRegistry, user);
 

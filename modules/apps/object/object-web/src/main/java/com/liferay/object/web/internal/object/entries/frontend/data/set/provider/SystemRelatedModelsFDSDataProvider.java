@@ -17,6 +17,7 @@ package com.liferay.object.web.internal.object.entries.frontend.data.set.provide
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
+import com.liferay.object.entry.util.ObjectEntryDTOConverterUtil;
 import com.liferay.object.entry.util.ObjectEntryValuesUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
@@ -109,7 +110,7 @@ public class SystemRelatedModelsFDSDataProvider
 				User user = _userLocalService.getUser(
 					PrincipalThreadLocal.getUserId());
 
-				Map<String, Object> values = ObjectEntryValuesUtil.getValues(
+				Map<String, Object> values = ObjectEntryDTOConverterUtil.toDTO(
 					relatedModel, _dtoConverterRegistry,
 					objectDefinition.getName(),
 					_systemObjectDefinitionManagerRegistry, user);

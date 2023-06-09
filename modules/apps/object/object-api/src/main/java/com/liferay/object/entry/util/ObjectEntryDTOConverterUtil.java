@@ -16,14 +16,21 @@ package com.liferay.object.entry.util;
 
 import com.liferay.object.system.JaxRsApplicationDescriptor;
 import com.liferay.object.system.SystemObjectDefinitionManager;
+import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
+import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.ws.rs.InternalServerErrorException;
 
@@ -55,6 +62,33 @@ public class ObjectEntryDTOConverterUtil {
 		return dtoConverter;
 	}
 
+	public static Map<String, Object> toDTO(
+		BaseModel<?> baseModel, DTOConverterRegistry dtoConverterRegistry,
+		String objectDefinitionName,
+		SystemObjectDefinitionManagerRegistry
+			systemObjectDefinitionManagerRegistry,
+		User user) {
+
+		try {
+			Object dto = toDTO(
+				baseModel, dtoConverterRegistry,
+				systemObjectDefinitionManagerRegistry.
+					getSystemObjectDefinitionManager(objectDefinitionName),
+				user);
+
+			if (Validator.isNull(dto)) {
+				return new HashMap<>();
+			}
+
+			return ObjectMapperUtil.readValue(Map.class, dto.toString());
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
+
+		return new HashMap<>();
+	}
+
 	public static Object toDTO(
 			BaseModel<?> baseModel, DTOConverterRegistry dtoConverterRegistry,
 			SystemObjectDefinitionManager systemObjectDefinitionManager,
@@ -77,5 +111,8 @@ public class ObjectEntryDTOConverterUtil {
 
 		return dtoConverter.toDTO(defaultDTOConverterContext);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ObjectEntryDTOConverterUtil.class);
 
 }

@@ -212,7 +212,7 @@ public class ObjectEntryDTOConverter
 											objectDefinition.getName());
 
 							Map<String, Object> values =
-								ObjectEntryValuesUtil.getValues(
+								ObjectEntryDTOConverterUtil.toDTO(
 									systemObjectDefinitionManager.
 										getBaseModelByExternalReferenceCode(
 											systemObjectDefinitionManager.

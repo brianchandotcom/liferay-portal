@@ -660,7 +660,7 @@
 					"name": "version",
 					"required": false,
 					"state": false,
-					"system": true,
+					"system": false,
 					"type": "String"
 				}
 			],

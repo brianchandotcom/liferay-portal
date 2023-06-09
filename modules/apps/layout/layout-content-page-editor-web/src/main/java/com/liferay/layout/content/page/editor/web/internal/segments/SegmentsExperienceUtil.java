@@ -384,12 +384,12 @@ public class SegmentsExperienceUtil {
 				segmentsExperimentPlid = layout.getClassPK();
 			}
 
-			if (SegmentsExperimentLocalServiceUtil.hasSegmentsExperiment(
-					sourceSegmentsExperienceId, segmentsExperimentPlid, null) &&
-				Validator.isNull(
+			if (Validator.isNull(
 					editableValuesJSONObject.getString("instanceId")) &&
 				Validator.isNull(
-					editableValuesJSONObject.getString("portletId"))) {
+					editableValuesJSONObject.getString("portletId")) &&
+				SegmentsExperimentLocalServiceUtil.hasSegmentsExperiment(
+					sourceSegmentsExperienceId, segmentsExperimentPlid, null)) {
 
 				newNamespace = fragmentEntryLink.getNamespace();
 			}

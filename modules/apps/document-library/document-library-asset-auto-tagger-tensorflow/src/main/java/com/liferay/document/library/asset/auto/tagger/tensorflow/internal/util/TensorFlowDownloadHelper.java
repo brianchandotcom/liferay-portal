@@ -15,9 +15,9 @@
 package com.liferay.document.library.asset.auto.tagger.tensorflow.internal.util;
 
 import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.configuration.TensorFlowImageAssetAutoTagProviderDownloadConfiguration;
-import com.liferay.document.library.kernel.store.DLStoreRequest;
-import com.liferay.document.library.kernel.store.DLStoreUtil;
+import com.liferay.document.library.kernel.store.Store;
 import com.liferay.petra.io.StreamUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -26,14 +26,14 @@ import com.liferay.portal.kernel.zip.ZipFileUtil;
 import com.liferay.portal.util.JarUtil;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
 import java.net.URL;
 
-import java.nio.file.Files;
-
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Tardín
@@ -90,16 +90,18 @@ public class TensorFlowDownloadHelper {
 	}
 
 	public InputStream getNativeLibraryInputStream() throws PortalException {
-		return DLStoreUtil.getFileAsStream(
-			_COMPANY_ID, CompanyConstants.SYSTEM, _getNativeLibraryFileName());
+		return _store.getFileAsStream(
+			_COMPANY_ID, CompanyConstants.SYSTEM, _getNativeLibraryFileName(),
+			StringPool.BLANK);
 	}
 
 	public boolean isDownloaded() throws PortalException {
-		if (DLStoreUtil.hasFile(
-				_COMPANY_ID, CompanyConstants.SYSTEM, _getModelFileName()) &&
-			DLStoreUtil.hasFile(
+		if (_store.hasFile(
+				_COMPANY_ID, CompanyConstants.SYSTEM, _getModelFileName(),
+				Store.VERSION_DEFAULT) &&
+			_store.hasFile(
 				_COMPANY_ID, CompanyConstants.SYSTEM,
-				_getNativeLibraryFileName())) {
+				_getNativeLibraryFileName(), Store.VERSION_DEFAULT)) {
 
 			return true;
 		}
@@ -118,15 +120,11 @@ public class TensorFlowDownloadHelper {
 
 		JarUtil.downloadAndInstallJar(new URL(url), tempFile.toPath(), sha1);
 
-		DLStoreUtil.addFile(
-			DLStoreRequest.builder(
-				_COMPANY_ID, CompanyConstants.SYSTEM, fileName
-			).className(
-				TensorFlowDownloadHelper.class.getName()
-			).size(
-				Files.size(tempFile.toPath())
-			).build(),
-			tempFile);
+		try (InputStream inputStream = new FileInputStream(tempFile)) {
+			_store.addFile(
+				_COMPANY_ID, CompanyConstants.SYSTEM, fileName,
+				Store.VERSION_DEFAULT, inputStream);
+		}
 	}
 
 	private String _getFileName(String fileName) {
@@ -139,8 +137,9 @@ public class TensorFlowDownloadHelper {
 
 		return ZipFileUtil.openInputStream(
 			FileUtil.createTempFile(
-				DLStoreUtil.getFileAsStream(
-					_COMPANY_ID, CompanyConstants.SYSTEM, _getModelFileName())),
+				_store.getFileAsStream(
+					_COMPANY_ID, CompanyConstants.SYSTEM, _getModelFileName(),
+					StringPool.BLANK)),
 			fileName);
 	}
 
@@ -155,5 +154,8 @@ public class TensorFlowDownloadHelper {
 	private static final long _COMPANY_ID = 0;
 
 	private static boolean _downloadFailed;
+
+	@Reference(target = "(default=true)")
+	private Store _store;
 
 }

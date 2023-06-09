@@ -7,7 +7,6 @@ Export-Package:\
 	com.liferay.portal.workflow.metrics.search.background.task,\
 	com.liferay.portal.workflow.metrics.search.index,\
 	com.liferay.portal.workflow.metrics.search.index.constants,\
-	com.liferay.portal.workflow.metrics.search.index.name,\
 	com.liferay.portal.workflow.metrics.search.index.reindexer,\
 	com.liferay.portal.workflow.metrics.service,\
 	com.liferay.portal.workflow.metrics.service.persistence,\

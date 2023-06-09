@@ -18,7 +18,7 @@ import com.liferay.asset.auto.tagger.AssetAutoTagProvider;
 import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.configuration.TensorFlowImageAssetAutoTagProviderCompanyConfiguration;
 import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.configuration.TensorFlowImageAssetAutoTagProviderProcessConfiguration;
 import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.petra.process.GetLabelProbabilitiesProcessCallable;
-import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.util.TensorFlowDownloadUtil;
+import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.util.TensorFlowDownloadHelper;
 import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.util.TensorFlowProcessHolder;
 import com.liferay.petra.process.ProcessExecutor;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -71,10 +71,10 @@ public class TensorFlowImageAssetAutoTagProvider
 			if (tensorFlowImageAssetAutoTagProviderCompanyConfiguration.
 					enabled() &&
 				!_isTemporary(fileEntry) &&
-				_tensorFlowDownloadUtil.isDownloaded()) {
+				_tensorFlowDownloadHelper.isDownloaded()) {
 
 				if (_labels == null) {
-					_labels = _tensorFlowDownloadUtil.getLabels();
+					_labels = _tensorFlowDownloadHelper.getLabels();
 				}
 
 				FileVersion fileVersion = fileEntry.getFileVersion();
@@ -105,7 +105,7 @@ public class TensorFlowImageAssetAutoTagProvider
 		modified(properties);
 
 		_tensorFlowProcessHolder = new TensorFlowProcessHolder(
-			_processExecutor, _tensorFlowDownloadUtil,
+			_processExecutor, _tensorFlowDownloadHelper,
 			bundleContext.getBundle());
 	}
 
@@ -175,7 +175,7 @@ public class TensorFlowImageAssetAutoTagProvider
 	private ProcessExecutor _processExecutor;
 
 	@Reference
-	private TensorFlowDownloadUtil _tensorFlowDownloadUtil;
+	private TensorFlowDownloadHelper _tensorFlowDownloadHelper;
 
 	private volatile TensorFlowImageAssetAutoTagProviderProcessConfiguration
 		_tensorFlowImageAssetAutoTagProviderProcessConfiguration;

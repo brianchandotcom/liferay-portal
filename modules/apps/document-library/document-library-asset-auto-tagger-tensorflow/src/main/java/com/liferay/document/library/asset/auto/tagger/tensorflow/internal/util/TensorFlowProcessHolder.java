@@ -64,11 +64,11 @@ public class TensorFlowProcessHolder {
 
 	public TensorFlowProcessHolder(
 			ProcessExecutor processExecutor,
-			TensorFlowDownloadUtil tensorFlowDownloadUtil, Bundle bundle)
+			TensorFlowDownloadHelper tensorFlowDownloadHelper, Bundle bundle)
 		throws Exception {
 
 		_processExecutor = processExecutor;
-		_tensorFlowDownloadUtil = tensorFlowDownloadUtil;
+		_tensorFlowDownloadHelper = tensorFlowDownloadHelper;
 		_bundle = bundle;
 
 		_tensorFlowWorkDir = bundle.getDataFile("tensorflow-workdir");
@@ -134,10 +134,10 @@ public class TensorFlowProcessHolder {
 		}
 
 		try (InputStream inputStream =
-				_tensorFlowDownloadUtil.getNativeLibraryInputStream()) {
+				_tensorFlowDownloadHelper.getNativeLibraryInputStream()) {
 
 			Path targetPath = tempPath.resolve(
-				TensorFlowDownloadUtil.NATIVE_LIBRARY_FILE_NAME);
+				TensorFlowDownloadHelper.NATIVE_LIBRARY_FILE_NAME);
 
 			sb.append(targetPath);
 
@@ -242,7 +242,7 @@ public class TensorFlowProcessHolder {
 
 			Future<String> future = processChannel.write(
 				new InitializeProcessCallable(
-					_tensorFlowDownloadUtil.getGraphBytes()));
+					_tensorFlowDownloadHelper.getGraphBytes()));
 
 			future.get();
 
@@ -273,7 +273,7 @@ public class TensorFlowProcessHolder {
 		_processChannelDCLSingleton = new DCLSingleton<>();
 	private ProcessConfig _processConfig;
 	private final ProcessExecutor _processExecutor;
-	private final TensorFlowDownloadUtil _tensorFlowDownloadUtil;
+	private final TensorFlowDownloadHelper _tensorFlowDownloadHelper;
 	private final File _tensorFlowWorkDir;
 
 }

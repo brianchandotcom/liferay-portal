@@ -15,7 +15,7 @@
 package com.liferay.document.library.asset.auto.tagger.tensorflow.internal;
 
 import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.configuration.TensorFlowImageAssetAutoTagProviderCompanyConfiguration;
-import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.util.TensorFlowDownloadUtil;
+import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.util.TensorFlowDownloadHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
@@ -24,22 +24,22 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class EditConfigurationDisplayContext {
 
 	public EditConfigurationDisplayContext(
-		TensorFlowDownloadUtil tensorFlowDownloadUtil,
+		TensorFlowDownloadHelper tensorFlowDownloadHelper,
 		TensorFlowImageAssetAutoTagProviderCompanyConfiguration
 			tensorFlowImageAssetAutoTagProviderCompanyConfiguration) {
 
-		_tensorFlowDownloadUtil = tensorFlowDownloadUtil;
+		_tensorFlowDownloadHelper = tensorFlowDownloadHelper;
 		_tensorFlowImageAssetAutoTagProviderCompanyConfiguration =
 			tensorFlowImageAssetAutoTagProviderCompanyConfiguration;
 	}
 
 	public boolean isDownloaded() throws PortalException {
-		return _tensorFlowDownloadUtil.isDownloaded();
+		return _tensorFlowDownloadHelper.isDownloaded();
 	}
 
 	public boolean isDownloadFailed() {
 		if (isTensorFlowImageAssetAutoTagProviderEnabled() &&
-			_tensorFlowDownloadUtil.isDownloadFailed()) {
+			_tensorFlowDownloadHelper.isDownloadFailed()) {
 
 			return true;
 		}
@@ -59,7 +59,7 @@ public class EditConfigurationDisplayContext {
 		return false;
 	}
 
-	private final TensorFlowDownloadUtil _tensorFlowDownloadUtil;
+	private final TensorFlowDownloadHelper _tensorFlowDownloadHelper;
 	private final TensorFlowImageAssetAutoTagProviderCompanyConfiguration
 		_tensorFlowImageAssetAutoTagProviderCompanyConfiguration;
 

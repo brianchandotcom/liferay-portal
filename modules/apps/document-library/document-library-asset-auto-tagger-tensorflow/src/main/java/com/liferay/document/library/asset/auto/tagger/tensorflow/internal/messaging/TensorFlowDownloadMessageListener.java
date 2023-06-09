@@ -16,7 +16,7 @@ package com.liferay.document.library.asset.auto.tagger.tensorflow.internal.messa
 
 import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.configuration.TensorFlowImageAssetAutoTagProviderDownloadConfiguration;
 import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.constants.TensorFlowDestinationNames;
-import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.util.TensorFlowDownloadUtil;
+import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.util.TensorFlowDownloadHelper;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Destination;
@@ -73,7 +73,7 @@ public class TensorFlowDownloadMessageListener extends BaseMessageListener {
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		_tensorFlowDownloadUtil.download(
+		_tensorFlowDownloadHelper.download(
 			_tensorFlowImageAssetAutoTagProviderDownloadConfiguration);
 	}
 
@@ -91,7 +91,7 @@ public class TensorFlowDownloadMessageListener extends BaseMessageListener {
 	private ServiceRegistration<Destination> _destinationServiceRegistration;
 
 	@Reference
-	private TensorFlowDownloadUtil _tensorFlowDownloadUtil;
+	private TensorFlowDownloadHelper _tensorFlowDownloadHelper;
 
 	private volatile TensorFlowImageAssetAutoTagProviderDownloadConfiguration
 		_tensorFlowImageAssetAutoTagProviderDownloadConfiguration;

@@ -38,8 +38,8 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Alejandro Tardín
  */
-@Component(service = TensorFlowDownloadUtil.class)
-public class TensorFlowDownloadUtil {
+@Component(service = TensorFlowDownloadHelper.class)
+public class TensorFlowDownloadHelper {
 
 	public static final String NATIVE_LIBRARY_FILE_NAME =
 		"libtensorflow_jni-1.15.0.jar";
@@ -122,7 +122,7 @@ public class TensorFlowDownloadUtil {
 			DLStoreRequest.builder(
 				_COMPANY_ID, CompanyConstants.SYSTEM, fileName
 			).className(
-				TensorFlowDownloadUtil.class.getName()
+				TensorFlowDownloadHelper.class.getName()
 			).size(
 				Files.size(tempFile.toPath())
 			).build(),

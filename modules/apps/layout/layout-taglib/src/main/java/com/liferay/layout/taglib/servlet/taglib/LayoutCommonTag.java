@@ -198,22 +198,33 @@ public class LayoutCommonTag extends IncludeTag {
 		while (iterator.hasNext()) {
 			String key = iterator.next();
 
-			if (Validator.isNull(key) || !key.endsWith("requestProcessed")) {
+			if (Validator.isNull(key)) {
 				continue;
 			}
 
-			String successMessage = (String)SessionMessages.get(
-				httpServletRequest, key);
+			if (key.endsWith("requestProcessed")) {
+				String successMessage = (String)SessionMessages.get(
+					httpServletRequest, key);
 
-			if (Validator.isNull(successMessage) ||
-				Objects.equals(successMessage, "request_processed") ||
-				Objects.equals(successMessage, key)) {
+				if (Validator.isNull(successMessage) ||
+					Objects.equals(successMessage, "request_processed") ||
+					Objects.equals(successMessage, key)) {
 
-				successMessage = LanguageUtil.get(
-					httpServletRequest, "your-request-completed-successfully");
+					successMessage = LanguageUtil.get(
+						httpServletRequest,
+						"your-request-completed-successfully");
+				}
+
+				sb.append(_getScript(successMessage, "success"));
 			}
+			else if (key.endsWith("_requestProcessedWarning")) {
+				String warningMessage = (String)SessionMessages.get(
+					httpServletRequest, key);
 
-			sb.append(_getScript(successMessage, "success"));
+				if (Validator.isNotNull(warningMessage)) {
+					sb.append(_getScript(warningMessage, "warning"));
+				}
+			}
 		}
 
 		return sb.toString();

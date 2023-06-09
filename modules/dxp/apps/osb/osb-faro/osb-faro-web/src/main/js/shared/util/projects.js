@@ -1,4 +1,4 @@
-import {formatSubscriptions} from 'shared/util/subscriptions';
+import {PLANS} from 'shared/util/subscriptions';
 import {Routes, toRoute} from 'shared/util/router';
 
 /**
@@ -8,14 +8,12 @@ import {Routes, toRoute} from 'shared/util/router';
  * @returns {Array} - the array of basic tier Projects
  */
 export function getBasicProjects(projects, unconfiguredOnly = false) {
-	const {plans} = formatSubscriptions();
-
 	return projects.filter(({faroSubscription, groupId}) => {
 		const subscriptionName = faroSubscription.get('name');
 
 		return unconfiguredOnly
-			? subscriptionName === plans.basic.name && !groupId
-			: subscriptionName === plans.basic.name;
+			? subscriptionName === PLANS.basic.name && !groupId
+			: subscriptionName === PLANS.basic.name;
 	});
 }
 

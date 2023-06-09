@@ -3,12 +3,12 @@ import PlanBreakdown from './PlanBreakdown';
 import React from 'react';
 import SubscriptionTitle from './SubscriptionTitle';
 import {
-	formatSubscriptions,
 	getPlanAddOns,
 	getPropLabel,
 	INDIVIDUALS,
 	PAGEVIEWS,
-	PLAN_TYPES
+	PLAN_TYPES,
+	PLANS
 } from 'shared/util/subscriptions';
 import {PropTypes} from 'prop-types';
 
@@ -34,7 +34,6 @@ class PlansList extends React.Component {
 
 	render() {
 		const {currentPlanName, plans} = this.props;
-		const {plans: faroSubscriptionsPlans} = formatSubscriptions();
 
 		return (
 			<div
@@ -71,7 +70,7 @@ class PlansList extends React.Component {
 						>
 							<PlanBreakdown
 								addOns={
-									name === faroSubscriptionsPlans.basic.name
+									name === PLANS.basic.name
 										? []
 										: getPlanAddOns(PLAN_TYPES[name])
 								}

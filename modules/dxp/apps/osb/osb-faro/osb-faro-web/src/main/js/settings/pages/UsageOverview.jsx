@@ -8,12 +8,11 @@ import UsageMetric from '../components/usage-overview/UsageMetric';
 import {compose, withCurrentUser, withProject} from 'shared/hoc';
 import {
 	formatPlanData,
-	formatSubscriptions,
-	getPlanAddOns,
 	getPropLabel,
 	INDIVIDUALS,
 	PAGEVIEWS,
 	PLAN_TYPES,
+	PLANS,
 	STATUS_DISPLAY_MAP
 } from 'shared/util/subscriptions';
 import {Project, User} from 'shared/util/records';
@@ -24,18 +23,15 @@ import {sub} from 'shared/util/lang';
 import {SubscriptionStatuses} from 'shared/util/constants';
 
 const PLAN_LEVEL_MAP = {
-	['basic']: 0,
-	['business']: 1,
-	['enterprise']: 2
+	[PLANS.basic.name]: 0,
+	[PLANS.business.name]: 1,
+	[PLANS.enterprise.name]: 2
 };
 
-const getPlans = ({name}) => {
-	const {plans} = formatSubscriptions();
-
-	return sortBy(plans, plan => PLAN_LEVEL_MAP[plan.name])
+const getPlans = ({name}) =>
+	sortBy(PLANS, plan => PLAN_LEVEL_MAP[plan.name])
 		.filter(plan => PLAN_LEVEL_MAP[plan.name] >= PLAN_LEVEL_MAP[name])
 		.reverse();
-};
 
 const getAlertContent = (alert, currentUser) => {
 	const admin = currentUser.isAdmin();
@@ -148,20 +144,16 @@ export class UsageOverview extends React.Component {
 			groupId,
 			project: {faroSubscription, timeZone}
 		} = this.props;
-		const {plans} = formatSubscriptions();
 
 		const currentPlan = formatPlanData(faroSubscription);
 		const timeZoneId = timeZone.get('timeZoneId');
 
 		const showAddonPanels =
 			PLAN_LEVEL_MAP[currentPlan.name] >=
-			PLAN_LEVEL_MAP[plans.business.name];
+			PLAN_LEVEL_MAP[PLANS.business.name];
 
 		const planType =
-			PLAN_TYPES[currentPlan.name] || PLAN_TYPES[plans.basic.name];
-
-		const availableAddOns = !!getPlanAddOns(planType).filter(Boolean)
-			.length;
+			PLAN_TYPES[currentPlan.name] || PLAN_TYPES[PLANS.basic.name];
 
 		return (
 			<BasePage
@@ -231,41 +223,39 @@ export class UsageOverview extends React.Component {
 							/>
 						</div>
 
-						{availableAddOns && (
-							<div>
-								<h4>{Liferay.Language.get('add-ons')}</h4>
+						<div>
+							<h4>{Liferay.Language.get('add-ons')}</h4>
 
-								<div className='text-secondary'>
-									<p>
-										{Liferay.Language.get(
-											'tailor-limits-to-business-needs.-incrementally-increase-individual-or-page-view-limits-as-needed-without-committing-to-a-new-plan'
-										)}
-									</p>
-								</div>
-
-								{!showAddonPanels && (
-									<div className='text-secondary'>
-										<strong>
-											<p>
-												{currentUser.isAdmin()
-													? Liferay.Language.get(
-															'add-ons-are-not-available-on-the-basic-plan.-to-increase-usage-limits-please-contact-a-sales-representative'
-													  )
-													: Liferay.Language.get(
-															'add-ons-are-not-available-on-the-basic-plan.-to-increase-usage-limits-please-contact-your-site-administrator'
-													  )}
-											</p>
-										</strong>
-									</div>
-								)}
-
-								<AddOnsList
-									active={showAddonPanels}
-									currentPlan={currentPlan}
-									planType={planType}
-								/>
+							<div className='text-secondary'>
+								<p>
+									{Liferay.Language.get(
+										'tailor-limits-to-business-needs.-incrementally-increase-individual-or-page-view-limits-as-needed-without-committing-to-a-new-plan'
+									)}
+								</p>
 							</div>
-						)}
+
+							{!showAddonPanels && (
+								<div className='text-secondary'>
+									<strong>
+										<p>
+											{currentUser.isAdmin()
+												? Liferay.Language.get(
+														'add-ons-are-not-available-on-the-basic-plan.-to-increase-usage-limits-please-contact-a-sales-representative'
+												  )
+												: Liferay.Language.get(
+														'add-ons-are-not-available-on-the-basic-plan.-to-increase-usage-limits-please-contact-your-site-administrator'
+												  )}
+										</p>
+									</strong>
+								</div>
+							)}
+
+							<AddOnsList
+								active={showAddonPanels}
+								currentPlan={currentPlan}
+								planType={planType}
+							/>
+						</div>
 					</div>
 				</div>
 			</BasePage>

@@ -3,6 +3,8 @@ import {fromJS, List, Map} from 'immutable';
 import {isNil} from 'lodash';
 import {Metric, Plan} from 'shared/util/records';
 
+const {subscriptionPlans} = Constants;
+
 export const INDIVIDUALS = 'individuals';
 
 export const PAGEVIEWS = 'pageViews';
@@ -35,31 +37,27 @@ export const PLAN_TYPES = {
 	['LXC Subscription - Transact Site']: 'lxcSubscriptionTransactSite'
 };
 
-export function formatSubscriptions() {
-	const {subscriptionPlans} = Constants;
-
+function formatSubscriptions(allPlans) {
 	const addOns = {
-		[INDIVIDUALS]: {business: {}, enterprise: {}},
-		['lxcCspUpTo100UsersExtraUser']: {business: {}, enterprise: {}},
-		['lxcCspUpTo10kUsersExtraUser']: {business: {}, enterprise: {}},
-		['lxcCspUpTo1kUsers']: {business: {}, enterprise: {}},
-		['lxcCspUpTo1kUsersExtraUser']: {business: {}, enterprise: {}},
-		['lxcCspUpTo20kUsers']: {business: {}, enterprise: {}},
-		['lxcCspUpTo20kUsersExtraUser']: {business: {}, enterprise: {}},
-		['lxcCspUpTo500UsersExtraUser']: {business: {}, enterprise: {}},
-		['lxcCspUpTo5kUsersExtraUser']: {business: {}, enterprise: {}},
-		['lxcSubscriptionEngageSite']: {business: {}, enterprise: {}},
-		['lxcSubscriptionSupportSite']: {business: {}, enterprise: {}},
-		['lxcSubscriptionTransactSite']: {business: {}, enterprise: {}},
-		[PAGEVIEWS]: {business: {}, enterprise: {}}
+		[INDIVIDUALS]: {},
+		['lxcCspUpTo100UsersExtraUser']: {},
+		['lxcCspUpTo10kUsersExtraUser']: {},
+		['lxcCspUpTo1kUsers']: {},
+		['lxcCspUpTo1kUsersExtraUser']: {},
+		['lxcCspUpTo20kUsers']: {},
+		['lxcCspUpTo20kUsersExtraUser']: {},
+		['lxcCspUpTo500UsersExtraUser']: {},
+		['lxcCspUpTo5kUsersExtraUser']: {},
+		['lxcSubscriptionTransactSite']: {},
+		[PAGEVIEWS]: {}
 	};
 
 	const plans = {};
 
 	const hasKeyProperty = key =>
-		Object.prototype.hasOwnProperty.call(subscriptionPlans, key);
+		Object.prototype.hasOwnProperty.call(allPlans, key);
 
-	for (const key in subscriptionPlans) {
+	for (const key in allPlans) {
 		if (hasKeyProperty(key)) {
 			const {
 				baseSubscriptionPlan,
@@ -67,7 +65,7 @@ export function formatSubscriptions() {
 				name,
 				pageViewsLimit,
 				price
-			} = subscriptionPlans[key];
+			} = allPlans[key];
 
 			const planType = PLAN_TYPES[key];
 
@@ -94,28 +92,30 @@ export function formatSubscriptions() {
 	return {addOns, plans};
 }
 
+const {addOns, plans} = formatSubscriptions(subscriptionPlans);
+
+export {addOns as ADD_ONS};
+
+export {plans as PLANS};
+
 export const STATUS_DISPLAY_MAP = {
 	[SubscriptionStatuses.Ok]: 'primary',
 	[SubscriptionStatuses.Approaching]: 'warning',
 	[SubscriptionStatuses.Over]: 'danger'
 };
 
+export const DEFAULT_ADDONS = {
+	[INDIVIDUALS]: addOns[INDIVIDUALS].business,
+	[PAGEVIEWS]: addOns[PAGEVIEWS].business
+};
+
 export function getPlanAddOns(planType) {
-	const {addOns} = formatSubscriptions();
-
-	const DEFAULT_ADDONS = {
-		[INDIVIDUALS]: addOns[INDIVIDUALS].business,
-		[PAGEVIEWS]: addOns[PAGEVIEWS].business
-	};
-
 	return planType === 'basic'
 		? [DEFAULT_ADDONS[INDIVIDUALS], DEFAULT_ADDONS[PAGEVIEWS]]
 		: [addOns[INDIVIDUALS][planType], addOns[PAGEVIEWS][planType]];
 }
 
 export function getPlanLabel(name) {
-	const {plans} = formatSubscriptions();
-
 	switch (name) {
 		case plans.basic.name:
 			return Liferay.Language.get('basic-plan');
@@ -173,8 +173,6 @@ export function getPropIcon(name) {
 }
 
 export function getPropLabel(name) {
-	const {plans} = formatSubscriptions();
-
 	switch (name) {
 		case INDIVIDUALS:
 		case `${INDIVIDUALS}Limit`:

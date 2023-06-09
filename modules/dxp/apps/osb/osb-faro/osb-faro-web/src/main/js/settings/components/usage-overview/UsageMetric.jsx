@@ -1,16 +1,19 @@
 import MetricBar from 'shared/components/MetricBar';
 import React from 'react';
 import Sticker from 'shared/components/Sticker';
-import {formatDateToTimeZone} from 'shared/util/date';
 import {
-	formatSubscriptions,
+	ADD_ONS,
+	DEFAULT_ADDONS,
 	getPlanLabel,
 	getPropIcon,
 	getPropLabel,
 	INDIVIDUALS,
 	PAGEVIEWS,
+	PLAN_TYPES,
+	PLANS,
 	STATUS_DISPLAY_MAP
 } from 'shared/util/subscriptions';
+import {formatDateToTimeZone} from 'shared/util/date';
 import {get} from 'lodash';
 import {Plan} from 'shared/util/records';
 import {PropTypes} from 'prop-types';
@@ -30,16 +33,15 @@ export default class UsageMetric extends React.Component {
 	static propTypes = {
 		currentPlan: PropTypes.instanceOf(Plan),
 		metricType: PropTypes.oneOf([INDIVIDUALS, PAGEVIEWS]),
+		planType: PropTypes.oneOf([
+			PLAN_TYPES[PLANS.basic.name],
+			PLAN_TYPES[PLANS.business.name],
+			PLAN_TYPES[PLANS.enterprise.name]
+		]),
 		timeZoneId: PropTypes.string
 	};
 
 	getUsageMetricDetails() {
-		const {addOns} = formatSubscriptions();
-		const DEFAULT_ADDONS = {
-			[INDIVIDUALS]: addOns[INDIVIDUALS].business,
-			[PAGEVIEWS]: addOns[PAGEVIEWS].business
-		};
-
 		const {
 			currentPlan: {addOns: planAddOns, metrics, name},
 			metricType,
@@ -51,7 +53,7 @@ export default class UsageMetric extends React.Component {
 		const addOnQuantity = planAddOns.getIn([metricType, 'quantity'], 0);
 
 		const addOnPlan = get(
-			addOns,
+			ADD_ONS,
 			[metricType, planType],
 			DEFAULT_ADDONS[metricType]
 		);

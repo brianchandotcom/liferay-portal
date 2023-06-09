@@ -5,9 +5,9 @@ import React from 'react';
 import URLConstants from 'shared/util/url-constants';
 import {close, modalTypes, open} from 'shared/actions/modals';
 import {connect, ConnectedProps} from 'react-redux';
-import {formatSubscriptions} from 'shared/util/subscriptions';
 import {Map} from 'immutable';
 import {Modal} from 'shared/types';
+import {PLANS} from 'shared/util/subscriptions';
 import {RootState} from 'shared/store';
 
 const getDropdownItems = ({
@@ -75,8 +75,7 @@ const HelpWidget: React.FC<IHelpWidgetProps> = ({
 	groupId,
 	open
 }) => {
-	const {plans} = formatSubscriptions();
-	const basicTier = faroSubscriptionIMap.get('name') === plans.basic.name;
+	const basicTier = faroSubscriptionIMap.get('name') === PLANS.basic.name;
 
 	return (
 		<div className='help-widget-root'>

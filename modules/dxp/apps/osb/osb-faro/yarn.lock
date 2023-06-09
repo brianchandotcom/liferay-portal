@@ -1235,18 +1235,18 @@
     react-dnd-html5-backend "^11.1.1"
     react-transition-group "^4.4.1"
 
-"@clayui/core@^3.95.0":
-  version "3.95.0"
-  resolved "https://registry.yarnpkg.com/@clayui/core/-/core-3.95.0.tgz#d862ff6e3a57c74f96abf6c430d7a947721fadb6"
-  integrity sha512-iSxGDxwB1ZDxqlWnpqAj/jUoeBJf2wwPEVcyIyaqzzeJoj5NDPdfTz3zDDtyu0otES2zP1Z++YfTDDoOjUOCdw==
+"@clayui/core@^3.96.0":
+  version "3.96.0"
+  resolved "https://registry.yarnpkg.com/@clayui/core/-/core-3.96.0.tgz#96263dccbcdddc8be075f28ea47d21e129187bcd"
+  integrity sha512-Q1V3GEYo2wGJjY0VOuwCk/dwRJhXqxXZXE/mFi35y6eDVR+TcxtkEQjbNNmTVzDk8TxF2yxmIKhgs7Fc4KQnjA==
   dependencies:
     "@clayui/button" "^3.92.0"
     "@clayui/icon" "^3.56.0"
     "@clayui/layout" "^3.93.0"
     "@clayui/loading-indicator" "^3.60.0"
-    "@clayui/modal" "^3.95.0"
+    "@clayui/modal" "^3.96.0"
     "@clayui/provider" "^3.93.0"
-    "@clayui/shared" "^3.95.0"
+    "@clayui/shared" "^3.96.0"
     "@tanstack/react-virtual" "3.0.0-beta.54"
     aria-hidden "^1.2.2"
     classnames "^2.2.6"
@@ -1404,6 +1404,18 @@
     classnames "^2.2.6"
     warning "^4.0.3"
 
+"@clayui/modal@^3.96.0":
+  version "3.96.0"
+  resolved "https://registry.yarnpkg.com/@clayui/modal/-/modal-3.96.0.tgz#ae74c186c728a108b8c4a25db4eb78c0a300f16f"
+  integrity sha512-XPzgHdsC5o6tPugyHD70C9rlwQd1ziNYPqeQX9QwwuDhKhKVaPv8w9JXyWUfq7TgaRyvbZgvqpa0ix4k8f2DbA==
+  dependencies:
+    "@clayui/button" "^3.92.0"
+    "@clayui/icon" "^3.56.0"
+    "@clayui/shared" "^3.96.0"
+    aria-hidden "^1.2.2"
+    classnames "^2.2.6"
+    warning "^4.0.3"
+
 "@clayui/navigation-bar@^3.93.0":
   version "3.93.0"
   resolved "https://registry.yarnpkg.com/@clayui/navigation-bar/-/navigation-bar-3.93.0.tgz#1248b1c9c16f1ef4fd0dc7b7ef69cbb795ea9753"
@@ -1477,6 +1489,19 @@
   version "3.95.2"
   resolved "https://registry.yarnpkg.com/@clayui/shared/-/shared-3.95.2.tgz#2ec99431c91dc2c5513b25ff8a5e747276fbe953"
   integrity sha512-vXUiuObwVbXdHE41h6tBqxtONKxyhczkfa7tKc17fWELn/pQK/jzWNyNUChx7xtZi7pV+cX56Wzk0K4mfnmBsQ==
+  dependencies:
+    "@clayui/button" "^3.92.0"
+    "@clayui/link" "^3.88.0"
+    "@clayui/provider" "^3.93.0"
+    aria-hidden "^1.2.2"
+    classnames "^2.2.6"
+    dom-align "^1.12.2"
+    warning "^4.0.3"
+
+"@clayui/shared@^3.96.0":
+  version "3.96.0"
+  resolved "https://registry.yarnpkg.com/@clayui/shared/-/shared-3.96.0.tgz#3b9fcfcde96a3c12f8666e3f6e059af40a278313"
+  integrity sha512-NCgZ67RXNNlne6oc4amRJeiDZ34NF79h5SOHQFaUK1AkpCdOXnX/lUzPtFk8DSu5qBq9+uDKbcEDGGuC4yVHNw==
   dependencies:
     "@clayui/button" "^3.92.0"
     "@clayui/link" "^3.88.0"

@@ -22,22 +22,24 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
-import com.liferay.portal.kernel.module.util.BundleUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
+import com.liferay.site.initializer.SiteInitializer;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -46,7 +48,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Rubén Pulido
@@ -203,16 +207,21 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 
 		Bundle bundle = FrameworkUtil.getBundle(SiteResourceTest.class);
 
-		Bundle siteResourceTestBundle = BundleUtil.getBundle(
-			bundle.getBundleContext(), "com.liferay.site.initializer.welcome");
+		BundleContext bundleContext = bundle.getBundleContext();
 
-		siteResourceTestBundle.stop();
+		String siteInitializerKey = RandomTestUtil.randomString();
 
-		Assert.assertEquals(Bundle.RESOLVED, siteResourceTestBundle.getState());
+		ServiceRegistration<SiteInitializer> serviceRegistration =
+			bundleContext.registerService(
+				SiteInitializer.class,
+				new TestSiteInitializer(siteInitializerKey),
+				HashMapDictionaryBuilder.put(
+					"site.initializer.key", siteInitializerKey
+				).build());
 
 		Site randomSite = randomSite();
 
-		randomSite.setTemplateKey("com.liferay.site.initializer.welcome");
+		randomSite.setTemplateKey(siteInitializerKey);
 		randomSite.setTemplateType(Site.TemplateType.SITE_INITIALIZER);
 
 		try {
@@ -228,11 +237,9 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 				"Site initializer with site template key " +
 					randomSite.getTemplateKey() + " is inactive",
 				problem.getTitle());
-
-			siteResourceTestBundle.start();
-
-			Assert.assertEquals(
-				Bundle.ACTIVE, siteResourceTestBundle.getState());
+		}
+		finally {
+			serviceRegistration.unregister();
 		}
 	}
 
@@ -450,5 +457,44 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
 
 	private final List<Site> _sites = new ArrayList<>();
+
+	private class TestSiteInitializer implements SiteInitializer {
+
+		public TestSiteInitializer(String key) {
+			_key = key;
+		}
+
+		@Override
+		public String getDescription(Locale locale) {
+			return RandomTestUtil.randomString();
+		}
+
+		@Override
+		public String getKey() {
+			return _key;
+		}
+
+		@Override
+		public String getName(Locale locale) {
+			return RandomTestUtil.randomString();
+		}
+
+		@Override
+		public String getThumbnailSrc() {
+			return RandomTestUtil.randomString();
+		}
+
+		@Override
+		public void initialize(long groupId) {
+		}
+
+		@Override
+		public boolean isActive(long companyId) {
+			return false;
+		}
+
+		private final String _key;
+
+	}
 
 }

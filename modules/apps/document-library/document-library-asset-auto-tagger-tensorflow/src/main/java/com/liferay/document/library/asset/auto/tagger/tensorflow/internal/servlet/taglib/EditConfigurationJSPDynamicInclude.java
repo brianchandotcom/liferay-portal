@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.asset.auto.tagger.tensorflow.internal.servlet.taglib;
 
+import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.EditConfigurationDisplayContext;
 import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.configuration.TensorFlowImageAssetAutoTagProviderCompanyConfiguration;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
@@ -59,9 +60,9 @@ public class EditConfigurationJSPDynamicInclude extends BaseJSPDynamicInclude {
 						_portal.getCompanyId(httpServletRequest));
 
 			httpServletRequest.setAttribute(
-				TensorFlowImageAssetAutoTagProviderCompanyConfiguration.class.
-					getName(),
-				tensorFlowImageAssetAutoTagProviderCompanyConfiguration);
+				EditConfigurationDisplayContext.class.getName(),
+				new EditConfigurationDisplayContext(
+					tensorFlowImageAssetAutoTagProviderCompanyConfiguration));
 		}
 		catch (ConfigurationException configurationException) {
 			_log.error(configurationException);

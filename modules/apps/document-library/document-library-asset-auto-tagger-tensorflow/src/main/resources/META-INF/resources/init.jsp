@@ -23,8 +23,7 @@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.document.library.asset.auto.tagger.tensorflow.internal.configuration.TensorFlowImageAssetAutoTagProviderCompanyConfiguration" %><%@
-page import="com.liferay.document.library.asset.auto.tagger.tensorflow.internal.util.TensorFlowDownloadUtil" %>
+<%@ page import="com.liferay.document.library.asset.auto.tagger.tensorflow.internal.EditConfigurationDisplayContext" %>
 
 <liferay-frontend:defineObjects />
 

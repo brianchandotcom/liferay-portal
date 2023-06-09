@@ -118,9 +118,10 @@ public class SampleSQLBuilderTest {
 		properties.put(BenchmarksPropsKeys.MAX_BLOGS_ENTRY_COMMENT_COUNT, "1");
 		properties.put(BenchmarksPropsKeys.MAX_BLOGS_ENTRY_COUNT, "1");
 		properties.put(
-			BenchmarksPropsKeys.MAX_COMMERCE_ACCOUNT_ENTRY_COUNT, "1");
+			BenchmarksPropsKeys.MAX_COMMERCE_ACCOUNT_ENTRY_COMMERCE_ORDER_COUNT,
+			"1");
 		properties.put(
-			BenchmarksPropsKeys.MAX_COMMERCE_ACCOUNT_ORDER_COUNT, "1");
+			BenchmarksPropsKeys.MAX_COMMERCE_ACCOUNT_ENTRY_COUNT, "1");
 		properties.put(BenchmarksPropsKeys.MAX_COMMERCE_CATALOG_COUNT, "1");
 		properties.put(BenchmarksPropsKeys.MAX_COMMERCE_GROUP_COUNT, "1");
 		properties.put(

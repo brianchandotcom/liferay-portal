@@ -80,6 +80,23 @@ public class SXPElementServiceImpl extends SXPElementServiceBaseImpl {
 	}
 
 	@Override
+	public SXPElement fetchSXPElementByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
+		throws PortalException {
+
+		SXPElement sxpElement =
+			sxpElementLocalService.fetchSXPElementByExternalReferenceCode(
+				externalReferenceCode, companyId);
+
+		if (sxpElement != null) {
+			_sxpElementModelResourcePermission.check(
+				getPermissionChecker(), sxpElement, ActionKeys.VIEW);
+		}
+
+		return sxpElement;
+	}
+
+	@Override
 	public SXPElement getSXPElement(long sxpElementId) throws PortalException {
 		SXPElement sxpElement = sxpElementLocalService.getSXPElement(
 			sxpElementId);

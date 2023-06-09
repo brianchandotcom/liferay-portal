@@ -564,7 +564,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		MultiSessionMessages.add(
-			actionRequest, "friendlyURLChanged",
+			actionRequest, "friendlyURLChanged_requestProcessedWarning",
 			_language.format(
 				_portal.getHttpServletRequest(actionRequest),
 				"the-friendly-url-x-was-changed-to-x-to-ensure-uniqueness",

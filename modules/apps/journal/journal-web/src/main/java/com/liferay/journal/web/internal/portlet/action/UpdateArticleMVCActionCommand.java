@@ -546,7 +546,7 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 				return StringUtil.merge(friendlyURLChangedMessages, "<br />");
 			}
 		).put(
-			"friendlyURLDuplicated",
+			"friendlyURLDuplicated_requestProcessedWarning",
 			() -> {
 				if (friendlyURLDuplicatedLocales.isEmpty()) {
 					return null;

@@ -31,7 +31,7 @@ String friendlyURLChangedMessage = GetterUtil.getString(MultiSessionMessages.get
 </c:if>
 
 <%
-String friendlyURLDuplicatedMessage = GetterUtil.getString(MultiSessionMessages.get(renderRequest, "friendlyURLDuplicated"));
+String friendlyURLDuplicatedMessage = GetterUtil.getString(MultiSessionMessages.get(renderRequest, "friendlyURLDuplicated_requestProcessedWarning"));
 %>
 
 <c:if test="<%= Validator.isNotNull(friendlyURLDuplicatedMessage) %>">

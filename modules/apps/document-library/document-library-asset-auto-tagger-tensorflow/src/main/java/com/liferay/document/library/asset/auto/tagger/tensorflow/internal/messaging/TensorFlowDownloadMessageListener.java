@@ -73,7 +73,7 @@ public class TensorFlowDownloadMessageListener extends BaseMessageListener {
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		TensorFlowDownloadUtil.download(
+		_tensorFlowDownloadUtil.download(
 			_tensorFlowImageAssetAutoTagProviderDownloadConfiguration);
 	}
 
@@ -89,6 +89,10 @@ public class TensorFlowDownloadMessageListener extends BaseMessageListener {
 	private DestinationFactory _destinationFactory;
 
 	private ServiceRegistration<Destination> _destinationServiceRegistration;
+
+	@Reference
+	private TensorFlowDownloadUtil _tensorFlowDownloadUtil;
+
 	private volatile TensorFlowImageAssetAutoTagProviderDownloadConfiguration
 		_tensorFlowImageAssetAutoTagProviderDownloadConfiguration;
 

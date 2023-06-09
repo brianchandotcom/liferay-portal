@@ -24,20 +24,22 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class EditConfigurationDisplayContext {
 
 	public EditConfigurationDisplayContext(
+		TensorFlowDownloadUtil tensorFlowDownloadUtil,
 		TensorFlowImageAssetAutoTagProviderCompanyConfiguration
 			tensorFlowImageAssetAutoTagProviderCompanyConfiguration) {
 
+		_tensorFlowDownloadUtil = tensorFlowDownloadUtil;
 		_tensorFlowImageAssetAutoTagProviderCompanyConfiguration =
 			tensorFlowImageAssetAutoTagProviderCompanyConfiguration;
 	}
 
 	public boolean isDownloaded() throws PortalException {
-		return TensorFlowDownloadUtil.isDownloaded();
+		return _tensorFlowDownloadUtil.isDownloaded();
 	}
 
 	public boolean isDownloadFailed() {
 		if (isTensorFlowImageAssetAutoTagProviderEnabled() &&
-			TensorFlowDownloadUtil.isDownloadFailed()) {
+			_tensorFlowDownloadUtil.isDownloadFailed()) {
 
 			return true;
 		}
@@ -57,6 +59,7 @@ public class EditConfigurationDisplayContext {
 		return false;
 	}
 
+	private final TensorFlowDownloadUtil _tensorFlowDownloadUtil;
 	private final TensorFlowImageAssetAutoTagProviderCompanyConfiguration
 		_tensorFlowImageAssetAutoTagProviderCompanyConfiguration;
 

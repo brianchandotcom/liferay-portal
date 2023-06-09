@@ -33,15 +33,18 @@ import java.net.URL;
 
 import java.nio.file.Files;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Alejandro Tardín
  */
+@Component(service = TensorFlowDownloadUtil.class)
 public class TensorFlowDownloadUtil {
 
 	public static final String NATIVE_LIBRARY_FILE_NAME =
 		"libtensorflow_jni-1.15.0.jar";
 
-	public static void download(
+	public void download(
 			TensorFlowImageAssetAutoTagProviderDownloadConfiguration
 				tensorFlowImageAssetAutoTagProviderDownloadConfiguration)
 		throws Exception {
@@ -74,26 +77,24 @@ public class TensorFlowDownloadUtil {
 		}
 	}
 
-	public static byte[] getGraphBytes() throws IOException, PortalException {
+	public byte[] getGraphBytes() throws IOException, PortalException {
 		return StreamUtil.toByteArray(
 			_getModelFileInputStream("tensorflow_inception_graph.pb"));
 	}
 
-	public static String[] getLabels() throws IOException, PortalException {
+	public String[] getLabels() throws IOException, PortalException {
 		return StringUtil.splitLines(
 			StringUtil.read(
 				_getModelFileInputStream(
 					"imagenet_comp_graph_label_strings.txt")));
 	}
 
-	public static InputStream getNativeLibraryInputStream()
-		throws PortalException {
-
+	public InputStream getNativeLibraryInputStream() throws PortalException {
 		return DLStoreUtil.getFileAsStream(
 			_COMPANY_ID, CompanyConstants.SYSTEM, _getNativeLibraryFileName());
 	}
 
-	public static boolean isDownloaded() throws PortalException {
+	public boolean isDownloaded() throws PortalException {
 		if (DLStoreUtil.hasFile(
 				_COMPANY_ID, CompanyConstants.SYSTEM, _getModelFileName()) &&
 			DLStoreUtil.hasFile(
@@ -106,11 +107,11 @@ public class TensorFlowDownloadUtil {
 		return false;
 	}
 
-	public static boolean isDownloadFailed() {
+	public boolean isDownloadFailed() {
 		return _downloadFailed;
 	}
 
-	private static void _downloadFile(String fileName, String url, String sha1)
+	private void _downloadFile(String fileName, String url, String sha1)
 		throws Exception {
 
 		File tempFile = FileUtil.createTempFile();
@@ -128,12 +129,12 @@ public class TensorFlowDownloadUtil {
 			tempFile);
 	}
 
-	private static String _getFileName(String fileName) {
+	private String _getFileName(String fileName) {
 		return "com.liferay.document.library.asset.auto.tagger.tensorflow/" +
 			fileName;
 	}
 
-	private static InputStream _getModelFileInputStream(String fileName)
+	private InputStream _getModelFileInputStream(String fileName)
 		throws IOException, PortalException {
 
 		return ZipFileUtil.openInputStream(
@@ -143,11 +144,11 @@ public class TensorFlowDownloadUtil {
 			fileName);
 	}
 
-	private static String _getModelFileName() {
+	private String _getModelFileName() {
 		return _getFileName("org.tensorflow.models.inception-5h.jar");
 	}
 
-	private static String _getNativeLibraryFileName() {
+	private String _getNativeLibraryFileName() {
 		return _getFileName(NATIVE_LIBRARY_FILE_NAME);
 	}
 

@@ -16,6 +16,7 @@ package com.liferay.document.library.asset.auto.tagger.tensorflow.internal.servl
 
 import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.EditConfigurationDisplayContext;
 import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.configuration.TensorFlowImageAssetAutoTagProviderCompanyConfiguration;
+import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.util.TensorFlowDownloadUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -62,6 +63,7 @@ public class EditConfigurationJSPDynamicInclude extends BaseJSPDynamicInclude {
 			httpServletRequest.setAttribute(
 				EditConfigurationDisplayContext.class.getName(),
 				new EditConfigurationDisplayContext(
+					_tensorFlowDownloadUtil,
 					tensorFlowImageAssetAutoTagProviderCompanyConfiguration));
 		}
 		catch (ConfigurationException configurationException) {
@@ -105,5 +107,8 @@ public class EditConfigurationJSPDynamicInclude extends BaseJSPDynamicInclude {
 		target = "(osgi.web.symbolicname=com.liferay.document.library.asset.auto.tagger.tensorflow)"
 	)
 	private ServletContext _servletContext;
+
+	@Reference
+	private TensorFlowDownloadUtil _tensorFlowDownloadUtil;
 
 }

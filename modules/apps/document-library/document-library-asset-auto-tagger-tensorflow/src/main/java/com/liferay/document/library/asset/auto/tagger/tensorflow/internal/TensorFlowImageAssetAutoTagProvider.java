@@ -71,10 +71,10 @@ public class TensorFlowImageAssetAutoTagProvider
 			if (tensorFlowImageAssetAutoTagProviderCompanyConfiguration.
 					enabled() &&
 				!_isTemporary(fileEntry) &&
-				TensorFlowDownloadUtil.isDownloaded()) {
+				_tensorFlowDownloadUtil.isDownloaded()) {
 
 				if (_labels == null) {
-					_labels = TensorFlowDownloadUtil.getLabels();
+					_labels = _tensorFlowDownloadUtil.getLabels();
 				}
 
 				FileVersion fileVersion = fileEntry.getFileVersion();
@@ -105,7 +105,8 @@ public class TensorFlowImageAssetAutoTagProvider
 		modified(properties);
 
 		_tensorFlowProcessHolder = new TensorFlowProcessHolder(
-			_processExecutor, bundleContext.getBundle());
+			_processExecutor, _tensorFlowDownloadUtil,
+			bundleContext.getBundle());
 	}
 
 	@Deactivate
@@ -172,6 +173,9 @@ public class TensorFlowImageAssetAutoTagProvider
 
 	@Reference
 	private ProcessExecutor _processExecutor;
+
+	@Reference
+	private TensorFlowDownloadUtil _tensorFlowDownloadUtil;
 
 	private volatile TensorFlowImageAssetAutoTagProviderProcessConfiguration
 		_tensorFlowImageAssetAutoTagProviderProcessConfiguration;

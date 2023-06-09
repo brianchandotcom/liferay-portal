@@ -24,7 +24,6 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.list.asset.entry.provider.AssetListAssetEntryProvider;
-import com.liferay.asset.list.asset.entry.query.processor.AssetListAssetEntryQueryProcessor;
 import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 import com.liferay.asset.list.internal.configuration.AssetListConfiguration;
 import com.liferay.asset.list.model.AssetListEntry;
@@ -43,8 +42,6 @@ import com.liferay.document.library.util.DLFileEntryTypeUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
-import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
-import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -84,7 +81,6 @@ import java.util.Objects;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
@@ -155,14 +151,6 @@ public class AssetListAssetEntryProviderImpl
 
 		_assetListConfiguration = ConfigurableUtil.createConfigurable(
 			AssetListConfiguration.class, properties);
-
-		_serviceTrackerList = ServiceTrackerListFactory.open(
-			bundleContext, AssetListAssetEntryQueryProcessor.class);
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_serviceTrackerList.close();
 	}
 
 	protected AssetEntryQuery getAssetEntryQuery(
@@ -174,13 +162,11 @@ public class AssetListAssetEntryProviderImpl
 			assetListEntry.getTypeSettings(segmentsEntryId)
 		).build();
 
-		return _createAssetEntryQuery(
-			assetListEntry, userId, unicodeProperties);
+		return _createAssetEntryQuery(assetListEntry, unicodeProperties);
 	}
 
 	private AssetEntryQuery _createAssetEntryQuery(
-		AssetListEntry assetListEntry, String userId,
-		UnicodeProperties unicodeProperties) {
+		AssetListEntry assetListEntry, UnicodeProperties unicodeProperties) {
 
 		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
 
@@ -289,10 +275,6 @@ public class AssetListAssetEntryProviderImpl
 		assetEntryQuery.setOrderByType2(
 			GetterUtil.getString(
 				unicodeProperties.getProperty("orderByType2", "ASC")));
-
-		_processAssetEntryQuery(
-			assetListEntry.getCompanyId(), userId, unicodeProperties,
-			assetEntryQuery);
 
 		return assetEntryQuery;
 	}
@@ -951,18 +933,6 @@ public class AssetListAssetEntryProviderImpl
 		return searchContext;
 	}
 
-	private void _processAssetEntryQuery(
-		long companyId, String userId, UnicodeProperties unicodeProperties,
-		AssetEntryQuery assetEntryQuery) {
-
-		for (AssetListAssetEntryQueryProcessor
-				assetListAssetEntryQueryProcessor : _serviceTrackerList) {
-
-			assetListAssetEntryQueryProcessor.processAssetEntryQuery(
-				companyId, userId, unicodeProperties, assetEntryQuery);
-		}
-	}
-
 	private void _setCategoriesAndTagsAndKeywords(
 		AssetEntryQuery assetEntryQuery, UnicodeProperties unicodeProperties,
 		long[] overrideAllAssetCategoryIds, String[] overrideAllAssetTagNames,
@@ -1158,8 +1128,5 @@ public class AssetListAssetEntryProviderImpl
 
 	@Reference
 	private Portal _portal;
-
-	private volatile ServiceTrackerList<AssetListAssetEntryQueryProcessor>
-		_serviceTrackerList;
 
 }

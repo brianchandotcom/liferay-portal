@@ -2853,8 +2853,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 			).build();
 
 		com.liferay.notification.model.NotificationTemplate
-			existingNotificationTemplate = _notificationTemplateLocalService
-				.fetchNotificationTemplateByExternalReferenceCode(notificationTemplate.getExternalReferenceCode(), serviceContext.getCompanyId());
+			existingNotificationTemplate =
+				_notificationTemplateLocalService.
+					fetchNotificationTemplateByExternalReferenceCode(
+						notificationTemplate.getExternalReferenceCode(),
+						serviceContext.getCompanyId());
 
 		if (existingNotificationTemplate == null) {
 			notificationTemplate =
@@ -2863,8 +2866,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 		else {
 			notificationTemplate =
-				notificationTemplateResource.putNotificationTemplateByExternalReferenceCode(
-					existingNotificationTemplate.getExternalReferenceCode(), notificationTemplate);
+				notificationTemplateResource.
+					putNotificationTemplateByExternalReferenceCode(
+						existingNotificationTemplate.getExternalReferenceCode(),
+						notificationTemplate);
 		}
 
 		json = SiteInitializerUtil.read(
@@ -5166,9 +5171,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final ListTypeEntryLocalService _listTypeEntryLocalService;
 	private final ListTypeEntryResource _listTypeEntryResource;
 	private final ListTypeEntryResource.Factory _listTypeEntryResourceFactory;
+	private final NotificationTemplateLocalService
+		_notificationTemplateLocalService;
 	private final NotificationTemplateResource.Factory
 		_notificationTemplateResourceFactory;
-	private final NotificationTemplateLocalService _notificationTemplateLocalService;
 	private final ObjectActionLocalService _objectActionLocalService;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectDefinitionResource.Factory

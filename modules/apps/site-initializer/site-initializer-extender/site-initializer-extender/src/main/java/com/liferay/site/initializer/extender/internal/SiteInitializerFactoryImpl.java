@@ -313,11 +313,11 @@ public class SiteInitializerFactoryImpl implements SiteInitializerFactory {
 	private ListTypeEntryResource.Factory _listTypeEntryResourceFactory;
 
 	@Reference
-	private NotificationTemplateResource.Factory
-		_notificationTemplateResourceFactory;
+	private NotificationTemplateLocalService _notificationTemplateLocalService;
 
 	@Reference
-	private NotificationTemplateLocalService _notificationTemplateLocalService;
+	private NotificationTemplateResource.Factory
+		_notificationTemplateResourceFactory;
 
 	@Reference
 	private ObjectActionLocalService _objectActionLocalService;

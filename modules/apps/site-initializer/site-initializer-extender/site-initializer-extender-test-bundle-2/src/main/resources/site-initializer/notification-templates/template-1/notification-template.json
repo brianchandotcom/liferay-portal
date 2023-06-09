@@ -1,7 +1,7 @@
 {
 	"description": "This is the description for Test Notification Template.",
-	"externalReferenceCode": "TEST-NOTIFICATION-TEMPLATE-2",
 	"editorType": "richText",
+	"externalReferenceCode": "TEST-NOTIFICATION-TEMPLATE-2",
 	"name": "Test Notification Template",
 	"recipientType": "email",
 	"recipients": [

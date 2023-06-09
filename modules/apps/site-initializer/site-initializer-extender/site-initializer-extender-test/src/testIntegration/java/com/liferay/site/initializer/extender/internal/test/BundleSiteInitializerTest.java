@@ -1772,7 +1772,9 @@ public class BundleSiteInitializerTest {
 			).build();
 
 		NotificationTemplate notificationTemplate =
-			notificationTemplateResource.getNotificationTemplateByExternalReferenceCode("TEST-NOTIFICATION-TEMPLATE-1");
+			notificationTemplateResource.
+				getNotificationTemplateByExternalReferenceCode(
+					"TEST-NOTIFICATION-TEMPLATE-1");
 
 		Assert.assertNotNull(notificationTemplateResource);
 
@@ -1793,13 +1795,16 @@ public class BundleSiteInitializerTest {
 
 		String templateContent = templateContentMap.get("en_US");
 
-		Assert.assertEquals(templateContent, "<p>\n\tThis is a template email for Test Notification Template.\n</p>");
+		Assert.assertEquals(
+			"<p>\n\tThis is a template email for Test Notification " +
+				"Template.\n</p>",
+			templateContent);
 	}
 
 	private void _assertNotificationTemplate2() throws Exception {
 		NotificationTemplateResource.Builder
 			notificationTemplateResourceBuilder =
-			_notificationTemplateResourceFactory.create();
+				_notificationTemplateResourceFactory.create();
 
 		NotificationTemplateResource notificationTemplateResource =
 			notificationTemplateResourceBuilder.user(
@@ -1807,7 +1812,9 @@ public class BundleSiteInitializerTest {
 			).build();
 
 		NotificationTemplate notificationTemplate =
-			notificationTemplateResource.getNotificationTemplateByExternalReferenceCode("TEST-NOTIFICATION-TEMPLATE-2");
+			notificationTemplateResource.
+				getNotificationTemplateByExternalReferenceCode(
+					"TEST-NOTIFICATION-TEMPLATE-2");
 
 		Assert.assertNotNull(notificationTemplateResource);
 
@@ -1828,7 +1835,10 @@ public class BundleSiteInitializerTest {
 
 		String templateContent = templateContentMap.get("en_US");
 
-		Assert.assertEquals(templateContent, "<p>\n\tThis is a template email for Test Notification Template 2.\n</p>");
+		Assert.assertEquals(
+			"<p>\n\tThis is a template email for Test Notification Template " +
+				"2.\n</p>",
+			templateContent);
 	}
 
 	private void _assertObjectActions(
@@ -3182,8 +3192,8 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertEquals(
 			"testalternatename2update", userAccount.getAlternateName());
-//		Assert.assertEquals(
-//			"test.user2.update@liferay.com", userAccount.getEmailAddress());
+		Assert.assertEquals(
+			"test.user2.update@liferay.com", userAccount.getEmailAddress());
 
 		organizationBriefs = userAccount.getOrganizationBriefs();
 

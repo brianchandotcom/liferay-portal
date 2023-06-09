@@ -216,6 +216,10 @@ public class IndexedFieldsFixture {
 
 			document.remove("score");
 		}
+
+		if (_isSearchEngineElasticsearch()) {
+			document.remove("timestamp");
+		}
 	}
 
 	public Document postProcessDocument(Document document) {
@@ -228,6 +232,15 @@ public class IndexedFieldsFixture {
 				StringUtil.toLowerCase(
 					document.getString("userGroupRoleNames")));
 			documentBuilder.unsetValue("score");
+
+			return documentBuilder.build();
+		}
+
+		if (_isSearchEngineElasticsearch()) {
+			DocumentBuilder documentBuilder = _documentBuilderFactory.builder(
+				document);
+
+			documentBuilder.unsetValue("timestamp");
 
 			return documentBuilder.build();
 		}

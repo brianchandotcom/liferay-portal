@@ -1,5 +1,94 @@
 definition {
 
+	macro _addCommerceShipment {
+		Variables.assertDefined(parameterList = ${orderId});
+
+		var baseURL = ${baseURL};
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if (!(isSet(carrier))) {
+			var carrier = "";
+		}
+
+		if (!(isSet(trackingNumber))) {
+			var trackingNumber = "";
+		}
+
+		if (!(isSet(trackingURL))) {
+			var trackingURL = "";
+		}
+
+		if (isSet(shipmentItemsList)) {
+			var shipmentItems = "";
+			var shipmentItemsList = ListUtil.newListFromString(${shipmentItemsList});
+			var count = 0;
+			var listSize = ListUtil.size(${shipmentItemsList});
+
+			var isLessThanSize = MathUtil.isLessThan(${count}, ${listSize});
+
+			while ((${isLessThanSize} == "true")) {
+				var shipmentItem = ListUtil.get(${shipmentItemsList}, ${count});
+
+				var shipmentItem = StringUtil.replace(${shipmentItem}, ":", ",");
+
+				var shipmentItem = ListUtil.newListFromString(${shipmentItem});
+
+				var orderItemId = ListUtil.get(${shipmentItem}, 0);
+				var quantity = ListUtil.get(${shipmentItem}, 1);
+				var warehouseName = ListUtil.get(${shipmentItem}, 2);
+
+				var warehouseId = CommerceJSONWarehousesAndInventoriesAPI._getWarehouseId(warehouseName = ${warehouseName});
+
+				if (${count} == 0) {
+					var comma = "";
+				}
+				else {
+					var comma = ",";
+				}
+
+				var shipmentItems = '''
+					${shipmentItems}${comma}
+					{
+						"orderItemId": ${orderItemId},
+						"quantity": ${quantity},
+						"warehouseId": ${warehouseId}
+					}
+				''';
+				var count = ${count} + 1;
+
+				var count = StringUtil.valueOf(${count});
+
+				var isLessThanSize = MathUtil.isLessThan(${count}, ${listSize});
+			}
+		}
+		else {
+			var shipmentItems = "";
+		}
+
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-shipment/v1.0/shipments \
+				-u ${userLoginInfo} \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					"carrier": "${carrier}",
+					"orderId": ${orderId},
+					"shipmentItems": [${shipmentItems}],
+					"trackingNumber": "${trackingNumber}",
+					"trackingURL": "${trackingURL}"
+				}'
+		''';
+
+		var shipmentId = JSONCurlUtil.post(${curl}, "$..['id']");
+
+		return ${shipmentId};
+	}
+
 	macro _deleteAllCommerceShipments {
 		var baseURL = ${baseURL};
 
@@ -78,6 +167,37 @@ definition {
 		echo("The Commerce shipments count is: ${shipmentsCount}");
 
 		return ${shipmentsCount};
+	}
+
+	macro _updateCommerceShipmentStatus {
+		Variables.assertDefined(parameterList = "${shipmentId},${shipmentStatus}");
+
+		var baseURL = ${baseURL};
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-shipment/v1.0/shipments/${shipmentId}/status-${shipmentStatus} \
+				-u ${userLoginInfo} \
+				-H 'accept: application/json' \
+				-d '{ }'
+		''';
+
+		var shipmentStatusLabel = JSONCurlUtil.post(${curl}, "$['status'].['label']");
+
+		echo("shipmentStatusLabel: ${shipmentStatusLabel}");
+
+		if (${shipmentStatus} == "finish-processing") {
+			var shipmentStatus = "ready-to-ship";
+		}
+
+		TestUtils.assertEquals(
+			actual = ${shipmentStatusLabel},
+			expected = ${shipmentStatus});
 	}
 
 }

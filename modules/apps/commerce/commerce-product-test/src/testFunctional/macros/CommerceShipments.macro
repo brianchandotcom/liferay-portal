@@ -10,6 +10,63 @@ definition {
 			locator1 = "Icon#ANY_VERTICAL_ELLIPSIS");
 	}
 
+	macro assertOrderItemShipmentInPlacedOrders {
+		Variables.assertDefined(parameterList = "${entryName},${shipmentId}");
+
+		ClickNoError(
+			key_entryName = ${entryName},
+			locator1 = "CommerceEntry#ENTRY_NAME_BODY_VERTICAL_ELLIPSIS");
+
+		CommerceEntry.clickNoError(menuItem = "Shipments");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		if (isSet(status)) {
+			if (${status} == "Finish Processing") {
+				var status = "Ready to Ship";
+			}
+
+			AssertTextEquals(
+				key_entry = ${shipmentId},
+				key_index = 1,
+				locator1 = "CommerceEntry#MODAL_DATASET_ROW_ITEM",
+				value1 = ${status});
+		}
+
+		AssertElementPresent(
+			key_entry = ${shipmentId},
+			key_index = 2,
+			locator1 = "CommerceEntry#MODAL_DATASET_ROW_ITEM");
+
+		if (isSet(carrier)) {
+			AssertTextEquals(
+				key_entry = ${shipmentId},
+				key_index = 3,
+				locator1 = "CommerceEntry#MODAL_DATASET_ROW_ITEM",
+				value1 = ${carrier});
+		}
+
+		if (isSet(trackingNumber)) {
+			AssertTextEquals(
+				key_entry = ${shipmentId},
+				key_index = 4,
+				locator1 = "CommerceEntry#MODAL_DATASET_ROW_ITEM",
+				value1 = ${trackingNumber});
+		}
+
+		if (isSet(quantity)) {
+			AssertTextEquals(
+				key_entry = ${shipmentId},
+				key_index = 5,
+				locator1 = "CommerceEntry#MODAL_DATASET_ROW_ITEM",
+				value1 = ${quantity});
+		}
+
+		Click(locator1 = "Icon#CLOSE");
+
+		SelectFrame.selectFrameTop();
+	}
+
 	macro assertShipmentItemWarehouseAndQuantityInShipment {
 		AssertTextEquals(
 			key_columnNumber = 4,

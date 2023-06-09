@@ -467,6 +467,33 @@ definition {
 		return ${orderItemCustomFieldValue};
 	}
 
+	macro _getCommerceOrderItems {
+		var baseURL = ${baseURL};
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if (isSet(orderItemCount)) {
+			var orderItemsCount = ${orderItemCount};
+		}
+		else {
+			var orderItemsCount = 100;
+		}
+
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-order/v1.0/orderItems?pageSize=${orderItemsCount} \
+				-u ${userLoginInfo} \
+				-H 'accept: application/json' \
+		''';
+
+		var responseBody = JSONCurlUtil.get(${curl});
+
+		return ${responseBody};
+	}
+
 	macro _getCommerceOrdersCount {
 		var baseURL = ${baseURL};
 
@@ -625,6 +652,18 @@ definition {
 		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
+	}
+
+	macro getCommerceOrderItemFieldByJSONPath {
+		Variables.assertDefined(parameterList = ${jsonPath});
+
+		if (!(isSet(responseBody))) {
+			var responseBody = CommerceJSONOrdersAPI._getCommerceOrderItems();
+		}
+
+		var fieldValue = JSONUtil.getWithJSONPath(${responseBody}, ${jsonPath});
+
+		return ${fieldValue};
 	}
 
 	macro getOrderField {

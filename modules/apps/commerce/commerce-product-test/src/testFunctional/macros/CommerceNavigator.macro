@@ -121,6 +121,20 @@ definition {
 		CommerceEntry.clickNoError(menuItem = "View");
 	}
 
+	macro goToPlacedOrderDetailPageViaURL {
+		Variables.assertDefined(parameterList = ${orderId});
+
+		if (!(isSet(site))) {
+			var site = "minium";
+		}
+
+		var siteURL = "web/${site}/placed-orders";
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "${siteURL}?p_p_id=com_liferay_commerce_order_content_web_internal_portlet_CommerceOrderContentPortlet&p_p_lifecycle=0&_com_liferay_commerce_order_content_web_internal_portlet_CommerceOrderContentPortlet_itemsPerPage=10&_com_liferay_commerce_order_content_web_internal_portlet_CommerceOrderContentPortlet_pageNumber=1&_com_liferay_commerce_order_content_web_internal_portlet_CommerceOrderContentPortlet_tableName=com_liferay_commerce_order_content_web_internal_portlet_CommerceOrderContentPortlet-placedOrders&_com_liferay_commerce_order_content_web_internal_portlet_CommerceOrderContentPortlet_backURL=http%3A%2F%2Flocalhost%3A8080%2Fweb%2Fminium%2Fplaced-orders%3Fp_p_id%3Dcom_liferay_commerce_order_content_web_internal_portlet_CommerceOrderContentPortlet%26p_p_lifecycle%3D0%26_com_liferay_commerce_order_content_web_internal_portlet_CommerceOrderContentPortlet_itemsPerPage%3D10%26_com_liferay_commerce_order_content_web_internal_portlet_CommerceOrderContentPortlet_pageNumber%3D1%26_com_liferay_commerce_order_content_web_internal_portlet_CommerceOrderContentPortlet_tableName%3Dcom_liferay_commerce_order_content_web_internal_portlet_CommerceOrderContentPortlet-placedOrders&_com_liferay_commerce_order_content_web_internal_portlet_CommerceOrderContentPortlet_mvcRenderCommandName=%2Fcommerce_order_content%2Fview_commerce_order_details&_com_liferay_commerce_order_content_web_internal_portlet_CommerceOrderContentPortlet_commerceOrderId=${orderId}");
+
+		WaitForPageLoad();
+	}
+
 	macro gotoPortlet {
 		ApplicationsMenu.gotoPortlet(
 			category = ${category},

@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.JaxRsLinkUtil;
@@ -451,7 +452,9 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 		return new NavigationMenu() {
 			{
 				creator = CreatorUtil.toCreator(
-					_portal, contextUriInfo,
+					new DefaultDTOConverterContext(
+						null, null, null, contextUriInfo, null),
+					_portal,
 					_userLocalService.fetchUser(
 						siteNavigationMenu.getUserId()));
 				dateCreated = siteNavigationMenu.getCreateDate();
@@ -506,7 +509,9 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 		return new NavigationMenuItem() {
 			{
 				creator = CreatorUtil.toCreator(
-					_portal, contextUriInfo,
+					new DefaultDTOConverterContext(
+						null, null, null, contextUriInfo, null),
+					_portal,
 					_userLocalService.fetchUser(
 						siteNavigationMenuItem.getUserId()));
 				dateCreated = siteNavigationMenuItem.getCreateDate();

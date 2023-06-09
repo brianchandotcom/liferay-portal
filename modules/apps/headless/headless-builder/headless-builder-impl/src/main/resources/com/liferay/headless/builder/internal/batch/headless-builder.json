@@ -15,7 +15,6 @@
 	},
 	"items": [
 		{
-
 			"enableCategorization": true,
 			"externalReferenceCode": "MSOD_API_SORT",
 			"label": {
@@ -93,7 +92,6 @@
 			"system": true
 		},
 		{
-
 			"enableCategorization": true,
 			"externalReferenceCode": "MSOD_API_FILTER",
 			"label": {
@@ -144,7 +142,6 @@
 			"system": true
 		},
 		{
-
 			"enableCategorization": true,
 			"externalReferenceCode": "MSOD_API_ENDPOINT",
 			"label": {
@@ -315,7 +312,6 @@
 			"system": true
 		},
 		{
-
 			"enableCategorization": true,
 			"enableComments": false,
 			"externalReferenceCode": "MSOD_API_PROPERTY",
@@ -430,7 +426,6 @@
 			"system": true
 		},
 		{
-
 			"enableCategorization": true,
 			"externalReferenceCode": "MSOD_API_SCHEMA",
 			"label": {
@@ -542,7 +537,6 @@
 			"system": true
 		},
 		{
-
 			"enableCategorization": true,
 			"externalReferenceCode": "MSOD_API_APPLICATION",
 			"label": {

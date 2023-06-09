@@ -66,6 +66,7 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.expando.ExpandoBridgeIndexer;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -189,7 +190,7 @@ public class MessageBoardThreadResourceImpl
 							pagination.getStartPosition(),
 							pagination.getEndPosition(),
 							new ThreadCreateDateComparator())),
-					this::_toMessageBoardThread),
+					mbThread -> _toMessageBoardThread(mbThread, false)),
 				pagination,
 				_mbThreadService.getThreadsCount(
 					mbCategory.getGroupId(), mbCategory.getCategoryId(),
@@ -237,7 +238,7 @@ public class MessageBoardThreadResourceImpl
 		_mbThreadFlagLocalService.addThreadFlag(
 			contextUser.getUserId(), mbThread, new ServiceContext());
 
-		return _toMessageBoardThread(mbThread);
+		return _toMessageBoardThread(mbThread, false);
 	}
 
 	@Override
@@ -291,7 +292,8 @@ public class MessageBoardThreadResourceImpl
 					dynamicQuery, pagination.getStartPosition(),
 					pagination.getEndPosition()),
 				(RatingsStats ratingsStats) -> _toMessageBoardThread(
-					_mbMessageService.getMessage(ratingsStats.getClassPK()))),
+					_mbMessageService.getMessage(ratingsStats.getClassPK()),
+					false)),
 			pagination,
 			_ratingsStatsLocalService.dynamicQueryCount(
 				_getDynamicQuery(
@@ -325,7 +327,7 @@ public class MessageBoardThreadResourceImpl
 			contextUser.getUserId(), mbMessage.getThread(),
 			new ServiceContext());
 
-		return _toMessageBoardThread(mbMessage);
+		return _toMessageBoardThread(mbMessage, false);
 	}
 
 	@Override
@@ -439,7 +441,7 @@ public class MessageBoardThreadResourceImpl
 
 		_updateQuestion(mbMessage, messageBoardThread);
 
-		return _toMessageBoardThread(mbMessage);
+		return _toMessageBoardThread(mbMessage, false);
 	}
 
 	@Override
@@ -523,7 +525,7 @@ public class MessageBoardThreadResourceImpl
 
 		_updateQuestion(mbMessage, messageBoardThread);
 
-		return _toMessageBoardThread(mbMessage);
+		return _toMessageBoardThread(mbMessage, false);
 	}
 
 	private void _checkPermission(
@@ -645,7 +647,8 @@ public class MessageBoardThreadResourceImpl
 			sorts,
 			document -> _toMessageBoardThread(
 				_mbMessageService.getMessage(
-					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))),
+				false));
 	}
 
 	private SPIRatingResource<Rating> _getSPIRatingResource() {
@@ -682,13 +685,16 @@ public class MessageBoardThreadResourceImpl
 			contextUser);
 	}
 
-	private MessageBoardThread _toMessageBoardThread(MBMessage mbMessage)
+	private MessageBoardThread _toMessageBoardThread(
+			MBMessage mbMessage, boolean userGroupInformations)
 		throws Exception {
 
-		return _toMessageBoardThread(mbMessage.getThread());
+		return _toMessageBoardThread(
+			mbMessage.getThread(), userGroupInformations);
 	}
 
-	private MessageBoardThread _toMessageBoardThread(MBThread mbThread)
+	private MessageBoardThread _toMessageBoardThread(
+			MBThread mbThread, boolean userGroupInformations)
 		throws Exception {
 
 		MBMessage mbMessage = _mbMessageLocalService.getMessage(
@@ -698,7 +704,7 @@ public class MessageBoardThreadResourceImpl
 			new MessageBoardThreadModelResourcePermission(
 				mbMessage, MBMessage.class.getName());
 
-		return _messageBoardThreadDTOConverter.toDTO(
+		DTOConverterContext dtoConverterContext =
 			new DefaultDTOConverterContext(
 				contextAcceptLanguage.isAcceptAllLanguages(),
 				HashMapBuilder.put(
@@ -742,8 +748,13 @@ public class MessageBoardThreadResourceImpl
 				).build(),
 				_dtoConverterRegistry, mbThread.getThreadId(),
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
-				contextUser),
-			mbThread);
+				contextUser);
+
+		dtoConverterContext.setAttribute(
+			"userGroupInformations", userGroupInformations);
+
+		return _messageBoardThreadDTOConverter.toDTO(
+			dtoConverterContext, mbThread);
 	}
 
 	private double _toPriority(Long siteId, String threadType)

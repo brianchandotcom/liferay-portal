@@ -83,10 +83,9 @@ public class LayoutSetPrototypeFriendlyURLConflictDetectionTest {
 			LayoutTestUtil.addTypePortletLayout(
 				_group.getGroupId(), RandomTestUtil.randomString(5), false);
 
-			Layout prototypeLayout = LayoutTestUtil.addTypePortletLayout(
-				_layoutSetPrototypeGroup.getGroupId(), name, true);
-
-			layouts.add(prototypeLayout);
+			layouts.add(
+				LayoutTestUtil.addTypePortletLayout(
+					_layoutSetPrototypeGroup.getGroupId(), name, true));
 
 			LayoutTestUtil.addTypePortletLayout(
 				_layoutSetPrototypeGroup.getGroupId(),
@@ -114,10 +113,9 @@ public class LayoutSetPrototypeFriendlyURLConflictDetectionTest {
 		List<Layout> layouts = new ArrayList<>();
 
 		for (String name : RandomTestUtil.randomStrings(3)) {
-			Layout layout = LayoutTestUtil.addTypePortletLayout(
-				_group.getGroupId(), name, false);
-
-			layouts.add(layout);
+			layouts.add(
+				LayoutTestUtil.addTypePortletLayout(
+					_group.getGroupId(), name, false));
 
 			LayoutTestUtil.addTypePortletLayout(
 				_group.getGroupId(), RandomTestUtil.randomString(5), false);

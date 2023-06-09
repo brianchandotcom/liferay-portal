@@ -65,17 +65,45 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 
 		Assert.assertEquals(1, page.getTotalCount());
 
-		Keyword getKeyword = new Keyword() {
+		Keyword getKeyword1 = new Keyword() {
 			{
 				name = keyword.getName();
 			}
 		};
 
-		assertEquals(getKeyword, page.fetchFirstItem());
+		assertEquals(getKeyword1, page.fetchFirstItem());
 
 		assertValid(page);
 
-		keywordResource.deleteKeyword(keyword.getId());
+		// Restricted fields
+
+		builder = KeywordResource.builder();
+
+		keywordResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
+			LocaleUtil.getDefault()
+		).parameters(
+			"restrictFields",
+			"actions,assetLibraryKey,creator,dateCreated,dateModified,name," +
+				"keywordUsageCount,subscribed"
+		).build();
+
+		page = keywordResource.getAssetLibraryKeywordsPage(
+			testDepotEntry.getDepotEntryId(), null, null, null,
+			Pagination.of(1, 10), null);
+
+		Assert.assertEquals(1, page.getTotalCount());
+
+		Keyword getKeyword2 = new Keyword() {
+			{
+				id = keyword.getId();
+			}
+		};
+
+		assertEquals(getKeyword2, page.fetchFirstItem());
+
+		assertValid(page);
 	}
 
 	@Override

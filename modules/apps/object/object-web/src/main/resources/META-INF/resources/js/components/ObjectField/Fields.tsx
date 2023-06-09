@@ -123,7 +123,17 @@ export default function Fields({
 		itemsActions: items,
 		namespace:
 			'_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_',
-
+		onActionDropdownItemClick({
+			action,
+			itemData,
+		}: {
+			action: {data: {id: string}};
+			itemData: {id: string};
+		}) {
+			if (action.data.id === 'deleteObjectField') {
+				Liferay.fire('deleteObjectField', {itemData});
+			}
+		},
 		portletId:
 			'com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet',
 		style,

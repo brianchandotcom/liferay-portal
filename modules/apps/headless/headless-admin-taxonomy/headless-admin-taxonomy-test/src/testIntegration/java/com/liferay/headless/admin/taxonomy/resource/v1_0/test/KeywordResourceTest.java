@@ -47,9 +47,8 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 		Keyword keyword = testPostAssetLibraryKeyword_addKeyword(
 			randomKeyword());
 
-		KeywordResource.Builder builder = KeywordResource.builder();
-
-		keywordResource = builder.authentication(
+		keywordResource = KeywordResource.builder(
+		).authentication(
 			"test@liferay.com", "test"
 		).locale(
 			LocaleUtil.getDefault()
@@ -61,20 +60,20 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 			testDepotEntry.getDepotEntryId(), null, null, null,
 			Pagination.of(1, 10), null);
 
-		Keyword getKeyword1 = new Keyword() {
-			{
-				name = keyword.getName();
-			}
-		};
-
 		Assert.assertEquals(1, page.getTotalCount());
-		assertEquals(getKeyword1, page.fetchFirstItem());
+
+		assertEquals(
+			new Keyword() {
+				{
+					name = keyword.getName();
+				}
+			},
+			page.fetchFirstItem());
 
 		assertValid(page);
 
-		builder = KeywordResource.builder();
-
-		keywordResource = builder.authentication(
+		keywordResource = KeywordResource.builder(
+		).authentication(
 			"test@liferay.com", "test"
 		).locale(
 			LocaleUtil.getDefault()
@@ -88,14 +87,15 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 			testDepotEntry.getDepotEntryId(), null, null, null,
 			Pagination.of(1, 10), null);
 
-		Keyword getKeyword2 = new Keyword() {
-			{
-				id = keyword.getId();
-			}
-		};
-
 		Assert.assertEquals(1, page.getTotalCount());
-		assertEquals(getKeyword2, page.fetchFirstItem());
+
+		assertEquals(
+			new Keyword() {
+				{
+					id = keyword.getId();
+				}
+			},
+			page.fetchFirstItem());
 
 		assertValid(page);
 
@@ -118,13 +118,13 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 			"fields", "name"
 		).build();
 
-		Keyword newKeyword = new Keyword() {
-			{
-				name = keyword.getName();
-			}
-		};
-
-		assertEquals(newKeyword, keywordResource.getKeyword(keyword.getId()));
+		assertEquals(
+			new Keyword() {
+				{
+					name = keyword.getName();
+				}
+			},
+			keywordResource.getKeyword(keyword.getId()));
 
 		keywordResource.deleteKeyword(keyword.getId());
 	}

@@ -93,6 +93,7 @@ public class TaxonomyVocabularyResourceTest
 				null, null, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(1, page.getTotalCount());
+
 		assertValid(
 			page,
 			HashMapBuilder.<String, Map<String, String>>put(
@@ -139,10 +140,8 @@ public class TaxonomyVocabularyResourceTest
 				).build()
 			).build());
 
-		TaxonomyVocabularyResource.Builder builder =
-			TaxonomyVocabularyResource.builder();
-
-		taxonomyVocabularyResource = builder.authentication(
+		taxonomyVocabularyResource = TaxonomyVocabularyResource.builder(
+		).authentication(
 			"test@liferay.com", "test"
 		).locale(
 			LocaleUtil.getDefault()
@@ -158,14 +157,15 @@ public class TaxonomyVocabularyResourceTest
 				testDepotEntry.getDepotEntryId(), null, null, null,
 				Pagination.of(1, 10), null);
 
-		TaxonomyVocabulary getTaxonomyVocabulary = new TaxonomyVocabulary() {
-			{
-				name = taxonomyVocabulary.getName();
-			}
-		};
-
 		Assert.assertEquals(1, page.getTotalCount());
-		assertEquals(getTaxonomyVocabulary, page.fetchFirstItem());
+
+		assertEquals(
+			new TaxonomyVocabulary() {
+				{
+					name = taxonomyVocabulary.getName();
+				}
+			},
+			page.fetchFirstItem());
 
 		assertValid(page);
 	}

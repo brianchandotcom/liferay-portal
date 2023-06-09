@@ -378,10 +378,6 @@ public class SegmentsExperienceUtil {
 				JSONFactoryUtil.createJSONObject(
 					fragmentEntryLink.getEditableValues());
 
-			String instanceId = editableValuesJSONObject.getString(
-				"instanceId");
-			String portletId = editableValuesJSONObject.getString("portletId");
-
 			long publicLayoutPlid = layout.getPlid();
 
 			if (layout.isDraftLayout()) {
@@ -390,7 +386,10 @@ public class SegmentsExperienceUtil {
 
 			if (SegmentsExperimentLocalServiceUtil.hasSegmentsExperiment(
 					sourceSegmentsExperienceId, publicLayoutPlid, null) &&
-				Validator.isNull(instanceId) && Validator.isNull(portletId)) {
+				Validator.isNull(
+					editableValuesJSONObject.getString("instanceId")) &&
+				Validator.isNull(
+					editableValuesJSONObject.getString("portletId"))) {
 
 				newNamespace = fragmentEntryLink.getNamespace();
 			}

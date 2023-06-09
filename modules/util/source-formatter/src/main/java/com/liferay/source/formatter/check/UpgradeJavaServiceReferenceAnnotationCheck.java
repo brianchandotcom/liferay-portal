@@ -17,9 +17,6 @@ package com.liferay.source.formatter.check;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.check.util.JavaSourceUtil;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 /**
  * @author Tamyris Bernardo
  */
@@ -34,35 +31,30 @@ public class UpgradeJavaServiceReferenceAnnotationCheck extends BaseFileCheck {
 			return content;
 		}
 
-		String newContent = content;
-
-		Matcher serviceReferenceMatcher = _serviceReferencePattern.matcher(
-			newContent);
-
 		boolean replaced = false;
 
-		while (serviceReferenceMatcher.find()) {
-			newContent = StringUtil.replace(
-				newContent,
-				JavaSourceUtil.getMethodCall(
-					content, serviceReferenceMatcher.start()),
-				"@Reference");
+		for (String annotationBlock :
+				JavaSourceUtil.getAnnotationsBlocks(content)) {
 
-			replaced = true;
+			annotationBlock = annotationBlock.trim();
+
+			if (annotationBlock.startsWith("@ServiceReference")) {
+				content = StringUtil.replace(
+					content, annotationBlock, "@Reference");
+
+				replaced = true;
+			}
 		}
 
 		if (replaced) {
-			newContent = StringUtil.replace(
-				newContent,
+			content = StringUtil.replace(
+				content,
 				"import com.liferay.portal.spring.extender.service." +
 					"ServiceReference;",
 				"import org.osgi.service.component.annotations.Reference;");
 		}
 
-		return newContent;
+		return content;
 	}
-
-	private static final Pattern _serviceReferencePattern = Pattern.compile(
-		"\\@ServiceReference\\(");
 
 }

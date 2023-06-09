@@ -77,84 +77,6 @@ definition {
 		return ${curl};
 	}
 
-	macro assertInFacetsWithCorrectValue {
-		Variables.assertDefined(parameterList = "${expectedValue},${taxonomyVocabularyId}");
-
-		var actualValue = JSONUtil.getWithJSONPath(${responseToParse}, "$.facets..facetValues[?(@.term=='${taxonomyVocabularyId}' && @.numberOfOccurrences==${expectedValue})].numberOfOccurrences");
-
-		TestUtils.assertEquals(
-			actual = ${actualValue},
-			expected = ${expectedValue});
-	}
-
-	macro assertProperBatchInActionBlock {
-		Variables.assertDefined(parameterList = ${responseToParse});
-
-		for (var batchAction : list ${batchActions}) {
-			var element = StringUtil.add("$.actions.", ${batchAction}, "");
-
-			var actualBatch = JSONUtil.getWithJSONPath(${responseToParse}, ${element});
-			var portalURL = JSONCompany.getPortalURL();
-
-			var href = "${portalURL}/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/batch";
-
-			if (${batchAction} == "updateBatch") {
-				var method = "PUT";
-			}
-			else if (${batchAction} == "deleteBatch") {
-				var method = "DELETE";
-			}
-			else {
-				var method = "POST";
-
-				if (isSet(depotName)) {
-					var assetLibraryId = JSONGroupAPI._getDepotIdByName(
-						depotName = ${depotName},
-						noSelenium = "true");
-
-					var href = "${portalURL}/o/headless-admin-taxonomy/v1.0/asset-libraries/${assetLibraryId}/taxonomy-vocabularies/batch";
-				}
-				else {
-					var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
-						groupName = ${groupName},
-						site = "true");
-
-					var href = "${portalURL}/o/headless-admin-taxonomy/v1.0/sites/${siteId}/taxonomy-vocabularies/batch";
-				}
-			}
-
-			var expectedBatch = StringUtil.add("{method=${method},", " href=${href}}", "");
-
-			TestUtils.assertEquals(
-				actual = ${actualBatch},
-				expected = ${expectedBatch});
-		}
-	}
-
-	macro assertProperVocabularyTotalCount {
-		Variables.assertDefined(parameterList = ${expectedTotalCount});
-
-		var response = TaxonomyVocabularyAPI.filterTaxonomyVocabulary(
-			depotName = ${depotName},
-			filterValue = ${filterValue});
-
-		var actualTotalCount = TaxonomyVocabularyAPI.getElementOfCreatedVocabulary(
-			element = "$..['totalCount']",
-			responseToParse = ${response});
-
-		TestUtils.assertEquals(
-			actual = ${actualTotalCount},
-			expected = ${expectedTotalCount});
-	}
-
-	macro assertResponseHasNameFieldValueOnly {
-		var actualValue = JSONUtil.getWithJSONPath(${responseToParse}, "$.items");
-
-		TestUtils.assertEquals(
-			actual = ${actualValue},
-			expected = ${expectedValue});
-	}
-
 	macro createAssetLibraryWithKeyWords {
 		Variables.assertDefined(parameterList = "${depotName},${name}");
 
@@ -239,54 +161,8 @@ definition {
 		JSONCurlUtil.delete(${curl});
 	}
 
-	macro filterTaxonomyVocabulary {
-		Variables.assertDefined(parameterList = ${filterValue});
-
-		var curl = TaxonomyVocabularyAPI._curlTaxonomyVocabulary(
-			depotName = ${depotName},
-			filterValue = ${filterValue},
-			groupName = ${groupName});
-
-		var response = JSONCurlUtil.get(${curl});
-
-		return ${response};
-	}
-
-	macro getAssetLibraryKeywordsWithDifferentParameters {
-		var curl = TaxonomyVocabularyAPI._curlTaxonomyKeywords(
-			depotName = ${depotName},
-			keywordId = ${keywordId},
-			parameter = ${parameter},
-			parameterValue = ${parameterValue});
-
-		var response = JSONCurlUtil.get(${curl});
-
-		return ${response};
-	}
-
-	macro getElementOfCreatedVocabulary {
-		Variables.assertDefined(parameterList = "${responseToParse},${element}");
-
-		var elementValue = JSONUtil.getWithJSONPath(${responseToParse}, ${element});
-
-		return ${elementValue};
-	}
-
 	macro getKeywordsByGroupName {
 		var curl = TaxonomyVocabularyAPI._curlTaxonomyKeywords(groupName = ${groupName});
-
-		var response = JSONCurlUtil.get(${curl});
-
-		return ${response};
-	}
-
-	macro getTaxonomyVocabularyByErc {
-		Variables.assertDefined(parameterList = ${externalReferenceCode});
-
-		var curl = TaxonomyVocabularyAPI._curlTaxonomyVocabulary(
-			depotName = ${depotName},
-			externalReferenceCode = ${externalReferenceCode},
-			groupName = ${groupName});
 
 		var response = JSONCurlUtil.get(${curl});
 
@@ -301,27 +177,6 @@ definition {
 			parameterValue = ${parameterValue});
 
 		var response = JSONCurlUtil.get(${curl});
-
-		return ${response};
-	}
-
-	macro updateTaxonomyVocabularyByErc {
-		Variables.assertDefined(parameterList = "${externalReferenceCode},${name}");
-
-		var body = '''-d {"name": "${name}"}''';
-
-		if (isSet(externalReferenceCodeInBody)) {
-			var body = '''-d {"name": "${name}","externalReferenceCode": "${externalReferenceCodeInBody}"}''';
-		}
-
-		var curl = TaxonomyVocabularyAPI._curlTaxonomyVocabulary(
-			depotName = ${depotName},
-			externalReferenceCode = ${externalReferenceCode},
-			groupName = ${groupName});
-
-		var curl = StringUtil.add(${curl}, ${body}, " ");
-
-		var response = JSONCurlUtil.put(${curl});
 
 		return ${response};
 	}

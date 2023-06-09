@@ -25,37 +25,6 @@ definition {
 		return ${curl};
 	}
 
-	macro _curlTaxonomyCategoryByErc {
-		Variables.assertDefined(parameterList = "${externalReferenceCode},${taxonomyVocabularyId}");
-
-		var portalURL = JSONCompany.getPortalURL();
-
-		var curl = '''
-			${portalURL}/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/${taxonomyVocabularyId}/taxonomy-categories/by-external-reference-code/${externalReferenceCode} \
-				-u test@liferay.com:test \
-				-H Content-Type: application/json \
-				-H accept: application/json \
-		''';
-
-		return ${curl};
-	}
-
-	macro _getTaxonomyCategory {
-		Variables.assertDefined(parameterList = ${taxonomyCategoryId});
-
-		var portalURL = JSONCompany.getPortalURL();
-
-		var curl = '''
-			${portalURL}/o/headless-admin-taxonomy/v1.0/taxonomy-categories/${taxonomyCategoryId} \
-				-u test@liferay.com:test \
-				-H Content-Type: application/json \
-		''';
-
-		var curl = JSONCurlUtil.get(${curl});
-
-		return ${curl};
-	}
-
 	macro createTaxonomyCategory {
 		Variables.assertDefined(parameterList = ${name});
 
@@ -70,45 +39,6 @@ definition {
 			taxonomyVocabularyId = ${taxonomyVocabularyId});
 
 		return ${response};
-	}
-
-	macro deleteTaxonomyCategoryByErc {
-		var curl = TaxonomyCategoryAPI._curlTaxonomyCategoryByErc(
-			externalReferenceCode = ${externalReferenceCode},
-			taxonomyVocabularyId = ${taxonomyVocabularyId});
-
-		var response = JSONCurlUtil.delete(${curl});
-
-		return ${response};
-	}
-
-	macro getTaxonomyCategory {
-		var getTaxonomyCategoryDetails = TaxonomyCategoryAPI._getTaxonomyCategory(taxonomyCategoryId = ${taxonomyCategoryId});
-
-		return ${getTaxonomyCategoryDetails};
-	}
-
-	macro getTaxonomyCategoryByErc {
-		var curl = TaxonomyCategoryAPI._curlTaxonomyCategoryByErc(
-			externalReferenceCode = ${externalReferenceCode},
-			taxonomyVocabularyId = ${taxonomyVocabularyId});
-
-		var response = JSONCurlUtil.get(${curl});
-
-		return ${response};
-	}
-
-	macro setUpGlobalResponse {
-		var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
-
-		var response = TaxonomyVocabularyAPI.createTaxonomyVocabulary(
-			assetLibraryId = ${assetLibraryId},
-			groupName = "Guest",
-			name = "Vocabulary Name");
-
-		static var responseOfCreated = ${response};
-
-		return ${responseOfCreated};
 	}
 
 	macro staticTaxonomyCategoryId {
@@ -132,19 +62,6 @@ definition {
 
 			return ${staticTaxonomyCategoryId};
 		}
-	}
-
-	macro updateTaxonomyCategoryByErc {
-		var curl = TaxonomyCategoryAPI._curlTaxonomyCategoryByErc(
-			externalReferenceCode = ${externalReferenceCode},
-			taxonomyVocabularyId = ${taxonomyVocabularyId});
-		var body = '''-d {"name": "${name}"}''';
-
-		var curl = StringUtil.add(${curl}, ${body}, " ");
-
-		var response = JSONCurlUtil.put(${curl});
-
-		return ${response};
 	}
 
 }

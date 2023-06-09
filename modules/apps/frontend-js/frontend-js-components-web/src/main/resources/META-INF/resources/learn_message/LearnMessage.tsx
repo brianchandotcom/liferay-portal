@@ -87,7 +87,9 @@ export default function LearnMessage({
 		LearnResourcesContext
 	) as ILearnResourceContext;
 
-	const resourceKeyObject = learnResourcesContext[resource][resourceKey] || {
+	const resourceKeyObject = learnResourcesContext?.[resource]?.[
+		resourceKey
+	] || {
 		en_US: {},
 	};
 

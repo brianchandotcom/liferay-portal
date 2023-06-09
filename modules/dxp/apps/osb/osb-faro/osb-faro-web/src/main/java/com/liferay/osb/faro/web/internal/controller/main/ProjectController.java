@@ -409,7 +409,8 @@ public class ProjectController extends BaseFaroController {
 
 			faroProject.setLastAccessTime(now);
 
-			_faroProjectLocalService.updateFaroProject(faroProject);
+			faroProject = _faroProjectLocalService.updateFaroProject(
+				faroProject);
 		}
 
 		return _getProjectDisplay(faroProject);

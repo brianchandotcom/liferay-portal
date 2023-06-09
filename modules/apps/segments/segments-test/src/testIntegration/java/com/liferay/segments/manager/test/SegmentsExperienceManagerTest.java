@@ -98,6 +98,7 @@ public class SegmentsExperienceManagerTest {
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
+		themeDisplay.setLayout(_layout);
 		themeDisplay.setPlid(_layout.getPlid());
 
 		mockHttpServletRequest.setAttribute(

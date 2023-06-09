@@ -128,7 +128,7 @@ exports[`UserDropdown should render dropdown menu when clicked 1`] = `
                       role="menuitem"
                     >
                       <a
-                        class="button-root link-unstyled"
+                        class="button-root btn btn-block btn-unstyled"
                         href="/link-externo-2"
                       >
                         Link 2

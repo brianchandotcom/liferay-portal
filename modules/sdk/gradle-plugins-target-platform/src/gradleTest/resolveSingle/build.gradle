@@ -36,11 +36,6 @@ apply plugin: "com.liferay.target.platform"
 
 task runGradleTest
 
-tasks.withType(JavaCompile) {
-	sourceCompatibility = JavaVersion.VERSION_1_8
-	targetCompatibility = JavaVersion.VERSION_1_8
-}
-
 dependencies {
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.taglib"

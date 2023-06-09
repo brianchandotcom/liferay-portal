@@ -85,6 +85,38 @@ function ExecutionOptions({
 		setScope(value);
 	};
 
+	const _renderExecutionModeRadioGroup = () => {
+		const radioGroup = [
+			<ClayRadio
+				key={EXECUTION_MODES.REGULAR}
+				label={Liferay.Language.get('regular')}
+				value={EXECUTION_MODES.REGULAR}
+			/>,
+		];
+
+		if (Liferay.FeatureFlags['LPS-177664']) {
+			radioGroup.push(
+				<ClayRadio
+					key={EXECUTION_MODES.CONCURRENT}
+					label={Liferay.Language.get('concurrent')}
+					value={EXECUTION_MODES.CONCURRENT}
+				/>
+			);
+		}
+
+		if (Liferay.FeatureFlags['LPS-177668']) {
+			radioGroup.push(
+				<ClayRadio
+					key={EXECUTION_MODES.SYNC}
+					label={Liferay.Language.get('sync')}
+					value={EXECUTION_MODES.SYNC}
+				/>
+			);
+		}
+
+		return radioGroup;
+	};
+
 	return (
 		<div className="execution-scope-sheet sheet sheet-lg">
 			{(Liferay.FeatureFlags['LPS-177664'] ||
@@ -100,24 +132,7 @@ function ExecutionOptions({
 							onChange={_handleExecutionModeChange}
 							value={executionMode}
 						>
-							<ClayRadio
-								label={Liferay.Language.get('regular')}
-								value={EXECUTION_MODES.REGULAR}
-							/>
-
-							{Liferay.FeatureFlags['LPS-177664'] && (
-								<ClayRadio
-									label={Liferay.Language.get('concurrent')}
-									value={EXECUTION_MODES.CONCURRENT}
-								/>
-							)}
-
-							{Liferay.FeatureFlags['LPS-177668'] && (
-								<ClayRadio
-									label={Liferay.Language.get('sync')}
-									value={EXECUTION_MODES.SYNC}
-								/>
-							)}
+							{_renderExecutionModeRadioGroup()}
 						</ClayRadioGroup>
 					</div>
 				)}

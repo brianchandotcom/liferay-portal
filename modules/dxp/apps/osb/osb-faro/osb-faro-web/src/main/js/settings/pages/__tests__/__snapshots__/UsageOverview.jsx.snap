@@ -169,7 +169,7 @@ exports[`UsageOverview should render 1`] = `
                       <span
                         class="text-secondary usage-since-label semibold"
                       >
-                        1% since July 8, 2018
+                        1.4% since July 8, 2018
                       </span>
                     </div>
                     <div

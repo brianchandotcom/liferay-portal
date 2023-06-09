@@ -176,6 +176,10 @@ definition {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
+		if (!(isSet(priority))) {
+			var priority = 0;
+		}
+
 		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
@@ -191,7 +195,7 @@ definition {
 					"name": "${promotionName}",
 					"netPrice": true,
 					"neverExpire": true,
-					"priority": 0,
+					"priority": ${priority},
 					"type": "promotion"
 				}'
 		''';

@@ -21,7 +21,10 @@ EditConfigurationDisplayContext editConfigurationDisplayContext = (EditConfigura
 %>
 
 <c:if test="<%= !editConfigurationDisplayContext.isDownloaded() %>">
-	<aui:alert closeable="<%= false %>" type='<%= editConfigurationDisplayContext.isDownloadFailed() ? "danger" : "info" %>'>
+	<clay:alert
+		dismissible="<%= false %>"
+		displayType='<%= editConfigurationDisplayContext.isDownloadFailed() ? "danger" : "info" %>'
+	>
 		<c:choose>
 			<c:when test="<%= editConfigurationDisplayContext.isDownloadFailed() %>">
 				<liferay-ui:message key="the-tensorflow-model-could-not-be-downloaded.-please-contact-your-administrator" />
@@ -33,5 +36,5 @@ EditConfigurationDisplayContext editConfigurationDisplayContext = (EditConfigura
 				<liferay-ui:message key="the-tensorflow-model-will-be-downloaded-in-the-background.-no-tags-will-be-created-until-the-model-is-fully-downloaded" />
 			</c:otherwise>
 		</c:choose>
-	</aui:alert>
+	</clay:alert>
 </c:if>

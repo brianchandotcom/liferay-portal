@@ -84,6 +84,14 @@ public class ObjectEntryServiceUtil {
 			externalReferenceCode, companyId, groupId);
 	}
 
+	public static ObjectEntry fetchManyToOneObjectEntry(
+			long groupId, long objectRelationshipId, long primaryKey)
+		throws PortalException {
+
+		return getService().fetchManyToOneObjectEntry(
+			groupId, objectRelationshipId, primaryKey);
+	}
+
 	public static ObjectEntry fetchObjectEntry(long objectEntryId)
 		throws PortalException {
 

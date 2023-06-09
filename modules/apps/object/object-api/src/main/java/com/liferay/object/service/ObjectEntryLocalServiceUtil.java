@@ -274,6 +274,14 @@ public class ObjectEntryLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
+	public static ObjectEntry fetchManyToOneObjectEntry(
+			long groupId, long objectRelationshipId, long primaryKey)
+		throws PortalException {
+
+		return getService().fetchManyToOneObjectEntry(
+			groupId, objectRelationshipId, primaryKey);
+	}
+
 	public static ObjectEntry fetchObjectEntry(long objectEntryId) {
 		return getService().fetchObjectEntry(objectEntryId);
 	}

@@ -84,6 +84,15 @@ public class ObjectEntryServiceWrapper
 	}
 
 	@Override
+	public com.liferay.object.model.ObjectEntry fetchManyToOneObjectEntry(
+			long groupId, long objectRelationshipId, long primaryKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectEntryService.fetchManyToOneObjectEntry(
+			groupId, objectRelationshipId, primaryKey);
+	}
+
+	@Override
 	public com.liferay.object.model.ObjectEntry fetchObjectEntry(
 			long objectEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {

@@ -122,6 +122,24 @@ local.bundles.backup.file=${liferay.home.parent.dir}/bundles-master-${git.commit
 	</target>
 
 	<target name="database-reset">
+		<propertycopy from="database.${database.type}.host" name="database.host.current" />
+
+		<if>
+			<contains string="${database.host.current}" substring="localhost_" />
+			<then>
+				<antcall target="rebuild-database">
+					<param name="database.type" value="${database.type}" />
+					<param name="sql.dir" value="sql/create-bare/" />
+					<param name="sql.file" value="create-bare-${database.type}.sql" />
+				</antcall>
+			</then>
+			<else>
+				<antcall target="database-reset-container" />
+			</else>
+		</if>
+	</target>
+
+	<target name="database-reset-container">
 		<antcall inheritAll="false" target="start-docker-database-${database.type}">
 			<param name="skip.property.cleanup" value="true" />
 		</antcall>
@@ -190,6 +208,8 @@ local.bundles.backup.file=${liferay.home.parent.dir}/bundles-master-${git.commit
 				<fail message="Backup restored to ${bundles.backup.parent.dir} but app.server.parent.dir was not found. Please check that app.server.parent.dir matches the bundle location." />
 			</then>
 		</if>
+
+		<antcall target="database-reset" />
 	</target>
 
 	<target name="run-integration-test">

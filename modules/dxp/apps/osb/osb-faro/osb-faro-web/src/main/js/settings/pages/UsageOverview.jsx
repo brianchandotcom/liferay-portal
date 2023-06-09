@@ -8,6 +8,7 @@ import UsageMetric from '../components/usage-overview/UsageMetric';
 import {compose, withCurrentUser, withProject} from 'shared/hoc';
 import {
 	formatPlanData,
+	getPlanAddOns,
 	getPropLabel,
 	INDIVIDUALS,
 	PAGEVIEWS,
@@ -155,6 +156,9 @@ export class UsageOverview extends React.Component {
 		const planType =
 			PLAN_TYPES[currentPlan.name] || PLAN_TYPES[PLANS.basic.name];
 
+		const availableAddOns = !!getPlanAddOns(planType).filter(Boolean)
+			.length;
+
 		return (
 			<BasePage
 				backURL={toRoute(Routes.SETTINGS_ADD_DATA_SOURCE, {
@@ -206,56 +210,60 @@ export class UsageOverview extends React.Component {
 						</Card>
 					</div>
 					<div className='col-xl-4 plans'>
-						<div>
-							<h4>{Liferay.Language.get('plans')}</h4>
+						{availableAddOns && (
+							<>
+								<div>
+									<h4>{Liferay.Language.get('plans')}</h4>
 
-							<div className='text-secondary'>
-								<p>
-									{Liferay.Language.get(
-										'balance-pricing-and-value.-higher-tiers-offer-more-flexibility-through-cheaper-add-ons-and-higher-limits'
-									)}
-								</p>
-							</div>
-
-							<PlansList
-								currentPlanName={currentPlan.name}
-								plans={getPlans(currentPlan)}
-							/>
-						</div>
-
-						<div>
-							<h4>{Liferay.Language.get('add-ons')}</h4>
-
-							<div className='text-secondary'>
-								<p>
-									{Liferay.Language.get(
-										'tailor-limits-to-business-needs.-incrementally-increase-individual-or-page-view-limits-as-needed-without-committing-to-a-new-plan'
-									)}
-								</p>
-							</div>
-
-							{!showAddonPanels && (
-								<div className='text-secondary'>
-									<strong>
+									<div className='text-secondary'>
 										<p>
-											{currentUser.isAdmin()
-												? Liferay.Language.get(
-														'add-ons-are-not-available-on-the-basic-plan.-to-increase-usage-limits-please-contact-a-sales-representative'
-												  )
-												: Liferay.Language.get(
-														'add-ons-are-not-available-on-the-basic-plan.-to-increase-usage-limits-please-contact-your-site-administrator'
-												  )}
+											{Liferay.Language.get(
+												'balance-pricing-and-value.-higher-tiers-offer-more-flexibility-through-cheaper-add-ons-and-higher-limits'
+											)}
 										</p>
-									</strong>
-								</div>
-							)}
+									</div>
 
-							<AddOnsList
-								active={showAddonPanels}
-								currentPlan={currentPlan}
-								planType={planType}
-							/>
-						</div>
+									<PlansList
+										currentPlanName={currentPlan.name}
+										plans={getPlans(currentPlan)}
+									/>
+								</div>
+
+								<div>
+									<h4>{Liferay.Language.get('add-ons')}</h4>
+
+									<div className='text-secondary'>
+										<p>
+											{Liferay.Language.get(
+												'tailor-limits-to-business-needs.-incrementally-increase-individual-or-page-view-limits-as-needed-without-committing-to-a-new-plan'
+											)}
+										</p>
+									</div>
+
+									{!showAddonPanels && (
+										<div className='text-secondary'>
+											<strong>
+												<p>
+													{currentUser.isAdmin()
+														? Liferay.Language.get(
+																'add-ons-are-not-available-on-the-basic-plan.-to-increase-usage-limits-please-contact-a-sales-representative'
+														  )
+														: Liferay.Language.get(
+																'add-ons-are-not-available-on-the-basic-plan.-to-increase-usage-limits-please-contact-your-site-administrator'
+														  )}
+												</p>
+											</strong>
+										</div>
+									)}
+
+									<AddOnsList
+										active={showAddonPanels}
+										currentPlan={currentPlan}
+										planType={planType}
+									/>
+								</div>
+							</>
+						)}
 					</div>
 				</div>
 			</BasePage>

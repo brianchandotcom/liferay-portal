@@ -48,6 +48,8 @@ function formatSubscriptions(allPlans) {
 		['lxcCspUpTo20kUsersExtraUser']: {},
 		['lxcCspUpTo500UsersExtraUser']: {},
 		['lxcCspUpTo5kUsersExtraUser']: {},
+		['lxcSubscriptionEngageSite']: {},
+		['lxcSubscriptionSupportSite']: {},
 		['lxcSubscriptionTransactSite']: {},
 		[PAGEVIEWS]: {}
 	};

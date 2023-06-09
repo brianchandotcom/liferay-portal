@@ -1,7 +1,7 @@
 import * as data from 'test/data';
-import {formatSubscriptions} from 'shared/util/subscriptions';
 import {fromJS} from 'immutable';
 import {getBasicProjects, getSingleProjectRoute} from '../projects';
+import {PLANS} from 'shared/util/subscriptions';
 import {Project} from 'shared/util/records';
 import {Routes, toRoute} from 'shared/util/router';
 
@@ -45,10 +45,9 @@ describe('projects', () => {
 	describe('getBasicProjects', () => {
 		it('should return only basic projects given a list of projects', () => {
 			const projects = getBasicProjects(mockProjects);
-			const {plans} = formatSubscriptions();
 
 			projects.map(({faroSubscription}) =>
-				expect(faroSubscription.get('name')).toEqual(plans.basic.name)
+				expect(faroSubscription.get('name')).toEqual(PLANS.basic.name)
 			);
 		});
 

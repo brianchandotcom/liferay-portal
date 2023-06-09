@@ -22,6 +22,7 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.web.internal.object.definitions.display.context.ObjectDefinitionsDetailsDisplayContext;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -68,6 +69,7 @@ public class EditObjectDefinitionMVCRenderCommand implements MVCRenderCommand {
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
 				new ObjectDefinitionsDetailsDisplayContext(
+					_configurationProvider,
 					_portal.getHttpServletRequest(renderRequest),
 					_objectDefinitionLocalService,
 					_objectDefinitionModelResourcePermission,
@@ -79,6 +81,9 @@ public class EditObjectDefinitionMVCRenderCommand implements MVCRenderCommand {
 
 		return "/object_definitions/edit_object_definition.jsp";
 	}
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

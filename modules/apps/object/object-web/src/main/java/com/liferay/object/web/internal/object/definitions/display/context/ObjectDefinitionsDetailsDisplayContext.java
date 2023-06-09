@@ -17,6 +17,7 @@ package com.liferay.object.web.internal.object.definitions.display.context;
 import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.application.list.constants.PanelCategoryKeys;
+import com.liferay.change.tracking.configuration.CTSettingsConfiguration;
 import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectWebKeys;
 import com.liferay.object.model.ObjectDefinition;
@@ -30,6 +31,7 @@ import com.liferay.object.web.internal.display.context.helper.ObjectRequestHelpe
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -52,6 +54,7 @@ public class ObjectDefinitionsDetailsDisplayContext
 	extends BaseObjectDefinitionsDisplayContext {
 
 	public ObjectDefinitionsDetailsDisplayContext(
+		ConfigurationProvider configurationProvider,
 		HttpServletRequest httpServletRequest,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ModelResourcePermission<ObjectDefinition>
@@ -63,6 +66,7 @@ public class ObjectDefinitionsDetailsDisplayContext
 
 		super(httpServletRequest, objectDefinitionModelResourcePermission);
 
+		_configurationProvider = configurationProvider;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectEntryManagerRegistry = objectEntryManagerRegistry;
 		_objectRelationshipLocalService = objectRelationshipLocalService;
@@ -176,6 +180,16 @@ public class ObjectDefinitionsDetailsDisplayContext
 			ObjectActionKeys.PUBLISH_OBJECT_DEFINITION);
 	}
 
+	public boolean isPublicationsEnabled() throws Exception {
+		CTSettingsConfiguration ctSettingsConfiguration =
+			_configurationProvider.getCompanyConfiguration(
+				CTSettingsConfiguration.class,
+				_objectRequestHelper.getCompanyId());
+
+		return ctSettingsConfiguration.enabled();
+	}
+
+	private final ConfigurationProvider _configurationProvider;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectEntryManagerRegistry _objectEntryManagerRegistry;
 	private final ObjectRelationshipLocalService

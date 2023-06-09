@@ -23,6 +23,7 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.web.internal.object.definitions.constants.ObjectDefinitionsScreenNavigationEntryConstants;
 import com.liferay.object.web.internal.object.definitions.display.context.ObjectDefinitionsDetailsDisplayContext;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -64,13 +65,17 @@ public class DetailsObjectDefinitionsScreenNavigationEntry
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
 			new ObjectDefinitionsDetailsDisplayContext(
-				httpServletRequest, _objectDefinitionLocalService,
+				_configurationProvider, httpServletRequest,
+				_objectDefinitionLocalService,
 				_objectDefinitionModelResourcePermission,
 				_objectEntryManagerRegistry, _objectRelationshipLocalService,
 				_objectScopeProviderRegistry, _panelCategoryRegistry));
 
 		super.render(httpServletRequest, httpServletResponse);
 	}
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

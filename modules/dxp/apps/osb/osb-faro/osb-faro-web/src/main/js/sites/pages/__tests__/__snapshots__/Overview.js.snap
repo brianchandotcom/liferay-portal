@@ -53,7 +53,7 @@ exports[`Sites Dashboard Overview render 1`] = `
               </div>
               <span
                 aria-hidden="true"
-                class="spinner-root spinner-inline loading-animation"
+                class="spinner-root loading-animation"
               />
             </div>
           </div>
@@ -103,7 +103,7 @@ exports[`Sites Dashboard Overview render 1`] = `
             </h5>
             <span
               aria-hidden="true"
-              class="spinner-root spinner-inline loading-animation"
+              class="spinner-root loading-animation"
             />
           </div>
           <div
@@ -206,7 +206,7 @@ exports[`Sites Dashboard Overview render 1`] = `
             </h5>
             <span
               aria-hidden="true"
-              class="spinner-root spinner-inline loading-animation"
+              class="spinner-root loading-animation"
             />
           </div>
           <div
@@ -297,7 +297,7 @@ exports[`Sites Dashboard Overview render 1`] = `
             </h5>
             <span
               aria-hidden="true"
-              class="spinner-root spinner-inline loading-animation"
+              class="spinner-root loading-animation"
             />
           </div>
           <div
@@ -305,7 +305,7 @@ exports[`Sites Dashboard Overview render 1`] = `
           >
             <span
               aria-hidden="true"
-              class="spinner-root spinner-center spinner-spacer loading-animation"
+              class="spinner-root loading-animation"
             />
           </div>
         </div>
@@ -326,7 +326,7 @@ exports[`Sites Dashboard Overview render 1`] = `
             </h5>
             <span
               aria-hidden="true"
-              class="spinner-root spinner-inline loading-animation"
+              class="spinner-root loading-animation"
             />
           </div>
           <div
@@ -352,7 +352,7 @@ exports[`Sites Dashboard Overview render 1`] = `
             </table>
             <span
               aria-hidden="true"
-              class="spinner-overlay spinner-root loading-animation"
+              class="display-card loading-root spinner-overlay spinner-root loading-animation"
             />
           </div>
         </div>
@@ -373,7 +373,7 @@ exports[`Sites Dashboard Overview render 1`] = `
             </h5>
             <span
               aria-hidden="true"
-              class="spinner-root spinner-inline loading-animation"
+              class="spinner-root loading-animation"
             />
           </div>
           <div
@@ -399,7 +399,7 @@ exports[`Sites Dashboard Overview render 1`] = `
             </table>
             <span
               aria-hidden="true"
-              class="spinner-overlay spinner-root loading-animation"
+              class="display-card loading-root spinner-overlay spinner-root loading-animation"
             />
           </div>
           <div
@@ -448,17 +448,21 @@ exports[`Sites Dashboard Overview render 1`] = `
             >
               <span
                 aria-hidden="true"
-                class="spinner-root spinner-inline loading-animation"
+                class="spinner-root loading-animation"
               />
             </div>
           </div>
           <div
             class="card-body"
           >
-            <span
-              aria-hidden="true"
-              class="spinner-root spinner-center spinner-spacer loading-animation"
-            />
+            <div
+              class="loading-root display-card"
+            >
+              <span
+                aria-hidden="true"
+                class="spinner-root loading-animation"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -482,17 +486,21 @@ exports[`Sites Dashboard Overview render 1`] = `
             >
               <span
                 aria-hidden="true"
-                class="spinner-root spinner-inline loading-animation"
+                class="spinner-root loading-animation"
               />
             </div>
           </div>
           <div
             class="card-body"
           >
-            <span
-              aria-hidden="true"
-              class="spinner-root spinner-center spinner-spacer loading-animation"
-            />
+            <div
+              class="loading-root display-card"
+            >
+              <span
+                aria-hidden="true"
+                class="spinner-root loading-animation"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -565,7 +573,7 @@ exports[`Sites Dashboard Overview render 1`] = `
             </div>
             <span
               aria-hidden="true"
-              class="spinner-root spinner-center spinner-spacer loading-animation"
+              class="spinner-root loading-animation"
               data-aria-hidden="true"
             />
           </div>

@@ -110,10 +110,14 @@ exports[`View should render 1`] = `
             <div
               class="card-body"
             >
-              <span
-                aria-hidden="true"
-                class="spinner-root spinner-center spinner-spacer loading-animation"
-              />
+              <div
+                class="loading-root display-card"
+              >
+                <span
+                  aria-hidden="true"
+                  class="spinner-root loading-animation"
+                />
+              </div>
             </div>
           </div>
           <div

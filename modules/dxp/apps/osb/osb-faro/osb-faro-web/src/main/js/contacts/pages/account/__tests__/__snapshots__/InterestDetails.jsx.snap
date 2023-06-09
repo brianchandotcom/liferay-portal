@@ -245,7 +245,7 @@ exports[`InterestDetails should render 1`] = `
           </table>
           <span
             aria-hidden="true"
-            class="spinner-overlay spinner-root loading-animation"
+            class="display-card loading-root spinner-overlay spinner-root loading-animation"
           />
         </div>
       </div>

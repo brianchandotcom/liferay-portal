@@ -18,7 +18,7 @@ exports[`BaseCard should render component 1`] = `
       >
         <span
           aria-hidden="true"
-          class="spinner-root spinner-inline loading-animation"
+          class="spinner-root loading-animation"
         />
       </div>
     </div>

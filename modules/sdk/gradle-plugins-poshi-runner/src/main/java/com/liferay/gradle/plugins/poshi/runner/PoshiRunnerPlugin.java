@@ -289,20 +289,28 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 
 							@Override
 							public void execute(CopySpec copySpec) {
-								File file = _getWebDriverBrowserBinaryFile(
-									project,
-									_getPoshiProperties(poshiRunnerExtension));
+								Map<String, Object> poshiProperties =
+									poshiRunnerExtension.getPoshiProperties();
 
-								String fileName = file.getName();
+								if (!poshiProperties.containsKey(
+										"seleniumRemoteDriverURL")) {
 
-								if (fileName.endsWith(".zip")) {
-									copySpec.from(project.zipTree(file));
+									File file = _getWebDriverBrowserBinaryFile(
+										project,
+										_getPoshiProperties(
+											poshiRunnerExtension));
+
+									String fileName = file.getName();
+
+									if (fileName.endsWith(".zip")) {
+										copySpec.from(project.zipTree(file));
+									}
+									else {
+										copySpec.from(project.tarTree(file));
+									}
+
+									copySpec.into(webDriverDir);
 								}
-								else {
-									copySpec.from(project.tarTree(file));
-								}
-
-								copySpec.into(webDriverDir);
 							}
 
 						});

@@ -223,31 +223,52 @@ definition {
 
 		// Needs refactor since it depends on example NASA ICE account
 
-		task ("Given a user signs in on OKTA to update the Customer Portal") {
-			CustomerPortal.loginOktaToUpdateCP();
+			task ("Given Active the option in koroneiki 'Allow Self Provissioning'") {
+			JSONCP.activeAllowSelfProvisioning(koroneiki="KOR-3963192");
+		}
+		task ("Add test user access to all Accounts") {
+			CustomerPortal.assignUserToOrganization();
 
-			Navigator.openURL();
+			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "NASA ICE");
+		}
 
+		task ("Give the user Role is Changed") {
+                CP2Utils.assigneToRoleViaUsersTab(
+                     accountRoleTitle = "Administrator",
+                     accountUserName = "Test Test",
+                     testAccount = "NASA ICE");
+            }
+		task ("And a user go to Customer Portal") {
 			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 		}
+	
+		task ("And go to the test account") {
+			CustomerPortal.search(searchItem = "NASA ICE");
 
-		task ("Given I go to the test account") {
-			CustomerPortal.search(searchItem = ${testAccount});
+			CustomerPortal.enterOnProject(title = "NASA ICE");
+		}
+		
+		task ("And going through onboarding") {
+			CustomerPortal.clickOnStartProjectSetup();
 
-			CustomerPortal.enterOnProject(title = ${testAccount});
+			CustomerPortal.clickOnSkipForNowButton();
 		}
 
-		task ("And I click on Portal product") {
+		task ("And click on Portal product") {
 			CP2NavigationMenu.goToProductActivation();
 
 			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
+
+			WaitForVisible(
+			key_text = "Redacted",
+			locator1 = "CP2ActivationKeys#RESPONSIVE_TABLE");
 		}
 
-		task ("And I go to generate a new key") {
+		task ("And go to generate a new key") {
 			CP2ActivationKeys.generateNewKey();
 		}
 
-		task ("Given I fulfill first phase form for Generate New License") {
+		task ("When fulfill first phase form for Generate New License") {
 			CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
 				field = "Product",
 				option = "Portal");
@@ -265,7 +286,7 @@ definition {
 			CustomerPortal.clickAtButton(text = "Next");
 		}
 
-		task ("Then The Generate button should be deactivated") {
+		task ("And Generate button should be deactivated") {
 			CustomerPortal.assertButtonIsDisabled(text = "Generate 1 Key");
 		}
 

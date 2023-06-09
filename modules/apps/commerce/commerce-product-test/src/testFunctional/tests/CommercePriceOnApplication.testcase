@@ -638,6 +638,57 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-11324. As a buyer user, I can Request a Quote from the Product Details Page for a product whose SKU is marked as Price On Application."
+	@priority = 5
+	test CanRequestAQuoteFromProductDetailsPage {
+		property portal.acceptance = "true";
+
+		task ("Given the admin marks the sku of a product as 'Price on Application") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "U-Joint");
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceNavigator.gotoTableListEntry(entryName = "MIN55861");
+
+			CommerceSKUs.editSkuPricing(priceOnApplication = "true");
+		}
+
+		task ("When the buyer user navigates to U-Joint's product details page") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceNavigator.gotoProductDetails(productName = "U-Joint");
+		}
+
+		task ("Then Request a Quote button is shown in the product details page together with add to cart button") {
+			AssertElementPresent(
+				key_text = "Request a Quote",
+				locator1 = "Button#ANY_SECONDARY");
+
+			AssertElementPresent(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE");
+		}
+
+		task ("And the buyer can Request a Quote from the product details page") {
+			Click(
+				key_text = "Request a Quote",
+				locator1 = "Button#ANY_SECONDARY");
+
+			WaitForElementPresent(locator1 = "CommerceOrders#PENDING_ORDERS_ORDER_ID");
+
+			var openOrderId = selenium.getText("CommerceOrders#PENDING_ORDERS_ORDER_ID");
+
+			AssertTextEquals(
+				locator1 = "CommerceOrders#PENDING_ORDERS_ORDER_ID",
+				value1 = ${openOrderId});
+		}
+	}
+
 	@description = "COMMERCE-11619. As a buyer user, I can verify that the Price on Application label is visible on the storefront for a product SKU marked as Price on Application."
 	@priority = 5
 	test CanViewPriceOnApplicationLabelOnStoreFront {

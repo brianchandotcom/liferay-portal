@@ -14,6 +14,7 @@
 
 package com.liferay.portal.tools.db.partition.virtual.instance.migrator.internal.util;
 
+import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.tools.db.partition.virtual.instance.migrator.internal.release.Release;
@@ -53,6 +54,25 @@ public class DatabaseUtil {
 		}
 
 		return failedServletContextNames;
+	}
+
+	public static List<String> getPartitionedTableNames(Connection connection)
+		throws Exception {
+
+		DBInspector dbInspector = new DBInspector(connection);
+
+		List<String> partitionedTableNames = new ArrayList<>();
+
+		for (String tableName : dbInspector.getTableNames(null)) {
+			if (!dbInspector.isControlTable(tableName) &&
+				!dbInspector.isObjectTable(
+					_getCompanyIds(connection), tableName)) {
+
+				partitionedTableNames.add(tableName);
+			}
+		}
+
+		return partitionedTableNames;
 	}
 
 	public static Map<String, Release> getReleaseMap(Connection connection)
@@ -98,31 +118,6 @@ public class DatabaseUtil {
 		}
 
 		return releases;
-	}
-
-	public static List<String> getTableNames(Connection connection)
-		throws SQLException {
-
-		DatabaseMetaData databaseMetaData = connection.getMetaData();
-
-		List<String> tableNames = new ArrayList<>();
-
-		try (ResultSet resultSet = databaseMetaData.getTables(
-				connection.getCatalog(), connection.getSchema(), null,
-				new String[] {"TABLE"})) {
-
-			while (resultSet.next()) {
-				String tableName = resultSet.getString("TABLE_NAME");
-
-				if (!_isObjectTable(connection, tableName) &&
-					!_isControlTable(connection, tableName)) {
-
-					tableNames.add(tableName);
-				}
-			}
-		}
-
-		return tableNames;
 	}
 
 	public static String getWebId(Connection connection) throws SQLException {
@@ -246,54 +241,6 @@ public class DatabaseUtil {
 		}
 
 		return 0;
-	}
-
-	private static boolean _hasColumn(
-			String tableName, String columnName, Connection connection)
-		throws SQLException {
-
-		DatabaseMetaData databaseMetaData = connection.getMetaData();
-
-		try (ResultSet resultSet = databaseMetaData.getColumns(
-				connection.getCatalog(), connection.getSchema(),
-				_normalizeName(databaseMetaData, tableName),
-				_normalizeName(databaseMetaData, columnName))) {
-
-			if (!resultSet.next()) {
-				return false;
-			}
-
-			return true;
-		}
-	}
-
-	private static boolean _isControlTable(
-			Connection connection, String tableName)
-		throws SQLException {
-
-		if (!_isObjectTable(connection, tableName) &&
-			(_controlTableNames.contains(tableName) ||
-			 !_hasColumn(tableName, "companyId", connection))) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	private static boolean _isObjectTable(
-			Connection connection, String tableName)
-		throws SQLException {
-
-		for (long companyId : _getCompanyIds(connection)) {
-			if (tableName.endsWith("_x_" + companyId) ||
-				tableName.startsWith("O_" + companyId + "_")) {
-
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 	private static String _normalizeName(

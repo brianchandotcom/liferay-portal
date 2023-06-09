@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.internal.facet.display.context.AssetTagsSearchFacetDisplayContext;
@@ -30,7 +31,6 @@ import com.liferay.portal.search.web.internal.tag.facet.configuration.TagFacetPo
 import com.liferay.portal.search.web.internal.util.comparator.BucketDisplayContextComparatorFactoryUtil;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -140,9 +140,7 @@ public class AssetTagsSearchFacetDisplayContextBuilder {
 	}
 
 	public void setParameterValues(String... parameterValues) {
-		if (parameterValues != null) {
-			_selectedTags = Arrays.asList(parameterValues);
-		}
+		_selectedTags = ListUtil.fromArray(parameterValues);
 	}
 
 	protected BucketDisplayContext buildBucketDisplayContext(

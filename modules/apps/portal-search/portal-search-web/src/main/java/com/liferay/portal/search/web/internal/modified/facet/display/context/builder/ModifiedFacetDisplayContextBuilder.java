@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.DateFormatFactory;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.internal.facet.display.context.BucketDisplayContext;
@@ -41,7 +42,6 @@ import java.io.Serializable;
 import java.text.DateFormat;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
@@ -143,9 +143,7 @@ public class ModifiedFacetDisplayContextBuilder implements Serializable {
 	}
 
 	public void setParameterValues(String... parameterValues) {
-		if (parameterValues != null) {
-			_selectedRanges = Arrays.asList(parameterValues);
-		}
+		_selectedRanges = ListUtil.fromArray(parameterValues);
 	}
 
 	public void setTimeZone(TimeZone timeZone) {

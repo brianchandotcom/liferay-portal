@@ -18,7 +18,7 @@ const FormAbandonmentWithData = compose(
 		options: mapPropsToOptions,
 		props: mapResultToProps
 	}),
-	withLoading({alignCenter: true, page: false}),
+	withLoading({alignCenter: true, displayCard: true, page: false}),
 	withError(),
 	withEmpty({
 		emptyTitle: Liferay.Language.get('empty-message-form-abandoment')

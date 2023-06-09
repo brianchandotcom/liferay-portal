@@ -17,7 +17,7 @@ const TouchpointListWithData = compose(
 		options: mapPropsToOptions,
 		props: mapResultToProps
 	}),
-	withLoading({alignCenter: true, page: false}),
+	withLoading({alignCenter: true, displayCard: true, page: false}),
 	withError({page: false}),
 	withEmpty({
 		emptyDescription: (

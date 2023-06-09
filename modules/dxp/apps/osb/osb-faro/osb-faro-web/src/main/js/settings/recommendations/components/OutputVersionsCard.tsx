@@ -87,7 +87,7 @@ const withData = () =>
 const TableWithData = compose(
 	withData(),
 	withPaginationBar({defaultDelta: 5}),
-	withLoading({alignCenter: true, page: false}),
+	withLoading({alignCenter: true, displayCard: true, page: false}),
 	withError({page: false}),
 	withEmpty({
 		emptyTitle: getFormattedTitle(

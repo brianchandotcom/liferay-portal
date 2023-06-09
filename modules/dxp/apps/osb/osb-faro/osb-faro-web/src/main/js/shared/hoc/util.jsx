@@ -9,7 +9,6 @@ import {compose} from 'redux';
 import {get, omit} from 'lodash';
 import {sub} from 'shared/util/lang';
 import {toRoute} from 'shared/util/router';
-
 /**
  * HOC for ErrorDisplay.
  * @param {Object} - Options object to pass as props to ErrorDisplay
@@ -81,32 +80,30 @@ export const withEmpty = (options = {}) => Component => ({
  * @returns {Function} Returns the Loading or WrappedComponent.
  */
 export const withLoading = (options = {}) => Component => ({
-	alignCenter: initialAlignCenter = false,
 	className,
 	data,
-	fadeIn: initialFadeIn = true,
-	inline: initialInline = false,
 	loading,
 	pageDisplay = true,
 	...otherProps
 }) => {
 	const page = get(options, 'page', pageDisplay);
-	const fadeIn = get(options, 'fadeIn', initialFadeIn);
-	const alignCenter = get(options, 'alignCenter', initialAlignCenter);
-	const inline = get(options, 'inline', initialInline);
-	const spacer = !get(options, 'inline', initialInline);
+	const fadeIn = get(options, 'fadeIn');
+	const displayCard = get(options, 'displayCard');
 
 	if (loading) {
 		return page ? (
 			<LoadingPage className={className} fadeIn={fadeIn} key='LOADING' />
+		) : displayCard ? (
+			<div
+				className={getCN('loading-root', {'display-card': displayCard})}
+			>
+				<ClayLoadingIndicator
+					className={getCN(className, 'spinner-root')}
+				/>
+			</div>
 		) : (
 			<ClayLoadingIndicator
-				className={getCN(className, 'spinner-root', {
-					['spinner-center']: alignCenter,
-					['spinner-inline']: inline,
-					['spinner-spacer']: spacer
-				})}
-				key='SPINNER'
+				className={getCN(className, 'spinner-root')}
 			/>
 		);
 	}

@@ -217,7 +217,7 @@ const Table: React.FC<ITableProps> = ({
 			</table>
 
 			{loading && (
-				<ClayLoadingIndicator className='spinner-overlay spinner-root' />
+				<ClayLoadingIndicator className='display-card loading-root spinner-overlay spinner-root' />
 			)}
 		</div>
 	);

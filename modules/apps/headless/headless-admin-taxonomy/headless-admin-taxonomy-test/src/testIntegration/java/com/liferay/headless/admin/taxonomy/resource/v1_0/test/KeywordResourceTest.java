@@ -61,14 +61,13 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 			testDepotEntry.getDepotEntryId(), null, null, null,
 			Pagination.of(1, 10), null);
 
-		Assert.assertEquals(1, page.getTotalCount());
-
 		Keyword getKeyword1 = new Keyword() {
 			{
 				name = keyword.getName();
 			}
 		};
 
+		Assert.assertEquals(1, page.getTotalCount());
 		assertEquals(getKeyword1, page.fetchFirstItem());
 
 		assertValid(page);
@@ -89,14 +88,13 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 			testDepotEntry.getDepotEntryId(), null, null, null,
 			Pagination.of(1, 10), null);
 
-		Assert.assertEquals(1, page.getTotalCount());
-
 		Keyword getKeyword2 = new Keyword() {
 			{
 				id = keyword.getId();
 			}
 		};
 
+		Assert.assertEquals(1, page.getTotalCount());
 		assertEquals(getKeyword2, page.fetchFirstItem());
 
 		assertValid(page);

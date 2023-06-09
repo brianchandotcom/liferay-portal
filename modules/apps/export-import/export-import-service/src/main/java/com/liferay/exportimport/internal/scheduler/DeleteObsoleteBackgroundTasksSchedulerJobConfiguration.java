@@ -94,6 +94,7 @@ public class DeleteObsoleteBackgroundTasksSchedulerJobConfiguration
 
 	private static final int[] _STATUSES = {
 		BackgroundTaskConstants.STATUS_CANCELLED,
+		BackgroundTaskConstants.STATUS_FAILED,
 		BackgroundTaskConstants.STATUS_SUCCESSFUL
 	};
 

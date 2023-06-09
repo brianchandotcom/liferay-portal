@@ -875,10 +875,10 @@
     "@clayui/layout" "^3.93.0"
     classnames "^2.2.6"
 
-"@clayui/autocomplete@3.96.1", "@clayui/autocomplete@^3.96.1":
-  version "3.96.1"
-  resolved "https://registry.yarnpkg.com/@clayui/autocomplete/-/autocomplete-3.96.1.tgz#218048bf93a7f9d97350b75caf6e1d300aa2c168"
-  integrity sha512-5NxQtHymrdV2f2+VovoH2undCPlQHyi8oAAXgvhFxgHkdyLgn1bGLztF5uFUPr4gDAf2Ogg19xGzcnpfJgADmA==
+"@clayui/autocomplete@3.96.0", "@clayui/autocomplete@^3.96.0":
+  version "3.96.0"
+  resolved "https://registry.yarnpkg.com/@clayui/autocomplete/-/autocomplete-3.96.0.tgz#4ea30671b6cebedd9d4cc47ada4396922721dd0e"
+  integrity sha512-4Wzd6nxdhpm6GhP7O3mxpFccqVe3HfAkkkuZ76fMttwg2r5WhmrvhDDUruXforNUOVmUm0R4hTOS9mIUCg+ciQ==
   dependencies:
     "@clayui/core" "^3.96.0"
     "@clayui/drop-down" "^3.96.0"
@@ -1121,12 +1121,12 @@
     classnames "^2.2.6"
     warning "^4.0.3"
 
-"@clayui/multi-select@3.96.1":
-  version "3.96.1"
-  resolved "https://registry.yarnpkg.com/@clayui/multi-select/-/multi-select-3.96.1.tgz#493984beaa715f436fc4b84a0ea34411d6ffe841"
-  integrity sha512-3ygTebqb/r984fkcO6/Dm9EZUlLt+r2IkqKhco3ElLogkZwgvQ34Fep6O35V6Ne9oZv8jvG17AV0NwdBmC8HDA==
+"@clayui/multi-select@3.96.0":
+  version "3.96.0"
+  resolved "https://registry.yarnpkg.com/@clayui/multi-select/-/multi-select-3.96.0.tgz#3325555e8b979812f1118991154c783a53398575"
+  integrity sha512-C37YVQirr/26xeGWPQFIo6/TfbVOhbqnwNdyjnLK4eVPrLkgIbIlssUBfm86ZvrtwcUAwRCyOVuhKGBYL+C2ug==
   dependencies:
-    "@clayui/autocomplete" "^3.96.1"
+    "@clayui/autocomplete" "^3.96.0"
     "@clayui/button" "^3.92.0"
     "@clayui/drop-down" "^3.96.0"
     "@clayui/form" "^3.96.0"

@@ -25,8 +25,6 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
-import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.web.internal.display.context.helper.ObjectRequestHelper;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -56,20 +54,16 @@ public class ObjectDefinitionsDetailsDisplayContext
 	public ObjectDefinitionsDetailsDisplayContext(
 		ConfigurationProvider configurationProvider,
 		HttpServletRequest httpServletRequest,
-		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ModelResourcePermission<ObjectDefinition>
 			objectDefinitionModelResourcePermission,
 		ObjectEntryManagerRegistry objectEntryManagerRegistry,
-		ObjectRelationshipLocalService objectRelationshipLocalService,
 		ObjectScopeProviderRegistry objectScopeProviderRegistry,
 		PanelCategoryRegistry panelCategoryRegistry) {
 
 		super(httpServletRequest, objectDefinitionModelResourcePermission);
 
 		_configurationProvider = configurationProvider;
-		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectEntryManagerRegistry = objectEntryManagerRegistry;
-		_objectRelationshipLocalService = objectRelationshipLocalService;
 		_objectScopeProviderRegistry = objectScopeProviderRegistry;
 		_panelCategoryRegistry = panelCategoryRegistry;
 
@@ -190,10 +184,7 @@ public class ObjectDefinitionsDetailsDisplayContext
 	}
 
 	private final ConfigurationProvider _configurationProvider;
-	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectEntryManagerRegistry _objectEntryManagerRegistry;
-	private final ObjectRelationshipLocalService
-		_objectRelationshipLocalService;
 	private final ObjectRequestHelper _objectRequestHelper;
 	private final ObjectScopeProviderRegistry _objectScopeProviderRegistry;
 	private final PanelCategoryRegistry _panelCategoryRegistry;

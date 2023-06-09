@@ -71,9 +71,8 @@ public class EditObjectDefinitionMVCRenderCommand implements MVCRenderCommand {
 				new ObjectDefinitionsDetailsDisplayContext(
 					_configurationProvider,
 					_portal.getHttpServletRequest(renderRequest),
-					_objectDefinitionLocalService,
 					_objectDefinitionModelResourcePermission,
-					_objectEntryManagerRegistry, null, null, null));
+					_objectEntryManagerRegistry, null, null));
 		}
 		catch (PortalException portalException) {
 			SessionErrors.add(renderRequest, portalException.getClass());

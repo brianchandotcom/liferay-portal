@@ -27,6 +27,7 @@ import ClayMultiSelect from '@clayui/multi-select';
 import classNames from 'classnames';
 import {format, getYear, isBefore, isEqual} from 'date-fns';
 import {fetch, navigate, openModal, openToast, sub} from 'frontend-js-web';
+import fuzzy from 'fuzzy';
 import React, {useEffect, useState} from 'react';
 
 import {API_URL, OBJECT_RELATIONSHIP} from '../Constants';
@@ -111,6 +112,7 @@ function AddFDSFilterModalContent({
 	const [name, setName] = useState(filter?.name || '');
 	const [picklists, setPicklists] = useState<IPickList[]>([]);
 	const [preselectedValues, setPreselectedValues] = useState<any[]>([]);
+	const [preselectedValueInput, setPreselectedValueInput] = useState('');
 	const [selectedField, setSelectedField] = useState<IField | null>(
 		fields.find((item) => item.name === filter?.fieldName) || null
 	);
@@ -245,6 +247,15 @@ function AddFDSFilterModalContent({
 	const selectedFieldFormElementId = `${namespace}SelectedField`;
 	const sourceOptionFormElementId = `${namespace}SourceOption`;
 	const toFormElementId = `${namespace}To`;
+
+	const filteredSourceItems = !selectedPicklist
+		? []
+		: selectedPicklist.listTypeEntries
+				.filter((item) => fuzzy.match(preselectedValueInput, item.name))
+				.map((item) => ({
+					label: item.name,
+					value: String(item.id),
+				}));
 
 	return (
 		<>
@@ -506,7 +517,20 @@ function AddFDSFilterModalContent({
 												})
 											)}
 											loadingState={4}
+											onChange={setPreselectedValueInput}
 											onItemsChange={(items: any) => {
+												const selectedVals = preselectedValues.map(
+													(item) => item.id.toString()
+												);
+
+												items = items.filter(
+													(item: any) => {
+														return !selectedVals.includes(
+															item.value
+														);
+													}
+												);
+
 												setPreselectedValues(
 													items.map((item: any) =>
 														selectedPicklist.listTypeEntries.find(
@@ -524,19 +548,8 @@ function AddFDSFilterModalContent({
 											placeholder={Liferay.Language.get(
 												'select-a-default-value-for-your-filter'
 											)}
-											sourceItems={
-												!selectedPicklist
-													? []
-													: selectedPicklist.listTypeEntries.map(
-															(item) => ({
-																label:
-																	item.name,
-																value: String(
-																	item.id
-																),
-															})
-													  )
-											}
+											sourceItems={filteredSourceItems}
+											value={preselectedValueInput}
 										/>
 
 										{!isValidSingleMode && (

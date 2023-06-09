@@ -44,8 +44,6 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 	public void testGetAssetLibraryKeywordsPage() throws Exception {
 		super.testGetAssetLibraryKeywordsPage();
 
-		// Only name field
-
 		Keyword keyword = testPostAssetLibraryKeyword_addKeyword(
 			randomKeyword());
 
@@ -74,8 +72,6 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 		assertEquals(getKeyword1, page.fetchFirstItem());
 
 		assertValid(page);
-
-		// Restricted fields
 
 		builder = KeywordResource.builder();
 

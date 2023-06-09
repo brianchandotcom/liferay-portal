@@ -81,8 +81,6 @@ public class TaxonomyVocabularyResourceTest
 	public void testGetAssetLibraryTaxonomyVocabulariesPage() throws Exception {
 		super.testGetAssetLibraryTaxonomyVocabulariesPage();
 
-		// Actions
-
 		TaxonomyVocabulary taxonomyVocabulary =
 			testGetAssetLibraryTaxonomyVocabulariesPage_addTaxonomyVocabulary(
 				testGetAssetLibraryTaxonomyVocabulariesPage_getAssetLibraryId(),
@@ -140,8 +138,6 @@ public class TaxonomyVocabularyResourceTest
 					"method", "PUT"
 				).build()
 			).build());
-
-		// Restricted fields
 
 		TaxonomyVocabularyResource.Builder builder =
 			TaxonomyVocabularyResource.builder();

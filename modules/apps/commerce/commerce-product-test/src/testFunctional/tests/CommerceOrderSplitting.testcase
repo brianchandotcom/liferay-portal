@@ -28,6 +28,151 @@ definition {
 		}
 	}
 
+	@description = "Test for COMMERCE-11444. As a buyer user, I want to be able to see information from the split supplier order also in the customer order"
+	@priority = 5
+	test CanAssertStoreFrontSplitOrderShipmentStatuses {
+		property portal.acceptance = "true";
+
+		task ("Given a Minium site with a buyer user") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And a product with 'Master' catalog, with price and inventory created") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Master",
+				price = 25,
+				productName = "Simple Product",
+				productType = "simple",
+				sku = "TESTSKU");
+
+			CommerceJSONWarehousesAndInventoriesAPI._addWarehouseItem(
+				warehouseItemQuantity = 100,
+				warehouseItemSku = "TESTSKU",
+				warehouseName = "Italy");
+		}
+
+		task ("And the 'Order Split by Catalog Action' health check is checked") {
+			CommerceNavigator.goToHealthCheckAdmin();
+
+			Click(
+				key_buttonRowName = "Order Split by Catalog Action",
+				key_buttonStatus = "",
+				locator1 = "CommerceEntry#FIX_ISSUE_BUTTON_NAME");
+
+			WaitForElementPresent(
+				key_value = "Order Split by Catalog Action",
+				locator1 = "CommerceEntry#HEALTH_CHECK_ICON_CHECK_NAME");
+		}
+
+		task ("And the buyer checkout an order with both Minium and Master catalogs products on Minium site") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			for (var productName : list "Simple Product,U-Joint") {
+				FrontStore.addInitializerProductToCart(
+					productName = ${productName},
+					productQuantity = 1);
+			}
+
+			var customerOrderId = CommerceJSONOrdersAPI._getCommerceOrderIds(orderCount = 1);
+
+			CommerceCheckout.gotoCheckout();
+
+			CommerceCheckout.checkout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				shippingMethod = "Standard");
+		}
+
+		task ("And the customer order is splitted") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+
+			CommerceOrders.openOrdersAdmin();
+
+			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
+
+			Click(
+				key_text = "Accept Order",
+				locator1 = "Link#ANY");
+
+			Alert.viewSuccessMessage();
+
+			var orderItemsJSON = CommerceJSONOrdersAPI._getCommerceOrderItems();
+		}
+
+		task ("And the buyer logs in again") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And a shipment is created for one of the split orders") {
+			for (var sku : list "TESTSKU,MIN55861") {
+				var orderId = CommerceJSONOrdersAPI.getCommerceOrderItemFieldByJSONPath(
+					jsonPath = "$..items[?(@['orderId'] != ${customerOrderId} && @['sku'] == '${sku}')].orderId",
+					responseBody = ${orderItemsJSON});
+				var orderItemId = CommerceJSONOrdersAPI.getCommerceOrderItemFieldByJSONPath(
+					jsonPath = "$..items[?(@['orderId'] != ${customerOrderId} && @['sku'] == '${sku}')].id",
+					responseBody = ${orderItemsJSON});
+
+				var shipmentItemsList = "${orderItemId}:1:Italy";
+
+				var shipmentId = CommerceJSONShipmentsAPI._addCommerceShipment(
+					orderId = ${orderId},
+					shipmentItemsList = ${shipmentItemsList});
+
+				task ("When the shipment's status is updated") {
+					for (var status : list "Processing,Finish Processing,Shipped,Delivered") {
+						var shipmentStatus = CommerceUtilities.convertStringToKey(string = ${status});
+
+						if (${status} != "Processing") {
+							CommerceJSONShipmentsAPI._updateCommerceShipmentStatus(
+								shipmentId = ${shipmentId},
+								shipmentStatus = ${shipmentStatus});
+						}
+
+						task ("Then the information from the shipment are displayed on both customer and supplier order in the store-front") {
+							for (var order : list "${orderId},${customerOrderId}") {
+								CommerceNavigator.goToPlacedOrderDetailPageViaURL(orderId = ${order});
+
+								CommerceShipments.assertOrderItemShipmentInPlacedOrders(
+									entryName = ${sku},
+									quantity = 1,
+									shipmentId = ${shipmentId},
+									status = ${status});
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
 	@description = "This is a test for COMMERCE-11438. CanChangesOnlyPropagateFromTheSupplierOrder"
 	@priority = 4
 	test CanChangesOnlyPropagateFromTheSupplierOrder {

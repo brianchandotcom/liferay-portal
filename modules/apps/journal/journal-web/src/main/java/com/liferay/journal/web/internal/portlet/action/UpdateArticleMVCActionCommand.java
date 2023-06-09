@@ -530,7 +530,7 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		return HashMapBuilder.put(
-			"friendlyURLChanged",
+			"friendlyURLChangedRequestProcessedWarning",
 			() -> {
 				if (friendlyURLChangedMessages.isEmpty()) {
 					return null;

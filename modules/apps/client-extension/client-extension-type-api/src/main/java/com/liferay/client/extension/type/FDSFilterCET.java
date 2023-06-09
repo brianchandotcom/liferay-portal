@@ -22,9 +22,9 @@ import org.osgi.annotation.versioning.ProviderType;
 /**
  * @author Bryce Osterhaus
  */
-@CETType(description = "This is a description.", name = "dataSetFilter")
+@CETType(description = "This is a description.", name = "fdsFilter")
 @ProviderType
-public interface DataSetFilterCET extends CET {
+public interface FDSFilterCET extends CET {
 
 	@CETProperty(defaultValue = "", name = "url", type = CETProperty.Type.URL)
 	public String getURL();

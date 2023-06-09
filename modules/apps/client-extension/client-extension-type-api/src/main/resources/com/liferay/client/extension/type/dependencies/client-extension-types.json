@@ -59,7 +59,7 @@
 	},
 	{
 		"description": "This is a description.",
-		"name": "dataSetFilter",
+		"name": "fdsFilter",
 		"properties": [
 			{
 				"name": "description",

@@ -57,11 +57,11 @@ public class CETFactoryImpl implements CETFactory {
 			ClientExtensionEntryConstants.TYPE_CUSTOM_ELEMENT,
 			new CustomElementCETImplFactoryImpl()
 		).put(
-			ClientExtensionEntryConstants.TYPE_DATA_SET_FILTER,
-			new DataSetFilterCETImplFactoryImpl()
-		).put(
 			ClientExtensionEntryConstants.TYPE_FDS_CELL_RENDERER,
 			new FDSCellRendererCETImplFactoryImpl()
+		).put(
+			ClientExtensionEntryConstants.TYPE_FDS_FILTER,
+			new FDSFilterCETImplFactoryImpl()
 		).put(
 			ClientExtensionEntryConstants.TYPE_GLOBAL_CSS,
 			new GlobalCSSCETImplFactoryImpl()

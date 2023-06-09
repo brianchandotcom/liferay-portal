@@ -17,13 +17,13 @@
 <%@ include file="/admin/init.jsp" %>
 
 <%
-EditClientExtensionEntryDisplayContext<DataSetFilterCET> editClientExtensionEntryDisplayContext = (EditClientExtensionEntryDisplayContext)renderRequest.getAttribute(ClientExtensionAdminWebKeys.EDIT_CLIENT_EXTENSION_ENTRY_DISPLAY_CONTEXT);
+EditClientExtensionEntryDisplayContext<FDSFilterCET> editClientExtensionEntryDisplayContext = (EditClientExtensionEntryDisplayContext)renderRequest.getAttribute(ClientExtensionAdminWebKeys.EDIT_CLIENT_EXTENSION_ENTRY_DISPLAY_CONTEXT);
 
-DataSetFilterCET dataSetFilterCETDataSetFilterCET = editClientExtensionEntryDisplayContext.getCET();
+FDSFilterCET fdsFilterCET = editClientExtensionEntryDisplayContext.getCET();
 %>
 
 <aui:field-wrapper cssClass="form-group">
-	<aui:input label="js-url" name="url" required="<%= true %>" type="text" value="<%= dataSetFilterCETDataSetFilterCET.getURL() %>" />
+	<aui:input label="js-url" name="url" required="<%= true %>" type="text" value="<%= fdsFilterCET.getURL() %>" />
 
 	<div class="form-text">
 		<liferay-ui:message key="enter-the-url-of-the-javascript-file-to-customize-a-data-set-filter" />

@@ -16,7 +16,7 @@ package com.liferay.client.extension.type.internal;
 
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.model.ClientExtensionEntry;
-import com.liferay.client.extension.type.DataSetFilterCET;
+import com.liferay.client.extension.type.FDSFilterCET;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -30,14 +30,14 @@ import javax.portlet.PortletRequest;
 /**
  * @author Bryce Osterhaus
  */
-public class DataSetFilterCETImpl
-	extends BaseCETImpl implements DataSetFilterCET {
+public class FDSFilterCETImpl
+	extends BaseCETImpl implements FDSFilterCET {
 
-	public DataSetFilterCETImpl(ClientExtensionEntry clientExtensionEntry) {
+	public FDSFilterCETImpl(ClientExtensionEntry clientExtensionEntry) {
 		super(clientExtensionEntry);
 	}
 
-	public DataSetFilterCETImpl(PortletRequest portletRequest) {
+	public FDSFilterCETImpl(PortletRequest portletRequest) {
 		this(
 			StringPool.BLANK,
 			UnicodePropertiesBuilder.create(
@@ -47,7 +47,7 @@ public class DataSetFilterCETImpl
 			).build());
 	}
 
-	public DataSetFilterCETImpl(
+	public FDSFilterCETImpl(
 		String baseURL, long companyId, String description,
 		String externalReferenceCode, String name, Properties properties,
 		String sourceCodeURL, UnicodeProperties typeSettingsUnicodeProperties) {
@@ -57,7 +57,7 @@ public class DataSetFilterCETImpl
 			properties, sourceCodeURL, typeSettingsUnicodeProperties);
 	}
 
-	public DataSetFilterCETImpl(
+	public FDSFilterCETImpl(
 		String baseURL, UnicodeProperties typeSettingsUnicodeProperties) {
 
 		super(baseURL, typeSettingsUnicodeProperties);
@@ -65,12 +65,12 @@ public class DataSetFilterCETImpl
 
 	@Override
 	public String getEditJSP() {
-		return "/admin/edit_data_set_filter.jsp";
+		return "/admin/edit_fds_filter.jsp";
 	}
 
 	@Override
 	public String getType() {
-		return ClientExtensionEntryConstants.TYPE_DATA_SET_FILTER;
+		return ClientExtensionEntryConstants.TYPE_FDS_FILTER;
 	}
 
 	@Override
@@ -89,6 +89,6 @@ public class DataSetFilterCETImpl
 	}
 
 	private static final Set<String> _urlCETPropertyNames =
-		getURLCETPropertyNames(DataSetFilterCET.class);
+		getURLCETPropertyNames(FDSFilterCET.class);
 
 }

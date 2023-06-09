@@ -502,9 +502,10 @@ definition {
 
 		Search.openSearchPage();
 
-		SearchFacetPortlet.updateFacetConfiguration(
-			displayTemplate = "Search Results Test ADT",
-			portletName = "Search Results");
+		SearchResultPortlet.configureSearchResults(
+			customEmptyResultMessage = "true",
+			customPagination = "true",
+			displayTemplate = "Search Results Test ADT");
 
 		SearchPortlets.searchEmbedded(searchTerm = "test");
 

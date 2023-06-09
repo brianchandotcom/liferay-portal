@@ -15,6 +15,7 @@
 import {LayoutTypes} from './LayoutTypes';
 
 export interface Config {
+	actionableInfoItemSelectorURL: string;
 	addFragmentCompositionURL: string;
 	addFragmentEntryLinkCommentURL: string;
 	addFragmentEntryLinkURL: string;

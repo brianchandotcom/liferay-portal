@@ -22,6 +22,7 @@ import {CheckboxField} from '../../../../../../app/components/fragment_configura
 import {SelectField} from '../../../../../../app/components/fragment_configuration_fields/SelectField';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../app/config/constants/editableFragmentEntryProcessor';
 import {EDITABLE_TYPES} from '../../../../../../app/config/constants/editableTypes';
+import {config} from '../../../../../../app/config/index';
 import {
 	useDispatch,
 	useSelector,
@@ -131,6 +132,7 @@ export default function EditableActionPanel({item}) {
 			<MappingSelector
 				fieldSelectorLabel={Liferay.Language.get('action')}
 				fieldType={EDITABLE_TYPES.action}
+				itemSelectorURL={config.actionableInfoItemSelectorURL}
 				mappedItem={editableValue.config.mappedAction || {}}
 				onMappingSelect={(action) => {
 					onValueSelect('mappedAction', action);

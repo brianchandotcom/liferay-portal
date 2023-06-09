@@ -14,7 +14,9 @@
 
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
+import ClayList from '@clayui/list';
 import classNames from 'classnames';
 import {fetch, navigate, openToast} from 'frontend-js-web';
 import React, {useRef, useState} from 'react';
@@ -71,10 +73,7 @@ const Details = ({
 					fdsViewLabelRef.current?.value ?? ''
 				);
 			}
-
-			onFDSViewUpdate(responseJSON);
-		}
-		else {
+		} else {
 			openToast({
 				message: Liferay.Language.get(
 					'your-request-failed-to-complete'
@@ -139,6 +138,68 @@ const Details = ({
 						type="text"
 					/>
 				</ClayForm.Group>
+			</ClayLayout.SheetSection>
+
+			<ClayLayout.SheetSection className="mb-4">
+				<h3 className="sheet-subtitle">
+					{Liferay.Language.get('rest-information')}
+				</h3>
+
+				<ClayList className="flex-row flex-wrap">
+					<ClayList.Item className="border-0 col-12" flex>
+						<ClayList.ItemField className="justify-content-center">
+							<ClayIcon symbol="api-web" />
+						</ClayList.ItemField>
+
+						<ClayList.ItemField expand>
+							<ClayList.ItemTitle>
+								{Liferay.Language.get('application')}
+							</ClayList.ItemTitle>
+
+							<ClayList.ItemText>
+								{
+									fdsView.fdsEntryFDSViewRelationship
+										.restApplication
+								}
+							</ClayList.ItemText>
+						</ClayList.ItemField>
+					</ClayList.Item>
+
+					<ClayList.Item className="border-0 col-12 col-sm-6" flex>
+						<ClayList.ItemField className="justify-content-center">
+							<ClayIcon symbol="diagram" />
+						</ClayList.ItemField>
+
+						<ClayList.ItemField>
+							<ClayList.ItemTitle>
+								{Liferay.Language.get('schema')}
+							</ClayList.ItemTitle>
+
+							<ClayList.ItemText>
+								{fdsView.fdsEntryFDSViewRelationship.restSchema}
+							</ClayList.ItemText>
+						</ClayList.ItemField>
+					</ClayList.Item>
+
+					<ClayList.Item className="border-0 col-12 col-sm-6" flex>
+						<ClayList.ItemField className="justify-content-center">
+							<ClayIcon symbol="nodes" />
+						</ClayList.ItemField>
+
+						<ClayList.ItemField>
+							<ClayList.ItemTitle>
+								{Liferay.Language.get('endpoint')}
+							</ClayList.ItemTitle>
+
+							<ClayList.ItemText>
+								{
+									fdsView.fdsEntryFDSViewRelationship
+										.restEndpoint
+								}
+							</ClayList.ItemText>
+						</ClayList.ItemField>
+					</ClayList.Item>
+				</ClayList>
 			</ClayLayout.SheetSection>
 
 			<ClayLayout.SheetFooter>

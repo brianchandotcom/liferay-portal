@@ -20,11 +20,10 @@ import com.liferay.osb.faro.constants.DocumentationConstants;
 import com.liferay.osb.faro.constants.FaroChannelConstants;
 import com.liferay.osb.faro.model.FaroChannel;
 import com.liferay.osb.faro.model.FaroUser;
+import com.liferay.osb.faro.service.FaroUserLocalService;
 import com.liferay.osb.faro.service.base.FaroChannelLocalServiceBaseImpl;
-import com.liferay.osb.faro.service.persistence.FaroUserFinder;
 import com.liferay.osb.faro.util.EmailUtil;
 import com.liferay.portal.aop.AopService;
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -141,7 +140,7 @@ public class FaroChannelLocalServiceImpl
 		FaroChannel faroChannel = faroChannelPersistence.findByC_W(
 			channelId, workspaceGroupId);
 
-		return _faroUserFinder.countByChannelKeywords(
+		return _faroUserLocalService.countFaroUsers(
 			faroChannel.getGroupId(), available, query, statuses,
 			faroChannel.getWorkspaceGroupId());
 	}
@@ -182,7 +181,7 @@ public class FaroChannelLocalServiceImpl
 		FaroChannel faroChannel = faroChannelPersistence.findByC_W(
 			channelId, workspaceGroupId);
 
-		return _faroUserFinder.findByChannelKeywords(
+		return _faroUserLocalService.findFaroUsers(
 			faroChannel.getGroupId(), available, query, statuses,
 			faroChannel.getWorkspaceGroupId(), start, end, orderByComparator);
 	}
@@ -289,8 +288,8 @@ public class FaroChannelLocalServiceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		FaroChannelLocalServiceImpl.class);
 
-	@BeanReference(type = FaroUserFinder.class)
-	private FaroUserFinder _faroUserFinder;
+	@Reference
+	private FaroUserLocalService _faroUserLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

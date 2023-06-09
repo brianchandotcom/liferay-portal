@@ -39,11 +39,48 @@ public class Validator {
 
 		_validateRelease(sourceConnection, destinationConnection, recorder);
 
-		_validateTables(sourceConnection, destinationConnection, recorder);
+		_validatePartitionedTables(
+			sourceConnection, destinationConnection, recorder);
 
 		_validateWebId(sourceConnection, destinationConnection, recorder);
 
 		return recorder;
+	}
+
+	private static void _validatePartitionedTables(
+			Connection sourceConnection, Connection destinationConnection,
+			Recorder recorder)
+		throws Exception {
+
+		List<String> sourcePartitionedTableNames =
+			DatabaseUtil.getPartitionedTableNames(sourceConnection);
+		List<String> destinationPartitionedTableNames =
+			DatabaseUtil.getPartitionedTableNames(destinationConnection);
+
+		for (String sourcePartitionedTableName : sourcePartitionedTableNames) {
+			if (destinationPartitionedTableNames.contains(
+					sourcePartitionedTableName)) {
+
+				destinationPartitionedTableNames.remove(
+					sourcePartitionedTableName);
+
+				continue;
+			}
+
+			recorder.registerWarning(
+				"Table " + sourcePartitionedTableName +
+					" is not present in destination database");
+		}
+
+		if (!destinationPartitionedTableNames.isEmpty()) {
+			for (String destionationPartitionedTableName :
+					destinationPartitionedTableNames) {
+
+				recorder.registerWarning(
+					"Table " + destionationPartitionedTableName +
+						" is not present in source database");
+			}
+		}
 	}
 
 	private static void _validateRelease(
@@ -164,37 +201,6 @@ public class Validator {
 			recorder.registerErrors(
 				failedServletContextNames,
 				StringUtil.replace(message, '?', "destination"));
-		}
-	}
-
-	private static void _validateTables(
-			Connection sourceConnection, Connection destinationConnection,
-			Recorder recorder)
-		throws SQLException {
-
-		List<String> sourceTableNames = DatabaseUtil.getTableNames(
-			sourceConnection);
-		List<String> destinationTableNames = DatabaseUtil.getTableNames(
-			destinationConnection);
-
-		for (String tableName : sourceTableNames) {
-			if (destinationTableNames.contains(tableName)) {
-				destinationTableNames.remove(tableName);
-
-				continue;
-			}
-
-			recorder.registerWarning(
-				"Table " + tableName +
-					" is not present in destination database");
-		}
-
-		if (!destinationTableNames.isEmpty()) {
-			for (String tableName : destinationTableNames) {
-				recorder.registerWarning(
-					"Table " + tableName +
-						" is not present in source database");
-			}
 		}
 	}
 

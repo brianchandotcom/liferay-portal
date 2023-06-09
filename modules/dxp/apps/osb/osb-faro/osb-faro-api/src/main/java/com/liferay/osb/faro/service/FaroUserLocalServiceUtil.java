@@ -72,6 +72,15 @@ public class FaroUserLocalServiceUtil {
 			sendEmail);
 	}
 
+	public static int countFaroUsers(
+			long groupId, boolean available, String query,
+			List<Integer> statuses, long workspaceGroupId)
+		throws PortalException {
+
+		return getService().countFaroUsers(
+			groupId, available, query, statuses, workspaceGroupId);
+	}
+
 	/**
 	 * Creates a new faro user with the primary key. Does not add the faro user to the database.
 	 *
@@ -236,6 +245,17 @@ public class FaroUserLocalServiceUtil {
 
 	public static FaroUser fetchOwnerFaroUser(long groupId) {
 		return getService().fetchOwnerFaroUser(groupId);
+	}
+
+	public static List<FaroUser> findFaroUsers(
+			long groupId, boolean available, String query,
+			List<Integer> statuses, long workspaceGroupId, int start, int end,
+			OrderByComparator<FaroUser> orderByComparator)
+		throws PortalException {
+
+		return getService().findFaroUsers(
+			groupId, available, query, statuses, workspaceGroupId, start, end,
+			orderByComparator);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery

@@ -72,6 +72,16 @@ public class FaroUserLocalServiceWrapper
 			sendEmail);
 	}
 
+	@Override
+	public int countFaroUsers(
+			long groupId, boolean available, String query,
+			java.util.List<Integer> statuses, long workspaceGroupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _faroUserLocalService.countFaroUsers(
+			groupId, available, query, statuses, workspaceGroupId);
+	}
+
 	/**
 	 * Creates a new faro user with the primary key. Does not add the faro user to the database.
 	 *
@@ -271,6 +281,20 @@ public class FaroUserLocalServiceWrapper
 		long groupId) {
 
 		return _faroUserLocalService.fetchOwnerFaroUser(groupId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.osb.faro.model.FaroUser> findFaroUsers(
+			long groupId, boolean available, String query,
+			java.util.List<Integer> statuses, long workspaceGroupId, int start,
+			int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.osb.faro.model.FaroUser> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _faroUserLocalService.findFaroUsers(
+			groupId, available, query, statuses, workspaceGroupId, start, end,
+			orderByComparator);
 	}
 
 	@Override

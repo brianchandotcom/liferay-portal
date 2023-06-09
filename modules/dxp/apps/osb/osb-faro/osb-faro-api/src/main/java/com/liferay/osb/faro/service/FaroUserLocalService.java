@@ -81,6 +81,11 @@ public interface FaroUserLocalService
 			String emailAddress, int status, boolean sendEmail)
 		throws PortalException;
 
+	public int countFaroUsers(
+			long groupId, boolean available, String query,
+			List<Integer> statuses, long workspaceGroupId)
+		throws PortalException;
+
 	/**
 	 * Creates a new faro user with the primary key. Does not add the faro user to the database.
 	 *
@@ -215,6 +220,12 @@ public interface FaroUserLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public FaroUser fetchOwnerFaroUser(long groupId);
+
+	public List<FaroUser> findFaroUsers(
+			long groupId, boolean available, String query,
+			List<Integer> statuses, long workspaceGroupId, int start, int end,
+			OrderByComparator<FaroUser> orderByComparator)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();

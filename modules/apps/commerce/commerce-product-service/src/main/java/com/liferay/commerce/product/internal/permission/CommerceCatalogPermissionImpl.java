@@ -15,6 +15,7 @@
 package com.liferay.commerce.product.internal.permission;
 
 import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.constants.AccountRoleConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.commerce.product.model.CommerceCatalog;
@@ -26,6 +27,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.util.List;
@@ -145,7 +147,10 @@ public class CommerceCatalogPermissionImpl
 				if (commerceCatalog.getAccountEntryId() ==
 						accountEntry.getAccountEntryId()) {
 
-					return true;
+					return _roleLocalService.hasUserRole(
+						permissionChecker.getUserId(),
+						permissionChecker.getCompanyId(),
+						AccountRoleConstants.ROLE_NAME_SUPPLIER, true);
 				}
 			}
 		}
@@ -160,5 +165,8 @@ public class CommerceCatalogPermissionImpl
 
 	@Reference
 	private CommerceCatalogLocalService _commerceCatalogLocalService;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
 
 }

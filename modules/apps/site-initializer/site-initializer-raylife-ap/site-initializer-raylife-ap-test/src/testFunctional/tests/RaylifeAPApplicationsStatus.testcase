@@ -150,6 +150,48 @@ definition {
 	}
 
 	@description = "LPS-154587 - Verify that the number in the center of the graph is equal to the total amount of registered status"
+	@description = "Story ID: LPS-154598 | Test Summary: Verify that when an incomplete application is saved, through Raylife D2C, it appears in the Application List, on Raylife AP."
+	@priority = 5
+	test AssertIncompleteD2CApplicationAppearsInAP {
+		property test.name.skip.portal.instance = "RaylifeAPApplicationsStatus#AssertIncompleteD2CApplicationAppearsInAP";
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		task ("Given that an user go to Raylife D2C") {
+			RaylifeAP.goToRaylifeUserProfileMenu(raylifeSite = "Raylife D2C");
+		}
+
+		task ("When the user do not finish the flow and save the application") {
+			RaylifeHomePage.startFlow();
+
+			RaylifeContactInfo.typeAllBasicsInfoFields();
+
+			Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+			RaylifeBusiness.typeAllBusinessInfoFields();
+
+			Click(locator1 = "RaylifeSaveExit#SAVE_EXIT");
+		}
+
+		task ("And the agent go to Raylife AP") {
+			var portalURL = PropsUtil.get("portal.url");
+
+			Navigator.openSpecificURL(url = "${portalURL}/group/raylife-ap");
+		}
+
+		task ("Then assert if the agent can see the incomplete application, saved through D2C, in the Application List on AP") {
+			RaylifeAPNavigator.gotoSidebarItem(itemName = "Applications");
+
+			RaylifeAP.search(searchTerm = "FirstName LastName");
+
+			RaylifeAP.assertTableElement(
+				column = 4,
+				line = 1,
+				text = "FirstName LastName");
+		}
+	}
+
+	@description = "Story ID:LPS-154587 | Test Summary:  Verify that the number in the center of the graph is equal to the total amount of registered status"
 	@priority = 4
 	test AssertNumberInCenterGraphIsEqualNumberOfStatus {
 		property test.name.skip.portal.instance = "RaylifeAPApplicationsStatus#AssertNumberInCenterGraphIsEqualNumberOfStatus";

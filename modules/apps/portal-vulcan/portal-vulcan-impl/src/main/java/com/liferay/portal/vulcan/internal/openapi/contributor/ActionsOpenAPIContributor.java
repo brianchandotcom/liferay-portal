@@ -38,6 +38,7 @@ import javax.ws.rs.core.UriInfo;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Carlos Correa
@@ -105,6 +106,11 @@ public class ActionsOpenAPIContributor implements OpenAPIContributor {
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, DTOActionProvider.class, "dto.class.name");
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
 	}
 
 	private Schema _getActionSchema(

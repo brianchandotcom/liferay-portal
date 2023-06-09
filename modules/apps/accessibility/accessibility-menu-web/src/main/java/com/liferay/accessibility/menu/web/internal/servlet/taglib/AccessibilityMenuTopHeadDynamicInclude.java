@@ -14,7 +14,9 @@
 
 package com.liferay.accessibility.menu.web.internal.servlet.taglib;
 
+import com.liferay.accessibility.menu.web.internal.util.AccessibilitySettingsUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.ui.QuickAccessEntry;
@@ -44,6 +46,12 @@ public class AccessibilityMenuTopHeadDynamicInclude extends BaseDynamicInclude {
 			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
 
+		if (!AccessibilitySettingsUtil.isAccessibilityMenuEnabled(
+				httpServletRequest, _configurationProvider)) {
+
+			return;
+		}
+
 		List<QuickAccessEntry> quickAccessEntries =
 			(List<QuickAccessEntry>)httpServletRequest.getAttribute(
 				WebKeys.PORTLET_QUICK_ACCESS_ENTRIES);
@@ -69,6 +77,9 @@ public class AccessibilityMenuTopHeadDynamicInclude extends BaseDynamicInclude {
 	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
 		dynamicIncludeRegistry.register("/html/common/themes/top_head.jsp#pre");
 	}
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private Language _language;

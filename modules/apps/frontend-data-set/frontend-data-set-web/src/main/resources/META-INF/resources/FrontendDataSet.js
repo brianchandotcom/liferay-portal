@@ -513,6 +513,7 @@ const FrontendDataSet = ({
 					activeDelta={paginationDelta}
 					activePage={pageNumber}
 					deltas={pagination?.deltas}
+					disableEllipsis={true}
 					ellipsisBuffer={3}
 					labels={{
 						paginationResults: Liferay.Language.get(

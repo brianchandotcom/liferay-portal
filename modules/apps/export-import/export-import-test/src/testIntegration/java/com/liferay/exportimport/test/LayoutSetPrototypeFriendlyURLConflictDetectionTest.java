@@ -72,7 +72,7 @@ public class LayoutSetPrototypeFriendlyURLConflictDetectionTest {
 	}
 
 	@Test
-	public void testLayoutSetPrototypeLayoutMultipleFriendlyURLConflictDetectionFromPrototype()
+	public void testDuplicatedFriendlyURLsInLayoutSetPrototype()
 		throws Exception {
 
 		List<Layout> layouts = new ArrayList<>();
@@ -107,9 +107,7 @@ public class LayoutSetPrototypeFriendlyURLConflictDetectionTest {
 	}
 
 	@Test
-	public void testLayoutSetPrototypeLayoutMultipleFriendlyURLConflictDetectionFromSite()
-		throws Exception {
-
+	public void testDuplicatedFriendlyURLsInLayoutSet() throws Exception {
 		List<Layout> layouts = new ArrayList<>();
 
 		for (String name : RandomTestUtil.randomStrings(3)) {

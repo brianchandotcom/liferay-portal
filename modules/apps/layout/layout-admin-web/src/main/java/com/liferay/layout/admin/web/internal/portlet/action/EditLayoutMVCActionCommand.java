@@ -200,7 +200,7 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 					draftLayout.getMasterLayoutPlid(), serviceContext);
 
 				_updateClientExtensions(
-					actionRequest, layout, themeDisplay.getUserId());
+					actionRequest, draftLayout, themeDisplay.getUserId());
 			}
 
 			themeDisplay.clearLayoutFriendlyURL(layout);

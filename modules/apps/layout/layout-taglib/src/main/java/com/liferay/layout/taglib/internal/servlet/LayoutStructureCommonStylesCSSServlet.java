@@ -50,7 +50,6 @@ import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -140,13 +139,12 @@ public class LayoutStructureCommonStylesCSSServlet extends HttpServlet {
 		httpServletResponse.setContentType(ContentTypes.TEXT_CSS_UTF8);
 		httpServletResponse.setStatus(HttpServletResponse.SC_OK);
 
-		Map<String, String[]> parameterMap = HttpComponentsUtil.getParameterMap(
-			httpServletRequest.getQueryString());
+		long plid = ParamUtil.getLong(httpServletRequest, "plid");
+		Layout layout = null;
 
-		String[] plids = parameterMap.get("plid");
-
-		Layout layout = _layoutLocalService.fetchLayout(
-			GetterUtil.getLong(plids[0]));
+		if (plid > 0) {
+			layout = _layoutLocalService.fetchLayout(plid);
+		}
 
 		if ((layout == null) ||
 			(!layout.isTypeAssetDisplay() && !layout.isTypeContent())) {

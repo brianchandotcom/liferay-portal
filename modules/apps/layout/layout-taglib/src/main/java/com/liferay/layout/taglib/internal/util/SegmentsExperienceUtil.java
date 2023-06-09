@@ -18,15 +18,11 @@ import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.manager.SegmentsExperienceManager;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
-
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -64,12 +60,13 @@ public class SegmentsExperienceUtil {
 			return themeDisplay.getLayout();
 		}
 
-		Map<String, String[]> parameterMap = HttpComponentsUtil.getParameterMap(
-			httpServletRequest.getQueryString());
+		long plid = ParamUtil.getLong(httpServletRequest, "plid");
 
-		String[] plids = parameterMap.get("plid");
+		if (plid > 0) {
+			return LayoutLocalServiceUtil.fetchLayout(plid);
+		}
 
-		return LayoutLocalServiceUtil.fetchLayout(GetterUtil.getLong(plids[0]));
+		return null;
 	}
 
 	private static boolean _isValidSegmentsExperienceId(

@@ -615,8 +615,9 @@ public class DataFactory {
 		return BenchmarksPropsValues.MAX_BLOGS_ENTRY_COMMENT_COUNT;
 	}
 
-	public int getMaxCommerceAccountOrderCount() {
-		return BenchmarksPropsValues.MAX_COMMERCE_ACCOUNT_ORDER_COUNT;
+	public int getMaxCommerceAccountEntryCommerceOrderCount() {
+		return BenchmarksPropsValues.
+			MAX_COMMERCE_ACCOUNT_ENTRY_COMMERCE_ORDER_COUNT;
 	}
 
 	public int getMaxCommerceGroupCount() {
@@ -783,10 +784,14 @@ public class DataFactory {
 		int orderStatus) {
 
 		List<CommerceOrderModel> commerceOrderModels = new ArrayList<>(
-			BenchmarksPropsValues.MAX_COMMERCE_ACCOUNT_ORDER_COUNT);
+			BenchmarksPropsValues.
+				MAX_COMMERCE_ACCOUNT_ENTRY_COMMERCE_ORDER_COUNT);
 
 		for (int i = 1;
-			 i <= BenchmarksPropsValues.MAX_COMMERCE_ACCOUNT_ORDER_COUNT; i++) {
+			 i <=
+				 BenchmarksPropsValues.
+					 MAX_COMMERCE_ACCOUNT_ENTRY_COMMERCE_ORDER_COUNT;
+			 i++) {
 
 			commerceOrderModels.add(
 				newCommerceOrderModel(

@@ -304,7 +304,7 @@ public class ValidatorTest {
 		);
 
 		_databaseMockedStatic.when(
-			() -> DatabaseUtil.getReleaseMap(_destinationConnection)
+			() -> DatabaseUtil.getReleasesMap(_destinationConnection)
 		).thenReturn(
 			releaseMap
 		);
@@ -328,7 +328,7 @@ public class ValidatorTest {
 		}
 
 		_databaseMockedStatic.when(
-			() -> DatabaseUtil.getReleaseMap(_destinationConnection)
+			() -> DatabaseUtil.getReleasesMap(_destinationConnection)
 		).thenReturn(
 			releaseMap
 		);
@@ -374,7 +374,7 @@ public class ValidatorTest {
 		}
 
 		_databaseMockedStatic.when(
-			() -> DatabaseUtil.getReleaseMap(_destinationConnection)
+			() -> DatabaseUtil.getReleasesMap(_destinationConnection)
 		).thenReturn(
 			releaseMap
 		);
@@ -403,7 +403,7 @@ public class ValidatorTest {
 		}
 
 		_databaseMockedStatic.when(
-			() -> DatabaseUtil.getReleaseMap(_destinationConnection)
+			() -> DatabaseUtil.getReleasesMap(_destinationConnection)
 		).thenReturn(
 			releaseMap
 		);

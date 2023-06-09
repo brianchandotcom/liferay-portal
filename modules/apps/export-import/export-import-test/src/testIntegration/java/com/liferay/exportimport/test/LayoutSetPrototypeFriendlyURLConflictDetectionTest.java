@@ -72,6 +72,38 @@ public class LayoutSetPrototypeFriendlyURLConflictDetectionTest {
 	}
 
 	@Test
+	public void testDuplicatedFriendlyURLsInLayoutSet() throws Exception {
+		List<Layout> layouts = new ArrayList<>();
+
+		for (String name : RandomTestUtil.randomStrings(3)) {
+			layouts.add(
+				LayoutTestUtil.addTypePortletLayout(
+					_group.getGroupId(), name, false));
+
+			LayoutTestUtil.addTypePortletLayout(
+				_group.getGroupId(), RandomTestUtil.randomString(5), false);
+			LayoutTestUtil.addTypePortletLayout(
+				_layoutSetPrototypeGroup.getGroupId(), name, true);
+			LayoutTestUtil.addTypePortletLayout(
+				_layoutSetPrototypeGroup.getGroupId(),
+				RandomTestUtil.randomString(5), true);
+		}
+
+		List<Long> duplicatedFriendlyURLPlids =
+			_layoutSetPrototypeHelper.getDuplicatedFriendlyURLPlids(
+				_group.getPublicLayoutSet());
+
+		Assert.assertEquals(
+			duplicatedFriendlyURLPlids.toString(), 3,
+			duplicatedFriendlyURLPlids.size());
+
+		for (Layout layout : layouts) {
+			Assert.assertTrue(
+				duplicatedFriendlyURLPlids.contains(layout.getPlid()));
+		}
+	}
+
+	@Test
 	public void testDuplicatedFriendlyURLsInLayoutSetPrototype()
 		throws Exception {
 
@@ -95,38 +127,6 @@ public class LayoutSetPrototypeFriendlyURLConflictDetectionTest {
 		List<Long> duplicatedFriendlyURLPlids =
 			_layoutSetPrototypeHelper.getDuplicatedFriendlyURLPlids(
 				_layoutSetPrototype);
-
-		Assert.assertEquals(
-			duplicatedFriendlyURLPlids.toString(), 3,
-			duplicatedFriendlyURLPlids.size());
-
-		for (Layout layout : layouts) {
-			Assert.assertTrue(
-				duplicatedFriendlyURLPlids.contains(layout.getPlid()));
-		}
-	}
-
-	@Test
-	public void testDuplicatedFriendlyURLsInLayoutSet() throws Exception {
-		List<Layout> layouts = new ArrayList<>();
-
-		for (String name : RandomTestUtil.randomStrings(3)) {
-			layouts.add(
-				LayoutTestUtil.addTypePortletLayout(
-					_group.getGroupId(), name, false));
-
-			LayoutTestUtil.addTypePortletLayout(
-				_group.getGroupId(), RandomTestUtil.randomString(5), false);
-			LayoutTestUtil.addTypePortletLayout(
-				_layoutSetPrototypeGroup.getGroupId(), name, true);
-			LayoutTestUtil.addTypePortletLayout(
-				_layoutSetPrototypeGroup.getGroupId(),
-				RandomTestUtil.randomString(5), true);
-		}
-
-		List<Long> duplicatedFriendlyURLPlids =
-			_layoutSetPrototypeHelper.getDuplicatedFriendlyURLPlids(
-				_group.getPublicLayoutSet());
 
 		Assert.assertEquals(
 			duplicatedFriendlyURLPlids.toString(), 3,

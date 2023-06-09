@@ -259,7 +259,7 @@ definition {
 	@description = "Bug: LRAC-12694 | Automation ID: LRAC-12811 | Test Summary: Known Individuals is not duplicated if user exists in multiple properties"
 	@priority = 3
 	test IndividualNotDuplicatedIfUserExistsInMultipleProperties {
-		property portal.upstream = "quarantine"
+		property portal.upstream = "quarantine";
 
 		//AC Quarantine Reason: Flaky issue with failing on upstream while passing on release branch
 

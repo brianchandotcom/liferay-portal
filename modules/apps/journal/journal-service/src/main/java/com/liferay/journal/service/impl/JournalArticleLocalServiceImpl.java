@@ -4725,7 +4725,11 @@ public class JournalArticleLocalServiceImpl
 				LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()));
 
 			if (Validator.isNull(urlTitle)) {
-				throw new ArticleFriendlyURLException();
+				urlTitle = ParamUtil.getString(serviceContext, "urlTitle");
+
+				if (!imported || Validator.isNull(urlTitle)) {
+					throw new ArticleFriendlyURLException();
+				}
 			}
 		}
 

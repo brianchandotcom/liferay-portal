@@ -161,7 +161,8 @@ export default function GlobalJSCETsConfiguration({
 
 						if (isDuplicated) {
 							duplicatedGlobalJSCETs.push(nextGlobalJSCET);
-						} else {
+						}
+						else {
 							nextGlobalJSCETs.push(nextGlobalJSCET);
 						}
 					});

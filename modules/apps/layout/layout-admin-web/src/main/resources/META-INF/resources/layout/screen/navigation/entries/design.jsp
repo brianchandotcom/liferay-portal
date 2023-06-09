@@ -75,6 +75,18 @@ LayoutRevision layoutRevision = LayoutStagingUtil.getLayoutRevision(selLayout);
 	<h2 class="c-mb-4 text-7"><liferay-ui:message key="design" /></h2>
 
 	<liferay-frontend:edit-form-body>
+		<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPS-153951") %>'>
+			<clay:alert
+				cssClass="ml-0 sheet-lg"
+				displayType="info"
+			>
+				<clay:link
+					href=""
+					label='<%= LanguageUtil.get(request, "see-current-published-configuration-here") %>'
+				/>
+			</clay:alert>
+		</c:if>
+
 		<liferay-ui:success key="layoutAdded" message="the-page-was-created-successfully" />
 
 		<liferay-ui:error exception="<%= LayoutTypeException.class %>">

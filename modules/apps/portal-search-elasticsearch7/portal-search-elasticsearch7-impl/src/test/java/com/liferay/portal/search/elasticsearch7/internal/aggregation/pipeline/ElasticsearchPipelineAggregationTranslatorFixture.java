@@ -21,28 +21,28 @@ import com.liferay.portal.search.elasticsearch7.internal.sort.ElasticsearchSortF
 /**
  * @author Michael C. Han
  */
-public class ElasticsearchPipelineAggregationVisitorFixture {
+public class ElasticsearchPipelineAggregationTranslatorFixture {
 
-	public ElasticsearchPipelineAggregationVisitorFixture() {
-		ElasticsearchPipelineAggregationVisitor
-			elasticsearchPipelineAggregationVisitor =
-				new ElasticsearchPipelineAggregationVisitor();
+	public ElasticsearchPipelineAggregationTranslatorFixture() {
+		ElasticsearchPipelineAggregationTranslator
+			elasticsearchPipelineAggregationTranslator =
+				new ElasticsearchPipelineAggregationTranslator();
 
-		_injectSortFieldTranslators(elasticsearchPipelineAggregationVisitor);
+		_injectSortFieldTranslators(elasticsearchPipelineAggregationTranslator);
 
-		_elasticsearchPipelineAggregationVisitor =
-			elasticsearchPipelineAggregationVisitor;
+		_elasticsearchPipelineAggregationTranslator =
+			elasticsearchPipelineAggregationTranslator;
 	}
 
-	public ElasticsearchPipelineAggregationVisitor
-		getElasticsearchPipelineAggregationVisitor() {
+	public ElasticsearchPipelineAggregationTranslator
+		getElasticsearchPipelineAggregationTranslator() {
 
-		return _elasticsearchPipelineAggregationVisitor;
+		return _elasticsearchPipelineAggregationTranslator;
 	}
 
 	private void _injectSortFieldTranslators(
-		ElasticsearchPipelineAggregationVisitor
-			elasticsearchPipelineAggregationVisitor) {
+		ElasticsearchPipelineAggregationTranslator
+			elasticsearchPipelineAggregationTranslator) {
 
 		ElasticsearchQueryTranslatorFixture
 			elasticsearchQueryTranslatorFixture =
@@ -55,12 +55,12 @@ public class ElasticsearchPipelineAggregationVisitorFixture {
 						getElasticsearchQueryTranslator());
 
 		ReflectionTestUtil.setFieldValue(
-			elasticsearchPipelineAggregationVisitor, "_sortFieldTranslator",
+			elasticsearchPipelineAggregationTranslator, "_sortFieldTranslator",
 			elasticsearchSortFieldTranslatorFixture.
 				getElasticsearchSortFieldTranslator());
 	}
 
-	private final ElasticsearchPipelineAggregationVisitor
-		_elasticsearchPipelineAggregationVisitor;
+	private final ElasticsearchPipelineAggregationTranslator
+		_elasticsearchPipelineAggregationTranslator;
 
 }

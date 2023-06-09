@@ -327,7 +327,7 @@ public class MessageBoardThreadResourceImpl
 			contextUser.getUserId(), mbMessage.getThread(),
 			new ServiceContext());
 
-		return _toMessageBoardThread(mbMessage, false);
+		return _toMessageBoardThread(mbMessage, true);
 	}
 
 	@Override

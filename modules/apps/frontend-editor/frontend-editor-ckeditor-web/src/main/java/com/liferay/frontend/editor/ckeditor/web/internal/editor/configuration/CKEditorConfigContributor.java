@@ -71,11 +71,7 @@ public class CKEditorConfigContributor extends BaseCKEditorConfigContributor {
 			extraPlugins += ",ajaxsave,restore";
 		}
 
-		boolean showAICreatorToolbar = GetterUtil.getBoolean(
-			inputEditorTaglibAttributes.get(
-				CKEditorConstants.ATTRIBUTE_NAMESPACE + ":showAICreator"));
-
-		if (showAICreatorToolbar) {
+		if (_isShowAICreator(inputEditorTaglibAttributes)) {
 			extraPlugins += ",aicreator";
 		}
 
@@ -97,7 +93,7 @@ public class CKEditorConfigContributor extends BaseCKEditorConfigContributor {
 		);
 
 		JSONArray toolbarSimpleJSONArray = _getToolbarSimpleJSONArray(
-			inputEditorTaglibAttributes, showAICreatorToolbar);
+			inputEditorTaglibAttributes);
 
 		jsonObject.put(
 			"toolbar_editInPlace", toolbarSimpleJSONArray
@@ -115,12 +111,10 @@ public class CKEditorConfigContributor extends BaseCKEditorConfigContributor {
 			"toolbar_tablet", toolbarSimpleJSONArray
 		).put(
 			"toolbar_text_advanced",
-			_getToolbarTextAdvancedJSONArray(
-				inputEditorTaglibAttributes, showAICreatorToolbar)
+			_getToolbarTextAdvancedJSONArray(inputEditorTaglibAttributes)
 		).put(
 			"toolbar_text_simple",
-			_getToolbarTextSimpleJSONArray(
-				inputEditorTaglibAttributes, showAICreatorToolbar)
+			_getToolbarTextSimpleJSONArray(inputEditorTaglibAttributes)
 		);
 	}
 
@@ -173,8 +167,7 @@ public class CKEditorConfigContributor extends BaseCKEditorConfigContributor {
 	}
 
 	private JSONArray _getToolbarSimpleJSONArray(
-		Map<String, Object> inputEditorTaglibAttributes,
-		boolean showAICreatorToolbar) {
+		Map<String, Object> inputEditorTaglibAttributes) {
 
 		return JSONUtil.putAll(
 			toJSONArray("['Undo', 'Redo']"),
@@ -200,7 +193,7 @@ public class CKEditorConfigContributor extends BaseCKEditorConfigContributor {
 			}
 		).put(
 			() -> {
-				if (showAICreatorToolbar) {
+				if (_isShowAICreator(inputEditorTaglibAttributes)) {
 					return toJSONArray("['AICreator']");
 				}
 
@@ -210,8 +203,7 @@ public class CKEditorConfigContributor extends BaseCKEditorConfigContributor {
 	}
 
 	private JSONArray _getToolbarTextAdvancedJSONArray(
-		Map<String, Object> inputEditorTaglibAttributes,
-		boolean showAICreatorToolbar) {
+		Map<String, Object> inputEditorTaglibAttributes) {
 
 		return JSONUtil.putAll(
 			toJSONArray("['Undo', 'Redo']"), toJSONArray("['Styles']"),
@@ -232,7 +224,7 @@ public class CKEditorConfigContributor extends BaseCKEditorConfigContributor {
 			}
 		).put(
 			() -> {
-				if (showAICreatorToolbar) {
+				if (_isShowAICreator(inputEditorTaglibAttributes)) {
 					return toJSONArray("['AICreator']");
 				}
 
@@ -242,8 +234,7 @@ public class CKEditorConfigContributor extends BaseCKEditorConfigContributor {
 	}
 
 	private JSONArray _getToolbarTextSimpleJSONArray(
-		Map<String, Object> inputEditorTaglibAttributes,
-		boolean showAICreatorToolbar) {
+		Map<String, Object> inputEditorTaglibAttributes) {
 
 		return JSONUtil.putAll(
 			toJSONArray("['Undo', 'Redo']"),
@@ -260,13 +251,21 @@ public class CKEditorConfigContributor extends BaseCKEditorConfigContributor {
 			}
 		).put(
 			() -> {
-				if (showAICreatorToolbar) {
+				if (_isShowAICreator(inputEditorTaglibAttributes)) {
 					return toJSONArray("['AICreator']");
 				}
 
 				return null;
 			}
 		);
+	}
+
+	private boolean _isShowAICreator(
+		Map<String, Object> inputEditorTaglibAttributes) {
+
+		return GetterUtil.getBoolean(
+			inputEditorTaglibAttributes.get(
+				CKEditorConstants.ATTRIBUTE_NAMESPACE + ":showAICreator"));
 	}
 
 	@Reference

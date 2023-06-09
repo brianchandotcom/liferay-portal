@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,19 +11,27 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/init.jsp" %>
+import {localStorage} from 'frontend-js-web';
 
-<%
-AccessibilityMenuDisplayContext accessibilityMenuDisplayContext = new AccessibilityMenuDisplayContext(request);
-%>
+export function getSettingValue(defaultValue, sessionClicksValue, key) {
+	if (themeDisplay.isSignedIn() && sessionClicksValue !== null) {
+		return sessionClicksValue;
+	}
+	else {
+		const localStorageValue = localStorage.getItem(
+			key,
+			localStorage.TYPES.FUNCTIONAL
+		);
 
-<react:component
-	module="js/AccessibilityMenu"
-	props='<%=
-		HashMapBuilder.<String, Object>put(
-			"accessibilitySettings", accessibilityMenuDisplayContext.getAccessibilitySettingsJSONArray()
-		).build()
-	%>'
-/>
+		if (localStorageValue !== null) {
+			return localStorageValue;
+		}
+	}
+
+	return defaultValue;
+}
+
+export function toggleClassName(className, value) {
+	document.querySelector('body').classList.toggle(className, value);
+}

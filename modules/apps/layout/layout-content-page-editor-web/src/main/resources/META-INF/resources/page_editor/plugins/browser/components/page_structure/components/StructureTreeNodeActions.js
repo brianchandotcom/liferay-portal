@@ -227,13 +227,16 @@ const ActionList = ({item, setActive, setEditingNodeId, setOpenSaveModal}) => {
 
 		if (canBeRemoved(item, layoutData)) {
 			items.push({
-				action: () =>
+				action: () => {
 					dispatch(
 						deleteItem({
 							itemId: item.id,
 							selectItem,
 						})
-					),
+					);
+
+					setText(Liferay.Language.get('item-removed'));
+				},
 				icon: 'trash',
 				label: Liferay.Language.get('delete'),
 			});

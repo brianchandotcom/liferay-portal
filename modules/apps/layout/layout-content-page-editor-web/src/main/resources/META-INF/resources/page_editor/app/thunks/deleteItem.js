@@ -16,6 +16,7 @@ import {openToast} from 'frontend-js-web';
 
 import deleteItemAction from '../actions/deleteItem';
 import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../config/constants/freemarkerFragmentEntryProcessor';
+import {ITEM_ACTIVATION_ORIGINS} from '../config/constants/itemActivationOrigins';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import selectEditableValue from '../selectors/selectEditableValue';
 import selectFormConfiguration from '../selectors/selectFormConfiguration';
@@ -46,7 +47,13 @@ export default function deleteItem({itemId, selectItem = () => {}}) {
 			segmentsExperienceId,
 		}).then(
 			({pageContents, portletIds = [], layoutData: nextLayoutData}) => {
-				selectItem(null);
+				const [firstChild] = nextLayoutData.items[
+					nextLayoutData.rootItems.main
+				].children;
+
+				selectItem(firstChild, {
+					origin: ITEM_ACTIVATION_ORIGINS.itemActions,
+				});
 
 				const fragmentEntryLinkIds = getFragmentEntryLinkIdsFromItemId({
 					itemId,

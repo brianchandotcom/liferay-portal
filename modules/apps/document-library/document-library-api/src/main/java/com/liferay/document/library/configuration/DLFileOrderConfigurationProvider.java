@@ -16,27 +16,22 @@ package com.liferay.document.library.configuration;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-
 /**
  * @author Sam Ziemer
  */
 @ProviderType
 public interface DLFileOrderConfigurationProvider {
 
-	public String getCompanyOrderByColumn(long companyId)
-		throws ConfigurationException;
+	public String getCompanyOrderByColumn(long companyId);
 
-	public String getCompanySortBy(long companyId)
-		throws ConfigurationException;
+	public String getCompanySortBy(long companyId);
 
-	public String getGroupOrderByColumn(long groupId)
-		throws ConfigurationException;
+	public String getGroupOrderByColumn(long groupId);
 
-	public String getGroupSortBy(long groupId) throws ConfigurationException;
+	public String getGroupSortBy(long groupId);
 
-	public String getSystemOrderByColumn() throws ConfigurationException;
+	public String getSystemOrderByColumn();
 
-	public String getSystemSortBy() throws ConfigurationException;
+	public String getSystemSortBy();
 
 }

@@ -152,6 +152,15 @@ public class FaroUserLocalServiceImpl extends FaroUserLocalServiceBaseImpl {
 		return faroUser;
 	}
 
+	public int countFaroUsers(
+			long groupId, boolean available, String query,
+			List<Integer> statuses, long workspaceGroupId)
+		throws PortalException {
+
+		return faroUserFinder.countByChannelKeywords(
+			groupId, available, query, statuses, workspaceGroupId);
+	}
+
 	public FaroUser deleteFaroUser(long faroUserId) throws PortalException {
 		FaroUser faroUser = getFaroUser(faroUserId);
 
@@ -189,6 +198,17 @@ public class FaroUserLocalServiceImpl extends FaroUserLocalServiceBaseImpl {
 
 		return faroUserPersistence.fetchByG_R_First(
 			groupId, role.getRoleId(), null);
+	}
+
+	public List<FaroUser> findFaroUsers(
+			long groupId, boolean available, String query,
+			List<Integer> statuses, long workspaceGroupId, int start, int end,
+			OrderByComparator<FaroUser> orderByComparator)
+		throws PortalException {
+
+		return faroUserFinder.findByChannelKeywords(
+			groupId, available, query, statuses, workspaceGroupId, start, end,
+			orderByComparator);
 	}
 
 	public FaroUser getFaroUser(long groupId, long liveUserId)

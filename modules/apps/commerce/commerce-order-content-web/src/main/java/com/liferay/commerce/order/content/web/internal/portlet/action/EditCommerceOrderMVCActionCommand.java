@@ -27,6 +27,7 @@ import com.liferay.commerce.exception.CommerceOrderValidatorException;
 import com.liferay.commerce.exception.NoSuchOrderException;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.model.CommerceOrderItemModel;
 import com.liferay.commerce.model.CommerceOrderNote;
 import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
@@ -54,6 +55,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -379,6 +381,21 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 
 		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
 			commerceOrderId);
+
+		if (ListUtil.exists(
+				commerceOrder.getCommerceOrderItems(),
+				CommerceOrderItemModel::isPriceOnApplication)) {
+
+			actionRequest.setAttribute(
+				WebKeys.REDIRECT,
+				PortletURLBuilder.create(
+					_commerceOrderHttpHelper.getCommerceCartPortletURL(
+						_portal.getHttpServletRequest(actionRequest),
+						commerceOrder)
+				).buildString());
+
+			return;
+		}
 
 		_commerceAccountHelper.setCurrentCommerceAccount(
 			_portal.getHttpServletRequest(actionRequest),

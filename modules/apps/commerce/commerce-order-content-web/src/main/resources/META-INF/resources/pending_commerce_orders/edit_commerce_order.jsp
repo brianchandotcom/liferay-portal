@@ -451,7 +451,7 @@ if (backURL != null) {
 			cssClass="btn btn-fixed btn-primary ml-3"
 		/>
 
-		<c:if test="<%= commerceOrderContentDisplayContext.isRequestQuoteEnabled() && commerceOrderContentDisplayContext.isValidCommerceOrder() %>">
+		<c:if test="<%= commerceOrderContentDisplayContext.isRequestQuoteButtonEnabled() %>">
 			<aui:button cssClass="btn-fixed btn-secondary ml-3 request-quote" displayType="secondary" id="requestQuote" small="<%= false %>" value='<%= LanguageUtil.get(request, "request-a-quote") %>' />
 		</c:if>
 	</div>

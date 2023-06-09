@@ -20,6 +20,7 @@ import com.liferay.commerce.constants.CommerceCheckoutWebKeys;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.model.CommerceOrderItemModel;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
@@ -35,6 +36,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -125,7 +127,11 @@ public class CommerceCheckoutPortlet extends MVCPortlet {
 						CookiesConstants.NAME_COMMERCE_CONTINUE_AS_GUEST,
 						httpServletRequest));
 
-				if (commerceOrder.isQuote()) {
+				if (commerceOrder.isQuote() ||
+					ListUtil.exists(
+						commerceOrder.getCommerceOrderItems(),
+						CommerceOrderItemModel::isPriceOnApplication)) {
+
 					httpServletResponse.sendRedirect(
 						_getOrderDetailsURL(renderRequest, commerceOrder));
 				}

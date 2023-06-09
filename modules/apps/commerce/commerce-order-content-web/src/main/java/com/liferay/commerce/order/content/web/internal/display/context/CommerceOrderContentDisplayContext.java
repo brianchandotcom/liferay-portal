@@ -30,6 +30,7 @@ import com.liferay.commerce.frontend.model.StepModel;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
+import com.liferay.commerce.model.CommerceOrderItemModel;
 import com.liferay.commerce.model.CommerceOrderNote;
 import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
@@ -95,6 +96,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -1125,6 +1127,27 @@ public class CommerceOrderContentDisplayContext {
 
 		return portletName.equals(
 			CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT);
+	}
+
+	public boolean isRequestQuoteButtonEnabled() throws PortalException {
+		CommerceOrder commerceOrder = getCommerceOrder();
+
+		if (commerceOrder == null) {
+			return false;
+		}
+
+		List<CommerceOrderItem> commerceOrderItems =
+			commerceOrder.getCommerceOrderItems();
+
+		if ((isRequestQuoteEnabled() && !commerceOrderItems.isEmpty()) ||
+			ListUtil.exists(
+				commerceOrderItems,
+				CommerceOrderItemModel::isPriceOnApplication)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isRequestQuoteEnabled() throws PortalException {

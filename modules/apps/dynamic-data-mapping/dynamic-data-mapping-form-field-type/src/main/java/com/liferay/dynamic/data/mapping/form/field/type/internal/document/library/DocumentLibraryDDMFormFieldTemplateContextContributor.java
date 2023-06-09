@@ -87,6 +87,8 @@ import javax.portlet.ResourceURL;
 
 import javax.servlet.http.HttpServletRequest;
 
+import javax.ws.rs.core.UriBuilder;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -381,6 +383,30 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 				RequestBackedPortletURLFactory requestBackedPortletURLFactory =
 					RequestBackedPortletURLFactoryUtil.create(
 						ddmFormFieldRenderingContext.getHttpServletRequest());
+
+				if (ddmFormField.hasProperty("fileEntryURL")) {
+					long ddmFormInstanceRecordId = GetterUtil.getLong(
+						ddmFormFieldRenderingContext.getProperty(
+							"ddmFormInstanceRecordId"));
+
+					String fileEntryURL = GetterUtil.getString(
+						ddmFormField.getProperty("fileEntryURL"));
+
+					if (Validator.isNotNull(fileEntryURL) &&
+						(ddmFormInstanceRecordId == 0)) {
+
+						String portletNamespace = _portal.getPortletNamespace(
+							DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM);
+
+						return UriBuilder.fromUri(
+							fileEntryURL
+						).replaceQueryParam(
+							portletNamespace + "fileEntryId",
+							fileEntry.getFileEntryId()
+						).build(
+						).toString();
+					}
+				}
 
 				return ResourceURLBuilder.createResourceURL(
 					(ResourceURL)

@@ -69,7 +69,7 @@ public class SegmentsEntryRetrieverTest {
 
 			long[] segmentsEntryIds =
 				_segmentsEntryRetriever.getSegmentsEntryIds(
-					_group.getGroupId(), _user.getUserId(), null);
+					_group.getGroupId(), _user.getUserId(), null, new long[0]);
 
 			Assert.assertEquals(
 				Arrays.toString(segmentsEntryIds), 2, segmentsEntryIds.length);
@@ -85,7 +85,7 @@ public class SegmentsEntryRetrieverTest {
 	@Test
 	public void testGetSegmentsEntryIdsWithoutSegmentsEntry() throws Exception {
 		long[] segmentsEntryIds = _segmentsEntryRetriever.getSegmentsEntryIds(
-			_group.getGroupId(), _user.getUserId(), null);
+			_group.getGroupId(), _user.getUserId(), null, new long[0]);
 
 		Assert.assertEquals(
 			Arrays.toString(segmentsEntryIds), 1, segmentsEntryIds.length);

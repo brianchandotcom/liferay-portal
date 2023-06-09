@@ -69,30 +69,6 @@ public class DatabaseUtil {
 
 		return partitionedTableNames;
 	}
-
-	public static Map<String, Release> getReleaseMap(Connection connection)
-		throws SQLException {
-
-		Map<String, Release> releaseMap = new HashMap<>();
-
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select servletContextName, schemaVersion, verified from " +
-					"Release_");
-			ResultSet resultSet = preparedStatement.executeQuery()) {
-
-			while (resultSet.next()) {
-				releaseMap.put(
-					resultSet.getString(1),
-					new Release(
-						resultSet.getString(1),
-						Version.parseVersion(resultSet.getString(2)),
-						resultSet.getBoolean(3)));
-			}
-		}
-
-		return releaseMap;
-	}
-
 	public static List<Release> getReleases(Connection connection)
 		throws SQLException {
 
@@ -113,6 +89,29 @@ public class DatabaseUtil {
 		}
 
 		return releases;
+	}
+
+	public static Map<String, Release> getReleasesMap(Connection connection)
+		throws SQLException {
+
+		Map<String, Release> releaseMap = new HashMap<>();
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"select servletContextName, schemaVersion, verified from " +
+					"Release_");
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			while (resultSet.next()) {
+				releaseMap.put(
+					resultSet.getString(1),
+					new Release(
+						resultSet.getString(1),
+						Version.parseVersion(resultSet.getString(2)),
+						resultSet.getBoolean(3)));
+			}
+		}
+
+		return releaseMap;
 	}
 
 	public static String getWebId(Connection connection) throws SQLException {

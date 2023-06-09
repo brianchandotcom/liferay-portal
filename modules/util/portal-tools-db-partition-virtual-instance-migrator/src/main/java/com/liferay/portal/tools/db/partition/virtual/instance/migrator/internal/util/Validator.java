@@ -90,8 +90,8 @@ public class Validator {
 		_validateReleaseState(
 			sourceConnection, destinationConnection, recorder);
 
-		Map<String, Release> destinationReleaseMap = DatabaseUtil.getReleaseMap(
-			destinationConnection);
+		Map<String, Release> destinationReleasesMap =
+			DatabaseUtil.getReleasesMap(destinationConnection);
 
 		List<Release> sourceReleases = DatabaseUtil.getReleases(
 			sourceConnection);
@@ -109,7 +109,7 @@ public class Validator {
 			String sourceServletContextName =
 				sourceRelease.getServletContextName();
 
-			Release destinationRelease = destinationReleaseMap.remove(
+			Release destinationRelease = destinationReleasesMap.remove(
 				sourceServletContextName);
 
 			if (destinationRelease == null) {
@@ -140,7 +140,7 @@ public class Validator {
 			}
 		}
 
-		for (Release destionationRelease : destinationReleaseMap.values()) {
+		for (Release destionationRelease : destinationReleasesMap.values()) {
 			String destinationServletContextName =
 				destionationRelease.getServletContextName();
 

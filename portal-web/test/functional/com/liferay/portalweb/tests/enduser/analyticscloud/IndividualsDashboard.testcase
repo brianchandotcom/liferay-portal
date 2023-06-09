@@ -261,7 +261,7 @@ definition {
 	test IndividualNotDuplicatedIfUserExistsInMultipleProperties {
 		property portal.upstream = "quarantine";
 
-		//AC Quarantine Reason: Flaky issue with failing on upstream while passing on release branch
+		// AC Quarantine Reason: Flaky issue with failing on upstream while passing on release branch
 
 		var propertyName1 = ${assignedPropertyName};
 

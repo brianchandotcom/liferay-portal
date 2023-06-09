@@ -143,7 +143,8 @@ public class ContentSetElementResourceImpl
 		long[] segmentsEntryIds =
 			_segmentsEntryProviderRegistry.getSegmentsEntryIds(
 				assetListEntry.getGroupId(), contextUser.getModelClassName(),
-				contextUser.getPrimaryKey(), _createSegmentsContext());
+				contextUser.getPrimaryKey(), _createSegmentsContext(),
+				new long[0]);
 
 		return Page.of(
 			transform(

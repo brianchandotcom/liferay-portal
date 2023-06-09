@@ -1170,7 +1170,8 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 		return _segmentsEntryRetriever.getSegmentsEntryIds(
 			themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
 			_requestContextMapper.map(
-				_portal.getHttpServletRequest(portletRequest)));
+				_portal.getHttpServletRequest(portletRequest)),
+			new long[0]);
 	}
 
 	private long[] _getSiteGroupIds(long[] groupIds) {

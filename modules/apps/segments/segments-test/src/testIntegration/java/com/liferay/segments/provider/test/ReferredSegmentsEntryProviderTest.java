@@ -281,7 +281,7 @@ public class ReferredSegmentsEntryProviderTest {
 		long[] segmentsEntryIds =
 			_segmentsEntryProviderRegistry.getSegmentsEntryIds(
 				_group.getGroupId(), User.class.getName(), _user1.getUserId(),
-				new Context());
+				new Context(), new long[0]);
 
 		Assert.assertEquals(
 			StringUtil.merge(segmentsEntryIds, StringPool.COMMA), 1,
@@ -321,7 +321,7 @@ public class ReferredSegmentsEntryProviderTest {
 		long[] segmentsEntryIds =
 			_segmentsEntryProviderRegistry.getSegmentsEntryIds(
 				_group.getGroupId(), User.class.getName(), _user1.getUserId(),
-				new Context());
+				new Context(), new long[0]);
 
 		Assert.assertEquals(
 			StringUtil.merge(segmentsEntryIds, StringPool.COMMA), 2,
@@ -377,7 +377,7 @@ public class ReferredSegmentsEntryProviderTest {
 		long[] segmentsEntryIds =
 			_segmentsEntryProviderRegistry.getSegmentsEntryIds(
 				_group.getGroupId(), User.class.getName(), _user1.getUserId(),
-				context);
+				context, new long[0]);
 
 		Assert.assertEquals(
 			StringUtil.merge(segmentsEntryIds, StringPool.COMMA), 2,
@@ -432,7 +432,7 @@ public class ReferredSegmentsEntryProviderTest {
 		long[] segmentsEntryIds =
 			_segmentsEntryProviderRegistry.getSegmentsEntryIds(
 				_group.getGroupId(), User.class.getName(), _user1.getUserId(),
-				context);
+				context, new long[0]);
 
 		Assert.assertEquals(
 			StringUtil.merge(segmentsEntryIds, StringPool.COMMA), 2,

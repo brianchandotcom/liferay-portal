@@ -783,7 +783,7 @@ public class ContentManager {
 				_segmentsEntryRetriever.getSegmentsEntryIds(
 					_portal.getScopeGroupId(httpServletRequest),
 					_portal.getUserId(httpServletRequest),
-					_requestContextMapper.map(httpServletRequest)),
+					_requestContextMapper.map(httpServletRequest), new long[0]),
 				StringPool.BLANK);
 
 		long[] allTagIds = assetEntryQuery.getAllTagIds();

@@ -21,7 +21,10 @@ import com.liferay.headless.admin.taxonomy.client.pagination.Page;
 import com.liferay.headless.admin.taxonomy.client.pagination.Pagination;
 import com.liferay.headless.admin.taxonomy.client.problem.Problem;
 import com.liferay.headless.admin.taxonomy.client.resource.v1_0.TaxonomyVocabularyResource;
+import com.liferay.headless.admin.taxonomy.client.serdes.v1_0.TaxonomyVocabularySerDes;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -258,6 +261,89 @@ public class TaxonomyVocabularyResourceTest
 					"method", "PUT"
 				).build()
 			).build());
+	}
+
+	@Test
+	public void testGraphQLGetAssetLibraryTaxonomyVocabulariesPage()
+		throws Exception {
+
+		TaxonomyVocabulary taxonomyVocabulary =
+			testGetAssetLibraryTaxonomyVocabulariesPage_addTaxonomyVocabulary(
+				testGetAssetLibraryTaxonomyVocabulariesPage_getAssetLibraryId(),
+				randomTaxonomyVocabulary());
+
+		GraphQLField graphQLField = new GraphQLField(
+			"assetLibraryTaxonomyVocabularies",
+			HashMapBuilder.<String, Object>put(
+				"aggregation", "[\"id\"]"
+			).put(
+				"assetLibraryId",
+				StringBundler.concat(
+					"\"", testDepotEntry.getDepotEntryId(), "\"")
+			).build(),
+			new GraphQLField(
+				"facets", new GraphQLField("facetCriteria"),
+				new GraphQLField(
+					"facetValues", new GraphQLField("numberOfOccurrences"),
+					new GraphQLField("term"))),
+			new GraphQLField(
+				"items", new GraphQLField("id"), new GraphQLField("name")),
+			new GraphQLField("totalCount"));
+
+		JSONObject taxonomyVocabulariesJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/assetLibraryTaxonomyVocabularies");
+
+		Assert.assertEquals(
+			1, taxonomyVocabulariesJSONObject.getLong("totalCount"));
+
+		Assert.assertEquals(
+			"id",
+			taxonomyVocabulariesJSONObject.getJSONArray(
+				"facets"
+			).getJSONObject(
+				0
+			).getString(
+				"facetCriteria"
+			));
+
+		Assert.assertEquals(
+			String.valueOf(1),
+			taxonomyVocabulariesJSONObject.getJSONArray(
+				"facets"
+			).getJSONObject(
+				0
+			).getJSONArray(
+				"facetValues"
+			).getJSONObject(
+				0
+			).getString(
+				"numberOfOccurrences"
+			));
+
+		Assert.assertEquals(
+			String.valueOf(taxonomyVocabulary.getId()),
+			taxonomyVocabulariesJSONObject.getJSONArray(
+				"facets"
+			).getJSONObject(
+				0
+			).getJSONArray(
+				"facetValues"
+			).getJSONObject(
+				0
+			).getString(
+				"term"
+			));
+
+		Assert.assertEquals(
+			1, taxonomyVocabulariesJSONObject.getLong("totalCount"));
+
+		Assert.assertEquals(
+			taxonomyVocabulary.getName(),
+			TaxonomyVocabularySerDes.toDTOs(
+				taxonomyVocabulariesJSONObject.getString("items"))[0].
+					getName());
 	}
 
 	@Override

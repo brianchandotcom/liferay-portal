@@ -78,8 +78,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9183 | Test Summary: Current AC plan is collapsible."
+	@ignore = "true"
 	@priority = 3
 	test CollapseCurrentPlan {
+
+		// AC Bug: Current plans card is missing
+		// AC Bug ticket: LRAC-14001
+
 		task ("Sign in AC") {
 			ACUtils.launchAC();
 		}

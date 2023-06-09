@@ -144,8 +144,8 @@ public class LayoutSetPrototypeFriendlyURLConflictDetectionTest {
 		MergeLayoutPrototypesThreadLocal.clearMergeComplete();
 
 		SitesUtil.updateLayoutSetPrototypesLinks(
-			_group, _layoutSetPrototype.getLayoutSetPrototypeId(), 0,
-			true, false);
+			_group, _layoutSetPrototype.getLayoutSetPrototypeId(), 0, true,
+			false);
 
 		Thread.sleep(2000);
 	}

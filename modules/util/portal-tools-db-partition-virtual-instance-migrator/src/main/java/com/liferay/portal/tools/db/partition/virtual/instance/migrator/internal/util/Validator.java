@@ -20,7 +20,6 @@ import com.liferay.portal.tools.db.partition.virtual.instance.migrator.internal.
 import com.liferay.portal.tools.db.partition.virtual.instance.migrator.internal.release.Release;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +32,7 @@ public class Validator {
 
 	public static Recorder validateDatabases(
 			Connection sourceConnection, Connection destinationConnection)
-		throws SQLException {
+		throws Exception {
 
 		Recorder recorder = new Recorder();
 
@@ -86,7 +85,7 @@ public class Validator {
 	private static void _validateRelease(
 			Connection sourceConnection, Connection destinationConnection,
 			Recorder recorder)
-		throws SQLException {
+		throws Exception {
 
 		_validateReleaseState(
 			sourceConnection, destinationConnection, recorder);
@@ -181,7 +180,7 @@ public class Validator {
 	private static void _validateReleaseState(
 			Connection sourceConnection, Connection destinationConnection,
 			Recorder recorder)
-		throws SQLException {
+		throws Exception {
 
 		String message = "has a failed Release state in the ? database";
 
@@ -207,7 +206,7 @@ public class Validator {
 	private static void _validateWebId(
 			Connection sourceConnection, Connection destinationConnection,
 			Recorder recorder)
-		throws SQLException {
+		throws Exception {
 
 		String sourceWebId = DatabaseUtil.getWebId(sourceConnection);
 

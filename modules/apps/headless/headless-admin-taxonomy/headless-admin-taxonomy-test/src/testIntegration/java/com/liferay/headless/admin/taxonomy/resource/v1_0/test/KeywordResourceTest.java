@@ -111,9 +111,8 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 
 		Keyword keyword = testGetKeyword_addKeyword();
 
-		KeywordResource.Builder builder = KeywordResource.builder();
-
-		keywordResource = builder.authentication(
+		keywordResource = KeywordResource.builder(
+		).authentication(
 			"test@liferay.com", "test"
 		).locale(
 			LocaleUtil.getDefault()
@@ -121,15 +120,13 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 			"fields", "name"
 		).build();
 
-		Keyword getKeyword = keywordResource.getKeyword(keyword.getId());
-
 		Keyword newKeyword = new Keyword() {
 			{
 				name = keyword.getName();
 			}
 		};
 
-		assertEquals(newKeyword, getKeyword);
+		assertEquals(newKeyword, keywordResource.getKeyword(keyword.getId()));
 
 		keywordResource.deleteKeyword(keyword.getId());
 	}

@@ -22,6 +22,7 @@ import com.liferay.headless.discovery.internal.dto.Resource;
 import com.liferay.headless.discovery.internal.dto.Resources;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.module.util.BundleUtil;
 import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -291,16 +292,14 @@ public class HeadlessDiscoveryAPIApplication extends Application {
 	}
 
 	private URL _getURL(String parameter) {
-		for (Bundle bundle : _bundleContext.getBundles()) {
-			if (StringUtil.equals(
-					bundle.getSymbolicName(),
-					"com.liferay.headless.discovery.web")) {
+		Bundle bundle = BundleUtil.getBundle(
+			_bundleContext, "com.liferay.headless.discovery.web");
 
-				return bundle.getEntry("META-INF/resources/" + parameter);
-			}
+		if (bundle == null) {
+			return null;
 		}
 
-		return null;
+		return bundle.getEntry("META-INF/resources/" + parameter);
 	}
 
 	private volatile BundleContext _bundleContext;

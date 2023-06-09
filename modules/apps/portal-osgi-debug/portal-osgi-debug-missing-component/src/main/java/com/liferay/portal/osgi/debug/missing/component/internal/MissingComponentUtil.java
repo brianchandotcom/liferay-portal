@@ -17,8 +17,7 @@ package com.liferay.portal.osgi.debug.missing.component.internal;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.bundle.blacklist.BundleBlacklistManager;
-
-import java.util.Objects;
+import com.liferay.portal.kernel.module.util.BundleUtil;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -38,18 +37,8 @@ public class MissingComponentUtil {
 		BundleContext bundleContext,
 		ServiceComponentRuntime serviceComponentRuntime) {
 
-		Bundle blacklistBundle = null;
-
-		for (Bundle bundle : bundleContext.getBundles()) {
-			if (Objects.equals(
-					bundle.getSymbolicName(),
-					"com.liferay.portal.bundle.blacklist.impl")) {
-
-				blacklistBundle = bundle;
-
-				break;
-			}
-		}
+		Bundle blacklistBundle = BundleUtil.getBundle(
+			bundleContext, "com.liferay.portal.bundle.blacklist.impl");
 
 		ServiceReference<BundleBlacklistManager> serviceReference =
 			bundleContext.getServiceReference(BundleBlacklistManager.class);

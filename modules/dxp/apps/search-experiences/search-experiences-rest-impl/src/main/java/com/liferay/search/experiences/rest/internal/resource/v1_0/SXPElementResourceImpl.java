@@ -320,7 +320,7 @@ public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
 
 		com.liferay.search.experiences.model.SXPElement
 			serviceBuilderSxpElement =
-				_sxpElementService.getSXPElementByExternalReferenceCode(
+				_sxpElementService.fetchSXPElementByExternalReferenceCode(
 					contextCompany.getCompanyId(), externalReferenceCode);
 
 		sxpElement.setExternalReferenceCode(externalReferenceCode);

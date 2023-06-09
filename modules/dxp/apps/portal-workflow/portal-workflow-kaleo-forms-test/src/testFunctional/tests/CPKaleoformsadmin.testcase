@@ -1702,9 +1702,7 @@ definition {
 			workflowDefinitionTitle = "Single Approver",
 			workflowDefinitionTitleEdit = "Edited Workflow Definition");
 
-		KaleoDesigner.selectNode(nodeNodeLabel = "update");
-
-		KaleoDesigner.deleteNode(nodeNodeLabel = "update");
+		KaleoDesigner.deleteNodeInKaleoForms(nodeNodeLabel = "update");
 
 		KaleoFormsAdmin.updateWorkflow();
 
@@ -1801,9 +1799,7 @@ definition {
 			workflowDefinitionTitle = "Uploaded Definition",
 			workflowDefinitionTitleEdit = "New Uploaded Definition Edit");
 
-		KaleoDesigner.selectNode(nodeNodeLabel = "update");
-
-		KaleoDesigner.deleteNode(nodeNodeLabel = "update");
+		KaleoDesigner.deleteNodeInKaleoForms(nodeNodeLabel = "update");
 
 		KaleoFormsAdmin.updateWorkflow();
 

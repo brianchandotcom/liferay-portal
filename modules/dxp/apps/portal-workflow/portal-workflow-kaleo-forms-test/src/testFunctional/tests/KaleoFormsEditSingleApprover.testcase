@@ -428,7 +428,7 @@ definition {
 			workflowDefinitionTitle = "Single Approver",
 			workflowDefinitionTitleEdit = "Edited Workflow Definition");
 
-		KaleoDesigner.selectNode(nodeNodeLabel = "review");
+		KaleoDesigner.selectNodeInKaleoForms(nodeNodeLabel = "review");
 
 		KaleoDesigner.editNodeNotifications(
 			nodeNotificationsDescription = "Review Notification Description",

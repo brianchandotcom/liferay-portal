@@ -189,21 +189,6 @@ public class CommerceChannelServiceImpl extends CommerceChannelServiceBaseImpl {
 			long commerceChannelId, long accountEntryId, long siteGroupId,
 			String name, String type,
 			UnicodeProperties typeSettingsUnicodeProperties,
-			String commerceCurrencyCode)
-		throws PortalException {
-
-		_commerceChannelModelResourcePermission.check(
-			getPermissionChecker(), commerceChannelId, ActionKeys.UPDATE);
-
-		return commerceChannelLocalService.updateCommerceChannel(
-			commerceChannelId, accountEntryId, siteGroupId, name, type,
-			typeSettingsUnicodeProperties, commerceCurrencyCode);
-	}
-
-	@Override
-	public CommerceChannel updateCommerceChannel(
-			long commerceChannelId, long siteGroupId, String name, String type,
-			UnicodeProperties typeSettingsUnicodeProperties,
 			String commerceCurrencyCode, String priceDisplayType,
 			boolean discountsTargetNetPrice)
 		throws PortalException {
@@ -212,7 +197,7 @@ public class CommerceChannelServiceImpl extends CommerceChannelServiceBaseImpl {
 			getPermissionChecker(), commerceChannelId, ActionKeys.UPDATE);
 
 		return commerceChannelLocalService.updateCommerceChannel(
-			commerceChannelId, siteGroupId, name, type,
+			commerceChannelId, accountEntryId, siteGroupId, name, type,
 			typeSettingsUnicodeProperties, commerceCurrencyCode,
 			priceDisplayType, discountsTargetNetPrice);
 	}

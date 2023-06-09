@@ -194,7 +194,9 @@ public class CommerceChannelLocalServiceImpl
 
 		return commerceChannelLocalService.updateCommerceChannel(
 			commerceChannel.getCommerceChannelId(), accountEntryId, siteGroupId,
-			name, type, typeSettingsUnicodeProperties, commerceCurrencyCode);
+			name, type, typeSettingsUnicodeProperties, commerceCurrencyCode,
+			commerceChannel.getPriceDisplayType(),
+			commerceChannel.isDiscountsTargetNetPrice());
 	}
 
 	@Indexable(type = IndexableType.DELETE)
@@ -411,7 +413,8 @@ public class CommerceChannelLocalServiceImpl
 			long commerceChannelId, long accountEntryId, long siteGroupId,
 			String name, String type,
 			UnicodeProperties typeSettingsUnicodeProperties,
-			String commerceCurrencyCode)
+			String commerceCurrencyCode, String priceDisplayType,
+			boolean discountsTargetNetPrice)
 		throws PortalException {
 
 		_validateAccountEntry(accountEntryId);
@@ -423,40 +426,6 @@ public class CommerceChannelLocalServiceImpl
 		long oldSiteGroupId = commerceChannel.getSiteGroupId();
 
 		commerceChannel.setAccountEntryId(accountEntryId);
-		commerceChannel.setSiteGroupId(siteGroupId);
-		commerceChannel.setName(name);
-		commerceChannel.setType(type);
-		commerceChannel.setTypeSettingsUnicodeProperties(
-			typeSettingsUnicodeProperties);
-		commerceChannel.setCommerceCurrencyCode(commerceCurrencyCode);
-
-		commerceChannel = commerceChannelPersistence.update(commerceChannel);
-
-		if (CommerceChannelConstants.CHANNEL_TYPE_SITE.equals(type) &&
-			(siteGroupId != oldSiteGroupId)) {
-
-			_updateGroupTypeSettings(commerceChannel.getGroup(), siteGroupId);
-		}
-
-		return commerceChannel;
-	}
-
-	@Indexable(type = IndexableType.REINDEX)
-	@Override
-	public CommerceChannel updateCommerceChannel(
-			long commerceChannelId, long siteGroupId, String name, String type,
-			UnicodeProperties typeSettingsUnicodeProperties,
-			String commerceCurrencyCode, String priceDisplayType,
-			boolean discountsTargetNetPrice)
-		throws PortalException {
-
-		_validateType(type);
-
-		CommerceChannel commerceChannel =
-			commerceChannelPersistence.findByPrimaryKey(commerceChannelId);
-
-		long oldSiteGroupId = commerceChannel.getSiteGroupId();
-
 		commerceChannel.setSiteGroupId(siteGroupId);
 		commerceChannel.setName(name);
 		commerceChannel.setType(type);

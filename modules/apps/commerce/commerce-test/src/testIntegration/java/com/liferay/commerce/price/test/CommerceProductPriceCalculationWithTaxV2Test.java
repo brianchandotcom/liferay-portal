@@ -189,6 +189,7 @@ public class CommerceProductPriceCalculationWithTaxV2Test {
 		commerceTaxIncludedChannel =
 			CommerceChannelLocalServiceUtil.updateCommerceChannel(
 				commerceTaxIncludedChannel.getCommerceChannelId(),
+				commerceTaxIncludedChannel.getAccountEntryId(),
 				commerceTaxIncludedChannel.getSiteGroupId(),
 				commerceTaxIncludedChannel.getName(),
 				commerceTaxIncludedChannel.getType(),

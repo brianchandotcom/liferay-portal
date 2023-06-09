@@ -27,7 +27,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -36,6 +41,25 @@ import java.util.regex.Pattern;
  * @author Adolfo Pérez
  */
 public class DBInspector {
+
+	public static boolean isObjectTable(
+		List<Long> companyIds, String tableName) {
+
+		for (long companyId : companyIds) {
+
+			// See ObjectDefinitionImpl#getExtensionDBTableName and
+			// ObjectDefinitionLocalServiceImpl#_getDBTableName
+
+			if (tableName.endsWith("_x_" + companyId) ||
+				tableName.startsWith("MSOD_" + companyId + "_") ||
+				tableName.startsWith("O_" + companyId + "_")) {
+
+				return true;
+			}
+		}
+
+		return false;
+	}
 
 	public DBInspector(Connection connection) {
 		_connection = connection;
@@ -56,6 +80,25 @@ public class DBInspector {
 
 			return null;
 		}
+	}
+
+	public List<String> getTableNames(String tableNamePattern)
+		throws SQLException {
+
+		DatabaseMetaData databaseMetaData = _connection.getMetaData();
+
+		List<String> tableNames = new ArrayList<>();
+
+		try (ResultSet resultSet = databaseMetaData.getTables(
+				_connection.getCatalog(), _connection.getSchema(),
+				tableNamePattern, new String[] {"TABLE"})) {
+
+			while (resultSet.next()) {
+				tableNames.add(resultSet.getString("TABLE_NAME"));
+			}
+		}
+
+		return tableNames;
 	}
 
 	public boolean hasColumn(String tableName, String columnName)
@@ -204,6 +247,17 @@ public class DBInspector {
 		return false;
 	}
 
+	public boolean isControlTable(String tableName) throws Exception {
+		if (!_isNotObjectTable(tableName) &&
+			(_controlTableNames.contains(StringUtil.toLowerCase(tableName)) ||
+			 hasColumn(tableName, "companyId"))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isNullable(String tableName, String columnName)
 		throws SQLException {
 
@@ -319,12 +373,22 @@ public class DBInspector {
 		return true;
 	}
 
+	private boolean _isNotObjectTable(String tableName) {
+		if (tableName.contains("_x_") || tableName.startsWith("O_")) {
+			return false;
+		}
+
+		return true;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(DBInspector.class);
 
 	private static final Pattern _columnSizePattern = Pattern.compile(
 		"^\\w+(?:\\((\\d+)\\))?.*", Pattern.CASE_INSENSITIVE);
 	private static final Pattern _columnTypePattern = Pattern.compile(
 		"(^\\w+)", Pattern.CASE_INSENSITIVE);
+	private static final Set<String> _controlTableNames = new HashSet<>(
+		Arrays.asList("company", "virtualhost"));
 
 	private final Connection _connection;
 

@@ -16,9 +16,9 @@ package com.liferay.client.extension.type.internal.factory;
 
 import com.liferay.client.extension.exception.ClientExtensionEntryTypeSettingsException;
 import com.liferay.client.extension.model.ClientExtensionEntry;
-import com.liferay.client.extension.type.DataSetFilterCET;
+import com.liferay.client.extension.type.FDSFilterCET;
 import com.liferay.client.extension.type.factory.CETImplFactory;
-import com.liferay.client.extension.type.internal.DataSetFilterCETImpl;
+import com.liferay.client.extension.type.internal.FDSFilterCETImpl;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -31,31 +31,31 @@ import javax.portlet.PortletRequest;
 /**
  * @author Bryce Osterhaus
  */
-public class DataSetFilterCETImplFactoryImpl
-	implements CETImplFactory<DataSetFilterCET> {
+public class FDSFilterCETImplFactoryImpl
+	implements CETImplFactory<FDSFilterCET> {
 
 	@Override
-	public DataSetFilterCET create(ClientExtensionEntry clientExtensionEntry)
+	public FDSFilterCET create(ClientExtensionEntry clientExtensionEntry)
 		throws PortalException {
 
-		return new DataSetFilterCETImpl(clientExtensionEntry);
+		return new FDSFilterCETImpl(clientExtensionEntry);
 	}
 
 	@Override
-	public DataSetFilterCET create(PortletRequest portletRequest)
+	public FDSFilterCET create(PortletRequest portletRequest)
 		throws PortalException {
 
-		return new DataSetFilterCETImpl(portletRequest);
+		return new FDSFilterCETImpl(portletRequest);
 	}
 
 	@Override
-	public DataSetFilterCET create(
+	public FDSFilterCET create(
 			String baseURL, long companyId, String description,
 			String externalReferenceCode, String name, Properties properties,
 			String sourceCodeURL, UnicodeProperties unicodeProperties)
 		throws PortalException {
 
-		return new DataSetFilterCETImpl(
+		return new FDSFilterCETImpl(
 			baseURL, companyId, description, externalReferenceCode, name,
 			properties, sourceCodeURL, unicodeProperties);
 	}
@@ -66,10 +66,10 @@ public class DataSetFilterCETImplFactoryImpl
 			UnicodeProperties oldTypeSettingsUnicodeProperties)
 		throws PortalException {
 
-		DataSetFilterCET dataSetFilter = new DataSetFilterCETImpl(
+		FDSFilterCET fdsFilterCET = new FDSFilterCETImpl(
 			StringPool.BLANK, newTypeSettingsUnicodeProperties);
 
-		if (Validator.isNull(dataSetFilter.getURL())) {
+		if (Validator.isNull(fdsFilterCET.getURL())) {
 			throw new ClientExtensionEntryTypeSettingsException(
 				"please-enter-at-least-one-url");
 		}

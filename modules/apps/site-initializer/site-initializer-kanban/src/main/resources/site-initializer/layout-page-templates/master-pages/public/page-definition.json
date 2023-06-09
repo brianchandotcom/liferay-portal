@@ -1,0 +1,77 @@
+{
+	"pageElement" : {
+		"pageElements" : [ {
+			"definition" : {
+				"fragmentSettings" : {
+					"unallowedFragments" : [ {
+						"key" : "BASIC_COMPONENT-slider"
+					}, {
+						"key" : "FOOTERS-footer-nav-dark"
+					}, {
+						"key" : "NAVIGATION_BARS-header-dark"
+					}, {
+						"key" : "NAVIGATION_BARS-header-light"
+					}, {
+						"key" : "FEATURED_CONTENT"
+					}, {
+						"key" : "BASIC_COMPONENT-social"
+					}, {
+						"key" : "BASIC_COMPONENT-spacer"
+					}, {
+						"key" : "FEATURED_CONTENT-banner-slider"
+					}, {
+						"key" : "BASIC_COMPONENT"
+					}, {
+						"key" : "FOOTERS"
+					}, {
+						"key" : "FOOTERS-footer-nav-light"
+					}, {
+						"key" : "NAVIGATION_BARS"
+					} ]
+				}
+			},
+			"type" : "DropZone"
+		}, {
+			"definition" : {
+				"indexed" : true,
+				"layout" : {
+					"borderWidth" : 0,
+					"marginBottom" : 0,
+					"marginLeft" : 0,
+					"marginRight" : 0,
+					"marginTop" : 0,
+					"opacity" : 100,
+					"paddingBottom" : 0,
+					"paddingLeft" : 0,
+					"paddingRight" : 0,
+					"paddingTop" : 0,
+					"widthType" : "Fluid"
+				}
+			},
+			"pageElements" : [ {
+				"definition" : {
+					"fragment" : {
+						"key" : "BASIC_COMPONENT-date"
+					},
+					"fragmentConfig" : { },
+					"fragmentFields" : [ {
+						"id" : "element-date",
+						"value" : {
+							"fragmentLink" : { }
+						}
+					} ],
+					"indexed" : true
+				},
+				"type" : "Fragment"
+			} ],
+			"type" : "Section"
+		} ],
+		"type" : "Root"
+	},
+	"settings" : {
+		"colorSchemeName" : "01",
+		"css" : "/*Balow*/\n@font-face {\n\tfont-display: swap;\n\tfont-family: 'Barlow';\n\tfont-style: normal;\n\tfont-weight: 400;\n\tsrc: url([$DOCUMENT_URL:/site-initializer/documents/group/fonts/barlow/Barlow-Regular.ttf$]);\n}\n\n@font-face {\n\tfont-display: swap;\n\tfont-family: 'Barlow';\n\tfont-style: normal;\n\tfont-weight: 600;\n\tsrc: url([$DOCUMENT_URL:/site-initializer/documents/group/fonts/barlow/Barlow-SemiBold.ttf$]);\n}\n\n@font-face {\n\tfont-display: swap;\n\tfont-family: 'Barlow';\n\tfont-style: normal;\n\tfont-weight: 700;\n\tsrc: url([$DOCUMENT_URL:/site-initializer/documents/group/fonts/barlow/Barlow-Bold.ttf$]);\n}\n\n@font-face {\n\tfont-display: swap;\n\tfont-family: 'Barlow';\n\tfont-style: normal;\n\tfont-weight: 800;\n\tsrc: url([$DOCUMENT_URL:/site-initializer/documents/group/fonts/barlow/Barlow-ExtraBold.ttf$]);\n}\n\n/*Source Serif Pro*/\n@font-face {\n\tfont-display: swap;\n\tfont-family: 'Source Serif Pro';\n\tfont-style: normal;\n\tfont-weight: 400;\n\tsrc: \n\t\turl([$DOCUMENT_URL:/site-initializer/documents/group/fonts/sourceSerifPro/SourceSerifPro-Regular.ttf$]);\n}\n\n\n/*GENERAL*/\n\na {\n\tcolor: var(--primary);\n}\n\n/*COMPONENTS*/\n\n/*Grid */\n\n.container,\n.container-fluid,\n.container-sm,\n.container-md,\n.container-lg,\n.container-xl {\n\tpadding-left: 16px;\n\tpadding-right: 16px;\n}\n.row {\n\tmargin-left: -16px;\n\tmargin-right: -16px;\n}\n.col-1,\n.col-2,\n.col-3,\n.col-4,\n.col-5,\n.col-6,\n.col-7,\n.col-8,\n.col-9,\n.col-10,\n.col-11,\n.col-12,\n.col,\n.col-auto,\n.col-sm-1,\n.col-sm-2,\n.col-sm-3,\n.col-sm-4,\n.col-sm-5,\n.col-sm-6,\n.col-sm-7,\n.col-sm-8,\n.col-sm-9,\n.col-sm-10,\n.col-sm-11,\n.col-sm-12,\n.col-sm,\n.col-sm-auto,\n.col-md-1,\n.col-md-2,\n.col-md-3,\n.col-md-4,\n.col-md-5,\n.col-md-6,\n.col-md-7,\n.col-md-8,\n.col-md-9,\n.col-md-10,\n.col-md-11,\n.col-md-12,\n.col-md,\n.col-md-auto,\n.col-lg-1,\n.col-lg-2,\n.col-lg-3,\n.col-lg-4,\n.col-lg-5,\n.col-lg-6,\n.col-lg-7,\n.col-lg-8,\n.col-lg-9,\n.col-lg-10,\n.col-lg-11,\n.col-lg-12,\n.col-lg,\n.col-lg-auto,\n.col-xl-1,\n.col-xl-2,\n.col-xl-3,\n.col-xl-4,\n.col-xl-5,\n.col-xl-6,\n.col-xl-7,\n.col-xl-8,\n.col-xl-9,\n.col-xl-10,\n.col-xl-11,\n.col-xl-12,\n.col-xl,\n.col-xl-auto {\n\tpadding-left: 16px;\n\tpadding-right: 16px;\n}\n\n/*Button*/\n\n.layout-content .btn {\n\tfont-weight: var(--font-weight-bold);\n}\n.layout-content .btn.btn-primary {\n\tbox-shadow: var(--box-shadow);\n}\n\n/*Navbar*/\n\n.layout-content .navbar {\n\t/*position: fixed;*/\n\tfont-size: var(--font-size-base);\n}\n.layout-content .navbar .navbar-brand {\n\tpadding-left: 0;\n}\n.layout-content .navbar .navbar-brand .navbar-logo {\n\theight: 32px;\n}\n.layout-content .navbar .portlet,\n.layout-content .navbar .navbar-zone {\n\tmargin-bottom: 0;\n\tmargin-left: auto;\n\tmargin-right: var(--spacer-2);\n}\n.layout-content .navbar .portlet .nav-item,\n.layout-content .navbar .navbar-nav .nav-item {\n\tfont-weight: var(--font-weight-bold);\n\tpadding-left: var(--spacer-3);\n\tpadding-right: var(--spacer-3);\n}\n.layout-content .navbar .navbar-collapse .sticker {\n\theight: 36px;\n\twidth: 36px;\n}\n.layout-content .navbar .user-menu .btn {\n\tpadding-left: 0;\n\tpadding-right: 0;\n}\n.layout-content .navbar .user-menu .user-name {\n\tcursor: default;\n\tfont-weight: var(--font-weight-bold);\n\tpadding-bottom: calc(var(--spacer-1) * 2);\n\tpadding-left: calc(var(--spacer-1) * 5);\n\tpadding-top: calc(var(--spacer-1) * 2);\n}\n\n/*Icon List*/\n\n.icon-list li {\n\tpadding: var(--spacer-2) 0;\n}\n.icon-list img {\n\tmargin-right: var(--spacer-3);\n\ttransform: translateY(-2px);\n\twidth: 22px;\n}\n\n/*Table*/\n\n.raylife-table {\n\tfont-size: var(--font-size-base);\n}\n.raylife-table thead th {\n\tborder-top: 0;\n}\n.raylife-table th {\n\tborder-bottom: none;\n\tfont-weight: var(--font-weight-bold);\n}\n.raylife-table tr td {\n\tborder-bottom: 0;\n}\n.raylife-table a {\n\tcolor: var(--body-color);\n}\n.raylife-table .status-sticker {\n\tmargin-right: var(--spacer-3);\n\ttransform: translateY(-2px);\n}",
+		"themeName" : "Dialect"
+	},
+	"version" : 1.1
+}

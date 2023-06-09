@@ -1,0 +1,230 @@
+/*Balow*/
+@font-face {
+	font-display: swap;
+	font-family: 'Barlow';
+	font-style: normal;
+	font-weight: 400;
+	src: url([$DOCUMENT_URL:/site-initializer/documents/group/fonts/barlow/Barlow-Regular.ttf$]);
+}
+
+@font-face {
+	font-display: swap;
+	font-family: 'Barlow';
+	font-style: normal;
+	font-weight: 600;
+	src: url([$DOCUMENT_URL:/site-initializer/documents/group/fonts/barlow/Barlow-SemiBold.ttf$]);
+}
+
+@font-face {
+	font-display: swap;
+	font-family: 'Barlow';
+	font-style: normal;
+	font-weight: 700;
+	src: url([$DOCUMENT_URL:/site-initializer/documents/group/fonts/barlow/Barlow-Bold.ttf$]);
+}
+
+@font-face {
+	font-display: swap;
+	font-family: 'Barlow';
+	font-style: normal;
+	font-weight: 800;
+	src: url([$DOCUMENT_URL:/site-initializer/documents/group/fonts/barlow/Barlow-ExtraBold.ttf$]);
+}
+
+/*Source Serif Pro*/
+@font-face {
+	font-display: swap;
+	font-family: 'Source Serif Pro';
+	font-style: normal;
+	font-weight: 400;
+	src: 
+		url([$DOCUMENT_URL:/site-initializer/documents/group/fonts/sourceSerifPro/SourceSerifPro-Regular.ttf$]);
+}
+
+/*GENERAL*/
+
+a {
+	color: var(--primary);
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active {
+    transition: all 5000s ease-in-out 0s;
+    transition-property: background-color, color;
+}
+
+/*COMPONENTS*/
+
+/*Grid */
+
+.container,
+.container-fluid,
+.container-sm,
+.container-md,
+.container-lg,
+.container-xl {
+	padding-left: 16px;
+	padding-right: 16px;
+}
+.row {
+	margin-left: -16px;
+	margin-right: -16px;
+}
+.col-1,
+.col-2,
+.col-3,
+.col-4,
+.col-5,
+.col-6,
+.col-7,
+.col-8,
+.col-9,
+.col-10,
+.col-11,
+.col-12,
+.col,
+.col-auto,
+.col-sm-1,
+.col-sm-2,
+.col-sm-3,
+.col-sm-4,
+.col-sm-5,
+.col-sm-6,
+.col-sm-7,
+.col-sm-8,
+.col-sm-9,
+.col-sm-10,
+.col-sm-11,
+.col-sm-12,
+.col-sm,
+.col-sm-auto,
+.col-md-1,
+.col-md-2,
+.col-md-3,
+.col-md-4,
+.col-md-5,
+.col-md-6,
+.col-md-7,
+.col-md-8,
+.col-md-9,
+.col-md-10,
+.col-md-11,
+.col-md-12,
+.col-md,
+.col-md-auto,
+.col-lg-1,
+.col-lg-2,
+.col-lg-3,
+.col-lg-4,
+.col-lg-5,
+.col-lg-6,
+.col-lg-7,
+.col-lg-8,
+.col-lg-9,
+.col-lg-10,
+.col-lg-11,
+.col-lg-12,
+.col-lg,
+.col-lg-auto,
+.col-xl-1,
+.col-xl-2,
+.col-xl-3,
+.col-xl-4,
+.col-xl-5,
+.col-xl-6,
+.col-xl-7,
+.col-xl-8,
+.col-xl-9,
+.col-xl-10,
+.col-xl-11,
+.col-xl-12,
+.col-xl,
+.col-xl-auto {
+	padding-left: 16px;
+	padding-right: 16px;
+}
+
+/*Button*/
+
+.layout-content .btn {
+	font-weight: var(--font-weight-bold);
+}
+.layout-content .btn.btn-primary {
+	box-shadow: var(--box-shadow);
+}
+
+/*Navbar*/
+
+.layout-content .navbar {
+	/*position: fixed;*/
+	font-size: var(--font-size-base);
+}
+.layout-content .navbar .navbar-brand {
+	padding-left: 0;
+}
+.layout-content .navbar .navbar-brand .navbar-logo {
+	height: 32px;
+}
+.layout-content .navbar .portlet,
+.layout-content .navbar .navbar-zone {
+	margin-bottom: 0;
+	margin-left: auto;
+	margin-right: var(--spacer-2);
+}
+.layout-content .navbar .portlet .nav-item,
+.layout-content .navbar .navbar-nav .nav-item {
+	font-weight: var(--font-weight-bold);
+	padding-left: var(--spacer-3);
+	padding-right: var(--spacer-3);
+}
+.layout-content .navbar .navbar-collapse .sticker {
+	height: 36px;
+	width: 36px;
+}
+.layout-content .navbar .user-menu .btn {
+	padding-left: 0;
+	padding-right: 0;
+}
+.layout-content .navbar .user-menu .user-name {
+	cursor: default;
+	font-weight: var(--font-weight-bold);
+	padding-bottom: calc(var(--spacer-1) * 2);
+	padding-left: calc(var(--spacer-1) * 5);
+	padding-top: calc(var(--spacer-1) * 2);
+}
+
+/*Icon List*/
+
+.icon-list li {
+	padding: var(--spacer-2) 0;
+}
+.icon-list img {
+	margin-right: var(--spacer-3);
+	transform: translateY(-2px);
+	width: 22px;
+}
+
+/*Table*/
+
+.raylife-table {
+	font-size: var(--font-size-base);
+}
+.raylife-table thead th {
+	border-top: 0;
+}
+.raylife-table th {
+	border-bottom: none;
+	font-weight: var(--font-weight-bold);
+}
+.raylife-table tr td {
+	border-bottom: 0;
+}
+.raylife-table a {
+	color: var(--body-color);
+}
+.raylife-table .status-sticker {
+	margin-right: var(--spacer-3);
+	transform: translateY(-2px);
+}

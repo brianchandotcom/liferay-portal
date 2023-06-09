@@ -1,0 +1,256 @@
+<?xml version="1.0"?>
+
+<root>
+	<structure>
+		<name>Quote</name>
+		<description></description>
+		<definition>
+			<![CDATA[
+				{
+					"availableLanguageIds": [
+						"en_US"
+					],
+					"defaultLanguageId": "en_US",
+					"fields": [
+						{
+							"dataType": "string",
+							"indexType": "keyword",
+							"label": {
+								"en_US": "Most Popular"
+							},
+							"localizable": true,
+							"name": "mostPopular",
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"type": "text"
+						},
+						{
+							"dataType": "string",
+							"indexType": "keyword",
+							"label": {
+								"en_US": "Title"
+							},
+							"localizable": true,
+							"name": "title",
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"required": true,
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"type": "text"
+						},
+						{
+							"dataType": "string",
+							"indexType": "keyword",
+							"label": {
+								"en_US": "Value"
+							},
+							"localizable": true,
+							"name": "value",
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"type": "text"
+						},
+						{
+							"dataType": "string",
+							"indexType": "keyword",
+							"label": {
+								"en_US": "Subtitle"
+							},
+							"localizable": true,
+							"name": "subtitle",
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"type": "text"
+						},
+						{
+							"dataType": "html",
+							"fieldNamespace": "ddm",
+							"indexType": "text",
+							"label": {
+								"en_US": "List Terms"
+							},
+							"localizable": true,
+							"name": "listTerms",
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"type": "ddm-text-html"
+						},
+						{
+							"dataType": "image",
+							"fieldNamespace": "ddm",
+							"indexType": "text",
+							"label": {
+								"en_US": "Check Icon"
+							},
+							"localizable": true,
+							"name": "checkIcon",
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"type": "ddm-image"
+						},
+						{
+							"dataType": "image",
+							"fieldNamespace": "ddm",
+							"indexType": "text",
+							"label": {
+								"en_US": "Close Icon"
+							},
+							"localizable": true,
+							"name": "closeIcon",
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"type": "ddm-image"
+						}
+					],
+					"successPage": {
+						"body": {
+						},
+						"enabled": false,
+						"title": {
+						}
+					}
+				}
+			]]>
+		</definition>
+		<layout>
+			<![CDATA[
+				{
+					"defaultLanguageId": "[$LOCALE_DEFAULT$]",
+					"pages": [
+						{
+							"rows": [
+								{
+									"columns": [
+										{
+											"fieldNames": [
+												"mostPopular"
+											],
+											"size": 12
+										}
+									]
+								},
+								{
+									"columns": [
+										{
+											"fieldNames": [
+												"title"
+											],
+											"size": 12
+										}
+									]
+								},
+								{
+									"columns": [
+										{
+											"fieldNames": [
+												"value"
+											],
+											"size": 12
+										}
+									]
+								},
+								{
+									"columns": [
+										{
+											"fieldNames": [
+												"subtitle"
+											],
+											"size": 12
+										}
+									]
+								},
+								{
+									"columns": [
+										{
+											"fieldNames": [
+												"listTerms"
+											],
+											"size": 12
+										}
+									]
+								},
+								{
+									"columns": [
+										{
+											"fieldNames": [
+												"checkIcon"
+											],
+											"size": 12
+										}
+									]
+								},
+								{
+									"columns": [
+										{
+											"fieldNames": [
+												"closeIcon"
+											],
+											"size": 12
+										}
+									]
+								}
+							],
+							"title": {
+								"[$LOCALE_DEFAULT$]": "Quote Structure"
+							}
+						}
+					]
+				}
+			]]>
+		</layout>
+	</structure>
+</root>

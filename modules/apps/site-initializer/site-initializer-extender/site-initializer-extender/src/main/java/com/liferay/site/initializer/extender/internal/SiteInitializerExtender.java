@@ -51,6 +51,7 @@ import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalServic
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.notification.rest.resource.v1_0.NotificationTemplateResource;
+import com.liferay.notification.service.NotificationTemplateLocalService;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectFieldResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectRelationshipResource;
@@ -158,7 +159,8 @@ public class SiteInitializerExtender
 				_listTypeDefinitionLocalService, _listTypeDefinitionResource,
 				_listTypeDefinitionResourceFactory, _listTypeEntryLocalService,
 				_listTypeEntryResource, _listTypeEntryResourceFactory,
-				_notificationTemplateResourceFactory, _objectActionLocalService,
+				_notificationTemplateResourceFactory, _notificationTemplateLocalService,
+				_objectActionLocalService,
 				_objectDefinitionLocalService, _objectDefinitionResourceFactory,
 				_objectEntryLocalService, _objectEntryManager,
 				_objectFieldLocalService, _objectFieldResourceFactory,
@@ -278,7 +280,8 @@ public class SiteInitializerExtender
 				_listTypeDefinitionLocalService, _listTypeDefinitionResource,
 				_listTypeDefinitionResourceFactory, _listTypeEntryLocalService,
 				_listTypeEntryResource, _listTypeEntryResourceFactory,
-				_notificationTemplateResourceFactory, _objectActionLocalService,
+				_notificationTemplateResourceFactory, _notificationTemplateLocalService,
+				_objectActionLocalService,
 				_objectDefinitionLocalService, _objectDefinitionResourceFactory,
 				_objectEntryLocalService, _objectEntryManager,
 				_objectFieldLocalService, _objectFieldResourceFactory,
@@ -440,6 +443,9 @@ public class SiteInitializerExtender
 	@Reference
 	private NotificationTemplateResource.Factory
 		_notificationTemplateResourceFactory;
+
+	@Reference
+	private NotificationTemplateLocalService _notificationTemplateLocalService;
 
 	@Reference
 	private ObjectActionLocalService _objectActionLocalService;

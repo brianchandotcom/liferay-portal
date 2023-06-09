@@ -1,0 +1,372 @@
+<?xml version="1.0"?>
+
+<root>
+	<structure>
+		<name>Tip</name>
+		<description></description>
+		<definition>
+			<![CDATA[
+				{
+					"availableLanguageIds": [
+						"en_US"
+					],
+					"defaultLanguageId": "en_US",
+					"fields": [
+						{
+							"dataType": "string",
+							"indexType": "keyword",
+							"label": {
+								"en_US": "Title"
+							},
+							"localizable": true,
+							"name": "title",
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"required": true,
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"type": "text"
+						},
+						{
+							"dataType": "string",
+							"indexType": "keyword",
+							"label": {
+								"en_US": "Subtitle"
+							},
+							"localizable": true,
+							"name": "subtitle",
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"type": "text"
+						},
+						{
+							"dataType": "html",
+							"fieldNamespace": "ddm",
+							"indexType": "text",
+							"label": {
+								"en_US": "Action List"
+							},
+							"localizable": true,
+							"name": "actionList",
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"type": "ddm-text-html"
+						},
+						{
+							"dataType": "html",
+							"fieldNamespace": "ddm",
+							"indexType": "text",
+							"label": {
+								"en_US": "External Link"
+							},
+							"localizable": true,
+							"name": "externalLink",
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"type": "ddm-text-html"
+						},
+						{
+							"dataType": "html",
+							"fieldNamespace": "ddm",
+							"indexType": "text",
+							"label": {
+								"en_US": "Description"
+							},
+							"localizable": true,
+							"name": "description",
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"type": "ddm-text-html"
+						},
+						{
+							"dataType": "image",
+							"fieldNamespace": "ddm",
+							"indexType": "text",
+							"label": {
+								"en_US": "Title Icon"
+							},
+							"localizable": true,
+							"name": "titleIcon",
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"type": "ddm-image"
+						},
+						{
+							"dataType": "image",
+							"fieldNamespace": "ddm",
+							"indexType": "text",
+							"label": {
+								"en_US": "List Icon"
+							},
+							"localizable": true,
+							"name": "listIcon",
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"type": "ddm-image"
+						},
+						{
+							"dataType": "image",
+							"fieldNamespace": "ddm",
+							"indexType": "text",
+							"label": {
+								"en_US": "Back Icon"
+							},
+							"localizable": true,
+							"name": "backIcon",
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"type": "ddm-image"
+						},
+						{
+							"dataType": "image",
+							"fieldNamespace": "ddm",
+							"indexType": "text",
+							"label": {
+								"en_US": "External Link Icon"
+							},
+							"localizable": true,
+							"name": "externalLinkIcon",
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"type": "ddm-image"
+						},
+						{
+							"dataType": "string",
+							"fieldNamespace": "",
+							"fieldReference": "pageOptions",
+							"indexType": "keyword",
+							"inline": false,
+							"label": {
+								"en_US": "Page Options"
+							},
+							"localizable": true,
+							"name": "pageOptions",
+							"nativeField": false,
+							"options": [
+								{
+									"label": {
+										"en_US": "Dismissible"
+									},
+									"reference": "",
+									"value": "dismissible"
+								},
+								{
+									"label": {
+										"en_US": "Back to Edit Info"
+									},
+									"reference": "",
+									"value": "showBacktoEdit"
+								}
+							],
+							"predefinedValue": {
+								"en_US": "[]"
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showAsSwitcher": false,
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"type": "checkbox_multiple",
+							"visibilityExpression": ""
+						}
+					],
+					"successPage": {
+						"body": {
+						},
+						"enabled": false,
+						"title": {
+						}
+					}
+				}
+			]]>
+		</definition>
+		<layout>
+			<![CDATA[
+				{
+					"defaultLanguageId": "[$LOCALE_DEFAULT$]",
+					"pages": [
+						{
+							"rows": [
+								{
+									"columns": [
+										{
+											"fieldNames": [
+												"title"
+											],
+											"size": 12
+										}
+									]
+								},
+								{
+									"columns": [
+										{
+											"fieldNames": [
+												"subtitle"
+											],
+											"size": 12
+										}
+									]
+								},
+								{
+									"columns": [
+										{
+											"fieldNames": [
+												"actionList"
+											],
+											"size": 12
+										}
+									]
+								},
+								{
+									"columns": [
+										{
+											"fieldNames": [
+												"externalLink"
+											],
+											"size": 12
+										}
+									]
+								},
+								{
+									"columns": [
+										{
+											"fieldNames": [
+												"description"
+											],
+											"size": 12
+										}
+									]
+								},
+								{
+									"columns": [
+										{
+											"fieldNames": [
+												"titleIcon"
+											],
+											"size": 12
+										}
+									]
+								},
+								{
+									"columns": [
+										{
+											"fieldNames": [
+												"listIcon"
+											],
+											"size": 12
+										}
+									]
+								},
+								{
+									"columns": [
+										{
+											"fieldNames": [
+												"backIcon"
+											],
+											"size": 12
+										}
+									]
+								},
+								{
+									"columns": [
+										{
+											"fieldNames": [
+												"externalLinkIcon"
+											],
+											"size": 12
+										}
+									]
+								},
+								{
+									"columns": [
+										{
+											"fieldNames": [
+												"pageOptions"
+											],
+											"size": 12
+										}
+									]
+								}
+							],
+							"title": {
+								"[$LOCALE_DEFAULT$]": "Tip Structure"
+							}
+						}
+					]
+				}
+			]]>
+		</layout>
+	</structure>
+</root>

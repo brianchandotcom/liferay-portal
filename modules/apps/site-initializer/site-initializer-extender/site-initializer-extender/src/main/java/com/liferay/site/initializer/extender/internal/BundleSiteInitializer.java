@@ -94,6 +94,7 @@ import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.notification.rest.dto.v1_0.NotificationTemplate;
 import com.liferay.notification.rest.resource.v1_0.NotificationTemplateResource;
+import com.liferay.notification.service.NotificationTemplateLocalService;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectField;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectRelationship;
@@ -279,6 +280,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		ListTypeEntryResource.Factory listTypeEntryResourceFactory,
 		NotificationTemplateResource.Factory
 			notificationTemplateResourceFactory,
+		NotificationTemplateLocalService notificationTemplateLocalService,
 		ObjectActionLocalService objectActionLocalService,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectDefinitionResource.Factory objectDefinitionResourceFactory,
@@ -361,6 +363,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_listTypeEntryResourceFactory = listTypeEntryResourceFactory;
 		_notificationTemplateResourceFactory =
 			notificationTemplateResourceFactory;
+		_notificationTemplateLocalService = notificationTemplateLocalService;
 		_objectActionLocalService = objectActionLocalService;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectDefinitionResourceFactory = objectDefinitionResourceFactory;
@@ -2849,16 +2852,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 				serviceContext.fetchUser()
 			).build();
 
-		Page<NotificationTemplate> notificationTemplatesPage =
-			notificationTemplateResource.getNotificationTemplatesPage(
-				null, null,
-				notificationTemplateResource.toFilter(
-					StringBundler.concat(
-						"name eq '", notificationTemplate.getName(), "'")),
-				null, null);
-
-		NotificationTemplate existingNotificationTemplate =
-			notificationTemplatesPage.fetchFirstItem();
+		com.liferay.notification.model.NotificationTemplate
+			existingNotificationTemplate = _notificationTemplateLocalService
+				.fetchNotificationTemplateByExternalReferenceCode(notificationTemplate.getExternalReferenceCode(), serviceContext.getCompanyId());
 
 		if (existingNotificationTemplate == null) {
 			notificationTemplate =
@@ -2867,8 +2863,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 		else {
 			notificationTemplate =
-				notificationTemplateResource.putNotificationTemplate(
-					existingNotificationTemplate.getId(), notificationTemplate);
+				notificationTemplateResource.putNotificationTemplateByExternalReferenceCode(
+					existingNotificationTemplate.getExternalReferenceCode(), notificationTemplate);
 		}
 
 		json = SiteInitializerUtil.read(
@@ -5172,6 +5168,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final ListTypeEntryResource.Factory _listTypeEntryResourceFactory;
 	private final NotificationTemplateResource.Factory
 		_notificationTemplateResourceFactory;
+	private final NotificationTemplateLocalService _notificationTemplateLocalService;
 	private final ObjectActionLocalService _objectActionLocalService;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectDefinitionResource.Factory

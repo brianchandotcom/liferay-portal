@@ -37,7 +37,15 @@ MercanetGroupServiceConfiguration mercanetGroupServiceConfiguration = (MercanetG
 		>
 			<aui:input label="merchant-id" name="settings--merchantId--" value="<%= mercanetGroupServiceConfiguration.merchantId() %>" />
 
-			<aui:input label="secret-key" name="settings--secretKey--" value="<%= mercanetGroupServiceConfiguration.secretKey() %>" />
+			<%
+			String secretKey = mercanetGroupServiceConfiguration.secretKey();
+
+			if (Validator.isNotNull(secretKey)) {
+				secretKey = Portal.TEMP_OBFUSCATION_VALUE;
+			}
+			%>
+
+			<aui:input label="secret-key" name="settings--secretKey--" type="password" value="<%= secretKey %>" />
 
 			<aui:input label="key-version" name="settings--keyVersion--" value="<%= mercanetGroupServiceConfiguration.keyVersion() %>" />
 

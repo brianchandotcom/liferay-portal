@@ -37,7 +37,7 @@ public interface MercanetGroupServiceConfiguration {
 	@Meta.AD(name = "environment", required = false)
 	public String environment();
 
-	@Meta.AD(name = "secret-key", required = false)
+	@Meta.AD(name = "secret-key", required = false, type = Meta.Type.Password)
 	public String secretKey();
 
 	@Meta.AD(name = "key-version", required = false)

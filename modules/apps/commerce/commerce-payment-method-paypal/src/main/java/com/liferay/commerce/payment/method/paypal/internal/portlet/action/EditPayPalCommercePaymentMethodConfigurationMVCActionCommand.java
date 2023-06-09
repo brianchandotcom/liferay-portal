@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -83,7 +84,9 @@ public class EditPayPalCommercePaymentMethodConfigurationMVCActionCommand
 		String clientSecret = ParamUtil.getString(
 			actionRequest, "settings--clientSecret--");
 
-		modifiableSettings.setValue("clientSecret", clientSecret);
+		if (!clientSecret.equals(Portal.TEMP_OBFUSCATION_VALUE)) {
+			modifiableSettings.setValue("clientSecret", clientSecret);
+		}
 
 		String mode = ParamUtil.getString(actionRequest, "settings--mode--");
 

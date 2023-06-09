@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -85,10 +86,12 @@ public class EditMercanetCommercePaymentMethodConfigurationMVCActionCommand
 
 		modifiableSettings.setValue("environment", environment);
 
-		String transactionKey = ParamUtil.getString(
+		String secretKey = ParamUtil.getString(
 			actionRequest, "settings--secretKey--");
 
-		modifiableSettings.setValue("secretKey", transactionKey);
+		if (!secretKey.equals(Portal.TEMP_OBFUSCATION_VALUE)) {
+			modifiableSettings.setValue("secretKey", secretKey);
+		}
 
 		String keyVersion = ParamUtil.getString(
 			actionRequest, "settings--keyVersion--");

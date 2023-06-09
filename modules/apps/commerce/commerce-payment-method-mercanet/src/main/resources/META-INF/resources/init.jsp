@@ -30,7 +30,9 @@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
-page import="com.liferay.portal.kernel.util.URLCodec" %>
+page import="com.liferay.portal.kernel.util.Portal" %><%@
+page import="com.liferay.portal.kernel.util.URLCodec" %><%@
+page import="com.liferay.portal.kernel.util.Validator" %>
 
 <%@ page import="java.net.URLDecoder" %>
 

@@ -37,7 +37,15 @@ PayPalGroupServiceConfiguration payPalGroupServiceConfiguration = (PayPalGroupSe
 
 			<aui:input id="paypal-client-id" label="client-id" name="settings--clientId--" value="<%= payPalGroupServiceConfiguration.clientId() %>" />
 
-			<aui:input id="paypal-client-secret" label="client-secret" name="settings--clientSecret--" value="<%= payPalGroupServiceConfiguration.clientSecret() %>" />
+			<%
+			String clientSecret = payPalGroupServiceConfiguration.clientSecret();
+
+			if (Validator.isNotNull(clientSecret)) {
+				clientSecret = Portal.TEMP_OBFUSCATION_VALUE;
+			}
+			%>
+
+			<aui:input id="paypal-client-secret" label="client-secret" name="settings--clientSecret--" type="password" value="<%= clientSecret %>" />
 
 			<aui:select id="paypal-settings-mode" label="mode" name="settings--mode--">
 

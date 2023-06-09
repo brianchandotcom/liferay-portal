@@ -34,7 +34,9 @@ public interface PayPalGroupServiceConfiguration {
 	@Meta.AD(name = "client-id", required = false)
 	public String clientId();
 
-	@Meta.AD(name = "client-secret", required = false)
+	@Meta.AD(
+		name = "client-secret", required = false, type = Meta.Type.Password
+	)
 	public String clientSecret();
 
 	@Meta.AD(name = "mode", required = false)

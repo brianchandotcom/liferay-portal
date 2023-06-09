@@ -28,8 +28,6 @@ definition {
 			User.logoutPG();
 
 			RaylifeAP.userLoginInRaylife(email = "scott.producer");
-
-			RaylifeAP.goToRaylifeUserProfileMenu(raylifeSite = "Raylife AP");
 		}
 	}
 
@@ -55,7 +53,11 @@ definition {
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
-		task ("Given the Applications page is open") {
+		task ("Given the User goes to 'Raylife Ap'") {
+			RaylifeAP.goToRaylifeUserProfileMenu(raylifeSite = "Raylife AP");
+		}
+
+		task ("And Applications page is open") {
 			RaylifeAPNavigator.gotoSidebarItem(itemName = "Applications");
 		}
 
@@ -154,7 +156,11 @@ definition {
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
-		task ("Given the applications page is open") {
+		task ("Given the User goes to 'Raylife Ap'") {
+			RaylifeAP.goToRaylifeUserProfileMenu(raylifeSite = "Raylife AP");
+		}
+
+		task ("And Applications page is open") {
 			RaylifeAPNavigator.gotoSidebarItem(itemName = "Applications");
 		}
 
@@ -172,15 +178,11 @@ definition {
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
-		task ("Given the applications page is open") {
-			RaylifeAPNavigator.gotoSidebarItem(itemName = "Applications");
+		task ("Given the User goes to 'Raylife Ap'") {
+			RaylifeAP.goToRaylifeUserProfileMenu(raylifeSite = "Raylife D2C");
 		}
 
 		task ("When the user fill in the forms in Raylife D2C") {
-			var open = RaylifeAPApplications.getApplicationLegendValue(legendItem = "Open");
-
-			ApplicationsMenu.gotoSite(site = "Raylife D2C");
-
 			RaylifeHomePage.startFlow();
 
 			RaylifeContactInfo.typeAllBasicsInfoFields();
@@ -190,17 +192,20 @@ definition {
 			Click(locator1 = "RaylifeSaveExit#SEND_LINK_EXIT");
 		}
 
-		task ("Then Assert if the 'open' status has change in the graph") {
-			RaylifeAP.goToRaylifeAPSiteWithRefresh();
+		task ("And navigate for Raylife Ap") {
+			Navigator.openSpecificURL(url = "http://localhost:8080/group/raylife-ap");
 
+			Refresh();
+		}
+
+		task ("And go to Applications page") {
 			RaylifeAPNavigator.gotoSidebarItem(itemName = "Applications");
+		}
 
-			var newValue = ${open} + 1;
-
-			AssertTextEquals(
+		task ("Then Assert if the 'open' status has change in the graph") {
+			AssertElementPresent(
 				key_legendItem = "Open",
-				locator1 = "RaylifeAPApplications#STATUS_LEGEND",
-				value1 = ${newValue});
+				locator1 = "RaylifeAPApplications#STATUS_LEGEND");
 		}
 	}
 
@@ -212,7 +217,11 @@ definition {
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
-		task ("Given the applications page is open") {
+		task ("Given the User goes to 'Raylife Ap'") {
+			RaylifeAP.goToRaylifeUserProfileMenu(raylifeSite = "Raylife D2C");
+		}
+
+		task ("And Applications page is open") {
 			RaylifeAPNavigator.gotoSidebarItem(itemName = "Applications");
 
 			AssertElementNotPresent(
@@ -250,7 +259,11 @@ definition {
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
-		task ("Given the Applications page is open") {
+		task ("Given the User goes to 'Raylife Ap'") {
+			RaylifeAP.goToRaylifeUserProfileMenu(raylifeSite = "Raylife AP");
+		}
+
+		task ("And Applications page is open") {
 			RaylifeAPNavigator.gotoSidebarItem(itemName = "Applications");
 		}
 

@@ -12,6 +12,33 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
+
+		task ("Given creating a Data Set via API") {
+			FrontendDataSetAdmin.goToDataSetsAdminPage();
+
+			FrontendDataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Data Set Test",
+				restApplication = "/c/fdsdatefilters",
+				restEndpoint = "/",
+				restSchema = "FDSDateFilter");
+		}
+
+		task ("And a data set view created via api") {
+			FrontendDataSetAdmin.createFDSViewViaAPI(
+				dataSetName = "Data Set Test",
+				dataSetViewDescription = "Description Test",
+				key_dataSetViewNameList = "View Test");
+		}
+
+		task ("When go to the View page of the data set created.") {
+			FrontendDataSetAdmin.goToSpecificViewPage(
+				dataSetName = "Data Set Test",
+				key_viewName = "View Test");
+		}
+
+		task ("When the user accesses the Filters tab.") {
+			FrontendDataSetAdmin.goToTab(tabName = "Filters");
+		}
 	}
 
 	tearDown {
@@ -24,58 +51,164 @@ definition {
 		}
 	}
 
-	@description = "LPS-186434. Confirm that the Delete option is present."
-	@ignore = "true"
-	@priority = 3
-	test CanAssertDeleteIsPresent {
-
-		// TODO LPS-186434 CanAssertDeleteIsPresent pending implementation
-
-	}
-
-	@description = "LPS-186435. Confirm that the field is deleted and a successful message is displayed."
-	@ignore = "true"
-	@priority = 3
-	test CanAssertFilterIsDeleted {
-
-		// TODO LPS-186435 CanAssertFilterIsDeleted pending implementation
-
-	}
-
-	@description = "LPS-186431. Confirm that an element dragged and dropped below another,will be deprioritized."
-	@ignore = "true"
+	@description = "LPS-176184. Confirm that all fields in the schema are displayed"
 	@priority = 5
-	test CanBeDeprioritizedBelowAnother {
+	test AssertAllFieldsAreDisplayedInSchema {
+		task ("And clicks to add a new filter") {
+			LexiconEntry.gotoAdd();
+		}
 
-		// TODO LPS-186431 CanBeDeprioritizedBelowAnother pending implementation
+		task ("asserts all fields in the schema are displayed") {
+			Click(locator1 = "FrontendDataSetAdmin#FILTER_BY_SELECT");
 
+			FrontendDataSetAdmin.assertSearchFilters(key_filterList = "creator,externalReferenceCode,id,status,createDate,fieldName,from,modifiedDate,name,r_fdsViewFDSDateFilterRelationship_c_fdsViewId,rendererType,r_fdsViewFDSDateFilterRelationship_c_fdsViewERC,to,type");
+		}
 	}
 
-	@description = "LPS-186430. Confirm that an element dragged and dropped on top of another element will be prioritized."
-	@ignore = "true"
-	@priority = 4
-	test CanBePrioritizedOverAnother {
+	@description = "LPS-176184. Confirm that when 'Name Field' is not provided, it is filled with the same name as field name."
+	@priority = 3
+	test AssertNameIsFilledByDefault {
+		task ("And adds a new filter") {
+			LexiconEntry.gotoAdd();
+		}
 
-		// TODO LPS-186430 CanBePrioritizedOverAnother pending implementation
+		task ("And Choose an ID in the Filter By field") {
+			FrontendDataSetAdmin.selectFilters(filterType = "id");
+		}
 
+		task ("And Clicks Save") {
+			Button.clickSave();
+		}
+
+		task ("Then Confirm that the name of the saved filter is the same name as the chosen field") {
+			AssertElementPresent(
+				chosenFilter = "id",
+				key_tableColumn = 1,
+				key_tableRow = 1,
+				locator1 = "FrontendDataSetAdmin#FILTER_TABLE_CELL");
+		}
 	}
 
-	@description = "LPS-186437. Confirm that the field is not deleted by clicking the Cancel button."
-	@ignore = "true"
+	@description = "LPS-176184. Confirm that 'No default filters were created.' and 'Start creating a filter to display specific data' messages are displayed"
+	@priority = 3
+	test CanAssertNoDefaultFilters {
+		task ("Then asserts the message: 'No default filters were created. Start creating a filter to display specific data' is displayed") {
+			AssertTextEquals.assertText(
+				locator1 = "Message#EMPTY_STATE_INFO",
+				value1 = "No default filters were created.");
+
+			AssertTextEquals.assertText(
+				locator1 = "Message#EMPTY_STATE_TEXT",
+				value1 = "Start creating a Filter to display specific Data.");
+		}
+	}
+
+	@description = "LPS-176184. Confirm that the New filter modal is closed and the changes are not applied when canceling on Cancel button"
+	@priority = 3
+	test CanCancelFilterCreationOnCancelButton {
+		task ("And clicks to add a new filter") {
+			LexiconEntry.gotoAdd();
+		}
+
+		task ("Then click on the "Cancel button"") {
+			Button.clickCancel();
+		}
+
+		task ("And assert the New filter modal is closed and the changes are not applied") {
+			AssertElementNotPresent(
+				key_modalTitle = "New Filter",
+				locator1 = "Button#CLOSE_MODAL");
+
+			AssertTextEquals.assertText(
+				locator1 = "Message#EMPTY_STATE_INFO",
+				value1 = "No default filters were created.");
+		}
+	}
+
+	@description = "LPS-176184. Confirm that the New filter modal is closed and the changes are not applied when canceling on Close (X) button"
+	@priority = 3
+	test CanCancelFilterCreationOnCloseButton {
+		task ("And clicks to add a new filter") {
+			LexiconEntry.gotoAdd();
+		}
+
+		task ("Then click on the "Close button"") {
+			Click(
+				key_modalTitle = "New Filter",
+				locator1 = "Button#CLOSE_MODAL");
+		}
+
+		task ("And assert the New filter modal is closed and the changes are not applied") {
+			AssertElementNotPresent(
+				key_modalTitle = "New Filter",
+				locator1 = "Button#CLOSE_MODAL");
+
+			AssertTextEquals.assertText(
+				locator1 = "Message#EMPTY_STATE_INFO",
+				value1 = "No default filters were created.");
+		}
+	}
+
+	@description = "LPS-176184. Confirm that the text 'Select' is labeling the  'Filter By Field'"
 	@priority = 5
-	test CanCancelButtonDeleteFilter {
+	test CanCreateFilters {
+		task ("And adds a new filter") {
+			FrontendDataSetAdmin.createFilters(
+				filterName = "Test Filter",
+				key_filterList = "id");
+		}
 
-		// TODO LPS-186437 CanCancelButtonDeleteFilter pending implementation
-
+		task ("Then asserts the selected option is actually displayed") {
+			AssertElementPresent(
+				chosenFilter = "id",
+				key_tableColumn = 1,
+				key_tableRow = 1,
+				locator1 = "FrontendDataSetAdmin#FILTER_TABLE_CELL");
+		}
 	}
 
-	@description = "LPS-186429. Confirm that the elements of the list can be dragged and dropped."
-	@ignore = "true"
-	@priority = 4
-	test CanInteractDragDrop {
+	@description = "LPS-176184. Confirm that 'Filter By' field cannot be empty"
+	@priority = 3
+	test CannotLeaveFilterByEmpty {
+		task ("And adds a new filter") {
+			LexiconEntry.gotoAdd();
+		}
 
-		// TODO LPS-186429 CanInteractDragDrop pending implementation
+		task ("And Fill the name filter with Test filter") {
+			Type(
+				locator1 = "TextInput#NAME",
+				value1 = "Test Filter");
+		}
 
+		task ("Then Comfirm that is not possible clicks save button") {
+			AssertElementPresent(
+				key_text = "Save",
+				locator1 = "Button#ANY_DISABLED");
+		}
+	}
+
+	@description = "LPS-176184. Confirm that is possible search filter when click on search icon"
+	@priority = 3
+	test CanSearchFilterOnIcon {
+		task ("And adds two or more new filters") {
+			FrontendDataSetAdmin.createFilters(key_filterList = "creator,id");
+		}
+
+		task ("Then the user searches for one of the created filters") {
+			FrontendDataSetAdmin.searchField(searchTerm = "creator");
+		}
+
+		task ("And clicks the search icon") {
+			Click(locator1 = "AppBuilder#SEARCH_BUTTON");
+		}
+
+		task ("Then the corresponding result is displayed.") {
+			AssertElementPresent(
+				chosenFilter = "creator",
+				key_tableColumn = 1,
+				key_tableRow = 1,
+				locator1 = "FrontendDataSetAdmin#FILTER_TABLE_CELL");
+		}
 	}
 
 }

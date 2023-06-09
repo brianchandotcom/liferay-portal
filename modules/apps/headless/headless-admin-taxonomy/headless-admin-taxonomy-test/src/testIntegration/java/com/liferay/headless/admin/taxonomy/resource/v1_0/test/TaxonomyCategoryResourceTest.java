@@ -46,6 +46,7 @@ import com.liferay.portal.test.log.LoggerTestUtil;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -98,6 +99,70 @@ public class TaxonomyCategoryResourceTest
 				).build(),
 				null, null, AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL,
 				new ServiceContext());
+	}
+
+	@Override
+	@Test
+	public void testGetTaxonomyCategory() throws Exception {
+		super.testGetTaxonomyCategory();
+
+		TaxonomyCategory postTaxonomyCategory =
+			testGetTaxonomyCategory_addTaxonomyCategory();
+
+		TaxonomyCategory getTaxonomyCategory =
+			taxonomyCategoryResource.getTaxonomyCategory(
+				postTaxonomyCategory.getId());
+
+		assertValid(
+			getTaxonomyCategory.getActions(),
+			HashMapBuilder.<String, Map<String, String>>put(
+				"add-category",
+				HashMapBuilder.put(
+					"href",
+					StringBundler.concat(
+						"http://localhost:8080/o/headless-admin-taxonomy/v1.0",
+						"/taxonomy-categories/", getTaxonomyCategory.getId(),
+						"/taxonomy-categories")
+				).put(
+					"method", "POST"
+				).build()
+			).put(
+				"delete",
+				HashMapBuilder.put(
+					"href",
+					"http://localhost:8080/o/headless-admin-taxonomy/v1.0" +
+						"/taxonomy-categories/" + getTaxonomyCategory.getId()
+				).put(
+					"method", "DELETE"
+				).build()
+			).put(
+				"get",
+				HashMapBuilder.put(
+					"href",
+					"http://localhost:8080/o/headless-admin-taxonomy/v1.0" +
+						"/taxonomy-categories/" + getTaxonomyCategory.getId()
+				).put(
+					"method", "GET"
+				).build()
+			).put(
+				"replace",
+				HashMapBuilder.put(
+					"href",
+					"http://localhost:8080/o/headless-admin-taxonomy/v1.0" +
+						"/taxonomy-categories/" + getTaxonomyCategory.getId()
+				).put(
+					"method", "PUT"
+				).build()
+			).put(
+				"update",
+				HashMapBuilder.put(
+					"href",
+					"http://localhost:8080/o/headless-admin-taxonomy/v1.0" +
+						"/taxonomy-categories/" + getTaxonomyCategory.getId()
+				).put(
+					"method", "PATCH"
+				).build()
+			).build());
 	}
 
 	@Override

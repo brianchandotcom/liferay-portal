@@ -22,12 +22,15 @@ import com.liferay.headless.admin.taxonomy.client.dto.v1_0.Keyword;
 import com.liferay.headless.admin.taxonomy.client.pagination.Page;
 import com.liferay.headless.admin.taxonomy.client.pagination.Pagination;
 import com.liferay.headless.admin.taxonomy.client.resource.v1_0.KeywordResource;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -106,6 +109,61 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 	@Test
 	public void testGetKeyword() throws Exception {
 		super.testGetKeyword();
+
+		Keyword postKeyword = testGetKeyword_addKeyword();
+
+		Keyword getKeyword = keywordResource.getKeyword(postKeyword.getId());
+
+		assertValid(
+			getKeyword.getActions(),
+			HashMapBuilder.<String, Map<String, String>>put(
+				"delete",
+				HashMapBuilder.put(
+					"href",
+					"http://localhost:8080/o/headless-admin-taxonomy/v1.0" +
+						"/keywords/" + getKeyword.getId()
+				).put(
+					"method", "DELETE"
+				).build()
+			).put(
+				"get",
+				HashMapBuilder.put(
+					"href",
+					"http://localhost:8080/o/headless-admin-taxonomy/v1.0" +
+						"/keywords/" + getKeyword.getId()
+				).put(
+					"method", "GET"
+				).build()
+			).put(
+				"replace",
+				HashMapBuilder.put(
+					"href",
+					"http://localhost:8080/o/headless-admin-taxonomy/v1.0" +
+						"/keywords/" + getKeyword.getId()
+				).put(
+					"method", "PUT"
+				).build()
+			).put(
+				"subscribe",
+				HashMapBuilder.put(
+					"href",
+					StringBundler.concat(
+						"http://localhost:8080/o/headless-admin-taxonomy/v1.0",
+						"/keywords/", getKeyword.getId(), "/subscribe")
+				).put(
+					"method", "PUT"
+				).build()
+			).put(
+				"unsubscribe",
+				HashMapBuilder.put(
+					"href",
+					StringBundler.concat(
+						"http://localhost:8080/o/headless-admin-taxonomy/v1.0",
+						"/keywords/", getKeyword.getId(), "/unsubscribe")
+				).put(
+					"method", "PUT"
+				).build()
+			).build());
 
 		Keyword keyword = testGetKeyword_addKeyword();
 

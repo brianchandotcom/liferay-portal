@@ -117,6 +117,7 @@ import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
@@ -301,6 +302,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			sitePagesJSONObject.get("totalCount"));
 	}
 
+	@FeatureFlags("LPS-178052")
 	@Override
 	@Test
 	public void testPostSiteSitePage() throws Exception {

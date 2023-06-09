@@ -110,6 +110,36 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 
 	@Override
 	@Test
+	public void testGetKeyword() throws Exception {
+		super.testGetKeyword();
+
+		Keyword keyword = testGetKeyword_addKeyword();
+
+		KeywordResource.Builder builder = KeywordResource.builder();
+
+		keywordResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
+			LocaleUtil.getDefault()
+		).parameters(
+			"fields", "name"
+		).build();
+
+		Keyword getKeyword = keywordResource.getKeyword(keyword.getId());
+
+		Keyword newKeyword = new Keyword() {
+			{
+				name = keyword.getName();
+			}
+		};
+
+		assertEquals(newKeyword, getKeyword);
+
+		keywordResource.deleteKeyword(keyword.getId());
+	}
+
+	@Override
+	@Test
 	public void testGetKeywordsRankedPage() throws Exception {
 		Page<Keyword> page = keywordResource.getKeywordsRankedPage(
 			testGroup.getGroupId(), RandomTestUtil.randomString(),

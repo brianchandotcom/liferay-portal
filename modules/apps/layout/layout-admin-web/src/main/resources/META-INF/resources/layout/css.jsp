@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-boolean readOnly = layoutsAdminDisplayContext.isReadOnly();
-
 Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 
 LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLookAndFeelDisplayContext(request, layoutsAdminDisplayContext, liferayPortletResponse);
@@ -71,7 +69,7 @@ LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLook
 		message='<%= LanguageUtil.get(request, "custom-css-is-disabled-when-using-the-inherited-theme") %>'
 	/>
 
-	<aui:input disabled="<%= selLayout.isInheritLookAndFeel() || readOnly %>" label="css" name="regularCss" type="textarea" value="<%= selLayout.getCssText() %>" wrapperCssClass="c-mb-0" />
+	<aui:input disabled="<%= selLayout.isInheritLookAndFeel() || layoutsAdminDisplayContext.isReadOnly() %>" label="css" name="regularCss" type="textarea" value="<%= selLayout.getCssText() %>" wrapperCssClass="c-mb-0" />
 
 	<p class="text-secondary">
 		<liferay-ui:message key="this-css-is-loaded-after-the-theme" />

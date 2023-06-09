@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-boolean readOnly = layoutsAdminDisplayContext.isReadOnly();
-
 Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 
 UnicodeProperties layoutTypeSettingsUnicodeProperties = null;
@@ -55,7 +53,7 @@ LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLook
 	collapsible="<%= true %>"
 	label="custom-javascript"
 >
-	<aui:input cssClass="propagatable-field" disabled="<%= selLayout.isLayoutPrototypeLinkActive() || readOnly %>" label="javascript" name="TypeSettingsProperties--javascript--" placeholder="javascript" type="textarea" value='<%= layoutTypeSettingsUnicodeProperties.getProperty("javascript") %>' wrap="soft" wrapperCssClass="c-mb-0" />
+	<aui:input cssClass="propagatable-field" disabled="<%= selLayout.isLayoutPrototypeLinkActive() || layoutsAdminDisplayContext.isReadOnly() %>" label="javascript" name="TypeSettingsProperties--javascript--" placeholder="javascript" type="textarea" value='<%= layoutTypeSettingsUnicodeProperties.getProperty("javascript") %>' wrap="soft" wrapperCssClass="c-mb-0" />
 
 	<p class="text-secondary">
 		<liferay-ui:message key="this-javascript-code-is-executed-at-the-bottom-of-the-page" />

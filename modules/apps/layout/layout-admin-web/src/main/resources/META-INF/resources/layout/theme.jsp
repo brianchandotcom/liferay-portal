@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-boolean readOnly = layoutsAdminDisplayContext.isReadOnly();
-
 Group group = layoutsAdminDisplayContext.getGroup();
 
 LayoutSet layoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
@@ -67,7 +65,7 @@ else {
 <div id="<portlet:namespace />themeContainer">
 	<clay:radio
 		checked="<%= selLayout.isInheritLookAndFeel() %>"
-		disabled="<%= readOnly %>"
+		disabled="<%= layoutsAdminDisplayContext.isReadOnly() %>"
 		id='<%= liferayPortletResponse.getNamespace() + "regularInheritLookAndFeel" %>'
 		label="<%= taglibLabel %>"
 		name='<%= liferayPortletResponse.getNamespace() + "regularInheritLookAndFeel" %>'
@@ -76,7 +74,7 @@ else {
 
 	<clay:radio
 		checked="<%= !selLayout.isInheritLookAndFeel() %>"
-		disabled="<%= readOnly %>"
+		disabled="<%= layoutsAdminDisplayContext.isReadOnly() %>"
 		id='<%= liferayPortletResponse.getNamespace() + "regularUniqueLookAndFeel" %>'
 		label='<%= LanguageUtil.get(request, "define-a-custom-theme-for-this-page") %>'
 		name='<%= liferayPortletResponse.getNamespace() + "regularInheritLookAndFeel" %>'

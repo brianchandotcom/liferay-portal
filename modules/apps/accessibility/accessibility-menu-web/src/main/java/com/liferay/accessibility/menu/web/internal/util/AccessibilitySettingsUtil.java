@@ -14,13 +14,20 @@
 
 package com.liferay.accessibility.menu.web.internal.util;
 
+import com.liferay.accessibility.menu.web.internal.configuration.AccessibilityMenuConfiguration;
 import com.liferay.accessibility.menu.web.internal.constants.AccessibilitySettingConstants;
 import com.liferay.accessibility.menu.web.internal.model.AccessibilitySetting;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 
@@ -47,6 +54,33 @@ public class AccessibilitySettingsUtil {
 						ACCESSIBILITY_SETTING_SHOW_UNDERLINE)));
 	}
 
+	public static boolean isAccessibilityMenuEnabled(
+		HttpServletRequest httpServletRequest,
+		ConfigurationProvider configurationProvider) {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		try {
+			AccessibilityMenuConfiguration accessibilityMenuConfiguration =
+				configurationProvider.getGroupConfiguration(
+					AccessibilityMenuConfiguration.class,
+					themeDisplay.getScopeGroupId());
+
+			if (accessibilityMenuConfiguration.enableAccessibilityMenu()) {
+				return true;
+			}
+		}
+		catch (ConfigurationException configurationException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(configurationException);
+			}
+		}
+
+		return false;
+	}
+
 	private static Boolean _getSessionClicksValue(
 		HttpServletRequest httpServletRequest, String accessibilitySettingKey) {
 
@@ -60,5 +94,8 @@ public class AccessibilitySettingsUtil {
 
 		return GetterUtil.getBoolean(sessionClicksValueString);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AccessibilitySettingsUtil.class);
 
 }

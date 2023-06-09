@@ -18,6 +18,7 @@ import com.liferay.accessibility.menu.web.internal.model.AccessibilitySetting;
 import com.liferay.accessibility.menu.web.internal.util.AccessibilitySettingsUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.template.TemplateContextContributor;
 import com.liferay.portal.kernel.util.GetterUtil;
 
@@ -43,6 +44,12 @@ public class AccessibilityTemplateContextContributor
 		Map<String, Object> contextObjects,
 		HttpServletRequest httpServletRequest) {
 
+		if (!AccessibilitySettingsUtil.isAccessibilityMenuEnabled(
+				httpServletRequest, _configurationProvider)) {
+
+			return;
+		}
+
 		StringBundler sb = new StringBundler();
 
 		sb.append(GetterUtil.getString(contextObjects.get("bodyCssClass")));
@@ -57,5 +64,8 @@ public class AccessibilityTemplateContextContributor
 			}
 		}
 	}
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 }

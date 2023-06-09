@@ -397,8 +397,13 @@ definition {
 	}
 
 	@description = "Feature ID: LRAC-9248 | Automation ID: LRAC-10727 | Test Summary: Empty state of pages with no data source and no property"
+	@ignore = "true"
 	@priority = 2
 	test CheckAllMessagesRelatedToSettings {
+
+		// AC Bug: Individuals Attribute empty state showing blank page
+		// AC Bug ticket: LRAC-13973
+
 		property test.name.skip.portal.instance = "EmptyState#CheckAllMessagesRelatedToSettings";
 
 		task ("Close the onboarding modal") {

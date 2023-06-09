@@ -68,4 +68,24 @@ definition {
 		}
 	}
 
+	@description = "LPS-175155. Verify if the Identity field can be hidden"
+	@priority = 3
+	test CanHiddenIdentityField {
+		task ("And clicks on Identity collapse icon") {
+			ClientExtensionGeneral.openOrCloseCollapseField(
+				key_fieldName = "Identity",
+				key_status = "Close");
+		}
+
+		task ("Then Name and Description fields are hidden") {
+			AssertNotVisible(
+				key_fieldName = "Name",
+				locator1 = "ClientExtension#ANY_FIELD");
+
+			AssertNotVisible(
+				key_fieldName = "Description",
+				locator1 = "ClientExtension#ANY_FIELD");
+		}
+	}
+
 }

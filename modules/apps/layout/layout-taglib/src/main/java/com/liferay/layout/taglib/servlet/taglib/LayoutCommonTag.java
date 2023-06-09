@@ -202,28 +202,25 @@ public class LayoutCommonTag extends IncludeTag {
 				continue;
 			}
 
+			String message = GetterUtil.getString(
+				SessionMessages.get(httpServletRequest, key));
+
 			if (key.endsWith("requestProcessed")) {
-				String successMessage = (String)SessionMessages.get(
-					httpServletRequest, key);
+				if (Validator.isNull(message) ||
+					Objects.equals(message, "request_processed") ||
+					Objects.equals(message, key)) {
 
-				if (Validator.isNull(successMessage) ||
-					Objects.equals(successMessage, "request_processed") ||
-					Objects.equals(successMessage, key)) {
-
-					successMessage = LanguageUtil.get(
+					message = LanguageUtil.get(
 						httpServletRequest,
 						"your-request-completed-successfully");
 				}
 
-				sb.append(_getScript(successMessage, "success"));
+				sb.append(_getScript(message, "success"));
 			}
-			else if (key.endsWith("_requestProcessedWarning")) {
-				String warningMessage = (String)SessionMessages.get(
-					httpServletRequest, key);
+			else if (key.endsWith("_requestProcessedWarning") &&
+					 Validator.isNotNull(message)) {
 
-				if (Validator.isNotNull(warningMessage)) {
-					sb.append(_getScript(warningMessage, "warning"));
-				}
+				sb.append(_getScript(message, "warning"));
 			}
 		}
 

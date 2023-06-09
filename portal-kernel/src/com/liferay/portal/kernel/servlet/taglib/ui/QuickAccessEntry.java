@@ -47,10 +47,6 @@ public class QuickAccessEntry {
 	}
 
 	public String getURL() {
-		if (Validator.isNull(_url)) {
-			return "javascript:void(0);";
-		}
-
 		return _url;
 	}
 

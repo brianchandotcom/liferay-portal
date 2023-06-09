@@ -1480,13 +1480,13 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 					<arg value="/c" />
 					<arg value="for /f %x in (pid-elasticsearch) do taskkill /f /pid %x" />
 				</exec>
-
-				<print-files dir="${elasticsearch.stop.dir}/logs/" exclude="*_*" include="LiferayElasticsearchCluster*.log" />
 			</then>
 			<else>
 				<echo>The Elasticsearch server in ${elasticsearch.stop.dir} has already been stopped</echo>
 			</else>
 		</if>
+
+		<print-files dir="${elasticsearch.stop.dir}/logs/" exclude="*_*" include="LiferayElasticsearchCluster*.log" />
 	</target>
 
 	<target name="stop-kibana">

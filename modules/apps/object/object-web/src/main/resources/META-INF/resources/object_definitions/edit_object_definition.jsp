@@ -19,12 +19,20 @@
 <%
 ObjectDefinition objectDefinition = (ObjectDefinition)request.getAttribute(ObjectWebKeys.OBJECT_DEFINITION);
 ObjectDefinitionsDetailsDisplayContext objectDefinitionsDetailsDisplayContext = (ObjectDefinitionsDetailsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+String screenNavigationCategoryKey = ParamUtil.getString(request, "screenNavigationCategoryKey");
 %>
 
-<div class="lfr-object__edit-object-definition">
+<c:choose>
+	<c:when test="<%= objectDefinitionsDetailsDisplayContext.isPublicationsEnabled() %>">
+		<div class="lfr-object__edit-object-definition publication">
+	</c:when>
+	<c:otherwise>
+		<div class="lfr-object__edit-object-definition">
+		</c:otherwise>
+</c:choose>
 	<c:choose>
-		<c:when test='<%= Objects.equals(ParamUtil.getString(request, "screenNavigationCategoryKey"), "details") %>'>
-			<div style="margin-bottom: 4rem;"></div>
+		<c:when test='<%= Objects.equals(screenNavigationCategoryKey, "details") || Validator.isNull(screenNavigationCategoryKey) %>'>
+			<div class="details-margin" style="margin-bottom: 4rem;"></div>
 		</c:when>
 		<c:otherwise>
 			<div>

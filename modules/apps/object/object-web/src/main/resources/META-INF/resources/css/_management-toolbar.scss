@@ -23,4 +23,24 @@
 	.page-header {
 		top: 120px;
 	}
+
+	&.publication {
+		& > .lfr-tooltip-scope {
+			top: 80px;
+		}
+
+		.data-set .management-bar-wrapper {
+			top: 192px;
+		}
+
+		.lfr-objects__object-definition-details-management-toolbar {
+			.lfr__management-toolbar {
+				margin-top: 24px;
+			}
+		}
+
+		.page-header {
+			top: 144px;
+		}
+	}
 }

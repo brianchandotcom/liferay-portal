@@ -52,7 +52,7 @@ public class DocumentFolderDTOConverter
 				actions = dtoConverterContext.getActions();
 				assetLibraryKey = GroupUtil.getAssetLibraryKey(group);
 				creator = CreatorUtil.toCreator(
-					_portal, dtoConverterContext.getUriInfo(),
+					dtoConverterContext, _portal,
 					_userLocalService.fetchUser(folder.getUserId()));
 				customFields = CustomFieldsUtil.toCustomFields(
 					dtoConverterContext.isAcceptAllLanguages(),

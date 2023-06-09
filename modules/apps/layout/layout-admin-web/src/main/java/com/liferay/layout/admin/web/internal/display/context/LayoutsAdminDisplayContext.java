@@ -49,6 +49,7 @@ import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -1769,7 +1770,19 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public boolean isReadOnly() {
-		return true;
+		if (_readOnly != null) {
+			return _readOnly;
+		}
+
+		_readOnly = false;
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-153951")) {
+			return _readOnly;
+		}
+
+		_readOnly = ParamUtil.getBoolean(_liferayPortletRequest, "readOnly");
+
+		return _readOnly;
 	}
 
 	public boolean isSearch() {
@@ -2284,6 +2297,7 @@ public class LayoutsAdminDisplayContext {
 	private Long _parentLayoutId;
 	private Boolean _privateLayout;
 	private Boolean _privateLayoutsEnabled;
+	private Boolean _readOnly;
 	private String _redirect;
 	private Layout _selLayout;
 	private LayoutSet _selLayoutSet;

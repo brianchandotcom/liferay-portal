@@ -23,6 +23,7 @@ import com.liferay.headless.admin.taxonomy.client.problem.Problem;
 import com.liferay.headless.admin.taxonomy.client.resource.v1_0.TaxonomyVocabularyResource;
 import com.liferay.headless.admin.taxonomy.client.serdes.v1_0.TaxonomyVocabularySerDes;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -281,7 +282,8 @@ public class TaxonomyVocabularyResourceTest
 			).put(
 				"assetLibraryId",
 				StringBundler.concat(
-					"\"", testDepotEntry.getDepotEntryId(), "\"")
+					StringPool.QUOTE, testDepotEntry.getDepotEntryId(),
+					StringPool.QUOTE)
 			).build(),
 			new GraphQLField(
 				"facets", new GraphQLField("facetCriteria"),

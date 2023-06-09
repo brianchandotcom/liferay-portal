@@ -15,23 +15,18 @@
 package com.liferay.portal.tools.db.partition.virtual.instance.migrator.internal.util;
 
 import com.liferay.portal.kernel.dao.db.DBInspector;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.tools.db.partition.virtual.instance.migrator.internal.release.Release;
 
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @author Luis Ortiz
@@ -153,23 +148,11 @@ public class DatabaseUtil {
 	}
 
 	public static boolean isDefaultPartition(Connection connection)
-		throws SQLException {
+		throws Exception {
 
-		DatabaseMetaData databaseMetaData = connection.getMetaData();
+		DBInspector dbInspector = new DBInspector(connection);
 
-		for (String tableName : _controlTableNames) {
-			try (ResultSet resultSet = databaseMetaData.getTables(
-					connection.getCatalog(), connection.getSchema(),
-					_normalizeName(databaseMetaData, tableName),
-					new String[] {"TABLE"})) {
-
-				if (!resultSet.next()) {
-					return false;
-				}
-			}
-		}
-
-		return true;
+		return dbInspector.hasTable("Company");
 	}
 
 	public static boolean isSingleVirtualInstance(Connection connection)
@@ -179,12 +162,8 @@ public class DatabaseUtil {
 				"select count(1) from CompanyInfo");
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
-			if (resultSet.next()) {
-				int count = resultSet.getInt(1);
-
-				if (count > 1) {
-					return false;
-				}
+			if (resultSet.next() && (resultSet.getInt(1) > 1)) {
+				return false;
 			}
 		}
 
@@ -196,72 +175,22 @@ public class DatabaseUtil {
 	}
 
 	private static List<Long> _getCompanyIds(Connection connection)
-		throws SQLException {
-
-		if (_companyIds.containsKey(connection)) {
-			return _companyIds.get(connection);
-		}
+		throws Exception {
 
 		List<Long> companyIds = new ArrayList<>();
-
-		long defaultCompanyId = _getDefaultCompanyIdBySQL(connection);
-
-		if (defaultCompanyId != 0) {
-			companyIds.add(defaultCompanyId);
-		}
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select companyId from Company");
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
-				long companyId = resultSet.getLong("companyId");
-
-				if (companyId != defaultCompanyId) {
-					companyIds.add(companyId);
-				}
+				companyIds.add(resultSet.getLong("companyId"));
 			}
 		}
-
-		_companyIds.put(connection, companyIds);
 
 		return companyIds;
 	}
 
-	private static long _getDefaultCompanyIdBySQL(Connection connection)
-		throws SQLException {
-
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select companyId from CompanyInfo");
-			ResultSet resultSet = preparedStatement.executeQuery()) {
-
-			if (resultSet.next()) {
-				return resultSet.getLong(1);
-			}
-		}
-
-		return 0;
-	}
-
-	private static String _normalizeName(
-			DatabaseMetaData databaseMetaData, String name)
-		throws SQLException {
-
-		if (databaseMetaData.storesLowerCaseIdentifiers()) {
-			return StringUtil.toLowerCase(name);
-		}
-
-		if (databaseMetaData.storesUpperCaseIdentifiers()) {
-			return StringUtil.toUpperCase(name);
-		}
-
-		return name;
-	}
-
-	private static final HashMap<Connection, List<Long>> _companyIds =
-		new HashMap<>();
-	private static final Set<String> _controlTableNames = new HashSet<>(
-		Arrays.asList("Company", "VirtualHost"));
 	private static String _schemaPrefix = "lpartition_";
 
 }

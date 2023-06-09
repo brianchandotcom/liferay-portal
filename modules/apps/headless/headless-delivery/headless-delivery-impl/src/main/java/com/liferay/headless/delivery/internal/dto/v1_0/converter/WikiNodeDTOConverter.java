@@ -42,7 +42,7 @@ public class WikiNodeDTOConverter
 			{
 				actions = dtoConverterContext.getActions();
 				creator = CreatorUtil.toCreator(
-					_portal, dtoConverterContext.getUriInfo(),
+					dtoConverterContext, _portal,
 					_userLocalService.fetchUser(wikiNode.getUserId()));
 				dateCreated = wikiNode.getCreateDate();
 				dateModified = wikiNode.getModifiedDate();

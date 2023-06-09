@@ -76,7 +76,7 @@ public class MessageBoardThreadDTOConverter
 						MBMessage.class.getName(), mbMessage.getMessageId()));
 				articleBody = mbMessage.getBody();
 				creator = CreatorUtil.toCreator(
-					_portal, dtoConverterContext.getUriInfo(), user);
+					dtoConverterContext, _portal, user);
 				customFields = CustomFieldsUtil.toCustomFields(
 					dtoConverterContext.isAcceptAllLanguages(),
 					MBMessage.class.getName(), mbMessage.getMessageId(),

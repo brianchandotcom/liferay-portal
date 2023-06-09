@@ -93,7 +93,6 @@ public class TaxonomyVocabularyResourceTest
 				null, null, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(1, page.getTotalCount());
-
 		assertValid(
 			page,
 			HashMapBuilder.<String, Map<String, String>>put(
@@ -159,14 +158,13 @@ public class TaxonomyVocabularyResourceTest
 				testDepotEntry.getDepotEntryId(), null, null, null,
 				Pagination.of(1, 10), null);
 
-		Assert.assertEquals(1, page.getTotalCount());
-
 		TaxonomyVocabulary getTaxonomyVocabulary = new TaxonomyVocabulary() {
 			{
 				name = taxonomyVocabulary.getName();
 			}
 		};
 
+		Assert.assertEquals(1, page.getTotalCount());
 		assertEquals(getTaxonomyVocabulary, page.fetchFirstItem());
 
 		assertValid(page);
@@ -301,7 +299,6 @@ public class TaxonomyVocabularyResourceTest
 
 		Assert.assertEquals(
 			1, taxonomyVocabulariesJSONObject.getLong("totalCount"));
-
 		Assert.assertEquals(
 			"id",
 			taxonomyVocabulariesJSONObject.getJSONArray(
@@ -311,7 +308,6 @@ public class TaxonomyVocabularyResourceTest
 			).getString(
 				"facetCriteria"
 			));
-
 		Assert.assertEquals(
 			String.valueOf(1),
 			taxonomyVocabulariesJSONObject.getJSONArray(
@@ -325,7 +321,6 @@ public class TaxonomyVocabularyResourceTest
 			).getString(
 				"numberOfOccurrences"
 			));
-
 		Assert.assertEquals(
 			String.valueOf(taxonomyVocabulary.getId()),
 			taxonomyVocabulariesJSONObject.getJSONArray(
@@ -339,10 +334,8 @@ public class TaxonomyVocabularyResourceTest
 			).getString(
 				"term"
 			));
-
 		Assert.assertEquals(
 			1, taxonomyVocabulariesJSONObject.getLong("totalCount"));
-
 		Assert.assertEquals(
 			taxonomyVocabulary.getName(),
 			TaxonomyVocabularySerDes.toDTOs(

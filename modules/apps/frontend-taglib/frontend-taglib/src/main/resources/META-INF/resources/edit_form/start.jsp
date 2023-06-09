@@ -25,7 +25,7 @@ String fullName = namespace.concat(HtmlUtil.escapeAttribute(name));
 		<div class="sheet <%= fluid ? StringPool.BLANK : "sheet-lg" %>">
 	</c:if>
 
-		<div class="panel-group panel-group-flush">
+		<div aria-orientation="vertical" class="panel-group panel-group-flush" role="tablist">
 			<c:if test="<%= Validator.isNotNull(onSubmit) %>">
 				<div aria-label="<%= HtmlUtil.escape(portletDisplay.getTitle()) %>" class="input-container" role="group">
 			</c:if>

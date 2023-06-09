@@ -38,31 +38,31 @@ import org.mockito.Mockito;
 public class DatabaseUtilTest {
 
 	@Test
-	public void testGetReleaseMapEntry() throws SQLException {
+	public void testGetReleasesMapEntry() throws SQLException {
 		Release release = new Release(
 			"module", Version.parseVersion("14.2.4"), true);
 
 		_mockGetReleaseMap(release, true);
 
-		Map<String, Release> releaseMap = DatabaseUtil.getReleaseMap(
+		Map<String, Release> releasesMap = DatabaseUtil.getReleasesMap(
 			_connection);
 
-		Assert.assertNotNull(releaseMap.get("module"));
+		Assert.assertNotNull(releasesMap.get("module"));
 
-		Assert.assertTrue(release.equals(releaseMap.get("module")));
+		Assert.assertTrue(release.equals(releasesMap.get("module")));
 	}
 
 	@Test
-	public void testGetReleaseMapNotFoundEntry() throws SQLException {
+	public void testGetReleasesMapNotFoundEntry() throws SQLException {
 		Release release = new Release(
 			"module", Version.parseVersion("14.2.4"), true);
 
 		_mockGetReleaseMap(release, false);
 
-		Map<String, Release> releaseMap = DatabaseUtil.getReleaseMap(
+		Map<String, Release> releasesMap = DatabaseUtil.getReleasesMap(
 			_connection);
 
-		Assert.assertNull(releaseMap.get("module"));
+		Assert.assertNull(releasesMap.get("module"));
 	}
 
 	@Test

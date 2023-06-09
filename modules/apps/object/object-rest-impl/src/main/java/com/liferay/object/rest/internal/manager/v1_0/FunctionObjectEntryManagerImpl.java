@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -85,7 +86,8 @@ public class FunctionObjectEntryManagerImpl
 				StringBundler.concat(
 					_functionObjectEntryManagerConfiguration.resourcePath(),
 					StringPool.SLASH,
-					objectDefinition.getExternalReferenceCode()),
+					HttpComponentsUtil.encodePath(
+						objectDefinition.getExternalReferenceCode())),
 				dtoConverterContext.getUserId()),
 			objectDefinition, scopeKey, dtoConverterContext.getUser());
 	}
@@ -105,7 +107,9 @@ public class FunctionObjectEntryManagerImpl
 			Http.Method.DELETE, _toJSONObject(dtoConverterContext, scopeKey),
 			StringBundler.concat(
 				_functionObjectEntryManagerConfiguration.resourcePath(),
-				StringPool.SLASH, objectDefinition.getExternalReferenceCode(),
+				StringPool.SLASH,
+				HttpComponentsUtil.encodePath(
+					objectDefinition.getExternalReferenceCode()),
 				StringPool.SLASH, externalReferenceCode),
 			dtoConverterContext.getUserId());
 	}
@@ -141,7 +145,8 @@ public class FunctionObjectEntryManagerImpl
 				StringBundler.concat(
 					_functionObjectEntryManagerConfiguration.resourcePath(),
 					StringPool.SLASH,
-					objectDefinition.getExternalReferenceCode()),
+					HttpComponentsUtil.encodePath(
+						objectDefinition.getExternalReferenceCode())),
 				dtoConverterContext.getUserId()),
 			objectDefinition, pagination, scopeKey,
 			dtoConverterContext.getUser());
@@ -168,7 +173,8 @@ public class FunctionObjectEntryManagerImpl
 				StringBundler.concat(
 					_functionObjectEntryManagerConfiguration.resourcePath(),
 					StringPool.SLASH,
-					objectDefinition.getExternalReferenceCode(),
+					HttpComponentsUtil.encodePath(
+						objectDefinition.getExternalReferenceCode()),
 					StringPool.SLASH, externalReferenceCode),
 				dtoConverterContext.getUserId()),
 			objectDefinition, scopeKey, dtoConverterContext.getUser());
@@ -215,7 +221,8 @@ public class FunctionObjectEntryManagerImpl
 				StringBundler.concat(
 					_functionObjectEntryManagerConfiguration.resourcePath(),
 					StringPool.SLASH,
-					objectDefinition.getExternalReferenceCode(),
+					HttpComponentsUtil.encodePath(
+						objectDefinition.getExternalReferenceCode()),
 					StringPool.SLASH, externalReferenceCode),
 				dtoConverterContext.getUserId()),
 			objectDefinition, scopeKey, dtoConverterContext.getUser());

@@ -378,14 +378,14 @@ public class SegmentsExperienceUtil {
 				JSONFactoryUtil.createJSONObject(
 					fragmentEntryLink.getEditableValues());
 
-			long publicLayoutPlid = layout.getPlid();
+			long segmentsExperimentPlid = layout.getPlid();
 
 			if (layout.isDraftLayout()) {
-				publicLayoutPlid = layout.getClassPK();
+				segmentsExperimentPlid = layout.getClassPK();
 			}
 
 			if (SegmentsExperimentLocalServiceUtil.hasSegmentsExperiment(
-					sourceSegmentsExperienceId, publicLayoutPlid, null) &&
+					sourceSegmentsExperienceId, segmentsExperimentPlid, null) &&
 				Validator.isNull(
 					editableValuesJSONObject.getString("instanceId")) &&
 				Validator.isNull(

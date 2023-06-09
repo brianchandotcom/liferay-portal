@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.elasticsearch7.internal.document.ElasticsearchDocumentFactory;
 import com.liferay.portal.search.elasticsearch7.internal.script.ScriptTranslator;
-import com.liferay.portal.search.engine.adapter.document.BulkableDocumentRequestTranslator;
 import com.liferay.portal.search.engine.adapter.document.DeleteDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.GetDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
@@ -44,10 +43,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "search.engine.impl=Elasticsearch",
-	service = {
-		BulkableDocumentRequestTranslator.class,
-		ElasticsearchBulkableDocumentRequestTranslator.class
-	}
+	service = ElasticsearchBulkableDocumentRequestTranslator.class
 )
 public class ElasticsearchBulkableDocumentRequestTranslatorImpl
 	implements ElasticsearchBulkableDocumentRequestTranslator {

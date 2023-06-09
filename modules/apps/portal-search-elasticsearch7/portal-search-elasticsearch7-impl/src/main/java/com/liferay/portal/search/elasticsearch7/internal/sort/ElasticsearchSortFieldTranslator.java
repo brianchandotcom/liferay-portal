@@ -50,7 +50,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "search.engine.impl=Elasticsearch",
-	service = {SortFieldTranslator.class, SortVisitor.class}
+	service = SortFieldTranslator.class
 )
 public class ElasticsearchSortFieldTranslator
 	implements SortFieldTranslator<SortBuilder<?>>,

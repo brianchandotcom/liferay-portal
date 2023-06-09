@@ -285,6 +285,20 @@ definition {
 		KaleoDesigner.viewNodeNotPresent(nodeNodeLabel = ${nodeNodeLabel});
 	}
 
+	macro deleteNodeInKaleoForms {
+		var key_nodeType = ${nodeNodeLabel};
+
+		Click(locator1 = "KaleoDesignerEditWorkflow#VIEW_FORM_NODE_DEFAULT");
+
+		ClickNoError(locator1 = "Icon#TIMES");
+
+		AssertConfirm(value1 = "Are you sure you want to delete the selected node(s)?");
+
+		WaitForElementNotPresent(locator1 = "KaleoDesignerEditWorkflow#VIEW_FORM_NODE_DEFAULT");
+
+		AssertElementNotPresent(locator1 = "KaleoDesignerEditWorkflow#VIEW_FORM_NODE_DEFAULT");
+	}
+
 	macro editConnectorDefault {
 		DoubleClick(locator1 = "DDMEditStructure#SETTINGS_DEFAULT");
 

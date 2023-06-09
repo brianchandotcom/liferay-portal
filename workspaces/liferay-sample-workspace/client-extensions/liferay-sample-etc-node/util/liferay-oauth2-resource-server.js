@@ -17,8 +17,8 @@ import {verify} from 'jsonwebtoken';
 import jwktopem from 'jwk-to-pem';
 import fetch from 'node-fetch';
 
-import config from './configTreePath.js';
-import {logger} from './logger.js';
+import config from './configTreePath';
+import {logger} from './logger';
 
 const domains = config['com.liferay.lxc.dxp.domains'];
 const externalReferenceCode =

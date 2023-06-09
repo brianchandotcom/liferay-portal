@@ -59,7 +59,7 @@
 	},
 	{
 		"description": "This is a description.",
-		"name": "fdsFilter",
+		"name": "fdsCellRenderer",
 		"properties": [
 			{
 				"name": "description",
@@ -87,7 +87,7 @@
 	},
 	{
 		"description": "This is a description.",
-		"name": "fdsCellRenderer",
+		"name": "fdsFilter",
 		"properties": [
 			{
 				"name": "description",

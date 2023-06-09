@@ -929,7 +929,7 @@ mariadb.executable=${mariadb.executable}]]></echo>
 			<propertycopy from="search.engine[${env.CI_TEST_SUITE}]" name="suite.search.engine" silent="true" />
 
 			<if>
-				<contains string="${suite.search.engine}" substring="remote-elasticsearch7" />
+				<contains string="${suite.search.engine}" substring="remote-elasticsearch" />
 				<then>
 					<ant antfile="build-test-elasticsearch7.xml" target="start-elasticsearch" />
 				</then>
@@ -3039,7 +3039,7 @@ log.sanitizer.enabled=false</echo>
 	<macrodef name="stop-suite-search-engine">
 		<sequential>
 			<if>
-				<contains string="${suite.search.engine}" substring="remote-elasticsearch7" />
+				<contains string="${suite.search.engine}" substring="remote-elasticsearch" />
 				<then>
 					<ant antfile="build-test-elasticsearch7.xml" target="stop-elasticsearch" />
 				</then>

@@ -6676,7 +6676,7 @@ go</echo>
 
 			<if>
 				<or>
-					<contains string="${suite.search.engine}" substring="remote-elasticsearch7" />
+					<contains string="${suite.search.engine}" substring="remote-elasticsearch" />
 					<equals arg1="${app.server.type}" arg2="websphere" />
 					<istrue value="${remote.elasticsearch.enabled}" />
 				</or>
@@ -7833,7 +7833,7 @@ ${docker.start.error}</fail>
 
 			<if>
 				<or>
-					<contains string="${suite.search.engine}" substring="remote-elasticsearch7" />
+					<contains string="${suite.search.engine}" substring="remote-elasticsearch" />
 					<equals arg1="${app.server.type}" arg2="websphere" />
 					<istrue value="${remote.elasticsearch.enabled}" />
 				</or>

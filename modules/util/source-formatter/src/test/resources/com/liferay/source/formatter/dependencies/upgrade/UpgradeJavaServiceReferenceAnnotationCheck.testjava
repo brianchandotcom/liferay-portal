@@ -21,13 +21,13 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
  */
 public class UpgradeJavaServiceReferenceAnnotationCheck {
 
-	@ServiceReference(type = FavoriteLocalService.class)
-	private FavoriteLocalService _favoriteLocalService;
-
 	@ServiceReference(
 		type = com.liferay.portal.kernel.service.ResourceLocalService.class
 	)
 	protected com.liferay.portal.kernel.service.ResourceLocalService
 		resourceLocalService;
+
+	@ServiceReference(type = FavoriteLocalService.class)
+	private FavoriteLocalService _favoriteLocalService;
 
 }

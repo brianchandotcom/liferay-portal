@@ -593,14 +593,14 @@
 					"DBType": "String",
 					"businessType": "Picklist",
 					"defaultValue": "draft",
-					"externalReferenceCode": "STATUS",
+					"externalReferenceCode": "APPLICATION_STATUS",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
-						"en_US": "Status"
+						"en_US": "Application Status"
 					},
-					"listTypeDefinitionExternalReferenceCode": "STATUS_PICKLIST",
-					"name": "status",
+					"listTypeDefinitionExternalReferenceCode": "APPLICATION_STATUS_PICKLIST",
+					"name": "applicationStatus",
 					"objectFieldSettings": [
 						{
 							"name": "stateFlow",

@@ -58,7 +58,8 @@ interface IProps extends ClayLinkProps {
  * object `learnResources` contains the messages and urls and is taken from
  * liferay-portal/learn-resources.
  *
- * Use `LearnResourcesContext` to wrap the entire React App.
+ * Use `LearnResourcesContext` to wrap the entire React App and in the JSP use
+ * `LearnMessageUtil.getReactDataJSONObject` to get the required resources.
  *
  * Example use:
  * <LearnResourcesContext.Provider value={learnResources}>
@@ -87,11 +88,35 @@ export default function LearnMessage({
 		LearnResourcesContext
 	) as ILearnResourceContext;
 
+	if (
+		process.env.NODE_ENV === 'development' &&
+		!Object.keys(learnResourcesContext).length
+	) {
+		console.warn(
+			`Unable to render LearnMessage for resourceKey: '${resourceKey}'.`,
+			'Unable to find LearnResourcesContext.',
+			'To LearnMessage component must be wrapped with',
+			'<LearnResourcesContext.Provider value={learnResources}>',
+			'with the needed learnResources passed in using the Java method',
+			'LearnMessageUtil.getReactDataJSONObject("module-name").'
+		);
+	}
+
 	const resourceKeyObject = learnResourcesContext?.[resource]?.[
 		resourceKey
 	] || {
 		en_US: {},
 	};
+
+	if (
+		process.env.NODE_ENV === 'development' &&
+		!learnResourcesContext?.[resource]
+	) {
+		console.warn(
+			`Unable to render LearnMessage for resourceKey: '${resourceKey}'.`,
+			`Unable to find resource: '${resource}'`
+		);
+	}
 
 	const learnMessageObject =
 		resourceKeyObject[Liferay.ThemeDisplay.getLanguageId()] ||

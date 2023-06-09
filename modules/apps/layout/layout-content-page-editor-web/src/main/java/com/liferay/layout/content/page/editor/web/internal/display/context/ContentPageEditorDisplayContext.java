@@ -1504,6 +1504,8 @@ public class ContentPageEditorDisplayContext {
 		).setParameter(
 			"privateLayout", layout.isPrivateLayout()
 		).setParameter(
+			"screenNavigationEntryKey", "design"
+		).setParameter(
 			"selPlid", layout.getPlid()
 		).buildString();
 	}

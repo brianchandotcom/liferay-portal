@@ -1,0 +1,39 @@
+definition{
+    macro updateSelfProvisioning {
+		Variables.assertDefined(parameterList = ${koroneikiAccountId});
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/o/c/koroneikiaccounts/${koroneikiAccountId} \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+                     "allowSelfProvisioning": true
+                    }'
+		''';
+
+		var response = JSONCurlUtil.patch(${curl});
+
+		echo(${response});
+	}
+       macro getIdKoreneikiAccount {
+		Variables.assertDefined(parameterList = ${koroneikiERC});
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/o/c//koroneikiaccounts/by-external-reference-code/${koroneikiERC} \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+		''';
+
+		var response = JSONCurlUtil.get(${curl}, "$.id");
+
+		echo(${response});
+
+        return ${response};
+	}
+}

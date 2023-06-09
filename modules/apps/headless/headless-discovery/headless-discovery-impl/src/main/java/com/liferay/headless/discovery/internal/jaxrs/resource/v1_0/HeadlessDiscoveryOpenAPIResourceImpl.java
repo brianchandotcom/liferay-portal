@@ -56,6 +56,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.PathSegment;
 import javax.ws.rs.core.Response;
@@ -353,17 +354,17 @@ public class HeadlessDiscoveryOpenAPIResourceImpl {
 
 			@Override
 			public List<Object> getMatchedResources() {
-				return null;
+				return new ArrayList<>();
 			}
 
 			@Override
 			public List<String> getMatchedURIs() {
-				return null;
+				return new ArrayList<>();
 			}
 
 			@Override
 			public List<String> getMatchedURIs(boolean decode) {
-				return null;
+				return new ArrayList<>();
 			}
 
 			@Override
@@ -378,36 +379,36 @@ public class HeadlessDiscoveryOpenAPIResourceImpl {
 
 			@Override
 			public MultivaluedMap<String, String> getPathParameters() {
-				return null;
+				return new MultivaluedHashMap<>();
 			}
 
 			@Override
 			public MultivaluedMap<String, String> getPathParameters(
 				boolean decode) {
 
-				return null;
+				return new MultivaluedHashMap<>();
 			}
 
 			@Override
 			public List<PathSegment> getPathSegments() {
-				return null;
+				return new ArrayList<>();
 			}
 
 			@Override
 			public List<PathSegment> getPathSegments(boolean decode) {
-				return null;
+				return new ArrayList<>();
 			}
 
 			@Override
 			public MultivaluedMap<String, String> getQueryParameters() {
-				return null;
+				return new MultivaluedHashMap<>();
 			}
 
 			@Override
 			public MultivaluedMap<String, String> getQueryParameters(
 				boolean decode) {
 
-				return null;
+				return new MultivaluedHashMap<>();
 			}
 
 			@Override

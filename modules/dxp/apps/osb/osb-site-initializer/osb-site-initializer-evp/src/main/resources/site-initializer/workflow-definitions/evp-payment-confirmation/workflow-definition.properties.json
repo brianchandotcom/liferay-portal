@@ -1,8 +1,0 @@
-[
-	{
-		"assetName": "C_EVPPaymentConfirmation",
-		"className": "com.liferay.object.model.ObjectDefinition",
-		"scope": "company",
-		"typePK": 1
-	}
-]

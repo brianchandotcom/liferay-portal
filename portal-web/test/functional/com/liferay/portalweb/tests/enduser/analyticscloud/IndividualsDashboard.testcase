@@ -257,12 +257,11 @@ definition {
 	}
 
 	@description = "Bug: LRAC-12694 | Automation ID: LRAC-12811 | Test Summary: Known Individuals is not duplicated if user exists in multiple properties"
-	@ignore = "true"
 	@priority = 3
 	test IndividualNotDuplicatedIfUserExistsInMultipleProperties {
+		property portal.upstream = "quarantine"
 
-		// AC Refactor: Data doesn't appear on time
-		// AC Refactor ticket: LRAC-13994
+		//AC Quarantine Reason: Flaky issue with failing on upstream while passing on release branch
 
 		var propertyName1 = ${assignedPropertyName};
 

@@ -1,6 +1,7 @@
 {
 	"description": "",
 	"editorType": "richText",
+	"externalReferenceCode": "RAYNOTIFICATION-001",
 	"name": "Quote Retrieve Notification Template",
 	"recipientType": "email",
 	"recipients": [

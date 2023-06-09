@@ -2,6 +2,7 @@
 	"description": "",
 	"editorType": "richText",
 	"name": "MDF Request Total Amount Template",
+	"externalReferenceCode": "PARTNERPORTALNOTIFICATION-004",
 	"recipientType": "email",
 	"recipients": [
 		{

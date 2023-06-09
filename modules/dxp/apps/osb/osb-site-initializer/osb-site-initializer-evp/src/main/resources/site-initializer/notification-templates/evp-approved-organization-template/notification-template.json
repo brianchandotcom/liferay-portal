@@ -2,6 +2,7 @@
 	"description": "",
 	"editorType": "richText",
 	"name": "EVP Approved Organization Template",
+	"externalReferenceCode": "EVPNOTIFICATION-001",
 	"recipientType": "email",
 	"recipients": [
 		{

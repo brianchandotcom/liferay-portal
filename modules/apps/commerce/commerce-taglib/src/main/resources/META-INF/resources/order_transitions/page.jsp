@@ -20,6 +20,7 @@
 CommerceOrder commerceOrder = (CommerceOrder)request.getAttribute("liferay-commerce:order-transitions:commerceOrder");
 List<ObjectValuePair<Long, String>> commerceOrderTransitionOVPs = (List<ObjectValuePair<Long, String>>)request.getAttribute("liferay-commerce:order-transitions:commerceOrderTransitionOVPs");
 String cssClass = (String)request.getAttribute("liferay-commerce:order-transitions:cssClass");
+boolean disabled = (boolean)request.getAttribute("liferay-commerce:order-transitions:disabled");
 %>
 
 <c:if test="<%= !commerceOrderTransitionOVPs.isEmpty() %>">
@@ -32,7 +33,7 @@ String cssClass = (String)request.getAttribute("liferay-commerce:order-transitio
 			String transitionName = transitionOVP.getValue();
 		%>
 
-			<button class="<%= HtmlUtil.escapeAttribute(cssClass) %> transition-link" data-commerceOrderId="<%= commerceOrder.getCommerceOrderId() %>" data-transitionName="<%= HtmlUtil.escapeAttribute(transitionName) %>" data-workflowTaskId="<%= transitionOVP.getKey() %>" type="button">
+			<button class="<%= HtmlUtil.escapeAttribute(cssClass) %> transition-link" data-commerceOrderId="<%= commerceOrder.getCommerceOrderId() %>" data-transitionName="<%= HtmlUtil.escapeAttribute(transitionName) %>" data-workflowTaskId="<%= transitionOVP.getKey() %>" <%= disabled ? "disabled" : StringPool.BLANK %> type="button">
 				<liferay-ui:message key="<%= HtmlUtil.escape(transitionName) %>" />
 			</button>
 

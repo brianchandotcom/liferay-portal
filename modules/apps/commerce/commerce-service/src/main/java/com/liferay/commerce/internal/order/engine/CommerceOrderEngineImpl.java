@@ -30,6 +30,7 @@ import com.liferay.commerce.discount.service.CommerceDiscountLocalService;
 import com.liferay.commerce.discount.service.CommerceDiscountUsageEntryLocalService;
 import com.liferay.commerce.exception.CommerceOrderBillingAddressException;
 import com.liferay.commerce.exception.CommerceOrderGuestCheckoutException;
+import com.liferay.commerce.exception.CommerceOrderPriceException;
 import com.liferay.commerce.exception.CommerceOrderShippingAddressException;
 import com.liferay.commerce.exception.CommerceOrderShippingMethodException;
 import com.liferay.commerce.exception.CommerceOrderStatusException;
@@ -43,6 +44,7 @@ import com.liferay.commerce.inventory.type.constants.CommerceInventoryAuditTypeC
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
+import com.liferay.commerce.model.CommerceOrderItemModel;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.model.attributes.provider.CommerceModelAttributesProvider;
 import com.liferay.commerce.notification.util.CommerceNotificationHelper;
@@ -79,6 +81,7 @@ import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -658,6 +661,13 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 
 	private void _validateCheckout(CommerceOrder commerceOrder)
 		throws Exception {
+
+		if (ListUtil.exists(
+				commerceOrder.getCommerceOrderItems(),
+				CommerceOrderItemModel::isPriceOnApplication)) {
+
+			throw new CommerceOrderPriceException();
+		}
 
 		if (!_commerceOrderValidatorRegistry.isValid(
 				LocaleUtil.getSiteDefault(), commerceOrder)) {

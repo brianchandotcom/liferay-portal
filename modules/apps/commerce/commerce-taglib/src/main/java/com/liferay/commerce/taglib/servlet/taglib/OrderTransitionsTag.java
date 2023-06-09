@@ -16,6 +16,7 @@ package com.liferay.commerce.taglib.servlet.taglib;
 
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.model.CommerceOrderItemModel;
 import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
 import com.liferay.commerce.order.status.CommerceOrderStatus;
 import com.liferay.commerce.order.status.CommerceOrderStatusRegistry;
@@ -28,6 +29,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -135,6 +137,11 @@ public class OrderTransitionsTag extends IncludeTag {
 			_commerceOrderTransitionOVPs);
 		httpServletRequest.setAttribute(
 			"liferay-commerce:order-transitions:cssClass", _cssClass);
+		httpServletRequest.setAttribute(
+			"liferay-commerce:order-transitions:disabled",
+			ListUtil.exists(
+				_commerceOrder.getCommerceOrderItems(),
+				CommerceOrderItemModel::isPriceOnApplication));
 		httpServletRequest.setAttribute(
 			"liferay-commerce:order-transitions:pathThemeImages",
 			_pathThemeImages);

@@ -26,6 +26,7 @@ import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.exception.CommerceOrderBillingAddressException;
 import com.liferay.commerce.exception.CommerceOrderGuestCheckoutException;
+import com.liferay.commerce.exception.CommerceOrderPriceException;
 import com.liferay.commerce.exception.CommerceOrderShippingAddressException;
 import com.liferay.commerce.exception.CommerceOrderShippingMethodException;
 import com.liferay.commerce.exception.CommerceOrderStatusException;
@@ -216,24 +217,27 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 			cart = _toCart(commerceOrder);
 		}
 		catch (Exception exception) {
+			cart.setValid(false);
+
 			if (exception.getCause() instanceof
 					CommerceOrderBillingAddressException) {
 
-				cart.setValid(false);
 				cart.setErrorMessages(new String[] {"Invalid billing address"});
 			}
 
 			if (exception.getCause() instanceof
 					CommerceOrderGuestCheckoutException) {
 
-				cart.setValid(false);
 				cart.setErrorMessages(new String[] {"Invalid guest checkout"});
+			}
+
+			if (exception.getCause() instanceof CommerceOrderPriceException) {
+				cart.setErrorMessages(new String[] {"Invalid price"});
 			}
 
 			if (exception.getCause() instanceof
 					CommerceOrderShippingAddressException) {
 
-				cart.setValid(false);
 				cart.setErrorMessages(
 					new String[] {"Invalid shipping address"});
 			}
@@ -241,12 +245,10 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 			if (exception.getCause() instanceof
 					CommerceOrderShippingMethodException) {
 
-				cart.setValid(false);
 				cart.setErrorMessages(new String[] {"Invalid shipping method"});
 			}
 
 			if (exception.getCause() instanceof CommerceOrderStatusException) {
-				cart.setValid(false);
 				cart.setErrorMessages(new String[] {"Invalid cart status"});
 			}
 		}

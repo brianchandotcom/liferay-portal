@@ -12,6 +12,10 @@ buildscript {
 		maven {
 			url "https://repository-cdn.liferay.com/nexus/content/groups/public"
 		}
+
+		maven {
+			url new File(rootProject.projectDir, "../../.m2-tmp")
+		}
 	}
 }
 

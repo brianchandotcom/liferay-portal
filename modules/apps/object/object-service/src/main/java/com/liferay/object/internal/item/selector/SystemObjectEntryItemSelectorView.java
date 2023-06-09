@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -228,7 +229,8 @@ public class SystemObjectEntryItemSelectorView
 			Map<String, Object> modelAttributes =
 				_baseModel.getModelAttributes();
 
-			return (String)modelAttributes.get(objectField.getDBColumnName());
+			return GetterUtil.getString(
+				modelAttributes.get(objectField.getDBColumnName()));
 		}
 
 		@Override

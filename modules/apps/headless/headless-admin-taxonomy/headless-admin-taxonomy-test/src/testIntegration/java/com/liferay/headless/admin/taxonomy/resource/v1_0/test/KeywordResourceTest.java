@@ -104,6 +104,8 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 		assertEquals(getKeyword2, page.fetchFirstItem());
 
 		assertValid(page);
+
+		keywordResource.deleteKeyword(keyword.getId());
 	}
 
 	@Override

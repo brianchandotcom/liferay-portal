@@ -33,6 +33,7 @@ import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.object.web.internal.object.entries.constants.ObjectEntriesFDSNames;
 import com.liferay.object.web.internal.object.entries.frontend.data.set.data.model.RelatedModel;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
@@ -115,14 +116,20 @@ public class SystemRelatedModelsFDSDataProvider
 					objectDefinition.getName(),
 					_systemObjectDefinitionManagerRegistry, user);
 
+				Object titleFieldValue =
+					ObjectEntryValuesUtil.getTitleFieldValue(
+						titleObjectField.getBusinessType(),
+						relatedModel.getModelAttributes(), titleObjectField,
+						user, values);
+
+				if (titleFieldValue == null) {
+					titleFieldValue = StringPool.BLANK;
+				}
+
 				return new RelatedModel(
 					objectDefinition.getClassName(),
 					GetterUtil.getLong(values.get("id")),
-					String.valueOf(
-						ObjectEntryValuesUtil.getTitleFieldValue(
-							titleObjectField.getBusinessType(), user,
-							values.get(titleObjectField.getName()))),
-					true);
+					titleFieldValue.toString(), true);
 			});
 	}
 

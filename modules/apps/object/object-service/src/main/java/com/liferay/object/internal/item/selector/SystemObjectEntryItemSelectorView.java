@@ -44,7 +44,6 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -256,14 +255,19 @@ public class SystemObjectEntryItemSelectorView
 			User user = _userLocalService.fetchUser(
 				PrincipalThreadLocal.getUserId());
 
-			Map<String, Object> values = ObjectEntryDTOConverterUtil.toDTO(
-				_baseModel, _dtoConverterRegistry, _objectDefinition.getName(),
-				_systemObjectDefinitionManagerRegistry, user);
+			Object titleFieldValue = ObjectEntryValuesUtil.getTitleFieldValue(
+				objectField.getBusinessType(), _baseModel.getModelAttributes(),
+				objectField, user,
+				ObjectEntryDTOConverterUtil.toDTO(
+					_baseModel, _dtoConverterRegistry,
+					_objectDefinition.getName(),
+					_systemObjectDefinitionManagerRegistry, user));
 
-			return String.valueOf(
-				ObjectEntryValuesUtil.getTitleFieldValue(
-					objectField.getBusinessType(), user,
-					values.get(objectField.getName())));
+			if (titleFieldValue == null) {
+				return StringPool.BLANK;
+			}
+
+			return titleFieldValue.toString();
 		}
 
 		@Override

@@ -211,14 +211,17 @@ public class ObjectEntryDTOConverter
 										getSystemObjectDefinitionManager(
 											objectDefinition.getName());
 
+							BaseModel<?> baseModel =
+								systemObjectDefinitionManager.
+									getBaseModelByExternalReferenceCode(
+										systemObjectDefinitionManager.
+											getExternalReferenceCode(
+												primaryKey),
+										objectDefinition.getCompanyId());
+
 							Map<String, Object> values =
 								ObjectEntryDTOConverterUtil.toDTO(
-									systemObjectDefinitionManager.
-										getBaseModelByExternalReferenceCode(
-											systemObjectDefinitionManager.
-												getExternalReferenceCode(
-													primaryKey),
-											objectDefinition.getCompanyId()),
+									baseModel,
 									dtoConverterContext.
 										getDTOConverterRegistry(),
 									objectDefinition.getName(),
@@ -235,8 +238,9 @@ public class ObjectEntryDTOConverter
 									objectField.getName(),
 									ObjectEntryValuesUtil.getTitleFieldValue(
 										objectField.getBusinessType(),
-										dtoConverterContext.getUser(),
-										values.get(objectField.getName())));
+										baseModel.getModelAttributes(),
+										objectField,
+										dtoConverterContext.getUser(), values));
 							}
 
 							relatedObjectEntryAtomicReference.set(

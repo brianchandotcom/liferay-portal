@@ -50,6 +50,7 @@ const UserMenuDropdownItem: React.FC<
 				) : (
 					<ClayLink
 						block
+						button
 						className='button-root'
 						displayType='unstyled'
 						href={url}

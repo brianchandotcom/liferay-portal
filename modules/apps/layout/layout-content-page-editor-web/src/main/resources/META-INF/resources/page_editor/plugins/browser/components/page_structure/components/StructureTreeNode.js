@@ -336,7 +336,7 @@ function StructureTreeNodeContent({
 		) {
 			document.querySelector(`[data-id*="${node.id}"]`).focus();
 		}
-	}, [activationOrigin, isActive, node.id]);
+	}, [activationOrigin, isActive, node.id, node.hidden]);
 
 	return (
 		<div
@@ -420,6 +420,12 @@ function StructureTreeNodeContent({
 					formIsUnavailable(item)
 				}
 			/>
+
+			{node.hidden ? (
+				<span className="sr-only">
+					{Liferay.Language.get('hidden-item')}
+				</span>
+			) : null}
 		</div>
 	);
 }

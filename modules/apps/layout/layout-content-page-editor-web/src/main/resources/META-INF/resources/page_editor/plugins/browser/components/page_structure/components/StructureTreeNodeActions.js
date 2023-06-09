@@ -24,6 +24,7 @@ import {flushSync} from 'react-dom';
 import SaveFragmentCompositionModal from '../../../../../app/components/SaveFragmentCompositionModal';
 import hasDropZoneChild from '../../../../../app/components/layout_data_items/hasDropZoneChild';
 import {FRAGMENT_ENTRY_TYPES} from '../../../../../app/config/constants/fragmentEntryTypes';
+import {ITEM_ACTIVATION_ORIGINS} from '../../../../../app/config/constants/itemActivationOrigins';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../app/config/constants/layoutDataItemTypes';
 import {useSelectItem} from '../../../../../app/contexts/ControlsContext';
 import {useSetMovementText} from '../../../../../app/contexts/KeyboardMovementContext';
@@ -173,6 +174,16 @@ const ActionList = ({item, setActive, setEditingNodeId, setOpenSaveModal}) => {
 							type: 'warning',
 						});
 					}
+
+					selectItem(item.id, {
+						origin: ITEM_ACTIVATION_ORIGINS.itemActions,
+					});
+
+					setText(
+						isHidden
+							? Liferay.Language.get('item-shown')
+							: Liferay.Language.get('hidden-item')
+					);
 				},
 				icon: isHidden ? 'view' : 'hidden',
 				label: isHidden

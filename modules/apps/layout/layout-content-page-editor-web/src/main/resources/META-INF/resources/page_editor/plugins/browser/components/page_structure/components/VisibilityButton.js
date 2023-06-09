@@ -19,6 +19,9 @@ import {openToast, sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import {ITEM_ACTIVATION_ORIGINS} from '../../../../../app/config/constants/itemActivationOrigins';
+import {useSelectItem} from '../../../../../app/contexts/ControlsContext';
+import {useSetMovementText} from '../../../../../app/contexts/KeyboardMovementContext';
 import {
 	FORM_ERROR_TYPES,
 	getFormErrorDescription,
@@ -34,6 +37,8 @@ export default function VisibilityButton({
 	visible,
 }) {
 	const hasRequiredChild = useHasRequiredChild(node.id);
+	const selectItem = useSelectItem();
+	const setText = useSetMovementText();
 
 	return (
 		<ClayButton
@@ -72,6 +77,16 @@ export default function VisibilityButton({
 						type: 'warning',
 					});
 				}
+
+				selectItem(node.id, {
+					origin: ITEM_ACTIVATION_ORIGINS.itemActions,
+				});
+
+				setText(
+					node.hidden
+						? Liferay.Language.get('item-shown')
+						: Liferay.Language.get('hidden-item')
+				);
 			}}
 			tabIndex={
 				document.activeElement.dataset.id?.includes(node.id)

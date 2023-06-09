@@ -643,6 +643,14 @@ definition {
 		ScrollWebElementIntoView(locator1 = "KaleoDesignerEditWorkflow#VIEW_FORM_NODE");
 	}
 
+	macro selectNodeInKaleoForms {
+		var key_nodeType = ${nodeNodeLabel};
+
+		Click(locator1 = "KaleoDesignerEditWorkflow#VIEW_FORM_NODE_DEFAULT");
+
+		ScrollWebElementIntoView(locator1 = "KaleoDesignerEditWorkflow#VIEW_FORM_NODE_DEFAULT");
+	}
+
 	macro showDetails {
 		if (IsElementNotPresent(locator1 = "Icon#INFO_ACTIVE")) {
 			Click(locator1 = "Button#INFO");

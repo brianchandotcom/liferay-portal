@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
+import com.liferay.portal.kernel.module.util.BundleUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -43,6 +44,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Rubén Pulido
@@ -81,6 +85,7 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 		_testPostSiteFailureInvalidKey();
 		_testPostSiteFailureNoName();
 		_testPostSiteFailureParentSiteNotFound();
+		_testPostSiteFailureSiteInitializerInactive();
 		_testPostSiteFailureSiteInitializerNotFound();
 		_testPostSiteFailureSiteTemplateInactive();
 		_testPostSiteFailureSiteTemplateNotFound();
@@ -190,6 +195,44 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 			Assert.assertEquals(
 				"No site exists for site key " + randomSite.getParentSiteKey(),
 				problem.getTitle());
+		}
+	}
+
+	private void _testPostSiteFailureSiteInitializerInactive()
+		throws Exception {
+
+		Bundle bundle = FrameworkUtil.getBundle(SiteResourceTest.class);
+
+		Bundle siteResourceTestBundle = BundleUtil.getBundle(
+			bundle.getBundleContext(), "com.liferay.site.initializer.welcome");
+
+		siteResourceTestBundle.stop();
+
+		Assert.assertEquals(Bundle.RESOLVED, siteResourceTestBundle.getState());
+
+		Site randomSite = randomSite();
+
+		randomSite.setTemplateKey("com.liferay.site.initializer.welcome");
+		randomSite.setTemplateType(Site.TemplateType.SITE_INITIALIZER);
+
+		try {
+			testPostSite_addSite(randomSite);
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
+			Assert.assertEquals(
+				"Site initializer with site template key " +
+					randomSite.getTemplateKey() + " is inactive",
+				problem.getTitle());
+
+			siteResourceTestBundle.start();
+
+			Assert.assertEquals(
+				Bundle.ACTIVE, siteResourceTestBundle.getState());
 		}
 	}
 

@@ -14,11 +14,14 @@
 
 package com.liferay.portal.spring.transaction;
 
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+
 import org.springframework.transaction.PlatformTransactionManager;
 
 /**
  * @author Shuyang Zhou
  */
+@OSGiBeanProperties(service = CounterTransactionExecutor.class)
 public class CounterTransactionExecutor extends BaseTransactionExecutor {
 
 	public CounterTransactionExecutor(

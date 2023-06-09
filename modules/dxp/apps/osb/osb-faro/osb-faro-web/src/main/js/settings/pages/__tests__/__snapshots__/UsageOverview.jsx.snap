@@ -212,7 +212,179 @@ exports[`UsageOverview should render 1`] = `
             </div>
             <div
               class="plans-list-root"
-            />
+            >
+              <div
+                class="panel-root"
+              >
+                <div
+                  class="panel-header"
+                  role="button"
+                  tabindex="0"
+                >
+                  <div
+                    class="trigger"
+                  >
+                    <svg
+                      class="icon-root lexicon-icon lexicon-icon-angle-up"
+                      viewBox=""
+                    >
+                      <use
+                        xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-up"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="panel-title"
+                  >
+                    <div
+                      class="plan-title"
+                    >
+                      <div
+                        class="plan-name"
+                      >
+                        Enterprise
+                      </div>
+                      <div
+                        class="label label-root label-primary label-lg label-uppercase"
+                      >
+                        <span
+                          class="label-item"
+                        >
+                          Current Plan
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="panel-body"
+                >
+                  <div
+                    class="plan-breakdown small"
+                  >
+                    <div
+                      class="limits"
+                    >
+                      <ul>
+                        <li>
+                          <svg
+                            class="icon-root lexicon-icon lexicon-icon-ac-individual"
+                            viewBox=""
+                          >
+                            <use
+                              xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-individual"
+                            />
+                          </svg>
+                          <span
+                            class="limit-amount semibold"
+                          >
+                            100,000
+                          </span>
+                          <span
+                            class="text-secondary"
+                          >
+                            Individuals
+                          </span>
+                        </li>
+                        <li>
+                          <svg
+                            class="icon-root lexicon-icon lexicon-icon-faro-page-views"
+                            viewBox=""
+                          >
+                            <use
+                              xlink:href="/o/osb-faro-web/dist/sprite.svg#faro-page-views"
+                            />
+                          </svg>
+                          <span
+                            class="limit-amount semibold"
+                          >
+                            60,000,000
+                          </span>
+                          <span
+                            class="text-secondary"
+                          >
+                            Page Views
+                          </span>
+                        </li>
+                        <li>
+                          <svg
+                            class="icon-root lexicon-icon lexicon-icon-ac-users"
+                            viewBox=""
+                          >
+                            <use
+                              xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-users"
+                            />
+                          </svg>
+                          <span
+                            class="limit-amount semibold"
+                          >
+                            Unlimited
+                          </span>
+                          <span
+                            class="text-secondary"
+                          >
+                            Users
+                          </span>
+                        </li>
+                      </ul>
+                    </div>
+                    <div
+                      class="addons"
+                    >
+                      <p
+                        class="text-secondary semibold addon-list-header"
+                      >
+                        Add-ons
+                      </p>
+                      <ul>
+                        <li
+                          class="extra-small"
+                        >
+                          <span
+                            class="limit-amount semibold"
+                          >
+                            5,000
+                          </span>
+                          <span
+                            class="text-secondary"
+                          >
+                            <b
+                              class="addon-name"
+                            >
+                              Individuals
+                            </b>
+                             for 
+                            500
+                             USD
+                          </span>
+                        </li>
+                        <li
+                          class="extra-small"
+                        >
+                          <span
+                            class="limit-amount semibold"
+                          >
+                            5,000,000
+                          </span>
+                          <span
+                            class="text-secondary"
+                          >
+                            <b
+                              class="addon-name"
+                            >
+                              Page Views
+                            </b>
+                             for 
+                            250
+                             USD
+                          </span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <div>
             <h4>
@@ -226,16 +398,7 @@ exports[`UsageOverview should render 1`] = `
               </p>
             </div>
             <div
-              class="text-secondary"
-            >
-              <strong>
-                <p>
-                  Add-ons are not available on the Basic plan. To increase usage limits, please contact a sales representative.
-                </p>
-              </strong>
-            </div>
-            <div
-              class="addons-list-root inactive"
+              class="addons-list-root"
             >
               <div
                 class="panel-root"
@@ -287,6 +450,20 @@ exports[`UsageOverview should render 1`] = `
                       >
                         2X
                       </span>
+                    </div>
+                    <div
+                      class="annual-price"
+                    >
+                      <div>
+                        <strong>
+                          500 USD
+                        </strong>
+                        <span
+                          class="text-secondary small"
+                        >
+                           / year
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -341,6 +518,20 @@ exports[`UsageOverview should render 1`] = `
                       >
                         1X
                       </span>
+                    </div>
+                    <div
+                      class="annual-price"
+                    >
+                      <div>
+                        <strong>
+                          250 USD
+                        </strong>
+                        <span
+                          class="text-secondary small"
+                        >
+                           / year
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </div>

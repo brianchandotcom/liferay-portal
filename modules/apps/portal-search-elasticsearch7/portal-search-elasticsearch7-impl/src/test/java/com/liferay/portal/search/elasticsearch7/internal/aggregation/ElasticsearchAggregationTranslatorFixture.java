@@ -34,7 +34,7 @@ import com.liferay.portal.search.elasticsearch7.internal.aggregation.metrics.Scr
 import com.liferay.portal.search.elasticsearch7.internal.aggregation.metrics.TopHitsAggregationTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.aggregation.metrics.TopHitsAggregationTranslatorImpl;
 import com.liferay.portal.search.elasticsearch7.internal.aggregation.metrics.WeightedAvgAggregationTranslatorImpl;
-import com.liferay.portal.search.elasticsearch7.internal.aggregation.pipeline.ElasticsearchPipelineAggregationVisitorFixture;
+import com.liferay.portal.search.elasticsearch7.internal.aggregation.pipeline.ElasticsearchPipelineAggregationTranslatorFixture;
 import com.liferay.portal.search.elasticsearch7.internal.query.ElasticsearchQueryTranslatorFixture;
 import com.liferay.portal.search.elasticsearch7.internal.sort.ElasticsearchSortFieldTranslatorFixture;
 
@@ -46,9 +46,9 @@ import org.elasticsearch.search.aggregations.PipelineAggregationBuilder;
 public class ElasticsearchAggregationTranslatorFixture {
 
 	public ElasticsearchAggregationTranslatorFixture() {
-		ElasticsearchPipelineAggregationVisitorFixture
-			pipelineAggregationVisitorFixture =
-				new ElasticsearchPipelineAggregationVisitorFixture();
+		ElasticsearchPipelineAggregationTranslatorFixture
+			pipelineAggregationTranslatorFixture =
+				new ElasticsearchPipelineAggregationTranslatorFixture();
 
 		ElasticsearchQueryTranslatorFixture
 			elasticsearchQueryTranslatorFixture =
@@ -56,8 +56,8 @@ public class ElasticsearchAggregationTranslatorFixture {
 
 		PipelineAggregationTranslator<PipelineAggregationBuilder>
 			pipelineAggregationTranslator =
-				pipelineAggregationVisitorFixture.
-					getElasticsearchPipelineAggregationVisitor();
+				pipelineAggregationTranslatorFixture.
+					getElasticsearchPipelineAggregationTranslator();
 
 		AggregationBuilderAssemblerFactory aggregationBuilderAssemblerFactory =
 			new AggregationBuilderAssemblerFactoryImpl();

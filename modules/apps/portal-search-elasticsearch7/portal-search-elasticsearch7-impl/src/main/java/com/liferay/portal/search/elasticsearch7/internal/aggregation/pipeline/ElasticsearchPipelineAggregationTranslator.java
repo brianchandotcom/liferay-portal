@@ -60,11 +60,9 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "search.engine.impl=Elasticsearch",
-	service = {
-		PipelineAggregationTranslator.class, PipelineAggregationVisitor.class
-	}
+	service = PipelineAggregationTranslator.class
 )
-public class ElasticsearchPipelineAggregationVisitor
+public class ElasticsearchPipelineAggregationTranslator
 	implements PipelineAggregationTranslator<PipelineAggregationBuilder>,
 			   PipelineAggregationVisitor<PipelineAggregationBuilder> {
 

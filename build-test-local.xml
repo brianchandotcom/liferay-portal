@@ -302,7 +302,7 @@ local.bundles.backup.file=${liferay.home.parent.dir}/bundles-master-${git.commit
 			</then>
 		</if>
 
-		<antcall target="database-reset" />
+		<antcall target="database-reset-container" />
 	</target>
 
 	<target name="setup-portal-cluster">
@@ -409,7 +409,7 @@ local.bundles.backup.file=${liferay.home.parent.dir}/bundles-master-${git.commit
 			</then>
 		</if>
 
-		<antcall target="database-reset" />
+		<antcall target="database-reset-container" />
 	</target>
 
 	<target name="start-docker-database-db2">

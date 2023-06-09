@@ -57,6 +57,16 @@ public class SXPElementServiceWrapper
 		return _sxpElementService.deleteSXPElement(sxpElementId);
 	}
 
+	@Override
+	public com.liferay.search.experiences.model.SXPElement
+			fetchSXPElementByExternalReferenceCode(
+				long companyId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _sxpElementService.fetchSXPElementByExternalReferenceCode(
+			companyId, externalReferenceCode);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

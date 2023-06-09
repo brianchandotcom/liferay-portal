@@ -58,6 +58,14 @@ public class SXPElementServiceUtil {
 		return getService().deleteSXPElement(sxpElementId);
 	}
 
+	public static SXPElement fetchSXPElementByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
+		throws PortalException {
+
+		return getService().fetchSXPElementByExternalReferenceCode(
+			companyId, externalReferenceCode);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

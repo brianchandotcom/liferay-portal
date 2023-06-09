@@ -11,10 +11,11 @@ import {
 	PAGEVIEWS,
 	STATUS_DISPLAY_MAP
 } from 'shared/util/subscriptions';
-import {get, round} from 'lodash';
+import {get} from 'lodash';
 import {Plan} from 'shared/util/records';
 import {PropTypes} from 'prop-types';
 import {sub} from 'shared/util/lang';
+import {toRounded} from 'shared/util/numbers';
 
 const METRIC_DEFINITION_MAP = {
 	[INDIVIDUALS]: Liferay.Language.get(
@@ -119,7 +120,7 @@ export default class UsageMetric extends React.Component {
 								{sub(
 									Liferay.Language.get('x-percent-since-x'),
 									[
-										round(percent * 100),
+										toRounded(percent * 100),
 										formatDateToTimeZone(
 											lastAnniversaryDate,
 											'MMMM D, YYYY',

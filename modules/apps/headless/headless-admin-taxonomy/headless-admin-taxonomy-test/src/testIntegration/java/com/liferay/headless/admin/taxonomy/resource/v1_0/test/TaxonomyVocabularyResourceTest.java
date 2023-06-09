@@ -262,6 +262,63 @@ public class TaxonomyVocabularyResourceTest
 
 	@Override
 	@Test
+	public void testGetTaxonomyVocabulary() throws Exception {
+		super.testGetTaxonomyVocabulary();
+
+		TaxonomyVocabulary postTaxonomyVocabulary =
+			testGetTaxonomyVocabulary_addTaxonomyVocabulary();
+
+		TaxonomyVocabulary getTaxonomyVocabulary =
+			taxonomyVocabularyResource.getTaxonomyVocabulary(
+				postTaxonomyVocabulary.getId());
+
+		assertValid(
+			getTaxonomyVocabulary.getActions(),
+			HashMapBuilder.<String, Map<String, String>>put(
+				"delete",
+				HashMapBuilder.put(
+					"href",
+					"http://localhost:8080/o/headless-admin-taxonomy/v1.0" +
+						"/taxonomy-vocabularies/" +
+							getTaxonomyVocabulary.getId()
+				).put(
+					"method", "DELETE"
+				).build()
+			).put(
+				"get",
+				HashMapBuilder.put(
+					"href",
+					"http://localhost:8080/o/headless-admin-taxonomy/v1.0" +
+						"/taxonomy-vocabularies/" +
+							getTaxonomyVocabulary.getId()
+				).put(
+					"method", "GET"
+				).build()
+			).put(
+				"replace",
+				HashMapBuilder.put(
+					"href",
+					"http://localhost:8080/o/headless-admin-taxonomy/v1.0" +
+						"/taxonomy-vocabularies/" +
+							getTaxonomyVocabulary.getId()
+				).put(
+					"method", "PUT"
+				).build()
+			).put(
+				"update",
+				HashMapBuilder.put(
+					"href",
+					"http://localhost:8080/o/headless-admin-taxonomy/v1.0" +
+						"/taxonomy-vocabularies/" +
+							getTaxonomyVocabulary.getId()
+				).put(
+					"method", "PATCH"
+				).build()
+			).build());
+	}
+
+	@Override
+	@Test
 	public void testPutAssetLibraryTaxonomyVocabularyByExternalReferenceCode()
 		throws Exception {
 

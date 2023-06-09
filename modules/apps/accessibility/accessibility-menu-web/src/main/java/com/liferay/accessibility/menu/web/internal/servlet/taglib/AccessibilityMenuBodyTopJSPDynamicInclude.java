@@ -15,7 +15,9 @@
 package com.liferay.accessibility.menu.web.internal.servlet.taglib;
 
 import com.liferay.accessibility.menu.web.internal.constants.AccessibilityMenuPortletKeys;
+import com.liferay.accessibility.menu.web.internal.util.AccessibilitySettingsUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.taglib.portletext.RuntimeTag;
@@ -29,6 +31,7 @@ import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Evan Thibodeau
@@ -42,6 +45,12 @@ public class AccessibilityMenuBodyTopJSPDynamicInclude
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
+
+		if (!AccessibilitySettingsUtil.isAccessibilityMenuEnabled(
+				httpServletRequest, _configurationProvider)) {
+
+			return;
+		}
 
 		PageContext pageContext = PageContextFactoryUtil.create(
 			httpServletRequest, httpServletResponse);
@@ -71,5 +80,8 @@ public class AccessibilityMenuBodyTopJSPDynamicInclude
 		dynamicIncludeRegistry.register(
 			"/html/common/themes/body_top.jsp#post");
 	}
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 }

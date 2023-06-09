@@ -44,20 +44,17 @@ public class SegmentsExperienceManager {
 			return segmentsExperienceIds[0];
 		}
 
-		return _segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-			_getPlid(httpServletRequest));
-	}
-
-	private long _getPlid(HttpServletRequest httpServletRequest) {
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
 		if (themeDisplay != null) {
-			return themeDisplay.getPlid();
+			return _segmentsExperienceLocalService.
+				fetchDefaultSegmentsExperienceId(themeDisplay.getPlid());
 		}
 
-		return ParamUtil.getLong(httpServletRequest, "plid");
+		return _segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+			ParamUtil.getLong(httpServletRequest, "plid"));
 	}
 
 	private final SegmentsExperienceLocalService

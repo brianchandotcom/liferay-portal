@@ -6,7 +6,7 @@ definition {
 		''';
 
 	macro _curlObjectEntries {
-		Variables.assertDefined(parameterList = "${en_US_plural_label},${fieldName},${fieldValue}");
+		Variables.assertDefined(parameterList = ${en_US_plural_label});
 
 		var en_US_plural_label_lowercase = StringUtil.lowerCase(${en_US_plural_label});
 
@@ -32,35 +32,38 @@ definition {
 				var groupName = "Guest";
 			}
 
-			var scopeKey = JSONGroupAPI._getGroupIdByNameNoSelenium(
+			var scopeKey = JSONGroupAPI._getSiteIdByGroupKeyNoSelenium(
 				groupName = ${groupName},
-				site = "true");
+				token = ${token});
 
 			var api = StringUtil.add(${api}, "/scopes/${scopeKey}", "");
 		}
 
-		var curlWithoutBody = StringUtil.add(${api}, " \ ${headers}", "");
-		var body = CustomObjectAPI._setNObjectEntriesBody(
-			alternateName = ${alternateName},
-			emailDomain = ${emailDomain},
-			externalReferenceCode = ${externalReferenceCode},
-			familyName = ${familyName},
-			fieldName = ${fieldName},
-			fieldValue = ${fieldValue},
-			givenName = ${givenName},
-			keywords = ${keywords},
-			nestedField = ${nestedField},
-			numberOfRelatedObjectEntries = ${numberOfRelatedObjectEntries},
-			objectEntryId = ${objectEntryId},
-			oneToManyChild = ${oneToManyChild},
-			relatedEntryExternalReferenceCode = ${relatedEntryExternalReferenceCode},
-			relatedEntryFieldName = ${relatedEntryFieldName},
-			relatedUserAccount = ${relatedUserAccount},
-			secondFieldValue = ${secondFieldValue},
-			taxonomyCategoryIds = ${taxonomyCategoryIds},
-			userExternalReferenceCodes = ${userExternalReferenceCodes});
+		var curl = StringUtil.add(${api}, " \ ${headers}", "");
 
-		var curl = StringUtil.add(${curlWithoutBody}, "-d {${body}}", " ");
+		if (!(isSet(body))) {
+			var body = CustomObjectAPI._setNObjectEntriesBody(
+				alternateName = ${alternateName},
+				emailDomain = ${emailDomain},
+				externalReferenceCode = ${externalReferenceCode},
+				familyName = ${familyName},
+				fieldName = ${fieldName},
+				fieldValue = ${fieldValue},
+				givenName = ${givenName},
+				keywords = ${keywords},
+				nestedField = ${nestedField},
+				numberOfRelatedObjectEntries = ${numberOfRelatedObjectEntries},
+				objectEntryId = ${objectEntryId},
+				oneToManyChild = ${oneToManyChild},
+				relatedEntryExternalReferenceCode = ${relatedEntryExternalReferenceCode},
+				relatedEntryFieldName = ${relatedEntryFieldName},
+				relatedUserAccount = ${relatedUserAccount},
+				secondFieldValue = ${secondFieldValue},
+				taxonomyCategoryIds = ${taxonomyCategoryIds},
+				userExternalReferenceCodes = ${userExternalReferenceCodes});
+
+			var curl = StringUtil.add(${curl}, "-d {${body}}", " ");
+		}
 
 		if (isSet(token)) {
 			var curl = StringUtil.add(${curl}, " -H 'Authorization: Bearer ${token}'", "");
@@ -232,6 +235,21 @@ definition {
 			virtualHost = ${virtualHost});
 
 		var response = JSONCurlUtil.post(${curl});
+
+		return ${response};
+	}
+
+	macro getObjectEntries {
+		Variables.assertDefined(parameterList = ${en_US_plural_label});
+
+		var en_US_plural_label_lowercase = StringUtil.lowerCase(${en_US_plural_label});
+		var curl = CustomObjectAPI._curlObjectEntries(
+			body = "false",
+			en_US_plural_label = ${en_US_plural_label},
+			scopeKey = ${scopeKey},
+			token = ${token});
+
+		var response = JSONCurlUtil.get(${curl});
 
 		return ${response};
 	}

@@ -107,8 +107,8 @@ definition {
 
 		task ("When I use postScopeScopeKey and scopeKey to create an object entry in default instance") {
 			var defaultInstanceToken = OAuth2ForObject.createTokenWithOAuth2Scopes(
-				resourceCheckList = "C_Test.everything",
-				resourcePanels = "C_Test");
+				resourceCheckList = "C_Test.everything,liferay-json-web-services.everything",
+				resourcePanels = "C_Test,Portal Services");
 
 			CustomObjectAPI.createObjectEntryWithFields(
 				en_US_plural_label = "tests",
@@ -119,8 +119,9 @@ definition {
 		}
 
 		task ("Then the object entry created successfully") {
-			var responseToParse = ObjectDefinitionAPI.getObjectEntries(
+			var responseToParse = CustomObjectAPI.getObjectEntries(
 				en_US_plural_label = "tests",
+				scopeKey = "true",
 				token = ${defaultInstanceToken});
 
 			var actualValue = JSONUtil.getWithJSONPath(${responseToParse}, "$.totalCount");

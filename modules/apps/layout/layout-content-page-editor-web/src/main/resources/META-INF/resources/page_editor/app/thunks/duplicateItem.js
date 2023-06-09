@@ -13,6 +13,7 @@
  */
 
 import duplicateItemAction from '../actions/duplicateItem';
+import {ITEM_ACTIVATION_ORIGINS} from '../config/constants/itemActivationOrigins';
 import FragmentService from '../services/FragmentService';
 
 export default function duplicateItem({itemId, selectItem = () => {}}) {
@@ -38,7 +39,9 @@ export default function duplicateItem({itemId, selectItem = () => {}}) {
 				);
 
 				if (duplicatedItemId) {
-					selectItem(duplicatedItemId);
+					selectItem(duplicatedItemId, {
+						origin: ITEM_ACTIVATION_ORIGINS.itemActions,
+					});
 				}
 			}
 		);

@@ -26,6 +26,7 @@ import hasDropZoneChild from '../../../../../app/components/layout_data_items/ha
 import {FRAGMENT_ENTRY_TYPES} from '../../../../../app/config/constants/fragmentEntryTypes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../app/config/constants/layoutDataItemTypes';
 import {useSelectItem} from '../../../../../app/contexts/ControlsContext';
+import {useSetMovementText} from '../../../../../app/contexts/KeyboardMovementContext';
 import {
 	useDispatch,
 	useSelector,
@@ -130,6 +131,7 @@ const ActionList = ({item, setActive, setEditingNodeId, setOpenSaveModal}) => {
 	const dispatch = useDispatch();
 	const hasRequiredChild = useHasRequiredChild(item.id);
 	const selectItem = useSelectItem();
+	const setText = useSetMovementText();
 	const widgets = useSelector((state) => state.widgets);
 
 	const {fragmentEntryLinks, layoutData, selectedViewportSize} = useSelector(
@@ -195,13 +197,16 @@ const ActionList = ({item, setActive, setEditingNodeId, setOpenSaveModal}) => {
 
 		if (canBeDuplicated(fragmentEntryLinks, item, layoutData, widgets)) {
 			items.push({
-				action: () =>
+				action: () => {
 					dispatch(
 						duplicateItem({
 							itemId: item.id,
 							selectItem,
 						})
-					),
+					);
+
+					setText(Liferay.Language.get('item-duplicated'));
+				},
 				icon: 'copy',
 				label: Liferay.Language.get('duplicate'),
 			});
@@ -246,6 +251,7 @@ const ActionList = ({item, setActive, setEditingNodeId, setOpenSaveModal}) => {
 		selectItem,
 		widgets,
 		setOpenSaveModal,
+		setText,
 		isHidden,
 		setEditingNodeId,
 	]);

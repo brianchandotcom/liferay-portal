@@ -80,6 +80,38 @@ definition {
 		}
 	}
 
+	@description = "LPS-175155. Verify if is possible create a cell renderer"
+	@priority = 5
+	test CanCreateCellRender {
+		task ("And types “Change Date Format” on Name field") {
+			Type(
+				key_text = "Name",
+				locator1 = "TextInput#ANY",
+				value1 = "Change Date Format");
+		}
+
+		task ("And types “http://www.myplace.com/mycellrenderer.js” on JS URL field") {
+			Type.typeNoMouseOver(
+				key_text = "JavaScript URL",
+				locator1 = "TextInput#ANY",
+				value1 = "http://www.myplace.com/mycellrenderer.js");
+		}
+
+		task ("And clicks on Publish button") {
+			Button.clickPublish();
+		}
+
+		task ("Then a confirmation message is displayed") {
+			Alert.viewSuccessMessage();
+		}
+
+		task ("And “Change Date Format” entry is present on Client Extension admin page") {
+			ClientExtensionGeneral.viewTableEntries(
+				entryName = "Change Date Format",
+				entryType = "Frontend Data Set Cell Renderer");
+		}
+	}
+
 	@description = "LPS-175155. Verify if is possible create a Renderer Cell via OSGI"
 	@priority = 4
 	test CanCreateCellRendererViaOSGI {

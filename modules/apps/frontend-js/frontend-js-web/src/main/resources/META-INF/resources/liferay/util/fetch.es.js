@@ -13,9 +13,33 @@
  */
 
 /**
+ * @param {!string|!Request|!URL} resource
+ * @param {!string} newLocation
+ * @return {!string|!Request|!URL}
+ */
+function setNewLocation(resource, newLocation) {
+	if (typeof resource === 'string') {
+		resource = newLocation;
+	}
+	else if (resource instanceof URL) {
+		resource = new URL(newLocation);
+	}
+	else if (resource instanceof Request) {
+		resource = new Request(newLocation, resource);
+	}
+	else {
+		console.warn(
+			'Resource passed to `fetch()` must either be a string, Request, or URL.'
+		);
+	}
+
+	return resource;
+}
+
+/**
  * Fetches a resource. A thin wrapper around ES6 Fetch API, with standardized
  * default configuration.
- * @param {!string|!Request} resource The URL to the resource, or a Resource
+ * @param {!string|!Request|!URL} resource The URL to the resource, or a Resource
  * object.
  * @param {Object=} init An optional object containing custom configuration.
  * @return {Promise} A Promise that resolves to a Response object.
@@ -34,12 +58,7 @@ export default function defaultFetch(resource, init = {}) {
 		if (pathContext && !resourceLocation.startsWith(pathContext)) {
 			resourceLocation = pathContext + resourceLocation;
 
-			if (typeof resource === 'string') {
-				resource = resourceLocation;
-			}
-			else {
-				resource = new URL(resourceLocation);
-			}
+			resource = setNewLocation(resource, resourceLocation);
 		}
 
 		resourceLocation = window.location.origin + resourceLocation;
@@ -58,14 +77,10 @@ export default function defaultFetch(resource, init = {}) {
 
 		if (doAsUserIdEncoded) {
 			resourceURL.searchParams.set('doAsUserId', doAsUserIdEncoded);
+
 			resourceLocation = resourceURL.toString();
 
-			if (typeof resource === 'string') {
-				resource = resourceLocation;
-			}
-			else {
-				resource = new URL(resourceLocation);
-			}
+			resource = setNewLocation(resource, resourceLocation);
 		}
 	}
 

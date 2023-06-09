@@ -800,13 +800,13 @@ public class DLAdminDisplayContext {
 					fileEntryTypeId);
 
 			dlFileEntryTypeName = dlFileEntryType.getName(
-				_httpServletRequest.getLocale());
+				_themeDisplay.getLocale());
 		}
 
 		return LanguageUtil.format(
 			_httpServletRequest,
 			"there-are-no-documents-or-media-files-of-type-x",
-			HtmlUtil.escape(dlFileEntryTypeName));
+			HtmlUtil.escape(dlFileEntryTypeName), false);
 	}
 
 	private Filter _getExtensionsFilter(String[] extensions) {

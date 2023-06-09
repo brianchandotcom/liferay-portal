@@ -369,7 +369,7 @@ public class DLAdminManagementToolbarDisplayContext
 							fileEntryTypeId);
 
 					fileEntryTypeName = fileEntryType.getName(
-						_httpServletRequest.getLocale());
+						_themeDisplay.getLocale());
 				}
 
 				labelItem.setLabel(

@@ -13,3 +13,8 @@
  * details.
  */
 --%>
+
+<%@ taglib uri="http://liferay.com/tld/react" prefix="react" %>
+
+<%@ page import="com.liferay.accessibility.menu.web.internal.display.context.AccessibilityMenuDisplayContext" %><%@
+page import="com.liferay.portal.kernel.util.HashMapBuilder" %>

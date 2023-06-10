@@ -58,7 +58,6 @@ import com.liferay.portlet.rolesadmin.search.OrganizationRoleChecker;
 import com.liferay.portlet.rolesadmin.search.SetUserRoleChecker;
 import com.liferay.portlet.rolesadmin.search.UnsetUserRoleChecker;
 import com.liferay.portlet.rolesadmin.search.UserGroupRoleChecker;
-import com.liferay.portlet.usergroupsadmin.search.UserGroupDisplayTerms;
 import com.liferay.portlet.usergroupsadmin.search.UserGroupSearch;
 import com.liferay.portlet.usersadmin.search.GroupSearch;
 import com.liferay.portlet.usersadmin.search.GroupSearchTerms;
@@ -448,10 +447,7 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 				Long.valueOf(_role.getRoleId()));
 		}
 
-		UserGroupDisplayTerms searchTerms =
-			(UserGroupDisplayTerms)userGroupSearch.getSearchTerms();
-
-		String keywords = searchTerms.getKeywords();
+		String keywords = getKeywords();
 
 		if (Validator.isNotNull(keywords)) {
 			userGroupParams.put("expandoAttributes", keywords);

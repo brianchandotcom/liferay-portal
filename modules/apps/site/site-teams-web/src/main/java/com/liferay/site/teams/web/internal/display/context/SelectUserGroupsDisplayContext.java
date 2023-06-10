@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.service.persistence.constants.UserGroupFinderConstants;
-import com.liferay.portlet.usergroupsadmin.search.UserGroupDisplayTerms;
 import com.liferay.portlet.usergroupsadmin.search.UserGroupSearch;
 import com.liferay.site.teams.web.internal.constants.SiteTeamsPortletKeys;
 import com.liferay.site.teams.web.internal.search.UserGroupTeamChecker;
@@ -213,9 +212,6 @@ public class SelectUserGroupsDisplayContext {
 
 		Team team = getTeam();
 
-		UserGroupDisplayTerms searchTerms =
-			(UserGroupDisplayTerms)userGroupSearchContainer.getSearchTerms();
-
 		LinkedHashMap<String, Object> userGroupParams =
 			LinkedHashMapBuilder.<String, Object>put(
 				UserGroupFinderConstants.PARAM_KEY_USER_GROUPS_GROUPS,
@@ -233,12 +229,12 @@ public class SelectUserGroupsDisplayContext {
 
 		userGroupSearchContainer.setResultsAndTotal(
 			() -> UserGroupLocalServiceUtil.search(
-				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+				themeDisplay.getCompanyId(), getKeywords(),
 				userGroupParams, userGroupSearchContainer.getStart(),
 				userGroupSearchContainer.getEnd(),
 				userGroupSearchContainer.getOrderByComparator()),
 			UserGroupLocalServiceUtil.searchCount(
-				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+				themeDisplay.getCompanyId(), getKeywords(),
 				userGroupParams));
 
 		userGroupSearchContainer.setRowChecker(

@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.usergroupsadmin.search.UserGroupChecker;
-import com.liferay.portlet.usergroupsadmin.search.UserGroupDisplayTerms;
 import com.liferay.portlet.usergroupsadmin.search.UserGroupSearch;
 import com.liferay.user.groups.admin.constants.UserGroupsAdminPortletKeys;
 
@@ -211,12 +210,9 @@ public class ViewUserGroupsManagementToolbarDisplayContext {
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		UserGroupDisplayTerms userGroupSearchTerms =
-			(UserGroupDisplayTerms)userGroupSearch.getSearchTerms();
-
 		LinkedHashMap<String, Object> userGroupParams = new LinkedHashMap<>();
 
-		String keywords = userGroupSearchTerms.getKeywords();
+		String keywords = getKeywords();
 
 		if (Validator.isNotNull(keywords)) {
 			userGroupParams.put("expandoAttributes", keywords);

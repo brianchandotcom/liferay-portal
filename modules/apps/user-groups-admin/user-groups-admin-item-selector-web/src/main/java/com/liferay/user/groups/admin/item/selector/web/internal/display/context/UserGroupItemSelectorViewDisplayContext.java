@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portlet.usergroupsadmin.search.UserGroupDisplayTerms;
 import com.liferay.portlet.usergroupsadmin.search.UserGroupSearch;
 import com.liferay.user.groups.admin.item.selector.UserGroupItemSelectorCriterion;
 import com.liferay.user.groups.admin.item.selector.web.internal.search.UserGroupItemSelectorChecker;
@@ -74,6 +73,18 @@ public class UserGroupItemSelectorViewDisplayContext {
 		return _portletURL;
 	}
 
+	public String getKeywords() {
+		if (_keywords != null) {
+			return _keywords;
+		}
+
+		_keywords = ParamUtil.getString(_renderRequest, "keywords");
+
+		return _keywords;
+	}
+
+	private String _keywords;
+
 	public SearchContainer<UserGroup> getSearchContainer() {
 		if (_searchContainer != null) {
 			return _searchContainer;
@@ -87,10 +98,7 @@ public class UserGroupItemSelectorViewDisplayContext {
 				getOrderByCol(), getOrderByType()));
 		_searchContainer.setOrderByType(getOrderByType());
 
-		UserGroupDisplayTerms searchTerms =
-			(UserGroupDisplayTerms)_searchContainer.getSearchTerms();
-
-		String keywords = searchTerms.getKeywords();
+		String keywords = getKeywords();
 
 		if (_userGroupItemSelectorCriterion.isFilterManageableUserGroups()) {
 			_searchContainer.setResultsAndTotal(

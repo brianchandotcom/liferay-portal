@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portlet.usergroupsadmin.search.UserGroupDisplayTerms;
 import com.liferay.portlet.usergroupsadmin.search.UserGroupSearch;
 import com.liferay.site.memberships.constants.SiteMembershipsPortletKeys;
 import com.liferay.site.memberships.web.internal.search.UserGroupSiteMembershipChecker;
@@ -196,19 +195,16 @@ public class SelectUserGroupsDisplayContext {
 		UserGroupSearch userGroupSearch = new UserGroupSearch(
 			_renderRequest, getPortletURL());
 
-		UserGroupDisplayTerms searchTerms =
-			(UserGroupDisplayTerms)userGroupSearch.getSearchTerms();
-
 		LinkedHashMap<String, Object> userGroupParams = new LinkedHashMap<>();
 
 		userGroupSearch.setResultsAndTotal(
 			() -> UserGroupLocalServiceUtil.search(
-				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+				themeDisplay.getCompanyId(), getKeywords(),
 				userGroupParams, userGroupSearch.getStart(),
 				userGroupSearch.getEnd(),
 				userGroupSearch.getOrderByComparator()),
 			UserGroupLocalServiceUtil.searchCount(
-				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+				themeDisplay.getCompanyId(), getKeywords(),
 				userGroupParams));
 
 		userGroupSearch.setRowChecker(

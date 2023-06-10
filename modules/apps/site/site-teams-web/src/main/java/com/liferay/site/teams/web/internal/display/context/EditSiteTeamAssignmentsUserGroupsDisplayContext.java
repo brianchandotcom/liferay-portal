@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.service.persistence.constants.UserGroupFinderConstants;
-import com.liferay.portlet.usergroupsadmin.search.UserGroupDisplayTerms;
 import com.liferay.portlet.usergroupsadmin.search.UserGroupSearch;
 import com.liferay.site.teams.web.internal.constants.SiteTeamsPortletKeys;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
@@ -141,9 +140,6 @@ public class EditSiteTeamAssignmentsUserGroupsDisplayContext
 				getOrderByCol(), getOrderByType()));
 		userGroupSearchContainer.setOrderByType(getOrderByType());
 
-		UserGroupDisplayTerms searchTerms =
-			(UserGroupDisplayTerms)userGroupSearchContainer.getSearchTerms();
-
 		LinkedHashMap<String, Object> userGroupParams =
 			LinkedHashMapBuilder.<String, Object>put(
 				UserGroupFinderConstants.PARAM_KEY_USER_GROUPS_TEAMS,
@@ -152,12 +148,12 @@ public class EditSiteTeamAssignmentsUserGroupsDisplayContext
 
 		userGroupSearchContainer.setResultsAndTotal(
 			() -> UserGroupLocalServiceUtil.search(
-				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+				themeDisplay.getCompanyId(), getKeywords(),
 				userGroupParams, userGroupSearchContainer.getStart(),
 				userGroupSearchContainer.getEnd(),
 				userGroupSearchContainer.getOrderByComparator()),
 			UserGroupLocalServiceUtil.searchCount(
-				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+				themeDisplay.getCompanyId(), getKeywords(),
 				userGroupParams));
 
 		userGroupSearchContainer.setRowChecker(

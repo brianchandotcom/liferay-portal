@@ -31,9 +31,9 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.service.persistence.constants.UserGroupFinderConstants;
-import com.liferay.portlet.usergroupsadmin.search.UserGroupSearch;
 import com.liferay.site.memberships.constants.SiteMembershipsPortletKeys;
 import com.liferay.site.memberships.web.internal.util.GroupUtil;
+import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
 import java.util.LinkedHashMap;
 
@@ -232,18 +232,18 @@ public class UserGroupsDisplayContext {
 	}
 
 	public SearchContainer<UserGroup> getUserGroupSearchContainer() {
-		if (_userGroupSearch != null) {
-			return _userGroupSearch;
+		if (_userGroupSearchContainer != null) {
+			return _userGroupSearchContainer;
 		}
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		UserGroupSearch userGroupSearch = new UserGroupSearch(
-			_renderRequest, getPortletURL());
+		SearchContainer<UserGroup> userGroupSearchContainer =
+			new SearchContainer<>(_renderRequest, getPortletURL(), null, null);
 
-		userGroupSearch.setEmptyResultsMessage(
+		userGroupSearchContainer.setEmptyResultsMessage(
 			LanguageUtil.format(
 				themeDisplay.getLocale(),
 				"no-user-group-was-found-that-is-a-member-of-this-x",
@@ -251,6 +251,13 @@ public class UserGroupsDisplayContext {
 					GroupUtil.getGroupTypeLabel(
 						_groupId, themeDisplay.getLocale())),
 				false));
+		userGroupSearchContainer.setOrderByCol(getOrderByCol());
+		userGroupSearchContainer.setOrderByComparator(
+			UsersAdminUtil.getUserGroupOrderByComparator(
+				getOrderByCol(), getOrderByType()));
+		userGroupSearchContainer.setOrderByType(getOrderByType());
+		userGroupSearchContainer.setRowChecker(
+			new EmptyOnClickRowChecker(_renderResponse));
 
 		LinkedHashMap<String, Object> userGroupParams =
 			LinkedHashMapBuilder.<String, Object>put(
@@ -272,22 +279,18 @@ public class UserGroupsDisplayContext {
 				}
 			).build();
 
-		userGroupSearch.setResultsAndTotal(
+		userGroupSearchContainer.setResultsAndTotal(
 			() -> UserGroupServiceUtil.search(
-				themeDisplay.getCompanyId(), getKeywords(),
-				userGroupParams, userGroupSearch.getStart(),
-				userGroupSearch.getEnd(),
-				userGroupSearch.getOrderByComparator()),
+				themeDisplay.getCompanyId(), getKeywords(), userGroupParams,
+				userGroupSearchContainer.getStart(),
+				userGroupSearchContainer.getEnd(),
+				userGroupSearchContainer.getOrderByComparator()),
 			UserGroupServiceUtil.searchCount(
-				themeDisplay.getCompanyId(), getKeywords(),
-				userGroupParams));
+				themeDisplay.getCompanyId(), getKeywords(), userGroupParams));
 
-		userGroupSearch.setRowChecker(
-			new EmptyOnClickRowChecker(_renderResponse));
+		_userGroupSearchContainer = userGroupSearchContainer;
 
-		_userGroupSearch = userGroupSearch;
-
-		return _userGroupSearch;
+		return _userGroupSearchContainer;
 	}
 
 	private String _displayStyle;
@@ -300,6 +303,6 @@ public class UserGroupsDisplayContext {
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private Role _role;
-	private UserGroupSearch _userGroupSearch;
+	private SearchContainer<UserGroup> _userGroupSearchContainer;
 
 }

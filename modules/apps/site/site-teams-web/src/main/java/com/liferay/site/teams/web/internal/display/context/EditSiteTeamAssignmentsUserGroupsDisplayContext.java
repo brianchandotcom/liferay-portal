@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.service.persistence.constants.UserGroupFinderConstants;
-import com.liferay.portlet.usergroupsadmin.search.UserGroupSearch;
 import com.liferay.site.teams.web.internal.constants.SiteTeamsPortletKeys;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
@@ -132,7 +131,9 @@ public class EditSiteTeamAssignmentsUserGroupsDisplayContext
 				WebKeys.THEME_DISPLAY);
 
 		SearchContainer<UserGroup> userGroupSearchContainer =
-			new UserGroupSearch(renderRequest, getEditTeamAssignmentsURL());
+			new SearchContainer<>(
+				renderRequest, getEditTeamAssignmentsURL(), null,
+				"no-user-groups-were-found");
 
 		userGroupSearchContainer.setOrderByCol(getOrderByCol());
 		userGroupSearchContainer.setOrderByComparator(
@@ -148,13 +149,12 @@ public class EditSiteTeamAssignmentsUserGroupsDisplayContext
 
 		userGroupSearchContainer.setResultsAndTotal(
 			() -> UserGroupLocalServiceUtil.search(
-				themeDisplay.getCompanyId(), getKeywords(),
-				userGroupParams, userGroupSearchContainer.getStart(),
+				themeDisplay.getCompanyId(), getKeywords(), userGroupParams,
+				userGroupSearchContainer.getStart(),
 				userGroupSearchContainer.getEnd(),
 				userGroupSearchContainer.getOrderByComparator()),
 			UserGroupLocalServiceUtil.searchCount(
-				themeDisplay.getCompanyId(), getKeywords(),
-				userGroupParams));
+				themeDisplay.getCompanyId(), getKeywords(), userGroupParams));
 
 		userGroupSearchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(renderResponse));

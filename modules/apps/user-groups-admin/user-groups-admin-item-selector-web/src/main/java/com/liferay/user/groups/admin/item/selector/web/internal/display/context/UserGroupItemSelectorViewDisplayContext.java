@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portlet.usergroupsadmin.search.UserGroupSearch;
 import com.liferay.user.groups.admin.item.selector.UserGroupItemSelectorCriterion;
 import com.liferay.user.groups.admin.item.selector.web.internal.search.UserGroupItemSelectorChecker;
 import com.liferay.users.admin.kernel.util.UsersAdmin;
@@ -59,6 +58,16 @@ public class UserGroupItemSelectorViewDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
+	public String getKeywords() {
+		if (_keywords != null) {
+			return _keywords;
+		}
+
+		_keywords = ParamUtil.getString(_renderRequest, "keywords");
+
+		return _keywords;
+	}
+
 	public String getOrderByCol() {
 		return ParamUtil.getString(
 			_renderRequest, SearchContainer.DEFAULT_ORDER_BY_COL_PARAM, "name");
@@ -73,24 +82,13 @@ public class UserGroupItemSelectorViewDisplayContext {
 		return _portletURL;
 	}
 
-	public String getKeywords() {
-		if (_keywords != null) {
-			return _keywords;
-		}
-
-		_keywords = ParamUtil.getString(_renderRequest, "keywords");
-
-		return _keywords;
-	}
-
-	private String _keywords;
-
 	public SearchContainer<UserGroup> getSearchContainer() {
 		if (_searchContainer != null) {
 			return _searchContainer;
 		}
 
-		_searchContainer = new UserGroupSearch(_renderRequest, getPortletURL());
+		_searchContainer = new SearchContainer<>(
+			_renderRequest, getPortletURL(), null, "no-user-groups-were-found");
 
 		_searchContainer.setOrderByCol(getOrderByCol());
 		_searchContainer.setOrderByComparator(
@@ -130,6 +128,7 @@ public class UserGroupItemSelectorViewDisplayContext {
 		return ParamUtil.getLongValues(_renderRequest, "checkedUserGroupIds");
 	}
 
+	private String _keywords;
 	private final PortletURL _portletURL;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;

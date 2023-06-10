@@ -58,7 +58,6 @@ import com.liferay.portlet.rolesadmin.search.OrganizationRoleChecker;
 import com.liferay.portlet.rolesadmin.search.SetUserRoleChecker;
 import com.liferay.portlet.rolesadmin.search.UnsetUserRoleChecker;
 import com.liferay.portlet.rolesadmin.search.UserGroupRoleChecker;
-import com.liferay.portlet.usergroupsadmin.search.UserGroupSearch;
 import com.liferay.portlet.usersadmin.search.GroupSearch;
 import com.liferay.portlet.usersadmin.search.GroupSearchTerms;
 import com.liferay.portlet.usersadmin.search.OrganizationSearch;
@@ -69,6 +68,7 @@ import com.liferay.roles.admin.constants.RolesAdminPortletKeys;
 import com.liferay.roles.admin.constants.RolesAdminWebKeys;
 import com.liferay.roles.admin.web.internal.dao.search.SegmentsEntrySearchContainerFactory;
 import com.liferay.segments.model.SegmentsEntry;
+import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -432,8 +432,25 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 	}
 
 	public SearchContainer<UserGroup> getUserGroupSearchContainer() {
-		UserGroupSearch userGroupSearch = new UserGroupSearch(
-			_renderRequest, getPortletURL());
+		SearchContainer<UserGroup> userGroupSearchContainer =
+			new SearchContainer<>(
+				_renderRequest, getPortletURL(), null,
+				"no-user-groups-were-found");
+
+		userGroupSearchContainer.setOrderByCol(getOrderByCol());
+		userGroupSearchContainer.setOrderByComparator(
+			UsersAdminUtil.getUserGroupOrderByComparator(
+				getOrderByCol(), getOrderByType()));
+		userGroupSearchContainer.setOrderByType(getOrderByType());
+
+		if (_tabs3.equals("available")) {
+			userGroupSearchContainer.setRowChecker(
+				new UserGroupRoleChecker(_renderResponse, _role));
+		}
+		else {
+			userGroupSearchContainer.setRowChecker(
+				new EmptyOnClickRowChecker(_renderResponse));
+		}
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_httpServletRequest.getAttribute(
@@ -453,24 +470,16 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 			userGroupParams.put("expandoAttributes", keywords);
 		}
 
-		userGroupSearch.setResultsAndTotal(
+		userGroupSearchContainer.setResultsAndTotal(
 			() -> UserGroupLocalServiceUtil.search(
 				themeDisplay.getCompanyId(), keywords, userGroupParams,
-				userGroupSearch.getStart(), userGroupSearch.getEnd(),
-				userGroupSearch.getOrderByComparator()),
+				userGroupSearchContainer.getStart(),
+				userGroupSearchContainer.getEnd(),
+				userGroupSearchContainer.getOrderByComparator()),
 			UserGroupLocalServiceUtil.searchCount(
 				themeDisplay.getCompanyId(), keywords, userGroupParams));
 
-		if (_tabs3.equals("available")) {
-			userGroupSearch.setRowChecker(
-				new UserGroupRoleChecker(_renderResponse, _role));
-		}
-		else {
-			userGroupSearch.setRowChecker(
-				new EmptyOnClickRowChecker(_renderResponse));
-		}
-
-		return userGroupSearch;
+		return userGroupSearchContainer;
 	}
 
 	public SearchContainer<User> getUserSearchContainer() {

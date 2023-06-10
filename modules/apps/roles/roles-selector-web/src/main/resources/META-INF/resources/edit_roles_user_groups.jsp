@@ -40,6 +40,15 @@ String keywords = ParamUtil.getString(request, "keywords");
 if (Validator.isNotNull(keywords)) {
 	userGroupParams.put("expandoAttributes", keywords);
 }
+
+SearchContainer<UserGroup> userGroupSearchContainer = new SearchContainer<>(renderRequest, portletURL, null, "no-user-groups-were-found");
+
+String orderByCol = SearchOrderByUtil.getOrderByCol(renderRequest, RolesSelectorPortletKeys.ROLES_SELECTOR, "name");
+String orderByType = SearchOrderByUtil.getOrderByType(renderRequest, RolesSelectorPortletKeys.ROLES_SELECTOR, "asc");
+
+userGroupSearchContainer.setOrderByCol(orderByCol);
+userGroupSearchContainer.setOrderByComparator(UsersAdminUtil.getUserGroupOrderByComparator(orderByCol, orderByType));
+userGroupSearchContainer.setOrderByType(orderByType);
 %>
 
 <aui:input name="addUserGroupIds" type="hidden" />
@@ -47,7 +56,7 @@ if (Validator.isNotNull(keywords)) {
 
 <liferay-ui:search-container
 	rowChecker="<%= new UserGroupGroupRoleUserGroupChecker(renderResponse, group, role) %>"
-	searchContainer="<%= new UserGroupSearch(renderRequest, portletURL) %>"
+	searchContainer="<%= userGroupSearchContainer %>"
 	total="<%= UserGroupServiceUtil.searchCount(company.getCompanyId(), keywords, userGroupParams) %>"
 >
 	<liferay-ui:search-container-results

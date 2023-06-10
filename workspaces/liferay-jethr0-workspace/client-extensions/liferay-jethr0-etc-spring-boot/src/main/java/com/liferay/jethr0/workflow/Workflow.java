@@ -37,19 +37,6 @@ public interface Workflow {
 		COMPUTER_TEMPORARILY_ONLINE, CREATE_BUILD, CREATE_PROJECT,
 		QUEUE_PROJECT;
 
-		public static EventType get(String key) {
-			return _eventTypes.get(key);
-		}
-
-		private static final Map<String, EventType> _eventTypes =
-			new HashMap<String, EventType>() {
-				{
-					for (EventType eventType : values()) {
-						put(eventType.toString(), eventType);
-					}
-				}
-			};
-
 	}
 
 }

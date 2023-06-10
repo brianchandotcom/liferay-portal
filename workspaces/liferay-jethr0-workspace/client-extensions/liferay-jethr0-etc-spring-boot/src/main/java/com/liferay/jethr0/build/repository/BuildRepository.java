@@ -35,6 +35,18 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class BuildRepository extends BaseEntityRepository<Build> {
 
+	public Build add(Project project, JSONObject jsonObject) {
+		jsonObject.put("r_projectToBuilds_c_projectId", project.getId());
+
+		Build build = add(jsonObject);
+
+		build.setProject(project);
+
+		project.addBuild(build);
+
+		return build;
+	}
+
 	public Build add(
 		Project project, String buildName, String jobName, Build.State state) {
 
@@ -45,18 +57,10 @@ public class BuildRepository extends BaseEntityRepository<Build> {
 		).put(
 			"jobName", jobName
 		).put(
-			"r_projectToBuilds_c_projectId", project.getId()
-		).put(
 			"state", state.getJSONObject()
 		);
 
-		Build build = add(jsonObject);
-
-		build.setProject(project);
-
-		project.addBuild(build);
-
-		return build;
+		return add(project, jsonObject);
 	}
 
 	public Set<Build> getAll(Project project) {

@@ -47,7 +47,13 @@ public class BuildParameterRepository
 			"value", value
 		);
 
-		return add(jsonObject);
+		BuildParameter buildParameter = add(jsonObject);
+
+		build.addBuildParameter(buildParameter);
+
+		buildParameter.setBuild(build);
+
+		return buildParameter;
 	}
 
 	public Set<BuildParameter> getAll(Build build) {

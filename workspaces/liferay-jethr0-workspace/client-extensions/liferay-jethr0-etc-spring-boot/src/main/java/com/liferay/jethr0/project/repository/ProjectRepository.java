@@ -58,7 +58,8 @@ public class ProjectRepository extends BaseEntityRepository<Project> {
 
 		addAll(
 			projectDALO.getProjectsByState(
-				Project.State.QUEUED, Project.State.RUNNING));
+				Project.State.OPENED, Project.State.QUEUED,
+				Project.State.RUNNING));
 	}
 
 	@Autowired

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.usergroupsadmin.search;
+package com.liferay.user.groups.admin.web.internal.search;
 
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.model.UserGroup;

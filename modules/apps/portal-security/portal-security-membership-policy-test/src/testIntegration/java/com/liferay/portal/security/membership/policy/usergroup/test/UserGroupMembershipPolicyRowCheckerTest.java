@@ -24,8 +24,8 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.security.membership.policy.usergroup.BaseUserGroupMembershipPolicyTestCase;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.RenderResponseFactory;
-import com.liferay.portlet.usergroupsadmin.search.SetUserUserGroupChecker;
-import com.liferay.portlet.usergroupsadmin.search.UnsetUserUserGroupChecker;
+import com.liferay.user.groups.admin.search.SetUserUserGroupChecker;
+import com.liferay.user.groups.admin.search.UnsetUserUserGroupChecker;
 
 import javax.portlet.RenderResponse;
 import javax.portlet.filter.RenderResponseWrapper;

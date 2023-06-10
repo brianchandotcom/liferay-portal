@@ -40,11 +40,11 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portlet.usergroupsadmin.search.SetUserUserGroupChecker;
-import com.liferay.portlet.usergroupsadmin.search.UnsetUserUserGroupChecker;
 import com.liferay.portlet.usersadmin.search.UserSearch;
 import com.liferay.portlet.usersadmin.search.UserSearchTerms;
 import com.liferay.user.groups.admin.constants.UserGroupsAdminPortletKeys;
+import com.liferay.user.groups.admin.search.SetUserUserGroupChecker;
+import com.liferay.user.groups.admin.search.UnsetUserUserGroupChecker;
 
 import java.util.LinkedHashMap;
 import java.util.List;

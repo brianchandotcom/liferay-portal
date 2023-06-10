@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.usergroupsadmin.search;
+package com.liferay.user.groups.admin.search;
 
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.log.Log;
@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.security.membershippolicy.UserGroupMembershipPolicyUtil;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 
 import javax.portlet.RenderResponse;
 
@@ -28,9 +27,9 @@ import javax.portlet.RenderResponse;
  * @author Charles May
  * @author Pei-Jung Lan
  */
-public class SetUserUserGroupChecker extends EmptyOnClickRowChecker {
+public class UnsetUserUserGroupChecker extends EmptyOnClickRowChecker {
 
-	public SetUserUserGroupChecker(
+	public UnsetUserUserGroupChecker(
 		RenderResponse renderResponse, UserGroup userGroup) {
 
 		super(renderResponse);
@@ -39,27 +38,11 @@ public class SetUserUserGroupChecker extends EmptyOnClickRowChecker {
 	}
 
 	@Override
-	public boolean isChecked(Object object) {
-		User user = (User)object;
-
-		try {
-			return UserLocalServiceUtil.hasUserGroupUser(
-				_userGroup.getUserGroupId(), user.getUserId());
-		}
-		catch (Exception exception) {
-			_log.error(exception);
-
-			return false;
-		}
-	}
-
-	@Override
 	public boolean isDisabled(Object object) {
 		User user = (User)object;
 
 		try {
-			if (isChecked(user) ||
-				!UserGroupMembershipPolicyUtil.isMembershipAllowed(
+			if (UserGroupMembershipPolicyUtil.isMembershipRequired(
 					user.getUserId(), _userGroup.getUserGroupId())) {
 
 				return true;
@@ -73,7 +56,7 @@ public class SetUserUserGroupChecker extends EmptyOnClickRowChecker {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		SetUserUserGroupChecker.class);
+		UnsetUserUserGroupChecker.class);
 
 	private final UserGroup _userGroup;
 

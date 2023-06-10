@@ -347,9 +347,6 @@ public class JMSEventHandler {
 	private JmsTemplate _jmsTemplate;
 
 	@Autowired
-	private ProjectQueue _projectQueue;
-
-	@Autowired
 	private ProjectRepository _projectRepository;
 
 	@Autowired

@@ -26,7 +26,7 @@ import org.springframework.context.annotation.Configuration;
 public class WorkflowFactory {
 
 	public Workflow newWorkflow(JSONObject jsonObject) {
-		Workflow.EventType eventType = Workflow.EventType.get(
+		Workflow.EventType eventType = Workflow.EventType.valueOf(
 			jsonObject.optString("eventTrigger"));
 
 		Workflow workflow = null;

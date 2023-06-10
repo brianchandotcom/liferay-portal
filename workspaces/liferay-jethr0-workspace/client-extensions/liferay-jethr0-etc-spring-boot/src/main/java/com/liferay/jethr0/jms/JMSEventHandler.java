@@ -31,13 +31,14 @@ import com.liferay.jethr0.project.repository.ProjectRepository;
 import com.liferay.jethr0.task.repository.TaskRepository;
 import com.liferay.jethr0.testsuite.repository.TestSuiteRepository;
 import com.liferay.jethr0.util.StringUtil;
+import com.liferay.jethr0.workflow.Workflow;
+import com.liferay.jethr0.workflow.WorkflowFactory;
 
 import java.net.URL;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,9 +56,7 @@ public class JMSEventHandler {
 	@JmsListener(destination = "${jms.jenkins.event.queue}")
 	public void process(String message) {
 		if (_log.isDebugEnabled()) {
-			_log.debug(
-				StringUtil.combine(
-					"[", _jmsJenkinsEventQueue, "] Receive ", message));
+			_log.debug("Received " + message);
 		}
 
 		JSONObject messageJSONObject = new JSONObject(message);
@@ -86,11 +85,25 @@ public class JMSEventHandler {
 		else if (eventTrigger.equals("CREATE_BUILD")) {
 			_eventTriggerCreateBuild(messageJSONObject);
 		}
-		else if (eventTrigger.equals("CREATE_PROJECT")) {
-			_eventTriggerCreateProject(messageJSONObject);
-		}
-		else if (eventTrigger.equals("QUEUE_PROJECT")) {
-			_eventTriggerQueueProject(messageJSONObject);
+		else if (eventTrigger.equals("CREATE_PROJECT") ||
+				 eventTrigger.equals("QUEUE_PROJECT")) {
+
+			Workflow workflow = _workflowFactory.newWorkflow(messageJSONObject);
+
+			if (workflow == null) {
+				throw new RuntimeException();
+			}
+
+			try {
+				workflow.process();
+			}
+			catch (Exception exception) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(exception);
+				}
+
+				throw new RuntimeException();
+			}
 		}
 	}
 
@@ -231,59 +244,6 @@ public class JMSEventHandler {
 		}
 	}
 
-	private void _eventTriggerCreateProject(JSONObject messageJSONObject) {
-		JSONObject projectJSONObject = messageJSONObject.getJSONObject(
-			"project");
-
-		Project project = _projectRepository.add(
-			projectJSONObject.getString("name"),
-			projectJSONObject.getInt("priority"), Project.State.OPENED,
-			Project.Type.getByKey(projectJSONObject.getString("type")));
-
-		JSONArray buildsJSONArray = projectJSONObject.getJSONArray("builds");
-
-		for (int i = 0; i < buildsJSONArray.length(); i++) {
-			JSONObject buildJSONObject = buildsJSONArray.getJSONObject(i);
-
-			Build build = _buildRepository.add(
-				project, buildJSONObject.getString("buildName"),
-				buildJSONObject.getString("jobName"), Build.State.OPENED);
-
-			JSONObject parametersJSONObject = buildJSONObject.getJSONObject(
-				"parameters");
-
-			for (String key : parametersJSONObject.keySet()) {
-				BuildParameter buildParameter = _buildParameterRepository.add(
-					build, key, parametersJSONObject.getString(key));
-
-				build.addBuildParameter(buildParameter);
-
-				buildParameter.setBuild(build);
-			}
-		}
-	}
-
-	private void _eventTriggerQueueProject(JSONObject messageJSONObject) {
-		JSONObject projectJSONObject = messageJSONObject.getJSONObject(
-			"project");
-
-		Project project = _projectRepository.getById(
-			projectJSONObject.getLong("id"));
-
-		_buildRepository.getAll(project);
-		_gitBranchRepository.getAll(project);
-		_taskRepository.getAll(project);
-		_testSuiteRepository.getAll(project);
-
-		project.setState(Project.State.QUEUED);
-
-		_projectRepository.update(project);
-
-		_buildQueue.addProject(project);
-
-		_jenkinsQueue.invoke();
-	}
-
 	private BuildRun _getBuildRun(JSONObject messageJSONObject) {
 		JSONObject buildJSONObject = messageJSONObject.getJSONObject("build");
 
@@ -296,7 +256,7 @@ public class JMSEventHandler {
 			return null;
 		}
 
-		return _buildRunRepository.getById(Long.parseLong(buildRunID));
+		return _buildRunRepository.getById(Long.valueOf(buildRunID));
 	}
 
 	private long _getBuildRunDuration(JSONObject messageJSONObject) {
@@ -397,5 +357,8 @@ public class JMSEventHandler {
 
 	@Autowired
 	private TestSuiteRepository _testSuiteRepository;
+
+	@Autowired
+	private WorkflowFactory _workflowFactory;
 
 }

@@ -73,7 +73,7 @@ SearchContainer<Role> roleSearchContainer = selectRoleManagementToolbarDisplayCo
 							).put(
 								"entityname", role.getTitle(locale)
 							).put(
-								"iconcssclass", RolesAdminUtil.getIconCssClass(role)
+								"iconcssclass", role.getIconCssClass()
 							).put(
 								"searchcontainername", "roles"
 							).build()

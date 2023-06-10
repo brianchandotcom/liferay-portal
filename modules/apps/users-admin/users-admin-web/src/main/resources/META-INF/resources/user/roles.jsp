@@ -117,7 +117,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 				name="title"
 			>
 				<liferay-ui:icon
-					iconCssClass="<%= RolesAdminUtil.getIconCssClass(role) %>"
+					iconCssClass="<%= role.getIconCssClass() %>"
 					label="<%= true %>"
 					message="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
 				/>
@@ -226,8 +226,13 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 					name="title"
 					value="<%= HtmlUtil.escape(ListUtil.toString(groupRoles, Role.TITLE_ACCESSOR)) %>"
 				>
+
+					<%
+					Role groupRole = groupRoles.get(0);
+					%>
+
 					<liferay-ui:icon
-						iconCssClass="<%= RolesAdminUtil.getIconCssClass(groupRoles.get(0)) %>"
+						iconCssClass="<%= groupRole.getIconCssClass() %>"
 						label="<%= true %>"
 						message="<%= HtmlUtil.escape(ListUtil.toString(groupRoles, Role.NAME_ACCESSOR)) %>"
 					/>
@@ -296,14 +301,19 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 				keyProperty="roleId"
 				modelVar="userGroupRole"
 			>
+
+				<%
+				Role role = userGroupRole.getRole();
+				%>
+
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand"
 					name="title"
 				>
 					<liferay-ui:icon
-						iconCssClass="<%= RolesAdminUtil.getIconCssClass(userGroupRole.getRole()) %>"
+						iconCssClass="<%= role.getIconCssClass() %>"
 						label="<%= true %>"
-						message="<%= HtmlUtil.escape(userGroupRole.getRole().getTitle(locale)) %>"
+						message="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
 					/>
 				</liferay-ui:search-container-column-text>
 
@@ -317,8 +327,6 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 				boolean membershipProtected = false;
 
 				Group group = userGroupRole.getGroup();
-
-				Role role = userGroupRole.getRole();
 
 				if (role.getType() == RoleConstants.TYPE_ORGANIZATION) {
 					membershipProtected = OrganizationMembershipPolicyUtil.isMembershipProtected(permissionChecker, userGroupRole.getUserId(), group.getOrganizationId());
@@ -541,14 +549,19 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 				keyProperty="roleId"
 				modelVar="userGroupRole"
 			>
+
+				<%
+				Role role = userGroupRole.getRole();
+				%>
+
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand"
 					name="title"
 				>
 					<liferay-ui:icon
-						iconCssClass="<%= RolesAdminUtil.getIconCssClass(userGroupRole.getRole()) %>"
+						iconCssClass="<%= role.getIconCssClass() %>"
 						label="<%= true %>"
-						message="<%= HtmlUtil.escape(userGroupRole.getRole().getTitle(locale)) %>"
+						message="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
 					/>
 				</liferay-ui:search-container-column-text>
 
@@ -565,8 +578,6 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 				boolean membershipProtected = false;
 
 				Group group = userGroupRole.getGroup();
-
-				Role role = userGroupRole.getRole();
 
 				if (role.getType() == RoleConstants.TYPE_ORGANIZATION) {
 					membershipProtected = OrganizationMembershipPolicyUtil.isMembershipProtected(permissionChecker, userGroupRole.getUserId(), group.getOrganizationId());
@@ -750,10 +761,15 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 					cssClass="table-cell-expand"
 					name="title"
 				>
+
+					<%
+					Role role = userGroupGroupRole.getRole();
+					%>
+
 					<liferay-ui:icon
-						iconCssClass="<%= RolesAdminUtil.getIconCssClass(userGroupGroupRole.getRole()) %>"
+						iconCssClass="<%= role.getIconCssClass() %>"
 						label="<%= true %>"
-						message="<%= HtmlUtil.escape(userGroupGroupRole.getRole().getTitle(locale)) %>"
+						message="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
 					/>
 				</liferay-ui:search-container-column-text>
 

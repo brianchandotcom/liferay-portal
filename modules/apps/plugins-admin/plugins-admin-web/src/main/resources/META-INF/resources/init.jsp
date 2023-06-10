@@ -56,8 +56,7 @@ page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.comparator.PortletTitleComparator" %><%@
-page import="com.liferay.portal.kernel.util.comparator.RoleRoleIdComparator" %><%@
-page import="com.liferay.roles.admin.kernel.util.RolesAdminUtil" %>
+page import="com.liferay.portal.kernel.util.comparator.RoleRoleIdComparator" %>
 
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.List" %>

@@ -85,10 +85,15 @@ DepotAdminRolesDisplayContext depotAdminRolesDisplayContext = (DepotAdminRolesDi
 			cssClass="table-cell-expand"
 			name="title"
 		>
+
+			<%
+			Role role = userGroupRole.getRole();
+			%>
+
 			<liferay-ui:icon
-				iconCssClass="<%= RolesAdminUtil.getIconCssClass(userGroupRole.getRole()) %>"
+				iconCssClass="<%= role.getIconCssClass() %>"
 				label="<%= true %>"
-				message="<%= HtmlUtil.escape(userGroupRole.getRole().getTitle(locale)) %>"
+				message="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
 			/>
 		</liferay-ui:search-container-column-text>
 

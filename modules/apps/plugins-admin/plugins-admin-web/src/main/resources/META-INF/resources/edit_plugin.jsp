@@ -120,7 +120,7 @@ renderResponse.setTitle(title);
 													name="role"
 												>
 													<liferay-ui:icon
-														icon="<%= RolesAdminUtil.getIconCssClass(role) %>"
+														icon="<%= role.getIconCssClass() %>"
 														label="<%= true %>"
 														markupView="lexicon"
 														message="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
@@ -179,7 +179,7 @@ renderResponse.setTitle(title);
 													name="role"
 												>
 													<liferay-ui:icon
-														icon="<%= RolesAdminUtil.getIconCssClass(role) %>"
+														icon="<%= role.getIconCssClass() %>"
 														label="<%= true %>"
 														markupView="lexicon"
 														message="<%= HtmlUtil.escape(role.getTitle(locale)) %>"

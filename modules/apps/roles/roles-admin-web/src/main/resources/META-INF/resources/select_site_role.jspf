@@ -255,7 +255,7 @@ SearchContainer<Role> roleSearchContainer = selectRoleManagementToolbarDisplayCo
 									).put(
 										"groupid", group.getGroupId()
 									).put(
-										"iconcssclass", RolesAdminUtil.getIconCssClass(role)
+										"iconcssclass", role.getIconCssClass()
 									).put(
 										"searchcontainername", "siteRoles"
 									).build()

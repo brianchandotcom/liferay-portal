@@ -229,7 +229,7 @@ else {
 						name="title"
 					>
 						<liferay-ui:icon
-							icon="<%= RolesAdminUtil.getIconCssClass(role) %>"
+							icon="<%= role.getIconCssClass() %>"
 							label="<%= true %>"
 							markupView="lexicon"
 							message="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
@@ -251,7 +251,7 @@ else {
 							).put(
 								"groupid", selectedOrganization.getGroupId()
 							).put(
-								"iconcssclass", RolesAdminUtil.getIconCssClass(role)
+								"iconcssclass", role.getIconCssClass()
 							).put(
 								"searchcontainername", "organizationRoles"
 							).build();

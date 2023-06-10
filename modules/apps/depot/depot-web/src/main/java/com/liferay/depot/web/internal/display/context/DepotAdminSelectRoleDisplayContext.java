@@ -53,7 +53,6 @@ import com.liferay.portlet.rolesadmin.search.RoleSearch;
 import com.liferay.portlet.rolesadmin.search.RoleSearchTerms;
 import com.liferay.portlet.usersadmin.search.GroupSearch;
 import com.liferay.portlet.usersadmin.search.GroupSearchTerms;
-import com.liferay.roles.admin.kernel.util.RolesAdminUtil;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -284,7 +283,7 @@ public class DepotAdminSelectRoleDisplayContext {
 				"groupdescriptivename",
 				_group.getDescriptiveName(_themeDisplay.getLocale())
 			).put(
-				"iconcssclass", RolesAdminUtil.getIconCssClass(role)
+				"iconcssclass", role.getIconCssClass()
 			).put(
 				"rolename", role.getTitle(_themeDisplay.getLocale())
 			).build();

@@ -101,6 +101,14 @@ public class ProjectQueue {
 			_taskRepository.getAll(project);
 			_testSuiteRepository.getAll(project);
 
+			Project.State state = project.getState();
+
+			if ((state != Project.State.QUEUED) &&
+				(state != Project.State.RUNNING)) {
+
+				continue;
+			}
+
 			projects.add(project);
 		}
 

@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -31,10 +30,7 @@ import com.liferay.portal.kernel.util.comparator.GroupDescriptiveNameComparator;
 import com.liferay.portal.kernel.util.comparator.GroupNameComparator;
 import com.liferay.portal.kernel.util.comparator.GroupTypeComparator;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -46,34 +42,11 @@ public class GroupSearch extends SearchContainer<Group> {
 
 	public static final String EMPTY_RESULTS_MESSAGE = "no-sites-were-found";
 
-	public static List<String> headerNames = new ArrayList<String>() {
-		{
-			add("name");
-			add("type");
-		}
-	};
-	public static Map<String, String> orderableHeaders = HashMapBuilder.put(
-		"name", "name"
-	).put(
-		"type", "type"
-	).build();
-
 	public GroupSearch(PortletRequest portletRequest, PortletURL iteratorURL) {
 		super(
-			portletRequest, new GroupDisplayTerms(portletRequest),
-			new GroupSearchTerms(portletRequest), DEFAULT_CUR_PARAM,
-			DEFAULT_DELTA, iteratorURL, headerNames, EMPTY_RESULTS_MESSAGE);
-
-		GroupDisplayTerms displayTerms = (GroupDisplayTerms)getDisplayTerms();
-
-		iteratorURL.setParameter(
-			GroupDisplayTerms.DESCRIPTION, displayTerms.getDescription());
-		iteratorURL.setParameter(
-			GroupDisplayTerms.NAME, displayTerms.getName());
+			portletRequest, iteratorURL, null, EMPTY_RESULTS_MESSAGE);
 
 		try {
-			setOrderableHeaders(orderableHeaders);
-
 			String portletId = PortletProviderUtil.getPortletId(
 				User.class.getName(), PortletProvider.Action.VIEW);
 

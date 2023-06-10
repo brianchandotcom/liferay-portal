@@ -320,6 +320,11 @@ public class RoleWrapper
 		return model.getDescriptiveName();
 	}
 
+	@Override
+	public String getIconCssClass() {
+		return model.getIconCssClass();
+	}
+
 	/**
 	 * Returns the modified date of this role.
 	 *

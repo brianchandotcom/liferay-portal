@@ -317,10 +317,6 @@
 		<property name="portletConfigurationIconMenu" ref="com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconMenu" />
 		<property name="portletToolbar" ref="com.liferay.portal.kernel.portlet.toolbar.PortletToolbar" />
 	</bean>
-	<bean class="com.liferay.portlet.rolesadmin.util.RolesAdminImpl" id="com.liferay.roles.admin.kernel.util.RolesAdmin" />
-	<bean class="com.liferay.roles.admin.kernel.util.RolesAdminUtil" id="com.liferay.roles.admin.kernel.util.RolesAdminUtil">
-		<property name="rolesAdmin" ref="com.liferay.roles.admin.kernel.util.RolesAdmin" />
-	</bean>
 	<bean class="com.liferay.portlet.sites.util.SitesImpl" id="com.liferay.sites.kernel.util.Sites" />
 	<bean class="com.liferay.sites.kernel.util.SitesUtil" id="com.liferay.sites.kernel.util.SitesUtil">
 		<property name="sites" ref="com.liferay.sites.kernel.util.Sites" />

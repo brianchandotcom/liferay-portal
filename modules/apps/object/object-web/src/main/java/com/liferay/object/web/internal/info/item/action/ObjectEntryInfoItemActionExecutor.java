@@ -73,15 +73,21 @@ public class ObjectEntryInfoItemActionExecutor
 					objectActionPrefix.length());
 			}
 
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			if ((serviceContext == null) ||
+				(serviceContext.getThemeDisplay() == null)) {
+
+				throw new InfoItemActionExecutionException();
+			}
+
+			ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
 			ObjectAction objectAction =
 				_objectActionLocalService.getObjectAction(
 					_objectDefinition.getObjectDefinitionId(), objectActionName,
 					ObjectActionTriggerConstants.KEY_STANDALONE);
-
-			ServiceContext serviceContext =
-				ServiceContextThreadLocal.getServiceContext();
-
-			ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
 			errorMessage = objectAction.getErrorMessage(
 				themeDisplay.getLocale());

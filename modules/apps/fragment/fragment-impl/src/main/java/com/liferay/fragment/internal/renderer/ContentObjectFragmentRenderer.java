@@ -136,6 +136,10 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 			return true;
 		}
 
+		if (Validator.isNull(className) && (infoItemReference != null)) {
+			className = infoItemReference.getClassName();
+		}
+
 		Tuple tuple = _getTuple(
 			className, displayObject.getClass(), fragmentRendererContext);
 
@@ -194,6 +198,10 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 			}
 
 			return;
+		}
+
+		if (Validator.isNull(className) && (infoItemReference != null)) {
+			className = infoItemReference.getClassName();
 		}
 
 		Tuple tuple = _getTuple(

@@ -136,6 +136,10 @@ public interface Project extends Entity {
 			return _types.get(key);
 		}
 
+		public static Set<String> getKeys() {
+			return _types.keySet();
+		}
+
 		public JSONObject getJSONObject() {
 			return new JSONObject("{\"key\": \"" + getKey() + "\"}");
 		}

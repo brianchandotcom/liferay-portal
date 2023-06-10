@@ -14,6 +14,7 @@
 
 package com.liferay.portal.model.impl;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -40,6 +41,32 @@ public class RoleImpl extends RoleBaseImpl {
 		}
 
 		return name;
+	}
+
+	@Override
+	public String getIconCssClass() {
+		String iconCssClass = StringPool.BLANK;
+
+		String roleName = getName();
+		int roleType = getType();
+
+		if (roleName.equals(RoleConstants.GUEST)) {
+			iconCssClass = "user";
+		}
+		else if (roleType == RoleConstants.TYPE_ORGANIZATION) {
+			iconCssClass = "globe";
+		}
+		else if (roleType == RoleConstants.TYPE_REGULAR) {
+			iconCssClass = "user";
+		}
+		else if (roleType == RoleConstants.TYPE_SITE) {
+			iconCssClass = "globe";
+		}
+		else if (isTeam()) {
+			iconCssClass = "community";
+		}
+
+		return iconCssClass;
 	}
 
 	@Override

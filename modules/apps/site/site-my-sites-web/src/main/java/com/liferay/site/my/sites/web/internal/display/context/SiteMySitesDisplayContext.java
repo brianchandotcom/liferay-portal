@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.usersadmin.search.GroupSearch;
-import com.liferay.portlet.usersadmin.search.GroupSearchTerms;
 import com.liferay.site.my.sites.web.internal.constants.MySitesPortletKeys;
 import com.liferay.site.my.sites.web.internal.servlet.taglib.util.SiteActionDropdownItemsProvider;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
@@ -130,9 +129,6 @@ public class SiteMySitesDisplayContext {
 				getOrderByCol(), getOrderByType()));
 		groupSearch.setOrderByType(getOrderByType());
 
-		GroupSearchTerms searchTerms =
-			(GroupSearchTerms)groupSearch.getSearchTerms();
-
 		LinkedHashMap<String, Object> groupParams =
 			LinkedHashMapBuilder.<String, Object>put(
 				"site", Boolean.TRUE
@@ -153,14 +149,15 @@ public class SiteMySitesDisplayContext {
 			groupParams.put("active", Boolean.TRUE);
 		}
 
+		String keywords = ParamUtil.getString(_httpServletRequest, "keywords");
+
 		groupSearch.setResultsAndTotal(
 			() -> GroupLocalServiceUtil.search(
-				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
-				groupParams, groupSearch.getStart(), groupSearch.getEnd(),
+				themeDisplay.getCompanyId(), keywords, groupParams,
+				groupSearch.getStart(), groupSearch.getEnd(),
 				groupSearch.getOrderByComparator()),
 			GroupLocalServiceUtil.searchCount(
-				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
-				groupParams));
+				themeDisplay.getCompanyId(), keywords, groupParams));
 
 		_groupSearch = groupSearch;
 

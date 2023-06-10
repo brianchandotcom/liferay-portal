@@ -26,10 +26,11 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.usersadmin.search.GroupSearch;
-import com.liferay.portlet.usersadmin.search.GroupSearchTerms;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -130,30 +131,27 @@ public class DepotAdminGroupSearchProvider {
 			_language.get(
 				portletRequest.getLocale(), "no-asset-libraries-were-found"));
 
-		GroupSearchTerms searchTerms =
-			(GroupSearchTerms)groupSearch.getSearchTerms();
+		String keywords = ParamUtil.getString(portletRequest, "keywords");
 
-		if (searchTerms.hasSearchTerms()) {
+		if (Validator.isNotNull(keywords)) {
 			groupSearch.setResultsAndTotal(
 				() -> _groupService.search(
-					company.getCompanyId(), _classNameIds,
-					searchTerms.getKeywords(), groupParams,
-					groupSearch.getStart(), groupSearch.getEnd(),
+					company.getCompanyId(), _classNameIds, keywords,
+					groupParams, groupSearch.getStart(), groupSearch.getEnd(),
 					groupSearch.getOrderByComparator()),
 				_groupService.searchCount(
-					company.getCompanyId(), _classNameIds,
-					searchTerms.getKeywords(), groupParams));
+					company.getCompanyId(), _classNameIds, keywords,
+					groupParams));
 		}
 		else {
 			groupSearch.setResultsAndTotal(
 				() -> _groupService.search(
-					company.getCompanyId(), _classNameIds,
-					searchTerms.getKeywords(), groupParams,
-					groupSearch.getStart(), groupSearch.getEnd(),
+					company.getCompanyId(), _classNameIds, keywords,
+					groupParams, groupSearch.getStart(), groupSearch.getEnd(),
 					groupSearch.getOrderByComparator()),
 				_groupService.searchCount(
-					company.getCompanyId(), _classNameIds,
-					searchTerms.getKeywords(), groupParams));
+					company.getCompanyId(), _classNameIds, keywords,
+					groupParams));
 		}
 
 		return groupSearch;

@@ -23,10 +23,10 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.usersadmin.search.GroupSearch;
-import com.liferay.portlet.usersadmin.search.GroupSearchTerms;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -58,15 +58,12 @@ public class ChildSitesItemSelectorViewDisplayContext
 		GroupSearch groupSearch = new GroupSearch(
 			getPortletRequest(), portletURL);
 
-		GroupSearchTerms groupSearchTerms =
-			(GroupSearchTerms)groupSearch.getSearchTerms();
-
 		groupSearch.setResultsAndTotal(
 			_filterGroups(
 				GroupLocalServiceUtil.search(
 					themeDisplay.getCompanyId(), _CLASS_NAME_IDS,
-					groupSearchTerms.getKeywords(), _getGroupParams(),
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					ParamUtil.getString(httpServletRequest, "keywords"),
+					_getGroupParams(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 					groupSearch.getOrderByComparator()),
 				themeDisplay.getPermissionChecker()));
 

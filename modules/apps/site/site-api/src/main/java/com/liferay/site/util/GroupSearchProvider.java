@@ -31,9 +31,9 @@ import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.usersadmin.search.GroupSearch;
-import com.liferay.portlet.usersadmin.search.GroupSearchTerms;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -66,9 +66,6 @@ public class GroupSearchProvider {
 			GroupSearch groupSearch, PortletRequest portletRequest)
 		throws PortalException {
 
-		GroupSearchTerms searchTerms =
-			(GroupSearchTerms)groupSearch.getSearchTerms();
-
 		long parentGroupId = getParentGroupId(portletRequest);
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
@@ -76,7 +73,7 @@ public class GroupSearchProvider {
 
 		Company company = themeDisplay.getCompany();
 
-		if (!searchTerms.hasSearchTerms() &&
+		if (!_isSearch(portletRequest) &&
 			isFilterManageableGroups(portletRequest) && (parentGroupId <= 0)) {
 
 			groupSearch.setResultsAndTotal(
@@ -84,19 +81,18 @@ public class GroupSearchProvider {
 					getAllGroups(portletRequest),
 					groupSearch.getOrderByComparator()));
 		}
-		else if (searchTerms.hasSearchTerms()) {
+		else if (_isSearch(portletRequest)) {
 			groupSearch.setResultsAndTotal(
 				() -> _groupLocalService.search(
 					company.getCompanyId(), _classNameIds,
-					searchTerms.getKeywords(),
-					getGroupParams(portletRequest, searchTerms, parentGroupId),
+					_getKeywords(portletRequest),
+					getGroupParams(portletRequest, parentGroupId),
 					groupSearch.getStart(), groupSearch.getEnd(),
 					groupSearch.getOrderByComparator()),
 				_groupLocalService.searchCount(
 					company.getCompanyId(), _classNameIds,
-					searchTerms.getKeywords(),
-					getGroupParams(
-						portletRequest, searchTerms, parentGroupId)));
+					_getKeywords(portletRequest),
+					getGroupParams(portletRequest, parentGroupId)));
 		}
 		else {
 			long groupId = ParamUtil.getLong(
@@ -106,15 +102,14 @@ public class GroupSearchProvider {
 			groupSearch.setResultsAndTotal(
 				() -> _groupLocalService.search(
 					company.getCompanyId(), _classNameIds, groupId,
-					searchTerms.getKeywords(),
-					getGroupParams(portletRequest, searchTerms, parentGroupId),
+					_getKeywords(portletRequest),
+					getGroupParams(portletRequest, parentGroupId),
 					groupSearch.getStart(), groupSearch.getEnd(),
 					groupSearch.getOrderByComparator()),
 				_groupLocalService.searchCount(
 					company.getCompanyId(), _classNameIds, groupId,
-					searchTerms.getKeywords(),
-					getGroupParams(
-						portletRequest, searchTerms, parentGroupId)));
+					_getKeywords(portletRequest),
+					getGroupParams(portletRequest, parentGroupId)));
 		}
 	}
 
@@ -155,8 +150,7 @@ public class GroupSearchProvider {
 	}
 
 	protected LinkedHashMap<String, Object> getGroupParams(
-			PortletRequest portletRequest, GroupSearchTerms searchTerms,
-			long parentGroupId)
+			PortletRequest portletRequest, long parentGroupId)
 		throws PortalException {
 
 		LinkedHashMap<String, Object> groupParams =
@@ -166,7 +160,7 @@ public class GroupSearchProvider {
 				"site", Boolean.TRUE
 			).build();
 
-		if (searchTerms.hasSearchTerms()) {
+		if (_isSearch(portletRequest)) {
 			if (isFilterManageableGroups(portletRequest)) {
 				groupParams.put("groupsTree", getAllGroups(portletRequest));
 			}
@@ -232,6 +226,18 @@ public class GroupSearchProvider {
 		}
 
 		return true;
+	}
+
+	private boolean _isSearch(PortletRequest portletRequest) {
+		if (Validator.isNotNull(_getKeywords(portletRequest))) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private String _getKeywords(PortletRequest portletRequest) {
+		return ParamUtil.getString(portletRequest, "keywords");
 	}
 
 	private long[] _classNameIds;

@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.usersadmin.search.GroupSearch;
-import com.liferay.portlet.usersadmin.search.GroupSearchTerms;
 import com.liferay.site.browser.web.internal.constants.SiteBrowserPortletKeys;
 import com.liferay.sites.kernel.util.SitesUtil;
 
@@ -115,9 +114,6 @@ public class SiteBrowserDisplayContext {
 		GroupSearch groupSearch = new GroupSearch(
 			_liferayPortletRequest, getPortletURL());
 
-		GroupSearchTerms groupSearchTerms =
-			(GroupSearchTerms)groupSearch.getSearchTerms();
-
 		List<Group> results = new ArrayList<>();
 
 		int additionalSites = 0;
@@ -159,6 +155,8 @@ public class SiteBrowserDisplayContext {
 			additionalSites++;
 		}
 
+		String keywords = ParamUtil.getString(_httpServletRequest, "keywords");
+
 		String type = getType();
 
 		if (Objects.equals(type, "layoutScopes")) {
@@ -168,8 +166,8 @@ public class SiteBrowserDisplayContext {
 		}
 		else if (!Objects.equals(type, "parent-sites")) {
 			total = GroupLocalServiceUtil.searchCount(
-				themeDisplay.getCompanyId(), classNameIds,
-				groupSearchTerms.getKeywords(), _getGroupParams());
+				themeDisplay.getCompanyId(), classNameIds, keywords,
+				_getGroupParams());
 		}
 
 		total += additionalSites;
@@ -219,9 +217,8 @@ public class SiteBrowserDisplayContext {
 		}
 		else {
 			List<Group> groups = GroupLocalServiceUtil.search(
-				company.getCompanyId(), classNameIds,
-				groupSearchTerms.getKeywords(), _getGroupParams(),
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				company.getCompanyId(), classNameIds, keywords,
+				_getGroupParams(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				groupSearch.getOrderByComparator());
 
 			total = groups.size();

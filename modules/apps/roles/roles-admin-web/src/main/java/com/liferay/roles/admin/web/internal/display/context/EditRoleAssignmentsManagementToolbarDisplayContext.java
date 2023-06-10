@@ -59,7 +59,6 @@ import com.liferay.portlet.rolesadmin.search.SetUserRoleChecker;
 import com.liferay.portlet.rolesadmin.search.UnsetUserRoleChecker;
 import com.liferay.portlet.rolesadmin.search.UserGroupRoleChecker;
 import com.liferay.portlet.usersadmin.search.GroupSearch;
-import com.liferay.portlet.usersadmin.search.GroupSearchTerms;
 import com.liferay.portlet.usersadmin.search.OrganizationSearch;
 import com.liferay.portlet.usersadmin.search.OrganizationSearchTerms;
 import com.liferay.portlet.usersadmin.search.UserSearch;
@@ -221,17 +220,13 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 			groupParams.put("site", Boolean.TRUE);
 		}
 
-		GroupSearchTerms searchTerms =
-			(GroupSearchTerms)groupSearch.getSearchTerms();
-
 		groupSearch.setResultsAndTotal(
 			() -> GroupLocalServiceUtil.search(
-				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
-				groupParams, groupSearch.getStart(), groupSearch.getEnd(),
+				themeDisplay.getCompanyId(), getKeywords(), groupParams,
+				groupSearch.getStart(), groupSearch.getEnd(),
 				groupSearch.getOrderByComparator()),
 			GroupLocalServiceUtil.searchCount(
-				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
-				groupParams));
+				themeDisplay.getCompanyId(), getKeywords(), groupParams));
 
 		return groupSearch;
 	}
@@ -303,7 +298,7 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 			organizationSearch.setResultsAndTotal(
 				OrganizationLocalServiceUtil.searchOrganizations(
 					themeDisplay.getCompanyId(), parentOrganizationId,
-					searchTerms.getKeywords(), organizationParams,
+					getKeywords(), organizationParams,
 					organizationSearch.getStart(), organizationSearch.getEnd(),
 					SortFactoryUtil.getSort(
 						Organization.class, organizationSearch.getOrderByCol(),
@@ -500,11 +495,11 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 
 		userSearch.setResultsAndTotal(
 			() -> UserLocalServiceUtil.search(
-				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+				themeDisplay.getCompanyId(), getKeywords(),
 				searchTerms.getStatus(), userParams, userSearch.getStart(),
 				userSearch.getEnd(), userSearch.getOrderByComparator()),
 			UserLocalServiceUtil.searchCount(
-				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+				themeDisplay.getCompanyId(), getKeywords(),
 				searchTerms.getStatus(), userParams));
 
 		if (_tabs3.equals("available")) {

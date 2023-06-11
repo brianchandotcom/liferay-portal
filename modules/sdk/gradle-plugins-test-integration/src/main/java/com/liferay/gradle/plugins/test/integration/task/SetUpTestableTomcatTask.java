@@ -267,7 +267,9 @@ public class SetUpTestableTomcatTask
 
 				printWriter.println();
 
-				printWriter.print("CATALINA_OPTS=\"${CATALINA_OPTS} ");
+				printWriter.println("if [ \"$1\" = \"aspectj\" ]");
+				printWriter.println("then");
+				printWriter.print("\tCATALINA_OPTS=\"${CATALINA_OPTS} ");
 				printWriter.print(aspectJAgent);
 				printWriter.print(
 					" -Dorg.aspectj.weaver.loadtime.configuration=");
@@ -279,6 +281,8 @@ public class SetUpTestableTomcatTask
 				}
 
 				printWriter.println("\"");
+				printWriter.println("\tshift");
+				printWriter.println("fi");
 			}
 		}
 	}

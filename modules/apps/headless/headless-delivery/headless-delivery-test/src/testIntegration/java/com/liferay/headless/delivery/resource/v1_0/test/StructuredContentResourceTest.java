@@ -544,10 +544,14 @@ public class StructuredContentResourceTest
 
 		// Duplicate external reference code
 
+		StructuredContent postStructuredContent3 =
+			testPostAssetLibraryStructuredContent_addStructuredContent(
+				randomStructuredContent());
+
 		StructuredContent randomStructuredContent2 = randomStructuredContent();
 
 		randomStructuredContent2.setExternalReferenceCode(
-			postStructuredContent2.getExternalReferenceCode());
+			postStructuredContent3.getExternalReferenceCode());
 
 		randomStructuredContent2.setContentStructureId(
 			_depotDDMStructure.getStructureId());
@@ -560,7 +564,7 @@ public class StructuredContentResourceTest
 		Assert.assertEquals(
 			StringBundler.concat(
 				"Duplicate journal article external reference code ",
-				postStructuredContent2.getExternalReferenceCode(), "in group ",
+				postStructuredContent3.getExternalReferenceCode(), "in group ",
 				testDepotEntry.getGroupId()),
 			httpResponse.getContent());
 	}
@@ -709,17 +713,22 @@ public class StructuredContentResourceTest
 			externalReferenceCode,
 			putStructuredContent2.getExternalReferenceCode());
 
-		randomStructuredContent2.setExternalReferenceCode(
-			StringUtil.toLowerCase(RandomTestUtil.randomString()));
+		StructuredContent randomStructuredContent3 = randomStructuredContent();
 
 		StructuredContent putStructuredContent3 =
 			structuredContentResource.
 				putAssetLibraryStructuredContentByExternalReferenceCode(
 					testPutAssetLibraryStructuredContentByExternalReferenceCode_getAssetLibraryId(),
-					putStructuredContent2.getExternalReferenceCode(),
-					randomStructuredContent2);
+					randomStructuredContent3.getExternalReferenceCode(),
+					randomStructuredContent3);
 
-		assertEquals(putStructuredContent2, putStructuredContent3);
+		assertEquals(
+			putStructuredContent3,
+			structuredContentResource.
+				putAssetLibraryStructuredContentByExternalReferenceCode(
+					testPutAssetLibraryStructuredContentByExternalReferenceCode_getAssetLibraryId(),
+					putStructuredContent3.getExternalReferenceCode(),
+					randomStructuredContent3));
 	}
 
 	@Override

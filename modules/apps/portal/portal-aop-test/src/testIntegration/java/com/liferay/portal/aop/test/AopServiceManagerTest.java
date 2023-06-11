@@ -96,10 +96,6 @@ public class AopServiceManagerTest {
 				"key", "value"
 			).build();
 
-		ServiceRegistration<AopService> aopServiceServiceRegistration =
-			_bundleContext.registerService(
-				AopService.class, new TestServiceImpl(), properties);
-
 		TestTransactionExecutor testTransactionExecutor =
 			new TestTransactionExecutor();
 
@@ -108,6 +104,10 @@ public class AopServiceManagerTest {
 				_bundleContext.registerService(
 					TransactionExecutor.class, testTransactionExecutor,
 					properties);
+
+		ServiceRegistration<AopService> aopServiceServiceRegistration =
+			_bundleContext.registerService(
+				AopService.class, new TestServiceImpl(), properties);
 
 		ServiceReference<TestService> testServiceServiceReference =
 			_bundleContext.getServiceReference(TestService.class);

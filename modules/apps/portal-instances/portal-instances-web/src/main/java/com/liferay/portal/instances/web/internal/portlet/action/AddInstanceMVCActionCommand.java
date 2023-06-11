@@ -83,14 +83,14 @@ public class AddInstanceMVCActionCommand extends BaseMVCActionCommand {
 			else if (exception instanceof CompanyWebIdException) {
 				errorMessage = "please-enter-a-valid-web-id";
 			}
-			else if (exception instanceof UserScreenNameException) {
-				errorMessage = "please-enter-a-valid-screen-name";
-			}
 			else if (exception instanceof UserEmailAddressException) {
 				errorMessage = "please-enter-a-valid-email-address";
 			}
 			else if (exception instanceof UserPasswordException) {
 				errorMessage = "please-enter-a-valid-password";
+			}
+			else if (exception instanceof UserScreenNameException) {
+				errorMessage = "please-enter-a-valid-screen-name";
 			}
 
 			jsonObject.put(

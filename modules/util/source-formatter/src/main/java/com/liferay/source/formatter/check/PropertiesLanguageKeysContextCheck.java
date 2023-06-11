@@ -54,10 +54,8 @@ public class PropertiesLanguageKeysContextCheck extends BaseFileCheck {
 		while (enumeration.hasMoreElements()) {
 			String key = enumeration.nextElement();
 
-			String value = properties.getProperty(key);
-
 			if (key.matches("\\w+") &&
-				StringUtil.equalsIgnoreCase(key, value)) {
+				StringUtil.equalsIgnoreCase(key, properties.getProperty(key))) {
 
 				addMessage(
 					fileName,

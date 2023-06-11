@@ -149,16 +149,16 @@ public class CTServicePublisher<T extends CTModel<T>> {
 		}
 
 		if (_deletionCTEntries != null) {
-			int updatedRowCount = _updateCTCollectionId(
-				connection, tableName, primaryKeyName,
-				_deletionCTEntries.values(), _targetCTCollectionId,
-				_sourceCTCollectionId, true, false);
+			int preDeletedRowCount = _getPreDeletedRowCount(
+				connection, tableName, primaryKeyName);
 
-			if (updatedRowCount != _deletionCTEntries.size()) {
-				int preDeletedRowCount = _getPreDeletedRowCount(
-					connection, tableName, primaryKeyName);
+			if (preDeletedRowCount != _deletionCTEntries.size()) {
+				int updatedRowCount = _updateCTCollectionId(
+					connection, tableName, primaryKeyName,
+					_deletionCTEntries.values(), _targetCTCollectionId,
+					_sourceCTCollectionId, true, false);
 
-				if ((updatedRowCount + preDeletedRowCount) !=
+				if ((preDeletedRowCount + updatedRowCount) !=
 						_deletionCTEntries.size()) {
 
 					throw new SystemException(

@@ -52,6 +52,8 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portletmvc4spring.test.mock.web.portlet.MockRenderRequest;
 
+import java.util.Date;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -76,6 +78,36 @@ public class JournalArticleAssetRendererTest {
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group.getGroupId());
+	}
+
+	@Test
+	public void testGetExportableArticleVersion() throws Exception {
+		JournalArticle article = JournalTestUtil.addArticleWithWorkflow(
+			_group.getGroupId(), true);
+
+		JournalTestUtil.updateArticle(
+			article, "title", article.getContent(), true, false,
+			_serviceContext, new Date(System.currentTimeMillis() + 600000));
+
+		JournalTestUtil.expireArticle(
+			article.getGroupId(), article, article.getVersion());
+
+		article.setVersion(1.1);
+
+		JournalTestUtil.updateArticle(
+			article, "title", article.getContent(), true, false,
+			_serviceContext, null);
+
+		AssetRendererFactory<JournalArticle> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(
+				JournalArticle.class);
+
+		AssetRenderer<JournalArticle> assetRenderer =
+			assetRendererFactory.getAssetRenderer(
+				article.getResourcePrimKey(), 0);
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_EXPIRED, assetRenderer.getStatus());
 	}
 
 	@Test

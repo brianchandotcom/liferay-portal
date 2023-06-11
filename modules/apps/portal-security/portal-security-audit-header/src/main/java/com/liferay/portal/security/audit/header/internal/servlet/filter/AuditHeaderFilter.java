@@ -14,20 +14,24 @@
 
 package com.liferay.portal.security.audit.header.internal.servlet.filter;
 
-import com.liferay.petra.reflect.ReflectionUtil;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.BaseFilter;
+import com.liferay.portal.kernel.servlet.TryFilter;
 import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.security.audit.header.internal.configuration.AuditHeaderConfiguration;
-import com.liferay.portal.servlet.filters.BasePortalFilter;
+
+import java.util.Map;
 
 import javax.servlet.Filter;
-import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -35,6 +39,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alvaro Saugar
  */
 @Component(
+	configurationPid = "com.liferay.portal.security.audit.header.internal.configuration.AuditHeaderConfiguration",
 	property = {
 		"after-filter=Portal CORS Servlet Filter", "dispatcher=FORWARD",
 		"dispatcher=REQUEST", "servlet-context-name=",
@@ -42,7 +47,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = Filter.class
 )
-public class AuditHeaderFilter extends BasePortalFilter {
+public class AuditHeaderFilter extends BaseFilter implements TryFilter {
 
 	public static final String REQUEST_PARAMETER_X_LIFERAY_REQUEST =
 		"X-Liferay-Request";
@@ -54,37 +59,20 @@ public class AuditHeaderFilter extends BasePortalFilter {
 		"X-Liferay-Request-Site";
 
 	@Override
-	public boolean isFilterEnabled(
-		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse) {
+	public Object doFilterTry(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-177196")) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-177196") ||
+			!(_auditHeaderConfiguration.enabledMALU() ||
+			  _auditHeaderConfiguration.enabledAPV() ||
+			  _auditHeaderConfiguration.enabledScope())) {
+
 			return false;
 		}
 
-		AuditHeaderConfiguration auditHeaderConfiguration =
-			_getAuditHeaderConfiguration(httpServletRequest);
-
-		if (auditHeaderConfiguration.enabledMALU() ||
-			auditHeaderConfiguration.enabledAPV() ||
-			auditHeaderConfiguration.enabledScope()) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	protected void processFilter(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, FilterChain filterChain)
-		throws Exception {
-
-		AuditHeaderConfiguration auditHeaderConfiguration =
-			_getAuditHeaderConfiguration(httpServletRequest);
-
-		Boolean enabledMALU = auditHeaderConfiguration.enabledMALU();
+		Boolean enabledMALU = _auditHeaderConfiguration.enabledMALU();
 
 		if (enabledMALU) {
 			long userId = _portal.getUserId(httpServletRequest);
@@ -108,7 +96,7 @@ public class AuditHeaderFilter extends BasePortalFilter {
 			}
 		}
 
-		Boolean enabledAPV = auditHeaderConfiguration.enabledAPV();
+		Boolean enabledAPV = _auditHeaderConfiguration.enabledAPV();
 
 		if (enabledAPV) {
 			long userId = _portal.getUserId(httpServletRequest);
@@ -119,7 +107,7 @@ public class AuditHeaderFilter extends BasePortalFilter {
 			}
 		}
 
-		Boolean enabledScope = auditHeaderConfiguration.enabledScope();
+		Boolean enabledScope = _auditHeaderConfiguration.enabledScope();
 
 		if (enabledScope) {
 			long userId = _portal.getUserId(httpServletRequest);
@@ -137,23 +125,27 @@ public class AuditHeaderFilter extends BasePortalFilter {
 					String.valueOf(groupId));
 			}
 		}
+
+		return true;
 	}
 
-	private AuditHeaderConfiguration _getAuditHeaderConfiguration(
-		HttpServletRequest httpServletRequest) {
+	@Activate
+	protected void activate(
+		BundleContext bundleContext, Map<String, Object> properties) {
 
-		try {
-			return _configurationProvider.getCompanyConfiguration(
-				AuditHeaderConfiguration.class,
-				_portal.getCompanyId(httpServletRequest));
-		}
-		catch (PortalException portalException) {
-			return ReflectionUtil.throwException(portalException);
-		}
+		_auditHeaderConfiguration = ConfigurableUtil.createConfigurable(
+			AuditHeaderConfiguration.class, properties);
 	}
 
-	@Reference
-	private ConfigurationProvider _configurationProvider;
+	@Override
+	protected Log getLog() {
+		return _log;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AuditHeaderFilter.class);
+
+	private AuditHeaderConfiguration _auditHeaderConfiguration;
 
 	@Reference
 	private Portal _portal;

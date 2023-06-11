@@ -30,10 +30,6 @@
 	>
 		<div class="add-instance-content">
 			<div class="px-4 py-2">
-				<liferay-ui:error exception="<%= CompanyMxException.class %>" message="please-enter-a-valid-mail-domain" />
-				<liferay-ui:error exception="<%= CompanyVirtualHostException.class %>" message="please-enter-a-valid-virtual-host" />
-				<liferay-ui:error exception="<%= CompanyWebIdException.class %>" message="please-enter-a-valid-web-id" />
-
 				<aui:model-context model="<%= Company.class %>" />
 
 				<aui:input name="webId" required="<%= true %>" />

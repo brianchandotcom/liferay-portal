@@ -979,6 +979,17 @@ public class JournalTestUtil {
 	}
 
 	public static JournalArticle updateArticle(
+			JournalArticle article, String title, String content,
+			boolean workflowEnabled, boolean approved,
+			ServiceContext serviceContext, Date expirationDate)
+		throws Exception {
+
+		return updateArticle(
+			article.getUserId(), article, _getLocalizedMap(title), content,
+			null, workflowEnabled, approved, serviceContext, expirationDate);
+	}
+
+	public static JournalArticle updateArticle(
 			long userId, JournalArticle article, Map<Locale, String> titleMap,
 			String content, boolean workflowEnabled, boolean approved,
 			ServiceContext serviceContext)

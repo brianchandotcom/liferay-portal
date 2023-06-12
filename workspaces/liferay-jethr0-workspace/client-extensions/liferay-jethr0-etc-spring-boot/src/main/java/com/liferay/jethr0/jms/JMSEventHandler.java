@@ -81,10 +81,8 @@ public class JMSEventHandler {
 				_eventTriggerComputerIdle(messageJSONObject);
 			}
 		}
-		else if (eventTrigger.equals("CREATE_BUILD")) {
-			_eventTriggerCreateBuild(messageJSONObject);
-		}
-		else if (eventTrigger.equals("CREATE_PROJECT") ||
+		else if (eventTrigger.equals("CREATE_BUILD") ||
+				 eventTrigger.equals("CREATE_PROJECT") ||
 				 eventTrigger.equals("QUEUE_PROJECT")) {
 
 			EventHandler eventHandler = _eventHandlerFactory.newEventHandler(
@@ -207,44 +205,6 @@ public class JMSEventHandler {
 		_buildRunRepository.update(buildRun);
 	}
 
-	private void _eventTriggerCreateBuild(JSONObject messageJSONObject) {
-		JSONObject buildJSONObject = messageJSONObject.getJSONObject("build");
-
-		Project project = _projectRepository.getById(
-			buildJSONObject.getLong("projectId"));
-
-		_buildRepository.getAll(project);
-		_gitBranchRepository.getAll(project);
-		_taskRepository.getAll(project);
-		_testSuiteRepository.getAll(project);
-
-		Build build = _buildRepository.add(
-			project, buildJSONObject.getString("buildName"),
-			buildJSONObject.getString("jobName"), Build.State.OPENED);
-
-		JSONObject parametersJSONObject = buildJSONObject.getJSONObject(
-			"parameters");
-
-		for (String key : parametersJSONObject.keySet()) {
-			BuildParameter buildParameter = _buildParameterRepository.add(
-				build, key, parametersJSONObject.getString(key));
-
-			build.addBuildParameter(buildParameter);
-
-			buildParameter.setBuild(build);
-		}
-
-		if (project.getState() == Project.State.COMPLETED) {
-			project.setState(Project.State.QUEUED);
-
-			_buildQueue.addProject(project);
-
-			_jenkinsQueue.invoke();
-
-			_projectRepository.update(project);
-		}
-	}
-
 	private BuildRun _getBuildRun(JSONObject messageJSONObject) {
 		JSONObject buildJSONObject = messageJSONObject.getJSONObject("build");
 
@@ -318,9 +278,6 @@ public class JMSEventHandler {
 	private static final Log _log = LogFactory.getLog(JMSEventHandler.class);
 
 	@Autowired
-	private BuildParameterRepository _buildParameterRepository;
-
-	@Autowired
 	private BuildQueue _buildQueue;
 
 	@Autowired
@@ -333,13 +290,7 @@ public class JMSEventHandler {
 	private EventHandlerFactory _eventHandlerFactory;
 
 	@Autowired
-	private GitBranchRepository _gitBranchRepository;
-
-	@Autowired
 	private JenkinsNodeRepository _jenkinsNodeRepository;
-
-	@Autowired
-	private JenkinsQueue _jenkinsQueue;
 
 	@Value("${jms.jenkins.build.queue}")
 	private String _jmsJenkinsBuildQueue;
@@ -352,11 +303,5 @@ public class JMSEventHandler {
 
 	@Autowired
 	private ProjectRepository _projectRepository;
-
-	@Autowired
-	private TaskRepository _taskRepository;
-
-	@Autowired
-	private TestSuiteRepository _testSuiteRepository;
 
 }

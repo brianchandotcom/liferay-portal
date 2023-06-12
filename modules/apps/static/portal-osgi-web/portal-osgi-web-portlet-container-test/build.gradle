@@ -10,6 +10,7 @@ dependencies {
 	testIntegrationCompile group: "org.springframework", name: "spring-web", version: "5.2.24.RELEASE"
 	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-taglib")
 	testIntegrationCompile project(":apps:layout:layout-test-util")
+	testIntegrationCompile project(":apps:portlet-display-template:portlet-display-template-api")
 	testIntegrationCompile project(":apps:static:portal-osgi-web:portal-osgi-web-portlet-container-test-util")
 	testIntegrationCompile project(":apps:upload:upload-api")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")

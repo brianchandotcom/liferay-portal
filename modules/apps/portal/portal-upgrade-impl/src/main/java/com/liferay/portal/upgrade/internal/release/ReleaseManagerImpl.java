@@ -193,8 +193,7 @@ public class ReleaseManagerImpl implements ReleaseManager {
 				new InitialUpgradeStepServiceTrackerCustomizer(bundleContext));
 
 		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
-			bundleContext, UpgradeStep.class,
-			"(!(upgrade.initial.database.creation=*))",
+			bundleContext, UpgradeStep.class, null,
 			new PropertyServiceReferenceMapper<>(
 				"upgrade.bundle.symbolic.name"),
 			new UpgradeServiceTrackerCustomizer(bundleContext),

@@ -74,7 +74,8 @@ public class JournalArticleTranslationsItemSelectorView
 			journalArticleTranslationsItemSelectorCriterion, portletURL,
 			itemSelectedEventName, search,
 			new JournalArticleTranslationsItemSelectorViewDescriptor(
-				(HttpServletRequest)servletRequest));
+				journalArticleTranslationsItemSelectorCriterion,
+				(HttpServletRequest)servletRequest, portletURL));
 	}
 
 	private static final List<ItemSelectorReturnType>

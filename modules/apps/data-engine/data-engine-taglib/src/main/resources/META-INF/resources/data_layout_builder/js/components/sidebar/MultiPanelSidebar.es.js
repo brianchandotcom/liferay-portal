@@ -139,19 +139,19 @@ export default function MultiPanelSidebar({
 		});
 	};
 
-	const handleTabKeyDown = (event) => {
+	const handleTabPanelKeyDown = (event) => {
 		if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
 			const tabs = Array.from(
 				tabListRef.current.querySelectorAll('button')
 			);
 
-			const positionActiveTab = tabs.indexOf(document.activeElement);
+			const activeTabIndex = tabs.indexOf(document.activeElement);
 
 			const activeTab =
 				tabs[
 					event.key === 'ArrowUp'
-						? positionActiveTab - 1
-						: positionActiveTab + 1
+						? activeTabIndex - 1
+						: activeTabIndex + 1
 				];
 
 			if (activeTab) {
@@ -183,7 +183,7 @@ export default function MultiPanelSidebar({
 							? `tbar-${variant}-d1`
 							: `tbar-${variant}`
 					)}
-					onKeyDown={handleTabKeyDown}
+					onKeyDown={handleTabPanelKeyDown}
 					ref={tabListRef}
 					role="tablist"
 				>

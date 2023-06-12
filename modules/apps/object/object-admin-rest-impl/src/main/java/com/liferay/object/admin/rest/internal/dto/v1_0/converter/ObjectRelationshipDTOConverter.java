@@ -20,6 +20,7 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
@@ -80,9 +81,18 @@ public class ObjectRelationshipDTOConverter
 					serviceBuilderObjectRelationship.getObjectDefinitionId1();
 				objectDefinitionId2 =
 					serviceBuilderObjectRelationship.getObjectDefinitionId2();
-				objectDefinitionModifiable2 = objectDefinition2.isModifiable();
+
+				if (FeatureFlagManagerUtil.isEnabled("LPS-167253")) {
+					objectDefinitionModifiable2 =
+						objectDefinition2.isModifiable();
+				}
+
 				objectDefinitionName2 = objectDefinition2.getShortName();
-				objectDefinitionSystem2 = objectDefinition2.isSystem();
+
+				if (FeatureFlagManagerUtil.isEnabled("LPS-167253")) {
+					objectDefinitionSystem2 = objectDefinition2.isSystem();
+				}
+
 				parameterObjectFieldId =
 					serviceBuilderObjectRelationship.
 						getParameterObjectFieldId();

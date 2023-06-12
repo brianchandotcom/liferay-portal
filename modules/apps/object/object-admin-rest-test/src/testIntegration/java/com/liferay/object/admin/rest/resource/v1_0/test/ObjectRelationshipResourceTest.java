@@ -23,6 +23,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
@@ -92,6 +93,7 @@ public class ObjectRelationshipResourceTest
 	public void testGraphQLGetObjectRelationshipNotFound() {
 	}
 
+	@FeatureFlags("LPS-167253")
 	@Override
 	@Test
 	public void testPostObjectDefinitionObjectRelationship() throws Exception {

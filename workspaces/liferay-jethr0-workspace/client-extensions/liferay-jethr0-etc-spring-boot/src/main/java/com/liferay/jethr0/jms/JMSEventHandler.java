@@ -88,14 +88,15 @@ public class JMSEventHandler {
 				 eventTrigger.equals("QUEUE_PROJECT")) {
 
 			EventHandler eventHandler = _eventHandlerFactory.newEventHandler(
-				messageJSONObject);
+				EventHandler.EventType.valueOf(
+					messageJSONObject.optString("eventTrigger")));
 
 			if (eventHandler == null) {
 				throw new RuntimeException();
 			}
 
 			try {
-				eventHandler.process();
+				eventHandler.process(messageJSONObject.toString());
 			}
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {

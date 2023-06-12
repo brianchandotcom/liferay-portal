@@ -32,34 +32,38 @@ import org.json.JSONObject;
 public class CreateProjectEventHandler extends BaseEventHandler {
 
 	@Override
-	public String process() throws Exception {
+	public String process(String body) throws Exception {
 		EventHandlerHelper eventHandlerHelper = getEventHandlerHelper();
 
-		BuildParameterRepository buildParameterRepository =
-			eventHandlerHelper.getBuildParameterRepository();
-		BuildRepository buildRepository =
-			eventHandlerHelper.getBuildRepository();
 		ProjectRepository projectRepository =
 			eventHandlerHelper.getProjectRepository();
 
-		JSONObject projectJSONObject = _getProjectJSONObject();
+		JSONObject projectJSONObject = _getProjectJSONObject(
+			new JSONObject(body));
 
 		Project project = projectRepository.add(projectJSONObject);
 
-		JSONArray buildsJSONArray = projectJSONObject.getJSONArray("builds");
+		JSONArray buildsJSONArray = projectJSONObject.optJSONArray("builds");
 
-		for (int i = 0; i < buildsJSONArray.length(); i++) {
-			JSONObject buildJSONObject = buildsJSONArray.getJSONObject(i);
+		if ((buildsJSONArray != null) && !buildsJSONArray.isEmpty()) {
+			BuildParameterRepository buildParameterRepository =
+				eventHandlerHelper.getBuildParameterRepository();
+			BuildRepository buildRepository =
+				eventHandlerHelper.getBuildRepository();
 
-			Build build = buildRepository.add(project, buildJSONObject);
+			for (int i = 0; i < buildsJSONArray.length(); i++) {
+				JSONObject buildJSONObject = buildsJSONArray.getJSONObject(i);
 
-			JSONObject parametersJSONObject = buildJSONObject.optJSONObject(
-				"parameters");
+				Build build = buildRepository.add(project, buildJSONObject);
 
-			if (parametersJSONObject != null) {
-				for (String key : parametersJSONObject.keySet()) {
-					buildParameterRepository.add(
-						build, key, parametersJSONObject.getString(key));
+				JSONObject parametersJSONObject = buildJSONObject.optJSONObject(
+					"parameters");
+
+				if (parametersJSONObject != null) {
+					for (String key : parametersJSONObject.keySet()) {
+						buildParameterRepository.add(
+							build, key, parametersJSONObject.getString(key));
+					}
 				}
 			}
 		}
@@ -67,16 +71,63 @@ public class CreateProjectEventHandler extends BaseEventHandler {
 		return project.toString();
 	}
 
-	protected CreateProjectEventHandler(
-		EventHandlerHelper eventHandlerHelper, JSONObject jsonObject) {
-
-		super(eventHandlerHelper, jsonObject);
+	protected CreateProjectEventHandler(EventHandlerHelper eventHandlerHelper) {
+		super(eventHandlerHelper);
 	}
 
-	private JSONObject _getProjectJSONObject() throws Exception {
-		JSONObject jsonObject = getJSONObject();
+	private JSONObject _getBuildJSONObject(JSONObject buildJSONObject)
+		throws Exception {
 
-		JSONObject projectJSONObject = jsonObject.optJSONObject("project");
+		if (buildJSONObject == null) {
+			throw new Exception("Invalid build JSON object");
+		}
+
+		String buildName = buildJSONObject.optString("buildName");
+
+		if (buildName.isEmpty()) {
+			throw new Exception("Invalid build 'buildName'");
+		}
+
+		String jobName = buildJSONObject.optString("jobName");
+
+		if (jobName.isEmpty()) {
+			throw new Exception("Invalid build 'jobName'");
+		}
+
+		buildJSONObject.put(
+			"buildName", buildName
+		).put(
+			"jobName", jobName
+		).put(
+			"parameters", buildJSONObject.optJSONObject("parameters")
+		).put(
+			"state", Build.State.OPENED.getJSONObject()
+		);
+
+		return buildJSONObject;
+	}
+
+	private List<JSONObject> _getBuildsJSONObjects(JSONArray buildsJSONArray)
+		throws Exception {
+
+		if ((buildsJSONArray == null) || buildsJSONArray.isEmpty()) {
+			return null;
+		}
+
+		List<JSONObject> buildsJSONObjects = new ArrayList<>();
+
+		for (int i = 0; i < buildsJSONArray.length(); i++) {
+			buildsJSONObjects.add(
+				_getBuildJSONObject(buildsJSONArray.optJSONObject(i)));
+		}
+
+		return buildsJSONObjects;
+	}
+
+	private JSONObject _getProjectJSONObject(JSONObject bodyJSONObject)
+		throws Exception {
+
+		JSONObject projectJSONObject = bodyJSONObject.optJSONObject("project");
 
 		if (projectJSONObject == null) {
 			throw new Exception("Missing 'project' JSON object");
@@ -94,15 +145,6 @@ public class CreateProjectEventHandler extends BaseEventHandler {
 			throw new Exception("Invalid project 'priority'");
 		}
 
-		Project.State projectState = Project.State.getByKey(
-			projectJSONObject.optString("state"));
-
-		if (projectState == null) {
-			projectState = Project.State.OPENED;
-		}
-
-		projectJSONObject.remove("state");
-
 		Project.Type type = Project.Type.getByKey(
 			projectJSONObject.optString("type"));
 
@@ -111,66 +153,18 @@ public class CreateProjectEventHandler extends BaseEventHandler {
 				"Project 'type' key does not match: " + Project.Type.getKeys());
 		}
 
-		projectJSONObject.remove("type");
-
 		projectJSONObject.put(
+			"builds",
+			_getBuildsJSONObjects(projectJSONObject.optJSONArray("builds"))
+		).put(
 			"name", name
 		).put(
 			"priority", priority
 		).put(
-			"state", projectState.getJSONObject()
+			"state", Project.State.OPENED.getJSONObject()
 		).put(
 			"type", type.getJSONObject()
 		);
-
-		JSONArray buildJSONArray = projectJSONObject.optJSONArray("builds");
-
-		if (buildJSONArray == null) {
-			return projectJSONObject;
-		}
-
-		List<JSONObject> buildsJSONObjects = new ArrayList<>();
-
-		for (int i = 0; i < buildJSONArray.length(); i++) {
-			JSONObject buildJSONObject = buildJSONArray.getJSONObject(i);
-
-			if (buildJSONObject == null) {
-				continue;
-			}
-
-			String buildName = buildJSONObject.optString("buildName");
-
-			if (buildName.isEmpty()) {
-				throw new Exception("Invalid build 'buildName'");
-			}
-
-			String jobName = buildJSONObject.optString("jobName");
-
-			if (jobName.isEmpty()) {
-				throw new Exception("Invalid build 'jobName'");
-			}
-
-			Build.State buildState = Build.State.getByKey(
-				buildJSONObject.optString("state"));
-
-			if (buildState == null) {
-				buildState = Build.State.OPENED;
-			}
-
-			buildJSONObject.put(
-				"buildName", buildName
-			).put(
-				"jobName", jobName
-			).put(
-				"parameters", buildJSONObject.optJSONObject("parameters")
-			).put(
-				"state", buildState.getJSONObject()
-			);
-
-			buildsJSONObjects.add(buildJSONObject);
-		}
-
-		projectJSONObject.put("builds", buildsJSONObjects);
 
 		return projectJSONObject;
 	}

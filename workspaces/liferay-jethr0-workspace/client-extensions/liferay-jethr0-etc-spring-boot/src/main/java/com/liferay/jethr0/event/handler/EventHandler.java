@@ -14,18 +14,12 @@
 
 package com.liferay.jethr0.event.handler;
 
-import org.json.JSONObject;
-
 /**
  * @author Michael Hashimoto
  */
 public interface EventHandler {
 
-	public EventHandlerHelper getEventHandlerHelper();
-
-	public JSONObject getJSONObject();
-
-	public String process() throws Exception;
+	public String process(String message) throws Exception;
 
 	public enum EventType {
 

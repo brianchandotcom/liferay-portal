@@ -14,8 +14,6 @@
 
 package com.liferay.jethr0.event.handler;
 
-import org.json.JSONObject;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
@@ -25,19 +23,14 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class EventHandlerFactory {
 
-	public EventHandler newEventHandler(JSONObject jsonObject) {
-		EventHandler.EventType eventType = EventHandler.EventType.valueOf(
-			jsonObject.optString("eventTrigger"));
-
+	public EventHandler newEventHandler(EventHandler.EventType eventType) {
 		EventHandler eventHandler = null;
 
 		if (eventType == EventHandler.EventType.CREATE_PROJECT) {
-			eventHandler = new CreateProjectEventHandler(
-				_eventHandlerHelper, jsonObject);
+			eventHandler = new CreateProjectEventHandler(_eventHandlerHelper);
 		}
 		else if (eventType == EventHandler.EventType.QUEUE_PROJECT) {
-			eventHandler = new QueueProjectEventHandler(
-				_eventHandlerHelper, jsonObject);
+			eventHandler = new QueueProjectEventHandler(_eventHandlerHelper);
 		}
 
 		return eventHandler;

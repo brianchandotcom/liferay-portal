@@ -1008,6 +1008,127 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-11706. Verify that only one "/" is shown in the URLs inside the sitemap when Virtual Host is enabled."
+	@priority = 5
+	test CanLocaleBePrependedForProductOnSiteMapPageWhenVirtualHostIsEnabled {
+		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "CPCommerceProductConfigurations#CanLocaleBePrependedForProductOnSiteMapPageWhenVirtualHostIsEnable";
+
+		task ("Given the localization for the Friendly URL is changed") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Localization",
+				configurationName = "Locale Prepend Friendly URL Style",
+				configurationScope = "Virtual Instance Scope");
+
+			Select(
+				locator1 = "Select#ANY_ID",
+				selectId = "friendly-url-style",
+				value1 = "Locale is automatically prepended to every URL.");
+
+			PortalSettings._saveDisplaySettings();
+		}
+
+		task (" And an account is created") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Commerce",
+				accountEntryType = "Business");
+		}
+
+		task ("And a new widget page with the Category Content is created") {
+			JSONLayout.addPublicLayout(
+				groupName = "Minium",
+				layoutName = "Widget Page");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Minium",
+				layoutName = "Widget Page",
+				widgetName = "Category Content");
+		}
+
+		task ("And a product's name and friendly URL are translated") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.searchEntry(entryName = "ABS Sensor");
+
+			CommerceNavigator.gotoEntry(entryName = "ABS Sensor");
+
+			PortletEntry.changeLocale(
+				fieldName = "Name",
+				locale = "ca-ES");
+
+			Type(
+				locator1 = "TextInput#NAME",
+				value1 = "Sensor ABS");
+
+			PortletEntry.changeLocale(
+				fieldName = "Friendly URL",
+				locale = "ca-ES");
+
+			Type(
+				key_fieldLabel = "Friendly URL",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "sensor-abs");
+
+			Button.clickPublish();
+		}
+
+		task ("And public virtual host and private virtual host are defined") {
+			Site.openSiteSettingsAdmin(siteURLKey = "Minium");
+
+			Site.addVirtualHostsURLCP(
+				pageVirtualHosts = "true",
+				pageVirtualHostURL = "www.able.com");
+		}
+
+		task ("And the virtual host signs in to the page") {
+			User.logoutPG();
+
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "http://www.able.com:8080",
+				userEmailAddress = "test@liferay.com");
+		}
+
+		task ("And Uuid of the product is acquired") {
+			var groupId = JSONGroupAPI._getGroupIdByName(
+				groupName = "Minium",
+				site = "true");
+
+			Open.openNoError(locator1 = "http://www.able.com:8080/sitemap.xml?groupId=${groupId}");
+
+			var responseToParse = CommerceJSONProductsAPI._getCommerceFieldValue(
+				field = "uuid",
+				groupName = "Minium",
+				title = "Product Detail");
+		}
+
+		task ("When the Product Detail page sitemap link is opened") {
+			var uuid = JSONUtil.getWithJSONPath(${responseToParse}, "$..['items'][0].uuid");
+
+			var link = selenium.getHtmlNodeText("//*[contains(text(),'${uuid}')][1]");
+
+			Open.openNoErrorNoSPARefresh(locator1 = ${link});
+		}
+
+		task ("Then the URLs are shown with only one /") {
+			AssertElementPresent.assertElementPresentNoWaitForSPAReFresh(locator1 = "//*[text()='http://www.able.com:8080/ca/p/sensor-abs']");
+
+			AssertElementPresent.assertElementPresentNoWaitForSPAReFresh(locator1 = "//*[text()='http://www.able.com:8080/en/p/abs-sensor']");
+		}
+
+		task ("And the admin goes back to portal") {
+			var basePortalURL = PropsUtil.get("portal.url");
+
+			Open.openNoErrorNoSPARefresh(locator1 = ${basePortalURL});
+		}
+	}
+
 	@description = "This is a test for COMMERCE-10560. Allowed quantities cannot be added to the cart when order quantity is higher than the stock quantity and back order is disabled"
 	@priority = 5
 	test CannotAddToCartAllowedQuantitiesWhenOrderItemQuantityIsHigherThanStockQuantityAndBackOrderIsDisabled {

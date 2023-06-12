@@ -27,19 +27,9 @@
 								"definition": {
 									"fragmentStyle": {
 										"backgroundColor": "brandColor1",
-										"borderWidth": "0",
 										"height": "880px"
 									},
 									"layout": {
-										"borderWidth": 0,
-										"marginBottom": 0,
-										"marginLeft": 0,
-										"marginRight": 0,
-										"marginTop": 0,
-										"paddingBottom": 0,
-										"paddingLeft": 0,
-										"paddingRight": 0,
-										"paddingTop": 0,
 										"widthType": "Fluid"
 									}
 								},
@@ -54,8 +44,6 @@
 			{
 				"definition": {
 					"fragmentStyle": {
-						"backgroundColor": "",
-						"borderWidth": "0",
 						"marginBottom": "9",
 						"paddingLeft": "2",
 						"paddingRight": "2",
@@ -80,17 +68,8 @@
 					],
 					"layout": {
 						"align": "Center",
-						"borderWidth": 0,
 						"contentDisplay": "FlexColumn",
 						"justify": "Center",
-						"marginBottom": 0,
-						"marginLeft": 0,
-						"marginRight": 0,
-						"marginTop": 0,
-						"paddingBottom": 0,
-						"paddingLeft": 0,
-						"paddingRight": 0,
-						"paddingTop": 0,
 						"widthType": "Fixed"
 					}
 				},
@@ -349,7 +328,6 @@
 				"definition": {
 					"fragmentStyle": {
 						"backgroundColor": "brandColor3",
-						"borderWidth": "0",
 						"marginBottom": "9",
 						"paddingBottom": "8",
 						"paddingLeft": "2",
@@ -375,16 +353,9 @@
 					],
 					"layout": {
 						"align": "Center",
-						"borderWidth": 0,
 						"contentDisplay": "FlexColumn",
 						"justify": "Center",
-						"marginBottom": 0,
-						"marginLeft": 0,
-						"marginRight": 0,
-						"marginTop": 0,
 						"paddingBottom": 10,
-						"paddingLeft": 0,
-						"paddingRight": 0,
 						"paddingTop": 10,
 						"widthType": "Fluid"
 					}
@@ -393,7 +364,6 @@
 					{
 						"definition": {
 							"fragmentStyle": {
-								"borderWidth": "0",
 								"maxWidth": "100%",
 								"textAlign": "center",
 								"width": "680px"
@@ -408,15 +378,6 @@
 								}
 							],
 							"layout": {
-								"borderWidth": 0,
-								"marginBottom": 0,
-								"marginLeft": 0,
-								"marginRight": 0,
-								"marginTop": 0,
-								"paddingBottom": 0,
-								"paddingLeft": 0,
-								"paddingRight": 0,
-								"paddingTop": 0,
 								"widthType": "Fluid"
 							}
 						},
@@ -537,7 +498,6 @@
 			{
 				"definition": {
 					"fragmentStyle": {
-						"borderWidth": "0",
 						"marginBottom": "8"
 					},
 					"fragmentViewports": [
@@ -549,15 +509,7 @@
 						}
 					],
 					"layout": {
-						"borderWidth": 0,
 						"marginBottom": 10,
-						"marginLeft": 0,
-						"marginRight": 0,
-						"marginTop": 0,
-						"paddingBottom": 0,
-						"paddingLeft": 0,
-						"paddingRight": 0,
-						"paddingTop": 0,
 						"widthType": "Fixed"
 					}
 				},
@@ -565,22 +517,13 @@
 					{
 						"definition": {
 							"fragmentStyle": {
-								"borderWidth": "0",
 								"marginBottom": "7"
 							},
 							"layout": {
 								"align": "Center",
-								"borderWidth": 0,
 								"contentDisplay": "FlexRow",
 								"justify": "SpaceBetween",
 								"marginBottom": 8,
-								"marginLeft": 0,
-								"marginRight": 0,
-								"marginTop": 0,
-								"paddingBottom": 0,
-								"paddingLeft": 0,
-								"paddingRight": 0,
-								"paddingTop": 0,
 								"widthType": "Fluid"
 							}
 						},
@@ -874,15 +817,7 @@
 						}
 					],
 					"layout": {
-						"borderWidth": 0,
 						"marginBottom": 10,
-						"marginLeft": 0,
-						"marginRight": 0,
-						"marginTop": 0,
-						"paddingBottom": 0,
-						"paddingLeft": 0,
-						"paddingRight": 0,
-						"paddingTop": 0,
 						"widthType": "Fixed"
 					}
 				},

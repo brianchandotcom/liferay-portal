@@ -5,7 +5,6 @@
 				"definition": {
 					"fragmentStyle": {
 						"backgroundColor": "brandColor1",
-						"borderWidth": "0",
 						"paddingBottom": "7",
 						"paddingLeft": "2",
 						"paddingRight": "2",
@@ -14,24 +13,13 @@
 					"fragmentViewports": [
 						{
 							"fragmentViewportStyle": {
-								"marginBottom": "0",
-								"paddingBottom": "4",
-								"paddingLeft": "0",
-								"paddingRight": "0",
-								"paddingTop": "0"
+								"paddingBottom": "4"
 							},
 							"id": "tablet"
 						}
 					],
 					"layout": {
-						"borderWidth": 0,
-						"marginBottom": 0,
-						"marginLeft": 0,
-						"marginRight": 0,
-						"marginTop": 0,
 						"paddingBottom": 8,
-						"paddingLeft": 0,
-						"paddingRight": 0,
 						"paddingTop": 4,
 						"widthType": "Fluid"
 					}
@@ -43,15 +31,6 @@
 								"borderWidth": "0"
 							},
 							"layout": {
-								"borderWidth": 0,
-								"marginBottom": 0,
-								"marginLeft": 0,
-								"marginRight": 0,
-								"marginTop": 0,
-								"paddingBottom": 0,
-								"paddingLeft": 0,
-								"paddingRight": 0,
-								"paddingTop": 0,
 								"widthType": "Fixed"
 							}
 						},
@@ -73,7 +52,6 @@
 										},
 										{
 											"fragmentViewportStyle": {
-												"marginTop": "0",
 												"paddingTop": "3"
 											},
 											"id": "tablet"
@@ -310,7 +288,6 @@
 												"definition": {
 													"fragmentStyle": {
 														"backgroundColor": "brandColor2",
-														"borderWidth": "0",
 														"marginBottom": "3",
 														"paddingBottom": "3",
 														"paddingLeft": "3",
@@ -330,7 +307,6 @@
 														{
 															"fragmentViewportStyle": {
 																"marginBottom": "3",
-																"marginLeft": "0",
 																"paddingBottom": "2",
 																"paddingLeft": "2",
 																"paddingRight": "2",
@@ -340,11 +316,7 @@
 														}
 													],
 													"layout": {
-														"borderWidth": 0,
 														"marginBottom": 1,
-														"marginLeft": 0,
-														"marginRight": 0,
-														"marginTop": 0,
 														"paddingBottom": 1,
 														"paddingLeft": 1,
 														"paddingRight": 1,
@@ -396,7 +368,6 @@
 			{
 				"definition": {
 					"fragmentStyle": {
-						"borderWidth": "0",
 						"paddingBottom": "8",
 						"paddingLeft": "2",
 						"paddingRight": "2",
@@ -405,23 +376,13 @@
 					"fragmentViewports": [
 						{
 							"fragmentViewportStyle": {
-								"paddingBottom": "0",
-								"paddingLeft": "0",
-								"paddingRight": "0",
 								"paddingTop": "5"
 							},
 							"id": "tablet"
 						}
 					],
 					"layout": {
-						"borderWidth": 0,
-						"marginBottom": 0,
-						"marginLeft": 0,
-						"marginRight": 0,
-						"marginTop": 0,
 						"paddingBottom": 10,
-						"paddingLeft": 0,
-						"paddingRight": 0,
 						"paddingTop": 10,
 						"widthType": "Fluid"
 					}
@@ -441,15 +402,6 @@
 								}
 							],
 							"layout": {
-								"borderWidth": 0,
-								"marginBottom": 0,
-								"marginLeft": 0,
-								"marginRight": 0,
-								"marginTop": 0,
-								"paddingBottom": 0,
-								"paddingLeft": 0,
-								"paddingRight": 0,
-								"paddingTop": 0,
 								"widthType": "Fixed"
 							}
 						},
@@ -582,8 +534,7 @@
 													"fragmentViewports": [
 														{
 															"fragmentViewportStyle": {
-																"marginBottom": "4",
-																"marginRight": "0"
+																"marginBottom": "4"
 															},
 															"id": "tablet"
 														}
@@ -621,7 +572,6 @@
 												"definition": {
 													"fragmentStyle": {
 														"backgroundColor": "darkColor",
-														"borderWidth": "0",
 														"marginRight": "4",
 														"paddingBottom": "5",
 														"paddingLeft": "5",
@@ -639,7 +589,6 @@
 														},
 														{
 															"fragmentViewportStyle": {
-																"marginRight": "0",
 																"paddingBottom": "4",
 																"paddingLeft": "5",
 																"paddingRight": "5",
@@ -649,11 +598,7 @@
 														}
 													],
 													"layout": {
-														"borderWidth": 0,
-														"marginBottom": 0,
-														"marginLeft": 0,
 														"marginRight": 2,
-														"marginTop": 0,
 														"paddingBottom": 4,
 														"paddingLeft": 4,
 														"paddingRight": 4,
@@ -665,22 +610,12 @@
 													{
 														"definition": {
 															"fragmentStyle": {
-																"borderWidth": "0",
 																"fontFamily": "fontFamilySansSerif",
 																"marginBottom": "1"
 															},
 															"layout": {
 																"align": "Center",
-																"borderWidth": 0,
 																"contentDisplay": "FlexRow",
-																"marginBottom": 0,
-																"marginLeft": 0,
-																"marginRight": 0,
-																"marginTop": 0,
-																"paddingBottom": 0,
-																"paddingLeft": 0,
-																"paddingRight": 0,
-																"paddingTop": 0,
 																"widthType": "Fluid"
 															}
 														},
@@ -749,22 +684,12 @@
 													{
 														"definition": {
 															"fragmentStyle": {
-																"borderWidth": "0",
 																"fontFamily": "fontFamilySansSerif",
 																"marginBottom": "1"
 															},
 															"layout": {
 																"align": "Center",
-																"borderWidth": 0,
 																"contentDisplay": "FlexRow",
-																"marginBottom": 0,
-																"marginLeft": 0,
-																"marginRight": 0,
-																"marginTop": 0,
-																"paddingBottom": 0,
-																"paddingLeft": 0,
-																"paddingRight": 0,
-																"paddingTop": 0,
 																"widthType": "Fluid"
 															}
 														},
@@ -833,22 +758,12 @@
 													{
 														"definition": {
 															"fragmentStyle": {
-																"borderWidth": "0",
 																"fontFamily": "fontFamilySansSerif",
 																"marginBottom": "1"
 															},
 															"layout": {
 																"align": "Center",
-																"borderWidth": 0,
 																"contentDisplay": "FlexRow",
-																"marginBottom": 0,
-																"marginLeft": 0,
-																"marginRight": 0,
-																"marginTop": 0,
-																"paddingBottom": 0,
-																"paddingLeft": 0,
-																"paddingRight": 0,
-																"paddingTop": 0,
 																"widthType": "Fluid"
 															}
 														},
@@ -917,22 +832,12 @@
 													{
 														"definition": {
 															"fragmentStyle": {
-																"borderWidth": "0",
 																"fontFamily": "fontFamilySansSerif",
 																"marginBottom": "1"
 															},
 															"layout": {
 																"align": "Center",
-																"borderWidth": 0,
 																"contentDisplay": "FlexRow",
-																"marginBottom": 0,
-																"marginLeft": 0,
-																"marginRight": 0,
-																"marginTop": 0,
-																"paddingBottom": 0,
-																"paddingLeft": 0,
-																"paddingRight": 0,
-																"paddingTop": 0,
 																"widthType": "Fluid"
 															}
 														},
@@ -1001,22 +906,12 @@
 													{
 														"definition": {
 															"fragmentStyle": {
-																"borderWidth": "0",
 																"fontFamily": "fontFamilySansSerif",
 																"marginBottom": "1"
 															},
 															"layout": {
 																"align": "Center",
-																"borderWidth": 0,
 																"contentDisplay": "FlexRow",
-																"marginBottom": 0,
-																"marginLeft": 0,
-																"marginRight": 0,
-																"marginTop": 0,
-																"paddingBottom": 0,
-																"paddingLeft": 0,
-																"paddingRight": 0,
-																"paddingTop": 0,
 																"widthType": "Fluid"
 															}
 														},
@@ -1144,29 +1039,20 @@
 											{
 												"definition": {
 													"fragmentStyle": {
-														"borderWidth": "0",
 														"marginBottom": "5",
 														"marginRight": "4"
 													},
 													"fragmentViewports": [
 														{
 															"fragmentViewportStyle": {
-																"marginBottom": "5",
-																"marginRight": "0"
+																"marginBottom": "5"
 															},
 															"id": "tablet"
 														}
 													],
 													"layout": {
-														"borderWidth": 0,
 														"marginBottom": 4,
-														"marginLeft": 0,
 														"marginRight": 2,
-														"marginTop": 0,
-														"paddingBottom": 0,
-														"paddingLeft": 0,
-														"paddingRight": 0,
-														"paddingTop": 0,
 														"widthType": "Fluid"
 													}
 												},
@@ -1368,7 +1254,6 @@
 											{
 												"definition": {
 													"fragmentStyle": {
-														"borderWidth": "0",
 														"marginBottom": "5",
 														"marginRight": "4"
 													},
@@ -1381,15 +1266,8 @@
 														}
 													],
 													"layout": {
-														"borderWidth": 0,
 														"marginBottom": 4,
-														"marginLeft": 0,
 														"marginRight": 2,
-														"marginTop": 0,
-														"paddingBottom": 0,
-														"paddingLeft": 0,
-														"paddingRight": 0,
-														"paddingTop": 0,
 														"widthType": "Fluid"
 													}
 												},
@@ -1591,7 +1469,6 @@
 											{
 												"definition": {
 													"fragmentStyle": {
-														"borderWidth": "0",
 														"marginBottom": "5",
 														"marginRight": "4"
 													},
@@ -1604,15 +1481,8 @@
 														}
 													],
 													"layout": {
-														"borderWidth": 0,
 														"marginBottom": 4,
-														"marginLeft": 0,
 														"marginRight": 2,
-														"marginTop": 0,
-														"paddingBottom": 0,
-														"paddingLeft": 0,
-														"paddingRight": 0,
-														"paddingTop": 0,
 														"widthType": "Fluid"
 													}
 												},
@@ -1801,7 +1671,6 @@
 				"definition": {
 					"fragmentStyle": {
 						"backgroundColor": "brandColor3",
-						"borderWidth": "0",
 						"marginBottom": "9",
 						"paddingBottom": "9",
 						"paddingLeft": "2",
@@ -1822,16 +1691,7 @@
 					],
 					"layout": {
 						"align": "Center",
-						"borderWidth": 0,
 						"contentDisplay": "FlexColumn",
-						"marginBottom": 0,
-						"marginLeft": 0,
-						"marginRight": 0,
-						"marginTop": 0,
-						"paddingBottom": 0,
-						"paddingLeft": 0,
-						"paddingRight": 0,
-						"paddingTop": 0,
 						"widthType": "Fluid"
 					}
 				},
@@ -2012,7 +1872,6 @@
 			{
 				"definition": {
 					"fragmentStyle": {
-						"borderWidth": "0",
 						"marginBottom": "7"
 					},
 					"fragmentViewports": [
@@ -2024,15 +1883,6 @@
 						}
 					],
 					"layout": {
-						"borderWidth": 0,
-						"marginBottom": 0,
-						"marginLeft": 0,
-						"marginRight": 0,
-						"marginTop": 0,
-						"paddingBottom": 0,
-						"paddingLeft": 0,
-						"paddingRight": 0,
-						"paddingTop": 0,
 						"widthType": "Fixed"
 					}
 				},

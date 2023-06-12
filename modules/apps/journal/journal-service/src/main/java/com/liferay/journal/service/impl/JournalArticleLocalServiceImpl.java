@@ -176,6 +176,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.GroupSubscriptionCheckSubscriptionSender;
+import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -1186,7 +1187,8 @@ public class JournalArticleLocalServiceImpl
 		if (article.isApproved() &&
 			isLatestVersion(
 				article.getGroupId(), article.getArticleId(),
-				article.getVersion(), WorkflowConstants.STATUS_APPROVED)) {
+				article.getVersion(), WorkflowConstants.STATUS_APPROVED) &&
+			!GroupThreadLocal.isDeleteInProcess()) {
 
 			updatePreviousApprovedArticle(article);
 		}
@@ -1209,7 +1211,8 @@ public class JournalArticleLocalServiceImpl
 			!article.isApproved() &&
 			isLatestVersion(
 				article.getGroupId(), article.getArticleId(),
-				article.getVersion())) {
+				article.getVersion()) &&
+			!GroupThreadLocal.isDeleteInProcess()) {
 
 			articleURL = buildArticleURL(
 				articleURL, article.getGroupId(), article.getFolderId(),

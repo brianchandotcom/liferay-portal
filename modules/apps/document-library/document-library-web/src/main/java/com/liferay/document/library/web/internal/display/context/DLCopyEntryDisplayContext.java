@@ -57,10 +57,10 @@ public class DLCopyEntryDisplayContext {
 	}
 
 	public String getActionURL() {
-		String actionName = "/document_library/copy_file_entry";
+		String actionName = "/document_library/file_entry_copy_entry";
 
 		if (getFileShortcutId() > 0) {
-			actionName = "/document_library/copy_file_shortcut";
+			actionName = "/document_library/file_shortcut_copy_entry";
 		}
 
 		return PortletURLBuilder.createActionURL(

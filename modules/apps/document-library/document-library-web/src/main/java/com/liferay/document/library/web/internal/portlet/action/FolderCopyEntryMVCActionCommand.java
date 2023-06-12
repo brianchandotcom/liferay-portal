@@ -15,13 +15,14 @@
 package com.liferay.document.library.web.internal.portlet.action;
 
 import com.liferay.document.library.constants.DLPortletKeys;
-import com.liferay.document.library.web.internal.helper.DLTrashHelper;
+import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.util.ParamUtil;
+
+import javax.portlet.ActionRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -34,38 +35,34 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY,
 		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
 		"javax.portlet.name=" + DLPortletKeys.MEDIA_GALLERY_DISPLAY,
-		"mvc.command.name=/document_library/copy_folder"
+		"mvc.command.name=/document_library/folder_copy_entry"
 	},
-	service = MVCRenderCommand.class
+	service = MVCActionCommand.class
 )
-public class CopyFolderMVCRenderCommand extends BaseFolderMVCRenderCommand {
+public class FolderCopyEntryMVCActionCommand
+	extends BaseCopyEntryMVCActionCommand {
 
 	@Override
-	protected void checkPermissions(
-			PermissionChecker permissionChecker, Folder folder)
+	protected void doCopyEntry(ActionRequest actionRequest)
 		throws PortalException {
 
-		_folderModelResourcePermission.check(
-			permissionChecker, folder, ActionKeys.VIEW);
-	}
+		long sourceRepositoryId = ParamUtil.getLong(
+			actionRequest, "sourceRepositoryId");
+		long sourceFolderId = ParamUtil.getLong(
+			actionRequest, "sourceFolderId");
+		long destinationRepositoryId = ParamUtil.getLong(
+			actionRequest, "destinationRepositoryId");
+		long destinationParentFolderId = ParamUtil.getLong(
+			actionRequest, "destinationParentFolderId");
 
-	@Override
-	protected DLTrashHelper getDLTrashHelper() {
-		return _dlTrashHelper;
-	}
-
-	@Override
-	protected String getPath() {
-		return "/document_library/copy_folder.jsp";
+		_dlAppService.copyFolder(
+			sourceRepositoryId, sourceFolderId, destinationRepositoryId,
+			destinationParentFolderId,
+			ServiceContextFactory.getInstance(
+				DLFolder.class.getName(), actionRequest));
 	}
 
 	@Reference
-	private DLTrashHelper _dlTrashHelper;
-
-	@Reference(
-		target = "(model.class.name=com.liferay.portal.kernel.repository.model.Folder)"
-	)
-	private volatile ModelResourcePermission<Folder>
-		_folderModelResourcePermission;
+	private DLAppService _dlAppService;
 
 }

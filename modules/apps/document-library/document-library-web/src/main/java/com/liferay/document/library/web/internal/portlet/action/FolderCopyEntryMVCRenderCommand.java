@@ -15,9 +15,10 @@
 package com.liferay.document.library.web.internal.portlet.action;
 
 import com.liferay.document.library.constants.DLPortletKeys;
+import com.liferay.document.library.web.internal.helper.DLTrashHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -33,31 +34,39 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY,
 		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
 		"javax.portlet.name=" + DLPortletKeys.MEDIA_GALLERY_DISPLAY,
-		"mvc.command.name=/document_library/copy_file_entry"
+		"mvc.command.name=/document_library/folder_copy_entry"
 	},
 	service = MVCRenderCommand.class
 )
-public class CopyFileEntryMVCRenderCommand
-	extends BaseFileEntryMVCRenderCommand {
+public class FolderCopyEntryMVCRenderCommand
+	extends BaseFolderMVCRenderCommand {
 
+	@Override
 	protected void checkPermissions(
-			PermissionChecker permissionChecker, FileEntry fileEntry)
+			PermissionChecker permissionChecker, Folder folder)
 		throws PortalException {
 
-		_fileEntryModelResourcePermission.check(
-			permissionChecker, fileEntry, ActionKeys.DOWNLOAD);
-		_fileEntryModelResourcePermission.check(
-			permissionChecker, fileEntry, ActionKeys.VIEW);
+		_folderModelResourcePermission.check(
+			permissionChecker, folder, ActionKeys.VIEW);
 	}
 
-	protected String getPath() {
-		return "/document_library/copy_file_entry.jsp";
+	@Override
+	protected DLTrashHelper getDLTrashHelper() {
+		return _dlTrashHelper;
 	}
+
+	@Override
+	protected String getPath() {
+		return "/document_library/folder_copy_entry.jsp";
+	}
+
+	@Reference
+	private DLTrashHelper _dlTrashHelper;
 
 	@Reference(
-		target = "(model.class.name=com.liferay.portal.kernel.repository.model.FileEntry)"
+		target = "(model.class.name=com.liferay.portal.kernel.repository.model.Folder)"
 	)
-	private volatile ModelResourcePermission<FileEntry>
-		_fileEntryModelResourcePermission;
+	private volatile ModelResourcePermission<Folder>
+		_folderModelResourcePermission;
 
 }

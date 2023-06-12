@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.jethr0.workflow;
+package com.liferay.jethr0.event.handler;
 
 import com.liferay.jethr0.build.queue.BuildQueue;
 import com.liferay.jethr0.build.repository.BuildParameterRepository;
@@ -27,7 +27,7 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class WorkflowHelper {
+public class EventHandlerHelper {
 
 	public BuildParameterRepository getBuildParameterRepository() {
 		return _buildParameterRepository;

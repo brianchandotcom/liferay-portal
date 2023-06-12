@@ -21,6 +21,8 @@ import com.liferay.jethr0.build.repository.BuildParameterRepository;
 import com.liferay.jethr0.build.repository.BuildRepository;
 import com.liferay.jethr0.build.repository.BuildRunRepository;
 import com.liferay.jethr0.build.run.BuildRun;
+import com.liferay.jethr0.event.handler.EventHandler;
+import com.liferay.jethr0.event.handler.EventHandlerFactory;
 import com.liferay.jethr0.gitbranch.repository.GitBranchRepository;
 import com.liferay.jethr0.jenkins.JenkinsQueue;
 import com.liferay.jethr0.jenkins.node.JenkinsNode;
@@ -30,8 +32,6 @@ import com.liferay.jethr0.project.repository.ProjectRepository;
 import com.liferay.jethr0.task.repository.TaskRepository;
 import com.liferay.jethr0.testsuite.repository.TestSuiteRepository;
 import com.liferay.jethr0.util.StringUtil;
-import com.liferay.jethr0.workflow.Workflow;
-import com.liferay.jethr0.workflow.WorkflowFactory;
 
 import java.net.URL;
 
@@ -87,14 +87,15 @@ public class JMSEventHandler {
 		else if (eventTrigger.equals("CREATE_PROJECT") ||
 				 eventTrigger.equals("QUEUE_PROJECT")) {
 
-			Workflow workflow = _workflowFactory.newWorkflow(messageJSONObject);
+			EventHandler eventHandler = _eventHandlerFactory.newEventHandler(
+				messageJSONObject);
 
-			if (workflow == null) {
+			if (eventHandler == null) {
 				throw new RuntimeException();
 			}
 
 			try {
-				workflow.process();
+				eventHandler.process();
 			}
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
@@ -328,6 +329,9 @@ public class JMSEventHandler {
 	private BuildRunRepository _buildRunRepository;
 
 	@Autowired
+	private EventHandlerFactory _eventHandlerFactory;
+
+	@Autowired
 	private GitBranchRepository _gitBranchRepository;
 
 	@Autowired
@@ -353,8 +357,5 @@ public class JMSEventHandler {
 
 	@Autowired
 	private TestSuiteRepository _testSuiteRepository;
-
-	@Autowired
-	private WorkflowFactory _workflowFactory;
 
 }

@@ -67,7 +67,8 @@ public class ObjectDefinitionServiceImpl
 	}
 
 	@Override
-	public ObjectDefinition addObjectDefinition(String externalReferenceCode)
+	public ObjectDefinition addObjectDefinition(
+			String externalReferenceCode, boolean modifiable, boolean system)
 		throws PortalException {
 
 		_portletResourcePermission.check(
@@ -75,7 +76,7 @@ public class ObjectDefinitionServiceImpl
 			ObjectActionKeys.ADD_OBJECT_DEFINITION);
 
 		return objectDefinitionLocalService.addObjectDefinition(
-			externalReferenceCode, getUserId());
+			externalReferenceCode, getUserId(), modifiable, system);
 	}
 
 	@Override

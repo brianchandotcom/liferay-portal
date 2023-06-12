@@ -37,6 +37,7 @@ import com.liferay.object.exception.ObjectDefinitionEnableCategorizationExceptio
 import com.liferay.object.exception.ObjectDefinitionEnableCommentsException;
 import com.liferay.object.exception.ObjectDefinitionEnableObjectEntryHistoryException;
 import com.liferay.object.exception.ObjectDefinitionLabelException;
+import com.liferay.object.exception.ObjectDefinitionModifiableException;
 import com.liferay.object.exception.ObjectDefinitionNameException;
 import com.liferay.object.exception.ObjectDefinitionPluralLabelException;
 import com.liferay.object.exception.ObjectDefinitionScopeException;
@@ -189,7 +190,8 @@ public class ObjectDefinitionLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ObjectDefinition addObjectDefinition(
-			String externalReferenceCode, long userId)
+			String externalReferenceCode, long userId, boolean modifiable,
+			boolean system)
 		throws PortalException {
 
 		ObjectDefinition objectDefinition = objectDefinitionPersistence.create(
@@ -205,14 +207,18 @@ public class ObjectDefinitionLocalServiceImpl
 
 		objectDefinition.setActive(false);
 		objectDefinition.setLabel(externalReferenceCode);
-		objectDefinition.setModifiable(true);
+		objectDefinition.setModifiable(modifiable);
 		objectDefinition.setName(externalReferenceCode);
 		objectDefinition.setPluralLabel(externalReferenceCode);
 		objectDefinition.setScope(ObjectDefinitionConstants.SCOPE_COMPANY);
 		objectDefinition.setStorageType(
 			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT);
-		objectDefinition.setSystem(false);
+		objectDefinition.setSystem(system);
 		objectDefinition.setStatus(WorkflowConstants.STATUS_DRAFT);
+
+		if (objectDefinition.isUnmodifiableSystemObject() || !modifiable) {
+			throw new ObjectDefinitionModifiableException.MustBeModifiable();
+		}
 
 		objectDefinition = objectDefinitionPersistence.update(objectDefinition);
 

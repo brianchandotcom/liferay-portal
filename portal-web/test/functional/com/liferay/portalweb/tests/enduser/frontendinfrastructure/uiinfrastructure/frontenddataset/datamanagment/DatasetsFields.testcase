@@ -423,6 +423,56 @@ definition {
 		}
 	}
 
+	@description = "LPS-176051. Confirm that the user can save changes when clicks on Save button"
+	@priority = 5
+	test CanSaveChangesOnSaveButton {
+		task ("And add new fields") {
+			FrontendDataSetAdmin.addFields(key_fieldList = "id,label");
+		}
+
+		task ("And clicks on Edit option") {
+			Click(
+				key_fieldName = "id",
+				locator1 = "FrontendDataSetAdmin#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
+
+			MenuItem.click(menuItem = "Edit");
+		}
+
+		task ("And choose another client extension option") {
+			Click(
+				dropdownLabel = "Cell Renderer",
+				locator1 = "ObjectField#ANY_DROPDOWN_LABEL");
+
+			MenuItem.click(menuItem = "Date and Time");
+		}
+
+		task ("And clicks on Save button") {
+			Click(
+				key_text = "Save",
+				locator1 = "CP2ActivationKeys#KEY_DEACTIVATION_TERMS");
+		}
+
+		task ("Then the Edit field modal is closed") {
+			AssertElementNotPresent(
+				locator1 = "Portlet#MODAL_TITLE",
+				value1 = "Edit id");
+		}
+
+		task ("And a successful message appears") {
+			Alert.viewSuccessMessage();
+		}
+
+		task ("And the changes are applied") {
+			FrontendDataSetAdmin.assertFieldsOnTable(
+				key_position = 1,
+				keyName = "id");
+
+			FrontendDataSetAdmin.assertFieldsOnTable(
+				key_position = 1,
+				keyName = "Date and Time");
+		}
+	}
+
 	@description = "LPS-179282. Confirm that the search bar returns works as expected"
 	@priority = 4
 	test CanSearchField {

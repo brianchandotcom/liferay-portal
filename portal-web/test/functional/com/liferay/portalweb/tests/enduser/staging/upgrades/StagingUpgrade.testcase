@@ -942,7 +942,7 @@ definition {
 
 		task ("Verify that the AP Widget is still present on the Site Name page") {
 			Navigator.gotoSitePage(
-				pageName = "Home",
+				pageName = "home",
 				siteName = "Site Name");
 
 			Refresh();
@@ -966,7 +966,7 @@ definition {
 
 		task ("Verify that the AP Widget is still present on the Site Name page") {
 			Navigator.gotoSitePage(
-				pageName = "Home",
+				pageName = "home",
 				siteName = "Site Name");
 
 			Refresh();

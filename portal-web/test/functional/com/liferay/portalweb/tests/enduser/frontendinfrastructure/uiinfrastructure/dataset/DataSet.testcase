@@ -24,7 +24,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		FrontendDataSetAdmin.deleteAllDataSetEntries();
+		DataSetAdmin.deleteAllDataSetEntries();
 
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
@@ -36,17 +36,17 @@ definition {
 	@priority = 4
 	test CanChangePaginationInAdminPage {
 		task ("Given create 6 data sets") {
-			FrontendDataSetAdmin.createDataSet(
+			DataSetAdmin.createDataSet(
 				key_dataSetNameList = "Test Data Set 1,Test Data Set 2,Test Data Set 3,Test Data Set 4,Test Data Set 5,Test Data Set 6",
 				key_type = "/c/fdsentries");
 		}
 
 		task ("When changing the page to 4 entries") {
-			FrontendDataSetAdmin.changePagination(itemsPerPage = "4 Items");
+			DataSetAdmin.changePagination(itemsPerPage = "4 Items");
 		}
 
 		task ("Then confirm that only 4 entries are displayed") {
-			FrontendDataSetAdmin.assertDataSetEntry(key_dataSetNameList = "Test Data Set 1,Test Data Set 2,Test Data Set 3,Test Data Set 4");
+			DataSetAdmin.assertDataSetEntry(key_dataSetNameList = "Test Data Set 1,Test Data Set 2,Test Data Set 3,Test Data Set 4");
 
 			Pagination.viewResults(results = "Showing 1 to 4 of 6 entries.");
 		}
@@ -56,7 +56,7 @@ definition {
 		}
 
 		task ("Then 2 entries are displayed") {
-			FrontendDataSetAdmin.assertDataSetEntry(key_dataSetNameList = "Test Data Set 5,Test Data Set 6");
+			DataSetAdmin.assertDataSetEntry(key_dataSetNameList = "Test Data Set 5,Test Data Set 6");
 
 			Pagination.viewResults(results = "Showing 5 to 6 of 6 entries.");
 		}
@@ -66,7 +66,7 @@ definition {
 	@priority = 5
 	test CanCreateDataSet {
 		task ("When Create a DataSet ") {
-			FrontendDataSetAdmin.createDataSet(
+			DataSetAdmin.createDataSet(
 				key_name = "Test Data Set",
 				key_type = "/c/fdsentries");
 		}
@@ -88,19 +88,51 @@ definition {
 	@priority = 5
 	test CanDeleteDataSet {
 		task ("When the user goes to add data sets") {
-			FrontendDataSetAdmin.createDataSet(
+			DataSetAdmin.createDataSet(
 				key_name = "Test Data Set",
 				key_type = "/c/fdsentries");
 		}
 
 		task ("And the user deletes a data set") {
-			FrontendDataSetAdmin.deleteDataSet(entry = "Test Data Set");
+			DataSetAdmin.deleteDataSet(entry = "Test Data Set");
 		}
 
 		task ("Then The data set is not present in the Data Sets admin page") {
 			AssertElementPresent(
 				locator1 = "Message#EMPTY_STATE_INFO",
 				value1 = "No Results Found");
+		}
+	}
+
+	@description = "LPS-172882: Display a list of headless resources in new FDS View modal"
+	@priority = 5
+	test CanDisplayHeadlessDeliveryAPIResources {
+		property test.name.skip.portal.instance = "FrontendDataSetAdminSearch#CanDisplayHeadlessDeliveryAPIResources";
+
+		task ("When go to add data sets") {
+			LexiconEntry.gotoAdd();
+		}
+
+		task ("Then displays list of headless resources") {
+			DataSetAdmin.searchProvider(
+				dropdownLabel = "Choose an Option",
+				key_provider = "Headless");
+
+			AssertElementPresent(
+				locator1 = "CommerceWidget#TAG_FACET_COMPACT_LAYOUT",
+				tagName = "headless-admin-address/v1.0");
+
+			AssertElementPresent(
+				locator1 = "CommerceWidget#TAG_FACET_COMPACT_LAYOUT",
+				tagName = "headless-admin-content/v1.0");
+
+			AssertElementPresent(
+				locator1 = "CommerceWidget#TAG_FACET_COMPACT_LAYOUT",
+				tagName = "headless-admin-list-type/v1.0");
+
+			AssertElementPresent(
+				locator1 = "CommerceWidget#TAG_FACET_COMPACT_LAYOUT",
+				tagName = "headless-admin-taxonomy/v1.0");
 		}
 	}
 
@@ -116,7 +148,7 @@ definition {
 		}
 
 		task ("And choose the provider named Channel") {
-			FrontendDataSetAdmin.selectProvider(key_type = "/c/fdsentries");
+			DataSetAdmin.selectProvider(key_type = "/c/fdsentries");
 		}
 
 		task ("And clicking on the Save button") {
@@ -130,11 +162,49 @@ definition {
 		}
 	}
 
+	@description = "LPS-172882: Display matched result in new FDS View modal"
+	@priority = 3
+	test CanReturnAMatchedResult {
+		property test.name.skip.portal.instance = "FrontendDataSetAdminSearch#CanReturnAMatchedResult";
+
+		task ("When go to add data sets") {
+			LexiconEntry.gotoAdd();
+		}
+
+		task ("And search for a known uniquely named headless provider") {
+			DataSetAdmin.searchProvider(
+				dropdownLabel = "Choose an Option",
+				key_provider = "/c/fdsentries");
+		}
+
+		task ("Then the suggested list is updated to have only 1 result for the search, and Then the suggested list contains the uniquely named headless provider") {
+			AssertElementPresent(
+				locator1 = "CommerceWidget#TAG_FACET_COMPACT_LAYOUT",
+				tagName = "/c/fdsentries");
+		}
+	}
+
+	@description = "LPS-172882: Display no matched result in new FDS View modal"
+	@priority = 4
+	test CanReturnNoMatchedResults {
+		task ("When go to add data sets") {
+			LexiconEntry.gotoAdd();
+		}
+
+		task ("And When search for a phrase that doesn't match available headless providers") {
+			DataSetAdmin.searchProvider(key_provider = "apple");
+		}
+
+		task ("Then suggested list contains 0 results") {
+			AssertElementNotPresent(locator1 = "FrontendDataSet#DROPDOWN_LIST");
+		}
+	}
+
 	@description = "LPS-172398. Confirm that the options view and Delete is present and is visible after clicking the ellipsis button."
 	@priority = 3
 	test DeleteAndViewAreAvailable {
 		task ("When The user goes to add a new data set") {
-			FrontendDataSetAdmin.createDataSet(
+			DataSetAdmin.createDataSet(
 				key_name = "Test Data Set",
 				key_type = "/c/fdsentries");
 		}
@@ -160,7 +230,7 @@ definition {
 		}
 
 		task ("And choose the Provider called /c/fdsentries") {
-			FrontendDataSetAdmin.selectProvider(key_type = "/c/fdsentries");
+			DataSetAdmin.selectProvider(key_type = "/c/fdsentries");
 		}
 
 		task ("And clicking on the Save button") {
@@ -208,7 +278,7 @@ definition {
 		}
 
 		task ("And choose the Provider called /c/fdsentries ") {
-			FrontendDataSetAdmin.selectProvider(key_type = "/c/fdsentries");
+			DataSetAdmin.selectProvider(key_type = "/c/fdsentries");
 		}
 
 		task ("And clicking on the Cancel button ") {
@@ -228,7 +298,7 @@ definition {
 	@priority = 5
 	test NotDeleteDataSetAfterCancel {
 		task ("When the user goes to add data sets") {
-			FrontendDataSetAdmin.createDataSet(
+			DataSetAdmin.createDataSet(
 				key_name = "Test Data Set",
 				key_type = "/c/fdsentries");
 		}
@@ -258,7 +328,7 @@ definition {
 	@priority = 5
 	test NotDeleteDataSetAfterCloseButton {
 		task ("When The user goes to add a new data set") {
-			FrontendDataSetAdmin.createDataSet(
+			DataSetAdmin.createDataSet(
 				key_name = "Test Data Set",
 				key_type = "/c/fdsentries");
 		}
@@ -292,7 +362,7 @@ definition {
 	@priority = 5
 	test WithSpecialCharacters {
 		task ("When Create a DataSet") {
-			FrontendDataSetAdmin.createDataSet(
+			DataSetAdmin.createDataSet(
 				key_name = "Data Set ~!@#$%^&*(){}[].<>/? name",
 				key_type = "/c/fdsentries");
 		}
@@ -307,76 +377,6 @@ definition {
 			AssertElementPresent(
 				key_itemName = "/c/fdsentries",
 				locator1 = "FrontendDataSetAdmin#TABLE_CELL");
-		}
-	}
-
-@description = "LPS-172882: Display a list of headless resources in new FDS View modal"
-	@priority = 5
-	test CanDisplayHeadlessDeliveryAPIResources {
-		property test.name.skip.portal.instance = "FrontendDataSetAdminSearch#CanDisplayHeadlessDeliveryAPIResources";
-
-		task ("When go to add data sets") {
-			LexiconEntry.gotoAdd();
-		}
-
-		task ("Then displays list of headless resources") {
-			FrontendDataSetAdmin.searchProvider(
-				dropdownLabel = "Choose an Option",
-				key_provider = "Headless");
-
-			AssertElementPresent(
-				locator1 = "CommerceWidget#TAG_FACET_COMPACT_LAYOUT",
-				tagName = "headless-admin-address/v1.0");
-
-			AssertElementPresent(
-				locator1 = "CommerceWidget#TAG_FACET_COMPACT_LAYOUT",
-				tagName = "headless-admin-content/v1.0");
-
-			AssertElementPresent(
-				locator1 = "CommerceWidget#TAG_FACET_COMPACT_LAYOUT",
-				tagName = "headless-admin-list-type/v1.0");
-
-			AssertElementPresent(
-				locator1 = "CommerceWidget#TAG_FACET_COMPACT_LAYOUT",
-				tagName = "headless-admin-taxonomy/v1.0");
-		}
-	}
-
-	@description = "LPS-172882: Display matched result in new FDS View modal"
-	@priority = 3
-	test CanReturnAMatchedResult {
-		property test.name.skip.portal.instance = "FrontendDataSetAdminSearch#CanReturnAMatchedResult";
-
-		task ("When go to add data sets") {
-			LexiconEntry.gotoAdd();
-		}
-
-		task ("And search for a known uniquely named headless provider") {
-			FrontendDataSetAdmin.searchProvider(
-				dropdownLabel = "Choose an Option",
-				key_provider = "/c/fdsentries");
-		}
-
-		task ("Then the suggested list is updated to have only 1 result for the search, and Then the suggested list contains the uniquely named headless provider") {
-			AssertElementPresent(
-				locator1 = "CommerceWidget#TAG_FACET_COMPACT_LAYOUT",
-				tagName = "/c/fdsentries");
-		}
-	}
-
-	@description = "LPS-172882: Display no matched result in new FDS View modal"
-	@priority = 4
-	test CanReturnNoMatchedResults {
-		task ("When go to add data sets") {
-			LexiconEntry.gotoAdd();
-		}
-
-		task ("And When search for a phrase that doesn't match available headless providers") {
-			FrontendDataSetAdmin.searchProvider(key_provider = "apple");
-		}
-
-		task ("Then suggested list contains 0 results") {
-			AssertElementNotPresent(locator1 = "FrontendDataSet#DROPDOWN_LIST");
 		}
 	}
 

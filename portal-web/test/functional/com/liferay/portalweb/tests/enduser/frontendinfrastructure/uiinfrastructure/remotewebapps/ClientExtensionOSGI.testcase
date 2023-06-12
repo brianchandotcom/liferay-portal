@@ -89,7 +89,7 @@ definition {
 		property test.name.skip.portal.instance = "ClientExtensionOSGI#OsgiClientExtensionWorkspaceLabelIsPresent";
 
 		task ("Then Modified Date column is present") {
-			FDSCustomView.assertColumnPresent(key_field = "Modified Date");
+			FrontendDataSetCustomView.assertColumnPresent(key_field = "Modified Date");
 		}
 
 		task ("And Then showing Label 'Workspace' is present") {

@@ -55,7 +55,7 @@ definition {
 		}
 
 		task ("Then all of them can be removed at once") {
-			FDSFilters.resetFilter();
+			FrontendDataSetFilters.resetFilter();
 		}
 
 		task ("Then the results will be displayed updated accordingly to it") {
@@ -75,13 +75,13 @@ definition {
 	@priority = 5
 	test AvailableFiltersCanBeApplied {
 		task ("When click on the filter button") {
-			FDSFilters.openFilters();
+			FrontendDataSetFilters.openFilters();
 		}
 
 		task ("And selecting one of the available filters") {
-			FDSFilters.disableStatusFilters(key_status = "Approved,Draft");
+			FrontendDataSetFilters.disableStatusFilters(key_status = "Approved,Draft");
 
-			FDSFilters.enableStatusFilters(key_status = "Pending");
+			FrontendDataSetFilters.enableStatusFilters(key_status = "Pending");
 
 			Click(locator1 = "FrontendDataSet#ADD_FILTER_BUTTON");
 		}
@@ -101,11 +101,11 @@ definition {
 	@priority = 5
 	test ExcludeCanBeEnabled {
 		task ("When click on the filter button") {
-			FDSFilters.openFilters();
+			FrontendDataSetFilters.openFilters();
 		}
 
 		task ("And When adding an option from the status list filter") {
-			FDSFilters.enableStatusFilters(key_status = "Approved,Draft");
+			FrontendDataSetFilters.enableStatusFilters(key_status = "Approved,Draft");
 		}
 
 		task ("And When the exclude option is active") {
@@ -141,9 +141,9 @@ definition {
 		}
 
 		task ("And the filter is edited") {
-			FDSFilters.disableStatusFilters(key_status = "Blue,Green");
+			FrontendDataSetFilters.disableStatusFilters(key_status = "Blue,Green");
 
-			FDSFilters.enableStatusFilters(key_status = "Red");
+			FrontendDataSetFilters.enableStatusFilters(key_status = "Red");
 
 			Click(locator1 = "FrontendDataSet#EDIT_FILTER_BUTTON");
 		}
@@ -177,11 +177,11 @@ definition {
 	@priority = 5
 	test FilterCanBeSearched {
 		task ("When click on the filter button") {
-			FDSFilters.openFilters();
+			FrontendDataSetFilters.openFilters();
 		}
 
 		task ("And When typing a key word in the category search box") {
-			FDSFilters.searchFilter(searchTerm = "status");
+			FrontendDataSetFilters.searchFilter(searchTerm = "status");
 		}
 
 		task ("And When there is a matching filter ") {
@@ -191,7 +191,7 @@ definition {
 		}
 
 		task ("Then the results will be displayed updated accordingly to it") {
-			FDSFilters.enableStatusFilters(key_status = "Pending");
+			FrontendDataSetFilters.enableStatusFilters(key_status = "Pending");
 
 			Click(locator1 = "FrontendDataSet#ADD_FILTER_BUTTON");
 		}
@@ -207,11 +207,11 @@ definition {
 	@priority = 3
 	test FilterNotFound {
 		task ("When clicking on the filter button") {
-			FDSFilters.openFilters();
+			FrontendDataSetFilters.openFilters();
 		}
 
 		task ("And typing a key word in the category search box") {
-			FDSFilters.searchFilter(searchTerm = "Pending");
+			FrontendDataSetFilters.searchFilter(searchTerm = "Pending");
 		}
 
 		task ("And there is no matching filter") {
@@ -239,9 +239,9 @@ definition {
 	@priority = 4
 	test OneFilterCanBeRemoved {
 		task ("When there are several filters already established") {
-			FDSFilters.openFilters();
+			FrontendDataSetFilters.openFilters();
 
-			FDSFilters.addDateRangeFilters(
+			FrontendDataSetFilters.addDateRangeFilters(
 				key_fromDate = "01/01/2021",
 				key_toDate = "02/02/2021");
 
@@ -255,11 +255,11 @@ definition {
 		}
 
 		task ("Then it can be removed one by one") {
-			FDSFilters.closeFilters();
+			FrontendDataSetFilters.closeFilters();
 
-			FDSFilters.removeFilter(key_filter = "Color");
+			FrontendDataSetFilters.removeFilter(key_filter = "Color");
 
-			FDSFilters.removeFilter(key_filter = "Date Range");
+			FrontendDataSetFilters.removeFilter(key_filter = "Date Range");
 		}
 
 		task ("Then the results will be displayed updated accordingly to it") {
@@ -283,15 +283,15 @@ definition {
 	@priority = 5
 	test StatusFilterCanBeAdded {
 		task ("Given no filters applied") {
-			FDSFilters.removeAllFilters();
+			FrontendDataSetFilters.removeAllFilters();
 		}
 
 		task ("When click on the filter button") {
-			FDSFilters.openFilters();
+			FrontendDataSetFilters.openFilters();
 		}
 
 		task ("And When adding an option from the status list filter") {
-			FDSFilters.enableStatusFilters(key_status = "Pending");
+			FrontendDataSetFilters.enableStatusFilters(key_status = "Pending");
 
 			Click(locator1 = "FrontendDataSet#ADD_FILTER_BUTTON");
 		}

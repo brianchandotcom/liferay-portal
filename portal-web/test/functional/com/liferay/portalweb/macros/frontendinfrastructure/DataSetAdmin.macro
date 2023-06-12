@@ -182,7 +182,7 @@ definition {
 	}
 
 	macro deleteAllDataSetEntries {
-		DataSetAdmin.goToDataSetsAdminPage();
+		DataSetAdmin.goToDataSetAdminPage();
 
 		if (IsElementPresent(key_itemName = "", locator1 = "FrontendDataSetAdmin#TABLE_CELL")) {
 			JSONDataSet._deleteFDSEntry();
@@ -282,7 +282,7 @@ definition {
 		Navigator.gotoBack();
 	}
 
-	macro goToDataSetsAdminPage {
+	macro goToDataSetAdminPage {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=com_liferay_frontend_data_set_views_web_internal_portlet_FDSViewsPortlet");
 	}
 

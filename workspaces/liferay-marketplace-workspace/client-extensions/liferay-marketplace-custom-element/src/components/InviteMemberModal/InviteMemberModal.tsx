@@ -23,7 +23,7 @@ import { DisplayType } from '@clayui/alert';
 import ClayIcon from '@clayui/icon';
 
 import { Liferay } from '../../liferay/liferay';
-import { getMyUserAccount } from '../../utils/api';
+import { getAccountGroup, getMyUserAccount } from "../../utils/api";
 import { createPassword } from '../../utils/createPassword';
 import {
   addAdditionalInfo,
@@ -34,7 +34,6 @@ import {
   getSiteURL,
   getUserByEmail,
 } from './services';
-import { getAccountGroup } from "../../utils/api";
 
 interface InviteMemberModalProps {
   handleClose: () => void;

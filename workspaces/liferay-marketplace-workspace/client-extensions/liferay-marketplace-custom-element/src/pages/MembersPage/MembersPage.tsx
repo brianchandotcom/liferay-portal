@@ -263,16 +263,17 @@ export function MembersPage({
         ></InviteMemberModal>
       )}
        <ClayAlert.ToastContainer>
-        {toastItems?.map((alert) => (
+        {toastItems?.map((alert, index) => (
           <ClayAlert
-            displayType={alert.type}
             autoClose={5000}
-            title={alert.title}
+            displayType={alert.type}
+            key={index}
             onClose={() => {
               setToastItems((prevItems) =>
                 prevItems.filter((item) => item !== alert)
               );
             }}
+            title={alert.title}
           >{alert.message}</ClayAlert>
         ))}
       </ClayAlert.ToastContainer>

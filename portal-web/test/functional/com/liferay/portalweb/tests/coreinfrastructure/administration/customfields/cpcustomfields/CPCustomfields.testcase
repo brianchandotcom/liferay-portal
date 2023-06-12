@@ -39,20 +39,14 @@ definition {
 			customFieldType = "Text Area",
 			resourceName = "Blogs Entry");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Custom Fields");
+		CustomFields.openCustomFieldAdmin();
 
 		CustomFields.addCP(
 			customFieldName = "Date",
 			customFieldType = "Date",
 			resourceName = "Bookmarks Entry");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Custom Fields");
+		CustomFields.openCustomFieldAdmin();
 
 		CustomFields.addCP(
 			customFieldName = "Number",
@@ -60,40 +54,28 @@ definition {
 			customInputDataType = "Integer",
 			resourceName = "Bookmarks Folder");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Custom Fields");
+		CustomFields.openCustomFieldAdmin();
 
 		CustomFields.addCP(
 			customFieldName = "Dropdown",
 			customFieldType = "Dropdown",
 			resourceName = "Calendar Event");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Custom Fields");
+		CustomFields.openCustomFieldAdmin();
 
 		CustomFields.addCP(
 			customFieldName = "Checkbox",
 			customFieldType = "Checkbox",
 			resourceName = "Document");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Custom Fields");
+		CustomFields.openCustomFieldAdmin();
 
 		CustomFields.addCP(
 			customFieldName = "Geolocation",
 			customFieldType = "Geolocation",
 			resourceName = "Documents Folder");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Custom Fields");
+		CustomFields.openCustomFieldAdmin();
 
 		CustomFields.addCP(
 			customFieldName = "Text Field",
@@ -101,20 +83,14 @@ definition {
 			customInputDataType = "Text",
 			resourceName = "Knowledge Base Article");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Custom Fields");
+		CustomFields.openCustomFieldAdmin();
 
 		CustomFields.addCP(
 			customFieldName = "Text Area",
 			customFieldType = "Text Area",
 			resourceName = "Knowledge Base Folder");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Custom Fields");
+		CustomFields.openCustomFieldAdmin();
 
 		CustomFields.addCP(
 			customFieldName = "Text Field",
@@ -122,10 +98,7 @@ definition {
 			customInputDataType = "Text",
 			resourceName = "Message Boards Category");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Custom Fields");
+		CustomFields.openCustomFieldAdmin();
 
 		CustomFields.addCP(
 			customFieldName = "Number",
@@ -133,70 +106,49 @@ definition {
 			customInputDataType = "Integer",
 			resourceName = "Message Boards Message");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Custom Fields");
+		CustomFields.openCustomFieldAdmin();
 
 		CustomFields.addCP(
 			customFieldName = "Dropdown",
 			customFieldType = "Dropdown",
 			resourceName = "Organization");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Custom Fields");
+		CustomFields.openCustomFieldAdmin();
 
 		CustomFields.addCP(
 			customFieldName = "Checkbox",
 			customFieldType = "Checkbox",
 			resourceName = "Page");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Custom Fields");
+		CustomFields.openCustomFieldAdmin();
 
 		CustomFields.addCP(
 			customFieldName = "Radio",
 			customFieldType = "Radio",
 			resourceName = "Role");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Custom Fields");
+		CustomFields.openCustomFieldAdmin();
 
 		CustomFields.addCP(
 			customFieldName = "Geolocation",
 			customFieldType = "Geolocation",
 			resourceName = "Site");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Custom Fields");
+		CustomFields.openCustomFieldAdmin();
 
 		CustomFields.addCP(
 			customFieldName = "Geolocation",
 			customFieldType = "Geolocation",
 			resourceName = "User");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Custom Fields");
+		CustomFields.openCustomFieldAdmin();
 
 		CustomFields.addCP(
 			customFieldName = "Date",
 			customFieldType = "Date",
 			resourceName = "User Group");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Custom Fields");
+		CustomFields.openCustomFieldAdmin();
 
 		CustomFields.addCP(
 			customFieldName = "Text Field",
@@ -205,10 +157,7 @@ definition {
 			localization = "true",
 			resourceName = "Web Content Article");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Custom Fields");
+		CustomFields.openCustomFieldAdmin();
 
 		CustomFields.addCP(
 			customFieldName = "Text Area",
@@ -216,10 +165,7 @@ definition {
 			localization = "true",
 			resourceName = "Web Content Folder");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Custom Fields");
+		CustomFields.openCustomFieldAdmin();
 
 		CustomFields.addCP(
 			customFieldName = "Number",
@@ -230,10 +176,7 @@ definition {
 
 	@priority = 5
 	test AddCustomFieldUserTextField {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Custom Fields");
+		CustomFields.openCustomFieldAdmin();
 
 		CustomFields.addCP(
 			customFieldName = "Nickname",
@@ -248,10 +191,7 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin();
 
 		UserNavigator.gotoUser(userScreenName = "usersn");
 
@@ -264,20 +204,14 @@ definition {
 	@description = "This is a use case for LPS-146795. The user admin could add new user with space character in geolocation custom field name."
 	@priority = 4
 	test AddNewUserWithGeolocationCustomFields {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Custom Fields");
+		CustomFields.openCustomFieldAdmin();
 
 		CustomFields.addCP(
 			customFieldName = "Test Field",
 			customFieldType = "Geolocation",
 			resourceName = "User");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin();
 
 		User.addCP(
 			lat = "39.88446750779911",
@@ -289,10 +223,7 @@ definition {
 
 		Alert.viewSuccessMessage();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin();
 
 		User.viewCP(
 			userEmailAddress = "userea@liferay.com",
@@ -309,10 +240,7 @@ definition {
 		property operating.system.types = "alpine,amazonlinux,centos,debian,fedora,orcllinux,osx,redhat,rockylinux,solaris,suse,ubuntu,windows";
 		property portal.acceptance = "true";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Custom Fields");
+		CustomFields.openCustomFieldAdmin();
 
 		CustomFields.addCP(
 			customFieldName = "Text Field",
@@ -320,10 +248,7 @@ definition {
 			customInputDataType = "Text",
 			resourceName = "User");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Custom Fields");
+		CustomFields.openCustomFieldAdmin();
 
 		CustomFields.editCP(
 			customFieldName = "Text Field",
@@ -337,10 +262,7 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin();
 
 		UserNavigator.gotoUser(userScreenName = "usersn");
 
@@ -354,10 +276,7 @@ definition {
 	test EditRevertCustomFieldWikiPage {
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Custom Fields");
+		CustomFields.openCustomFieldAdmin();
 
 		CustomFields.addCP(
 			customFieldName = "Text Field",
@@ -365,10 +284,7 @@ definition {
 			customInputDataType = "Text",
 			resourceName = "Wiki Page");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages",
-			site = ${siteName});
+		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
 		PagesAdmin.addPage(pageName = "Wiki Test Page");
 
@@ -458,19 +374,13 @@ definition {
 			roleTitle = "Update DM Role",
 			userEmailAddress = "userea@liferay.com");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin();
 
 		User.editPasswordCP(
 			userEmailAddress = "userea@liferay.com",
 			userScreenName = "usersn");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Custom Fields");
+		CustomFields.openCustomFieldAdmin();
 
 		CustomFields.addCP(
 			customFieldName = "Note",
@@ -480,9 +390,7 @@ definition {
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Documents and Media");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
 		DMDocument.addCP(
 			customFieldText = "This is my favorate Document",

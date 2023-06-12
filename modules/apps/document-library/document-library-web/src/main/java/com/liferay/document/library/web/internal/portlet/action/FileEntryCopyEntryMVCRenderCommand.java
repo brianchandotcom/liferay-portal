@@ -15,14 +15,12 @@
 package com.liferay.document.library.web.internal.portlet.action;
 
 import com.liferay.document.library.constants.DLPortletKeys;
-import com.liferay.document.library.kernel.model.DLFileShortcut;
-import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
-import com.liferay.portal.kernel.util.ParamUtil;
-
-import javax.portlet.ActionRequest;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -35,31 +33,31 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY,
 		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
 		"javax.portlet.name=" + DLPortletKeys.MEDIA_GALLERY_DISPLAY,
-		"mvc.command.name=/document_library/copy_file_shortcut"
+		"mvc.command.name=/document_library/file_entry_copy_entry"
 	},
-	service = MVCActionCommand.class
+	service = MVCRenderCommand.class
 )
-public class CopyFileShortcutMVCActionCommand
-	extends BaseCopyEntryMVCActionCommand {
+public class FileEntryCopyEntryMVCRenderCommand
+	extends BaseFileEntryMVCRenderCommand {
 
-	@Override
-	protected void doCopyEntry(ActionRequest actionRequest)
+	protected void checkPermissions(
+			PermissionChecker permissionChecker, FileEntry fileEntry)
 		throws PortalException {
 
-		long fileShortcutId = ParamUtil.getLong(
-			actionRequest, "fileShortcutId");
-		long destinationFolderId = ParamUtil.getLong(
-			actionRequest, "destinationFolderId");
-		long destinationRepositoryId = ParamUtil.getLong(
-			actionRequest, "destinationRepositoryId");
-
-		_dlAppService.copyFileShortcut(
-			fileShortcutId, destinationFolderId, destinationRepositoryId,
-			ServiceContextFactory.getInstance(
-				DLFileShortcut.class.getName(), actionRequest));
+		_fileEntryModelResourcePermission.check(
+			permissionChecker, fileEntry, ActionKeys.DOWNLOAD);
+		_fileEntryModelResourcePermission.check(
+			permissionChecker, fileEntry, ActionKeys.VIEW);
 	}
 
-	@Reference
-	private DLAppService _dlAppService;
+	protected String getPath() {
+		return "/document_library/file_entry_copy_entry.jsp";
+	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.kernel.repository.model.FileEntry)"
+	)
+	private volatile ModelResourcePermission<FileEntry>
+		_fileEntryModelResourcePermission;
 
 }

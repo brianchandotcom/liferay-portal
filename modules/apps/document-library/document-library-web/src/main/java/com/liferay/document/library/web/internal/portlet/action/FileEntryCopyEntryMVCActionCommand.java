@@ -15,7 +15,7 @@
 package com.liferay.document.library.web.internal.portlet.action;
 
 import com.liferay.document.library.constants.DLPortletKeys;
-import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.document.library.kernel.model.DLFileShortcut;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -35,30 +35,27 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY,
 		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
 		"javax.portlet.name=" + DLPortletKeys.MEDIA_GALLERY_DISPLAY,
-		"mvc.command.name=/document_library/copy_folder"
+		"mvc.command.name=/document_library/file_entry_copy_entry"
 	},
 	service = MVCActionCommand.class
 )
-public class CopyFolderMVCActionCommand extends BaseCopyEntryMVCActionCommand {
+public class FileEntryCopyEntryMVCActionCommand
+	extends BaseCopyEntryMVCActionCommand {
 
 	@Override
 	protected void doCopyEntry(ActionRequest actionRequest)
 		throws PortalException {
 
-		long sourceRepositoryId = ParamUtil.getLong(
-			actionRequest, "sourceRepositoryId");
-		long sourceFolderId = ParamUtil.getLong(
-			actionRequest, "sourceFolderId");
+		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
+		long destinationFolderId = ParamUtil.getLong(
+			actionRequest, "destinationFolderId");
 		long destinationRepositoryId = ParamUtil.getLong(
 			actionRequest, "destinationRepositoryId");
-		long destinationParentFolderId = ParamUtil.getLong(
-			actionRequest, "destinationParentFolderId");
 
-		_dlAppService.copyFolder(
-			sourceRepositoryId, sourceFolderId, destinationRepositoryId,
-			destinationParentFolderId,
+		_dlAppService.copyFileEntry(
+			fileEntryId, destinationFolderId, destinationRepositoryId,
 			ServiceContextFactory.getInstance(
-				DLFolder.class.getName(), actionRequest));
+				DLFileShortcut.class.getName(), actionRequest));
 	}
 
 	@Reference

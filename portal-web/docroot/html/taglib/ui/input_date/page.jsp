@@ -328,7 +328,7 @@ else {
 							var date = A.DataType.Date.parse(newSelection);
 							var invalidNumber = isNaN(newSelection);
 
-							if ((invalidNumber && !nullable) || (invalidNumber && !date && nullable && newSelection)) {
+							if ((invalidNumber && !nullable) || (invalidNumber && !date && nullable && newSelection) || (newSelection.getFullYear() > 9999)) {
 								event.newSelection[0] = new Date();
 							}
 

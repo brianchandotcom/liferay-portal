@@ -54,16 +54,16 @@ public class LogoSelectorTag extends IncludeTag {
 		return _description;
 	}
 
-	public boolean getDisabled() {
-		return _disabled;
-	}
-
 	public String getLabel(HttpServletRequest httpServletRequest) {
 		if (Validator.isNull(_label)) {
 			return LanguageUtil.get(httpServletRequest, "logo");
 		}
 
 		return _label;
+	}
+
+	public boolean isDisabled() {
+		return _disabled;
 	}
 
 	public boolean isPreserveRatio() {

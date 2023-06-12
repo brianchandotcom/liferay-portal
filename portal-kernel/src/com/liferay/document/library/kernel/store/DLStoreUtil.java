@@ -117,22 +117,6 @@ public class DLStoreUtil {
 	}
 
 	/**
-	 * Deletes a file. If a file has multiple versions, all versions will be
-	 * deleted.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param repositoryId the primary key of the data repository (optionally
-	 *        {@link com.liferay.portal.kernel.model.CompanyConstants#SYSTEM})
-	 * @param fileName the file's name
-	 */
-	public static void deleteFile(
-			long companyId, long repositoryId, String fileName)
-		throws PortalException {
-
-		_store.deleteFile(companyId, repositoryId, fileName);
-	}
-
-	/**
 	 * Deletes a file at a particular version.
 	 *
 	 * @param companyId the primary key of the company
@@ -147,44 +131,6 @@ public class DLStoreUtil {
 		throws PortalException {
 
 		_store.deleteFile(companyId, repositoryId, fileName, versionLabel);
-	}
-
-	/**
-	 * Returns the file as a byte array.
-	 *
-	 * @param  companyId the primary key of the company
-	 * @param  repositoryId the primary key of the data repository (optionally
-	 *         {@link com.liferay.portal.kernel.model.CompanyConstants#SYSTEM})
-	 * @param  fileName the file's name
-	 * @return Returns the byte array with the file's name
-	 */
-	public static byte[] getFileAsBytes(
-			long companyId, long repositoryId, String fileName)
-		throws PortalException {
-
-		return _store.getFileAsBytes(companyId, repositoryId, fileName);
-	}
-
-	/**
-	 * Returns the file as an {@link InputStream} object.
-	 *
-	 * <p>
-	 * If using an S3 store, it is preferable for performance reasons to use
-	 * this method to get the file as an {@link InputStream} instead of using
-	 * other methods to get the file as a {@link File}.
-	 * </p>
-	 *
-	 * @param  companyId the primary key of the company
-	 * @param  repositoryId the primary key of the data repository (optionally
-	 *         {@link com.liferay.portal.kernel.model.CompanyConstants#SYSTEM})
-	 * @param  fileName the file's name
-	 * @return Returns the {@link InputStream} object with the file's name
-	 */
-	public static InputStream getFileAsStream(
-			long companyId, long repositoryId, String fileName)
-		throws PortalException {
-
-		return _store.getFileAsStream(companyId, repositoryId, fileName);
 	}
 
 	/**
@@ -261,23 +207,6 @@ public class DLStoreUtil {
 	 * @param  repositoryId the primary key of the data repository (optionally
 	 *         {@link com.liferay.portal.kernel.model.CompanyConstants#SYSTEM})
 	 * @param  fileName the file's name
-	 * @return <code>true</code> if the file exists; <code>false</code>
-	 *         otherwise
-	 */
-	public static boolean hasFile(
-			long companyId, long repositoryId, String fileName)
-		throws PortalException {
-
-		return _store.hasFile(companyId, repositoryId, fileName);
-	}
-
-	/**
-	 * Returns <code>true</code> if the file exists.
-	 *
-	 * @param  companyId the primary key of the company
-	 * @param  repositoryId the primary key of the data repository (optionally
-	 *         {@link com.liferay.portal.kernel.model.CompanyConstants#SYSTEM})
-	 * @param  fileName the file's name
 	 * @param  versionLabel the file's version label
 	 * @return <code>true</code> if the file exists; <code>false</code>
 	 *         otherwise
@@ -342,46 +271,6 @@ public class DLStoreUtil {
 	}
 
 	/**
-	 * Validates a file's name.
-	 *
-	 * @param fileName the file's name
-	 * @param validateFileExtension whether to validate the file's extension
-	 */
-	public static void validate(String fileName, boolean validateFileExtension)
-		throws PortalException {
-
-		_store.validate(fileName, validateFileExtension);
-	}
-
-	/**
-	 * Validates a file's name and data.
-	 *
-	 * @param fileName the file's name
-	 * @param validateFileExtension whether to validate the file's extension
-	 * @param bytes the file's data (optionally <code>null</code>)
-	 */
-	public static void validate(
-			String fileName, boolean validateFileExtension, byte[] bytes)
-		throws PortalException {
-
-		_store.validate(fileName, validateFileExtension, bytes);
-	}
-
-	/**
-	 * Validates a file's name and data.
-	 *
-	 * @param fileName the file's name
-	 * @param validateFileExtension whether to validate the file's extension
-	 * @param file Name the file's name
-	 */
-	public static void validate(
-			String fileName, boolean validateFileExtension, File file)
-		throws PortalException {
-
-		_store.validate(fileName, validateFileExtension, file);
-	}
-
-	/**
 	 * Validates a file's name and data.
 	 *
 	 * @param fileName the file's name
@@ -394,53 +283,6 @@ public class DLStoreUtil {
 		throws PortalException {
 
 		_store.validate(fileName, validateFileExtension, inputStream);
-	}
-
-	public static void validate(
-			String fileName, String fileExtension, String sourceFileName,
-			boolean validateFileExtension)
-		throws PortalException {
-
-		_store.validate(
-			fileName, fileExtension, sourceFileName, validateFileExtension);
-	}
-
-	/**
-	 * Validates a file's name and data.
-	 *
-	 * @param fileName the file's name
-	 * @param fileExtension the file's extension
-	 * @param sourceFileName the file's original name
-	 * @param validateFileExtension whether to validate the file's extension
-	 * @param file Name the file's name
-	 */
-	public static void validate(
-			String fileName, String fileExtension, String sourceFileName,
-			boolean validateFileExtension, File file)
-		throws PortalException {
-
-		_store.validate(
-			fileName, fileExtension, sourceFileName, validateFileExtension,
-			file);
-	}
-
-	/**
-	 * Validates a file's name and data.
-	 *
-	 * @param fileName the file's name
-	 * @param fileExtension the file's extension
-	 * @param sourceFileName the file's original name
-	 * @param validateFileExtension whether to validate the file's extension
-	 * @param inputStream the file's data (optionally <code>null</code>)
-	 */
-	public static void validate(
-			String fileName, String fileExtension, String sourceFileName,
-			boolean validateFileExtension, InputStream inputStream)
-		throws PortalException {
-
-		_store.validate(
-			fileName, fileExtension, sourceFileName, validateFileExtension,
-			inputStream);
 	}
 
 	public void setStore(DLStore store) {

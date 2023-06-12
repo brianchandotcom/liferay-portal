@@ -24,7 +24,6 @@ import com.liferay.document.library.kernel.store.DLStoreRequest;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.document.library.kernel.util.DLValidator;
 import com.liferay.petra.io.ByteArrayFileInputStream;
-import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -37,15 +36,14 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Reference;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.ConfigurationPolicy;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Raymond Augé
@@ -176,19 +174,6 @@ public class AntivirusAsyncDLStore implements DLStore {
 	}
 
 	@Override
-	public void deleteFile(long companyId, long repositoryId, String fileName)
-		throws PortalException {
-
-		validate(fileName, false);
-
-		for (String versionLabel :
-				_store.getFileVersions(companyId, repositoryId, fileName)) {
-
-			_store.deleteFile(companyId, repositoryId, fileName, versionLabel);
-		}
-	}
-
-	@Override
 	public void deleteFile(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel)
@@ -202,34 +187,6 @@ public class AntivirusAsyncDLStore implements DLStore {
 		catch (AccessDeniedException accessDeniedException) {
 			throw new PrincipalException(accessDeniedException);
 		}
-	}
-
-	@Override
-	public byte[] getFileAsBytes(
-			long companyId, long repositoryId, String fileName)
-		throws PortalException {
-
-		validate(fileName, false);
-
-		try {
-			return StreamUtil.toByteArray(
-				_store.getFileAsStream(
-					companyId, repositoryId, fileName, StringPool.BLANK));
-		}
-		catch (IOException ioException) {
-			throw new SystemException(ioException);
-		}
-	}
-
-	@Override
-	public InputStream getFileAsStream(
-			long companyId, long repositoryId, String fileName)
-		throws PortalException {
-
-		validate(fileName, false);
-
-		return _store.getFileAsStream(
-			companyId, repositoryId, fileName, StringPool.BLANK);
 	}
 
 	@Override
@@ -264,16 +221,6 @@ public class AntivirusAsyncDLStore implements DLStore {
 
 		return _store.getFileSize(
 			companyId, repositoryId, fileName, StringPool.BLANK);
-	}
-
-	@Override
-	public boolean hasFile(long companyId, long repositoryId, String fileName)
-		throws PortalException {
-
-		validate(fileName, false);
-
-		return _store.hasFile(
-			companyId, repositoryId, fileName, Store.VERSION_DEFAULT);
 	}
 
 	@Override
@@ -389,30 +336,6 @@ public class AntivirusAsyncDLStore implements DLStore {
 
 	@Override
 	public void validate(
-			String fileName, boolean validateFileExtension, byte[] bytes)
-		throws PortalException {
-
-		validate(fileName, validateFileExtension);
-
-		_dlValidator.validateFileSize(
-			GroupThreadLocal.getGroupId(), fileName,
-			MimeTypesUtil.getContentType(fileName), bytes);
-	}
-
-	@Override
-	public void validate(
-			String fileName, boolean validateFileExtension, File file)
-		throws PortalException {
-
-		validate(fileName, validateFileExtension);
-
-		_dlValidator.validateFileSize(
-			GroupThreadLocal.getGroupId(), fileName,
-			MimeTypesUtil.getContentType(fileName), file);
-	}
-
-	@Override
-	public void validate(
 			String fileName, boolean validateFileExtension,
 			InputStream inputStream)
 		throws PortalException {
@@ -435,64 +358,11 @@ public class AntivirusAsyncDLStore implements DLStore {
 		_dlValidator.validateSourceFileExtension(fileExtension, sourceFileName);
 	}
 
-	@Override
-	public void validate(
-			String fileName, String fileExtension, String sourceFileName,
-			boolean validateFileExtension, File file)
-		throws PortalException {
-
-		validate(
-			fileName, fileExtension, sourceFileName, validateFileExtension);
-
-		_dlValidator.validateFileSize(
-			GroupThreadLocal.getGroupId(), fileName,
-			MimeTypesUtil.getContentType(fileName), file);
-	}
-
-	@Override
-	public void validate(
-			String fileName, String fileExtension, String sourceFileName,
-			boolean validateFileExtension, InputStream inputStream)
-		throws PortalException {
-
-		validate(
-			fileName, fileExtension, sourceFileName, validateFileExtension);
-
-		_dlValidator.validateFileSize(
-			GroupThreadLocal.getGroupId(), fileName,
-			MimeTypesUtil.getContentType(fileName), inputStream);
-	}
-
 	protected void validate(
 			String fileName, boolean validateFileExtension, String versionLabel)
 		throws PortalException {
 
 		validate(fileName, validateFileExtension);
-
-		_dlValidator.validateVersionLabel(versionLabel);
-	}
-
-	protected void validate(
-			String fileName, String fileExtension, String sourceFileName,
-			boolean validateFileExtension, File file, String versionLabel)
-		throws PortalException {
-
-		validate(
-			fileName, fileExtension, sourceFileName, validateFileExtension,
-			file);
-
-		_dlValidator.validateVersionLabel(versionLabel);
-	}
-
-	protected void validate(
-			String fileName, String fileExtension, String sourceFileName,
-			boolean validateFileExtension, InputStream inputStream,
-			String versionLabel)
-		throws PortalException {
-
-		validate(
-			fileName, fileExtension, sourceFileName, validateFileExtension,
-			inputStream);
 
 		_dlValidator.validateVersionLabel(versionLabel);
 	}

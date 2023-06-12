@@ -172,7 +172,7 @@ public class DLStoreStoreAreaTest {
 		_addFile(fileName, Store.VERSION_DEFAULT);
 		_addFile(fileName, "2.0");
 
-		DLStoreUtil.deleteFile(
+		DLStoreUtil.deleteDirectory(
 			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
 			fileName);
 

@@ -137,21 +137,6 @@ public class DLStoreImpl implements DLStore {
 	}
 
 	@Override
-	public void deleteFile(long companyId, long repositoryId, String fileName)
-		throws PortalException {
-
-		validate(fileName, false);
-
-		for (String versionLabel :
-				_wrappedStore.getFileVersions(
-					companyId, repositoryId, fileName)) {
-
-			_wrappedStore.deleteFile(
-				companyId, repositoryId, fileName, versionLabel);
-		}
-	}
-
-	@Override
 	public void deleteFile(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel)
@@ -166,34 +151,6 @@ public class DLStoreImpl implements DLStore {
 		catch (AccessDeniedException accessDeniedException) {
 			throw new PrincipalException(accessDeniedException);
 		}
-	}
-
-	@Override
-	public byte[] getFileAsBytes(
-			long companyId, long repositoryId, String fileName)
-		throws PortalException {
-
-		validate(fileName, false);
-
-		try {
-			return StreamUtil.toByteArray(
-				_wrappedStore.getFileAsStream(
-					companyId, repositoryId, fileName, StringPool.BLANK));
-		}
-		catch (IOException ioException) {
-			throw new SystemException(ioException);
-		}
-	}
-
-	@Override
-	public InputStream getFileAsStream(
-			long companyId, long repositoryId, String fileName)
-		throws PortalException {
-
-		validate(fileName, false);
-
-		return _wrappedStore.getFileAsStream(
-			companyId, repositoryId, fileName, StringPool.BLANK);
 	}
 
 	@Override
@@ -228,16 +185,6 @@ public class DLStoreImpl implements DLStore {
 
 		return _wrappedStore.getFileSize(
 			companyId, repositoryId, fileName, StringPool.BLANK);
-	}
-
-	@Override
-	public boolean hasFile(long companyId, long repositoryId, String fileName)
-		throws PortalException {
-
-		validate(fileName, false);
-
-		return _wrappedStore.hasFile(
-			companyId, repositoryId, fileName, Store.VERSION_DEFAULT);
 	}
 
 	@Override
@@ -361,30 +308,6 @@ public class DLStoreImpl implements DLStore {
 
 	@Override
 	public void validate(
-			String fileName, boolean validateFileExtension, byte[] bytes)
-		throws PortalException {
-
-		validate(fileName, validateFileExtension);
-
-		DLValidatorUtil.validateFileSize(
-			GroupThreadLocal.getGroupId(), fileName,
-			MimeTypesUtil.getContentType(fileName), bytes);
-	}
-
-	@Override
-	public void validate(
-			String fileName, boolean validateFileExtension, File file)
-		throws PortalException {
-
-		validate(fileName, validateFileExtension);
-
-		DLValidatorUtil.validateFileSize(
-			GroupThreadLocal.getGroupId(), fileName,
-			MimeTypesUtil.getContentType(fileName), file);
-	}
-
-	@Override
-	public void validate(
 			String fileName, boolean validateFileExtension,
 			InputStream inputStream)
 		throws PortalException {
@@ -408,64 +331,11 @@ public class DLStoreImpl implements DLStore {
 			fileExtension, sourceFileName);
 	}
 
-	@Override
-	public void validate(
-			String fileName, String fileExtension, String sourceFileName,
-			boolean validateFileExtension, File file)
-		throws PortalException {
-
-		validate(
-			fileName, fileExtension, sourceFileName, validateFileExtension);
-
-		DLValidatorUtil.validateFileSize(
-			GroupThreadLocal.getGroupId(), fileName,
-			MimeTypesUtil.getContentType(fileName), file);
-	}
-
-	@Override
-	public void validate(
-			String fileName, String fileExtension, String sourceFileName,
-			boolean validateFileExtension, InputStream inputStream)
-		throws PortalException {
-
-		validate(
-			fileName, fileExtension, sourceFileName, validateFileExtension);
-
-		DLValidatorUtil.validateFileSize(
-			GroupThreadLocal.getGroupId(), fileName,
-			MimeTypesUtil.getContentType(fileName), inputStream);
-	}
-
 	protected void validate(
 			String fileName, boolean validateFileExtension, String versionLabel)
 		throws PortalException {
 
 		validate(fileName, validateFileExtension);
-
-		_validateVersionLabel(versionLabel);
-	}
-
-	protected void validate(
-			String fileName, String fileExtension, String sourceFileName,
-			boolean validateFileExtension, File file, String versionLabel)
-		throws PortalException {
-
-		validate(
-			fileName, fileExtension, sourceFileName, validateFileExtension,
-			file);
-
-		_validateVersionLabel(versionLabel);
-	}
-
-	protected void validate(
-			String fileName, String fileExtension, String sourceFileName,
-			boolean validateFileExtension, InputStream inputStream,
-			String versionLabel)
-		throws PortalException {
-
-		validate(
-			fileName, fileExtension, sourceFileName, validateFileExtension,
-			inputStream);
 
 		_validateVersionLabel(versionLabel);
 	}

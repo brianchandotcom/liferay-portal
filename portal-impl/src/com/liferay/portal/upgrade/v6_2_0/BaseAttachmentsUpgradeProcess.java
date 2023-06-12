@@ -18,6 +18,7 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.store.DLStoreRequest;
 import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.document.library.kernel.util.DLValidator;
+import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.change.tracking.store.CTStoreFactory;
@@ -588,8 +589,10 @@ public abstract class BaseAttachmentsUpgradeProcess extends UpgradeProcess {
 					createDate, repositoryId, containerModelFolderId,
 					fileEntryId, extension, mimeType, title, size);
 
-				byte[] bytes = DLStoreUtil.getFileAsBytes(
-					companyId, CompanyConstants.SYSTEM, attachment);
+				byte[] bytes = StreamUtil.toByteArray(
+					DLStoreUtil.getFileAsStream(
+						companyId, CompanyConstants.SYSTEM, attachment,
+						StringPool.BLANK));
 
 				DLStoreUtil.addFile(
 					DLStoreRequest.builder(
@@ -609,7 +612,7 @@ public abstract class BaseAttachmentsUpgradeProcess extends UpgradeProcess {
 			}
 
 			try {
-				DLStoreUtil.deleteFile(
+				DLStoreUtil.deleteDirectory(
 					companyId, CompanyConstants.SYSTEM, attachment);
 			}
 			catch (Exception exception) {

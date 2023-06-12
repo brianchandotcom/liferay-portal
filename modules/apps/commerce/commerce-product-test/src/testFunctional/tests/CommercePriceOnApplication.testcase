@@ -887,9 +887,9 @@ definition {
 		}
 	}
 
-	@description = "COMMERCE-11549 | As an admin user, I want to be able to override 'Price on Application' set for the sku using a Price List"
+	@description = "COMMERCE-11728 As an admin user, I want to be able to override a Price on Application' set for the sku with a price list"
 	@priority = 5
-	test CanPriceListPriceOverridePriceOnApplicationSet {
+	test CanPriceListPriceOverrideSkuPriceOnApplicationSet {
 		property portal.acceptance = "true";
 
 		task ("Given the admin navigates to a product's sku details") {
@@ -906,21 +906,31 @@ definition {
 			CommerceSKUs.editSkuPricing(priceOnApplication = "true");
 		}
 
-		task ("When a new price list is created") {
+		task ("When a new price list and promotion are created") {
 			CommerceJSONPriceListsAndPromotionsAPI._addPriceList(
 				catalogName = "Minium",
 				currencyCode = "USD",
 				priceListName = "Test Price List");
+
+			CommerceJSONPriceListsAndPromotionsAPI._addPromotion(
+				catalogName = "Minium",
+				currencyCode = "USD",
+				promotionName = "Test Promotion");
 		}
 
-		task ("And a price list entry is created for the same sku") {
+		task ("And a price list and promotion entries are created for the same sku") {
 			CommerceJSONPriceListsAndPromotionsAPI._addPriceListEntry(
 				entryPrice = 20,
 				priceListName = "Test Price List",
 				productSKU = "MIN55861");
+
+			CommerceJSONPriceListsAndPromotionsAPI._addPromotionEntry(
+				entryPrice = 0,
+				productSKU = "MIN55861",
+				promotionName = "Test Promotion");
 		}
 
-		task ("Then the price list entry's price is shown as the active price") {
+		task ("Then the 20$ price inside the price list is shown as the active price") {
 			var key_productName = "U-Joint";
 
 			User.logoutPG();
@@ -935,20 +945,6 @@ definition {
 			AssertTextEquals.assertPartialText(
 				locator1 = "CommerceEntry#PRODUCT_CARD_LIST_PRICE",
 				value1 = "$ 20.00");
-		}
-
-		task ("When the price list is removed") {
-			CommerceJSONPriceListsAndPromotionsAPI._deleteCommercePriceList(priceListName = "Test Price List");
-		}
-
-		task ("Then 'Price on Application' is shown as the active price") {
-			Refresh();
-
-			AssertElementPresent(locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE_ON_APPLICATION");
-
-			var key_price = "20.00";
-
-			AssertElementNotPresent(locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE_FIELD");
 		}
 	}
 
@@ -1369,13 +1365,10 @@ definition {
 		}
 	}
 
-	@description = "COMMERCE-11550 | As an admin user, I want to be able to override 'Price on Application' set for the sku using a Promotion"
-	@ignore = "true"
+	@description = "COMMERCE-11727 As an admin user, I want to be able to override a Price on Application' set for the sku with a promotion"
 	@priority = 5
-	test CanPromotionPriceOverridePriceOnApplicationSet {
+	test CanPromotionPriceOverrideSkuPriceOnApplicationSet {
 		property portal.acceptance = "true";
-
-		// This test needs to be readapted and ignore tag should be removed with COMMERCE-11276
 
 		task ("Given the admin navigates to a product's sku details") {
 			CommerceProducts.openProductsAdmin();
@@ -1391,21 +1384,31 @@ definition {
 			CommerceSKUs.editSkuPricing(priceOnApplication = "true");
 		}
 
-		task ("When a new promotion is created") {
+		task ("When a new price list and promotion are created") {
+			CommerceJSONPriceListsAndPromotionsAPI._addPriceList(
+				catalogName = "Minium",
+				currencyCode = "USD",
+				priceListName = "Test Price List");
+
 			CommerceJSONPriceListsAndPromotionsAPI._addPromotion(
 				catalogName = "Minium",
 				currencyCode = "USD",
 				promotionName = "Test Promotion");
 		}
 
-		task ("And a promotion entry is created for the same sku") {
-			CommerceJSONPriceListsAndPromotionsAPI._addPromotionEntry(
+		task ("And a price list and promotion entries are created for the same sku") {
+			CommerceJSONPriceListsAndPromotionsAPI._addPriceListEntry(
 				entryPrice = 20,
+				priceListName = "Test Price List",
+				productSKU = "MIN55861");
+
+			CommerceJSONPriceListsAndPromotionsAPI._addPromotionEntry(
+				entryPrice = 18,
 				productSKU = "MIN55861",
 				promotionName = "Test Promotion");
 		}
 
-		task ("Then the promotion entry's price is shown as the active price") {
+		task ("Then the 18$ promo price inside the promotion is shown as the active price") {
 			var key_productName = "U-Joint";
 
 			User.logoutPG();
@@ -1417,28 +1420,10 @@ definition {
 
 			AssertElementNotPresent(locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE_ON_APPLICATION");
 
-			// Update price assertion following COMMERCE-11276
-
-			AssertTextEquals.assertPartialText(
-				locator1 = "CommerceFrontStore#FS_PRODUCT_VALUE_PROMO_PRICE",
-				value1 = "20.00");
-		}
-
-		task ("When the promotion is removed") {
-			CommerceJSONPriceListsAndPromotionsAPI._deleteCommercePriceList(priceListName = "Test Promotion");
-		}
-
-		task ("Then 'Price on Application' is shown as the active price") {
-			Refresh();
-
-			AssertElementPresent(locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE_ON_APPLICATION");
-
-			// Update price assertion following COMMERCE-11276
-
-			var key_element = " price-value-promo";
-			var key_price = "20.00";
-
-			AssertElementNotPresent(locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE_FIELD");
+			FrontStore.assertPromoPrice(
+				basePrice = "20.00",
+				productName = "U-Joint",
+				promoPrice = "18.00");
 		}
 	}
 

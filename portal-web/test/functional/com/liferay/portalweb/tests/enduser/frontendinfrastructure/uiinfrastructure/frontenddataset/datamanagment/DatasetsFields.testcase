@@ -531,6 +531,15 @@ definition {
 		}
 	}
 
+	@description = "LPS-176051. Blocked by :LPS-186987. Confirm that Cell Renderer option can be selected on Cell Renderer Field."
+	@ignore = "true"
+	@priority = 3
+	test CanSelectCellRendererOption {
+
+		// TODO LPS-185794 CanSelectCellRendererOption pending implementation
+
+	}
+
 	@description = "LPS-176051. Confirm that the user can select options of dropdown on Edit"
 	@priority = 5
 	test CanSelectDropdownOptions {

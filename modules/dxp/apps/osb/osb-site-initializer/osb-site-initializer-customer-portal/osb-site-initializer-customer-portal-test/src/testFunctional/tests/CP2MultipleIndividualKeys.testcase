@@ -55,54 +55,34 @@ definition {
 		}
 	}
 
-	@description = "Story ID: LPS-146061 | Test Summary: Verify that user can see the correct option of download when they select two keys with the same expiration date."
+	@description = "Story ID: LPS-146061 | Test Summary: Verify success message when the Individual Key is downloaded."
 	@ignore = "true"
 	@priority = 5
-	test AssertThetMultipleIndividualKeysAgregatedDowloadOptions {
+	test AssertSuccessMessageFromIndividualKey {
 		property portal.upstream = "quarantine";
 
-		task ("Given the user go to the test account") {
+		task ("Given I go to the test account") {
 			CustomerPortal.search(searchItem = "NASA ICE");
 
 			CustomerPortal.enterOnProject(title = "NASA ICE");
 		}
 
-		task ("And click on DXP product") {
+		task ("And I click on DXP product") {
 			CP2NavigationMenu.goToProductActivation();
 
 			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
 		}
 
-		task ("And filter the table by On-Premise key type") {
-			CP2ActivationKeys.filterKeyTable(
-				filterOption = "On-Premise",
-				filterType = "Key Type");
+		task ("And the key is select from the table") {
+			CP2ActivationKeys.selectKeyCheckboxByEnvironmentName(environmentName = "Redacted");
 		}
 
-		task ("When select two keys from the table with same Expiration Date") {
-			CP2ActivationKeys.selectKeyCheckboxByExpirationDate(
-				date = "Sep 08, 2022",
-				position = 1);
-
-			CP2ActivationKeys.selectKeyCheckboxByExpirationDate(
-				date = "Sep 08, 2022",
-				position = 2);
-		}
-
-		task ("And click at the download button") {
+		task ("And clicks on the download button") {
 			CustomerPortal.clickAtButton(text = "download");
 		}
 
-		task ("And assert the 'Aggregate key single file' option is enabled") {
-			CP2ActivationKeys.assertDropdownItemIsEnabled(dropdownItem = "Aggregate Key single file");
-		}
-
-		task ("And click at the 'Aggregate key single file' option") {
-			CP2ActivationKeys.clickAtDropdownItem(dropdownItem = "Aggregate Key single file");
-		}
-
 		task ("Then assert that the alert with the message 'Activation Key Was Downloaded Successfully' is visible") {
-			CustomerPortal.viewAlert(alertText = "Activation Key was downloaded successfully");
+			CustomerPortal.viewAlert(alertText = "Activation key was downloaded successfully");
 		}
 	}
 
@@ -155,34 +135,54 @@ definition {
 		}
 	}
 
-	@description = "Story ID: LPS-146061 | Test Summary: Verify success message when the Individual Key is downloaded."
+	@description = "Story ID: LPS-146061 | Test Summary: Verify that user can see the correct option of download when they select two keys with the same expiration date."
 	@ignore = "true"
 	@priority = 5
-	test AssertSuccessMessageFromIndividualKey {
+	test AssertThetMultipleIndividualKeysAgregatedDowloadOptions {
 		property portal.upstream = "quarantine";
 
-		task ("Given I go to the test account") {
+		task ("Given the user go to the test account") {
 			CustomerPortal.search(searchItem = "NASA ICE");
 
 			CustomerPortal.enterOnProject(title = "NASA ICE");
 		}
 
-		task ("And I click on DXP product") {
+		task ("And click on DXP product") {
 			CP2NavigationMenu.goToProductActivation();
 
 			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
 		}
 
-		task ("And the key is select from the table") {
-			CP2ActivationKeys.selectKeyCheckboxByEnvironmentName(environmentName = "Redacted");
+		task ("And filter the table by On-Premise key type") {
+			CP2ActivationKeys.filterKeyTable(
+				filterOption = "On-Premise",
+				filterType = "Key Type");
 		}
 
-		task ("And clicks on the download button") {
+		task ("When select two keys from the table with same Expiration Date") {
+			CP2ActivationKeys.selectKeyCheckboxByExpirationDate(
+				date = "Sep 08, 2022",
+				position = 1);
+
+			CP2ActivationKeys.selectKeyCheckboxByExpirationDate(
+				date = "Sep 08, 2022",
+				position = 2);
+		}
+
+		task ("And click at the download button") {
 			CustomerPortal.clickAtButton(text = "download");
 		}
 
+		task ("And assert the 'Aggregate key single file' option is enabled") {
+			CP2ActivationKeys.assertDropdownItemIsEnabled(dropdownItem = "Aggregate Key single file");
+		}
+
+		task ("And click at the 'Aggregate key single file' option") {
+			CP2ActivationKeys.clickAtDropdownItem(dropdownItem = "Aggregate Key single file");
+		}
+
 		task ("Then assert that the alert with the message 'Activation Key Was Downloaded Successfully' is visible") {
-			CustomerPortal.viewAlert(alertText = "Activation key was downloaded successfully");
+			CustomerPortal.viewAlert(alertText = "Activation Key was downloaded successfully");
 		}
 	}
 

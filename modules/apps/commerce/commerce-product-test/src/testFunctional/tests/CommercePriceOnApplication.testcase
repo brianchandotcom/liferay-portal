@@ -1808,6 +1808,129 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-11726 | As an admin user, I want to be able to override a Price List with a 'Price on Application' set for the sku"
+	@priority = 5
+	test CanSkuPriceOnApplicationSetOverridePriceList {
+		property portal.acceptance = "true";
+
+		task ("Given the admin navigates to a product's sku details") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "U-Joint");
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceNavigator.gotoTableListEntry(entryName = "MIN55861");
+		}
+
+		task ("And the admin marks the sku as 'Price on Application'") {
+			CommerceSKUs.editSkuPricing(priceOnApplication = "true");
+		}
+
+		task ("When a new price list is created") {
+			CommerceJSONPriceListsAndPromotionsAPI._addPriceList(
+				catalogName = "Minium",
+				currencyCode = "USD",
+				priceListName = "Test Price List");
+		}
+
+		task ("And a price list entry is created for the same sku") {
+			CommerceJSONPriceListsAndPromotionsAPI._addPriceListEntry(
+				entryPrice = 20,
+				priceListName = "Test Price List",
+				productSKU = "MIN55861");
+		}
+
+		task ("Then the enabled 'Price on Application' inside the SKU is shown as the active price") {
+			var key_productName = "U-Joint";
+
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			AssertElementPresent(locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE_ON_APPLICATION");
+		}
+
+		task ("When the price list is removed") {
+			CommerceJSONPriceListsAndPromotionsAPI._deleteCommercePriceList(priceListName = "Test Price List");
+		}
+
+		task ("Then 'Price on Application' is still shown as the active price") {
+			Refresh();
+
+			AssertElementPresent(locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE_ON_APPLICATION");
+
+			var key_price = "20.00";
+
+			AssertElementNotPresent(locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE_FIELD");
+		}
+	}
+
+	@description = "COMMERCE-11726 | As an admin user, I want to be able to override a Promotion with a 'Price on Application' set for the sku"
+	@priority = 5
+	test CanSkuPriceOnApplicationSetOverridePromotion {
+		property portal.acceptance = "true";
+
+		task ("Given the admin navigates to a product's sku details") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "U-Joint");
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceNavigator.gotoTableListEntry(entryName = "MIN55861");
+		}
+
+		task ("And the admin marks the sku as 'Price on Application'") {
+			CommerceSKUs.editSkuPricing(priceOnApplication = "true");
+		}
+
+		task ("When a new promotion is created") {
+			CommerceJSONPriceListsAndPromotionsAPI._addPromotion(
+				catalogName = "Minium",
+				currencyCode = "USD",
+				promotionName = "Test Promotion");
+		}
+
+		task ("And a promotion entry is created for the same sku") {
+			CommerceJSONPriceListsAndPromotionsAPI._addPromotionEntry(
+				entryPrice = 20,
+				productSKU = "MIN55861",
+				promotionName = "Test Promotion");
+		}
+
+		task ("Then the enabled 'Price on Application' inside the SKU is shown as the active price") {
+			var key_productName = "U-Joint";
+
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			AssertElementPresent(locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE_ON_APPLICATION");
+		}
+
+		task ("When the promotion is removed") {
+			CommerceJSONPriceListsAndPromotionsAPI._deleteCommercePriceList(priceListName = "Test Promotion");
+		}
+
+		task ("Then 'Price on Application' is still shown as the active price") {
+			Refresh();
+
+			AssertElementPresent(locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE_ON_APPLICATION");
+
+			var key_element = " price-value-promo";
+			var key_price = "20.00";
+
+			AssertElementNotPresent(locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE_FIELD");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-11683. Buyer can use Price on Application on Price List with default setting"
 	@priority = 4
 	test CanUsePriceOnApplicationOnPriceList {

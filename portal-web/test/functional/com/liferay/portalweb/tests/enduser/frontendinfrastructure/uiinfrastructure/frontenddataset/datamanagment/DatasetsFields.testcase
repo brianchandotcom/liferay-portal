@@ -439,6 +439,36 @@ definition {
 		}
 	}
 
+	@description = "LPS-176051. Confirm that the user can select options of dropdown on Edit"
+	@priority = 5
+	test CanSelectDropdownOptions {
+		task ("And add new fields") {
+			FrontendDataSetAdmin.addFields(key_fieldList = "id,label");
+		}
+
+		task ("And clicks on Edit option") {
+			Click(
+				key_fieldName = "id",
+				locator1 = "FrontendDataSetAdmin#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
+
+			MenuItem.click(menuItem = "Edit");
+		}
+
+		task ("When the user clicks on Cell Renderer field") {
+			Click(
+				dropdownLabel = "Cell Renderer",
+				locator1 = "ObjectField#ANY_DROPDOWN_LABEL");
+		}
+
+		task ("Then a dropdown is displayed") {
+			AssertVisible(locator1 = "ObjectCustomViews#VIEW_DROPDOWN_MENU_ON_MODAL_DEFAULT_SORT");
+		}
+
+		task ("And the options present in the dropdown can be selected") {
+			MenuItem.click(menuItem = "Date and Time");
+		}
+	}
+
 	@description = "LPS-185503. Confirm that fields are not updated when saving changes."
 	@priority = 4
 	test CanUpdateFieldsWhenSave {

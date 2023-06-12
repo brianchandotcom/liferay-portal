@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.sql.Connection;
@@ -33,6 +32,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -431,6 +431,125 @@ public class DBTest {
 				_db.getPrimaryKeyColumnNames(_connection, _TABLE_NAME_2)));
 	}
 
+	@Test
+	public void testSyncTables() throws Exception {
+		_db.runSQL(
+			StringBundler.concat(
+				"create table ", _TABLE_NAME_2, " (id LONG not null primary ",
+				"key, notNilColumn VARCHAR(75) not null, nilColumn ",
+				"VARCHAR(75) null, typeBlob BLOB, typeBoolean BOOLEAN,",
+				"typeDate DATE null, typeDouble DOUBLE, typeInteger INTEGER, ",
+				"typeLong LONG null, typeSBlob SBLOB, typeString STRING null, ",
+				"typeText TEXT null, typeVarchar VARCHAR(75) null);"));
+
+		_db.runSQL(
+			StringBundler.concat(
+				"insert into ", _TABLE_NAME_1,
+				" (id, notNilColumn, typeString) values (1, '1', ",
+				"'testValueA')"));
+
+		_db.runSQL(
+			StringBundler.concat(
+				"insert into ", _TABLE_NAME_2,
+				" (id, notNilColumn, typeString) values (1, '1', ",
+				"'testValueA')"));
+
+		Map<String, String> columnNameMap = new HashMap<>();
+
+		for (String columnName : _COLUMN_NAMES_1) {
+			columnNameMap.put(columnName, columnName);
+		}
+
+		try (AutoCloseable autoCloseable = _db.syncTables(
+				_connection, _TABLE_NAME_1, _TABLE_NAME_2, columnNameMap)) {
+
+			_db.runSQL(
+				StringBundler.concat(
+					"insert into ", _TABLE_NAME_1,
+					" (id, notNilColumn, typeString) values (2, '2', ",
+					"'testValueB')"));
+
+			_db.runSQL("delete from " + _TABLE_NAME_1 + " where id = 1");
+
+			_db.runSQL(
+				"update " + _TABLE_NAME_1 +
+					" set typeString = 'testValueC' where id = 2");
+		}
+
+		try (PreparedStatement preparedStatement = _connection.prepareStatement(
+				"select * from " + _TABLE_NAME_2);
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			Assert.assertTrue(resultSet.next());
+			Assert.assertEquals(2, resultSet.getLong("id"));
+			Assert.assertEquals("2", resultSet.getString("notNilColumn"));
+			Assert.assertEquals(
+				"testValueC", resultSet.getString("typeString"));
+
+			Assert.assertFalse(resultSet.next());
+		}
+	}
+
+	@Test
+	public void testSyncTablesDifferentColumnNames() throws Exception {
+		_db.runSQL(
+			StringBundler.concat(
+				"create table ", _TABLE_NAME_2, " (id2 LONG not null primary ",
+				"key, notNilColumn2 VARCHAR(75) not null, nilColumn2 ",
+				"VARCHAR(75) null, typeBlob2 BLOB, typeBoolean2 BOOLEAN,",
+				"typeDate2 DATE null, typeDouble2 DOUBLE, typeInteger2 ",
+				"INTEGER, typeLong2 LONG null, typeSBlob2 SBLOB, typeString2 ",
+				"STRING null, typeText2 TEXT null, typeVarchar2 VARCHAR(75) ",
+				"null);"));
+
+		_db.runSQL(
+			StringBundler.concat(
+				"insert into ", _TABLE_NAME_1,
+				" (id, notNilColumn, typeString) values (1, '1', ",
+				"'testValueA')"));
+
+		_db.runSQL(
+			StringBundler.concat(
+				"insert into ", _TABLE_NAME_2,
+				" (id2, notNilColumn2, typeString2) values (1, '1', ",
+				"'testValueA')"));
+
+		Map<String, String> columnNameMap = new HashMap<>();
+
+		for (String columnName : _COLUMN_NAMES_1) {
+			columnNameMap.put(columnName, columnName + "2");
+		}
+
+		try (AutoCloseable autoCloseable = _db.syncTables(
+				_connection, _TABLE_NAME_1, _TABLE_NAME_2, columnNameMap)) {
+
+			_db.runSQL(
+				StringBundler.concat(
+					"insert into ", _TABLE_NAME_1,
+					" (id, notNilColumn, typeString) values (2, '2', ",
+					"'testValueB')"));
+
+			_db.runSQL("delete from " + _TABLE_NAME_1 + " where id = 1");
+
+			_db.runSQL(
+				"update " + _TABLE_NAME_1 +
+					" set typeString = 'testValueC' where id = 2");
+		}
+
+		try (PreparedStatement preparedStatement = _connection.prepareStatement(
+				"select * from " + _TABLE_NAME_2);
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			Assert.assertTrue(resultSet.next());
+			Assert.assertEquals(2, resultSet.getLong("id2"));
+			Assert.assertEquals("2", resultSet.getString("notNilColumn2"));
+			Assert.assertEquals(
+				"testValueC", resultSet.getString("typeString2"));
+
+			Assert.assertFalse(resultSet.next());
+		}
+	}
+
 	private void _addIndex(String[] columnNames) {
 		List<IndexMetadata> indexMetadatas = Arrays.asList(
 			new IndexMetadata(_INDEX_NAME, _TABLE_NAME_1, false, columnNames));
@@ -468,6 +587,12 @@ public class DBTest {
 			ArrayUtil.sortedUnique(columnNames),
 			ArrayUtil.sortedUnique(indexMetadata.getColumnNames()));
 	}
+
+	private static final String[] _COLUMN_NAMES_1 = {
+		"id", "nilColumn", "notNilColumn", "notNilColumn", "typeBlob",
+		"typeBoolean", "typeDate", "typeDouble", "typeInteger", "typeLong",
+		"typeSBlob", "typeString", "typeText", "typeVarchar"
+	};
 
 	private static final String _INDEX_NAME = "IX_TEMP";
 

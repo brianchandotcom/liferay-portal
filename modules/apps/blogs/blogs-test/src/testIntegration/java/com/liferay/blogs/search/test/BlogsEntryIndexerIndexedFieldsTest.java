@@ -114,7 +114,7 @@ public class BlogsEntryIndexerIndexedFieldsTest {
 		Map<String, ?> map, String searchTerm, Locale locale) {
 
 		FieldValuesAssert.assertFieldValues(
-			map, name -> !name.equals("score"),
+			map, name -> !name.equals("score") && !name.equals("timestamp"),
 			searcher.search(
 				searchRequestBuilderFactory.builder(
 				).companyId(

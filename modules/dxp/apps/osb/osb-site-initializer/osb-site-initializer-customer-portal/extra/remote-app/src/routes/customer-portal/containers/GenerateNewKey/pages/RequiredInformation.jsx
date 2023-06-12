@@ -188,18 +188,22 @@ const RequiredInformation = ({
 		if (infoSelectedKey.hasNotPermanentLicence) {
 			setIsLoadingGenerateKey(true);
 
-			await createNewGenerateKey(
+			const results = await createNewGenerateKey(
 				accountKey,
 				provisioningServerAPI,
 				sessionId,
 				licenseKey
 			);
 
+			if (checkedBoxSubscription) {
+				await saveSubscriptionKey(results.items[0].id);
+			}
+
 			setIsLoadingGenerateKey(false);
 		} else {
 			setIsLoadingGenerateKey(true);
 
-			const results = await Promise.all(
+			await Promise.all(
 				values?.keys?.map(({hostName, ipAddresses, macAddresses}) => {
 					licenseKey.macAddresses = macAddresses.replace('\n', ',');
 					licenseKey.hostName = hostName.replace('\n', ',');
@@ -214,9 +218,6 @@ const RequiredInformation = ({
 				})
 			);
 
-			if (checkedBoxSubscription) {
-				await saveSubscriptionKey(results[0].items[0].id);
-			}
 			setIsLoadingGenerateKey(false);
 		}
 
@@ -243,6 +244,41 @@ const RequiredInformation = ({
 		});
 
 		navigate(urlPreviousPage, {state: {newKeyGeneratedAlert: true}});
+	};
+
+	const CheckBox = () => {
+		if (
+			featureFlags.includes('LPS-180001') &&
+			infoSelectedKey?.hasNotPermanentLicence
+		) {
+			return (
+				<>
+					<div className="d-flex mb-3 mx-6 pt-2">
+						<div className="pr-2 pt-1">
+							<ClayCheckbox
+								checked={checkedBoxSubscription}
+								id="expiration-checkbox"
+								onChange={() =>
+									setCheckedBoxSubscription(
+										(checkedBoxSubcription) =>
+											!checkedBoxSubcription
+									)
+								}
+							/>
+						</div>
+
+						<label htmlFor="expiration-checkbox">
+							{i18n.sub(
+								'receive-expiration-notifications-through-email-when-this-activation-key-is-about-to-expire-x-days-before,-x-days-before,-and-on-the-day-of-expiration.-unsubscribe-at-any-time',
+								[30, 15]
+							)}
+						</label>
+					</div>
+
+					<div className="dropdown-divider"></div>
+				</>
+			);
+		}
 	};
 
 	const ClusterNodesOption = () => {
@@ -478,40 +514,14 @@ const RequiredInformation = ({
 										</Button>
 									</ClayTooltipProvider>
 
-									{featureFlags.includes('LPS-180001') && (
-										<>
-											<div className="d-flex">
-												<div className="pr-2 pt-1">
-													<ClayCheckbox
-														checked={
-															checkedBoxSubscription
-														}
-														id="expiration-checkbox"
-														onChange={() =>
-															setCheckedBoxSubscription(
-																(
-																	checkedBoxSubcription
-																) =>
-																	!checkedBoxSubcription
-															)
-														}
-													/>
-												</div>
-
-												<label htmlFor="expiration-checkbox">
-													{i18n.sub(
-														'receive-expiration-notifications-through-email-when-this-activation-key-is-about-to-expire-x-days-before,-x-days-before,-and-on-the-day-of-expiration.-unsubscribe-at-any-time',
-														[30, 15]
-													)}
-												</label>
-											</div>
-
-											<div className="dropdown-divider"></div>
-										</>
-									)}
+									<CheckBox />
 								</div>
 							) : (
-								<ClusterNodesOption />
+								<div>
+									<ClusterNodesOption />
+
+									<CheckBox />
+								</div>
 							)}
 						</>
 					)}

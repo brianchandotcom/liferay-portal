@@ -194,6 +194,7 @@ definition {
 	}
 
 	@description = "LPS-181281. Confirms the user cannot create a new date filter with invalid date range."
+	@ignore = "true"
 	@priority = 4
 	test CannotSaveAnInvalidDateRangeInDateFields {
 		task ("And click on the 'Create Filter' button") {

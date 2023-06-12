@@ -20,6 +20,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.jabsorb.serializer.LiferayJSONDeserializationWhitelist;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONSerializer;
+import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -28,6 +29,7 @@ import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -63,7 +65,7 @@ public class JSONFactoryTest {
 			FooBean.class.getName(), FooBean1.class.getName(),
 			FooBean2.class.getName(), FooBean3.class.getName(),
 			FooBean4.class.getName(), FooBean5.class.getName(),
-			FooBean6.class.getName());
+			FooBean6.class.getName(), FooBean7.class.getName());
 
 		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
 
@@ -246,6 +248,40 @@ public class JSONFactoryTest {
 		Assert.assertNotNull(map);
 		Assert.assertEquals(map.toString(), 1, map.size());
 		Assert.assertEquals(JSONFactoryImpl.class.getName(), map.get("class"));
+	}
+
+	@Test
+	public void testSerializeDeserializeEnum() {
+		String json = JSONFactoryUtil.serialize(
+			HashMapBuilder.put(
+				"enum", FooBean7.TEST_1
+			).build());
+
+		Object object = JSONFactoryUtil.deserialize(json);
+
+		Assert.assertTrue(object instanceof HashMap);
+
+		Assert.assertTrue(
+			((HashMap<?, ?>)object).get("enum") instanceof FooBean7);
+
+		Assert.assertSame(((HashMap<?, ?>)object).get("enum"), FooBean7.TEST_1);
+	}
+
+	@Test
+	public void testSerializeDeserializeEnumInsideMessage() {
+		Message message = new Message();
+
+		message.put("enum", FooBean7.TEST_1);
+
+		String json = JSONFactoryUtil.serialize(message);
+
+		Object object = JSONFactoryUtil.deserialize(json);
+
+		Assert.assertTrue(object instanceof Message);
+
+		Assert.assertTrue(((Message)object).get("enum") instanceof FooBean7);
+
+		Assert.assertSame(((Message)object).get("enum"), FooBean7.TEST_1);
 	}
 
 	@Test

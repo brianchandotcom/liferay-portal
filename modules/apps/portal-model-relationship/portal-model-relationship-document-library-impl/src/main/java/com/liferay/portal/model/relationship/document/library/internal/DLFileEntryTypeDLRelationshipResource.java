@@ -37,14 +37,21 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Máté Thurzó
+ *
+ * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
  */
 @Component(
 	property = "model.class.name=com.liferay.document.library.kernel.model.DLFileEntryType",
 	service = RelationshipResource.class
 )
+@Deprecated
 public class DLFileEntryTypeDLRelationshipResource
 	implements RelationshipResource<DLFileEntryType> {
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public Relationship<DLFileEntryType> relationship(
 		Relationship.Builder<DLFileEntryType> builder) {
@@ -59,6 +66,10 @@ public class DLFileEntryTypeDLRelationshipResource
 		).build();
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	private FileEntry _getFileEntry(DLFileEntryType fileEntryType) {
 		for (DLFileEntry dlFileEntry :
 				_dlFileEntryLocalService.getFileEntries(-1, -1)) {
@@ -85,6 +96,10 @@ public class DLFileEntryTypeDLRelationshipResource
 		throw new NoSuchElementException();
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	private List<Folder> _getFolders(DLFileEntryType fileEntryType) {
 		return TransformUtil.transform(
 			_dlFolderLocalService.getDLFileEntryTypeDLFolders(

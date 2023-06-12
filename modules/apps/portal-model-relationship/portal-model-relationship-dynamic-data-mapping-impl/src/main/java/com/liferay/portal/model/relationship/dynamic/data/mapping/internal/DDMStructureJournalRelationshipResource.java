@@ -33,14 +33,21 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Máté Thurzó
+ *
+ * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
  */
 @Component(
 	property = "model.class.name=com.liferay.dynamic.data.mapping.model.DDMStructure",
 	service = RelationshipResource.class
 )
+@Deprecated
 public class DDMStructureJournalRelationshipResource
 	implements RelationshipResource<DDMStructure> {
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public Relationship<DDMStructure> relationship(
 		Relationship.Builder<DDMStructure> builder) {
@@ -54,11 +61,19 @@ public class DDMStructureJournalRelationshipResource
 		).build();
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	private List<JournalArticle> _getStructureArticles(DDMStructure structure) {
 		return _journalArticleLocalService.getArticlesByStructureId(
 			structure.getGroupId(), structure.getStructureId(), -1, -1, null);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	private List<JournalFolder> _getStructureFolders(DDMStructure structure) {
 		long classNameId = _classNameLocalService.getClassNameId(
 			JournalFolder.class);

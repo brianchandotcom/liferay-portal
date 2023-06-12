@@ -31,14 +31,21 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Máté Thurzó
+ *
+ * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
  */
 @Component(
 	property = "model.class.name=com.liferay.dynamic.data.mapping.model.DDMStructure",
 	service = RelationshipResource.class
 )
+@Deprecated
 public class DDMStructureDLFileEntryTypeRelationshipResource
 	implements RelationshipResource<DDMStructure> {
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public Relationship<DDMStructure> relationship(
 		Relationship.Builder<DDMStructure> builder) {
@@ -50,6 +57,10 @@ public class DDMStructureDLFileEntryTypeRelationshipResource
 		).build();
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	private List<DLFileEntryType> _getStructureFileEntryTypes(
 		DDMStructure structure) {
 

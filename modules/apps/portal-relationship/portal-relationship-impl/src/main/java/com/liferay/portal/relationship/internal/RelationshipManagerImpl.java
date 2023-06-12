@@ -36,10 +36,17 @@ import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Máté Thurzó
+ *
+ * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
  */
 @Component(service = RelationshipManager.class)
+@Deprecated
 public class RelationshipManagerImpl implements RelationshipManager {
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public <T extends ClassedModel> Collection<? extends ClassedModel>
 		getInboundRelatedModels(Class<T> modelClass, long primKey) {
@@ -54,6 +61,10 @@ public class RelationshipManagerImpl implements RelationshipManager {
 		return inboundRelatedModels;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	@SuppressWarnings("unchecked")
 	public <T extends ClassedModel> Collection<? extends ClassedModel>
@@ -85,6 +96,10 @@ public class RelationshipManagerImpl implements RelationshipManager {
 		return inboundRelatedClassedModels;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public <T extends ClassedModel> Collection<? extends ClassedModel>
 		getOutboundRelatedModels(Class<T> modelClass, long primKey) {
@@ -99,6 +114,10 @@ public class RelationshipManagerImpl implements RelationshipManager {
 		return outboundRelatedModels;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	@SuppressWarnings("unchecked")
 	public <T extends ClassedModel> Collection<? extends ClassedModel>
@@ -130,6 +149,10 @@ public class RelationshipManagerImpl implements RelationshipManager {
 		return outBoundRelatedClassedModels;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public <T extends ClassedModel> Collection<? extends ClassedModel>
 		getRelatedModels(Class<T> modelClass, long primKey) {
@@ -143,6 +166,10 @@ public class RelationshipManagerImpl implements RelationshipManager {
 		return relatedModels;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	@SuppressWarnings("unchecked")
 	public <T extends ClassedModel> Collection<? extends ClassedModel>
@@ -199,6 +226,10 @@ public class RelationshipManagerImpl implements RelationshipManager {
 		_serviceTrackerMap.close();
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	private <T extends ClassedModel> List<Relationship<T>> _getRelationships(
 		Class<T> modelClass) {

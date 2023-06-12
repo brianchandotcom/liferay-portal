@@ -24,15 +24,26 @@ import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Máté Thurzó
+ *
+ * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
  */
+@Deprecated
 public class RelationshipImplBundleActivator implements BundleActivator {
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public void start(BundleContext bundleContext) throws Exception {
 		_serviceTracker =
 			new ServiceTracker<RelationshipManager, RelationshipManager>(
 				bundleContext, RelationshipManager.class.getName(), null) {
 
+				/**
+				 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+				 */
+				@Deprecated
 				@Override
 				public RelationshipManager addingService(
 					ServiceReference<RelationshipManager> serviceReference) {
@@ -51,6 +62,10 @@ public class RelationshipImplBundleActivator implements BundleActivator {
 		_serviceTracker.open();
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public void stop(BundleContext bundleContext) throws Exception {
 		_serviceTracker.close();

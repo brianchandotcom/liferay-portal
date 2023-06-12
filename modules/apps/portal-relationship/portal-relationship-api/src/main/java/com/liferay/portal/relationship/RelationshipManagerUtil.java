@@ -20,9 +20,16 @@ import java.util.Collection;
 
 /**
  * @author Máté Thurzó
+ *
+ * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
  */
+@Deprecated
 public class RelationshipManagerUtil {
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public static <T extends ClassedModel> Collection<? extends ClassedModel>
 		getInboundRelatedModels(Class<T> modelClass, long primKey) {
 
@@ -30,6 +37,10 @@ public class RelationshipManagerUtil {
 			modelClass, primKey);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public static <T extends ClassedModel> Collection<? extends ClassedModel>
 		getInboundRelatedModels(
 			Class<T> modelClass, long primKey, Degree degree) {
@@ -38,6 +49,10 @@ public class RelationshipManagerUtil {
 			modelClass, primKey, degree);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public static <T extends ClassedModel> Collection<? extends ClassedModel>
 		getOutboundRelatedModels(Class<T> modelClass, long primKey) {
 
@@ -45,6 +60,10 @@ public class RelationshipManagerUtil {
 			modelClass, primKey);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public static <T extends ClassedModel> Collection<? extends ClassedModel>
 		getOutboundRelatedModels(
 			Class<T> modelClass, long primKey, Degree degree) {
@@ -53,12 +72,20 @@ public class RelationshipManagerUtil {
 			modelClass, primKey);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public static <T extends ClassedModel> Collection<? extends ClassedModel>
 		getRelatedModels(Class<T> modelClass, long primKey) {
 
 		return _relationshipManager.getRelatedModels(modelClass, primKey);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public static <T extends ClassedModel> Collection<? extends ClassedModel>
 		getRelatedModels(Class<T> modelClass, long primKey, Degree degree) {
 
@@ -66,6 +93,10 @@ public class RelationshipManagerUtil {
 			modelClass, primKey, degree);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public static void setRelationshipManager(
 		RelationshipManager relationshipManager) {
 

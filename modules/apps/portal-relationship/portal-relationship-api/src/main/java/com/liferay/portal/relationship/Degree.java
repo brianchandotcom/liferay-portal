@@ -19,13 +19,24 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 /**
  * @author Máté Thurzó
+ *
+ * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
  */
+@Deprecated
 public class Degree {
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public static Degree infinite() {
 		return new Degree(Integer.MAX_VALUE);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public static Degree minusOne(Degree degree) {
 		int degreeValue = degree.getDegree();
 
@@ -36,10 +47,18 @@ public class Degree {
 		return new Degree(degreeValue - 1);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public static Degree one() {
 		return new Degree(1);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public static Degree parse(String string) {
 		try {
 			int degree = Integer.valueOf(string);
@@ -60,14 +79,26 @@ public class Degree {
 		}
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public static Degree two() {
 		return new Degree(2);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public int getDegree() {
 		return _degree;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	private Degree(int degree) {
 		_degree = degree;
 	}

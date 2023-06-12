@@ -25,31 +25,62 @@ import java.util.function.Function;
 
 /**
  * @author Máté Thurzó
+ *
+ * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
  */
+@Deprecated
 public class Relationship<T extends ClassedModel> {
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public List<? extends ClassedModel> getInboundRelatedModels(long primKey) {
 		return _getRelatedModels(_modelSupplier.supply(primKey), true, false);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public List<? extends ClassedModel> getOutboundRelatedModels(long primKey) {
 		return _getRelatedModels(_modelSupplier.supply(primKey), false, true);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public List<? extends ClassedModel> getRelatedModels(long primKey) {
 		return _getRelatedModels(_modelSupplier.supply(primKey), true, true);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public static class Builder<T extends ClassedModel> {
 
+		/**
+		 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+		 */
+		@Deprecated
 		public Builder() {
 			_relationship = new Relationship<>();
 		}
 
+		/**
+		 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+		 */
+		@Deprecated
 		public Builder(Relationship<T> relationship) {
 			_relationship = relationship;
 		}
 
+		/**
+		 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+		 */
+		@Deprecated
 		public RelationshipStep modelSupplier(
 			ModelSupplier<Long, T> modelSupplier) {
 
@@ -58,12 +89,24 @@ public class Relationship<T extends ClassedModel> {
 			return new RelationshipStep();
 		}
 
+		/**
+		 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+		 */
+		@Deprecated
 		public class RelationshipStep {
 
+			/**
+			 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+			 */
+			@Deprecated
 			public Relationship<T> build() {
 				return _relationship;
 			}
 
+			/**
+			 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+			 */
+			@Deprecated
 			public <U extends ClassedModel> RelationshipStep
 				inboundMultiRelationship(
 					MultiRelationshipFunction<T, U> multiRelationshipFunction) {
@@ -76,6 +119,10 @@ public class Relationship<T extends ClassedModel> {
 				return this;
 			}
 
+			/**
+			 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+			 */
+			@Deprecated
 			public <U extends ClassedModel> RelationshipStep
 				inboundSingleRelationship(Function<T, U> function) {
 
@@ -86,6 +133,10 @@ public class Relationship<T extends ClassedModel> {
 				return this;
 			}
 
+			/**
+			 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+			 */
+			@Deprecated
 			public <U extends ClassedModel> RelationshipStep
 				outboundMultiRelationship(
 					MultiRelationshipFunction<T, U> multiRelationshipFunction) {
@@ -98,6 +149,10 @@ public class Relationship<T extends ClassedModel> {
 				return this;
 			}
 
+			/**
+			 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+			 */
+			@Deprecated
 			public <U extends ClassedModel> RelationshipStep
 				outboundSingleRelationship(Function<T, U> function) {
 
@@ -115,9 +170,17 @@ public class Relationship<T extends ClassedModel> {
 
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	private Relationship() {
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	private List<? extends ClassedModel> _getRelatedModels(
 		T model, boolean inbound, boolean outbound) {
 

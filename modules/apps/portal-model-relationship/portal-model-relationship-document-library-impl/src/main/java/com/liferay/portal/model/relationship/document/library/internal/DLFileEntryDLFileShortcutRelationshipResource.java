@@ -25,14 +25,21 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Máté Thurzó
+ *
+ * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
  */
 @Component(
 	property = "model.class.name=com.liferay.document.library.kernel.model.DLFileEntry",
 	service = RelationshipResource.class
 )
+@Deprecated
 public class DLFileEntryDLFileShortcutRelationshipResource
 	implements RelationshipResource<DLFileEntry> {
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public Relationship<DLFileEntry> relationship(
 		Relationship.Builder<DLFileEntry> builder) {

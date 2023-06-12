@@ -27,6 +27,7 @@ export default function FormFragmentsConfiguration({
 	formTypes,
 	portletNamespace,
 	selectFragmentURL,
+	updateInputFragmentsURL,
 }) {
 	const [values, setValues] = useState({});
 
@@ -53,85 +54,97 @@ export default function FormFragmentsConfiguration({
 
 	return (
 		<ClayLayout.Container className="c-mt-3">
-			<div className="sheet">
-				<h2 className="sheet-title">
-					{Liferay.Language.get('form-fragments')}
-				</h2>
+			<ClayForm action={updateInputFragmentsURL} method="POST">
+				<div className="sheet">
+					<h2 className="sheet-title">
+						{Liferay.Language.get('form-fragments')}
+					</h2>
 
-				<p className="c-mb-4 text-3 text-secondary">
-					{Liferay.Language.get(
-						'define-the-default-form-fragments-for-this-site'
-					)}
-				</p>
+					<p className="c-mb-4 text-3 text-secondary">
+						{Liferay.Language.get(
+							'define-the-default-form-fragments-for-this-site'
+						)}
+					</p>
 
-				<ClayTable className="c-mb-4">
-					<ClayTable.Head>
-						<ClayTable.Row>
-							<ClayTable.Cell headingCell>
-								{Liferay.Language.get('field-type')}
-							</ClayTable.Cell>
+					<ClayTable className="c-mb-4">
+						<ClayTable.Head>
+							<ClayTable.Row>
+								<ClayTable.Cell headingCell>
+									{Liferay.Language.get('field-type')}
+								</ClayTable.Cell>
 
-							<ClayTable.Cell headingCell>
-								{Liferay.Language.get('form-fragment')}
-							</ClayTable.Cell>
-						</ClayTable.Row>
-					</ClayTable.Head>
-
-					<ClayTable.Body>
-						{formTypes.map(({fragmentName, label, name}) => (
-							<ClayTable.Row key={label}>
-								<ClayTable.Cell>{label}</ClayTable.Cell>
-
-								<ClayTable.Cell>
-									<ClayForm.Group className="c-mb-0" small>
-										<ClayInput.Group>
-											<ClayInput.GroupItem>
-												<ClayInput
-													onClick={() =>
-														onClick(name)
-													}
-													readOnly
-													value={
-														values[name]
-															?.fragmentEntryName ||
-														fragmentName
-													}
-												/>
-											</ClayInput.GroupItem>
-
-											<ClayInput.GroupItem shrink>
-												<ClayButton
-													displayType="secondary"
-													onClick={() =>
-														onClick(name)
-													}
-													size="sm"
-												>
-													{Liferay.Language.get(
-														'select'
-													)}
-												</ClayButton>
-											</ClayInput.GroupItem>
-										</ClayInput.Group>
-									</ClayForm.Group>
+								<ClayTable.Cell headingCell>
+									{Liferay.Language.get('form-fragment')}
 								</ClayTable.Cell>
 							</ClayTable.Row>
-						))}
-					</ClayTable.Body>
-				</ClayTable>
+						</ClayTable.Head>
 
-				<div className="sheet-footer">
-					<ClayButton.Group spaced>
-						<ClayButton type="submit">
-							{Liferay.Language.get('save')}
-						</ClayButton>
+						<ClayTable.Body>
+							{formTypes.map(({fragmentName, label, name}) => (
+								<ClayTable.Row key={label}>
+									<ClayTable.Cell>{label}</ClayTable.Cell>
 
-						<ClayButton displayType="secondary">
-							{Liferay.Language.get('cancel')}
-						</ClayButton>
-					</ClayButton.Group>
+									<ClayTable.Cell>
+										<ClayForm.Group
+											className="c-mb-0"
+											small
+										>
+											<ClayInput.Group>
+												<ClayInput.GroupItem>
+													<ClayInput
+														onClick={() =>
+															onClick(name)
+														}
+														readOnly
+														value={
+															values[name]
+																?.fragmentEntryName ||
+															fragmentName
+														}
+													/>
+												</ClayInput.GroupItem>
+
+												<ClayInput.GroupItem shrink>
+													<ClayButton
+														displayType="secondary"
+														onClick={() =>
+															onClick(name)
+														}
+														size="sm"
+													>
+														{Liferay.Language.get(
+															'select'
+														)}
+													</ClayButton>
+												</ClayInput.GroupItem>
+											</ClayInput.Group>
+										</ClayForm.Group>
+									</ClayTable.Cell>
+								</ClayTable.Row>
+							))}
+						</ClayTable.Body>
+					</ClayTable>
+
+					<div className="sheet-footer">
+						<ClayButton.Group spaced>
+							<ClayButton type="submit">
+								{Liferay.Language.get('save')}
+							</ClayButton>
+
+							<ClayButton displayType="secondary">
+								{Liferay.Language.get('cancel')}
+							</ClayButton>
+						</ClayButton.Group>
+					</div>
 				</div>
-			</div>
+
+				<ClayInput
+					name={`${portletNamespace}values`}
+					readOnly
+					type="hidden"
+					value={JSON.stringify(values)}
+				/>
+			</ClayForm>
 		</ClayLayout.Container>
 	);
 }

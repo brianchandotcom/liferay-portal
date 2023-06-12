@@ -63,7 +63,7 @@ public class ConfigurationDisplayContext {
 		return HashMapBuilder.<String, Object>put(
 			"formTypes",
 			() -> {
-				Map<String, String> formTypes = new HashMap<>();
+				List<Map<String, String>> formTypes = new ArrayList<>();
 
 				ThemeDisplay themeDisplay =
 					(ThemeDisplay)_httpServletRequest.getAttribute(
@@ -74,27 +74,36 @@ public class ConfigurationDisplayContext {
 						getDefaultInputFragmentEntryKeysJSONObject(
 							themeDisplay.getScopeGroupId());
 
+				Map<String, FragmentEntry> fragmentEntries =
+					_fragmentCollectionContributorRegistry.
+						getFragmentEntries(
+							themeDisplay.getLocale());
+
 				for (InfoFieldType infoFieldType : _INFO_FIELD_TYPES) {
 					JSONObject jsonObject =
 						defaultInputFragmentEntryKeysJSONObject.getJSONObject(
 							infoFieldType.getName());
 
-					FragmentEntry fragmentEntry =
-						_fragmentCollectionContributorRegistry.getFragmentEntry(
-							jsonObject.getString("key"));
+					formTypes.add(
+						HashMapBuilder.put(
+							"fragmentName",
+							() -> {
+								FragmentEntry fragmentEntry =
+									fragmentEntries.get(
+											jsonObject.getString("key"));
 
-					if (fragmentEntry != null) {
-						formTypes.put(
-							infoFieldType.getLabel(themeDisplay.getLocale()),
-							LanguageUtil.get(
-								themeDisplay.getLocale(),
-								fragmentEntry.getName()));
-					}
-					else {
-						formTypes.put(
-							infoFieldType.getLabel(themeDisplay.getLocale()),
-							null);
-					}
+								if (fragmentEntry != null) {
+									return fragmentEntry.getName();
+								}
+
+								return null;
+							}
+						).put(
+							"label",
+							infoFieldType.getLabel(themeDisplay.getLocale())
+						).put(
+							"name", infoFieldType.getName()
+						).build());
 				}
 
 				return formTypes;

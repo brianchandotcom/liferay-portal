@@ -59,7 +59,6 @@
 								"definition": {
 									"fragmentStyle": {
 										"backgroundColor": "gray100Color",
-										"borderWidth": "0",
 										"height": "100vh",
 										"paddingBottom": "6",
 										"paddingTop": "5"
@@ -73,14 +72,7 @@
 										}
 									],
 									"layout": {
-										"borderWidth": 0,
-										"marginBottom": 0,
-										"marginLeft": 0,
-										"marginRight": 0,
-										"marginTop": 0,
 										"paddingBottom": 6,
-										"paddingLeft": 0,
-										"paddingRight": 0,
 										"paddingTop": 4,
 										"widthType": "Fluid"
 									}
@@ -185,8 +177,6 @@
 							{
 								"definition": {
 									"fragmentStyle": {
-										"backgroundColor": "",
-										"borderWidth": "0",
 										"paddingBottom": "5",
 										"paddingLeft": "7",
 										"paddingRight": "8",
@@ -196,7 +186,6 @@
 										{
 											"fragmentViewportStyle": {
 												"hidden": false,
-												"marginLeft": "0",
 												"paddingBottom": "4",
 												"paddingLeft": "2",
 												"paddingRight": "2",
@@ -206,11 +195,6 @@
 										}
 									],
 									"layout": {
-										"borderWidth": 0,
-										"marginBottom": 0,
-										"marginLeft": 0,
-										"marginRight": 0,
-										"marginTop": 0,
 										"paddingBottom": 4,
 										"paddingLeft": 10,
 										"paddingRight": 10,
@@ -222,7 +206,6 @@
 									{
 										"definition": {
 											"fragmentStyle": {
-												"borderWidth": "0",
 												"marginBottom": "7"
 											},
 											"fragmentViewports": [
@@ -234,15 +217,7 @@
 												}
 											],
 											"layout": {
-												"borderWidth": 0,
 												"marginBottom": 8,
-												"marginLeft": 0,
-												"marginRight": 0,
-												"marginTop": 0,
-												"paddingBottom": 0,
-												"paddingLeft": 0,
-												"paddingRight": 0,
-												"paddingTop": 0,
 												"widthType": "Fluid"
 											}
 										},
@@ -347,15 +322,6 @@
 												"borderWidth": "0"
 											},
 											"layout": {
-												"borderWidth": 0,
-												"marginBottom": 0,
-												"marginLeft": 0,
-												"marginRight": 0,
-												"marginTop": 0,
-												"paddingBottom": 0,
-												"paddingLeft": 0,
-												"paddingRight": 0,
-												"paddingTop": 0,
 												"widthType": "Fluid"
 											}
 										},

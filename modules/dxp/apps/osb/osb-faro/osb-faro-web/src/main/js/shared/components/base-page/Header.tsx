@@ -85,10 +85,11 @@ const PageActions: React.FC<IPageActionsProps> = ({
 				return (
 					<Button
 						button
-						className={classNames({
-							'button-root': true,
-							disabled: props.disabled
-						})}
+						className={classNames(
+							getCN('button-root', {
+								disabled: props.disabled
+							})
+						)}
 						displayType='secondary'
 						key={label}
 						{...props}

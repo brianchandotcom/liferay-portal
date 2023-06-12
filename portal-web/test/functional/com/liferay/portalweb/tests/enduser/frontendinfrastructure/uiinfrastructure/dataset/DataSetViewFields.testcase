@@ -61,29 +61,29 @@ definition {
 		task ("Then Confirm the fields are visible and present: creator,name,id") {
 			AssertElementPresent(
 				key_name = "name",
-				locator1 = "FrontendDataSetAdmin#FIELDS_ITEM");
+				locator1 = "DataSet#FIELDS_ITEM");
 
 			AssertElementPresent(
 				key_name = "creator",
-				locator1 = "FrontendDataSetAdmin#FIELDS_ITEM");
+				locator1 = "DataSet#FIELDS_ITEM");
 
 			AssertElementPresent(
 				key_name = "id",
-				locator1 = "FrontendDataSetAdmin#FIELDS_ITEM");
+				locator1 = "DataSet#FIELDS_ITEM");
 		}
 
 		task ("And is not present metadata fields:x-class-name, x-schema-name and scopeKey") {
 			AssertElementNotPresent(
 				key_name = "x-class-name",
-				locator1 = "FrontendDataSetAdmin#FIELDS_ITEM");
+				locator1 = "DataSet#FIELDS_ITEM");
 
 			AssertElementNotPresent(
 				key_name = "x-schema-name",
-				locator1 = "FrontendDataSetAdmin#FIELDS_ITEM");
+				locator1 = "DataSet#FIELDS_ITEM");
 
 			AssertElementNotPresent(
 				key_name = "scopeKey",
-				locator1 = "FrontendDataSetAdmin#FIELDS_ITEM");
+				locator1 = "DataSet#FIELDS_ITEM");
 		}
 	}
 
@@ -111,7 +111,7 @@ definition {
 		task ("When the user selects the Delete option in the 3 dots menu") {
 			Click(
 				key_fieldName = "id",
-				locator1 = "FrontendDataSetAdmin#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
 
 			ClickNoError(locator1 = "ObjectPortlet#DELETE_ENTRY_BUTTON");
 		}
@@ -119,7 +119,7 @@ definition {
 		task ("Then confirmation message is displayed") {
 			AssertElementPresent(
 				key_modalText = "Are you sure you want to delete this field? It will be removed immediately. Fragments using it will be affected. This action cannot be undone.",
-				locator1 = "FrontendDataSetAdmin#DELETE_DATA_SET_MODAL_BODY");
+				locator1 = "DataSet#DELETE_DATA_SET_MODAL_BODY");
 		}
 	}
 
@@ -221,7 +221,7 @@ definition {
 		task ("When the user selects the Delete option in the 3 dots menu") {
 			Click(
 				key_fieldName = "id",
-				locator1 = "FrontendDataSetAdmin#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
 
 			ClickNoError(locator1 = "ObjectPortlet#DELETE_ENTRY_BUTTON");
 		}
@@ -229,7 +229,7 @@ definition {
 		task ("Then the confirmation message is displayed") {
 			AssertElementPresent(
 				key_modalText = "Are you sure you want to delete this field? It will be removed immediately. Fragments using it will be affected. This action cannot be undone.",
-				locator1 = "FrontendDataSetAdmin#DELETE_DATA_SET_MODAL_BODY");
+				locator1 = "DataSet#DELETE_DATA_SET_MODAL_BODY");
 		}
 
 		task ("And the user cancels the confirmation message") {
@@ -253,7 +253,7 @@ definition {
 		task ("And clicks on a field drag dots icon related id field ") {
 			Click.clickAt(
 				key_nameField = "id",
-				locator1 = "FrontendDataSetAdmin#FIELDS_DRAG_DOTS_ICON");
+				locator1 = "DataSet#FIELDS_DRAG_DOTS_ICON");
 		}
 
 		task ("Then the user can move the id field below the label field") {
@@ -261,8 +261,8 @@ definition {
 				key_nameField = "id",
 				key_position = 2,
 				keyName = "label",
-				locator1 = "FrontendDataSetAdmin#FIELDS_DRAG_DOTS_ICON",
-				locator2 = "FrontendDataSetAdmin#FIELDS_TABLE");
+				locator1 = "DataSet#FIELDS_DRAG_DOTS_ICON",
+				locator2 = "DataSet#FIELDS_TABLE");
 
 			DataSetAdmin.assertFieldsOnTable(
 				key_position = 1,
@@ -345,7 +345,7 @@ definition {
 			AssertElementNotPresent(
 				key_position = 1,
 				keyName = "id",
-				locator1 = "FrontendDataSetAdmin#FIELDS_TABLE");
+				locator1 = "DataSet#FIELDS_TABLE");
 		}
 	}
 
@@ -371,7 +371,7 @@ definition {
 		task ("And the Add field modal is closed") {
 			AssertElementNotPresent(
 				key_modalText = "Deleting a data set is an action that cannot be reversed. The content will be deleted and some data set fragments may not be displayed.",
-				locator1 = "FrontendDataSetAdmin#DELETE_DATA_SET_MODAL_BODY");
+				locator1 = "DataSet#DELETE_DATA_SET_MODAL_BODY");
 		}
 
 		task ("And the changes are not applied") {
@@ -409,7 +409,7 @@ definition {
 		task ("And the Add field modal is closed") {
 			AssertElementNotPresent(
 				key_modalText = "Deleting a data set is an action that cannot be reversed. The content will be deleted and some data set fragments may not be displayed.",
-				locator1 = "FrontendDataSetAdmin#DELETE_DATA_SET_MODAL_BODY");
+				locator1 = "DataSet#DELETE_DATA_SET_MODAL_BODY");
 		}
 
 		task ("And the changes are not applied") {
@@ -487,7 +487,7 @@ definition {
 		task ("Then the corresponding option is the just displayed") {
 			AssertElementPresent(
 				key_name = "name",
-				locator1 = "FrontendDataSetAdmin#FIELDS_ITEM");
+				locator1 = "DataSet#FIELDS_ITEM");
 		}
 	}
 
@@ -505,7 +505,7 @@ definition {
 		task ("Then 'label' field should appear on Add Fields modal") {
 			AssertElementPresent(
 				key_name = "label",
-				locator1 = "FrontendDataSetAdmin#FIELDS_ITEM");
+				locator1 = "DataSet#FIELDS_ITEM");
 		}
 	}
 
@@ -594,7 +594,7 @@ definition {
 		task ("Then the Add field modal is closed") {
 			AssertElementNotPresent(
 				key_modalText = "Deleting a data set is an action that cannot be reversed. The content will be deleted and some data set fragments may not be displayed.",
-				locator1 = "FrontendDataSetAdmin#DELETE_DATA_SET_MODAL_BODY");
+				locator1 = "DataSet#DELETE_DATA_SET_MODAL_BODY");
 		}
 
 		task ("And the changes are applied") {

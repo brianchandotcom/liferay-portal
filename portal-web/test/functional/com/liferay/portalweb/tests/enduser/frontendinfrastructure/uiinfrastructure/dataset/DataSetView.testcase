@@ -55,7 +55,7 @@ definition {
 
 		task ("And Filling the description field with 'Test Description'") {
 			Type(
-				locator1 = "FrontendDataSetAdmin#NEW_DATA_SET_VIEW_DESCRIPTION",
+				locator1 = "DataSet#NEW_DATA_SET_VIEW_DESCRIPTION",
 				value1 = "Test Description");
 		}
 
@@ -105,7 +105,7 @@ definition {
 
 		task ("And Filling the description field with 'Test Description'") {
 			Type(
-				locator1 = "FrontendDataSetAdmin#NEW_DATA_SET_VIEW_DESCRIPTION",
+				locator1 = "DataSet#NEW_DATA_SET_VIEW_DESCRIPTION",
 				value1 = "Test Description");
 		}
 
@@ -198,7 +198,7 @@ definition {
 		task ("And select delete and in the modal, click the cancel button") {
 			Click(
 				key_name = "View Test",
-				locator1 = "FrontendDataSetAdmin#DATA_SET_VIEW_ENTRY_KEBAB_MENU");
+				locator1 = "DataSet#DATA_SET_VIEW_ENTRY_KEBAB_MENU");
 
 			ClickNoError(locator1 = "ObjectPortlet#DELETE_ENTRY_BUTTON");
 
@@ -208,7 +208,7 @@ definition {
 		task ("Then the data set view is not deleted") {
 			AssertElementPresent(
 				key_itemName = "View Test",
-				locator1 = "FrontendDataSetAdmin#NAME_OF_VIEWS");
+				locator1 = "DataSet#NAME_OF_VIEWS");
 		}
 	}
 
@@ -224,13 +224,13 @@ definition {
 		task ("And The user tries to delete the view") {
 			Click(
 				key_name = "View Test",
-				locator1 = "FrontendDataSetAdmin#DATA_SET_VIEW_ENTRY_KEBAB_MENU");
+				locator1 = "DataSet#DATA_SET_VIEW_ENTRY_KEBAB_MENU");
 
 			ClickNoError(locator1 = "ObjectPortlet#DELETE_ENTRY_BUTTON");
 
 			AssertElementPresent(
 				key_modalText = "Deleting a data set view is an action that cannot be reversed. The content will be deleted and some data set fragments may not be displayed.",
-				locator1 = "FrontendDataSetAdmin#DELETE_DATA_SET_MODAL_BODY");
+				locator1 = "DataSet#DELETE_DATA_SET_MODAL_BODY");
 		}
 
 		task ("And When the user clicks on the 'X' button in the modal") {
@@ -255,7 +255,7 @@ definition {
 				value1 = "Test Description");
 
 			Type(
-				locator1 = "FrontendDataSetAdmin#NEW_DATA_SET_VIEW_DESCRIPTION",
+				locator1 = "DataSet#NEW_DATA_SET_VIEW_DESCRIPTION",
 				value1 = "View Test");
 		}
 
@@ -266,7 +266,7 @@ definition {
 		task ("Then Confirm that the View was not created") {
 			AssertElementNotPresent(
 				entryName = "View Test",
-				locator1 = "FrontendDataSetAdmin#DATA_SET_VIEW_ENTRY_NAME");
+				locator1 = "DataSet#DATA_SET_VIEW_ENTRY_NAME");
 		}
 	}
 
@@ -360,7 +360,7 @@ definition {
 		task ("And Clicking the ellipsis button") {
 			Click(
 				key_name = "View Test",
-				locator1 = "FrontendDataSetAdmin#DATA_SET_VIEW_ENTRY_KEBAB_MENU");
+				locator1 = "DataSet#DATA_SET_VIEW_ENTRY_KEBAB_MENU");
 		}
 
 		task ("Then confirm the options Edit and Delete are visible") {
@@ -439,7 +439,7 @@ definition {
 		task ("Then the corresponding view is displayed") {
 			AssertElementPresent(
 				entryName = "View Test",
-				locator1 = "FrontendDataSetAdmin#DATA_SET_VIEW_ENTRY_NAME");
+				locator1 = "DataSet#DATA_SET_VIEW_ENTRY_NAME");
 		}
 	}
 
@@ -458,7 +458,7 @@ definition {
 
 		task ("Then confirm that the views column shows 1 views") {
 			AssertElementPresent(
-				locator1 = "FrontendDataSetAdmin#NUMBER_OF_VIEWS",
+				locator1 = "DataSet#NUMBER_OF_VIEWS",
 				numberOfViews = 1);
 		}
 
@@ -467,7 +467,7 @@ definition {
 				key_entry = "Data Set Test",
 				locator1 = "ObjectPortlet#ENTRY_KEBAB_MENU");
 
-			Click(locator1 = "FrontendDataSetAdmin#VIEW_ENTRY_BUTTON");
+			Click(locator1 = "DataSet#VIEW_ENTRY_BUTTON");
 		}
 
 		task ("And the user deletes a View created") {
@@ -480,7 +480,7 @@ definition {
 
 		task ("Then confirm that the views column shows 0 views") {
 			AssertElementPresent(
-				locator1 = "FrontendDataSetAdmin#NUMBER_OF_VIEWS",
+				locator1 = "DataSet#NUMBER_OF_VIEWS",
 				numberOfViews = 0);
 		}
 	}

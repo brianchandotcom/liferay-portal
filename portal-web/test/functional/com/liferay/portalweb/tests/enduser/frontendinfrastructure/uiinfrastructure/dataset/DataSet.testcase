@@ -74,13 +74,13 @@ definition {
 		task ("Then Confirm the name as expected") {
 			AssertElementPresent(
 				key_itemName = "Test Data Set",
-				locator1 = "FrontendDataSetAdmin#TABLE_CELL");
+				locator1 = "DataSet#TABLE_CELL");
 		}
 
 		task ("And Confirm the Provider as expected") {
 			AssertElementPresent(
 				key_itemName = "/c/fdsentries",
-				locator1 = "FrontendDataSetAdmin#TABLE_CELL");
+				locator1 = "DataSet#TABLE_CELL");
 		}
 	}
 
@@ -218,7 +218,7 @@ definition {
 		task ("Then Confirm that the options view and Delete is present and is visible") {
 			AssertElementPresent(locator1 = "ObjectPortlet#DELETE_ENTRY_BUTTON");
 
-			AssertElementPresent(locator1 = "FrontendDataSetAdmin#VIEW_ENTRY_BUTTON");
+			AssertElementPresent(locator1 = "DataSet#VIEW_ENTRY_BUTTON");
 		}
 	}
 
@@ -290,7 +290,7 @@ definition {
 		task ("Then Confirm that the data set was not created") {
 			AssertElementNotPresent(
 				key_itemName = "Test Data Set",
-				locator1 = "FrontendDataSetAdmin#TABLE_CELL");
+				locator1 = "DataSet#TABLE_CELL");
 		}
 	}
 
@@ -312,7 +312,7 @@ definition {
 
 			AssertElementPresent(
 				key_modalText = "Deleting a data set is an action that cannot be reversed. The content will be deleted and some data set fragments may not be displayed.",
-				locator1 = "FrontendDataSetAdmin#DELETE_DATA_SET_MODAL_BODY");
+				locator1 = "DataSet#DELETE_DATA_SET_MODAL_BODY");
 
 			Button.clickCancel();
 		}
@@ -320,7 +320,7 @@ definition {
 		task ("Then The data set is not present in the Data Sets admin page") {
 			AssertElementPresent(
 				key_itemName = "Test Data Set",
-				locator1 = "FrontendDataSetAdmin#TABLE_CELL");
+				locator1 = "DataSet#TABLE_CELL");
 		}
 	}
 
@@ -342,7 +342,7 @@ definition {
 
 			AssertElementPresent(
 				key_modalText = "Deleting a data set is an action that cannot be reversed. The content will be deleted and some data set fragments may not be displayed.",
-				locator1 = "FrontendDataSetAdmin#DELETE_DATA_SET_MODAL_BODY");
+				locator1 = "DataSet#DELETE_DATA_SET_MODAL_BODY");
 		}
 
 		task ("And When the user clicks on the 'X' button in the modal") {
@@ -354,7 +354,7 @@ definition {
 		task ("Then The data set is present in the Data Sets admin page") {
 			AssertElementPresent(
 				key_itemName = "Test Data Set",
-				locator1 = "FrontendDataSetAdmin#TABLE_CELL");
+				locator1 = "DataSet#TABLE_CELL");
 		}
 	}
 
@@ -370,13 +370,13 @@ definition {
 		task ("Then confirm that the data set is created and if the name is provided as expected") {
 			AssertElementPresent(
 				key_itemName = "Data Set ~!@#$%^&*(){}[].<>/? name",
-				locator1 = "FrontendDataSetAdmin#TABLE_CELL");
+				locator1 = "DataSet#TABLE_CELL");
 		}
 
 		task ("And Then Confirm the Provider as expected") {
 			AssertElementPresent(
 				key_itemName = "/c/fdsentries",
-				locator1 = "FrontendDataSetAdmin#TABLE_CELL");
+				locator1 = "DataSet#TABLE_CELL");
 		}
 	}
 

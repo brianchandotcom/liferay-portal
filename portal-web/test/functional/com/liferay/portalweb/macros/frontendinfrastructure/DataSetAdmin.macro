@@ -16,7 +16,7 @@ definition {
 		for (var key_dataSetName : list ${key_dataSetNameList}) {
 			AssertElementPresent(
 				key_itemName = ${key_dataSetName},
-				locator1 = "FrontendDataSetAdmin#TABLE_CELL");
+				locator1 = "DataSet#TABLE_CELL");
 		}
 	}
 
@@ -24,7 +24,7 @@ definition {
 		for (var key_dataSetViewName : list ${key_dataSetViewNameList}) {
 			AssertElementPresent(
 				entryName = ${key_dataSetViewName},
-				locator1 = "FrontendDataSetAdmin#DATA_SET_VIEW_ENTRY_NAME");
+				locator1 = "DataSet#DATA_SET_VIEW_ENTRY_NAME");
 		}
 	}
 
@@ -32,7 +32,7 @@ definition {
 		for (var key_dataSetViewDescription : list ${key_dataSetViewDescriptionList}) {
 			AssertElementPresent(
 				key_description = ${key_dataSetViewDescription},
-				locator1 = "FrontendDataSetAdmin#DATA_SET_VIEW_DESCRIPTION");
+				locator1 = "DataSet#DATA_SET_VIEW_DESCRIPTION");
 		}
 	}
 
@@ -56,32 +56,32 @@ definition {
 		AssertElementPresent(
 			key_position = ${key_position},
 			keyName = ${keyName},
-			locator1 = "FrontendDataSetAdmin#FIELDS_TABLE");
+			locator1 = "DataSet#FIELDS_TABLE");
 	}
 
 	macro assertSearchFilters {
 		for (var key_filterType : list ${key_filterList}) {
 			AssertElementPresent(
-				locator1 = "FrontendDataSetAdmin#FILTER_BY_SELECT",
+				locator1 = "DataSet#FILTER_BY_SELECT",
 				value1 = ${key_filterList});
 		}
 	}
 
 	macro changePagination {
-		Click(locator1 = "FrontendDataSetAdmin#ITEMS_PER_PAGE_SELECT");
+		Click(locator1 = "DataSet#ITEMS_PER_PAGE_SELECT");
 
 		MenuItem.click(menuItem = ${itemsPerPage});
 	}
 
 	macro changePaginationDefaultItems {
 		Type(
-			locator1 = "FrontendDataSetAdmin#PAGINATION_DEFAULT_ITEMS",
+			locator1 = "DataSet#PAGINATION_DEFAULT_ITEMS",
 			value1 = ${defaultPagination});
 	}
 
 	macro changePaginationItems {
 		Type(
-			locator1 = "FrontendDataSetAdmin#PAGINATION_LIST_OF_ITEMS",
+			locator1 = "DataSet#PAGINATION_LIST_OF_ITEMS",
 			value1 = ${paginationItems});
 	}
 
@@ -97,11 +97,11 @@ definition {
 		LexiconEntry.gotoAdd();
 
 		Select(
-			locator1 = "FrontendDataSetAdmin#FIELD_SELECT",
+			locator1 = "DataSet#FIELD_SELECT",
 			value1 = ${key_field});
 
 		Select(
-			locator1 = "FrontendDataSetAdmin#SORTING_SELECT",
+			locator1 = "DataSet#SORTING_SELECT",
 			value1 = ${key_sorting});
 
 		PortletEntry.save();
@@ -151,7 +151,7 @@ definition {
 				value1 = ${key_dataSetViewName});
 
 			Type(
-				locator1 = "FrontendDataSetAdmin#NEW_DATA_SET_VIEW_DESCRIPTION",
+				locator1 = "DataSet#NEW_DATA_SET_VIEW_DESCRIPTION",
 				value1 = ${description});
 
 			PortletEntry.save();
@@ -172,7 +172,7 @@ definition {
 			LexiconEntry.gotoAdd();
 
 			Select(
-				locator1 = "FrontendDataSetAdmin#FILTER_BY_SELECT",
+				locator1 = "DataSet#FILTER_BY_SELECT",
 				value1 = ${key_filterType});
 
 			Click(
@@ -184,7 +184,7 @@ definition {
 	macro deleteAllDataSetEntries {
 		DataSetAdmin.goToDataSetAdminPage();
 
-		if (IsElementPresent(key_itemName = "", locator1 = "FrontendDataSetAdmin#TABLE_CELL")) {
+		if (IsElementPresent(key_itemName = "", locator1 = "DataSet#TABLE_CELL")) {
 			JSONDataSet._deleteFDSEntry();
 
 			Refresh();
@@ -215,7 +215,7 @@ definition {
 
 		AssertElementPresent(
 			key_modalText = "Deleting a data set is an action that cannot be reversed. The content will be deleted and some data set fragments may not be displayed.",
-			locator1 = "FrontendDataSetAdmin#DELETE_DATA_SET_MODAL_BODY");
+			locator1 = "DataSet#DELETE_DATA_SET_MODAL_BODY");
 
 		Button.clickDelete();
 	}
@@ -223,13 +223,13 @@ definition {
 	macro deleteDataSetView {
 		Click(
 			key_name = ${viewName},
-			locator1 = "FrontendDataSetAdmin#DATA_SET_VIEW_ENTRY_KEBAB_MENU");
+			locator1 = "DataSet#DATA_SET_VIEW_ENTRY_KEBAB_MENU");
 
 		ClickNoError(locator1 = "ObjectPortlet#DELETE_ENTRY_BUTTON");
 
 		AssertElementPresent(
 			key_modalText = "Deleting a data set view is an action that cannot be reversed. The content will be deleted and some data set fragments may not be displayed.",
-			locator1 = "FrontendDataSetAdmin#DELETE_DATA_SET_MODAL_BODY");
+			locator1 = "DataSet#DELETE_DATA_SET_MODAL_BODY");
 
 		Button.clickDelete();
 	}
@@ -237,13 +237,13 @@ definition {
 	macro deleteDataSetViewsFields {
 		Click(
 			key_fieldName = ${fieldName},
-			locator1 = "FrontendDataSetAdmin#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
+			locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
 
 		ClickNoError(locator1 = "ObjectPortlet#DELETE_ENTRY_BUTTON");
 
 		AssertElementPresent(
 			key_modalText = "Are you sure you want to delete this field? It will be removed immediately. Fragments using it will be affected. This action cannot be undone.",
-			locator1 = "FrontendDataSetAdmin#DELETE_DATA_SET_MODAL_BODY");
+			locator1 = "DataSet#DELETE_DATA_SET_MODAL_BODY");
 
 		Button.clickDelete();
 
@@ -263,18 +263,18 @@ definition {
 	macro editView {
 		Click(
 			key_name = ${key_oldName},
-			locator1 = "FrontendDataSetAdmin#DATA_SET_VIEW_ENTRY_KEBAB_MENU");
+			locator1 = "DataSet#DATA_SET_VIEW_ENTRY_KEBAB_MENU");
 
 		MenuItem.click(menuItem = "View");
 
 		Type(
 			key_type = "Name",
-			locator1 = "FrontendDataSetAdmin#EDIT_DATA_SET_VIEW",
+			locator1 = "DataSet#EDIT_DATA_SET_VIEW",
 			value1 = ${key_newName});
 
 		Type(
 			key_type = "Description",
-			locator1 = "FrontendDataSetAdmin#EDIT_DATA_SET_VIEW",
+			locator1 = "DataSet#EDIT_DATA_SET_VIEW",
 			value1 = ${key_newDescription});
 
 		PortletEntry.save();
@@ -297,7 +297,7 @@ definition {
 
 		Click(
 			key_name = ${key_viewName},
-			locator1 = "FrontendDataSetAdmin#DATA_SET_VIEW_ENTRY_KEBAB_MENU");
+			locator1 = "DataSet#DATA_SET_VIEW_ENTRY_KEBAB_MENU");
 
 		MenuItem.click(menuItem = "View");
 	}
@@ -306,14 +306,14 @@ definition {
 		if (isSet(dataSetViewName)) {
 			Click(
 				key_name = ${dataSetViewName},
-				locator1 = "FrontendDataSetAdmin#DATA_SET_VIEW_ENTRY_KEBAB_MENU");
+				locator1 = "DataSet#DATA_SET_VIEW_ENTRY_KEBAB_MENU");
 
-			Click(locator1 = "FrontendDataSetAdmin#VIEW_ENTRY_BUTTON");
+			Click(locator1 = "DataSet#VIEW_ENTRY_BUTTON");
 		}
 
 		Click(
 			key_tabName = ${tabName},
-			locator1 = "FrontendDataSetAdmin#VIEW_ANY_TAB");
+			locator1 = "DataSet#VIEW_ANY_TAB");
 	}
 
 	macro goToViews {
@@ -321,26 +321,26 @@ definition {
 			key_entry = ${dataSetName},
 			locator1 = "ObjectPortlet#ENTRY_KEBAB_MENU");
 
-		Click(locator1 = "FrontendDataSetAdmin#VIEW_ENTRY_BUTTON");
+		Click(locator1 = "DataSet#VIEW_ENTRY_BUTTON");
 	}
 
 	macro searchField {
-		WaitForElementPresent(locator1 = "FrontendDataSetAdmin#FIELDS_TAB_SEARCH");
+		WaitForElementPresent(locator1 = "DataSet#FIELDS_TAB_SEARCH");
 
 		AssertElementPresent(locator1 = "Icon#BASIC_SEARCH");
 
 		Type(
-			locator1 = "FrontendDataSetAdmin#FIELDS_TAB_SEARCH",
+			locator1 = "DataSet#FIELDS_TAB_SEARCH",
 			value1 = ${searchTerm});
 	}
 
 	macro searchFieldInModal {
-		WaitForElementPresent(locator1 = "FrontendDataSetAdmin#MODAL_SEARCH");
+		WaitForElementPresent(locator1 = "DataSet#MODAL_SEARCH");
 
 		AssertElementPresent(locator1 = "Icon#BASIC_SEARCH");
 
 		Type(
-			locator1 = "FrontendDataSetAdmin#MODAL_SEARCH",
+			locator1 = "DataSet#MODAL_SEARCH",
 			value1 = ${searchTerm});
 
 		if (!(isSet(modal))) {
@@ -362,7 +362,7 @@ definition {
 
 	macro selectFilters {
 		Select(
-			locator1 = "FrontendDataSetAdmin#FILTER_BY_SELECT",
+			locator1 = "DataSet#FILTER_BY_SELECT",
 			value1 = ${filterType});
 	}
 

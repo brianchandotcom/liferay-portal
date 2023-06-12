@@ -60,7 +60,7 @@ definition {
 
 		task ("When the user adds a name") {
 			Type(
-				locator1 = "FrontendDataSetAdmin#NEW_FILTER_NAME",
+				locator1 = "DataSet#NEW_FILTER_NAME",
 				value1 = "Test");
 		}
 
@@ -71,13 +71,13 @@ definition {
 		task ("Then 'From' field is present") {
 			AssertVisible(
 				key_label = "From",
-				locator1 = "FrontendDataSetAdmin#LABEL");
+				locator1 = "DataSet#LABEL");
 		}
 
 		task ("And 'To' field is also present ") {
 			AssertVisible(
 				key_label = "To",
-				locator1 = "FrontendDataSetAdmin#LABEL");
+				locator1 = "DataSet#LABEL");
 		}
 	}
 
@@ -90,7 +90,7 @@ definition {
 
 		task ("When the user adds a name") {
 			Type(
-				locator1 = "FrontendDataSetAdmin#NEW_FILTER_NAME",
+				locator1 = "DataSet#NEW_FILTER_NAME",
 				value1 = "Test");
 		}
 
@@ -101,29 +101,29 @@ definition {
 		task ("And clicks on From field datepicker") {
 			Click(
 				key_dateField = "From",
-				locator1 = "FrontendDataSetAdmin#DATEPICKER_BUTTON");
+				locator1 = "DataSet#DATEPICKER_BUTTON");
 		}
 
 		task ("Then the Clay Date picker is open") {
-			AssertVisible(locator1 = "FrontendDataSetAdmin#DATEPICKER_MENU");
+			AssertVisible(locator1 = "DataSet#DATEPICKER_MENU");
 
 			Click(
 				key_dateField = "From",
-				locator1 = "FrontendDataSetAdmin#DATEPICKER_BUTTON");
+				locator1 = "DataSet#DATEPICKER_BUTTON");
 		}
 
 		task ("When the user clicks on To field datepicker") {
 			Click(
 				key_dateField = "To",
-				locator1 = "FrontendDataSetAdmin#DATEPICKER_BUTTON");
+				locator1 = "DataSet#DATEPICKER_BUTTON");
 		}
 
 		task ("Then the Clay Date picker is open") {
-			AssertVisible(locator1 = "FrontendDataSetAdmin#DATEPICKER_MENU");
+			AssertVisible(locator1 = "DataSet#DATEPICKER_MENU");
 
 			Click(
 				key_dateField = "To",
-				locator1 = "FrontendDataSetAdmin#DATEPICKER_BUTTON");
+				locator1 = "DataSet#DATEPICKER_BUTTON");
 		}
 	}
 
@@ -136,7 +136,7 @@ definition {
 
 		task ("When the user adds a name") {
 			Type(
-				locator1 = "FrontendDataSetAdmin#NEW_FILTER_NAME",
+				locator1 = "DataSet#NEW_FILTER_NAME",
 				value1 = "Test");
 		}
 
@@ -148,14 +148,14 @@ definition {
 			AssertVisible(
 				key_dateField = "From",
 				key_placeholderText = "YYYY-MM-DD",
-				locator1 = "FrontendDataSetAdmin#DATE_FIELD_PLACEHOLDER");
+				locator1 = "DataSet#DATE_FIELD_PLACEHOLDER");
 		}
 
 		task ("And the default value is 'YYYY-MM-DD' in 'To' field") {
 			AssertVisible(
 				key_dateField = "To",
 				key_placeholderText = "YYYY-MM-DD",
-				locator1 = "FrontendDataSetAdmin#DATE_FIELD_PLACEHOLDER");
+				locator1 = "DataSet#DATE_FIELD_PLACEHOLDER");
 		}
 	}
 
@@ -168,7 +168,7 @@ definition {
 
 		task ("When the user adds a name") {
 			Type(
-				locator1 = "FrontendDataSetAdmin#NEW_FILTER_NAME",
+				locator1 = "DataSet#NEW_FILTER_NAME",
 				value1 = "Test");
 		}
 
@@ -185,11 +185,11 @@ definition {
 		}
 
 		task ("And clicks on Cancel button") {
-			Click(locator1 = "FrontendDataSetAdmin#NEW_FILTER_CANCEL_BUTTON");
+			Click(locator1 = "DataSet#NEW_FILTER_CANCEL_BUTTON");
 		}
 
 		task ("Then New filter modal is closed and the changes are not applied") {
-			AssertVisible(locator1 = "FrontendDataSetAdmin#CREATE_FILTER_BUTTON");
+			AssertVisible(locator1 = "DataSet#CREATE_FILTER_BUTTON");
 		}
 	}
 
@@ -203,7 +203,7 @@ definition {
 
 		task ("When the user adds a name") {
 			Type(
-				locator1 = "FrontendDataSetAdmin#NEW_FILTER_NAME",
+				locator1 = "DataSet#NEW_FILTER_NAME",
 				value1 = "Test");
 		}
 
@@ -220,11 +220,11 @@ definition {
 		}
 
 		task ("Then an error message appears") {
-			AssertVisible(locator1 = "FrontendDataSetAdmin#NEW_FILTER_INVALID_DATE");
+			AssertVisible(locator1 = "DataSet#NEW_FILTER_INVALID_DATE");
 		}
 
 		task ("When the user tries to save the date filter") {
-			Click(locator1 = "FrontendDataSetAdmin#NEW_FILTER_SAVE_BUTTON");
+			Click(locator1 = "DataSet#NEW_FILTER_SAVE_BUTTON");
 		}
 
 		task ("Then assert it's not possible to save a date filter with an invalid date range") {
@@ -241,7 +241,7 @@ definition {
 
 		task ("When the user adds a name") {
 			Type(
-				locator1 = "FrontendDataSetAdmin#NEW_FILTER_NAME",
+				locator1 = "DataSet#NEW_FILTER_NAME",
 				value1 = "Test");
 		}
 
@@ -258,7 +258,7 @@ definition {
 		}
 
 		task ("And clicks on the Save button") {
-			Click(locator1 = "FrontendDataSetAdmin#NEW_FILTER_SAVE_BUTTON");
+			Click(locator1 = "DataSet#NEW_FILTER_SAVE_BUTTON");
 		}
 
 		task ("Then a successful message is displayed") {
@@ -268,7 +268,7 @@ definition {
 		task ("And New filter modal is closed and the changes are applied") {
 			AssertVisible(
 				key_entryName = "Test",
-				locator1 = "FrontendDataSetAdmin#FILTERS_ENTRY");
+				locator1 = "DataSet#FILTERS_ENTRY");
 		}
 	}
 

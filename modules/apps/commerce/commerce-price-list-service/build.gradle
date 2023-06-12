@@ -20,6 +20,7 @@ dependencies {
 	compileOnly project(":apps:commerce:commerce-pricing-api")
 	compileOnly project(":apps:commerce:commerce-product-api")
 	compileOnly project(":apps:portal-search:portal-search-api")
+	compileOnly project(":apps:portal-search:portal-search-spi")
 	compileOnly project(":apps:portal:portal-aop-api")
 	compileOnly project(":apps:portal:portal-dao-orm-custom-sql-api")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")

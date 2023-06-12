@@ -364,8 +364,12 @@ components:
                 objectDefinitionId2:
                     format: int64
                     type: integer
+                objectDefinitionModifiable2:
+                    type: boolean
                 objectDefinitionName2:
                     type: string
+                objectDefinitionSystem2:
+                    type: boolean
                 parameterObjectFieldId:
                     format: int64
                     type: integer

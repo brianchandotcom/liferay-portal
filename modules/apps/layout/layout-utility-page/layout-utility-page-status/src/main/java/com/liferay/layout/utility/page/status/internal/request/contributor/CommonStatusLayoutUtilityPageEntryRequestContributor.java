@@ -69,7 +69,7 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributor
 		String host = _portal.getHost(dynamicServletRequest);
 
 		host = StringUtil.toLowerCase(host);
-		host = host.trim();
+		host = StringUtil.trim(host);
 
 		VirtualHost virtualHost = _virtualHostLocalService.fetchVirtualHost(
 			host);

@@ -72,6 +72,97 @@ definition {
 		}
 	}
 
+	@description = "Automation ID: LPS-151788 | Test Summary: Verify if when user fill the mandatory field and at least one detail from Activation Key Server Details, button 'Generate 1 Key' is already enable"
+	@ignore = "true"
+	@priority = 4
+	test AssertIfGenerate1KeyIsEnable {
+
+		// Needs refactor since it depends on example NASA ICE account
+
+		task ("Given Active the option in koroneiki 'Allow Self Provissioning'") {
+			JSONCP.activeAllowSelfProvisioning(koroneiki = "KOR-3963192");
+		}
+
+		task ("Add test user access to all Accounts") {
+			CustomerPortal.assignUserToOrganization();
+
+			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "NASA ICE");
+		}
+
+		task ("Give the user Role is Changed") {
+			CP2Utils.assigneToRoleViaUsersTab(
+				accountRoleTitle = "Administrator",
+				accountUserName = "Test Test",
+				testAccount = "NASA ICE");
+		}
+
+		task ("And a user go to Customer Portal") {
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+		}
+
+		task ("And go to the test account") {
+			CustomerPortal.search(searchItem = "NASA ICE");
+
+			CustomerPortal.enterOnProject(title = "NASA ICE");
+		}
+
+		task ("And going through onboarding") {
+			CustomerPortal.clickOnStartProjectSetup();
+
+			CustomerPortal.clickOnSkipForNowButton();
+		}
+
+		task ("And click on Portal product") {
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
+
+			WaitForVisible(
+				key_text = "Redacted",
+				locator1 = "CP2ActivationKeys#RESPONSIVE_TABLE");
+		}
+
+		task ("And go to generate a new key") {
+			CP2ActivationKeys.generateNewKey();
+		}
+
+		task ("When fulfill first phase form for Generate New License") {
+			CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
+				field = "Product",
+				option = "Portal");
+
+			CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
+				field = "Version",
+				option = "6.1 GA1");
+
+			CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
+				field = "Key Type",
+				option = "Production");
+
+			CP2ActivationKeys.selectFistActiveSubscriptionInput();
+
+			CustomerPortal.clickAtButton(text = "Next");
+		}
+
+		task ("And Generate button should be deactivated") {
+			CustomerPortal.assertButtonIsDisabled(text = "Generate 1 Key");
+		}
+
+		task ("And when fulfill the Environment and Host name fields") {
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = "Environment Test Name",
+				field = "Environment Name");
+
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = "localhost",
+				field = "Host Name");
+		}
+
+		task ("Then The Generate button should be active") {
+			CustomerPortal.assertButtonIsActive(text = "Generate 1 Key");
+		}
+	}
+
 	@description = "Automation Ticket: LPS-151334 | Test Summary: Verify that the Key Type field displays a drop-down list where you can select a key."
 	@ignore = "true"
 	@priority = 3
@@ -213,95 +304,6 @@ definition {
 
 		task ("Then I should be able to see the tool tip with the text 'Maximum number of Activation Keys reached for this subscription.'") {
 			CP2ActivationKeys.assertTooltipIsVisible(text = "Maximum number of Activation Keys reached for this subscription.");
-		}
-	}
-
-	@description = "Automation ID: LPS-151788 | Test Summary: Verify if when user fill the mandatory field and at least one detail from Activation Key Server Details, button 'Generate 1 Key' is already enable"
-	@ignore = "true"
-	@priority = 4
-	test IfGenerate1KeyIsEnable {
-
-		// Needs refactor since it depends on example NASA ICE account
-
-			task ("Given Active the option in koroneiki 'Allow Self Provissioning'") {
-			JSONCP.activeAllowSelfProvisioning(koroneiki="KOR-3963192");
-		}
-		task ("Add test user access to all Accounts") {
-			CustomerPortal.assignUserToOrganization();
-
-			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "NASA ICE");
-		}
-
-		task ("Give the user Role is Changed") {
-                CP2Utils.assigneToRoleViaUsersTab(
-                     accountRoleTitle = "Administrator",
-                     accountUserName = "Test Test",
-                     testAccount = "NASA ICE");
-            }
-		task ("And a user go to Customer Portal") {
-			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
-		}
-	
-		task ("And go to the test account") {
-			CustomerPortal.search(searchItem = "NASA ICE");
-
-			CustomerPortal.enterOnProject(title = "NASA ICE");
-		}
-		
-		task ("And going through onboarding") {
-			CustomerPortal.clickOnStartProjectSetup();
-
-			CustomerPortal.clickOnSkipForNowButton();
-		}
-
-		task ("And click on Portal product") {
-			CP2NavigationMenu.goToProductActivation();
-
-			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
-
-			WaitForVisible(
-			key_text = "Redacted",
-			locator1 = "CP2ActivationKeys#RESPONSIVE_TABLE");
-		}
-
-		task ("And go to generate a new key") {
-			CP2ActivationKeys.generateNewKey();
-		}
-
-		task ("When fulfill first phase form for Generate New License") {
-			CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
-				field = "Product",
-				option = "Portal");
-
-			CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
-				field = "Version",
-				option = "6.1 GA1");
-
-			CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
-				field = "Key Type",
-				option = "Production");
-
-			CP2ActivationKeys.selectFistActiveSubscriptionInput();
-
-			CustomerPortal.clickAtButton(text = "Next");
-		}
-
-		task ("And Generate button should be deactivated") {
-			CustomerPortal.assertButtonIsDisabled(text = "Generate 1 Key");
-		}
-
-		task ("And when fulfill the Environment and Host name fields") {
-			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
-				content = "Environment Test Name",
-				field = "Environment Name");
-
-			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
-				content = "localhost",
-				field = "Host Name");
-		}
-
-		task ("Then The Generate button should be active") {
-			CustomerPortal.assertButtonIsActive(text = "Generate 1 Key");
 		}
 	}
 

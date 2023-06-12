@@ -1,24 +1,6 @@
-definition{
-    macro updateSelfProvisioning {
-		Variables.assertDefined(parameterList = ${koroneikiAccountId});
+definition {
 
-		var portalURL = JSONCompany.getPortalURL();
-
-		var curl = '''
-			${portalURL}/o/c/koroneikiaccounts/${koroneikiAccountId} \
-				-u test@liferay.com:test \
-				-H 'accept: application/json' \
-				-H 'Content-Type: application/json' \
-				-d '{
-                     "allowSelfProvisioning": true
-                    }'
-		''';
-
-		var response = JSONCurlUtil.patch(${curl});
-
-		echo(${response});
-	}
-       macro getIdKoreneikiAccount {
+	macro getIdKoreneikiAccount {
 		Variables.assertDefined(parameterList = ${koroneikiERC});
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -34,6 +16,27 @@ definition{
 
 		echo(${response});
 
-        return ${response};
+		return ${response};
 	}
+
+	macro updateSelfProvisioning {
+		Variables.assertDefined(parameterList = ${koroneikiAccountId});
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/o/c/koroneikiaccounts/${koroneikiAccountId} \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					"allowSelfProvisioning": true
+				}'
+		''';
+
+		var response = JSONCurlUtil.patch(${curl});
+
+		echo(${response});
+	}
+
 }

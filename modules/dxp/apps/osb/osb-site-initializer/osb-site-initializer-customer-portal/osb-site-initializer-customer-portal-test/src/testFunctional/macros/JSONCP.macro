@@ -1,7 +1,11 @@
-definition{
-    macro activeAllowSelfProvisioning {
-    var accountid = JSONCPAPI.getIdKoreneikiAccount(koroneikiERC = "${koroneiki}");
-	echo("${accountid}");
-	JSONCPAPI.updateSelfProvisioning(koroneikiAccountId = ${accountid});
-    }
+definition {
+
+	macro activeAllowSelfProvisioning {
+		var accountid = JSONCPAPI.getIdKoreneikiAccount(koroneikiERC = ${koroneiki});
+
+		echo(${accountid});
+
+		JSONCPAPI.updateSelfProvisioning(koroneikiAccountId = ${accountid});
+	}
+
 }

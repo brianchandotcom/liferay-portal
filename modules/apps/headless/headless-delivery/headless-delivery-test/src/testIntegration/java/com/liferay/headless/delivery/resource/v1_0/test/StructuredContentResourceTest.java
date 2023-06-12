@@ -74,6 +74,9 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
 
@@ -227,21 +230,42 @@ public class StructuredContentResourceTest
 
 		long assetLibraryId = RandomTestUtil.randomLong();
 
-		try {
-			structuredContentResource.
-				getAssetLibraryStructuredContentByExternalReferenceCode(
-					assetLibraryId,
-					postStructuredContent.getExternalReferenceCode());
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.portal.vulcan.internal.jaxrs.exception.mapper." +
+					"WebApplicationExceptionMapper",
+				LoggerTestUtil.ERROR)) {
 
-			Assert.fail();
-		}
-		catch (Problem.ProblemException problemException) {
-			Problem problem = problemException.getProblem();
+			try {
+				structuredContentResource.
+					getAssetLibraryStructuredContentByExternalReferenceCode(
+						assetLibraryId,
+						postStructuredContent.getExternalReferenceCode());
 
-			Assert.assertEquals("NOT_FOUND", problem.getStatus());
+				Assert.fail();
+			}
+			catch (Problem.ProblemException problemException) {
+				Problem problem = problemException.getProblem();
+
+				Assert.assertEquals("NOT_FOUND", problem.getStatus());
+				Assert.assertEquals(
+					"Unable to get a valid asset library with ID " +
+						assetLibraryId,
+					problem.getTitle());
+			}
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
+
+			LogEntry logEntry = logEntries.get(0);
+
+			Assert.assertEquals(LoggerTestUtil.ERROR, logEntry.getPriority());
+
+			Throwable throwable = logEntry.getThrowable();
+
 			Assert.assertEquals(
 				"Unable to get a valid asset library with ID " + assetLibraryId,
-				problem.getTitle());
+				throwable.getMessage());
 		}
 	}
 

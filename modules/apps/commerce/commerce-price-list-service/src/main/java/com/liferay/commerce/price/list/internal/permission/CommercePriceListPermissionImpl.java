@@ -144,7 +144,9 @@ public class CommercePriceListPermissionImpl
 				_commerceCatalogLocalService.fetchCommerceCatalogByGroupId(
 					commercePriceList.getGroupId());
 
-			if (commerceCatalog != null) {
+			if ((commerceCatalog != null) &&
+				(commerceCatalog.getAccountEntryId() > 0)) {
+
 				List<AccountEntry> accountEntries =
 					_accountEntryLocalService.getUserAccountEntries(
 						permissionChecker.getUserId(), 0L, StringPool.BLANK,

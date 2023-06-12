@@ -46,9 +46,6 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.MissingFilter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -85,7 +82,7 @@ public class CommercePriceListIndexer extends BaseIndexer<CommercePriceList> {
 			Field.GROUP_ID, Field.MODIFIED_DATE, Field.NAME,
 			Field.SCOPE_GROUP_ID, Field.UID);
 		setFilterSearch(true);
-		setPermissionAware(false);
+		setPermissionAware(true);
 	}
 
 	@Override
@@ -98,16 +95,6 @@ public class CommercePriceListIndexer extends BaseIndexer<CommercePriceList> {
 	@Override
 	public String getClassName() {
 		return CLASS_NAME;
-	}
-
-	@Override
-	public boolean hasPermission(
-			PermissionChecker permissionChecker, String entryClassName,
-			long entryClassPK, String actionId)
-		throws Exception {
-
-		return _modelResourcePermission.contains(
-			permissionChecker, entryClassPK, ActionKeys.VIEW);
 	}
 
 	@Override
@@ -246,9 +233,21 @@ public class CommercePriceListIndexer extends BaseIndexer<CommercePriceList> {
 		document.addKeyword(
 			FIELD_EXTERNAL_REFERENCE_CODE,
 			commercePriceList.getExternalReferenceCode());
+
+		long commerceCatalogId = _getCatalogId(commercePriceList);
+
+		CommerceCatalog commerceCatalog =
+			_commerceCatalogLocalService.fetchCommerceCatalog(
+				commerceCatalogId);
+
+		if (commerceCatalog != null) {
+			document.addKeyword(
+				"accountEntryId", commerceCatalog.getAccountEntryId());
+		}
+
 		document.addKeyword(
 			"catalogBasePriceList", commercePriceList.isCatalogBasePriceList());
-		document.addNumber("catalogId", _getCatalogId(commercePriceList));
+		document.addNumber("catalogId", commerceCatalogId);
 
 		long[] commerceAccountGroupIds = TransformUtil.transformToLongArray(
 			_commercePriceListCommerceAccountGroupRelLocalService.
@@ -398,10 +397,5 @@ public class CommercePriceListIndexer extends BaseIndexer<CommercePriceList> {
 
 	@Reference
 	private IndexWriterHelper _indexWriterHelper;
-
-	@Reference(
-		target = "(model.class.name=com.liferay.commerce.price.list.model.CommercePriceList)"
-	)
-	private ModelResourcePermission<CommercePriceList> _modelResourcePermission;
 
 }

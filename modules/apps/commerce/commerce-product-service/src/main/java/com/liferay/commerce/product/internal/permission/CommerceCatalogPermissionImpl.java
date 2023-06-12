@@ -134,8 +134,9 @@ public class CommerceCatalogPermissionImpl
 			return true;
 		}
 
-		if (actionId.equals(ActionKeys.UPDATE) ||
-			actionId.equals(ActionKeys.VIEW)) {
+		if ((commerceCatalog.getAccountEntryId() > 0) &&
+			(actionId.equals(ActionKeys.UPDATE) ||
+			 actionId.equals(ActionKeys.VIEW))) {
 
 			List<AccountEntry> accountEntries =
 				_accountEntryLocalService.getUserAccountEntries(

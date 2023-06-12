@@ -724,7 +724,7 @@ element.textContent = 'Fragment Example';''';
 				{
 					"dataType": "string",
 					"defaultValue": "primary",
-					"label": "type",
+					"label": "style",
 					"name": "buttonType",
 					"type": "select",
 					"typeOptions": {
@@ -852,7 +852,7 @@ main();
 
 			PageEditor.gotoStyle(fragmentName = "Fragment Name");
 
-			PageEditor.configureFragment(style = "Large");
+			PageEditor.configureFragment(size = "Large");
 		}
 
 		task ("View the fragment styles") {

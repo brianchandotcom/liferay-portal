@@ -18,7 +18,9 @@ definition {
 			var api = "keywords/${keywordId}";
 		}
 		else {
-			var siteId = JSONGroupAPI._getSiteIdByGroupKey(groupName = ${groupName});
+			var siteId = JSONGroupAPI._getGroupIdByName(
+				groupName = ${groupName},
+				site = "true");
 
 			var api = "sites/${siteId}/keywords";
 		}

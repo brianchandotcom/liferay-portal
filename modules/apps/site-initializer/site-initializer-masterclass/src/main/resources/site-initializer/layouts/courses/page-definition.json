@@ -4,20 +4,12 @@
 			{
 				"definition": {
 					"fragmentStyle": {
-						"borderWidth": "0",
 						"marginBottom": "7",
 						"marginTop": "8"
 					},
 					"layout": {
-						"borderWidth": 0,
 						"marginBottom": 8,
-						"marginLeft": 0,
-						"marginRight": 0,
 						"marginTop": 10,
-						"paddingBottom": 0,
-						"paddingLeft": 0,
-						"paddingRight": 0,
-						"paddingTop": 0,
 						"widthType": "Fixed"
 					}
 				},
@@ -81,28 +73,17 @@
 									{
 										"definition": {
 											"fragmentStyle": {
-												"borderWidth": "0",
 												"marginBottom": "5",
 												"marginRight": "4"
 											},
 											"fragmentViewports": [
 												{
-													"fragmentViewportStyle": {
-														"marginRight": "0"
-													},
 													"id": "tablet"
 												}
 											],
 											"layout": {
-												"borderWidth": 0,
 												"marginBottom": 4,
-												"marginLeft": 0,
 												"marginRight": 2,
-												"marginTop": 0,
-												"paddingBottom": 0,
-												"paddingLeft": 0,
-												"paddingRight": 0,
-												"paddingTop": 0,
 												"widthType": "Fluid"
 											}
 										},
@@ -210,8 +191,7 @@
 													],
 													"fragmentStyle": {
 														"fontSize": "fontSizeLg",
-														"marginBottom": "3",
-														"textColor": ""
+														"marginBottom": "3"
 													}
 												},
 												"type": "Fragment"

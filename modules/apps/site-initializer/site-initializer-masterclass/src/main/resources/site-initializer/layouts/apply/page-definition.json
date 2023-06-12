@@ -4,7 +4,6 @@
 			{
 				"definition": {
 					"fragmentStyle": {
-						"borderWidth": "0",
 						"paddingBottom": "6",
 						"paddingLeft": "2",
 						"paddingRight": "2",
@@ -13,37 +12,26 @@
 					"fragmentViewports": [
 						{
 							"fragmentViewportStyle": {
-								"paddingBottom": "3",
-								"paddingTop": "0"
+								"paddingBottom": "3"
 							},
 							"id": "landscapeMobile"
 						},
 						{
 							"fragmentViewportStyle": {
-								"paddingBottom": "3",
-								"paddingTop": "0"
+								"paddingBottom": "3"
 							},
 							"id": "portraitMobile"
 						},
 						{
 							"fragmentViewportStyle": {
 								"paddingBottom": "5",
-								"paddingLeft": "0",
-								"paddingRight": "0",
 								"paddingTop": "5"
 							},
 							"id": "tablet"
 						}
 					],
 					"layout": {
-						"borderWidth": 0,
-						"marginBottom": 0,
-						"marginLeft": 0,
-						"marginRight": 0,
-						"marginTop": 0,
 						"paddingBottom": 6,
-						"paddingLeft": 0,
-						"paddingRight": 0,
 						"paddingTop": 8,
 						"widthType": "Fluid"
 					}
@@ -51,10 +39,6 @@
 				"pageElements": [
 					{
 						"definition": {
-							"fragmentStyle": {
-								"backgroundColor": "",
-								"borderWidth": "0"
-							},
 							"fragmentViewports": [
 								{
 									"fragmentViewportStyle": {
@@ -65,15 +49,6 @@
 								}
 							],
 							"layout": {
-								"borderWidth": 0,
-								"marginBottom": 0,
-								"marginLeft": 0,
-								"marginRight": 0,
-								"marginTop": 0,
-								"paddingBottom": 0,
-								"paddingLeft": 0,
-								"paddingRight": 0,
-								"paddingTop": 0,
 								"widthType": "Fixed"
 							}
 						},
@@ -173,7 +148,6 @@
 												"definition": {
 													"fragmentStyle": {
 														"backgroundColor": "gray200Color",
-														"borderWidth": "0",
 														"marginRight": "6",
 														"paddingBottom": "3",
 														"paddingLeft": "3",
@@ -183,18 +157,13 @@
 													"fragmentViewports": [
 														{
 															"fragmentViewportStyle": {
-																"marginBottom": "4",
-																"marginRight": "0"
+																"marginBottom": "4"
 															},
 															"id": "tablet"
 														}
 													],
 													"layout": {
-														"borderWidth": 0,
-														"marginBottom": 0,
-														"marginLeft": 0,
 														"marginRight": 6,
-														"marginTop": 0,
 														"paddingBottom": 1,
 														"paddingLeft": 1,
 														"paddingRight": 1,
@@ -280,21 +249,11 @@
 											{
 												"definition": {
 													"fragmentStyle": {
-														"borderWidth": "0",
 														"marginBottom": "2"
 													},
 													"layout": {
 														"align": "Center",
-														"borderWidth": 0,
 														"contentDisplay": "FlexRow",
-														"marginBottom": 0,
-														"marginLeft": 0,
-														"marginRight": 0,
-														"marginTop": 0,
-														"paddingBottom": 0,
-														"paddingLeft": 0,
-														"paddingRight": 0,
-														"paddingTop": 0,
 														"widthType": "Fluid"
 													}
 												},
@@ -340,7 +299,6 @@
 															],
 															"fragmentStyle": {
 																"marginRight": "2",
-																"textColor": "",
 																"width": "26px"
 															}
 														},
@@ -381,21 +339,11 @@
 											{
 												"definition": {
 													"fragmentStyle": {
-														"borderWidth": "0",
 														"marginBottom": "2"
 													},
 													"layout": {
 														"align": "Center",
-														"borderWidth": 0,
 														"contentDisplay": "FlexRow",
-														"marginBottom": 0,
-														"marginLeft": 0,
-														"marginRight": 0,
-														"marginTop": 0,
-														"paddingBottom": 0,
-														"paddingLeft": 0,
-														"paddingRight": 0,
-														"paddingTop": 0,
 														"widthType": "Fluid"
 													}
 												},
@@ -481,21 +429,11 @@
 											{
 												"definition": {
 													"fragmentStyle": {
-														"borderWidth": "0",
 														"marginBottom": "1"
 													},
 													"layout": {
 														"align": "Center",
-														"borderWidth": 0,
 														"contentDisplay": "FlexRow",
-														"marginBottom": 0,
-														"marginLeft": 0,
-														"marginRight": 0,
-														"marginTop": 0,
-														"paddingBottom": 0,
-														"paddingLeft": 0,
-														"paddingRight": 0,
-														"paddingTop": 0,
 														"widthType": "Fluid"
 													}
 												},

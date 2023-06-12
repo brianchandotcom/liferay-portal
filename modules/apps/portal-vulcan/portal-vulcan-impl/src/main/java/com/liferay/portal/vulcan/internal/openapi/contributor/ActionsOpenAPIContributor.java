@@ -16,6 +16,7 @@ package com.liferay.portal.vulcan.internal.openapi.contributor;
 
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.vulcan.action.ActionInfo;
@@ -49,6 +50,10 @@ public class ActionsOpenAPIContributor implements OpenAPIContributor {
 	@Override
 	public void contribute(OpenAPI openAPI, OpenAPIContext openAPIContext)
 		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-180090")) {
+			return;
+		}
 
 		Map<String, Schema> individualSchemas = _getIndividualSchemas(openAPI);
 

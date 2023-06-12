@@ -25,10 +25,12 @@ import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.field.Field;
 import com.liferay.segments.field.customizer.SegmentsFieldCustomizer;
 
@@ -106,9 +108,13 @@ public class AssetCategorySegmentsFieldCustomizer
 
 			ArrayList<Long> vocabularyIds = new ArrayList<>();
 
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)portletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
 			List<AssetVocabulary> assetVocabularies =
-				_assetVocabularyLocalService.getAssetVocabularies(
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+				_assetVocabularyLocalService.getGroupVocabularies(
+					themeDisplay.getCompanyGroupId());
 
 			for (AssetVocabulary assetVocabulary : assetVocabularies) {
 				vocabularyIds.add(assetVocabulary.getVocabularyId());

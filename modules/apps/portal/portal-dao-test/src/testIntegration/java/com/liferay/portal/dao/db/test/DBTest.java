@@ -64,6 +64,10 @@ public class DBTest {
 		_dbInspector = new DBInspector(_connection);
 
 		_db = DBManagerUtil.getDB();
+
+		for (int i = 0; i < _COLUMN_NAMES_1.length; i++) {
+			_COLUMN_NAMES_1[i] = _dbInspector.normalizeName(_COLUMN_NAMES_1[i]);
+		}
 	}
 
 	@AfterClass
@@ -589,9 +593,9 @@ public class DBTest {
 	}
 
 	private static final String[] _COLUMN_NAMES_1 = {
-		"id", "nilColumn", "notNilColumn", "notNilColumn", "typeBlob",
-		"typeBoolean", "typeDate", "typeDouble", "typeInteger", "typeLong",
-		"typeSBlob", "typeString", "typeText", "typeVarchar"
+		"id", "notNilColumn", "nilColumn", "typeBlob", "typeBoolean",
+		"typeDate", "typeDouble", "typeInteger", "typeLong", "typeSBlob",
+		"typeString", "typeText", "typeVarchar"
 	};
 
 	private static final String _INDEX_NAME = "IX_TEMP";

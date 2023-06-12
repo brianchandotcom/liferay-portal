@@ -10,6 +10,7 @@ import {
 	openModal,
 	openSelectionModal,
 	openToast,
+	sub
 } from 'frontend-js-web';
 
 import showSuccessMessage from './utils/showSuccessMessage';
@@ -40,11 +41,12 @@ const ACTIONS = {
 			itemType,
 			moveKBItemActionURL,
 			moveKBItemModalURL,
+			kbItemTitle
 		},
 		portletNamespace
 	) {
 		openSelectionModal({
-			buttonAddLabel: Liferay.Language.get('move'),
+			buttonAddLabel: Liferay.Language.get('save'),
 			height: '50vh',
 			multiple: true,
 			onSelect: ({destinationItem, index}) => {
@@ -104,7 +106,7 @@ const ACTIONS = {
 			},
 			selectEventName: `selectKBMoveFolder`,
 			size: 'md',
-			title: Liferay.Language.get('move'),
+			title: sub(Liferay.Language.get('move-x-to'), kbItemTitle),
 			url: moveKBItemModalURL,
 		});
 	},

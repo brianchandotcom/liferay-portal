@@ -122,9 +122,7 @@ definition {
 			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
-		if (IsElementNotPresent(locator1 = "ApplicationsMenu#TOGGLE")) {
-			Refresh();
-
+		if (IsElementPresent(locator1 = "UserBar#USER_SIGN_IN")) {
 			User.firstLoginUI(
 				password = "test",
 				specificURL = "http://localhost:9080",
@@ -148,12 +146,16 @@ definition {
 
 		User.logoutPG();
 
-		User.firstLoginPG();
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://localhost:8080",
+			userEmailAddress = "test@liferay.com");
 
-		if (IsElementNotPresent(locator1 = "ApplicationsMenu#TOGGLE")) {
-			Refresh();
-
-			User.firstLoginPG();
+		if (IsElementPresent(locator1 = "UserBar#USER_SIGN_IN")) {
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "http://localhost:8080",
+				userEmailAddress = "test@liferay.com");
 		}
 
 		ApplicationsMenu.gotoPortlet(

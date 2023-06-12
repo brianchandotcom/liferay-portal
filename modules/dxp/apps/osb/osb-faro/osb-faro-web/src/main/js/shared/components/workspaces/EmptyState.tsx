@@ -5,6 +5,7 @@ import getCN from 'classnames';
 import React from 'react';
 import {close, modalTypes, open} from 'shared/actions/modals';
 import {connect} from 'react-redux';
+import {DisplayType} from 'shared/types';
 import {PROD_MODE} from 'shared/util/constants';
 import {Routes, toRoute} from 'shared/util/router';
 
@@ -23,6 +24,7 @@ const EmptyState: React.FC<IEmptyStateProps> = ({
 		<div className={PROD_MODE ? 'col-xl-12' : 'col-xl-6'}>
 			<CardEmpty
 				buttonProps={{
+					displayType: 'primary',
 					label: Liferay.Language.get('contact-sales'),
 					onClick: () =>
 						open(modalTypes.CONTACT_SALES_MODAL, {
@@ -55,6 +57,7 @@ const EmptyState: React.FC<IEmptyStateProps> = ({
 
 interface ICardItemProps extends React.HTMLAttributes<HTMLElement> {
 	buttonProps: {
+		displayType?: DisplayType;
 		href?: string;
 		label: string;
 		onClick?: () => void;
@@ -68,7 +71,12 @@ export const CardEmpty: React.FC<ICardItemProps> = ({
 	description,
 	icon
 }) => {
-	const {href, label, ...otherButtonProps} = buttonProps;
+	const {
+		displayType = 'secondary',
+		href,
+		label,
+		...otherButtonProps
+	} = buttonProps;
 
 	return (
 		<div className='empty-card'>
@@ -84,7 +92,7 @@ export const CardEmpty: React.FC<ICardItemProps> = ({
 					{label}
 				</ClayLink>
 			) : (
-				<ClayButton displayType='secondary' {...otherButtonProps}>
+				<ClayButton displayType={displayType} {...otherButtonProps}>
 					{label}
 				</ClayButton>
 			)}

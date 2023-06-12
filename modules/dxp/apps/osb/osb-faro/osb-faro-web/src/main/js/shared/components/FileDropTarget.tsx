@@ -121,7 +121,7 @@ export const FileItem: React.FC<IFileItemProps> = ({file, onCancel}) => {
 
 					<ClayButton
 						className='button-root'
-						displayType='unstyled'
+						displayType='link'
 						onClick={onCancel}
 						size='sm'
 					>

@@ -32,7 +32,6 @@ import javax.management.ObjectName;
 
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -54,15 +53,6 @@ public class PortalCacheExtenderTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Before
-	public void setUp() throws Exception {
-		_multiVmXML = _generateXMLContent(_TEST_CACHE_MULTI, 1001, 51);
-		_singleVmXML = _generateXMLContent(_TEST_CACHE_SINGLE, 1001, 51);
-
-		_bundle = _installBundle(
-			_BUNDLE_SYMBOLIC_NAME, _multiVmXML, _singleVmXML);
-	}
-
 	@After
 	public void tearDown() throws Exception {
 		if (_bundle.getState() != Bundle.UNINSTALLED) {
@@ -72,6 +62,12 @@ public class PortalCacheExtenderTest {
 
 	@Test
 	public void testUpdateConfig() throws Exception {
+		_multiVmXML = _generateXMLContent(_TEST_CACHE_MULTI, 1001, 51);
+		_singleVmXML = _generateXMLContent(_TEST_CACHE_SINGLE, 1001, 51);
+
+		_bundle = _installBundle(
+			_BUNDLE_SYMBOLIC_NAME, _multiVmXML, _singleVmXML);
+
 		_assertCacheConfig(
 			PortalCacheManagerNames.MULTI_VM, 1001, _TEST_CACHE_MULTI, 51L);
 		_assertCacheConfig(

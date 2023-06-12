@@ -194,28 +194,23 @@ public class UpgradeStepRegistratorTracker {
 			List<ServiceRegistration<UpgradeStep>> serviceRegistrations =
 				new ArrayList<>(upgradeInfos.size());
 
-			try (SafeCloseable safeCloseable =
-					UpgradeStepRegistratorThreadLocal.setEnabled(false)) {
+			for (UpgradeInfo upgradeInfo : upgradeInfos) {
+				ServiceRegistration<UpgradeStep> serviceRegistration =
+					_bundleContext.registerService(
+						UpgradeStep.class, upgradeInfo.getUpgradeStep(),
+						HashMapDictionaryBuilder.<String, Object>put(
+							"build.number", upgradeInfo.getBuildNumber()
+						).put(
+							"upgrade.bundle.symbolic.name", bundleSymbolicName
+						).put(
+							"upgrade.from.schema.version",
+							upgradeInfo.getFromSchemaVersionString()
+						).put(
+							"upgrade.to.schema.version",
+							upgradeInfo.getToSchemaVersionString()
+						).build());
 
-				for (UpgradeInfo upgradeInfo : upgradeInfos) {
-					ServiceRegistration<UpgradeStep> serviceRegistration =
-						_bundleContext.registerService(
-							UpgradeStep.class, upgradeInfo.getUpgradeStep(),
-							HashMapDictionaryBuilder.<String, Object>put(
-								"build.number", upgradeInfo.getBuildNumber()
-							).put(
-								"upgrade.bundle.symbolic.name",
-								bundleSymbolicName
-							).put(
-								"upgrade.from.schema.version",
-								upgradeInfo.getFromSchemaVersionString()
-							).put(
-								"upgrade.to.schema.version",
-								upgradeInfo.getToSchemaVersionString()
-							).build());
-
-					serviceRegistrations.add(serviceRegistration);
-				}
+				serviceRegistrations.add(serviceRegistration);
 			}
 
 			return () -> {

@@ -18,7 +18,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123540. Upgrade in WEM Structures with translations."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = 4
 	test CreateNewStructureUsingAnUpgradedStructureAsFieldsetAfterUpgrade7310 {
 		property data.archive.type = "data-archive-data-engine-structure";
@@ -29,7 +29,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123540. Upgrade in WEM Structures with translations."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = 4
 	test CreateNewStructureUsingAnUpgradedStructureAsFieldsetAfterUpgrade71103 {
 		property data.archive.type = "data-archive-data-engine-structure";
@@ -40,7 +40,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123540. Upgrade in WEM Structures with translations."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = 4
 	test CreateNewStructureUsingAnUpgradedStructureAsFieldsetAfterUpgrade72101 {
 		property data.archive.type = "data-archive-data-engine-structure";
@@ -51,7 +51,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123540. Upgrade in WEM Structures with translations."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = 4
 	test CreateNewStructureUsingAnUpgradedStructureAsFieldsetAfterUpgrade701014 {
 		property data.archive.type = "data-archive-data-engine-structure";
@@ -62,7 +62,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123540. Upgrade in WEM Structures with translations."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = 4
 	test EditAnUpgradedStructureWithFieldGroupAfterUpgrade621021 {
 		property data.archive.type = "data-archive-data-engine-structure";
@@ -73,7 +73,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123540. Upgrade in WEM Structures with translations."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = 4
 	test EditAnUpgradedStructureWithFieldsetAfterUpgrade7310 {
 		property data.archive.type = "data-archive-data-engine-structure";
@@ -84,7 +84,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123540. Upgrade in WEM Structures with translations."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = 4
 	test EditAnUpgradedStructureWithFieldsetAfterUpgrade71103 {
 		property data.archive.type = "data-archive-data-engine-structure";
@@ -95,7 +95,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123540. Upgrade in WEM Structures with translations."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = 4
 	test EditAnUpgradedStructureWithFieldsetAfterUpgrade72101 {
 		property data.archive.type = "data-archive-data-engine-structure";
@@ -106,7 +106,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123540. Upgrade in WEM Structures with translations."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = 4
 	test EditAnUpgradedStructureWithFieldsetAfterUpgrade701014 {
 		property data.archive.type = "data-archive-data-engine-structure";
@@ -117,7 +117,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123540. Upgrade in WEM Structures with translations."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = 4
 	test ValidateFieldLabelsTranslatedInStructureAfterUpgrade7310 {
 		property data.archive.type = "data-archive-data-engine-structure";
@@ -130,7 +130,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123540. Upgrade in WEM Structures with translations."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = 4
 	test ValidateFieldLabelsTranslatedInStructureAfterUpgrade71103 {
 		property data.archive.type = "data-archive-data-engine-structure";
@@ -143,7 +143,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123540. Upgrade in WEM Structures with translations."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = 4
 	test ValidateFieldLabelsTranslatedInStructureAfterUpgrade72101 {
 		property data.archive.type = "data-archive-data-engine-structure";
@@ -156,7 +156,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123540. Upgrade in WEM Structures with translations."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = 4
 	test ValidateFieldLabelsTranslatedInStructureAfterUpgrade621021 {
 		property data.archive.type = "data-archive-data-engine-structure";
@@ -169,7 +169,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123540. Upgrade in WEM Structures with translations."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = 4
 	test ValidateFieldLabelsTranslatedInStructureAfterUpgrade701014 {
 		property data.archive.type = "data-archive-data-engine-structure";
@@ -182,7 +182,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123540. Upgrade in WEM Structures with translations."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = 4
 	test ValidateFieldLabelsTranslatedInStructureWithFieldGroupAfterUpgrade7310 {
 		property data.archive.type = "data-archive-data-engine-structure";
@@ -193,7 +193,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123540. Upgrade in WEM Structures with translations."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = 4
 	test ValidateFieldLabelsTranslatedInStructureWithFieldGroupAfterUpgrade71103 {
 		property data.archive.type = "data-archive-data-engine-structure";
@@ -204,7 +204,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123540. Upgrade in WEM Structures with translations."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = 4
 	test ValidateFieldLabelsTranslatedInStructureWithFieldGroupAfterUpgrade72101 {
 		property data.archive.type = "data-archive-data-engine-structure";
@@ -215,7 +215,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123540. Upgrade in WEM Structures with translations."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = 4
 	test ValidateFieldLabelsTranslatedInStructureWithFieldGroupAfterUpgrade621021 {
 		property data.archive.type = "data-archive-data-engine-structure";
@@ -226,7 +226,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123540. Upgrade in WEM Structures with translations."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = 4
 	test ValidateFieldLabelsTranslatedInStructureWithFieldGroupAfterUpgrade701014 {
 		property data.archive.type = "data-archive-data-engine-structure";
@@ -237,7 +237,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123540. Upgrade in WEM Structures with translations."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = 4
 	test ValidateFieldLabelsTranslatedInStructureWithFieldSetAfterUpgrade7310 {
 		property data.archive.type = "data-archive-data-engine-structure";
@@ -248,7 +248,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123540. Upgrade in WEM Structures with translations."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = 4
 	test ValidateFieldLabelsTranslatedInStructureWithFieldSetAfterUpgrade71103 {
 		property data.archive.type = "data-archive-data-engine-structure";
@@ -259,7 +259,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123540. Upgrade in WEM Structures with translations."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = 4
 	test ValidateFieldLabelsTranslatedInStructureWithFieldSetAfterUpgrade72101 {
 		property data.archive.type = "data-archive-data-engine-structure";
@@ -270,7 +270,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123540. Upgrade in WEM Structures with translations."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = 4
 	test ValidateFieldLabelsTranslatedInStructureWithFieldSetAfterUpgrade701014 {
 		property data.archive.type = "data-archive-data-engine-structure";
@@ -281,7 +281,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123540. Upgrade in WEM Structures with translations."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = 4
 	test ValidateNStructureAfterUpgrade7310 {
 		property data.archive.type = "data-archive-data-engine-structure";
@@ -292,7 +292,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123540. Upgrade in WEM Structures with translations."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = 4
 	test ValidateNStructureAfterUpgrade71103 {
 		property data.archive.type = "data-archive-data-engine-structure";
@@ -303,7 +303,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123540. Upgrade in WEM Structures with translations."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = 4
 	test ValidateNStructureAfterUpgrade72101 {
 		property data.archive.type = "data-archive-data-engine-structure";
@@ -314,7 +314,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123540. Upgrade in WEM Structures with translations."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = 4
 	test ValidateNStructureAfterUpgrade621021 {
 		property data.archive.type = "data-archive-data-engine-structure";
@@ -325,7 +325,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123540. Upgrade in WEM Structures with translations."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = 4
 	test ValidateNStructureAfterUpgrade701014 {
 		property data.archive.type = "data-archive-data-engine-structure";

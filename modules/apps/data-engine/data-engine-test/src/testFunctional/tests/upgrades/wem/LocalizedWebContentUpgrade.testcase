@@ -18,7 +18,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = 4
 	test CreateNewWebContentUsingAnUpgradedStructureAfterUpgrade621021 {
 		property data.archive.type = "data-archive-data-engine-web-content";
@@ -29,7 +29,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = 4
 	test CreateNewWebContentUsingAnUpgradedStructureWithFieldsetAfterUpgrade7310 {
 		property data.archive.type = "data-archive-data-engine-web-content";
@@ -40,7 +40,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = 4
 	test CreateNewWebContentUsingAnUpgradedStructureWithFieldsetAfterUpgrade71103 {
 		property data.archive.type = "data-archive-data-engine-web-content";
@@ -51,7 +51,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = 4
 	test CreateNewWebContentUsingAnUpgradedStructureWithFieldsetAfterUpgrade72101 {
 		property data.archive.type = "data-archive-data-engine-web-content";
@@ -62,7 +62,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = 4
 	test CreateNewWebContentUsingAnUpgradedStructureWithFieldsetAfterUpgrade701014 {
 		property data.archive.type = "data-archive-data-engine-web-content";
@@ -73,7 +73,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = 4
 	test EditAnUpgradedWebContentWithTranslationsAfterUpgrade7310 {
 		property data.archive.type = "data-archive-data-engine-web-content";
@@ -84,7 +84,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = 4
 	test EditAnUpgradedWebContentWithTranslationsAfterUpgrade71103 {
 		property data.archive.type = "data-archive-data-engine-web-content";
@@ -95,7 +95,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = 4
 	test EditAnUpgradedWebContentWithTranslationsAfterUpgrade72101 {
 		property data.archive.type = "data-archive-data-engine-web-content";
@@ -106,7 +106,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = 4
 	test EditAnUpgradedWebContentWithTranslationsAfterUpgrade621021 {
 		property data.archive.type = "data-archive-data-engine-web-content";
@@ -117,7 +117,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = 4
 	test EditAnUpgradedWebContentWithTranslationsAfterUpgrade701014 {
 		property data.archive.type = "data-archive-data-engine-web-content";
@@ -128,7 +128,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = 4
 	test ValidateNWebContentAfterUpgrade7310 {
 		property data.archive.type = "data-archive-data-engine-web-content";
@@ -139,7 +139,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = 4
 	test ValidateNWebContentAfterUpgrade71103 {
 		property data.archive.type = "data-archive-data-engine-web-content";
@@ -150,7 +150,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = 4
 	test ValidateNWebContentAfterUpgrade72101 {
 		property data.archive.type = "data-archive-data-engine-web-content";
@@ -161,7 +161,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = 4
 	test ValidateNWebContentAfterUpgrade621021 {
 		property data.archive.type = "data-archive-data-engine-web-content";
@@ -172,7 +172,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = 4
 	test ValidateNWebContentAfterUpgrade701014 {
 		property data.archive.type = "data-archive-data-engine-web-content";
@@ -183,7 +183,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = 4
 	test ValidateWebContentWithAllFieldsTranslatedAfterUpgrade7310 {
 		property data.archive.type = "data-archive-data-engine-web-content";
@@ -196,7 +196,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = 4
 	test ValidateWebContentWithAllFieldsTranslatedAfterUpgrade71103 {
 		property data.archive.type = "data-archive-data-engine-web-content";
@@ -209,7 +209,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = 4
 	test ValidateWebContentWithAllFieldsTranslatedAfterUpgrade72101 {
 		property data.archive.type = "data-archive-data-engine-web-content";
@@ -222,7 +222,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = 4
 	test ValidateWebContentWithAllFieldsTranslatedAfterUpgrade621021 {
 		property data.archive.type = "data-archive-data-engine-web-content";
@@ -235,7 +235,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = 4
 	test ValidateWebContentWithAllFieldsTranslatedAfterUpgrade701014 {
 		property data.archive.type = "data-archive-data-engine-web-content";
@@ -248,7 +248,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = 4
 	test ValidateWebContentWithFieldGroupLevel2AndTranslationsAfterUpgrade7310 {
 		property data.archive.type = "data-archive-data-engine-web-content";
@@ -259,7 +259,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = 4
 	test ValidateWebContentWithFieldGroupLevel2AndTranslationsAfterUpgrade71103 {
 		property data.archive.type = "data-archive-data-engine-web-content";
@@ -270,7 +270,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = 4
 	test ValidateWebContentWithFieldGroupLevel2AndTranslationsAfterUpgrade72101 {
 		property data.archive.type = "data-archive-data-engine-web-content";
@@ -281,7 +281,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = 4
 	test ValidateWebContentWithFieldGroupLevel2AndTranslationsAfterUpgrade621021 {
 		property data.archive.type = "data-archive-data-engine-web-content";
@@ -292,7 +292,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = 4
 	test ValidateWebContentWithFieldGroupLevel2AndTranslationsAfterUpgrade701014 {
 		property data.archive.type = "data-archive-data-engine-web-content";
@@ -303,7 +303,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = 4
 	test ValidateWebContentWithFieldsetLevel2AndTranslationsAfterUpgrade7310 {
 		property data.archive.type = "data-archive-data-engine-web-content";
@@ -314,7 +314,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = 4
 	test ValidateWebContentWithFieldsetLevel2AndTranslationsAfterUpgrade71103 {
 		property data.archive.type = "data-archive-data-engine-web-content";
@@ -325,7 +325,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = 4
 	test ValidateWebContentWithFieldsetLevel2AndTranslationsAfterUpgrade72101 {
 		property data.archive.type = "data-archive-data-engine-web-content";
@@ -336,7 +336,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = 4
 	test ValidateWebContentWithFieldsetLevel2AndTranslationsAfterUpgrade701014 {
 		property data.archive.type = "data-archive-data-engine-web-content";
@@ -347,7 +347,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = 4
 	test ValidateWebContentWithRepeatableFieldGroupAndTranslationsAfterUpgrade7310 {
 		property data.archive.type = "data-archive-data-engine-web-content";
@@ -358,7 +358,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = 4
 	test ValidateWebContentWithRepeatableFieldGroupAndTranslationsAfterUpgrade71103 {
 		property data.archive.type = "data-archive-data-engine-web-content";
@@ -369,7 +369,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = 4
 	test ValidateWebContentWithRepeatableFieldGroupAndTranslationsAfterUpgrade72101 {
 		property data.archive.type = "data-archive-data-engine-web-content";
@@ -380,7 +380,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = 4
 	test ValidateWebContentWithRepeatableFieldGroupAndTranslationsAfterUpgrade621021 {
 		property data.archive.type = "data-archive-data-engine-web-content";
@@ -391,7 +391,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = 4
 	test ValidateWebContentWithRepeatableFieldGroupAndTranslationsAfterUpgrade701014 {
 		property data.archive.type = "data-archive-data-engine-web-content";

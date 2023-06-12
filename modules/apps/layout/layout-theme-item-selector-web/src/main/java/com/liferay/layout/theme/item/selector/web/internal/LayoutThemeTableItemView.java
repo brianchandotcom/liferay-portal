@@ -53,17 +53,17 @@ public class LayoutThemeTableItemView implements TableItemView {
 
 		TextSearchEntry nameTextSearchEntry = new TextSearchEntry();
 
-		nameTextSearchEntry.setName(_theme.getName());
 		nameTextSearchEntry.setCssClass(
 			"entry entry-selector table-cell-expand table-cell-minw-200");
+		nameTextSearchEntry.setName(_theme.getName());
 
 		searchEntries.add(nameTextSearchEntry);
 
 		TextSearchEntry authorTextSearchEntry = new TextSearchEntry();
 
-		authorTextSearchEntry.setName(_getAuthor());
 		authorTextSearchEntry.setCssClass(
 			"table-cell-expand-smaller table-cell-minw-150");
+		authorTextSearchEntry.setName(_getAuthor());
 
 		searchEntries.add(authorTextSearchEntry);
 

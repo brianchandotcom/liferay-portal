@@ -35,11 +35,13 @@ if (Validator.isNotNull(backURL)) {
 renderResponse.setTitle(layoutsAdminDisplayContext.getConfigurationTitle(selLayout, locale));
 %>
 
-<clay:container-fluid>
-	<liferay-frontend:form-navigator
-		formModelBean="<%= selLayout %>"
-		id="<%= FormNavigatorConstants.FORM_NAVIGATOR_ID_LAYOUT_DESIGN %>"
-		showButtons="<%= false %>"
-		type="<%= FormNavigatorConstants.FormNavigatorType.SHEET_SECTIONS %>"
-	/>
-</clay:container-fluid>
+<div class="sheet-lg">
+	<clay:container-fluid>
+		<liferay-frontend:form-navigator
+			formModelBean="<%= selLayout %>"
+			id="<%= FormNavigatorConstants.FORM_NAVIGATOR_ID_LAYOUT_DESIGN %>"
+			showButtons="<%= false %>"
+			type="<%= FormNavigatorConstants.FormNavigatorType.SHEET_SECTIONS %>"
+		/>
+	</clay:container-fluid>
+</div>

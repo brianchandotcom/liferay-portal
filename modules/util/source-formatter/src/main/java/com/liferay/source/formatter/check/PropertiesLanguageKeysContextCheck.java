@@ -63,6 +63,8 @@ public class PropertiesLanguageKeysContextCheck extends BaseFileCheck {
 						"The single-word key '", key,
 						"' should include a word of context at the end, ",
 						"within a [], to indicate specific meaning"));
+
+				continue;
 			}
 
 			if ((contextDepth != 0) &&

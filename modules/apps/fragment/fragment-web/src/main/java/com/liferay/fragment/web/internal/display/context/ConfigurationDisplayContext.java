@@ -29,12 +29,16 @@ import com.liferay.info.field.type.NumberInfoFieldType;
 import com.liferay.info.field.type.RelationshipInfoFieldType;
 import com.liferay.info.field.type.SelectInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -44,7 +48,10 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class ConfigurationDisplayContext {
 
-	public ConfigurationDisplayContext(HttpServletRequest httpServletRequest) {
+	public ConfigurationDisplayContext(
+		HttpServletRequest httpServletRequest,
+		LiferayPortletResponse liferayPortletResponse) {
+
 		_httpServletRequest = httpServletRequest;
 
 		_defaultInputFragmentEntryConfigurationProvider =
@@ -57,6 +64,8 @@ public class ConfigurationDisplayContext {
 			(FragmentCollectionContributorRegistry)
 				httpServletRequest.getAttribute(
 					FragmentWebKeys.FRAGMENT_COLLECTION_CONTRIBUTOR_TRACKER);
+
+		_liferayPortletResponse = liferayPortletResponse;
 	}
 
 	public Map<String, Object> getData() {
@@ -75,9 +84,8 @@ public class ConfigurationDisplayContext {
 							themeDisplay.getScopeGroupId());
 
 				Map<String, FragmentEntry> fragmentEntries =
-					_fragmentCollectionContributorRegistry.
-						getFragmentEntries(
-							themeDisplay.getLocale());
+					_fragmentCollectionContributorRegistry.getFragmentEntries(
+						themeDisplay.getLocale());
 
 				for (InfoFieldType infoFieldType : _INFO_FIELD_TYPES) {
 					JSONObject jsonObject =
@@ -90,7 +98,7 @@ public class ConfigurationDisplayContext {
 							() -> {
 								FragmentEntry fragmentEntry =
 									fragmentEntries.get(
-											jsonObject.getString("key"));
+										jsonObject.getString("key"));
 
 								if (fragmentEntry != null) {
 									return fragmentEntry.getName();
@@ -108,6 +116,15 @@ public class ConfigurationDisplayContext {
 
 				return formTypes;
 			}
+		).put(
+			"selectFragmentURL",
+			PortletURLBuilder.createRenderURL(
+				_liferayPortletResponse
+			).setMVCRenderCommandName(
+				"/fragment/select_default_input_fragment"
+			).setWindowState(
+				LiferayWindowState.POP_UP
+			).buildString()
 		).build();
 	}
 
@@ -124,5 +141,6 @@ public class ConfigurationDisplayContext {
 	private final FragmentCollectionContributorRegistry
 		_fragmentCollectionContributorRegistry;
 	private final HttpServletRequest _httpServletRequest;
+	private final LiferayPortletResponse _liferayPortletResponse;
 
 }

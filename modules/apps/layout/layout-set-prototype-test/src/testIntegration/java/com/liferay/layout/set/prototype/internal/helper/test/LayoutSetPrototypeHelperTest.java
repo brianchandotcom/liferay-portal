@@ -21,6 +21,7 @@ import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -68,7 +69,13 @@ public class LayoutSetPrototypeHelperTest {
 
 		_layoutSetPrototypeGroup = _layoutSetPrototype.getGroup();
 
+		_prototypeLayout = LayoutTestUtil.addTypePortletLayout(
+			_layoutSetPrototypeGroup, true);
+
 		setLinkEnabled();
+
+		_siteLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(
+			_group.getGroupId(), false, _prototypeLayout.getFriendlyURL());
 	}
 
 	@Test
@@ -138,14 +145,144 @@ public class LayoutSetPrototypeHelperTest {
 		}
 	}
 
+	@Test
+	public void testLayoutSetPrototypeLayoutFriendlyURLConflictDetectionBeforeChange()
+		throws Exception {
+
+		LayoutTestUtil.addTypePortletLayout(_group.getGroupId(), "test", false);
+
+		Layout layoutSetPrototypeLayout = LayoutTestUtil.addTypePortletLayout(
+			_layoutSetPrototypeGroup.getGroupId(), "testNoConflict", true);
+
+		boolean hasConflicts =
+			_layoutSetPrototypeHelper.hasDuplicatedFriendlyURLs(
+				layoutSetPrototypeLayout.getGroupId(),
+				layoutSetPrototypeLayout.isPrivateLayout(),
+				layoutSetPrototypeLayout.getUuid(), "/test");
+
+		Assert.assertTrue(hasConflicts);
+	}
+
+	@Test
+	public void testLayoutSetPrototypeLayoutFriendlyURLConflictDetectionBeforeCreate()
+		throws Exception {
+
+		LayoutTestUtil.addTypePortletLayout(_group.getGroupId(), "test", false);
+
+		boolean hasConflicts =
+			_layoutSetPrototypeHelper.hasDuplicatedFriendlyURLs(
+				_layoutSetPrototypeGroup.getGroupId(), true, null, "/test");
+
+		Assert.assertTrue(hasConflicts);
+	}
+
+	@Test
+	public void testLayoutSetPrototypeLayoutFriendlyURLConflictDetectionBeforePropagate()
+		throws Exception {
+
+		Layout siteLayout = LayoutTestUtil.addTypePortletLayout(
+			_group.getGroupId(), "test", false);
+
+		Layout layoutSetPrototypeLayout = LayoutTestUtil.addTypePortletLayout(
+			_layoutSetPrototypeGroup.getGroupId(), "test", true);
+
+		List<Layout> conflictLayouts =
+			_layoutSetPrototypeHelper.getDuplicatedFriendlyURLLayouts(
+				layoutSetPrototypeLayout);
+
+		Assert.assertEquals(
+			conflictLayouts.toString(), 1, conflictLayouts.size());
+
+		Layout conflictLayout = conflictLayouts.get(0);
+
+		Assert.assertEquals(conflictLayout.getPlid(), siteLayout.getPlid());
+	}
+
+	@Test
+	public void testLayoutSetPrototypeLayoutFriendlyURLConflictDetectionIgnorePropagated()
+		throws Exception {
+
+		boolean hasConflicts =
+			_layoutSetPrototypeHelper.hasDuplicatedFriendlyURLs(
+				_prototypeLayout.getGroupId(),
+				_prototypeLayout.isPrivateLayout(), _prototypeLayout.getUuid(),
+				_prototypeLayout.getFriendlyURL());
+
+		Assert.assertFalse(hasConflicts);
+	}
+
+	@Test
+	public void testSiteLayoutFriendlyURLConflictDetectionBeforeChange()
+		throws Exception {
+
+		Layout siteLayout = LayoutTestUtil.addTypePortletLayout(
+			_group.getGroupId(), "testNoConflict", false);
+
+		LayoutTestUtil.addTypePortletLayout(
+			_layoutSetPrototypeGroup.getGroupId(), "test", true);
+
+		boolean hasConflicts =
+			_layoutSetPrototypeHelper.hasDuplicatedFriendlyURLs(
+				siteLayout.getGroupId(), siteLayout.isPrivateLayout(),
+				siteLayout.getUuid(), "/test");
+
+		Assert.assertTrue(hasConflicts);
+	}
+
+	@Test
+	public void testSiteLayoutFriendlyURLConflictDetectionBeforeCreate()
+		throws Exception {
+
+		LayoutTestUtil.addTypePortletLayout(
+			_layoutSetPrototypeGroup.getGroupId(), "test", true);
+
+		boolean hasConflicts =
+			_layoutSetPrototypeHelper.hasDuplicatedFriendlyURLs(
+				_group.getGroupId(), false, null, "/test");
+
+		Assert.assertTrue(hasConflicts);
+	}
+
+	@Test
+	public void testSiteLayoutFriendlyURLConflictDetectionBeforePropagate()
+		throws Exception {
+
+		Layout siteLayout = LayoutTestUtil.addTypePortletLayout(
+			_group.getGroupId(), "test", false);
+
+		Layout layoutSetPrototypeLayout = LayoutTestUtil.addTypePortletLayout(
+			_layoutSetPrototypeGroup.getGroupId(), "test", true);
+
+		List<Layout> conflicts =
+			_layoutSetPrototypeHelper.getDuplicatedFriendlyURLLayouts(
+				siteLayout);
+
+		Assert.assertEquals(conflicts.toString(), 1, conflicts.size());
+
+		Layout conflictLayout = conflicts.get(0);
+
+		Assert.assertEquals(
+			conflictLayout.getPlid(), layoutSetPrototypeLayout.getPlid());
+	}
+
+	@Test
+	public void testSiteLayoutFriendlyURLConflictDetectionIgnorePropagated()
+		throws Exception {
+
+		boolean hasConflicts =
+			_layoutSetPrototypeHelper.hasDuplicatedFriendlyURLs(
+				_siteLayout.getGroupId(), _siteLayout.isPrivateLayout(),
+				_siteLayout.getUuid(), _siteLayout.getFriendlyURL());
+
+		Assert.assertFalse(hasConflicts);
+	}
+
 	protected void setLinkEnabled() throws Exception {
 		MergeLayoutPrototypesThreadLocal.clearMergeComplete();
 
 		SitesUtil.updateLayoutSetPrototypesLinks(
 			_group, _layoutSetPrototype.getLayoutSetPrototypeId(), 0, true,
 			false);
-
-		Thread.sleep(2000);
 	}
 
 	@DeleteAfterTestRun
@@ -159,5 +296,8 @@ public class LayoutSetPrototypeHelperTest {
 
 	@Inject
 	private LayoutSetPrototypeHelper _layoutSetPrototypeHelper;
+
+	private Layout _prototypeLayout;
+	private Layout _siteLayout;
 
 }

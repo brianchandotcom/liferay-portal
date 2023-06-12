@@ -169,6 +169,48 @@ definition {
 		}
 	}
 
+	@description = "LPS-176051. Confirm that the user can cancel changes when clicks on Cancel button"
+	@priority = 4
+	test CanCancelChangesOnCancelButton {
+		task ("And add new fields") {
+			FrontendDataSetAdmin.addFields(key_fieldList = "id,label");
+		}
+
+		task ("And clicks on Edit option") {
+			Click(
+				key_fieldName = "id",
+				locator1 = "FrontendDataSetAdmin#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
+
+			MenuItem.click(menuItem = "Edit");
+		}
+
+		task ("And choose another client extension option") {
+			Click(
+				dropdownLabel = "Cell Renderer",
+				locator1 = "ObjectField#ANY_DROPDOWN_LABEL");
+		}
+
+		task ("And clicks on Cancel button") {
+			Button.click(button = "Cancel");
+		}
+
+		task ("Then the Edit field modal is closed") {
+			AssertElementNotPresent(
+				locator1 = "Portlet#MODAL_TITLE",
+				value1 = "Edit id");
+		}
+
+		task ("And the changes are not applied") {
+			FrontendDataSetAdmin.assertFieldsOnTable(
+				key_position = 1,
+				keyName = "id");
+
+			FrontendDataSetAdmin.assertFieldsOnTable(
+				key_position = 1,
+				keyName = "default");
+		}
+	}
+
 	@description = "LPS-185500. Confirm that can cancel field deletion on cancel button."
 	@priority = 4
 	test CanCancelFieldDeletion {

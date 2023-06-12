@@ -18,7 +18,6 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ClassedModel;
@@ -29,12 +28,10 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.field.Field;
 import com.liferay.segments.field.customizer.SegmentsFieldCustomizer;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -106,22 +103,16 @@ public class AssetCategorySegmentsFieldCustomizer
 			portletURL.setParameter("mvcPath", "/view.jsp");
 			portletURL.setParameter("singleSelect", Boolean.TRUE.toString());
 
-			ArrayList<Long> vocabularyIds = new ArrayList<>();
-
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)portletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-			List<AssetVocabulary> assetVocabularies =
-				_assetVocabularyLocalService.getGroupVocabularies(
-					themeDisplay.getCompanyGroupId());
-
-			for (AssetVocabulary assetVocabulary : assetVocabularies) {
-				vocabularyIds.add(assetVocabulary.getVocabularyId());
-			}
-
 			portletURL.setParameter(
-				"vocabularyIds", StringUtil.merge(vocabularyIds));
+				"vocabularyIds",
+				ListUtil.toString(
+					_assetVocabularyLocalService.getGroupVocabularies(
+						themeDisplay.getCompanyGroupId()),
+					AssetVocabulary.VOCABULARY_ID_ACCESSOR));
 
 			portletURL.setParameter("eventName", "selectEntity");
 			portletURL.setWindowState(LiferayWindowState.POP_UP);

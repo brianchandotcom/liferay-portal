@@ -102,6 +102,7 @@ export default React.memo(function LayoutPreview() {
 							'you-cannot-preview-the-style-book-because-your-site-is-empty'
 						)}
 						imgSrc={`${themeDisplay.getPathThemeImages()}/states/empty_state.gif`}
+						title={Liferay.Language.get('no-results-found')}
 					/>
 				)}
 			</div>

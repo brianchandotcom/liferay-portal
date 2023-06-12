@@ -2560,7 +2560,7 @@ export default function ChangeTrackingChangesView({
 									'there-are-no-changes-to-display-in-this-view'
 								)}
 								imgSrc={`${themeDisplay.getPathThemeImages()}/states/search_state.gif`}
-								title={null}
+								title={Liferay.Language.get('no-results-found')}
 							/>
 						</ClayTable.Cell>
 					</ClayTable.Row>
@@ -2666,7 +2666,7 @@ export default function ChangeTrackingChangesView({
 								'no-changes-were-found'
 							)}
 							imgSrc={`${themeDisplay.getPathThemeImages()}/states/empty_state.gif`}
-							title={null}
+							title={Liferay.Language.get('no-results-found')}
 						/>
 					</ClayLayout.Sheet>
 				</div>

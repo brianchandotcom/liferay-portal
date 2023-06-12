@@ -315,7 +315,7 @@ const TreeFilter = ({
 									'no-results-were-found'
 								)}
 								imgSrc={`${themeDisplay.getPathThemeImages()}/states/empty_state.gif`}
-								title={null}
+								title={Liferay.Language.get('no-results-found')}
 							/>
 						)}
 					</div>

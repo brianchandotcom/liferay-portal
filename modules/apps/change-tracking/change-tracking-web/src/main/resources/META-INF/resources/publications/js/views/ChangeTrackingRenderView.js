@@ -1103,7 +1103,7 @@ export default function ChangeTrackingRenderView({
 						'there-are-no-changes-to-display-in-this-view'
 					)}
 					imgSrc={`${themeDisplay.getPathThemeImages()}/states/search_state.gif`}
-					title={null}
+					title={Liferay.Language.get('no-results-found')}
 				/>
 			);
 		}

@@ -615,7 +615,7 @@ const PublicationsSearchContainer = ({
 										? `${themeDisplay.getPathThemeImages()}/states/search_state.gif`
 										: `${themeDisplay.getPathThemeImages()}/states/empty_state.gif`
 								}
-								title={null}
+								title={Liferay.Language.get('no-results-found')}
 							/>
 						</div>
 					</div>

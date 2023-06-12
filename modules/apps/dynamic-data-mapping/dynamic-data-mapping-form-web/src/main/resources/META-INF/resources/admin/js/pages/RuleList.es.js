@@ -59,7 +59,7 @@ const EmptyState = () => (
 				'there-are-no-rules-yet-click-on-plus-icon-below-to-add-the-first'
 			)}
 			imgSrc={`${themeDisplay.getPathThemeImages()}/states/empty_state.gif`}
-			title={null}
+			title={Liferay.Language.get('no-results-found')}
 		/>
 	</ClayLayout.Sheet>
 );

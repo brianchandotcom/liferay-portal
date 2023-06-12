@@ -293,7 +293,10 @@ function PreviewSidebar({
 						_renderHits()
 					) : totalHits === 0 ? (
 						<div className="empty-list-message">
-							<ClayEmptyState description="" />
+							<ClayEmptyState
+								description=""
+								title={Liferay.Language.get('no-results-found')}
+							/>
 						</div>
 					) : (
 						!errors.length && (

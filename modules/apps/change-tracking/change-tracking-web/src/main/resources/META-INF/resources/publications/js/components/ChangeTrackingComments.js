@@ -291,7 +291,7 @@ export default function ChangeTrackingComments({
 					description={Liferay.Language.get('no-comments-yet')}
 					imgSrc={`${themeDisplay.getPathThemeImages()}/states/empty_state.gif`}
 					small
-					title={null}
+					title={Liferay.Language.get('no-results-found')}
 				/>
 			);
 		}

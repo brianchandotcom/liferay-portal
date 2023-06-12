@@ -241,6 +241,61 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-143321. After clicking on discard draft the page continues to run."
+	@priority = 5
+	test DiscardContentPageDraft {
+		task ("Given a page designer has a content page with draft and experience") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Paragraph",
+				targetFragmentName = "Heading");
+
+			PageEditor.publish();
+		}
+
+		task ("When the page designer discards draft via Pages admin") {
+			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteName});
+
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "Edit",
+				pageName = "Test Page Name");
+
+			PageEditor.addExperience(
+				experienceName = "Experience Name",
+				segmentName = "Anyone");
+
+			PageEditor.clickBack();
+
+			PagesAdmin.discardDraft(pageName = "Test Page Name");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Then the page editor should be rendered well") {
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "Edit",
+				pageName = "Test Page Name");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Heading Example");
+
+			PageEditor.viewFragmentEditableText(
+				editableText = "A paragraph is a self-contained unit of a discourse in writing dealing with a particular point or idea. Paragraphs are usually an expected part of formal writing, used to organize longer prose.",
+				fragmentName = "Paragraph",
+				id = "element-text");
+		}
+	}
+
 	@description = "LPS-157033 Given the View mode of a page When an experience is inactive in the Control Menu Then the INACTIVE label will appear next to the experience name"
 	@priority = 3
 	test InactiveExperienceLabelInControlMenu {

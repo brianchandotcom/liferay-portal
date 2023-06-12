@@ -680,22 +680,9 @@ public class DLAdminDisplayContext {
 			SearchContext searchContext = _getSearchContext(
 				dlSearchContainer, "none");
 
-			long userId = 0;
-
-			if (navigation.equals("mine") && _themeDisplay.isSignedIn()) {
-				status = WorkflowConstants.STATUS_ANY;
-				userId = _themeDisplay.getUserId();
-			}
-
-			searchContext.setAttribute("status", status);
-			searchContext.setBooleanClauses(
-				_getBooleanClauses(
-					assetCategoryIds, assetTagIds, extensions, fileEntryTypeId,
-					userId));
-
-			if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-				searchContext.setFolderIds(new long[] {folderId});
-			}
+			_initializeFilterSearchContext(
+				searchContext, assetCategoryIds, assetTagIds, extensions,
+				fileEntryTypeId, folderId, navigation, status);
 
 			Indexer<?> indexer = IndexerRegistryUtil.getIndexer(
 				DLFileEntryConstants.getClassName());
@@ -824,6 +811,16 @@ public class DLAdminDisplayContext {
 
 		SearchContext searchContext = _getSearchContext(
 			searchContainer, "regular");
+
+		_initializeFilterSearchContext(
+			searchContext,
+			ParamUtil.getLongValues(_httpServletRequest, "assetCategoryId"),
+			ParamUtil.getStringValues(_httpServletRequest, "assetTagId"),
+			ParamUtil.getStringValues(_httpServletRequest, "extension"),
+			ParamUtil.getLong(_httpServletRequest, "fileEntryTypeId", -1),
+			getFolderId(),
+			ParamUtil.getString(_httpServletRequest, "navigation", "home"),
+			_getStatus());
 
 		long searchRepositoryId = ParamUtil.getLong(
 			_httpServletRequest, "searchRepositoryId",
@@ -1038,6 +1035,29 @@ public class DLAdminDisplayContext {
 		}
 
 		return status;
+	}
+
+	private void _initializeFilterSearchContext(
+		SearchContext searchContext, long[] assetCategoryIds,
+		String[] assetTagIds, String[] extensions, long fileEntryTypeId,
+		long folderId, String navigation, int status) {
+
+		long userId = 0;
+
+		if (navigation.equals("mine") && _themeDisplay.isSignedIn()) {
+			status = WorkflowConstants.STATUS_ANY;
+			userId = _themeDisplay.getUserId();
+		}
+
+		searchContext.setAttribute("status", status);
+		searchContext.setBooleanClauses(
+			_getBooleanClauses(
+				assetCategoryIds, assetTagIds, extensions, fileEntryTypeId,
+				userId));
+
+		if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			searchContext.setFolderIds(new long[] {folderId});
+		}
 	}
 
 	private boolean _isAncestorFolder(long folderId, FileEntry fileEntry) {

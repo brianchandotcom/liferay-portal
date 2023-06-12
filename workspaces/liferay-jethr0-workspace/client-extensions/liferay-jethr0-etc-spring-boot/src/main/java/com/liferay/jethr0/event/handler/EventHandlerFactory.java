@@ -26,7 +26,10 @@ public class EventHandlerFactory {
 	public EventHandler newEventHandler(EventHandler.EventType eventType) {
 		EventHandler eventHandler = null;
 
-		if (eventType == EventHandler.EventType.CREATE_PROJECT) {
+		if (eventType == EventHandler.EventType.CREATE_BUILD) {
+			eventHandler = new CreateBuildEventHandler(_eventHandlerHelper);
+		}
+		else if (eventType == EventHandler.EventType.CREATE_PROJECT) {
 			eventHandler = new CreateProjectEventHandler(_eventHandlerHelper);
 		}
 		else if (eventType == EventHandler.EventType.QUEUE_PROJECT) {

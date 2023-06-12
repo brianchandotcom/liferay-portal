@@ -65,13 +65,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 public class ReleaseManagerImpl implements ReleaseManager {
 
 	public Set<String> getBundleSymbolicNames() {
-		Set<String> bundleSymbolicNames = new HashSet<>(
-			_serviceTrackerMap.keySet());
-
-		bundleSymbolicNames.addAll(
-			_initialUpgradeStepServiceTrackerMap.keySet());
-
-		return bundleSymbolicNames;
+		return new HashSet<>(_serviceTrackerMap.keySet());
 	}
 
 	public String getSchemaVersionString(String bundleSymbolicName) {

@@ -18,7 +18,11 @@ import ClayLayout from '@clayui/layout';
 import ClayTable from '@clayui/table';
 import React from 'react';
 
-export default function FormFragmentsConfiguration({formTypes}) {
+export default function FormFragmentsConfiguration({
+	formTypes,
+	portletNamespace,
+	selectFragmentURL,
+}) {
 	return (
 		<ClayLayout.Container className="c-mt-3">
 			<div className="sheet">
@@ -46,9 +50,9 @@ export default function FormFragmentsConfiguration({formTypes}) {
 					</ClayTable.Head>
 
 					<ClayTable.Body>
-						{Object.entries(formTypes).map(([name, value]) => (
-							<ClayTable.Row key={name}>
-								<ClayTable.Cell>{name}</ClayTable.Cell>
+						{formTypes.map(({fragmentName, label, name}) => (
+							<ClayTable.Row key={label}>
+								<ClayTable.Cell>{label}</ClayTable.Cell>
 
 								<ClayTable.Cell>
 									<ClayForm.Group className="c-mb-0" small>
@@ -56,7 +60,7 @@ export default function FormFragmentsConfiguration({formTypes}) {
 											<ClayInput.GroupItem>
 												<ClayInput
 													readOnly
-													value={value}
+													value={fragmentName}
 												/>
 											</ClayInput.GroupItem>
 

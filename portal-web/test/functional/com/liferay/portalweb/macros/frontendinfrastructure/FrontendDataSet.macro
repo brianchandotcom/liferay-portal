@@ -1,0 +1,80 @@
+definition {
+
+	macro chooseOptionNewFilterDropdown {
+		var key_option = ${key_option};
+
+		Type(
+			locator1 = "FrontendDataSetAdmin#FILTER_BY_DROPDOWN",
+			value1 = ${key_option});
+	}
+
+	macro dateFilterSaveDates {
+		var key_dateNumber1 = ${key_dateNumber1};
+		var key_dateNumber2 = ${key_dateNumber2};
+
+		Click(
+			key_dateField = "From",
+			locator1 = "FrontendDataSetAdmin#DATEPICKER_BUTTON");
+
+		Click(
+			key_dateNumber = ${key_dateNumber1},
+			locator1 = "FrontendDataSetAdmin#CHOOSE_DATE_DATEPICKER_MENU");
+
+		Click(
+			key_dateField = "From",
+			locator1 = "FrontendDataSetAdmin#DATEPICKER_BUTTON");
+
+		Click(
+			key_dateField = "To",
+			locator1 = "FrontendDataSetAdmin#DATEPICKER_BUTTON");
+
+		Click(
+			key_dateNumber = ${key_dateNumber2},
+			locator1 = "FrontendDataSetAdmin#CHOOSE_DATE_DATEPICKER_MENU");
+
+		Click(
+			key_dateField = "To",
+			locator1 = "FrontendDataSetAdmin#DATEPICKER_BUTTON");
+
+		Click(locator1 = "FrontendDataSetAdmin#NEW_FILTER_SAVE_BUTTON");
+	}
+
+	macro selectFromFieldDates {
+		Click(
+			key_dateField = "From",
+			locator1 = "FrontendDataSetAdmin#DATEPICKER_BUTTON");
+
+		Click(
+			locator1 = "FrontendDataSetAdmin#CHOOSE_DATE_DATEPICKER_MENU",
+			value1 = ${key_dateNumber});
+
+		Click(
+			key_dateField = "From",
+			locator1 = "FrontendDataSetAdmin#DATEPICKER_BUTTON");
+	}
+
+	macro selectItemActionDropdownMenuList {
+		Click(
+			key_title = ${key_title},
+			locator1 = "FrontendDataSet#ENTRY_VERTICAL_ELLIPSIS");
+
+		Click(
+			key_viewMode = ${key_viewMode},
+			locator1 = "FrontendDataSet#ITEMS_VIEW_TYPE_DROPDOWN");
+	}
+
+	macro selectToFieldDates {
+		Click(
+			key_dateField = "To",
+			locator1 = "FrontendDataSetAdmin#DATEPICKER_BUTTON");
+
+		Click(
+			locator1 = "FrontendDataSetAdmin#CHOOSE_DATE_DATEPICKER_MENU",
+			value1 = ${key_dateNumber});
+
+		Click(
+			key_dateField = "To",
+			locator1 = "FrontendDataSetAdmin#DATEPICKER_BUTTON");
+	}
+
+}

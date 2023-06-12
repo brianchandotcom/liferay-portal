@@ -161,29 +161,7 @@ public class DLAdminDisplayContext {
 			return _displayStyle;
 		}
 
-		String displayStyle = ParamUtil.getString(
-			_httpServletRequest, "displayStyle");
-
-		String[] displayViews = _dlPortletInstanceSettings.getDisplayViews();
-
-		if (Validator.isNull(displayStyle)) {
-			displayStyle = _getPortletPreference(
-				"display-style", PropsValues.DL_DEFAULT_DISPLAY_VIEW);
-		}
-		else {
-			if (ArrayUtil.contains(displayViews, displayStyle)) {
-				_setPortletPreference("display-style", displayStyle);
-
-				_httpServletRequest.setAttribute(
-					WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
-			}
-		}
-
-		if (!ArrayUtil.contains(displayViews, displayStyle)) {
-			displayStyle = displayViews[0];
-		}
-
-		_displayStyle = displayStyle;
+		_displayStyle = _getDisplayStyle(PropsValues.DL_DEFAULT_DISPLAY_VIEW);
 
 		return _displayStyle;
 	}
@@ -333,6 +311,10 @@ public class DLAdminDisplayContext {
 		}
 
 		return _searchContainer;
+	}
+
+	public String getSearchDisplayStyle() {
+		return _getDisplayStyle("descriptive");
 	}
 
 	public PortletURL getSearchSearchContainerURL() {
@@ -619,6 +601,31 @@ public class DLAdminDisplayContext {
 			BooleanClauseFactoryUtil.create(
 				booleanQuery, BooleanClauseOccur.MUST.getName())
 		};
+	}
+
+	private String _getDisplayStyle(String defaultValue) {
+		String displayStyle = ParamUtil.getString(
+			_httpServletRequest, "displayStyle");
+
+		String[] displayViews = _dlPortletInstanceSettings.getDisplayViews();
+
+		if (Validator.isNull(displayStyle)) {
+			displayStyle = _getPortletPreference("display-style", defaultValue);
+		}
+		else {
+			if (ArrayUtil.contains(displayViews, displayStyle)) {
+				_setPortletPreference("display-style", displayStyle);
+
+				_httpServletRequest.setAttribute(
+					WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
+			}
+		}
+
+		if (!ArrayUtil.contains(displayViews, displayStyle)) {
+			displayStyle = displayViews[0];
+		}
+
+		return displayStyle;
 	}
 
 	private SearchContainer<RepositoryEntry> _getDLSearchContainer()

@@ -708,6 +708,10 @@ public class DLAdminManagementToolbarDisplayContext
 	}
 
 	private String _getDisplayStyle() {
+		if (_isSearch()) {
+			return _dlAdminDisplayContext.getSearchDisplayStyle();
+		}
+
 		return _dlAdminDisplayContext.getDisplayStyle();
 	}
 

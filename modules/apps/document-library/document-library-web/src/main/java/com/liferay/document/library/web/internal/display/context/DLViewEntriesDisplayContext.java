@@ -191,6 +191,10 @@ public class DLViewEntriesDisplayContext {
 	}
 
 	public String getDisplayStyle() {
+		if (_dlAdminDisplayContext.isSearch()) {
+			return _dlAdminDisplayContext.getSearchDisplayStyle();
+		}
+
 		return _dlAdminDisplayContext.getDisplayStyle();
 	}
 

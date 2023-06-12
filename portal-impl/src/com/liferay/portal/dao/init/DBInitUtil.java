@@ -98,11 +98,9 @@ public class DBInitUtil {
 
 			preparedStatement.setString(
 				3, ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
-
 			preparedStatement.setString(
 				4,
 				String.valueOf(PortalUpgradeProcess.getLatestSchemaVersion()));
-
 			preparedStatement.setInt(5, ReleaseInfo.getBuildNumber());
 			preparedStatement.setBoolean(6, false);
 			preparedStatement.setString(7, ReleaseConstants.TEST_STRING);

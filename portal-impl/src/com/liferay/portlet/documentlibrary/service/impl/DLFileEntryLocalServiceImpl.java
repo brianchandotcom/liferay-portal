@@ -441,7 +441,6 @@ public class DLFileEntryLocalServiceImpl
 		latestDLFileVersion.setChangeLog(changeLog);
 		latestDLFileVersion.setVersion(
 			_getNextVersion(dlFileEntry, computedDLVersionNumberIncrease));
-
 		latestDLFileVersion.setStoreUUID(String.valueOf(UUID.randomUUID()));
 
 		latestDLFileVersion = _dlFileVersionPersistence.update(

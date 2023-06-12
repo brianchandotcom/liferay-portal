@@ -697,7 +697,6 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 			}
 
 			theme.setTemplateExtension(templateExtension);
-
 			theme.setTimestamp(timestamp);
 
 			PluginSetting pluginSetting =
@@ -705,7 +704,6 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 
 			theme.setPluginPackage(pluginPackage);
 			theme.setDefaultPluginSetting(pluginSetting);
-
 			theme.setThemeCompanyLimit(companyLimit);
 			theme.setThemeGroupLimit(groupLimit);
 

@@ -105,7 +105,6 @@ public class SharepointFilter extends BaseAuthFilter {
 
 	protected void setGetHeaders(HttpServletResponse httpServletResponse) {
 		httpServletResponse.setContentType("text/html");
-
 		httpServletResponse.setHeader(
 			"Public-Extension", "http://schemas.microsoft.com/repl-2");
 		httpServletResponse.setHeader(
@@ -138,7 +137,6 @@ public class SharepointFilter extends BaseAuthFilter {
 
 	protected void setPostHeaders(HttpServletResponse httpServletResponse) {
 		httpServletResponse.setContentType("application/x-vermeer-rpc");
-
 		httpServletResponse.setHeader(
 			"MicrosoftSharePointTeamServices", SharepointUtil.VERSION);
 		httpServletResponse.setHeader("Cache-Control", "no-cache");

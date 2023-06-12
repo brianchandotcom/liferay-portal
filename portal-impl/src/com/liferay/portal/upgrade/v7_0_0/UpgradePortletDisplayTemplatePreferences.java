@@ -125,7 +125,6 @@ public class UpgradePortletDisplayTemplatePreferences
 			portletPreferences.setValue(
 				"displayStyleGroupId",
 				String.valueOf(objectValuePair.getKey()));
-
 			portletPreferences.setValue(
 				"displayStyle",
 				PortletDisplayTemplateManager.DISPLAY_STYLE_PREFIX +

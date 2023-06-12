@@ -161,7 +161,6 @@ public class LiferayInputStreamTest {
 		throws Exception {
 
 		_mockHttpServletRequest.setContent(content);
-
 		_mockHttpServletRequest.setAttribute(
 			LiferayInputStream.COPY_MULTIPART_STREAM_TO_FILE, readable);
 

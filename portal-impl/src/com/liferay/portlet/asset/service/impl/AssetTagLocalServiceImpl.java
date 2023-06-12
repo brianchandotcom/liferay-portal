@@ -759,7 +759,6 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 			HashMapBuilder.<String, Serializable>put(
 				Field.NAME, name
 			).build());
-
 		searchContext.setCompanyId(companyId);
 		searchContext.setEnd(end);
 		searchContext.setGroupIds(groupIds);

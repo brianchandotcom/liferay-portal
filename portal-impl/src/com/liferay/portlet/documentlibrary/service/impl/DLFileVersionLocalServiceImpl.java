@@ -197,7 +197,6 @@ public class DLFileVersionLocalServiceImpl
 						treePathProperty.isNull(),
 						treePathProperty.ne(treePath)));
 			});
-
 		actionableDynamicQuery.setPerformActionMethod(
 			(DLFileVersion dlFileVersion) -> {
 				dlFileVersion.setTreePath(treePath);

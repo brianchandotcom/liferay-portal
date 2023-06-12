@@ -94,7 +94,6 @@ public class UserSearch extends SearchContainer<User> {
 
 		iteratorURL.setParameter(
 			UserDisplayTerms.STATUS, String.valueOf(displayTerms.getStatus()));
-
 		iteratorURL.setParameter(
 			UserDisplayTerms.EMAIL_ADDRESS, displayTerms.getEmailAddress());
 		iteratorURL.setParameter(

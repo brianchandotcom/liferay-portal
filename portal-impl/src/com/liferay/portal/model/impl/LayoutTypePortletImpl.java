@@ -2126,7 +2126,6 @@ public class LayoutTypePortletImpl
 	protected void setUserPreference(String key, String value) {
 		_portalPreferences.setValue(
 			CustomizedPages.namespacePlid(getPlid()), key, value);
-
 		_portalPreferences.setValue(
 			CustomizedPages.namespacePlid(getPlid()), _MODIFIED_DATE,
 			_dateFormat.format(new Date()));

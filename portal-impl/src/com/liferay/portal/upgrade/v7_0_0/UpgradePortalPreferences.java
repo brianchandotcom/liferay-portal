@@ -115,7 +115,6 @@ public class UpgradePortalPreferences extends UpgradeProcess {
 				}
 
 				preparedStatement2.setString(1, newPreferences);
-
 				preparedStatement2.setLong(2, portalPreferencesId);
 
 				preparedStatement2.addBatch();

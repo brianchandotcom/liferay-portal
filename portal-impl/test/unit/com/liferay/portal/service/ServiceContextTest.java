@@ -42,12 +42,10 @@ public class ServiceContextTest {
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setAttribute("TestName", "TestValue");
-
 		serviceContext.setHeaders(
 			HashMapBuilder.put(
 				"TestHeaderName", "TestHeaderValue"
 			).build());
-
 		serviceContext.setRequest(
 			ProxyFactory.newDummyInstance(HttpServletRequest.class));
 

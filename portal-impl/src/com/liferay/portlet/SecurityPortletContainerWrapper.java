@@ -455,7 +455,6 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 		httpServletResponse.setHeader(
 			HttpHeaders.CACHE_CONTROL,
 			HttpHeaders.CACHE_CONTROL_NO_CACHE_VALUE);
-
 		httpServletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
 
 		if (principalException instanceof

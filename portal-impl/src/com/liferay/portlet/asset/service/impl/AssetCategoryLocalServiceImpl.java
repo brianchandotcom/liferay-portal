@@ -682,7 +682,6 @@ public class AssetCategoryLocalServiceImpl
 			).put(
 				Field.TITLE, title
 			).build());
-
 		searchContext.setCompanyId(companyId);
 		searchContext.setEnd(end);
 		searchContext.setGroupIds(groupIds);

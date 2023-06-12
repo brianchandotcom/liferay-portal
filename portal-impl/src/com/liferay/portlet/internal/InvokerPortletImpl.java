@@ -384,7 +384,6 @@ public class InvokerPortletImpl
 			}
 			else if ((response.getTime() < now) && (_expCache.intValue() > 0)) {
 				response.setTitle(invokeRender(renderRequest, renderResponse));
-
 				response.setContent(bufferCacheServletResponse.getString());
 				response.setTime(now + (Time.SECOND * _expCache.intValue()));
 			}

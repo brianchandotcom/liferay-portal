@@ -560,7 +560,6 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			portlet = new PortletImpl(CompanyConstants.SYSTEM, portletId);
 
 			portlet.setPortletApp(getPortletApp(StringPool.BLANK));
-
 			portlet.setPortletName(portletId);
 			portlet.setDisplayName(portletId);
 			portlet.setPortletClass(UndeployedPortlet.class.getName());
@@ -2041,7 +2040,6 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 		portletModel.setPluginPackage(pluginPackage);
 		portletModel.setPortletApp(portletApp);
-
 		portletModel.setPortletName(portletName);
 		portletModel.setDisplayName(
 			GetterUtil.getString(

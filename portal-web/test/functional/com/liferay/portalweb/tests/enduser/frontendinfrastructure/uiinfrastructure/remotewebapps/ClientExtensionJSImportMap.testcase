@@ -1,0 +1,43 @@
+definition {
+
+	property custom.properties = "feature.flag.LPS-172903=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Client Extensions";
+	property testray.main.component.name = "Client Extensions";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		task ("Given Client Extension admin page") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Custom Apps",
+				panel = "Applications",
+				portlet = "Client Extensions");
+		}
+
+		task ("When the user clicks on plus button") {
+			LexiconEntry.gotoAdd();
+		}
+
+		task ("And clicks on JS Import Map Entry option") {
+			DropdownMenuItem.click(menuItem = "Add JS Import Maps Entry");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Navigator.gotoPage(pageName = "Home");
+
+			ClientExtensionGeneral.tearDown();
+		}
+	}
+
+}

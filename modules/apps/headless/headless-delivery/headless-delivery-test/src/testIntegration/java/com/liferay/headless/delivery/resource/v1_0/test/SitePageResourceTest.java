@@ -321,8 +321,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		_testPostSiteSitePageSuccessInvalidParentSitePage();
 		_testPostSiteSitePageSuccessKeywords();
 		_testPostSiteSitePageSuccessPageDefinition();
-		_testPostSiteSitePageSuccessPageDefinitionSettingsClientExtensions();
-		_testPostSiteSitePageSuccessPageDefinitionSettingsFaviconFromClientExtension();
+		_testPostSiteSitePageSuccessPageDefinitionSettingsClientExtensionEntries();
+		_testPostSiteSitePageSuccessPageDefinitionSettingsFaviconFromClientExtensionEntry();
 		_testPostSiteSitePageSuccessPageDefinitionSettingsFaviconFromDocument();
 		_testPostSiteSitePageSuccessPagePermissions();
 		_testPostSiteSitePageSuccessPagePermissionsActionKeysEmpty();
@@ -990,7 +990,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				(String)actualFragmentPageElement.getDefinition()));
 	}
 
-	private void _testPostSiteSitePageSuccessPageDefinitionSettingsClientExtensions()
+	private void _testPostSiteSitePageSuccessPageDefinitionSettingsClientExtensionEntries()
 		throws Exception {
 
 		SitePage randomSitePage = randomSitePage();
@@ -1062,7 +1062,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			globalJSClientExtensionEntryRel.getCETExternalReferenceCode());
 	}
 
-	private void _testPostSiteSitePageSuccessPageDefinitionSettingsFaviconFromClientExtension()
+	private void _testPostSiteSitePageSuccessPageDefinitionSettingsFaviconFromClientExtensionEntry()
 		throws Exception {
 
 		SitePage randomSitePage = randomSitePage();

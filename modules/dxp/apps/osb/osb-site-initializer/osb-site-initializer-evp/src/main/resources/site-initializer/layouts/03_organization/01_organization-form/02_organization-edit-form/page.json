@@ -43,6 +43,13 @@
 			],
 			"roleName": "Finance User",
 			"scope": 4
+		},
+		{
+			"actionIds": [
+				"VIEW"
+			],
+			"roleName": "Liferay Manager",
+			"scope": 4
 		}
 	],
 	"private": false,

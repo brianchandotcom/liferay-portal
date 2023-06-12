@@ -22,5 +22,13 @@
 		"name": "Finance User",
 		"subtype": "",
 		"type": 1
+	},
+	{
+		"actions": [
+		],
+		"description": "",
+		"name": "Liferay Manager",
+		"subtype": "",
+		"type": 1
 	}
 ]

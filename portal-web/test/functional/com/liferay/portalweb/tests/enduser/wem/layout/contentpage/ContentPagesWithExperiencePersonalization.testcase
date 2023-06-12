@@ -259,9 +259,7 @@ definition {
 				targetFragmentName = "Heading");
 
 			PageEditor.publish();
-		}
 
-		task ("When the page designer discards draft via Pages admin") {
 			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteName});
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
@@ -273,7 +271,9 @@ definition {
 				segmentName = "Anyone");
 
 			PageEditor.clickBack();
+		}
 
+		task ("When the page designer discards draft via Pages admin") {
 			PagesAdmin.discardDraft(pageName = "Test Page Name");
 
 			Alert.viewSuccessMessage();

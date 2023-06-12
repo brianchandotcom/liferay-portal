@@ -615,6 +615,10 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "Locale#RestrictDefaultLocale";
 
+		task ("Create test site") {
+			HeadlessSite.addSite(siteName = "Test Site Name");
+		}
+
 		task ("Sign in via UI") {
 			User.firstLoginUI(
 				localization = "ES",

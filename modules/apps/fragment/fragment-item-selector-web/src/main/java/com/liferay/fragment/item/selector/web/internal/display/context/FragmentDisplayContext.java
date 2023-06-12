@@ -207,6 +207,10 @@ public class FragmentDisplayContext {
 		return _fragmentsSearchContainer;
 	}
 
+	public String getGroupKey() {
+		return _group.getGroupKey();
+	}
+
 	public boolean isSearch() {
 		if (Validator.isNotNull(_getKeywords())) {
 			return true;

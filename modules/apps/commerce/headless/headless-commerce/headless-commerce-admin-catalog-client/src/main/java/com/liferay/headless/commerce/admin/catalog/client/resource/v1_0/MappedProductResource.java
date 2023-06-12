@@ -94,30 +94,36 @@ public interface MappedProductResource {
 		throws Exception;
 
 	public Page<MappedProduct> getProductIdMappedProductsPage(
-			Long productId, String search, Pagination pagination,
-			String sortString)
+			Long id, String search, Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getProductIdMappedProductsPageHttpResponse(
-			Long productId, String search, Pagination pagination,
-			String sortString)
+			Long id, String search, Pagination pagination, String sortString)
 		throws Exception;
 
 	public MappedProduct postProductIdMappedProduct(
-			Long productId, MappedProduct mappedProduct)
+			Long id, MappedProduct mappedProduct)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postProductIdMappedProductHttpResponse(
-			Long productId, MappedProduct mappedProduct)
+			Long id, MappedProduct mappedProduct)
 		throws Exception;
 
-	public MappedProduct getProductMappedProductBySequence(
-			Long productId, String sequence)
+	public void postProductIdMappedProductBatch(
+			String callbackURL, Object object)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse postProductIdMappedProductBatchHttpResponse(
+			String callbackURL, Object object)
+		throws Exception;
+
+	public MappedProduct getProductIdMappedProductBySequence(
+			Long id, String sequence)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			getProductMappedProductBySequenceHttpResponse(
-				Long productId, String sequence)
+			getProductIdMappedProductBySequenceHttpResponse(
+				Long id, String sequence)
 		throws Exception;
 
 	public static class Builder {
@@ -870,13 +876,13 @@ public interface MappedProductResource {
 		}
 
 		public Page<MappedProduct> getProductIdMappedProductsPage(
-				Long productId, String search, Pagination pagination,
+				Long id, String search, Pagination pagination,
 				String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getProductIdMappedProductsPageHttpResponse(
-					productId, search, pagination, sortString);
+					id, search, pagination, sortString);
 
 			String content = httpResponse.getContent();
 
@@ -939,7 +945,7 @@ public interface MappedProductResource {
 
 		public HttpInvoker.HttpResponse
 				getProductIdMappedProductsPageHttpResponse(
-					Long productId, String search, Pagination pagination,
+					Long id, String search, Pagination pagination,
 					String sortString)
 			throws Exception {
 
@@ -982,9 +988,9 @@ public interface MappedProductResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-commerce-admin-catalog/v1.0/products/{productId}/mapped-products");
+						"/o/headless-commerce-admin-catalog/v1.0/products/{id}/mapped-products");
 
-			httpInvoker.path("productId", productId);
+			httpInvoker.path("id", id);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -993,12 +999,11 @@ public interface MappedProductResource {
 		}
 
 		public MappedProduct postProductIdMappedProduct(
-				Long productId, MappedProduct mappedProduct)
+				Long id, MappedProduct mappedProduct)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postProductIdMappedProductHttpResponse(
-					productId, mappedProduct);
+				postProductIdMappedProductHttpResponse(id, mappedProduct);
 
 			String content = httpResponse.getContent();
 
@@ -1060,7 +1065,7 @@ public interface MappedProductResource {
 		}
 
 		public HttpInvoker.HttpResponse postProductIdMappedProductHttpResponse(
-				Long productId, MappedProduct mappedProduct)
+				Long id, MappedProduct mappedProduct)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1089,9 +1094,9 @@ public interface MappedProductResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-commerce-admin-catalog/v1.0/products/{productId}/mapped-products");
+						"/o/headless-commerce-admin-catalog/v1.0/products/{id}/mapped-products");
 
-			httpInvoker.path("productId", productId);
+			httpInvoker.path("id", id);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -1099,13 +1104,112 @@ public interface MappedProductResource {
 			return httpInvoker.invoke();
 		}
 
-		public MappedProduct getProductMappedProductBySequence(
-				Long productId, String sequence)
+		public void postProductIdMappedProductBatch(
+				String callbackURL, Object object)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getProductMappedProductBySequenceHttpResponse(
-					productId, sequence);
+				postProductIdMappedProductBatchHttpResponse(
+					callbackURL, object);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				postProductIdMappedProductBatchHttpResponse(
+					String callbackURL, Object object)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(object.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+			if (callbackURL != null) {
+				httpInvoker.parameter(
+					"callbackURL", String.valueOf(callbackURL));
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/headless-commerce-admin-catalog/v1.0/products/mapped-products/batch");
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public MappedProduct getProductIdMappedProductBySequence(
+				Long id, String sequence)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				getProductIdMappedProductBySequenceHttpResponse(id, sequence);
 
 			String content = httpResponse.getContent();
 
@@ -1167,8 +1271,8 @@ public interface MappedProductResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				getProductMappedProductBySequenceHttpResponse(
-					Long productId, String sequence)
+				getProductIdMappedProductBySequenceHttpResponse(
+					Long id, String sequence)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1195,9 +1299,9 @@ public interface MappedProductResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-commerce-admin-catalog/v1.0/products/{productId}/mapped-products/by-sequence/{sequence}");
+						"/o/headless-commerce-admin-catalog/v1.0/products/{id}/mapped-products/by-sequence/{sequence}");
 
-			httpInvoker.path("productId", productId);
+			httpInvoker.path("id", id);
 			httpInvoker.path("sequence", sequence);
 
 			httpInvoker.userNameAndPassword(

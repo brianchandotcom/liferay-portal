@@ -57,7 +57,7 @@ public interface SkuSubscriptionConfigurationResource {
 				String externalReferenceCode)
 		throws Exception;
 
-	public SkuSubscriptionConfiguration getIdSkuSubscriptionConfiguration(
+	public SkuSubscriptionConfiguration getSkuIdSkuSubscriptionConfiguration(
 			Long id)
 		throws Exception;
 

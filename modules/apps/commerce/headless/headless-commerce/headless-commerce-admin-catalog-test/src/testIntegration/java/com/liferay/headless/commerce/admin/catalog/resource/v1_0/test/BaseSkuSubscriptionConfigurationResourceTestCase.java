@@ -219,19 +219,19 @@ public abstract class BaseSkuSubscriptionConfigurationResourceTestCase {
 	}
 
 	@Test
-	public void testGetIdSkuSubscriptionConfiguration() throws Exception {
+	public void testGetSkuIdSkuSubscriptionConfiguration() throws Exception {
 		Assert.assertTrue(false);
 	}
 
 	@Test
-	public void testGraphQLGetIdSkuSubscriptionConfiguration()
+	public void testGraphQLGetSkuIdSkuSubscriptionConfiguration()
 		throws Exception {
 
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGraphQLGetIdSkuSubscriptionConfigurationNotFound()
+	public void testGraphQLGetSkuIdSkuSubscriptionConfigurationNotFound()
 		throws Exception {
 
 		Assert.assertTrue(true);

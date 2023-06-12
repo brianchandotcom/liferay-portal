@@ -584,16 +584,16 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {productIdDiagram(productId: ___){attachmentBase64, color, id, imageId, imageURL, productExternalReferenceCode, productId, radius, type}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {productIdDiagram(id: ___){attachmentBase64, color, id, imageId, imageURL, productExternalReferenceCode, productId, radius, type}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
-	public Diagram productIdDiagram(@GraphQLName("productId") Long productId)
+	public Diagram productIdDiagram(@GraphQLName("id") Long id)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_diagramResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			diagramResource -> diagramResource.getProductIdDiagram(productId));
+			diagramResource -> diagramResource.getProductIdDiagram(id));
 	}
 
 	/**
@@ -620,12 +620,11 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {productIdGroupedProducts(page: ___, pageSize: ___, productId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {productIdGroupedProducts(id: ___, page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public GroupedProductPage productIdGroupedProducts(
-			@GraphQLName("productId") Long productId,
-			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("id") Long id, @GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
 
@@ -634,18 +633,17 @@ public class Query {
 			this::_populateResourceContext,
 			groupedProductResource -> new GroupedProductPage(
 				groupedProductResource.getProductIdGroupedProductsPage(
-					productId, Pagination.of(page, pageSize))));
+					id, Pagination.of(page, pageSize))));
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {productIdLinkedProducts(page: ___, pageSize: ___, productId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {productIdLinkedProducts(id: ___, page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public LinkedProductPage productIdLinkedProducts(
-			@GraphQLName("productId") Long productId,
-			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("id") Long id, @GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
 
@@ -654,7 +652,7 @@ public class Query {
 			this::_populateResourceContext,
 			linkedProductResource -> new LinkedProductPage(
 				linkedProductResource.getProductIdLinkedProductsPage(
-					productId, Pagination.of(page, pageSize))));
+					id, Pagination.of(page, pageSize))));
 	}
 
 	/**
@@ -720,12 +718,11 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {productIdMappedProducts(page: ___, pageSize: ___, productId: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {productIdMappedProducts(id: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public MappedProductPage productIdMappedProducts(
-			@GraphQLName("productId") Long productId,
-			@GraphQLName("search") String search,
+			@GraphQLName("id") Long id, @GraphQLName("search") String search,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page,
 			@GraphQLName("sort") String sortsString)
@@ -736,7 +733,7 @@ public class Query {
 			this::_populateResourceContext,
 			mappedProductResource -> new MappedProductPage(
 				mappedProductResource.getProductIdMappedProductsPage(
-					productId, search, Pagination.of(page, pageSize),
+					id, search, Pagination.of(page, pageSize),
 					_sortsBiFunction.apply(
 						mappedProductResource, sortsString))));
 	}
@@ -744,11 +741,11 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {productMappedProductBySequence(productId: ___, sequence: ___){actions, customFields, id, productExternalReferenceCode, productId, productName, quantity, sequence, sku, skuExternalReferenceCode, skuId, type}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {productIdMappedProductBySequence(id: ___, sequence: ___){actions, customFields, id, productExternalReferenceCode, productId, productName, quantity, sequence, sku, skuExternalReferenceCode, skuId, type}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
-	public MappedProduct productMappedProductBySequence(
-			@GraphQLName("productId") Long productId,
+	public MappedProduct productIdMappedProductBySequence(
+			@GraphQLName("id") Long id,
 			@GraphQLName("sequence") String sequence)
 		throws Exception {
 
@@ -756,8 +753,8 @@ public class Query {
 			_mappedProductResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			mappedProductResource ->
-				mappedProductResource.getProductMappedProductBySequence(
-					productId, sequence));
+				mappedProductResource.getProductIdMappedProductBySequence(
+					id, sequence));
 	}
 
 	/**
@@ -963,12 +960,11 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {productIdPins(page: ___, pageSize: ___, productId: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {productIdPins(id: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public PinPage productIdPins(
-			@GraphQLName("productId") Long productId,
-			@GraphQLName("search") String search,
+			@GraphQLName("id") Long id, @GraphQLName("search") String search,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page,
 			@GraphQLName("sort") String sortsString)
@@ -978,7 +974,7 @@ public class Query {
 			_pinResourceComponentServiceObjects, this::_populateResourceContext,
 			pinResource -> new PinPage(
 				pinResource.getProductIdPinsPage(
-					productId, search, Pagination.of(page, pageSize),
+					id, search, Pagination.of(page, pageSize),
 					_sortsBiFunction.apply(pinResource, sortsString))));
 	}
 
@@ -1779,10 +1775,10 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {idSkuSubscriptionConfiguration(id: ___){deliverySubscriptionEnable, deliverySubscriptionLength, deliverySubscriptionNumberOfLength, deliverySubscriptionType, deliverySubscriptionTypeSettings, enable, length, numberOfLength, overrideSubscriptionInfo, subscriptionType, subscriptionTypeSettings}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {skuIdSkuSubscriptionConfiguration(id: ___){deliverySubscriptionEnable, deliverySubscriptionLength, deliverySubscriptionNumberOfLength, deliverySubscriptionType, deliverySubscriptionTypeSettings, enable, length, numberOfLength, overrideSubscriptionInfo, subscriptionType, subscriptionTypeSettings}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
-	public SkuSubscriptionConfiguration idSkuSubscriptionConfiguration(
+	public SkuSubscriptionConfiguration skuIdSkuSubscriptionConfiguration(
 			@GraphQLName("id") Long id)
 		throws Exception {
 
@@ -1791,7 +1787,7 @@ public class Query {
 			this::_populateResourceContext,
 			skuSubscriptionConfigurationResource ->
 				skuSubscriptionConfigurationResource.
-					getIdSkuSubscriptionConfiguration(id));
+					getSkuIdSkuSubscriptionConfiguration(id));
 	}
 
 	/**
@@ -2359,35 +2355,6 @@ public class Query {
 
 	}
 
-	@GraphQLTypeExtension(Diagram.class)
-	public class GetProductIdPinsPageTypeExtension {
-
-		public GetProductIdPinsPageTypeExtension(Diagram diagram) {
-			_diagram = diagram;
-		}
-
-		@GraphQLField
-		public PinPage productIdPins(
-				@GraphQLName("search") String search,
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page,
-				@GraphQLName("sort") String sortsString)
-			throws Exception {
-
-			return _applyComponentServiceObjects(
-				_pinResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				pinResource -> new PinPage(
-					pinResource.getProductIdPinsPage(
-						_diagram.getProductId(), search,
-						Pagination.of(page, pageSize),
-						_sortsBiFunction.apply(pinResource, sortsString))));
-		}
-
-		private Diagram _diagram;
-
-	}
-
 	@GraphQLTypeExtension(Catalog.class)
 	public class GetOptionByExternalReferenceCodeOptionValuesPageTypeExtension {
 
@@ -2418,56 +2385,6 @@ public class Query {
 		}
 
 		private Catalog _catalog;
-
-	}
-
-	@GraphQLTypeExtension(Sku.class)
-	public class GetProductMappedProductBySequenceTypeExtension {
-
-		public GetProductMappedProductBySequenceTypeExtension(Sku sku) {
-			_sku = sku;
-		}
-
-		@GraphQLField
-		public MappedProduct productMappedProductBySequence(
-				@GraphQLName("sequence") String sequence)
-			throws Exception {
-
-			return _applyComponentServiceObjects(
-				_mappedProductResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				mappedProductResource ->
-					mappedProductResource.getProductMappedProductBySequence(
-						_sku.getProductId(), sequence));
-		}
-
-		private Sku _sku;
-
-	}
-
-	@GraphQLTypeExtension(Diagram.class)
-	public class GetProductIdGroupedProductsPageTypeExtension {
-
-		public GetProductIdGroupedProductsPageTypeExtension(Diagram diagram) {
-			_diagram = diagram;
-		}
-
-		@GraphQLField
-		public GroupedProductPage productIdGroupedProducts(
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page)
-			throws Exception {
-
-			return _applyComponentServiceObjects(
-				_groupedProductResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				groupedProductResource -> new GroupedProductPage(
-					groupedProductResource.getProductIdGroupedProductsPage(
-						_diagram.getProductId(),
-						Pagination.of(page, pageSize))));
-		}
-
-		private Diagram _diagram;
 
 	}
 
@@ -2593,36 +2510,6 @@ public class Query {
 		}
 
 		private Catalog _catalog;
-
-	}
-
-	@GraphQLTypeExtension(Diagram.class)
-	public class GetProductIdMappedProductsPageTypeExtension {
-
-		public GetProductIdMappedProductsPageTypeExtension(Diagram diagram) {
-			_diagram = diagram;
-		}
-
-		@GraphQLField
-		public MappedProductPage productIdMappedProducts(
-				@GraphQLName("search") String search,
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page,
-				@GraphQLName("sort") String sortsString)
-			throws Exception {
-
-			return _applyComponentServiceObjects(
-				_mappedProductResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				mappedProductResource -> new MappedProductPage(
-					mappedProductResource.getProductIdMappedProductsPage(
-						_diagram.getProductId(), search,
-						Pagination.of(page, pageSize),
-						_sortsBiFunction.apply(
-							mappedProductResource, sortsString))));
-		}
-
-		private Diagram _diagram;
 
 	}
 
@@ -2813,32 +2700,6 @@ public class Query {
 		}
 
 		private Catalog _catalog;
-
-	}
-
-	@GraphQLTypeExtension(Diagram.class)
-	public class GetProductIdLinkedProductsPageTypeExtension {
-
-		public GetProductIdLinkedProductsPageTypeExtension(Diagram diagram) {
-			_diagram = diagram;
-		}
-
-		@GraphQLField
-		public LinkedProductPage productIdLinkedProducts(
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page)
-			throws Exception {
-
-			return _applyComponentServiceObjects(
-				_linkedProductResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				linkedProductResource -> new LinkedProductPage(
-					linkedProductResource.getProductIdLinkedProductsPage(
-						_diagram.getProductId(),
-						Pagination.of(page, pageSize))));
-		}
-
-		private Diagram _diagram;
 
 	}
 

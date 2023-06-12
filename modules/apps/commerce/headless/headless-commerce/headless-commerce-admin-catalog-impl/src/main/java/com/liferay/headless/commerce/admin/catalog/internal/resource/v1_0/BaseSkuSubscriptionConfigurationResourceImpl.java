@@ -113,7 +113,7 @@ public abstract class BaseSkuSubscriptionConfigurationResourceImpl
 	@javax.ws.rs.Path("/skus/{id}/skuSubscriptionConfiguration")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public SkuSubscriptionConfiguration getIdSkuSubscriptionConfiguration(
+	public SkuSubscriptionConfiguration getSkuIdSkuSubscriptionConfiguration(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull @javax.ws.rs.PathParam("id")
 			Long id)

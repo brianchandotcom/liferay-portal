@@ -42,11 +42,11 @@ public interface LinkedProductResource {
 	}
 
 	public Page<LinkedProduct> getProductIdLinkedProductsPage(
-			Long productId, Pagination pagination)
+			Long id, Pagination pagination)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getProductIdLinkedProductsPageHttpResponse(
-			Long productId, Pagination pagination)
+			Long id, Pagination pagination)
 		throws Exception;
 
 	public static class Builder {
@@ -155,12 +155,11 @@ public interface LinkedProductResource {
 		implements LinkedProductResource {
 
 		public Page<LinkedProduct> getProductIdLinkedProductsPage(
-				Long productId, Pagination pagination)
+				Long id, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getProductIdLinkedProductsPageHttpResponse(
-					productId, pagination);
+				getProductIdLinkedProductsPageHttpResponse(id, pagination);
 
 			String content = httpResponse.getContent();
 
@@ -223,7 +222,7 @@ public interface LinkedProductResource {
 
 		public HttpInvoker.HttpResponse
 				getProductIdLinkedProductsPageHttpResponse(
-					Long productId, Pagination pagination)
+					Long id, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -257,9 +256,9 @@ public interface LinkedProductResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-commerce-admin-catalog/v1.0/products/{productId}/linked-products");
+						"/o/headless-commerce-admin-catalog/v1.0/products/{id}/linked-products");
 
-			httpInvoker.path("productId", productId);
+			httpInvoker.path("id", id);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

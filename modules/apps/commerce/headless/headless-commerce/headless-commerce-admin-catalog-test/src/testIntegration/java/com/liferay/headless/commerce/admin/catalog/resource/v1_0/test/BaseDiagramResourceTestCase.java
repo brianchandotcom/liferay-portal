@@ -326,16 +326,16 @@ public abstract class BaseDiagramResourceTestCase {
 		Diagram postDiagram = testGetProductIdDiagram_addDiagram();
 
 		Diagram getDiagram = diagramResource.getProductIdDiagram(
-			testGetProductIdDiagram_getProductId(postDiagram));
+			testGetProductIdDiagram_getId(postDiagram));
 
 		assertEquals(postDiagram, getDiagram);
 		assertValid(getDiagram);
 	}
 
-	protected Long testGetProductIdDiagram_getProductId(Diagram diagram)
+	protected Long testGetProductIdDiagram_getId(Diagram diagram)
 		throws Exception {
 
-		return diagram.getProductId();
+		return diagram.getId();
 	}
 
 	protected Diagram testGetProductIdDiagram_addDiagram() throws Exception {
@@ -358,8 +358,8 @@ public abstract class BaseDiagramResourceTestCase {
 								new HashMap<String, Object>() {
 									{
 										put(
-											"productId",
-											testGraphQLGetProductIdDiagram_getProductId(
+											"id",
+											testGraphQLGetProductIdDiagram_getId(
 												diagram));
 									}
 								},
@@ -367,15 +367,15 @@ public abstract class BaseDiagramResourceTestCase {
 						"JSONObject/data", "Object/productIdDiagram"))));
 	}
 
-	protected Long testGraphQLGetProductIdDiagram_getProductId(Diagram diagram)
+	protected Long testGraphQLGetProductIdDiagram_getId(Diagram diagram)
 		throws Exception {
 
-		return diagram.getProductId();
+		return diagram.getId();
 	}
 
 	@Test
 	public void testGraphQLGetProductIdDiagramNotFound() throws Exception {
-		Long irrelevantProductId = RandomTestUtil.randomLong();
+		Long irrelevantId = RandomTestUtil.randomLong();
 
 		Assert.assertEquals(
 			"Not Found",
@@ -385,7 +385,7 @@ public abstract class BaseDiagramResourceTestCase {
 						"productIdDiagram",
 						new HashMap<String, Object>() {
 							{
-								put("productId", irrelevantProductId);
+								put("id", irrelevantId);
 							}
 						},
 						getGraphQLFields())),

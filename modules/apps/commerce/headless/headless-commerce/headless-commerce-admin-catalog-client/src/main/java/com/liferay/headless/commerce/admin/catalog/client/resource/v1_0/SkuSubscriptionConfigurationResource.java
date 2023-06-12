@@ -48,12 +48,12 @@ public interface SkuSubscriptionConfigurationResource {
 				String externalReferenceCode)
 		throws Exception;
 
-	public SkuSubscriptionConfiguration getIdSkuSubscriptionConfiguration(
+	public SkuSubscriptionConfiguration getSkuIdSkuSubscriptionConfiguration(
 			Long id)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			getIdSkuSubscriptionConfigurationHttpResponse(Long id)
+			getSkuIdSkuSubscriptionConfigurationHttpResponse(Long id)
 		throws Exception;
 
 	public static class Builder {
@@ -270,12 +270,12 @@ public interface SkuSubscriptionConfigurationResource {
 			return httpInvoker.invoke();
 		}
 
-		public SkuSubscriptionConfiguration getIdSkuSubscriptionConfiguration(
-				Long id)
+		public SkuSubscriptionConfiguration
+				getSkuIdSkuSubscriptionConfiguration(Long id)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getIdSkuSubscriptionConfigurationHttpResponse(id);
+				getSkuIdSkuSubscriptionConfigurationHttpResponse(id);
 
 			String content = httpResponse.getContent();
 
@@ -339,7 +339,7 @@ public interface SkuSubscriptionConfigurationResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				getIdSkuSubscriptionConfigurationHttpResponse(Long id)
+				getSkuIdSkuSubscriptionConfigurationHttpResponse(Long id)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();

@@ -14,6 +14,9 @@ import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.model.KBTemplate;
 import com.liferay.knowledge.base.service.KBArticleServiceUtil;
+import com.liferay.knowledge.base.service.KBFolderLocalServiceUtil;
+import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
+
 import com.liferay.knowledge.base.service.KBFolderServiceUtil;
 import com.liferay.knowledge.base.service.KBTemplateServiceUtil;
 import com.liferay.knowledge.base.util.comparator.KBArticleTitleComparator;
@@ -31,6 +34,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -42,6 +46,7 @@ import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.LiferayPortletUtil;
+import org.osgi.service.component.annotations.Reference;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -53,6 +58,8 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
+
+import static java.lang.Long.parseLong;
 
 /**
  * @author Sergio González
@@ -265,34 +272,62 @@ public class KBAdminNavigationDisplayContext {
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, WorkflowConstants.STATUS_ANY,
 			new KBArticleTitleComparator(true));
 
-		for (KBArticle kbArticle : kbArticles) {
-			childrenJSONArray.put(
-				JSONUtil.put(
-					"actions",
-					_kbDropdownItemsProvider.getKBArticleDropdownItems(
-						kbArticle, _selectedItemAncestorIds)
-				).put(
-					"children", _getChildKBArticlesJSONArray(kbArticle)
-				).put(
-					"classNameId", kbArticle.getClassNameId()
-				).put(
-					"href",
-					_kbArticleURLHelper.createViewWithRedirectURL(
-						kbArticle,
-						PortalUtil.getCurrentURL(_httpServletRequest))
-				).put(
-					"id", kbArticle.getResourcePrimKey()
-				).put(
-					"name", kbArticle.getTitle()
-				).put(
-					"type", "article"
-				));
+		long itemToMoveId = -1;
+		if(!ParamUtil.getString(_httpServletRequest, "itemToMoveId").isEmpty()){
+			itemToMoveId = parseLong(ParamUtil.getString(_httpServletRequest, "itemToMoveId"));
 		}
 
+		for (KBArticle kbArticle : kbArticles) {
+			if(itemToMoveId != kbArticle.getResourcePrimKey()){
+				childrenJSONArray.put(
+					JSONUtil.put(
+						"actions",
+						_kbDropdownItemsProvider.getKBArticleDropdownItems(
+							kbArticle, _selectedItemAncestorIds)
+					).put(
+						"children", _getChildKBArticlesJSONArray(kbArticle)
+					).put(
+						"classNameId", kbArticle.getClassNameId()
+					).put(
+						"href",
+						_kbArticleURLHelper.createViewWithRedirectURL(
+							kbArticle,
+							PortalUtil.getCurrentURL(_httpServletRequest))
+					).put(
+						"id", kbArticle.getResourcePrimKey()
+					).put(
+						"name", kbArticle.getTitle()
+					).put(
+						"type", "article"
+					));
+			}
+		}
 		return childrenJSONArray;
 	}
 
-	private KBFolder _getKBFolder(long kbFolderId) throws PortalException {
+
+	public long getItemToMoveParent(String itemToMoveType) throws PortalException{
+		long itemToMoveId = parseLong(ParamUtil.getString(_httpServletRequest, "itemToMoveId"));
+		long parentKbObjectId;
+
+		if (itemToMoveType.equals("Folder")){
+			KBFolder kbFolder = KBFolderLocalServiceUtil.getKBFolder(itemToMoveId);
+			parentKbObjectId = kbFolder.getParentKBFolderId();
+		} else {
+			int articleVersion = ParamUtil.getInteger(_httpServletRequest, "itemVersion");
+			KBArticle kbArticle = KBArticleLocalServiceUtil.getKBArticle(itemToMoveId, articleVersion);
+
+			if (kbArticle.getParentResourceClassNameId() == ClassNameLocalServiceUtil.getClassNameId(KBFolder.class.getName())) {
+				parentKbObjectId = KBFolderServiceUtil.getKBFolder(kbArticle.getParentResourcePrimKey()).getKbFolderId();
+			} else {
+				parentKbObjectId = kbArticle.getParentKBArticle().getResourcePrimKey();
+			}
+		}
+
+		return parentKbObjectId;
+	}
+
+	private KBFolder _getKBFolder(long  kbFolderId) throws PortalException {
 		if (kbFolderId != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			return KBFolderServiceUtil.getKBFolder(kbFolderId);
 		}
@@ -310,68 +345,77 @@ public class KBAdminNavigationDisplayContext {
 			WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			new KBObjectsPriorityComparator<>(true));
 
+		long itemToMoveId = -1;
+		if(!ParamUtil.getString(_httpServletRequest, "itemToMoveId").isEmpty()){
+			itemToMoveId = parseLong(ParamUtil.getString(_httpServletRequest, "itemToMoveId"));
+		}
+
 		for (Object kbObject : kbObjects) {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 			if (kbObject instanceof KBFolder) {
 				KBFolder kbFolder = (KBFolder)kbObject;
-
-				jsonObject.put(
-					"actions",
-					_kbDropdownItemsProvider.getKBFolderDropdownItems(
-						kbFolder, _selectedItemAncestorIds)
-				).put(
-					"children",
-					_getKBFolderDataJSONArray(kbFolder.getKbFolderId())
-				).put(
-					"classNameId", kbFolder.getClassNameId()
-				).put(
-					"href",
-					PortletURLBuilder.createRenderURL(
-						_liferayPortletResponse
-					).setMVCPath(
-						"/admin/view_kb_folders.jsp"
-					).setParameter(
-						"parentResourceClassNameId", kbFolder.getClassNameId()
-					).setParameter(
-						"parentResourcePrimKey", kbFolder.getKbFolderId()
-					).setParameter(
-						"selectedItemId", kbFolder.getKbFolderId()
-					).buildString()
-				).put(
-					"id", kbFolder.getKbFolderId()
-				).put(
-					"name", kbFolder.getName()
-				).put(
-					"type", "folder"
-				);
+				if( itemToMoveId != kbFolder.getKbFolderId()){
+					jsonObject.put(
+						"actions",
+						_kbDropdownItemsProvider.getKBFolderDropdownItems(
+							kbFolder, _selectedItemAncestorIds)
+					).put(
+						"children",
+						_getKBFolderDataJSONArray(kbFolder.getKbFolderId())
+					).put(
+						"classNameId", kbFolder.getClassNameId()
+					).put(
+						"href",
+						PortletURLBuilder.createRenderURL(
+							_liferayPortletResponse
+						).setMVCPath(
+							"/admin/view_kb_folders.jsp"
+						).setParameter(
+							"parentResourceClassNameId", kbFolder.getClassNameId()
+						).setParameter(
+							"parentResourcePrimKey", kbFolder.getKbFolderId()
+						).setParameter(
+							"selectedItemId", kbFolder.getKbFolderId()
+						).buildString()
+					).put(
+						"id", kbFolder.getKbFolderId()
+					).put(
+						"name", kbFolder.getName()
+					).put(
+						"type", "folder"
+					);
+				}
 			}
 			else {
 				KBArticle kbArticle = (KBArticle)kbObject;
-
-				jsonObject.put(
-					"actions",
-					_kbDropdownItemsProvider.getKBArticleDropdownItems(
-						kbArticle, _selectedItemAncestorIds)
-				).put(
-					"children", _getChildKBArticlesJSONArray(kbArticle)
-				).put(
-					"classNameId", kbArticle.getClassNameId()
-				).put(
-					"href",
-					_kbArticleURLHelper.createViewWithRedirectURL(
-						kbArticle,
-						PortalUtil.getCurrentURL(_httpServletRequest))
-				).put(
-					"id", kbArticle.getResourcePrimKey()
-				).put(
-					"name", kbArticle.getTitle()
-				).put(
-					"type", "article"
-				);
+				if( itemToMoveId != kbArticle.getResourcePrimKey()){
+					jsonObject.put(
+						"actions",
+						_kbDropdownItemsProvider.getKBArticleDropdownItems(
+							kbArticle, _selectedItemAncestorIds)
+					).put(
+						"children", _getChildKBArticlesJSONArray(kbArticle)
+					).put(
+						"classNameId", kbArticle.getClassNameId()
+					).put(
+						"href",
+						_kbArticleURLHelper.createViewWithRedirectURL(
+							kbArticle,
+							PortalUtil.getCurrentURL(_httpServletRequest))
+					).put(
+						"id", kbArticle.getResourcePrimKey()
+					).put(
+						"name", kbArticle.getTitle()
+					).put(
+						"type", "article"
+					);
+				}
 			}
 
-			childrenJSONArray.put(jsonObject);
+			if(!jsonObject.isNull("id")){
+				childrenJSONArray.put(jsonObject);
+			}
 		}
 
 		return childrenJSONArray;

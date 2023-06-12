@@ -14,31 +14,19 @@
 
 package com.liferay.jethr0.event.handler;
 
-import org.json.JSONObject;
-
 /**
  * @author Michael Hashimoto
  */
 public abstract class BaseEventHandler implements EventHandler {
 
-	@Override
-	public EventHandlerHelper getEventHandlerHelper() {
+	protected BaseEventHandler(EventHandlerHelper eventHandlerHelper) {
+		_eventHandlerHelper = eventHandlerHelper;
+	}
+
+	protected EventHandlerHelper getEventHandlerHelper() {
 		return _eventHandlerHelper;
 	}
 
-	@Override
-	public JSONObject getJSONObject() {
-		return _jsonObject;
-	}
-
-	protected BaseEventHandler(
-		EventHandlerHelper eventHandlerHelper, JSONObject jsonObject) {
-
-		_eventHandlerHelper = eventHandlerHelper;
-		_jsonObject = jsonObject;
-	}
-
 	private final EventHandlerHelper _eventHandlerHelper;
-	private final JSONObject _jsonObject;
 
 }

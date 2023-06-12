@@ -28,22 +28,10 @@ import org.json.JSONObject;
 public class QueueProjectEventHandler extends BaseEventHandler {
 
 	@Override
-	public String process() throws Exception {
+	public String process(String body) throws Exception {
+		Project project = _getProject(new JSONObject(body));
+
 		EventHandlerHelper eventHandlerHelper = getEventHandlerHelper();
-
-		ProjectRepository projectRepository =
-			eventHandlerHelper.getProjectRepository();
-
-		Project project = projectRepository.getById(_getProjectID());
-
-		BuildRepository buildRepository =
-			eventHandlerHelper.getBuildRepository();
-
-		buildRepository.getAll(project);
-
-		project.setState(Project.State.QUEUED);
-
-		projectRepository.update(project);
 
 		BuildQueue buildQueue = eventHandlerHelper.getBuildQueue();
 
@@ -56,16 +44,12 @@ public class QueueProjectEventHandler extends BaseEventHandler {
 		return project.toString();
 	}
 
-	protected QueueProjectEventHandler(
-		EventHandlerHelper eventHandlerHelper, JSONObject jsonObject) {
-
-		super(eventHandlerHelper, jsonObject);
+	protected QueueProjectEventHandler(EventHandlerHelper eventHandlerHelper) {
+		super(eventHandlerHelper);
 	}
 
-	private Long _getProjectID() throws Exception {
-		JSONObject jsonObject = getJSONObject();
-
-		JSONObject projectJSONObject = jsonObject.optJSONObject("project");
+	private Project _getProject(JSONObject bodyJSONObject) throws Exception {
+		JSONObject projectJSONObject = bodyJSONObject.optJSONObject("project");
 
 		if (projectJSONObject == null) {
 			throw new Exception("Missing 'project' JSON object");
@@ -75,7 +59,22 @@ public class QueueProjectEventHandler extends BaseEventHandler {
 			throw new Exception("Missing project 'id'");
 		}
 
-		return projectJSONObject.getLong("id");
+		EventHandlerHelper eventHandlerHelper = getEventHandlerHelper();
+
+		ProjectRepository projectRepository =
+			eventHandlerHelper.getProjectRepository();
+
+		Project project = projectRepository.getById(
+			projectJSONObject.getLong("id"));
+
+		BuildRepository buildRepository =
+			eventHandlerHelper.getBuildRepository();
+
+		buildRepository.getAll(project);
+
+		project.setState(Project.State.QUEUED);
+
+		return project;
 	}
 
 }

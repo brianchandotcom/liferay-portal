@@ -45,19 +45,6 @@ public class SkuSubscriptionConfigurationResourceImpl
 	extends BaseSkuSubscriptionConfigurationResourceImpl
 	implements NestedFieldSupport {
 
-	@NestedField(
-		parentClass = Sku.class, value = "skuSubscriptionConfiguration"
-	)
-	@Override
-	public SkuSubscriptionConfiguration getIdSkuSubscriptionConfiguration(
-			@NestedFieldId(value = "id") Long id)
-		throws Exception {
-
-		CPInstance cpInstance = _cpInstanceService.getCPInstance(id);
-
-		return _toSkuSubscriptionConfiguration(cpInstance.getCPInstanceId());
-	}
-
 	@Override
 	public SkuSubscriptionConfiguration
 			getSkuByExternalReferenceCodeSkuSubscriptionConfiguration(
@@ -72,6 +59,19 @@ public class SkuSubscriptionConfigurationResourceImpl
 				"Unable to find sku with external reference code: " +
 					externalReferenceCode);
 		}
+
+		return _toSkuSubscriptionConfiguration(cpInstance.getCPInstanceId());
+	}
+
+	@NestedField(
+		parentClass = Sku.class, value = "skuSubscriptionConfiguration"
+	)
+	@Override
+	public SkuSubscriptionConfiguration getSkuIdSkuSubscriptionConfiguration(
+			@NestedFieldId(value = "id") Long id)
+		throws Exception {
+
+		CPInstance cpInstance = _cpInstanceService.getCPInstance(id);
 
 		return _toSkuSubscriptionConfiguration(cpInstance.getCPInstanceId());
 	}

@@ -46,23 +46,6 @@ public class SkuSubscriptionConfigurationResourceTest
 
 	@Override
 	@Test
-	public void testGetIdSkuSubscriptionConfiguration() throws Exception {
-		SkuSubscriptionConfiguration addSkuSubscriptionConfiguration =
-			_addSkuSubscriptionConfiguration(
-				randomSkuSubscriptionConfiguration());
-
-		SkuSubscriptionConfiguration idSkuSubscriptionConfiguration =
-			skuSubscriptionConfigurationResource.
-				getIdSkuSubscriptionConfiguration(
-					_cpInstance.getCPInstanceId());
-
-		assertValid(idSkuSubscriptionConfiguration);
-		assertEquals(
-			addSkuSubscriptionConfiguration, idSkuSubscriptionConfiguration);
-	}
-
-	@Override
-	@Test
 	public void testGetSkuByExternalReferenceCodeSkuSubscriptionConfiguration()
 		throws Exception {
 
@@ -80,6 +63,23 @@ public class SkuSubscriptionConfigurationResourceTest
 		assertEquals(
 			addSkuSubscriptionConfiguration,
 			skuByExternalReferenceCodeSkuSubscriptionConfiguration);
+	}
+
+	@Override
+	@Test
+	public void testGetSkuIdSkuSubscriptionConfiguration() throws Exception {
+		SkuSubscriptionConfiguration addSkuSubscriptionConfiguration =
+			_addSkuSubscriptionConfiguration(
+				randomSkuSubscriptionConfiguration());
+
+		SkuSubscriptionConfiguration idSkuSubscriptionConfiguration =
+			skuSubscriptionConfigurationResource.
+				getSkuIdSkuSubscriptionConfiguration(
+					_cpInstance.getCPInstanceId());
+
+		assertValid(idSkuSubscriptionConfiguration);
+		assertEquals(
+			addSkuSubscriptionConfiguration, idSkuSubscriptionConfiguration);
 	}
 
 	@Override

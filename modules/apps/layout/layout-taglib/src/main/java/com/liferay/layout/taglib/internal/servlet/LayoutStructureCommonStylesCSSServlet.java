@@ -139,8 +139,9 @@ public class LayoutStructureCommonStylesCSSServlet extends HttpServlet {
 		httpServletResponse.setContentType(ContentTypes.TEXT_CSS_UTF8);
 		httpServletResponse.setStatus(HttpServletResponse.SC_OK);
 
-		long plid = ParamUtil.getLong(httpServletRequest, "plid");
 		Layout layout = null;
+
+		long plid = ParamUtil.getLong(httpServletRequest, "plid");
 
 		if (plid > 0) {
 			layout = _layoutLocalService.fetchLayout(plid);

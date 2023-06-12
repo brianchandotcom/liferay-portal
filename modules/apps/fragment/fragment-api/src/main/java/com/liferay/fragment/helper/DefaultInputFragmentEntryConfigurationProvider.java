@@ -14,17 +14,17 @@
 
 package com.liferay.fragment.helper;
 
-import java.util.Map;
+import com.liferay.portal.kernel.json.JSONObject;
 
 /**
  * @author Víctor Galán
  */
 public interface DefaultInputFragmentEntryConfigurationProvider {
 
-	public Map<String, String> getDefaultInputFragmentEntryKeys(long groupId);
+	public JSONObject getDefaultInputFragmentEntryKeysJSONObject(long groupId);
 
-	public void updateDefaultInputFragmentEntryKeys(
-			Map<String, String> defaultInputFragmentEntryKeys)
+	public void updateDefaultInputFragmentEntryKeysJSONObject(
+			JSONObject defaultInputFragmentEntryKeysJSONObject)
 		throws Exception;
 
 }

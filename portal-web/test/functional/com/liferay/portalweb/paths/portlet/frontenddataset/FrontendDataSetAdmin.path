@@ -228,6 +228,11 @@
 	<td>//table[contains(@class,'table-list')]//tr[@class='orderable-table-row'][${key_tableRow}]//td[contains(.,'${chosenFilter}')][${key_tableColumn}]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SELECT_DATASET</td>
+	<td>//table[contains(@class,'table-list')]//tr[contains(@class,'orderable-table-row') and contains(.,'${key_nameField}')]//td[@class="drag-handle-cell"]//button[@aria-label="Drag Item"]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

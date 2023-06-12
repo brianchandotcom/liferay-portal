@@ -55,7 +55,7 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "Modal#HEADER",
-				value1 = "Open Graph Image");
+				value1 = "Select Image");
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 

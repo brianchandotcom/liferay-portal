@@ -380,21 +380,17 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 					return StringPool.BLANK;
 				}
 
-				RequestBackedPortletURLFactory requestBackedPortletURLFactory =
-					RequestBackedPortletURLFactoryUtil.create(
-						ddmFormFieldRenderingContext.getHttpServletRequest());
+				long ddmFormInstanceRecordId = GetterUtil.getLong(
+					ddmFormFieldRenderingContext.getProperty(
+						"ddmFormInstanceRecordId"));
 
-				if (ddmFormField.hasProperty("fileEntryURL")) {
-					long ddmFormInstanceRecordId = GetterUtil.getLong(
-						ddmFormFieldRenderingContext.getProperty(
-							"ddmFormInstanceRecordId"));
+				if ((ddmFormInstanceRecordId == 0) &&
+					ddmFormField.hasProperty("fileEntryURL")) {
 
 					String fileEntryURL = GetterUtil.getString(
 						ddmFormField.getProperty("fileEntryURL"));
 
-					if (Validator.isNotNull(fileEntryURL) &&
-						(ddmFormInstanceRecordId == 0)) {
-
+					if (Validator.isNotNull(fileEntryURL)) {
 						String portletNamespace = _portal.getPortletNamespace(
 							DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM);
 
@@ -408,6 +404,10 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 					}
 				}
 
+				RequestBackedPortletURLFactory requestBackedPortletURLFactory =
+					RequestBackedPortletURLFactoryUtil.create(
+						ddmFormFieldRenderingContext.getHttpServletRequest());
+
 				return ResourceURLBuilder.createResourceURL(
 					(ResourceURL)
 						requestBackedPortletURLFactory.createResourceURL(
@@ -415,9 +415,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 				).setParameter(
 					"ddmFormFieldName", ddmFormField.getName()
 				).setParameter(
-					"ddmFormInstanceRecordId",
-					ddmFormFieldRenderingContext.getProperty(
-						"ddmFormInstanceRecordId")
+					"ddmFormInstanceRecordId", ddmFormInstanceRecordId
 				).setParameter(
 					"fileEntryId", fileEntry.getFileEntryId()
 				).setResourceID(

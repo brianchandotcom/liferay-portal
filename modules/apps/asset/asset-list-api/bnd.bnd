@@ -3,7 +3,6 @@ Bundle-SymbolicName: com.liferay.asset.list.api
 Bundle-Version: 11.3.1
 Export-Package:\
 	com.liferay.asset.list.asset.entry.provider,\
-	com.liferay.asset.list.asset.entry.query.processor,\
 	com.liferay.asset.list.constants,\
 	com.liferay.asset.list.exception,\
 	com.liferay.asset.list.model,\

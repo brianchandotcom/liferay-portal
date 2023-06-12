@@ -157,21 +157,7 @@ public class ObjectRelationshipResourceImpl
 					externalReferenceCode, contextCompany.getCompanyId());
 
 		com.liferay.object.model.ObjectDefinition objectDefinition2 =
-			_objectDefinitionLocalService.
-				getObjectDefinitionByExternalReferenceCode(
-					objectRelationship.
-						getObjectDefinitionExternalReferenceCode2(),
-					contextCompany.getCompanyId());
-
-		if (objectDefinition2 == null) {
-			objectDefinition2 =
-				_objectDefinitionLocalService.addObjectDefinition(
-					objectRelationship.
-						getObjectDefinitionExternalReferenceCode2(),
-					contextUser.getUserId());
-		}
-
-		long objectDefinitionId2 = objectDefinition2.getObjectDefinitionId();
+			_getObjectDefinition2(objectRelationship);
 
 		objectRelationship.setParameterObjectFieldId(
 			() -> {
@@ -183,7 +169,7 @@ public class ObjectRelationshipResourceImpl
 
 				ObjectField objectField =
 					_objectFieldLocalService.getObjectField(
-						objectDefinitionId2,
+						objectDefinition2.getObjectDefinitionId(),
 						objectRelationship.getParameterObjectFieldName());
 
 				return objectField.getObjectFieldId();
@@ -213,19 +199,7 @@ public class ObjectRelationshipResourceImpl
 				null)) {
 
 			com.liferay.object.model.ObjectDefinition objectDefinition =
-				_objectDefinitionLocalService.
-					fetchObjectDefinitionByExternalReferenceCode(
-						objectRelationship.
-							getObjectDefinitionExternalReferenceCode2(),
-						contextCompany.getCompanyId());
-
-			if (objectDefinition == null) {
-				objectDefinition =
-					_objectDefinitionLocalService.addObjectDefinition(
-						objectRelationship.
-							getObjectDefinitionExternalReferenceCode2(),
-						contextUser.getUserId());
-			}
+				_getObjectDefinition2(objectRelationship);
 
 			objectDefinitionId2 = objectDefinition.getObjectDefinitionId();
 		}
@@ -275,6 +249,30 @@ public class ObjectRelationshipResourceImpl
 				objectRelationship.getDeletionTypeAsString(),
 				LocalizedMapUtil.getLocalizedMap(
 					objectRelationship.getLabel())));
+	}
+
+	private com.liferay.object.model.ObjectDefinition _getObjectDefinition2(
+			ObjectRelationship objectRelationship)
+		throws Exception {
+
+		com.liferay.object.model.ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.
+				fetchObjectDefinitionByExternalReferenceCode(
+					objectRelationship.
+						getObjectDefinitionExternalReferenceCode2(),
+					contextCompany.getCompanyId());
+
+		if (objectDefinition != null) {
+			return objectDefinition;
+		}
+
+		return _objectDefinitionLocalService.addObjectDefinition(
+			objectRelationship.getObjectDefinitionExternalReferenceCode2(),
+			contextUser.getUserId(),
+			GetterUtil.get(
+				objectRelationship.getObjectDefinitionModifiable2(), true),
+			GetterUtil.get(
+				objectRelationship.getObjectDefinitionSystem2(), false));
 	}
 
 	private ObjectRelationship _toObjectRelationship(

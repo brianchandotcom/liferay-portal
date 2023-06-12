@@ -26,7 +26,6 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
-import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.document.library.kernel.util.DLUtil;
@@ -1008,11 +1007,7 @@ public class DLAdminManagementToolbarDisplayContext
 	}
 
 	private String _getViewMvcRenderCommandName(long folderId) {
-		if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			return "/document_library/view";
-		}
-
-		return "/document_library/view_folder";
+		return _dlAdminDisplayContext.getViewMvcRenderCommandName(folderId);
 	}
 
 	private boolean _hasValidAssetVocabularies(long scopeGroupId)

@@ -1,9 +1,17 @@
 [
 	{
-		"key": "awaitingApprovalOnEvp",
-		"name": "Awaiting Approval On Evp",
+		"key": "awaitingApprovalOnManager",
+		"name": "Awaiting Approval On Manager",
 		"name_i18n": {
-			"en-US": "Awaiting Approval On Evp"
+			"en-US": "Awaiting Approval On Manager"
+		},
+		"type": "string"
+	},
+	{
+		"key": "awaitingApprovalOnEvp",
+		"name": "Awaiting Approval On EVP",
+		"name_i18n": {
+			"en-US": "Awaiting Approval On EVP"
 		},
 		"type": "string"
 	},

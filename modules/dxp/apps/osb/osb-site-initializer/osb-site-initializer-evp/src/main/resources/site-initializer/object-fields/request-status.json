@@ -28,6 +28,9 @@
 										"key": "awaitingApprovalOnEvp"
 									},
 									{
+										"key": "awaitingApprovalOnManager"
+									},
+									{
 										"key": "awaitCompanyVerification"
 									},
 									{
@@ -54,6 +57,9 @@
 										"key": "awaitingApprovalOnEvp"
 									},
 									{
+										"key": "awaitingApprovalOnManager"
+									},
+									{
 										"key": "awaitCompanyVerification"
 									},
 									{
@@ -78,6 +84,35 @@
 									},
 									{
 										"key": "closed"
+									},
+									{
+										"key": "awaitingApprovalOnManager"
+									},
+									{
+										"key": "awaitCompanyVerification"
+									},
+									{
+										"key": "awaitingFinanceReview"
+									},
+									{
+										"key": "awaitingPaymentConfirmation"
+									},
+									{
+										"key": "awaitingMoreInfoFromEmployee"
+									}
+								]
+							},
+							{
+								"key": "awaitingApprovalOnManager",
+								"objectStateTransitions": [
+									{
+										"key": "rejected"
+									},
+									{
+										"key": "closed"
+									},
+									{
+										"key": "awaitingApprovalOnEvp"
 									},
 									{
 										"key": "awaitCompanyVerification"
@@ -109,6 +144,9 @@
 										"key": "awaitingApprovalOnEvp"
 									},
 									{
+										"key": "awaitingApprovalOnManager"
+									},
+									{
 										"key": "awaitingFinanceReview"
 									},
 									{
@@ -133,6 +171,9 @@
 									},
 									{
 										"key": "awaitingApprovalOnEvp"
+									},
+									{
+										"key": "awaitingApprovalOnManager"
 									},
 									{
 										"key": "awaitCompanyVerification"
@@ -161,6 +202,9 @@
 										"key": "awaitingApprovalOnEvp"
 									},
 									{
+										"key": "awaitingApprovalOnManager"
+									},
+									{
 										"key": "awaitCompanyVerification"
 									},
 									{
@@ -185,6 +229,9 @@
 									},
 									{
 										"key": "awaitingApprovalOnEvp"
+									},
+									{
+										"key": "awaitingApprovalOnManager"
 									},
 									{
 										"key": "awaitCompanyVerification"

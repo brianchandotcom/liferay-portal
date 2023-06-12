@@ -18,6 +18,7 @@ import com.liferay.account.exception.AccountEntryTypeException;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
@@ -30,19 +31,20 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Channel)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Channel.AccountTypeExceptionMapper"
+		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Channel.ChannelAccountTypeExceptionMapper"
 	},
 	service = ExceptionMapper.class
 )
 @Provider
-public class AccountTypeExceptionMapper
+public class ChannelAccountTypeExceptionMapper
 	extends BaseExceptionMapper<AccountEntryTypeException> {
 
 	@Override
 	protected Problem getProblem(
 		AccountEntryTypeException accountEntryTypeException) {
 
-		return new Problem(accountEntryTypeException);
+		return new Problem(
+			Response.Status.BAD_REQUEST, "Channel account type is invalid");
 	}
 
 }

@@ -30,6 +30,8 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 ).build();
 %>
 
+<liferay-ui:error embed="<%= false %>" exception="<%= AccountEntryStatusException.class %>" message="please-select-a-valid-supplier" />
+<liferay-ui:error embed="<%= false %>" exception="<%= AccountEntryTypeException.class %>" message="please-select-a-valid-supplier" />
 <liferay-ui:error embed="<%= false %>" exception="<%= FileExtensionException.class %>" message="please-select-a-valid-jrxml-file" />
 <liferay-ui:error embed="<%= false %>" exception="<%= InvalidFileException.class %>" message="please-select-a-valid-jrxml-file" />
 
@@ -43,9 +45,10 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 	<aui:model-context bean="<%= commerceChannel %>" model="<%= CommerceChannel.class %>" />
 
 	<div class="row">
-		<div class="col-lg-6">
+		<div class="col-lg-6 d-flex">
 			<commerce-ui:panel
 				bodyClasses="flex-fill"
+				elementClasses="flex-fill"
 				title='<%= LanguageUtil.get(request, "details") %>'
 			>
 				<aui:input name="name" />
@@ -77,12 +80,29 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 					%>
 
 				</aui:select>
+
+				<c:if test='<%= FeatureFlagManagerUtil.isEnabled("COMMERCE-10890") %>'>
+					<aui:select disabled="<%= !commerceChannelDisplayContext.hasManageLinkSupplierPermission() %>" label="link-channel-to-a-supplier" name="accountEntryId" showEmptyOption="<%= true %>">
+
+						<%
+						for (AccountEntry accountEntry : commerceChannelDisplayContext.getSupplierAccountEntries()) {
+						%>
+
+							<aui:option label="<%= accountEntry.getName() %>" selected="<%= (commerceChannel != null) && (accountEntry.getAccountEntryId() == commerceChannel.getAccountEntryId()) %>" value="<%= accountEntry.getAccountEntryId() %>" />
+
+						<%
+						}
+						%>
+
+					</aui:select>
+				</c:if>
 			</commerce-ui:panel>
 		</div>
 
-		<div class="col-lg-6">
+		<div class="col-lg-6 d-flex">
 			<commerce-ui:panel
 				bodyClasses="flex-fill"
+				elementClasses="flex-fill"
 				title='<%= LanguageUtil.get(request, "prices") %>'
 			>
 				<label class="control-label" for="shippingTaxSettings--taxCategoryId--"><liferay-ui:message key="shipping-tax-category" /></label>

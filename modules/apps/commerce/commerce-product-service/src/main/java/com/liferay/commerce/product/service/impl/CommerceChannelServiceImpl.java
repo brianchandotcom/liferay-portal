@@ -21,6 +21,7 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -193,8 +194,24 @@ public class CommerceChannelServiceImpl extends CommerceChannelServiceBaseImpl {
 			boolean discountsTargetNetPrice)
 		throws PortalException {
 
+		PermissionChecker permissionChecker = getPermissionChecker();
+
 		_commerceChannelModelResourcePermission.check(
-			getPermissionChecker(), commerceChannelId, ActionKeys.UPDATE);
+			permissionChecker, commerceChannelId, ActionKeys.UPDATE);
+
+		PortletResourcePermission portletResourcePermission =
+			_commerceChannelModelResourcePermission.
+				getPortletResourcePermission();
+
+		if (!portletResourcePermission.contains(
+				permissionChecker, null, CPActionKeys.VIEW_COMMERCE_CHANNELS)) {
+
+			CommerceChannel commerceChannel =
+				commerceChannelLocalService.getCommerceChannel(
+					commerceChannelId);
+
+			accountEntryId = commerceChannel.getAccountEntryId();
+		}
 
 		return commerceChannelLocalService.updateCommerceChannel(
 			commerceChannelId, accountEntryId, siteGroupId, name, type,

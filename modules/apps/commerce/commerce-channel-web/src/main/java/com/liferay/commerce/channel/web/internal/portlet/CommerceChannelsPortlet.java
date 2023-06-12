@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.channel.web.internal.portlet;
 
+import com.liferay.account.service.AccountEntryService;
 import com.liferay.commerce.channel.web.internal.display.context.CommerceChannelDisplayContext;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
 import com.liferay.commerce.product.channel.CommerceChannelHealthStatusRegistry;
@@ -75,7 +76,7 @@ public class CommerceChannelsPortlet extends MVCPortlet {
 
 		CommerceChannelDisplayContext commerceChannelDisplayContext =
 			new CommerceChannelDisplayContext(
-				_commerceChannelHealthStatusRegistry,
+				_accountEntryService, _commerceChannelHealthStatusRegistry,
 				_commerceChannelModelResourcePermission,
 				_commerceChannelService, _commerceChannelTypeRegistry,
 				_commerceCurrencyService, _configurationProvider,
@@ -89,6 +90,9 @@ public class CommerceChannelsPortlet extends MVCPortlet {
 
 		super.render(renderRequest, renderResponse);
 	}
+
+	@Reference
+	private AccountEntryService _accountEntryService;
 
 	@Reference
 	private CommerceChannelHealthStatusRegistry

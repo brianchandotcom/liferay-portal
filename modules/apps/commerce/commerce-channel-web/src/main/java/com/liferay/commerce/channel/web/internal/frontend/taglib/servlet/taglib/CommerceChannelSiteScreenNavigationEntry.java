@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.channel.web.internal.frontend.taglib.servlet.taglib;
 
+import com.liferay.account.service.AccountEntryService;
 import com.liferay.commerce.channel.web.internal.display.context.SiteCommerceChannelTypeDisplayContext;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
 import com.liferay.commerce.inventory.method.CommerceInventoryMethodRegistry;
@@ -80,7 +81,7 @@ public class CommerceChannelSiteScreenNavigationEntry
 		SiteCommerceChannelTypeDisplayContext
 			siteCommerceChannelTypeDisplayContext =
 				new SiteCommerceChannelTypeDisplayContext(
-					_commerceChannelHealthStatusRegistry,
+					_accountEntryService, _commerceChannelHealthStatusRegistry,
 					_commerceChannelModelResourcePermission,
 					_commerceChannelService, _commerceChannelTypeRegistry,
 					_commerceCurrencyService, _configurationProvider,
@@ -97,6 +98,9 @@ public class CommerceChannelSiteScreenNavigationEntry
 			httpServletRequest, httpServletResponse,
 			"/commerce_channel/site.jsp");
 	}
+
+	@Reference
+	private AccountEntryService _accountEntryService;
 
 	@Reference
 	private CommerceChannelHealthStatusRegistry

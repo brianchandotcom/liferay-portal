@@ -14,6 +14,9 @@
 
 package com.liferay.commerce.channel.web.internal.display.context;
 
+import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryService;
 import com.liferay.commerce.channel.web.internal.display.context.helper.CommerceChannelRequestHelper;
 import com.liferay.commerce.configuration.CommerceAccountGroupServiceConfiguration;
 import com.liferay.commerce.configuration.CommerceOrderCheckoutConfiguration;
@@ -59,15 +62,18 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 
@@ -89,6 +95,7 @@ public class CommerceChannelDisplayContext
 	extends BaseCommerceChannelDisplayContext {
 
 	public CommerceChannelDisplayContext(
+		AccountEntryService accountEntryService,
 		CommerceChannelHealthStatusRegistry commerceChannelHealthStatusRegistry,
 		ModelResourcePermission<CommerceChannel>
 			commerceChannelModelResourcePermission,
@@ -105,6 +112,7 @@ public class CommerceChannelDisplayContext
 
 		super(httpServletRequest);
 
+		_accountEntryService = accountEntryService;
 		_commerceChannelHealthStatusRegistry =
 			commerceChannelHealthStatusRegistry;
 		_commerceChannelModelResourcePermission =
@@ -368,6 +376,23 @@ public class CommerceChannelDisplayContext
 		return portletURL;
 	}
 
+	public List<AccountEntry> getSupplierAccountEntries()
+		throws PortalException {
+
+		BaseModelSearchResult<AccountEntry> baseModelSearchResult =
+			_accountEntryService.searchAccountEntries(
+				null,
+				LinkedHashMapBuilder.<String, Object>put(
+					"status", WorkflowConstants.STATUS_APPROVED
+				).put(
+					"types",
+					new String[] {AccountConstants.ACCOUNT_ENTRY_TYPE_SUPPLIER}
+				).build(),
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, "name", false);
+
+		return baseModelSearchResult.getBaseModels();
+	}
+
 	public List<CPTaxCategory> getTaxCategories() {
 		return _cpTaxCategoryLocalService.getCPTaxCategories(
 			_commerceChannelRequestHelper.getCompanyId(), QueryUtil.ALL_POS,
@@ -411,6 +436,20 @@ public class CommerceChannelDisplayContext
 		return portletResourcePermission.contains(
 			themeDisplay.getPermissionChecker(), null,
 			CPActionKeys.ADD_COMMERCE_CHANNEL);
+	}
+
+	public boolean hasManageLinkSupplierPermission() {
+		PortletResourcePermission portletResourcePermission =
+			_commerceChannelModelResourcePermission.
+				getPortletResourcePermission();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		return portletResourcePermission.contains(
+			themeDisplay.getPermissionChecker(), null,
+			CPActionKeys.VIEW_COMMERCE_CHANNELS);
 	}
 
 	public boolean hasPermission(long commerceChannelId, String actionId)
@@ -548,6 +587,7 @@ public class CommerceChannelDisplayContext
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceChannelDisplayContext.class);
 
+	private final AccountEntryService _accountEntryService;
 	private CommerceAccountGroupServiceConfiguration
 		_commerceAccountGroupServiceConfiguration;
 	private final CommerceChannelHealthStatusRegistry

@@ -23,6 +23,7 @@ import com.liferay.fragment.listener.FragmentEntryLinkListenerRegistry;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkService;
+import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.type.InfoFieldType;
 import com.liferay.info.form.InfoForm;
@@ -47,10 +48,12 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -65,7 +68,6 @@ import com.liferay.segments.constants.SegmentsExperienceConstants;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.TreeSet;
 
@@ -183,6 +185,11 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			httpServletRequest);
 
+		JSONObject defaultInputFragmentEntryKeysJSONObject =
+			_defaultInputFragmentEntryHelper.
+				getDefaultInputFragmentEntryKeysJSONObject(
+					themeDisplay.getScopeGroupId());
+
 		for (InfoField<?> infoField :
 				_getInfoFields(
 					formStyledLayoutStructureItem,
@@ -194,10 +201,9 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 
 			InfoFieldType infoFieldType = infoField.getInfoFieldType();
 
-			FragmentEntry fragmentEntry =
-				_fragmentCollectionContributorRegistry.getFragmentEntry(
-					_getFragmentEntryKey(
-						infoField, themeDisplay.getScopeGroupId()));
+			FragmentEntry fragmentEntry = _getFragmentEntry(
+				themeDisplay.getCompanyId(), infoField.getInfoFieldType(),
+				defaultInputFragmentEntryKeysJSONObject);
 
 			if ((fragmentEntry == null) ||
 				!_isAllowedFragmentEntryKey(
@@ -265,19 +271,35 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 		return addedFragmentEntryLinks;
 	}
 
-	private String _getFragmentEntryKey(InfoField infoField, long groupId) {
-		InfoFieldType infoFieldType = infoField.getInfoFieldType();
-
-
-		JSONObject defaultInputFragmentEntryKeysJSONObject =
-			_defaultInputFragmentEntryHelper.getDefaultInputFragmentEntryKeysJSONObject(
-				groupId);
+	private FragmentEntry _getFragmentEntry(
+		long companyId, InfoFieldType infoFieldType,
+		JSONObject defaultInputFragmentEntryKeysJSONObject) {
 
 		JSONObject jsonObject =
 			defaultInputFragmentEntryKeysJSONObject.getJSONObject(
 				infoFieldType.getName());
 
-		return jsonObject.getString("key");
+		if (jsonObject == null) {
+			return null;
+		}
+
+		FragmentEntry fragmentEntry =
+			_fragmentCollectionContributorRegistry.getFragmentEntry(
+				jsonObject.getString("key"));
+
+		if (fragmentEntry != null) {
+			return fragmentEntry;
+		}
+
+		Group group = _groupLocalService.fetchGroup(
+			companyId, jsonObject.getString("groupKey"));
+
+		if (group == null) {
+			return null;
+		}
+
+		return _fragmentEntryLocalService.fetchFragmentEntry(
+			group.getGroupId(), jsonObject.getString("key"));
 	}
 
 	private List<InfoField<?>> _getInfoFields(
@@ -546,6 +568,12 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private FragmentEntryLinkService _fragmentEntryLinkService;
+
+	@Reference
+	private FragmentEntryLocalService _fragmentEntryLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private InfoItemServiceRegistry _infoItemServiceRegistry;

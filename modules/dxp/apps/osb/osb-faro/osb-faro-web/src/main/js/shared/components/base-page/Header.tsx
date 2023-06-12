@@ -1,4 +1,5 @@
 import Breadcrumbs from 'shared/components/Breadcrumbs';
+import classNames from 'classnames';
 import ClayButton from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
@@ -58,6 +59,7 @@ const NavBar: React.FC<INavBarProps> = ({
 };
 
 interface Action extends React.HTMLAttributes<HTMLElement> {
+	disabled: boolean;
 	label: string;
 	href: string;
 }
@@ -83,7 +85,10 @@ const PageActions: React.FC<IPageActionsProps> = ({
 				return (
 					<Button
 						button
-						className='button-root'
+						className={classNames({
+							'button-root': true,
+							disabled: props.disabled
+						})}
 						displayType='secondary'
 						key={label}
 						{...props}

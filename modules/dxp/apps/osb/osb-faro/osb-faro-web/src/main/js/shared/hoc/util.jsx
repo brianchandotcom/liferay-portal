@@ -103,7 +103,10 @@ export const withLoading = (options = {}) => Component => ({
 			</div>
 		) : (
 			<ClayLoadingIndicator
-				className={getCN(className, 'spinner-root')}
+				className={getCN(
+					className,
+					'display-card loading-root spinner-root'
+				)}
 			/>
 		);
 	}

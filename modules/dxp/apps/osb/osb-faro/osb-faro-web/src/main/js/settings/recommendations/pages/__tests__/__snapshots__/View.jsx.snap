@@ -63,7 +63,7 @@ exports[`View should render 1`] = `
             class="page-actions-container"
           >
             <button
-              class="button-root btn btn-secondary"
+              class="button-root disabled btn btn-secondary"
               disabled=""
               type="button"
             >

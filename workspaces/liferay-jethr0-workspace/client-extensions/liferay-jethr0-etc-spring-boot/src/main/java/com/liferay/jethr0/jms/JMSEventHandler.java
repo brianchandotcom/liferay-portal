@@ -15,22 +15,16 @@
 package com.liferay.jethr0.jms;
 
 import com.liferay.jethr0.build.Build;
-import com.liferay.jethr0.build.parameter.BuildParameter;
 import com.liferay.jethr0.build.queue.BuildQueue;
-import com.liferay.jethr0.build.repository.BuildParameterRepository;
 import com.liferay.jethr0.build.repository.BuildRepository;
 import com.liferay.jethr0.build.repository.BuildRunRepository;
 import com.liferay.jethr0.build.run.BuildRun;
 import com.liferay.jethr0.event.handler.EventHandler;
 import com.liferay.jethr0.event.handler.EventHandlerFactory;
-import com.liferay.jethr0.gitbranch.repository.GitBranchRepository;
-import com.liferay.jethr0.jenkins.JenkinsQueue;
 import com.liferay.jethr0.jenkins.node.JenkinsNode;
 import com.liferay.jethr0.jenkins.repository.JenkinsNodeRepository;
 import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.project.repository.ProjectRepository;
-import com.liferay.jethr0.task.repository.TaskRepository;
-import com.liferay.jethr0.testsuite.repository.TestSuiteRepository;
 import com.liferay.jethr0.util.StringUtil;
 
 import java.net.URL;

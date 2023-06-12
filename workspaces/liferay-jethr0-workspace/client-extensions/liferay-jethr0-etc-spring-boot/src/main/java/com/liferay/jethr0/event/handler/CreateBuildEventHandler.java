@@ -41,7 +41,7 @@ public class CreateBuildEventHandler extends BaseEventHandler {
 		BuildRepository buildRepository =
 			eventHandlerHelper.getBuildRepository();
 
-		JSONObject buildJSONObject = _getBuildJSONObject(
+		JSONObject buildJSONObject = validateBuildJSONObject(
 			bodyJSONObject.optJSONObject("build"));
 
 		Build build = buildRepository.add(project, buildJSONObject);
@@ -85,38 +85,6 @@ public class CreateBuildEventHandler extends BaseEventHandler {
 
 	protected CreateBuildEventHandler(EventHandlerHelper eventHandlerHelper) {
 		super(eventHandlerHelper);
-	}
-
-	private JSONObject _getBuildJSONObject(JSONObject buildJSONObject)
-		throws Exception {
-
-		if (buildJSONObject == null) {
-			throw new Exception("Invalid build JSON object");
-		}
-
-		String buildName = buildJSONObject.optString("buildName");
-
-		if (buildName.isEmpty()) {
-			throw new Exception("Invalid build 'buildName'");
-		}
-
-		String jobName = buildJSONObject.optString("jobName");
-
-		if (jobName.isEmpty()) {
-			throw new Exception("Invalid build 'jobName'");
-		}
-
-		buildJSONObject.put(
-			"buildName", buildName
-		).put(
-			"jobName", jobName
-		).put(
-			"parameters", buildJSONObject.optJSONObject("parameters")
-		).put(
-			"state", Build.State.OPENED.getJSONObject()
-		);
-
-		return buildJSONObject;
 	}
 
 	private Project _getProject(JSONObject bodyJSONObject) throws Exception {

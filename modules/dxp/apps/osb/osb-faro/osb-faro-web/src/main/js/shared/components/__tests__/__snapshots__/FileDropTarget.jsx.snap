@@ -97,7 +97,7 @@ exports[`FileDropTarget FileItem renders 1`] = `
         class="d-flex align-items-center"
       >
         <button
-          class="button-root btn btn-sm btn-unstyled"
+          class="button-root btn btn-sm btn-link"
           type="button"
         >
           Remove

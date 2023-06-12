@@ -135,7 +135,7 @@ function updateValue(requestType) {
 		'.grant-combobox div div div div div label'
 	);
 
-	if (!labelName.innerText.includes('*')) {
+	if (!labelName?.innerText.includes('*')) {
 		labelName.innerHTML =
 			labelName.innerText +
 			"<span style='color:#DA1414;margin-left:4px;font-size:15px;'>*</span>";
@@ -207,7 +207,7 @@ function handleDocumentClick(requestType) {
 
 const getUser = async () => {
 	const response = await fetch(
-		`/o/headless-admin-user/v1.0/user-accounts/${userId}`,
+		`/o/headless-admin-user/v1.0/my-user-account`,
 		{
 			headers: {
 				'content-type': 'application/json',
@@ -235,6 +235,24 @@ const setDefaultUserInfo = async () => {
 	emailAddressInput.style.cursor = 'not-allowed';
 	emailAddressInput.style.color = '#b1b2b8';
 	emailAddressInput.value = userInformation[0]?.emailAddress;
+
+	const managerInformation = userInformation[0].customFields.find(
+		({name}) => name === 'Manager'
+	).customValue.data;
+
+	const managerEmailAddress = document.querySelector(
+		'[name="managerEmailAddress"]'
+	);
+
+	if (managerInformation) {
+		managerEmailAddress.readOnly = true;
+		managerEmailAddress.style.cursor = 'not-allowed';
+		managerEmailAddress.style.color = '#b1b2b8';
+		managerEmailAddress.value = managerInformation;
+	}
+	else {
+		managerEmailAddress.parentElement.style.display = 'none';
+	}
 
 	const phoneNumber =
 		userInformation[0]?.userAccountContactInformation?.telephones[0]

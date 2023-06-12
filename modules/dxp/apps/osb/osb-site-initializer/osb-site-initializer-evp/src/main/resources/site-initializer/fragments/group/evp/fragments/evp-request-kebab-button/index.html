@@ -44,7 +44,7 @@ Await Company Verification", "Awaiting Finance Review"] /]
 			[/#if]
 
 			[#if role.name == "EVP Manager" && requestStatus == "awaitingApprovalOnEvp" || role.name == "Finance User" && requestStatus == "awaitingFinanceReview"]
-				<div class="btnOpenModal">
+				<div class="btnOpenModal review">
 					[@liferay_ui["icon"]
 						message="Review"
 						url="#${requestId}"
@@ -53,13 +53,28 @@ Await Company Verification", "Awaiting Finance Review"] /]
 			[/#if]
 
 			[#if role.name == "Employee" && grantRequestType == "sponsorship" && requestStatus == "awaitingEmployeeProofOfExpenses"]
-			<div class="btnOpenModal">
+			<div class="btnOpenModal review">
 				[@liferay_ui["icon"]
 					message="Upload Receipt"
 					url=URL + "/upload-receipt?id=" + requestId
 				/]
 			</div>
 		[/#if]
+			[#if role.name == "Liferay Manager" && requestStatus == "awaitingApprovalOnManager"]
+				<div class="btnOpenModal approve">
+					[@liferay_ui["icon"]
+						message="Approve"
+						url="#${requestId}"
+					/]
+				</div>
+
+				<div class="btnOpenModal rejected">
+					[@liferay_ui["icon"]
+						message="Reject"
+						url="#${requestId}"
+					/]
+				</div>
+			[/#if]
 		[/#list]
 	[/@]
 </div>

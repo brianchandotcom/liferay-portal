@@ -118,7 +118,7 @@ String styleBookWarningMessage = layoutsAdminDisplayContext.getStyleBookWarningM
 
 				<c:choose>
 					<c:when test='<%= type.equals("checkbox") %>'>
-						<aui:input label="<%= HtmlUtil.escape(name) %>" labelCssClass="font-weight-normal" name="<%= propertyName %>" type="checkbox" value="<%= value %>" wrapperCssClass="c-mb-3" />
+						<aui:input disabled="<%= layoutsAdminDisplayContext.isReadOnly() %>" label="<%= HtmlUtil.escape(name) %>" labelCssClass="font-weight-normal" name="<%= propertyName %>" type="checkbox" value="<%= value %>" wrapperCssClass="c-mb-3" />
 					</c:when>
 					<c:when test='<%= type.equals("text") || type.equals("textarea") %>'>
 						<aui:input label="<%= HtmlUtil.escape(name) %>" name="<%= propertyName %>" type="<%= type %>" value="<%= value %>" />
@@ -153,6 +153,7 @@ String styleBookWarningMessage = layoutsAdminDisplayContext.getStyleBookWarningM
 		</c:if>
 
 		<clay:button
+			disabled="<%= layoutsAdminDisplayContext.isReadOnly() %>"
 			displayType="secondary"
 			id='<%= liferayPortletResponse.getNamespace() + "changeTheme" %>'
 			label='<%= LanguageUtil.get(request, "change-current-theme") %>'

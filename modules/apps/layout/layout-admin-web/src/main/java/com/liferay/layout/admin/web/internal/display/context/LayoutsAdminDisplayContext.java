@@ -49,6 +49,7 @@ import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -538,6 +539,8 @@ public class LayoutsAdminDisplayContext {
 		).put(
 			"imgURL", getFaviconURL()
 		).put(
+			"isReadOnly", isReadOnly()
+		).put(
 			"themeFaviconCETExternalReferenceCode",
 			getThemeFaviconCETExternalReferenceCode()
 		).put(
@@ -1012,6 +1015,18 @@ public class LayoutsAdminDisplayContext {
 		).buildPortletURL();
 	}
 
+	public String getPreviewCurrentDesignURL() {
+		return PortletURLBuilder.createRenderURL(
+			_liferayPortletResponse
+		).setMVCPath(
+			"/preview_current_design.jsp"
+		).setRedirect(
+			themeDisplay.getURLCurrent()
+		).setParameter(
+			"readOnly", true
+		).buildString();
+	}
+
 	public String getPreviewDraftURL(Layout layout) throws PortalException {
 		return PortalUtil.getLayoutFriendlyURL(
 			layout.fetchDraftLayout(), themeDisplay);
@@ -1344,6 +1359,8 @@ public class LayoutsAdminDisplayContext {
 					ClientExtensionEntryConstants.TYPE_THEME_CSS);
 
 		return HashMapBuilder.<String, Object>put(
+			"isReadOnly", isReadOnly()
+		).put(
 			"placeholder", _getPlaceholder()
 		).put(
 			"selectThemeCSSClientExtensionEventName",
@@ -1750,6 +1767,22 @@ public class LayoutsAdminDisplayContext {
 		}
 
 		return _privateLayoutsEnabled;
+	}
+
+	public boolean isReadOnly() {
+		if (_readOnly != null) {
+			return _readOnly;
+		}
+
+		_readOnly = false;
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-153951")) {
+			return _readOnly;
+		}
+
+		_readOnly = ParamUtil.getBoolean(_liferayPortletRequest, "readOnly");
+
+		return _readOnly;
 	}
 
 	public boolean isSearch() {
@@ -2264,6 +2297,7 @@ public class LayoutsAdminDisplayContext {
 	private Long _parentLayoutId;
 	private Boolean _privateLayout;
 	private Boolean _privateLayoutsEnabled;
+	private Boolean _readOnly;
 	private String _redirect;
 	private Layout _selLayout;
 	private LayoutSet _selLayoutSet;

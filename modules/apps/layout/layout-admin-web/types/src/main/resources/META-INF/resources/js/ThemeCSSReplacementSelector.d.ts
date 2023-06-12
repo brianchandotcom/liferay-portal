@@ -15,6 +15,7 @@
 /// <reference types="react" />
 
 export default function ThemeCSSReplacementSelector({
+	isReadOnly,
 	placeholder,
 	portletNamespace,
 	selectThemeCSSClientExtensionEventName,
@@ -23,6 +24,7 @@ export default function ThemeCSSReplacementSelector({
 	themeCSSExtensionName,
 }: IProps): JSX.Element;
 interface IProps {
+	isReadOnly: boolean;
 	placeholder: string;
 	portletNamespace: string;
 	selectThemeCSSClientExtensionEventName: string;

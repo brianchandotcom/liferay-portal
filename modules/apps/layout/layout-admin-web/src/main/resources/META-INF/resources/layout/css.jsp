@@ -22,11 +22,6 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLookAndFeelDisplayContext(request, layoutsAdminDisplayContext, liferayPortletResponse);
 %>
 
-<clay:alert
-	displayType="info"
-	message='<%= LanguageUtil.get(request, "theme-css-client-extension-and-custom-css-are-disabled-when-using-the-inherited-theme") %>'
-/>
-
 <liferay-frontend:fieldset
 	collapsed="<%= false %>"
 	collapsible="<%= true %>"
@@ -67,7 +62,14 @@ LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLook
 	collapsible="<%= true %>"
 	label="custom-css"
 >
-	<aui:input disabled="<%= selLayout.isInheritLookAndFeel() %>" label="css" name="regularCss" type="textarea" value="<%= selLayout.getCssText() %>" wrapperCssClass="c-mb-0" />
+	<clay:alert
+		cssClass='<%= selLayout.isInheritLookAndFeel() ? StringPool.BLANK : "d-none" %>'
+		displayType="info"
+		id='<%= liferayPortletResponse.getNamespace() + "regularCssAlert" %>'
+		message='<%= LanguageUtil.get(request, "custom-css-is-disabled-when-using-the-inherited-theme") %>'
+	/>
+
+	<aui:input disabled="<%= selLayout.isInheritLookAndFeel() || layoutsAdminDisplayContext.isReadOnly() %>" label="css" name="regularCss" type="textarea" value="<%= selLayout.getCssText() %>" wrapperCssClass="c-mb-0" />
 
 	<p class="text-secondary">
 		<liferay-ui:message key="this-css-is-loaded-after-the-theme" />

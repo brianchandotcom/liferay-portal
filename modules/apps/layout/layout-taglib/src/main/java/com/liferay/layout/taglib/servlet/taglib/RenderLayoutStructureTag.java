@@ -180,20 +180,11 @@ public class RenderLayoutStructureTag extends IncludeTag {
 				renderLayoutStructureDisplayContext);
 
 			if (_renderActionHandler) {
-				ComponentTag componentTag = new ComponentTag();
-
-				componentTag.setComponentId("infoItemActionComponent");
-				componentTag.setContext(
+				_renderComponent(
+					"infoItemActionComponent",
 					renderLayoutStructureDisplayContext.
-						getInfoItemActionComponentContext());
-				componentTag.setModule(
+						getInfoItemActionComponentContext(),
 					"render_layout_structure/js/InfoItemActionHandler");
-				componentTag.setPageContext(pageContext);
-				
-				componentTag.setServletContext(
-					ServletContextUtil.getServletContext());
-				componentTag.doStartTag();
-				componentTag.doEndTag();
 			}
 		}
 
@@ -597,12 +588,9 @@ public class RenderLayoutStructureTag extends IncludeTag {
 
 			jspWriter.write("</div>");
 
-			ComponentTag componentTag = new ComponentTag();
-
-			componentTag.setComponentId(
+			_renderComponent(
 				"paginationComponent" +
-					collectionStyledLayoutStructureItem.getItemId());
-			componentTag.setContext(
+					collectionStyledLayoutStructureItem.getItemId(),
 				HashMapBuilder.<String, Object>put(
 					"activePage",
 					renderCollectionLayoutStructureItemDisplayContext.
@@ -610,11 +598,8 @@ public class RenderLayoutStructureTag extends IncludeTag {
 				).put(
 					"collectionId",
 					collectionStyledLayoutStructureItem.getItemId()
-				).build());
-			componentTag.setModule(
+				).build(),
 				"render_layout_structure/js/SimpleCollectionPagination");
-
-			componentTag.doTag(pageContext);
 		}
 
 		jspWriter.write("</div>");
@@ -649,6 +634,21 @@ public class RenderLayoutStructureTag extends IncludeTag {
 			renderLayoutStructureDisplayContext);
 
 		colTag.doEndTag();
+	}
+
+	private void _renderComponent(
+			String componentId, Map<String, Object> context, String module)
+		throws Exception {
+
+		ComponentTag componentTag = new ComponentTag();
+
+		componentTag.setComponentId(componentId);
+		componentTag.setContext(context);
+		componentTag.setModule(module);
+		componentTag.setPageContext(pageContext);
+		componentTag.setServletContext(ServletContextUtil.getServletContext());
+		componentTag.doStartTag();
+		componentTag.doEndTag();
 	}
 
 	private void _renderContainerStyledLayoutStructureItem(

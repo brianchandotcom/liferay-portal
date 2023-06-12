@@ -96,20 +96,24 @@ public class ObjectCodeEditorUtil {
 					"general-variables", locale));
 		}
 
-		if (ddmExpressionOperatorPredicate != null) {
+		List<Map<String, String>> ddmExpressionOperators =
+			DDMExpressionOperator.getItems(
+				ddmExpressionOperatorPredicate, locale);
+
+		if (ListUtil.isNotEmpty(ddmExpressionOperators)) {
 			codeEditorElements.add(
 				_createCodeEditorElement(
-					DDMExpressionOperator.getItems(
-						ddmExpressionOperatorPredicate, locale),
-					"operators", locale));
+					ddmExpressionOperators, "operators", locale));
 		}
 
-		if (ddmExpressionFunctionPredicate != null) {
+		List<Map<String, String>> ddmExpressionFunctions =
+			DDMExpressionFunction.getItems(
+				ddmExpressionFunctionPredicate, locale);
+
+		if (ListUtil.isNotEmpty(ddmExpressionFunctions)) {
 			codeEditorElements.add(
 				_createCodeEditorElement(
-					DDMExpressionFunction.getItems(
-						ddmExpressionFunctionPredicate, locale),
-					"functions", locale));
+					ddmExpressionFunctions, "functions", locale));
 		}
 
 		return codeEditorElements;

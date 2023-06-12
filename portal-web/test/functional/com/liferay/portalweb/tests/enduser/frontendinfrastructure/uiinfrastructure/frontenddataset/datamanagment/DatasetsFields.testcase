@@ -473,6 +473,28 @@ definition {
 		}
 	}
 
+	@description = "LPS-176051. Confirm that the user can view Edit icon modal"
+	@priority = 5
+	test CanViewEditModal {
+		task ("And add new fields") {
+			FrontendDataSetAdmin.addFields(key_fieldList = "id,label");
+		}
+
+		task ("And clicks on Edit option") {
+			Click(
+				key_fieldName = "id",
+				locator1 = "FrontendDataSetAdmin#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
+
+			MenuItem.click(menuItem = "Edit");
+		}
+
+		task ("Then the Edit field modal is displayed") {
+			AssertVisible(
+				locator1 = "Portlet#MODAL_TITLE",
+				value1 = "Edit id");
+		}
+	}
+
 	@description = "LPS-176051. Confirm that the user can view Edit icon of fields"
 	@priority = 5
 	test CanViewEditOption {

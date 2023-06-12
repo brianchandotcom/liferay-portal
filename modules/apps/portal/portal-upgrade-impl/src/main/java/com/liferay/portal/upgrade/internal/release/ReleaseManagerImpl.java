@@ -19,7 +19,6 @@ import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReference
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapListener;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -40,8 +39,6 @@ import com.liferay.portal.upgrade.PortalUpgradeProcess;
 import com.liferay.portal.upgrade.internal.executor.UpgradeExecutor;
 import com.liferay.portal.upgrade.internal.graph.ReleaseGraphManager;
 import com.liferay.portal.upgrade.internal.registry.UpgradeInfo;
-import com.liferay.portal.upgrade.internal.registry.UpgradeStepRegistratorThreadLocal;
-import com.liferay.portal.util.PropsValues;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -203,8 +200,7 @@ public class ReleaseManagerImpl implements ReleaseManager {
 			new UpgradeServiceTrackerCustomizer(bundleContext),
 			Collections.reverseOrder(
 				new PropertyServiceReferenceComparator<>(
-					"upgrade.from.schema.version")),
-			new UpgradeInfoServiceTrackerMapListener());
+					"upgrade.from.schema.version")));
 	}
 
 	@Deactivate
@@ -550,32 +546,6 @@ public class ReleaseManagerImpl implements ReleaseManager {
 		}
 
 		private final BundleContext _bundleContext;
-
-	}
-
-	private class UpgradeInfoServiceTrackerMapListener
-		implements ServiceTrackerMapListener
-			<String, UpgradeInfo, List<UpgradeInfo>> {
-
-		@Override
-		public void keyEmitted(
-			ServiceTrackerMap<String, List<UpgradeInfo>> serviceTrackerMap,
-			String key, UpgradeInfo upgradeInfo,
-			List<UpgradeInfo> upgradeInfos) {
-
-			if (UpgradeStepRegistratorThreadLocal.isEnabled() &&
-				PropsValues.UPGRADE_DATABASE_AUTO_RUN) {
-
-				_upgradeExecutor.execute(key, upgradeInfos);
-			}
-		}
-
-		@Override
-		public void keyRemoved(
-			ServiceTrackerMap<String, List<UpgradeInfo>> serviceTrackerMap,
-			String key, UpgradeInfo upgradeInfo,
-			List<UpgradeInfo> upgradeInfos) {
-		}
 
 	}
 

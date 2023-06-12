@@ -80,7 +80,9 @@ public class ObjectRelationshipDTOConverter
 					serviceBuilderObjectRelationship.getObjectDefinitionId1();
 				objectDefinitionId2 =
 					serviceBuilderObjectRelationship.getObjectDefinitionId2();
+				objectDefinitionModifiable2 = objectDefinition2.isModifiable();
 				objectDefinitionName2 = objectDefinition2.getShortName();
+				objectDefinitionSystem2 = objectDefinition2.isSystem();
 				parameterObjectFieldId =
 					serviceBuilderObjectRelationship.
 						getParameterObjectFieldId();

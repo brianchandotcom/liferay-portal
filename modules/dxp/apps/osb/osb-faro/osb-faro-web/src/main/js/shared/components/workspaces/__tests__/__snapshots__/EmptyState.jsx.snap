@@ -49,7 +49,7 @@ exports[`Workspace Empty State should render 1`] = `
           Do more with our Business & Enterprise Plans
         </p>
         <button
-          class="btn btn-secondary"
+          class="btn btn-primary"
           type="button"
         >
           Contact Sales

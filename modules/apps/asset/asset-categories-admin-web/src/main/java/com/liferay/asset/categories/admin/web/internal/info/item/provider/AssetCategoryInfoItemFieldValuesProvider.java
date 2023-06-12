@@ -32,6 +32,8 @@ import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -74,6 +76,18 @@ public class AssetCategoryInfoItemFieldValuesProvider
 		}
 	}
 
+	private Map<Locale, String> _getAssetCategoryDescriptionMap(
+		AssetCategory assetCategory) {
+
+		Map<Locale, String> descriptionMap = assetCategory.getDescriptionMap();
+
+		descriptionMap.putIfAbsent(
+			LocaleUtil.fromLanguageId(assetCategory.getDefaultLanguageId()),
+			StringPool.BLANK);
+
+		return descriptionMap;
+	}
+
 	private List<InfoFieldValue<Object>> _getAssetCategoryInfoFieldValues(
 		AssetCategory assetCategory) {
 
@@ -98,7 +112,7 @@ public class AssetCategoryInfoItemFieldValuesProvider
 					LocaleUtil.fromLanguageId(
 						assetCategory.getDefaultLanguageId())
 				).values(
-					assetCategory.getDescriptionMap()
+					_getAssetCategoryDescriptionMap(assetCategory)
 				).build()));
 
 		AssetVocabulary assetVocabulary =

@@ -183,6 +183,7 @@ export default function propsTransformer({
 		openSelectionModal({
 			buttonAddLabel: Liferay.Language.get('apply'),
 			height: '70vh',
+			iframeBodyCssClass: '',
 			multiple: true,
 			onSelect: (selectedItems) => {
 				if (selectedItems) {

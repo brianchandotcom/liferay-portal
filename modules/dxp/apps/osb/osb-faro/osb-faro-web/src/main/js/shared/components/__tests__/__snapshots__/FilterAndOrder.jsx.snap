@@ -413,57 +413,62 @@ exports[`FilterAndOrder should render with order by options 1`] = `
         role="presentation"
         style="left: -999px; top: -995px;"
       >
-        <li
-          aria-hidden="true"
-          class="dropdown-subheader"
-          id="clay-dropdown-menu-group-2"
-          role="presentation"
+        <ul
+          class="list-unstyled"
+          role="menu"
         >
-          Order By
-        </li>
-        <li
-          role="presentation"
-        >
-          <ul
-            aria-labelledby="clay-dropdown-menu-group-2"
-            class="list-unstyled"
-            role="group"
+          <li
+            aria-hidden="true"
+            class="dropdown-subheader"
+            id="clay-dropdown-menu-group-2"
+            role="presentation"
           >
-            <li
-              aria-selected="false"
-              role="presentation"
+            Order By
+          </li>
+          <li
+            role="presentation"
+          >
+            <ul
+              aria-labelledby="clay-dropdown-menu-group-2"
+              class="list-unstyled"
+              role="group"
             >
-              <span
-                class="dropdown-item"
-                role="menuitem"
-                tabindex="-1"
+              <li
+                aria-selected="false"
+                role="presentation"
               >
-                <div
-                  class="custom-control custom-radio"
+                <span
+                  class="dropdown-item"
+                  role="menuitem"
+                  tabindex="-1"
                 >
-                  <label>
-                    <input
-                      class="custom-control-input"
-                      name="filterAndOrder3"
-                      role="radio"
-                      type="radio"
-                      value="name"
-                    />
-                    <span
-                      class="custom-control-label"
-                    >
+                  <div
+                    class="custom-control custom-radio"
+                  >
+                    <label>
+                      <input
+                        class="custom-control-input"
+                        name="filterAndOrder3"
+                        role="radio"
+                        type="radio"
+                        value="name"
+                      />
                       <span
-                        class="custom-control-label-text"
+                        class="custom-control-label"
                       >
-                        name
+                        <span
+                          class="custom-control-label-text"
+                        >
+                          name
+                        </span>
                       </span>
-                    </span>
-                  </label>
-                </div>
-              </span>
-            </li>
-          </ul>
-        </li>
+                    </label>
+                  </div>
+                </span>
+              </li>
+            </ul>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
@@ -570,57 +575,62 @@ exports[`FilterAndOrder should render with order by options and filter by option
             </div>
           </ul>
         </li>
-        <li
-          aria-hidden="true"
-          class="dropdown-subheader"
-          id="clay-dropdown-menu-group-4"
-          role="presentation"
+        <ul
+          class="list-unstyled"
+          role="menu"
         >
-          Order By
-        </li>
-        <li
-          role="presentation"
-        >
-          <ul
-            aria-labelledby="clay-dropdown-menu-group-4"
-            class="list-unstyled"
-            role="group"
+          <li
+            aria-hidden="true"
+            class="dropdown-subheader"
+            id="clay-dropdown-menu-group-4"
+            role="presentation"
           >
-            <li
-              aria-selected="false"
-              role="presentation"
+            Order By
+          </li>
+          <li
+            role="presentation"
+          >
+            <ul
+              aria-labelledby="clay-dropdown-menu-group-4"
+              class="list-unstyled"
+              role="group"
             >
-              <span
-                class="dropdown-item"
-                role="menuitem"
-                tabindex="-1"
+              <li
+                aria-selected="false"
+                role="presentation"
               >
-                <div
-                  class="custom-control custom-radio"
+                <span
+                  class="dropdown-item"
+                  role="menuitem"
+                  tabindex="-1"
                 >
-                  <label>
-                    <input
-                      class="custom-control-input"
-                      name="filterAndOrder4"
-                      role="radio"
-                      type="radio"
-                      value="name"
-                    />
-                    <span
-                      class="custom-control-label"
-                    >
+                  <div
+                    class="custom-control custom-radio"
+                  >
+                    <label>
+                      <input
+                        class="custom-control-input"
+                        name="filterAndOrder4"
+                        role="radio"
+                        type="radio"
+                        value="name"
+                      />
                       <span
-                        class="custom-control-label-text"
+                        class="custom-control-label"
                       >
-                        name
+                        <span
+                          class="custom-control-label-text"
+                        >
+                          name
+                        </span>
                       </span>
-                    </span>
-                  </label>
-                </div>
-              </span>
-            </li>
-          </ul>
-        </li>
+                    </label>
+                  </div>
+                </span>
+              </li>
+            </ul>
+          </li>
+        </ul>
       </div>
       <div
         aria-hidden="true"

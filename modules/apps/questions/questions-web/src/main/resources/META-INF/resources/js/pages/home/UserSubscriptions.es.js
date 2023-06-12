@@ -191,6 +191,9 @@ export default withRouter(
 								emptyState={
 									<ClayEmptyState
 										className="empty-state-icon"
+										description={Liferay.Language.get(
+											'sorry,-no-results-were-found'
+										)}
 										title={Liferay.Language.get(
 											'there-are-no-results'
 										)}
@@ -224,6 +227,9 @@ export default withRouter(
 							topics.myUserAccountSubscriptions.items &&
 							!topics.myUserAccountSubscriptions.items.length && (
 								<ClayEmptyState
+									description={Liferay.Language.get(
+										'sorry,-no-results-were-found'
+									)}
 									title={Liferay.Language.get(
 										'there-are-no-results'
 									)}
@@ -305,6 +311,9 @@ export default withRouter(
 								!threads.myUserAccountSubscriptions.items
 									.length && (
 									<ClayEmptyState
+										description={Liferay.Language.get(
+											'sorry,-no-results-were-found'
+										)}
 										title={Liferay.Language.get(
 											'there-are-no-results'
 										)}

@@ -156,6 +156,9 @@ export default withRouter(({history, location}) => {
 									'there-are-no-results'
 								)}
 								className="empty-state-icon"
+								description={Liferay.Language.get(
+									'sorry,-no-results-were-found'
+								)}
 								title={Liferay.Language.get(
 									'there-are-no-results'
 								)}

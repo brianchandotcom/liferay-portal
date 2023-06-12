@@ -239,6 +239,9 @@ const SelectSXPBlueprintModal = ({observer, onClose, onSubmit, selectedId}) => {
 
 		return (
 			<ClayEmptyState
+				description={Liferay.Language.get(
+					'sorry,-no-results-were-found'
+				)}
 				imgProps={{
 					alt: Liferay.Language.get('no-results-found'),
 					title: Liferay.Language.get('no-results-found'),

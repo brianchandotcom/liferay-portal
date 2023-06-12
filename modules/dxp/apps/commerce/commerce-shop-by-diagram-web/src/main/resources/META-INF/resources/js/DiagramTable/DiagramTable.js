@@ -252,6 +252,9 @@ function DiagramTable({
 			{mappedProducts && !mappedProducts.length && !loaderActive && (
 				<ClayEmptyState
 					className="full-height-content"
+					description={Liferay.Language.get(
+						'sorry,-no-results-were-found'
+					)}
 					title={Liferay.Language.get('there-are-no-results')}
 				/>
 			)}

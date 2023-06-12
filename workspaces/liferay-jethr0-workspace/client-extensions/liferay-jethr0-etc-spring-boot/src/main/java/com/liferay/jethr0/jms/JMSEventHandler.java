@@ -26,7 +26,6 @@ import com.liferay.jethr0.jenkins.JenkinsQueue;
 import com.liferay.jethr0.jenkins.node.JenkinsNode;
 import com.liferay.jethr0.jenkins.repository.JenkinsNodeRepository;
 import com.liferay.jethr0.project.Project;
-import com.liferay.jethr0.project.queue.ProjectQueue;
 import com.liferay.jethr0.project.repository.ProjectRepository;
 import com.liferay.jethr0.task.repository.TaskRepository;
 import com.liferay.jethr0.testsuite.repository.TestSuiteRepository;

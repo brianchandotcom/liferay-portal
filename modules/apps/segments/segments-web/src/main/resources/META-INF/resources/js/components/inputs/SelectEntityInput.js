@@ -88,10 +88,24 @@ function SelectEntityInput({
 						});
 					}
 					catch {
-						onChange({
-							displayValue: event.entityname,
-							value: event.entityid,
-						});
+						if (event.entityname && event.entityid) {
+							onChange({
+								displayValue: event.entityname,
+								value: event.entityid,
+							});
+						}
+						else {
+							const category = event
+								? event[Object.keys(event)[0]]
+								: null;
+
+							if (category) {
+								onChange({
+									displayValue: category.title,
+									value: category.categoryId,
+								});
+							}
+						}
 					}
 				},
 				selectEventName: id,

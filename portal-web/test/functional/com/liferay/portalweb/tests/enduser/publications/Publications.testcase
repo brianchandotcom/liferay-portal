@@ -799,6 +799,89 @@ definition {
 			changeUser = "Test Test");
 	}
 
+	@description = "This is a use case for LPS-161618 - As a publication user, I would like to track changes to addresses"
+	@priority = 3
+	test CanTrackChangesToAddresses {
+		task ("Add an Organization and Create a Publication") {
+			JSONOrganization.addOrganization(organizationName = "Organization Name");
+
+			JSONPublications.addPublication(publicationName = "Test Publication");
+
+			JSONPublications.selectPublication(publicationName = "Test Publication");
+		}
+
+		task ("Add address for the organization") {
+			Organization.openOrganizationsAdmin();
+
+			Organization.gotoEdit(orgName = "Organization Name");
+
+			Navigator.gotoNavTab(navTab = "Contact");
+
+			Organization.addContactInformation(
+				addressType = "Billing",
+				city = "Diamond Bar",
+				contactType = "add-address-link",
+				country = "United States",
+				postalCode = 91765,
+				region = "California",
+				street1 = "1400 Montefino Ave");
+		}
+
+		task ("Review changes and publish the publication") {
+			PublicationsNavigator.gotoReviewChanges(
+				gotoPublicationsAdmin = "true",
+				publicationName = "Test Publication");
+
+			PublicationsChanges.viewChanges(
+				changeCategory = "Address",
+				changeSite = "Global",
+				changeTitle = "Address",
+				changeType = "Added",
+				changeUser = "Test Test");
+
+			PublicationsNavigator.gotoPublish(
+				gotoPublicationsAdmin = "true",
+				publicationName = "Test Publication");
+
+			Publications.publishPublication(publicationName = "Test Publication");
+		}
+
+		task ("Revert publication and publish it again") {
+			PublicationsNavigator.openPublicationsHistory();
+
+			Publications.revertPublication(
+				publicationName = "Test Publication",
+				publishNow = "true");
+
+			PublicationsNavigator.gotoReviewChanges(
+				gotoPublicationsAdmin = "true",
+				publicationName = "Revert \"Test Publication\"");
+
+			PublicationsChanges.viewChanges(
+				changeCategory = "Address",
+				changeSite = "Global",
+				changeTitle = "Address",
+				changeType = "Deleted",
+				changeUser = "Test Test");
+
+			PublicationsNavigator.gotoPublish(
+				gotoPublicationsAdmin = "true",
+				publicationName = "Revert \"Test Publication\"");
+
+			Publications.publishPublication(publicationName = "Revert \"Test Publication\"");
+		}
+
+		task ("Assert there is no address in the Organization") {
+			Organization.openOrganizationsAdmin();
+
+			Organization.gotoEdit(orgName = "Organization Name");
+
+			Navigator.gotoNavTab(navTab = "Contact");
+
+			AssertElementPresent(locator1 = "//*[contains(text(), 'This organization does not have any addresses.')]");
+		}
+	}
+
 	@description = "This is a use case for LPS-161618 - As a publication user, I would like to track changes to email addresses"
 	@priority = 3
 	test CanTrackChangesToEmailAddresses {

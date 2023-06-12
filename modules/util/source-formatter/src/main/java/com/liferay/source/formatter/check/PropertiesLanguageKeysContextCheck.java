@@ -60,9 +60,9 @@ public class PropertiesLanguageKeysContextCheck extends BaseFileCheck {
 				addMessage(
 					fileName,
 					StringBundler.concat(
-						"One word '", key,
-						"' for both key and value might have the ",
-						"disambiguation"));
+						"The single-word key '", key,
+						"' should include a word of context at the end, ",
+						"within a [], to indicate specific meaning"));
 			}
 
 			if ((contextDepth != 0) &&
@@ -82,8 +82,8 @@ public class PropertiesLanguageKeysContextCheck extends BaseFileCheck {
 				addMessage(
 					fileName,
 					StringBundler.concat(
-						"The key for '", matcher.group(1),
-						"' should have the context in [] to indicate the ",
+						"The key '", matcher.group(1), "' should include a ",
+						"word of context at the end, within a [], to indicate ",
 						"specific meaning"));
 			}
 

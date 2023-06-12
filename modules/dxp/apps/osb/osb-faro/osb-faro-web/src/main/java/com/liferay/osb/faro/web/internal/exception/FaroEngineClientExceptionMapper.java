@@ -44,11 +44,11 @@ public class FaroEngineClientExceptionMapper
 				faroEngineClientException.getMessage());
 
 			if (jsonObject.get("errorAttributes") != null) {
-				JSONObject errorAttributes = (JSONObject)jsonObject.get(
-					"errorAttributes");
+				JSONObject errorAttributesJSONObject =
+					(JSONObject)jsonObject.get("errorAttributes");
 
 				errorResponse = JSONUtil.readValue(
-					errorAttributes.toString(), ErrorResponse.class);
+					errorAttributesJSONObject.toString(), ErrorResponse.class);
 			}
 			else {
 				errorResponse = JSONUtil.readValue(

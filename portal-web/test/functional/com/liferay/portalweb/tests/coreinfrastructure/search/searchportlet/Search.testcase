@@ -320,6 +320,7 @@ definition {
 	@priority = 4
 	test CanReindexWithConcurrentExecutionMode {
 		property custom.properties = "feature.flag.LPS-177664=true";
+		property portal.release = "false";
 		property search.environment.suite.exclude = "true";
 		property test.name.skip.portal.instance = "Search#CanReindexWithConcurrentExecutionMode";
 

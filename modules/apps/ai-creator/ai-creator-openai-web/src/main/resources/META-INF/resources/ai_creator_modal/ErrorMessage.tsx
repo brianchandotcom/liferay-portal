@@ -12,6 +12,8 @@
  * details.
  */
 
+/* eslint-disable @liferay/empty-line-between-elements */
+
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import React from 'react';

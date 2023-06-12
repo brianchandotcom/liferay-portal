@@ -222,10 +222,6 @@ public class ObjectCodeEditorUtil {
 				"that-can-be-used-with-other-validation-functions",
 			"sum");
 
-		public static List<Map<String, String>> getItems(Locale locale) {
-			return getItems(null, locale);
-		}
-
 		public static List<Map<String, String>> getItems(
 			Predicate<DDMExpressionFunction> ddmExpressionFunctionPredicate,
 			Locale locale) {
@@ -300,10 +296,6 @@ public class ObjectCodeEditorUtil {
 		TIMES(
 			"field_name * field_name2",
 			"multiply-numeric-fields-to-create-an-expression", "times");
-
-		public static List<Map<String, String>> getItems(Locale locale) {
-			return getItems(null, locale);
-		}
 
 		public static List<Map<String, String>> getItems(
 			Predicate<DDMExpressionOperator> ddmExpressionOperatorPredicate,

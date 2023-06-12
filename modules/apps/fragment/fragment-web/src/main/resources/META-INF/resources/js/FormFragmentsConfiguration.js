@@ -21,13 +21,36 @@ import {
 	getPortletId,
 	openSelectionModal,
 } from 'frontend-js-web';
-import React from 'react';
+import React, {useState} from 'react';
 
 export default function FormFragmentsConfiguration({
 	formTypes,
 	portletNamespace,
 	selectFragmentURL,
 }) {
+	const [values, setValues] = useState({});
+
+	const onClick = (name) => {
+		openSelectionModal({
+			onSelect: ({fragmententrykey, fragmententryname, groupkey}) => {
+				setValues((previousValues) => ({
+					...previousValues,
+					[name]: {
+						fragmentEntryKey: fragmententrykey,
+						fragmentEntryName: fragmententryname,
+						groupKey: groupkey,
+					},
+				}));
+			},
+			selectEventName: 'selectFragment',
+			title: 'select',
+			url: createPortletURL(selectFragmentURL, {
+				inputType: name,
+				p_p_id: getPortletId(portletNamespace),
+			}),
+		});
+	};
+
 	return (
 		<ClayLayout.Container className="c-mt-3">
 			<div className="sheet">
@@ -64,33 +87,24 @@ export default function FormFragmentsConfiguration({
 										<ClayInput.Group>
 											<ClayInput.GroupItem>
 												<ClayInput
+													onClick={() =>
+														onClick(name)
+													}
 													readOnly
-													value={fragmentName}
+													value={
+														values[name]
+															?.fragmentEntryName ||
+														fragmentName
+													}
 												/>
 											</ClayInput.GroupItem>
 
 											<ClayInput.GroupItem shrink>
 												<ClayButton
 													displayType="secondary"
-													onClick={() => {
-														openSelectionModal({
-															onSelect: (
-																selectedItem
-															) => {},
-															selectEventName:
-																'selectFragment',
-															title: 'select',
-															url: createPortletURL(
-																selectFragmentURL,
-																{
-																	inputType: name,
-																	p_p_id: getPortletId(
-																		portletNamespace
-																	),
-																}
-															),
-														});
-													}}
+													onClick={() =>
+														onClick(name)
+													}
 													size="sm"
 												>
 													{Liferay.Language.get(

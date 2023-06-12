@@ -106,44 +106,16 @@ definition {
 		}
 	}
 
-		task ("And I should see the download button") {
-			CustomerPortal.viewButton(text = "download");
-		}
-
-		task ("And I click at the download button") {
-			CustomerPortal.clickAtButton(text = "download");
-		}
-
-		task ("When I click at the 'Individual keys multiple files' option") {
-			CP2ActivationKeys.clickAtDropdownItem(dropdownItem = "Individual Keys multiple files");
-		}
-
-		task ("Then I assert that the alert with the message 'Activation Key Was Downloaded Successfully' is visible") {
-			CustomerPortal.viewAlert(alertText = "Activation Key was downloaded successfully");
-		}
-
-		task ("And I get the expected downloaded file name") {
-			var downloadedFileName = CP2ActivationKeys.formatLicenseFileName(
-				fileType = "xml",
-				licenseName = ${testAccount},
-				licenseType = "activation-key");
-		}
-
-		task ("And I assert that the Activation Key was downloaded") {
-			CP2FileUtil.assertDownloadedFileIsPresent(downloadedFileName = ${downloadedFileName});
-		}
-	}
-
-	@description = "Verify that user can see the correct option of download when they select two keys with different expiration dates"
+	@description = "Story ID: LPS-146061 | Test summary: Verify that user can see the correct option of download when they select two keys with different expiration dates"
 	@ignore = "true"
 	@priority = 5
-	test MultipleIndividualKeysNotAgregatedDowloadOptions {
+	test AssertThatMultipleIndividualKeysNotAgregatedDowloadOptions {
 		property portal.upstream = "quarantine";
 
 		task ("Given I go to the test account") {
-			CustomerPortal.search(searchItem = ${testAccount});
+			CustomerPortal.search(searchItem = "NASA ICE");
 
-			CustomerPortal.enterOnProject(title = ${testAccount});
+			CustomerPortal.enterOnProject(title = "NASA ICE");
 		}
 
 		task ("And I click on DXP product") {
@@ -152,13 +124,9 @@ definition {
 			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
 		}
 
-		task ("And I view the Actions button") {
-			CustomerPortal.viewButton(text = "Actions");
-		}
-
 		task ("When I select two keys from the table with diferent Expiration Date") {
 			CP2ActivationKeys.selectKeyCheckboxByExpirationDate(
-				date = "Mar 30, 2023",
+				date = "Sep 08, 2022",
 				position = 1);
 
 			CP2ActivationKeys.selectKeyCheckboxByExpirationDate(
@@ -166,36 +134,26 @@ definition {
 				position = 1);
 		}
 
-		task ("Then I should see the download button") {
-			CustomerPortal.viewButton(text = "download");
-		}
-
-		task ("When I click at the download button") {
+		task ("And click at the download button") {
 			CustomerPortal.clickAtButton(text = "download");
 		}
 
-		task ("Then I should see the 'Aggregate key single file' option enabled") {
+		task ("And the option 'Aggregate key single file' is disabled") {
 			CP2ActivationKeys.assertDropdownItemIsDisabled(dropdownItem = "Aggregate Key single file");
 		}
 
-		task ("And I should see the 'Individual keys multiple files' option enabled") {
+		task ("And the option 'Individual keys multiple files' is enabled") {
 			CP2ActivationKeys.assertDropdownItemIsEnabled(dropdownItem = "Individual Keys multiple files");
 		}
 
-		task ("When I click at the 'Individual keys multiple files' option") {
+		task ("When click at the 'Individual keys multiple files' option") {
 			CP2ActivationKeys.clickAtDropdownItem(dropdownItem = "Individual Keys multiple files");
 		}
 
-		task ("Then I assert that the alert with the message 'Activation Key(s) was downloaded successfully as zip file.' is visible") {
+		task ("Then assert that the alert with the message 'Activation Key(s) was downloaded successfully as zip file.' is visible") {
 			CustomerPortal.viewAlert(alertText = "Activation Key(s) was downloaded successfully as zip file.");
 		}
-
-		task ("And I get the expected downloaded file name") {
-			var downloadedFileName = CP2ActivationKeys.formatLicenseFileName(
-				fileType = "zip",
-				licenseName = ${testAccount},
-				licenseType = "activation-key");
-		}
+	}
 
 		task ("And I assert that the Activation Key was downloaded") {
 			CP2FileUtil.assertDownloadedFileIsPresent(downloadedFileName = ${downloadedFileName});

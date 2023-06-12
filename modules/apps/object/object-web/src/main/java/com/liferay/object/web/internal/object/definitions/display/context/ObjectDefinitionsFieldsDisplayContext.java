@@ -27,7 +27,6 @@ import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.web.internal.object.definitions.display.context.util.ObjectCodeEditorUtil;
 import com.liferay.object.web.internal.util.ObjectFieldBusinessTypeUtil;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -167,8 +166,11 @@ public class ObjectDefinitionsFieldsDisplayContext
 
 	public List<Map<String, Object>> getObjectFieldCodeEditorElements() {
 		return ObjectCodeEditorUtil.getCodeEditorElements(
-			"old-value", true, true, objectRequestHelper.getLocale(),
-			getObjectDefinitionId(),
+			ddmExpressionFunction ->
+				!ObjectCodeEditorUtil.DDMExpressionFunction.OLD_VALUE.equals(
+					ddmExpressionFunction),
+			ddmExpressionOperator -> true, true,
+			objectRequestHelper.getLocale(), getObjectDefinitionId(),
 			objectField -> !objectField.compareBusinessType(
 				ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION));
 	}
@@ -181,16 +183,17 @@ public class ObjectDefinitionsFieldsDisplayContext
 			FeatureFlagManagerUtil.isEnabled("LPS-164948")) {
 
 			return ObjectCodeEditorUtil.getCodeEditorElements(
+				ddmExpressionFunction -> false,
 				ddmExpressionOperator ->
 					_filterableDDMExpressionOperators.contains(
 						ddmExpressionOperator),
-				objectRequestHelper.getLocale(), getObjectDefinitionId(),
+				false, objectRequestHelper.getLocale(), getObjectDefinitionId(),
 				objectField -> _filterableObjectFieldBusinessTypes.contains(
 					objectField.getBusinessType()));
 		}
 
 		return ObjectCodeEditorUtil.getCodeEditorElements(
-			StringPool.BLANK, true, false, objectRequestHelper.getLocale(),
+			true, false, objectRequestHelper.getLocale(),
 			getObjectDefinitionId(), objectField -> !objectField.isSystem());
 	}
 

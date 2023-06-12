@@ -20,9 +20,6 @@ import com.liferay.jethr0.build.repository.BuildRepository;
 import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.project.repository.ProjectRepository;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -75,55 +72,6 @@ public class CreateProjectEventHandler extends BaseEventHandler {
 		super(eventHandlerHelper);
 	}
 
-	private JSONObject _getBuildJSONObject(JSONObject buildJSONObject)
-		throws Exception {
-
-		if (buildJSONObject == null) {
-			throw new Exception("Invalid build JSON object");
-		}
-
-		String buildName = buildJSONObject.optString("buildName");
-
-		if (buildName.isEmpty()) {
-			throw new Exception("Invalid build 'buildName'");
-		}
-
-		String jobName = buildJSONObject.optString("jobName");
-
-		if (jobName.isEmpty()) {
-			throw new Exception("Invalid build 'jobName'");
-		}
-
-		buildJSONObject.put(
-			"buildName", buildName
-		).put(
-			"jobName", jobName
-		).put(
-			"parameters", buildJSONObject.optJSONObject("parameters")
-		).put(
-			"state", Build.State.OPENED.getJSONObject()
-		);
-
-		return buildJSONObject;
-	}
-
-	private List<JSONObject> _getBuildsJSONObjects(JSONArray buildsJSONArray)
-		throws Exception {
-
-		if ((buildsJSONArray == null) || buildsJSONArray.isEmpty()) {
-			return null;
-		}
-
-		List<JSONObject> buildsJSONObjects = new ArrayList<>();
-
-		for (int i = 0; i < buildsJSONArray.length(); i++) {
-			buildsJSONObjects.add(
-				_getBuildJSONObject(buildsJSONArray.optJSONObject(i)));
-		}
-
-		return buildsJSONObjects;
-	}
-
 	private JSONObject _getProjectJSONObject(JSONObject bodyJSONObject)
 		throws Exception {
 
@@ -155,7 +103,7 @@ public class CreateProjectEventHandler extends BaseEventHandler {
 
 		projectJSONObject.put(
 			"builds",
-			_getBuildsJSONObjects(projectJSONObject.optJSONArray("builds"))
+			validateBuildsJSONArray(projectJSONObject.optJSONArray("builds"))
 		).put(
 			"name", name
 		).put(

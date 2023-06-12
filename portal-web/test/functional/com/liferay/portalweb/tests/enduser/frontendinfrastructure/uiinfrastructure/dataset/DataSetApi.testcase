@@ -40,13 +40,13 @@ definition {
 
 			WaitForElementPresent(
 				key_itemName = "Data Set Test",
-				locator1 = "FrontendDataSetAdmin#TABLE_CELL");
+				locator1 = "DataSet#TABLE_CELL");
 		}
 
 		task ("Then the data set is shown in the list") {
 			AssertElementPresent(
 				key_itemName = "Data Set Test",
-				locator1 = "FrontendDataSetAdmin#TABLE_CELL");
+				locator1 = "DataSet#TABLE_CELL");
 		}
 	}
 

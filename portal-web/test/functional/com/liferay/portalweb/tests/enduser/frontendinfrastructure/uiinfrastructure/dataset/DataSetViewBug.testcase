@@ -61,11 +61,11 @@ definition {
 		task ("Then Composed fields (refrencing another schema), are not available for selection") {
 			AssertElementNotPresent(
 				key_name = "parentTaxonomyCategory",
-				locator1 = "FrontendDataSetAdmin#FIELDS_ITEM");
+				locator1 = "DataSet#FIELDS_ITEM");
 
 			AssertElementNotPresent(
 				key_name = "parentTaxonomyVocabulary",
-				locator1 = "FrontendDataSetAdmin#FIELDS_ITEM");
+				locator1 = "DataSet#FIELDS_ITEM");
 		}
 	}
 

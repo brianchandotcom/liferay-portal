@@ -64,7 +64,7 @@ definition {
 		task ("Then an error message appears") {
 			AssertElementPresent(
 				key_errorMessage = "This field is required.",
-				locator1 = "FrontendDataSetAdmin#VIEW_ERROR_MESSAGE");
+				locator1 = "DataSet#VIEW_ERROR_MESSAGE");
 		}
 
 		task ("And the field will be populated with the default value for Default value: 20	") {
@@ -74,7 +74,7 @@ definition {
 
 			AssertElementPresent(
 				key_fieldValue = 20,
-				locator1 = "FrontendDataSetAdmin#PAGINATION_DEFAULT_ITEMS");
+				locator1 = "DataSet#PAGINATION_DEFAULT_ITEMS");
 		}
 	}
 
@@ -84,13 +84,13 @@ definition {
 		task ("Then the default values for Pagination items will be 4, 8, 20, 40, 60, separated by commas") {
 			AssertElementPresent(
 				key_fieldValue = "4, 8, 20, 40, 60",
-				locator1 = "FrontendDataSetAdmin#PAGINATION_LIST_OF_ITEMS");
+				locator1 = "DataSet#PAGINATION_LIST_OF_ITEMS");
 		}
 
 		task ("And The default value for the Default Value field is 20") {
 			AssertElementPresent(
 				key_defaultValue = 20,
-				locator1 = "FrontendDataSetAdmin#PAGINATION_DEFAULT_ITEMS");
+				locator1 = "DataSet#PAGINATION_DEFAULT_ITEMS");
 		}
 	}
 
@@ -191,7 +191,7 @@ definition {
 		task ("Then an error message appears") {
 			AssertElementPresent(
 				key_errorMessage = "This field contains more than 25 elements.",
-				locator1 = "FrontendDataSetAdmin#VIEW_ERROR_MESSAGE");
+				locator1 = "DataSet#VIEW_ERROR_MESSAGE");
 		}
 	}
 
@@ -215,7 +215,7 @@ definition {
 		task ("Then an error message appears") {
 			AssertElementPresent(
 				key_errorMessage = "This field contains an invalid number. Only positive numbers between 1 and 1000 are allowed.",
-				locator1 = "FrontendDataSetAdmin#VIEW_ERROR_MESSAGE");
+				locator1 = "DataSet#VIEW_ERROR_MESSAGE");
 		}
 	}
 
@@ -231,7 +231,7 @@ definition {
 		task ("Then the user is not allowed to type characters in the Default value field") {
 			AssertElementPresent(
 				key_errorMessage = "This field is required.",
-				locator1 = "FrontendDataSetAdmin#VIEW_ERROR_MESSAGE");
+				locator1 = "DataSet#VIEW_ERROR_MESSAGE");
 		}
 	}
 
@@ -264,7 +264,7 @@ definition {
 		task ("Then an error message appears") {
 			AssertElementPresent(
 				key_errorMessage = "The default value must exist in the list of items per page.",
-				locator1 = "FrontendDataSetAdmin#VIEW_ERROR_MESSAGE");
+				locator1 = "DataSet#VIEW_ERROR_MESSAGE");
 		}
 	}
 
@@ -284,7 +284,7 @@ definition {
 		task ("Then an error message appears") {
 			AssertElementPresent(
 				key_errorMessage = "This field is required.",
-				locator1 = "FrontendDataSetAdmin#VIEW_ERROR_MESSAGE");
+				locator1 = "DataSet#VIEW_ERROR_MESSAGE");
 		}
 
 		task ("The field will be populated with the default values for Pagination items 4, 8, 20, 40, 60, separated by commas") {
@@ -294,7 +294,7 @@ definition {
 
 			AssertElementPresent(
 				key_fieldValue = "4, 8, 20, 40, 60",
-				locator1 = "FrontendDataSetAdmin#PAGINATION_LIST_OF_ITEMS");
+				locator1 = "DataSet#PAGINATION_LIST_OF_ITEMS");
 		}
 	}
 

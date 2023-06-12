@@ -1,0 +1,94 @@
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Object";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		ObjectAdmin.deleteAllCustomObjectsViaAPI();
+
+		JSONUser.tearDownNonAdminUsers();
+
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "LPS-176582 - Verify a user's personal data can be exported"
+	@priority = 5
+	test CanExportObjectEntries {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property portal.acceptance = "true";
+
+		task ("Given a custom object") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 186452",
+				objectName = "CustomObject186452",
+				pluralLabelName = "Custom Objects 186452");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customObjectField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject186452");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject186452");
+		}
+
+		task ("And given a user with permission to add object entries") {
+			JSONUser.addUserWithRole(
+				roleTitle = "Administrator",
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+		}
+
+		task ("And given several object entries added by the user") {
+			for (var entryNumber : list "1,2,3") {
+				ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+					fieldName = "customObjectField",
+					objectName = "CustomObject186452",
+					userEmailAddress = "userea@liferay.com",
+					value = "Entry ${entryNumber}");
+			}
+		}
+
+		task ("When the admin user exports the personal data of the user in Users and Organizations") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Users and Organizations");
+
+			User.exportPersonalDataCP(
+				userFirstName = "userfn",
+				userLastName = "userln");
+
+			GDPR.addExportProcessCP(
+				applications = "Objects",
+				userFirstName = "userfn",
+				userLastName = "userln");
+
+			GDPR.downloadExportedPersonalData(applications = "Objects");
+
+			MenuItem.click(menuItem = "Download (2 KB)");
+
+			DownloadTempFile();
+		}
+
+		task ("Then a file is downloaded containing the user's data") {
+			ImportExport.assertDownloadedFileName(downloadedFile = "UAD_userfn+userln_com.liferay.object.service*");
+		}
+	}
+
+}

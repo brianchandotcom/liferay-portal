@@ -112,10 +112,6 @@ public class ContentDashboardItemSubtypeItemSelectorView
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
 
-		RequestDispatcher requestDispatcher =
-			_servletContext.getRequestDispatcher(
-				"/view_content_dashboard_item_types.jsp");
-
 		try {
 			servletRequest.setAttribute(
 				ContentDashboardItemSubtypeItemSelectorViewDisplayContext.class.
@@ -130,6 +126,10 @@ public class ContentDashboardItemSubtypeItemSelectorView
 		catch (JSONException jsonException) {
 			throw new IOException(jsonException);
 		}
+
+		RequestDispatcher requestDispatcher =
+			_servletContext.getRequestDispatcher(
+				"/view_content_dashboard_item_types.jsp");
 
 		requestDispatcher.include(servletRequest, servletResponse);
 	}

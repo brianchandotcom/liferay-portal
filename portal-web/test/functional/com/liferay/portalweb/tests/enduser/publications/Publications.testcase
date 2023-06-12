@@ -881,6 +881,88 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-161618 - As a publication user, I would like to track changes to phone numbers"
+	@priority = 3
+	test CanTrackChangesToPhoneNumbers {
+		task ("Add an Organization and Create a Publication") {
+			JSONOrganization.addOrganization(organizationName = "Organization Name");
+
+			JSONPublications.addPublication(publicationName = "Test Publication");
+
+			JSONPublications.selectPublication(publicationName = "Test Publication");
+		}
+
+		task ("Add phone number for the organization") {
+			Organization.openOrganizationsAdmin();
+
+			Organization.gotoEdit(orgName = "Organization Name");
+
+			Navigator.gotoNavTab(navTab = "Contact");
+
+			Navigator.gotoNavNested(navNested = "Contact Information");
+
+			Organization.addContactInformation(
+				contactType = "add-phone-number-link",
+				number = "1-877-543-3729");
+		}
+
+		task ("Review changes and publish the publication") {
+			PublicationsNavigator.gotoReviewChanges(
+				gotoPublicationsAdmin = "true",
+				publicationName = "Test Publication");
+
+			PublicationsChanges.viewChanges(
+				changeCategory = "Phone",
+				changeSite = "Global",
+				changeTitle = "1-877-543-3729",
+				changeType = "Added",
+				changeUser = "Test Test");
+
+			PublicationsNavigator.gotoPublish(
+				gotoPublicationsAdmin = "true",
+				publicationName = "Test Publication");
+
+			Publications.publishPublication(publicationName = "Test Publication");
+		}
+
+		task ("Revert publication and publish it again") {
+			PublicationsNavigator.openPublicationsHistory();
+
+			Publications.revertPublication(
+				publicationName = "Test Publication",
+				publishNow = "true");
+
+			PublicationsNavigator.gotoReviewChanges(
+				gotoPublicationsAdmin = "true",
+				publicationName = "Revert \"Test Publication\"");
+
+			PublicationsChanges.viewChanges(
+				changeCategory = "Phone",
+				changeSite = "Global",
+				changeTitle = "1-877-543-3729",
+				changeType = "Deleted",
+				changeUser = "Test Test");
+
+			PublicationsNavigator.gotoPublish(
+				gotoPublicationsAdmin = "true",
+				publicationName = "Revert \"Test Publication\"");
+
+			Publications.publishPublication(publicationName = "Revert \"Test Publication\"");
+		}
+
+		task ("Assert there is no phone number in the Organization") {
+			Organization.openOrganizationsAdmin();
+
+			Organization.gotoEdit(orgName = "Organization Name");
+
+			Navigator.gotoNavTab(navTab = "Contact");
+
+			Navigator.gotoNavNested(navNested = "Contact Information");
+
+			AssertElementPresent(locator1 = "//*[contains(text(), 'This organization does not have any phone numbers.')]");
+		}
+	}
+
 	@description = "This is use case for LPS-157264.Changing permissions on a publication shouldn't go into the publication"
 	@priority = 3
 	test ChangePermissionsOnAPublicationShouldGoIntoProduction {

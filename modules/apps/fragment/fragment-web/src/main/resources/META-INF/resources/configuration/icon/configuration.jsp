@@ -22,7 +22,7 @@ portletDisplay.setURLBack(ParamUtil.getString(request, "backURL", String.valueOf
 
 renderResponse.setTitle(LanguageUtil.get(request, "fragment-configuration"));
 
-ConfigurationDisplayContext configurationDisplayContext = new ConfigurationDisplayContext(request);
+ConfigurationDisplayContext configurationDisplayContext = new ConfigurationDisplayContext(request, liferayPortletResponse);
 %>
 
 <div>

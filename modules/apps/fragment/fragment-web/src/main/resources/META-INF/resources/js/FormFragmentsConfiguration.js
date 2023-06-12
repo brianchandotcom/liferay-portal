@@ -16,6 +16,11 @@ import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import ClayTable from '@clayui/table';
+import {
+	createPortletURL,
+	getPortletId,
+	openSelectionModal,
+} from 'frontend-js-web';
 import React from 'react';
 
 export default function FormFragmentsConfiguration({
@@ -67,6 +72,25 @@ export default function FormFragmentsConfiguration({
 											<ClayInput.GroupItem shrink>
 												<ClayButton
 													displayType="secondary"
+													onClick={() => {
+														openSelectionModal({
+															onSelect: (
+																selectedItem
+															) => {},
+															selectEventName:
+																'selectFragment',
+															title: 'select',
+															url: createPortletURL(
+																selectFragmentURL,
+																{
+																	inputType: name,
+																	p_p_id: getPortletId(
+																		portletNamespace
+																	),
+																}
+															),
+														});
+													}}
 													size="sm"
 												>
 													{Liferay.Language.get(

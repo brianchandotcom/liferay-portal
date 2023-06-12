@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.jethr0.workflow;
+package com.liferay.jethr0.event.handler;
 
 import org.json.JSONObject;
 
@@ -23,25 +23,27 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class WorkflowFactory {
+public class EventHandlerFactory {
 
-	public Workflow newWorkflow(JSONObject jsonObject) {
-		Workflow.EventType eventType = Workflow.EventType.valueOf(
+	public EventHandler newEventHandler(JSONObject jsonObject) {
+		EventHandler.EventType eventType = EventHandler.EventType.valueOf(
 			jsonObject.optString("eventTrigger"));
 
-		Workflow workflow = null;
+		EventHandler eventHandler = null;
 
-		if (eventType == Workflow.EventType.CREATE_PROJECT) {
-			workflow = new CreateProjectWorkflow(jsonObject, _workflowHelper);
+		if (eventType == EventHandler.EventType.CREATE_PROJECT) {
+			eventHandler = new CreateProjectEventHandler(
+				_eventHandlerHelper, jsonObject);
 		}
-		else if (eventType == Workflow.EventType.QUEUE_PROJECT) {
-			workflow = new QueueProjectWorkflow(jsonObject, _workflowHelper);
+		else if (eventType == EventHandler.EventType.QUEUE_PROJECT) {
+			eventHandler = new QueueProjectEventHandler(
+				_eventHandlerHelper, jsonObject);
 		}
 
-		return workflow;
+		return eventHandler;
 	}
 
 	@Autowired
-	private WorkflowHelper _workflowHelper;
+	private EventHandlerHelper _eventHandlerHelper;
 
 }

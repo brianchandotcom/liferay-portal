@@ -12,33 +12,33 @@
  * details.
  */
 
-package com.liferay.jethr0.workflow;
+package com.liferay.jethr0.event.handler;
 
 import org.json.JSONObject;
 
 /**
  * @author Michael Hashimoto
  */
-public abstract class BaseWorkflow implements Workflow {
+public abstract class BaseEventHandler implements EventHandler {
+
+	@Override
+	public EventHandlerHelper getEventHandlerHelper() {
+		return _eventHandlerHelper;
+	}
 
 	@Override
 	public JSONObject getJSONObject() {
 		return _jsonObject;
 	}
 
-	@Override
-	public WorkflowHelper getWorkflowHelper() {
-		return _workflowHelper;
-	}
+	protected BaseEventHandler(
+		EventHandlerHelper eventHandlerHelper, JSONObject jsonObject) {
 
-	protected BaseWorkflow(
-		JSONObject jsonObject, WorkflowHelper workflowHelper) {
-
+		_eventHandlerHelper = eventHandlerHelper;
 		_jsonObject = jsonObject;
-		_workflowHelper = workflowHelper;
 	}
 
+	private final EventHandlerHelper _eventHandlerHelper;
 	private final JSONObject _jsonObject;
-	private final WorkflowHelper _workflowHelper;
 
 }

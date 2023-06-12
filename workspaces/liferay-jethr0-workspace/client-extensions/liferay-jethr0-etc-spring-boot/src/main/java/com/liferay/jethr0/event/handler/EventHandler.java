@@ -12,18 +12,18 @@
  * details.
  */
 
-package com.liferay.jethr0.workflow;
+package com.liferay.jethr0.event.handler;
 
 import org.json.JSONObject;
 
 /**
  * @author Michael Hashimoto
  */
-public interface Workflow {
+public interface EventHandler {
+
+	public EventHandlerHelper getEventHandlerHelper();
 
 	public JSONObject getJSONObject();
-
-	public WorkflowHelper getWorkflowHelper();
 
 	public String process() throws Exception;
 

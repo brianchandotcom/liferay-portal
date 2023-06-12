@@ -14,8 +14,8 @@
 
 package com.liferay.jethr0;
 
-import com.liferay.jethr0.workflow.Workflow;
-import com.liferay.jethr0.workflow.WorkflowFactory;
+import com.liferay.jethr0.event.handler.EventHandler;
+import com.liferay.jethr0.event.handler.EventHandlerFactory;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -41,14 +41,15 @@ public class Jethr0RestController {
 			_log.debug("Processing " + body);
 		}
 
-		Workflow workflow = _workflowFactory.newWorkflow(new JSONObject(body));
+		EventHandler eventHandler = _eventHandlerFactory.newEventHandler(
+			new JSONObject(body));
 
-		if (workflow == null) {
+		if (eventHandler == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 
 		try {
-			return new ResponseEntity<>(workflow.process(), HttpStatus.OK);
+			return new ResponseEntity<>(eventHandler.process(), HttpStatus.OK);
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
@@ -64,6 +65,6 @@ public class Jethr0RestController {
 		Jethr0RestController.class);
 
 	@Autowired
-	private WorkflowFactory _workflowFactory;
+	private EventHandlerFactory _eventHandlerFactory;
 
 }

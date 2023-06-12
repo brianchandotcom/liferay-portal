@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.jethr0.workflow;
+package com.liferay.jethr0.event.handler;
 
 import com.liferay.jethr0.build.queue.BuildQueue;
 import com.liferay.jethr0.build.repository.BuildRepository;
@@ -25,18 +25,19 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class QueueProjectWorkflow extends BaseWorkflow {
+public class QueueProjectEventHandler extends BaseEventHandler {
 
 	@Override
 	public String process() throws Exception {
-		WorkflowHelper workflowHelper = getWorkflowHelper();
+		EventHandlerHelper eventHandlerHelper = getEventHandlerHelper();
 
 		ProjectRepository projectRepository =
-			workflowHelper.getProjectRepository();
+			eventHandlerHelper.getProjectRepository();
 
 		Project project = projectRepository.getById(_getProjectID());
 
-		BuildRepository buildRepository = workflowHelper.getBuildRepository();
+		BuildRepository buildRepository =
+			eventHandlerHelper.getBuildRepository();
 
 		buildRepository.getAll(project);
 
@@ -44,21 +45,21 @@ public class QueueProjectWorkflow extends BaseWorkflow {
 
 		projectRepository.update(project);
 
-		BuildQueue buildQueue = workflowHelper.getBuildQueue();
+		BuildQueue buildQueue = eventHandlerHelper.getBuildQueue();
 
 		buildQueue.addProject(project);
 
-		JenkinsQueue jenkinsQueue = workflowHelper.getJenkinsQueue();
+		JenkinsQueue jenkinsQueue = eventHandlerHelper.getJenkinsQueue();
 
 		jenkinsQueue.invoke();
 
 		return project.toString();
 	}
 
-	protected QueueProjectWorkflow(
-		JSONObject jsonObject, WorkflowHelper workflowHelper) {
+	protected QueueProjectEventHandler(
+		EventHandlerHelper eventHandlerHelper, JSONObject jsonObject) {
 
-		super(jsonObject, workflowHelper);
+		super(eventHandlerHelper, jsonObject);
 	}
 
 	private Long _getProjectID() throws Exception {

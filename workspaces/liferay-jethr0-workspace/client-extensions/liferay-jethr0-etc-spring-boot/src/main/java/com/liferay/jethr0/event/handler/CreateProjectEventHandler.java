@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.jethr0.workflow;
+package com.liferay.jethr0.event.handler;
 
 import com.liferay.jethr0.build.Build;
 import com.liferay.jethr0.build.repository.BuildParameterRepository;
@@ -29,17 +29,18 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class CreateProjectWorkflow extends BaseWorkflow {
+public class CreateProjectEventHandler extends BaseEventHandler {
 
 	@Override
 	public String process() throws Exception {
-		WorkflowHelper workflowHelper = getWorkflowHelper();
+		EventHandlerHelper eventHandlerHelper = getEventHandlerHelper();
 
 		BuildParameterRepository buildParameterRepository =
-			workflowHelper.getBuildParameterRepository();
-		BuildRepository buildRepository = workflowHelper.getBuildRepository();
+			eventHandlerHelper.getBuildParameterRepository();
+		BuildRepository buildRepository =
+			eventHandlerHelper.getBuildRepository();
 		ProjectRepository projectRepository =
-			workflowHelper.getProjectRepository();
+			eventHandlerHelper.getProjectRepository();
 
 		JSONObject projectJSONObject = _getProjectJSONObject();
 
@@ -66,10 +67,10 @@ public class CreateProjectWorkflow extends BaseWorkflow {
 		return project.toString();
 	}
 
-	protected CreateProjectWorkflow(
-		JSONObject jsonObject, WorkflowHelper workflowHelper) {
+	protected CreateProjectEventHandler(
+		EventHandlerHelper eventHandlerHelper, JSONObject jsonObject) {
 
-		super(jsonObject, workflowHelper);
+		super(eventHandlerHelper, jsonObject);
 	}
 
 	private JSONObject _getProjectJSONObject() throws Exception {

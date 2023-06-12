@@ -22,7 +22,10 @@ import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Máté Thurzó
+ *
+ * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
  */
+@Deprecated
 @ProviderType
 public interface RelationshipManager {
 

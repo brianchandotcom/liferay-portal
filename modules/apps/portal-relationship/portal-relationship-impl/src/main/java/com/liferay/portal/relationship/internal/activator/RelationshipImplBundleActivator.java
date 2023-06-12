@@ -24,7 +24,10 @@ import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Máté Thurzó
+ *
+ * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
  */
+@Deprecated
 public class RelationshipImplBundleActivator implements BundleActivator {
 
 	@Override

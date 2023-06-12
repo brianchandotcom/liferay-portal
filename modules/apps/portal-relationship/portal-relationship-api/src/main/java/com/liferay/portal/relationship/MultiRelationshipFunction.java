@@ -18,7 +18,10 @@ import java.util.Collection;
 
 /**
  * @author Máté Thurzó
+ *
+ * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
  */
+@Deprecated
 @FunctionalInterface
 public interface MultiRelationshipFunction<T, U> {
 

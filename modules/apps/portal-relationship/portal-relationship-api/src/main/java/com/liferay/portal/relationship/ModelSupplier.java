@@ -20,7 +20,10 @@ import java.io.Serializable;
 
 /**
  * @author Máté Thurzó
+ *
+ * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
  */
+@Deprecated
 @FunctionalInterface
 public interface ModelSupplier<T extends Serializable, U extends ClassedModel> {
 

@@ -36,8 +36,11 @@ import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Máté Thurzó
+ *
+ * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
  */
 @Component(service = RelationshipManager.class)
+@Deprecated
 public class RelationshipManagerImpl implements RelationshipManager {
 
 	@Override

@@ -18,7 +18,10 @@ import com.liferay.portal.kernel.model.ClassedModel;
 
 /**
  * @author Máté Thurzó
+ *
+ * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
  */
+@Deprecated
 public interface RelationshipResource<T extends ClassedModel> {
 
 	public Relationship<T> relationship(Relationship.Builder<T> builder);

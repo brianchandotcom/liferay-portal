@@ -31,11 +31,14 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Máté Thurzó
+ *
+ * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
  */
 @Component(
 	property = "model.class.name=com.liferay.dynamic.data.mapping.model.DDMStructure",
 	service = RelationshipResource.class
 )
+@Deprecated
 public class DDMStructureDLFileEntryTypeRelationshipResource
 	implements RelationshipResource<DDMStructure> {
 

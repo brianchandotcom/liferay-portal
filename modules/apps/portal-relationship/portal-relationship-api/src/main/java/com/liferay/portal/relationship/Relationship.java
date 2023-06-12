@@ -25,7 +25,10 @@ import java.util.function.Function;
 
 /**
  * @author Máté Thurzó
+ *
+ * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
  */
+@Deprecated
 public class Relationship<T extends ClassedModel> {
 
 	public List<? extends ClassedModel> getInboundRelatedModels(long primKey) {

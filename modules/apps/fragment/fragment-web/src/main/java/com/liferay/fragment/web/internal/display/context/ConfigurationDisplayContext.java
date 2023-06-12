@@ -17,6 +17,7 @@ package com.liferay.fragment.web.internal.display.context;
 import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.helper.DefaultInputFragmentEntryConfigurationProvider;
 import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.fragment.web.internal.constants.FragmentWebKeys;
 import com.liferay.info.field.type.BooleanInfoFieldType;
 import com.liferay.info.field.type.DateInfoFieldType;
@@ -30,9 +31,11 @@ import com.liferay.info.field.type.RelationshipInfoFieldType;
 import com.liferay.info.field.type.SelectInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -69,14 +72,14 @@ public class ConfigurationDisplayContext {
 	}
 
 	public Map<String, Object> getData() {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 		return HashMapBuilder.<String, Object>put(
 			"formTypes",
 			() -> {
 				List<Map<String, String>> formTypes = new ArrayList<>();
-
-				ThemeDisplay themeDisplay =
-					(ThemeDisplay)_httpServletRequest.getAttribute(
-						WebKeys.THEME_DISPLAY);
 
 				JSONObject defaultInputFragmentEntryKeysJSONObject =
 					_defaultInputFragmentEntryConfigurationProvider.
@@ -104,6 +107,24 @@ public class ConfigurationDisplayContext {
 									return fragmentEntry.getName();
 								}
 
+								Group group = GroupLocalServiceUtil.fetchGroup(
+									themeDisplay.getCompanyId(),
+									jsonObject.getString("groupKey"));
+
+								if (group == null) {
+									return null;
+								}
+
+								fragmentEntry =
+									FragmentEntryLocalServiceUtil.
+										fetchFragmentEntry(
+											group.getGroupId(),
+											jsonObject.getString("key"));
+
+								if (fragmentEntry != null) {
+									return fragmentEntry.getName();
+								}
+
 								return null;
 							}
 						).put(
@@ -124,6 +145,15 @@ public class ConfigurationDisplayContext {
 				"/fragment/select_default_input_fragment"
 			).setWindowState(
 				LiferayWindowState.POP_UP
+			).buildString()
+		).put(
+			"updateInputFragmentsURL",
+			PortletURLBuilder.createActionURL(
+				_liferayPortletResponse
+			).setActionName(
+				"/fragment/update_default_input_fragments"
+			).setRedirect(
+				themeDisplay.getURLCurrent()
 			).buildString()
 		).build();
 	}

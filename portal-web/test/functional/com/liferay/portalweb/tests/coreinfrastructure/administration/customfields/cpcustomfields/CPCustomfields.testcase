@@ -340,13 +340,14 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Documents and Media Page");
 
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Documents and Media Page",
+			widgetName = "Documents and Media");
+
 		Navigator.gotoSitePage(
 			pageName = "Documents and Media Page",
 			siteName = "Site Name");
-
-		Portlet.addPG(
-			pageName = "Documents and Media Page",
-			portletName = "Documents and Media");
 
 		DMDocument.enableActionsMenuOnPortlet();
 

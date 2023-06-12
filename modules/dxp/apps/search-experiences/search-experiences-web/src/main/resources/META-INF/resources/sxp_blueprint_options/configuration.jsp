@@ -47,7 +47,7 @@
 						).put(
 							"initialSXPBlueprintId", SXPBlueprintOptionsPortletPreferencesUtil.getValue(portletPreferences, "sxpBlueprintId")
 						).put(
-							"initialSXPBlueprintTitle", (sxpBlueprint != null) ? HtmlUtil.escape(sxpBlueprint.getTitle(locale)) : StringPool.BLANK
+							"initialSXPBlueprintTitle", (sxpBlueprint != null) ? LanguageUtil.get(request, HtmlUtil.escape(sxpBlueprint.getTitle(locale))) : StringPool.BLANK
 						).put(
 							"learnMessages", LearnMessageUtil.getJSONObject("search-experiences-web")
 						).put(

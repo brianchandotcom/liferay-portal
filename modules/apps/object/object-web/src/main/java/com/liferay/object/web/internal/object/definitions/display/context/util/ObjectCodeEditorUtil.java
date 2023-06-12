@@ -42,53 +42,17 @@ public class ObjectCodeEditorUtil {
 		boolean includeGeneralVariables, Locale locale, long objectDefinitionId,
 		Predicate<ObjectField> objectFieldPredicate) {
 
-		List<Map<String, Object>> codeEditorElements = new ArrayList<>();
-
-		ObjectFieldLocalService objectFieldLocalService =
-			_objectFieldLocalServiceSnapshot.get();
-
-		codeEditorElements.add(
-			_createCodeEditorElement(
-				TransformUtil.transform(
-					ListUtil.filter(
-						objectFieldLocalService.getObjectFields(
-							objectDefinitionId),
-						objectFieldPredicate),
-					objectField -> HashMapBuilder.put(
-						"content", objectField.getName()
-					).put(
-						"helpText", StringPool.BLANK
-					).put(
-						"label", objectField.getLabel(locale)
-					).build()),
-				"fields", locale));
-
-		if (includeGeneralVariables) {
-			codeEditorElements.add(
-				_createCodeEditorElement(
-					Collections.singletonList(
-						HashMapBuilder.put(
-							"content", "currentUserId"
-						).put(
-							"helpText", StringPool.BLANK
-						).put(
-							"label", LanguageUtil.get(locale, "current-user")
-						).build()),
-					"general-variables", locale));
-		}
-
 		if (includeDDMExpressionBuilderElements) {
-			Collections.addAll(
-				codeEditorElements,
-				_createCodeEditorElement(
-					DDMExpressionOperator.getItems(locale), "operators",
-					locale),
-				_createCodeEditorElement(
-					DDMExpressionFunction.getItems(locale), "functions",
-					locale));
+			return getCodeEditorElements(
+				ddmExpressionFunctionPredicate -> true,
+				ddmExpressionOperatorPredicate -> true, includeGeneralVariables,
+				locale, objectDefinitionId, objectFieldPredicate);
 		}
 
-		return codeEditorElements;
+		return getCodeEditorElements(
+			ddmExpressionFunctionPredicate -> false,
+			ddmExpressionOperatorPredicate -> false, includeGeneralVariables,
+			locale, objectDefinitionId, objectFieldPredicate);
 	}
 
 	public static List<Map<String, Object>> getCodeEditorElements(

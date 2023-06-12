@@ -21,4 +21,15 @@ import com.liferay.item.selector.BaseItemSelectorCriterion;
  */
 public class JournalArticleTranslationsItemSelectorCriterion
 	extends BaseItemSelectorCriterion {
+
+	public String getArticleId() {
+		return _articleId;
+	}
+
+	public void setArticleId(String articleId) {
+		_articleId = articleId;
+	}
+
+	private String _articleId;
+
 }

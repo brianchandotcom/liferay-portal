@@ -89,6 +89,30 @@ definition {
 		}
 	}
 
+	@description = "LPS-176188. Confirm that the Delete option is present."
+	@priority = 3
+	test CanAssertDeleteIsPresent {
+		task ("And adds a filter") {
+			FrontendDataSetAdmin.createFilters(
+				filterName = "Test Filter",
+				key_filterList = "id");
+		}
+
+		task ("When the user clicks the ellipsis //3 dots menu") {
+			Click(
+				key_fieldName = "id",
+				locator1 = "FrontendDataSetAdmin#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
+
+			ClickNoError(locator1 = "ObjectPortlet#DELETE_ENTRY_BUTTON");
+		}
+
+		task ("Then assert the Delete option is present") {
+			AssertElementPresent(
+				key_text = "Delete",
+				locator1 = "Button#ANY");
+		}
+	}
+
 	@description = "LPS-176187. Confirm that the fields Name and Filter by are present in the New Filter modal."
 	@ignore = "true"
 	@priority = 5
@@ -96,6 +120,47 @@ definition {
 
 		// TODO LPS-176187 CanAssertFieldsIsPresent pending implementation
 
+	}
+
+	@description = "LPS-176188. Confirm that the field is deleted and a successful message is displayed."
+	@priority = 3
+	test CanAssertFilterIsDeleted {
+		task ("And adds a filter") {
+			FrontendDataSetAdmin.createFilters(
+				filterName = "Test Filter",
+				key_filterList = "creator");
+		}
+
+		task ("When the user selects the Delete option in the 3 dots menu") {
+			Click(
+				key_fieldName = "creator",
+				locator1 = "FrontendDataSetAdmin#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
+
+			ClickNoError(locator1 = "ObjectPortlet#DELETE_ENTRY_BUTTON");
+		}
+
+		task ("Then the modal with a confirmation message is displayed") {
+			AssertElementPresent(
+				key_modalText = "Are you sure you want to delete this filter? It will be removed immediately. Fragments using it will be affected. This action cannot be undone.",
+				locator1 = "FrontendDataSetAdmin#DELETE_DATA_SET_MODAL_BODY");
+		}
+
+		task ("And confirms the deletion") {
+			Button.clickDelete();
+		}
+
+		task ("Then assert the field is deleted") {
+			AssertElementNotPresent(
+				key_nameField = "creator",
+				key_position = 1,
+				locator1 = "FrontendDataSetAdmin#FIELDS_TABLE");
+		}
+
+		task ("And a successful message is displayed") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#SUCCESS",
+				value1 = "Your request completed successfully.");
+		}
 	}
 
 	@description = "LPS-176184. Confirm that 'No default filters were created.' and 'Start creating a filter to display specific data' messages are displayed"
@@ -155,6 +220,98 @@ definition {
 
 		// TODO LPS-176187 CanAssertTheFieldsIsDisplayed pending implementation
 
+	}
+
+	@description = "LPS-176188. Confirm that an element dragged and dropped below another,will be deprioritized."
+	@priority = 5
+	test CanBeDeprioritizedBelowAnother {
+		task ("And adds two or more new filters") {
+			FrontendDataSetAdmin.createFilters(
+				filterName = "Filter Test",
+				key_filterList = "id");
+
+			FrontendDataSetAdmin.createFilters(
+				filterName = "Second Test",
+				key_filterList = "creator");
+		}
+
+		task ("When an element is dragged and dropped below another element of the list") {
+			DragAndDrop.javaScriptDragAndDropToBottom(
+				key_nameField = "id",
+				key_position = 2,
+				keyName = "creator",
+				locator1 = "FrontendDataSetAdmin#SELECT_DATASET",
+				locator2 = "FrontendDataSetAdmin#FIELDS_TABLE");
+		}
+
+		task ("Then this element will be deprioritized") {
+			FrontendDataSetAdmin.assertFieldsOnTable(
+				key_position = 2,
+				keyName = "id");
+		}
+	}
+
+	@description = "LPS-176188. Confirm that an element dragged and dropped on top of another element will be prioritized."
+	@priority = 4
+	test CanBePrioritizedOverAnother {
+		task ("And adds two or more new filters") {
+			FrontendDataSetAdmin.createFilters(
+				filterName = "Filter Test",
+				key_filterList = "id");
+
+			FrontendDataSetAdmin.createFilters(
+				filterName = "Second Test",
+				key_filterList = "creator");
+		}
+
+		task ("When an element is dragged and dropped over another element of the list") {
+			DragAndDrop.javaScriptDragAndDropToBottom(
+				key_nameField = "creator",
+				key_position = 1,
+				keyName = "id",
+				locator1 = "FrontendDataSetAdmin#FIELDS_TABLE",
+				locator2 = "FrontendDataSetAdmin#SELECT_DATASET");
+		}
+
+		task ("Then this element will be prioritized") {
+			FrontendDataSetAdmin.assertFieldsOnTable(
+				key_position = 1,
+				keyName = "creator");
+		}
+	}
+
+	@description = "LPS-176188. Confirm that the field is not deleted by clicking the Cancel button."
+	@priority = 5
+	test CanCancelButtonDeleteFilter {
+		task ("And adds a filter") {
+			FrontendDataSetAdmin.createFilters(
+				filterName = "Filter Test",
+				key_filterList = "from");
+		}
+
+		task ("When the user selects the Delete option in the 3 dots menu") {
+			Click(
+				key_fieldName = "from",
+				locator1 = "FrontendDataSetAdmin#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
+
+			ClickNoError(locator1 = "ObjectPortlet#DELETE_ENTRY_BUTTON");
+		}
+
+		task ("Then the modal with a confirmation message is displayed") {
+			AssertElementPresent(
+				key_modalText = "Are you sure you want to delete this filter? It will be removed immediately. Fragments using it will be affected. This action cannot be undone.",
+				locator1 = "FrontendDataSetAdmin#DELETE_DATA_SET_MODAL_BODY");
+		}
+
+		task ("And cancels the deletion") {
+			Button.clickCancel();
+		}
+
+		task ("Then assert the field is not deleted and it still appears in the Fields tab table") {
+			FrontendDataSetAdmin.assertFieldsOnTable(
+				key_position = 1,
+				keyName = "from");
+		}
 	}
 
 	@description = "LPS-176184. Confirm that the New filter modal is closed and the changes are not applied when canceling on Cancel button"
@@ -236,6 +393,37 @@ definition {
 				key_tableColumn = 1,
 				key_tableRow = 1,
 				locator1 = "FrontendDataSetAdmin#FILTER_TABLE_CELL");
+		}
+	}
+
+	@description = "LPS-176188. Confirm that the elements of the list can be dragged and dropped."
+	@priority = 4
+	test CanInteractDragDrop {
+		task ("And adds two or more filters") {
+			FrontendDataSetAdmin.createFilters(
+				filterName = "Filter Test",
+				key_filterList = "id");
+
+			FrontendDataSetAdmin.createFilters(
+				filterName = "Second Test",
+				key_filterList = "creator");
+		}
+
+		task ("Then assert the elements in the list can be dragged and dropped") {
+			DragAndDrop.javaScriptDragAndDropToBottom(
+				key_nameField = "id",
+				key_position = 2,
+				keyName = "creator",
+				locator1 = "FrontendDataSetAdmin#SELECT_DATASET",
+				locator2 = "FrontendDataSetAdmin#FIELDS_TABLE");
+
+			FrontendDataSetAdmin.assertFieldsOnTable(
+				key_position = 1,
+				keyName = "creator");
+
+			FrontendDataSetAdmin.assertFieldsOnTable(
+				key_position = 2,
+				keyName = "id");
 		}
 	}
 

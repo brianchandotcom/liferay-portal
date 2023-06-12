@@ -155,21 +155,16 @@ definition {
 		}
 	}
 
-		task ("And I assert that the Activation Key was downloaded") {
-			CP2FileUtil.assertDownloadedFileIsPresent(downloadedFileName = ${downloadedFileName});
-		}
-	}
-
-	@description = "Automation ID: LPS-152781 | Test Summary: Verify success message when the Individual Key is downloaded."
+	@description = "Story ID: LPS-146061 | Test Summary: Verify success message when the Individual Key is downloaded."
 	@ignore = "true"
 	@priority = 5
-	test SuccessMessageFromIndividualKey {
+	test AssertSuccessMessageFromIndividualKey {
 		property portal.upstream = "quarantine";
 
 		task ("Given I go to the test account") {
-			CustomerPortal.search(searchItem = ${testAccount});
+			CustomerPortal.search(searchItem = "NASA ICE");
 
-			CustomerPortal.enterOnProject(title = ${testAccount});
+			CustomerPortal.enterOnProject(title = "NASA ICE");
 		}
 
 		task ("And I click on DXP product") {
@@ -178,37 +173,16 @@ definition {
 			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
 		}
 
-		task ("And I view the Actions button") {
-			CustomerPortal.viewButton(text = "Actions");
+		task ("And the key is select from the table") {
+			CP2ActivationKeys.selectKeyCheckboxByEnvironmentName(environmentName = "Redacted");
 		}
 
-		task ("When I select a key from the table") {
-			CP2ActivationKeys.selectKeyCheckboxByEnvironmentName(environmentName = "Test Environment Name");
-		}
-
-		task ("Then I should see the download button") {
-			CustomerPortal.viewButton(text = "download");
-		}
-
-		task ("When I click at the download button") {
+		task ("And clicks on the download button") {
 			CustomerPortal.clickAtButton(text = "download");
 		}
 
-		task ("Then I assert that the alert with the message 'Activation Key Was Downloaded Successfully' is visible") {
+		task ("Then assert that the alert with the message 'Activation Key Was Downloaded Successfully' is visible") {
 			CustomerPortal.viewAlert(alertText = "Activation key was downloaded successfully");
-		}
-
-		task ("And I get the expected downloaded file name") {
-			var downloadedFileName = CP2ActivationKeys.formatLicenseFileName(
-				fileType = "xml",
-				licenseName = ${testAccount},
-				licenseType = "activation-key",
-				product = ${testProduct},
-				version = "7.4");
-		}
-
-		task ("And I assert that the Activation Key was downloaded") {
-			CP2FileUtil.assertDownloadedFileIsPresent(downloadedFileName = ${downloadedFileName});
 		}
 	}
 

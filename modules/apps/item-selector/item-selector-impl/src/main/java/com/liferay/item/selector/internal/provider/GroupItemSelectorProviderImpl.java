@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.permission.GroupPermission;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portlet.usersadmin.search.GroupSearch;
+import com.liferay.site.search.GroupSearch;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;

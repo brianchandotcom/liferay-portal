@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portlet.usersadmin.search.GroupSearch;
+import com.liferay.site.search.GroupSearch;
 import com.liferay.site.util.GroupSearchProvider;
 import com.liferay.sites.kernel.util.SitesUtil;
 

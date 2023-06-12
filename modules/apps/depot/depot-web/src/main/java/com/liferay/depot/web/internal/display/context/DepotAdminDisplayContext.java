@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portlet.usersadmin.search.GroupSearch;
+import com.liferay.site.search.GroupSearch;
 
 import java.util.List;
 import java.util.Objects;

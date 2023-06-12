@@ -45,8 +45,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portlet.usersadmin.search.GroupSearch;
 import com.liferay.site.browser.web.internal.constants.SiteBrowserPortletKeys;
+import com.liferay.site.search.GroupSearch;
 import com.liferay.sites.kernel.util.SitesUtil;
 
 import java.util.ArrayList;

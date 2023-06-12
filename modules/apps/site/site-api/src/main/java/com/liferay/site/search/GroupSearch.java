@@ -43,8 +43,7 @@ public class GroupSearch extends SearchContainer<Group> {
 	public static final String EMPTY_RESULTS_MESSAGE = "no-sites-were-found";
 
 	public GroupSearch(PortletRequest portletRequest, PortletURL iteratorURL) {
-		super(
-			portletRequest, iteratorURL, null, EMPTY_RESULTS_MESSAGE);
+		super(portletRequest, iteratorURL, null, EMPTY_RESULTS_MESSAGE);
 
 		try {
 			String portletId = PortletProviderUtil.getPortletId(

@@ -18,7 +18,7 @@ import com.liferay.asset.publisher.util.AssetPublisherHelper;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portlet.usersadmin.search.GroupSearch;
+import com.liferay.site.search.GroupSearch;
 import com.liferay.sites.kernel.util.SitesUtil;
 
 import java.util.ArrayList;

@@ -14,7 +14,7 @@
 
 package com.liferay.asset.publisher.web.internal.display.context;
 
-import com.liferay.portlet.usersadmin.search.GroupSearch;
+import com.liferay.site.search.GroupSearch;
 
 /**
  * @author Eudaldo Alonso

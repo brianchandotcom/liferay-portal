@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portlet.usersadmin.search.GroupSearch;
+import com.liferay.site.search.GroupSearch;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -228,16 +228,16 @@ public class GroupSearchProvider {
 		return true;
 	}
 
+	private String _getKeywords(PortletRequest portletRequest) {
+		return ParamUtil.getString(portletRequest, "keywords");
+	}
+
 	private boolean _isSearch(PortletRequest portletRequest) {
 		if (Validator.isNotNull(_getKeywords(portletRequest))) {
 			return true;
 		}
 
 		return false;
-	}
-
-	private String _getKeywords(PortletRequest portletRequest) {
-		return ParamUtil.getString(portletRequest, "keywords");
 	}
 
 	private long[] _classNameIds;

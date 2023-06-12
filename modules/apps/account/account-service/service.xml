@@ -229,6 +229,7 @@
 		<exception>AccountEntryDomains</exception>
 		<exception>AccountEntryEmailAddress</exception>
 		<exception>AccountEntryName</exception>
+		<exception>AccountEntryStatus</exception>
 		<exception>AccountEntryType</exception>
 		<exception>AccountEntryUserRelEmailAddress</exception>
 		<exception>AccountGroupName</exception>

@@ -161,7 +161,6 @@ public class CronTextUtil {
 					new DayAndPosition[] {
 						new DayAndPosition(yearlyDay, yearlyPos)
 					});
-
 				recurrence.setByMonth(new int[] {yearlyMonth});
 
 				int yearlyInterval = ParamUtil.getInteger(

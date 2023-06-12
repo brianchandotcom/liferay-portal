@@ -159,7 +159,6 @@ public class RatingsDataTransformerUtil {
 
 				dynamicQuery.add(property.eq(className));
 			});
-
 		ratingsEntryActionableDynamicQuery.setPerformActionMethod(
 			performActionMethod);
 

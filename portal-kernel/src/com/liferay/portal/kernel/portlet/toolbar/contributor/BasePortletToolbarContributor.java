@@ -66,7 +66,6 @@ public abstract class BasePortletToolbarContributor
 			HashMapBuilder.<String, Object>put(
 				"qa-id", "addButton"
 			).build());
-
 		menu.setDirection("right");
 		menu.setExtended(false);
 		menu.setIcon("plus");

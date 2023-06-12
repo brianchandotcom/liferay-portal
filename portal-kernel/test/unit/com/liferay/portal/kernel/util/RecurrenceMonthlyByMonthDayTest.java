@@ -144,7 +144,6 @@ public class RecurrenceMonthlyByMonthDayTest extends RecurrenceTestCase {
 			dtStart, duration, Recurrence.MONTHLY);
 
 		recurrence.setByMonthDay(new int[] {monthDay});
-
 		recurrence.setInterval(interval);
 
 		return recurrence;

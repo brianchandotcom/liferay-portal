@@ -150,9 +150,7 @@ public class RecurrenceYearlyByMonthAndMonthDayTest extends RecurrenceTestCase {
 			dtStart, duration, Recurrence.YEARLY);
 
 		recurrence.setByMonth(new int[] {month});
-
 		recurrence.setByMonthDay(new int[] {monthDay});
-
 		recurrence.setInterval(interval);
 
 		return recurrence;

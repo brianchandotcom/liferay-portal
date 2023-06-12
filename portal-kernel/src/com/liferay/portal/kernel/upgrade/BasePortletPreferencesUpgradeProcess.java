@@ -613,7 +613,6 @@ public abstract class BasePortletPreferencesUpgradeProcess
 						updatePreparedStatement.setBoolean(
 							2, newPreferenceValues._readOnly);
 						updatePreparedStatement.setString(3, smallValue);
-
 						updatePreparedStatement.setLong(
 							4,
 							oldPreferenceValues._portletPreferenceValueIds.get(

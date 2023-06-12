@@ -558,7 +558,6 @@ public class ServletResponseUtil {
 		if (range != null) {
 			httpServletResponse.setHeader(
 				HttpHeaders.CONTENT_RANGE, range.getContentRange());
-
 			httpServletResponse.setHeader(
 				HttpHeaders.CONTENT_LENGTH, String.valueOf(range.getLength()));
 		}

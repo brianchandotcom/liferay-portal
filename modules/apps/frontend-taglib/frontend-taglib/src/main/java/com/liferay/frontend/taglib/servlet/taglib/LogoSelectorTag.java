@@ -54,7 +54,7 @@ public class LogoSelectorTag extends IncludeTag {
 		return _description;
 	}
 
-	public boolean getDisabled() {
+	public boolean isDisabled() {
 		return _disabled;
 	}
 

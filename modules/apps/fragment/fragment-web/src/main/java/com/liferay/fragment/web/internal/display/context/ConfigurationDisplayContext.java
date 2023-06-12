@@ -69,18 +69,19 @@ public class ConfigurationDisplayContext {
 					(ThemeDisplay)_httpServletRequest.getAttribute(
 						WebKeys.THEME_DISPLAY);
 
-				Map<String, String> defaultInputFragmentEntryKeys =
+				JSONObject defaultInputFragmentEntryKeysJSONObject =
 					_defaultInputFragmentEntryConfigurationProvider.
-						getDefaultInputFragmentEntryKeys(
+						getDefaultInputFragmentEntryKeysJSONObject(
 							themeDisplay.getScopeGroupId());
 
 				for (InfoFieldType infoFieldType : _INFO_FIELD_TYPES) {
-					String fragmentEntryKey = defaultInputFragmentEntryKeys.get(
-						infoFieldType.getName());
+					JSONObject jsonObject =
+						defaultInputFragmentEntryKeysJSONObject.getJSONObject(
+							infoFieldType.getName());
 
 					FragmentEntry fragmentEntry =
 						_fragmentCollectionContributorRegistry.getFragmentEntry(
-							fragmentEntryKey);
+							jsonObject.getString("key"));
 
 					if (fragmentEntry != null) {
 						formTypes.put(

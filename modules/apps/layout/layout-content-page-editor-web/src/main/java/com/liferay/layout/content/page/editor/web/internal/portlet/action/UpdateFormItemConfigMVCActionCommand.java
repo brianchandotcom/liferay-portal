@@ -268,11 +268,16 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 	private String _getFragmentEntryKey(InfoField infoField, long groupId) {
 		InfoFieldType infoFieldType = infoField.getInfoFieldType();
 
-		Map<String, String> defaultInputFragmentEntryKeys =
-			_defaultInputFragmentEntryHelper.getDefaultInputFragmentEntryKeys(
+
+		JSONObject defaultInputFragmentEntryKeysJSONObject =
+			_defaultInputFragmentEntryHelper.getDefaultInputFragmentEntryKeysJSONObject(
 				groupId);
 
-		return defaultInputFragmentEntryKeys.get(infoFieldType.getName());
+		JSONObject jsonObject =
+			defaultInputFragmentEntryKeysJSONObject.getJSONObject(
+				infoFieldType.getName());
+
+		return jsonObject.getString("key");
 	}
 
 	private List<InfoField<?>> _getInfoFields(

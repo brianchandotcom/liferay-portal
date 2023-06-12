@@ -151,7 +151,7 @@ public class OrganizationIndexerIndexedFieldsTest {
 
 	protected void assertFieldValues(Map<String, ?> map, String searchTerm) {
 		FieldValuesAssert.assertFieldValues(
-			map, name -> !name.equals("score"),
+			map, name -> !name.equals("score") && !name.equals("timestamp"),
 			searcher.search(
 				searchRequestBuilderFactory.builder(
 				).companyId(

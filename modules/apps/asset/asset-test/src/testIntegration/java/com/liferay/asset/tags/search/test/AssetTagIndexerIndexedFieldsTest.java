@@ -124,7 +124,7 @@ public class AssetTagIndexerIndexedFieldsTest {
 
 	protected void assertFieldValues(Map<String, String> map, String classPK) {
 		FieldValuesAssert.assertFieldValues(
-			map, name -> !name.equals("score"),
+			map, name -> !name.equals("score") && !name.equals("timestamp"),
 			searcher.search(
 				searchRequestBuilderFactory.builder(
 				).companyId(

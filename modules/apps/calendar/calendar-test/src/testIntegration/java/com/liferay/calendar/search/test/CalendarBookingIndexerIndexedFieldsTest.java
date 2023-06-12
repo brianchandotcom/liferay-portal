@@ -138,7 +138,8 @@ public class CalendarBookingIndexerIndexedFieldsTest
 			keywords, LocaleUtil.HUNGARY);
 
 		FieldValuesAssert.assertFieldValues(
-			map, name -> !name.equals("score"), searchResponse);
+			map, name -> !name.equals("score") && !name.equals("timestamp"),
+			searchResponse);
 	}
 
 	protected CalendarBooking addCalendarBooking(

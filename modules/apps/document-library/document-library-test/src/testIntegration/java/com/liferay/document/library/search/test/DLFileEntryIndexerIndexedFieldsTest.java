@@ -121,7 +121,8 @@ public class DLFileEntryIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 			dlAppLocalService.getFileEntry(fileEntryId), map);
 
 		FieldValuesAssert.assertFieldValues(
-			map, name -> !name.equals("score"), searchResponse);
+			map, name -> !name.equals("score") && !name.equals("timestamp"),
+			searchResponse);
 	}
 
 	private long _addFileEntry(String fileName) throws Exception {

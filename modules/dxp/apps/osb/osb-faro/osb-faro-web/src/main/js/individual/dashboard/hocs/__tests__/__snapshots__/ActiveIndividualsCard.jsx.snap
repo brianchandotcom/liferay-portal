@@ -42,7 +42,7 @@ exports[`ActiveIndividualsCard should render 1`] = `
         </div>
         <span
           aria-hidden="true"
-          class="spinner-root loading-animation"
+          class="display-card loading-root spinner-root spinner-inline loading-animation"
         />
       </div>
     </div>

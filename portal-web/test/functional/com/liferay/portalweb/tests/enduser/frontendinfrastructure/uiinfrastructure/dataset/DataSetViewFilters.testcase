@@ -14,9 +14,9 @@ definition {
 		User.firstLoginPG();
 
 		task ("Given creating a Data Set via API") {
-			FrontendDataSetAdmin.goToDataSetsAdminPage();
+			DataSetAdmin.goToDataSetAdminPage();
 
-			FrontendDataSetAdmin.createDataSetEntryViaAPI(
+			DataSetAdmin.createDataSetEntryViaAPI(
 				dataSetName = "Data Set Test",
 				restApplication = "/c/fdsdatefilters",
 				restEndpoint = "/",
@@ -24,27 +24,27 @@ definition {
 		}
 
 		task ("And a data set view created via api") {
-			FrontendDataSetAdmin.createFDSViewViaAPI(
+			DataSetAdmin.createFDSViewViaAPI(
 				dataSetName = "Data Set Test",
 				dataSetViewDescription = "Description Test",
 				key_dataSetViewNameList = "View Test");
 		}
 
 		task ("When go to the View page of the data set created.") {
-			FrontendDataSetAdmin.goToSpecificViewPage(
+			DataSetAdmin.goToSpecificViewPage(
 				dataSetName = "Data Set Test",
 				key_viewName = "View Test");
 		}
 
 		task ("When the user accesses the Filters tab.") {
-			FrontendDataSetAdmin.goToTab(tabName = "Filters");
+			DataSetAdmin.goToTab(tabName = "Filters");
 		}
 	}
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		FrontendDataSetAdmin.deleteAllDataSetEntries();
+		DataSetAdmin.deleteAllDataSetEntries();
 
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
@@ -61,7 +61,7 @@ definition {
 		task ("asserts all fields in the schema are displayed") {
 			Click(locator1 = "FrontendDataSetAdmin#FILTER_BY_SELECT");
 
-			FrontendDataSetAdmin.assertSearchFilters(key_filterList = "creator,externalReferenceCode,id,status,createDate,fieldName,from,modifiedDate,name,r_fdsViewFDSDateFilterRelationship_c_fdsViewId,rendererType,r_fdsViewFDSDateFilterRelationship_c_fdsViewERC,to,type");
+			DataSetAdmin.assertSearchFilters(key_filterList = "creator,externalReferenceCode,id,status,createDate,fieldName,from,modifiedDate,name,r_fdsViewFDSDateFilterRelationship_c_fdsViewId,rendererType,r_fdsViewFDSDateFilterRelationship_c_fdsViewERC,to,type");
 		}
 	}
 
@@ -73,7 +73,7 @@ definition {
 		}
 
 		task ("And Choose an ID in the Filter By field") {
-			FrontendDataSetAdmin.selectFilters(filterType = "id");
+			DataSetAdmin.selectFilters(filterType = "id");
 		}
 
 		task ("And Clicks Save") {
@@ -153,7 +153,7 @@ definition {
 	@priority = 5
 	test CanCreateFilters {
 		task ("And adds a new filter") {
-			FrontendDataSetAdmin.createFilters(
+			DataSetAdmin.createFilters(
 				filterName = "Test Filter",
 				key_filterList = "id");
 		}
@@ -191,11 +191,11 @@ definition {
 	@priority = 3
 	test CanSearchFilterOnIcon {
 		task ("And adds two or more new filters") {
-			FrontendDataSetAdmin.createFilters(key_filterList = "creator,id");
+			DataSetAdmin.createFilters(key_filterList = "creator,id");
 		}
 
 		task ("Then the user searches for one of the created filters") {
-			FrontendDataSetAdmin.searchField(searchTerm = "creator");
+			DataSetAdmin.searchField(searchTerm = "creator");
 		}
 
 		task ("And clicks the search icon") {

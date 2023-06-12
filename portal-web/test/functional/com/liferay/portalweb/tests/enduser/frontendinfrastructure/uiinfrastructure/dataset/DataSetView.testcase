@@ -14,9 +14,9 @@ definition {
 		User.firstLoginPG();
 
 		task ("Given creating a Data Set via API") {
-			FrontendDataSetAdmin.goToDataSetsAdminPage();
+			DataSetAdmin.goToDataSetAdminPage();
 
-			FrontendDataSetAdmin.createDataSetEntryViaAPI(
+			DataSetAdmin.createDataSetEntryViaAPI(
 				dataSetName = "Data Set Test",
 				restApplication = "/c/fdsentries");
 
@@ -24,16 +24,16 @@ definition {
 		}
 
 		task ("When go to the View page of the data set created.") {
-			FrontendDataSetAdmin.goToViews(dataSetName = "Data Set Test");
+			DataSetAdmin.goToViews(dataSetName = "Data Set Test");
 		}
 	}
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		FrontendDataSetAdmin.deleteAllDataSetViews();
+		DataSetAdmin.deleteAllDataSetViews();
 
-		FrontendDataSetAdmin.deleteAllDataSetEntries();
+		DataSetAdmin.deleteAllDataSetEntries();
 
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
@@ -72,13 +72,13 @@ definition {
 	@priority = 4
 	test AssertNumberOfCharactersInDescriptionField {
 		task ("When go to add View with name View Test and description with 150 characters") {
-			FrontendDataSetAdmin.createDataSetView(
+			DataSetAdmin.createDataSetView(
 				description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor accumsan luctus. Praesent feugiat nibh a lectus hendrerit lobortis. Donec blandit.",
 				key_name = "View Test");
 		}
 
 		task ("Then confirm the description value will be trunked") {
-			FrontendDataSetAdmin.assertDataSetViewDescription(key_dataSetViewDescriptionList = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor accumsan luctus. Praesent feugiat nibh a lectus hendrerit lobortis. Donec blandit.");
+			DataSetAdmin.assertDataSetViewDescription(key_dataSetViewDescriptionList = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor accumsan luctus. Praesent feugiat nibh a lectus hendrerit lobortis. Donec blandit.");
 		}
 	}
 
@@ -86,13 +86,13 @@ definition {
 	@priority = 4
 	test CanAssertNameFieldIsTrunkedIfExceedCharacters {
 		task ("When Clicking add button, and a user types a name that is more than 100 characters until 280 characters, and Filling the description field with 'Test Description', and Clicking Save button") {
-			FrontendDataSetAdmin.createDataSetView(
+			DataSetAdmin.createDataSetView(
 				description = "Test Description",
 				key_name = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer non tincidunt ipsum. Quisque in justo a nibh sagittis auctor non at quam. Nulla facilisi. Donec feugiat, sapien at cursus orci aliquam.");
 		}
 
 		task ("Then confirm the name value will be trunked") {
-			FrontendDataSetAdmin.assertDataSetView(key_dataSetViewNameList = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer non tincidunt ipsum. Quisque in justo a nibh sagittis auctor non at quam. Nulla facilisi. Donec feugiat, sapien at cursus orci aliquam.");
+			DataSetAdmin.assertDataSetView(key_dataSetViewNameList = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer non tincidunt ipsum. Quisque in justo a nibh sagittis auctor non at quam. Nulla facilisi. Donec feugiat, sapien at cursus orci aliquam.");
 		}
 	}
 
@@ -124,28 +124,28 @@ definition {
 	@priority = 5
 	test CanAssertPagination {
 		task ("And Adding a 6 view called 'View Test 1', 'View Test 2'... and Filling the description field with 'Test Description'") {
-			FrontendDataSetAdmin.createFDSViewViaAPI(
+			DataSetAdmin.createFDSViewViaAPI(
 				dataSetName = "Data Set Test",
 				dataSetViewDescription = "Test Description",
 				key_dataSetViewNameList = "View Test 1,View Test 2,View Test 3,View Test 4,View Test 5,View Test 6");
 
-			FrontendDataSetAdmin.goToDataSetViewAdminPage(dataSetName = "Data Set Test");
+			DataSetAdmin.goToDataSetViewAdminPage(dataSetName = "Data Set Test");
 		}
 
 		task ("And Change the pagination to 4 items") {
-			FrontendDataSetAdmin.changePagination(itemsPerPage = "4 Items");
+			DataSetAdmin.changePagination(itemsPerPage = "4 Items");
 		}
 
 		task ("Then Confirm that 2 pages are shown") {
 			AssertElementPresent(locator1 = "Pagination#NEXT_LINK");
 
-			FrontendDataSetAdmin.assertDataSetView(key_dataSetViewNameList = "View Test 1,View Test 2,View Test 3,View Test 4");
+			DataSetAdmin.assertDataSetView(key_dataSetViewNameList = "View Test 1,View Test 2,View Test 3,View Test 4");
 
 			Pagination.viewResults(results = "Showing 1 to 4 of 6 entries.");
 		}
 
 		task ("When the user deletes two Views") {
-			FrontendDataSetAdmin.deleteDataSetViewViaAPI(dataSetViewsNameList = "View Test 1,View Test 2");
+			DataSetAdmin.deleteDataSetViewViaAPI(dataSetViewsNameList = "View Test 1,View Test 2");
 		}
 
 		task ("Then Confirm that only one page is displayed") {
@@ -157,20 +157,20 @@ definition {
 	@priority = 3
 	test CanAssertPaginationOnFDSViewsPage {
 		task ("When Adding a 6 view called 'View Test 1', 'View Test 2'... and Filling the description field with 'Test Description'") {
-			FrontendDataSetAdmin.createFDSViewViaAPI(
+			DataSetAdmin.createFDSViewViaAPI(
 				dataSetName = "Data Set Test",
 				dataSetViewDescription = "Test Description",
 				key_dataSetViewNameList = "View Test 1,View Test 2,View Test 3,View Test 4,View Test 5,View Test 6");
 
-			FrontendDataSetAdmin.goToDataSetViewAdminPage(dataSetName = "Data Set Test");
+			DataSetAdmin.goToDataSetViewAdminPage(dataSetName = "Data Set Test");
 		}
 
 		task ("And changing the page to 4 entries.") {
-			FrontendDataSetAdmin.changePagination(itemsPerPage = "4 Items");
+			DataSetAdmin.changePagination(itemsPerPage = "4 Items");
 		}
 
 		task ("Then confirm that only 4 entries are displayed") {
-			FrontendDataSetAdmin.assertDataSetView(key_dataSetViewNameList = "View Test 1,View Test 2,View Test 3,View Test 4");
+			DataSetAdmin.assertDataSetView(key_dataSetViewNameList = "View Test 1,View Test 2,View Test 3,View Test 4");
 
 			Pagination.viewResults(results = "Showing 1 to 4 of 6 entries.");
 		}
@@ -180,7 +180,7 @@ definition {
 		}
 
 		task ("Then 2 entries are displayed") {
-			FrontendDataSetAdmin.assertDataSetView(key_dataSetViewNameList = "View Test 5,View Test 6");
+			DataSetAdmin.assertDataSetView(key_dataSetViewNameList = "View Test 5,View Test 6");
 
 			Pagination.viewResults(results = "Showing 5 to 6 of 6 entries.");
 		}
@@ -190,7 +190,7 @@ definition {
 	@priority = 5
 	test CanCancelDeletionOnCancelButton {
 		task ("When Add a new view") {
-			FrontendDataSetAdmin.createDataSetView(
+			DataSetAdmin.createDataSetView(
 				description = "Description Test",
 				key_name = "View Test");
 		}
@@ -216,7 +216,7 @@ definition {
 	@priority = 3
 	test CanCancelDeletionOnCloseButton {
 		task ("When Add a new view") {
-			FrontendDataSetAdmin.createDataSetView(
+			DataSetAdmin.createDataSetView(
 				description = "Description Test",
 				key_name = "View Test");
 		}
@@ -240,7 +240,7 @@ definition {
 		}
 
 		task ("Then The data set is present in the Data Sets admin page") {
-			FrontendDataSetAdmin.assertDataSetView(key_dataSetViewNameList = "View Test");
+			DataSetAdmin.assertDataSetView(key_dataSetViewNameList = "View Test");
 		}
 	}
 
@@ -274,21 +274,21 @@ definition {
 	@priority = 4
 	test CanCreateMultipleViews {
 		task ("When Adding a new view called "View Test" and the description field with "Test Description"") {
-			FrontendDataSetAdmin.createDataSetView(
+			DataSetAdmin.createDataSetView(
 				description = "Test Description",
 				key_name = "View Test");
 		}
 
 		task ("And Adding a new view called "Bob Test" and the description field with "Bob Description"") {
-			FrontendDataSetAdmin.createDataSetView(
+			DataSetAdmin.createDataSetView(
 				description = "Bob Description",
 				key_name = "Bob Test");
 		}
 
 		task ("Then Assert that the 2 views are created") {
-			FrontendDataSetAdmin.assertDataSetView(key_dataSetViewNameList = "View Test");
+			DataSetAdmin.assertDataSetView(key_dataSetViewNameList = "View Test");
 
-			FrontendDataSetAdmin.assertDataSetView(key_dataSetViewNameList = "Bob Test");
+			DataSetAdmin.assertDataSetView(key_dataSetViewNameList = "Bob Test");
 		}
 	}
 
@@ -296,17 +296,17 @@ definition {
 	@priority = 5
 	test CanCreateView {
 		task ("When Filling the name with 'View Test' And Clicking Save button") {
-			FrontendDataSetAdmin.createDataSetView(
+			DataSetAdmin.createDataSetView(
 				description = "Test Description",
 				key_name = "View Test");
 		}
 
 		task ("Then Confirm the view name in View page as expected") {
-			FrontendDataSetAdmin.assertDataSetView(key_dataSetViewNameList = "View Test");
+			DataSetAdmin.assertDataSetView(key_dataSetViewNameList = "View Test");
 		}
 
 		task ("And Confirm the description is 'Test Description'") {
-			FrontendDataSetAdmin.assertDataSetViewDescription(key_dataSetViewDescriptionList = "Test Description");
+			DataSetAdmin.assertDataSetViewDescription(key_dataSetViewDescriptionList = "Test Description");
 		}
 	}
 
@@ -314,13 +314,13 @@ definition {
 	@priority = 4
 	test CanCreateViewWithNoDescription {
 		task ("When Clicking add button, And Filling the name with 'View Test', And Clicking the Save button") {
-			FrontendDataSetAdmin.createDataSetView(
+			DataSetAdmin.createDataSetView(
 				description = "",
 				key_name = "View Test");
 		}
 
 		task ("Then Confirm Data set view was created") {
-			FrontendDataSetAdmin.assertDataSetView(key_dataSetViewNameList = "View Test");
+			DataSetAdmin.assertDataSetView(key_dataSetViewNameList = "View Test");
 		}
 	}
 
@@ -328,13 +328,13 @@ definition {
 	@priority = 5
 	test CanDeleteView {
 		task ("When Add a new view") {
-			FrontendDataSetAdmin.createDataSetView(
+			DataSetAdmin.createDataSetView(
 				description = "Description Test",
 				key_name = "View Test");
 		}
 
 		task ("And the user deletes a View created") {
-			FrontendDataSetAdmin.deleteDataSetView(viewName = "View Test");
+			DataSetAdmin.deleteDataSetView(viewName = "View Test");
 		}
 
 		task ("Then Confirm that the Success message should appear") {
@@ -352,7 +352,7 @@ definition {
 	@priority = 5
 	test CanEditOrDeleteView {
 		task ("When go to the View page of the data set created, and click save button") {
-			FrontendDataSetAdmin.createDataSetView(
+			DataSetAdmin.createDataSetView(
 				description = "Description Test",
 				key_name = "View Test");
 		}
@@ -374,22 +374,22 @@ definition {
 	@priority = 5
 	test CanEditView {
 		task ("When go to the View page of the data set created, and click save button") {
-			FrontendDataSetAdmin.createDataSetView(
+			DataSetAdmin.createDataSetView(
 				description = "Description Test",
 				key_name = "View Test");
 		}
 
 		task ("When we edit the name and description of a view ") {
-			FrontendDataSetAdmin.editView(
+			DataSetAdmin.editView(
 				key_newDescription = "Test Description edited",
 				key_newName = "View Test edited",
 				key_oldName = "View Test");
 		}
 
 		task ("Then The data set is present in the Data Sets admin page") {
-			FrontendDataSetAdmin.assertDataSetView(key_dataSetViewNameList = "View Test edited");
+			DataSetAdmin.assertDataSetView(key_dataSetViewNameList = "View Test edited");
 
-			FrontendDataSetAdmin.assertDataSetViewDescription(key_dataSetViewDescriptionList = "Test Description edited");
+			DataSetAdmin.assertDataSetViewDescription(key_dataSetViewDescriptionList = "Test Description edited");
 		}
 	}
 
@@ -397,13 +397,13 @@ definition {
 	@priority = 4
 	test CanSearchViewByDescription {
 		task ("When Adding a new view called 'View Test' and the description field with 'Test Description', And Clicking Save button") {
-			FrontendDataSetAdmin.createDataSetView(
+			DataSetAdmin.createDataSetView(
 				description = "Test Description",
 				key_name = "View Test");
 		}
 
 		task ("And Adding a new view called 'Bob Test' and the description field with 'Bob Description'") {
-			FrontendDataSetAdmin.createDataSetView(
+			DataSetAdmin.createDataSetView(
 				description = "Bob Description",
 				key_name = "Bob Test");
 		}
@@ -413,7 +413,7 @@ definition {
 		}
 
 		task ("Then the corresponding view is displayed") {
-			FrontendDataSetAdmin.assertDataSetView(key_dataSetViewNameList = "Bob Test");
+			DataSetAdmin.assertDataSetView(key_dataSetViewNameList = "Bob Test");
 		}
 	}
 
@@ -421,13 +421,13 @@ definition {
 	@priority = 4
 	test CanSearchViewByName {
 		task ("When Adding a new view called 'View Test' and the description field with 'Test Description'") {
-			FrontendDataSetAdmin.createDataSetView(
+			DataSetAdmin.createDataSetView(
 				description = "Test Description",
 				key_name = "View Test");
 		}
 
 		task ("And Adding a new view called 'Bob Test' and the description field with 'Bob Description'") {
-			FrontendDataSetAdmin.createDataSetView(
+			DataSetAdmin.createDataSetView(
 				description = "Bob Description",
 				key_name = "Bob Test");
 		}
@@ -447,7 +447,7 @@ definition {
 	@priority = 5
 	test CanUpdateNumberOfViews {
 		task ("When Add a new view") {
-			FrontendDataSetAdmin.createDataSetView(
+			DataSetAdmin.createDataSetView(
 				description = "Description Test",
 				key_name = "View Test");
 		}
@@ -471,7 +471,7 @@ definition {
 		}
 
 		task ("And the user deletes a View created") {
-			FrontendDataSetAdmin.deleteDataSetViewViaAPI(dataSetViewsNameList = "View Test");
+			DataSetAdmin.deleteDataSetViewViaAPI(dataSetViewsNameList = "View Test");
 		}
 
 		task ("And back to the Data Sets admin page") {
@@ -489,17 +489,17 @@ definition {
 	@priority = 4
 	test CanUseSpecialCharactersInNameField {
 		task ("When Clicking add button, and Filling the Name field with, and Clicking Save button") {
-			FrontendDataSetAdmin.createDataSetView(
+			DataSetAdmin.createDataSetView(
 				description = "Test Description",
 				key_name = "View ~!@#$%^&*(){}[].<>/? name");
 		}
 
 		task ("And Confirm the view name in View page as expected") {
-			FrontendDataSetAdmin.assertDataSetView(key_dataSetViewNameList = "View ~!@#$%^&*(){}[].<>/? name");
+			DataSetAdmin.assertDataSetView(key_dataSetViewNameList = "View ~!@#$%^&*(){}[].<>/? name");
 		}
 
 		task ("And Then Confirm the description is 'Test Description'") {
-			FrontendDataSetAdmin.assertDataSetViewDescription(key_dataSetViewDescriptionList = "Test Description");
+			DataSetAdmin.assertDataSetViewDescription(key_dataSetViewDescriptionList = "Test Description");
 		}
 	}
 

@@ -14,9 +14,9 @@ definition {
 		User.firstLoginPG();
 
 		task ("When Create a DataSet ") {
-			FrontendDataSetAdmin.goToDataSetsAdminPage();
+			DataSetAdmin.goToDataSetAdminPage();
 
-			FrontendDataSetAdmin.createDataSet(
+			DataSetAdmin.createDataSet(
 				key_name = "Test Data Set",
 				key_type = "/c/fdssorts");
 
@@ -24,17 +24,17 @@ definition {
 		}
 
 		task ("When go to the View page of the data set created.") {
-			FrontendDataSetAdmin.goToViews(dataSetName = "Test Data Set");
+			DataSetAdmin.goToViews(dataSetName = "Test Data Set");
 		}
 
 		task ("And adding a data set view") {
-			FrontendDataSetAdmin.createDataSetView(
+			DataSetAdmin.createDataSetView(
 				description = "View Description",
 				key_name = "View Test");
 		}
 
 		task ("When the user accesses the sorting tab") {
-			FrontendDataSetAdmin.goToTab(
+			DataSetAdmin.goToTab(
 				dataSetViewName = "View Test",
 				tabName = "Sorting");
 		}
@@ -43,9 +43,9 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		FrontendDataSetAdmin.deleteAllDataSetViews();
+		DataSetAdmin.deleteAllDataSetViews();
 
-		FrontendDataSetAdmin.deleteAllDataSetEntries();
+		DataSetAdmin.deleteAllDataSetEntries();
 
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
@@ -96,7 +96,7 @@ definition {
 	@priority = 3
 	test CanCreateDefaultSort {
 		task ("And adding a new default sort ") {
-			FrontendDataSetAdmin.createASort(
+			DataSetAdmin.createASort(
 				key_field = "creator",
 				key_sorting = "Descending");
 		}
@@ -126,7 +126,7 @@ definition {
 	@priority = 4
 	test CanSearchSortingInSearchBar {
 		task ("And adding a new default sort/the fields are selected ") {
-			FrontendDataSetAdmin.createASort(
+			DataSetAdmin.createASort(
 				key_field = "creator",
 				key_sorting = "Descending");
 		}
@@ -136,7 +136,7 @@ definition {
 				locator1 = "AppBuilder#SEARCH_BAR_INPUT",
 				value1 = "creator");
 
-			FrontendDataSetAdmin.assertFieldsOnTable(
+			DataSetAdmin.assertFieldsOnTable(
 				key_position = 1,
 				keyName = "creator");
 		}

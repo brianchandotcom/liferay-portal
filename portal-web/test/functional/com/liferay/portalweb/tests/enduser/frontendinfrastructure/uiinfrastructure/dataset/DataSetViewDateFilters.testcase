@@ -14,9 +14,9 @@ definition {
 		User.firstLoginPG();
 
 		task ("Given the creation of a new data set") {
-			FrontendDataSetAdmin.goToDataSetAdminPage();
+			DataSetAdmin.goToDataSetAdminPage();
 
-			JSONFrontendDataSetEntries._createDataSetEntry(
+			JSONDataSet._createDataSetEntry(
 				dataSetName = "Data Set Fields Test",
 				restApplication = "/headless-admin-taxonomy/v1.0",
 				restEndpoint = "/v1.0/keywords/ranked",
@@ -24,27 +24,27 @@ definition {
 		}
 
 		task ("And adding a data set view") {
-			JSONFrontendDataSetEntries._createFDSViewViaAPI(
+			JSONDataSet._createFDSViewViaAPI(
 				dataSetName = "Data Set Fields Test",
 				dataSetViewDescription = "FDSViewDescription",
 				dataSetViewName = "View Fields Test");
 		}
 
 		task ("When go to the View page of the data set created.") {
-			FrontendDataSetAdmin.goToSpecificViewPage(
+			DataSetAdmin.goToSpecificViewPage(
 				dataSetName = "Data Set Fields Test",
 				key_viewName = "View Fields Test");
 		}
 
 		task ("When the user accesses the Filters tab") {
-			FrontendDataSetAdmin.goToTab(tabName = "Filters");
+			DataSetAdmin.goToTab(tabName = "Filters");
 		}
 	}
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		FrontendDataSetAdmin.deleteAllDataSetEntries();
+		DataSetAdmin.deleteAllDataSetEntries();
 
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();

@@ -17,7 +17,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		FrontendDataSetAdmin.deleteAllDataSetEntries();
+		DataSetAdmin.deleteAllDataSetEntries();
 
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
@@ -28,15 +28,15 @@ definition {
 	@priority = 5
 	test CanCreateDataSetEntryViaAPI {
 		task ("Given creating a Data Set via API") {
-			FrontendDataSetAdmin.goToDataSetsAdminPage();
+			DataSetAdmin.goToDataSetAdminPage();
 
-			FrontendDataSetAdmin.createDataSetEntryViaAPI(
+			DataSetAdmin.createDataSetEntryViaAPI(
 				dataSetName = "Data Set Test",
 				restApplication = "/c/fdsentries");
 		}
 
 		task ("and given access to the Data Sets admin page") {
-			FrontendDataSetAdmin.goToDataSetsAdminPage();
+			DataSetAdmin.goToDataSetAdminPage();
 
 			WaitForElementPresent(
 				key_itemName = "Data Set Test",
@@ -54,26 +54,26 @@ definition {
 	@priority = 4
 	test CanCreateViewsThroughAPI {
 		task ("Given creating a Data Set via API") {
-			FrontendDataSetAdmin.goToDataSetsAdminPage();
+			DataSetAdmin.goToDataSetAdminPage();
 
-			FrontendDataSetAdmin.createDataSetEntryViaAPI(
+			DataSetAdmin.createDataSetEntryViaAPI(
 				dataSetName = "Data Set Test",
 				restApplication = "/c/fdsentries");
 		}
 
 		task ("And a data set view created via api") {
-			FrontendDataSetAdmin.createFDSViewViaAPI(
+			DataSetAdmin.createFDSViewViaAPI(
 				dataSetName = "Data Set Test",
 				dataSetViewDescription = "FDSViewDescription",
 				key_dataSetViewNameList = "View Test");
 		}
 
 		task ("When access to View page of the data set created.") {
-			FrontendDataSetAdmin.goToDataSetViewAdminPage(dataSetName = "Data Set Test");
+			DataSetAdmin.goToDataSetViewAdminPage(dataSetName = "Data Set Test");
 		}
 
 		task ("Then Confirm the data set view was created.") {
-			FrontendDataSetAdmin.assertDataSetView(key_dataSetViewNameList = "View Test");
+			DataSetAdmin.assertDataSetView(key_dataSetViewNameList = "View Test");
 		}
 	}
 

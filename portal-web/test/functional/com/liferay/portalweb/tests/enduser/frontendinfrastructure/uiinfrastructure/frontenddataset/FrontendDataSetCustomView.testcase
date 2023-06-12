@@ -50,15 +50,15 @@ definition {
 	@priority = 5
 	test CanBeDeleted {
 		task ("Given A custom view is created") {
-			FDSCustomView.createNewView(key_nameView = "New View");
+			FrontendDataSetCustomView.createNewView(key_nameView = "New View");
 		}
 
 		task ("When Deleting the custom view") {
-			FDSCustomView.deleteView();
+			FrontendDataSetCustomView.deleteView();
 		}
 
 		task ("Then Assert the custom view no longer exists") {
-			FDSCustomView.assertCustomViewName(key_nameCustomView = "New View");
+			FrontendDataSetCustomView.assertCustomViewName(key_nameCustomView = "New View");
 		}
 	}
 
@@ -66,36 +66,36 @@ definition {
 	@priority = 4
 	test CanBeEdited {
 		task ("And Given a custom view is created and selected") {
-			FDSCustomView.createNewView(key_nameView = "New View");
+			FrontendDataSetCustomView.createNewView(key_nameView = "New View");
 		}
 
 		task ("When make edits to the view settings") {
-			FDSCustomView.selectColumn(key_itemName = "Description");
+			FrontendDataSetCustomView.selectColumn(key_itemName = "Description");
 
-			FDSFilters.editFilters(
+			FrontendDataSetFilters.editFilters(
 				key_disableFilters = "Blue",
 				key_enableFilters = "Red",
 				key_filter = "Color");
 		}
 
 		task ("And When save the custom view") {
-			FDSCustomView.saveCustomView();
+			FrontendDataSetCustomView.saveCustomView();
 		}
 
 		task ("Then the view settings are applied to current custom view") {
-			FDSCustomView.assertColumnNotPresent(key_field = "Description");
+			FrontendDataSetCustomView.assertColumnNotPresent(key_field = "Description");
 
-			FDSCustomView.assertFilterSummaryLabel(key_filter = "Green, Yellow, Red");
+			FrontendDataSetCustomView.assertFilterSummaryLabel(key_filter = "Green, Yellow, Red");
 		}
 
 		task ("And Then edits are not applied to default view") {
 			Click(locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW");
 
-			FDSCustomView.selectView(key_itemName = "Default View");
+			FrontendDataSetCustomView.selectView(key_itemName = "Default View");
 
-			FDSCustomView.assertColumnPresent(key_field = "Description");
+			FrontendDataSetCustomView.assertColumnPresent(key_field = "Description");
 
-			FDSCustomView.assertFilterSummaryLabel(key_filter = "Blue, Green, Yellow");
+			FrontendDataSetCustomView.assertFilterSummaryLabel(key_filter = "Blue, Green, Yellow");
 		}
 	}
 
@@ -103,7 +103,7 @@ definition {
 	@priority = 4
 	test CanBeSaved {
 		task ("When Make some changes to data set display") {
-			FDSFilters.editFilters(
+			FrontendDataSetFilters.editFilters(
 				key_disableFilters = "Blue,Green,Yellow",
 				key_enableFilters = "Red",
 				key_filter = "Color");
@@ -124,7 +124,7 @@ definition {
 		}
 
 		task ("And When Save As the custom view") {
-			FDSCustomView.createNewView(entryName = "TEST");
+			FrontendDataSetCustomView.createNewView(entryName = "TEST");
 
 			Click(locator1 = "FrontendDataSet#SELECT_OPTION_HEADER");
 
@@ -136,7 +136,7 @@ definition {
 		task ("Then A new custom view is created and selected as current view") {
 			Click(locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW");
 
-			FDSCustomView.selectView(key_itemName = "Default View");
+			FrontendDataSetCustomView.selectView(key_itemName = "Default View");
 
 			AssertElementPresent(
 				columnName = "Description",
@@ -144,7 +144,7 @@ definition {
 
 			Click(locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW");
 
-			FDSCustomView.selectView(key_itemName = "TEST");
+			FrontendDataSetCustomView.selectView(key_itemName = "TEST");
 
 			AssertElementNotPresent(
 				key_columnName = "Description",
@@ -162,12 +162,12 @@ definition {
 		}
 
 		task ("And Given a created customized view") {
-			FDSFilters.editFilters(
+			FrontendDataSetFilters.editFilters(
 				key_disableFilters = "Blue,Green,Yellow",
 				key_enableFilters = "Red",
 				key_filter = "Color");
 
-			FDSCustomView.createNewView(entryName = "Custom View Name");
+			FrontendDataSetCustomView.createNewView(entryName = "Custom View Name");
 		}
 
 		task ("When open menu to select created custom view") {
@@ -191,11 +191,11 @@ definition {
 	@priority = 4
 	test CanCreateMultiple {
 		task ("And Given A custom view is created and selected") {
-			FDSCustomView.createNewView(entryName = "FrontendDataSet View");
+			FrontendDataSetCustomView.createNewView(entryName = "FrontendDataSet View");
 		}
 
 		task ("When Make some changes to data set display (filter, sorting, page size or visible columns if data display in table)") {
-			FDSFilters.editFilters(
+			FrontendDataSetFilters.editFilters(
 				key_disableFilters = "Blue,Green,Yellow",
 				key_enableFilters = "Red",
 				key_filter = "Color");
@@ -208,33 +208,33 @@ definition {
 				key_text = "order-arrow-down",
 				locator1 = "Icon#ANY");
 
-			FDSCustomView.selectColumn(key_itemName = "Description");
+			FrontendDataSetCustomView.selectColumn(key_itemName = "Description");
 
 			Pagination.changePagination(itemsPerPage = "4 Items");
 		}
 
 		task ("And Click Save as button, provide a name") {
-			FDSCustomView.createNewView(entryName = "FrontendDataSet View 2");
+			FrontendDataSetCustomView.createNewView(entryName = "FrontendDataSet View 2");
 		}
 
 		task ("Then A new custom view is created, and selected as current view") {
-			FDSCustomView.assertCustomViewName(key_nameCustomView = "FrontendDataSet View 2");
+			FrontendDataSetCustomView.assertCustomViewName(key_nameCustomView = "FrontendDataSet View 2");
 
-			FDSCustomView.changeCustomView(key_itemName = "FrontendDataSet View");
+			FrontendDataSetCustomView.changeCustomView(key_itemName = "FrontendDataSet View");
 
-			FDSCustomView.assertFilterSummaryLabel(key_filter = "Color: Blue, Green, Yellow");
+			FrontendDataSetCustomView.assertFilterSummaryLabel(key_filter = "Color: Blue, Green, Yellow");
 
-			FDSCustomView.assertColumnPresent(key_field = "Description");
+			FrontendDataSetCustomView.assertColumnPresent(key_field = "Description");
 
-			FDSCustomView.changeCustomView(key_itemName = "FrontendDataSet View 2");
+			FrontendDataSetCustomView.changeCustomView(key_itemName = "FrontendDataSet View 2");
 
 			Pagination.viewResults(results = "Showing 1 to 4 of 25 entries.");
 
-			FDSCustomView.assertFilterSummaryLabel(key_filter = "Color: Red");
+			FrontendDataSetCustomView.assertFilterSummaryLabel(key_filter = "Color: Red");
 
-			FDSCustomView.assertColumnNotPresent(key_field = "Description");
+			FrontendDataSetCustomView.assertColumnNotPresent(key_field = "Description");
 
-			FDSCustomView.compareValue(
+			FrontendDataSetCustomView.compareValue(
 				key_columnIndex = 2,
 				key_valueIndex1 = 1,
 				key_valueIndex2 = 2);
@@ -245,11 +245,11 @@ definition {
 	@priority = 4
 	test CanUpdateName {
 		task ("And Given created custom view") {
-			FDSCustomView.createNewView(entryName = "TEST");
+			FrontendDataSetCustomView.createNewView(entryName = "TEST");
 		}
 
 		task ("When edit custom view name") {
-			FDSCustomView.editCurrentViewName(entryName = "Edit View Name");
+			FrontendDataSetCustomView.editCurrentViewName(entryName = "Edit View Name");
 		}
 
 		task ("Then name of custom view is updated in select custom view") {
@@ -263,7 +263,7 @@ definition {
 	@priority = 3
 	test HasActionsOnlyOnEllipsis {
 		task ("And Given created custom view") {
-			FDSCustomView.createNewView(key_nameView = "New View");
+			FrontendDataSetCustomView.createNewView(key_nameView = "New View");
 		}
 
 		task ("When open ellipsis next to custom view") {
@@ -271,13 +271,13 @@ definition {
 		}
 
 		task ("Then actions to save and delete views are available in dropdown menu") {
-			FDSCustomView.assertMenuItem(key_menuItem = "Save View");
+			FrontendDataSetCustomView.assertMenuItem(key_menuItem = "Save View");
 
-			FDSCustomView.assertMenuItem(key_menuItem = "Delete View");
+			FrontendDataSetCustomView.assertMenuItem(key_menuItem = "Delete View");
 		}
 
 		task ("When open select custom view button") {
-			FDSCustomView.changeCustomView(key_itemName = "Default View");
+			FrontendDataSetCustomView.changeCustomView(key_itemName = "Default View");
 
 			Click(locator1 = "FrontendDataSet#SELECT_OPTION_HEADER");
 		}
@@ -297,7 +297,7 @@ definition {
 	@priority = 4
 	test HasOptionToEditName {
 		task ("And Given created custom view") {
-			FDSCustomView.createNewView(key_nameView = "TEST");
+			FrontendDataSetCustomView.createNewView(key_nameView = "TEST");
 		}
 
 		task ("When open ellisis next to custom view") {

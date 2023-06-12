@@ -868,7 +868,7 @@ definition {
 		}
 
 		task ("Then Modified Date column is present") {
-			FDSCustomView.assertColumnPresent(key_field = "Modified Date");
+			FrontendDataSetCustomView.assertColumnPresent(key_field = "Modified Date");
 		}
 
 		task ("And Then showing Label 'UI' is present") {

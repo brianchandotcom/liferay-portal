@@ -14,25 +14,25 @@ definition {
 		User.firstLoginPG();
 
 		task ("Given access to the Data Sets admin page") {
-			FrontendDataSetAdmin.goToDataSetsAdminPage();
+			DataSetAdmin.goToDataSetAdminPage();
 		}
 
 		task ("The user goes to add a new data set") {
-			FrontendDataSetAdmin.createDataSet(
+			DataSetAdmin.createDataSet(
 				key_name = "Test Data Set",
 				key_type = "/c/fdsentries");
 		}
 
 		task ("Add a new view") {
-			FrontendDataSetAdmin.goToViews(dataSetName = "Test Data Set");
+			DataSetAdmin.goToViews(dataSetName = "Test Data Set");
 
-			FrontendDataSetAdmin.createDataSetView(
+			DataSetAdmin.createDataSetView(
 				description = "Test Description",
 				key_name = "View Test");
 		}
 
 		task ("When goes to Pagination Tab") {
-			FrontendDataSetAdmin.goToTab(
+			DataSetAdmin.goToTab(
 				dataSetViewName = "View Test",
 				tabName = "Pagination");
 		}
@@ -41,7 +41,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		FrontendDataSetAdmin.deleteAllDataSetEntries();
+		DataSetAdmin.deleteAllDataSetEntries();
 
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
@@ -52,9 +52,9 @@ definition {
 	@priority = 4
 	test CanAssertDefaultValueIsRequired {
 		task ("And the user leaves the field Default Value empty") {
-			FrontendDataSetAdmin.changePaginationDefaultItems(defaultPagination = "");
+			DataSetAdmin.changePaginationDefaultItems(defaultPagination = "");
 
-			FrontendDataSetAdmin.goToTab(tabName = "Pagination");
+			DataSetAdmin.goToTab(tabName = "Pagination");
 		}
 
 		task ("Assert Save button is disabled") {
@@ -70,7 +70,7 @@ definition {
 		task ("And the field will be populated with the default value for Default value: 20	") {
 			Refresh();
 
-			FrontendDataSetAdmin.goToTab(tabName = "Pagination");
+			DataSetAdmin.goToTab(tabName = "Pagination");
 
 			AssertElementPresent(
 				key_fieldValue = 20,
@@ -98,11 +98,11 @@ definition {
 	@priority = 5
 	test CanCancelPaginationCreationOnCancelButton {
 		task ("And the user fills in the pagination items field") {
-			FrontendDataSetAdmin.changePaginationItems(paginationItems = "10, 20, 30, 40");
+			DataSetAdmin.changePaginationItems(paginationItems = "10, 20, 30, 40");
 		}
 
 		task ("And fills the default value field") {
-			FrontendDataSetAdmin.changePaginationDefaultItems(defaultPagination = 10);
+			DataSetAdmin.changePaginationDefaultItems(defaultPagination = 10);
 		}
 
 		task ("And Click on the Cancel button") {
@@ -114,7 +114,7 @@ definition {
 		}
 
 		task ("And the items set are not saved") {
-			FrontendDataSetAdmin.goToTab(
+			DataSetAdmin.goToTab(
 				dataSetViewName = "View Test",
 				tabName = "Pagination");
 
@@ -133,11 +133,11 @@ definition {
 	@priority = 5
 	test CanCreatePagination {
 		task ("And the user fills in the pagination items field") {
-			FrontendDataSetAdmin.changePaginationItems(paginationItems = "10, 20, 30, 40");
+			DataSetAdmin.changePaginationItems(paginationItems = "10, 20, 30, 40");
 		}
 
 		task ("And fills the default value field") {
-			FrontendDataSetAdmin.changePaginationDefaultItems(defaultPagination = 10);
+			DataSetAdmin.changePaginationDefaultItems(defaultPagination = 10);
 		}
 
 		task ("And saves") {
@@ -153,13 +153,13 @@ definition {
 	@priority = 5
 	test CanCreateWithOnePaginationItem {
 		task ("Only one item is written in the pagination items") {
-			FrontendDataSetAdmin.changePaginationItems(paginationItems = 10);
+			DataSetAdmin.changePaginationItems(paginationItems = 10);
 		}
 
 		task ("The same item is placed in the default value field") {
-			FrontendDataSetAdmin.changePaginationDefaultItems(defaultPagination = 10);
+			DataSetAdmin.changePaginationDefaultItems(defaultPagination = 10);
 
-			FrontendDataSetAdmin.goToTab(tabName = "Pagination");
+			DataSetAdmin.goToTab(tabName = "Pagination");
 		}
 
 		task ("Saves") {
@@ -175,13 +175,13 @@ definition {
 	@priority = 5
 	test CannotExceed25PaginationItems {
 		task ("The user writes 26 items in the pagination items field //Pagination Items: 1,2,3,…,26") {
-			FrontendDataSetAdmin.changePaginationItems(paginationItems = "1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26");
+			DataSetAdmin.changePaginationItems(paginationItems = "1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26");
 		}
 
 		task ("Fills the default value field") {
-			FrontendDataSetAdmin.changePaginationDefaultItems(defaultPagination = 10);
+			DataSetAdmin.changePaginationDefaultItems(defaultPagination = 10);
 
-			FrontendDataSetAdmin.goToTab(tabName = "Pagination");
+			DataSetAdmin.goToTab(tabName = "Pagination");
 		}
 
 		task ("Assert Save button is disabled") {
@@ -199,13 +199,13 @@ definition {
 	@priority = 5
 	test CannotExceed1000ItemsPerPage {
 		task ("The user fills the pagination items field") {
-			FrontendDataSetAdmin.changePaginationItems(paginationItems = "10, 100, 1000, 1001");
+			DataSetAdmin.changePaginationItems(paginationItems = "10, 100, 1000, 1001");
 		}
 
 		task ("Fills the default value field") {
-			FrontendDataSetAdmin.changePaginationDefaultItems(defaultPagination = 1001);
+			DataSetAdmin.changePaginationDefaultItems(defaultPagination = 1001);
 
-			FrontendDataSetAdmin.goToTab(tabName = "Pagination");
+			DataSetAdmin.goToTab(tabName = "Pagination");
 		}
 
 		task ("Assert Save button is disabled") {
@@ -223,9 +223,9 @@ definition {
 	@priority = 4
 	test CannotUseCharactersInDefaultValueField {
 		task ("The user fills in the default value field some characters") {
-			FrontendDataSetAdmin.changePaginationDefaultItems(defaultPagination = "a");
+			DataSetAdmin.changePaginationDefaultItems(defaultPagination = "a");
 
-			FrontendDataSetAdmin.goToTab(tabName = "Pagination");
+			DataSetAdmin.goToTab(tabName = "Pagination");
 		}
 
 		task ("Then the user is not allowed to type characters in the Default value field") {
@@ -248,13 +248,13 @@ definition {
 	@priority = 4
 	test DefaultValueCannotDivergeFromPaginationItems {
 		task ("And the user fills the pagination items field") {
-			FrontendDataSetAdmin.changePaginationItems(paginationItems = "10, 20, 30, 40");
+			DataSetAdmin.changePaginationItems(paginationItems = "10, 20, 30, 40");
 		}
 
 		task ("And fills the default value field with a different number of one of the numbers written in the Pagination items field") {
-			FrontendDataSetAdmin.changePaginationDefaultItems(defaultPagination = 4);
+			DataSetAdmin.changePaginationDefaultItems(defaultPagination = 4);
 
-			FrontendDataSetAdmin.goToTab(tabName = "Pagination");
+			DataSetAdmin.goToTab(tabName = "Pagination");
 		}
 
 		task ("Assert Save button is disabled") {
@@ -272,9 +272,9 @@ definition {
 	@priority = 5
 	test ErrorAppearsWhenPaginationItemBlank {
 		task ("The user leaves the field Pagination Items empty") {
-			FrontendDataSetAdmin.changePaginationItems(paginationItems = "");
+			DataSetAdmin.changePaginationItems(paginationItems = "");
 
-			FrontendDataSetAdmin.goToTab(tabName = "Pagination");
+			DataSetAdmin.goToTab(tabName = "Pagination");
 		}
 
 		task ("Assert Save button is disabled") {
@@ -290,7 +290,7 @@ definition {
 		task ("The field will be populated with the default values for Pagination items 4, 8, 20, 40, 60, separated by commas") {
 			Refresh();
 
-			FrontendDataSetAdmin.goToTab(tabName = "Pagination");
+			DataSetAdmin.goToTab(tabName = "Pagination");
 
 			AssertElementPresent(
 				key_fieldValue = "4, 8, 20, 40, 60",

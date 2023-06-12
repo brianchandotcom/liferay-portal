@@ -2115,7 +2115,7 @@ definition {
 		}
 
 		task ("When the admin searches for specific filters") {
-			FDSFilters.searchFilter(searchTerm = "Type");
+			FrontendDataSetFilters.searchFilter(searchTerm = "Type");
 		}
 
 		task ("Then only the matching results are shown in the list") {

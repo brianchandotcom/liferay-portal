@@ -91,7 +91,7 @@ definition {
 		}
 
 		task ("Then quick action menu is not visible") {
-			FDSQuickActions.viewQuickActionMenuNotPresent(title = "Sample1");
+			FrontendDataSetQuickActions.viewQuickActionMenuNotPresent(title = "Sample1");
 		}
 	}
 
@@ -99,7 +99,7 @@ definition {
 	@priority = 5
 	test CanDisplayOnHover {
 		task ("Then the quick action menu is displayed on the 1st line") {
-			FDSQuickActions.viewQuickActionMenuPresent(title = "Sample1");
+			FrontendDataSetQuickActions.viewQuickActionMenuPresent(title = "Sample1");
 		}
 	}
 
@@ -113,7 +113,7 @@ definition {
 		}
 
 		task ("Then the quick action menu is displayed on the 2nd row") {
-			FDSQuickActions.viewQuickActionMenuPresent(title = "Sample3");
+			FrontendDataSetQuickActions.viewQuickActionMenuPresent(title = "Sample3");
 		}
 
 		task ("When hovering over the 1st row item") {
@@ -123,13 +123,13 @@ definition {
 		}
 
 		task ("Then the quick action menu is displayed on the 1st row") {
-			FDSQuickActions.viewQuickActionMenuPresent(title = "Sample1");
+			FrontendDataSetQuickActions.viewQuickActionMenuPresent(title = "Sample1");
 		}
 
 		// This test is being ignored due to bug that doesn't display multiple quick actions in LPS-157838.
 
 		task ("And Then the quick action menu is displayed on the 2nd row") {
-			FDSQuickActions.viewQuickActionMenuPresent(title = "Sample3");
+			FrontendDataSetQuickActions.viewQuickActionMenuPresent(title = "Sample3");
 		}
 	}
 
@@ -143,11 +143,11 @@ definition {
 		}
 
 		task ("Then quick action menu is displayed on the 3rd row") {
-			FDSQuickActions.viewQuickActionMenuPresent(title = "Sample3");
+			FrontendDataSetQuickActions.viewQuickActionMenuPresent(title = "Sample3");
 		}
 
 		task ("Then quick action menu is not displayed on 1st row") {
-			FDSQuickActions.viewQuickActionMenuNotPresent(title = "Sample1");
+			FrontendDataSetQuickActions.viewQuickActionMenuNotPresent(title = "Sample1");
 		}
 	}
 
@@ -207,7 +207,7 @@ definition {
 		}
 
 		task ("Then the quick action icons are not visible") {
-			FDSQuickActions.viewQuickActionMenuNotPresent(title = "Sample1");
+			FrontendDataSetQuickActions.viewQuickActionMenuNotPresent(title = "Sample1");
 		}
 	}
 

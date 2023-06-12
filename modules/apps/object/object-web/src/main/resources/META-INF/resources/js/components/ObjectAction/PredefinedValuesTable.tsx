@@ -264,7 +264,9 @@ export default function PredefinedValuesTable({
 					getLocalizableLabel(creationLanguageId, label, name),
 				getName: ({name}: ObjectField) => name,
 				header: Liferay.Language.get('add-fields'),
-				items: currentObjectDefinitionFields,
+				items: currentObjectDefinitionFields.filter(
+					({localized}) => !localized
+				),
 				onSave: (items: ObjectField[]) => {
 					const predefinedValuesMap = new Map<
 						string,

@@ -94,7 +94,6 @@ public class UpgradeGroup extends UpgradeProcess {
 
 						preparedStatement3.setLong(1, parentGroupId);
 						preparedStatement3.setString(2, treePath);
-
 						preparedStatement3.setLong(3, groupId);
 
 						preparedStatement3.addBatch();

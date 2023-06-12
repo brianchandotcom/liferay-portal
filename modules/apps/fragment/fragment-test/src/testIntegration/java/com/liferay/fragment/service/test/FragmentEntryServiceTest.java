@@ -451,14 +451,89 @@ public class FragmentEntryServiceTest {
 	public void testFetchFragmentEntry() throws Exception {
 		String name = RandomTestUtil.randomString();
 
-		FragmentEntry fragmentEntry = FragmentEntryTestUtil.addFragmentEntry(
-			_fragmentCollection.getFragmentCollectionId(), name);
+		FragmentEntry fragmentEntry = _createFragment(name);
 
 		FragmentEntry persistedFragmentEntry =
 			_fragmentEntryService.fetchFragmentEntry(
 				fragmentEntry.getFragmentEntryId());
 
 		Assert.assertEquals(name, persistedFragmentEntry.getName());
+	}
+
+	@Test
+	public void testGetFragmentCompositionsAndFragmentEntries()
+		throws Exception {
+
+		String keyword = "fragmentCompositionName";
+
+		FragmentComposition fragmentComposition1 = _createFragmentComposition(
+			RandomTestUtil.randomString() + keyword);
+		FragmentComposition fragmentComposition2 = _createFragmentComposition(
+			RandomTestUtil.randomString() + keyword +
+				RandomTestUtil.randomString());
+		FragmentComposition fragmentComposition3 = _createFragmentComposition(
+			keyword + RandomTestUtil.randomString());
+
+		FragmentEntry fragmentEntry1 = _createFragment(
+			RandomTestUtil.randomString() + keyword);
+		FragmentEntry fragmentEntry2 = _createFragment(
+			RandomTestUtil.randomString() + keyword +
+				RandomTestUtil.randomString());
+		FragmentEntry fragmentEntry3 = _createFragment(
+			keyword + RandomTestUtil.randomString());
+
+		List<Object> list =
+			_fragmentEntryService.getFragmentCompositionsAndFragmentEntries(
+				_fragmentCollection.getGroupId(),
+				_fragmentCollection.getFragmentCollectionId(),
+				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+
+		Assert.assertEquals(list.toString(), 6, list.size());
+
+		List<FragmentComposition> fragmentCompositions = new ArrayList<>();
+		List<FragmentEntry> fragmentEntries = new ArrayList<>();
+
+		for (Object object : list) {
+			if (object instanceof FragmentComposition) {
+				FragmentComposition fragmentComposition =
+					(FragmentComposition)object;
+
+				Assert.assertTrue(
+					Objects.equals(
+						fragmentComposition.getFragmentCompositionId(),
+						fragmentComposition1.getFragmentCompositionId()) ||
+					Objects.equals(
+						fragmentComposition.getFragmentCompositionId(),
+						fragmentComposition2.getFragmentCompositionId()) ||
+					Objects.equals(
+						fragmentComposition.getFragmentCompositionId(),
+						fragmentComposition3.getFragmentCompositionId()));
+
+				fragmentCompositions.add(fragmentComposition);
+			}
+			else {
+				FragmentEntry fragmentEntry = (FragmentEntry)object;
+
+				Assert.assertTrue(
+					Objects.equals(
+						fragmentEntry.getFragmentEntryId(),
+						fragmentEntry1.getFragmentEntryId()) ||
+					Objects.equals(
+						fragmentEntry.getFragmentEntryId(),
+						fragmentEntry2.getFragmentEntryId()) ||
+					Objects.equals(
+						fragmentEntry.getFragmentEntryId(),
+						fragmentEntry3.getFragmentEntryId()));
+
+				fragmentEntries.add(fragmentEntry);
+			}
+		}
+
+		Assert.assertEquals(
+			fragmentCompositions.toString(), 3, fragmentCompositions.size());
+		Assert.assertEquals(
+			fragmentEntries.toString(), 3, fragmentEntries.size());
 	}
 
 	@Test
@@ -499,34 +574,211 @@ public class FragmentEntryServiceTest {
 			_fragmentCollection.getFragmentCollectionId(),
 			RandomTestUtil.randomString());
 
-		FragmentEntryTestUtil.addFragmentEntry(
-			_fragmentCollection.getFragmentCollectionId(),
-			RandomTestUtil.randomString());
+		_createFragment(RandomTestUtil.randomString());
 
-		FragmentEntry fragmentEntry1 = FragmentEntryTestUtil.addFragmentEntry(
-			_fragmentCollection.getFragmentCollectionId(),
+		FragmentEntry fragmentEntry1 = _createFragment(
 			RandomTestUtil.randomString() + keyword);
 
-		FragmentEntryTestUtil.addFragmentEntry(
-			_fragmentCollection.getFragmentCollectionId(),
-			RandomTestUtil.randomString());
+		_createFragment(RandomTestUtil.randomString());
 
-		FragmentEntry fragmentEntry2 = FragmentEntryTestUtil.addFragmentEntry(
-			_fragmentCollection.getFragmentCollectionId(),
+		FragmentEntry fragmentEntry2 = _createFragment(
 			RandomTestUtil.randomString() + keyword +
 				RandomTestUtil.randomString());
 
-		FragmentEntryTestUtil.addFragmentEntry(
-			_fragmentCollection.getFragmentCollectionId(),
-			RandomTestUtil.randomString());
+		_createFragment(RandomTestUtil.randomString());
 
-		FragmentEntry fragmentEntry3 = FragmentEntryTestUtil.addFragmentEntry(
-			_fragmentCollection.getFragmentCollectionId(),
+		FragmentEntry fragmentEntry3 = _createFragment(
 			keyword + RandomTestUtil.randomString());
 
-		FragmentEntryTestUtil.addFragmentEntry(
+		_createFragment(RandomTestUtil.randomString());
+
+		List<Object> list =
+			_fragmentEntryService.getFragmentCompositionsAndFragmentEntries(
+				_fragmentCollection.getGroupId(),
+				_fragmentCollection.getFragmentCollectionId(), keyword,
+				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+
+		Assert.assertEquals(list.toString(), 6, list.size());
+
+		List<FragmentComposition> fragmentCompositions = new ArrayList<>();
+		List<FragmentEntry> fragmentEntries = new ArrayList<>();
+
+		for (Object object : list) {
+			if (object instanceof FragmentComposition) {
+				FragmentComposition fragmentComposition =
+					(FragmentComposition)object;
+
+				Assert.assertTrue(
+					Objects.equals(
+						fragmentComposition.getFragmentCompositionId(),
+						fragmentComposition1.getFragmentCompositionId()) ||
+					Objects.equals(
+						fragmentComposition.getFragmentCompositionId(),
+						fragmentComposition2.getFragmentCompositionId()) ||
+					Objects.equals(
+						fragmentComposition.getFragmentCompositionId(),
+						fragmentComposition3.getFragmentCompositionId()));
+
+				fragmentCompositions.add(fragmentComposition);
+			}
+			else {
+				FragmentEntry fragmentEntry = (FragmentEntry)object;
+
+				Assert.assertTrue(
+					Objects.equals(
+						fragmentEntry.getFragmentEntryId(),
+						fragmentEntry1.getFragmentEntryId()) ||
+					Objects.equals(
+						fragmentEntry.getFragmentEntryId(),
+						fragmentEntry2.getFragmentEntryId()) ||
+					Objects.equals(
+						fragmentEntry.getFragmentEntryId(),
+						fragmentEntry3.getFragmentEntryId()));
+
+				fragmentEntries.add(fragmentEntry);
+			}
+		}
+
+		Assert.assertEquals(
+			fragmentCompositions.toString(), 3, fragmentCompositions.size());
+		Assert.assertEquals(
+			fragmentEntries.toString(), 3, fragmentEntries.size());
+
+		List<Object> lowerCaseList =
+			_fragmentEntryService.getFragmentCompositionsAndFragmentEntries(
+				_fragmentCollection.getGroupId(),
+				_fragmentCollection.getFragmentCollectionId(),
+				StringUtil.toLowerCase(keyword),
+				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+
+		Assert.assertEquals(lowerCaseList.toString(), list, lowerCaseList);
+
+		List<Object> upperCaseList =
+			_fragmentEntryService.getFragmentCompositionsAndFragmentEntries(
+				_fragmentCollection.getGroupId(),
+				_fragmentCollection.getFragmentCollectionId(),
+				StringUtil.toUpperCase(keyword),
+				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+
+		Assert.assertEquals(upperCaseList.toString(), list, upperCaseList);
+	}
+
+	@Test
+	public void testGetFragmentCompositionsAndFragmentEntriesCount()
+		throws Exception {
+
+		_createFragmentComposition(RandomTestUtil.randomString());
+		_createFragmentComposition(RandomTestUtil.randomString());
+		_createFragmentComposition(RandomTestUtil.randomString());
+
+		_createFragment(RandomTestUtil.randomString());
+		_createFragment(RandomTestUtil.randomString());
+
+		Assert.assertEquals(
+			5,
+			_fragmentEntryService.
+				getFragmentCompositionsAndFragmentEntriesCount(
+					_fragmentCollection.getGroupId(),
+					_fragmentCollection.getFragmentCollectionId(),
+					WorkflowConstants.STATUS_APPROVED));
+	}
+
+	@Test
+	public void testGetFragmentCompositionsAndFragmentEntriesCountWithName()
+		throws Exception {
+
+		String keyword = "fragmentCompositionName";
+
+		FragmentCompositionTestUtil.addFragmentComposition(
 			_fragmentCollection.getFragmentCollectionId(),
 			RandomTestUtil.randomString());
+
+		_createFragmentComposition(keyword);
+		_createFragmentComposition(RandomTestUtil.randomString());
+		_createFragmentComposition(
+			RandomTestUtil.randomString() + keyword +
+				RandomTestUtil.randomString());
+		_createFragmentComposition(RandomTestUtil.randomString());
+		_createFragmentComposition(keyword + RandomTestUtil.randomString());
+		_createFragmentComposition(RandomTestUtil.randomString());
+		_createFragmentComposition(RandomTestUtil.randomString());
+
+		_createFragment(keyword);
+		_createFragment(RandomTestUtil.randomString());
+		_createFragment(
+			RandomTestUtil.randomString() + keyword +
+				RandomTestUtil.randomString());
+		_createFragment(RandomTestUtil.randomString());
+		_createFragment(keyword + RandomTestUtil.randomString());
+		_createFragment(RandomTestUtil.randomString());
+
+		Assert.assertEquals(
+			6,
+			_fragmentEntryService.
+				getFragmentCompositionsAndFragmentEntriesCount(
+					_fragmentCollection.getGroupId(),
+					_fragmentCollection.getFragmentCollectionId(), keyword,
+					WorkflowConstants.STATUS_APPROVED));
+	}
+
+	@Test
+	public void testGetFragmentCompositionsAndFragmentEntriesWithBlanks()
+		throws Exception {
+
+		String keyword = "text with blanks";
+
+		FragmentCompositionTestUtil.addFragmentComposition(
+			_fragmentCollection.getFragmentCollectionId(),
+			RandomTestUtil.randomString());
+
+		FragmentComposition fragmentComposition1 =
+			FragmentCompositionTestUtil.addFragmentComposition(
+				_fragmentCollection.getFragmentCollectionId(),
+				RandomTestUtil.randomString() + keyword);
+
+		FragmentCompositionTestUtil.addFragmentComposition(
+			_fragmentCollection.getFragmentCollectionId(),
+			RandomTestUtil.randomString());
+
+		FragmentComposition fragmentComposition2 =
+			FragmentCompositionTestUtil.addFragmentComposition(
+				_fragmentCollection.getFragmentCollectionId(),
+				RandomTestUtil.randomString() + keyword +
+					RandomTestUtil.randomString());
+
+		FragmentCompositionTestUtil.addFragmentComposition(
+			_fragmentCollection.getFragmentCollectionId(),
+			RandomTestUtil.randomString());
+
+		FragmentComposition fragmentComposition3 =
+			FragmentCompositionTestUtil.addFragmentComposition(
+				_fragmentCollection.getFragmentCollectionId(),
+				keyword + RandomTestUtil.randomString());
+
+		FragmentCompositionTestUtil.addFragmentComposition(
+			_fragmentCollection.getFragmentCollectionId(),
+			RandomTestUtil.randomString());
+
+		_createFragment(RandomTestUtil.randomString());
+
+		FragmentEntry fragmentEntry1 = _createFragment(
+			RandomTestUtil.randomString() + keyword);
+
+		_createFragment(RandomTestUtil.randomString());
+
+		FragmentEntry fragmentEntry2 = _createFragment(
+			RandomTestUtil.randomString() + keyword +
+				RandomTestUtil.randomString());
+
+		_createFragment(RandomTestUtil.randomString());
+
+		FragmentEntry fragmentEntry3 = _createFragment(
+			keyword + RandomTestUtil.randomString());
+
+		_createFragment(RandomTestUtil.randomString());
 
 		List<Object> list =
 			_fragmentEntryService.getFragmentCompositionsAndFragmentEntries(
@@ -798,14 +1050,11 @@ public class FragmentEntryServiceTest {
 	public void testGetFragmentEntriesByNameOrderByNameComparator()
 		throws Exception {
 
-		FragmentEntry fragmentEntry = FragmentEntryTestUtil.addFragmentEntry(
-			_fragmentCollection.getFragmentCollectionId(), "AB Fragment Entry");
+		FragmentEntry fragmentEntry = _createFragment("AB Fragment Entry");
 
-		FragmentEntryTestUtil.addFragmentEntry(
-			_fragmentCollection.getFragmentCollectionId(), "AA Fragment");
+		_createFragment("AA Fragment");
 
-		FragmentEntryTestUtil.addFragmentEntry(
-			_fragmentCollection.getFragmentCollectionId(), "AC Fragment Entry");
+		_createFragment("AC Fragment Entry");
 
 		FragmentEntryNameComparator fragmentEntryNameComparatorAsc =
 			new FragmentEntryNameComparator(true);
@@ -1521,6 +1770,19 @@ public class FragmentEntryServiceTest {
 
 		Assert.assertEquals(
 			fragmentEntry.getType(), copyFragmentEntry.getType());
+	}
+
+	private FragmentEntry _createFragment(String keyword) throws Exception {
+		return FragmentEntryTestUtil.addFragmentEntry(
+			_fragmentCollection.getFragmentCollectionId(), keyword);
+	}
+
+	private FragmentComposition _createFragmentComposition(String keyword)
+		throws Exception {
+
+		return FragmentCompositionTestUtil.addFragmentComposition(
+			_fragmentCollection.getFragmentCollectionId(),
+			RandomTestUtil.randomString() + keyword);
 	}
 
 	private String _read(String fileName) throws Exception {

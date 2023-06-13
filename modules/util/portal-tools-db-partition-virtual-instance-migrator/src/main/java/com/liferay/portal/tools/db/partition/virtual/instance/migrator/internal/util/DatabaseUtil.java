@@ -69,6 +69,7 @@ public class DatabaseUtil {
 
 		return partitionedTableNames;
 	}
+
 	public static List<Release> getReleases(Connection connection)
 		throws SQLException {
 

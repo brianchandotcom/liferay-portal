@@ -38,31 +38,117 @@ import org.mockito.Mockito;
 public class DatabaseUtilTest {
 
 	@Test
-	public void testGetReleasesMapEntry() throws SQLException {
-		Release release = new Release(
-			"module", Version.parseVersion("14.2.4"), true);
+	public void testGetPartitionedTableNames() throws Exception {
+		Mockito.when(
+			_connection.getMetaData()
+		).thenReturn(
+			_databaseMetaData
+		);
 
-		_mockGetReleaseMap(release, true);
+		Mockito.when(
+			_databaseMetaData.getTables(
+				Mockito.nullable(String.class), Mockito.nullable(String.class),
+				Mockito.nullable(String.class), Mockito.any(String[].class))
+		).thenReturn(
+			_resultSet
+		);
 
-		Map<String, Release> releasesMap = DatabaseUtil.getReleasesMap(
+		Mockito.when(
+			_resultSet.next()
+		).thenReturn(
+			true
+		).thenReturn(
+			true
+		).thenReturn(
+			true
+		).thenReturn(
+			false
+		);
+
+		Mockito.when(
+			_resultSet.getString("TABLE_NAME")
+		).thenReturn(
+			"Table1"
+		).thenReturn(
+			"Company"
+		).thenReturn(
+			"Table2"
+		).thenReturn(
+			"Object_x_25000"
+		);
+
+		PreparedStatement preparedStatement1 = Mockito.mock(
+			PreparedStatement.class);
+
+		ResultSet resultSet1 = Mockito.mock(ResultSet.class);
+
+		Mockito.when(
+			_connection.prepareStatement("select companyId from Company")
+		).thenReturn(
+			preparedStatement1
+		);
+
+		Mockito.when(
+			preparedStatement1.executeQuery()
+		).thenReturn(
+			resultSet1
+		);
+
+		Mockito.when(
+			resultSet1.next()
+		).thenReturn(
+			true
+		).thenReturn(
+			false
+		);
+
+		Mockito.when(
+			resultSet1.getLong("companyId")
+		).thenReturn(
+			25000L
+		);
+
+		ResultSet resultSet2 = Mockito.mock(ResultSet.class);
+
+		Mockito.when(
+			_databaseMetaData.getColumns(
+				Mockito.nullable(String.class), Mockito.nullable(String.class),
+				Mockito.any(), Mockito.nullable(String.class))
+		).thenReturn(
+			resultSet2
+		);
+
+		Mockito.when(
+			resultSet2.next()
+		).thenReturn(
+			false
+		);
+
+		ResultSet resultSet3 = Mockito.mock(ResultSet.class);
+
+		Mockito.when(
+			_databaseMetaData.getColumns(
+				Mockito.nullable(String.class), Mockito.nullable(String.class),
+				Mockito.eq("company"), Mockito.nullable(String.class))
+		).thenReturn(
+			resultSet3
+		);
+
+		Mockito.when(
+			resultSet2.next()
+		).thenReturn(
+			true
+		);
+
+		List<String> tableNames = DatabaseUtil.getPartitionedTableNames(
 			_connection);
 
-		Assert.assertNotNull(releasesMap.get("module"));
+		Assert.assertEquals(tableNames.toString(), 2, tableNames.size());
 
-		Assert.assertTrue(release.equals(releasesMap.get("module")));
-	}
-
-	@Test
-	public void testGetReleasesMapNotFoundEntry() throws SQLException {
-		Release release = new Release(
-			"module", Version.parseVersion("14.2.4"), true);
-
-		_mockGetReleaseMap(release, false);
-
-		Map<String, Release> releasesMap = DatabaseUtil.getReleasesMap(
-			_connection);
-
-		Assert.assertNull(releasesMap.get("module"));
+		Assert.assertTrue(tableNames.contains("Table1"));
+		Assert.assertTrue(tableNames.contains("Table2"));
+		Assert.assertFalse(tableNames.contains("Company"));
+		Assert.assertFalse(tableNames.contains("Object_x_25000"));
 	}
 
 	@Test
@@ -125,7 +211,7 @@ public class DatabaseUtilTest {
 
 		List<Release> releases = DatabaseUtil.getReleases(_connection);
 
-		Assert.assertTrue(releases.size() == 2);
+		Assert.assertEquals(releases.toString(), 2, releases.size());
 
 		Release module1Entry = releases.get(0);
 
@@ -137,123 +223,31 @@ public class DatabaseUtilTest {
 	}
 
 	@Test
-	public void testGetTableNames() throws SQLException {
-		Mockito.when(
-			_connection.getMetaData()
-		).thenReturn(
-			_databaseMetaData
-		);
+	public void testGetReleasesMapEntry() throws SQLException {
+		Release release = new Release(
+			"module", Version.parseVersion("14.2.4"), true);
 
-		Mockito.when(
-			_databaseMetaData.getTables(
-				Mockito.nullable(String.class), Mockito.nullable(String.class),
-				Mockito.nullable(String.class), Mockito.any(String[].class))
-		).thenReturn(
-			_resultSet
-		);
+		_mockGetReleasesMap(release, true);
 
-		Mockito.when(
-			_resultSet.next()
-		).thenReturn(
-			true
-		).thenReturn(
-			true
-		).thenReturn(
-			true
-		).thenReturn(
-			false
-		);
+		Map<String, Release> releasesMap = DatabaseUtil.getReleasesMap(
+			_connection);
 
-		Mockito.when(
-			_resultSet.getString("TABLE_NAME")
-		).thenReturn(
-			"Table1"
-		).thenReturn(
-			"Company"
-		).thenReturn(
-			"Table2"
-		).thenReturn(
-			"Object_x_25000"
-		);
+		Assert.assertNotNull(releasesMap.get("module"));
 
-		PreparedStatement preparedStatement1 = Mockito.mock(
-			PreparedStatement.class);
+		Assert.assertTrue(release.equals(releasesMap.get("module")));
+	}
 
-		ResultSet resultSet1 = Mockito.mock(ResultSet.class);
+	@Test
+	public void testGetReleasesMapNotFoundEntry() throws SQLException {
+		Release release = new Release(
+			"module", Version.parseVersion("14.2.4"), true);
 
-		Mockito.when(
-			_connection.prepareStatement("select companyId from CompanyInfo")
-		).thenReturn(
-			preparedStatement1
-		);
+		_mockGetReleasesMap(release, false);
 
-		Mockito.when(
-			preparedStatement1.executeQuery()
-		).thenReturn(
-			resultSet1
-		);
+		Map<String, Release> releasesMap = DatabaseUtil.getReleasesMap(
+			_connection);
 
-		Mockito.when(
-			resultSet1.next()
-		).thenReturn(
-			false
-		);
-
-		PreparedStatement preparedStatement2 = Mockito.mock(
-			PreparedStatement.class);
-
-		ResultSet resultSet2 = Mockito.mock(ResultSet.class);
-
-		Mockito.when(
-			_connection.prepareStatement("select companyId from Company")
-		).thenReturn(
-			preparedStatement2
-		);
-
-		Mockito.when(
-			preparedStatement2.executeQuery()
-		).thenReturn(
-			resultSet2
-		);
-
-		Mockito.when(
-			resultSet2.next()
-		).thenReturn(
-			true
-		).thenReturn(
-			false
-		);
-
-		Mockito.when(
-			resultSet2.getLong("companyId")
-		).thenReturn(
-			25000L
-		);
-
-		ResultSet resultSet3 = Mockito.mock(ResultSet.class);
-
-		Mockito.when(
-			_databaseMetaData.getColumns(
-				Mockito.nullable(String.class), Mockito.nullable(String.class),
-				Mockito.nullable(String.class), Mockito.nullable(String.class))
-		).thenReturn(
-			resultSet3
-		);
-
-		Mockito.when(
-			resultSet3.next()
-		).thenReturn(
-			true
-		);
-
-		List<String> tableNames = DatabaseUtil.getTableNames(_connection);
-
-		Assert.assertTrue(tableNames.size() == 2);
-
-		Assert.assertTrue(tableNames.contains("Table1"));
-		Assert.assertTrue(tableNames.contains("Table2"));
-		Assert.assertFalse(tableNames.contains("Company"));
-		Assert.assertFalse(tableNames.contains("Object_x_25000"));
+		Assert.assertNull(releasesMap.get("module"));
 	}
 
 	@Test
@@ -297,55 +291,26 @@ public class DatabaseUtilTest {
 		List<String> failedServletContextNames =
 			DatabaseUtil.getFailedServletContextNames(_connection);
 
-		Assert.assertTrue(failedServletContextNames.size() == 2);
+		Assert.assertEquals(
+			failedServletContextNames.toString(), 2,
+			failedServletContextNames.size());
 
 		Assert.assertTrue(failedServletContextNames.contains("module1"));
 		Assert.assertTrue(failedServletContextNames.contains("module2"));
 	}
 
 	@Test
-	public void testIsDefaultPartition() throws SQLException {
+	public void testIsDefaultPartition() throws Exception {
 		_mockDefaultPartition(true);
 
 		Assert.assertTrue(DatabaseUtil.isDefaultPartition(_connection));
-
-		ArgumentCaptor<String> valueCapture = ArgumentCaptor.forClass(
-			String.class);
-
-		Mockito.verify(
-			_databaseMetaData, Mockito.times(2)
-		).getTables(
-			Mockito.nullable(String.class), Mockito.nullable(String.class),
-			valueCapture.capture(), Mockito.any(String[].class)
-		);
-
-		List<String> capturedValues = valueCapture.getAllValues();
-
-		Assert.assertTrue(capturedValues.size() == 2);
-		Assert.assertTrue(capturedValues.contains("company"));
-		Assert.assertTrue(capturedValues.contains("virtualhost"));
 	}
 
 	@Test
-	public void testIsNotDefaultPartition() throws SQLException {
+	public void testIsNotDefaultPartition() throws Exception {
 		_mockDefaultPartition(false);
 
 		Assert.assertFalse(DatabaseUtil.isDefaultPartition(_connection));
-
-		ArgumentCaptor<String> valueCapture = ArgumentCaptor.forClass(
-			String.class);
-
-		Mockito.verify(
-			_databaseMetaData, Mockito.times(1)
-		).getTables(
-			Mockito.nullable(String.class), Mockito.nullable(String.class),
-			valueCapture.capture(), Mockito.any(String[].class)
-		);
-
-		List<String> capturedValues = valueCapture.getAllValues();
-
-		Assert.assertTrue(capturedValues.size() == 1);
-		Assert.assertTrue(capturedValues.contains("company"));
 	}
 
 	@Test
@@ -373,20 +338,12 @@ public class DatabaseUtilTest {
 	}
 
 	private void _mockDefaultPartition(boolean defaultPartition)
-		throws SQLException {
+		throws Exception {
 
 		Mockito.when(
 			_connection.getMetaData()
 		).thenReturn(
 			_databaseMetaData
-		);
-
-		Mockito.when(
-			_databaseMetaData.getTables(
-				Mockito.nullable(String.class), Mockito.nullable(String.class),
-				Mockito.anyString(), Mockito.eq(new String[] {"TABLE"}))
-		).thenReturn(
-			_resultSet
 		);
 
 		Mockito.when(
@@ -396,13 +353,21 @@ public class DatabaseUtilTest {
 		);
 
 		Mockito.when(
+			_databaseMetaData.getTables(
+				Mockito.nullable(String.class), Mockito.nullable(String.class),
+				Mockito.eq("company"), Mockito.nullable(String[].class))
+		).thenReturn(
+			_resultSet
+		);
+
+		Mockito.when(
 			_resultSet.next()
 		).thenReturn(
 			defaultPartition
 		);
 	}
 
-	private void _mockGetReleaseMap(Release release, boolean found)
+	private void _mockGetReleasesMap(Release release, boolean found)
 		throws SQLException {
 
 		Mockito.when(

@@ -8,7 +8,7 @@ Main-Class: com.liferay.portal.tools.db.partition.virtual.instance.migrator.Virt
 	@com.liferay.petra.string-*.jar!/com/liferay/petra/string/CharPool.class,\
 	@com.liferay.petra.string-*.jar!/com/liferay/petra/string/StringBundler.class,\
 	@com.liferay.petra.string-*.jar!/com/liferay/petra/string/StringPool.class,\
-	@com.liferay.petra.string-*.jar!/com/liferay/portal/kernel/dao/db/DBInspector.class,\
+	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/dao/db/DBInspector.class,\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/log/Log.class,\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/log/LogFactoryUtil.class,\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/util/GetterUtil.class,\

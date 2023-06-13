@@ -255,4 +255,52 @@ definition {
 		}
 	}
 
+	@description = "LPS-180167. Verify if Source Code URL field can convert text to URL"
+	@priority = 4
+	test CanPublishWithAnTextOnSourceCodeURLField {
+		task ("And fills Name field") {
+			Type.typeNoMouseOver(
+				key_text = "Name",
+				locator1 = "TextInput#ANY",
+				value1 = "JS Import Map Entry Test");
+		}
+
+		task ("And fills Bare Specifier field") {
+			Type.typeNoMouseOver(
+				key_text = "Bare Specifier",
+				locator1 = "TextInput#ANY",
+				value1 = "bare-specifier-test");
+		}
+
+		task ("And fills JavaScript URL field") {
+			Type.typeNoMouseOver(
+				key_text = "JavaScript URL",
+				locator1 = "TextInput#ANY",
+				value1 = "https://liferay.github.io/liferay-frontend-projects/");
+		}
+
+		task ("And types “Lorem Ipsum is simply dummy text of the printing and typesetting industry.” on Source Code URL field") {
+			Type(
+				key_text = "Source Code URL",
+				locator1 = "TextInput#ANY",
+				value1 = "Lorem Ipsum is simply dummy text of the printing and typesetting industry.");
+		}
+
+		task ("And clicks on Publish button") {
+			Button.clickPublish();
+		}
+
+		task ("Then an success message should be displayed") {
+			Alert.viewSuccessMessage();
+		}
+
+		task ("And entry name is present on Client Extension admin page") {
+			ClientExtensionGeneral.goToRemoteAppsPortlet();
+
+			AssertElementPresent(
+				key_tableEntryName = "JS Import Map Entry Test",
+				locator1 = "ClientExtension#TABLE_ENTRY_NAME_REMOTE_TABLE");
+		}
+	}
+
 }

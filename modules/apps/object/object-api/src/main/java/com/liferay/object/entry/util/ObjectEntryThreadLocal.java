@@ -29,6 +29,10 @@ public class ObjectEntryThreadLocal {
 		return _skipObjectEntryResourcePermissionThreadLocal.get();
 	}
 
+	public static boolean isSkipReadOnlyValidation() {
+		return _skipReadOnlyValidationThreadLocal.get();
+	}
+
 	public static void setDisassociateRelatedModels(
 		boolean disassociateRelatedModels) {
 
@@ -42,6 +46,12 @@ public class ObjectEntryThreadLocal {
 			skipObjectEntryResourcePermission);
 	}
 
+	public static void setSkipReadOnlyValidation(
+		boolean skipReadOnlyValidation) {
+
+		_skipReadOnlyValidationThreadLocal.set(skipReadOnlyValidation);
+	}
+
 	private static final ThreadLocal<Boolean>
 		_disassociateRelatedModelsThreadLocal = new CentralizedThreadLocal<>(
 			ObjectEntryThreadLocal.class +
@@ -53,5 +63,10 @@ public class ObjectEntryThreadLocal {
 				ObjectEntryThreadLocal.class +
 					"._skipObjectEntryResourcePermissionThreadLocal",
 				() -> false);
+	private static final ThreadLocal<Boolean>
+		_skipReadOnlyValidationThreadLocal = new CentralizedThreadLocal<>(
+			ObjectEntryThreadLocal.class +
+				"._skipReadOnlyValidationThreadLocal",
+			() -> false);
 
 }

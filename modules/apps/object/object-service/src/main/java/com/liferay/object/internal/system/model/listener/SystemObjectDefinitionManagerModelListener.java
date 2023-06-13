@@ -367,12 +367,12 @@ public class SystemObjectDefinitionManagerModelListener<T extends BaseModel<T>>
 				new HashMap<>(), extendedProperties, _ddmExpressionFactory,
 				objectFields);
 
-			_skipValidateReadOnly.set(true);
+			_skipReadOnlyValidation.set(true);
 
 			return;
 		}
 
-		if (_skipValidateReadOnly.get()) {
+		if (_skipReadOnlyValidation.get()) {
 			return;
 		}
 
@@ -387,7 +387,7 @@ public class SystemObjectDefinitionManagerModelListener<T extends BaseModel<T>>
 			).build(),
 			extendedProperties, _ddmExpressionFactory, objectFields);
 
-		_skipValidateReadOnly.set(true);
+		_skipReadOnlyValidation.set(true);
 	}
 
 	private void _validateSystemObject(T originalModel, T model)
@@ -424,10 +424,10 @@ public class SystemObjectDefinitionManagerModelListener<T extends BaseModel<T>>
 	private static final Log _log = LogFactoryUtil.getLog(
 		SystemObjectDefinitionManagerModelListener.class);
 
-	private static final ThreadLocal<Boolean> _skipValidateReadOnly =
+	private static final ThreadLocal<Boolean> _skipReadOnlyValidation =
 		new CentralizedThreadLocal<>(
 			SystemObjectDefinitionManagerModelListener.class +
-				"._skipValidateReadOnly",
+				"._skipReadOnlyValidation",
 			() -> false);
 
 	private final DDMExpressionFactory _ddmExpressionFactory;

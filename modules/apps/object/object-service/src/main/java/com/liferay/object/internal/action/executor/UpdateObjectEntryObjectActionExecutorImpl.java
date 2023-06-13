@@ -107,6 +107,7 @@ public class UpdateObjectEntryObjectActionExecutorImpl
 
 		try {
 			ObjectEntryThreadLocal.setSkipObjectEntryResourcePermission(true);
+			ObjectEntryThreadLocal.setSkipReadOnlyValidation(true);
 
 			DefaultObjectEntryManager defaultObjectEntryManager =
 				DefaultObjectEntryManagerProvider.provide(
@@ -127,6 +128,7 @@ public class UpdateObjectEntryObjectActionExecutorImpl
 		finally {
 			ObjectEntryThreadLocal.setSkipObjectEntryResourcePermission(
 				skipObjectEntryResourcePermission);
+			ObjectEntryThreadLocal.setSkipReadOnlyValidation(false);
 		}
 	}
 

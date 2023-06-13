@@ -36,13 +36,13 @@
 			<get-database-upgrade-client-paths />
 
 			<replace
-				file="${db.upgrade.client.home}/db_upgrade${file.suffix.bat}"
+				file="${db.upgrade.client.home}/db_upgrade_client${file.suffix.bat}"
 				token="exit 1"
 				value="exit 0"
 			/>
 
 			<chmod
-				file="${db.upgrade.client.home}/db_upgrade${file.suffix.bat}"
+				file="${db.upgrade.client.home}/db_upgrade_client${file.suffix.bat}"
 				perm="a+x"
 			/>
 		</sequential>
@@ -52,7 +52,7 @@
 		<sequential>
 			<exec executable="/bin/bash" logError="true" output="true">
 				<arg value="-c" />
-				<arg value="pkill -1 -f db_upgrade" />
+				<arg value="pkill -1 -f db_upgrade_client" />
 			</exec>
 
 			<exec executable="/bin/bash" logError="true" output="true">
@@ -60,7 +60,7 @@
 				<arg value="pkill -1 -f com.liferay.portal.tools.db.upgrade.client.jar" />
 			</exec>
 
-			<echo>SIGHUP signals sent to db_upgrade script and upgrade client jar.</echo>
+			<echo>SIGHUP signals sent to db_upgrade_client script and upgrade client jar.</echo>
 		</sequential>
 	</macrodef>
 
@@ -134,7 +134,7 @@
 
 		<parallel failonany="true">
 			<execute dir="${db.upgrade.client.home}" failonerror="true">
-				db_upgrade${file.suffix.bat} -j "-Dfile.encoding=UTF8 -Duser.country=US -Duser.language=en -Duser.timezone=GMT -Xmx4096m"
+				db_upgrade_client${file.suffix.bat} -j "-Dfile.encoding=UTF8 -Duser.country=US -Duser.language=en -Duser.timezone=GMT -Xmx4096m"
 			</execute>
 			<sequential>
 				<wait-for-upgrade-start />
@@ -162,7 +162,7 @@
 		<get-database-upgrade-client-paths />
 
 		<execute dir="${db.upgrade.client.home}" failonerror="true">
-			db_upgrade${file.suffix.bat} -l log_file.txt
+			db_upgrade_client${file.suffix.bat} -l log_file.txt
 		</execute>
 		<if>
 			<not>
@@ -235,7 +235,7 @@
 		</sql>
 
 		<execute dir="${db.upgrade.client.home}">
-			db_upgrade${file.suffix.bat} run
+			db_upgrade_client${file.suffix.bat} run
 		</execute>
 	</target>
 
@@ -255,7 +255,7 @@
 		<local name="upgrade.help.output" />
 
 		<execute dir="${db.upgrade.client.home}" failonerror="true">
-			db_upgrade${file.suffix.bat} -h > help.output
+			db_upgrade_client${file.suffix.bat} -h > help.output
 		</execute>
 
 		<loadfile
@@ -286,7 +286,7 @@
 				<touch file="${user.home}/portal-ext.properties" />
 
 				<execute dir="${db.upgrade.client.home}" failonerror="true">
-					db_upgrade${file.suffix.bat} run > temp.log
+					db_upgrade_client${file.suffix.bat} run > temp.log
 				</execute>
 
 				<loadfile
@@ -318,7 +318,7 @@
 		<parallel failonany="true">
 			<execute dir="${db.upgrade.client.home}" failonerror="true">
 				JAVA_HOME=${java.jdk.7.x64.home} echo JAVA_HOME=${JAVA_HOME}
-				db_upgrade${file.suffix.bat}
+				db_upgrade_client${file.suffix.bat}
 			</execute>
 
 			<sequential>
@@ -356,7 +356,7 @@
 		<parallel failonany="true">
 			<exec executable="/bin/bash" spawn="true">
 				<arg value="-c" />
-				<arg value="${db.upgrade.client.home}/db_upgrade${file.suffix.bat}" />
+				<arg value="${db.upgrade.client.home}/db_upgrade_client${file.suffix.bat}" />
 			</exec>
 
 			<sequential>
@@ -364,7 +364,7 @@
 
 				<exec executable="/bin/bash">
 					<arg value="-c" />
-					<arg value="${db.upgrade.client.home}/db_upgrade${file.suffix.bat} > temp.log" />
+					<arg value="${db.upgrade.client.home}/db_upgrade_client${file.suffix.bat} > temp.log" />
 				</exec>
 
 				<loadfile
@@ -393,7 +393,7 @@
 		<parallel failonany="true">
 			<exec executable="/bin/bash" spawn="true">
 				<arg value="-c" />
-				<arg value="${db.upgrade.client.home}/db_upgrade${file.suffix.bat}" />
+				<arg value="${db.upgrade.client.home}/db_upgrade_client${file.suffix.bat}" />
 			</exec>
 
 			<sequential>
@@ -427,7 +427,7 @@
 upgrade.database.auto.run=false</echo>
 
 		<execute dir="${db.upgrade.client.home}">
-			db_upgrade${file.suffix.bat} run
+			db_upgrade_client${file.suffix.bat} run
 		</execute>
 	</target>
 
@@ -455,7 +455,7 @@ upgrade.database.auto.run=false</echo>
 				/>
 			</delete>
 
-			<for list="app-server.properties,com.liferay.portal.tools.db.upgrade.client.jar,db_upgrade.bat,db_upgrade.sh,portal-upgrade-database.properties,portal-upgrade-ext.properties" param="upgrade.file">
+			<for list="app-server.properties,com.liferay.portal.tools.db.upgrade.client.jar,db_upgrade_client.bat,db_upgrade_client.sh,portal-upgrade-database.properties,portal-upgrade-ext.properties" param="upgrade.file">
 				<sequential>
 					<if>
 						<available file="${db.upgrade.client.home}/@{upgrade.file}" />

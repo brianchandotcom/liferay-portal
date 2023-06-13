@@ -1,6 +1,6 @@
 #!/usr/bin/expect
 
-spawn [db.upgrade.client.home]/db_upgrade[file.suffix.bat]
+spawn [db.upgrade.client.home]/db_upgrade_client[file.suffix.bat]
 
 expect "Please enter your application server" {
 	send "\r"

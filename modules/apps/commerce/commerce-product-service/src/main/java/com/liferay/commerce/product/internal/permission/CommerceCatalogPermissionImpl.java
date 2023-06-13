@@ -145,13 +145,14 @@ public class CommerceCatalogPermissionImpl
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 			for (AccountEntry accountEntry : accountEntries) {
-				if (commerceCatalog.getAccountEntryId() ==
-						accountEntry.getAccountEntryId()) {
-
-					return _roleLocalService.hasUserRole(
+				if ((commerceCatalog.getAccountEntryId() ==
+						accountEntry.getAccountEntryId()) &&
+					_roleLocalService.hasUserRole(
 						permissionChecker.getUserId(),
 						permissionChecker.getCompanyId(),
-						AccountRoleConstants.ROLE_NAME_SUPPLIER, true);
+						AccountRoleConstants.ROLE_NAME_SUPPLIER, true)) {
+
+					return true;
 				}
 			}
 		}

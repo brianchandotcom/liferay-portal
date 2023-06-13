@@ -246,7 +246,7 @@ const RequiredInformation = ({
 		navigate(urlPreviousPage, {state: {newKeyGeneratedAlert: true}});
 	};
 
-	const CheckBox = () => {
+	const CheckboxSubscriptionNotification = () => {
 		if (
 			featureFlags.includes('LPS-180001') &&
 			infoSelectedKey?.hasNotPermanentLicence
@@ -513,14 +513,12 @@ const RequiredInformation = ({
 											</div>
 										</Button>
 									</ClayTooltipProvider>
-
-									<CheckBox />
 								</div>
 							) : (
 								<div>
 									<ClusterNodesOption />
 
-									<CheckBox />
+									<CheckboxSubscriptionNotification />
 								</div>
 							)}
 						</>

@@ -166,7 +166,7 @@ const Dropdown = memo(
 				trigger={
 					<Button className="align-items-center bg-white cp-project-breadcrumbs-toggle d-flex p-0">
 						<div className="font-weight-bold h5 m-0 text-neutral-9">
-							{selectedKoroneikiAccount.name}
+							{selectedKoroneikiAccount?.name}
 						</div>
 
 						<span className="inline-item inline-item-after position-absolute text-brand-primary">

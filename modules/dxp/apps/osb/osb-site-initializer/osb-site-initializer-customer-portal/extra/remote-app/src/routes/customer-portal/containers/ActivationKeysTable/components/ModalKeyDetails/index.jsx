@@ -34,6 +34,8 @@ const openToast = (title, {type = 'success'} = {}) =>
 		type,
 	});
 
+const YEAR_FOR_PERMANENT_KEYS = 2100;
+
 const ModalKeyDetails = ({
 	currentActivationKey,
 	observer,
@@ -58,6 +60,10 @@ const ModalKeyDetails = ({
 				: ALERT_DOWNLOAD_TYPE.danger
 		);
 	};
+
+	const keyIsPermanent =
+		new Date(currentActivationKey.expirationDate).getFullYear() >
+		YEAR_FOR_PERMANENT_KEYS;
 
 	const {featureFlags} = useAppPropertiesContext();
 
@@ -134,6 +140,7 @@ const ModalKeyDetails = ({
 			</div>
 
 			{featureFlags.includes('LPS-185063') &&
+				!keyIsPermanent &&
 				(isLoading ? (
 					<ClayLoadingIndicator />
 				) : (

@@ -21,6 +21,115 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-172782. The navigation menu creator could add child item via keyboard."
+	@priority = 4
+	test AddChildNavigationMenuItemViaKeyboard {
+		task ("Given a navigation menu creator has a navigation menu with an item") {
+			JSONCategory.addVocabulary(
+				groupName = ${randomSiteName},
+				title = "Vocabulary Name");
+
+			JSONCategory.addCategory(
+				groupName = ${randomSiteName},
+				title = "Category Name",
+				vocabularyName = "Vocabulary Name");
+
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = ${randomSiteName},
+				title = "Web Content Title");
+
+			JSONSitenavigation.addSiteNavigationMenu(
+				groupName = ${randomSiteName},
+				siteNavigationMenuName = "Navigation Menu Name");
+
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = ${siteURLKey});
+
+			NavigationMenusAdmin.editMenu(navigationMenuName = "Navigation Menu Name");
+
+			NavigationMenusAdmin.addItem(
+				assetTitle = "Web Content Title",
+				item = "Web Content Article");
+		}
+
+		task ("When the navigation menu creator focuses on the card body of Web Content Article type item via Tab key") {
+			KeyPress(
+				key_text = "cog",
+				locator1 = "Icon#ANY",
+				value1 = "\TAB");
+
+			TestUtils.assertElementFocused(element = "//div[contains(@aria-label,'Web Content Title')]");
+		}
+
+		task ("Then the navigation menu creator could create a Category type item via keyboard") {
+			KeyPress(
+				locator1 = "//div[contains(@aria-label,'Web Content Title')]",
+				value1 = "\TAB");
+
+			KeyPress(
+				key_sourceItemName = "Web Content Title",
+				locator1 = "SiteNavigationMenu#ITEM_ENTRY_DRAG_ICON",
+				value1 = "\TAB");
+
+			KeyPress(
+				key_itemName = "Web Content Title",
+				key_relationship = "before",
+				locator1 = "SiteNavigationMenu#ITEM_ENTRY_ADD_ICON",
+				value1 = "\TAB");
+
+			KeyPress(
+				key_itemName = "Web Content Title",
+				key_relationship = "after",
+				locator1 = "SiteNavigationMenu#ITEM_ENTRY_ADD_ICON",
+				value1 = "\TAB");
+
+			TestUtils.assertElementFocused(element = "//div[contains(@class,'card')][contains(.,'Web Content Title')]//*[contains(@class,'dropdown-toggle')][..//*[name()='svg'][contains(@class,'lexicon-icon-ellipsis')]]");
+
+			KeyPress(
+				key_card = "Web Content Title",
+				locator1 = "Card#CARD_ELLIPSIS",
+				value1 = "\ENTER");
+
+			KeyPress(
+				key_menuItem = "Add Child",
+				locator1 = "MenuItem#ANY_MENU_ITEM",
+				value1 = "\ENTER");
+
+			KeyPress(
+				key_menuItem = "Blogs Entry",
+				locator1 = "MenuItem#ANY_MENU_ITEM",
+				value1 = "\DOWN");
+
+			KeyPress(
+				key_menuItem = "Category",
+				locator1 = "MenuItem#ANY_MENU_ITEM",
+				value1 = "\ENTER");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			Portlet.expandTree();
+
+			Click(
+				key_nodeName = "Category Name",
+				locator1 = "Treeview#NODE_UNSELECTED");
+
+			SelectFrame.selectFrameTop();
+
+			Button.clickSelect();
+
+			SelectFrame.selectFrameTop();
+
+			Alert.viewSuccessMessage();
+
+			NavigationMenusAdmin.viewItemNested(
+				groupName = ${randomSiteName},
+				itemNameList = "Category Name",
+				parentItemNameList = "Web Content Title",
+				site = "true",
+				siteNavigationMenuName = "Navigation Menu Name");
+		}
+	}
+
 	@description = "This is a test for LPS-172782. The navigation menu creator could add sibling item via keyboard."
 	@priority = 4
 	test AddSiblingNavigationMenuItemsViaKeyboard {

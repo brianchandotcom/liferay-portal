@@ -27,7 +27,7 @@
 </tr>
 <tr>
 	<td>ITEM_ENTRY_N</td>
-	<td>xpath=(//div[contains(@class,'MenuItem')])[${key_index}]</td>
+	<td>xpath=(//p[contains(@class,'card-title')])[${key_index}]</td>
 	<td></td>
 </tr>
 <tr>

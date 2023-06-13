@@ -100,6 +100,70 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-180526. Verify that the value of Claimed MDFs are displayed on MDF Dashboard"
+	@priority = 4
+	test MDFClaimedValueAppearInDashboard {
+		var budgetValue = 2000;
+
+		task ("Given that the PMU get the current amount of the Claim MDF Value") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "pmu@partner.com",
+				userLoginFullName = "Partner Marketing User");
+
+			PRMUtils.gotoPRM();
+
+			PRMNavigator.openSitePage(pageName = "Home");
+
+			var initialValue = PRMDashboards.getLegendValue(
+				chartName = "Request",
+				legendName = "Claimed");
+		}
+
+		task ("And a new MDF Request is created and approved") {
+			var requestId = JSONPRM.createMDFRequest(
+				accountEntryName = "Company Name 1",
+				budgetValueList = ${budgetValue},
+				campaignName = "Campaign Name 1");
+
+			JSONPRM.changeMDFStatus(
+				mdfStatus = "Approved",
+				requestId = ${requestId});
+		}
+
+		task ("And the PMU creates a new claim in the submitted MDF") {
+			PRMNavigator.openSitePage(pageName = "MDF Requests");
+
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name 1");
+		
+			PRMMDFClaim.createNewClaim(
+				listLeads = "Document_1.xlsx",
+				reimbursementInvoice = "Document_1.png",
+				thirdInvoice = "Document_1.png");
+		}
+
+		task ("When the PMU goes back to the MDF Dashboard and get the new amount of Claimed value") {
+			PRMNavigator.openSitePage(pageName = "Home");
+
+			var newValue = PRMDashboards.getLegendValue(
+				chartName = "Request",
+				legendName = "Claimed");
+
+			task ("Make a quotient of the Total Activity Cost by 50% (2), which will result in the claim value") {
+				var requestedValue = ${budgetValue} / 2;
+			}
+
+			task ("Make the sum of the initial value + claim value, to obtain the new value that must be in the dashboard") {
+				var expectedValue = ${initialValue} + ${requestedValue};
+			}
+		}
+
+		task ("Then the actual amount of Claimed value was increased") {
+			TestUtils.assertEquals(
+				actual = ${newValue},
+				expected = ${expectedValue});
+		}
+	}
+
 	@description = "This is a test for LPS-177308. Verify that the value of Requested MDFs are displayed on MDF Dashboard"
 	@priority = 4
 	test MDFRequestedValueAppearInDashboard {

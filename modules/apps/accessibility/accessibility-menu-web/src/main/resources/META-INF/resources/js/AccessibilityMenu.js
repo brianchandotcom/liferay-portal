@@ -16,16 +16,43 @@ import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayModal, {useModal} from '@clayui/modal';
 import {checkCookieConsentForTypes} from '@liferay/cookies-banner-web';
-import {COOKIE_TYPES, checkConsent} from 'frontend-js-web';
+import {
+	COOKIE_TYPES,
+	checkConsent,
+	localStorage,
+	setSessionValue,
+} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 
 import AccessibilitySetting from './AccessibilitySetting';
 import {getSettingValue, toggleClassName} from './util';
 
 const OPEN_ACCESSIBILITY_MENU_EVENT_NAME = 'openAccessibilityMenu';
 
-const AccessibilityMenu = ({accessibilitySettings}) => {
+const getInitialSettings = (settings) => {
+	return settings.map((setting) => {
+		const {
+			className,
+			defaultValue,
+			key,
+			label,
+			sessionClicksValue,
+		} = setting;
+
+		const value = getSettingValue(defaultValue, sessionClicksValue, key);
+
+		toggleClassName(className, value);
+
+		return {className, key, label, value};
+	});
+};
+
+const AccessibilityMenu = (props) => {
+	const [settings, setSettings] = useState(() =>
+		getInitialSettings(props.settings)
+	);
+
 	const [
 		hasFunctionalCookiesConsent,
 		setHasFunctionalCookiesConsent,
@@ -38,26 +65,62 @@ const AccessibilityMenu = ({accessibilitySettings}) => {
 
 		Liferay.on(OPEN_ACCESSIBILITY_MENU_EVENT_NAME, openAccessibilityMenu);
 
-		accessibilitySettings.forEach((setting) => {
-			toggleClassName(
-				setting.className,
-				getSettingValue(
-					setting.defaultValue,
-					setting.sessionClicksValue,
-					setting.key
-				)
-			);
-		});
-
 		return () => {
 			Liferay.detach(
 				OPEN_ACCESSIBILITY_MENU_EVENT_NAME,
 				openAccessibilityMenu
 			);
 		};
-	}, [accessibilitySettings, onOpenChange]);
+	}, [onOpenChange]);
 
-	const handleReviewCookies = () => {
+	const updateSetting = useCallback((settingKey, settingUpdates) => {
+		setSettings((settings) =>
+			settings.map((setting) => {
+				if (settingKey === setting.key) {
+					return {
+						...setting,
+						...settingUpdates,
+					};
+				}
+				else {
+					return setting;
+				}
+			})
+		);
+	}, []);
+
+	const afterSettingValueChange = useCallback(
+		(value, setting) => {
+			toggleClassName(setting.className, value);
+
+			updateSetting(setting.key, {disabled: false, value});
+		},
+		[updateSetting]
+	);
+
+	const handleAccessiblitySettingChange = useCallback(
+		(value, setting) => {
+			updateSetting(setting.key, {disabled: true});
+
+			if (themeDisplay.isSignedIn()) {
+				setSessionValue(setting.key, value).then(() => {
+					afterSettingValueChange(value, setting);
+				});
+			}
+			else {
+				localStorage.setItem(
+					setting.key,
+					value,
+					localStorage.TYPES.FUNCTIONAL
+				);
+
+				afterSettingValueChange(value, setting);
+			}
+		},
+		[afterSettingValueChange, updateSetting]
+	);
+
+	const handleReviewCookies = useCallback(() => {
 		checkCookieConsentForTypes(COOKIE_TYPES.FUNCTIONAL)
 			.then(() => {
 				setHasFunctionalCookiesConsent(true);
@@ -65,7 +128,7 @@ const AccessibilityMenu = ({accessibilitySettings}) => {
 			.catch(() => {
 				setHasFunctionalCookiesConsent(false);
 			});
-	};
+	}, []);
 
 	const isSettingsDisabled =
 		!hasFunctionalCookiesConsent && !themeDisplay.isSignedIn();
@@ -105,16 +168,25 @@ const AccessibilityMenu = ({accessibilitySettings}) => {
 						)}
 
 						<ul className="list-unstyled mb-0">
-							{accessibilitySettings.map((setting, index) => (
+							{settings.map((setting, index) => (
 								<AccessibilitySetting
 									className={
-										index + 1 < accessibilitySettings.length
+										index + 1 < settings.length
 											? 'mb-3'
 											: ''
 									}
-									disabled={isSettingsDisabled}
+									disabled={
+										isSettingsDisabled || setting.disabled
+									}
 									key={setting.key}
-									setting={setting}
+									label={setting.label}
+									onChange={(value) =>
+										handleAccessiblitySettingChange(
+											value,
+											setting
+										)
+									}
+									value={setting.value}
 								/>
 							))}
 						</ul>
@@ -126,13 +198,13 @@ const AccessibilityMenu = ({accessibilitySettings}) => {
 };
 
 AccessibilityMenu.propTypes = {
-	accessibilitySettings: PropTypes.arrayOf(
+	settings: PropTypes.arrayOf(
 		PropTypes.shape({
 			className: PropTypes.string,
-			defaultValue: PropTypes.string,
+			defaultValue: PropTypes.bool,
 			key: PropTypes.string,
 			label: PropTypes.string,
-			sessionClicksValue: PropTypes.string,
+			sessionClicksValue: PropTypes.bool,
 		})
 	).isRequired,
 };

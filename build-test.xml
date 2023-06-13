@@ -505,6 +505,7 @@ typeSettings=&#91;&quot;friendlyURLMapping=perico&quot;,&quot;instanceable=false
 
 	<macrodef name="export-database-mysql-compact">
 		<attribute default="mysql" name="database.file.prefix" />
+		<attribute default="lportal" name="database.schema.name" />
 
 		<sequential>
 			<if>
@@ -517,7 +518,7 @@ typeSettings=&#91;&quot;friendlyURLMapping=perico&quot;,&quot;instanceable=false
 
 					<property location="export_database_mysql_compact_export.sh" name="export.database.mysql.compact.file.path" />
 					<property name="docker.src.file.path" value="/tmp/export.sql" />
-					<property name="export.dmp.file.path" value="${basedir}/@{database.file.prefix}.sql" />
+					<property name="export.dmp.file.path" value="${basedir}/@{database.file.prefix}-@{database.schema.name}.sql" />
 
 					<echo file="${export.database.mysql.compact.file.path}">
 						<![CDATA[
@@ -531,7 +532,8 @@ typeSettings=&#91;&quot;friendlyURLMapping=perico&quot;,&quot;instanceable=false
 								--skip-comments \
 								--skip-extended-insert \
 								--user=${database.mysql.username} \
-								${database.mysql.schema} > \
+								--default-character-set=utf8 \
+								--databases ${database.schema.name} > \
 								${docker.src.file.path}
 
 							sed -i "s/Warning: Using a password on the command line interface can be insecure.//g" ${docker.src.file.path}
@@ -555,7 +557,7 @@ typeSettings=&#91;&quot;friendlyURLMapping=perico&quot;,&quot;instanceable=false
 					</execute>
 				</then>
 				<else>
-					<exec executable="mysqldump" output="@{database.file.prefix}.sql">
+					<exec executable="mysqldump" output="@{database.file.prefix}-@{database.schema.name}.sql">
 						<arg value="--compact" />
 						<arg value="--no-data" />
 						<arg value="--order-by-primary" />
@@ -563,11 +565,11 @@ typeSettings=&#91;&quot;friendlyURLMapping=perico&quot;,&quot;instanceable=false
 						<arg value="--skip-comments" />
 						<arg value="--skip-extended-insert" />
 						<arg value="--user=${database.mysql.username}" />
-						<arg value="${database.mysql.schema}" />
+						<arg value="${database.schema.name}" />
 					</exec>
 
 					<replaceregexp
-						file="@{database.file.prefix}.sql"
+						file="@{database.file.prefix}-@{database.schema.name}.sql"
 						match=".*Using a password on the command line interface can be insecure.*\n"
 						replace=""
 					/>
@@ -583,20 +585,21 @@ typeSettings=&#91;&quot;friendlyURLMapping=perico&quot;,&quot;instanceable=false
 						!f
 						f{a[$0]=$0}' ${1} |
 					sed 's=/[^/]*$==;s/\,$//' |
-					sed 's/_x_.*//'
+					sed 's/_x_.*//' |
+					sed '/lpartition_/d'
 				]]>
 			</echo>
 
 			<execute>
-				export_database_mysql_compact_sort_sql.sh @{database.file.prefix}.sql > @{database.file.prefix}-sorted.sql
+				export_database_mysql_compact_sort_sql.sh @{database.file.prefix}-@{database.schema.name}.sql > @{database.file.prefix}-@{database.schema.name}-sorted.sql
 			</execute>
 
-			<delete file="@{database.file.prefix}.sql" />
+			<delete file="@{database.file.prefix}-@{database.schema.name}.sql" />
 			<delete file="export_database_mysql_compact_sort_sql.sh" />
 
 			<move
-				file="@{database.file.prefix}-sorted.sql"
-				tofile="@{database.file.prefix}.sql"
+				file="@{database.file.prefix}-@{database.schema.name}-sorted.sql"
+				tofile="@{database.file.prefix}-@{database.schema.name}.sql"
 			/>
 		</sequential>
 	</macrodef>
@@ -8158,6 +8161,54 @@ war.path=${app.server.portal.dir}/</echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="validate-mysql-schemas">
+		<attribute default="upgraded" name="first.validation.file.prefix" />
+		<attribute default="fresh" name="second.validation.file.prefix" />
+		<attribute default="validate-db-upgrade-schemas.txt" name="output.file.name.prefix" />
+
+		<sequential>
+			<property name="output.file" value="@{output.file.name.prefix}" />
+
+			<echo file="validate_db_upgrade_schemas.sh">
+diff -B --new-line-format='%L' --old-line-format= --unchanged-line-format= @{first.validation.file.prefix}.sql @{second.validation.file.prefix}.sql || true
+			</echo>
+
+			<chmod
+				file="validate_db_upgrade_schemas.sh"
+				perm="a+x"
+			/>
+
+			<exec executable="./validate_db_upgrade_schemas.sh" outputproperty="database.changes.master" />
+
+			<if>
+				<not>
+					<equals arg1="${database.changes.master}" arg2="" />
+				</not>
+				<then>
+					<echo file="${output.file}">
+Upgraded database is missing the following elements from a fresh database: ${line.separator}${database.changes.master}
+
+diff:${line.separator}@{first.validation.file.prefix}.sql > @{second.validation.file.prefix}.sql
+					</echo>
+
+					<echo file="validate_db_upgrade_schemas.sh">
+diff -y -B -W250 @{first.validation.file.prefix}.sql @{second.validation.file.prefix}.sql | expand | grep -E -C40 '^.{123} [|>]( |$)'
+					</echo>
+
+					<chmod
+						file="validate_db_upgrade_schemas.sh"
+						perm="a+x"
+					/>
+
+					<exec append="true" executable="./validate_db_upgrade_schemas.sh" output="${output.file}" />
+				</then>
+				<else>
+					<echo file="${output.file}">Database schemas match</echo>
+				</else>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="wait-for-app-server">
 		<attribute name="app.server.bin.dir" />
 		<attribute default="0" name="app.server.bundle.index" />
@@ -10309,7 +10360,7 @@ send_user $expect_out(buffer)]]></echo>
 	</target>
 
 	<target name="export-database-schema">
-		<export-database-mysql-compact database.file.prefix="${database.file.prefix}" />
+		<export-database-mysql-compact database.file.prefix="${database.file.prefix}" database.schema.name="${database.schema.name}" />
 	</target>
 
 	<target name="generate-changelog">
@@ -16436,43 +16487,7 @@ mail.send.blacklist=</echo>
 	</target>
 
 	<target name="validate-db-upgrade-schemas">
-		<echo file="validate_db_upgrade_schemas.sh">
-diff -B --new-line-format='%L' --old-line-format= --unchanged-line-format= upgraded.sql fresh.sql || true
-		</echo>
-
-		<chmod
-			file="validate_db_upgrade_schemas.sh"
-			perm="a+x"
-		/>
-
-		<exec executable="./validate_db_upgrade_schemas.sh" outputproperty="database.changes.master" />
-
-		<if>
-			<not>
-				<equals arg1="${database.changes.master}" arg2="" />
-			</not>
-			<then>
-				<echo file="validate-db-upgrade-schemas.txt">
-Upgraded database is missing the following elements from a fresh database: ${line.separator}${database.changes.master}
-
-diff:${line.separator}upgraded.sql > fresh.sql
-				</echo>
-
-				<echo file="validate_db_upgrade_schemas.sh">
-diff -y -B -W250 upgraded.sql fresh.sql | expand | grep -E -C40 '^.{123} [|>]( |$)'
-				</echo>
-
-				<chmod
-					file="validate_db_upgrade_schemas.sh"
-					perm="a+x"
-				/>
-
-				<exec append="true" executable="./validate_db_upgrade_schemas.sh" output="validate-db-upgrade-schemas.txt" />
-			</then>
-			<else>
-				<echo file="validate-db-upgrade-schemas.txt">Database schemas match</echo>
-			</else>
-		</if>
+		<validate-mysql-schemas first.validation.file.prefix="${first.validation.file.prefix}" second.validation.file.prefix="${second.validation.file.prefix}" output.file.name.prefix="${output.file.name.prefix}" />
 	</target>
 
 	<target name="wait-for-license-activation">

@@ -109,7 +109,9 @@ public class LayoutPrototypeStagedModelDataHandlerTest
 			LocaleUtil.fromLanguageId(
 				_layoutPrototype.getNameCurrentLanguageId()));
 
-		LayoutPrototypeLocalServiceUtil.updateLayoutPrototype(_layoutPrototype);
+		_layoutPrototype =
+			LayoutPrototypeLocalServiceUtil.updateLayoutPrototype(
+				_layoutPrototype);
 
 		initImport();
 
@@ -158,7 +160,7 @@ public class LayoutPrototypeStagedModelDataHandlerTest
 			LayoutPrototypeStagedModelDataHandlerTest.class.getName(),
 			Boolean.TRUE.toString());
 
-		LayoutLocalServiceUtil.updateLayout(layout);
+		layout = LayoutLocalServiceUtil.updateLayout(layout);
 
 		addDependentStagedModel(dependentStagedModelsMap, Layout.class, layout);
 

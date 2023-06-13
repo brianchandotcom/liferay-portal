@@ -133,7 +133,7 @@ public class LayoutServiceTest {
 
 		layout.setUserId(-1);
 
-		LayoutLocalServiceUtil.updateLayout(layout);
+		layout = LayoutLocalServiceUtil.updateLayout(layout);
 
 		Map<Locale, String> friendlyURLMap = layout.getFriendlyURLMap();
 
@@ -178,7 +178,7 @@ public class LayoutServiceTest {
 
 		Layout layout = layoutPrototype.getLayout();
 
-		LayoutLocalServiceUtil.updateLayout(layout);
+		layout = LayoutLocalServiceUtil.updateLayout(layout);
 
 		ServiceContext serviceContext = new ServiceContext();
 

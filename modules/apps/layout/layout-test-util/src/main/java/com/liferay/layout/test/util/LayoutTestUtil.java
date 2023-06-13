@@ -276,9 +276,7 @@ public class LayoutTestUtil {
 
 		layout.setType(LayoutConstants.TYPE_LINK_TO_LAYOUT);
 
-		LayoutLocalServiceUtil.updateLayout(layout);
-
-		return layout;
+		return LayoutLocalServiceUtil.updateLayout(layout);
 	}
 
 	public static Layout addTypeLinkToURLLayout(long groupId, String url)
@@ -293,9 +291,7 @@ public class LayoutTestUtil {
 
 		layout.setType(LayoutConstants.TYPE_URL);
 
-		LayoutLocalServiceUtil.updateLayout(layout);
-
-		return layout;
+		return LayoutLocalServiceUtil.updateLayout(layout);
 	}
 
 	public static Layout addTypePortletLayout(Group group) throws Exception {

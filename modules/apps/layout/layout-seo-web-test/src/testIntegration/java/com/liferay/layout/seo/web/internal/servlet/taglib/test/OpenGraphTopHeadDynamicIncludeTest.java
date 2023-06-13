@@ -276,7 +276,7 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 
 		_layout.setType(LayoutConstants.TYPE_ASSET_DISPLAY);
 
-		_layoutLocalService.updateLayout(_layout);
+		_layout = _layoutLocalService.updateLayout(_layout);
 
 		_testWithMockInfoItem(
 			_serviceContext.getRequest(),
@@ -1077,7 +1077,7 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		typeSettingsUnicodeProperties.put(
 			"mapped-openGraphImageAlt", "mappedImageAltFieldName");
 
-		_layoutLocalService.updateLayout(_layout);
+		_layout = _layoutLocalService.updateLayout(_layout);
 
 		HttpServletRequest httpServletRequest = _getHttpServletRequest();
 
@@ -1113,7 +1113,7 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		typeSettingsUnicodeProperties.put(
 			"mapped-openGraphTitle", "mappedTitleFieldName");
 
-		_layoutLocalService.updateLayout(_layout);
+		_layout = _layoutLocalService.updateLayout(_layout);
 
 		HttpServletRequest httpServletRequest = _getHttpServletRequest();
 

@@ -373,7 +373,7 @@ public class LayoutCopyHelperTest {
 		sourceLayout.setThemeId("l1-theme");
 		sourceLayout.setCss("l1-css");
 
-		LayoutLocalServiceUtil.updateLayout(sourceLayout);
+		sourceLayout = LayoutLocalServiceUtil.updateLayout(sourceLayout);
 
 		Layout targetLayout = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(), StringPool.BLANK);

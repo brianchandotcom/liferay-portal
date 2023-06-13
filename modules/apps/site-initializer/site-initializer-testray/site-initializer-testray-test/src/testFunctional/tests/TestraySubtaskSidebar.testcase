@@ -246,4 +246,54 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-164985 | Test Summary: Verify that can see the details of a re-examined subtask in the sidebar"
+	@priority = 3
+	test AdminCanSeeSubtaskReexaminedInSidebar {
+		task ("Given that the user reanalyze a task") {
+			TestrayTestflow.goToTask(taskName = "Task_1");
+
+			Button.click(button = "Abandon");
+
+			Button.click(button = "Reanalyze");
+		}
+
+		task ("And the user assign two subtasks") {
+			TestraySubtask.goToSubtask(subtaskName = "Subtask_1");
+
+			Button.click(button = "Assign and Begin Analysis");
+
+			TestrayTestflow.assignUsers(userName = "Test Test");
+
+			TR2Utils.clickBreadcrumb(text = ${taskName});
+
+			TestraySubtask.goToSubtask(subtaskName = "Subtask_2");
+
+			Button.click(button = "Assign and Begin Analysis");
+
+			TestrayTestflow.assignUsers(userName = "Test Test");
+		}
+
+		task ("And the user complete the subtask") {
+			Button.click(button = "Complete");
+
+			TestrayTestflow.editStatus(selectStatus = "Passed");
+
+			TestrayTestflow.assertStatus(
+				label = "Subtask Details",
+				status = "Complete");
+		}
+
+		task ("When the user reanalyze the subtask") {
+			Button.click(button = "Assign and Reanalyze");
+
+			TestrayTestflow.assignUsers(userName = "Test Test");
+		}
+
+		task ("Then the subtask should appear on the sidebar") {
+			Refresh();
+
+			TestraySubtask.viewSubtaskSidebar(listsubtaskName = "Subtask_1,Subtask_2");
+		}
+	}
+
 }

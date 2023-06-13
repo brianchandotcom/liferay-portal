@@ -1,0 +1,11 @@
+<#-- FreeMarker Template -->
+
+<#assign
+	group = themeDisplay.getPortletGroupId()
+/>
+
+<div class="Test">
+	<h3>
+		${themeDisplay.getPortletGroupId()}
+	</h3>
+</div>

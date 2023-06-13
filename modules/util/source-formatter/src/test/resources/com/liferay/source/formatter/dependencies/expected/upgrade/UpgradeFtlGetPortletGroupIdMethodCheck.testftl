@@ -1,0 +1,11 @@
+<#-- FreeMarker Template -->
+
+<#assign
+	group = themeDisplay.getScopeGroupId()
+/>
+
+<div class="Test">
+	<h3>
+		${themeDisplay.getScopeGroupId()}
+	</h3>
+</div>

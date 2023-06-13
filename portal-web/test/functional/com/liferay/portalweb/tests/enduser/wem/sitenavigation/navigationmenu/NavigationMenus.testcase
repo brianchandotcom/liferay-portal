@@ -1667,7 +1667,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-137577. The modal confirmation is displayed when delete a item with children."
+	@description = "This is a test for LPS-137577 and LPS-172782. The modal confirmation is displayed when delete a item with children."
 	@priority = 4
 	test ViewModalWhenDeleteItemWithChildren {
 		task ("Add three hierarchy levels categories to a vocabulary within a site") {

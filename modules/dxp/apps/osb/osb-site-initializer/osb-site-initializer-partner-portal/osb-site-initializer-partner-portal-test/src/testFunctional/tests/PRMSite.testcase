@@ -1,0 +1,54 @@
+@component-name = "OSB Site Initializer Partner Portal"
+definition {
+
+	property custom.properties = "feature.flag.LPS-135430=true";
+	property osgi.modules.includes = "osb-site-initializer-partner-portal";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "OSB Site Initializer Partner Portal";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			PRMUtils.tearDown();
+		}
+	}
+
+	@description = "This is a test for LPS-187560. Verify that the PRM site can be created"
+	@priority = 5
+	test CanBeCreated {
+		property test.name.skip.portal.instance = "PRMSite#CanBeCreated";
+
+		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
+
+		task ("Given that the user goes to Site admin page") {
+			Site.openSitesAdmin();
+		}
+
+		task ("When the user creates a site with the Partner Portal template") {
+			Site.addCP(
+				siteName = "Partner Portal",
+				siteTemplateName = "OSB Site Initializer Partner Portal");
+		}
+
+		task ("Then the user can navigate to the created site") {
+			PRMUtils.gotoPRM();
+
+			PRMUtils.assertPageTitle(pageTitle = "Welcome to Partner Portal");
+		}
+	}
+
+}

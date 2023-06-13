@@ -26,7 +26,7 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class CreateProjectEventHandler extends BaseEventHandler {
+public class CreateProjectEventHandler extends BaseObjectEventHandler {
 
 	@Override
 	public String process() throws Exception {
@@ -37,14 +37,13 @@ public class CreateProjectEventHandler extends BaseEventHandler {
 
 		EventHandlerContext eventHandlerContext = getEventHandlerContext();
 
-		ProjectRepository projectRepository =
-			eventHandlerContext.getProjectRepository();
-
-		Project project = projectRepository.add(projectJSONObject);
+		Project project = _createProject(projectJSONObject);
 
 		JSONArray buildsJSONArray = projectJSONObject.optJSONArray("builds");
 
 		if ((buildsJSONArray != null) && !buildsJSONArray.isEmpty()) {
+			EventHandlerHelper eventHandlerHelper = getEventHandlerHelper();
+
 			BuildParameterRepository buildParameterRepository =
 				eventHandlerContext.getBuildParameterRepository();
 			BuildRepository buildRepository =
@@ -74,6 +73,15 @@ public class CreateProjectEventHandler extends BaseEventHandler {
 		EventHandlerHelper eventHandlerHelper, JSONObject messageJSONObject) {
 
 		super(eventHandlerHelper, messageJSONObject);
+	}
+
+	private Project _createProject(JSONObject projectJSONObject) {
+		EventHandlerContext eventHandlerContext = getEventHandlerContext();
+
+		ProjectRepository projectRepository =
+			eventHandlerContext.getProjectRepository();
+
+		return projectRepository.add(projectJSONObject);
 	}
 
 }

@@ -28,7 +28,7 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class CreateBuildEventHandler extends BaseEventHandler {
+public class CreateBuildEventHandler extends BaseObjectEventHandler {
 
 	@Override
 	public String process() throws Exception {

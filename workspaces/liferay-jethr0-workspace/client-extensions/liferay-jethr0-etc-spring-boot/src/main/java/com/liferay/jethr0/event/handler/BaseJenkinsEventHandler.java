@@ -36,6 +36,10 @@ public abstract class BaseJenkinsEventHandler extends BaseEventHandler {
 	protected long getBuildDuration() throws Exception {
 		JSONObject buildJSONObject = getBuildJSONObject();
 
+		if (!buildJSONObject.has("duration")) {
+			throw new Exception("Missing 'duration' from Build JSON object");
+		}
+
 		return buildJSONObject.getLong("duration");
 	}
 
@@ -53,6 +57,10 @@ public abstract class BaseJenkinsEventHandler extends BaseEventHandler {
 
 	protected long getBuildNumber() throws Exception {
 		JSONObject buildJSONObject = getBuildJSONObject();
+
+		if (!buildJSONObject.has("number")) {
+			throw new Exception("Missing 'number' from Build JSON object");
+		}
 
 		return buildJSONObject.optLong("number");
 	}
@@ -88,6 +96,10 @@ public abstract class BaseJenkinsEventHandler extends BaseEventHandler {
 	protected BuildRun.Result getBuildRunResult() throws Exception {
 		JSONObject buildJSONObject = getBuildJSONObject();
 
+		if (!buildJSONObject.has("result")) {
+			throw new Exception("Missing 'result' from Build JSON object");
+		}
+
 		String result = buildJSONObject.getString("result");
 
 		if (result.equals("SUCCESS")) {
@@ -106,17 +118,22 @@ public abstract class BaseJenkinsEventHandler extends BaseEventHandler {
 	protected JSONObject getJenkinsJSONObject() throws Exception {
 		JSONObject messageJSONObject = getMessageJSONObject();
 
-		JSONObject buildJSONObject = messageJSONObject.optJSONObject("jenkins");
+		JSONObject jenkinsJSONObject = messageJSONObject.optJSONObject(
+			"jenkins");
 
-		if (buildJSONObject == null) {
+		if (jenkinsJSONObject == null) {
 			throw new Exception("Missing 'jenkins' JSON object");
 		}
 
-		return buildJSONObject;
+		return jenkinsJSONObject;
 	}
 
 	protected URL getJenkinsURL() throws Exception {
 		JSONObject jenkinsJSONObject = getJenkinsJSONObject();
+
+		if (!jenkinsJSONObject.has("url")) {
+			throw new Exception("Missing 'url' from Jenkins JSON object");
+		}
 
 		return StringUtil.toURL(jenkinsJSONObject.optString("url"));
 	}
@@ -124,17 +141,21 @@ public abstract class BaseJenkinsEventHandler extends BaseEventHandler {
 	protected JSONObject getJobJSONObject() throws Exception {
 		JSONObject messageJSONObject = getMessageJSONObject();
 
-		JSONObject buildJSONObject = messageJSONObject.optJSONObject("job");
+		JSONObject jobJSONObject = messageJSONObject.optJSONObject("job");
 
-		if (buildJSONObject == null) {
+		if (jobJSONObject == null) {
 			throw new Exception("Missing 'job' JSON object");
 		}
 
-		return buildJSONObject;
+		return jobJSONObject;
 	}
 
 	protected String getJobName() throws Exception {
 		JSONObject jobJSONObject = getJobJSONObject();
+
+		if (!jobJSONObject.has("name")) {
+			throw new Exception("Missing 'name' from Job JSON object");
+		}
 
 		return jobJSONObject.optString("name");
 	}

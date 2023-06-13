@@ -24,7 +24,7 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class QueueProjectEventHandler extends BaseEventHandler {
+public class QueueProjectEventHandler extends BaseObjectEventHandler {
 
 	@Override
 	public String process() throws Exception {

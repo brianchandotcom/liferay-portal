@@ -180,8 +180,9 @@ public class CommerceGrossPricingTest {
 
 		commercePriceList.setNetPrice(false);
 
-		CommercePriceListLocalServiceUtil.updateCommercePriceList(
-			commercePriceList);
+		commercePriceList =
+			CommercePriceListLocalServiceUtil.updateCommercePriceList(
+				commercePriceList);
 
 		CPInstance cpInstance =
 			CPTestUtil.addCPInstanceWithRandomSkuFromCatalog(
@@ -192,7 +193,8 @@ public class CommerceGrossPricingTest {
 		cpDefinition.setCPTaxCategoryId(_commerceTaxCategoryId);
 		cpDefinition.setTaxExempt(false);
 
-		_cpDefinitionLocalService.updateCPDefinition(cpDefinition);
+		cpDefinition = _cpDefinitionLocalService.updateCPDefinition(
+			cpDefinition);
 
 		double netPrice1 = 20;
 
@@ -330,8 +332,9 @@ public class CommerceGrossPricingTest {
 
 		commercePriceList1.setNetPrice(false);
 
-		CommercePriceListLocalServiceUtil.updateCommercePriceList(
-			commercePriceList1);
+		commercePriceList1 =
+			CommercePriceListLocalServiceUtil.updateCommercePriceList(
+				commercePriceList1);
 
 		_commercePriceListAccountRelLocalService.addCommercePriceListAccountRel(
 			_user.getUserId(), commercePriceList1.getCommercePriceListId(),
@@ -347,7 +350,8 @@ public class CommerceGrossPricingTest {
 		cpDefinition.setCPTaxCategoryId(_commerceTaxCategoryId);
 		cpDefinition.setTaxExempt(false);
 
-		_cpDefinitionLocalService.updateCPDefinition(cpDefinition);
+		cpDefinition = _cpDefinitionLocalService.updateCPDefinition(
+			cpDefinition);
 
 		double netPrice1 = 20;
 
@@ -431,8 +435,9 @@ public class CommerceGrossPricingTest {
 
 		commercePriceList.setNetPrice(false);
 
-		CommercePriceListLocalServiceUtil.updateCommercePriceList(
-			commercePriceList);
+		commercePriceList =
+			CommercePriceListLocalServiceUtil.updateCommercePriceList(
+				commercePriceList);
 
 		CPInstance cpInstance =
 			CPTestUtil.addCPInstanceWithRandomSkuFromCatalog(
@@ -443,7 +448,8 @@ public class CommerceGrossPricingTest {
 		cpDefinition.setCPTaxCategoryId(_commerceTaxCategoryId);
 		cpDefinition.setTaxExempt(false);
 
-		_cpDefinitionLocalService.updateCPDefinition(cpDefinition);
+		cpDefinition = _cpDefinitionLocalService.updateCPDefinition(
+			cpDefinition);
 
 		double netPrice = 35;
 
@@ -521,8 +527,9 @@ public class CommerceGrossPricingTest {
 
 		commercePromotion.setNetPrice(false);
 
-		CommercePriceListLocalServiceUtil.updateCommercePriceList(
-			commercePromotion);
+		commercePromotion =
+			CommercePriceListLocalServiceUtil.updateCommercePriceList(
+				commercePromotion);
 
 		CPInstance cpInstance =
 			CPTestUtil.addCPInstanceWithRandomSkuFromCatalog(
@@ -533,7 +540,8 @@ public class CommerceGrossPricingTest {
 		cpDefinition.setCPTaxCategoryId(_commerceTaxCategoryId);
 		cpDefinition.setTaxExempt(false);
 
-		_cpDefinitionLocalService.updateCPDefinition(cpDefinition);
+		cpDefinition = _cpDefinitionLocalService.updateCPDefinition(
+			cpDefinition);
 
 		double netPrice = 20;
 
@@ -619,8 +627,9 @@ public class CommerceGrossPricingTest {
 
 		commercePriceList1.setNetPrice(false);
 
-		CommercePriceListLocalServiceUtil.updateCommercePriceList(
-			commercePriceList1);
+		commercePriceList1 =
+			CommercePriceListLocalServiceUtil.updateCommercePriceList(
+				commercePriceList1);
 
 		CommercePriceList basePriceList =
 			CommercePriceListTestUtil.addCommercePriceList(
@@ -635,7 +644,8 @@ public class CommerceGrossPricingTest {
 		cpDefinition.setCPTaxCategoryId(_commerceTaxCategoryId);
 		cpDefinition.setTaxExempt(false);
 
-		_cpDefinitionLocalService.updateCPDefinition(cpDefinition);
+		cpDefinition = _cpDefinitionLocalService.updateCPDefinition(
+			cpDefinition);
 
 		BigDecimal price1 = new BigDecimal("20");
 
@@ -712,8 +722,9 @@ public class CommerceGrossPricingTest {
 
 		commercePriceList1.setNetPrice(false);
 
-		CommercePriceListLocalServiceUtil.updateCommercePriceList(
-			commercePriceList1);
+		commercePriceList1 =
+			CommercePriceListLocalServiceUtil.updateCommercePriceList(
+				commercePriceList1);
 
 		_commercePriceListAccountRelLocalService.addCommercePriceListAccountRel(
 			_user.getUserId(), commercePriceList1.getCommercePriceListId(),
@@ -726,8 +737,9 @@ public class CommerceGrossPricingTest {
 
 		basePriceList.setNetPrice(false);
 
-		CommercePriceListLocalServiceUtil.updateCommercePriceList(
-			basePriceList);
+		basePriceList =
+			CommercePriceListLocalServiceUtil.updateCommercePriceList(
+				basePriceList);
 
 		CommercePricingClass commercePricingClass =
 			_commercePricingClassLocalService.addCommercePricingClass(
@@ -751,7 +763,8 @@ public class CommerceGrossPricingTest {
 		cpDefinition.setCPTaxCategoryId(_commerceTaxCategoryId);
 		cpDefinition.setTaxExempt(false);
 
-		_cpDefinitionLocalService.updateCPDefinition(cpDefinition);
+		cpDefinition = _cpDefinitionLocalService.updateCPDefinition(
+			cpDefinition);
 
 		_commercePricingClassCPDefinitionRelLocalService.
 			addCommercePricingClassCPDefinitionRel(
@@ -847,8 +860,9 @@ public class CommerceGrossPricingTest {
 
 		commercePriceList1.setNetPrice(false);
 
-		CommercePriceListLocalServiceUtil.updateCommercePriceList(
-			commercePriceList1);
+		commercePriceList1 =
+			CommercePriceListLocalServiceUtil.updateCommercePriceList(
+				commercePriceList1);
 
 		_commercePriceListAccountRelLocalService.addCommercePriceListAccountRel(
 			_user.getUserId(), commercePriceList1.getCommercePriceListId(),
@@ -861,8 +875,9 @@ public class CommerceGrossPricingTest {
 
 		basePriceList.setNetPrice(false);
 
-		CommercePriceListLocalServiceUtil.updateCommercePriceList(
-			basePriceList);
+		basePriceList =
+			CommercePriceListLocalServiceUtil.updateCommercePriceList(
+				basePriceList);
 
 		CPInstance cpInstance =
 			CPTestUtil.addCPInstanceWithRandomSkuFromCatalog(
@@ -873,7 +888,8 @@ public class CommerceGrossPricingTest {
 		cpDefinition.setCPTaxCategoryId(_commerceTaxCategoryId);
 		cpDefinition.setTaxExempt(false);
 
-		_cpDefinitionLocalService.updateCPDefinition(cpDefinition);
+		cpDefinition = _cpDefinitionLocalService.updateCPDefinition(
+			cpDefinition);
 
 		BigDecimal price1 = new BigDecimal("20");
 
@@ -947,8 +963,9 @@ public class CommerceGrossPricingTest {
 
 		commercePriceList.setNetPrice(false);
 
-		CommercePriceListLocalServiceUtil.updateCommercePriceList(
-			commercePriceList);
+		commercePriceList =
+			CommercePriceListLocalServiceUtil.updateCommercePriceList(
+				commercePriceList);
 
 		CPInstance cpInstance =
 			CPTestUtil.addCPInstanceWithRandomSkuFromCatalog(
@@ -959,7 +976,8 @@ public class CommerceGrossPricingTest {
 		cpDefinition.setCPTaxCategoryId(_commerceTaxCategoryId);
 		cpDefinition.setTaxExempt(false);
 
-		_cpDefinitionLocalService.updateCPDefinition(cpDefinition);
+		cpDefinition = _cpDefinitionLocalService.updateCPDefinition(
+			cpDefinition);
 
 		double netPrice1 = 50;
 
@@ -1067,8 +1085,9 @@ public class CommerceGrossPricingTest {
 
 		commercePromotion.setNetPrice(false);
 
-		CommercePriceListLocalServiceUtil.updateCommercePriceList(
-			commercePromotion);
+		commercePromotion =
+			CommercePriceListLocalServiceUtil.updateCommercePriceList(
+				commercePromotion);
 
 		CPInstance cpInstance =
 			CPTestUtil.addCPInstanceWithRandomSkuFromCatalog(
@@ -1079,7 +1098,8 @@ public class CommerceGrossPricingTest {
 		cpDefinition.setCPTaxCategoryId(_commerceTaxCategoryId);
 		cpDefinition.setTaxExempt(false);
 
-		_cpDefinitionLocalService.updateCPDefinition(cpDefinition);
+		cpDefinition = _cpDefinitionLocalService.updateCPDefinition(
+			cpDefinition);
 
 		BigDecimal price1 = BigDecimal.valueOf(20);
 
@@ -1179,8 +1199,9 @@ public class CommerceGrossPricingTest {
 
 		commercePriceList1.setNetPrice(false);
 
-		CommercePriceListLocalServiceUtil.updateCommercePriceList(
-			commercePriceList1);
+		commercePriceList1 =
+			CommercePriceListLocalServiceUtil.updateCommercePriceList(
+				commercePriceList1);
 
 		CPInstance cpInstance =
 			CPTestUtil.addCPInstanceWithRandomSkuFromCatalog(
@@ -1191,7 +1212,8 @@ public class CommerceGrossPricingTest {
 		cpDefinition.setCPTaxCategoryId(_commerceTaxCategoryId);
 		cpDefinition.setTaxExempt(false);
 
-		_cpDefinitionLocalService.updateCPDefinition(cpDefinition);
+		cpDefinition = _cpDefinitionLocalService.updateCPDefinition(
+			cpDefinition);
 
 		double netPrice1 = 20;
 
@@ -1364,8 +1386,9 @@ public class CommerceGrossPricingTest {
 
 		commercePriceList1.setNetPrice(false);
 
-		CommercePriceListLocalServiceUtil.updateCommercePriceList(
-			commercePriceList1);
+		commercePriceList1 =
+			CommercePriceListLocalServiceUtil.updateCommercePriceList(
+				commercePriceList1);
 
 		_commercePriceListAccountRelLocalService.addCommercePriceListAccountRel(
 			_user.getUserId(), commercePriceList1.getCommercePriceListId(),
@@ -1381,7 +1404,8 @@ public class CommerceGrossPricingTest {
 		cpDefinition.setCPTaxCategoryId(_commerceTaxCategoryId);
 		cpDefinition.setTaxExempt(false);
 
-		_cpDefinitionLocalService.updateCPDefinition(cpDefinition);
+		cpDefinition = _cpDefinitionLocalService.updateCPDefinition(
+			cpDefinition);
 
 		double netPrice1 = 20;
 
@@ -1459,8 +1483,9 @@ public class CommerceGrossPricingTest {
 
 		commercePromotion.setNetPrice(false);
 
-		CommercePriceListLocalServiceUtil.updateCommercePriceList(
-			commercePromotion);
+		commercePromotion =
+			CommercePriceListLocalServiceUtil.updateCommercePriceList(
+				commercePromotion);
 
 		_commercePriceListAccountRelLocalService.addCommercePriceListAccountRel(
 			_user.getUserId(), commercePromotion.getCommercePriceListId(),
@@ -1528,8 +1553,9 @@ public class CommerceGrossPricingTest {
 
 		commercePriceList1.setNetPrice(false);
 
-		CommercePriceListLocalServiceUtil.updateCommercePriceList(
-			commercePriceList1);
+		commercePriceList1 =
+			CommercePriceListLocalServiceUtil.updateCommercePriceList(
+				commercePriceList1);
 
 		_commercePriceListAccountRelLocalService.addCommercePriceListAccountRel(
 			_user.getUserId(), commercePriceList1.getCommercePriceListId(),
@@ -1545,7 +1571,8 @@ public class CommerceGrossPricingTest {
 		cpDefinition.setCPTaxCategoryId(_commerceTaxCategoryId);
 		cpDefinition.setTaxExempt(false);
 
-		_cpDefinitionLocalService.updateCPDefinition(cpDefinition);
+		cpDefinition = _cpDefinitionLocalService.updateCPDefinition(
+			cpDefinition);
 
 		double netPrice1 = 20;
 
@@ -1623,8 +1650,9 @@ public class CommerceGrossPricingTest {
 
 		commercePromotion.setNetPrice(false);
 
-		CommercePriceListLocalServiceUtil.updateCommercePriceList(
-			commercePromotion);
+		commercePromotion =
+			CommercePriceListLocalServiceUtil.updateCommercePriceList(
+				commercePromotion);
 
 		_commercePriceListAccountRelLocalService.addCommercePriceListAccountRel(
 			_user.getUserId(), commercePromotion.getCommercePriceListId(),

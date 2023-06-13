@@ -158,7 +158,8 @@ public class CommerceShipmentTest {
 			commerceOrder.setCommerceShippingMethodId(
 				commerceShippingMethod.getCommerceShippingMethodId());
 
-			_commerceOrderLocalService.updateCommerceOrder(commerceOrder);
+			commerceOrder = _commerceOrderLocalService.updateCommerceOrder(
+				commerceOrder);
 
 			_commerceOrders.add(commerceOrder);
 
@@ -417,7 +418,8 @@ public class CommerceShipmentTest {
 
 		commerceOrder.setShippingDiscountPercentageLevel1(expectedL1Discount);
 
-		_commerceOrderLocalService.updateCommerceOrder(commerceOrder);
+		commerceOrder = _commerceOrderLocalService.updateCommerceOrder(
+			commerceOrder);
 
 		_commerceOrders.add(commerceOrder);
 
@@ -561,7 +563,8 @@ public class CommerceShipmentTest {
 
 		cpDefinition.setShippable(false);
 
-		_cpDefinitionLocalService.updateCPDefinition(cpDefinition);
+		cpDefinition = _cpDefinitionLocalService.updateCPDefinition(
+			cpDefinition);
 
 		cpInstance = _cpInstanceLocalService.getCPInstance(
 			cpDefinition.getCPDefinitionId(), cpInstance.getSku());
@@ -815,7 +818,8 @@ public class CommerceShipmentTest {
 
 		commerceOrder.setOrderStatus(CommerceOrderConstants.ORDER_STATUS_OPEN);
 
-		_commerceOrderLocalService.updateCommerceOrder(commerceOrder);
+		commerceOrder = _commerceOrderLocalService.updateCommerceOrder(
+			commerceOrder);
 
 		_commerceOrders.add(commerceOrder);
 

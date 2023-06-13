@@ -97,7 +97,8 @@ public class CommerceDeliverySubscriptionsTest {
 		_commerceOrder.setPaymentStatus(
 			CommerceOrderPaymentConstants.STATUS_COMPLETED);
 
-		CommerceOrderLocalServiceUtil.updateCommerceOrder(_commerceOrder);
+		_commerceOrder = CommerceOrderLocalServiceUtil.updateCommerceOrder(
+			_commerceOrder);
 
 		_commerceOrder = _commerceOrderEngine.checkoutCommerceOrder(
 			_commerceOrder, _user.getUserId());
@@ -193,7 +194,8 @@ public class CommerceDeliverySubscriptionsTest {
 		_commerceOrder.setPaymentStatus(
 			CommerceOrderPaymentConstants.STATUS_COMPLETED);
 
-		CommerceOrderLocalServiceUtil.updateCommerceOrder(_commerceOrder);
+		_commerceOrder = CommerceOrderLocalServiceUtil.updateCommerceOrder(
+			_commerceOrder);
 
 		_commerceOrder = _commerceOrderEngine.checkoutCommerceOrder(
 			_commerceOrder, _user.getUserId());

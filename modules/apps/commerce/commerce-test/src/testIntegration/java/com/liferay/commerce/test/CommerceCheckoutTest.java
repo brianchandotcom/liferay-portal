@@ -719,8 +719,9 @@ public class CommerceCheckoutTest {
 
 		commerceOrderItem.setQuantity(stockQuantity);
 
-		_commerceOrderItemLocalService.updateCommerceOrderItem(
-			commerceOrderItem);
+		commerceOrderItem =
+			_commerceOrderItemLocalService.updateCommerceOrderItem(
+				commerceOrderItem);
 
 		_commerceOrderEngine.checkoutCommerceOrder(
 			commerceOrder, _user.getUserId());

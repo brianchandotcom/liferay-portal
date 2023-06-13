@@ -135,8 +135,9 @@ public class CommerceProductPriceCalculationWithTaxV2Test {
 
 		commercePriceList.setNetPrice(false);
 
-		CommercePriceListLocalServiceUtil.updateCommercePriceList(
-			commercePriceList);
+		commercePriceList =
+			CommercePriceListLocalServiceUtil.updateCommercePriceList(
+				commercePriceList);
 
 		CPInstance cpInstance =
 			CPTestUtil.addCPInstanceWithRandomSkuFromCatalog(
@@ -147,7 +148,8 @@ public class CommerceProductPriceCalculationWithTaxV2Test {
 		cpDefinition.setCPTaxCategoryId(cpTaxCategoryId);
 		cpDefinition.setTaxExempt(false);
 
-		_cpDefinitionLocalService.updateCPDefinition(cpDefinition);
+		cpDefinition = _cpDefinitionLocalService.updateCPDefinition(
+			cpDefinition);
 
 		BigDecimal price = new BigDecimal("111");
 
@@ -221,8 +223,9 @@ public class CommerceProductPriceCalculationWithTaxV2Test {
 
 		commercePriceList.setNetPrice(true);
 
-		CommercePriceListLocalServiceUtil.updateCommercePriceList(
-			commercePriceList);
+		commercePriceList =
+			CommercePriceListLocalServiceUtil.updateCommercePriceList(
+				commercePriceList);
 
 		CPInstance cpInstance =
 			CPTestUtil.addCPInstanceWithRandomSkuFromCatalog(
@@ -233,7 +236,8 @@ public class CommerceProductPriceCalculationWithTaxV2Test {
 		cpDefinition.setCPTaxCategoryId(cpTaxCategoryId);
 		cpDefinition.setTaxExempt(false);
 
-		_cpDefinitionLocalService.updateCPDefinition(cpDefinition);
+		cpDefinition = _cpDefinitionLocalService.updateCPDefinition(
+			cpDefinition);
 
 		BigDecimal price = new BigDecimal("111");
 

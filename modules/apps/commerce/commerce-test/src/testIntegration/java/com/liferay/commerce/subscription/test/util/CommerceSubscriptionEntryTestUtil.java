@@ -62,7 +62,8 @@ public class CommerceSubscriptionEntryTestUtil {
 		commerceOrder.setShippingAddressId(
 			commerceAddress.getCommerceAddressId());
 
-		CommerceOrderLocalServiceUtil.updateCommerceOrder(commerceOrder);
+		commerceOrder = CommerceOrderLocalServiceUtil.updateCommerceOrder(
+			commerceOrder);
 
 		CommerceTestUtil.addCommerceOrderItem(
 			commerceOrder.getCommerceOrderId(), cpInstance.getCPInstanceId(),

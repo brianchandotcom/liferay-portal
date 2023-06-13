@@ -124,7 +124,7 @@ public class CommerceOrderItemIndexerTest {
 
 		cpInstance.setSku(sku);
 
-		_cpInstanceLocalService.updateCPInstance(cpInstance);
+		cpInstance = _cpInstanceLocalService.updateCPInstance(cpInstance);
 
 		CommerceTestUtil.updateBackOrderCPDefinitionInventory(
 			cpInstance.getCPDefinition());
@@ -167,7 +167,7 @@ public class CommerceOrderItemIndexerTest {
 
 			cpInstance.setPurchasable(true);
 
-			_cpInstanceLocalService.updateCPInstance(cpInstance);
+			cpInstance = _cpInstanceLocalService.updateCPInstance(cpInstance);
 
 			CommerceTestUtil.updateBackOrderCPDefinitionInventory(
 				cpInstance.getCPDefinition());

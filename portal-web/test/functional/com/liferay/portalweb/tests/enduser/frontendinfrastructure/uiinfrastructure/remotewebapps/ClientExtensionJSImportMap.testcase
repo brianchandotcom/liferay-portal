@@ -40,6 +40,44 @@ definition {
 		}
 	}
 
+	@description = "LPS-180167. Verify if is possible cancel changes when clicks on Cancel button"
+	@priority = 5
+	test CanCancelChanges {
+		task ("And fills Bare Specifier field") {
+			Type.typeNoMouseOver(
+				key_text = "Name",
+				locator1 = "TextInput#ANY",
+				value1 = "JS Import Map Entry Test");
+		}
+
+		task ("And fills Bare Specifier field") {
+			Type.typeNoMouseOver(
+				key_text = "Bare Specifier",
+				locator1 = "TextInput#ANY",
+				value1 = "bare-specifier-test");
+		}
+
+		task ("And fills Bare Specifier field") {
+			Type.typeNoMouseOver(
+				key_text = "JavaScript URL",
+				locator1 = "TextInput#ANY",
+				value1 = "https://liferay.github.io/liferay-frontend-projects/");
+		}
+
+		task ("And clicks on Cancel button") {
+			Button.clickCancel();
+		}
+
+		task ("Then entry name is not present on Client Extension admin page") {
+			ClientExtensionGeneral.goToRemoteAppsPortlet();
+
+			AssertElementNotPresent(
+				key_tableEntryName = "Name",
+				locator1 = "ClientExtension#TABLE_ENTRY_NAME_REMOTE_TABLE",
+				value1 = "Change Date Format");
+		}
+	}
+
 	@description = "LPS-180167. Verify if has possible change the language on language icon"
 	@priority = 3
 	test CanChangeLanguage {

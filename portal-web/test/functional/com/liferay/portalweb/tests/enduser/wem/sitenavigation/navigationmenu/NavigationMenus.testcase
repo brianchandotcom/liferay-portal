@@ -413,6 +413,105 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-172782. The navigation menu creator could add sibling item."
+	@priority = 5
+	test AddSiblingNavigationMenuItems {
+		task ("Given a navigation menu creator has a navigation menu with an item") {
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Page Name");
+
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = ${randomSiteName},
+				title = "Web Content Title");
+
+			JSONSitenavigation.addSiteNavigationMenu(
+				groupName = ${randomSiteName},
+				siteNavigationMenuName = "Navigation Menu Name");
+
+			JSONSitenavigation.addSiteNavigationMenuItem(
+				groupName = ${randomSiteName},
+				privateLayout = "false",
+				siteNavigationMenuItemName = "Test Page Name",
+				siteNavigationMenuName = "Navigation Menu Name",
+				type = "layout");
+		}
+
+		task ("When the navigation menu creator hovers on the card body of page type item") {
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = ${siteURLKey});
+
+			NavigationMenusAdmin.editMenu(navigationMenuName = "Navigation Menu Name");
+
+			MouseOver(
+				key_itemName = "Test Page Name",
+				locator1 = "SiteNavigationMenu#ITEM_ENTRY");
+		}
+
+		task ("Then the navigation menu creators sees two plus icons on the card") {
+			for (var relationship : list "before,after") {
+				AssertVisible(
+					key_itemName = "Test Page Name",
+					key_relationship = ${relationship},
+					locator1 = "SiteNavigationMenu#ITEM_ENTRY_ADD_ICON");
+			}
+		}
+
+		task ("When the navigation menu creator hovers on one plus icon") {
+			MouseOver.javaScriptFocus(
+				key_itemName = "Test Page Name",
+				key_relationship = "before",
+				locator1 = "SiteNavigationMenu#ITEM_ENTRY_ADD_ICON");
+		}
+
+		task ("Then the navigation menu creators sees tooltip") {
+			AssertVisible(
+				key_content = "Add Item at the Same Level",
+				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+		}
+
+		task ("When the navigation menu creator adds a previous sibling item via above plus icon") {
+			NavigationMenusAdmin.addSiblingItem(
+				item = "URL",
+				itemName = "Test Page Name",
+				relationship = "before",
+				url = "https://www.liferay.com",
+				urlName = "Liferay");
+		}
+
+		task ("Then the navigation menu creator sees the added item at the same level with page type item") {
+			NavigationMenusAdmin.viewItemOrder(
+				index = 1,
+				itemName = "Liferay");
+
+			NavigationMenusAdmin.viewItemOrder(
+				index = 2,
+				itemName = "Test Page Name");
+
+			NavigationMenusAdmin.viewItemNotNested(itemNameList = "Liferay,Test Page Name");
+		}
+
+		task ("When the navigation menu creator adds a following sibling item via below plus icon") {
+			NavigationMenusAdmin.addSiblingItem(
+				assetTitle = "Web Content Title",
+				item = "Web Content Article",
+				itemName = "Test Page Name",
+				relationship = "after");
+		}
+
+		task ("Then the navigation menu creators sees the added item at the same level with page type item") {
+			NavigationMenusAdmin.viewItemOrder(
+				index = 2,
+				itemName = "Test Page Name");
+
+			NavigationMenusAdmin.viewItemOrder(
+				index = 3,
+				itemName = "Web Content Title");
+
+			NavigationMenusAdmin.viewItemNotNested(itemNameList = "Web Content Title");
+		}
+	}
+
 	@description = "This is a test for LPS-120277. When add an URL type item, the blank target is set up after checking Open in a new tab."
 	@priority = 5
 	@uitest

@@ -42,9 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	configurationPid = "com.liferay.document.library.internal.configuration.DLFileOrderConfiguration",
 	property = Constants.SERVICE_PID + "=com.liferay.document.library.internal.configuration.DLFileOrderConfiguration.scoped",
-	service = {
-		DLFileOrderManagedServiceFactory.class, ManagedServiceFactory.class
-	}
+	service = ManagedServiceFactory.class
 )
 public class DLFileOrderManagedServiceFactory implements ManagedServiceFactory {
 

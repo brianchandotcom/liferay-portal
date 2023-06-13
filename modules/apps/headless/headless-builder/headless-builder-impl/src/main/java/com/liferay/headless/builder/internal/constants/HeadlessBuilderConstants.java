@@ -20,6 +20,10 @@ package com.liferay.headless.builder.internal.constants;
  */
 public class HeadlessBuilderConstants {
 
+	public static final String API_APPLICATION_BASE_URL_FIELD_NAME = "baseURL";
+
+	public static final String API_APPLICATION_ERC = "MSOD_API_APPLICATION";
+
 	public static final String BASE_PATH = "/headless-builder-old";
 
 	public static final String OPERATION_NAME = "operation.name";

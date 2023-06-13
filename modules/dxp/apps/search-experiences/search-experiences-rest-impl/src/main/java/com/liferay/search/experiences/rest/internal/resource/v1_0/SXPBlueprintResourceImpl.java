@@ -94,15 +94,18 @@ public class SXPBlueprintResourceImpl extends BaseSXPBlueprintResourceImpl {
 			String externalReferenceCode)
 		throws Exception {
 
+		com.liferay.search.experiences.model.SXPBlueprint sxpBlueprint =
+			_sxpBlueprintService.getSXPBlueprintByExternalReferenceCode(
+				contextCompany.getCompanyId(), externalReferenceCode);
+
 		return _sxpBlueprintDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
 				contextAcceptLanguage.isAcceptAllLanguages(), new HashMap<>(),
 				_dtoConverterRegistry, contextHttpServletRequest,
-				externalReferenceCode,
+				sxpBlueprint.getSXPBlueprintId(),
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser),
-			_sxpBlueprintService.getSXPBlueprintByExternalReferenceCode(
-				contextCompany.getCompanyId(), externalReferenceCode));
+			sxpBlueprint);
 	}
 
 	@Override

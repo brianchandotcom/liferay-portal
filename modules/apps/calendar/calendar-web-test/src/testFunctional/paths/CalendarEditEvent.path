@@ -35,12 +35,12 @@
 </tr>
 <tr>
 	<td>START_DATE_TIME</td>
-	<td>//input[contains(@name,'_startTime') and @type='time']</td>
+	<td>//input[contains(@id,'_startTimeTime')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>START_DATE_TIME_24_HOUR</td>
-	<td>//input[contains(@name,'_startTime') and @type='time']</td>
+	<td>//input[contains(@id,'_startTimeTime')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -63,12 +63,12 @@
 </tr>
 <tr>
 	<td>END_DATE_TIME</td>
-	<td>//input[contains(@name,'_endTime') and @type='time']</td>
+	<td>//input[contains(@id,'_endTimeTime')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>END_DATE_TIME_24_HOUR</td>
-	<td>//input[contains(@name,'_endTime') and @type='time']</td>
+	<td>//input[contains(@id,'_endTimeTime')]</td>
 	<td></td>
 </tr>
 <tr>

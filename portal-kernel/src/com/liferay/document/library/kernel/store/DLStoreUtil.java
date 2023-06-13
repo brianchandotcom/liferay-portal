@@ -270,21 +270,6 @@ public class DLStoreUtil {
 			toVersionLabel);
 	}
 
-	/**
-	 * Validates a file's name and data.
-	 *
-	 * @param fileName the file's name
-	 * @param validateFileExtension whether to validate the file's extension
-	 * @param inputStream the file's data (optionally <code>null</code>)
-	 */
-	public static void validate(
-			String fileName, boolean validateFileExtension,
-			InputStream inputStream)
-		throws PortalException {
-
-		_store.validate(fileName, validateFileExtension, inputStream);
-	}
-
 	public void setStore(DLStore store) {
 		_store = store;
 	}

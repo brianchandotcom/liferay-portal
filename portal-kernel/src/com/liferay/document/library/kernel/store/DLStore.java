@@ -90,9 +90,4 @@ public interface DLStore {
 			String fromVersionLabel, String toVersionLabel)
 		throws PortalException;
 
-	public void validate(
-			String fileName, boolean validateFileExtension,
-			InputStream inputStream)
-		throws PortalException;
-
 }

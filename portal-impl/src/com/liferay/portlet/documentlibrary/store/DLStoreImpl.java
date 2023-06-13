@@ -32,8 +32,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.ByteArrayFileInputStream;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.GroupThreadLocal;
-import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.util.PropsValues;
 
@@ -67,7 +65,7 @@ public class DLStoreImpl implements DLStore {
 
 			_validate(
 				dlStoreRequest.getFileName(), null, null,
-				dlStoreRequest.isValidateFileExtension(), null, null);
+				dlStoreRequest.isValidateFileExtension(), null);
 
 			_addFile(dlStoreRequest, dlStoreFileProvider);
 		}
@@ -82,7 +80,7 @@ public class DLStoreImpl implements DLStore {
 
 			_validate(
 				dlStoreRequest.getFileName(), null, null,
-				dlStoreRequest.isValidateFileExtension(), null, null);
+				dlStoreRequest.isValidateFileExtension(), null);
 
 			_addFile(dlStoreRequest, dlStoreFileProvider);
 		}
@@ -97,7 +95,7 @@ public class DLStoreImpl implements DLStore {
 
 			_validate(
 				dlStoreRequest.getFileName(), null, null,
-				dlStoreRequest.isValidateFileExtension(), null, null);
+				dlStoreRequest.isValidateFileExtension(), null);
 
 			_addFile(dlStoreRequest, dlStoreFileProvider);
 		}
@@ -141,7 +139,7 @@ public class DLStoreImpl implements DLStore {
 			String versionLabel)
 		throws PortalException {
 
-		_validate(fileName, null, null, false, versionLabel, null);
+		_validate(fileName, null, null, false, versionLabel);
 
 		try {
 			_wrappedStore.deleteFile(
@@ -158,7 +156,7 @@ public class DLStoreImpl implements DLStore {
 			String versionLabel)
 		throws PortalException {
 
-		_validate(fileName, null, null, false, versionLabel, null);
+		_validate(fileName, null, null, false, versionLabel);
 
 		return _wrappedStore.getFileAsStream(
 			companyId, repositoryId, fileName, versionLabel);
@@ -180,7 +178,7 @@ public class DLStoreImpl implements DLStore {
 	public long getFileSize(long companyId, long repositoryId, String fileName)
 		throws PortalException {
 
-		_validate(fileName, null, null, false, null, null);
+		_validate(fileName, null, null, false, null);
 
 		return _wrappedStore.getFileSize(
 			companyId, repositoryId, fileName, StringPool.BLANK);
@@ -192,7 +190,7 @@ public class DLStoreImpl implements DLStore {
 			String versionLabel)
 		throws PortalException {
 
-		_validate(fileName, null, null, false, versionLabel, null);
+		_validate(fileName, null, null, false, versionLabel);
 
 		return _wrappedStore.hasFile(
 			companyId, repositoryId, fileName, versionLabel);
@@ -209,7 +207,7 @@ public class DLStoreImpl implements DLStore {
 				dlStoreRequest.getFileName(), dlStoreRequest.getFileExtension(),
 				dlStoreRequest.getSourceFileName(),
 				dlStoreRequest.isValidateFileExtension(),
-				dlStoreRequest.getVersionLabel(), null);
+				dlStoreRequest.getVersionLabel());
 
 			_addFile(dlStoreRequest, dlStoreFileProvider);
 		}
@@ -227,7 +225,7 @@ public class DLStoreImpl implements DLStore {
 				dlStoreRequest.getFileName(), dlStoreRequest.getFileExtension(),
 				dlStoreRequest.getSourceFileName(),
 				dlStoreRequest.isValidateFileExtension(),
-				dlStoreRequest.getVersionLabel(), null);
+				dlStoreRequest.getVersionLabel());
 
 			_addFile(dlStoreRequest, dlStoreFileProvider);
 		}
@@ -292,15 +290,6 @@ public class DLStoreImpl implements DLStore {
 			companyId, repositoryId, fileName, fromVersionLabel);
 	}
 
-	@Override
-	public void validate(
-			String fileName, boolean validateFileExtension,
-			InputStream inputStream)
-		throws PortalException {
-
-		_validate(fileName, null, null, validateFileExtension, null, null);
-	}
-
 	private void _addFile(
 			DLStoreRequest dlStoreRequest,
 			DLStoreFileProvider dlStoreFileProvider)
@@ -343,8 +332,7 @@ public class DLStoreImpl implements DLStore {
 
 	private void _validate(
 			String fileName, String fileExtension, String sourceFileName,
-			boolean validateFileExtension, String versionLabel,
-			InputStream inputStream)
+			boolean validateFileExtension, String versionLabel)
 		throws PortalException {
 
 		DLValidatorUtil.validateFileName(fileName);
@@ -357,12 +345,6 @@ public class DLStoreImpl implements DLStore {
 			fileExtension, sourceFileName);
 
 		DLValidatorUtil.validateVersionLabel(versionLabel);
-
-		if (inputStream != null) {
-			DLValidatorUtil.validateFileSize(
-				GroupThreadLocal.getGroupId(), fileName,
-				MimeTypesUtil.getContentType(fileName), inputStream);
-		}
 	}
 
 	private static volatile Store _store =

@@ -53,4 +53,13 @@ definition {
 			locator1 = "TestraySubtask#SUBTASK_DETAILS");
 	}
 
+	@summary = "This macro assert subtask and task in the sidebar."
+	macro viewSubtaskSidebar {
+		for (var subtaskName : list ${listsubtaskName}) {
+			AssertElementPresent(
+				key_subtaskName = ${subtaskName},
+				locator1 = "TestraySubtask#VIEW_SUBTASK_SIDEBAR");
+		}
+	}
+
 }

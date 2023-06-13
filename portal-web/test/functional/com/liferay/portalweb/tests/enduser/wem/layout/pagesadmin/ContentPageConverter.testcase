@@ -1098,6 +1098,12 @@ definition {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
+		var userEmailAddress = StringUtil.randomString(8);
+		var userFirstName = StringUtil.randomString(8);
+		var userLastName = StringUtil.randomString(8);
+		var userScreenName = StringUtil.randomString(8);
+		var randomRoleKey = StringUtil.randomString(8);
+
 		task ("Add a widget page") {
 			JSONLayout.addPublicLayout(
 				groupName = ${randomSiteName},
@@ -1155,44 +1161,44 @@ definition {
 
 		task ("Add a new user") {
 			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "Userfn",
-				userLastName = "Userln",
-				userScreenName = "usersn");
+				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"),
+				userFirstName = ${userFirstName},
+				userLastName = ${userLastName},
+				userScreenName = StringUtil.toLowerCase(${userScreenName}));
 
 			JSONUser.setFirstPassword(
 				agreeToTermsAndAnswerReminderQuery = "true",
 				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
+				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
 		}
 
 		task ("Add a new site role") {
-			JSONRole.addSiteRole(roleTitle = "Roles Siterole Name");
+			JSONRole.addSiteRole(roleTitle = ${randomRoleKey});
 		}
 
 		task ("Define permission of new site role") {
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW",
 				resourceName = "com_liferay_layout_admin_web_portlet_GroupPagesPortlet",
-				roleTitle = "Roles Siterole Name",
+				roleTitle = ${randomRoleKey},
 				roleType = "site");
 		}
 
 		task ("Assign the user to site") {
 			JSONUser.addUserToSite(
 				groupName = ${randomSiteName},
-				userEmailAddress = "userea@liferay.com");
+				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
 		}
 
 		task ("Assign the user to site role") {
 			JSONRole.assignSiteRoleToUser(
 				groupName = ${randomSiteName},
-				roleTitle = "Roles Siterole Name",
-				userEmailAddress = "userea@liferay.com");
+				roleTitle = ${randomRoleKey},
+				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
 		}
 
 		task ("Sign in as new user") {
-			User.logoutAndLoginPG(userLoginEmailAddress = "userea@liferay.com");
+			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
 		}
 
 		task ("View user has no permission to edit a portlet") {
@@ -1214,7 +1220,7 @@ definition {
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "MANAGE_LAYOUTS",
 				resourceName = "com.liferay.portal.kernel.model.Group",
-				roleTitle = "Roles Siterole Name",
+				roleTitle = ${randomRoleKey},
 				roleType = "site");
 		}
 

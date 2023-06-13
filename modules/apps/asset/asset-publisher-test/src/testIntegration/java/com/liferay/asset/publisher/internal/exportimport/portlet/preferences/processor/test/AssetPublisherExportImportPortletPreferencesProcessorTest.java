@@ -132,7 +132,8 @@ public class AssetPublisherExportImportPortletPreferencesProcessorTest {
 			exportedAssetVocabularyId.substring(
 				0, exportedAssetVocabularyId.indexOf(CharPool.POUND)));
 
-		AssetVocabularyLocalServiceUtil.updateAssetVocabulary(assetVocabulary);
+		assetVocabulary = AssetVocabularyLocalServiceUtil.updateAssetVocabulary(
+			assetVocabulary);
 
 		// Test the import
 
@@ -188,7 +189,8 @@ public class AssetPublisherExportImportPortletPreferencesProcessorTest {
 			exportedAssetCategoryId.substring(
 				0, exportedAssetCategoryId.indexOf(StringPool.POUND)));
 
-		AssetCategoryLocalServiceUtil.updateAssetCategory(assetCategory);
+		assetCategory = AssetCategoryLocalServiceUtil.updateAssetCategory(
+			assetCategory);
 
 		// Test the import
 

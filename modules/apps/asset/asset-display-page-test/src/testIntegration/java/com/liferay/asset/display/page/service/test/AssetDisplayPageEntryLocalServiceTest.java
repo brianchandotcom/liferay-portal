@@ -105,8 +105,9 @@ public class AssetDisplayPageEntryLocalServiceTest {
 
 		layoutPageTemplateEntry.setModifiedDate(originalModifiedDate);
 
-		_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
-			layoutPageTemplateEntry);
+		layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
+				layoutPageTemplateEntry);
 
 		AssetDisplayPageEntryTestUtil.addAssetDisplayPageEntry(
 			_group.getGroupId(), _classNameId, RandomTestUtil.randomLong(),
@@ -317,8 +318,9 @@ public class AssetDisplayPageEntryLocalServiceTest {
 
 		layoutPageTemplateEntry.setModifiedDate(originalModifiedDate);
 
-		_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
-			layoutPageTemplateEntry);
+		layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
+				layoutPageTemplateEntry);
 
 		_assetDisplayPageEntryLocalService.updateAssetDisplayPageEntry(
 			assetDisplayPageEntry.getAssetDisplayPageEntryId(),

@@ -44,6 +44,10 @@ public class CheckboxDDMFormFieldValueAccessor
 
 		Value value = ddmFormFieldValue.getValue();
 
+		if (value == null) {
+			return false;
+		}
+
 		return Boolean.valueOf(value.getString(locale));
 	}
 

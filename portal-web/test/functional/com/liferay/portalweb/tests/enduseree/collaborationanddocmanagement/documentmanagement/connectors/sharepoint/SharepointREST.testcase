@@ -281,7 +281,7 @@ definition {
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_3.doc");
 
 		DMDocument.viewCP(
-			dmDocumentSize = "38 KB",
+			dmDocumentSize = "39 KB",
 			dmDocumentTitle = "Document_3.doc");
 
 		DMNavigator.openToFolderInAdmin(

@@ -323,13 +323,6 @@ public class AntivirusAsyncDLStore implements DLStore {
 	}
 
 	@Override
-	public void validate(String fileName, boolean validateFileExtension)
-		throws PortalException {
-
-		_validate(fileName, null, null, validateFileExtension, null, null);
-	}
-
-	@Override
 	public void validate(
 			String fileName, boolean validateFileExtension,
 			InputStream inputStream)
@@ -337,17 +330,6 @@ public class AntivirusAsyncDLStore implements DLStore {
 
 		_validate(
 			fileName, null, null, validateFileExtension, null, inputStream);
-	}
-
-	@Override
-	public void validate(
-			String fileName, String fileExtension, String sourceFileName,
-			boolean validateFileExtension)
-		throws PortalException {
-
-		_validate(
-			fileName, fileExtension, sourceFileName, validateFileExtension,
-			null, null);
 	}
 
 	private void _registerCallback(DLStoreRequest dlStoreRequest)

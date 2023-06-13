@@ -22,7 +22,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -59,7 +58,7 @@ public class ValidatorTest {
 	}
 
 	@Test
-	public void testCheckWebIdNotValid() throws SQLException {
+	public void testCheckWebIdNotValid() throws Exception {
 		_mockWebIds(false);
 
 		_executeAndAssert(
@@ -70,14 +69,14 @@ public class ValidatorTest {
 	}
 
 	@Test
-	public void testCheckWebIdValid() throws SQLException {
+	public void testCheckWebIdValid() throws Exception {
 		_mockWebIds(true);
 
 		_executeAndAssert(false, false, null);
 	}
 
 	@Test
-	public void testHigherVersionModule() throws SQLException {
+	public void testHigherVersionModule() throws Exception {
 		_mockReleaseSchemaVersion("module2.service", "1.0.0");
 
 		_executeAndAssert(
@@ -88,7 +87,7 @@ public class ValidatorTest {
 	}
 
 	@Test
-	public void testInvalidDestinationReleaseState() throws SQLException {
+	public void testInvalidDestinationReleaseState() throws Exception {
 		List<String> failedServletContextNames = Arrays.asList(
 			"module1", "module2");
 
@@ -105,7 +104,7 @@ public class ValidatorTest {
 	}
 
 	@Test
-	public void testInvalidSourceReleaseState() throws SQLException {
+	public void testInvalidSourceReleaseState() throws Exception {
 		List<String> failedServletContextNames = Arrays.asList(
 			"module1", "module2");
 
@@ -122,7 +121,7 @@ public class ValidatorTest {
 	}
 
 	@Test
-	public void testLowerVersionModule() throws SQLException {
+	public void testLowerVersionModule() throws Exception {
 		_mockReleaseSchemaVersion("module1", "10.0.0");
 
 		_executeAndAssert(
@@ -133,7 +132,7 @@ public class ValidatorTest {
 	}
 
 	@Test
-	public void testMissingDestinationNotServiceModule() throws SQLException {
+	public void testMissingDestinationNotServiceModule() throws Exception {
 		_mockMissingDestinationModule("module1");
 
 		_executeAndAssert(
@@ -143,7 +142,7 @@ public class ValidatorTest {
 	}
 
 	@Test
-	public void testMissingDestinationServiceModule() throws SQLException {
+	public void testMissingDestinationServiceModule() throws Exception {
 		_mockMissingDestinationModule("module2.service");
 
 		_executeAndAssert(
@@ -154,7 +153,7 @@ public class ValidatorTest {
 	}
 
 	@Test
-	public void testMissingSourceModule() throws SQLException {
+	public void testMissingSourceModule() throws Exception {
 		_mockMissingSourceModule("module1");
 
 		_executeAndAssert(
@@ -165,7 +164,7 @@ public class ValidatorTest {
 	}
 
 	@Test
-	public void testMissingTablesInBothDatabases() throws SQLException {
+	public void testMissingTablesInBothDatabases() throws Exception {
 		_mockMissingTables(
 			new ArrayList<>(
 				Arrays.asList("table1", "table2", "table3", "table5")),
@@ -180,7 +179,7 @@ public class ValidatorTest {
 	}
 
 	@Test
-	public void testMissingTablesInDestination() throws SQLException {
+	public void testMissingTablesInDestination() throws Exception {
 		_mockMissingTables(
 			new ArrayList<>(
 				Arrays.asList(
@@ -195,7 +194,7 @@ public class ValidatorTest {
 	}
 
 	@Test
-	public void testMissingTablesInSource() throws SQLException {
+	public void testMissingTablesInSource() throws Exception {
 		_mockMissingTables(
 			new ArrayList<>(Arrays.asList("table1", "table3", "table4")),
 			new ArrayList<>(
@@ -210,7 +209,7 @@ public class ValidatorTest {
 	}
 
 	@Test
-	public void testUnverifiedDestinationModule() throws SQLException {
+	public void testUnverifiedDestinationModule() throws Exception {
 		_mockupReleaseVerified("module2", false);
 
 		_executeAndAssert(
@@ -221,7 +220,7 @@ public class ValidatorTest {
 	}
 
 	@Test
-	public void testUnverifiedSourceModule() throws SQLException {
+	public void testUnverifiedSourceModule() throws Exception {
 		_mockupReleaseVerified("module2.service", true);
 
 		_executeAndAssert(
@@ -242,7 +241,7 @@ public class ValidatorTest {
 
 	private void _executeAndAssert(
 			boolean hasErrors, boolean hasWarnings, List<String> messages)
-		throws SQLException {
+		throws Exception {
 
 		Recorder recorder = Validator.validateDatabases(
 			_sourceConnection, _destinationConnection);
@@ -338,13 +337,13 @@ public class ValidatorTest {
 		List<String> sourceTableNames, List<String> destinationTableNames) {
 
 		_databaseMockedStatic.when(
-			() -> DatabaseUtil.getTableNames(_sourceConnection)
+			() -> DatabaseUtil.getPartitionedTableNames(_sourceConnection)
 		).thenReturn(
 			sourceTableNames
 		);
 
 		_databaseMockedStatic.when(
-			() -> DatabaseUtil.getTableNames(_destinationConnection)
+			() -> DatabaseUtil.getPartitionedTableNames(_destinationConnection)
 		).thenReturn(
 			destinationTableNames
 		);

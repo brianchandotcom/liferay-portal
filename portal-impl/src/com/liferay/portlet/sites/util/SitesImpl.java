@@ -1755,7 +1755,7 @@ public class SitesImpl implements Sites {
 	protected void doResetPrototype(Layout layout) throws PortalException {
 		layout.setModifiedDate(null);
 
-		LayoutLocalServiceUtil.updateLayout(layout);
+		layout = LayoutLocalServiceUtil.updateLayout(layout);
 
 		doResetPrototype(layout.getLayoutSet());
 	}

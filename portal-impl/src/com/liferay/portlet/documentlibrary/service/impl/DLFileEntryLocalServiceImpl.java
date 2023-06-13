@@ -1815,7 +1815,7 @@ public class DLFileEntryLocalServiceImpl
 
 		dlFileEntry.setFileEntryTypeId(fileEntryTypeId);
 
-		dlFileEntryLocalService.updateDLFileEntry(dlFileEntry);
+		dlFileEntry = dlFileEntryLocalService.updateDLFileEntry(dlFileEntry);
 
 		DLFileVersion dlFileVersion =
 			_dlFileVersionLocalService.getLatestFileVersion(

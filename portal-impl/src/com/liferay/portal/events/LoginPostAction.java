@@ -164,7 +164,7 @@ public class LoginPostAction extends Action {
 
 			user.setPasswordModifiedDate(date);
 
-			UserLocalServiceUtil.updateUser(user);
+			user = UserLocalServiceUtil.updateUser(user);
 		}
 
 		Date passwordModifiedDate = user.getPasswordModifiedDate();

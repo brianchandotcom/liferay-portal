@@ -60,7 +60,8 @@ public class WebDAVPropsLocalServiceImpl
 			webDAVProps.setClassNameId(classNameId);
 			webDAVProps.setClassPK(classPK);
 
-			webDAVPropsLocalService.updateWebDAVProps(webDAVProps);
+			webDAVProps = webDAVPropsLocalService.updateWebDAVProps(
+				webDAVProps);
 		}
 
 		return webDAVProps;

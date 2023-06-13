@@ -294,7 +294,7 @@ public class UpdatePasswordAction implements Action {
 
 				user.setReminderQueryAnswer(null);
 
-				UserLocalServiceUtil.updateUser(user);
+				user = UserLocalServiceUtil.updateUser(user);
 			}
 
 			HttpSession httpSession = httpServletRequest.getSession();

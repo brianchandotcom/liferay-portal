@@ -127,16 +127,16 @@ public class DLFileOrderManagedServiceFactory implements ManagedServiceFactory {
 		long companyId) {
 
 		return _getDLFileOrderConfiguration(
-			companyId, _companyConfigurationBeans,
+			companyId, _companyDLFileOrderConfigurations,
 			() -> _systemDLFileOrderConfiguration);
 	}
 
 	private DLFileOrderConfiguration _getDLFileOrderConfiguration(
-		long key, Map<Long, DLFileOrderConfiguration> configurationBeans,
+		long key, Map<Long, DLFileOrderConfiguration> dlFileOrderConfigurations,
 		Supplier<DLFileOrderConfiguration> supplier) {
 
-		if (configurationBeans.containsKey(key)) {
-			return configurationBeans.get(key);
+		if (dlFileOrderConfigurations.containsKey(key)) {
+			return dlFileOrderConfigurations.get(key);
 		}
 
 		return supplier.get();
@@ -146,7 +146,7 @@ public class DLFileOrderManagedServiceFactory implements ManagedServiceFactory {
 		long groupId) {
 
 		return _getDLFileOrderConfiguration(
-			groupId, _groupConfigurationBeans,
+			groupId, _groupDLFileOrderConfigurations,
 			() -> {
 				Group group = _groupLocalService.fetchGroup(groupId);
 
@@ -164,22 +164,22 @@ public class DLFileOrderManagedServiceFactory implements ManagedServiceFactory {
 		if (_companyIds.containsKey(pid)) {
 			long companyId = _companyIds.remove(pid);
 
-			_companyConfigurationBeans.remove(companyId);
+			_companyDLFileOrderConfigurations.remove(companyId);
 
-			_groupConfigurationBeans.clear();
+			_groupDLFileOrderConfigurations.clear();
 			_groupIds.clear();
 		}
 		else if (_groupIds.containsKey(pid)) {
 			long groupId = _groupIds.remove(pid);
 
-			_groupConfigurationBeans.remove(groupId);
+			_groupDLFileOrderConfigurations.remove(groupId);
 		}
 	}
 
 	private void _updateCompanyConfiguration(
 		long companyId, String pid, Dictionary<String, ?> dictionary) {
 
-		_companyConfigurationBeans.put(
+		_companyDLFileOrderConfigurations.put(
 			companyId,
 			ConfigurableUtil.createConfigurable(
 				DLFileOrderConfiguration.class, dictionary));
@@ -189,7 +189,7 @@ public class DLFileOrderManagedServiceFactory implements ManagedServiceFactory {
 	private void _updateGroupConfiguration(
 		long groupId, String pid, Dictionary<String, ?> dictionary) {
 
-		_groupConfigurationBeans.put(
+		_groupDLFileOrderConfigurations.put(
 			groupId,
 			ConfigurableUtil.createConfigurable(
 				DLFileOrderConfiguration.class, dictionary));
@@ -197,9 +197,9 @@ public class DLFileOrderManagedServiceFactory implements ManagedServiceFactory {
 	}
 
 	private final Map<Long, DLFileOrderConfiguration>
-		_companyConfigurationBeans = new ConcurrentHashMap<>();
+		_companyDLFileOrderConfigurations = new ConcurrentHashMap<>();
 	private final Map<String, Long> _companyIds = new ConcurrentHashMap<>();
-	private final Map<Long, DLFileOrderConfiguration> _groupConfigurationBeans =
+	private final Map<Long, DLFileOrderConfiguration> _groupDLFileOrderConfigurations =
 		new ConcurrentHashMap<>();
 	private final Map<String, Long> _groupIds = new ConcurrentHashMap<>();
 

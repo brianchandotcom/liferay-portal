@@ -56,16 +56,16 @@ public class EventHandlerContext {
 		return _jenkinsQueue;
 	}
 
-	public void setJMSEventHandler(JMSEventHandler jmsEventHandler) {
-		_jmsEventHandler = jmsEventHandler;
-	}
-
 	public JMSEventHandler getJMSEventHandler() {
 		return _jmsEventHandler;
 	}
 
 	public ProjectRepository getProjectRepository() {
 		return _projectRepository;
+	}
+
+	public void setJMSEventHandler(JMSEventHandler jmsEventHandler) {
+		_jmsEventHandler = jmsEventHandler;
 	}
 
 	@Autowired

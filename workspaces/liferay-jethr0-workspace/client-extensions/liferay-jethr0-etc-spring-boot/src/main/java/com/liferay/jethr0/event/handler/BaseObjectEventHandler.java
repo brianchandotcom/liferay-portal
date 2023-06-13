@@ -40,14 +40,15 @@ public abstract class BaseObjectEventHandler extends BaseEventHandler {
 			throw new Exception("Invalid Project JSON object");
 		}
 
-		if (!projectJSONObject.has("id")) {
+		long projectId = projectJSONObject.optLong("id");
+
+		if (projectId <= 0) {
 			throw new Exception("Missing Project 'id'");
 		}
 
 		ProjectRepository projectRepository = getProjectRepository();
 
-		Project project = projectRepository.getById(
-			projectJSONObject.getLong("id"));
+		Project project = projectRepository.getById(projectId);
 
 		BuildRepository buildRepository = getBuildRepository();
 

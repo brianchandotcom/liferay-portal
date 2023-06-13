@@ -1203,6 +1203,8 @@ definition {
 	test CanFilterByCategories {
 		property custom.properties = "feature.flag.LPS-84424=true";
 
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
+
 		JSONCategory.addVocabulary(
 			groupName = "Guest",
 			title = "DXP Site Vocabulary");
@@ -1254,7 +1256,7 @@ definition {
 			ManagementBar.setFilterAndOrder(filterBy = "Categories...");
 
 			DMDocument.viewFilterByDetails(
-				category = "DXP Site Vocabulary (Liferay DXP),Global Site Vocabulary (Global)",
+				category = "DXP Site Vocabulary (${siteName}),Global Site Vocabulary (Global)",
 				subcategory = "Category1,Category1,GlobalCategory");
 
 			DMDocument.selectExtensions(category = "Category1");

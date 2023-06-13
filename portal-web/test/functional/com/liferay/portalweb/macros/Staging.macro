@@ -1219,6 +1219,8 @@ definition {
 
 		Click(locator1 = "StagingPublishToLive#SWITCH_TO_ADVANCED_PUBLICATION");
 
+		AssertElementPresent(locator1 = "//div[contains(@class,'layout-selector-options')]//*[contains(@class,'treeview')]");
+
 		if (IsElementPresent(locator1 = "PagesConfiguration#PAGES_ALL_PAGES_CHECKBOX")) {
 			Click.clickAtNotVisible(locator1 = "PagesConfiguration#PAGES_ALL_PAGES_CHECKBOX");
 		}

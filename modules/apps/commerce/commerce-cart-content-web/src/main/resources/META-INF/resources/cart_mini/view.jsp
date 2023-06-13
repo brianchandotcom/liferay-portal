@@ -183,10 +183,24 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 						<c:choose>
 							<c:when test="<%= commerceCartContentMiniDisplayContext.isUnitPromoPriceActive(commerceOrderItem) %>">
-								<%= HtmlUtil.escape(unitPromoPriceCommerceMoney.format(locale)) %>
+								<c:choose>
+									<c:when test="<%= unitPromoPriceCommerceMoney.isPriceOnApplication() %>">
+										<liferay-ui:message key="price-on-application" />
+									</c:when>
+									<c:otherwise>
+										<%= HtmlUtil.escape(unitPromoPriceCommerceMoney.format(locale)) %>
+									</c:otherwise>
+								</c:choose>
 							</c:when>
 							<c:otherwise>
-								<%= HtmlUtil.escape(unitPriceCommerceMoney.format(locale)) %>
+								<c:choose>
+									<c:when test="<%= unitPriceCommerceMoney.isPriceOnApplication() %>">
+										<liferay-ui:message key="price-on-application" />
+									</c:when>
+									<c:otherwise>
+										<%= HtmlUtil.escape(unitPriceCommerceMoney.format(locale)) %>
+									</c:otherwise>
+								</c:choose>
 							</c:otherwise>
 						</c:choose>
 					</c:if>

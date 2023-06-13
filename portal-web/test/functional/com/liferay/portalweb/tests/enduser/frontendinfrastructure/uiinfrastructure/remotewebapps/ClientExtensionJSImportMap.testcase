@@ -40,6 +40,46 @@ definition {
 		}
 	}
 
+	@description = "LPS-180167. Verify if has possible change the language on language icon"
+	@priority = 3
+	test CanChangeLanguage {
+		task ("And changes the language flag icon to Spanish flag") {
+			Click(
+				key_locale = "en-US",
+				locator1 = "Translation#CURRENT_LOCALE_NAME");
+
+			DropdownMenuItem.click(menuItem = "es-ES");
+		}
+
+		task ("And types “Cambiar formato de fecha” on Name field") {
+			Type(
+				key_text = "Name",
+				locator1 = "TextInput#ANY",
+				value1 = "Cambiar formato de fecha");
+		}
+
+		task ("And changes the language icon to English and Spanish again") {
+			Click(
+				key_locale = "es-ES",
+				locator1 = "Translation#CURRENT_LOCALE_NAME");
+
+			DropdownMenuItem.click(menuItem = "en-US");
+
+			Click(
+				key_locale = "en-US",
+				locator1 = "Translation#CURRENT_LOCALE_NAME");
+
+			DropdownMenuItem.click(menuItem = "es-ES");
+		}
+
+		task ("Then the title and information about the fields are displayed in Spanish") {
+			AssertTextEquals(
+				key_text = "Name",
+				locator1 = "TextInput#ANY",
+				value1 = "Cambiar formato de fecha");
+		}
+	}
+
 	@description = "LPS-180167. Verify if the Identity field can be hidden"
 	@priority = 3
 	test CanHiddenIdentityField {

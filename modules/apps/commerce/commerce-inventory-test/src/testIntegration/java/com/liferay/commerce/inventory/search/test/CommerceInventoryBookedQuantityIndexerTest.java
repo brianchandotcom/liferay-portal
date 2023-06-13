@@ -153,7 +153,7 @@ public class CommerceInventoryBookedQuantityIndexerTest {
 
 		cpInstance.setSku("Example SKU");
 
-		_cpInstanceLocalService.updateCPInstance(cpInstance);
+		cpInstance = _cpInstanceLocalService.updateCPInstance(cpInstance);
 
 		_cpInstances.add(cpInstance);
 
@@ -209,7 +209,7 @@ public class CommerceInventoryBookedQuantityIndexerTest {
 
 		cpInstance.setSku("Example SKU");
 
-		_cpInstanceLocalService.updateCPInstance(cpInstance);
+		cpInstance = _cpInstanceLocalService.updateCPInstance(cpInstance);
 
 		_cpInstances.add(cpInstance);
 

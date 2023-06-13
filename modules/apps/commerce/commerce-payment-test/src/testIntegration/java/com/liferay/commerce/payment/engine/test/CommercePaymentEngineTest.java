@@ -154,7 +154,8 @@ public class CommercePaymentEngineTest {
 		commerceOrder.setCommercePaymentMethodKey(
 			TestCommercePaymentMethod.KEY);
 
-		_commerceOrderLocalService.updateCommerceOrder(commerceOrder);
+		commerceOrder = _commerceOrderLocalService.updateCommerceOrder(
+			commerceOrder);
 
 		CommerceCatalog commerceCatalog =
 			CommerceCatalogLocalServiceUtil.addCommerceCatalog(
@@ -245,7 +246,8 @@ public class CommercePaymentEngineTest {
 		commerceOrder.setCommercePaymentMethodKey(
 			TestCommercePaymentMethod.KEY);
 
-		_commerceOrderLocalService.updateCommerceOrder(commerceOrder);
+		commerceOrder = _commerceOrderLocalService.updateCommerceOrder(
+			commerceOrder);
 
 		CommerceCatalog commerceCatalog =
 			CommerceCatalogLocalServiceUtil.addCommerceCatalog(

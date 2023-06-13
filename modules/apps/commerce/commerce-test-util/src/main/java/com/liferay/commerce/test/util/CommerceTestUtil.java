@@ -197,7 +197,7 @@ public class CommerceTestUtil {
 			cpInstance.setDeliveryMaxSubscriptionCycles(2);
 		}
 
-		CPInstanceLocalServiceUtil.updateCPInstance(cpInstance);
+		cpInstance = CPInstanceLocalServiceUtil.updateCPInstance(cpInstance);
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
 			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
@@ -314,7 +314,8 @@ public class CommerceTestUtil {
 			commerceOrder.setCommerceCurrencyId(
 				commerceCurrency.getCommerceCurrencyId());
 
-			CommerceOrderLocalServiceUtil.updateCommerceOrder(commerceOrder);
+			commerceOrder = CommerceOrderLocalServiceUtil.updateCommerceOrder(
+				commerceOrder);
 		}
 
 		ServiceContext serviceContext =

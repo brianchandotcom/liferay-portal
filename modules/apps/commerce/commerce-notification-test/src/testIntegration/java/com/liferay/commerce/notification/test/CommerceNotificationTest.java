@@ -154,7 +154,7 @@ public class CommerceNotificationTest {
 	public void testEmailAddressRecipient() throws Exception {
 		_user.setEmailAddress("mail@mail.com");
 
-		_userLocalService.updateUser(_user);
+		_user = _userLocalService.updateUser(_user);
 
 		_commerceNotificationTemplate =
 			CommerceNotificationTestUtil.addNotificationTemplate(

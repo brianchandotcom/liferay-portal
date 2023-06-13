@@ -305,7 +305,7 @@ public class SpeedwellSiteInitializer implements SiteInitializer {
 		group.setMembershipRestriction(
 			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION);
 
-		_groupLocalService.updateGroup(group);
+		group = _groupLocalService.updateGroup(group);
 
 		_commerceCurrencyLocalService.importDefaultValues(true, serviceContext);
 		_cpMeasurementUnitLocalService.importDefaultValues(serviceContext);

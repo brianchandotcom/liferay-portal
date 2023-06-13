@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collections;
-import java.util.List;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -105,7 +104,7 @@ public class JournalArticleTranslationsItemSelectorViewDescriptor
 
 		String keywords = _getKeywords();
 
-		List<JournalArticleTranslation> articleTranslations =
+		articleTranslationsSearchContainer.setResultsAndTotal(
 			TransformUtil.transformToList(
 				article.getAvailableLanguageIds(),
 				languageId -> {
@@ -126,10 +125,7 @@ public class JournalArticleTranslationsItemSelectorViewDescriptor
 					}
 
 					return articleTranslation;
-				});
-
-		articleTranslationsSearchContainer.setResultsAndTotal(
-			articleTranslations);
+				}));
 
 		articleTranslationsSearchContainer.setRowChecker(
 			new JournalArticleTranslationRowChecker(_portletResponse));

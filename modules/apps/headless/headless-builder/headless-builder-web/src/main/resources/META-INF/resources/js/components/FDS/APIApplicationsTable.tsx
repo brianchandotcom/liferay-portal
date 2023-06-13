@@ -13,8 +13,10 @@
  */
 
 import {FrontendDataSet} from '@liferay/frontend-data-set-web';
+import {openModal} from 'frontend-js-web';
 import React from 'react';
 
+import {CreateAPIApplicationModalContent} from '../modals/CreateAPIApplicationModalContent';
 import {getAPIApplicationsFDSProps} from './fdsUtils/fdsProps';
 
 interface APIApplicationsTableProps {
@@ -28,9 +30,28 @@ export default function APIApplicationsTable({
 	portletId,
 	readOnly,
 }: APIApplicationsTableProps) {
+	const createAPIApplication = {
+		onClick: ({loadData}: {loadData: voidReturn}) => {
+			openModal({
+				center: true,
+				contentComponent: ({closeModal}: {closeModal: voidReturn}) =>
+					CreateAPIApplicationModalContent({
+						apiURL,
+						closeModal,
+						loadData,
+					}),
+				id: 'createAPIApplicationModal',
+				size: 'md',
+			});
+		},
+	};
+
 	return (
 		<FrontendDataSet
-			{...getAPIApplicationsFDSProps(apiURL, portletId, readOnly)}
+			{...getAPIApplicationsFDSProps(apiURL, portletId)}
+			creationMenu={{
+				primaryItems: readOnly ? [] : ([createAPIApplication] as any),
+			}}
 		/>
 	);
 }

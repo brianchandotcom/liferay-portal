@@ -16,6 +16,8 @@ import React from 'react';
 
 import APIApplications from './APIApplications';
 
+import '../../css/main.scss';
+
 interface AppProps {
 	apiURL: string;
 	portletId: string;

@@ -1,3 +1,13 @@
-.headless-builder-web {
-	display: flex;
+#createAPIApplicationModal {
+	textarea.form-control {
+		height: 136px !important;
+	}
+
+	#modalURLField {
+		margin-bottom: 3px !important;
+	}
+
+	#hostTextPreview {
+		margin-bottom: 7px !important;
+	}
 }

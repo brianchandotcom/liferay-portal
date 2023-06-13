@@ -19,23 +19,10 @@ import {itemPathRenderer, itemStatusRenderer} from './fdsRenderers';
 
 export function getAPIApplicationsFDSProps(
 	apiURL: string,
-	portletId: string,
-	readOnly: boolean
+	portletId: string
 ): IFrontendDataSetProps {
-	const addButton = {
-		href: 'handleAddItems',
-		label: Liferay.Language.get('add-item'),
-		target: 'event',
-		type: 'item',
-	};
-
-	const addItemMenu = readOnly ? [] : [addButton];
-
 	return {
 		apiURL,
-		creationMenu: {
-			primaryItems: addItemMenu,
-		},
 		currentURL: window.location.pathname + window.location.search,
 		customDataRenderers: {
 			itemPathRenderer,

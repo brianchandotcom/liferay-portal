@@ -14,10 +14,14 @@
 
 /// <reference types="react" />
 
-import '../../css/main.scss';
-interface AppProps {
+interface HandleCreateInModal {
 	apiURL: string;
-	portletId: string;
+	closeModal: voidReturn;
+	loadData: voidReturn;
 }
-export default function App({apiURL, portletId}: AppProps): JSX.Element;
+export declare function CreateAPIApplicationModalContent({
+	apiURL,
+	closeModal,
+	loadData,
+}: HandleCreateInModal): JSX.Element;
 export {};

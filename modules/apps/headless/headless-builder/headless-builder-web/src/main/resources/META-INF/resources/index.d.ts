@@ -29,3 +29,5 @@ interface FDSItem {
 	itemData: ItemData;
 	value: string;
 }
+
+type voidReturn = () => void;

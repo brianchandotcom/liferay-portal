@@ -163,28 +163,6 @@ public class Product implements Cloneable, Serializable {
 
 	protected Category[] categories;
 
-	public ProductConfiguration getConfiguration() {
-		return configuration;
-	}
-
-	public void setConfiguration(ProductConfiguration configuration) {
-		this.configuration = configuration;
-	}
-
-	public void setConfiguration(
-		UnsafeSupplier<ProductConfiguration, Exception>
-			configurationUnsafeSupplier) {
-
-		try {
-			configuration = configurationUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected ProductConfiguration configuration;
-
 	public Date getCreateDate() {
 		return createDate;
 	}

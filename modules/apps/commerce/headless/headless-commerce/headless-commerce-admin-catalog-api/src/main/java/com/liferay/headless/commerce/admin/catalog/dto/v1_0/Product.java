@@ -242,36 +242,6 @@ public class Product implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Category[] categories;
 
-	@Schema
-	@Valid
-	public ProductConfiguration getConfiguration() {
-		return configuration;
-	}
-
-	public void setConfiguration(ProductConfiguration configuration) {
-		this.configuration = configuration;
-	}
-
-	@JsonIgnore
-	public void setConfiguration(
-		UnsafeSupplier<ProductConfiguration, Exception>
-			configurationUnsafeSupplier) {
-
-		try {
-			configuration = configurationUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected ProductConfiguration configuration;
-
 	@Schema(example = "2017-07-21")
 	public Date getCreateDate() {
 		return createDate;
@@ -1683,16 +1653,6 @@ public class Product implements Serializable {
 			}
 
 			sb.append("]");
-		}
-
-		if (configuration != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"configuration\": ");
-
-			sb.append(String.valueOf(configuration));
 		}
 
 		if (createDate != null) {

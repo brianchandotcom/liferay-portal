@@ -46,20 +46,43 @@ public class PropertiesSourceProcessorTest extends BaseSourceProcessorTestCase {
 			).addExpectedMessage(
 				"The context 'xyz' is invalid in the key 'order[xyz]'"
 			).addExpectedMessage(
-				"The key for 'a' should have the context in [] to indicate " +
-					"the specific meaning"
+				"The key 'a' should include a word of context at the end, " +
+					"within a [], to indicate specific meaning"
 			).addExpectedMessage(
-				"The key for 'add' should have the context in [] to indicate " +
-					"the specific meaning"
+				"The key 'add' should include a word of context at the end, " +
+					"within a [], to indicate specific meaning"
 			).addExpectedMessage(
-				"The key for 'alert' should have the context in [] to " +
-					"indicate the specific meaning"
+				"The key 'alert' should include a word of context at the " +
+					"end, within a [], to indicate specific meaning"
 			).addExpectedMessage(
-				"The key for 'average' should have the context in [] to " +
-					"indicate the specific meaning"
+				"The key 'average' should include a word of context at the " +
+					"end, within a [], to indicate specific meaning"
 			).addExpectedMessage(
-				"The key for 'order' should have the context in [] to " +
-					"indicate the specific meaning"
+				"The key 'order' should include a word of context at the " +
+					"end, within a [], to indicate specific meaning"
+			).addExpectedMessage(
+				"The single-word key 'abstract' should include a word of " +
+					"context at the end, within a [], to indicate specific " +
+						"meaning"
+			).addExpectedMessage(
+				"The single-word key 'add' should include a word of context " +
+					"at the end, within a [], to indicate specific meaning"
+			).addExpectedMessage(
+				"The single-word key 'alert' should include a word of " +
+					"context at the end, within a [], to indicate specific " +
+						"meaning"
+			).addExpectedMessage(
+				"The single-word key 'alerts' should include a word of " +
+					"context at the end, within a [], to indicate specific " +
+						"meaning"
+			).addExpectedMessage(
+				"The single-word key 'average' should include a word of " +
+					"context at the end, within a [], to indicate specific " +
+						"meaning"
+			).addExpectedMessage(
+				"The single-word key 'order' should include a word of " +
+					"context at the end, within a [], to indicate specific " +
+						"meaning"
 			));
 	}
 

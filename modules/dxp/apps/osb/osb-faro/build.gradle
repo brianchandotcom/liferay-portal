@@ -31,7 +31,6 @@ task stopDocker(type: DockerStopContainer)
 def dockerContainerId = "faro"
 def dockerImageUser = "liferay"
 def dockerImageId = "com-liferay-osb-faro"
-//def dockerImageId = "liferay/com-liferay-osb-faro"
 
 ext.faroEnvironmentName = System.getenv().get("FARO_ENVIRONMENT_NAME") ?: project.property("com.liferay.osb.faro.environment.name")
 ext.faroImageTag = project.hasProperty("docker.image.tag") ? project.getProperty("docker.image.tag") : "latest"

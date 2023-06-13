@@ -15,16 +15,3 @@ dependencies {
 	compileOnly project(":dxp:apps:osb:osb-faro:osb-faro-contacts-api")
 	compileOnly project(":dxp:apps:osb:osb-faro:osb-faro-engine-client")
 }
-
-repositories {
-	mavenCentral()
-
-	maven {
-		credentials {
-			username System.properties["repository.private.username"]
-			password System.properties["repository.private.password"]
-		}
-		url "https://repository-cdn.liferay.com/nexus/service/local/repo_groups/private/content/"
-
-	}
-}

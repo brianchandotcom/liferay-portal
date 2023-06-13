@@ -34,7 +34,7 @@ public class CreateBuildEventHandler extends BaseEventHandler {
 	public String process(String body) throws Exception {
 		JSONObject bodyJSONObject = new JSONObject(body);
 
-		Project project = _getProject(bodyJSONObject);
+		Project project = getProject(bodyJSONObject.optJSONObject("project"));
 
 		EventHandlerHelper eventHandlerHelper = getEventHandlerHelper();
 
@@ -85,33 +85,6 @@ public class CreateBuildEventHandler extends BaseEventHandler {
 
 	protected CreateBuildEventHandler(EventHandlerHelper eventHandlerHelper) {
 		super(eventHandlerHelper);
-	}
-
-	private Project _getProject(JSONObject bodyJSONObject) throws Exception {
-		JSONObject projectJSONObject = bodyJSONObject.optJSONObject("project");
-
-		if (projectJSONObject == null) {
-			throw new Exception("Missing 'project' JSON object");
-		}
-
-		if (!projectJSONObject.has("id")) {
-			throw new Exception("Missing project 'id'");
-		}
-
-		EventHandlerHelper eventHandlerHelper = getEventHandlerHelper();
-
-		ProjectRepository projectRepository =
-			eventHandlerHelper.getProjectRepository();
-
-		Project project = projectRepository.getById(
-			projectJSONObject.getLong("id"));
-
-		BuildRepository buildRepository =
-			eventHandlerHelper.getBuildRepository();
-
-		buildRepository.getAll(project);
-
-		return project;
 	}
 
 }

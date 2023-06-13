@@ -123,7 +123,8 @@ public class PlacedOrderItemResourceTest
 		_commerceOrder.setOrderStatus(
 			CommerceOrderConstants.ORDER_STATUS_COMPLETED);
 
-		_commerceOrderLocalService.updateCommerceOrder(_commerceOrder);
+		_commerceOrder = _commerceOrderLocalService.updateCommerceOrder(
+			_commerceOrder);
 
 		_commercePriceList =
 			_commercePriceListLocalService.addCommercePriceList(

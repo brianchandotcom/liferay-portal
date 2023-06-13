@@ -90,7 +90,7 @@ public class ShipmentItemResourceTest extends BaseShipmentItemResourceTestCase {
 		_cpInstance = CPTestUtil.addCPInstanceWithRandomSku(
 			_commerceOrder.getGroupId(), price);
 
-		CPInstanceLocalServiceUtil.updateCPInstance(_cpInstance);
+		_cpInstance = CPInstanceLocalServiceUtil.updateCPInstance(_cpInstance);
 
 		_commerceInventoryWarehouse =
 			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(

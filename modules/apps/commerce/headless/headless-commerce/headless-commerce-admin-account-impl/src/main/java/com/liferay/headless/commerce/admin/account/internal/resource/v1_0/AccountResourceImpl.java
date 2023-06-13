@@ -507,7 +507,7 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 			_toAccountEntryStatus(
 				GetterUtil.getBoolean(account.getActive(), true)));
 
-		_accountEntryService.updateAccountEntry(accountEntry);
+		accountEntry = _accountEntryService.updateAccountEntry(accountEntry);
 
 		// Expando
 

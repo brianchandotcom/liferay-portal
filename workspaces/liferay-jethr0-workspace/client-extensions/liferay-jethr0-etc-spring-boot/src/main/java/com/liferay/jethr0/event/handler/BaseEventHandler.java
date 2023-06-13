@@ -19,6 +19,8 @@ import com.liferay.jethr0.build.repository.BuildParameterRepository;
 import com.liferay.jethr0.build.repository.BuildRepository;
 import com.liferay.jethr0.build.repository.BuildRunRepository;
 import com.liferay.jethr0.jenkins.JenkinsQueue;
+import com.liferay.jethr0.jenkins.repository.JenkinsNodeRepository;
+import com.liferay.jethr0.jms.JMSEventHandler;
 import com.liferay.jethr0.project.repository.ProjectRepository;
 
 import org.json.JSONObject;
@@ -51,8 +53,16 @@ public abstract class BaseEventHandler implements EventHandler {
 		return _eventHandlerContext.getBuildRunRepository();
 	}
 
+	protected JenkinsNodeRepository getJenkinsNodeRepository() {
+		return _eventHandlerHelper.getJenkinsNodeRepository();
+	}
+
 	protected JenkinsQueue getJenkinsQueue() {
 		return _eventHandlerContext.getJenkinsQueue();
+	}
+
+	protected JMSEventHandler getJMSEventHandler() {
+		return _eventHandlerHelper.getJMSEventHandler();
 	}
 
 	protected JSONObject getMessageJSONObject() {

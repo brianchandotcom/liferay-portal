@@ -15,7 +15,6 @@
 package com.liferay.jethr0.event.handler;
 
 import com.liferay.jethr0.build.queue.BuildQueue;
-import com.liferay.jethr0.build.repository.BuildRepository;
 import com.liferay.jethr0.jenkins.JenkinsQueue;
 import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.project.repository.ProjectRepository;
@@ -29,9 +28,18 @@ public class QueueProjectEventHandler extends BaseEventHandler {
 
 	@Override
 	public String process(String body) throws Exception {
-		Project project = _getProject(new JSONObject(body));
+		JSONObject bodyJSONObject = new JSONObject(body);
+
+		Project project = getProject(bodyJSONObject.optJSONObject("project"));
+
+		project.setState(Project.State.QUEUED);
 
 		EventHandlerHelper eventHandlerHelper = getEventHandlerHelper();
+
+		ProjectRepository projectRepository =
+			eventHandlerHelper.getProjectRepository();
+
+		projectRepository.update(project);
 
 		BuildQueue buildQueue = eventHandlerHelper.getBuildQueue();
 
@@ -46,35 +54,6 @@ public class QueueProjectEventHandler extends BaseEventHandler {
 
 	protected QueueProjectEventHandler(EventHandlerHelper eventHandlerHelper) {
 		super(eventHandlerHelper);
-	}
-
-	private Project _getProject(JSONObject bodyJSONObject) throws Exception {
-		JSONObject projectJSONObject = bodyJSONObject.optJSONObject("project");
-
-		if (projectJSONObject == null) {
-			throw new Exception("Missing 'project' JSON object");
-		}
-
-		if (!projectJSONObject.has("id")) {
-			throw new Exception("Missing project 'id'");
-		}
-
-		EventHandlerHelper eventHandlerHelper = getEventHandlerHelper();
-
-		ProjectRepository projectRepository =
-			eventHandlerHelper.getProjectRepository();
-
-		Project project = projectRepository.getById(
-			projectJSONObject.getLong("id"));
-
-		BuildRepository buildRepository =
-			eventHandlerHelper.getBuildRepository();
-
-		buildRepository.getAll(project);
-
-		project.setState(Project.State.QUEUED);
-
-		return project;
 	}
 
 }

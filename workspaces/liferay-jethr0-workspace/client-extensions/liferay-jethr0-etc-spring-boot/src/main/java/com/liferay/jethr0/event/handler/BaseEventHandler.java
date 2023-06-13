@@ -15,6 +15,9 @@
 package com.liferay.jethr0.event.handler;
 
 import com.liferay.jethr0.build.Build;
+import com.liferay.jethr0.build.repository.BuildRepository;
+import com.liferay.jethr0.project.Project;
+import com.liferay.jethr0.project.repository.ProjectRepository;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -32,27 +35,56 @@ public abstract class BaseEventHandler implements EventHandler {
 		return _eventHandlerHelper;
 	}
 
+	protected Project getProject(JSONObject projectJSONObject)
+		throws Exception {
+
+		if (projectJSONObject == null) {
+			throw new Exception("Invalid Project JSON object");
+		}
+
+		projectJSONObject = validateProjectJSONObject(projectJSONObject);
+
+		EventHandlerHelper eventHandlerHelper = getEventHandlerHelper();
+
+		ProjectRepository projectRepository =
+			eventHandlerHelper.getProjectRepository();
+
+		Project project = projectRepository.getById(
+			projectJSONObject.getLong("id"));
+
+		BuildRepository buildRepository =
+			eventHandlerHelper.getBuildRepository();
+
+		buildRepository.getAll(project);
+
+		return project;
+	}
+
 	protected JSONObject validateBuildJSONObject(JSONObject buildJSONObject)
 		throws Exception {
 
 		if (buildJSONObject == null) {
-			throw new Exception("Invalid build JSON object");
+			throw new Exception("Invalid Build JSON object");
 		}
 
 		String buildName = buildJSONObject.optString("buildName");
 
 		if (buildName.isEmpty()) {
-			throw new Exception("Invalid build 'buildName'");
+			throw new Exception("Invalid Build 'buildName'");
 		}
 
 		String jobName = buildJSONObject.optString("jobName");
 
 		if (jobName.isEmpty()) {
-			throw new Exception("Invalid build 'jobName'");
+			throw new Exception("Invalid Build 'jobName'");
 		}
 
-		Build.State state = Build.State.valueOf(
-			buildJSONObject.optString("state", Build.State.OPENED.toString()));
+		Build.State state = Build.State.getByKey(
+			buildJSONObject.optString("state"));
+
+		if (state == null) {
+			state = Build.State.OPENED;
+		}
 
 		JSONObject jsonObject = new JSONObject();
 
@@ -82,6 +114,62 @@ public abstract class BaseEventHandler implements EventHandler {
 		}
 
 		return jsonArray;
+	}
+
+	protected JSONObject validateProjectJSONObject(JSONObject projectJSONObject)
+		throws Exception {
+
+		if (projectJSONObject == null) {
+			throw new Exception("Invalid Project JSON object");
+		}
+
+		if (projectJSONObject.has("id")) {
+			return projectJSONObject;
+		}
+
+		String name = projectJSONObject.optString("name");
+
+		if (name.isEmpty()) {
+			throw new Exception("Invalid Project 'name'");
+		}
+
+		int priority = projectJSONObject.optInt("priority");
+
+		if (priority <= 0) {
+			throw new Exception("Invalid Project 'priority'");
+		}
+
+		Project.State state = Project.State.getByKey(
+			projectJSONObject.optString("state"));
+
+		if (state == null) {
+			state = Project.State.OPENED;
+		}
+
+		Project.Type type = Project.Type.getByKey(
+			projectJSONObject.optString("type"));
+
+		if (type == null) {
+			throw new Exception(
+				"Project 'type' key does not match: " + Project.Type.getKeys());
+		}
+
+		JSONObject jsonObject = new JSONObject();
+
+		jsonObject.put(
+			"builds",
+			validateBuildsJSONArray(projectJSONObject.optJSONArray("builds"))
+		).put(
+			"name", name
+		).put(
+			"priority", priority
+		).put(
+			"state", state.getJSONObject()
+		).put(
+			"type", type.getJSONObject()
+		);
+
+		return jsonObject;
 	}
 
 	private final EventHandlerHelper _eventHandlerHelper;

@@ -30,13 +30,15 @@ public class CreateProjectEventHandler extends BaseEventHandler {
 
 	@Override
 	public String process(String body) throws Exception {
+		JSONObject bodyJSONObject = new JSONObject(body);
+
+		JSONObject projectJSONObject = validateProjectJSONObject(
+			bodyJSONObject.optJSONObject("project"));
+
 		EventHandlerHelper eventHandlerHelper = getEventHandlerHelper();
 
 		ProjectRepository projectRepository =
 			eventHandlerHelper.getProjectRepository();
-
-		JSONObject projectJSONObject = _getProjectJSONObject(
-			new JSONObject(body));
 
 		Project project = projectRepository.add(projectJSONObject);
 
@@ -70,51 +72,6 @@ public class CreateProjectEventHandler extends BaseEventHandler {
 
 	protected CreateProjectEventHandler(EventHandlerHelper eventHandlerHelper) {
 		super(eventHandlerHelper);
-	}
-
-	private JSONObject _getProjectJSONObject(JSONObject bodyJSONObject)
-		throws Exception {
-
-		JSONObject projectJSONObject = bodyJSONObject.optJSONObject("project");
-
-		if (projectJSONObject == null) {
-			throw new Exception("Missing 'project' JSON object");
-		}
-
-		String name = projectJSONObject.optString("name");
-
-		if (name.isEmpty()) {
-			throw new Exception("Invalid project 'name'");
-		}
-
-		int priority = projectJSONObject.optInt("priority");
-
-		if (priority <= 0) {
-			throw new Exception("Invalid project 'priority'");
-		}
-
-		Project.Type type = Project.Type.getByKey(
-			projectJSONObject.optString("type"));
-
-		if (type == null) {
-			throw new Exception(
-				"Project 'type' key does not match: " + Project.Type.getKeys());
-		}
-
-		projectJSONObject.put(
-			"builds",
-			validateBuildsJSONArray(projectJSONObject.optJSONArray("builds"))
-		).put(
-			"name", name
-		).put(
-			"priority", priority
-		).put(
-			"state", Project.State.OPENED.getJSONObject()
-		).put(
-			"type", type.getJSONObject()
-		);
-
-		return projectJSONObject;
 	}
 
 }

@@ -14,10 +14,18 @@
 
 package com.liferay.headless.admin.user.internal.dto.v1_0.util;
 
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.service.CountryServiceUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.model.impl.CountryImpl;
+
+import java.util.List;
 
 /**
  * @author Drew Brokke
@@ -40,6 +48,23 @@ public class ServiceBuilderCountryUtil {
 
 			if (country != null) {
 				return country;
+			}
+
+			String addressCountryKeyWord =
+				StringPool.QUOTE + addressCountry + StringPool.QUOTE;
+
+			OrderByComparator comparator = OrderByComparatorFactoryUtil.create(
+				CountryImpl.TABLE_NAME, "name", true);
+
+			BaseModelSearchResult<Country> baseModelSearchResult =
+				CountryServiceUtil.searchCountries(
+					companyId, true, addressCountryKeyWord, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, comparator);
+
+			List<Country> countries = baseModelSearchResult.getBaseModels();
+
+			if (countries != null) {
+				return countries.get(0);
 			}
 
 			return CountryServiceUtil.getCountryByName(

@@ -484,16 +484,16 @@
 				{
 					"deletionType": "prevent",
 					"label": {
-						"en_US": "API Schemas API Properties"
+						"en_US": "API Schema API Properties"
 					},
-					"name": "apiSchemasAPIProperties",
+					"name": "apiSchemaAPIProperties",
 					"objectDefinitionExternalReferenceCode1": "MSOD_API_SCHEMA",
 					"objectDefinitionExternalReferenceCode2": "MSOD_API_PROPERTY",
 					"objectDefinitionName2": "APIProperty",
 					"parameterObjectFieldId": 0,
 					"parameterObjectFieldName": "",
 					"reverse": false,
-					"type": "manyToMany"
+					"type": "oneToMany"
 				},
 				{
 					"deletionType": "prevent",

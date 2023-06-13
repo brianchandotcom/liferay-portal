@@ -99,15 +99,18 @@ public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
 			String externalReferenceCode)
 		throws Exception {
 
+		com.liferay.search.experiences.model.SXPElement sxpElement =
+			_sxpElementService.getSXPElementByExternalReferenceCode(
+				contextCompany.getCompanyId(), externalReferenceCode);
+
 		return _sxpElementDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
 				contextAcceptLanguage.isAcceptAllLanguages(), new HashMap<>(),
 				_dtoConverterRegistry, contextHttpServletRequest,
-				externalReferenceCode,
+				sxpElement.getSXPElementId(),
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser),
-			_sxpElementService.getSXPElementByExternalReferenceCode(
-				contextCompany.getCompanyId(), externalReferenceCode));
+			sxpElement);
 	}
 
 	@Override

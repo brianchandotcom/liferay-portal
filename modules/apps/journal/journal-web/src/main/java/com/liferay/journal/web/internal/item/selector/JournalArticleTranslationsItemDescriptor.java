@@ -46,8 +46,7 @@ public class JournalArticleTranslationsItemDescriptor
 	@Override
 	public String getPayload() {
 		return JSONUtil.put(
-			"journalArticleTranslationId",
-			_journalArticleTranslation.getLanguageId()
+			"languageId", _journalArticleTranslation.getLanguageId()
 		).toString();
 	}
 

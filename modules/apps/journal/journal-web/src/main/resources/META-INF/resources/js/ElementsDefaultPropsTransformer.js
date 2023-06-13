@@ -88,8 +88,7 @@ const ACTIONS = {
 									selectedItems.map((item) => item.value)
 								);
 
-								input.value =
-									itemValue.journalArticleTranslationId;
+								input.value = itemValue.languageId;
 
 								form.appendChild(input);
 

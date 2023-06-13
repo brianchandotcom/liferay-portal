@@ -136,10 +136,6 @@ export function useDropTarget(item) {
 
 			const lastNestingLevel = nestingLevel;
 
-			cardWidthRef.current = null;
-			nextItemNestingRef.current = null;
-			targetRectRef.current = null;
-
 			if (itemPath.length < lastNestingLevel) {
 				return {
 					order: 0,
@@ -259,6 +255,12 @@ export function useDropTarget(item) {
 		},
 		[dndTargetRef]
 	);
+
+	useEffect(() => {
+		cardWidthRef.current = null;
+		nextItemNestingRef.current = null;
+		targetRectRef.current = null;
+	}, [targetItemId]);
 
 	return {
 		isOver: targetItemId === siteNavigationMenuItemId,

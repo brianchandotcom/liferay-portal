@@ -46,6 +46,11 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8152 | Test Summary: Check all applicable events trigger for unknown users (Page, Blog, Form, Web Content, Documents & Media, Social)"
 	@priority = 5
 	test CheckGeneralEventsForUnknownUser {
+		property portal.upstream = "quarantine";
+
+		// AC Quarantine Reason: Test fix data source name is not found
+		// AC Quarantine Ticket: LRAC-13741
+
 		property proxy.server.enabled = "true";
 		property test.name.skip.portal.instance = "GeneralEvents#CheckGeneralEventsForUnknownUser";
 

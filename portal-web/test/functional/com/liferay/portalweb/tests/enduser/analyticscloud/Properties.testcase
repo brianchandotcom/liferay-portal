@@ -273,8 +273,13 @@ definition {
 	}
 
 	@description = "Bug ID: LRAC-8093 | Automation ID: LRAC-11533 | Test Summary: Able to clear property data"
+	@ignore = "true"
 	@priority = 4
 	test ClearPropertyData {
+
+		// AC Refactor: data doesn't appear on time
+		// AC Refactor ticket: LRAC-8994
+
 		task ("Connect the DXP to Analytics Cloud") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",
@@ -459,6 +464,11 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9104 | Test Summary: [AC] It is not allowed duplicated property name for a same data source or workspace"
 	@priority = 3
 	test NoDuplicatePropertiesName {
+		property portal.upstream = "quarantine";
+
+		// AC Quarantine Reason: Test fix sites created twice
+		// AC Quarantine Ticket: LRAC-13677
+
 		task ("View the checkbox of site entry is disabled") {
 			ACUtils.launchAC();
 

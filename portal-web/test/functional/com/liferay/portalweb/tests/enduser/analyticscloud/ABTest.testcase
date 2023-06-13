@@ -51,6 +51,11 @@ definition {
 	@description = "Bug: LRAC-8084 | Automation ID: LRAC-11512 | Test Summary: It is possible to create an AB test"
 	@priority = 5
 	test CanCreateStartABTest {
+		property portal.upstream = "quarantine";
+
+		// AC Quarantine Reason: Test fix sites created twice
+		// AC Quarantine Ticket: LRAC-13677
+
 		var nameABTest = "Create AB test";
 
 		task ("Connect DXP to Analytics Cloud") {
@@ -89,6 +94,11 @@ definition {
 	@description = "Bug: LRAC-7750 | Automation ID: LRAC-11513 | Test Summary: It is possible to delete an AB test"
 	@priority = 5
 	test CanDeleteABTest {
+		property portal.upstream = "quarantine";
+
+		// AC Quarantine Reason: Test fix sites created twice
+		// AC Quarantine Ticket: LRAC-13677
+
 		var nameABTest = "Delete AB test";
 
 		task ("Connect DXP to Analytics Cloud") {

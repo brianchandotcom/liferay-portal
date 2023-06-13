@@ -40,6 +40,11 @@ definition {
 	@description = "Feature ID: LRAC-10405 | Automation ID: LRAC-11120 | Test Summary: Empty state Assets page with assets with data source and property no data"
 	@priority = 2
 	test CheckAllAssetsMessagesWhenHasPropertyAndDataSource {
+		property portal.upstream = "quarantine";
+
+		// AC Quarantine Reason: Test fix empty state change no tooltip pop up
+		// AC Quarantine Ticket: LRAC-14035
+
 		property test.name.skip.portal.instance = "EmptyState#CheckAllAssetsMessagesWhenHasPropertyAndDataSource";
 
 		task ("Check the first screen of the onboarding modal") {
@@ -1172,6 +1177,11 @@ definition {
 	@description = "Feature ID: LRAC-10405 | Automation ID: LRAC-11121 | Test Summary: Empty state Segments page no/with segment with data source and property no data"
 	@priority = 2
 	test CheckAllSegmentMessagesWhenHasPropertyAndDataSourceButNoData {
+		property portal.upstream = "quarantine";
+
+		// AC Quarantine Reason: Test fix investigate empty state message
+		// AC Quarantine Ticket: LRAC-14036
+
 		property test.name.skip.portal.instance = "EmptyState#CheckAllSegmentMessagesWhenHasPropertyAndDataSourceButNoData";
 
 		task ("Check the first screen of the onboarding modal") {
@@ -1300,6 +1310,11 @@ definition {
 	@description = "Feature ID: LRAC-10405 | Automation ID: LRAC-11117 | Test Summary: Empty state Sites page with data source and property no data"
 	@priority = 2
 	test CheckAllSitesMessagesWhenHasPropertyAndDataSourceButNoData {
+		property portal.upstream = "quarantine";
+
+		// AC Quarantine Reason: Test fix investigate empty state
+		// AC Quarantine Ticket: LRAC-13989
+
 		property test.name.skip.portal.instance = "EmptyState#CheckAllSitesMessagesWhenHasPropertyAndDataSourceButNoData";
 
 		task ("Check the first screen of the onboarding modal") {

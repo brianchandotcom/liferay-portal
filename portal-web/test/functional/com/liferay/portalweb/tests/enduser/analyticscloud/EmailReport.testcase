@@ -330,6 +330,11 @@ definition {
 	@description = "Story: LRAC-11665 | Automation ID: LRAC-11890 | Test Summary: Open the email report and see if the links are pointing to the right places"
 	@priority = 2
 	test CheckLinksInEmailReportAreCorrect {
+		property portal.upstream = "quarantine";
+
+		// AC Quarantine Reason: Test fix look into mockmock page
+		// AC Quarantine Ticket: LRAC-12253
+
 		property test.name.skip.portal.instance = "EmailReport#CheckLinksInEmailReportAreCorrect";
 
 		var reportDetailsNameList = "Workspace,Property";

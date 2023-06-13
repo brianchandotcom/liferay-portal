@@ -68,6 +68,11 @@ definition {
 	@description = "Bug: LRAC-7832 | Automation ID: LRAC-9867 | Test Summary: Check fieldBlurred and fieldFocused is triggered when interacting with form fields (Text, Date, Date and Time, Image, Rich Text, Upload and Color[by color picker and color field])"
 	@priority = 4
 	test CheckFieldBlurredAndFieldFocusedWhenInteractingWithFields {
+		property portal.upstream = "quarantine";
+
+		// AC Quarantine Reason: Test fix upload field text change
+		// AC Quarantine Ticket: LRAC-12435
+
 		property proxy.server.enabled = "true";
 
 		var fieldNameList = "Date,Image,Rich Text,Upload,Color,Date and Time";

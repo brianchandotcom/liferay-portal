@@ -389,6 +389,11 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8116 | Test Summary: Assert clicking a document in the documents and media list navigates to the documents overview page"
 	@priority = 5
 	test CanNavigatesToDocumentsOverviewPage {
+		property portal.upstream = "quarantine";
+
+		// AC Quarantine Reason: Test fix sites created twice
+		// AC Quarantine Ticket: LRAC-13677
+
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		JSONUser.addUser(

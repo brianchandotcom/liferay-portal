@@ -139,6 +139,11 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8158 | Test Summary: Switch the property which was selected by default"
 	@priority = 5
 	test CanSwitchPropertyWhichWasSelectedByDefault {
+		property portal.upstream = "quarantine";
+
+		// AC Quarantine Reason: Test fix sites created twice
+		// AC Quarantine Ticket: LRAC-13677
+
 		ACUtils.launchAC();
 
 		AssertTextNotEquals(

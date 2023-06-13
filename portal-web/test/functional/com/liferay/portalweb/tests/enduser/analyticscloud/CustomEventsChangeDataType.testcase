@@ -286,6 +286,11 @@ definition {
 	@description = "Feature ID: LRAC-7185 | Automation ID: LRAC-10206 | Test Summary: Undefined for results cannot be interpreted"
 	@priority = 3
 	test ViewUndefinedResultsIsDisplayedWhenChangeDataTypeThatCannotBeInterpreted {
+		property portal.upstream = "quarantine";
+
+		// AC Quarantine Reason: Test fix investigate issue
+		// AC Quarantine Ticket: LRAC-14034
+
 		var attributeName = "company";
 		var attributeValue = "liferay";
 

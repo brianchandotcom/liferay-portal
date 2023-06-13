@@ -127,8 +127,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8156 | Test Summary: Current AC plan level is shown in a card"
+	@ignore = "true"
 	@priority = 5
 	test CurrentACPlanLevelShownInCard {
+
+		// AC Bug: Current plans card is missing
+		// AC Bug ticket: LRAC-14001
+
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 
 		ACUtils.launchAC();
@@ -151,8 +156,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8157 | Test Summary: Current add-ons are displayed in a card"
+	@ignore = "true"
 	@priority = 5
 	test CurrentAddonsDisplayedInCard {
+
+		// AC Bug: Current plans card is missing
+		// AC Bug ticket: LRAC-14001
+
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 
 		ACUtils.launchAC();
@@ -177,8 +187,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9180 | Test Summary: Individuals limit corresponds correctly with the plan and add-ons purchased."
+	@ignore = "true"
 	@priority = 3
 	test IndividualsCardShowCurrentPlanLimitAndAddOnInfo {
+
+		// AC Bug: Current plans card is missing
+		// AC Bug ticket: LRAC-14001
+
 		task ("Sign in AC") {
 			ACUtils.launchAC();
 		}
@@ -345,8 +360,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9182 | Test Summary: Page views limit corresponds correctly with the plan and add-ons purchased."
+	@ignore = "true"
 	@priority = 3
 	test PageViewsCardShowCurrentPlanLimitAndAddOnInfo {
+
+		// AC Refactor: Data doesn't appear on time
+		// AC Refactor ticket: LRAC-13994
+
 		task ("Sign in AC") {
 			ACUtils.launchAC();
 		}

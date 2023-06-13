@@ -24,6 +24,7 @@ import {FORMAT_DATE_TYPES} from '../../../../../common/utils/constants';
 import getDateCustomFormat from '../../../../../common/utils/getDateCustomFormat';
 import {useCustomerPortal} from '../../../context';
 import GenerateNewKeySkeleton from '../Skeleton';
+import {getLicenseKeyEndDatesByLicenseType} from '../utils/licenseKeyEndDateUtil';
 
 const SelectSubscription = ({
 	accountKey,
@@ -152,8 +153,13 @@ const SelectSubscription = ({
 		[generateFormValues?.subscriptionTerms, selectedProductKey]
 	);
 
-	const getCustomAlert = (subscriptionTerm) =>
-		hasNotPermanentLicence || doesNotAllowPermanentLicense ? (
+	const getCustomAlert = (subscriptionTerm) => {
+		const licenseKeyData = {
+			...infoSelectedKey,
+			selectedSubscription: {...subscriptionTerm},
+		};
+
+		return hasNotPermanentLicence || doesNotAllowPermanentLicense ? (
 			<ClayAlert className="px-4 py-3" displayType="info">
 				<span className="text-paragraph">
 					{i18n.sub('activation-keys-will-be-valid-x-x', [
@@ -162,7 +168,7 @@ const SelectSubscription = ({
 							FORMAT_DATE_TYPES.day2DMonthSYearN
 						),
 						getDateCustomFormat(
-							subscriptionTerm.endDate,
+							getLicenseKeyEndDatesByLicenseType(licenseKeyData),
 							FORMAT_DATE_TYPES.day2DMonthSYearN
 						),
 					])}
@@ -183,6 +189,7 @@ const SelectSubscription = ({
 				</span>
 			</ClayAlert>
 		);
+	};
 
 	if (!generateFormValues || !accountKey || !sessionId) {
 		return <GenerateNewKeySkeleton />;

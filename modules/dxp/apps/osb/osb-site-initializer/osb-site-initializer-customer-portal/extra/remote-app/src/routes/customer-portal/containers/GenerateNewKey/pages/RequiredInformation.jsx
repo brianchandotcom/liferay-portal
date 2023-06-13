@@ -29,8 +29,7 @@ import getInitialGenerateNewKey from '../../../../../common/utils/constants/getI
 import GenerateCardLayout from '../GenerateCardLayout';
 import KeyInputs from '../KeyInputs';
 import KeySelect from '../KeySelect';
-
-const DNE_YEARS = 100;
+import {getLicenseKeyEndDatesByLicenseType} from '../utils/licenseKeyEndDateUtil';
 
 const RequiredInformation = ({
 	accountKey,
@@ -150,9 +149,7 @@ const RequiredInformation = ({
 		}`;
 
 		const getLicenseEntryTypeSelected = () => {
-			if (
-				infoSelectedKey?.licenseEntryType?.includes('Virtual Cluster')
-			) {
+			if (infoSelectedKey?.licenseEntryType.includes('Virtual Cluster')) {
 				return 'virtual-cluster';
 			}
 
@@ -167,27 +164,11 @@ const RequiredInformation = ({
 			return 'production';
 		};
 
-		const subscriptionStartDate = new Date(
-			infoSelectedKey.selectedSubscription.startDate
-		);
-
-		const permanentLicenseKeys = new Date(
-			subscriptionStartDate.setFullYear(
-				subscriptionStartDate.getFullYear() + DNE_YEARS
-			)
-		);
-
-		const hasExpirationDate =
-			infoSelectedKey?.doesNotAllowPermanentLicense ||
-			infoSelectedKey?.hasNotPermanentLicence;
-
 		const licenseKey = {
 			accountKey,
 			active: true,
 			description: values?.description,
-			expirationDate: hasExpirationDate
-				? infoSelectedKey?.selectedSubscription.endDate
-				: permanentLicenseKeys,
+			expirationDate: getLicenseKeyEndDatesByLicenseType(infoSelectedKey),
 			licenseEntryType: getLicenseEntryTypeSelected(),
 			maxClusterNodes: values?.maxClusterNodes || 0,
 			name: values?.name,
@@ -315,7 +296,9 @@ const RequiredInformation = ({
 								isLoading={isLoadingGenerateKey}
 								onClick={() => submitKey()}
 							>
-								{infoSelectedKey.hasNotPermanentLicence
+								{infoSelectedKey?.licenseEntryType.includes(
+									'Virtual Cluster'
+								)
 									? i18n.sub('generate-cluster-x-keys', [
 											values.maxClusterNodes,
 									  ])

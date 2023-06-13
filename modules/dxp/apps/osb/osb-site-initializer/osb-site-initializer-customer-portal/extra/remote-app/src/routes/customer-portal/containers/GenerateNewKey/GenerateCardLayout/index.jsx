@@ -13,13 +13,14 @@ import ClayCard from '@clayui/card';
 import i18n from '../../../../../common/I18n';
 import {FORMAT_DATE_TYPES} from '../../../../../common/utils/constants';
 import getDateCustomFormat from '../../../../../common/utils/getDateCustomFormat';
+import {getLicenseKeyEndDatesByLicenseType} from '../utils/licenseKeyEndDateUtil';
 
 const GenerateCardLayout = ({infoSelectedKey}) => {
 	const currentDate = `${getDateCustomFormat(
 		infoSelectedKey?.selectedSubscription?.startDate,
 		FORMAT_DATE_TYPES.day2DMonthSYearN
 	)} - ${getDateCustomFormat(
-		infoSelectedKey?.selectedSubscription?.endDate,
+		getLicenseKeyEndDatesByLicenseType(infoSelectedKey),
 		FORMAT_DATE_TYPES.day2DMonthSYearN
 	)}`;
 

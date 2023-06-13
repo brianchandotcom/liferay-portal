@@ -180,7 +180,10 @@ entriesChecker.setRememberCheckBoxStateURLRegex("^(?!.*" + liferayPortletRespons
 
 															</c:when>
 															<c:when test="<%= Validator.isNull(thumbnailSrc) %>">
-																<aui:icon cssClass="aspect-ratio-item-center-middle aspect-ratio-item-fluid card-type-asset-icon" image="documents-and-media" markupView="lexicon" />
+																<clay:icon
+																	cssClass="aspect-ratio-item-center-middle aspect-ratio-item-fluid card-type-asset-icon"
+																	symbol="documents-and-media"
+																/>
 															</c:when>
 															<c:otherwise>
 																<img alt="" class="aspect-ratio-item-center-middle aspect-ratio-item-fluid" src="<%= thumbnailSrc %>" />
@@ -215,19 +218,25 @@ entriesChecker.setRememberCheckBoxStateURLRegex("^(?!.*" + liferayPortletRespons
 															<c:choose>
 																<c:when test="<%= fileShortcut != null %>">
 																	<span class="inline-item inline-item-after state-icon">
-																		<aui:icon image="shortcut" markupView="lexicon" message="shortcut" />
+																		<clay:icon
+																			symbol="shortcut"
+																		/>
 																	</span>
 																</c:when>
 																<c:when test="<%= fileEntry.hasLock() || fileEntry.isCheckedOut() %>">
 																	<span class="inline-item inline-item-after state-icon">
-																		<aui:icon image="lock" markupView="lexicon" message="locked" />
+																		<clay:icon
+																			symbol="lock"
+																		/>
 																	</span>
 																</c:when>
 															</c:choose>
 
 															<c:if test="<%= dlViewFileVersionDisplayContext.isShared() %>">
 																<span class="inline-item inline-item-after lfr-portal-tooltip state-icon" title="<%= LanguageUtil.get(request, "shared") %>">
-																	<aui:icon image="users" markupView="lexicon" message="shared" />
+																	<clay:icon
+																		symbol="users"
+																	/>
 																</span>
 															</c:if>
 														</div>
@@ -277,19 +286,25 @@ entriesChecker.setRememberCheckBoxStateURLRegex("^(?!.*" + liferayPortletRespons
 
 												<c:if test="<%= fileEntry.hasLock() || fileEntry.isCheckedOut() %>">
 													<span class="inline-item inline-item-after state-icon">
-														<aui:icon image="lock" markupView="lexicon" message="locked" />
+														<clay:icon
+															symbol="lock"
+														/>
 													</span>
 												</c:if>
 
 												<c:if test="<%= dlViewFileVersionDisplayContext.isShared() %>">
 													<span class="inline-item inline-item-after lfr-portal-tooltip state-icon" title="<%= LanguageUtil.get(request, "shared") %>">
-														<aui:icon image="users" markupView="lexicon" message="shared" />
+														<clay:icon
+															symbol="users"
+														/>
 													</span>
 												</c:if>
 
 												<c:if test="<%= fileShortcut != null %>">
 													<span class="inline-item inline-item-after state-icon">
-														<aui:icon image="shortcut" markupView="lexicon" message="shortcut" />
+														<clay:icon
+															symbol="shortcut"
+														/>
 													</span>
 												</c:if>
 											</liferay-ui:search-container-column-text>

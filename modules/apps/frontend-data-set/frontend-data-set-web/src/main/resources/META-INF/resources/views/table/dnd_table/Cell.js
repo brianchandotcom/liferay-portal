@@ -21,7 +21,7 @@ import ViewsContext from '../../ViewsContext';
 import {VIEWS_ACTION_TYPES} from '../../viewsReducer';
 import Context from './TableContext';
 
-function Cell({children, className, columnName, expand, heading, resizable}) {
+function Cell({children, className, columnName, heading, resizable}) {
 	const {
 		draggingAllowed,
 		draggingColumnName,
@@ -88,11 +88,7 @@ function Cell({children, className, columnName, expand, heading, resizable}) {
 
 	return (
 		<div
-			className={classNames(
-				heading ? 'dnd-th' : 'dnd-td',
-				expand && 'expand',
-				className
-			)}
+			className={classNames(heading ? 'dnd-th' : 'dnd-td', className)}
 			ref={cellRef}
 			style={{
 				width,
@@ -114,7 +110,6 @@ function Cell({children, className, columnName, expand, heading, resizable}) {
 }
 
 Cell.defaultProps = {
-	expand: false,
 	heading: false,
 	resizable: false,
 };
@@ -122,7 +117,6 @@ Cell.defaultProps = {
 Cell.propTypes = {
 	className: PropTypes.string,
 	columnName: PropTypes.string,
-	expand: PropTypes.bool,
 	heading: PropTypes.bool,
 	resizable: PropTypes.bool,
 };

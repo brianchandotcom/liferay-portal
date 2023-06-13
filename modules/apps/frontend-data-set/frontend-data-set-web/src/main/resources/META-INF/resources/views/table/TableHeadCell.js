@@ -24,7 +24,6 @@ import Cell from './dnd_table/Cell';
 
 function TableHeadCell({
 	contentRenderer,
-	expand,
 	fieldName,
 	hideColumnLabel,
 	label,
@@ -82,7 +81,6 @@ function TableHeadCell({
 				[`content-renderer-${contentRenderer}`]: contentRenderer,
 			})}
 			columnName={String(fieldName)}
-			expand={expand}
 			heading
 			resizable
 		>
@@ -124,8 +122,6 @@ function TableHeadCell({
 
 TableHeadCell.proptypes = {
 	contentRenderer: PropTypes.string,
-	expand: PropTypes.bool,
-	expandableColumns: PropTypes.bool,
 	fieldName: PropTypes.oneOfType([
 		PropTypes.string,
 		PropTypes.arrayOf(PropTypes.string),

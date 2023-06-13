@@ -30,8 +30,6 @@ function TableHead({
 	selectedItemsValue,
 	selectionType,
 }) {
-	const expandableColumns = fields.some((field) => field.expand);
-
 	function handleCheckboxClick() {
 		if (selectedItemsValue.length === items.length) {
 			return selectItems([]);
@@ -71,11 +69,7 @@ function TableHead({
 				)}
 
 				{fields.map((field) => (
-					<TableHeadCell
-						{...field}
-						expandableColumns={expandableColumns}
-						key={field.label}
-					/>
+					<TableHeadCell {...field} key={field.label} />
 				))}
 
 				<DndTable.Cell
@@ -91,11 +85,7 @@ function TableHead({
 }
 
 TableHead.propTypes = {
-	fields: PropTypes.arrayOf(
-		PropTypes.shape({
-			expand: PropTypes.bool,
-		})
-	),
+	fields: PropTypes.array,
 	items: PropTypes.array,
 	schema: PropTypes.shape({
 		fields: PropTypes.any,

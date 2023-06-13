@@ -80,6 +80,26 @@ definition {
 		}
 	}
 
+	@description = "LPS-180167. Verify if the Content field can be hidden"
+	@priority = 3
+	test CanHiddenContentField {
+		task ("And clicks on Content collapse icon") {
+			ClientExtensionGeneral.openOrCloseCollapseField(
+				key_fieldName = "Content",
+				key_status = "Close");
+		}
+
+		task ("Then JS URL field is hidden") {
+			AssertNotVisible(
+				key_fieldName = "JavaScript URL",
+				locator1 = "ClientExtension#ANY_FIELD");
+
+			AssertNotVisible(
+				key_fieldName = "Bare Specifier",
+				locator1 = "ClientExtension#ANY_FIELD");
+		}
+	}
+
 	@description = "LPS-180167. Verify if the Identity field can be hidden"
 	@priority = 3
 	test CanHiddenIdentityField {

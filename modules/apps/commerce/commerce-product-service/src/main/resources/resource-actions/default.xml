@@ -72,6 +72,7 @@
 				<action-key>ADD_COMMERCE_PRODUCT_OPTION_CATEGORY</action-key>
 				<action-key>ADD_COMMERCE_PRODUCT_SPECIFICATION_OPTION</action-key>
 				<action-key>MANAGE_COMMERCE_PRODUCT_ATTACHMENTS</action-key>
+				<action-key>MANAGE_COMMERCE_PRODUCT_CHANNEL_VISIBILITY</action-key>
 				<action-key>MANAGE_COMMERCE_PRODUCT_IMAGES</action-key>
 				<action-key>MANAGE_COMMERCE_PRODUCT_MEASUREMENT_UNITS</action-key>
 				<action-key>PERMISSIONS</action-key>
@@ -93,6 +94,7 @@
 				<action-key>ADD_COMMERCE_PRODUCT_RULE</action-key>
 				<action-key>ADD_COMMERCE_PRODUCT_SPECIFICATION_OPTION</action-key>
 				<action-key>MANAGE_COMMERCE_PRODUCT_ATTACHMENTS</action-key>
+				<action-key>MANAGE_COMMERCE_PRODUCT_CHANNEL_VISIBILITY</action-key>
 				<action-key>MANAGE_COMMERCE_PRODUCT_IMAGES</action-key>
 				<action-key>MANAGE_COMMERCE_PRODUCT_MEASUREMENT_UNITS</action-key>
 				<action-key>PERMISSIONS</action-key>
@@ -149,6 +151,64 @@
 				<action-key>DELETE</action-key>
 				<action-key>PERMISSIONS</action-key>
 				<action-key>UPDATE</action-key>
+			</guest-unsupported>
+			<owner-defaults>
+				<action-key>DELETE</action-key>
+				<action-key>PERMISSIONS</action-key>
+				<action-key>UPDATE</action-key>
+				<action-key>VIEW</action-key>
+			</owner-defaults>
+		</permissions>
+	</model-resource>
+	<model-resource>
+		<model-name>com.liferay.commerce.product.model.CPDefinition</model-name>
+		<portlet-ref>
+			<portlet-name>com_liferay_commerce_product_definitions_web_internal_portlet_CPDefinitionsPortlet</portlet-name>
+		</portlet-ref>
+		<weight>2</weight>
+		<permissions>
+			<supports>
+				<action-key>DELETE</action-key>
+				<action-key>PERMISSIONS</action-key>
+				<action-key>UPDATE</action-key>
+				<action-key>VIEW</action-key>
+			</supports>
+			<site-member-defaults />
+			<guest-defaults />
+			<guest-unsupported>
+				<action-key>DELETE</action-key>
+				<action-key>PERMISSIONS</action-key>
+				<action-key>UPDATE</action-key>
+				<action-key>VIEW</action-key>
+			</guest-unsupported>
+			<owner-defaults>
+				<action-key>DELETE</action-key>
+				<action-key>PERMISSIONS</action-key>
+				<action-key>UPDATE</action-key>
+				<action-key>VIEW</action-key>
+			</owner-defaults>
+		</permissions>
+	</model-resource>
+	<model-resource>
+		<model-name>com.liferay.commerce.product.model.CPInstance</model-name>
+		<portlet-ref>
+			<portlet-name>com_liferay_commerce_product_definitions_web_internal_portlet_CPDefinitionsPortlet</portlet-name>
+		</portlet-ref>
+		<weight>2</weight>
+		<permissions>
+			<supports>
+				<action-key>DELETE</action-key>
+				<action-key>PERMISSIONS</action-key>
+				<action-key>UPDATE</action-key>
+				<action-key>VIEW</action-key>
+			</supports>
+			<site-member-defaults />
+			<guest-defaults />
+			<guest-unsupported>
+				<action-key>DELETE</action-key>
+				<action-key>PERMISSIONS</action-key>
+				<action-key>UPDATE</action-key>
+				<action-key>VIEW</action-key>
 			</guest-unsupported>
 			<owner-defaults>
 				<action-key>DELETE</action-key>

@@ -1,0 +1,21 @@
+#!/usr/bin/expect
+
+spawn [db.upgrade.client.home]/db_upgrade[file.suffix.bat] -s
+
+set timeout 900
+
+expect {
+	"Connecting to Gogo shell." {}
+	timeout {send_user "No Gogoshell messages display";exit 2}
+}
+
+expect {
+	"Type \"help\" to get available upgrade and verify commands.\r\nType \"help \{command\}\" to get additional information about the command. For example, \"help upgrade:list\".\r\nEnter \"exit\" or \"quit\" to exit." {send "exit\r"}
+	timeout {send_user "No Gogoshell messages display";exit 2}
+}
+
+set timeout 5
+
+expect {
+	"Unable to open Gogo shell" {send_user "The Gogo shell connection failed";exit 2}
+}

@@ -37,9 +37,9 @@ export default function FormFragmentsConfiguration({
 				setValues((previousValues) => ({
 					...previousValues,
 					[name]: {
-						fragmentEntryKey: fragmententrykey,
 						fragmentEntryName: fragmententryname,
 						groupKey: groupkey,
+						key: fragmententrykey,
 					},
 				}));
 			},

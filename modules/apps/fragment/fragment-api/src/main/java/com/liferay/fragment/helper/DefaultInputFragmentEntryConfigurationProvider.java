@@ -24,7 +24,7 @@ public interface DefaultInputFragmentEntryConfigurationProvider {
 	public JSONObject getDefaultInputFragmentEntryKeysJSONObject(long groupId);
 
 	public void updateDefaultInputFragmentEntryKeysJSONObject(
-			JSONObject defaultInputFragmentEntryKeysJSONObject)
+			JSONObject defaultInputFragmentEntryKeysJSONObject, long groupId)
 		throws Exception;
 
 }

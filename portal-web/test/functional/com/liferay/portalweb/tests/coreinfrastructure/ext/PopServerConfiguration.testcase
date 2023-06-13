@@ -83,6 +83,7 @@ definition {
 	@priority = 3
 	test CanEnablePopServerNotificationsViaUI {
 		property database.types = "mysql";
+		property test.name.skip.portal.instance = "PopServerConfiguration#CanEnablePopServerNotificationsViaUI";
 
 		task ("Given pop server notifications are disabled") {
 			ServerAdministration.openServerAdmin();

@@ -25,9 +25,9 @@ ClientExtensionAdminDisplayContext clientExtensionAdminDisplayContext = (ClientE
 		module="js/components/ModalImportClientExtensionEntry"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
-				"importClientExtensionEntryURL", clientExtensionAdminDisplayContext.getImportURL()
+				"importClientExtensionEntryURL", clientExtensionAdminDisplayContext.getImportClientExtensionEntryURL()
 			).put(
-				"successURL", clientExtensionAdminDisplayContext.getImportSuccessURL()
+				"successURL", clientExtensionAdminDisplayContext.getImportClientExtensionEntrySuccessURL()
 			).build()
 		%>'
 	/>

@@ -79,17 +79,17 @@ public class ClientExtensionAdminDisplayContext {
 		return creationMenu;
 	}
 
-	public String getImportSuccessURL() {
+	public String getImportClientExtensionEntrySuccessURL() {
 		return PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse
 		).buildString();
 	}
 
-	public String getImportURL() {
+	public String getImportClientExtensionEntryURL() {
 		return ResourceURLBuilder.createResourceURL(
 			_liferayPortletResponse
 		).setResourceID(
-			"/client_extension_admin/import"
+			"/client_extension_admin/import_client_extension_entry"
 		).buildString();
 	}
 

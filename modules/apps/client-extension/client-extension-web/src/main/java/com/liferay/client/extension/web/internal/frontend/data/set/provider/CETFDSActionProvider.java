@@ -148,7 +148,7 @@ public class CETFDSActionProvider implements FDSActionProvider {
 			).setParameter(
 				"externalReferenceCode", cetFDSEntry.getExternalReferenceCode()
 			).setResourceID(
-				"/client_extension_admin/export"
+				"/client_extension_admin/export_client_extension_entry"
 			).buildString());
 		dropdownItem.setIcon("export");
 		dropdownItem.setLabel(

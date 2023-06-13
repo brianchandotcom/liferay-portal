@@ -19,6 +19,7 @@ import com.liferay.info.permission.provider.InfoPermissionProvider;
 import com.liferay.layout.content.page.editor.web.internal.constants.ContentPageEditorConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -56,7 +57,9 @@ public class ObjectUtil {
 		long companyId, InfoItemServiceRegistry infoItemServiceRegistry,
 		PermissionChecker permissionChecker) {
 
-		if (_isLayoutTypeAssetDisplay()) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-183727") &&
+			_isLayoutTypeAssetDisplay()) {
+
 			return true;
 		}
 

@@ -19,7 +19,7 @@ package com.liferay.jethr0.event.handler;
  */
 public interface EventHandler {
 
-	public String process(String message) throws Exception;
+	public String process() throws Exception;
 
 	public enum EventType {
 

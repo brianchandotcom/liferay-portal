@@ -27,10 +27,11 @@ import org.json.JSONObject;
 public class QueueProjectEventHandler extends BaseEventHandler {
 
 	@Override
-	public String process(String body) throws Exception {
-		JSONObject bodyJSONObject = new JSONObject(body);
+	public String process() throws Exception {
+		JSONObject messageJSONObject = getMessageJSONObject();
 
-		Project project = getProject(bodyJSONObject.optJSONObject("project"));
+		Project project = getProject(
+			messageJSONObject.optJSONObject("project"));
 
 		project.setState(Project.State.QUEUED);
 
@@ -53,9 +54,9 @@ public class QueueProjectEventHandler extends BaseEventHandler {
 	}
 
 	protected QueueProjectEventHandler(
-		EventHandlerContext eventHandlerContext) {
+		EventHandlerHelper eventHandlerHelper, JSONObject messageJSONObject) {
 
-		super(eventHandlerContext);
+		super(eventHandlerHelper, messageJSONObject);
 	}
 
 }

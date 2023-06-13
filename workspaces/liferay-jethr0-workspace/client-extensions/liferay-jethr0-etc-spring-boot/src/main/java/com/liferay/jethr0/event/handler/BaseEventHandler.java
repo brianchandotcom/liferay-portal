@@ -27,12 +27,19 @@ import org.json.JSONObject;
  */
 public abstract class BaseEventHandler implements EventHandler {
 
-	protected BaseEventHandler(EventHandlerContext eventHandlerContext) {
-		_eventHandlerContext = eventHandlerContext;
+	protected BaseEventHandler(
+		EventHandlerHelper eventHandlerHelper, JSONObject messageJSONObject) {
+
+		_eventHandlerHelper = eventHandlerHelper;
+		_messageJSONObject = messageJSONObject;
 	}
 
 	protected EventHandlerContext getEventHandlerContext() {
 		return _eventHandlerContext;
+	}
+
+	protected JSONObject getMessageJSONObject() {
+		return _messageJSONObject;
 	}
 
 	protected Project getProject(JSONObject projectJSONObject)
@@ -172,6 +179,7 @@ public abstract class BaseEventHandler implements EventHandler {
 		return jsonObject;
 	}
 
-	private final EventHandlerContext _eventHandlerContext;
+	private final EventHandlerHelper _eventHandlerHelper;
+	private final JSONObject _messageJSONObject;
 
 }

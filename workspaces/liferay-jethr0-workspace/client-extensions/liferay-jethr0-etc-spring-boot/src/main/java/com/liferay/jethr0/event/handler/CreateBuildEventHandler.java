@@ -31,10 +31,11 @@ import org.json.JSONObject;
 public class CreateBuildEventHandler extends BaseEventHandler {
 
 	@Override
-	public String process(String body) throws Exception {
-		JSONObject bodyJSONObject = new JSONObject(body);
+	public String process() throws Exception {
+		JSONObject messageJSONObject = getMessageJSONObject();
 
-		Project project = getProject(bodyJSONObject.optJSONObject("project"));
+		Project project = getProject(
+			messageJSONObject.optJSONObject("project"));
 
 		EventHandlerContext eventHandlerContext = getEventHandlerContext();
 
@@ -42,7 +43,7 @@ public class CreateBuildEventHandler extends BaseEventHandler {
 			eventHandlerContext.getBuildRepository();
 
 		JSONObject buildJSONObject = validateBuildJSONObject(
-			bodyJSONObject.optJSONObject("build"));
+			messageJSONObject.optJSONObject("build"));
 
 		Build build = buildRepository.add(project, buildJSONObject);
 
@@ -83,8 +84,10 @@ public class CreateBuildEventHandler extends BaseEventHandler {
 		return project.toString();
 	}
 
-	protected CreateBuildEventHandler(EventHandlerContext eventHandlerContext) {
-		super(eventHandlerContext);
+	protected CreateBuildEventHandler(
+		EventHandlerHelper eventHandlerHelper, JSONObject messageJSONObject) {
+
+		super(eventHandlerHelper, messageJSONObject);
 	}
 
 }

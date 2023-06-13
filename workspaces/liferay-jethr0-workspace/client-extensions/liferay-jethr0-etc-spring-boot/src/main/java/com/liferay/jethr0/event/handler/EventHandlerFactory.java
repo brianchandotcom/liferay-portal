@@ -14,6 +14,8 @@
 
 package com.liferay.jethr0.event.handler;
 
+import org.json.JSONObject;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
@@ -23,17 +25,27 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class EventHandlerFactory {
 
-	public EventHandler newEventHandler(EventHandler.EventType eventType) {
+	public EventHandler newEventHandler(JSONObject messageJSONObject) {
+		EventHandler.EventType eventType = EventHandler.EventType.valueOf(
+			messageJSONObject.optString("eventTrigger"));
+
 		EventHandler eventHandler = null;
 
 		if (eventType == EventHandler.EventType.CREATE_BUILD) {
-			eventHandler = new CreateBuildEventHandler(_eventHandlerContext);
+			eventHandler = new CreateBuildEventHandler(
+				_eventHandlerHelper, messageJSONObject);
 		}
 		else if (eventType == EventHandler.EventType.CREATE_PROJECT) {
-			eventHandler = new CreateProjectEventHandler(_eventHandlerContext);
+			eventHandler = new CreateProjectEventHandler(
+				_eventHandlerHelper, messageJSONObject);
 		}
 		else if (eventType == EventHandler.EventType.QUEUE_PROJECT) {
-			eventHandler = new QueueProjectEventHandler(_eventHandlerContext);
+			eventHandler = new QueueProjectEventHandler(
+				_eventHandlerHelper, messageJSONObject);
+		}
+		else {
+			throw new IllegalArgumentException(
+				"Invalid event type: " + eventType);
 		}
 
 		return eventHandler;

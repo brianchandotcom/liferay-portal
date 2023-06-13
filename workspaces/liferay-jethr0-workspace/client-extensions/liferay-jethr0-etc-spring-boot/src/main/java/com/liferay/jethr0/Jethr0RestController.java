@@ -41,19 +41,15 @@ public class Jethr0RestController {
 			_log.debug("Processing " + body);
 		}
 
-		JSONObject bodyJSONObject = new JSONObject(body);
-
 		EventHandler eventHandler = _eventHandlerFactory.newEventHandler(
-			EventHandler.EventType.valueOf(
-				bodyJSONObject.optString("eventTrigger")));
+			new JSONObject(body));
 
 		if (eventHandler == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 
 		try {
-			return new ResponseEntity<>(
-				eventHandler.process(bodyJSONObject.toString()), HttpStatus.OK);
+			return new ResponseEntity<>(eventHandler.process(), HttpStatus.OK);
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {

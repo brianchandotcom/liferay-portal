@@ -29,11 +29,11 @@ import org.json.JSONObject;
 public class CreateProjectEventHandler extends BaseEventHandler {
 
 	@Override
-	public String process(String body) throws Exception {
-		JSONObject bodyJSONObject = new JSONObject(body);
+	public String process() throws Exception {
+		JSONObject messageJSONObject = getMessageJSONObject();
 
 		JSONObject projectJSONObject = validateProjectJSONObject(
-			bodyJSONObject.optJSONObject("project"));
+			messageJSONObject.optJSONObject("project"));
 
 		EventHandlerContext eventHandlerContext = getEventHandlerContext();
 
@@ -71,9 +71,9 @@ public class CreateProjectEventHandler extends BaseEventHandler {
 	}
 
 	protected CreateProjectEventHandler(
-		EventHandlerContext eventHandlerContext) {
+		EventHandlerHelper eventHandlerHelper, JSONObject messageJSONObject) {
 
-		super(eventHandlerContext);
+		super(eventHandlerHelper, messageJSONObject);
 	}
 
 }

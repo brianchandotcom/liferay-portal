@@ -66,7 +66,7 @@ public class ExpandoRowConstraintResolver
 
 		ExpandoRow expandoRow = constraintResolverContext.getTargetCTModel();
 
-		_expandoRowLocalService.deleteExpandoRow(expandoRow.getRowId());
+		_expandoRowLocalService.deleteExpandoRow(expandoRow);
 	}
 
 	@Reference

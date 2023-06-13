@@ -67,7 +67,7 @@ public class ExpandoValueConstraintResolver
 		ExpandoValue expandoValue =
 			constraintResolverContext.getTargetCTModel();
 
-		_expandoValueLocalService.deleteExpandoValue(expandoValue.getValueId());
+		_expandoValueLocalService.deleteExpandoValue(expandoValue);
 	}
 
 	@Reference

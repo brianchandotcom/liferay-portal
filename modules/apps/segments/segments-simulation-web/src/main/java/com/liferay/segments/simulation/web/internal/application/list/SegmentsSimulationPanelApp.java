@@ -16,6 +16,7 @@ package com.liferay.segments.simulation.web.internal.application.list;
 
 import com.liferay.application.list.BaseJSPPanelApp;
 import com.liferay.application.list.PanelApp;
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
@@ -86,7 +87,8 @@ public class SegmentsSimulationPanelApp extends BaseJSPPanelApp {
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
 			new SegmentsSimulationDisplayContext(
-				httpServletRequest, _segmentsConfigurationProvider));
+				httpServletRequest, _itemSelector,
+				_segmentsConfigurationProvider));
 
 		return super.include(httpServletRequest, httpServletResponse);
 	}
@@ -106,6 +108,9 @@ public class SegmentsSimulationPanelApp extends BaseJSPPanelApp {
 	protected ServletContext getServletContext() {
 		return _servletContext;
 	}
+
+	@Reference
+	private ItemSelector _itemSelector;
 
 	@Reference
 	private Language _language;

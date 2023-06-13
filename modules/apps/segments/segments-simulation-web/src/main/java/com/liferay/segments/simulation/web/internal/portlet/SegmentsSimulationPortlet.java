@@ -14,6 +14,7 @@
 
 package com.liferay.segments.simulation.web.internal.portlet;
 
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -67,11 +68,14 @@ public class SegmentsSimulationPortlet extends MVCPortlet {
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
 			new SegmentsSimulationDisplayContext(
-				_portal.getHttpServletRequest(renderRequest),
+				_portal.getHttpServletRequest(renderRequest), _itemSelector,
 				_segmentsConfigurationProvider));
 
 		super.render(renderRequest, renderResponse);
 	}
+
+	@Reference
+	private ItemSelector _itemSelector;
 
 	@Reference
 	private Portal _portal;

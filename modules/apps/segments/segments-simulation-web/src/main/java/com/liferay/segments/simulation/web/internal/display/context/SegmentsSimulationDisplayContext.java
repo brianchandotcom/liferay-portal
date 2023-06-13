@@ -14,14 +14,18 @@
 
 package com.liferay.segments.simulation.web.internal.display.context;
 
+import com.liferay.item.selector.ItemSelector;
+import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -30,6 +34,9 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.configuration.provider.SegmentsConfigurationProvider;
 import com.liferay.segments.constants.SegmentsPortletKeys;
+import com.liferay.segments.item.selector.SegmentsEntryItemSelectorReturnType;
+import com.liferay.segments.item.selector.criterion.SegmentsEntryItemSelectorCriterion;
+import com.liferay.segments.item.selector.criterion.SegmentsExperienceItemSelectorCriterion;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.SegmentsEntryServiceUtil;
 import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
@@ -49,10 +56,11 @@ import javax.servlet.http.HttpServletRequest;
 public class SegmentsSimulationDisplayContext {
 
 	public SegmentsSimulationDisplayContext(
-		HttpServletRequest httpServletRequest,
+		HttpServletRequest httpServletRequest, ItemSelector itemSelector,
 		SegmentsConfigurationProvider segmentsConfigurationProvider) {
 
 		_httpServletRequest = httpServletRequest;
+		_itemSelector = itemSelector;
 		_segmentsConfigurationProvider = segmentsConfigurationProvider;
 
 		RenderResponse renderResponse =
@@ -80,6 +88,10 @@ public class SegmentsSimulationDisplayContext {
 			"segmentsEntries", _getSegmentsEntriesJSONArray()
 		).put(
 			"segmentsExperiences", _getSegmentsExperiencesJSONArray()
+		).put(
+			"selectSegmentsEntryURL", _getSelectSegmentsEntryURL()
+		).put(
+			"selectSegmentsExperienceURL", _getSelectSegmentsExperienceURL()
 		).put(
 			"showEmptyMessage", isShowEmptyMessage()
 		).put(
@@ -188,6 +200,51 @@ public class SegmentsSimulationDisplayContext {
 		return _segmentsExperiencesJSONArray;
 	}
 
+	private String _getSelectSegmentsEntryURL() {
+		SegmentsEntryItemSelectorCriterion segmentsEntryItemSelectorCriterion =
+			new SegmentsEntryItemSelectorCriterion();
+
+		segmentsEntryItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			new SegmentsEntryItemSelectorReturnType());
+
+		StagingGroupHelper stagingGroupHelper =
+			StagingGroupHelperUtil.getStagingGroupHelper();
+
+		Group group = _themeDisplay.getScopeGroup();
+
+		if (!stagingGroupHelper.isStagedPortlet(
+				_themeDisplay.getScopeGroupId(),
+				SegmentsPortletKeys.SEGMENTS)) {
+
+			group = stagingGroupHelper.getStagedPortletGroup(
+				_themeDisplay.getScopeGroup(), SegmentsPortletKeys.SEGMENTS);
+		}
+
+		segmentsEntryItemSelectorCriterion.setGroupId(group.getGroupId());
+
+		return String.valueOf(
+			_itemSelector.getItemSelectorURL(
+				RequestBackedPortletURLFactoryUtil.create(_httpServletRequest),
+				_liferayPortletResponse.getNamespace() + "selectSegmentsEntry",
+				segmentsEntryItemSelectorCriterion));
+	}
+
+	private String _getSelectSegmentsExperienceURL() {
+		SegmentsExperienceItemSelectorCriterion
+			segmentsExperienceItemSelectorCriterion =
+				new SegmentsExperienceItemSelectorCriterion();
+
+		segmentsExperienceItemSelectorCriterion.
+			setDesiredItemSelectorReturnTypes(new UUIDItemSelectorReturnType());
+
+		return String.valueOf(
+			_itemSelector.getItemSelectorURL(
+				RequestBackedPortletURLFactoryUtil.create(_httpServletRequest),
+				_liferayPortletResponse.getNamespace() +
+					"selectSegmentsExperience",
+				segmentsExperienceItemSelectorCriterion));
+	}
+
 	private long _getStagingAwareGroupId() {
 		if (_groupId != null) {
 			return _groupId;
@@ -207,6 +264,7 @@ public class SegmentsSimulationDisplayContext {
 
 	private Long _groupId;
 	private final HttpServletRequest _httpServletRequest;
+	private final ItemSelector _itemSelector;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final SegmentsConfigurationProvider _segmentsConfigurationProvider;
 	private List<SegmentsEntry> _segmentsEntries;

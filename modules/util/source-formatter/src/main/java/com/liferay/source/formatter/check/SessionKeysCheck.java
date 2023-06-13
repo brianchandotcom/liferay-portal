@@ -100,7 +100,19 @@ public class SessionKeysCheck extends BaseFileCheck {
 
 			String prefix = match.substring(0, y + 1);
 			String suffix = match.substring(z);
+
 			String oldKey = match.substring(y + 1, z);
+			String oldKeySuffix = StringPool.BLANK;
+
+			for (String allowedSuffix : _ALLOWED_SUFFIXES) {
+				if (oldKey.endsWith(allowedSuffix)) {
+					oldKey = oldKey.substring(
+						0, oldKey.lastIndexOf(allowedSuffix));
+					oldKeySuffix = allowedSuffix;
+
+					break;
+				}
+			}
 
 			boolean alphaNumericKey = true;
 
@@ -124,6 +136,11 @@ public class SessionKeysCheck extends BaseFileCheck {
 				continue;
 			}
 
+			if (Validator.isNotNull(oldKeySuffix)) {
+				newKey = newKey + oldKeySuffix;
+				oldKey = oldKey + oldKeySuffix;
+			}
+
 			String oldSub = StringBundler.concat(prefix, oldKey, suffix);
 			String newSub = StringBundler.concat(prefix, newKey, suffix);
 
@@ -141,5 +158,9 @@ public class SessionKeysCheck extends BaseFileCheck {
 
 		return content;
 	}
+
+	private static final String[] _ALLOWED_SUFFIXES = {
+		"_requestProcessedWarning"
+	};
 
 }

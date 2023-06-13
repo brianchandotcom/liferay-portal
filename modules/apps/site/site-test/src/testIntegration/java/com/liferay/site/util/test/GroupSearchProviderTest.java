@@ -91,7 +91,7 @@ public class GroupSearchProviderTest {
 
 		childGroup1.setType(GroupConstants.TYPE_SITE_PRIVATE);
 
-		_groupLocalService.updateGroup(childGroup1);
+		childGroup1 = _groupLocalService.updateGroup(childGroup1);
 
 		Group childGroup2 = GroupTestUtil.addGroup(parentGroup.getGroupId());
 

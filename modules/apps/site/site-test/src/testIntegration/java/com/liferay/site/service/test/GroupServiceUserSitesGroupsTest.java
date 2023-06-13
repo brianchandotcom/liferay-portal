@@ -92,7 +92,7 @@ public class GroupServiceUserSitesGroupsTest {
 
 		_group.setActive(false);
 
-		_groupLocalService.updateGroup(_group);
+		_group = _groupLocalService.updateGroup(_group);
 
 		List<Group> groups = _groupService.getUserSitesGroups(
 			_user.getUserId(), null, QueryUtil.ALL_POS);
@@ -120,7 +120,7 @@ public class GroupServiceUserSitesGroupsTest {
 
 		group.setActive(false);
 
-		_groupLocalService.updateGroup(group);
+		group = _groupLocalService.updateGroup(group);
 
 		List<Group> groups = _groupService.getUserSitesGroups(
 			_user.getUserId(), null, QueryUtil.ALL_POS);

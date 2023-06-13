@@ -361,7 +361,7 @@ public class GroupServiceTest {
 			RandomTestUtil.randomString() + StringPool.SPACE +
 				RandomTestUtil.randomString());
 
-		_groupLocalService.updateGroup(_group);
+		_group = _groupLocalService.updateGroup(_group);
 
 		Assert.assertEquals(
 			1,
@@ -395,7 +395,7 @@ public class GroupServiceTest {
 			RandomTestUtil.randomString() + StringPool.SPACE +
 				RandomTestUtil.randomString());
 
-		_groupLocalService.updateGroup(_group);
+		_group = _groupLocalService.updateGroup(_group);
 
 		Assert.assertEquals(
 			1,

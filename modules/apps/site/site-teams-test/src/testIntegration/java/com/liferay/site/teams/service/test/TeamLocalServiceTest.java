@@ -64,7 +64,7 @@ public class TeamLocalServiceTest {
 		typeSettingsUnicodeProperties.setProperty(
 			"defaultTeamIds", String.valueOf(team.getTeamId()));
 
-		_groupLocalService.updateGroup(_group);
+		_group = _groupLocalService.updateGroup(_group);
 
 		_teamLocalService.deleteTeam(team);
 

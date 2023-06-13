@@ -12,8 +12,8 @@
  * details.
  */
 
-import ClayButton from '@clayui/button';
-import {ClayInput} from '@clayui/form';
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
+import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useModal} from '@clayui/modal';
@@ -123,49 +123,55 @@ function SXPBlueprintSelectorInput({
 					'has-error': !sxpBlueprintId && touched,
 				})}
 			>
-				<label>
-					{Liferay.Language.get('blueprint')}
+				<ClayForm.Group className="c-mb-0 w-100">
+					<label>
+						{Liferay.Language.get('blueprint')}
 
-					<span className="reference-mark">
-						<ClayIcon symbol="asterisk" />
-					</span>
-				</label>
+						<span className="reference-mark">
+							<ClayIcon symbol="asterisk" />
+						</span>
+					</label>
 
-				<div className="select-sxp-blueprint">
-					{sxpBlueprint.loading ? (
-						<div className="form-control" readOnly>
-							<span className="inline-item w-100">
-								<ClayLoadingIndicator small />
-							</span>
-						</div>
-					) : (
-						<ClayInput
-							onBlur={onBlur}
-							onChange={_handleChange}
-							required
-							type="text"
-							value={sxpBlueprint.title}
-						/>
-					)}
+					<ClayInput.Group>
+						<ClayInput.GroupItem prepend>
+							<ClayInput
+								className="bg-transparent form-control input-group-inset input-group-inset-after"
+								onBlur={onBlur}
+								onChange={_handleChange}
+								required
+								style={{caretColor: 'transparent'}}
+								type="text"
+								value={sxpBlueprint.title}
+							/>
 
-					{sxpBlueprint.title && (
-						<ClayButton
-							className="remove-sxp-blueprint"
-							displayType="secondary"
-							onClick={_handleClickRemove}
-							small
-						>
-							<ClayIcon symbol="times-circle" />
-						</ClayButton>
-					)}
+							<ClayInput.GroupInsetItem
+								after
+								className="bg-transparent rounded-0"
+							>
+								{sxpBlueprint.loading && (
+									<ClayLoadingIndicator small />
+								)}
 
-					<ClayButton
-						displayType="secondary"
-						onClick={_handleClickSelect}
-					>
-						{Liferay.Language.get('select')}
-					</ClayButton>
-				</div>
+								{sxpBlueprint.title && (
+									<ClayButtonWithIcon
+										displayType="unstyled"
+										onClick={_handleClickRemove}
+										symbol="times-circle"
+									/>
+								)}
+							</ClayInput.GroupInsetItem>
+						</ClayInput.GroupItem>
+
+						<ClayInput.GroupItem append shrink>
+							<ClayButton
+								displayType="secondary"
+								onClick={_handleClickSelect}
+							>
+								{Liferay.Language.get('select')}
+							</ClayButton>
+						</ClayInput.GroupItem>
+					</ClayInput.Group>
+				</ClayForm.Group>
 			</ClayInput.GroupItem>
 		</>
 	);

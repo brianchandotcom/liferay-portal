@@ -5,59 +5,6 @@
 		}
 	}
 
-	.search-bar-configuration-options-container {
-		.form-group {
-			margin-bottom: 0;
-		}
-	}
-
-	.search-bar-configuration-suggestions-root {
-		.has-error {
-			.select-sxp-blueprint {
-				.form-control {
-					background-color: var(--danger-l2, $danger-l2);
-					border-color: var(--danger-l1, $danger-l1);
-				}
-			}
-		}
-
-		.select-sxp-blueprint {
-			display: flex;
-			width: 100%;
-
-			.form-control {
-				background-color: var(--white, $white);
-				border-bottom-right-radius: 0;
-				border-color: var(--gray-400, $secondary-l2);
-				border-right: 0;
-				border-top-right-radius: 0;
-				caret-color: transparent;
-				opacity: 1;
-				padding-right: 0;
-
-				&:focus {
-					box-shadow: none;
-				}
-			}
-
-			.btn {
-				border-bottom-left-radius: 0;
-				border-top-left-radius: 0;
-
-				&:focus {
-					box-shadow: none;
-				}
-
-				&.remove-sxp-blueprint {
-					border-bottom-right-radius: 0;
-					border-left: 0;
-					border-right: 0;
-					border-top-right-radius: 0;
-				}
-			}
-		}
-	}
-
 	.search-bar-keywords-input-wrapper {
 		min-width: 6.25rem;
 	}

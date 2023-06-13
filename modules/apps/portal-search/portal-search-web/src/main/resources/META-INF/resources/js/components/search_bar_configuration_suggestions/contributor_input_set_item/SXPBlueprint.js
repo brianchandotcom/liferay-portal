@@ -98,7 +98,7 @@ function SXPBlueprint({index, onBlur, onInputSetItemChange, touched, value}) {
 				/>
 			</div>
 
-			<div className="c-mb-0 form-group-autofit">
+			<div className="c-mb-3 form-group-autofit">
 				<CharacterThresholdInput
 					onBlur={onBlur('attributes.characterThreshold')}
 					onChange={_handleChangeAttribute('characterThreshold')}
@@ -179,7 +179,7 @@ function SXPBlueprint({index, onBlur, onInputSetItemChange, touched, value}) {
 				</ClayInput.GroupItem>
 			</div>
 
-			<div className="form-group-autofit">
+			<div className="c-mb-0 form-group-autofit">
 				<FieldsInput
 					fields={value.attributes?.fields}
 					onBlur={onBlur('attributes.fields')}

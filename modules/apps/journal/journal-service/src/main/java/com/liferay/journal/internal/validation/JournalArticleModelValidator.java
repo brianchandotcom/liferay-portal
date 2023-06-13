@@ -485,6 +485,11 @@ public class JournalArticleModelValidator
 			ExportImportContentProcessorRegistryUtil.
 				getExportImportContentProcessor(JournalArticle.class.getName());
 
+		if (smallImage && Validator.isNotNull(smallImageURL)) {
+			exportImportContentProcessor.validateContentReferences(
+				groupId, smallImageURL);
+		}
+
 		exportImportContentProcessor.validateContentReferences(
 			groupId, content);
 	}

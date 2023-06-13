@@ -98,9 +98,11 @@ public class JournalArticleTranslationsItemSelectorViewDescriptor
 
 		articleTranslationsSearchContainer.setId("articleTranslations");
 
-		JournalArticle article = JournalArticleLocalServiceUtil.getArticle(
-			_journalArticleTranslationsItemSelectorCriterion.getGroupId(),
-			_journalArticleTranslationsItemSelectorCriterion.getArticleId());
+		JournalArticle article =
+			JournalArticleLocalServiceUtil.getLatestArticle(
+				_journalArticleTranslationsItemSelectorCriterion.getGroupId(),
+				_journalArticleTranslationsItemSelectorCriterion.
+					getArticleId());
 
 		String keywords = _getKeywords();
 

@@ -35,9 +35,7 @@ definition {
 	@description = "LPS-158522: Upgrade client can connect to Gogo Shell"
 	@priority = 3
 	test CheckUpgradeClientGogoShell {
-		AntCommand(
-			locator1 = "modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml",
-			value1 = "check-upgrade-client-gogoshell");
+		AntCommands.runCommand("modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml", "check-upgrade-client-gogoshell");
 	}
 
 	@description = "LPS-158522: Upgrade client can connect to Gogo Shell and check upgrade"
@@ -170,9 +168,7 @@ definition {
 		property skip.get.testcase.database.properties = "true";
 		property skip.upgrade-legacy-database = "true";
 
-		AntCommand(
-			locator1 = "modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml",
-			value1 = "execute-all-pending-upgrades-from-gogo-shell");
+		AntCommands.runCommand("modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml", "execute-all-pending-upgrades-from-gogo-shell");
 	}
 
 	@description = "LPS-168551:  Upgrade client throws error when portal-ext.properties exists in home directory"

@@ -25,13 +25,9 @@ definition {
 		property test.assert.warning.exceptions = "false";
 		property test.name.skip.portal.instance = "VerifyProperties#UpgradeStopsIfVerifyPropertiesFail";
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "start-app-server -Ddelete.liferay.home=false");
+		AntCommands.runCommand("build-test.xml", "start-app-server-tomcat-simple");
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "wait-for-server-shutdown -Dapp.server.port.number=8080");
+		AntCommands.runCommand("build-test.xml", "wait-for-server-shutdown -Dapp.server.port.number=8080");
 
 		AssertConsoleTextPresent(value1 = "Completed com.liferay.portal.verify.VerifyProperties#verifySystemProperties");
 

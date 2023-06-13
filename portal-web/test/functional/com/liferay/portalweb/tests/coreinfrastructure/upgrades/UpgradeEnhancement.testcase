@@ -41,9 +41,7 @@ definition {
 
 		Portlet.shutdownServer();
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "start-app-server -Ddelete.liferay.home=false");
+		AntCommands.runCommand("build-test.xml", "start-app-server-tomcat-simple");
 
 		AssertConsoleTextPresent(value1 = "You must first upgrade the portal to the required schema version");
 	}
@@ -137,9 +135,7 @@ definition {
 		if (${output} != "Cannot decrement minor version, it is already at the minimum value") {
 			Portlet.shutdownServer();
 
-			AntCommand(
-				locator1 = "build-test.xml",
-				value1 = "start-app-server -Ddelete.liferay.home=false");
+			AntCommands.runCommand("build-test.xml", "start-app-server-tomcat-simple");
 
 			AssertConsoleTextPresent(value1 = "You must first upgrade the portal to the required schema version");
 		}

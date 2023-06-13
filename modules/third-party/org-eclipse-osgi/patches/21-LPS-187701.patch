@@ -1,0 +1,30 @@
+diff --git a/org/eclipse/osgi/internal/loader/BundleLoader.java b/org/eclipse/osgi/internal/loader/BundleLoader.java
+index 25ef7f960ef7..69e30a31204a 100644
+--- a/org/eclipse/osgi/internal/loader/BundleLoader.java
++++ b/org/eclipse/osgi/internal/loader/BundleLoader.java
+@@ -181,7 +181,7 @@ public class BundleLoader extends ModuleLoader {
+ 		exportSources = new BundleLoaderSources(this);
+ 		List<ModuleCapability> exports = wiring.getModuleCapabilities(PackageNamespace.PACKAGE_NAMESPACE);
+ 		exports = exports == null ? new ArrayList<ModuleCapability>(0) : exports;
+-		exportedPackages = Collections.synchronizedCollection(exports.size() > 10 ? new HashSet<String>(exports.size()) : new ArrayList<String>(exports.size()));
++		exportedPackages = Collections.newSetFromMap(new ConcurrentHashMap<>());
+ 		initializeExports(exports, exportSources, exportedPackages);
+ 
+ 		// init the dynamic imports tables
+@@ -968,12 +968,10 @@ public class BundleLoader extends ModuleLoader {
+ 		if (visited.contains(this))
+ 			return;
+ 		visited.add(this);
+-		synchronized (exportedPackages) {
+-			for (String exported : exportedPackages) {
+-				if (exported.equals(packageName) || (subPackages && isSubPackage(packageName, exported))) {
+-					if (!result.contains(exported))
+-						result.add(exported);
+-				}
++		for (String exported : exportedPackages) {
++			if (exported.equals(packageName) || (subPackages && isSubPackage(packageName, exported))) {
++				if (!result.contains(exported))
++					result.add(exported);
+ 			}
+ 		}
+ 		for (String substituted : wiring.getSubstitutedNames()) {

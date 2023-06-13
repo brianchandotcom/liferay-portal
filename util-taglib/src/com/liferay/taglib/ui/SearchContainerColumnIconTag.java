@@ -59,14 +59,14 @@ public class SearchContainerColumnIconTag<R> extends SearchContainerColumnTag {
 			iconSearchEntry.setAlign(getAlign());
 			iconSearchEntry.setColspan(getColspan());
 			iconSearchEntry.setCssClass(getCssClass());
+			iconSearchEntry.setIcon(_icon);
 			iconSearchEntry.setRequest(
 				(HttpServletRequest)pageContext.getRequest());
 			iconSearchEntry.setResponse(
 				(HttpServletResponse)pageContext.getResponse());
-			iconSearchEntry.setToggleRowChecker(isToggleRowChecker());
 			iconSearchEntry.setServletContext(
 				ServletContextPool.get(PortalUtil.getServletContextName()));
-			iconSearchEntry.setIcon(_icon);
+			iconSearchEntry.setToggleRowChecker(isToggleRowChecker());
 			iconSearchEntry.setValign(getValign());
 
 			resultRow.addSearchEntry(index, iconSearchEntry);

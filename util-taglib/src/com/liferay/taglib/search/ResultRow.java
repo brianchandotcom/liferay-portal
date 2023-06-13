@@ -265,8 +265,8 @@ public class ResultRow
 		statusSearchEntry.setColspan(SearchEntry.DEFAULT_COLSPAN);
 		statusSearchEntry.setHref(href);
 		statusSearchEntry.setStatus(status);
-		statusSearchEntry.setStatusDate(statusDate);
 		statusSearchEntry.setStatusByUserId(statusByUserId);
+		statusSearchEntry.setStatusDate(statusDate);
 		statusSearchEntry.setValign(SearchEntry.DEFAULT_VALIGN);
 
 		_searchEntries.add(index, statusSearchEntry);

@@ -83,10 +83,10 @@ public class SegmentsEntryTableItemView implements TableItemView {
 
 		DateSearchEntry modifiedDateTextDateSearchEntry = new DateSearchEntry();
 
-		modifiedDateTextDateSearchEntry.setDate(
-			_segmentsEntry.getModifiedDate());
 		modifiedDateTextDateSearchEntry.setCssClass(
 			"table-cell-expand-smallest table-cell-ws-nowrap");
+		modifiedDateTextDateSearchEntry.setDate(
+			_segmentsEntry.getModifiedDate());
 
 		searchEntries.add(modifiedDateTextDateSearchEntry);
 

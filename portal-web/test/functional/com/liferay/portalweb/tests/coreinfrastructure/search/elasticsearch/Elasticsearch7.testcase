@@ -329,7 +329,11 @@ definition {
 			nodePort = 9200,
 			numberOfNodes = 2);
 
-		Navigator.openURL();
+		SearchAdministration.openSearchAdmin();
+
+		AssertElementPresent(
+			key_panel = "Nodes (2)",
+			locator1 = "Panel#PANEL_EXPANDED");
 
 		JSONMBMessage.addMessage(
 			groupName = "Guest",
@@ -343,9 +347,7 @@ definition {
 			mimeType = "text/plain",
 			sourceFileName = "Document_1.txt");
 
-		Navigator.openURL();
-
-		SearchPortlets.searchEmbedded(searchTerm = "Apple");
+		Search.openSearchPage(searchTerm = "Apple");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "Apple",
@@ -355,9 +357,7 @@ definition {
 			searchAssetTitle = "Apple",
 			searchAssetType = "Message Boards Message");
 
-		Navigator.openURL();
-
-		SearchPortlets.searchEmbedded(searchTerm = "Orange");
+		Search.openSearchPage(searchTerm = "Orange");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "Apple",

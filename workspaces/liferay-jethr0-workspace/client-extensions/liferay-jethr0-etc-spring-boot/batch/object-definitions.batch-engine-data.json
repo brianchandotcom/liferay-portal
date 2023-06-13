@@ -24,21 +24,21 @@
 					"type": "String"
 				},
 				{
-					"DBType": "String",
-					"businessType": "Text",
+					"DBType": "Clob",
+					"businessType": "LongText",
 					"label": {
 						"en_US": "Value"
 					},
 					"name": "value",
 					"required": true,
-					"type": "String"
+					"type": "Clob"
 				}
 			],
-			"panelCategoryKey": "",
+			"panelCategoryKey": "control_panel.object",
 			"pluralLabel": {
 				"en_US": "Build Parameters"
 			},
-			"portlet": false,
+			"portlet": true,
 			"scope": "company",
 			"status": {
 				"code": 0,
@@ -876,11 +876,11 @@
 					"type": "oneToMany"
 				}
 			],
-			"panelCategoryKey": "",
+			"panelCategoryKey": "control_panel.object",
 			"pluralLabel": {
 				"en_US": "Build Runs"
 			},
-			"portlet": false,
+			"portlet": true,
 			"scope": "company",
 			"status": {
 				"code": 0,
@@ -1033,11 +1033,11 @@
 					"type": "manyToMany"
 				}
 			],
-			"panelCategoryKey": "",
+			"panelCategoryKey": "control_panel.object",
 			"pluralLabel": {
 				"en_US": "Builds"
 			},
-			"portlet": false,
+			"portlet": true,
 			"scope": "company",
 			"status": {
 				"code": 0,
@@ -1184,11 +1184,11 @@
 					"type": "manyToMany"
 				}
 			],
-			"panelCategoryKey": "",
+			"panelCategoryKey": "control_panel.object",
 			"pluralLabel": {
 				"en_US": "Projects"
 			},
-			"portlet": false,
+			"portlet": true,
 			"scope": "company",
 			"status": {
 				"code": 0,

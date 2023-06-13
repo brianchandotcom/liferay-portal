@@ -8,6 +8,10 @@ html#{$cadmin-selector} .cadmin .page-editor__custom-css-field {
 		height: 16px;
 		width: 16px;
 	}
+
+	&__editor-modal {
+		border: 1px solid $light-l1;
+	}
 }
 
 .page-editor__custom-css-field__editor-modal {

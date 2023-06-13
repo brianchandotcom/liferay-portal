@@ -151,7 +151,7 @@ definition {
 		if (${item} == "Submenu") {
 			NavigationMenusAdmin._addItemSubmenu(submenuName = ${submenuName});
 
-			Button.clickAdd();
+			Button.click(button = "Add");
 		}
 
 		if (${item} == "URL") {
@@ -160,7 +160,7 @@ definition {
 				url = ${url},
 				urlName = ${urlName});
 
-			Button.clickAdd();
+			Button.click(button = "Add");
 		}
 
 		if (${item} == "Vocabulary") {
@@ -177,9 +177,9 @@ definition {
 			Button.clickSelect();
 		}
 
-		Alert.viewSuccessMessage();
+		SelectFrame.selectFrameTop();
 
-		IFrame.selectTopFrame();
+		Alert.viewSuccessMessage();
 	}
 
 	macro addItem {
@@ -259,7 +259,7 @@ definition {
 		if (${item} == "Submenu") {
 			NavigationMenusAdmin._addItemSubmenu(submenuName = ${submenuName});
 
-			Button.clickAdd();
+			Button.click(button = "Add");
 		}
 
 		if (${item} == "URL") {
@@ -268,7 +268,7 @@ definition {
 				url = ${url},
 				urlName = ${urlName});
 
-			Button.clickAdd();
+			Button.click(button = "Add");
 		}
 
 		if (${item} == "Vocabulary") {
@@ -285,9 +285,9 @@ definition {
 			Button.clickSelect();
 		}
 
-		Alert.viewSuccessMessage();
+		SelectFrame.selectFrameTop();
 
-		IFrame.selectTopFrame();
+		Alert.viewSuccessMessage();
 	}
 
 	macro addMenu {
@@ -380,7 +380,7 @@ definition {
 		if (${item} == "Submenu") {
 			NavigationMenusAdmin._addItemSubmenu(submenuName = ${submenuName});
 
-			Button.clickAdd();
+			Button.click(button = "Add");
 		}
 
 		if (${item} == "URL") {
@@ -389,7 +389,7 @@ definition {
 				url = ${url},
 				urlName = ${urlName});
 
-			Button.clickAdd();
+			Button.click(button = "Add");
 		}
 
 		if (${item} == "Vocabulary") {
@@ -406,9 +406,9 @@ definition {
 			Button.clickSelect();
 		}
 
-		Alert.viewSuccessMessage();
+		SelectFrame.selectFrameTop();
 
-		IFrame.selectTopFrame();
+		Alert.viewSuccessMessage();
 	}
 
 	macro addTranslation {

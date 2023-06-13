@@ -276,8 +276,9 @@ public class BatchEngineExportTaskExecutorImpl
 		batchEngineExportTask.setExecuteStatus(
 			batchEngineTaskExecuteStatus.toString());
 
-		_batchEngineExportTaskLocalService.updateBatchEngineExportTask(
-			batchEngineExportTask);
+		batchEngineExportTask =
+			_batchEngineExportTaskLocalService.updateBatchEngineExportTask(
+				batchEngineExportTask);
 
 		BatchEngineTaskCallbackUtil.sendCallback(
 			batchEngineExportTask.getCallbackURL(),

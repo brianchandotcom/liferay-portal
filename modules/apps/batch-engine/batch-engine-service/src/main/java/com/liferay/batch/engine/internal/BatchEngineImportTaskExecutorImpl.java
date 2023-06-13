@@ -341,8 +341,9 @@ public class BatchEngineImportTaskExecutorImpl
 		batchEngineImportTask.setExecuteStatus(
 			batchEngineTaskExecuteStatus.toString());
 
-		_batchEngineImportTaskLocalService.updateBatchEngineImportTask(
-			batchEngineImportTask);
+		batchEngineImportTask =
+			_batchEngineImportTaskLocalService.updateBatchEngineImportTask(
+				batchEngineImportTask);
 
 		BatchEngineTaskCallbackUtil.sendCallback(
 			batchEngineImportTask.getCallbackURL(),

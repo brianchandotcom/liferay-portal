@@ -2518,7 +2518,7 @@ definition {
 		}
 	}
 
-	macro selectExtensions {
+	macro selectFilterItems {
 		IFrame.selectModalFrame();
 
 		if (${clearAll} == "true") {
@@ -2527,7 +2527,7 @@ definition {
 				locator1 = "Link#ANY");
 		}
 
-		for (var category : list ${category}) {
+		for (var category : list ${categories}) {
 			while (IsElementPresent(locator1 = "Treeview#NODE_COLLAPSED")) {
 				Click(locator1 = "Treeview#NODE_COLLAPSED");
 			}

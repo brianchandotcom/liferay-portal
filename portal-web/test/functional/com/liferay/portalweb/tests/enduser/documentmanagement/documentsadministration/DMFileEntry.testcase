@@ -1259,7 +1259,7 @@ definition {
 				category = "DXP Site Vocabulary (${siteName}),Global Site Vocabulary (Global)",
 				subcategory = "Category1,Category1,GlobalCategory");
 
-			DMDocument.selectExtensions(category = "Category1");
+			DMDocument.selectFilterItems(categories = "Category1");
 
 			DMDocument.viewFilterSummaryResults(
 				filterScope = "Category: Category1",
@@ -1281,8 +1281,8 @@ definition {
 				active = "true",
 				filterBy = "Categories...");
 
-			DMDocument.selectExtensions(
-				category = "Category1,GlobalCategory",
+			DMDocument.selectFilterItems(
+				categories = "Category1,GlobalCategory",
 				clearAll = "true");
 
 			DMDocument.viewFilterSummaryResults(
@@ -1331,7 +1331,7 @@ definition {
 
 		ManagementBar.setFilterAndOrder(filterBy = "Categories...");
 
-		DMDocument.selectExtensions(category = "Category1~!@#$*");
+		DMDocument.selectFilterItems(categories = "Category1~!@#$*");
 
 		DMDocument.viewFilterSummaryResults(
 			filterScope = "Category: Category1~!@#$*",
@@ -1390,7 +1390,7 @@ definition {
 				category = "Image (1 Item),Spreadsheet (1 Item),Text (1 Item)",
 				subcategory = "xls,docx");
 
-			DMDocument.selectExtensions(category = "Text (1 Item)");
+			DMDocument.selectFilterItems(categories = "Text (1 Item)");
 
 			DMDocument.viewFilterSummaryResults(
 				filterScope = "Extension: docx",
@@ -1416,8 +1416,8 @@ definition {
 				category = "Image (1 Item),Spreadsheet (1 Item),Text (1 Item)",
 				subcategory = "xls,docx");
 
-			DMDocument.selectExtensions(
-				category = "Spreadsheet (1 Item),Text (1 Item)",
+			DMDocument.selectFilterItems(
+				categories = "Spreadsheet (1 Item),Text (1 Item)",
 				clearAll = "true");
 
 			DMDocument.viewFilterSummaryResults(
@@ -1456,7 +1456,7 @@ definition {
 				category = "Image (1 Item),Spreadsheet (1 Item),Text (1 Item)",
 				subcategory = "xls,docx");
 
-			DMDocument.selectExtensions(category = "Spreadsheet (1 Item),Text (1 Item)");
+			DMDocument.selectFilterItems(categories = "Spreadsheet (1 Item),Text (1 Item)");
 
 			DMDocument.viewFilterSummaryResults(
 				filterScope = "Extension: docx",
@@ -1617,7 +1617,7 @@ definition {
 				category = "Image (3 Items),Spreadsheet (2 Items),Text (2 Items),Vectorial (1 Item)",
 				subcategory = "png,jpg,jpeg,xls,xlsx,doc,docx");
 
-			DMDocument.selectExtensions(category = "xlsx");
+			DMDocument.selectFilterItems(categories = "xlsx");
 
 			DMDocument.viewFilterSummaryResults(
 				filterScope = "Extension: xlsx",
@@ -1638,8 +1638,8 @@ definition {
 				category = "Image (3 Items),Spreadsheet (2 Items),Text (2 Items),Vectorial (1 Item)",
 				subcategory = "png,jpg,jpeg,xls,xlsx,doc,docx");
 
-			DMDocument.selectExtensions(
-				category = "jpg,jpeg",
+			DMDocument.selectFilterItems(
+				categories = "jpg,jpeg",
 				clearAll = "true");
 
 			DMDocument.viewFilterSummaryResults(
@@ -1666,8 +1666,8 @@ definition {
 				category = "Image (3 Items),Spreadsheet (2 Items),Text (2 Items),Vectorial (1 Item)",
 				subcategory = "png,jpg,jpeg,xls,xlsx,doc,docx");
 
-			DMDocument.selectExtensions(
-				category = "jpg,xls",
+			DMDocument.selectFilterItems(
+				categories = "jpg,xls",
 				clearAll = "true");
 
 			DMDocument.viewFilterSummaryResults(
@@ -1694,8 +1694,8 @@ definition {
 				category = "Image (3 Items),Spreadsheet (2 Items),Text (2 Items),Vectorial (1 Item)",
 				subcategory = "png,jpg,jpeg,xls,xlsx,doc,docx");
 
-			DMDocument.selectExtensions(
-				category = "doc,pdf",
+			DMDocument.selectFilterItems(
+				categories = "doc,pdf",
 				clearAll = "true");
 
 			DMDocument.viewFilterSummaryResults(
@@ -3440,7 +3440,7 @@ definition {
 		task ("Assert only documents in the folder return when a user chooses one category to filter documents in a folder") {
 			ManagementBar.setFilterAndOrder(filterBy = "Categories...");
 
-			DMDocument.selectExtensions(category = "Category2");
+			DMDocument.selectFilterItems(categories = "Category2");
 
 			DMDocument.viewFilterSummaryResults(
 				filterScope = "Category: Category2",
@@ -3465,7 +3465,7 @@ definition {
 				active = "true",
 				filterBy = "Categories...");
 
-			DMDocument.selectExtensions(category = "Category1");
+			DMDocument.selectFilterItems(categories = "Category1");
 
 			DMDocument.viewFilterSummaryResults(
 				filterScope = "Category: Category1,Category: Category2",

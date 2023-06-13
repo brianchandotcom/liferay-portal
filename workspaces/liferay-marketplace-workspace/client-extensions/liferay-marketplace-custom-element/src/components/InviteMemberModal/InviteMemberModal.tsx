@@ -334,7 +334,7 @@ export function InviteMemberModal({
               const showCheckIcon = checkboxRoles.some(
                 (checkedRole) =>
                   checkedRole.isChecked &&
-                  rolePermission.permitedRoles.includes(checkedRole.roleName)
+                  rolePermission.permittedRoles.includes(checkedRole.roleName)
               );
 
               return (

@@ -355,7 +355,7 @@ type RoleBrief = {
 type PermissionDescription = {
 	permissionName:string;
 	permissionTooltip:string;
-	permitedRoles:string[];
+	permittedRoles:string[];
 };
 
 type SKU = {

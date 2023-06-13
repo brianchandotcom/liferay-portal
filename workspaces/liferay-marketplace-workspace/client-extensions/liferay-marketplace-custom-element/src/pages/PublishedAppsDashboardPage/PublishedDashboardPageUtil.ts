@@ -35,12 +35,12 @@ export type CatalogProps = {
 };
 
 export type MemberProps = {
-  isInvitedMember: boolean;
   accountBriefs: AccountBriefProps[];
   dateCreated: string;
   email: string;
   image: string;
   isCustomerAccount: boolean;
+  isInvitedMember: boolean;
   isPublisherAccount: boolean;
   lastLoginDate: string;
   name: string;
@@ -164,18 +164,23 @@ export const publisherPermissionDescriptions: PermissionDescription[] = [
   {
     permissionName: 'Create new apps',
     permissionTooltip: 'Create and submit new apps and versions',
-    permitedRoles: ['App Editor'],
+    permittedRoles: ['App Editor'],
   },
   {
 	permissionName: 'Manage apps owned by me',
 	permissionTooltip: 'Manage apps and versions I own as a publisher - version, hide or delete.',
-	permitedRoles: ['App Editor'],
+	permittedRoles: ['App Editor'],
   },
   {
 	permissionName: 'Manage all apps',
 	permissionTooltip: 'Manage any app in the business - version, hide or delete.',
-	permitedRoles: ['App Editor'],
+	permittedRoles: ['App Editor'],
   },
+  {
+    permissionName: 'Create app pricing',
+    permissionTooltip: 'Sell apps in the Marketplace, edit pricing structure for apps in the business.',
+    permittedRoles: ['App Editor'],
+    },
 ];
 
 export const adminRoles = ['Account Administrator'];

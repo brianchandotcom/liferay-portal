@@ -56,23 +56,23 @@ export const customerPermissionDescriptions : PermissionDescription[] = [
   {
     permissionName: 'Purchase apps and solutions',
     permissionTooltip: 'Purchase new apps and versions',
-    permitedRoles: ['Account Administrator', 'Account Buyer'],
+    permittedRoles: ['Account Buyer'],
   },
   {
     permissionName: 'Provision and download apps and solutions',
     permissionTooltip:
       'Manually provision cloud solutions in the DXP Cloud console.',
-    permitedRoles: [''],
+    permittedRoles: [''],
   },
   {
     permissionName: 'Download DXP app and versions',
     permissionTooltip: 'Download purchased DXP app LPKG files.',
-    permitedRoles: ['Account Administrator', 'Account Buyer'],
+    permittedRoles: ['Account Administrator', 'Account Buyer'],
   },
   {
     permissionName: 'View purchased apps and solutions',
     permissionTooltip: 'View Cloud and DXP apps purchased by the customer.',
-    permitedRoles: ['Account Administrator', 'Account Buyer', 'Account Member'],
+    permittedRoles: ['Account Administrator', 'Account Buyer', 'Account Member'],
   },
 ];
 

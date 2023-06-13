@@ -283,7 +283,7 @@ public class JournalArticleTrashHandler extends BaseJournalTrashHandler {
 
 		article.setArticleId(name);
 
-		_journalArticleLocalService.updateJournalArticle(article);
+		article = _journalArticleLocalService.updateJournalArticle(article);
 
 		JournalArticleResource articleResource =
 			_journalArticleResourceLocalService.getArticleResource(

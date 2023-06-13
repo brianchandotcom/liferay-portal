@@ -312,7 +312,8 @@ public class JournalFolderStagedModelDataHandler
 				JournalFolderConstants.
 					RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW);
 
-			_journalFolderLocalService.updateJournalFolder(importedFolder);
+			importedFolder = _journalFolderLocalService.updateJournalFolder(
+				importedFolder);
 
 			_journalFolderLocalService.updateFolderDDMStructures(
 				importedFolder,

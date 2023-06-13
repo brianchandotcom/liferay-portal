@@ -955,8 +955,9 @@ public class JournalArticleStagedModelDataHandler
 					if (!articleUuid.equals(importedArticleUuid)) {
 						importedArticle.setUuid(articleUuid);
 
-						_journalArticleLocalService.updateJournalArticle(
-							importedArticle);
+						importedArticle =
+							_journalArticleLocalService.updateJournalArticle(
+								importedArticle);
 					}
 				}
 			}

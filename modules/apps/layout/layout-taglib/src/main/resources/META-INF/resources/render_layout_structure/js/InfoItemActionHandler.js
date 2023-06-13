@@ -86,6 +86,10 @@ function triggerAction(trigger, executeInfoItemActionURL) {
 		lfrSuccessText: successText,
 	} = trigger.dataset;
 
+	if (!fieldId) {
+		return;
+	}
+
 	const loadingIndicator = getLoadingIndicator();
 
 	trigger.classList.add('disabled');

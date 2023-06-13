@@ -273,7 +273,7 @@
 				{
 					"deletionType": "prevent",
 					"label": {
-						"en_US": "API Endpoint API Filters"
+						"en_US": "API Endpoint"
 					},
 					"name": "apiEndpointAPIFilters",
 					"objectDefinitionExternalReferenceCode1": "MSOD_API_ENDPOINT",
@@ -287,7 +287,7 @@
 				{
 					"deletionType": "prevent",
 					"label": {
-						"en_US": "API Endpoint API Sorts"
+						"en_US": "API Endpoint"
 					},
 					"name": "apiEndpointAPISorts",
 					"objectDefinitionExternalReferenceCode1": "MSOD_API_ENDPOINT",
@@ -401,7 +401,7 @@
 				{
 					"deletionType": "prevent",
 					"label": {
-						"en_US": "API Properties API Properties"
+						"en_US": "API Properties"
 					},
 					"name": "apiPropertiesAPIProperties",
 					"objectDefinitionExternalReferenceCode1": "MSOD_API_PROPERTY",
@@ -484,7 +484,7 @@
 				{
 					"deletionType": "prevent",
 					"label": {
-						"en_US": "API Schema API Properties"
+						"en_US": "API Schema"
 					},
 					"name": "apiSchemaAPIProperties",
 					"objectDefinitionExternalReferenceCode1": "MSOD_API_SCHEMA",
@@ -498,7 +498,7 @@
 				{
 					"deletionType": "prevent",
 					"label": {
-						"en_US": "Request API Schema API Endpoints"
+						"en_US": "Request API Schema"
 					},
 					"name": "requestAPISchemaAPIEndpoints",
 					"objectDefinitionExternalReferenceCode1": "MSOD_API_SCHEMA",
@@ -512,7 +512,7 @@
 				{
 					"deletionType": "prevent",
 					"label": {
-						"en_US": "Response API Schema API Endpoints"
+						"en_US": "Response API Schema"
 					},
 					"name": "responseAPISchemaAPIEndpoints",
 					"objectDefinitionExternalReferenceCode1": "MSOD_API_SCHEMA",
@@ -662,7 +662,7 @@
 				{
 					"deletionType": "prevent",
 					"label": {
-						"en_US": "API Application API Endpoints"
+						"en_US": "API Application"
 					},
 					"name": "apiApplicationAPIEndpoints",
 					"objectDefinitionExternalReferenceCode1": "MSOD_API_APPLICATION",
@@ -676,7 +676,7 @@
 				{
 					"deletionType": "prevent",
 					"label": {
-						"en_US": "API Application API Schemas"
+						"en_US": "API Application"
 					},
 					"name": "apiApplicationAPISchemas",
 					"objectDefinitionExternalReferenceCode1": "MSOD_API_APPLICATION",

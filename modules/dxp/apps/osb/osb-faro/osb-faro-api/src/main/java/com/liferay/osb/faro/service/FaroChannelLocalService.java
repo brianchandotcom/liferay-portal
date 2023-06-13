@@ -85,11 +85,6 @@ public interface FaroChannelLocalService
 			long userId, long workspaceGroupId)
 		throws PortalException;
 
-	public int countFaroUsers(
-			String channelId, boolean available, String query,
-			List<Integer> statuses, long workspaceGroupId)
-		throws PortalException;
-
 	/**
 	 * Creates a new faro channel with the primary key. Does not add the faro channel to the database.
 	 *
@@ -224,12 +219,6 @@ public interface FaroChannelLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public FaroChannel fetchFaroChannel(long faroChannelId);
 
-	public List<FaroUser> findFaroUsers(
-			String channelId, boolean available, String query,
-			List<Integer> statuses, long workspaceGroupId, int start, int end,
-			OrderByComparator<FaroUser> orderByComparator)
-		throws PortalException;
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
@@ -269,6 +258,19 @@ public interface FaroChannelLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFaroChannelsCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<FaroUser> getFaroUsers(
+			String channelId, boolean available, String query,
+			List<Integer> statuses, long workspaceGroupId, int start, int end,
+			OrderByComparator<FaroUser> orderByComparator)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getFaroUsersCount(
+			String channelId, boolean available, String query,
+			List<Integer> statuses, long workspaceGroupId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();

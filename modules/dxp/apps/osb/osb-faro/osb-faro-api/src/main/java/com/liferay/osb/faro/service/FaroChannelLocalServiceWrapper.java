@@ -75,16 +75,6 @@ public class FaroChannelLocalServiceWrapper
 			companyId, channelId, invitedUserIds, userId, workspaceGroupId);
 	}
 
-	@Override
-	public int countFaroUsers(
-			String channelId, boolean available, String query,
-			java.util.List<Integer> statuses, long workspaceGroupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _faroChannelLocalService.countFaroUsers(
-			channelId, available, query, statuses, workspaceGroupId);
-	}
-
 	/**
 	 * Creates a new faro channel with the primary key. Does not add the faro channel to the database.
 	 *
@@ -284,20 +274,6 @@ public class FaroChannelLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.liferay.osb.faro.model.FaroUser> findFaroUsers(
-			String channelId, boolean available, String query,
-			java.util.List<Integer> statuses, long workspaceGroupId, int start,
-			int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.osb.faro.model.FaroUser> orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _faroChannelLocalService.findFaroUsers(
-			channelId, available, query, statuses, workspaceGroupId, start, end,
-			orderByComparator);
-	}
-
-	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -354,6 +330,30 @@ public class FaroChannelLocalServiceWrapper
 	@Override
 	public int getFaroChannelsCount() {
 		return _faroChannelLocalService.getFaroChannelsCount();
+	}
+
+	@Override
+	public java.util.List<com.liferay.osb.faro.model.FaroUser> getFaroUsers(
+			String channelId, boolean available, String query,
+			java.util.List<Integer> statuses, long workspaceGroupId, int start,
+			int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.osb.faro.model.FaroUser> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _faroChannelLocalService.getFaroUsers(
+			channelId, available, query, statuses, workspaceGroupId, start, end,
+			orderByComparator);
+	}
+
+	@Override
+	public int getFaroUsersCount(
+			String channelId, boolean available, String query,
+			java.util.List<Integer> statuses, long workspaceGroupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _faroChannelLocalService.getFaroUsersCount(
+			channelId, available, query, statuses, workspaceGroupId);
 	}
 
 	@Override

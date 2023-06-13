@@ -76,15 +76,6 @@ public class FaroChannelLocalServiceUtil {
 			companyId, channelId, invitedUserIds, userId, workspaceGroupId);
 	}
 
-	public static int countFaroUsers(
-			String channelId, boolean available, String query,
-			List<Integer> statuses, long workspaceGroupId)
-		throws PortalException {
-
-		return getService().countFaroUsers(
-			channelId, available, query, statuses, workspaceGroupId);
-	}
-
 	/**
 	 * Creates a new faro channel with the primary key. Does not add the faro channel to the database.
 	 *
@@ -251,18 +242,6 @@ public class FaroChannelLocalServiceUtil {
 		return getService().fetchFaroChannel(faroChannelId);
 	}
 
-	public static List<com.liferay.osb.faro.model.FaroUser> findFaroUsers(
-			String channelId, boolean available, String query,
-			List<Integer> statuses, long workspaceGroupId, int start, int end,
-			OrderByComparator<com.liferay.osb.faro.model.FaroUser>
-				orderByComparator)
-		throws PortalException {
-
-		return getService().findFaroUsers(
-			channelId, available, query, statuses, workspaceGroupId, start, end,
-			orderByComparator);
-	}
-
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -311,6 +290,27 @@ public class FaroChannelLocalServiceUtil {
 	 */
 	public static int getFaroChannelsCount() {
 		return getService().getFaroChannelsCount();
+	}
+
+	public static List<com.liferay.osb.faro.model.FaroUser> getFaroUsers(
+			String channelId, boolean available, String query,
+			List<Integer> statuses, long workspaceGroupId, int start, int end,
+			OrderByComparator<com.liferay.osb.faro.model.FaroUser>
+				orderByComparator)
+		throws PortalException {
+
+		return getService().getFaroUsers(
+			channelId, available, query, statuses, workspaceGroupId, start, end,
+			orderByComparator);
+	}
+
+	public static int getFaroUsersCount(
+			String channelId, boolean available, String query,
+			List<Integer> statuses, long workspaceGroupId)
+		throws PortalException {
+
+		return getService().getFaroUsersCount(
+			channelId, available, query, statuses, workspaceGroupId);
 	}
 
 	public static

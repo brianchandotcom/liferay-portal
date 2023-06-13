@@ -276,6 +276,17 @@ public class FaroUserLocalServiceUtil {
 		return getService().getFaroUsers(start, end);
 	}
 
+	public static List<FaroUser> getFaroUsers(
+			long groupId, boolean available, String query,
+			List<Integer> statuses, long workspaceGroupId, int start, int end,
+			OrderByComparator<FaroUser> orderByComparator)
+		throws PortalException {
+
+		return getService().getFaroUsers(
+			groupId, available, query, statuses, workspaceGroupId, start, end,
+			orderByComparator);
+	}
+
 	public static List<FaroUser> getFaroUsersByLiveUserId(
 		long liveUserId, int status) {
 
@@ -301,6 +312,15 @@ public class FaroUserLocalServiceUtil {
 	 */
 	public static int getFaroUsersCount() {
 		return getService().getFaroUsersCount();
+	}
+
+	public static int getFaroUsersCount(
+			long groupId, boolean available, String query,
+			List<Integer> statuses, long workspaceGroupId)
+		throws PortalException {
+
+		return getService().getFaroUsersCount(
+			groupId, available, query, statuses, workspaceGroupId);
 	}
 
 	public static

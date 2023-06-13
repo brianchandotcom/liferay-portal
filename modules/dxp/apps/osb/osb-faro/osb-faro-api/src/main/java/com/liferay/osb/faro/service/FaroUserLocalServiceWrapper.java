@@ -321,6 +321,20 @@ public class FaroUserLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.osb.faro.model.FaroUser> getFaroUsers(
+			long groupId, boolean available, String query,
+			java.util.List<Integer> statuses, long workspaceGroupId, int start,
+			int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.osb.faro.model.FaroUser> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _faroUserLocalService.getFaroUsers(
+			groupId, available, query, statuses, workspaceGroupId, start, end,
+			orderByComparator);
+	}
+
+	@Override
 	public java.util.List<com.liferay.osb.faro.model.FaroUser>
 		getFaroUsersByLiveUserId(long liveUserId, int status) {
 
@@ -350,6 +364,16 @@ public class FaroUserLocalServiceWrapper
 	@Override
 	public int getFaroUsersCount() {
 		return _faroUserLocalService.getFaroUsersCount();
+	}
+
+	@Override
+	public int getFaroUsersCount(
+			long groupId, boolean available, String query,
+			java.util.List<Integer> statuses, long workspaceGroupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _faroUserLocalService.getFaroUsersCount(
+			groupId, available, query, statuses, workspaceGroupId);
 	}
 
 	@Override

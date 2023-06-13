@@ -135,8 +135,9 @@ public class CommerceOrderItemModelListener
 					customerCommerceOrderItem.setFinalPrice(newFinalPrice);
 				}
 
-				_commerceOrderItemLocalService.updateCommerceOrderItem(
-					customerCommerceOrderItem);
+				customerCommerceOrderItem =
+					_commerceOrderItemLocalService.updateCommerceOrderItem(
+						customerCommerceOrderItem);
 
 				_commerceOrderEngine.checkCommerceOrderShipmentStatus(
 					customerCommerceOrderItem.getCommerceOrder());

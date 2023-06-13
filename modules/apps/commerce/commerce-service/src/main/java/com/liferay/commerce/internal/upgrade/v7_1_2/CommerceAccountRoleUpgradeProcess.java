@@ -162,8 +162,9 @@ public class CommerceAccountRoleUpgradeProcess extends UpgradeProcess {
 
 					resourcePermission.setRoleId(accountRole.getRoleId());
 
-					_resourcePermissionLocalService.updateResourcePermission(
-						resourcePermission);
+					resourcePermission =
+						_resourcePermissionLocalService.
+							updateResourcePermission(resourcePermission);
 				}
 			}
 			else if ((resourcePermission.getScope() ==

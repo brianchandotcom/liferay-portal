@@ -75,7 +75,8 @@ definition {
 
 			JSONPRM.changeMDFStatus(
 				mdfStatus = "Approved",
-				requestId = ${requestId});
+				requestId = ${requestId},
+				userEmailAddress = "cmm@liferaytest.com");
 		}
 
 		task ("And I go back to Dashboard page and get the new amount of Approved MDF Value") {

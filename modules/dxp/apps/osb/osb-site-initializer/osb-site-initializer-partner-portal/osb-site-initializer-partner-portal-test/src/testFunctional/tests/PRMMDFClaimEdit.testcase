@@ -44,7 +44,8 @@ definition {
 
 			JSONPRM.changeMDFStatus(
 				mdfStatus = "Approved",
-				requestId = ${requestId});
+				requestId = ${requestId},
+				userEmailAddress = "cmm@liferaytest.com");
 		}
 
 		task ("Login with the Partner user and create an MDF Claim") {

@@ -42,7 +42,8 @@ definition {
 
 			JSONPRM.changeMDFStatus(
 				mdfStatus = "Approved",
-				requestId = ${requestId});
+				requestId = ${requestId},
+				userEmailAddress = "cmm@liferaytest.com");
 		}
 	}
 

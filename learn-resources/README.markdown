@@ -62,7 +62,7 @@ The first line above includes the `liferay-learn` tag library. The `liferay-lear
 
 That's how you link to Liferay Learn resources!
 
-> A CDN server hosts the JSON files. For example, here's how the `<liferay-learn:messag key="download-app" resource="marketplace-store-web" />` tag works:
+> A CDN server hosts the JSON files. For example, here's how the `<liferay-learn:message key="download-app" resource="marketplace-store-web" />` tag works:
 >
 > 1. The tag checks for the resource file (JSON file with prefix `marketplace-store-web`) on the *local* CDN server at <https://learn-resources.liferay.com/marketplace-store-web.json>.
 > 1. The local server checks the *global* server at <http://s3.amazonaws.com/learn-resources.liferay.com/marketplace-store-web.json> for updates to the resource.

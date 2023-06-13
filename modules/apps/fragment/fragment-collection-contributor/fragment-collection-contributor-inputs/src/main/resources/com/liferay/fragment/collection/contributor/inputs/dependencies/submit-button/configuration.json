@@ -5,7 +5,7 @@
 				{
 					"dataType": "string",
 					"defaultValue": "primary",
-					"label": "type",
+					"label": "style",
 					"name": "buttonType",
 					"type": "select",
 					"typeOptions": {

@@ -54,7 +54,7 @@ public class BlockedCountriesServletFilter extends BaseFilter {
 			HttpServletResponse httpServletResponse, FilterChain filterChain)
 		throws Exception {
 
-		if ((_ipGeocoder != null) && _isBlockedCountry(httpServletRequest)) {
+		if (_isBlockedCountry(httpServletRequest)) {
 			httpServletResponse.sendError(
 				HttpServletResponse.SC_FORBIDDEN,
 				"This content is not available in your country");

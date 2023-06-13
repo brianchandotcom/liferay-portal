@@ -132,19 +132,6 @@ public class FaroChannelLocalServiceImpl
 		}
 	}
 
-	public int countFaroUsers(
-			String channelId, boolean available, String query,
-			List<Integer> statuses, long workspaceGroupId)
-		throws PortalException {
-
-		FaroChannel faroChannel = faroChannelPersistence.findByC_W(
-			channelId, workspaceGroupId);
-
-		return _faroUserLocalService.countFaroUsers(
-			faroChannel.getGroupId(), available, query, statuses,
-			faroChannel.getWorkspaceGroupId());
-	}
-
 	public FaroChannel deleteFaroChannel(FaroChannel faroChannel)
 		throws PortalException {
 
@@ -172,7 +159,13 @@ public class FaroChannelLocalServiceImpl
 		}
 	}
 
-	public List<FaroUser> findFaroUsers(
+	public FaroChannel getFaroChannel(String channelId, long workspaceGroupId)
+		throws PortalException {
+
+		return faroChannelPersistence.findByC_W(channelId, workspaceGroupId);
+	}
+
+	public List<FaroUser> getFaroUsers(
 			String channelId, boolean available, String query,
 			List<Integer> statuses, long workspaceGroupId, int start, int end,
 			OrderByComparator<FaroUser> orderByComparator)
@@ -181,15 +174,22 @@ public class FaroChannelLocalServiceImpl
 		FaroChannel faroChannel = faroChannelPersistence.findByC_W(
 			channelId, workspaceGroupId);
 
-		return _faroUserLocalService.findFaroUsers(
+		return _faroUserLocalService.getFaroUsers(
 			faroChannel.getGroupId(), available, query, statuses,
 			faroChannel.getWorkspaceGroupId(), start, end, orderByComparator);
 	}
 
-	public FaroChannel getFaroChannel(String channelId, long workspaceGroupId)
+	public int getFaroUsersCount(
+			String channelId, boolean available, String query,
+			List<Integer> statuses, long workspaceGroupId)
 		throws PortalException {
 
-		return faroChannelPersistence.findByC_W(channelId, workspaceGroupId);
+		FaroChannel faroChannel = faroChannelPersistence.findByC_W(
+			channelId, workspaceGroupId);
+
+		return _faroUserLocalService.getFaroUsersCount(
+			faroChannel.getGroupId(), available, query, statuses,
+			faroChannel.getWorkspaceGroupId());
 	}
 
 	public void removeUsers(

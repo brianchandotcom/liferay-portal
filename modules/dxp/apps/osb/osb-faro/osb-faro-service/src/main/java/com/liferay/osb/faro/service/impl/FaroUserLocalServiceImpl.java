@@ -152,15 +152,6 @@ public class FaroUserLocalServiceImpl extends FaroUserLocalServiceBaseImpl {
 		return faroUser;
 	}
 
-	public int countFaroUsers(
-			long groupId, boolean available, String query,
-			List<Integer> statuses, long workspaceGroupId)
-		throws PortalException {
-
-		return faroUserFinder.countByChannelKeywords(
-			groupId, available, query, statuses, workspaceGroupId);
-	}
-
 	public FaroUser deleteFaroUser(long faroUserId) throws PortalException {
 		FaroUser faroUser = getFaroUser(faroUserId);
 
@@ -200,7 +191,13 @@ public class FaroUserLocalServiceImpl extends FaroUserLocalServiceBaseImpl {
 			groupId, role.getRoleId(), null);
 	}
 
-	public List<FaroUser> findFaroUsers(
+	public FaroUser getFaroUser(long groupId, long liveUserId)
+		throws PortalException {
+
+		return faroUserPersistence.findByG_L(groupId, liveUserId);
+	}
+
+	public List<FaroUser> getFaroUsers(
 			long groupId, boolean available, String query,
 			List<Integer> statuses, long workspaceGroupId, int start, int end,
 			OrderByComparator<FaroUser> orderByComparator)
@@ -209,12 +206,6 @@ public class FaroUserLocalServiceImpl extends FaroUserLocalServiceBaseImpl {
 		return faroUserFinder.findByChannelKeywords(
 			groupId, available, query, statuses, workspaceGroupId, start, end,
 			orderByComparator);
-	}
-
-	public FaroUser getFaroUser(long groupId, long liveUserId)
-		throws PortalException {
-
-		return faroUserPersistence.findByG_L(groupId, liveUserId);
 	}
 
 	public List<FaroUser> getFaroUsersByLiveUserId(
@@ -229,6 +220,15 @@ public class FaroUserLocalServiceImpl extends FaroUserLocalServiceBaseImpl {
 
 	public List<FaroUser> getFaroUsersByStatus(long groupId, int status) {
 		return faroUserPersistence.findByG_S(groupId, status);
+	}
+
+	public int getFaroUsersCount(
+			long groupId, boolean available, String query,
+			List<Integer> statuses, long workspaceGroupId)
+		throws PortalException {
+
+		return faroUserFinder.countByChannelKeywords(
+			groupId, available, query, statuses, workspaceGroupId);
 	}
 
 	public FaroUser getOwnerFaroUser(long groupId) throws PortalException {

@@ -187,13 +187,13 @@ public class ChannelController extends BaseFaroController {
 				orderByFieldsFaroParam.getValue());
 		}
 
-		List<FaroUser> faroUsers = _faroChannelLocalService.findFaroUsers(
+		List<FaroUser> faroUsers = _faroChannelLocalService.getFaroUsers(
 			id, available, query, statuses, groupId, startAndEnd[0],
 			startAndEnd[1], orderByComparator);
 
 		return new FaroResultsDisplay(
 			TransformUtil.transform(faroUsers, FaroUserDisplay::new),
-			_faroChannelLocalService.countFaroUsers(
+			_faroChannelLocalService.getFaroUsersCount(
 				id, available, query, statuses, groupId));
 	}
 

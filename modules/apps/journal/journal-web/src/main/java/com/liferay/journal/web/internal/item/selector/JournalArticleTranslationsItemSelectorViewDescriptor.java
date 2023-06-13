@@ -140,7 +140,7 @@ public class JournalArticleTranslationsItemSelectorViewDescriptor
 	public TableItemView getTableItemView(
 		JournalArticleTranslation articleTranslation) {
 
-		return new JournalArticleTranslationsItemView(articleTranslation);
+		return new JournalArticleTranslationsTableItemView(articleTranslation);
 	}
 
 	@Override

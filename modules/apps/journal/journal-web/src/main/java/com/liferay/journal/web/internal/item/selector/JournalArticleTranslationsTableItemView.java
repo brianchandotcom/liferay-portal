@@ -32,9 +32,9 @@ import java.util.Locale;
 /**
  * @author Barbara Cabrera
  */
-public class JournalArticleTranslationsItemView implements TableItemView {
+public class JournalArticleTranslationsTableItemView implements TableItemView {
 
-	public JournalArticleTranslationsItemView(
+	public JournalArticleTranslationsTableItemView(
 		JournalArticleTranslation articleTranslation) {
 
 		_articleTranslation = articleTranslation;

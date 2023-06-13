@@ -44,16 +44,12 @@ public abstract class BaseObjectEventHandler extends BaseEventHandler {
 			throw new Exception("Missing Project 'id'");
 		}
 
-		EventHandlerHelper eventHandlerHelper = getEventHandlerHelper();
-
-		ProjectRepository projectRepository =
-			eventHandlerHelper.getProjectRepository();
+		ProjectRepository projectRepository = getProjectRepository();
 
 		Project project = projectRepository.getById(
 			projectJSONObject.getLong("id"));
 
-		BuildRepository buildRepository =
-			eventHandlerHelper.getBuildRepository();
+		BuildRepository buildRepository = getBuildRepository();
 
 		buildRepository.getAll(project);
 

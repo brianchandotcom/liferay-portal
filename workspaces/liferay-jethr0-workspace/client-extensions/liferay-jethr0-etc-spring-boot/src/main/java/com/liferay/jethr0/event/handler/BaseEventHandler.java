@@ -14,6 +14,13 @@
 
 package com.liferay.jethr0.event.handler;
 
+import com.liferay.jethr0.build.queue.BuildQueue;
+import com.liferay.jethr0.build.repository.BuildParameterRepository;
+import com.liferay.jethr0.build.repository.BuildRepository;
+import com.liferay.jethr0.build.repository.BuildRunRepository;
+import com.liferay.jethr0.jenkins.JenkinsQueue;
+import com.liferay.jethr0.project.repository.ProjectRepository;
+
 import org.json.JSONObject;
 
 /**
@@ -22,21 +29,41 @@ import org.json.JSONObject;
 public abstract class BaseEventHandler implements EventHandler {
 
 	protected BaseEventHandler(
-		EventHandlerHelper eventHandlerHelper, JSONObject messageJSONObject) {
+		EventHandlerContext eventHandlerContext, JSONObject messageJSONObject) {
 
-		_eventHandlerHelper = eventHandlerHelper;
+		_eventHandlerContext = eventHandlerHelper;
 		_messageJSONObject = messageJSONObject;
 	}
 
-	protected EventHandlerContext getEventHandlerContext() {
-		return _eventHandlerContext;
+	protected BuildParameterRepository getBuildParameterRepository() {
+		return _eventHandlerContext.getBuildParameterRepository();
+	}
+
+	protected BuildQueue getBuildQueue() {
+		return _eventHandlerContext.getBuildQueue();
+	}
+
+	protected BuildRepository getBuildRepository() {
+		return _eventHandlerContext.getBuildRepository();
+	}
+
+	protected BuildRunRepository getBuildRunRepository() {
+		return _eventHandlerContext.getBuildRunRepository();
+	}
+
+	protected JenkinsQueue getJenkinsQueue() {
+		return _eventHandlerContext.getJenkinsQueue();
 	}
 
 	protected JSONObject getMessageJSONObject() {
 		return _messageJSONObject;
 	}
 
-	private final EventHandlerHelper _eventHandlerHelper;
+	protected ProjectRepository getProjectRepository() {
+		return _eventHandlerContext.getProjectRepository();
+	}
+
+	private final EventHandlerHelper _eventHandlerContext;
 	private final JSONObject _messageJSONObject;
 
 }

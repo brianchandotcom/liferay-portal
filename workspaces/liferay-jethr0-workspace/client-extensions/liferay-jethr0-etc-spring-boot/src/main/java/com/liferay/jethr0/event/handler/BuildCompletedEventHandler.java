@@ -54,24 +54,19 @@ public class BuildCompletedEventHandler extends BaseJenkinsEventHandler {
 			}
 		}
 
-		EventHandlerHelper eventHandlerHelper = getEventHandlerHelper();
-
 		if (projectState == Project.State.COMPLETED) {
 			project.setState(projectState);
 
-			ProjectRepository projectRepository =
-				eventHandlerHelper.getProjectRepository();
+			ProjectRepository projectRepository = getProjectRepository();
 
 			projectRepository.update(project);
 		}
 
-		BuildRepository buildRepository =
-			eventHandlerHelper.getBuildRepository();
+		BuildRepository buildRepository = getBuildRepository();
 
 		buildRepository.update(build);
 
-		BuildRunRepository buildRunRepository =
-			eventHandlerHelper.getBuildRunRepository();
+		BuildRunRepository buildRunRepository = getBuildRunRepository();
 
 		buildRunRepository.update(buildRun);
 

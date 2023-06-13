@@ -41,24 +41,19 @@ public class BuildStartedEventHandler extends BaseJenkinsEventHandler {
 
 		Project project = build.getProject();
 
-		EventHandlerHelper eventHandlerHelper = getEventHandlerHelper();
-
 		if (project.getState() != Project.State.RUNNING) {
 			project.setState(Project.State.RUNNING);
 
-			ProjectRepository projectRepository =
-				eventHandlerHelper.getProjectRepository();
+			ProjectRepository projectRepository = getProjectRepository();
 
 			projectRepository.update(project);
 		}
 
-		BuildRepository buildRepository =
-			eventHandlerHelper.getBuildRepository();
+		BuildRepository buildRepository = getBuildRepository();
 
 		buildRepository.update(build);
 
-		BuildRunRepository buildRunRepository =
-			eventHandlerHelper.getBuildRunRepository();
+		BuildRunRepository buildRunRepository = getBuildRunRepository();
 
 		buildRunRepository.update(buildRun);
 

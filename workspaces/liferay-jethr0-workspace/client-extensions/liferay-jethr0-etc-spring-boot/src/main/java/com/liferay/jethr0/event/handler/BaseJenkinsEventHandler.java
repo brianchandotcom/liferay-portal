@@ -85,10 +85,7 @@ public abstract class BaseJenkinsEventHandler extends BaseEventHandler {
 			return null;
 		}
 
-		EventHandlerHelper eventHandlerHelper = getEventHandlerHelper();
-
-		BuildRunRepository buildRunRepository =
-			eventHandlerHelper.getBuildRunRepository();
+		BuildRunRepository buildRunRepository = getBuildRunRepository();
 
 		return buildRunRepository.getById(Long.valueOf(buildRunID));
 	}

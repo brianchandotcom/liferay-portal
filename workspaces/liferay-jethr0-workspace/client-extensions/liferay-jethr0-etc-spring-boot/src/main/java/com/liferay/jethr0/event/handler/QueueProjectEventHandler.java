@@ -35,18 +35,15 @@ public class QueueProjectEventHandler extends BaseObjectEventHandler {
 
 		project.setState(Project.State.QUEUED);
 
-		EventHandlerContext eventHandlerContext = getEventHandlerContext();
-
-		ProjectRepository projectRepository =
-			eventHandlerContext.getProjectRepository();
+		ProjectRepository projectRepository = getProjectRepository();
 
 		projectRepository.update(project);
 
-		BuildQueue buildQueue = eventHandlerContext.getBuildQueue();
+		BuildQueue buildQueue = getBuildQueue();
 
 		buildQueue.addProject(project);
 
-		JenkinsQueue jenkinsQueue = eventHandlerContext.getJenkinsQueue();
+		JenkinsQueue jenkinsQueue = getJenkinsQueue();
 
 		jenkinsQueue.invoke();
 

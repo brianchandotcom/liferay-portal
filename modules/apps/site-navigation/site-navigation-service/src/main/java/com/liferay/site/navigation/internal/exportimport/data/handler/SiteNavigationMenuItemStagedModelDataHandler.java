@@ -201,8 +201,9 @@ public class SiteNavigationMenuItemStagedModelDataHandler
 			return;
 		}
 
-		_siteNavigationMenuItemLocalService.updateSiteNavigationMenuItem(
-			importedSiteNavigationMenuItem);
+		importedSiteNavigationMenuItem =
+			_siteNavigationMenuItemLocalService.updateSiteNavigationMenuItem(
+				importedSiteNavigationMenuItem);
 
 		portletDataContext.importClassedModel(
 			siteNavigationMenuItem, importedSiteNavigationMenuItem);

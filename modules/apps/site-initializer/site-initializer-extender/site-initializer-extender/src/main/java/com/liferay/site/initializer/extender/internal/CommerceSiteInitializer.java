@@ -911,7 +911,7 @@ public class CommerceSiteInitializer {
 				BigDecimal.valueOf(
 					cpInstancePropertiesJSONObject.getLong("skuPromoPrice")));
 
-			_cpInstanceLocalService.updateCPInstance(cpInstance);
+			cpInstance = _cpInstanceLocalService.updateCPInstance(cpInstance);
 		}
 
 		_addOrUpdateCommercePriceEntries(

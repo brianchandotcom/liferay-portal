@@ -45,21 +45,6 @@ function fetchData(apiURL, searchParam, currentPage = 1) {
 	}).then((response) => response.json());
 }
 
-const mapResponseData = (data, itemLabel, itemKey) => {
-	return {
-		...data,
-		items: data.items.map((item) => {
-			const option = {label: undefined, value: undefined};
-			option.label = itemLabel
-				? getValueFromItem(item, itemLabel)
-				: item.label;
-			option.value = itemKey ? item[itemKey] : item.value;
-
-			return option;
-		}),
-	};
-};
-
 const getSelectedItemsLabel = ({selectedData}) => {
 	const {exclude, selectedItems} = selectedData;
 
@@ -144,7 +129,14 @@ function SelectionFilter({
 
 			fetchData(apiURL, search, currentPage)
 				.then((response) => {
-					const data = mapResponseData(response, itemLabel, itemKey);
+					const selectionItems = response.items.map((item) => {
+						return {
+							label: itemLabel
+								? getValueFromItem(item, itemLabel)
+								: item.label,
+							value: itemKey ? item[itemKey] : item.value,
+						};
+					});
 
 					if (!isMounted()) {
 						return;
@@ -153,21 +145,21 @@ function SelectionFilter({
 					setLoading(false);
 
 					if (currentPage === 1) {
-						setItems(data.items);
+						setItems(selectionItems);
 					}
 					else {
-						setItems((items) => [...items, ...data.items]);
+						setItems((items) => [...items, ...selectionItems]);
 					}
 
 					if (
 						firstRequest &&
-						data.totalCount <= DEFAULT_PAGE_SIZE &&
+						response.totalCount <= DEFAULT_PAGE_SIZE &&
 						autocompleteEnabled
 					) {
-						setLocalItems(data.items);
+						setLocalItems(selectionItems);
 					}
 
-					setTotal(data.totalCount);
+					setTotal(response.totalCount);
 					setFirstRequest(false);
 				})
 				.catch(() => {

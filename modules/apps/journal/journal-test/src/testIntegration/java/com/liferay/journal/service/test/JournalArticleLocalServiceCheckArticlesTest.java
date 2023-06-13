@@ -265,7 +265,7 @@ public class JournalArticleLocalServiceCheckArticlesTest {
 		article.setExpirationDate(
 			new Date(expirationDate.getTime() - (Time.HOUR * 2)));
 
-		_journalArticleLocalService.updateJournalArticle(article);
+		article = _journalArticleLocalService.updateJournalArticle(article);
 
 		_journalArticleLocalService.checkArticles(_group.getCompanyId());
 

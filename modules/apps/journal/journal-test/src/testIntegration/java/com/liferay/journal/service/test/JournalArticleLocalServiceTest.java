@@ -559,7 +559,7 @@ public class JournalArticleLocalServiceTest {
 
 		article.setDDMTemplateKey(ddmTemplate.getTemplateKey());
 
-		_journalArticleLocalService.updateJournalArticle(article);
+		article = _journalArticleLocalService.updateJournalArticle(article);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
@@ -615,7 +615,7 @@ public class JournalArticleLocalServiceTest {
 
 		article.setDDMTemplateKey(ddmTemplate.getTemplateKey());
 
-		_journalArticleLocalService.updateJournalArticle(article);
+		article = _journalArticleLocalService.updateJournalArticle(article);
 
 		JournalArticleDisplay articleDisplay =
 			_journalArticleLocalService.getArticleDisplay(

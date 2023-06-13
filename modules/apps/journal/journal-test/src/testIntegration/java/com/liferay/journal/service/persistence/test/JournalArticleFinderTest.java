@@ -143,7 +143,7 @@ public class JournalArticleFinderTest {
 		article.setExpirationDate(calendar.getTime());
 		article.setReviewDate(calendar.getTime());
 
-		JournalArticleLocalServiceUtil.updateJournalArticle(article);
+		article = JournalArticleLocalServiceUtil.updateJournalArticle(article);
 
 		JournalArticleLocalServiceUtil.moveArticleToTrash(
 			TestPropsValues.getUserId(), article);
@@ -185,7 +185,7 @@ public class JournalArticleFinderTest {
 		article.setUserId(_USER_ID);
 		article.setStatus(WorkflowConstants.STATUS_DRAFT);
 
-		JournalArticleLocalServiceUtil.updateJournalArticle(article);
+		article = JournalArticleLocalServiceUtil.updateJournalArticle(article);
 
 		_articles.add(article);
 

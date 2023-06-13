@@ -127,13 +127,13 @@ public class DLFileOrderManagedServiceFactory implements ManagedServiceFactory {
 		long companyId) {
 
 		return _getDLFileOrderConfiguration(
-			companyId, _companyDLFileOrderConfigurations,
+			_companyDLFileOrderConfigurations, companyId,
 			() -> _systemDLFileOrderConfiguration);
 	}
 
 	private DLFileOrderConfiguration _getDLFileOrderConfiguration(
-		long key, Map<Long, DLFileOrderConfiguration> dlFileOrderConfigurations,
-		Supplier<DLFileOrderConfiguration> supplier) {
+		Map<Long, DLFileOrderConfiguration> dlFileOrderConfigurations,
+		long key, Supplier<DLFileOrderConfiguration> supplier) {
 
 		if (dlFileOrderConfigurations.containsKey(key)) {
 			return dlFileOrderConfigurations.get(key);
@@ -146,7 +146,7 @@ public class DLFileOrderManagedServiceFactory implements ManagedServiceFactory {
 		long groupId) {
 
 		return _getDLFileOrderConfiguration(
-			groupId, _groupDLFileOrderConfigurations,
+			_groupDLFileOrderConfigurations, groupId,
 			() -> {
 				Group group = _groupLocalService.fetchGroup(groupId);
 

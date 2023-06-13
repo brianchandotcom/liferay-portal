@@ -523,14 +523,16 @@ AUI.add(
 					const documentsAndMediaField = document.querySelector(
 						'.ddm-documents-and-media-field'
 					);
-					const isHidden = documentsAndMediaField.classList.contains(
-						'hide'
-					);
-					if (hasDocumentLibrary && isHidden) {
-						documentsAndMediaField.classList.remove('hide');
-					}
-					else if (!hasDocumentLibrary) {
-						documentsAndMediaField.classList.add('hide');
+					if (documentsAndMediaField !== null) {
+						const isHidden = documentsAndMediaField.classList.contains(
+							'hide'
+						);
+						if (hasDocumentLibrary && isHidden) {
+							documentsAndMediaField.classList.remove('hide');
+						}
+						else if (!hasDocumentLibrary) {
+							documentsAndMediaField.classList.add('hide');
+						}
 					}
 				},
 

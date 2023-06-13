@@ -55,7 +55,6 @@ page import="com.liferay.commerce.model.CommerceAddress" %><%@
 page import="com.liferay.commerce.model.CommerceOrder" %><%@
 page import="com.liferay.commerce.model.CommerceOrderNote" %><%@
 page import="com.liferay.commerce.model.CommerceOrderType" %><%@
-page import="com.liferay.commerce.model.CommerceShipmentItem" %><%@
 page import="com.liferay.commerce.order.CommerceOrderValidatorResult" %><%@
 page import="com.liferay.commerce.order.content.web.internal.constants.CommerceOrderFDSNames" %><%@
 page import="com.liferay.commerce.order.content.web.internal.display.context.CommerceOrderContentDisplayContext" %><%@

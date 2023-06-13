@@ -1,8 +1,8 @@
 {
 	"description": "",
 	"editorType": "richText",
-	"name": "MDF Request Total Amount Template",
 	"externalReferenceCode": "PARTNERPORTALNOTIFICATION-004",
+	"name": "MDF Request Total Amount Template",
 	"recipientType": "email",
 	"recipients": [
 		{

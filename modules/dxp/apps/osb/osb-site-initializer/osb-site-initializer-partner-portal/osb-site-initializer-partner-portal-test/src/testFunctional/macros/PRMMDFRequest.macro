@@ -138,6 +138,7 @@ definition {
 			targetRolesOptions = ${targetRolesOptions});
 	}
 
+	@summary = "Edit the MDF Request data"
 	macro editMDF {
 		PRMMDFRequest.editGoals(
 			accountName = ${accountName},
@@ -150,10 +151,25 @@ definition {
 
 		Button.click(button = "Continue");
 
-		PRMMDFRequest.editActivity(
-			activityIndex = ${activityIndex},
-			newActivityName = ${newActivityName},
-			newBugdetValue = ${newBugdetValue});
+		if (isSet(newActivity)) {
+			PRMMDFRequest.newActivity(
+				activityDescription = ${activityDescription},
+				activityName = ${newActivity},
+				budgetList = ${budgetList},
+				followUpStrategy = ${followUpStrategy},
+				leadFollowUpList = ${leadFollowUpList},
+				leadList = ${leadList},
+				tactic = ${tactic},
+				targetOfLeads = ${targetOfLeads},
+				typeOfActivity = ${typeOfActivity});
+		}
+
+		if (isSet(newActivityName)) {
+			PRMMDFRequest.editActivity(
+				activityIndex = ${activityIndex},
+				newActivityName = ${newActivityName},
+				newBugdetValue = ${newBugdetValue});
+		}
 
 		Button.click(button = "Continue");
 

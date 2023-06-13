@@ -68,9 +68,7 @@ public class AccessibilitySettingsUtil {
 					AccessibilityMenuConfiguration.class,
 					themeDisplay.getScopeGroupId());
 
-			if (accessibilityMenuConfiguration.enableAccessibilityMenu()) {
-				return true;
-			}
+			return accessibilityMenuConfiguration.enableAccessibilityMenu();
 		}
 		catch (ConfigurationException configurationException) {
 			if (_log.isDebugEnabled()) {

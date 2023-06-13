@@ -248,9 +248,9 @@ public class DBInspector {
 	}
 
 	public boolean isControlTable(String tableName) throws Exception {
-		if (!_isNotObjectTable(tableName) &&
+		if (_isNotObjectTable(tableName) &&
 			(_controlTableNames.contains(StringUtil.toLowerCase(tableName)) ||
-			 hasColumn(tableName, "companyId"))) {
+			 !hasColumn(tableName, "companyId"))) {
 
 			return true;
 		}
@@ -374,11 +374,11 @@ public class DBInspector {
 	}
 
 	private boolean _isNotObjectTable(String tableName) {
-		if (tableName.contains("_x_") || tableName.startsWith("O_")) {
-			return false;
+		if (!tableName.contains("_x_") && !tableName.startsWith("O_")) {
+			return true;
 		}
 
-		return true;
+		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(DBInspector.class);

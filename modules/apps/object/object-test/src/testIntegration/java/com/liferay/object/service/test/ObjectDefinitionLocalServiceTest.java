@@ -23,6 +23,7 @@ import com.liferay.object.exception.ObjectDefinitionAccountEntryRestrictedExcept
 import com.liferay.object.exception.ObjectDefinitionActiveException;
 import com.liferay.object.exception.ObjectDefinitionEnableObjectEntryHistoryException;
 import com.liferay.object.exception.ObjectDefinitionLabelException;
+import com.liferay.object.exception.ObjectDefinitionModifiableException;
 import com.liferay.object.exception.ObjectDefinitionNameException;
 import com.liferay.object.exception.ObjectDefinitionPluralLabelException;
 import com.liferay.object.exception.ObjectDefinitionScopeException;
@@ -378,43 +379,22 @@ public class ObjectDefinitionLocalServiceTest {
 
 	@Test
 	public void testAddObjectDefinition() throws Exception {
-		String externalReferenceCode = RandomTestUtil.randomString();
-		User user = TestPropsValues.getUser();
+		AssertUtils.assertFailure(
+			ObjectDefinitionModifiableException.MustBeModifiable.class,
+			"A modifiable object definition is required",
+			() -> _objectDefinitionLocalService.addObjectDefinition(
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				false, false));
 
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.addObjectDefinition(
-				externalReferenceCode, user.getUserId());
+		AssertUtils.assertFailure(
+			ObjectDefinitionModifiableException.MustBeModifiable.class,
+			"A modifiable object definition is required",
+			() -> _objectDefinitionLocalService.addObjectDefinition(
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				false, true));
 
-		Assert.assertEquals(
-			externalReferenceCode, objectDefinition.getExternalReferenceCode());
-		Assert.assertEquals(
-			TestPropsValues.getCompanyId(), objectDefinition.getCompanyId());
-		Assert.assertEquals(user.getUserId(), objectDefinition.getUserId());
-		Assert.assertEquals(user.getFullName(), objectDefinition.getUserName());
-		Assert.assertFalse(objectDefinition.isAccountEntryRestricted());
-		Assert.assertFalse(objectDefinition.isActive());
-		Assert.assertEquals(
-			StringPool.BLANK, objectDefinition.getDBTableName());
-		Assert.assertEquals(externalReferenceCode, objectDefinition.getLabel());
-		Assert.assertFalse(objectDefinition.isEnableCategorization());
-		Assert.assertFalse(objectDefinition.isEnableComments());
-		Assert.assertFalse(objectDefinition.isEnableLocalization());
-		Assert.assertFalse(objectDefinition.isEnableObjectEntryHistory());
-		Assert.assertTrue(objectDefinition.isModifiable());
-		Assert.assertEquals(externalReferenceCode, objectDefinition.getName());
-		Assert.assertEquals(
-			externalReferenceCode, objectDefinition.getPluralLabel());
-		Assert.assertEquals(
-			ObjectDefinitionConstants.SCOPE_COMPANY,
-			objectDefinition.getScope());
-		Assert.assertEquals(
-			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
-			objectDefinition.getStorageType());
-		Assert.assertFalse(objectDefinition.isSystem());
-		Assert.assertEquals(
-			WorkflowConstants.STATUS_DRAFT, objectDefinition.getStatus());
-
-		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
+		_addObjectDefinition(true, false);
+		_addObjectDefinition(true, true);
 	}
 
 	@Test
@@ -1547,6 +1527,48 @@ public class ObjectDefinitionLocalServiceTest {
 					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 					ObjectFieldConstants.DB_TYPE_STRING,
 					RandomTestUtil.randomString(), StringUtil.randomId())));
+	}
+
+	private void _addObjectDefinition(boolean modifiable, boolean system)
+		throws Exception {
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+		User user = TestPropsValues.getUser();
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.addObjectDefinition(
+				externalReferenceCode, user.getUserId(), modifiable, system);
+
+		Assert.assertEquals(
+			externalReferenceCode, objectDefinition.getExternalReferenceCode());
+		Assert.assertEquals(
+			TestPropsValues.getCompanyId(), objectDefinition.getCompanyId());
+		Assert.assertEquals(user.getUserId(), objectDefinition.getUserId());
+		Assert.assertEquals(user.getFullName(), objectDefinition.getUserName());
+		Assert.assertFalse(objectDefinition.isAccountEntryRestricted());
+		Assert.assertFalse(objectDefinition.isActive());
+		Assert.assertEquals(
+			StringPool.BLANK, objectDefinition.getDBTableName());
+		Assert.assertEquals(externalReferenceCode, objectDefinition.getLabel());
+		Assert.assertFalse(objectDefinition.isEnableCategorization());
+		Assert.assertFalse(objectDefinition.isEnableComments());
+		Assert.assertFalse(objectDefinition.isEnableLocalization());
+		Assert.assertFalse(objectDefinition.isEnableObjectEntryHistory());
+		Assert.assertEquals(modifiable, objectDefinition.isModifiable());
+		Assert.assertEquals(externalReferenceCode, objectDefinition.getName());
+		Assert.assertEquals(
+			externalReferenceCode, objectDefinition.getPluralLabel());
+		Assert.assertEquals(
+			ObjectDefinitionConstants.SCOPE_COMPANY,
+			objectDefinition.getScope());
+		Assert.assertEquals(
+			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
+			objectDefinition.getStorageType());
+		Assert.assertEquals(system, objectDefinition.isSystem());
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_DRAFT, objectDefinition.getStatus());
+
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 	}
 
 	private ObjectDefinition _addSystemObjectDefinition(String name)

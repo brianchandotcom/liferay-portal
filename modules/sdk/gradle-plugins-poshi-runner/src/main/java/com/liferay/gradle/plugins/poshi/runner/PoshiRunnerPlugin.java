@@ -1045,6 +1045,10 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 	private boolean _isDownloadWebDriverBrowserBinary(
 		Properties poshiProperties) {
 
+		if(poshiProperties.containsKey("seleniumRemoteDriverURL")){
+			return false;
+		}
+
 		String webDriverBrowserBinaryPropertyName =
 			_getWebDriverBrowserBinaryPropertyName(poshiProperties);
 

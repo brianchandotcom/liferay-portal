@@ -220,4 +220,30 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-164985 | Test Summary: Verify that can go to the task from the sidebar"
+	@priority = 3
+	test AdminCanGoToTaskFromTheSidebar {
+		task ("Given that the user reanalyze a task") {
+			TestrayTestflow.goToTask(taskName = "Task_1");
+
+			Button.click(button = "Abandon");
+
+			Button.click(button = "Reanalyze");
+
+			Refresh();
+		}
+
+		task ("When the user click in the task from the sidebar") {
+			Click(
+				key_subtaskName = ${taskName},
+				locator1 = "TestraySubtask#VIEW_SUBTASK_SIDEBAR");
+		}
+
+		task ("Then the user can go to the task page") {
+			TestrayTestflow.assertStatus(
+				label = "Task Details",
+				status = "In Analysis");
+		}
+	}
+
 }

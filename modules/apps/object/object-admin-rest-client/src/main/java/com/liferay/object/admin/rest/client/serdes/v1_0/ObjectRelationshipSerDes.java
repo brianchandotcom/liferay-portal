@@ -171,6 +171,16 @@ public class ObjectRelationshipSerDes {
 			sb.append(objectRelationship.getObjectDefinitionId2());
 		}
 
+		if (objectRelationship.getObjectDefinitionModifiable2() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"objectDefinitionModifiable2\": ");
+
+			sb.append(objectRelationship.getObjectDefinitionModifiable2());
+		}
+
 		if (objectRelationship.getObjectDefinitionName2() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -183,6 +193,16 @@ public class ObjectRelationshipSerDes {
 			sb.append(_escape(objectRelationship.getObjectDefinitionName2()));
 
 			sb.append("\"");
+		}
+
+		if (objectRelationship.getObjectDefinitionSystem2() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"objectDefinitionSystem2\": ");
+
+			sb.append(objectRelationship.getObjectDefinitionSystem2());
 		}
 
 		if (objectRelationship.getParameterObjectFieldId() != null) {
@@ -336,6 +356,16 @@ public class ObjectRelationshipSerDes {
 				String.valueOf(objectRelationship.getObjectDefinitionId2()));
 		}
 
+		if (objectRelationship.getObjectDefinitionModifiable2() == null) {
+			map.put("objectDefinitionModifiable2", null);
+		}
+		else {
+			map.put(
+				"objectDefinitionModifiable2",
+				String.valueOf(
+					objectRelationship.getObjectDefinitionModifiable2()));
+		}
+
 		if (objectRelationship.getObjectDefinitionName2() == null) {
 			map.put("objectDefinitionName2", null);
 		}
@@ -343,6 +373,16 @@ public class ObjectRelationshipSerDes {
 			map.put(
 				"objectDefinitionName2",
 				String.valueOf(objectRelationship.getObjectDefinitionName2()));
+		}
+
+		if (objectRelationship.getObjectDefinitionSystem2() == null) {
+			map.put("objectDefinitionSystem2", null);
+		}
+		else {
+			map.put(
+				"objectDefinitionSystem2",
+				String.valueOf(
+					objectRelationship.getObjectDefinitionSystem2()));
 		}
 
 		if (objectRelationship.getParameterObjectFieldId() == null) {
@@ -468,11 +508,27 @@ public class ObjectRelationshipSerDes {
 				}
 			}
 			else if (Objects.equals(
+						jsonParserFieldName, "objectDefinitionModifiable2")) {
+
+				if (jsonParserFieldValue != null) {
+					objectRelationship.setObjectDefinitionModifiable2(
+						(Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
 						jsonParserFieldName, "objectDefinitionName2")) {
 
 				if (jsonParserFieldValue != null) {
 					objectRelationship.setObjectDefinitionName2(
 						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "objectDefinitionSystem2")) {
+
+				if (jsonParserFieldValue != null) {
+					objectRelationship.setObjectDefinitionSystem2(
+						(Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(

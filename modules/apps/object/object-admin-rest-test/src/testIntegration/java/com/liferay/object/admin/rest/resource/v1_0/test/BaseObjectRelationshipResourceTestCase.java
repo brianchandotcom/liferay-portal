@@ -1159,9 +1159,31 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 			}
 
 			if (Objects.equals(
+					"objectDefinitionModifiable2", additionalAssertFieldName)) {
+
+				if (objectRelationship.getObjectDefinitionModifiable2() ==
+						null) {
+
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
 					"objectDefinitionName2", additionalAssertFieldName)) {
 
 				if (objectRelationship.getObjectDefinitionName2() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"objectDefinitionSystem2", additionalAssertFieldName)) {
+
+				if (objectRelationship.getObjectDefinitionSystem2() == null) {
 					valid = false;
 				}
 
@@ -1439,11 +1461,37 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 			}
 
 			if (Objects.equals(
+					"objectDefinitionModifiable2", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						objectRelationship1.getObjectDefinitionModifiable2(),
+						objectRelationship2.getObjectDefinitionModifiable2())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
 					"objectDefinitionName2", additionalAssertFieldName)) {
 
 				if (!Objects.deepEquals(
 						objectRelationship1.getObjectDefinitionName2(),
 						objectRelationship2.getObjectDefinitionName2())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"objectDefinitionSystem2", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						objectRelationship1.getObjectDefinitionSystem2(),
+						objectRelationship2.getObjectDefinitionSystem2())) {
 
 					return false;
 				}
@@ -1663,6 +1711,11 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("objectDefinitionModifiable2")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("objectDefinitionName2")) {
 			sb.append("'");
 			sb.append(
@@ -1670,6 +1723,11 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 			sb.append("'");
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("objectDefinitionSystem2")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("parameterObjectFieldId")) {
@@ -1749,8 +1807,10 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 					RandomTestUtil.randomString());
 				objectDefinitionId1 = RandomTestUtil.randomLong();
 				objectDefinitionId2 = RandomTestUtil.randomLong();
+				objectDefinitionModifiable2 = RandomTestUtil.randomBoolean();
 				objectDefinitionName2 = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				objectDefinitionSystem2 = RandomTestUtil.randomBoolean();
 				parameterObjectFieldId = RandomTestUtil.randomLong();
 				parameterObjectFieldName = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());

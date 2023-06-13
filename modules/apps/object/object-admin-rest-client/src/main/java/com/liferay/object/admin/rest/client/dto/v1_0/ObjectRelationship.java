@@ -239,6 +239,31 @@ public class ObjectRelationship implements Cloneable, Serializable {
 
 	protected Long objectDefinitionId2;
 
+	public Boolean getObjectDefinitionModifiable2() {
+		return objectDefinitionModifiable2;
+	}
+
+	public void setObjectDefinitionModifiable2(
+		Boolean objectDefinitionModifiable2) {
+
+		this.objectDefinitionModifiable2 = objectDefinitionModifiable2;
+	}
+
+	public void setObjectDefinitionModifiable2(
+		UnsafeSupplier<Boolean, Exception>
+			objectDefinitionModifiable2UnsafeSupplier) {
+
+		try {
+			objectDefinitionModifiable2 =
+				objectDefinitionModifiable2UnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean objectDefinitionModifiable2;
+
 	public String getObjectDefinitionName2() {
 		return objectDefinitionName2;
 	}
@@ -259,6 +284,29 @@ public class ObjectRelationship implements Cloneable, Serializable {
 	}
 
 	protected String objectDefinitionName2;
+
+	public Boolean getObjectDefinitionSystem2() {
+		return objectDefinitionSystem2;
+	}
+
+	public void setObjectDefinitionSystem2(Boolean objectDefinitionSystem2) {
+		this.objectDefinitionSystem2 = objectDefinitionSystem2;
+	}
+
+	public void setObjectDefinitionSystem2(
+		UnsafeSupplier<Boolean, Exception>
+			objectDefinitionSystem2UnsafeSupplier) {
+
+		try {
+			objectDefinitionSystem2 =
+				objectDefinitionSystem2UnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean objectDefinitionSystem2;
 
 	public Long getParameterObjectFieldId() {
 		return parameterObjectFieldId;

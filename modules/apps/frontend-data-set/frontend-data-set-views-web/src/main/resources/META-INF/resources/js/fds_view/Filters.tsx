@@ -15,6 +15,7 @@
 import ClayButton from '@clayui/button';
 import ClayDatePicker from '@clayui/date-picker';
 import ClayForm, {
+	ClayCheckbox,
 	ClayInput,
 	ClayRadio,
 	ClayRadioGroup,
@@ -518,39 +519,88 @@ function AddFDSFilterModalContent({
 											)}
 											loadingState={4}
 											onChange={setPreselectedValueInput}
-											onItemsChange={(items: any) => {
-												const selectedVals = preselectedValues.map(
-													(item) => item.id.toString()
-												);
-
-												items = items.filter(
-													(item: any) => {
-														return !selectedVals.includes(
-															item.value
-														);
-													}
-												);
-
-												setPreselectedValues(
-													items.map((item: any) =>
-														selectedPicklist.listTypeEntries.find(
-															(entry) =>
-																String(
-																	entry.id
-																) ===
-																String(
-																	item.value
-																)
-														)
-													)
-												);
-											}}
 											placeholder={Liferay.Language.get(
 												'select-a-default-value-for-your-filter'
 											)}
 											sourceItems={filteredSourceItems}
 											value={preselectedValueInput}
-										/>
+										>
+											{(item: any) => (
+												<ClayMultiSelect.Item
+													key={item.value}
+													textValue={item.label}
+												>
+													<div className="autofit-row autofit-row-center">
+														<div className="autofit-col mr-3">
+															<ClayCheckbox
+																checked={preselectedValues.find(
+																	(
+																		preselectedValue
+																	) =>
+																		String(
+																			preselectedValue.id
+																		) ===
+																		String(
+																			item.value
+																		)
+																)}
+																onClick={(
+																	event: any
+																) => {
+																	event.stopPropagation();
+
+																	if (
+																		event
+																			.target
+																			.checked
+																	) {
+																		setPreselectedValues(
+																			(
+																				existingItems
+																			) => [
+																				...existingItems,
+																				selectedPicklist.listTypeEntries.find(
+																					(
+																						entry
+																					) =>
+																						String(
+																							item.value
+																						) ===
+																						String(
+																							entry.id
+																						)
+																				),
+																			]
+																		);
+																	}
+																	else {
+																		setPreselectedValues(
+																			preselectedValues.filter(
+																				(
+																					entry
+																				) =>
+																					String(
+																						item.value
+																					) !==
+																					String(
+																						entry.id
+																					)
+																			)
+																		);
+																	}
+																}}
+															/>
+														</div>
+
+														<div className="autofit-col">
+															<span>
+																{item.label}
+															</span>
+														</div>
+													</div>
+												</ClayMultiSelect.Item>
+											)}
+										</ClayMultiSelect>
 
 										{!isValidSingleMode && (
 											<ClayForm.FeedbackGroup>

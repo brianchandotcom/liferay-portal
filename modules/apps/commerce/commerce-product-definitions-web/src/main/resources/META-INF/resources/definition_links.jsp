@@ -68,7 +68,7 @@ long cpDefinitionId = cpDefinitionLinkDisplayContext.getCPDefinitionId();
 		%>
 
 			eventHandler = Liferay.on(
-				'<portlet:namespace />addCommerceProductDefinitionLink<%= type %>',
+				'<portlet:namespace />addCommerceProductDefinitionLink<%= HtmlUtil.escapeJS(type) %>',
 				() => {
 					Liferay.Util.openSelectionModal({
 						multiple: true,
@@ -92,7 +92,7 @@ long cpDefinitionId = cpDefinitionLinkDisplayContext.getCPDefinitionId();
 							);
 
 							if (typeInput) {
-								typeInput.value = '<%= type %>';
+								typeInput.value = '<%= HtmlUtil.escapeJS(type) %>';
 							}
 
 							const form = document.getElementById(

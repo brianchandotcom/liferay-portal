@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.simulation.constants.ProductNavigationSimulationConstants;
 import com.liferay.segments.configuration.provider.SegmentsConfigurationProvider;
@@ -34,7 +33,6 @@ import com.liferay.segments.simulation.web.internal.display.context.SegmentsSimu
 import java.io.IOException;
 
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -62,14 +60,11 @@ public class SegmentsSimulationPanelApp extends BaseJSPPanelApp {
 
 	@Override
 	public String getLabel(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
-
 		if (FeatureFlagManagerUtil.isEnabled("LPS-186155")) {
-			return _language.get(resourceBundle, "page-content");
+			return _language.get(locale, "page-content");
 		}
 
-		return _language.get(resourceBundle, "segments");
+		return _language.get(locale, "segments");
 	}
 
 	@Override

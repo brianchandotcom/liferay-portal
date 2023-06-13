@@ -29,7 +29,7 @@ export default function () {
 		setIsLoading(true);
 		// eslint-disable-next-line @liferay/portal/no-global-fetch
 		const response = await fetch(
-			'/o/c/opportunitysfs?pageSize=200&sort=closeDate:asc',
+			'/o/c/opportunitysfs?pageSize=200&sort=closeDate:desc',
 			{
 				headers: {
 					'accept': 'application/json',
@@ -56,7 +56,7 @@ export default function () {
 		getRenewalsData();
 	}, []);
 
-	const renewalsData = getFilteredRenewals(data);
+	const renewalsData = getFilteredRenewals(data).reverse();
 
 	const getCurrentStatusColor = (item: any) => {
 		if (item?.expirationDays <= 5) {

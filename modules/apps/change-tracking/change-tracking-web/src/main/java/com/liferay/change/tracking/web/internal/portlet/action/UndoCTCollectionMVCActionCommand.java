@@ -15,7 +15,6 @@
 package com.liferay.change.tracking.web.internal.portlet.action;
 
 import com.liferay.change.tracking.constants.CTPortletKeys;
-import com.liferay.change.tracking.exception.CTLocalizedException;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTCollectionService;
@@ -31,6 +30,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -111,15 +111,24 @@ public class UndoCTCollectionMVCActionCommand extends BaseMVCActionCommand {
 				).put(
 					"revertedRedirectURL", redirectURL.toString()
 				));
+
+			hideDefaultSuccessMessage(actionRequest);
 		}
-		catch (CTLocalizedException ctLocalizedException) {
-			_log.error(ctLocalizedException);
+		catch (Exception exception) {
+			_log.error(exception);
 
 			SessionErrors.add(
-				actionRequest, CTLocalizedException.class.getName(),
-				ctLocalizedException);
+				actionRequest, Exception.class.getName(), exception);
 
 			hideDefaultErrorMessage(actionRequest);
+
+			JSONPortletResponseUtil.writeJSON(
+				actionRequest, actionResponse,
+				JSONUtil.put(
+					"errorMessage",
+					_language.get(
+						themeDisplay.getLocale(),
+						"failed-to-revert-publication")));
 		}
 	}
 
@@ -134,5 +143,8 @@ public class UndoCTCollectionMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private Portal _portal;
 
 }

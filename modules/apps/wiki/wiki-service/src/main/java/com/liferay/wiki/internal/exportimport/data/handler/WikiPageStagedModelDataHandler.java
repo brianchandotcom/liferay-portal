@@ -252,8 +252,9 @@ public class WikiPageStagedModelDataHandler
 						importedPageResource.setUuid(
 							pageElement.attributeValue("page-resource-uuid"));
 
-						_wikiPageResourceLocalService.updateWikiPageResource(
-							importedPageResource);
+						importedPageResource =
+							_wikiPageResourceLocalService.
+								updateWikiPageResource(importedPageResource);
 					}
 				}
 			}

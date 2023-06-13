@@ -364,7 +364,7 @@ public class WikiPageTrashHandler extends BaseWikiTrashHandler {
 
 		page.setTitle(name);
 
-		_wikiPageLocalService.updateWikiPage(page);
+		page = _wikiPageLocalService.updateWikiPage(page);
 
 		WikiPageResource pageResource =
 			_wikiPageResourceLocalService.getPageResource(

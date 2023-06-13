@@ -1269,9 +1269,8 @@ public class WikiPageLocalServiceTest {
 				"multiValued=true\nrequiredClassNameIds=", classNameId,
 				":-1\nselectedClassNameIds=", classNameId, ":-1"));
 
-		AssetVocabularyLocalServiceUtil.updateAssetVocabulary(assetVocabulary);
-
-		return assetVocabulary;
+		return AssetVocabularyLocalServiceUtil.updateAssetVocabulary(
+			assetVocabulary);
 	}
 
 	protected void testChangeParent(boolean hasExpandoValues) throws Exception {

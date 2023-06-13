@@ -566,7 +566,8 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 
 						message.setBody(body);
 
-						_mbMessageLocalService.updateMBMessage(message);
+						message = _mbMessageLocalService.updateMBMessage(
+							message);
 					}
 				}
 			}

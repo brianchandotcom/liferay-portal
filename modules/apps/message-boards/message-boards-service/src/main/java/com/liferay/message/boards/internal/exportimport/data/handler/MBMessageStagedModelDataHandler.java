@@ -393,7 +393,7 @@ public class MBMessageStagedModelDataHandler
 
 			thread.setUuid(messageElement.attributeValue("threadUuid"));
 
-			_mbThreadLocalService.updateMBThread(thread);
+			thread = _mbThreadLocalService.updateMBThread(thread);
 
 			if (importedMessage.getCategoryId() != parentCategoryId) {
 				_mbThreadLocalService.moveThread(
@@ -568,9 +568,7 @@ public class MBMessageStagedModelDataHandler
 
 		importedMessage.setModifiedDate(modifiedDate);
 
-		_mbMessageLocalService.updateMBMessage(importedMessage);
-
-		return importedMessage;
+		return _mbMessageLocalService.updateMBMessage(importedMessage);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -159,7 +159,7 @@ public class MBDiscussionStagedModelDataHandler
 
 			rootMessage.setCreateDate(discussion.getCreateDate());
 
-			_mbMessageLocalService.updateMBMessage(rootMessage);
+			rootMessage = _mbMessageLocalService.updateMBMessage(rootMessage);
 
 			existingDiscussion = _mbDiscussionLocalService.getThreadDiscussion(
 				rootMessage.getThreadId());

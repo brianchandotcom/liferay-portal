@@ -1011,7 +1011,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 			thread.setTitle(subject);
 
-			mbThreadLocalService.updateMBThread(thread);
+			thread = mbThreadLocalService.updateMBThread(thread);
 		}
 
 		message.setThreadId(thread.getThreadId());

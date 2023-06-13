@@ -22,5 +22,5 @@ export function itemPathRenderer({itemData}: FDSItem) {
 }
 
 export function itemStatusRenderer({itemData}: FDSItem) {
-	return <StatusLabel statusKey={itemData.applicationStatus.key} />;
+	return <StatusLabel statusKey={itemData.applicationStatus?.key} />;
 }

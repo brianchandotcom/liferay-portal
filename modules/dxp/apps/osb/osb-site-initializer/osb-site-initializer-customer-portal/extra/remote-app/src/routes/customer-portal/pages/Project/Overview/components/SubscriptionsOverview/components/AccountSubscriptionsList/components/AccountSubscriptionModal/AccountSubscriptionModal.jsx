@@ -24,6 +24,8 @@ import useOrderItems from './hooks/useOrderItems';
 import getColumns from './utils/getColumns';
 import getRows from './utils/getRows';
 
+const accountSubscriptionGroupNames = ['DXP', 'Portal'];
+
 const AccountSubscriptionModal = ({
 	accountKey,
 	accountSubscriptionGroup,
@@ -50,7 +52,12 @@ const AccountSubscriptionModal = ({
 
 	const totalCount = data?.orderItems.totalCount;
 
-	const accountSubscriptionGroupNames = ['DXP', 'Portal'];
+	const accountSubscriptionTerms = data?.orderItems?.items ?? [];
+
+	const accountSubscriptionTermsSort = [...accountSubscriptionTerms].sort(
+		(a, b) =>
+			new Date(b.options?.startDate) - new Date(a.options?.startDate)
+	);
 
 	return (
 		<ClayModal center observer={observer} size="lg">
@@ -97,7 +104,7 @@ const AccountSubscriptionModal = ({
 						setActivePage,
 						totalCount,
 					}}
-					rows={getRows(data?.orderItems.items)}
+					rows={getRows(accountSubscriptionTermsSort)}
 					tableVerticalAlignment="middle"
 				/>
 			</div>

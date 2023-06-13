@@ -96,8 +96,9 @@ public class NotificationTemplateLocalServiceImpl
 		notificationRecipient.setClassPK(
 			notificationTemplate.getNotificationTemplateId());
 
-		_notificationRecipientLocalService.updateNotificationRecipient(
-			notificationRecipient);
+		notificationRecipient =
+			_notificationRecipientLocalService.updateNotificationRecipient(
+				notificationRecipient);
 
 		for (NotificationRecipientSetting notificationRecipientSetting :
 				notificationContext.getNotificationRecipientSettings()) {
@@ -166,8 +167,9 @@ public class NotificationTemplateLocalServiceImpl
 		notificationRecipient.setClassPK(
 			notificationTemplate.getNotificationTemplateId());
 
-		_notificationRecipientLocalService.updateNotificationRecipient(
-			notificationRecipient);
+		notificationRecipient =
+			_notificationRecipientLocalService.updateNotificationRecipient(
+				notificationRecipient);
 
 		_addNotificationRecipientSetting(
 			null, "from", notificationRecipient.getNotificationRecipientId(),

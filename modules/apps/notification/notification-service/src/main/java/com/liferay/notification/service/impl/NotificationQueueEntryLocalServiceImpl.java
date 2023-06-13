@@ -98,8 +98,9 @@ public class NotificationQueueEntryLocalServiceImpl
 		notificationRecipient.setClassPK(
 			notificationQueueEntry.getNotificationQueueEntryId());
 
-		_notificationRecipientLocalService.updateNotificationRecipient(
-			notificationRecipient);
+		notificationRecipient =
+			_notificationRecipientLocalService.updateNotificationRecipient(
+				notificationRecipient);
 
 		for (NotificationRecipientSetting notificationRecipientSetting :
 				notificationContext.getNotificationRecipientSettings()) {

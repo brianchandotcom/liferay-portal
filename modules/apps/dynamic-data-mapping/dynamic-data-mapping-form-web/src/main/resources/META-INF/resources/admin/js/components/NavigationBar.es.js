@@ -80,7 +80,11 @@ export function NavigationBar({history, location}) {
 	);
 
 	useLayoutEffect(() => {
-		const index = NAV_ITEMS_REVERSE[location.pathname];
+		let index = NAV_ITEMS_REVERSE[location.pathname];
+
+		if (location.pathname === '/rules/editor') {
+			index = 1;
+		}
 
 		// This will mark the active element of the NavigationBar for the first
 		// time according to the pathname when the application is started.

@@ -24,7 +24,12 @@ function InputSetItemHeader({children}) {
 
 function InputSetItemHeaderTitle({children}) {
 	return (
-		<h3 className="c-mb-1 contributor-name sheet-subtitle">{children}</h3>
+		<h3
+			className="c-mb-1 contributor-name sheet-subtitle text-secondary"
+			style={{textTransform: 'none'}}
+		>
+			{children}
+		</h3>
 	);
 }
 

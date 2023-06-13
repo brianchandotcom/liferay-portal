@@ -12,16 +12,6 @@
 	}
 
 	.search-bar-configuration-suggestions-root {
-		.input-sets-item-root {
-			.contributor-input-set-item-header-root {
-				.contributor-name {
-					border-color: var(--gray-400, $secondary-l2);
-					color: var(--gray-600, $secondary);
-					text-transform: none;
-				}
-			}
-		}
-
 		.has-error {
 			.select-sxp-blueprint {
 				.form-control {

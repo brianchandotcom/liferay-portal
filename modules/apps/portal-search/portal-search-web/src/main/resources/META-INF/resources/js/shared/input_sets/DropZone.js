@@ -12,6 +12,7 @@
  * details.
  */
 
+import getCN from 'classnames';
 import React from 'react';
 import {useDrop} from 'react-dnd';
 
@@ -32,8 +33,17 @@ function DropZone({index, move}) {
 	);
 
 	return (
-		<div className="input-sets-item-drop-zone-root" ref={drop}>
-			{isOver && <div className="input-sets-item-drop-zone-over" />}
+		<div
+			className="input-sets-item-drop-zone-root"
+			ref={drop}
+			style={{padding: '10px 0'}}
+		>
+			<div
+				className={getCN('input-sets-item-drop-zone-over', {
+					'bg-primary': isOver,
+				})}
+				style={{height: '4px'}}
+			/>
 		</div>
 	);
 }

@@ -1645,6 +1645,10 @@
 					"store": true,
 					"type": "keyword"
 				},
+				"timestamp": {
+					"store": true,
+					"type": "date"
+				},
 				"title": {
 					"store": true,
 					"term_vector": "with_positions_offsets",

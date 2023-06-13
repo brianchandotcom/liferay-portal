@@ -190,9 +190,10 @@ public class EditCommerceCatalogMVCActionCommand extends BaseMVCActionCommand {
 		String catalogDefaultLanguageId = ParamUtil.getString(
 			actionRequest, "catalogDefaultLanguageId");
 
-		CommerceCatalog commerceCatalog = null;
+		CommerceCatalog commerceCatalog =
+			_commerceCatalogService.fetchCommerceCatalog(commerceCatalogId);
 
-		if (commerceCatalogId <= 0) {
+		if (commerceCatalog == null) {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				CommerceCatalog.class.getName(), actionRequest);
 
@@ -202,8 +203,9 @@ public class EditCommerceCatalogMVCActionCommand extends BaseMVCActionCommand {
 		}
 		else {
 			commerceCatalog = _commerceCatalogService.updateCommerceCatalog(
-				commerceCatalogId, AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
-				name, commerceCurrencyCode, catalogDefaultLanguageId);
+				commerceCatalog.getCommerceCatalogId(),
+				commerceCatalog.getAccountEntryId(), name, commerceCurrencyCode,
+				catalogDefaultLanguageId);
 		}
 
 		return commerceCatalog;

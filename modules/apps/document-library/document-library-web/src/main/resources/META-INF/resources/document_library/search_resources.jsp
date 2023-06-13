@@ -201,9 +201,11 @@ entriesChecker.setRememberCheckBoxStateURLRegex("^(?!.*" + liferayPortletRespons
 											<div class="card-body">
 												<div class="card-row">
 													<div class="autofit-col autofit-col-expand">
-														<aui:a cssClass="card-title text-truncate" href="<%= dlViewEntriesDisplayContext.getViewFileEntryURL(fileEntry) %>" title="<%= HtmlUtil.escapeAttribute(latestFileVersion.getTitle()) %>">
-															<%= latestFileVersion.getTitle() %>
-														</aui:a>
+														<clay:link
+															cssClass="card-title text-truncate"
+															href="<%= dlViewEntriesDisplayContext.getViewFileEntryURL(fileEntry) %>"
+															label="<%= HtmlUtil.escapeAttribute(latestFileVersion.getTitle()) %>"
+														/>
 
 														<div class="card-subtitle text-truncate">
 															<%= LanguageUtil.format(request, "modified-x-ago-by-x", new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - fileEntry.getModifiedDate().getTime(), true), HtmlUtil.escape(latestFileVersion.getUserName())}, false) %>
@@ -279,7 +281,10 @@ entriesChecker.setRememberCheckBoxStateURLRegex("^(?!.*" + liferayPortletRespons
 
 													<div class="autofit-col autofit-col-expand">
 														<div class="table-title">
-															<aui:a href="<%= dlViewEntriesDisplayContext.getViewFileEntryURL(fileEntry) %>"><%= HtmlUtil.unescape(latestFileVersion.getTitle()) %></aui:a>
+															<clay:link
+																href="<%= dlViewEntriesDisplayContext.getViewFileEntryURL(fileEntry) %>"
+																label="<%= HtmlUtil.unescape(latestFileVersion.getTitle()) %>"
+															/>
 														</div>
 													</div>
 												</div>
@@ -485,7 +490,7 @@ entriesChecker.setRememberCheckBoxStateURLRegex("^(?!.*" + liferayPortletRespons
 
 													<div class="autofit-col autofit-col-expand">
 														<div class="table-title">
-															<aui:a
+															<clay:link
 																href='<%=
 																	PortletURLBuilder.createRenderURL(
 																		liferayPortletResponse
@@ -497,9 +502,8 @@ entriesChecker.setRememberCheckBoxStateURLRegex("^(?!.*" + liferayPortletRespons
 																		"folderId", curFolder.getFolderId()
 																	).buildString()
 																%>'
-															>
-																<%= HtmlUtil.unescape(curFolder.getName()) %>
-															</aui:a>
+																label="<%= HtmlUtil.unescape(curFolder.getName()) %>"
+															/>
 														</div>
 													</div>
 												</div>

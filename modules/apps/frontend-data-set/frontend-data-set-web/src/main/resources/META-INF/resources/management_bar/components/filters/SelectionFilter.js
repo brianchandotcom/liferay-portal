@@ -19,12 +19,13 @@ import {ClayCheckbox, ClayRadio, ClayToggle} from '@clayui/form';
 import ClayLabel from '@clayui/label';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
-import {fetch} from 'frontend-js-web';
+import {debounce, fetch} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import {getValueFromItem, isValuesArrayChanged} from '../../../utils/index';
 
+const DEFAULT_DEBOUNCE_DELAY = 300;
 const DEFAULT_PAGE_SIZE = 10;
 
 function fetchData(apiURL, searchParam, currentPage = 1) {
@@ -43,6 +44,21 @@ function fetchData(apiURL, searchParam, currentPage = 1) {
 		},
 	}).then((response) => response.json());
 }
+
+const mapResponseData = (data, itemLabelProp, itemKey) => {
+	return {
+		...data,
+		items: data.items.map((item) => {
+			const option = {label: undefined, value: undefined};
+			option.label = itemLabelProp
+				? getValueFromItem(item, itemLabelProp)
+				: item.label;
+			option.value = itemKey ? item[itemKey] : item.value;
+
+			return option;
+		}),
+	};
+};
 
 const getSelectedItemsLabel = ({selectedData}) => {
 	const {exclude, selectedItems} = selectedData;
@@ -98,12 +114,15 @@ function SelectionFilter({
 	selectedData,
 	setFilter,
 }) {
-	const [query, setQuery] = useState('');
 	const [search, setSearch] = useState('');
 	const [selectedItems, setSelectedItems] = useState(
 		selectedData?.selectedItems || []
 	);
 	const [items, setItems] = useState(apiURL ? null : initialItems);
+	const [localItems, setLocalItems] = useState(
+		initialItems.length ? initialItems : null
+	);
+	const [firstRequest, setFirstRequest] = useState(true);
 	const [loading, setLoading] = useState(false);
 	const [currentPage, setCurrentPage] = useState(1);
 	const [total, setTotal] = useState(apiURL ? 0 : initialItems?.length);
@@ -113,30 +132,24 @@ function SelectionFilter({
 	const [infiniteLoaderRendered, setInfiniteLoaderRendered] = useState(false);
 	const [exclude, setExclude] = useState(!!selectedData?.exclude);
 
-	const loaderVisible = items?.length < total;
+	const loaderVisible = !localItems?.length && items?.length < total;
 
 	useEffect(() => {
 		setSelectedItems(selectedData?.selectedItems || []);
 	}, [selectedData]);
 
-	useEffect(() => {
-		if (query === search) {
-			return;
-		}
-
-		setCurrentPage(1);
-
-		setSearch(query);
-	}, [query, search]);
-
-	const isMounted = useIsMounted();
-
-	useEffect(() => {
-		if (apiURL) {
+	const loadSelectionItems = function () {
+		if (apiURL && !localItems?.length) {
 			setLoading(true);
 
 			fetchData(apiURL, search, currentPage)
-				.then((data) => {
+				.then((response) => {
+					const data = mapResponseData(
+						response,
+						itemLabelProp,
+						itemKey
+					);
+
 					if (!isMounted()) {
 						return;
 					}
@@ -150,7 +163,16 @@ function SelectionFilter({
 						setItems((items) => [...items, ...data.items]);
 					}
 
+					if (
+						firstRequest &&
+						data.totalCount <= DEFAULT_PAGE_SIZE &&
+						autocompleteEnabled
+					) {
+						setLocalItems(data.items);
+					}
+
 					setTotal(data.totalCount);
+					setFirstRequest(false);
 				})
 				.catch(() => {
 					if (isMounted()) {
@@ -158,7 +180,29 @@ function SelectionFilter({
 					}
 				});
 		}
-	}, [autocompleteEnabled, currentPage, isMounted, search, apiURL]);
+		else if (localItems?.length && autocompleteEnabled) {
+			setItems(
+				search ? localItems?.filter(({label}) =>
+					label.toLowerCase().match(search.toLowerCase())
+				) : localItems
+			);
+		}
+	}
+
+	const debouncedQuery = debounce((value) => {
+		setCurrentPage(1);
+		setSearch(value);
+	}, DEFAULT_DEBOUNCE_DELAY);
+
+	const handleAutocompleteQuery = (query) => {
+		debouncedQuery(query);
+	};
+
+	const isMounted = useIsMounted();
+
+	useEffect(() => {
+		loadSelectionItems();
+	}, [search, currentPage]);
 
 	const setScrollingArea = useCallback((node) => {
 		scrollingAreaRef.current = node;
@@ -241,7 +285,7 @@ function SelectionFilter({
 						<ClayAutocomplete>
 							<ClayAutocomplete.Input
 								onChange={(event) =>
-									setQuery(event.target.value)
+									handleAutocompleteQuery(event.target.value)
 								}
 								placeholder={inputPlaceholder}
 							/>
@@ -302,47 +346,40 @@ function SelectionFilter({
 						className="inline-scroller mx-n2 px-2"
 						ref={setScrollingArea}
 					>
-						{items.map((item) => {
-							const itemValue = itemKey
-								? item[itemKey]
-								: item.value;
-							const itemLabel = itemLabelProp
-								? getValueFromItem(item, itemLabelProp)
-								: item.label;
+						{items.map(({label, value}) => {
 							const newValue = {
-								label: itemLabel,
-								value: itemValue,
+								label,
+								value,
 							};
 
 							return (
 								<Item
-									aria-label={itemLabel}
+									aria-label={label}
 									checked={Boolean(
 										selectedItems.find(
-											(element) =>
-												element.value === itemValue
+											(element) => element.value === value
 										)
 									)}
-									key={itemValue}
-									label={itemLabel}
+									key={value}
+									label={label}
 									multiple={multiple}
 									onChange={() => {
 										setSelectedItems(
 											selectedItems.find(
 												(element) =>
-													element.value === itemValue
+													element.value === value
 											)
 												? selectedItems.filter(
 														(element) =>
 															element.value !==
-															itemValue
+															value
 												  )
 												: multiple
 												? [...selectedItems, newValue]
 												: [newValue]
 										);
 									}}
-									value={itemValue}
+									value={value}
 								/>
 							);
 						})}
@@ -350,7 +387,7 @@ function SelectionFilter({
 						{loaderVisible && (
 							<ClayLoadingIndicator
 								ref={setInfiniteLoader}
-								small
+								size="sm"
 							/>
 						)}
 					</ul>
@@ -392,7 +429,7 @@ function SelectionFilter({
 							});
 						}
 					}}
-					small
+					size="sm"
 				>
 					{actionType === 'add' && Liferay.Language.get('add-filter')}
 

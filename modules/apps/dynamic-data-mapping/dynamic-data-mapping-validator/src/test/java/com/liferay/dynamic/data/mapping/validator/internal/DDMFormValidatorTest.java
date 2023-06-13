@@ -631,7 +631,6 @@ public class DDMFormValidatorTest {
 		ReflectionTestUtil.setFieldValue(
 			ddmExpressionFactoryImpl, "ddmExpressionFunctionRegistry",
 			Mockito.mock(DDMExpressionFunctionRegistry.class));
-
 		ReflectionTestUtil.setFieldValue(
 			_ddmFormValidatorImpl, "_ddmExpressionFactory",
 			ddmExpressionFactoryImpl);

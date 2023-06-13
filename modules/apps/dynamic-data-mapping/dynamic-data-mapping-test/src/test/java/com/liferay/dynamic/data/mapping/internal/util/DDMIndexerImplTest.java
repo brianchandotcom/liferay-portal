@@ -311,7 +311,6 @@ public class DDMIndexerImplTest {
 			ddmFormSerializerSerializeResponse.getContent());
 
 		ddmStructure.setDDMForm(ddmForm);
-
 		ddmStructure.setStructureId(RandomTestUtil.randomLong());
 		ddmStructure.setName(RandomTestUtil.randomString());
 

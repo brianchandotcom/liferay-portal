@@ -62,7 +62,6 @@ public class DDMFormInstanceRecordUADAnonymizer
 			if (ddmFormInstanceRecordVersion.getUserId() == userId) {
 				ddmFormInstanceRecordVersion.setUserId(
 					anonymousUser.getUserId());
-
 				ddmFormInstanceRecordVersion.setUserName(
 					anonymousUser.getFullName());
 			}

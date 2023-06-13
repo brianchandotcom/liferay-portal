@@ -245,7 +245,6 @@ public class PollsToDDMUpgradeProcessTest extends BaseDDMTestCase {
 		ReflectionTestUtil.setFieldValue(
 			_pollsToDDMUpgradeProcess, "_availableLocales",
 			SetUtil.fromArray(LocaleUtil.BRAZIL, LocaleUtil.US));
-
 		ReflectionTestUtil.setFieldValue(
 			_pollsToDDMUpgradeProcess, "_defaultLocale", LocaleUtil.US);
 	}

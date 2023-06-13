@@ -76,7 +76,6 @@ public class DLFileEntryTypeDDMFieldAttributeUpgradeProcess
 
 			preparedStatement1.setLong(
 				1, PortalUtil.getClassNameId(DLFileEntryType.class));
-
 			preparedStatement1.setLong(2, companyId);
 			preparedStatement1.setString(3, "numeric");
 

@@ -73,7 +73,6 @@ public class DDMStructureLayoutUpgradeProcess extends UpgradeProcess {
 					jsonObject.put("paginationMode", DDMFormLayout.MULTI_PAGES);
 
 					preparedStatement2.setString(1, jsonObject.toString());
-
 					preparedStatement2.setLong(
 						2, resultSet.getLong("structureLayoutId"));
 

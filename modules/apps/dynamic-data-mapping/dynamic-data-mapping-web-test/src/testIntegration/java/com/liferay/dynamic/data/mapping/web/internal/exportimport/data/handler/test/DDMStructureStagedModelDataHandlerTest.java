@@ -346,7 +346,6 @@ public class DDMStructureStagedModelDataHandlerTest
 			"Country", "Country", "select", "string", true, false, true);
 
 		selectDDMFormField.setProperty("dataSourceType", "data-provider");
-
 		selectDDMFormField.setProperty(
 			"ddmDataProviderInstanceId",
 			ddmDataProviderInstance.getDataProviderInstanceId());

@@ -89,8 +89,9 @@ public class ExecutePoshiElement extends PoshiElement {
 				PoshiScriptParserUtil.getMethodParameterValues(
 					poshiScriptParentheticalContent, this);
 
-			if (liferaySeleniumMethod.getParameterCount() !=
-					methodParameterValues.size()) {
+			if (!(liferaySeleniumMethod == null) &&
+				(liferaySeleniumMethod.getParameterCount() !=
+					methodParameterValues.size())) {
 
 				List<String> parameterNames =
 					liferaySeleniumMethod.getParameterNames();

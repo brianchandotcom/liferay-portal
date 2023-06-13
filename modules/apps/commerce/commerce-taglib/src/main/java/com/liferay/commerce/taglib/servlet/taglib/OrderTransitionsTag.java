@@ -137,11 +137,19 @@ public class OrderTransitionsTag extends IncludeTag {
 			_commerceOrderTransitionOVPs);
 		httpServletRequest.setAttribute(
 			"liferay-commerce:order-transitions:cssClass", _cssClass);
-		httpServletRequest.setAttribute(
-			"liferay-commerce:order-transitions:disabled",
-			ListUtil.exists(
-				_commerceOrder.getCommerceOrderItems(),
-				CommerceOrderItemModel::isPriceOnApplication));
+
+		if (_commerceOrder == null) {
+			httpServletRequest.setAttribute(
+				"liferay-commerce:order-transitions:disabled", Boolean.TRUE);
+		}
+		else {
+			httpServletRequest.setAttribute(
+				"liferay-commerce:order-transitions:disabled",
+				ListUtil.exists(
+					_commerceOrder.getCommerceOrderItems(),
+					CommerceOrderItemModel::isPriceOnApplication));
+		}
+
 		httpServletRequest.setAttribute(
 			"liferay-commerce:order-transitions:pathThemeImages",
 			_pathThemeImages);

@@ -354,11 +354,10 @@ public class DDMFormValuesExportImportContentProcessorTest {
 
 		ddmFormFields.add(webContentFormField);
 
-		long classNameId = ClassNameLocalServiceUtil.getClassNameId(
-			DLFileEntryMetadata.class);
-
 		_ddmStructure.setDDMForm(journalDDMForm);
-		_ddmStructure.setClassNameId(classNameId);
+		_ddmStructure.setClassNameId(
+			ClassNameLocalServiceUtil.getClassNameId(
+				DLFileEntryMetadata.class));
 
 		_ddmStructure = _ddmStructureLocalService.updateDDMStructure(
 			_ddmStructure);

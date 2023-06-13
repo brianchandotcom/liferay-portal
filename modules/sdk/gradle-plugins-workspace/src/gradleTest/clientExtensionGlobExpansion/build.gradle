@@ -12,7 +12,15 @@ runGradleTest {
 
 		assert clientExtensionConfigJSONFile.text.contains('"doNotExpand=*.lfr.dev"')
 		assert clientExtensionConfigJSONFile.text.contains('"fooUrls=foo.json\\nfoo.txt"')
-		assert clientExtensionConfigJSONFile.text.contains('"jsonUrls=foo.json\\none/two/three/bar.json"')
+
+		def isWindows = System.getProperty('os.name').toLowerCase().contains('win')
+
+		if (isWindows) {
+			assert clientExtensionConfigJSONFile.text.contains('"jsonUrls=foo.json\\none\\\\two\\\\three\\\\bar.json"')
+		} else {
+			assert clientExtensionConfigJSONFile.text.contains('"jsonUrls=foo.json\\none/two/three/bar.json"')
+		}
+
 		assert clientExtensionConfigJSONFile.text.contains('"singleURL=bar.txt\\nfoo.txt"')
 	}
 }

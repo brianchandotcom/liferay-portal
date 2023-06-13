@@ -12,7 +12,11 @@
  * details.
  */
 
-import {objectToFormData, openToast} from 'frontend-js-web';
+import {navigate, objectToFormData, openToast} from 'frontend-js-web';
+
+const INTERACTION_NOTIFICATION = 'notification';
+const INTERACTION_PAGE = 'page';
+const INTERACTION_URL = 'url';
 
 const TOAST_DATA = {
 	error: {
@@ -27,7 +31,25 @@ const TOAST_DATA = {
 	},
 };
 
-export default function ({executeInfoItemActionURL}) {
+export default function InfoItemActionHandler({executeInfoItemActionURL}) {
+	const url = new URL(window.location.href);
+
+	if (url.searchParams.has('toastData')) {
+		try {
+			const data = JSON.parse(url.searchParams.get('toastData'));
+			openResultToast(data);
+		}
+		catch (error) {
+			if (process.env.NODE_ENV === 'development') {
+				console.error(error);
+			}
+		}
+
+		url.searchParams.delete('toastData');
+
+		history.replaceState(null, document.head.title, url.href);
+	}
+
 	const triggers = document.querySelectorAll(
 		'[data-lfr-editable-type="action"]'
 	);
@@ -53,7 +75,15 @@ function triggerAction(trigger, executeInfoItemActionURL) {
 	const {
 		lfrClassNameId: classNameId,
 		lfrClassPk: classPK,
+		lfrErrorInteraction: errorInteraction,
+		lfrErrorPageUrl: errorPageURL,
+		lfrErrorReload: errorReload,
+		lfrErrorText: errorText,
 		lfrFieldId: fieldId,
+		lfrSuccessInteraction: successInteraction,
+		lfrSuccessPageUrl: successPageURL,
+		lfrSuccessReload: successReload,
+		lfrSuccessText: successText,
 	} = trigger.dataset;
 
 	const loadingIndicator = getLoadingIndicator();
@@ -77,10 +107,22 @@ function triggerAction(trigger, executeInfoItemActionURL) {
 			trigger.removeChild(loadingIndicator);
 
 			if (error) {
-				openResultToast(TOAST_DATA.error, error);
+				handleResult(
+					errorInteraction,
+					errorReload,
+					errorText || error,
+					TOAST_DATA.error,
+					errorPageURL
+				);
 			}
 			else {
-				openResultToast(TOAST_DATA.success);
+				handleResult(
+					successInteraction,
+					successReload,
+					successText,
+					TOAST_DATA.success,
+					successPageURL
+				);
 			}
 		})
 		.catch(() => {
@@ -105,6 +147,29 @@ function getLoadingIndicator() {
 	);
 
 	return element;
+}
+
+function handleResult(interaction, reload, text, toastData, url) {
+	if (interaction === INTERACTION_NOTIFICATION) {
+		if (reload) {
+			const reloadURL = new URL(window.location.href);
+
+			const data = {...toastData, message: text || toastData.message};
+
+			reloadURL.searchParams.set('toastData', JSON.stringify(data));
+
+			navigate(reloadURL);
+		}
+		else {
+			openResultToast(toastData, text);
+		}
+	}
+	else if ([INTERACTION_PAGE, INTERACTION_URL].includes(interaction)) {
+		navigate(url);
+	}
+	else if (reload) {
+		window.location.reload();
+	}
 }
 
 function openResultToast({message, title, type}, text) {

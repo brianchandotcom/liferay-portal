@@ -36,18 +36,24 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.IOException;
 
+import java.nio.charset.StandardCharsets;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.elasticsearch.action.ingest.PutPipelineRequest;
 import org.elasticsearch.client.IndicesClient;
+import org.elasticsearch.client.IngestClient;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.client.indices.GetIndexRequest;
 import org.elasticsearch.client.indices.GetIndexResponse;
 import org.elasticsearch.cluster.metadata.MappingMetadata;
+import org.elasticsearch.common.bytes.BytesArray;
 import org.elasticsearch.common.settings.Settings;
+import org.elasticsearch.xcontent.XContentType;
 
 import org.hamcrest.CoreMatchers;
 
@@ -83,6 +89,8 @@ public class CompanyIndexFactoryTest {
 			CompanyIndexFactoryTest.class.getSimpleName());
 
 		_elasticsearchFixture.setUp();
+
+		_putTimestampPipeline(_elasticsearchFixture.getRestHighLevelClient());
 	}
 
 	@AfterClass
@@ -616,6 +624,25 @@ public class CompanyIndexFactoryTest {
 		public void populate(IndexSettingsHelper indexSettingsHelper) {
 		}
 
+	}
+
+	private static void _putTimestampPipeline(
+			RestHighLevelClient restHighLevelClient)
+		throws Exception {
+
+		String source =
+			"{\"description\":\"Adds timestamp to documents\",\"processors\":" +
+				"[{\"set\":{\"field\":\"_source.timestamp\",\"value\":" +
+					"\"{{{_ingest.timestamp}}}\"}}]}";
+
+		PutPipelineRequest putPipelineRequest = new PutPipelineRequest(
+			"timestamp",
+			new BytesArray(source.getBytes(StandardCharsets.UTF_8)),
+			XContentType.JSON);
+
+		IngestClient ingestClient = restHighLevelClient.ingest();
+
+		ingestClient.putPipeline(putPipelineRequest, RequestOptions.DEFAULT);
 	}
 
 	private void _assertAdditionalTypeMappings() throws Exception {

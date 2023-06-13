@@ -60,7 +60,9 @@ public class DLFileEntryTypePermissionUpdateHandler
 
 			dlFileEntryType.setModifiedDate(new Date());
 
-			_dLFileEntryTypeLocalService.updateDLFileEntryType(dlFileEntryType);
+			dlFileEntryType =
+				_dLFileEntryTypeLocalService.updateDLFileEntryType(
+					dlFileEntryType);
 
 			String dlFileEntryMetadataResourceName =
 				_ddmPermissionSupport.getStructureModelResourceName(

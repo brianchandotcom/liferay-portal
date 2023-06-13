@@ -220,7 +220,7 @@ public class FolderStagedModelDataHandlerTest
 		dlFolder.setRestrictionType(
 			DLFolderConstants.RESTRICTION_TYPE_FILE_ENTRY_TYPES_AND_WORKFLOW);
 
-		DLFolderLocalServiceUtil.updateDLFolder(dlFolder);
+		dlFolder = DLFolderLocalServiceUtil.updateDLFolder(dlFolder);
 
 		DLFileEntryTypeLocalServiceUtil.updateFolderFileEntryTypes(
 			dlFolder, ListUtil.fromArray(dlFileEntryType.getFileEntryTypeId()),

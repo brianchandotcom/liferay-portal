@@ -166,7 +166,8 @@ public class DLFileVersionConstraintResolver
 			fileVersion.setVersion(newFileVersion);
 			fileVersion.setStoreUUID(String.valueOf(UUID.randomUUID()));
 
-			_dlFileVersionLocalService.updateDLFileVersion(fileVersion);
+			fileVersion = _dlFileVersionLocalService.updateDLFileVersion(
+				fileVersion);
 
 			versionMap.put(oldStoreFileName, fileVersion.getStoreFileName());
 
@@ -181,7 +182,7 @@ public class DLFileVersionConstraintResolver
 
 		dlFileEntry.setVersion(newFileVersion);
 
-		_dlFileEntryLocalService.updateDLFileEntry(dlFileEntry);
+		dlFileEntry = _dlFileEntryLocalService.updateDLFileEntry(dlFileEntry);
 
 		for (Map.Entry<String, String> entry : versionMap.entrySet()) {
 			String oldStoreFileName = entry.getKey();

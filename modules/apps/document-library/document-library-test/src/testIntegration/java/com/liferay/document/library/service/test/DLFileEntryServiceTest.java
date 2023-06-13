@@ -402,7 +402,8 @@ public class DLFileEntryServiceTest {
 
 		dlFileVersion.setFileName(fileName);
 
-		DLFileVersionLocalServiceUtil.updateDLFileVersion(dlFileVersion);
+		dlFileVersion = DLFileVersionLocalServiceUtil.updateDLFileVersion(
+			dlFileVersion);
 
 		dlFileEntry = updateStatus(dlFileVersion, serviceContext);
 

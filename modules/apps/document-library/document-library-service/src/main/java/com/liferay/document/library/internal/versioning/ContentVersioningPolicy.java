@@ -76,7 +76,8 @@ public class ContentVersioningPolicy implements VersioningPolicy {
 		try (InputStream inputStream = dlFileVersion.getContentStream(false)) {
 			dlFileVersion.setChecksum(DigesterUtil.digestBase64(inputStream));
 
-			_dlFileVersionLocalService.updateDLFileVersion(dlFileVersion);
+			dlFileVersion = _dlFileVersionLocalService.updateDLFileVersion(
+				dlFileVersion);
 
 			return dlFileVersion.getChecksum();
 		}

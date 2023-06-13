@@ -1525,7 +1525,8 @@ public class DLFileEntryFinderTest {
 
 		dlFileEntry.setDescription("FE3.txt");
 
-		DLFileEntryLocalServiceUtil.updateDLFileEntry(dlFileEntry);
+		dlFileEntry = DLFileEntryLocalServiceUtil.updateDLFileEntry(
+			dlFileEntry);
 
 		DLFileVersion dlFileVersion2 = dlFileEntry.getFileVersion();
 

@@ -826,7 +826,8 @@ public class DLFileEntryLocalServiceTest {
 		dlFileEntryType.setScope(
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_SCOPE_SYSTEM);
 
-		DLFileEntryTypeLocalServiceUtil.updateDLFileEntryType(dlFileEntryType);
+		dlFileEntryType = DLFileEntryTypeLocalServiceUtil.updateDLFileEntryType(
+			dlFileEntryType);
 
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(

@@ -124,9 +124,7 @@ public class DLVideoExternalShortcutDLFileEntryTypeHelper {
 			_updateDescriptionMap(ddmStructure.getDescriptionMap()));
 		ddmStructure.setType(DDMStructureConstants.TYPE_AUTO);
 
-		_ddmStructureLocalService.updateDDMStructure(ddmStructure);
-
-		return ddmStructure;
+		return _ddmStructureLocalService.updateDDMStructure(ddmStructure);
 	}
 
 	private void _addDLVideoExternalShortcutDLFileEntryType(long ddmStructureId)

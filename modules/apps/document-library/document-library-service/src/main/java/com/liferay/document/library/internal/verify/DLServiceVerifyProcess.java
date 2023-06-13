@@ -252,8 +252,9 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 
 					dlFileVersion.setMimeType(mimeType);
 
-					_dlFileVersionLocalService.updateDLFileVersion(
-						dlFileVersion);
+					dlFileVersion =
+						_dlFileVersionLocalService.updateDLFileVersion(
+							dlFileVersion);
 
 					try {
 						DLFileEntry dlFileEntry = dlFileVersion.getFileEntry();

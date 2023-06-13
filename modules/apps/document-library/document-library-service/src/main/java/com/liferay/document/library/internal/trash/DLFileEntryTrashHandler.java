@@ -322,7 +322,7 @@ public class DLFileEntryTrashHandler extends BaseDLTrashHandler {
 
 		dlFileEntry.setTitle(name);
 
-		_dlFileEntryLocalService.updateDLFileEntry(dlFileEntry);
+		dlFileEntry = _dlFileEntryLocalService.updateDLFileEntry(dlFileEntry);
 
 		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
 

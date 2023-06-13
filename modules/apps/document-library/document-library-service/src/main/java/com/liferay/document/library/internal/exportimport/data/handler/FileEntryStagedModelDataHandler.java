@@ -1152,8 +1152,9 @@ public class FileEntryStagedModelDataHandler
 					dlFileVersion.setStoreUUID(
 						String.valueOf(UUID.randomUUID()));
 
-					_dlFileVersionLocalService.updateDLFileVersion(
-						dlFileVersion);
+					dlFileVersion =
+						_dlFileVersionLocalService.updateDLFileVersion(
+							dlFileVersion);
 
 					dlFileEntry.setVersion(version);
 

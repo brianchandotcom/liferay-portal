@@ -920,7 +920,6 @@ public class LayoutsAdminDisplayContext {
 		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
 
 		breadcrumbEntry.setTitle(LanguageUtil.get(httpServletRequest, "pages"));
-
 		breadcrumbEntry.setURL(
 			PortletURLBuilder.createRenderURL(
 				_liferayPortletResponse
@@ -1480,7 +1479,6 @@ public class LayoutsAdminDisplayContext {
 		portletURL.setParameter("collectionPK", collectionPK);
 		portletURL.setParameter("collectionType", collectionType);
 		portletURL.setParameter("showActions", String.valueOf(Boolean.TRUE));
-
 		portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 		return portletURL.toString();
@@ -2008,7 +2006,6 @@ public class LayoutsAdminDisplayContext {
 		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
 
 		breadcrumbEntry.setTitle(title);
-
 		breadcrumbEntry.setURL(
 			PortletURLBuilder.create(
 				getPortletURL()

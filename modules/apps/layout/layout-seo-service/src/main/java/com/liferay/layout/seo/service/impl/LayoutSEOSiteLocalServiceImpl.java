@@ -110,10 +110,8 @@ public class LayoutSEOSiteLocalServiceImpl
 		layoutSEOSite.setCompanyId(group.getCompanyId());
 
 		layoutSEOSite.setUserId(userId);
-
 		layoutSEOSite.setCreateDate(new Date());
 		layoutSEOSite.setModifiedDate(new Date());
-
 		layoutSEOSite.setOpenGraphEnabled(openGraphEnabled);
 
 		if (openGraphImageFileEntryId != 0) {

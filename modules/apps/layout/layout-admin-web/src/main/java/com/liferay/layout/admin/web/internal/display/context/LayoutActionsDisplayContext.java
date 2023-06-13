@@ -89,7 +89,6 @@ public class LayoutActionsDisplayContext {
 							dropdownItem.setLabel(
 								LanguageUtil.get(
 									_httpServletRequest, "configure"));
-
 							dropdownItem.setTarget("_blank");
 						}
 					).add(

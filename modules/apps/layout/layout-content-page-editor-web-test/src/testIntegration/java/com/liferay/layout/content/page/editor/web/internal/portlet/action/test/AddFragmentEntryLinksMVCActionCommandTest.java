@@ -242,7 +242,6 @@ public class AddFragmentEntryLinksMVCActionCommandTest {
 				new DefaultFragmentRendererContext(fragmentEntryLink);
 
 			defaultFragmentRendererContext.setLocale(locale);
-
 			defaultFragmentRendererContext.setMode(
 				FragmentEntryLinkConstants.EDIT);
 

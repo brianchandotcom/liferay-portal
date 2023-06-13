@@ -137,7 +137,6 @@ public class LayoutPrototypeManagementToolbarDisplayContext
 					).buildString());
 
 				labelItem.setCloseable(true);
-
 				labelItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "active"));
 			}
@@ -154,7 +153,6 @@ public class LayoutPrototypeManagementToolbarDisplayContext
 					).buildString());
 
 				labelItem.setCloseable(true);
-
 				labelItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "inactive"));
 			}

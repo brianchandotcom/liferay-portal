@@ -151,7 +151,6 @@ public class LayoutPublishedSearchTest {
 			layoutSet.getTheme(), layoutSet.getColorScheme());
 
 		themeDisplay.setRealUser(TestPropsValues.getUser());
-
 		themeDisplay.setResponse(new MockHttpServletResponse());
 		themeDisplay.setScopeGroupId(_group.getGroupId());
 		themeDisplay.setUser(TestPropsValues.getUser());

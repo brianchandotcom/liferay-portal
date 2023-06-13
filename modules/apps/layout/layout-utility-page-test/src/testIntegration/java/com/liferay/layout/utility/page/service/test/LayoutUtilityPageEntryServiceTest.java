@@ -325,7 +325,6 @@ public class LayoutUtilityPageEntryServiceTest {
 			String.valueOf(
 				layoutUtilityPageEntry1.getLayoutUtilityPageEntryId()),
 			_role.getRoleId(), new String[] {ActionKeys.UPDATE});
-
 		_resourcePermissionLocalService.setResourcePermissions(
 			_group.getCompanyId(), LayoutUtilityPageEntry.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL,

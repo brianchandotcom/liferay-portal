@@ -120,7 +120,6 @@ public class HTMLTitleTemplateContextContributorTest {
 
 		themeDisplay.setCompany(
 			_companyLocalService.getCompany(TestPropsValues.getCompanyId()));
-
 		themeDisplay.setLanguageId(_group.getDefaultLanguageId());
 		themeDisplay.setLayout(_layout);
 		themeDisplay.setLayoutSet(

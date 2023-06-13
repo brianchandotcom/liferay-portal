@@ -183,7 +183,6 @@ public class DisplayPageLayoutTypeController
 				httpServletRequest.setAttribute(
 					ContentPageEditorWebKeys.CLASS_NAME,
 					LayoutPageTemplateEntry.class.getName());
-
 				httpServletRequest.setAttribute(
 					ContentPageEditorWebKeys.CLASS_PK,
 					layoutPageTemplateEntry.getLayoutPageTemplateEntryId());

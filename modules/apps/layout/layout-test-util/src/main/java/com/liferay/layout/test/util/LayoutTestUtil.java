@@ -528,7 +528,6 @@ public class LayoutTestUtil {
 		layoutTypePortlet.setTypeSettingsProperty(
 			CustomizedPages.namespaceColumnId(columnId),
 			String.valueOf(customizable));
-
 		layoutTypePortlet.setUpdatePermission(customizable);
 
 		return LayoutServiceUtil.updateLayout(

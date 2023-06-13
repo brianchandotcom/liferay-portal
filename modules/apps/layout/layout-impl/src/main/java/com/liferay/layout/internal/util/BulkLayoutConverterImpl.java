@@ -196,7 +196,6 @@ public class BulkLayoutConverterImpl implements BulkLayoutConverter {
 
 					dynamicQuery.add(property.eq(false));
 				});
-
 			actionableDynamicQuery.setPerformActionMethod(
 				(Layout layout) -> {
 					UnicodeProperties typeSettingsUnicodeProperties =

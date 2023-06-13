@@ -166,7 +166,6 @@ public class LayoutPrototypeUpgradeProcess extends UpgradeProcess {
 				preparedStatement.setString(6, layoutPrototype.getUserName());
 				preparedStatement.setDate(7, date);
 				preparedStatement.setDate(8, date);
-
 				preparedStatement.setLong(9, 0);
 				preparedStatement.setString(10, name);
 				preparedStatement.setInt(

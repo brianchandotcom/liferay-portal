@@ -196,10 +196,8 @@ public class CopyLayoutPageTemplateEntryMVCActionCommandTest {
 		mockLiferayPortletActionRequest.setAttribute(
 			JavaConstants.JAVAX_PORTLET_RESPONSE,
 			new MockLiferayPortletActionResponse());
-
 		mockLiferayPortletActionRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _getThemeDisplay());
-
 		mockLiferayPortletActionRequest.setParameter(
 			"layoutPageTemplateEntryId",
 			String.valueOf(

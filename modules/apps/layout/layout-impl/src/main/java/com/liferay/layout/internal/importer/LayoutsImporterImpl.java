@@ -1574,7 +1574,6 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 	private void _updateLayoutSettings(Layout layout, Settings settings) {
 		if (settings == null) {
 			layout.setThemeId(null);
-
 			layout.setColorSchemeId(null);
 
 			layout = _layoutLocalService.updateLayout(layout);

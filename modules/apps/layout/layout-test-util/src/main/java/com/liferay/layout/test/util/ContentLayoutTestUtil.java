@@ -401,9 +401,7 @@ public class ContentLayoutTestUtil {
 
 		mockLiferayPortletActionRequest.setAttribute(
 			PortletServlet.PORTLET_SERVLET_REQUEST, mockHttpServletRequest);
-
 		mockLiferayPortletActionRequest.setAttribute(WebKeys.LAYOUT, layout);
-
 		mockLiferayPortletActionRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
 

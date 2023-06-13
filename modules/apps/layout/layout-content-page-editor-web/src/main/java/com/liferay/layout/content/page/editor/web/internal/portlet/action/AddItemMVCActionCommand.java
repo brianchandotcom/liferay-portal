@@ -192,7 +192,6 @@ public class AddItemMVCActionCommand extends BaseMVCActionCommand {
 			columnLayoutStructureItem.setViewportConfiguration(
 				ViewportSize.MOBILE_LANDSCAPE.getViewportSizeId(),
 				JSONUtil.put("size", 12));
-
 			columnLayoutStructureItem.setSize(4);
 		}
 

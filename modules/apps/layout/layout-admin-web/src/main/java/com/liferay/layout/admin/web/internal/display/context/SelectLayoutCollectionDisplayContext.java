@@ -271,7 +271,6 @@ public class SelectLayoutCollectionDisplayContext {
 			).setParameter(
 				"selectedTab", tabName
 			).buildString());
-
 		navigationItem.setLabel(LanguageUtil.get(_httpServletRequest, label));
 
 		return navigationItem;

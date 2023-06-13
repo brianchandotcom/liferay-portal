@@ -93,7 +93,7 @@ public class ReactRendererUtilTest {
 			"{component} from my-context", "componentId",
 			Arrays.asList(
 				"{dep1} from deps-context", "{dep2} from deps-context"),
-			false, "{propsTransformer} from props-transformer-context");
+			false, "{myTransformer} from props-transformer-context");
 
 		HttpServletRequest httpServletRequest = Mockito.mock(
 			HttpServletRequest.class);
@@ -205,8 +205,8 @@ public class ReactRendererUtilTest {
 			esImports.get(3));
 
 		_assertESImportEquals(
-			StringPool.BLANK, "props-transformer-context#index.js",
-			"propsTransformer", esImports.get(4));
+			"propsTransformer", "props-transformer-context#index.js",
+			"myTransformer", esImports.get(4));
 	}
 
 	private void _assertESImportEquals(

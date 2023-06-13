@@ -84,7 +84,8 @@ public class ReactRendererUtil {
 			if (ESImportUtil.isESImport(propsTransformer)) {
 				esImports.add(
 					ESImportUtil.getESImport(
-						absolutePortalURLBuilder, propsTransformer));
+						absolutePortalURLBuilder, "propsTransformer",
+						propsTransformer));
 			}
 			else {
 				amdRequires.add(

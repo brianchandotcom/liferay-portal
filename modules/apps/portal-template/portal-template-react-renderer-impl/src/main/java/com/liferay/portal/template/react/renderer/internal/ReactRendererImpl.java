@@ -14,6 +14,7 @@
 
 package com.liferay.portal.template.react.renderer.internal;
 
+import com.liferay.frontend.js.loader.modules.extender.esm.ESImportUtil;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolvedPackageNameUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -51,9 +52,7 @@ public class ReactRendererImpl implements ReactRenderer {
 
 		_renderPlaceholder(writer, placeholderId);
 
-		String module = componentDescriptor.getModule();
-
-		if (module.contains(" from ")) {
+		if (ESImportUtil.isESImport(componentDescriptor.getModule())) {
 			ReactRendererUtil.renderEcmaScript(
 				_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
 					httpServletRequest),

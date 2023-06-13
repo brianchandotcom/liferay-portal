@@ -75,7 +75,7 @@
 			/>
 
 			<chmod
-				file="@{db.upgrade.client.home}/db_upgrade@{file.suffix.bat}"
+				file="@{db.upgrade.client.home}/db_upgrade_client@{file.suffix.bat}"
 				perm="+x"
 			/>
 

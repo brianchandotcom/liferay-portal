@@ -16118,6 +16118,19 @@ mail.send.blacklist=</echo>
 		/>
 	</target>
 
+	<target name="start-app-server-tomcat-simple">
+		<trycatch property="startup.error">
+			<try>
+				<exec executable="${app.server.tomcat.bin.dir}/catalina.sh" failonerror="true" timeout="600000">
+					<arg line="run" />
+				</exec>
+			</try>
+			<catch>
+				<echo>Server failed to start</echo>
+			</catch>
+		</trycatch>
+	</target>
+
 	<target name="start-docker-browser">
 		<start-docker-browser />
 	</target>

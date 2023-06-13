@@ -26,7 +26,6 @@ import com.liferay.info.field.type.NumberInfoFieldType;
 import com.liferay.info.field.type.RelationshipInfoFieldType;
 import com.liferay.info.field.type.SelectInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -37,13 +36,11 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.Dictionary;
 import java.util.Objects;
 
-import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -85,24 +82,15 @@ public class DefaultInputFragmentEntryConfigurationProviderImpl
 
 	@Override
 	public void updateDefaultInputFragmentEntryKeysJSONObject(
-			JSONObject defaultInputFragmentEntryKeysJSONObject)
+			JSONObject defaultInputFragmentEntryKeysJSONObject, long groupId)
 		throws Exception {
 
-		Configuration configuration = _configurationAdmin.getConfiguration(
-			DefaultInputFragmentEntryConfiguration.class.getName(),
-			StringPool.QUESTION);
-
-		Dictionary<String, Object> properties = configuration.getProperties();
-
-		if (properties == null) {
-			properties = new HashMapDictionary<>();
-		}
-
-		properties.put(
-			"defaultInputFragmentEntryKeys",
-			defaultInputFragmentEntryKeysJSONObject.toString());
-
-		configuration.update(properties);
+		_configurationProvider.saveGroupConfiguration(
+			DefaultInputFragmentEntryConfiguration.class, groupId,
+			HashMapDictionaryBuilder.<String, Object>put(
+				"defaultInputFragmentEntryKeys",
+				defaultInputFragmentEntryKeysJSONObject.toString()
+			).build());
 	}
 
 	private JSONObject _getDefaultInputFragmentEntryKeysJSONObject(

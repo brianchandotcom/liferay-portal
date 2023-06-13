@@ -68,13 +68,14 @@ public class UpdateDefaultInputFragmentsMVCActionCommand
 				JSONUtil.put(
 					"groupKey", jsonObject.getString("groupKey")
 				).put(
-					"key", jsonObject.getString("fragmentEntryKey")
+					"key", jsonObject.getString("key")
 				));
 		}
 
 		_defaultInputFragmentEntryConfigurationProvider.
 			updateDefaultInputFragmentEntryKeysJSONObject(
-				defaultInputFragmentEntryKeysJSONObject);
+				defaultInputFragmentEntryKeysJSONObject,
+				themeDisplay.getScopeGroupId());
 	}
 
 	@Reference

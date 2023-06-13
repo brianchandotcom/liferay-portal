@@ -184,4 +184,40 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-164985 | Test Summary: Verify that can go to the Subtask from the sidebar"
+	@priority = 3
+	test AdminCanGoToSubtaskFromTheSidebar {
+		task ("Given that the user reanalyze a task") {
+			TestrayTestflow.goToTask(taskName = "Task_1");
+
+			Button.click(button = "Abandon");
+
+			Button.click(button = "Reanalyze");
+		}
+
+		task ("And the user assign a subtask") {
+			TestraySubtask.goToSubtask(subtaskName = "Subtask_1");
+
+			Button.click(button = "Assign and Begin Analysis");
+
+			TestrayTestflow.assignUsers(userName = "Test Test");
+
+			TestrayTestflow.goToTestflow();
+
+			Refresh();
+		}
+
+		task ("When the user click in the subtask from the sidebar") {
+			Click(
+				key_subtaskName = "Subtask_1",
+				locator1 = "TestraySubtask#VIEW_SUBTASK_SIDEBAR");
+		}
+
+		task ("Then the user can go to the subtask page") {
+			TestrayTestflow.assertStatus(
+				label = "Subtask Details",
+				status = "In Analysis");
+		}
+	}
+
 }

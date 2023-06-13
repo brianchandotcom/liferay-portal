@@ -70,7 +70,7 @@ definition {
 			PRMMDFRequest.changeMDFStatus(statusButton = "Approve");
 		}
 
-		task ("When the CMM edit the MDF informations and submit it") {
+		task ("When the CMM edit the MDF information and submit it") {
 			PRMMDFRequest.editButton();
 
 			PRMMDFRequest.editMDF(
@@ -79,7 +79,7 @@ definition {
 				newBugdetValue = 2000);
 		}
 
-		task ("Then the informations will be updated") {
+		task ("Then the information will be updated") {
 			PRMNavigator.gotoMDF(requestId = ${staticRequestId});
 
 			PRMMDFRequest.viewMDFCompanyDetails(campaignName = "Campaign Name Edited");
@@ -108,7 +108,7 @@ definition {
 			PRMMDFRequest.changeMDFStatus(statusButton = "Cancel");
 		}
 
-		task ("When the CMM edit the MDF informations and submit it") {
+		task ("When the CMM edit the MDF information and submit it") {
 			PRMMDFRequest.editButton();
 
 			PRMMDFRequest.editMDF(
@@ -117,7 +117,7 @@ definition {
 				newBugdetValue = 2000);
 		}
 
-		task ("Then the informations will be updated") {
+		task ("Then the information will be updated") {
 			PRMNavigator.gotoMDF(requestId = ${staticRequestId});
 
 			PRMMDFRequest.viewMDFCompanyDetails(campaignName = "Campaign Name Edited");
@@ -146,7 +146,7 @@ definition {
 			PRMMDFRequest.changeMDFStatus(statusButton = "Marketing Director Review");
 		}
 
-		task ("When the CMM edit the MDF informations and submit it") {
+		task ("When the CMM edit the MDF information and submit it") {
 			PRMMDFRequest.editButton();
 
 			PRMMDFRequest.editMDF(
@@ -155,7 +155,7 @@ definition {
 				newBugdetValue = 2000);
 		}
 
-		task ("Then the informations will be updated") {
+		task ("Then the information will be updated") {
 			PRMNavigator.gotoMDF(requestId = ${staticRequestId});
 
 			PRMMDFRequest.viewMDFCompanyDetails(campaignName = "Campaign Name Edited");
@@ -180,7 +180,7 @@ definition {
 			PRMNavigator.gotoMDF(requestId = ${staticRequestId});
 		}
 
-		task ("When the CMM edit the MDF informations and submit it") {
+		task ("When the CMM edit the MDF information and submit it") {
 			PRMMDFRequest.editButton();
 
 			PRMMDFRequest.editMDF(
@@ -189,7 +189,7 @@ definition {
 				newBugdetValue = 2000);
 		}
 
-		task ("Then the informations will be updated") {
+		task ("Then the information will be updated") {
 			PRMNavigator.gotoMDF(requestId = ${staticRequestId});
 
 			PRMMDFRequest.viewMDFCompanyDetails(campaignName = "Campaign Name Edited");
@@ -218,7 +218,7 @@ definition {
 			PRMMDFRequest.changeMDFStatus(statusButton = "Rejected");
 		}
 
-		task ("When the CMM edit the MDF informations and submit it") {
+		task ("When the CMM edit the MDF information and submit it") {
 			PRMMDFRequest.editButton();
 
 			PRMMDFRequest.editMDF(

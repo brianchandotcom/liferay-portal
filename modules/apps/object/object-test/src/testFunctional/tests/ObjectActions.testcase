@@ -2072,8 +2072,6 @@ definition {
 				fieldType = "String",
 				isRequired = "true",
 				objectName = "CustomObject");
-
-			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
 		}
 
 		task ("When the action is added") {
@@ -2092,6 +2090,8 @@ definition {
 				objectLabel = "Custom Object",
 				thenAction = "Add an Object Entry",
 				whenAction = "On After Add");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
 		}
 
 		task ("Then the object entry is created when the condition is met") {

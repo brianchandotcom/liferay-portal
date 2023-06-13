@@ -354,7 +354,7 @@ function SortConfigurationOptions({
 
 	return (
 		<div className="sort-configurations-options">
-			<div className="c-mb-2 view-switcher">
+			<div className="c-mb-2 flex-row-reverse form-inline view-switcher">
 				<ClayButton
 					borderless
 					displayType="secondary"
@@ -372,7 +372,7 @@ function SortConfigurationOptions({
 			{view.value === VIEWS.NEW.value && (
 				<>
 					<InputSets>
-						<ClayForm.Group className="input-sets-item-form-group relevance">
+						<ClayForm.Group className="c-mb-0 c-pl-5 c-pr-2 input-sets-item-form-group list-group-item rounded">
 							<ClayInput.Group>
 								<ClayInput.GroupItem>
 									<label htmlFor="relevance">
@@ -485,8 +485,8 @@ function SortConfigurationOptions({
 							className="field-form-row lfr-form-row lfr-form-row-inline"
 							key={index}
 						>
-							<div className="row-fields">
-								<div className="form-group">
+							<div className="c-pb-5 row-fields">
+								<div className="c-mb-2 form-group">
 									<label htmlFor={`label_${index}`}>
 										{Liferay.Language.get('label')}
 									</label>
@@ -503,7 +503,7 @@ function SortConfigurationOptions({
 									/>
 								</div>
 
-								<div className="form-group">
+								<div className="c-mb-2 form-group">
 									<label htmlFor={`field_${index}`}>
 										{Liferay.Language.get('field')}
 									</label>

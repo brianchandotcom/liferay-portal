@@ -18,6 +18,8 @@ import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.constants.AccountRoleConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -48,7 +50,9 @@ public class CommerceCatalogSearchPermissionFilterContributor
 		BooleanFilter booleanFilter, long companyId, long[] groupIds,
 		long userId, PermissionChecker permissionChecker, String className) {
 
-		if (!className.equals(CommerceCatalog.class.getName())) {
+		if (!className.equals(CommerceCatalog.class.getName()) &&
+			!className.equals(CPInstance.class.getName())) {
+
 			return;
 		}
 

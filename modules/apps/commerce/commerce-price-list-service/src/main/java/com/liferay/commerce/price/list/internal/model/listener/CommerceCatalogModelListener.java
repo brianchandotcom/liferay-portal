@@ -15,12 +15,21 @@
 package com.liferay.commerce.price.list.internal.model.listener;
 
 import com.liferay.commerce.price.list.internal.helper.CommerceBasePriceListHelper;
+import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CommerceCatalog;
+import com.liferay.commerce.product.service.CPInstanceLocalService;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -46,6 +55,36 @@ public class CommerceCatalogModelListener
 	}
 
 	@Override
+	public void onAfterUpdate(
+			CommerceCatalog originalCommerceCatalog,
+			CommerceCatalog commerceCatalog)
+		throws ModelListenerException {
+
+		if (originalCommerceCatalog.getAccountEntryId() ==
+				commerceCatalog.getAccountEntryId()) {
+
+			return;
+		}
+
+		try {
+			Indexer<CPInstance> indexer =
+				IndexerRegistryUtil.nullSafeGetIndexer(CPInstance.class);
+
+			List<CPInstance> cpInstances =
+				_cpInstanceLocalService.getCPInstances(
+					commerceCatalog.getGroupId(), WorkflowConstants.STATUS_ANY,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+			for (CPInstance cpInstance : cpInstances) {
+				indexer.reindex(cpInstance);
+			}
+		}
+		catch (Exception exception) {
+			throw new ModelListenerException(exception);
+		}
+	}
+
+	@Override
 	public void onBeforeRemove(CommerceCatalog commerceCatalog) {
 		try {
 			_commerceBasePriceListHelper.deleteCatalogBaseCommercePriceList(
@@ -63,5 +102,8 @@ public class CommerceCatalogModelListener
 
 	@Reference
 	private CommerceBasePriceListHelper _commerceBasePriceListHelper;
+
+	@Reference
+	private CPInstanceLocalService _cpInstanceLocalService;
 
 }

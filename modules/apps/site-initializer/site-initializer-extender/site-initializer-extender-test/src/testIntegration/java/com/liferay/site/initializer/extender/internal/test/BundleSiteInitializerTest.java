@@ -1774,7 +1774,7 @@ public class BundleSiteInitializerTest {
 		NotificationTemplate notificationTemplate =
 			notificationTemplateResource.
 				getNotificationTemplateByExternalReferenceCode(
-					"TEST-NOTIFICATION-TEMPLATE-1");
+					"TESTNOTIFICATIONTEMPLATE1");
 
 		Assert.assertNotNull(notificationTemplateResource);
 
@@ -1814,7 +1814,7 @@ public class BundleSiteInitializerTest {
 		NotificationTemplate notificationTemplate =
 			notificationTemplateResource.
 				getNotificationTemplateByExternalReferenceCode(
-					"TEST-NOTIFICATION-TEMPLATE-2");
+					"TESTNOTIFICATIONTEMPLATE2");
 
 		Assert.assertNotNull(notificationTemplateResource);
 

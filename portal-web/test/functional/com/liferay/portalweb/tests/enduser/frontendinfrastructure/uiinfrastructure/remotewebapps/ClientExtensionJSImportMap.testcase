@@ -100,4 +100,32 @@ definition {
 		}
 	}
 
+	@description = "LPS-180167. Verify if not is possible publish when field Name is empty"
+	@priority = 5
+	test CannotPublishWithFieldNameEmpty {
+		task ("And fills Bare Specifier field") {
+			Type.typeNoMouseOver(
+				key_text = "Bare Specifier",
+				locator1 = "TextInput#ANY",
+				value1 = "bare-specifier-test");
+		}
+
+		task ("And fills Javascript URL field") {
+			Type.typeNoMouseOver(
+				key_text = "JavaScript URL",
+				locator1 = "TextInput#ANY",
+				value1 = "https://liferay.github.io/liferay-frontend-projects/");
+		}
+
+		task ("And clicks on Publish button") {
+			Button.clickPublish();
+		}
+
+		task ("Then an error message should be displayed") {
+			AssertVisible(
+				key_alertMessage = "Your request failed to complete.",
+				locator1 = "Message#ERROR_ENTER_ANY");
+		}
+	}
+
 }

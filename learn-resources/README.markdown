@@ -70,6 +70,42 @@ That's how you link to Liferay Learn resources!
 >
 > Note: The cache refreshes every four hours by default, per the [`learn.resources.refresh.time` portal property](../portal-impl/src/portal.properties).
 
+## Adding a Resource Link to a React Component
+
+For example, to use [the `search-experiences-web.json` file's `advanced-configuration` resource key](https://github.com/liferay/liferay-portal/blob/master/learn-resources/search-experiences-web.json#L2-L7):
+
+1. In the JSP, use the `LearnMessageUtil.getReactDataJSONObject` Java method to retrieve the resource data to pass into the React component.
+
+	```html
+	<%@ page import="com.liferay.learn.LearnMessageUtil" %>
+
+	<react:component
+		module='path/to/component'
+		props='<%=
+			HashMapBuilder.<String, Object>put(
+				"learnResources", LearnMessageUtil.getReactDataJSONObject("search-experiences-web")
+			).build()
+		%>'
+	/>
+	```
+
+	To retrieve multiple resources, a string array can be passed into `getReactDataJSONObject`. For example: `LearnMessageUtil.getReactDataJSONObject(new String[] {"portal-search-web", "search-experiences-web"})`
+
+1. In the React component, use `LearnResourcesContext` to provide the resource and the `LearnMessage` component to display the link.
+
+	```javascript
+	import {LearnMessage, LearnResourcesContext} from 'frontend-js-components-web';
+
+	<LearnResourcesContext.Provider value={learnResources}>
+		<LearnMessage
+			resource='search-experiences-web'
+			resourceKey='advanced-configuration'
+		/>
+	</LearnResourcesContext.Provider>
+	```
+
+	The `LearnMessage` component renders a `ClayLink` and additional props will be passed into it.
+
 ## Guidelines
 
 Here are some guidelines for writing the JSON files and tags.

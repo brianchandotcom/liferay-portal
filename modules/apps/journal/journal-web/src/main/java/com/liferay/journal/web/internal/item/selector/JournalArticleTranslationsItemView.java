@@ -35,9 +35,9 @@ import java.util.Locale;
 public class JournalArticleTranslationsItemView implements TableItemView {
 
 	public JournalArticleTranslationsItemView(
-		JournalArticleTranslation journalArticleTranslation) {
+		JournalArticleTranslation articleTranslation) {
 
-		_journalArticleTranslation = journalArticleTranslation;
+		_articleTranslation = articleTranslation;
 	}
 
 	@Override
@@ -51,8 +51,7 @@ public class JournalArticleTranslationsItemView implements TableItemView {
 
 		IconSearchEntry languageIconSearchEntry = new IconSearchEntry();
 
-		languageIconSearchEntry.setIcon(
-			_journalArticleTranslation.getLanguageTag());
+		languageIconSearchEntry.setIcon(_articleTranslation.getLanguageTag());
 
 		searchEntries.add(languageIconSearchEntry);
 
@@ -63,14 +62,13 @@ public class JournalArticleTranslationsItemView implements TableItemView {
 		nameTextSearchEntry.setName(
 			HtmlUtil.escape(
 				LocaleUtil.getLongDisplayName(
-					_journalArticleTranslation.getLocale(),
-					Collections.emptySet())));
+					_articleTranslation.getLocale(), Collections.emptySet())));
 
 		searchEntries.add(nameTextSearchEntry);
 
 		IconSearchEntry defaultLanguageIconSearchEntry = new IconSearchEntry();
 
-		if (_journalArticleTranslation.isDefault()) {
+		if (_articleTranslation.isDefault()) {
 			defaultLanguageIconSearchEntry.setIcon("check-circle");
 		}
 		else {
@@ -82,6 +80,6 @@ public class JournalArticleTranslationsItemView implements TableItemView {
 		return searchEntries;
 	}
 
-	private final JournalArticleTranslation _journalArticleTranslation;
+	private final JournalArticleTranslation _articleTranslation;
 
 }

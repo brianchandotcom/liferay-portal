@@ -73,10 +73,9 @@ public class JournalArticleTranslationsItemSelectorViewDescriptor
 
 	@Override
 	public ItemDescriptor getItemDescriptor(
-		JournalArticleTranslation journalArticleTranslation) {
+		JournalArticleTranslation articleTranslation) {
 
-		return new JournalArticleTranslationsItemDescriptor(
-			journalArticleTranslation);
+		return new JournalArticleTranslationsItemDescriptor(articleTranslation);
 	}
 
 	@Override
@@ -139,10 +138,9 @@ public class JournalArticleTranslationsItemSelectorViewDescriptor
 	}
 
 	public TableItemView getTableItemView(
-		JournalArticleTranslation journalArticleTranslation) {
+		JournalArticleTranslation articleTranslation) {
 
-		return new JournalArticleTranslationsItemView(
-			journalArticleTranslation);
+		return new JournalArticleTranslationsItemView(articleTranslation);
 	}
 
 	@Override

@@ -28,14 +28,14 @@ public class JournalArticleTranslationsItemDescriptor
 	implements ItemSelectorViewDescriptor.ItemDescriptor {
 
 	public JournalArticleTranslationsItemDescriptor(
-		JournalArticleTranslation journalArticleTranslation) {
+		JournalArticleTranslation articleTranslation) {
 
-		_journalArticleTranslation = journalArticleTranslation;
+		_articleTranslation = articleTranslation;
 	}
 
 	@Override
 	public String getIcon() {
-		return _journalArticleTranslation.getLanguageTag();
+		return _articleTranslation.getLanguageTag();
 	}
 
 	@Override
@@ -46,7 +46,7 @@ public class JournalArticleTranslationsItemDescriptor
 	@Override
 	public String getPayload() {
 		return JSONUtil.put(
-			"languageId", _journalArticleTranslation.getLanguageId()
+			"languageId", _articleTranslation.getLanguageId()
 		).toString();
 	}
 
@@ -57,9 +57,9 @@ public class JournalArticleTranslationsItemDescriptor
 
 	@Override
 	public String getTitle(Locale locale) {
-		return _journalArticleTranslation.getLanguageId();
+		return _articleTranslation.getLanguageId();
 	}
 
-	private final JournalArticleTranslation _journalArticleTranslation;
+	private final JournalArticleTranslation _articleTranslation;
 
 }

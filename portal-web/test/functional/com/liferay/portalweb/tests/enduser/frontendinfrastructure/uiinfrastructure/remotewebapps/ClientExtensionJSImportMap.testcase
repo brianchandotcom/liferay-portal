@@ -174,4 +174,43 @@ definition {
 		}
 	}
 
+	@description = "LPS-180167. Verify if JavaScript URL field can convert text to .js"
+	@priority = 4
+	test CanPublishWithAnTextOnJSField {
+		task ("And fills Name field") {
+			Type.typeNoMouseOver(
+				key_text = "Name",
+				locator1 = "TextInput#ANY",
+				value1 = "JS Import Map Entry Test");
+		}
+
+		task ("And fills Bare Specifier field") {
+			Type.typeNoMouseOver(
+				key_text = "Bare Specifier",
+				locator1 = "TextInput#ANY",
+				value1 = "bare-specifier-test");
+		}
+
+		task ("And types "Lorem Ipsum is simply dummy text of the printing and typesetting industry." in JavaScript URL field") {
+			Type.typeNoMouseOver(
+				key_text = "JavaScript URL",
+				locator1 = "TextInput#ANY",
+				value1 = "Lorem Ipsum is simply dummy text of the printing and typesetting industry.");
+		}
+
+		task ("And clicks on Publish button") {
+			Button.clickPublish();
+		}
+
+		task ("Then an success message should be displayed ") {
+			Alert.viewSuccessMessage();
+		}
+
+		task ("And entry name is present on Client Extension admin page") {
+			AssertElementPresent(
+				key_tableEntryName = "JS Import Map Entry Test",
+				locator1 = "ClientExtension#TABLE_ENTRY_NAME_REMOTE_TABLE");
+		}
+	}
+
 }

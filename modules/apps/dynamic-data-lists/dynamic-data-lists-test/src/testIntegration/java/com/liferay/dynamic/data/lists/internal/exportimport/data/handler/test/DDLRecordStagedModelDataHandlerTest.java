@@ -171,7 +171,8 @@ public class DDLRecordStagedModelDataHandlerTest
 
 		DDLRecordVersionLocalServiceUtil.updateDDLRecordVersion(
 			ddlRecordVersion);
-		DDLRecordLocalServiceUtil.updateDDLRecord(ddlRecord);
+
+		ddlRecord = DDLRecordLocalServiceUtil.updateDDLRecord(ddlRecord);
 
 		exportImportStagedModel(ddlRecord);
 

@@ -1365,9 +1365,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 		accountEntry.setExternalReferenceCode(RandomTestUtil.randomString());
 
-		_accountEntryLocalService.updateAccountEntry(accountEntry);
-
-		return accountEntry;
+		return _accountEntryLocalService.updateAccountEntry(accountEntry);
 	}
 
 	private Long _getAccountEntryId() {

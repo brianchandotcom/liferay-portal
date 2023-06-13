@@ -61,7 +61,9 @@ public class ERAssetVocabularyLocalServiceImpl
 
 			assetVocabulary.setExternalReferenceCode(externalReferenceCode);
 
-			_assetVocabularyLocalService.updateAssetVocabulary(assetVocabulary);
+			assetVocabulary =
+				_assetVocabularyLocalService.updateAssetVocabulary(
+					assetVocabulary);
 		}
 		else {
 			assetVocabulary = _assetVocabularyLocalService.updateVocabulary(

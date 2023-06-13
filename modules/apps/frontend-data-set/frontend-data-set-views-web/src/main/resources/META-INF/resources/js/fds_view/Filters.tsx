@@ -597,7 +597,8 @@ function AddFDSFilterModalContent({
 						<ClayButton
 							disabled={
 								!selectedField ||
-								(!multiple && preselectedValues.length > 1)
+								(!multiple && preselectedValues.length > 1) ||
+								!isValidDateRange
 							}
 							form={formElementId}
 							type="submit"

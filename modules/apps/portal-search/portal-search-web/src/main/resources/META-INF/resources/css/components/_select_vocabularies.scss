@@ -1,28 +1,6 @@
 .select-vocabularies {
-	&.disabled {
-		.alert-info {
-			opacity: 0.5;
-		}
-
-		.sheet-text {
-			color: var(--gray-500, $secondary-l1);
-		}
-
-		.treeview {
-			.autofit-col,
-			.custom-control-label-text {
-				color: var(--gray-500, $secondary-l1);
-			}
-		}
-	}
-
-	.btn-group-item:first-of-type {
-		margin-right: 6px;
-	}
-
 	.treeview-group {
 		.treeview-link {
-			cursor: unset;
 			padding-left: 36px !important;
 
 			.c-inner {

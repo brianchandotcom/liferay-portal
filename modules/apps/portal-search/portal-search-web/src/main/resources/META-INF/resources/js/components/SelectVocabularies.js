@@ -86,35 +86,41 @@ function SiteRow({disabled, name, onSelect, vocabularies}) {
 				</ClayButton>
 			</div>
 
-			<div className="autofit-col">{name}</div>
+			<div className={getCN('autofit-col', {'text-muted': disabled})}>
+				{name}
+			</div>
 
 			<div className="autofit-col autofit-col-expand" />
 
 			{!!vocabularies.length && !disabled && (
 				<div className="autofit-col">
-					<ClayButton.Group spaced>
-						<ClayButton
-							className="quick-action-item"
-							displayType="secondary"
-							onClick={_handleSelect()}
-							small
-						>
-							<span className="c-inner" tabIndex="-2">
-								{Liferay.Language.get('select-all')}
-							</span>
-						</ClayButton>
+					<span className="autofit-row">
+						<span className="autofit-col c-mr-1">
+							<ClayButton
+								className="quick-action-item"
+								displayType="secondary"
+								onClick={_handleSelect()}
+								small
+							>
+								<span className="c-inner" tabIndex="-2">
+									{Liferay.Language.get('select-all')}
+								</span>
+							</ClayButton>
+						</span>
 
-						<ClayButton
-							className="quick-action-item"
-							displayType="secondary"
-							onClick={_handleSelect(false)}
-							small
-						>
-							<span className="c-inner" tabIndex="-2">
-								{Liferay.Language.get('deselect-all')}
-							</span>
-						</ClayButton>
-					</ClayButton.Group>
+						<span className="autofit-col">
+							<ClayButton
+								className="quick-action-item"
+								displayType="secondary"
+								onClick={_handleSelect(false)}
+								small
+							>
+								<span className="c-inner" tabIndex="-2">
+									{Liferay.Language.get('deselect-all')}
+								</span>
+							</ClayButton>
+						</span>
+					</span>
 				</div>
 			)}
 		</div>
@@ -158,6 +164,7 @@ function VocabularyTree({
 				aria-disabled="true"
 				checked={checked}
 				className="custom-control-input"
+				disabled={true}
 				readOnly
 				type="checkbox"
 			/>
@@ -208,7 +215,10 @@ function VocabularyTree({
 										)}
 									</TreeView.Item>
 								) : (
-									<TreeView.Item key={id}>
+									<TreeView.Item
+										key={id}
+										style={{cursor: 'unset'}}
+									>
 										<ClayCheckbox
 											checked={selectedKeys.has(id)}
 											onChange={() => _handleToggle(id)}
@@ -326,7 +336,7 @@ function SelectVocabularies({
 		);
 
 	return (
-		<div className={getCN('select-vocabularies', {disabled})}>
+		<div className="select-vocabularies">
 			<label className={getCN({disabled})}>
 				{Liferay.Language.get('select-vocabularies')}
 			</label>
@@ -344,9 +354,11 @@ function SelectVocabularies({
 			/>
 
 			<div className="c-mb-3 c-mt-2 sheet-text text-3">
-				{Liferay.Language.get(
-					'select-vocabularies-configuration-description'
-				)}
+				<span className={getCN({'text-muted': disabled})}>
+					{Liferay.Language.get(
+						'select-vocabularies-configuration-description'
+					)}
+				</span>
 
 				{!disabled && (
 					<LearnMessage
@@ -375,6 +387,7 @@ function SelectVocabularies({
 				_isDisplayInfoSelectedVocabulariesHidden() && (
 					<ClayAlert
 						displayType="info"
+						style={{opacity: disabled ? 0.5 : 1}}
 						title={`${Liferay.Language.get('info')}:`}
 					>
 						{Liferay.Language.get(

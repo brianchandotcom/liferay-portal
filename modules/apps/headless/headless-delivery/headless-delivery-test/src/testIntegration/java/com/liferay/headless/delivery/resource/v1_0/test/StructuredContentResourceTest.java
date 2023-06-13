@@ -201,32 +201,7 @@ public class StructuredContentResourceTest
 		assertEquals(postStructuredContent, getStructuredContent);
 		assertValid(getStructuredContent);
 
-		// Nonexistent external reference code
-
-		String externalReferenceCode = StringUtil.toLowerCase(
-			RandomTestUtil.randomString());
-
-		try {
-			structuredContentResource.
-				getAssetLibraryStructuredContentByExternalReferenceCode(
-					testGetAssetLibraryStructuredContentByExternalReferenceCode_getAssetLibraryId(),
-					externalReferenceCode);
-
-			Assert.fail();
-		}
-		catch (Problem.ProblemException problemException) {
-			Problem problem = problemException.getProblem();
-
-			Assert.assertEquals("NOT_FOUND", problem.getStatus());
-			Assert.assertEquals(
-				StringBundler.concat(
-					"No JournalArticle exists with the key {groupId=",
-					testDepotEntry.getGroupId(), ", externalReferenceCode=",
-					externalReferenceCode, "}"),
-				problem.getTitle());
-		}
-
-		// Non-exist assetLibraryId
+		// Nonexistent asset library id
 
 		long assetLibraryId = RandomTestUtil.randomLong();
 
@@ -266,6 +241,31 @@ public class StructuredContentResourceTest
 			Assert.assertEquals(
 				"Unable to get a valid asset library with ID " + assetLibraryId,
 				throwable.getMessage());
+		}
+
+		// Nonexistent external reference code
+
+		String externalReferenceCode = StringUtil.toLowerCase(
+			RandomTestUtil.randomString());
+
+		try {
+			structuredContentResource.
+				getAssetLibraryStructuredContentByExternalReferenceCode(
+					testGetAssetLibraryStructuredContentByExternalReferenceCode_getAssetLibraryId(),
+					externalReferenceCode);
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("NOT_FOUND", problem.getStatus());
+			Assert.assertEquals(
+				StringBundler.concat(
+					"No JournalArticle exists with the key {groupId=",
+					testDepotEntry.getGroupId(), ", externalReferenceCode=",
+					externalReferenceCode, "}"),
+				problem.getTitle());
 		}
 	}
 

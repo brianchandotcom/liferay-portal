@@ -80,6 +80,45 @@ definition {
 		}
 	}
 
+	@description = "LPS-180167. Verify if is possible publish with only requireds fields"
+	@priority = 5
+	test CanCreateWithOnlyRequiredFieldsFilled {
+		task ("And fills Name field") {
+			Type.typeNoMouseOver(
+				key_text = "Name",
+				locator1 = "TextInput#ANY",
+				value1 = "JS Import Map Entry Test");
+		}
+
+		task ("And fills Bare Specifier field") {
+			Type.typeNoMouseOver(
+				key_text = "Bare Specifier",
+				locator1 = "TextInput#ANY",
+				value1 = "bare-specifier-test");
+		}
+
+		task ("And fills JavaScript URL field") {
+			Type.typeNoMouseOver(
+				key_text = "JavaScript URL",
+				locator1 = "TextInput#ANY",
+				value1 = "https://liferay.github.io/liferay-frontend-projects/");
+		}
+
+		task ("And clicks on Publish button") {
+			Button.clickPublish();
+		}
+
+		task ("Then an success message should be displayed ") {
+			Alert.viewSuccessMessage();
+		}
+
+		task ("And entry name is present on Client Extension admin page") {
+			AssertElementPresent(
+				key_tableEntryName = "JS Import Map Entry Test",
+				locator1 = "ClientExtension#TABLE_ENTRY_NAME_REMOTE_TABLE");
+		}
+	}
+
 	@description = "LPS-180167. Verify if the Additional Resources field can be hidden"
 	@priority = 3
 	test CanHiddenAdditionalResourcesField {

@@ -13,7 +13,10 @@
  */
 
 import ClayAlert from '@clayui/alert';
+import {Option, Picker, Text} from '@clayui/core';
 import {ClaySelectWithOption} from '@clayui/form';
+import Label from '@clayui/label';
+import Layout from '@clayui/layout';
 import ClayLink from '@clayui/link';
 import {fetch} from 'frontend-js-web';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
@@ -43,7 +46,10 @@ function SegmentsAndExperiencesSelector({
 	const [selectedPreviewOption, setSelectedPreviewOption] = useState(
 		'segments'
 	);
-	const [selectedSegment, setSelectedSegment] = useState(null);
+	const [selectedSegment, setSelectedSegment] = useState('');
+	const [selectedExperience, setSelectedExperience] = useState(
+		segmentsExperiences?.[0]?.id
+	);
 
 	const formRef = useRef(null);
 
@@ -76,8 +82,6 @@ function SegmentsAndExperiencesSelector({
 	}, [simulateSegmentsEntriesURL]);
 
 	useEffect(() => {
-		formRef.current.addEventListener('change', simulateSegmentsEntries);
-
 		const deactivateSimulationEventHandler = Liferay.on(
 			'SimulationMenu:closeSimulationPanel',
 			fetchDeactivateSimulation
@@ -91,9 +95,17 @@ function SegmentsAndExperiencesSelector({
 		return () => {
 			deactivateSimulationEventHandler.detach();
 			openSimulationPanelEventHandler.detach();
-			formRef.removeEventListener('change', simulateSegmentsEntries);
 		};
 	}, [fetchDeactivateSimulation, simulateSegmentsEntries]);
+
+	useEffect(() => {
+		simulateSegmentsEntries();
+	}, [
+		selectedExperience,
+		selectedPreviewOption,
+		selectedSegment,
+		simulateSegmentsEntries,
+	]);
 
 	return (
 		<>
@@ -155,30 +167,104 @@ function SegmentsAndExperiencesSelector({
 							</div>
 						)}
 
-					<ul className="list-unstyled">
-						{selectedPreviewOption === 'segments' && (
-							<div className="form-group">
-								<label htmlFor={`${namespace}segmentsEntryId`}>
-									{Liferay.Language.get('segments')}
-								</label>
+					{selectedPreviewOption === 'segments' && (
+						<div className="form-group">
+							<label htmlFor={`${namespace}segmentsEntryId`}>
+								{Liferay.Language.get('segment')}
+							</label>
 
-								<ClaySelectWithOption
-									id={`${namespace}segmentsEntryId`}
-									name={`${namespace}segmentsEntryId`}
-									onChange={({target}) => {
-										setSelectedSegment(target.value);
-									}}
-									options={segmentsEntries.map((segment) => {
-										return {
-											label: segment.name,
-											value: segment.id,
-										};
-									})}
-									value={selectedSegment}
-								/>
-							</div>
-						)}
-					</ul>
+							<ClaySelectWithOption
+								id={`${namespace}segmentsEntryId`}
+								name={`${namespace}segmentsEntryId`}
+								onChange={({target}) => {
+									setSelectedSegment(target.value);
+								}}
+								options={segmentsEntries.map((segment) => {
+									return {
+										label: segment.name,
+										value: segment.id,
+									};
+								})}
+								value={selectedSegment}
+							/>
+						</div>
+					)}
+
+					{selectedPreviewOption === 'experiences' && (
+						<div className="form-group">
+							<label
+								htmlFor={`${namespace}segmentsExperienceSelector`}
+								id={`${namespace}segmentsExperienceLabelId`}
+							>
+								{Liferay.Language.get('experience')}
+							</label>
+
+							<input
+								id={`${namespace}segmentsExperienceId`}
+								name={`${namespace}segmentsExperienceId`}
+								type="hidden"
+								value={selectedExperience}
+							/>
+
+							<Picker
+								aria-labelledby={`${namespace}segmentsExperienceLabelId`}
+								id={`${namespace}segmentsExperienceSelector`}
+								items={segmentsExperiences}
+								onSelectionChange={setSelectedExperience}
+								selectedKey={selectedExperience}
+								type="button"
+							>
+								{(experience) => (
+									<Option
+										key={experience.id}
+										textValue={experience.name}
+									>
+										<Layout.ContentRow>
+											<Layout.ContentCol
+												className="pl-0"
+												expand
+											>
+												<Text
+													id={`${experience.id}-title`}
+													size={3}
+													weight="semi-bold"
+												>
+													{experience.name}
+												</Text>
+
+												<Text
+													aria-hidden
+													color="secondary"
+													id={`${experience.id}-description`}
+													size={3}
+												>
+													{`${Liferay.Language.get(
+														'segment'
+													)}:
+														${experience.segmentsEntryName}`}
+												</Text>
+											</Layout.ContentCol>
+
+											<Layout.ContentCol className="pr-0">
+												<Label
+													aria-hidden
+													className="mr-0"
+													displayType={
+														experience.active
+															? 'success'
+															: 'secondary'
+													}
+													id={`${experience.id}-status`}
+												>
+													{experience.statusLabel}
+												</Label>
+											</Layout.ContentCol>
+										</Layout.ContentRow>
+									</Option>
+								)}
+							</Picker>
+						</div>
+					)}
 				</form>
 			)}
 		</>

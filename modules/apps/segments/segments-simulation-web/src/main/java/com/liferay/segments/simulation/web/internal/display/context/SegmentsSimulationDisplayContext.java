@@ -20,6 +20,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -33,13 +34,16 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.configuration.provider.SegmentsConfigurationProvider;
+import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.constants.SegmentsPortletKeys;
 import com.liferay.segments.item.selector.SegmentsEntryItemSelectorReturnType;
 import com.liferay.segments.item.selector.criterion.SegmentsEntryItemSelectorCriterion;
 import com.liferay.segments.item.selector.criterion.SegmentsExperienceItemSelectorCriterion;
 import com.liferay.segments.model.SegmentsEntry;
+import com.liferay.segments.model.SegmentsExperience;
+import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsEntryServiceUtil;
-import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.staging.StagingGroupHelper;
 import com.liferay.staging.StagingGroupHelperUtil;
 
@@ -57,11 +61,17 @@ public class SegmentsSimulationDisplayContext {
 
 	public SegmentsSimulationDisplayContext(
 		HttpServletRequest httpServletRequest, ItemSelector itemSelector,
-		SegmentsConfigurationProvider segmentsConfigurationProvider) {
+		Language language,
+		SegmentsConfigurationProvider segmentsConfigurationProvider,
+		SegmentsEntryLocalService segmentsEntryLocalService,
+		SegmentsExperienceLocalService segmentsExperienceLocalService) {
 
 		_httpServletRequest = httpServletRequest;
 		_itemSelector = itemSelector;
+		_language = language;
 		_segmentsConfigurationProvider = segmentsConfigurationProvider;
+		_segmentsEntryLocalService = segmentsEntryLocalService;
+		_segmentsExperienceLocalService = segmentsExperienceLocalService;
 
 		RenderResponse renderResponse =
 			(RenderResponse)httpServletRequest.getAttribute(
@@ -188,13 +198,43 @@ public class SegmentsSimulationDisplayContext {
 			return _segmentsExperiencesJSONArray;
 		}
 
+		List<SegmentsExperience> segmentsExperiences =
+			_segmentsExperienceLocalService.getSegmentsExperiences(
+				_themeDisplay.getScopeGroupId(), _themeDisplay.getPlid(), true);
+
 		_segmentsExperiencesJSONArray = JSONUtil.toJSONArray(
-			SegmentsExperienceLocalServiceUtil.getSegmentsExperiences(
-				_themeDisplay.getScopeGroupId(), _themeDisplay.getPlid()),
+			segmentsExperiences,
 			segmentsExperience -> JSONUtil.put(
+				"active", _isActive(segmentsExperience, segmentsExperiences)
+			).put(
 				"id", segmentsExperience.getSegmentsExperienceId()
 			).put(
 				"name", segmentsExperience.getName(_themeDisplay.getLocale())
+			).put(
+				"segmentsEntryName",
+				() -> {
+					SegmentsEntry segmentsEntry =
+						_segmentsEntryLocalService.fetchSegmentsEntry(
+							segmentsExperience.getSegmentsEntryId());
+
+					if (segmentsEntry != null) {
+						return segmentsEntry.getName(_themeDisplay.getLocale());
+					}
+
+					return SegmentsEntryConstants.getDefaultSegmentsEntryName(
+						_themeDisplay.getLocale());
+				}
+			).put(
+				"statusLabel",
+				() -> {
+					String statusLabelKey = "inactive";
+
+					if (_isActive(segmentsExperience, segmentsExperiences)) {
+						statusLabelKey = "active";
+					}
+
+					return _language.get(_httpServletRequest, statusLabelKey);
+				}
 			));
 
 		return _segmentsExperiencesJSONArray;
@@ -259,16 +299,43 @@ public class SegmentsSimulationDisplayContext {
 		return _groupId;
 	}
 
+	private boolean _isActive(
+		SegmentsExperience segmentsExperience,
+		List<SegmentsExperience> segmentsExperiences) {
+
+		for (SegmentsExperience curSegmentsExperience : segmentsExperiences) {
+			if ((curSegmentsExperience.getSegmentsEntryId() ==
+					segmentsExperience.getSegmentsEntryId()) ||
+				(curSegmentsExperience.getSegmentsEntryId() ==
+					SegmentsEntryConstants.ID_DEFAULT)) {
+
+				if (curSegmentsExperience.getSegmentsExperienceId() ==
+						segmentsExperience.getSegmentsExperienceId()) {
+
+					return true;
+				}
+
+				return false;
+			}
+		}
+
+		return false;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		SegmentsSimulationDisplayContext.class);
 
 	private Long _groupId;
 	private final HttpServletRequest _httpServletRequest;
 	private final ItemSelector _itemSelector;
+	private final Language _language;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final SegmentsConfigurationProvider _segmentsConfigurationProvider;
 	private List<SegmentsEntry> _segmentsEntries;
 	private JSONArray _segmentsEntriesJSONArray;
+	private final SegmentsEntryLocalService _segmentsEntryLocalService;
+	private final SegmentsExperienceLocalService
+		_segmentsExperienceLocalService;
 	private JSONArray _segmentsExperiencesJSONArray;
 	private Boolean _showEmptyMessage;
 	private final ThemeDisplay _themeDisplay;

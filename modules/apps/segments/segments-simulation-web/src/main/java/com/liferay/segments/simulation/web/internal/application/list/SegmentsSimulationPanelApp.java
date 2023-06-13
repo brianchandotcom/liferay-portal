@@ -29,6 +29,8 @@ import com.liferay.segments.configuration.provider.SegmentsConfigurationProvider
 import com.liferay.segments.constants.SegmentsActionKeys;
 import com.liferay.segments.constants.SegmentsConstants;
 import com.liferay.segments.constants.SegmentsPortletKeys;
+import com.liferay.segments.service.SegmentsEntryLocalService;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.simulation.web.internal.display.context.SegmentsSimulationDisplayContext;
 
 import java.io.IOException;
@@ -87,8 +89,9 @@ public class SegmentsSimulationPanelApp extends BaseJSPPanelApp {
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
 			new SegmentsSimulationDisplayContext(
-				httpServletRequest, _itemSelector,
-				_segmentsConfigurationProvider));
+				httpServletRequest, _itemSelector, _language,
+				_segmentsConfigurationProvider, _segmentsEntryLocalService,
+				_segmentsExperienceLocalService));
 
 		return super.include(httpServletRequest, httpServletResponse);
 	}
@@ -127,6 +130,12 @@ public class SegmentsSimulationPanelApp extends BaseJSPPanelApp {
 
 	@Reference
 	private SegmentsConfigurationProvider _segmentsConfigurationProvider;
+
+	@Reference
+	private SegmentsEntryLocalService _segmentsEntryLocalService;
+
+	@Reference
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.segments.simulation.web)"

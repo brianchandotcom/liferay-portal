@@ -15,11 +15,14 @@
 package com.liferay.segments.simulation.web.internal.portlet;
 
 import com.liferay.item.selector.ItemSelector;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.configuration.provider.SegmentsConfigurationProvider;
 import com.liferay.segments.constants.SegmentsPortletKeys;
+import com.liferay.segments.service.SegmentsEntryLocalService;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.simulation.web.internal.display.context.SegmentsSimulationDisplayContext;
 
 import java.io.IOException;
@@ -69,7 +72,8 @@ public class SegmentsSimulationPortlet extends MVCPortlet {
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
 			new SegmentsSimulationDisplayContext(
 				_portal.getHttpServletRequest(renderRequest), _itemSelector,
-				_segmentsConfigurationProvider));
+				_language, _segmentsConfigurationProvider,
+				_segmentsEntryLocalService, _segmentsExperienceLocalService));
 
 		super.render(renderRequest, renderResponse);
 	}
@@ -78,9 +82,18 @@ public class SegmentsSimulationPortlet extends MVCPortlet {
 	private ItemSelector _itemSelector;
 
 	@Reference
+	private Language _language;
+
+	@Reference
 	private Portal _portal;
 
 	@Reference
 	private SegmentsConfigurationProvider _segmentsConfigurationProvider;
+
+	@Reference
+	private SegmentsEntryLocalService _segmentsEntryLocalService;
+
+	@Reference
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 }

@@ -102,7 +102,8 @@ public class DataLimitTest {
 		DataLimitEntry dataLimitEntry3 = _dataLimitEntryPersistence.create(
 			_counterLocalService.increment());
 
-		_dataLimitEntryLocalService.updateDataLimitEntry(dataLimitEntry3);
+		dataLimitEntry3 = _dataLimitEntryLocalService.updateDataLimitEntry(
+			dataLimitEntry3);
 
 		// Exceeding data limit
 

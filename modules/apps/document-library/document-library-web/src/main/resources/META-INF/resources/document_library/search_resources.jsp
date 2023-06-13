@@ -207,7 +207,10 @@ entriesChecker.setRememberCheckBoxStateURLRegex("^(?!.*" + liferayPortletRespons
 														</div>
 
 														<div class="card-detail">
-															<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= latestFileVersion.getStatus() %>" />
+															<liferay-portal-workflow:status
+																showStatusLabel="<%= false %>"
+																status="<%= latestFileVersion.getStatus() %>"
+															/>
 
 															<c:choose>
 																<c:when test="<%= fileShortcut != null %>">

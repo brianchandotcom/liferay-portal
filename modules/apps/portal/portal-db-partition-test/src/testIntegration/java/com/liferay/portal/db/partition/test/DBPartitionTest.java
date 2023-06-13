@@ -194,7 +194,8 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 
 		try {
 			_companyLocalService.addCompany(
-				companyId, webId, webId, webId, 0, true);
+				companyId, webId, webId, webId, 0, true, null, null, null, null,
+				null, null);
 		}
 		catch (Exception exception) {
 			try (Connection connection = DataAccess.getConnection();

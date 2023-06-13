@@ -14,6 +14,7 @@ import ClayAlert from '@clayui/alert';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import ClayLink from '@clayui/link';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayToolbar from '@clayui/toolbar';
 import {Editor} from 'frontend-editor-ckeditor-web';
 import React, {useContext, useEffect, useRef, useState} from 'react';
@@ -34,6 +35,7 @@ export default function SourceBuilder() {
 		version,
 	} = useContext(DefinitionBuilderContext);
 	const editorRef = useRef();
+	const [loading, setLoading] = useState(true);
 	const [showImportSuccessMessage, setShowImportSuccessMessage] = useState(
 		false
 	);
@@ -42,8 +44,8 @@ export default function SourceBuilder() {
 	);
 
 	useEffect(() => {
-		if (elements) {
-			const metada = {
+		if (currentEditor?.mode === 'source' && elements) {
+			const metadata = {
 				description: definitionDescription,
 				name: definitionName,
 				version,
@@ -51,18 +53,26 @@ export default function SourceBuilder() {
 
 			const xmlContent = serializeDefinition(
 				xmlNamespace,
-				metada,
+				metadata,
 				elements.filter(isNode),
 				elements.filter(isEdge)
 			);
 
-			if (xmlContent && currentEditor) {
+			if (xmlContent) {
 				currentEditor.setData(xmlContent);
+
+				setLoading(false);
 			}
 		}
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [currentEditor, definitionName, elements, version]);
+
+	useEffect(() => {
+		if (currentEditor && currentEditor.mode !== 'source') {
+			currentEditor.setMode('source');
+		}
+	}, [currentEditor]);
 
 	useEffect(() => {
 		if (showInvalidContentMessage) {
@@ -145,12 +155,20 @@ export default function SourceBuilder() {
 				</ClayLayout.ContainerFluid>
 			</ClayToolbar>
 
+			{loading && (
+				<ClayLoadingIndicator
+					displayType="primary"
+					shape="squares"
+					size="md"
+				/>
+			)}
+
 			<Editor
 				config={editorConfig}
 				onInstanceReady={({editor}) => {
-					setCurrentEditor(editor);
-
 					editor.setMode('source');
+
+					setCurrentEditor(editor);
 				}}
 				ref={editorRef}
 			/>

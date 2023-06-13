@@ -132,8 +132,8 @@ public class DLFileOrderManagedServiceFactory implements ManagedServiceFactory {
 	}
 
 	private DLFileOrderConfiguration _getDLFileOrderConfiguration(
-		Map<Long, DLFileOrderConfiguration> dlFileOrderConfigurations,
-		long key, Supplier<DLFileOrderConfiguration> supplier) {
+		Map<Long, DLFileOrderConfiguration> dlFileOrderConfigurations, long key,
+		Supplier<DLFileOrderConfiguration> supplier) {
 
 		if (dlFileOrderConfigurations.containsKey(key)) {
 			return dlFileOrderConfigurations.get(key);

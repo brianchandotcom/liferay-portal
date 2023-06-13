@@ -120,7 +120,7 @@ public class UADAnonymousUserProviderImpl implements UADAnonymousUserProvider {
 				"Application data anonymized by Personal Data Erasure will be ",
 				"assigned to this user."));
 
-		_userLocalService.updateUser(anonymousUser);
+		anonymousUser = _userLocalService.updateUser(anonymousUser);
 
 		_userLocalService.updateStatus(
 			anonymousUser.getUserId(), WorkflowConstants.STATUS_INACTIVE,

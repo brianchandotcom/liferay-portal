@@ -226,9 +226,7 @@ public class UserSearchFixture {
 
 		addAddress(user);
 
-		UserLocalServiceUtil.updateUser(user);
-
-		return user;
+		return UserLocalServiceUtil.updateUser(user);
 	}
 
 	/**

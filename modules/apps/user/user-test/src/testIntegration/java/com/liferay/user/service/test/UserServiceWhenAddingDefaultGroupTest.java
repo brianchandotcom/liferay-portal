@@ -67,7 +67,7 @@ public class UserServiceWhenAddingDefaultGroupTest {
 		_childGroup.setMembershipRestriction(
 			GroupConstants.MEMBERSHIP_RESTRICTION_TO_PARENT_SITE_MEMBERS);
 
-		_groupLocalService.updateGroup(_childGroup);
+		_childGroup = _groupLocalService.updateGroup(_childGroup);
 
 		_grandChildGroup1 = GroupTestUtil.addGroupToCompany(
 			_company.getCompanyId(), _childGroup.getGroupId());
@@ -75,7 +75,7 @@ public class UserServiceWhenAddingDefaultGroupTest {
 		_grandChildGroup1.setMembershipRestriction(
 			GroupConstants.MEMBERSHIP_RESTRICTION_TO_PARENT_SITE_MEMBERS);
 
-		_groupLocalService.updateGroup(_grandChildGroup1);
+		_grandChildGroup1 = _groupLocalService.updateGroup(_grandChildGroup1);
 
 		_grandChildGroup2 = GroupTestUtil.addGroupToCompany(
 			_company.getCompanyId(), _childGroup.getGroupId());

@@ -67,7 +67,8 @@ public class StagingGetScopeGroupIdTest extends BaseLocalStagingTestCase {
 		_stagingLayoutScopeGroup.setLiveGroupId(
 			_liveLayoutScopeGroup.getGroupId());
 
-		GroupLocalServiceUtil.updateGroup(_stagingLayoutScopeGroup);
+		_stagingLayoutScopeGroup = GroupLocalServiceUtil.updateGroup(
+			_stagingLayoutScopeGroup);
 
 		_mockHttpServletRequest.setAttribute(WebKeys.LAYOUT, stagingLayout);
 	}

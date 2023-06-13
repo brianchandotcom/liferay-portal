@@ -79,8 +79,9 @@ public class UserServiceWhenAddingOrRemovingPasswordPolicyUsersTest {
 	public void tearDown() {
 		_defaultPasswordPolicy.setDefaultPolicy(false);
 
-		_passwordPolicyLocalService.updatePasswordPolicy(
-			_defaultPasswordPolicy);
+		_defaultPasswordPolicy =
+			_passwordPolicyLocalService.updatePasswordPolicy(
+				_defaultPasswordPolicy);
 	}
 
 	@Test

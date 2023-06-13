@@ -76,7 +76,7 @@ public class UserServiceWhenUpdatingUserTest {
 			childGroup.setMembershipRestriction(
 				GroupConstants.MEMBERSHIP_RESTRICTION_TO_PARENT_SITE_MEMBERS);
 
-			_groupLocalService.updateGroup(childGroup);
+			childGroup = _groupLocalService.updateGroup(childGroup);
 
 			_groupLocalService.addUserGroups(_user.getUserId(), groups);
 

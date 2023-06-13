@@ -51,11 +51,12 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"javax.portlet.name=" + ClientExtensionAdminPortletKeys.CLIENT_EXTENSION_ADMIN,
-		"mvc.command.name=/client_extension_admin/export"
+		"mvc.command.name=/client_extension_admin/export_client_extension_entry"
 	},
 	service = MVCResourceCommand.class
 )
-public class ExportMVCResourceCommand extends BaseMVCResourceCommand {
+public class ExportClientExtensionEntryMVCResourceCommand
+	extends BaseMVCResourceCommand {
 
 	@Override
 	protected void doServeResource(
@@ -194,7 +195,7 @@ public class ExportMVCResourceCommand extends BaseMVCResourceCommand {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ExportMVCResourceCommand.class);
+		ExportClientExtensionEntryMVCResourceCommand.class);
 
 	@Reference
 	private ClientExtensionEntryService _clientExtensionEntryService;

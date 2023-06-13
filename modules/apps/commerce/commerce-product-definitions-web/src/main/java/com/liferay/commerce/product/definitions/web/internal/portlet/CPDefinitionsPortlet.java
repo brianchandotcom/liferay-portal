@@ -15,6 +15,7 @@
 package com.liferay.commerce.product.definitions.web.internal.portlet;
 
 import com.liferay.account.service.AccountGroupRelLocalService;
+import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.definitions.web.internal.display.context.CPDefinitionsDisplayContext;
 import com.liferay.commerce.product.portlet.action.ActionHelper;
@@ -26,6 +27,7 @@ import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -77,7 +79,8 @@ public class CPDefinitionsPortlet extends MVCPortlet {
 				_actionHelper, _portal.getHttpServletRequest(renderRequest),
 				_accountGroupRelLocalService, _commerceCatalogService,
 				_commerceChannelRelService, _configurationProvider,
-				_cpDefinitionService, _cpFriendlyURL, _itemSelector);
+				_cpDefinitionService, _cpFriendlyURL, _itemSelector,
+				_portletResourcePermission);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, cpDefinitionsDisplayContext);
@@ -116,5 +119,10 @@ public class CPDefinitionsPortlet extends MVCPortlet {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference(
+		target = "(resource.name=" + CPConstants.RESOURCE_NAME_PRODUCT + ")"
+	)
+	private PortletResourcePermission _portletResourcePermission;
 
 }

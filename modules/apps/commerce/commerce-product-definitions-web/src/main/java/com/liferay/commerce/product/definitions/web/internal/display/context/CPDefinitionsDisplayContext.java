@@ -20,6 +20,7 @@ import com.liferay.account.service.AccountGroupRelLocalService;
 import com.liferay.commerce.account.item.selector.criterion.CommerceAccountGroupItemSelectorCriterion;
 import com.liferay.commerce.frontend.model.HeaderActionModel;
 import com.liferay.commerce.product.configuration.CProductVersionConfiguration;
+import com.liferay.commerce.product.constants.CPActionKeys;
 import com.liferay.commerce.product.display.context.BaseCPDefinitionsDisplayContext;
 import com.liferay.commerce.product.item.selector.criterion.CommerceChannelItemSelectorCriterion;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -56,6 +57,7 @@ import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.kernel.settings.SystemSettingsLocator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -92,7 +94,8 @@ public class CPDefinitionsDisplayContext
 		CommerceChannelRelService commerceChannelRelService,
 		ConfigurationProvider configurationProvider,
 		CPDefinitionService cpDefinitionService, CPFriendlyURL cpFriendlyURL,
-		ItemSelector itemSelector) {
+		ItemSelector itemSelector,
+		PortletResourcePermission portletResourcePermission) {
 
 		super(actionHelper, httpServletRequest);
 
@@ -103,6 +106,7 @@ public class CPDefinitionsDisplayContext
 		_cpDefinitionService = cpDefinitionService;
 		_cpFriendlyURL = cpFriendlyURL;
 		_itemSelector = itemSelector;
+		_portletResourcePermission = portletResourcePermission;
 	}
 
 	public String getAccountGroupItemSelectorUrl() throws PortalException {
@@ -468,6 +472,18 @@ public class CPDefinitionsDisplayContext
 			getCPDefinitionId(), null);
 	}
 
+	public boolean hasManageCommerceProductChannelVisibility()
+		throws Exception {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		return _portletResourcePermission.contains(
+			themeDisplay.getPermissionChecker(), null,
+			CPActionKeys.MANAGE_COMMERCE_PRODUCT_CHANNEL_VISIBILITY);
+	}
+
 	public boolean isSelectedCatalog(CommerceCatalog commerceCatalog)
 		throws PortalException {
 
@@ -525,5 +541,6 @@ public class CPDefinitionsDisplayContext
 	private final CPDefinitionService _cpDefinitionService;
 	private final CPFriendlyURL _cpFriendlyURL;
 	private final ItemSelector _itemSelector;
+	private final PortletResourcePermission _portletResourcePermission;
 
 }

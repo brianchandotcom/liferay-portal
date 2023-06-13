@@ -44,6 +44,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -75,13 +76,14 @@ public class CPDefinitionConfigurationDisplayContext
 		CPDefinitionService cpDefinitionService,
 		CPMeasurementUnitLocalService cpMeasurementUnitLocalService,
 		CPTaxCategoryService cpTaxCategoryService, CPFriendlyURL cpFriendlyURL,
-		ItemSelector itemSelector) {
+		ItemSelector itemSelector,
+		PortletResourcePermission portletResourcePermission) {
 
 		super(
 			actionHelper, httpServletRequest, accountGroupRelLocalService,
 			commerceCatalogService, commerceChannelRelService,
 			configurationProvider, cpDefinitionService, cpFriendlyURL,
-			itemSelector);
+			itemSelector, portletResourcePermission);
 
 		_commerceAvailabilityEstimateService =
 			commerceAvailabilityEstimateService;

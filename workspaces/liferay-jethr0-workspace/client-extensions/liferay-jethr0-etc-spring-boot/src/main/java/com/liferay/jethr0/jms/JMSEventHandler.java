@@ -14,15 +14,8 @@
 
 package com.liferay.jethr0.jms;
 
-import com.liferay.jethr0.build.Build;
-import com.liferay.jethr0.build.queue.BuildQueue;
-import com.liferay.jethr0.build.repository.BuildRepository;
-import com.liferay.jethr0.build.repository.BuildRunRepository;
-import com.liferay.jethr0.build.run.BuildRun;
 import com.liferay.jethr0.event.handler.EventHandler;
 import com.liferay.jethr0.event.handler.EventHandlerFactory;
-import com.liferay.jethr0.jenkins.node.JenkinsNode;
-import com.liferay.jethr0.jenkins.repository.JenkinsNodeRepository;
 import com.liferay.jethr0.util.StringUtil;
 
 import org.apache.commons.logging.Log;
@@ -50,13 +43,21 @@ public class JMSEventHandler {
 
 		JSONObject messageJSONObject = new JSONObject(message);
 
-		String eventTrigger = messageJSONObject.getString("eventTrigger");
+		EventHandler.EventType eventType = EventHandler.EventType.valueOf(
+			messageJSONObject.optString("eventTrigger"));
 
-		if (eventTrigger.equals("BUILD_COMPLETED") ||
-			eventTrigger.equals("BUILD_STARTED") ||
-			eventTrigger.equals("CREATE_BUILD") ||
-			eventTrigger.equals("CREATE_PROJECT") ||
-			eventTrigger.equals("QUEUE_PROJECT")) {
+		if ((eventType == EventHandler.EventType.BUILD_COMPLETED) ||
+			(eventType == EventHandler.EventType.BUILD_STARTED) ||
+			(eventType == EventHandler.EventType.COMPUTER_BUSY) ||
+			(eventType == EventHandler.EventType.COMPUTER_IDLE) ||
+			(eventType == EventHandler.EventType.COMPUTER_OFFLINE) ||
+			(eventType == EventHandler.EventType.COMPUTER_ONLINE) ||
+			(eventType ==
+				EventHandler.EventType.COMPUTER_TEMPORARILY_OFFLINE) ||
+			(eventType == EventHandler.EventType.COMPUTER_TEMPORARILY_ONLINE) ||
+			(eventType == EventHandler.EventType.CREATE_BUILD) ||
+			(eventType == EventHandler.EventType.CREATE_PROJECT) ||
+			(eventType == EventHandler.EventType.QUEUE_PROJECT)) {
 
 			EventHandler eventHandler = _eventHandlerFactory.newEventHandler(
 				messageJSONObject);
@@ -76,19 +77,6 @@ public class JMSEventHandler {
 				throw new RuntimeException();
 			}
 		}
-		else if (eventTrigger.equals("COMPUTER_BUSY") ||
-				 eventTrigger.equals("COMPUTER_IDLE") ||
-				 eventTrigger.equals("COMPUTER_OFFLINE") ||
-				 eventTrigger.equals("COMPUTER_ONLINE") ||
-				 eventTrigger.equals("COMPUTER_TEMPORARILY_OFFLINE") ||
-				 eventTrigger.equals("COMPUTER_TEMPORARILY_ONLINE")) {
-
-			_updateJenkinsNode(messageJSONObject);
-
-			if (eventTrigger.equals("COMPUTER_IDLE")) {
-				_eventTriggerComputerIdle(messageJSONObject);
-			}
-		}
 	}
 
 	public void send(String message) {
@@ -101,70 +89,10 @@ public class JMSEventHandler {
 		_jmsTemplate.convertAndSend(_jmsJenkinsBuildQueue, message);
 	}
 
-	private void _eventTriggerComputerIdle(JSONObject messageJSONObject) {
-		JenkinsNode jenkinsNode = _getJenkinsNode(messageJSONObject);
-
-		if (jenkinsNode == null) {
-			return;
-		}
-
-		Build build = _buildQueue.nextBuild(jenkinsNode);
-
-		if (build == null) {
-			return;
-		}
-
-		build.setState(Build.State.QUEUED);
-
-		BuildRun buildRun = _buildRunRepository.add(
-			build, BuildRun.State.QUEUED);
-
-		send(String.valueOf(buildRun.getInvokeJSONObject()));
-
-		_buildRepository.update(build);
-		_buildRunRepository.update(buildRun);
-	}
-
-	private JenkinsNode _getJenkinsNode(JSONObject messageJSONObject) {
-		JSONObject computerJSONObject = messageJSONObject.getJSONObject(
-			"computer");
-
-		return _jenkinsNodeRepository.get(computerJSONObject.getString("name"));
-	}
-
-	private JenkinsNode _updateJenkinsNode(JSONObject messageJSONObject) {
-		JenkinsNode jenkinsNode = _getJenkinsNode(messageJSONObject);
-
-		JSONObject computerJSONObject = messageJSONObject.getJSONObject(
-			"computer");
-
-		computerJSONObject.put(
-			"idle", !computerJSONObject.getBoolean("busy")
-		).put(
-			"offline", !computerJSONObject.getBoolean("online")
-		);
-
-		jenkinsNode.update(computerJSONObject);
-
-		return jenkinsNode;
-	}
-
 	private static final Log _log = LogFactory.getLog(JMSEventHandler.class);
 
 	@Autowired
-	private BuildQueue _buildQueue;
-
-	@Autowired
-	private BuildRepository _buildRepository;
-
-	@Autowired
-	private BuildRunRepository _buildRunRepository;
-
-	@Autowired
 	private EventHandlerFactory _eventHandlerFactory;
-
-	@Autowired
-	private JenkinsNodeRepository _jenkinsNodeRepository;
 
 	@Value("${jms.jenkins.build.queue}")
 	private String _jmsJenkinsBuildQueue;

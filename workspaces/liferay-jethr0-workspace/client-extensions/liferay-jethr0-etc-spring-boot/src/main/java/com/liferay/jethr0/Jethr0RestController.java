@@ -41,24 +41,46 @@ public class Jethr0RestController {
 			_log.debug("Processing " + body);
 		}
 
-		EventHandler eventHandler = _eventHandlerFactory.newEventHandler(
-			new JSONObject(body));
+		JSONObject bodyJSONObject = new JSONObject(body);
 
-		if (eventHandler == null) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
+		EventHandler.EventType eventType = EventHandler.EventType.valueOf(
+			bodyJSONObject.optString("eventTrigger"));
 
-		try {
-			return new ResponseEntity<>(eventHandler.process(), HttpStatus.OK);
-		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(exception);
+		if ((eventType == EventHandler.EventType.BUILD_COMPLETED) ||
+			(eventType == EventHandler.EventType.BUILD_STARTED) ||
+			(eventType == EventHandler.EventType.COMPUTER_BUSY) ||
+			(eventType == EventHandler.EventType.COMPUTER_IDLE) ||
+			(eventType == EventHandler.EventType.COMPUTER_OFFLINE) ||
+			(eventType == EventHandler.EventType.COMPUTER_ONLINE) ||
+			(eventType ==
+				EventHandler.EventType.COMPUTER_TEMPORARILY_OFFLINE) ||
+			(eventType == EventHandler.EventType.COMPUTER_TEMPORARILY_ONLINE) ||
+			(eventType == EventHandler.EventType.CREATE_BUILD) ||
+			(eventType == EventHandler.EventType.CREATE_PROJECT) ||
+			(eventType == EventHandler.EventType.QUEUE_PROJECT)) {
+
+			EventHandler eventHandler = _eventHandlerFactory.newEventHandler(
+				bodyJSONObject);
+
+			if (eventHandler == null) {
+				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 			}
 
-			return new ResponseEntity<>(
-				exception.getMessage(), HttpStatus.BAD_REQUEST);
+			try {
+				return new ResponseEntity<>(
+					eventHandler.process(), HttpStatus.OK);
+			}
+			catch (Exception exception) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(exception);
+				}
+
+				return new ResponseEntity<>(
+					exception.getMessage(), HttpStatus.BAD_REQUEST);
+			}
 		}
+
+		return new ResponseEntity<>("{}", HttpStatus.OK);
 	}
 
 	private static final Log _log = LogFactory.getLog(

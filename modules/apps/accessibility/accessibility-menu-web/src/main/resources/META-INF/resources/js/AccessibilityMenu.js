@@ -93,17 +93,21 @@ const AccessibilityMenu = (props) => {
 		(value, setting) => {
 			toggleClassName(setting.className, value);
 
-			updateSetting(setting.key, {disabled: false, value});
+			updateSetting(setting.key, {updating: false, value});
 		},
 		[updateSetting]
 	);
 
 	const handleAccessiblitySettingChange = useCallback(
 		(value, setting) => {
-			updateSetting(setting.key, {disabled: true});
+			if (setting.updating) {
+				return;
+			}
+
+			updateSetting(setting.key, {updating: true});
 
 			if (themeDisplay.isSignedIn()) {
-				setSessionValue(setting.key, value).then(() => {
+				return setSessionValue(setting.key, value).then(() => {
 					afterSettingValueChange(value, setting);
 				});
 			}
@@ -175,9 +179,7 @@ const AccessibilityMenu = (props) => {
 											? 'mb-3'
 											: ''
 									}
-									disabled={
-										isSettingsDisabled || setting.disabled
-									}
+									disabled={isSettingsDisabled}
 									key={setting.key}
 									label={setting.label}
 									onChange={(value) =>

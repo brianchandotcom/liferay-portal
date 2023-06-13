@@ -168,7 +168,8 @@ public abstract class BaseConfigurationFactory {
 
 	private static final Snapshot<PortalK8sConfigMapModifier>
 		_portalK8sConfigMapModifierSnapshot = new Snapshot<>(
-			BaseConfigurationFactory.class, PortalK8sConfigMapModifier.class);
+			BaseConfigurationFactory.class, PortalK8sConfigMapModifier.class,
+			null, true);
 
 	private volatile String _configMapName;
 	private volatile Map<String, String> _extensionProperties;

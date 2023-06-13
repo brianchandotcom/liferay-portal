@@ -519,7 +519,7 @@ public class SXPBlueprintSearchResultTest {
 
 		user.setCreateDate(date);
 
-		_userLocalService.updateUser(user);
+		user = _userLocalService.updateUser(user);
 
 		_setCurrentUser(user);
 

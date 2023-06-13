@@ -171,8 +171,10 @@ public class WorkflowMetricsSLADefinitionDemoDataCreatorImpl
 
 		workflowMetricsSLADefinition.setCreateDate(createDate);
 
-		_workflowMetricsSLADefinitionLocalService.
-			updateWorkflowMetricsSLADefinition(workflowMetricsSLADefinition);
+		workflowMetricsSLADefinition =
+			_workflowMetricsSLADefinitionLocalService.
+				updateWorkflowMetricsSLADefinition(
+					workflowMetricsSLADefinition);
 
 		_workflowMetricsSLADefinitionIds.add(
 			workflowMetricsSLADefinition.getWorkflowMetricsSLADefinitionId());

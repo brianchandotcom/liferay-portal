@@ -979,17 +979,6 @@ public class JournalTestUtil {
 	}
 
 	public static JournalArticle updateArticle(
-			JournalArticle article, String title, String content,
-			boolean workflowEnabled, boolean approved,
-			ServiceContext serviceContext, Date expirationDate)
-		throws Exception {
-
-		return updateArticle(
-			article.getUserId(), article, _getLocalizedMap(title), content,
-			null, workflowEnabled, approved, serviceContext, expirationDate);
-	}
-
-	public static JournalArticle updateArticle(
 			long userId, JournalArticle article, Map<Locale, String> titleMap,
 			String content, boolean workflowEnabled, boolean approved,
 			ServiceContext serviceContext)
@@ -997,14 +986,13 @@ public class JournalTestUtil {
 
 		return updateArticle(
 			userId, article, titleMap, content, null, workflowEnabled, approved,
-			serviceContext, null);
+			serviceContext);
 	}
 
 	public static JournalArticle updateArticle(
 			long userId, JournalArticle article, Map<Locale, String> titleMap,
 			String content, Date displayDate, boolean workflowEnabled,
-			boolean approved, ServiceContext serviceContext,
-			Date expirationDate)
+			boolean approved, ServiceContext serviceContext)
 		throws Exception {
 
 		if (workflowEnabled) {
@@ -1045,30 +1033,6 @@ public class JournalTestUtil {
 			displayDateMinute = displayCal.get(Calendar.MINUTE);
 		}
 
-		int expirationDateMonth = 0;
-		int expirationDateDay = 0;
-		int expirationDateYear = 0;
-		int expirationDateHour = 0;
-		int expirationDateMinute = 0;
-		boolean neverExpire = true;
-
-		if (expirationDate != null) {
-			neverExpire = false;
-
-			User user = TestPropsValues.getUser();
-
-			Calendar displayCal = CalendarFactoryUtil.getCalendar(
-				user.getTimeZone());
-
-			displayCal.setTime(expirationDate);
-
-			expirationDateMonth = displayCal.get(Calendar.MONTH);
-			expirationDateDay = displayCal.get(Calendar.DATE);
-			expirationDateYear = displayCal.get(Calendar.YEAR);
-			expirationDateHour = displayCal.get(Calendar.HOUR_OF_DAY);
-			expirationDateMinute = displayCal.get(Calendar.MINUTE);
-		}
-
 		serviceContext.setCommand(Constants.UPDATE);
 		serviceContext.setLayoutFullURL("http://localhost");
 
@@ -1077,11 +1041,10 @@ public class JournalTestUtil {
 			article.getArticleId(), article.getVersion(), titleMap,
 			article.getDescriptionMap(), content, article.getDDMTemplateKey(),
 			article.getLayoutUuid(), displayDateMonth, displayDateDay,
-			displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire, 0, 0, 0, 0,
-			0, true, article.isIndexable(), article.isSmallImage(),
-			article.getSmallImageURL(), null, null, null, serviceContext);
+			displayDateYear, displayDateHour, displayDateMinute, 0, 0, 0, 0, 0,
+			true, 0, 0, 0, 0, 0, true, article.isIndexable(),
+			article.isSmallImage(), article.getSmallImageURL(), null, null,
+			null, serviceContext);
 	}
 
 	public static JournalArticle updateArticleWithWorkflow(

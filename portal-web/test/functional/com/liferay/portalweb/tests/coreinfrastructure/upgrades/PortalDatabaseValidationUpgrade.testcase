@@ -10,6 +10,89 @@ definition {
 
 	@ignore = "true"
 	@priority = 4
+	test ComparePartitionedUpgradedAndFreshDBSchemas7413 {
+		property data.archive.type = "data-archive-portal-partition";
+		property database.partition.enabled = "true";
+		property liferay.online.properties = "true";
+		property portal.upgrades = "true";
+		property portal.version = "7.4.13.u33";
+
+		task ("Given the user have a partitioned upgraded base And export the schemas") {
+			Portlet.shutdownServer();
+
+			AntCommands.runCommand("build-test.xml", "export-database-schema -Ddatabase.file.prefix=upgraded -Ddatabase.schema.name=lportal");
+
+			AntCommands.runCommand("build-test.xml", "export-database-schema -Ddatabase.file.prefix=upgraded -Ddatabase.schema.name=lpartition_44913");
+
+			AntCommands.runCommand("build-test.xml", "export-database-schema -Ddatabase.file.prefix=upgraded -Ddatabase.schema.name=lpartition_42638");
+		}
+
+		task ("When the user rebuild the database And clean the missing partitions") {
+			AntCommand(
+				locator1 = "build-test.xml",
+				value1 = "rebuild-database -Ddatabase.type=mysql -Dsql.dir=sql/create-bare/ -Dsql.file=create-bare-mysql.sql");
+
+			SQL.executeMySQLStatement(mysqlStatement = "DROP DATABASE lpartition_42638;");
+
+			SQL.executeMySQLStatement(mysqlStatement = "DROP DATABASE lpartition_44913;");
+		}
+
+		task ("And the user start the server again to have a fresh and clean base") {
+			Portlet.startServer();
+
+			User.firstLoginPG(
+				password = "test",
+				userEmailAddress = "test@liferay.com",
+				virtualHostsURL = "http://localhost:8080");
+		}
+
+		task ("And the user add two new partitions to emulate the same enviroment as before") {
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.able.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
+
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.baker.com",
+				portalInstanceId = "www.baker.com",
+				virtualHost = "www.baker.com");
+
+			User.firstLoginPG(
+				password = "test",
+				userEmailAddress = "test@www.able.com",
+				virtualHostsURL = "http://www.able.com:8080");
+		}
+
+		task ("Then he export the fresh schemas") {
+			var companyId1 = JSONCompany.getCompanyId(portalInstanceName = "www.able.com");
+			var companyId2 = JSONCompany.getCompanyId(portalInstanceName = "www.baker.com");
+
+			Portlet.shutdownServer();
+
+			AntCommands.runCommand("build-test.xml", "export-database-schema -Ddatabase.file.prefix=fresh -Ddatabase.schema.name=lportal");
+
+			AntCommands.runCommand("build-test.xml", "export-database-schema -Ddatabase.file.prefix=fresh -Ddatabase.schema.name=lpartition_${companyId1}");
+
+			AntCommands.runCommand("build-test.xml", "export-database-schema -Ddatabase.file.prefix=fresh -Ddatabase.schema.name=lpartition_${companyId2}");
+		}
+
+		task ("And validate that the schemas structure is the same between upgraded and fresh bases") {
+			UpgradeSchema.validateSchemas(
+				upgradedDBSchemaName = "lpartition_44913",
+				freshDBSchemaName = "lpartition_${companyId1}");
+
+			UpgradeSchema.validateSchemas(
+				upgradedDBSchemaName = "lpartition_42638",
+				freshDBSchemaName = "lpartition_${companyId2}");
+
+			UpgradeSchema.validateSchemas(
+				upgradedDBSchemaName = "lportal",
+				freshDBSchemaName = "lportal");
+		}
+	}
+
+	@ignore = "true"
+	@priority = 4
 	test CompareUpgradedAndFreshDatabaseSchemas6130 {
 		property custom.properties = "feature.flag.LPS-157670=true";
 		property data.archive.type = "data-archive-portal";

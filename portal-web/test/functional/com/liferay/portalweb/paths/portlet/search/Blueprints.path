@@ -327,7 +327,7 @@
 </tr>
 <tr>
 	<td>BLUEPRINTS_PREVIEW_SEARCH_RESULT_EMPTY</td>
-	<td>//div[contains(@class,'preview-sidebar')]//span[contains(.,'No results found')]</td>
+	<td>//div[contains(@class,'preview-sidebar')]//span[contains(.,'No Results Found')]</td>
 	<td></td>
 </tr>
 <tr>

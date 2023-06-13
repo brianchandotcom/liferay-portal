@@ -35,7 +35,6 @@ import com.liferay.headless.admin.user.resource.v1_0.AccountRoleResource;
 import com.liferay.headless.admin.user.resource.v1_0.OrganizationResource;
 import com.liferay.headless.admin.user.resource.v1_0.UserAccountResource;
 import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowDefinitionResource;
-import com.liferay.headless.commerce.admin.account.resource.v1_0.AdminAccountGroupResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentFolderResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
 import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseArticleResource;
@@ -139,8 +138,7 @@ public class SiteInitializerExtender
 				_accountEntryLocalService, _accountGroupLocalService,
 				_accountGroupRelService, _accountResourceFactory,
 				_accountRoleLocalService, _accountRoleResourceFactory,
-				_adminAccountGroupResourcefactory, _assetCategoryLocalService,
-				_assetListEntryLocalService, bundle,
+				_assetCategoryLocalService, _assetListEntryLocalService, bundle,
 				_clientExtensionEntryLocalService, _configurationProvider,
 				_ddmStructureLocalService, _ddmTemplateLocalService,
 				_defaultDDMStructureHelper, _dependencyManager, _dlURLHelper,
@@ -253,8 +251,7 @@ public class SiteInitializerExtender
 				_accountEntryLocalService, _accountGroupLocalService,
 				_accountGroupRelService, _accountResourceFactory,
 				_accountRoleLocalService, _accountRoleResourceFactory,
-				_adminAccountGroupResourcefactory, _assetCategoryLocalService,
-				_assetListEntryLocalService,
+				_assetCategoryLocalService, _assetListEntryLocalService,
 				ProxyUtil.newDelegateProxyInstance(
 					Bundle.class.getClassLoader(), Bundle.class,
 					new FileBackedBundleDelegate(
@@ -324,9 +321,6 @@ public class SiteInitializerExtender
 
 	@Reference
 	private AccountRoleResource.Factory _accountRoleResourceFactory;
-
-	@Reference
-	private AdminAccountGroupResource.Factory _adminAccountGroupResourcefactory;
 
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;

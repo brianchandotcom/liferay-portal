@@ -35,7 +35,6 @@ import com.liferay.headless.admin.user.resource.v1_0.AccountRoleResource;
 import com.liferay.headless.admin.user.resource.v1_0.OrganizationResource;
 import com.liferay.headless.admin.user.resource.v1_0.UserAccountResource;
 import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowDefinitionResource;
-import com.liferay.headless.commerce.admin.account.resource.v1_0.AdminAccountGroupResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentFolderResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
 import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseArticleResource;
@@ -107,7 +106,6 @@ public class SiteInitializerExtension {
 		AccountResource.Factory accountResourceFactory,
 		AccountRoleLocalService accountRoleLocalService,
 		AccountRoleResource.Factory accountRoleResourceFactory,
-		AdminAccountGroupResource.Factory adminAccountGroupResourceFactory,
 		AssetCategoryLocalService assetCategoryLocalService,
 		AssetListEntryLocalService assetListEntryLocalService, Bundle bundle,
 		ClientExtensionEntryLocalService clientExtensionEntryLocalService,
@@ -186,8 +184,7 @@ public class SiteInitializerExtension {
 			accountEntryLocalService, accountGroupLocalService,
 			accountGroupRelService, accountResourceFactory,
 			accountRoleLocalService, accountRoleResourceFactory,
-			adminAccountGroupResourceFactory, assetCategoryLocalService,
-			assetListEntryLocalService, bundle,
+			assetCategoryLocalService, assetListEntryLocalService, bundle,
 			clientExtensionEntryLocalService, configurationProvider,
 			ddmStructureLocalService, ddmTemplateLocalService,
 			defaultDDMStructureHelper, dlURLHelper,

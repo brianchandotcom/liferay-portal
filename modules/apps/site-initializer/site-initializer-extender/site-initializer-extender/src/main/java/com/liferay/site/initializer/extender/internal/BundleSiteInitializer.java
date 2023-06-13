@@ -64,8 +64,6 @@ import com.liferay.headless.admin.user.resource.v1_0.OrganizationResource;
 import com.liferay.headless.admin.user.resource.v1_0.UserAccountResource;
 import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowDefinition;
 import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowDefinitionResource;
-import com.liferay.headless.commerce.admin.account.dto.v1_0.AdminAccountGroup;
-import com.liferay.headless.commerce.admin.account.resource.v1_0.AdminAccountGroupResource;
 import com.liferay.headless.delivery.dto.v1_0.Document;
 import com.liferay.headless.delivery.dto.v1_0.DocumentFolder;
 import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseArticle;
@@ -241,7 +239,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		AccountResource.Factory accountResourceFactory,
 		AccountRoleLocalService accountRoleLocalService,
 		AccountRoleResource.Factory accountRoleResourceFactory,
-		AdminAccountGroupResource.Factory adminAccountGroupResourceFactory,
 		AssetCategoryLocalService assetCategoryLocalService,
 		AssetListEntryLocalService assetListEntryLocalService, Bundle bundle,
 		ClientExtensionEntryLocalService clientExtensionEntryLocalService,
@@ -318,7 +315,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_accountResourceFactory = accountResourceFactory;
 		_accountRoleLocalService = accountRoleLocalService;
 		_accountRoleResourceFactory = accountRoleResourceFactory;
-		_adminAccountGroupResourceFactory = adminAccountGroupResourceFactory;
 		_assetCategoryLocalService = assetCategoryLocalService;
 		_assetListEntryLocalService = assetListEntryLocalService;
 		_bundle = bundle;
@@ -719,35 +715,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private void _addAccountGroups(ServiceContext serviceContext)
 		throws Exception {
 
-		String json = SiteInitializerUtil.read(
-			"/site-initializer/account-groups.json", _servletContext);
-
-		if (json == null) {
+		if (_commerceSiteInitializer == null) {
 			return;
 		}
 
-		AdminAccountGroupResource.Builder builder =
-			_adminAccountGroupResourceFactory.create();
-
-		AdminAccountGroupResource adminAccountGroupResource = builder.user(
-			serviceContext.fetchUser()
-		).build();
-
-		JSONArray jsonArray = _jsonFactory.createJSONArray(json);
-
-		for (int i = 0; i < jsonArray.length(); i++) {
-			AdminAccountGroup accountGroup = AdminAccountGroup.toDTO(
-				String.valueOf(jsonArray.getJSONObject(i)));
-
-			if (accountGroup == null) {
-				_log.error(
-					"Unable to transform account group from JSON: " + json);
-
-				continue;
-			}
-
-			adminAccountGroupResource.postAccountGroup(accountGroup);
-		}
+		_commerceSiteInitializer.addAccountGroups(
+			serviceContext, _servletContext);
 	}
 
 	private void _addAccounts(ServiceContext serviceContext) throws Exception {
@@ -5008,8 +4981,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final AccountResource.Factory _accountResourceFactory;
 	private final AccountRoleLocalService _accountRoleLocalService;
 	private final AccountRoleResource.Factory _accountRoleResourceFactory;
-	private final AdminAccountGroupResource.Factory
-		_adminAccountGroupResourceFactory;
 	private final AssetCategoryLocalService _assetCategoryLocalService;
 	private final AssetListEntryLocalService _assetListEntryLocalService;
 	private final Bundle _bundle;

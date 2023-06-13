@@ -618,8 +618,10 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 
 		CommerceCatalog commerceCatalog = cpDefinition.getCommerceCatalog();
 
-		document.addKeyword(
-			"commerceCatalogId", commerceCatalog.getCommerceCatalogId());
+		if (commerceCatalog != null) {
+			document.addKeyword(
+				"commerceCatalogId", commerceCatalog.getCommerceCatalogId());
+		}
 
 		document.addText("defaultLanguageId", cpDefinitionDefaultLanguageId);
 

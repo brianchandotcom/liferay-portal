@@ -71,6 +71,8 @@ public class CPInstanceIndexer extends BaseIndexer<CPInstance> {
 			Field.COMPANY_ID, Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK,
 			Field.GROUP_ID, Field.MODIFIED_DATE, Field.SCOPE_GROUP_ID,
 			CPField.SKU, Field.UID);
+		setFilterSearch(true);
+		setPermissionAware(true);
 	}
 
 	@Override
@@ -272,8 +274,12 @@ public class CPInstanceIndexer extends BaseIndexer<CPInstance> {
 
 		CommerceCatalog commerceCatalog = cpDefinition.getCommerceCatalog();
 
-		document.addKeyword(
-			"commerceCatalogId", commerceCatalog.getCommerceCatalogId());
+		if (commerceCatalog != null) {
+			document.addKeyword(
+				"accountEntryId", commerceCatalog.getAccountEntryId());
+			document.addKeyword(
+				"commerceCatalogId", commerceCatalog.getCommerceCatalogId());
+		}
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Document " + cpInstance + " indexed successfully");

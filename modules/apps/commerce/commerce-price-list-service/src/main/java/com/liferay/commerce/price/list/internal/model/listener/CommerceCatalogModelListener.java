@@ -19,6 +19,11 @@ import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.model.CommerceCatalog;
+import com.liferay.commerce.product.service.CPInstanceLocalService;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -26,6 +31,7 @@ import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
 
@@ -54,16 +60,31 @@ public class CommerceCatalogModelListener
 
 	@Override
 	public void onAfterUpdate(
-		CommerceCatalog originalCommerceCatalog,
-		CommerceCatalog commerceCatalog) {
+			CommerceCatalog originalCommerceCatalog,
+			CommerceCatalog commerceCatalog)
+		throws ModelListenerException {
+
+		if (originalCommerceCatalog.getAccountEntryId() ==
+				commerceCatalog.getAccountEntryId()) {
+
+			return;
+		}
 
 		try {
-			_reindexPriceLists(commerceCatalog);
-		}
-		catch (PortalException portalException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(portalException);
+			Indexer<CPInstance> indexer =
+				IndexerRegistryUtil.nullSafeGetIndexer(CPInstance.class);
+
+			List<CPInstance> cpInstances =
+				_cpInstanceLocalService.getCPInstances(
+					commerceCatalog.getGroupId(), WorkflowConstants.STATUS_ANY,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+			for (CPInstance cpInstance : cpInstances) {
+				indexer.reindex(cpInstance);
 			}
+		}
+		catch (Exception exception) {
+			throw new ModelListenerException(exception);
 		}
 	}
 
@@ -110,6 +131,6 @@ public class CommerceCatalogModelListener
 	private CommerceBasePriceListHelper _commerceBasePriceListHelper;
 
 	@Reference
-	private CommercePriceListLocalService _commercePriceListLocalService;
+	private CPInstanceLocalService _cpInstanceLocalService;
 
 }

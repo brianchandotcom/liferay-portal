@@ -58,33 +58,38 @@ long cpInstanceId = cpInstanceCommercePriceEntryDisplayContext.getCPInstanceId()
 	</aui:form>
 </div>
 
-<aui:script use="liferay-item-selector-dialog">
+<aui:script sandbox="<%= true %>">
 	Liferay.on('<portlet:namespace />addCommercePriceEntry', () => {
-		var itemSelectorDialog = new A.LiferayItemSelectorDialog({
-			eventName: 'priceListsSelectItem',
-			on: {
-				selectedItemChange: function (event) {
-					var selectedItems = event.newVal;
+		const openerWindow = Liferay.Util.getOpener();
 
-					if (selectedItems) {
-						window.document.querySelector(
-							'#<portlet:namespace />commercePriceListIds'
-						).value = selectedItems;
+		openerWindow.Liferay.Util.openSelectionModal({
+			multiple: true,
+			onSelect: (selectedItems) => {
+				if (!selectedItems || !selectedItems.length) {
+					return;
+				}
 
-						var addCommercePriceEntryFm = window.document.querySelector(
-							'#<portlet:namespace />addCommercePriceEntryFm'
-						);
+				const commercePriceListIds = document.getElementById(
+					'<portlet:namespace />commercePriceListIds'
+				);
 
-						submitForm(addCommercePriceEntryFm);
-					}
-				},
+				if (commercePriceListIds) {
+					commercePriceListIds.value = selectedItems;
+				}
+
+				var addCommercePriceEntryFm = window.document.querySelector(
+					'#<portlet:namespace />addCommercePriceEntryFm'
+				);
+
+				if (addCommercePriceEntryFm) {
+					submitForm(addCommercePriceEntryFm);
+				}
 			},
+			selectEventName: 'priceListsSelectItem',
 			title:
 				'<liferay-ui:message arguments="<%= HtmlUtil.escape(cpInstance.getSku()) %>" key="add-x-to-price-list" />',
 			url:
 				'<%= cpInstanceCommercePriceEntryDisplayContext.getItemSelectorUrl() %>',
 		});
-
-		itemSelectorDialog.open();
 	});
 </aui:script>

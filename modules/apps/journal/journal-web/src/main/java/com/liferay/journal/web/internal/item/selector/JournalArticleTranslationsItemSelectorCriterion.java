@@ -26,10 +26,19 @@ public class JournalArticleTranslationsItemSelectorCriterion
 		return _articleId;
 	}
 
+	public long getGroupId() {
+		return _groupId;
+	}
+
 	public void setArticleId(String articleId) {
 		_articleId = articleId;
 	}
 
+	public void setGroupId(long groupId) {
+		_groupId = groupId;
+	}
+
 	private String _articleId;
+	private long _groupId;
 
 }

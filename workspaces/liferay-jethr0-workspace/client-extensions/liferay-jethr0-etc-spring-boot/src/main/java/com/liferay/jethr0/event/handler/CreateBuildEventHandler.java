@@ -67,15 +67,15 @@ public class CreateBuildEventHandler extends BaseObjectEventHandler {
 			ProjectRepository projectRepository = getProjectRepository();
 
 			projectRepository.update(project);
-
-			BuildQueue buildQueue = getBuildQueue();
-
-			buildQueue.addProject(project);
-
-			JenkinsQueue jenkinsQueue = getJenkinsQueue();
-
-			jenkinsQueue.invoke();
 		}
+
+		BuildQueue buildQueue = getBuildQueue();
+
+		buildQueue.addProject(project);
+
+		JenkinsQueue jenkinsQueue = getJenkinsQueue();
+
+		jenkinsQueue.invoke();
 
 		return project.toString();
 	}

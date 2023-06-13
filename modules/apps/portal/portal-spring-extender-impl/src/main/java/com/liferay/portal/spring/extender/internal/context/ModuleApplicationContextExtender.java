@@ -160,7 +160,6 @@ public class ModuleApplicationContextExtender
 					_dependencyManager.createServiceDependency();
 
 				serviceDependency.setRequired(true);
-
 				serviceDependency.setService(
 					Configuration.class,
 					StringBundler.concat(
@@ -176,7 +175,6 @@ public class ModuleApplicationContextExtender
 				_dependencyManager.createServiceDependency();
 
 			serviceDependency.setRequired(true);
-
 			serviceDependency.setService(
 				Release.class,
 				StringBundler.concat(

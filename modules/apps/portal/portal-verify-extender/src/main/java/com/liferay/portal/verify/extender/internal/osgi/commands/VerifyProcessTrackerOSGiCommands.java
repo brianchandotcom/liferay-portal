@@ -304,7 +304,6 @@ public class VerifyProcessTrackerOSGiCommands {
 					_counterLocalService.increment());
 
 				release.setServletContextName(bundle.getSymbolicName());
-
 				release.setVerified(false);
 			}
 

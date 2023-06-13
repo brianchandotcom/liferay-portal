@@ -125,7 +125,6 @@ public class ServiceConfigurationExtender
 			_dependencyManager.createServiceDependency();
 
 		serviceDependency.setRequired(true);
-
 		serviceDependency.setService(
 			Release.class,
 			StringBundler.concat(

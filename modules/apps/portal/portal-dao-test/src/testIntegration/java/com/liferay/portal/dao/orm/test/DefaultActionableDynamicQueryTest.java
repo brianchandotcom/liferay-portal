@@ -72,13 +72,10 @@ public class DefaultActionableDynamicQueryTest {
 
 				dynamicQuery.add(property.le(className.getClassNameId()));
 			});
-
 		actionableDynamicQuery.setAddOrderCriteriaMethod(
 			dynamicQuery -> OrderFactoryUtil.addOrderByComparator(
 				dynamicQuery, _descClassNameIdOrderByComparator));
-
 		actionableDynamicQuery.setInterval(1);
-
 		actionableDynamicQuery.setPerformActionMethod(
 			(ActionableDynamicQuery.PerformActionMethod<ClassName>)
 				actualClassNames::add);

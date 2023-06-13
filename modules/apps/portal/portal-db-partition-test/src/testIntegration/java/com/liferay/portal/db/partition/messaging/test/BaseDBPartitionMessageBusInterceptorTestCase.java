@@ -92,7 +92,6 @@ public abstract class BaseDBPartitionMessageBusInterceptorTestCase
 			_dbPartitionMessageBusInterceptor,
 			"_excludedMessageBusDestinationNames",
 			_currentExcludedMessageBusDestinationNames);
-
 		ReflectionTestUtil.setFieldValue(
 			_dbPartitionMessageBusInterceptor, "_excludedSchedulerJobNames",
 			_currentExcludedSchedulerJobNames);

@@ -294,7 +294,6 @@ public abstract class BaseDBPartitionTestCase {
 			ReflectionTestUtil.setFieldValue(
 				CurrentConnectionUtil.class, "_currentConnection",
 				defaultCurrentConnection);
-
 			ReflectionTestUtil.setFieldValue(
 				DBPartitionUtil.class, "_DATABASE_PARTITION_MIGRATE_ENABLED",
 				_DATABASE_PARTITION_MIGRATE_ENABLED);

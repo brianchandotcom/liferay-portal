@@ -82,11 +82,9 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 		ReflectionTestUtil.setFieldValue(
 			DBUpgrader.class, "_upgradeClient", _originalUpgradeClient);
-
 		ReflectionTestUtil.setFieldValue(
 			PropsValues.class, "UPGRADE_LOG_CONTEXT_ENABLED",
 			_originalUpgradeLogContextEnabled);
-
 		ReflectionTestUtil.setFieldValue(
 			PropsValues.class, "UPGRADE_REPORT_ENABLED",
 			_originalUpgradeReportEnabled);

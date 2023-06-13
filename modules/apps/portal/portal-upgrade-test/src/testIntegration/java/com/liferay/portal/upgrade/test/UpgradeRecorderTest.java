@@ -103,7 +103,6 @@ public class UpgradeRecorderTest {
 			release = _releaseLocalService.updateRelease(release);
 
 			StartupHelperUtil.setUpgrading(true);
-
 			StartupHelperUtil.setUpgrading(false);
 		}
 		finally {
@@ -148,7 +147,6 @@ public class UpgradeRecorderTest {
 	@Test
 	public void testSuccessByNoUpgrades() {
 		StartupHelperUtil.setUpgrading(true);
-
 		StartupHelperUtil.setUpgrading(false);
 
 		Assert.assertEquals("success", _getResult());

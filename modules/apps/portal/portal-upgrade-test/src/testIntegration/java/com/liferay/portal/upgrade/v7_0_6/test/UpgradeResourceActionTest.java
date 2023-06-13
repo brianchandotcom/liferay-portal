@@ -134,7 +134,6 @@ public class UpgradeResourceActionTest {
 			preparedStatement.setLong(
 				1,
 				_counterLocalService.increment(ResourceAction.class.getName()));
-
 			preparedStatement.setString(2, name);
 			preparedStatement.setString(3, actionId);
 			preparedStatement.setLong(4, bitwiseValue);

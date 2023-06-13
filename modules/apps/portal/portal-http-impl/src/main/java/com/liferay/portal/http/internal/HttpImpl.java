@@ -1057,7 +1057,6 @@ public class HttpImpl implements Http {
 
 		proxyHttpClientBuilder.setRoutePlanner(
 			new SystemDefaultRoutePlanner(ProxySelector.getDefault()));
-
 		proxyHttpClientBuilder.setConnectionManager(
 			_poolingHttpClientConnectionManagerDCLSingleton.getSingleton(
 				HttpImpl::_createPoolingHttpClientConnectionManager));

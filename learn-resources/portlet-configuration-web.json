@@ -1,15 +1,15 @@
 {
 	"general": {
 		"ar_SA": {
-			"message": "اقرأ المزيد.",
+			"message": "لمعرفة المزيد.",
 			"url": "https://learn.liferay.com/dxp/latest/en/site-building/creating-pages/using-widget-pages/configuring-widgets/communication-between-widgets.html"
 		},
 		"ca_ES": {
-			"message": "Llegir més.",
+			"message": "Aprèn més.",
 			"url": "https://learn.liferay.com/dxp/latest/en/site-building/creating-pages/using-widget-pages/configuring-widgets/communication-between-widgets.html"
 		},
 		"de_DE": {
-			"message": "Mehr dazu hier.",
+			"message": "Mehr erfahren.",
 			"url": "https://learn.liferay.com/dxp/latest/en/site-building/creating-pages/using-widget-pages/configuring-widgets/communication-between-widgets.html"
 		},
 		"en_US": {
@@ -17,23 +17,23 @@
 			"url": "https://learn.liferay.com/dxp/latest/en/site-building/creating-pages/using-widget-pages/configuring-widgets/communication-between-widgets.html"
 		},
 		"es_ES": {
-			"message": "Leer más.",
+			"message": "Aprender más.",
 			"url": "https://learn.liferay.com/dxp/latest/en/site-building/creating-pages/using-widget-pages/configuring-widgets/communication-between-widgets.html"
 		},
 		"eu": {
-			"message": "Irakurri gehiago.",
+			"message": "Irasi gehiago.",
 			"url": "https://learn.liferay.com/dxp/latest/en/site-building/creating-pages/using-widget-pages/configuring-widgets/communication-between-widgets.html"
 		},
 		"fi_FI": {
-			"message": "Lue lisää.",
+			"message": "Lisää.",
 			"url": "https://learn.liferay.com/dxp/latest/en/site-building/creating-pages/using-widget-pages/configuring-widgets/communication-between-widgets.html"
 		},
 		"fr_CA": {
-			"message": "Lire plus.",
+			"message": "Pour en savoir plus.",
 			"url": "https://learn.liferay.com/dxp/latest/en/site-building/creating-pages/using-widget-pages/configuring-widgets/communication-between-widgets.html"
 		},
 		"fr_FR": {
-			"message": "Lire plus.",
+			"message": "Pour en savoir plus.",
 			"url": "https://learn.liferay.com/dxp/latest/en/site-building/creating-pages/using-widget-pages/configuring-widgets/communication-between-widgets.html"
 		},
 		"gl_ES": {
@@ -41,19 +41,19 @@
 			"url": "https://learn.liferay.com/dxp/latest/en/site-building/creating-pages/using-widget-pages/configuring-widgets/communication-between-widgets.html"
 		},
 		"hu_HU": {
-			"message": "Bővebben.",
+			"message": "További információk.",
 			"url": "https://learn.liferay.com/dxp/latest/en/site-building/creating-pages/using-widget-pages/configuring-widgets/communication-between-widgets.html"
 		},
 		"ja_JP": {
-			"message": "詳しい内容はこちらをご覧ください。",
+			"message": "詳細ヘルプ。",
 			"url": "https://learn.liferay.com/dxp/latest/en/site-building/creating-pages/using-widget-pages/configuring-widgets/communication-between-widgets.html"
 		},
 		"nl_NL": {
-			"message": "Meer hierover.",
+			"message": "Meer weten.",
 			"url": "https://learn.liferay.com/dxp/latest/en/site-building/creating-pages/using-widget-pages/configuring-widgets/communication-between-widgets.html"
 		},
 		"pt_BR": {
-			"message": "Leia mais.",
+			"message": "Aprender mais.",
 			"url": "https://learn.liferay.com/dxp/latest/en/site-building/creating-pages/using-widget-pages/configuring-widgets/communication-between-widgets.html"
 		},
 		"sv_SE": {
@@ -65,7 +65,7 @@
 			"url": "https://learn.liferay.com/dxp/latest/en/site-building/creating-pages/using-widget-pages/configuring-widgets/communication-between-widgets.html"
 		},
 		"zh_TW": {
-			"message": "閱讀更多。",
+			"message": "學習更多。",
 			"url": "https://learn.liferay.com/dxp/latest/en/site-building/creating-pages/using-widget-pages/configuring-widgets/communication-between-widgets.html"
 		}
 	}

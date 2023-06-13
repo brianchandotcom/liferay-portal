@@ -156,8 +156,9 @@ public class LayoutPageTemplateStructureRelUpgradeProcess
 						fragmentEntryLink.getEditableValues(),
 						segmentsExperienceId));
 
-				_fragmentEntryLinkLocalService.updateFragmentEntryLink(
-					fragmentEntryLink);
+				fragmentEntryLink =
+					_fragmentEntryLinkLocalService.updateFragmentEntryLink(
+						fragmentEntryLink);
 
 				continue;
 			}

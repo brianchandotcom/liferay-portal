@@ -602,10 +602,8 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		layoutPageTemplateEntry.setModifiedDate(new Date());
 		layoutPageTemplateEntry.setDefaultTemplate(defaultTemplate);
 
-		layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
-			layoutPageTemplateEntry);
-
-		return layoutPageTemplateEntry;
+		return layoutPageTemplateEntryLocalService.
+			updateLayoutPageTemplateEntry(layoutPageTemplateEntry);
 	}
 
 	@Override

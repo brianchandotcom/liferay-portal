@@ -158,8 +158,9 @@ public class LayoutUpgradeProcess extends UpgradeProcess {
 					fragmentEntryLink.setClassPK(plid);
 					fragmentEntryLink.setPlid(plid);
 
-					_fragmentEntryLinkLocalService.updateFragmentEntryLink(
-						fragmentEntryLink);
+					fragmentEntryLink =
+						_fragmentEntryLinkLocalService.updateFragmentEntryLink(
+							fragmentEntryLink);
 
 					_fragmentEntryLinkLocalService.addFragmentEntryLink(
 						draftLayout.getUserId(), draftLayout.getGroupId(), 0,

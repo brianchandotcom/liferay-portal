@@ -151,8 +151,9 @@ public class LayoutPrototypeUpgradeProcess extends UpgradeProcess {
 						layoutPrototype.setModifiedDate(date);
 					}
 
-					_layoutPrototypeLocalService.updateLayoutPrototype(
-						layoutPrototype);
+					layoutPrototype =
+						_layoutPrototypeLocalService.updateLayoutPrototype(
+							layoutPrototype);
 				}
 
 				existingNames.add(name);

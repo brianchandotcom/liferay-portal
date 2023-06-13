@@ -1295,6 +1295,20 @@ definition {
 			menuItem = "Copy To",
 			rowEntry = ${dmDocumentTitle});
 
+		Alert.viewWarningSpecific(warningMessage = "The copying process may take some time. Note that categories, ratings, tags, and custom document types will not be copied.");
+
+		AssertElementPresent(
+			key_fieldLabel = "Copy From",
+			locator1 = "FormFields#FIELD_DISABLED");
+
+		AssertElementPresent(
+			key_fieldLabel = "Copy To",
+			locator1 = "FormFields#FIELD_DISABLED");
+
+		AssertVisible(
+			key_text = "Copy",
+			locator1 = "Button#ANY_DISABLED");
+
 		Button.clickSelect();
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");

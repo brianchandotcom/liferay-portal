@@ -25,7 +25,7 @@ export function getSettingValue(defaultValue, sessionClicksValue, key) {
 		);
 
 		if (localStorageValue !== null) {
-			return localStorageValue;
+			return localStorageValue === 'true' ? true : false;
 		}
 	}
 

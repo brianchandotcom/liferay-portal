@@ -973,9 +973,9 @@
 															"fragmentStyle": {
 																"borderColor": "colorNeutral4",
 																"height": "65px",
-																"maxWidth": "18%",
+																"maxWidth": "20%",
 																"paddingLeft": "2",
-																"width": "18%"
+																"width": "20%"
 															},
 															"indexed": true,
 															"layout": {
@@ -1221,7 +1221,8 @@
 															{
 																"definition": {
 																	"cssClasses": [
-																		"evp-table-border"
+																		"evp-table-border",
+																		"evp-service-requests"
 																	],
 																	"customCSS": ".evp-table-border {\nborder-bottom: 1px solid var(--color-neutral-4) !important;\n}",
 																	"fragmentStyle": {
@@ -1483,6 +1484,20 @@
 											}
 										],
 										"type": "Section"
+									},
+									{
+										"definition": {
+											"fragment": {
+												"key": "evp-request-filter",
+												"siteKey": "[$GROUP_KEY$]"
+											},
+											"fragmentConfig": {
+											},
+											"fragmentFields": [
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
 									}
 								],
 								"type": "FragmentDropZone"

@@ -176,7 +176,8 @@ const openModal = (btn_option) => {
 			],
 			headerHTML: `<p class="request-modal-header">Review Request:</p><p>${requestName}</p>`,
 		};
-	} else {
+	}
+	else {
 		modalConfigs =
 			btn_option === MODAL_BTN_OPTION.APPROVE
 				? {

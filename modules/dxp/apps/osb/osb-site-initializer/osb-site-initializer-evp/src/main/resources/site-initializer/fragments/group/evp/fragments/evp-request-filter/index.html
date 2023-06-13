@@ -1,0 +1,6 @@
+[#assign userRoles = permissionChecker.getUserBag().getRoles()/]
+[#list userRoles as role]
+	[#if role.name == "Liferay Manager"]
+<div class="evp-request-filter"></div>
+	[/#if]
+[/#list]

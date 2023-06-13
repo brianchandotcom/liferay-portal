@@ -3049,12 +3049,6 @@ tenantId=&quot;${ms.exchange.tenant.id}&quot;</echo>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="prepare-portal-search-osgi-configuration">
-		<sequential>
-			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.internal.index.configuration.IndexStatusManagerInternalConfiguration.config">suppressIndexReadOnly=B"true"</echo>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="prepare-portal-template-freemarker-osgi-configuration">
 		<sequential>
 			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.template.freemarker.configuration.FreeMarkerEngineConfiguration.config">asyncRenderTimeout=L"7200000"${line.separator}loopCountThreshold=I"2147483647"</echo>
@@ -11315,15 +11309,6 @@ ${update.properties}</echo>
 		<prepare-portal-elasticsearch-osgi-configuration />
 
 		<get-testcase-property property.name="portal.version" />
-
-		<if>
-			<not>
-				<isset property="portal.version" />
-			</not>
-			<then>
-				<prepare-portal-search-osgi-configuration/>
-			</then>
-		</if>
 
 		<prepare-portal-template-freemarker-osgi-configuration />
 

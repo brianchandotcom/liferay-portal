@@ -17,7 +17,6 @@ package com.liferay.portal.search.internal.upgrade.registry;
 import com.liferay.portal.configuration.persistence.upgrade.ConfigurationUpgradeStepFactory;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.util.PrefsProps;
-import com.liferay.portal.search.internal.index.configuration.IndexStatusManagerInternalConfiguration;
 import com.liferay.portal.search.internal.upgrade.v1_0_1.ReindexConfigurationUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
@@ -43,7 +42,8 @@ public class PortalSearchUpgradeStepRegistrator
 			_configurationUpgradeStepFactory.createUpgradeStep(
 				"com.liferay.portal.search.internal.index." +
 					"IndexStatusManagerInternalConfiguration",
-				IndexStatusManagerInternalConfiguration.class.getName()));
+				"com.liferay.portal.search.internal.index.configuration." +
+					"IndexStatusManagerInternalConfiguration"));
 
 		registry.register(
 			"1.0.0", "1.0.1",

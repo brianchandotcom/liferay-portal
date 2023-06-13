@@ -577,7 +577,8 @@ public class CPDefinitionsImporter {
 				cpInstance.setCost(
 					BigDecimal.valueOf(jsonObject.getDouble("cost", 0)));
 
-				_cpInstanceLocalService.updateCPInstance(cpInstance);
+				cpInstance = _cpInstanceLocalService.updateCPInstance(
+					cpInstance);
 
 				// Commerce warehouse items
 

@@ -202,7 +202,8 @@ public class CommerceOrderImporter {
 
 		commerceOrder.setCreateDate(createDate);
 
-		_commerceOrderLocalService.updateCommerceOrder(commerceOrder);
+		commerceOrder = _commerceOrderLocalService.updateCommerceOrder(
+			commerceOrder);
 
 		// Create CommerceContext
 

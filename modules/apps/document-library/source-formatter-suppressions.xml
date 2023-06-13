@@ -9,6 +9,5 @@
 	</checkstyle>
 	<source-check>
 		<suppress checks="BNDDefinitionKeysCheck" files="document-library-preview-pdf/bnd\.bnd" />
-		<suppress checks="JavaComponentAnnotationsCheck" files="document-library-service/src/main/java/com/liferay/document/library/internal/configuration/admin/service/DLFileOrderManagedServiceFactory\.java" />
 	</source-check>
 </suppressions>

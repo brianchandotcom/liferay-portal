@@ -25,7 +25,7 @@ import ClayLayout from '@clayui/layout';
 import ClayModal from '@clayui/modal';
 import ClayMultiSelect from '@clayui/multi-select';
 import classNames from 'classnames';
-import {format, getYear, isBefore} from 'date-fns';
+import {format, getYear, isBefore, isEqual} from 'date-fns';
 import {fetch, navigate, openModal, openToast, sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
@@ -95,7 +95,7 @@ function AddFDSFilterModalContent({
 	onSave,
 }: IPropsAddFDSFilterModalContent) {
 	const [from, setFrom] = useState<string>(
-		(filter as IDateFilter)?.from ?? ''
+		(filter as IDateFilter)?.from ?? format(new Date(), 'yyyy-MM-dd')
 	);
 	const [includeMode, setIncludeMode] = useState<string>(
 		filter
@@ -115,7 +115,9 @@ function AddFDSFilterModalContent({
 		fields.find((item) => item.name === filter?.fieldName) || null
 	);
 	const [selectedPicklist, setSelectedPicklist] = useState<IPickList>();
-	const [to, setTo] = useState<string>((filter as IDateFilter)?.to ?? '');
+	const [to, setTo] = useState<string>(
+		(filter as IDateFilter)?.to ?? format(new Date(), 'yyyy-MM-dd')
+	);
 
 	useEffect(() => {
 		getAllPicklists().then((items) => {
@@ -143,8 +145,12 @@ function AddFDSFilterModalContent({
 	useEffect(() => {
 		let isValid = true;
 
+		const dateTo = new Date(to);
+
+		const dateFrom = new Date(from);
+
 		if (to && from) {
-			isValid = isBefore(new Date(from), new Date(to));
+			isValid = isBefore(dateFrom, dateTo) || isEqual(dateFrom, dateTo);
 		}
 
 		setIsValidDateRange(isValid);

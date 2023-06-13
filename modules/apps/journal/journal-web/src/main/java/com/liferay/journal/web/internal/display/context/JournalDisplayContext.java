@@ -495,10 +495,6 @@ public class JournalDisplayContext {
 		return WorkflowConstants.STATUS_APPROVED;
 	}
 
-	public String getDeleteTranslationsEventName() {
-		return _liferayPortletResponse.getNamespace() + "selectTranslations";
-	}
-
 	public String getDisplayStyle() {
 		if (_displayStyle != null) {
 			return _displayStyle;
@@ -598,16 +594,6 @@ public class JournalDisplayContext {
 			).put(
 				"name", LanguageUtil.get(_themeDisplay.getLocale(), "home")
 			));
-	}
-
-	public String getFolderTitle() {
-		JournalFolder folder = getFolder();
-
-		if (folder != null) {
-			return folder.getName();
-		}
-
-		return StringPool.BLANK;
 	}
 
 	public List<NavigationItem> getInfoPanelNavigationItems() {

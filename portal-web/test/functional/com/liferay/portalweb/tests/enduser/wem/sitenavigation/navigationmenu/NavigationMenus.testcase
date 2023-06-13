@@ -1093,6 +1093,46 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-172782. The navigation menu creator could open the contextual menu via View Info action."
+	@priority = 3
+	test OpenContextualMenuViaViewInfoAction {
+		task ("Given a navigation menu creator has a navigation menu") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = ${randomSiteName},
+				title = "Web Content Title");
+
+			JSONSitenavigation.addSiteNavigationMenu(
+				groupName = ${randomSiteName},
+				siteNavigationMenuName = "Navigation Menu Name");
+		}
+
+		task ("When the navigation menu creator adds an item") {
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = ${siteURLKey});
+
+			NavigationMenusAdmin.editMenu(navigationMenuName = "Navigation Menu Name");
+
+			NavigationMenusAdmin.addItem(
+				assetTitle = "Web Content Title",
+				item = "Web Content Article");
+		}
+
+		task ("Then the navigation menu creators could open the contextual menu via View Info action") {
+			MouseOver(
+				key_itemName = "Web Content Title",
+				locator1 = "SiteNavigationMenu#ITEM_ENTRY");
+
+			LexiconCard.clickEllipsisItem(
+				card = "Web Content Title",
+				item = "View Info");
+
+			AssertTextEquals(
+				key_itemName = "Web Content Title",
+				locator1 = "SiteNavigationMenu#SIDEBAR_ITEM_NAME",
+				value1 = "Web Content Title");
+		}
+	}
+
 	@description = "This is a test for LPS-164113. The navigation menu preserves scroll position when saving."
 	@priority = 4
 	test PersistScrollPositionAfterSavingItem {

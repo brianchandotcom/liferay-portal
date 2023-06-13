@@ -22,7 +22,7 @@ import {FrontendDataSet} from '@liferay/frontend-data-set-web';
 import classNames from 'classnames';
 import {fetch, navigate, openModal, openToast} from 'frontend-js-web';
 import fuzzy from 'fuzzy';
-import React, {useRef, useState} from 'react';
+import React, {useState} from 'react';
 
 import '../css/FDSEntries.scss';
 import {
@@ -261,23 +261,56 @@ const RestEndpointDropdownMenu = ({
 	);
 };
 
-interface ISaveFDSEntryModalContentInterface {
+const FDSEntryLabelInput = ({
+	handleOnBlur,
+	labelValidationError,
+	namespace,
+	onChange,
+	value,
+}: {
+	handleOnBlur: () => void;
+	labelValidationError: boolean;
+	namespace: string;
+	onChange: Function;
+	value: string;
+}) => (
+	<ClayForm.Group
+		className={classNames({
+			'has-error': labelValidationError,
+		})}
+	>
+		<label htmlFor={`${namespace}fdsEntryLabelInput`}>
+			{Liferay.Language.get('name')}
+
+			<RequiredMark />
+		</label>
+
+		<ClayInput
+			id={`${namespace}fdsEntryLabelInput`}
+			onBlur={handleOnBlur}
+			onChange={(event) => onChange(event.target.value)}
+			type="text"
+			value={value}
+		/>
+
+		{labelValidationError && <ValidationFeedback />}
+	</ClayForm.Group>
+);
+
+interface IAddFDSEntryModalContentInterface {
 	closeModal: Function;
-	itemData?: FDSEntryType;
 	loadData: Function;
 	namespace: string;
-	rename?: boolean;
 	restApplications?: Array<string>;
 }
 
-const SaveFDSEntryModalContent = ({
+const AddFDSEntryModalContent = ({
 	closeModal,
-	itemData,
 	loadData,
 	namespace,
-	rename,
 	restApplications,
-}: ISaveFDSEntryModalContentInterface) => {
+}: IAddFDSEntryModalContentInterface) => {
+	const [fdsEntryLabel, setFDSEntryLabel] = useState('');
 	const [labelValidationError, setLabelValidationError] = useState(false);
 	const [
 		requiredRESTApplicationValidationError,
@@ -307,12 +340,6 @@ const SaveFDSEntryModalContent = ({
 		string | null
 	>();
 
-	const fdsEntryLabelRef = useRef<HTMLInputElement>(null);
-
-	if (itemData?.label && fdsEntryLabelRef.current) {
-		fdsEntryLabelRef.current.value = itemData.label;
-	}
-
 	const addFDSEntry = async () => {
 		if (!selectedRESTApplication) {
 			return;
@@ -321,7 +348,7 @@ const SaveFDSEntryModalContent = ({
 		selectedRESTApplication;
 
 		const body = {
-			label: fdsEntryLabelRef.current?.value,
+			label: fdsEntryLabel,
 			restApplication: selectedRESTApplication,
 			restEndpoint: selectedRESTEndpoint,
 			restSchema: selectedRESTSchema,
@@ -442,74 +469,36 @@ const SaveFDSEntryModalContent = ({
 	};
 
 	const validate = () => {
-		if (!fdsEntryLabelRef.current?.value) {
+		if (!fdsEntryLabel) {
 			setLabelValidationError(true);
 
 			return false;
 		}
 
-		if (!rename) {
-			if (!selectedRESTApplication) {
-				setRequiredRESTApplicationValidationError(true);
+		if (!selectedRESTApplication) {
+			setRequiredRESTApplicationValidationError(true);
 
-				return false;
-			}
+			return false;
+		}
 
-			if (noEnpointsRESTApplicationValidationError) {
-				return false;
-			}
+		if (noEnpointsRESTApplicationValidationError) {
+			return false;
+		}
 
-			if (!selectedRESTSchema) {
-				setRESTSchemaValidationError(true);
+		if (!selectedRESTSchema) {
+			setRESTSchemaValidationError(true);
 
-				return false;
-			}
+			return false;
+		}
 
-			if (!selectedRESTEndpoint) {
-				setRESTEndpointValidationError(true);
+		if (!selectedRESTEndpoint) {
+			setRESTEndpointValidationError(true);
 
-				return false;
-			}
+			return false;
 		}
 
 		return true;
 	};
-
-	function updateFDSEntry() {
-		if (itemData && fdsEntryLabelRef.current) {
-			fetch(itemData.actions.update.href, {
-				body: JSON.stringify({
-					externalReferenceCode: itemData.externalReferenceCode,
-					label: fdsEntryLabelRef.current.value,
-				}),
-				headers: {
-					'Accept': 'application/json',
-					'Content-Type': 'application/json',
-				},
-				method: itemData.actions.update.method,
-			})
-				.then(() => {
-					closeModal();
-
-					openToast({
-						message: Liferay.Language.get(
-							'your-request-completed-successfully'
-						),
-						type: 'success',
-					});
-
-					loadData();
-				})
-				.catch(() =>
-					openToast({
-						message: Liferay.Language.get(
-							'your-request-failed-to-complete'
-						),
-						type: 'danger',
-					})
-				);
-		}
-	}
 
 	const RestApplicationDropdown = () => (
 		<ClayDropDown
@@ -623,30 +612,15 @@ const SaveFDSEntryModalContent = ({
 			</ClayModal.Header>
 
 			<ClayModal.Body>
-				<ClayForm.Group
-					className={classNames({
-						'has-error': labelValidationError,
-					})}
-				>
-					<label htmlFor={`${namespace}fdsEntryLabelInput`}>
-						{Liferay.Language.get('name')}
-
-						<RequiredMark />
-					</label>
-
-					<ClayInput
-						id={`${namespace}fdsEntryLabelInput`}
-						onBlur={() => {
-							setLabelValidationError(
-								!fdsEntryLabelRef.current?.value
-							);
-						}}
-						ref={fdsEntryLabelRef}
-						type="text"
-					/>
-
-					{labelValidationError && <ValidationFeedback />}
-				</ClayForm.Group>
+				<FDSEntryLabelInput
+					handleOnBlur={() => {
+						setLabelValidationError(!fdsEntryLabel);
+					}}
+					labelValidationError={labelValidationError}
+					namespace={namespace}
+					onChange={setFDSEntryLabel}
+					value={fdsEntryLabel}
+				/>
 
 				{restApplications && (
 					<ClayForm.Group
@@ -732,15 +706,96 @@ const SaveFDSEntryModalContent = ({
 								const success = validate();
 
 								if (success) {
-									if (rename) {
-										updateFDSEntry();
-									}
-									else {
-										addFDSEntry();
-									}
+									addFDSEntry();
 								}
 							}}
 						>
+							{Liferay.Language.get('save')}
+						</ClayButton>
+
+						<ClayButton
+							displayType="secondary"
+							onClick={() => closeModal()}
+						>
+							{Liferay.Language.get('cancel')}
+						</ClayButton>
+					</ClayButton.Group>
+				}
+			/>
+		</>
+	);
+};
+
+const RenameFDSEntryModalContent = ({
+	closeModal,
+	itemData,
+	loadData,
+	namespace,
+}: {
+	closeModal: Function;
+	itemData: FDSEntryType;
+	loadData: Function;
+	namespace: string;
+}) => {
+	const [fdsEntryLabel, setFDSEntryLabel] = useState(itemData.label);
+	const [labelValidationError, setLabelValidationError] = useState(false);
+
+	function saveFDSEntryRename() {
+		fetch(itemData.actions.update.href, {
+			body: JSON.stringify({
+				externalReferenceCode: itemData.externalReferenceCode,
+				label: fdsEntryLabel,
+			}),
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json',
+			},
+			method: itemData.actions.update.method,
+		})
+			.then(() => {
+				closeModal();
+
+				openToast({
+					message: Liferay.Language.get(
+						'your-request-completed-successfully'
+					),
+					type: 'success',
+				});
+
+				loadData();
+			})
+			.catch(() =>
+				openToast({
+					message: Liferay.Language.get(
+						'your-request-failed-to-complete'
+					),
+					type: 'danger',
+				})
+			);
+	}
+
+	return (
+		<>
+			<ClayModal.Header>
+				{Liferay.Language.get('rename-data-set')}
+			</ClayModal.Header>
+
+			<ClayModal.Body>
+				<FDSEntryLabelInput
+					handleOnBlur={() => {
+						setLabelValidationError(!fdsEntryLabel);
+					}}
+					labelValidationError={labelValidationError}
+					namespace={namespace}
+					onChange={setFDSEntryLabel}
+					value={fdsEntryLabel}
+				/>
+			</ClayModal.Body>
+
+			<ClayModal.Footer
+				last={
+					<ClayButton.Group spaced>
+						<ClayButton onClick={saveFDSEntryRename}>
 							{Liferay.Language.get('save')}
 						</ClayButton>
 
@@ -779,7 +834,7 @@ const FDSEntries = ({
 						}: {
 							closeModal: Function;
 						}) => (
-							<SaveFDSEntryModalContent
+							<AddFDSEntryModalContent
 								closeModal={closeModal}
 								loadData={loadData}
 								namespace={namespace}
@@ -867,12 +922,11 @@ const FDSEntries = ({
 	}) => {
 		openModal({
 			contentComponent: ({closeModal}: {closeModal: Function}) => (
-				<SaveFDSEntryModalContent
+				<RenameFDSEntryModalContent
 					closeModal={closeModal}
 					itemData={itemData}
 					loadData={loadData}
 					namespace={namespace}
-					rename
 				/>
 			),
 		});

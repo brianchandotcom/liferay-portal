@@ -21,6 +21,183 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-172782. The navigation menu creator could add sibling item via keyboard."
+	@priority = 4
+	test AddSiblingNavigationMenuItemsViaKeyboard {
+		task ("Given a navigation menu creator has a navigation menu with an item") {
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Page Name");
+
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = ${randomSiteName},
+				title = "Web Content Title");
+
+			JSONSitenavigation.addSiteNavigationMenu(
+				groupName = ${randomSiteName},
+				siteNavigationMenuName = "Navigation Menu Name");
+
+			JSONSitenavigation.addSiteNavigationMenuItem(
+				groupName = ${randomSiteName},
+				privateLayout = "false",
+				siteNavigationMenuItemName = "Test Page Name",
+				siteNavigationMenuName = "Navigation Menu Name",
+				type = "layout");
+		}
+
+		task ("When the navigation menu creator focuses on the card body of page type item via Tab key") {
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = ${siteURLKey});
+
+			NavigationMenusAdmin.editMenu(navigationMenuName = "Navigation Menu Name");
+
+			KeyPress(
+				key_text = "cog",
+				locator1 = "Icon#ANY",
+				value1 = "\TAB");
+		}
+
+		task ("Then the navigation menu creators sees two plus icons on the card") {
+			TestUtils.assertElementFocused(element = "//div[contains(@aria-label,'Test Page Name')]");
+
+			for (var relationship : list "before,after") {
+				AssertVisible(
+					key_itemName = "Test Page Name",
+					key_relationship = ${relationship},
+					locator1 = "SiteNavigationMenu#ITEM_ENTRY_ADD_ICON");
+			}
+		}
+
+		task ("When the navigation menu creator press the Tab key") {
+			KeyPress(
+				locator1 = "//div[contains(@aria-label,'Test Page Name')]",
+				value1 = "\TAB");
+		}
+
+		task ("Then the drag icon is focused") {
+			TestUtils.assertElementFocused(element = "//div[contains(@class,'MenuItem')][.//p[contains(@class,'card-title')][normalize-space()='Test Page Name']]//div[contains(@draggable,'true')]//button");
+		}
+
+		task ("When the navigation menu creator press the Tab key") {
+			KeyPress(
+				key_sourceItemName = "Test Page Name",
+				locator1 = "SiteNavigationMenu#ITEM_ENTRY_DRAG_ICON",
+				value1 = "\TAB");
+		}
+
+		task ("Then the above plus icon is focused") {
+			TestUtils.assertElementFocused(element = "//div[contains(@class,'MenuItem')][.//p[contains(@class,'card-title')][normalize-space()='Test Page Name']]//button[contains(@aria-label,'Add item before')]");
+		}
+
+		task ("When the navigation menu creator press the Enter key") {
+			KeyPress(
+				key_itemName = "Test Page Name",
+				key_relationship = "before",
+				locator1 = "SiteNavigationMenu#ITEM_ENTRY_ADD_ICON",
+				value1 = "\ENTER");
+		}
+
+		task ("Then the navigation menu creator could create a URL type item") {
+			KeyPress(
+				key_menuItem = "Submenu",
+				locator1 = "MenuItem#ANY_MENU_ITEM",
+				value1 = "\DOWN");
+
+			KeyPress(
+				key_menuItem = "URL",
+				locator1 = "MenuItem#ANY_MENU_ITEM",
+				value1 = "\ENTER");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			NavigationMenusAdmin._addItemURL(
+				url = "https://www.liferay.com",
+				urlName = "Liferay");
+
+			Button.click(button = "Add");
+
+			SelectFrame.selectFrameTop();
+
+			Alert.viewSuccessMessage();
+
+			NavigationMenusAdmin.viewItemOrder(
+				index = 1,
+				itemName = "Liferay");
+
+			NavigationMenusAdmin.viewItemOrder(
+				index = 2,
+				itemName = "Test Page Name");
+
+			NavigationMenusAdmin.viewItemNotNested(itemNameList = "Liferay,Test Page Name");
+		}
+
+		task ("When the navigation menu creator focuses on the below plus icon of page type item via keyboard") {
+			KeyPress(
+				key_text = "cog",
+				locator1 = "Icon#ANY",
+				value1 = "\TAB");
+
+			KeyPress(
+				locator1 = "//div[contains(@aria-label,'Liferay')]",
+				value1 = "\DOWN");
+
+			KeyPress(
+				locator1 = "//div[contains(@aria-label,'Test Page Name')]",
+				value1 = "\TAB");
+
+			KeyPress(
+				key_sourceItemName = "Test Page Name",
+				locator1 = "SiteNavigationMenu#ITEM_ENTRY_DRAG_ICON",
+				value1 = "\TAB");
+
+			KeyPress(
+				key_itemName = "Test Page Name",
+				key_relationship = "before",
+				locator1 = "SiteNavigationMenu#ITEM_ENTRY_ADD_ICON",
+				value1 = "\TAB");
+
+			TestUtils.assertElementFocused(element = "//div[contains(@class,'MenuItem')][.//p[contains(@class,'card-title')][normalize-space()='Test Page Name']]//button[contains(@aria-label,'Add item after')]");
+		}
+
+		task ("Then the navigation menu creator could create a Web Content Article type item") {
+			KeyPress(
+				key_itemName = "Test Page Name",
+				key_relationship = "after",
+				locator1 = "SiteNavigationMenu#ITEM_ENTRY_ADD_ICON",
+				value1 = "\ENTER");
+
+			KeyPress(
+				key_menuItem = "Vocabulary",
+				locator1 = "MenuItem#ANY_MENU_ITEM",
+				value1 = "\DOWN");
+
+			KeyPress(
+				key_menuItem = "Web Content Article",
+				locator1 = "MenuItem#ANY_MENU_ITEM",
+				value1 = "\ENTER");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			Click(
+				key_listEntry = "Web Content Title",
+				locator1 = "LexiconList#LIST_ENTRY_TITLE");
+
+			SelectFrame.selectFrameTop();
+
+			Alert.viewSuccessMessage();
+
+			NavigationMenusAdmin.viewItemOrder(
+				index = 2,
+				itemName = "Test Page Name");
+
+			NavigationMenusAdmin.viewItemOrder(
+				index = 3,
+				itemName = "Web Content Title");
+
+			NavigationMenusAdmin.viewItemNotNested(itemNameList = "Web Content Title");
+		}
+	}
+
 	@description = "This is a test for LPS-171044. The site designer could select or deselect a parent node and all its child items via keyboard and mouse."
 	@priority = 3
 	test SelectOrDeselectParentNodeAndChildItemsViaKeyboardAndMouse {

@@ -51,7 +51,8 @@ public class LayoutRevisionWorkflowDefinitionLinkUpdateHandler
 
 			layoutRevision.setStatus(WorkflowConstants.STATUS_DRAFT);
 
-			_layoutRevisionLocalService.updateLayoutRevision(layoutRevision);
+			layoutRevision = _layoutRevisionLocalService.updateLayoutRevision(
+				layoutRevision);
 
 			try {
 				_workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(

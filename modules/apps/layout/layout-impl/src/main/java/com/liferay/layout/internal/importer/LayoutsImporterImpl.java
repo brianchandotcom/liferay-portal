@@ -1577,7 +1577,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 
 			layout.setColorSchemeId(null);
 
-			_layoutLocalService.updateLayout(layout);
+			layout = _layoutLocalService.updateLayout(layout);
 
 			return;
 		}

@@ -393,8 +393,9 @@ public class CPInstanceHelperTest {
 
 		cpDefinitionOptionRel1.setPriority(2);
 
-		_cpDefinitionOptionRelLocalService.updateCPDefinitionOptionRel(
-			cpDefinitionOptionRel1);
+		cpDefinitionOptionRel1 =
+			_cpDefinitionOptionRelLocalService.updateCPDefinitionOptionRel(
+				cpDefinitionOptionRel1);
 
 		CPDefinitionOptionRel cpDefinitionOptionRel2 =
 			CPTestUtil.addCPDefinitionOptionRel(
@@ -403,8 +404,9 @@ public class CPInstanceHelperTest {
 
 		cpDefinitionOptionRel2.setPriority(1);
 
-		_cpDefinitionOptionRelLocalService.updateCPDefinitionOptionRel(
-			cpDefinitionOptionRel2);
+		cpDefinitionOptionRel2 =
+			_cpDefinitionOptionRelLocalService.updateCPDefinitionOptionRel(
+				cpDefinitionOptionRel2);
 
 		Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
 			cpDefinitionOptionValueRelsMap =
@@ -450,8 +452,9 @@ public class CPInstanceHelperTest {
 
 		cpDefinitionOptionRel1.setName("Size");
 
-		_cpDefinitionOptionRelLocalService.updateCPDefinitionOptionRel(
-			cpDefinitionOptionRel1);
+		cpDefinitionOptionRel1 =
+			_cpDefinitionOptionRelLocalService.updateCPDefinitionOptionRel(
+				cpDefinitionOptionRel1);
 
 		CPDefinitionOptionRel cpDefinitionOptionRel2 =
 			CPTestUtil.addCPDefinitionOptionRel(
@@ -460,8 +463,9 @@ public class CPInstanceHelperTest {
 
 		cpDefinitionOptionRel2.setName("Color");
 
-		_cpDefinitionOptionRelLocalService.updateCPDefinitionOptionRel(
-			cpDefinitionOptionRel2);
+		cpDefinitionOptionRel2 =
+			_cpDefinitionOptionRelLocalService.updateCPDefinitionOptionRel(
+				cpDefinitionOptionRel2);
 
 		Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
 			cpDefinitionOptionValueRelsMap =

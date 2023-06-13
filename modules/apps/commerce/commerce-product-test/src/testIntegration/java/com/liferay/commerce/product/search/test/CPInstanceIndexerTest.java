@@ -94,7 +94,7 @@ public class CPInstanceIndexerTest {
 
 		cpInstance.setSku(sku);
 
-		_cpInstanceLocalService.updateCPInstance(cpInstance);
+		cpInstance = _cpInstanceLocalService.updateCPInstance(cpInstance);
 
 		_assertSearch("open", cpInstance.getCPDefinitionId(), cpInstance);
 		_assertSearch("open4life", cpInstance.getCPDefinitionId(), cpInstance);

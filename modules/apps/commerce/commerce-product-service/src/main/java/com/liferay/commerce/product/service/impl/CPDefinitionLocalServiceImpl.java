@@ -325,7 +325,7 @@ public class CPDefinitionLocalServiceImpl
 		cProduct.setUserName(user.getFullName());
 		cProduct.setLatestVersion(1);
 
-		_cProductLocalService.updateCProduct(cProduct);
+		cProduct = _cProductLocalService.updateCProduct(cProduct);
 
 		// Commerce product definition localization
 

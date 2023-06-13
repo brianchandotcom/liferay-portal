@@ -66,7 +66,9 @@ public class CommerceAvalaraDispatchTriggerImpl
 			dispatchTrigger.setActive(Boolean.TRUE);
 			dispatchTrigger.setCronExpression("0 0 0 1 * ?");
 
-			_dispatchTriggerLocalService.updateDispatchTrigger(dispatchTrigger);
+			dispatchTrigger =
+				_dispatchTriggerLocalService.updateDispatchTrigger(
+					dispatchTrigger);
 		}
 		catch (PortalException portalException) {
 			_log.error(
@@ -166,7 +168,9 @@ public class CommerceAvalaraDispatchTriggerImpl
 		if (dispatchTrigger != null) {
 			dispatchTrigger.setActive(commerceTaxMethod.isActive());
 
-			_dispatchTriggerLocalService.updateDispatchTrigger(dispatchTrigger);
+			dispatchTrigger =
+				_dispatchTriggerLocalService.updateDispatchTrigger(
+					dispatchTrigger);
 		}
 
 		return dispatchTrigger;

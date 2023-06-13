@@ -551,12 +551,14 @@ definition {
 			JSONObject.addObjectEntryViaJSONAPI(
 				fieldName = "title",
 				fieldValue = "Apple Fruit",
-				objectName = "CustomObject");
+				objectName = "CustomObject",
+				scope = "site");
 
 			JSONObject.addObjectEntryViaJSONAPI(
 				fieldName = "title",
 				fieldValue = "Banana Fruit",
-				objectName = "CustomObject");
+				objectName = "CustomObject",
+				scope = "site");
 		}
 
 		task ("Create a Web Content article") {
@@ -2394,15 +2396,18 @@ definition {
 		task ("Create three object entries that configure the title, siteID, and date fields") {
 			JSONObject.addObjectEntryViaJSONAPI(
 				fieldList = "title/Apple Fruit,siteID/3,date/2023-04-02",
-				objectName = "CustomObject");
+				objectName = "CustomObject",
+				scope = "site");
 
 			JSONObject.addObjectEntryViaJSONAPI(
 				fieldList = "title/Banana Fruit,siteID/2,date/2023-04-01",
-				objectName = "CustomObject");
+				objectName = "CustomObject",
+				scope = "site");
 
 			JSONObject.addObjectEntryViaJSONAPI(
 				fieldList = "title/Coconut Fruit,siteID/1,date/2023-04-03",
-				objectName = "CustomObject");
+				objectName = "CustomObject",
+				scope = "site");
 		}
 
 		task ("Go to the search page and execute a search for the object entries") {
@@ -2664,7 +2669,8 @@ definition {
 		JSONObject.addObjectEntryViaJSONAPI(
 			fieldName = "title",
 			fieldValue = "apple",
-			objectName = "CustomObject");
+			objectName = "CustomObject",
+			scope = "site");
 
 		Search.openSearchPage();
 

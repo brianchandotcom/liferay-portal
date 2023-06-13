@@ -199,8 +199,8 @@ public class DLFileOrderManagedServiceFactory implements ManagedServiceFactory {
 	private final Map<Long, DLFileOrderConfiguration>
 		_companyDLFileOrderConfigurations = new ConcurrentHashMap<>();
 	private final Map<String, Long> _companyIds = new ConcurrentHashMap<>();
-	private final Map<Long, DLFileOrderConfiguration> _groupDLFileOrderConfigurations =
-		new ConcurrentHashMap<>();
+	private final Map<Long, DLFileOrderConfiguration>
+		_groupDLFileOrderConfigurations = new ConcurrentHashMap<>();
 	private final Map<String, Long> _groupIds = new ConcurrentHashMap<>();
 
 	@Reference

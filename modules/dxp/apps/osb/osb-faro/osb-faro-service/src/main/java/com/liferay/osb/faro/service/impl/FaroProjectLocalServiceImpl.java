@@ -95,7 +95,7 @@ public class FaroProjectLocalServiceImpl
 		if ((friendlyURL == null) || Validator.isBlank(friendlyURL.trim())) {
 			group.setFriendlyURL(null);
 
-			_groupLocalService.updateGroup(group);
+			group = _groupLocalService.updateGroup(group);
 		}
 
 		long groupId = group.getGroupId();

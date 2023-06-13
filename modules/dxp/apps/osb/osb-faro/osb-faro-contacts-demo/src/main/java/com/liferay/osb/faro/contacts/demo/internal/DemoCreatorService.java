@@ -178,7 +178,7 @@ public abstract class DemoCreatorService {
 			user.setLastLoginDate(new Date());
 			user.setAgreedToTermsOfUse(true);
 
-			userLocalService.updateUser(user);
+			user = userLocalService.updateUser(user);
 
 			Role role = roleLocalService.getRole(
 				portal.getDefaultCompanyId(), userInfo[1]);

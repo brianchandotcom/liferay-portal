@@ -82,7 +82,7 @@ public class FaroChannelLocalServiceImpl
 
 		group.setFriendlyURL(null);
 
-		_groupLocalService.updateGroup(group);
+		group = _groupLocalService.updateGroup(group);
 
 		FaroChannel faroChannel = faroChannelPersistence.create(faroChannelId);
 

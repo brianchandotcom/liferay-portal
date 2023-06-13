@@ -23,65 +23,65 @@ public class AccessibilitySetting {
 		String cssClass, boolean defaultValue, String key, String label,
 		Boolean sessionClicksValue) {
 
-		this.cssClass = cssClass;
-		this.defaultValue = defaultValue;
-		this.key = key;
-		this.label = label;
-		this.sessionClicksValue = sessionClicksValue;
+		_cssClass = cssClass;
+		_defaultValue = defaultValue;
+		_key = key;
+		_label = label;
+		_sessionClicksValue = sessionClicksValue;
 	}
 
 	public String getCssClass() {
-		return cssClass;
+		return _cssClass;
 	}
 
 	public boolean getDefaultValue() {
-		return defaultValue;
+		return _defaultValue;
 	}
 
 	public String getKey() {
-		return key;
+		return _key;
 	}
 
 	public String getLabel() {
-		return label;
+		return _label;
 	}
 
 	public Boolean getSessionClicksValue() {
-		return sessionClicksValue;
+		return _sessionClicksValue;
 	}
 
 	public boolean isEnabled() {
-		if (sessionClicksValue != null) {
-			return sessionClicksValue;
+		if (_sessionClicksValue != null) {
+			return _sessionClicksValue;
 		}
 
-		return defaultValue;
+		return _defaultValue;
 	}
 
 	public void setCssClass(String cssClass) {
-		this.cssClass = cssClass;
+		_cssClass = cssClass;
 	}
 
 	public void setDefaultValue(boolean defaultValue) {
-		this.defaultValue = defaultValue;
+		_defaultValue = defaultValue;
 	}
 
 	public void setKey(String key) {
-		this.key = key;
+		_key = key;
 	}
 
 	public void setLabel(String label) {
-		this.label = label;
+		_label = label;
 	}
 
 	public void setSessionClicksValue(Boolean sessionClicksValue) {
-		this.sessionClicksValue = sessionClicksValue;
+		_sessionClicksValue = sessionClicksValue;
 	}
 
-	protected String cssClass;
-	protected boolean defaultValue;
-	protected String key;
-	protected String label;
-	protected Boolean sessionClicksValue;
+	private String _cssClass;
+	private boolean _defaultValue;
+	private String _key;
+	private String _label;
+	private Boolean _sessionClicksValue;
 
 }

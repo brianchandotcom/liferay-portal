@@ -15,6 +15,7 @@
 package com.liferay.commerce.product.definitions.web.internal.frontend.taglib.servlet.taglib;
 
 import com.liferay.account.service.AccountGroupRelLocalService;
+import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.definitions.web.internal.display.context.CPDefinitionsDisplayContext;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CommerceCatalog;
@@ -37,6 +38,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -103,7 +105,7 @@ public class CPDefinitionDetailsScreenNavigationEntry
 				_actionHelper, httpServletRequest, _accountGroupRelLocalService,
 				_commerceCatalogService, _commerceChannelRelService,
 				_configurationProvider, _cpDefinitionService, _cpFriendlyURL,
-				_itemSelector);
+				_itemSelector, _portletResourcePermission);
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, cpDefinitionsDisplayContext);
@@ -151,6 +153,11 @@ public class CPDefinitionDetailsScreenNavigationEntry
 
 	@Reference
 	private JSPRenderer _jspRenderer;
+
+	@Reference(
+		target = "(resource.name=" + CPConstants.RESOURCE_NAME_PRODUCT + ")"
+	)
+	private PortletResourcePermission _portletResourcePermission;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.product.definitions.web)"

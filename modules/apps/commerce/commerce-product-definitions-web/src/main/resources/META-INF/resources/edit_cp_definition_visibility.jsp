@@ -38,22 +38,24 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 	<aui:input name="commerceChannelIds" type="hidden" value="" />
 	<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_SAVE_DRAFT %>" />
 
-	<commerce-ui:panel
-		bodyClasses="p-0"
-		collapsed="<%= !cpDefinition.isChannelFilterEnabled() %>"
-		collapseLabel='<%= LanguageUtil.get(request, "filter") %>'
-		collapseSwitchName='<%= liferayPortletResponse.getNamespace() + "channelFilterEnabled" %>'
-		title='<%= LanguageUtil.get(request, "channels") %>'
-	>
-		<frontend-data-set:classic-display
-			contextParams="<%= contextParams %>"
-			creationMenu="<%= cpDefinitionsDisplayContext.getChannelsCreationMenu() %>"
-			dataProviderKey="<%= CommerceProductFDSNames.PRODUCT_CHANNELS %>"
-			formName="fm"
-			id="<%= CommerceProductFDSNames.PRODUCT_CHANNELS %>"
-			itemsPerPage="<%= 10 %>"
-		/>
-	</commerce-ui:panel>
+	<c:if test="<%= cpDefinitionsDisplayContext.hasManageCommerceProductChannelVisibility() %>">
+		<commerce-ui:panel
+			bodyClasses="p-0"
+			collapsed="<%= !cpDefinition.isChannelFilterEnabled() %>"
+			collapseLabel='<%= LanguageUtil.get(request, "filter") %>'
+			collapseSwitchName='<%= liferayPortletResponse.getNamespace() + "channelFilterEnabled" %>'
+			title='<%= LanguageUtil.get(request, "channels") %>'
+		>
+			<frontend-data-set:classic-display
+				contextParams="<%= contextParams %>"
+				creationMenu="<%= cpDefinitionsDisplayContext.getChannelsCreationMenu() %>"
+				dataProviderKey="<%= CommerceProductFDSNames.PRODUCT_CHANNELS %>"
+				formName="fm"
+				id="<%= CommerceProductFDSNames.PRODUCT_CHANNELS %>"
+				itemsPerPage="<%= 10 %>"
+			/>
+		</commerce-ui:panel>
+	</c:if>
 
 	<commerce-ui:panel
 		bodyClasses="p-0"

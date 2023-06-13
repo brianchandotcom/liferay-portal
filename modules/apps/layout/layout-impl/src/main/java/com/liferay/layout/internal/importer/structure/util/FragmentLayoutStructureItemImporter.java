@@ -928,6 +928,10 @@ public class FragmentLayoutStructureItemImporter
 		LayoutStructureItemImporterContext layoutStructureItemImporterContext,
 		List<Object> fragmentFields) {
 
+		if (fragmentFields == null) {
+			return _jsonFactory.createJSONObject();
+		}
+
 		JSONObject backgroundImageFragmentEntryProcessorValuesJSONObject =
 			_jsonFactory.createJSONObject();
 

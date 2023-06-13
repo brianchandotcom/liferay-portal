@@ -85,6 +85,8 @@ public class WorkspacePlugin implements Plugin<Settings> {
 					Plugin<Project> plugin = null;
 
 					if (project.getParent() == null) {
+						_applyPlugins(project);
+
 						for (ProjectConfigurator projectConfigurator :
 								workspaceExtension.getProjectConfigurators()) {
 
@@ -103,16 +105,6 @@ public class WorkspacePlugin implements Plugin<Settings> {
 					if (plugin != null) {
 						plugin.apply(project);
 					}
-				}
-
-			});
-
-		gradle.afterProject(
-			new Action<Project>() {
-
-				@Override
-				public void execute(Project project) {
-					_applyPlugins(project);
 				}
 
 			});

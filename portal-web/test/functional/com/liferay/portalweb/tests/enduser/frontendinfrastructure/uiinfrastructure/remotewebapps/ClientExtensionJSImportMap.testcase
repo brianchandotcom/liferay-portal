@@ -120,6 +120,32 @@ definition {
 		}
 	}
 
+	@description = "LPS-180167. Verify if not is possible publish when Bare Specifier field is empty"
+	@priority = 5
+	test CannotPublishWhenBareSpecifierFieldIsEmpty {
+		task ("And fills Name field") {
+			Type.typeNoMouseOver(
+				key_text = "Name",
+				locator1 = "TextInput#ANY",
+				value1 = "JS Import Map Entry Test");
+		}
+
+		task ("And fills JavaScript URL field") {
+			Type.typeNoMouseOver(
+				key_text = "JavaScript URL",
+				locator1 = "TextInput#ANY",
+				value1 = "https://liferay.github.io/liferay-frontend-projects/");
+		}
+
+		task ("And clicks on Publish button") {
+			Button.clickPublish();
+		}
+
+		task ("Then an error message should be displayed ") {
+			Alert.viewSpecificRequiredField(fieldFieldLabel = "Bare Specifier");
+		}
+	}
+
 	@description = "LPS-180167. Verify if not is possible publish when field Name is empty"
 	@priority = 5
 	test CannotPublishWithFieldNameEmpty {

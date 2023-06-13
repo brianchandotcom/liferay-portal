@@ -92,6 +92,8 @@ definition {
 
 	@summary = "This calls the JSON WS API to create an Objects entry with any number of fields"
 	macro addObjectEntryViaJSONAPI {
+		Variables.assertDefined(parameterList = ${objectName});
+
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (!(isSet(userEmailAddress))) {
@@ -102,13 +104,19 @@ definition {
 			var userPassword = "test";
 		}
 
-		if (!(isSet(groupName))) {
-			var groupName = "Guest";
+		if (${scope} == "site") {
+			if (!(isSet(groupName))) {
+				var groupName = "Guest";
+			}
+
+			var groupId = JSONGroupAPI._getGroupIdByName(
+				groupName = ${groupName},
+				site = "true");
+		}
+		else {
+			var groupId = 0;
 		}
 
-		var groupId = JSONGroupAPI._getGroupIdByName(
-			groupName = ${groupName},
-			site = "true");
 		var objectId = JSONObject.getObjectId(
 			objectName = ${objectName},
 			userEmailAddress = ${userEmailAddress},
@@ -134,7 +142,6 @@ definition {
 
 				ListUtil.remove(${fieldList}, ${fieldNameValue});
 
-				var size = ListUtil.size(${fieldList});
 				var listEmpty = ListUtil.isEmpty(${fieldList});
 
 				if (${listEmpty} == "false") {

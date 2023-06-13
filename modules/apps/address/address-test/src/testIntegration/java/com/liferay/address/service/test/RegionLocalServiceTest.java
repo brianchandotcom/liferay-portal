@@ -111,7 +111,8 @@ public class RegionLocalServiceTest {
 		organization.setRegionId(region.getRegionId());
 		organization.setCountryId(region.getCountryId());
 
-		_organizationLocalService.updateOrganization(organization);
+		organization = _organizationLocalService.updateOrganization(
+			organization);
 
 		Assert.assertFalse(
 			ListUtil.isEmpty(

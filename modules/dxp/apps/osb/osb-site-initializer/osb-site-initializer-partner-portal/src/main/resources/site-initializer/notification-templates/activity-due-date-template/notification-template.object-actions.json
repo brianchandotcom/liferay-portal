@@ -1,0 +1,13 @@
+[
+	{
+		"active": true,
+		"externalReferenceCode": "ACTIVITY-DUE-DATE-NOTIFICATION",
+		"label": {
+			"en_US": "Notification Due Date Template Action"
+		},
+		"name": "NotificationDueDateTemplateAction",
+		"objectActionExecutorKey": "notification",
+		"objectActionTriggerKey": "standalone",
+		"objectDefinitionId": "[$OBJECT_DEFINITION_ID:Activity$]"
+	}
+]

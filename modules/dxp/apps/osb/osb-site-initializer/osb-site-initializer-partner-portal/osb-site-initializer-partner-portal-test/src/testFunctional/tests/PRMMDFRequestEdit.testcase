@@ -227,7 +227,67 @@ definition {
 				newBugdetValue = 2000);
 		}
 
-		task ("Then the informations will be updated") {
+		task ("Then the information will be updated") {
+			PRMNavigator.gotoMDF(requestId = ${staticRequestId});
+
+			PRMMDFRequest.viewMDFCompanyDetails(campaignName = "Campaign Name Edited");
+
+			PRMMDFRequest.viewMDFActivityDetails(
+				activityName = "Activity Name Edited",
+				budget = "2,000",
+				expense = "Content Creation");
+		}
+	}
+
+	@description = "This is a test for LPS-187090. Verify that the PMU can edit an MDF in 'Draft' Status"
+	@priority = 5
+	test PMUCanEditMDFInDraftStatus {
+		property test.name.skip.portal.instance = "PRMMDFRequestEdit#PMUCanEditMDFInDraftStatus";
+
+		task ("Given that a MDF Request is saved as draft") {
+			PRMNavigator.openSitePage(pageName = "MDF Requests");
+
+			Button.click(button = "New Request");
+
+			PRMMDFRequest.fillGoalsPage(
+				accountName = "Company Name 1",
+				campaignDescription = "Campaign Description",
+				campaignName = "Campaign Name Draft",
+				goalsOptions = "Lead generation",
+				targetMarketOptions = "Education,Energy",
+				targetRolesOptions = "Administrator");
+
+			Button.click(button = "Save as Draft");
+		}
+
+		task ("And the PMU goes to edit the draft MDF") {
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name Draft");
+
+			PRMMDFRequest.editButton();
+		}
+
+		task ("When the PMU add a new activity and change the MDF name") {
+			PRMMDFRequest.editMDF(
+				activityDescription = "Campaign Description",
+				budgetList = "Sponsorship Fee-2000",
+				campaignName = "Campaign Name Edited",
+				leadList = "No",
+				newActivity = "Activity Name Added",
+				tactic = "Other",
+				typeOfActivity = "Miscellaneous Marketing");
+		}
+
+		task ("Then the MDF information will be updated") {
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name Edited");
+
+			PRMMDFRequest.viewMDFCompanyDetails(campaignName = "Campaign Name Edited");
+
+			PRMMDFRequest.viewMDFActivityDetails(
+				activityName = "Activity Name Added",
+				budget = "2,000",
+				expense = "Sponsorship Fee");
+		}
+	}
 			PRMNavigator.gotoMDF(requestId = ${staticRequestId});
 
 			PRMMDFRequest.viewMDFCompanyDetails(campaignName = "Campaign Name Edited");

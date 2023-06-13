@@ -8,7 +8,7 @@
 		"label": {
 			"en_US": "Notification Due Date Template Action"
 		},
-		"name": "NotificationDueDateTemplateAction",
+		"name": "notificationDueDateTemplateAction",
 		"objectActionExecutorKey": "notification",
 		"objectActionTriggerKey": "standalone",
 		"objectDefinitionId": "[$OBJECT_DEFINITION_ID:Activity$]"

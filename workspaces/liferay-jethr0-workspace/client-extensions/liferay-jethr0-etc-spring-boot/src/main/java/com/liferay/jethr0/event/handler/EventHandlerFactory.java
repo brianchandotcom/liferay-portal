@@ -39,6 +39,21 @@ public class EventHandlerFactory {
 			eventHandler = new BuildStartedEventHandler(
 				_eventHandlerHelper, messageJSONObject);
 		}
+		else if ((eventType == EventHandler.EventType.COMPUTER_BUSY) ||
+				 (eventType == EventHandler.EventType.COMPUTER_OFFLINE) ||
+				 (eventType == EventHandler.EventType.COMPUTER_ONLINE) ||
+				 (eventType ==
+					 EventHandler.EventType.COMPUTER_TEMPORARILY_OFFLINE) ||
+				 (eventType ==
+					 EventHandler.EventType.COMPUTER_TEMPORARILY_ONLINE)) {
+
+			eventHandler = new ComputerUpdateEventHandler(
+				_eventHandlerHelper, messageJSONObject);
+		}
+		else if (eventType == EventHandler.EventType.COMPUTER_IDLE) {
+			eventHandler = new ComputerIdleEventHandler(
+				_eventHandlerHelper, messageJSONObject);
+		}
 		else if (eventType == EventHandler.EventType.CREATE_BUILD) {
 			eventHandler = new CreateBuildEventHandler(
 				_eventHandlerHelper, messageJSONObject);

@@ -16,6 +16,8 @@ package com.liferay.jethr0.event.handler;
 
 import com.liferay.jethr0.build.repository.BuildRunRepository;
 import com.liferay.jethr0.build.run.BuildRun;
+import com.liferay.jethr0.jenkins.node.JenkinsNode;
+import com.liferay.jethr0.jenkins.repository.JenkinsNodeRepository;
 import com.liferay.jethr0.util.StringUtil;
 
 import java.net.URL;
@@ -112,6 +114,19 @@ public abstract class BaseJenkinsEventHandler extends BaseEventHandler {
 				getJenkinsURL(), "job/", getJobName(), "/", getBuildNumber()));
 	}
 
+	protected JSONObject getComputerJSONObject() throws Exception {
+		JSONObject messageJSONObject = getMessageJSONObject();
+
+		JSONObject computerJSONObject = messageJSONObject.optJSONObject(
+			"computer");
+
+		if (computerJSONObject == null) {
+			throw new Exception("Missing 'computer' JSON object");
+		}
+
+		return computerJSONObject;
+	}
+
 	protected JSONObject getJenkinsJSONObject() throws Exception {
 		JSONObject messageJSONObject = getMessageJSONObject();
 
@@ -123,6 +138,15 @@ public abstract class BaseJenkinsEventHandler extends BaseEventHandler {
 		}
 
 		return jenkinsJSONObject;
+	}
+
+	protected JenkinsNode getJenkinsNode() throws Exception {
+		JSONObject computerJSONObject = getComputerJSONObject();
+
+		JenkinsNodeRepository jenkinsNodeRepository =
+			getJenkinsNodeRepository();
+
+		return jenkinsNodeRepository.get(computerJSONObject.getString("name"));
 	}
 
 	protected URL getJenkinsURL() throws Exception {
@@ -155,6 +179,22 @@ public abstract class BaseJenkinsEventHandler extends BaseEventHandler {
 		}
 
 		return jobJSONObject.optString("name");
+	}
+
+	protected JenkinsNode updateJenkinsNode() throws Exception {
+		JSONObject computerJSONObject = getComputerJSONObject();
+
+		computerJSONObject.put(
+			"idle", !computerJSONObject.getBoolean("busy")
+		).put(
+			"offline", !computerJSONObject.getBoolean("online")
+		);
+
+		JenkinsNode jenkinsNode = getJenkinsNode();
+
+		jenkinsNode.update(computerJSONObject);
+
+		return jenkinsNode;
 	}
 
 }

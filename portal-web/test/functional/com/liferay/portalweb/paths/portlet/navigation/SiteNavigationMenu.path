@@ -21,6 +21,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ITEM_ENTRY_ADD_ICON</td>
+	<td>//div[contains(@class,'MenuItem')][.//p[contains(@class,'card-title')][normalize-space()='${key_itemName}']]//button[contains(@aria-label,'Add item ${key_relationship}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ITEM_ENTRY_N</td>
 	<td>xpath=(//div[contains(@class,'MenuItem')])[${key_index}]</td>
 	<td></td>

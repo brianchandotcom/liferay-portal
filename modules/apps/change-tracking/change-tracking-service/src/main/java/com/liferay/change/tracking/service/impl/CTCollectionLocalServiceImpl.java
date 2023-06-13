@@ -876,6 +876,17 @@ public class CTCollectionLocalServiceImpl
 			throw new SystemException(exception);
 		}
 
+		List<CTEntry> newCTEntries =
+			_ctEntryLocalService.getCTCollectionCTEntries(
+				newCTCollection.getCtCollectionId());
+
+		if (newCTEntries.size() != publishedCTEntries.size()) {
+			throw new SystemException(
+				StringBundler.concat(
+					"Size mismatch expected ", publishedCTEntries.size(),
+					" but was ", newCTEntries.size()));
+		}
+
 		_ctServiceRegistry.onAfterCopy(undoCTCollection, newCTCollection);
 
 		return newCTCollection;

@@ -606,10 +606,9 @@ definition {
 
 		WaitForConsoleTextPresent(value1 = "Returning connection with ID: __REMOTE__");
 
-		// LRCI-2401
+		Navigator.openSpecificURL(url = "http://localhost:9201");
 
-		//Navigator.openSpecificURL(url = "http://localhost:9201");
-		//AssertTextNotPresent(value1 = "cluster_name");
+		AssertTextNotPresent(value1 = "cluster_name");
 
 		Navigator.openURL();
 

@@ -883,7 +883,8 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 							scopeGroup.setLiveGroupId(
 								oldScopeGroup.getGroupId());
 
-							_groupLocalService.updateGroup(scopeGroup);
+							scopeGroup = _groupLocalService.updateGroup(
+								scopeGroup);
 						}
 						else {
 							oldScopeGroup.setLiveGroupId(

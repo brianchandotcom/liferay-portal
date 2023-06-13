@@ -75,7 +75,8 @@ public class SystemEventCheckTest {
 
 			systemEvent.setCreateDate(createDate);
 
-			SystemEventLocalServiceUtil.updateSystemEvent(systemEvent);
+			systemEvent = SystemEventLocalServiceUtil.updateSystemEvent(
+				systemEvent);
 
 			expiredSystemEvents.add(systemEvent);
 		}

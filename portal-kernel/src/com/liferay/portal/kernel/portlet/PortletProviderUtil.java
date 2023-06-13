@@ -41,7 +41,8 @@ public class PortletProviderUtil {
 	public static String getPortletId(
 		String className, PortletProvider.Action action) {
 
-		PortletProvider portletProvider = getPortletProvider(className, action);
+		PortletProvider portletProvider = _getPortletProvider(
+			className, action);
 
 		if (portletProvider != null) {
 			return portletProvider.getPortletName();
@@ -55,7 +56,8 @@ public class PortletProviderUtil {
 			String className, PortletProvider.Action action)
 		throws PortalException {
 
-		PortletProvider portletProvider = getPortletProvider(className, action);
+		PortletProvider portletProvider = _getPortletProvider(
+			className, action);
 
 		if (portletProvider != null) {
 			return portletProvider.getPortletURL(httpServletRequest, group);
@@ -69,7 +71,8 @@ public class PortletProviderUtil {
 			PortletProvider.Action action)
 		throws PortalException {
 
-		PortletProvider portletProvider = getPortletProvider(className, action);
+		PortletProvider portletProvider = _getPortletProvider(
+			className, action);
 
 		if (portletProvider != null) {
 			return portletProvider.getPortletURL(httpServletRequest);
@@ -98,33 +101,6 @@ public class PortletProviderUtil {
 			action);
 	}
 
-	protected static PortletProvider getPortletProvider(
-		String className, PortletProvider.Action action) {
-
-		PortletProvider portletProvider = _getPortletProvider(
-			action, _serviceTrackerMap.getService(className));
-
-		if ((portletProvider == null) && isAssetObject(className)) {
-			portletProvider = _getPortletProvider(
-				action,
-				_serviceTrackerMap.getService(AssetEntry.class.getName()));
-		}
-
-		return portletProvider;
-	}
-
-	protected static boolean isAssetObject(String className) {
-		AssetRendererFactory<?> assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				className);
-
-		if (assetRendererFactory != null) {
-			return true;
-		}
-
-		return false;
-	}
-
 	private static PortletProvider _getPortletProvider(
 		PortletProvider.Action action, List<PortletProvider> portletProviders) {
 
@@ -141,6 +117,33 @@ public class PortletProviderUtil {
 		}
 
 		return null;
+	}
+
+	private static PortletProvider _getPortletProvider(
+		String className, PortletProvider.Action action) {
+
+		PortletProvider portletProvider = _getPortletProvider(
+			action, _serviceTrackerMap.getService(className));
+
+		if ((portletProvider == null) && _isAssetObject(className)) {
+			portletProvider = _getPortletProvider(
+				action,
+				_serviceTrackerMap.getService(AssetEntry.class.getName()));
+		}
+
+		return portletProvider;
+	}
+
+	private static boolean _isAssetObject(String className) {
+		AssetRendererFactory<?> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				className);
+
+		if (assetRendererFactory != null) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final ServiceTrackerMap<String, List<PortletProvider>>

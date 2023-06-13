@@ -142,6 +142,39 @@ public class StructuredContentResourceTest
 
 	@Override
 	@Test
+	public void testDeleteAssetLibraryStructuredContentByExternalReferenceCode()
+		throws Exception {
+
+		_useDepotDDMStructureStructureId = true;
+
+		super.testDeleteAssetLibraryStructuredContentByExternalReferenceCode();
+
+		StructuredContent randomStructuredContent = randomStructuredContent();
+
+		randomStructuredContent.setExternalReferenceCode("");
+
+		StructuredContent postStructuredContent =
+			structuredContentResource.postAssetLibraryStructuredContent(
+				testDeleteAssetLibraryStructuredContentByExternalReferenceCode_getAssetLibraryId(),
+				randomStructuredContent);
+
+		assertHttpResponseStatusCode(
+			204,
+			structuredContentResource.
+				deleteAssetLibraryStructuredContentByExternalReferenceCodeHttpResponse(
+					testDeleteAssetLibraryStructuredContentByExternalReferenceCode_getAssetLibraryId(),
+					postStructuredContent.getUuid()));
+
+		assertHttpResponseStatusCode(
+			404,
+			structuredContentResource.
+				getAssetLibraryStructuredContentByExternalReferenceCodeHttpResponse(
+					testDeleteAssetLibraryStructuredContentByExternalReferenceCode_getAssetLibraryId(),
+					postStructuredContent.getExternalReferenceCode()));
+	}
+
+	@Override
+	@Test
 	public void testDeleteStructuredContentMyRating() throws Exception {
 		super.testDeleteStructuredContentMyRating();
 

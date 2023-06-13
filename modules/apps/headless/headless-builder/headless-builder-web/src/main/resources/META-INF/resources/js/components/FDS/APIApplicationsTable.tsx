@@ -17,6 +17,7 @@ import {openModal} from 'frontend-js-web';
 import React from 'react';
 
 import {CreateAPIApplicationModalContent} from '../modals/CreateAPIApplicationModalContent';
+import {DeleteAPIApplicationModalContent} from '../modals/DeleteAPIApplicationModalContent';
 import {getAPIApplicationsFDSProps} from './fdsUtils/fdsProps';
 
 interface APIApplicationsTableProps {
@@ -46,12 +47,34 @@ export default function APIApplicationsTable({
 		},
 	};
 
+	const deleteAPIApplication = (itemData: ItemData, loadData: voidReturn) => {
+		openModal({
+			center: true,
+			contentComponent: ({closeModal}: {closeModal: voidReturn}) =>
+				DeleteAPIApplicationModalContent({
+					closeModal,
+					itemData,
+					loadData,
+				}),
+			id: 'deleteAPIApplicationModal',
+			size: 'md',
+			status: 'danger',
+		});
+	};
+
+	function onActionDropdownItemClick({action, itemData, loadData}: FDSItem) {
+		if (action.id === 'deleteAPIApplication') {
+			deleteAPIApplication(itemData, loadData);
+		}
+	}
+
 	return (
 		<FrontendDataSet
 			{...getAPIApplicationsFDSProps(apiURLPaths.applications, portletId)}
 			creationMenu={{
 				primaryItems: readOnly ? [] : ([createAPIApplication] as any),
 			}}
+			onActionDropdownItemClick={onActionDropdownItemClick}
 		/>
 	);
 }

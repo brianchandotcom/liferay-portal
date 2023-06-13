@@ -33,21 +33,18 @@ export function getAPIApplicationsFDSProps(
 		itemsActions: [
 			{
 				icon: 'view',
-				id: 'editApiApplication',
+				id: 'editAPIApplication',
 				label: Liferay.Language.get('view'),
 			},
 			{
 				data: {
-					confirmationMessage: Liferay.Language.get(
-						'this-action-cannot-be-undone'
-					),
 					id: 'delete',
 					method: 'delete',
 					permissionKey: 'delete',
 				},
 				icon: 'trash',
+				id: 'deleteAPIApplication',
 				label: Liferay.Language.get('delete'),
-				target: 'headless',
 			},
 		],
 		pagination: {

@@ -3,39 +3,27 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property testcase.url = "http://localhost:8080";
 	property testray.main.component.name = "Navigation";
 
-	setUp {
-		task ("Set up instance and sign in") {
-			TestCase.setUpPortalInstance();
+	static var randomSiteName = StringUtil.randomString(8);
+	static var randomNavigationMenuName = StringUtil.randomString(8);
+	var siteURLKey = StringUtil.toLowerCase(${randomSiteName});
 
+	setUp {
+		task ("Sign in") {
 			User.firstLoginPG();
 		}
 
 		task ("Add a site") {
-			HeadlessSite.addSite(siteName = "Test Site Name");
+			HeadlessSite.addSite(siteName = ${randomSiteName});
 		}
 
 		task ("Add a navigation menu in Global site") {
 			JSONSitenavigation.addSiteNavigationMenu(
 				auto = "false",
 				groupName = "Global",
-				siteNavigationMenuName = "Global Navigation Menu Name");
-		}
-	}
-
-	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
-		if (${testPortalInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
-
-			JSONSitenavigation.deleteSiteNavigationMenu(
-				groupName = "Global",
-				siteNavigationMenuName = "Global Navigation Menu Name");
+				siteNavigationMenuName = ${randomNavigationMenuName});
 		}
 	}
 
@@ -48,12 +36,12 @@ definition {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",
 				displayPageTemplateEntryName = "Web Content DPT",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				subType = "Basic Web Content");
 		}
 
 		task ("Add a Display Page Content fragment to the first display page template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = ${siteURLKey});
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Web Content DPT");
 
@@ -72,11 +60,11 @@ definition {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Blogs Entry",
 				displayPageTemplateEntryName = "Blogs Entry DPT",
-				groupName = "Test Site Name");
+				groupName = ${randomSiteName});
 		}
 
 		task ("Add a Display Page Content fragment to the second display page template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = ${siteURLKey});
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Blogs Entry DPT");
 
@@ -95,12 +83,12 @@ definition {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Document",
 				displayPageTemplateEntryName = "Document DPT",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				subType = "Basic Document");
 		}
 
 		task ("Add a Display Page Content fragment to the third display page template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = ${siteURLKey});
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Document DPT");
 
@@ -119,11 +107,11 @@ definition {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Category",
 				displayPageTemplateEntryName = "Category DPT",
-				groupName = "Test Site Name");
+				groupName = ${randomSiteName});
 		}
 
 		task ("Add a Display Page Content fragment to the fourth display page template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = ${siteURLKey});
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Category DPT");
 
@@ -141,46 +129,46 @@ definition {
 		task ("Add a web content based on Basic Web Content") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Web Content Title");
 		}
 
 		task ("Add a blogs entry") {
 			HeadlessBlog.addBlogEntry(
 				content = "Blogs Entry Content",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Blogs Entry Title");
 		}
 
 		task ("Add a document with an image") {
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentTitle = "Document Title",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				mimeType = "image/jpeg",
 				sourceFileName = "Document_1.jpg");
 		}
 
 		task ("Add a vocabulary") {
 			JSONCategory.addVocabulary(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Vocabulary Name");
 		}
 
 		task ("Add a category") {
 			JSONCategory.addCategory(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Category Name",
 				vocabularyName = "Vocabulary Name");
 		}
 
 		task ("Add a navigation menu") {
 			JSONSitenavigation.addSiteNavigationMenu(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				siteNavigationMenuName = "Navigation Menu Name");
 		}
 
 		task ("Add the Display Page type items in navigation menu") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = ${siteURLKey});
 
 			NavigationMenusAdmin.editMenu(navigationMenuName = "Navigation Menu Name");
 		}
@@ -211,14 +199,14 @@ definition {
 
 		task ("Add a widget page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name");
 		}
 
 		task ("Select the navigation menu in Navigation Menu widget") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			NavigationMenusWidget.gotoNavigationMenuWidgetConfig();
 
@@ -282,35 +270,37 @@ definition {
 	@description = "This is a test for LPS-141352. The navigation menu admin could add a global or asset library vocabulary item to navigation menu."
 	@priority = 4
 	test AddGlobalOrAssetLibraryVocabularyNavigationMenuItem {
+		var randomDepotName = StringUtil.randomString(8);
+
 		task ("Given a navigation menu admin has a navigation menu") {
 			task ("Add an asset library") {
 				JSONDepot.addDepot(
 					depotDescription = "This is the description of a depot",
-					depotName = "Test Depot Name");
+					depotName = ${randomDepotName});
 			}
 
 			task ("Connect the asset library to the site") {
 				JSONDepot.connectSite(
-					depotName = "Test Depot Name",
-					groupName = "Test Site Name");
+					depotName = ${randomDepotName},
+					groupName = ${randomSiteName});
 			}
 
 			task ("Add a navigation menu") {
 				JSONSitenavigation.addSiteNavigationMenu(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					siteNavigationMenuName = "Navigation Menu Name");
 			}
 
 			task ("Add a vocabulary in asset library") {
 				JSONCategory.addVocabulary(
-					groupName = "Test Depot Name",
+					groupName = ${randomDepotName},
 					site = "false",
 					title = "Vocabulary Name");
 			}
 		}
 
 		task ("When the navigation menu admin adds vocabulary type item") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = ${siteURLKey});
 
 			NavigationMenusAdmin.editMenu(navigationMenuName = "Navigation Menu Name");
 		}
@@ -323,10 +313,6 @@ definition {
 			for (var itemName : list "Topic,Vocabulary Name") {
 				NavigationMenusAdmin.viewItem(itemName = ${itemName});
 			}
-
-			task ("Delete the asset library") {
-				JSONDepot.deleteDepot(depotName = "Test Depot Name");
-			}
 		}
 	}
 
@@ -338,18 +324,18 @@ definition {
 
 		task ("Add a page to the site") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name");
 		}
 
 		task ("Add a navigation menu") {
 			JSONSitenavigation.addSiteNavigationMenu(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				siteNavigationMenuName = "Navigation Menu Name");
 		}
 
 		task ("Navigate to the navigation menu") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = ${siteURLKey});
 
 			NavigationMenusAdmin.editMenu(navigationMenuName = "Navigation Menu Name");
 		}
@@ -394,18 +380,18 @@ definition {
 
 		task ("Add a page to the site") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name");
 		}
 
 		task ("Add a navigation menu") {
 			JSONSitenavigation.addSiteNavigationMenu(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				siteNavigationMenuName = "Navigation Menu Name");
 		}
 
 		task ("Navigate to the navigation menu") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = ${siteURLKey});
 
 			NavigationMenusAdmin.editMenu(navigationMenuName = "Navigation Menu Name");
 		}
@@ -435,16 +421,16 @@ definition {
 
 		task ("Add a page to the site") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name");
 		}
 
 		task ("Add a navigation menu") {
 			JSONSitenavigation.addSiteNavigationMenu(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				siteNavigationMenuName = "Navigation Menu Name");
 
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = ${siteURLKey});
 
 			NavigationMenusAdmin.editMenu(navigationMenuName = "Navigation Menu Name");
 		}
@@ -464,7 +450,7 @@ definition {
 		task ("Navigate to the Navigation Menu widget") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 		}
 
 		task ("Configure the Navigation Menu widget to use the navigation menu") {
@@ -487,7 +473,7 @@ definition {
 
 			var siteName = TestCase.getSiteName(siteName = ${siteName});
 
-			SelectWindow(locator1 = "title=Test Page Name - Test Site Name - ${siteName}");
+			SelectWindow(locator1 = "title=Test Page Name - ${randomSiteName} - ${siteName}");
 		}
 	}
 
@@ -499,16 +485,16 @@ definition {
 
 		task ("Add a page to the site") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name");
 		}
 
 		task ("Add a navigation menu") {
 			JSONSitenavigation.addSiteNavigationMenu(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				siteNavigationMenuName = "Navigation Menu Name");
 
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = ${siteURLKey});
 
 			NavigationMenusAdmin.editMenu(navigationMenuName = "Navigation Menu Name");
 		}
@@ -527,7 +513,7 @@ definition {
 		task ("Navigate to the Navigation Menu widget") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 		}
 
 		task ("Configure the Navigation Menu widget to use the navigation menu") {
@@ -556,19 +542,19 @@ definition {
 		task ("Given a navigation menu admin has a navigation menu") {
 			task ("Add a navigation menu") {
 				JSONSitenavigation.addSiteNavigationMenu(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					siteNavigationMenuName = "Navigation Menu Name");
 			}
 
 			task ("Add a vocabulary") {
 				JSONCategory.addVocabulary(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					title = "Vocabulary Name");
 			}
 		}
 
 		task ("When the navigation menu admin adds a Vocabulary type item to navigation menu") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = ${siteURLKey});
 
 			NavigationMenusAdmin.editMenu(navigationMenuName = "Navigation Menu Name");
 
@@ -609,12 +595,12 @@ definition {
 
 			AssertElementNotPresent(
 				key_addNewPages = "Yes",
-				key_rowEntry = "Global Navigation Menu Name",
+				key_rowEntry = ${randomNavigationMenuName},
 				locator1 = "SiteNavigationMenu#MENU_ADD_NEW_PAGES");
 		}
 
 		task ("Assert no checkbox for Add Page to Global navigation menu when creating a page in normal site") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteName});
 
 			LexiconEntry.gotoAddMenuItem(menuItem = "Page");
 
@@ -623,7 +609,7 @@ definition {
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 			AssertElementNotPresent(
-				checkboxName = "Global Navigation Menu Name",
+				checkboxName = ${randomNavigationMenuName},
 				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
 	}
@@ -636,7 +622,7 @@ definition {
 		task ("Navigate to the Global navigation menu") {
 			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "global");
 
-			NavigationMenusAdmin.editMenu(navigationMenuName = "Global Navigation Menu Name");
+			NavigationMenusAdmin.editMenu(navigationMenuName = ${randomNavigationMenuName});
 		}
 
 		task ("Assert no Page option in drop down list") {
@@ -667,14 +653,14 @@ definition {
 	test CannotViewWarningMessageInContextualMenuOnceChangeToAnItemWithoutAssociatedDisplayPage {
 		task ("Add a vocabulary") {
 			JSONCategory.addVocabulary(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Vocabulary Name");
 		}
 
 		task ("Add two categories") {
 			for (var i : list "1,2") {
 				JSONCategory.addCategory(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					title = "Category Name ${i}",
 					vocabularyName = "Vocabulary Name");
 			}
@@ -684,9 +670,9 @@ definition {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Category",
 				displayPageTemplateEntryName = "Category DPT",
-				groupName = "Test Site Name");
+				groupName = ${randomSiteName});
 
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = ${siteURLKey});
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Category DPT");
 
@@ -698,7 +684,7 @@ definition {
 		}
 
 		task ("Associate the display page template to the second category") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteURLKey = ${siteURLKey});
 
 			Category.editCP(
 				categoryName = "Category Name 2",
@@ -709,12 +695,12 @@ definition {
 
 		task ("Add a navigation menu") {
 			JSONSitenavigation.addSiteNavigationMenu(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				siteNavigationMenuName = "Navigation Menu Name");
 		}
 
 		task ("Add an item based on the first category") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = ${siteURLKey});
 
 			NavigationMenusAdmin.editMenu(navigationMenuName = "Navigation Menu Name");
 
@@ -757,37 +743,37 @@ definition {
 	@priority = 4
 	test ChangeSameAssetTypeItem {
 		task ("Add two Categories with different asset types") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteURLKey = ${siteURLKey});
 
 			Vocabulary.addWithAssociatedAssetTypeCP(
 				assetType = "Document",
 				vocabularyName = "Vocabulary Name 1");
 
 			JSONCategory.addCategory(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Document Category Name",
 				vocabularyName = "Vocabulary Name 1");
 
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteURLKey = ${siteURLKey});
 
 			Vocabulary.addWithAssociatedAssetTypeCP(
 				assetType = "Web Content Article",
 				vocabularyName = "Vocabulary Name 2");
 
 			JSONCategory.addCategory(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Web Content Article Category Name",
 				vocabularyName = "Vocabulary Name 2");
 		}
 
 		task ("Add a navigation menu") {
 			JSONSitenavigation.addSiteNavigationMenu(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				siteNavigationMenuName = "Navigation Menu Name");
 		}
 
 		task ("Navigate to the navigation menu") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = ${siteURLKey});
 
 			NavigationMenusAdmin.editMenu(navigationMenuName = "Navigation Menu Name");
 		}
@@ -819,16 +805,16 @@ definition {
 
 		task ("Add 2 navigation menus") {
 			JSONSitenavigation.addSiteNavigationMenu(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				siteNavigationMenuName = "Navigation Menu Name 1");
 
 			JSONSitenavigation.addSiteNavigationMenu(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				siteNavigationMenuName = "Navigation Menu Name 2");
 		}
 
 		task ("Delete all navigation menus") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = ${siteURLKey});
 
 			NavigationMenusAdmin.deleteAllCP();
 		}
@@ -848,12 +834,12 @@ definition {
 
 		task ("Add a navigation menu") {
 			JSONSitenavigation.addSiteNavigationMenu(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				siteNavigationMenuName = "Navigation Menu Name");
 		}
 
 		task ("Delete the navigation menu") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = ${siteURLKey});
 
 			NavigationMenusAdmin.deleteCP(navigationMenuName = "Navigation Menu Name");
 		}
@@ -869,13 +855,13 @@ definition {
 		task ("Add two navigation menus") {
 			for (var n : list "1,2") {
 				JSONSitenavigation.addSiteNavigationMenu(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					siteNavigationMenuName = "Navigation Menu Name ${n}");
 			}
 		}
 
 		task ("Navigate to Navigation Menus admin") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = ${siteURLKey});
 		}
 
 		task ("Mark the first navigation menu as Primary Navigation") {
@@ -910,13 +896,13 @@ definition {
 		task ("Add two navigation menus") {
 			for (var n : list "1,2") {
 				JSONSitenavigation.addSiteNavigationMenu(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					siteNavigationMenuName = "Navigation Menu Name ${n}");
 			}
 		}
 
 		task ("Navigate to Navigation Menus admin") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = ${siteURLKey});
 		}
 
 		task ("Mark the first navigation menu as Secondary Navigation") {
@@ -938,13 +924,13 @@ definition {
 		task ("Add two navigation menus") {
 			for (var n : list "1,2") {
 				JSONSitenavigation.addSiteNavigationMenu(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					siteNavigationMenuName = "Navigation Menu Name ${n}");
 			}
 		}
 
 		task ("Navigate to Navigation Menus admin") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = ${siteURLKey});
 		}
 
 		task ("Mark the second navigation menu as Social Navigation") {
@@ -968,21 +954,21 @@ definition {
 
 			while (${i} != 16) {
 				JSONLayout.addPublicLayout(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					layoutName = "Test Page Name ${i}");
 
 				var i = ${i} + 1;
 			}
 
 			JSONSitenavigation.addSiteNavigationMenu(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				siteNavigationMenuName = "Navigation Menu Name");
 
 			var i = 1;
 
 			while (${i} != 16) {
 				JSONSitenavigation.addSiteNavigationMenuItem(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					privateLayout = "false",
 					siteNavigationMenuItemName = "Test Page Name ${i}",
 					siteNavigationMenuName = "Navigation Menu Name",
@@ -993,7 +979,7 @@ definition {
 		}
 
 		task ("When the site designer saves changes of the item at the bottom of the page") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = ${siteURLKey});
 
 			NavigationMenusAdmin.editMenu(navigationMenuName = "Navigation Menu Name");
 
@@ -1029,12 +1015,12 @@ definition {
 
 		task ("Add a navigation menu") {
 			JSONSitenavigation.addSiteNavigationMenu(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				siteNavigationMenuName = "Navigation Menu Name");
 		}
 
 		task ("Rename the navigation menu") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = ${siteURLKey});
 
 			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "Rename",
@@ -1058,21 +1044,21 @@ definition {
 		task ("Add two pages") {
 			for (var n : list "1,2") {
 				JSONLayout.addPublicLayout(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					layoutName = "Test Page Name ${n}");
 			}
 		}
 
 		task ("Add a navigation menu") {
 			JSONSitenavigation.addSiteNavigationMenu(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				siteNavigationMenuName = "Navigation Menu Name");
 		}
 
 		task ("Add the first page and second page to the navigation menu") {
 			for (var layoutName : list "Test Page Name 1,Test Page Name 2") {
 				JSONSitenavigation.addSiteNavigationMenuItem(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					privateLayout = "false",
 					siteNavigationMenuItemName = ${layoutName},
 					siteNavigationMenuName = "Navigation Menu Name",
@@ -1081,7 +1067,7 @@ definition {
 		}
 
 		task ("Navigate to the Navigation Menus admin") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = ${siteURLKey});
 		}
 
 		task ("Mark the navigation menu as Primary Navigation") {
@@ -1106,7 +1092,7 @@ definition {
 		task ("Select the Primary Navigation in the Navigation Menu widget") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name 1",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			NavigationMenusWidget.gotoNavigationMenuWidgetConfig();
 
@@ -1122,11 +1108,11 @@ definition {
 		task ("Navigate to the second page via Navigation Menu widget") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name 3",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			var portalURL = PropsUtil.get("portal.url");
 
-			AssertLocation(value1 = "${portalURL}/web/test-site-name/test-page-name-2");
+			AssertLocation(value1 = "${portalURL}/web/${siteURLKey}/test-page-name-2");
 		}
 	}
 
@@ -1138,21 +1124,21 @@ definition {
 
 			while (${i} != 16) {
 				JSONLayout.addPublicLayout(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					layoutName = "Test Page Name ${i}");
 
 				var i = ${i} + 1;
 			}
 
 			JSONSitenavigation.addSiteNavigationMenu(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				siteNavigationMenuName = "Navigation Menu Name");
 
 			var i = 1;
 
 			while (${i} != 16) {
 				JSONSitenavigation.addSiteNavigationMenuItem(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					privateLayout = "false",
 					siteNavigationMenuItemName = "Test Page Name ${i}",
 					siteNavigationMenuName = "Navigation Menu Name",
@@ -1163,7 +1149,7 @@ definition {
 		}
 
 		task ("When the site designer scrolls down to the bottom of navigation menu editor") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = ${siteURLKey});
 
 			NavigationMenusAdmin.editMenu(navigationMenuName = "Navigation Menu Name");
 
@@ -1187,7 +1173,7 @@ definition {
 				key_itemName = "Test Page Name 15",
 				locator1 = "SiteNavigationMenu#ITEM_ENTRY");
 
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = ${siteURLKey});
 
 			NavigationMenusAdmin.editMenu(navigationMenuName = "Navigation Menu Name");
 
@@ -1209,13 +1195,13 @@ definition {
 		task ("Add two navigation menus with option to offer new pages flagged") {
 			for (var n : list "1,2") {
 				JSONSitenavigation.addSiteNavigationMenu(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					siteNavigationMenuName = "Navigation Menu Name ${n}");
 			}
 		}
 
 		task ("Navigate to pages admin") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 		}
 
 		task ("Add a page and automatically add it to both navigation menus") {
@@ -1231,7 +1217,7 @@ definition {
 		}
 
 		task ("Navigate to the first navigation menu") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = ${siteURLKey});
 
 			NavigationMenusAdmin.editMenu(navigationMenuName = "Navigation Menu Name 1");
 		}
@@ -1243,7 +1229,7 @@ definition {
 		}
 
 		task ("Navigate to the second navigation menu") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = ${siteURLKey});
 
 			NavigationMenusAdmin.editMenu(navigationMenuName = "Navigation Menu Name 2");
 		}
@@ -1255,7 +1241,7 @@ definition {
 		}
 
 		task ("Disable the option to offer new pages for the first navigation menu") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = ${siteURLKey});
 
 			NavigationMenusAdmin.editMenu(navigationMenuName = "Navigation Menu Name 1");
 
@@ -1263,7 +1249,7 @@ definition {
 		}
 
 		task ("Add a third page and assert that while adding the new page, the checkbox to add a new page to the first navigation menu is not present") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PagesAdmin.addPage(
 				assertCheckboxMissing = "true",
@@ -1272,7 +1258,7 @@ definition {
 		}
 
 		task ("Assert the third page was not added to the first navigation menu") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = ${siteURLKey});
 
 			NavigationMenusAdmin.editMenu(navigationMenuName = "Navigation Menu Name 1");
 
@@ -1285,11 +1271,11 @@ definition {
 	test ViewBehaviorsOfNavigationMenuItemCreation {
 		task ("Given a site designer has a navigation menu") {
 			JSONSitenavigation.addSiteNavigationMenu(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				siteNavigationMenuName = "Navigation Menu Name");
 
 			JSONCategory.addVocabulary(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Vocabulary Name");
 
 			var list = ListUtil.newList();
@@ -1297,7 +1283,7 @@ definition {
 
 			while (${i} != 10) {
 				JSONCategory.addCategory(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					title = "Category Name ${i}",
 					vocabularyName = "Vocabulary Name");
 
@@ -1308,12 +1294,12 @@ definition {
 
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Web Content Title");
 		}
 
 		task ("When the site designer adds 10 Category type items at one time") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = ${siteURLKey});
 
 			NavigationMenusAdmin.editMenu(navigationMenuName = "Navigation Menu Name");
 
@@ -1356,22 +1342,22 @@ definition {
 	test ViewCategoryAddedToNearestAncestor {
 		task ("Add three hierarchy levels categories to a vocabulary within a site") {
 			JSONCategory.addVocabulary(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Vocabulary Name");
 
 			JSONCategory.addCategory(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Category Name",
 				vocabularyName = "Vocabulary Name");
 
 			JSONCategory.addSubcategory(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				parentCategoryName = "Category Name",
 				title = "Subcategory Name",
 				vocabularyName = "Vocabulary Name");
 
 			JSONCategory.addSubcategory(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				parentCategoryName = "Subcategory Name",
 				title = "SubSubcategory Name",
 				vocabularyName = "Vocabulary Name");
@@ -1379,12 +1365,12 @@ definition {
 
 		task ("Add a navigation menu") {
 			JSONSitenavigation.addSiteNavigationMenu(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				siteNavigationMenuName = "Navigation Menu Name");
 		}
 
 		task ("Add first and third category into Navigation Menu") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = ${siteURLKey});
 
 			NavigationMenusAdmin.editMenu(navigationMenuName = "Navigation Menu Name");
 
@@ -1395,7 +1381,7 @@ definition {
 
 		task ("View third level of category is nested to first category") {
 			NavigationMenusAdmin.viewItemNested(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				itemNameList = "SubSubcategory Name",
 				parentItemNameList = "Category Name",
 				site = "true",
@@ -1408,12 +1394,12 @@ definition {
 	test ViewDropdownMenuIconsInNavigationAdmin {
 		task ("Given a Navigation menu creator has a new navigation menu") {
 			JSONSitenavigation.addSiteNavigationMenu(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				siteNavigationMenuName = "Navigation Menu Name");
 		}
 
 		task ("When the Navigation menu creator opens the dropdown menu of navigation menu") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = ${siteURLKey});
 
 			LexiconEntry.openEntryMenu(rowEntry = "Navigation Menu Name");
 		}
@@ -1439,12 +1425,12 @@ definition {
 		task ("Add three content pages") {
 			for (var n : list "1,2,3") {
 				JSONLayout.addPublicLayout(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					layoutName = "Test Page Name ${n}",
 					type = "content");
 
 				JSONLayout.publishLayout(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					layoutName = "Test Page Name ${n}");
 			}
 		}
@@ -1452,7 +1438,7 @@ definition {
 		task ("Add a child widget page for each content page") {
 			for (var n : list "1,2,3") {
 				JSONLayout.addPublicLayout(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					layoutName = "Child Page ${n}",
 					parentLayoutName = "Test Page Name ${n}");
 			}
@@ -1460,14 +1446,14 @@ definition {
 
 		task ("Add a navigation menu") {
 			JSONSitenavigation.addSiteNavigationMenu(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				siteNavigationMenuName = "Navigation Menu Name");
 		}
 
 		task ("Add three content pages as parent page items to the navigation menu") {
 			for (var n : list "1,2,3") {
 				JSONSitenavigation.addSiteNavigationMenuItem(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					privateLayout = "false",
 					siteNavigationMenuItemName = "Test Page Name ${n}",
 					siteNavigationMenuName = "Navigation Menu Name",
@@ -1478,7 +1464,7 @@ definition {
 		task ("Add the child widget page as child page item under each parent page item") {
 			for (var n : list "1,2,3") {
 				JSONSitenavigation.addSiteNavigationMenuItem(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					parentSiteNavigationMenuItem = "Test Page Name ${n}",
 					privateLayout = "false",
 					siteNavigationMenuItemName = "Child Page ${n}",
@@ -1488,7 +1474,7 @@ definition {
 		}
 
 		task ("Navigate to the navigation menu") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = ${siteURLKey});
 
 			NavigationMenusAdmin.editMenu(navigationMenuName = "Navigation Menu Name");
 
@@ -1507,7 +1493,7 @@ definition {
 			NavigationMenusAdmin.viewItemNotNested(itemNameList = "Test Page Name 1,Test Page Name 2,Test Page Name 3");
 
 			NavigationMenusAdmin.viewItemNested(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				itemNameList = "Child Page 1,Child Page 2,Child Page 3",
 				parentItemNameList = "Test Page Name 1,Test Page Name 2,Test Page Name 3",
 				site = "true",
@@ -1526,7 +1512,7 @@ definition {
 			NavigationMenusAdmin.viewItemNotNested(itemNameList = "Test Page Name 1,Test Page Name 2,Test Page Name 3");
 
 			NavigationMenusAdmin.viewItemNested(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				itemNameList = "Child Page 1,Child Page 2,Child Page 3",
 				parentItemNameList = "Test Page Name 1,Test Page Name 2,Test Page Name 3",
 				site = "true",
@@ -1539,22 +1525,22 @@ definition {
 	test ViewModalWhenDeleteItemWithChildren {
 		task ("Add three hierarchy levels categories to a vocabulary within a site") {
 			JSONCategory.addVocabulary(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Vocabulary Name");
 
 			JSONCategory.addCategory(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Category Name",
 				vocabularyName = "Vocabulary Name");
 
 			JSONCategory.addSubcategory(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				parentCategoryName = "Category Name",
 				title = "Subcategory Name",
 				vocabularyName = "Vocabulary Name");
 
 			JSONCategory.addSubcategory(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				parentCategoryName = "Subcategory Name",
 				title = "SubSubcategory Name",
 				vocabularyName = "Vocabulary Name");
@@ -1562,12 +1548,12 @@ definition {
 
 		task ("Add a navigation menu") {
 			JSONSitenavigation.addSiteNavigationMenu(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				siteNavigationMenuName = "Navigation Menu Name");
 		}
 
 		task ("Add all categories into Navigation Menu") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = ${siteURLKey});
 
 			NavigationMenusAdmin.editMenu(navigationMenuName = "Navigation Menu Name");
 
@@ -1588,7 +1574,7 @@ definition {
 
 		task ("View third level of category is nested to first category") {
 			NavigationMenusAdmin.viewItemNested(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				itemNameList = "SubSubcategory Name",
 				parentItemNameList = "Category Name",
 				site = "true",
@@ -1613,18 +1599,18 @@ definition {
 
 		task ("Add a public page to the site") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Public Page");
 		}
 
 		task ("Add a private page to the site") {
 			JSONLayout.addPrivateLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Private Page");
 		}
 
 		task ("View no navigation menus are automatically created after adding pages") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = ${siteURLKey});
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#EMPTY_INFO",
@@ -1638,18 +1624,18 @@ definition {
 		task ("Given a navigation menu opens the select pages modal") {
 			task ("Add a Navigation menu") {
 				JSONSitenavigation.addSiteNavigationMenu(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					siteNavigationMenuName = "Navigation Menu Name");
 			}
 
 			task ("Add a widget page") {
 				JSONLayout.addPublicLayout(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					layoutName = "Test Page Name");
 			}
 
 			task ("Navigate to select pages modal of Navigation menu") {
-				NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
+				NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = ${siteURLKey});
 
 				NavigationMenusAdmin.editMenu(navigationMenuName = "Navigation Menu Name");
 
@@ -1671,7 +1657,7 @@ definition {
 
 		task ("Then the navigation menu creator could view a tooltip with the page url") {
 			AssertVisible(
-				key_content = "/web/test-site-name/test-page-name",
+				key_content = "/web/${siteURLKey}/test-page-name",
 				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
 		}
 	}
@@ -1681,11 +1667,11 @@ definition {
 	test ViewStylesOfNavigationMenuItem {
 		task ("Given a site designer has navigation menu items") {
 			JSONSitenavigation.addSiteNavigationMenu(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				siteNavigationMenuName = "Navigation Menu Name");
 
 			JSONSitenavigation.addSiteNavigationMenuItem(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				siteNavigationMenuItemName = "Liferay",
 				siteNavigationMenuName = "Navigation Menu Name",
 				type = "url",
@@ -1693,7 +1679,7 @@ definition {
 				useNewTab = "false");
 
 			JSONSitenavigation.addSiteNavigationMenuItem(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				siteNavigationMenuItemName = "Google",
 				siteNavigationMenuName = "Navigation Menu Name",
 				type = "url",
@@ -1702,7 +1688,7 @@ definition {
 		}
 
 		task ("When the site designer navigates to the navigation menu") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = ${siteURLKey});
 
 			NavigationMenusAdmin.editMenu(navigationMenuName = "Navigation Menu Name");
 		}
@@ -1752,12 +1738,12 @@ definition {
 	test ViewStylesOfNavigationMenuManagementBar {
 		task ("Given a site designer has a navigation menu") {
 			JSONSitenavigation.addSiteNavigationMenu(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				siteNavigationMenuName = "Navigation Menu Name");
 		}
 
 		task ("When the site designer navigates to the navigation menu") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = ${siteURLKey});
 
 			NavigationMenusAdmin.editMenu(navigationMenuName = "Navigation Menu Name");
 		}

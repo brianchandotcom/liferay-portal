@@ -1,10 +1,10 @@
 [
 	{
 		"active": true,
-		"externalReferenceCode": "CLAIM-DUE-DATE-NOTIFICATION",
 		"errorMessage": {
-			"en_US":  "Error"
-		 },
+			"en_US": "Error"
+		},
+		"externalReferenceCode": "CLAIM-DUE-DATE-NOTIFICATION",
 		"label": {
 			"en_US": "Notification Due Date Template Action"
 		},

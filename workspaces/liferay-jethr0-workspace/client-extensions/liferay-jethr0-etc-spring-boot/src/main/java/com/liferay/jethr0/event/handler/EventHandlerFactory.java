@@ -31,7 +31,15 @@ public class EventHandlerFactory {
 
 		EventHandler eventHandler = null;
 
-		if (eventType == EventHandler.EventType.CREATE_BUILD) {
+		if (eventType == EventHandler.EventType.BUILD_COMPLETED) {
+			eventHandler = new BuildCompletedEventHandler(
+				_eventHandlerHelper, messageJSONObject);
+		}
+		else if (eventType == EventHandler.EventType.BUILD_STARTED) {
+			eventHandler = new BuildStartedEventHandler(
+				_eventHandlerHelper, messageJSONObject);
+		}
+		else if (eventType == EventHandler.EventType.CREATE_BUILD) {
 			eventHandler = new CreateBuildEventHandler(
 				_eventHandlerHelper, messageJSONObject);
 		}

@@ -17,6 +17,7 @@ package com.liferay.jethr0.event.handler;
 import com.liferay.jethr0.build.queue.BuildQueue;
 import com.liferay.jethr0.build.repository.BuildParameterRepository;
 import com.liferay.jethr0.build.repository.BuildRepository;
+import com.liferay.jethr0.build.repository.BuildRunRepository;
 import com.liferay.jethr0.jenkins.JenkinsQueue;
 import com.liferay.jethr0.project.repository.ProjectRepository;
 
@@ -41,6 +42,10 @@ public class EventHandlerContext {
 		return _buildRepository;
 	}
 
+	public BuildRunRepository getBuildRunRepository() {
+		return _buildRunRepository;
+	}
+
 	public JenkinsQueue getJenkinsQueue() {
 		return _jenkinsQueue;
 	}
@@ -57,6 +62,9 @@ public class EventHandlerContext {
 
 	@Autowired
 	private BuildRepository _buildRepository;
+
+	@Autowired
+	private BuildRunRepository _buildRunRepository;
 
 	@Autowired
 	private JenkinsQueue _jenkinsQueue;

@@ -23,11 +23,7 @@ import com.liferay.jethr0.event.handler.EventHandler;
 import com.liferay.jethr0.event.handler.EventHandlerFactory;
 import com.liferay.jethr0.jenkins.node.JenkinsNode;
 import com.liferay.jethr0.jenkins.repository.JenkinsNodeRepository;
-import com.liferay.jethr0.project.Project;
-import com.liferay.jethr0.project.repository.ProjectRepository;
 import com.liferay.jethr0.util.StringUtil;
-
-import java.net.URL;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -56,11 +52,29 @@ public class JMSEventHandler {
 
 		String eventTrigger = messageJSONObject.getString("eventTrigger");
 
-		if (eventTrigger.equals("BUILD_COMPLETED")) {
-			_eventTriggerBuildCompleted(messageJSONObject);
-		}
-		else if (eventTrigger.equals("BUILD_STARTED")) {
-			_eventTriggerBuildStarted(messageJSONObject);
+		if (eventTrigger.equals("BUILD_COMPLETED") ||
+			eventTrigger.equals("BUILD_STARTED") ||
+			eventTrigger.equals("CREATE_BUILD") ||
+			eventTrigger.equals("CREATE_PROJECT") ||
+			eventTrigger.equals("QUEUE_PROJECT")) {
+
+			EventHandler eventHandler = _eventHandlerFactory.newEventHandler(
+				messageJSONObject);
+
+			if (eventHandler == null) {
+				throw new RuntimeException();
+			}
+
+			try {
+				eventHandler.process();
+			}
+			catch (Exception exception) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(exception);
+				}
+
+				throw new RuntimeException();
+			}
 		}
 		else if (eventTrigger.equals("COMPUTER_BUSY") ||
 				 eventTrigger.equals("COMPUTER_IDLE") ||
@@ -75,29 +89,6 @@ public class JMSEventHandler {
 				_eventTriggerComputerIdle(messageJSONObject);
 			}
 		}
-		else if (eventTrigger.equals("CREATE_BUILD") ||
-				 eventTrigger.equals("CREATE_PROJECT") ||
-				 eventTrigger.equals("QUEUE_PROJECT")) {
-
-			EventHandler eventHandler = _eventHandlerFactory.newEventHandler(
-				EventHandler.EventType.valueOf(
-					messageJSONObject.optString("eventTrigger")));
-
-			if (eventHandler == null) {
-				throw new RuntimeException();
-			}
-
-			try {
-				eventHandler.process(messageJSONObject.toString());
-			}
-			catch (Exception exception) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(exception);
-				}
-
-				throw new RuntimeException();
-			}
-		}
 	}
 
 	public void send(String message) {
@@ -108,71 +99,6 @@ public class JMSEventHandler {
 		}
 
 		_jmsTemplate.convertAndSend(_jmsJenkinsBuildQueue, message);
-	}
-
-	private void _eventTriggerBuildCompleted(JSONObject messageJSONObject) {
-		BuildRun buildRun = _getBuildRun(messageJSONObject);
-
-		if (buildRun == null) {
-			return;
-		}
-
-		buildRun.setDuration(_getBuildRunDuration(messageJSONObject));
-		buildRun.setResult(_getBuildRunResult(messageJSONObject));
-		buildRun.setState(BuildRun.State.COMPLETED);
-
-		Build build = buildRun.getBuild();
-
-		build.setState(Build.State.COMPLETED);
-
-		Project project = build.getProject();
-
-		Project.State projectState = Project.State.COMPLETED;
-
-		for (Build projectBuild : project.getBuilds()) {
-			Build.State buildState = projectBuild.getState();
-
-			if (buildState != Build.State.COMPLETED) {
-				projectState = Project.State.RUNNING;
-
-				break;
-			}
-		}
-
-		if (projectState == Project.State.COMPLETED) {
-			project.setState(projectState);
-
-			_projectRepository.update(project);
-		}
-
-		_buildRepository.update(build);
-		_buildRunRepository.update(buildRun);
-	}
-
-	private void _eventTriggerBuildStarted(JSONObject messageJSONObject) {
-		BuildRun buildRun = _getBuildRun(messageJSONObject);
-
-		if (buildRun == null) {
-			return;
-		}
-
-		buildRun.setBuildURL(_getBuildURL(messageJSONObject));
-		buildRun.setState(BuildRun.State.RUNNING);
-
-		Build build = buildRun.getBuild();
-
-		build.setState(Build.State.RUNNING);
-
-		Project project = build.getProject();
-
-		if (project.getState() != Project.State.RUNNING) {
-			project.setState(Project.State.RUNNING);
-
-			_projectRepository.update(project);
-		}
-
-		_buildRepository.update(build);
-		_buildRunRepository.update(buildRun);
 	}
 
 	private void _eventTriggerComputerIdle(JSONObject messageJSONObject) {
@@ -197,52 +123,6 @@ public class JMSEventHandler {
 
 		_buildRepository.update(build);
 		_buildRunRepository.update(buildRun);
-	}
-
-	private BuildRun _getBuildRun(JSONObject messageJSONObject) {
-		JSONObject buildJSONObject = messageJSONObject.getJSONObject("build");
-
-		JSONObject parmetersJSONObject = buildJSONObject.getJSONObject(
-			"parameters");
-
-		String buildRunID = parmetersJSONObject.optString("BUILD_RUN_ID");
-
-		if ((buildRunID == null) || !buildRunID.matches("\\d+")) {
-			return null;
-		}
-
-		return _buildRunRepository.getById(Long.valueOf(buildRunID));
-	}
-
-	private long _getBuildRunDuration(JSONObject messageJSONObject) {
-		JSONObject buildJSONObject = messageJSONObject.getJSONObject("build");
-
-		return buildJSONObject.getLong("duration");
-	}
-
-	private BuildRun.Result _getBuildRunResult(JSONObject messageJSONObject) {
-		JSONObject buildJSONObject = messageJSONObject.getJSONObject("build");
-
-		String result = buildJSONObject.getString("result");
-
-		if (result.equals("SUCCESS")) {
-			return BuildRun.Result.PASSED;
-		}
-
-		return BuildRun.Result.FAILED;
-	}
-
-	private URL _getBuildURL(JSONObject messageJSONObject) {
-		JSONObject buildJSONObject = messageJSONObject.getJSONObject("build");
-		JSONObject jobJSONObject = messageJSONObject.getJSONObject("job");
-		JSONObject jenkinsJSONObject = messageJSONObject.getJSONObject(
-			"jenkins");
-
-		return StringUtil.toURL(
-			StringUtil.combine(
-				jenkinsJSONObject.getString("url"), "job/",
-				jobJSONObject.getString("name"), "/",
-				buildJSONObject.getInt("number")));
 	}
 
 	private JenkinsNode _getJenkinsNode(JSONObject messageJSONObject) {
@@ -294,8 +174,5 @@ public class JMSEventHandler {
 
 	@Autowired
 	private JmsTemplate _jmsTemplate;
-
-	@Autowired
-	private ProjectRepository _projectRepository;
 
 }

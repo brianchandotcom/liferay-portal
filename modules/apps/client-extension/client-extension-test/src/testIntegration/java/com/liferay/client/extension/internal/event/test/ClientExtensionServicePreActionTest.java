@@ -234,7 +234,7 @@ public class ClientExtensionServicePreActionTest {
 
 		_layout.setMasterLayoutPlid(masterLayoutPageTemplateEntry.getPlid());
 
-		_layoutLocalService.updateLayout(_layout);
+		_layout = _layoutLocalService.updateLayout(_layout);
 
 		_assertFaviconURL();
 	}

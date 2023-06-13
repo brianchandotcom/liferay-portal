@@ -32,11 +32,14 @@ import getItemPath from './getItemPath';
 const DragDropContext = React.createContext({});
 
 export function DragDropProvider({children}) {
+	const [nestingLevel, setNestingLevel] = useState(0);
 	const [order, setOrder] = useState(null);
 	const [targetItemId, setTargetItemId] = useState(null);
 
 	const dragDropValues = {
+		nestingLevel,
 		order,
+		setNestingLevel,
 		setOrder,
 		setTargetItemId,
 		targetItemId,
@@ -106,12 +109,16 @@ export function useDropTarget(item) {
 	const {siteNavigationMenuItemId} = item;
 
 	const cardWidthRef = useRef();
-	const [nestingLevel, setNestingLevel] = useState(0);
 	const nextItemNestingRef = useRef(null);
 	const items = useItems();
 	const itemPath = getItemPath(siteNavigationMenuItemId, items);
 	const {languageId} = useConstants();
-	const {setTargetItemId, targetItemId} = useContext(DragDropContext);
+	const {
+		nestingLevel,
+		setNestingLevel,
+		setTargetItemId,
+		targetItemId,
+	} = useContext(DragDropContext);
 	const targetRef = useRef();
 	const targetRectRef = useRef(null);
 

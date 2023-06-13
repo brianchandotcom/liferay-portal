@@ -30,7 +30,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
 
 /**
  * @author Shinn Lok
@@ -78,7 +77,7 @@ public class BlockedCountriesServletFilter extends BaseFilter {
 	private static final List<String> _blockedCountryCodes = Arrays.asList(
 		"CU", "IR", "KP", "SY");
 
-	@Reference(cardinality = ReferenceCardinality.OPTIONAL)
+	@Reference
 	private IPGeocoder _ipGeocoder;
 
 }

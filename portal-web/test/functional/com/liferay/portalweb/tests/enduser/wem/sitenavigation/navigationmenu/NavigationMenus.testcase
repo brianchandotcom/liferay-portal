@@ -27,6 +27,54 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-172782. The navigation menu creator could add child item."
+	@priority = 5
+	test AddChildNavigationMenuItem {
+		task ("Given a navigation menu creator has a navigation menu") {
+			JSONCategory.addVocabulary(
+				groupName = ${randomSiteName},
+				title = "Vocabulary Name");
+
+			JSONCategory.addCategory(
+				groupName = ${randomSiteName},
+				title = "Category Name",
+				vocabularyName = "Vocabulary Name");
+
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = ${randomSiteName},
+				title = "Web Content Title");
+
+			JSONSitenavigation.addSiteNavigationMenu(
+				groupName = ${randomSiteName},
+				siteNavigationMenuName = "Navigation Menu Name");
+		}
+
+		task ("When the navigation menu creator adds an item") {
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = ${siteURLKey});
+
+			NavigationMenusAdmin.editMenu(navigationMenuName = "Navigation Menu Name");
+
+			NavigationMenusAdmin.addItem(
+				assetTitle = "Web Content Title",
+				item = "Web Content Article");
+		}
+
+		task ("Then the navigation menu creators could add child item") {
+			NavigationMenusAdmin.addChildItem(
+				assetTitleList = "Category Name",
+				item = "Category",
+				itemName = "Web Content Title");
+
+			NavigationMenusAdmin.viewItemNested(
+				groupName = ${randomSiteName},
+				itemNameList = "Category Name",
+				parentItemNameList = "Web Content Title",
+				site = "true",
+				siteNavigationMenuName = "Navigation Menu Name");
+		}
+	}
+
 	@description = "This is a test for LPS-141351. The site admin could find display page type items in dropdown menu."
 	@priority = 5
 	test AddDisplayPageTypeNavigationMenuItems {

@@ -50,7 +50,7 @@ The example resource entries have the keys `download-app` and `purchase-app`. Th
 In your module's JSP, link to the resources using `liferay-learn:message` tags. For example, the `marketplace-store-web` module's `view.jsp` file can reference the `learn-resources/marketplace-store-web.json` file's `download-app` resource with this code:
 
 ```javascript
-<%@taglib uri="http://liferay.com/tld/learn" prefix="liferay-learn" %>
+<%@ taglib uri="http://liferay.com/tld/learn" prefix="liferay-learn" %>
 
 <liferay-learn:message
     key="download-app"

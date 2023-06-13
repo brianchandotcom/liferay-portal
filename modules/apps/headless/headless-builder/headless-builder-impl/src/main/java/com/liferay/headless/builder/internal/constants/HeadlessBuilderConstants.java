@@ -20,7 +20,7 @@ package com.liferay.headless.builder.internal.constants;
  */
 public class HeadlessBuilderConstants {
 
-	public static final String BASE_PATH = "/headless-builder";
+	public static final String BASE_PATH = "/headless-builder-old";
 
 	public static final String OPERATION_NAME = "operation.name";
 

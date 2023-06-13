@@ -113,7 +113,7 @@ public class HeadlessBuilderTest {
 			TestPropsValues.getCompanyId(),
 			() -> {
 				JSONObject jsonObject = _invoke(
-					"headless-builder/v1.0/test-entries/" +
+					"/headless-builder-old/v1.0/test-entries/" +
 						_testEntry.getTestEntryId(),
 					Http.Method.GET);
 
@@ -136,7 +136,7 @@ public class HeadlessBuilderTest {
 			0,
 			() -> {
 				JSONObject jsonObject = _invoke(
-					"headless-builder/v1.0/test-entries/" +
+					"/headless-builder-old/v1.0/test-entries/" +
 						_testEntry.getTestEntryId(),
 					Http.Method.GET);
 
@@ -155,7 +155,8 @@ public class HeadlessBuilderTest {
 		throws Exception {
 
 		HttpURLConnection httpURLConnection = _createHttpURLConnection(
-			"headless-builder/v1.0/test-entries/" + _testEntry.getTestEntryId(),
+			"/headless-builder-old/v1.0/test-entries/" +
+				_testEntry.getTestEntryId(),
 			Http.Method.GET);
 
 		httpURLConnection.connect();
@@ -167,7 +168,7 @@ public class HeadlessBuilderTest {
 	@Test
 	public void testMissingHeadlessBuilderApplication() throws Exception {
 		JSONObject jsonObject = _invoke(
-			"headless-builder/v1.0/test-entries/1234", Http.Method.GET);
+			"/headless-builder-old/v1.0/test-entries/1234", Http.Method.GET);
 
 		JSONAssert.assertEquals(
 			JSONUtil.put(

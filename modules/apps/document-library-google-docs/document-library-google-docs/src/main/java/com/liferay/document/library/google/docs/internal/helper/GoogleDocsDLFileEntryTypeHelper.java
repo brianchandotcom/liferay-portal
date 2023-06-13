@@ -111,9 +111,7 @@ public class GoogleDocsDLFileEntryTypeHelper {
 		ddmStructure.setNameMap(_updateNameMap(ddmStructure.getNameMap()));
 		ddmStructure.setType(DDMStructureConstants.TYPE_AUTO);
 
-		_ddmStructureLocalService.updateDDMStructure(ddmStructure);
-
-		return ddmStructure;
+		return _ddmStructureLocalService.updateDDMStructure(ddmStructure);
 	}
 
 	private void _addGoogleDocsDLFileEntryType(long ddmStructureId)

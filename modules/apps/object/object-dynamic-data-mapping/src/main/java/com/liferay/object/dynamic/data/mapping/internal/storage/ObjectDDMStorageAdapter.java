@@ -285,7 +285,6 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 				DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
 
 				ddmFormFieldValue.setName(ddmFormField.getName());
-
 				ddmFormFieldValue.setValue(
 					_getDDMFormFieldValue(
 						ddmFormField, ddmFormFieldsMap, locale, properties));

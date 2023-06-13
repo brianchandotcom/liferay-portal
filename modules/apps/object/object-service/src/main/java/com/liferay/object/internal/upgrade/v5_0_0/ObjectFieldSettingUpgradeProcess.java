@@ -79,7 +79,6 @@ public class ObjectFieldSettingUpgradeProcess extends UpgradeProcess {
 
 				preparedStatement2.setString(1, _portalUUID.generate());
 				preparedStatement2.setLong(2, increment());
-
 				preparedStatement2.setString(
 					9, ObjectFieldSettingConstants.NAME_DEFAULT_VALUE);
 				preparedStatement2.setString(

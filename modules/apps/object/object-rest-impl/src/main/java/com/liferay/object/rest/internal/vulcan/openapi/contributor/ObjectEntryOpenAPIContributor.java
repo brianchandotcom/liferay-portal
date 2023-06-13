@@ -204,7 +204,6 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 				openAPI, "Page" + _objectDefinition.getShortName());
 
 			collectionActionsMapSchema.setAdditionalProperties(null);
-
 			collectionActionsMapSchema.setProperties(
 				_getCollectionActionSchemas(
 					openAPIContext, openAPI.getPaths()));
@@ -213,7 +212,6 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 				openAPI, _objectDefinition.getShortName());
 
 			individualActionsMapSchema.setAdditionalProperties(null);
-
 			individualActionsMapSchema.setProperties(
 				_getIndividualActionSchemas(
 					openAPIContext, openAPI.getPaths()));
@@ -222,7 +220,6 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 				openAPI, "PagePermission");
 
 			permissionActionsMapSchema.setAdditionalProperties(null);
-
 			permissionActionsMapSchema.setProperties(
 				_getIndividualActionSchemas(
 					openAPIContext, openAPI.getPaths()));

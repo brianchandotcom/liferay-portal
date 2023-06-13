@@ -46,7 +46,6 @@ public class ObjectStateFlowUtil {
 
 		serviceBuilderObjectStateFlow.setObjectStateFlowId(
 			GetterUtil.getLong(objectStateFlow.getId()));
-
 		serviceBuilderObjectStateFlow.setObjectStates(
 			TransformUtil.transformToList(
 				objectStateFlow.getObjectStates(),

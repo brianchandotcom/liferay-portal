@@ -325,7 +325,6 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 					businessType,
 					ObjectFieldSettingUtil.getTimeZoneId(
 						objectFieldSettings, user)));
-
 			dateTimeFDSTableSchemaField.setLabel(label);
 			dateTimeFDSTableSchemaField.setLocalizeLabel(localizeLabel);
 

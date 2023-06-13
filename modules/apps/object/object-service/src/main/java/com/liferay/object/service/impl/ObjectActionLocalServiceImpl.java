@@ -128,7 +128,6 @@ public class ObjectActionLocalServiceImpl
 		}
 
 		objectAction.setExternalReferenceCode(externalReferenceCode);
-
 		objectAction.setCompanyId(user.getCompanyId());
 		objectAction.setUserId(user.getUserId());
 		objectAction.setUserName(user.getFullName());

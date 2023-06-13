@@ -11,6 +11,7 @@ dependencies {
 	testIntegrationCompile project(":apps:fragment:fragment-api")
 	testIntegrationCompile project(":apps:fragment:fragment-entry-processor:fragment-entry-processor-api")
 	testIntegrationCompile project(":apps:fragment:fragment-service")
+	testIntegrationCompile project(":apps:info:info-api")
 	testIntegrationCompile project(":apps:layout:layout-page-template-api")
 	testIntegrationCompile project(":apps:layout:layout-test-util")
 	testIntegrationCompile project(":apps:portal-configuration:portal-configuration-test-util")

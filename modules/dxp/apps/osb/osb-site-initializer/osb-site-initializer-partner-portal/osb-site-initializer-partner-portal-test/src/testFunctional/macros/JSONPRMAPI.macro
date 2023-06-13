@@ -417,21 +417,21 @@ definition {
 
 		var portalURL = JSONCompany.getPortalURL();
 
-		if (!(isSet(userEmailAddress))) {
-			var userEmailAddress = "cmm@liferaytest.com";
+		if (!(isSet(emailAddress))) {
+			var emailAddress = "cmm@liferaytest.com";
+		}
+
+		if (!(isSet(password))) {
+			var password = "test";
 		}
 
 		var curl = '''
 			${portalURL}/o/c/mdfclaims/${claimId} \
-				-u ${userEmailAddress}:test \
+				-u ${emailAddress}:${password} \
 				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
 				-d '{
-					"id" : ${claimId},
-					"mdfClaimStatus" : {
-						"key" : "${statusKey}",
-						"name" : "${claimStatus}"
-					}
+					"mdfClaimStatus": "${statusKey}"
 				}'
 		''';
 
@@ -445,22 +445,23 @@ definition {
 
 		var portalURL = JSONCompany.getPortalURL();
 
-		if (!(isSet(userEmailAddress))) {
-			var userEmailAddress = "cmm@liferaytest.com";
+		if (!(isSet(emailAddress))) {
+			var emailAddress = "cmm@liferaytest.com";
+		}
+
+		if (!(isSet(password))) {
+			var password = "test";
 		}
 
 		var curl = '''
 			${portalURL}/o/c/mdfrequests/${requestId} \
-				-u test@liferay.com:test \
+				-u ${emailAddress}:${password} \
 				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
 				-d '{
-					"id" : ${requestId},
-					"mdfRequestStatus" : {
-						"key" : "${statusKey}",
-						"name" : "${mdfStatus}"
-					}
-				}'
+					"mdfRequestStatus": "${statusKey}"
+				}
+			}'
 		''';
 
 		var response = JSONCurlUtil.patch(${curl});

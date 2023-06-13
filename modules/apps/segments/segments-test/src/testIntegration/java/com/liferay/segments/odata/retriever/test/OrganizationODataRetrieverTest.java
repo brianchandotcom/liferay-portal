@@ -310,7 +310,8 @@ public class OrganizationODataRetrieverTest {
 
 		organization2.setModifiedDate(Date.from(instant.plusSeconds(1)));
 
-		_organizationLocalService.updateOrganization(organization2);
+		organization2 = _organizationLocalService.updateOrganization(
+			organization2);
 
 		String filterString = String.format(
 			"(dateModified gt %s) and (parentOrganizationId eq '%s')",
@@ -356,7 +357,8 @@ public class OrganizationODataRetrieverTest {
 
 		organization2.setModifiedDate(Date.from(instant.plusSeconds(1)));
 
-		_organizationLocalService.updateOrganization(organization2);
+		organization2 = _organizationLocalService.updateOrganization(
+			organization2);
 
 		String filterString = String.format(
 			"(dateModified ge %s) and (parentOrganizationId eq '%s')",
@@ -402,7 +404,8 @@ public class OrganizationODataRetrieverTest {
 
 		organization2.setModifiedDate(Date.from(instant.plusSeconds(1)));
 
-		_organizationLocalService.updateOrganization(organization2);
+		organization2 = _organizationLocalService.updateOrganization(
+			organization2);
 
 		String filterString = String.format(
 			"(dateModified lt %s) and (parentOrganizationId eq '%s')",

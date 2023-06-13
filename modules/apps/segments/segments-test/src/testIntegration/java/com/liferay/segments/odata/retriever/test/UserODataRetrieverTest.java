@@ -356,7 +356,7 @@ public class UserODataRetrieverTest {
 
 		_user2.setModifiedDate(Date.from(instant.plusSeconds(1)));
 
-		_userLocalService.updateUser(_user2);
+		_user2 = _userLocalService.updateUser(_user2);
 
 		String filterString = String.format(
 			"(dateModified eq %s) and (firstName eq '%s')",
@@ -387,7 +387,7 @@ public class UserODataRetrieverTest {
 
 		_user2.setModifiedDate(Date.from(instant.plusSeconds(1)));
 
-		_userLocalService.updateUser(_user2);
+		_user2 = _userLocalService.updateUser(_user2);
 
 		String filterString = String.format(
 			"(dateModified gt %s) and (firstName eq '%s')",
@@ -420,7 +420,7 @@ public class UserODataRetrieverTest {
 
 		_user2.setModifiedDate(Date.from(instant.plusSeconds(1)));
 
-		_userLocalService.updateUser(_user2);
+		_user2 = _userLocalService.updateUser(_user2);
 
 		String filterString = String.format(
 			"(dateModified ge %s) and (firstName eq '%s')",
@@ -451,7 +451,7 @@ public class UserODataRetrieverTest {
 
 		_user2.setModifiedDate(Date.from(instant.plusSeconds(1)));
 
-		_userLocalService.updateUser(_user2);
+		_user2 = _userLocalService.updateUser(_user2);
 
 		String filterString = String.format(
 			"(dateModified lt %s) and (firstName eq '%s')",
@@ -484,7 +484,7 @@ public class UserODataRetrieverTest {
 
 		_user2.setModifiedDate(Date.from(instant.plusSeconds(1)));
 
-		_userLocalService.updateUser(_user2);
+		_user2 = _userLocalService.updateUser(_user2);
 
 		String filterString = String.format(
 			"(dateModified le %s) and (firstName eq '%s')",
@@ -756,7 +756,7 @@ public class UserODataRetrieverTest {
 
 		_user1.setJobTitle(RandomTestUtil.randomString());
 
-		_userLocalService.updateUser(_user1);
+		_user1 = _userLocalService.updateUser(_user1);
 
 		_user2 = _addUser(_group1);
 
@@ -782,7 +782,7 @@ public class UserODataRetrieverTest {
 
 		_user1.setJobTitle(jobTitlePrefix + RandomTestUtil.randomString());
 
-		_userLocalService.updateUser(_user1);
+		_user1 = _userLocalService.updateUser(_user1);
 
 		_user2 = _addUser(_group1);
 

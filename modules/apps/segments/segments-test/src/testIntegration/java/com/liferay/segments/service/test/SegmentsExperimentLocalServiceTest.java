@@ -751,8 +751,9 @@ public class SegmentsExperimentLocalServiceTest {
 		segmentsExperiment.setStatus(
 			SegmentsExperimentConstants.STATUS_FINISHED_WINNER);
 
-		_segmentsExperimentLocalService.updateSegmentsExperiment(
-			segmentsExperiment);
+		segmentsExperiment =
+			_segmentsExperimentLocalService.updateSegmentsExperiment(
+				segmentsExperiment);
 
 		_segmentsExperimentLocalService.updateSegmentsExperimentStatus(
 			segmentsExperiment.getSegmentsExperimentId(),
@@ -835,8 +836,9 @@ public class SegmentsExperimentLocalServiceTest {
 		segmentsExperiment.setStatus(
 			SegmentsExperimentConstants.STATUS_FINISHED_WINNER);
 
-		_segmentsExperimentLocalService.updateSegmentsExperiment(
-			segmentsExperiment);
+		segmentsExperiment =
+			_segmentsExperimentLocalService.updateSegmentsExperiment(
+				segmentsExperiment);
 
 		_segmentsExperimentLocalService.updateSegmentsExperimentStatus(
 			segmentsExperiment.getSegmentsExperimentId(),
@@ -920,8 +922,9 @@ public class SegmentsExperimentLocalServiceTest {
 		segmentsExperiment.setStatus(
 			SegmentsExperimentConstants.STATUS_FINISHED_WINNER);
 
-		_segmentsExperimentLocalService.updateSegmentsExperiment(
-			segmentsExperiment);
+		segmentsExperiment =
+			_segmentsExperimentLocalService.updateSegmentsExperiment(
+				segmentsExperiment);
 
 		_segmentsExperimentLocalService.updateSegmentsExperimentStatus(
 			segmentsExperiment.getSegmentsExperimentId(),
@@ -978,8 +981,9 @@ public class SegmentsExperimentLocalServiceTest {
 
 		variantSegmentsExperience.setActive(false);
 
-		_segmentsExperienceLocalService.updateSegmentsExperience(
-			variantSegmentsExperience);
+		variantSegmentsExperience =
+			_segmentsExperienceLocalService.updateSegmentsExperience(
+				variantSegmentsExperience);
 
 		_segmentsExperimentRelLocalService.addSegmentsExperimentRel(
 			segmentsExperiment.getSegmentsExperimentId(),
@@ -1007,8 +1011,9 @@ public class SegmentsExperimentLocalServiceTest {
 
 		variantSegmentsExperience.setActive(false);
 
-		_segmentsExperienceLocalService.updateSegmentsExperience(
-			variantSegmentsExperience);
+		variantSegmentsExperience =
+			_segmentsExperienceLocalService.updateSegmentsExperience(
+				variantSegmentsExperience);
 
 		_segmentsExperimentRelLocalService.addSegmentsExperimentRel(
 			segmentsExperiment.getSegmentsExperimentId(),

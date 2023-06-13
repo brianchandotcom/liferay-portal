@@ -170,7 +170,8 @@ public class UpgradeDDMFormInstanceSettingsTest {
 
 		ddmFormInstance.setSettings(settings);
 
-		DDMFormInstanceLocalServiceUtil.updateDDMFormInstance(ddmFormInstance);
+		ddmFormInstance = DDMFormInstanceLocalServiceUtil.updateDDMFormInstance(
+			ddmFormInstance);
 
 		return DDMFormInstanceLocalServiceUtil.getFormInstance(
 			ddmFormInstance.getFormInstanceId());

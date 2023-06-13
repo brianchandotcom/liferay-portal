@@ -2479,7 +2479,7 @@ public class DynamicDataMappingUpgradeProcess extends UpgradeProcess {
 			dlFolder.setStatusByUserId(0);
 			dlFolder.setStatusByUserName(StringPool.BLANK);
 
-			_dlFolderLocalService.updateDLFolder(dlFolder);
+			dlFolder = _dlFolderLocalService.updateDLFolder(dlFolder);
 
 			ServiceContext serviceContext = new ServiceContext();
 
@@ -2651,7 +2651,8 @@ public class DynamicDataMappingUpgradeProcess extends UpgradeProcess {
 					StringPool.BLANK, WorkflowConstants.STATUS_APPROVED,
 					_userId, _userName, _createDate);
 
-				_dlFileEntryLocalService.updateDLFileEntry(dlFileEntry);
+				dlFileEntry = _dlFileEntryLocalService.updateDLFileEntry(
+					dlFileEntry);
 
 				// Resources
 

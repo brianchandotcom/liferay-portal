@@ -100,8 +100,10 @@ public class DDMFormInstanceRecordStagedModelDataHandlerTest
 
 		DDMFormInstanceRecordVersionLocalServiceUtil.
 			updateDDMFormInstanceRecordVersion(ddmFormInstanceRecordVersion);
-		DDMFormInstanceRecordLocalServiceUtil.updateDDMFormInstanceRecord(
-			ddmFormInstanceRecord);
+
+		ddmFormInstanceRecord =
+			DDMFormInstanceRecordLocalServiceUtil.updateDDMFormInstanceRecord(
+				ddmFormInstanceRecord);
 
 		exportImportStagedModel(ddmFormInstanceRecord);
 

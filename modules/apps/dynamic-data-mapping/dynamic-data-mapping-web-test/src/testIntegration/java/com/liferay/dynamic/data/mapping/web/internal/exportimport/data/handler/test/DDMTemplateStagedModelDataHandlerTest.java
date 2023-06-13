@@ -78,7 +78,7 @@ public class DDMTemplateStagedModelDataHandlerTest
 
 		template.setClassPK(structure.getStructureId());
 
-		DDMTemplateLocalServiceUtil.updateDDMTemplate(template);
+		template = DDMTemplateLocalServiceUtil.updateDDMTemplate(template);
 
 		_exportImportTemplateAndStructure(template, structure);
 
@@ -111,7 +111,7 @@ public class DDMTemplateStagedModelDataHandlerTest
 
 		template.setClassPK(structure.getStructureId());
 
-		DDMTemplateLocalServiceUtil.updateDDMTemplate(template);
+		template = DDMTemplateLocalServiceUtil.updateDDMTemplate(template);
 
 		Map<Locale, String> titleMap = HashMapBuilder.put(
 			LocaleUtil.getDefault(), RandomTestUtil.randomString()

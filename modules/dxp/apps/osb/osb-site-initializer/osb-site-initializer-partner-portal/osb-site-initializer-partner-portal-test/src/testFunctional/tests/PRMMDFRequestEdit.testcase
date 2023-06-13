@@ -288,7 +288,34 @@ definition {
 				expense = "Sponsorship Fee");
 		}
 	}
+
+	@description = "This is a test for LPS-187087. Verify that the Partner can edit an MDF in 'More Info Requested' Status"
+	@priority = 5
+	test PMUCanEditMDFInRequestMoreInfoStatus {
+		property test.name.skip.portal.instance = "PRMMDFRequestEdit#PMUCanEditMDFInRequestMoreInfoStatus";
+
+		task ("Given that the CMM changes the MDF status to 'More Info Requested'") {
+			JSONPRM.changeMDFStatus(
+				mdfStatus = "More Info Requested",
+				requestId = ${staticRequestId},
+				userEmailAddress = "cmm@liferaytest.com");
+		}
+
+		task ("And the PMU goes to edit the created MDF") {
 			PRMNavigator.gotoMDF(requestId = ${staticRequestId});
+
+			PRMMDFRequest.editButton();
+		}
+
+		task ("When the PMU edit the MDF information and submit it ") {
+			PRMMDFRequest.editMDF(
+				campaignName = "Campaign Name Edited",
+				newActivityName = "Activity Name Edited",
+				newBugdetValue = 2000);
+		}
+
+		task ("Then the information will be updated") {
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name Edited");
 
 			PRMMDFRequest.viewMDFCompanyDetails(campaignName = "Campaign Name Edited");
 

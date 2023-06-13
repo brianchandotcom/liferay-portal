@@ -66,16 +66,21 @@ public class JournalArticleTranslationsTableItemView implements TableItemView {
 
 		searchEntries.add(nameTextSearchEntry);
 
-		IconSearchEntry defaultLanguageIconSearchEntry = new IconSearchEntry();
-
 		if (_articleTranslation.isDefault()) {
+			IconSearchEntry defaultLanguageIconSearchEntry =
+				new IconSearchEntry();
+
 			defaultLanguageIconSearchEntry.setIcon("check-circle");
+
+			searchEntries.add(defaultLanguageIconSearchEntry);
 		}
 		else {
-			defaultLanguageIconSearchEntry.setIcon(StringPool.BLANK);
-		}
+			TextSearchEntry emptyTextSearchEntry = new TextSearchEntry();
 
-		searchEntries.add(defaultLanguageIconSearchEntry);
+			emptyTextSearchEntry.setName(StringPool.BLANK);
+
+			searchEntries.add(emptyTextSearchEntry);
+		}
 
 		return searchEntries;
 	}

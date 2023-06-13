@@ -12,7 +12,6 @@
  * details.
  */
 
-// eslint-disable-next-line @liferay/import-extensions
 import {upperCase} from './shared-utils.js';
 
 class HeaderWebComponent extends HTMLElement {

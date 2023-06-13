@@ -51,6 +51,7 @@ config = {
 		},
 	],
 	rules: {
+		'@liferay/import-extensions': 'off',
 		'@liferay/portal/deprecation': 'off',
 		'@liferay/portal/no-document-cookie': 'off',
 		'@liferay/portal/no-explicit-extend': 'off',

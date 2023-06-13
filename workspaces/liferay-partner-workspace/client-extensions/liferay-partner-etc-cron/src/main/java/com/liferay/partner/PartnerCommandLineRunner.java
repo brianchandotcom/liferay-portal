@@ -106,6 +106,76 @@ public class PartnerCommandLineRunner implements CommandLineRunner {
 
 			_put(itemsJSONArray.toString(), "/o/c/activities/batch");
 		}
+
+		responseJSONObject = _get(
+			uriBuilder -> uriBuilder.path(
+				"/o/c/mdfclaimactivities"
+			).queryParam(
+				"filter",
+				"selected eq true and actToMDFClmActs/submitted eq true and actToMDFClmActs/activityStatus eq 'active' and actToMDFClmActs/endDate le " +
+					_toString(zonedDateTime.minusDays(15)) +
+						" and mdfClmToMDFClmActs/mdfClaimStatus ne 'draft' and mdfClmToMDFClmActs/mdfClaimStatus ne 'moreInfoRequested'"
+			).queryParam(
+				"nestedFields", "actToMDFClmActs"
+			).queryParam(
+				"page", "1"
+			).queryParam(
+				"pageSize", "-1"
+			).build());
+
+		if (responseJSONObject.getInt("totalCount") > 0) {
+			JSONArray itemsJSONArray = responseJSONObject.getJSONArray("items");
+
+			for (int i = 0; i < itemsJSONArray.length(); i++) {
+				JSONObject itemJSONObject = itemsJSONArray.getJSONObject(i);
+
+				String activityErc = itemJSONObject.getString(
+					"r_actToMDFClmActs_c_activityERC");
+
+				JSONObject activityJSONArray = itemJSONObject.getJSONObject(
+					"r_actToMDFClmActs_c_activity");
+
+				ZonedDateTime activityEndDate = ZonedDateTime.parse(
+					activityJSONArray.getString("endDate"));
+
+				ZonedDateTime activityExpirationDate = activityEndDate.plusDays(
+					30);
+
+				if (activityExpirationDate.toLocalDate(
+					).isEqual(
+						zonedDateTime.plusDays(
+							15
+						).toLocalDate()
+					)) {
+
+					_sendNotification(itemsJSONArray.toString(), activityErc);
+
+					return;
+				}
+				else if (activityExpirationDate.toLocalDate(
+						).isEqual(
+							zonedDateTime.plusDays(
+								5
+							).toLocalDate()
+						)) {
+
+					_sendNotification(itemsJSONArray.toString(), activityErc);
+
+					return;
+				}
+				else if (activityExpirationDate.toLocalDate(
+						).isEqual(
+							zonedDateTime.plusDays(
+								1
+							).toLocalDate()
+						)) {
+
+					_sendNotification(itemsJSONArray.toString(), activityErc);
+
+					return;
+				}
+			}
+		}
 	}
 
 	private JSONObject _get(Function<UriBuilder, URI> uriFunction) {
@@ -145,6 +215,16 @@ public class PartnerCommandLineRunner implements CommandLineRunner {
 		).bodyToMono(
 			Void.class
 		).block();
+	}
+
+	private void _sendNotification(
+		String bodyValue, String externalReferenceCode) {
+
+		_put(
+			bodyValue.toString(),
+			"/o/c/activities/by-external-reference-code/" +
+				externalReferenceCode +
+					"/object-actions/notificationDueDateTemplateAction");
 	}
 
 	private String _toString(ZonedDateTime zonedDateTime) {

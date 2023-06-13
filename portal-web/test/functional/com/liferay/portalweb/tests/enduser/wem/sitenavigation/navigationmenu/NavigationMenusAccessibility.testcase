@@ -21,7 +21,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-172782. The navigation menu creator could add child item via keyboard."
+	@description = "This is a test for LPS-172782. The navigation menu creator could add child item via keyboard. The screen reader should announce relevant info when hover on the plus icon of navigation menu item."
 	@priority = 4
 	test AddChildNavigationMenuItemViaKeyboard {
 		task ("Given a navigation menu creator has a navigation menu with an item") {
@@ -50,6 +50,38 @@ definition {
 			NavigationMenusAdmin.addItem(
 				assetTitle = "Web Content Title",
 				item = "Web Content Article");
+		}
+
+		task ("When the navigation menu creator focuses on the above plus icon of Web Content Article type item") {
+			MouseOver.javaScriptFocus(
+				key_itemName = "Web Content Title",
+				key_relationship = "before",
+				locator1 = "SiteNavigationMenu#ITEM_ENTRY_ADD_ICON");
+		}
+
+		task ("Then the screen reader should announce relevant info") {
+			AssertAttributeValue(
+				attribute1 = "aria-label",
+				key_itemName = "Web Content Title",
+				key_relationship = "before",
+				locator1 = "SiteNavigationMenu#ITEM_ENTRY_ADD_ICON",
+				value1 = "Add item before Web Content Title (Web Content Article).");
+		}
+
+		task ("When the navigation menu creator focuses on the below plus icon of Web Content Article type item") {
+			MouseOver.javaScriptFocus(
+				key_itemName = "Web Content Title",
+				key_relationship = "after",
+				locator1 = "SiteNavigationMenu#ITEM_ENTRY_ADD_ICON");
+		}
+
+		task ("Then the screen reader should announce relevant info") {
+			AssertAttributeValue(
+				attribute1 = "aria-label",
+				key_itemName = "Web Content Title",
+				key_relationship = "after",
+				locator1 = "SiteNavigationMenu#ITEM_ENTRY_ADD_ICON",
+				value1 = "Add item after Web Content Title (Web Content Article).");
 		}
 
 		task ("When the navigation menu creator focuses on the card body of Web Content Article type item via Tab key") {

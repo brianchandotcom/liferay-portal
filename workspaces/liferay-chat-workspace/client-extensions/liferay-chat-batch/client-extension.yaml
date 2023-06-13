@@ -1,0 +1,15 @@
+assemble:
+    - from: batch
+      into: batch
+liferay-chat-batch:
+    name: Liferay Chat Batch
+    oAuthApplicationHeadlessServer: liferay-chat-batch-oauth-application-headless-server
+    type: batch
+liferay-chat-batch-oauth-application-headless-server:
+  .serviceAddress: localhost:8080
+  .serviceScheme: http
+  name: liferay-chat-batch-oauth-application-headless-server
+  scopes:
+    - Liferay.Headless.Batch.Engine.everything
+    - Liferay.Object.Admin.REST.everything
+  type: oAuthApplicationHeadlessServer

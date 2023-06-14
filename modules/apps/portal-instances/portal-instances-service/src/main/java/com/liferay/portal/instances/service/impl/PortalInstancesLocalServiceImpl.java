@@ -294,7 +294,6 @@ public class PortalInstancesLocalServiceImpl
 
 			httpServletRequest.setAttribute(
 				JavaConstants.JAVAX_PORTLET_REQUEST, liferayRenderRequest);
-
 			httpServletRequest.setAttribute(
 				JavaConstants.JAVAX_PORTLET_RESPONSE,
 				RenderResponseFactory.create(

@@ -207,7 +207,6 @@ public class EntityModelSchemaBasedEdmProvider extends SchemaBasedEdmProvider {
 			EntityModel entityModel = entityRelationship.getEntityModel();
 
 			csdlNavigationProperty.setPartner(entityModel.getName());
-
 			csdlNavigationProperty.setType(_getFullQualifiedName(entityModel));
 
 			csdlNavigationProperties.add(csdlNavigationProperty);
@@ -241,7 +240,6 @@ public class EntityModelSchemaBasedEdmProvider extends SchemaBasedEdmProvider {
 			CsdlProperty csdlProperty = new CsdlProperty();
 
 			csdlProperty.setName(entityField.getName());
-
 			csdlProperty.setType(
 				new FullQualifiedName(namespace, entityField.getName()));
 

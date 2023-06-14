@@ -742,7 +742,6 @@ public class BackgroundTaskLocalServiceImpl
 		_backgroundTaskThreadLocalManager.serializeThreadLocals(taskContextMap);
 
 		backgroundTask.setTaskContextMap(taskContextMap);
-
 		backgroundTask.setStatus(BackgroundTaskConstants.STATUS_NEW);
 
 		backgroundTask = backgroundTaskPersistence.update(backgroundTask);

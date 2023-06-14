@@ -652,7 +652,7 @@ public class LayoutReferencesExportImportContentProcessorTest {
 						TestPropsValues.getCompanyId(),
 						ExportImportServiceConfiguration.class.getName(),
 						HashMapDictionaryBuilder.<String, Object>put(
-							"whitelistedURLPatterns",
+							"layoutReferencesValidationWhitelistedURLPatterns",
 							new String[] {exactMatchPattern}
 						).build(),
 						SettingsFactoryUtil.getSettingsFactory())) {
@@ -694,7 +694,7 @@ public class LayoutReferencesExportImportContentProcessorTest {
 						TestPropsValues.getCompanyId(),
 						ExportImportServiceConfiguration.class.getName(),
 						HashMapDictionaryBuilder.<String, Object>put(
-							"whitelistedURLPatterns",
+							"layoutReferencesValidationWhitelistedURLPatterns",
 							new String[] {exactMatchPattern}
 						).build(),
 						SettingsFactoryUtil.getSettingsFactory())) {
@@ -726,7 +726,7 @@ public class LayoutReferencesExportImportContentProcessorTest {
 						TestPropsValues.getCompanyId(),
 						ExportImportServiceConfiguration.class.getName(),
 						HashMapDictionaryBuilder.<String, Object>put(
-							"whitelistedURLPatterns",
+							"layoutReferencesValidationWhitelistedURLPatterns",
 							new String[] {
 								StringBundler.concat(
 									PropsValues.
@@ -781,7 +781,7 @@ public class LayoutReferencesExportImportContentProcessorTest {
 						TestPropsValues.getCompanyId(),
 						ExportImportServiceConfiguration.class.getName(),
 						HashMapDictionaryBuilder.<String, Object>put(
-							"whitelistedURLPatterns",
+							"layoutReferencesValidationWhitelistedURLPatterns",
 							new String[] {prefixPattern + StringPool.STAR}
 						).build(),
 						SettingsFactoryUtil.getSettingsFactory())) {

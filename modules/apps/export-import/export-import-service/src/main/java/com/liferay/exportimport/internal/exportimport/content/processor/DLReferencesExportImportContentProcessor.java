@@ -789,11 +789,11 @@ public class DLReferencesExportImportContentProcessor
 							_virtualHostLocalService.getVirtualHosts(
 								group.getCompanyId())) {
 
-						String virtualHostname = virtualHost.getHostname();
+						String hostname = virtualHost.getHostname();
 
-						hostNames.add(Http.HTTP_WITH_SLASH + virtualHostname);
-						hostNames.add(Http.HTTPS_WITH_SLASH + virtualHostname);
-						hostNames.add(virtualHostname);
+						hostNames.add(hostname);
+						hostNames.add(Http.HTTP_WITH_SLASH + hostname);
+						hostNames.add(Http.HTTPS_WITH_SLASH + hostname);
 					}
 
 					for (String hostName : hostNames) {

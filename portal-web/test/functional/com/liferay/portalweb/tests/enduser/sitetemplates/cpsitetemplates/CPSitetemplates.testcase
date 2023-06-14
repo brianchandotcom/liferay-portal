@@ -790,10 +790,13 @@ definition {
 
 			PageEditor.publish();
 
-			ContentPages.addChildPage(
+			SiteTemplatesNavigator.openSiteTemplatesAdmin();
+
+			SiteTemplates.addChildPageViaSiteTemplateCP(
 				childPageName = "Child Content Page",
 				parentPageName = "Parent Content Page",
-				sitePageType = "Blank");
+				sitePageType = "Content Page",
+				siteTemplateName = "Site Template Name");
 
 			SelectFrameTop();
 

@@ -39,6 +39,13 @@ definition {
 			var api = StringUtil.add(${api}, "/scopes/${scopeKey}", "");
 		}
 
+		if (isSet(userEmailAddress)) {
+			var headers = '''
+				-u ${userEmailAddress}:test \
+				-H Content-Type: application/json \
+			''';
+		}
+
 		var curl = StringUtil.add(${api}, " \ ${headers}", "");
 
 		if (!(isSet(body))) {
@@ -239,6 +246,47 @@ definition {
 		return ${response};
 	}
 
+	macro createStudentRelatedToAccount {
+		Variables.assertDefined(parameterList = "${name},${accountId}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/o/c/students \
+				-u test@liferay.com:test \
+				-H Content-Type: application/json \
+				-d {
+					"name": "${name}",
+					"r_accountStudents_accountEntryId": "${accountId}"
+				}
+		''';
+
+		var studentId = JSONCurlUtil.post(${curl}, "$.id");
+
+		return ${studentId};
+	}
+
+	macro createSubjectRelatedToStudentAndAccount {
+		Variables.assertDefined(parameterList = "${name},${accountId},${studentId}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/o/c/subjects \
+				-u test@liferay.com:test \
+				-H Content-Type: application/json \
+				-d {
+					"name": "${name}",
+					"r_accountSubjects_accountEntryId": "${accountId}",
+					"r_studentSubjects_c_studentId": "${studentId}"
+				}
+		''';
+
+		var subjectId = JSONCurlUtil.post(${curl}, "$.id");
+
+		return ${subjectId};
+	}
+
 	macro getObjectEntries {
 		Variables.assertDefined(parameterList = ${en_US_plural_label});
 
@@ -403,6 +451,21 @@ definition {
 		var body = StringUtil.add("${body},", ${entryBody}, "");
 
 		return ${body};
+	}
+
+	macro patchObjectEntryNameById {
+		Variables.assertDefined(parameterList = "${en_US_plural_label},${fieldValue},${objectEntryId}");
+
+		var curl = CustomObjectAPI._curlObjectEntries(
+			en_US_plural_label = ${en_US_plural_label},
+			fieldName = "name",
+			fieldValue = ${fieldValue},
+			objectEntryId = ${objectEntryId},
+			userEmailAddress = ${userEmailAddress});
+
+		var response = JSONCurlUtil.patch(${curl});
+
+		return ${response};
 	}
 
 	macro putObjectEntryById {

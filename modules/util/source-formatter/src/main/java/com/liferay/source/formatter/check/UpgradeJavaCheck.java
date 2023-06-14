@@ -54,11 +54,11 @@ public class UpgradeJavaCheck extends BaseFileCheck {
 
 		Map<String, String> importsMap = _getImportsMap();
 
-		List<String> oldVariablesList = new ArrayList<>();
-		List<String> newVariablesList = new ArrayList<>();
+		List<String> variables = new ArrayList<>();
+		List<String> newVariables = new ArrayList<>();
 
-		for (String oldImportName : javaClass.getImportNames()) {
-			String newImportName = importsMap.get(oldImportName);
+		for (String importName : javaClass.getImportNames()) {
+			String newImportName = importsMap.get(importName);
 
 			if (newImportName == null) {
 				continue;
@@ -67,30 +67,30 @@ public class UpgradeJavaCheck extends BaseFileCheck {
 			content = StringUtil.replace(
 				content,
 				StringBundler.concat(
-					"import ", oldImportName, StringPool.SEMICOLON),
+					"import ", importName, StringPool.SEMICOLON),
 				StringBundler.concat(
 					"import ", newImportName, StringPool.SEMICOLON));
 
-			String oldClassName = SourceFormatterUtil.getSimpleName(
-				oldImportName);
+			String className = SourceFormatterUtil.getSimpleName(
+				importName);
 			String newClassName = SourceFormatterUtil.getSimpleName(
 				newImportName);
 
-			if (!oldClassName.equals(newClassName)) {
-				oldVariablesList.add(oldClassName);
-				oldVariablesList.add(
-					StringUtil.lowerCaseFirstLetter(oldClassName));
+			if (!className.equals(newClassName)) {
+				variables.add(className);
+				variables.add(
+					StringUtil.lowerCaseFirstLetter(className));
 
-				newVariablesList.add(newClassName);
-				newVariablesList.add(
+				newVariables.add(newClassName);
+				newVariables.add(
 					StringUtil.lowerCaseFirstLetter(newClassName));
 			}
 		}
 
-		if (!newVariablesList.isEmpty()) {
+		if (!newVariables.isEmpty()) {
 			content = StringUtil.replace(
-				content, ArrayUtil.toStringArray(oldVariablesList),
-				ArrayUtil.toStringArray(newVariablesList));
+				content, ArrayUtil.toStringArray(variables),
+				ArrayUtil.toStringArray(newVariables));
 		}
 
 		return content;

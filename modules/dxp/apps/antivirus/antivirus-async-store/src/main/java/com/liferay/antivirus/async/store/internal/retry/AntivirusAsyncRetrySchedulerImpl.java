@@ -19,7 +19,6 @@ import com.liferay.antivirus.async.store.constants.AntivirusAsyncConstants;
 import com.liferay.antivirus.async.store.constants.AntivirusAsyncDestinationNames;
 import com.liferay.antivirus.async.store.retry.AntivirusAsyncRetryScheduler;
 import com.liferay.petra.reflect.ReflectionUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
@@ -69,18 +68,16 @@ public class AntivirusAsyncRetrySchedulerImpl
 			ConfigurableUtil.createConfigurable(
 				AntivirusAsyncConfiguration.class, properties);
 
-		_retryInterval = antivirusAsyncConfiguration.retryInterval();
+		_retryCronExpression =
+			antivirusAsyncConfiguration.retryCronExpression();
 	}
 
 	private Trigger _createTrigger(String jobName) {
-		String cronExpression = StringBundler.concat(
-			"0 0/", _retryInterval, " * * * ?");
-
 		Instant now = Instant.now();
 
 		return _triggerFactory.createTrigger(
 			jobName, AntivirusAsyncConstants.SCHEDULER_GROUP_NAME_ANTIVIRUS,
-			Date.from(now.plusSeconds(10)), null, cronExpression);
+			Date.from(now.plusSeconds(10)), null, _retryCronExpression);
 	}
 
 	private void _schedule(Message message) throws SchedulerException {
@@ -119,7 +116,7 @@ public class AntivirusAsyncRetrySchedulerImpl
 			AntivirusAsyncDestinationNames.ANTIVIRUS, message);
 	}
 
-	private volatile int _retryInterval;
+	private volatile String _retryCronExpression;
 
 	@Reference
 	private SchedulerEngineHelper _schedulerEngineHelper;

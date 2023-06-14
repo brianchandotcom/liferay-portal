@@ -132,7 +132,7 @@ public class AsyncAntivirusDLStoreTest {
 			new MockAntivirusScanner(() -> calledScan.set(true)), null);
 
 		_withAsyncAntivirusConfiguration(
-			1, 1, true,
+			1, "0 0/1 * * * ?", true,
 			() -> {
 				_messageBus.sendMessage(
 					AntivirusAsyncDestinationNames.ANTIVIRUS,
@@ -183,7 +183,7 @@ public class AsyncAntivirusDLStoreTest {
 			null);
 
 		_withAsyncAntivirusConfiguration(
-			1, 1, true,
+			1, "0 0/1 * * * ?", true,
 			() -> {
 				DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
 
@@ -226,7 +226,7 @@ public class AsyncAntivirusDLStoreTest {
 			null);
 
 		_withAsyncAntivirusConfiguration(
-			1, 1, true,
+			1, "0 0/1 * * * ?", true,
 			() -> {
 				DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
 
@@ -262,7 +262,7 @@ public class AsyncAntivirusDLStoreTest {
 			new MockAntivirusScanner(() -> calledScan.set(true)), null);
 
 		_withAsyncAntivirusConfiguration(
-			1, 1, true,
+			1, "0 0/1 * * * ?", true,
 			() -> {
 				DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
 
@@ -306,7 +306,7 @@ public class AsyncAntivirusDLStoreTest {
 			null);
 
 		_withAsyncAntivirusConfiguration(
-			1, 1, true,
+			1, "0 0/1 * * * ?", true,
 			() -> {
 				DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
 
@@ -354,7 +354,7 @@ public class AsyncAntivirusDLStoreTest {
 			null);
 
 		_withAsyncAntivirusConfiguration(
-			1, 10, false,
+			1, "0 0/10 * * * ?", false,
 			() -> {
 				DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
 
@@ -447,7 +447,7 @@ public class AsyncAntivirusDLStoreTest {
 			MapUtil.singletonDictionary(Constants.SERVICE_RANKING, 100));
 
 		_withAsyncAntivirusConfiguration(
-			5, 10, true,
+			5, "0 0/10 * * * ?", true,
 			() -> {
 				AntivirusAsyncStatisticsManagerMBean
 					antivirusAsyncStatisticsManagerMBean =
@@ -530,7 +530,7 @@ public class AsyncAntivirusDLStoreTest {
 	}
 
 	private void _withAsyncAntivirusConfiguration(
-			int maximumQueueSize, int retryInterval, boolean sync,
+			int maximumQueueSize, String retryCronExpression, boolean sync,
 			UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {
 
@@ -540,7 +540,7 @@ public class AsyncAntivirusDLStoreTest {
 					HashMapDictionaryBuilder.<String, Object>put(
 						"maximumQueueSize", maximumQueueSize
 					).put(
-						"retryInterval", retryInterval
+						"retryCronExpression", retryCronExpression
 					).build())) {
 
 			if (sync) {

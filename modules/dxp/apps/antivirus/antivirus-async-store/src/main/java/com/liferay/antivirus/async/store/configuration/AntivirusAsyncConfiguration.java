@@ -30,10 +30,10 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface AntivirusAsyncConfiguration {
 
 	@Meta.AD(
-		deflt = "23", description = "batch-scan-interval-help", max = "23",
-		min = "1", name = "batch-scan-interval", required = false
+		deflt = "0 0 23 * * ?", description = "batch-scan-cron-expression-help",
+		name = "batch-scan-cron-expression", required = false
 	)
-	public int batchScanInterval();
+	public String batchScanCronExpression();
 
 	@Meta.AD(
 		description = "maximum-queue-size-help", name = "maximum-queue-size",
@@ -42,9 +42,9 @@ public interface AntivirusAsyncConfiguration {
 	public int maximumQueueSize();
 
 	@Meta.AD(
-		deflt = "5", description = "retry-interval-help", max = "59", min = "1",
-		name = "retry-interval", required = false
+		deflt = "0 0/5 * * * ?", description = "retry-cron-expression-help",
+		name = "retry-cron-expression", required = false
 	)
-	public int retryInterval();
+	public String retryCronExpression();
 
 }

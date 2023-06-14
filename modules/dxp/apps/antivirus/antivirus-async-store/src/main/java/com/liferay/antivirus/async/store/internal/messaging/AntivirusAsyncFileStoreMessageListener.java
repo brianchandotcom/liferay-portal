@@ -103,7 +103,8 @@ public class AntivirusAsyncFileStoreMessageListener implements MessageListener {
 			ConfigurableUtil.createConfigurable(
 				AntivirusAsyncConfiguration.class, properties);
 
-		_batchInterval = antivirusAsyncConfiguration.batchScanInterval();
+		_batchCronExpression =
+			antivirusAsyncConfiguration.batchScanCronExpression();
 
 		DestinationConfiguration destinationConfiguration =
 			DestinationConfiguration.createSerialDestinationConfiguration(
@@ -138,8 +139,7 @@ public class AntivirusAsyncFileStoreMessageListener implements MessageListener {
 		return _triggerFactory.createTrigger(
 			jobName,
 			AntivirusAsyncConstants.SCHEDULER_GROUP_NAME_ANTIVIRUS_BATCH,
-			Date.from(instant.plusSeconds(30)), null,
-			"0 0 0/" + _batchInterval + " * * ?");
+			Date.from(instant.plusSeconds(30)), null, _batchCronExpression);
 	}
 
 	private void _init(File rootDir) throws SchedulerException {
@@ -327,7 +327,7 @@ public class AntivirusAsyncFileStoreMessageListener implements MessageListener {
 	private AntivirusAsyncEventListenerManager
 		_antivirusAsyncEventListenerManager;
 
-	private int _batchInterval;
+	private String _batchCronExpression;
 
 	@Reference
 	private DestinationFactory _destinationFactory;

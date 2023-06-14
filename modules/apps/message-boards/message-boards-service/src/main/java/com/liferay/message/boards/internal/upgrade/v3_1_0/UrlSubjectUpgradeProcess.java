@@ -21,11 +21,15 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
+import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Javier Gamarra
@@ -70,6 +74,8 @@ public class UrlSubjectUpgradeProcess extends UpgradeProcess {
 	}
 
 	private void _populateUrlSubject() throws Exception {
+		Map<String, IntegerWrapper> counts = new HashMap<>();
+
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				"select messageId, subject from MBMessage order by subject, " +
 					"messageId asc");
@@ -80,26 +86,28 @@ public class UrlSubjectUpgradeProcess extends UpgradeProcess {
 					"update MBMessage set urlSubject = ? where messageId = " +
 						"?")) {
 
-			int count = 0;
 			String curURLSubject = null;
-			String previousURLSubject = null;
 
 			while (resultSet.next()) {
 				long messageId = resultSet.getLong(1);
 				String subject = resultSet.getString(2);
 
+				String suffix = StringPool.BLANK;
+
 				curURLSubject = _getURLSubject(messageId, subject);
 
-				String suffix = null;
+				IntegerWrapper count = counts.getOrDefault(
+					curURLSubject, new IntegerWrapper(0));
 
-				if (StringUtil.equals(previousURLSubject, curURLSubject)) {
-					count++;
-					suffix = StringPool.DASH + count;
+				if (count.getValue() > 0) {
+					suffix = StringPool.DASH + count.getValue();
+
+					counts.put(curURLSubject + suffix, new IntegerWrapper(1));
+
+					count.increment();
 				}
 				else {
-					count = 0;
-					previousURLSubject = curURLSubject;
-					suffix = StringPool.BLANK;
+					counts.put(curURLSubject, new IntegerWrapper(1));
 				}
 
 				preparedStatement2.setString(1, curURLSubject + suffix);

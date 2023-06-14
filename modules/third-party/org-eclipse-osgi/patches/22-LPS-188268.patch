@@ -1,0 +1,151 @@
+diff --git a/org/eclipse/osgi/internal/framework/EquinoxContainer.java b/org/eclipse/osgi/internal/framework/EquinoxContainer.java
+index 4312a0f73f18..b1ab0899cb00 100644
+--- a/org/eclipse/osgi/internal/framework/EquinoxContainer.java
++++ b/org/eclipse/osgi/internal/framework/EquinoxContainer.java
+@@ -50,15 +50,13 @@ public class EquinoxContainer implements ThreadFactory, Runnable {
+ 	private final boolean isProcessClassRecursionSupportedByAll;
+ 	private final EquinoxEventPublisher eventPublisher;
+ 
+-	private final Object monitor = new Object();
++	private volatile ServiceRegistry serviceRegistry;
++	private volatile ContextFinder contextFinder;
+ 
+-	private ServiceRegistry serviceRegistry;
+-	private ContextFinder contextFinder;
++	private volatile ServiceTracker<SignedContentFactory, SignedContentFactory> signedContentFactory;
+ 
+-	private ServiceTracker<SignedContentFactory, SignedContentFactory> signedContentFactory;
+-
+-	private ScheduledExecutorService executor;
+-	private StorageSaver storageSaver;
++	private volatile ScheduledExecutorService executor;
++	private volatile StorageSaver storageSaver;
+ 
+ 	public EquinoxContainer(Map<String, ?> configuration) {
+ 		this.equinoxConfig = new EquinoxConfiguration(configuration, new HookRegistry(this));
+@@ -134,10 +132,8 @@ public class EquinoxContainer implements ThreadFactory, Runnable {
+ 	}
+ 
+ 	public SignedContentFactory getSignedContentFactory() {
+-		ServiceTracker<SignedContentFactory, SignedContentFactory> current;
+-		synchronized (this.monitor) {
+-			current = signedContentFactory;
+-		}
++		ServiceTracker<SignedContentFactory, SignedContentFactory> current = signedContentFactory;
++
+ 		return current == null ? null : current.getService();
+ 	}
+ 
+@@ -159,26 +155,25 @@ public class EquinoxContainer implements ThreadFactory, Runnable {
+ 
+ 	void init() {
+ 		eventPublisher.init();
+-		synchronized (this.monitor) {
+-			serviceRegistry = new ServiceRegistry(this);
+-			initializeContextFinder();
+-			executor = Executors.newScheduledThreadPool(1, this);
+-			// be sure to initialize the executor threads
+-			executor.execute(this);
+-			storageSaver = new StorageSaver(this);
+-		}
++
++		serviceRegistry = new ServiceRegistry(this);
++		initializeContextFinder();
++		executor = Executors.newScheduledThreadPool(1, this);
++		// be sure to initialize the executor threads
++		executor.execute(this);
++		storageSaver = new StorageSaver(this);
+ 	}
+ 
+ 	void close() {
+ 		StorageSaver currentSaver;
+ 		Storage currentStorage;
+ 		ScheduledExecutorService currentExecutor;
+-		synchronized (this.monitor) {
+-			serviceRegistry = null;
+-			currentSaver = storageSaver;
+-			currentStorage = storage;
+-			currentExecutor = executor;
+-		}
++
++		serviceRegistry = null;
++		currentSaver = storageSaver;
++		currentStorage = storage;
++		currentExecutor = executor;
++
+ 		// do this outside of the lock to avoid deadlock
+ 		currentSaver.close();
+ 		currentStorage.close();
+@@ -216,27 +211,19 @@ public class EquinoxContainer implements ThreadFactory, Runnable {
+ 	}
+ 
+ 	public EquinoxEventPublisher getEventPublisher() {
+-		synchronized (this.monitor) {
+-			return eventPublisher;
+-		}
++		return eventPublisher;
+ 	}
+ 
+ 	ScheduledExecutorService getScheduledExecutor() {
+-		synchronized (this.monitor) {
+-			return executor;
+-		}
++		return executor;
+ 	}
+ 
+ 	public ServiceRegistry getServiceRegistry() {
+-		synchronized (this.monitor) {
+-			return serviceRegistry;
+-		}
++		return serviceRegistry;
+ 	}
+ 
+ 	public ContextFinder getContextFinder() {
+-		synchronized (this.monitor) {
+-			return contextFinder;
+-		}
++		return contextFinder;
+ 	}
+ 
+ 	public <K, V, E> ListenerQueue<K, V, E> newListenerQueue() {
+@@ -256,19 +243,14 @@ public class EquinoxContainer implements ThreadFactory, Runnable {
+ 	}
+ 
+ 	void systemStart(BundleContext bc) {
+-		synchronized (this.monitor) {
+-			signedContentFactory = new ServiceTracker<>(bc, SignedContentFactory.class, null);
+-		}
++		signedContentFactory = new ServiceTracker<>(bc, SignedContentFactory.class, null);
++
+ 		signedContentFactory.open();
+ 	}
+ 
+ 	void systemStop(BundleContext bc) {
+-		ServiceTracker<SignedContentFactory, SignedContentFactory> current;
+-		synchronized (this.monitor) {
+-			current = signedContentFactory;
+-		}
+-		if (current != null) {
+-			current.close();
++		if (signedContentFactory != null) {
++			signedContentFactory.close();
+ 		}
+ 	}
+ 
+@@ -279,9 +261,7 @@ public class EquinoxContainer implements ThreadFactory, Runnable {
+ 	}
+ 
+ 	StorageSaver getStorageSaver() {
+-		synchronized (this.monitor) {
+-			return storageSaver;
+-		}
++		return storageSaver;
+ 	}
+ 
+ 	@Override
+@@ -303,3 +283,4 @@ public class EquinoxContainer implements ThreadFactory, Runnable {
+ 	}
+ 
+ }
++/* @generated */
+\ No newline at end of file

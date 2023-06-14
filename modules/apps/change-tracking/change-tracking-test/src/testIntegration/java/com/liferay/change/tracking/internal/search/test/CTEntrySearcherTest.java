@@ -50,7 +50,6 @@ import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.search.sort.Sort;
-import com.liferay.portal.search.sort.SortFieldBuilder;
 import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.sort.Sorts;
 import com.liferay.portal.search.test.util.DocumentsAssert;
@@ -434,10 +433,8 @@ public class CTEntrySearcherTest {
 			CTEntry.class);
 	}
 
-	private Sort _getSort(String orderByCol, SortOrder sortOrder) {
-		return _sorts.field(
-			_sortFieldBuilder.getSortField(CTEntry.class, orderByCol),
-			sortOrder);
+	private Sort _getSort(String field, SortOrder sortOrder) {
+		return _sorts.field(field, sortOrder);
 	}
 
 	private List<String> _getUIDs(BaseModel<?>... baseModels) {
@@ -476,9 +473,6 @@ public class CTEntrySearcherTest {
 
 	@Inject
 	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
-
-	@Inject
-	private SortFieldBuilder _sortFieldBuilder;
 
 	@Inject
 	private Sorts _sorts;

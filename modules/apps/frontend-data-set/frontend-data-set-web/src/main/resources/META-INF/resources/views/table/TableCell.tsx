@@ -12,19 +12,14 @@
  * details.
  */
 
-import {FDSCellRenderer, FDSCellRendererArgs} from '@liferay/js-api/data-set';
-import React, {
-	ComponentType,
-	RefObject,
-	useContext,
-	useEffect,
-	useState,
-} from 'react';
+import {FDSCellRendererArgs} from '@liferay/js-api/data-set';
+import React, {ComponentType, useContext, useEffect, useState} from 'react';
 
 // @ts-ignore
 
 import FrontendDataSetContext from '../../FrontendDataSetContext';
 import {getInternalCellRenderer} from '../../cell_renderers/getInternalCellRenderer';
+import ClientExtensionRenderer from '../../components/ClientExtensionRenderer';
 import {
 	CellRenderer,
 	getCellRendererByURL,
@@ -34,35 +29,6 @@ import {
 // @ts-ignore
 
 import DndTableCell from './dnd_table/Cell';
-
-interface ClientExtensionRendererComponentProps {
-	args: FDSCellRendererArgs;
-	renderer: FDSCellRenderer;
-}
-
-class ClientExtensionRendererComponent extends React.Component<
-	ClientExtensionRendererComponentProps
-> {
-	private readonly ref: RefObject<HTMLDivElement>;
-
-	constructor(props: ClientExtensionRendererComponentProps) {
-		super(props);
-
-		this.ref = React.createRef();
-	}
-
-	componentDidMount() {
-		if (!this.ref.current) {
-			return;
-		}
-
-		this.ref.current.appendChild(this.props.renderer(this.props.args));
-	}
-
-	render() {
-		return <div ref={this.ref}></div>;
-	}
-}
 
 function InlineEditInputRenderer({
 	itemId,
@@ -209,7 +175,7 @@ function TableCell({
 	if (cellRenderer.type === 'clientExtension') {
 		return (
 			<DndTableCell columnName={String(options.fieldName)}>
-				<ClientExtensionRendererComponent
+				<ClientExtensionRenderer<FDSCellRendererArgs>
 					args={{value}}
 					renderer={cellRenderer.renderer}
 				/>

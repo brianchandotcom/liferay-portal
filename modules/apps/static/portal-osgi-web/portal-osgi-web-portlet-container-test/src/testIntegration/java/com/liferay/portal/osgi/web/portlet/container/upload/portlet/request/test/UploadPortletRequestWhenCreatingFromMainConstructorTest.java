@@ -9,11 +9,12 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.upload.FileItem;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.osgi.web.portlet.container.test.util.PortletContainerTestUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upload.LiferayServletRequest;
 import com.liferay.portal.upload.UploadPortletRequestImpl;
-import com.liferay.portal.upload.UploadServletRequestImpl;
 
 import java.util.List;
 import java.util.Map;
@@ -55,7 +56,7 @@ public class UploadPortletRequestWhenCreatingFromMainConstructorTest {
 
 		UploadPortletRequest uploadPortletRequest =
 			new UploadPortletRequestImpl(
-				new UploadServletRequestImpl(mockHttpServletRequest), null,
+				_portal.getUploadServletRequest(mockHttpServletRequest), null,
 				_portletNamespace);
 
 		Map<String, FileItem[]> multipartParameterMap =
@@ -77,5 +78,8 @@ public class UploadPortletRequestWhenCreatingFromMainConstructorTest {
 		"Enterprise. Open Source. For Life.".getBytes();
 
 	private static String _portletNamespace;
+
+	@Inject
+	private Portal _portal;
 
 }

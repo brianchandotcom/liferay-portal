@@ -9,7 +9,10 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.servlet.ServletInputStreamAdapter;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.upload.FileItem;
+import com.liferay.portal.kernel.upload.UploadServletRequest;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.osgi.web.portlet.container.test.util.PortletContainerTestUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upload.LiferayInputStream;
 import com.liferay.portal.upload.LiferayServletRequest;
@@ -51,21 +54,21 @@ public class UploadServletRequestWhenGettingInputStreamTest {
 			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _BYTES);
 
-		UploadServletRequestImpl uploadServletRequestImpl =
-			new UploadServletRequestImpl(
+		UploadServletRequest uploadServletRequest =
+			_portal.getUploadServletRequest(
 				(HttpServletRequest)liferayServletRequest.getRequest());
 
 		ServletInputStream servletInputStream =
-			uploadServletRequestImpl.getInputStream();
+			uploadServletRequest.getInputStream();
 
 		Assert.assertFalse(servletInputStream instanceof LiferayInputStream);
 
-		uploadServletRequestImpl = new UploadServletRequestImpl(
+		uploadServletRequest = new UploadServletRequestImpl(
 			(HttpServletRequest)liferayServletRequest.getRequest(),
 			new HashMap<String, FileItem[]>(),
 			new HashMap<String, List<String>>());
 
-		servletInputStream = uploadServletRequestImpl.getInputStream();
+		servletInputStream = uploadServletRequest.getInputStream();
 
 		Assert.assertFalse(servletInputStream instanceof LiferayInputStream);
 	}
@@ -76,12 +79,12 @@ public class UploadServletRequestWhenGettingInputStreamTest {
 			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _BYTES);
 
-		UploadServletRequestImpl uploadServletRequestImpl =
-			new UploadServletRequestImpl(
+		UploadServletRequest uploadServletRequest =
+			_portal.getUploadServletRequest(
 				(HttpServletRequest)liferayServletRequest.getRequest());
 
 		ServletInputStream servletInputStream =
-			uploadServletRequestImpl.getInputStream();
+			uploadServletRequest.getInputStream();
 
 		Assert.assertTrue(
 			servletInputStream instanceof ServletInputStreamAdapter);
@@ -91,5 +94,8 @@ public class UploadServletRequestWhenGettingInputStreamTest {
 		"Enterprise. Open Source. For Life.".getBytes();
 
 	private static String _fileNameParameter;
+
+	@Inject
+	private Portal _portal;
 
 }

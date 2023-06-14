@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -227,7 +228,9 @@ public class DefaultFragmentDisplayContext {
 			Set<String> fieldTypes = JSONUtil.toStringSet(
 				typeOptionsJSONObject.getJSONArray("fieldTypes"));
 
-			if (SetUtil.isEmpty(SetUtil.intersect(fieldTypes, inputTypes))) {
+			if (SetUtil.isEmpty(
+					SetUtil.intersect(fieldTypes, new HashSet<>(inputTypes)))) {
+
 				return false;
 			}
 

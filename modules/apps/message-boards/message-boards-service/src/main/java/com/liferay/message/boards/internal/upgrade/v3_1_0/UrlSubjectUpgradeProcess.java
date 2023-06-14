@@ -27,6 +27,9 @@ import com.liferay.portal.kernel.util.Validator;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author Javier Gamarra
  */
@@ -70,6 +73,8 @@ public class UrlSubjectUpgradeProcess extends UpgradeProcess {
 	}
 
 	private void _populateUrlSubject() throws Exception {
+		Map<String, Integer> urlSubjects = new HashMap<>();
+
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				"select messageId, subject from MBMessage order by subject, " +
 					"messageId asc");
@@ -80,26 +85,24 @@ public class UrlSubjectUpgradeProcess extends UpgradeProcess {
 					"update MBMessage set urlSubject = ? where messageId = " +
 						"?")) {
 
-			int count = 0;
 			String curURLSubject = null;
-			String previousURLSubject = null;
 
 			while (resultSet.next()) {
 				long messageId = resultSet.getLong(1);
 				String subject = resultSet.getString(2);
 
+				String suffix = StringPool.BLANK;
+
 				curURLSubject = _getURLSubject(messageId, subject);
 
-				String suffix = null;
+				Integer count = urlSubjects.getOrDefault(curURLSubject, 0);
 
-				if (StringUtil.equals(previousURLSubject, curURLSubject)) {
-					count++;
+				urlSubjects.put(curURLSubject, count + 1);
+
+				if (count > 0) {
 					suffix = StringPool.DASH + count;
-				}
-				else {
-					count = 0;
-					previousURLSubject = curURLSubject;
-					suffix = StringPool.BLANK;
+
+					urlSubjects.put(curURLSubject + suffix, 1);
 				}
 
 				preparedStatement2.setString(1, curURLSubject + suffix);

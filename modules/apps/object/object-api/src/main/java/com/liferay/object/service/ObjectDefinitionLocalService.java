@@ -252,8 +252,9 @@ public interface ObjectDefinitionLocalService
 			ObjectRelationship objectRelationship)
 		throws PortalException;
 
-	public ObjectDefinition enableAccountEntryRestrictedForExternalStorageType(
-			ObjectField objectField)
+	public ObjectDefinition
+			enableAccountEntryRestrictedForNondefaultStorageType(
+				ObjectField objectField)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

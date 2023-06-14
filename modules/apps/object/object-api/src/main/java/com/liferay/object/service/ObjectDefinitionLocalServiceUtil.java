@@ -287,12 +287,12 @@ public class ObjectDefinitionLocalServiceUtil {
 	}
 
 	public static ObjectDefinition
-			enableAccountEntryRestrictedForExternalStorageType(
+			enableAccountEntryRestrictedForNondefaultStorageType(
 				com.liferay.object.model.ObjectField objectField)
 		throws PortalException {
 
-		return getService().enableAccountEntryRestrictedForExternalStorageType(
-			objectField);
+		return getService().
+			enableAccountEntryRestrictedForNondefaultStorageType(objectField);
 	}
 
 	public static ObjectDefinition fetchObjectDefinition(

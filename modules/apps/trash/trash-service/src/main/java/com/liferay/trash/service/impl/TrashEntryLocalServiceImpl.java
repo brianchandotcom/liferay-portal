@@ -192,7 +192,9 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 								trashEntry.getClassPK());
 						}
 						catch (Exception exception) {
-							_log.error(exception);
+							if (_log.isDebugEnabled()) {
+								_log.debug(exception);
+							}
 						}
 					}
 				}

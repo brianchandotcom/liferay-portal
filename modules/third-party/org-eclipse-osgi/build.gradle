@@ -18,6 +18,7 @@ patch {
 	fileNames "org/eclipse/osgi/container/ModuleRevisions.java"
 	fileNames "org/eclipse/osgi/framework/util/CaseInsensitiveDictionaryMap.java"
 	fileNames "org/eclipse/osgi/internal/framework/EquinoxConfiguration.java"
+	fileNames "org/eclipse/osgi/internal/framework/EquinoxContainer.java"
 	fileNames "org/eclipse/osgi/internal/framework/EquinoxContainerAdaptor.java"
 	fileNames "org/eclipse/osgi/internal/framework/FilterImpl.java"
 	fileNames "org/eclipse/osgi/internal/loader/BundleLoader.java"

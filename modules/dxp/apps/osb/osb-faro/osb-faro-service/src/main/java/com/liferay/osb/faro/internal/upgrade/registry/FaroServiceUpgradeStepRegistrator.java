@@ -14,8 +14,8 @@
 
 package com.liferay.osb.faro.internal.upgrade.registry;
 
-import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
+import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -119,14 +119,22 @@ public class FaroServiceUpgradeStepRegistrator
 
 		registry.register(
 			"17.0.0", "18.0.0",
+			new com.liferay.osb.faro.internal.upgrade.v18_0_0.
+				LayoutSetUpgradeProcess(),
 			new MVCCVersionUpgradeProcess() {
 
 				@Override
 				protected String[] getTableNames() {
-					return new String[] {"OSBFaro_FaroChannel", "OSBFaro_FaroNotification", "OSBFaro_FaroPreferences", "OSBFaro_FaroProject", "OSBFaro_FaroProjectEmailDomain", "OSBFaro_FaroUser"};
+					return new String[] {
+						"OSBFaro_FaroChannel", "OSBFaro_FaroNotification",
+						"OSBFaro_FaroPreferences", "OSBFaro_FaroProject",
+						"OSBFaro_FaroProjectEmailDomain", "OSBFaro_FaroUser"
+					};
 				}
 
-			});
+			},
+			new com.liferay.osb.faro.internal.upgrade.v18_0_0.
+				UpgradeCompanyId());
 	}
 
 }

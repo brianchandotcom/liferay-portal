@@ -14,9 +14,13 @@
 
 package com.liferay.portal.json.jabsorb.serializer;
 
+import com.liferay.petra.lang.ClassLoaderPool;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.lang.reflect.Method;
 
@@ -66,6 +70,13 @@ public class EnumSerializer extends AbstractSerializer {
 				Class<?> clazz = object.getClass();
 
 				jsonObject.put("javaClass", clazz.getName());
+
+				String contextName = ClassLoaderPool.getContextName(
+					clazz.getClassLoader());
+
+				if (Validator.isNotNull(contextName)) {
+					jsonObject.put("contextName", contextName);
+				}
 			}
 			catch (Exception exception) {
 				throw new MarshallException(
@@ -143,6 +154,23 @@ public class EnumSerializer extends AbstractSerializer {
 		String javaClassName = _getString(jsonObject, "javaClass");
 
 		try {
+			if (jsonObject.has("contextName")) {
+				String contextName = jsonObject.getString("contextName");
+
+				ClassLoader classLoader = ClassLoaderPool.getClassLoader(
+					contextName);
+
+				if (classLoader != null) {
+					return Class.forName(javaClassName, true, classLoader);
+				}
+				else if (_log.isWarnEnabled()) {
+					_log.warn(
+						StringBundler.concat(
+							"Unable to get class loader for class ",
+							javaClassName, " in context ", contextName));
+				}
+			}
+
 			return Class.forName(javaClassName);
 		}
 		catch (ClassNotFoundException classNotFoundException) {
@@ -173,5 +201,7 @@ public class EnumSerializer extends AbstractSerializer {
 	private static final Class<?>[] _JSON_CLASSES = {JSONObject.class};
 
 	private static final Class<?>[] _SERIALIZABLE_CLASSES = {Enum.class};
+
+	private static final Log _log = LogFactoryUtil.getLog(EnumSerializer.class);
 
 }

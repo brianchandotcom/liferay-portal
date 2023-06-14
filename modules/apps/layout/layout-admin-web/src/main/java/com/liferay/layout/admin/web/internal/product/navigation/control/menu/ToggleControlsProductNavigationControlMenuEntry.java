@@ -14,6 +14,7 @@
 
 package com.liferay.layout.admin.web.internal.product.navigation.control.menu;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.IconTag;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
@@ -24,18 +25,28 @@ import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.SessionClicks;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.product.navigation.control.menu.BaseProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
 
-import java.util.Collections;
+import java.io.IOException;
+import java.io.Writer;
+
+import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
+import java.util.Objects;
+import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.jsp.JspException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -54,47 +65,57 @@ public class ToggleControlsProductNavigationControlMenuEntry
 	extends BaseProductNavigationControlMenuEntry {
 
 	@Override
-	public Map<String, Object> getData(HttpServletRequest httpServletRequest) {
-		return _data;
+	public String getLabel(Locale locale) {
+		return null;
+	}
+
+	public String getURL(HttpServletRequest httpServletRequest) {
+		return null;
 	}
 
 	@Override
-	public String getIcon(HttpServletRequest httpServletRequest) {
-		String stateCss = null;
+	public boolean includeIcon(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws IOException {
 
 		String toggleControls = GetterUtil.getString(
 			SessionClicks.get(
 				httpServletRequest,
 				"com.liferay.frontend.js.web_toggleControls", "visible"));
 
-		if (toggleControls.equals("visible")) {
-			stateCss = "view";
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			_portal.getLocale(httpServletRequest), getClass());
+
+		IconTag iconTag = new IconTag();
+
+		iconTag.setCssClass("icon-monospaced");
+
+		if (Objects.equals(toggleControls, "visible")) {
+			iconTag.setSymbol("view");
 		}
 		else {
-			stateCss = "hidden";
+			iconTag.setSymbol("hidden");
 		}
 
-		return stateCss;
-	}
+		try {
+			HashMap<String, String> values = HashMapBuilder.put(
+				"iconTag",
+				iconTag.doTagAsString(httpServletRequest, httpServletResponse)
+			).put(
+				"title", _language.get(resourceBundle, "toggle-controls")
+			).build();
 
-	@Override
-	public String getIconCssClass(HttpServletRequest httpServletRequest) {
-		return "icon-monospaced";
-	}
+			Writer writer = httpServletResponse.getWriter();
 
-	@Override
-	public String getLabel(Locale locale) {
-		return _language.get(locale, "toggle-controls");
-	}
+			writer.write(
+				StringUtil.replace(_ICON_TMPL_CONTENT, "${", "}", values));
+		}
+		catch (JspException jspException) {
+			throw new IOException(jspException);
+		}
 
-	@Override
-	public String getLinkCssClass(HttpServletRequest httpServletRequest) {
-		return "d-block toggle-controls";
-	}
-
-	@Override
-	public String getURL(HttpServletRequest httpServletRequest) {
-		return "javascript:void(0);";
+		return true;
 	}
 
 	@Override
@@ -172,10 +193,13 @@ public class ToggleControlsProductNavigationControlMenuEntry
 			themeDisplay.getLayout(), ActionKeys.CONFIGURATION);
 	}
 
-	private static final Map<String, Object> _data =
-		Collections.<String, Object>singletonMap("qa-id", "showControls");
+	private static final String _ICON_TMPL_CONTENT = StringUtil.read(
+		ToggleControlsProductNavigationControlMenuEntry.class, "icon.tmpl");
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private Portal _portal;
 
 }

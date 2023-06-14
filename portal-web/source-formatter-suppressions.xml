@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<source-check>
+		<suppress checks="IllegalTaglibsCheck" files="docroot/html/taglib/ui/icon/page\.jsp" />
+	</source-check>
+</suppressions>

@@ -657,7 +657,6 @@ public class DLAdminManagementToolbarDisplayContext
 
 		fileExtensionItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			Collections.singletonList(new UUIDItemSelectorReturnType()));
-
 		fileExtensionItemSelectorCriterion.setSelectedGroupIds(
 			new long[] {_themeDisplay.getScopeGroupId()});
 

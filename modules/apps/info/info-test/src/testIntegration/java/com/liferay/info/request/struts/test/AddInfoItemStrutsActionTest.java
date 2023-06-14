@@ -439,7 +439,6 @@ public class AddInfoItemStrutsActionTest {
 
 		uploadPortletRequest.setAttribute(
 			WebKeys.CURRENT_URL, "/portal/add_info_item");
-
 		uploadPortletRequest.setAttribute(WebKeys.USER, user);
 
 		EventsProcessorUtil.process(

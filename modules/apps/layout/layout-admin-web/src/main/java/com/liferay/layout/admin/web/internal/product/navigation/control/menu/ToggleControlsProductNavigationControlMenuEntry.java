@@ -51,8 +51,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = ProductNavigationControlMenuEntry.class
 )
 public class ToggleControlsProductNavigationControlMenuEntry
-	extends BaseProductNavigationControlMenuEntry
-	implements ProductNavigationControlMenuEntry {
+	extends BaseProductNavigationControlMenuEntry {
 
 	@Override
 	public Map<String, Object> getData(HttpServletRequest httpServletRequest) {

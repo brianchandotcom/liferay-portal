@@ -5,6 +5,7 @@ import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.portal.vulcan.action.ActionInfo;
 import com.liferay.portal.vulcan.action.DTOActionProvider;
 import com.liferay.portal.vulcan.util.ActionUtil;
+import com.liferay.portal.vulcan.util.UriInfoUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -44,7 +45,7 @@ public class ${schemaName}DTOActionProvider implements DTOActionProvider {
 				continue;
 			}
 
-			actions.put(actionName, ActionUtil.addAction(actionInfo.getActionKey(), actionInfo.getResourceClass(), primaryKey, actionInfo.getResourceMethodName(), _scopeChecker,userId, ${schemaVarName}DTOActionMetadataProvider.getPermissionName(),groupId, uriInfo));
+			actions.put(actionName, ActionUtil.addAction(actionInfo.getActionKey(), actionInfo.getResourceClass(), primaryKey, actionInfo.getResourceMethodName(), _scopeChecker,userId, ${schemaVarName}DTOActionMetadataProvider.getPermissionName(), groupId, () -> UriInfoUtil.getBaseUriBuilder("${configYAML.application.baseURI?remove_beginning("/")}", uriInfo), uriInfo));
 		}
 
 		return actions;

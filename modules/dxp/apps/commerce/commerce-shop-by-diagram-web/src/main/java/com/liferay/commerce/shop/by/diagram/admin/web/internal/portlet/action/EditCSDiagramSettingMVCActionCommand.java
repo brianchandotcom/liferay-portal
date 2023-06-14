@@ -19,11 +19,13 @@ import com.liferay.commerce.product.exception.NoSuchCPAttachmentFileEntryExcepti
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
+import com.liferay.commerce.shop.by.diagram.configuration.CSDiagramSettingImageConfiguration;
 import com.liferay.commerce.shop.by.diagram.constants.CSDiagramSettingsConstants;
 import com.liferay.commerce.shop.by.diagram.exception.NoSuchCSDiagramEntryException;
 import com.liferay.commerce.shop.by.diagram.model.CSDiagramSetting;
 import com.liferay.commerce.shop.by.diagram.service.CSDiagramSettingService;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -49,6 +51,7 @@ import java.io.IOException;
 
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Map;
 import java.util.concurrent.Callable;
 
 import javax.portlet.ActionRequest;
@@ -56,13 +59,16 @@ import javax.portlet.ActionResponse;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
  */
 @Component(
+	configurationPid = "com.liferay.commerce.shop.by.diagram.configuration.CSDiagramSettingImageConfiguration",
 	property = {
 		"javax.portlet.name=" + CPPortletKeys.CP_DEFINITIONS,
 		"mvc.command.name=/cp_definitions/edit_cs_diagram_setting"
@@ -70,6 +76,14 @@ import org.osgi.service.component.annotations.Reference;
 	service = MVCActionCommand.class
 )
 public class EditCSDiagramSettingMVCActionCommand extends BaseMVCActionCommand {
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_csDiagramSettingImageConfiguration =
+			ConfigurableUtil.createConfigurable(
+				CSDiagramSettingImageConfiguration.class, properties);
+	}
 
 	@Override
 	protected void doProcessAction(
@@ -213,20 +227,22 @@ public class EditCSDiagramSettingMVCActionCommand extends BaseMVCActionCommand {
 			_addOrUpdateCPAttachmentFileEntry(
 				actionRequest, csDiagramSetting, cpDefinitionId);
 
-		double radius = ParamUtil.getDouble(actionRequest, "radius");
 		String type = ParamUtil.getString(actionRequest, "type");
 
 		if (csDiagramSetting == null) {
 			return _csDiagramSettingService.addCSDiagramSetting(
 				cpDefinitionId,
 				cpAttachmentFileEntry.getCPAttachmentFileEntryId(), null,
-				radius, type);
+				ParamUtil.getDouble(
+					actionRequest, "radius",
+					_csDiagramSettingImageConfiguration.radius()),
+				type);
 		}
 
 		return _csDiagramSettingService.updateCSDiagramSetting(
 			csDiagramSetting.getCSDiagramSettingId(),
-			cpAttachmentFileEntry.getCPAttachmentFileEntryId(), null, radius,
-			type);
+			cpAttachmentFileEntry.getCPAttachmentFileEntryId(), null,
+			csDiagramSetting.getRadius(), type);
 	}
 
 	private void _writeJSON(
@@ -249,6 +265,9 @@ public class EditCSDiagramSettingMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private CPAttachmentFileEntryService _cpAttachmentFileEntryService;
+
+	private volatile CSDiagramSettingImageConfiguration
+		_csDiagramSettingImageConfiguration;
 
 	@Reference
 	private CSDiagramSettingService _csDiagramSettingService;

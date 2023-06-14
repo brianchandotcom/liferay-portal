@@ -818,35 +818,32 @@ public class DLReferencesExportImportContentProcessor
 
 			FileEntry fileEntry = _getFileEntry(dlReferenceParameters);
 
-			if (fileEntry == null) {
-				boolean externalUrl = _isExternalUrl(
-					groupId, content, beginPos, endPos);
+			if ((fileEntry == null) &&
+				!_isExternalUrl(groupId, content, beginPos, endPos)) {
 
-				if (!externalUrl) {
-					ExportImportContentValidationException
-						exportImportContentValidationException =
-							new ExportImportContentValidationException(
-								DLReferencesExportImportContentProcessor.class.
-									getName(),
-								new NoSuchFileEntryException());
+				ExportImportContentValidationException
+					exportImportContentValidationException =
+						new ExportImportContentValidationException(
+							DLReferencesExportImportContentProcessor.class.
+								getName(),
+							new NoSuchFileEntryException());
 
-					exportImportContentValidationException.
-						setDlReferenceParameters(dlReferenceParameters);
+				exportImportContentValidationException.setDlReferenceParameters(
+					dlReferenceParameters);
 
-					ObjectValuePair<String, Integer>
-						dlReferenceEndPosObjectValuePair =
-							_getDLReferenceEndPosObjectValuePair(
-								content, beginPos, endPos);
+				ObjectValuePair<String, Integer>
+					dlReferenceEndPosObjectValuePair =
+						_getDLReferenceEndPosObjectValuePair(
+							content, beginPos, endPos);
 
-					exportImportContentValidationException.setDlReference(
-						dlReferenceEndPosObjectValuePair.getKey());
+				exportImportContentValidationException.setDlReference(
+					dlReferenceEndPosObjectValuePair.getKey());
 
-					exportImportContentValidationException.setType(
-						ExportImportContentValidationException.
-							FILE_ENTRY_NOT_FOUND);
+				exportImportContentValidationException.setType(
+					ExportImportContentValidationException.
+						FILE_ENTRY_NOT_FOUND);
 
-					throw exportImportContentValidationException;
-				}
+				throw exportImportContentValidationException;
 			}
 
 			endPos = beginPos - 1;

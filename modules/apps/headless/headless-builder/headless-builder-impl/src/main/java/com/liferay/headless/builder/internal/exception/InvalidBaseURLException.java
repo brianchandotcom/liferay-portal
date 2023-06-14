@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.headless.builder.exception;
+package com.liferay.headless.builder.internal.exception;
 
 import javax.ws.rs.BadRequestException;
 

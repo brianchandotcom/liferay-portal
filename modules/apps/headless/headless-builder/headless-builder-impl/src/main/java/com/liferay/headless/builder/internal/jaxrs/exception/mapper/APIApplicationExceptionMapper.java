@@ -14,7 +14,7 @@
 
 package com.liferay.headless.builder.internal.jaxrs.exception.mapper;
 
-import com.liferay.headless.builder.exception.InvalidBaseURLException;
+import com.liferay.headless.builder.internal.exception.InvalidBaseURLException;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 

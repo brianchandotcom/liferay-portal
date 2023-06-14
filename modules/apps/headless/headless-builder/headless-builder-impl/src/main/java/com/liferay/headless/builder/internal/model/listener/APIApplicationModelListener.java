@@ -14,8 +14,8 @@
 
 package com.liferay.headless.builder.internal.model.listener;
 
-import com.liferay.headless.builder.exception.InvalidBaseURLException;
 import com.liferay.headless.builder.internal.constants.HeadlessBuilderConstants;
+import com.liferay.headless.builder.internal.exception.InvalidBaseURLException;
 import com.liferay.headless.builder.internal.validator.HeadlessBuilderValidator;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;

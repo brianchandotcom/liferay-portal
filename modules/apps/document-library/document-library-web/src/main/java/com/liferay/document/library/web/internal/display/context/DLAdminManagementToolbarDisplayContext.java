@@ -1089,44 +1089,21 @@ public class DLAdminManagementToolbarDisplayContext
 	}
 
 	private void _setFilterParameters(PortletURL portletURL) {
-		long[] assetCategoryIds = ArrayUtil.toLongArray(
-			_getSelectedAssetCategoryIds());
+		portletURL.setParameter(
+			"assetCategoryId",
+			ArrayUtil.toStringArray(
+				ArrayUtil.toLongArray(_getSelectedAssetCategoryIds())));
 
-		if (ArrayUtil.isNotEmpty(assetCategoryIds)) {
-			portletURL.setParameter(
-				"assetCategoryId", ArrayUtil.toStringArray(assetCategoryIds));
-		}
-		else {
-			portletURL.setParameter("assetCategoryId", (String)null);
-		}
+		portletURL.setParameter(
+			"assetTagId", ArrayUtil.toStringArray(_getSelectedAssetTagIds()));
 
-		String[] assetTagIds = ArrayUtil.toStringArray(
-			_getSelectedAssetTagIds());
-
-		if (ArrayUtil.isNotEmpty(assetTagIds)) {
-			portletURL.setParameter("assetTagId", assetTagIds);
-		}
-		else {
-			portletURL.setParameter("assetTagId", (String)null);
-		}
-
-		String[] extensions = _getExtensions();
-
-		if (ArrayUtil.isNotEmpty(extensions)) {
-			portletURL.setParameter("extension", extensions);
-		}
-		else {
-			portletURL.setParameter("extension", (String)null);
-		}
+		portletURL.setParameter("extension", _getExtensions());
 
 		long fileEntryTypeId = _getFileEntryTypeId();
 
 		if (fileEntryTypeId != -1) {
 			portletURL.setParameter(
 				"fileEntryTypeId", String.valueOf(fileEntryTypeId));
-		}
-		else {
-			portletURL.setParameter("fileEntryTypeId", (String)null);
 		}
 
 		portletURL.setParameter(

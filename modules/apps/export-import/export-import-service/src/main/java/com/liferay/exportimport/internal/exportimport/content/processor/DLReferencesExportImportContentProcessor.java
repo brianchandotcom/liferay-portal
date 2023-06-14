@@ -496,7 +496,11 @@ public class DLReferencesExportImportContentProcessor
 
 			FileEntry fileEntry = _getFileEntry(dlReferenceParameters);
 
-			if (fileEntry == null) {
+			if ((fileEntry == null) ||
+				_isExternalUrl(
+					portletDataContext.getScopeGroupId(), content, beginPos,
+					endPos)) {
+
 				endPos = beginPos - 1;
 
 				continue;

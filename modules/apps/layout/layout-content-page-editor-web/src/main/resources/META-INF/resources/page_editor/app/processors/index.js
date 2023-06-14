@@ -12,6 +12,7 @@
  * details.
  */
 
+import ActionProcessor from './ActionProcessor';
 import BackgroundImageProcessor from './BackgroundImageProcessor';
 import DateTimeProcessor from './DateTimeProcessor';
 import FallbackProcessor from './FallbackProcessor';
@@ -22,6 +23,7 @@ import RichTextProcessor from './RichTextProcessor';
 import TextProcessor from './TextProcessor';
 
 export default {
+	'action': ActionProcessor,
 	'background-image': BackgroundImageProcessor,
 	'date-time': DateTimeProcessor,
 	'fallback': FallbackProcessor,

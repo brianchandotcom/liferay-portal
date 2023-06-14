@@ -23,8 +23,6 @@ LayoutSetPrototype layoutSetPrototype = (LayoutSetPrototype)request.getAttribute
 String redirect = (String)request.getAttribute("edit_layout_set_prototype.jsp-redirect");
 
 int mergeFailCount = SitesUtil.getMergeFailCount(layoutSetPrototype);
-
-String randomNamespace = PortalUtil.generateRandomKey(request, "portlet_layout_set_prototypes_merge_alert") + StringPool.UNDERLINE;
 %>
 
 <c:if test="<%= mergeFailCount > PropsValues.LAYOUT_SET_PROTOTYPE_MERGE_FAIL_THRESHOLD %>">
@@ -33,30 +31,21 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "portlet_layout_s
 
 		<liferay-ui:message arguments="site-template" key="click-reset-and-propagate-to-reset-the-failure-count-and-propagate-changes-from-the-x" />
 
-		<clay:button
+		<liferay-portlet:actionURL name="/site_admin/reset_merge_fail_count_and_merge" portletName="<%= SiteAdminPortletKeys.SITE_ADMIN %>" var="portletURL">
+			<portlet:param name="redirect" value="<%= redirect %>" />
+			<portlet:param name="layoutSetPrototypeId" value="<%= String.valueOf(layoutSetPrototype.getLayoutSetPrototypeId()) %>" />
+			<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+			<portlet:param name="privateLayoutSet" value="<%= String.valueOf(layoutSet.isPrivateLayout()) %>" />
+		</liferay-portlet:actionURL>
+
+		<clay:link
 			cssClass="c-mt-2"
 			displayType="secondary"
-			id='<%= randomNamespace + "resetButton" %>'
+			href="<%= portletURL.toString() %>"
 			label="reset-and-propagate"
+			type="button"
 		/>
 	</clay:alert>
-
-	<script>
-		var resetButton = document.getElementById('<%= randomNamespace %>resetButton');
-
-		if (resetButton) {
-			resetButton.addEventListener('click', (event) => {
-				<liferay-portlet:actionURL name="/site_admin/reset_merge_fail_count_and_merge" portletName="<%= SiteAdminPortletKeys.SITE_ADMIN %>" var="portletURL">
-					<portlet:param name="redirect" value="<%= redirect %>" />
-					<portlet:param name="layoutSetPrototypeId" value="<%= String.valueOf(layoutSetPrototype.getLayoutSetPrototypeId()) %>" />
-					<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-					<portlet:param name="privateLayoutSet" value="<%= String.valueOf(layoutSet.isPrivateLayout()) %>" />
-				</liferay-portlet:actionURL>
-
-				submitForm(document.hrefFm, '<%= portletURL.toString() %>');
-			});
-		}
-	</script>
 </c:if>
 
 <%

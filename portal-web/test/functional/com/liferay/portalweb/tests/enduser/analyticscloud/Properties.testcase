@@ -278,7 +278,7 @@ definition {
 	test ClearPropertyData {
 
 		// AC Refactor: data doesn't appear on time
-		// AC Refactor ticket: LRAC-8994
+		// AC Refactor ticket: LRAC-13994
 
 		task ("Connect the DXP to Analytics Cloud") {
 			JSONUser.addUser(

@@ -1,0 +1,236 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragmentStyle": {
+						"marginLeft": "10",
+						"marginRight": "10"
+					},
+					"indexed": true,
+					"layout": {
+						"opacity": 100,
+						"widthType": "Fluid"
+					},
+					"name": "EVP Upload Receipt"
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"indexed": true,
+							"layout": {
+								"opacity": 100,
+								"widthType": "Fluid"
+							},
+							"name": "Breadcrumb container"
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"widgetInstance": {
+										"widgetConfig": {
+										},
+										"widgetName": "com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet"
+									}
+								},
+								"type": "Widget"
+							}
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"indexed": true,
+							"layout": {
+								"opacity": 100,
+								"widthType": "Fluid"
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"indexed": true,
+									"layout": {
+										"opacity": 100,
+										"widthType": "Fluid"
+									}
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "DIALECT-dialect-text"
+											},
+											"fragmentConfig": {
+												"textType": "h1",
+												"truncateText": false
+											},
+											"fragmentFields": [
+												{
+													"id": "element-text",
+													"value": {
+														"fragmentLink": {
+														},
+														"text": {
+															"value_i18n": {
+																"en_US": "Upload Receipt"
+															}
+														}
+													}
+												}
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "Section"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "BASIC_COMPONENT-separator"
+									},
+									"fragmentConfig": {
+										"bottomSpacing": "3",
+										"separatorColor": ""
+									},
+									"fragmentFields": [
+									],
+									"fragmentStyle": {
+										"marginBottom": "3"
+									},
+									"indexed": true
+								},
+								"type": "Fragment"
+							}
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"fragment": {
+								"key": "evp-upload-receipt",
+								"siteKey": "[$GROUP_KEY$]"
+							},
+							"fragmentConfig": {
+							},
+							"fragmentFields": [
+							],
+							"fragmentStyle": {
+								"marginBottom": "5"
+							},
+							"indexed": true
+						},
+						"pageElements": [
+							{
+								"definition": {
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"formConfig": {
+												"formReference": {
+													"className": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:EVPUploadReceipt$]",
+													"classType": 0
+												}
+											},
+											"indexed": true,
+											"layout": {
+												"widthType": "Fluid"
+											}
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "INPUTS-file-upload"
+													},
+													"fragmentConfig": {
+														"buttonText": "Select File",
+														"inputFieldId": "ObjectField_file",
+														"inputHelpText": {
+															"en_US": "Send only a PDF file containing the vouchers."
+														},
+														"inputLabel": {
+															"en_US": ""
+														},
+														"inputShowHelpText": true,
+														"showSupportedFileInfo": true
+													},
+													"fragmentFields": [
+													],
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "INPUTS-numeric-input"
+													},
+													"fragmentConfig": {
+														"inputFieldId": "ObjectField_receiptValue",
+														"inputHelpText": {
+															"en_US": "Enter the receipt amount. Eg: 500.5"
+														},
+														"inputShowHelpText": true,
+														"placeholder": ""
+													},
+													"fragmentFields": [
+													],
+													"fragmentStyle": {
+														"marginTop": "3"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "INPUTS-submit-button"
+													},
+													"fragmentConfig": {
+														"buttonSize": "nm",
+														"buttonType": "primary"
+													},
+													"fragmentFields": [
+														{
+															"id": "submit-button-text",
+															"value": {
+																"fragmentLink": {
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"marginBottom": "5",
+														"marginTop": "4"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "Form"
+									}
+								],
+								"type": "FragmentDropZone"
+							}
+						],
+						"type": "Fragment"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "main-template"
+		}
+	},
+	"version": 1.1
+}

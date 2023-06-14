@@ -1,0 +1,72 @@
+{
+	"label": {
+		"en_US": "EVP Upload Receipt"
+	},
+	"name": "EVPUploadReceipt",
+	"objectFields": [
+		{
+			"DBType": "Long",
+			"businessType": "Attachment",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "File"
+			},
+			"name": "file",
+			"objectFieldSettings": [
+				{
+					"name": "acceptedFileExtensions",
+					"value": "pdf"
+				},
+				{
+					"name": "maximumFileSize",
+					"value": 5
+				},
+				{
+					"name": "fileSource",
+					"value": "userComputer"
+				},
+				{
+					"name": "showFilesInDocumentsAndMedia",
+					"value": true
+				},
+				{
+					"name": "storageDLFolderPath",
+					"value": "/EVPUploadReceipt"
+				}
+			],
+			"readOnly": "false",
+			"readOnlyConditionExpression": "",
+			"required": true,
+			"state": false,
+			"system": false,
+			"type": "Long"
+		},
+		{
+			"DBType": "BigDecimal",
+			"businessType": "PrecisionDecimal",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "Receipt Value"
+			},
+			"name": "receiptValue",
+			"objectFieldSettings": [
+			],
+			"readOnly": "false",
+			"readOnlyConditionExpression": "",
+			"required": true,
+			"state": false,
+			"system": false,
+			"type": "BigDecimal"
+		}
+	],
+	"panelCategoryKey": "control_panel.object",
+	"pluralLabel": {
+		"en_US": "EVP Upload Receipts"
+	},
+	"scope": "company",
+	"titleObjectFieldName": "id"
+}

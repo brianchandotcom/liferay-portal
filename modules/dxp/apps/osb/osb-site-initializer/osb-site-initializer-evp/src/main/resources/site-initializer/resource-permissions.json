@@ -11,6 +11,14 @@
 		"actionIds": [
 			"ADD_OBJECT_ENTRY"
 		],
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:EVPUploadReceipt$]",
+		"roleName": "Employee",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"ADD_OBJECT_ENTRY"
+		],
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:EVPGrantRequest$]",
 		"roleName": "Employee",
 		"scope": "1"

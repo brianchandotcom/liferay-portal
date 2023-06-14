@@ -11,10 +11,13 @@
 [#assign requestStatusListing = ["rejected","awaitingMoreInfoFromEmployee", "verified", "closed", "
 Await Company Verification", "Awaiting Finance Review"] /]
 [#assign requestName = (restClient.get("/c/evprequests/" + requestId).id)! /]
+[#assign grantRequestType = (restClient.get("/c/evprequests/" + requestId).grantRequestType.key)! /]
 
 <input class="requestID" type="hidden" value="${requestId}" />
 
 <input class="requestName" hidden value="${requestName}" />
+
+<input class="grantRequestType" hidden value="${grantRequestType}" />
 
 <input class="userRoles" hidden value="${userRoles[1].name}" />
 
@@ -48,6 +51,15 @@ Await Company Verification", "Awaiting Finance Review"] /]
 					/]
 				</div>
 			[/#if]
+
+			[#if role.name == "Employee" && grantRequestType == "sponsorship" && requestStatus == "awaitingEmployeeProofOfExpenses"]
+			<div class="btnOpenModal">
+				[@liferay_ui["icon"]
+					message="Upload Receipt"
+					url=URL + "/upload-receipt?id=" + requestId
+				/]
+			</div>
+		[/#if]
 		[/#list]
 	[/@]
 </div>

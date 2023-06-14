@@ -55,10 +55,11 @@ public class ObjectDefinitionServiceUtil {
 	}
 
 	public static ObjectDefinition addObjectDefinition(
-			String externalReferenceCode)
+			String externalReferenceCode, boolean modifiable, boolean system)
 		throws PortalException {
 
-		return getService().addObjectDefinition(externalReferenceCode);
+		return getService().addObjectDefinition(
+			externalReferenceCode, modifiable, system);
 	}
 
 	public static ObjectDefinition addSystemObjectDefinition(

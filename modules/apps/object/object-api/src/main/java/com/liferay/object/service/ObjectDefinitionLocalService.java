@@ -95,7 +95,8 @@ public interface ObjectDefinitionLocalService
 
 	@Indexable(type = IndexableType.REINDEX)
 	public ObjectDefinition addObjectDefinition(
-			String externalReferenceCode, long userId)
+			String externalReferenceCode, long userId, boolean modifiable,
+			boolean system)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)

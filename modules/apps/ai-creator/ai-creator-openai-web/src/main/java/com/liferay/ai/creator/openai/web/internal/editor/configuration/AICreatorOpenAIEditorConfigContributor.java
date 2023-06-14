@@ -19,7 +19,6 @@ import com.liferay.ai.creator.openai.web.internal.constants.AICreatorOpenAIPortl
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -27,15 +26,13 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Map;
 
 import javax.portlet.PortletMode;
-import javax.portlet.PortletModeException;
-import javax.portlet.PortletURL;
-import javax.portlet.WindowStateException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -68,31 +65,18 @@ public class AICreatorOpenAIEditorConfigContributor
 
 		jsonObject.put(
 			"aiCreatorOpenAIURL",
-			() -> {
-				PortletURL portletURL =
-					requestBackedPortletURLFactory.createControlPanelRenderURL(
-						AICreatorOpenAIPortletKeys.AI_CREATOR_OPENAI,
-						themeDisplay.getScopeGroup(),
-						themeDisplay.getRefererGroupId(), 0);
-
-				try {
-					portletURL.setPortletMode(PortletMode.VIEW);
-				}
-				catch (PortletModeException portletModeException) {
-					throw new SystemException(portletModeException);
-				}
-
-				try {
-					portletURL.setWindowState(LiferayWindowState.POP_UP);
-				}
-				catch (WindowStateException windowStateException) {
-					throw new SystemException(windowStateException);
-				}
-
-				portletURL.setParameter("mvcPath", "/view.jsp");
-
-				return portletURL.toString();
-			}
+			() -> PortletURLBuilder.create(
+				requestBackedPortletURLFactory.createControlPanelRenderURL(
+					AICreatorOpenAIPortletKeys.AI_CREATOR_OPENAI,
+					themeDisplay.getScopeGroup(),
+					themeDisplay.getRefererGroupId(), 0)
+			).setMVCPath(
+				"/view.jsp"
+			).setPortletMode(
+				PortletMode.VIEW
+			).setWindowState(
+				LiferayWindowState.POP_UP
+			).buildString()
 		).put(
 			"isAICreatorOpenAIAPIKey",
 			() -> {

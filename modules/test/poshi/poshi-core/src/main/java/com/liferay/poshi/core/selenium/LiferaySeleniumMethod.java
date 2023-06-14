@@ -58,6 +58,10 @@ public class LiferaySeleniumMethod {
 		return _defaultParameterNames.subList(0, parameterCount);
 	}
 
+	public Class<?>[] getParameterTypes() {
+		return _method.getParameterTypes();
+	}
+
 	private static final List<String> _defaultParameterNames = Arrays.asList(
 		"locator1", "value1", "locator2");
 	private static final List<String> _javaScriptMethodNames = Arrays.asList(
@@ -69,6 +73,7 @@ public class LiferaySeleniumMethod {
 				put(
 					"assertCSSValue",
 					new String[] {"locator1", "locator2", "value1"});
+				put("executeCDPCommand", new String[] {"value1", "value2"});
 				put(
 					"ocularAssertElementImage",
 					new String[] {"locator1", "value1", "value2"});

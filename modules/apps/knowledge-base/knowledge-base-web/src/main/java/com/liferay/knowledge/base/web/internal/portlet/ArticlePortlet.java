@@ -136,7 +136,6 @@ public class ArticlePortlet extends BaseKBPortlet {
 
 			renderRequest.setAttribute(
 				KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE, kbArticle);
-
 			renderRequest.setAttribute(KBWebKeys.KNOWLEDGE_BASE_STATUS, status);
 		}
 		catch (NoSuchArticleException | PrincipalException exception) {

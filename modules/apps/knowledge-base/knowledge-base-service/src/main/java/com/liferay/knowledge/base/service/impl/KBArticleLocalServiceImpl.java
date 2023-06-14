@@ -1067,7 +1067,6 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			curKBArticle.setParentResourceClassNameId(
 				parentResourceClassNameId);
 			curKBArticle.setParentResourcePrimKey(parentResourcePrimKey);
-
 			curKBArticle.setKbFolderId(kbFolderId);
 			curKBArticle.setPriority(priority);
 

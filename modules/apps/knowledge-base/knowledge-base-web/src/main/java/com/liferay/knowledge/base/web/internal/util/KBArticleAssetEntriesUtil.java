@@ -212,7 +212,6 @@ public class KBArticleAssetEntriesUtil {
 
 		portletURL.setWindowState(WindowState.MAXIMIZED);
 		portletURL.setPortletMode(PortletMode.VIEW);
-
 		portletURL.setParameter("returnToFullPageURL", currentURL);
 
 		return portletURL.toString();

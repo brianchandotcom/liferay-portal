@@ -96,7 +96,6 @@ public class SearchPortlet extends BaseKBPortlet {
 			renderRequest.setAttribute(
 				KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE,
 				_getKBArticle(renderRequest));
-
 			renderRequest.setAttribute(
 				KBWebKeys.KNOWLEDGE_BASE_STATUS,
 				WorkflowConstants.STATUS_APPROVED);

@@ -139,7 +139,6 @@ public class KBDropdownItemsProvider {
 							_hasHistoryPermission(kbArticle),
 						_getHistoryActionUnsafeConsumer(kbArticle)
 					).build());
-
 				dropdownGroupItem.setSeparator(true);
 			}
 		).addGroup(
@@ -155,7 +154,6 @@ public class KBDropdownItemsProvider {
 						() -> _hasMovePermission(kbArticle),
 						_getMoveActionUnsafeConsumer(kbArticle)
 					).build());
-
 				dropdownGroupItem.setSeparator(true);
 			}
 		).addGroup(
@@ -169,7 +167,6 @@ public class KBDropdownItemsProvider {
 						_getDeleteActionUnsafeConsumer(
 							kbArticle, selectedItemAncestorIds)
 					).build());
-
 				dropdownGroupItem.setSeparator(true);
 			}
 		).build();
@@ -245,7 +242,6 @@ public class KBDropdownItemsProvider {
 						_getDeleteActionUnsafeConsumer(
 							kbFolder, selectedItemAncestorIds)
 					).build());
-
 				dropdownGroupItem.setSeparator(true);
 			}
 		).build();

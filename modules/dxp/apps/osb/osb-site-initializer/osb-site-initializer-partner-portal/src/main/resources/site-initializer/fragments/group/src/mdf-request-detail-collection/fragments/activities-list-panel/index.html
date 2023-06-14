@@ -7,7 +7,7 @@
 [#assign mdf_request_id = (request.getAttribute("INFO_ITEM").objectEntryId)! /]
 
 [#function days_difference_from_now date]
-	[#return (date?long - .now?long) / (1000 * 60 * 60 * 24) /]
+	[#return (date?long + (31 * 1000 * 60 * 60 * 24) - (.now?long)) / (1000 * 60 * 60 * 24) /]
 [/#function]
 
 [#function get_event_fields activity]
@@ -105,7 +105,7 @@
 			<span class="${request_status_style[activity_status.key]}">
 				${activity_status.name}
 			</span>
-			[#if end_date?has_content]
+			[#if end_date?has_content && activity_status.key == 'active']
 				[#assign request_date = days_difference_from_now(end_date) /]
 
 				<span class="font-weight-light ml-sm-2">

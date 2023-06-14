@@ -45,7 +45,6 @@ import {
 import React, {useCallback, useRef, useState} from 'react';
 
 import CollaboratorRow from './CollaboratorRow';
-import SharingAutocomplete from './SharingAutocomplete';
 
 const ManageCollaborators = ({
 	autocompleteUserURL,
@@ -252,6 +251,7 @@ const ManageCollaborators = ({
 		},
 	});
 
+	const [networkStatus, setNetworkStatus] = useState(4);
 	const {resource: autocompleteResource} = useResource({
 		fetchOptions: {
 			credentials: 'include',
@@ -262,6 +262,7 @@ const ManageCollaborators = ({
 			attempts: 0,
 		},
 		link: autocompleteUserURL,
+		onNetworkStatusChange: setNetworkStatus,
 		variables: {
 			[`${namespace}keywords`]: multiSelectValue,
 		},
@@ -618,7 +619,7 @@ const ManageCollaborators = ({
 								<ClayMultiSelect
 									inputName={`${namespace}userEmailAddress`}
 									items={[]}
-									menuRenderer={SharingAutocomplete}
+									loadingState={networkStatus}
 									onChange={handleChange}
 									onItemsChange={handleItemsChange}
 									placeholder={Liferay.Language.get(
@@ -646,7 +647,61 @@ const ManageCollaborators = ({
 									}
 									spritemap={spritemap}
 									value={multiSelectValue}
-								/>
+								>
+									{(item) => (
+										<ClayMultiSelect.Item
+											data-tooltip-align="top"
+											disabled={item.isOwner}
+											key={item.userId}
+											textValue={item.label}
+											title={
+												item.isOwner
+													? Liferay.Language.get(
+															'cannot-update-permissions-for-an-owner'
+													  )
+													: ''
+											}
+										>
+											<div className="autofit-row autofit-row-center">
+												<div className="autofit-col mr-3">
+													<ClaySticker
+														className={`sticker-user-icon ${
+															item.portraitURL
+																? ''
+																: 'user-icon-color-' +
+																  (item.userId %
+																		10)
+														}`}
+														size="lg"
+													>
+														{item.portraitURL ? (
+															<div className="sticker-overlay">
+																<img
+																	className="sticker-img"
+																	src={
+																		item.portraitURL
+																	}
+																/>
+															</div>
+														) : (
+															<ClayIcon symbol="user" />
+														)}
+													</ClaySticker>
+												</div>
+
+												<div className="autofit-col">
+													<strong>
+														{item.fullName}
+													</strong>
+
+													<span>
+														{item.emailAddress}
+													</span>
+												</div>
+											</div>
+										</ClayMultiSelect.Item>
+									)}
+								</ClayMultiSelect>
 							</ClayInput.GroupItem>
 
 							<ClayInput.GroupItem shrink>

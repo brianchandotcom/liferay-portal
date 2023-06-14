@@ -86,6 +86,7 @@ export function MultipleSelect<
 			trigger={
 				<ClayMultiSelect
 					items={multiSelectItems as MultiSelectItem[]}
+					loadingState={4}
 					onClick={() => setDropdownActive((active) => !active)}
 					onInput={() => {}}
 					onItemsChange={(items: MultiSelectItem[]) => {

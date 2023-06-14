@@ -400,14 +400,33 @@ function CategorySelectorInput({
 						disabled={disabled}
 						id={id}
 						items={value || []}
-						menuRenderer={CategoryMenu}
+						loadingState={4}
 						onBlur={_handleBlur}
 						onChange={_handleMultiInputValueChange}
 						onItemsChange={_handleMultiItemsChange}
 						onKeyDown={_handleKeyDown}
 						sourceItems={matchingCategories}
 						value={inputValue}
-					/>
+					>
+						{(item) => (
+							<ClayMultiSelect.Item
+								key={item.value}
+								textValue={item.label}
+							>
+								<div className="autofit-col">
+									<span className="list-group-text">
+										{item.label}
+									</span>
+
+									{item.description && (
+										<span className="list-group-subtext">
+											{item.description}
+										</span>
+									)}
+								</div>
+							</ClayMultiSelect.Item>
+						)}
+					</ClayMultiSelect>
 				) : (
 					<ClayAutocomplete>
 						<ClayAutocomplete.Input

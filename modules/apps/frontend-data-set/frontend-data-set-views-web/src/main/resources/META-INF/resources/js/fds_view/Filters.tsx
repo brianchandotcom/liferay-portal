@@ -499,6 +499,7 @@ function AddFDSFilterModalContent({
 													value: item.id,
 												})
 											)}
+											loadingState={4}
 											onItemsChange={(items: any) => {
 												setPreselectedValues(
 													items.map((item: any) =>

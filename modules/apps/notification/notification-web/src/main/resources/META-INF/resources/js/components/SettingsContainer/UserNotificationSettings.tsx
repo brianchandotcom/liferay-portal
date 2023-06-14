@@ -245,6 +245,7 @@ export function UserNotificationSettings({
 
 						<ClayMultiSelect
 							items={multiSelectItems}
+							loadingState={4}
 							onChange={setSearchTerm}
 							onItemsChange={handleMultiSelectItemsChange}
 							placeholder={Liferay.Language.get('enter-a-role')}
@@ -268,6 +269,7 @@ export function UserNotificationSettings({
 
 						<ClayMultiSelect
 							items={multiSelectItems}
+							loadingState={4}
 							onChange={setSearchTerm}
 							onItemsChange={handleMultiSelectItemsChange}
 							placeholder={Liferay.Language.get(

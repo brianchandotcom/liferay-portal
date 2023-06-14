@@ -14,7 +14,7 @@
 
 import {useResource} from '@clayui/data-provider';
 import ClayForm, {ClayInput} from '@clayui/form';
-import ClayMultiSelect, {itemLabelFilter} from '@clayui/multi-select';
+import ClayMultiSelect from '@clayui/multi-select';
 import React, {useState} from 'react';
 
 function formatAutocompleteValue(data) {
@@ -25,22 +25,6 @@ function isEmailAddressValid(email) {
 	const emailRegex = /.+@.+\..+/i;
 
 	return emailRegex.test(email.label);
-}
-
-function formatAutocompleteUsersFromRequest(resource, inputValue) {
-	if (resource.length) {
-		return itemLabelFilter(
-			resource.map((data) => {
-				return {
-					label: data.emailAddress,
-					value: formatAutocompleteValue(data),
-				};
-			}),
-			inputValue
-		);
-	}
-
-	return resource;
 }
 
 const Email = ({
@@ -79,6 +63,7 @@ const Email = ({
 										'remove'
 									)}
 									items={addresses}
+									loadingState={networkStatus}
 									onChange={setMultiSelectValue}
 									onClearAllButtonClick={() => {
 										emailContent.current.addresses = [];
@@ -111,10 +96,15 @@ const Email = ({
 									)}
 									sourceItems={
 										resource
-											? formatAutocompleteUsersFromRequest(
-													resource,
-													multiSelectValue
-											  )
+											? resource.map((data) => {
+													return {
+														label:
+															data.emailAddress,
+														value: formatAutocompleteValue(
+															data
+														),
+													};
+											  })
 											: []
 									}
 									value={multiSelectValue}

@@ -13,7 +13,7 @@
  */
 
 import ClayForm, {ClayInput} from '@clayui/form';
-import ClayMultiSelect, {itemLabelFilter} from '@clayui/multi-select';
+import ClayMultiSelect from '@clayui/multi-select';
 import React, {useState} from 'react';
 
 export default function Multiselect({
@@ -60,11 +60,7 @@ export default function Multiselect({
 						locator={multiselectLocator}
 						onChange={setInputValue}
 						onItemsChange={setSelectedItems}
-						sourceItems={itemLabelFilter(
-							sourceItems,
-							inputValue,
-							multiselectLocator?.label ?? 'label'
-						)}
+						sourceItems={sourceItems}
 						value={inputValue}
 						{...otherProps}
 					/>

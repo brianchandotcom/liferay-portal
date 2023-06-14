@@ -12,12 +12,13 @@
  * details.
  */
 
+import {useResource} from '@clayui/data-provider';
 import ClayForm, {ClayInput, ClaySelect} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayModal from '@clayui/modal';
 import ClayMultiSelect from '@clayui/multi-select';
 import {fetch} from 'frontend-js-web';
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 const ORGANIZATIONS_ROOT_ENDPOINT = '/o/headless-admin-user/v1.0/organizations';
 
@@ -33,22 +34,23 @@ export default function AccountCreationModalBody({
 }) {
 	const [availableOrganizations, setAvailableOrganizations] = useState([]);
 	const [organizationQuery, setOrganizationQuery] = useState('');
-	const [organizationData, setOrganizationData] = useState([]);
 	const [organizationError, setOrganizationError] = useState(false);
 
-	useEffect(() => {
-		fetch(orgUrl.toString())
-			.then((response) => response.json())
-			.then((data) => setOrganizationData(data.items));
-	}, []);
+	const [networkStatus, setNetworkStatus] = useState(4);
+	const {resource = []} = useResource({
+		fetch: async (link, options) => {
+			const result = await fetch(link, options);
+			const json = await result.json();
 
-	const organizations = useMemo(
-		() =>
-			organizationData.map(({id, name}) => {
-				return {label: name, value: id};
-			}),
-		[organizationData]
-	);
+			return json.items.map((item) => ({
+				label: item.name,
+				value: item.id,
+			}));
+		},
+		fetchPolicy: 'cache-first',
+		link: orgUrl.toString(),
+		onNetworkStatusChange: setNetworkStatus,
+	});
 
 	useEffect(() => {
 		const accountValues = accountData.organizations.map(
@@ -56,9 +58,9 @@ export default function AccountCreationModalBody({
 		);
 
 		setAvailableOrganizations(
-			organizations.filter((org) => !accountValues.includes(org.value))
+			resource.filter((org) => !accountValues.includes(org.value))
 		);
-	}, [accountData.organizations, organizations]);
+	}, [accountData.organizations, resource]);
 
 	return (
 		<ClayModal.Body>
@@ -98,6 +100,7 @@ export default function AccountCreationModalBody({
 				<ClayMultiSelect
 					closeButtonAriaLabel={Liferay.Language.get('remove')}
 					items={accountData.organizations}
+					loadingState={networkStatus}
 					name="accountOrganizations"
 					onChange={setOrganizationQuery}
 					onItemsChange={(newItems) => {
@@ -107,7 +110,7 @@ export default function AccountCreationModalBody({
 
 						newItems.map((item) => {
 							if (
-								organizationData.find(
+								resource.find(
 									(organization) =>
 										organization.name.toLowerCase() ===
 										item.label.toLowerCase()
@@ -125,11 +128,7 @@ export default function AccountCreationModalBody({
 							organizations: validItems,
 						});
 					}}
-					sourceItems={availableOrganizations.filter((organization) =>
-						organization.label
-							.toLowerCase()
-							.match(organizationQuery.toLowerCase())
-					)}
+					sourceItems={availableOrganizations}
 					value={organizationQuery}
 				/>
 

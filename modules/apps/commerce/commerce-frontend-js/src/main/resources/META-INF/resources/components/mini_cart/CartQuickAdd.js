@@ -303,6 +303,7 @@ export default function CartQuickAdd() {
 						className="p3"
 						inputName="searchProducts"
 						items={selectedProducts}
+						loadingState={4}
 						locator={{
 							label: 'chipLabel',
 							value: 'value',

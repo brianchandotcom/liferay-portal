@@ -71,6 +71,7 @@ const MultiSelect = ({
 					id={`${inputName}MultiSelect`}
 					inputName={inputName}
 					items={items}
+					loadingState={4}
 					onBlur={onBlurFn}
 
 					// @ts-ignore

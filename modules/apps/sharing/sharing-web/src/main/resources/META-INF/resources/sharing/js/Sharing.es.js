@@ -14,7 +14,6 @@
 
 import ClayButton from '@clayui/button';
 import {useResource} from '@clayui/data-provider';
-import ClayDropDown from '@clayui/drop-down';
 import ClayForm, {
 	ClayCheckbox,
 	ClayInput,
@@ -37,47 +36,6 @@ function filterDuplicateItems(items) {
 			) === index
 	);
 }
-
-const SharingAutocomplete = ({onItemClick = () => {}, sourceItems}) => {
-	return (
-		<ClayDropDown.ItemList>
-			{sourceItems.map((item) => (
-				<ClayDropDown.Item
-					key={item.id}
-					onClick={() => onItemClick(item)}
-				>
-					<div className="autofit-row autofit-row-center">
-						<div className="autofit-col mr-3">
-							<ClaySticker
-								className={`sticker-user-icon ${
-									item.portraitURL ? '' : item.userId % 10
-								}`}
-								size="lg"
-							>
-								{item.portraitURL ? (
-									<div className="sticker-overlay">
-										<img
-											className="sticker-img"
-											src={item.portraitURL}
-										/>
-									</div>
-								) : (
-									<ClayIcon symbol="user" />
-								)}
-							</ClaySticker>
-						</div>
-
-						<div className="autofit-col">
-							<strong>{item.fullName}</strong>
-
-							<span>{item.emailAddress}</span>
-						</div>
-					</div>
-				</ClayDropDown.Item>
-			))}
-		</ClayDropDown.ItemList>
-	);
-};
 
 const Sharing = ({
 	autocompleteUserURL,
@@ -251,6 +209,7 @@ const Sharing = ({
 		}
 	}, []);
 
+	const [networkStatus, setNetworkStatus] = useState(4);
 	const {resource} = useResource({
 		fetchOptions: {
 			credentials: 'include',
@@ -261,6 +220,7 @@ const Sharing = ({
 			attempts: 0,
 		},
 		link: autocompleteUserURL,
+		onNetworkStatusChange: setNetworkStatus,
 		variables: {
 			[`${portletNamespace}query`]: multiSelectValue,
 		},
@@ -285,7 +245,7 @@ const Sharing = ({
 							<ClayMultiSelect
 								inputName={`${portletNamespace}userEmailAddress`}
 								items={selectedItems}
-								menuRenderer={SharingAutocomplete}
+								loadingState={networkStatus}
 								onChange={handleChange}
 								onItemsChange={handleItemsChange}
 								placeholder={Liferay.Language.get(
@@ -308,7 +268,46 @@ const Sharing = ({
 										: []
 								}
 								value={multiSelectValue}
-							/>
+							>
+								{(item) => (
+									<ClayMultiSelect.Item
+										key={item.id}
+										textValue={item.fullName}
+									>
+										<div className="autofit-row autofit-row-center">
+											<div className="autofit-col mr-3">
+												<ClaySticker
+													className={`sticker-user-icon ${
+														item.portraitURL
+															? ''
+															: item.userId % 10
+													}`}
+													size="lg"
+												>
+													{item.portraitURL ? (
+														<div className="sticker-overlay">
+															<img
+																className="sticker-img"
+																src={
+																	item.portraitURL
+																}
+															/>
+														</div>
+													) : (
+														<ClayIcon symbol="user" />
+													)}
+												</ClaySticker>
+											</div>
+
+											<div className="autofit-col">
+												<strong>{item.fullName}</strong>
+
+												<span>{item.emailAddress}</span>
+											</div>
+										</div>
+									</ClayMultiSelect.Item>
+								)}
+							</ClayMultiSelect>
 
 							<ClayForm.FeedbackGroup>
 								<ClayForm.Text>

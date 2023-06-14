@@ -250,6 +250,7 @@ export default function AddOrganizationModal({
 						<ClayMultiSelect
 							id="searchAccountInput"
 							items={selectedAccounts}
+							loadingState={4}
 							locator={{label: 'name', value: 'id'}}
 							onChange={setAccountsQuery}
 							onItemsChange={handleItemsChange}

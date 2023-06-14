@@ -13,8 +13,9 @@
  */
 
 import ClayButton from '@clayui/button';
+import {useResource} from '@clayui/data-provider';
 import ClayForm, {ClayInput} from '@clayui/form';
-import ClayMultiSelect, {itemLabelFilter} from '@clayui/multi-select';
+import ClayMultiSelect from '@clayui/multi-select';
 import {usePrevious} from '@liferay/frontend-js-react-web';
 import {useId} from '@liferay/layout-content-page-editor-web';
 import {fetch, openSelectionModal, sub} from 'frontend-js-web';
@@ -43,37 +44,42 @@ function AssetTagsSelector({
 	const selectButtonRef = useRef();
 	const tagsId = useId();
 
-	const [resource, setResource] = useState([]);
+	const [networkStatus, setNetworkStatus] = useState(4);
+	const {refetch, resource} = useResource({
+		fetch,
+		fetchOptions: {
+			body: new URLSearchParams({
+				cmd: JSON.stringify({
+					'/assettag/search': {
+						end: 20,
+						groupIds,
+						name: `%${inputValue === '*' ? '' : inputValue}%`,
+						start: 0,
+						tagProperties: '',
+					},
+				}),
+				p_auth: Liferay.authToken,
+			}),
+			method: 'POST',
+		},
+		fetchPolicy: 'cache-first',
+		link: `${
+			window.location.origin
+		}${themeDisplay.getPathContext()}/api/jsonws/invoke`,
+		onNetworkStatusChange: setNetworkStatus,
+	});
 
 	const previousInputValue = usePrevious(inputValue);
 
 	useEffect(() => {
-		if (inputValue && inputValue !== previousInputValue) {
-			fetch(
-				`${
-					window.location.origin
-				}${themeDisplay.getPathContext()}/api/jsonws/invoke`,
-				{
-					body: new URLSearchParams({
-						cmd: JSON.stringify({
-							'/assettag/search': {
-								end: 20,
-								groupIds,
-								name: `%${
-									inputValue === '*' ? '' : inputValue
-								}%`,
-								start: 0,
-								tagProperties: '',
-							},
-						}),
-						p_auth: Liferay.authToken,
-					}),
-					method: 'POST',
-				}
-			)
-				.then((response) => response.json())
-				.then((response) => setResource(response));
+		if (inputValue !== previousInputValue) {
+			refetch();
 		}
+
+		// The intended `refetch` method has no reference stabilization, adding
+		// this to deps will cause a loop and we only want to invoke the
+		// `useEffect` when the value changes.
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [groupIds, inputValue, previousInputValue]);
 
 	const callGlobalCallback = (callback, item) => {
@@ -234,7 +240,6 @@ function AssetTagsSelector({
 				<ClayInput.Group style={{minHeight: '2.125rem'}}>
 					<ClayInput.GroupItem>
 						<ClayMultiSelect
-							alignmentByViewport
 							aria-describedby={
 								helpText
 									? `${inputName}_MultiSelectHelpText`
@@ -243,20 +248,18 @@ function AssetTagsSelector({
 							id={inputName + '_MultiSelect'}
 							inputName={inputName}
 							items={selectedItems}
+							loadingState={networkStatus}
 							onBlur={handleInputBlur}
 							onChange={onInputValueChange}
 							onItemsChange={handleItemsChange}
 							sourceItems={
 								resource
-									? itemLabelFilter(
-											resource.map((tag) => {
-												return {
-													label: tag.text,
-													value: tag.value,
-												};
-											}),
-											inputValue
-									  )
+									? resource.map((tag) => {
+											return {
+												label: tag.text,
+												value: tag.value,
+											};
+									  })
 									: []
 							}
 							value={inputValue}

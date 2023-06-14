@@ -32,6 +32,7 @@ import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.Internal;
 import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.OutputDirectory;
+import org.gradle.api.tasks.OutputFile;
 import org.gradle.api.tasks.PathSensitive;
 import org.gradle.api.tasks.PathSensitivity;
 import org.gradle.api.tasks.SkipWhenEmpty;
@@ -162,7 +163,7 @@ public class ConfigJSModulesTask
 		return new File(getTemporaryDir(), "files");
 	}
 
-	@OutputDirectory
+	@OutputFile
 	public File getOutputFile() {
 		return GradleUtil.toFile(getProject(), _outputFile);
 	}

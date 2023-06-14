@@ -147,7 +147,7 @@
 </tr>
 <tr>
 	<td>PUBLICATIONS_ELLIPSIS</td>
-	<td>//div[contains(@class,'control-menu-icon')]//span[*[contains(@class,'lexicon-icon-ellipsis-v')]]</td>
+	<td>//div[contains(@class,'control-menu-nav-category')]//span[*[contains(@class,'lexicon-icon-ellipsis-v')]]</td>
 	<td></td>
 </tr>
 <tr>

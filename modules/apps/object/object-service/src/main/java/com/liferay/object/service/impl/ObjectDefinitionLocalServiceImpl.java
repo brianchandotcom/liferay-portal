@@ -46,6 +46,7 @@ import com.liferay.object.exception.ObjectFieldRelationshipTypeException;
 import com.liferay.object.exception.RequiredObjectDefinitionException;
 import com.liferay.object.exception.RequiredObjectFieldException;
 import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
+import com.liferay.object.internal.definition.util.ObjectDefinitionUtil;
 import com.liferay.object.internal.deployer.ObjectDefinitionDeployerImpl;
 import com.liferay.object.internal.petra.sql.dsl.DynamicObjectDefinitionLocalizationTableFactory;
 import com.liferay.object.model.ObjectDefinition;
@@ -1669,6 +1670,14 @@ public class ObjectDefinitionLocalServiceImpl
 		else if (!system && !name.startsWith("C_")) {
 			throw new ObjectDefinitionNameException.
 				MustStartWithCAndUnderscoreForCustomObject();
+		}
+
+		if (modifiable && system &&
+			!ObjectDefinitionUtil.isAllowedModifiableSystemObjectDefinitionName(
+				name)) {
+
+			throw new ObjectDefinitionNameException.
+				MustBeAnAllowedModifiableSystemObjectDefinitionName();
 		}
 
 		char[] nameCharArray = name.toCharArray();

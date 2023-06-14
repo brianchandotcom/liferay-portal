@@ -24,6 +24,12 @@
 		{
 			"template_string_sortable_ar": {
 				"mapping": {
+					"fields": {
+						"keyword_lowercase": {
+							"normalizer": "lowercase",
+							"type": "keyword"
+						}
+					},
 					"language": "ar",
 					"store": true,
 					"type": "icu_collation_keyword"
@@ -36,6 +42,12 @@
 		{
 			"template_string_sortable_bg": {
 				"mapping": {
+					"fields": {
+						"keyword_lowercase": {
+							"normalizer": "lowercase",
+							"type": "keyword"
+						}
+					},
 					"language": "bg",
 					"store": true,
 					"type": "icu_collation_keyword"
@@ -48,6 +60,12 @@
 		{
 			"template_string_sortable_ca": {
 				"mapping": {
+					"fields": {
+						"keyword_lowercase": {
+							"normalizer": "lowercase",
+							"type": "keyword"
+						}
+					},
 					"language": "ca",
 					"store": true,
 					"type": "icu_collation_keyword"
@@ -60,6 +78,12 @@
 		{
 			"template_string_sortable_cs": {
 				"mapping": {
+					"fields": {
+						"keyword_lowercase": {
+							"normalizer": "lowercase",
+							"type": "keyword"
+						}
+					},
 					"language": "cs",
 					"store": true,
 					"type": "icu_collation_keyword"
@@ -72,6 +96,12 @@
 		{
 			"template_string_sortable_da": {
 				"mapping": {
+					"fields": {
+						"keyword_lowercase": {
+							"normalizer": "lowercase",
+							"type": "keyword"
+						}
+					},
 					"language": "da",
 					"store": true,
 					"type": "icu_collation_keyword"
@@ -85,6 +115,12 @@
 			"template_string_sortable_de_AT": {
 				"mapping": {
 					"country": "AT",
+					"fields": {
+						"keyword_lowercase": {
+							"normalizer": "lowercase",
+							"type": "keyword"
+						}
+					},
 					"language": "de",
 					"store": true,
 					"type": "icu_collation_keyword"
@@ -97,6 +133,12 @@
 		{
 			"template_string_sortable_de": {
 				"mapping": {
+					"fields": {
+						"keyword_lowercase": {
+							"normalizer": "lowercase",
+							"type": "keyword"
+						}
+					},
 					"language": "de",
 					"store": true,
 					"type": "icu_collation_keyword"
@@ -109,6 +151,12 @@
 		{
 			"template_string_sortable_el": {
 				"mapping": {
+					"fields": {
+						"keyword_lowercase": {
+							"normalizer": "lowercase",
+							"type": "keyword"
+						}
+					},
 					"language": "el",
 					"store": true,
 					"type": "icu_collation_keyword"
@@ -121,6 +169,12 @@
 		{
 			"template_string_sortable_en": {
 				"mapping": {
+					"fields": {
+						"keyword_lowercase": {
+							"normalizer": "lowercase",
+							"type": "keyword"
+						}
+					},
 					"language": "en",
 					"store": true,
 					"type": "icu_collation_keyword"
@@ -133,6 +187,12 @@
 		{
 			"template_string_sortable_es": {
 				"mapping": {
+					"fields": {
+						"keyword_lowercase": {
+							"normalizer": "lowercase",
+							"type": "keyword"
+						}
+					},
 					"language": "es",
 					"store": true,
 					"type": "icu_collation_keyword"
@@ -145,6 +205,12 @@
 		{
 			"template_string_sortable_et": {
 				"mapping": {
+					"fields": {
+						"keyword_lowercase": {
+							"normalizer": "lowercase",
+							"type": "keyword"
+						}
+					},
 					"language": "et",
 					"store": true,
 					"type": "icu_collation_keyword"
@@ -157,6 +223,12 @@
 		{
 			"template_string_sortable_eu": {
 				"mapping": {
+					"fields": {
+						"keyword_lowercase": {
+							"normalizer": "lowercase",
+							"type": "keyword"
+						}
+					},
 					"language": "eu",
 					"store": true,
 					"type": "icu_collation_keyword"
@@ -169,6 +241,12 @@
 		{
 			"template_string_sortable_fa": {
 				"mapping": {
+					"fields": {
+						"keyword_lowercase": {
+							"normalizer": "lowercase",
+							"type": "keyword"
+						}
+					},
 					"language": "fa",
 					"store": true,
 					"type": "icu_collation_keyword"
@@ -181,6 +259,12 @@
 		{
 			"template_string_sortable_fi": {
 				"mapping": {
+					"fields": {
+						"keyword_lowercase": {
+							"normalizer": "lowercase",
+							"type": "keyword"
+						}
+					},
 					"language": "fi",
 					"store": true,
 					"type": "icu_collation_keyword"
@@ -194,6 +278,12 @@
 			"template_string_sortable_fr_CA": {
 				"mapping": {
 					"country": "CA",
+					"fields": {
+						"keyword_lowercase": {
+							"normalizer": "lowercase",
+							"type": "keyword"
+						}
+					},
 					"language": "fr",
 					"store": true,
 					"type": "icu_collation_keyword"
@@ -206,6 +296,12 @@
 		{
 			"template_string_sortable_fr": {
 				"mapping": {
+					"fields": {
+						"keyword_lowercase": {
+							"normalizer": "lowercase",
+							"type": "keyword"
+						}
+					},
 					"language": "fr",
 					"store": true,
 					"type": "icu_collation_keyword"
@@ -218,6 +314,12 @@
 		{
 			"template_string_sortable_gl": {
 				"mapping": {
+					"fields": {
+						"keyword_lowercase": {
+							"normalizer": "lowercase",
+							"type": "keyword"
+						}
+					},
 					"language": "gl",
 					"store": true,
 					"type": "icu_collation_keyword"
@@ -230,6 +332,12 @@
 		{
 			"template_string_sortable_hi": {
 				"mapping": {
+					"fields": {
+						"keyword_lowercase": {
+							"normalizer": "lowercase",
+							"type": "keyword"
+						}
+					},
 					"language": "hi",
 					"store": true,
 					"type": "icu_collation_keyword"
@@ -242,6 +350,12 @@
 		{
 			"template_string_sortable_hr": {
 				"mapping": {
+					"fields": {
+						"keyword_lowercase": {
+							"normalizer": "lowercase",
+							"type": "keyword"
+						}
+					},
 					"language": "hr",
 					"store": true,
 					"type": "icu_collation_keyword"
@@ -254,6 +368,12 @@
 		{
 			"template_string_sortable_hu": {
 				"mapping": {
+					"fields": {
+						"keyword_lowercase": {
+							"normalizer": "lowercase",
+							"type": "keyword"
+						}
+					},
 					"language": "hu",
 					"store": true,
 					"type": "icu_collation_keyword"
@@ -266,6 +386,12 @@
 		{
 			"template_string_sortable_hy": {
 				"mapping": {
+					"fields": {
+						"keyword_lowercase": {
+							"normalizer": "lowercase",
+							"type": "keyword"
+						}
+					},
 					"language": "hy",
 					"store": true,
 					"type": "icu_collation_keyword"
@@ -278,6 +404,12 @@
 		{
 			"template_string_sortable_in": {
 				"mapping": {
+					"fields": {
+						"keyword_lowercase": {
+							"normalizer": "lowercase",
+							"type": "keyword"
+						}
+					},
 					"language": "in",
 					"store": true,
 					"type": "icu_collation_keyword"
@@ -290,6 +422,12 @@
 		{
 			"template_string_sortable_it": {
 				"mapping": {
+					"fields": {
+						"keyword_lowercase": {
+							"normalizer": "lowercase",
+							"type": "keyword"
+						}
+					},
 					"language": "it",
 					"store": true,
 					"type": "icu_collation_keyword"
@@ -302,6 +440,12 @@
 		{
 			"template_string_sortable_ja": {
 				"mapping": {
+					"fields": {
+						"keyword_lowercase": {
+							"normalizer": "lowercase",
+							"type": "keyword"
+						}
+					},
 					"language": "ja",
 					"store": true,
 					"type": "icu_collation_keyword"
@@ -314,6 +458,12 @@
 		{
 			"template_string_sortable_kk": {
 				"mapping": {
+					"fields": {
+						"keyword_lowercase": {
+							"normalizer": "lowercase",
+							"type": "keyword"
+						}
+					},
 					"language": "kk",
 					"store": true,
 					"type": "icu_collation_keyword"
@@ -326,6 +476,12 @@
 		{
 			"template_string_sortable_ko": {
 				"mapping": {
+					"fields": {
+						"keyword_lowercase": {
+							"normalizer": "lowercase",
+							"type": "keyword"
+						}
+					},
 					"language": "ko",
 					"store": true,
 					"type": "icu_collation_keyword"
@@ -338,6 +494,12 @@
 		{
 			"template_string_sortable_lo": {
 				"mapping": {
+					"fields": {
+						"keyword_lowercase": {
+							"normalizer": "lowercase",
+							"type": "keyword"
+						}
+					},
 					"language": "lo",
 					"store": true,
 					"type": "icu_collation_keyword"
@@ -350,6 +512,12 @@
 		{
 			"template_string_sortable_lt": {
 				"mapping": {
+					"fields": {
+						"keyword_lowercase": {
+							"normalizer": "lowercase",
+							"type": "keyword"
+						}
+					},
 					"language": "lt",
 					"store": true,
 					"type": "icu_collation_keyword"
@@ -362,6 +530,12 @@
 		{
 			"template_string_sortable_ms": {
 				"mapping": {
+					"fields": {
+						"keyword_lowercase": {
+							"normalizer": "lowercase",
+							"type": "keyword"
+						}
+					},
 					"language": "ms",
 					"store": true,
 					"type": "icu_collation_keyword"
@@ -374,6 +548,12 @@
 		{
 			"template_string_sortable_nb": {
 				"mapping": {
+					"fields": {
+						"keyword_lowercase": {
+							"normalizer": "lowercase",
+							"type": "keyword"
+						}
+					},
 					"language": "nb",
 					"store": true,
 					"type": "icu_collation_keyword"
@@ -386,6 +566,12 @@
 		{
 			"template_string_sortable_nl": {
 				"mapping": {
+					"fields": {
+						"keyword_lowercase": {
+							"normalizer": "lowercase",
+							"type": "keyword"
+						}
+					},
 					"language": "nl",
 					"store": true,
 					"type": "icu_collation_keyword"
@@ -398,6 +584,12 @@
 		{
 			"template_string_sortable_no": {
 				"mapping": {
+					"fields": {
+						"keyword_lowercase": {
+							"normalizer": "lowercase",
+							"type": "keyword"
+						}
+					},
 					"language": "no",
 					"store": true,
 					"type": "icu_collation_keyword"
@@ -410,6 +602,12 @@
 		{
 			"template_string_sortable_pl": {
 				"mapping": {
+					"fields": {
+						"keyword_lowercase": {
+							"normalizer": "lowercase",
+							"type": "keyword"
+						}
+					},
 					"language": "pl",
 					"store": true,
 					"type": "icu_collation_keyword"
@@ -422,6 +620,12 @@
 		{
 			"template_string_sortable_pt": {
 				"mapping": {
+					"fields": {
+						"keyword_lowercase": {
+							"normalizer": "lowercase",
+							"type": "keyword"
+						}
+					},
 					"language": "pt",
 					"store": true,
 					"type": "icu_collation_keyword"
@@ -434,6 +638,12 @@
 		{
 			"template_string_sortable_ro": {
 				"mapping": {
+					"fields": {
+						"keyword_lowercase": {
+							"normalizer": "lowercase",
+							"type": "keyword"
+						}
+					},
 					"language": "ro",
 					"store": true,
 					"type": "icu_collation_keyword"
@@ -446,6 +656,12 @@
 		{
 			"template_string_sortable_ru": {
 				"mapping": {
+					"fields": {
+						"keyword_lowercase": {
+							"normalizer": "lowercase",
+							"type": "keyword"
+						}
+					},
 					"language": "ru",
 					"store": true,
 					"type": "icu_collation_keyword"
@@ -458,6 +674,12 @@
 		{
 			"template_string_sortable_sk": {
 				"mapping": {
+					"fields": {
+						"keyword_lowercase": {
+							"normalizer": "lowercase",
+							"type": "keyword"
+						}
+					},
 					"language": "sk",
 					"store": true,
 					"type": "icu_collation_keyword"
@@ -470,6 +692,12 @@
 		{
 			"template_string_sortable_sl": {
 				"mapping": {
+					"fields": {
+						"keyword_lowercase": {
+							"normalizer": "lowercase",
+							"type": "keyword"
+						}
+					},
 					"language": "sl",
 					"store": true,
 					"type": "icu_collation_keyword"
@@ -482,6 +710,12 @@
 		{
 			"template_string_sortable_sr": {
 				"mapping": {
+					"fields": {
+						"keyword_lowercase": {
+							"normalizer": "lowercase",
+							"type": "keyword"
+						}
+					},
 					"language": "sr",
 					"store": true,
 					"type": "icu_collation_keyword"
@@ -494,6 +728,12 @@
 		{
 			"template_string_sortable_sv": {
 				"mapping": {
+					"fields": {
+						"keyword_lowercase": {
+							"normalizer": "lowercase",
+							"type": "keyword"
+						}
+					},
 					"language": "sv",
 					"store": true,
 					"type": "icu_collation_keyword"
@@ -506,6 +746,12 @@
 		{
 			"template_string_sortable_ta": {
 				"mapping": {
+					"fields": {
+						"keyword_lowercase": {
+							"normalizer": "lowercase",
+							"type": "keyword"
+						}
+					},
 					"language": "ta",
 					"store": true,
 					"type": "icu_collation_keyword"
@@ -518,6 +764,12 @@
 		{
 			"template_string_sortable_th": {
 				"mapping": {
+					"fields": {
+						"keyword_lowercase": {
+							"normalizer": "lowercase",
+							"type": "keyword"
+						}
+					},
 					"language": "th",
 					"store": true,
 					"type": "icu_collation_keyword"
@@ -530,6 +782,12 @@
 		{
 			"template_string_sortable_tr": {
 				"mapping": {
+					"fields": {
+						"keyword_lowercase": {
+							"normalizer": "lowercase",
+							"type": "keyword"
+						}
+					},
 					"language": "tr",
 					"store": true,
 					"type": "icu_collation_keyword"
@@ -542,6 +800,12 @@
 		{
 			"template_string_sortable_uk": {
 				"mapping": {
+					"fields": {
+						"keyword_lowercase": {
+							"normalizer": "lowercase",
+							"type": "keyword"
+						}
+					},
 					"language": "uk",
 					"store": true,
 					"type": "icu_collation_keyword"
@@ -554,6 +818,12 @@
 		{
 			"template_string_sortable_vi": {
 				"mapping": {
+					"fields": {
+						"keyword_lowercase": {
+							"normalizer": "lowercase",
+							"type": "keyword"
+						}
+					},
 					"language": "vi",
 					"store": true,
 					"type": "icu_collation_keyword"
@@ -566,6 +836,12 @@
 		{
 			"template_string_sortable_zh": {
 				"mapping": {
+					"fields": {
+						"keyword_lowercase": {
+							"normalizer": "lowercase",
+							"type": "keyword"
+						}
+					},
 					"language": "zh",
 					"store": true,
 					"type": "icu_collation_keyword"

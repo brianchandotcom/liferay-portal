@@ -287,7 +287,6 @@ public class DLOpenerGoogleDriveDLViewFileVersionDisplayContext
 						).put(
 							"checkinURL", _getActionURL(Constants.CHECKIN)
 						).build());
-
 					dropdownItem.setHref(StringPool.BLANK);
 				}
 			}

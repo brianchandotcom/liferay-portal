@@ -57,28 +57,15 @@ public class JaxRsLinkUtil {
 		String applicationPath, Class<?> clazz, String methodName,
 		UriInfo uriInfo, Object... values) {
 
-		String baseURIString = UriInfoUtil.getBasePath(uriInfo);
-
-		if (baseURIString.endsWith(StringPool.FORWARD_SLASH)) {
-			baseURIString = baseURIString.substring(
-				0, baseURIString.length() - 1);
-		}
-
-		baseURIString =
-			baseURIString.substring(0, baseURIString.lastIndexOf("/") + 1) +
-				applicationPath;
-
-		URI resourceURI = UriBuilder.fromResource(
+		return UriInfoUtil.getBaseUriBuilder(
+			applicationPath, uriInfo
+		).path(
 			clazz
-		).build();
-
-		URI methodURI = UriBuilder.fromMethod(
+		).path(
 			clazz, methodName
 		).build(
 			values, false
-		);
-
-		return baseURIString + resourceURI.toString() + methodURI.toString();
+		).toString();
 	}
 
 }

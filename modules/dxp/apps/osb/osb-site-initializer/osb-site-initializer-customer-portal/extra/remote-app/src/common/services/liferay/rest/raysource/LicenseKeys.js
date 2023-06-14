@@ -140,6 +140,10 @@ export async function associateContactRoleNameByEmailByProject(
 ) {
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(
+<<<<<<< HEAD
+=======
+		`${provisioningServerAPI}/accounts/${accountKey}/contacts/by-email-address/${emailURI}/roles?contactRoleNames=${roleName}`,
+>>>>>>> fb03877 (LPS-187670 Fix Erro when invite a new team member)
 		`${provisioningServerAPI}/accounts/${accountKey}/contacts/by-email-address/${emailURI}/roles?contactRoleNames=${roleName}&firstName=${firstName}&lastName=${lastName}`,
 		{
 			headers: {

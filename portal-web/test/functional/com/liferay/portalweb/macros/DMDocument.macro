@@ -2549,7 +2549,7 @@ definition {
 
 		SelectFrameTop();
 
-		Button.clickSelect();
+		Button.clickApply();
 	}
 
 	macro selectTags {

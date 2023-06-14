@@ -60,6 +60,7 @@ page import="com.liferay.item.selector.ItemSelector" %><%@
 page import="com.liferay.item.selector.criteria.FolderItemSelectorReturnType" %><%@
 page import="com.liferay.item.selector.criteria.folder.criterion.FolderItemSelectorCriterion" %><%@
 page import="com.liferay.portal.kernel.dao.search.RowChecker" %><%@
+page import="com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil" %><%@
 page import="com.liferay.portal.kernel.lock.Lock" %><%@
 page import="com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil" %><%@

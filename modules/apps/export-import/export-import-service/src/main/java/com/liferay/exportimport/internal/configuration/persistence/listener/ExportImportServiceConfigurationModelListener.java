@@ -80,7 +80,7 @@ public class ExportImportServiceConfigurationModelListener
 				ExportImportServiceConfiguration.class, properties);
 
 		String[] whitelistedURLPatterns =
-			exportImportServiceConfiguration.whitelistedURLPatterns();
+			exportImportServiceConfiguration.layoutReferencesValidationWhitelistedURLPatterns();
 
 		if (whitelistedURLPatterns == null) {
 			return;

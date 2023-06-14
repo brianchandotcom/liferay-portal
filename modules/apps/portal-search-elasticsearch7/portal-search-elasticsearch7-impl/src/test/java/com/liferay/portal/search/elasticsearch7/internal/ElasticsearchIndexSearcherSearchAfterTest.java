@@ -137,6 +137,16 @@ public class ElasticsearchIndexSearcherSearchAfterTest {
 	}
 
 	@Test
+	public void testElasticsearchIndexSearcherAcrossMultiplesOfIndexMaxResultWindow()
+		throws Exception {
+
+		_assertHits(
+			_INDEX_MAX_RESULT_WINDOW, _INDEX_MAX_RESULT_WINDOW,
+			_NUMBER_INDEXED_DOCUMENTS, _INDEX_MAX_RESULT_WINDOW + 1,
+			_NUMBER_INDEXED_DOCUMENTS);
+	}
+
+	@Test
 	public void testElasticsearchIndexSearcherIndexSearchLimit()
 		throws Exception {
 
@@ -345,12 +355,12 @@ public class ElasticsearchIndexSearcherSearchAfterTest {
 		ReflectionTestUtil.setFieldValue(_indexSearcher, "_sorts", sorts);
 	}
 
-	private static final int _INDEX_SEARCH_LIMIT = 3;
+	private static final int _INDEX_SEARCH_LIMIT = 2;
 
 	private static IndexingFixture _indexingFixture;
-	private static final int _NUMBER_INDEXED_DOCUMENTS = 5;
+	private static final int _NUMBER_INDEXED_DOCUMENTS = 7;
 
-	private static final int _INDEX_MAX_RESULT_WINDOW = 4;
+	private static final int _INDEX_MAX_RESULT_WINDOW = 3;
 
 	private final DocumentFixture _documentFixture = new DocumentFixture();
 	private final List<Document> _documents = new ArrayList<>();

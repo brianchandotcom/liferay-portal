@@ -15,6 +15,7 @@
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import React, {useContext, useEffect, useState} from 'react';
 
+import ClientExtensionRenderer from '../../../components/ClientExtensionRenderer';
 import {getComponentByModuleURL} from '../../../utils/modules';
 import ViewsContext from '../../../views/ViewsContext';
 import {VIEWS_ACTION_TYPES} from '../../../views/viewsReducer';
@@ -63,15 +64,11 @@ const getOdataFilterString = (filter) => {
 /**
  * @param {Props} props
  */
-const ClientExtensionRendererComponent = ({args, renderer}) => {
-	const containerRef = React.useRef(null);
+const ClientExtensionRendererWrapper = (props) => {
 
-	useEffect(() => {
-		containerRef.current.appendChild(renderer(args));
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	// This wrapper exists so that we can keep TS consistent
 
-	return <div ref={containerRef}></div>;
+	return <ClientExtensionRenderer {...props} />;
 };
 
 const Filter = ({moduleURL, type, ...otherProps}) => {
@@ -126,7 +123,7 @@ const Filter = ({moduleURL, type, ...otherProps}) => {
 	return Component ? (
 		<div className="data-set-filter">
 			{type === 'client-extension' ? (
-				<ClientExtensionRendererComponent
+				<ClientExtensionRendererWrapper
 					args={{
 						filter: otherProps,
 						setFilter: (filter) =>

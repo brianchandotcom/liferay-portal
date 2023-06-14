@@ -577,7 +577,8 @@ public class DBPartitionUtil {
 			// ObjectDefinitionLocalServiceImpl#_getDBTableName
 
 			if (tableName.endsWith("_x_" + companyId) ||
-				tableName.startsWith("O_" + companyId + "_")) {
+				tableName.startsWith("O_" + companyId + "_") ||
+				tableName.startsWith("MSOD_" + companyId + "_")) {
 
 				return true;
 			}

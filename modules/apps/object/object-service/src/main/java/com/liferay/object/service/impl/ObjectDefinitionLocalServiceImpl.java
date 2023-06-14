@@ -890,7 +890,7 @@ public class ObjectDefinitionLocalServiceImpl
 
 		User user = _userLocalService.getUser(userId);
 
-		name = _getName(name, modifiable, system);
+		name = _getName(name, system);
 
 		String shortName = ObjectDefinitionImpl.getShortName(name);
 
@@ -1170,14 +1170,20 @@ public class ObjectDefinitionLocalServiceImpl
 			return name;
 		}
 
+		String tablePrefix = "O_";
+
+		if (modifiable && system) {
+			tablePrefix = "MSOD_";
+		}
+
 		return StringBundler.concat(
-			"O_", companyId, StringPool.UNDERLINE, shortName);
+			tablePrefix, companyId, StringPool.UNDERLINE, shortName);
 	}
 
-	private String _getName(String name, boolean modifiable, boolean system) {
+	private String _getName(String name, boolean system) {
 		name = StringUtil.trim(name);
 
-		if (modifiable || !system) {
+		if (!system) {
 			name = "C_" + name;
 		}
 
@@ -1428,8 +1434,7 @@ public class ObjectDefinitionLocalServiceImpl
 			return objectDefinitionPersistence.update(objectDefinition);
 		}
 
-		name = _getName(
-			name, objectDefinition.isModifiable(), objectDefinition.isSystem());
+		name = _getName(name, objectDefinition.isSystem());
 
 		String shortName = ObjectDefinitionImpl.getShortName(name);
 

@@ -83,10 +83,7 @@ definition {
 		}
 
 		task ("Add a Custom Facet widget to the search page") {
-			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Guest",
-				layoutName = "Search",
-				widgetName = "Custom Facet");
+			SearchPortlets.addWidgets(searchPortletList = "Custom Facet");
 		}
 
 		task ("Go to the search page and execute a search for the object entries") {
@@ -205,10 +202,7 @@ definition {
 		}
 
 		task ("Add Custom Facet widget to the Search Page") {
-			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Guest",
-				layoutName = "Search",
-				widgetName = "Custom Facet");
+			SearchPortlets.addWidgets(searchPortletList = "Custom Facet");
 		}
 
 		task ("Go to the Search page and execute a search for the web content articles") {
@@ -424,11 +418,7 @@ definition {
 	@description = "This is a use case for LPS-138720."
 	@priority = 4
 	test AssertCustomFacetNoXSS {
-		JSONLayout.addWidgetToPublicLayout(
-			column = 1,
-			groupName = "Guest",
-			layoutName = "Search",
-			widgetName = "Custom Facet");
+		SearchPortlets.addWidgets(searchPortletList = "Custom Facet");
 
 		Search.openSearchPage();
 
@@ -455,11 +445,7 @@ definition {
 				sourceFileName = "Document_${count}.docx");
 		}
 
-		JSONLayout.addWidgetToPublicLayout(
-			column = 1,
-			groupName = "Guest",
-			layoutName = "Search",
-			widgetName = "Custom Facet");
+		SearchPortlets.addWidgets(searchPortletList = "Custom Facet");
 
 		SearchPortlets.searchEmbedded(searchTerm = "title");
 
@@ -571,11 +557,10 @@ definition {
 			groupName = "Guest",
 			layoutName = "New Search Page");
 
-		JSONLayout.addWidgetToPublicLayout(
+		SearchPortlets.addWidgets(
 			column = 2,
-			groupName = "Guest",
 			layoutName = "New Search Page",
-			widgetName = "Search Results");
+			searchPortletList = "Search Results");
 
 		Navigator.openSitePage(
 			pageName = "New Search Page",
@@ -656,24 +641,19 @@ definition {
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/guest/search-page");
 
-		for (var portlet : list "Category Facet,Custom Facet,Custom Filter,Folder Facet,Low Level Search Options,Modified Facet,Search Insights,Search Options,Search Results,Site Facet,Suggestions,Tag Facet,Type Facet,User Facet,Search Bar") {
-			JSONLayout.addWidgetToPublicLayout(
-				column = 1,
-				groupName = "Guest",
-				layoutName = "Search Page",
-				widgetName = ${portlet});
-		}
+		SearchPortlets.addWidgets(
+			layoutName = "Search Page",
+			searchPortletList = "Category Facet,Custom Facet,Custom Filter,Folder Facet,Low Level Search Options,Modified Facet,Search Insights,Search Options,Search Results,Site Facet,Suggestions,Tag Facet,Type Facet,User Facet,Search Bar");
 
-		SearchPortlets.addWidgets(searchPortletList = "Sort");
+		SearchPortlets.addWidgetsViaUI(searchPortletList = "Sort");
 
 		var testRunEnvironment = PropsUtil.get("test.run.environment");
 
 		if (${testRunEnvironment} == "EE") {
-			JSONLayout.addWidgetToPublicLayout(
+			SearchPortlets.addWidgets(
 				column = 2,
-				groupName = "Guest",
 				layoutName = "Search Page",
-				widgetName = "Similar Results");
+				searchPortletList = "Similar Results");
 
 			Refresh();
 
@@ -940,7 +920,7 @@ definition {
 	test AssertSortWidgetNoXSS {
 		Search.openSearchPage();
 
-		SearchPortlets.addWidgets(searchPortletList = "Sort");
+		SearchPortlets.addWidgetsViaUI(searchPortletList = "Sort");
 
 		Portlet.gotoPortletOptions(
 			portletName = "Sort",
@@ -1211,11 +1191,7 @@ definition {
 			mimeType = "image/png",
 			sourceFileName = "Document_1.png");
 
-		JSONLayout.addWidgetToPublicLayout(
-			column = 1,
-			groupName = "Guest",
-			layoutName = "Search",
-			widgetName = "Custom Facet");
+		SearchPortlets.addWidgets(searchPortletList = "Custom Facet");
 
 		SearchPortlets.searchEmbedded(searchTerm = "test");
 
@@ -1706,11 +1682,7 @@ definition {
 		}
 
 		task ("Add the Custom Facet to the search page") {
-			JSONLayout.addWidgetToPublicLayout(
-				column = 1,
-				groupName = "Guest",
-				layoutName = "Search",
-				widgetName = "Custom Facet");
+			SearchPortlets.addWidgets(searchPortletList = "Custom Facet");
 		}
 
 		task ("Go to the Search page and execute a search for the web content article") {
@@ -1887,11 +1859,7 @@ definition {
 			groupName = "Guest",
 			title = "WebContent Title 1");
 
-		JSONLayout.addWidgetToPublicLayout(
-			column = 1,
-			groupName = "Guest",
-			layoutName = "Search",
-			widgetName = "Custom Facet");
+		SearchPortlets.addWidgets(searchPortletList = "Custom Facet");
 
 		Search.openSearchPage();
 
@@ -2004,11 +1972,7 @@ definition {
 
 		var aggregationField = RegexUtil.replace(${journalArticleDocumentType}, "ddmFieldName\":\"(.*)\",\"ddmFieldValueKeyword\"", 1);
 
-		JSONLayout.addWidgetToPublicLayout(
-			column = 1,
-			groupName = "Guest",
-			layoutName = "Search",
-			widgetName = "Custom Facet");
+		SearchPortlets.addWidgets(searchPortletList = "Custom Facet");
 
 		Search.openSearchPage();
 
@@ -2073,13 +2037,9 @@ definition {
 			groupName = "Guest",
 			layoutName = "Search Page");
 
-		for (var portlet : list "Search Bar,Search Results,Category Facet") {
-			JSONLayout.addWidgetToPublicLayout(
-				column = 1,
-				groupName = "Guest",
-				layoutName = "Search Page",
-				widgetName = ${portlet});
-		}
+		SearchPortlets.addWidgets(
+			layoutName = "Search Page",
+			searchPortletList = "Search Bar,Search Results,Category Facet");
 
 		Navigator.gotoPage(pageName = "Search Page");
 
@@ -2169,13 +2129,9 @@ definition {
 			groupName = "Guest",
 			layoutName = "Search Page");
 
-		for (var portlet : list "Search Bar,Search Results,Category Facet,Category Facet") {
-			JSONLayout.addWidgetToPublicLayout(
-				column = 1,
-				groupName = "Guest",
-				layoutName = "Search Page",
-				widgetName = ${portlet});
-		}
+		SearchPortlets.addWidgets(
+			layoutName = "Search Page",
+			searchPortletList = "Search Bar,Search Results,Category Facet,Category Facet");
 
 		Navigator.gotoPage(pageName = "Search Page");
 
@@ -2243,7 +2199,7 @@ definition {
 		task ("Search for the created articles, add the Sort widget to the search page, and navigate to the Sort widget configuration") {
 			SearchPortlets.searchEmbedded(searchTerm = "Fruit");
 
-			SearchPortlets.addWidgets(searchPortletList = "Sort");
+			SearchPortlets.addWidgetsViaUI(searchPortletList = "Sort");
 
 			Portlet.gotoPortletOptions(
 				portletName = "Sort",
@@ -2527,13 +2483,9 @@ definition {
 			groupName = "Guest",
 			layoutName = "Search Page");
 
-		for (var portlet : list "Site Facet,Search Results,Search Bar") {
-			JSONLayout.addWidgetToPublicLayout(
-				column = 1,
-				groupName = "Guest",
-				layoutName = "Search Page",
-				widgetName = ${portlet});
-		}
+		SearchPortlets.addWidgets(
+			layoutName = "Search Page",
+			searchPortletList = "Site Facet,Search Results,Search Bar");
 
 		Navigator.gotoPage(pageName = "Search Page");
 
@@ -2634,31 +2586,14 @@ definition {
 			groupName = "Guest",
 			layoutName = "Search Page");
 
-		for (var portlet : list "Category,Folder,Site,Tag,Type,User") {
-			JSONLayout.addWidgetToPublicLayout(
-				column = 1,
-				groupName = "Guest",
-				layoutName = "Search Page",
-				widgetName = "${portlet} Facet");
-		}
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = 2,
-			groupName = "Guest",
+		SearchPortlets.addWidgets(
 			layoutName = "Search Page",
-			widgetName = "Search Bar");
+			searchPortletList = "Category Facet,Folder Facet,Site Facet,Tag Facet,Type Facet,User Facet");
 
-		JSONLayout.addWidgetToPublicLayout(
+		SearchPortlets.addWidgets(
 			column = 2,
-			groupName = "Guest",
 			layoutName = "Search Page",
-			widgetName = "Search Options");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = 2,
-			groupName = "Guest",
-			layoutName = "Search Page",
-			widgetName = "Search Results");
+			searchPortletList = "Search Bar,Search Options,Search Results");
 
 		Navigator.gotoPage(pageName = "Search Page");
 
@@ -2918,7 +2853,7 @@ definition {
 		task ("Execute a search to populate the search widgets and add the Sort widget") {
 			Search.openSearchPage(searchTerm = "test");
 
-			SearchPortlets.addWidgets(searchPortletList = "Sort");
+			SearchPortlets.addWidgetsViaUI(searchPortletList = "Sort");
 		}
 
 		task ("Confirm the Sort configuration uses the new view by default") {

@@ -123,11 +123,7 @@ definition {
 			groupName = "Guest",
 			titleMap = "en_US:WC Title,de_DE:WC Titel");
 
-		JSONLayout.addWidgetToPublicLayout(
-			column = 1,
-			groupName = "Guest",
-			layoutName = "Search",
-			widgetName = "Suggestions");
+		SearchPortlets.addWidgets(searchPortletList = "Suggestions");
 
 		Search.openSearchPage();
 
@@ -175,11 +171,9 @@ definition {
 			groupName = "Guest",
 			layoutName = "Search Page");
 
-		JSONLayout.addWidgetToPublicLayout(
-			column = 1,
-			groupName = "Guest",
+		SearchPortlets.addWidgets(
 			layoutName = "Search Page",
-			widgetName = "Search Results");
+			searchPortletList = "Search Results");
 
 		Navigator.gotoPage(pageName = "Search Page");
 
@@ -258,13 +252,9 @@ definition {
 			groupName = "Guest",
 			layoutName = "Search Page");
 
-		for (var portlet : list "Type Facet,Search Results,Search Bar") {
-			JSONLayout.addWidgetToPublicLayout(
-				column = 1,
-				groupName = "Guest",
-				layoutName = "Search Page",
-				widgetName = ${portlet});
-		}
+		SearchPortlets.addWidgets(
+			layoutName = "Search Page",
+			searchPortletList = "Type Facet,Search Results,Search Bar");
 
 		Navigator.gotoPage(pageName = "Search Page");
 
@@ -1293,17 +1283,13 @@ definition {
 			serviceContext = ${webContentServiceContext},
 			title = "WC Title");
 
-		for (var portlet : list "Custom Filter,Suggestions,Search Results,Search Bar") {
-			JSONLayout.addWidgetToPublicLayout(
-				column = 1,
-				groupName = "Guest",
-				layoutName = "Search Page",
-				widgetName = ${portlet});
-		}
+		SearchPortlets.addWidgets(
+			layoutName = "Search Page",
+			searchPortletList = "Custom Filter,Suggestions,Search Results,Search Bar");
 
 		Navigator.gotoPage(pageName = "Search Page");
 
-		SearchPortlets.addWidgets(searchPortletList = "Sort");
+		SearchPortlets.addWidgetsViaUI(searchPortletList = "Sort");
 
 		PermissionsInline.gotoConfigurationPG(portletName = "Search Results");
 
@@ -1472,7 +1458,7 @@ definition {
 
 		SearchPortlets.searchEmbedded(searchTerm = "Content");
 
-		SearchPortlets.addWidgets(searchPortletList = "Sort");
+		SearchPortlets.addWidgetsViaUI(searchPortletList = "Sort");
 
 		Refresh();
 

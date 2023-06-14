@@ -419,11 +419,7 @@ definition {
 	test CopySearchInsightsJSON {
 		Search.openSearchPage();
 
-		JSONLayout.addWidgetToPublicLayout(
-			column = 1,
-			groupName = "Guest",
-			layoutName = "Search",
-			widgetName = "Search Insights");
+		SearchPortlets.addWidgets(searchPortletList = "Search Insights");
 
 		SearchPortlets.searchEmbedded(searchTerm = "test");
 
@@ -485,17 +481,15 @@ definition {
 		Navigator.openSpecificURL(url = "${portalURL}/web/guest/federated-search-page");
 
 		for (var column : list "1,2") {
-			JSONLayout.addWidgetToPublicLayout(
+			SearchPortlets.addWidgets(
 				column = ${column},
-				groupName = "Guest",
 				layoutName = "Federated Search Page",
-				widgetName = "Search Bar");
+				searchPortletList = "Search Bar");
 
-			JSONLayout.addWidgetToPublicLayout(
+			SearchPortlets.addWidgets(
 				column = ${column},
-				groupName = "Guest",
 				layoutName = "Federated Search Page",
-				widgetName = "Search Results");
+				searchPortletList = "Search Results");
 
 			Refresh();
 
@@ -569,10 +563,7 @@ definition {
 		}
 
 		task ("Add a Custom Filter widget to the search page and perform a search that returns the object entries and web content article") {
-			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Guest",
-				layoutName = "Search",
-				widgetName = "Custom Filter");
+			SearchPortlets.addWidgets(searchPortletList = "Custom Filter");
 
 			Search.openSearchPage(searchTerm = "fruit");
 		}
@@ -602,10 +593,7 @@ definition {
 		}
 
 		task ("Add a second Custom Filter widget and configure it as a child query matching the 'title' field name of the object nested field") {
-			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Guest",
-				layoutName = "Search",
-				widgetName = "Custom Filter");
+			SearchPortlets.addWidgets(searchPortletList = "Custom Filter");
 
 			Refresh();
 
@@ -619,10 +607,7 @@ definition {
 		}
 
 		task ("Add a third Custom Filter widget and configure it as a child query matching the value field name") {
-			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Guest",
-				layoutName = "Search",
-				widgetName = "Custom Filter");
+			SearchPortlets.addWidgets(searchPortletList = "Custom Filter");
 
 			Refresh();
 
@@ -721,10 +706,7 @@ definition {
 		}
 
 		task ("Add the Custom Filter widget to the default search page") {
-			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Guest",
-				layoutName = "Search",
-				widgetName = "Custom Filter");
+			SearchPortlets.addWidgets(searchPortletList = "Custom Filter");
 		}
 
 		task ("Go to the search page and execute a search for the web content articles") {
@@ -740,10 +722,7 @@ definition {
 		}
 
 		task ("Add a second Custom Filter widget and configure it as a child query matching the DDM field name") {
-			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Guest",
-				layoutName = "Search",
-				widgetName = "Custom Filter");
+			SearchPortlets.addWidgets(searchPortletList = "Custom Filter");
 
 			Refresh();
 
@@ -778,10 +757,7 @@ definition {
 		}
 
 		task ("Add a third Custom Filter widget and configure it as a child query matching the DDM field value") {
-			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Guest",
-				layoutName = "Search",
-				widgetName = "Custom Filter");
+			SearchPortlets.addWidgets(searchPortletList = "Custom Filter");
 
 			Refresh();
 
@@ -944,7 +920,7 @@ definition {
 
 		SearchPortlets.searchEmbedded(searchTerm = "Apple");
 
-		SearchPortlets.addWidgets(searchPortletList = "Sort");
+		SearchPortlets.addWidgetsViaUI(searchPortletList = "Sort");
 
 		Refresh();
 
@@ -1001,11 +977,9 @@ definition {
 			groupName = "Guest",
 			layoutName = "Search Result Widget Page");
 
-		JSONLayout.addWidgetToPublicLayout(
-			column = 1,
-			groupName = "Guest",
+		SearchPortlets.addWidgets(
 			layoutName = "Search Result Widget Page",
-			widgetName = "Search Results");
+			searchPortletList = "Search Results");
 
 		for (var count : list "1,2,3") {
 			JSONWebcontent.addWebContent(
@@ -1096,13 +1070,9 @@ definition {
 			groupName = "Guest",
 			layoutName = "Search Page");
 
-		for (var portlet : list "Type Facet,Search Results,Search Bar") {
-			JSONLayout.addWidgetToPublicLayout(
-				column = 1,
-				groupName = "Guest",
-				layoutName = "Search Page",
-				widgetName = ${portlet});
-		}
+		SearchPortlets.addWidgets(
+			layoutName = "Search Page",
+			searchPortletList = "Type Facet,Search Results,Search Bar");
 
 		Navigator.gotoPage(pageName = "Search Page");
 
@@ -2415,7 +2385,7 @@ definition {
 		}
 
 		task ("Add the Sort Widget to the search page") {
-			SearchPortlets.addWidgets(searchPortletList = "Sort");
+			SearchPortlets.addWidgetsViaUI(searchPortletList = "Sort");
 		}
 
 		task ("Within the Sort Widget configuration, add a sort option to sort by the custom object's 'title' field in ascending order") {
@@ -2506,17 +2476,13 @@ definition {
 			serviceContext = ${webContentServiceContext},
 			title = "WC Title");
 
-		for (var portlet : list "Custom Filter,Suggestions,Search Results,Search Bar") {
-			JSONLayout.addWidgetToPublicLayout(
-				column = 1,
-				groupName = "Guest",
-				layoutName = "Search Page",
-				widgetName = ${portlet});
-		}
+		SearchPortlets.addWidgets(
+			layoutName = "Search Page",
+			searchPortletList = "Custom Filter,Suggestions,Search Results,Search Bar");
 
 		Navigator.gotoPage(pageName = "Search Page");
 
-		SearchPortlets.addWidgets(searchPortletList = "Sort");
+		SearchPortlets.addWidgetsViaUI(searchPortletList = "Sort");
 
 		PermissionsInline.gotoConfigurationPG(portletName = "Search Results");
 
@@ -2773,7 +2739,7 @@ definition {
 
 		SearchPortlets.searchEmbedded(searchTerm = "Fruit");
 
-		SearchPortlets.addWidgets(searchPortletList = "Sort");
+		SearchPortlets.addWidgetsViaUI(searchPortletList = "Sort");
 
 		Refresh();
 

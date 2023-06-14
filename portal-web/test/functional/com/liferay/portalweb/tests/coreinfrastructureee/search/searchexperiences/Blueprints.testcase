@@ -123,11 +123,7 @@ definition {
 			groupName = "Guest",
 			title = "apple");
 
-		JSONLayout.addWidgetToPublicLayout(
-			column = 1,
-			groupName = "Guest",
-			layoutName = "Search",
-			widgetName = "Low Level Search Options");
+		SearchPortlets.addWidgets(searchPortletList = "Low Level Search Options");
 
 		SearchPortlets.searchEmbedded(searchTerm = "apple");
 
@@ -151,13 +147,7 @@ definition {
 	test ApplyBlueprintJSONToSearchViaLLSO {
 		property test.name.skip.portal.instance = "Blueprints#ApplyBlueprintJSONToSearchViaLLSO";
 
-		for (var portlet : list "Search Insights,Low Level Search Options") {
-			JSONLayout.addWidgetToPublicLayout(
-				column = 1,
-				groupName = "Guest",
-				layoutName = "Search",
-				widgetName = ${portlet});
-		}
+		SearchPortlets.addWidgets(searchPortletList = "Search Insights,Low Level Search Options");
 
 		Search.openSearchPage();
 
@@ -3142,11 +3132,7 @@ definition {
 
 		PortletEntry.save();
 
-		JSONLayout.addWidgetToPublicLayout(
-			column = 1,
-			groupName = "Guest",
-			layoutName = "Search",
-			widgetName = "Blueprints Options");
+		SearchPortlets.addWidgets(searchPortletList = "Blueprints Options");
 
 		Search.openSearchPage(locale = "es-ES");
 
@@ -4600,11 +4586,7 @@ definition {
 
 		Close.closeAndSelectWindow(locator1 = "View Element - ${siteName}");
 
-		JSONLayout.addWidgetToPublicLayout(
-			column = 1,
-			groupName = "Guest",
-			layoutName = "Search",
-			widgetName = "Blueprints Options");
+		SearchPortlets.addWidgets(searchPortletList = "Blueprints Options");
 
 		Search.openSearchPage();
 

@@ -50,11 +50,7 @@ definition {
 			groupName = "Guest",
 			title = "apple");
 
-		JSONLayout.addWidgetToPublicLayout(
-			column = 1,
-			groupName = "Guest",
-			layoutName = "Search",
-			widgetName = "Search Insights");
+		SearchPortlets.addWidgets(searchPortletList = "Search Insights");
 
 		Search.openSearchPage();
 

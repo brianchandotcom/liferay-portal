@@ -81,11 +81,9 @@ definition {
 			groupName = "Guest",
 			layoutName = "Similar Results Page");
 
-		JSONLayout.addWidgetToPublicLayout(
-			column = 1,
-			groupName = "Guest",
+		SearchPortlets.addWidgets(
 			layoutName = "Similar Results Page",
-			widgetName = "Similar Results");
+			searchPortletList = "Similar Results");
 
 		JSONLayout.addWidgetToPublicLayout(
 			column = 2,
@@ -128,11 +126,9 @@ definition {
 			groupName = "Guest",
 			layoutName = "Similar Results Page");
 
-		JSONLayout.addWidgetToPublicLayout(
-			column = 1,
-			groupName = "Guest",
+		SearchPortlets.addWidgets(
 			layoutName = "Similar Results Page",
-			widgetName = "Similar Results");
+			searchPortletList = "Similar Results");
 
 		JSONLayout.addWidgetToPublicLayout(
 			column = 2,
@@ -360,11 +356,9 @@ definition {
 			groupName = "Guest",
 			layoutName = "Similar Results Page");
 
-		JSONLayout.addWidgetToPublicLayout(
-			column = 1,
-			groupName = "Guest",
+		SearchPortlets.addWidgets(
 			layoutName = "Similar Results Page",
-			widgetName = "Similar Results");
+			searchPortletList = "Similar Results");
 
 		JSONLayout.addWidgetToPublicLayout(
 			column = 2,
@@ -403,11 +397,9 @@ definition {
 			groupName = "Guest",
 			layoutName = "Similar Results Page");
 
-		JSONLayout.addWidgetToPublicLayout(
-			column = 1,
-			groupName = "Guest",
+		SearchPortlets.addWidgets(
 			layoutName = "Similar Results Page",
-			widgetName = "Similar Results");
+			searchPortletList = "Similar Results");
 
 		JSONLayout.addWidgetToPublicLayout(
 			column = 2,

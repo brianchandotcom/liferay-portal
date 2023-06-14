@@ -205,11 +205,9 @@ definition {
 			layoutName = "Elasticsearch Monitoring Page",
 			layoutTemplate = "1 Column");
 
-		JSONLayout.addWidgetToPublicLayout(
-			column = 1,
-			groupName = "Guest",
+		SearchPortlets.addWidgets(
 			layoutName = "Elasticsearch Monitoring Page",
-			widgetName = "Elasticsearch Monitoring");
+			searchPortletList = "Elasticsearch Monitoring");
 
 		Navigator.gotoPage(pageName = "Elasticsearch Monitoring Page");
 
@@ -238,11 +236,9 @@ definition {
 			layoutName = "Elasticsearch Monitoring Page",
 			layoutTemplate = "1 Column");
 
-		JSONLayout.addWidgetToPublicLayout(
-			column = 1,
-			groupName = "Guest",
+		SearchPortlets.addWidgets(
 			layoutName = "Elasticsearch Monitoring Page",
-			widgetName = "Elasticsearch Monitoring");
+			searchPortletList = "Elasticsearch Monitoring");
 
 		Navigator.gotoPage(pageName = "Elasticsearch Monitoring Page");
 
@@ -276,11 +272,9 @@ definition {
 			layoutName = "Elasticsearch Monitoring Page",
 			layoutTemplate = "1 Column");
 
-		JSONLayout.addWidgetToPublicLayout(
-			column = 1,
-			groupName = "Guest",
+		SearchPortlets.addWidgets(
 			layoutName = "Elasticsearch Monitoring Page",
-			widgetName = "Elasticsearch Monitoring");
+			searchPortletList = "Elasticsearch Monitoring");
 
 		Navigator.gotoPage(pageName = "Elasticsearch Monitoring Page");
 
@@ -326,11 +320,9 @@ definition {
 			layoutName = "Elasticsearch Monitoring Page",
 			layoutTemplate = "1 Column");
 
-		JSONLayout.addWidgetToPublicLayout(
-			column = 1,
-			groupName = "Guest",
+		SearchPortlets.addWidgets(
 			layoutName = "Elasticsearch Monitoring Page",
-			widgetName = "Elasticsearch Monitoring");
+			searchPortletList = "Elasticsearch Monitoring");
 
 		Navigator.gotoPage(pageName = "Elasticsearch Monitoring Page");
 
@@ -361,11 +353,9 @@ definition {
 			layoutName = "Elasticsearch Monitoring Page",
 			layoutTemplate = "1 Column");
 
-		JSONLayout.addWidgetToPublicLayout(
-			column = 1,
-			groupName = "Guest",
+		SearchPortlets.addWidgets(
 			layoutName = "Elasticsearch Monitoring Page",
-			widgetName = "Elasticsearch Monitoring");
+			searchPortletList = "Elasticsearch Monitoring");
 
 		Navigator.gotoPage(pageName = "Elasticsearch Monitoring Page");
 

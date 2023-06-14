@@ -179,11 +179,7 @@ definition {
 			groupName = "Guest",
 			title = "apple");
 
-		JSONLayout.addWidgetToPublicLayout(
-			column = 1,
-			groupName = "Guest",
-			layoutName = "Search",
-			widgetName = "Search Insights");
+		SearchPortlets.addWidgets(searchPortletList = "Search Insights");
 
 		Search.openSearchPage();
 
@@ -417,29 +413,24 @@ definition {
 			layoutName = "Multiple Connections Page",
 			layoutTemplate = "3 Columns");
 
-		JSONLayout.addWidgetToPublicLayout(
-			column = 1,
-			groupName = "Guest",
+		SearchPortlets.addWidgets(
 			layoutName = "Multiple Connections Page",
-			widgetName = "Custom Filter");
+			searchPortletList = "Custom Filter");
 
-		JSONLayout.addWidgetToPublicLayout(
+		SearchPortlets.addWidgets(
 			column = 2,
-			groupName = "Guest",
 			layoutName = "Multiple Connections Page",
-			widgetName = "Search Results");
+			searchPortletList = "Search Results");
 
-		JSONLayout.addWidgetToPublicLayout(
+		SearchPortlets.addWidgets(
 			column = 3,
-			groupName = "Guest",
 			layoutName = "Multiple Connections Page",
-			widgetName = "Search Options");
+			searchPortletList = "Search Options");
 
-		JSONLayout.addWidgetToPublicLayout(
+		SearchPortlets.addWidgets(
 			column = 3,
-			groupName = "Guest",
 			layoutName = "Multiple Connections Page",
-			widgetName = "Low Level Search Options");
+			searchPortletList = "Low Level Search Options");
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/guest/multiple-connections-page");
 
@@ -541,13 +532,9 @@ definition {
 			groupName = "Guest",
 			layoutName = "Search Page");
 
-		for (var portlet : list "Custom Filter,Low Level Search Options,Search Results,Search Bar") {
-			JSONLayout.addWidgetToPublicLayout(
-				column = 1,
-				groupName = "Guest",
-				layoutName = "Search Page",
-				widgetName = ${portlet});
-		}
+		SearchPortlets.addWidgets(
+			layoutName = "Search Page",
+			searchPortletList = "Custom Filter,Low Level Search Options,Search Results,Search Bar");
 
 		var portalURL = PropsUtil.get("portal.url");
 

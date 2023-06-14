@@ -42,11 +42,13 @@ definition {
 			var layoutName = "Search";
 		}
 
-		JSONLayout.addWidgetToPublicLayout(
-			column = ${column},
-			groupName = ${groupName},
-			layoutName = ${layoutName},
-			widgetName = ${searchPortletList});
+		for (var portletName : list ${searchPortletList}) {
+			JSONLayout.addWidgetToPublicLayout(
+				column = ${column},
+				groupName = ${groupName},
+				layoutName = ${layoutName},
+				widgetName = ${portletName});
+		}
 	}
 
 	macro addWidgetsViaUI {

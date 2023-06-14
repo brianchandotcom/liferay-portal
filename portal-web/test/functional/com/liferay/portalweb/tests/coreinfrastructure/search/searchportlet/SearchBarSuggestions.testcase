@@ -33,11 +33,7 @@ definition {
 			groupName = "Guest",
 			titleMap = "en_US:WC Title,de_DE:WC Titel");
 
-		JSONLayout.addWidgetToPublicLayout(
-			column = 1,
-			groupName = "Guest",
-			layoutName = "Search",
-			widgetName = "Suggestions");
+		SearchPortlets.addWidgets(searchPortletList = "Suggestions");
 
 		Search.openSearchPage();
 

@@ -132,16 +132,16 @@ public class PartnerCommandLineRunner implements CommandLineRunner {
 				String activityErc = itemJSONObject.getString(
 					"r_actToMDFClmActs_c_activityERC");
 
-				JSONObject activityJSONArray = itemJSONObject.getJSONObject(
+				JSONObject activityJSONObject = itemJSONObject.getJSONObject(
 					"r_actToMDFClmActs_c_activity");
 
-				ZonedDateTime activityEndDate = ZonedDateTime.parse(
-					activityJSONArray.getString("endDate"));
+				ZonedDateTime zonedActivityEndDate = ZonedDateTime.parse(
+					activityJSONObject.getString("endDate"));
 
-				ZonedDateTime activityExpirationDate = activityEndDate.plusDays(
-					30);
+				ZonedDateTime zonedActivityExpirationDate =
+					zonedActivityEndDate.plusDays(30);
 
-				if (activityExpirationDate.toLocalDate(
+				if (zonedActivityExpirationDate.toLocalDate(
 					).isEqual(
 						zonedDateTime.plusDays(
 							15
@@ -152,7 +152,7 @@ public class PartnerCommandLineRunner implements CommandLineRunner {
 
 					return;
 				}
-				else if (activityExpirationDate.toLocalDate(
+				else if (zonedActivityExpirationDate.toLocalDate(
 						).isEqual(
 							zonedDateTime.plusDays(
 								5
@@ -163,7 +163,7 @@ public class PartnerCommandLineRunner implements CommandLineRunner {
 
 					return;
 				}
-				else if (activityExpirationDate.toLocalDate(
+				else if (zonedActivityExpirationDate.toLocalDate(
 						).isEqual(
 							zonedDateTime.plusDays(
 								1

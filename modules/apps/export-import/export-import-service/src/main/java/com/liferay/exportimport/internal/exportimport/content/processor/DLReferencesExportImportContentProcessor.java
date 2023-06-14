@@ -797,6 +797,10 @@ public class DLReferencesExportImportContentProcessor
 					for (String hostName : hostNames) {
 						int curBeginPos = beginPos - hostName.length();
 
+						if (curBeginPos < 0) {
+							continue;
+						}
+
 						String substring = content.substring(
 							curBeginPos, endPos);
 

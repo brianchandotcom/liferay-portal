@@ -144,6 +144,10 @@ definition {
 
 		Click(locator1 = "Button#CONTINUE");
 
+		Alert.viewWarningSpecific(warningMessage = "The import LAR file is not kept and thrown away immediately after the process.");
+
+		Alert.viewWarningSpecific(warningMessage = "Import process will be deleted after 30 days.");
+
 		if (${importPermissions} == "true") {
 			Click(locator1 = "ExportImport#PERMISSIONS_TITLE");
 
@@ -269,6 +273,10 @@ definition {
 				value1 = "Continue");
 
 			WaitForElementPresent(locator1 = "Button#BACK");
+
+			Alert.viewWarningSpecific(warningMessage = "The import LAR file is not kept and thrown away immediately after the process.");
+
+			Alert.viewWarningSpecific(warningMessage = "Import process will be deleted after 30 days.");
 
 			if (${copyAsNew} == "true") {
 				LAR._copyAsNew();

@@ -540,7 +540,7 @@ definition {
 		else {
 			MouseOver.waitForMenuToggleJSMouseOver(locator1 = "Portlet#PORTLET_SECTION");
 
-			Click.javaScriptClick(locator1 = "Portlet#OPTIONS_ICON");
+			Click(locator1 = "Portlet#OPTIONS_ICON");
 		}
 
 		if (isSet(portletOption)) {

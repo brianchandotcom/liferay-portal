@@ -23,6 +23,135 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-166514. TC-1: Verify that the import process related LAR file is thrown away immediately after the process."
+	@priority = 5
+	test LARFileRemovedAfterImportProcess {
+		property test.name.skip.portal.instance = "ImportProcess#LARFileRemovedAfterImportProcess";
+
+		task ("Given: Import two types of LAR files") {
+			HeadlessSite.addSite(siteName = "Site Name");
+
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Site Name");
+
+			BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
+
+			LAR.exportPortlet(larFileName = "Blog_portlet.lar");
+
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+
+			JSONLayoututilitypage.deleteLayoutUtilityPage(
+				groupName = "Guest",
+				layoutUtilityPageName = 404);
+
+			LAR.importSiteCP(
+				larFileName = "HR_Home_Page_Content_master.lar",
+				siteName = "Guest",
+				uploadFrom = "dependencies");
+
+			BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+			LAR.importPortlet(larFileName = "Blog_portlet.lar");
+		}
+
+		task ("When: Query the stored import LAR files in the database") {
+			var lARFileStatus = ExportImport.getLARFileStatus();
+		}
+
+		task ("Then: Verify that the import process related LAR files are removed without waiting") {
+			TestUtils.assertEquals(
+				actual = ${lARFileStatus},
+				expected = "Deleted successfully");
+		}
+	}
+
+	@description = "This is a use case for LPS-166514. TC-2: Verify that the expired import process entries can be removed after triggering scheduler job manually."
+	@priority = 5
+	test TriggerSchedulerJobManuallyCanRemoveExpiredImportEntry {
+		property test.name.skip.portal.instance = "ImportProcess#TriggerSchedulerJobManuallyCanRemoveExpiredImportEntry";
+
+		task ("Given: Import two types of LAR files") {
+			HeadlessSite.addSite(siteName = "Site Name");
+
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Site Name");
+
+			BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
+
+			LAR.exportPortlet(larFileName = "Blog_portlet.lar");
+
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+
+			JSONLayoututilitypage.deleteLayoutUtilityPage(
+				groupName = "Guest",
+				layoutUtilityPageName = 404);
+
+			LAR.importSiteCP(
+				larFileName = "HR_Home_Page_Content_master.lar",
+				siteName = "Guest",
+				uploadFrom = "dependencies");
+
+			BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+			LAR.importPortlet(larFileName = "Blog_portlet.lar");
+		}
+
+		task ("When: Modify the modifiedDate of background task to a past date and trigger scheduler job manually") {
+			ExportImport.updateLayoutBackgroundTaskModifiedDateToPast(type = "Import");
+
+			ExportImport.updatePortletBackgroundTaskModifiedDateToPast(type = "Import");
+
+			ApplicationsMenu.gotoPortlet(
+				category = "System",
+				panel = "Control Panel",
+				portlet = "Server Administration");
+
+			ServerAdministration.executeServerResourcesActions(actionsDescription = "Clear the database cache.");
+
+			JobScheduler.openJobSchedulerAdmin();
+
+			Navigator.gotoNavItem(navItem = "Scheduled Jobs");
+
+			Click.clickAtNotVisible(locator1 = "Blueprints#PAGINATION_NEXT_LINK");
+
+			Click.clickAtNotVisible(
+				key_name = "DeleteObsoleteBackgroundTasksSchedulerJobConfiguration",
+				locator1 = "JobScheduler#RUN_NOW_BUTTON");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Then: Verify that the import entries and the stored import LAR files are removed without waiting") {
+			var backgroundTaskStatus = ExportImport.getBackgroundTaskStatus(type = "Import");
+
+			TestUtils.assertEquals(
+				actual = ${backgroundTaskStatus},
+				expected = "Deleted successfully");
+
+			LAR.openImportAdmin(siteName = "guest");
+
+			LexiconEntry.viewNoEntry(rowEntry = "HR_Home_Page_Content_master.lar");
+
+			BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+			LAR._gotoExportImport();
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			Click(
+				key_navItem = "Import",
+				locator1 = "NavBar#NAV_ITEM_LINK");
+
+			Click(locator1 = "ExportImport#CURRENT_AND_PREVIOUS_TAB");
+
+			AssertElementNotPresent(locator1 = "ExportImport#CURRENT_AND_PREVIOUS_STATUS_1");
+		}
+	}
+
 	@description = "This is a use case for LPS-182567. TC-1: Verify that a confirmation pop-up should show up when Delete Application Data Before Importing checkbox is checked."
 	@priority = 5
 	test ViewDeletingApplicationDataPopUpOnDefaultSite {

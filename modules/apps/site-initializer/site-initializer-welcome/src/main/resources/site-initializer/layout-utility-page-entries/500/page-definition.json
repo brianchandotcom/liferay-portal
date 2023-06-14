@@ -49,8 +49,6 @@
 					{
 						"definition": {
 							"fragmentStyle": {
-								"backgroundFragmentImage": {
-								},
 								"borderRadius": "",
 								"borderWidth": "0",
 								"height": "100vh",
@@ -324,9 +322,6 @@
 																				"fragmentLink": {
 																				},
 																				"text": {
-																					"value": {
-																						"title": "Internal Server Error"
-																					},
 																					"value_i18n": {
 																						"ar_SA": "خطأ خادم داخلي",
 																						"ca_ES": "Error intern del servidor",

@@ -46,10 +46,11 @@ function SegmentsAndExperiencesSelector({
 	const [selectedPreviewOption, setSelectedPreviewOption] = useState(
 		'segments'
 	);
-	const [selectedSegment, setSelectedSegment] = useState('');
-	const [selectedExperience, setSelectedExperience] = useState(
-		segmentsExperiences?.[0]?.id
-	);
+	const [selectedSegmentEntry, setSelectedSegmentEntry] = useState('');
+	const [
+		selectedSegmentsExperience,
+		setSelectedSegmentsExperience,
+	] = useState(segmentsExperiences?.[0]?.id);
 
 	const formRef = useRef(null);
 
@@ -101,9 +102,9 @@ function SegmentsAndExperiencesSelector({
 	useEffect(() => {
 		simulateSegmentsEntries();
 	}, [
-		selectedExperience,
+		selectedSegmentsExperience,
 		selectedPreviewOption,
-		selectedSegment,
+		selectedSegmentEntry,
 		simulateSegmentsEntries,
 	]);
 
@@ -177,7 +178,7 @@ function SegmentsAndExperiencesSelector({
 								id={`${namespace}segmentsEntryId`}
 								name={`${namespace}segmentsEntryId`}
 								onChange={({target}) => {
-									setSelectedSegment(target.value);
+									setSelectedSegmentEntry(target.value);
 								}}
 								options={segmentsEntries.map((segment) => {
 									return {
@@ -185,7 +186,7 @@ function SegmentsAndExperiencesSelector({
 										value: segment.id,
 									};
 								})}
-								value={selectedSegment}
+								value={selectedSegmentEntry}
 							/>
 						</div>
 					)}
@@ -203,15 +204,17 @@ function SegmentsAndExperiencesSelector({
 								id={`${namespace}segmentsExperienceId`}
 								name={`${namespace}segmentsExperienceId`}
 								type="hidden"
-								value={selectedExperience}
+								value={selectedSegmentsExperience}
 							/>
 
 							<Picker
 								aria-labelledby={`${namespace}segmentsExperienceLabelId`}
 								id={`${namespace}segmentsExperienceSelector`}
 								items={segmentsExperiences}
-								onSelectionChange={setSelectedExperience}
-								selectedKey={selectedExperience}
+								onSelectionChange={
+									setSelectedSegmentsExperience
+								}
+								selectedKey={selectedSegmentsExperience}
 								type="button"
 							>
 								{(experience) => (

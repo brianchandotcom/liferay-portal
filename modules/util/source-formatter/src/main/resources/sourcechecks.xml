@@ -1395,7 +1395,7 @@
 		</check>
 		<check name="PropertiesLanguageKeysContextCheck">
 			<category name="Bug Prevention" />
-			<description name="Checks that prohibiting single/double-word language keys without [context] brackets." />
+			<description name="Checks if the language keys include a word of context to indicate specific meaning." />
 			<property name="enabled" value="false" />
 		</check>
 		<check name="PropertiesLanguageKeysOrderCheck">

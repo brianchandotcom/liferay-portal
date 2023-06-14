@@ -270,12 +270,18 @@ public class CTEntrySearcherTest {
 
 		_assertHits(
 			_getUIDs(_getCTEntries(journalFolder1, journalFolder2)),
-			_getSort(Field.TITLE, SortOrder.ASC),
+			_getSort(
+				Field.getSortableFieldName(
+					Field.getLocalizedName(LocaleUtil.US, Field.TITLE)),
+				SortOrder.ASC),
 			_byAttribute(
 				"modelClassNameId", new long[] {_journalFolderClassNameId}));
 		_assertHits(
 			_getUIDs(_getCTEntries(journalFolder2, journalFolder1)),
-			_getSort(Field.TITLE, SortOrder.DESC),
+			_getSort(
+				Field.getSortableFieldName(
+					Field.getLocalizedName(LocaleUtil.US, Field.TITLE)),
+				SortOrder.DESC),
 			_byAttribute(
 				"modelClassNameId", new long[] {_journalFolderClassNameId}));
 	}
@@ -308,7 +314,10 @@ public class CTEntrySearcherTest {
 
 		_assertHits(
 			_getUIDs(journalArticleCTEntry, journalFolderCTEntry),
-			_getSort("typeName", SortOrder.ASC),
+			_getSort(
+				Field.getSortableFieldName(
+					Field.getLocalizedName(LocaleUtil.US, "typeName")),
+				SortOrder.ASC),
 			_byAttribute(
 				"modelClassNameId",
 				new long[] {
@@ -316,7 +325,10 @@ public class CTEntrySearcherTest {
 				}));
 		_assertHits(
 			_getUIDs(journalFolderCTEntry, journalArticleCTEntry),
-			_getSort("typeName", SortOrder.DESC),
+			_getSort(
+				Field.getSortableFieldName(
+					Field.getLocalizedName(LocaleUtil.US, "typeName")),
+				SortOrder.DESC),
 			_byAttribute(
 				"modelClassNameId",
 				new long[] {

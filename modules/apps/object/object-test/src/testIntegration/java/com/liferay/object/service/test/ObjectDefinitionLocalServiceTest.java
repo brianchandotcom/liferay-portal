@@ -1206,7 +1206,7 @@ public class ObjectDefinitionLocalServiceTest {
 	}
 
 	@Test
-	public void testEnableAccountEntryRestrictedForExternalStorageType()
+	public void testEnableAccountEntryRestrictedForNondefaultStorageType()
 		throws Exception {
 
 		// Enabling account restriction to a custom salesforce object definition
@@ -1334,12 +1334,20 @@ public class ObjectDefinitionLocalServiceTest {
 				true
 			).build());
 
-		objectDefinition3 =
-			_objectDefinitionLocalService.
-				enableAccountEntryRestrictedForNondefaultStorageType(
-					objectField4);
+		try {
+			objectDefinition3 =
+				_objectDefinitionLocalService.
+					enableAccountEntryRestrictedForNondefaultStorageType(
+						objectField4);
 
-		Assert.assertFalse(objectDefinition3.isAccountEntryRestricted());
+			Assert.fail();
+		}
+		catch (UnsupportedOperationException unsupportedOperationException) {
+			Assert.assertNotNull(unsupportedOperationException);
+
+			_objectDefinitionLocalService.deleteObjectDefinition(
+				objectDefinition3);
+		}
 
 		// Enabling account restriction using a forbidden type field
 

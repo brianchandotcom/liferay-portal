@@ -58,6 +58,11 @@ public class SizeSelectionFDSFilter extends BaseSelectionFDSFilter {
 	}
 
 	@Override
+	public boolean isAutocompleteEnabled() {
+		return true;
+	}
+
+	@Override
 	public boolean isMultiple() {
 		return false;
 	}

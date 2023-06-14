@@ -253,6 +253,13 @@ public class CommerceCatalogPersistenceTest {
 	}
 
 	@Test
+	public void testCountByAccountEntryId() throws Exception {
+		_persistence.countByAccountEntryId(RandomTestUtil.nextLong());
+
+		_persistence.countByAccountEntryId(0L);
+	}
+
+	@Test
 	public void testCountByC_S() throws Exception {
 		_persistence.countByC_S(
 			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());

@@ -364,6 +364,12 @@ public class CommerceCatalogLocalServiceUtil {
 		return getService().getCommerceCatalogs(companyId, system);
 	}
 
+	public static List<CommerceCatalog> getCommerceCatalogsByAccountEntryId(
+		long accountEntryId) {
+
+		return getService().getCommerceCatalogsByAccountEntryId(accountEntryId);
+	}
+
 	/**
 	 * Returns the number of commerce catalogs.
 	 *

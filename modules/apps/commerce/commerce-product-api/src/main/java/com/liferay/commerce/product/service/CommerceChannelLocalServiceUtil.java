@@ -399,6 +399,12 @@ public class CommerceChannelLocalServiceUtil {
 			companyId, keywords, start, end);
 	}
 
+	public static List<CommerceChannel> getCommerceChannelsByAccountEntryId(
+		long accountEntryId) {
+
+		return getService().getCommerceChannelsByAccountEntryId(accountEntryId);
+	}
+
 	/**
 	 * Returns the number of commerce channels.
 	 *

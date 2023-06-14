@@ -447,6 +447,14 @@ public class CommerceChannelLocalServiceWrapper
 			companyId, keywords, start, end);
 	}
 
+	@Override
+	public java.util.List<CommerceChannel> getCommerceChannelsByAccountEntryId(
+		long accountEntryId) {
+
+		return _commerceChannelLocalService.getCommerceChannelsByAccountEntryId(
+			accountEntryId);
+	}
+
 	/**
 	 * Returns the number of commerce channels.
 	 *

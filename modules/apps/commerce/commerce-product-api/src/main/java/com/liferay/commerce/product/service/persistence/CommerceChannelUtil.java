@@ -879,6 +879,262 @@ public class CommerceChannelUtil {
 	}
 
 	/**
+	 * Returns all the commerce channels where accountEntryId = &#63;.
+	 *
+	 * @param accountEntryId the account entry ID
+	 * @return the matching commerce channels
+	 */
+	public static List<CommerceChannel> findByAccountEntryId(
+		long accountEntryId) {
+
+		return getPersistence().findByAccountEntryId(accountEntryId);
+	}
+
+	/**
+	 * Returns a range of all the commerce channels where accountEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceChannelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param accountEntryId the account entry ID
+	 * @param start the lower bound of the range of commerce channels
+	 * @param end the upper bound of the range of commerce channels (not inclusive)
+	 * @return the range of matching commerce channels
+	 */
+	public static List<CommerceChannel> findByAccountEntryId(
+		long accountEntryId, int start, int end) {
+
+		return getPersistence().findByAccountEntryId(
+			accountEntryId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce channels where accountEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceChannelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param accountEntryId the account entry ID
+	 * @param start the lower bound of the range of commerce channels
+	 * @param end the upper bound of the range of commerce channels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce channels
+	 */
+	public static List<CommerceChannel> findByAccountEntryId(
+		long accountEntryId, int start, int end,
+		OrderByComparator<CommerceChannel> orderByComparator) {
+
+		return getPersistence().findByAccountEntryId(
+			accountEntryId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce channels where accountEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceChannelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param accountEntryId the account entry ID
+	 * @param start the lower bound of the range of commerce channels
+	 * @param end the upper bound of the range of commerce channels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching commerce channels
+	 */
+	public static List<CommerceChannel> findByAccountEntryId(
+		long accountEntryId, int start, int end,
+		OrderByComparator<CommerceChannel> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByAccountEntryId(
+			accountEntryId, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first commerce channel in the ordered set where accountEntryId = &#63;.
+	 *
+	 * @param accountEntryId the account entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce channel
+	 * @throws NoSuchChannelException if a matching commerce channel could not be found
+	 */
+	public static CommerceChannel findByAccountEntryId_First(
+			long accountEntryId,
+			OrderByComparator<CommerceChannel> orderByComparator)
+		throws com.liferay.commerce.product.exception.NoSuchChannelException {
+
+		return getPersistence().findByAccountEntryId_First(
+			accountEntryId, orderByComparator);
+	}
+
+	/**
+	 * Returns the first commerce channel in the ordered set where accountEntryId = &#63;.
+	 *
+	 * @param accountEntryId the account entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce channel, or <code>null</code> if a matching commerce channel could not be found
+	 */
+	public static CommerceChannel fetchByAccountEntryId_First(
+		long accountEntryId,
+		OrderByComparator<CommerceChannel> orderByComparator) {
+
+		return getPersistence().fetchByAccountEntryId_First(
+			accountEntryId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last commerce channel in the ordered set where accountEntryId = &#63;.
+	 *
+	 * @param accountEntryId the account entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce channel
+	 * @throws NoSuchChannelException if a matching commerce channel could not be found
+	 */
+	public static CommerceChannel findByAccountEntryId_Last(
+			long accountEntryId,
+			OrderByComparator<CommerceChannel> orderByComparator)
+		throws com.liferay.commerce.product.exception.NoSuchChannelException {
+
+		return getPersistence().findByAccountEntryId_Last(
+			accountEntryId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last commerce channel in the ordered set where accountEntryId = &#63;.
+	 *
+	 * @param accountEntryId the account entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce channel, or <code>null</code> if a matching commerce channel could not be found
+	 */
+	public static CommerceChannel fetchByAccountEntryId_Last(
+		long accountEntryId,
+		OrderByComparator<CommerceChannel> orderByComparator) {
+
+		return getPersistence().fetchByAccountEntryId_Last(
+			accountEntryId, orderByComparator);
+	}
+
+	/**
+	 * Returns the commerce channels before and after the current commerce channel in the ordered set where accountEntryId = &#63;.
+	 *
+	 * @param commerceChannelId the primary key of the current commerce channel
+	 * @param accountEntryId the account entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce channel
+	 * @throws NoSuchChannelException if a commerce channel with the primary key could not be found
+	 */
+	public static CommerceChannel[] findByAccountEntryId_PrevAndNext(
+			long commerceChannelId, long accountEntryId,
+			OrderByComparator<CommerceChannel> orderByComparator)
+		throws com.liferay.commerce.product.exception.NoSuchChannelException {
+
+		return getPersistence().findByAccountEntryId_PrevAndNext(
+			commerceChannelId, accountEntryId, orderByComparator);
+	}
+
+	/**
+	 * Returns all the commerce channels that the user has permission to view where accountEntryId = &#63;.
+	 *
+	 * @param accountEntryId the account entry ID
+	 * @return the matching commerce channels that the user has permission to view
+	 */
+	public static List<CommerceChannel> filterFindByAccountEntryId(
+		long accountEntryId) {
+
+		return getPersistence().filterFindByAccountEntryId(accountEntryId);
+	}
+
+	/**
+	 * Returns a range of all the commerce channels that the user has permission to view where accountEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceChannelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param accountEntryId the account entry ID
+	 * @param start the lower bound of the range of commerce channels
+	 * @param end the upper bound of the range of commerce channels (not inclusive)
+	 * @return the range of matching commerce channels that the user has permission to view
+	 */
+	public static List<CommerceChannel> filterFindByAccountEntryId(
+		long accountEntryId, int start, int end) {
+
+		return getPersistence().filterFindByAccountEntryId(
+			accountEntryId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce channels that the user has permissions to view where accountEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceChannelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param accountEntryId the account entry ID
+	 * @param start the lower bound of the range of commerce channels
+	 * @param end the upper bound of the range of commerce channels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce channels that the user has permission to view
+	 */
+	public static List<CommerceChannel> filterFindByAccountEntryId(
+		long accountEntryId, int start, int end,
+		OrderByComparator<CommerceChannel> orderByComparator) {
+
+		return getPersistence().filterFindByAccountEntryId(
+			accountEntryId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns the commerce channels before and after the current commerce channel in the ordered set of commerce channels that the user has permission to view where accountEntryId = &#63;.
+	 *
+	 * @param commerceChannelId the primary key of the current commerce channel
+	 * @param accountEntryId the account entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce channel
+	 * @throws NoSuchChannelException if a commerce channel with the primary key could not be found
+	 */
+	public static CommerceChannel[] filterFindByAccountEntryId_PrevAndNext(
+			long commerceChannelId, long accountEntryId,
+			OrderByComparator<CommerceChannel> orderByComparator)
+		throws com.liferay.commerce.product.exception.NoSuchChannelException {
+
+		return getPersistence().filterFindByAccountEntryId_PrevAndNext(
+			commerceChannelId, accountEntryId, orderByComparator);
+	}
+
+	/**
+	 * Removes all the commerce channels where accountEntryId = &#63; from the database.
+	 *
+	 * @param accountEntryId the account entry ID
+	 */
+	public static void removeByAccountEntryId(long accountEntryId) {
+		getPersistence().removeByAccountEntryId(accountEntryId);
+	}
+
+	/**
+	 * Returns the number of commerce channels where accountEntryId = &#63;.
+	 *
+	 * @param accountEntryId the account entry ID
+	 * @return the number of matching commerce channels
+	 */
+	public static int countByAccountEntryId(long accountEntryId) {
+		return getPersistence().countByAccountEntryId(accountEntryId);
+	}
+
+	/**
+	 * Returns the number of commerce channels that the user has permission to view where accountEntryId = &#63;.
+	 *
+	 * @param accountEntryId the account entry ID
+	 * @return the number of matching commerce channels that the user has permission to view
+	 */
+	public static int filterCountByAccountEntryId(long accountEntryId) {
+		return getPersistence().filterCountByAccountEntryId(accountEntryId);
+	}
+
+	/**
 	 * Returns the commerce channel where siteGroupId = &#63; or throws a <code>NoSuchChannelException</code> if it could not be found.
 	 *
 	 * @param siteGroupId the site group ID

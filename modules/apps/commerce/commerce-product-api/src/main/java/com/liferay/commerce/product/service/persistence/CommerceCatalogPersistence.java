@@ -683,6 +683,215 @@ public interface CommerceCatalogPersistence
 	public int filterCountByCompanyId(long companyId);
 
 	/**
+	 * Returns all the commerce catalogs where accountEntryId = &#63;.
+	 *
+	 * @param accountEntryId the account entry ID
+	 * @return the matching commerce catalogs
+	 */
+	public java.util.List<CommerceCatalog> findByAccountEntryId(
+		long accountEntryId);
+
+	/**
+	 * Returns a range of all the commerce catalogs where accountEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceCatalogModelImpl</code>.
+	 * </p>
+	 *
+	 * @param accountEntryId the account entry ID
+	 * @param start the lower bound of the range of commerce catalogs
+	 * @param end the upper bound of the range of commerce catalogs (not inclusive)
+	 * @return the range of matching commerce catalogs
+	 */
+	public java.util.List<CommerceCatalog> findByAccountEntryId(
+		long accountEntryId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the commerce catalogs where accountEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceCatalogModelImpl</code>.
+	 * </p>
+	 *
+	 * @param accountEntryId the account entry ID
+	 * @param start the lower bound of the range of commerce catalogs
+	 * @param end the upper bound of the range of commerce catalogs (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce catalogs
+	 */
+	public java.util.List<CommerceCatalog> findByAccountEntryId(
+		long accountEntryId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CommerceCatalog>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the commerce catalogs where accountEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceCatalogModelImpl</code>.
+	 * </p>
+	 *
+	 * @param accountEntryId the account entry ID
+	 * @param start the lower bound of the range of commerce catalogs
+	 * @param end the upper bound of the range of commerce catalogs (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching commerce catalogs
+	 */
+	public java.util.List<CommerceCatalog> findByAccountEntryId(
+		long accountEntryId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CommerceCatalog>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first commerce catalog in the ordered set where accountEntryId = &#63;.
+	 *
+	 * @param accountEntryId the account entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce catalog
+	 * @throws NoSuchCatalogException if a matching commerce catalog could not be found
+	 */
+	public CommerceCatalog findByAccountEntryId_First(
+			long accountEntryId,
+			com.liferay.portal.kernel.util.OrderByComparator<CommerceCatalog>
+				orderByComparator)
+		throws NoSuchCatalogException;
+
+	/**
+	 * Returns the first commerce catalog in the ordered set where accountEntryId = &#63;.
+	 *
+	 * @param accountEntryId the account entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce catalog, or <code>null</code> if a matching commerce catalog could not be found
+	 */
+	public CommerceCatalog fetchByAccountEntryId_First(
+		long accountEntryId,
+		com.liferay.portal.kernel.util.OrderByComparator<CommerceCatalog>
+			orderByComparator);
+
+	/**
+	 * Returns the last commerce catalog in the ordered set where accountEntryId = &#63;.
+	 *
+	 * @param accountEntryId the account entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce catalog
+	 * @throws NoSuchCatalogException if a matching commerce catalog could not be found
+	 */
+	public CommerceCatalog findByAccountEntryId_Last(
+			long accountEntryId,
+			com.liferay.portal.kernel.util.OrderByComparator<CommerceCatalog>
+				orderByComparator)
+		throws NoSuchCatalogException;
+
+	/**
+	 * Returns the last commerce catalog in the ordered set where accountEntryId = &#63;.
+	 *
+	 * @param accountEntryId the account entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce catalog, or <code>null</code> if a matching commerce catalog could not be found
+	 */
+	public CommerceCatalog fetchByAccountEntryId_Last(
+		long accountEntryId,
+		com.liferay.portal.kernel.util.OrderByComparator<CommerceCatalog>
+			orderByComparator);
+
+	/**
+	 * Returns the commerce catalogs before and after the current commerce catalog in the ordered set where accountEntryId = &#63;.
+	 *
+	 * @param commerceCatalogId the primary key of the current commerce catalog
+	 * @param accountEntryId the account entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce catalog
+	 * @throws NoSuchCatalogException if a commerce catalog with the primary key could not be found
+	 */
+	public CommerceCatalog[] findByAccountEntryId_PrevAndNext(
+			long commerceCatalogId, long accountEntryId,
+			com.liferay.portal.kernel.util.OrderByComparator<CommerceCatalog>
+				orderByComparator)
+		throws NoSuchCatalogException;
+
+	/**
+	 * Returns all the commerce catalogs that the user has permission to view where accountEntryId = &#63;.
+	 *
+	 * @param accountEntryId the account entry ID
+	 * @return the matching commerce catalogs that the user has permission to view
+	 */
+	public java.util.List<CommerceCatalog> filterFindByAccountEntryId(
+		long accountEntryId);
+
+	/**
+	 * Returns a range of all the commerce catalogs that the user has permission to view where accountEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceCatalogModelImpl</code>.
+	 * </p>
+	 *
+	 * @param accountEntryId the account entry ID
+	 * @param start the lower bound of the range of commerce catalogs
+	 * @param end the upper bound of the range of commerce catalogs (not inclusive)
+	 * @return the range of matching commerce catalogs that the user has permission to view
+	 */
+	public java.util.List<CommerceCatalog> filterFindByAccountEntryId(
+		long accountEntryId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the commerce catalogs that the user has permissions to view where accountEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceCatalogModelImpl</code>.
+	 * </p>
+	 *
+	 * @param accountEntryId the account entry ID
+	 * @param start the lower bound of the range of commerce catalogs
+	 * @param end the upper bound of the range of commerce catalogs (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce catalogs that the user has permission to view
+	 */
+	public java.util.List<CommerceCatalog> filterFindByAccountEntryId(
+		long accountEntryId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CommerceCatalog>
+			orderByComparator);
+
+	/**
+	 * Returns the commerce catalogs before and after the current commerce catalog in the ordered set of commerce catalogs that the user has permission to view where accountEntryId = &#63;.
+	 *
+	 * @param commerceCatalogId the primary key of the current commerce catalog
+	 * @param accountEntryId the account entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce catalog
+	 * @throws NoSuchCatalogException if a commerce catalog with the primary key could not be found
+	 */
+	public CommerceCatalog[] filterFindByAccountEntryId_PrevAndNext(
+			long commerceCatalogId, long accountEntryId,
+			com.liferay.portal.kernel.util.OrderByComparator<CommerceCatalog>
+				orderByComparator)
+		throws NoSuchCatalogException;
+
+	/**
+	 * Removes all the commerce catalogs where accountEntryId = &#63; from the database.
+	 *
+	 * @param accountEntryId the account entry ID
+	 */
+	public void removeByAccountEntryId(long accountEntryId);
+
+	/**
+	 * Returns the number of commerce catalogs where accountEntryId = &#63;.
+	 *
+	 * @param accountEntryId the account entry ID
+	 * @return the number of matching commerce catalogs
+	 */
+	public int countByAccountEntryId(long accountEntryId);
+
+	/**
+	 * Returns the number of commerce catalogs that the user has permission to view where accountEntryId = &#63;.
+	 *
+	 * @param accountEntryId the account entry ID
+	 * @return the number of matching commerce catalogs that the user has permission to view
+	 */
+	public int filterCountByAccountEntryId(long accountEntryId);
+
+	/**
 	 * Returns all the commerce catalogs where companyId = &#63; and system = &#63;.
 	 *
 	 * @param companyId the company ID

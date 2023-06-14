@@ -336,6 +336,10 @@ public interface CommerceChannelLocalService
 			long companyId, String keywords, int start, int end)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceChannel> getCommerceChannelsByAccountEntryId(
+		long accountEntryId);
+
 	/**
 	 * Returns the number of commerce channels.
 	 *

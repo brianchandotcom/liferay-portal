@@ -317,6 +317,10 @@ public interface CommerceCatalogLocalService
 	public List<CommerceCatalog> getCommerceCatalogs(
 		long companyId, boolean system);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceCatalog> getCommerceCatalogsByAccountEntryId(
+		long accountEntryId);
+
 	/**
 	 * Returns the number of commerce catalogs.
 	 *

@@ -268,6 +268,13 @@ public class CommerceChannelPersistenceTest {
 	}
 
 	@Test
+	public void testCountByAccountEntryId() throws Exception {
+		_persistence.countByAccountEntryId(RandomTestUtil.nextLong());
+
+		_persistence.countByAccountEntryId(0L);
+	}
+
+	@Test
 	public void testCountBySiteGroupId() throws Exception {
 		_persistence.countBySiteGroupId(RandomTestUtil.nextLong());
 

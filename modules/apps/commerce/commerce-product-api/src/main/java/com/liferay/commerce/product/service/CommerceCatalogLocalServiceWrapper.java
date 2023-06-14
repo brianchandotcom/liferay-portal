@@ -410,6 +410,14 @@ public class CommerceCatalogLocalServiceWrapper
 			companyId, system);
 	}
 
+	@Override
+	public java.util.List<CommerceCatalog> getCommerceCatalogsByAccountEntryId(
+		long accountEntryId) {
+
+		return _commerceCatalogLocalService.getCommerceCatalogsByAccountEntryId(
+			accountEntryId);
+	}
+
 	/**
 	 * Returns the number of commerce catalogs.
 	 *

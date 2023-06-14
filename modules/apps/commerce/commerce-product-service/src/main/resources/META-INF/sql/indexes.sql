@@ -161,12 +161,14 @@ create index IX_4F867FC4 on CProduct (uuid_[$COLUMN_LENGTH:75$], companyId, ctCo
 create index IX_36D0BBE0 on CProduct (uuid_[$COLUMN_LENGTH:75$], ctCollectionId);
 create unique index IX_F70CE3C6 on CProduct (uuid_[$COLUMN_LENGTH:75$], groupId, ctCollectionId);
 
+create index IX_4807BAF6 on CommerceCatalog (accountEntryId, ctCollectionId);
 create index IX_7D2B5F22 on CommerceCatalog (companyId, ctCollectionId);
 create index IX_B053A95A on CommerceCatalog (companyId, system_, ctCollectionId);
 create unique index IX_482EFB0D on CommerceCatalog (externalReferenceCode[$COLUMN_LENGTH:75$], companyId, ctCollectionId);
 create index IX_E567F436 on CommerceCatalog (uuid_[$COLUMN_LENGTH:75$], companyId, ctCollectionId);
 create index IX_570B9AAE on CommerceCatalog (uuid_[$COLUMN_LENGTH:75$], ctCollectionId);
 
+create index IX_4F0C1D60 on CommerceChannel (accountEntryId, ctCollectionId);
 create index IX_6A59A278 on CommerceChannel (companyId, ctCollectionId);
 create unique index IX_782B56F7 on CommerceChannel (externalReferenceCode[$COLUMN_LENGTH:75$], companyId, ctCollectionId);
 create index IX_A12DD9F3 on CommerceChannel (siteGroupId, ctCollectionId);

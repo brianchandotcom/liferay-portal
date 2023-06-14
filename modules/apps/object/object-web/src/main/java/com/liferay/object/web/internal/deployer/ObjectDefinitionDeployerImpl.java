@@ -136,8 +136,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			return Collections.emptyList();
 		}
 
-		InfoItemFormProvider<ObjectEntry> infoItemFormProvider =
-			new ObjectEntryInfoItemFormProvider(
+		InfoItemFormProvider<com.liferay.object.rest.dto.v1_0.ObjectEntry>
+			infoItemFormProvider = new ObjectEntryInfoItemFormProvider(
 				_displayPageInfoItemFieldSetProvider, objectDefinition,
 				_infoItemFieldReaderFieldSetProvider,
 				_listTypeEntryLocalService, _objectActionLocalService,
@@ -201,7 +201,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				InfoItemCreator.class,
 				new ObjectEntryInfoItemCreator(
 					_groupLocalService, infoItemFormProvider, objectDefinition,
-					_objectEntryService, _objectScopeProviderRegistry),
+					_objectEntryManagerRegistry, _objectScopeProviderRegistry),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"company.id", objectDefinition.getCompanyId()
 				).put(

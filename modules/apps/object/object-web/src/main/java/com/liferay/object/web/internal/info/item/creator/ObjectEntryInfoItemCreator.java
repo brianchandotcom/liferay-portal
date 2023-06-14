@@ -20,6 +20,7 @@ import com.liferay.info.exception.InfoFormValidationException;
 import com.liferay.info.exception.NoSuchFormVariationException;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
+import com.liferay.info.field.type.DateInfoFieldType;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.creator.InfoItemCreator;
@@ -28,27 +29,30 @@ import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.exception.ObjectEntryValuesException;
 import com.liferay.object.exception.ObjectValidationRuleEngineException;
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
+import com.liferay.object.rest.dto.v1_0.ObjectEntry;
+import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
+import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
-import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.object.service.ObjectFieldSettingLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.ModelListenerException;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.vulcan.util.GroupUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 
-import java.io.Serializable;
+import java.text.Format;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -63,13 +67,13 @@ public class ObjectEntryInfoItemCreator
 		GroupLocalService groupLocalService,
 		InfoItemFormProvider<ObjectEntry> infoItemFormProvider,
 		ObjectDefinition objectDefinition,
-		ObjectEntryService objectEntryService,
+		ObjectEntryManagerRegistry objectEntryManagerRegistry,
 		ObjectScopeProviderRegistry objectScopeProviderRegistry) {
 
 		_groupLocalService = groupLocalService;
 		_infoItemFormProvider = infoItemFormProvider;
 		_objectDefinition = objectDefinition;
-		_objectEntryService = objectEntryService;
+		_objectEntryManagerRegistry = objectEntryManagerRegistry;
 		_objectScopeProviderRegistry = objectScopeProviderRegistry;
 	}
 
@@ -79,25 +83,26 @@ public class ObjectEntryInfoItemCreator
 		throws InfoFormException {
 
 		try {
+			ObjectEntryManager objectEntryManager =
+				_objectEntryManagerRegistry.getObjectEntryManager(
+					_objectDefinition.getStorageType());
+
 			ServiceContext serviceContext =
 				ServiceContextThreadLocal.getServiceContext();
 
-			Map<String, Serializable> values = new HashMap<>();
+			ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
-			for (InfoFieldValue<Object> infoFieldValue :
-					infoItemFieldValues.getInfoFieldValues()) {
-
-				InfoField<?> infoField = infoFieldValue.getInfoField();
-
-				values.put(
-					infoField.getName(),
-					(Serializable)infoFieldValue.getValue());
-			}
-
-			return _objectEntryService.addObjectEntry(
-				_getGroupId(_objectDefinition, String.valueOf(groupId)),
-				_objectDefinition.getObjectDefinitionId(), values,
-				serviceContext);
+			return objectEntryManager.addObjectEntry(
+				new DefaultDTOConverterContext(
+					false, null, null, null, null, themeDisplay.getLocale(),
+					null, themeDisplay.getUser()),
+				_objectDefinition,
+				new ObjectEntry() {
+					{
+						properties = _toProperties(infoItemFieldValues);
+					}
+				},
+				_getScopeKey(groupId));
 		}
 		catch (ModelListenerException modelListenerException) {
 			Throwable throwable = modelListenerException.getCause();
@@ -228,9 +233,9 @@ public class ObjectEntryInfoItemCreator
 			throw new InfoFormValidationException.RequiredInfoField(
 				infoFieldUniqueId);
 		}
-		catch (PortalException portalException) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
+				_log.debug(exception);
 			}
 
 			throw new InfoFormException();
@@ -275,32 +280,6 @@ public class ObjectEntryInfoItemCreator
 		return objectFieldSetting.getValue();
 	}
 
-	private long _getGroupId(
-		ObjectDefinition objectDefinition, String siteKey) {
-
-		ObjectScopeProvider objectScopeProvider =
-			_objectScopeProviderRegistry.getObjectScopeProvider(
-				objectDefinition.getScope());
-
-		if (!objectScopeProvider.isGroupAware()) {
-			return 0;
-		}
-
-		long groupId = 0;
-
-		if (Objects.equals(
-				ObjectDefinitionConstants.SCOPE_SITE,
-				objectDefinition.getScope())) {
-
-			groupId = GetterUtil.getLong(
-				GroupUtil.getGroupId(
-					objectDefinition.getCompanyId(), siteKey,
-					_groupLocalService));
-		}
-
-		return groupId;
-	}
-
 	private String _getInfoFieldUniqueId(long groupId, String objectFieldName) {
 		try {
 			InfoForm infoForm = _infoItemFormProvider.getInfoForm(
@@ -322,13 +301,60 @@ public class ObjectEntryInfoItemCreator
 		return null;
 	}
 
+	private String _getScopeKey(long groupId) {
+		ObjectScopeProvider objectScopeProvider =
+			_objectScopeProviderRegistry.getObjectScopeProvider(
+				_objectDefinition.getScope());
+
+		if (!objectScopeProvider.isGroupAware()) {
+			return null;
+		}
+
+		Group group = _groupLocalService.fetchGroup(groupId);
+
+		if (group == null) {
+			return null;
+		}
+
+		return group.getGroupKey();
+	}
+
+	private Map<String, Object> _toProperties(
+		InfoItemFieldValues infoItemFieldValues) {
+
+		Map<String, Object> properties = new HashMap<>();
+
+		for (InfoFieldValue<Object> infoFieldValue :
+				infoItemFieldValues.getInfoFieldValues()) {
+
+			InfoField<?> infoField = infoFieldValue.getInfoField();
+
+			Object value = infoFieldValue.getValue();
+
+			if (Objects.equals(
+					DateInfoFieldType.INSTANCE, infoField.getInfoFieldType()) &&
+				(value instanceof Date)) {
+
+				Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(
+					"yyyy-MM-dd");
+
+				properties.put(infoField.getName(), format.format(value));
+			}
+			else {
+				properties.put(infoField.getName(), value);
+			}
+		}
+
+		return properties;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectEntryInfoItemCreator.class);
 
 	private final GroupLocalService _groupLocalService;
 	private final InfoItemFormProvider<ObjectEntry> _infoItemFormProvider;
 	private final ObjectDefinition _objectDefinition;
-	private final ObjectEntryService _objectEntryService;
+	private final ObjectEntryManagerRegistry _objectEntryManagerRegistry;
 	private final ObjectScopeProviderRegistry _objectScopeProviderRegistry;
 
 }

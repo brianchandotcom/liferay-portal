@@ -15,10 +15,12 @@
 package com.liferay.portal.vulcan.util;
 
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.lang.reflect.Field;
@@ -56,6 +58,28 @@ public class UriInfoUtil {
 		}
 
 		return uriBuilder;
+	}
+
+	public static UriBuilder getBaseUriBuilder(
+		String applicationPath, UriInfo uriInfo) {
+
+		String baseURIString = getBasePath(uriInfo);
+
+		if (baseURIString.endsWith(StringPool.FORWARD_SLASH)) {
+			baseURIString = baseURIString.substring(
+				0, baseURIString.length() - 1);
+		}
+
+		baseURIString = baseURIString.substring(
+			0, baseURIString.lastIndexOf("/") + 1);
+
+		if (baseURIString.endsWith("/c/")) {
+			baseURIString = StringUtil.removeLast(baseURIString, "c/");
+		}
+
+		baseURIString = baseURIString + applicationPath;
+
+		return UriBuilder.fromPath(baseURIString);
 	}
 
 	public static UriBuilder getBaseUriBuilder(UriInfo uriInfo) {

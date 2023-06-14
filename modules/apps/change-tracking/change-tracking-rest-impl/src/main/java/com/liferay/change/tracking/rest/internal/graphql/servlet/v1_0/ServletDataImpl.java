@@ -18,8 +18,10 @@ import com.liferay.change.tracking.rest.internal.graphql.mutation.v1_0.Mutation;
 import com.liferay.change.tracking.rest.internal.graphql.query.v1_0.Query;
 import com.liferay.change.tracking.rest.internal.resource.v1_0.CTCollectionResourceImpl;
 import com.liferay.change.tracking.rest.internal.resource.v1_0.CTEntryResourceImpl;
+import com.liferay.change.tracking.rest.internal.resource.v1_0.CTProcessResourceImpl;
 import com.liferay.change.tracking.rest.resource.v1_0.CTCollectionResource;
 import com.liferay.change.tracking.rest.resource.v1_0.CTEntryResource;
+import com.liferay.change.tracking.rest.resource.v1_0.CTProcessResource;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 
@@ -47,11 +49,15 @@ public class ServletDataImpl implements ServletData {
 	public void activate(BundleContext bundleContext) {
 		Mutation.setCTCollectionResourceComponentServiceObjects(
 			_ctCollectionResourceComponentServiceObjects);
+		Mutation.setCTProcessResourceComponentServiceObjects(
+			_ctProcessResourceComponentServiceObjects);
 
 		Query.setCTCollectionResourceComponentServiceObjects(
 			_ctCollectionResourceComponentServiceObjects);
 		Query.setCTEntryResourceComponentServiceObjects(
 			_ctEntryResourceComponentServiceObjects);
+		Query.setCTProcessResourceComponentServiceObjects(
+			_ctProcessResourceComponentServiceObjects);
 	}
 
 	public String getApplicationName() {
@@ -142,6 +148,16 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							CTCollectionResourceImpl.class,
 							"postCTCollectionSchedulePublish"));
+					put(
+						"mutation#createCTProcessesPageExportBatch",
+						new ObjectValuePair<>(
+							CTProcessResourceImpl.class,
+							"postCTProcessesPageExportBatch"));
+					put(
+						"mutation#createCTProcessRevert",
+						new ObjectValuePair<>(
+							CTProcessResourceImpl.class,
+							"postCTProcessRevert"));
 
 					put(
 						"query#cTCollections",
@@ -161,6 +177,14 @@ public class ServletDataImpl implements ServletData {
 						"query#cTEntry",
 						new ObjectValuePair<>(
 							CTEntryResourceImpl.class, "getCTEntry"));
+					put(
+						"query#cTProcesses",
+						new ObjectValuePair<>(
+							CTProcessResourceImpl.class, "getCTProcessesPage"));
+					put(
+						"query#cTProcess",
+						new ObjectValuePair<>(
+							CTProcessResourceImpl.class, "getCTProcess"));
 
 					put(
 						"query#CTEntry.cTCollection",
@@ -177,6 +201,10 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<CTCollectionResource>
 		_ctCollectionResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<CTProcessResource>
+		_ctProcessResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<CTEntryResource>

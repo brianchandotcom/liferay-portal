@@ -16,9 +16,11 @@ package com.liferay.change.tracking.rest.internal.graphql.mutation.v1_0;
 
 import com.liferay.change.tracking.rest.dto.v1_0.CTCollection;
 import com.liferay.change.tracking.rest.resource.v1_0.CTCollectionResource;
+import com.liferay.change.tracking.rest.resource.v1_0.CTProcessResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
@@ -53,6 +55,14 @@ public class Mutation {
 
 		_ctCollectionResourceComponentServiceObjects =
 			ctCollectionResourceComponentServiceObjects;
+	}
+
+	public static void setCTProcessResourceComponentServiceObjects(
+		ComponentServiceObjects<CTProcessResource>
+			ctProcessResourceComponentServiceObjects) {
+
+		_ctProcessResourceComponentServiceObjects =
+			ctProcessResourceComponentServiceObjects;
 	}
 
 	@GraphQLField
@@ -215,6 +225,44 @@ public class Mutation {
 		return true;
 	}
 
+	@GraphQLField
+	public Response createCTProcessesPageExportBatch(
+			@GraphQLName("status") Integer[] status,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_ctProcessResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			ctProcessResource ->
+				ctProcessResource.postCTProcessesPageExportBatch(
+					status, search,
+					_filterBiFunction.apply(ctProcessResource, filterString),
+					_sortsBiFunction.apply(ctProcessResource, sortsString),
+					callbackURL, contentType, fieldNames));
+	}
+
+	@GraphQLField
+	public boolean createCTProcessRevert(
+			@GraphQLName("ctProcessId") Long ctProcessId,
+			@GraphQLName("description") String description,
+			@GraphQLName("name") String name)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_ctProcessResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			ctProcessResource -> ctProcessResource.postCTProcessRevert(
+				ctProcessId, description, name));
+
+		return true;
+	}
+
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
 			_applyComponentServiceObjects(
 				ComponentServiceObjects<T> componentServiceObjects,
@@ -274,11 +322,33 @@ public class Mutation {
 			_vulcanBatchEngineImportTaskResource);
 	}
 
+	private void _populateResourceContext(CTProcessResource ctProcessResource)
+		throws Exception {
+
+		ctProcessResource.setContextAcceptLanguage(_acceptLanguage);
+		ctProcessResource.setContextCompany(_company);
+		ctProcessResource.setContextHttpServletRequest(_httpServletRequest);
+		ctProcessResource.setContextHttpServletResponse(_httpServletResponse);
+		ctProcessResource.setContextUriInfo(_uriInfo);
+		ctProcessResource.setContextUser(_user);
+		ctProcessResource.setGroupLocalService(_groupLocalService);
+		ctProcessResource.setRoleLocalService(_roleLocalService);
+
+		ctProcessResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
+
+		ctProcessResource.setVulcanBatchEngineImportTaskResource(
+			_vulcanBatchEngineImportTaskResource);
+	}
+
 	private static ComponentServiceObjects<CTCollectionResource>
 		_ctCollectionResourceComponentServiceObjects;
+	private static ComponentServiceObjects<CTProcessResource>
+		_ctProcessResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
 	private com.liferay.portal.kernel.model.Company _company;
+	private BiFunction<Object, String, Filter> _filterBiFunction;
 	private GroupLocalService _groupLocalService;
 	private HttpServletRequest _httpServletRequest;
 	private HttpServletResponse _httpServletResponse;

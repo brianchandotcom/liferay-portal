@@ -16,8 +16,10 @@ package com.liferay.change.tracking.rest.internal.graphql.query.v1_0;
 
 import com.liferay.change.tracking.rest.dto.v1_0.CTCollection;
 import com.liferay.change.tracking.rest.dto.v1_0.CTEntry;
+import com.liferay.change.tracking.rest.dto.v1_0.CTProcess;
 import com.liferay.change.tracking.rest.resource.v1_0.CTCollectionResource;
 import com.liferay.change.tracking.rest.resource.v1_0.CTEntryResource;
+import com.liferay.change.tracking.rest.resource.v1_0.CTProcessResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.search.Sort;
@@ -64,6 +66,14 @@ public class Query {
 
 		_ctEntryResourceComponentServiceObjects =
 			ctEntryResourceComponentServiceObjects;
+	}
+
+	public static void setCTProcessResourceComponentServiceObjects(
+		ComponentServiceObjects<CTProcessResource>
+			ctProcessResourceComponentServiceObjects) {
+
+		_ctProcessResourceComponentServiceObjects =
+			ctProcessResourceComponentServiceObjects;
 	}
 
 	/**
@@ -146,6 +156,47 @@ public class Query {
 			_ctEntryResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			ctEntryResource -> ctEntryResource.getCTEntry(ctEntryId));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cTProcesses(filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___, status: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public CTProcessPage cTProcesses(
+			@GraphQLName("status") Integer[] status,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_ctProcessResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			ctProcessResource -> new CTProcessPage(
+				ctProcessResource.getCTProcessesPage(
+					status, search,
+					_filterBiFunction.apply(ctProcessResource, filterString),
+					Pagination.of(page, pageSize),
+					_sortsBiFunction.apply(ctProcessResource, sortsString))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cTProcess(ctProcessId: ___){actions, datePublished, description, id, name, ownerName, status}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public CTProcess cTProcess(@GraphQLName("ctProcessId") Long ctProcessId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_ctProcessResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			ctProcessResource -> ctProcessResource.getCTProcess(ctProcessId));
 	}
 
 	@GraphQLTypeExtension(CTEntry.class)
@@ -267,6 +318,39 @@ public class Query {
 
 	}
 
+	@GraphQLName("CTProcessPage")
+	public class CTProcessPage {
+
+		public CTProcessPage(Page ctProcessPage) {
+			actions = ctProcessPage.getActions();
+
+			items = ctProcessPage.getItems();
+			lastPage = ctProcessPage.getLastPage();
+			page = ctProcessPage.getPage();
+			pageSize = ctProcessPage.getPageSize();
+			totalCount = ctProcessPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map<String, String>> actions;
+
+		@GraphQLField
+		protected java.util.Collection<CTProcess> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
 			_applyComponentServiceObjects(
 				ComponentServiceObjects<T> componentServiceObjects,
@@ -314,10 +398,25 @@ public class Query {
 		ctEntryResource.setRoleLocalService(_roleLocalService);
 	}
 
+	private void _populateResourceContext(CTProcessResource ctProcessResource)
+		throws Exception {
+
+		ctProcessResource.setContextAcceptLanguage(_acceptLanguage);
+		ctProcessResource.setContextCompany(_company);
+		ctProcessResource.setContextHttpServletRequest(_httpServletRequest);
+		ctProcessResource.setContextHttpServletResponse(_httpServletResponse);
+		ctProcessResource.setContextUriInfo(_uriInfo);
+		ctProcessResource.setContextUser(_user);
+		ctProcessResource.setGroupLocalService(_groupLocalService);
+		ctProcessResource.setRoleLocalService(_roleLocalService);
+	}
+
 	private static ComponentServiceObjects<CTCollectionResource>
 		_ctCollectionResourceComponentServiceObjects;
 	private static ComponentServiceObjects<CTEntryResource>
 		_ctEntryResourceComponentServiceObjects;
+	private static ComponentServiceObjects<CTProcessResource>
+		_ctProcessResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
 	private com.liferay.portal.kernel.model.Company _company;

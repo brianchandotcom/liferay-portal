@@ -42,18 +42,18 @@ public class PropertiesLanguageKeysContextCheck extends BaseFileCheck {
 			return content;
 		}
 
+		List<String> allowedSingleWordLanguageKeys = getAttributeValues(
+			_ALLOWED_SINGLE_WORD_LANGUAGE_KEYS_KEY, absolutePath);
+
+		int contextDepth = GetterUtil.getInteger(
+			getAttributeValue(_CONTEXT_DEPTH_KEY, absolutePath));
+
 		Properties properties = new Properties();
 
 		properties.load(new StringReader(content));
 
 		Enumeration<String> enumeration =
 			(Enumeration<String>)properties.propertyNames();
-
-		List<String> allowedSingleWordLanguageKeys = getAttributeValues(
-			_ALLOWED_SINGLE_WORD_LANGUAGE_KEYS_KEY, absolutePath);
-
-		int contextDepth = GetterUtil.getInteger(
-			getAttributeValue(_CONTEXT_DEPTH_KEY, absolutePath));
 
 		while (enumeration.hasMoreElements()) {
 			String key = enumeration.nextElement();

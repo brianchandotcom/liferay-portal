@@ -294,6 +294,13 @@ public class CommerceCatalogLocalServiceImpl
 	}
 
 	@Override
+	public List<CommerceCatalog> getCommerceCatalogsByAccountEntryId(
+		long accountEntryId) {
+
+		return commerceCatalogPersistence.findByAccountEntryId(accountEntryId);
+	}
+
+	@Override
 	public List<CommerceCatalog> search(long companyId) throws PortalException {
 		return search(
 			companyId, StringPool.BLANK, QueryUtil.ALL_POS, QueryUtil.ALL_POS,

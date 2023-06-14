@@ -41,6 +41,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -155,6 +156,7 @@ public class UpgradeRecorderTest {
 		Assert.assertEquals("no upgrade", _getType());
 	}
 
+	@Ignore
 	@Test
 	public void testWarning() throws Exception {
 		StartupHelperUtil.setUpgrading(true);

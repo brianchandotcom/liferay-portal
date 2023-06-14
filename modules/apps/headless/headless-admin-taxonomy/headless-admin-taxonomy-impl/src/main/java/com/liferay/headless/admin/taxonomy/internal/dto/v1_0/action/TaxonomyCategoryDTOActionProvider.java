@@ -19,6 +19,7 @@ import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.portal.vulcan.action.ActionInfo;
 import com.liferay.portal.vulcan.action.DTOActionProvider;
 import com.liferay.portal.vulcan.util.ActionUtil;
+import com.liferay.portal.vulcan.util.UriInfoUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -74,7 +75,10 @@ public class TaxonomyCategoryDTOActionProvider implements DTOActionProvider {
 					_scopeChecker, userId,
 					taxonomyCategoryDTOActionMetadataProvider.
 						getPermissionName(),
-					groupId, uriInfo));
+					groupId,
+					() -> UriInfoUtil.getBaseUriBuilder(
+						"headless-admin-taxonomy", uriInfo),
+					uriInfo));
 		}
 
 		return actions;

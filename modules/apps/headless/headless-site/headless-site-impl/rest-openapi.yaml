@@ -82,11 +82,11 @@ paths:
                         default response
             # @review
             tags: ["Site"]
-    /sites/{externalReferenceCode}:
+    /sites/by-externalReferenceCode/{externalReferenceCode}:
         put:
             description:
                 Adds or update a new site
-            operationId: putSite
+            operationId: putSiteByExternalReferenceCode
             parameters:
                 - in: path
                   name: externalReferenceCode

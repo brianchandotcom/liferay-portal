@@ -173,13 +173,13 @@ definition {
 	@priority = 4
 	test CanCancelChangesOnCancelButton {
 		task ("And add new fields") {
-			FrontendDataSetAdmin.addFields(key_fieldList = "id,label");
+			DataSetAdmin.addFields(key_fieldList = "id,label");
 		}
 
 		task ("And clicks on Edit option") {
 			Click(
 				key_fieldName = "id",
-				locator1 = "FrontendDataSetAdmin#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
 
 			MenuItem.click(menuItem = "Edit");
 		}
@@ -201,11 +201,11 @@ definition {
 		}
 
 		task ("And the changes are not applied") {
-			FrontendDataSetAdmin.assertFieldsOnTable(
+			DataSetAdmin.assertFieldsOnTable(
 				key_position = 1,
 				keyName = "id");
 
-			FrontendDataSetAdmin.assertFieldsOnTable(
+			DataSetAdmin.assertFieldsOnTable(
 				key_position = 1,
 				keyName = "default");
 		}
@@ -427,13 +427,13 @@ definition {
 	@priority = 5
 	test CanSaveChangesOnSaveButton {
 		task ("And add new fields") {
-			FrontendDataSetAdmin.addFields(key_fieldList = "id,label");
+			DataSetAdmin.addFields(key_fieldList = "id,label");
 		}
 
 		task ("And clicks on Edit option") {
 			Click(
 				key_fieldName = "id",
-				locator1 = "FrontendDataSetAdmin#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
 
 			MenuItem.click(menuItem = "Edit");
 		}
@@ -463,11 +463,11 @@ definition {
 		}
 
 		task ("And the changes are applied") {
-			FrontendDataSetAdmin.assertFieldsOnTable(
+			DataSetAdmin.assertFieldsOnTable(
 				key_position = 1,
 				keyName = "id");
 
-			FrontendDataSetAdmin.assertFieldsOnTable(
+			DataSetAdmin.assertFieldsOnTable(
 				key_position = 1,
 				keyName = "Date and Time");
 		}
@@ -544,13 +544,13 @@ definition {
 	@priority = 5
 	test CanSelectDropdownOptions {
 		task ("And add new fields") {
-			FrontendDataSetAdmin.addFields(key_fieldList = "id,label");
+			DataSetAdmin.addFields(key_fieldList = "id,label");
 		}
 
 		task ("And clicks on Edit option") {
 			Click(
 				key_fieldName = "id",
-				locator1 = "FrontendDataSetAdmin#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
 
 			MenuItem.click(menuItem = "Edit");
 		}
@@ -608,13 +608,13 @@ definition {
 	@priority = 5
 	test CanViewEditModal {
 		task ("And add new fields") {
-			FrontendDataSetAdmin.addFields(key_fieldList = "id,label");
+			DataSetAdmin.addFields(key_fieldList = "id,label");
 		}
 
 		task ("And clicks on Edit option") {
 			Click(
 				key_fieldName = "id",
-				locator1 = "FrontendDataSetAdmin#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
 
 			MenuItem.click(menuItem = "Edit");
 		}
@@ -630,13 +630,13 @@ definition {
 	@priority = 5
 	test CanViewEditOption {
 		task ("And add new fields") {
-			FrontendDataSetAdmin.addFields(key_fieldList = "id,label");
+			DataSetAdmin.addFields(key_fieldList = "id,label");
 		}
 
 		task ("When the user clicks on 3 dots icon") {
 			Click(
 				key_fieldName = "id",
-				locator1 = "FrontendDataSetAdmin#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
 		}
 
 		task ("Then the Edit option appears") {

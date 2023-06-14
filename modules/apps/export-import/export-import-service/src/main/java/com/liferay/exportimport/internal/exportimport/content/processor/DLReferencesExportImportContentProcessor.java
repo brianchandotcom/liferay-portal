@@ -356,6 +356,75 @@ public class DLReferencesExportImportContentProcessor
 		return uuid;
 	}
 
+	private boolean _isExternalUrl(
+			long groupId, String content, int beginPos, int endPos)
+		throws PortalException {
+
+		if (((beginPos == 0) && (endPos == content.length())) ||
+			content.regionMatches(
+				true, beginPos - _OFFSET_HREF_ATTRIBUTE, "href=", 0, 5) ||
+			content.regionMatches(
+				true, beginPos - _OFFSET_SRC_ATTRIBUTE, "src=", 0, 4)) {
+
+			return false;
+		}
+
+		String portalURL = _portal.getPathContext();
+
+		if (Validator.isNull(portalURL)) {
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			if ((serviceContext != null) &&
+				(serviceContext.getThemeDisplay() != null)) {
+
+				portalURL = _portal.getPortalURL(
+					serviceContext.getThemeDisplay());
+			}
+		}
+
+		Set<String> hostNames = new HashSet<>();
+
+		hostNames.add(portalURL);
+
+		Group group = _groupLocalService.getGroup(groupId);
+
+		for (VirtualHost virtualHost :
+				_virtualHostLocalService.getVirtualHosts(
+					group.getCompanyId())) {
+
+			String hostname = virtualHost.getHostname();
+
+			hostNames.add(hostname);
+			hostNames.add(Http.HTTP_WITH_SLASH + hostname);
+			hostNames.add(Http.HTTPS_WITH_SLASH + hostname);
+		}
+
+		for (String hostName : hostNames) {
+			int curBeginPos = beginPos - hostName.length();
+
+			if (curBeginPos < 0) {
+				continue;
+			}
+
+			String substring = content.substring(curBeginPos, endPos);
+
+			if (substring.startsWith(hostName) &&
+				(((curBeginPos == 0) && (endPos == content.length())) ||
+				 content.regionMatches(
+					 true, curBeginPos - _OFFSET_HREF_ATTRIBUTE, "href=", 0,
+					 5) ||
+				 content.regionMatches(
+					 true, curBeginPos - _OFFSET_SRC_ATTRIBUTE, "src=", 0,
+					 4))) {
+
+				return false;
+			}
+		}
+
+		return true;
+	}
+
 	private boolean _isLegacyURL(String content, int beginPos) {
 		if (content.startsWith("/documents/", beginPos)) {
 			return false;
@@ -750,78 +819,10 @@ public class DLReferencesExportImportContentProcessor
 			FileEntry fileEntry = _getFileEntry(dlReferenceParameters);
 
 			if (fileEntry == null) {
-				boolean absolutePortalURL = false;
+				boolean externalUrl = _isExternalUrl(
+					groupId, content, beginPos, endPos);
 
-				boolean relativePortalURL = false;
-
-				if (((beginPos == 0) && (endPos == content.length())) ||
-					content.regionMatches(
-						true, beginPos - _OFFSET_HREF_ATTRIBUTE, "href=", 0,
-						5) ||
-					content.regionMatches(
-						true, beginPos - _OFFSET_SRC_ATTRIBUTE, "src=", 0, 4)) {
-
-					relativePortalURL = true;
-				}
-
-				if (!relativePortalURL) {
-					String portalURL = pathContext;
-
-					if (Validator.isNull(portalURL)) {
-						ServiceContext serviceContext =
-							ServiceContextThreadLocal.getServiceContext();
-
-						if ((serviceContext != null) &&
-							(serviceContext.getThemeDisplay() != null)) {
-
-							portalURL = _portal.getPortalURL(
-								serviceContext.getThemeDisplay());
-						}
-					}
-
-					Set<String> hostNames = new HashSet<>();
-
-					hostNames.add(portalURL);
-
-					Group group = _groupLocalService.getGroup(groupId);
-
-					for (VirtualHost virtualHost :
-							_virtualHostLocalService.getVirtualHosts(
-								group.getCompanyId())) {
-
-						String hostname = virtualHost.getHostname();
-
-						hostNames.add(hostname);
-						hostNames.add(Http.HTTP_WITH_SLASH + hostname);
-						hostNames.add(Http.HTTPS_WITH_SLASH + hostname);
-					}
-
-					for (String hostName : hostNames) {
-						int curBeginPos = beginPos - hostName.length();
-
-						if (curBeginPos < 0) {
-							continue;
-						}
-
-						String substring = content.substring(
-							curBeginPos, endPos);
-
-						if (substring.startsWith(hostName) &&
-							(((curBeginPos == 0) &&
-							  (endPos == content.length())) ||
-							 content.regionMatches(
-								 true, curBeginPos - _OFFSET_HREF_ATTRIBUTE,
-								 "href=", 0, 5) ||
-							 content.regionMatches(
-								 true, curBeginPos - _OFFSET_SRC_ATTRIBUTE,
-								 "src=", 0, 4))) {
-
-							absolutePortalURL = true;
-						}
-					}
-				}
-
-				if (absolutePortalURL || relativePortalURL) {
+				if (!externalUrl) {
 					ExportImportContentValidationException
 						exportImportContentValidationException =
 							new ExportImportContentValidationException(

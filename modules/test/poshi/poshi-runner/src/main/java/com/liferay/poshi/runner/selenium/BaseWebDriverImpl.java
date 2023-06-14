@@ -108,6 +108,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.WrapsDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -1007,6 +1008,15 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	@Override
 	public void echo(String message) {
 		LiferaySeleniumUtil.echo(message);
+	}
+
+	@Override
+	public void executeCDPCommand(
+		String commandName, Map<String, Object> commandParameters) {
+
+		ChromeDriver chromeDriver = (ChromeDriver)_webDriver;
+
+		chromeDriver.executeCdpCommand(commandName, commandParameters);
 	}
 
 	@Override

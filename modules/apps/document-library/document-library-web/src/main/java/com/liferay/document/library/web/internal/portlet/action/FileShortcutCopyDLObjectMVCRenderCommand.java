@@ -15,10 +15,9 @@
 package com.liferay.document.library.web.internal.portlet.action;
 
 import com.liferay.document.library.constants.DLPortletKeys;
-import com.liferay.document.library.web.internal.helper.DLTrashHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -34,39 +33,31 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY,
 		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
 		"javax.portlet.name=" + DLPortletKeys.MEDIA_GALLERY_DISPLAY,
-		"mvc.command.name=/document_library/folder_copy_entry"
+		"mvc.command.name=/document_library/file_shortcut_copy_dl_object"
 	},
 	service = MVCRenderCommand.class
 )
-public class FolderCopyEntryMVCRenderCommand
-	extends BaseFolderMVCRenderCommand {
+public class FileShortcutCopyDLObjectMVCRenderCommand
+	extends BaseFileShortcutMVCRenderCommand {
 
 	@Override
 	protected void checkPermissions(
-			PermissionChecker permissionChecker, Folder folder)
+			PermissionChecker permissionChecker, FileShortcut fileShortcut)
 		throws PortalException {
 
-		_folderModelResourcePermission.check(
-			permissionChecker, folder, ActionKeys.VIEW);
-	}
-
-	@Override
-	protected DLTrashHelper getDLTrashHelper() {
-		return _dlTrashHelper;
+		_fileShortcutModelResourcePermission.check(
+			permissionChecker, fileShortcut, ActionKeys.VIEW);
 	}
 
 	@Override
 	protected String getPath() {
-		return "/document_library/folder_copy_entry.jsp";
+		return "/document_library/file_entry_copy_dl_object.jsp";
 	}
 
-	@Reference
-	private DLTrashHelper _dlTrashHelper;
-
 	@Reference(
-		target = "(model.class.name=com.liferay.portal.kernel.repository.model.Folder)"
+		target = "(model.class.name=com.liferay.portal.kernel.repository.model.FileShortcut)"
 	)
-	private volatile ModelResourcePermission<Folder>
-		_folderModelResourcePermission;
+	private volatile ModelResourcePermission<FileShortcut>
+		_fileShortcutModelResourcePermission;
 
 }

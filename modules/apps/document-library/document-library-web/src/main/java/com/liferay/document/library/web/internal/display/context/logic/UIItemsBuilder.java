@@ -255,10 +255,10 @@ public class UIItemsBuilder {
 		String mvcRenderCommand;
 
 		if (_fileShortcut != null) {
-			mvcRenderCommand = "/document_library/file_shortcut_copy_entry";
+			mvcRenderCommand = "/document_library/file_shortcut_copy_dl_object";
 		}
 		else {
-			mvcRenderCommand = "/document_library/file_entry_copy_entry";
+			mvcRenderCommand = "/document_library/file_entry_copy_dl_object";
 		}
 
 		return DropdownItemBuilder.setHref(

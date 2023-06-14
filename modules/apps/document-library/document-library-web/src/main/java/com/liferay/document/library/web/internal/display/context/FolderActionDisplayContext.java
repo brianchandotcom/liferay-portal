@@ -365,7 +365,7 @@ public class FolderActionDisplayContext {
 		return PortletURLBuilder.createRenderURL(
 			_dlRequestHelper.getLiferayPortletResponse()
 		).setMVCRenderCommandName(
-			"/document_library/folder_copy_entry"
+			"/document_library/folder_copy_dl_object"
 		).setRedirect(
 			_dlRequestHelper.getCurrentURL()
 		).setParameter(

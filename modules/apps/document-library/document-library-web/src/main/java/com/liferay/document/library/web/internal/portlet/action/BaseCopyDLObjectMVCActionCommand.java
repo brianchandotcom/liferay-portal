@@ -36,10 +36,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Adolfo Pérez
  */
-public abstract class BaseCopyEntryMVCActionCommand
+public abstract class BaseCopyDLObjectMVCActionCommand
 	extends BaseMVCActionCommand {
 
-	protected abstract void doCopyEntry(ActionRequest actionRequest)
+	protected abstract void doCopyDLObject(ActionRequest actionRequest)
 		throws PortalException;
 
 	@Override
@@ -48,7 +48,7 @@ public abstract class BaseCopyEntryMVCActionCommand
 		throws PortalException {
 
 		try {
-			_copyEntry(actionRequest, actionResponse);
+			_copyDLObject(actionRequest, actionResponse);
 		}
 		catch (IOException ioException) {
 			_log.error(ioException);
@@ -80,14 +80,14 @@ public abstract class BaseCopyEntryMVCActionCommand
 		}
 	}
 
-	private void _copyEntry(
+	private void _copyDLObject(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws IOException {
 
 		try {
 			_checkDestinationRepositoryId(actionRequest);
 
-			doCopyEntry(actionRequest);
+			doCopyDLObject(actionRequest);
 
 			JSONPortletResponseUtil.writeJSON(
 				actionRequest, actionResponse, jsonFactory.createJSONObject());
@@ -105,6 +105,6 @@ public abstract class BaseCopyEntryMVCActionCommand
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BaseCopyEntryMVCActionCommand.class);
+		BaseCopyDLObjectMVCActionCommand.class);
 
 }

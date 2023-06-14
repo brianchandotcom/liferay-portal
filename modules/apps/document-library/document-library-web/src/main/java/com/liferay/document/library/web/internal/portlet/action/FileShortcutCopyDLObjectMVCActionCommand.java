@@ -15,7 +15,7 @@
 package com.liferay.document.library.web.internal.portlet.action;
 
 import com.liferay.document.library.constants.DLPortletKeys;
-import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.document.library.kernel.model.DLFileShortcut;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -35,31 +35,28 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY,
 		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
 		"javax.portlet.name=" + DLPortletKeys.MEDIA_GALLERY_DISPLAY,
-		"mvc.command.name=/document_library/folder_copy_entry"
+		"mvc.command.name=/document_library/file_shortcut_copy_dl_object"
 	},
 	service = MVCActionCommand.class
 )
-public class FolderCopyEntryMVCActionCommand
-	extends BaseCopyEntryMVCActionCommand {
+public class FileShortcutCopyDLObjectMVCActionCommand
+	extends BaseCopyDLObjectMVCActionCommand {
 
 	@Override
-	protected void doCopyEntry(ActionRequest actionRequest)
+	protected void doCopyDLObject(ActionRequest actionRequest)
 		throws PortalException {
 
-		long sourceRepositoryId = ParamUtil.getLong(
-			actionRequest, "sourceRepositoryId");
-		long sourceFolderId = ParamUtil.getLong(
-			actionRequest, "sourceFolderId");
+		long fileShortcutId = ParamUtil.getLong(
+			actionRequest, "fileShortcutId");
+		long destinationFolderId = ParamUtil.getLong(
+			actionRequest, "destinationFolderId");
 		long destinationRepositoryId = ParamUtil.getLong(
 			actionRequest, "destinationRepositoryId");
-		long destinationParentFolderId = ParamUtil.getLong(
-			actionRequest, "destinationParentFolderId");
 
-		_dlAppService.copyFolder(
-			sourceRepositoryId, sourceFolderId, destinationRepositoryId,
-			destinationParentFolderId,
+		_dlAppService.copyFileShortcut(
+			fileShortcutId, destinationFolderId, destinationRepositoryId,
 			ServiceContextFactory.getInstance(
-				DLFolder.class.getName(), actionRequest));
+				DLFileShortcut.class.getName(), actionRequest));
 	}
 
 	@Reference

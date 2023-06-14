@@ -55,7 +55,7 @@ public class DLCopyFolderDisplayContext {
 		return PortletURLBuilder.createActionURL(
 			_liferayPortletResponse
 		).setActionName(
-			"/document_library/folder_copy_entry"
+			"/document_library/folder_copy_dl_object"
 		).buildString();
 	}
 

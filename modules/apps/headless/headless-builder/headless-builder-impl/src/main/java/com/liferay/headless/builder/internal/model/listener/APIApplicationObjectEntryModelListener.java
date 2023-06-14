@@ -36,12 +36,16 @@ import org.osgi.service.component.annotations.Reference;
  * @author Sergio Jiménez del Coso
  */
 @Component(service = ModelListener.class)
-public class APIApplicationModelListener
+public class APIApplicationObjectEntryModelListener
 	extends BaseModelListener<ObjectEntry> {
 
 	@Override
 	public void onBeforeCreate(ObjectEntry objectEntry)
 		throws ModelListenerException {
+
+		if (!_validObjectDefinition(objectEntry)) {
+			return;
+		}
 
 		_validate(objectEntry);
 	}
@@ -51,6 +55,10 @@ public class APIApplicationModelListener
 			ObjectEntry originalObjectEntry, ObjectEntry objectEntry)
 		throws ModelListenerException {
 
+		if (!_validObjectDefinition(objectEntry)) {
+			return;
+		}
+
 		_validate(objectEntry);
 	}
 
@@ -59,8 +67,7 @@ public class APIApplicationModelListener
 			Map<String, Serializable> objectEntryValues =
 				objectEntry.getValues();
 
-			if (_validObjectDefinition(objectEntry) &&
-				!HeadlessBuilderValidator.validatePath(
+			if (!HeadlessBuilderValidator.validatePath(
 					(String)objectEntryValues.get(
 						HeadlessBuilderConstants.
 							API_APPLICATION_BASE_URL_FIELD_NAME))) {

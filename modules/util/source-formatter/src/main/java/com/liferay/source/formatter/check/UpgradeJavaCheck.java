@@ -71,19 +71,16 @@ public class UpgradeJavaCheck extends BaseFileCheck {
 				StringBundler.concat(
 					"import ", newImportName, StringPool.SEMICOLON));
 
-			String className = SourceFormatterUtil.getSimpleName(
-				importName);
+			String className = SourceFormatterUtil.getSimpleName(importName);
 			String newClassName = SourceFormatterUtil.getSimpleName(
 				newImportName);
 
 			if (!className.equals(newClassName)) {
 				variables.add(className);
-				variables.add(
-					StringUtil.lowerCaseFirstLetter(className));
+				variables.add(StringUtil.lowerCaseFirstLetter(className));
 
 				newVariables.add(newClassName);
-				newVariables.add(
-					StringUtil.lowerCaseFirstLetter(newClassName));
+				newVariables.add(StringUtil.lowerCaseFirstLetter(newClassName));
 			}
 		}
 

@@ -15,7 +15,6 @@
 package com.liferay.headless.builder.test.validation.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.headless.builder.internal.constants.HeadlessBuilderConstants;
 import com.liferay.headless.builder.test.util.APIApplicationTestUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
@@ -55,8 +54,7 @@ public class HeadlessBuilderObjectValidationTest {
 		_apiApplicationObjectDefinition =
 			_objectDefinitionLocalService.
 				getObjectDefinitionByExternalReferenceCode(
-					HeadlessBuilderConstants.API_APPLICATION_ERC,
-					CompanyThreadLocal.getCompanyId());
+					"MSOD_API_APPLICATION", CompanyThreadLocal.getCompanyId());
 	}
 
 	@Test(expected = ModelListenerException.class)

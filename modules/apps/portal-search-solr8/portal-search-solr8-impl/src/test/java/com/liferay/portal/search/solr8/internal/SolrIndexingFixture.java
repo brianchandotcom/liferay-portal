@@ -329,7 +329,6 @@ public class SolrIndexingFixture implements IndexingFixture {
 			new SolrSpellCheckIndexWriter() {
 				{
 					digester = createDigester();
-					nGramHolderBuilder = new NGramHolderBuilderImpl();
 
 					activate(_properties);
 				}

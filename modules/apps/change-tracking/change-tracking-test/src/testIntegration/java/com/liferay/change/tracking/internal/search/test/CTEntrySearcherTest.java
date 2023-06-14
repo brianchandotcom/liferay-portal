@@ -29,6 +29,7 @@ import com.liferay.journal.test.util.JournalFolderFixture;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -41,6 +42,7 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -61,6 +63,8 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
+
+import org.apache.commons.lang3.StringUtils;
 
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -340,30 +344,41 @@ public class CTEntrySearcherTest {
 	public void testSortByUserName() throws Exception {
 		JournalFolder journalFolder1 = null;
 
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					_ctCollection.getCtCollectionId())) {
-
-			journalFolder1 = _journalFolderFixture.addFolder(
-				_group.getGroupId(), RandomTestUtil.randomString());
-		}
-
-		User user = UserTestUtil.addUser(
-			"ZZ", LocaleUtil.getDefault(), "ZZ", "ZZ", null);
-
 		JournalFolder journalFolder2 = null;
 
 		String originalName = PrincipalThreadLocal.getName();
 
+		User user1 = UserTestUtil.addUser(
+			"AA", LocaleUtil.getDefault(), "AA", "AA", null);
+
+		User user2 = UserTestUtil.addUser(
+			"BB", LocaleUtil.getDefault(), "BB", "BB", null);
+
 		try {
-			PrincipalThreadLocal.setName(user.getUserId());
+			PrincipalThreadLocal.setName(user1.getUserId());
+
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+						_ctCollection.getCtCollectionId())) {
+
+				journalFolder1 = _journalFolderFixture.addFolder(
+					JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+					RandomTestUtil.randomString(),
+					ServiceContextTestUtil.getServiceContext(
+						_group.getGroupId(), user1.getUserId()));
+			}
+
+			PrincipalThreadLocal.setName(user2.getUserId());
 
 			try (SafeCloseable safeCloseable =
 					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 						_ctCollection.getCtCollectionId())) {
 
 				journalFolder2 = _journalFolderFixture.addFolder(
-					_group.getGroupId(), RandomTestUtil.randomString());
+					JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+					RandomTestUtil.randomString(),
+					ServiceContextTestUtil.getServiceContext(
+						_group.getGroupId(), user2.getUserId()));
 			}
 		}
 		finally {

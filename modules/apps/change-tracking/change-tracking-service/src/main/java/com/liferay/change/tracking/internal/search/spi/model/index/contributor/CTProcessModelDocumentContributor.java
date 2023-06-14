@@ -19,8 +19,10 @@ import com.liferay.change.tracking.model.CTProcess;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.portal.background.task.model.BackgroundTask;
 import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 
 import org.osgi.service.component.annotations.Component;
@@ -40,6 +42,14 @@ public class CTProcessModelDocumentContributor
 	public void contribute(Document document, CTProcess ctProcess) {
 		document.addDate(Field.CREATE_DATE, ctProcess.getCreateDate());
 		document.addKeyword(Field.TYPE, ctProcess.getType());
+
+		User user = _userLocalService.fetchUser(ctProcess.getUserId());
+
+		if (user != null) {
+			document.addKeyword(Field.USER_ID, user.getUserId());
+			document.addText(Field.USER_NAME, user.getFullName());
+		}
+
 		document.addKeyword(Field.USER_ID, ctProcess.getUserId());
 
 		BackgroundTask backgroundTask =
@@ -64,5 +74,8 @@ public class CTProcessModelDocumentContributor
 
 	@Reference
 	private CTCollectionLocalService _ctCollectionLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

@@ -97,7 +97,7 @@ public class SegmentsEntryReindexMessageListener extends BaseMessageListener {
 		return SetUtil.fromArray(classPKs);
 	}
 
-	private Set<Long> _getOldClassPKs(
+	private Set<Long> _getOldIndexClassPKs(
 			long companyId, long segmentsEntryId, Indexer<Object> indexer)
 		throws SearchException {
 
@@ -149,7 +149,8 @@ public class SegmentsEntryReindexMessageListener extends BaseMessageListener {
 		throws PortalException {
 
 		Set<Long> classPKs = SetUtil.symmetricDifference(
-			_getOldClassPKs(companyId, segmentsEntryId, indexer), newClassPKs);
+			_getOldIndexClassPKs(companyId, segmentsEntryId, indexer),
+			newClassPKs);
 
 		for (long classPK : classPKs) {
 			indexer.reindex(type, classPK);

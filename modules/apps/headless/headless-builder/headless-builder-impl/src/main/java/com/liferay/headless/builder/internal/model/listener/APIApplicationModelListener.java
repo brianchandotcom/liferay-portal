@@ -60,7 +60,7 @@ public class APIApplicationModelListener
 				objectEntry.getValues();
 
 			if (_validObjectDefinition(objectEntry) &&
-				!_headlessBuilderValidator.validatePath(
+				!HeadlessBuilderValidator.validatePath(
 					(String)objectEntryValues.get(
 						HeadlessBuilderConstants.
 							API_APPLICATION_BASE_URL_FIELD_NAME))) {
@@ -89,9 +89,6 @@ public class APIApplicationModelListener
 
 		return false;
 	}
-
-	@Reference
-	private HeadlessBuilderValidator _headlessBuilderValidator;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

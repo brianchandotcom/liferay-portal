@@ -14,11 +14,21 @@
 
 package com.liferay.headless.builder.internal.validator;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * @author Sergio Jiménez del Coso
  */
-public interface HeadlessBuilderValidator {
+public class HeadlessBuilderValidator {
 
-	public boolean validatePath(String path) throws Exception;
+	public static boolean validatePath(String path) {
+		Matcher matcher = _baseURLPattern.matcher(path);
+
+		return matcher.matches();
+	}
+
+	private static final Pattern _baseURLPattern = Pattern.compile(
+		"[a-zA-Z0-9-]{1,255}");
 
 }

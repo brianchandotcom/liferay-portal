@@ -35,7 +35,11 @@
 	<td>//*[contains(@class,'customer-portal')]//*[contains(text(), '${key_title}')]</td>
 	<td></td>
 </tr>
-
+<tr>
+	<td>GUIDE_VIDEOS_BUTTON</td>
+	<td>//div[contains(@class,"text-container")]//button[normalize-space()= 'Watch Tutorial Videos']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

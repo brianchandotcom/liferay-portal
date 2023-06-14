@@ -14,6 +14,7 @@
 
 package com.liferay.site.initializer.extender.internal.test;
 
+import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.account.service.AccountGroupRelLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetCategory;
@@ -453,6 +454,17 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals("Test Account Group 4", accountGroup.getName());
 
 		_assertAccountGroupAssignments(accountGroup, 0);
+	}
+
+	private void _assertAccountOrganizationRelsCount(
+			Organization organization, int organizationAssignmentsCount)
+		throws Exception {
+
+		Assert.assertEquals(
+			organizationAssignmentsCount,
+			_accountEntryOrganizationRelLocalService.
+				getAccountEntryOrganizationRelsByOrganizationIdCount(
+					GetterUtil.getLong(organization.getId())));
 	}
 
 	private void _assertAccounts1() throws Exception {
@@ -2154,26 +2166,32 @@ public class BundleSiteInitializerTest {
 				_serviceContext.fetchUser()
 			).build();
 
-		Organization organization1 =
+		Organization organization =
 			organizationResource.getOrganizationByExternalReferenceCode(
 				"TESTORGANIZATION1");
 
-		Assert.assertNotNull(organization1);
-		Assert.assertEquals("Test Organization 1", organization1.getName());
+		Assert.assertNotNull(organization);
+		Assert.assertEquals("Test Organization 1", organization.getName());
 
-		Organization organization2 =
+		_assertAccountOrganizationRelsCount(organization, 1);
+
+		organization =
 			organizationResource.getOrganizationByExternalReferenceCode(
 				"TESTORGANIZATION2");
 
-		Assert.assertNotNull(organization2);
-		Assert.assertEquals("Test Organization 2", organization2.getName());
+		Assert.assertNotNull(organization);
+		Assert.assertEquals("Test Organization 2", organization.getName());
 
-		Organization organization3 =
+		_assertAccountOrganizationRelsCount(organization, 1);
+
+		organization =
 			organizationResource.getOrganizationByExternalReferenceCode(
 				"TESTORGANIZATION3");
 
-		Assert.assertNotNull(organization3);
-		Assert.assertEquals("Test Organization 3", organization3.getName());
+		Assert.assertNotNull(organization);
+		Assert.assertEquals("Test Organization 3", organization.getName());
+
+		_assertAccountOrganizationRelsCount(organization, 0);
 	}
 
 	private void _assertOrganizations2() throws Exception {
@@ -2185,34 +2203,42 @@ public class BundleSiteInitializerTest {
 				_serviceContext.fetchUser()
 			).build();
 
-		Organization organization1 =
+		Organization organization =
 			organizationResource.getOrganizationByExternalReferenceCode(
 				"TESTORGANIZATION1");
 
-		Assert.assertNotNull(organization1);
-		Assert.assertEquals("Test Organization 1", organization1.getName());
+		Assert.assertNotNull(organization);
+		Assert.assertEquals("Test Organization 1", organization.getName());
 
-		Organization organization2 =
+		_assertAccountOrganizationRelsCount(organization, 1);
+
+		organization =
 			organizationResource.getOrganizationByExternalReferenceCode(
 				"TESTORGANIZATION2");
 
-		Assert.assertNotNull(organization2);
+		Assert.assertNotNull(organization);
 		Assert.assertEquals(
-			"Test Organization 2 Update", organization2.getName());
+			"Test Organization 2 Update", organization.getName());
 
-		Organization organization3 =
+		_assertAccountOrganizationRelsCount(organization, 2);
+
+		organization =
 			organizationResource.getOrganizationByExternalReferenceCode(
 				"TESTORGANIZATION3");
 
-		Assert.assertNotNull(organization3);
-		Assert.assertEquals("Test Organization 3", organization3.getName());
+		Assert.assertNotNull(organization);
+		Assert.assertEquals("Test Organization 3", organization.getName());
 
-		Organization organization4 =
+		_assertAccountOrganizationRelsCount(organization, 1);
+
+		organization =
 			organizationResource.getOrganizationByExternalReferenceCode(
 				"TESTORGANIZATION4");
 
-		Assert.assertNotNull(organization4);
-		Assert.assertEquals("Test Organization 4", organization4.getName());
+		Assert.assertNotNull(organization);
+		Assert.assertEquals("Test Organization 4", organization.getName());
+
+		_assertAccountOrganizationRelsCount(organization, 0);
 	}
 
 	private void _assertPermissions() throws Exception {
@@ -3394,6 +3420,10 @@ public class BundleSiteInitializerTest {
 
 	@Inject
 	private static PLOEntryLocalService _ploEntryLocalService;
+
+	@Inject
+	private AccountEntryOrganizationRelLocalService
+		_accountEntryOrganizationRelLocalService;
 
 	@Inject
 	private AccountGroupRelLocalService _accountGroupRelLocalService;

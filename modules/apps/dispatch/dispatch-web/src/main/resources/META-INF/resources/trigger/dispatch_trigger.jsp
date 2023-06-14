@@ -23,9 +23,13 @@ Date timeZoneEndDate = (dispatchTrigger.getTimeZoneEndDate() == null) ? new Date
 
 Date timeZoneStartDate = (dispatchTrigger.getTimeZoneStartDate() == null) ? new Date() : dispatchTrigger.getTimeZoneStartDate();
 
-Calendar endDateCalendar = CalendarFactoryUtil.getCalendar(timeZoneEndDate.getTime());
+Calendar endDateCalendar = CalendarFactoryUtil.getCalendar();
 
-Calendar startDateCalendar = CalendarFactoryUtil.getCalendar(timeZoneStartDate.getTime());
+endDateCalendar.setTime(timeZoneEndDate);
+
+Calendar startDateCalendar = CalendarFactoryUtil.getCalendar();
+
+startDateCalendar.setTime(timeZoneStartDate);
 
 int endDateAmPm = endDateCalendar.get(Calendar.AM_PM);
 int endDateDay = endDateCalendar.get(Calendar.DATE);

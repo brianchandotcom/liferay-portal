@@ -75,18 +75,10 @@ public class JSUnitModulesBatchTestClassGroup
 
 		List<PathMatcher> excludesPathMatchers = getPathMatchers(
 			getExcludesJobProperties());
-		List<PathMatcher> includesPathMatchers = getIncludesPathMatchers();
 
-		if (testRelevantChanges) {
-			moduleDirs.addAll(
-				portalGitWorkingDirectory.getModifiedModuleDirsList(
-					excludesPathMatchers, includesPathMatchers));
-		}
-		else {
-			moduleDirs.addAll(
-				portalGitWorkingDirectory.getModuleDirsList(
-					excludesPathMatchers, includesPathMatchers));
-		}
+		moduleDirs.addAll(
+			portalGitWorkingDirectory.getModuleDirsList(
+				excludesPathMatchers, getIncludesPathMatchers()));
 
 		for (File moduleDir : moduleDirs) {
 			TestClass testClass = TestClassFactory.newTestClass(

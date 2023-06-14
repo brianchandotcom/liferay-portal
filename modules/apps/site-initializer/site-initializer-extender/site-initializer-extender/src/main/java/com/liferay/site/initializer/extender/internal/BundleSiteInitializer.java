@@ -15,12 +15,12 @@
 package com.liferay.site.initializer.extender.internal;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryModel;
 import com.liferay.account.model.AccountGroup;
 import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.account.service.AccountGroupRelService;
 import com.liferay.account.service.AccountRoleLocalService;
@@ -129,6 +129,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
+import com.liferay.portal.kernel.model.OrganizationModel;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.Theme;
@@ -200,14 +201,14 @@ import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 import com.liferay.style.book.zip.processor.StyleBookEntryZipProcessor;
 import com.liferay.template.model.TemplateEntry;
 import com.liferay.template.service.TemplateEntryLocalService;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.wiring.BundleWiring;
 
+import javax.servlet.ServletContext;
 import java.io.Serializable;
-
 import java.net.URL;
 import java.net.URLConnection;
-
 import java.text.DateFormat;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -222,11 +223,6 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 
-import javax.servlet.ServletContext;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.wiring.BundleWiring;
-
 /**
  * @author Brian Wing Shun Chan
  */
@@ -234,6 +230,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 	public BundleSiteInitializer(
 		AccountEntryLocalService accountEntryLocalService,
+		AccountEntryOrganizationRelLocalService
+			accountEntryOrganizationRelLocalService,
 		AccountGroupLocalService accountGroupLocalService,
 		AccountGroupRelService accountGroupRelService,
 		AccountResource.Factory accountResourceFactory,
@@ -310,6 +308,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 		WorkflowDefinitionResource.Factory workflowDefinitionResourceFactory) {
 
 		_accountEntryLocalService = accountEntryLocalService;
+		_accountEntryOrganizationRelLocalService =
+			accountEntryOrganizationRelLocalService;
 		_accountGroupLocalService = accountGroupLocalService;
 		_accountGroupRelService = accountGroupRelService;
 		_accountResourceFactory = accountResourceFactory;
@@ -491,6 +491,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_invoke(() -> _addOrUpdateExpandoColumns(serviceContext));
 			_invoke(() -> _addOrUpdateKnowledgeBaseArticles(serviceContext));
 			_invoke(() -> _addOrUpdateOrganizations(serviceContext));
+
+			_invoke(() -> _addAccountsOrganizations(serviceContext));
 
 			Map<String, String> roleIdsStringUtilReplaceValues = _invoke(
 				() -> _addOrUpdateRoles(serviceContext));
@@ -751,6 +753,61 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			accountResource.putAccountByExternalReferenceCode(
 				account.getExternalReferenceCode(), account);
+		}
+	}
+
+	private void _addAccountsOrganizations(ServiceContext serviceContext)
+		throws Exception {
+
+		String json = SiteInitializerUtil.read(
+			"/site-initializer/accounts-organizations.json", _servletContext);
+
+		if (json == null) {
+			return;
+		}
+
+		JSONArray jsonArray = _jsonFactory.createJSONArray(json);
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			JSONArray organizationJSONArray = jsonObject.getJSONArray(
+				"organizations");
+
+			if (JSONUtil.isEmpty(organizationJSONArray)) {
+				continue;
+			}
+
+			List<com.liferay.portal.kernel.model.Organization> organizations =
+				new ArrayList<>();
+
+			for (int j = 0; j < organizationJSONArray.length(); j++) {
+				organizations.add(
+					_organizationLocalService.
+						getOrganizationByExternalReferenceCode(
+							organizationJSONArray.getString(j),
+							serviceContext.getCompanyId()));
+			}
+
+			if (ListUtil.isEmpty(organizations)) {
+				continue;
+			}
+
+			AccountEntry accountEntry =
+				_accountEntryLocalService.
+					getAccountEntryByExternalReferenceCode(
+						jsonObject.getString("accountExternalReferenceCode"),
+						serviceContext.getCompanyId());
+
+			if (accountEntry == null) {
+				continue;
+			}
+
+			_accountEntryOrganizationRelLocalService.
+				addAccountEntryOrganizationRels(
+					accountEntry.getAccountEntryId(),
+					ListUtil.toLongArray(
+						organizations, OrganizationModel::getOrganizationId));
 		}
 	}
 
@@ -4976,6 +5033,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private static final ObjectMapper _objectMapper = new ObjectMapper();
 
 	private final AccountEntryLocalService _accountEntryLocalService;
+	private final AccountEntryOrganizationRelLocalService
+		_accountEntryOrganizationRelLocalService;
 	private final AccountGroupLocalService _accountGroupLocalService;
 	private final AccountGroupRelService _accountGroupRelService;
 	private final AccountResource.Factory _accountResourceFactory;

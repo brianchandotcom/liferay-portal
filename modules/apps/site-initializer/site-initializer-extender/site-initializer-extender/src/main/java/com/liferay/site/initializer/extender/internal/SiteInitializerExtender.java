@@ -15,6 +15,7 @@
 package com.liferay.site.initializer.extender.internal;
 
 import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.account.service.AccountGroupRelService;
 import com.liferay.account.service.AccountRoleLocalService;
@@ -135,10 +136,12 @@ public class SiteInitializerExtender
 
 		SiteInitializerExtension siteInitializerExtension =
 			new SiteInitializerExtension(
-				_accountEntryLocalService, _accountGroupLocalService,
-				_accountGroupRelService, _accountResourceFactory,
-				_accountRoleLocalService, _accountRoleResourceFactory,
-				_assetCategoryLocalService, _assetListEntryLocalService, bundle,
+				_accountEntryLocalService,
+				_accountEntryOrganizationRelLocalService,
+				_accountGroupLocalService, _accountGroupRelService,
+				_accountResourceFactory, _accountRoleLocalService,
+				_accountRoleResourceFactory, _assetCategoryLocalService,
+				_assetListEntryLocalService, bundle,
 				_clientExtensionEntryLocalService, _configurationProvider,
 				_ddmStructureLocalService, _ddmTemplateLocalService,
 				_defaultDDMStructureHelper, _dependencyManager, _dlURLHelper,
@@ -248,10 +251,12 @@ public class SiteInitializerExtender
 
 		SiteInitializerExtension siteInitializerExtension =
 			new SiteInitializerExtension(
-				_accountEntryLocalService, _accountGroupLocalService,
-				_accountGroupRelService, _accountResourceFactory,
-				_accountRoleLocalService, _accountRoleResourceFactory,
-				_assetCategoryLocalService, _assetListEntryLocalService,
+				_accountEntryLocalService,
+				_accountEntryOrganizationRelLocalService,
+				_accountGroupLocalService, _accountGroupRelService,
+				_accountResourceFactory, _accountRoleLocalService,
+				_accountRoleResourceFactory, _assetCategoryLocalService,
+				_assetListEntryLocalService,
 				ProxyUtil.newDelegateProxyInstance(
 					Bundle.class.getClassLoader(), Bundle.class,
 					new FileBackedBundleDelegate(
@@ -306,6 +311,10 @@ public class SiteInitializerExtender
 
 	@Reference
 	private AccountEntryLocalService _accountEntryLocalService;
+
+	@Reference
+	private AccountEntryOrganizationRelLocalService
+		_accountEntryOrganizationRelLocalService;
 
 	@Reference
 	private AccountGroupLocalService _accountGroupLocalService;

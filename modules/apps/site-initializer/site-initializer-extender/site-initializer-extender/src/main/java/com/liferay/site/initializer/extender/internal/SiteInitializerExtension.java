@@ -15,6 +15,7 @@
 package com.liferay.site.initializer.extender.internal;
 
 import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.account.service.AccountGroupRelService;
 import com.liferay.account.service.AccountRoleLocalService;
@@ -101,6 +102,8 @@ public class SiteInitializerExtension {
 
 	public SiteInitializerExtension(
 		AccountEntryLocalService accountEntryLocalService,
+		AccountEntryOrganizationRelLocalService
+			accountEntryOrganizationRelLocalService,
 		AccountGroupLocalService accountGroupLocalService,
 		AccountGroupRelService accountGroupRelService,
 		AccountResource.Factory accountResourceFactory,
@@ -181,10 +184,11 @@ public class SiteInitializerExtension {
 		_component = dependencyManager.createComponent();
 
 		BundleSiteInitializer bundleSiteInitializer = new BundleSiteInitializer(
-			accountEntryLocalService, accountGroupLocalService,
-			accountGroupRelService, accountResourceFactory,
-			accountRoleLocalService, accountRoleResourceFactory,
-			assetCategoryLocalService, assetListEntryLocalService, bundle,
+			accountEntryLocalService, accountEntryOrganizationRelLocalService,
+			accountGroupLocalService, accountGroupRelService,
+			accountResourceFactory, accountRoleLocalService,
+			accountRoleResourceFactory, assetCategoryLocalService,
+			assetListEntryLocalService, bundle,
 			clientExtensionEntryLocalService, configurationProvider,
 			ddmStructureLocalService, ddmTemplateLocalService,
 			defaultDDMStructureHelper, dlURLHelper,

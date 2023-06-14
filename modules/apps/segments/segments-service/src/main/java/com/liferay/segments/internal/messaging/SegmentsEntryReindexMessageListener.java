@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -73,9 +74,13 @@ public class SegmentsEntryReindexMessageListener extends BaseMessageListener {
 		long companyId = message.getLong("companyId");
 
 		try {
+			Set<Long> newClassPKs = _getNewClassPKs(segmentsEntryId);
+
+			_updateDatabase(segmentsEntryId, newClassPKs);
+
 			Set<Long> classPKs = SetUtil.symmetricDifference(
 				_getOldClassPKs(companyId, segmentsEntryId, indexer),
-				_getNewClassPKs(segmentsEntryId));
+				newClassPKs);
 
 			for (long classPK : classPKs) {
 				indexer.reindex(type, classPK);
@@ -94,26 +99,6 @@ public class SegmentsEntryReindexMessageListener extends BaseMessageListener {
 		long[] classPKs =
 			_segmentsEntryProviderRegistry.getSegmentsEntryClassPKs(
 				segmentsEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		SegmentsEntry segmentsEntry =
-			_segmentsEntryLocalService.fetchSegmentsEntry(segmentsEntryId);
-
-		if ((segmentsEntry != null) &&
-			(segmentsEntry.getCriteriaObj() != null)) {
-
-			_segmentsEntryRelLocalService.deleteSegmentsEntryRels(
-				segmentsEntryId);
-
-			ServiceContext serviceContext = new ServiceContext();
-
-			serviceContext.setScopeGroupId(segmentsEntry.getGroupId());
-			serviceContext.setUserId(segmentsEntry.getUserId());
-
-			_segmentsEntryRelLocalService.addSegmentsEntryRels(
-				segmentsEntryId,
-				_portal.getClassNameId(segmentsEntry.getType()), classPKs,
-				serviceContext);
-		}
 
 		return SetUtil.fromArray(classPKs);
 	}
@@ -138,6 +123,30 @@ public class SegmentsEntryReindexMessageListener extends BaseMessageListener {
 		}
 
 		return classPKsSet;
+	}
+
+	private void _updateDatabase(long segmentsEntryId, Set<Long> newClassPKs)
+		throws PortalException {
+
+		SegmentsEntry segmentsEntry =
+			_segmentsEntryLocalService.fetchSegmentsEntry(segmentsEntryId);
+
+		if ((segmentsEntry != null) &&
+			(segmentsEntry.getCriteriaObj() != null)) {
+
+			_segmentsEntryRelLocalService.deleteSegmentsEntryRels(
+				segmentsEntryId);
+
+			ServiceContext serviceContext = new ServiceContext();
+
+			serviceContext.setScopeGroupId(segmentsEntry.getGroupId());
+			serviceContext.setUserId(segmentsEntry.getUserId());
+
+			_segmentsEntryRelLocalService.addSegmentsEntryRels(
+				segmentsEntryId,
+				_portal.getClassNameId(segmentsEntry.getType()),
+				ArrayUtil.toLongArray(newClassPKs), serviceContext);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

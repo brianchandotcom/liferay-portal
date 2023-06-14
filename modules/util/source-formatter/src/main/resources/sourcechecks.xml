@@ -1585,6 +1585,10 @@
 			<description name="Checks if the property value `-includeresource` or `Include-Resource` exists and removes it" />
 			<weight>1</weight>
 		</check>
+		<check name="UpgradeGetImagePreviewURLMethodCheck">
+			<category name="Upgrade" />
+			<description name="Replaces the references of the method 'DLUtil.getImagePreviewURL' with the method 'getImagePreviewURL' of 'DLURLHelper' class" />
+		</check>
 		<check name="UpgradeGetPortletGroupIdMethodCheck">
 			<category name="Upgrade" />
 			<description name="Run code migration of the method 'getPortletGroupId' to 'getScopeGroupId'" />

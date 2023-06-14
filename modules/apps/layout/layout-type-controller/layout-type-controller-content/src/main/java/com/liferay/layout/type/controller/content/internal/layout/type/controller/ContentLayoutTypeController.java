@@ -100,29 +100,28 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 
 		Boolean hasUpdatePermissions = null;
 
+		if (layout.isDraftLayout()) {
+			Layout curLayout = _layoutLocalService.fetchLayout(
+				layout.getClassPK());
+
+			if (curLayout.isPending()) {
+				curLayout = layout;
+			}
+
+			hasUpdatePermissions = _hasUpdatePermissions(
+				themeDisplay.getPermissionChecker(), curLayout);
+
+			if (!hasUpdatePermissions) {
+				throw new PrincipalException.MustHavePermission(
+					themeDisplay.getPermissionChecker(), Layout.class.getName(),
+					layout.getLayoutId(), ActionKeys.UPDATE);
+			}
+		}
+
 		String layoutMode = ParamUtil.getString(
 			httpServletRequest, "p_l_mode", Constants.VIEW);
 
 		if (layoutMode.equals(Constants.EDIT)) {
-			if (layout.isDraftLayout()) {
-				Layout curLayout = _layoutLocalService.fetchLayout(
-					layout.getClassPK());
-
-				if (curLayout.isPending()) {
-					curLayout = layout;
-				}
-
-				hasUpdatePermissions = _hasUpdatePermissions(
-					themeDisplay.getPermissionChecker(), curLayout);
-
-				if (!hasUpdatePermissions) {
-					throw new PrincipalException.MustHavePermission(
-						themeDisplay.getPermissionChecker(),
-						Layout.class.getName(), layout.getLayoutId(),
-						ActionKeys.UPDATE);
-				}
-			}
-
 			if (hasUpdatePermissions == null) {
 				hasUpdatePermissions = _hasUpdatePermissions(
 					themeDisplay.getPermissionChecker(), layout);

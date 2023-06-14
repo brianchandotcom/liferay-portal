@@ -129,7 +129,7 @@ public class PartnerCommandLineRunner implements CommandLineRunner {
 			for (int i = 0; i < itemsJSONArray.length(); i++) {
 				JSONObject itemJSONObject = itemsJSONArray.getJSONObject(i);
 
-				String activityErc = itemJSONObject.getString(
+				String activityERC = itemJSONObject.getString(
 					"r_actToMDFClmActs_c_activityERC");
 
 				JSONObject activityJSONObject = itemJSONObject.getJSONObject(
@@ -148,7 +148,7 @@ public class PartnerCommandLineRunner implements CommandLineRunner {
 						).toLocalDate()
 					)) {
 
-					_sendNotification(itemsJSONArray.toString(), activityErc);
+					_sendNotification(itemsJSONArray.toString(), activityERC);
 
 					return;
 				}
@@ -159,7 +159,7 @@ public class PartnerCommandLineRunner implements CommandLineRunner {
 							).toLocalDate()
 						)) {
 
-					_sendNotification(itemsJSONArray.toString(), activityErc);
+					_sendNotification(itemsJSONArray.toString(), activityERC);
 
 					return;
 				}
@@ -170,7 +170,7 @@ public class PartnerCommandLineRunner implements CommandLineRunner {
 							).toLocalDate()
 						)) {
 
-					_sendNotification(itemsJSONArray.toString(), activityErc);
+					_sendNotification(itemsJSONArray.toString(), activityERC);
 
 					return;
 				}

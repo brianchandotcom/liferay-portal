@@ -14,6 +14,8 @@
 
 package com.liferay.poshi.core.selenium;
 
+import java.util.Map;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -189,6 +191,9 @@ public interface LiferaySelenium {
 		String locator, String coordString, String movementsString);
 
 	public void echo(String message);
+
+	public void executeCDPCommand(
+		String commandName, Map<String, Object> commandParameters);
 
 	public void executeJavaScript(
 		String javaScript, String argument1, String argument2);

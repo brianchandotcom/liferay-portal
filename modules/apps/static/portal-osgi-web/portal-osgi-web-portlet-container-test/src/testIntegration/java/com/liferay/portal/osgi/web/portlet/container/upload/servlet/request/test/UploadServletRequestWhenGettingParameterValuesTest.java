@@ -8,12 +8,13 @@ package com.liferay.portal.osgi.web.portlet.container.upload.servlet.request.tes
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.upload.FileItem;
+import com.liferay.portal.kernel.upload.UploadServletRequest;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.osgi.web.portlet.container.test.util.PortletContainerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upload.LiferayServletRequest;
-import com.liferay.portal.upload.UploadServletRequestImpl;
+import com.liferay.portal.upload.test.util.UploadTestUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -65,8 +66,8 @@ public class UploadServletRequestWhenGettingParameterValuesTest {
 
 		mockHttpServletRequest.addParameter(parameter, parameter);
 
-		UploadServletRequestImpl uploadServletRequestImpl =
-			new UploadServletRequestImpl(
+		UploadServletRequest uploadServletRequest =
+			UploadTestUtil.createUploadServletRequest(
 				(HttpServletRequest)liferayServletRequest.getRequest(),
 				fileParameters, regularParameters);
 
@@ -74,14 +75,14 @@ public class UploadServletRequestWhenGettingParameterValuesTest {
 				regularParameters.entrySet()) {
 
 			List<String> parameterValuesList = ListUtil.fromArray(
-				uploadServletRequestImpl.getParameterValues(entry.getKey()));
+				uploadServletRequest.getParameterValues(entry.getKey()));
 
 			Assert.assertTrue(
 				parameterValuesList.containsAll(entry.getValue()));
 		}
 
 		String[] requestParameterValues =
-			uploadServletRequestImpl.getParameterValues(parameter);
+			uploadServletRequest.getParameterValues(parameter);
 
 		ArrayUtil.contains(requestParameterValues, parameter);
 
@@ -89,7 +90,7 @@ public class UploadServletRequestWhenGettingParameterValuesTest {
 			String key = entry.getKey();
 
 			List<String> parameterValuesList = ListUtil.fromArray(
-				uploadServletRequestImpl.getParameterValues(key));
+				uploadServletRequest.getParameterValues(key));
 
 			Assert.assertFalse(
 				parameterValuesList.toString(),

@@ -8,10 +8,11 @@ package com.liferay.portal.osgi.web.portlet.container.upload.servlet.request.tes
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.upload.FileItem;
+import com.liferay.portal.kernel.upload.UploadServletRequest;
 import com.liferay.portal.osgi.web.portlet.container.test.util.PortletContainerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upload.LiferayServletRequest;
-import com.liferay.portal.upload.UploadServletRequestImpl;
+import com.liferay.portal.upload.test.util.UploadTestUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -52,13 +53,13 @@ public class UploadServletRequestWhenGettingContentTypeTest {
 			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _BYTES);
 
-		UploadServletRequestImpl uploadServletRequestImpl =
-			new UploadServletRequestImpl(
+		UploadServletRequest uploadServletRequest =
+			UploadTestUtil.createUploadServletRequest(
 				(HttpServletRequest)liferayServletRequest.getRequest(),
 				fileParameters, new HashMap<String, List<String>>());
 
 		Map<String, FileItem[]> map =
-			uploadServletRequestImpl.getMultipartParameterMap();
+			uploadServletRequest.getMultipartParameterMap();
 
 		Assert.assertEquals(map.toString(), 1, map.size());
 
@@ -71,7 +72,7 @@ public class UploadServletRequestWhenGettingContentTypeTest {
 
 			Assert.assertEquals(
 				firstFileItem.getContentType(),
-				uploadServletRequestImpl.getContentType(key));
+				uploadServletRequest.getContentType(key));
 		}
 	}
 
@@ -81,13 +82,13 @@ public class UploadServletRequestWhenGettingContentTypeTest {
 			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _BYTES);
 
-		UploadServletRequestImpl uploadServletRequestImpl =
-			new UploadServletRequestImpl(
+		UploadServletRequest uploadServletRequest =
+			UploadTestUtil.createUploadServletRequest(
 				(HttpServletRequest)liferayServletRequest.getRequest(),
 				new HashMap<String, FileItem[]>(),
 				new HashMap<String, List<String>>());
 
-		Assert.assertNull(uploadServletRequestImpl.getContentType("name"));
+		Assert.assertNull(uploadServletRequest.getContentType("name"));
 	}
 
 	private static final byte[] _BYTES =

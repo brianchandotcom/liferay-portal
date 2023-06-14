@@ -16,7 +16,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upload.LiferayInputStream;
 import com.liferay.portal.upload.LiferayServletRequest;
-import com.liferay.portal.upload.UploadServletRequestImpl;
+import com.liferay.portal.upload.test.util.UploadTestUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -63,7 +63,7 @@ public class UploadServletRequestWhenGettingInputStreamTest {
 
 		Assert.assertFalse(servletInputStream instanceof LiferayInputStream);
 
-		uploadServletRequest = new UploadServletRequestImpl(
+		uploadServletRequest = UploadTestUtil.createUploadServletRequest(
 			(HttpServletRequest)liferayServletRequest.getRequest(),
 			new HashMap<String, FileItem[]>(),
 			new HashMap<String, List<String>>());

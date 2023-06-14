@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.io.StringReader;
 
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -48,6 +49,9 @@ public class PropertiesLanguageKeysContextCheck extends BaseFileCheck {
 		Enumeration<String> enumeration =
 			(Enumeration<String>)properties.propertyNames();
 
+		List<String> allowedSingleWordLanguageKeys = getAttributeValues(
+			_ALLOWED_SINGLE_WORD_LANGUAGE_KEYS_KEY, absolutePath);
+
 		int contextDepth = GetterUtil.getInteger(
 			getAttributeValue(_CONTEXT_DEPTH_KEY, absolutePath));
 
@@ -55,7 +59,8 @@ public class PropertiesLanguageKeysContextCheck extends BaseFileCheck {
 			String key = enumeration.nextElement();
 
 			if (key.matches("\\w+") &&
-				StringUtil.equalsIgnoreCase(key, properties.getProperty(key))) {
+				StringUtil.equalsIgnoreCase(key, properties.getProperty(key)) &&
+				!allowedSingleWordLanguageKeys.contains(key)) {
 
 				addMessage(
 					fileName,
@@ -113,6 +118,9 @@ public class PropertiesLanguageKeysContextCheck extends BaseFileCheck {
 
 		return content;
 	}
+
+	private static final String _ALLOWED_SINGLE_WORD_LANGUAGE_KEYS_KEY =
+		"allowedSingleWordLanguageKeys";
 
 	private static final String _CONTEXT_DEPTH_KEY = "contextDepth";
 

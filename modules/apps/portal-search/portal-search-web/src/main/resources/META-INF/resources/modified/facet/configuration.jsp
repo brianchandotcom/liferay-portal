@@ -103,11 +103,11 @@ JSONArray rangesJSONArray = modifiedFacetPortletPreferences.getRangesJSONArray()
 						JSONObject jsonObject = rangesJSONArray.getJSONObject(i);
 					%>
 
-						<div class="lfr-form-row lfr-form-row-inline range-form-row">
+						<div class="c-pb-5 lfr-form-row lfr-form-row-inline range-form-row">
 							<div class="row-fields">
-								<aui:input cssClass="label-input" label="label" name='<%= "label_" + i %>' required="<%= true %>" value='<%= jsonObject.getString("label") %>' />
+								<aui:input cssClass="label-input" label="label" name='<%= "label_" + i %>' required="<%= true %>" value='<%= jsonObject.getString("label") %>' wrapperCssClass="c-mb-2" />
 
-								<aui:input cssClass="range-input" label="range" name='<%= "range_" + i %>' required="<%= true %>" value='<%= jsonObject.getString("range") %>' />
+								<aui:input cssClass="range-input" label="range" name='<%= "range_" + i %>' required="<%= true %>" value='<%= jsonObject.getString("range") %>' wrapperCssClass="c-mb-2" />
 							</div>
 						</div>
 

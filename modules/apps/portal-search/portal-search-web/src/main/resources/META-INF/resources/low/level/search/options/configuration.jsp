@@ -91,14 +91,14 @@ LowLevelSearchOptionsPortletPreferences lowLevelSearchOptionsPortletPreferences 
 				JSONObject jsonObject = attributesJSONArray.getJSONObject(i);
 			%>
 
-				<div class="field-form-row lfr-form-row lfr-form-row-inline">
+				<div class="c-pb-5 field-form-row lfr-form-row lfr-form-row-inline">
 					<div class="autofit-row row-fields">
 						<div class="autofit-col-expand">
-							<aui:input cssClass="flex-fill key-input" label="key" name='<%= "key_" + i %>' value='<%= jsonObject.getString("key") %>' />
+							<aui:input cssClass="flex-fill key-input" label="key" name='<%= "key_" + i %>' value='<%= jsonObject.getString("key") %>' wrapperCssClass="c-mb-2 c-mr-2" />
 						</div>
 
 						<div class="autofit-col-expand">
-							<aui:input cssClass="flex-fill value-input" label="value" name='<%= "value_" + i %>' value='<%= jsonObject.getString("value") %>' />
+							<aui:input cssClass="flex-fill value-input" label="value" name='<%= "value_" + i %>' value='<%= jsonObject.getString("value") %>' wrapperCssClass="c-mb-2" />
 						</div>
 					</div>
 				</div>

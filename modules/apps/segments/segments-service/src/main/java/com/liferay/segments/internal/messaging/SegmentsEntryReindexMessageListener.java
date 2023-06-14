@@ -71,20 +71,14 @@ public class SegmentsEntryReindexMessageListener extends BaseMessageListener {
 			return;
 		}
 
-		long companyId = message.getLong("companyId");
-
 		try {
 			Set<Long> newClassPKs = _getNewClassPKs(segmentsEntryId);
 
 			_updateDatabase(segmentsEntryId, newClassPKs);
 
-			Set<Long> classPKs = SetUtil.symmetricDifference(
-				_getOldClassPKs(companyId, segmentsEntryId, indexer),
-				newClassPKs);
-
-			for (long classPK : classPKs) {
-				indexer.reindex(type, classPK);
-			}
+			_updateIndex(
+				message.getLong("companyId"), segmentsEntryId, type,
+				newClassPKs, indexer);
 		}
 		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
@@ -147,6 +141,19 @@ public class SegmentsEntryReindexMessageListener extends BaseMessageListener {
 		_segmentsEntryRelLocalService.addSegmentsEntryRels(
 			segmentsEntryId, _portal.getClassNameId(segmentsEntry.getType()),
 			ArrayUtil.toLongArray(newClassPKs), serviceContext);
+	}
+
+	private void _updateIndex(
+			long companyId, long segmentsEntryId, String type,
+			Set<Long> newClassPKs, Indexer<Object> indexer)
+		throws PortalException {
+
+		Set<Long> classPKs = SetUtil.symmetricDifference(
+			_getOldClassPKs(companyId, segmentsEntryId, indexer), newClassPKs);
+
+		for (long classPK : classPKs) {
+			indexer.reindex(type, classPK);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

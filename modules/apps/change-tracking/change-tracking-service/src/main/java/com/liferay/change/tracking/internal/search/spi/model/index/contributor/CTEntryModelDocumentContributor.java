@@ -56,6 +56,7 @@ public class CTEntryModelDocumentContributor
 
 	@Override
 	public void contribute(Document document, CTEntry ctEntry) {
+		document.addKeyword(Field.COMPANY_ID, ctEntry.getCompanyId());
 		document.addDate(Field.CREATE_DATE, ctEntry.getCreateDate());
 		document.addDate(Field.MODIFIED_DATE, ctEntry.getModifiedDate());
 

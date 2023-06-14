@@ -46,6 +46,7 @@ public class CTCollectionModelDocumentContributor
 
 	@Override
 	public void contribute(Document document, CTCollection ctCollection) {
+		document.addKeyword(Field.COMPANY_ID, ctCollection.getCompanyId());
 		document.addDate(Field.CREATE_DATE, ctCollection.getCreateDate());
 		document.addText(Field.DESCRIPTION, ctCollection.getDescription());
 		document.addDate(Field.MODIFIED_DATE, ctCollection.getModifiedDate());

@@ -38,6 +38,7 @@ public class CTProcessModelDocumentContributor
 
 	@Override
 	public void contribute(Document document, CTProcess ctProcess) {
+		document.addKeyword(Field.COMPANY_ID, ctProcess.getCompanyId());
 		document.addDate(Field.CREATE_DATE, ctProcess.getCreateDate());
 		document.addKeyword(Field.TYPE, ctProcess.getType());
 		document.addKeyword(Field.USER_ID, ctProcess.getUserId());

@@ -12,6 +12,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -245,11 +246,16 @@ public class PDFPreviewManagedServiceFactoryTest {
 	private long _getMaxNumberOfPages(String scope, long scopePK)
 		throws Exception {
 
-		Method method = ReflectionUtil.getDeclaredMethod(
-			_managedServiceFactory.getClass(), "getMaxNumberOfPages",
-			String.class, long.class);
+		Object pdfPreviewManagedServiceFactoryHelper =
+			ReflectionTestUtil.getFieldValue(
+				_managedServiceFactory, "_pdfPreviewConfigurationHelper");
 
-		return (int)method.invoke(_managedServiceFactory, scope, scopePK);
+		Method method = ReflectionUtil.getDeclaredMethod(
+			pdfPreviewManagedServiceFactoryHelper.getClass(),
+			"getMaxNumberOfPages", String.class, long.class);
+
+		return (int)method.invoke(
+			pdfPreviewManagedServiceFactoryHelper, scope, scopePK);
 	}
 
 	private <E extends Exception> void _withCompanyConfiguration(

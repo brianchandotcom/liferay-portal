@@ -14,7 +14,7 @@ import com.liferay.document.library.kernel.util.DLProcessor;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.kernel.util.PDFProcessor;
 import com.liferay.document.library.preview.pdf.internal.background.task.PDFPreviewBackgroundTaskExecutor;
-import com.liferay.document.library.preview.pdf.internal.configuration.admin.service.PDFPreviewManagedServiceFactory;
+import com.liferay.document.library.preview.pdf.internal.configuration.admin.service.helper.PDFPreviewConfigurationHelper;
 import com.liferay.document.library.preview.pdf.internal.util.ProcessConfigUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.image.Ghostscript;
@@ -113,7 +113,7 @@ public class PDFProcessorImpl
 		throws Exception {
 
 		int maxNumberOfPages =
-			_pdfPreviewManagedServiceFactory.getMaxNumberOfPages(
+			_pdfPreviewConfigurationHelper.getMaxNumberOfPages(
 				ExtendedObjectClassDefinition.Scope.GROUP.getValue(),
 				destinationFileVersion.getGroupId());
 
@@ -1119,7 +1119,7 @@ public class PDFProcessorImpl
 	private boolean _ghostscriptInitialized;
 
 	@Reference
-	private PDFPreviewManagedServiceFactory _pdfPreviewManagedServiceFactory;
+	private PDFPreviewConfigurationHelper _pdfPreviewConfigurationHelper;
 
 	@Reference
 	private PortalUUID _portalUUID;

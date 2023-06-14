@@ -220,7 +220,6 @@ public class DefaultSearchSearchResponseAssemblerHelperImpl
 
 		searchSearchResponse.setCount(hits.getLength());
 		searchSearchResponse.setHits(hits);
-
 		searchSearchResponse.setSearchHits(toSearchHits(documents));
 	}
 

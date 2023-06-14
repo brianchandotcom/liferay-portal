@@ -75,16 +75,16 @@ public interface ExportImportServiceConfiguration {
 	public boolean validateLayoutReferences();
 
 	@Meta.AD(
-		deflt = "true", description = "validate-missing-references-help",
-		name = "validate-missing-references", required = false
-	)
-	public boolean validateMissingReferences();
-
-	@Meta.AD(
 		description = "layout-references-validation-whitelisted-url-pattern-help",
 		name = "layout-references-validation-whitelisted-url-pattern",
 		required = false
 	)
 	public String[] layoutReferencesValidationWhitelistedURLPatterns();
+
+	@Meta.AD(
+		deflt = "true", description = "validate-missing-references-help",
+		name = "validate-missing-references", required = false
+	)
+	public boolean validateMissingReferences();
 
 }

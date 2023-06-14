@@ -1355,11 +1355,7 @@ definition {
 		Button.click(button = "Copy");
 
 		if (isSet(copyDuplicatedDocument)) {
-			Alert.viewRequestFailedToComplete();
-
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#ERROR_DISMISSIBLE",
-				value1 = "The folder you selected already has an entry with this name. Please select a different folder.");
+			Alert.viewErrorMessage(errorMessage = "A file entry already exists with title ${dmDocumentTitle}");
 		}
 		else {
 			Alert.viewSuccessMessage();

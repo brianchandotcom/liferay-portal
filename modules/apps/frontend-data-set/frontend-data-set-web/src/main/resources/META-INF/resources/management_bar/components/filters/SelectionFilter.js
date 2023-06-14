@@ -117,14 +117,14 @@ function SelectionFilter({
 	const [infiniteLoaderRendered, setInfiniteLoaderRendered] = useState(false);
 	const [exclude, setExclude] = useState(!!selectedData?.exclude);
 
-	const loaderVisible = !localItems?.length && items?.length < total;
+	const loaderVisible = !localItems.length && items?.length < total;
 
 	useEffect(() => {
 		setSelectedItems(selectedData?.selectedItems || []);
 	}, [selectedData]);
 
 	const loadSelectionItems = function () {
-		if (apiURL && !localItems?.length) {
+		if (apiURL && !localItems.length) {
 			setLoading(true);
 
 			fetchData(apiURL, search, currentPage)
@@ -168,10 +168,10 @@ function SelectionFilter({
 					}
 				});
 		}
-		else if (localItems?.length && autocompleteEnabled) {
+		else if (localItems.length && autocompleteEnabled) {
 			setItems(
 				search
-					? localItems?.filter(({label}) =>
+					? localItems.filter(({label}) =>
 							label.toLowerCase().match(search.toLowerCase())
 					  )
 					: localItems

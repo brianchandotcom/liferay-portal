@@ -1,3 +1,0 @@
-liferay-partner-etc-cron-oauth-application-headless-server:
-    .serviceAddress: localhost:18080
-    .serviceScheme: http

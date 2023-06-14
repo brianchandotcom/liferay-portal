@@ -79,7 +79,6 @@ public class NotificationTemplateUtil {
 		notificationContext.setNotificationTemplate(
 			createNotificationTemplate(
 				user.getUserId(), body, description, subject, type));
-
 		notificationContext.setType(type);
 
 		return notificationContext;

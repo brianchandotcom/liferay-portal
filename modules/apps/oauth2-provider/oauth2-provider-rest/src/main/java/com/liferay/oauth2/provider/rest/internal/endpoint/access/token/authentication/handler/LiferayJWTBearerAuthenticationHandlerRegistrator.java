@@ -41,7 +41,6 @@ public class LiferayJWTBearerAuthenticationHandlerRegistrator {
 
 		liferayJWTBearerAuthenticationHandler.setClientRegistrationProvider(
 			_liferayOAuthDataProvider);
-
 		liferayJWTBearerAuthenticationHandler.
 			setOAuth2InAssertionManagedServiceFactory(
 				_oAuth2InAssertionManagedServiceFactory);

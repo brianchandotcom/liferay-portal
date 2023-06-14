@@ -102,7 +102,6 @@ public class NotificationQueueEntryUpgradeProcess extends UpgradeProcess {
 					}
 
 					preparedStatement3.setLong(1, classNameId);
-
 					preparedStatement3.setLong(
 						2, resultSet1.getLong("notificationQueueEntryId"));
 

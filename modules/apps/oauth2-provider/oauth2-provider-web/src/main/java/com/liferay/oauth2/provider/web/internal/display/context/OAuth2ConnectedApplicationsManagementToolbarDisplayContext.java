@@ -79,7 +79,6 @@ public class OAuth2ConnectedApplicationsManagementToolbarDisplayContext
 						).put(
 							"oAuth2ApplicationId", "application-id"
 						).build()));
-
 				dropdownGroupItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "order-by"));
 			}

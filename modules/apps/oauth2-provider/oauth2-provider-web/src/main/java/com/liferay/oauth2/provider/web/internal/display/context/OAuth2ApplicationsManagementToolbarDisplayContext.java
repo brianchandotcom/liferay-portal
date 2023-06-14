@@ -122,7 +122,6 @@ public class OAuth2ApplicationsManagementToolbarDisplayContext
 						).put(
 							"name", "name"
 						).build()));
-
 				dropdownGroupItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "order-by"));
 			}

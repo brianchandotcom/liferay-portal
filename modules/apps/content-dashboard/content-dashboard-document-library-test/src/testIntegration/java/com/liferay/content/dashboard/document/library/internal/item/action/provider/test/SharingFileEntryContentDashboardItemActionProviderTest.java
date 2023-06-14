@@ -90,7 +90,6 @@ public class SharingFileEntryContentDashboardItemActionProviderTest {
 		mockHttpServletRequest.setAttribute(
 			JavaConstants.JAVAX_PORTLET_RESPONSE,
 			new MockLiferayPortletRenderResponse());
-
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _getThemeDisplay(mockHttpServletRequest));
 

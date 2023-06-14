@@ -212,7 +212,6 @@ public class
 
 		themeDisplay.setCompany(
 			_companyLocalService.fetchCompany(TestPropsValues.getCompanyId()));
-
 		themeDisplay.setLocale(locale);
 		themeDisplay.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(user));

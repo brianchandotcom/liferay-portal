@@ -385,7 +385,6 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 
 		_serviceContext.setAssetCategoryIds(
 			new long[] {assetCategory.getCategoryId()});
-
 		_serviceContext.setAssetTagNames(new String[] {"tag1"});
 	}
 

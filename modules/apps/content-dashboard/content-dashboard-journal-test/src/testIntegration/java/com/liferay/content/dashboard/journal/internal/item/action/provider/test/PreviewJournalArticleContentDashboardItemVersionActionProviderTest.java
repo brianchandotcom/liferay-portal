@@ -169,11 +169,10 @@ public class
 			new MockHttpServletRequest();
 
 		mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, _getThemeDisplay(LocaleUtil.US));
-
-		mockHttpServletRequest.setAttribute(
 			JavaConstants.JAVAX_PORTLET_RESPONSE,
 			new MockLiferayResourceResponse());
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _getThemeDisplay(LocaleUtil.US));
 
 		ContentDashboardItemVersionAction contentDashboardItemVersionAction =
 			_contentDashboardItemVersionActionProvider.

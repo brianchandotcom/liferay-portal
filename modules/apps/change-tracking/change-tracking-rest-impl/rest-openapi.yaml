@@ -103,6 +103,40 @@ components:
                     readOnly: true
                     type: string
             type: object
+        CTProcess:
+            # @review
+            description:
+                Represents publications that have been published.
+            properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
+                datePublished:
+                    description:
+                        The publication's published date.
+                    format: date-time
+                    readOnly: true
+                    type: string
+                description:
+                    type: string
+                id:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                name:
+                    type: string
+                ownerName:
+                    description:
+                        The publication's creator.
+                    readOnly: true
+                    type: string
+                status:
+                    $ref: "#/components/schemas/Status"
+                    readOnly: true
         Status:
             properties:
                 code:
@@ -391,3 +425,91 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/CTEntry"
             tags: ["CTEntry"]
+    "/ct-processes":
+        get:
+            operationId: getCTProcessesPage
+            parameters:
+                - in: query
+                  name: status
+                  schema:
+                      items:
+                          type: integer
+                      type: array
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/CTProcess"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/CTProcess"
+                                type: array
+            tags: ["CTProcess"]
+    "/ct-processes/{ctProcessId}":
+        get:
+            operationId: getCTProcess
+            parameters:
+                - in: path
+                  name: ctProcessId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/CTProcess"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/CTProcess"
+            tags: ["CTProcess"]
+    "/ct-processes/{ctProcessId}/revert":
+        post:
+            operationId: postCTProcessRevert
+            parameters:
+                - in: path
+                  name: ctProcessId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: description
+                  schema:
+                      type: string
+                - in: query
+                  name: name
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["CTProcess"]

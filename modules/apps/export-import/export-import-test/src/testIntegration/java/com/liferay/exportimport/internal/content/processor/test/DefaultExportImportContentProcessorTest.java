@@ -582,6 +582,31 @@ public class DefaultExportImportContentProcessorTest {
 	}
 
 	@Test
+	public void testExportUUIDDLReference() throws Exception {
+		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
+			null, TestPropsValues.getUserId(), _stagingGroup.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			"00000000-0000-0000-0000-000000000000.txt", ContentTypes.TEXT_PLAIN,
+			TestDataConstants.TEST_BYTE_ARRAY, null, null,
+			ServiceContextTestUtil.getServiceContext(
+				_stagingGroup.getGroupId(), TestPropsValues.getUserId()));
+
+		ThumbnailCapability thumbnailCapability =
+			fileEntry.getRepositoryCapability(ThumbnailCapability.class);
+
+		fileEntry = thumbnailCapability.setLargeImageId(
+			fileEntry, fileEntry.getFileEntryId());
+
+		_portletDataContextExport.setZipWriter(new TestReaderWriter());
+
+		String content = _replaceParameters(
+			_getContent("dl_references.txt"), fileEntry);
+
+		_exportImportContentProcessor.validateContentReferences(
+			_stagingGroup.getGroupId(), content);
+	}
+
+	@Test
 	public void testImportDLReferences1() throws Exception {
 		_testImportDLReferences(false);
 	}

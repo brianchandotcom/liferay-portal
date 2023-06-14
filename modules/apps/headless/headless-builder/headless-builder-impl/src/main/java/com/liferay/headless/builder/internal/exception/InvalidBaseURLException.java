@@ -21,19 +21,8 @@ import javax.ws.rs.BadRequestException;
  */
 public class InvalidBaseURLException extends BadRequestException {
 
-	public InvalidBaseURLException() {
-	}
-
 	public InvalidBaseURLException(String msg) {
 		super(msg);
-	}
-
-	public InvalidBaseURLException(String msg, Throwable throwable) {
-		super(msg, throwable);
-	}
-
-	public InvalidBaseURLException(Throwable throwable) {
-		super(throwable);
 	}
 
 }

@@ -250,9 +250,8 @@ public class DefaultSearchResultPermissionFilterTest {
 	}
 
 	private void _mockPermission(SearchContext searchContext) {
-		searchContext.setAttribute(Field.STATUS, 1);
-
 		searchContext.setAttribute(Field.GROUP_ID, _USER_GROUP_ID);
+		searchContext.setAttribute(Field.STATUS, 1);
 
 		Mockito.when(
 			_permissionChecker.getCompanyId()

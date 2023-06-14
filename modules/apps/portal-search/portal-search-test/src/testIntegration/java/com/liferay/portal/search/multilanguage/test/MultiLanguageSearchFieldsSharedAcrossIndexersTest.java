@@ -306,7 +306,6 @@ public class MultiLanguageSearchFieldsSharedAcrossIndexersTest {
 			new String[] {
 				DLFileEntry.class.getName(), JournalArticle.class.getName()
 			});
-
 		searchContext.setLocale(locale);
 
 		QueryConfig queryConfig = searchContext.getQueryConfig();

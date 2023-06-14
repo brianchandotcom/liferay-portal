@@ -590,7 +590,6 @@ public class SearchResultSummaryDisplayContextBuilder {
 			searchResultSummaryDisplayContext.
 				setDocumentFormFieldDisplayContexts(
 					_buildFieldDisplayContexts(_getAllFieldNames()));
-
 			searchResultSummaryDisplayContext.setDocumentFormVisible(true);
 		}
 	}

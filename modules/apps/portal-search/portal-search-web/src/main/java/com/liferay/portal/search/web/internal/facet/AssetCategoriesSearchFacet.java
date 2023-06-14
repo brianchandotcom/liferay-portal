@@ -47,7 +47,6 @@ public class AssetCategoriesSearchFacet extends BaseJSPSearchFacet {
 		FacetConfiguration facetConfiguration = new FacetConfiguration();
 
 		facetConfiguration.setClassName(getFacetClassName());
-
 		facetConfiguration.setDataJSONObject(
 			JSONUtil.put(
 				"displayStyle", "list"
@@ -58,7 +57,6 @@ public class AssetCategoriesSearchFacet extends BaseJSPSearchFacet {
 			).put(
 				"showAssetCount", true
 			));
-
 		facetConfiguration.setFieldName(getFieldName());
 		facetConfiguration.setLabel(getLabel());
 		facetConfiguration.setOrder(getOrder());

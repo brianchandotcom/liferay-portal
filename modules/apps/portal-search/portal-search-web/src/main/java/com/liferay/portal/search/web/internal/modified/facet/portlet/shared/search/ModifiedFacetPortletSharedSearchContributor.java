@@ -82,10 +82,8 @@ public class ModifiedFacetPortletSharedSearchContributor
 
 		modifiedFacetBuilder.setSelectedRanges(
 			portletSharedSearchSettings.getParameterValues(parameterName));
-
 		modifiedFacetBuilder.setCustomRangeFrom(
 			portletSharedSearchSettings.getParameter(parameterName + "From"));
-
 		modifiedFacetBuilder.setCustomRangeTo(
 			portletSharedSearchSettings.getParameter(parameterName + "To"));
 

@@ -105,7 +105,6 @@ public class CalendarFacetedSearcherTest extends BaseFacetedSearcherTestCase {
 
 		searchContext.setEntryClassNames(
 			new String[] {CalendarBooking.class.getName()});
-
 		searchContext.setUserId(user2.getUserId());
 
 		Facet facet = createUserFacet(searchContext);

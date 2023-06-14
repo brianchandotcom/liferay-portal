@@ -90,7 +90,6 @@ public abstract class BaseHighlighterTestCase extends BaseIndexingTestCase {
 				searchSearchRequest.setIndexNames("_all");
 				searchSearchRequest.setQuery(query);
 				searchSearchRequest.setSize(30);
-
 				searchSearchRequest.setHighlight(highlight);
 
 				SearchEngineAdapter searchEngineAdapter =

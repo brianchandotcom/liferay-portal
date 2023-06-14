@@ -47,7 +47,6 @@ public class ScopeSearchFacet extends BaseJSPSearchFacet {
 		FacetConfiguration facetConfiguration = new FacetConfiguration();
 
 		facetConfiguration.setClassName(getFacetClassName());
-
 		facetConfiguration.setDataJSONObject(
 			JSONUtil.put(
 				"frequencyThreshold", 1
@@ -56,7 +55,6 @@ public class ScopeSearchFacet extends BaseJSPSearchFacet {
 			).put(
 				"showAssetCount", true
 			));
-
 		facetConfiguration.setFieldName(getFieldName());
 		facetConfiguration.setLabel(getLabel());
 		facetConfiguration.setOrder(getOrder());

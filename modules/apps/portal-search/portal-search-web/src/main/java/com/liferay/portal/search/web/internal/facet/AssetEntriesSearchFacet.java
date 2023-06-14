@@ -65,7 +65,6 @@ public class AssetEntriesSearchFacet extends BaseJSPSearchFacet {
 		FacetConfiguration facetConfiguration = new FacetConfiguration();
 
 		facetConfiguration.setClassName(getFacetClassName());
-
 		facetConfiguration.setDataJSONObject(
 			JSONUtil.put(
 				"frequencyThreshold", 1
@@ -81,7 +80,6 @@ public class AssetEntriesSearchFacet extends BaseJSPSearchFacet {
 					return jsonArray;
 				}
 			));
-
 		facetConfiguration.setFieldName(getFieldName());
 		facetConfiguration.setLabel(getLabel());
 		facetConfiguration.setOrder(getOrder());

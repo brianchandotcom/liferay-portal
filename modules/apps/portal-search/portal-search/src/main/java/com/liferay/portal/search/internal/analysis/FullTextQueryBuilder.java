@@ -102,7 +102,6 @@ public class FullTextQueryBuilder {
 		PhraseQueryBuilder builder = new PhraseQueryBuilder();
 
 		builder.setMaxExpansions(_maxExpansions);
-
 		builder.setPrefix(true);
 
 		return builder.build(field, value);

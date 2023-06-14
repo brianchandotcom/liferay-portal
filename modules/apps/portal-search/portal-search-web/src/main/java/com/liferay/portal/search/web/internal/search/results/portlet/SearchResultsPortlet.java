@@ -241,7 +241,6 @@ public class SearchResultsPortlet extends MVCPortlet {
 
 		searchResultsPortletDisplayContext.setKeywords(
 			GetterUtil.getString(searchRequest.getQueryString()));
-
 		searchResultsPortletDisplayContext.setRenderNothing(
 			isRenderNothing(renderRequest, searchRequest));
 
@@ -255,7 +254,6 @@ public class SearchResultsPortlet extends MVCPortlet {
 				searchResultsPortletPreferences.
 					getPaginationDeltaParameterName(),
 				renderRequest));
-
 		searchResultsPortletDisplayContext.setSearchResultsSummariesHolder(
 			searchResultsSummariesHolder);
 		searchResultsPortletDisplayContext.

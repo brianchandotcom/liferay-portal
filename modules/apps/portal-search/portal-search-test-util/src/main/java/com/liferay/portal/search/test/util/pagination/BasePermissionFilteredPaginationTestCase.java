@@ -284,10 +284,9 @@ public abstract class BasePermissionFilteredPaginationTestCase
 		SearchContext searchContext = createSearchContext();
 
 		searchContext.setEnd(end);
-		searchContext.setStart(start);
-
 		searchContext.setSorts(
 			new Sort(Field.PRIORITY, Sort.DOUBLE_TYPE, false));
+		searchContext.setStart(start);
 
 		return searchContext;
 	}

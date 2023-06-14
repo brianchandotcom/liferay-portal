@@ -87,7 +87,6 @@ public class SearchResultContentDisplayContextBuilder {
 						WebKeys.THEME_DISPLAY);
 
 				searchResultContentDisplayContext.setIconEditTarget(title);
-
 				searchResultContentDisplayContext.setIconURLString(
 					PortletURLBuilder.create(
 						assetRenderer.getURLEdit(

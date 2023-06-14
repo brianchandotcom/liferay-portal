@@ -393,7 +393,6 @@ public abstract class BaseGroupByTestCase extends BaseIndexingTestCase {
 
 						groupByRequest.setTermsSorts(
 							new Sort(SORT_FIELD, Sort.STRING_TYPE, true));
-
 						groupByRequest.setTermsStart(1);
 
 						searchRequestBuilder.groupByRequests(groupByRequest);
@@ -637,7 +636,6 @@ public abstract class BaseGroupByTestCase extends BaseIndexingTestCase {
 	protected void setTermsSortsAndDocsSize(GroupByRequest groupByRequest) {
 		groupByRequest.setTermsSorts(
 			new Sort(SORT_FIELD, Sort.STRING_TYPE, true));
-
 		groupByRequest.setDocsSize(2);
 	}
 

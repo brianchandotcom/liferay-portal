@@ -353,7 +353,6 @@ public class AssetCategoriesSearchFacetDisplayContextBuilder
 
 		assetCategoriesSearchFacetDisplayContext.setBucketDisplayContexts(
 			bucketDisplayContexts);
-
 		assetCategoriesSearchFacetDisplayContext.setBucketDisplayContextsMap(
 			bucketDisplayContextsMap);
 		assetCategoriesSearchFacetDisplayContext.setVocabularyNames(

@@ -77,7 +77,6 @@ public class UserFacetedSearcherTest extends BaseFacetedSearcherTestCase {
 			new String[] {
 				JournalArticle.class.getName(), User.class.getName()
 			});
-
 		searchContext.setLocale(_locale);
 
 		Facet facet = createUserFacet(searchContext);

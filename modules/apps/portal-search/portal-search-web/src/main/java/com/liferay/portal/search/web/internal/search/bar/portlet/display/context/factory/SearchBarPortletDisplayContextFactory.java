@@ -157,7 +157,6 @@ public class SearchBarPortletDisplayContextFactory {
 				portletSharedSearchResponse.getSearchSettings(),
 				searchBarPrecedenceHelper, searchBarPortletPreferences,
 				themeDisplay));
-
 		searchBarPortletDisplayContext.setPaginationStartParameterName(
 			GetterUtil.getString(
 				searchRequest.getPaginationStartParameterName()));

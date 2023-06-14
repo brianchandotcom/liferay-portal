@@ -257,7 +257,7 @@ definition {
 			pageName = ${pageName},
 			siteName = ${siteName});
 
-		Click(locator1 = "Icon#INFO");
+		Click(locator1 = "Icon#INFO_DM");
 
 		Click.waitForMenuToggleJSClick(locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON");
 

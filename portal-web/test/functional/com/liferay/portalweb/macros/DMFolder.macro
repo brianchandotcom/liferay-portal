@@ -549,7 +549,7 @@ definition {
 	}
 
 	macro subscribePG {
-		Click(locator1 = "Icon#INFO");
+		Click(locator1 = "Icon#INFO_DM");
 
 		Click(locator1 = "Icon#SUBSCRIBE_BELL");
 

@@ -18,6 +18,7 @@ import com.liferay.change.tracking.constants.CTActionKeys;
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.rest.dto.v1_0.CTProcess;
+import com.liferay.change.tracking.rest.internal.odata.entity.v1_0.CTProcessEntityModel;
 import com.liferay.change.tracking.rest.resource.v1_0.CTProcessResource;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTCollectionService;
@@ -37,6 +38,7 @@ import com.liferay.portal.kernel.security.permission.resource.PortletResourcePer
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -44,6 +46,8 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.util.Collections;
+
+import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -87,6 +91,11 @@ public class CTProcessResourceImpl extends BaseCTProcessResourceImpl {
 			sorts,
 			document -> _toCTProcess(
 				GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))));
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
+		return _entityModel;
 	}
 
 	@Override
@@ -173,6 +182,8 @@ public class CTProcessResourceImpl extends BaseCTProcessResourceImpl {
 		return _ctProcessDTOConverter.toDTO(
 			_getDTOConverterContext(ctProcess), ctProcess);
 	}
+
+	private static final EntityModel _entityModel = new CTProcessEntityModel();
 
 	@Reference
 	private BackgroundTaskLocalService _backgroundTaskLocalService;

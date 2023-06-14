@@ -1271,9 +1271,7 @@ public class JournalDisplayContext {
 		searchContext.setAttribute(
 			Field.CLASS_NAME_ID,
 			PortalUtil.getClassNameId(JournalArticle.class));
-
 		searchContext.setAttribute("discussion", Boolean.TRUE);
-
 		searchContext.setEnd(searchContainer.getEnd());
 		searchContext.setStart(searchContainer.getStart());
 

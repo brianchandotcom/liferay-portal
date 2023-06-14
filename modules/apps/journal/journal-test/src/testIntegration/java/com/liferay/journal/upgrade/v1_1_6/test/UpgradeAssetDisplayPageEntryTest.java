@@ -324,7 +324,6 @@ public class UpgradeAssetDisplayPageEntryTest {
 				dynamicQuery.add(
 					RestrictionsFactoryUtil.eq("classPK", classPK));
 			});
-
 		adq.setPerformActionMethod(
 			(PerformActionMethod<AssetDisplayPageEntry>)
 				assetDisplayPageEntry -> assetDisplayPageEntries.add(

@@ -117,7 +117,6 @@ public class JournalArticleDDMStructureIdUpgradeProcess extends UpgradeProcess {
 					}
 
 					preparedStatement.setLong(1, ddmStructureId);
-
 					preparedStatement.setLong(2, groupId);
 					preparedStatement.setString(3, ddmStructureKey);
 

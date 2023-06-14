@@ -461,7 +461,6 @@ public class JournalArticleAssetRenderer
 		throws Exception {
 
 		httpServletRequest.setAttribute(WebKeys.JOURNAL_ARTICLE, _article);
-
 		httpServletRequest.setAttribute(
 			WebKeys.JOURNAL_ARTICLE_DISPLAY,
 			_getArticleDisplay(httpServletRequest));

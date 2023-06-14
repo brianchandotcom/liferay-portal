@@ -1040,7 +1040,6 @@ public class JournalEditArticleDisplayContext {
 					PortalUtil.getClassNameId(JournalArticle.class.getName()));
 				ddmTemplateItemSelectorCriterion.setDDMStructureId(
 					_ddmStructure.getStructureId());
-
 				ddmTemplateItemSelectorCriterion.
 					setDesiredItemSelectorReturnTypes(
 						new DDMTemplateItemSelectorReturnType());

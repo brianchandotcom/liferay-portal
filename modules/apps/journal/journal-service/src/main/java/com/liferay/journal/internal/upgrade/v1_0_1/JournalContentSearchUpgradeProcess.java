@@ -58,13 +58,9 @@ public class JournalContentSearchUpgradeProcess extends UpgradeProcess {
 					portletId, _OLD_ROOT_PORTLET_ID, _NEW_ROOT_PORTLET_ID);
 
 				preparedStatement2.setLong(1, groupId);
-
 				preparedStatement2.setBoolean(2, privateLayout);
-
 				preparedStatement2.setLong(3, layoutId);
-
 				preparedStatement2.setString(4, newPortletId);
-
 				preparedStatement2.setString(5, articleId);
 
 				try (ResultSet resultSet2 = preparedStatement2.executeQuery()) {
@@ -75,7 +71,6 @@ public class JournalContentSearchUpgradeProcess extends UpgradeProcess {
 					}
 					else {
 						preparedStatement3.setString(1, newPortletId);
-
 						preparedStatement3.setLong(2, contentSearchId);
 
 						preparedStatement3.addBatch();

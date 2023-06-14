@@ -111,7 +111,6 @@ public class MenuFavItemPortalPreferenceValuesUpgradeProcess
 
 					preparedStatement.setString(
 						1, String.valueOf(groupIdsMap.get(groupId)));
-
 					preparedStatement.setLong(2, (Long)values[0]);
 
 					preparedStatement.addBatch();

@@ -101,7 +101,6 @@ public class JournalArticleDatesUpgradeProcess extends UpgradeProcess {
 					preparedStatement2.setTimestamp(1, assetModifiedDate);
 
 					preparedStatement2.setLong(2, resourcePrimKey);
-
 					preparedStatement2.setDouble(3, latestVersion);
 
 					preparedStatement2.addBatch();

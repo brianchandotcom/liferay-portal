@@ -548,7 +548,6 @@ public class JournalRSSHelper {
 			new Sort(
 				fieldName, Sort.LONG_TYPE,
 				StringUtil.equalsIgnoreCase(feed.getOrderByType(), "desc")));
-
 		searchContext.setStart(0);
 
 		QueryConfig queryConfig = searchContext.getQueryConfig();

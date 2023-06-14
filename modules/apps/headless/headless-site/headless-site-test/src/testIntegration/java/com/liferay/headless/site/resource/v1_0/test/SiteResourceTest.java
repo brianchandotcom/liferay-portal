@@ -111,6 +111,8 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 	protected Site randomSite() throws Exception {
 		return new Site() {
 			{
+				externalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}
 		};
@@ -126,13 +128,17 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 	}
 
 	@Override
-	protected Site testPutSite_addSite() throws Exception {
-		return siteResource.putSite(
+	protected Site testPutSiteByExternalReferenceCode_addSite()
+		throws Exception {
+
+		return siteResource.putSiteByExternalReferenceCode(
 			RandomTestUtil.randomString(), randomSite(), getMultipartFiles());
 	}
 
 	@Override
-	protected Site testPutSite_getSite(String externalReferenceCode) {
+	protected Site testPutSiteByExternalReferenceCode_getSite(
+		String externalReferenceCode) {
+
 		Group group = _groupLocalService.fetchGroupByExternalReferenceCode(
 			externalReferenceCode, testCompany.getCompanyId());
 
@@ -148,7 +154,11 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 	}
 
 	private void _testPostSiteFailureDuplicateName() throws Exception {
-		Site randomSite = randomSite();
+		Site randomSite = new Site() {
+			{
+				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
+			}
+		};
 
 		testPostSite_addSite(randomSite);
 

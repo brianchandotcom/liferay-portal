@@ -400,8 +400,18 @@ public class DLReferencesExportImportContentProcessor
 			hostNames.add(Http.HTTPS_WITH_SLASH + hostname);
 		}
 
+		int colonPos = 0;
+
+		for (int i = 1; i <= _OFFSET_COLON_PORT; i++) {
+			if (content.charAt(beginPos - i) == CharPool.COLON) {
+				colonPos = i;
+
+				break;
+			}
+		}
+
 		for (String hostName : hostNames) {
-			int curBeginPos = beginPos - hostName.length();
+			int curBeginPos = beginPos - hostName.length() - colonPos;
 
 			if (curBeginPos < 0) {
 				continue;
@@ -872,6 +882,8 @@ public class DLReferencesExportImportContentProcessor
 		StringPool.PIPE, StringPool.QUESTION, StringPool.QUOTE,
 		StringPool.QUOTE_ENCODED, StringPool.SPACE
 	};
+
+	private static final int _OFFSET_COLON_PORT = 6;
 
 	private static final int _OFFSET_HREF_ATTRIBUTE = 6;
 

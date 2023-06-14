@@ -359,6 +359,106 @@ definition {
 	}
 
 	@disable-webdriver = "true"
+	@priority = 3
+	test CanFilterMultipleLevelsWithComparisonIfMultipleRelationshipsBetweenTwoObjects {
+		task ("And Given one-to-many relaltionships:studentSubjects, subjectUniversities, universityStudents created") {
+			ObjectDefinitionAPI.createRelationshipWithObjectDefinitionNames(
+				childObjectName = "Subject",
+				deletionType = "cascade",
+				name = "studentSubjects",
+				parentObjectName = "Student",
+				type = "oneToMany");
+
+			ObjectDefinitionAPI.createRelationshipWithObjectDefinitionNames(
+				childObjectName = "University",
+				deletionType = "cascade",
+				name = "subjectUniversities",
+				parentObjectName = "Subject",
+				type = "oneToMany");
+
+			ObjectDefinitionAPI.createRelationshipWithObjectDefinitionNames(
+				childObjectName = "Student",
+				deletionType = "cascade",
+				name = "universityStudents",
+				parentObjectName = "University",
+				type = "oneToMany");
+		}
+
+		task ("And Given many-to-many relationships: studentsUniversities, subjectsStudents, universitiesSubjects created") {
+			ObjectDefinitionAPI.createRelationshipWithObjectDefinitionNames(
+				childObjectName = "University",
+				deletionType = "cascade",
+				name = "studentsUniversities",
+				parentObjectName = "Student",
+				type = "manyToMany");
+
+			ObjectDefinitionAPI.createRelationshipWithObjectDefinitionNames(
+				childObjectName = "Student",
+				deletionType = "cascade",
+				name = "subjectsStudents",
+				parentObjectName = "Subject",
+				type = "manyToMany");
+
+			ObjectDefinitionAPI.createRelationshipWithObjectDefinitionNames(
+				childObjectName = "Subject",
+				deletionType = "cascade",
+				name = "universitiesSubjects",
+				parentObjectName = "University",
+				type = "manyToMany");
+		}
+
+		task ("And Given created subject 'Calculus' related to created student 'Pearl' with studentSubjects") {
+			ObjectDefinitionAPI.createObjectEntryWithName(
+				en_US_plural_label = "subjects",
+				name = "Calculus");
+
+			ObjectDefinitionAPI.createObjectEntryWithName(
+				en_US_plural_label = "students",
+				name = "Pearl");
+
+			ObjectDefinitionAPI.relateObjectEntriesByName(
+				child_plural_label = "subjects",
+				childEntryName = "Calculus",
+				parent_plural_label = "students",
+				parentEntryName = "Pearl",
+				relationshipName = "studentSubjects");
+		}
+
+		task ("And Given student 'Pearl' related to the created university 'Oxford' with universityStudents") {
+			ObjectDefinitionAPI.createObjectEntryWithName(
+				en_US_plural_label = "universities",
+				name = "Oxford");
+
+			ObjectDefinitionAPI.relateObjectEntriesByName(
+				child_plural_label = "students",
+				childEntryName = "Pearl",
+				parent_plural_label = "universities",
+				parentEntryName = "Oxford",
+				relationshipName = "universityStudents");
+		}
+
+		task ("When in GetSubjectsPage filtering by 'studentSubjects/universityStudents/dateCreated lt 2030-04-10T15:04:51Z'") {
+			var response = ObjectDefinitionAPI.getObjectEntries(
+				en_US_plural_label = "subjects",
+				parameter = "studentSubjects%2FuniversityStudents%2FdateCreated%20lt%202030-04-10T15%3A04%3A51Z");
+		}
+
+		task ("Then 'Calculus' entry details are returned") {
+			var actual = JSONPathUtil.getProperty(
+				property = "$.items[0].name",
+				response = ${response});
+
+			TestUtils.assertEquals(
+				actual = ${actual},
+				expected = "Calculus");
+
+			HeadlessWebcontentAPI.assertProperNumberOfItems(
+				expectedTotalElement = 1,
+				responseToParse = ${response});
+		}
+	}
+
+	@disable-webdriver = "true"
 	@priority = 4
 	test CanFilterMultipleLevelsWithComparisonLe {
 		task ("Given many-to-many relationships: universitiesSubjects,studentsUniversities") {

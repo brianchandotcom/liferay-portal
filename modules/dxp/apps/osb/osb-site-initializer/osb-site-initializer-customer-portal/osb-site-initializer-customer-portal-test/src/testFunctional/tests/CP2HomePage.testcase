@@ -36,6 +36,20 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-148368| Test Summary: Verify that clicking in the button 'Watch Tutorial Videos', the user is redirect to the correct URL"
+	@priority = 2
+	test AssertThatGuideButtonIsPresent {
+		task ("Given that I go to the Customer Portal") {
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+
+			CustomerPortal.waitCP20PageToLoad(userFirstName = ${testUserFirstName});
+		}
+
+		task ("Then I click on Watch Onboarding Videos button in the banner") {
+			CP2HomePage.assertGuideVideosButton();
+		}
+	}
+
 	@description = "Story ID: LPS-152144 | Test Summary: Verify that clicking the Cookie Policy link opens a new page"
 	@priority = 3
 	test AssertThatTheCookiePolicyPageOpens {

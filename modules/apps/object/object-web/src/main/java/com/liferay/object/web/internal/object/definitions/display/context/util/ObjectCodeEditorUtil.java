@@ -282,11 +282,11 @@ public class ObjectCodeEditorUtil {
 				"used-to-indicate-a-dependent-relationship",
 			"and"),
 		DIVIDED_BY(
-			"field_name / field_name2",
+			"field_name1 / field_name2",
 			"divide-one-numeric-field-by-another-to-create-an-expression",
 			"divided-by"),
 		MINUS(
-			"field_name - field_name2",
+			"field_name1 - field_name2",
 			"subtract-numeric-fields-from-one-another-to-create-an-expression",
 			"minus"),
 		OR(
@@ -295,10 +295,10 @@ public class ObjectCodeEditorUtil {
 				"independent-relationship",
 			"or"),
 		PLUS(
-			"field_name + field_name2",
+			"field_name1 + field_name2",
 			"add-numeric-fields-to-create-an-expression", "plus"),
 		TIMES(
-			"field_name * field_name2",
+			"field_name1 * field_name2",
 			"multiply-numeric-fields-to-create-an-expression", "times");
 
 		public static List<Map<String, String>> getItems(

@@ -1,3 +1,5 @@
+import com.liferay.gradle.util.OSDetector
+
 task runGradleTest
 
 runGradleTest {
@@ -13,11 +15,10 @@ runGradleTest {
 		assert clientExtensionConfigJSONFile.text.contains('"doNotExpand=*.lfr.dev"')
 		assert clientExtensionConfigJSONFile.text.contains('"fooUrls=foo.json\\nfoo.txt"')
 
-		def isWindows = System.getProperty('os.name').toLowerCase().contains('win')
-
-		if (isWindows) {
+		if (OSDetector.windows) {
 			assert clientExtensionConfigJSONFile.text.contains('"jsonUrls=foo.json\\none\\\\two\\\\three\\\\bar.json"')
-		} else {
+		}
+		else {
 			assert clientExtensionConfigJSONFile.text.contains('"jsonUrls=foo.json\\none/two/three/bar.json"')
 		}
 

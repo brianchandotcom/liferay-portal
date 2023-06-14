@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.search.generic.MatchAllQuery;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -122,18 +121,14 @@ public class ElasticsearchIndexSearcherSearchAfterTest {
 
 	@Test
 	public void testElasticsearchIndexSearcher() throws Exception {
-		_assertHits(
-			_INDEX_MAX_RESULT_WINDOW, _INDEX_MAX_RESULT_WINDOW,
-			_NUMBER_INDEXED_DOCUMENTS,0, _INDEX_MAX_RESULT_WINDOW);
+		_assertHits(_INDEX_MAX_RESULT_WINDOW, 0, _INDEX_MAX_RESULT_WINDOW);
 	}
 
 	@Test
 	public void testElasticsearchIndexSearcherAcrossIndexMaxResultWindow()
 		throws Exception {
 
-		_assertHits(
-			_INDEX_MAX_RESULT_WINDOW, _INDEX_MAX_RESULT_WINDOW,
-			_NUMBER_INDEXED_DOCUMENTS,1, _INDEX_MAX_RESULT_WINDOW + 1);
+		_assertHits(_INDEX_MAX_RESULT_WINDOW, 1, _INDEX_MAX_RESULT_WINDOW + 1);
 	}
 
 	@Test
@@ -141,8 +136,7 @@ public class ElasticsearchIndexSearcherSearchAfterTest {
 		throws Exception {
 
 		_assertHits(
-			_INDEX_MAX_RESULT_WINDOW, _INDEX_MAX_RESULT_WINDOW,
-			_NUMBER_INDEXED_DOCUMENTS, _INDEX_MAX_RESULT_WINDOW + 1,
+			_INDEX_MAX_RESULT_WINDOW, _INDEX_MAX_RESULT_WINDOW + 1,
 			_NUMBER_INDEXED_DOCUMENTS);
 	}
 
@@ -150,9 +144,7 @@ public class ElasticsearchIndexSearcherSearchAfterTest {
 	public void testElasticsearchIndexSearcherIndexSearchLimit()
 		throws Exception {
 
-		_assertHits(
-			_INDEX_SEARCH_LIMIT, _INDEX_SEARCH_LIMIT, _NUMBER_INDEXED_DOCUMENTS,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		_assertHits(_INDEX_SEARCH_LIMIT, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
 	@Rule
@@ -193,13 +185,19 @@ public class ElasticsearchIndexSearcherSearchAfterTest {
 		}
 	}
 
-	private void _assertHits(int end, int expectedHits) throws Exception {
-		_assertHits(expectedHits, expectedHits, expectedHits, 0, end);
+	private void _assertDocumentOrder(
+		Document[] documents, int start, int end) {
+
+		for (int i = 0; (i < documents.length) && (start < end); i++) {
+			Document expectedDocument = _documents.get(start++);
+
+			Assert.assertEquals(
+				expectedDocument.get(Field.TITLE),
+				documents[i].get(Field.TITLE));
+		}
 	}
 
-	private void _assertHits(
-		int expectedHitsReturned, int expectedScoresReturned, int expectedHitTotal,
-		int start, int end)
+	private void _assertHits(int expectedHitsReturned, int start, int end)
 		throws Exception {
 
 		IdempotentRetryAssert.retryAssert(
@@ -221,22 +219,20 @@ public class ElasticsearchIndexSearcherSearchAfterTest {
 					printHits(documents);
 
 					Assert.assertEquals(
-						hits.toString(), expectedHitsReturned, documents.length);
+						hits.toString(), expectedHitsReturned,
+						documents.length);
 					Assert.assertEquals(
-						hits.toString(), expectedHitTotal, hits.getLength());
+						hits.toString(), _NUMBER_INDEXED_DOCUMENTS,
+						hits.getLength());
 
 					Assert.assertEquals(
-						scores.toString(), expectedScoresReturned, scores.length);
+						scores.toString(), expectedHitsReturned, scores.length);
+
+					_assertDocumentOrder(documents, start, end);
 				}
 				catch (Exception exception) {
 				}
 			});
-	}
-
-	private void printHits(Document[] documents) {
-		for (Document document : documents) {
-			System.out.println("Title: " + document.get(Field.TITLE));
-		}
 	}
 
 	private Document _createDocument(
@@ -325,7 +321,7 @@ public class ElasticsearchIndexSearcherSearchAfterTest {
 		Props props = Mockito.mock(Props.class);
 
 		Mockito.doReturn(
-			Integer.toString(_INDEX_SEARCH_LIMIT)
+			String.valueOf(_INDEX_SEARCH_LIMIT)
 		).when(
 			props
 		).get(
@@ -355,12 +351,19 @@ public class ElasticsearchIndexSearcherSearchAfterTest {
 		ReflectionTestUtil.setFieldValue(_indexSearcher, "_sorts", sorts);
 	}
 
-	private static final int _INDEX_SEARCH_LIMIT = 2;
-
-	private static IndexingFixture _indexingFixture;
-	private static final int _NUMBER_INDEXED_DOCUMENTS = 7;
+	private void printHits(Document[] documents) {
+		for (Document document : documents) {
+			System.out.println("Title: " + document.get(Field.TITLE));
+		}
+	}
 
 	private static final int _INDEX_MAX_RESULT_WINDOW = 3;
+
+	private static final int _INDEX_SEARCH_LIMIT = 2;
+
+	private static final int _NUMBER_INDEXED_DOCUMENTS = 7;
+
+	private static IndexingFixture _indexingFixture;
 
 	private final DocumentFixture _documentFixture = new DocumentFixture();
 	private final List<Document> _documents = new ArrayList<>();

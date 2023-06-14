@@ -59,7 +59,7 @@ export default function ({namespace, uploadOpenGraphImageURL}) {
 				}
 			},
 			selectEventName: `${namespace}openGraphImageSelectedItem`,
-			title: Liferay.Language.get('open-graph-image'),
+			title: Liferay.Language.get('select-image'),
 			url: uploadOpenGraphImageURL,
 		});
 	});

@@ -163,7 +163,6 @@ public class ExportImportToolbarDisplayContext {
 									ParamUtil.getString(
 										_httpServletRequest, "displayStyle",
 										"descriptive"));
-
 								dropdownItem.setLabel(
 									exportImportConfiguration.getName());
 							});

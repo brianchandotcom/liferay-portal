@@ -186,9 +186,7 @@ public class DummyReferenceStagedModelRepository
 		exportActionableDynamicQuery.setClassLoader(clazz.getClassLoader());
 
 		exportActionableDynamicQuery.setModelClass(DummyReference.class);
-
 		exportActionableDynamicQuery.setPrimaryKeyPropertyName("id");
-
 		exportActionableDynamicQuery.setAddCriteriaMethod(
 			dynamicQuery -> {
 				Criterion modifiedDateCriterion =
@@ -275,18 +273,14 @@ public class DummyReferenceStagedModelRepository
 							stagedModelDataHandler.getExportableStatuses()));
 				}
 			});
-
 		exportActionableDynamicQuery.setCompanyId(
 			portletDataContext.getCompanyId());
-
 		exportActionableDynamicQuery.setGroupId(
 			portletDataContext.getScopeGroupId());
-
 		exportActionableDynamicQuery.setPerformActionMethod(
 			(DummyReference dummyReference) ->
 				StagedModelDataHandlerUtil.exportStagedModel(
 					portletDataContext, dummyReference));
-
 		exportActionableDynamicQuery.setStagedModelType(
 			new StagedModelType(
 				portal.getClassNameId(DummyReference.class.getName()),

@@ -90,7 +90,6 @@ public class PublishModelMenuItemTag extends IncludeTag {
 		httpServletRequest.setAttribute(
 			"liferay-export-import-changeset:publish-model-menu-item:className",
 			ExportImportClassedModelUtil.getClassName(_stagedModel));
-
 		httpServletRequest.setAttribute(
 			"liferay-export-import-changeset:publish-model-menu-item:uuid",
 			_stagedModel.getUuid());

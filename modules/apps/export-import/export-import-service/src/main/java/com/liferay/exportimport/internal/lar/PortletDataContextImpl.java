@@ -1954,7 +1954,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 			serviceContext.setAssetCategoryIds(
 				getAssetCategoryIds(clazz, classPKObj));
-
 			serviceContext.setAssetTagNames(
 				getAssetTagNames(clazz, classPKObj));
 		}

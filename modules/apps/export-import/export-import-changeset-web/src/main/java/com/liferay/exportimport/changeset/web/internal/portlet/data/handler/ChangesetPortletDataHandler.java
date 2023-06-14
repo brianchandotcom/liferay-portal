@@ -265,7 +265,6 @@ public class ChangesetPortletDataHandler extends BasePortletDataHandler {
 				RestrictionsFactoryUtil.eq(
 					"changesetCollectionId",
 					changesetCollection.getChangesetCollectionId())));
-
 		actionableDynamicQuery.setPerformActionMethod(
 			(ActionableDynamicQuery.PerformActionMethod<ChangesetEntry>)
 				changesetEntry -> _exportStagedModel(

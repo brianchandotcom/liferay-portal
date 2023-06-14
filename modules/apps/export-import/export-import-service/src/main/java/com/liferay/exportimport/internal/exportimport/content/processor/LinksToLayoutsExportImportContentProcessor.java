@@ -314,7 +314,6 @@ public class LinksToLayoutsExportImportContentProcessor
 						).put(
 							"privateLayout", String.valueOf(privateLayout)
 						).build());
-
 				exportImportContentValidationException.setType(
 					ExportImportContentValidationException.LAYOUT_NOT_FOUND);
 

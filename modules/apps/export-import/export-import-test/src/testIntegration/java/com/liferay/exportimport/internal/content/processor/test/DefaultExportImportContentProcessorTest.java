@@ -218,7 +218,6 @@ public class DefaultExportImportContentProcessorTest {
 			_stagingPublicLayout.getPlid(), _livePublicLayout.getPlid());
 
 		_portletDataContextImport.setPlid(_livePublicLayout.getPlid());
-
 		_portletDataContextImport.setSourceGroupId(_stagingGroup.getGroupId());
 
 		rootElement.addElement("entry");

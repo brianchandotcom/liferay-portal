@@ -27,7 +27,7 @@ public class PropertiesSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
-	public void testLanguageKeyContext() throws Exception {
+	public void testLanguageKeysContext() throws Exception {
 		test(
 			SourceProcessorTestParameters.create(
 				"content/Language.testproperties"

@@ -15,6 +15,7 @@
 package com.liferay.exportimport.internal.content.processor.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
@@ -148,7 +149,7 @@ public class DefaultExportImportContentProcessorTest {
 		_fileEntry = DLAppLocalServiceUtil.addFileEntry(
 			null, TestPropsValues.getUserId(), _stagingGroup.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString() + ".txt", ContentTypes.TEXT_PLAIN,
+			"00000000-0000-0000-0000-000000000000.txt", ContentTypes.TEXT_PLAIN,
 			TestDataConstants.TEST_BYTE_ARRAY, null, null,
 			ServiceContextTestUtil.getServiceContext(
 				_stagingGroup.getGroupId(), TestPropsValues.getUserId()));
@@ -239,8 +240,15 @@ public class DefaultExportImportContentProcessorTest {
 		String content = _replaceParameters(
 			_getContent("dl_references.txt"), _fileEntry);
 
-		_exportImportContentProcessor.validateContentReferences(
-			_stagingGroup.getGroupId(), content);
+		try {
+			_exportImportContentProcessor.validateContentReferences(
+				_stagingGroup.getGroupId(), content);
+		}
+		catch (Exception exception) {
+			if (exception.getCause() instanceof NoSuchFileEntryException) {
+				Assert.fail("Filename should not be recognised as UUID");
+			}
+		}
 
 		List<String> urls = _getURLs(content);
 

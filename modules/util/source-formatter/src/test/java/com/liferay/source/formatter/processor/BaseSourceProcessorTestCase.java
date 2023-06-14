@@ -110,6 +110,28 @@ public abstract class BaseSourceProcessorTestCase {
 					" does not end with a valid extension");
 		}
 
+		String actualFormattedContent = null;
+
+		String expectedFileName =
+			sourceProcessorTestParameters.getExpectedFileName();
+
+		if (expectedFileName != null) {
+			actualFormattedContent = FileUtil.read(
+				new File(
+					_temporaryFolder,
+					StringUtil.replace(expectedFileName, ".test", ".")));
+
+			expectedFileName = StringBundler.concat(
+				_DIR_NAME, "/expected/", expectedFileName);
+		}
+		else {
+			expectedFileName = StringBundler.concat(
+				_DIR_NAME, "/expected/",
+				sourceProcessorTestParameters.getFileName());
+		}
+
+		URL expectedURL = classLoader.getResource(expectedFileName);
+
 		List<SourceFormatterMessage> sourceFormatterMessages =
 			ListUtil.fromCollection(
 				sourceFormatter.getSourceFormatterMessages());
@@ -120,74 +142,19 @@ public abstract class BaseSourceProcessorTestCase {
 		if (!(sourceFormatterMessages.isEmpty() &&
 			  expectedMessages.isEmpty())) {
 
-			Assert.assertEquals(
-				sourceFormatterMessages.toString(), expectedMessages.size(),
-				sourceFormatterMessages.size());
-
-			for (int i = 0; i < sourceFormatterMessages.size(); i++) {
-				SourceFormatterMessage sourceFormatterMessage =
-					sourceFormatterMessages.get(i);
-
-				Assert.assertEquals(
-					expectedMessages.get(i),
-					sourceFormatterMessage.getMessage());
-
-				int lineNumber = sourceFormatterMessage.getLineNumber();
-
-				if (lineNumber > -1) {
-					List<Integer> lineNumbers =
-						sourceProcessorTestParameters.getLineNumbers();
-
-					Assert.assertEquals(
-						String.valueOf(lineNumbers.get(i)),
-						String.valueOf(lineNumber));
-				}
-
-				String absolutePath = StringUtil.replace(
-					newFile.getAbsolutePath(), CharPool.BACK_SLASH,
-					CharPool.SLASH);
-
-				Assert.assertEquals(
-					absolutePath, sourceFormatterMessage.getFileName());
+			if (expectedURL != null) {
+				_checkExpectedContent(
+					actualFormattedContent, expectedFileName,
+					modifiedFileNames);
 			}
+
+			_checkExpectedMessages(
+				expectedMessages, newFile, sourceFormatterMessages,
+				sourceProcessorTestParameters);
 		}
 		else {
-			String actualFormattedContent = FileUtil.read(
-				new File(modifiedFileNames.get(0)));
-
-			String expectedFileName =
-				sourceProcessorTestParameters.getExpectedFileName();
-
-			if (expectedFileName != null) {
-				actualFormattedContent = FileUtil.read(
-					new File(
-						_temporaryFolder,
-						StringUtil.replace(expectedFileName, ".test", ".")));
-
-				expectedFileName = StringBundler.concat(
-					_DIR_NAME, "/expected/", expectedFileName);
-			}
-			else {
-				expectedFileName = StringBundler.concat(
-					_DIR_NAME, "/expected/",
-					sourceProcessorTestParameters.getFileName());
-			}
-
-			URL expectedURL = classLoader.getResource(expectedFileName);
-
-			if (expectedURL == null) {
-				throw new FileNotFoundException(expectedFileName);
-			}
-
-			String expectedFormattedContent = IOUtils.toString(
-				expectedURL, StringPool.UTF8);
-
-			expectedFormattedContent = StringUtil.replace(
-				expectedFormattedContent, StringPool.RETURN_NEW_LINE,
-				StringPool.NEW_LINE);
-
-			Assert.assertEquals(
-				expectedFormattedContent, actualFormattedContent);
+			_checkExpectedContent(
+				actualFormattedContent, expectedFileName, modifiedFileNames);
 		}
 	}
 
@@ -219,6 +186,67 @@ public abstract class BaseSourceProcessorTestCase {
 
 	protected final ClassLoader classLoader =
 		BaseSourceProcessorTestCase.class.getClassLoader();
+
+	private static void _checkExpectedMessages(
+		List<String> expectedMessages, File newFile,
+		List<SourceFormatterMessage> sourceFormatterMessages,
+		SourceProcessorTestParameters sourceProcessorTestParameters) {
+
+		Assert.assertEquals(
+			sourceFormatterMessages.toString(), expectedMessages.size(),
+			sourceFormatterMessages.size());
+
+		for (int i = 0; i < sourceFormatterMessages.size(); i++) {
+			SourceFormatterMessage sourceFormatterMessage =
+				sourceFormatterMessages.get(i);
+
+			Assert.assertEquals(
+				expectedMessages.get(i), sourceFormatterMessage.getMessage());
+
+			int lineNumber = sourceFormatterMessage.getLineNumber();
+
+			if (lineNumber > -1) {
+				List<Integer> lineNumbers =
+					sourceProcessorTestParameters.getLineNumbers();
+
+				Assert.assertEquals(
+					String.valueOf(lineNumbers.get(i)),
+					String.valueOf(lineNumber));
+			}
+
+			String absolutePath = StringUtil.replace(
+				newFile.getAbsolutePath(), CharPool.BACK_SLASH, CharPool.SLASH);
+
+			Assert.assertEquals(
+				absolutePath, sourceFormatterMessage.getFileName());
+		}
+	}
+
+	private void _checkExpectedContent(
+			String actualFormattedContent, String expectedFileName,
+			List<String> modifiedFileNames)
+		throws Exception {
+
+		if (actualFormattedContent == null) {
+			actualFormattedContent = FileUtil.read(
+				new File(modifiedFileNames.get(0)));
+		}
+
+		URL expectedURL = classLoader.getResource(expectedFileName);
+
+		if (expectedURL == null) {
+			throw new FileNotFoundException(expectedFileName);
+		}
+
+		String expectedFormattedContent = IOUtils.toString(
+			expectedURL, StringPool.UTF8);
+
+		expectedFormattedContent = StringUtil.replace(
+			expectedFormattedContent, StringPool.RETURN_NEW_LINE,
+			StringPool.NEW_LINE);
+
+		Assert.assertEquals(expectedFormattedContent, actualFormattedContent);
+	}
 
 	private File _generateTempFile(String fileName) throws Exception {
 		int pos = fileName.lastIndexOf(CharPool.PERIOD);

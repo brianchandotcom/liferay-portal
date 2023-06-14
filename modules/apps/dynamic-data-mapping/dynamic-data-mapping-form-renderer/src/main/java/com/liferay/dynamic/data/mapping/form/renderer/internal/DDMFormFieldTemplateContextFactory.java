@@ -177,7 +177,6 @@ public class DDMFormFieldTemplateContextFactory {
 		}
 
 		ddmFormFieldRenderingContext.setProperty("groupId", groupId);
-
 		ddmFormFieldRenderingContext.setReturnFullContext(
 			_ddmFormRenderingContext.isReturnFullContext());
 		ddmFormFieldRenderingContext.setViewMode(

@@ -181,7 +181,6 @@ public class UpdateRecordMVCResourceCommand extends BaseMVCResourceCommand {
 		}
 
 		ddmFormValues.setAvailableLocales(locales);
-
 		ddmFormValues.setDefaultLocale(
 			LocaleUtil.fromLanguageId(
 				jsonObject.getString("defaultLanguageId")));

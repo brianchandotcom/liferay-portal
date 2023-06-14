@@ -131,22 +131,22 @@ public class SegmentsEntryReindexMessageListener extends BaseMessageListener {
 		SegmentsEntry segmentsEntry =
 			_segmentsEntryLocalService.fetchSegmentsEntry(segmentsEntryId);
 
-		if ((segmentsEntry != null) &&
-			(segmentsEntry.getCriteriaObj() != null)) {
+		if ((segmentsEntry == null) ||
+			(segmentsEntry.getCriteriaObj() == null)) {
 
-			_segmentsEntryRelLocalService.deleteSegmentsEntryRels(
-				segmentsEntryId);
-
-			ServiceContext serviceContext = new ServiceContext();
-
-			serviceContext.setScopeGroupId(segmentsEntry.getGroupId());
-			serviceContext.setUserId(segmentsEntry.getUserId());
-
-			_segmentsEntryRelLocalService.addSegmentsEntryRels(
-				segmentsEntryId,
-				_portal.getClassNameId(segmentsEntry.getType()),
-				ArrayUtil.toLongArray(newClassPKs), serviceContext);
+			return;
 		}
+
+		_segmentsEntryRelLocalService.deleteSegmentsEntryRels(segmentsEntryId);
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setScopeGroupId(segmentsEntry.getGroupId());
+		serviceContext.setUserId(segmentsEntry.getUserId());
+
+		_segmentsEntryRelLocalService.addSegmentsEntryRels(
+			segmentsEntryId, _portal.getClassNameId(segmentsEntry.getType()),
+			ArrayUtil.toLongArray(newClassPKs), serviceContext);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -133,7 +133,7 @@ import org.skyscreamer.jsonassert.JSONAssert;
 /**
  * @author Luis Miguel Barcos
  */
-@FeatureFlags({"LPS-153117", "LPS-154672", "LPS-164801"})
+@FeatureFlags({"LPS-153117", "LPS-164801"})
 @RunWith(Arquillian.class)
 public class ObjectEntryResourceTest {
 
@@ -3361,7 +3361,6 @@ public class ObjectEntryResourceTest {
 			Type.ONE_TO_MANY);
 	}
 
-	@FeatureFlags("LPS-165819")
 	@Test
 	public void testGetNestedFieldDetailsInRelationshipsWithSystemObjectDefinition()
 		throws Exception {

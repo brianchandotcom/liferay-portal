@@ -138,7 +138,6 @@ public class SystemObjectRelatedObjectEntriesTest {
 			_objectDefinition.getObjectDefinitionId());
 	}
 
-	@FeatureFlags("LPS-165819")
 	@Test
 	public void testGetManyToManySystemObjectRelatedObjectEntries()
 		throws Exception {

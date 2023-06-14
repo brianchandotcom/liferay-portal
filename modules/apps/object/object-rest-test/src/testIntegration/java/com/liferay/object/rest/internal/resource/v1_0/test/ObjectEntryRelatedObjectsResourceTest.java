@@ -544,7 +544,6 @@ public class ObjectEntryRelatedObjectsResourceTest {
 		}
 	}
 
-	@FeatureFlags("LPS-165819")
 	@Ignore
 	@Test
 	public void testPostCustomObjectEntryWithNestedSystemObjectEntry()
@@ -581,7 +580,6 @@ public class ObjectEntryRelatedObjectsResourceTest {
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY));
 	}
 
-	@FeatureFlags("LPS-165819")
 	@Ignore
 	@Test
 	public void testPutCustomObjectEntryWithNestedSystemObjectEntry()
@@ -618,7 +616,6 @@ public class ObjectEntryRelatedObjectsResourceTest {
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY));
 	}
 
-	@FeatureFlags("LPS-165819")
 	@Ignore
 	@Test
 	public void testPutCustomObjectEntryWithNestedSystemObjectEntryByExternalReferenceCode()

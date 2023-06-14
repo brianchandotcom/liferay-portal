@@ -43,7 +43,6 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.entity.IdEntityField;
 import com.liferay.portal.odata.entity.IntegerEntityField;
 import com.liferay.portal.odata.entity.StringEntityField;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -71,7 +70,6 @@ import org.osgi.framework.FrameworkUtil;
 /**
  * @author Feliphe Marinho
  */
-@FeatureFlags("LPS-154672")
 @RunWith(Arquillian.class)
 public class ObjectEntryEntityModelTest {
 

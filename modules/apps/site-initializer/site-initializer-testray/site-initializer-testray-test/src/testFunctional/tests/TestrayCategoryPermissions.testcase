@@ -1,7 +1,7 @@
 @component-name = "portal-solutions"
 definition {
 
-	property custom.properties = "feature.flag.LPS-163118=true${line.separator}feature.flag.LPS-154672=true";
+	property custom.properties = "feature.flag.LPS-163118=true";
 	property osgi.modules.includes = "site-initializer-testray";
 	property portal.release = "false";
 	property portal.upstream = "true";

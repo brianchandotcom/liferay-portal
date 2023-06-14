@@ -25,7 +25,6 @@ import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -63,10 +62,6 @@ public class ObjectEntryEntityModel implements EntityModel {
 		throws Exception {
 
 		_entityFieldsMap = _getStringEntityFieldsMap(objectFields);
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-154672")) {
-			return;
-		}
 
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionLocalServiceUtil.getObjectDefinition(

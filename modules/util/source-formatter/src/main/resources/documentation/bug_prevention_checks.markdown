@@ -162,6 +162,7 @@ PropertiesBuildIncludeDirsCheck | .eslintignore, .prettierignore or .properties 
 PropertiesFeatureFlagsCheck | .eslintignore, .prettierignore or .properties | Generate feature flags in `portal.properties` file. |
 PropertiesImportedFilesContentCheck | .eslintignore, .prettierignore or .properties | Performs several checks on `imported-files.properties` file. |
 [PropertiesLanguageKeysCheck](check/properties_language_keys_check.markdown#propertieslanguagekeyscheck) | .eslintignore, .prettierignore or .properties | Checks that there is no HTML markup in language keys. |
+PropertiesLanguageKeysContextCheck | .eslintignore, .prettierignore or .properties | Checks if the language keys include a word of context to indicate specific meaning. |
 PropertiesLiferayPluginPackageFileCheck | .eslintignore, .prettierignore or .properties | Performs several checks on `liferay-plugin-package.properties` file. |
 PropertiesLiferayPluginPackageLiferayVersionsCheck | .eslintignore, .prettierignore or .properties | Validates the version in `liferay-plugin-package.properties` file. |
 PropertiesPortalFileCheck | .eslintignore, .prettierignore or .properties | Performs several checks on `portal.properties` or `portal-*.properties` file. |

@@ -59,6 +59,22 @@ public class PoshiVariablesContext {
 		return _staticMap.containsKey(replaceCommandVars(key));
 	}
 
+	public Object getObjectFromCommandMap(String key) {
+		if (containsKeyInCommandMap((String)replaceCommandVars(key))) {
+			return getValueFromCommandMap(key);
+		}
+
+		return null;
+	}
+
+	public Object getReplacedCommandVarsObject(String token) {
+		if (token == null) {
+			return null;
+		}
+
+		return replaceCommandVars(token);
+	}
+
 	public String getReplacedCommandVarsString(String token) {
 		if (token == null) {
 			return null;
@@ -71,16 +87,6 @@ public class PoshiVariablesContext {
 		}
 
 		return tokenObject.toString();
-	}
-
-	public String getStringFromCommandMap(String key) {
-		if (containsKeyInCommandMap((String)replaceCommandVars(key))) {
-			Object object = getValueFromCommandMap(key);
-
-			return object.toString();
-		}
-
-		return null;
 	}
 
 	public String getStringFromExecuteMap(String key) {
@@ -186,9 +192,10 @@ public class PoshiVariablesContext {
 		matcher.reset();
 
 		while (matcher.find() && _commandMap.containsKey(matcher.group(1))) {
-			String varValue = getStringFromCommandMap(matcher.group(1));
+			Object varValue = getObjectFromCommandMap(matcher.group(1));
 
-			token = StringUtil.replace(token, matcher.group(), varValue);
+			token = StringUtil.replace(
+				token, matcher.group(), (String)varValue);
 		}
 
 		return token;

@@ -264,7 +264,6 @@ public class ImportFragmentEntriesStrutsActionTest {
 
 		mockHttpServletRequest.setAttribute(
 			WebKeys.CURRENT_URL, "/portal/fragment/import_fragment_entries");
-
 		mockHttpServletRequest.setAttribute(WebKeys.USER, user);
 
 		EventsProcessorUtil.process(

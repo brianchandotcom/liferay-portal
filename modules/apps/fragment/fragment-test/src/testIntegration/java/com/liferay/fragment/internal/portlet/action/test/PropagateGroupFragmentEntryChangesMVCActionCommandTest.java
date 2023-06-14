@@ -160,7 +160,6 @@ public class PropagateGroupFragmentEntryChangesMVCActionCommandTest {
 
 		mockLiferayPortletActionRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _getThemeDisplay());
-
 		mockLiferayPortletActionRequest.setParameter(
 			"segmentsExperienceId",
 			String.valueOf(

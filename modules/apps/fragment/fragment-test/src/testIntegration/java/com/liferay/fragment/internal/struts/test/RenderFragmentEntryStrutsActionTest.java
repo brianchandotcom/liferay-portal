@@ -195,7 +195,6 @@ public class RenderFragmentEntryStrutsActionTest {
 
 		mockHttpServletRequest.setAttribute(
 			WebKeys.CURRENT_URL, "/portal/fragment/render_fragment_entry");
-
 		mockHttpServletRequest.setAttribute(WebKeys.USER, user);
 
 		EventsProcessorUtil.process(

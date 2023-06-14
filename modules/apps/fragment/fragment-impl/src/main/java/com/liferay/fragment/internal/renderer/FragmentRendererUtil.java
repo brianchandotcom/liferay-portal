@@ -142,7 +142,6 @@ public class FragmentRendererUtil {
 			IconTag iconTag = new IconTag();
 
 			iconTag.setCssClass("lexicon-icon lexicon-icon-password-policies");
-
 			iconTag.setSymbol("password-policies");
 
 			printWriter.write(

@@ -24,6 +24,7 @@ import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
@@ -35,6 +36,7 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -49,6 +51,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
@@ -275,6 +278,34 @@ public class LayoutUtilityPageEntryServiceTest {
 		Assert.assertNull(persistedLayoutUtilityPageEntry);
 	}
 
+	@Test
+	public void testRenameLayoutUtilityPageEntry() throws Exception {
+		LayoutUtilityPageEntry layoutUtilityPageEntry =
+			_layoutUtilityPageEntryService.addLayoutUtilityPageEntry(
+				RandomTestUtil.randomString(), _group.getGroupId(), 0, 0, true,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(), 0,
+				_serviceContext);
+
+		layoutUtilityPageEntry =
+			_layoutUtilityPageEntryLocalService.updateLayoutUtilityPageEntry(
+				layoutUtilityPageEntry.getLayoutUtilityPageEntryId(),
+				RandomTestUtil.randomString());
+
+		Layout draftLayout = _layoutLocalService.fetchDraftLayout(
+			layoutUtilityPageEntry.getPlid());
+
+		Assert.assertEquals(
+			layoutUtilityPageEntry.getName(),
+			draftLayout.getName(LocaleUtil.getSiteDefault()));
+
+		Layout layout = _layoutLocalService.getLayout(
+			layoutUtilityPageEntry.getPlid());
+
+		Assert.assertEquals(
+			layoutUtilityPageEntry.getName(),
+			layout.getName(LocaleUtil.getSiteDefault()));
+	}
+
 	@Test(expected = PrincipalException.MustHavePermission.class)
 	public void testSetDefaultLayoutUtilityPageEntryWithNoPermissions()
 		throws Exception {
@@ -416,11 +447,17 @@ public class LayoutUtilityPageEntryServiceTest {
 	private Language _language;
 
 	@Inject
+	private LayoutLocalService _layoutLocalService;
+
+	@Inject
 	private LayoutUtilityPageEntryLocalService
 		_layoutUtilityPageEntryLocalService;
 
 	@Inject
 	private LayoutUtilityPageEntryService _layoutUtilityPageEntryService;
+
+	@Inject
+	private Portal _portal;
 
 	@Inject
 	private PortletFileRepository _portletFileRepository;

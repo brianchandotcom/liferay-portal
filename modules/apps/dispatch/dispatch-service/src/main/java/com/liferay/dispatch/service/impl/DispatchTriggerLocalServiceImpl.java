@@ -323,7 +323,6 @@ public class DispatchTriggerLocalServiceImpl
 					startDateMonth, startDateDay, startDateYear, startDateHour,
 					startDateMinute, DispatchTriggerStartDateException.class),
 				timeZoneId));
-
 		dispatchTrigger.setTimeZoneId(timeZoneId);
 
 		dispatchTrigger = dispatchTriggerPersistence.update(dispatchTrigger);

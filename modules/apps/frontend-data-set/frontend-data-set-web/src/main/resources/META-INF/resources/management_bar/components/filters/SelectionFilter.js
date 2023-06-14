@@ -105,7 +105,7 @@ function SelectionFilter({
 	);
 	const [items, setItems] = useState(apiURL ? null : initialItems);
 	const [localItems, setLocalItems] = useState(
-		initialItems.length ? initialItems : null
+		initialItems.length ? initialItems : []
 	);
 	const [firstRequest, setFirstRequest] = useState(true);
 	const [loading, setLoading] = useState(false);
@@ -179,14 +179,10 @@ function SelectionFilter({
 		}
 	};
 
-	const debouncedQuery = debounce((value) => {
+	const handleAutocompleteQuery = debounce((value) => {
 		setCurrentPage(1);
 		setSearch(value);
 	}, DEFAULT_DEBOUNCE_DELAY);
-
-	const handleAutocompleteQuery = (query) => {
-		debouncedQuery(query);
-	};
 
 	const isMounted = useIsMounted();
 

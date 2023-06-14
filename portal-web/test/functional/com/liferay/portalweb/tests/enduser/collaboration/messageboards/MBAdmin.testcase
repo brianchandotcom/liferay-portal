@@ -349,7 +349,7 @@ definition {
 	@description = "This test ensures that the new templates are set as the default and new terms (Message siblings, Message parents and Root message body) are included in the definition of terms."
 	@priority = 4
 	test RootMessageSiblingsAndParentsAreDefinedInDefaultTemplates {
-		property custom.properties = "feature.flag.LPS-182020=true${line.separator}message.boards.email.message.added.body=${resource:com/liferay/portlet/messageboards/dependencies/email_message_added_body_LPS-182020.tmpl}${line.separator}message.boards.email.message.updated.body=${resource:com/liferay/portlet/messageboards/dependencies/email_message_updated_body_LPS-182020.tmpl}";
+		property custom.properties = "message.boards.email.message.added.body=${resource:com/liferay/portlet/messageboards/dependencies/email_message_added_body_LPS-182020.tmpl}${line.separator}message.boards.email.message.updated.body=${resource:com/liferay/portlet/messageboards/dependencies/email_message_updated_body_LPS-182020.tmpl}";
 
 		MessageboardsPortlet.ViewMessageEmailTemplate(
 			content = "[$MESSAGE_SIBLINGS$] [$MESSAGE_USER_NAME$] NEW [$MESSAGE_BODY$] Reply",

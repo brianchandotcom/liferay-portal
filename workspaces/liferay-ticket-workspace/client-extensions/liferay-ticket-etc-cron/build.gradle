@@ -14,18 +14,18 @@ buildscript {
 }
 
 apply plugin: "com.liferay.source.formatter"
-apply plugin: "java"
+apply plugin: "java-library"
 apply plugin: "org.springframework.boot"
 
 dependencies {
-	compile group: "com.liferay", name: "com.liferay.client.extension.util.spring.boot", version: "latest.release"
-	compile group: "com.liferay", name: "com.liferay.headless.admin.user.client", version: "latest.release"
-	compile group: "com.liferay", name: "com.liferay.headless.delivery.client", version: "latest.release"
-	compile group: "commons-logging", name: "commons-logging", version: "1.2"
-	compile group: "org.json", name: "json", version: "20220320"
-	compile group: "org.springframework.boot", name: "spring-boot", version: "2.7.9"
-	compile group: "org.springframework.boot", name: "spring-boot-starter-oauth2-client", version: "2.7.9"
-	compile group: "org.springframework.boot", name: "spring-boot-starter-web", version: "2.7.9"
+	implementation group: "com.liferay", name: "com.liferay.client.extension.util.spring.boot", version: "latest.release"
+	implementation group: "com.liferay", name: "com.liferay.headless.admin.user.client", version: "latest.release"
+	implementation group: "com.liferay", name: "com.liferay.headless.delivery.client", version: "latest.release"
+	implementation group: "commons-logging", name: "commons-logging", version: "1.2"
+	implementation group: "org.json", name: "json", version: "20220320"
+	implementation group: "org.springframework.boot", name: "spring-boot", version: "2.7.9"
+	implementation group: "org.springframework.boot", name: "spring-boot-starter-oauth2-client", version: "2.7.9"
+	implementation group: "org.springframework.boot", name: "spring-boot-starter-web", version: "2.7.9"
 }
 
 repositories {

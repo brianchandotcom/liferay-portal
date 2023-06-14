@@ -15,8 +15,10 @@
 package com.liferay.object.internal.definition.util;
 
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.PortalRunMode;
 
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Alejandro Tardín
@@ -26,11 +28,19 @@ public class ObjectDefinitionUtil {
 	public static String getModifiableSystemObjectDefinitionRESTContextPath(
 		String name) {
 
+		if (PortalRunMode.isTestMode() && Objects.equals(name, "Test")) {
+			return "/test";
+		}
+
 		return _allowedModifiableSystemObjectDefinitionNames.get(name);
 	}
 
 	public static boolean isAllowedModifiableSystemObjectDefinitionName(
 		String name) {
+
+		if (PortalRunMode.isTestMode() && Objects.equals(name, "Test")) {
+			return true;
+		}
 
 		return _allowedModifiableSystemObjectDefinitionNames.containsKey(name);
 	}

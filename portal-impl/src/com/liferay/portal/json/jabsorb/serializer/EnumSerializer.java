@@ -1,0 +1,177 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.portal.json.jabsorb.serializer;
+
+import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+
+import java.lang.reflect.Method;
+
+import org.jabsorb.serializer.AbstractSerializer;
+import org.jabsorb.serializer.MarshallException;
+import org.jabsorb.serializer.ObjectMatch;
+import org.jabsorb.serializer.SerializerState;
+import org.jabsorb.serializer.UnmarshallException;
+
+import org.json.JSONObject;
+
+/**
+ * @author Dante Wang
+ */
+public class EnumSerializer extends AbstractSerializer {
+
+	@Override
+	public boolean canSerialize(Class clazz, Class jsonClass) {
+		if (clazz.isEnum() &&
+			((jsonClass == null) || (jsonClass == JSONObject.class))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public Class<?>[] getJSONClasses() {
+		return _JSON_CLASSES;
+	}
+
+	@Override
+	public Class<?>[] getSerializableClasses() {
+		return _SERIALIZABLE_CLASSES;
+	}
+
+	@Override
+	public Object marshall(
+			SerializerState serializerState, Object parentObject, Object object)
+		throws MarshallException {
+
+		JSONObject jsonObject = new JSONObject();
+
+		if (ser.getMarshallClassHints()) {
+			try {
+				Class<?> clazz = object.getClass();
+
+				jsonObject.put("javaClass", clazz.getName());
+			}
+			catch (Exception exception) {
+				throw new MarshallException(
+					"Unable to put javaClass", exception);
+			}
+		}
+
+		try {
+			serializerState.push(object, StringPool.BLANK, "enumValue");
+
+			Enum<?> enumObject = (Enum<?>)object;
+
+			jsonObject.put("enumValue", enumObject.name());
+		}
+		finally {
+			serializerState.pop();
+		}
+
+		return jsonObject;
+	}
+
+	@Override
+	public ObjectMatch tryUnmarshall(
+			SerializerState serializerState, Class clazz, Object object)
+		throws UnmarshallException {
+
+		JSONObject jsonObject = (JSONObject)object;
+
+		_getJavaClass(jsonObject);
+
+		ObjectMatch objectMatch = ObjectMatch.ROUGHLY_SIMILAR;
+
+		if (jsonObject.has("enumValue")) {
+			objectMatch = ObjectMatch.OKAY;
+		}
+
+		serializerState.setSerialized(object, objectMatch);
+
+		return objectMatch;
+	}
+
+	@Override
+	public Object unmarshall(
+			SerializerState serializerState, Class clazz, Object object)
+		throws UnmarshallException {
+
+		JSONObject jsonObject = (JSONObject)object;
+
+		Class<?> javaClass = _getJavaClass(jsonObject);
+
+		String enumValue = _getString(jsonObject, "enumValue");
+
+		try {
+			Method valueOfMethod = ReflectionUtil.getDeclaredMethod(
+				javaClass, "valueOf", String.class);
+
+			Object enumObject = valueOfMethod.invoke(null, enumValue);
+
+			serializerState.setSerialized(object, enumObject);
+
+			return enumObject;
+		}
+		catch (Exception exception) {
+			throw new UnmarshallException(
+				StringBundler.concat(
+					"Unable to deserialize ", javaClass, " with value ",
+					enumValue),
+				exception);
+		}
+	}
+
+	private Class<?> _getJavaClass(JSONObject jsonObject)
+		throws UnmarshallException {
+
+		String javaClassName = _getString(jsonObject, "javaClass");
+
+		try {
+			return Class.forName(javaClassName);
+		}
+		catch (ClassNotFoundException classNotFoundException) {
+			throw new UnmarshallException(
+				"Unable to load enum class", classNotFoundException);
+		}
+	}
+
+	private String _getString(JSONObject jsonObject, String key)
+		throws UnmarshallException {
+
+		String string = null;
+
+		try {
+			string = jsonObject.getString(key);
+		}
+		catch (Exception exception) {
+			throw new UnmarshallException("Unable to get " + key, exception);
+		}
+
+		if (string == null) {
+			throw new UnmarshallException(key + " is undefined");
+		}
+
+		return string;
+	}
+
+	private static final Class<?>[] _JSON_CLASSES = {JSONObject.class};
+
+	private static final Class<?>[] _SERIALIZABLE_CLASSES = {Enum.class};
+
+}

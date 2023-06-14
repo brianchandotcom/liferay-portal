@@ -91,12 +91,6 @@
 		</sequential>
 	</macrodef>
 
-	<macrodef name="configure-elasticsearch-discovery-type-single-node">
-		<sequential>
-			<echo append="true" file="${elasticsearch.dir}/config/elasticsearch.yml">${line.separator}discovery.type: single-node</echo>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="configure-elasticsearch-jdk">
 		<attribute name="elasticsearch.java.home" />
 
@@ -774,8 +768,6 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 		<sequential>
 			<set-up-standard-elasticsearch />
 
-			<configure-elasticsearch-discovery-type-single-node />
-
 			<configure-elasticsearch-ltr-properties />
 
 			<configure-elasticsearch-jdk elasticsearch.java.home="/opt/java/openjdk17" />
@@ -809,8 +801,6 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 		<sequential>
 			<set-up-standard-elasticsearch />
 
-			<configure-elasticsearch-discovery-type-single-node />
-
 			<prepare-additional-elasticsearch-bundles total.bundles="2" />
 
 			<configure-elasticsearch-second-cluster-properties />
@@ -839,8 +829,6 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 	<macrodef name="start-elasticsearch-with-xpack">
 		<sequential>
 			<set-up-standard-elasticsearch />
-
-			<configure-elasticsearch-discovery-type-single-node />
 
 			<generate-x-pack-security-certificates />
 
@@ -1373,8 +1361,6 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 			</case>
 			<default>
 				<set-up-standard-elasticsearch />
-
-				<configure-elasticsearch-discovery-type-single-node />
 
 				<antcall target="start-elasticsearch-node" unless:true="${skip.server.startup}" />
 			</default>

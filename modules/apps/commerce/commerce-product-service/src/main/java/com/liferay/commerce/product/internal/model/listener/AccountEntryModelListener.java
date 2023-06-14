@@ -16,8 +16,12 @@ package com.liferay.commerce.product.internal.model.listener;
 
 import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.product.constants.CommerceChannelAccountEntryRelConstants;
+import com.liferay.commerce.product.model.CommerceCatalog;
+import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.model.CommerceChannelAccountEntryRel;
+import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelLocalService;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -25,6 +29,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -34,6 +40,29 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = ModelListener.class)
 public class AccountEntryModelListener extends BaseModelListener<AccountEntry> {
+
+	@Override
+	public void onAfterRemove(AccountEntry accountEntry) {
+		List<CommerceCatalog> commerceCatalogs =
+			_commerceCatalogLocalService.getCommerceCatalogsByAccountEntryId(
+				accountEntry.getAccountEntryId());
+
+		for (CommerceCatalog commerceCatalog : commerceCatalogs) {
+			commerceCatalog.setAccountEntryId(0);
+
+			_commerceCatalogLocalService.updateCommerceCatalog(commerceCatalog);
+		}
+
+		List<CommerceChannel> commerceChannels =
+			_commerceChannelLocalService.getCommerceChannelsByAccountEntryId(
+				accountEntry.getAccountEntryId());
+
+		for (CommerceChannel commerceChannel : commerceChannels) {
+			commerceChannel.setAccountEntryId(0);
+
+			_commerceChannelLocalService.updateCommerceChannel(commerceChannel);
+		}
+	}
 
 	@Override
 	public void onAfterUpdate(
@@ -171,7 +200,13 @@ public class AccountEntryModelListener extends BaseModelListener<AccountEntry> {
 		AccountEntryModelListener.class);
 
 	@Reference
+	private CommerceCatalogLocalService _commerceCatalogLocalService;
+
+	@Reference
 	private CommerceChannelAccountEntryRelLocalService
 		_commerceChannelAccountEntryRelLocalService;
+
+	@Reference
+	private CommerceChannelLocalService _commerceChannelLocalService;
 
 }

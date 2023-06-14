@@ -183,14 +183,12 @@ const InviteTeamMembersPage = ({
 				isSelectdAdministratorOrRequestorRole
 			) {
 				setBaseButtonDisabled(true);
-			}
-			else {
+			} else {
 				setInitialError(false);
 				setBaseButtonDisabled(sucessfullyEmails !== totalEmails);
 				setshowEmptyEmailError(false);
 			}
-		}
-		else if (touched['invites']?.some((field) => field?.email)) {
+		} else if (touched['invites']?.some((field) => field?.email)) {
 			setInitialError(true);
 			setBaseButtonDisabled(true);
 		}
@@ -250,13 +248,14 @@ const InviteTeamMembersPage = ({
 							project.accountKey,
 							provisioningServerAPI,
 							sessionId,
+							filledEmail.givenName,
 							encodeURI(filledEmail.email),
+							filledEmail.familyName,
 							filledEmail.role.raysourceName
 						);
 
 						return filledEmail;
-					}
-					catch (error) {
+					} catch (error) {
 						displaySuccess = false;
 						Liferay.Util.openToast(DEFAULT_WARNING);
 					}
@@ -303,8 +302,7 @@ const InviteTeamMembersPage = ({
 			}
 
 			setIsLoadingUserInvitation(false);
-		}
-		else {
+		} else {
 			setInitialError(true);
 			setBaseButtonDisabled(true);
 			setTouched({

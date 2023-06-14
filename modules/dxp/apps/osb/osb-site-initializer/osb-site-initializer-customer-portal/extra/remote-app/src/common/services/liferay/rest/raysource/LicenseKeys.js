@@ -133,12 +133,14 @@ export async function associateContactRoleNameByEmailByProject(
 	accountKey,
 	provisioningServerAPI,
 	sessionId,
+	firstName,
 	emailURI,
+	lastName,
 	roleName
 ) {
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(
-		`${provisioningServerAPI}/accounts/${accountKey}/contacts/by-email-address/${emailURI}/roles?contactRoleNames=${roleName}`,
+		`${provisioningServerAPI}/accounts/${accountKey}/contacts/by-email-address/${emailURI}/roles?contactRoleNames=${roleName}&firstName=${firstName}&lastName=${lastName}`,
 		{
 			headers: {
 				'Okta-Session-ID': sessionId,

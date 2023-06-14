@@ -147,7 +147,21 @@ public class SegmentsEntryReindexMessageListener extends BaseMessageListener {
 			return;
 		}
 
-		_segmentsEntryRelLocalService.deleteSegmentsEntryRels(segmentsEntryId);
+		Set<Long> oldClassPKs = _getOldDatabaseClassPKs(segmentsEntryId);
+
+		Set<Long> deleteClassPKs = new HashSet<>();
+
+		for (Long oldClassPK : oldClassPKs) {
+			if (!newClassPKs.remove(oldClassPK)) {
+				deleteClassPKs.add(oldClassPK);
+			}
+		}
+
+		long classNameId = _portal.getClassNameId(segmentsEntry.getType());
+
+		_segmentsEntryRelLocalService.deleteSegmentsEntryRels(
+			segmentsEntryId, classNameId,
+			ArrayUtil.toLongArray(deleteClassPKs));
 
 		ServiceContext serviceContext = new ServiceContext();
 
@@ -155,8 +169,8 @@ public class SegmentsEntryReindexMessageListener extends BaseMessageListener {
 		serviceContext.setUserId(segmentsEntry.getUserId());
 
 		_segmentsEntryRelLocalService.addSegmentsEntryRels(
-			segmentsEntryId, _portal.getClassNameId(segmentsEntry.getType()),
-			ArrayUtil.toLongArray(newClassPKs), serviceContext);
+			segmentsEntryId, classNameId, ArrayUtil.toLongArray(newClassPKs),
+			serviceContext);
 	}
 
 	private void _updateIndex(

@@ -48,6 +48,9 @@ public class PropertiesLanguageKeysContextCheck extends BaseFileCheck {
 		int contextDepth = GetterUtil.getInteger(
 			getAttributeValue(_CONTEXT_DEPTH_KEY, absolutePath));
 
+		List<String> forbiddenContextNames = getAttributeValues(
+			_FORBIDDEN_CONTEXT_NAMES_KEY, absolutePath);
+
 		Properties properties = new Properties();
 
 		properties.load(new StringReader(content));
@@ -102,11 +105,7 @@ public class PropertiesLanguageKeysContextCheck extends BaseFileCheck {
 				 !bracketsContent.equals("v")) ||
 				(bracketsContent.matches("\\d+") && !key.contains("code") &&
 				 !key.contains("status")) ||
-				getAttributeValues(
-					_FORBIDDEN_CONTEXT_NAMES_KEY, absolutePath
-				).contains(
-					bracketsContent
-				)) {
+				forbiddenContextNames.contains(bracketsContent)) {
 
 				addMessage(
 					fileName,

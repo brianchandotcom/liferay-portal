@@ -1501,6 +1501,49 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-168698. Expired Web Content Display Pages are not accessible"
+	@priority = 4
+	test ViewNotFoundWhenAccessToAssociatedDisplayPageOfExpiredWebContent {
+		task ("Given a site administrator has an associated display page for web content") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.publish();
+
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+
+			JSONWebcontent.addWebContent(
+				content = "Webcontent Content",
+				groupName = "Test Site Name",
+				title = "Webcontent Title");
+		}
+
+		task ("When expire the created web content") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Expire",
+				rowEntry = "Webcontent Title");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Then the site administrator should see not found when access to the associated display page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/w/webcontent-title");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = 404);
+
+			ContentPages.viewFragmentText(
+				fragmentName = "paragraph",
+				id = "element-text",
+				text = "Page Not Found");
+		}
+	}
+
 	@description = "This is a test for LPS-146373. New prefixes for email,phone and none options can be used on Display Page Templates."
 	@priority = 3
 	test ViewPrefixesForEmailAndPhoneAndNoneOptions {

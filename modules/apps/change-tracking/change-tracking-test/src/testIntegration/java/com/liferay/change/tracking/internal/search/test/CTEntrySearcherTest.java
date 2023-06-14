@@ -419,9 +419,11 @@ public class CTEntrySearcherTest {
 		SearchResponse searchResponse = _searcher.search(
 			searchRequestBuilder.build());
 
-		DocumentsAssert.assertValuesIgnoreRelevance(
+		DocumentsAssert.assertValues(
 			searchResponse.getResponseString(), searchResponse.getDocuments(),
-			Field.UID, expectedValues);
+			Field.UID,
+			StringBundler.concat(
+				"[", StringUtils.join(expectedValues, ", "), "]"));
 	}
 
 	private Consumer<SearchRequestBuilder> _byAttribute(

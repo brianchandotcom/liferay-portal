@@ -14,6 +14,7 @@
 
 package com.liferay.segments.internal.messaging;
 
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -35,6 +36,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.segments.internal.constants.SegmentsDestinationNames;
 import com.liferay.segments.model.SegmentsEntry;
+import com.liferay.segments.model.SegmentsEntryRelTable;
 import com.liferay.segments.provider.SegmentsEntryProviderRegistry;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsEntryRelLocalService;
@@ -95,6 +97,20 @@ public class SegmentsEntryReindexMessageListener extends BaseMessageListener {
 				segmentsEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		return SetUtil.fromArray(classPKs);
+	}
+
+	private Set<Long> _getOldDatabaseClassPKs(long segmentsEntryId) {
+		Iterable<Long> iterable = _segmentsEntryLocalService.dslQuery(
+			DSLQueryFactoryUtil.select(
+				SegmentsEntryRelTable.INSTANCE.classPK
+			).from(
+				SegmentsEntryRelTable.INSTANCE
+			).where(
+				SegmentsEntryRelTable.INSTANCE.segmentsEntryId.eq(
+					segmentsEntryId)
+			));
+
+		return SetUtil.fromIterator(iterable.iterator());
 	}
 
 	private Set<Long> _getOldIndexClassPKs(

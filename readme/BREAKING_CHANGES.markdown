@@ -1404,3 +1404,25 @@ Remove `cacheDirCleanUpExpunge` and `cacheDirCleanUpFrequency` from `com.liferay
 ### Why was this change made?
 
 `S3FileCache` has various design flaws, and all other cloud-based store implementations in Liferay do not provide any caching mechanism.
+
+---------------------------------------
+
+## Removed unsupported scripting language types from file liferay-workflow-definition_7_4_0.xsd
+- **Date:** 2023-June-14
+- **JIRA Ticket:** [LPS-187594](https://issues.liferay.com/browse/LPS-187594)
+
+### What changed?
+
+`beanshell`, `javascript`, `python` and `ruby` scripting language types are removed, and cannot use `XML` file containing these scripting language types in the `liferay workflow`.
+
+### Who is affected?
+
+This affects anyone using `XML` file containing `beanshell`, `javascript`, `python` or `ruby` scripting language type in the `liferay workflow`.
+
+### How should I update my code?
+
+Use the `drl`, `groovy` or `java` scripting language type in the `XML` file, and rewrite the script logic.
+
+### Why was this change made?
+
+Liferay no longer supports these scripting language types.

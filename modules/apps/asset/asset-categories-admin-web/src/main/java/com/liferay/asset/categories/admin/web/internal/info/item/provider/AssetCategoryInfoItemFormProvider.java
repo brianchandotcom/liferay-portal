@@ -43,6 +43,26 @@ public class AssetCategoryInfoItemFormProvider
 
 	@Override
 	public InfoForm getInfoForm() {
+		return getInfoForm(StringPool.BLANK, 0);
+	}
+
+	@Override
+	public InfoForm getInfoForm(AssetCategory assetCategory) {
+		return getInfoForm(StringPool.BLANK, 0);
+	}
+
+	@Override
+	public InfoForm getInfoForm(long itemClassTypeId) {
+		return getInfoForm(StringPool.BLANK, 0);
+	}
+
+	@Override
+	public InfoForm getInfoForm(String formVariationKey) {
+		return getInfoForm(StringPool.BLANK, 0);
+	}
+
+	@Override
+	public InfoForm getInfoForm(String formVariationKey, long groupId) {
 		Set<Locale> availableLocales = _language.getAvailableLocales();
 
 		InfoLocalizedValue.Builder infoLocalizedValueBuilder =
@@ -73,7 +93,7 @@ public class AssetCategoryInfoItemFormProvider
 					unsafeConsumer.accept(
 						_displayPageInfoItemFieldSetProvider.getInfoFieldSet(
 							AssetCategory.class.getName(), StringPool.BLANK,
-							0));
+							groupId));
 				}
 			}
 		).infoFieldSetEntry(

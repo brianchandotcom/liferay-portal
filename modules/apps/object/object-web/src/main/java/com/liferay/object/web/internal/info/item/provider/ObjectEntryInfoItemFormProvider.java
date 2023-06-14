@@ -164,6 +164,13 @@ public class ObjectEntryInfoItemFormProvider
 	public InfoForm getInfoForm(String formVariationKey)
 		throws NoSuchFormVariationException {
 
+		return getInfoForm(formVariationKey, 0);
+	}
+
+	@Override
+	public InfoForm getInfoForm(String formVariationKey, long groupId)
+		throws NoSuchFormVariationException {
+
 		long objectDefinitionId = GetterUtil.getLong(formVariationKey);
 
 		if (objectDefinitionId == 0) {
@@ -173,14 +180,8 @@ public class ObjectEntryInfoItemFormProvider
 		return _getInfoForm(
 			objectDefinitionId,
 			_displayPageInfoItemFieldSetProvider.getInfoFieldSet(
-				_getModelClassName(objectDefinitionId), StringPool.BLANK, 0));
-	}
-
-	@Override
-	public InfoForm getInfoForm(String formVariationKey, long groupId)
-		throws NoSuchFormVariationException {
-
-		return getInfoForm(formVariationKey);
+				_getModelClassName(objectDefinitionId), StringPool.BLANK,
+				groupId));
 	}
 
 	private InfoField<?> _addAttributes(

@@ -55,6 +55,16 @@ definition {
 		JSONCurlUtil.delete(${curl});
 	}
 
+	macro deleteAllAccounts {
+		var response = AccountAPI.getAccounts();
+
+		var accountIdList = JSONUtil.getWithJSONPath(${response}, "$.items..id");
+
+		for (var accountId : list ${accountIdList}) {
+			AccountAPI.deleteAccount(accountId = ${accountId});
+		}
+	}
+
 	macro getAccounts {
 		var curl = AccountAPI._curlAccount();
 

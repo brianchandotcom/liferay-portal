@@ -1,0 +1,39 @@
+definition {
+
+	macro associateAccountRoleUserAndAccount {
+		Variables.assertDefined(parameterList = "${accountId},${roleName},${userAccountId}");
+
+		var portalURL = JSONCompany.getPortalURL();
+		var idOfRole = AccountRoleAPI.getIdForAccountRoleByAccountId(
+			accountId = ${accountId},
+			roleName = ${roleName});
+
+		var curl = '''
+			${portalURL}/o/headless-admin-user/v1.0/accounts/${accountId}/account-roles/${idOfRole}/user-accounts/${userAccountId}
+				roles/${roleId}/association/user-account/ \
+				-H accept: application/json \
+				-u test@liferay.com:test \
+		''';
+
+		var response = JSONCurlUtil.post(${curl});
+
+		return ${response};
+	}
+
+	macro getIdForAccountRoleByAccountId {
+		Variables.assertDefined(parameterList = "${roleName},${accountId}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/o/headless-admin-user/v1.0/accounts/${accountId}/account-roles
+				-H accept: application/json \
+				-u test@liferay.com:test \
+		''';
+
+		var idOfRole = JSONCurlUtil.get(${curl}, "$.items[?(@['name'] == '${roleName}')]['id']");
+
+		return ${idOfRole};
+	}
+
+}

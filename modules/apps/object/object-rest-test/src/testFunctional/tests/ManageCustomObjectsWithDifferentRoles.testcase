@@ -1,0 +1,254 @@
+@component-name = "portal-headless"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Object";
+	property testray.main.component.name = "Headless";
+
+	setUp {
+		TestCase.setUpPortalInstanceNoSelenium();
+
+		task ("Given Student and Subject object definitions with field 'name' and panelCategoryKey 'Control Panel > Object' created") {
+			ObjectDefinitionAPI.staticStudentObjectId();
+
+			ObjectDefinitionAPI.updateObjectDefinitionById(
+				objectDefinitionId = ${staticStudentObjectId},
+				parameter = "panelCategoryKey",
+				parameterValue = "control_panel.object");
+
+			ObjectDefinitionAPI.staticSubjectObjectId();
+
+			ObjectDefinitionAPI.updateObjectDefinitionById(
+				objectDefinitionId = ${staticSubjectObjectId},
+				parameter = "panelCategoryKey",
+				parameterValue = "control_panel.object");
+		}
+
+		task ("And Given oneToMany relationship studentSubjects created") {
+			ObjectDefinitionAPI.createRelationship(
+				deletionType = "cascade",
+				en_US_label = "StudentSubjects",
+				name = "studentSubjects",
+				objectDefinitionId1 = ${staticStudentObjectId},
+				objectDefinitionId2 = ${staticSubjectObjectId},
+				type = "oneToMany");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		ObjectAdmin.deleteAllCustomObjectsViaAPI();
+
+		JSONUser.tearDownNonAdminUsersNoSelenium();
+
+		JSONRole.deleteTestRoles();
+
+		AccountAPI.deleteAllAccounts();
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCPNoSelenium();
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 4
+	test CanUpdateObjectAsRegularRoleWithViewAndUpdatePermissions {
+		property portal.acceptance = "true";
+
+		task ("And Given student and subject entries with relationship created") {
+			CustomObjectAPI.createObjectEntryWithFields(
+				en_US_plural_label = "students",
+				fieldName = "name",
+				fieldValue = "Bob");
+
+			CustomObjectAPI.createObjectEntryWithFields(
+				en_US_plural_label = "subjects",
+				fieldName = "name",
+				fieldValue = "Math");
+
+			var studentId = CustomObjectAPI.getObjectEntryIdByName(
+				en_US_plural_label = "students",
+				name = "Bob");
+			var subjectId = CustomObjectAPI.getObjectEntryIdByName(
+				en_US_plural_label = "subjects",
+				name = "Math");
+
+			ObjectDefinitionAPI.relateObjectEntries(
+				en_US_plural_label = "students",
+				objectEntry1 = ${studentId},
+				objectEntry2 = ${subjectId},
+				relationshipName = "studentSubjects");
+		}
+
+		task ("And Given a regular role with permissios to access Student and Subject is created") {
+			JSONRole.addRegularRole(
+				roleKey = "Test Regular Role",
+				roleTitle = "Test Regular Role");
+
+			for (var resourceAction : list "UPDATE,VIEW") {
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = ${resourceAction},
+					resourceName = "com.liferay.object.model.ObjectDefinition#${staticStudentObjectId}",
+					roleTitle = "Test Regular Role",
+					roleType = "regular");
+			}
+
+			for (var resourceAction : list "UPDATE,VIEW") {
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = ${resourceAction},
+					resourceName = "com.liferay.object.model.ObjectDefinition#${staticSubjectObjectId}",
+					roleTitle = "Test Regular Role",
+					roleType = "regular");
+			}
+		}
+
+		task ("And Given create a new user and assign to the role created") {
+			var response = UserAccountAPI.createUserAccount(
+				alternateName = "test2",
+				emailAddress = "test2@liferay.com",
+				familyName = "test2fn",
+				fieldName = "password",
+				fieldValue = "test",
+				givenName = "test2gn");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "Test Regular Role",
+				userEmailAddress = "test2@liferay.com");
+		}
+
+		task ("When with patchSubject and subjectId to update subject as the new user") {
+			var response = CustomObjectAPI.patchObjectEntryNameById(
+				en_US_plural_label = "subjects",
+				fieldValue = "Able",
+				objectEntryId = ${subjectId},
+				userEmailAddress = "test2@liferay.com");
+		}
+
+		task ("Then the subject is updated successfully") {
+			var actualName = JSONUtil.getWithJSONPath(${response}, "$.name");
+
+			TestUtils.assertEquals(
+				actual = ${actualName},
+				expected = "Able");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 4
+	test CanUpdateObjectWithAccountRestrictionAsAccountRoleWithPermissions {
+		property portal.acceptance = "true";
+
+		task ("And Given oneToMany relationships are set between Account -> Student and Account -> Subject") {
+			var accountObjectId = ObjectDefinitionAPI.getObjectDefinitionIdByName(name = "AccountEntry");
+
+			ObjectDefinitionAPI.createRelationship(
+				deletionType = "cascade",
+				en_US_label = "AccountStudents",
+				name = "accountStudents",
+				objectDefinitionId1 = ${accountObjectId},
+				objectDefinitionId2 = ${staticStudentObjectId},
+				type = "oneToMany");
+
+			ObjectDefinitionAPI.createRelationship(
+				deletionType = "cascade",
+				en_US_label = "AccountSubjects",
+				name = "accountSubjects",
+				objectDefinitionId1 = ${accountObjectId},
+				objectDefinitionId2 = ${staticSubjectObjectId},
+				type = "oneToMany");
+		}
+
+		task ("And Given Account Restriction enabled for Student and Subject") {
+			ObjectDefinitionAPI.enableAccountRestrictedAndShowWidget(
+				accountRestrictedField = "r_accountStudents_accountEntryId",
+				objectDefinitionId = ${staticStudentObjectId});
+
+			ObjectDefinitionAPI.enableAccountRestrictedAndShowWidget(
+				accountRestrictedField = "r_accountSubjects_accountEntryId",
+				objectDefinitionId = ${staticSubjectObjectId});
+		}
+
+		task ("And Given an Account Role with permissions for Student and Subject is created") {
+			JSONRole.addSharedAccountRole(roleTitle = "Test Account Role");
+
+			for (var resourceAction : list "UPDATE,VIEW") {
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = ${resourceAction},
+					resourceName = "com.liferay.object.model.ObjectDefinition#${staticStudentObjectId}",
+					roleTitle = "Test Account Role",
+					roleType = "account");
+			}
+
+			for (var resourceAction : list "UPDATE,VIEW") {
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = ${resourceAction},
+					resourceName = "com.liferay.object.model.ObjectDefinition#${staticSubjectObjectId}",
+					roleTitle = "Test Account Role",
+					roleType = "account");
+			}
+		}
+
+		task ("And Given two new accounts related to Student and Subject created") {
+			var studentAccountId = AccountAPI.createAccount(name = "accountForStudent");
+
+			var studentId = CustomObjectAPI.createStudentRelatedToAccount(
+				accountId = ${studentAccountId},
+				name = "Able");
+			var subjectAccountId = AccountAPI.createAccount(name = "accountForSubject");
+
+			var subjectId = CustomObjectAPI.createSubjectRelatedToStudentAndAccount(
+				accountId = ${subjectAccountId},
+				name = "English",
+				studentId = ${studentId});
+		}
+
+		task ("And Given assign a new user to every account as well as assign Account Role to the user") {
+			var response = UserAccountAPI.createUserAccount(
+				alternateName = "test2",
+				emailAddress = "test2@liferay.com",
+				familyName = "test2fn",
+				fieldName = "password",
+				fieldValue = "test",
+				givenName = "test2gn");
+
+			var userAccountId = JSONPathUtil.getIdValue(response = ${response});
+
+			JSONAccountEntryUser.addExistUsertoAccount(
+				accountEntryName = "accountForStudent",
+				userEmailAddress = "test2@liferay.com");
+
+			JSONAccountEntryUser.addExistUsertoAccount(
+				accountEntryName = "accountForSubject",
+				userEmailAddress = "test2@liferay.com");
+
+			AccountRoleAPI.associateAccountRoleUserAndAccount(
+				accountId = ${studentAccountId},
+				roleName = "Test Account Role",
+				userAccountId = ${userAccountId});
+
+			AccountRoleAPI.associateAccountRoleUserAndAccount(
+				accountId = ${subjectAccountId},
+				roleName = "Test Account Role",
+				userAccountId = ${userAccountId});
+		}
+
+		task ("When with patchSubject and subjectId to update subject as the new user") {
+			var response = CustomObjectAPI.patchObjectEntryNameById(
+				en_US_plural_label = "subjects",
+				fieldValue = "Able-update",
+				objectEntryId = ${subjectId},
+				userEmailAddress = "test2@liferay.com");
+		}
+
+		task ("Then the subject is updated successfully") {
+			var actualName = JSONUtil.getWithJSONPath(${response}, "$.name");
+
+			TestUtils.assertEquals(
+				actual = ${actualName},
+				expected = "Able-update");
+		}
+	}
+
+}

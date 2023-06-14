@@ -36,16 +36,17 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.VirtualHost;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.repository.friendly.url.resolver.FileEntryFriendlyURLResolver;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.VirtualHostLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
@@ -782,17 +783,18 @@ public class DLReferencesExportImportContentProcessor
 
 					hostNames.add(portalURL);
 
-					_companyLocalService.forEachCompany(
-						company -> {
-							String virtualHostname =
-								company.getVirtualHostname();
+					Group group = _groupLocalService.getGroup(groupId);
 
-							hostNames.add(
-								Http.HTTP_WITH_SLASH + virtualHostname);
-							hostNames.add(
-								Http.HTTPS_WITH_SLASH + virtualHostname);
-							hostNames.add(virtualHostname);
-						});
+					for (VirtualHost virtualHost :
+							_virtualHostLocalService.getVirtualHosts(
+								group.getCompanyId())) {
+
+						String virtualHostname = virtualHost.getHostname();
+
+						hostNames.add(Http.HTTP_WITH_SLASH + virtualHostname);
+						hostNames.add(Http.HTTPS_WITH_SLASH + virtualHostname);
+						hostNames.add(virtualHostname);
+					}
 
 					for (String hostName : hostNames) {
 						int curBeginPos = beginPos - hostName.length();
@@ -881,9 +883,6 @@ public class DLReferencesExportImportContentProcessor
 			"[a-fA-F0-9]{12}(?=[&,?]|$)");
 
 	@Reference
-	private CompanyLocalService _companyLocalService;
-
-	@Reference
 	private ConfigurationProvider _configurationProvider;
 
 	@Reference
@@ -906,5 +905,8 @@ public class DLReferencesExportImportContentProcessor
 
 	@Reference
 	private UserLocalService _userLocalService;
+
+	@Reference
+	private VirtualHostLocalService _virtualHostLocalService;
 
 }

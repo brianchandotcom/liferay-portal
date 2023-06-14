@@ -221,7 +221,7 @@ public class PartnerCommandLineRunner implements CommandLineRunner {
 		String bodyValue, String externalReferenceCode) {
 
 		_put(
-			bodyValue.toString(),
+			bodyValue,
 			"/o/c/activities/by-external-reference-code/" +
 				externalReferenceCode +
 					"/object-actions/notificationDueDateTemplateAction");

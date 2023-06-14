@@ -28,14 +28,14 @@ import com.liferay.commerce.product.model.CPTaxCategory;
 import com.liferay.commerce.product.portlet.action.ActionHelper;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
-import com.liferay.commerce.product.service.CPTaxCategoryService;
+import com.liferay.commerce.product.service.CPTaxCategoryLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogService;
 import com.liferay.commerce.product.service.CommerceChannelRelService;
 import com.liferay.commerce.product.servlet.taglib.ui.constants.CPDefinitionScreenNavigationConstants;
 import com.liferay.commerce.product.url.CPFriendlyURL;
 import com.liferay.commerce.service.CPDAvailabilityEstimateService;
 import com.liferay.commerce.service.CPDefinitionInventoryService;
-import com.liferay.commerce.service.CommerceAvailabilityEstimateService;
+import com.liferay.commerce.service.CommerceAvailabilityEstimateLocalService;
 import com.liferay.commerce.stock.activity.CommerceLowStockActivity;
 import com.liferay.commerce.stock.activity.CommerceLowStockActivityRegistry;
 import com.liferay.commerce.util.comparator.CommerceAvailabilityEstimatePriorityComparator;
@@ -64,7 +64,8 @@ public class CPDefinitionConfigurationDisplayContext
 	public CPDefinitionConfigurationDisplayContext(
 		ActionHelper actionHelper, HttpServletRequest httpServletRequest,
 		AccountGroupRelLocalService accountGroupRelLocalService,
-		CommerceAvailabilityEstimateService commerceAvailabilityEstimateService,
+		CommerceAvailabilityEstimateLocalService
+			commerceAvailabilityEstimateLocalService,
 		CommerceCatalogService commerceCatalogService,
 		CommerceChannelRelService commerceChannelRelService,
 		CommerceCurrencyLocalService commerceCurrencyLocalService,
@@ -75,8 +76,8 @@ public class CPDefinitionConfigurationDisplayContext
 		CPDefinitionInventoryService cpDefinitionInventoryService,
 		CPDefinitionService cpDefinitionService,
 		CPMeasurementUnitLocalService cpMeasurementUnitLocalService,
-		CPTaxCategoryService cpTaxCategoryService, CPFriendlyURL cpFriendlyURL,
-		ItemSelector itemSelector,
+		CPTaxCategoryLocalService cpTaxCategoryLocalService,
+		CPFriendlyURL cpFriendlyURL, ItemSelector itemSelector,
 		PortletResourcePermission portletResourcePermission) {
 
 		super(
@@ -85,8 +86,8 @@ public class CPDefinitionConfigurationDisplayContext
 			configurationProvider, cpDefinitionService, cpFriendlyURL,
 			itemSelector, portletResourcePermission);
 
-		_commerceAvailabilityEstimateService =
-			commerceAvailabilityEstimateService;
+		_commerceAvailabilityEstimateLocalService =
+			commerceAvailabilityEstimateLocalService;
 		_commerceCurrencyLocalService = commerceCurrencyLocalService;
 		_commerceLowStockActivityRegistry = commerceLowStockActivityRegistry;
 		_cpdAvailabilityEstimateService = cpdAvailabilityEstimateService;
@@ -94,13 +95,13 @@ public class CPDefinitionConfigurationDisplayContext
 			cpDefinitionInventoryEngineRegistry;
 		_cpDefinitionInventoryService = cpDefinitionInventoryService;
 		_cpMeasurementUnitLocalService = cpMeasurementUnitLocalService;
-		_cpTaxCategoryService = cpTaxCategoryService;
+		_cpTaxCategoryLocalService = cpTaxCategoryLocalService;
 	}
 
 	public List<CommerceAvailabilityEstimate> getCommerceAvailabilityEstimates()
 		throws PortalException {
 
-		return _commerceAvailabilityEstimateService.
+		return _commerceAvailabilityEstimateLocalService.
 			getCommerceAvailabilityEstimates(
 				cpRequestHelper.getCompanyId(), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS,
@@ -173,7 +174,7 @@ public class CPDefinitionConfigurationDisplayContext
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		return _cpTaxCategoryService.getCPTaxCategories(
+		return _cpTaxCategoryLocalService.getCPTaxCategories(
 			themeDisplay.getCompanyId());
 	}
 
@@ -212,8 +213,8 @@ public class CPDefinitionConfigurationDisplayContext
 		return cpDefinitionInventory;
 	}
 
-	private final CommerceAvailabilityEstimateService
-		_commerceAvailabilityEstimateService;
+	private final CommerceAvailabilityEstimateLocalService
+		_commerceAvailabilityEstimateLocalService;
 	private final CommerceCurrencyLocalService _commerceCurrencyLocalService;
 	private final CommerceLowStockActivityRegistry
 		_commerceLowStockActivityRegistry;
@@ -224,6 +225,6 @@ public class CPDefinitionConfigurationDisplayContext
 		_cpDefinitionInventoryEngineRegistry;
 	private final CPDefinitionInventoryService _cpDefinitionInventoryService;
 	private final CPMeasurementUnitLocalService _cpMeasurementUnitLocalService;
-	private final CPTaxCategoryService _cpTaxCategoryService;
+	private final CPTaxCategoryLocalService _cpTaxCategoryLocalService;
 
 }

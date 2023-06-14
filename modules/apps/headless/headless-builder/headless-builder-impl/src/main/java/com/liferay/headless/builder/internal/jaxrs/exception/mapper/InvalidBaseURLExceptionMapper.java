@@ -21,7 +21,7 @@ import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 /**
  * @author Sergio Jiménez del Coso
  */
-public class APIApplicationExceptionMapper
+public class InvalidBaseURLExceptionMapper
 	extends BaseExceptionMapper<InvalidBaseURLException> {
 
 	@Override

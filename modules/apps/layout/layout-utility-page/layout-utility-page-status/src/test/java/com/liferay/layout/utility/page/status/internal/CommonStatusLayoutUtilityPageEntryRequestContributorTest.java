@@ -28,10 +28,15 @@ import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Props;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+import com.liferay.portal.util.PropsImpl;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -49,6 +54,26 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
+
+	@BeforeClass
+	public static void setUpClass() {
+		_originalProps = PropsUtil.getProps();
+
+		Props props = Mockito.mock(PropsImpl.class);
+
+		Mockito.when(
+			props.get("feature.flag.LPS-165914")
+		).thenReturn(
+			"true"
+		);
+
+		PropsUtil.setProps(props);
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		PropsUtil.setProps(_originalProps);
+	}
 
 	@Test
 	public void testAddParametersWithDefaultVirtualHostAndWithoutCurrentURL() {
@@ -315,5 +340,6 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 	private static final CommonStatusLayoutUtilityPageEntryRequestContributor
 		_commonStatusLayoutUtilityPageEntryRequestContributor =
 			new CommonStatusLayoutUtilityPageEntryRequestContributor();
+	private static Props _originalProps;
 
 }

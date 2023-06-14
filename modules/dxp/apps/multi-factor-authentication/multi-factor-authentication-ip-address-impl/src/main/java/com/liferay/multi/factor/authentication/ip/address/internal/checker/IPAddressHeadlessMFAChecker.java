@@ -17,6 +17,7 @@ package com.liferay.multi.factor.authentication.ip.address.internal.checker;
 import com.liferay.multi.factor.authentication.ip.address.internal.audit.MFAIPAddressAuditMessageBuilder;
 import com.liferay.multi.factor.authentication.ip.address.internal.configuration.MFAIPAddressConfiguration;
 import com.liferay.multi.factor.authentication.spi.checker.headless.HeadlessMFAChecker;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -39,7 +40,6 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
 
 /**
  * @author Marta Medio
@@ -64,7 +64,7 @@ public class IPAddressHeadlessMFAChecker implements HeadlessMFAChecker {
 			}
 
 			MFAIPAddressAuditMessageBuilder mfaIPAddressAuditMessageBuilder =
-				_mfaIPAddressAuditMessageBuilder;
+				_mfaIPAddressAuditMessageBuilderSnapshot.get();
 
 			if (mfaIPAddressAuditMessageBuilder != null) {
 				mfaIPAddressAuditMessageBuilder.routeAuditMessage(
@@ -81,7 +81,7 @@ public class IPAddressHeadlessMFAChecker implements HeadlessMFAChecker {
 				httpServletRequest, _allowedIpAddressesAndNetmasks)) {
 
 			MFAIPAddressAuditMessageBuilder mfaIPAddressAuditMessageBuilder =
-				_mfaIPAddressAuditMessageBuilder;
+				_mfaIPAddressAuditMessageBuilderSnapshot.get();
 
 			if (mfaIPAddressAuditMessageBuilder != null) {
 				mfaIPAddressAuditMessageBuilder.routeAuditMessage(
@@ -94,7 +94,7 @@ public class IPAddressHeadlessMFAChecker implements HeadlessMFAChecker {
 		}
 
 		MFAIPAddressAuditMessageBuilder mfaIPAddressAuditMessageBuilder =
-			_mfaIPAddressAuditMessageBuilder;
+			_mfaIPAddressAuditMessageBuilderSnapshot.get();
 
 		if (mfaIPAddressAuditMessageBuilder != null) {
 			mfaIPAddressAuditMessageBuilder.routeAuditMessage(
@@ -145,11 +145,12 @@ public class IPAddressHeadlessMFAChecker implements HeadlessMFAChecker {
 	private static final Log _log = LogFactoryUtil.getLog(
 		IPAddressHeadlessMFAChecker.class);
 
+	private static final Snapshot<MFAIPAddressAuditMessageBuilder>
+		_mfaIPAddressAuditMessageBuilderSnapshot = new Snapshot<>(
+			IPAddressHeadlessMFAChecker.class,
+			MFAIPAddressAuditMessageBuilder.class);
+
 	private Set<String> _allowedIpAddressesAndNetmasks;
-
-	@Reference(cardinality = ReferenceCardinality.OPTIONAL)
-	private MFAIPAddressAuditMessageBuilder _mfaIPAddressAuditMessageBuilder;
-
 	private ServiceRegistration<HeadlessMFAChecker> _serviceRegistration;
 
 	@Reference

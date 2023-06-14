@@ -29,6 +29,7 @@ import com.liferay.multi.factor.authentication.fido2.web.internal.util.ConvertUt
 import com.liferay.multi.factor.authentication.fido2.web.internal.yubico.webauthn.MFAFIDO2CredentialRepository;
 import com.liferay.multi.factor.authentication.spi.checker.browser.BrowserMFAChecker;
 import com.liferay.multi.factor.authentication.spi.checker.setup.SetupMFAChecker;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -81,7 +82,6 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
 
 /**
  * @author Arthur Chan
@@ -248,7 +248,7 @@ public class FIDO2BrowserSetupMFAChecker
 			}
 
 			MFAFIDO2AuditMessageBuilder mfaFIDO2AuditMessageBuilder =
-				_mfaFIDO2AuditMessageBuilder;
+				_mfaFIDO2AuditMessageBuilderSnapshot.get();
 
 			if (mfaFIDO2AuditMessageBuilder != null) {
 				mfaFIDO2AuditMessageBuilder.routeAuditMessage(
@@ -269,7 +269,7 @@ public class FIDO2BrowserSetupMFAChecker
 			}
 
 			MFAFIDO2AuditMessageBuilder mfaFIDO2AuditMessageBuilder =
-				_mfaFIDO2AuditMessageBuilder;
+				_mfaFIDO2AuditMessageBuilderSnapshot.get();
 
 			if (mfaFIDO2AuditMessageBuilder != null) {
 				mfaFIDO2AuditMessageBuilder.routeAuditMessage(
@@ -293,7 +293,7 @@ public class FIDO2BrowserSetupMFAChecker
 					userId, credentialIdByteArray.getBase64(), 0);
 
 				MFAFIDO2AuditMessageBuilder mfaFIDO2AuditMessageBuilder =
-					_mfaFIDO2AuditMessageBuilder;
+					_mfaFIDO2AuditMessageBuilderSnapshot.get();
 
 				if (mfaFIDO2AuditMessageBuilder != null) {
 					mfaFIDO2AuditMessageBuilder.routeAuditMessage(
@@ -330,7 +330,7 @@ public class FIDO2BrowserSetupMFAChecker
 			MFAFIDO2WebKeys.MFA_FIDO2_VALIDATED_USER_ID, userId);
 
 		MFAFIDO2AuditMessageBuilder mfaFIDO2AuditMessageBuilder =
-			_mfaFIDO2AuditMessageBuilder;
+			_mfaFIDO2AuditMessageBuilderSnapshot.get();
 
 		if (mfaFIDO2AuditMessageBuilder != null) {
 			mfaFIDO2AuditMessageBuilder.routeAuditMessage(
@@ -524,7 +524,7 @@ public class FIDO2BrowserSetupMFAChecker
 			}
 
 			MFAFIDO2AuditMessageBuilder mfaFIDO2AuditMessageBuilder =
-				_mfaFIDO2AuditMessageBuilder;
+				_mfaFIDO2AuditMessageBuilderSnapshot.get();
 
 			if (mfaFIDO2AuditMessageBuilder != null) {
 				mfaFIDO2AuditMessageBuilder.routeAuditMessage(
@@ -539,7 +539,7 @@ public class FIDO2BrowserSetupMFAChecker
 
 		if (httpSession == null) {
 			MFAFIDO2AuditMessageBuilder mfaFIDO2AuditMessageBuilder =
-				_mfaFIDO2AuditMessageBuilder;
+				_mfaFIDO2AuditMessageBuilderSnapshot.get();
 
 			if (mfaFIDO2AuditMessageBuilder != null) {
 				mfaFIDO2AuditMessageBuilder.routeAuditMessage(
@@ -559,8 +559,10 @@ public class FIDO2BrowserSetupMFAChecker
 	private static final Log _log = LogFactoryUtil.getLog(
 		FIDO2BrowserSetupMFAChecker.class);
 
-	@Reference(cardinality = ReferenceCardinality.OPTIONAL)
-	private MFAFIDO2AuditMessageBuilder _mfaFIDO2AuditMessageBuilder;
+	private static final Snapshot<MFAFIDO2AuditMessageBuilder>
+		_mfaFIDO2AuditMessageBuilderSnapshot = new Snapshot<>(
+			FIDO2BrowserSetupMFAChecker.class,
+			MFAFIDO2AuditMessageBuilder.class);
 
 	private MFAFIDO2Configuration _mfaFIDO2Configuration;
 

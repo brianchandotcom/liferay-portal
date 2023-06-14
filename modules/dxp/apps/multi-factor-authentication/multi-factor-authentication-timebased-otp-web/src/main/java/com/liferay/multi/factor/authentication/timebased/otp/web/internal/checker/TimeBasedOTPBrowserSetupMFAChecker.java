@@ -22,6 +22,7 @@ import com.liferay.multi.factor.authentication.timebased.otp.web.internal.audit.
 import com.liferay.multi.factor.authentication.timebased.otp.web.internal.configuration.MFATimeBasedOTPConfiguration;
 import com.liferay.multi.factor.authentication.timebased.otp.web.internal.constants.MFATimeBasedOTPWebKeys;
 import com.liferay.multi.factor.authentication.timebased.otp.web.internal.util.MFATimeBasedOTPUtil;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -59,7 +60,6 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
 
 /**
  * @author Tomas Polesovsky
@@ -236,7 +236,7 @@ public class TimeBasedOTPBrowserSetupMFAChecker
 
 			MFATimeBasedOTPAuditMessageBuilder
 				mfaTimeBasedOTPAuditMessageBuilder =
-					_mfaTimeBasedOTPAuditMessageBuilder;
+					_mfaTimeBasedOTPAuditMessageBuilderSnapshot.get();
 
 			if (mfaTimeBasedOTPAuditMessageBuilder != null) {
 				mfaTimeBasedOTPAuditMessageBuilder.routeAuditMessage(
@@ -258,7 +258,7 @@ public class TimeBasedOTPBrowserSetupMFAChecker
 
 			MFATimeBasedOTPAuditMessageBuilder
 				mfaTimeBasedOTPAuditMessageBuilder =
-					_mfaTimeBasedOTPAuditMessageBuilder;
+					_mfaTimeBasedOTPAuditMessageBuilderSnapshot.get();
 
 			if (mfaTimeBasedOTPAuditMessageBuilder != null) {
 				mfaTimeBasedOTPAuditMessageBuilder.routeAuditMessage(
@@ -298,7 +298,7 @@ public class TimeBasedOTPBrowserSetupMFAChecker
 
 			MFATimeBasedOTPAuditMessageBuilder
 				mfaTimeBasedOTPAuditMessageBuilder =
-					_mfaTimeBasedOTPAuditMessageBuilder;
+					_mfaTimeBasedOTPAuditMessageBuilderSnapshot.get();
 
 			if (mfaTimeBasedOTPAuditMessageBuilder != null) {
 				mfaTimeBasedOTPAuditMessageBuilder.routeAuditMessage(
@@ -314,7 +314,7 @@ public class TimeBasedOTPBrowserSetupMFAChecker
 			user.getUserId(), remoteAddress, false);
 
 		MFATimeBasedOTPAuditMessageBuilder mfaTimeBasedOTPAuditMessageBuilder =
-			_mfaTimeBasedOTPAuditMessageBuilder;
+			_mfaTimeBasedOTPAuditMessageBuilderSnapshot.get();
 
 		if (mfaTimeBasedOTPAuditMessageBuilder != null) {
 			mfaTimeBasedOTPAuditMessageBuilder.routeAuditMessage(
@@ -401,7 +401,7 @@ public class TimeBasedOTPBrowserSetupMFAChecker
 
 			MFATimeBasedOTPAuditMessageBuilder
 				mfaTimeBasedOTPAuditMessageBuilder =
-					_mfaTimeBasedOTPAuditMessageBuilder;
+					_mfaTimeBasedOTPAuditMessageBuilderSnapshot.get();
 
 			if (mfaTimeBasedOTPAuditMessageBuilder != null) {
 				mfaTimeBasedOTPAuditMessageBuilder.routeAuditMessage(
@@ -417,7 +417,7 @@ public class TimeBasedOTPBrowserSetupMFAChecker
 		if (httpSession == null) {
 			MFATimeBasedOTPAuditMessageBuilder
 				mfaTimeBasedOTPAuditMessageBuilder =
-					_mfaTimeBasedOTPAuditMessageBuilder;
+					_mfaTimeBasedOTPAuditMessageBuilderSnapshot.get();
 
 			if (mfaTimeBasedOTPAuditMessageBuilder != null) {
 				mfaTimeBasedOTPAuditMessageBuilder.routeAuditMessage(
@@ -435,7 +435,7 @@ public class TimeBasedOTPBrowserSetupMFAChecker
 		if (mfaTimeBasedOTPValidatedUserId == null) {
 			MFATimeBasedOTPAuditMessageBuilder
 				mfaTimeBasedOTPAuditMessageBuilder =
-					_mfaTimeBasedOTPAuditMessageBuilder;
+					_mfaTimeBasedOTPAuditMessageBuilderSnapshot.get();
 
 			if (mfaTimeBasedOTPAuditMessageBuilder != null) {
 				mfaTimeBasedOTPAuditMessageBuilder.routeAuditMessage(
@@ -450,7 +450,7 @@ public class TimeBasedOTPBrowserSetupMFAChecker
 		if (!Objects.equals(mfaTimeBasedOTPValidatedUserId, userId)) {
 			MFATimeBasedOTPAuditMessageBuilder
 				mfaTimeBasedOTPAuditMessageBuilder =
-					_mfaTimeBasedOTPAuditMessageBuilder;
+					_mfaTimeBasedOTPAuditMessageBuilderSnapshot.get();
 
 			if (mfaTimeBasedOTPAuditMessageBuilder != null) {
 				mfaTimeBasedOTPAuditMessageBuilder.routeAuditMessage(
@@ -482,9 +482,10 @@ public class TimeBasedOTPBrowserSetupMFAChecker
 	private static final Log _log = LogFactoryUtil.getLog(
 		TimeBasedOTPBrowserSetupMFAChecker.class);
 
-	@Reference(cardinality = ReferenceCardinality.OPTIONAL)
-	private MFATimeBasedOTPAuditMessageBuilder
-		_mfaTimeBasedOTPAuditMessageBuilder;
+	private static final Snapshot<MFATimeBasedOTPAuditMessageBuilder>
+		_mfaTimeBasedOTPAuditMessageBuilderSnapshot = new Snapshot<>(
+			TimeBasedOTPBrowserSetupMFAChecker.class,
+			MFATimeBasedOTPAuditMessageBuilder.class);
 
 	private MFATimeBasedOTPConfiguration _mfaTimeBasedOTPConfiguration;
 

@@ -20,6 +20,7 @@ import com.liferay.multi.factor.authentication.email.otp.service.MFAEmailOTPEntr
 import com.liferay.multi.factor.authentication.email.otp.web.internal.audit.MFAEmailOTPAuditMessageBuilder;
 import com.liferay.multi.factor.authentication.email.otp.web.internal.constants.MFAEmailOTPWebKeys;
 import com.liferay.multi.factor.authentication.spi.checker.browser.BrowserMFAChecker;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -53,7 +54,6 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
 
 /**
  * @author Arthur Chan
@@ -148,7 +148,7 @@ public class EmailOTPBrowserMFAChecker implements BrowserMFAChecker {
 			}
 
 			MFAEmailOTPAuditMessageBuilder mfaEmailOTPAuditMessageBuilder =
-				_mfaEmailOTPAuditMessageBuilder;
+				_mfaEmailOTPAuditMessageBuilderSnapshot.get();
 
 			if (mfaEmailOTPAuditMessageBuilder != null) {
 				mfaEmailOTPAuditMessageBuilder.routeAuditMessage(
@@ -170,7 +170,7 @@ public class EmailOTPBrowserMFAChecker implements BrowserMFAChecker {
 
 		if (_isMaximumAllowedAttemptsReached(userId)) {
 			MFAEmailOTPAuditMessageBuilder mfaEmailOTPAuditMessageBuilder =
-				_mfaEmailOTPAuditMessageBuilder;
+				_mfaEmailOTPAuditMessageBuilderSnapshot.get();
 
 			if (mfaEmailOTPAuditMessageBuilder != null) {
 				mfaEmailOTPAuditMessageBuilder.routeAuditMessage(
@@ -201,7 +201,7 @@ public class EmailOTPBrowserMFAChecker implements BrowserMFAChecker {
 				userId, originalHttpServletRequest.getRemoteAddr(), true);
 
 			MFAEmailOTPAuditMessageBuilder mfaEmailOTPAuditMessageBuilder =
-				_mfaEmailOTPAuditMessageBuilder;
+				_mfaEmailOTPAuditMessageBuilderSnapshot.get();
 
 			if (mfaEmailOTPAuditMessageBuilder != null) {
 				mfaEmailOTPAuditMessageBuilder.routeAuditMessage(
@@ -214,7 +214,7 @@ public class EmailOTPBrowserMFAChecker implements BrowserMFAChecker {
 		}
 
 		MFAEmailOTPAuditMessageBuilder mfaEmailOTPAuditMessageBuilder =
-			_mfaEmailOTPAuditMessageBuilder;
+			_mfaEmailOTPAuditMessageBuilderSnapshot.get();
 
 		if (mfaEmailOTPAuditMessageBuilder != null) {
 			mfaEmailOTPAuditMessageBuilder.routeAuditMessage(
@@ -341,7 +341,7 @@ public class EmailOTPBrowserMFAChecker implements BrowserMFAChecker {
 			}
 
 			MFAEmailOTPAuditMessageBuilder mfaEmailOTPAuditMessageBuilder =
-				_mfaEmailOTPAuditMessageBuilder;
+				_mfaEmailOTPAuditMessageBuilderSnapshot.get();
 
 			if (mfaEmailOTPAuditMessageBuilder != null) {
 				mfaEmailOTPAuditMessageBuilder.routeAuditMessage(
@@ -356,7 +356,7 @@ public class EmailOTPBrowserMFAChecker implements BrowserMFAChecker {
 
 		if (httpSession == null) {
 			MFAEmailOTPAuditMessageBuilder mfaEmailOTPAuditMessageBuilder =
-				_mfaEmailOTPAuditMessageBuilder;
+				_mfaEmailOTPAuditMessageBuilderSnapshot.get();
 
 			if (mfaEmailOTPAuditMessageBuilder != null) {
 				mfaEmailOTPAuditMessageBuilder.routeAuditMessage(
@@ -372,7 +372,7 @@ public class EmailOTPBrowserMFAChecker implements BrowserMFAChecker {
 
 		if (mfaEmailOTPValidatedUserId == null) {
 			MFAEmailOTPAuditMessageBuilder mfaEmailOTPAuditMessageBuilder =
-				_mfaEmailOTPAuditMessageBuilder;
+				_mfaEmailOTPAuditMessageBuilderSnapshot.get();
 
 			if (mfaEmailOTPAuditMessageBuilder != null) {
 				mfaEmailOTPAuditMessageBuilder.routeAuditMessage(
@@ -385,7 +385,7 @@ public class EmailOTPBrowserMFAChecker implements BrowserMFAChecker {
 
 		if (!Objects.equals(mfaEmailOTPValidatedUserId, userId)) {
 			MFAEmailOTPAuditMessageBuilder mfaEmailOTPAuditMessageBuilder =
-				_mfaEmailOTPAuditMessageBuilder;
+				_mfaEmailOTPAuditMessageBuilderSnapshot.get();
 
 			if (mfaEmailOTPAuditMessageBuilder != null) {
 				mfaEmailOTPAuditMessageBuilder.routeAuditMessage(
@@ -419,8 +419,10 @@ public class EmailOTPBrowserMFAChecker implements BrowserMFAChecker {
 	private static final Log _log = LogFactoryUtil.getLog(
 		EmailOTPBrowserMFAChecker.class);
 
-	@Reference(cardinality = ReferenceCardinality.OPTIONAL)
-	private MFAEmailOTPAuditMessageBuilder _mfaEmailOTPAuditMessageBuilder;
+	private static final Snapshot<MFAEmailOTPAuditMessageBuilder>
+		_mfaEmailOTPAuditMessageBuilderSnapshot = new Snapshot<>(
+			EmailOTPBrowserMFAChecker.class,
+			MFAEmailOTPAuditMessageBuilder.class);
 
 	private MFAEmailOTPConfiguration _mfaEmailOTPConfiguration;
 

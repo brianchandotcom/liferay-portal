@@ -15,21 +15,21 @@
 package com.liferay.headless.builder.test.validation.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.headless.builder.test.util.APIApplicationTestUtil;
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
-import java.io.Serializable;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -57,34 +57,49 @@ public class HeadlessBuilderObjectValidationTest {
 					"MSOD_API_APPLICATION", CompanyThreadLocal.getCompanyId());
 	}
 
-	@Test(expected = ModelListenerException.class)
+	@Test
 	public void testInvalidBaseURLPathAPIApplication() throws Exception {
-		APIApplicationTestUtil.addAPIApplicationEntry(
-			_apiApplicationObjectDefinition,
-			HashMapBuilder.<String, Serializable>put(
-				"applicationStatus", "draft"
-			).put(
-				"baseURL",
-				RandomTestUtil.randomString() + StringPool.FORWARD_SLASH
-			).put(
-				"title", RandomTestUtil.randomString()
-			).build());
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.portal.vulcan.internal.jaxrs.exception.mapper." +
+					"WebApplicationExceptionMapper",
+				LoggerTestUtil.WARN)) {
+
+			JSONObject jsonObject = HTTPTestUtil.invoke(
+				JSONUtil.put(
+					"applicationStatus", "draft"
+				).put(
+					"baseURL",
+					RandomTestUtil.randomString() + StringPool.FORWARD_SLASH
+				).put(
+					"title", RandomTestUtil.randomString()
+				).toString(),
+				_apiApplicationObjectDefinition.getRESTContextPath(),
+				Http.Method.POST);
+
+			Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
+		}
 	}
 
 	@Test
 	public void testValidBaseURLPathAPIApplication() throws Exception {
-		ObjectEntry apiApplication =
-			APIApplicationTestUtil.addAPIApplicationEntry(
-				_apiApplicationObjectDefinition,
-				HashMapBuilder.<String, Serializable>put(
-					"applicationStatus", "draft"
-				).put(
-					"baseURL", RandomTestUtil.randomString()
-				).put(
-					"title", RandomTestUtil.randomString()
-				).build());
+		JSONObject jsonObject = HTTPTestUtil.invoke(
+			JSONUtil.put(
+				"applicationStatus", "draft"
+			).put(
+				"baseURL", RandomTestUtil.randomString()
+			).put(
+				"title", RandomTestUtil.randomString()
+			).toString(),
+			_apiApplicationObjectDefinition.getRESTContextPath(),
+			Http.Method.POST);
 
-		Assert.assertNotNull(apiApplication);
+		Assert.assertEquals(
+			0,
+			jsonObject.getJSONObject(
+				"status"
+			).get(
+				"code"
+			));
 	}
 
 	private ObjectDefinition _apiApplicationObjectDefinition;

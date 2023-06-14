@@ -628,7 +628,7 @@ public class ObjectEntryInfoItemFormProvider
 			InfoLocalizedValue.localize(
 				ObjectEntryInfoItemFields.class, "actions")
 		).name(
-			_objectDefinition.getName()
+			"actions"
 		);
 
 		return TransformUtil.transform(

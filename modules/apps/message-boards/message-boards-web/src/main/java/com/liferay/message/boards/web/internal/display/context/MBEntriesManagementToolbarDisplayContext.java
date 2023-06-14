@@ -217,7 +217,6 @@ public class MBEntriesManagementToolbarDisplayContext {
 						"mvcRenderCommandName", "/message_boards/edit_category",
 						"redirect", _currentURLObj.toString(),
 						"parentCategoryId", String.valueOf(categoryId));
-
 					dropdownItem.setLabel(
 						LanguageUtil.get(
 							_httpServletRequest, "category[message-board]"));

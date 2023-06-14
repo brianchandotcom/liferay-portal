@@ -108,7 +108,6 @@ public class UpgradeUnsupportedGuestPermissions implements UpgradeStep {
 			actionableDynamicQuery.setAddCriteriaMethod(
 				dynamicQuery -> dynamicQuery.add(
 					RestrictionsFactoryUtil.eq("name", resourceName)));
-
 			actionableDynamicQuery.setPerformActionMethod(
 				(ResourcePermission resourcePermission) ->
 					_removeResourceAction(resourcePermission, resourceAction));

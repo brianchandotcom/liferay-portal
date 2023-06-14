@@ -140,7 +140,6 @@ public class MBMessageIndexerLocalizedTest {
 			_group.getGroupId());
 
 		searchContext.setKeywords(searchTerm);
-
 		searchContext.setLocale(locale);
 
 		QueryConfig queryConfig = searchContext.getQueryConfig();

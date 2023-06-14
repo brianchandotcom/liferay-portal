@@ -60,7 +60,6 @@ public class ModuleLocalServiceImpl extends ModuleLocalServiceBaseImpl {
 		module = modulePersistence.create(moduleId);
 
 		module.setModuleId(moduleId);
-
 		module.setCompanyId(app.getCompanyId());
 		module.setAppId(appId);
 		module.setBundleSymbolicName(bundleSymbolicName);

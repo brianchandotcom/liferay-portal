@@ -63,7 +63,6 @@ public class MicrosoftTranslatorAuthenticator {
 			options.addHeader("Ocp-Apim-Subscription-Key", _subscriptionKey);
 
 			options.setLocation(_URL);
-
 			options.setPost(true);
 
 			String content = HttpUtil.URLtoString(options);

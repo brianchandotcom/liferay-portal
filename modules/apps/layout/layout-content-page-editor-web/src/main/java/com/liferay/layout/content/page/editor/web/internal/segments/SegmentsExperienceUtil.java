@@ -400,7 +400,6 @@ public class SegmentsExperienceUtil {
 					newNamespace, layout.getPlid()));
 
 			newFragmentEntryLink.setNamespace(newNamespace);
-
 			newFragmentEntryLink.setLastPropagationDate(new Date());
 
 			newFragmentEntryLink =

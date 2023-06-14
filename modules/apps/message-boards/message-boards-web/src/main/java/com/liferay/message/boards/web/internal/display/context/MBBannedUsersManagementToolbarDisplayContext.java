@@ -66,7 +66,6 @@ public class MBBannedUsersManagementToolbarDisplayContext {
 				dropdownItem.setIcon("unlock");
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "unban-user"));
-
 				dropdownItem.setQuickAction(true);
 			}
 		).build();

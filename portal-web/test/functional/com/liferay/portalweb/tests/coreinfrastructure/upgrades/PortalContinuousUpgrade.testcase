@@ -57,6 +57,13 @@ definition {
 
 		Navigator.openSpecificURL(url = "http://localhost:8080");
 
+		TestUtils.hardRefresh();
+
+		ContentPages.viewFragmentImage(
+			fragmentName = "image",
+			id = "image-square",
+			image = "tree.png");
+
 		User.firstLoginUI(
 			password = "test",
 			specificURL = "http://localhost:8080",
@@ -134,6 +141,13 @@ definition {
 			specificURL = "http://www.able.com:8080",
 			userEmailAddress = "test@www.able.com");
 
+		TestUtils.hardRefresh();
+
+		ContentPages.viewFragmentImage(
+			fragmentName = "image",
+			id = "image-square",
+			image = "tree.png");
+
 		Navigator.openSpecificURL(url = "http://www.able.com:8080");
 
 		ProductMenu.gotoPortlet(
@@ -206,6 +220,13 @@ definition {
 			password = "test",
 			userEmailAddress = "test@www.able.com",
 			virtualHostsURL = "http://www.able.com:8080");
+
+		TestUtils.hardRefresh();
+
+		ContentPages.viewFragmentImage(
+			fragmentName = "image",
+			id = "image-square",
+			image = "tree.png");
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",

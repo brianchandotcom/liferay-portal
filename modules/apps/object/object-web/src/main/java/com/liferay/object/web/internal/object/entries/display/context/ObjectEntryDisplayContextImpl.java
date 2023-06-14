@@ -681,8 +681,25 @@ public class ObjectEntryDisplayContextImpl
 					continue;
 				}
 
-				ddmForm.addDDMFormField(
-					_getDDMFormField(objectEntry, objectField, readOnly));
+				if (FeatureFlagManagerUtil.isEnabled("LPS-170122")) {
+					ddmForm.addDDMFormField(
+						_getDDMFormField(objectEntry, objectField, readOnly));
+
+					continue;
+				}
+
+				if (objectField.compareBusinessType(
+						ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION) ||
+					objectField.compareBusinessType(
+						ObjectFieldConstants.BUSINESS_TYPE_FORMULA)) {
+
+					ddmForm.addDDMFormField(
+						_getDDMFormField(objectEntry, objectField, true));
+				}
+				else {
+					ddmForm.addDDMFormField(
+						_getDDMFormField(objectEntry, objectField, readOnly));
+				}
 			}
 		}
 		else {
@@ -781,8 +798,13 @@ public class ObjectEntryDisplayContextImpl
 			ddmFormField.setReadOnly(true);
 		}
 		else {
-			ddmFormField.setReadOnly(
-				_getReadOnly(objectEntry, objectField, readOnly));
+			if (FeatureFlagManagerUtil.isEnabled("LPS-170122")) {
+				ddmFormField.setReadOnly(
+					_getReadOnly(objectEntry, objectField, readOnly));
+			}
+			else {
+				ddmFormField.setReadOnly(readOnly);
+			}
 		}
 
 		ddmFormField.setRequired(objectField.isRequired());
@@ -995,9 +1017,28 @@ public class ObjectEntryDisplayContextImpl
 					objectLayoutColumn.getObjectFieldId(),
 					currentObjectField.getName());
 
-				nestedDDMFormFields.add(
-					_getDDMFormField(
-						objectEntry, currentObjectField, readOnly));
+				if (FeatureFlagManagerUtil.isEnabled("LPS-170122")) {
+					nestedDDMFormFields.add(
+						_getDDMFormField(
+							objectEntry, currentObjectField, readOnly));
+
+					continue;
+				}
+
+				if (currentObjectField.compareBusinessType(
+						ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION) ||
+					currentObjectField.compareBusinessType(
+						ObjectFieldConstants.BUSINESS_TYPE_FORMULA)) {
+
+					nestedDDMFormFields.add(
+						_getDDMFormField(
+							objectEntry, currentObjectField, true));
+				}
+				else {
+					nestedDDMFormFields.add(
+						_getDDMFormField(
+							objectEntry, currentObjectField, readOnly));
+				}
 			}
 		}
 

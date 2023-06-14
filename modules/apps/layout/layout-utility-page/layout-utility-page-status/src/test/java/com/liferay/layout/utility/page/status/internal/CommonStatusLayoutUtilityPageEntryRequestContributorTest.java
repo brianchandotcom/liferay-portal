@@ -36,6 +36,7 @@ import com.liferay.portal.util.PropsImpl;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -73,6 +74,12 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 	@AfterClass
 	public static void tearDownClass() {
 		PropsUtil.setProps(_originalProps);
+	}
+
+	@Before
+	public void setUp() {
+		_commonStatusLayoutUtilityPageEntryRequestContributor =
+			new CommonStatusLayoutUtilityPageEntryRequestContributor();
 	}
 
 	@Test
@@ -337,9 +344,9 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 			"_virtualHostLocalService", virtualHostLocalService);
 	}
 
-	private static final CommonStatusLayoutUtilityPageEntryRequestContributor
-		_commonStatusLayoutUtilityPageEntryRequestContributor =
-			new CommonStatusLayoutUtilityPageEntryRequestContributor();
 	private static Props _originalProps;
+
+	private CommonStatusLayoutUtilityPageEntryRequestContributor
+		_commonStatusLayoutUtilityPageEntryRequestContributor;
 
 }

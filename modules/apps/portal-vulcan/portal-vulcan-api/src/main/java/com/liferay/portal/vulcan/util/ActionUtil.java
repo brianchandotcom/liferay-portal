@@ -37,6 +37,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Supplier;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -87,7 +88,23 @@ public class ActionUtil {
 		try {
 			return _addAction(
 				actionName, clazz, id, methodName, modelResourcePermission,
-				null, null, parameterId, null, null, uriInfo);
+				null, null, parameterId, null, null,
+				() -> UriInfoUtil.getBaseUriBuilder(uriInfo), uriInfo);
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
+		}
+	}
+
+	public static Map<String, String> addAction(
+		String actionName, Class<?> clazz, Long id, String methodName,
+		Object object, Long ownerId, String permissionName, Long siteId,
+		Supplier<UriBuilder> uriBuilderSupplier, UriInfo uriInfo) {
+
+		try {
+			return _addAction(
+				actionName, clazz, id, methodName, null, object, ownerId, id,
+				permissionName, siteId, uriBuilderSupplier, uriInfo);
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);
@@ -106,9 +123,10 @@ public class ActionUtil {
 		UriInfo uriInfo) {
 
 		try {
-			return _addAction(
-				actionName, clazz, id, methodName, null, object, ownerId, id,
-				permissionName, siteId, uriInfo);
+			return addAction(
+				actionName, clazz, id, methodName, object, ownerId,
+				permissionName, siteId,
+				() -> UriInfoUtil.getBaseUriBuilder(uriInfo), uriInfo);
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);
@@ -123,7 +141,8 @@ public class ActionUtil {
 		try {
 			return _addAction(
 				actionName, clazz, id, methodName, modelResourcePermission,
-				object, null, id, null, null, uriInfo);
+				object, null, id, null, null,
+				() -> UriInfoUtil.getBaseUriBuilder(uriInfo), uriInfo);
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);
@@ -164,7 +183,7 @@ public class ActionUtil {
 			String actionName, Class<?> clazz, Long id, String methodName,
 			ModelResourcePermission<?> modelResourcePermission, Object object,
 			Long ownerId, Long parameterId, String permissionName, Long siteId,
-			UriInfo uriInfo)
+			Supplier<UriBuilder> uriBuilderSupplier, UriInfo uriInfo)
 		throws Exception {
 
 		if (uriInfo == null) {
@@ -253,13 +272,17 @@ public class ActionUtil {
 		return HashMapBuilder.put(
 			"href",
 			() -> {
-				UriBuilder uriBuilder = UriInfoUtil.getBaseUriBuilder(uriInfo);
+				UriBuilder uriBuilder = uriBuilderSupplier.get();
 
-				uriBuilder = uriBuilder.path(
-					_getVersion(uriInfo)
-				).path(
-					clazz.getSuperclass(), methodName
-				);
+				if (clazz.getSuperclass(
+					).isAnnotationPresent(
+						Path.class
+					)) {
+
+					uriBuilder = uriBuilder.path(clazz.getSuperclass());
+				}
+
+				uriBuilder = uriBuilder.path(clazz.getSuperclass(), methodName);
 
 				if (parameterId != null) {
 					uriBuilder = uriBuilder.resolveTemplates(
@@ -381,18 +404,6 @@ public class ActionUtil {
 		}
 
 		return parameterMap;
-	}
-
-	private static String _getVersion(UriInfo uriInfo) {
-		String version = "";
-
-		List<String> matchedURIs = uriInfo.getMatchedURIs();
-
-		if (!matchedURIs.isEmpty()) {
-			version = matchedURIs.get(matchedURIs.size() - 1);
-		}
-
-		return version;
 	}
 
 	private static boolean _hasPermission(

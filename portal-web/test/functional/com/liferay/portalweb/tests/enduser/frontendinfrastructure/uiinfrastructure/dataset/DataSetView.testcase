@@ -398,7 +398,7 @@ definition {
 		task ("And The data set View is not present in the data set View page") {
 			AssertTextEquals(
 				locator1 = "Message#EMPTY_STATE_INFO",
-				value1 = "No Results Found");
+				value1 = "No Views Created");
 		}
 	}
 

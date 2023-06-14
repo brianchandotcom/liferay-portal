@@ -255,18 +255,20 @@ public class FunctionObjectEntryManagerImpl
 			DTOConverterContext dtoConverterContext, String scopeKey)
 		throws Exception {
 
-		return JSONUtil.put(
-			"companyId", _companyId
-		).put(
-			"languageId",
-			LocaleUtil.toLanguageId(dtoConverterContext.getLocale())
-		).put(
-			"scopeKey", scopeKey
-		).put(
-			"uriInfo", dtoConverterContext.getUriInfo()
-		).put(
-			"userId", dtoConverterContext.getUserId()
-		);
+		return _jsonFactory.createJSONObject(
+			_jsonFactory.looseSerialize(
+				HashMapBuilder.<String, Object>put(
+					"companyId", _companyId
+				).put(
+					"languageId",
+					LocaleUtil.toLanguageId(dtoConverterContext.getLocale())
+				).put(
+					"scopeKey", scopeKey
+				).put(
+					"uriInfo", dtoConverterContext.getUriInfo()
+				).put(
+					"userId", dtoConverterContext.getUserId()
+				).build()));
 	}
 
 	private JSONObject _toJSONObject(ObjectEntry objectEntry) throws Exception {

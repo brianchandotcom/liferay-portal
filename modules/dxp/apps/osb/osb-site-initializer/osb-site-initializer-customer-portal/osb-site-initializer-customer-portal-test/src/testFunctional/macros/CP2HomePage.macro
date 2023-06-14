@@ -1,5 +1,10 @@
 definition {
 
+	@summary = "This macro assert that the Guide Videos button is on banner in home page."
+	macro assertGuideVideosButton {
+		AssertElementPresent(locator1 = "CP2HomePage#GUIDE_VIDEOS_BUTTON");
+	}
+
 	@summary = "This macro asserts the site language"
 	macro assertLanguageChange {
 		var key_title = ${siteTitle};

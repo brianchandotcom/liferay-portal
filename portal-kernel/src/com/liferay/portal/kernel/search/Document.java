@@ -137,6 +137,9 @@ public interface Document extends Cloneable, Serializable {
 
 	public void addLocalizedText(String name, Map<Locale, String> values);
 
+	public void addLocalizedText(
+		String name, Map<Locale, String> values, boolean sortable);
+
 	public void addNumber(String name, BigDecimal value);
 
 	public void addNumber(String name, BigDecimal[] values);

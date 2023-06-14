@@ -477,6 +477,19 @@ public class DocumentImpl implements Document {
 	}
 
 	@Override
+	public void addLocalizedText(
+		String name, Map<Locale, String> values, boolean sortable) {
+
+		if ((values == null) || values.isEmpty()) {
+			return;
+		}
+
+		Field field = createField(name, values, sortable);
+
+		field.setTokenized(true);
+	}
+
+	@Override
 	public void addNumber(String name, BigDecimal value) {
 		createNumberField(name, value);
 	}

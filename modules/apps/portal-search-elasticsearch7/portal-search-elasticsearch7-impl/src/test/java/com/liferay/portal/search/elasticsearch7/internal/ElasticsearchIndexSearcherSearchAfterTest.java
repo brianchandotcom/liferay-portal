@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchConnectionFixture;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.elasticsearch7.internal.deep.pagination.configuration.DeepPaginationConfigurationWrapper;
 import com.liferay.portal.search.internal.legacy.searcher.SearchRequestBuilderFactoryImpl;
@@ -46,6 +47,7 @@ import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -89,6 +91,8 @@ public class ElasticsearchIndexSearcherSearchAfterTest {
 
 		_setUpIndexingFixture();
 
+		_addDocuments();
+
 		PropsTestUtil.setProps("feature.flag.LPS-172416", "true");
 	}
 
@@ -118,29 +122,27 @@ public class ElasticsearchIndexSearcherSearchAfterTest {
 
 	@Test
 	public void testElasticsearchIndexSearcher() throws Exception {
-		_addDocuments();
-
-		_assertHits(5, 5);
+		_assertHits(
+			_INDEX_MAX_RESULT_WINDOW, _INDEX_MAX_RESULT_WINDOW,
+			_NUMBER_INDEXED_DOCUMENTS,0, _INDEX_MAX_RESULT_WINDOW);
 	}
 
 	@Test
-	public void testElasticsearchIndexSearcherIndexMaxResultWindow()
+	public void testElasticsearchIndexSearcherAcrossIndexMaxResultWindow()
 		throws Exception {
 
-		_addDocuments();
-
-		_assertHits(5, 5);
+		_assertHits(
+			_INDEX_MAX_RESULT_WINDOW, _INDEX_MAX_RESULT_WINDOW,
+			_NUMBER_INDEXED_DOCUMENTS,1, _INDEX_MAX_RESULT_WINDOW + 1);
 	}
 
 	@Test
 	public void testElasticsearchIndexSearcherIndexSearchLimit()
 		throws Exception {
 
-		_addDocuments();
-
 		_assertHits(
-			QueryUtil.ALL_POS, GetterUtil.getInteger(_INDEX_SEARCH_LIMIT),
-			GetterUtil.getInteger(_INDEX_SEARCH_LIMIT), _documents.size());
+			_INDEX_SEARCH_LIMIT, _INDEX_SEARCH_LIMIT, _NUMBER_INDEXED_DOCUMENTS,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
 	@Rule
@@ -176,20 +178,18 @@ public class ElasticsearchIndexSearcherSearchAfterTest {
 	}
 
 	private void _addDocuments() {
-		int numDocuments = 5;
-
-		for (int i = 0; i < numDocuments; i++) {
+		for (int i = 1; i <= _NUMBER_INDEXED_DOCUMENTS; i++) {
 			_addDocument(Field.TITLE, "Title " + i, Field.CONTENT, "example");
 		}
 	}
 
 	private void _assertHits(int end, int expectedHits) throws Exception {
-		_assertHits(end, expectedHits, expectedHits, expectedHits);
+		_assertHits(expectedHits, expectedHits, expectedHits, 0, end);
 	}
 
 	private void _assertHits(
-			int end, int expectedHitCount, int expectedScoreCount,
-			int expectedHitTotal)
+		int expectedHitsReturned, int expectedScoresReturned, int expectedHitTotal,
+		int start, int end)
 		throws Exception {
 
 		IdempotentRetryAssert.retryAssert(
@@ -199,6 +199,7 @@ public class ElasticsearchIndexSearcherSearchAfterTest {
 
 				searchContext.setEnd(end);
 				searchContext.setSorts(new Sort(Field.MODIFIED_DATE, true));
+				searchContext.setStart(start);
 
 				try {
 					Hits hits = _indexSearcher.search(
@@ -207,17 +208,25 @@ public class ElasticsearchIndexSearcherSearchAfterTest {
 					Document[] documents = hits.getDocs();
 					float[] scores = hits.getScores();
 
+					printHits(documents);
+
 					Assert.assertEquals(
-						hits.toString(), expectedHitCount, documents.length);
+						hits.toString(), expectedHitsReturned, documents.length);
 					Assert.assertEquals(
 						hits.toString(), expectedHitTotal, hits.getLength());
 
 					Assert.assertEquals(
-						scores.toString(), expectedScoreCount, scores.length);
+						scores.toString(), expectedScoresReturned, scores.length);
 				}
 				catch (Exception exception) {
 				}
 			});
+	}
+
+	private void printHits(Document[] documents) {
+		for (Document document : documents) {
+			System.out.println("Title: " + document.get(Field.TITLE));
+		}
 	}
 
 	private Document _createDocument(
@@ -234,9 +243,19 @@ public class ElasticsearchIndexSearcherSearchAfterTest {
 	}
 
 	private IndexingFixture _createIndexingFixture() {
+		ElasticsearchConnectionFixture elasticsearchConnectionFixture =
+			ElasticsearchConnectionFixture.builder(
+			).clusterName(
+				ElasticsearchIndexSearcherSearchAfterTest.class.getSimpleName()
+			).elasticsearchConfigurationProperties(
+				Collections.singletonMap(
+					"indexMaxResultWindow", _INDEX_MAX_RESULT_WINDOW)
+			).build();
+
 		return new ElasticsearchIndexingFixture() {
 			{
-				setElasticsearchFixture(new ElasticsearchFixture(getClass()));
+				setElasticsearchFixture(
+					new ElasticsearchFixture(elasticsearchConnectionFixture));
 				setLiferayMappingsAddedToIndex(true);
 			}
 		};
@@ -296,7 +315,7 @@ public class ElasticsearchIndexSearcherSearchAfterTest {
 		Props props = Mockito.mock(Props.class);
 
 		Mockito.doReturn(
-			_INDEX_SEARCH_LIMIT
+			Integer.toString(_INDEX_SEARCH_LIMIT)
 		).when(
 			props
 		).get(
@@ -326,9 +345,12 @@ public class ElasticsearchIndexSearcherSearchAfterTest {
 		ReflectionTestUtil.setFieldValue(_indexSearcher, "_sorts", sorts);
 	}
 
-	private static final String _INDEX_SEARCH_LIMIT = "3";
+	private static final int _INDEX_SEARCH_LIMIT = 3;
 
 	private static IndexingFixture _indexingFixture;
+	private static final int _NUMBER_INDEXED_DOCUMENTS = 5;
+
+	private static final int _INDEX_MAX_RESULT_WINDOW = 4;
 
 	private final DocumentFixture _documentFixture = new DocumentFixture();
 	private final List<Document> _documents = new ArrayList<>();

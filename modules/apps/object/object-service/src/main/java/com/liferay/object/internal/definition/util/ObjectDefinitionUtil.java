@@ -22,6 +22,12 @@ import java.util.Map;
  */
 public class ObjectDefinitionUtil {
 
+	public static String getModifiableSystemObjectDefinitionRESTContextPath(
+		String name) {
+
+		return _allowedModifiableSystemObjectDefinitionNames.get(name);
+	}
+
 	public static boolean isAllowedModifiableSystemObjectDefinitionName(
 		String name) {
 

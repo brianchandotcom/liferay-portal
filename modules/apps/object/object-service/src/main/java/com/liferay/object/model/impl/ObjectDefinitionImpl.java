@@ -15,6 +15,7 @@
 package com.liferay.object.model.impl;
 
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.internal.definition.util.ObjectDefinitionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -109,6 +110,11 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 	public String getRESTContextPath() {
 		if (isUnmodifiableSystemObject()) {
 			throw new UnsupportedOperationException();
+		}
+
+		if (isModifiable() && isSystem()) {
+			return ObjectDefinitionUtil.
+				getModifiableSystemObjectDefinitionRESTContextPath(getName());
 		}
 
 		return "/c/" +

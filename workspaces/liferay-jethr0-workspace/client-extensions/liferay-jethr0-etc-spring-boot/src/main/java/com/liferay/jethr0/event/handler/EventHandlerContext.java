@@ -27,7 +27,7 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class EventHandlerHelper {
+public class EventHandlerContext {
 
 	public BuildParameterRepository getBuildParameterRepository() {
 		return _buildParameterRepository;

@@ -27,12 +27,12 @@ import org.json.JSONObject;
  */
 public abstract class BaseEventHandler implements EventHandler {
 
-	protected BaseEventHandler(EventHandlerHelper eventHandlerHelper) {
-		_eventHandlerHelper = eventHandlerHelper;
+	protected BaseEventHandler(EventHandlerContext eventHandlerContext) {
+		_eventHandlerContext = eventHandlerContext;
 	}
 
-	protected EventHandlerHelper getEventHandlerHelper() {
-		return _eventHandlerHelper;
+	protected EventHandlerContext getEventHandlerContext() {
+		return _eventHandlerContext;
 	}
 
 	protected Project getProject(JSONObject projectJSONObject)
@@ -44,16 +44,16 @@ public abstract class BaseEventHandler implements EventHandler {
 
 		projectJSONObject = validateProjectJSONObject(projectJSONObject);
 
-		EventHandlerHelper eventHandlerHelper = getEventHandlerHelper();
+		EventHandlerContext eventHandlerContext = getEventHandlerContext();
 
 		ProjectRepository projectRepository =
-			eventHandlerHelper.getProjectRepository();
+			eventHandlerContext.getProjectRepository();
 
 		Project project = projectRepository.getById(
 			projectJSONObject.getLong("id"));
 
 		BuildRepository buildRepository =
-			eventHandlerHelper.getBuildRepository();
+			eventHandlerContext.getBuildRepository();
 
 		buildRepository.getAll(project);
 
@@ -172,6 +172,6 @@ public abstract class BaseEventHandler implements EventHandler {
 		return jsonObject;
 	}
 
-	private final EventHandlerHelper _eventHandlerHelper;
+	private final EventHandlerContext _eventHandlerContext;
 
 }

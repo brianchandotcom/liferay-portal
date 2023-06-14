@@ -27,19 +27,19 @@ public class EventHandlerFactory {
 		EventHandler eventHandler = null;
 
 		if (eventType == EventHandler.EventType.CREATE_BUILD) {
-			eventHandler = new CreateBuildEventHandler(_eventHandlerHelper);
+			eventHandler = new CreateBuildEventHandler(_eventHandlerContext);
 		}
 		else if (eventType == EventHandler.EventType.CREATE_PROJECT) {
-			eventHandler = new CreateProjectEventHandler(_eventHandlerHelper);
+			eventHandler = new CreateProjectEventHandler(_eventHandlerContext);
 		}
 		else if (eventType == EventHandler.EventType.QUEUE_PROJECT) {
-			eventHandler = new QueueProjectEventHandler(_eventHandlerHelper);
+			eventHandler = new QueueProjectEventHandler(_eventHandlerContext);
 		}
 
 		return eventHandler;
 	}
 
 	@Autowired
-	private EventHandlerHelper _eventHandlerHelper;
+	private EventHandlerContext _eventHandlerContext;
 
 }

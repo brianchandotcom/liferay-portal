@@ -35,10 +35,10 @@ public class CreateProjectEventHandler extends BaseEventHandler {
 		JSONObject projectJSONObject = validateProjectJSONObject(
 			bodyJSONObject.optJSONObject("project"));
 
-		EventHandlerHelper eventHandlerHelper = getEventHandlerHelper();
+		EventHandlerContext eventHandlerContext = getEventHandlerContext();
 
 		ProjectRepository projectRepository =
-			eventHandlerHelper.getProjectRepository();
+			eventHandlerContext.getProjectRepository();
 
 		Project project = projectRepository.add(projectJSONObject);
 
@@ -46,9 +46,9 @@ public class CreateProjectEventHandler extends BaseEventHandler {
 
 		if ((buildsJSONArray != null) && !buildsJSONArray.isEmpty()) {
 			BuildParameterRepository buildParameterRepository =
-				eventHandlerHelper.getBuildParameterRepository();
+				eventHandlerContext.getBuildParameterRepository();
 			BuildRepository buildRepository =
-				eventHandlerHelper.getBuildRepository();
+				eventHandlerContext.getBuildRepository();
 
 			for (int i = 0; i < buildsJSONArray.length(); i++) {
 				JSONObject buildJSONObject = buildsJSONArray.getJSONObject(i);
@@ -70,8 +70,10 @@ public class CreateProjectEventHandler extends BaseEventHandler {
 		return project.toString();
 	}
 
-	protected CreateProjectEventHandler(EventHandlerHelper eventHandlerHelper) {
-		super(eventHandlerHelper);
+	protected CreateProjectEventHandler(
+		EventHandlerContext eventHandlerContext) {
+
+		super(eventHandlerContext);
 	}
 
 }

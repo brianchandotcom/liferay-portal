@@ -36,10 +36,10 @@ public class CreateBuildEventHandler extends BaseEventHandler {
 
 		Project project = getProject(bodyJSONObject.optJSONObject("project"));
 
-		EventHandlerHelper eventHandlerHelper = getEventHandlerHelper();
+		EventHandlerContext eventHandlerContext = getEventHandlerContext();
 
 		BuildRepository buildRepository =
-			eventHandlerHelper.getBuildRepository();
+			eventHandlerContext.getBuildRepository();
 
 		JSONObject buildJSONObject = validateBuildJSONObject(
 			bodyJSONObject.optJSONObject("build"));
@@ -51,7 +51,7 @@ public class CreateBuildEventHandler extends BaseEventHandler {
 
 		if ((parametersJSONObject != null) && !parametersJSONObject.isEmpty()) {
 			BuildParameterRepository buildParameterRepository =
-				eventHandlerHelper.getBuildParameterRepository();
+				eventHandlerContext.getBuildParameterRepository();
 
 			for (String key : parametersJSONObject.keySet()) {
 				BuildParameter buildParameter = buildParameterRepository.add(
@@ -67,15 +67,15 @@ public class CreateBuildEventHandler extends BaseEventHandler {
 			project.setState(Project.State.QUEUED);
 
 			ProjectRepository projectRepository =
-				eventHandlerHelper.getProjectRepository();
+				eventHandlerContext.getProjectRepository();
 
 			projectRepository.update(project);
 
-			BuildQueue buildQueue = eventHandlerHelper.getBuildQueue();
+			BuildQueue buildQueue = eventHandlerContext.getBuildQueue();
 
 			buildQueue.addProject(project);
 
-			JenkinsQueue jenkinsQueue = eventHandlerHelper.getJenkinsQueue();
+			JenkinsQueue jenkinsQueue = eventHandlerContext.getJenkinsQueue();
 
 			jenkinsQueue.invoke();
 		}
@@ -83,8 +83,8 @@ public class CreateBuildEventHandler extends BaseEventHandler {
 		return project.toString();
 	}
 
-	protected CreateBuildEventHandler(EventHandlerHelper eventHandlerHelper) {
-		super(eventHandlerHelper);
+	protected CreateBuildEventHandler(EventHandlerContext eventHandlerContext) {
+		super(eventHandlerContext);
 	}
 
 }

@@ -315,7 +315,6 @@ public class DataLayoutUtil {
 							spiDDMFormRuleAction),
 						Map.class),
 					Map.class));
-
 			dataRule.setConditions(
 				TransformUtil.transformToArray(
 					spiDDMFormRule.getSPIDDMFormRuleConditions(),

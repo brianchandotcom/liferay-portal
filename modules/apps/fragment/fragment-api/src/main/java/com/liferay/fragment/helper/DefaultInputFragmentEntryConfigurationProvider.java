@@ -16,9 +16,12 @@ package com.liferay.fragment.helper;
 
 import com.liferay.portal.kernel.json.JSONObject;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Víctor Galán
  */
+@ProviderType
 public interface DefaultInputFragmentEntryConfigurationProvider {
 
 	public JSONObject getDefaultInputFragmentEntryKeysJSONObject(long groupId);

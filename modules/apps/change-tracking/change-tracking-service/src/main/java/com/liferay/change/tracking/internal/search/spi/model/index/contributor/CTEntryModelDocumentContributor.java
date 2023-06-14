@@ -148,9 +148,9 @@ public class CTEntryModelDocumentContributor
 			_ctDisplayRendererRegistry.getCTDisplayRenderer(
 				ctEntry.getModelClassNameId()));
 
-		document.addLocalizedKeyword(
-			"typeName",
-			_getTypeNameMap(locales, ctEntry.getModelClassNameId()));
+		document.addLocalizedText(
+			"typeName", _getTypeNameMap(locales, ctEntry.getModelClassNameId()),
+			true);
 
 		if (model == null) {
 			return;
@@ -173,7 +173,7 @@ public class CTEntryModelDocumentContributor
 			_getTitleMap(locales, model, ctEntry.getModelClassNameId()));
 		document.addLocalizedText(
 			Field.TITLE,
-			_getTitleMap(locales, model, ctEntry.getModelClassNameId()));
+			_getTitleMap(locales, model, ctEntry.getModelClassNameId()), true);
 
 		document.addKeyword(
 			"hideable",

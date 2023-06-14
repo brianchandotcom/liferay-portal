@@ -28,10 +28,10 @@ public class HeadlessBuilderValidatorImpl implements HeadlessBuilderValidator {
 	public boolean validatePath(String path) throws Exception {
 		Matcher matcher = _baseURLPattern.matcher(path);
 
-		return matcher.find();
+		return matcher.matches();
 	}
 
 	private static final Pattern _baseURLPattern = Pattern.compile(
-		"^[a-zA-Z0-9-]{1,255}$");
+		"[a-zA-Z0-9-]{1,255}");
 
 }

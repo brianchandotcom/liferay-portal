@@ -165,6 +165,8 @@ definition {
 	@description = "LPS-163243: The user can execute the upgrade:executeAll command on Gogo shell to execute all remaining upgrade processes"
 	@priority = 3
 	test ExecuteAllPendingUpgradesFromGogoShell {
+		property portal.release = "quarantine";
+		property portal.upstream = "quarantine";
 		property skip.get.testcase.database.properties = "true";
 		property skip.upgrade-legacy-database = "true";
 

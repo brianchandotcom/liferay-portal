@@ -30,6 +30,26 @@ definition {
 	}
 
 	macro addWidgets {
+		if (!(isSet(column))) {
+			var column = 1;
+		}
+
+		if (!(isSet(groupName))) {
+			var groupName = "Guest";
+		}
+
+		if (!(isSet(layoutName))) {
+			var layoutName = "Search";
+		}
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = ${column},
+			groupName = ${groupName},
+			layoutName = ${layoutName},
+			widgetName = ${searchPortletList});
+	}
+
+	macro addWidgetsViaUI {
 		if (IsNotVisible(locator1 = "ControlMenuAddPanel#CLOSE_ADD_PANEL")) {
 			Click.clickAt(locator1 = "ControlMenu#ADD");
 		}

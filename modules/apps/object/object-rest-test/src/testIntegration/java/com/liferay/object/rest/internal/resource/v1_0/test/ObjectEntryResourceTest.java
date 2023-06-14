@@ -110,9 +110,9 @@ import java.lang.reflect.Method;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import org.hamcrest.CoreMatchers;
 
@@ -5467,7 +5467,59 @@ public class ObjectEntryResourceTest {
 
 		TaxonomyCategory embeddedTaxonomyCategory = taxonomyCategory.clone();
 
-		embeddedTaxonomyCategory.setActions(new HashMap<>());
+		embeddedTaxonomyCategory.setActions(
+			HashMapBuilder.<String, Map<String, String>>put(
+				"add-category",
+				HashMapBuilder.put(
+					"href",
+					StringBundler.concat(
+						"http://localhost:8080/o/headless-admin-taxonomy/v1.0",
+						"/taxonomy-categories/", taxonomyCategory.getId(),
+						"/taxonomy-categories")
+				).put(
+					"method", "POST"
+				).build()
+			).put(
+				"delete",
+				HashMapBuilder.put(
+					"href",
+					StringBundler.concat(
+						"http://localhost:8080/o/headless-admin-taxonomy/v1.0",
+						"/taxonomy-categories/", taxonomyCategory.getId())
+				).put(
+					"method", "DELETE"
+				).build()
+			).put(
+				"get",
+				HashMapBuilder.put(
+					"href",
+					StringBundler.concat(
+						"http://localhost:8080/o/headless-admin-taxonomy/v1.0",
+						"/taxonomy-categories/", taxonomyCategory.getId())
+				).put(
+					"method", "GET"
+				).build()
+			).put(
+				"replace",
+				HashMapBuilder.put(
+					"href",
+					StringBundler.concat(
+						"http://localhost:8080/o/headless-admin-taxonomy/v1.0",
+						"/taxonomy-categories/", taxonomyCategory.getId())
+				).put(
+					"method", "PUT"
+				).build()
+			).put(
+				"update",
+				HashMapBuilder.put(
+					"href",
+					StringBundler.concat(
+						"http://localhost:8080/o/headless-admin-taxonomy/v1.0",
+						"/taxonomy-categories/", taxonomyCategory.getId())
+				).put(
+					"method", "PATCH"
+				).build()
+			).build());
 
 		return JSONFactoryUtil.createJSONObject(
 			embeddedTaxonomyCategory.toString());

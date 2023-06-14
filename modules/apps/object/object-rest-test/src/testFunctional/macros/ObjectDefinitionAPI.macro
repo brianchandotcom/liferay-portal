@@ -823,6 +823,25 @@ definition {
 		ObjectDefinitionAPI._deleteRelationship(relationshipId = ${relationshipId});
 	}
 
+	macro enableAccountRestrictedAndShowWidget {
+		Variables.assertDefined(parameterList = "${objectDefinitionId},${accountRestrictedField}");
+
+		ObjectDefinitionAPI.updateObjectDefinitionById(
+			objectDefinitionId = ${objectDefinitionId},
+			parameter = "accountEntryRestrictedObjectFieldName",
+			parameterValue = ${accountRestrictedField});
+
+		ObjectDefinitionAPI.updateObjectDefinitionById(
+			objectDefinitionId = ${objectDefinitionId},
+			parameter = "accountEntryRestricted",
+			parameterValue = "true");
+
+		ObjectDefinitionAPI.updateObjectDefinitionById(
+			objectDefinitionId = ${objectDefinitionId},
+			parameter = "portlet",
+			parameterValue = "true");
+	}
+
 	macro getIdOfObjectDefinitionExportBatch {
 		var portalURL = JSONCompany.getPortalURL();
 

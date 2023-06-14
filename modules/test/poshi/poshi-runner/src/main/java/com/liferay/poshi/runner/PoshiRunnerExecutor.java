@@ -545,8 +545,9 @@ public class PoshiRunnerExecutor {
 			String locator = executeElement.attributeValue("locator" + i);
 
 			if (locator == null) {
-				locator = _poshiVariablesContext.getStringFromCommandMap(
-					"locator" + i);
+				locator =
+					(String)_poshiVariablesContext.getObjectFromCommandMap(
+						"locator" + i);
 			}
 
 			if (locator != null) {
@@ -588,10 +589,10 @@ public class PoshiRunnerExecutor {
 					"locator" + i, locator);
 			}
 
-			String value = executeElement.attributeValue("value" + i);
+			Object value = executeElement.attributeValue("value" + i);
 
 			if (value == null) {
-				value = _poshiVariablesContext.getStringFromCommandMap(
+				value = (String)_poshiVariablesContext.getObjectFromCommandMap(
 					"value" + i);
 			}
 
@@ -989,13 +990,13 @@ public class PoshiRunnerExecutor {
 		LiferaySeleniumMethod liferaySeleniumMethod =
 			PoshiContext.getLiferaySeleniumMethod(selenium);
 
-		List<String> arguments = new ArrayList<>();
+		List<Object> arguments = new ArrayList<>();
 		List<Class<?>> parameterClasses = new ArrayList<>();
 
 		int parameterCount = liferaySeleniumMethod.getParameterCount();
 
 		for (int i = 0; i < parameterCount; i++) {
-			String argument = executeElement.attributeValue(
+			Object argument = executeElement.attributeValue(
 				"argument" + (i + 1));
 
 			if (argument == null) {
@@ -1004,20 +1005,26 @@ public class PoshiRunnerExecutor {
 
 				String parameterName = parameterNames.get(i);
 
-				argument = _poshiVariablesContext.getStringFromCommandMap(
+				argument = _poshiVariablesContext.getObjectFromCommandMap(
 					parameterName);
 			}
 			else {
-				argument = _poshiVariablesContext.getReplacedCommandVarsString(
-					argument);
+				argument = _poshiVariablesContext.getReplacedCommandVarsObject(
+					(String)argument);
 			}
 
 			arguments.add(argument);
 
-			parameterClasses.add(String.class);
+			parameterClasses.add(liferaySeleniumMethod.getParameterTypes()[i]);
 		}
 
-		_poshiLogger.logSeleniumCommand(executeElement, arguments);
+		List<String> argumentsList = new ArrayList<>();
+
+		for (Object argument : arguments) {
+			argumentsList.add(argument.toString());
+		}
+
+		_poshiLogger.logSeleniumCommand(executeElement, argumentsList);
 
 		LiferaySelenium liferaySelenium = WebDriverUtil.getLiferaySelenium(
 			getTestNamespacedClassCommandName());
@@ -1027,7 +1034,7 @@ public class PoshiRunnerExecutor {
 		_returnObject = invokeLiferaySeleniumMethod(
 			clazz.getMethod(
 				selenium, parameterClasses.toArray(new Class<?>[0])),
-			arguments.toArray(new String[0]));
+			arguments.toArray(new Object[0]));
 	}
 
 	public void runTakeScreenshotElement(Element element) throws Exception {

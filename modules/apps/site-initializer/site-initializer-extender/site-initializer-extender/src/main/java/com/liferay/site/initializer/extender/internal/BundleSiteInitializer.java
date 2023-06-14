@@ -1466,7 +1466,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			}
 			else {
 				_objectDefinitionLocalService.
-					enableAccountEntryRestrictedForExternalStorageType(
+					enableAccountEntryRestrictedForNondefaultStorageType(
 						serviceBuilderObjectField);
 			}
 		}

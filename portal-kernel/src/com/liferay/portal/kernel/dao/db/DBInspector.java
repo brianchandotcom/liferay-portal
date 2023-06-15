@@ -247,8 +247,10 @@ public class DBInspector {
 		return false;
 	}
 
-	public boolean isControlTable(String tableName) throws Exception {
-		if (!_isNotObjectTable(tableName) &&
+	public boolean isControlTable(List<Long> companyIds, String tableName)
+		throws Exception {
+
+		if (!isObjectTable(companyIds, tableName) &&
 			(_controlTableNames.contains(StringUtil.toLowerCase(tableName)) ||
 			 !hasColumn(tableName, "companyId"))) {
 
@@ -367,14 +369,6 @@ public class DBInspector {
 		typeName = StringUtil.toLowerCase(typeName);
 
 		if (typeName.endsWith("not null")) {
-			return false;
-		}
-
-		return true;
-	}
-
-	private boolean _isNotObjectTable(String tableName) {
-		if (tableName.contains("_x_") || tableName.startsWith("O_")) {
 			return false;
 		}
 

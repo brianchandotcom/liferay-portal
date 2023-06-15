@@ -52,7 +52,7 @@ definition {
 
 		Site.addBlankCP(siteName = "Site Test");
 
-		JSONGroup.addGroup(groupName = "Site Test");
+		HeadlessSite.addSite(siteName = "Site Test");
 
 		JSONUser.addUser(
 			userEmailAddress = "usersn@liferay.com",
@@ -196,7 +196,7 @@ definition {
 
 		Site.addBlankCP(siteName = "Site Test");
 
-		JSONGroup.addGroup(groupName = "Site Test");
+		HeadlessSite.addSite(siteName = "Site Test");
 
 		JSONUser.addUser(
 			userEmailAddress = "usersn@liferay.com",

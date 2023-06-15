@@ -50,7 +50,7 @@ definition {
 		}
 
 		task ("Then the default theme for a new site should be Minium theme") {
-			JSONGroup.addGroup(groupName = "Test Site");
+			HeadlessSite.addSite(siteName = "Test Site");
 
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site");
 

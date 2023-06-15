@@ -12,7 +12,7 @@ definition {
 
 		User.firstLoginPG();
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		ApplicationsMenu.gotoSite(site = "Site Name");
 	}
@@ -132,7 +132,7 @@ definition {
 
 		task ("And When site 2 has walkthrough enabled site-level with JSON") {
 			task ("Create site 2") {
-				JSONGroup.addGroup(groupName = "Test Site Name");
+				HeadlessSite.addSite(siteName = "Test Site Name");
 
 				ApplicationsMenu.gotoSite(site = "Test Site Name");
 			}

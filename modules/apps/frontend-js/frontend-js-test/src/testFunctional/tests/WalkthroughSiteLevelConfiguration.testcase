@@ -13,7 +13,7 @@ definition {
 		User.firstLoginPG();
 
 		task ("Given a new Site") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 
 			ApplicationsMenu.gotoSite(site = "Site Name");
 		}
@@ -149,7 +149,7 @@ definition {
 		var portalURL = PropsUtil.get("portal.url");
 
 		task ("Given there is a site-level JSON defined for current site") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 
 			ApplicationsMenu.gotoSite(site = "Site Name");
 

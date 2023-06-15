@@ -418,7 +418,7 @@ definition {
 	@description = "This is a use case for LPS-57830."
 	@priority = 4
 	test UpdateDocumentWithCustomField {
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",

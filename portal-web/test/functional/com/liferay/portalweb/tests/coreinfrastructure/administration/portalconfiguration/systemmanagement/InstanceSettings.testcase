@@ -513,7 +513,7 @@ definition {
 
 		PortletEntry.save();
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -618,7 +618,7 @@ definition {
 	test CanSpecifyTheTermsofUseWebContent {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
-		JSONGroup.addGroup(groupName = "Terms of Use Site");
+		HeadlessSite.addSite(siteName = "Terms of Use Site");
 
 		JSONWebcontent.addWebContent(
 			content = "This is a new terms of use items posted in Terms of Use Site.",

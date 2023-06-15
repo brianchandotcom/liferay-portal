@@ -56,7 +56,7 @@ definition {
 
 		LAR.downloadLar();
 
-		JSONGroup.addGroup(groupName = "Test Site Name 1");
+		HeadlessSite.addSite(siteName = "Test Site Name 1");
 
 		var groupId1 = JSONGroupAPI._getGroupIdByName(
 			groupName = "Test Site Name 1",

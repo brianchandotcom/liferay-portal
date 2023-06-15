@@ -1880,7 +1880,7 @@ definition {
 			}
 
 			task ("Add another site") {
-				JSONGroup.addGroup(groupName = "Test Site Name 2");
+				HeadlessSite.addSite(siteName = "Test Site Name 2");
 			}
 
 			task ("Add a web content with one friendly URL") {
@@ -2026,7 +2026,7 @@ definition {
 			}
 
 			task ("Add another site") {
-				JSONGroup.addGroup(groupName = "Test Site Name 2");
+				HeadlessSite.addSite(siteName = "Test Site Name 2");
 			}
 
 			task ("Add a web content with three friendly URLs") {
@@ -2053,7 +2053,7 @@ definition {
 			}
 
 			task ("Add a third site") {
-				JSONGroup.addGroup(groupName = "Test Site Name 3");
+				HeadlessSite.addSite(siteName = "Test Site Name 3");
 			}
 
 			task ("Add a web content with four friendly URLs") {
@@ -2084,7 +2084,7 @@ definition {
 			}
 
 			task ("Add a forth site") {
-				JSONGroup.addGroup(groupName = "Test Site Name 4");
+				HeadlessSite.addSite(siteName = "Test Site Name 4");
 			}
 
 			task ("Add a web content with four friendly URLs") {
@@ -2222,7 +2222,7 @@ definition {
 			}
 
 			task ("Add a second site and connect it to asset library") {
-				JSONGroup.addGroup(groupName = "Test Site Name 2");
+				HeadlessSite.addSite(siteName = "Test Site Name 2");
 
 				JSONDepot.connectSite(
 					depotName = "Test Depot Name",

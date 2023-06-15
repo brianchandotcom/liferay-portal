@@ -10,7 +10,7 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		task ("Given a site") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 		}
 	}
 

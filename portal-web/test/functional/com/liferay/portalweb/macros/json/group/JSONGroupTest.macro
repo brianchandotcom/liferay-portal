@@ -5,9 +5,9 @@ definition {
 
 		// Group
 
-		JSONGroup.addGroup(groupName = "group name");
+		HeadlessSite.addSite(siteName = "group name");
 
-		JSONGroup.addGroup(groupName = "group name 2");
+		HeadlessSite.addSite(siteName = "group name 2");
 
 		// User
 

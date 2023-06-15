@@ -13,7 +13,7 @@ definition {
 
 		User.firstLoginPG();
 
-		JSONGroup.addGroup(groupName = "WYSIWYG Site Name");
+		HeadlessSite.addSite(siteName = "WYSIWYG Site Name");
 	}
 
 	tearDown {

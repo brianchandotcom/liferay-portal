@@ -212,7 +212,7 @@ definition {
 		}
 
 		task ("And a new site is created") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 		}
 
 		task ("When change groupKey to new instance site and copy it to the configs folder") {

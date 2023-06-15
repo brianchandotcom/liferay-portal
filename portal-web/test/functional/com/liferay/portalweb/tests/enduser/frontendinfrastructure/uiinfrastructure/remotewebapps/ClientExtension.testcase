@@ -145,7 +145,7 @@ definition {
 	@priority = 3
 	test CSSCanBeCreated {
 		task ("Given a site administrator accesses to the Client Extensions admin") {
-			JSONGroup.addGroup(groupName = "Test Site Name");
+			HeadlessSite.addSite(siteName = "Test Site Name");
 
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentTitle = "Font Family",

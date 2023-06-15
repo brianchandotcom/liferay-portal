@@ -13,7 +13,7 @@ definition {
 		User.firstLoginPG();
 
 		task ("Given walkthrough enabled site-level") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 
 			ApplicationsMenu.gotoSite(site = "Site Name");
 

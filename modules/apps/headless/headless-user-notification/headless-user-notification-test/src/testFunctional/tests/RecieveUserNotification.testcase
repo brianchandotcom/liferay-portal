@@ -10,7 +10,7 @@ definition {
 
 		User.firstLoginPG();
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		task ("Given user test2@liferay.com with Administrator role created") {
 			UserAccountAPI.setUpGlobalUserAccountId(

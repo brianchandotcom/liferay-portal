@@ -33,8 +33,7 @@ interface Props {
 type RequestStatus =
 	| {type: 'idle'}
 	| {type: 'loading'}
-	| {errorMessage: string; type: 'error'}
-	| {text: string; type: 'success'};
+	| {errorMessage: string; type: 'error'};
 
 export default function AICreatorModal({
 	getCompletionURL,
@@ -47,12 +46,13 @@ export default function AICreatorModal({
 	};
 
 	const [status, setStatus] = useState<RequestStatus>({type: 'idle'});
+	const [text, setText] = useState<string | null>(null);
 
 	const onAdd = () => {
-		if (status.type === 'success') {
+		if (text) {
 			const opener = Liferay.Util.getOpener();
 
-			opener.Liferay.fire('closeModal', {text: status.text});
+			opener.Liferay.fire('closeModal', {text});
 		}
 	};
 
@@ -79,10 +79,8 @@ export default function AICreatorModal({
 					setErrorStatus(json.error.message);
 				}
 				else if (json.completion?.content) {
-					setStatus({
-						text: json.completion.content,
-						type: 'success',
-					});
+					setText(json.completion.content);
+					setStatus({type: 'idle'});
 				}
 				else {
 					setErrorStatus();
@@ -121,9 +119,9 @@ export default function AICreatorModal({
 					>
 						<FormContent portletNamespace={portletNamespace} />
 
-						{status.type === 'success' ? (
+						{text ? (
 							<TextContent
-								content={status.text}
+								content={text}
 								portletNamespace={portletNamespace}
 							/>
 						) : null}
@@ -141,15 +139,9 @@ export default function AICreatorModal({
 						<FormFooter
 							onAdd={onAdd}
 							onClose={closeModal}
-							showAddButton={
-								status.type === 'success' &&
-								Boolean(status.text)
-							}
-							showCreateButton={
-								status.type === 'idle' ||
-								status.type === 'error'
-							}
-							showRetryButton={status.type === 'success'}
+							showAddButton={Boolean(text)}
+							showCreateButton={!text}
+							showRetryButton={Boolean(text)}
 						/>
 					</div>
 				</fieldset>

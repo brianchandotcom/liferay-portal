@@ -243,7 +243,7 @@ The DM file [$DOCUMENT_TITLE$] has been added to Home folder.
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
-		Click(locator1 = "Icon#INFO");
+		Click(locator1 = "Icon#INFO_DM");
 
 		AssertTextEquals(
 			locator1 = "Link#UNSUBSCRIBE",

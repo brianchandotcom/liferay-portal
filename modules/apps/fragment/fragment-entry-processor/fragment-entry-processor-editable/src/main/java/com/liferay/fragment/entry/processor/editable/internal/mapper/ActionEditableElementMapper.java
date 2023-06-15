@@ -128,6 +128,14 @@ public class ActionEditableElementMapper implements EditableElementMapper {
 
 		element.attr("data-lfr-on-" + resultType + "-interaction", interaction);
 
+		if ((interaction.equals(_INTERACTION_NONE) ||
+			 interaction.equals(_INTERACTION_NOTIFICATION)) &&
+			jsonObject.getBoolean("reload")) {
+
+			element.attr(
+				"data-lfr-on-" + resultType + "-reload", StringPool.TRUE);
+		}
+
 		ThemeDisplay themeDisplay = null;
 
 		ServiceContext serviceContext =
@@ -184,14 +192,6 @@ public class ActionEditableElementMapper implements EditableElementMapper {
 						"data-lfr-on-" + resultType + "-page-url", url);
 				}
 			}
-		}
-
-		if ((interaction.equals(_INTERACTION_NONE) ||
-			 interaction.equals(_INTERACTION_NOTIFICATION)) &&
-			jsonObject.getBoolean("reload")) {
-
-			element.attr(
-				"data-lfr-on-" + resultType + "-reload", StringPool.TRUE);
 		}
 	}
 

@@ -46,21 +46,60 @@ logger.debug({
 });
 
 class Jira extends JiraAuth {
-    public async getIssue(ticket: string, userId: string) {
-        const { cloudId, token } = await this.getTokenAndCloudId(userId);
+	public async getIssue(ticket: string, userId: string): Promise<any> {
+		const { cloudId, token } = await this.getTokenAndCloudId(userId);
 
-        const response = await fetch(
-            `${JIRA_API_BASE_URL}/ex/jira/${cloudId}/rest/api/latest/issue/${ticket}`,
-            {
-                headers: {
-                    "Authorization": `Bearer ${token}`,
-                    'Content-Type': 'application/json',
-                },
-            }
-        );
+		const response = await fetch(
+			`${JIRA_API_BASE_URL}/ex/jira/${cloudId}/rest/api/latest/issue/${ticket}`,
+			{
+				headers: {
+					Authorization: `Bearer ${token}`,
+					"Content-Type": "application/json",
+				},
+			},
+		);
 
-        return response.json();
-    }
+		if (!response.ok) {
+			const error = new FetcherError(
+				"An error occurred while fetching the data.",
+			);
+
+			error.info = await response.json();
+			error.status = response.status;
+
+			throw error;
+		}
+
+		return response.json();
+	}
+
+	public async getIssues(issues: string[], userId: string): Promise<any> {
+		const jiraIssues: {
+			[key: string]: any;
+		} = {};
+
+		const _issues = await Promise.allSettled(
+			issues.map((issue) => this.getIssue(issue, userId)),
+		);
+
+		_issues.forEach((issue, index) => {
+			const issueKey = issues[index];
+
+			const _issue = (issue as any)?.value;
+
+			jiraIssues[issueKey] =
+				issue.status === "rejected" || issue.value?.errorMessages
+					? null
+					: {
+							description: _issue.fields.description,
+							jiraComponents: _issue.fields.labels,
+							key: _issue.key,
+							summary: _issue.fields.summary,
+					  };
+		});
+
+		return jiraIssues;
+	}
 
     public async updateIssue(ticket: string, body: unknown, userId: string) {
         const { cloudId, token } = await this.getTokenAndCloudId(userId);

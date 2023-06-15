@@ -63,7 +63,6 @@ export default function MoveModal({itemToMoveParent, items: initialItems}) {
 				<ClayTreeView
 					defaultItems={items}
 					defaultSelectedKeys={new Set([itemToMoveParent])}
-					dragAndDrop
 					nestedKey="children"
 					onItemMove={handleItemMove}
 					showExpanderOnHover={false}

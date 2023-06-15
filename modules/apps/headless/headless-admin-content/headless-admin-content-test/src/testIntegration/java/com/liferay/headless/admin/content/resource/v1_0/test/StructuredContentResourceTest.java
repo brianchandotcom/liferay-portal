@@ -135,15 +135,17 @@ public class StructuredContentResourceTest
 				testGetSiteStructuredContentsPage_getSiteId(),
 				Double.valueOf(0.99));
 
-		_testGetSiteStructuredContentsPage_addStructuredContent_addDraftStructuredContentWithPriority(
-			testGetSiteStructuredContentsPage_getSiteId(), Double.valueOf(1));
-
 		StructuredContent postStructuredContent2 =
+			_testGetSiteStructuredContentsPage_addStructuredContent_addDraftStructuredContentWithPriority(
+				testGetSiteStructuredContentsPage_getSiteId(),
+				Double.valueOf(1));
+
+		StructuredContent postStructuredContent3 =
 			_testGetSiteStructuredContentsPage_addStructuredContent_addDraftStructuredContentWithPriority(
 				testGetSiteStructuredContentsPage_getSiteId(),
 				Double.valueOf(1.1));
 
-		StructuredContent postStructuredContent3 =
+		StructuredContent postStructuredContent4 =
 			_testGetSiteStructuredContentsPage_addStructuredContent_addDraftStructuredContentWithPriority(
 				testGetSiteStructuredContentsPage_getSiteId(),
 				Double.valueOf(2.99));
@@ -157,8 +159,22 @@ public class StructuredContentResourceTest
 
 		assertEquals(
 			Arrays.asList(
-				postStructuredContent1, postStructuredContent2,
-				postStructuredContent3),
+				postStructuredContent1, postStructuredContent3,
+				postStructuredContent4),
+			(List<StructuredContent>)page.getItems());
+
+		assertValid(page);
+
+		page = structuredContentResource.getSiteStructuredContentsPage(
+			testGroup.getGroupId(), true, null, null, "priority gt 0.99",
+			Pagination.of(1, 10), "priority:desc");
+
+		Assert.assertEquals(3, page.getTotalCount());
+
+		assertEquals(
+			Arrays.asList(
+				postStructuredContent4, postStructuredContent3,
+				postStructuredContent2),
 			(List<StructuredContent>)page.getItems());
 
 		assertValid(page);

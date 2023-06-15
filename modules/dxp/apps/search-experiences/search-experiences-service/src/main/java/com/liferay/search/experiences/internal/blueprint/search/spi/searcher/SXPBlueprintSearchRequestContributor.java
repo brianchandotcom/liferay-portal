@@ -69,17 +69,15 @@ public class SXPBlueprintSearchRequestContributor
 					object);
 		}
 
-		if (object == null) {
-		}
-		else if (object instanceof String) {
+		if (object instanceof String) {
 			String string = (String)object;
 
-			if (Validator.isNotNull(string)) {
+			if (!Validator.isBlank(string)) {
 				_enhanceWithExternalReferenceCode(
 					searchRequestBuilder, StringUtil.split(string));
 			}
 		}
-		else {
+		else if (object != null) {
 			throw new IllegalArgumentException(
 				"Invalid search experiences blueprint External Reference " +
 					"Code " + object);
@@ -97,21 +95,19 @@ public class SXPBlueprintSearchRequestContributor
 			_log.debug("Search experiences blueprint ID " + object);
 		}
 
-		if (object == null) {
-		}
-		else if (object instanceof Number) {
+		if (object instanceof Number) {
 			_enhanceWithId(searchRequestBuilder, GetterUtil.getLong(object));
 		}
 		else if (object instanceof String) {
 			String string = (String)object;
 
-			if (Validator.isNotNull(string)) {
+			if (!Validator.isBlank(string)) {
 				_enhanceWithId(
 					searchRequestBuilder,
 					GetterUtil.getLongValues(StringUtil.split(string)));
 			}
 		}
-		else {
+		else if (object != null) {
 			throw new IllegalArgumentException(
 				"Invalid search experiences blueprint ID " + object);
 		}
@@ -165,14 +161,13 @@ public class SXPBlueprintSearchRequestContributor
 				continue;
 			}
 
-			Object companyId = searchRequestBuilder.withSearchContextGet(
-				SearchContext::getCompanyId);
-
 			SXPBlueprint sxpBlueprint =
 				_sxpBlueprintLocalService.
 					fetchSXPBlueprintByExternalReferenceCode(
 						sxpBlueprintExternalReferenceCode,
-						GetterUtil.getLong(companyId));
+						GetterUtil.getLong(
+							searchRequestBuilder.withSearchContextGet(
+								SearchContext::getCompanyId)));
 
 			if (_log.isDebugEnabled()) {
 				_log.debug("Search experiences blueprint " + sxpBlueprint);

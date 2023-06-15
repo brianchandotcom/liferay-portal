@@ -426,8 +426,9 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 		return cpDefinitionLocalService.searchCPDefinitions(
 			companyId,
 			TransformUtil.transformToLongArray(
-				_commerceCatalogService.getCommerceCatalogs(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+				_commerceCatalogService.search(
+					companyId, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null),
 				CommerceCatalog::getGroupId),
 			keywords, status, ignoreCommerceAccountGroup, start, end, sort);
 	}
@@ -441,8 +442,9 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 		return cpDefinitionLocalService.searchCPDefinitions(
 			companyId,
 			TransformUtil.transformToLongArray(
-				_commerceCatalogService.getCommerceCatalogs(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+				_commerceCatalogService.search(
+					companyId, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null),
 				CommerceCatalog::getGroupId),
 			keywords, filterFields, filterValues, start, end, sort);
 	}

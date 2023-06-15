@@ -93,31 +93,14 @@ public class StructuredContentResourceTest
 	public void testGetSiteStructuredContentsPage() throws Exception {
 		super.testGetSiteStructuredContentsPage();
 
-		Locale locale = LocaleUtil.getDefault();
-
-		StructuredContent irrelevantStructuredContent =
-			_randomStructuredContent(locale);
-
-		com.liferay.headless.admin.content.client.resource.v1_0.
-			StructuredContentResource irrelevantStructuredContentResource =
-				_buildStructureContentResource(locale);
-
-		irrelevantStructuredContentResource.postSiteStructuredContentDraft(
+		_testGetSiteStructuredContentsPage_addStructuredContent_addDraftStructuredContentWithPriority(
 			testGetSiteStructuredContentsPage_getSiteId(),
-			irrelevantStructuredContent);
-
-		StructuredContent structuredContent = _randomStructuredContent(locale);
-
-		structuredContent.setPriority(Double.valueOf(1));
-
-		com.liferay.headless.admin.content.client.resource.v1_0.
-			StructuredContentResource structuredContentResource =
-				_buildStructureContentResource(locale);
+			RandomTestUtil.randomDouble());
 
 		StructuredContent postStructuredContent =
-			structuredContentResource.postSiteStructuredContentDraft(
+			_testGetSiteStructuredContentsPage_addStructuredContent_addDraftStructuredContentWithPriority(
 				testGetSiteStructuredContentsPage_getSiteId(),
-				structuredContent);
+				Double.valueOf(1));
 
 		com.liferay.headless.delivery.client.dto.v1_0.StructuredContent
 			patchStructuredContent =
@@ -568,6 +551,25 @@ public class StructuredContentResourceTest
 			"dependencies/" + fileName);
 
 		return StringUtil.read(inputStream);
+	}
+
+	private StructuredContent
+			_testGetSiteStructuredContentsPage_addStructuredContent_addDraftStructuredContentWithPriority(
+				Long siteId, Double priority)
+		throws Exception {
+
+		Locale locale = LocaleUtil.getDefault();
+
+		StructuredContent structuredContent = _randomStructuredContent(locale);
+
+		structuredContent.setPriority(priority);
+
+		com.liferay.headless.admin.content.client.resource.v1_0.
+			StructuredContentResource structuredContentResource =
+				_buildStructureContentResource(locale);
+
+		return structuredContentResource.postSiteStructuredContentDraft(
+			siteId, structuredContent);
 	}
 
 	private StructuredContent _testPostSiteStructuredContentDraft(

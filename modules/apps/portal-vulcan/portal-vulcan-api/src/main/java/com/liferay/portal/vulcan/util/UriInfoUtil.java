@@ -66,12 +66,10 @@ public class UriInfoUtil {
 		String basePath = getBasePath(uriInfo);
 
 		if (basePath.endsWith(StringPool.FORWARD_SLASH)) {
-			basePath = basePath.substring(
-				0, basePath.length() - 1);
+			basePath = basePath.substring(0, basePath.length() - 1);
 		}
 
-		basePath = basePath.substring(
-			0, basePath.lastIndexOf("/") + 1);
+		basePath = basePath.substring(0, basePath.lastIndexOf("/") + 1);
 
 		if (basePath.endsWith("/c/")) {
 			basePath = StringUtil.removeLast(basePath, "c/");

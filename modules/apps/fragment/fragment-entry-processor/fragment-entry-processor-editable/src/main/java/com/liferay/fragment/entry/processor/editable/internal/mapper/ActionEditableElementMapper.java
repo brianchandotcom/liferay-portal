@@ -106,26 +106,27 @@ public class ActionEditableElementMapper implements EditableElementMapper {
 		element.attr("data-lfr-class-pk", classPK);
 		element.attr("data-lfr-field-id", fieldId);
 
-		_mapOnError(element, configJSONObject);
-		_mapOnSuccess(element, configJSONObject);
+		_addDataAtributes(
+			element, configJSONObject.getJSONObject("onError"), "error");
+		_addDataAtributes(
+			element, configJSONObject.getJSONObject("onSuccess"), "success");
 	}
 
-	private void _mapOnError(Element element, JSONObject jsonObject)
+	private void _addDataAtributes(
+			Element element, JSONObject jsonObject, String resultType)
 		throws PortalException {
 
-		JSONObject onErrorJSONObject = jsonObject.getJSONObject("onError");
-
-		if (onErrorJSONObject == null) {
+		if (jsonObject == null) {
 			return;
 		}
 
-		String interaction = onErrorJSONObject.getString("interaction");
+		String interaction = jsonObject.getString("interaction");
 
 		if (Validator.isNull(interaction)) {
 			interaction = _INTERACTION_NONE;
 		}
 
-		element.attr("data-lfr-on-error-interaction", interaction);
+		element.attr("data-lfr-on-" + resultType + "-interaction", interaction);
 
 		ThemeDisplay themeDisplay = null;
 
@@ -137,19 +138,19 @@ public class ActionEditableElementMapper implements EditableElementMapper {
 		}
 
 		if (interaction.equals(_INTERACTION_NOTIFICATION)) {
-			JSONObject textJSONObject = onErrorJSONObject.getJSONObject("text");
+			JSONObject textJSONObject = jsonObject.getJSONObject("text");
 
 			if ((textJSONObject != null) && (themeDisplay != null)) {
 				String text = textJSONObject.getString(
 					themeDisplay.getLanguageId());
 
 				if (Validator.isNotNull(text)) {
-					element.attr("data-lfr-on-error-text", text);
+					element.attr("data-lfr-on-" + resultType + "-text", text);
 				}
 			}
 		}
 		else if (interaction.equals(_INTERACTION_PAGE)) {
-			JSONObject pageJSONObject = onErrorJSONObject.getJSONObject("page");
+			JSONObject pageJSONObject = jsonObject.getJSONObject("page");
 
 			if (pageJSONObject != null) {
 				Layout layout = _layoutLocalService.fetchLayout(
@@ -160,13 +161,13 @@ public class ActionEditableElementMapper implements EditableElementMapper {
 
 				if ((layout != null) && (themeDisplay != null)) {
 					element.attr(
-						"data-lfr-on-error-page-url",
+						"data-lfr-on-" + resultType + "-page-url",
 						_portal.getLayoutURL(layout, themeDisplay));
 				}
 			}
 		}
 		else if (interaction.equals(_INTERACTION_URL)) {
-			JSONObject urlJSONObject = onErrorJSONObject.getJSONObject("url");
+			JSONObject urlJSONObject = jsonObject.getJSONObject("url");
 
 			if ((urlJSONObject != null) && (themeDisplay != null)) {
 				String url = urlJSONObject.getString(
@@ -179,100 +180,18 @@ public class ActionEditableElementMapper implements EditableElementMapper {
 				}
 
 				if (Validator.isNotNull(url)) {
-					element.attr("data-lfr-on-error-page-url", url);
-				}
-			}
-		}
-
-		if ((interaction.equals(_INTERACTION_NONE) ||
-			 interaction.equals(_INTERACTION_NOTIFICATION)) &&
-			onErrorJSONObject.getBoolean("reload")) {
-
-			element.attr("data-lfr-on-error-reload", StringPool.TRUE);
-		}
-	}
-
-	private void _mapOnSuccess(Element element, JSONObject jsonObject)
-		throws PortalException {
-
-		JSONObject onSuccessJSONObject = jsonObject.getJSONObject("onSuccess");
-
-		if (onSuccessJSONObject == null) {
-			return;
-		}
-
-		String interaction = onSuccessJSONObject.getString("interaction");
-
-		if (Validator.isNull(interaction)) {
-			interaction = _INTERACTION_NONE;
-		}
-
-		element.attr("data-lfr-on-success-interaction", interaction);
-
-		ThemeDisplay themeDisplay = null;
-
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		if (serviceContext != null) {
-			themeDisplay = serviceContext.getThemeDisplay();
-		}
-
-		if (interaction.equals(_INTERACTION_NOTIFICATION)) {
-			JSONObject textJSONObject = onSuccessJSONObject.getJSONObject(
-				"text");
-
-			if ((textJSONObject != null) && (themeDisplay != null)) {
-				String text = textJSONObject.getString(
-					themeDisplay.getLanguageId());
-
-				if (Validator.isNotNull(text)) {
-					element.attr("data-lfr-on-success-text", text);
-				}
-			}
-		}
-		else if (interaction.equals(_INTERACTION_PAGE)) {
-			JSONObject pageJSONObject = onSuccessJSONObject.getJSONObject(
-				"page");
-
-			if (pageJSONObject != null) {
-				Layout layout = _layoutLocalService.fetchLayout(
-					GetterUtil.getLong(pageJSONObject.getString("groupId")),
-					GetterUtil.getBoolean(
-						pageJSONObject.getString("privateLayout")),
-					GetterUtil.getLong(pageJSONObject.getString("layoutId")));
-
-				if ((layout != null) && (themeDisplay != null)) {
 					element.attr(
-						"data-lfr-on-success-page-url",
-						_portal.getLayoutURL(layout, themeDisplay));
-				}
-			}
-		}
-		else if (interaction.equals(_INTERACTION_URL)) {
-			JSONObject urlJSONObject = onSuccessJSONObject.getJSONObject("url");
-
-			if ((urlJSONObject != null) && (themeDisplay != null)) {
-				String url = urlJSONObject.getString(
-					themeDisplay.getLanguageId());
-
-				if (Validator.isNull(url)) {
-					Locale locale = LocaleUtil.getSiteDefault();
-
-					url = urlJSONObject.getString(locale.getLanguage());
-				}
-
-				if (Validator.isNotNull(url)) {
-					element.attr("data-lfr-on-success-page-url", url);
+						"data-lfr-on-" + resultType + "-page-url", url);
 				}
 			}
 		}
 
 		if ((interaction.equals(_INTERACTION_NONE) ||
 			 interaction.equals(_INTERACTION_NOTIFICATION)) &&
-			onSuccessJSONObject.getBoolean("reload")) {
+			jsonObject.getBoolean("reload")) {
 
-			element.attr("data-lfr-on-success-reload", StringPool.TRUE);
+			element.attr(
+				"data-lfr-on-" + resultType + "-reload", StringPool.TRUE);
 		}
 	}
 

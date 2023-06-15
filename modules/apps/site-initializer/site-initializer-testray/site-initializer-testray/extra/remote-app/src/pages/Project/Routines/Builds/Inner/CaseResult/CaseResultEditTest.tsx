@@ -121,7 +121,8 @@ const CaseResultEditTest = () => {
 			});
 
 			onSave();
-		} catch (error) {
+		}
+		catch (error) {
 			onError(error);
 		}
 	};

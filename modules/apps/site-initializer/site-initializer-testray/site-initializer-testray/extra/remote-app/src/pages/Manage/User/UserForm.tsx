@@ -116,7 +116,8 @@ const UserForm = () => {
 			mutateUser(_userAccount);
 
 			onSave();
-		} catch (error) {
+		}
+		catch (error) {
 			onError(error);
 		}
 	};

@@ -26,9 +26,9 @@ const CheckPermission: React.FC<CheckPermissionProps> = ({
 	children,
 	properties: {
 		createPath = '',
-		restImpl,
 		deniedChildren,
 		redirectTo = `/404?type=permission`,
+		restImpl,
 	},
 }) => {
 	const outletContext = useOutletContext<{actions: ObjectActionsItems}>();

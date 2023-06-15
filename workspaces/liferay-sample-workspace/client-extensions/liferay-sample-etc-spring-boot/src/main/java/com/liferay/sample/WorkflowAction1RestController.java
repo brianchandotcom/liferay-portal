@@ -66,7 +66,7 @@ public class WorkflowAction1RestController extends BaseRestController {
 			).uri(
 				jsonObject.getString("transitionURL")
 			).bodyValue(
-				"{transitionName: \"approve\"}"
+				"{\"transitionName\": \"approve\"}"
 			).header(
 				HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
 			).exchangeToMono(

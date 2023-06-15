@@ -15,7 +15,7 @@
 import ClayForm, {ClayInput, ClayToggle} from '@clayui/form';
 import {debounce, openToast, sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useMemo, useState} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 
 import updateItemLocalConfig from '../../../../../../app/actions/updateItemLocalConfig';
 import {CheckboxField} from '../../../../../../app/components/fragment_configuration_fields/CheckboxField';
@@ -65,26 +65,12 @@ const INTERACTION_OPTIONS = [
 
 const INTERACTION_DATA = {
 	error: {
-		fields: {
-			interaction: 'errorInteraction',
-			page: 'errorPage',
-			reload: 'errorReload',
-			showPreview: 'errorShowPreview',
-			text: 'errorText',
-			url: 'errorURL',
-		},
+		field: 'onError',
 		label: Liferay.Language.get('error'),
 		type: 'danger',
 	},
 	success: {
-		fields: {
-			interaction: 'successInteraction',
-			page: 'successPage',
-			reload: 'successReload',
-			showPreview: 'successShowPreview',
-			text: 'successText',
-			url: 'successURL',
-		},
+		field: 'onSuccess',
 		label: Liferay.Language.get('success'),
 		type: 'success',
 	},
@@ -165,7 +151,11 @@ EditableActionPanel.propTypes = {
 };
 
 function InteractionSelector({config, data, fragmentId, onValueSelect}) {
-	const {fields, label, type} = data;
+	const {field, label, type} = data;
+
+	const interactionConfig = config[field];
+
+	const {interaction, page, reload, text, url} = interactionConfig || {};
 
 	const languageId = useSelector(selectLanguageId);
 	const fragmentConfig = useSelector(
@@ -176,15 +166,22 @@ function InteractionSelector({config, data, fragmentId, onValueSelect}) {
 	const previewId = useId();
 	const textInputId = useId();
 
-	const [textValue, setTextValue] = useState(config[fields.text] || {});
-	const [URLValue, setURLValue] = useState(config[fields.url] || {});
-	const [showPreview, setShowPreview] = useState(
-		fragmentConfig[fields.showPreview]
+	const [textValue, setTextValue] = useState(text || {});
+	const [URLValue, setURLValue] = useState(url || {});
+	const [showPreview, setShowPreview] = useState(fragmentConfig.showPreview);
+
+	const onConfigChange = useCallback(
+		(name, value) => {
+			const nextConfig = {...interactionConfig, [name]: value};
+
+			onValueSelect(field, nextConfig);
+		},
+		[field, interactionConfig, onValueSelect]
 	);
 
-	const debouncedOnValueSelect = useMemo(
-		() => debounce((name, value) => onValueSelect(name, value), 300),
-		[onValueSelect]
+	const debouncedOnConfigChange = useMemo(
+		() => debounce((name, value) => onConfigChange(name, value), 300),
+		[onConfigChange]
 	);
 
 	const onPreviewToggle = (checked) => {
@@ -194,7 +191,7 @@ function InteractionSelector({config, data, fragmentId, onValueSelect}) {
 			updateItemLocalConfig({
 				disableUndo: true,
 				itemConfig: {
-					[fields.showPreview]: checked,
+					showPreview: checked,
 				},
 				itemId: fragmentId,
 			})
@@ -212,36 +209,37 @@ function InteractionSelector({config, data, fragmentId, onValueSelect}) {
 			<SelectField
 				field={{
 					label: sub(Liferay.Language.get('x-interaction'), label),
-					name: fields.interaction,
+					name: 'interaction',
 					typeOptions: {
 						validValues: INTERACTION_OPTIONS,
 					},
 				}}
 				onValueSelect={(name, value) => {
-					onValueSelect(name, value);
+					onConfigChange(name, value);
 				}}
-				value={config[fields.interaction]}
+				value={interaction}
 			/>
 
-			{[INTERACTION_NONE, INTERACTION_NOTIFICATION].includes(
-				config[fields.interaction]
-			) && (
+			{(!interaction ||
+				[INTERACTION_NONE, INTERACTION_NOTIFICATION].includes(
+					interaction
+				)) && (
 				<CheckboxField
 					field={{
 						label: sub(
 							Liferay.Language.get('reload-page-after-x'),
 							label
 						),
-						name: fields.reload,
+						name: 'reload',
 					}}
 					onValueSelect={(name, value) => {
-						onValueSelect(name, value);
+						onConfigChange(name, value);
 					}}
-					value={config[fields.reload]}
+					value={reload}
 				/>
 			)}
 
-			{config[fields.interaction] === INTERACTION_NOTIFICATION && (
+			{interaction === INTERACTION_NOTIFICATION && (
 				<>
 					<ClayForm.Group>
 						<label htmlFor={textInputId}>
@@ -259,14 +257,14 @@ function InteractionSelector({config, data, fragmentId, onValueSelect}) {
 										}
 
 										const nextTextValue = {
-											...config[fields.text],
+											...text,
 											[languageId]: event.target.value,
 										};
 
 										setTextValue(nextTextValue);
 
-										debouncedOnValueSelect(
-											fields.text,
+										debouncedOnConfigChange(
+											'text',
 											nextTextValue
 										);
 									}}
@@ -308,17 +306,17 @@ function InteractionSelector({config, data, fragmentId, onValueSelect}) {
 				</>
 			)}
 
-			{config[fields.interaction] === INTERACTION_PAGE && (
+			{interaction === INTERACTION_PAGE && (
 				<LayoutSelector
 					label={sub(Liferay.Language.get('x-page'), label)}
-					mappedLayout={config[fields.page]}
+					mappedLayout={page}
 					onLayoutSelect={(layout) => {
-						onValueSelect(fields.page, layout);
+						onConfigChange('page', layout);
 					}}
 				/>
 			)}
 
-			{config[fields.interaction] === INTERACTION_URL && (
+			{interaction === INTERACTION_URL && (
 				<ClayForm.Group>
 					<label htmlFor={textInputId}>
 						{sub(Liferay.Language.get('x-external-url'), label)}
@@ -330,14 +328,14 @@ function InteractionSelector({config, data, fragmentId, onValueSelect}) {
 								id={textInputId}
 								onChange={(event) => {
 									const nextURLValue = {
-										...config[fields.url],
+										...url,
 										[languageId]: event.target.value,
 									};
 
 									setURLValue(nextURLValue);
 
-									debouncedOnValueSelect(
-										fields.url,
+									debouncedOnConfigChange(
+										'url',
 										nextURLValue
 									);
 								}}

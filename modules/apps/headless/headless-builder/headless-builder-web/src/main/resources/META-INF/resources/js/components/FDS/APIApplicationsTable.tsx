@@ -20,13 +20,13 @@ import {CreateAPIApplicationModalContent} from '../modals/CreateAPIApplicationMo
 import {getAPIApplicationsFDSProps} from './fdsUtils/fdsProps';
 
 interface APIApplicationsTableProps {
-	apiURL: string;
+	apiURLPaths: APIURLPaths;
 	portletId: string;
 	readOnly: boolean;
 }
 
 export default function APIApplicationsTable({
-	apiURL,
+	apiURLPaths,
 	portletId,
 	readOnly,
 }: APIApplicationsTableProps) {
@@ -36,7 +36,7 @@ export default function APIApplicationsTable({
 				center: true,
 				contentComponent: ({closeModal}: {closeModal: voidReturn}) =>
 					CreateAPIApplicationModalContent({
-						apiURL,
+						apiApplicationsURLPath: apiURLPaths.applications,
 						closeModal,
 						loadData,
 					}),
@@ -48,7 +48,7 @@ export default function APIApplicationsTable({
 
 	return (
 		<FrontendDataSet
-			{...getAPIApplicationsFDSProps(apiURL, portletId)}
+			{...getAPIApplicationsFDSProps(apiURLPaths.applications, portletId)}
 			creationMenu={{
 				primaryItems: readOnly ? [] : ([createAPIApplication] as any),
 			}}

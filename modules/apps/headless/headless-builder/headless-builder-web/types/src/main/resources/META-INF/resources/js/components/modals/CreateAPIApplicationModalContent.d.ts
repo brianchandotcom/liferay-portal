@@ -15,12 +15,12 @@
 /// <reference types="react" />
 
 interface HandleCreateInModal {
-	apiURL: string;
+	apiApplicationsURLPath: string;
 	closeModal: voidReturn;
 	loadData: voidReturn;
 }
 export declare function CreateAPIApplicationModalContent({
-	apiURL,
+	apiApplicationsURLPath,
 	closeModal,
 	loadData,
 }: HandleCreateInModal): JSX.Element;

@@ -19,10 +19,10 @@ import APIApplications from './APIApplications';
 import '../../css/main.scss';
 
 interface AppProps {
-	apiURL: string;
+	apiURLPaths: APIURLPaths;
 	portletId: string;
 }
 
-export default function App({apiURL, portletId}: AppProps) {
-	return <APIApplications apiURL={apiURL} portletId={portletId} />;
+export default function App({apiURLPaths, portletId}: AppProps) {
+	return <APIApplications apiURLPaths={apiURLPaths} portletId={portletId} />;
 }

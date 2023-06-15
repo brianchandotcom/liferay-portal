@@ -37,7 +37,7 @@ type DataError = {
 };
 
 interface HandleCreateInModal {
-	apiURL: string;
+	apiApplicationsURLPath: string;
 	closeModal: voidReturn;
 	loadData: voidReturn;
 }
@@ -49,7 +49,7 @@ const headers = new Headers({
 });
 
 export function CreateAPIApplicationModalContent({
-	apiURL,
+	apiApplicationsURLPath,
 	closeModal,
 	loadData,
 }: HandleCreateInModal) {
@@ -72,7 +72,7 @@ export function CreateAPIApplicationModalContent({
 	}, [data]);
 
 	async function postData() {
-		fetch(apiURL, {
+		fetch(apiApplicationsURLPath, {
 			body: JSON.stringify({
 				...data,
 				applicationStatus: {key: 'unpublished'},

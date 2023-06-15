@@ -16,8 +16,8 @@
 
 import '../../css/main.scss';
 interface AppProps {
-	apiURL: string;
+	apiURLPaths: APIURLPaths;
 	portletId: string;
 }
-export default function App({apiURL, portletId}: AppProps): JSX.Element;
+export default function App({apiURLPaths, portletId}: AppProps): JSX.Element;
 export {};

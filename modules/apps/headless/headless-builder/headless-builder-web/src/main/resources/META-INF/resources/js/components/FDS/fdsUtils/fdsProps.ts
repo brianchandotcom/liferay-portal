@@ -18,11 +18,11 @@ import {getAPIApplicationsFDSFilters} from './fdsFilters';
 import {itemPathRenderer, itemStatusRenderer} from './fdsRenderers';
 
 export function getAPIApplicationsFDSProps(
-	apiURL: string,
+	apiApplicationsURLPath: string,
 	portletId: string
 ): IFrontendDataSetProps {
 	return {
-		apiURL,
+		apiURL: apiApplicationsURLPath,
 		currentURL: window.location.pathname + window.location.search,
 		customDataRenderers: {
 			itemPathRenderer,

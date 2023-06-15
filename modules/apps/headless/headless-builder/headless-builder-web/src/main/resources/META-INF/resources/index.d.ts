@@ -12,6 +12,14 @@
  * details.
  */
 
+interface APIURLPaths {
+	applications: string;
+	endpoints: string;
+	filters: string;
+	properties: string;
+	schemas: string;
+	sorts: string;
+}
 interface ItemData {
 	applicationStatus: {key: string; name: string};
 	baseURL: string;

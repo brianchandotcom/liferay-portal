@@ -17,17 +17,17 @@ import React from 'react';
 import APIApplicationsTable from './FDS/APIApplicationsTable';
 
 interface APIApplicationsProps {
-	apiURL: string;
+	apiURLPaths: APIURLPaths;
 	portletId: string;
 }
 
 export default function APIApplications({
-	apiURL,
+	apiURLPaths,
 	portletId,
 }: APIApplicationsProps) {
 	return (
 		<APIApplicationsTable
-			apiURL={apiURL}
+			apiURLPaths={apiURLPaths}
 			portletId={portletId}
 			readOnly={false}
 		/>

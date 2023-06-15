@@ -24,9 +24,9 @@ HeadlessBuilderWebDisplayContext headlessBuilderWebDisplayContext = (HeadlessBui
 	module="js/components/App"
 	props='<%=
 		HashMapBuilder.<String, Object>put(
-			"apiURL", headlessBuilderWebDisplayContext.getAPIURL()
+			"apiURLPaths", headlessBuilderWebDisplayContext.getAPIURLPaths()
 		).put(
-			"fetchURL", headlessBuilderWebDisplayContext.getPortletId()
+			"portletId", headlessBuilderWebDisplayContext.getPortletId()
 		).build()
 	%>'
 />

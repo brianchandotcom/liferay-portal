@@ -15,12 +15,12 @@
 /// <reference types="react" />
 
 interface APIApplicationsTableProps {
-	apiURL: string;
+	apiURLPaths: APIURLPaths;
 	portletId: string;
 	readOnly: boolean;
 }
 export default function APIApplicationsTable({
-	apiURL,
+	apiURLPaths,
 	portletId,
 	readOnly,
 }: APIApplicationsTableProps): JSX.Element;

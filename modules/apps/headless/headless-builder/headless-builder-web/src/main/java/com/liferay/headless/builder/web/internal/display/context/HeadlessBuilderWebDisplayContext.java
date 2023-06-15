@@ -15,6 +15,9 @@
 package com.liferay.headless.builder.web.internal.display.context;
 
 import com.liferay.headless.builder.web.internal.display.context.helper.HeadlessBuilderWebRequestHelper;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -30,8 +33,20 @@ public class HeadlessBuilderWebDisplayContext {
 			httpServletRequest);
 	}
 
-	public String getAPIURL() {
-		return "/o/headless-builder/applications/";
+	public HashMap<String, String> getAPIURLPaths() {
+		return HashMapBuilder.put(
+			"applications", "/o/headless-builder/applications"
+		).put(
+			"endpoints", "/o/headless-builder/endpoints"
+		).put(
+			"filters", "/o/headless-builder/filters"
+		).put(
+			"properties", "/o/headless-builder/properties"
+		).put(
+			"schemas", "/o/headless-builder/schemas"
+		).put(
+			"sorts", "/o/headless-builder/sorts"
+		).build();
 	}
 
 	public String getPortletId() {

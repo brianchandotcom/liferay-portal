@@ -15,11 +15,11 @@
 /// <reference types="react" />
 
 interface APIApplicationsProps {
-	apiURL: string;
+	apiURLPaths: APIURLPaths;
 	portletId: string;
 }
 export default function APIApplications({
-	apiURL,
+	apiURLPaths,
 	portletId,
 }: APIApplicationsProps): JSX.Element;
 export {};

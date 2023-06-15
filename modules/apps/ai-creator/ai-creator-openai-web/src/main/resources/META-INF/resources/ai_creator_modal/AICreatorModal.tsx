@@ -128,7 +128,7 @@ export default function AICreatorModal({
 							/>
 						) : null}
 
-						<ClayForm.Group className="c-mb-0">
+						<ClayForm.Group className="c-mb-0 d-none">
 							<ClayLink href="#">
 								{Liferay.Language.get(
 									'learn-more-about-openai-integration'

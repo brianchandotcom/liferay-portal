@@ -1,34 +1,5 @@
 definition {
 
-	@summary = "Directly calls the JSON WS API to add a group"
-	macro _addGroup {
-		Variables.assertDefined(parameterList = "${groupDescriptionMap},${groupNameMap},${manualMembership},${parentGroupId},${type}");
-
-		if (!(isSet(portalURL))) {
-			var portalURL = JSONCompany.getPortalURL();
-		}
-
-		var userLoginInfo = JSONUtil2.formatJSONUser();
-
-		var curl = '''
-			${portalURL}/api/jsonws/group/add-group \
-				-u ${userLoginInfo} \
-				-d parentGroupId=${parentGroupId} \
-				-d liveGroupId=0 \
-				-d nameMap=${groupNameMap} \
-				-d descriptionMap=${groupDescriptionMap} \
-				-d type=${type} \
-				-d manualMembership=${manualMembership} \
-				-d membershipRestriction=0 \
-				-d friendlyURL= \
-				-d site=true \
-				-d inheritContent=false \
-				-d active=true
-		''';
-
-		JSONCurlUtil.post(${curl});
-	}
-
 	@summary = "Directly calls the JSON WS API to assign a user a role"
 	macro _assignGroupRoleToUser {
 		Variables.assertDefined(parameterList = "${groupId},${roleId},${userId}");

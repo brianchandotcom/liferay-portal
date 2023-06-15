@@ -40,7 +40,7 @@ const FDSViewItemSelector = ({
 	className: String;
 	classNameId: String;
 }) => {
-	const [classPK, setClassPK] = useState<String>();
+	const [selectedId, setSelectedId] = useState<String>();
 
 	return (
 		<div className="fds-view-item-selector">
@@ -53,7 +53,7 @@ const FDSViewItemSelector = ({
 					}: {
 						selectedItems: Array<{id: string}>;
 					}) => {
-						setClassPK(selectedItems[0].id);
+						setSelectedId(selectedItems[0].id);
 					}}
 					selectedItemsKey="id"
 					selectionType="single"
@@ -75,7 +75,7 @@ const FDSViewItemSelector = ({
 
 						<ClayButton
 							className="item-preview selector-button"
-							data-value={`{"classPK": "${classPK}", "className": "${className}",  "classNameId": "${classNameId}"}`}
+							data-value={`{"classPK": "${selectedId}", "className": "${className}",  "classNameId": "${classNameId}"}`}
 						>
 							{Liferay.Language.get('save')}
 						</ClayButton>

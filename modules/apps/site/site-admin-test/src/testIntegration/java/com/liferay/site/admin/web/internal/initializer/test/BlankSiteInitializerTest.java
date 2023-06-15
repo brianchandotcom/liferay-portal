@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -73,6 +74,7 @@ public class BlankSiteInitializerTest {
 		ServiceContextThreadLocal.popServiceContext();
 	}
 
+	@FeatureFlags("LPS-165914")
 	@Test
 	public void testInitialize() throws PortalException {
 		SiteInitializer siteInitializer =
@@ -81,10 +83,20 @@ public class BlankSiteInitializerTest {
 
 		siteInitializer.initialize(_group.getGroupId());
 
-		LayoutUtilityPageEntry layoutUtilityPageEntry =
+		_assertLayoutUtilityPageEntryCreatedCorrectly(
 			_layoutUtilityPageEntryService.getDefaultLayoutUtilityPageEntry(
 				_group.getGroupId(),
-				LayoutUtilityPageEntryConstants.TYPE_SC_NOT_FOUND);
+				LayoutUtilityPageEntryConstants.TYPE_SC_INTERNAL_SERVER_ERROR));
+
+		_assertLayoutUtilityPageEntryCreatedCorrectly(
+			_layoutUtilityPageEntryService.getDefaultLayoutUtilityPageEntry(
+				_group.getGroupId(),
+				LayoutUtilityPageEntryConstants.TYPE_SC_NOT_FOUND));
+	}
+
+	private void _assertLayoutUtilityPageEntryCreatedCorrectly(
+			LayoutUtilityPageEntry layoutUtilityPageEntry)
+		throws PortalException {
 
 		Layout layout = _layoutLocalService.fetchLayout(
 			layoutUtilityPageEntry.getPlid());

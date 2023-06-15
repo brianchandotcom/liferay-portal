@@ -61,7 +61,7 @@ public class TaxonomyCategoryDTOActionProvider implements DTOActionProvider {
 				taxonomyCategoryDTOActionMetadataProvider.getActionInfo(
 					actionName);
 
-			if ((actionInfo == null) || (actionInfo.getActionKey() == null) ||
+			if ((actionInfo == null) || (actionInfo.getActionName() == null) ||
 				(actionInfo.getResourceMethodName() == null)) {
 
 				continue;
@@ -70,7 +70,7 @@ public class TaxonomyCategoryDTOActionProvider implements DTOActionProvider {
 			actions.put(
 				actionName,
 				ActionUtil.addAction(
-					actionInfo.getActionKey(), actionInfo.getResourceClass(),
+					actionInfo.getActionName(), actionInfo.getResourceClass(),
 					primaryKey, actionInfo.getResourceMethodName(),
 					_scopeChecker, userId,
 					taxonomyCategoryDTOActionMetadataProvider.

@@ -76,7 +76,7 @@ public class ActionsOpenAPIContributor implements OpenAPIContributor {
 				ActionInfo actionInfo = actionInfoEntry.getValue();
 
 				if ((actionInfo == null) ||
-					(actionInfo.getActionKey() == null) ||
+					(actionInfo.getActionName() == null) ||
 					(actionInfo.getResourceMethodName() == null)) {
 
 					continue;

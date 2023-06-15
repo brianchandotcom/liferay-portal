@@ -12,6 +12,7 @@ function formatCartItem(cpInstance) {
 	return {
 		options: JSON.stringify(cpInstance.skuOptions || []),
 		quantity: cpInstance.quantity,
+		replacedSkuId: cpInstance.replacedSkuId ?? 0,
 		skuId: cpInstance.skuId,
 	};
 }

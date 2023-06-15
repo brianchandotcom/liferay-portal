@@ -187,6 +187,7 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 							{
 								sku = replacementCPInstance.getSku();
 								skuId = replacementCPInstance.getCPInstanceId();
+
 								setProductConfiguration(
 									() -> {
 										if (replacementCPDefinition == null) {

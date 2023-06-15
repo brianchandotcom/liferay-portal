@@ -115,11 +115,13 @@ describe('Add to Cart Button', () => {
 				{
 					options: '[]',
 					quantity: 1,
+					replacedSkuId: 0,
 					skuId: 123,
 				},
 				{
 					options: '[]',
 					quantity: 3,
+					replacedSkuId: 0,
 					skuId: 234,
 				},
 			],

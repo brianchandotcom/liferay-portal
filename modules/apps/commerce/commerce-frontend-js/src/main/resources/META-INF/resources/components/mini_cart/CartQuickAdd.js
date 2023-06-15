@@ -9,7 +9,7 @@ import ClayForm, {ClayInput} from '@clayui/form';
 import ClayMultiSelect from '@clayui/multi-select';
 import classNames from 'classnames';
 import {fetch} from 'frontend-js-web';
-import React, {useContext, useEffect, useRef, useState} from 'react';
+import React, {useContext, useRef, useState} from 'react';
 
 import {addToCart} from '../add_to_cart/data';
 import InfiniteScroller from '../infinite_scroller/InfiniteScroller';
@@ -46,7 +46,6 @@ export default function CartQuickAdd() {
 	const paginatorTotalCountRef = useRef(0);
 	const requestAbortControllerRef = useRef(new AbortController());
 
-	const [availableSKUs, setAvailableSKUs] = useState([]);
 	const [formattedSKUs, setFormattedSKUs] = useState([]);
 	const [quantityError, setQuantityError] = useState(false);
 	const [quickAddToCartError, setQuickAddToCartError] = useState(false);
@@ -60,35 +59,6 @@ export default function CartQuickAdd() {
 		id: cartId,
 	} = cartState;
 	const channelId = channel.id;
-
-	useEffect(() => {
-		const productsApiURL = new URL(
-			`${themeDisplay.getPathContext()}${CHANNEL_RESOURCE_ENDPOINT}/${channelId}/products?accountId=${accountId}&nestedFields=skus&pageSize=-1&skus.accountId=${accountId}`,
-			themeDisplay.getPortalURL()
-		);
-
-		fetch(productsApiURL.toString())
-			.then((response) => response.json())
-			.then((responseSKUs) => {
-				const flattenedSKUs = [];
-
-				responseSKUs.items.forEach((responseSKU) => {
-					responseSKU.skus.forEach((sku) => {
-						flattenedSKUs.push({
-							...sku,
-							chipLabel: sku.sku,
-							label: responseSKU.name,
-							productConfiguration:
-								responseSKU.productConfiguration,
-							urls: responseSKU.urls,
-							value: sku.sku,
-						});
-					});
-				});
-
-				setAvailableSKUs(flattenedSKUs);
-			});
-	}, [accountId, channelId]);
 
 	const ProductAutocompleteList = ({onItemClick, sourceItems}) => {
 		return (
@@ -147,42 +117,51 @@ export default function CartQuickAdd() {
 	};
 
 	const handleAddToCartClick = () => {
-		const readySKUs = selectedSKUs.map((selectedSKU) => {
+		const readySKUs = selectedSKUs.map((selectedSKUData) => {
 			const {
-				id,
-				productConfiguration,
-				replacementSkuId,
-				sku,
+				id: selectedId,
+				productConfiguration: selectedConfiguration,
+				replacementSku: replacementSKUData,
+				sku: selectedSKU,
 				urls,
-			} = selectedSKU;
+			} = selectedSKUData;
 
-			if (replacementSkuId) {
-				const replacementSKU = availableSKUs.find(
-					(availableSKU) => availableSKU.id === replacementSkuId
-				);
+			if (
+				selectedSKUData.availability?.label !== 'available' &&
+				!selectedConfiguration.allowBackOrder &&
+				replacementSKUData
+			) {
+				const {
+					price,
+					productConfiguration: replacementConfiguration,
+					sku: replacementSKU,
+					urls: productURLs,
+				} = replacementSKUData;
 
 				return {
-					...replacementSKU,
-					productURLs: urls,
+					...replacementSKUData,
+					price,
+					productURLs,
 					quantity: getCorrectedQuantity(
+						replacementConfiguration,
 						replacementSKU,
-						replacementSKU.sku,
 						cartItems
 					),
-					replacementSkuId: id,
-					settings: productConfiguration,
-					skuId: replacementSKU.id,
-					urls: replacementSKU.urls,
+					replacedSkuId: selectedId,
+					settings: replacementConfiguration,
 				};
 			}
 
 			return {
-				...selectedSKU,
+				...selectedSKUData,
 				productURLs: urls,
-				quantity: getCorrectedQuantity(selectedSKU, sku, cartItems),
-				settings: productConfiguration,
-				skuId: id,
-				urls,
+				quantity: getCorrectedQuantity(
+					selectedConfiguration,
+					selectedSKU,
+					cartItems
+				),
+				settings: selectedConfiguration,
+				skuId: selectedId,
 			};
 		});
 

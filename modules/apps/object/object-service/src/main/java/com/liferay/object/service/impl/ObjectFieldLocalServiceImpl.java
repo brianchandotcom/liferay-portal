@@ -694,7 +694,7 @@ public class ObjectFieldLocalServiceImpl
 		newObjectField.setReadOnly(_getReadOnly(businessType, readOnly));
 		newObjectField.setReadOnlyConditionExpression(
 			_getReadOnlyConditionExpression(
-				readOnly, readOnlyConditionExpression));
+				newObjectField.getReadOnly(), readOnlyConditionExpression));
 
 		if (objectDefinition.isApproved()) {
 			newObjectField = objectFieldPersistence.update(newObjectField);
@@ -831,7 +831,7 @@ public class ObjectFieldLocalServiceImpl
 		objectField.setReadOnly(_getReadOnly(businessType, readOnly));
 		objectField.setReadOnlyConditionExpression(
 			_getReadOnlyConditionExpression(
-				readOnly, readOnlyConditionExpression));
+				objectField.getReadOnly(), readOnlyConditionExpression));
 		objectField.setRelationshipType(null);
 		objectField.setRequired(required);
 		objectField.setState(state);

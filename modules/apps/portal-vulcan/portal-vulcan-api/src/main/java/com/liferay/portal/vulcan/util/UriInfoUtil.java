@@ -63,23 +63,23 @@ public class UriInfoUtil {
 	public static UriBuilder getBaseUriBuilder(
 		String applicationPath, UriInfo uriInfo) {
 
-		String baseURIString = getBasePath(uriInfo);
+		String basePath = getBasePath(uriInfo);
 
-		if (baseURIString.endsWith(StringPool.FORWARD_SLASH)) {
-			baseURIString = baseURIString.substring(
-				0, baseURIString.length() - 1);
+		if (basePath.endsWith(StringPool.FORWARD_SLASH)) {
+			basePath = basePath.substring(
+				0, basePath.length() - 1);
 		}
 
-		baseURIString = baseURIString.substring(
-			0, baseURIString.lastIndexOf("/") + 1);
+		basePath = basePath.substring(
+			0, basePath.lastIndexOf("/") + 1);
 
-		if (baseURIString.endsWith("/c/")) {
-			baseURIString = StringUtil.removeLast(baseURIString, "c/");
+		if (basePath.endsWith("/c/")) {
+			basePath = StringUtil.removeLast(basePath, "c/");
 		}
 
-		baseURIString = baseURIString + applicationPath;
+		basePath = basePath + applicationPath;
 
-		return UriBuilder.fromPath(baseURIString);
+		return UriBuilder.fromPath(basePath);
 	}
 
 	public static UriBuilder getBaseUriBuilder(UriInfo uriInfo) {

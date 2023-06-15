@@ -879,6 +879,7 @@ definition {
 	@description = "This is a test for LPS-169960. Verify that a submited MDF will be displayed on the list"
 	@priority = 5
 	test SubmittedMDFAppearsOnListing {
+		property portal.acceptance = "true";
 		property solutions.acceptance = "true";
 		property test.name.skip.portal.instance = "PRMMDFRequest#SubmittedMDFAppearsOnListing";
 

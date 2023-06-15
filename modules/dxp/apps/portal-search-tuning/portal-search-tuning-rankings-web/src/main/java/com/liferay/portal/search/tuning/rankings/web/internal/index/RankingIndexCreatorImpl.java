@@ -14,6 +14,11 @@
 
 package com.liferay.portal.search.tuning.rankings.web.internal.index;
 
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.index.CreateIndexRequest;
@@ -28,19 +33,21 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Wade Cao
  * @author Adam Brandizzi
+ * @author Joshua Cords
+ * @author Tibor Lipusz
  */
 @Component(service = RankingIndexCreator.class)
 public class RankingIndexCreatorImpl implements RankingIndexCreator {
 
 	@Override
 	public void create(RankingIndexName rankingIndexName) {
-		String mappingSource = StringUtil.read(
-			getClass(), _INDEX_SETTINGS_RESOURCE_NAME);
-
 		CreateIndexRequest createIndexRequest = new CreateIndexRequest(
 			rankingIndexName.getIndexName());
 
-		createIndexRequest.setSource(mappingSource);
+		createIndexRequest.setMappings(
+			_readJSONResource(_INDEX_MAPPINGS_FILE_NAME));
+		createIndexRequest.setSettings(
+			_readJSONResource(_INDEX_SETTINGS_FILE_NAME));
 
 		_searchEngineAdapter.execute(createIndexRequest);
 	}
@@ -61,8 +68,31 @@ public class RankingIndexCreatorImpl implements RankingIndexCreator {
 		}
 	}
 
-	private static final String _INDEX_SETTINGS_RESOURCE_NAME =
-		"/META-INF/search/liferay-search-tuning-rankings-index.json";
+	private String _readJSONResource(String fileName) {
+		try {
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
+				StringUtil.read(getClass(), "/META-INF/search/" + fileName));
+
+			return jsonObject.toString();
+		}
+		catch (JSONException jsonException) {
+			_log.error(jsonException);
+		}
+
+		return null;
+	}
+
+	private static final String _INDEX_MAPPINGS_FILE_NAME =
+		"liferay-search-tuning-rankings-mappings.json";
+
+	private static final String _INDEX_SETTINGS_FILE_NAME =
+		"liferay-search-tuning-rankings-settings.json";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		RankingIndexCreatorImpl.class);
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private SearchEngineAdapter _searchEngineAdapter;

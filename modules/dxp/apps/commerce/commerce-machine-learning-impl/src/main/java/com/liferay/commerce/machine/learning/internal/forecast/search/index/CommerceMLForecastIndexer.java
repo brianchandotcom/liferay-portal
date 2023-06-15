@@ -45,7 +45,7 @@ public class CommerceMLForecastIndexer implements CommerceMLIndexer {
 	}
 
 	private static final String _INDEX_MAPPING_FILE_NAME =
-		"/META-INF/search/commerce-ml-forecast-document-type.json";
+		"commerce-ml-forecast-mappings.json";
 
 	private static final String _INDEX_NAME_PATTERN = "%s-commerce-ml-forecast";
 

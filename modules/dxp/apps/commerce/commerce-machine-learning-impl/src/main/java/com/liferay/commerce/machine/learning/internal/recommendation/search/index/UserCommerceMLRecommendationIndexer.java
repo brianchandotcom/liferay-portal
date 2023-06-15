@@ -45,7 +45,7 @@ public class UserCommerceMLRecommendationIndexer implements CommerceMLIndexer {
 	}
 
 	private static final String _INDEX_MAPPING_FILE_NAME =
-		"/META-INF/search/user-commerce-ml-recommendation-document-type.json";
+		"user-commerce-ml-recommendation-mappings.json";
 
 	private static final String _INDEX_NAME_PATTERN =
 		"%s-user-commerce-ml-recommendation";

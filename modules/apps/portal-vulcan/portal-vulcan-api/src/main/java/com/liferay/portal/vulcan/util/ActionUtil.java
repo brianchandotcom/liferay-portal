@@ -240,9 +240,9 @@ public class ActionUtil {
 			}
 		}
 
-		String baseURIString = UriInfoUtil.getBasePath(uriInfo);
+		String basePath = UriInfoUtil.getBasePath(uriInfo);
 
-		if (baseURIString.contains("/graphql")) {
+		if (basePath.contains("/graphql")) {
 			String operation = null;
 			String type = null;
 

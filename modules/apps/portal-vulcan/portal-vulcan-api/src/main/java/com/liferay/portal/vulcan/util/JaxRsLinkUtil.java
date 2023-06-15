@@ -36,8 +36,7 @@ public class JaxRsLinkUtil {
 		String basePath = UriInfoUtil.getBasePath(uriInfo);
 
 		if (basePath.endsWith(StringPool.FORWARD_SLASH)) {
-			basePath = basePath.substring(
-				0, basePath.length() - 1);
+			basePath = basePath.substring(0, basePath.length() - 1);
 		}
 
 		URI resourceURI = UriBuilder.fromResource(

@@ -43,7 +43,13 @@ public class ListTypeEntryEntityModel implements EntityModel {
 			new StringEntityField(
 				Field.NAME,
 				locale -> Field.getSortableFieldName(
-					Field.getLocalizedName(locale, "localized_name"))));
+					Field.getLocalizedName(locale, "localized_name")),
+				locale -> {
+					String sortableFieldName = Field.getSortableFieldName(
+						Field.getLocalizedName(locale, "localized_name"));
+
+					return sortableFieldName.concat(".keyword_lowercase");
+				}));
 	}
 
 	@Override

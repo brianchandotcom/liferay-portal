@@ -164,12 +164,18 @@ definition {
 			locator1 = "TextInput#VIDEO_URL",
 			value1 = ${videoSourceURL});
 
+		WaitForElementPresent(
+			key_src = "https://",
+			locator1 = "IFrame#IFRAME_SRC");
+
 		if (!(isSet(unpublish))) {
 			WaitForVisible(
 				key_text = "Add",
 				locator1 = "Button#ANY_ENABLED");
 
-			Button.clickAdd();
+			Click(
+				key_text = "Add",
+				locator1 = "Button#ANY_ENABLED");
 		}
 
 		SelectFrameTop(value1 = "relative=top");

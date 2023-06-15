@@ -3443,6 +3443,38 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-143405. Does return to Create Experience modal after cancel segment creation via experiences"
+	@priority = 3
+	test CancelSegmentCreationDuringNewExperienceCreation {
+		task ("Given a page designer has a content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
+		}
+
+		task ("When the page designer cancel the segment creation during experience creation") {
+			PageEditor.openExperienceMenu();
+
+			Click(
+				key_text = "New Experience",
+				locator1 = "Button#ANY");
+
+			Type(
+				locator1 = "PageEditor#EXPERIENCE_NAME",
+				value1 = "Experience Name");
+
+			Click(locator1 = "PageEditor#EXPERIENCE_CREATE_SEGMENT");
+
+			Button.clickCancel();
+		}
+
+		task ("Then the page designer should return to the experience creation modal") {
+			AssertTextEquals(
+				locator1 = "PageEditor#EXPERIENCE_NEW_EXPERIENCE_MODAL_TITLE",
+				value1 = "New Experience");
+		}
+	}
+
 	@description = "LPS-86285: Validate in the content page if, the user can change the background color of some section in the experiences that can be different from other experiences (already published)"
 	@priority = 3
 	test ChangingBackgroundColor {

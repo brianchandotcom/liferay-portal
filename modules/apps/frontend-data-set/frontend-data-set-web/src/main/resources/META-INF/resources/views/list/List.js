@@ -21,11 +21,12 @@ const List = ({items, schema, viewsTitle}) => {
 	const {selectedItemsKey} = useContext(FrontendDataSetContext);
 
 	return items?.length ? (
-		<div className="data-views-list-sheet">
+		<ClayLayout.Sheet className="data-views-list-sheet">
+
 			{viewsTitle && 	
-				<div className="data-views-list-header">
+				<ClayLayout.SheetHeader>
 					<h2 className="sheet-title">{viewsTitle}</h2>
-				</div>
+				</ClayLayout.SheetHeader>
 			}
 
 			<ClayList>
@@ -39,7 +40,8 @@ const List = ({items, schema, viewsTitle}) => {
 					);
 				})}
 			</ClayList>
-		</div>
+		
+		</ClayLayout.Sheet>
 	) : (
 		<ClayEmptyState
 			description={Liferay.Language.get('sorry,-no-results-were-found')}

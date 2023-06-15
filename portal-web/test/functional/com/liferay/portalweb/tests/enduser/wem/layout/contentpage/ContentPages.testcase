@@ -1683,6 +1683,73 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-162328. The page creator can change locale to ES in edit mode and date format mapped to text editable field will be changed."
+	@priority = 3
+	test ViewLocalizedDateFormatInPageEditor {
+		task ("Given a page creator maps the publish date field of web content to a fragment") {
+			JSONWebcontent.addWebContent(
+				content = "Webcontent Content",
+				groupName = ${randomSiteName},
+				title = "Web Content Title");
+
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Paragraph");
+
+			PageEditorMapping.gotoEditableFieldMapping(
+				fragmentName = "Paragraph",
+				id = "element-text");
+
+			PageEditorMapping.mapEditableFieldToAsset(
+				entryTitle = "Web Content Title",
+				navItem = "Web Content");
+
+			Select(
+				key_fieldLabel = "Field",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Publish Date");
+
+			var publishedDate = selenium.getText("//div[contains(@id,'fragment-')][.//*[contains(@class,'paragraph')]]//*[contains(@data-lfr-editable-id,'element-text')]");
+
+			var match = StringUtil.matches(${publishedDate}, "\d/\d\d/\d\d\s\d\d:\d\d\s\D\D");
+
+			if (${match} == "true") {
+				echo("PASSED");
+			}
+			else {
+				fail("The ${publishedDate} doesn't follow the expected format");
+			}
+		}
+
+		task ("When changes locale to ES") {
+			PageEditor.changeLocale(
+				currentLocale = "en-US",
+				locale = "es-ES");
+		}
+
+		task ("Then the date format will be changed") {
+			var spanishLocaleDateFormat = selenium.getText("//div[contains(@id,'fragment-')][.//*[contains(@class,'paragraph')]]//*[contains(@data-lfr-editable-id,'element-text')]");
+
+			var match = StringUtil.matches(${spanishLocaleDateFormat}, "\d\d/\d\d/\d\d\s\d\d:\d\d");
+
+			if (${match} == "true") {
+				echo("PASSED");
+			}
+			else {
+				fail("The ${spanishLocaleDateFormat} doesn't follow the expected format");
+			}
+		}
+	}
+
 	@description = "This is for LPS-106813. Widgets inherited from content page template will inherit permissions set in content page template."
 	@priority = 4
 	test ViewPermissionsOfAssetPublisherInheritedFromContentPageTemplate {

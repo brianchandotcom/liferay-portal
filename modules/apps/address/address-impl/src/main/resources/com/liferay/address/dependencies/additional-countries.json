@@ -1,0 +1,18 @@
+[
+	{
+		"a2": "HK",
+		"a3": "HKG",
+		"idd": 852,
+		"name": "hong-kong",
+		"number": 344,
+		"zipRequired": false
+	},
+	{
+		"a2": "MO",
+		"a3": "MAC",
+		"idd": 853,
+		"name": "macau",
+		"number": 446,
+		"zipRequired": true
+	}
+]

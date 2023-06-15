@@ -105,6 +105,26 @@ public class PortalAddressOSGiCommands implements OSGiCommands {
 		}
 	}
 
+	private void _processAdditionalCountries(Company company) throws Exception {
+		JSONArray additionalCountriesJSONArray =
+			CompanyCountriesUtil.getJSONArray(
+				"com/liferay/address/dependencies/additional-countries.json");
+
+		for (int i = 0; i < additionalCountriesJSONArray.length(); i++) {
+			JSONObject countryJSONObject =
+				additionalCountriesJSONArray.getJSONObject(i);
+
+			try {
+				CompanyCountriesUtil.addCountry(
+					company, countryJSONObject, _countryLocalService,
+					_regionLocalService);
+			}
+			catch (Exception exception) {
+				_log.error(exception);
+			}
+		}
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalAddressOSGiCommands.class);
 

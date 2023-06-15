@@ -178,6 +178,20 @@ public class StructuredContentResourceTest
 			(List<StructuredContent>)page.getItems());
 
 		assertValid(page);
+
+		page = structuredContentResource.getSiteStructuredContentsPage(
+			testGroup.getGroupId(), true, null, null, "priority ge 0.99",
+			Pagination.of(1, 10), null);
+
+		Assert.assertEquals(4, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(
+				postStructuredContent1, postStructuredContent2,
+				postStructuredContent3, postStructuredContent4),
+			(List<StructuredContent>)page.getItems());
+
+		assertValid(page);
 	}
 
 	@Override

@@ -14,12 +14,10 @@
 
 package com.liferay.headless.builder.internal.exception;
 
-import javax.ws.rs.BadRequestException;
-
 /**
  * @author Sergio Jiménez del Coso
  */
-public class InvalidBaseURLException extends BadRequestException {
+public class InvalidBaseURLException extends IllegalArgumentException {
 
 	public InvalidBaseURLException(String msg) {
 		super(msg);

@@ -44,7 +44,10 @@ const UserMenuDropdownItem: React.FC<
 		<ClayDropDown.Item className={getCN(className, {active})}>
 			{url ? (
 				externalLink ? (
-					<a className='button-root link-unstyled' href={url}>
+					<a
+						className='button-root btn btn-block btn-unstyled'
+						href={url}
+					>
 						<Content />
 					</a>
 				) : (

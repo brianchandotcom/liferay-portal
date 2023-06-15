@@ -76,6 +76,10 @@ public class LayoutDesignScreenNavigationEntry
 	public String getStatusLabel(Locale locale, Layout layout) {
 		Layout draftLayout = layout.fetchDraftLayout();
 
+		if (draftLayout == null) {
+			return null;
+		}
+
 		UnicodeProperties typeSettingsUnicodeProperties =
 			draftLayout.getTypeSettingsProperties();
 

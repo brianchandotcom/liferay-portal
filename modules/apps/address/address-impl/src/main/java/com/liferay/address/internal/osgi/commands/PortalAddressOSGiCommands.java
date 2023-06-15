@@ -70,6 +70,18 @@ public class PortalAddressOSGiCommands implements OSGiCommands {
 		JSONArray countriesJSONArray = CompanyCountriesUtil.getJSONArray(
 			"com/liferay/address/dependencies/countries.json");
 
+		if (PropsValues.ISO_COUNTRIES_ENABLED) {
+			JSONArray additionalCountriesJSONArray = _getJSONArray(
+				"com/liferay/address/dependencies/additional-countries.json");
+
+			for (int i = 0; i < additionalCountriesJSONArray.length(); i++) {
+				JSONObject countryJSONObject =
+					additionalCountriesJSONArray.getJSONObject(i);
+
+				countriesJSONArray.put(countryJSONObject);
+			}
+		}
+
 		for (int i = 0; i < countriesJSONArray.length(); i++) {
 			JSONObject countryJSONObject = countriesJSONArray.getJSONObject(i);
 

@@ -37,11 +37,11 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"javax.portlet.name=" + FragmentPortletKeys.FRAGMENT,
-		"mvc.command.name=/fragment/update_default_input_fragments"
+		"mvc.command.name=/fragment/update_default_input_fragment_entries"
 	},
 	service = MVCActionCommand.class
 )
-public class UpdateDefaultInputFragmentsMVCActionCommand
+public class UpdateDefaultInputFragmentEntriesMVCActionCommand
 	extends BaseMVCActionCommand {
 
 	@Override

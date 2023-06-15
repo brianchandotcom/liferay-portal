@@ -16,7 +16,7 @@ package com.liferay.fragment.item.selector.web.internal.display.context;
 
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.constants.FragmentPortletKeys;
-import com.liferay.fragment.item.selector.criterion.FragmentItemSelectorCriterion;
+import com.liferay.fragment.item.selector.criterion.FragmentEntryItemSelectorCriterion;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentCollectionLocalServiceUtil;
@@ -61,16 +61,17 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Víctor Galán
  */
-public class FragmentDisplayContext {
+public class FragmentEntriesDisplayContext {
 
-	public FragmentDisplayContext(
+	public FragmentEntriesDisplayContext(
 		HttpServletRequest httpServletRequest,
-		FragmentItemSelectorCriterion fragmentItemSelectorCriterion,
+		FragmentEntryItemSelectorCriterion fragmentEntryItemSelectorCriterion,
 		Group group, LiferayPortletRequest liferayPortletRequest,
 		PortletURL portletURL) {
 
 		_httpServletRequest = httpServletRequest;
-		_fragmentItemSelectorCriterion = fragmentItemSelectorCriterion;
+		_fragmentEntryItemSelectorCriterion =
+			fragmentEntryItemSelectorCriterion;
 		_group = group;
 		_liferayPortletRequest = liferayPortletRequest;
 		_portletURL = portletURL;
@@ -144,7 +145,7 @@ public class FragmentDisplayContext {
 				_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS),
 			fragmentCollection -> {
 				if (SetUtil.isEmpty(
-						_fragmentItemSelectorCriterion.getInputTypes()) ||
+						_fragmentEntryItemSelectorCriterion.getInputTypes()) ||
 					ListUtil.exists(
 						FragmentEntryLocalServiceUtil.getFragmentEntries(
 							_group.getGroupId(),
@@ -152,7 +153,8 @@ public class FragmentDisplayContext {
 							WorkflowConstants.STATUS_APPROVED),
 						fragmentEntry -> _filterInputTypes(
 							fragmentEntry,
-							_fragmentItemSelectorCriterion.getInputTypes()))) {
+							_fragmentEntryItemSelectorCriterion.
+								getInputTypes()))) {
 
 					return true;
 				}
@@ -201,7 +203,7 @@ public class FragmentDisplayContext {
 				fragmentEntries,
 				fragmentEntry -> _filterInputTypes(
 					fragmentEntry,
-					_fragmentItemSelectorCriterion.getInputTypes())));
+					_fragmentEntryItemSelectorCriterion.getInputTypes())));
 
 		_fragmentsSearchContainer = searchContainer;
 
@@ -308,12 +310,13 @@ public class FragmentDisplayContext {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		FragmentDisplayContext.class.getName());
+		FragmentEntriesDisplayContext.class.getName());
 
 	private Long _fragmentCollectionId;
 	private SearchContainer<FragmentCollection>
 		_fragmentCollectionSearchContainer;
-	private final FragmentItemSelectorCriterion _fragmentItemSelectorCriterion;
+	private final FragmentEntryItemSelectorCriterion
+		_fragmentEntryItemSelectorCriterion;
 	private SearchContainer<FragmentEntry> _fragmentsSearchContainer;
 	private final Group _group;
 	private final HttpServletRequest _httpServletRequest;

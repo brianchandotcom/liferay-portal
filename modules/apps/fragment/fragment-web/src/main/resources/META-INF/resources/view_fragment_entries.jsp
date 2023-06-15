@@ -19,7 +19,7 @@
 <%
 FragmentManagementToolbarDisplayContextFactory fragmentManagementToolbarDisplayContextFactory = FragmentManagementToolbarDisplayContextFactory.getInstance();
 
-FragmentManagementToolbarDisplayContext fragmentManagementToolbarDisplayContext = fragmentManagementToolbarDisplayContextFactory.getFragmentManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, fragmentDisplayContext);
+FragmentManagementToolbarDisplayContext fragmentManagementToolbarDisplayContext = fragmentManagementToolbarDisplayContextFactory.getFragmentManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, fragmentEntriesDisplayContext);
 %>
 
 <liferay-ui:error exception="<%= RequiredFragmentEntryException.class %>" message="the-fragment-entry-cannot-be-deleted-because-it-is-required-by-one-or-more-page-templates" />
@@ -32,7 +32,7 @@ FragmentManagementToolbarDisplayContext fragmentManagementToolbarDisplayContext 
 
 <aui:form name="fm">
 	<liferay-ui:search-container
-		searchContainer="<%= fragmentDisplayContext.getFragmentEntriesSearchContainer() %>"
+		searchContainer="<%= fragmentEntriesDisplayContext.getFragmentEntriesSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
 			className="Object"
@@ -42,7 +42,7 @@ FragmentManagementToolbarDisplayContext fragmentManagementToolbarDisplayContext 
 			<%
 			row.setData(
 				HashMapBuilder.<String, Object>put(
-					"actions", fragmentDisplayContext.getAvailableActions(object)
+					"actions", fragmentEntriesDisplayContext.getAvailableActions(object)
 				).build());
 
 			FragmentEntryVerticalCardFactory fragmentEntryVerticalCardFactory = FragmentEntryVerticalCardFactory.getInstance();
@@ -53,14 +53,14 @@ FragmentManagementToolbarDisplayContext fragmentManagementToolbarDisplayContext 
 					<c:when test="<%= object instanceof FragmentComposition %>">
 						<clay:vertical-card
 							propsTransformer="js/FragmentCompositionDropdownPropsTransformer"
-							verticalCard="<%= fragmentEntryVerticalCardFactory.getVerticalCard((FragmentComposition)object, renderRequest, renderResponse, searchContainer.getRowChecker(), fragmentDisplayContext.getFragmentType()) %>"
+							verticalCard="<%= fragmentEntryVerticalCardFactory.getVerticalCard((FragmentComposition)object, renderRequest, renderResponse, searchContainer.getRowChecker(), fragmentEntriesDisplayContext.getFragmentType()) %>"
 						/>
 					</c:when>
 					<c:otherwise>
 						<clay:vertical-card
-							additionalProps="<%= fragmentDisplayContext.getAdditionalProps() %>"
+							additionalProps="<%= fragmentEntriesDisplayContext.getAdditionalProps() %>"
 							propsTransformer="js/FragmentEntryDropdownPropsTransformer"
-							verticalCard="<%= fragmentEntryVerticalCardFactory.getVerticalCard((FragmentEntry)object, renderRequest, renderResponse, searchContainer.getRowChecker(), fragmentDisplayContext.getFragmentType()) %>"
+							verticalCard="<%= fragmentEntryVerticalCardFactory.getVerticalCard((FragmentEntry)object, renderRequest, renderResponse, searchContainer.getRowChecker(), fragmentEntriesDisplayContext.getFragmentType()) %>"
 						/>
 					</c:otherwise>
 				</c:choose>

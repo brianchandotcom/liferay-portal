@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ContributedFragmentManagementToolbarDisplayContext contributedFragmentManagementToolbarDisplayContext = new ContributedFragmentManagementToolbarDisplayContext(fragmentDisplayContext, request, liferayPortletRequest, liferayPortletResponse);
+ContributedFragmentManagementToolbarDisplayContext contributedFragmentManagementToolbarDisplayContext = new ContributedFragmentManagementToolbarDisplayContext(fragmentEntriesDisplayContext, request, liferayPortletRequest, liferayPortletResponse);
 %>
 
 <clay:management-toolbar
@@ -28,7 +28,7 @@ ContributedFragmentManagementToolbarDisplayContext contributedFragmentManagement
 
 <aui:form name="fm">
 	<liferay-ui:search-container
-		searchContainer="<%= fragmentDisplayContext.getContributedEntriesSearchContainer() %>"
+		searchContainer="<%= fragmentEntriesDisplayContext.getContributedEntriesSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
 			className="Object"
@@ -38,14 +38,14 @@ ContributedFragmentManagementToolbarDisplayContext contributedFragmentManagement
 				<c:choose>
 					<c:when test="<%= object instanceof FragmentComposition %>">
 						<clay:vertical-card
-							additionalProps="<%= fragmentDisplayContext.getAdditionalProps() %>"
+							additionalProps="<%= fragmentEntriesDisplayContext.getAdditionalProps() %>"
 							propsTransformer="js/ContributedFragmentEntryDropdownPropsTransformer"
 							verticalCard="<%= new ContributedFragmentCompositionVerticalCard((FragmentComposition)object, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
 						/>
 					</c:when>
 					<c:otherwise>
 						<clay:vertical-card
-							additionalProps="<%= fragmentDisplayContext.getAdditionalProps() %>"
+							additionalProps="<%= fragmentEntriesDisplayContext.getAdditionalProps() %>"
 							propsTransformer="js/ContributedFragmentEntryDropdownPropsTransformer"
 							verticalCard="<%= new ContributedFragmentEntryVerticalCard((FragmentEntry)object, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
 						/>

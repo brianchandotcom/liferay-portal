@@ -16,7 +16,7 @@ package com.liferay.fragment.item.selector.web.internal.display.context;
 
 import com.liferay.fragment.contributor.FragmentCollectionContributor;
 import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
-import com.liferay.fragment.item.selector.criterion.FragmentItemSelectorCriterion;
+import com.liferay.fragment.item.selector.criterion.FragmentEntryItemSelectorCriterion;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.json.JSONException;
@@ -49,9 +49,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Víctor Galán
  */
-public class DefaultFragmentDisplayContext {
+public class DefaultFragmentEntriesDisplayContext {
 
-	public DefaultFragmentDisplayContext(
+	public DefaultFragmentEntriesDisplayContext(
 		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
@@ -63,9 +63,9 @@ public class DefaultFragmentDisplayContext {
 				httpServletRequest.getAttribute(
 					FragmentCollectionContributorRegistry.class.getName());
 
-		_fragmentItemSelectorCriterion =
-			(FragmentItemSelectorCriterion)httpServletRequest.getAttribute(
-				FragmentItemSelectorCriterion.class.getName());
+		_fragmentEntryItemSelectorCriterion =
+			(FragmentEntryItemSelectorCriterion)httpServletRequest.getAttribute(
+				FragmentEntryItemSelectorCriterion.class.getName());
 
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
@@ -133,14 +133,15 @@ public class DefaultFragmentDisplayContext {
 					getFragmentCollectionContributors(),
 				fragmentCollectionContributor -> {
 					if (SetUtil.isEmpty(
-							_fragmentItemSelectorCriterion.getInputTypes()) ||
+							_fragmentEntryItemSelectorCriterion.
+								getInputTypes()) ||
 						ListUtil.exists(
 							fragmentCollectionContributor.getFragmentEntries(
-								_fragmentItemSelectorCriterion.getType(),
+								_fragmentEntryItemSelectorCriterion.getType(),
 								_themeDisplay.getLocale()),
 							fragmentEntry -> _filterInputTypes(
 								fragmentEntry,
-								_fragmentItemSelectorCriterion.
+								_fragmentEntryItemSelectorCriterion.
 									getInputTypes()))) {
 
 						return true;
@@ -186,10 +187,11 @@ public class DefaultFragmentDisplayContext {
 
 		List<FragmentEntry> fragmentEntries = ListUtil.filter(
 			fragmentCollectionContributor.getFragmentEntries(
-				_fragmentItemSelectorCriterion.getType(),
+				_fragmentEntryItemSelectorCriterion.getType(),
 				_themeDisplay.getLocale()),
 			fragmentEntry -> _filterInputTypes(
-				fragmentEntry, _fragmentItemSelectorCriterion.getInputTypes()));
+				fragmentEntry,
+				_fragmentEntryItemSelectorCriterion.getInputTypes()));
 
 		if (isSearch()) {
 			fragmentEntries = ListUtil.filter(
@@ -254,14 +256,15 @@ public class DefaultFragmentDisplayContext {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DefaultFragmentDisplayContext.class.getName());
+		DefaultFragmentEntriesDisplayContext.class.getName());
 
 	private final FragmentCollectionContributorRegistry
 		_fragmentCollectionContributorRegistry;
 	private String _fragmentCollectionKey;
 	private SearchContainer<FragmentCollectionContributor>
 		_fragmentCollectionSearchContainer;
-	private final FragmentItemSelectorCriterion _fragmentItemSelectorCriterion;
+	private final FragmentEntryItemSelectorCriterion
+		_fragmentEntryItemSelectorCriterion;
 	private SearchContainer<FragmentEntry> _fragmentsSearchContainer;
 	private final HttpServletRequest _httpServletRequest;
 	private String _keywords;

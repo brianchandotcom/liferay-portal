@@ -49,6 +49,10 @@ public class PortalInstancePool {
 		throw new IllegalStateException("Unable to get default company ID");
 	}
 
+	public static String getWebId(long companyId) {
+		return _portalInstances.get(companyId);
+	}
+
 	public static String[] getWebIds() {
 		return ArrayUtil.toStringArray(_portalInstances.values());
 	}

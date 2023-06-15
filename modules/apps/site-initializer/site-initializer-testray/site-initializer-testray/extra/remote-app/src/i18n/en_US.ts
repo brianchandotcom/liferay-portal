@@ -188,6 +188,8 @@ export default {
 	'in-progress': 'In Progress',
 	'issue': 'Issue',
 	'issues': 'Issues',
+	'issues-keys': 'Issues Keys',
+	'jira-authorization': 'Jira Authorization',
 	'jira-components': 'Jira Components',
 	'job-scheduler': 'Job Scheduler',
 	'job-scheduler-x': 'Job Scheduler {0}',
@@ -405,6 +407,8 @@ export default {
 	'this-field-is-required': 'This field is required.',
 	'this-role-is-for-general-liferay-employees-and-enables-authenticated-users-to-view-test-results':
 		'This role is for general Liferay employees and enables authenticated users to view test results.',
+	'this-user-does-not-have-authentication-with-jira':
+		'This user does not have authentication with jira',
 	'time-x-total-issues': 'Time {0} Total Issues',
 	'total': 'Total',
 	'total-completed': 'Total Completed',

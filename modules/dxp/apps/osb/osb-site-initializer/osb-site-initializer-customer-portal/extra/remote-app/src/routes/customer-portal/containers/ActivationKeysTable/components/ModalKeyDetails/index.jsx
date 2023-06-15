@@ -28,8 +28,9 @@ import {ALERT_ACTIVATION_AGGREGATED_KEYS_DOWNLOAD_TEXT} from '../../utils/consta
 import {downloadActivationLicenseKey} from '../../utils/downloadActivationLicenseKey';
 import TableKeyDetails from '../TableKeyDetails';
 
-const openToast = (title, {type = 'success'} = {}) =>
+const openToast = (title, message, {type = 'success'} = {}) =>
 	Liferay.Util.openToast({
+		message: i18n.translate(message),
 		title: i18n.translate(title),
 		type,
 	});
@@ -80,7 +81,7 @@ const ModalKeyDetails = ({
 				setHasErrorSubscription(false);
 			})
 			.catch(() => {
-				openToast('get-subscription-failed', {type: 'danger'});
+				openToast('error', 'get-subscription-failed', {type: 'danger'});
 
 				setHasErrorSubscription(true);
 			})
@@ -99,11 +100,13 @@ const ModalKeyDetails = ({
 		try {
 			await fn(provisioningServerAPI, currentActivationKey.id, sessionId);
 
-			openToast('success');
+			openToast('success', 'your-request-completed-successfully', {
+				type: 'success',
+			});
 		} catch {
 			setTimeout(() => {
 				handleToggle();
-				openToast('subscription-failed', {type: 'danger'});
+				openToast('error', 'subscription-failed', {type: 'danger'});
 			}, 500);
 		}
 	};

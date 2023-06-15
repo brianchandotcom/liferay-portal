@@ -54,7 +54,7 @@ const RequiredInformation = ({
 	const [showKeyEmptyError, setShowKeyEmptyError] = useState(false);
 	const [isLoadingGenerateKey, setIsLoadingGenerateKey] = useState(false);
 	const [availableKeys, setAvailableKeys] = useState(1);
-	const [checkedBoxSubscription, setCheckedBoxSubscription] = useState(false);
+	const [checkedBoxSubscription, setCheckedBoxSubscription] = useState(true);
 	const navigate = useNavigate();
 
 	const hasTouched = !Object.keys(touched).length;

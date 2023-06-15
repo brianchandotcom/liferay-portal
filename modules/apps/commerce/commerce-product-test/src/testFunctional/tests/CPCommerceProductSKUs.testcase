@@ -116,6 +116,48 @@ definition {
 			locator1 = "CommerceEntry#ENTRY_SUBSCRIPTIONS");
 	}
 
+	@description = "This is a test for COMMERCE-11084. Admin can add price lists on a product's SKU details page"
+	@priority = 5
+	test CanAddPriceListsOnProductSKU {
+		property portal.acceptance = "true";
+
+		task ("Given a Minium site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And a simple product with 'Minium' catalog is created") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Minium",
+				productName = "Test Simple Product",
+				productType = "Simple",
+				sku = "SIMPLESKU");
+		}
+
+		task ("When admin adds some price lists on the product's SKU details page") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.searchEntry(entryName = "Simple");
+
+			CommerceNavigator.gotoEntry(entryName = "Test Simple Product");
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceEntry.addPriceListsFromProductSKU(
+				priceListNames = "Master Base Price List,Master Base Promotion",
+				skuName = "SIMPLESKU");
+		}
+
+		task ("Then the price lists are added successfully") {
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			for (var priceListName : list "Master Base Price List,Master Base Promotion") {
+				AssertElementPresent(
+					key_entryName = ${priceListName},
+					locator1 = "CommerceNavigation#ENTRY_NAME");
+			}
+		}
+	}
+
 	@description = "This is a test for COMMERCE-9891 UI to show External Reference code of SKU"
 	@priority = 3
 	test CanEditSKUERC {

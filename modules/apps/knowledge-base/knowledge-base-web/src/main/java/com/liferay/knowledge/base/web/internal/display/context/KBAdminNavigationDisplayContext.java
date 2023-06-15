@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.SessionClicks;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.LiferayPortletUtil;
@@ -272,13 +273,12 @@ public class KBAdminNavigationDisplayContext {
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, WorkflowConstants.STATUS_ANY,
 			new KBArticleTitleComparator(true));
 
-		long itemToMoveId = -1;
-		if(!ParamUtil.getString(_httpServletRequest, "itemToMoveId").isEmpty()){
-			itemToMoveId = parseLong(ParamUtil.getString(_httpServletRequest, "itemToMoveId"));
-		}
+		long kbEntryToMoveId =
+			ParamUtil.getLong(_httpServletRequest, "itemToMoveId", -1);
 
 		for (KBArticle kbArticle : kbArticles) {
-			if(itemToMoveId != kbArticle.getResourcePrimKey()){
+			if(kbEntryToMoveId == -1 ||
+			   kbEntryToMoveId != kbArticle.getResourcePrimKey()){
 				childrenJSONArray.put(
 					JSONUtil.put(
 						"actions",

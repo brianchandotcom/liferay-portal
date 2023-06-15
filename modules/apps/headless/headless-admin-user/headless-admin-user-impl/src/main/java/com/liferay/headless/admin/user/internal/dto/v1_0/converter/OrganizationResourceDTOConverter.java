@@ -68,7 +68,11 @@ import org.osgi.service.component.annotations.Reference;
  * @author Javier Gamarra
  */
 @Component(
-	property = "dto.class.name=com.liferay.portal.kernel.model.Organization",
+	property = {
+		"application.name=Liferay.Headless.Admin.User",
+		"dto.class.name=com.liferay.portal.kernel.model.Organization",
+		"version=v1.0"
+	},
 	service = DTOConverter.class
 )
 public class OrganizationResourceDTOConverter

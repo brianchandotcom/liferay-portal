@@ -411,13 +411,6 @@ public class AssetListEntryAssetEntryRelLocalServiceUtil {
 	}
 
 	public static int getAssetListEntryAssetEntryRelsCount(
-		long assetLIstEntryId, long segmentsEntryId, boolean visible) {
-
-		return getService().getAssetListEntryAssetEntryRelsCount(
-			assetLIstEntryId, segmentsEntryId, visible);
-	}
-
-	public static int getAssetListEntryAssetEntryRelsCount(
 		long assetListEntryId, long[] segmentsEntryIds) {
 
 		return getService().getAssetListEntryAssetEntryRelsCount(

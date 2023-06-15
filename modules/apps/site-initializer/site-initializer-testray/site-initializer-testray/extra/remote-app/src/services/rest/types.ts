@@ -80,6 +80,7 @@ export type UserAccount = {
 	givenName: string;
 	id: number;
 	image: string;
+	jiraAuthorization: boolean;
 	name: string;
 	roleBriefs: Role[];
 	userGroupBriefs: UserGroup[];

@@ -14,6 +14,7 @@ const deleteResource = (resource: RequestInfo) => {
 
 export {deleteResource};
 
+export * from './JiraClientExtension';
 export * from './LiferayMessageBoard';
 export * from './LiferayUserAccounts';
 export * from './TestrayBuild';

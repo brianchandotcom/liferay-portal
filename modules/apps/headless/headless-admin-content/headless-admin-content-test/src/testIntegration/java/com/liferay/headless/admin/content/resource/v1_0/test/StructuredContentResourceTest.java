@@ -128,6 +128,42 @@ public class StructuredContentResourceTest
 		assertValid(page);
 	}
 
+	@Test
+	public void testGetSiteStructuredContentsPageWithSort() throws Exception {
+		StructuredContent postStructuredContent1 =
+			_testGetSiteStructuredContentsPage_addStructuredContent_addDraftStructuredContentWithPriority(
+				testGetSiteStructuredContentsPage_getSiteId(),
+				Double.valueOf(0.99));
+
+		_testGetSiteStructuredContentsPage_addStructuredContent_addDraftStructuredContentWithPriority(
+			testGetSiteStructuredContentsPage_getSiteId(), Double.valueOf(1));
+
+		StructuredContent postStructuredContent2 =
+			_testGetSiteStructuredContentsPage_addStructuredContent_addDraftStructuredContentWithPriority(
+				testGetSiteStructuredContentsPage_getSiteId(),
+				Double.valueOf(1.1));
+
+		StructuredContent postStructuredContent3 =
+			_testGetSiteStructuredContentsPage_addStructuredContent_addDraftStructuredContentWithPriority(
+				testGetSiteStructuredContentsPage_getSiteId(),
+				Double.valueOf(2.99));
+
+		Page<StructuredContent> page =
+			structuredContentResource.getSiteStructuredContentsPage(
+				testGroup.getGroupId(), true, null, null, "priority ne 1.0",
+				Pagination.of(1, 10), "priority:asc");
+
+		Assert.assertEquals(3, page.getTotalCount());
+
+		assertEquals(
+			Arrays.asList(
+				postStructuredContent1, postStructuredContent2,
+				postStructuredContent3),
+			(List<StructuredContent>)page.getItems());
+
+		assertValid(page);
+	}
+
 	@Override
 	@Test
 	public void testGetStructuredContentByVersion() throws Exception {

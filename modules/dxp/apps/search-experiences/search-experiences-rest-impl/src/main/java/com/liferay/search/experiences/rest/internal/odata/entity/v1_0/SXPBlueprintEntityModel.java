@@ -45,12 +45,27 @@ public class SXPBlueprintEntityModel implements EntityModel {
 				"description",
 				locale -> Field.getSortableFieldName(
 					LocalizationUtil.getLocalizedName(
-						Field.DESCRIPTION, LocaleUtil.toLanguageId(locale)))),
+						Field.DESCRIPTION, LocaleUtil.toLanguageId(locale))),
+				locale -> {
+					String sortableFieldName = Field.getSortableFieldName(
+						LocalizationUtil.getLocalizedName(
+							Field.DESCRIPTION,
+							LocaleUtil.toLanguageId(locale)));
+
+					return sortableFieldName.concat(".keyword_lowercase");
+				}),
 			new StringEntityField(
 				"title",
 				locale -> Field.getSortableFieldName(
 					LocalizationUtil.getLocalizedName(
-						Field.TITLE, LocaleUtil.toLanguageId(locale)))));
+						Field.TITLE, LocaleUtil.toLanguageId(locale))),
+				locale -> {
+					String sortableFieldName = Field.getSortableFieldName(
+						LocalizationUtil.getLocalizedName(
+							Field.TITLE, LocaleUtil.toLanguageId(locale)));
+
+					return sortableFieldName.concat(".keyword_lowercase");
+				}));
 	}
 
 	@Override

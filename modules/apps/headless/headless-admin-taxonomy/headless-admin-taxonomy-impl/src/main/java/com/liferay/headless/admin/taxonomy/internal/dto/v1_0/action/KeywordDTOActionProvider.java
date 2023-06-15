@@ -59,7 +59,7 @@ public class KeywordDTOActionProvider implements DTOActionProvider {
 			ActionInfo actionInfo =
 				keywordDTOActionMetadataProvider.getActionInfo(actionName);
 
-			if ((actionInfo == null) || (actionInfo.getActionKey() == null) ||
+			if ((actionInfo == null) || (actionInfo.getActionName() == null) ||
 				(actionInfo.getResourceMethodName() == null)) {
 
 				continue;
@@ -68,7 +68,7 @@ public class KeywordDTOActionProvider implements DTOActionProvider {
 			actions.put(
 				actionName,
 				ActionUtil.addAction(
-					actionInfo.getActionKey(), actionInfo.getResourceClass(),
+					actionInfo.getActionName(), actionInfo.getResourceClass(),
 					primaryKey, actionInfo.getResourceMethodName(),
 					_scopeChecker, userId,
 					keywordDTOActionMetadataProvider.getPermissionName(),

@@ -49,25 +49,14 @@ new Elysia()
 
         await testray.setTestrayOAuthJiraCode(response, state as string);
 
-        return response;
-    })
-    .put(
-        '/jira/ticket',
-        ({ body, request }) =>
-            jiraEngine.updateIssues(body.tickets, getUserId(request)),
-        {
-            schema: {
-                body: t.Object({
-                    tickets: t.Array(t.String()),
-                }),
-            },
-        }
-    )
-    .get('/jira/ticket/:ticket', ({ params: { ticket }, request }) =>
-        jira.getIssue(ticket, getUserId(request))
-    )
-    .listen(Number(PORT), ({ hostname, port }) =>
-        logger.info(
-            `🦊 Testray LXC Integration with Elysia is running at ${hostname}:${port}`
-        )
-    );
+	.post(
+		"/jira/getissues",
+		({ body, request }) => jira.getIssues(body.issues, getUserId(request)),
+		{
+			schema: {
+				body: t.Object({
+					issues: t.Array(t.String()),
+				}),
+			},
+		},
+	)

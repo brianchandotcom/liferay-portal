@@ -74,12 +74,26 @@ public class StructuredContentEntityModel implements EntityModel {
 				locale -> Field.getSortableFieldName(
 					StringBundler.concat(
 						"urlTitle_", LocaleUtil.toLanguageId(locale),
-						"_String"))),
+						"_String")),
+				locale -> {
+					String sortableFieldName = Field.getSortableFieldName(
+						StringBundler.concat(
+							"urlTitle_", LocaleUtil.toLanguageId(locale),
+							"_String"));
+
+					return sortableFieldName.concat(".keyword_lowercase");
+				}),
 			new StringEntityField(
 				"title",
 				locale -> Field.getSortableFieldName(
-					"localized_title_".concat(
-						LocaleUtil.toLanguageId(locale)))));
+					"localized_title_".concat(LocaleUtil.toLanguageId(locale))),
+				locale -> {
+					String sortableFieldName = Field.getSortableFieldName(
+						"localized_title_".concat(
+							LocaleUtil.toLanguageId(locale)));
+
+					return sortableFieldName.concat(".keyword_lowercase");
+				}));
 	}
 
 	@Override

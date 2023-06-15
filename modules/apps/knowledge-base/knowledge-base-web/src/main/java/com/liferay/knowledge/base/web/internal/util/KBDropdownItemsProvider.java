@@ -726,12 +726,12 @@ public class KBDropdownItemsProvider {
 			return dropdownItem -> {
 				dropdownItem.putData("action", "move");
 				dropdownItem.putData(
-					"itemClassNameId",
+					"kbEntryClassNameId",
 					String.valueOf(kbArticle.getClassNameId()));
 				dropdownItem.putData(
-					"itemId", String.valueOf(kbArticle.getResourcePrimKey()));
-				dropdownItem.putData("itemType", KBConstants.TYPE_ARTICLE);
-				dropdownItem.putData("kbItemTitle", kbArticle.getTitle());
+					"kbEntryId", String.valueOf(kbArticle.getResourcePrimKey()));
+				dropdownItem.putData("kbEntryType", KBConstants.TYPE_ARTICLE);
+				dropdownItem.putData("kbEntryTitle", kbArticle.getTitle());
 				dropdownItem.putData(
 					"moveKBItemActionURL",
 					PortletURLBuilder.createActionURL(
@@ -746,11 +746,7 @@ public class KBDropdownItemsProvider {
 					).setMVCPath(
 						"/admin/common/move_kb_object_modal.jsp"
 					).setParameter(
-						"itemToMoveId", kbArticle.getResourcePrimKey()
-					).setParameter(
-						"itemToMoveType", KBConstants.TYPE_ARTICLE
-					).setParameter(
-						"itemVersion", kbArticle.getVersion()
+						"kbEntryVersion", kbArticle.getVersion()
 					).setWindowState(
 						LiferayWindowState.POP_UP
 					).buildString());
@@ -798,12 +794,12 @@ public class KBDropdownItemsProvider {
 			return dropdownItem -> {
 				dropdownItem.putData("action", "move");
 				dropdownItem.putData(
-					"itemClassNameId",
+					"kbEntryClassNameId",
 					String.valueOf(kbFolder.getClassNameId()));
 				dropdownItem.putData(
-					"itemId", String.valueOf(kbFolder.getKbFolderId()));
-				dropdownItem.putData("itemType", KBConstants.TYPE_FOLDER);
-				dropdownItem.putData("kbItemTitle", kbFolder.getName());
+					"kbEntryId", String.valueOf(kbFolder.getKbFolderId()));
+				dropdownItem.putData("kbEntryType", KBConstants.TYPE_FOLDER);
+				dropdownItem.putData("kbEntryTitle", kbFolder.getName());
 				dropdownItem.putData(
 					"moveKBItemActionURL",
 					PortletURLBuilder.createActionURL(
@@ -817,12 +813,6 @@ public class KBDropdownItemsProvider {
 						_liferayPortletResponse
 					).setMVCPath(
 						"/admin/common/move_kb_object_modal.jsp"
-					).setParameter(
-						"itemToMoveId", kbFolder.getKbFolderId()
-					).setParameter(
-						"itemToMoveType", KBConstants.TYPE_FOLDER
-					).setParameter(
-						"itemVersion", -1
 					).setWindowState(
 						LiferayWindowState.POP_UP
 					).buildString());

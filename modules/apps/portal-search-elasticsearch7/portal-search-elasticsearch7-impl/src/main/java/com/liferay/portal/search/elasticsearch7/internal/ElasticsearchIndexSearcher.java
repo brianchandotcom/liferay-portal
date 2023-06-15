@@ -125,6 +125,13 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 				throw new IllegalArgumentException("Invalid end " + end);
 			}
 
+			int maxResultWindow =
+				_elasticsearchConfigurationWrapper.indexMaxResultWindow();
+
+			if ((end - start) > maxResultWindow) {
+				end = start + maxResultWindow;
+			}
+
 			SearchResponseBuilder searchResponseBuilder =
 				_getSearchResponseBuilder(searchContext);
 
@@ -529,7 +536,11 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 			SearchSearchRequest searchSearchRequest = createSearchSearchRequest(
 				searchRequest, searchContext, query);
 
-			searchSearchRequest.setSize(end - start);
+			searchSearchRequest.setSize(
+				Math.min(
+					end - start,
+					_elasticsearchConfigurationWrapper.indexMaxResultWindow() -
+						start));
 			searchSearchRequest.setSorts(searchContext.getSorts());
 			searchSearchRequest.setSorts(searchRequest.getSorts());
 			searchSearchRequest.setStart(start);

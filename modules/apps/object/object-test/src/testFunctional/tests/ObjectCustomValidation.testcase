@@ -2168,11 +2168,9 @@ definition {
 
 		ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
 
-		ObjectCustomValidation.activeValidation();
-
 		ObjectCustomValidation.gotoTab(tabName = "Conditions");
 
-		ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "invalidFields = (customField < 18)");
+		ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "invalidFields = (customField > 2500)");
 
 		ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
 
@@ -2180,47 +2178,34 @@ definition {
 
 		Refresh();
 
-		ObjectCustomValidation.assertValidationPresent(
-			validationActive = "Yes",
-			validationName = "Custom Validation",
-			validationType = "Groovy");
-
 		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 			fieldName = "customField",
 			objectName = "CustomObject153552",
-			value = 10);
-
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject153552");
-
-		ObjectPortlet.assertEntryNotPresent(entry = 10);
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 153552");
-
-		ObjectAdmin.goToValidationsTab();
+			value = 4500);
 
 		ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
 
-		ObjectCustomValidation.desactiveValidation();
+		ObjectCustomValidation.activeValidation();
 
 		PortletEntry.save();
 
 		Refresh();
 
-		ObjectCustomValidation.assertValidationPresent(
-			validationActive = "No",
-			validationName = "Custom Validation",
-			validationType = "Groovy");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject153552");
 
-		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
-			fieldName = "customField",
-			objectName = "CustomObject153552",
-			value = 10);
+		LexiconEntry.gotoAdd();
+
+		ObjectPortlet.typeCustomField(
+			customField = "Custom Field",
+			entry = 3500);
+
+		Button.clickSave();
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject153552");
 
-		ObjectPortlet.viewEntry(entry = 10);
+		ObjectPortlet.assertEntryNotPresent(entry = 3500);
+
+		ObjectPortlet.viewEntry(entry = 4500);
 	}
 
 	@description = "LPS-144474 - Verify that, when managing an Object validation, the user can see Basic Info tab"

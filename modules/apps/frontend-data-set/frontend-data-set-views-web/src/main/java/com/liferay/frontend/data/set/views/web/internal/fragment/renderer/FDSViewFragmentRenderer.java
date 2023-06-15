@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -202,6 +203,8 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 			).put(
 				"namespace", fragmentRendererContext.getFragmentElementId()
 			).put(
+				"pagination", _getPaginationJSONObject(fdsViewObjectEntry)
+			).put(
 				"style", "fluid"
 			).put(
 				"views",
@@ -249,6 +252,25 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 		return defaultObjectEntryManager.getObjectEntry(
 			companyId, dtoConverterContext, externalReferenceCode,
 			objectDefinition, null);
+	}
+
+	private JSONObject _getPaginationJSONObject(ObjectEntry fdsViewObjectEntry)
+		throws Exception {
+
+		Map<String, Object> properties = fdsViewObjectEntry.getProperties();
+
+		return JSONUtil.put(
+			"deltas",
+			JSONUtil.toJSONArray(
+				StringUtil.split(
+					String.valueOf(properties.get("listOfItemsPerPage")),
+					StringPool.COMMA_AND_SPACE),
+				(String itemPerPage) -> JSONUtil.put(
+					"label", GetterUtil.getInteger(itemPerPage)))
+		).put(
+			"initialDelta",
+			String.valueOf(properties.get("defaultItemsPerPage"))
+		);
 	}
 
 	private Collection<ObjectEntry> _getRelatedObjectEntries(

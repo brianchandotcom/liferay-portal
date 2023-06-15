@@ -46,6 +46,8 @@
 
 						<aui:input name="preferences--showCompleteYourProfile--" type="checkbox" value="<%= showCompleteYourProfile %>" />
 
+						<aui:input name="preferences--showEmailAddress--" type="checkbox" value="<%= showEmailAddress %>" />
+
 						<aui:input name="preferences--showInstantMessenger--" type="checkbox" value="<%= showInstantMessenger %>" />
 
 						<aui:input name="preferences--showPhones--" type="checkbox" value="<%= showPhones %>" />

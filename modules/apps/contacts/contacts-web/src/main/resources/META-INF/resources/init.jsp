@@ -111,6 +111,7 @@ boolean showAdditionalEmailAddresses = PrefsParamUtil.getBoolean(portletPreferen
 boolean showAddresses = PrefsParamUtil.getBoolean(portletPreferences, request, "showAddresses", true);
 boolean showComments = PrefsParamUtil.getBoolean(portletPreferences, request, "showComments", true);
 boolean showCompleteYourProfile = PrefsParamUtil.getBoolean(portletPreferences, request, "showCompleteYourProfile", false);
+boolean showEmailAddress = PrefsParamUtil.getBoolean(portletPreferences, request, "showEmailAddress", false);
 boolean showIcon = PrefsParamUtil.getBoolean(portletPreferences, request, "showIcon", true);
 boolean showInstantMessenger = PrefsParamUtil.getBoolean(portletPreferences, request, "showInstantMessenger", true);
 boolean showPhones = PrefsParamUtil.getBoolean(portletPreferences, request, "showPhones", true);

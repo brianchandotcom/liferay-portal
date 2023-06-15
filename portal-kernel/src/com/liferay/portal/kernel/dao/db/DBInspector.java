@@ -250,7 +250,7 @@ public class DBInspector {
 	public boolean isControlTable(String tableName) throws Exception {
 		if (!_isNotObjectTable(tableName) &&
 			(_controlTableNames.contains(StringUtil.toLowerCase(tableName)) ||
-			 hasColumn(tableName, "companyId"))) {
+			 !hasColumn(tableName, "companyId"))) {
 
 			return true;
 		}

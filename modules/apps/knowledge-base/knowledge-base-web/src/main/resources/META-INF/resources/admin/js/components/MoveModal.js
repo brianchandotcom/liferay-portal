@@ -138,5 +138,6 @@ const itemShape = {
 itemShape.children = PropTypes.arrayOf(PropTypes.shape(itemShape));
 
 MoveModal.propTypes = {
+	itemToMoveParent: PropTypes.number.isRequired,
 	items: PropTypes.arrayOf(PropTypes.shape(itemShape)),
 };

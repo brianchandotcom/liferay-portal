@@ -19,7 +19,7 @@ KBAdminNavigationDisplayContext kbAdminNavigationDisplayContext = new KBAdminNav
 			HashMapBuilder.<String, Object>put(
 				"items", kbAdminNavigationDisplayContext.getKBFolderDataJSONArray()
 			).put(
-				"itemToMoveParent", kbAdminNavigationDisplayContext.getItemToMoveParent(ParamUtil.getString(request, "itemToMoveType"))
+				"itemToMoveParent", kbAdminNavigationDisplayContext.getItemToMoveParent()
 			).build()
 		%>'
 	/>

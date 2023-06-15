@@ -96,25 +96,29 @@ public class KBAdminNavigationDisplayContext {
 			).build());
 	}
 
-	public long getItemToMoveParent(String itemToMoveType)
+	public long getItemToMoveParent()
 		throws PortalException {
 
-		long itemToMoveId = ParamUtil.getLong(
-			_httpServletRequest, "itemToMoveId");
+		String kbEntryToMoveType = ParamUtil.getString(
+			_httpServletRequest, "kbEntryToMoveType");
+
+		long kbEntryToMoveId = ParamUtil.getLong(
+			_httpServletRequest, "kbEntryToMoveId");
+
 		long parentKbObjectId;
 
-		if (itemToMoveType.equals(KBConstants.TYPE_FOLDER)) {
+		if (kbEntryToMoveType.equals(KBConstants.TYPE_FOLDER)) {
 			KBFolder kbFolder = KBFolderLocalServiceUtil.getKBFolder(
-				itemToMoveId);
+				kbEntryToMoveId);
 
 			parentKbObjectId = kbFolder.getParentKBFolderId();
 		}
 		else {
 			int articleVersion = ParamUtil.getInteger(
-				_httpServletRequest, "itemVersion");
+				_httpServletRequest, "kbEntryVersion", -1);
 
 			KBArticle kbArticle = KBArticleLocalServiceUtil.getKBArticle(
-				itemToMoveId, articleVersion);
+				kbEntryToMoveId, articleVersion);
 
 			if (kbArticle.getParentResourceClassNameId() ==
 					ClassNameLocalServiceUtil.getClassNameId(
@@ -307,11 +311,10 @@ public class KBAdminNavigationDisplayContext {
 			new KBArticleTitleComparator(true));
 
 		long kbEntryToMoveId = ParamUtil.getLong(
-			_httpServletRequest, "itemToMoveId", -1);
+			_httpServletRequest, "kbEntryToMoveId", -1);
 
 		for (KBArticle kbArticle : kbArticles) {
-			if ((kbEntryToMoveId == -1) ||
-				(kbEntryToMoveId != kbArticle.getResourcePrimKey())) {
+			if ((kbEntryToMoveId != kbArticle.getResourcePrimKey())) {
 
 				childrenJSONArray.put(
 					JSONUtil.put(
@@ -358,15 +361,8 @@ public class KBAdminNavigationDisplayContext {
 			WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			new KBObjectsPriorityComparator<>(true));
 
-		long itemToMoveId = -1;
-
-		if (!ParamUtil.getString(
-				_httpServletRequest, "itemToMoveId"
-			).isEmpty()) {
-
-			itemToMoveId = ParamUtil.getLong(
-				_httpServletRequest, "itemToMoveId");
-		}
+		long kbEntryToMoveId = ParamUtil.getLong(
+			_httpServletRequest, "kbEntryToMoveId", -1);
 
 		for (Object kbObject : kbObjects) {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
@@ -374,7 +370,7 @@ public class KBAdminNavigationDisplayContext {
 			if (kbObject instanceof KBFolder) {
 				KBFolder kbFolder = (KBFolder)kbObject;
 
-				if (itemToMoveId != kbFolder.getKbFolderId()) {
+				if (kbEntryToMoveId != kbFolder.getKbFolderId()) {
 					jsonObject.put(
 						"actions",
 						_kbDropdownItemsProvider.getKBFolderDropdownItems(
@@ -410,7 +406,7 @@ public class KBAdminNavigationDisplayContext {
 			else {
 				KBArticle kbArticle = (KBArticle)kbObject;
 
-				if (itemToMoveId != kbArticle.getResourcePrimKey()) {
+				if (kbEntryToMoveId != kbArticle.getResourcePrimKey()) {
 					jsonObject.put(
 						"actions",
 						_kbDropdownItemsProvider.getKBArticleDropdownItems(

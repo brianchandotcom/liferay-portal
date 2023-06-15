@@ -92,7 +92,7 @@ definition {
 			var creatorPassword = "test";
 		}
 
-		var companyId = JSONCompany.getCompanyId();
+		var companyId = JSONCompany.getCompanyIdNoSelenium();
 		var portalURL = JSONCompany.getPortalURL();
 		var userId = JSONUserSetter.setUserId(userEmailAddress = ${creatorEmailAddress});
 		var curl = '''

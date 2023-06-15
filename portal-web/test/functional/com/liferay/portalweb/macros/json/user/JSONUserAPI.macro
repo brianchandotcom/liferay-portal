@@ -226,7 +226,7 @@ definition {
 	macro _getUserIdByEmailAddress {
 		Variables.assertDefined(parameterList = ${userEmailAddress});
 
-		var companyId = JSONCompany.getCompanyId(
+		var companyId = JSONCompany.getCompanyIdNoSelenium(
 			creatorEmailAddress = ${creatorEmailAddress},
 			creatorPassword = ${creatorPassword},
 			portalInstanceName = ${portalInstanceName});

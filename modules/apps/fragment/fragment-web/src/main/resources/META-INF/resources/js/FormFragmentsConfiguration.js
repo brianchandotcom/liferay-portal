@@ -20,6 +20,7 @@ import {
 	createPortletURL,
 	getPortletId,
 	openSelectionModal,
+	sub,
 } from 'frontend-js-web';
 import React, {useState} from 'react';
 
@@ -44,7 +45,10 @@ export default function FormFragmentsConfiguration({
 				}));
 			},
 			selectEventName: 'selectFragment',
-			title: 'select',
+			title: sub(
+				Liferay.Language.get('select-x'),
+				Liferay.Language.get('fragment')
+			),
 			url: createPortletURL(selectFragmentURL, {
 				inputType: name,
 				p_p_id: getPortletId(portletNamespace),

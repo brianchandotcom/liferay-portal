@@ -3,5 +3,5 @@ assemble:
       into: static
 liferay-sample-data-set-filter:
     name: Liferay Sample Data Set Filter
-    type: dataSetFilter
+    type: fdsFilter
     url: index.js

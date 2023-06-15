@@ -16,6 +16,10 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+AICreatorOpenAIDisplayContext aiCreatorOpenAIDisplayContext = (AICreatorOpenAIDisplayContext)request.getAttribute(AICreatorOpenAIDisplayContext.class.getName());
+%>
+
 <div>
 	<div class="inline-item my-5 p-5 w-100">
 		<span aria-hidden="true" class="loading-animation"></span>
@@ -23,5 +27,6 @@
 
 	<react:component
 		module="ai_creator_modal/AICreatorModal"
+		props="<%= aiCreatorOpenAIDisplayContext.getProps() %>"
 	/>
 </div>

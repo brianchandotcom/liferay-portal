@@ -26,6 +26,7 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.ai.creator.openai.web.internal.display.context.AICreatorOpenAICompanyConfigurationDisplayContext" %><%@
+page import="com.liferay.ai.creator.openai.web.internal.display.context.AICreatorOpenAIDisplayContext" %><%@
 page import="com.liferay.ai.creator.openai.web.internal.display.context.AICreatorOpenAIGroupConfigurationDisplayContext" %><%@
 page import="com.liferay.ai.creator.openai.web.internal.exception.AICreatorOpenAIClientException" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@

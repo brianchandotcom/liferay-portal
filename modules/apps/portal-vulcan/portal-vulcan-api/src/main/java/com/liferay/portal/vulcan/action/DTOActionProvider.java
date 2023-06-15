@@ -23,7 +23,7 @@ import javax.ws.rs.core.UriInfo;
  */
 public interface DTOActionProvider {
 
-	public Map<String, ActionInfo> getActionInfoMap() throws Exception;
+	public Map<String, ActionInfo> getActionInfos() throws Exception;
 
 	public Map<String, Map<String, String>> getActions(
 		long groupId, long primaryKey, UriInfo uriInfo, long userId);

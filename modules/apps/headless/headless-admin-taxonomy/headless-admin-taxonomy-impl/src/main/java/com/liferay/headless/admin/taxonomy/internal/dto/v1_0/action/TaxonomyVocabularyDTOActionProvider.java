@@ -85,8 +85,8 @@ public class TaxonomyVocabularyDTOActionProvider implements DTOActionProvider {
 	}
 
 	@Override
-	public Map<String, ActionInfo> getActionInfoMap() throws Exception {
-		Map<String, ActionInfo> actionInfoMap = new HashMap<>();
+	public Map<String, ActionInfo> getActionInfos() throws Exception {
+		Map<String, ActionInfo> actionInfos = new HashMap<>();
 
 		TaxonomyVocabularyDTOActionMetadataProvider
 			taxonomyVocabularyDTOActionMetadataProvider =
@@ -95,13 +95,13 @@ public class TaxonomyVocabularyDTOActionProvider implements DTOActionProvider {
 		for (String actionName :
 				taxonomyVocabularyDTOActionMetadataProvider.getActionNames()) {
 
-			actionInfoMap.put(
+			actionInfos.put(
 				actionName,
 				taxonomyVocabularyDTOActionMetadataProvider.getActionInfo(
 					actionName));
 		}
 
-		return actionInfoMap;
+		return actionInfos;
 	}
 
 	@Reference

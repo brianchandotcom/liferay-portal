@@ -284,7 +284,7 @@ definition {
 	}
 
 	macro gotoVerticalEllipsisMenuItem {
-		AssertElementPresent.assertVisible(locator1 = "Icon#TOOLBAR_ELLIPSIS");
+		WaitForVisible(locator1 = "Icon#TOOLBAR_ELLIPSIS");
 
 		Click(locator1 = "Icon#TOOLBAR_ELLIPSIS");
 

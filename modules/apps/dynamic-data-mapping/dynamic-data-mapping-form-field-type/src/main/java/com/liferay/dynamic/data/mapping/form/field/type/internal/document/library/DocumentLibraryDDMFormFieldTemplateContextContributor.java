@@ -14,10 +14,10 @@
 
 package com.liferay.dynamic.data.mapping.form.field.type.internal.document.library;
 
-import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.dynamic.data.mapping.constants.DDMActionKeys;
 import com.liferay.dynamic.data.mapping.constants.DDMFormConstants;
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTemplateContextContributor;
@@ -54,10 +54,8 @@ import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -163,13 +161,13 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 			WebKeys.THEME_DISPLAY);
 	}
 
-	private boolean _containsAddFolderPermission(
-		PermissionChecker permissionChecker, long groupId, long folderId) {
+	private boolean _containsAddFormInstanceRecordPermission(
+		PermissionChecker permissionChecker, long formInstanceId) {
 
 		try {
-			return ModelResourcePermissionUtil.contains(
-				_dlFolderModelResourcePermission, permissionChecker, groupId,
-				folderId, ActionKeys.ADD_FOLDER);
+			return _ddmFormInstanceModelResourcePermission.contains(
+				permissionChecker, formInstanceId,
+				DDMActionKeys.ADD_FORM_INSTANCE_RECORD);
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
@@ -642,6 +640,15 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 			return new HashMap<>();
 		}
 
+		if (!_containsAddFormInstanceRecordPermission(
+				themeDisplay.getPermissionChecker(),
+				ddmFormFieldRenderingContext.getDDMFormInstanceId())) {
+
+			return HashMapBuilder.<String, Object>put(
+				"showUploadPermissionMessage", true
+			).build();
+		}
+
 		long groupId = GetterUtil.getLong(
 			ddmFormFieldRenderingContext.getProperty("groupId"));
 
@@ -680,15 +687,6 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 						ddmFormField, ddmFormFieldRenderingContext,
 						ddmFormFolderId, httpServletRequest);
 				}
-			).build();
-		}
-
-		if (!_containsAddFolderPermission(
-				themeDisplay.getPermissionChecker(), groupId,
-				ddmFormFolderId)) {
-
-			return HashMapBuilder.<String, Object>put(
-				"showUploadPermissionMessage", true
 			).build();
 		}
 
@@ -735,6 +733,12 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
+	@Reference(
+		target = "(model.class.name=com.liferay.dynamic.data.mapping.model.DDMFormInstance)"
+	)
+	private ModelResourcePermission<DDMFormInstance>
+		_ddmFormInstanceModelResourcePermission;
+
 	@Reference
 	private DDMFormInstanceLocalService _ddmFormInstanceLocalService;
 
@@ -743,11 +747,6 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 
 	@Reference
 	private DLAppService _dlAppService;
-
-	@Reference(
-		target = "(model.class.name=com.liferay.document.library.kernel.model.DLFolder)"
-	)
-	private ModelResourcePermission<DLFolder> _dlFolderModelResourcePermission;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

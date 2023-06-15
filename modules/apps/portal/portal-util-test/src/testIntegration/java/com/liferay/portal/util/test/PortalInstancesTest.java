@@ -180,6 +180,15 @@ public class PortalInstancesTest {
 		List<String> webIds = ListUtil.fromArray(PortalInstances.getWebIds());
 
 		Assert.assertTrue(webIds.contains(_company.getWebId()));
+
+		_company.setWebId(RandomTestUtil.randomString());
+
+		PortalInstances.initCompany(
+			_companyLocalService.updateCompany(_company));
+
+		webIds = ListUtil.fromArray(PortalInstances.getWebIds());
+
+		Assert.assertTrue(webIds.contains(_company.getWebId()));
 	}
 
 	private void _testGetCompanyId(

@@ -154,11 +154,11 @@ public class EnumSerializer extends AbstractSerializer {
 		String javaClassName = _getString(jsonObject, "javaClass");
 
 		try {
-			if (!jsonObject.has("contextName")) {
+			String contextName = jsonObject.optString("contextName");
+
+			if (Validator.isNull(contextName)) {
 				return Class.forName(javaClassName);
 			}
-
-			String contextName = jsonObject.getString("contextName");
 
 			ClassLoader classLoader = ClassLoaderPool.getClassLoader(
 				contextName);
@@ -184,16 +184,9 @@ public class EnumSerializer extends AbstractSerializer {
 	private String _getString(JSONObject jsonObject, String key)
 		throws UnmarshallException {
 
-		String string = null;
+		String string = jsonObject.optString(key);
 
-		try {
-			string = jsonObject.getString(key);
-		}
-		catch (Exception exception) {
-			throw new UnmarshallException("Unable to get " + key, exception);
-		}
-
-		if (string == null) {
+		if (Validator.isNull(string)) {
 			throw new UnmarshallException(key + " is undefined");
 		}
 

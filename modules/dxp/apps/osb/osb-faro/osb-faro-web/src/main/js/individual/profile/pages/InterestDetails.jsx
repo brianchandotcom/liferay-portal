@@ -1,8 +1,8 @@
 import Card from 'shared/components/Card';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
+import ClayNavigationBar from '@clayui/navigation-bar';
 import InterestPagesList from 'contacts/components/InterestPagesList';
-import Nav from 'shared/components/Nav';
 import React from 'react';
 import {EntityTypes} from 'shared/util/constants';
 import {Individual} from 'shared/util/records';
@@ -110,23 +110,21 @@ export default class InterestDetails extends React.Component {
 					</Card.Header>
 
 					<Card.Header>
-						<Nav
+						<ClayNavigationBar
 							className='page-subnav'
-							display='underline'
-							key='subnav'
+							triggerLabel='label'
 						>
 							{this.getNavigationItems().map(
 								({active, href, label}) => (
-									<Nav.Item
+									<ClayNavigationBar.Item
 										active={active}
-										href={href}
 										key={label}
 									>
-										<h4>{label}</h4>
-									</Nav.Item>
+										<ClayLink href={href}>{label}</ClayLink>
+									</ClayNavigationBar.Item>
 								)
 							)}
-						</Nav>
+						</ClayNavigationBar>
 					</Card.Header>
 
 					<InterestPagesList

@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"@liferay/js-api": "^0.2.0-pre.0",
+		"@liferay/js-api": "^0.3.0-pre.0",
 		"serve": "^14.2.0"
 	},
 	"description": "Liferay Sample Data Set Filter",

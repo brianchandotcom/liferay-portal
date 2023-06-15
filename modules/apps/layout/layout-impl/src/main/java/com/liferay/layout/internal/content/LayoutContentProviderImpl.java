@@ -115,7 +115,7 @@ public class LayoutContentProviderImpl implements LayoutContentProvider {
 			try {
 				httpServletRequest.setAttribute(WebKeys.LAYOUT, layout);
 				httpServletRequest.setAttribute(
-					WebKeys.SHOW_PORTLET_TOPPER, Boolean.TRUE);
+					WebKeys.SHOW_PORTLET_TOPPER, Boolean.FALSE);
 
 				themeDisplay.setLayout(layout);
 				themeDisplay.setPlid(layout.getPlid());

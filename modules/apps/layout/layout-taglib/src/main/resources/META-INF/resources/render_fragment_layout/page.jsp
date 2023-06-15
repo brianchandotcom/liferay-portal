@@ -26,7 +26,7 @@ boolean showPreview = GetterUtil.getBoolean(request.getAttribute("liferay-layout
 
 <%
 try {
-	request.setAttribute(WebKeys.SHOW_PORTLET_TOPPER, Boolean.TRUE);
+	request.setAttribute(WebKeys.SHOW_PORTLET_TOPPER, Boolean.FALSE);
 %>
 
 	<liferay-util:buffer

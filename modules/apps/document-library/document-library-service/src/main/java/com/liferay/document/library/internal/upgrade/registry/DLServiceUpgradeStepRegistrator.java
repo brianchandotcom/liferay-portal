@@ -27,7 +27,7 @@ import com.liferay.document.library.internal.upgrade.v3_2_2.DLFileEntryUpgradePr
 import com.liferay.document.library.internal.upgrade.v3_2_4.DLSizeLimitConfigurationUpgradeProcess;
 import com.liferay.document.library.internal.upgrade.v3_2_5.DLFileEntryTypesDDMStructureUpgradeProcess;
 import com.liferay.document.library.internal.upgrade.v3_2_6.DeleteStalePWCVersionsUpgradeProcess;
-import com.liferay.document.library.internal.upgrade.v3_2_7.ResourcePermissionUpgradeProcess;
+import com.liferay.document.library.internal.upgrade.v3_2_7.DownloadViewActionResourcePermissionUpgradeProcess;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.dynamic.data.mapping.security.permission.DDMPermissionSupport;
@@ -138,8 +138,7 @@ public class DLServiceUpgradeStepRegistrator implements UpgradeStepRegistrator {
 
 		registry.register(
 			"3.2.6", "3.2.7",
-			new ResourcePermissionUpgradeProcess(
-				_resourceActionLocalService, _resourcePermissionLocalService));
+			new DownloadViewActionResourcePermissionUpgradeProcess());
 	}
 
 	@Reference

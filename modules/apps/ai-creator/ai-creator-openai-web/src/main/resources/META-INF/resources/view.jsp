@@ -15,3 +15,13 @@
 --%>
 
 <%@ include file="/init.jsp" %>
+
+<div>
+	<div class="inline-item my-5 p-5 w-100">
+		<span aria-hidden="true" class="loading-animation"></span>
+	</div>
+
+	<react:component
+		module="ai_creator_modal/AICreatorModal"
+	/>
+</div>

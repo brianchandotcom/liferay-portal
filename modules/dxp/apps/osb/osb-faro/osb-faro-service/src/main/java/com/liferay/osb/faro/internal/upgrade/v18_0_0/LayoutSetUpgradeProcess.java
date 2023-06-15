@@ -26,7 +26,7 @@ public class LayoutSetUpgradeProcess extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		runSQL(
 			"update LayoutSet set themeId = 'osbfarotheme_WAR_osbfarotheme' " +
-                "where themeId = 'osbfaro_WAR_osbfarotheme'");
+				"where themeId = 'osbfaro_WAR_osbfarotheme'");
 	}
 
 }

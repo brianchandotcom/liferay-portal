@@ -65,7 +65,7 @@ public class FunctionActionExecutorImplFactory {
 	}
 
 	@Reference(
-		target = "(component.factory=com.liferay.object.internal.action.executor.FunctionObjectActionExecutorImpl)"
+		target = "(component.factory=com.liferay.portal.workflow.kaleo.runtime.internal.action.executor.FunctionActionExecutorImpl)"
 	)
 	private ComponentFactory<FunctionActionExecutorImpl> _componentFactory;
 

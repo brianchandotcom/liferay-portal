@@ -355,7 +355,7 @@ definition {
 
 		task ("Then the navigation menu admin could select vocabulary from global or asset library") {
 			NavigationMenusAdmin.addItem(
-				assetTitleList = "Topic (Global),Vocabulary Name (Test Depot Name)",
+				assetTitleList = "Topic (Global),Vocabulary Name (${randomDepotName})",
 				item = "Vocabulary");
 
 			for (var itemName : list "Topic,Vocabulary Name") {

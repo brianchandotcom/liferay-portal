@@ -61,8 +61,6 @@ describe('UsageOverview', () => {
 			data.mockProject(23, {
 				faroSubscription: fromJS(
 					data.mockSubscription({
-						pageViewsCount: 0,
-						pageViewsLimit: 7000000,
 						pageViewsStatus: SubscriptionStatuses.Approaching
 					})
 				)
@@ -76,12 +74,30 @@ describe('UsageOverview', () => {
 		expect(container.querySelector('.alert-warning')).toBeInTheDocument();
 	});
 
-	it('should render with an overage warning if a metric has exceeded the plan limit', () => {
+	it('should render with an overage warning if the INDIVIDUALS metric has exceeded the plan limit', () => {
 		const mockProject = new Project(
 			data.mockProject(23, {
 				faroSubscription: fromJS(
 					data.mockSubscription({
 						individualsStatus: SubscriptionStatuses.Over
+					})
+				)
+			})
+		);
+
+		const {container} = render(
+			<WrappedComponent {...defaultProps} project={mockProject} />
+		);
+
+		expect(container.querySelector('.alert-danger')).toBeInTheDocument();
+	});
+
+	it('should render with an overage warning if the PAGE VIEWS metric has exceeded the plan limit', () => {
+		const mockProject = new Project(
+			data.mockProject(23, {
+				faroSubscription: fromJS(
+					data.mockSubscription({
+						pageViewsStatus: SubscriptionStatuses.Over
 					})
 				)
 			})

@@ -47,6 +47,6 @@ public class AssetCategoryConfigurationProviderUtil {
 			ServiceProxyFactory.newServiceTrackedInstance(
 				AssetCategoryConfigurationProvider.class,
 				AssetCategoryConfigurationProviderUtil.class,
-				"_assetCategoryConfigurationProvider", true);
+				"_assetCategoryConfigurationProvider", false);
 
 }

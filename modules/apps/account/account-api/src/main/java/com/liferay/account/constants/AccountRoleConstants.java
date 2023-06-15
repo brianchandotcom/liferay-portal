@@ -48,6 +48,8 @@ public class AccountRoleConstants {
 	public static final String ROLE_NAME_ACCOUNT_ORDER_MANAGER =
 		"Order Manager";
 
+	public static final String ROLE_NAME_ACCOUNT_SUPPLIER = "Account Supplier";
+
 	public static final String ROLE_NAME_SUPPLIER = "Supplier";
 
 	public static boolean isImpliedRole(Role role) {

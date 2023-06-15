@@ -251,13 +251,13 @@ public class JournalArticleStagedModelDataHandler
 			ExportImportRuntimeException exportImportRuntimeException =
 				new ExportImportRuntimeException(StringPool.BLANK, exception);
 
+			exportImportRuntimeException.setClassName(
+				JournalArticleStagedModelDataHandler.class.getName());
+			exportImportRuntimeException.setData(
+				String.valueOf(article.getArticleId()));
 			exportImportRuntimeException.setMessageKey(
 				"unable-to-find-article-resource-x-while-gathering-reference-" +
 					"attributes");
-			exportImportRuntimeException.setData(
-				String.valueOf(article.getArticleId()));
-			exportImportRuntimeException.setClassName(
-				JournalArticleStagedModelDataHandler.class.getName());
 
 			throw exportImportRuntimeException;
 		}

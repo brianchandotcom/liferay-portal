@@ -650,10 +650,10 @@ public class StructuredContentResourceTest
 
 		StructuredContent randomStructuredContent2 = randomStructuredContent();
 
-		randomStructuredContent2.setExternalReferenceCode(
-			postStructuredContent3.getExternalReferenceCode());
 		randomStructuredContent2.setContentStructureId(
 			_depotDDMStructure.getStructureId());
+		randomStructuredContent2.setExternalReferenceCode(
+			postStructuredContent3.getExternalReferenceCode());
 
 		HttpInvoker.HttpResponse httpResponse =
 			structuredContentResource.

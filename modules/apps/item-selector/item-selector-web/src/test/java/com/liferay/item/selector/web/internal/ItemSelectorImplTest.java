@@ -94,11 +94,11 @@ public class ItemSelectorImplTest {
 
 		_mediaItemSelectorCriterion = new MediaItemSelectorCriterion();
 
-		_mediaItemSelectorCriterion.setFileExtension("jpg");
-		_mediaItemSelectorCriterion.setMaxSize(2048);
 		_mediaItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new TestFileEntryItemSelectorReturnType(),
 			_testURLItemSelectorReturnType);
+		_mediaItemSelectorCriterion.setFileExtension("jpg");
+		_mediaItemSelectorCriterion.setMaxSize(2048);
 
 		PortalUtil portalUtil = new PortalUtil();
 

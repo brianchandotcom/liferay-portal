@@ -30,6 +30,7 @@ definition {
 	@description = "This is a test for LPS-187560. Verify that the PRM site can be created"
 	@priority = 5
 	test CanBeCreated {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "PRMSite#CanBeCreated";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052

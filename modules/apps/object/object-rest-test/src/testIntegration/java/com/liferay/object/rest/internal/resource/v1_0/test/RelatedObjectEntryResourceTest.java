@@ -216,7 +216,9 @@ public class RelatedObjectEntryResourceTest {
 
 		_objectDefinition.setActive(false);
 
-		_objectDefinitionLocalService.updateObjectDefinition(_objectDefinition);
+		_objectDefinition =
+			_objectDefinitionLocalService.updateObjectDefinition(
+				_objectDefinition);
 
 		jsonObject = HTTPTestUtil.invoke(
 			null,
@@ -271,7 +273,9 @@ public class RelatedObjectEntryResourceTest {
 
 		_objectDefinition.setActive(false);
 
-		_objectDefinitionLocalService.updateObjectDefinition(_objectDefinition);
+		_objectDefinition =
+			_objectDefinitionLocalService.updateObjectDefinition(
+				_objectDefinition);
 
 		jsonObject = HTTPTestUtil.invoke(
 			null,
@@ -377,7 +381,9 @@ public class RelatedObjectEntryResourceTest {
 
 		_objectDefinition.setActive(false);
 
-		_objectDefinitionLocalService.updateObjectDefinition(_objectDefinition);
+		_objectDefinition =
+			_objectDefinitionLocalService.updateObjectDefinition(
+				_objectDefinition);
 
 		jsonObject = HTTPTestUtil.invoke(
 			null,
@@ -540,7 +546,9 @@ public class RelatedObjectEntryResourceTest {
 
 		_objectDefinition.setActive(false);
 
-		_objectDefinitionLocalService.updateObjectDefinition(_objectDefinition);
+		_objectDefinition =
+			_objectDefinitionLocalService.updateObjectDefinition(
+				_objectDefinition);
 
 		jsonObject = HTTPTestUtil.invoke(
 			null,

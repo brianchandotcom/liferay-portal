@@ -527,7 +527,9 @@ public class ObjectEntryLocalServiceSearchObjectEntriesTest {
 
 		_objectDefinition.setTitleObjectFieldId(_getTitleObjectFieldId());
 
-		_objectDefinitionLocalService.updateObjectDefinition(_objectDefinition);
+		_objectDefinition =
+			_objectDefinitionLocalService.updateObjectDefinition(
+				_objectDefinition);
 
 		_objectDefinition =
 			_objectDefinitionLocalService.publishCustomObjectDefinition(

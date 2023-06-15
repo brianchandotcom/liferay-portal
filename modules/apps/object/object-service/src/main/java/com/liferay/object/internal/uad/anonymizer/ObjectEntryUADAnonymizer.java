@@ -62,7 +62,7 @@ public class ObjectEntryUADAnonymizer
 			objectEntry.setStatusByUserName(anonymousUser.getFullName());
 		}
 
-		_objectEntryLocalService.updateObjectEntry(objectEntry);
+		objectEntry = _objectEntryLocalService.updateObjectEntry(objectEntry);
 
 		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
 			_objectDefinition.getClassName(), objectEntry.getObjectEntryId());

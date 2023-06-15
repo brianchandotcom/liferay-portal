@@ -77,6 +77,10 @@ public class HeadlessBuilderObjectValidationTest {
 				Http.Method.POST);
 
 			Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
+			Assert.assertEquals(
+				"Base URL should not have blank spaces and special " +
+					"characters with a maximum of 255 characters",
+				jsonObject.get("title"));
 		}
 	}
 

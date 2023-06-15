@@ -181,6 +181,11 @@ public abstract class BaseBuiltInJSModuleServlet extends HttpServlet {
 					}
 				}
 			}
+			else {
+				if (_log.isDebugEnabled()) {
+					_log.debug("moduleName value is null");
+				}
+			}
 		}
 
 		if (inputStream == null) {

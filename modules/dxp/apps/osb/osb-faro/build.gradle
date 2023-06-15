@@ -17,8 +17,8 @@ buildscript {
 	}
 }
 
-apply plugin: "com.liferay.app.defaults.plugin"
 apply plugin: "com.liferay.app.docker"
+apply plugin: "com.liferay.root.defaults.plugin"
 apply plugin: "com.liferay.yarn.defaults.plugin"
 
 task checkDocker(type: DockerWaitHealthyContainer)
@@ -144,6 +144,29 @@ stopDocker {
 
 	targetContainerId {
 		dockerContainerId
+	}
+}
+
+configure(project(":dxp:apps:osb:osb-faro:osb-faro-dependencies")) {
+	task copyWedeployResources(type: Copy)
+	task wedeploy(type: Exec)
+
+	String deployDir = "../wedeploy/" + faroEnvironmentName + "/deploy"
+
+	copyWedeployResources {
+		doFirst {
+			delete file(deployDir)
+		}
+
+		from configurations.compileOnly
+		into deployDir
+	}
+
+	wedeploy {
+		args "deploy", "--project", "ac-" + faroEnvironmentName
+		dependsOn copyWedeployResources
+		executable = "lcp"
+		workingDir "../wedeploy/".concat(faroEnvironmentName)
 	}
 }
 

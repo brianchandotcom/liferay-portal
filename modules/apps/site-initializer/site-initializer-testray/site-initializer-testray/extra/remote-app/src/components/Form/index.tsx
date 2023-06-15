@@ -11,7 +11,7 @@ import Checkbox from './Checkbox';
 import DualListBox from './DualListBox';
 import Footer from './Footer';
 import Input from './Input';
-import MultiSelect from './MultiSelect';
+import MultiSelect, {MultiSelectCreatable} from './MultiSelect';
 import Renderer from './Renderer';
 import Select from './Select';
 
@@ -30,6 +30,7 @@ Form.DualListBox = DualListBox;
 Form.Footer = Footer;
 Form.Input = Input;
 Form.MultiSelect = MultiSelect;
+Form.MultiSelectCreatable = MultiSelectCreatable;
 Form.Renderer = Renderer;
 Form.Select = Select;
 

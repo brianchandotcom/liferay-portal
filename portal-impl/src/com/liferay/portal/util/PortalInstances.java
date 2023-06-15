@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.exception.NoSuchVirtualHostException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -53,11 +54,9 @@ import java.sql.SQLException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.servlet.http.HttpServletRequest;
@@ -188,7 +187,7 @@ public class PortalInstances {
 	}
 
 	public static long[] getCompanyIds() {
-		return ArrayUtil.toLongArray(_webIds.keySet());
+		return PortalInstancePool.getCompanyIds();
 	}
 
 	public static long[] getCompanyIdsBySQL() throws SQLException {
@@ -218,7 +217,9 @@ public class PortalInstances {
 	}
 
 	public static long getDefaultCompanyId() {
-		if (_webIds.isEmpty()) {
+		long[] companyIds = PortalInstancePool.getCompanyIds();
+
+		if (companyIds.length == 0) {
 			try {
 				return getDefaultCompanyIdBySQL();
 			}
@@ -231,15 +232,7 @@ public class PortalInstances {
 			}
 		}
 
-		for (Map.Entry<Long, String> entry : _webIds.entrySet()) {
-			if (Objects.equals(
-					PropsValues.COMPANY_DEFAULT_WEB_ID, entry.getValue())) {
-
-				return entry.getKey();
-			}
-		}
-
-		throw new IllegalStateException("Unable to get default company ID");
+		return PortalInstancePool.getDefaultCompanyId();
 	}
 
 	public static long getDefaultCompanyIdBySQL() throws SQLException {
@@ -258,7 +251,7 @@ public class PortalInstances {
 	}
 
 	public static String[] getWebIds() {
-		return ArrayUtil.toStringArray(_webIds.values());
+		return PortalInstancePool.getWebIds();
 	}
 
 	public static long initCompany(Company company) {
@@ -321,7 +314,9 @@ public class PortalInstances {
 					portletCategory = new PortletCategory();
 				}
 
-				for (long currentCompanyId : _webIds.keySet()) {
+				for (long currentCompanyId :
+						PortalInstancePool.getCompanyIds()) {
+
 					PortletCategory currentPortletCategory =
 						(PortletCategory)WebAppPool.get(
 							currentCompanyId, WebKeys.PORTLET_CATEGORY);
@@ -365,7 +360,7 @@ public class PortalInstances {
 						company.getCompanyId()));
 			}
 
-			_webIds.put(company.getCompanyId(), company.getWebId());
+			PortalInstancePool.add(company);
 		}
 		finally {
 			CompanyThreadLocal.setCompanyId(currentThreadCompanyId);
@@ -428,7 +423,7 @@ public class PortalInstances {
 			_log.error(exception);
 		}
 
-		_webIds.remove(companyId);
+		PortalInstancePool.remove(companyId);
 
 		WebAppPool.remove(companyId, WebKeys.PORTLET_CATEGORY);
 	}
@@ -567,10 +562,8 @@ public class PortalInstances {
 		new CopyOnWriteArrayList<>();
 	private static final Set<String> _virtualHostsIgnoreHosts;
 	private static final Set<String> _virtualHostsIgnorePaths;
-	private static final Map<Long, String> _webIds;
 
 	static {
-		_webIds = new ConcurrentHashMap<>();
 		_autoLoginIgnoreHosts = SetUtil.fromArray(
 			PropsUtil.getArray(PropsKeys.AUTO_LOGIN_IGNORE_HOSTS));
 		_autoLoginIgnorePaths = SetUtil.fromArray(

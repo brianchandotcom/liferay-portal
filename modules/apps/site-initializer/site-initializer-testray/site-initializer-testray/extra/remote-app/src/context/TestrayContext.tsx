@@ -135,6 +135,7 @@ const TestrayContextProvider: React.FC<{
 			givenName: user?.givenName,
 			id: user?.id,
 			image: user.image,
+			jiraAuthorization: user?.jiraAuthorization,
 			name: user.name,
 			roleBriefs: user?.roleBriefs,
 			userGroupBriefs: user?.userGroupBriefs,

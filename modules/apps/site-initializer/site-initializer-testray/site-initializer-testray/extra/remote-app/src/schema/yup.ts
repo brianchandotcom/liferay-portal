@@ -150,6 +150,14 @@ const yupSchema = {
 	issue: yup.object({
 		name: yup.string(),
 	}),
+	jiraIssues: yup.object({
+		issues: yup.array(
+			yup.object({
+				label: yup.string(),
+				value: yup.string(),
+			})
+		),
+	}),
 	option: yup.object({
 		name: yup.string(),
 	}),

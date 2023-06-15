@@ -1586,7 +1586,7 @@ definition {
 
 		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
 
-		ProcessBuilderKaleoDesignerReact.selectTranslationLanguage(translationOptionSelected = "en-us");
+		ProcessBuilderKaleoDesignerReact.openTranslationLanguageDropdown();
 
 		ProcessBuilderKaleoDesignerReact.gotoManageTranslations();
 

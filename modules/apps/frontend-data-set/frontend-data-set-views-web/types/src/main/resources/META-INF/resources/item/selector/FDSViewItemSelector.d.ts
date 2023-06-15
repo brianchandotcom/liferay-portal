@@ -18,8 +18,10 @@ import './FDSViewItemSelector.scss';
 declare const FDSViewItemSelector: ({
 	className,
 	classNameId,
+	namespace,
 }: {
 	className: String;
 	classNameId: String;
+	namespace: String;
 }) => JSX.Element;
 export default FDSViewItemSelector;

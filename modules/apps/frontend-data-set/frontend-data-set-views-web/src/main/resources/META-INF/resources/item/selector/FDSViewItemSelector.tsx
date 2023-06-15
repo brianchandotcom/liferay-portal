@@ -36,9 +36,11 @@ const views = [
 const FDSViewItemSelector = ({
 	className,
 	classNameId,
+	namespace,
 }: {
 	className: String;
 	classNameId: String;
+	namespace: String;
 }) => {
 	const [selectedId, setSelectedId] = useState<String>();
 
@@ -47,7 +49,7 @@ const FDSViewItemSelector = ({
 			<ClayModal.Body>
 				<FrontendDataSet
 					apiURL={API_URL.FDS_VIEWS}
-					id="FDSViewsItemSelector"
+					id={`${namespace}FDSViewsItemSelector`}
 					onSelect={({
 						selectedItems,
 					}: {

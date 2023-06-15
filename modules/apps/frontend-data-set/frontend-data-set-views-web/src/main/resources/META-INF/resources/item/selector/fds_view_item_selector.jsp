@@ -23,6 +23,8 @@
 			"className", fdsViewItemSelectorDisplayContext.getClassName()
 		).put(
 			"classNameId", fdsViewItemSelectorDisplayContext.getClassNameId()
+		).put(
+			"namespace", liferayPortletResponse.getNamespace()
 		).build()
 	%>'
 />

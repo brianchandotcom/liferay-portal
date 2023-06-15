@@ -470,24 +470,29 @@ definition {
 
 		Workflow.addNewDefinition(workflowDefinitionTitle = "Test title");
 
-		ProcessBuilderKaleoDesignerReact.selectTranslationLanguage(
-			newTranslationOption = "fr_FR",
-			translationOptionSelected = "en-us",
-			translationStatus = "label-warning");
+		ProcessBuilderKaleoDesignerReact.addConnector(
+			connectorIn = "end",
+			connectorLabel = "Start-End Connector",
+			connectorOut = "start",
+			key_direction = "right");
 
-		ProcessBuilderKaleoDesignerReact.editWorkflowTitle(title = "Titre l'epreuve");
+		Button.clickPublish();
 
 		ProcessBuilderKaleoDesignerReact.selectTranslationLanguage(key_locale = "pt_BR");
 
-		ProcessBuilderKaleoDesignerReact.editWorkflowTitle(title = "Titulo do teste");
+		for (var nodeTypes : list "start,end") {
+			ProcessBuilderKaleoDesignerReact.selectNode(nodeType = ${nodeTypes});
 
-		Workflow.saveDefinition(newKaleoDesigner = "True");
+			ProcessBuilderKaleoDesignerReact.editNodeInformationField(
+				infoOption = "Label",
+				infoValue = "pt_${nodeTypes}");
+		}
 
-		Workflow.viewWorkflowDefinition(workflowDefinitionTitle = "Test title");
+		ProcessBuilderKaleoDesignerReact.editConnector(
+			connectorLabel = "START-END CONNECTOR",
+			connectorLabelEdit = "pt_Start-End Connector");
 
-		ProcessBuilderKaleoDesignerReact.viewTranslationLanguageStatus(
-			newTranslationOption = "fr_FR",
-			translationStatus = "success");
+		ProcessBuilderKaleoDesignerReact.editWorkflowTitle(title = "pt_Workflow Definition");
 
 		ProcessBuilderKaleoDesignerReact.openTranslationLanguageDropdown();
 

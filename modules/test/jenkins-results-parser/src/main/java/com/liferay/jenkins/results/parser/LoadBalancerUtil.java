@@ -34,16 +34,16 @@ import java.util.regex.Pattern;
 public class LoadBalancerUtil {
 
 	public static List<JenkinsMaster> getAvailableJenkinsMasters(
-		String masterPrefix, String blacklistString, boolean clock,
+		String masterPrefix, String blacklistString, boolean goodClockRequired,
 		int minimumRAM, int maximumSlavesPerHost, Properties properties) {
 
 		return getAvailableJenkinsMasters(
-			masterPrefix, blacklistString, clock, minimumRAM,
+			masterPrefix, blacklistString, goodClockRequired, minimumRAM,
 			maximumSlavesPerHost, properties, true);
 	}
 
 	public static List<JenkinsMaster> getAvailableJenkinsMasters(
-		String masterPrefix, String blacklistString, boolean clock,
+		String masterPrefix, String blacklistString, boolean goodClockRequired,
 		int minimumRAM, int maximumSlavesPerHost, Properties properties,
 		boolean verbose) {
 
@@ -79,7 +79,8 @@ public class LoadBalancerUtil {
 
 		for (JenkinsMaster jenkinsMaster : allJenkinsMasters) {
 			if (blacklist.contains(jenkinsMaster.getName()) ||
-				(clock && !goodClockList.contains(jenkinsMaster.getName())) ||
+				(goodClockRequired &&
+				 !goodClockList.contains(jenkinsMaster.getName())) ||
 				(jenkinsMaster.getSlaveRAM() < minimumRAM) ||
 				(jenkinsMaster.getSlavesPerHost() > maximumSlavesPerHost)) {
 

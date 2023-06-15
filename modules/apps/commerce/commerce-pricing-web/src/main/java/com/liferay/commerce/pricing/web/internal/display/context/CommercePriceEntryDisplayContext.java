@@ -17,6 +17,7 @@ package com.liferay.commerce.pricing.web.internal.display.context;
 import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceList;
+import com.liferay.commerce.price.list.service.CommercePriceEntryLocalService;
 import com.liferay.commerce.price.list.service.CommercePriceEntryService;
 import com.liferay.commerce.price.list.service.CommercePriceListService;
 import com.liferay.commerce.product.service.CommerceCatalogService;
@@ -49,6 +50,7 @@ public class CommercePriceEntryDisplayContext
 
 	public CommercePriceEntryDisplayContext(
 		CommerceCatalogService commerceCatalogService,
+		CommercePriceEntryLocalService commercePriceEntryLocalService,
 		CommercePriceEntryService commercePriceEntryService,
 		ModelResourcePermission<CommercePriceList>
 			commercePriceListModelResourcePermission,
@@ -59,6 +61,7 @@ public class CommercePriceEntryDisplayContext
 			commerceCatalogService, commercePriceListModelResourcePermission,
 			commercePriceListService, httpServletRequest);
 
+		_commercePriceEntryLocalService = commercePriceEntryLocalService;
 		_commercePriceEntryService = commercePriceEntryService;
 	}
 
@@ -82,7 +85,7 @@ public class CommercePriceEntryDisplayContext
 		CommercePriceList commercePriceList = getCommercePriceList();
 
 		CommercePriceEntry instanceBaseCommercePriceEntry =
-			_commercePriceEntryService.getInstanceBaseCommercePriceEntry(
+			_commercePriceEntryLocalService.getInstanceBaseCommercePriceEntry(
 				commercePriceEntry.getCPInstanceUuid(),
 				commercePriceList.getType());
 
@@ -192,6 +195,8 @@ public class CommercePriceEntryDisplayContext
 		CommercePriceEntryDisplayContext.class);
 
 	private CommercePriceEntry _commercePriceEntry;
+	private final CommercePriceEntryLocalService
+		_commercePriceEntryLocalService;
 	private final CommercePriceEntryService _commercePriceEntryService;
 
 }

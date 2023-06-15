@@ -525,10 +525,9 @@ definition {
 	}
 
 	macro publishWorkflow {
-		AssertClick(
-			key_text = "Publish",
-			locator1 = "Button#ANY",
-			value1 = "Publish");
+		SetWindowSize.maximizeWindow();
+
+		Click(locator1 = "Button#PUBLISH");
 
 		Alert.viewSuccessMessage();
 

@@ -110,6 +110,11 @@ public class ClaySampleDisplayContext {
 				tabsItem.setLabel("Tabs");
 				tabsItem.setPanelId("tabs");
 			}
+		).add(
+			tabsItem -> {
+				tabsItem.setLabel("Vertical Nav");
+				tabsItem.setPanelId("vertical_nav");
+			}
 		).build();
 
 		return _tabsItems;

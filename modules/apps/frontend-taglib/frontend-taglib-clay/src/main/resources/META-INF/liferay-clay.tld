@@ -3051,4 +3051,28 @@
 		</attribute>
 		<dynamic-attributes>true</dynamic-attributes>
 	</tag>
+	<tag>
+		<description></description>
+		<name>vertical-nav</name>
+		<tag-class>com.liferay.frontend.taglib.clay.servlet.taglib.VerticalNavTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<description></description>
+			<name>decorated</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>large</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>verticalNavItems</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
 </taglib>

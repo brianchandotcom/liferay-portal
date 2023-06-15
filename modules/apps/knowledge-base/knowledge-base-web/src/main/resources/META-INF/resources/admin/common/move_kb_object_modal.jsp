@@ -20,8 +20,6 @@ KBAdminNavigationDisplayContext kbAdminNavigationDisplayContext = new KBAdminNav
 				"items", kbAdminNavigationDisplayContext.getKBFolderDataJSONArray()
 			).put(
 				"itemToMoveParent", kbAdminNavigationDisplayContext.getItemToMoveParent(ParamUtil.getString(request, "itemToMoveType"))
-			).put(
-				"itemVersion", ParamUtil.getString(request, "itemVersion")
 			).build()
 		%>'
 	/>

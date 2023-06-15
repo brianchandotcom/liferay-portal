@@ -39,12 +39,15 @@ import com.liferay.source.formatter.util.CheckType;
 import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.source.formatter.util.SourceFormatterCheckUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.DocumentHelper;
+import org.dom4j.Element;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -53,11 +56,6 @@ import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.dom4j.Document;
-import org.dom4j.DocumentException;
-import org.dom4j.DocumentHelper;
-import org.dom4j.Element;
 
 /**
  * @author Hugo Huijser
@@ -626,6 +624,35 @@ public abstract class BaseSourceCheck implements SourceCheck {
 
 		return _getVariableTypeName(
 			fileContent, variableName, includeArrayOrCollectionTypes);
+	}
+
+	protected String getVariableName(String methodCall){
+
+		if (methodCall != null){
+			return methodCall.substring(
+				0, methodCall.indexOf(CharPool.PERIOD));
+		}
+
+		return null;
+	}
+
+	protected boolean hasClassOrVariableName(
+		String className, String content, String methodCall) {
+
+		String variable = getVariableName(methodCall);
+
+		if (variable == null){
+			return false;
+		}
+
+		String variableTypeName = getVariableTypeName(
+			content, content, variable.trim(), true);
+
+		if (variableTypeName.contains(className)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	protected boolean isAttributeValue(

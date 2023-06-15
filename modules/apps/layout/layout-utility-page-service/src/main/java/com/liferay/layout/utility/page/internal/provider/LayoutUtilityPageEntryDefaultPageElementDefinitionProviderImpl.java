@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
@@ -43,9 +42,7 @@ public class LayoutUtilityPageEntryDefaultPageElementDefinitionProviderImpl
 
 	@Override
 	public String getDefaultPageElementJSON(String type) {
-		if (!Objects.equals(
-				type, LayoutUtilityPageEntryConstants.TYPE_SC_NOT_FOUND)) {
-
+		if (!_errorCodeNames.containsKey(type)) {
 			return null;
 		}
 
@@ -109,6 +106,8 @@ public class LayoutUtilityPageEntryDefaultPageElementDefinitionProviderImpl
 
 	private static final Map<String, String> _errorCodeNames =
 		HashMapBuilder.put(
+			LayoutUtilityPageEntryConstants.TYPE_SC_INTERNAL_SERVER_ERROR, "500"
+		).put(
 			LayoutUtilityPageEntryConstants.TYPE_SC_NOT_FOUND, "404"
 		).build();
 

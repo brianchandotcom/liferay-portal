@@ -85,8 +85,8 @@ public class TaxonomyCategoryDTOActionProvider implements DTOActionProvider {
 	}
 
 	@Override
-	public Map<String, ActionInfo> getActionInfoMap() throws Exception {
-		Map<String, ActionInfo> actionInfoMap = new HashMap<>();
+	public Map<String, ActionInfo> getActionInfos() throws Exception {
+		Map<String, ActionInfo> actionInfos = new HashMap<>();
 
 		TaxonomyCategoryDTOActionMetadataProvider
 			taxonomyCategoryDTOActionMetadataProvider =
@@ -95,13 +95,13 @@ public class TaxonomyCategoryDTOActionProvider implements DTOActionProvider {
 		for (String actionName :
 				taxonomyCategoryDTOActionMetadataProvider.getActionNames()) {
 
-			actionInfoMap.put(
+			actionInfos.put(
 				actionName,
 				taxonomyCategoryDTOActionMetadataProvider.getActionInfo(
 					actionName));
 		}
 
-		return actionInfoMap;
+		return actionInfos;
 	}
 
 	@Reference

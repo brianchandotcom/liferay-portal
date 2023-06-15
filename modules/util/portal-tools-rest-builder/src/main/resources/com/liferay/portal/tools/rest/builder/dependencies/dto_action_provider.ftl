@@ -52,16 +52,16 @@ public class ${schemaName}DTOActionProvider implements DTOActionProvider {
 	}
 
 	@Override
-	public Map<String, ActionInfo> getActionInfoMap() throws Exception {
-		Map<String, ActionInfo> actionInfoMap = new HashMap<>();
+	public Map<String, ActionInfo> getActionInfos() throws Exception {
+		Map<String, ActionInfo> actionInfos = new HashMap<>();
 
 		${schemaName}DTOActionMetadataProvider ${schemaVarName}DTOActionMetadataProvider = new ${schemaName}DTOActionMetadataProvider();
 
 		for (String actionName : ${schemaVarName}DTOActionMetadataProvider.getActionNames()) {
-			actionInfoMap.put(actionName, ${schemaVarName}DTOActionMetadataProvider.getActionInfo(actionName));
+			actionInfos.put(actionName, ${schemaVarName}DTOActionMetadataProvider.getActionInfo(actionName));
 		}
 
-		return actionInfoMap;
+		return actionInfos;
 	}
 
 	@Reference

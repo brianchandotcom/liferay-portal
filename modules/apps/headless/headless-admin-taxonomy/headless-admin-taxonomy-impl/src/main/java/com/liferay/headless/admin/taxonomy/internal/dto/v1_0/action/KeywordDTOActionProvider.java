@@ -82,8 +82,8 @@ public class KeywordDTOActionProvider implements DTOActionProvider {
 	}
 
 	@Override
-	public Map<String, ActionInfo> getActionInfoMap() throws Exception {
-		Map<String, ActionInfo> actionInfoMap = new HashMap<>();
+	public Map<String, ActionInfo> getActionInfos() throws Exception {
+		Map<String, ActionInfo> actionInfos = new HashMap<>();
 
 		KeywordDTOActionMetadataProvider keywordDTOActionMetadataProvider =
 			new KeywordDTOActionMetadataProvider();
@@ -91,12 +91,12 @@ public class KeywordDTOActionProvider implements DTOActionProvider {
 		for (String actionName :
 				keywordDTOActionMetadataProvider.getActionNames()) {
 
-			actionInfoMap.put(
+			actionInfos.put(
 				actionName,
 				keywordDTOActionMetadataProvider.getActionInfo(actionName));
 		}
 
-		return actionInfoMap;
+		return actionInfos;
 	}
 
 	@Reference

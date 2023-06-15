@@ -67,11 +67,11 @@ public class ActionsOpenAPIContributor implements OpenAPIContributor {
 
 			Map<String, Schema> actionsProperties = new HashMap<>();
 
-			Map<String, ActionInfo> actionInfoMap =
-				dtoActionProvider.getActionInfoMap();
+			Map<String, ActionInfo> actionInfos =
+				dtoActionProvider.getActionInfos();
 
 			for (Map.Entry<String, ActionInfo> actionInfoEntry :
-					actionInfoMap.entrySet()) {
+					actionInfos.entrySet()) {
 
 				ActionInfo actionInfo = actionInfoEntry.getValue();
 

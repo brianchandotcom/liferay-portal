@@ -22,6 +22,7 @@ import com.liferay.client.extension.service.ClientExtensionEntryService;
 import com.liferay.client.extension.web.internal.constants.ClientExtensionAdminPortletKeys;
 import com.liferay.client.extension.web.internal.constants.ClientExtensionAdminWebConstants;
 import com.liferay.petra.string.StringUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -41,6 +42,7 @@ import java.io.PrintWriter;
 
 import java.util.Objects;
 
+import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
@@ -70,56 +72,7 @@ public class ImportClientExtensionEntryMVCResourceCommand
 		throws Exception {
 
 		try {
-			for (Part part : resourceRequest.getParts()) {
-				JSONObject jsonObject = _jsonFactory.createJSONObject(
-					StringUtil.read(part.getInputStream()));
-
-				if (jsonObject.getInt("version", -1) !=
-						ClientExtensionAdminWebConstants.EXPORT_VERSION) {
-
-					throw new JSONException("Invalid version number");
-				}
-
-				JSONObject clientExtensionEntriesJSONObject =
-					jsonObject.getJSONObject("clientExtensionEntries");
-
-				for (String externalReferenceCode :
-						clientExtensionEntriesJSONObject.keySet()) {
-
-					jsonObject = clientExtensionEntriesJSONObject.getJSONObject(
-						externalReferenceCode);
-
-					ClientExtensionEntry clientExtensionEntry =
-						_clientExtensionEntryService.
-							fetchClientExtensionEntryByExternalReferenceCode(
-								_portal.getCompanyId(resourceRequest),
-								externalReferenceCode);
-
-					_validate(clientExtensionEntry, jsonObject);
-
-					if (clientExtensionEntry == null) {
-						_clientExtensionEntryService.addClientExtensionEntry(
-							externalReferenceCode,
-							jsonObject.getString("description"),
-							_localization.getLocalizationMap(
-								jsonObject.getString("name")),
-							jsonObject.getString("properties"),
-							jsonObject.getString("sourceCodeURL"),
-							jsonObject.getString("type"),
-							jsonObject.getString("typeSettings"));
-					}
-					else {
-						_clientExtensionEntryService.updateClientExtensionEntry(
-							clientExtensionEntry.getClientExtensionEntryId(),
-							jsonObject.getString("description"),
-							_localization.getLocalizationMap(
-								jsonObject.getString("name")),
-							jsonObject.getString("properties"),
-							jsonObject.getString("sourceCodeURL"),
-							jsonObject.getString("typeSettings"));
-					}
-				}
-			}
+			_import(resourceRequest);
 
 			SessionMessages.add(
 				resourceRequest, "requestProcessed",
@@ -181,6 +134,61 @@ public class ImportClientExtensionEntryMVCResourceCommand
 		}
 	}
 
+	private void _import(ResourceRequest resourceRequest)
+		throws IOException, PortalException, PortletException {
+
+		for (Part part : resourceRequest.getParts()) {
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
+				StringUtil.read(part.getInputStream()));
+
+			if (jsonObject.getInt("version", -1) !=
+					ClientExtensionAdminWebConstants.EXPORT_VERSION) {
+
+				throw new JSONException("Invalid version number");
+			}
+
+			JSONObject clientExtensionEntriesJSONObject =
+				jsonObject.getJSONObject("clientExtensionEntries");
+
+			for (String externalReferenceCode :
+					clientExtensionEntriesJSONObject.keySet()) {
+
+				jsonObject = clientExtensionEntriesJSONObject.getJSONObject(
+					externalReferenceCode);
+
+				ClientExtensionEntry clientExtensionEntry =
+					_clientExtensionEntryService.
+						fetchClientExtensionEntryByExternalReferenceCode(
+							_portal.getCompanyId(resourceRequest),
+							externalReferenceCode);
+
+				_validate(clientExtensionEntry, jsonObject);
+
+				if (clientExtensionEntry == null) {
+					_clientExtensionEntryService.addClientExtensionEntry(
+						externalReferenceCode,
+						jsonObject.getString("description"),
+						_localization.getLocalizationMap(
+							jsonObject.getString("name")),
+						jsonObject.getString("properties"),
+						jsonObject.getString("sourceCodeURL"),
+						jsonObject.getString("type"),
+						jsonObject.getString("typeSettings"));
+				}
+				else {
+					_clientExtensionEntryService.updateClientExtensionEntry(
+						clientExtensionEntry.getClientExtensionEntryId(),
+						jsonObject.getString("description"),
+						_localization.getLocalizationMap(
+							jsonObject.getString("name")),
+						jsonObject.getString("properties"),
+						jsonObject.getString("sourceCodeURL"),
+						jsonObject.getString("typeSettings"));
+				}
+			}
+		}
+	}
+
 	private void _sendResponse(
 			String errorKey, Object[] errorArguments,
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
@@ -208,7 +216,7 @@ public class ImportClientExtensionEntryMVCResourceCommand
 			jsonObject.put("error", message);
 		}
 
-		String json = _jsonFactory.looseSerialize(jsonObject);
+		String json = jsonObject.toString();
 
 		resourceResponse.setContentLength(json.length());
 

@@ -97,7 +97,7 @@ public class ExportClientExtensionEntryMVCResourceCommand
 				"version", ClientExtensionAdminWebConstants.EXPORT_VERSION
 			);
 
-			String json = _jsonFactory.looseSerialize(jsonObject);
+			String json = jsonObject.toString();
 
 			resourceResponse.setContentLength(json.length());
 

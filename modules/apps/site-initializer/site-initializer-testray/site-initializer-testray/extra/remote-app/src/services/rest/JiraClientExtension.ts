@@ -1,3 +1,14 @@
+	public async resyncWithJira(linkTitle: string): Promise<ticket> {
+		const response = await fetcher(`/jira/ticket/${linkTitle}`, {
+			headers: this.headers,
+		});
+
+		const {
+			fields: {description, labels, summary},
+		} = response;
+
+		return {description, labels, summary};
+	}
 	public async importIssues(issues: string[]): Promise<any> {
 		const _issues = issues
 			.map((name) => name.trim().toUpperCase())

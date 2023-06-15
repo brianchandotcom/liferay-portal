@@ -1,0 +1,23 @@
+{
+	"description": "",
+	"editorType": "richText",
+	"name": "Claim Due Date 5 Notification Template",
+	"recipientType": "email",
+	"recipients": [
+		{
+			"bcc": "",
+			"cc": "",
+			"from": "partner-portal-admin@liferay.com",
+			"fromName": {
+				"en-US": "Partner Portal"
+			},
+			"to": {
+				"en-US": "liferay@liferay.com"
+			}
+		}
+	],
+	"subject": {
+		"en_US": "[Liferay Partner Portal] Activity Due Date"
+	},
+	"type": "email"
+}

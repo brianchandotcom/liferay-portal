@@ -42,7 +42,13 @@ public class CategoryEntityModel implements EntityModel {
 			new StringEntityField(
 				"name",
 				locale -> Field.getSortableFieldName(
-					"localized_title_" + LocaleUtil.toLanguageId(locale))));
+					"localized_title_" + LocaleUtil.toLanguageId(locale)),
+				locale -> {
+					String sortableFieldName = Field.getSortableFieldName(
+						"localized_title_" + LocaleUtil.toLanguageId(locale));
+
+					return sortableFieldName.concat(".keyword_lowercase");
+				}));
 	}
 
 	@Override

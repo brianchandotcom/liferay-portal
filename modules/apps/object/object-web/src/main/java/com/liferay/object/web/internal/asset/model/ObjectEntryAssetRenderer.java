@@ -136,6 +136,19 @@ public class ObjectEntryAssetRenderer
 	}
 
 	@Override
+	public String getURLViewInContext(
+			ThemeDisplay themeDisplay, String noSuchEntryRedirect)
+		throws Exception {
+
+		if (themeDisplay != null) {
+			return _assetDisplayPageFriendlyURLProvider.getFriendlyURL(
+				getClassName(), getClassPK(), themeDisplay);
+		}
+
+		return null;
+	}
+
+	@Override
 	public long getUserId() {
 		return _objectEntry.getUserId();
 	}

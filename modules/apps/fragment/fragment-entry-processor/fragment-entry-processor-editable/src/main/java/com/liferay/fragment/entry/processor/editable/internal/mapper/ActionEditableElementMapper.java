@@ -106,7 +106,90 @@ public class ActionEditableElementMapper implements EditableElementMapper {
 		element.attr("data-lfr-class-pk", classPK);
 		element.attr("data-lfr-field-id", fieldId);
 
+		_mapOnError(element, configJSONObject);
 		_mapOnSuccess(element, configJSONObject);
+	}
+
+	private void _mapOnError(Element element, JSONObject jsonObject)
+		throws PortalException {
+
+		JSONObject onErrorJSONObject = jsonObject.getJSONObject("onError");
+
+		if (onErrorJSONObject == null) {
+			return;
+		}
+
+		String interaction = onErrorJSONObject.getString("interaction");
+
+		if (Validator.isNull(interaction)) {
+			interaction = _INTERACTION_NONE;
+		}
+
+		element.attr("data-lfr-on-error-interaction", interaction);
+
+		ThemeDisplay themeDisplay = null;
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if (serviceContext != null) {
+			themeDisplay = serviceContext.getThemeDisplay();
+		}
+
+		if (interaction.equals(_INTERACTION_NOTIFICATION)) {
+			JSONObject textJSONObject = onErrorJSONObject.getJSONObject("text");
+
+			if ((textJSONObject != null) && (themeDisplay != null)) {
+				String text = textJSONObject.getString(
+					themeDisplay.getLanguageId());
+
+				if (Validator.isNotNull(text)) {
+					element.attr("data-lfr-on-error-text", text);
+				}
+			}
+		}
+		else if (interaction.equals(_INTERACTION_PAGE)) {
+			JSONObject pageJSONObject = onErrorJSONObject.getJSONObject("page");
+
+			if (pageJSONObject != null) {
+				Layout layout = _layoutLocalService.fetchLayout(
+					GetterUtil.getLong(pageJSONObject.getString("groupId")),
+					GetterUtil.getBoolean(
+						pageJSONObject.getString("privateLayout")),
+					GetterUtil.getLong(pageJSONObject.getString("layoutId")));
+
+				if ((layout != null) && (themeDisplay != null)) {
+					element.attr(
+						"data-lfr-on-error-page-url",
+						_portal.getLayoutURL(layout, themeDisplay));
+				}
+			}
+		}
+		else if (interaction.equals(_INTERACTION_URL)) {
+			JSONObject urlJSONObject = onErrorJSONObject.getJSONObject("url");
+
+			if ((urlJSONObject != null) && (themeDisplay != null)) {
+				String url = urlJSONObject.getString(
+					themeDisplay.getLanguageId());
+
+				if (Validator.isNull(url)) {
+					Locale locale = LocaleUtil.getSiteDefault();
+
+					url = urlJSONObject.getString(locale.getLanguage());
+				}
+
+				if (Validator.isNotNull(url)) {
+					element.attr("data-lfr-on-error-page-url", url);
+				}
+			}
+		}
+
+		if ((interaction.equals(_INTERACTION_NONE) ||
+			 interaction.equals(_INTERACTION_NOTIFICATION)) &&
+			onErrorJSONObject.getBoolean("reload")) {
+
+			element.attr("data-lfr-on-error-reload", StringPool.TRUE);
+		}
 	}
 
 	private void _mapOnSuccess(Element element, JSONObject jsonObject)

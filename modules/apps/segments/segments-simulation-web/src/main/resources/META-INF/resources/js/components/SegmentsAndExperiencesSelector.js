@@ -50,7 +50,7 @@ function SegmentsAndExperiencesSelector({
 	const [
 		selectedSegmentsExperience,
 		setSelectedSegmentsExperience,
-	] = useState(segmentsExperiences?.[0]?.id);
+	] = useState(segmentsExperiences?.[0]?.segmentsExperienceId);
 
 	const formRef = useRef(null);
 	const firstRenderRef = useRef(true);
@@ -252,10 +252,14 @@ function SegmentsAndExperiencesSelector({
 								selectedKey={selectedSegmentsExperience}
 								type="button"
 							>
-								{(experience) => (
+								{(segmentsExperience) => (
 									<Option
-										key={experience.id}
-										textValue={experience.name}
+										key={
+											segmentsExperience.segmentsExperienceId
+										}
+										textValue={
+											segmentsExperience.segmentsExperienceName
+										}
 									>
 										<Layout.ContentRow>
 											<Layout.ContentCol
@@ -263,23 +267,25 @@ function SegmentsAndExperiencesSelector({
 												expand
 											>
 												<Text
-													id={`${experience.id}-title`}
+													id={`${segmentsExperience.segmentsExperienceId}-title`}
 													size={3}
 													weight="semi-bold"
 												>
-													{experience.name}
+													{
+														segmentsExperience.segmentsExperienceName
+													}
 												</Text>
 
 												<Text
 													aria-hidden
 													color="secondary"
-													id={`${experience.id}-description`}
+													id={`${segmentsExperience.segmentsExperienceId}-description`}
 													size={3}
 												>
 													{`${Liferay.Language.get(
 														'segment'
 													)}:
-														${experience.segmentsEntryName}`}
+														${segmentsExperience.segmentsEntryName}`}
 												</Text>
 											</Layout.ContentCol>
 
@@ -288,13 +294,15 @@ function SegmentsAndExperiencesSelector({
 													aria-hidden
 													className="mr-0"
 													displayType={
-														experience.active
+														segmentsExperience.segmentsExperienceActive
 															? 'success'
 															: 'secondary'
 													}
-													id={`${experience.id}-status`}
+													id={`${segmentsExperience.segmentsExperienceId}-status`}
 												>
-													{experience.statusLabel}
+													{
+														segmentsExperience.segmentsExperienceStatusLabel
+													}
 												</Label>
 											</Layout.ContentCol>
 										</Layout.ContentRow>

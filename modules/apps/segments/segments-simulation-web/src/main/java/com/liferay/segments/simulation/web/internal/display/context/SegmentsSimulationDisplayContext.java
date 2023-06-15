@@ -205,12 +205,6 @@ public class SegmentsSimulationDisplayContext {
 		_segmentsExperiencesJSONArray = JSONUtil.toJSONArray(
 			segmentsExperiences,
 			segmentsExperience -> JSONUtil.put(
-				"active", _isActive(segmentsExperience, segmentsExperiences)
-			).put(
-				"id", segmentsExperience.getSegmentsExperienceId()
-			).put(
-				"name", segmentsExperience.getName(_themeDisplay.getLocale())
-			).put(
 				"segmentsEntryName",
 				() -> {
 					SegmentsEntry segmentsEntry =
@@ -225,7 +219,16 @@ public class SegmentsSimulationDisplayContext {
 						_themeDisplay.getLocale());
 				}
 			).put(
-				"statusLabel",
+				"segmentsExperienceActive",
+				_isActive(segmentsExperience, segmentsExperiences)
+			).put(
+				"segmentsExperienceId",
+				segmentsExperience.getSegmentsExperienceId()
+			).put(
+				"segmentsExperienceName",
+				segmentsExperience.getName(_themeDisplay.getLocale())
+			).put(
+				"segmentsExperienceStatusLabel",
 				() -> {
 					String statusLabelKey = "inactive";
 

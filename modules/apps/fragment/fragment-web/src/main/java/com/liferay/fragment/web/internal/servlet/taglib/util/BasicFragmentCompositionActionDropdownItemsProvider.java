@@ -14,6 +14,7 @@
 
 package com.liferay.fragment.web.internal.servlet.taglib.util;
 
+import com.liferay.fragment.collection.item.selector.criterion.FragmentCollectionItemSelectorCriterion;
 import com.liferay.fragment.constants.FragmentActionKeys;
 import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.model.FragmentComposition;
@@ -25,10 +26,11 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuil
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
+import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCriterion;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -233,15 +235,27 @@ public class BasicFragmentCompositionActionDropdownItemsProvider {
 				).setRedirect(
 					_themeDisplay.getURLCurrent()
 				).buildString());
+
+			FragmentCollectionItemSelectorCriterion
+				fragmentCollectionItemSelectorCriterion =
+					new FragmentCollectionItemSelectorCriterion();
+
+			fragmentCollectionItemSelectorCriterion.
+				setDesiredItemSelectorReturnTypes(
+					new UUIDItemSelectorReturnType());
+
+			RequestBackedPortletURLFactory requestBackedPortletURLFactory =
+				RequestBackedPortletURLFactoryUtil.create(_httpServletRequest);
+
 			dropdownItem.putData(
 				"selectFragmentCollectionURL",
-				PortletURLBuilder.createRenderURL(
-					_renderResponse
-				).setMVCRenderCommandName(
-					"/fragment/select_fragment_collection"
-				).setWindowState(
-					LiferayWindowState.POP_UP
-				).buildString());
+				String.valueOf(
+					_itemSelector.getItemSelectorURL(
+						requestBackedPortletURLFactory,
+						_renderResponse.getNamespace() +
+							"selectFragmentCollection",
+						fragmentCollectionItemSelectorCriterion)));
+
 			dropdownItem.setIcon("move-folder");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "move"));

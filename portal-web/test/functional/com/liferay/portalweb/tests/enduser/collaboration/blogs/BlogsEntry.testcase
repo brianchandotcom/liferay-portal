@@ -1688,10 +1688,11 @@ definition {
 			navTab = "URL",
 			videoService = "youtube");
 
-		BlogsNavigator.openToBlogEntry(
-			entryTitle = "Blogs Entry Title",
-			layoutName = "Blogs Page",
-			siteURLKey = "guest");
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "video",
+			entryTitle = "Blogs Entry Title");
 
 		YoutubePortlet.playEmbeddedVideo(
 			progressBarInitialization = "0 Minutes 0 Seconds of 0 Minutes 0 Seconds",

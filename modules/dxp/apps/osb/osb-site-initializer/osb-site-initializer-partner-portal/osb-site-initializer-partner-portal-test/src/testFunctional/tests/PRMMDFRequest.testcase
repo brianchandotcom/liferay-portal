@@ -885,7 +885,25 @@ definition {
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 
 		task ("Given that a new MDF Request is submitted") {
-			JSONPRM.createMDFRequest();
+			PRMMarketing.gotoAddNewMDF();
+
+			PRMMDFRequest.createNewRequest(
+				accountName = "Company Name 1",
+				activityDescription = "Activity Description",
+				activityName = "Activity Name 1",
+				additionalOptions = "6.x to DXP Migration/Upgrade,Migration from competitor platform",
+				budgetList = "Sponsorship Fee-2000,Room Rental-3000",
+				campaignDescription = "Campaign Description",
+				campaignName = "Campaign Name",
+				followUpStrategy = "test",
+				goalsOptions = "Lead generation",
+				leadFollowUpList = "Other",
+				leadList = "No",
+				tactic = "Other",
+				targetMarketOptions = "Education,Energy",
+				targetOfLeads = "test",
+				targetRolesOptions = "Administrator",
+				typeOfActivity = "Miscellaneous Marketing");
 		}
 
 		task ("Then the MDF appears on listing page") {

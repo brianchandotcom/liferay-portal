@@ -271,7 +271,7 @@ public abstract class BaseAssetRenderer<T> implements AssetRenderer<T> {
 			ThemeDisplay themeDisplay, String noSuchEntryRedirect)
 		throws Exception {
 
-		throw null;
+		return null;
 	}
 
 	@Override

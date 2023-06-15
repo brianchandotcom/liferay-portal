@@ -80,6 +80,11 @@
 	<td>//h4[contains(.,"${key_name}")]//span[contains(@id,'toggle-switch')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>ENABLE_BETA_TOGGLE_SWITCH</td>
+	<td>//*[@id="${key_featureFlag}-toggle"]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -22,6 +22,7 @@ import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.price.list.constants.CommercePriceListActionKeys;
+import com.liferay.commerce.pricing.constants.CommercePricingClassActionKeys;
 import com.liferay.commerce.pricing.constants.CommercePricingPortletKeys;
 import com.liferay.commerce.product.constants.CPActionKeys;
 import com.liferay.commerce.product.constants.CPPortletKeys;
@@ -229,8 +230,25 @@ public class CommerceAccountRoleHelperImpl
 				});
 
 			companyResourceActionIds.put(
+				"com.liferay.commerce.pricing",
+				new String[] {
+					CommercePricingClassActionKeys.ADD_COMMERCE_PRICING_CLASS
+				});
+
+			companyResourceActionIds.put(
 				"com.liferay.commerce.pricing.model.CommercePricingClass",
 				new String[] {ActionKeys.VIEW});
+
+			companyResourceActionIds.put(
+				"com.liferay.commerce.product",
+				new String[] {
+					CPActionKeys.ADD_COMMERCE_PRODUCT_OPTION,
+					CPActionKeys.ADD_COMMERCE_PRODUCT_SPECIFICATION_OPTION,
+					CPActionKeys.MANAGE_COMMERCE_PRODUCT_ATTACHMENTS,
+					CPActionKeys.MANAGE_COMMERCE_PRODUCT_IMAGES,
+					CPActionKeys.VIEW_COMMERCE_PRODUCT_ATTACHMENTS,
+					CPActionKeys.VIEW_COMMERCE_PRODUCT_IMAGES
+				});
 
 			companyResourceActionIds.put(
 				PortletKeys.PORTAL,

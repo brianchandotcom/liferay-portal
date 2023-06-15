@@ -20,7 +20,7 @@ import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceList;
-import com.liferay.commerce.price.list.service.CommercePriceEntryService;
+import com.liferay.commerce.price.list.service.CommercePriceEntryLocalService;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.Sku;
@@ -54,12 +54,12 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 			(Long)dtoConverterContext.getId());
 
 		CommercePriceEntry commerceBasePriceListPriceEntry =
-			_commercePriceEntryService.getInstanceBaseCommercePriceEntry(
+			_commercePriceEntryLocalService.getInstanceBaseCommercePriceEntry(
 				cpInstance.getCPInstanceUuid(),
 				CommercePriceListConstants.TYPE_PRICE_LIST);
 
 		CommercePriceEntry commerceBasePromotionPriceEntry =
-			_commercePriceEntryService.getInstanceBaseCommercePriceEntry(
+			_commercePriceEntryLocalService.getInstanceBaseCommercePriceEntry(
 				cpInstance.getCPInstanceUuid(),
 				CommercePriceListConstants.TYPE_PROMOTION);
 
@@ -115,7 +115,7 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 	private CommerceCurrencyService _commerceCurrencyService;
 
 	@Reference
-	private CommercePriceEntryService _commercePriceEntryService;
+	private CommercePriceEntryLocalService _commercePriceEntryLocalService;
 
 	@Reference
 	private CommercePriceFormatter _commercePriceFormatter;

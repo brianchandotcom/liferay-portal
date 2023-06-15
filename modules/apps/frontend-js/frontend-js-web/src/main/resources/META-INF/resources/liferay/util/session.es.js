@@ -32,7 +32,13 @@ function getSessionClickFormData(cmd) {
 }
 
 function getSessionClickURL() {
-	return `${Liferay.ThemeDisplay.getPortalURL()}${Liferay.ThemeDisplay.getPathMain()}/portal/session_click`;
+	let sessionClickURL = `${Liferay.ThemeDisplay.getPortalURL()}${Liferay.ThemeDisplay.getPathMain()}/portal/session_click`;
+	
+	if (Liferay.ThemeDisplay.getScopeGroupId()) {
+		sessionClickURL += `?doAsGroupId=${Liferay.ThemeDisplay.getScopeGroupId()}`;
+	}
+	
+	return sessionClickURL;
 }
 
 /**

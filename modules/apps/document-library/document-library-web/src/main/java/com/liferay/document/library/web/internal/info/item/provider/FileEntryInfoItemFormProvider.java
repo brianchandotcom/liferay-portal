@@ -78,7 +78,7 @@ public class FileEntryInfoItemFormProvider
 					DLFileEntryConstants.getClassName()),
 				0,
 				_displayPageInfoItemFieldSetProvider.getInfoFieldSet(
-					DLFileEntryConstants.getClassName(), StringPool.BLANK, 0),
+					FileEntry.class.getName(), StringPool.BLANK, 0),
 				0);
 		}
 		catch (NoSuchFormVariationException noSuchFormVariationException) {
@@ -111,8 +111,8 @@ public class FileEntryInfoItemFormProvider
 						fileEntry.getFileEntryId())),
 				ddmStructureId,
 				_displayPageInfoItemFieldSetProvider.getInfoFieldSet(
-					DLFileEntryConstants.getClassName(),
-					String.valueOf(fileEntryTypeId), 0),
+					FileEntry.class.getName(), String.valueOf(fileEntryTypeId),
+					0),
 				fileEntryTypeId);
 		}
 		catch (NoSuchFormVariationException noSuchFormVariationException) {
@@ -145,8 +145,8 @@ public class FileEntryInfoItemFormProvider
 				GetterUtil.getLong(formVariationKey), groupId),
 			ddmStructureId,
 			_displayPageInfoItemFieldSetProvider.getInfoFieldSet(
-				DLFileEntryConstants.getClassName(),
-				String.valueOf(ddmStructureId), groupId),
+				FileEntry.class.getName(), String.valueOf(ddmStructureId),
+				groupId),
 			GetterUtil.getLong(formVariationKey));
 	}
 

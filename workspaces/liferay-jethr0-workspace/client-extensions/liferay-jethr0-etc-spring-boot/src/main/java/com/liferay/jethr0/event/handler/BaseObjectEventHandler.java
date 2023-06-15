@@ -28,9 +28,9 @@ import org.json.JSONObject;
 public abstract class BaseObjectEventHandler extends BaseEventHandler {
 
 	protected BaseObjectEventHandler(
-		EventHandlerHelper eventHandlerHelper, JSONObject messageJSONObject) {
+		EventHandlerContext eventHandlerContext, JSONObject messageJSONObject) {
 
-		super(eventHandlerHelper, messageJSONObject);
+		super(eventHandlerContext, messageJSONObject);
 	}
 
 	protected Project getProject(JSONObject projectJSONObject)

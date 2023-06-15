@@ -24,9 +24,9 @@ import org.json.JSONObject;
 public class ComputerUpdateEventHandler extends BaseJenkinsEventHandler {
 
 	public ComputerUpdateEventHandler(
-		EventHandlerHelper eventHandlerHelper, JSONObject messageJSONObject) {
+		EventHandlerContext eventHandlerContext, JSONObject messageJSONObject) {
 
-		super(eventHandlerHelper, messageJSONObject);
+		super(eventHandlerContext, messageJSONObject);
 	}
 
 	@Override

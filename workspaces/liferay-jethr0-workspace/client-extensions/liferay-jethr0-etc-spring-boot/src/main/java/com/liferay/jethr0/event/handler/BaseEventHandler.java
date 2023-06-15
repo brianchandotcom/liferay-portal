@@ -33,7 +33,7 @@ public abstract class BaseEventHandler implements EventHandler {
 	protected BaseEventHandler(
 		EventHandlerContext eventHandlerContext, JSONObject messageJSONObject) {
 
-		_eventHandlerContext = eventHandlerHelper;
+		_eventHandlerContext = eventHandlerContext;
 		_messageJSONObject = messageJSONObject;
 	}
 
@@ -54,7 +54,7 @@ public abstract class BaseEventHandler implements EventHandler {
 	}
 
 	protected JenkinsNodeRepository getJenkinsNodeRepository() {
-		return _eventHandlerHelper.getJenkinsNodeRepository();
+		return _eventHandlerContext.getJenkinsNodeRepository();
 	}
 
 	protected JenkinsQueue getJenkinsQueue() {
@@ -62,7 +62,7 @@ public abstract class BaseEventHandler implements EventHandler {
 	}
 
 	protected JMSEventHandler getJMSEventHandler() {
-		return _eventHandlerHelper.getJMSEventHandler();
+		return _eventHandlerContext.getJMSEventHandler();
 	}
 
 	protected JSONObject getMessageJSONObject() {
@@ -73,7 +73,7 @@ public abstract class BaseEventHandler implements EventHandler {
 		return _eventHandlerContext.getProjectRepository();
 	}
 
-	private final EventHandlerHelper _eventHandlerContext;
+	private final EventHandlerContext _eventHandlerContext;
 	private final JSONObject _messageJSONObject;
 
 }

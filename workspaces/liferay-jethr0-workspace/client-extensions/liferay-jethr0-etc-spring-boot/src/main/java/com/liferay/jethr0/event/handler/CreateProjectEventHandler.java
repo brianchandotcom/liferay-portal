@@ -35,8 +35,6 @@ public class CreateProjectEventHandler extends BaseObjectEventHandler {
 		JSONObject projectJSONObject = validateProjectJSONObject(
 			messageJSONObject.optJSONObject("project"));
 
-		EventHandlerContext eventHandlerContext = getEventHandlerContext();
-
 		Project project = _createProject(projectJSONObject);
 
 		JSONArray buildsJSONArray = projectJSONObject.optJSONArray("builds");
@@ -67,9 +65,9 @@ public class CreateProjectEventHandler extends BaseObjectEventHandler {
 	}
 
 	protected CreateProjectEventHandler(
-		EventHandlerHelper eventHandlerHelper, JSONObject messageJSONObject) {
+		EventHandlerContext eventHandlerContext, JSONObject messageJSONObject) {
 
-		super(eventHandlerHelper, messageJSONObject);
+		super(eventHandlerContext, messageJSONObject);
 	}
 
 	private Project _createProject(JSONObject projectJSONObject) {

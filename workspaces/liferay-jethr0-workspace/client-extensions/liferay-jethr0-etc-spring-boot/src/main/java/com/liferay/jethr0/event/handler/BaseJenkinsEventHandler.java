@@ -30,9 +30,9 @@ import org.json.JSONObject;
 public abstract class BaseJenkinsEventHandler extends BaseEventHandler {
 
 	protected BaseJenkinsEventHandler(
-		EventHandlerHelper eventHandlerHelper, JSONObject messageJSONObject) {
+		EventHandlerContext eventHandlerContext, JSONObject messageJSONObject) {
 
-		super(eventHandlerHelper, messageJSONObject);
+		super(eventHandlerContext, messageJSONObject);
 	}
 
 	protected long getBuildDuration() throws Exception {

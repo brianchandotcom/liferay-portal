@@ -30,9 +30,9 @@ import org.json.JSONObject;
 public class ComputerIdleEventHandler extends ComputerUpdateEventHandler {
 
 	public ComputerIdleEventHandler(
-		EventHandlerHelper eventHandlerHelper, JSONObject messageJSONObject) {
+		EventHandlerContext eventHandlerContext, JSONObject messageJSONObject) {
 
-		super(eventHandlerHelper, messageJSONObject);
+		super(eventHandlerContext, messageJSONObject);
 	}
 
 	@Override

@@ -81,9 +81,9 @@ public class CreateBuildEventHandler extends BaseObjectEventHandler {
 	}
 
 	protected CreateBuildEventHandler(
-		EventHandlerHelper eventHandlerHelper, JSONObject messageJSONObject) {
+		EventHandlerContext eventHandlerContext, JSONObject messageJSONObject) {
 
-		super(eventHandlerHelper, messageJSONObject);
+		super(eventHandlerContext, messageJSONObject);
 	}
 
 }

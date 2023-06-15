@@ -61,9 +61,9 @@ public class BuildStartedEventHandler extends BaseJenkinsEventHandler {
 	}
 
 	protected BuildStartedEventHandler(
-		EventHandlerHelper eventHandlerHelper, JSONObject jsonObject) {
+		EventHandlerContext eventHandlerContext, JSONObject jsonObject) {
 
-		super(eventHandlerHelper, jsonObject);
+		super(eventHandlerContext, jsonObject);
 	}
 
 }

@@ -33,11 +33,11 @@ public class EventHandlerFactory {
 
 		if (eventType == EventHandler.EventType.BUILD_COMPLETED) {
 			eventHandler = new BuildCompletedEventHandler(
-				_eventHandlerHelper, messageJSONObject);
+				_eventHandlerContext, messageJSONObject);
 		}
 		else if (eventType == EventHandler.EventType.BUILD_STARTED) {
 			eventHandler = new BuildStartedEventHandler(
-				_eventHandlerHelper, messageJSONObject);
+				_eventHandlerContext, messageJSONObject);
 		}
 		else if ((eventType == EventHandler.EventType.COMPUTER_BUSY) ||
 				 (eventType == EventHandler.EventType.COMPUTER_OFFLINE) ||
@@ -48,23 +48,23 @@ public class EventHandlerFactory {
 					 EventHandler.EventType.COMPUTER_TEMPORARILY_ONLINE)) {
 
 			eventHandler = new ComputerUpdateEventHandler(
-				_eventHandlerHelper, messageJSONObject);
+				_eventHandlerContext, messageJSONObject);
 		}
 		else if (eventType == EventHandler.EventType.COMPUTER_IDLE) {
 			eventHandler = new ComputerIdleEventHandler(
-				_eventHandlerHelper, messageJSONObject);
+				_eventHandlerContext, messageJSONObject);
 		}
 		else if (eventType == EventHandler.EventType.CREATE_BUILD) {
 			eventHandler = new CreateBuildEventHandler(
-				_eventHandlerHelper, messageJSONObject);
+				_eventHandlerContext, messageJSONObject);
 		}
 		else if (eventType == EventHandler.EventType.CREATE_PROJECT) {
 			eventHandler = new CreateProjectEventHandler(
-				_eventHandlerHelper, messageJSONObject);
+				_eventHandlerContext, messageJSONObject);
 		}
 		else if (eventType == EventHandler.EventType.QUEUE_PROJECT) {
 			eventHandler = new QueueProjectEventHandler(
-				_eventHandlerHelper, messageJSONObject);
+				_eventHandlerContext, messageJSONObject);
 		}
 		else {
 			throw new IllegalArgumentException(

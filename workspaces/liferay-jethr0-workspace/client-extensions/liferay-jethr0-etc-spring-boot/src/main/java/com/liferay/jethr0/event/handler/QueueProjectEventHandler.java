@@ -51,9 +51,9 @@ public class QueueProjectEventHandler extends BaseObjectEventHandler {
 	}
 
 	protected QueueProjectEventHandler(
-		EventHandlerHelper eventHandlerHelper, JSONObject messageJSONObject) {
+		EventHandlerContext eventHandlerContext, JSONObject messageJSONObject) {
 
-		super(eventHandlerHelper, messageJSONObject);
+		super(eventHandlerContext, messageJSONObject);
 	}
 
 }

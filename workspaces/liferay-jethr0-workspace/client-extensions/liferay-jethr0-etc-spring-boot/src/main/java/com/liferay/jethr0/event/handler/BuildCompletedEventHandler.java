@@ -74,9 +74,9 @@ public class BuildCompletedEventHandler extends BaseJenkinsEventHandler {
 	}
 
 	protected BuildCompletedEventHandler(
-		EventHandlerHelper eventHandlerHelper, JSONObject messageJSONObject) {
+		EventHandlerContext eventHandlerContext, JSONObject messageJSONObject) {
 
-		super(eventHandlerHelper, messageJSONObject);
+		super(eventHandlerContext, messageJSONObject);
 	}
 
 }

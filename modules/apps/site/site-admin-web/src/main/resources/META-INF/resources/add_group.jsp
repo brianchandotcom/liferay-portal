@@ -56,9 +56,10 @@ AddGroupDisplayContext addGroupDisplayContext = (AddGroupDisplayContext)request.
 								/>
 							</c:when>
 							<c:otherwise>
-								<div class="alert alert-warning text-justify">
-									<liferay-ui:message key="sites-have-required-vocabularies.-you-need-to-create-at-least-one-category-in-all-required-vocabularies-in-order-to-create-a-site" />
-								</div>
+								<clay:alert
+									displayType="warning"
+									message='<%= LanguageUtil.get(request, "sites-have-required-vocabularies.-you-need-to-create-at-least-one-category-in-all-required-vocabularies-in-order-to-create-a-site") %>'
+								/>
 							</c:otherwise>
 						</c:choose>
 					</aui:fieldset>

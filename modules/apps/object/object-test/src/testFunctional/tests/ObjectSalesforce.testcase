@@ -24,10 +24,23 @@ definition {
 	@description = "LPS-162131 Verify CRUD functionality with a created custom object using Salesforce as the storage type"
 	@priority = 5
 	test AssertCRUDWithCreatedCustomObject {
-		property custom.properties = "feature.flag.LPS-135430=true";
 		property portal.acceptance = "true";
 
 		task ("Given portal configured with Salesforce") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Feature Flags",
+				configurationName = "Beta",
+				configurationScope = "Virtual Instance Scope");
+
+			Check.checkToggleSwitch(
+				key_featureFlag = "LPS-135430",
+				locator1 = "ToggleSwitch#ENABLE_BETA_TOGGLE_SWITCH");
+
 			ApplicationsMenu.gotoPortlet(
 				category = "Configuration",
 				panel = "Control Panel",
@@ -138,8 +151,21 @@ definition {
 	@description = "LPS-185429 Verify CRUD functionality with a created standard object using Salesforce as the storage type"
 	@priority = 5
 	test AssertCRUDWithCreatedStandardObject {
-		property custom.properties = "feature.flag.LPS-135430=true";
 		property portal.acceptance = "true";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Feature Flags",
+			configurationName = "Beta",
+			configurationScope = "Virtual Instance Scope");
+
+		Check.checkToggleSwitch(
+			key_featureFlag = "LPS-135430",
+			locator1 = "ToggleSwitch#ENABLE_BETA_TOGGLE_SWITCH");
 
 		task ("Given portal configured with Salesforce") {
 			ApplicationsMenu.gotoPortlet(
@@ -310,10 +336,23 @@ definition {
 	@description = "LPS-185427 Verify CRUD functionality with an imported custom object using Salesforce as the storage type"
 	@priority = 5
 	test AssertCRUDWithImportedCustomObject {
-		property custom.properties = "feature.flag.LPS-135430=true";
 		property portal.acceptance = "true";
 
 		task ("Given portal configured with Salesforce") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Feature Flags",
+				configurationName = "Beta",
+				configurationScope = "Virtual Instance Scope");
+
+			Check.checkToggleSwitch(
+				key_featureFlag = "LPS-135430",
+				locator1 = "ToggleSwitch#ENABLE_BETA_TOGGLE_SWITCH");
+
 			ApplicationsMenu.gotoPortlet(
 				category = "Configuration",
 				panel = "Control Panel",
@@ -391,10 +430,23 @@ definition {
 	@description = "LPS-185428 Verify CRUD functionality with an imported standard object using Salesforce as the storage type"
 	@priority = 5
 	test AssertCRUDWithImportedStandardObject {
-		property custom.properties = "feature.flag.LPS-135430=true";
 		property portal.acceptance = "true";
 
 		task ("Given the DXP configured with Salesforce") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Feature Flags",
+				configurationName = "Beta",
+				configurationScope = "Virtual Instance Scope");
+
+			Check.checkToggleSwitch(
+				key_featureFlag = "LPS-135430",
+				locator1 = "ToggleSwitch#ENABLE_BETA_TOGGLE_SWITCH");
+
 			ApplicationsMenu.gotoPortlet(
 				category = "Configuration",
 				panel = "Control Panel",

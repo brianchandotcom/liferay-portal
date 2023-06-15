@@ -398,7 +398,7 @@ typeSettings=&#91;&quot;friendlyURLMapping=perico&quot;,&quot;instanceable=false
 
 			<echo></echo>
 
-			<for list="${osgi.modules.paths}" parallel="true" param="osgi.module.path">
+			<for list="${osgi.modules.paths}" param="osgi.module.path">
 				<sequential>
 					<local name="module.base.dir" />
 					<local name="osgi.module.command.prefix" />

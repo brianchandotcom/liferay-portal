@@ -3,6 +3,6 @@ task runGradleTest
 runGradleTest {
 
 	doLast {
-		assert "test1" == project.property("key1")
+		assert project.property("key1") == "test1"
 	}
 }

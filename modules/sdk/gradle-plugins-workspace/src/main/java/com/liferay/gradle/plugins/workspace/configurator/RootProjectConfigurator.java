@@ -1220,6 +1220,9 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 			});
 
+		initBundleTask.setGroup(BUNDLE_GROUP);
+		initBundleTask.setProvidedModules(osgiModulesConfiguration);
+
 		project.afterEvaluate(
 			new Action<Project>() {
 
@@ -1241,9 +1244,6 @@ public class RootProjectConfigurator implements Plugin<Project> {
 				}
 
 			});
-
-		initBundleTask.setGroup(BUNDLE_GROUP);
-		initBundleTask.setProvidedModules(osgiModulesConfiguration);
 
 		return initBundleTask;
 	}

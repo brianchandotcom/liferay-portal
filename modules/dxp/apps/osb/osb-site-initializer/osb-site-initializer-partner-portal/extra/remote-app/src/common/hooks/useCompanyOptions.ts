@@ -52,6 +52,7 @@ export default function useCompanyOptions(
 	if (!companyOptions && account) {
 		companyOptions = [
 			{
+				defaultValue: account.id,
 				label: account.name,
 				value: account.externalReferenceCode,
 			},
@@ -95,6 +96,7 @@ export default function useCompanyOptions(
 
 		setSelectedAccountBrief({
 			externalReferenceCode: optionSelected?.value as string,
+			id: optionSelected?.defaultValue as number,
 			name: optionSelected?.label as string,
 		});
 	};

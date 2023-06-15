@@ -29,6 +29,7 @@ type MDFRequestActivityDTO = Omit<
 		r_accToActs_accountEntryERC?: string;
 		r_accToActs_accountEntryId?: number;
 		r_mdfReqToActs_c_mdfRequestERC?: string;
+		r_mdfReqToActs_c_mdfRequestId?: number;
 		selected?: boolean;
 	};
 

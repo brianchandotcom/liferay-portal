@@ -46,6 +46,7 @@ export function getDTOFromMDFRequest(
 		partnerCountry: mdfRequest.partnerCountry,
 		r_accToMDFReqs_accountEntryERC:
 			mdfRequest.company?.externalReferenceCode,
+		r_accToMDFReqs_accountEntryId: mdfRequest.company?.id,
 		r_usrToMDFReqs_userId: mdfRequest.id
 			? mdfRequest.r_usrToMDFReqs_userId
 			: Number(Liferay.ThemeDisplay.getUserId()),

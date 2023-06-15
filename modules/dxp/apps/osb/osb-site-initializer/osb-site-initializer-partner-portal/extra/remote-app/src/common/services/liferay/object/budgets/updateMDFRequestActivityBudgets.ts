@@ -10,7 +10,8 @@
  */
 
 import {Liferay} from '../..';
-import MDFRequestDTO from '../../../../interfaces/dto/mdfRequestDTO';
+import MDFRequestActivityDTO from '../../../../interfaces/dto/mdfRequestActivityDTO';
+import MDFRequest from '../../../../interfaces/mdfRequest';
 import MDFRequestBudget from '../../../../interfaces/mdfRequestBudget';
 import getDTOFromMDFRequestBudget from '../../../../utils/dto/mdf-request-budget/getDTOFromMDFRequestBudget';
 import {LiferayAPIs} from '../../common/enums/apis';
@@ -20,16 +21,12 @@ import {ResourceName} from '../enum/resourceName';
 export default async function updateMDFRequestActivityBudget(
 	apiOption: ResourceName,
 	budget: MDFRequestBudget,
-	activityExternalReferenceCode: string,
-	dtoMDFRequest: MDFRequestDTO
+	activityDTO: MDFRequestActivityDTO,
+	mdfRequest: MDFRequest
 ) {
 	return await liferayFetcher.put(
 		`/o/${LiferayAPIs.OBJECT}/${apiOption}/by-external-reference-code/${budget.externalReferenceCode}`,
 		Liferay.authToken,
-		getDTOFromMDFRequestBudget(
-			budget,
-			activityExternalReferenceCode,
-			dtoMDFRequest.r_accToMDFReqs_accountEntryERC
-		)
+		getDTOFromMDFRequestBudget(budget, activityDTO, mdfRequest)
 	);
 }

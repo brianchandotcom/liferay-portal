@@ -53,7 +53,10 @@ export default async function submitForm(
 	let dtoMDFRequest: mdfRequestDTO | undefined = undefined;
 
 	try {
-		if (values.mdfRequestStatus.key !== Status.DRAFT.key) {
+		if (
+			values.mdfRequestStatus.key !== Status.DRAFT.key ||
+			values.submitted
+		) {
 			dtoMDFRequest = await createMDFRequestProxyAPI(values);
 		}
 		else if (values.id && values.externalReferenceCode) {
@@ -69,7 +72,11 @@ export default async function submitForm(
 			);
 		}
 
-		if (values?.activities?.length && dtoMDFRequest?.id) {
+		if (
+			values?.activities?.length &&
+			dtoMDFRequest?.id &&
+			values.company?.id
+		) {
 			const dtoMDFRequestActivities = await Promise.all(
 				values?.activities?.map(async (activity) => {
 					if (
@@ -92,12 +99,14 @@ export default async function submitForm(
 						return null;
 					}
 					if (
-						dtoMDFRequest &&
-						values.mdfRequestStatus.key !== Status.DRAFT.key
+						(dtoMDFRequest &&
+							values.mdfRequestStatus.key !== Status.DRAFT.key) ||
+						(dtoMDFRequest && activity.submitted)
 					) {
 						return createMDFRequestActivitiesProxyAPI(
 							activity,
-							dtoMDFRequest
+							dtoMDFRequest,
+							values
 						);
 					}
 					else {
@@ -105,6 +114,7 @@ export default async function submitForm(
 							return await updateMDFRequestActivities(
 								ResourceName.ACTIVITY_DXP,
 								activity,
+								values,
 								dtoMDFRequest,
 								activity.externalReferenceCode
 							);
@@ -113,6 +123,7 @@ export default async function submitForm(
 							return await createMDFRequestActivities(
 								ResourceName.ACTIVITY_DXP,
 								activity,
+								values,
 								dtoMDFRequest,
 								activity.externalReferenceCode
 							);
@@ -128,7 +139,8 @@ export default async function submitForm(
 					if (
 						activity.budgets?.length &&
 						dtoActivity?.id &&
-						dtoActivity.externalReferenceCode
+						dtoActivity.externalReferenceCode &&
+						values.company?.id
 					) {
 						activity.budgets?.map(async (budget) => {
 							if (
@@ -140,8 +152,8 @@ export default async function submitForm(
 								await updateMDFRequestActivityBudget(
 									ResourceName.BUDGET,
 									budget,
-									dtoActivity.externalReferenceCode,
-									dtoMDFRequest
+									dtoActivity,
+									values
 								);
 								if (budget.removed) {
 									await deleteMDFRequestActivityBudgets(
@@ -157,8 +169,8 @@ export default async function submitForm(
 								await createMDFRequestActivityBudget(
 									ResourceName.BUDGET,
 									budget,
-									dtoActivity.externalReferenceCode,
-									dtoMDFRequest
+									dtoActivity,
+									values
 								);
 							}
 						});

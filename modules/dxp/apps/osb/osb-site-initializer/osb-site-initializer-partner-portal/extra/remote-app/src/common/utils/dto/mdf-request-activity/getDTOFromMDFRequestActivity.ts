@@ -10,13 +10,15 @@
  */
 
 import MDFRequestActivityDTO from '../../../interfaces/dto/mdfRequestActivityDTO';
+import MDFRequestDTO from '../../../interfaces/dto/mdfRequestDTO';
+import MDFRequest from '../../../interfaces/mdfRequest';
 import MDFRequestActivity from '../../../interfaces/mdfRequestActivity';
 
 export default function getDTOFromMDFRequestActivity(
 	mdfRequestActivity: MDFRequestActivity,
-	externalReferenceCodeFromSF?: string,
-	accountEntryExternalReferenceCode?: string,
-	mdfRequestExternalReferenceCode?: string
+	mdfRequest: MDFRequest,
+	mdfRequestDTO?: MDFRequestDTO,
+	externalReferenceCodeFromSF?: string
 ): MDFRequestActivityDTO {
 	const {activityDescription, ...newMDFRequestActivity} = mdfRequestActivity;
 
@@ -33,8 +35,10 @@ export default function getDTOFromMDFRequestActivity(
 		leadFollowUpStrategies: activityDescription?.leadFollowUpStrategies?.join(
 			', '
 		),
-		mdfRequestExternalReferenceCode,
-		r_accToActs_accountEntryERC: accountEntryExternalReferenceCode,
-		r_mdfReqToActs_c_mdfRequestERC: mdfRequestExternalReferenceCode,
+		mdfRequestExternalReferenceCode: mdfRequestDTO?.externalReferenceCode,
+		r_accToActs_accountEntryERC: mdfRequest.company?.externalReferenceCode,
+		r_accToActs_accountEntryId: mdfRequest.company?.id,
+		r_mdfReqToActs_c_mdfRequestERC: mdfRequestDTO?.externalReferenceCode,
+		r_mdfReqToActs_c_mdfRequestId: mdfRequestDTO?.id,
 	};
 }

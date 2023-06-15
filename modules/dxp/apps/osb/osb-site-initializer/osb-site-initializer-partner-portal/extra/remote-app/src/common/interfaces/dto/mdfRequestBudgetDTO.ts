@@ -13,5 +13,7 @@ import MDFRequestBudget from '../mdfRequestBudget';
 
 export default interface MDFRequestBudgetDTO extends MDFRequestBudget {
 	r_accToBgts_accountEntryERC?: string;
+	r_accToBgts_accountEntryId?: number;
 	r_actToBgts_c_activityERC?: string;
+	r_actToBgts_c_activityId?: number;
 }

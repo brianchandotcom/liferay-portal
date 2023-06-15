@@ -11,6 +11,7 @@
 
 import MDFRequestActivityDTO from '../../../common/interfaces/dto/mdfRequestActivityDTO';
 import MDFRequestDTO from '../../../common/interfaces/dto/mdfRequestDTO';
+import MDFRequest from '../../../common/interfaces/mdfRequest';
 import MDFRequestActivity from '../../../common/interfaces/mdfRequestActivity';
 import createMDFRequestActivities from '../../../common/services/liferay/object/activity/createMDFRequestActivities';
 import updateMDFRequestActivities from '../../../common/services/liferay/object/activity/updateMDFRequestActivities';
@@ -18,7 +19,8 @@ import {ResourceName} from '../../../common/services/liferay/object/enum/resourc
 
 export default async function createMDFRequestActivitiesProxyAPI(
 	mdfRequestActivity: MDFRequestActivity,
-	mdfRequestDTO: MDFRequestDTO
+	mdfRequestDTO: MDFRequestDTO,
+	mdfRequest: MDFRequest
 ) {
 	let dtoMDFRequestActivitySFResponse:
 		| MDFRequestActivityDTO
@@ -30,13 +32,15 @@ export default async function createMDFRequestActivitiesProxyAPI(
 	) {
 		dtoMDFRequestActivitySFResponse = await updateMDFRequestActivities(
 			ResourceName.ACTIVITY_SALESFORCE,
-			mdfRequestActivity
+			mdfRequestActivity,
+			mdfRequest
 		);
 	}
 	else {
 		dtoMDFRequestActivitySFResponse = await createMDFRequestActivities(
 			ResourceName.ACTIVITY_SALESFORCE,
 			mdfRequestActivity,
+			mdfRequest,
 			mdfRequestDTO
 		);
 	}
@@ -50,6 +54,7 @@ export default async function createMDFRequestActivitiesProxyAPI(
 			dtoMDFRequestResponse = await updateMDFRequestActivities(
 				ResourceName.ACTIVITY_DXP,
 				mdfRequestActivity,
+				mdfRequest,
 				mdfRequestDTO,
 				dtoMDFRequestActivitySFResponse.externalReferenceCode
 			);
@@ -60,6 +65,7 @@ export default async function createMDFRequestActivitiesProxyAPI(
 			dtoMDFRequestResponse = await createMDFRequestActivities(
 				ResourceName.ACTIVITY_DXP,
 				mdfRequestActivity,
+				mdfRequest,
 				mdfRequestDTO,
 				dtoMDFRequestActivitySFResponse.externalReferenceCode
 			);

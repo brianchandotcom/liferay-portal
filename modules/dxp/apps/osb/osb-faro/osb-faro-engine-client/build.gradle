@@ -15,13 +15,7 @@ dependencies {
 	compileInclude group: "org.springframework.boot", name: "spring-boot", version: "2.4.13"
 	compileInclude group: "org.springframework.hateoas", name: "spring-hateoas", version: "1.4.1"
 
-	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.13.4"
-	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.13.4"
-	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.13.4.2"
-	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
-	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
-	compileOnly project(":core:petra:petra-function")
-	compileOnly project(":core:petra:petra-string")
+	compileOnly group: "com.liferay.portal", name: "release.dxp.api", version: "7.4.13.u78"
 	compileOnly project(":dxp:apps:osb:osb-faro:osb-faro-api")
 	compileOnly project(":dxp:apps:osb:osb-faro:osb-faro-contacts-api")
 }

@@ -9,6 +9,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemBuilder;
 import com.liferay.knowledge.base.constants.KBActionKeys;
 import com.liferay.knowledge.base.constants.KBArticleConstants;
+import com.liferay.knowledge.base.constants.KBConstants;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBFolder;
@@ -102,7 +103,7 @@ public class KBAdminNavigationDisplayContext {
 			_httpServletRequest, "itemToMoveId");
 		long parentKbObjectId;
 
-		if (itemToMoveType.equals("Folder")) {
+		if (itemToMoveType.equals(KBConstants.TYPE_FOLDER)) {
 			KBFolder kbFolder = KBFolderLocalServiceUtil.getKBFolder(
 				itemToMoveId);
 
@@ -331,7 +332,7 @@ public class KBAdminNavigationDisplayContext {
 					).put(
 						"name", kbArticle.getTitle()
 					).put(
-						"type", "article"
+						"type", KBConstants.TYPE_ARTICLE
 					));
 			}
 		}
@@ -402,7 +403,7 @@ public class KBAdminNavigationDisplayContext {
 					).put(
 						"name", kbFolder.getName()
 					).put(
-						"type", "folder"
+						"type", KBConstants.TYPE_FOLDER
 					);
 				}
 			}
@@ -428,7 +429,7 @@ public class KBAdminNavigationDisplayContext {
 					).put(
 						"name", kbArticle.getTitle()
 					).put(
-						"type", "article"
+						"type", KBConstants.TYPE_ARTICLE
 					);
 				}
 			}
@@ -500,7 +501,7 @@ public class KBAdminNavigationDisplayContext {
 			).put(
 				"name", _themeDisplay.translate("home")
 			).put(
-				"type", "folder"
+				"type", KBConstants.TYPE_FOLDER
 			));
 	}
 

@@ -730,7 +730,7 @@ public class KBDropdownItemsProvider {
 					String.valueOf(kbArticle.getClassNameId()));
 				dropdownItem.putData(
 					"itemId", String.valueOf(kbArticle.getResourcePrimKey()));
-				dropdownItem.putData("itemType", "article");
+				dropdownItem.putData("itemType", KBConstants.TYPE_ARTICLE);
 				dropdownItem.putData("kbItemTitle", kbArticle.getTitle());
 				dropdownItem.putData(
 					"moveKBItemActionURL",
@@ -748,7 +748,7 @@ public class KBDropdownItemsProvider {
 					).setParameter(
 						"itemToMoveId", kbArticle.getResourcePrimKey()
 					).setParameter(
-						"itemToMoveType", "Article"
+						"itemToMoveType", KBConstants.TYPE_ARTICLE
 					).setParameter(
 						"itemVersion", kbArticle.getVersion()
 					).setWindowState(
@@ -802,7 +802,7 @@ public class KBDropdownItemsProvider {
 					String.valueOf(kbFolder.getClassNameId()));
 				dropdownItem.putData(
 					"itemId", String.valueOf(kbFolder.getKbFolderId()));
-				dropdownItem.putData("itemType", "folder");
+				dropdownItem.putData("itemType", KBConstants.TYPE_FOLDER);
 				dropdownItem.putData("kbItemTitle", kbFolder.getName());
 				dropdownItem.putData(
 					"moveKBItemActionURL",
@@ -820,7 +820,7 @@ public class KBDropdownItemsProvider {
 					).setParameter(
 						"itemToMoveId", kbFolder.getKbFolderId()
 					).setParameter(
-						"itemToMoveType", "Folder"
+						"itemToMoveType", KBConstants.TYPE_FOLDER
 					).setParameter(
 						"itemVersion", -1
 					).setWindowState(

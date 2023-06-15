@@ -372,7 +372,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-162328. The page creator can change locale to ES in edit mode and date format mapped to text editable field will be changed."
+	@description = "This is a use case for LPS-162223. The page creator can change locale to ES in edit mode and date format mapped to text editable field will be changed."
 	@priority = 3
 	test ViewLocalizedDateFormatInPageEditor {
 		task ("Given a page creator maps the publish date field of web content to a fragment") {

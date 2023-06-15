@@ -407,34 +407,34 @@ definition {
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "Publish Date");
 
-			var publishedDate = selenium.getText("//div[contains(@id,'fragment-')][.//*[contains(@class,'paragraph')]]//*[contains(@data-lfr-editable-id,'element-text')]");
+			var defaultDateFormat = selenium.getText("//div[contains(@id,'fragment-')][.//*[contains(@class,'paragraph')]]//*[contains(@data-lfr-editable-id,'element-text')]");
 
-			var match = StringUtil.matches(${publishedDate}, "\d/\d\d/\d\d\s\d\d:\d\d\s\D\D");
+			var match = StringUtil.matches(${defaultDateFormat}, "\d{1,2}\/\d{1,2}\/\d{1,2}\s\d{1,2}:\d{1,2}\s[A-Z]{2}");
 
 			if (${match} == "true") {
 				echo("PASSED");
 			}
 			else {
-				fail("The ${publishedDate} doesn't follow the expected format");
+				fail("The ${defaultDateFormat} doesn't follow the expected format");
 			}
 		}
 
-		task ("When changes locale to ES") {
+		task ("When changes locale to DE") {
 			PageEditor.changeLocale(
 				currentLocale = "en-US",
-				locale = "es-ES");
+				locale = "de-DE");
 		}
 
 		task ("Then the date format will be changed") {
-			var spanishLocaleDateFormat = selenium.getText("//div[contains(@id,'fragment-')][.//*[contains(@class,'paragraph')]]//*[contains(@data-lfr-editable-id,'element-text')]");
+			var germanyDateFormat = selenium.getText("//div[contains(@id,'fragment-')][.//*[contains(@class,'paragraph')]]//*[contains(@data-lfr-editable-id,'element-text')]");
 
-			var match = StringUtil.matches(${spanishLocaleDateFormat}, "\d\d/\d\d/\d\d\s\d\d:\d\d");
+			var match = StringUtil.matches(${germanyDateFormat}, "\d\d\.\d\d\.\d\d\s\d\d:\d\d$");
 
 			if (${match} == "true") {
 				echo("PASSED");
 			}
 			else {
-				fail("The ${spanishLocaleDateFormat} doesn't follow the expected format");
+				fail("The ${germanyDateFormat} doesn't follow the expected format");
 			}
 		}
 	}

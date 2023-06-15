@@ -458,8 +458,12 @@ public class SetupWizardUtil {
 			return;
 		}
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 		Company company = CompanyLocalServiceUtil.getCompanyById(
-			PortalInstances.getDefaultCompanyId());
+			themeDisplay.getCompanyId());
 
 		if (Objects.equals(companyDefaultWebId, company.getWebId())) {
 			return;
@@ -468,11 +472,11 @@ public class SetupWizardUtil {
 		company.setWebId(companyDefaultWebId);
 		company.setMx(companyDefaultWebId);
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+		company = CompanyLocalServiceUtil.updateCompany(company);
 
-		themeDisplay.setCompany(CompanyLocalServiceUtil.updateCompany(company));
+		PortalInstances.initCompany(company);
+
+		themeDisplay.setCompany(company);
 	}
 
 	private static void _updateLanguage(

@@ -136,19 +136,23 @@ public class ActionEditableElementMapper implements EditableElementMapper {
 				"data-lfr-on-" + resultType + "-reload", StringPool.TRUE);
 		}
 
-		ThemeDisplay themeDisplay = null;
-
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		if (serviceContext != null) {
-			themeDisplay = serviceContext.getThemeDisplay();
+		if (serviceContext == null) {
+			return;
+		}
+
+		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+		if (themeDisplay == null) {
+			return;
 		}
 
 		if (interaction.equals(_INTERACTION_NOTIFICATION)) {
 			JSONObject textJSONObject = jsonObject.getJSONObject("text");
 
-			if ((textJSONObject != null) && (themeDisplay != null)) {
+			if (textJSONObject != null) {
 				String text = textJSONObject.getString(
 					themeDisplay.getLanguageId());
 
@@ -167,7 +171,7 @@ public class ActionEditableElementMapper implements EditableElementMapper {
 						pageJSONObject.getString("privateLayout")),
 					GetterUtil.getLong(pageJSONObject.getString("layoutId")));
 
-				if ((layout != null) && (themeDisplay != null)) {
+				if (layout != null) {
 					element.attr(
 						"data-lfr-on-" + resultType + "-page-url",
 						_portal.getLayoutURL(layout, themeDisplay));
@@ -177,7 +181,7 @@ public class ActionEditableElementMapper implements EditableElementMapper {
 		else if (interaction.equals(_INTERACTION_URL)) {
 			JSONObject urlJSONObject = jsonObject.getJSONObject("url");
 
-			if ((urlJSONObject != null) && (themeDisplay != null)) {
+			if (urlJSONObject != null) {
 				String url = urlJSONObject.getString(
 					themeDisplay.getLanguageId());
 

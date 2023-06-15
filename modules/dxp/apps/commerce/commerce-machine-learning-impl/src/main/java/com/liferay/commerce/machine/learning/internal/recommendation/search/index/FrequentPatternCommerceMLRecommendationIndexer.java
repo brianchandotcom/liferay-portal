@@ -46,8 +46,7 @@ public class FrequentPatternCommerceMLRecommendationIndexer
 	}
 
 	private static final String _INDEX_MAPPING_FILE_NAME =
-		"/META-INF/search" +
-			"/frequent-pattern-commerce-ml-recommendation-document-type.json";
+		"frequent-pattern-commerce-ml-recommendation-mappings.json";
 
 	private static final String _INDEX_NAME_PATTERN =
 		"%s-frequent-pattern-commerce-ml-recommendation";

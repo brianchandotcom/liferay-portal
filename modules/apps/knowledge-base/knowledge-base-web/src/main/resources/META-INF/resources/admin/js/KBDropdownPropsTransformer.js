@@ -19,7 +19,7 @@ import {
 	openModal,
 	openSelectionModal,
 	openToast,
-	sub
+	sub,
 } from 'frontend-js-web';
 
 import showSuccessMessage from './utils/showSuccessMessage';
@@ -48,9 +48,9 @@ const ACTIONS = {
 			itemClassNameId,
 			itemId,
 			itemType,
+			kbItemTitle,
 			moveKBItemActionURL,
 			moveKBItemModalURL,
-			kbItemTitle
 		},
 		portletNamespace
 	) {

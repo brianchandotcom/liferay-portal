@@ -19,10 +19,20 @@ import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.util.Locale;
 
 import org.jsoup.nodes.Element;
 
@@ -95,7 +105,104 @@ public class ActionEditableElementMapper implements EditableElementMapper {
 		element.attr("data-lfr-class-name-id", classNameId);
 		element.attr("data-lfr-class-pk", classPK);
 		element.attr("data-lfr-field-id", fieldId);
+
+		_mapOnSuccess(element, configJSONObject);
 	}
+
+	private void _mapOnSuccess(Element element, JSONObject jsonObject)
+		throws PortalException {
+
+		JSONObject onSuccessJSONObject = jsonObject.getJSONObject("onSuccess");
+
+		if (onSuccessJSONObject == null) {
+			return;
+		}
+
+		String interaction = onSuccessJSONObject.getString("interaction");
+
+		if (Validator.isNull(interaction)) {
+			interaction = _INTERACTION_NONE;
+		}
+
+		element.attr("data-lfr-on-success-interaction", interaction);
+
+		ThemeDisplay themeDisplay = null;
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if (serviceContext != null) {
+			themeDisplay = serviceContext.getThemeDisplay();
+		}
+
+		if (interaction.equals(_INTERACTION_NOTIFICATION)) {
+			JSONObject textJSONObject = onSuccessJSONObject.getJSONObject(
+				"text");
+
+			if ((textJSONObject != null) && (themeDisplay != null)) {
+				String text = textJSONObject.getString(
+					themeDisplay.getLanguageId());
+
+				if (Validator.isNotNull(text)) {
+					element.attr("data-lfr-on-success-text", text);
+				}
+			}
+		}
+		else if (interaction.equals(_INTERACTION_PAGE)) {
+			JSONObject pageJSONObject = onSuccessJSONObject.getJSONObject(
+				"page");
+
+			if (pageJSONObject != null) {
+				Layout layout = _layoutLocalService.fetchLayout(
+					GetterUtil.getLong(pageJSONObject.getString("groupId")),
+					GetterUtil.getBoolean(
+						pageJSONObject.getString("privateLayout")),
+					GetterUtil.getLong(pageJSONObject.getString("layoutId")));
+
+				if ((layout != null) && (themeDisplay != null)) {
+					element.attr(
+						"data-lfr-on-success-page-url",
+						_portal.getLayoutURL(layout, themeDisplay));
+				}
+			}
+		}
+		else if (interaction.equals(_INTERACTION_URL)) {
+			JSONObject urlJSONObject = onSuccessJSONObject.getJSONObject("url");
+
+			if ((urlJSONObject != null) && (themeDisplay != null)) {
+				String url = urlJSONObject.getString(
+					themeDisplay.getLanguageId());
+
+				if (Validator.isNull(url)) {
+					Locale locale = LocaleUtil.getSiteDefault();
+
+					url = urlJSONObject.getString(locale.getLanguage());
+				}
+
+				if (Validator.isNotNull(url)) {
+					element.attr("data-lfr-on-success-page-url", url);
+				}
+			}
+		}
+
+		if ((interaction.equals(_INTERACTION_NONE) ||
+			 interaction.equals(_INTERACTION_NOTIFICATION)) &&
+			onSuccessJSONObject.getBoolean("reload")) {
+
+			element.attr("data-lfr-on-success-reload", StringPool.TRUE);
+		}
+	}
+
+	private static final String _INTERACTION_NONE = "none";
+
+	private static final String _INTERACTION_NOTIFICATION = "notification";
+
+	private static final String _INTERACTION_PAGE = "page";
+
+	private static final String _INTERACTION_URL = "url";
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private Portal _portal;

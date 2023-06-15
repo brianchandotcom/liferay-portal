@@ -154,21 +154,23 @@ public class EnumSerializer extends AbstractSerializer {
 		String javaClassName = _getString(jsonObject, "javaClass");
 
 		try {
-			if (jsonObject.has("contextName")) {
-				String contextName = jsonObject.getString("contextName");
+			if (!jsonObject.has("contextName")) {
+				return Class.forName(javaClassName);
+			}
 
-				ClassLoader classLoader = ClassLoaderPool.getClassLoader(
-					contextName);
+			String contextName = jsonObject.getString("contextName");
 
-				if (classLoader != null) {
-					return Class.forName(javaClassName, true, classLoader);
-				}
-				else if (_log.isWarnEnabled()) {
-					_log.warn(
-						StringBundler.concat(
-							"Unable to get class loader for class ",
-							javaClassName, " in context ", contextName));
-				}
+			ClassLoader classLoader = ClassLoaderPool.getClassLoader(
+				contextName);
+
+			if (classLoader != null) {
+				return classLoader.loadClass(javaClassName);
+			}
+			else if (_log.isWarnEnabled()) {
+				_log.warn(
+					StringBundler.concat(
+						"Unable to get class loader for class ", javaClassName,
+						" in context ", contextName));
 			}
 
 			return Class.forName(javaClassName);

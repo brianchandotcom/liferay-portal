@@ -617,10 +617,6 @@ definition {
 			SelectWindow.selectPopUp(locator1 = "null");
 
 			AssertLocation.assertPartialLocation(value1 = "https://www.liferay.com");
-
-			var siteName = TestCase.getSiteName(siteName = ${siteName});
-
-			SelectWindow(locator1 = "title=Test Page Name - ${randomSiteName} - ${siteName}");
 		}
 	}
 

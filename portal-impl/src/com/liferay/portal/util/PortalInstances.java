@@ -365,7 +365,7 @@ public class PortalInstances {
 						company.getCompanyId()));
 			}
 
-			_webIds.putIfAbsent(company.getCompanyId(), company.getWebId());
+			_webIds.put(company.getCompanyId(), company.getWebId());
 		}
 		finally {
 			CompanyThreadLocal.setCompanyId(currentThreadCompanyId);

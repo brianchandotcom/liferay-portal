@@ -122,7 +122,7 @@ public class LDAPUserExporterImpl implements UserExporter {
 
 			Binding userBinding = _safePortalLDAP.getUser(
 				ldapServerId, contact.getCompanyId(), user.getScreenName(),
-				user.getEmailAddress());
+				user.getEmailAddress(), false, false);
 
 			if (userBinding == null) {
 				Properties userMappings = _ldapSettings.getUserMappings(
@@ -306,7 +306,7 @@ public class LDAPUserExporterImpl implements UserExporter {
 
 			Binding userBinding = _safePortalLDAP.getUser(
 				ldapServerId, user.getCompanyId(), user.getScreenName(),
-				user.getEmailAddress(), true);
+				user.getEmailAddress(), true, false);
 
 			if (userBinding == null) {
 				userBinding = addUser(
@@ -345,6 +345,12 @@ public class LDAPUserExporterImpl implements UserExporter {
 			}
 
 			ModificationItem[] modificationItems = modifications.getItems();
+
+			if (userBinding == null) {
+				userBinding = _safePortalLDAP.getUser(
+					ldapServerId, companyId, user.getScreenName(),
+					user.getEmailAddress(), false, false);
+			}
 
 			SafeLdapName userSafeLdapName = SafeLdapNameFactory.from(
 				userBinding);

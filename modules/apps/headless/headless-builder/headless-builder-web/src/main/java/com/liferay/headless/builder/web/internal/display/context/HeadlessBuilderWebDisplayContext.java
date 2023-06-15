@@ -31,7 +31,7 @@ public class HeadlessBuilderWebDisplayContext {
 	}
 
 	public String getAPIURL() {
-		return "/o/c/apiapplications/";
+		return "/o/headless-builder/applications/";
 	}
 
 	public String getPortletId() {

@@ -166,12 +166,12 @@ public class SummaryBuilderImplTest {
 
 	@Test
 	public void testTitleHighlight() {
+		_summaryBuilder.setHighlight(true);
 		_summaryBuilder.setTitle(
 			StringBundler.concat(
 				"AAA<strong>BBB</strong>CCC", HighlightUtil.HIGHLIGHT_TAG_OPEN,
 				"DDD<strong>EEE</strong>FFF", HighlightUtil.HIGHLIGHT_TAG_CLOSE,
 				"GGG<strong>HHH</strong>III"));
-		_summaryBuilder.setHighlight(true);
 
 		Summary summary = _summaryBuilder.build();
 
@@ -187,13 +187,13 @@ public class SummaryBuilderImplTest {
 
 	@Test
 	public void testTitleHighlightUnescaped() {
+		_summaryBuilder.setEscape(false);
+		_summaryBuilder.setHighlight(true);
 		_summaryBuilder.setTitle(
 			StringBundler.concat(
 				"AAA<strong>BBB</strong>CCC", HighlightUtil.HIGHLIGHT_TAG_OPEN,
 				"DDD<strong>EEE</strong>FFF", HighlightUtil.HIGHLIGHT_TAG_CLOSE,
 				"GGG<strong>HHH</strong>III"));
-		_summaryBuilder.setEscape(false);
-		_summaryBuilder.setHighlight(true);
 
 		Summary summary = _summaryBuilder.build();
 

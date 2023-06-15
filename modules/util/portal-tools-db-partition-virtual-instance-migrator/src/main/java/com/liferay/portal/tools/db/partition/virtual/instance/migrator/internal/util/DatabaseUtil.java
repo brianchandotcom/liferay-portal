@@ -56,12 +56,13 @@ public class DatabaseUtil {
 
 		DBInspector dbInspector = new DBInspector(connection);
 
+		List<Long> companyIds = _getCompanyIds(connection);
+
 		List<String> partitionedTableNames = new ArrayList<>();
 
 		for (String tableName : dbInspector.getTableNames(null)) {
-			if (!dbInspector.isControlTable(tableName) &&
-				!dbInspector.isObjectTable(
-					_getCompanyIds(connection), tableName)) {
+			if (!dbInspector.isControlTable(companyIds, tableName) &&
+				!dbInspector.isObjectTable(companyIds, tableName)) {
 
 				partitionedTableNames.add(tableName);
 			}

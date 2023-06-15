@@ -16,8 +16,8 @@ package com.liferay.commerce.product.definitions.web.internal.frontend.data.set.
 
 import com.liferay.account.model.AccountGroup;
 import com.liferay.account.model.AccountGroupRel;
+import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.account.service.AccountGroupRelLocalService;
-import com.liferay.account.service.AccountGroupService;
 import com.liferay.commerce.product.definitions.web.internal.constants.CommerceProductFDSNames;
 import com.liferay.commerce.product.definitions.web.internal.model.CProductAccountGroup;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -64,8 +64,9 @@ public class CommerceProductAccountGroupFDSDataProvider
 				fdsPagination.getEndPosition(), null);
 
 		for (AccountGroupRel accountGroupRel : accountGroupRels) {
-			AccountGroup accountGroup = _accountGroupService.getAccountGroup(
-				accountGroupRel.getAccountGroupId());
+			AccountGroup accountGroup =
+				_accountGroupLocalService.getAccountGroup(
+					accountGroupRel.getAccountGroupId());
 
 			cProductAccountGroups.add(
 				new CProductAccountGroup(
@@ -89,9 +90,9 @@ public class CommerceProductAccountGroupFDSDataProvider
 	}
 
 	@Reference
-	private AccountGroupRelLocalService _accountGroupRelLocalService;
+	private AccountGroupLocalService _accountGroupLocalService;
 
 	@Reference
-	private AccountGroupService _accountGroupService;
+	private AccountGroupRelLocalService _accountGroupRelLocalService;
 
 }

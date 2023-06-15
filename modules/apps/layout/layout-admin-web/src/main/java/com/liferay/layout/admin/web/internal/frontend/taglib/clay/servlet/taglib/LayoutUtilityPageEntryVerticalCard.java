@@ -167,6 +167,12 @@ public class LayoutUtilityPageEntryVerticalCard extends BaseVerticalCard {
 				getLayoutUtilityPageEntryViewRenderer(
 					_layoutUtilityPageEntry.getType());
 
+		if (layoutUtilityPageEntryViewRenderer == null) {
+			_log.error("Invalid type" + _layoutUtilityPageEntry.getType());
+
+			return null;
+		}
+
 		return layoutUtilityPageEntryViewRenderer.getLabel(
 			themeDisplay.getLocale());
 	}

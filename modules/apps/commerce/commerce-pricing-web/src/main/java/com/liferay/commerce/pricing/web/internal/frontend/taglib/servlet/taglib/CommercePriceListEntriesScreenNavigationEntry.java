@@ -15,6 +15,7 @@
 package com.liferay.commerce.pricing.web.internal.frontend.taglib.servlet.taglib;
 
 import com.liferay.commerce.price.list.model.CommercePriceList;
+import com.liferay.commerce.price.list.service.CommercePriceEntryLocalService;
 import com.liferay.commerce.price.list.service.CommercePriceEntryService;
 import com.liferay.commerce.price.list.service.CommercePriceListService;
 import com.liferay.commerce.pricing.web.internal.display.context.CommercePriceEntryDisplayContext;
@@ -85,7 +86,8 @@ public class CommercePriceListEntriesScreenNavigationEntry
 		try {
 			CommercePriceEntryDisplayContext commercePriceEntryDisplayContext =
 				new CommercePriceEntryDisplayContext(
-					_commerceCatalogService, _commercePriceEntryService,
+					_commerceCatalogService, _commercePriceEntryLocalService,
+					_commercePriceEntryService,
 					_commercePriceListModelResourcePermission,
 					_commercePriceListService, httpServletRequest);
 
@@ -107,6 +109,9 @@ public class CommercePriceListEntriesScreenNavigationEntry
 
 	@Reference
 	private CommerceCatalogService _commerceCatalogService;
+
+	@Reference
+	private CommercePriceEntryLocalService _commercePriceEntryLocalService;
 
 	@Reference
 	private CommercePriceEntryService _commercePriceEntryService;

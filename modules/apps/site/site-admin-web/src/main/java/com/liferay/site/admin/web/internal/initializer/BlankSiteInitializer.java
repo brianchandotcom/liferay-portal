@@ -23,6 +23,7 @@ import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.provider.LayoutUtilityPageEntryDefaultPageElementDefinitionProvider;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -76,6 +77,12 @@ public class BlankSiteInitializer implements SiteInitializer {
 		_addLayoutUtilityPageEntry(
 			404, groupId, "404 Error",
 			LayoutUtilityPageEntryConstants.TYPE_SC_NOT_FOUND);
+
+		if (FeatureFlagManagerUtil.isEnabled("LPS-165914")) {
+			_addLayoutUtilityPageEntry(
+				500, groupId, "500 Error",
+				LayoutUtilityPageEntryConstants.TYPE_SC_INTERNAL_SERVER_ERROR);
+		}
 	}
 
 	@Override

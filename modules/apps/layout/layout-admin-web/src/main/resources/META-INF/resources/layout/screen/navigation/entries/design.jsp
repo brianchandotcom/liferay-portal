@@ -33,10 +33,6 @@ Group group = layoutsAdminDisplayContext.getGroup();
 
 Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 
-Layout draftLayout = selLayout.fetchDraftLayout();
-
-UnicodeProperties typeSettingsUnicodeProperties = draftLayout.getTypeSettingsProperties();
-
 LayoutRevision layoutRevision = LayoutStagingUtil.getLayoutRevision(selLayout);
 %>
 
@@ -79,7 +75,7 @@ LayoutRevision layoutRevision = LayoutStagingUtil.getLayoutRevision(selLayout);
 	<h2 class="c-mb-4 text-7"><liferay-ui:message key="design" /></h2>
 
 	<liferay-frontend:edit-form-body>
-		<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPS-153951") && GetterUtil.getBoolean(typeSettingsUnicodeProperties.getProperty("designConfigurationModified")) %>'>
+		<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPS-153951") && layoutsAdminDisplayContext.isShowPublishedConfigurationMessage() %>'>
 			<clay:alert
 				cssClass="ml-0 sheet-lg"
 				displayType="info"

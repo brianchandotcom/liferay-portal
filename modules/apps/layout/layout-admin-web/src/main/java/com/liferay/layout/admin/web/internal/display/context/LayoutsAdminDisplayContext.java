@@ -1848,6 +1848,28 @@ public class LayoutsAdminDisplayContext {
 		return true;
 	}
 
+	public boolean isShowPublishedConfigurationMessage() {
+		Layout selLayout = getSelLayout();
+
+		Layout draftLayout = selLayout.fetchDraftLayout();
+
+		if (draftLayout == null) {
+			return false;
+		}
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			draftLayout.getTypeSettingsProperties();
+
+		if (GetterUtil.getBoolean(
+				typeSettingsUnicodeProperties.getProperty(
+					"designConfigurationModified"))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isShowUserPrivateLayouts() throws PortalException {
 		Group selGroup = getSelGroup();
 

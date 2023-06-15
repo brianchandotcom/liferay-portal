@@ -21,6 +21,7 @@ import com.liferay.frontend.taglib.clay.sample.web.internal.display.context.Drop
 import com.liferay.frontend.taglib.clay.sample.web.internal.display.context.MultiselectDisplayContext;
 import com.liferay.frontend.taglib.clay.sample.web.internal.display.context.NavigationBarsDisplayContext;
 import com.liferay.frontend.taglib.clay.sample.web.internal.display.context.TabsDisplayContext;
+import com.liferay.frontend.taglib.clay.sample.web.internal.display.context.VerticalNavDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import java.io.IOException;
@@ -81,6 +82,9 @@ public class ClaySamplePortlet extends MVCPortlet {
 		renderRequest.setAttribute(
 			ClaySamplePortletKeys.TABS_DISPLAY_CONTEXT,
 			new TabsDisplayContext());
+		renderRequest.setAttribute(
+			ClaySamplePortletKeys.VERTICAL_NAV_DISPLAY_CONTEXT,
+			new VerticalNavDisplayContext());
 
 		super.doDispatch(renderRequest, renderResponse);
 	}

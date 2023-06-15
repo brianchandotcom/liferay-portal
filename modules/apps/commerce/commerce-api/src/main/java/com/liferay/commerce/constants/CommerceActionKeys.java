@@ -19,6 +19,8 @@ package com.liferay.commerce.constants;
  */
 public class CommerceActionKeys {
 
+	public static final String MANAGE_ALL_ACCOUNTS = "MANAGE_ALL_ACCOUNTS";
+
 	public static final String MANAGE_COMMERCE_AVAILABILITY_ESTIMATES =
 		"MANAGE_COMMERCE_AVAILABILITY_ESTIMATES";
 

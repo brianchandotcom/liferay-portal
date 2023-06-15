@@ -15,7 +15,7 @@
 import {localStorage} from 'frontend-js-web';
 
 export function getSettingValue(defaultValue, sessionClicksValue, key) {
-	if (themeDisplay.isSignedIn() && sessionClicksValue !== null) {
+	if (themeDisplay.isSignedIn() && !isNullOrUndefined(sessionClicksValue)) {
 		return sessionClicksValue;
 	}
 	else {
@@ -24,12 +24,16 @@ export function getSettingValue(defaultValue, sessionClicksValue, key) {
 			localStorage.TYPES.FUNCTIONAL
 		);
 
-		if (localStorageValue !== null) {
+		if (!isNullOrUndefined(localStorageValue)) {
 			return localStorageValue === 'true' ? true : false;
 		}
 	}
 
 	return defaultValue;
+}
+
+export function isNullOrUndefined(value) {
+	return value === null || value === undefined;
 }
 
 export function toggleClassName(className, value) {

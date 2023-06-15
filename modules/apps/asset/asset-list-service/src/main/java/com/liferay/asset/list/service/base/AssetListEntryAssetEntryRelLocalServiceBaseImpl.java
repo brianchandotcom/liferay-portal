@@ -657,10 +657,6 @@ public abstract class AssetListEntryAssetEntryRelLocalServiceBaseImpl
 		assetListEntryAssetEntryRelPersistence;
 
 	@Reference
-	protected AssetListEntryAssetEntryRelFinder
-		assetListEntryAssetEntryRelFinder;
-
-	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 

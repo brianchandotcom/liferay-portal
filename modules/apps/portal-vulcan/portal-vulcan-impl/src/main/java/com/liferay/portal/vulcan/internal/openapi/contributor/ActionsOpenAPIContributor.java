@@ -65,7 +65,7 @@ public class ActionsOpenAPIContributor implements OpenAPIContributor {
 				continue;
 			}
 
-			Map<String, Schema> actionsProperties = new HashMap<>();
+			Map<String, Schema> actionsSchemas = new HashMap<>();
 
 			Map<String, ActionInfo> actionInfos =
 				dtoActionProvider.getActionInfos();
@@ -82,7 +82,7 @@ public class ActionsOpenAPIContributor implements OpenAPIContributor {
 					continue;
 				}
 
-				actionsProperties.put(
+				actionsSchemas.put(
 					actionInfoEntry.getKey(),
 					_getActionSchema(
 						actionInfoEntry.getKey(), actionInfoEntry.getValue(),
@@ -100,7 +100,7 @@ public class ActionsOpenAPIContributor implements OpenAPIContributor {
 				new MapSchema() {
 					{
 						setDescription(actionsSchema.getDescription());
-						setProperties(actionsProperties);
+						setProperties(actionsSchemas);
 						setReadOnly(actionsSchema.getReadOnly());
 					}
 				});

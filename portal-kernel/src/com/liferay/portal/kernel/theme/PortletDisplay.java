@@ -517,7 +517,7 @@ public class PortletDisplay implements Cloneable, Serializable {
 
 		if (layoutMode.equals(Constants.VIEW) &&
 			(layout.isTypeAssetDisplay() || layout.isTypeContent()) &&
-			showPortletTopper) {
+			!showPortletTopper) {
 
 			return false;
 		}

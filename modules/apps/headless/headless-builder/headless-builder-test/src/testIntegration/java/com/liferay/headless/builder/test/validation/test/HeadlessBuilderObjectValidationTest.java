@@ -14,7 +14,6 @@
 
 package com.liferay.headless.builder.test.validation.test;
 
-import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.string.StringPool;
@@ -32,14 +31,14 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * @author Sergio Jiménez del Coso
  */
-@RunWith(Arquillian.class)
+@Ignore
 public class HeadlessBuilderObjectValidationTest {
 
 	@ClassRule

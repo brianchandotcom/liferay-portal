@@ -75,15 +75,15 @@ function triggerAction(trigger, executeInfoItemActionURL) {
 	const {
 		lfrClassNameId: classNameId,
 		lfrClassPk: classPK,
-		lfrErrorInteraction: errorInteraction,
-		lfrErrorPageUrl: errorPageURL,
-		lfrErrorReload: errorReload,
-		lfrErrorText: errorText,
 		lfrFieldId: fieldId,
-		lfrSuccessInteraction: successInteraction,
-		lfrSuccessPageUrl: successPageURL,
-		lfrSuccessReload: successReload,
-		lfrSuccessText: successText,
+		lfrOnErrorInteraction: errorInteraction,
+		lfrOnErrorPageUrl: errorPageURL,
+		lfrOnErrorReload: errorReload,
+		lfrOnErrorText: errorText,
+		lfrOnSuccessInteraction: successInteraction,
+		lfrOnSuccessPageUrl: successPageURL,
+		lfrOnSuccessReload: successReload,
+		lfrOnSuccessText: successText,
 	} = trigger.dataset;
 
 	if (!fieldId) {

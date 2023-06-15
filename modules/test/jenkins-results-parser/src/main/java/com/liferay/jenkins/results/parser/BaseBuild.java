@@ -762,7 +762,7 @@ public abstract class BaseBuild implements Build {
 
 		if (_jenkinsConsoleTextLoader == null) {
 			_jenkinsConsoleTextLoader = new JenkinsConsoleTextLoader(
-				getBuildURL());
+				getBuildURL(), this instanceof TopLevelBuild);
 		}
 
 		return _jenkinsConsoleTextLoader.getConsoleText();

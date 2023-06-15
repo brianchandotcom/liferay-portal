@@ -21,7 +21,7 @@ const ITEM_TYPES_SYMBOL = {
 
 const SELECT_EVENT_NAME = 'selectKBMoveFolder';
 
-export default function MoveModal({items: initialItems, itemToMoveParent}) {
+export default function MoveModal({itemToMoveParent, items: initialItems}) {
 	const items = useMemo(() => normalizeItems(initialItems), [initialItems]);
 
 	const searchItems = useMemo(() => getSearchItems(initialItems), [
@@ -53,7 +53,10 @@ export default function MoveModal({items: initialItems, itemToMoveParent}) {
 			<SearchField
 				handleSearchChange={handleSearchChange}
 				items={searchItems}
-				placeholder={sub(Liferay.Language.get('search-in-x'), "destination-folders")}
+				placeholder={sub(
+					Liferay.Language.get('search-in-x'),
+					'destination-folders'
+				)}
 			/>
 
 			{!searchActive && (
@@ -65,14 +68,19 @@ export default function MoveModal({items: initialItems, itemToMoveParent}) {
 					onItemMove={handleItemMove}
 					showExpanderOnHover={false}
 				>
-					{(item, selection) => { 
+					{(item, selection) => {
 						return (
 							<ClayTreeView.Item
 								className={classnames({
-									'knowledge-base-navigation-item-active': selection.has(item.id),
+									'knowledge-base-navigation-item-active': selection.has(
+										item.id
+									),
 								})}
 								onClick={(event) => {
-									selection.has(item.id) ? null : selection.toggle(item.id);
+									if (!selection.has(item.id)) {
+										selection.toggle(item.id);
+									}
+
 									onItemClick(item, event);
 								}}
 							>

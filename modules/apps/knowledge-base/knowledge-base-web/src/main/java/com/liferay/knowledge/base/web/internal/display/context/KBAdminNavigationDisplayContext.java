@@ -13,10 +13,9 @@ import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.model.KBTemplate;
+import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
 import com.liferay.knowledge.base.service.KBArticleServiceUtil;
 import com.liferay.knowledge.base.service.KBFolderLocalServiceUtil;
-import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
-
 import com.liferay.knowledge.base.service.KBFolderServiceUtil;
 import com.liferay.knowledge.base.service.KBTemplateServiceUtil;
 import com.liferay.knowledge.base.util.comparator.KBArticleTitleComparator;
@@ -43,11 +42,9 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.SessionClicks;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.LiferayPortletUtil;
-import org.osgi.service.component.annotations.Reference;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -59,8 +56,6 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
-
-import static java.lang.Long.parseLong;
 
 /**
  * @author Sergio González
@@ -98,6 +93,43 @@ public class KBAdminNavigationDisplayContext {
 			).setLabel(
 				LanguageUtil.get(_httpServletRequest, "details")
 			).build());
+	}
+
+	public long getItemToMoveParent(String itemToMoveType)
+		throws PortalException {
+
+		long itemToMoveId = ParamUtil.getLong(
+			_httpServletRequest, "itemToMoveId");
+		long parentKbObjectId;
+
+		if (itemToMoveType.equals("Folder")) {
+			KBFolder kbFolder = KBFolderLocalServiceUtil.getKBFolder(
+				itemToMoveId);
+
+			parentKbObjectId = kbFolder.getParentKBFolderId();
+		}
+		else {
+			int articleVersion = ParamUtil.getInteger(
+				_httpServletRequest, "itemVersion");
+
+			KBArticle kbArticle = KBArticleLocalServiceUtil.getKBArticle(
+				itemToMoveId, articleVersion);
+
+			if (kbArticle.getParentResourceClassNameId() ==
+					ClassNameLocalServiceUtil.getClassNameId(
+						KBFolder.class.getName())) {
+
+				parentKbObjectId = KBFolderServiceUtil.getKBFolder(
+					kbArticle.getParentResourcePrimKey()
+				).getKbFolderId();
+			}
+			else {
+				parentKbObjectId = kbArticle.getParentKBArticle(
+				).getResourcePrimKey();
+			}
+		}
+
+		return parentKbObjectId;
 	}
 
 	public JSONArray getKBFolderDataJSONArray() throws PortalException {
@@ -273,12 +305,13 @@ public class KBAdminNavigationDisplayContext {
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, WorkflowConstants.STATUS_ANY,
 			new KBArticleTitleComparator(true));
 
-		long kbEntryToMoveId =
-			ParamUtil.getLong(_httpServletRequest, "itemToMoveId", -1);
+		long kbEntryToMoveId = ParamUtil.getLong(
+			_httpServletRequest, "itemToMoveId", -1);
 
 		for (KBArticle kbArticle : kbArticles) {
-			if(kbEntryToMoveId == -1 ||
-			   kbEntryToMoveId != kbArticle.getResourcePrimKey()){
+			if ((kbEntryToMoveId == -1) ||
+				(kbEntryToMoveId != kbArticle.getResourcePrimKey())) {
+
 				childrenJSONArray.put(
 					JSONUtil.put(
 						"actions",
@@ -302,32 +335,11 @@ public class KBAdminNavigationDisplayContext {
 					));
 			}
 		}
+
 		return childrenJSONArray;
 	}
 
-
-	public long getItemToMoveParent(String itemToMoveType) throws PortalException{
-		long itemToMoveId = parseLong(ParamUtil.getString(_httpServletRequest, "itemToMoveId"));
-		long parentKbObjectId;
-
-		if (itemToMoveType.equals("Folder")){
-			KBFolder kbFolder = KBFolderLocalServiceUtil.getKBFolder(itemToMoveId);
-			parentKbObjectId = kbFolder.getParentKBFolderId();
-		} else {
-			int articleVersion = ParamUtil.getInteger(_httpServletRequest, "itemVersion");
-			KBArticle kbArticle = KBArticleLocalServiceUtil.getKBArticle(itemToMoveId, articleVersion);
-
-			if (kbArticle.getParentResourceClassNameId() == ClassNameLocalServiceUtil.getClassNameId(KBFolder.class.getName())) {
-				parentKbObjectId = KBFolderServiceUtil.getKBFolder(kbArticle.getParentResourcePrimKey()).getKbFolderId();
-			} else {
-				parentKbObjectId = kbArticle.getParentKBArticle().getResourcePrimKey();
-			}
-		}
-
-		return parentKbObjectId;
-	}
-
-	private KBFolder _getKBFolder(long  kbFolderId) throws PortalException {
+	private KBFolder _getKBFolder(long kbFolderId) throws PortalException {
 		if (kbFolderId != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			return KBFolderServiceUtil.getKBFolder(kbFolderId);
 		}
@@ -346,8 +358,13 @@ public class KBAdminNavigationDisplayContext {
 			new KBObjectsPriorityComparator<>(true));
 
 		long itemToMoveId = -1;
-		if(!ParamUtil.getString(_httpServletRequest, "itemToMoveId").isEmpty()){
-			itemToMoveId = parseLong(ParamUtil.getString(_httpServletRequest, "itemToMoveId"));
+
+		if (!ParamUtil.getString(
+				_httpServletRequest, "itemToMoveId"
+			).isEmpty()) {
+
+			itemToMoveId = ParamUtil.getLong(
+				_httpServletRequest, "itemToMoveId");
 		}
 
 		for (Object kbObject : kbObjects) {
@@ -355,7 +372,8 @@ public class KBAdminNavigationDisplayContext {
 
 			if (kbObject instanceof KBFolder) {
 				KBFolder kbFolder = (KBFolder)kbObject;
-				if( itemToMoveId != kbFolder.getKbFolderId()){
+
+				if (itemToMoveId != kbFolder.getKbFolderId()) {
 					jsonObject.put(
 						"actions",
 						_kbDropdownItemsProvider.getKBFolderDropdownItems(
@@ -372,7 +390,8 @@ public class KBAdminNavigationDisplayContext {
 						).setMVCPath(
 							"/admin/view_kb_folders.jsp"
 						).setParameter(
-							"parentResourceClassNameId", kbFolder.getClassNameId()
+							"parentResourceClassNameId",
+							kbFolder.getClassNameId()
 						).setParameter(
 							"parentResourcePrimKey", kbFolder.getKbFolderId()
 						).setParameter(
@@ -389,7 +408,8 @@ public class KBAdminNavigationDisplayContext {
 			}
 			else {
 				KBArticle kbArticle = (KBArticle)kbObject;
-				if( itemToMoveId != kbArticle.getResourcePrimKey()){
+
+				if (itemToMoveId != kbArticle.getResourcePrimKey()) {
 					jsonObject.put(
 						"actions",
 						_kbDropdownItemsProvider.getKBArticleDropdownItems(
@@ -413,7 +433,7 @@ public class KBAdminNavigationDisplayContext {
 				}
 			}
 
-			if(!jsonObject.isNull("id")){
+			if (!jsonObject.isNull("id")) {
 				childrenJSONArray.put(jsonObject);
 			}
 		}

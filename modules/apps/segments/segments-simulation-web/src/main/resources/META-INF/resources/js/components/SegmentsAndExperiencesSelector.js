@@ -53,19 +53,12 @@ function SegmentsAndExperiencesSelector({
 	] = useState(segmentsExperiences?.[0]?.id);
 
 	const formRef = useRef(null);
+	const firstRenderRef = useRef(true);
 
 	const fetchDeactivateSimulation = useCallback(() => {
 		fetch(deactivateSimulationURL, {
 			body: new FormData(formRef.current),
 			method: 'POST',
-		}).then(() => {
-			const simulationElements = document.querySelectorAll(
-				`#${formRef.current.id} input`
-			);
-
-			for (let i = 0; i < simulationElements.length; i++) {
-				simulationElements[i].setAttribute('checked', false);
-			}
 		});
 	}, [deactivateSimulationURL]);
 
@@ -82,6 +75,17 @@ function SegmentsAndExperiencesSelector({
 		});
 	}, [simulateSegmentsEntriesURL]);
 
+	const simulateSegmentsExperiment = useCallback((experience) => {
+		const iframe = document.querySelector('iframe');
+
+		if (iframe?.contentWindow) {
+			const url = new URL(iframe.contentWindow.location.href);
+
+			url.searchParams.set('segmentsExperienceId', experience);
+			iframe.src = url.toString();
+		}
+	}, []);
+
 	useEffect(() => {
 		const deactivateSimulationEventHandler = Liferay.on(
 			'SimulationMenu:closeSimulationPanel',
@@ -90,7 +94,10 @@ function SegmentsAndExperiencesSelector({
 
 		const openSimulationPanelEventHandler = Liferay.on(
 			'SimulationMenu:openSimulationPanel',
-			simulateSegmentsEntries
+			() => {
+				firstRenderRef.current = false;
+				simulateSegmentsEntries();
+			}
 		);
 
 		return () => {
@@ -100,12 +107,40 @@ function SegmentsAndExperiencesSelector({
 	}, [fetchDeactivateSimulation, simulateSegmentsEntries]);
 
 	useEffect(() => {
-		simulateSegmentsEntries();
+		if (!firstRenderRef.current) {
+			simulateSegmentsEntries();
+		}
+	}, [selectedSegmentEntry, simulateSegmentsEntries]);
+
+	useEffect(() => {
+		if (!firstRenderRef.current) {
+			simulateSegmentsExperiment(selectedSegmentsExperience);
+		}
+	}, [selectedSegmentsExperience, simulateSegmentsExperiment]);
+
+	useEffect(() => {
+		if (firstRenderRef.current) {
+			return;
+		}
+
+		const iframe = document.querySelector('iframe');
+
+		if (selectedPreviewOption === 'segments') {
+			const url = new URL(iframe.contentWindow.location.href);
+			url.searchParams.delete('segmentsExperienceId');
+
+			iframe.src = url.toString();
+
+			simulateSegmentsEntries();
+		}
+		else {
+			simulateSegmentsExperiment(selectedSegmentsExperience);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [
-		selectedSegmentsExperience,
 		selectedPreviewOption,
-		selectedSegmentEntry,
 		simulateSegmentsEntries,
+		simulateSegmentsExperiment,
 	]);
 
 	return (

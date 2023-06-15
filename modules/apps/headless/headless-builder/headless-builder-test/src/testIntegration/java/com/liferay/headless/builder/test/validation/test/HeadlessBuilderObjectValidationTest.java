@@ -26,8 +26,6 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.test.log.LogCapture;
-import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -59,29 +57,23 @@ public class HeadlessBuilderObjectValidationTest {
 
 	@Test
 	public void testInvalidBaseURLPathAPIApplication() throws Exception {
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.portal.vulcan.internal.jaxrs.exception.mapper." +
-					"WebApplicationExceptionMapper",
-				LoggerTestUtil.WARN)) {
+		JSONObject jsonObject = HTTPTestUtil.invoke(
+			JSONUtil.put(
+				"applicationStatus", "draft"
+			).put(
+				"baseURL",
+				RandomTestUtil.randomString() + StringPool.FORWARD_SLASH
+			).put(
+				"title", RandomTestUtil.randomString()
+			).toString(),
+			_apiApplicationObjectDefinition.getRESTContextPath(),
+			Http.Method.POST);
 
-			JSONObject jsonObject = HTTPTestUtil.invoke(
-				JSONUtil.put(
-					"applicationStatus", "draft"
-				).put(
-					"baseURL",
-					RandomTestUtil.randomString() + StringPool.FORWARD_SLASH
-				).put(
-					"title", RandomTestUtil.randomString()
-				).toString(),
-				_apiApplicationObjectDefinition.getRESTContextPath(),
-				Http.Method.POST);
-
-			Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
-			Assert.assertEquals(
-				"Base URL should not have blank spaces and special " +
-					"characters with a maximum of 255 characters",
-				jsonObject.get("title"));
-		}
+		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
+		Assert.assertEquals(
+			"Base URL should not have blank spaces and special characters " +
+				"with a maximum of 255 characters",
+			jsonObject.get("title"));
 	}
 
 	@Test

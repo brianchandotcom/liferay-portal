@@ -14,6 +14,7 @@
 
 package com.liferay.object.admin.rest.resource.v1_0.test;
 
+import com.liferay.account.model.AccountEntry;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectField;
@@ -22,8 +23,10 @@ import com.liferay.object.admin.rest.client.pagination.Page;
 import com.liferay.object.admin.rest.client.problem.Problem;
 import com.liferay.object.admin.rest.client.serdes.v1_0.ObjectDefinitionSerDes;
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.exception.NoSuchObjectDefinitionException;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -31,6 +34,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -40,6 +44,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -238,10 +243,67 @@ public class ObjectDefinitionResourceTest
 	public void testPutObjectDefinition() throws Exception {
 		super.testPutObjectDefinition();
 
-		ObjectDefinition postObjectDefinition =
-			testPutObjectDefinition_addObjectDefinition();
+		// Account Entry with Account restriction
 
 		ObjectDefinition randomObjectDefinition = randomObjectDefinition();
+
+		randomObjectDefinition.setSystem(false);
+
+		ObjectDefinition postObjectDefinition =
+			objectDefinitionResource.postObjectDefinition(
+				randomObjectDefinition);
+
+		com.liferay.object.model.ObjectDefinition
+			serviceBuilderAccountEntryObjectDefinition =
+				_objectDefinitionLocalService.fetchSystemObjectDefinition(
+					AccountEntry.class.getSimpleName());
+
+		_objectDefinitionLocalService.enableAccountEntryRestricted(
+			_objectRelationshipLocalService.addObjectRelationship(
+				TestPropsValues.getUserId(),
+				serviceBuilderAccountEntryObjectDefinition.
+					getObjectDefinitionId(),
+				postObjectDefinition.getId(), 0,
+				ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"a" + RandomTestUtil.randomString(),
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY));
+
+		postObjectDefinition = objectDefinitionResource.getObjectDefinition(
+			postObjectDefinition.getId());
+
+		Assert.assertTrue(postObjectDefinition.getAccountEntryRestricted());
+
+		String accountEntryRestrictedObjectFieldName =
+			postObjectDefinition.getAccountEntryRestrictedObjectFieldName();
+
+		ObjectDefinition accountEntryObjectDefinition =
+			objectDefinitionResource.getObjectDefinition(
+				serviceBuilderAccountEntryObjectDefinition.
+					getObjectDefinitionId());
+
+		accountEntryObjectDefinition.setExternalReferenceCode(
+			RandomTestUtil.randomString());
+
+		objectDefinitionResource.putObjectDefinition(
+			accountEntryObjectDefinition.getId(), accountEntryObjectDefinition);
+
+		postObjectDefinition = objectDefinitionResource.getObjectDefinition(
+			postObjectDefinition.getId());
+
+		Assert.assertTrue(postObjectDefinition.getAccountEntryRestricted());
+		Assert.assertEquals(
+			accountEntryRestrictedObjectFieldName,
+			postObjectDefinition.getAccountEntryRestrictedObjectFieldName());
+
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			postObjectDefinition.getId());
+
+		// Must not update storage type
+
+		postObjectDefinition = testPutObjectDefinition_addObjectDefinition();
+
+		randomObjectDefinition = randomObjectDefinition();
 
 		randomObjectDefinition.setStorageType(
 			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT);
@@ -426,5 +488,8 @@ public class ObjectDefinitionResourceTest
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Inject
+	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
 }

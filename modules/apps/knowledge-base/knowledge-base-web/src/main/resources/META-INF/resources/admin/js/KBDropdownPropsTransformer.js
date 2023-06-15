@@ -13,6 +13,7 @@
  */
 
 import {
+	addParams,
 	fetch,
 	objectToFormData,
 	openConfirmModal,
@@ -45,10 +46,10 @@ const ACTIONS = {
 
 	move(
 		{
-			itemClassNameId,
-			itemId,
-			itemType,
-			kbItemTitle,
+			kbEntryClassNameId,
+			kbEntryId,
+			kbEntryTitle,
+			kbEntryType,
 			moveKBItemActionURL,
 			moveKBItemModalURL,
 		},
@@ -60,7 +61,7 @@ const ACTIONS = {
 			multiple: true,
 			onSelect: ({destinationItem, index}) => {
 				if (
-					itemType === ITEM_TYPES.folder &&
+					kbEntryType === ITEM_TYPES.folder &&
 					destinationItem.type === ITEM_TYPES.article
 				) {
 					openToast({
@@ -77,8 +78,8 @@ const ACTIONS = {
 					body: objectToFormData({
 						[`${portletNamespace}dragAndDrop`]: true,
 						[`${portletNamespace}position`]: index?.next ?? -1,
-						[`${portletNamespace}resourceClassNameId`]: itemClassNameId,
-						[`${portletNamespace}resourcePrimKey`]: itemId,
+						[`${portletNamespace}resourceClassNameId`]: kbEntryClassNameId,
+						[`${portletNamespace}resourcePrimKey`]: kbEntryId,
 						[`${portletNamespace}parentResourceClassNameId`]: destinationItem.classNameId,
 						[`${portletNamespace}parentResourcePrimKey`]: destinationItem.id,
 					}),
@@ -115,8 +116,11 @@ const ACTIONS = {
 			},
 			selectEventName: `selectKBMoveFolder`,
 			size: 'md',
-			title: sub(Liferay.Language.get('move-x-to'), kbItemTitle),
-			url: moveKBItemModalURL,
+			title: sub(Liferay.Language.get('move-x-to'), kbEntryTitle),
+			url: addParams(
+				`${portletNamespace}kbEntryToMoveId=${kbEntryId}&${portletNamespace}kbEntryToMoveType=${kbEntryType}`,
+				moveKBItemModalURL
+			),
 		});
 	},
 

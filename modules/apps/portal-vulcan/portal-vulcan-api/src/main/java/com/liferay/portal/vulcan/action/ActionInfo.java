@@ -20,15 +20,15 @@ package com.liferay.portal.vulcan.action;
 public class ActionInfo {
 
 	public ActionInfo(
-		String actionKey, Class<?> resourceClass, String resourceMethodName) {
+		String actionName, Class<?> resourceClass, String resourceMethodName) {
 
-		_actionKey = actionKey;
+		_actionName = actionName;
 		_resourceClass = resourceClass;
 		_resourceMethodName = resourceMethodName;
 	}
 
-	public String getActionKey() {
-		return _actionKey;
+	public String getActionName() {
+		return _actionName;
 	}
 
 	public Class<?> getResourceClass() {
@@ -39,7 +39,7 @@ public class ActionInfo {
 		return _resourceMethodName;
 	}
 
-	private final String _actionKey;
+	private final String _actionName;
 	private final Class<?> _resourceClass;
 	private final String _resourceMethodName;
 

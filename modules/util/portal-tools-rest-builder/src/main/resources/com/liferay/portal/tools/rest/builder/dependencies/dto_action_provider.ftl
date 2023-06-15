@@ -41,11 +41,11 @@ public class ${schemaName}DTOActionProvider implements DTOActionProvider {
 		for (String actionName : ${schemaVarName}DTOActionMetadataProvider.getActionNames()) {
 			ActionInfo actionInfo = ${schemaVarName}DTOActionMetadataProvider.getActionInfo(actionName);
 
-			if (actionInfo == null || actionInfo.getActionKey() == null || actionInfo.getResourceMethodName() == null) {
+			if (actionInfo == null || actionInfo.getActionName() == null || actionInfo.getResourceMethodName() == null) {
 				continue;
 			}
 
-			actions.put(actionName, ActionUtil.addAction(actionInfo.getActionKey(), actionInfo.getResourceClass(), primaryKey, actionInfo.getResourceMethodName(), _scopeChecker,userId, ${schemaVarName}DTOActionMetadataProvider.getPermissionName(), groupId, () -> UriInfoUtil.getBaseUriBuilder("${configYAML.application.baseURI?remove_beginning("/")}", uriInfo), uriInfo));
+			actions.put(actionName, ActionUtil.addAction(actionInfo.getActionName(), actionInfo.getResourceClass(), primaryKey, actionInfo.getResourceMethodName(), _scopeChecker,userId, ${schemaVarName}DTOActionMetadataProvider.getPermissionName(), groupId, () -> UriInfoUtil.getBaseUriBuilder("${configYAML.application.baseURI?remove_beginning("/")}", uriInfo), uriInfo));
 		}
 
 		return actions;

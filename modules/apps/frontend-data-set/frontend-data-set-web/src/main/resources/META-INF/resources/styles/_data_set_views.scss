@@ -1,21 +1,8 @@
 .data-views-list-sheet {
 
-    background-color: $white;
-    border-color: $border-color;
-    border-style: solid;
-    border-width: $border-width;
-    border-radius: map-get($spacers, 1);
+    .sheet-header{
 
-    & .data-views-list-header {
-        padding-top: map-get($spacers, 4);
-        padding-right: map-get($spacers, 4);
-        padding-left: map-get($spacers, 4);
-        border-bottom: 1px solid $gray-200;
-    }
-
-    & .list-group {
-        padding-top: map-get($spacers, 4);
-        padding-right: map-get($spacers, 4);
-        padding-left: map-get($spacers, 4);
+    border-bottom: 1px solid $gray-200;
+    margin-bottom: map-get($spacers, 4);
     }
 }

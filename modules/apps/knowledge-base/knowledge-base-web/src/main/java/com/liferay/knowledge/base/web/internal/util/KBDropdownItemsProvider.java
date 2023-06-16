@@ -729,9 +729,10 @@ public class KBDropdownItemsProvider {
 					"kbEntryClassNameId",
 					String.valueOf(kbArticle.getClassNameId()));
 				dropdownItem.putData(
-					"kbEntryId", String.valueOf(kbArticle.getResourcePrimKey()));
-				dropdownItem.putData("kbEntryType", KBConstants.TYPE_ARTICLE);
+					"kbEntryId",
+					String.valueOf(kbArticle.getResourcePrimKey()));
 				dropdownItem.putData("kbEntryTitle", kbArticle.getTitle());
+				dropdownItem.putData("kbEntryType", KBConstants.TYPE_ARTICLE);
 				dropdownItem.putData(
 					"moveKBItemActionURL",
 					PortletURLBuilder.createActionURL(
@@ -798,8 +799,8 @@ public class KBDropdownItemsProvider {
 					String.valueOf(kbFolder.getClassNameId()));
 				dropdownItem.putData(
 					"kbEntryId", String.valueOf(kbFolder.getKbFolderId()));
-				dropdownItem.putData("kbEntryType", KBConstants.TYPE_FOLDER);
 				dropdownItem.putData("kbEntryTitle", kbFolder.getName());
+				dropdownItem.putData("kbEntryType", KBConstants.TYPE_FOLDER);
 				dropdownItem.putData(
 					"moveKBItemActionURL",
 					PortletURLBuilder.createActionURL(

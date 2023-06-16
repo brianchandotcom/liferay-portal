@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.site.initializer.extender.internal.util;
+package com.liferay.site.initializer.extender;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.site.initializer.extender.internal.configuration;
+package com.liferay.site.initializer.extender.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -21,7 +21,7 @@ import aQute.bnd.annotation.metatype.Meta;
  */
 @Meta.OCD(
 	factory = true,
-	id = "com.liferay.site.initializer.extender.internal.configuration.SiteInitializerConfiguration"
+	id = "com.liferay.site.initializer.extender.configuration.SiteInitializerConfiguration"
 )
 public interface SiteInitializerConfiguration {
 

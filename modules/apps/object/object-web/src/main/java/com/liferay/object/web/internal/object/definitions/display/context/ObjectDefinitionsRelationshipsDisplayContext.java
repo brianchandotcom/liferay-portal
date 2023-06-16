@@ -92,8 +92,12 @@ public class ObjectDefinitionsRelationshipsDisplayContext
 
 		return Arrays.asList(
 			new FDSActionDropdownItem(
-				getEditObjectRelationshipURL(), "view", "view",
-				LanguageUtil.get(objectRequestHelper.getRequest(), "view"),
+				getEditObjectRelationshipURL(),
+				hasUpdateObjectDefinitionPermission() ? "pencil" : "view",
+				hasUpdateObjectDefinitionPermission() ? "edit" : "view",
+				LanguageUtil.get(
+					objectRequestHelper.getRequest(),
+					hasUpdateObjectDefinitionPermission() ? "edit" : "view"),
 				"get", null, "sidePanel"),
 			new FDSActionDropdownItem(
 				null, "trash", "deleteObjectRelationship",

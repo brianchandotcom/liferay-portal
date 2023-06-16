@@ -66,8 +66,12 @@ public class ObjectDefinitionsLayoutsDisplayContext
 
 		return Arrays.asList(
 			new FDSActionDropdownItem(
-				getEditObjectLayoutsURL(), "view", "view",
-				LanguageUtil.get(objectRequestHelper.getRequest(), "view"),
+				getEditObjectLayoutsURL(),
+				hasUpdateObjectDefinitionPermission() ? "pencil" : "view",
+				hasUpdateObjectDefinitionPermission() ? "edit" : "view",
+				LanguageUtil.get(
+					objectRequestHelper.getRequest(),
+					hasUpdateObjectDefinitionPermission() ? "edit" : "view"),
 				"get", null, "sidePanel"),
 			new FDSActionDropdownItem(
 				"/o/object-admin/v1.0/object-layouts/{id}", "trash", "delete",

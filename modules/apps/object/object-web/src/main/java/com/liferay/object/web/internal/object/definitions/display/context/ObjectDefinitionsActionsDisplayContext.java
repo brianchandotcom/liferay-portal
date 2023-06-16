@@ -98,8 +98,11 @@ public class ObjectDefinitionsActionsDisplayContext
 				).setWindowState(
 					LiferayWindowState.POP_UP
 				).buildString(),
-				"view", "view",
-				LanguageUtil.get(objectRequestHelper.getRequest(), "view"),
+				hasUpdateObjectDefinitionPermission() ? "pencil" : "view",
+				hasUpdateObjectDefinitionPermission() ? "edit" : "view",
+				LanguageUtil.get(
+					objectRequestHelper.getRequest(),
+					hasUpdateObjectDefinitionPermission() ? "edit" : "view"),
 				"get", null, "sidePanel"),
 			new FDSActionDropdownItem(
 				"/o/object-admin/v1.0/object-actions/{id}", "trash", "delete",

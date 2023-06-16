@@ -73,8 +73,12 @@ public class ObjectDefinitionsStateManagerDisplayContext
 
 		return Collections.singletonList(
 			new FDSActionDropdownItem(
-				getEditObjectValidationURL(), "view", "view",
-				LanguageUtil.get(objectRequestHelper.getRequest(), "view"),
+				getEditObjectValidationURL(),
+				hasUpdateObjectDefinitionPermission() ? "pencil" : "view",
+				hasUpdateObjectDefinitionPermission() ? "edit" : "view",
+				LanguageUtil.get(
+					objectRequestHelper.getRequest(),
+					hasUpdateObjectDefinitionPermission() ? "edit" : "view"),
 				"get", null, "sidePanel"));
 	}
 

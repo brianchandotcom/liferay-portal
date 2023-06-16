@@ -62,8 +62,12 @@ public class ObjectDefinitionsViewsDisplayContext
 
 		return Arrays.asList(
 			new FDSActionDropdownItem(
-				getEditObjectViewsURL(), "view", "view",
-				LanguageUtil.get(objectRequestHelper.getRequest(), "view"),
+				getEditObjectViewsURL(),
+				hasUpdateObjectDefinitionPermission() ? "pencil" : "view",
+				hasUpdateObjectDefinitionPermission() ? "edit" : "view",
+				LanguageUtil.get(
+					objectRequestHelper.getRequest(),
+					hasUpdateObjectDefinitionPermission() ? "edit" : "view"),
 				"get", null, "sidePanel"),
 			new FDSActionDropdownItem(
 				"/o/object-admin/v1.0/object-views/{id}/copy", "copy", "copy",

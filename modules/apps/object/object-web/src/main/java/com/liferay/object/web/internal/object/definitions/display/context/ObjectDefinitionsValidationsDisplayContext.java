@@ -75,8 +75,12 @@ public class ObjectDefinitionsValidationsDisplayContext
 
 		return Arrays.asList(
 			new FDSActionDropdownItem(
-				getEditObjectValidationURL(), "view", "view",
-				LanguageUtil.get(objectRequestHelper.getRequest(), "view"),
+				getEditObjectValidationURL(),
+				hasUpdateObjectDefinitionPermission() ? "pencil" : "view",
+				hasUpdateObjectDefinitionPermission() ? "edit" : "view",
+				LanguageUtil.get(
+					objectRequestHelper.getRequest(),
+					hasUpdateObjectDefinitionPermission() ? "edit" : "view"),
 				"get", null, "sidePanel"),
 			new FDSActionDropdownItem(
 				"/o/object-admin/v1.0/object-validation-rules/{id}", "trash",

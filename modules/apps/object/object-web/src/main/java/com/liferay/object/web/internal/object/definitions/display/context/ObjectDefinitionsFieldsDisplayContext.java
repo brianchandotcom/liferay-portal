@@ -124,8 +124,12 @@ public class ObjectDefinitionsFieldsDisplayContext
 
 		return Arrays.asList(
 			new FDSActionDropdownItem(
-				getEditObjectFieldURL(), "view", "view",
-				LanguageUtil.get(objectRequestHelper.getRequest(), "view"),
+				getEditObjectFieldURL(),
+				hasUpdateObjectDefinitionPermission() ? "pencil" : "view",
+				hasUpdateObjectDefinitionPermission() ? "edit" : "view",
+				LanguageUtil.get(
+					objectRequestHelper.getRequest(),
+					hasUpdateObjectDefinitionPermission() ? "edit" : "view"),
 				"get", null, "sidePanel"),
 			fdsActionDropdownItem);
 	}

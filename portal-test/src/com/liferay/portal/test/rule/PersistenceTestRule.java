@@ -15,7 +15,6 @@
 package com.liferay.portal.test.rule;
 
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
-import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.ModelListenerRegistrationUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AbstractTestRule;
@@ -23,7 +22,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.junit.runner.Description;
@@ -38,16 +36,20 @@ public class PersistenceTestRule extends AbstractTestRule<Object, Object> {
 
 	@Override
 	public void afterMethod(
-		Description description, Object copyModelListeners, Object target) {
+		Description description, Object copiedServiceTrackerBuckets,
+		Object target) {
 
 		CacheRegistryUtil.setActive(true);
 
-		Map<Class<?>, List<ModelListener<?>>> modelListeners =
-			ReflectionTestUtil.getFieldValue(
-				ModelListenerRegistrationUtil.class, "_modelListeners");
+		Object modelListeners = ReflectionTestUtil.getFieldValue(
+			ModelListenerRegistrationUtil.class, "_modelListeners");
 
-		modelListeners.putAll(
-			(Map<Class<?>, List<ModelListener<?>>>)copyModelListeners);
+		Map<Object, Object> serviceTrackerBuckets =
+			ReflectionTestUtil.getFieldValue(
+				modelListeners, "_serviceTrackerBuckets");
+
+		serviceTrackerBuckets.putAll(
+			(Map<Object, Object>)copiedServiceTrackerBuckets);
 	}
 
 	@Override
@@ -59,20 +61,23 @@ public class PersistenceTestRule extends AbstractTestRule<Object, Object> {
 	public Object beforeMethod(Description description, Object target)
 		throws Exception {
 
-		Map<Class<?>, List<ModelListener<?>>> modelListeners =
+		Object modelListeners = ReflectionTestUtil.getFieldValue(
+			ModelListenerRegistrationUtil.class, "_modelListeners");
+
+		Map<Object, Object> serviceTrackerBuckets =
 			ReflectionTestUtil.getFieldValue(
-				ModelListenerRegistrationUtil.class, "_modelListeners");
+				modelListeners, "_serviceTrackerBuckets");
 
-		Map<Class<?>, List<ModelListener<?>>> copyModelListeners =
-			new HashMap<>(modelListeners);
+		Map<Object, Object> copiedServiceTrackerBuckets = new HashMap<>(
+			serviceTrackerBuckets);
 
-		modelListeners.clear();
+		serviceTrackerBuckets.clear();
 
 		CacheRegistryUtil.setActive(false);
 
 		UserTestUtil.setUser(TestPropsValues.getUser());
 
-		return copyModelListeners;
+		return copiedServiceTrackerBuckets;
 	}
 
 	@Override

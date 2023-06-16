@@ -43,6 +43,14 @@ public class SyncReindexManagerImpl implements SyncReindexManager {
 	public void deleteStaleDocuments(
 		long companyId, Date date, Set<String> classNames) {
 
+		deleteStaleDocuments(
+			_indexNameBuilder.getIndexName(companyId), date, classNames);
+	}
+
+	@Override
+	public void deleteStaleDocuments(
+		String indexName, Date date, Set<String> classNames) {
+
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
 		TermsQuery termsQuery = _queries.terms(Field.ENTRY_CLASS_NAME);
@@ -55,11 +63,14 @@ public class SyncReindexManagerImpl implements SyncReindexManager {
 		DateRangeTermQuery dateRangeTermQuery = _queries.dateRangeTerm(
 			"timestamp", false, false, null, format.format(date));
 
-		booleanQuery.addFilterQueryClauses(termsQuery, dateRangeTermQuery);
+		if (!termsQuery.isEmpty()) {
+			booleanQuery.addFilterQueryClauses(termsQuery);
+		}
+
+		booleanQuery.addFilterQueryClauses(dateRangeTermQuery);
 
 		DeleteByQueryDocumentRequest deleteByQueryDocumentRequest =
-			new DeleteByQueryDocumentRequest(
-				booleanQuery, _indexNameBuilder.getIndexName(companyId));
+			new DeleteByQueryDocumentRequest(booleanQuery, indexName);
 
 		_searchEngineAdapter.execute(deleteByQueryDocumentRequest);
 	}

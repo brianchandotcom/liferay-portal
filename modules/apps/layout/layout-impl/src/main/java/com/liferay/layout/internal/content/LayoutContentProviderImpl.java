@@ -22,6 +22,7 @@ import com.liferay.layout.internal.search.util.LayoutPageTemplateStructureRender
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.osgi.util.service.Snapshot;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -34,6 +35,7 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.RenderLayoutContentThreadLocal;
 import com.liferay.portal.kernel.util.Validator;
@@ -100,7 +102,10 @@ public class LayoutContentProviderImpl implements LayoutContentProvider {
 			}
 
 			httpServletRequest = DynamicServletRequest.addQueryString(
-				httpServletRequest, "p_l_id=" + layout.getPlid(), false);
+				httpServletRequest,
+				StringBundler.concat(
+					"p_l_id=", layout.getPlid(), "&p_l_mode=", Constants.VIEW),
+				false);
 
 			Layout originalRequestLayout =
 				(Layout)httpServletRequest.getAttribute(WebKeys.LAYOUT);

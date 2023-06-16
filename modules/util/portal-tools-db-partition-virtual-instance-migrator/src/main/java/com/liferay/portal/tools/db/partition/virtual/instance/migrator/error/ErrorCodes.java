@@ -19,6 +19,18 @@ package com.liferay.portal.tools.db.partition.virtual.instance.migrator.error;
  */
 public class ErrorCodes {
 
+/*
+    LIFERAY_COMMON_EXIT_CODE_BAD=1
+    LIFERAY_COMMON_EXIT_CODE_CD=3
+    LIFERAY_COMMON_EXIT_CODE_HELP=2
+    LIFERAY_COMMON_EXIT_CODE_OK=0
+    LIFERAY_COMMON_EXIT_CODE_SKIPPED=4
+101
+102
+103
+104
+*/
+
 	public static final int BAD_DESTINATION_PARAMETERS = 12;
 
 	public static final int BAD_INPUT_ARGUMENTS = 10;

@@ -369,6 +369,11 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 	}
 
 	@Override
+	protected String[] getIgnoredEntityFieldNames() {
+		return new String[] {"type"};
+	}
+
+	@Override
 	protected Account randomAccount() throws Exception {
 		Account account = super.randomAccount();
 

@@ -15,9 +15,11 @@
 package com.liferay.headless.admin.user.internal.odata.entity.v1_0;
 
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.odata.entity.CollectionEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.entity.IdEntityField;
+import com.liferay.portal.odata.entity.IntegerEntityField;
 import com.liferay.portal.odata.entity.StringEntityField;
 
 import java.util.Map;
@@ -29,11 +31,14 @@ public class AccountEntityModel implements EntityModel {
 
 	public AccountEntityModel() {
 		_entityFieldsMap = EntityModel.toEntityFieldsMap(
-			new StringEntityField(
-				"name", locale -> Field.getSortableFieldName(Field.NAME)),
+			new CollectionEntityField(
+				new IntegerEntityField("status", locale -> Field.STATUS)),
 			new IdEntityField(
 				"organizationIds", locale -> "organizationIds",
-				String::valueOf));
+				String::valueOf),
+			new StringEntityField(
+				"name", locale -> Field.getSortableFieldName(Field.NAME)),
+			new StringEntityField("type", locale -> Field.TYPE));
 	}
 
 	@Override

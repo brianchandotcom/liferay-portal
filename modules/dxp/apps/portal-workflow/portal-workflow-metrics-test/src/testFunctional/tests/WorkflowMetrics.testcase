@@ -3304,8 +3304,6 @@ definition {
 	@description = "LRQA-58272 Automate LPS-107777: Move Workflow Metrics reindex actions out of the Search Settings"
 	@priority = 5
 	test WorkflowMetricsReindex {
-		property portal.acceptance = "quarantine";
-
 		WorkflowMetrics.executeIndexActions(actionDescription = "Workflow Indexes");
 
 		WorkflowMetrics.executeIndexActions(actionDescription = "Workflow Metrics Indexes");

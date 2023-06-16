@@ -105,26 +105,24 @@ const HelpWidget: React.FC<IHelpWidgetProps> = ({
 					groupId,
 					open,
 					showModal: basicTier
-				}).map((item, index) => (
+				}).map(({href, label, onClick, target}, index) => (
 					<ClayDropDown.Item key={index}>
-						{item.href ? (
+						{href ? (
 							<a
-								href={item.href}
-								onClick={() => item.onClick}
-								style={{color: 'gray', textDecoration: 'none'}}
-								target={item.target}
+								className='btn btn-unstyled w-100'
+								href={href}
+								onClick={onClick}
+								target={target}
 							>
-								{item.label}
+								{label}
 							</a>
 						) : (
-							<span
-								onClick={() => item.onClick}
-								onKeyDown={() => {}}
-								role='button'
-								tabIndex={0}
+							<ClayButton
+								displayType='unstyled'
+								onClick={onClick}
 							>
-								{item.label}
-							</span>
+								{label}
+							</ClayButton>
 						)}
 					</ClayDropDown.Item>
 				))}

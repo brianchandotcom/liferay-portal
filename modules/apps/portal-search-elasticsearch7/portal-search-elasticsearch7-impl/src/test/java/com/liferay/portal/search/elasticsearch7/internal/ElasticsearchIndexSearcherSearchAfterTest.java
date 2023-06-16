@@ -160,6 +160,13 @@ public class ElasticsearchIndexSearcherSearchAfterTest {
 	}
 
 	@Test
+	public void testElasticsearchIndexSearcherNoSort() throws Exception {
+		_assertHits(
+			_INDEX_MAX_RESULT_WINDOW, 0, _INDEX_MAX_RESULT_WINDOW, 0,
+			_INDEX_MAX_RESULT_WINDOW, null);
+	}
+
+	@Test
 	public void testElasticsearchIndexSearcherSizeGreaterThanIndexedDocuments()
 		throws Exception {
 
@@ -358,8 +365,11 @@ public class ElasticsearchIndexSearcherSearchAfterTest {
 			() -> {
 				SearchContext searchContext = _getSearchContext();
 
+				if (sort != null) {
+					searchContext.setSorts(sort);
+				}
+
 				searchContext.setEnd(end);
-				searchContext.setSorts(sort);
 				searchContext.setStart(start);
 
 				try {

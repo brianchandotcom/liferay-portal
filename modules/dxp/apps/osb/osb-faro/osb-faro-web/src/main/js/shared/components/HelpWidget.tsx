@@ -1,8 +1,8 @@
 import ClayButton from '@clayui/button';
+import ClayDropDown, {Align} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import React from 'react';
 import URLConstants from 'shared/util/url-constants';
-import {Align, ClayDropDownWithItems} from '@clayui/drop-down';
 import {close, modalTypes, open} from 'shared/actions/modals';
 import {connect, ConnectedProps} from 'react-redux';
 import {formatSubscriptions} from 'shared/util/subscriptions';
@@ -80,14 +80,8 @@ const HelpWidget: React.FC<IHelpWidgetProps> = ({
 
 	return (
 		<div className='help-widget-root'>
-			<ClayDropDownWithItems
+			<ClayDropDown
 				alignmentPosition={Align.TopLeft}
-				items={getDropdownItems({
-					close,
-					groupId,
-					open,
-					showModal: basicTier
-				})}
 				menuElementAttrs={{
 					className: 'help-dropdown-root'
 				}}
@@ -105,7 +99,36 @@ const HelpWidget: React.FC<IHelpWidgetProps> = ({
 						/>
 					</ClayButton>
 				}
-			/>
+			>
+				{getDropdownItems({
+					close,
+					groupId,
+					open,
+					showModal: basicTier
+				}).map((item, index) => (
+					<ClayDropDown.Item key={index}>
+						{item.href ? (
+							<a
+								href={item.href}
+								onClick={() => item.onClick}
+								style={{color: 'gray', textDecoration: 'none'}}
+								target={item.target}
+							>
+								{item.label}
+							</a>
+						) : (
+							<span
+								onClick={() => item.onClick}
+								onKeyDown={() => {}}
+								role='button'
+								tabIndex={0}
+							>
+								{item.label}
+							</span>
+						)}
+					</ClayDropDown.Item>
+				))}
+			</ClayDropDown>
 		</div>
 	);
 };

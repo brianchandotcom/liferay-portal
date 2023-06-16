@@ -151,49 +151,59 @@ public class ActionEditableElementMapper implements EditableElementMapper {
 		if (interaction.equals(_INTERACTION_NOTIFICATION)) {
 			JSONObject textJSONObject = jsonObject.getJSONObject("text");
 
-			if (textJSONObject != null) {
-				String text = textJSONObject.getString(
-					themeDisplay.getLanguageId());
-
-				if (Validator.isNotNull(text)) {
-					element.attr("data-lfr-on-" + resultType + "-text", text);
-				}
+			if (textJSONObject == null) {
+				return;
 			}
+
+			String text = textJSONObject.getString(
+				themeDisplay.getLanguageId());
+
+			if (Validator.isNull(text)) {
+				return;
+			}
+
+			element.attr("data-lfr-on-" + resultType + "-text", text);
 		}
 		else if (interaction.equals(_INTERACTION_PAGE)) {
 			JSONObject pageJSONObject = jsonObject.getJSONObject("page");
 
-			if (pageJSONObject != null) {
-				Layout layout = _layoutLocalService.fetchLayout(
-					pageJSONObject.getLong("groupId"),
-					pageJSONObject.getBoolean("privateLayout"),
-					pageJSONObject.getLong("layoutId"));
-
-				if (layout != null) {
-					element.attr(
-						"data-lfr-on-" + resultType + "-page-url",
-						_portal.getLayoutURL(layout, themeDisplay));
-				}
+			if (pageJSONObject == null) {
+				return;
 			}
+
+			Layout layout = _layoutLocalService.fetchLayout(
+				pageJSONObject.getLong("groupId"),
+				pageJSONObject.getBoolean("privateLayout"),
+				pageJSONObject.getLong("layoutId"));
+
+			if (layout == null) {
+				return;
+			}
+
+			element.attr(
+				"data-lfr-on-" + resultType + "-page-url",
+				_portal.getLayoutURL(layout, themeDisplay));
 		}
 		else if (interaction.equals(_INTERACTION_URL)) {
 			JSONObject urlJSONObject = jsonObject.getJSONObject("url");
 
-			if (urlJSONObject != null) {
-				String url = urlJSONObject.getString(
-					themeDisplay.getLanguageId());
-
-				if (Validator.isNull(url)) {
-					Locale locale = LocaleUtil.getSiteDefault();
-
-					url = urlJSONObject.getString(locale.getLanguage());
-				}
-
-				if (Validator.isNotNull(url)) {
-					element.attr(
-						"data-lfr-on-" + resultType + "-page-url", url);
-				}
+			if (urlJSONObject == null) {
+				return;
 			}
+
+			String url = urlJSONObject.getString(themeDisplay.getLanguageId());
+
+			if (Validator.isNull(url)) {
+				Locale locale = LocaleUtil.getSiteDefault();
+
+				url = urlJSONObject.getString(locale.getLanguage());
+			}
+
+			if (Validator.isNull(url)) {
+				return;
+			}
+
+			element.attr("data-lfr-on-" + resultType + "-page-url", url);
 		}
 	}
 

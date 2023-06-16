@@ -13,7 +13,9 @@
  */
 
 import ClayAlert from '@clayui/alert';
+import ClayButton from '@clayui/button';
 import {Option, Picker, Text} from '@clayui/core';
+import ClayDropDown, {Align} from '@clayui/drop-down';
 import {ClaySelectWithOption} from '@clayui/form';
 import Label from '@clayui/label';
 import Layout from '@clayui/layout';
@@ -32,6 +34,8 @@ const PREVIEW_OPTIONS = [
 	},
 ];
 
+const MAXIMUM_DROPDOWN_ENTRIES = 8;
+
 function SegmentsAndExperiencesSelector({
 	deactivateSimulationURL,
 	namespace,
@@ -46,11 +50,19 @@ function SegmentsAndExperiencesSelector({
 	const [selectedPreviewOption, setSelectedPreviewOption] = useState(
 		'segments'
 	);
-	const [selectedSegmentEntry, setSelectedSegmentEntry] = useState('');
+	const [selectedSegmentEntry, setSelectedSegmentEntry] = useState(
+		segmentsEntries?.[0]
+	);
 	const [
 		selectedSegmentsExperience,
 		setSelectedSegmentsExperience,
 	] = useState(segmentsExperiences?.[0]?.segmentsExperienceId);
+	const [segmentSelectorActive, setSegmentSelectorActive] = useState(false);
+
+	const segmentEntriesShortList =
+		segmentsEntries.length > 8
+			? segmentsEntries.slice(0, 8)
+			: segmentsEntries;
 
 	const formRef = useRef(null);
 	const firstRenderRef = useRef(true);
@@ -84,6 +96,12 @@ function SegmentsAndExperiencesSelector({
 			url.searchParams.set('segmentsExperienceId', experience);
 			iframe.src = url.toString();
 		}
+	}, []);
+
+	const handleMoreButtonClick = useCallback(() => {
+
+		// TODO
+
 	}, []);
 
 	useEffect(() => {
@@ -214,20 +232,73 @@ function SegmentsAndExperiencesSelector({
 								{Liferay.Language.get('segment')}
 							</label>
 
-							<ClaySelectWithOption
+							<input
 								id={`${namespace}segmentsEntryId`}
 								name={`${namespace}segmentsEntryId`}
-								onChange={({target}) => {
-									setSelectedSegmentEntry(target.value);
-								}}
-								options={segmentsEntries.map((segment) => {
-									return {
-										label: segment.name,
-										value: segment.id,
-									};
-								})}
-								value={selectedSegmentEntry}
+								type="hidden"
+								value={selectedSegmentEntry.id}
 							/>
+
+							<ClayDropDown
+								active={segmentSelectorActive}
+								alignmentPosition={Align.BottomLeft}
+								menuElementAttrs={{
+									containerProps: {
+										className: 'cadmin',
+									},
+								}}
+								onActiveChange={setSegmentSelectorActive}
+								trigger={
+									<ClayButton
+										className="form-control-select text-left w-100"
+										displayType="secondary"
+										size="sm"
+										type="button"
+									>
+										<span>{selectedSegmentEntry.name}</span>
+									</ClayButton>
+								}
+							>
+								<ClayDropDown.ItemList>
+									{segmentEntriesShortList.map(
+										(segmentEntry) => (
+											<ClayDropDown.Item
+												key={segmentEntry.id}
+												onClick={() => {
+													setSegmentSelectorActive(
+														false
+													);
+													setSelectedSegmentEntry(
+														segmentEntry
+													);
+												}}
+											>
+												{segmentEntry.name}
+											</ClayDropDown.Item>
+										)
+									)}
+
+									{segmentsEntries.length >
+										MAXIMUM_DROPDOWN_ENTRIES && (
+										<ClayDropDown.Section>
+											<ClayButton
+												displayType="secondary w-100"
+												onClick={() => {
+													setSegmentSelectorActive(
+														false
+													);
+
+													handleMoreButtonClick();
+												}}
+											>
+												{Liferay.Language.get(
+													'more-segments'
+												)}
+											</ClayButton>
+										</ClayDropDown.Section>
+									)}
+								</ClayDropDown.ItemList>
+							</ClayDropDown>
 						</div>
 					)}
 

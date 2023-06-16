@@ -497,6 +497,19 @@ public class ObjectFieldLocalServiceImpl
 	}
 
 	@Override
+	public ObjectField getObjectField(
+			String externalReferenceCode, long objectDefinitionId)
+		throws PortalException {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
+
+		return objectFieldPersistence.findByERC_C_ODI(
+			externalReferenceCode, objectDefinition.getCompanyId(),
+			objectDefinitionId);
+	}
+
+	@Override
 	public List<ObjectField> getObjectFields(long objectDefinitionId) {
 		List<ObjectField> objectFields =
 			objectFieldPersistence.findByObjectDefinitionId(objectDefinitionId);

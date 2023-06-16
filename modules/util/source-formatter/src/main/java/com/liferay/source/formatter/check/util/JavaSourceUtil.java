@@ -28,8 +28,11 @@ import com.liferay.portal.tools.ToolsUtil;
 import java.io.File;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -38,40 +41,40 @@ import java.util.regex.Pattern;
  */
 public class JavaSourceUtil extends SourceUtil {
 
-	public static String addImport(String content, String... newImports) {
-		String[] imports = StringUtil.splitLines(
-			JavaImportsFormatter.getImports(content));
-
-		List<String> neededImports = new ArrayList<>();
-
-		for (String newImport : newImports) {
-			if (!ArrayUtil.contains(imports, newImport)) {
-				neededImports.add(newImport);
-			}
-		}
-
-		if (neededImports.isEmpty()) {
+	public static String addImports(String content, String... newImports) {
+		if (newImports.length == 0) {
 			return content;
 		}
 
-		if (imports.length == 0) {
-			String packageName = getPackageName(content);
+		Set<String> missingImports = new TreeSet<>();
 
-			return StringUtil.replace(
-				content, packageName + StringPool.SEMICOLON,
-				StringBundler.concat(
-					packageName, StringPool.SEMICOLON, StringPool.NEW_LINE,
-					StringPool.NEW_LINE,
-					StringUtil.merge(neededImports, StringPool.NEW_LINE)));
+		Collections.addAll(missingImports, newImports);
+
+		for (String importName : getImportNames(content)) {
+			missingImports.remove(importName);
 		}
 
-		String lastImport = imports[imports.length - 1];
+		if (missingImports.isEmpty()) {
+			return content;
+		}
+
+		String packageName = getPackageName(content);
+
+		StringBundler sb = new StringBundler();
+
+		sb.append(packageName);
+		sb.append(StringPool.SEMICOLON);
+		sb.append(StringPool.NEW_LINE);
+		sb.append(StringPool.NEW_LINE);
+
+		for (String missingImport : missingImports) {
+			sb.append("import ");
+			sb.append(missingImport);
+			sb.append(StringPool.SEMICOLON);
+		}
 
 		return StringUtil.replace(
-			content, lastImport,
-			StringBundler.concat(
-				lastImport, StringPool.NEW_LINE,
-				StringUtil.merge(neededImports, StringPool.NEW_LINE)));
+			content, packageName + StringPool.SEMICOLON, sb.toString());
 	}
 
 	public static String getClassName(String fileName) {
@@ -79,6 +82,22 @@ public class JavaSourceUtil extends SourceUtil {
 		int y = fileName.lastIndexOf(CharPool.PERIOD);
 
 		return fileName.substring(x + 1, y);
+	}
+
+	public static List<String> getImportNames(String content) {
+		List<String> importNames = new ArrayList<>();
+
+		String[] importLines = StringUtil.splitLines(
+			JavaImportsFormatter.getImports(content));
+
+		for (String importLine : importLines) {
+			if (Validator.isNotNull(importLine)) {
+				importNames.add(
+					importLine.substring(7, importLine.length() - 1));
+			}
+		}
+
+		return importNames;
 	}
 
 	public static File getJavaFile(

@@ -149,10 +149,11 @@ public class SegmentsEntryReindexMessageListener extends BaseMessageListener {
 
 		Set<Long> oldClassPKs = _getOldDatabaseClassPKs(segmentsEntryId);
 
+		Set<Long> addClassPKs = new HashSet<>(newClassPKs);
 		Set<Long> deleteClassPKs = new HashSet<>();
 
 		for (Long oldClassPK : oldClassPKs) {
-			if (!newClassPKs.remove(oldClassPK)) {
+			if (!addClassPKs.remove(oldClassPK)) {
 				deleteClassPKs.add(oldClassPK);
 			}
 		}
@@ -169,7 +170,7 @@ public class SegmentsEntryReindexMessageListener extends BaseMessageListener {
 		serviceContext.setUserId(segmentsEntry.getUserId());
 
 		_segmentsEntryRelLocalService.addSegmentsEntryRels(
-			segmentsEntryId, classNameId, ArrayUtil.toLongArray(newClassPKs),
+			segmentsEntryId, classNameId, ArrayUtil.toLongArray(addClassPKs),
 			serviceContext);
 	}
 

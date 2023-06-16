@@ -1686,6 +1686,117 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: LRAC-13424 | Automation ID: LRAC-14041 | Test Summary: Check that it is not possible to create a dynamic segment with a name that is already in use"
+	@priority = 4
+	test CheckNotPossibleCreateDynamicSegmentWithNameAlreadyInUse {
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("View the site page") {
+			ACUtils.navigateToSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Close sessions and wait for 30 seconds") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
+		}
+
+		for (var segmentName : list "Segment Name Already Exists,segment name already exists") {
+			task ("Add two new dynamic segments") {
+				ACNavigation.goToSegments();
+
+				ACSegments.createDynamicSegment();
+
+				ACUtils.setItemName(itemName = ${segmentName});
+			}
+
+			task ("Add an email field") {
+				ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
+
+				ACSegments.addSegmentField(segmentField = "email");
+
+				ACSegments.editTextCriterion(textInput = "userea@liferay.com");
+			}
+
+			task ("Save the Segment") {
+				Click(locator1 = "ACSegments#SAVE_SEGMENT");
+			}
+		}
+
+		task ("Assert that the warning pop-up appears") {
+			Alert.viewWarningSpecific(warningMessage = "Warning:This segment name is currently in use. Please try a different one");
+		}
+
+		task ("Cancel the creation") {
+			ACSegments.cancelSegment();
+
+			Button.click(button = "Leave Page");
+		}
+
+		task ("Check that only one segment is present in the list") {
+			ACUtils.viewResultsMessage(results = "Showing 1 to 1 of 1 entry.");
+		}
+
+		task ("Add a new static segment") {
+			ACSegments.createStaticSegment();
+		}
+
+		task ("Type the segment name") {
+			ACUtils.setItemName(itemName = "Segment Name Already Exists 2");
+		}
+
+		task ("Add the new user as member") {
+			ACSegments.addStaticMember(tableMember = "userfn userln");
+		}
+
+		task ("Save the Segment") {
+			ACSegments.saveSegment();
+		}
+
+		task ("Add a new dynamic segment") {
+			ACNavigation.goToSegments();
+
+			ACSegments.createDynamicSegment();
+
+			ACUtils.setItemName(itemName = "segment name already exists 2");
+		}
+
+		task ("Add an email field") {
+			ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
+
+			ACSegments.addSegmentField(segmentField = "email");
+
+			ACSegments.editTextCriterion(textInput = "userea@liferay.com");
+		}
+
+		task ("Save the Segment") {
+			Click(locator1 = "ACSegments#SAVE_SEGMENT");
+		}
+
+		task ("Assert that the warning pop-up appears") {
+			Alert.viewWarningSpecific(warningMessage = "Warning:This segment name is currently in use. Please try a different one");
+		}
+
+		task ("Cancel the creation") {
+			ACSegments.cancelSegment();
+
+			Button.click(button = "Leave Page");
+		}
+
+		task ("Check that only two segments are present in the list") {
+			ACUtils.viewResultsMessage(results = "Showing 1 to 2 of 2 entries.");
+		}
+	}
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8484 | Test Summary: Segment Form Validation"
 	@priority = 5
 	test ViewSegmentFormValidation {

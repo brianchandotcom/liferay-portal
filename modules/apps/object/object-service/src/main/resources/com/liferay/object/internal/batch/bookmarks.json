@@ -20,5 +20,218 @@
 		"version": "v1.0"
 	},
 	"items": [
+		{
+			"accountEntryRestricted": false,
+			"externalReferenceCode": "MSOD_BOOKMARKS",
+			"label": {
+				"en_US": "Bookmarks"
+			},
+			"modifiable": true,
+			"name": "bookmarks",
+			"objectFields": [
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"defaultValue": "",
+					"externalReferenceCode": "DESCRIPTION",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Description"
+					},
+					"listTypeDefinitionExternalReferenceCode": "",
+					"name": "description",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": "false"
+						}
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Clob"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"defaultValue": "",
+					"externalReferenceCode": "NAME",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Name"
+					},
+					"listTypeDefinitionExternalReferenceCode": "",
+					"name": "name",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": "false"
+						}
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"defaultValue": "",
+					"externalReferenceCode": "URL",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "URL"
+					},
+					"listTypeDefinitionExternalReferenceCode": "",
+					"name": "url",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": "false"
+						}
+					],
+					"required": true,
+					"state": false,
+					"system": false,
+					"type": "String"
+				}
+			],
+			"objectLayouts": [
+				{
+					"defaultObjectLayout": true,
+					"name": {
+						"en_US": "Main"
+					},
+					"objectDefinitionExternalReferenceCode": "MSOD_BOOKMARKS",
+					"objectLayoutTabs": [
+						{
+							"name": {
+								"en_US": "Bookmarks"
+							},
+							"objectLayoutBoxes": [
+								{
+									"collapsable": false,
+									"name": {
+										"en_US": "My Link"
+									},
+									"objectLayoutRows": [
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "name",
+													"priority": 0,
+													"size": 12
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "url",
+													"priority": 0,
+													"size": 12
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "description",
+													"priority": 0,
+													"size": 12
+												}
+											],
+											"priority": 0
+										}
+									],
+									"priority": 0,
+									"type": "regular"
+								},
+								{
+									"collapsable": true,
+									"name": {
+										"en_US": "Categorization"
+									},
+									"objectLayoutRows": [
+									],
+									"priority": 0,
+									"type": "categorization"
+								}
+							],
+							"priority": 0
+						}
+					]
+				}
+			],
+			"objectValidationRules": [
+				{
+					"active": true,
+					"engine": "ddm",
+					"engineLabel": "Expression Builder",
+					"errorLabel": {
+						"en_US": "Please enter a valid URL."
+					},
+					"name": {
+						"en_US": "Valid URL"
+					},
+					"objectDefinitionExternalReferenceCode": "MSOD_BOOKMARKS",
+					"script": "isURL(url)"
+				}
+			],
+			"objectViews": [
+				{
+					"defaultObjectView": true,
+					"name": {
+						"en_US": "Main"
+					},
+					"objectDefinitionExternalReferenceCode": "MSOD_BOOKMARKS",
+					"objectViewColumns": [
+						{
+							"label": {
+								"en_US": "Name"
+							},
+							"objectFieldName": "name",
+							"priority": 0
+						},
+						{
+							"label": {
+								"en_US": "URL"
+							},
+							"objectFieldName": "url",
+							"priority": 1
+						},
+						{
+							"label": {
+								"en_US": "Description"
+							},
+							"objectFieldName": "description",
+							"priority": 2
+						}
+					],
+					"objectViewFilterColumns": [
+					],
+					"objectViewSortColumns": [
+					]
+				}
+			],
+			"panelCategoryKey": "site_administration.content",
+			"pluralLabel": {
+				"en_US": "Bookmarks"
+			},
+			"scope": "site",
+			"status": {
+				"code": 0
+			},
+			"system": true,
+			"titleObjectFieldName": "name"
+		}
 	]
 }

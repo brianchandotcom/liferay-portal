@@ -41,7 +41,9 @@ public class DBPartitionVirtualInstanceMigrator {
 		}
 		catch (Exception exception) {
 			System.err.println("Unexpected error:");
+
 			exception.printStackTrace();
+
 			_exitWithCode(ErrorCodes.UNEXPECTED_ERROR);
 		}
 	}
@@ -135,6 +137,7 @@ public class DBPartitionVirtualInstanceMigrator {
 				System.err.println(
 					"Unable to get source database connection with the " +
 						"specified parameters:");
+
 				sqlException.printStackTrace();
 
 				_exitWithCode(ErrorCodes.BAD_SOURCE_PARAMETERS);
@@ -148,6 +151,7 @@ public class DBPartitionVirtualInstanceMigrator {
 				System.err.println(
 					"Unable to get destination database connection with the " +
 						"specified parameters:");
+
 				sqlException.printStackTrace();
 
 				_exitWithCode(ErrorCodes.BAD_DESTINATION_PARAMETERS);
@@ -187,6 +191,7 @@ public class DBPartitionVirtualInstanceMigrator {
 			System.err.println(
 				"Unable to parse command line properties: " +
 					parseException.getMessage());
+
 			System.err.println();
 
 			HelpFormatter helpFormatter = new HelpFormatter();

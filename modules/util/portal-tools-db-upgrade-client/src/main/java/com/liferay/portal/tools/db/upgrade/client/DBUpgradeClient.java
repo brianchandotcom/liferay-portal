@@ -130,12 +130,12 @@ public class DBUpgradeClient {
 			dbUpgradeClient.upgrade();
 		}
 		catch (ParseException parseException) {
-			System.err.println("Unable to parse command line properties");
+			System.err.println("Unable to parse command line properties:");
 
 			parseException.printStackTrace();
 		}
 		catch (Exception exception) {
-			System.err.println("Error running upgrade");
+			System.err.println("Error running upgrade:");
 
 			exception.printStackTrace();
 		}

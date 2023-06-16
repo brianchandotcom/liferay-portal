@@ -80,7 +80,7 @@ public class DeploymentHelper {
 			_printOptions();
 		}
 		catch (Exception exception) {
-			System.err.println("Error running deployment helper");
+			System.err.println("Error running deployment helper:");
 
 			exception.printStackTrace();
 		}

@@ -455,4 +455,30 @@ definition {
 		}
 	}
 
+	@description = "LPS-182790. Confirms it's possible to edit a sorting."
+	@priority = 5
+	test CantEditField {
+		task ("When the user creates a new sorting") {
+			DataSetAdmin.createASort(
+				key_field = "creator",
+				key_sorting = "Descending");
+		}
+
+		task ("And clicks on the 3 dots menu present on the newly created sorting") {
+			Click(locator1 = "DataSet#ANY_ELLIPSIS_BUTTON");
+		}
+
+		task ("And clicks on the Edit option") {
+			Click(
+				key_dropdownItem = "Edit",
+				locator1 = "DataSet#DROPDOWN_ITEM");
+		}
+
+		task ("Then Field can’t be edited by the user") {
+			AssertElementPresent(
+				key_fieldName = "fdsSortFieldNameInput",
+				locator1 = "DataSet#INPUT_FIELD_DISABLED");
+		}
+	}
+
 }

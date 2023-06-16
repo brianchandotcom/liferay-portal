@@ -82,6 +82,31 @@ definition {
 				locator1 = "DataSet#MODAL_MESSAGE");
 		}
 	}
+
+	@description = "LPS-182790. Confirms the option of Edit a sorting appears."
+	@priority = 5
+	test AssertEditOptionAppears {
+		task ("When the user creates a new sorting") {
+			DataSetAdmin.createASort(
+				key_field = "creator",
+				key_sorting = "Descending");
+		}
+
+		task ("And clicks on the 3 dots menu present on the newly created sorting") {
+			Click(locator1 = "DataSet#ANY_ELLIPSIS_BUTTON");
+		}
+
+		task ("Then the Edit and Delete options appear") {
+			AssertVisible(
+				key_dropdownItem = "Edit",
+				locator1 = "DataSet#DROPDOWN_ITEM");
+
+			AssertVisible(
+				key_dropdownItem = "Delete",
+				locator1 = "DataSet#DROPDOWN_ITEM");
+		}
+	}
+
 	@description = "LPS-185324. Confirm that the new default classification modal is displayed, the field is required."
 	@priority = 4
 	test CanAssertFieldIsRequired {

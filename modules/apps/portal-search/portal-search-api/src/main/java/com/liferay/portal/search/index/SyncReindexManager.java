@@ -28,4 +28,7 @@ public interface SyncReindexManager {
 	public void deleteStaleDocuments(
 		long companyId, Date date, Set<String> classNames);
 
+	public void deleteStaleDocuments(
+		String indexName, Date date, Set<String> classNames);
+
 }

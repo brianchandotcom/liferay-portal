@@ -75,4 +75,90 @@ definition {
 		}
 	}
 
+	@description = "This is a test case for COMMERCE-10923. Supplier account can be linked to a channel from UI."
+	@priority = 5
+	test CanLinkSupplierAccountToChannelViaUI {
+		property portal.acceptance = "true";
+
+		task ("Given an active business and 2 active supplier accounts are created") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Commerce Account",
+				accountEntryType = "Business");
+
+			for (var num : list "1,2") {
+				JSONAccountEntry.addAccountEntry(
+					accountEntryName = "Supplier Account ${num}",
+					accountEntryType = "Supplier");
+			}
+		}
+
+		task ("And one inactive supplier account is created") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Supplier Account 3",
+				accountEntryStatus = "Inactive",
+				accountEntryType = "Supplier");
+		}
+
+		task ("When admin goes to the Minium Portal channel") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+		}
+
+		task ("Then can view 'Link Channel to a Supplier' field is null by default and only Supplier Accounts are listed on the dropdown") {
+			AssertElementPresent(
+				entryName = "",
+				key_fieldLabel = "Link Channel to a Supplier",
+				key_index = 1,
+				locator1 = "CommerceEntry#LABEL_GENERIC_SELECT_ENTRY_POSITION");
+
+			for (var accountNameWithIndex : list "Supplier Account 1:2,Supplier Account 2:3") {
+				var accountName = StringUtil.extractFirst(${accountNameWithIndex}, ":");
+				var index = StringUtil.extractLast(${accountNameWithIndex}, ":");
+
+				AssertElementPresent(
+					entryName = ${accountName},
+					key_fieldLabel = "Link Channel to a Supplier",
+					key_index = ${index},
+					locator1 = "CommerceEntry#LABEL_GENERIC_SELECT_ENTRY_POSITION");
+			}
+		}
+
+		task ("And Business or Deactivated Accounts are not listed on the dropdown") {
+			for (var index : list "1,2,3,4,5") {
+				AssertElementNotPresent(
+					entryName = "Commerce Account",
+					key_fieldLabel = "Link Channel to a Supplier",
+					key_index = ${index},
+					locator1 = "CommerceEntry#LABEL_GENERIC_SELECT_ENTRY_POSITION");
+			}
+
+			for (var index : list "1,2,3,4,5") {
+				AssertElementNotPresent(
+					entryName = "Supplier Account 3",
+					key_fieldLabel = "Link Channel to a Supplier",
+					key_index = ${index},
+					locator1 = "CommerceEntry#LABEL_GENERIC_SELECT_ENTRY_POSITION");
+			}
+		}
+
+		task ("When admin selects Supplier Account 1 for the channel") {
+			Select(
+				key_fieldLabel = "Link Channel to a Supplier",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Supplier Account 1");
+
+			Button.clickSave();
+		}
+
+		task ("Then Supplier Account 1 is linked successfully to the channel") {
+			CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
+
+			AssertElementPresent(
+				key_fieldLabel = "Link Channel to a Supplier",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Supplier Account 1");
+		}
+	}
+
 }

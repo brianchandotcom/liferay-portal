@@ -1,0 +1,90 @@
+@component-name = "portal-feature-flags"
+definition {
+
+	property custom.properties = "feature.flag.LPS-xxxxxx=false${line.separator}feature.flag.LPS-xxxxxx.status=beta${line.separator}feature.flag.LPS-xxxxxx.title=Terms and Conditions pages${line.separator}feature.flag.LPS-xxxxxx.description=Create your own terms and conditions pages${line.separator}feature.flag.LPS-yyyyyy=false${line.separator}feature.flag.LPS-yyyyyy.status=beta${line.separator}feature.flag.LPS-yyyyyy.dependencies=LPS-xxxxxx";
+	property portal.acceptance = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Feature Flags";
+
+	setUp {
+		User.firstLoginPG();
+
+		task ("Given the Feature Flags page") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			Click(
+				key_itemName = "Feature Flags",
+				locator1 = "ListGroupItem#ITEM_TEXT");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "LPS-167698 - This tests asserts that a feature flag can be Disabled"
+	@priority = 5
+	test CanBeDisabled {
+		property portal.acceptance = "true";
+
+		task ("And a feature flag is enabled") {
+			if (IsElementPresent(locator1 = "FeatureFlags#TOGGLE_ROW", title_row = "Proxy Object", toggle_state = "Disabled")) {
+				Check.checkToggleSwitch(
+					locator1 = "FeatureFlags#TOGGLE_ROW",
+					title_row = "Proxy Object",
+					toggle_state = "Disabled");
+			}
+		}
+
+		task ("When the administrator disables a feature flag") {
+			Check.checkToggleSwitch(
+				locator1 = "FeatureFlags#TOGGLE_ROW",
+				title_row = "Proxy Object",
+				toggle_state = "Enabled");
+		}
+
+		task ("Then assert the toggle is disabled state") {
+			VerifyElementPresent(
+				locator1 = "FeatureFlags#TOGGLE_ROW",
+				title_row = "Proxy Object",
+				toggle_state = "Disabled");
+		}
+	}
+
+	@description = "LPS-167698 - This tests asserts that a feature flag can be enabled"
+	@priority = 5
+	test CanBeEnabled {
+		property portal.acceptance = "true";
+
+		task ("And a feature flag is disabled") {
+			if (IsElementPresent(locator1 = "FeatureFlags#TOGGLE_ROW", title_row = "Proxy Object", toggle_state = "Enabled")) {
+				Check.checkToggleSwitch(
+					locator1 = "FeatureFlags#TOGGLE_ROW",
+					title_row = "Proxy Object",
+					toggle_state = "Enabled");
+			}
+		}
+
+		task ("When the administrator enables a feature flag") {
+			Check.checkToggleSwitch(
+				locator1 = "FeatureFlags#TOGGLE_ROW",
+				title_row = "Proxy Object",
+				toggle_state = "Disabled");
+		}
+
+		task ("Then assert the toggle is enabled state") {
+			VerifyElementPresent(
+				locator1 = "FeatureFlags#TOGGLE_ROW",
+				title_row = "Proxy Object",
+				toggle_state = "Enabled");
+		}
+	}
+
+}

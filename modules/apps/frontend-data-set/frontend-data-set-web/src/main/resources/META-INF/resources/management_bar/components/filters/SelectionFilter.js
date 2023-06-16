@@ -188,6 +188,8 @@ function SelectionFilter({
 
 	useEffect(() => {
 		loadSelectionItems();
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [search, currentPage]);
 
 	const setScrollingArea = useCallback((node) => {

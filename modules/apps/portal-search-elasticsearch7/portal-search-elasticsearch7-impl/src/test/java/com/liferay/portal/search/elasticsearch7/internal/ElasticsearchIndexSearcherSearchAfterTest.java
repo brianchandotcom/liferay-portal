@@ -144,7 +144,9 @@ public class ElasticsearchIndexSearcherSearchAfterTest {
 	public void testElasticsearchIndexSearcherIndexSearchLimit()
 		throws Exception {
 
-		_assertHits(_INDEX_SEARCH_LIMIT, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		_assertHits(
+			_INDEX_SEARCH_LIMIT, QueryUtil.ALL_POS, QueryUtil.ALL_POS, 0,
+			_INDEX_SEARCH_LIMIT);
 	}
 
 	@Rule
@@ -200,6 +202,14 @@ public class ElasticsearchIndexSearcherSearchAfterTest {
 	private void _assertHits(int expectedHitsReturned, int start, int end)
 		throws Exception {
 
+		_assertHits(expectedHitsReturned, start, end, start, end);
+	}
+
+	private void _assertHits(
+			int expectedHitsReturned, int start, int end, int expectedStart,
+			int expectedEnd)
+		throws Exception {
+
 		IdempotentRetryAssert.retryAssert(
 			5, TimeUnit.SECONDS,
 			() -> {
@@ -228,7 +238,7 @@ public class ElasticsearchIndexSearcherSearchAfterTest {
 					Assert.assertEquals(
 						scores.toString(), expectedHitsReturned, scores.length);
 
-					_assertDocumentOrder(documents, start, end);
+					_assertDocumentOrder(documents, expectedStart, expectedEnd);
 				}
 				catch (Exception exception) {
 				}

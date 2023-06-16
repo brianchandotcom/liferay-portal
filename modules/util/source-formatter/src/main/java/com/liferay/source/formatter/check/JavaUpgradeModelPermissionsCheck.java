@@ -46,39 +46,11 @@ public class JavaUpgradeModelPermissionsCheck extends BaseJavaTermCheck {
 			return javaTermContent;
 		}
 
-		Matcher setGroupPermissionsMatcher =
-			_setGroupPermissionsPattern.matcher(javaTermContent);
-
-		Matcher setGuestPermissionsMatcher =
-			_setGuestPermissionsPattern.matcher(javaTermContent);
-
-		boolean hasSetGroupPermissions = false;
-		boolean hasSetGuestPermissions = false;
-
-		if (setGroupPermissionsMatcher.find()) {
-			hasSetGroupPermissions = _isServiceContextMethodCall(
-				javaTermContent, fileContent,
-				setGroupPermissionsMatcher.group(1));
+		if (javaTerm.isJavaClass()) {
+			return _formatClass(javaTermContent, importNames);
 		}
 
-		if (setGuestPermissionsMatcher.find()) {
-			hasSetGuestPermissions = _isServiceContextMethodCall(
-				javaTermContent, fileContent,
-				setGuestPermissionsMatcher.group(1));
-		}
-
-		if (hasSetGroupPermissions || hasSetGuestPermissions) {
-			if (javaTerm.isJavaClass()) {
-				return _addImports(fileContent, javaTermContent);
-			}
-
-			return _formatSetGroupAndGuestPermissions(
-				hasSetGroupPermissions, hasSetGuestPermissions,
-				setGroupPermissionsMatcher, setGuestPermissionsMatcher,
-				javaTermContent);
-		}
-
-		return javaTermContent;
+		return _formatMethod(javaTermContent, fileContent);
 	}
 
 	@Override
@@ -86,25 +58,67 @@ public class JavaUpgradeModelPermissionsCheck extends BaseJavaTermCheck {
 		return new String[] {JAVA_CLASS, JAVA_METHOD};
 	}
 
-	private String _addImports(String fileContent, String javaTermContent) {
-		if (!fileContent.contains(
+	private String _formatClass(String content, List<String> importNames) {
+		Matcher setGroupPermissionsMatcher =
+			_setGroupPermissionsPattern.matcher(content);
+
+		Matcher setGuestPermissionsMatcher =
+			_setGuestPermissionsPattern.matcher(content);
+
+		if (!(setGroupPermissionsMatcher.find() ||
+			  setGuestPermissionsMatcher.find())) {
+
+			return content;
+		}
+
+		if (!importNames.contains(
 				"com.liferay.portal.kernel.service.permission." +
 					"ModelPermissions")) {
 
-			javaTermContent = StringBundler.concat(
+			content = StringBundler.concat(
 				"import com.liferay.portal.kernel.service.permission.",
-				"ModelPermissions;\n\n", javaTermContent);
+				"ModelPermissions;\n\n", content);
 		}
 
-		if (!fileContent.contains(
+		if (!importNames.contains(
 				"com.liferay.portal.kernel.model.role.RoleConstants")) {
 
-			javaTermContent = StringBundler.concat(
+			content = StringBundler.concat(
 				"import com.liferay.portal.kernel.model.role.",
-				"RoleConstants;\n\n", javaTermContent);
+				"RoleConstants;\n\n", content);
 		}
 
-		return javaTermContent;
+		return content;
+	}
+
+	private String _formatMethod(String content, String fileContent) {
+		Matcher setGroupPermissionsMatcher =
+			_setGroupPermissionsPattern.matcher(content);
+
+		Matcher setGuestPermissionsMatcher =
+			_setGuestPermissionsPattern.matcher(content);
+
+		boolean hasSetGroupPermissions = false;
+		boolean hasSetGuestPermissions = false;
+
+		if (setGroupPermissionsMatcher.find()) {
+			hasSetGroupPermissions = _isServiceContextMethodCall(
+				content, fileContent, setGroupPermissionsMatcher.group(1));
+		}
+
+		if (setGuestPermissionsMatcher.find()) {
+			hasSetGuestPermissions = _isServiceContextMethodCall(
+				content, fileContent, setGuestPermissionsMatcher.group(1));
+		}
+
+		if (hasSetGroupPermissions || hasSetGuestPermissions) {
+			content = _formatSetGroupAndGuestPermissions(
+				hasSetGroupPermissions, hasSetGuestPermissions,
+				setGroupPermissionsMatcher, setGuestPermissionsMatcher,
+				content);
+		}
+
+		return content;
 	}
 
 	private String _formatSetGroupAndGuestPermissions(

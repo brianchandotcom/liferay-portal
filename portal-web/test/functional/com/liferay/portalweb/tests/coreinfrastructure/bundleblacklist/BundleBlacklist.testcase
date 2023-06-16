@@ -337,7 +337,7 @@ definition {
 
 		var testRunEnvironment = PropsUtil.get("test.run.environment");
 
-		AssertConsoleTextPresent(value1 = "STARTED ${symbolicName}");
+		WaitForConsoleTextPresent(value1 = "STARTED ${symbolicName}");
 	}
 
 	@priority = 3
@@ -370,7 +370,7 @@ definition {
 
 		OSGiConfig.deleteOSGiConfigFile(osgiConfigFileName = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config");
 
-		AssertConsoleTextPresent(value1 = "Reinstalling bundle minium-theme");
+		WaitForConsoleTextPresent(value1 = "Reinstalling bundle minium-theme");
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 

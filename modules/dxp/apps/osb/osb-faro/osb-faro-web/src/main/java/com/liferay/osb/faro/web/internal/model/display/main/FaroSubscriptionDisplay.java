@@ -27,6 +27,10 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -39,9 +43,25 @@ import org.apache.commons.lang3.time.DateUtils;
 @SuppressWarnings({"FieldCanBeLocal", "UnusedDeclaration"})
 public class FaroSubscriptionDisplay {
 
-	public static Date getLastAnniversaryDate(Date createDate) {
+	public static Date getLastAnniversaryDate(
+		Date createDate, String timeZoneId) {
+
 		Date lastAnniversaryDate = DateUtils.setYears(
 			createDate, DateUtil.getYear(new Date()));
+
+		ZoneId zoneId = ZoneId.of(timeZoneId);
+
+		Instant instant = lastAnniversaryDate.toInstant();
+
+		LocalDate localDate = instant.atZone(
+			zoneId
+		).toLocalDate();
+
+		instant = localDate.atStartOfDay(
+			zoneId
+		).toInstant();
+
+		lastAnniversaryDate = Date.from(instant);
 
 		if (DateUtil.compareTo(new Date(), lastAnniversaryDate) > 0) {
 			return lastAnniversaryDate;
@@ -167,7 +187,8 @@ public class FaroSubscriptionDisplay {
 			return;
 		}
 
-		_lastAnniversaryDate = getLastAnniversaryDate(_startDate);
+		_lastAnniversaryDate = getLastAnniversaryDate(
+			_startDate, faroProject.getTimeZoneId());
 
 		_individualsCount = contactsEngineClient.getIndividualsCount(
 			faroProject, false);

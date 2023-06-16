@@ -2732,6 +2732,12 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		Layout layout = layoutPersistence.findByG_P_L(
 			groupId, privateLayout, layoutId);
 
+		// set expando bridge first to prevent autoflush from including any
+		// modifications of the layout in cases when hibernate is managing the
+		// entity
+
+		layout.setExpandoBridgeAttributes(serviceContext);
+
 		String name = nameMap.get(LocaleUtil.getSiteDefault());
 
 		if (Validator.isNull(name)) {
@@ -2827,8 +2833,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 					groupId, privateLayout, layoutId);
 			}
 		}
-
-		layout.setExpandoBridgeAttributes(serviceContext);
 
 		layout = layoutLocalService.updateLayout(layout);
 

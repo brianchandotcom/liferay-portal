@@ -314,7 +314,9 @@ const usePublicAPI = ({apiRef, containerRef, unstable_onEventRef}) => {
 			evaluate(null, {
 				defaultLanguageId,
 				editingLanguageId,
-				formId: getFormId(getFormNode(containerRef.current)),
+				formId: containerRef.current
+					? getFormId(getFormNode(containerRef.current))
+					: 0,
 				groupId,
 				pages,
 				portletNamespace,

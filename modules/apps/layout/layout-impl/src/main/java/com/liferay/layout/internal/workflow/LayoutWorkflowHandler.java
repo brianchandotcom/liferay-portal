@@ -19,6 +19,7 @@ import com.liferay.layout.content.LayoutContentProvider;
 import com.liferay.layout.internal.configuration.LayoutWorkflowHandlerConfiguration;
 import com.liferay.layout.service.LayoutLocalizationLocalService;
 import com.liferay.layout.util.LayoutCopyHelper;
+import com.liferay.layout.util.LayoutServiceContextHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
@@ -142,12 +144,12 @@ public class LayoutWorkflowHandler extends BaseWorkflowHandler<Layout> {
 			return layout;
 		}
 
-		ServiceContext serviceContext = (ServiceContext)workflowContext.get(
+		ServiceContext serviceContext1 = (ServiceContext)workflowContext.get(
 			"serviceContext");
 
 		if (status != WorkflowConstants.STATUS_APPROVED) {
 			return _layoutLocalService.updateStatus(
-				userId, classPK, status, serviceContext);
+				userId, classPK, status, serviceContext1);
 		}
 
 		Layout draftLayout = layout.fetchDraftLayout();
@@ -157,7 +159,7 @@ public class LayoutWorkflowHandler extends BaseWorkflowHandler<Layout> {
 		try {
 			PrincipalThreadLocal.setName(userId);
 
-			_layoutCopyHelper.copyLayoutContent(draftLayout, layout);
+			layout = _layoutCopyHelper.copyLayoutContent(draftLayout, layout);
 		}
 		catch (Exception exception) {
 			throw new PortalException(exception);
@@ -168,30 +170,27 @@ public class LayoutWorkflowHandler extends BaseWorkflowHandler<Layout> {
 
 		_layoutLocalService.updateStatus(
 			userId, draftLayout.getPlid(), WorkflowConstants.STATUS_APPROVED,
-			serviceContext);
+			serviceContext1);
 
-		HttpServletRequest httpServletRequest = serviceContext.getRequest();
-		HttpServletResponse httpServletResponse = serviceContext.getResponse();
-		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+		try (AutoCloseable autoCloseable =
+				_layoutServiceContextHelper.getServiceContextAutoCloseable(
+					layout)) {
 
-		if ((httpServletRequest == null) && (themeDisplay != null)) {
-			httpServletRequest = themeDisplay.getRequest();
-		}
+			ServiceContext serviceContext2 =
+				ServiceContextThreadLocal.getServiceContext();
 
-		if ((httpServletResponse == null) && (themeDisplay != null)) {
-			httpServletResponse = themeDisplay.getResponse();
-		}
-
-		if ((httpServletRequest != null) && (httpServletResponse != null)) {
-			layout = _layoutLocalService.getLayout(layout.getPlid());
+			ThemeDisplay themeDisplay = serviceContext2.getThemeDisplay();
 
 			_updateLayoutContent(
-				httpServletRequest, httpServletResponse, layout,
-				serviceContext);
+				themeDisplay.getRequest(), themeDisplay.getResponse(), layout,
+				serviceContext2);
+		}
+		catch (Exception exception) {
+			throw new PortalException(exception);
 		}
 
 		return _layoutLocalService.updateStatus(
-			userId, classPK, status, serviceContext);
+			userId, classPK, status, serviceContext1);
 	}
 
 	@Activate
@@ -235,6 +234,9 @@ public class LayoutWorkflowHandler extends BaseWorkflowHandler<Layout> {
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutServiceContextHelper _layoutServiceContextHelper;
 
 	private volatile LayoutWorkflowHandlerConfiguration
 		_layoutWorkflowHandlerConfiguration;

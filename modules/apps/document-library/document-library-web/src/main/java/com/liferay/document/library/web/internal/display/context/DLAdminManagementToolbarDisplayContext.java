@@ -302,6 +302,33 @@ public class DLAdminManagementToolbarDisplayContext
 		return creationMenu;
 	}
 
+	public PortletURL getCurrentRenderURL() {
+		PortletURL renderURL = _liferayPortletResponse.createRenderURL();
+
+		long folderId = _getFolderId();
+
+		if (_isSearch()) {
+			renderURL.setParameter(
+				"mvcRenderCommandName", "/document_library/search");
+
+			if (FeatureFlagManagerUtil.isEnabled("LPS-84424")) {
+				_setFilterParameters(renderURL);
+			}
+
+			_setSearchParameters(renderURL);
+		}
+		else {
+			renderURL.setParameter(
+				"mvcRenderCommandName", _getViewMvcRenderCommandName(folderId));
+
+			_setFilterParameters(renderURL);
+		}
+
+		renderURL.setParameter("folderId", String.valueOf(folderId));
+
+		return renderURL;
+	}
+
 	@Override
 	public String getDefaultEventHandler() {
 		return liferayPortletResponse.getNamespace() + "DocumentLibrary";
@@ -475,7 +502,7 @@ public class DLAdminManagementToolbarDisplayContext
 		}
 
 		return PortletURLBuilder.create(
-			_getCurrentRenderURL()
+			getCurrentRenderURL()
 		).setParameter(
 			"orderByType",
 			Objects.equals(_getOrderByType(), "asc") ? "desc" : "asc"
@@ -493,7 +520,7 @@ public class DLAdminManagementToolbarDisplayContext
 			return null;
 		}
 
-		PortletURL renderURL = _getCurrentRenderURL();
+		PortletURL renderURL = getCurrentRenderURL();
 
 		int curEntry = ParamUtil.getInteger(_httpServletRequest, "curEntry");
 
@@ -703,33 +730,6 @@ public class DLAdminManagementToolbarDisplayContext
 		).setWindowState(
 			LiferayWindowState.POP_UP
 		).buildString();
-	}
-
-	private PortletURL _getCurrentRenderURL() {
-		PortletURL renderURL = _liferayPortletResponse.createRenderURL();
-
-		long folderId = _getFolderId();
-
-		if (_isSearch()) {
-			renderURL.setParameter(
-				"mvcRenderCommandName", "/document_library/search");
-
-			if (FeatureFlagManagerUtil.isEnabled("LPS-84424")) {
-				_setFilterParameters(renderURL);
-			}
-
-			_setSearchParameters(renderURL);
-		}
-		else {
-			renderURL.setParameter(
-				"mvcRenderCommandName", _getViewMvcRenderCommandName(folderId));
-
-			_setFilterParameters(renderURL);
-		}
-
-		renderURL.setParameter("folderId", String.valueOf(folderId));
-
-		return renderURL;
 	}
 
 	private String _getDisplayStyle() {
@@ -980,7 +980,7 @@ public class DLAdminManagementToolbarDisplayContext
 							dropdownItem.setActive(
 								orderByCol.equals(_getOrderByCol()));
 							dropdownItem.setHref(
-								_getCurrentRenderURL(), "orderByCol",
+								getCurrentRenderURL(), "orderByCol",
 								orderByCol);
 							dropdownItem.setLabel(
 								LanguageUtil.get(

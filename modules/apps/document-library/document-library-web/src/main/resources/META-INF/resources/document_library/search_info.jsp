@@ -17,11 +17,11 @@
 <%@ include file="/document_library/init.jsp" %>
 
 <%
-long folderId = ParamUtil.getLong(request, "folderId");
+DLAdminDisplayContext dlAdminDisplayContext = (DLAdminDisplayContext)request.getAttribute(DLAdminDisplayContext.class.getName());
+DLAdminManagementToolbarDisplayContext dlAdminManagementToolbarDisplayContext = (DLAdminManagementToolbarDisplayContext)request.getAttribute(DLAdminManagementToolbarDisplayContext.class.getName());
 
 Folder folder = null;
-
-DLAdminDisplayContext dlAdminDisplayContext = (DLAdminDisplayContext)request.getAttribute(DLAdminDisplayContext.class.getName());
+long folderId = ParamUtil.getLong(request, "folderId");
 
 if (folderId != dlAdminDisplayContext.getRootFolderId()) {
 	folder = DLAppServiceUtil.getFolder(folderId);
@@ -30,58 +30,42 @@ if (folderId != dlAdminDisplayContext.getRootFolderId()) {
 List<Folder> mountFolders = DLAppServiceUtil.getMountFolders(scopeGroupId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 %>
 
-<c:if test="<%= !(mountFolders.isEmpty() && (folder == null)) %>">
+<c:if test="<%= (folder != null) || !mountFolders.isEmpty() %>">
 	<div class="search-info">
-		<liferay-util:whitespace-remover>
-			<liferay-ui:message key="search-colon" />
 
-			<%
-			long repositoryId = ParamUtil.getLong(request, "repositoryId");
+		<%
+		long repositoryId = ParamUtil.getLong(request, "repositoryId");
 
-			if (repositoryId == 0) {
-				repositoryId = scopeGroupId;
-			}
+		if (repositoryId == 0) {
+			repositoryId = scopeGroupId;
+		}
 
-			PortletURL searchEverywhereURL = PortletURLBuilder.createRenderURL(
-				liferayPortletResponse
-			).setMVCRenderCommandName(
-				"/document_library/search"
-			).setParameter(
-				"repositoryId", repositoryId
-			).buildPortletURL();
+		long searchRepositoryId = ParamUtil.getLong(request, "searchRepositoryId");
 
-			long searchRepositoryId = ParamUtil.getLong(request, "searchRepositoryId");
+		if (searchRepositoryId == 0) {
+			searchRepositoryId = repositoryId;
+		}
 
-			if (searchRepositoryId == 0) {
-				searchRepositoryId = repositoryId;
-			}
+		PortletURL searchURL = dlAdminManagementToolbarDisplayContext.getCurrentRenderURL();
 
-			searchEverywhereURL.setParameter("searchRepositoryId", String.valueOf(searchRepositoryId));
+		long searchFolderId = ParamUtil.getLong(request, "searchFolderId");
+		%>
 
-			searchEverywhereURL.setParameter("folderId", String.valueOf(folderId));
+		<div class="btn-group">
+			<c:if test="<%= (folder != null) && mountFolders.isEmpty() %>">
 
-			searchEverywhereURL.setParameter("searchFolderId", String.valueOf(dlAdminDisplayContext.getRootFolderId()));
+				<%
+				PortletURL searchEverywhereURL = PortletURLBuilder.create(
+					PortletURLUtil.clone(searchURL, liferayPortletResponse)
+				).setParameter(
+					"repositoryId", repositoryId
+				).setParameter(
+					"searchFolderId", dlAdminDisplayContext.getRootFolderId()
+				).setParameter(
+					"searchRepositoryId", searchRepositoryId
+				).buildPortletURL();
+				%>
 
-			String keywords = ParamUtil.getString(request, "keywords");
-
-			searchEverywhereURL.setParameter("keywords", keywords);
-
-			searchEverywhereURL.setParameter("showSearchInfo", Boolean.TRUE.toString());
-
-			PortletURL searchFolderURL = PortletURLBuilder.create(
-				PortletURLUtil.clone(searchEverywhereURL, liferayPortletResponse)
-			).setParameter(
-				"folderId", folderId
-			).setParameter(
-				"searchFolderId", folderId
-			).setParameter(
-				"searchRepositoryId", scopeGroupId
-			).buildPortletURL();
-
-			long searchFolderId = ParamUtil.getLong(request, "searchFolderId");
-			%>
-
-			<c:if test="<%= mountFolders.isEmpty() && (folder != null) %>">
 				<clay:link
 					cssClass='<%= (searchFolderId == dlAdminDisplayContext.getRootFolderId()) ? "active" : "" %>'
 					displayType="secondary"
@@ -94,6 +78,19 @@ List<Folder> mountFolders = DLAppServiceUtil.getMountFolders(scopeGroupId, DLFol
 			</c:if>
 
 			<c:if test="<%= folder != null %>">
+
+				<%
+				PortletURL searchFolderURL = PortletURLBuilder.create(
+					PortletURLUtil.clone(searchURL, liferayPortletResponse)
+				).setParameter(
+					"repositoryId", repositoryId
+				).setParameter(
+					"searchFolderId", folderId
+				).setParameter(
+					"searchRepositoryId", scopeGroupId
+				).buildPortletURL();
+				%>
+
 				<clay:link
 					cssClass='<%= (searchFolderId == folder.getFolderId()) ? "active" : "" %>'
 					displayType="secondary"
@@ -110,16 +107,18 @@ List<Folder> mountFolders = DLAppServiceUtil.getMountFolders(scopeGroupId, DLFol
 
 				<%
 				PortletURL searchRepositoryURL = PortletURLBuilder.create(
-					PortletURLUtil.clone(searchEverywhereURL, liferayPortletResponse)
+					PortletURLUtil.clone(searchURL, liferayPortletResponse)
 				).setParameter(
 					"repositoryId", scopeGroupId
+				).setParameter(
+					"searchFolderId", dlAdminDisplayContext.getRootFolderId()
 				).setParameter(
 					"searchRepositoryId", scopeGroupId
 				).buildPortletURL();
 				%>
 
 				<clay:link
-					cssClass='<%= ((searchRepositoryId == scopeGroupId) && (searchFolderId == dlAdminDisplayContext.getRootFolderId())) ? "active" : "" %>'
+					cssClass='<%= ((searchFolderId == dlAdminDisplayContext.getRootFolderId()) && (searchRepositoryId == scopeGroupId)) ? "active" : "" %>'
 					displayType="secondary"
 					href="<%= searchRepositoryURL.toString() %>"
 					icon="repository"
@@ -132,8 +131,8 @@ List<Folder> mountFolders = DLAppServiceUtil.getMountFolders(scopeGroupId, DLFol
 				<%
 				for (Folder mountFolder : mountFolders) {
 					searchRepositoryURL.setParameter("repositoryId", String.valueOf(mountFolder.getRepositoryId()));
-					searchRepositoryURL.setParameter("searchRepositoryId", String.valueOf(mountFolder.getRepositoryId()));
 					searchRepositoryURL.setParameter("searchFolderId", String.valueOf(mountFolder.getFolderId()));
+					searchRepositoryURL.setParameter("searchRepositoryId", String.valueOf(mountFolder.getRepositoryId()));
 				%>
 
 					<clay:link
@@ -152,6 +151,6 @@ List<Folder> mountFolders = DLAppServiceUtil.getMountFolders(scopeGroupId, DLFol
 				%>
 
 			</c:if>
-		</liferay-util:whitespace-remover>
+		</div>
 	</div>
 </c:if>

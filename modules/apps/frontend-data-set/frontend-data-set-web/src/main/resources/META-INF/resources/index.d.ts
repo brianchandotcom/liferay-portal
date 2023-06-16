@@ -90,7 +90,14 @@ export interface IItemsActions {
 	label?: string;
 	onClick?: Function;
 	separator?: boolean;
-	target?: 'async' | 'headless' | 'link' | 'modal' | 'sidePanel' | 'event';
+	target?:
+		| 'async'
+		| 'headless'
+		| 'link'
+		| 'modal'
+		| 'modal-permissions'
+		| 'sidePanel'
+		| 'event';
 	type?: string;
 }
 

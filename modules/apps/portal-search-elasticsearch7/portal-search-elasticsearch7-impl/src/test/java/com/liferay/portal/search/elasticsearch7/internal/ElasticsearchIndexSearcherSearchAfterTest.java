@@ -149,6 +149,15 @@ public class ElasticsearchIndexSearcherSearchAfterTest {
 			_INDEX_SEARCH_LIMIT);
 	}
 
+	@Test
+	public void testElasticsearchIndexSearcherLargerThanIndexMaxResultWindow()
+		throws Exception {
+
+		_assertHits(
+			_INDEX_MAX_RESULT_WINDOW, 0, _NUMBER_INDEXED_DOCUMENTS, 0,
+			_INDEX_MAX_RESULT_WINDOW);
+	}
+
 	@Rule
 	public TestName testName = new TestName();
 

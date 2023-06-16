@@ -1,0 +1,100 @@
+@component-name = "portal-publications"
+definition {
+
+	property osgi.module.configuration.file.names = "com.liferay.change.tracking.configuration.CTSettingsConfiguration.config";
+	property osgi.module.configurations = "enabled=B\"true\"";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Publications";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Publications.disablePublications();
+		}
+	}
+
+	@description = "Assert that is possible to create a Asset List within Publications"
+	@priority = 3
+	test CanAddAssetList {
+		task ("Add new Publication and use it") {
+			JSONPublications.addPublication(publicationName = "Publication Name");
+
+			JSONPublications.selectPublication(publicationName = "Publication Name");
+		}
+
+		task ("Create a manual asset list") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "guest");
+
+			AssetListsAdmin.addManualSelection(assetListTitle = "Manual Asset List Test");
+		}
+
+		task ("Create a dynamic asset list") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "guest");
+
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Asset List Test");
+		}
+
+		task ("Assert Asset List Entry names and types") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "guest");
+
+			AssertTextEquals.assertPartialText(
+				key_title = "Manual Asset List Test",
+				locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE",
+				value1 = "Manual Asset List Test");
+
+			AssertTextEquals.assertPartialText(
+				key_columnName = "lfr-type",
+				key_tableEntry = "Manual",
+				locator1 = "LexiconTable#TABLE_ENTRY_INFO",
+				value1 = "Manual");
+
+			AssertTextEquals.assertPartialText(
+				key_title = "Dynamic Asset List Test",
+				locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE",
+				value1 = "Dynamic Asset List Test");
+
+			AssertTextEquals.assertPartialText(
+				key_columnName = "lfr-type",
+				key_tableEntry = "Dynamic",
+				locator1 = "LexiconTable#TABLE_ENTRY_INFO",
+				value1 = "Dynamic");
+		}
+
+		task ("Assert that it's possible to publish it") {
+			PublicationsNavigator.gotoReviewChanges();
+
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Show All Items",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			PublicationsChanges.viewChanges(
+				changeCategory = "Asset List Entry",
+				changeSite = "Guest",
+				changeTitle = "Asset List Entry",
+				changeType = "Added",
+				changeUser = "Test Test");
+
+			Button.clickPublish();
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#SUCCESS",
+				value1 = "No unresolved conflicts, ready to publish.");
+
+			Publications.publishPublication(publicationName = "Publication Name");
+
+			Publications.viewPublicationPublished(publicationName = "Publication Name");
+		}
+	}
+
+}

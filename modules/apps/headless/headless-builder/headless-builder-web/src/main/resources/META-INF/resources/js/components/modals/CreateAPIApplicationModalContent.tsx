@@ -13,16 +13,11 @@
  */
 
 import ClayButton from '@clayui/button';
-import {Text} from '@clayui/core';
-import ClayForm, {ClayInput} from '@clayui/form';
-import ClayIcon from '@clayui/icon';
 import ClayModal from '@clayui/modal';
-import {ClayTooltipProvider} from '@clayui/tooltip';
-import classNames from 'classnames';
 import {fetch, openToast} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
-import {limitStringInputLengh, makeURLPathString} from '../utils/string';
+import BaseAPIApplicationField from '../baseComponents/BaseAPIApplicationFields';
 
 type Data = {
 	baseURL: string;
@@ -58,7 +53,6 @@ export function CreateAPIApplicationModalContent({
 		baseURL: false,
 		title: false,
 	});
-	const [userEditedURL, setUserEditedURL] = useState(false);
 
 	useEffect(() => {
 		for (const key in data) {
@@ -158,129 +152,11 @@ export function CreateAPIApplicationModalContent({
 			</ClayModal.Header>
 
 			<div className="modal-body">
-				<ClayForm.Group
-					className={classNames({
-						'has-error': displayError.title,
-					})}
-				>
-					<label>
-						{Liferay.Language.get('title')}
-
-						<span className="ml-1 reference-mark text-warning">
-							<ClayIcon symbol="asterisk" />
-						</span>
-					</label>
-
-					<ClayInput
-						onChange={({target: {value}}) =>
-							setData((previousData) => ({
-								...previousData,
-								title: value,
-								...(!userEditedURL && {
-									baseURL: makeURLPathString(value),
-								}),
-							}))
-						}
-						placeholder={Liferay.Language.get('enter-title')}
-					/>
-
-					<div className="feedback-container">
-						<ClayForm.FeedbackGroup>
-							{displayError.title && (
-								<ClayForm.FeedbackItem className="mt-2">
-									<ClayForm.FeedbackIndicator symbol="exclamation-full" />
-
-									{Liferay.Language.get(
-										'please-enter-an-api-title-to-continue'
-									)}
-								</ClayForm.FeedbackItem>
-							)}
-						</ClayForm.FeedbackGroup>
-					</div>
-				</ClayForm.Group>
-
-				<ClayForm.Group
-					className={classNames({
-						'has-error': displayError.baseURL,
-					})}
-				>
-					<label>
-						{Liferay.Language.get('url')}
-
-						<span className="ml-1 reference-mark text-warning">
-							<ClayIcon symbol="asterisk" />
-						</span>
-
-						<ClayTooltipProvider>
-							<span
-								data-tooltip-align="top"
-								title={Liferay.Language.get(
-									'there-is-a-limit-of-255-characters-and-must-only-contain-numbers-letters-or-dashes'
-								)}
-							>
-								&nbsp;
-								<ClayIcon symbol="question-circle-full" />
-							</span>
-						</ClayTooltipProvider>
-					</label>
-
-					<br />
-
-					<Text as="p" id="hostTextPreview" size={2} weight="lighter">
-						{`${window.location.origin}/o/`}
-					</Text>
-
-					<ClayInput
-						id="modalURLField"
-						onChange={({target: {value}}) => {
-							setUserEditedURL(true);
-							setData((previousData) => ({
-								...previousData,
-								baseURL: limitStringInputLengh(
-									makeURLPathString(value),
-									255
-								),
-							}));
-						}}
-						placeholder={Liferay.Language.get('automated-url')}
-						value={data.baseURL}
-					/>
-
-					<ClayForm.FeedbackGroup>
-						{displayError.baseURL ? (
-							<ClayForm.FeedbackItem className="mt-2">
-								<ClayForm.FeedbackIndicator symbol="exclamation-full" />
-
-								{Liferay.Language.get(
-									'please-enter-a-title-so-we-can-create-an-url'
-								)}
-							</ClayForm.FeedbackItem>
-						) : (
-							<Text size={3} weight="lighter">
-								{Liferay.Language.get(
-									'the-url-can-be-modified'
-								)}
-							</Text>
-						)}
-					</ClayForm.FeedbackGroup>
-				</ClayForm.Group>
-
-				<ClayForm.Group>
-					<label>{Liferay.Language.get('description')}</label>
-
-					<textarea
-						className="form-control"
-						onBlur={({target: {value}}) =>
-							setData((previousData) => ({
-								...previousData,
-								description: value,
-							}))
-						}
-						placeholder={Liferay.Language.get(
-							'add-a-short-description-that-describes-this-api'
-						)}
-					></textarea>
-				</ClayForm.Group>
+				<BaseAPIApplicationField
+					data={data}
+					displayError={displayError}
+					setData={setData}
+				/>
 			</div>
 
 			<ClayModal.Footer

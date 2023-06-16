@@ -23,7 +23,7 @@ const ALIGN_OPTIONS = [
 		value: 'align-items-start',
 	},
 	{
-		label: Liferay.Language.get('center'),
+		label: Liferay.Language.get('center[verb]'),
 		value: 'align-items-center',
 	},
 	{
@@ -61,7 +61,7 @@ const JUSTIFY_OPTIONS = [
 		value: '',
 	},
 	{
-		label: Liferay.Language.get('center'),
+		label: Liferay.Language.get('center[verb]'),
 		value: 'justify-content-center',
 	},
 	{

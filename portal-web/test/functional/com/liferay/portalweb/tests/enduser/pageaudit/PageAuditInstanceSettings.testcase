@@ -45,7 +45,7 @@ definition {
 		property test.name.skip.portal.instance = "PageAudit#DefaultStrategyAtInstanceSettings";
 
 		task ("Set a custom page as canonical URL to have data already loaded") {
-			PageAudit.setSEOcanonicalURL(url = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
+			PageAudit.setSEOcanonicalURL(url = "https://liferay-echo.github.io/liferay-portal/page-audit-test");
 		}
 
 		task ("Set Google PageSpeed API") {
@@ -110,7 +110,7 @@ definition {
 		property test.name.skip.portal.instance = "PageAudit#MobileStrategyAtInstanceSettings";
 
 		task ("Set a custom page as canonical URL to have data already loaded") {
-			PageAudit.setSEOcanonicalURL(url = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
+			PageAudit.setSEOcanonicalURL(url = "https://liferay-echo.github.io/liferay-portal/page-audit-test");
 		}
 
 		task ("Set Google PageSpeed API") {
@@ -141,7 +141,7 @@ definition {
 		property test.name.skip.portal.instance = "PageAudit#SiteSettingsHierarchyOverInstanceSettings";
 
 		task ("Set a custom page as canonical URL to have data already loaded") {
-			PageAudit.setSEOcanonicalURL(url = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
+			PageAudit.setSEOcanonicalURL(url = "https://liferay-echo.github.io/liferay-portal/page-audit-test");
 		}
 
 		task ("Set Google PageSpeed API by System Settings") {

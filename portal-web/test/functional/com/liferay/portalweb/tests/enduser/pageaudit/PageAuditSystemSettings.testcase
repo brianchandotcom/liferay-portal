@@ -45,7 +45,7 @@ definition {
 		property test.name.skip.portal.instance = "PageAudit#AssertProgressBar";
 
 		task ("Set a custom page as canonical URL to have data already loaded") {
-			PageAudit.setSEOcanonicalURL(url = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
+			PageAudit.setSEOcanonicalURL(url = "https://liferay-echo.github.io/liferay-portal/page-audit-test");
 		}
 
 		task ("Set Google PageSpeed API") {
@@ -98,7 +98,7 @@ definition {
 		property test.name.skip.portal.instance = "PageAudit#DefaultStrategyAtSystemSettings";
 
 		task ("Set a custom page as canonical URL to have data already loaded") {
-			PageAudit.setSEOcanonicalURL(url = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
+			PageAudit.setSEOcanonicalURL(url = "https://liferay-echo.github.io/liferay-portal/page-audit-test");
 		}
 
 		task ("Set Google PageSpeed API") {
@@ -129,7 +129,7 @@ definition {
 		property test.name.skip.portal.instance = "PageAudit#DesktopStrategyAtSystemSettings";
 
 		task ("Set a custom page as canonical URL to have data already loaded") {
-			PageAudit.setSEOcanonicalURL(url = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
+			PageAudit.setSEOcanonicalURL(url = "https://liferay-echo.github.io/liferay-portal/page-audit-test");
 		}
 
 		task ("Set Google PageSpeed API") {
@@ -160,7 +160,7 @@ definition {
 		property test.name.skip.portal.instance = "PageAudit#MobileStrategyAtSystemSettings";
 
 		task ("Set a custom page as canonical URL to have data already loaded") {
-			PageAudit.setSEOcanonicalURL(url = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
+			PageAudit.setSEOcanonicalURL(url = "https://liferay-echo.github.io/liferay-portal/page-audit-test");
 		}
 
 		task ("Set Google PageSpeed API") {
@@ -274,7 +274,7 @@ definition {
 		property test.name.skip.portal.instance = "PageAudit#PageWithNoIssues";
 
 		task ("Set a custom page as canonical URL to have data already loaded") {
-			PageAudit.setSEOcanonicalURL(url = "https://liferay-tango.github.io/liferay-portal/page-audit-test-no-issues");
+			PageAudit.setSEOcanonicalURL(url = "https://liferay-echo.github.io/liferay-portal/page-audit-test-no-issues");
 		}
 
 		task ("Set Google PageSpeed API") {
@@ -301,7 +301,7 @@ definition {
 		property test.name.skip.portal.instance = "PageAudit#SiteSettingsHierarchyOverSystemSettings";
 
 		task ("Set a custom page as canonical URL to have data already loaded") {
-			PageAudit.setSEOcanonicalURL(url = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
+			PageAudit.setSEOcanonicalURL(url = "https://liferay-echo.github.io/liferay-portal/page-audit-test");
 		}
 
 		task ("Set Google PageSpeed API by System Settings") {

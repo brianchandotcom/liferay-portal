@@ -14,8 +14,10 @@
 
 package com.liferay.commerce.internal.security.permission.resource;
 
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.permission.resource.BaseModelResourcePermissionWrapper;
@@ -23,6 +25,7 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.workflow.permission.WorkflowPermission;
 
@@ -55,11 +58,18 @@ public class CommerceOrderModelResourcePermissionWrapper
 
 				consumer.accept(
 					new CommerceOrderModelResourcePermissionLogic(
+						_accountEntryLocalService, _commerceChannelLocalService,
 						_configurationProvider, _groupLocalService,
-						_portletResourcePermission,
+						_portletResourcePermission, _userGroupRoleLocalService,
 						_workflowDefinitionLinkLocalService));
 			});
 	}
+
+	@Reference
+	private AccountEntryLocalService _accountEntryLocalService;
+
+	@Reference
+	private CommerceChannelLocalService _commerceChannelLocalService;
 
 	@Reference
 	private CommerceOrderLocalService _commerceOrderLocalService;
@@ -74,6 +84,9 @@ public class CommerceOrderModelResourcePermissionWrapper
 		target = "(resource.name=" + CommerceOrderConstants.RESOURCE_NAME + ")"
 	)
 	private PortletResourcePermission _portletResourcePermission;
+
+	@Reference
+	private UserGroupRoleLocalService _userGroupRoleLocalService;
 
 	@Reference
 	private WorkflowDefinitionLinkLocalService

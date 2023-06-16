@@ -77,7 +77,7 @@ public class ValidatorTest {
 
 	@Test
 	public void testHigherVersionModule() throws Exception {
-		_mockReleaseSchemaVersion("module2.service", "1.0.0");
+		_mockReleaseSchemaVersion("1.0.0", "module2.service");
 
 		_executeAndAssert(
 			true, false,
@@ -122,7 +122,7 @@ public class ValidatorTest {
 
 	@Test
 	public void testLowerVersionModule() throws Exception {
-		_mockReleaseSchemaVersion("module1", "10.0.0");
+		_mockReleaseSchemaVersion("10.0.0", "module1");
 
 		_executeAndAssert(
 			true, false,
@@ -348,7 +348,7 @@ public class ValidatorTest {
 	}
 
 	private void _mockReleaseSchemaVersion(
-		String servletContextName, String schemaVersion) {
+		String schemaVersion, String servletContextName) {
 
 		List<Release> releases = _createReleaseElements();
 

@@ -663,6 +663,8 @@ definition {
 	@description = "This is a use case for LPS-185939 - Federated search requests should inherit parent request's search context properties."
 	@priority = 3
 	test AssertFederatedSearchRequestsInheritParentRequestsSearchContextProperties {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
 		task ("Add a user and assign it the Administrator role") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",

@@ -17,10 +17,13 @@ package com.liferay.expando.internal.change.tracking.spi.resolver;
 import com.liferay.change.tracking.spi.resolver.ConstraintResolver;
 import com.liferay.change.tracking.spi.resolver.context.ConstraintResolverContext;
 import com.liferay.expando.kernel.model.ExpandoRow;
+import com.liferay.expando.kernel.model.ExpandoValue;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
+import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.language.LanguageResources;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -64,12 +67,25 @@ public class ExpandoRowConstraintResolver
 			ConstraintResolverContext<ExpandoRow> constraintResolverContext)
 		throws PortalException {
 
-		ExpandoRow expandoRow = constraintResolverContext.getTargetCTModel();
+		ExpandoRow expandoRow = constraintResolverContext.getSourceCTModel();
 
-		_expandoRowLocalService.deleteExpandoRow(expandoRow);
+		List<ExpandoValue> expandoValues =
+			_expandoValueLocalService.getRowValues(expandoRow.getRowId());
+
+		_expandoRowLocalService.deleteRow(expandoRow);
+
+		for (ExpandoValue expandoValue : expandoValues) {
+			_expandoValueLocalService.addValue(
+				expandoValue.getClassNameId(), expandoValue.getTableId(),
+				expandoValue.getColumnId(), expandoValue.getClassPK(),
+				expandoValue.getData());
+		}
 	}
 
 	@Reference
 	private ExpandoRowLocalService _expandoRowLocalService;
+
+	@Reference
+	private ExpandoValueLocalService _expandoValueLocalService;
 
 }

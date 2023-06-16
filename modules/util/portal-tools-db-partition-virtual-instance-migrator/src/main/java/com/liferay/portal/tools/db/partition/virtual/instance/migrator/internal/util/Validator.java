@@ -31,7 +31,7 @@ import java.util.Map;
 public class Validator {
 
 	public static Recorder validateDatabases(
-			Connection sourceConnection, Connection destinationConnection)
+			Connection destinationConnection, Connection sourceConnection)
 		throws Exception {
 
 		Recorder recorder = new Recorder();

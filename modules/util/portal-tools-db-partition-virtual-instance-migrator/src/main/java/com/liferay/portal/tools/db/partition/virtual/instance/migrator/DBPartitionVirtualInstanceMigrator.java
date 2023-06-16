@@ -127,6 +127,12 @@ public class DBPartitionVirtualInstanceMigrator {
 				_exit(ErrorCodes.BAD_DESTINATION_PARAMETERS);
 			}
 
+			if (!DatabaseUtil.isDefaultPartition(_destinationConnection)) {
+				System.err.println("Destination is not the default partition");
+
+				_exit(ErrorCodes.DESTINATION_NOT_DEFAULT);
+			}
+
 			if (commandLine.hasOption("destination-schema-prefix")) {
 				DatabaseUtil.setSchemaPrefix(
 					commandLine.getOptionValue("destination-schema-prefix"));
@@ -154,17 +160,12 @@ public class DBPartitionVirtualInstanceMigrator {
 				_exit(ErrorCodes.SOURCE_MULTI_INSTANCES);
 			}
 
-			if (!DatabaseUtil.isDefaultPartition(_destinationConnection)) {
-				System.err.println("Destination is not the default partition");
-
-				_exit(ErrorCodes.DESTINATION_NOT_DEFAULT);
-			}
-
 			Recorder recorder = Validator.validateDatabases(
-				_sourceConnection, _destinationConnection);
+				_destinationConnection, _sourceConnection);
 
 			if (recorder.hasErrors() || recorder.hasWarnings()) {
 				recorder.printMessages();
+
 				_exit(ErrorCodes.VALIDATION_ERROR);
 			}
 

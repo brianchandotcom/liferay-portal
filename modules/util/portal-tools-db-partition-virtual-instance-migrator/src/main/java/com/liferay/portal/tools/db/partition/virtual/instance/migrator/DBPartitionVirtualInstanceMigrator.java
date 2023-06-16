@@ -55,7 +55,7 @@ public class DBPartitionVirtualInstanceMigrator {
 			}
 
 			if (_destinationConnection != null) {
-				_sourceConnection.close();
+				_destinationConnection.close();
 			}
 		}
 		catch (SQLException sqlException) {

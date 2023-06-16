@@ -72,26 +72,25 @@ public class DBPartitionVirtualInstanceMigrator {
 
 		options.addRequiredOption(
 			"d", "destination-jdbc-url", true,
-			"Set the JDBC URL for the destination database.");
+			"Set the destination JDBC URL.");
 		options.addRequiredOption(
 			"dp", "destination-password", true,
-			"Set the destination database user password.");
+			"Set the destination password.");
 		options.addOption(
 			"dsp", "destination-schema-prefix", true,
-			"Set the schema prefix for non-default databases in destination " +
-				"database.");
+			"Set the destination schema prefix.");
 		options.addRequiredOption(
 			"du", "destination-user", true,
-			"Set the destination database user name.");
+			"Set the destination user.");
 		options.addOption("h", "help", false, "Print help message.");
 		options.addRequiredOption(
 			"s", "source-jdbc-url", true,
-			"Set the JDBC URL for the source database.");
+			"Set the source JDBC URL.");
 		options.addRequiredOption(
 			"sp", "source-password", true,
-			"Set the source database user password.");
+			"Set the source password.");
 		options.addRequiredOption(
-			"su", "source-user", true, "Set the source database user name.");
+			"su", "source-user", true, "Set the source user.");
 
 		return options;
 	}

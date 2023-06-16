@@ -48,7 +48,7 @@ public class DBPartitionSchemaValidator {
 			HelpFormatter helpFormatter = new HelpFormatter();
 
 			helpFormatter.printHelp(
-				"Liferay Portal DB Partition Schema Validator", options);
+				"Liferay Portal Tools DB Partition Schema Validator", options);
 
 			return;
 		}

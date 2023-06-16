@@ -294,9 +294,9 @@ public class DBUpgradeClient {
 		Options options = new Options();
 
 		options.addOption(
-			new Option("d", "debug", false, "Debug the upgrade jvm."));
+			new Option("d", "debug", false, "Debug the upgrade JVM."));
 		options.addOption(
-			new Option("h", "help", false, "Print this message."));
+			new Option("h", "help", false, "Print help message."));
 		options.addOption(
 			new Option(
 				"j", "jvm-opts", true,

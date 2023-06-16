@@ -18,7 +18,7 @@ interface APIApplicationsProps {
 	apiURLPaths: APIURLPaths;
 	portletId: string;
 }
-export default function APIApplications({
+export default function ListAPIApplications({
 	apiURLPaths,
 	portletId,
 }: APIApplicationsProps): JSX.Element;

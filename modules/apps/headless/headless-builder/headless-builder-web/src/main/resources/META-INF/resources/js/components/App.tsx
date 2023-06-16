@@ -14,7 +14,7 @@
 
 import React from 'react';
 
-import APIApplications from './APIApplications';
+import ListAPIApplications from './ListAPIApplications';
 
 import '../../css/main.scss';
 
@@ -24,5 +24,7 @@ interface AppProps {
 }
 
 export default function App({apiURLPaths, portletId}: AppProps) {
-	return <APIApplications apiURLPaths={apiURLPaths} portletId={portletId} />;
+	return (
+		<ListAPIApplications apiURLPaths={apiURLPaths} portletId={portletId} />
+	);
 }

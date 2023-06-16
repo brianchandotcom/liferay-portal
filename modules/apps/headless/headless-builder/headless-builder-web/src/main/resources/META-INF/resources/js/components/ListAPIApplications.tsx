@@ -21,7 +21,7 @@ interface APIApplicationsProps {
 	portletId: string;
 }
 
-export default function APIApplications({
+export default function ListAPIApplications({
 	apiURLPaths,
 	portletId,
 }: APIApplicationsProps) {

@@ -191,7 +191,8 @@ import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.site.exception.InitializationException;
 import com.liferay.site.initializer.SiteInitializer;
-import com.liferay.site.initializer.extender.internal.util.SiteInitializerUtil;
+import com.liferay.site.initializer.extender.SiteInitializerCommerceExtension;
+import com.liferay.site.initializer.extender.SiteInitializerUtil;
 import com.liferay.site.navigation.menu.item.layout.constants.SiteNavigationMenuItemTypeConstants;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
@@ -441,7 +442,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 	@Override
 	public void initialize(long groupId) throws InitializationException {
 		if (_log.isDebugEnabled()) {
-			_log.debug("Commerce site initializer " + _commerceSiteInitializer);
+			_log.debug(
+				"Commerce site initializer " +
+					_siteInitializerCommerceExtension);
 		}
 
 		long startTime = System.currentTimeMillis();
@@ -656,14 +659,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 		return true;
 	}
 
-	protected void setCommerceSiteInitializer(
-		CommerceSiteInitializer commerceSiteInitializer) {
-
-		_commerceSiteInitializer = commerceSiteInitializer;
-	}
-
 	protected void setServletContext(ServletContext servletContext) {
 		_servletContext = servletContext;
+	}
+
+	protected void setSiteInitializerCommerceExtension(
+		SiteInitializerCommerceExtension siteInitializerCommerceExtension) {
+
+		_siteInitializerCommerceExtension = siteInitializerCommerceExtension;
 	}
 
 	private void _addAccountGroupAssignments(ServiceContext serviceContext)
@@ -723,11 +726,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private void _addAccountGroups(ServiceContext serviceContext)
 		throws Exception {
 
-		if (_commerceSiteInitializer == null) {
+		if (_siteInitializerCommerceExtension == null) {
 			return;
 		}
 
-		_commerceSiteInitializer.addAccountGroups(
+		_siteInitializerCommerceExtension.addAccountGroups(
 			serviceContext, _servletContext);
 	}
 
@@ -865,11 +868,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		if (_commerceSiteInitializer == null) {
+		if (_siteInitializerCommerceExtension == null) {
 			return;
 		}
 
-		_commerceSiteInitializer.addCPDefinitions(
+		_siteInitializerCommerceExtension.addCPDefinitions(
 			_bundle, documentsStringUtilReplaceValues,
 			objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
 			serviceContext, _servletContext);
@@ -3701,11 +3704,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private void _addPortletSettings(ServiceContext serviceContext)
 		throws Exception {
 
-		if (_commerceSiteInitializer == null) {
+		if (_siteInitializerCommerceExtension == null) {
 			return;
 		}
 
-		_commerceSiteInitializer.addPortletSettings(
+		_siteInitializerCommerceExtension.addPortletSettings(
 			_classLoader, serviceContext, _servletContext);
 	}
 
@@ -4461,14 +4464,15 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 				long typePK = 0;
 
-				if ((_commerceSiteInitializer != null) &&
+				if ((_siteInitializerCommerceExtension != null) &&
 					StringUtil.equals(
 						className,
-						_commerceSiteInitializer.getCommerceOrderClassName())) {
+						_siteInitializerCommerceExtension.
+							getCommerceOrderClassName())) {
 
 					groupId =
-						_commerceSiteInitializer.getCommerceChannelGroupId(
-							groupId);
+						_siteInitializerCommerceExtension.
+							getCommerceChannelGroupId(groupId);
 
 					typePK = propertiesJSONObject.getLong("typePK");
 				}
@@ -5053,7 +5057,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final Map<String, String> _classNameIdStringUtilReplaceValues;
 	private final ClientExtensionEntryLocalService
 		_clientExtensionEntryLocalService;
-	private CommerceSiteInitializer _commerceSiteInitializer;
 	private final ConfigurationProvider _configurationProvider;
 	private final DDMStructureLocalService _ddmStructureLocalService;
 	private final DDMTemplateLocalService _ddmTemplateLocalService;
@@ -5118,6 +5121,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_segmentsExperienceLocalService;
 	private ServletContext _servletContext;
 	private final SettingsFactory _settingsFactory;
+	private SiteInitializerCommerceExtension _siteInitializerCommerceExtension;
 	private final SiteNavigationMenuItemLocalService
 		_siteNavigationMenuItemLocalService;
 	private final SiteNavigationMenuItemTypeRegistry

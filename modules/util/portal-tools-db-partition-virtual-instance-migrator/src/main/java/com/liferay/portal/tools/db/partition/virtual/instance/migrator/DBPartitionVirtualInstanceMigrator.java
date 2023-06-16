@@ -168,8 +168,6 @@ public class DBPartitionVirtualInstanceMigrator {
 
 				_exit(ErrorCodes.VALIDATION_ERROR);
 			}
-
-			System.out.println("All validations passed successfully");
 		}
 		catch (ParseException parseException) {
 			System.err.println(

@@ -8,8 +8,10 @@ dependencies {
 	compileOnly project(":apps:headless:headless-builder:headless-builder-api")
 	compileOnly project(":apps:info:info-api")
 	compileOnly project(":apps:object:object-api")
+	compileOnly project(":apps:object:object-rest-api")
 	compileOnly project(":apps:portal-vulcan:portal-vulcan-api")
 	compileOnly project(":apps:static:osgi:osgi-util")
 	compileOnly project(":core:osgi-service-tracker-collections")
+	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-string")
 }

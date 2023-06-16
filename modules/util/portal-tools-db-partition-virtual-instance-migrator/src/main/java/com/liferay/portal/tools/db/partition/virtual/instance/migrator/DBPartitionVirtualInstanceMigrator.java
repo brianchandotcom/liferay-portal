@@ -149,16 +149,13 @@ public class DBPartitionVirtualInstanceMigrator {
 			}
 
 			if (!DatabaseUtil.isSingleVirtualInstance(_sourceConnection)) {
-				System.err.println(
-					"Source database has several instances. That is not " +
-						"supported by the tool");
+				System.err.println("Source has more than one virtual instance");
 
 				_exit(ErrorCodes.SOURCE_MULTI_INSTANCES);
 			}
 
 			if (!DatabaseUtil.isDefaultPartition(_destinationConnection)) {
-				System.err.println(
-					"Destination database is not the default partition");
+				System.err.println("Destination is not the default partition");
 
 				_exit(ErrorCodes.DESTINATION_NOT_DEFAULT);
 			}

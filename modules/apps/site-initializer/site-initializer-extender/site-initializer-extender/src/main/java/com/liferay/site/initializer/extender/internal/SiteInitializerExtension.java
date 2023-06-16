@@ -232,7 +232,7 @@ public class SiteInitializerExtension {
 		ServiceDependency serviceDependency =
 			_dependencyManager.createServiceDependency();
 
-		serviceDependency.setCallbacks("setCommerceSiteInitializer", null);
+		serviceDependency.setCallbacks("setSiteInitializerCommerceExtension", null);
 		serviceDependency.setRequired(false);
 		serviceDependency.setService(SiteInitializerCommerceExtension.class);
 

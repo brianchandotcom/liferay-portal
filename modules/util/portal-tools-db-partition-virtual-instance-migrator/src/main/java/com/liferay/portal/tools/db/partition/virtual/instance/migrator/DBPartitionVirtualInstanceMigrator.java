@@ -44,7 +44,7 @@ public class DBPartitionVirtualInstanceMigrator {
 
 			exception.printStackTrace();
 
-			_exit(ErrorCodes.UNEXPECTED_ERROR);
+			_exit(ErrorCodes.LIFERAY_COMMON_EXIT_CODE_BAD);
 		}
 	}
 
@@ -62,7 +62,7 @@ public class DBPartitionVirtualInstanceMigrator {
 			System.err.println(sqlException);
 		}
 
-		if (code != ErrorCodes.SUCCESS) {
+		if (code != ErrorCodes.LIFERAY_COMMON_EXIT_CODE_OK) {
 			System.exit(code);
 		}
 	}
@@ -124,13 +124,13 @@ public class DBPartitionVirtualInstanceMigrator {
 
 				sqlException.printStackTrace();
 
-				_exit(ErrorCodes.BAD_TARGET_PARAMETERS);
+				_exit(ErrorCodes.LIFERAY_COMMON_EXIT_CODE_BAD);
 			}
 
 			if (!DatabaseUtil.isDefaultPartition(_targetConnection)) {
 				System.err.println("Target is not the default partition");
 
-				_exit(ErrorCodes.TARGET_NOT_DEFAULT);
+				_exit(ErrorCodes.LIFERAY_COMMON_EXIT_CODE_BAD);
 			}
 
 			if (commandLine.hasOption("target-schema-prefix")) {
@@ -151,13 +151,13 @@ public class DBPartitionVirtualInstanceMigrator {
 
 				sqlException.printStackTrace();
 
-				_exit(ErrorCodes.BAD_SOURCE_PARAMETERS);
+				_exit(ErrorCodes.LIFERAY_COMMON_EXIT_CODE_BAD);
 			}
 
 			if (!DatabaseUtil.isSingleVirtualInstance(_sourceConnection)) {
 				System.err.println("Source has more than one virtual instance");
 
-				_exit(ErrorCodes.SOURCE_MULTI_INSTANCES);
+				_exit(ErrorCodes.LIFERAY_COMMON_EXIT_CODE_BAD);
 			}
 
 			Recorder recorder = Validator.validateDatabases(
@@ -166,7 +166,7 @@ public class DBPartitionVirtualInstanceMigrator {
 			if (recorder.hasErrors() || recorder.hasWarnings()) {
 				recorder.printMessages();
 
-				_exit(ErrorCodes.VALIDATION_ERROR);
+				_exit(ErrorCodes.LIFERAY_COMMON_EXIT_CODE_BAD);
 			}
 		}
 		catch (ParseException parseException) {
@@ -180,10 +180,10 @@ public class DBPartitionVirtualInstanceMigrator {
 				"Liferay Portal Tools DB Partition Virtual Instance Migrator",
 				options);
 
-			_exit(ErrorCodes.BAD_INPUT_ARGUMENTS);
+			_exit(ErrorCodes.LIFERAY_COMMON_EXIT_CODE_HELP);
 		}
 
-		_exit(ErrorCodes.SUCCESS);
+		_exit(ErrorCodes.LIFERAY_COMMON_EXIT_CODE_OK);
 	}
 
 	private static Connection _targetConnection;

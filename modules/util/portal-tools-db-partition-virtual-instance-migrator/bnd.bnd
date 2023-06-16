@@ -1,0 +1,30 @@
+Bundle-Name: Liferay Portal Tools DB Partition Virtual Instance Migrator
+Bundle-SymbolicName: com.liferay.portal.tools.db.partition.virtual.instance.migrator
+Bundle-Version: 1.0.0
+Main-Class: com.liferay.portal.tools.db.partition.virtual.instance.migrator.DBPartitionVirtualInstanceMigrator
+-includeresource:\
+	@com.liferay.petra.lang-*.jar!/com/liferay/petra/lang/CentralizedThreadLocal.class,\
+	@com.liferay.petra.lang-*.jar!/com/liferay/petra/lang/HashUtil.class,\
+	@com.liferay.petra.string-*.jar!/com/liferay/petra/string/CharPool.class,\
+	@com.liferay.petra.string-*.jar!/com/liferay/petra/string/StringBundler.class,\
+	@com.liferay.petra.string-*.jar!/com/liferay/petra/string/StringPool.class,\
+	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/dao/db/DBInspector.class,\
+	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/io/unsync/UnsyncByteArrayInputStream.class,\
+	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/io/unsync/UnsyncByteArrayOutputStream.class,\
+	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/io/unsync/UnsyncStringReader.class,\
+	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/log/Jdk14LogFactoryImpl.class,\
+	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/log/Jdk14LogImpl.class,\
+	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/log/Log.class,\
+	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/log/LogFactory.class,\
+	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/log/LogFactoryUtil.class,\
+	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/log/LogSanitizerException.class,\
+	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/log/LogWrapper.class,\
+	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/log/SanitizerLogWrapper.class,\
+	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/util/EnvPropertiesUtil.class,\
+	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/util/GetterUtil.class,\
+	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/util/PropertiesUtil.class,\
+	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/util/StringUtil.class,\
+	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/util/SystemEnv.class,\
+	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/util/SystemProperties.class,\
+	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/util/Validator.class,\
+	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/version/Version.class

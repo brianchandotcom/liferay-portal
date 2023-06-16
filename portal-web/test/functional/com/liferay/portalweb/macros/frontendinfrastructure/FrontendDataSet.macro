@@ -36,7 +36,7 @@ definition {
 			key_dateField = "To",
 			locator1 = "DataSet#DATEPICKER_BUTTON");
 
-		Click(locator1 = "DataSet#NEW_FILTER_SAVE_BUTTON");
+		Click(locator1 = "DataSet#MODAL_SAVE_BUTTON");
 	}
 
 	macro selectFromFieldDates {

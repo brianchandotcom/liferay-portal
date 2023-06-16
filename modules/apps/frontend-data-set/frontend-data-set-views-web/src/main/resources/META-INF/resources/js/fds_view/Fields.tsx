@@ -593,7 +593,13 @@ const Fields = ({
 
 		const responseJSON = await response.json();
 
-		const storedFDSFields = responseJSON?.items;
+		const storedFDSFields = responseJSON?.items.map(
+			(field: IFDSField): IFDSField => {
+				field.renderer = getRendererLabel(field.renderer);
+
+				return field;
+			}
+		);
 
 		if (!storedFDSFields) {
 			openToast({
@@ -637,13 +643,7 @@ const Fields = ({
 
 			fdsFieldsOrderRef.current = orderedFDSFieldIds.join(',');
 
-			const nextOrderedFDSFields = orderedFDSFields.map((field) => {
-				field.renderer = getRendererLabel(field.renderer);
-
-				return field;
-			});
-
-			setFDSFields(nextOrderedFDSFields);
+			setFDSFields(orderedFDSFields);
 		}
 		else {
 			fdsFieldsOrderRef.current = storedFDSFields

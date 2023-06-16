@@ -93,12 +93,12 @@ public class StructuredContentResourceTest
 	public void testGetSiteStructuredContentsPage() throws Exception {
 		super.testGetSiteStructuredContentsPage();
 
-		_testGetSiteStructuredContentsPage_addStructuredContent_addDraftStructuredContentWithPriority(
+		_addDraftStructuredContentWithPriority(
 			testGetSiteStructuredContentsPage_getSiteId(),
 			RandomTestUtil.randomDouble());
 
 		StructuredContent postStructuredContent =
-			_testGetSiteStructuredContentsPage_addStructuredContent_addDraftStructuredContentWithPriority(
+			_addDraftStructuredContentWithPriority(
 				testGetSiteStructuredContentsPage_getSiteId(),
 				Double.valueOf(1));
 
@@ -131,22 +131,22 @@ public class StructuredContentResourceTest
 	@Test
 	public void testGetSiteStructuredContentsPageWithSort() throws Exception {
 		StructuredContent postStructuredContent1 =
-			_testGetSiteStructuredContentsPage_addStructuredContent_addDraftStructuredContentWithPriority(
+			_addDraftStructuredContentWithPriority(
 				testGetSiteStructuredContentsPage_getSiteId(),
 				Double.valueOf(0.99));
 
 		StructuredContent postStructuredContent2 =
-			_testGetSiteStructuredContentsPage_addStructuredContent_addDraftStructuredContentWithPriority(
+			_addDraftStructuredContentWithPriority(
 				testGetSiteStructuredContentsPage_getSiteId(),
 				Double.valueOf(1));
 
 		StructuredContent postStructuredContent3 =
-			_testGetSiteStructuredContentsPage_addStructuredContent_addDraftStructuredContentWithPriority(
+			_addDraftStructuredContentWithPriority(
 				testGetSiteStructuredContentsPage_getSiteId(),
 				Double.valueOf(1.1));
 
 		StructuredContent postStructuredContent4 =
-			_testGetSiteStructuredContentsPage_addStructuredContent_addDraftStructuredContentWithPriority(
+			_addDraftStructuredContentWithPriority(
 				testGetSiteStructuredContentsPage_getSiteId(),
 				Double.valueOf(2.99));
 
@@ -462,6 +462,24 @@ public class StructuredContentResourceTest
 			_read("test-structured-content-template.vm"), LocaleUtil.US);
 	}
 
+	private StructuredContent _addDraftStructuredContentWithPriority(
+			Long siteId, Double priority)
+		throws Exception {
+
+		Locale locale = LocaleUtil.getDefault();
+
+		StructuredContent structuredContent = _randomStructuredContent(locale);
+
+		structuredContent.setPriority(priority);
+
+		com.liferay.headless.admin.content.client.resource.v1_0.
+			StructuredContentResource structuredContentResource =
+				_buildStructureContentResource(locale);
+
+		return structuredContentResource.postSiteStructuredContentDraft(
+			siteId, structuredContent);
+	}
+
 	private void _assertLocalizedValue(
 		Map<String, String> localizedValues, String value, String w3cLanguageId,
 		Set<String> w3cLanguageIds) {
@@ -629,25 +647,6 @@ public class StructuredContentResourceTest
 			"dependencies/" + fileName);
 
 		return StringUtil.read(inputStream);
-	}
-
-	private StructuredContent
-			_testGetSiteStructuredContentsPage_addStructuredContent_addDraftStructuredContentWithPriority(
-				Long siteId, Double priority)
-		throws Exception {
-
-		Locale locale = LocaleUtil.getDefault();
-
-		StructuredContent structuredContent = _randomStructuredContent(locale);
-
-		structuredContent.setPriority(priority);
-
-		com.liferay.headless.admin.content.client.resource.v1_0.
-			StructuredContentResource structuredContentResource =
-				_buildStructureContentResource(locale);
-
-		return structuredContentResource.postSiteStructuredContentDraft(
-			siteId, structuredContent);
 	}
 
 	private StructuredContent _testPostSiteStructuredContentDraft(

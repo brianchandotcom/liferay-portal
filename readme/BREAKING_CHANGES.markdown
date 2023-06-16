@@ -1389,21 +1389,21 @@ These methods were added in 7.2 for forward compatibility: see [LPS-101007](http
 
 ### What changed?
 
-`S3FileCache` was removed. `cacheDirCleanUpExpunge` and `cacheDirCleanUpFrequency` were removed from `com.liferay.portal.store.s3.configuration.S3StoreConfiguration`.
+`S3FileCache` was removed. In addition, `cacheDirCleanUpExpunge` and `cacheDirCleanUpFrequency` were removed from `com.liferay.portal.store.s3.configuration.S3StoreConfiguration`.
 
 ### Who is affected?
 
-This affects anyone using the S3 file store. When downloading files from S3, the data from S3 will be directly forwarded to the client, and no longer cached on Liferay server.
+This affects anyone using the S3 file store. When downloading files from S3, the data is directly forwarded to the client, and no longer cached on the Liferay server.
 
 ### How should I update my code?
 
 No code changes are necessary.
 
-Remove `cacheDirCleanUpExpunge` and `cacheDirCleanUpFrequency` from `com.liferay.portal.store.s3.configuration.S3StoreConfiguration.config`.
+If using a `com.liferay.portal.store.s3.configuration.S3StoreConfiguration.config` file to configure S3 in Liferay, remove the properties `cacheDirCleanUpExpunge` and `cacheDirCleanUpFrequency`.
 
 ### Why was this change made?
 
-`S3FileCache` has various design flaws, and all other cloud-based store implementations in Liferay do not provide any caching mechanism.
+`S3FileCache` has various design flaws, and no other cloud-based store implementation in Liferay provides caching.
 
 ---------------------------------------
 

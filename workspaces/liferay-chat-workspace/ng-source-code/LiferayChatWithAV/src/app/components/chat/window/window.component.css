@@ -1,0 +1,177 @@
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+
+
+::ng-deep .ngx-notifier
+{
+    position: absolute!important;
+    top: 0;
+    z-index: 999999;
+    left: 0;
+    right: 0;
+}
+.custom-tool-bar
+{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.custom-tool-bar .title
+{
+    display: inline-flex;
+    text-transform: uppercase!important;
+
+}
+.custom-tool-bar .actions
+{
+    display: inline-flex;
+
+}
+.custom-tool-bar .actions *
+{
+    display: inline-flex;
+    margin: auto;
+    margin-right: 1rem;
+    font-size: 1rem;
+}
+.chat-window
+{
+    margin:1rem;
+}
+.initial-avatar {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    text-transform: uppercase!important;
+    background-color: var(--light)!important;
+    color: #fff;
+    font-weight: 900;
+    border-radius: 50%;
+    height: 3rem!important;
+    width: 3rem!important;
+    margin-left: 0.5rem!important;
+    margin-right: 0.5rem!important;
+}
+mat-list-item
+{
+    margin-bottom: 0.5rem!important;
+    padding: 0.5rem!important;
+    cursor: pointer;
+}
+mat-list-item:hover
+{
+    background-color: var(--light) !important;
+
+}
+mat-list-item:hover .initial-avatar
+{
+    background-color: var(--secondary) !important;
+    color: var(--light) !important;;
+}
+
+.clientName
+{
+    text-transform: capitalize!important;
+    font-size: 1rem!important;
+    overflow: visible!important;
+}
+
+::ng-deep .mat-mdc-tab-header
+{
+    display: none!important;
+}
+
+.mat-elevation-z8 {
+    box-shadow: 0 5px 5px -3px rgba(0,0,0,.2), 0 8px 10px 1px rgba(0,0,0,.14), 0 3px 14px 2px rgba(0,0,0,.12);
+}
+
+.chat-container
+{
+    height: 600px;
+    background-color: white;
+}
+
+.online-contact
+{
+    background-color: red;
+}
+
+.initial-avatar.online-contact
+{
+    border-color: var(--success) !important;
+    border-width: 2px;
+    border-style: solid;
+}
+.initial-avatar.offline-contact
+{
+    border-color: var(--dark) !important;
+    border-width: 2px;
+    border-style: solid;
+}
+
+.contact
+{
+    display: flex;
+    justify-content: space-between;
+}
+.contact div
+{
+    display: inline-flex;
+}
+.status
+{
+    display: flex;
+}
+.status span
+{
+    margin: auto;
+}
+.online-contact
+{
+    background-color: var(--success);
+    border-radius: 50%;
+    width: 1rem;
+    height: 1rem;
+}
+.offline-contact
+{
+    background-color: var(--dark);
+    border-radius: 50%;
+    width: 1rem;
+    height: 1rem;
+}
+
+.toolbar-container.sub
+{
+    border-bottom: solid;
+    border-width: thin;
+    border-color: var(--light);
+}
+
+.toolbar-container.sub mat-toolbar
+{
+    background-color: white;
+}
+.toolbar-container.sub .title
+{
+    font-size: 1rem;
+}
+.auto-margin
+{
+    margin: auto!important;
+}
+
+
+::ng-deep .mdc-list-item__content
+{
+    overflow: visible!important;
+}
+
+.back-button
+{
+    padding: 0.5rem;
+    background: var(--primary);
+    color: white;
+}
+
+

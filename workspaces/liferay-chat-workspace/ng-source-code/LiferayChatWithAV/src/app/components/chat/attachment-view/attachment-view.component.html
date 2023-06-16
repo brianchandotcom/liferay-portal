@@ -1,0 +1,17 @@
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+<div *ngIf="fileType">
+    <div class="viewer-container" *ngIf="fileType == 'image'">
+        <img  src="{{contentUrl}}" class="preview-image" width="80%" />
+    </div>
+    <div class="viewer-container" *ngIf="fileType != 'image' && fileType != 'audio'"  >
+        <span *ngIf="!isDocumentPreviewReady">Generating Preview...</span>
+        <img  *ngIf="isDocumentPreviewReady" src="{{contentUrl.replace('&download=true','')}}&previewFileIndex=1" (error)="handleImagePreviewError()" (load)="stopTimer()" class="preview-image" width="80%" />
+    </div>
+    <div class="viewer-container" *ngIf="fileType == 'audio'">
+        <audio style="width: 100%;min-width: 200px" controls autobuffer  playsinline webkit-playsinline="webkit-playsinline" onloadedmetadata="this.muted = false">
+            <source src="{{contentUrl.replace('&download=true','')}}" type="video/mp4">
+        </audio>
+    </div>
+
+</div>
+

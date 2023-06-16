@@ -369,8 +369,6 @@ public class ElasticsearchIndexSearcherSearchAfterTest {
 					Document[] documents = hits.getDocs();
 					float[] scores = hits.getScores();
 
-					printHits(documents);
-
 					Assert.assertEquals(
 						hits.toString(), expectedHitsReturned,
 						documents.length);
@@ -408,12 +406,6 @@ public class ElasticsearchIndexSearcherSearchAfterTest {
 		searchContext.setCompanyId(_indexingFixture.getCompanyId());
 
 		return searchContext;
-	}
-
-	private void printHits(Document[] documents) {
-		for (Document document : documents) {
-			System.out.println("Title: " + document.get(Field.TITLE));
-		}
 	}
 
 	private static final int _INDEX_MAX_RESULT_WINDOW = 3;

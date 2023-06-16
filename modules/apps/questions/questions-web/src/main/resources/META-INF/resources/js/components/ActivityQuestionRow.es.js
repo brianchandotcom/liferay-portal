@@ -81,7 +81,7 @@ export default function ActivityQuestionRow({
 
 		if (headline.startsWith(MESSAGE_TYPES.answer.prefix)) {
 			return {
-				label: Liferay.Language.get('answer'),
+				label: Liferay.Language.get('answer[noun]'),
 				symbol: 'message',
 				text: headline.replace(MESSAGE_TYPES.answer.prefix, ''),
 				type: MESSAGE_TYPES.answer.type,

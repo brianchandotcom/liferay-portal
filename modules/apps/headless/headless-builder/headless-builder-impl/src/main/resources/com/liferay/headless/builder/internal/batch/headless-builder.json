@@ -20,7 +20,7 @@
 			"label": {
 				"en_US": "API Sort"
 			},
-			"modifiable": false,
+			"modifiable": true,
 			"name": "APISort",
 			"objectFields": [
 				{
@@ -97,7 +97,7 @@
 			"label": {
 				"en_US": "API Filter"
 			},
-			"modifiable": false,
+			"modifiable": true,
 			"name": "APIFilter",
 			"objectFields": [
 				{
@@ -147,7 +147,7 @@
 			"label": {
 				"en_US": "API Endpoint"
 			},
-			"modifiable": false,
+			"modifiable": true,
 			"name": "APIEndpoint",
 			"objectFields": [
 				{
@@ -318,7 +318,7 @@
 			"label": {
 				"en_US": "API Property"
 			},
-			"modifiable": false,
+			"modifiable": true,
 			"name": "APIProperty",
 			"objectFields": [
 				{
@@ -431,7 +431,7 @@
 			"label": {
 				"en_US": "API Schema"
 			},
-			"modifiable": false,
+			"modifiable": true,
 			"name": "APISchema",
 			"objectFields": [
 				{
@@ -542,7 +542,7 @@
 			"label": {
 				"en_US": "API Application"
 			},
-			"modifiable": false,
+			"modifiable": true,
 			"name": "APIApplication",
 			"objectFields": [
 				{

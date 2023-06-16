@@ -14,9 +14,9 @@
 
 package com.liferay.fragment.item.selector.web.internal;
 
-import com.liferay.fragment.item.selector.FragmentItemSelectorReturnType;
-import com.liferay.fragment.item.selector.criterion.FragmentItemSelectorCriterion;
-import com.liferay.fragment.item.selector.web.internal.display.context.FragmentDisplayContext;
+import com.liferay.fragment.item.selector.FragmentEntryItemSelectorReturnType;
+import com.liferay.fragment.item.selector.criterion.FragmentEntryItemSelectorCriterion;
+import com.liferay.fragment.item.selector.web.internal.display.context.FragmentEntriesDisplayContext;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.portal.kernel.language.Language;
@@ -53,14 +53,14 @@ import org.osgi.service.component.annotations.Reference;
 	property = "item.selector.view.order:Integer=200",
 	service = ItemSelectorView.class
 )
-public class GlobalFragmentItemSelectorView
-	implements ItemSelectorView<FragmentItemSelectorCriterion> {
+public class GlobalFragmentEntryItemSelectorView
+	implements ItemSelectorView<FragmentEntryItemSelectorCriterion> {
 
 	@Override
-	public Class<? extends FragmentItemSelectorCriterion>
+	public Class<? extends FragmentEntryItemSelectorCriterion>
 		getItemSelectorCriterionClass() {
 
-		return FragmentItemSelectorCriterion.class;
+		return FragmentEntryItemSelectorCriterion.class;
 	}
 
 	@Override
@@ -75,7 +75,7 @@ public class GlobalFragmentItemSelectorView
 
 	@Override
 	public boolean isVisible(
-		FragmentItemSelectorCriterion itemSelectorCriterion,
+		FragmentEntryItemSelectorCriterion itemSelectorCriterion,
 		ThemeDisplay themeDisplay) {
 
 		if (Objects.equals(
@@ -91,7 +91,8 @@ public class GlobalFragmentItemSelectorView
 	@Override
 	public void renderHTML(
 			ServletRequest servletRequest, ServletResponse servletResponse,
-			FragmentItemSelectorCriterion fragmentItemSelectorCriterion,
+			FragmentEntryItemSelectorCriterion
+				fragmentEntryItemSelectorCriterion,
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
 
@@ -103,10 +104,10 @@ public class GlobalFragmentItemSelectorView
 			WebKeys.THEME_DISPLAY);
 
 		servletRequest.setAttribute(
-			FragmentDisplayContext.class.getName(),
-			new FragmentDisplayContext(
+			FragmentEntriesDisplayContext.class.getName(),
+			new FragmentEntriesDisplayContext(
 				(HttpServletRequest)servletRequest,
-				fragmentItemSelectorCriterion,
+				fragmentEntryItemSelectorCriterion,
 				_groupLocalService.fetchGroup(themeDisplay.getCompanyGroupId()),
 				_portal.getLiferayPortletRequest(
 					(PortletRequest)servletRequest.getAttribute(
@@ -118,7 +119,7 @@ public class GlobalFragmentItemSelectorView
 
 	private static final List<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Collections.singletonList(
-			new FragmentItemSelectorReturnType());
+			new FragmentEntryItemSelectorReturnType());
 
 	@Reference
 	private GroupLocalService _groupLocalService;

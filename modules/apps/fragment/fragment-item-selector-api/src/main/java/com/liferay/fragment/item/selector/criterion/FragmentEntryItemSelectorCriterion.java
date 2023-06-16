@@ -22,7 +22,8 @@ import java.util.Set;
 /**
  * @author Pavel Savinov
  */
-public class FragmentItemSelectorCriterion extends BaseItemSelectorCriterion {
+public class FragmentEntryItemSelectorCriterion
+	extends BaseItemSelectorCriterion {
 
 	public Set<String> getInputTypes() {
 		return _inputTypes;

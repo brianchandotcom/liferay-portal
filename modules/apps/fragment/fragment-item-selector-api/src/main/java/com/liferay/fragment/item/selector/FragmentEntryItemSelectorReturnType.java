@@ -19,5 +19,6 @@ import com.liferay.item.selector.ItemSelectorReturnType;
 /**
  * @author Víctor Galán
  */
-public class FragmentItemSelectorReturnType implements ItemSelectorReturnType {
+public class FragmentEntryItemSelectorReturnType
+	implements ItemSelectorReturnType {
 }

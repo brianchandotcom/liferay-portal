@@ -17,25 +17,25 @@
 <%@ include file="/init.jsp" %>
 
 <%
-DefaultFragmentDisplayContext defaultFragmentDisplayContext = new DefaultFragmentDisplayContext(request, liferayPortletRequest, liferayPortletResponse);
+DefaultFragmentEntriesDisplayContext defaultFragmentEntriesDisplayContext = new DefaultFragmentEntriesDisplayContext(request, liferayPortletRequest, liferayPortletResponse);
 %>
 
 <c:choose>
-	<c:when test="<%= Validator.isNotNull(defaultFragmentDisplayContext.getFragmentCollectionKey()) %>">
-		<liferay-util:include page="/select_contributed_fragment.jsp" servletContext="<%= application %>" />
+	<c:when test="<%= Validator.isNotNull(defaultFragmentEntriesDisplayContext.getFragmentCollectionKey()) %>">
+		<liferay-util:include page="/select_contributed_fragment_entry.jsp" servletContext="<%= application %>" />
 	</c:when>
 	<c:otherwise>
 		<clay:management-toolbar
-			managementToolbarDisplayContext="<%= new FragmentCollectionContributorsItemSelectorViewManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, defaultFragmentDisplayContext.getFragmentCollectionContributorsSearchContainer()) %>"
+			managementToolbarDisplayContext="<%= new FragmentCollectionContributorsItemSelectorViewManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, defaultFragmentEntriesDisplayContext.getFragmentCollectionContributorsSearchContainer()) %>"
 		/>
 
 		<clay:container-fluid>
 			<liferay-site-navigation:breadcrumb
-				breadcrumbEntries="<%= defaultFragmentDisplayContext.getBreadcrumbEntries() %>"
+				breadcrumbEntries="<%= defaultFragmentEntriesDisplayContext.getBreadcrumbEntries() %>"
 			/>
 
 			<liferay-ui:search-container
-				searchContainer="<%= defaultFragmentDisplayContext.getFragmentCollectionContributorsSearchContainer() %>"
+				searchContainer="<%= defaultFragmentEntriesDisplayContext.getFragmentCollectionContributorsSearchContainer() %>"
 			>
 				<liferay-ui:search-container-row
 					className="com.liferay.fragment.contributor.FragmentCollectionContributor "

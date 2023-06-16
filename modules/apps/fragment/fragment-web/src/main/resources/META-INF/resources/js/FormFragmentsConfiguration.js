@@ -27,8 +27,8 @@ import React, {useState} from 'react';
 export default function FormFragmentsConfiguration({
 	formTypes,
 	portletNamespace,
-	selectFragmentURL,
-	updateInputFragmentsURL,
+	selectFragmentEntryURL,
+	updateInputFragmentEntriesURL,
 }) {
 	const [values, setValues] = useState({});
 
@@ -49,7 +49,7 @@ export default function FormFragmentsConfiguration({
 				Liferay.Language.get('select-x'),
 				Liferay.Language.get('fragment')
 			),
-			url: createPortletURL(selectFragmentURL, {
+			url: createPortletURL(selectFragmentEntryURL, {
 				inputType: name,
 				p_p_id: getPortletId(portletNamespace),
 			}),
@@ -58,7 +58,7 @@ export default function FormFragmentsConfiguration({
 
 	return (
 		<ClayLayout.Container className="c-mt-3">
-			<ClayForm action={updateInputFragmentsURL} method="POST">
+			<ClayForm action={updateInputFragmentEntriesURL} method="POST">
 				<div className="sheet">
 					<h2 className="sheet-title">
 						{Liferay.Language.get('form-fragments')}

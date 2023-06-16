@@ -17,20 +17,20 @@
 <%@ include file="/init.jsp" %>
 
 <%
-DefaultFragmentDisplayContext defaultFragmentDisplayContext = new DefaultFragmentDisplayContext(request, liferayPortletRequest, liferayPortletResponse);
+DefaultFragmentEntriesDisplayContext defaultFragmentEntriesDisplayContext = new DefaultFragmentEntriesDisplayContext(request, liferayPortletRequest, liferayPortletResponse);
 %>
 
 <clay:management-toolbar
-	managementToolbarDisplayContext="<%= new ContributedFragmentsItemSelectorViewManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, defaultFragmentDisplayContext.getFragmentsSearchContainer()) %>"
+	managementToolbarDisplayContext="<%= new ContributedFragmentEntriesItemSelectorViewManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, defaultFragmentEntriesDisplayContext.getFragmentsSearchContainer()) %>"
 />
 
 <clay:container-fluid>
 	<liferay-site-navigation:breadcrumb
-		breadcrumbEntries="<%= defaultFragmentDisplayContext.getBreadcrumbEntries() %>"
+		breadcrumbEntries="<%= defaultFragmentEntriesDisplayContext.getBreadcrumbEntries() %>"
 	/>
 
 	<liferay-ui:search-container
-		searchContainer="<%= defaultFragmentDisplayContext.getFragmentsSearchContainer() %>"
+		searchContainer="<%= defaultFragmentEntriesDisplayContext.getFragmentsSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.fragment.model.FragmentEntry"

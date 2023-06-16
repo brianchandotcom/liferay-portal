@@ -138,20 +138,20 @@ public class ConfigurationDisplayContext {
 				return formTypes;
 			}
 		).put(
-			"selectFragmentURL",
+			"selectFragmentEntryURL",
 			PortletURLBuilder.createRenderURL(
 				_liferayPortletResponse
 			).setMVCRenderCommandName(
-				"/fragment/select_default_input_fragment"
+				"/fragment/select_default_input_fragment_entry"
 			).setWindowState(
 				LiferayWindowState.POP_UP
 			).buildString()
 		).put(
-			"updateInputFragmentsURL",
+			"updateInputFragmentEntriesURL",
 			PortletURLBuilder.createActionURL(
 				_liferayPortletResponse
 			).setActionName(
-				"/fragment/update_default_input_fragments"
+				"/fragment/update_default_input_fragment_entries"
 			).setRedirect(
 				themeDisplay.getURLCurrent()
 			).buildString()

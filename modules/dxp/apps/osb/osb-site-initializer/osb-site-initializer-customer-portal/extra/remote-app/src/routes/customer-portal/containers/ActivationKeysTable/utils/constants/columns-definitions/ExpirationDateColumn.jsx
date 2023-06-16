@@ -13,12 +13,12 @@ import i18n from '../../../../../../../common/I18n';
 import {FORMAT_DATE_TYPES} from '../../../../../../../common/utils/constants';
 import getDateCustomFormat from '../../../../../../../common/utils/getDateCustomFormat';
 
-const DNE_YEARS = 100;
+const YEARS_FOR_PERMANENT_KEYS = 80;
 
 const ExpirationDateColumn = ({activationKey}) => {
 	const subscriptionStartDate = new Date(activationKey.startDate);
 	const unlimitedLicenseDate = subscriptionStartDate.setFullYear(
-		subscriptionStartDate.getFullYear() + DNE_YEARS
+		subscriptionStartDate.getFullYear() + YEARS_FOR_PERMANENT_KEYS
 	);
 
 	if (

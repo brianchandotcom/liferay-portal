@@ -51,10 +51,7 @@ definition {
 	test GogoShellCommandDisconnectNotSupported {
 		property test.liferay.virtual.instance = "false";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "Gogo Shell");
+		GogoShell.openGogoShellAdmin();
 
 		GogoShell.executeCommand(commandName = "disconnect");
 
@@ -67,10 +64,7 @@ definition {
 	test GogoShellPortletOnlyOnMainInstance {
 		property test.liferay.virtual.instance = "false";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "Virtual Instances");
+		PortalInstances.openVirtualInstancesAdmin();
 
 		PortalInstances.addCP(
 			mailDomain = "www.able.com",
@@ -79,10 +73,9 @@ definition {
 
 		PortalInstances.viewCP(virtualHost = "www.able.com");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "Gogo Shell");
+		GogoShell.openGogoShellAdmin();
+
+		AssertElementPresent(locator1 = "GogoShell#COMMAND_FIELD");
 
 		User.firstLoginPG(
 			password = "test",
@@ -111,10 +104,7 @@ definition {
 			roleTitle = "Administrator",
 			userEmailAddress = "userea@liferay.com");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin();
 
 		User.editPasswordCP(
 			requirePasswordReset = "true",
@@ -125,10 +115,7 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "Gogo Shell");
+		GogoShell.openGogoShellAdmin();
 
 		GogoShell.executeCommand(commandName = "lb | grep Liferay");
 
@@ -145,20 +132,14 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin();
 
 		User.editPasswordCP(
 			requirePasswordReset = "true",
 			userEmailAddress = "userea@liferay.com",
 			userScreenName = "usersn");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin();
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -166,19 +147,15 @@ definition {
 			siteName = ${siteName},
 			userScreenName = "usersn");
 
-		ProductMenu.gotoPortlet(
-			category = "People",
-			portlet = "Memberships",
-			site = ${siteName});
+		Site.openSiteMembershipsAdmin(siteURLKey = "guest");
 
 		Site.assignSiteRoleCP(
 			resourceName = "userfn userln",
 			roleTitle = "Site Administrator");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "Gogo Shell");
+		GogoShell.openGogoShellAdmin();
+
+		AssertElementPresent(locator1 = "GogoShell#COMMAND_FIELD");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",

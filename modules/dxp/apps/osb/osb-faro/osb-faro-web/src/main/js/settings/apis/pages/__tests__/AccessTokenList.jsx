@@ -102,6 +102,72 @@ describe('AccessTokenList', () => {
 		expect(container.querySelector('.table-root')).toMatchSnapshot();
 	});
 
+	it('should render the correct date on expiration date column when generated token is 30 days', () => {
+		API.apiTokens.search.mockReturnValueOnce(
+			Promise.resolve([
+				data.mockApiToken({
+					createDate: '2023-05-11T19:35:28.338Z',
+					expirationDate: '2023-06-12T19:35:28.000Z'
+				})
+			])
+		);
+
+		const {container} = render(<DefaultComponent />);
+
+		jest.runAllTimers();
+
+		expect(
+			getByText(
+				container.querySelector('td:nth-child(3)'),
+				'Jun 12, 2023'
+			)
+		).toMatchSnapshot();
+	});
+
+	it('should render the correct date on expiration date column when generated token is 6 months', () => {
+		API.apiTokens.search.mockReturnValueOnce(
+			Promise.resolve([
+				data.mockApiToken({
+					createDate: '2023-05-11T19:35:28.338Z',
+					expirationDate: '2023-11-12T19:35:28.000Z'
+				})
+			])
+		);
+
+		const {container} = render(<DefaultComponent />);
+
+		jest.runAllTimers();
+
+		expect(
+			getByText(
+				container.querySelector('td:nth-child(3)'),
+				'Nov 12, 2023'
+			)
+		).toMatchSnapshot();
+	});
+
+	it('should render the correct date on expiration date column when generated token is 1 year', () => {
+		API.apiTokens.search.mockReturnValueOnce(
+			Promise.resolve([
+				data.mockApiToken({
+					createDate: '2023-05-11T19:35:28.338Z',
+					expirationDate: '2024-05-12T19:35:28.000Z'
+				})
+			])
+		);
+
+		const {container} = render(<DefaultComponent />);
+
+		jest.runAllTimers();
+
+		expect(
+			getByText(
+				container.querySelector('td:nth-child(3)'),
+				'May 12, 2024'
+			)
+		).toMatchSnapshot();
+	});
+
 	it('should render indefinite on expiration date column when generated token is indefinite', () => {
 		API.apiTokens.search.mockReturnValueOnce(
 			Promise.resolve([

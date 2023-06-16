@@ -65,6 +65,12 @@ interface ISaveFDSFieldsModalContentProps {
 	saveFDSFieldsURL: string;
 }
 
+const getRendererLabel = (rendererName: string) => {
+	return FDS_INTERNAL_CELL_RENDERERS.filter(renderer => {
+		return (renderer.name === rendererName || renderer.label === rendererName)
+	})[0].label!
+};
+
 const SaveFDSFieldsModalContent = ({
 	closeModal,
 	fdsFields,
@@ -345,15 +351,15 @@ const EditFDSFieldModalContent = ({
 
 	const fdsFieldLabelRef = useRef<HTMLInputElement>(null);
 
-	const fdsInternalCellRendererLabels = FDS_INTERNAL_CELL_RENDERERS.map(
-		(cellRenderer) => cellRenderer.label
+	const fdsInternalCellRendererNames = FDS_INTERNAL_CELL_RENDERERS.map(
+		(cellRenderer) => cellRenderer.name
 	);
 
 	const editFDSField = async () => {
 		const body = {
 			label: fdsFieldLabelRef.current?.value,
 			renderer: selectedFDSFieldRenderer,
-			rendererType: !fdsInternalCellRendererLabels.includes(
+			rendererType: !fdsInternalCellRendererNames.includes(
 				selectedFDSFieldRenderer
 			)
 				? 'clientExtension'
@@ -382,7 +388,7 @@ const EditFDSFieldModalContent = ({
 			});
 		}
 
-		const editedFDSField = await response.json();
+		const editedFDSFieldResponse = await response.json();
 
 		closeModal();
 
@@ -392,7 +398,10 @@ const EditFDSFieldModalContent = ({
 			),
 			type: 'success',
 		});
-
+		const editedFDSField: any = {
+			...editedFDSFieldResponse,
+			renderer: getRendererLabel(editedFDSFieldResponse.renderer)
+		};
 		onSave({editedFDSField});
 	};
 
@@ -443,7 +452,7 @@ const EditFDSFieldModalContent = ({
 						id={fdsFieldRendererSelectId}
 					>
 						{selectedFDSFieldRenderer
-							? selectedFDSFieldRenderer
+							? getRendererLabel(selectedFDSFieldRenderer)
 							: Liferay.Language.get('choose-an-option')}
 					</ClayButton>
 				}
@@ -453,7 +462,7 @@ const EditFDSFieldModalContent = ({
 						<ClayDropDown.Item
 							className="align-items-center d-flex justify-content-between"
 							key={cellRenderer.value}
-							onClick={() => onItemClick(cellRenderer.label)}
+							onClick={() => onItemClick(cellRenderer.value)}
 							roleItem="option"
 						>
 							{cellRenderer.label}
@@ -626,7 +635,12 @@ const Fields = ({
 
 			fdsFieldsOrderRef.current = orderedFDSFieldIds.join(',');
 
-			setFDSFields(orderedFDSFields);
+			const nextOrderedFDSFields = orderedFDSFields.map(field => {
+				field.renderer = getRendererLabel(field.renderer);
+				return field;
+			});
+
+			setFDSFields(nextOrderedFDSFields);
 		}
 		else {
 			fdsFieldsOrderRef.current = storedFDSFields

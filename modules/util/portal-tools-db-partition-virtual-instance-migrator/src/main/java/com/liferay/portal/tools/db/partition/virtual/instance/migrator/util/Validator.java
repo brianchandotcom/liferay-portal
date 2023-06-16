@@ -36,19 +36,19 @@ public class Validator {
 
 		Recorder recorder = new Recorder();
 
-		_validateRelease(sourceConnection, targetConnection, recorder);
+		_validateRelease(recorder, sourceConnection, targetConnection);
 
 		_validatePartitionedTables(
-			sourceConnection, targetConnection, recorder);
+			recorder, sourceConnection, targetConnection);
 
-		_validateWebId(sourceConnection, targetConnection, recorder);
+		_validateWebId(recorder, sourceConnection, targetConnection);
 
 		return recorder;
 	}
 
 	private static void _validatePartitionedTables(
-			Connection sourceConnection, Connection targetConnection,
-			Recorder recorder)
+			Recorder recorder, Connection sourceConnection,
+			Connection targetConnection)
 		throws Exception {
 
 		List<String> sourcePartitionedTableNames =
@@ -82,11 +82,11 @@ public class Validator {
 	}
 
 	private static void _validateRelease(
-			Connection sourceConnection, Connection targetConnection,
-			Recorder recorder)
+			Recorder recorder, Connection sourceConnection,
+			Connection targetConnection)
 		throws Exception {
 
-		_validateReleaseState(sourceConnection, targetConnection, recorder);
+		_validateReleaseState(recorder, sourceConnection, targetConnection);
 
 		Map<String, Release> targetReleasesMap = DatabaseUtil.getReleasesMap(
 			targetConnection);
@@ -170,8 +170,8 @@ public class Validator {
 	}
 
 	private static void _validateReleaseState(
-			Connection sourceConnection, Connection targetConnection,
-			Recorder recorder)
+			Recorder recorder, Connection sourceConnection,
+			Connection targetConnection)
 		throws Exception {
 
 		String message = "has a failed Release state in the ? database";
@@ -196,8 +196,8 @@ public class Validator {
 	}
 
 	private static void _validateWebId(
-			Connection sourceConnection, Connection targetConnection,
-			Recorder recorder)
+			Recorder recorder, Connection sourceConnection,
+			Connection targetConnection)
 		throws Exception {
 
 		String sourceWebId = DatabaseUtil.getWebId(sourceConnection);

@@ -17,7 +17,6 @@ package com.liferay.frontend.taglib.clay.servlet.taglib;
 import com.liferay.frontend.taglib.clay.internal.servlet.taglib.BaseContainerTag;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.VerticalNavItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.VerticalNavItemList;
-import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
@@ -148,30 +147,44 @@ public class VerticalNavTag extends BaseContainerTag {
 
 			String href = (String)verticalNavItem.get("href");
 
+			boolean button = false;
+
+			if ((items != null) || Validator.isNull(href)) {
+				button = true;
+			}
+
 			jspWriter.write("<li role=\"none\" class=\"nav-item\">");
 
-			jspWriter.write("<a class=\"nav-link collapse-icon");
+			if (button) {
+				jspWriter.write("<button class=\"nav-link collapse-icon");
 
-			if (!expanded) {
-				jspWriter.write(" collapsed");
-			}
+				if (!expanded) {
+					jspWriter.write(" collapsed");
+				}
 
-			if (active) {
-				jspWriter.write(" active");
-			}
+				if (active) {
+					jspWriter.write(" active");
+				}
 
-			jspWriter.write(" btn btn-unstyled\" aria-expanded=\"");
-			jspWriter.write(expanded.toString());
-			jspWriter.write("\" role=\"menuitem\" tabindex=\"-1\" href=\"");
-
-			if (Validator.isNotNull(href)) {
-				jspWriter.write((String)verticalNavItem.get("href"));
+				jspWriter.write(" btn btn-unstyled\" type=\"button\"");
+				jspWriter.write(" aria-expanded=\"");
+				jspWriter.write(expanded.toString());
+				jspWriter.write("\" aria-haspopup=\"true\"");
+				jspWriter.write(" role=\"button\" tabindex=\"-1\">");
 			}
 			else {
-				jspWriter.write(CharPool.POUND);
+				jspWriter.write("<a class=\"nav-link ");
+				jspWriter.write(" role=\"menuitem\" tabindex=\"-1\"");
+
+				if (active) {
+					jspWriter.write(" active");
+				}
+
+				jspWriter.write(" href=\"");
+				jspWriter.write((String)verticalNavItem.get("href"));
+				jspWriter.write("\">");
 			}
 
-			jspWriter.write("\">");
 			jspWriter.write((String)verticalNavItem.get("label"));
 
 			if (items != null) {
@@ -190,7 +203,12 @@ public class VerticalNavTag extends BaseContainerTag {
 				jspWriter.write("</span>");
 			}
 
-			jspWriter.write("</a>");
+			if (button) {
+				jspWriter.write("</button>");
+			}
+			else {
+				jspWriter.write("</a>");
+			}
 
 			if ((items != null) && expanded) {
 				_renderVerticalNavItems(jspWriter, items, depth++);

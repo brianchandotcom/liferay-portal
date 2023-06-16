@@ -96,7 +96,6 @@ public class VerticalNavDisplayContext {
 										5, verticalNavItem));
 								verticalNavItem.setExpanded(position == 2);
 							}
-
 						});
 
 					i++;

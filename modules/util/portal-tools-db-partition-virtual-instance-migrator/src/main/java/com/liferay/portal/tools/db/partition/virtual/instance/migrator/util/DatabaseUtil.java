@@ -74,19 +74,12 @@ public class DatabaseUtil {
 	public static List<Release> getReleases(Connection connection)
 		throws SQLException {
 
+		Map<String, Release> releasesMap = getReleasesMap(connection);
+
 		List<Release> releases = new ArrayList<>();
 
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select servletContextName, schemaVersion, verified from " +
-					"Release_");
-			ResultSet resultSet = preparedStatement.executeQuery()) {
-
-			while (resultSet.next()) {
-				releases.add(
-					new Release(
-						Version.parseVersion(resultSet.getString(2)),
-						resultSet.getString(1), resultSet.getBoolean(3)));
-			}
+		for (Release release : releasesMap.values()) {
+			releases.add(release);
 		}
 
 		return releases;
@@ -103,11 +96,13 @@ public class DatabaseUtil {
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
+				String servletContextName = resultSet.getString(1);
+
 				releaseMap.put(
-					resultSet.getString(1),
+					servletContextName,
 					new Release(
 						Version.parseVersion(resultSet.getString(2)),
-						resultSet.getString(1), resultSet.getBoolean(3)));
+						servletContextName, resultSet.getBoolean(3)));
 			}
 		}
 

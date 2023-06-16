@@ -126,48 +126,34 @@ public class JavaUpgradeModelPermissionsCheck extends BaseJavaTermCheck {
 		Matcher setGroupPermissionsMatcher, Matcher setGuestPermissionsMatcher,
 		String javaTermContent) {
 
-		if (hasSetGroupPermissions && hasSetGuestPermissions) {
-			String modelPermissionsImplementation =
-				_getModelPermissionsImplementation(
-					setGroupPermissionsMatcher.group(2),
-					setGuestPermissionsMatcher.group(2),
-					SourceUtil.getIndent(setGroupPermissionsMatcher.group(0)),
-					setGroupPermissionsMatcher.group(1));
+		String oldSub;
+		String serviceContext;
+		String groupPermissions = "new String[0]";
+		String guestPermissions = "new String[0]";
 
-			javaTermContent = StringUtil.replace(
-				javaTermContent,
-				new String[] {
-					setGroupPermissionsMatcher.group(0),
-					setGuestPermissionsMatcher.group(0)
-				},
-				new String[] {
-					modelPermissionsImplementation, StringPool.BLANK
-				});
-		}
-		else if (hasSetGroupPermissions) {
-			String modelPermissionsImplementation =
-				_getModelPermissionsImplementation(
-					setGroupPermissionsMatcher.group(2), "new String[0]",
-					SourceUtil.getIndent(setGroupPermissionsMatcher.group(0)),
-					setGroupPermissionsMatcher.group(1));
+		if (hasSetGroupPermissions) {
+			oldSub = setGroupPermissionsMatcher.group(0);
+			serviceContext = setGroupPermissionsMatcher.group(1);
+			groupPermissions = setGroupPermissionsMatcher.group(2);
 
-			javaTermContent = StringUtil.replace(
-				javaTermContent, setGroupPermissionsMatcher.group(0),
-				modelPermissionsImplementation);
+			if (hasSetGuestPermissions) {
+				guestPermissions = setGuestPermissionsMatcher.group(2);
+
+				javaTermContent = StringUtil.removeSubstring(
+					javaTermContent, setGuestPermissionsMatcher.group(0));
+			}
 		}
 		else {
-			String modelPermissionsImplementation =
-				_getModelPermissionsImplementation(
-					"new String[0]", setGuestPermissionsMatcher.group(2),
-					SourceUtil.getIndent(setGuestPermissionsMatcher.group(0)),
-					setGuestPermissionsMatcher.group(1));
-
-			javaTermContent = StringUtil.replace(
-				javaTermContent, setGuestPermissionsMatcher.group(0),
-				modelPermissionsImplementation);
+			oldSub = setGuestPermissionsMatcher.group(0);
+			serviceContext = setGuestPermissionsMatcher.group(1);
+			guestPermissions = setGuestPermissionsMatcher.group(2);
 		}
 
-		return javaTermContent;
+		return StringUtil.replace(
+			javaTermContent, oldSub,
+			_getModelPermissionsImplementation(
+				groupPermissions, guestPermissions,
+				SourceUtil.getIndent(oldSub), serviceContext));
 	}
 
 	private String _getModelPermissionsImplementation(

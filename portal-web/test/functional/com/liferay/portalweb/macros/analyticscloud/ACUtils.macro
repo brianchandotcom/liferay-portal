@@ -1133,6 +1133,8 @@ definition {
 	}
 
 	macro viewResultsMessage {
+		WaitForElementPresent(locator1 = "ACUtils#RESULT_MESSAGE");
+
 		AssertTextEquals(
 			locator1 = "ACUtils#RESULT_MESSAGE",
 			value1 = ${results});

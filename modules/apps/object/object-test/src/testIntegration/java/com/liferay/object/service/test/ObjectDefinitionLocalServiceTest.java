@@ -1323,7 +1323,138 @@ public class ObjectDefinitionLocalServiceTest {
 		_testUpdateCustomObjectDefinitionThrowsObjectFieldRelationshipTypeException(
 			objectDefinition);
 
+		objectDefinition =
+			_objectDefinitionLocalService.updateCustomObjectDefinition(
+				"TEST", objectDefinition.getObjectDefinitionId(), 0, 0, 0,
+				false, true, true, false, false, true,
+				LocalizedMapUtil.getLocalizedMap("Charlie"), "Charlie", null,
+				null, false, LocalizedMapUtil.getLocalizedMap("Charlies"),
+				objectDefinition.getScope());
+
+		_assertFailure(
+			ObjectDefinitionNameException.
+				ForbiddenObjectDefinitionExternalReferenceCode.class,
+			"Forbidden object definition external reference code MSOD_TEST_ERC",
+			objectDefinition,
+			objectDefinitionId ->
+				_objectDefinitionLocalService.updateCustomObjectDefinition(
+					"MSOD_TEST_ERC", objectDefinitionId, 0, 0, 0, false, true,
+					true, false, false, true,
+					LocalizedMapUtil.getLocalizedMap("Baker"), "Baker", null,
+					null, false, LocalizedMapUtil.getLocalizedMap("Bakers"),
+					ObjectDefinitionConstants.SCOPE_COMPANY));
+		_assertFailure(
+			ObjectDefinitionNameException.
+				ForbiddenObjectDefinitionExternalReferenceCode.class,
+			"Forbidden object definition external reference code USOD_TEST_ERC",
+			objectDefinition,
+			objectDefinitionId ->
+				_objectDefinitionLocalService.updateCustomObjectDefinition(
+					"USOD_TEST_ERC", objectDefinitionId, 0, 0, 0, false, true,
+					true, false, false, true,
+					LocalizedMapUtil.getLocalizedMap("Baker"), "Baker", null,
+					null, false, LocalizedMapUtil.getLocalizedMap("Bakers"),
+					ObjectDefinitionConstants.SCOPE_COMPANY));
+
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
+	}
+
+	@Test
+	public void testUpdateExternalReferenceCode() throws Exception {
+		ObjectDefinition customObjectDefinition =
+			_objectDefinitionLocalService.addCustomObjectDefinition(
+				TestPropsValues.getUserId(), false, false,
+				LocalizedMapUtil.getLocalizedMap("Able"), "Able", null, null,
+				LocalizedMapUtil.getLocalizedMap("Ables"),
+				ObjectDefinitionConstants.SCOPE_COMPANY,
+				ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE,
+				Collections.emptyList());
+
+		_objectDefinitionLocalService.updateExternalReferenceCode(
+			customObjectDefinition.getObjectDefinitionId(), "TEST_ERC");
+
+		_assertFailure(
+			ObjectDefinitionNameException.
+				ForbiddenObjectDefinitionExternalReferenceCode.class,
+			"Forbidden object definition external reference code USOD_TEST_ERC",
+			customObjectDefinition,
+			objectDefinitionId ->
+				_objectDefinitionLocalService.updateExternalReferenceCode(
+					objectDefinitionId, "USOD_TEST_ERC"));
+		_assertFailure(
+			ObjectDefinitionNameException.
+				ForbiddenObjectDefinitionExternalReferenceCode.class,
+			"Forbidden object definition external reference code MSOD_TEST_ERC",
+			customObjectDefinition,
+			objectDefinitionId ->
+				_objectDefinitionLocalService.updateExternalReferenceCode(
+					objectDefinitionId, "MSOD_TEST_ERC"));
+
+		ObjectDefinition modifiableSystemObjectDefinition =
+			ObjectDefinitionTestUtil.addModifiableSystemObjectDefinition(
+				TestPropsValues.getUserId(), null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"Test", null, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				ObjectDefinitionConstants.SCOPE_SITE, null, 1,
+				_objectDefinitionLocalService,
+				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING,
+						RandomTestUtil.randomString(), StringUtil.randomId())));
+
+		_objectDefinitionLocalService.updateExternalReferenceCode(
+			modifiableSystemObjectDefinition.getObjectDefinitionId(),
+			"MSOD_TEST_ERC");
+
+		_assertFailure(
+			ObjectDefinitionNameException.
+				ForbiddenObjectDefinitionExternalReferenceCode.class,
+			"Forbidden object definition external reference code USOD_TEST_ERC",
+			modifiableSystemObjectDefinition,
+			objectDefinitionId ->
+				_objectDefinitionLocalService.updateExternalReferenceCode(
+					objectDefinitionId, "USOD_TEST_ERC"));
+		_assertFailure(
+			ObjectDefinitionNameException.
+				ForbiddenObjectDefinitionExternalReferenceCode.class,
+			"Forbidden object definition external reference code TEST_ERC",
+			modifiableSystemObjectDefinition,
+			objectDefinitionId ->
+				_objectDefinitionLocalService.updateExternalReferenceCode(
+					objectDefinitionId, "TEST_ERC"));
+
+		ObjectDefinition unmodifiableSystemObjectDefinition =
+			_addSystemObjectDefinition("Unmodifiable");
+
+		_objectDefinitionLocalService.updateExternalReferenceCode(
+			unmodifiableSystemObjectDefinition.getObjectDefinitionId(),
+			"USOD_TEST_ERC");
+
+		_assertFailure(
+			ObjectDefinitionNameException.
+				ForbiddenObjectDefinitionExternalReferenceCode.class,
+			"Forbidden object definition external reference code MSOD_TEST_ERC",
+			unmodifiableSystemObjectDefinition,
+			objectDefinitionId ->
+				_objectDefinitionLocalService.updateExternalReferenceCode(
+					objectDefinitionId, "MSOD_TEST_ERC"));
+		_assertFailure(
+			ObjectDefinitionNameException.
+				ForbiddenObjectDefinitionExternalReferenceCode.class,
+			"Forbidden object definition external reference code TEST_ERC",
+			unmodifiableSystemObjectDefinition,
+			objectDefinitionId ->
+				_objectDefinitionLocalService.updateExternalReferenceCode(
+					objectDefinitionId, "TEST_ERC"));
+
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			customObjectDefinition);
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			modifiableSystemObjectDefinition);
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			unmodifiableSystemObjectDefinition);
 	}
 
 	@Test
@@ -1386,6 +1517,29 @@ public class ObjectDefinitionLocalServiceTest {
 					null, null, false, null,
 					ObjectDefinitionConstants.SCOPE_SITE));
 
+		_objectDefinitionLocalService.updateSystemObjectDefinition(
+			"MSOD_TEST_ERC", objectDefinition.getObjectDefinitionId(),
+			objectDefinition.getTitleObjectFieldId());
+
+		long titleObjectFieldId = objectDefinition.getTitleObjectFieldId();
+
+		_assertFailure(
+			ObjectDefinitionNameException.
+				ForbiddenObjectDefinitionExternalReferenceCode.class,
+			"Forbidden object definition external reference code USOD_TEST_ERC",
+			objectDefinition,
+			objectDefinitionId ->
+				_objectDefinitionLocalService.updateSystemObjectDefinition(
+					"USOD_TEST_ERC", objectDefinitionId, titleObjectFieldId));
+		_assertFailure(
+			ObjectDefinitionNameException.
+				ForbiddenObjectDefinitionExternalReferenceCode.class,
+			"Forbidden object definition external reference code TEST_ERC",
+			objectDefinition,
+			objectDefinitionId ->
+				_objectDefinitionLocalService.updateSystemObjectDefinition(
+					"TEST_ERC", objectDefinitionId, titleObjectFieldId));
+
 		// After Update a modifiable system object definition check its
 		// properties
 
@@ -1441,7 +1595,7 @@ public class ObjectDefinitionLocalServiceTest {
 				true
 			).build());
 
-		String externalReferenceCode = RandomTestUtil.randomString();
+		String externalReferenceCode = "USOD_TEST";
 
 		objectDefinition =
 			_objectDefinitionLocalService.updateSystemObjectDefinition(
@@ -1454,6 +1608,23 @@ public class ObjectDefinitionLocalServiceTest {
 
 		Assert.assertEquals(
 			externalReferenceCode, objectDefinition.getExternalReferenceCode());
+
+		_assertFailure(
+			ObjectDefinitionNameException.
+				ForbiddenObjectDefinitionExternalReferenceCode.class,
+			"Forbidden object definition external reference code MSOD_TEST_ERC",
+			objectDefinition,
+			objectDefinitionId ->
+				_objectDefinitionLocalService.updateSystemObjectDefinition(
+					"MSOD_TEST_ERC", objectDefinitionId, 0));
+		_assertFailure(
+			ObjectDefinitionNameException.
+				ForbiddenObjectDefinitionExternalReferenceCode.class,
+			"Forbidden object definition external reference code TEST_ERC",
+			objectDefinition,
+			objectDefinitionId ->
+				_objectDefinitionLocalService.updateSystemObjectDefinition(
+					"TEST_ERC", objectDefinitionId, 0));
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 	}

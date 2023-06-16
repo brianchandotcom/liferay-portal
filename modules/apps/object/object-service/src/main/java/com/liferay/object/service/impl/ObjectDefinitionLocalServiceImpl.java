@@ -801,6 +801,10 @@ public class ObjectDefinitionLocalServiceImpl
 		ObjectDefinition objectDefinition =
 			objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
 
+		_validateExternalReferenceCode(
+			externalReferenceCode, objectDefinition.isModifiable(),
+			objectDefinition.isSystem());
+
 		objectDefinition.setExternalReferenceCode(externalReferenceCode);
 
 		return objectDefinitionPersistence.update(objectDefinition);
@@ -816,6 +820,9 @@ public class ObjectDefinitionLocalServiceImpl
 		ObjectDefinition objectDefinition =
 			objectDefinitionPersistence.fetchByPrimaryKey(objectDefinitionId);
 
+		_validateExternalReferenceCode(
+			externalReferenceCode, objectDefinition.isModifiable(),
+			objectDefinition.isSystem());
 		_validateObjectFieldId(objectDefinition, titleObjectFieldId);
 
 		objectDefinition.setExternalReferenceCode(externalReferenceCode);
@@ -1383,6 +1390,9 @@ public class ObjectDefinitionLocalServiceImpl
 				enableObjectEntryHistory,
 			objectDefinition.isModifiable(), objectDefinition.getStorageType(),
 			objectDefinition.isSystem());
+		_validateExternalReferenceCode(
+			externalReferenceCode, objectDefinition.isModifiable(),
+			objectDefinition.isSystem());
 		_validateLabel(labelMap);
 		_validatePluralLabel(pluralLabelMap);
 
@@ -1640,6 +1650,29 @@ public class ObjectDefinitionLocalServiceImpl
 			throw new ObjectDefinitionEnableObjectEntryHistoryException(
 				"Enable object entry history is only allowed for object " +
 					"definitions with the default storage type");
+		}
+	}
+
+	private void _validateExternalReferenceCode(
+			String externalReferenceCode, boolean modifiable, boolean system)
+		throws PortalException {
+
+		if (externalReferenceCode == null) {
+			return;
+		}
+
+		if ((!(modifiable && system) &&
+			 StringUtil.startsWith(externalReferenceCode, "MSOD_")) ||
+			(!(!modifiable && system) &&
+			 StringUtil.startsWith(externalReferenceCode, "USOD_")) ||
+			(modifiable && system &&
+			 !StringUtil.startsWith(externalReferenceCode, "MSOD_")) ||
+			(!modifiable && system &&
+			 !StringUtil.startsWith(externalReferenceCode, "USOD_"))) {
+
+			throw new ObjectDefinitionNameException.
+				ForbiddenObjectDefinitionExternalReferenceCode(
+					externalReferenceCode);
 		}
 	}
 

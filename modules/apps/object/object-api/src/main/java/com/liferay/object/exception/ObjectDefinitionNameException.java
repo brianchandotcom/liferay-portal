@@ -30,6 +30,19 @@ public class ObjectDefinitionNameException extends PortalException {
 
 	}
 
+	public static class ForbiddenObjectDefinitionExternalReferenceCode
+		extends ObjectDefinitionNameException {
+
+		public ForbiddenObjectDefinitionExternalReferenceCode(
+			String externalReferenceCode) {
+
+			super(
+				"Forbidden object definition external reference code " +
+					externalReferenceCode);
+		}
+
+	}
+
 	public static class MustBeginWithUpperCaseLetter
 		extends ObjectDefinitionNameException {
 

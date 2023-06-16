@@ -7,7 +7,7 @@
 [#assign mdf_request_id = (request.getAttribute("INFO_ITEM").objectEntryId)! /]
 
 [#function days_difference_from_now date]
-	[#return (date?long + (31 * 1000 * 60 * 60 * 24) - (.now?long)) / (1000 * 60 * 60 * 24) /]
+	[#return (date?long + (30 * 1000 * 60 * 60 * 24) - (.now?long)) / (1000 * 60 * 60 * 24) /]
 [/#function]
 
 [#function get_event_fields activity]
@@ -110,7 +110,11 @@
 
 				<span class="font-weight-light ml-sm-2">
 					[#assign days_left = (request_date > 0)?then(request_date?ceiling, 0) /]
-					${(request_date > 0)?then(request_date?ceiling, 0)} ${(days_left > 1)?then('days left to claim', 'day left to claim')} 
+					[#if days_left > 0 ]
+						${(request_date > 0)?then(request_date?ceiling, 0)} ${(days_left > 1)?then('days left to claim', 'day left to claim')}
+					[#else]
+						Last day to claim
+					[/#if]
 				</span>
 			[/#if]
 		</p>

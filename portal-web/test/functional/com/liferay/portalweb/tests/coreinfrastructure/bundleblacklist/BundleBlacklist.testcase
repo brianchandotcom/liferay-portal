@@ -32,6 +32,7 @@ definition {
 	test BlacklistModuleBundleSymbolicName {
 		property osgi.modules.includes = "frontend-taglib-clay-sample-web";
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "BundleBlacklist#BlacklistModuleBundleSymbolicName";
 
 		task ("Given a test portlet on a page") {
 			JSONLayout.addPublicLayout(
@@ -142,6 +143,8 @@ definition {
 
 	@priority = 4
 	test BlacklistModuleWar {
+		property test.name.skip.portal.instance = "BundleBlacklist#BlacklistModuleWar";
+
 		FileInstall.deployFileOnServer(jarFile = "test-theme.war");
 
 		WaitForConsoleTextPresent(value1 = "STARTED test-theme");
@@ -169,6 +172,7 @@ definition {
 	test CanEnableBlacklistedModuleJarAfterRestart {
 		property osgi.module.configurations = "blacklistBundleSymbolicNames=[\"com.liferay.frontend.taglib.clay.sample.web\"]";
 		property osgi.modules.includes = "frontend-taglib-clay-sample-web";
+		property test.name.skip.portal.instance = "BundleBlacklist#CanEnableBlacklistedModuleJarAfterRestart";
 
 		task ("Given a portlet's jar is blacklisted") {
 			AssertConsoleTextPresent(value1 = "Stopping blacklisted bundle com.liferay.frontend.taglib.clay.sample.web");
@@ -273,6 +277,8 @@ definition {
 
 	@priority = 3
 	test CanEnableBlacklistedModuleWarAfterRestart {
+		property test.name.skip.portal.instance = "BundleBlacklist#CanEnableBlacklistedModuleWarAfterRestart";
+
 		task ("Given a war module") {
 			FileInstall.deployFileOnServer(jarFile = "test-theme.war");
 

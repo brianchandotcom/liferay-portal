@@ -58,6 +58,8 @@ public class ObjectDefinitionUtil {
 			"APISchema", "/headless-builder/schemas"
 		).put(
 			"APISort", "/headless-builder/sorts"
+		).put(
+			"Bookmark", "/bookmarks"
 		).build();
 
 }

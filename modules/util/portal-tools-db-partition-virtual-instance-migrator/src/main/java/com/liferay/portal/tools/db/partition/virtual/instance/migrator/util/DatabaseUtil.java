@@ -84,9 +84,8 @@ public class DatabaseUtil {
 			while (resultSet.next()) {
 				releases.add(
 					new Release(
-						resultSet.getString(1),
 						Version.parseVersion(resultSet.getString(2)),
-						resultSet.getBoolean(3)));
+						resultSet.getString(1), resultSet.getBoolean(3)));
 			}
 		}
 
@@ -107,9 +106,8 @@ public class DatabaseUtil {
 				releaseMap.put(
 					resultSet.getString(1),
 					new Release(
-						resultSet.getString(1),
 						Version.parseVersion(resultSet.getString(2)),
-						resultSet.getBoolean(3)));
+						resultSet.getString(1), resultSet.getBoolean(3)));
 			}
 		}
 

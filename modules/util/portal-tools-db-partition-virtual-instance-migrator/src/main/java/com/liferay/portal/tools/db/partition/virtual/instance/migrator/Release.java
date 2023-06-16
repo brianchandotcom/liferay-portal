@@ -24,10 +24,10 @@ import java.util.Objects;
 public class Release {
 
 	public Release(
-		String servletContextName, Version schemaVersion, boolean verified) {
+		Version schemaVersion, String servletContextName, boolean verified) {
 
-		_servletContextName = servletContextName;
 		_schemaVersion = schemaVersion;
+		_servletContextName = servletContextName;
 		_verified = verified;
 	}
 
@@ -43,8 +43,8 @@ public class Release {
 
 		Release release = (Release)object;
 
-		if (_servletContextName.equals(release._servletContextName) &&
-			_schemaVersion.equals(release._schemaVersion) &&
+		if (_schemaVersion.equals(release._schemaVersion) &&
+			_servletContextName.equals(release._servletContextName) &&
 			(_verified == release._verified)) {
 
 			return true;

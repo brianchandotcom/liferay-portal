@@ -154,9 +154,9 @@ public class DatabaseUtilTest {
 	@Test
 	public void testGetReleases() throws SQLException {
 		Release module1Release = new Release(
-			"module1", Version.parseVersion("14.2.4"), true);
+			Version.parseVersion("14.2.4"), "module1", true);
 		Release module2Release = new Release(
-			"module2", Version.parseVersion("2.0.1"), false);
+			Version.parseVersion("2.0.1"), "module2", false);
 
 		Mockito.when(
 			_connection.prepareStatement(
@@ -225,7 +225,7 @@ public class DatabaseUtilTest {
 	@Test
 	public void testGetReleasesMapEntry() throws SQLException {
 		Release release = new Release(
-			"module", Version.parseVersion("14.2.4"), true);
+			Version.parseVersion("14.2.4"), "module", true);
 
 		_mockGetReleasesMap(release, true);
 
@@ -240,7 +240,7 @@ public class DatabaseUtilTest {
 	@Test
 	public void testGetReleasesMapNotFoundEntry() throws SQLException {
 		Release release = new Release(
-			"module", Version.parseVersion("14.2.4"), true);
+			Version.parseVersion("14.2.4"), "module", true);
 
 		_mockGetReleasesMap(release, false);
 

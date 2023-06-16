@@ -231,11 +231,11 @@ public class ValidatorTest {
 
 	private List<Release> _createReleaseElements() {
 		return Arrays.asList(
-			new Release("module1.service", Version.parseVersion("3.5.1"), true),
+			new Release(Version.parseVersion("3.5.1"), "module1.service", true),
 			new Release(
-				"module2.service", Version.parseVersion("5.0.0"), false),
-			new Release("module1", Version.parseVersion("2.3.2"), true),
-			new Release("module2", Version.parseVersion("5.1.0"), true));
+				Version.parseVersion("5.0.0"), "module2.service", false),
+			new Release(Version.parseVersion("2.3.2"), "module1", true),
+			new Release(Version.parseVersion("5.1.0"), "module2", true));
 	}
 
 	private void _executeAndAssert(
@@ -363,7 +363,7 @@ public class ValidatorTest {
 		for (Release release : releases) {
 			if (servletContextName.equals(release.getServletContextName())) {
 				release = new Release(
-					servletContextName, Version.parseVersion(schemaVersion),
+					Version.parseVersion(schemaVersion), servletContextName,
 					release.getVerified());
 			}
 
@@ -393,7 +393,7 @@ public class ValidatorTest {
 		for (Release release : releases) {
 			if (servletContextName.equals(release.getServletContextName())) {
 				release = new Release(
-					servletContextName, release.getSchemaVersion(), verified);
+					release.getSchemaVersion(), servletContextName, verified);
 			}
 
 			releaseMap.put(release.getServletContextName(), release);

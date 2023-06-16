@@ -118,7 +118,7 @@ public class DBPartitionVirtualInstanceMigrator {
 			catch (SQLException sqlException) {
 				System.err.println(
 					"Unable to connect to source with the specified " +
-					"parameters:");
+						"parameters:");
 
 				sqlException.printStackTrace();
 

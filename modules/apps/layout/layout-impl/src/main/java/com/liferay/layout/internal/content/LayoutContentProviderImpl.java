@@ -114,6 +114,9 @@ public class LayoutContentProviderImpl implements LayoutContentProvider {
 				(ThemeDisplay)httpServletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
+			HttpServletRequest originalThemeDisplayHttpServletRequest =
+				themeDisplay.getRequest();
+
 			Layout originalThemeDisplayLayout = themeDisplay.getLayout();
 			long originalThemeDisplayPlid = themeDisplay.getPlid();
 
@@ -124,6 +127,8 @@ public class LayoutContentProviderImpl implements LayoutContentProvider {
 
 				themeDisplay.setLayout(layout);
 				themeDisplay.setPlid(layout.getPlid());
+
+				themeDisplay.setRequest(httpServletRequest);
 
 				long segmentsExperienceId =
 					_segmentsExperienceLocalService.
@@ -156,6 +161,8 @@ public class LayoutContentProviderImpl implements LayoutContentProvider {
 
 				themeDisplay.setLayout(originalThemeDisplayLayout);
 				themeDisplay.setPlid(originalThemeDisplayPlid);
+
+				themeDisplay.setRequest(originalThemeDisplayHttpServletRequest);
 			}
 		}
 		finally {

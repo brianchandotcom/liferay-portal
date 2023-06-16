@@ -177,6 +177,44 @@ definition {
 		}
 	}
 
+	@description = "LPS-182790. Confirms it's possible to cancel a sorting deletion."
+	@priority = 4
+	test CanCancelDeleteSorting {
+		task ("When the user creates a new sorting") {
+			DataSetAdmin.createASort(
+				key_field = "creator",
+				key_sorting = "Descending");
+		}
+
+		task ("And clicks on the 3 dots menu present on the newly created sorting") {
+			Click(locator1 = "DataSet#ANY_ELLIPSIS_BUTTON");
+		}
+
+		task ("And clicks on the Delete option") {
+			Click(
+				key_dropdownItem = "Delete",
+				locator1 = "DataSet#DROPDOWN_ITEM");
+		}
+
+		task ("Then the Delete Sorting modal is displayed") {
+			AssertVisible(locator1 = "DataSet#MODAL_DIALOG");
+		}
+
+		task ("When the user clicks on the Cancel button") {
+			Button.clickCancel();
+		}
+
+		task ("Then the Delete Sorting modal is closed") {
+			AssertElementNotPresent(locator1 = "DataSet#MODAL_DIALOG");
+		}
+
+		task ("And the sorting is not deleted") {
+			AssertVisible(
+				key_rowPosition = 1,
+				key_text = "creator",
+				locator1 = "DataSet#SORT_ENTRY_TABLE");
+		}
+	}
 	@description = "LPS-185326. Confirm that the Default Sort was created successfully."
 	@priority = 3
 	test CanCreateDefaultSort {

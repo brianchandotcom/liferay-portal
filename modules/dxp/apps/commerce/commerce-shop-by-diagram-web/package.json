@@ -27,5 +27,5 @@
 		"test": "liferay-npm-scripts test --passWithNoTests",
 		"watch": "liferay-npm-scripts webpack --watch"
 	},
-	"version": "1.0.67"
+	"version": "1.0.68"
 }

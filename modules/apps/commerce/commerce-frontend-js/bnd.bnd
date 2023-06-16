@@ -1,5 +1,5 @@
 Bundle-Name: Liferay Commerce Frontend JS
 Bundle-SymbolicName: com.liferay.commerce.frontend.js
-Bundle-Version: 4.0.88
+Bundle-Version: 4.0.89
 Liferay-JS-Submodules-Bridge: commerce-frontend-js
 Web-ContextPath: /commerce-frontend-js

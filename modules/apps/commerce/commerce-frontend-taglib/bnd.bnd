@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Commerce Frontend Taglib
 Bundle-SymbolicName: com.liferay.commerce.frontend.taglib
-Bundle-Version: 19.6.0
+Bundle-Version: 19.6.1
 Export-Package: com.liferay.commerce.frontend.taglib.servlet.taglib
 Liferay-JS-Submodules-Bridge: commerce-frontend-taglib
 Provide-Capability:\

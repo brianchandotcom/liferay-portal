@@ -1,5 +1,5 @@
 Bundle-Name: Liferay Commerce Frontend Implementation
 Bundle-SymbolicName: com.liferay.commerce.frontend.impl
-Bundle-Version: 4.0.42
+Bundle-Version: 4.0.43
 Liferay-JS-Config: /META-INF/resources/js/config.js
 Web-ContextPath: /commerce-frontend-impl

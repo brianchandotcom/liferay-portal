@@ -577,3 +577,8 @@ a8639b1c18bfe37c4b9bbaf63cff7678377621b5^..8fcded46b0cf01af4fa0db9a4f0f0b8dbd1ed
 # Bundle Version 6.0.97
 #
 238afecc5117b193f57a8a0bdddb1767b435c9e8^..d2ca05b6abbb6c2d4ea471e1bff3009607b2f8af=LPS-185879
+
+#
+# Bundle Version 6.0.98
+#
+d2ca05b6abbb6c2d4ea471e1bff3009607b2f8af^..a5add2757df1bddb8ac716c764b922fe626083fc=LPS-185667 LPS-186307 LPS-186953

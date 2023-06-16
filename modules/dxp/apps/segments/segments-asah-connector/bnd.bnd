@@ -1,4 +1,4 @@
 Bundle-Name: Liferay Segments Asah Connector
 Bundle-SymbolicName: com.liferay.segments.asah.connector
-Bundle-Version: 3.0.47
+Bundle-Version: 3.0.48
 Web-ContextPath: /segments-asah-connector

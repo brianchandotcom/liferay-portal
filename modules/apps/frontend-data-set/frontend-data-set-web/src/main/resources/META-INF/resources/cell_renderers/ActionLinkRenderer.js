@@ -170,6 +170,7 @@ ActionLinkRenderer.propTypes = {
 			size: PropTypes.string,
 			target: PropTypes.oneOf([
 				'modal',
+				'modal-permissions',
 				'sidePanel',
 				'link',
 				'async',

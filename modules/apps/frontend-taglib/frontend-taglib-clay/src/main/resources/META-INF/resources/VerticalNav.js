@@ -18,27 +18,27 @@ import React from 'react';
 export default function VerticalNav({
 	activation,
 	active,
-	decorated,
-	items,
-	large,
-	triggerLabel,
 	additionalProps: _additionalProps,
 	componentId: _componentId,
 	cssClass,
+	decorated,
+	items,
+	large,
 	locale: _locale,
 	portletId: _portletId,
 	portletNamespace: _portletNamespace,
+	triggerLabel,
 	...otherProps
 }) {
 	return (
 		<ClayVerticalNav
 			activation={activation}
 			active={active}
+			className={cssClass}
 			decorated={decorated}
 			items={items}
 			large={large}
 			triggerLabel={triggerLabel}
-			className={cssClass}
 			{...otherProps}
 		>
 			{(item) => (

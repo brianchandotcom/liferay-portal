@@ -15,10 +15,16 @@
 package com.liferay.commerce.internal.security.permission.resource;
 
 import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.constants.AccountRoleConstants;
 import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.commerce.constants.CommerceOrderActionKeys;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
@@ -28,6 +34,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionLogic;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
 
@@ -41,14 +48,20 @@ public class CommerceOrderModelResourcePermissionLogic
 	implements ModelResourcePermissionLogic<CommerceOrder> {
 
 	public CommerceOrderModelResourcePermissionLogic(
+		AccountEntryLocalService accountEntryLocalService,
+		CommerceChannelLocalService commerceChannelLocalService,
 		ConfigurationProvider configurationProvider,
 		GroupLocalService groupLocalService,
 		PortletResourcePermission portletResourcePermission,
+		UserGroupRoleLocalService userGroupRoleLocalService,
 		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService) {
 
+		_accountEntryLocalService = accountEntryLocalService;
+		_commerceChannelLocalService = commerceChannelLocalService;
 		_configurationProvider = configurationProvider;
 		_groupLocalService = groupLocalService;
 		_portletResourcePermission = portletResourcePermission;
+		_userGroupRoleLocalService = userGroupRoleLocalService;
 		_workflowDefinitionLinkLocalService =
 			workflowDefinitionLinkLocalService;
 	}
@@ -77,6 +90,13 @@ public class CommerceOrderModelResourcePermissionLogic
 			 _hasAncestorPermission(
 				 permissionChecker, accountEntry.getAccountEntryGroupId(),
 				 CommerceOrderActionKeys.MANAGE_COMMERCE_ORDERS))) {
+
+			return true;
+		}
+
+		if ((actionId.equals(ActionKeys.UPDATE) ||
+			 actionId.equals(ActionKeys.VIEW)) &&
+			_hasSupplierPermission(permissionChecker, commerceOrder)) {
 
 			return true;
 		}
@@ -461,9 +481,56 @@ public class CommerceOrderModelResourcePermissionLogic
 		return false;
 	}
 
+	private boolean _hasSupplierAccount(
+			PermissionChecker permissionChecker,
+			CommerceChannel commerceChannel)
+		throws PortalException {
+
+		List<AccountEntry> accountEntries =
+			_accountEntryLocalService.getUserAccountEntries(
+				permissionChecker.getUserId(), 0L, StringPool.BLANK,
+				new String[] {AccountConstants.ACCOUNT_ENTRY_TYPE_SUPPLIER},
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		for (AccountEntry accountEntry : accountEntries) {
+			if ((accountEntry.getAccountEntryId() ==
+					commerceChannel.getAccountEntryId()) &&
+				_userGroupRoleLocalService.hasUserGroupRole(
+					permissionChecker.getUserId(),
+					accountEntry.getAccountEntryGroupId(),
+					AccountRoleConstants.ROLE_NAME_ACCOUNT_SUPPLIER)) {
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private boolean _hasSupplierPermission(
+			PermissionChecker permissionChecker, CommerceOrder commerceOrder)
+		throws PortalException {
+
+		CommerceChannel commerceChannel =
+			_commerceChannelLocalService.fetchCommerceChannelByGroupClassPK(
+				commerceOrder.getGroupId());
+
+		if ((commerceChannel != null) &&
+			(commerceChannel.getAccountEntryId() > 0) &&
+			_hasSupplierAccount(permissionChecker, commerceChannel)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private final AccountEntryLocalService _accountEntryLocalService;
+	private final CommerceChannelLocalService _commerceChannelLocalService;
 	private final ConfigurationProvider _configurationProvider;
 	private final GroupLocalService _groupLocalService;
 	private final PortletResourcePermission _portletResourcePermission;
+	private final UserGroupRoleLocalService _userGroupRoleLocalService;
 	private final WorkflowDefinitionLinkLocalService
 		_workflowDefinitionLinkLocalService;
 

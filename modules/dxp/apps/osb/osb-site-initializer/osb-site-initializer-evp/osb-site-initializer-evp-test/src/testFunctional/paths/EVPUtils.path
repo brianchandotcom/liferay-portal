@@ -14,9 +14,9 @@
 <!-- GENERAL_PATHS -->
 
 <tr>
-    <td>INPUT_FIELD</td>
-    <td>//label[contains(., '${key_inputValue}')]/..//input</td>
-    <td></td>
+	<td>INPUT_FIELD</td>
+	<td>//label[contains(., '${key_inputValue}')]/..//input</td>
+	<td></td>
 </tr>
 <tr>
 	<td>SIGN_IN</td>

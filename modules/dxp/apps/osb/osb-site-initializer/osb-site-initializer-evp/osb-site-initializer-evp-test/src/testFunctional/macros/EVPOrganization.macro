@@ -1,5 +1,23 @@
 definition {
 
+	@summary = "Action kebab menu is not present"
+	macro actionKebabMenuNotPresent {
+		Click(
+			key_name = ${organizationName},
+			locator1 = "EVPUtils#KEBAB_MENU_OPTION_ORGANIZATION");
+
+		MenuItem.viewNotPresent(menuItem = ${actionKebab});
+	}
+
+	@summary = "Assert status in EVP"
+	macro assertStatus {
+		AssertElementPresent(
+			key_email = ${email},
+			key_organizationName = ${organizationName},
+			key_status = ${status},
+			locator1 = "EVPOrganization#ASSERT_STATUS");
+	}
+
 	@summary = "Add a new organization"
 	macro createAnOrganization {
 		EVPNavigator.goToNavItem(navItem = "Organization");
@@ -124,24 +142,6 @@ definition {
 			value1 = ${typeMessage});
 
 		Button.click(button = ${button});
-	}
-
-	@summary = "Assert status in EVP"
-	macro assertStatus {
-		AssertElementPresent(
-			key_organizationName = ${organizationName},
-			key_status = ${status},
-			key_email = ${email},
-			locator1 = "EVPOrganization#ASSERT_STATUS");
-	}
-
-	@summary = "Action kebab menu is not present"
-	macro actionKebabMenuNotPresent {
-		Click(
-			key_name = ${organizationName},
-			locator1 = "EVPUtils#KEBAB_MENU_OPTION_ORGANIZATION");
-
-		MenuItem.viewNotPresent(menuItem = ${actionKebab});
 	}
 
 }

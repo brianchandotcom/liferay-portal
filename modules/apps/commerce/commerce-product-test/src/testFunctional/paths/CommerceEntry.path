@@ -86,6 +86,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LABEL_GENERIC_SELECT_ENTRY_POSITION</td>
+	<td>//label[contains(text(),'${key_fieldLabel}')]/..//select/option[${key_index}][normalize-space(text())='${entryName}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ACTIVE_CHECKBOX</td>
 	<td>//input[contains(@id,'active') and (@type='checkbox')]</td>
 	<td></td>

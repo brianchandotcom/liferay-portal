@@ -107,8 +107,9 @@ public class AopServiceManager {
 
 				if (transactionExecutor == null) {
 					throw new IllegalStateException(
-						"Unable to locate transaction executor for bundle " +
-							bundleId);
+						StringBundler.concat(
+							"Unable to locate transaction executor for bundle ",
+							bundleId, ", service ", aopService));
 				}
 
 				aopServiceRegistrar.register(transactionExecutor);

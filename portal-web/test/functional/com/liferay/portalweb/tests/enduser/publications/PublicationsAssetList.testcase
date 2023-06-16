@@ -156,4 +156,68 @@ definition {
 		}
 	}
 
+	@description = "Assert that is possible to edit a Asset List within Publications"
+	@priority = 3
+	test CanEditAssetList {
+		task ("Create a manual asset list") {
+			JSONAssetlist.addManualAssetListEntry(
+				groupName = "Guest",
+				title = "Manual Asset List Test");
+		}
+
+		task ("Add new Publication and use it") {
+			JSONPublications.addPublication(publicationName = "Publication Name");
+
+			JSONPublications.selectPublication(publicationName = "Publication Name");
+		}
+
+		task ("Rename the asset list") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "guest");
+
+			AssetListsAdmin.renameAssetList(
+				newAssetListTitle = "Manual Asset List Edit",
+				oldAssetListTitle = "Manual Asset List Test");
+		}
+
+		task ("Assert that it's possible to publish it") {
+			PublicationsNavigator.gotoReviewChanges();
+
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Show All Items",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			PublicationsChanges.viewChanges(
+				changeCategory = "Asset List Entry",
+				changeSite = "Guest",
+				changeTitle = "Asset List Entry",
+				changeType = "Modified",
+				changeUser = "Test Test");
+
+			Button.clickPublish();
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#SUCCESS",
+				value1 = "No unresolved conflicts, ready to publish.");
+
+			Publications.publishPublication(publicationName = "Publication Name");
+
+			Publications.viewPublicationPublished(publicationName = "Publication Name");
+		}
+
+		task ("Assert that the edited name remains after publishing the Publication") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "guest");
+
+			AssertTextEquals.assertPartialText(
+				key_title = "Manual Asset List Edit",
+				locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE",
+				value1 = "Manual Asset List Edit");
+
+			AssertTextEquals.assertPartialText(
+				key_columnName = "lfr-type",
+				key_tableEntry = "Manual",
+				locator1 = "LexiconTable#TABLE_ENTRY_INFO",
+				value1 = "Manual");
+		}
+	}
+
 }

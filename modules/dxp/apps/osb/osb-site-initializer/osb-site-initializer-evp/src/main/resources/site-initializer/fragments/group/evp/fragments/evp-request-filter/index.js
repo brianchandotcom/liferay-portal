@@ -12,16 +12,15 @@
  * distribution rights of the Software.
  */
 
-const evpRequestRows = document.querySelectorAll('.evp-table-border');
-const evpServicesRequests = Array.from(evpRequestRows).filter(({classList}) =>
-	classList.contains('evp-service-requests')
+const evpRequestRows = Array.from(
+	document.querySelectorAll('.evp-table-border.evp-request-row')
 );
 
-const getServicesRequests = async () => {
+const getUserRequests = async () => {
 	const userEmailAddress = Liferay.ThemeDisplay.getUserEmailAddress();
 
 	const response = await fetch(
-		`/o/c/evprequests?filter=requestType eq 'service' and managerEmailAddress eq '${userEmailAddress}' or emailAddress eq '${userEmailAddress}'&fields=id`,
+		`/o/c/evprequests?filter=managerEmailAddress eq '${userEmailAddress}' or emailAddress eq '${userEmailAddress}'&fields=id,requestType`,
 		{
 			headers: {
 				'content-type': 'application/json',
@@ -31,26 +30,47 @@ const getServicesRequests = async () => {
 		}
 	);
 
-	const data = await response.json();
+	const requests = await response.json();
 
-	if (!data) {
+	if (!requests) {
 		return;
 	}
 
-	return data?.items.map(({id}) => id);
+	return requests?.items.map((request) => request.id);
 };
 
 const filterRequests = async () => {
-	const evpUserServiceRequests = await getServicesRequests();
+	const evpUserRequests = await getUserRequests();
 
-	evpServicesRequests.forEach((cur_evpServiceRequest) => {
-		const cur_evpServiceRequest_Id = parseInt(
-			cur_evpServiceRequest.querySelector('.component-text').innerText
+	evpRequestRows.forEach((cur_evpRequestRow) => {
+		const cur_evpRequestRow_Id = parseInt(
+			cur_evpRequestRow.querySelector('.component-text').innerText
 		);
-		if (!evpUserServiceRequests.includes(cur_evpServiceRequest_Id)) {
-			cur_evpServiceRequest.remove();
+
+		if (!evpUserRequests.includes(cur_evpRequestRow_Id)) {
+			cur_evpRequestRow.remove();
 		}
 	});
+
+	if (!evpUserRequests.length && evpRequestRows.length) {
+		const tablesHeader = document.querySelectorAll('.evp-table-header');
+
+		const notFoundDiv = document.createElement('div');
+		notFoundDiv.classList.add('c-empty-state');
+		notFoundDiv.innerHTML =
+			"<div class='c-empty-state-text'>No Results Found</div>";
+
+		tablesHeader.forEach((element) => {
+			if (!element.parentNode.querySelector('.c-empty-state')) {
+				element.nextSibling.nextSibling.classList.add('d-none');
+
+				element.parentNode.insertBefore(
+					notFoundDiv,
+					element.nextSibling
+				);
+			}
+		});
+	}
 };
 
 if (fragmentElement.querySelector('.evp-request-filter')) {

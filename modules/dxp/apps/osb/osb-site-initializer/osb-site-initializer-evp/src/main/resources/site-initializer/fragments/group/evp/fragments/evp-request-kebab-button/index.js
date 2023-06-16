@@ -91,14 +91,14 @@ const layerForDendingUpdateStatus = async (message, attribute, key, value) => {
 const getMessage = () => document.querySelector('#messageDescribed').value;
 const getAttributeHidden = () => document.querySelector('#messageDanger');
 
-const openModal = (btn_option) => {
+const openModal = (optionBtn) => {
 	const grantRequestType = fragmentElement.querySelector('.grantRequestType')
 		.value;
 	const requestName = fragmentElement.querySelector('.requestName').value;
 
 	let modalConfigs = {};
 
-	if (btn_option === MODAL_BTN_OPTION.REVIEW) {
+	if (optionBtn === MODAL_BTN_OPTION.REVIEW) {
 		modalConfigs = {
 			buttons: [
 				{
@@ -145,7 +145,8 @@ const openModal = (btn_option) => {
 											.AWAITING_EMPLOYEE_PROOF_OF_EXPENSES
 											.value,
 								};
-							} else {
+							}
+							else {
 								status = {
 									key:
 										REQUEST_STATUS
@@ -156,7 +157,8 @@ const openModal = (btn_option) => {
 											.value,
 								};
 							}
-						} else {
+						}
+						else {
 							status = {
 								key: REQUEST_STATUS.AWAITING_FINANCE_REVIEW.key,
 								value:
@@ -164,6 +166,7 @@ const openModal = (btn_option) => {
 										.value,
 							};
 						}
+
 						await layerForDendingUpdateStatus(
 							getMessage(),
 							getAttributeHidden(),
@@ -179,7 +182,7 @@ const openModal = (btn_option) => {
 	}
 	else {
 		modalConfigs =
-			btn_option === MODAL_BTN_OPTION.APPROVE
+			optionBtn === MODAL_BTN_OPTION.APPROVE
 				? {
 						buttons: [
 							{
@@ -242,7 +245,7 @@ const openModal = (btn_option) => {
 const btnOpenModal = fragmentElement.querySelectorAll('.btnOpenModal');
 
 if (btnOpenModal.length) {
-	btnOpenModal.forEach((cur_btn_option) => {
-		cur_btn_option.onclick = () => openModal(cur_btn_option.classList[1]);
+	btnOpenModal.forEach((cur_optionBtn) => {
+		cur_optionBtn.onclick = () => openModal(cur_optionBtn.classList[1]);
 	});
 }

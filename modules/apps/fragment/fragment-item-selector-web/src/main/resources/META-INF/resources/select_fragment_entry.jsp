@@ -17,20 +17,20 @@
 <%@ include file="/init.jsp" %>
 
 <%
-FragmentDisplayContext fragmentDisplayContext = (FragmentDisplayContext)request.getAttribute(FragmentDisplayContext.class.getName());
+FragmentEntriesDisplayContext fragmentEntriesDisplayContext = (FragmentEntriesDisplayContext)request.getAttribute(FragmentEntriesDisplayContext.class.getName());
 %>
 
 <clay:management-toolbar
-	managementToolbarDisplayContext="<%= new FragmentsItemSelectorViewManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, fragmentDisplayContext.getFragmentsSearchContainer()) %>"
+	managementToolbarDisplayContext="<%= new FragmentEntriesItemSelectorViewManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, fragmentEntriesDisplayContext.getFragmentsSearchContainer()) %>"
 />
 
 <clay:container-fluid>
 	<liferay-site-navigation:breadcrumb
-		breadcrumbEntries="<%= fragmentDisplayContext.getBreadcrumbEntries() %>"
+		breadcrumbEntries="<%= fragmentEntriesDisplayContext.getBreadcrumbEntries() %>"
 	/>
 
 	<liferay-ui:search-container
-		searchContainer="<%= fragmentDisplayContext.getFragmentsSearchContainer() %>"
+		searchContainer="<%= fragmentEntriesDisplayContext.getFragmentsSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.fragment.model.FragmentEntry"
@@ -40,7 +40,7 @@ FragmentDisplayContext fragmentDisplayContext = (FragmentDisplayContext)request.
 				<clay:vertical-card
 					data-fragmententrykey="<%= fragmentEntry.getFragmentEntryKey() %>"
 					data-fragmententryname="<%= fragmentEntry.getName() %>"
-					data-groupkey="<%= fragmentDisplayContext.getGroupKey() %>"
+					data-groupkey="<%= fragmentEntriesDisplayContext.getGroupKey() %>"
 					verticalCard="<%= new FragmentEntryVerticalCard(fragmentEntry) %>"
 				/>
 			</liferay-ui:search-container-column-text>

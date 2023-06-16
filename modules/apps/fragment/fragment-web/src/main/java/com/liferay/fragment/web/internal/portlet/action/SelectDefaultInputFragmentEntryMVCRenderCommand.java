@@ -16,8 +16,8 @@ package com.liferay.fragment.web.internal.portlet.action;
 
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.constants.FragmentPortletKeys;
-import com.liferay.fragment.item.selector.FragmentItemSelectorReturnType;
-import com.liferay.fragment.item.selector.criterion.FragmentItemSelectorCriterion;
+import com.liferay.fragment.item.selector.FragmentEntryItemSelectorReturnType;
+import com.liferay.fragment.item.selector.criterion.FragmentEntryItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -48,11 +48,11 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"javax.portlet.name=" + FragmentPortletKeys.FRAGMENT,
-		"mvc.command.name=/fragment/select_default_input_fragment"
+		"mvc.command.name=/fragment/select_default_input_fragment_entry"
 	},
 	service = MVCRenderCommand.class
 )
-public class SelectDefaultInputFragmentMVCRenderCommand
+public class SelectDefaultInputFragmentEntryMVCRenderCommand
 	implements MVCRenderCommand {
 
 	@Override
@@ -60,16 +60,17 @@ public class SelectDefaultInputFragmentMVCRenderCommand
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		FragmentItemSelectorCriterion fragmentItemSelectorCriterion =
-			new FragmentItemSelectorCriterion();
+		FragmentEntryItemSelectorCriterion fragmentEntryItemSelectorCriterion =
+			new FragmentEntryItemSelectorCriterion();
 
-		fragmentItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			new FragmentItemSelectorReturnType());
-		fragmentItemSelectorCriterion.setInputTypes(
+		fragmentEntryItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			new FragmentEntryItemSelectorReturnType());
+		fragmentEntryItemSelectorCriterion.setInputTypes(
 			new HashSet<>(
 				Collections.singletonList(
 					ParamUtil.getString(renderRequest, "inputType"))));
-		fragmentItemSelectorCriterion.setType(FragmentConstants.TYPE_INPUT);
+		fragmentEntryItemSelectorCriterion.setType(
+			FragmentConstants.TYPE_INPUT);
 
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
 			RequestBackedPortletURLFactoryUtil.create(renderRequest);
@@ -83,7 +84,7 @@ public class SelectDefaultInputFragmentMVCRenderCommand
 					_itemSelector.getItemSelectorURL(
 						requestBackedPortletURLFactory,
 						renderResponse.getNamespace() + "selectFragment",
-						fragmentItemSelectorCriterion)));
+						fragmentEntryItemSelectorCriterion)));
 		}
 		catch (IOException ioException) {
 			_log.error(ioException);
@@ -95,7 +96,7 @@ public class SelectDefaultInputFragmentMVCRenderCommand
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		SelectDefaultInputFragmentMVCRenderCommand.class);
+		SelectDefaultInputFragmentEntryMVCRenderCommand.class);
 
 	@Reference
 	private ItemSelector _itemSelector;

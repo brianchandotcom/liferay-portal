@@ -27,7 +27,7 @@ import React, {useState} from 'react';
 export default function FormFragmentsConfiguration({
 	formTypes,
 	portletNamespace,
-	selectFragmentURL,
+	selectFragmentEntryURL,
 	updateInputFragmentsURL,
 }) {
 	const [values, setValues] = useState({});
@@ -49,7 +49,7 @@ export default function FormFragmentsConfiguration({
 				Liferay.Language.get('select-x'),
 				Liferay.Language.get('fragment')
 			),
-			url: createPortletURL(selectFragmentURL, {
+			url: createPortletURL(selectFragmentEntryURL, {
 				inputType: name,
 				p_p_id: getPortletId(portletNamespace),
 			}),

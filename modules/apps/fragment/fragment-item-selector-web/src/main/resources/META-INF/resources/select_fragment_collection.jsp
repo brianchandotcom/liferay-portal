@@ -17,25 +17,25 @@
 <%@ include file="/init.jsp" %>
 
 <%
-FragmentDisplayContext fragmentDisplayContext = (FragmentDisplayContext)request.getAttribute(FragmentDisplayContext.class.getName());
+FragmentEntriesDisplayContext fragmentEntriesDisplayContext = (FragmentEntriesDisplayContext)request.getAttribute(FragmentEntriesDisplayContext.class.getName());
 %>
 
 <c:choose>
-	<c:when test="<%= fragmentDisplayContext.getFragmentCollectionId() > 0 %>">
-		<liferay-util:include page="/select_fragment.jsp" servletContext="<%= application %>" />
+	<c:when test="<%= fragmentEntriesDisplayContext.getFragmentCollectionId() > 0 %>">
+		<liferay-util:include page="/select_fragment_entry.jsp" servletContext="<%= application %>" />
 	</c:when>
 	<c:otherwise>
 		<clay:management-toolbar
-			managementToolbarDisplayContext="<%= new FragmentCollectionItemSelectorViewManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, fragmentDisplayContext.getFragmentCollectionsSearchContainer()) %>"
+			managementToolbarDisplayContext="<%= new FragmentCollectionsItemSelectorViewManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, fragmentEntriesDisplayContext.getFragmentCollectionsSearchContainer()) %>"
 		/>
 
 		<clay:container-fluid>
 			<liferay-site-navigation:breadcrumb
-				breadcrumbEntries="<%= fragmentDisplayContext.getBreadcrumbEntries() %>"
+				breadcrumbEntries="<%= fragmentEntriesDisplayContext.getBreadcrumbEntries() %>"
 			/>
 
 			<liferay-ui:search-container
-				searchContainer="<%= fragmentDisplayContext.getFragmentCollectionsSearchContainer() %>"
+				searchContainer="<%= fragmentEntriesDisplayContext.getFragmentCollectionsSearchContainer() %>"
 			>
 				<liferay-ui:search-container-row
 					className="com.liferay.fragment.model.FragmentCollection"

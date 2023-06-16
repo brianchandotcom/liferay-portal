@@ -176,7 +176,7 @@ public class UpdateDefaultInputFragmentsMVCActionCommandMVCActionCommandTest {
 	private JSONFactory _jsonFactory;
 
 	@Inject(
-		filter = "mvc.command.name=/fragment/update_default_input_fragments"
+		filter = "mvc.command.name=/fragment/update_default_input_fragment_entries"
 	)
 	private MVCActionCommand _mvcActionCommand;
 

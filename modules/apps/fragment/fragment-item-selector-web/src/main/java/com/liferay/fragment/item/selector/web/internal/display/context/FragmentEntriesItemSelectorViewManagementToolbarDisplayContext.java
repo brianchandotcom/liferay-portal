@@ -15,19 +15,21 @@
 package com.liferay.fragment.item.selector.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Víctor Galán
  */
-public class FragmentCollectionItemSelectorViewManagementToolbarDisplayContext
+public class FragmentEntriesItemSelectorViewManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
-	public FragmentCollectionItemSelectorViewManagementToolbarDisplayContext(
+	public FragmentEntriesItemSelectorViewManagementToolbarDisplayContext(
 		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
@@ -39,13 +41,12 @@ public class FragmentCollectionItemSelectorViewManagementToolbarDisplayContext
 	}
 
 	@Override
-	public String getSortingURL() {
-		return null;
-	}
-
-	@Override
-	public Boolean isDisabled() {
-		return true;
+	public String getClearResultsURL() {
+		return PortletURLBuilder.create(
+			getPortletURL()
+		).setKeywords(
+			StringPool.BLANK
+		).buildString();
 	}
 
 	@Override
@@ -60,6 +61,11 @@ public class FragmentCollectionItemSelectorViewManagementToolbarDisplayContext
 
 	protected String[] getDisplayViews() {
 		return new String[] {"icon"};
+	}
+
+	@Override
+	protected String[] getOrderByKeys() {
+		return new String[] {"name", "modified-date"};
 	}
 
 }

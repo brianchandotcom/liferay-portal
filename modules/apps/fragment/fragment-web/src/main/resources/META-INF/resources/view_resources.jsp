@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-FragmentCollectionResourcesDisplayContext fragmentCollectionResourcesDisplayContext = new FragmentCollectionResourcesDisplayContext(request, renderRequest, renderResponse, fragmentDisplayContext);
+FragmentCollectionResourcesDisplayContext fragmentCollectionResourcesDisplayContext = new FragmentCollectionResourcesDisplayContext(request, renderRequest, renderResponse, fragmentEntriesDisplayContext);
 %>
 
 <c:choose>
@@ -42,7 +42,7 @@ FragmentCollectionResourcesDisplayContext fragmentCollectionResourcesDisplayCont
 		</portlet:actionURL>
 
 		<aui:form action="<%= addFragmentCollectionResourceURL %>" name="fragmentCollectionResourceFm">
-			<aui:input name="fragmentCollectionId" type="hidden" value="<%= String.valueOf(fragmentDisplayContext.getFragmentCollectionId()) %>" />
+			<aui:input name="fragmentCollectionId" type="hidden" value="<%= String.valueOf(fragmentEntriesDisplayContext.getFragmentCollectionId()) %>" />
 			<aui:input name="fileEntryId" type="hidden" />
 		</aui:form>
 

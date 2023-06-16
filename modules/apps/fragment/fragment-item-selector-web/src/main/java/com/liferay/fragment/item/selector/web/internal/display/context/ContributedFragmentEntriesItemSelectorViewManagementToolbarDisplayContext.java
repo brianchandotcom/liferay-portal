@@ -26,10 +26,11 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Víctor Galán
  */
-public class FragmentsItemSelectorViewManagementToolbarDisplayContext
-	extends SearchContainerManagementToolbarDisplayContext {
+public class
+	ContributedFragmentEntriesItemSelectorViewManagementToolbarDisplayContext
+		extends SearchContainerManagementToolbarDisplayContext {
 
-	public FragmentsItemSelectorViewManagementToolbarDisplayContext(
+	public ContributedFragmentEntriesItemSelectorViewManagementToolbarDisplayContext(
 		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
@@ -50,6 +51,11 @@ public class FragmentsItemSelectorViewManagementToolbarDisplayContext
 	}
 
 	@Override
+	public String getSortingURL() {
+		return null;
+	}
+
+	@Override
 	public Boolean isSelectable() {
 		return false;
 	}
@@ -61,11 +67,6 @@ public class FragmentsItemSelectorViewManagementToolbarDisplayContext
 
 	protected String[] getDisplayViews() {
 		return new String[] {"icon"};
-	}
-
-	@Override
-	protected String[] getOrderByKeys() {
-		return new String[] {"name", "modified-date"};
 	}
 
 }

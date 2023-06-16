@@ -119,8 +119,8 @@ public class DBPartitionVirtualInstanceMigrator {
 			}
 			catch (SQLException sqlException) {
 				System.err.println(
-					"Unable to get destination database connection with the " +
-						"specified parameters:");
+					"Unable to connect to destination with the specified " +
+						"parameters:");
 
 				sqlException.printStackTrace();
 
@@ -135,8 +135,8 @@ public class DBPartitionVirtualInstanceMigrator {
 			}
 			catch (SQLException sqlException) {
 				System.err.println(
-					"Unable to get source database connection with the " +
-						"specified parameters:");
+					"Unable to connect to source with the specified " +
+						"parameters:");
 
 				sqlException.printStackTrace();
 

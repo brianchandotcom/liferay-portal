@@ -67,6 +67,8 @@ import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.CopyLayoutThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.exportimport.staging.StagingAdvicesThreadLocal;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
@@ -717,6 +719,35 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 		return segmentsExperienceIdsMap;
 	}
 
+	private String _getTypeSettings(Layout sourceLayout, Layout targetLayout) {
+		if ((!sourceLayout.isDraftLayout() && !targetLayout.isDraftLayout()) ||
+			targetLayout.isDraftLayout()) {
+
+			return sourceLayout.getTypeSettings();
+		}
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			UnicodePropertiesBuilder.create(
+				true
+			).fastLoad(
+				targetLayout.getTypeSettings()
+			).build();
+
+		return UnicodePropertiesBuilder.create(
+			true
+		).fastLoad(
+			sourceLayout.getTypeSettings()
+		).setProperty(
+			"query-string",
+			typeSettingsUnicodeProperties.getProperty("query-string")
+		).setProperty(
+			"target", typeSettingsUnicodeProperties.getProperty("target")
+		).setProperty(
+			"targetType",
+			typeSettingsUnicodeProperties.getProperty("targetType")
+		).buildString();
+	}
+
 	private boolean _hasLayoutClassedModelUsage(
 		List<LayoutClassedModelUsage> layoutClassedModelUsages,
 		LayoutClassedModelUsage targetLayoutClassedModelUsage) {
@@ -940,9 +971,9 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 
 			return _layoutLocalService.updateLayout(
 				_targetLayout.getGroupId(), _targetLayout.isPrivateLayout(),
-				_targetLayout.getLayoutId(), _sourceLayout.getTypeSettings(),
-				imageBytes, _sourceLayout.getThemeId(),
-				_sourceLayout.getColorSchemeId(),
+				_targetLayout.getLayoutId(),
+				_getTypeSettings(_sourceLayout, _targetLayout), imageBytes,
+				_sourceLayout.getThemeId(), _sourceLayout.getColorSchemeId(),
 				_sourceLayout.getStyleBookEntryId(), _sourceLayout.getCss(),
 				_sourceLayout.getFaviconFileEntryId(),
 				_sourceLayout.getMasterLayoutPlid());

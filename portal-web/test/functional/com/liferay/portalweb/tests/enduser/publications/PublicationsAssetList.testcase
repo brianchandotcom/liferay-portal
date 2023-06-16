@@ -97,4 +97,63 @@ definition {
 		}
 	}
 
+	@description = "Assert that is possible to delete a Asset List within Publications"
+	@priority = 3
+	test CanDeleteAssetList {
+		task ("Create a manual asset list") {
+			JSONAssetlist.addManualAssetListEntry(
+				groupName = "Guest",
+				title = "Manual Asset List Test");
+		}
+
+		task ("Create a dynamic asset list") {
+			JSONAssetlist.addDynamicAssetListEntry(
+				groupName = "Guest",
+				title = "Dynamic Asset List Test");
+		}
+
+		task ("Add new Publication and use it") {
+			JSONPublications.addPublication(publicationName = "Publication Name");
+
+			JSONPublications.selectPublication(publicationName = "Publication Name");
+		}
+
+		task ("Delete both asset lists") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "guest");
+
+			AssetListsAdmin.deleteEntry(assetListTitle = "Manual Asset List Test");
+
+			AssetListsAdmin.deleteEntry(assetListTitle = "Dynamic Asset List Test");
+		}
+
+		task ("Assert the taglib that displays when there are no entries displays") {
+			AssertElementPresent(locator1 = "Message#EMPTY_INFO_TAGLIB");
+		}
+
+		task ("Assert that it's possible to publish it") {
+			PublicationsNavigator.gotoReviewChanges();
+
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Show All Items",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			PublicationsChanges.viewChanges(
+				changeCategory = "Asset List Entry",
+				changeSite = "Guest",
+				changeTitle = "Asset List Entry",
+				changeType = "Deleted",
+				changeUser = "Test Test");
+
+			Button.clickPublish();
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#SUCCESS",
+				value1 = "No unresolved conflicts, ready to publish.");
+
+			Publications.publishPublication(publicationName = "Publication Name");
+
+			Publications.viewPublicationPublished(publicationName = "Publication Name");
+		}
+	}
+
 }

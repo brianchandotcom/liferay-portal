@@ -1,5 +1,44 @@
 definition {
 
+	macro configureURLPattern {
+		Type(
+			locator1 = "ExportImport#URL_PATTERN",
+			value1 = ${urlPattern});
+
+		if (isSet(multipleURL)) {
+			FormFields.addRepeatableField(
+				fieldName = "whitelistedURLPatterns",
+				repeatableFieldNumber = 1);
+
+			FormFields.editRepeatableTextMultiline(
+				fieldName = "whitelistedURLPatterns",
+				fieldValue = ${multipleURL},
+				repeatableFieldNumber = 2);
+		}
+
+		if (IsElementPresent(locator1 = "Button#SAVE")) {
+			PortletEntry.save();
+		}
+		else {
+			Button.clickUpdate();
+		}
+
+		if (isSet(errorMessage)) {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR_DISMISSIBLE",
+				value1 = ${errorMessage});
+		}
+		else {
+			Alert.viewSuccessMessage();
+		}
+	}
+
+	macro deployInstanceConfigFile {
+		var companyId = JSONCompany.getCompanyId(portalInstanceName = ${portalInstanceName});
+
+		AntCommands.runCommand("build-test-export-import.xml", "prepare-export-import-osgi-configuration -DcompanyId=${companyId} -Dosgi.config.file.name=${osgiConfigFileName}");
+	}
+
 	macro getBackgroundTaskStatus {
 		if (${type} == "Export") {
 			var mysqlStatement = "SELECT backgroundTaskId FROM BackgroundTask WHERE taskExecutorClassName in ('com.liferay.exportimport.internal.background.task.LayoutExportBackgroundTaskExecutor', 'com.liferay.exportimport.internal.background.task.PortletExportBackgroundTaskExecutor') AND STATUS IN (3, 5);";
@@ -99,6 +138,15 @@ definition {
 		if (${queryResult} != "") {
 			fail("The modifiedDate of the portlet background task failed to modify.");
 		}
+
+	macro viewValidationMessage {
+		AssertTextPresent(
+			locator1 = "Message#ERROR",
+			value1 = "Your request failed to complete.");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#ERROR_DISMISSIBLE",
+			value1 = "Unable to validate referenced page with URL ${url} because the page group with URL ${urlPattern} cannot be found");
 	}
 
 }

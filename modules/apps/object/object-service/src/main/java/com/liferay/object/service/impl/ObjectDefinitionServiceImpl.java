@@ -51,7 +51,7 @@ public class ObjectDefinitionServiceImpl
 	public ObjectDefinition addCustomObjectDefinition(
 			boolean enableComments, boolean enableLocalization,
 			Map<Locale, String> labelMap, String name, String panelAppOrder,
-			String panelCategoryKey, Map<Locale, String> pluralLabelMap,
+			String panelCategoryKey, Map<Locale, String> pluralLabelMap, Boolean portlet,
 			String scope, String storageType, List<ObjectField> objectFields)
 		throws PortalException {
 
@@ -61,7 +61,7 @@ public class ObjectDefinitionServiceImpl
 
 		return objectDefinitionLocalService.addCustomObjectDefinition(
 			getUserId(), enableComments, enableLocalization, labelMap, name,
-			panelAppOrder, panelCategoryKey, pluralLabelMap, scope, storageType,
+			panelAppOrder, panelCategoryKey, pluralLabelMap, portlet, scope, storageType,
 			objectFields);
 	}
 

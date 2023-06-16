@@ -174,14 +174,14 @@ public class ObjectDefinitionLocalServiceImpl
 	public ObjectDefinition addCustomObjectDefinition(
 			long userId, boolean enableComments, boolean enableLocalization,
 			Map<Locale, String> labelMap, String name, String panelAppOrder,
-			String panelCategoryKey, Map<Locale, String> pluralLabelMap,
+			String panelCategoryKey, Map<Locale, String> pluralLabelMap, Boolean portlet,
 			String scope, String storageType, List<ObjectField> objectFields)
 		throws PortalException {
 
 		return _addObjectDefinition(
 			userId, null, null, enableComments, enableLocalization, labelMap,
 			true, name, panelAppOrder, panelCategoryKey, null, null,
-			pluralLabelMap, scope, storageType, false, null, 0,
+			pluralLabelMap, portlet, scope, storageType, false, null, 0,
 			WorkflowConstants.STATUS_DRAFT, objectFields);
 	}
 
@@ -884,7 +884,7 @@ public class ObjectDefinitionLocalServiceImpl
 			Map<Locale, String> labelMap, boolean modifiable, String name,
 			String panelAppOrder, String panelCategoryKey,
 			String pkObjectFieldDBColumnName, String pkObjectFieldName,
-			Map<Locale, String> pluralLabelMap, String scope,
+			Map<Locale, String> pluralLabelMap, Boolean portlet, String scope,
 			String storageType, boolean system, String titleObjectFieldName,
 			int version, int status, List<ObjectField> objectFields)
 		throws PortalException {

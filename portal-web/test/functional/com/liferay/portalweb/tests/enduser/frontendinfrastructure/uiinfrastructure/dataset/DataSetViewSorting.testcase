@@ -215,6 +215,48 @@ definition {
 				locator1 = "DataSet#SORT_ENTRY_TABLE");
 		}
 	}
+
+	@description = "LPS-182790. Confirms it's possible to cancel a sorting edit."
+	@priority = 4
+	test CanCancelEditSorting {
+		task ("When the user creates a new sorting") {
+			DataSetAdmin.createASort(
+				key_field = "creator",
+				key_sorting = "Descending");
+		}
+
+		task ("And clicks on the 3 dots menu present on the newly created sorting") {
+			Click(locator1 = "DataSet#ANY_ELLIPSIS_BUTTON");
+		}
+
+		task ("And clicks on the Edit option") {
+			Click(
+				key_dropdownItem = "Edit",
+				locator1 = "DataSet#DROPDOWN_ITEM");
+		}
+
+		task ("And changes the option present in the Sorting field") {
+			Type(
+				locator1 = "DataSet#SORTING_SELECT",
+				value1 = "Ascending");
+		}
+
+		task ("And clicks on the Cancel button") {
+			Button.clickCancel();
+		}
+
+		task ("Then the modal is closed") {
+			AssertElementNotPresent(locator1 = "DataSet#MODAL_DIALOG");
+		}
+
+		task ("And the changes are not applied") {
+			AssertVisible(
+				key_rowPosition = 1,
+				key_text = "Descending",
+				locator1 = "DataSet#SORT_ENTRY_TABLE");
+		}
+	}
+
 	@description = "LPS-185326. Confirm that the Default Sort was created successfully."
 	@priority = 3
 	test CanCreateDefaultSort {

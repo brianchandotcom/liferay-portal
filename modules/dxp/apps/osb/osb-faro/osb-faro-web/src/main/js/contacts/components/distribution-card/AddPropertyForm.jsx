@@ -153,7 +153,7 @@ const AddPropertyForm = ({
 												context={defaultContext}
 												groupId={groupId}
 												label={Liferay.Language.get(
-													'attribute'
+													'attribute[noun]'
 												)}
 												name='property'
 												onSelect={({rawType}) =>

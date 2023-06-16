@@ -95,7 +95,7 @@ const EditAttributeEventModal: React.FC<IEditAttributeEventModalProps> = ({
 								[
 									showTypecast
 										? Liferay.Language.get(
-												'attribute'
+												'attribute[noun]'
 										  ).toLowerCase()
 										: Liferay.Language.get(
 												'event'

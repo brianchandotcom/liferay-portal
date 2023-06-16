@@ -32,7 +32,7 @@ const IndividualAttributesModal: React.FC<IIndividualAttributesModalInterface> =
 					},
 					{
 						accessor: 'dataSourceFieldName',
-						label: Liferay.Language.get('attribute'),
+						label: Liferay.Language.get('attribute[noun]'),
 						sortable: false
 					}
 				]}

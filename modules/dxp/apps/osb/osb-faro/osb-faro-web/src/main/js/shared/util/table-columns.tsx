@@ -341,7 +341,7 @@ export const detailsListColumns = {
 		accessor: 'name',
 		cellRenderer: PropertyCell,
 		className: 'table-cell-expand',
-		label: Liferay.Language.get('attribute')
+		label: Liferay.Language.get('attribute[noun]')
 	},
 	sourceName: {
 		accessor: 'sourceName',

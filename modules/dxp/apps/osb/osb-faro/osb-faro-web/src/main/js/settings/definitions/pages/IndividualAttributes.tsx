@@ -105,7 +105,7 @@ const IndividualAttributes: React.FC<IIndividualAttributesProps> = ({
 							accessor: 'fieldName',
 							cellRenderer: FieldNameCell,
 							className: 'table-cell-expand',
-							label: Liferay.Language.get('attribute')
+							label: Liferay.Language.get('attribute[noun]')
 						},
 						{
 							accessor: 'dataSources',

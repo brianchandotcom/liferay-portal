@@ -112,16 +112,6 @@ export function DropdownColorPicker({
 		}
 	};
 
-	const containerRef = useMemo(() => {
-		const ref = React.createRef();
-
-		ref.current = document.querySelector(
-			'page-editor__item-configuration-sidebar'
-		);
-
-		return ref;
-	}, []);
-
 	return (
 		<div
 			className={classNames(
@@ -177,9 +167,8 @@ export function DropdownColorPicker({
 				className="clay-color-dropdown-menu px-0"
 				containerProps={{
 					className: 'cadmin',
-					containerRef,
 				}}
-				onSetActive={onSetActive}
+				onActiveChange={onSetActive}
 				ref={dropdownContainerRef}
 			>
 				{active ? (

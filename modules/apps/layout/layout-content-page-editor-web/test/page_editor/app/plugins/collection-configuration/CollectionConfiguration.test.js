@@ -81,6 +81,7 @@ const renderComponent = () => {
 			collectionItemTypeLabel="Item Type"
 			collectionLabel="Example Collection"
 			configurationDefinition={CONFIGURATION_DEFINITION}
+			languageId="en_US"
 		/>
 	);
 };

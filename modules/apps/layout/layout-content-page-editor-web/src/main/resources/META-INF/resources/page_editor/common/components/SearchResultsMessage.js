@@ -51,6 +51,6 @@ export default function SearchResultsMessage({
 }
 
 SearchResultsMessage.propTypes = {
-	numberOfResults: PropTypes.number.isRequired,
+	numberOfResults: PropTypes.number,
 	resultType: PropTypes.string,
 };

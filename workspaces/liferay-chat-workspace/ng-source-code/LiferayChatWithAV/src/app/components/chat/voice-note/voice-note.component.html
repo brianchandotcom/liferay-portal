@@ -1,0 +1,25 @@
+<div class="voice-note-container">
+    <mat-toolbar class="voice-note">
+        <button *ngIf="isRecording" (click)="stopRecording()" [disableRipple]="true" mat-icon-button class="text-danger" aria-label="Example icon-button with menu icon">
+            <fa-icon  [icon]="['fas', 'stop']"></fa-icon>
+        </button>
+        <audio #audioPreview [src]="rawAudioObject"  *ngIf="!isRecording" controls>
+        </audio>
+        <span class="status" *ngIf="isRecording">
+            <span>
+                Recording...{{timer}}
+            </span>
+        </span>
+        <span class="example-spacer"></span>
+        <div>
+            <button (click)="cancel()"  [disableRipple]="true" mat-icon-button class="text-danger" aria-label="Example icon-button with heart icon">
+                <fa-icon  [icon]="['fas', 'xmark']"></fa-icon>
+            </button>
+            <button (click)="sendRecording()"  [disableRipple]="true" mat-icon-button class="text-success" aria-label="Example icon-button with share icon">
+                <fa-icon  [icon]="['fas', 'paper-plane']"></fa-icon>
+            </button>
+        </div>
+
+    </mat-toolbar>
+</div>
+

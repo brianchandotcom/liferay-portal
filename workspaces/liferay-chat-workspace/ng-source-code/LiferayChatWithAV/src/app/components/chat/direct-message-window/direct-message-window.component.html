@@ -1,0 +1,57 @@
+<div class="direct-message-container">
+    <div class="direct-messages-window"  #scrollMe [scrollTop]="autoScroll?scrollMe.scrollHeight : 0">
+        <div class="load-more-messages-container">
+            <button  *ngIf="this.chatInfo.pageIndex < this.chatInfo.numberOfPages" (click)="loadOlder()">
+               <div class="icon-button">
+                   <div class="button-label">
+                       Load Older Messages
+                   </div>
+                   <div class="button-icon">
+                       <fa-icon  [icon]="['fas', 'clock-rotate-left']"></fa-icon>
+                   </div>
+               </div>
+            </button>
+        </div>
+        <div class="message message-{{(messageDirection(message))}}"  *ngFor="let message of messages">
+            <div class="bubble {{(messageDirection(message))}}">
+                <a *ngIf="message['attachment']" href="{{message['attachment']['link']['href']}}" download>
+                   <attachment-viewer [documentId]="message['attachment']['id']"></attachment-viewer>
+                </a>
+                <span *ngIf="!message['attachment']">
+                    {{message["message"]}}
+                </span>
+            </div>
+        </div>
+        <div class="icon-button attachment" *ngIf="attachment">
+            <div class="button-label">
+                {{attachment.name}}
+            </div>
+            <div class="button-icon">
+                <fa-icon  [icon]="['fas', 'paperclip']"></fa-icon>
+            </div>
+        </div>
+    </div>
+
+    <input type="file" style="display: none;" #fileInput (change)="onFileSelected($event)" />
+    <div class="direct-messages-actions" *ngIf="isRecording">
+        <chat-voice-note
+                (SendVoiceNote)="sendRecording($event)"
+                (CancelRecording)="cancelRecording()">
+        </chat-voice-note>
+    </div>
+    <div class="direct-messages-actions" *ngIf="!isRecording">
+        <mat-form-field class="send-message-action">
+            <input [(ngModel)]="message" (keyup.enter)="send()" matInput maxlength="350" placeholder="Your message...">
+            <mat-hint align="end"><strong>{{message.length}}</strong> / 350</mat-hint>
+            <button [disableRipple]="true" mat-icon-button  (click)="startRecording()"  matSuffix class=""  aria-label="Send"  color="primary">
+                <fa-icon  [icon]="['fas', 'microphone']"></fa-icon>
+            </button >
+            <button [disabled]="isLoading"  [disableRipple]="true" mat-icon-button (click)="fileInput.click()"  matSuffix class=""  aria-label="Send"  color="primary">
+                <fa-icon  [icon]="['fas', 'paperclip']"></fa-icon>
+            </button >
+            <button [disabled]="isLoading || message.length == 0" [disableRipple]="true" mat-icon-button  (click)="send()"  matSuffix class=""  aria-label="Send"  color="primary">
+                <fa-icon  [icon]="['fas', 'paper-plane']"></fa-icon>
+            </button >
+        </mat-form-field>
+    </div>
+</div>

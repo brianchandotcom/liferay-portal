@@ -1,0 +1,20 @@
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+
+
+.viewer-container
+{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-flow: wrap;
+}
+
+.viewer-container *
+{
+    margin:auto;
+    display: flex;
+}
+.preview-image
+{
+    max-height: 350px;
+}

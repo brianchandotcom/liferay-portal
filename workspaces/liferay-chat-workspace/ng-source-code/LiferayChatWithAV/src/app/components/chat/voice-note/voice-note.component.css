@@ -1,0 +1,36 @@
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+
+fa-icon
+{
+    display: flex!important;
+}
+.voice-note-container
+{
+    background-color: var(--light);
+    margin: 1rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+::ng-deep .voice-note
+{
+    width: 100%;
+    justify-content: space-between;
+}
+.text-danger
+{
+    color: var(--danger);
+}
+.text-success
+{
+    color: var(--sccuess);
+}
+.status
+{
+    display: flex;
+    width: 100%;
+}
+.status > span
+{
+    margin-top: auto;
+    margin-bottom: auto;
+}

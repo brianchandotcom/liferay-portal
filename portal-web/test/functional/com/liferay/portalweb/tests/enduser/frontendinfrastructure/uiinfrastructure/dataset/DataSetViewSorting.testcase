@@ -107,6 +107,36 @@ definition {
 		}
 	}
 
+	@description = "LPS-182790. Confirms Ascending and Descending options appears when editing a sorting."
+	@priority = 5
+	test AssertEditSortingOptions {
+		task ("When the user creates a new sorting") {
+			DataSetAdmin.createASort(
+				key_field = "creator",
+				key_sorting = "Descending");
+		}
+
+		task ("And clicks on the 3 dots menu present on the newly created sorting") {
+			Click(locator1 = "DataSet#ANY_ELLIPSIS_BUTTON");
+		}
+
+		task ("And clicks on the Edit option") {
+			Click(
+				key_dropdownItem = "Edit",
+				locator1 = "DataSet#DROPDOWN_ITEM");
+		}
+
+		task ("And clicks on the Sorting field") {
+			Click(locator1 = "DataSet#SORTING_SELECT");
+		}
+
+		task ("Then a dropdown containing Ascending and Descending options is displayed") {
+			AssertVisible(locator1 = "DataSet#ASCENDING_SORTING_OPTION");
+
+			AssertVisible(locator1 = "DataSet#DESCENDING_SORTING_OPTION");
+		}
+	}
+
 	@description = "LPS-185324. Confirm that the new default classification modal is displayed, the field is required."
 	@priority = 4
 	test CanAssertFieldIsRequired {

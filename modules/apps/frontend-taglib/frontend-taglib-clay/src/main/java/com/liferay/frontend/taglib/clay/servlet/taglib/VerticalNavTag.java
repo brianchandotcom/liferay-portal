@@ -16,6 +16,7 @@ package com.liferay.frontend.taglib.clay.servlet.taglib;
 
 import com.liferay.frontend.taglib.clay.internal.servlet.taglib.BaseContainerTag;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.VerticalNavItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.VerticalNavItemList;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -106,20 +107,52 @@ public class VerticalNavTag extends BaseContainerTag {
 
 		jspWriter.write("<div class=\"collapse menubar-collapse\">");
 
+		_renderVerticalNavItems(jspWriter, _verticalNavItems, 0);
+
+		jspWriter.write("</div>");
+
+		return EVAL_BODY_INCLUDE;
+	}
+
+	private void _renderVerticalNavItems(
+			JspWriter jspWriter, List<VerticalNavItem> verticalNavItems,
+			int depth)
+		throws Exception {
+
 		jspWriter.write("<ul aria-orientation=\"vertical\" role=\"menubar\"");
 
-		jspWriter.write("class=\"nav nav-nested\">");
+		jspWriter.write("class=\"nav ");
 
-		for (VerticalNavItem verticalNavItem : _verticalNavItems) {
-			String label = (String)verticalNavItem.get("label");
+		if (depth == 0) {
+			jspWriter.write("nav-nested\">");
+		}
+		else {
+			jspWriter.write("nav-stacked\">");
+		}
+
+		for (VerticalNavItem verticalNavItem : verticalNavItems) {
+			VerticalNavItemList items =
+				(VerticalNavItemList)verticalNavItem.get("items");
+
+			Boolean expanded = (Boolean)verticalNavItem.get("expanded");
+
+			if (expanded == null) {
+				expanded = Boolean.FALSE;
+			}
+
+			String href = (String)verticalNavItem.get("href");
 
 			jspWriter.write("<li role=\"none\" class=\"nav-item\">");
 
-			jspWriter.write("<a class=\"nav-link collapse-icon collapsed btn ");
-			jspWriter.write("btn-unstyled\" aria-expanded=\"false\" ");
-			jspWriter.write("role=\"menuitem\" tabindex=\"-1\" href=\"");
+			jspWriter.write("<a class=\"nav-link collapse-icon");
+			if (!expanded) {
+				jspWriter.write(" collapsed");
+			}
+			jspWriter.write(" btn btn-unstyled\" aria-expanded=\"");
+			jspWriter.write(expanded.toString());
+			jspWriter.write("\" role=\"menuitem\" tabindex=\"-1\" href=\"");
 
-			if (Validator.isNotNull((String)verticalNavItem.get("href"))) {
+			if (Validator.isNotNull(href)) {
 				jspWriter.write((String)verticalNavItem.get("href"));
 			}
 			else {
@@ -127,16 +160,33 @@ public class VerticalNavTag extends BaseContainerTag {
 			}
 
 			jspWriter.write("\">");
-			jspWriter.write(label);
+			jspWriter.write((String)verticalNavItem.get("label"));
+
+			if (items != null) {
+				IconTag iconTag = new IconTag();
+
+				if (expanded) {
+					iconTag.setSymbol("caret-bottom");
+				}
+				else {
+					iconTag.setSymbol("caret-right");
+				}
+
+				jspWriter.write("<span class=\"collapse-icon-closed\">");
+				iconTag.doTag(pageContext);
+				jspWriter.write("</span>");
+			}
+
 			jspWriter.write("</a>");
+
+			if ((items != null) && expanded) {
+				_renderVerticalNavItems(jspWriter, items, depth++);
+			}
+
 			jspWriter.write("</li>");
 		}
 
 		jspWriter.write("</ul>");
-
-		jspWriter.write("</div>");
-
-		return EVAL_BODY_INCLUDE;
 	}
 
 	private static final String _ATTRIBUTE_NAMESPACE = "clay:vertical_nav:";

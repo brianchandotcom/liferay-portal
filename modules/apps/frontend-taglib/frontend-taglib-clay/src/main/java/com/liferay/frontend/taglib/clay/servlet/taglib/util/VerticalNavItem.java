@@ -14,8 +14,19 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 
+import java.util.List;
+
 /**
  * @author Eduardo Allegrini
  */
 public class VerticalNavItem extends NavigationItem {
+
+	public void setExpanded(boolean expanded) {
+		put("expanded", expanded);
+	}
+
+	public void setItems(List<VerticalNavItem> verticalNavItems) {
+		put("items", verticalNavItems);
+	}
+
 }

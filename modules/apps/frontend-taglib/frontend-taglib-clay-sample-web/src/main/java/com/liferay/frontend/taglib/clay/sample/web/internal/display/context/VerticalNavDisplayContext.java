@@ -22,6 +22,7 @@ import java.util.List;
 
 /**
  * @author Eduardo Allegrini
+ * @author Daniel Sanz
  */
 public class VerticalNavDisplayContext {
 
@@ -44,7 +45,17 @@ public class VerticalNavDisplayContext {
 							verticalNavItem.setHref(
 								"#" + integerWrapper.getValue());
 							verticalNavItem.setLabel(
-								"Page " + integerWrapper.getValue());
+								"Item " + integerWrapper.getValue());
+
+							if ((integerWrapper.getValue() % 2) == 0) {
+								verticalNavItem.setItems(
+									_createVerticalNavItemsList(
+										integerWrapper.getValue(),
+										verticalNavItem));
+
+								verticalNavItem.setExpanded(
+									integerWrapper.getValue() == 4);
+							}
 						});
 
 					integerWrapper.increment();
@@ -53,6 +64,39 @@ public class VerticalNavDisplayContext {
 		};
 
 		return _verticalNavItems;
+	}
+
+	private VerticalNavItemList _createVerticalNavItemsList(
+		int size, VerticalNavItem parent) {
+
+		return new VerticalNavItemList() {
+			{
+				int i = 0;
+
+				while (i < size) {
+					int position = i;
+					String suffix = "." + position;
+
+					add(
+						verticalNavItem -> {
+							verticalNavItem.setHref(
+								parent.get("href") + suffix);
+							verticalNavItem.setLabel(
+								parent.get("label") + suffix);
+
+							if (size == 4) {
+								verticalNavItem.setItems(
+									_createVerticalNavItemsList(
+										5, verticalNavItem));
+							}
+
+							verticalNavItem.setExpanded(position == 2);
+						});
+
+					i++;
+				}
+			}
+		};
 	}
 
 	private List<VerticalNavItem> _verticalNavItems;

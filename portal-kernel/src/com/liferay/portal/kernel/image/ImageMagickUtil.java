@@ -102,6 +102,6 @@ public class ImageMagickUtil {
 
 	private static volatile ImageMagick _imageMagick =
 		ServiceProxyFactory.newServiceTrackedInstance(
-			ImageMagick.class, ImageMagickUtil.class, "_imageMagick", true);
+			ImageMagick.class, ImageMagickUtil.class, "_imageMagick", false);
 
 }

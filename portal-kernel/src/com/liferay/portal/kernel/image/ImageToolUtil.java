@@ -297,7 +297,7 @@ public class ImageToolUtil {
 		private static volatile CMYKImageTool _cmykImageTool =
 			ServiceProxyFactory.newServiceTrackedInstance(
 				CMYKImageTool.class, CMYKImageToolHolder.class,
-				"_cmykImageTool", true);
+				"_cmykImageTool", false);
 
 	}
 

@@ -330,6 +330,56 @@ definition {
 		}
 	}
 
+	@description = "LPS-182790. Confirms it's posible to order a sorting."
+	@priority = 5
+	test CanOrderSorting {
+		task ("When the user creates 2 or more new sorting") {
+			DataSetAdmin.createASort(
+				key_field = "creator",
+				key_sorting = "Descending");
+
+			DataSetAdmin.createASort(
+				key_field = "id",
+				key_sorting = "Ascending");
+		}
+
+		task ("And drag the last sorting to the first position") {
+			DragAndDrop.javaScriptDragAndDropToObject(
+				key_rowPosition = 1,
+				key_text = "creator",
+				locator1 = "DataSet#SORT_ENTRY_TABLE",
+				locator2 = "//tr[@class='orderable-table-row'][2]//*[contains(text(), 'id')]");
+		}
+
+		task("Then the sorting that was in the first position goes to the second position") {
+			if (IsElementPresent(
+				key_rowPosition = 1,
+				key_text = "id",
+				locator1 = "DataSet#SORT_ENTRY_TABLE")){
+					TestUtils.pass(message = "The sorting that was in the first position went to the second position"); 
+				} else {
+					fail("The sorting that was in the first position didn't go to the second position");
+				}
+		}
+
+		task ("When the user edits a sorting") {
+			DataSetAdmin.editSorting(
+				key_entryPosition = 1,
+				key_sortingOption = "Descending");
+		}
+
+		task ("Then their position is still the same as before the edit") {
+			if (IsElementPresent(
+				key_rowPosition = 1,
+				key_text = "id",
+				locator1 = "DataSet#SORT_ENTRY_TABLE")){
+					TestUtils.pass(message = "The sortings position didn't change after the edit."); 
+				} else {
+					fail("The sorting position changed after editing. ");
+				}
+		}
+	}
+
 	@description = "LPS-185327. Confirm that the search bar responds when we search for one of the options."
 	@priority = 4
 	test CanSearchSortingInSearchBar {

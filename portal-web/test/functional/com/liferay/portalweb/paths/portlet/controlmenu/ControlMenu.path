@@ -72,7 +72,7 @@
 </tr>
 <tr>
 	<td>TOGGLE_CONTROLS</td>
-	<td>//*[@class='control-menu-nav']//*[@data-qa-id='showControls' and contains(.,'Toggle Controls')]//*[name()='svg'][contains(@class,'${key_status}')]</td>
+	<td>//*[@class='control-menu-nav-item']//*[@data-qa-id='showControls' and contains(@data-title,'Toggle Controls')]//*[name()='svg'][contains(@class,'${key_status}')]</td>
 	<td></td>
 </tr>
 <tr>

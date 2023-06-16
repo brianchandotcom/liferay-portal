@@ -35,10 +35,7 @@ definition {
 		property test.assert.warning.exceptions = "true";
 		property test.name.skip.portal.instance = "OSGIConfiguration#CanCreateVirtualInstanceViaConfig";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "Virtual Instances");
+		PortalInstances.openVirtualInstancesAdmin();
 
 		PortalInstances.viewCP(virtualHost = "www.able.com");
 

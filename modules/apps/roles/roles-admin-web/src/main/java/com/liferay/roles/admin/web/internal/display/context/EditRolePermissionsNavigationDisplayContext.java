@@ -148,8 +148,7 @@ public class EditRolePermissionsNavigationDisplayContext {
 
 		return NavigationItem.create(
 			LanguageUtil.get(_locale, "applications"),
-			navigationItem -> navigationItem.addItems(
-				navigationItems));
+			navigationItem -> navigationItem.addItems(navigationItems));
 	}
 
 	private String _getBackURL() {
@@ -231,8 +230,7 @@ public class EditRolePermissionsNavigationDisplayContext {
 
 		return NavigationItem.create(
 			panelCategory.getLabel(_locale),
-			navigationItem -> navigationItem.addItems(
-				navigationItems));
+			navigationItem -> navigationItem.addItems(navigationItems));
 	}
 
 	private List<NavigationItem> _getPanelCategoryNavigationItems(
@@ -245,8 +243,7 @@ public class EditRolePermissionsNavigationDisplayContext {
 					panelCategoryKey)) {
 
 			NavigationItem panelCategoryNavigationItem =
-				_getPanelCategoryNavigationItem(
-					panelCategory, new String[0]);
+				_getPanelCategoryNavigationItem(panelCategory, new String[0]);
 
 			if (panelCategoryNavigationItem != null) {
 				navigationItems.add(panelCategoryNavigationItem);
@@ -267,14 +264,13 @@ public class EditRolePermissionsNavigationDisplayContext {
 		return _portletResource;
 	}
 
-	private Consumer<NavigationItem>
-	_getPortletResourceNavigationItemConsumer(String portletResource) {
+	private Consumer<NavigationItem> _getPortletResourceNavigationItemConsumer(
+		String portletResource) {
 
 		return navigationItem -> {
-			navigationItem.setActive(
-				_portletResource.equals(portletResource));
 			navigationItem.put(
 				"resourceURL", _getEditPermissionsResourceURL(portletResource));
+			navigationItem.setActive(_portletResource.equals(portletResource));
 		};
 	}
 
@@ -302,8 +298,6 @@ public class EditRolePermissionsNavigationDisplayContext {
 		return NavigationItem.create(
 			LanguageUtil.get(_locale, "summary"),
 			navigationItem -> {
-				navigationItem.setActive(
-					Validator.isNull(_getPortletResource()));
 				navigationItem.put("className", "mb-4");
 				navigationItem.put("ignoreFilter", true);
 				navigationItem.put(
@@ -325,12 +319,13 @@ public class EditRolePermissionsNavigationDisplayContext {
 					).setParameter(
 						"p_p_isolated", "true"
 					).buildString());
+				navigationItem.setActive(
+					Validator.isNull(_getPortletResource()));
 			});
 	}
 
 	private NavigationItem _getTopLevelNavigationItem() {
-		NavigationItem topLevelNavigationItem =
-			new NavigationItem(null);
+		NavigationItem topLevelNavigationItem = new NavigationItem(null);
 
 		topLevelNavigationItem.addItems(_getSummaryNavigationItem());
 
@@ -410,8 +405,7 @@ public class EditRolePermissionsNavigationDisplayContext {
 				navigationItem -> {
 					navigationItem.addItems(
 						_getSiteAdministrationPanelCategoryNavigationItems());
-					navigationItem.addItems(
-						_getApplicationsNavigationItem());
+					navigationItem.addItems(_getApplicationsNavigationItem());
 				}));
 
 		if (roleType == RoleConstants.TYPE_REGULAR) {
@@ -529,11 +523,9 @@ public class EditRolePermissionsNavigationDisplayContext {
 	private static class NavigationItem {
 
 		public static NavigationItem create(
-			String label,
-			Consumer<NavigationItem> navigationItemConsumer) {
+			String label, Consumer<NavigationItem> navigationItemConsumer) {
 
-			NavigationItem navigationItem = new NavigationItem(
-				label);
+			NavigationItem navigationItem = new NavigationItem(label);
 
 			navigationItemConsumer.accept(navigationItem);
 
@@ -549,14 +541,12 @@ public class EditRolePermissionsNavigationDisplayContext {
 			this.label = label;
 		}
 
-		public void addItems(NavigationItem... navigationItems) {
-			addItems(Arrays.asList(navigationItems));
+		public void addItems(Collection<NavigationItem> navigationItems) {
+			items.addAll(navigationItems);
 		}
 
-		public void addItems(
-			Collection<NavigationItem> navigationItems) {
-
-			items.addAll(navigationItems);
+		public void addItems(NavigationItem... navigationItems) {
+			addItems(Arrays.asList(navigationItems));
 		}
 
 		public void put(String key, Object value) {
@@ -593,8 +583,7 @@ public class EditRolePermissionsNavigationDisplayContext {
 		@JsonAnyGetter
 		protected final Map<String, Object> properties = new HashMap<>();
 
-		private static final String _NAVIGATION_ITEM =
-			"NAVIGATION_ITEM";
+		private static final String _NAVIGATION_ITEM = "NAVIGATION_ITEM";
 
 	}
 

@@ -10,9 +10,22 @@
 </thead>
 
 <tbody>
+
+<!-- GENERAL_PATHS -->
+
+<tr>
+    <td>INPUT_FIELD</td>
+    <td>//label[contains(., '${key_inputValue}')]/..//input</td>
+    <td></td>
+</tr>
 <tr>
 	<td>SIGN_IN</td>
 	<td>//div//a[contains(@class,'btn-solid') and contains(.,'Sign In')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>KEBAB_MENU_OPTION_ORGANIZATION</td>
+	<td>//span[contains(@class,'organizationName')][contains(text(),'${key_name}')]//following-sibling::div[@id="evp-organization-kebab-button"]</td>
 	<td></td>
 </tr>
 </tbody>

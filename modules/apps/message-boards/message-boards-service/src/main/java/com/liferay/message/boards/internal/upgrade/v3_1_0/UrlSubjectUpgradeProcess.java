@@ -96,19 +96,16 @@ public class UrlSubjectUpgradeProcess extends UpgradeProcess {
 
 				curURLSubject = _getURLSubject(messageId, subject);
 
-				IntegerWrapper count = counts.getOrDefault(
-					curURLSubject, new IntegerWrapper(0));
+				IntegerWrapper count = counts.computeIfAbsent(
+					curURLSubject, key -> new IntegerWrapper(0));
 
 				if (count.getValue() > 0) {
 					suffix = StringPool.DASH + count.getValue();
 
 					counts.put(curURLSubject + suffix, new IntegerWrapper(1));
+				}
 
-					count.increment();
-				}
-				else {
-					counts.put(curURLSubject, new IntegerWrapper(1));
-				}
+				count.increment();
 
 				preparedStatement2.setString(1, curURLSubject + suffix);
 				preparedStatement2.setLong(2, messageId);

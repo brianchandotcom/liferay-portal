@@ -16,27 +16,26 @@ definition {
 		task ("When Create a DataSet ") {
 			DataSetAdmin.goToDataSetAdminPage();
 
-			DataSetAdmin.createDataSet(
-				key_name = "Test Data Set",
-				key_type = "/data-set-manager/sorts");
-
-			Refresh();
-		}
-
-		task ("When go to the View page of the data set created.") {
-			DataSetAdmin.goToViews(dataSetName = "Test Data Set");
+			JSONDataSet._createDataSetEntry(
+				dataSetName = "Test Data Set",
+				restApplication = "/c/fdssorts",
+				restEndpoint = "/",
+				restSchema = "FDSSort");
 		}
 
 		task ("And adding a data set view") {
-			DataSetAdmin.createDataSetView(
-				description = "View Description",
-				key_name = "View Test");
+			JSONDataSet._createFDSViewViaAPI(
+				dataSetName = "Test Data Set",
+				dataSetViewDescription = "View Description",
+				dataSetViewName = "View Test");
+
+			DataSetAdmin.goToSpecificViewPage(
+				dataSetName = "Test Data Set",
+				key_viewName = "View Test");
 		}
 
 		task ("When the user accesses the sorting tab") {
-			DataSetAdmin.goToTab(
-				dataSetViewName = "View Test",
-				tabName = "Sorting");
+			DataSetAdmin.goToTab(tabName = "Sorting");
 		}
 	}
 

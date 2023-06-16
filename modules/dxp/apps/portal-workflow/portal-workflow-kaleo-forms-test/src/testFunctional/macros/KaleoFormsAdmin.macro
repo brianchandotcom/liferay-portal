@@ -70,6 +70,8 @@ definition {
 	}
 
 	macro addWorkflow {
+		SetWindowSize.maximizeWindow();
+
 		KaleoFormsAdmin.viewNewProcessProgressBar(
 			kfProgressName = "Workflow",
 			kfProgressStep = 3);
@@ -525,8 +527,6 @@ definition {
 	}
 
 	macro publishWorkflow {
-		SetWindowSize.maximizeWindow();
-
 		Click(locator1 = "Button#PUBLISH");
 
 		Alert.viewSuccessMessage();

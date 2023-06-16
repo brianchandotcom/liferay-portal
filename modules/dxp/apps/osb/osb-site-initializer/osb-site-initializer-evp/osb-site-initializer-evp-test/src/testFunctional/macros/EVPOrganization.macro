@@ -1,0 +1,147 @@
+definition {
+
+	@summary = "Add a new organization"
+	macro createAnOrganization {
+		EVPNavigator.goToNavItem(navItem = "Organization");
+
+		Button.click(button = "Create an Organization");
+	}
+
+	@summary = "Fill in all required fields on the Organization Form"
+	macro fillOrganizationForm {
+		WaitForPageLoad();
+
+		if (isSet(organizationName)) {
+			Type(
+				key_inputValue = "Organization Name",
+				locator1 = "EVPUtils#INPUT_FIELD",
+				value1 = ${organizationName});
+		}
+
+		if (isSet(organizationSite)) {
+			Type(
+				key_inputValue = "Organization Site/Social Media Link",
+				locator1 = "EVPUtils#INPUT_FIELD",
+				value1 = ${organizationSite});
+		}
+
+		if (isSet(smallDescription)) {
+			Type(
+				key_inputValue = "Small Description",
+				locator1 = "EVPUtils#INPUT_FIELD",
+				value1 = ${smallDescription});
+		}
+
+		if (isSet(street)) {
+			Type(
+				key_inputValue = "Street",
+				locator1 = "EVPUtils#INPUT_FIELD",
+				value1 = ${street});
+		}
+
+		if (isSet(city)) {
+			Type(
+				key_inputValue = "City",
+				locator1 = "EVPUtils#INPUT_FIELD",
+				value1 = ${city});
+		}
+
+		if (isSet(state)) {
+			Type(
+				key_inputValue = "State",
+				locator1 = "EVPUtils#INPUT_FIELD",
+				value1 = ${state});
+		}
+
+		if (isSet(country)) {
+			Type(
+				key_inputValue = "Country",
+				locator1 = "EVPUtils#INPUT_FIELD",
+				value1 = ${country});
+		}
+
+		if (isSet(zip)) {
+			Type(
+				key_inputValue = "Zip",
+				locator1 = "EVPUtils#INPUT_FIELD",
+				value1 = ${zip});
+		}
+
+		if (isSet(taxId)) {
+			Type(
+				key_inputValue = "Tax Id",
+				locator1 = "EVPUtils#INPUT_FIELD",
+				value1 = ${taxId});
+		}
+
+		if (isSet(contactName)) {
+			Type(
+				key_inputValue = "Contact Name",
+				locator1 = "EVPUtils#INPUT_FIELD",
+				value1 = ${contactName});
+		}
+
+		if (isSet(contactEmail)) {
+			Type(
+				key_inputValue = "Contact Email",
+				locator1 = "EVPUtils#INPUT_FIELD",
+				value1 = ${contactEmail});
+		}
+
+		if (isSet(contactPhone)) {
+			Type(
+				key_inputValue = "Contact Phone",
+				locator1 = "EVPUtils#INPUT_FIELD",
+				value1 = ${contactPhone});
+		}
+
+		if (isSet(bankingInfo)) {
+			Type(
+				key_inputValue = "Banking Info",
+				locator1 = "EVPUtils#INPUT_FIELD",
+				value1 = ${bankingInfo});
+		}
+
+		ScrollWebElementIntoView(locator1 = "Button#SUBMIT");
+
+		Button.click(button = "Submit");
+	}
+
+	@summary = "Click kebab menu in organization page"
+	macro kebabMenuOrganization {
+		Click(
+			key_name = ${organizationName},
+			locator1 = "EVPUtils#KEBAB_MENU_OPTION_ORGANIZATION");
+
+		MenuItem.click(menuItem = ${kebabOption});
+	}
+
+	@summary = "Review request to organization page"
+	macro reviewOrganization {
+		Type(
+			key_fieldId = "messageDescribed",
+			locator1 = "TextArea#ANY_ID",
+			value1 = ${typeMessage});
+
+		Button.click(button = ${button});
+	}
+
+	@summary = "Assert status in EVP"
+	macro assertStatus {
+		AssertElementPresent(
+			key_organizationName = ${organizationName},
+			key_status = ${status},
+			key_email = ${email},
+			locator1 = "EVPOrganization#ASSERT_STATUS");
+	}
+
+	@summary = "Action kebab menu is not present"
+	macro actionKebabMenuNotPresent {
+		Click(
+			key_name = ${organizationName},
+			locator1 = "EVPUtils#KEBAB_MENU_OPTION_ORGANIZATION");
+
+		MenuItem.viewNotPresent(menuItem = ${actionKebab});
+	}
+
+}

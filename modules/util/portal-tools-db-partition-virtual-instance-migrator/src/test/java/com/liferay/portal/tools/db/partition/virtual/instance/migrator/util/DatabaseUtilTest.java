@@ -77,7 +77,7 @@ public class DatabaseUtilTest {
 			"Object_x_25000"
 		);
 
-		PreparedStatement preparedStatement1 = Mockito.mock(
+		PreparedStatement preparedStatement = Mockito.mock(
 			PreparedStatement.class);
 
 		ResultSet resultSet1 = Mockito.mock(ResultSet.class);
@@ -85,11 +85,11 @@ public class DatabaseUtilTest {
 		Mockito.when(
 			_connection.prepareStatement("select companyId from Company")
 		).thenReturn(
-			preparedStatement1
+			preparedStatement
 		);
 
 		Mockito.when(
-			preparedStatement1.executeQuery()
+			preparedStatement.executeQuery()
 		).thenReturn(
 			resultSet1
 		);
@@ -256,15 +256,15 @@ public class DatabaseUtilTest {
 
 		Assert.assertFalse(DatabaseUtil.hasWebId(_connection, "webId"));
 
-		ArgumentCaptor<String> valueCapture = ArgumentCaptor.forClass(
+		ArgumentCaptor<String> webIdCaptor = ArgumentCaptor.forClass(
 			String.class);
 
 		Mockito.verify(
 			_preparedStatement
 		).setString(
-			Mockito.eq(1), valueCapture.capture()
+			Mockito.eq(1), webIdCaptor.capture()
 		);
-		Assert.assertEquals("webId", valueCapture.getValue());
+		Assert.assertEquals("webId", webIdCaptor.getValue());
 	}
 
 	@Test
@@ -273,15 +273,15 @@ public class DatabaseUtilTest {
 
 		Assert.assertTrue(DatabaseUtil.hasWebId(_connection, "webId"));
 
-		ArgumentCaptor<String> valueCapture = ArgumentCaptor.forClass(
+		ArgumentCaptor<String> webIdCaptor = ArgumentCaptor.forClass(
 			String.class);
 
 		Mockito.verify(
 			_preparedStatement
 		).setString(
-			Mockito.eq(1), valueCapture.capture()
+			Mockito.eq(1), webIdCaptor.capture()
 		);
-		Assert.assertEquals("webId", valueCapture.getValue());
+		Assert.assertEquals("webId", webIdCaptor.getValue());
 	}
 
 	@Test

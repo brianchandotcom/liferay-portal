@@ -33,7 +33,7 @@ import org.apache.commons.cli.ParseException;
 /**
  * @author Luis Ortiz
  */
-public class VirtualInstanceMigrator {
+public class DBPartitionVirtualInstanceMigrator {
 
 	public static void main(String[] args) {
 		try {

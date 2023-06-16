@@ -390,3 +390,12 @@ type UserAccount = {
 	isPublisherAccount: boolean;
 	password: string;
 };
+
+
+type RequestBody = {
+	alternateName: string;
+	emailAddress: string;
+	familyName: string;
+	givenName: string;
+	password: string;
+};

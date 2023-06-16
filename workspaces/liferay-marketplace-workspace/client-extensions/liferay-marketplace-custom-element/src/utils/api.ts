@@ -656,7 +656,6 @@ export async function getUserAccounts() {
 			method: 'GET',
 		}
 	);
-	console.log(await response.json())
 	return await response.json();
 }
 
@@ -946,7 +945,7 @@ export async function updateUseradditionalinfos(body: Object, id: number) {
 	const response = await fetch(
 		`${baseURL}/o/c/useradditionalinfos/${id}`,
 		{
-			body: JSON.stringify({emailOfMember: body}),
+			body: JSON.stringify(body),
 			headers,
 			method: 'PATCH',
 		}
@@ -970,3 +969,14 @@ export async function getMyUserAditionalInfos (userId: number) {
 	}
 };
 
+export async function updateUserPassword(password: string, id: number) {
+	
+	const response = await fetch(`/o/headless-admin-user/v1.0/user-accounts/${id}`, {
+		body: JSON.stringify({password}),
+		headers,
+		method: 'PATCH',
+	});
+
+	return response.json();
+
+}

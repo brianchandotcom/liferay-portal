@@ -24,7 +24,8 @@ import userIcon from "../../assets/icons/user_icon.svg";
 import { DetailedCard } from "../DetailedCard/DetailedCard";
 import { Avatar } from "../Avatar/Avatar";
 import { useAppContext } from "../../manage-app-state/AppManageState";
-import { getMyUserAditionalInfos, updateUseradditionalinfos } from "../../utils/api";
+import { getMyUserAditionalInfos, updateUserPassword, updateUseradditionalinfos } from "../../utils/api";
+import { createPassword } from "../../utils/createPassword";
 
 interface MemberProfileProps {
   userLogged?: {
@@ -48,12 +49,12 @@ export function MemberProfile({
 	event.preventDefault();
 
 	const myUserAdditionalInfos = await getMyUserAditionalInfos(member.userId)
+	const newPassword = createPassword();
 	for (const userAdditionInfo of myUserAdditionalInfos.items || []) {
-		const userInfoEmaail = await updateUseradditionalinfos(userAdditionInfo.emailOfMember, userAdditionInfo.id);
-		console.log(userInfoEmaail)
-
-		if(userInfoEmaail){
-
+		const userInfoEmail = await updateUseradditionalinfos({emailOfMember:userAdditionInfo.emailOfMember, mothersName: newPassword}, userAdditionInfo.id);
+		
+		if(userInfoEmail){
+			await updateUserPassword(newPassword, member.userId)
 			renderToast(
 				`invited again succesfully`,
 				`${member.name}`,

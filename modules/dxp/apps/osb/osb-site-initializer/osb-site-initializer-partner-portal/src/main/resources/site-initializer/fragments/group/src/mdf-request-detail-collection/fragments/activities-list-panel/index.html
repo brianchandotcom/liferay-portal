@@ -109,7 +109,7 @@
 				[#assign request_date = days_difference_from_now(end_date) /]
 
 				<span class="font-weight-light ml-sm-2">
-					[#assign days_left =  (request_date > 0)?then(request_date?ceiling, 0) /]
+					[#assign days_left = (request_date > 0)?then(request_date?ceiling, 0) /]
 					${(request_date > 0)?then(request_date?ceiling, 0)} ${(days_left > 1)?then('days left to claim', 'day left to claim')} 
 				</span>
 			[/#if]

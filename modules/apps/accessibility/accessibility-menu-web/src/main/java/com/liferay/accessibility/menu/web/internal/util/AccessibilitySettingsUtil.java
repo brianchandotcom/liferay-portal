@@ -53,6 +53,15 @@ public class AccessibilitySettingsUtil {
 					AccessibilitySettingConstants.
 						ACCESSIBILITY_SETTING_SHOW_UNDERLINE)),
 			new AccessibilitySetting(
+				"c-prefers-letter-spacing-1", false,
+				AccessibilitySettingConstants.
+					ACCESSIBILITY_SETTING_INCREASE_TEXT_SPACING,
+				LanguageUtil.get(httpServletRequest, "increased-text-spacing"),
+				_getSessionClicksValue(
+					httpServletRequest,
+					AccessibilitySettingConstants.
+						ACCESSIBILITY_SETTING_INCREASE_TEXT_SPACING)),
+			new AccessibilitySetting(
 				"c-prefers-expanded-text", false,
 				AccessibilitySettingConstants.ACCESSIBILITY_SETTING_EXPAND_TEXT,
 				LanguageUtil.get(httpServletRequest, "expanded-text"),

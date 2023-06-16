@@ -44,14 +44,14 @@ public class ObjectDefinitionLocalServiceWrapper
 			java.util.Map<java.util.Locale, String> labelMap, String name,
 			String panelAppOrder, String panelCategoryKey,
 			java.util.Map<java.util.Locale, String> pluralLabelMap,
-			String scope, String storageType,
+			Boolean portlet, String scope, String storageType,
 			java.util.List<com.liferay.object.model.ObjectField> objectFields)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectDefinitionLocalService.addCustomObjectDefinition(
 			userId, enableComments, enableLocalization, labelMap, name,
-			panelAppOrder, panelCategoryKey, pluralLabelMap, scope, storageType,
-			objectFields);
+			panelAppOrder, panelCategoryKey, pluralLabelMap, portlet, scope,
+			storageType, objectFields);
 	}
 
 	/**

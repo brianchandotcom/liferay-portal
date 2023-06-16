@@ -58,7 +58,8 @@ public interface ObjectDefinitionService extends BaseService {
 			boolean enableComments, boolean enableLocalization,
 			Map<Locale, String> labelMap, String name, String panelAppOrder,
 			String panelCategoryKey, Map<Locale, String> pluralLabelMap,
-			String scope, String storageType, List<ObjectField> objectFields)
+			Boolean portlet, String scope, String storageType,
+			List<ObjectField> objectFields)
 		throws PortalException;
 
 	public ObjectDefinition addObjectDefinition(String externalReferenceCode)

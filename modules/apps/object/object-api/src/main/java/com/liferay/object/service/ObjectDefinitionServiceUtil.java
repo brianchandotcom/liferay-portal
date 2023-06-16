@@ -43,14 +43,15 @@ public class ObjectDefinitionServiceUtil {
 			boolean enableComments, boolean enableLocalization,
 			Map<java.util.Locale, String> labelMap, String name,
 			String panelAppOrder, String panelCategoryKey,
-			Map<java.util.Locale, String> pluralLabelMap, String scope,
-			String storageType,
+			Map<java.util.Locale, String> pluralLabelMap, Boolean portlet,
+			String scope, String storageType,
 			List<com.liferay.object.model.ObjectField> objectFields)
 		throws PortalException {
 
 		return getService().addCustomObjectDefinition(
 			enableComments, enableLocalization, labelMap, name, panelAppOrder,
-			panelCategoryKey, pluralLabelMap, scope, storageType, objectFields);
+			panelCategoryKey, pluralLabelMap, portlet, scope, storageType,
+			objectFields);
 	}
 
 	public static ObjectDefinition addObjectDefinition(

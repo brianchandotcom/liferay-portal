@@ -363,6 +363,21 @@ public class RenderLayoutStructureDisplayContext {
 		return redirect;
 	}
 
+	public String getFormStyledLayoutStructureItemSuccessMessageDisplayPage(
+		FormStyledLayoutStructureItem formStyledLayoutStructureItem) {
+
+		JSONObject successMessageJSONObject =
+			formStyledLayoutStructureItem.getSuccessMessageJSONObject();
+
+		if ((successMessageJSONObject == null) ||
+			!successMessageJSONObject.has("displayPage")) {
+
+			return StringPool.BLANK;
+		}
+
+		return successMessageJSONObject.getString("displayPage");
+	}
+
 	public InfoForm getInfoForm(
 		FormStyledLayoutStructureItem formStyledLayoutStructureItem) {
 

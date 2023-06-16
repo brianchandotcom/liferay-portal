@@ -13,6 +13,10 @@
 			"store": true,
 			"type": "text"
 		},
+		"timestamp": {
+			"store": true,
+			"type": "date"
+		},
 		"uid": {
 			"store": true,
 			"type": "keyword"

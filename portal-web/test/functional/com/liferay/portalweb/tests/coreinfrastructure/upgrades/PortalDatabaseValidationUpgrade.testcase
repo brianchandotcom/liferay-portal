@@ -78,16 +78,16 @@ definition {
 
 		task ("And validate that the schemas structure is the same between upgraded and fresh bases") {
 			UpgradeSchema.validateSchemas(
-				upgradedDBSchemaName = "lpartition_44913",
-				freshDBSchemaName = "lpartition_${companyId1}");
+				freshDBSchemaName = "lpartition_${companyId1}",
+				upgradedDBSchemaName = "lpartition_44913");
 
 			UpgradeSchema.validateSchemas(
-				upgradedDBSchemaName = "lpartition_42638",
-				freshDBSchemaName = "lpartition_${companyId2}");
+				freshDBSchemaName = "lpartition_${companyId2}",
+				upgradedDBSchemaName = "lpartition_42638");
 
 			UpgradeSchema.validateSchemas(
-				upgradedDBSchemaName = "lportal",
-				freshDBSchemaName = "lportal");
+				freshDBSchemaName = "lportal",
+				upgradedDBSchemaName = "lportal");
 		}
 	}
 
@@ -111,8 +111,8 @@ definition {
 		AntCommands.runCommand("build-test.xml", "export-database-schema -Ddatabase.file.prefix=fresh -Ddatabase.schema.name=lportal");
 
 		UpgradeSchema.validateSchemas(
-			upgradedDBSchemaName = "lportal",
-			freshDBSchemaName = "lportal");
+			freshDBSchemaName = "lportal",
+			upgradedDBSchemaName = "lportal");
 	}
 
 	@ignore = "true"
@@ -134,8 +134,8 @@ definition {
 		AntCommands.runCommand("build-test.xml", "export-database-schema -Ddatabase.file.prefix=fresh -Ddatabase.schema.name=lportal");
 
 		UpgradeSchema.validateSchemas(
-			upgradedDBSchemaName = "lportal",
-			freshDBSchemaName = "lportal");
+			freshDBSchemaName = "lportal",
+			upgradedDBSchemaName = "lportal");
 	}
 
 	@priority = 4
@@ -156,8 +156,8 @@ definition {
 		AntCommands.runCommand("build-test.xml", "export-database-schema -Ddatabase.file.prefix=fresh -Ddatabase.schema.name=lportal");
 
 		UpgradeSchema.validateSchemas(
-			upgradedDBSchemaName = "lportal",
-			freshDBSchemaName = "lportal");
+			freshDBSchemaName = "lportal",
+			upgradedDBSchemaName = "lportal");
 	}
 
 	@priority = 4
@@ -178,8 +178,8 @@ definition {
 		AntCommands.runCommand("build-test.xml", "export-database-schema -Ddatabase.file.prefix=fresh -Ddatabase.schema.name=lportal");
 
 		UpgradeSchema.validateSchemas(
-			upgradedDBSchemaName = "lportal",
-			freshDBSchemaName = "lportal");
+			freshDBSchemaName = "lportal",
+			upgradedDBSchemaName = "lportal");
 	}
 
 	@ignore = "true"
@@ -201,8 +201,8 @@ definition {
 		AntCommands.runCommand("build-test.xml", "export-database-schema -Ddatabase.file.prefix=fresh -Ddatabase.schema.name=lportal");
 
 		UpgradeSchema.validateSchemas(
-			upgradedDBSchemaName = "lportal",
-			freshDBSchemaName = "lportal");
+			freshDBSchemaName = "lportal",
+			upgradedDBSchemaName = "lportal");
 	}
 
 	@ignore = "true"
@@ -224,8 +224,8 @@ definition {
 		AntCommands.runCommand("build-test.xml", "export-database-schema -Ddatabase.file.prefix=fresh -Ddatabase.schema.name=lportal");
 
 		UpgradeSchema.validateSchemas(
-			upgradedDBSchemaName = "lportal",
-			freshDBSchemaName = "lportal");
+			freshDBSchemaName = "lportal",
+			upgradedDBSchemaName = "lportal");
 	}
 
 	@ignore = "true"
@@ -247,8 +247,8 @@ definition {
 		AntCommands.runCommand("build-test.xml", "export-database-schema -Ddatabase.file.prefix=fresh -Ddatabase.schema.name=lportal");
 
 		UpgradeSchema.validateSchemas(
-			upgradedDBSchemaName = "lportal",
-			freshDBSchemaName = "lportal");
+			freshDBSchemaName = "lportal",
+			upgradedDBSchemaName = "lportal");
 	}
 
 }

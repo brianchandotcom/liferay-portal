@@ -168,7 +168,7 @@ $multi-step-progress-bar-fixed-width: 100px !default;
 	.kaleo-process-preview-fields-dialog {
 		.modal-content {
 			.modal-body {
-				overflow-y: hidden;
+				overflow-y: auto;
 
 				.checkbox {
 					margin-bottom: 0;

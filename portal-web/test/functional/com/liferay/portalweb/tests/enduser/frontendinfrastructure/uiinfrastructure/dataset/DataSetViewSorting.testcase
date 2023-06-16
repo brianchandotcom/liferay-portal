@@ -51,6 +51,37 @@ definition {
 		}
 	}
 
+	@description = "LPS-182790. Confirms the sorting deletion message."
+	@priority = 5
+	test AssertDeleteSortingMessage {
+		task ("When the user creates a new sorting") {
+			DataSetAdmin.createASort(
+				key_field = "creator",
+				key_sorting = "Descending");
+		}
+
+		task ("And clicks on the 3 dots menu present on the newly created sorting") {
+			Click(locator1 = "DataSet#ANY_ELLIPSIS_BUTTON");
+		}
+
+		task ("And clicks on the Delete option") {
+			Click(
+				key_dropdownItem = "Delete",
+				locator1 = "DataSet#DROPDOWN_ITEM");
+		}
+
+		task ("Then the Delete Sorting modal is displayed") {
+			AssertVisible(
+				key_modalTitle = "Delete Filter",
+				locator1 = "DataSet#MODAL_DIALOG");
+		}
+
+		task ("And the delete message is displayed") {
+			AssertVisible(
+				key_message = "Are you sure you want to delete this sorting? It will be removed immediately. Fragments using it will be affected. This action cannot be undone.",
+				locator1 = "DataSet#MODAL_MESSAGE");
+		}
+	}
 	@description = "LPS-185324. Confirm that the new default classification modal is displayed, the field is required."
 	@priority = 4
 	test CanAssertFieldIsRequired {

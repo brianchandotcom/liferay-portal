@@ -1,0 +1,138 @@
+@component-name = "OSB Site Initializer EVP"
+definition {
+
+	var baseURL = PropsUtil.get("portal.url");
+
+	property custom.properties = "feature.flag.LPS-169981=true";
+	property osgi.modules.includes = "osb-site-initializer-evp";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "OSB Site Initializer EVP";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Create a new EVP Site") {
+			EVPUtils.addEVPSite();
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+        ObjectAdmin.deleteAllCustomObjectsViaAPI();
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "EVP Portal");
+		}
+	}
+
+	@description = "Story ID: LPS-164733 | Test Summary: Verify that the EVP Staff can approve a new organization"
+	@priority = 4
+	test ManagerCanApproveOrganization {
+        task ("Given that Sign as Manager user and Navigate to EVP Site") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "manager@liferay.com",
+				userLoginFullName = "Manager User");
+
+            EVPUtils.gotoEVP();
+		}
+
+		task ("And that the manager create a organization") {
+            EVPOrganization.createAnOrganization();
+
+			EVPOrganization.fillOrganizationForm(
+				bankingInfo = "Bank Test",
+				city = "City Test",
+				contactEmail = "test@liferay.com",
+				contactName = "Contact Test",
+				contactPhone = 12345,
+				country = "Country Test",
+				organizationName = "Organization Test",
+				organizationSite = "www.test.com.br",
+				smallDescription = "Description Test",
+				state = "State Test",
+				street = "Street Test",
+				taxId = 12345,
+				zip = "12.345-67");
+
+            Button.click(button = "Done");
+		}
+
+		task ("When the manager approve the organization created") {
+			EVPOrganization.kebabMenuOrganization(
+                organizationName = "Organization Test",
+                kebabOption = "Review");
+
+            EVPOrganization.reviewOrganization(
+                typeMessage = "Your organization has been approved!",
+                button = "Approve");
+		}
+
+		task ("Then can view the status Awaiting Finance Approval") {
+			EVPOrganization.assertStatus(
+                organizationName = "Organization Test",
+                status = "Awaiting Finance Approval",
+                email = "test@liferay.com");
+		}
+	}
+
+    @description = "Story ID: LPS-164733 | Test Summary: Verify that the EVP Staff can Reject a new organization"
+	@priority = 5
+	test ManagerCanRejectOrganization {
+        task ("Given that Sign as Manager user and Navigate to EVP Site") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "manager@liferay.com",
+				userLoginFullName = "Manager User");
+
+            EVPUtils.gotoEVP();
+		}
+
+		task ("And that the manager create a organization") {
+            EVPOrganization.createAnOrganization();
+
+			EVPOrganization.fillOrganizationForm(
+				bankingInfo = "Bank Test",
+				city = "City Test",
+				contactEmail = "test@liferay.com",
+				contactName = "Contact Test",
+				contactPhone = 12345,
+				country = "Country Test",
+				organizationName = "Organization Test",
+				organizationSite = "www.test.com.br",
+				smallDescription = "Description Test",
+				state = "State Test",
+				street = "Street Test",
+				taxId = 12345,
+				zip = "12.345-67");
+
+            Button.click(button = "Done");
+		}
+
+		task ("When the manager approve the organization created") {
+			EVPOrganization.kebabMenuOrganization(
+                organizationName = "Organization Test",
+                kebabOption = "Review");
+
+            EVPOrganization.reviewOrganization(
+                typeMessage = "Your organization has been Reject",
+                button = "Reject");
+		}
+
+		task ("Then can view the status Awaiting Finance Approval") {
+			EVPOrganization.assertStatus(
+                organizationName = "Organization Test",
+                status = "Rejected",
+                email = "test@liferay.com");
+		}
+	}
+
+}

@@ -391,6 +391,14 @@ public class ObjectFieldLocalServiceUtil {
 		return getService().getObjectField(objectDefinitionId, name);
 	}
 
+	public static ObjectField getObjectField(
+			String externalReferenceCode, long objectDefinitionId)
+		throws PortalException {
+
+		return getService().getObjectField(
+			externalReferenceCode, objectDefinitionId);
+	}
+
 	/**
 	 * Returns the object field with the matching UUID and company.
 	 *

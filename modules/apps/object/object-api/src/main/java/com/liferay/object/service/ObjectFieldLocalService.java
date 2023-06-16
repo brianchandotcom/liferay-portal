@@ -321,6 +321,11 @@ public interface ObjectFieldLocalService
 	public ObjectField getObjectField(long objectDefinitionId, String name)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ObjectField getObjectField(
+			String externalReferenceCode, long objectDefinitionId)
+		throws PortalException;
+
 	/**
 	 * Returns the object field with the matching UUID and company.
 	 *

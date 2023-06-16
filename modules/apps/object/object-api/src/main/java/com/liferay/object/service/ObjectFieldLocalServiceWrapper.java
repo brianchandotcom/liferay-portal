@@ -445,6 +445,15 @@ public class ObjectFieldLocalServiceWrapper
 			objectDefinitionId, name);
 	}
 
+	@Override
+	public com.liferay.object.model.ObjectField getObjectField(
+			String externalReferenceCode, long objectDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectFieldLocalService.getObjectField(
+			externalReferenceCode, objectDefinitionId);
+	}
+
 	/**
 	 * Returns the object field with the matching UUID and company.
 	 *

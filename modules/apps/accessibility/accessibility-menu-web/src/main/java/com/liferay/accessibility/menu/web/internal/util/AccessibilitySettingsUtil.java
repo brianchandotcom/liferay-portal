@@ -51,7 +51,15 @@ public class AccessibilitySettingsUtil {
 				_getSessionClicksValue(
 					httpServletRequest,
 					AccessibilitySettingConstants.
-						ACCESSIBILITY_SETTING_SHOW_UNDERLINE)));
+						ACCESSIBILITY_SETTING_SHOW_UNDERLINE)),
+			new AccessibilitySetting(
+				"c-prefers-expanded-text", false,
+				AccessibilitySettingConstants.ACCESSIBILITY_SETTING_EXPAND_TEXT,
+				LanguageUtil.get(httpServletRequest, "expanded-text"),
+				_getSessionClicksValue(
+					httpServletRequest,
+					AccessibilitySettingConstants.
+						ACCESSIBILITY_SETTING_EXPAND_TEXT)));
 	}
 
 	public static boolean isAccessibilityMenuEnabled(

@@ -19,6 +19,9 @@ package com.liferay.accessibility.menu.web.internal.constants;
  */
 public class AccessibilitySettingConstants {
 
+	public static final String ACCESSIBILITY_SETTING_EXPAND_TEXT =
+		"ACCESSIBILITY_SETTING_EXPAND_TEXT";
+
 	public static final String ACCESSIBILITY_SETTING_SHOW_UNDERLINE =
 		"ACCESSIBILITY_SETTING_SHOW_UNDERLINE";
 

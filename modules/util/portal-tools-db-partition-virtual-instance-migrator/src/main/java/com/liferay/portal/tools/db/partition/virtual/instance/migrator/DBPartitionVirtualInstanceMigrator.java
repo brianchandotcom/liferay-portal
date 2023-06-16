@@ -121,6 +121,21 @@ public class DBPartitionVirtualInstanceMigrator {
 				"destination-password");
 			String destinationUser = commandLine.getOptionValue(
 				"destination-user");
+
+			try {
+				_destinationConnection = DriverManager.getConnection(
+					destinationJDBCURL, destinationUser, destinationPassword);
+			}
+			catch (SQLException sqlException) {
+				System.err.println(
+					"Unable to get destination database connection with the " +
+						"specified parameters:");
+
+				sqlException.printStackTrace();
+
+				_exit(ErrorCodes.BAD_DESTINATION_PARAMETERS);
+			}
+
 			String sourceJDBCURL = commandLine.getOptionValue(
 				"source-jdbc-url");
 			String sourcePassword = commandLine.getOptionValue(
@@ -139,20 +154,6 @@ public class DBPartitionVirtualInstanceMigrator {
 				sqlException.printStackTrace();
 
 				_exit(ErrorCodes.BAD_SOURCE_PARAMETERS);
-			}
-
-			try {
-				_destinationConnection = DriverManager.getConnection(
-					destinationJDBCURL, destinationUser, destinationPassword);
-			}
-			catch (SQLException sqlException) {
-				System.err.println(
-					"Unable to get destination database connection with the " +
-						"specified parameters:");
-
-				sqlException.printStackTrace();
-
-				_exit(ErrorCodes.BAD_DESTINATION_PARAMETERS);
 			}
 
 			if (commandLine.hasOption("destination-schema-prefix")) {

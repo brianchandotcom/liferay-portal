@@ -152,6 +152,51 @@
 	<td>//div[label[contains(.,'Sorting')]]/select</td>
 	<td></td>
 </tr>
+<tr>
+	<td>ANY_ELLIPSIS_BUTTON</td>
+	<td>//button[contains(@class, 'dropdown-toggle')]//*[contains(@class, 'lexicon-icon-ellipsis')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_ELLIPSIS_BUTTON_BY_POSITION</td>
+	<td>//tr[contains(@class,'orderable-table-row')][${key_entryPosition}]//*[contains(@class, 'lexicon-icon-ellipsis')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASCENDING_SORTING_OPTION</td>
+	<td>//*[contains(@class, 'modal-dialog')]//option[contains(@value, 'asc')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DESCENDING_SORTING_OPTION</td>
+	<td>//*[contains(@class, 'modal-dialog')]//option[contains(@value, 'desc')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DROPDOWN_ITEM</td>
+	<td>//button[contains(@class, 'dropdown-item') and contains(text(), '${key_dropdownItem}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SORT_ENTRY_TABLE</td>
+	<td>//tr[@class='orderable-table-row'][${key_rowPosition}]//*[contains(text(), '${key_text}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MODAL_DIALOG</td>
+	<td>//*[contains(@class, 'modal-dialog')] | //*[contains(@class, 'modal-header')]//*[contains(text(), '${key_modalTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MODAL_MESSAGE</td>
+	<td>//*[contains(@class, 'modal-body')]//*[contains(text(), '${key_message}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INPUT_FIELD_DISABLED</td>
+	<td>//input[contains(@name, '${key_fieldName}')][@disabled]</td>
+	<td></td>
+</tr>
 
 <!-- DATA SET FILTERS -->
 
@@ -196,12 +241,12 @@
 	<td></td>
 </tr>
 <tr>
-	<td>NEW_FILTER_SAVE_BUTTON</td>
-	<td>//button[contains(text(), 'Save')]</td>
+	<td>MODAL_SAVE_BUTTON</td>
+	<td>//*[contains(@class, 'modal-dialog')]//button[contains(text(), 'Save')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>NEW_FILTER_CANCEL_BUTTON</td>
+	<td>MODAL_CANCEL_BUTTON</td>
 	<td>//*[contains(@class, 'modal-dialog')]//button[contains(text(), 'Cancel')]</td>
 	<td></td>
 </tr>

@@ -167,7 +167,7 @@ definition {
 
 			CommerceNavigator.searchEntry(entryName = "Virtual");
 
-			CommerceNavigator.gotoEntry(entryName = "Virtual Product");
+			CommerceNavigator.gotoEntry(entryName = "Virtual T-Shirt");
 
 			CommerceEntry.gotoMenuTab(menuTab = "Virtual");
 
@@ -181,9 +181,9 @@ definition {
 		task ("And the admin enables the override for the SKU") {
 			CommerceProducts.openProductsAdmin();
 
-			CommerceNavigator.searchEntry(entryName = '''"Virtual Product"''');
+			CommerceNavigator.searchEntry(entryName = '''"Virtual T-Shirt"''');
 
-			CommerceNavigator.gotoEntry(entryName = "Virtual Product");
+			CommerceNavigator.gotoEntry(entryName = "Virtual T-Shirt");
 
 			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
 
@@ -215,7 +215,7 @@ definition {
 
 		task ("And completes a checkout adding the virtual product to the cart") {
 			FrontStore.addInitializerProductToCart(
-				productName = "Virtual Product",
+				productName = "Virtual T-Shirt",
 				productQuantity = 1);
 
 			CommerceCheckout.gotoCheckout();
@@ -226,7 +226,7 @@ definition {
 				newAddressCountry = "United States",
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
-				productName = "Virtual Product",
+				productName = "Virtual T-Shirt",
 				productQuantity = 1,
 				productUnitPrice = 0);
 
@@ -290,7 +290,7 @@ definition {
 
 			CommerceNavigator.searchEntry(entryName = "Virtual");
 
-			CommerceNavigator.gotoEntry(entryName = "Virtual Product");
+			CommerceNavigator.gotoEntry(entryName = "Virtual T-Shirt");
 
 			CommerceEntry.gotoMenuTab(menuTab = "Virtual");
 
@@ -304,9 +304,9 @@ definition {
 		task ("And the admin enables the override for the SKU") {
 			CommerceProducts.openProductsAdmin();
 
-			CommerceNavigator.searchEntry(entryName = '''"Virtual Product"''');
+			CommerceNavigator.searchEntry(entryName = '''"Virtual T-Shirt"''');
 
-			CommerceNavigator.gotoEntry(entryName = "Virtual Product");
+			CommerceNavigator.gotoEntry(entryName = "Virtual T-Shirt");
 
 			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
 
@@ -338,7 +338,7 @@ definition {
 
 		task ("And completes a checkout adding the virtual product to the cart") {
 			FrontStore.addInitializerProductToCart(
-				productName = "Virtual Product",
+				productName = "Virtual T-Shirt",
 				productQuantity = 1);
 
 			CommerceCheckout.gotoCheckout();
@@ -349,7 +349,7 @@ definition {
 				newAddressCountry = "United States",
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
-				productName = "Virtual Product",
+				productName = "Virtual T-Shirt",
 				productQuantity = 1,
 				productUnitPrice = 0);
 
@@ -392,7 +392,7 @@ definition {
 
 			CommerceNavigator.searchEntry(entryName = "Virtual");
 
-			CommerceNavigator.gotoEntry(entryName = "Virtual Product");
+			CommerceNavigator.gotoEntry(entryName = "Virtual T-Shirt");
 
 			CommerceEntry.gotoMenuTab(menuTab = "Virtual");
 
@@ -406,9 +406,9 @@ definition {
 		task ("And the admin enables the override for the SKU") {
 			CommerceProducts.openProductsAdmin();
 
-			CommerceNavigator.searchEntry(entryName = '''"Virtual Product"''');
+			CommerceNavigator.searchEntry(entryName = '''"Virtual T-Shirt"''');
 
-			CommerceNavigator.gotoEntry(entryName = "Virtual Product");
+			CommerceNavigator.gotoEntry(entryName = "Virtual T-Shirt");
 
 			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
 
@@ -440,7 +440,7 @@ definition {
 
 		task ("And completes a checkout adding the virtual product to the cart") {
 			FrontStore.addInitializerProductToCart(
-				productName = "Virtual Product",
+				productName = "Virtual T-Shirt",
 				productQuantity = 1);
 
 			CommerceCheckout.gotoCheckout();
@@ -451,7 +451,7 @@ definition {
 				newAddressCountry = "United States",
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
-				productName = "Virtual Product",
+				productName = "Virtual T-Shirt",
 				productQuantity = 1,
 				productUnitPrice = 10);
 		}
@@ -501,7 +501,7 @@ definition {
 
 			CommerceNavigator.searchEntry(entryName = "Virtual");
 
-			CommerceNavigator.gotoEntry(entryName = "Virtual Product");
+			CommerceNavigator.gotoEntry(entryName = "Virtual T-Shirt");
 
 			CommerceEntry.gotoMenuTab(menuTab = "Virtual");
 
@@ -515,9 +515,9 @@ definition {
 		task ("And the admin enables the override for the SKU") {
 			CommerceProducts.openProductsAdmin();
 
-			CommerceNavigator.searchEntry(entryName = '''"Virtual Product"''');
+			CommerceNavigator.searchEntry(entryName = '''"Virtual T-Shirt"''');
 
-			CommerceNavigator.gotoEntry(entryName = "Virtual Product");
+			CommerceNavigator.gotoEntry(entryName = "Virtual T-Shirt");
 
 			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
 
@@ -549,7 +549,7 @@ definition {
 
 		task ("And completes a checkout adding the virtual product to the cart") {
 			FrontStore.addInitializerProductToCart(
-				productName = "Virtual Product",
+				productName = "Virtual T-Shirt",
 				productQuantity = 1);
 
 			CommerceCheckout.gotoCheckout();
@@ -560,7 +560,7 @@ definition {
 				newAddressCountry = "United States",
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
-				productName = "Virtual Product",
+				productName = "Virtual T-Shirt",
 				productQuantity = 1,
 				productUnitPrice = 0);
 

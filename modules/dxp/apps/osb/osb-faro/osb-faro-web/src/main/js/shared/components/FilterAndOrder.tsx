@@ -152,7 +152,7 @@ export const getFilterAndOrderLabel = ({filterByOptions, orderByOptions}) => {
 		return Liferay.Language.get('filter');
 	}
 
-	return Liferay.Language.get('order');
+	return Liferay.Language.get('order[sort]');
 };
 
 interface IFilterAndOrderProps extends React.HTMLAttributes<HTMLElement> {

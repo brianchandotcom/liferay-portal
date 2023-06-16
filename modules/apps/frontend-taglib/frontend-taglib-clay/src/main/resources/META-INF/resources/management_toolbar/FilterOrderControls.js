@@ -166,7 +166,7 @@ const FilterOrderControls = ({
 									</span>
 
 									<span className="navbar-text-truncate">
-										{Liferay.Language.get('order')}
+										{Liferay.Language.get('order[sort]')}
 									</span>
 
 									<ClayIcon

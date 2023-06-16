@@ -175,7 +175,7 @@ function Inputs({index, onInputSetItemChange, value}) {
 
 			<ClayInput.GroupItem>
 				<label htmlFor={`order${index}`}>
-					{Liferay.Language.get('order')}
+					{Liferay.Language.get('order[sort]')}
 				</label>
 
 				<ClaySelect

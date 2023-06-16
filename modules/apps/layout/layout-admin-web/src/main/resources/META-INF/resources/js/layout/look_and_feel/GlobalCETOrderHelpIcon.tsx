@@ -21,7 +21,7 @@ export function GlobalCETOrderHelpIcon({buttonId, children, title}: IProps) {
 
 	return (
 		<div className="align-items-center d-flex">
-			<div>{Liferay.Language.get('order')}</div>
+			<div>{Liferay.Language.get('order[ranking(n)]')}</div>
 
 			<ClayPopover
 				alignPosition="top"

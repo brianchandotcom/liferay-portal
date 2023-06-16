@@ -21,6 +21,16 @@ import com.liferay.petra.lang.CentralizedThreadLocal;
  */
 public class NestedFieldsContextThreadLocal {
 
+	public static NestedFieldsContext getAndSetNestedFieldsContext(
+		NestedFieldsContext nestedFieldsContext) {
+
+		NestedFieldsContext oldNestedFieldsContext = getNestedFieldsContext();
+
+		setNestedFieldsContext(nestedFieldsContext);
+
+		return oldNestedFieldsContext;
+	}
+
 	public static NestedFieldsContext getNestedFieldsContext() {
 		return _nestedContextThreadLocal.get();
 	}

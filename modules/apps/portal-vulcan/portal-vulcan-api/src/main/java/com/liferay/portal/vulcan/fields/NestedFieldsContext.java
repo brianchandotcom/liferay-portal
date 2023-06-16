@@ -27,6 +27,10 @@ import org.apache.cxf.message.Message;
  */
 public class NestedFieldsContext {
 
+	public NestedFieldsContext(int depth, List<String> fieldNames) {
+		this(depth, fieldNames, null, null, null, null);
+	}
+
 	public NestedFieldsContext(
 		int depth, List<String> fieldNames, Message message,
 		MultivaluedMap<String, String> pathParameters, String resourceVersion,

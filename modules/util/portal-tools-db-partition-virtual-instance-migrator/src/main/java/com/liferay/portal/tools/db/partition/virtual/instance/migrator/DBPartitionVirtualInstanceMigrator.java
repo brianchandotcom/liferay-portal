@@ -115,18 +115,17 @@ public class DBPartitionVirtualInstanceMigrator {
 
 			CommandLine commandLine = commandLineParser.parse(options, args);
 
-			String sourceJDBCURL = commandLine.getOptionValue(
-				"source-jdbc-url");
-			String sourceUser = commandLine.getOptionValue("source-user");
-			String sourcePassword = commandLine.getOptionValue(
-				"source-password");
-
 			String destinationJDBCURL = commandLine.getOptionValue(
 				"destination-jdbc-url");
-			String destinationUser = commandLine.getOptionValue(
-				"destination-user");
 			String destinationPassword = commandLine.getOptionValue(
 				"destination-password");
+			String destinationUser = commandLine.getOptionValue(
+				"destination-user");
+			String sourceJDBCURL = commandLine.getOptionValue(
+				"source-jdbc-url");
+			String sourcePassword = commandLine.getOptionValue(
+				"source-password");
+			String sourceUser = commandLine.getOptionValue("source-user");
 
 			try {
 				_sourceConnection = DriverManager.getConnection(

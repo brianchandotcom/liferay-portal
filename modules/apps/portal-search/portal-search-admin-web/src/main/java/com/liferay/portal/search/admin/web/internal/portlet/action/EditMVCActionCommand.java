@@ -216,7 +216,8 @@ public class EditMVCActionCommand extends BaseMVCActionCommand {
 			_indexReindexerRegistry.getIndexReindexer(className);
 
 		indexReindexer.reindex(
-			ParamUtil.getLongValues(actionRequest, "companyIds"));
+			ParamUtil.getLongValues(actionRequest, "companyIds"),
+			ParamUtil.getString(actionRequest, "executionMode"));
 	}
 
 	private void _reindexIndexReindexers(ActionRequest actionRequest)
@@ -226,7 +227,8 @@ public class EditMVCActionCommand extends BaseMVCActionCommand {
 				_indexReindexerRegistry.getIndexReindexers()) {
 
 			indexReindexer.reindex(
-				ParamUtil.getLongValues(actionRequest, "companyIds"));
+				ParamUtil.getLongValues(actionRequest, "companyIds"),
+				ParamUtil.getString(actionRequest, "executionMode"));
 		}
 	}
 

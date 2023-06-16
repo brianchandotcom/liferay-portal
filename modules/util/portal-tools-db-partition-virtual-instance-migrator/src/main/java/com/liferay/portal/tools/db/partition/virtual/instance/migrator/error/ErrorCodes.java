@@ -31,13 +31,13 @@ public class ErrorCodes {
 104
 */
 
-	public static final int BAD_DESTINATION_PARAMETERS = 12;
+	public static final int BAD_TARGET_PARAMETERS = 12;
 
 	public static final int BAD_INPUT_ARGUMENTS = 10;
 
 	public static final int BAD_SOURCE_PARAMETERS = 11;
 
-	public static final int DESTINATION_NOT_DEFAULT = 13;
+	public static final int TARGET_NOT_DEFAULT = 13;
 
 	public static final int SOURCE_MULTI_INSTANCES = 14;
 

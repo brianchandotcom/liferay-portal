@@ -50,12 +50,12 @@ public class DBPartitionVirtualInstanceMigrator {
 
 	private static void _exit(int code) {
 		try {
-			if (_destinationConnection != null) {
-				_destinationConnection.close();
-			}
-
 			if (_sourceConnection != null) {
 				_sourceConnection.close();
+			}
+
+			if (_targetConnection != null) {
+				_targetConnection.close();
 			}
 		}
 		catch (SQLException sqlException) {
@@ -70,16 +70,6 @@ public class DBPartitionVirtualInstanceMigrator {
 	private static Options _getOptions() {
 		Options options = new Options();
 
-		options.addRequiredOption(
-			"d", "destination-jdbc-url", true, "Set the destination JDBC URL.");
-		options.addRequiredOption(
-			"dp", "destination-password", true,
-			"Set the destination password.");
-		options.addOption(
-			"dsp", "destination-schema-prefix", true,
-			"Set the destination schema prefix.");
-		options.addRequiredOption(
-			"du", "destination-user", true, "Set the destination user.");
 		options.addOption("h", "help", false, "Print help message.");
 		options.addRequiredOption(
 			"s", "source-jdbc-url", true, "Set the source JDBC URL.");
@@ -87,6 +77,16 @@ public class DBPartitionVirtualInstanceMigrator {
 			"sp", "source-password", true, "Set the source password.");
 		options.addRequiredOption(
 			"su", "source-user", true, "Set the source user.");
+		options.addRequiredOption(
+			"t", "target-jdbc-url", true, "Set the target JDBC URL.");
+		options.addRequiredOption(
+			"tp", "target-password", true,
+			"Set the target password.");
+		options.addOption(
+			"tsp", "target-schema-prefix", true,
+			"Set the target schema prefix.");
+		options.addRequiredOption(
+			"tu", "target-user", true, "Set the target user.");
 
 		return options;
 	}
@@ -112,30 +112,30 @@ public class DBPartitionVirtualInstanceMigrator {
 			CommandLine commandLine = commandLineParser.parse(options, args);
 
 			try {
-				_destinationConnection = DriverManager.getConnection(
-					commandLine.getOptionValue("destination-jdbc-url"),
-					commandLine.getOptionValue("destination-user"),
-					commandLine.getOptionValue("destination-password"));
+				_targetConnection = DriverManager.getConnection(
+					commandLine.getOptionValue("target-jdbc-url"),
+					commandLine.getOptionValue("target-user"),
+					commandLine.getOptionValue("target-password"));
 			}
 			catch (SQLException sqlException) {
 				System.err.println(
-					"Unable to connect to destination with the specified " +
+					"Unable to connect to target with the specified " +
 						"parameters:");
 
 				sqlException.printStackTrace();
 
-				_exit(ErrorCodes.BAD_DESTINATION_PARAMETERS);
+				_exit(ErrorCodes.BAD_TARGET_PARAMETERS);
 			}
 
-			if (!DatabaseUtil.isDefaultPartition(_destinationConnection)) {
-				System.err.println("Destination is not the default partition");
+			if (!DatabaseUtil.isDefaultPartition(_targetConnection)) {
+				System.err.println("Target is not the default partition");
 
-				_exit(ErrorCodes.DESTINATION_NOT_DEFAULT);
+				_exit(ErrorCodes.TARGET_NOT_DEFAULT);
 			}
 
-			if (commandLine.hasOption("destination-schema-prefix")) {
+			if (commandLine.hasOption("target-schema-prefix")) {
 				DatabaseUtil.setSchemaPrefix(
-					commandLine.getOptionValue("destination-schema-prefix"));
+					commandLine.getOptionValue("target-schema-prefix"));
 			}
 
 			try {
@@ -161,7 +161,7 @@ public class DBPartitionVirtualInstanceMigrator {
 			}
 
 			Recorder recorder = Validator.validateDatabases(
-				_destinationConnection, _sourceConnection);
+				_sourceConnection, _targetConnection);
 
 			if (recorder.hasErrors() || recorder.hasWarnings()) {
 				recorder.printMessages();
@@ -186,7 +186,7 @@ public class DBPartitionVirtualInstanceMigrator {
 		_exit(ErrorCodes.SUCCESS);
 	}
 
-	private static Connection _destinationConnection;
+	private static Connection _targetConnection;
 	private static Connection _sourceConnection;
 
 }

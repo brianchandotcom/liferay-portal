@@ -31,36 +31,36 @@ import java.util.Map;
 public class Validator {
 
 	public static Recorder validateDatabases(
-			Connection destinationConnection, Connection sourceConnection)
+			Connection sourceConnection, Connection targetConnection)
 		throws Exception {
 
 		Recorder recorder = new Recorder();
 
-		_validateRelease(sourceConnection, destinationConnection, recorder);
+		_validateRelease(sourceConnection, targetConnection, recorder);
 
 		_validatePartitionedTables(
-			sourceConnection, destinationConnection, recorder);
+			sourceConnection, targetConnection, recorder);
 
-		_validateWebId(sourceConnection, destinationConnection, recorder);
+		_validateWebId(sourceConnection, targetConnection, recorder);
 
 		return recorder;
 	}
 
 	private static void _validatePartitionedTables(
-			Connection sourceConnection, Connection destinationConnection,
+			Connection sourceConnection, Connection targetConnection,
 			Recorder recorder)
 		throws Exception {
 
 		List<String> sourcePartitionedTableNames =
 			DatabaseUtil.getPartitionedTableNames(sourceConnection);
-		List<String> destinationPartitionedTableNames =
-			DatabaseUtil.getPartitionedTableNames(destinationConnection);
+		List<String> targetPartitionedTableNames =
+			DatabaseUtil.getPartitionedTableNames(targetConnection);
 
 		for (String sourcePartitionedTableName : sourcePartitionedTableNames) {
-			if (destinationPartitionedTableNames.contains(
+			if (targetPartitionedTableNames.contains(
 					sourcePartitionedTableName)) {
 
-				destinationPartitionedTableNames.remove(
+				targetPartitionedTableNames.remove(
 					sourcePartitionedTableName);
 
 				continue;
@@ -68,12 +68,12 @@ public class Validator {
 
 			recorder.registerWarning(
 				"Table " + sourcePartitionedTableName +
-					" is not present in destination database");
+					" is not present in target database");
 		}
 
-		if (!destinationPartitionedTableNames.isEmpty()) {
+		if (!targetPartitionedTableNames.isEmpty()) {
 			for (String destionationPartitionedTableName :
-					destinationPartitionedTableNames) {
+					targetPartitionedTableNames) {
 
 				recorder.registerWarning(
 					"Table " + destionationPartitionedTableName +
@@ -83,78 +83,78 @@ public class Validator {
 	}
 
 	private static void _validateRelease(
-			Connection sourceConnection, Connection destinationConnection,
+			Connection sourceConnection, Connection targetConnection,
 			Recorder recorder)
 		throws Exception {
 
 		_validateReleaseState(
-			sourceConnection, destinationConnection, recorder);
+			sourceConnection, targetConnection, recorder);
 
-		Map<String, Release> destinationReleasesMap =
-			DatabaseUtil.getReleasesMap(destinationConnection);
+		Map<String, Release> targetReleasesMap =
+			DatabaseUtil.getReleasesMap(targetConnection);
 
 		List<Release> sourceReleases = DatabaseUtil.getReleases(
 			sourceConnection);
 
-		List<String> missingDestinationModules = new ArrayList<>();
-		List<String> missingDestinationServiceModules = new ArrayList<>();
+		List<String> missingTargetModules = new ArrayList<>();
+		List<String> missingTargetServiceModules = new ArrayList<>();
 
 		List<String> missingSourceModules = new ArrayList<>();
 		List<String> lowerVersionModules = new ArrayList<>();
 		List<String> higherVersionModules = new ArrayList<>();
 		List<String> unverifiedSourceModules = new ArrayList<>();
-		List<String> unverifiedDestinationModules = new ArrayList<>();
+		List<String> unverifiedTargetModules = new ArrayList<>();
 
 		for (Release sourceRelease : sourceReleases) {
 			String sourceServletContextName =
 				sourceRelease.getServletContextName();
 
-			Release destinationRelease = destinationReleasesMap.remove(
+			Release targetRelease = targetReleasesMap.remove(
 				sourceServletContextName);
 
-			if (destinationRelease == null) {
+			if (targetRelease == null) {
 				missingSourceModules.add(sourceServletContextName);
 
 				continue;
 			}
 
 			Version sourceVersion = sourceRelease.getSchemaVersion();
-			Version destinationVersion = destinationRelease.getSchemaVersion();
+			Version targetVersion = targetRelease.getSchemaVersion();
 
-			if (sourceVersion.compareTo(destinationVersion) < 0) {
+			if (sourceVersion.compareTo(targetVersion) < 0) {
 				lowerVersionModules.add(sourceServletContextName);
 			}
-			else if (sourceVersion.compareTo(destinationVersion) > 0) {
+			else if (sourceVersion.compareTo(targetVersion) > 0) {
 				higherVersionModules.add(sourceServletContextName);
 			}
 
 			if (sourceRelease.getVerified() &&
-				!destinationRelease.getVerified()) {
+				!targetRelease.getVerified()) {
 
-				unverifiedDestinationModules.add(sourceServletContextName);
+				unverifiedTargetModules.add(sourceServletContextName);
 			}
 			else if (!sourceRelease.getVerified() &&
-					 destinationRelease.getVerified()) {
+					 targetRelease.getVerified()) {
 
 				unverifiedSourceModules.add(sourceServletContextName);
 			}
 		}
 
-		for (Release destionationRelease : destinationReleasesMap.values()) {
-			String destinationServletContextName =
+		for (Release destionationRelease : targetReleasesMap.values()) {
+			String targetServletContextName =
 				destionationRelease.getServletContextName();
 
-			if (destinationServletContextName.endsWith(".service")) {
-				missingDestinationServiceModules.add(
-					destinationServletContextName);
+			if (targetServletContextName.endsWith(".service")) {
+				missingTargetServiceModules.add(
+					targetServletContextName);
 			}
 			else {
-				missingDestinationModules.add(destinationServletContextName);
+				missingTargetModules.add(targetServletContextName);
 			}
 		}
 
 		recorder.registerErrors(
-			missingDestinationServiceModules,
+			missingTargetServiceModules,
 			"needs to be installed in the source database before the " +
 				"migration");
 		recorder.registerErrors(
@@ -162,23 +162,23 @@ public class Validator {
 			"needs to be upgraded in source database before the migration");
 		recorder.registerErrors(
 			higherVersionModules,
-			"needs to be upgraded in destination database before the " +
+			"needs to be upgraded in target database before the " +
 				"migration");
 		recorder.registerErrors(
 			unverifiedSourceModules,
 			"needs to be verified in the source database before the migration");
 		recorder.registerErrors(
-			unverifiedDestinationModules,
-			"needs to be verified in the destination database before the " +
+			unverifiedTargetModules,
+			"needs to be verified in the target database before the " +
 				"migration");
 		recorder.registerWarnings(
-			missingDestinationModules, "is not present in the source database");
+			missingTargetModules, "is not present in the source database");
 		recorder.registerWarnings(
-			missingSourceModules, "is not present in the destination database");
+			missingSourceModules, "is not present in the target database");
 	}
 
 	private static void _validateReleaseState(
-			Connection sourceConnection, Connection destinationConnection,
+			Connection sourceConnection, Connection targetConnection,
 			Recorder recorder)
 		throws Exception {
 
@@ -194,26 +194,26 @@ public class Validator {
 		}
 
 		failedServletContextNames = DatabaseUtil.getFailedServletContextNames(
-			destinationConnection);
+			targetConnection);
 
 		if (!failedServletContextNames.isEmpty()) {
 			recorder.registerErrors(
 				failedServletContextNames,
-				StringUtil.replace(message, '?', "destination"));
+				StringUtil.replace(message, '?', "target"));
 		}
 	}
 
 	private static void _validateWebId(
-			Connection sourceConnection, Connection destinationConnection,
+			Connection sourceConnection, Connection targetConnection,
 			Recorder recorder)
 		throws Exception {
 
 		String sourceWebId = DatabaseUtil.getWebId(sourceConnection);
 
-		if (DatabaseUtil.hasWebId(destinationConnection, sourceWebId)) {
+		if (DatabaseUtil.hasWebId(targetConnection, sourceWebId)) {
 			recorder.registerError(
 				"WebId " + sourceWebId +
-					" already exists in destination database");
+					" already exists in target database");
 		}
 	}
 

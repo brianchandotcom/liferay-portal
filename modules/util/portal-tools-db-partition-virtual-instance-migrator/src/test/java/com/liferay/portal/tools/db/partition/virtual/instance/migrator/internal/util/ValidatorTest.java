@@ -48,7 +48,7 @@ public class ValidatorTest {
 		_databaseMockedStatic = Mockito.mockStatic(DatabaseUtil.class);
 
 		_sourceConnection = Mockito.mock(Connection.class);
-		_destinationConnection = Mockito.mock(Connection.class);
+		_targetConnection = Mockito.mock(Connection.class);
 	}
 
 	@After
@@ -65,7 +65,7 @@ public class ValidatorTest {
 			true, false,
 			Arrays.asList(
 				"[ERROR] WebId " + _TEST_WEB_ID +
-					" already exists in destination database"));
+					" already exists in target database"));
 	}
 
 	@Test
@@ -83,11 +83,11 @@ public class ValidatorTest {
 			true, false,
 			Arrays.asList(
 				"[ERROR] Module module2.service needs to be upgraded in " +
-					"destination database before the migration"));
+					"target database before the migration"));
 	}
 
 	@Test
-	public void testInvalidDestinationReleaseState() throws Exception {
+	public void testInvalidTargetReleaseState() throws Exception {
 		List<String> failedServletContextNames = Arrays.asList(
 			"module1", "module2");
 
@@ -98,9 +98,9 @@ public class ValidatorTest {
 			true, false,
 			Arrays.asList(
 				"[ERROR] Module module1 has a failed Release state in the " +
-					"destination database",
+					"target database",
 				"[ERROR] Module module2 has a failed Release state in the " +
-					"destination database"));
+					"target database"));
 	}
 
 	@Test
@@ -132,8 +132,8 @@ public class ValidatorTest {
 	}
 
 	@Test
-	public void testMissingDestinationNotServiceModule() throws Exception {
-		_mockMissingDestinationModule("module1");
+	public void testMissingTargetNotServiceModule() throws Exception {
+		_mockMissingTargetModule("module1");
 
 		_executeAndAssert(
 			false, true,
@@ -142,8 +142,8 @@ public class ValidatorTest {
 	}
 
 	@Test
-	public void testMissingDestinationServiceModule() throws Exception {
-		_mockMissingDestinationModule("module2.service");
+	public void testMissingTargetServiceModule() throws Exception {
+		_mockMissingTargetModule("module2.service");
 
 		_executeAndAssert(
 			true, false,
@@ -159,7 +159,7 @@ public class ValidatorTest {
 		_executeAndAssert(
 			false, true,
 			Arrays.asList(
-				"[WARN] Module module1 is not present in the destination " +
+				"[WARN] Module module1 is not present in the target " +
 					"database"));
 	}
 
@@ -175,11 +175,11 @@ public class ValidatorTest {
 			false, true,
 			Arrays.asList(
 				"[WARN] Table table4 is not present in source database",
-				"[WARN] Table table2 is not present in destination database"));
+				"[WARN] Table table2 is not present in target database"));
 	}
 
 	@Test
-	public void testMissingTablesInDestination() throws Exception {
+	public void testMissingTablesInTarget() throws Exception {
 		_mockMissingTables(
 			new ArrayList<>(
 				Arrays.asList(
@@ -189,8 +189,8 @@ public class ValidatorTest {
 		_executeAndAssert(
 			false, true,
 			Arrays.asList(
-				"[WARN] Table table2 is not present in destination database",
-				"[WARN] Table table5 is not present in destination database"));
+				"[WARN] Table table2 is not present in target database",
+				"[WARN] Table table5 is not present in target database"));
 	}
 
 	@Test
@@ -209,14 +209,14 @@ public class ValidatorTest {
 	}
 
 	@Test
-	public void testUnverifiedDestinationModule() throws Exception {
+	public void testUnverifiedTargetModule() throws Exception {
 		_mockupReleaseVerified("module2", false);
 
 		_executeAndAssert(
 			true, false,
 			Arrays.asList(
 				"[ERROR] Module module2 needs to be verified in the " +
-					"destination database before the migration"));
+					"target database before the migration"));
 	}
 
 	@Test
@@ -244,7 +244,7 @@ public class ValidatorTest {
 		throws Exception {
 
 		Recorder recorder = Validator.validateDatabases(
-			_sourceConnection, _destinationConnection);
+			_sourceConnection, _targetConnection);
 
 		Assert.assertEquals(hasErrors, recorder.hasErrors());
 		Assert.assertEquals(hasWarnings, recorder.hasWarnings());
@@ -265,7 +265,7 @@ public class ValidatorTest {
 
 	private void _mockFailedServletContextNames(
 		List<String> sourceFailedServletContextNames,
-		List<String> destinationFailedServletContextNames) {
+		List<String> targetFailedServletContextNames) {
 
 		_databaseMockedStatic.when(
 			() -> DatabaseUtil.getFailedServletContextNames(_sourceConnection)
@@ -275,35 +275,35 @@ public class ValidatorTest {
 
 		_databaseMockedStatic.when(
 			() -> DatabaseUtil.getFailedServletContextNames(
-				_destinationConnection)
+				_targetConnection)
 		).thenReturn(
-			destinationFailedServletContextNames
+			targetFailedServletContextNames
 		);
 	}
 
-	private void _mockMissingDestinationModule(String servletContextName) {
+	private void _mockMissingTargetModule(String servletContextName) {
 		List<Release> releases = _createReleaseElements();
 
 		Map<String, Release> releaseMap = new HashMap<>();
 
-		List<Release> missingDestinationModuleReleases = new ArrayList<>();
+		List<Release> missingTargetModuleReleases = new ArrayList<>();
 
 		for (Release release : releases) {
 			releaseMap.put(release.getServletContextName(), release);
 
 			if (!servletContextName.equals(release.getServletContextName())) {
-				missingDestinationModuleReleases.add(release);
+				missingTargetModuleReleases.add(release);
 			}
 		}
 
 		_databaseMockedStatic.when(
 			() -> DatabaseUtil.getReleases(_sourceConnection)
 		).thenReturn(
-			missingDestinationModuleReleases
+			missingTargetModuleReleases
 		);
 
 		_databaseMockedStatic.when(
-			() -> DatabaseUtil.getReleasesMap(_destinationConnection)
+			() -> DatabaseUtil.getReleasesMap(_targetConnection)
 		).thenReturn(
 			releaseMap
 		);
@@ -327,14 +327,14 @@ public class ValidatorTest {
 		}
 
 		_databaseMockedStatic.when(
-			() -> DatabaseUtil.getReleasesMap(_destinationConnection)
+			() -> DatabaseUtil.getReleasesMap(_targetConnection)
 		).thenReturn(
 			releaseMap
 		);
 	}
 
 	private void _mockMissingTables(
-		List<String> sourceTableNames, List<String> destinationTableNames) {
+		List<String> sourceTableNames, List<String> targetTableNames) {
 
 		_databaseMockedStatic.when(
 			() -> DatabaseUtil.getPartitionedTableNames(_sourceConnection)
@@ -343,9 +343,9 @@ public class ValidatorTest {
 		);
 
 		_databaseMockedStatic.when(
-			() -> DatabaseUtil.getPartitionedTableNames(_destinationConnection)
+			() -> DatabaseUtil.getPartitionedTableNames(_targetConnection)
 		).thenReturn(
-			destinationTableNames
+			targetTableNames
 		);
 	}
 
@@ -373,7 +373,7 @@ public class ValidatorTest {
 		}
 
 		_databaseMockedStatic.when(
-			() -> DatabaseUtil.getReleasesMap(_destinationConnection)
+			() -> DatabaseUtil.getReleasesMap(_targetConnection)
 		).thenReturn(
 			releaseMap
 		);
@@ -402,7 +402,7 @@ public class ValidatorTest {
 		}
 
 		_databaseMockedStatic.when(
-			() -> DatabaseUtil.getReleasesMap(_destinationConnection)
+			() -> DatabaseUtil.getReleasesMap(_targetConnection)
 		).thenReturn(
 			releaseMap
 		);
@@ -416,7 +416,7 @@ public class ValidatorTest {
 		);
 
 		_databaseMockedStatic.when(
-			() -> DatabaseUtil.hasWebId(_destinationConnection, _TEST_WEB_ID)
+			() -> DatabaseUtil.hasWebId(_targetConnection, _TEST_WEB_ID)
 		).thenReturn(
 			!valid
 		);
@@ -425,7 +425,7 @@ public class ValidatorTest {
 	private static final String _TEST_WEB_ID = "www.able.com";
 
 	private MockedStatic<DatabaseUtil> _databaseMockedStatic;
-	private Connection _destinationConnection;
+	private Connection _targetConnection;
 	private final PrintStream _originalOut = System.out;
 	private Connection _sourceConnection;
 	private final ByteArrayOutputStream _testOutByteArrayOutputStream =

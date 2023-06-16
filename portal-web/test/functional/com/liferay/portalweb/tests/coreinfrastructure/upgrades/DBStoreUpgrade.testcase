@@ -17,7 +17,7 @@ definition {
 	@priority = 4
 	test ViewDBStoreArchive7310 {
 		property data.archive.type = "data-archive-db-store";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property database.types = "mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property portal.version = "7.3.10";
 
 		ValidateDBStoreUpgrade.viewDBStoreUpgrade();
@@ -26,7 +26,7 @@ definition {
 	@priority = 4
 	test ViewDBStoreArchive7413 {
 		property data.archive.type = "data-archive-db-store";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver";
+		property database.types = "mariadb,mysql,oracle,postgresql,sqlserver";
 		property portal.version = "7.4.13";
 
 		ValidateDBStoreUpgrade.viewDBStoreUpgrade();
@@ -35,7 +35,7 @@ definition {
 	@priority = 4
 	test ViewDBStoreArchive621021 {
 		property data.archive.type = "data-archive-db-store";
-		property database.types = "db2,mysql,oracle,postgresql,sqlserver,sybase";
+		property database.types = "mysql,oracle,postgresql,sqlserver,sybase";
 		property portal.version = "6.2.10.21";
 
 		ValidateDBStoreUpgrade.viewDBStoreUpgrade();

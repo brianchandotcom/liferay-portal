@@ -945,6 +945,7 @@ public class ObjectDefinitionLocalServiceImpl
 			pkObjectFieldDBColumnName);
 		objectDefinition.setPKObjectFieldName(pkObjectFieldName);
 		objectDefinition.setPluralLabelMap(pluralLabelMap);
+		objectDefinition.setPortlet(_isPortletNotNull(portlet)?portlet:true);
 		objectDefinition.setScope(scope);
 		objectDefinition.setStorageType(
 			Validator.isNotNull(storageType) ? storageType :
@@ -1275,6 +1276,14 @@ public class ObjectDefinitionLocalServiceImpl
 						layoutClassedModelUsage.getContainerKey(),
 						StringPool.DASH, locale, StringPool.DASH, 0));
 			}
+		}
+	}
+
+	private boolean _isPortletNotNull(Boolean portlet){
+		if (portlet!=null){
+			return true;
+		}else{
+			return false;
 		}
 	}
 

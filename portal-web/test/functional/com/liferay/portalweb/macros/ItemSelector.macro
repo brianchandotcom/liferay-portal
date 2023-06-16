@@ -164,9 +164,11 @@ definition {
 			locator1 = "TextInput#VIDEO_URL",
 			value1 = ${videoSourceURL});
 
-		WaitForElementPresent(
-			key_src = "https://",
-			locator1 = "IFrame#IFRAME_SRC");
+		if (!(isSet(invalidURL))) {
+			WaitForElementPresent(
+				key_src = "https://",
+				locator1 = "IFrame#IFRAME_SRC");
+		}
 
 		if (!(isSet(unpublish))) {
 			WaitForVisible(

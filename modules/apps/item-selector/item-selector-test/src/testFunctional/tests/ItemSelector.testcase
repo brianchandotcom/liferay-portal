@@ -471,6 +471,7 @@ definition {
 		ItemSelector.gotoItemSelectorViaCKEditor(video = "true");
 
 		ItemSelector.addVideoFromURL(
+			invalidURL = "true",
 			navTab = "URL",
 			unpublish = "true",
 			videoSourceURL = "https://youtu.be/IxNczRyywXYtest");
@@ -478,6 +479,7 @@ definition {
 		ItemSelector.previewEmbeddedVideo(invalidURL = "https://www.youtube.com");
 
 		ItemSelector.addVideoFromURL(
+			invalidURL = "true",
 			navTab = "URL",
 			unpublish = "true",
 			videoSourceURL = "https://www.youtube.com/watch?v=test");
@@ -485,6 +487,7 @@ definition {
 		ItemSelector.previewEmbeddedVideo(invalidURL = "https://www.youtube.com");
 
 		ItemSelector.addVideoFromURL(
+			invalidURL = "true",
 			navTab = "URL",
 			unpublish = "true",
 			videoSourceURL = "https://vimeo.com/test");
@@ -492,6 +495,7 @@ definition {
 		ItemSelector.previewEmbeddedVideo(invalidURL = "https://player.vimeo.com");
 
 		ItemSelector.addVideoFromURL(
+			invalidURL = "true",
 			navTab = "URL",
 			unpublish = "true",
 			videoSourceURL = "https://www.facebook.com/Cristiano/videos/test");
@@ -499,6 +503,7 @@ definition {
 		ItemSelector.previewEmbeddedVideo(invalidURL = "https://www.facebook.com");
 
 		ItemSelector.addVideoFromURL(
+			invalidURL = "true",
 			navTab = "URL",
 			unpublish = "true",
 			videoSourceURL = "https://test.com/test");

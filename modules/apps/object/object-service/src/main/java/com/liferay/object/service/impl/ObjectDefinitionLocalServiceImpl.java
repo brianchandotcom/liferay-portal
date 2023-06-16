@@ -332,7 +332,7 @@ public class ObjectDefinitionLocalServiceImpl
 		return _addObjectDefinition(
 			userId, className, dbTableName, enableComments, false, labelMap,
 			modifiable, name, panelAppOrder, panelCategoryKey,
-			pkObjectFieldDBColumnName, pkObjectFieldName, pluralLabelMap, scope,
+			pkObjectFieldDBColumnName, pkObjectFieldName, pluralLabelMap, false, scope,
 			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT, true,
 			titleObjectFieldName, version, status, objectFields);
 	}

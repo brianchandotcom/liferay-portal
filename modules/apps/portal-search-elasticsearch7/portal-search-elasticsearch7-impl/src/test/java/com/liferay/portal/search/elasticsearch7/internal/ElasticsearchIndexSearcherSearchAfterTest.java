@@ -158,6 +158,23 @@ public class ElasticsearchIndexSearcherSearchAfterTest {
 			_INDEX_MAX_RESULT_WINDOW);
 	}
 
+	@Test
+	public void testElasticsearchIndexSearcherSizeGreaterThanIndexedDocuments()
+		throws Exception {
+
+		_assertHits(
+			1, _NUMBER_INDEXED_DOCUMENTS - 1, 12, _NUMBER_INDEXED_DOCUMENTS - 1,
+			_NUMBER_INDEXED_DOCUMENTS);
+	}
+
+	@Test
+	public void testElasticsearchIndexSearcherStartAndSizeGreaterThanIndexedDocuments()
+		throws Exception {
+
+		_assertHits(
+			0, _NUMBER_INDEXED_DOCUMENTS, _NUMBER_INDEXED_DOCUMENTS + 1);
+	}
+
 	@Rule
 	public TestName testName = new TestName();
 

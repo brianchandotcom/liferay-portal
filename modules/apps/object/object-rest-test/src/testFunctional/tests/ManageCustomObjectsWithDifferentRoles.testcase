@@ -223,12 +223,12 @@ definition {
 				accountEntryName = "accountForSubject",
 				userEmailAddress = "test2@liferay.com");
 
-			AccountRoleAPI.associateAccountRoleUserAndAccount(
+			AccountRoleAPI.associateUserToAccountWithAccountRole(
 				accountId = ${studentAccountId},
 				roleName = "Test Account Role",
 				userAccountId = ${userAccountId});
 
-			AccountRoleAPI.associateAccountRoleUserAndAccount(
+			AccountRoleAPI.associateUserToAccountWithAccountRole(
 				accountId = ${subjectAccountId},
 				roleName = "Test Account Role",
 				userAccountId = ${userAccountId});

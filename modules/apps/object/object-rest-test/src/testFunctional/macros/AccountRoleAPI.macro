@@ -1,10 +1,10 @@
 definition {
 
-	macro associateAccountRoleUserAndAccount {
+	macro associateUserToAccountWithAccountRole {
 		Variables.assertDefined(parameterList = "${accountId},${roleName},${userAccountId}");
 
 		var portalURL = JSONCompany.getPortalURL();
-		var idOfRole = AccountRoleAPI.getIdForAccountRoleByAccountId(
+		var idOfRole = AccountRoleAPI.getAccountRoleIdByAccountId(
 			accountId = ${accountId},
 			roleName = ${roleName});
 
@@ -20,7 +20,7 @@ definition {
 		return ${response};
 	}
 
-	macro getIdForAccountRoleByAccountId {
+	macro getAccountRoleIdByAccountId {
 		Variables.assertDefined(parameterList = "${roleName},${accountId}");
 
 		var portalURL = JSONCompany.getPortalURL();

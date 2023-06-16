@@ -170,11 +170,9 @@ public class DBPartitionVirtualInstanceMigrator {
 			}
 		}
 		catch (ParseException parseException) {
-			System.err.println(
-				"Unable to parse command line properties: " +
-					parseException.getMessage());
+			System.err.println("Unable to parse command line properties:");
 
-			System.err.println();
+			parseException.printStackTrace();
 
 			HelpFormatter helpFormatter = new HelpFormatter();
 

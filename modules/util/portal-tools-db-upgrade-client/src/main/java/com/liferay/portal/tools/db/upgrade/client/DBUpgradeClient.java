@@ -133,6 +133,11 @@ public class DBUpgradeClient {
 			System.err.println("Unable to parse command line properties:");
 
 			parseException.printStackTrace();
+
+			HelpFormatter helpFormatter = new HelpFormatter();
+
+			helpFormatter.printHelp(
+				"Liferay Portal Tools Database Upgrade Client", options);
 		}
 		catch (Exception exception) {
 			System.err.println("Error running upgrade:");

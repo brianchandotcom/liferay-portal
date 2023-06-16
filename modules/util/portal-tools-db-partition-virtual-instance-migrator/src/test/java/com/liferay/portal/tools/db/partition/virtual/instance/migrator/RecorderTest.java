@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.tools.db.partition.virtual.instance.migrator.internal.recorder;
+package com.liferay.portal.tools.db.partition.virtual.instance.migrator;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -20,6 +20,7 @@ import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.List;
 
+import com.liferay.portal.tools.db.partition.virtual.instance.migrator.Recorder;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;

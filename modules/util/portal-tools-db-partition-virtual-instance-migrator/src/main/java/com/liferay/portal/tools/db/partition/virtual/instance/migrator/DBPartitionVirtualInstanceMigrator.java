@@ -15,9 +15,8 @@
 package com.liferay.portal.tools.db.partition.virtual.instance.migrator;
 
 import com.liferay.portal.tools.db.partition.virtual.instance.migrator.error.ErrorCodes;
-import com.liferay.portal.tools.db.partition.virtual.instance.migrator.internal.recorder.Recorder;
-import com.liferay.portal.tools.db.partition.virtual.instance.migrator.internal.util.DatabaseUtil;
-import com.liferay.portal.tools.db.partition.virtual.instance.migrator.internal.util.Validator;
+import com.liferay.portal.tools.db.partition.virtual.instance.migrator.util.DatabaseUtil;
+import com.liferay.portal.tools.db.partition.virtual.instance.migrator.util.Validator;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

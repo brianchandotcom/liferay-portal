@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.tools.db.partition.virtual.instance.migrator.internal.util;
+package com.liferay.portal.tools.db.partition.virtual.instance.migrator.util;
 
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.version.Version;
-import com.liferay.portal.tools.db.partition.virtual.instance.migrator.internal.recorder.Recorder;
-import com.liferay.portal.tools.db.partition.virtual.instance.migrator.internal.release.Release;
+import com.liferay.portal.tools.db.partition.virtual.instance.migrator.Recorder;
+import com.liferay.portal.tools.db.partition.virtual.instance.migrator.Release;
 
 import java.sql.Connection;
 

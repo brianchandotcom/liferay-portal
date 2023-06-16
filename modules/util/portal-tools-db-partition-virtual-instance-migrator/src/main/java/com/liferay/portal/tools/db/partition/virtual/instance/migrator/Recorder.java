@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.tools.db.partition.virtual.instance.migrator.internal.recorder;
+package com.liferay.portal.tools.db.partition.virtual.instance.migrator;
 
 import com.liferay.petra.string.StringBundler;
 

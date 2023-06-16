@@ -16,6 +16,7 @@ import ClayAlert from '@clayui/alert';
 import ClayForm, {ClayInput, ClayToggle} from '@clayui/form';
 import React, {useCallback, useEffect, useState} from 'react';
 
+import {addMappingFields} from '../../../../../../app/actions/index';
 import updateItemLocalConfig from '../../../../../../app/actions/updateItemLocalConfig';
 import {SelectField} from '../../../../../../app/components/fragment_configuration_fields/SelectField';
 import {COMMON_STYLES_ROLES} from '../../../../../../app/config/constants/commonStylesRoles';
@@ -24,14 +25,17 @@ import {
 	useSelector,
 } from '../../../../../../app/contexts/StoreContext';
 import selectLanguageId from '../../../../../../app/selectors/selectLanguageId';
+import InfoItemService from '../../../../../../app/services/InfoItemService';
 import updateFormItemConfig from '../../../../../../app/thunks/updateFormItemConfig';
 import {formIsMapped} from '../../../../../../app/utils/formIsMapped';
 import {formIsRestricted} from '../../../../../../app/utils/formIsRestricted';
 import {formIsUnavailable} from '../../../../../../app/utils/formIsUnavailable';
 import {getEditableLocalizedValue} from '../../../../../../app/utils/getEditableLocalizedValue';
+import getMappingFieldsKey from '../../../../../../app/utils/getMappingFieldsKey';
 import Collapse from '../../../../../../common/components/Collapse';
 import CurrentLanguageFlag from '../../../../../../common/components/CurrentLanguageFlag';
 import {LayoutSelector} from '../../../../../../common/components/LayoutSelector';
+import MappingFieldSelector from '../../../../../../common/components/MappingFieldSelector';
 import useControlledState from '../../../../../../common/hooks/useControlledState';
 import {useId} from '../../../../../../common/hooks/useId';
 import {CommonStyles} from './CommonStyles';
@@ -116,6 +120,7 @@ function FormOptions({item, onValueSelect}) {
 const EMBEDDED_OPTION = 'embedded';
 const LAYOUT_OPTION = 'fromLayout';
 const URL_OPTION = 'url';
+const DISPLAY_PAGE_OPTION = 'displayPage';
 
 const SUCCESS_MESSAGE_OPTIONS = [
 	{
@@ -130,6 +135,14 @@ const SUCCESS_MESSAGE_OPTIONS = [
 		label: Liferay.Language.get('external-url'),
 		value: URL_OPTION,
 	},
+	...(Liferay.FeatureFlags['LPS-183498']
+		? [
+				{
+					label: Liferay.Language.get('entry-display-page'),
+					value: DISPLAY_PAGE_OPTION,
+				},
+		  ]
+		: []),
 ];
 
 function SuccessMessageOptions({item, onValueSelect}) {
@@ -328,8 +341,95 @@ function SuccessMessageOptions({item, onValueSelect}) {
 					</p>
 				</ClayForm.Group>
 			)}
+
+			{selectedSource === DISPLAY_PAGE_OPTION && (
+				<DisplayPageSelector
+					item={item}
+					onValueSelect={onValueSelect}
+					selectedSource={selectedSource}
+					selectedValue={successMessageConfig?.displayPage}
+				/>
+			)}
 		</>
 	);
+}
+
+function DisplayPageSelector({
+	item,
+	onValueSelect,
+	selectedSource,
+	selectedValue,
+}) {
+	const dispatch = useDispatch();
+
+	const mappingFields = useSelector((state) => state.mappingFields);
+
+	const [displayPageFields, setDisplayPageFields] = useState(null);
+
+	useEffect(() => {
+		if (selectedSource !== DISPLAY_PAGE_OPTION) {
+			return;
+		}
+
+		const {classNameId, classTypeId} = item.config;
+
+		const key = getMappingFieldsKey(classNameId, classTypeId);
+
+		const fields = mappingFields[key];
+
+		if (fields) {
+			setDisplayPageFields(filterFields(fields));
+		}
+		else {
+			InfoItemService.getAvailableStructureMappingFields({
+				classNameId,
+				classTypeId,
+				onNetworkStatus: dispatch,
+			}).then((newFields) => {
+				dispatch(addMappingFields({fields: newFields, key}));
+			});
+		}
+	}, [dispatch, item, mappingFields, selectedSource]);
+
+	return (
+		<MappingFieldSelector
+			className="mb-3"
+			defaultLabel={`-- ${Liferay.Language.get('none')} --`}
+			fields={displayPageFields}
+			label={Liferay.Language.get('display-page')}
+			onValueSelect={(event) =>
+				onValueSelect({
+					successMessage: {
+						displayPage:
+							event.target.value === 'unmapped'
+								? null
+								: event.target.value,
+					},
+				})
+			}
+			value={selectedValue}
+		/>
+	);
+}
+
+function filterFields(fields) {
+	return fields.reduce((acc, fieldSet) => {
+		const newFields = fieldSet.fields.filter(
+			(field) => field.type === 'display-page'
+		);
+
+		if (newFields.length) {
+			return [
+				...acc,
+				{
+					...fieldSet,
+					fields: newFields,
+				},
+			];
+		}
+
+		return acc;
+	}, []);
 }
 
 function getSelectedOption(successMessageConfig) {
@@ -343,6 +443,10 @@ function getSelectedOption(successMessageConfig) {
 
 	if (successMessageConfig.layout?.layoutUuid) {
 		return LAYOUT_OPTION;
+	}
+
+	if (successMessageConfig.displayPage) {
+		return DISPLAY_PAGE_OPTION;
 	}
 
 	return EMBEDDED_OPTION;

@@ -1905,6 +1905,87 @@ definition {
 			ACUtils.viewResultsMessage(results = "Showing 1 to 2 of 2 entries.");
 		}
 	}
+
+	@description = "Feature ID: LRAC-13424 | Automation ID: LRAC-14043 | Test Summary: Check that it is not possible to edit the segment name to an existing one"
+	@priority = 3
+	test CheckNotPossibleEditSegmentNameToExistsOne {
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("View the site page") {
+			ACUtils.navigateToSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Close sessions and wait for 30 seconds") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
+		}
+
+		for (var segmentName : list "Segment Name Already Exists,segment name already exists 2") {
+			task ("Add two new dynamic segments") {
+				ACNavigation.goToSegments();
+
+				ACSegments.createDynamicSegment();
+
+				ACUtils.setItemName(itemName = ${segmentName});
+			}
+
+			task ("Add an email field") {
+				ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
+
+				ACSegments.addSegmentField(segmentField = "email");
+
+				ACSegments.editTextCriterion(textInput = "userea@liferay.com");
+			}
+
+			task ("Save the Segment") {
+				ACSegments.saveSegment();
+			}
+		}
+
+		task ("Edit the first segment") {
+			ACNavigation.goToSegments();
+
+			ACSegments.editSegment(segmentName = "Segment Name Already Exists");
+		}
+
+		task ("Change the segment name to be equal to the second segment name") {
+			ACUtils.setItemName(itemName = "segment name already exists 2");
+		}
+
+		task ("Save the Segment") {
+			Click(locator1 = "ACSegments#SAVE_SEGMENT");
+		}
+
+		task ("Assert that the warning pop-up appears") {
+			Alert.viewWarningSpecific(warningMessage = "Warning:This segment name is currently in use. Please try a different one");
+		}
+
+		task ("Cancel the creation") {
+			ACSegments.cancelSegment();
+
+			Button.click(button = "Leave Page");
+		}
+
+		task ("Check that no segment names have been changed") {
+			ACNavigation.goToSegments();
+
+			for (var segmentName : list "Segment Name Already Exists,segment name already exists 2") {
+				ACSegments.assertSegmentPresent(segmentName = ${segmentName});
+			}
+		}
+	}
+
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8484 | Test Summary: Segment Form Validation"
 	@priority = 5
 	test ViewSegmentFormValidation {

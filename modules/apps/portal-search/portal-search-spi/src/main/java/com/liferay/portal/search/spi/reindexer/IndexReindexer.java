@@ -21,4 +21,7 @@ public interface IndexReindexer {
 
 	public void reindex(long[] companyIds) throws Exception;
 
+	public void reindex(long[] companyIds, String executionMode)
+		throws Exception;
+
 }

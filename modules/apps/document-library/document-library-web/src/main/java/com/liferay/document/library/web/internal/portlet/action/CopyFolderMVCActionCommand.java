@@ -22,9 +22,11 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -67,6 +69,17 @@ public class CopyFolderMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
+	private void _checkDestinationRepository(long repositoryId)
+		throws PortalException {
+
+		Group group = _groupLocalService.fetchGroup(repositoryId);
+
+		if ((group != null) && group.isStaged() && !group.isStagingGroup()) {
+			throw new PortalException(
+				"cannot-copy-entries-to-the-live-version-of-a-group");
+		}
+	}
+
 	private void _copyFolder(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws IOException {
@@ -84,6 +97,8 @@ public class CopyFolderMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "destinationParentFolderId");
 
 		try {
+			_checkDestinationRepository(destinationRepositoryId);
+
 			_dlAppService.copyFolder(
 				sourceRepositoryId, sourceFolderId, destinationRepositoryId,
 				destinationParentFolderId,
@@ -110,6 +125,9 @@ public class CopyFolderMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private DLAppService _dlAppService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private JSONFactory _jsonFactory;

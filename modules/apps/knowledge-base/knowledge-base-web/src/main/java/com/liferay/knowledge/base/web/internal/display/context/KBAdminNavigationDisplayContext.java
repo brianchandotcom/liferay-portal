@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -96,45 +95,27 @@ public class KBAdminNavigationDisplayContext {
 			).build());
 	}
 
-	public long getItemToMoveParent()
-		throws PortalException {
-
+	public long getItemToMoveParent() throws PortalException {
 		String kbEntryToMoveType = ParamUtil.getString(
 			_httpServletRequest, "kbEntryToMoveType");
 
 		long kbEntryToMoveId = ParamUtil.getLong(
 			_httpServletRequest, "kbEntryToMoveId");
 
-		long parentKbObjectId;
-
 		if (kbEntryToMoveType.equals(KBConstants.TYPE_FOLDER)) {
 			KBFolder kbFolder = KBFolderLocalServiceUtil.getKBFolder(
 				kbEntryToMoveId);
 
-			parentKbObjectId = kbFolder.getParentKBFolderId();
-		}
-		else {
-			int articleVersion = ParamUtil.getInteger(
-				_httpServletRequest, "kbEntryVersion", -1);
-
-			KBArticle kbArticle = KBArticleLocalServiceUtil.getKBArticle(
-				kbEntryToMoveId, articleVersion);
-
-			if (kbArticle.getParentResourceClassNameId() ==
-					ClassNameLocalServiceUtil.getClassNameId(
-						KBFolder.class.getName())) {
-
-				parentKbObjectId = KBFolderServiceUtil.getKBFolder(
-					kbArticle.getParentResourcePrimKey()
-				).getKbFolderId();
-			}
-			else {
-				parentKbObjectId = kbArticle.getParentKBArticle(
-				).getResourcePrimKey();
-			}
+			return kbFolder.getParentKBFolderId();
 		}
 
-		return parentKbObjectId;
+		int articleVersion = ParamUtil.getInteger(
+			_httpServletRequest, "kbEntryVersion", -1);
+
+		KBArticle kbArticle = KBArticleLocalServiceUtil.getKBArticle(
+			kbEntryToMoveId, articleVersion);
+
+		return kbArticle.getParentResourcePrimKey();
 	}
 
 	public JSONArray getKBFolderDataJSONArray() throws PortalException {
@@ -314,8 +295,7 @@ public class KBAdminNavigationDisplayContext {
 			_httpServletRequest, "kbEntryToMoveId", -1);
 
 		for (KBArticle kbArticle : kbArticles) {
-			if ((kbEntryToMoveId != kbArticle.getResourcePrimKey())) {
-
+			if (kbEntryToMoveId != kbArticle.getResourcePrimKey()) {
 				childrenJSONArray.put(
 					JSONUtil.put(
 						"actions",

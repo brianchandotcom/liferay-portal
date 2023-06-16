@@ -229,4 +229,51 @@ definition {
 		}
 	}
 
+    @description = "Story ID: LPS-164733 | Test Summary: Verify that the Manager can not see 'Review button' when organization are in 'Awaiting Finance Approval' status"
+	@priority = 4
+	test ManagerCannotSeeReviewButtonInAwaitingFinanceStatus {
+		task ("Given that the Manager user create a organization") {
+            User.logoutAndLoginPG(
+				userLoginEmailAddress = "manager@liferay.com",
+				userLoginFullName = "Manager User");
+
+            EVPUtils.gotoEVP();
+
+            EVPOrganization.createAnOrganization();
+
+			EVPOrganization.fillOrganizationForm(
+				bankingInfo = "Bank Test",
+				city = "City Test",
+				contactEmail = "test@liferay.com",
+				contactName = "Contact Test",
+				contactPhone = 12345,
+				country = "Country Test",
+				organizationName = "Organization Test",
+				organizationSite = "www.test.com.br",
+				smallDescription = "Description Test",
+				state = "State Test",
+				street = "Street Test",
+				taxId = 12345,
+				zip = "12.345-67");
+
+            Button.click(button = "Done");
+		}
+
+        task ("When the manager approve the organization created") {
+			EVPOrganization.kebabMenuOrganization(
+                organizationName = "Organization Test",
+                kebabOption = "Review");
+
+            EVPOrganization.reviewOrganization(
+                typeMessage = "Your organization has been approved!",
+                button = "Approve");
+		}
+
+		task ("Then the manager user can not see Awaiting Finance Approval status") {
+			EVPOrganization.actionKebabMenuNotPresent(
+                organizationName = "Organization Test",
+                actionKebab = "Awaiting Finance Approval");
+		}
+	}
+
 }

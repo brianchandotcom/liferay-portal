@@ -26,7 +26,7 @@ import {
 import React, {useState} from 'react';
 
 const DDMFolderSelector = ({
-	copyActionURL,
+	copyDLObjectURL,
 	fileShortcutId,
 	itemType,
 	portletNamespace,
@@ -72,27 +72,29 @@ const DDMFolderSelector = ({
 		event.preventDefault();
 
 		const bodyContentObject = objectToFormData(
-			itemType === 'folder'
+			itemType === 'DLFolder'
 				? {
-						[`${portletNamespace}sourceRepositoryId`]: sourceRepositoryId,
-						[`${portletNamespace}sourceFolderId`]: sourceFolderId,
-						[`${portletNamespace}destinationParentFolderId`]: destinationParentFolderId,
-						[`${portletNamespace}destinationRepositoryId`]: destinationRepositoryId,
+						[`destinationParentFolderId`]: destinationParentFolderId,
+						[`destinationRepositoryId`]: destinationRepositoryId,
+						[`entryType`]: 'DLFolder',
+						[`sourceFolderId`]: sourceFolderId,
+						[`sourceRepositoryId`]: sourceRepositoryId,
 				  }
 				: {
-						[`${portletNamespace}fileEntryId`]: sourceFileEntryId,
-						[`${portletNamespace}fileShortcutId`]: fileShortcutId,
-						[`${portletNamespace}destinationFolderId`]: destinationParentFolderId,
-						[`${portletNamespace}destinationRepositoryId`]: destinationRepositoryId,
+						[`destinationFolderId`]: destinationParentFolderId,
+						[`destinationRepositoryId`]: destinationRepositoryId,
+						[`entryType`]: 'DLFileEntry',
+						[`fileEntryId`]: sourceFileEntryId,
+						[`fileShortcutId`]: fileShortcutId,
 				  }
 		);
 
-		fetch(copyActionURL, {
+		fetch(copyDLObjectURL, {
 			body: bodyContentObject,
 			method: 'POST',
 		})
 			.then((response) => response.json())
-			.then(({errorMessage}) => {
+			.then(({errorMessage, successMessage}) => {
 				if (errorMessage) {
 					openToast({
 						message: errorMessage,
@@ -101,6 +103,9 @@ const DDMFolderSelector = ({
 					});
 				}
 				else {
+					openToast({
+						message: successMessage,
+					});
 					navigate(redirect);
 				}
 			})

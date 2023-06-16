@@ -27,11 +27,11 @@ dlCopyEntryDisplayContext.setViewAttributes();
 		module="document_library/js/DDMFolderSelector"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
-				"copyActionURL", dlCopyEntryDisplayContext.getActionURL()
+				"copyDLObjectURL", dlCopyEntryDisplayContext.getCopyDLObjectURL()
 			).put(
 				"fileShortcutId", dlCopyEntryDisplayContext.getFileShortcutId()
 			).put(
-				"itemType", "fileEntry"
+				"itemType", DLFileEntry.class.getSimpleName()
 			).put(
 				"redirect", dlCopyEntryDisplayContext.getRedirect()
 			).put(

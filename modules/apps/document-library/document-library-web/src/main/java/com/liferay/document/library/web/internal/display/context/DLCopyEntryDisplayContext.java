@@ -21,12 +21,12 @@ import com.liferay.document.library.kernel.service.DLFileShortcutLocalServiceUti
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.FolderItemSelectorReturnType;
 import com.liferay.item.selector.criteria.folder.criterion.FolderItemSelectorCriterion;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
-import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -36,6 +36,8 @@ import com.liferay.portal.kernel.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 import javax.portlet.RenderResponse;
 
@@ -56,20 +58,14 @@ public class DLCopyEntryDisplayContext {
 		_themeDisplay = themeDisplay;
 	}
 
-	public String getActionURL() {
-		String actionName = "/document_library/copy_file_entry";
-
-		if (getFileShortcutId() > 0) {
-			actionName = "/document_library/copy_file_shortcut";
+	public String getCopyDLObjectURL() {
+		if (_copyDLObjectURL != null) {
+			return _copyDLObjectURL;
 		}
 
-		return PortletURLBuilder.createActionURL(
-			_liferayPortletResponse
-		).setActionName(
-			actionName
-		).setMVCRenderCommandName(
-			actionName
-		).buildString();
+		return StringBundler.concat(
+			PortalUtil.getPortalURL(_httpServletRequest),
+			PortalUtil.getPathContext(), Portal.PATH_MODULE, "/copy_dl_object");
 	}
 
 	public long getFileEntryId() {
@@ -225,6 +221,7 @@ public class DLCopyEntryDisplayContext {
 		return repository.getRepositoryId();
 	}
 
+	private String _copyDLObjectURL;
 	private long _fileEntryId = -1;
 	private String _fileName;
 	private long _fileShortcutId = -1;

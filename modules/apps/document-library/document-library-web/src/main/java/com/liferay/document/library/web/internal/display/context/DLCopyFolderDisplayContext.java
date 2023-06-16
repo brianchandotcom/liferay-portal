@@ -19,18 +19,20 @@ import com.liferay.document.library.kernel.service.DLFolderLocalServiceUtil;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.FolderItemSelectorReturnType;
 import com.liferay.item.selector.criteria.folder.criterion.FolderItemSelectorCriterion;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
-import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 import javax.portlet.RenderResponse;
 
@@ -51,12 +53,14 @@ public class DLCopyFolderDisplayContext {
 		_themeDisplay = themeDisplay;
 	}
 
-	public String getActionURL() {
-		return PortletURLBuilder.createActionURL(
-			_liferayPortletResponse
-		).setActionName(
-			"/document_library/copy_folder"
-		).buildString();
+	public String getCopyDLObjectURL() {
+		if (_copyDLObjectURL != null) {
+			return _copyDLObjectURL;
+		}
+
+		return StringBundler.concat(
+			PortalUtil.getPortalURL(_httpServletRequest),
+			PortalUtil.getPathContext(), Portal.PATH_MODULE, "/copy_dl_object");
 	}
 
 	public String getRedirect() {
@@ -171,6 +175,7 @@ public class DLCopyFolderDisplayContext {
 		return portletDisplay.getNamespace() + "folderSelected";
 	}
 
+	private String _copyDLObjectURL;
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _redirect;

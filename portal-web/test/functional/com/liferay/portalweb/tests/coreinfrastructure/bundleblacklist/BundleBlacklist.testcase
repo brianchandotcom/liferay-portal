@@ -112,13 +112,6 @@ definition {
 
 		AssertElementPresent(locator1 = "GogoShell#COMMAND_FIELD");
 
-		SystemSettings.openSystemSettingsAdmin();
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Module Container",
-			configurationName = "Bundle Blacklist",
-			configurationScope = "System Scope");
-
 		var testRunEnvironment = PropsUtil.get("test.run.environment");
 
 		if (${testRunEnvironment} == "EE") {
@@ -128,9 +121,9 @@ definition {
 			var symbolicName = "Liferay CE Foundation - Liferay CE Gogo Shell - Impl";
 		}
 
-		BundleBlacklist.blacklistModuleAndComponentConfiguration(
-			label = "Blacklist Bundle Symbolic Names",
-			symbolicName = ${symbolicName});
+		OSGiConfig.deployOSGiConfigFile(
+			osgiConfigFileName = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config",
+			osgiConfigs = "blacklistBundleSymbolicNames=[\"${symbolicName}\" ]");
 
 		BundleBlacklist.viewProductMenuBlacklistedModule(
 			category = "System",
@@ -239,24 +232,13 @@ definition {
 			osgiConfigFileName = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config",
 			osgiConfigs = "blacklistBundleSymbolicNames=[\"${symbolicName}\" ]");
 
-		WaitForConsoleTextPresent(value1 = "STOPPED ${symbolicName}");
-
 		BundleBlacklist.viewProductMenuBlacklistedModule(
 			category = "System",
 			consoleText = "STOPPED ${symbolicName}",
 			panel = "Control Panel",
 			portlet = "Gogo Shell");
 
-		SystemSettings.openSystemSettingsAdmin();
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Module Container",
-			configurationName = "Bundle Blacklist",
-			configurationScope = "System Scope");
-
-		BundleBlacklist.blacklistModuleAndComponentConfiguration(
-			label = "Blacklist Bundle Symbolic Names",
-			symbolicName = " ");
+		OSGiConfig.deleteOSGiConfigFile(osgiConfigFileName = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config");
 
 		Portlet.shutdownServer();
 
@@ -345,24 +327,13 @@ definition {
 			osgiConfigFileName = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config",
 			osgiConfigs = "blacklistBundleSymbolicNames=[\"${symbolicName}\" ]");
 
-		WaitForConsoleTextPresent(value1 = "STOPPED ${symbolicName}");
-
 		BundleBlacklist.viewProductMenuBlacklistedModule(
 			category = "System",
 			consoleText = "STOPPED ${symbolicName}",
 			panel = "Control Panel",
 			portlet = "Gogo Shell");
 
-		SystemSettings.openSystemSettingsAdmin();
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Module Container",
-			configurationName = "Bundle Blacklist",
-			configurationScope = "System Scope");
-
-		BundleBlacklist.blacklistModuleAndComponentConfiguration(
-			label = "Blacklist Bundle Symbolic Names",
-			symbolicName = " ");
+		OSGiConfig.deleteOSGiConfigFile(osgiConfigFileName = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config");
 
 		var testRunEnvironment = PropsUtil.get("test.run.environment");
 
@@ -397,18 +368,7 @@ definition {
 			locator1 = "Card#CARD_TITLE",
 			value1 = "Minium");
 
-		Navigator.openURL();
-
-		SystemSettings.openSystemSettingsAdmin();
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Module Container",
-			configurationName = "Bundle Blacklist",
-			configurationScope = "System Scope");
-
-		BundleBlacklist.blacklistModuleAndComponentConfiguration(
-			label = "Blacklist Bundle Symbolic Names",
-			symbolicName = " ");
+		OSGiConfig.deleteOSGiConfigFile(osgiConfigFileName = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config");
 
 		AssertConsoleTextPresent(value1 = "Reinstalling bundle minium-theme");
 
@@ -483,16 +443,16 @@ definition {
 	test ExportBundleBlacklistConfig {
 		property test.liferay.virtual.instance = "false";
 
+		OSGiConfig.deployOSGiConfigFile(
+			osgiConfigFileName = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config",
+			osgiConfigs = "blacklistBundleSymbolicNames=[\"com.liferay.gogo.shell.web\" ]");
+
 		SystemSettings.openSystemSettingsAdmin();
 
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "Module Container",
 			configurationName = "Bundle Blacklist",
 			configurationScope = "System Scope");
-
-		BundleBlacklist.blacklistModuleAndComponentConfiguration(
-			label = "Blacklist Bundle Symbolic Names",
-			symbolicName = "com.liferay.gogo.shell.web");
 
 		SystemSettings.exportConfiguration();
 
@@ -509,16 +469,9 @@ definition {
 	test RestartCanNotEnableBlacklistedModuleJarViaUI {
 		property test.liferay.virtual.instance = "false";
 
-		SystemSettings.openSystemSettingsAdmin();
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Module Container",
-			configurationName = "Bundle Blacklist",
-			configurationScope = "System Scope");
-
-		BundleBlacklist.blacklistModuleAndComponentConfiguration(
-			label = "Blacklist Bundle Symbolic Names",
-			symbolicName = "com.liferay.gogo.shell.web");
+		OSGiConfig.deployOSGiConfigFile(
+			osgiConfigFileName = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config",
+			osgiConfigs = "blacklistBundleSymbolicNames=[\"com.liferay.gogo.shell.web\" ]");
 
 		BundleBlacklist.viewProductMenuBlacklistedModule(
 			category = "System",
@@ -568,16 +521,9 @@ definition {
 			Portlet.startServer(deleteLiferayHome = "false");
 		}
 
-		SystemSettings.openSystemSettingsAdmin();
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Module Container",
-			configurationName = "Bundle Blacklist",
-			configurationScope = "System Scope");
-
-		BundleBlacklist.blacklistModuleAndComponentConfiguration(
-			label = "Blacklist Bundle Symbolic Names",
-			symbolicName = ${symbolicName});
+		OSGiConfig.deployOSGiConfigFile(
+			osgiConfigFileName = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config",
+			osgiConfigs = "blacklistBundleSymbolicNames=[\"${symbolicName}\" ]");
 
 		BundleBlacklist.viewProductMenuBlacklistedModule(
 			category = "System",
@@ -602,18 +548,11 @@ definition {
 	test RestartCanNotEnableBlacklistedModuleWarViaUI {
 		property test.liferay.virtual.instance = "false";
 
-		SystemSettings.openSystemSettingsAdmin();
+		OSGiConfig.deployOSGiConfigFile(
+			osgiConfigFileName = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config",
+			osgiConfigs = "blacklistBundleSymbolicNames=[\"minium-theme\" ]");
 
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Module Container",
-			configurationName = "Bundle Blacklist",
-			configurationScope = "System Scope");
-
-		BundleBlacklist.blacklistModuleAndComponentConfiguration(
-			label = "Blacklist Bundle Symbolic Names",
-			symbolicName = "minium-theme");
-
-		AssertConsoleTextPresent(value1 = "STOPPED minium-theme");
+		WaitForConsoleTextPresent(value1 = "STOPPED minium-theme");
 
 		Portlet.shutdownServer();
 

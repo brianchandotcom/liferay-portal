@@ -115,13 +115,13 @@ public class DBPartitionVirtualInstanceMigrator {
 
 			CommandLine commandLine = commandLineParser.parse(options, args);
 
-			String sourceJdbcURL = commandLine.getOptionValue(
+			String sourceJDBCURL = commandLine.getOptionValue(
 				"source-jdbc-url");
 			String sourceUser = commandLine.getOptionValue("source-user");
 			String sourcePassword = commandLine.getOptionValue(
 				"source-password");
 
-			String destinationJdbcURL = commandLine.getOptionValue(
+			String destinationJDBCURL = commandLine.getOptionValue(
 				"destination-jdbc-url");
 			String destinationUser = commandLine.getOptionValue(
 				"destination-user");
@@ -130,7 +130,7 @@ public class DBPartitionVirtualInstanceMigrator {
 
 			try {
 				_sourceConnection = DriverManager.getConnection(
-					sourceJdbcURL, sourceUser, sourcePassword);
+					sourceJDBCURL, sourceUser, sourcePassword);
 			}
 			catch (SQLException sqlException) {
 				System.err.println(
@@ -144,7 +144,7 @@ public class DBPartitionVirtualInstanceMigrator {
 
 			try {
 				_destinationConnection = DriverManager.getConnection(
-					destinationJdbcURL, destinationUser, destinationPassword);
+					destinationJDBCURL, destinationUser, destinationPassword);
 			}
 			catch (SQLException sqlException) {
 				System.err.println(

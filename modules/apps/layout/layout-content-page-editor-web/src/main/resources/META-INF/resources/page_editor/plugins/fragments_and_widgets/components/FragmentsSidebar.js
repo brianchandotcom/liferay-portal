@@ -233,7 +233,7 @@ export default function FragmentsSidebar() {
 		Liferay.Language.get('switch-to-x-view'),
 		displayStyle === FRAGMENTS_DISPLAY_STYLES.LIST
 			? Liferay.Language.get('card')
-			: Liferay.Language.get('list')
+			: Liferay.Language.get('list[noun]')
 	);
 
 	return (

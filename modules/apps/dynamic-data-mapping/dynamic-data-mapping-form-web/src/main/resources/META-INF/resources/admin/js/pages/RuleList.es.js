@@ -47,7 +47,7 @@ const OPERATORS = {
 
 const OPERAND_TEXT = {
 	field: Liferay.Language.get('field'),
-	list: Liferay.Language.get('list'),
+	list: Liferay.Language.get('list[noun]'),
 	user: Liferay.Language.get('user'),
 	value: Liferay.Language.get('value'),
 };

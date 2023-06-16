@@ -62,7 +62,7 @@ export const VIEWS = [
 	},
 	{
 		id: 'list',
-		label: Liferay.Language.get('list'),
+		label: Liferay.Language.get('list[noun]'),
 		symbol: 'list',
 	},
 	{

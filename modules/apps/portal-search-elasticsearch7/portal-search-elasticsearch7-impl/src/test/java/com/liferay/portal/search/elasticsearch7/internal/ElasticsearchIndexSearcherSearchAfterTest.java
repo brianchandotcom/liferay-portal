@@ -75,6 +75,12 @@ public class ElasticsearchIndexSearcherSearchAfterTest {
 	public static void setUpClass() throws Exception {
 		_setUpIndexingFixture();
 		_setUpIndexSearcherAndWriter();
+
+		_setUpIndexSearchLimit();
+		_setUpDeepPagination();
+		_setUpSorts();
+
+		PropsTestUtil.setProps("feature.flag.LPS-172416", "true");
 	}
 
 	@AfterClass
@@ -99,13 +105,7 @@ public class ElasticsearchIndexSearcherSearchAfterTest {
 		_entryClassName = StringUtil.toLowerCase(
 			clazz.getSimpleName() + CharPool.PERIOD + testName.getMethodName());
 
-		_setUpIndexSearchLimit();
-		_setUpDeepPagination();
-		_setUpSorts();
-
 		_addDocuments();
-
-		PropsTestUtil.setProps("feature.flag.LPS-172416", "true");
 	}
 
 	@After
@@ -207,6 +207,27 @@ public class ElasticsearchIndexSearcherSearchAfterTest {
 		};
 	}
 
+	private static void _setUpDeepPagination() {
+		DeepPaginationConfigurationWrapper deepPaginationConfigurationWrapper =
+			Mockito.mock(DeepPaginationConfigurationWrapper.class);
+
+		Mockito.doReturn(
+			true
+		).when(
+			deepPaginationConfigurationWrapper
+		).getEnableDeepPagination();
+
+		Mockito.doReturn(
+			60
+		).when(
+			deepPaginationConfigurationWrapper
+		).getPointInTimeKeepAliveSeconds();
+
+		ReflectionTestUtil.setFieldValue(
+			_indexSearcher, "_deepPaginationConfigurationWrapper",
+			deepPaginationConfigurationWrapper);
+	}
+
 	private static void _setUpIndexingFixture() throws Exception {
 		if (_indexingFixture != null) {
 			Assume.assumeTrue(_indexingFixture.isSearchEngineAvailable());
@@ -224,6 +245,40 @@ public class ElasticsearchIndexSearcherSearchAfterTest {
 
 		_indexSearcher = _indexingFixture.getIndexSearcher();
 		_indexWriter = _indexingFixture.getIndexWriter();
+	}
+
+	private static void _setUpIndexSearchLimit() {
+		Props props = Mockito.mock(Props.class);
+
+		Mockito.doReturn(
+			String.valueOf(_INDEX_SEARCH_LIMIT)
+		).when(
+			props
+		).get(
+			PropsKeys.INDEX_SEARCH_LIMIT
+		);
+
+		ReflectionTestUtil.setFieldValue(_indexSearcher, "_props", props);
+	}
+
+	private static void _setUpSorts() {
+		Sorts sorts = Mockito.mock(Sorts.class);
+
+		Mockito.doReturn(
+			new ScoreSortImpl()
+		).when(
+			sorts
+		).score();
+
+		Mockito.doReturn(
+			new FieldSortImpl("_shard_doc")
+		).when(
+			sorts
+		).field(
+			"_shard_doc"
+		);
+
+		ReflectionTestUtil.setFieldValue(_indexSearcher, "_sorts", sorts);
 	}
 
 	private void _addDocument(
@@ -353,61 +408,6 @@ public class ElasticsearchIndexSearcherSearchAfterTest {
 		searchContext.setCompanyId(_indexingFixture.getCompanyId());
 
 		return searchContext;
-	}
-
-	private void _setUpDeepPagination() {
-		DeepPaginationConfigurationWrapper deepPaginationConfigurationWrapper =
-			Mockito.mock(DeepPaginationConfigurationWrapper.class);
-
-		Mockito.doReturn(
-			true
-		).when(
-			deepPaginationConfigurationWrapper
-		).getEnableDeepPagination();
-
-		Mockito.doReturn(
-			60
-		).when(
-			deepPaginationConfigurationWrapper
-		).getPointInTimeKeepAliveSeconds();
-
-		ReflectionTestUtil.setFieldValue(
-			_indexSearcher, "_deepPaginationConfigurationWrapper",
-			deepPaginationConfigurationWrapper);
-	}
-
-	private void _setUpIndexSearchLimit() {
-		Props props = Mockito.mock(Props.class);
-
-		Mockito.doReturn(
-			String.valueOf(_INDEX_SEARCH_LIMIT)
-		).when(
-			props
-		).get(
-			PropsKeys.INDEX_SEARCH_LIMIT
-		);
-
-		ReflectionTestUtil.setFieldValue(_indexSearcher, "_props", props);
-	}
-
-	private void _setUpSorts() {
-		Sorts sorts = Mockito.mock(Sorts.class);
-
-		Mockito.doReturn(
-			new ScoreSortImpl()
-		).when(
-			sorts
-		).score();
-
-		Mockito.doReturn(
-			new FieldSortImpl("_shard_doc")
-		).when(
-			sorts
-		).field(
-			"_shard_doc"
-		);
-
-		ReflectionTestUtil.setFieldValue(_indexSearcher, "_sorts", sorts);
 	}
 
 	private void printHits(Document[] documents) {

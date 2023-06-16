@@ -66,9 +66,11 @@ interface ISaveFDSFieldsModalContentProps {
 }
 
 const getRendererLabel = (rendererName: string) => {
-	return FDS_INTERNAL_CELL_RENDERERS.filter(renderer => {
-		return (renderer.name === rendererName || renderer.label === rendererName)
-	})[0].label!
+	return FDS_INTERNAL_CELL_RENDERERS.filter((renderer) => {
+		return (
+			renderer.name === rendererName || renderer.label === rendererName
+		);
+	})[0].label!;
 };
 
 const SaveFDSFieldsModalContent = ({
@@ -400,7 +402,7 @@ const EditFDSFieldModalContent = ({
 		});
 		const editedFDSField: any = {
 			...editedFDSFieldResponse,
-			renderer: getRendererLabel(editedFDSFieldResponse.renderer)
+			renderer: getRendererLabel(editedFDSFieldResponse.renderer),
 		};
 		onSave({editedFDSField});
 	};
@@ -635,8 +637,9 @@ const Fields = ({
 
 			fdsFieldsOrderRef.current = orderedFDSFieldIds.join(',');
 
-			const nextOrderedFDSFields = orderedFDSFields.map(field => {
+			const nextOrderedFDSFields = orderedFDSFields.map((field) => {
 				field.renderer = getRendererLabel(field.renderer);
+
 				return field;
 			});
 

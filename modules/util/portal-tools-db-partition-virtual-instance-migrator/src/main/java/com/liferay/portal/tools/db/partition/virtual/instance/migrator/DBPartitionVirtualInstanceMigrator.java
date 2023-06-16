@@ -71,8 +71,7 @@ public class DBPartitionVirtualInstanceMigrator {
 		Options options = new Options();
 
 		options.addRequiredOption(
-			"d", "destination-jdbc-url", true,
-			"Set the destination JDBC URL.");
+			"d", "destination-jdbc-url", true, "Set the destination JDBC URL.");
 		options.addRequiredOption(
 			"dp", "destination-password", true,
 			"Set the destination password.");
@@ -80,15 +79,12 @@ public class DBPartitionVirtualInstanceMigrator {
 			"dsp", "destination-schema-prefix", true,
 			"Set the destination schema prefix.");
 		options.addRequiredOption(
-			"du", "destination-user", true,
-			"Set the destination user.");
+			"du", "destination-user", true, "Set the destination user.");
 		options.addOption("h", "help", false, "Print help message.");
 		options.addRequiredOption(
-			"s", "source-jdbc-url", true,
-			"Set the source JDBC URL.");
+			"s", "source-jdbc-url", true, "Set the source JDBC URL.");
 		options.addRequiredOption(
-			"sp", "source-password", true,
-			"Set the source password.");
+			"sp", "source-password", true, "Set the source password.");
 		options.addRequiredOption(
 			"su", "source-user", true, "Set the source user.");
 
@@ -117,10 +113,9 @@ public class DBPartitionVirtualInstanceMigrator {
 
 			try {
 				_destinationConnection = DriverManager.getConnection(
-					commandLine.getOptionValue(
-				"destination-jdbc-url"), commandLine.getOptionValue(
-				"destination-user"), commandLine.getOptionValue(
-				"destination-password"));
+					commandLine.getOptionValue("destination-jdbc-url"),
+					commandLine.getOptionValue("destination-user"),
+					commandLine.getOptionValue("destination-password"));
 			}
 			catch (SQLException sqlException) {
 				System.err.println(
@@ -134,9 +129,9 @@ public class DBPartitionVirtualInstanceMigrator {
 
 			try {
 				_sourceConnection = DriverManager.getConnection(
-					commandLine.getOptionValue(
-				"source-jdbc-url"), commandLine.getOptionValue("source-user"), commandLine.getOptionValue(
-				"source-password"));
+					commandLine.getOptionValue("source-jdbc-url"),
+					commandLine.getOptionValue("source-user"),
+					commandLine.getOptionValue("source-password"));
 			}
 			catch (SQLException sqlException) {
 				System.err.println(

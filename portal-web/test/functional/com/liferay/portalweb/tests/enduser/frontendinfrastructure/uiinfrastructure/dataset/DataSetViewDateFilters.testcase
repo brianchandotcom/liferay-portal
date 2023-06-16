@@ -207,7 +207,7 @@ definition {
 		}
 
 		task ("And clicks on Cancel button") {
-			Click(locator1 = "DataSet#NEW_FILTER_CANCEL_BUTTON");
+			Click(locator1 = "DataSet#MODAL_CANCEL_BUTTON");
 		}
 
 		task ("Then New filter modal is closed and the changes are not applied") {

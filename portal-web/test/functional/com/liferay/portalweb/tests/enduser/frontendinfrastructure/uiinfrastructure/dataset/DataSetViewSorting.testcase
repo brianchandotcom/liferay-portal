@@ -351,15 +351,13 @@ definition {
 				locator2 = "//tr[@class='orderable-table-row'][2]//*[contains(text(), 'id')]");
 		}
 
-		task("Then the sorting that was in the first position goes to the second position") {
-			if (IsElementPresent(
-				key_rowPosition = 1,
-				key_text = "id",
-				locator1 = "DataSet#SORT_ENTRY_TABLE")){
-					TestUtils.pass(message = "The sorting that was in the first position went to the second position"); 
-				} else {
-					fail("The sorting that was in the first position didn't go to the second position");
-				}
+		task ("Then the sorting that was in the first position goes to the second position") {
+			if (IsElementPresent(key_rowPosition = 1, key_text = "id", locator1 = "DataSet#SORT_ENTRY_TABLE")) {
+				TestUtils.pass(message = "The sorting that was in the first position went to the second position");
+			}
+			else {
+				fail("The sorting that was in the first position didn't go to the second position");
+			}
 		}
 
 		task ("When the user edits a sorting") {
@@ -369,14 +367,12 @@ definition {
 		}
 
 		task ("Then their position is still the same as before the edit") {
-			if (IsElementPresent(
-				key_rowPosition = 1,
-				key_text = "id",
-				locator1 = "DataSet#SORT_ENTRY_TABLE")){
-					TestUtils.pass(message = "The sortings position didn't change after the edit."); 
-				} else {
-					fail("The sorting position changed after editing. ");
-				}
+			if (IsElementPresent(key_rowPosition = 1, key_text = "id", locator1 = "DataSet#SORT_ENTRY_TABLE")) {
+				TestUtils.pass(message = "The sortings position didn't change after the edit.");
+			}
+			else {
+				fail("The sorting position changed after editing. ");
+			}
 		}
 	}
 

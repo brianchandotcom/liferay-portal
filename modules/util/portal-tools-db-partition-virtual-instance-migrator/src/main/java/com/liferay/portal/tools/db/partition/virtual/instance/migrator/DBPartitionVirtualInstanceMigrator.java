@@ -44,11 +44,11 @@ public class DBPartitionVirtualInstanceMigrator {
 
 			exception.printStackTrace();
 
-			_exitWithCode(ErrorCodes.UNEXPECTED_ERROR);
+			_exit(ErrorCodes.UNEXPECTED_ERROR);
 		}
 	}
 
-	private static void _exitWithCode(int code) {
+	private static void _exit(int code) {
 		try {
 			if (_destinationConnection != null) {
 				_destinationConnection.close();
@@ -140,7 +140,7 @@ public class DBPartitionVirtualInstanceMigrator {
 
 				sqlException.printStackTrace();
 
-				_exitWithCode(ErrorCodes.BAD_SOURCE_PARAMETERS);
+				_exit(ErrorCodes.BAD_SOURCE_PARAMETERS);
 			}
 
 			try {
@@ -154,7 +154,7 @@ public class DBPartitionVirtualInstanceMigrator {
 
 				sqlException.printStackTrace();
 
-				_exitWithCode(ErrorCodes.BAD_DESTINATION_PARAMETERS);
+				_exit(ErrorCodes.BAD_DESTINATION_PARAMETERS);
 			}
 
 			if (commandLine.hasOption("destination-schema-prefix")) {
@@ -167,14 +167,14 @@ public class DBPartitionVirtualInstanceMigrator {
 					"Source database has several instances. That is not " +
 						"supported by the tool");
 
-				_exitWithCode(ErrorCodes.SOURCE_MULTI_INSTANCES);
+				_exit(ErrorCodes.SOURCE_MULTI_INSTANCES);
 			}
 
 			if (!DatabaseUtil.isDefaultPartition(_destinationConnection)) {
 				System.err.println(
 					"Destination database is not the default partition");
 
-				_exitWithCode(ErrorCodes.DESTINATION_NOT_DEFAULT);
+				_exit(ErrorCodes.DESTINATION_NOT_DEFAULT);
 			}
 
 			Recorder recorder = Validator.validateDatabases(
@@ -182,7 +182,7 @@ public class DBPartitionVirtualInstanceMigrator {
 
 			if (recorder.hasErrors() || recorder.hasWarnings()) {
 				recorder.printMessages();
-				_exitWithCode(ErrorCodes.VALIDATION_ERROR);
+				_exit(ErrorCodes.VALIDATION_ERROR);
 			}
 
 			System.out.println("All validations passed successfully");
@@ -200,10 +200,10 @@ public class DBPartitionVirtualInstanceMigrator {
 				"Liferay Portal Tools DB Partition Virtual Instance Migrator",
 				options);
 
-			_exitWithCode(ErrorCodes.BAD_INPUT_ARGUMENTS);
+			_exit(ErrorCodes.BAD_INPUT_ARGUMENTS);
 		}
 
-		_exitWithCode(ErrorCodes.SUCCESS);
+		_exit(ErrorCodes.SUCCESS);
 	}
 
 	private static Connection _destinationConnection;

@@ -110,6 +110,28 @@ public class DBPartitionVirtualInstanceMigrator {
 			CommandLine commandLine = commandLineParser.parse(options, args);
 
 			try {
+				_sourceConnection = DriverManager.getConnection(
+					commandLine.getOptionValue("source-jdbc-url"),
+					commandLine.getOptionValue("source-user"),
+					commandLine.getOptionValue("source-password"));
+			}
+			catch (SQLException sqlException) {
+				System.err.println(
+					"Unable to connect to source with the specified " +
+					"parameters:");
+
+				sqlException.printStackTrace();
+
+				_exit(ErrorCodes.LIFERAY_COMMON_EXIT_CODE_BAD);
+			}
+
+			if (!DatabaseUtil.isSingleVirtualInstance(_sourceConnection)) {
+				System.err.println("Source has more than one virtual instance");
+
+				_exit(ErrorCodes.LIFERAY_COMMON_EXIT_CODE_BAD);
+			}
+
+			try {
 				_targetConnection = DriverManager.getConnection(
 					commandLine.getOptionValue("target-jdbc-url"),
 					commandLine.getOptionValue("target-user"),
@@ -134,28 +156,6 @@ public class DBPartitionVirtualInstanceMigrator {
 			if (commandLine.hasOption("target-schema-prefix")) {
 				DatabaseUtil.setSchemaPrefix(
 					commandLine.getOptionValue("target-schema-prefix"));
-			}
-
-			try {
-				_sourceConnection = DriverManager.getConnection(
-					commandLine.getOptionValue("source-jdbc-url"),
-					commandLine.getOptionValue("source-user"),
-					commandLine.getOptionValue("source-password"));
-			}
-			catch (SQLException sqlException) {
-				System.err.println(
-					"Unable to connect to source with the specified " +
-						"parameters:");
-
-				sqlException.printStackTrace();
-
-				_exit(ErrorCodes.LIFERAY_COMMON_EXIT_CODE_BAD);
-			}
-
-			if (!DatabaseUtil.isSingleVirtualInstance(_sourceConnection)) {
-				System.err.println("Source has more than one virtual instance");
-
-				_exit(ErrorCodes.LIFERAY_COMMON_EXIT_CODE_BAD);
 			}
 
 			Recorder recorder = Validator.validateDatabases(

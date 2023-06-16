@@ -53,6 +53,16 @@ DLSizeLimitConfigurationDisplayContext dlSizeLimitConfigurationDisplayContext = 
 			</div>
 		</clay:sheet-section>
 
+		<clay:sheet-section>
+			<h3 class="c-mb-2 sheet-subtitle text-2 text-secondary"><liferay-ui:message key="size-limit-copy-files-title" /></h3>
+
+			<p class="c-mb-4 text-3 text-secondary">
+				<liferay-ui:message key="size-limit-copy-files-help" />
+			</p>
+
+			<aui:input label="max-size-to-copy" name="copyFilesMaxSize" value="<%= dlSizeLimitConfigurationDisplayContext.getCopyFilesMaxSize() %>" />
+		</clay:sheet-section>
+
 		<clay:sheet-footer>
 			<aui:button primary="<%= true %>" type="submit" />
 		</clay:sheet-footer>

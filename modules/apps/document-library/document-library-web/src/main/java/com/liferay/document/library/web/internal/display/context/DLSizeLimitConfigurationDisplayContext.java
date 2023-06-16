@@ -45,6 +45,10 @@ public class DLSizeLimitConfigurationDisplayContext {
 		_scopePK = scopePK;
 	}
 
+	public long getCopyFilesMaxSize() {
+		return 0;
+	}
+
 	public String getEditDLSizeLimitConfigurationURL() {
 		return PortletURLBuilder.createActionURL(
 			_liferayPortletResponse

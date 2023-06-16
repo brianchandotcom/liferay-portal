@@ -309,7 +309,7 @@ definition {
 		}
 
 		task ("When the user tries to save the date filter") {
-			Click(locator1 = "DataSet#NEW_FILTER_SAVE_BUTTON");
+			Click(locator1 = "DataSet#MODAL_SAVE_BUTTON");
 		}
 
 		task ("Then assert it's not possible to save a date filter with an invalid date range") {
@@ -343,7 +343,7 @@ definition {
 		}
 
 		task ("And clicks on the Save button") {
-			Click(locator1 = "DataSet#NEW_FILTER_SAVE_BUTTON");
+			Click(locator1 = "DataSet#MODAL_SAVE_BUTTON");
 		}
 
 		task ("Then a successful message is displayed") {

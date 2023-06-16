@@ -15,6 +15,7 @@
 package com.liferay.portal.search.tuning.rankings.web.internal.index;
 
 import com.liferay.json.storage.service.JSONStorageEntryLocalService;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -24,11 +25,15 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.search.capabilities.SearchCapabilities;
+import com.liferay.portal.search.index.SyncReindexManager;
 import com.liferay.portal.search.spi.reindexer.IndexReindexer;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexName;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexNameBuilder;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -42,6 +47,17 @@ public class RankingIndexReindexer implements IndexReindexer {
 
 	@Override
 	public void reindex(long[] companyIds) throws Exception {
+		reindex(companyIds, null);
+	}
+
+	@Override
+	public void reindex(long[] companyIds, String executionMode)
+		throws Exception {
+
+		if (!searchCapabilities.isResultRankingsSupported()) {
+			return;
+		}
+
 		for (long companyId : companyIds) {
 			List<Long> classPKs = jsonStorageEntryLocalService.getClassPKs(
 				companyId, classNameLocalService.getClassNameId(Ranking.class),
@@ -61,20 +77,41 @@ public class RankingIndexReindexer implements IndexReindexer {
 				continue;
 			}
 
-			try {
-				rankingIndexCreator.delete(rankingIndexName);
+			Date date = null;
+
+			if (_isExecuteSyncReindex(executionMode)) {
+				date = new Date();
+
+				Thread.sleep(1000);
 			}
-			catch (RuntimeException runtimeException) {
-				_log.error(
-					"Unable to delete index " + rankingIndexName.getIndexName(),
-					runtimeException);
+			else {
+				try {
+					rankingIndexCreator.delete(rankingIndexName);
+				}
+				catch (RuntimeException runtimeException) {
+					_log.error(
+						"Unable to delete index " +
+							rankingIndexName.getIndexName(),
+						runtimeException);
+				}
 			}
 
-			rankingIndexCreator.create(rankingIndexName);
+			if (!_isExecuteSyncReindex(executionMode)) {
+				rankingIndexCreator.create(rankingIndexName);
+			}
 
 			for (long classPK : classPKs) {
 				rankingIndexWriter.create(
 					rankingIndexName, _buildRanking(classPK));
+			}
+
+			if (_isExecuteSyncReindex(executionMode)) {
+				SyncReindexManager syncReindexManager =
+					_syncReindexManagerSnapshot.get();
+
+				syncReindexManager.deleteStaleDocuments(
+					rankingIndexName.getIndexName(), date,
+					Collections.emptySet());
 			}
 		}
 	}
@@ -93,6 +130,9 @@ public class RankingIndexReindexer implements IndexReindexer {
 
 	@Reference
 	protected RankingIndexWriter rankingIndexWriter;
+
+	@Reference
+	protected SearchCapabilities searchCapabilities;
 
 	private Ranking _buildRanking(long classPK) throws Exception {
 		JSONObject jsonObject = jsonStorageEntryLocalService.getJSONObject(
@@ -134,7 +174,21 @@ public class RankingIndexReindexer implements IndexReindexer {
 		return pins;
 	}
 
+	private boolean _isExecuteSyncReindex(String executionMode) {
+		if ((_syncReindexManagerSnapshot.get() != null) &&
+			(executionMode != null) && executionMode.equals("sync")) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		RankingIndexReindexer.class);
+
+	private static final Snapshot<SyncReindexManager>
+		_syncReindexManagerSnapshot = new Snapshot<>(
+			RankingIndexReindexer.class, SyncReindexManager.class, null, true);
 
 }

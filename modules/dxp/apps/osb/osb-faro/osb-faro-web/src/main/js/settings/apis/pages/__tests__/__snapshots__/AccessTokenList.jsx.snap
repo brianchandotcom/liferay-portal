@@ -245,6 +245,24 @@ exports[`AccessTokenList should render indefinite on expiration date column when
 </td>
 `;
 
+exports[`AccessTokenList should render the correct date on expiration date column when generated token is 1 year 1`] = `
+<td>
+  May 12, 2024
+</td>
+`;
+
+exports[`AccessTokenList should render the correct date on expiration date column when generated token is 6 months 1`] = `
+<td>
+  Nov 12, 2023
+</td>
+`;
+
+exports[`AccessTokenList should render the correct date on expiration date column when generated token is 30 days 1`] = `
+<td>
+  Jun 12, 2023
+</td>
+`;
+
 exports[`AccessTokenList should show the generated token in a list and the "Generate Token" button should no longer be visible 1`] = `
 <div
   class="table-responsive table-root flex-grow-1 mb-0"

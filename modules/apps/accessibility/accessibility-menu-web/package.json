@@ -2,10 +2,10 @@
 	"dependencies": {
 		"@clayui/alert": "3.93.0",
 		"@clayui/button": "3.92.0",
-		"@clayui/form": "3.95.2",
+		"@clayui/form": "3.96.0",
 		"@clayui/icon": "3.56.0",
 		"@clayui/layout": "3.93.0",
-		"@clayui/modal": "3.95.2",
+		"@clayui/modal": "3.96.0",
 		"@clayui/progress-bar": "3.65.0",
 		"@liferay/cookies-banner-web": "*",
 		"@liferay/frontend-js-react-web": "*",

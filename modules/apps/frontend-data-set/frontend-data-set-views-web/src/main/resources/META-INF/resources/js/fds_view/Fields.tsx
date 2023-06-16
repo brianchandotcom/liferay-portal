@@ -44,6 +44,7 @@ interface IFDSField {
 	label: string;
 	name: string;
 	renderer: string;
+	rendererLabel?: string;
 	sortable: boolean;
 	type: string;
 }
@@ -65,12 +66,27 @@ interface ISaveFDSFieldsModalContentProps {
 	saveFDSFieldsURL: string;
 }
 
-const getRendererLabel = (rendererName: string) => {
-	return FDS_INTERNAL_CELL_RENDERERS.filter((renderer) => {
+const getRendererLabel = ({
+	cetRenderers = [],
+	rendererName,
+}: {
+	cetRenderers?: FDSClientExtensionCellRenderer[];
+	rendererName: string;
+}) => {
+	const AVAILABLE_CELL_RENDERERS = [
+		...FDS_INTERNAL_CELL_RENDERERS,
+		...cetRenderers,
+	];
+
+	const renderer = AVAILABLE_CELL_RENDERERS.filter((renderer: any) => {
 		return (
-			renderer.name === rendererName || renderer.label === rendererName
+			renderer.name === rendererName ||
+			renderer.label === rendererName ||
+			renderer.erc
 		);
-	})[0].label!;
+	})[0];
+
+	return renderer.label || renderer.name;
 };
 
 const SaveFDSFieldsModalContent = ({
@@ -402,7 +418,10 @@ const EditFDSFieldModalContent = ({
 		});
 		const editedFDSField: any = {
 			...editedFDSFieldResponse,
-			renderer: getRendererLabel(editedFDSFieldResponse.renderer),
+			rendererLabel: getRendererLabel({
+				cetRenderers: fdsClientExtensionCellRenderers,
+				rendererName: editedFDSFieldResponse.renderer,
+			}),
 		};
 		onSave({editedFDSField});
 	};
@@ -454,7 +473,10 @@ const EditFDSFieldModalContent = ({
 						id={fdsFieldRendererSelectId}
 					>
 						{selectedFDSFieldRenderer
-							? getRendererLabel(selectedFDSFieldRenderer)
+							? getRendererLabel({
+									cetRenderers: fdsClientExtensionCellRenderers,
+									rendererName: selectedFDSFieldRenderer,
+							  })
 							: Liferay.Language.get('choose-an-option')}
 					</ClayButton>
 				}
@@ -595,7 +617,10 @@ const Fields = ({
 
 		const storedFDSFields = responseJSON?.items.map(
 			(field: IFDSField): IFDSField => {
-				field.renderer = getRendererLabel(field.renderer);
+				field.rendererLabel = getRendererLabel({
+					cetRenderers: fdsClientExtensionCellRenderers,
+					rendererName: field.renderer,
+				});
 
 				return field;
 			}
@@ -792,6 +817,9 @@ const Fields = ({
 						});
 
 						createdFDSFields.forEach((fdsField) => {
+							fdsField.rendererLabel = getRendererLabel({
+								rendererName: fdsField.renderer,
+							});
 							newFDSFields.push(fdsField);
 						});
 
@@ -864,7 +892,7 @@ const Fields = ({
 						},
 						{
 							label: Liferay.Language.get('cell-renderer'),
-							name: 'renderer',
+							name: 'rendererLabel',
 						},
 						{
 							label: Liferay.Language.get('sortable'),

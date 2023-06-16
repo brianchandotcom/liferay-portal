@@ -178,13 +178,14 @@ public class VerticalNavTag extends BaseContainerTag {
 				IconTag iconTag = new IconTag();
 
 				if (expanded) {
+					jspWriter.write("<span class=\"collapse-icon-open\">");
 					iconTag.setSymbol("caret-bottom");
 				}
 				else {
+					jspWriter.write("<span class=\"collapse-icon-closed\">");
 					iconTag.setSymbol("caret-right");
 				}
 
-				jspWriter.write("<span class=\"collapse-icon-closed\">");
 				iconTag.doTag(pageContext);
 				jspWriter.write("</span>");
 			}

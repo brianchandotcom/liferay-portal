@@ -104,7 +104,7 @@ definition {
 			locator1 = "DataSet#SORTING_SELECT",
 			value1 = ${key_sorting});
 
-		PortletEntry.save();
+		Click(locator1 = "DataSet#MODAL_SAVE_BUTTON");
 	}
 
 	macro createDataSet {
@@ -402,6 +402,44 @@ definition {
 				checkboxName = ${key_fieldItem},
 				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
+	}
+
+
+	macro deleteSorting {
+		var key_rowPosition = ${key_rowPosition};
+
+		Click(
+			key_rowPosition = ${key_entryPosition},
+			locator1 = "DataSet#ENTRY_ELLIPSIS_BUTTON_BY_POSITION");
+
+		Click(
+			key_dropdownItem = "Delete",
+			locator1 = "DataSet#DROPDOWN_ITEM");
+
+		Button.click(button = "Delete");
+
+		Alert.viewSuccessMessage();
+	}
+
+	macro editSorting {
+		var key_entryPosition = ${key_entryPosition};
+		var key_sortingOption = ${key_sortingOption};
+
+		Click(
+			key_rowPosition = ${key_entryPosition},
+			locator1 = "DataSet#ENTRY_ELLIPSIS_BUTTON_BY_POSITION");
+
+		Click(
+			key_dropdownItem = "Edit",
+			locator1 = "DataSet#DROPDOWN_ITEM");
+
+		Type(
+			locator1 = "DataSet#SORTING_SELECT",
+			value1 = ${key_sortingOption});
+
+		Click(locator1 = "DataSet#MODAL_SAVE_BUTTON");
+
+		Alert.viewSuccessMessage();
 	}
 
 }

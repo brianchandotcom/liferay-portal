@@ -182,4 +182,51 @@ definition {
 		}
 	}
 
+    @description = "Story ID: LPS-164733 | Test Summary: Verify that Only the Employee user can not see 'Review button' when organization are in 'Awaiting Approval On EVP' status"
+	@priority = 5
+	test EmployeeCanNotSeeReviewInAwaitingEVPStatus {
+		task ("Given that the Manager user create a organization") {
+            User.logoutAndLoginPG(
+				userLoginEmailAddress = "manager@liferay.com",
+				userLoginFullName = "Manager User");
+
+            EVPUtils.gotoEVP();
+
+            EVPOrganization.createAnOrganization();
+
+			EVPOrganization.fillOrganizationForm(
+				bankingInfo = "Bank Test",
+				city = "City Test",
+				contactEmail = "test@liferay.com",
+				contactName = "Contact Test",
+				contactPhone = 12345,
+				country = "Country Test",
+				organizationName = "Organization Test",
+				organizationSite = "www.test.com.br",
+				smallDescription = "Description Test",
+				state = "State Test",
+				street = "Street Test",
+				taxId = 12345,
+				zip = "12.345-67");
+
+            Button.click(button = "Done");
+		}
+
+        task ("When the employee go to organization created") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "employee@liferay.com",
+				userLoginFullName = "Employee User");
+
+            EVPUtils.gotoEVP();
+
+            EVPNavigator.goToNavItem(navItem = "Organization");
+		}
+
+		task ("Then the employee user can not see Awaiting Approval On EVP status") {
+			EVPOrganization.actionKebabMenuNotPresent(
+                organizationName = "Organization Test",
+                actionKebab = "Awaiting Approval On EVP");
+		}
+	}
+
 }

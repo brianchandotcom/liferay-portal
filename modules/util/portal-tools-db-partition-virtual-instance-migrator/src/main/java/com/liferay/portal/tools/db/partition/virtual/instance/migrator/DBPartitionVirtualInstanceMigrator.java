@@ -37,115 +37,7 @@ public class DBPartitionVirtualInstanceMigrator {
 
 	public static void main(String[] args) {
 		try {
-			Options options = _getOptions();
-
-			if ((args.length != 0) &&
-				(args[0].equals("-h") || args[0].endsWith("help"))) {
-
-				HelpFormatter helpFormatter = new HelpFormatter();
-
-				helpFormatter.printHelp(
-					"Liferay Portal Tools DB Partition Virtual Instance " +
-						"Migrator",
-					options);
-
-				return;
-			}
-
-			try {
-				CommandLineParser commandLineParser = new DefaultParser();
-
-				CommandLine commandLine = commandLineParser.parse(
-					options, args);
-
-				String sourceJdbcURL = commandLine.getOptionValue(
-					"source-jdbc-url");
-				String sourceUser = commandLine.getOptionValue("source-user");
-				String sourcePassword = commandLine.getOptionValue(
-					"source-password");
-
-				String destinationJdbcURL = commandLine.getOptionValue(
-					"destination-jdbc-url");
-				String destinationUser = commandLine.getOptionValue(
-					"destination-user");
-				String destinationPassword = commandLine.getOptionValue(
-					"destination-password");
-
-				try {
-					_sourceConnection = DriverManager.getConnection(
-						sourceJdbcURL, sourceUser, sourcePassword);
-				}
-				catch (SQLException sqlException) {
-					System.err.println(
-						"Unable to get source database connection with the " +
-							"specified parameters:");
-					sqlException.printStackTrace();
-
-					_exitWithCode(ErrorCodes.BAD_SOURCE_PARAMETERS);
-				}
-
-				try {
-					_destinationConnection = DriverManager.getConnection(
-						destinationJdbcURL, destinationUser,
-						destinationPassword);
-				}
-				catch (SQLException sqlException) {
-					System.err.println(
-						"Unable to get destination database connection with " +
-							"the specified parameters:");
-					sqlException.printStackTrace();
-
-					_exitWithCode(ErrorCodes.BAD_DESTINATION_PARAMETERS);
-				}
-
-				if (commandLine.hasOption("destination-schema-prefix")) {
-					DatabaseUtil.setSchemaPrefix(
-						commandLine.getOptionValue(
-							"destination-schema-prefix"));
-				}
-
-				if (!DatabaseUtil.isSingleVirtualInstance(_sourceConnection)) {
-					System.err.println(
-						"Source database has several instances. That is not " +
-							"supported by the tool");
-
-					_exitWithCode(ErrorCodes.SOURCE_MULTI_INSTANCES);
-				}
-
-				if (!DatabaseUtil.isDefaultPartition(_destinationConnection)) {
-					System.err.println(
-						"Destination database is not the default partition");
-
-					_exitWithCode(ErrorCodes.DESTINATION_NOT_DEFAULT);
-				}
-
-				Recorder recorder = Validator.validateDatabases(
-					_sourceConnection, _destinationConnection);
-
-				if (recorder.hasErrors() || recorder.hasWarnings()) {
-					recorder.printMessages();
-					_exitWithCode(ErrorCodes.VALIDATION_ERROR);
-				}
-
-				System.out.println("All validations passed successfully");
-			}
-			catch (ParseException parseException) {
-				System.err.println(
-					"Unable to parse command line properties: " +
-						parseException.getMessage());
-				System.err.println();
-
-				HelpFormatter helpFormatter = new HelpFormatter();
-
-				helpFormatter.printHelp(
-					"Liferay Portal Tools DB Partition Virtual Instance " +
-						"Migrator",
-					options);
-
-				_exitWithCode(ErrorCodes.BAD_INPUT_ARGUMENTS);
-			}
-
-			_exitWithCode(ErrorCodes.SUCCESS);
+			_main(args);
 		}
 		catch (Exception exception) {
 			System.err.println("Unexpected error:");
@@ -200,6 +92,113 @@ public class DBPartitionVirtualInstanceMigrator {
 			"su", "source-user", true, "Set the source database user name.");
 
 		return options;
+	}
+
+	private static void _main(String[] args) throws Exception {
+		Options options = _getOptions();
+
+		if ((args.length != 0) &&
+			(args[0].equals("-h") || args[0].endsWith("help"))) {
+
+			HelpFormatter helpFormatter = new HelpFormatter();
+
+			helpFormatter.printHelp(
+				"Liferay Portal Tools DB Partition Virtual Instance Migrator",
+				options);
+
+			return;
+		}
+
+		try {
+			CommandLineParser commandLineParser = new DefaultParser();
+
+			CommandLine commandLine = commandLineParser.parse(options, args);
+
+			String sourceJdbcURL = commandLine.getOptionValue(
+				"source-jdbc-url");
+			String sourceUser = commandLine.getOptionValue("source-user");
+			String sourcePassword = commandLine.getOptionValue(
+				"source-password");
+
+			String destinationJdbcURL = commandLine.getOptionValue(
+				"destination-jdbc-url");
+			String destinationUser = commandLine.getOptionValue(
+				"destination-user");
+			String destinationPassword = commandLine.getOptionValue(
+				"destination-password");
+
+			try {
+				_sourceConnection = DriverManager.getConnection(
+					sourceJdbcURL, sourceUser, sourcePassword);
+			}
+			catch (SQLException sqlException) {
+				System.err.println(
+					"Unable to get source database connection with the " +
+						"specified parameters:");
+				sqlException.printStackTrace();
+
+				_exitWithCode(ErrorCodes.BAD_SOURCE_PARAMETERS);
+			}
+
+			try {
+				_destinationConnection = DriverManager.getConnection(
+					destinationJdbcURL, destinationUser, destinationPassword);
+			}
+			catch (SQLException sqlException) {
+				System.err.println(
+					"Unable to get destination database connection with the " +
+						"specified parameters:");
+				sqlException.printStackTrace();
+
+				_exitWithCode(ErrorCodes.BAD_DESTINATION_PARAMETERS);
+			}
+
+			if (commandLine.hasOption("destination-schema-prefix")) {
+				DatabaseUtil.setSchemaPrefix(
+					commandLine.getOptionValue("destination-schema-prefix"));
+			}
+
+			if (!DatabaseUtil.isSingleVirtualInstance(_sourceConnection)) {
+				System.err.println(
+					"Source database has several instances. That is not " +
+						"supported by the tool");
+
+				_exitWithCode(ErrorCodes.SOURCE_MULTI_INSTANCES);
+			}
+
+			if (!DatabaseUtil.isDefaultPartition(_destinationConnection)) {
+				System.err.println(
+					"Destination database is not the default partition");
+
+				_exitWithCode(ErrorCodes.DESTINATION_NOT_DEFAULT);
+			}
+
+			Recorder recorder = Validator.validateDatabases(
+				_sourceConnection, _destinationConnection);
+
+			if (recorder.hasErrors() || recorder.hasWarnings()) {
+				recorder.printMessages();
+				_exitWithCode(ErrorCodes.VALIDATION_ERROR);
+			}
+
+			System.out.println("All validations passed successfully");
+		}
+		catch (ParseException parseException) {
+			System.err.println(
+				"Unable to parse command line properties: " +
+					parseException.getMessage());
+			System.err.println();
+
+			HelpFormatter helpFormatter = new HelpFormatter();
+
+			helpFormatter.printHelp(
+				"Liferay Portal Tools DB Partition Virtual Instance Migrator",
+				options);
+
+			_exitWithCode(ErrorCodes.BAD_INPUT_ARGUMENTS);
+		}
+
+		_exitWithCode(ErrorCodes.SUCCESS);
 	}
 
 	private static Connection _destinationConnection;

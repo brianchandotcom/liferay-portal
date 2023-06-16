@@ -22,12 +22,12 @@
 	"items": [
 		{
 			"accountEntryRestricted": false,
-			"externalReferenceCode": "MSOD_BOOKMARKS",
+			"externalReferenceCode": "MSOD_BOOKMARK",
 			"label": {
-				"en_US": "Bookmarks"
+				"en_US": "Bookmark"
 			},
 			"modifiable": true,
-			"name": "bookmarks",
+			"name": "Bookmark",
 			"objectFields": [
 				{
 					"DBType": "Clob",
@@ -108,11 +108,11 @@
 					"name": {
 						"en_US": "Main"
 					},
-					"objectDefinitionExternalReferenceCode": "MSOD_BOOKMARKS",
+					"objectDefinitionExternalReferenceCode": "MSOD_BOOKMARK",
 					"objectLayoutTabs": [
 						{
 							"name": {
-								"en_US": "Bookmarks"
+								"en_US": "Bookmark"
 							},
 							"objectLayoutBoxes": [
 								{
@@ -182,7 +182,7 @@
 					"name": {
 						"en_US": "Valid URL"
 					},
-					"objectDefinitionExternalReferenceCode": "MSOD_BOOKMARKS",
+					"objectDefinitionExternalReferenceCode": "MSOD_BOOKMARK",
 					"script": "isURL(url)"
 				}
 			],
@@ -192,7 +192,7 @@
 					"name": {
 						"en_US": "Main"
 					},
-					"objectDefinitionExternalReferenceCode": "MSOD_BOOKMARKS",
+					"objectDefinitionExternalReferenceCode": "MSOD_BOOKMARK",
 					"objectViewColumns": [
 						{
 							"label": {

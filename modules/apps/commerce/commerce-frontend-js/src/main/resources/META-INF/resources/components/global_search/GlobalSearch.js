@@ -242,7 +242,7 @@ function GlobalSearch({
 			>
 				<ClayDropDown.ItemList>
 					<ClayDropDown.Group
-						header={Liferay.Language.get('catalog')}
+						header={Liferay.Language.get('catalog[noun]')}
 					>
 						{!productsLoading ? (
 							products?.length ? (

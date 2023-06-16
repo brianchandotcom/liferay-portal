@@ -368,7 +368,7 @@ public class CommerceSearchResource {
 		if (cpDataSourceResult.getLength() > 0) {
 			searchItemModels.add(
 				new SearchItemModel(
-					"label", _language.get(resourceBundle, "catalog")));
+					"label", _language.get(resourceBundle, "catalog[noun]")));
 		}
 
 		for (CPCatalogEntry cpCatalogEntry :
@@ -385,7 +385,7 @@ public class CommerceSearchResource {
 			url = HttpComponentsUtil.addParameter(url, "q", queryString);
 
 			SearchItemModel searchItemModel = new SearchItemModel(
-				"category", _language.get(resourceBundle, "catalog"));
+				"category", _language.get(resourceBundle, "catalog[noun]"));
 
 			searchItemModel.setUrl(url);
 

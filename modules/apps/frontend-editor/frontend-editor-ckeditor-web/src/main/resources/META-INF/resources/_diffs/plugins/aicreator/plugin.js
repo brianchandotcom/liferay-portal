@@ -12,21 +12,21 @@
  * details.
  */
 
-const POPOVER_CONTENT_TEMPLATE = `
-	<div class="arrow"></div>
-	<div class="inline-scroller">
-		<div class="popover-header">
-			${Liferay.Language.get('configure-openai')}
-		</div>
-		<div class="popover-body">
-			${Liferay.Language.get(
-				'api-authentication-is-needed-to-use-this-feature.-add-an-api-key-from-the-settings-page-or-contact-your-administrator'
-			)}
-		</div>
-	</div>
-`;
-
 (function () {
+	const POPOVER_CONTENT_TEMPLATE = `
+		<div class="arrow"></div>
+		<div class="inline-scroller">
+			<div class="popover-header">
+				${Liferay.Language.get('configure-openai')}
+			</div>
+			<div class="popover-body">
+				${Liferay.Language.get(
+					'api-authentication-is-needed-to-use-this-feature.-add-an-api-key-from-the-settings-page-or-contact-your-administrator'
+				)}
+			</div>
+		</div>
+	`;
+
 	const pluginName = 'aicreator';
 
 	if (CKEDITOR.plugins.get(pluginName)) {

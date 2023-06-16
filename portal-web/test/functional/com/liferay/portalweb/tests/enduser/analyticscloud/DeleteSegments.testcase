@@ -100,7 +100,7 @@ definition {
 		}
 
 		task ("View the segment criteria") {
-			ACSegments.viewSegmentCriteriaIndividualAttributes(attributeName = "createDate");
+			ACSegments.viewSegmentCriteriaIndividualAttributes(attributeName = "modifiedDate");
 
 			AssertElementNotPresent(
 				key_criteriaName = "birthDate",

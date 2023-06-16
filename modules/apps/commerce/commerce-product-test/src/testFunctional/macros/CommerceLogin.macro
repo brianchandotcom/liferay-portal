@@ -22,7 +22,8 @@ definition {
 			value1 = ${newPassword});
 
 		Type(
-			locator1 = "TextInput#ENTER_AGAIN",
+			key_text = "Reenter",
+			locator1 = "TextInput#ANY",
 			value1 = ${newPassword});
 
 		Button.clickSave();

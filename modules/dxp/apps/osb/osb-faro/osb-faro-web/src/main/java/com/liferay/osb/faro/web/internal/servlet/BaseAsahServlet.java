@@ -18,13 +18,10 @@ import com.liferay.osb.faro.engine.client.util.EngineServiceURLUtil;
 import com.liferay.osb.faro.engine.client.util.TokenUtil;
 import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.osb.faro.web.internal.util.FaroProjectThreadLocal;
-import com.liferay.petra.string.StringPool;
-import com.liferay.petra.string.StringUtil;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import java.util.Arrays;
 import java.util.Map;
 
 import javax.servlet.http.HttpServlet;
@@ -68,11 +65,8 @@ public abstract class BaseAsahServlet extends HttpServlet {
 		String url = uri.toString();
 
 		return DigestUtils.sha256Hex(
-			StringUtil.merge(
-				Arrays.asList(
-					TokenUtil.getOSBAsahSecurityToken(),
-					url.substring(0, url.lastIndexOf(uri.getPath()))),
-				StringPool.BLANK));
+			TokenUtil.getOSBAsahSecurityToken() +
+				url.substring(0, url.lastIndexOf(uri.getPath())));
 	}
 
 	protected static final String ASAH_PROJECT_ID_HEADER =

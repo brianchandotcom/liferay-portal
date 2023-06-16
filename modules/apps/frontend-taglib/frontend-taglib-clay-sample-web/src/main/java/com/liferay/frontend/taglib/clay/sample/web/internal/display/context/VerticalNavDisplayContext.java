@@ -46,6 +46,8 @@ public class VerticalNavDisplayContext {
 								"#" + integerWrapper.getValue());
 							verticalNavItem.setLabel(
 								"Item " + integerWrapper.getValue());
+							verticalNavItem.setId(
+								"id-" + integerWrapper.getValue());
 
 							if ((integerWrapper.getValue() % 2) == 0) {
 								verticalNavItem.setItems(

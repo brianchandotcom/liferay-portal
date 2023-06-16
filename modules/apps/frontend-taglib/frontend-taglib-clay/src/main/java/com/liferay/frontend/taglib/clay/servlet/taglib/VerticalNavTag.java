@@ -75,6 +75,11 @@ public class VerticalNavTag extends BaseContainerTag {
 	}
 
 	@Override
+	protected String getHydratedModuleName() {
+		return "{VerticalNav} from frontend-taglib-clay";
+	}
+
+	@Override
 	protected Map<String, Object> prepareProps(Map<String, Object> props) {
 		props.put("decorated", _decorated);
 		props.put("large", _large);

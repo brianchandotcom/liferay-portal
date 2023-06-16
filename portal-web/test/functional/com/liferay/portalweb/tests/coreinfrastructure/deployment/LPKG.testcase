@@ -36,20 +36,14 @@ definition {
 		var lpkgFileExists = FileUtil.exists("${liferayHome}/osgi/marketplace/${lpkgFileName}");
 
 		if (${lpkgFileExists} == "false") {
-			AntCommand(
-				locator1 = "build-test.xml",
-				value1 = "deploy-osgi-apps -Dosgi.app.includes=gogo-shell");
+			AntCommands.runCommand("build-test.xml", "deploy-osgi-apps -Dosgi.app.includes=gogo-shell");
 		}
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "move-file -DfileRegex=*Gogo*Impl.lpkg -DfromDir=${liferayHome}/osgi/marketplace -DtoDir=${liferayHome}");
+		AntCommands.runCommand("build-test.xml", "move-file -DfileRegex=*Gogo*Impl.lpkg -DfromDir=${liferayHome}/osgi/marketplace -DtoDir=${liferayHome}");
 
 		Portlet.startServer(keepCachedAppServerData = "true");
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "move-file -DfileRegex=*Gogo*Impl.lpkg -DfromDir=${liferayHome} -DtoDir=${liferayHome}/deploy");
+		AntCommands.runCommand("build-test.xml", "move-file -DfileRegex=*Gogo*Impl.lpkg -DfromDir=${liferayHome} -DtoDir=${liferayHome}/deploy");
 
 		WaitForConsoleTextPresent(value1 = "Processing ${lpkgFileName}");
 

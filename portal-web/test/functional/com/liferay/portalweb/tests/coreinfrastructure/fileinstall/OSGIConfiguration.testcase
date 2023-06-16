@@ -35,10 +35,7 @@ definition {
 		property test.assert.warning.exceptions = "true";
 		property test.liferay.virtual.instance = "false";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "Virtual Instances");
+		PortalInstances.openVirtualInstancesAdmin();
 
 		PortalInstances.viewCP(virtualHost = "www.able.com");
 

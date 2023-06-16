@@ -253,7 +253,6 @@ public class RestHighLevelClientFactory {
 					_proxyConfig.getHost(), _proxyConfig.getPort(), "http"));
 		}
 
-		httpClientBuilder.disableAuthCaching();
 		httpClientBuilder.disableAutomaticRetries();
 		httpClientBuilder.disableConnectionState();
 		httpClientBuilder.disableContentCompression();

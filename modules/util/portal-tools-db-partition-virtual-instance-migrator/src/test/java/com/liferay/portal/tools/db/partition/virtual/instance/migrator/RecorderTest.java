@@ -20,7 +20,6 @@ import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.List;
 
-import com.liferay.portal.tools.db.partition.virtual.instance.migrator.Recorder;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;

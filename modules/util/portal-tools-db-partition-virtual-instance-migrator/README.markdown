@@ -6,7 +6,7 @@ This tool allows to migrate a virtual instance to a new partition in a database 
     - Database user with DDL privileges
 
 ## Usage
-    usage: Liferay Portal Tools DB Partition Virtual Instance Migrator 
+    usage: Liferay Portal Tools DB Partition Virtual Instance Migrator
     -h,--help Print help message.
     -s,--source-jdbc-url <arg> Set the source JDBC URL.
     -sp,--source-password <arg> Set the source password.

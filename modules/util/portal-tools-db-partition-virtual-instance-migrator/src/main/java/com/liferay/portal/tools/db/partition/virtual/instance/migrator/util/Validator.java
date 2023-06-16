@@ -60,8 +60,7 @@ public class Validator {
 			if (targetPartitionedTableNames.contains(
 					sourcePartitionedTableName)) {
 
-				targetPartitionedTableNames.remove(
-					sourcePartitionedTableName);
+				targetPartitionedTableNames.remove(sourcePartitionedTableName);
 
 				continue;
 			}
@@ -87,11 +86,10 @@ public class Validator {
 			Recorder recorder)
 		throws Exception {
 
-		_validateReleaseState(
-			sourceConnection, targetConnection, recorder);
+		_validateReleaseState(sourceConnection, targetConnection, recorder);
 
-		Map<String, Release> targetReleasesMap =
-			DatabaseUtil.getReleasesMap(targetConnection);
+		Map<String, Release> targetReleasesMap = DatabaseUtil.getReleasesMap(
+			targetConnection);
 
 		List<Release> sourceReleases = DatabaseUtil.getReleases(
 			sourceConnection);
@@ -128,9 +126,7 @@ public class Validator {
 				higherVersionModules.add(sourceServletContextName);
 			}
 
-			if (sourceRelease.getVerified() &&
-				!targetRelease.getVerified()) {
-
+			if (sourceRelease.getVerified() && !targetRelease.getVerified()) {
 				unverifiedTargetModules.add(sourceServletContextName);
 			}
 			else if (!sourceRelease.getVerified() &&
@@ -145,8 +141,7 @@ public class Validator {
 				destionationRelease.getServletContextName();
 
 			if (targetServletContextName.endsWith(".service")) {
-				missingTargetServiceModules.add(
-					targetServletContextName);
+				missingTargetServiceModules.add(targetServletContextName);
 			}
 			else {
 				missingTargetModules.add(targetServletContextName);
@@ -162,15 +157,13 @@ public class Validator {
 			"needs to be upgraded in source database before the migration");
 		recorder.registerErrors(
 			higherVersionModules,
-			"needs to be upgraded in target database before the " +
-				"migration");
+			"needs to be upgraded in target database before the migration");
 		recorder.registerErrors(
 			unverifiedSourceModules,
 			"needs to be verified in the source database before the migration");
 		recorder.registerErrors(
 			unverifiedTargetModules,
-			"needs to be verified in the target database before the " +
-				"migration");
+			"needs to be verified in the target database before the migration");
 		recorder.registerWarnings(
 			missingTargetModules, "is not present in the source database");
 		recorder.registerWarnings(
@@ -212,8 +205,7 @@ public class Validator {
 
 		if (DatabaseUtil.hasWebId(targetConnection, sourceWebId)) {
 			recorder.registerError(
-				"WebId " + sourceWebId +
-					" already exists in target database");
+				"WebId " + sourceWebId + " already exists in target database");
 		}
 	}
 

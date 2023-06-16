@@ -79,8 +79,7 @@ public class DBPartitionVirtualInstanceMigrator {
 		options.addRequiredOption(
 			"t", "target-jdbc-url", true, "Set the target JDBC URL.");
 		options.addRequiredOption(
-			"tp", "target-password", true,
-			"Set the target password.");
+			"tp", "target-password", true, "Set the target password.");
 		options.addOption(
 			"tsp", "target-schema-prefix", true,
 			"Set the target schema prefix.");
@@ -185,7 +184,7 @@ public class DBPartitionVirtualInstanceMigrator {
 		_exit(ErrorCodes.LIFERAY_COMMON_EXIT_CODE_OK);
 	}
 
-	private static Connection _targetConnection;
 	private static Connection _sourceConnection;
+	private static Connection _targetConnection;
 
 }

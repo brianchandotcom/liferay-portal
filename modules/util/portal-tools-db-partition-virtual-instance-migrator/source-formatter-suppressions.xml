@@ -2,6 +2,6 @@
 
 <suppressions>
 	<checkstyle>
-		<suppress checks="CompanyIterationCheck" files="src/main/java/com/liferay/portal/tools/db/partition/virtual/instance/migrator/internal/util/DatabaseUtil\.java" />
+		<suppress checks="CompanyIterationCheck" files="src/main/java/com/liferay/portal/tools/db/partition/virtual/instance/migrator/util/DatabaseUtil\.java" />
 	</checkstyle>
 </suppressions>

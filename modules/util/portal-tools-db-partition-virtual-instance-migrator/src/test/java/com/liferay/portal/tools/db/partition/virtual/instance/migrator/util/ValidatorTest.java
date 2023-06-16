@@ -87,23 +87,6 @@ public class ValidatorTest {
 	}
 
 	@Test
-	public void testInvalidTargetReleaseState() throws Exception {
-		List<String> failedServletContextNames = Arrays.asList(
-			"module1", "module2");
-
-		_mockFailedServletContextNames(
-			new ArrayList<>(), failedServletContextNames);
-
-		_executeAndAssert(
-			true, false,
-			Arrays.asList(
-				"[ERROR] Module module1 has a failed Release state in the " +
-					"target database",
-				"[ERROR] Module module2 has a failed Release state in the " +
-					"target database"));
-	}
-
-	@Test
 	public void testInvalidSourceReleaseState() throws Exception {
 		List<String> failedServletContextNames = Arrays.asList(
 			"module1", "module2");
@@ -121,6 +104,23 @@ public class ValidatorTest {
 	}
 
 	@Test
+	public void testInvalidTargetReleaseState() throws Exception {
+		List<String> failedServletContextNames = Arrays.asList(
+			"module1", "module2");
+
+		_mockFailedServletContextNames(
+			new ArrayList<>(), failedServletContextNames);
+
+		_executeAndAssert(
+			true, false,
+			Arrays.asList(
+				"[ERROR] Module module1 has a failed Release state in the " +
+					"target database",
+				"[ERROR] Module module2 has a failed Release state in the " +
+					"target database"));
+	}
+
+	@Test
 	public void testLowerVersionModule() throws Exception {
 		_mockReleaseSchemaVersion("module1", "10.0.0");
 
@@ -129,6 +129,61 @@ public class ValidatorTest {
 			Arrays.asList(
 				"[ERROR] Module module1 needs to be upgraded in source " +
 					"database before the migration"));
+	}
+
+	@Test
+	public void testMissingSourceModule() throws Exception {
+		_mockMissingSourceModule("module1");
+
+		_executeAndAssert(
+			false, true,
+			Arrays.asList(
+				"[WARN] Module module1 is not present in the target database"));
+	}
+
+	@Test
+	public void testMissingTablesInBothDatabases() throws Exception {
+		_mockMissingTables(
+			new ArrayList<>(
+				Arrays.asList("table1", "table2", "table3", "table5")),
+			new ArrayList<>(
+				Arrays.asList("table1", "table3", "table4", "table5")));
+
+		_executeAndAssert(
+			false, true,
+			Arrays.asList(
+				"[WARN] Table table4 is not present in source database",
+				"[WARN] Table table2 is not present in target database"));
+	}
+
+	@Test
+	public void testMissingTablesInSource() throws Exception {
+		_mockMissingTables(
+			new ArrayList<>(Arrays.asList("table1", "table3", "table4")),
+			new ArrayList<>(
+				Arrays.asList(
+					"table1", "table2", "table3", "table4", "table5")));
+
+		_executeAndAssert(
+			false, true,
+			Arrays.asList(
+				"[WARN] Table table2 is not present in source database",
+				"[WARN] Table table5 is not present in source database"));
+	}
+
+	@Test
+	public void testMissingTablesInTarget() throws Exception {
+		_mockMissingTables(
+			new ArrayList<>(
+				Arrays.asList(
+					"table1", "table2", "table3", "table4", "table5")),
+			new ArrayList<>(Arrays.asList("table1", "table3", "table4")));
+
+		_executeAndAssert(
+			false, true,
+			Arrays.asList(
+				"[WARN] Table table2 is not present in target database",
+				"[WARN] Table table5 is not present in target database"));
 	}
 
 	@Test
@@ -153,59 +208,14 @@ public class ValidatorTest {
 	}
 
 	@Test
-	public void testMissingSourceModule() throws Exception {
-		_mockMissingSourceModule("module1");
+	public void testUnverifiedSourceModule() throws Exception {
+		_mockupReleaseVerified("module2.service", true);
 
 		_executeAndAssert(
-			false, true,
+			true, false,
 			Arrays.asList(
-				"[WARN] Module module1 is not present in the target " +
-					"database"));
-	}
-
-	@Test
-	public void testMissingTablesInBothDatabases() throws Exception {
-		_mockMissingTables(
-			new ArrayList<>(
-				Arrays.asList("table1", "table2", "table3", "table5")),
-			new ArrayList<>(
-				Arrays.asList("table1", "table3", "table4", "table5")));
-
-		_executeAndAssert(
-			false, true,
-			Arrays.asList(
-				"[WARN] Table table4 is not present in source database",
-				"[WARN] Table table2 is not present in target database"));
-	}
-
-	@Test
-	public void testMissingTablesInTarget() throws Exception {
-		_mockMissingTables(
-			new ArrayList<>(
-				Arrays.asList(
-					"table1", "table2", "table3", "table4", "table5")),
-			new ArrayList<>(Arrays.asList("table1", "table3", "table4")));
-
-		_executeAndAssert(
-			false, true,
-			Arrays.asList(
-				"[WARN] Table table2 is not present in target database",
-				"[WARN] Table table5 is not present in target database"));
-	}
-
-	@Test
-	public void testMissingTablesInSource() throws Exception {
-		_mockMissingTables(
-			new ArrayList<>(Arrays.asList("table1", "table3", "table4")),
-			new ArrayList<>(
-				Arrays.asList(
-					"table1", "table2", "table3", "table4", "table5")));
-
-		_executeAndAssert(
-			false, true,
-			Arrays.asList(
-				"[WARN] Table table2 is not present in source database",
-				"[WARN] Table table5 is not present in source database"));
+				"[ERROR] Module module2.service needs to be verified in the " +
+					"source database before the migration"));
 	}
 
 	@Test
@@ -215,19 +225,8 @@ public class ValidatorTest {
 		_executeAndAssert(
 			true, false,
 			Arrays.asList(
-				"[ERROR] Module module2 needs to be verified in the " +
-					"target database before the migration"));
-	}
-
-	@Test
-	public void testUnverifiedSourceModule() throws Exception {
-		_mockupReleaseVerified("module2.service", true);
-
-		_executeAndAssert(
-			true, false,
-			Arrays.asList(
-				"[ERROR] Module module2.service needs to be verified in the " +
-					"source database before the migration"));
+				"[ERROR] Module module2 needs to be verified in the target " +
+					"database before the migration"));
 	}
 
 	private List<Release> _createReleaseElements() {
@@ -274,38 +273,9 @@ public class ValidatorTest {
 		);
 
 		_databaseMockedStatic.when(
-			() -> DatabaseUtil.getFailedServletContextNames(
-				_targetConnection)
+			() -> DatabaseUtil.getFailedServletContextNames(_targetConnection)
 		).thenReturn(
 			targetFailedServletContextNames
-		);
-	}
-
-	private void _mockMissingTargetModule(String servletContextName) {
-		List<Release> releases = _createReleaseElements();
-
-		Map<String, Release> releaseMap = new HashMap<>();
-
-		List<Release> missingTargetModuleReleases = new ArrayList<>();
-
-		for (Release release : releases) {
-			releaseMap.put(release.getServletContextName(), release);
-
-			if (!servletContextName.equals(release.getServletContextName())) {
-				missingTargetModuleReleases.add(release);
-			}
-		}
-
-		_databaseMockedStatic.when(
-			() -> DatabaseUtil.getReleases(_sourceConnection)
-		).thenReturn(
-			missingTargetModuleReleases
-		);
-
-		_databaseMockedStatic.when(
-			() -> DatabaseUtil.getReleasesMap(_targetConnection)
-		).thenReturn(
-			releaseMap
 		);
 	}
 
@@ -346,6 +316,34 @@ public class ValidatorTest {
 			() -> DatabaseUtil.getPartitionedTableNames(_targetConnection)
 		).thenReturn(
 			targetTableNames
+		);
+	}
+
+	private void _mockMissingTargetModule(String servletContextName) {
+		List<Release> releases = _createReleaseElements();
+
+		Map<String, Release> releaseMap = new HashMap<>();
+
+		List<Release> missingTargetModuleReleases = new ArrayList<>();
+
+		for (Release release : releases) {
+			releaseMap.put(release.getServletContextName(), release);
+
+			if (!servletContextName.equals(release.getServletContextName())) {
+				missingTargetModuleReleases.add(release);
+			}
+		}
+
+		_databaseMockedStatic.when(
+			() -> DatabaseUtil.getReleases(_sourceConnection)
+		).thenReturn(
+			missingTargetModuleReleases
+		);
+
+		_databaseMockedStatic.when(
+			() -> DatabaseUtil.getReleasesMap(_targetConnection)
+		).thenReturn(
+			releaseMap
 		);
 	}
 
@@ -425,9 +423,9 @@ public class ValidatorTest {
 	private static final String _TEST_WEB_ID = "www.able.com";
 
 	private MockedStatic<DatabaseUtil> _databaseMockedStatic;
-	private Connection _targetConnection;
 	private final PrintStream _originalOut = System.out;
 	private Connection _sourceConnection;
+	private Connection _targetConnection;
 	private final ByteArrayOutputStream _testOutByteArrayOutputStream =
 		new ByteArrayOutputStream();
 

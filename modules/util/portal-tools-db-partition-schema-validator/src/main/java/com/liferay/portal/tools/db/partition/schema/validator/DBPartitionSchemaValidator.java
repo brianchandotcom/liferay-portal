@@ -37,7 +37,7 @@ import org.apache.commons.cli.Options;
 /**
  * @author Alberto Chaparro
  */
-public class SchemaValidator {
+public class DBPartitionSchemaValidator {
 
 	public static void main(String[] args) throws Exception {
 		Options options = _getOptions();

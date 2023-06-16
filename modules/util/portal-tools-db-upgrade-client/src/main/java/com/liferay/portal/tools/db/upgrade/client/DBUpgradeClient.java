@@ -56,7 +56,7 @@ import org.apache.commons.cli.ParseException;
 /**
  * @author David Truong
  */
-public class UpgradeClient {
+public class DBUpgradeClient {
 
 	public static void main(String[] args) {
 		try {
@@ -124,10 +124,10 @@ public class UpgradeClient {
 				shell = true;
 			}
 
-			UpgradeClient upgradeClient = new UpgradeClient(
+			DBUpgradeClient dbUpgradeClient = new DBUpgradeClient(
 				jvmOpts, logFile, shell);
 
-			upgradeClient.upgrade();
+			dbUpgradeClient.upgrade();
 		}
 		catch (ParseException parseException) {
 			System.err.println("Unable to parse command line properties");
@@ -141,7 +141,7 @@ public class UpgradeClient {
 		}
 	}
 
-	public UpgradeClient(String jvmOpts, File logFile, boolean shell)
+	public DBUpgradeClient(String jvmOpts, File logFile, boolean shell)
 		throws IOException {
 
 		_jvmOpts = jvmOpts;
@@ -779,7 +779,7 @@ public class UpgradeClient {
 
 	static {
 		ProtectionDomain protectionDomain =
-			UpgradeClient.class.getProtectionDomain();
+			DBUpgradeClient.class.getProtectionDomain();
 
 		CodeSource codeSource = protectionDomain.getCodeSource();
 

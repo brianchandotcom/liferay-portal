@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
@@ -103,8 +104,19 @@ public class LayoutServiceContextHelperImpl
 		return new ServiceContextTemporarySwapper(company);
 	}
 
+	@Override
+	public AutoCloseable getServiceContextAutoCloseable(Layout layout)
+		throws PortalException {
+
+		return new ServiceContextTemporarySwapper(
+			_companyLocalService.getCompany(layout.getCompanyId()), layout);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutServiceContextHelperImpl.class);
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private FriendlyURLNormalizer _friendlyURLNormalizer;
@@ -582,6 +594,12 @@ public class LayoutServiceContextHelperImpl
 		public ServiceContextTemporarySwapper(Company company)
 			throws PortalException {
 
+			this(company, null);
+		}
+
+		public ServiceContextTemporarySwapper(Company company, Layout layout)
+			throws PortalException {
+
 			_company = company;
 
 			_originalCompanyId = CompanyThreadLocal.getCompanyId();
@@ -623,14 +641,20 @@ public class LayoutServiceContextHelperImpl
 				}
 			}
 
-			_group = _groupLocalService.getGroup(
-				company.getCompanyId(), GroupConstants.GUEST);
+			if (layout == null) {
+				_group = _groupLocalService.getGroup(
+					company.getCompanyId(), GroupConstants.GUEST);
 
-			String friendlyURL = _friendlyURLNormalizer.normalizeWithEncoding(
-				PropsValues.DEFAULT_GUEST_PUBLIC_LAYOUT_FRIENDLY_URL);
+				String friendlyURL =
+					_friendlyURLNormalizer.normalizeWithEncoding(
+						PropsValues.DEFAULT_GUEST_PUBLIC_LAYOUT_FRIENDLY_URL);
 
-			Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
-				_group.getGroupId(), false, friendlyURL);
+				layout = _layoutLocalService.fetchLayoutByFriendlyURL(
+					_group.getGroupId(), false, friendlyURL);
+			}
+			else {
+				_group = _groupLocalService.getGroup(layout.getGroupId());
+			}
 
 			if (layout == null) {
 				layout = _layoutLocalService.fetchFirstLayout(

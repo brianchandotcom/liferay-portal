@@ -12,7 +12,7 @@
  * details.
  */
 
-import {FieldType} from './utils/dataConverter';
+import {Field, FieldType} from './utils/dataConverter';
 
 export {FieldFeedback} from './core/components/FieldFeedback';
 export {EVENT_TYPES as FORM_EVENT_TYPES} from './custom/form/eventTypes';
@@ -76,3 +76,12 @@ export const PartialResults: React.FC<{
 	displayChartAsTable: boolean;
 	reportDataURL: string;
 }>;
+
+export class PagesVisitor {
+	constructor(pages: unknown);
+	mapFields: (
+		mapper: (field: Field) => void,
+		merge: boolean,
+		includeNestedFields: boolean
+	) => void;
+}

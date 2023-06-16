@@ -14,12 +14,11 @@
 
 import {ClayInput} from '@clayui/form';
 import {ClassicEditor} from 'frontend-editor-ckeditor-web';
-import React, {useEffect, useMemo, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 import {FieldBase} from '../FieldBase/ReactFieldBase.es';
 import LocalesDropdown from '../util/localizable/LocalesDropdown';
 import {
-	convertStringToObject,
 	getEditingValue,
 	getInitialInternalValue,
 	normalizeLocaleId,
@@ -35,18 +34,15 @@ const INITIAL_EDITING_LOCALE = {
 	localeId: themeDisplay.getDefaultLanguageId(),
 };
 
-const RichText = ({
+const LocalizableRichText = ({
 	availableLocales,
 	defaultLocale = INITIAL_DEFAULT_LOCALE,
 	editable,
-	editingLanguageId,
 	editingLocale = INITIAL_EDITING_LOCALE,
 	editorConfig,
 	fieldName,
 	id,
-	locale,
 	name,
-	localizedObjectField,
 	onBlur,
 	onChange,
 	onFocus,
@@ -57,12 +53,6 @@ const RichText = ({
 	...otherProps
 }) => {
 	const editorRef = useRef();
-
-	const contents = useMemo(
-		() => (editable ? predefinedValue : value ?? predefinedValue),
-		[editable, predefinedValue, value]
-	);
-
 	const [currentAvailableLocales, setCurrentAvailableLocales] = useState(
 		availableLocales
 	);
@@ -70,10 +60,7 @@ const RichText = ({
 		editingLocale
 	);
 	const [currentValue, setCurrentValue] = useState(
-		convertStringToObject(
-			contents,
-			editingLanguageId ?? locale ?? defaultLocale?.localeId
-		)
+		editable ? predefinedValue : value ?? predefinedValue
 	);
 	const [currentInternalValue, setCurrentInternalValue] = useState(
 		getInitialInternalValue({
@@ -81,10 +68,8 @@ const RichText = ({
 			value: currentValue,
 		})
 	);
-
 	useEffect(() => {
 		const editor = editorRef.current?.editor;
-
 		if (editor) {
 			editor.config.contentsLangDirection =
 				Liferay.Language.direction[currentEditingLocale.localeId];
@@ -103,41 +88,6 @@ const RichText = ({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [currentEditingLocale]);
 
-	useEffect(() => {
-		changeLanguage(editingLanguageId ?? locale ?? defaultLocale?.localeId);
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [editingLanguageId, locale, predefinedValue]);
-
-	const changeLanguage = (localeId) => {
-		if (!localeId) {
-			return;
-		}
-		let newEditingLocale = {};
-
-		if (currentAvailableLocales) {
-			const index = currentAvailableLocales?.findIndex(
-				(availableLocale) => availableLocale.localeId === localeId
-			);
-			newEditingLocale = currentAvailableLocales[index];
-		}
-		else {
-			newEditingLocale = {localeId};
-		}
-
-		setCurrentEditingLocale({
-			...newEditingLocale,
-			icon: normalizeLocaleId(newEditingLocale.localeId),
-		});
-		setCurrentInternalValue(
-			getEditingValue({
-				defaultLocale,
-				editingLocale: newEditingLocale,
-				fieldName,
-				value: convertStringToObject(contents, localeId),
-			})
-		);
-	};
-
 	return (
 		<FieldBase
 			{...otherProps}
@@ -151,11 +101,7 @@ const RichText = ({
 				<ClayInput.GroupItem>
 					<ClassicEditor
 						className="w-100"
-						contents={
-							currentValue
-								? currentValue[currentEditingLocale?.localeId]
-								: ''
-						}
+						contents={currentValue[currentEditingLocale?.localeId]}
 						editorConfig={editorConfig}
 						name={name}
 						onBlur={onBlur}
@@ -182,16 +128,7 @@ const RichText = ({
 
 								setCurrentAvailableLocales(availableLocales);
 
-								onChange({
-									target: {
-										value: localizedObjectField
-											? newValue
-											: newValue[
-													currentEditingLocale
-														?.localeId
-											  ],
-									},
-								});
+								onChange({target: {value: newValue}});
 							}
 						}}
 						onFocus={onFocus}
@@ -212,33 +149,43 @@ const RichText = ({
 					id={id}
 					name={name}
 					type="hidden"
-					value={
-						localizedObjectField
-							? currentValue || ''
-							: currentValue
-							? currentValue[currentEditingLocale?.localeId]
-							: ''
-					}
+					value={currentValue || ''}
 				/>
 
-				{localizedObjectField && (
-					<ClayInput.GroupItem
-						className="liferay-ddm-form-field-localizable-text"
-						shrink
-					>
-						<LocalesDropdown
-							availableLocales={currentAvailableLocales}
-							editingLocale={currentEditingLocale}
-							fieldName={fieldName}
-							onLanguageClicked={(localeId) => {
-								changeLanguage(localeId);
-							}}
-						/>
-					</ClayInput.GroupItem>
-				)}
+				<ClayInput.GroupItem
+					className="liferay-ddm-form-field-localizable-text"
+					shrink
+				>
+					<LocalesDropdown
+						availableLocales={currentAvailableLocales}
+						editingLocale={currentEditingLocale}
+						fieldName={fieldName}
+						onLanguageClicked={(localeId) => {
+							const newEditingLocale = currentAvailableLocales.find(
+								(availableLocale) =>
+									availableLocale.localeId === localeId
+							);
+
+							setCurrentEditingLocale({
+								...newEditingLocale,
+								icon: normalizeLocaleId(
+									newEditingLocale.localeId
+								),
+							});
+							setCurrentInternalValue(
+								getEditingValue({
+									defaultLocale,
+									editingLocale: newEditingLocale,
+									fieldName,
+									value: currentValue,
+								})
+							);
+						}}
+					/>
+				</ClayInput.GroupItem>
 			</ClayInput.Group>
 		</FieldBase>
 	);
 };
 
-export default RichText;
+export default LocalizableRichText;

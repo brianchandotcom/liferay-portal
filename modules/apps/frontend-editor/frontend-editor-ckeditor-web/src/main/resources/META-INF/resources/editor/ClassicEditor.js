@@ -20,6 +20,7 @@ import BaseEditor from './BaseEditor';
 const ClassicEditor = forwardRef(
 	(
 		{
+			className,
 			contents,
 			editorConfig,
 			initialToolbarSet = 'simple',
@@ -30,7 +31,7 @@ const ClassicEditor = forwardRef(
 		ref
 	) => {
 		return (
-			<div id={`${name}Container`}>
+			<div className={className} id={`${name}Container`}>
 				{title && (
 					<label className="control-label" htmlFor={name}>
 						{title}

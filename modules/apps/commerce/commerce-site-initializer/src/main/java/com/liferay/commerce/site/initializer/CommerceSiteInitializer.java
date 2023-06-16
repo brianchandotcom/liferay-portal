@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.site.initializer.extender.internal;
+package com.liferay.commerce.site.initializer;
 
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.initializer.util.CPDefinitionsImporter;
@@ -86,7 +86,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
-import com.liferay.site.initializer.extender.internal.util.SiteInitializerUtil;
+import com.liferay.site.initializer.extender.SiteInitializerCommerceExtension;
+import com.liferay.site.initializer.extender.SiteInitializerUtil;
 
 import java.math.BigDecimal;
 
@@ -107,8 +108,9 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Rafael Praxedes
  */
-@Component(service = CommerceSiteInitializer.class)
-public class CommerceSiteInitializer {
+@Component(service = SiteInitializerCommerceExtension.class)
+public class CommerceSiteInitializer
+	implements SiteInitializerCommerceExtension {
 
 	public void addAccountGroups(
 			ServiceContext serviceContext, ServletContext servletContext)

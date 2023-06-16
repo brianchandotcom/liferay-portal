@@ -630,14 +630,17 @@ public class LayoutServiceContextHelperImpl
 					_httpServletRequest = new MockHttpServletRequest();
 				}
 
-				if ((_originalServiceContext.getResponse() == null) &&
-					(themeDisplay != null)) {
+				if (_originalServiceContext.getResponse() != null) {
+					_httpServletResponse =
+						_originalServiceContext.getResponse();
+				}
+				else if ((themeDisplay != null) &&
+						 (themeDisplay.getResponse() != null)) {
 
 					_httpServletResponse = themeDisplay.getResponse();
 				}
 				else {
-					_httpServletResponse =
-						_originalServiceContext.getResponse();
+					_httpServletResponse = new DummyHttpServletResponse();
 				}
 			}
 

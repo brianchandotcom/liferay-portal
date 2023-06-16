@@ -50,12 +50,12 @@ public class DBPartitionVirtualInstanceMigrator {
 
 	private static void _exitWithCode(int code) {
 		try {
-			if (_sourceConnection != null) {
-				_sourceConnection.close();
-			}
-
 			if (_destinationConnection != null) {
 				_destinationConnection.close();
+			}
+
+			if (_sourceConnection != null) {
+				_sourceConnection.close();
 			}
 		}
 		catch (SQLException sqlException) {

@@ -365,7 +365,7 @@ public interface SiteResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-site/v1.0/sites/by-externalReferenceCode/{externalReferenceCode}");
+						"/o/headless-site/v1.0/sites/by-external-reference-code/{externalReferenceCode}");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
 

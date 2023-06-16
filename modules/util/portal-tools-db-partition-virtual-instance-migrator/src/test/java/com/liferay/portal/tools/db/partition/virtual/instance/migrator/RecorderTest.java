@@ -62,7 +62,7 @@ public class RecorderTest {
 
 		List<String> modules = Arrays.asList("module1", "module2", "module3");
 
-		recorder.registerErrors(modules, "simple message");
+		recorder.registerErrors("simple message", modules);
 
 		recorder.printMessages();
 
@@ -84,7 +84,7 @@ public class RecorderTest {
 
 		List<String> modules = Arrays.asList("module1", "module2", "module3");
 
-		recorder.registerWarnings(modules, "simple message");
+		recorder.registerWarnings("simple message", modules);
 
 		recorder.printMessages();
 

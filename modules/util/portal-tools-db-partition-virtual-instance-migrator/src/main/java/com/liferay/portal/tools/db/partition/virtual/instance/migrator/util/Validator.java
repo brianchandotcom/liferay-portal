@@ -149,25 +149,24 @@ public class Validator {
 		}
 
 		recorder.registerErrors(
-			missingTargetServiceModules,
-			"needs to be installed in the source database before the " +
-				"migration");
+			"needs to be installed in the source database before the migration",
+			missingTargetServiceModules);
 		recorder.registerErrors(
-			lowerVersionModules,
-			"needs to be upgraded in source database before the migration");
+			"needs to be upgraded in source database before the migration",
+			lowerVersionModules);
 		recorder.registerErrors(
-			higherVersionModules,
-			"needs to be upgraded in target database before the migration");
+			"needs to be upgraded in target database before the migration",
+			higherVersionModules);
 		recorder.registerErrors(
-			unverifiedSourceModules,
-			"needs to be verified in the source database before the migration");
+			"needs to be verified in the source database before the migration",
+			unverifiedSourceModules);
 		recorder.registerErrors(
-			unverifiedTargetModules,
-			"needs to be verified in the target database before the migration");
+			"needs to be verified in the target database before the migration",
+			unverifiedTargetModules);
 		recorder.registerWarnings(
-			missingTargetModules, "is not present in the source database");
+			"is not present in the source database", missingTargetModules);
 		recorder.registerWarnings(
-			missingSourceModules, "is not present in the target database");
+			"is not present in the target database", missingSourceModules);
 	}
 
 	private static void _validateReleaseState(
@@ -182,8 +181,8 @@ public class Validator {
 
 		if (!failedServletContextNames.isEmpty()) {
 			recorder.registerErrors(
-				failedServletContextNames,
-				StringUtil.replace(message, '?', "source"));
+				StringUtil.replace(message, '?', "source"),
+				failedServletContextNames);
 		}
 
 		failedServletContextNames = DatabaseUtil.getFailedServletContextNames(
@@ -191,8 +190,8 @@ public class Validator {
 
 		if (!failedServletContextNames.isEmpty()) {
 			recorder.registerErrors(
-				failedServletContextNames,
-				StringUtil.replace(message, '?', "target"));
+				StringUtil.replace(message, '?', "target"),
+				failedServletContextNames);
 		}
 	}
 

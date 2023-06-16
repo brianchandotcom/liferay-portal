@@ -53,7 +53,7 @@ public class Recorder {
 		_errors.add(message);
 	}
 
-	public void registerErrors(List<String> moduleNames, String message) {
+	public void registerErrors(String message, List<String> moduleNames) {
 		for (String moduleName : moduleNames) {
 			_errors.add(
 				StringBundler.concat("Module ", moduleName, " ", message));
@@ -64,7 +64,7 @@ public class Recorder {
 		_warnings.add(message);
 	}
 
-	public void registerWarnings(List<String> moduleNames, String message) {
+	public void registerWarnings(String message, List<String> moduleNames) {
 		for (String moduleName : moduleNames) {
 			_warnings.add(
 				StringBundler.concat("Module ", moduleName, " ", message));

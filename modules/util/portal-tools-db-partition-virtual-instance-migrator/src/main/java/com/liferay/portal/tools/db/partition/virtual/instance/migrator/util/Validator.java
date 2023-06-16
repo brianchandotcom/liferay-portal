@@ -92,12 +92,11 @@ public class Validator {
 		List<Release> sourceReleases = DatabaseUtil.getReleases(
 			sourceConnection);
 
+		List<String> higherVersionModules = new ArrayList<>();
+		List<String> lowerVersionModules = new ArrayList<>();
 		List<String> missingTargetModules = new ArrayList<>();
 		List<String> missingTargetServiceModules = new ArrayList<>();
-
 		List<String> missingSourceModules = new ArrayList<>();
-		List<String> lowerVersionModules = new ArrayList<>();
-		List<String> higherVersionModules = new ArrayList<>();
 		List<String> unverifiedSourceModules = new ArrayList<>();
 		List<String> unverifiedTargetModules = new ArrayList<>();
 

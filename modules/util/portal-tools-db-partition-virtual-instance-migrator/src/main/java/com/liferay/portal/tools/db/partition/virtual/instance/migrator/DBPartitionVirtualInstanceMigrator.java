@@ -127,6 +127,11 @@ public class DBPartitionVirtualInstanceMigrator {
 				_exit(ErrorCodes.BAD_DESTINATION_PARAMETERS);
 			}
 
+			if (commandLine.hasOption("destination-schema-prefix")) {
+				DatabaseUtil.setSchemaPrefix(
+					commandLine.getOptionValue("destination-schema-prefix"));
+			}
+
 			try {
 				_sourceConnection = DriverManager.getConnection(
 					commandLine.getOptionValue("source-jdbc-url"),
@@ -141,11 +146,6 @@ public class DBPartitionVirtualInstanceMigrator {
 				sqlException.printStackTrace();
 
 				_exit(ErrorCodes.BAD_SOURCE_PARAMETERS);
-			}
-
-			if (commandLine.hasOption("destination-schema-prefix")) {
-				DatabaseUtil.setSchemaPrefix(
-					commandLine.getOptionValue("destination-schema-prefix"));
 			}
 
 			if (!DatabaseUtil.isSingleVirtualInstance(_sourceConnection)) {

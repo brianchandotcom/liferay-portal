@@ -682,7 +682,7 @@ public class ObjectEntryLocalServiceTest {
 					"futureDates(time, \"%s\")",
 					dateTimeFormatter.format(LocalDateTime.now())));
 
-		_assertFailure(
+		AssertUtils.assertFailure(
 			ModelListenerException.class,
 			ObjectValidationRuleEngineException.InvalidFields.class.getName() +
 				": Date time must be in the future",

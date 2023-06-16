@@ -100,6 +100,6 @@ public class JSONWebServiceActionsManagerUtil {
 			ServiceProxyFactory.newServiceTrackedInstance(
 				JSONWebServiceActionsManager.class,
 				JSONWebServiceActionsManagerUtil.class,
-				"_jsonWebServiceActionsManager", true);
+				"_jsonWebServiceActionsManager", false);
 
 }

@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>METRICS_MENU_INDEX</td>
-	<td>//div[contains(@class, 'control-menu-icon')]</td>
+	<td>//div[contains(@class, 'control-menu')]//*[contains(@class, 'component-action')]</td>
 	<td></td>
 </tr>
 <tr>

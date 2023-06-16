@@ -86,9 +86,14 @@ export function MembersPage({
 		{message: string; title?: string; type: DisplayType}[]
 	>([]);
 
-	const renderToast = (message: string, title: string, type: DisplayType) => {
-		setToastItems([...toastItems, {message, title, type}]);
-	};
+  const renderToast = (message: string, title: string, type: DisplayType) => {
+    setToastItems([...toastItems, { message, title, type }]);
+  };
+  const [userLogged, setUserLogged] = useState< 
+  {accountBriefs: any;
+  isAdminAccount: boolean;
+  isCustomerAccount: boolean;
+  isPublisherAccount: boolean}>();
 
 	const getRolesList = useCallback(
 		(accountBriefs: AccountBrief[]) => {
@@ -213,49 +218,53 @@ export function MembersPage({
 				);
 			});
 
-			setMembers(filteredMembersList);
-		})();
-	}, [visible, selectedAccount, getRolesList]);
+      setUserLogged(currentUserAccount);
 
-	return (
-		<>
-			{loading ? (
-				<ClayLoadingIndicator
-					className="members-page-loading-indicator"
-					displayType="primary"
-					shape="circle"
-					size="md"
-				/>
-			) : (
-				<DashboardPage
-					buttonMessage={isCurrentUserAdmin ? '+ New Member' : ''}
-					dashboardNavigationItems={dashboardNavigationItems}
-					messages={memberMessages}
-					onButtonClick={() => setVisible(true)}
-				>
-					{selectedMember ? (
-						<MemberProfile
-							member={selectedMember}
-							setSelectedMember={setSelectedMember}
-						></MemberProfile>
-					) : (
-						<DashboardTable<MemberProps>
-							emptyStateMessage={memberMessages.emptyStateMessage}
-							icon={icon}
-							items={members}
-							tableHeaders={memberTableHeaders}
-						>
-							{(member) => (
-								<DashboardMemberTableRow
-									item={member}
-									key={member.name}
-									onSelectedMemberChange={setSelectedMember}
-								/>
-							)}
-						</DashboardTable>
-					)}
-				</DashboardPage>
-			)}
+      setMembers(filteredMembersList);
+    })();
+  }, [visible, selectedAccount, getRolesList]);
+
+  return (
+    <>
+      {loading ? (
+        <ClayLoadingIndicator
+          className="members-page-loading-indicator"
+          displayType="primary"
+          shape="circle"
+          size="md"
+        />
+      ) : (
+        <DashboardPage
+          buttonMessage={isCurrentUserAdmin ? '+ New Member' : ''}
+          dashboardNavigationItems={dashboardNavigationItems}
+          messages={memberMessages}
+          onButtonClick={() => setVisible(true)}
+        >
+          {selectedMember ? (
+            <MemberProfile
+            member={selectedMember}
+            renderToast={renderToast}
+            setSelectedMember={setSelectedMember}
+            userLogged={userLogged}
+            ></MemberProfile>
+          ) : (
+            <DashboardTable<MemberProps>
+              emptyStateMessage={memberMessages.emptyStateMessage}
+              icon={icon}
+              items={members}
+              tableHeaders={memberTableHeaders}
+            >
+              {(member) => (
+                <DashboardMemberTableRow
+                  item={member}
+                  key={member.name}
+                  onSelectedMemberChange={setSelectedMember}
+                />
+              )}
+            </DashboardTable>
+          )}
+        </DashboardPage>
+      )}
 
 			{visible && (
 				<InviteMemberModal

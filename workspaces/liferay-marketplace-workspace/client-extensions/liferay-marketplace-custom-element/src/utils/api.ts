@@ -656,8 +656,8 @@ export async function getUserAccounts() {
 			method: 'GET',
 		}
 	);
-
-	return response.json();
+	console.log(await response.json())
+	return await response.json();
 }
 
 export async function getUserAccountsById() {
@@ -941,3 +941,32 @@ export async function updateProductSpecification({
 
 	return await response.json();
 }
+export async function updateUseradditionalinfos(body: Object, id: number) {
+	
+	const response = await fetch(
+		`${baseURL}/o/c/useradditionalinfos/${id}`,
+		{
+			body: JSON.stringify({emailOfMember: body}),
+			headers,
+			method: 'PATCH',
+		}
+	);
+
+	return await response.json();
+}
+
+
+export async function getMyUserAditionalInfos (userId: number) {
+
+	const userAdditionalInfos = await fetch(
+		`${baseURL}/o/c/useradditionalinfos/?filter=r_userToUserAddInfo_userId eq '${userId}'`,
+		{headers}
+	);
+	
+	const response = await userAdditionalInfos.json();
+
+	if(!response.acceptInviteStatus){
+		return response;
+	}
+};
+

@@ -1,10 +1,68 @@
 .member-profile {
+
+	&-content-header {
+		display: flex;
+	}
+
+	&-resend-invitation {
+		margin-left: auto;
+	}
+
+	&-button-resend-invitation {
+		background-color: #0053f0;
+		border: none;
+		border-radius: 0.5rem;
+		color: #fff;
+		font-size: 1rem;
+		font-weight: 600;
+		height: 2.5rem;
+		line-height: 1.5rem;
+		margin-right: 1rem;
+		width: max-content;
+
+		&:hover {
+			background-color: #ffff;
+			border: 1px solid #0053f0;
+			color: #0053f0;
+		}
+
+		transition: background-color 0.3s;
+		transition: border 0.3s;
+		transition: color 0.3s;
+
+		.icon-container-reload {
+			margin-left: 0.4rem;
+    		margin-right: 7px;
+		}
+	}
+
+	&-button-edit-member{
+		background-color: #FFFFFF;
+		border: 1px solid #2B3A4B;
+		border-radius: 8px;
+		color: #2B3A4B;
+		font-size: 1rem;
+		font-weight: 600;
+		height: 2.5rem;
+		line-height: 1.5rem;
+		width: max-content;
+
+		&-label-edit{
+			margin-left: 0.5rem;
+    		margin-right: 0.3rem;
+		}
+		.icon-container-angle-down-small {
+			margin-left: 0.2rem;
+		}
+	}
+
 	&-back-button {
 		align-items: center;
 		cursor: pointer;
 		display: flex;
-		margin-bottom: 2rem;
-
+		margin-bottom: 1rem;
+		width: 15%;
+		
 		svg {
 			margin-top: 1px;
 		}
@@ -20,14 +78,14 @@
 	}
 
 	&-heading-container {
-		margin-bottom: 2rem;
+		margin-bottom: 0;
 		vertical-align: top;
 	}
 
 	&-image img {
 		border-radius: 4.5rem;
 		height: 4.5rem;
-		margin-right: 2rem;
+		margin-right: 1rem;
 		width: 4.5rem;
 	}
 

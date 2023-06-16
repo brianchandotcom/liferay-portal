@@ -1688,6 +1688,20 @@ definition {
 			key_title = "Currency",
 			locator1 = "CommerceEntry#CATALOGS_FORM",
 			value1 = ${catalogCurrency});
+
+		if (isSet(catalogBasePriceList)) {
+			AssertValue(
+				key_labelName = "Base Price List",
+				locator1 = "TextInput#SPECIFIC_LABEL_TEXT_INPUT",
+				value1 = ${catalogBasePriceList});
+		}
+
+		if (isSet(catalogBasePromotion)) {
+			AssertValue(
+				key_labelName = "Base Promotion",
+				locator1 = "TextInput#SPECIFIC_LABEL_TEXT_INPUT",
+				value1 = ${catalogBasePromotion});
+		}
 	}
 
 	macro viewChannelsEntry {

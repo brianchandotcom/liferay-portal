@@ -229,4 +229,110 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-11604 | As a supplier account user, I want to be able to manage the catalogs the account is linked to"
+	@priority = 5
+	test CanSupplierUserManageCatalogs {
+		property portal.acceptance = "true";
+
+		task ("Given a Supplier account with a supplier user") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Commerce Supplier",
+				accountEntryType = "Supplier");
+
+			JSONAccountEntryUser.addAccountEntryUser(
+				accountEntryName = "Commerce Supplier",
+				userEmailAddress = "supplier@liferay.com",
+				userFirstName = "Supplier",
+				userLastName = "User",
+				userScreenName = "supplieruser");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "supplier@liferay.com");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "Supplier",
+				userEmailAddress = "supplier@liferay.com");
+		}
+
+		task ("And Supplier account is linked to a catalog") {
+			var accountId = CommerceJSONAccountsAPI.getAccountFieldByAccountName(
+				accountName = "Commerce Supplier",
+				field = "id");
+
+			CommerceJSONCatalogsAPI._patchCommerceCatalog(
+				accountId = ${accountId},
+				catalogName = "Minium");
+		}
+
+		task ("And a price list and a promotion are created") {
+			CommerceJSONPriceListsAndPromotionsAPI._addPriceList(
+				catalogName = "Minium",
+				currencyCode = "USD",
+				priceListName = "Test Price List");
+
+			CommerceJSONPriceListsAndPromotionsAPI._addPromotion(
+				catalogName = "Minium",
+				currencyCode = "USD",
+				promotionName = "Test Promotion");
+		}
+
+		task ("When the supplier user logs in") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "supplier@liferay.com",
+				userLoginFullName = "Supplier User");
+		}
+
+		task ("Then the supplier user can view only the catalog the account is linked to") {
+			CommerceCatalog.openCatalogsAdmin();
+
+			AssertElementPresent(
+				key_entryName = "Minium",
+				locator1 = "CommerceNavigation#ENTRY_NAME");
+
+			AssertElementNotPresent(
+				key_entryName = "Master",
+				locator1 = "CommerceNavigation#ENTRY_NAME");
+		}
+
+		task ("And cannot add/delete catalogs") {
+			AssertElementNotPresent(locator1 = "Button#PLUS");
+
+			AssertElementNotPresent(
+				key_value = "Minium",
+				locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+		}
+
+		task ("When the supplier user navigates to a catalog details") {
+			Click(
+				key_firstColumnValue = "Minium",
+				key_secondColumnValue = "USD",
+				key_table = "",
+				locator1 = "CommerceEntry#TABLE_ASSERT_TWO_COLUMNS_EDIT_BUTTON");
+		}
+
+		task ("Then the user is able to edit the catalog fields") {
+			CommerceCatalog.editCatalogEntry(
+				catalogBasePriceList = "Test Price List",
+				catalogBasePromotion = "Test Promotion",
+				catalogCurrency = "Euro",
+				catalogLanguage = "Catalan (Spain)",
+				catalogNewName = "Minium 2");
+
+			Click(
+				key_firstColumnValue = "Minium 2",
+				key_secondColumnValue = "EUR",
+				key_table = "",
+				locator1 = "CommerceEntry#TABLE_ASSERT_TWO_COLUMNS_EDIT_BUTTON");
+
+			CommerceEntry.viewCatalogsEntry(
+				catalogBasePriceList = "Test Price List",
+				catalogBasePromotion = "Test Promotion",
+				catalogCurrency = "Euro",
+				catalogLanguage = "Catalan (Spain)",
+				catalogName = "Minium 2");
+		}
+	}
+
 }

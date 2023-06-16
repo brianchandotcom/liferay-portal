@@ -97,7 +97,8 @@ public class FDSViewsPortlet extends MVCPortlet {
 		renderRequest.setAttribute(
 			FDSViewsWebKeys.FDS_VIEWS_DISPLAY_CONTEXT,
 			new FDSViewsDisplayContext(
-				_cetManager, renderRequest, _serviceTrackerList));
+				_cetManager, renderRequest, renderResponse,
+				_serviceTrackerList));
 
 		super.doDispatch(renderRequest, renderResponse);
 	}

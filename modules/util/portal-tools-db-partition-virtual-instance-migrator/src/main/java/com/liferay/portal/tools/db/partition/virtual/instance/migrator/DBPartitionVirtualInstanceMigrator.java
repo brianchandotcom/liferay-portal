@@ -115,16 +115,12 @@ public class DBPartitionVirtualInstanceMigrator {
 
 			CommandLine commandLine = commandLineParser.parse(options, args);
 
-			String destinationJDBCURL = commandLine.getOptionValue(
-				"destination-jdbc-url");
-			String destinationPassword = commandLine.getOptionValue(
-				"destination-password");
-			String destinationUser = commandLine.getOptionValue(
-				"destination-user");
-
 			try {
 				_destinationConnection = DriverManager.getConnection(
-					destinationJDBCURL, destinationUser, destinationPassword);
+					commandLine.getOptionValue(
+				"destination-jdbc-url"), commandLine.getOptionValue(
+				"destination-user"), commandLine.getOptionValue(
+				"destination-password"));
 			}
 			catch (SQLException sqlException) {
 				System.err.println(
@@ -136,15 +132,11 @@ public class DBPartitionVirtualInstanceMigrator {
 				_exit(ErrorCodes.BAD_DESTINATION_PARAMETERS);
 			}
 
-			String sourceJDBCURL = commandLine.getOptionValue(
-				"source-jdbc-url");
-			String sourcePassword = commandLine.getOptionValue(
-				"source-password");
-			String sourceUser = commandLine.getOptionValue("source-user");
-
 			try {
 				_sourceConnection = DriverManager.getConnection(
-					sourceJDBCURL, sourceUser, sourcePassword);
+					commandLine.getOptionValue(
+				"source-jdbc-url"), commandLine.getOptionValue("source-user"), commandLine.getOptionValue(
+				"source-password"));
 			}
 			catch (SQLException sqlException) {
 				System.err.println(

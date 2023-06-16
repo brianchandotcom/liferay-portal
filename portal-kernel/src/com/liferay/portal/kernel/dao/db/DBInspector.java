@@ -187,7 +187,7 @@ public class DBInspector {
 					actualColumnDefaultValue = _getStoredColumnDefaultValue(
 						actualColumnDefaultValue, DB::getDefaultValue);
 				}
-				
+
 				return StringUtil.equals(
 					expectedColumnDefaultValue, actualColumnDefaultValue);
 			}
@@ -410,6 +410,7 @@ public class DBInspector {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(DBInspector.class);
+
 	private static final Pattern _columnDefaultClausePattern = Pattern.compile(
 		".*DEFAULT '?(.*[^'])'? NOT NULL", Pattern.CASE_INSENSITIVE);
 	private static final Pattern _columnSizePattern = Pattern.compile(

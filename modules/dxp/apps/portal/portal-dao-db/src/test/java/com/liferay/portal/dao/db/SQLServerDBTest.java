@@ -35,17 +35,17 @@ public class SQLServerDBTest extends BaseDBTestCase {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void testGetVarcharDefaultValue() {
-		DB db = getDB();
-
-		Assert.assertEquals(db.getDefaultValue("('test')"), "test");
-	}
-
-	@Test
 	public void testGetLongDefaultValue() {
 		DB db = getDB();
 
-		Assert.assertEquals(db.getDefaultValue("((10))"), "10");
+		Assert.assertEquals("10", db.getDefaultValue("((10))"));
+	}
+
+	@Test
+	public void testGetVarcharDefaultValue() {
+		DB db = getDB();
+
+		Assert.assertEquals("test", db.getDefaultValue("('test')"));
 	}
 
 	@Test

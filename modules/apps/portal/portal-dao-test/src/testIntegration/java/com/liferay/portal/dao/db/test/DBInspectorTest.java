@@ -62,9 +62,9 @@ public class DBInspectorTest {
 				"VARCHAR(75) null, typeBlob BLOB, typeBoolean BOOLEAN,",
 				"typeDate DATE null, typeDouble DOUBLE, typeInteger INTEGER, ",
 				"typeLong LONG null, typeLongDefault LONG default 10 not null,",
-				"typeSBlob SBLOB, typeString STRING null, ",
-				"typeText TEXT null, typeVarchar VARCHAR(75) null, ",
-				"typeVarcharDefault VARCHAR(10) default 'testValue' not null);"));
+				"typeSBlob SBLOB, typeString STRING null, typeText TEXT null, ",
+				"typeVarchar VARCHAR(75) null, typeVarcharDefault VARCHAR(10) ",
+				"default 'testValue' not null);"));
 	}
 
 	@AfterClass
@@ -136,6 +136,17 @@ public class DBInspectorTest {
 	}
 
 	@Test
+	public void testHasColumnTypeLongDefaultNotNull() throws Exception {
+		Assert.assertTrue(
+			_dbInspector.hasColumnType(
+				_TABLE_NAME, "typeLongDefault", "LONG default 10 not null"));
+
+		Assert.assertFalse(
+			_dbInspector.hasColumnType(
+				_TABLE_NAME, "typeLongDefault", "LONG default 15 not null"));
+	}
+
+	@Test
 	public void testHasColumnTypeSBlob() throws Exception {
 		Assert.assertTrue(
 			_dbInspector.hasColumnType(_TABLE_NAME, "typeSBlob", "SBLOB null"));
@@ -159,6 +170,19 @@ public class DBInspectorTest {
 		Assert.assertTrue(
 			_dbInspector.hasColumnType(
 				_TABLE_NAME, "typeVarchar", "VARCHAR(75) null"));
+	}
+
+	@Test
+	public void testHasColumnTypeVarcharDefaultNotNull() throws Exception {
+		Assert.assertTrue(
+			_dbInspector.hasColumnType(
+				_TABLE_NAME, "typeVarcharDefault",
+				"VARCHAR(10) default 'testValue' not null"));
+
+		Assert.assertFalse(
+			_dbInspector.hasColumnType(
+				_TABLE_NAME, "typeVarcharDefault",
+				"VARCHAR(10) default 'notTestValue' not null"));
 	}
 
 	@Test
@@ -191,28 +215,6 @@ public class DBInspectorTest {
 		Assert.assertFalse(
 			_dbInspector.hasColumnType(
 				_TABLE_NAME, "nilColumn", "VARCHAR(75) not null"));
-	}
-
-	@Test
-	public void testHasColumnTypeLongDefaultNotNull() throws Exception {
-		Assert.assertTrue(
-			_dbInspector.hasColumnType(
-				_TABLE_NAME, "typeLongDefault", "LONG default 10 not null"));
-
-		Assert.assertFalse(
-			_dbInspector.hasColumnType(
-				_TABLE_NAME, "typeLongDefault", "LONG default 15 not null"));
-	}
-
-	@Test
-	public void testHasColumnTypeVarcharDefaultNotNull() throws Exception {
-		Assert.assertTrue(
-			_dbInspector.hasColumnType(
-				_TABLE_NAME, "typeVarcharDefault", "VARCHAR(10) default 'testValue' not null"));
-
-		Assert.assertFalse(
-			_dbInspector.hasColumnType(
-				_TABLE_NAME, "typeVarcharDefault", "VARCHAR(10) default 'notTestValue' not null"));
 	}
 
 	@Test

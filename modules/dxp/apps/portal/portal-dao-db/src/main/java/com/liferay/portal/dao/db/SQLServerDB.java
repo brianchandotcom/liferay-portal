@@ -114,7 +114,6 @@ public class SQLServerDB extends BaseDB {
 			databaseStoredDefaultValue);
 
 		if (matcher.find()) {
-
 			if (matcher.group(1) == null) {
 				return matcher.group(2);
 			}

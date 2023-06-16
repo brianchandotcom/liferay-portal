@@ -15,6 +15,7 @@
 package com.liferay.layout.set.prototype.helper;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
 
@@ -25,10 +26,18 @@ import java.util.List;
  */
 public interface LayoutSetPrototypeHelper {
 
+	public List<Layout> getDuplicatedFriendlyURLLayouts(Layout layout)
+		throws PortalException;
+
 	public List<Long> getDuplicatedFriendlyURLPlids(LayoutSet layoutSet);
 
 	public List<Long> getDuplicatedFriendlyURLPlids(
 			LayoutSetPrototype layoutSetPrototype)
+		throws PortalException;
+
+	public boolean hasDuplicatedFriendlyURLs(
+			long groupId, boolean privateLayout, String layoutUuid,
+			String friendlyURL)
 		throws PortalException;
 
 }

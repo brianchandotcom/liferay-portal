@@ -108,12 +108,14 @@ public class FragmentRendererControllerImpl
 					httpServletResponse, unsyncStringWriter));
 		}
 		catch (Exception exception) {
+			Throwable throwable = exception.getCause();
+
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					StringBundler.concat(
 						"Unable to render content of fragment entry ",
 						fragmentEntryLink.getFragmentEntryId(), ":",
-						exception.getMessage()),
+						exception.getMessage(), ", ", throwable.getMessage()),
 					exception);
 			}
 			else {
@@ -121,7 +123,7 @@ public class FragmentRendererControllerImpl
 					StringBundler.concat(
 						"Unable to render content of fragment entry ",
 						fragmentEntryLink.getFragmentEntryId(), ":",
-						exception.getMessage()));
+						exception.getMessage(), ", ", throwable.getMessage()));
 			}
 
 			SessionErrors.add(

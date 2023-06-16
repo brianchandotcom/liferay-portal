@@ -623,6 +623,33 @@ public class LayoutServiceContextHelperImpl
 				}
 			}
 
+			_group = _groupLocalService.getGroup(
+				company.getCompanyId(), GroupConstants.GUEST);
+
+			String friendlyURL = _friendlyURLNormalizer.normalizeWithEncoding(
+				PropsValues.DEFAULT_GUEST_PUBLIC_LAYOUT_FRIENDLY_URL);
+
+			Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
+				_group.getGroupId(), false, friendlyURL);
+
+			if (layout == null) {
+				layout = _layoutLocalService.fetchFirstLayout(
+					_group.getGroupId(), false,
+					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, false);
+			}
+
+			if (layout == null) {
+				layout = _layoutLocalService.fetchFirstLayout(
+					_group.getGroupId(), false,
+					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+			}
+
+			_layout = layout;
+
+			_user = _userLocalService.fetchGuestUser(company.getCompanyId());
+
+			_permissionChecker = PermissionCheckerFactoryUtil.create(_user);
+
 			_setCompanyServiceContext();
 		}
 
@@ -688,39 +715,18 @@ public class LayoutServiceContextHelperImpl
 
 			themeDisplay.setCompany(company);
 
-			Group group = _groupLocalService.getGroup(
-				company.getCompanyId(), GroupConstants.GUEST);
+			if (_layout != null) {
+				themeDisplay.setLanguageId(_layout.getDefaultLanguageId());
+				themeDisplay.setLayout(_layout);
 
-			String friendlyURL = _friendlyURLNormalizer.normalizeWithEncoding(
-				PropsValues.DEFAULT_GUEST_PUBLIC_LAYOUT_FRIENDLY_URL);
-
-			Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
-				group.getGroupId(), false, friendlyURL);
-
-			if (layout == null) {
-				layout = _layoutLocalService.fetchFirstLayout(
-					group.getGroupId(), false,
-					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, false);
-			}
-
-			if (layout == null) {
-				layout = _layoutLocalService.fetchFirstLayout(
-					group.getGroupId(), false,
-					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-			}
-
-			if (layout != null) {
-				themeDisplay.setLanguageId(layout.getDefaultLanguageId());
-				themeDisplay.setLayout(layout);
-
-				LayoutSet layoutSet = layout.getLayoutSet();
+				LayoutSet layoutSet = _layout.getLayoutSet();
 
 				themeDisplay.setLayoutSet(layoutSet);
 
 				themeDisplay.setLayoutTypePortlet(
-					(LayoutTypePortlet)layout.getLayoutType());
+					(LayoutTypePortlet)_layout.getLayoutType());
 				themeDisplay.setLocale(
-					LocaleUtil.fromLanguageId(layout.getDefaultLanguageId()));
+					LocaleUtil.fromLanguageId(_layout.getDefaultLanguageId()));
 
 				Theme theme = _themeLocalService.fetchTheme(
 					company.getCompanyId(), layoutSet.getThemeId());
@@ -733,11 +739,11 @@ public class LayoutServiceContextHelperImpl
 					_log.debug(layoutSet.getThemeId() + " is not registered");
 				}
 
-				themeDisplay.setPlid(layout.getPlid());
+				themeDisplay.setPlid(_layout.getPlid());
 			}
 			else {
 				Locale locale = _portal.getSiteDefaultLocale(
-					group.getGroupId());
+					_group.getGroupId());
 
 				themeDisplay.setLanguageId(LocaleUtil.toLanguageId(locale));
 				themeDisplay.setLocale(locale);
@@ -745,12 +751,13 @@ public class LayoutServiceContextHelperImpl
 
 			themeDisplay.setPermissionChecker(permissionChecker);
 			themeDisplay.setPortalDomain(company.getVirtualHostname());
-			themeDisplay.setPortalURL(company.getPortalURL(group.getGroupId()));
+			themeDisplay.setPortalURL(
+				company.getPortalURL(_group.getGroupId()));
 			themeDisplay.setRealUser(user);
-			themeDisplay.setScopeGroupId(group.getGroupId());
+			themeDisplay.setScopeGroupId(_group.getGroupId());
 			themeDisplay.setServerPort(
 				_portal.getPortalServerPort(_isHttpsEnabled()));
-			themeDisplay.setSiteGroupId(group.getGroupId());
+			themeDisplay.setSiteGroupId(_group.getGroupId());
 			themeDisplay.setTimeZone(user.getTimeZone());
 			themeDisplay.setUser(user);
 
@@ -773,33 +780,31 @@ public class LayoutServiceContextHelperImpl
 		private void _setCompanyServiceContext() throws PortalException {
 			CompanyThreadLocal.setCompanyId(_company.getCompanyId());
 
-			User user = _userLocalService.fetchGuestUser(
-				_company.getCompanyId());
+			PermissionThreadLocal.setPermissionChecker(_permissionChecker);
 
-			PermissionChecker permissionChecker =
-				PermissionCheckerFactoryUtil.create(user);
-
-			PermissionThreadLocal.setPermissionChecker(permissionChecker);
-
-			PrincipalThreadLocal.setName(user.getUserId());
+			PrincipalThreadLocal.setName(_user.getUserId());
 
 			ServiceContext serviceContext = new ServiceContext();
 
 			serviceContext.setCompanyId(_company.getCompanyId());
 			serviceContext.setRequest(
-				_getHttpServletRequest(permissionChecker, user));
-			serviceContext.setUserId(user.getUserId());
+				_getHttpServletRequest(_permissionChecker, _user));
+			serviceContext.setUserId(_user.getUserId());
 
 			ServiceContextThreadLocal.pushServiceContext(serviceContext);
 		}
 
 		private final Company _company;
+		private final Group _group;
 		private final HttpServletRequest _httpServletRequest;
 		private final HttpServletResponse _httpServletResponse;
+		private final Layout _layout;
 		private final long _originalCompanyId;
 		private final String _originalName;
 		private final PermissionChecker _originalPermissionChecker;
 		private final ServiceContext _originalServiceContext;
+		private final PermissionChecker _permissionChecker;
+		private final User _user;
 
 	}
 

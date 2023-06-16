@@ -548,7 +548,7 @@
 				{
 					"DBType": "String",
 					"businessType": "Picklist",
-					"defaultValue": "draft",
+					"defaultValue": "unpublished",
 					"externalReferenceCode": "APPLICATION_STATUS",
 					"indexed": true,
 					"indexedAsKeyword": false,
@@ -563,18 +563,18 @@
 							"value": {
 								"objectStates": [
 									{
-										"key": "draft",
+										"key": "published",
 										"objectStateTransitions": [
 											{
-												"key": "published"
+												"key": "unpublished"
 											}
 										]
 									},
 									{
-										"key": "published",
+										"key": "unpublished",
 										"objectStateTransitions": [
 											{
-												"key": "draft"
+												"key": "published"
 											}
 										]
 									}

@@ -52,9 +52,14 @@ public class VerticalNavDisplayContext {
 									_createVerticalNavItemsList(
 										integerWrapper.getValue(),
 										verticalNavItem));
+							}
 
-								verticalNavItem.setExpanded(
-									integerWrapper.getValue() == 4);
+							if (integerWrapper.getValue() == 4) {
+								verticalNavItem.setExpanded(true);
+							}
+
+							if (integerWrapper.getValue() == 3) {
+								verticalNavItem.setActive(true);
 							}
 						});
 
@@ -75,6 +80,7 @@ public class VerticalNavDisplayContext {
 
 				while (i < size) {
 					int position = i;
+
 					String suffix = "." + position;
 
 					add(
@@ -88,9 +94,9 @@ public class VerticalNavDisplayContext {
 								verticalNavItem.setItems(
 									_createVerticalNavItemsList(
 										5, verticalNavItem));
+								verticalNavItem.setExpanded(position == 2);
 							}
 
-							verticalNavItem.setExpanded(position == 2);
 						});
 
 					i++;

@@ -134,6 +134,12 @@ public class VerticalNavTag extends BaseContainerTag {
 			VerticalNavItemList items =
 				(VerticalNavItemList)verticalNavItem.get("items");
 
+			Boolean active = (Boolean)verticalNavItem.get("active");
+
+			if (active == null) {
+				active = Boolean.FALSE;
+			}
+
 			Boolean expanded = (Boolean)verticalNavItem.get("expanded");
 
 			if (expanded == null) {
@@ -145,9 +151,15 @@ public class VerticalNavTag extends BaseContainerTag {
 			jspWriter.write("<li role=\"none\" class=\"nav-item\">");
 
 			jspWriter.write("<a class=\"nav-link collapse-icon");
+
 			if (!expanded) {
 				jspWriter.write(" collapsed");
 			}
+
+			if (active) {
+				jspWriter.write(" active");
+			}
+
 			jspWriter.write(" btn btn-unstyled\" aria-expanded=\"");
 			jspWriter.write(expanded.toString());
 			jspWriter.write("\" role=\"menuitem\" tabindex=\"-1\" href=\"");

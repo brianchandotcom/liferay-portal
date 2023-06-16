@@ -4,11 +4,11 @@
 		"errorMessage": {
 			"en_US": "Error"
 		},
-		"externalReferenceCode": "CLAIM-DUE-DATE-NOTIFICATION",
+		"externalReferenceCode": "CLAIM-DUE-DATE-5-DAYS-NOTIFICATION",
 		"label": {
-			"en_US": "Notification Due Date Template Action"
+			"en_US": "Notification Due Date 5 Days Template Action"
 		},
-		"name": "notificationDueDateTemplateAction",
+		"name": "notificationDueDate5DaysTemplateAction",
 		"objectActionExecutorKey": "notification",
 		"objectActionTriggerKey": "standalone",
 		"objectDefinitionId": "[$OBJECT_DEFINITION_ID:Activity$]"

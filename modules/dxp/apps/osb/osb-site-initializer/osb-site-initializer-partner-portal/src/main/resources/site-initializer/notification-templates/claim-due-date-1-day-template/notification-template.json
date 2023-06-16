@@ -1,7 +1,7 @@
 {
 	"description": "",
 	"editorType": "richText",
-	"name": "Claim Due Date 5 Notification Template",
+	"name": "Claim Due Date 1 day Notification Template",
 	"recipientType": "email",
 	"recipients": [
 		{

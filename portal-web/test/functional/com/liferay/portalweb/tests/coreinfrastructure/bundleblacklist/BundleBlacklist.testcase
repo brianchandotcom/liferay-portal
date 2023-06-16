@@ -114,13 +114,6 @@ definition {
 
 		var testRunEnvironment = PropsUtil.get("test.run.environment");
 
-		if (${testRunEnvironment} == "EE") {
-			var symbolicName = "Liferay Foundation - Liferay Gogo Shell - Impl";
-		}
-		else {
-			var symbolicName = "Liferay CE Foundation - Liferay CE Gogo Shell - Impl";
-		}
-
 		OSGiConfig.deployOSGiConfigFile(
 			osgiConfigFileName = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config",
 			osgiConfigs = "blacklistBundleSymbolicNames=[\"${symbolicName}\" ]");

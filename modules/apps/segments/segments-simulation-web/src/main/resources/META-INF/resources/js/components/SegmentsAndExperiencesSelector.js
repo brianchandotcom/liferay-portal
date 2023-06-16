@@ -134,7 +134,12 @@ function SegmentsAndExperiencesSelector({
 			simulateSegmentsEntries();
 		}
 		else {
-			simulateSegmentsExperiment(selectedSegmentsExperience);
+			fetch(deactivateSimulationURL, {
+				body: new FormData(formRef.current),
+				method: 'POST',
+			}).then(() => {
+				simulateSegmentsExperiment(selectedSegmentsExperience);
+			});
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [

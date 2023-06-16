@@ -55,9 +55,9 @@ public class UpgradeJavaExtractTextMethodCheck extends BaseFileCheck {
 		}
 
 		if (replaced) {
-			newContent = JavaSourceUtil.addImport(
-				newContent, "import com.liferay.portal.kernel.util.HtmlParser;",
-				"import org.osgi.service.component.annotations.Reference;");
+			newContent = JavaSourceUtil.addImports(
+				newContent, "com.liferay.portal.kernel.util.HtmlParser",
+				"org.osgi.service.component.annotations.Reference");
 			newContent = StringUtil.replaceLast(
 				newContent, CharPool.CLOSE_CURLY_BRACE,
 				"\n\t@Reference\n\tprivate HtmlParser _htmlParser;\n}");

@@ -19,7 +19,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.tools.JavaImportsFormatter;
+import com.liferay.source.formatter.check.util.JavaSourceUtil;
 import com.liferay.source.formatter.check.util.SourceUtil;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaMethod;
@@ -147,17 +147,10 @@ public class JavaUpgradeConnectionCheck extends BaseJavaTermCheck {
 				else {
 					String fullyQualifiedName = StringPool.BLANK;
 
-					String[] importLines = StringUtil.splitLines(
-						JavaImportsFormatter.getImports(upgradeContent));
+					List<String> importNames = JavaSourceUtil.getImportNames(
+						upgradeContent);
 
-					for (String importLine : importLines) {
-						if (Validator.isNull(importLine)) {
-							continue;
-						}
-
-						String importName = importLine.substring(
-							7, importLine.length() - 1);
-
+					for (String importName : importNames) {
 						if (importName.endsWith(
 								CharPool.PERIOD + extendedClassName)) {
 

@@ -53,9 +53,8 @@ public class UpgradeJavaMultiVMPoolUtilCheck extends BaseFileCheck {
 	}
 
 	private String _replaceGetPortalCache(String content) throws Exception {
-		content = JavaSourceUtil.addImport(
-			content,
-			"import org.osgi.service.component.annotations.Reference;");
+		content = JavaSourceUtil.addImports(
+			content, "org.osgi.service.component.annotations.Reference");
 
 		Matcher portalCacheMatcher = _getPortalCachePattern.matcher(content);
 

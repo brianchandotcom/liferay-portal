@@ -18,14 +18,11 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.tools.JavaImportsFormatter;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.check.util.JavaSourceUtil;
 
 import java.io.IOException;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -64,7 +61,7 @@ public class JavaInnerClassImportsCheck extends BaseFileCheck {
 			// cases where we get long lines that are hard to resolve
 
 			if (imports == null) {
-				imports = _getImports(content);
+				imports = JavaSourceUtil.getImportNames(content);
 			}
 
 			if ((innerClassName.length() + outerClassName.length()) > 40) {
@@ -152,21 +149,6 @@ public class JavaInnerClassImportsCheck extends BaseFileCheck {
 		}
 
 		return null;
-	}
-
-	private List<String> _getImports(String content) {
-		List<String> imports = new ArrayList<>();
-
-		String[] importLines = StringUtil.splitLines(
-			JavaImportsFormatter.getImports(content));
-
-		for (String importLine : importLines) {
-			if (Validator.isNotNull(importLine)) {
-				imports.add(importLine.substring(7, importLine.length() - 1));
-			}
-		}
-
-		return imports;
 	}
 
 	private boolean _isRedundantImport(

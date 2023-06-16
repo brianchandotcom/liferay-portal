@@ -18,8 +18,6 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.tools.JavaImportsFormatter;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.check.util.JavaSourceUtil;
 import com.liferay.source.formatter.check.util.SourceUtil;
@@ -135,22 +133,11 @@ public class JavaClassParser {
 			}
 		}
 
-		List<String> importNames = new ArrayList<>();
-
-		String[] importLines = StringUtil.splitLines(
-			JavaImportsFormatter.getImports(content));
-
-		for (String importLine : importLines) {
-			if (Validator.isNotNull(importLine)) {
-				importNames.add(
-					importLine.substring(7, importLine.length() - 1));
-			}
-		}
-
 		JavaClass javaClass = _parseJavaClass(
-			className, JavaSourceUtil.getPackageName(content), importNames,
-			classContent, lineNumber, JavaTerm.ACCESS_MODIFIER_PUBLIC,
-			isAbstract, isFinal, false, isEnum, isInterface, false);
+			className, JavaSourceUtil.getPackageName(content),
+			JavaSourceUtil.getImportNames(content), classContent, lineNumber,
+			JavaTerm.ACCESS_MODIFIER_PUBLIC, isAbstract, isFinal, false, isEnum,
+			isInterface, false);
 
 		return _parseExtendsImplements(
 			javaClass, StringUtil.trim(matcher.group(5)));

@@ -1,0 +1,13 @@
+{
+	"description": "",
+	"fragmentCompositionDefinitionPath": "page-definition.json",
+	"friendlyURL": "/create-new-app",
+	"hidden": true,
+	"name": "Create New App",
+	"name_i18n": {
+		"en_US": "Create New App"
+	},
+	"private": false,
+	"system": false,
+	"type": "content"
+}

@@ -168,6 +168,13 @@ public class ElasticsearchIndexSearcherSearchAfterTest {
 	}
 
 	@Test
+	public void testElasticsearchIndexSearcherSort() throws Exception {
+		_assertHits(
+			_INDEX_MAX_RESULT_WINDOW, 0, _INDEX_MAX_RESULT_WINDOW, 0,
+			_INDEX_MAX_RESULT_WINDOW, new Sort(Field.TITLE, true));
+	}
+
+	@Test
 	public void testElasticsearchIndexSearcherStartAndSizeGreaterThanIndexedDocuments()
 		throws Exception {
 
@@ -214,10 +221,16 @@ public class ElasticsearchIndexSearcherSearchAfterTest {
 	}
 
 	private void _assertDocumentOrder(
-		Document[] documents, int start, int end) {
+		Document[] documents, int start, int end, Sort sort) {
+
+		List<Document> expectedDocuments = new ArrayList<>(_documents);
+
+		if (sort.isReverse()) {
+			Collections.reverse(expectedDocuments);
+		}
 
 		for (int i = 0; (i < documents.length) && (start < end); i++) {
-			Document expectedDocument = _documents.get(start++);
+			Document expectedDocument = expectedDocuments.get(start++);
 
 			Assert.assertEquals(
 				expectedDocument.get(Field.TITLE),
@@ -236,13 +249,23 @@ public class ElasticsearchIndexSearcherSearchAfterTest {
 			int expectedEnd)
 		throws Exception {
 
+		_assertHits(
+			expectedHitsReturned, start, end, expectedStart, expectedEnd,
+			new Sort(Field.TITLE, false));
+	}
+
+	private void _assertHits(
+			int expectedHitsReturned, int start, int end, int expectedStart,
+			int expectedEnd, Sort sort)
+		throws Exception {
+
 		IdempotentRetryAssert.retryAssert(
 			5, TimeUnit.SECONDS,
 			() -> {
 				SearchContext searchContext = _getSearchContext();
 
 				searchContext.setEnd(end);
-				searchContext.setSorts(new Sort(Field.MODIFIED_DATE, true));
+				searchContext.setSorts(sort);
 				searchContext.setStart(start);
 
 				try {
@@ -264,7 +287,8 @@ public class ElasticsearchIndexSearcherSearchAfterTest {
 					Assert.assertEquals(
 						scores.toString(), expectedHitsReturned, scores.length);
 
-					_assertDocumentOrder(documents, expectedStart, expectedEnd);
+					_assertDocumentOrder(
+						documents, expectedStart, expectedEnd, sort);
 				}
 				catch (Exception exception) {
 				}

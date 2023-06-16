@@ -59,9 +59,9 @@ import org.apache.commons.cli.ParseException;
 public class DBUpgradeClient {
 
 	public static void main(String[] args) {
-		try {
-			Options options = _getOptions();
+		Options options = _getOptions();
 
+		try {
 			CommandLineParser commandLineParser = new DefaultParser();
 
 			CommandLine commandLine = commandLineParser.parse(options, args);

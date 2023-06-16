@@ -19,7 +19,7 @@
 <%@ page import="com.liferay.portal.kernel.servlet.taglib.ui.LanguageEntry" %>
 
 <%
-String displayStyle = GetterUtil.getString((String)request.getAttribute("liferay-ui:language:displayStyle"));
+String ddmTemplateKey = GetterUtil.getString((String)request.getAttribute("liferay-ui:language:ddmTemplateKey"));
 long displayStyleGroupId = GetterUtil.getLong(request.getAttribute("liferay-ui:language:displayStyleGroupId"), scopeGroupId);
 String formAction = (String)request.getAttribute("liferay-ui:language:formAction");
 String formName = (String)request.getAttribute("liferay-ui:language:formName");

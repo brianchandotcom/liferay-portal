@@ -32,5 +32,5 @@
 	).build();
 	%>
 
-	<%= PortletDisplayTemplateManagerUtil.renderDDMTemplate(PortalUtil.getClassNameId(LanguageEntry.class), contextObjects, displayStyle, languageEntries, displayStyleGroupId, request, response, true) %>
+	<%= PortletDisplayTemplateManagerUtil.renderDDMTemplate(PortalUtil.getClassNameId(LanguageEntry.class), contextObjects, ddmTemplateKey, languageEntries, displayStyleGroupId, request, response, true) %>
 </c:if>

@@ -146,4 +146,60 @@ definition {
 		return ${catalogIds};
 	}
 
+	macro _patchCommerceCatalog {
+		Variables.assertDefined(parameterList = ${catalogName});
+
+		var baseURL = ${baseURL};
+		var fieldsList = ListUtil.newList();
+		var catalogId = CommerceJSONCatalogsAPI._getCommerceCatalogIdByName(catalogName = ${catalogName});
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if (isSet(accountId)) {
+			var accountId = '''"accountId": ${accountId}''';
+
+			ListUtil.add(${fieldsList}, ${accountId});
+		}
+
+		if (isSet(currencyCode)) {
+			var currencyCode = '''"currencyCode": "${currencyCode}"''';
+
+			ListUtil.add(${fieldsList}, ${currencyCode});
+		}
+
+		if (isSet(defaultLanguageId)) {
+			var defaultLanguageId = '''"defaultLanguageId": "${defaultLanguageId}"''';
+
+			ListUtil.add(${fieldsList}, ${defaultLanguageId});
+		}
+
+		// Following lines to be updated after COMMERCE-11734 is fixed
+
+		if (isSet(newCatalogName)) {
+			var name = '''"name": "${newCatalogName}"''';
+		}
+		else {
+			var name = '''"name": "${catalogName}"''';
+		}
+
+		ListUtil.add(${fieldsList}, ${name});
+
+		var fieldsList = ListUtil.toString(${fieldsList});
+
+		var payload = CommerceUtilities.getPayloadFromFieldsList(fieldsList = ${fieldsList});
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-catalog/v1.0/catalog/${catalogId} \
+				-u ${userLoginInfo} \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{${payload}}'
+		''';
+
+		JSONCurlUtil.patch(${curl});
+	}
+
 }

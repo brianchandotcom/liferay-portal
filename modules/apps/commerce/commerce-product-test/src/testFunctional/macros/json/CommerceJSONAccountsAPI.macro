@@ -564,6 +564,33 @@ definition {
 		return ${accountAddressStreet};
 	}
 
+	macro _getAccounts {
+		var baseURL = ${baseURL};
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if (isSet(accountCount)) {
+			var accountsCount = ${accountCount};
+		}
+		else {
+			var accountsCount = 100;
+		}
+
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
+		var curl = '''
+			${baseURL}/o/headless-admin-user/v1.0/accounts?pageSize=${accountsCount} \
+				-u ${userLoginInfo} \
+				-H 'accept: application/json' \
+		''';
+
+		var responseBody = JSONCurlUtil.get(${curl});
+
+		return ${responseBody};
+	}
+
 	macro _getCommerceAccountEmail {
 		var baseURL = ${baseURL};
 
@@ -645,6 +672,16 @@ definition {
 		echo("The Commerce accounts count is: ${accountsCount}");
 
 		return ${accountsCount};
+	}
+
+	macro getAccountFieldByAccountName {
+		Variables.assertDefined(parameterList = ${accountName});
+
+		var responseBody = CommerceJSONAccountsAPI._getAccounts();
+
+		var fieldValue = JSONUtil.getWithJSONPath(${responseBody}, "$..[?(@['name'] == '${accountName}')]['${field}']");
+
+		return ${fieldValue};
 	}
 
 }

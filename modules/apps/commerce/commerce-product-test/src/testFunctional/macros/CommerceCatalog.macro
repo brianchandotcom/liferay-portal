@@ -15,17 +15,51 @@ definition {
 	}
 
 	macro editCatalogEntry {
-		ClickNoError(
-			key_value = ${catalogName},
-			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+		if (IsElementNotPresent(locator1 = "CommerceEntry#HEADER_ID")) {
+			CommerceEntry.clickTableEntryEditButton(entryName = ${catalogName});
+		}
 
-		DropdownMenuItem.click(menuItem = "Edit");
+		if (isSet(catalogNewName)) {
+			Type(
+				key_fieldLabel = "Name",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = ${catalogNewName});
+		}
 
 		if (isSet(catalogLanguage)) {
 			Select(
 				key_title = "Default Catalog Language",
 				locator1 = "CommerceEntry#CATALOGS_FORM",
 				value1 = ${catalogLanguage});
+		}
+
+		if (isSet(catalogCurrency)) {
+			Select(
+				key_title = "Currency",
+				locator1 = "CommerceEntry#CATALOGS_FORM",
+				value1 = ${catalogCurrency});
+		}
+
+		if (isSet(catalogBasePriceList)) {
+			Type(
+				key_labelName = "Base Price List",
+				locator1 = "TextInput#SPECIFIC_LABEL_TEXT_INPUT",
+				value1 = ${catalogBasePriceList});
+
+			Click(
+				key_menuItem = ${catalogBasePriceList},
+				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+		}
+
+		if (isSet(catalogBasePromotion)) {
+			Type(
+				key_labelName = "Base Promotion",
+				locator1 = "TextInput#SPECIFIC_LABEL_TEXT_INPUT",
+				value1 = ${catalogBasePromotion});
+
+			Click(
+				key_menuItem = ${catalogBasePromotion},
+				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
 		}
 
 		Button.clickSave();

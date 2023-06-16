@@ -21,6 +21,7 @@ import com.liferay.source.formatter.check.util.SourceUtil;
 import com.liferay.source.formatter.parser.JavaTerm;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -55,14 +56,14 @@ public class JavaUpgradeModelPermissionsCheck extends BaseJavaTermCheck {
 		boolean hasSetGuestPermissions = false;
 
 		if (setGroupPermissionsMatcher.find()) {
-			hasSetGroupPermissions = _hasClassName(
-				"ServiceContext", javaTermContent, fileContent,
+			hasSetGroupPermissions = _isServiceContextMethodCall(
+				javaTermContent, fileContent,
 				setGroupPermissionsMatcher.group(1));
 		}
 
 		if (setGuestPermissionsMatcher.find()) {
-			hasSetGuestPermissions = _hasClassName(
-				"ServiceContext", javaTermContent, fileContent,
+			hasSetGuestPermissions = _isServiceContextMethodCall(
+				javaTermContent, fileContent,
 				setGuestPermissionsMatcher.group(1));
 		}
 
@@ -207,17 +208,12 @@ public class JavaUpgradeModelPermissionsCheck extends BaseJavaTermCheck {
 		return sb.toString();
 	}
 
-	private boolean _hasClassName(
-		String className, String content, String fileContent, String variable) {
+	private boolean _isServiceContextMethodCall(
+		String methodCall, String fileContent, String variableName) {
 
-		String variableTypeName = getVariableTypeName(
-			content, fileContent, variable);
-
-		if (variableTypeName.equals(className)) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(
+			getVariableTypeName(methodCall, fileContent, variableName),
+			"ServiceContext");
 	}
 
 	private static final Pattern _setGroupPermissionsPattern = Pattern.compile(

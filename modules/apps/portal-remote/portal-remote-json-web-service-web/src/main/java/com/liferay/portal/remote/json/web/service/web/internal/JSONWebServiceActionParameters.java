@@ -234,23 +234,24 @@ public class JSONWebServiceActionParameters {
 				for (int i = 0; i < fileItems.length; i++) {
 					FileItem fileItem = fileItems[i];
 
-					File file = fileItem.getStoreLocation();
-
 					if (fileItem.isInMemory()) {
+						files[i] = fileItem.getTempFile();
+
 						try {
-							FileUtil.write(file, fileItem.getInputStream());
+							FileUtil.write(files[i], fileItem.getInputStream());
 						}
 						catch (IOException ioException) {
 							if (_log.isWarnEnabled()) {
 								_log.warn(
 									"Unable to write temporary file " +
-										file.getAbsolutePath(),
+										files[i].getAbsolutePath(),
 									ioException);
 							}
 						}
 					}
-
-					files[i] = file;
+					else {
+						files[i] = fileItem.getStoreLocation();
+					}
 				}
 
 				if (files.length == 1) {

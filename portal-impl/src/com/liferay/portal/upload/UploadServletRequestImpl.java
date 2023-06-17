@@ -266,15 +266,19 @@ public class UploadServletRequestImpl
 
 		FileItem liferayFileItem = liferayFileItems[0];
 
+		if (!liferayFileItem.isInMemory()) {
+			return liferayFileItem.getStoreLocation();
+		}
+
 		long size = liferayFileItem.getSize();
 
 		if ((size > 0) && (size <= liferayFileItem.getSizeThreshold())) {
 			forceCreate = true;
 		}
 
-		File file = liferayFileItem.getStoreLocation();
+		File file = liferayFileItem.getTempFile();
 
-		if (liferayFileItem.isInMemory() && forceCreate) {
+		if (forceCreate) {
 			try {
 				FileUtil.write(file, liferayFileItem.getInputStream());
 			}
@@ -366,7 +370,12 @@ public class UploadServletRequestImpl
 				FileItem liferayFileItem = liferayFileItems[i];
 
 				if (Validator.isNotNull(liferayFileItem.getFileName())) {
-					files[i] = liferayFileItem.getStoreLocation();
+					if (liferayFileItem.isInMemory()) {
+						files[i] = liferayFileItem.getTempFile();
+					}
+					else {
+						files[i] = liferayFileItem.getStoreLocation();
+					}
 				}
 			}
 

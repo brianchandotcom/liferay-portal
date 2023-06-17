@@ -14,6 +14,11 @@
 
 package com.liferay.portal.search.tuning.synonyms.web.internal.index;
 
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.index.CreateIndexRequest;
@@ -27,6 +32,8 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adam Brandizzi
+ * @author Joshua Cords
+ * @author Tibor Lipusz
  */
 @Component(service = SynonymSetIndexCreator.class)
 public class SynonymSetIndexCreatorImpl implements SynonymSetIndexCreator {
@@ -36,7 +43,10 @@ public class SynonymSetIndexCreatorImpl implements SynonymSetIndexCreator {
 		CreateIndexRequest createIndexRequest = new CreateIndexRequest(
 			synonymSetIndexName.getIndexName());
 
-		createIndexRequest.setSource(_readIndexSettings());
+		createIndexRequest.setMappings(
+			_readJSONResource(_INDEX_MAPPINGS_FILE_NAME));
+		createIndexRequest.setSettings(
+			_readJSONResource(_INDEX_SETTINGS_FILE_NAME));
 
 		_searchEngineAdapter.execute(createIndexRequest);
 	}
@@ -57,12 +67,31 @@ public class SynonymSetIndexCreatorImpl implements SynonymSetIndexCreator {
 		}
 	}
 
-	protected static final String INDEX_SETTINGS_RESOURCE_NAME =
-		"/META-INF/search/liferay-search-tuning-synonyms-index.json";
+	private String _readJSONResource(String fileName) {
+		try {
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
+				StringUtil.read(getClass(), "/META-INF/search/" + fileName));
 
-	private String _readIndexSettings() {
-		return StringUtil.read(getClass(), INDEX_SETTINGS_RESOURCE_NAME);
+			return jsonObject.toString();
+		}
+		catch (JSONException jsonException) {
+			_log.error(jsonException);
+		}
+
+		return null;
 	}
+
+	private static final String _INDEX_MAPPINGS_FILE_NAME =
+		"liferay-search-tuning-synonyms-mappings.json";
+
+	private static final String _INDEX_SETTINGS_FILE_NAME =
+		"liferay-search-tuning-synonyms-settings.json";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SynonymSetIndexCreatorImpl.class);
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private SearchEngineAdapter _searchEngineAdapter;

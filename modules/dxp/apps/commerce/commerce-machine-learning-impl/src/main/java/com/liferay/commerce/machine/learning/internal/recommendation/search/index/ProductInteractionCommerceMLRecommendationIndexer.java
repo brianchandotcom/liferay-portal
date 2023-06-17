@@ -46,8 +46,7 @@ public class ProductInteractionCommerceMLRecommendationIndexer
 	}
 
 	private static final String _INDEX_MAPPING_FILE_NAME =
-		"/META-INF/search" +
-			"/product-commerce-ml-recommendation-document-type.json";
+		"product-commerce-ml-recommendation-mappings.json";
 
 	private static final String _INDEX_NAME_PATTERN =
 		"%s-product-interaction-commerce-ml-recommendation";

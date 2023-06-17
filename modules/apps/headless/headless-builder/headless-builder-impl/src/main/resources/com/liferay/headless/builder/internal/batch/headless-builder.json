@@ -271,7 +271,7 @@
 			],
 			"objectRelationships": [
 				{
-					"deletionType": "prevent",
+					"deletionType": "cascade",
 					"label": {
 						"en_US": "API Endpoint to API Filters"
 					},
@@ -285,7 +285,7 @@
 					"type": "oneToMany"
 				},
 				{
-					"deletionType": "prevent",
+					"deletionType": "cascade",
 					"label": {
 						"en_US": "API Endpoint API Sorts"
 					},
@@ -399,7 +399,7 @@
 			],
 			"objectRelationships": [
 				{
-					"deletionType": "prevent",
+					"deletionType": "cascade",
 					"label": {
 						"en_US": "API Properties to API Properties"
 					},
@@ -482,7 +482,7 @@
 			],
 			"objectRelationships": [
 				{
-					"deletionType": "prevent",
+					"deletionType": "cascade",
 					"label": {
 						"en_US": "API Schema to API Properties"
 					},
@@ -496,7 +496,7 @@
 					"type": "oneToMany"
 				},
 				{
-					"deletionType": "prevent",
+					"deletionType": "cascade",
 					"label": {
 						"en_US": "Request API Schema to API Properties"
 					},
@@ -510,7 +510,7 @@
 					"type": "oneToMany"
 				},
 				{
-					"deletionType": "prevent",
+					"deletionType": "cascade",
 					"label": {
 						"en_US": "Response API Schema to API Endpoints"
 					},
@@ -660,7 +660,7 @@
 			],
 			"objectRelationships": [
 				{
-					"deletionType": "prevent",
+					"deletionType": "cascade",
 					"label": {
 						"en_US": "API Application to API Endpoints"
 					},
@@ -674,7 +674,7 @@
 					"type": "oneToMany"
 				},
 				{
-					"deletionType": "prevent",
+					"deletionType": "cascade",
 					"label": {
 						"en_US": "API Application to API Schemas"
 					},

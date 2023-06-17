@@ -16,6 +16,7 @@ package com.liferay.portal.search.elasticsearch7.internal.index;
 
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.FastDateFormatFactory;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.document.DeleteByQueryDocumentRequest;
 import com.liferay.portal.search.index.IndexNameBuilder;
@@ -53,19 +54,19 @@ public class SyncReindexManagerImpl implements SyncReindexManager {
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
-		TermsQuery termsQuery = _queries.terms(Field.ENTRY_CLASS_NAME);
+		if (SetUtil.isNotEmpty(classNames)) {
+			TermsQuery termsQuery = _queries.terms(Field.ENTRY_CLASS_NAME);
 
-		termsQuery.addValues(classNames.toArray());
+			termsQuery.addValues(classNames.toArray());
+
+			booleanQuery.addFilterQueryClauses(termsQuery);
+		}
 
 		Format format = _fastDateFormatFactory.getSimpleDateFormat(
 			"yyyyMMddHHmmss");
 
 		DateRangeTermQuery dateRangeTermQuery = _queries.dateRangeTerm(
 			"timestamp", false, false, null, format.format(date));
-
-		if (!termsQuery.isEmpty()) {
-			booleanQuery.addFilterQueryClauses(termsQuery);
-		}
 
 		booleanQuery.addFilterQueryClauses(dateRangeTermQuery);
 

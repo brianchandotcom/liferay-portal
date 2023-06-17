@@ -71,7 +71,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "item.class.name=com.liferay.journal.model.JournalArticle",
 	service = InfoItemFieldValuesUpdater.class
 )
-public class JournalArticleInfoItemFieldValuesUpdaterImpl
+public class JournalArticleInfoItemFieldValuesUpdater
 	implements InfoItemFieldValuesUpdater<JournalArticle> {
 
 	@Override

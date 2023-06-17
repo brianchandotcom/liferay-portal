@@ -114,7 +114,7 @@ public class ObjectEntryInfoItemFormProviderTest {
 				_childObjectDefinition.getClassName());
 
 		InfoForm infoForm = infoItemFormProvider.getInfoForm(
-			String.valueOf(_childObjectDefinition.getObjectDefinitionId()));
+			String.valueOf(_childObjectDefinition.getObjectDefinitionId()), 0);
 
 		Assert.assertNotNull(infoForm);
 

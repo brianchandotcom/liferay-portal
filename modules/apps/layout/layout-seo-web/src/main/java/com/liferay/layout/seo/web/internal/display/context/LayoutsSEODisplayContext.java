@@ -539,7 +539,7 @@ public class LayoutsSEODisplayContext {
 				InfoItemFormProvider.class, _getClassName());
 
 		return infoItemFormProvider.getInfoForm(
-			String.valueOf(_getClassTypeId()));
+			String.valueOf(_getClassTypeId()), _themeDisplay.getScopeGroupId());
 	}
 
 	private LayoutPageTemplateEntry _getLayoutPageTemplateEntry() {

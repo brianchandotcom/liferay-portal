@@ -407,7 +407,8 @@ public class FragmentEntryLinkManager {
 	}
 
 	private InfoForm _getInfoForm(
-		FormStyledLayoutStructureItem formStyledLayoutStructureItem) {
+		FormStyledLayoutStructureItem formStyledLayoutStructureItem,
+		long groupId) {
 
 		if (formStyledLayoutStructureItem == null) {
 			return null;
@@ -427,7 +428,8 @@ public class FragmentEntryLinkManager {
 			try {
 				return infoItemFormProvider.getInfoForm(
 					String.valueOf(
-						formStyledLayoutStructureItem.getClassTypeId()));
+						formStyledLayoutStructureItem.getClassTypeId()),
+					groupId);
 			}
 			catch (NoSuchFormVariationException noSuchFormVariationException) {
 				if (_log.isDebugEnabled()) {
@@ -462,7 +464,9 @@ public class FragmentEntryLinkManager {
 			return null;
 		}
 
-		return _getInfoForm((FormStyledLayoutStructureItem)layoutStructureItem);
+		return _getInfoForm(
+			(FormStyledLayoutStructureItem)layoutStructureItem,
+			fragmentEntryLink.getGroupId());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

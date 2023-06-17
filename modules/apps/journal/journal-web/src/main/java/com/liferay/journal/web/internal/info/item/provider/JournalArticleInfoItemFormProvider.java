@@ -15,7 +15,6 @@
 package com.liferay.journal.web.internal.info.item.provider;
 
 import com.liferay.asset.info.item.provider.AssetEntryInfoItemFieldSetProvider;
-import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
 import com.liferay.dynamic.data.mapping.info.item.provider.DDMStructureInfoItemFieldSetProvider;
@@ -106,18 +105,6 @@ public class JournalArticleInfoItemFormProvider
 					article.getResourcePrimKey(),
 				portalException);
 		}
-	}
-
-	@Override
-	public InfoForm getInfoForm(String formVariationKey)
-		throws NoSuchFormVariationException {
-
-		return _getInfoForm(
-			formVariationKey,
-			_assetEntryInfoItemFieldSetProvider.getInfoFieldSet(
-				AssetEntry.class.getName()),
-			_displayPageInfoItemFieldSetProvider.getInfoFieldSet(
-				JournalArticle.class.getName(), formVariationKey, 0));
 	}
 
 	@Override

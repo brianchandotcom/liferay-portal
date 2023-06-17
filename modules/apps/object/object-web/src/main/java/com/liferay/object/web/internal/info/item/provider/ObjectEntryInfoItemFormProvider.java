@@ -161,13 +161,6 @@ public class ObjectEntryInfoItemFormProvider
 	}
 
 	@Override
-	public InfoForm getInfoForm(String formVariationKey)
-		throws NoSuchFormVariationException {
-
-		return getInfoForm(formVariationKey, 0);
-	}
-
-	@Override
 	public InfoForm getInfoForm(String formVariationKey, long groupId)
 		throws NoSuchFormVariationException {
 

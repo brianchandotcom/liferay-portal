@@ -48,16 +48,6 @@ public class AssetCategoryInfoItemFormProvider
 	}
 
 	@Override
-	public InfoForm getInfoForm(long itemClassTypeId) {
-		return getInfoForm(StringPool.BLANK, 0);
-	}
-
-	@Override
-	public InfoForm getInfoForm(String formVariationKey) {
-		return getInfoForm(StringPool.BLANK, 0);
-	}
-
-	@Override
 	public InfoForm getInfoForm(String formVariationKey, long groupId) {
 		return InfoForm.builder(
 		).infoFieldSetEntry(

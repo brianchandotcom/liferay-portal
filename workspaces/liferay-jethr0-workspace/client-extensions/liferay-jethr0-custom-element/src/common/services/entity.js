@@ -12,34 +12,24 @@
  * details.
  */
 
-import React from 'react';
-import {createRoot} from 'react-dom/client';
+import api from './liferay/api.js';
 
-import BuildQueue from './common/components/BuildQueue.js';
-import {Liferay} from './common/services/liferay/liferay.js';
+const getEntities = async (name, filter, options = {}) => {
+	var url = 'o/c/' + name;
 
-const App = () => {
-	return (
-		<div>
-			<h2>Build Queue</h2>
+	if (filter != null) {
+		url += '?filter=' + filter;
+	}
 
-			{Liferay.ThemeDisplay.isSignedIn() && (
-				<BuildQueue />
-			)}
-		</div>
-	);
+	const response = await api(url, options);
+
+	if (!response.ok) {
+		throw new Error(response.statusText);
+	}
+
+	const data = await response.json();
+
+	return data;
 };
 
-class WebComponent extends HTMLElement {
-	connectedCallback() {
-		createRoot(this).render(
-			<App />
-		);
-	}
-}
-
-const ELEMENT_ID = 'liferay-jethr0-custom-element';
-
-if (!customElements.get(ELEMENT_ID)) {
-	customElements.define(ELEMENT_ID, WebComponent);
-}
+export default getEntities;

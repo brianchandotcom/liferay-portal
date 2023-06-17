@@ -22,15 +22,11 @@ import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.field.reader.InfoItemFieldReaderFieldSetProvider;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
+import com.liferay.info.localized.bundle.ModelResourceLocalizedValue;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.web.internal.info.item.KBArticleInfoItemFields;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
-
-import java.util.Locale;
-import java.util.Set;
 
 import org.osgi.framework.Constants;
 import org.osgi.service.component.annotations.Component;
@@ -115,18 +111,6 @@ public class KBArticleInfoItemFormProvider
 	}
 
 	private InfoForm _getInfoForm(InfoFieldSet assetEntryInfoFieldSet) {
-		Set<Locale> availableLocales = _language.getAvailableLocales();
-
-		InfoLocalizedValue.Builder infoLocalizedValueBuilder =
-			InfoLocalizedValue.builder();
-
-		for (Locale locale : availableLocales) {
-			infoLocalizedValueBuilder.value(
-				locale,
-				ResourceActionsUtil.getModelResource(
-					locale, KBArticle.class.getName()));
-		}
-
 		return InfoForm.builder(
 		).infoFieldSetEntry(
 			_getBasicInformationInfoFieldSet()
@@ -146,7 +130,7 @@ public class KBArticleInfoItemFormProvider
 			_infoItemFieldReaderFieldSetProvider.getInfoFieldSet(
 				KBArticle.class.getName())
 		).labelInfoLocalizedValue(
-			infoLocalizedValueBuilder.build()
+			new ModelResourceLocalizedValue(KBArticle.class.getName())
 		).name(
 			KBArticle.class.getName()
 		).build();
@@ -165,9 +149,6 @@ public class KBArticleInfoItemFormProvider
 	@Reference
 	private InfoItemFieldReaderFieldSetProvider
 		_infoItemFieldReaderFieldSetProvider;
-
-	@Reference
-	private Language _language;
 
 	@Reference
 	private TemplateInfoItemFieldSetProvider _templateInfoItemFieldSetProvider;

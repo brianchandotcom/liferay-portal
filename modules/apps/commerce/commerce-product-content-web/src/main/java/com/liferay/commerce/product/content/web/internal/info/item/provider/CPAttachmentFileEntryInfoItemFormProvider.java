@@ -22,12 +22,8 @@ import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.field.reader.InfoItemFieldReaderFieldSetProvider;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
-import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.info.localized.bundle.ModelResourceLocalizedValue;
 import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
-
-import java.util.Locale;
-import java.util.Set;
 
 import org.osgi.framework.Constants;
 import org.osgi.service.component.annotations.Component;
@@ -121,18 +117,6 @@ public class CPAttachmentFileEntryInfoItemFormProvider
 	}
 
 	private InfoForm _getInfoForm() {
-		Set<Locale> availableLocales = _language.getAvailableLocales();
-
-		InfoLocalizedValue.Builder<String> infoLocalizedValueBuilder =
-			InfoLocalizedValue.builder();
-
-		for (Locale locale : availableLocales) {
-			infoLocalizedValueBuilder.value(
-				locale,
-				ResourceActionsUtil.getModelResource(
-					locale, CPAttachmentFileEntry.class.getName()));
-		}
-
 		return InfoForm.builder(
 		).infoFieldSetEntry(
 			_expandoInfoItemFieldSetProvider.getInfoFieldSet(
@@ -152,7 +136,8 @@ public class CPAttachmentFileEntryInfoItemFormProvider
 		).infoFieldSetEntry(
 			_getStatusInfoFieldSet()
 		).labelInfoLocalizedValue(
-			infoLocalizedValueBuilder.build()
+			new ModelResourceLocalizedValue(
+				CPAttachmentFileEntry.class.getName())
 		).name(
 			CPAttachmentFileEntry.class.getName()
 		).build();
@@ -208,9 +193,6 @@ public class CPAttachmentFileEntryInfoItemFormProvider
 	@Reference
 	private InfoItemFieldReaderFieldSetProvider
 		_infoItemFieldReaderFieldSetProvider;
-
-	@Reference
-	private Language _language;
 
 	@Reference
 	private TemplateInfoItemFieldSetProvider _templateInfoItemFieldSetProvider;

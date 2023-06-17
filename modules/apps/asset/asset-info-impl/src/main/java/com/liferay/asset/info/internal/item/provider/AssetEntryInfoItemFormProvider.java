@@ -21,12 +21,8 @@ import com.liferay.info.field.InfoFieldSet;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
-import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.info.localized.bundle.ModelResourceLocalizedValue;
 import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
-
-import java.util.Locale;
-import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -40,18 +36,6 @@ public class AssetEntryInfoItemFormProvider
 
 	@Override
 	public InfoForm getInfoForm() {
-		Set<Locale> availableLocales = _language.getAvailableLocales();
-
-		InfoLocalizedValue.Builder infoLocalizedValueBuilder =
-			InfoLocalizedValue.builder();
-
-		for (Locale locale : availableLocales) {
-			infoLocalizedValueBuilder.value(
-				locale,
-				ResourceActionsUtil.getModelResource(
-					locale, AssetEntry.class.getName()));
-		}
-
 		return InfoForm.builder(
 		).infoFieldSetEntry(
 			InfoFieldSet.builder(
@@ -89,7 +73,7 @@ public class AssetEntryInfoItemFormProvider
 			_assetEntryInfoItemFieldSetProvider.getInfoFieldSet(
 				AssetEntry.class.getName())
 		).labelInfoLocalizedValue(
-			infoLocalizedValueBuilder.build()
+			new ModelResourceLocalizedValue(AssetEntry.class.getName())
 		).name(
 			AssetEntry.class.getName()
 		).build();
@@ -98,9 +82,6 @@ public class AssetEntryInfoItemFormProvider
 	@Reference
 	private AssetEntryInfoItemFieldSetProvider
 		_assetEntryInfoItemFieldSetProvider;
-
-	@Reference
-	private Language _language;
 
 	@Reference
 	private TemplateInfoItemFieldSetProvider _templateInfoItemFieldSetProvider;

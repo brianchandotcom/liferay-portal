@@ -21,15 +21,11 @@ import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.field.reader.InfoItemFieldReaderFieldSetProvider;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
+import com.liferay.info.localized.bundle.ModelResourceLocalizedValue;
 import com.liferay.layout.page.template.info.item.provider.DisplayPageInfoItemFieldSetProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
-
-import java.util.Locale;
-import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -63,18 +59,6 @@ public class AssetCategoryInfoItemFormProvider
 
 	@Override
 	public InfoForm getInfoForm(String formVariationKey, long groupId) {
-		Set<Locale> availableLocales = _language.getAvailableLocales();
-
-		InfoLocalizedValue.Builder infoLocalizedValueBuilder =
-			InfoLocalizedValue.builder();
-
-		for (Locale locale : availableLocales) {
-			infoLocalizedValueBuilder.value(
-				locale,
-				ResourceActionsUtil.getModelResource(
-					locale, AssetCategory.class.getName()));
-		}
-
 		return InfoForm.builder(
 		).infoFieldSetEntry(
 			_getBasicInformationInfoFieldSet()
@@ -100,7 +84,7 @@ public class AssetCategoryInfoItemFormProvider
 			_infoItemFieldReaderFieldSetProvider.getInfoFieldSet(
 				AssetCategory.class.getName())
 		).labelInfoLocalizedValue(
-			infoLocalizedValueBuilder.build()
+			new ModelResourceLocalizedValue(AssetCategory.class.getName())
 		).name(
 			AssetCategory.class.getName()
 		).build();
@@ -139,9 +123,6 @@ public class AssetCategoryInfoItemFormProvider
 	@Reference
 	private InfoItemFieldReaderFieldSetProvider
 		_infoItemFieldReaderFieldSetProvider;
-
-	@Reference
-	private Language _language;
 
 	@Reference
 	private TemplateInfoItemFieldSetProvider _templateInfoItemFieldSetProvider;

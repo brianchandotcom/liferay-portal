@@ -34,15 +34,14 @@ import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.field.reader.InfoItemFieldReaderFieldSetProvider;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
+import com.liferay.info.localized.bundle.ModelResourceLocalizedValue;
 import com.liferay.layout.page.template.info.item.provider.DisplayPageInfoItemFieldSetProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
@@ -53,7 +52,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 
 import org.osgi.framework.Constants;
 import org.osgi.service.component.annotations.Component;
@@ -248,18 +246,6 @@ public class FileEntryInfoItemFormProvider
 			InfoFieldSet displayPageInfoFieldSet, long fileEntryTypeId)
 		throws NoSuchFormVariationException {
 
-		Set<Locale> availableLocales = _language.getAvailableLocales();
-
-		InfoLocalizedValue.Builder infoLocalizedValueBuilder =
-			InfoLocalizedValue.builder();
-
-		for (Locale locale : availableLocales) {
-			infoLocalizedValueBuilder.value(
-				locale,
-				ResourceActionsUtil.getModelResource(
-					locale, FileEntry.class.getName()));
-		}
-
 		try {
 			return InfoForm.builder(
 			).infoFieldSetEntry(
@@ -298,7 +284,7 @@ public class FileEntryInfoItemFormProvider
 				_infoItemFieldReaderFieldSetProvider.getInfoFieldSet(
 					FileEntry.class.getName())
 			).labelInfoLocalizedValue(
-				infoLocalizedValueBuilder.build()
+				new ModelResourceLocalizedValue(FileEntry.class.getName())
 			).name(
 				FileEntry.class.getName()
 			).build();
@@ -400,9 +386,6 @@ public class FileEntryInfoItemFormProvider
 	@Reference
 	private InfoItemFieldReaderFieldSetProvider
 		_infoItemFieldReaderFieldSetProvider;
-
-	@Reference
-	private Language _language;
 
 	@Reference
 	private TemplateInfoItemFieldSetProvider _templateInfoItemFieldSetProvider;

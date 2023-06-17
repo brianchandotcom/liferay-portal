@@ -52,7 +52,7 @@ public class UpgradeJavaMultiVMPoolUtilCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private String _replaceGetPortalCache(String content) throws Exception {
+	private String _replaceGetPortalCache(String content) {
 		content = JavaSourceUtil.addImports(
 			content, "org.osgi.service.component.annotations.Reference");
 

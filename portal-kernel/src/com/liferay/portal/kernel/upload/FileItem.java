@@ -63,6 +63,8 @@ public interface FileItem {
 
 	public String getString();
 
+	public File getTempFile();
+
 	public boolean isFormField();
 
 	public boolean isInMemory();

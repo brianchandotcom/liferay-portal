@@ -168,7 +168,7 @@ public class LiferayFileItem extends DiskFileItem implements FileItem {
 	}
 
 	@Override
-	protected File getTempFile() {
+	public File getTempFile() {
 		if (_tempFile != null) {
 			return _tempFile;
 		}

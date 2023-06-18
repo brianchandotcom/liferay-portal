@@ -189,10 +189,10 @@ public class AddItemMVCActionCommand extends BaseMVCActionCommand {
 					layoutStructure.addColumnLayoutStructureItem(
 						rowStyledLayoutStructureItem.getItemId(), i);
 
+			columnLayoutStructureItem.setSize(4);
 			columnLayoutStructureItem.setViewportConfiguration(
 				ViewportSize.MOBILE_LANDSCAPE.getViewportSizeId(),
 				JSONUtil.put("size", 12));
-			columnLayoutStructureItem.setSize(4);
 		}
 
 		return rowStyledLayoutStructureItem;

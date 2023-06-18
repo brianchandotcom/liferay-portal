@@ -69,7 +69,7 @@ public class SynonymSetsDatabaseImporterImplTest
 	}
 
 	@Test
-	public void testPopulateDatabase() {
+	public void testPopulateDatabase() throws Exception {
 		setUpSynonymSetIndexNameBuilder();
 		setUpSearchEngineAdapter(setUpSearchHits("car,automobile"));
 
@@ -83,7 +83,7 @@ public class SynonymSetsDatabaseImporterImplTest
 	}
 
 	@Test
-	public void testPopulateDatabaseExceptionBeforeReindex() {
+	public void testPopulateDatabaseExceptionBeforeReindex() throws Exception {
 		_synonymSetsDatabaseImporterImpl.populateDatabase(111L);
 
 		Mockito.verify(

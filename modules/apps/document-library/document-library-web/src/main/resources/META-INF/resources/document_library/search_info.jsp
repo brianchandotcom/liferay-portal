@@ -58,8 +58,6 @@ List<Folder> mountFolders = DLAppServiceUtil.getMountFolders(scopeGroupId, DLFol
 				PortletURL searchEverywhereURL = PortletURLBuilder.create(
 					PortletURLUtil.clone(searchURL, liferayPortletResponse)
 				).setParameter(
-					"repositoryId", repositoryId
-				).setParameter(
 					"searchFolderId", dlAdminDisplayContext.getRootFolderId()
 				).setParameter(
 					"searchRepositoryId", searchRepositoryId
@@ -77,22 +75,20 @@ List<Folder> mountFolders = DLAppServiceUtil.getMountFolders(scopeGroupId, DLFol
 				/>
 			</c:if>
 
-			<c:if test="<%= folder != null %>">
+			<c:if test="<%= (folder != null) && !folder.isMountPoint() %>">
 
 				<%
 				PortletURL searchFolderURL = PortletURLBuilder.create(
 					PortletURLUtil.clone(searchURL, liferayPortletResponse)
 				).setParameter(
-					"repositoryId", repositoryId
-				).setParameter(
 					"searchFolderId", folderId
 				).setParameter(
-					"searchRepositoryId", scopeGroupId
+					"searchRepositoryId", repositoryId
 				).buildPortletURL();
 				%>
 
 				<clay:link
-					cssClass='<%= (searchFolderId == folder.getFolderId()) ? "active" : "" %>'
+					cssClass='<%= ((searchFolderId == folderId) && (searchRepositoryId == repositoryId)) ? "active" : "" %>'
 					displayType="secondary"
 					href="<%= searchFolderURL.toString() %>"
 					icon="folder"
@@ -108,8 +104,6 @@ List<Folder> mountFolders = DLAppServiceUtil.getMountFolders(scopeGroupId, DLFol
 				<%
 				PortletURL searchRepositoryURL = PortletURLBuilder.create(
 					PortletURLUtil.clone(searchURL, liferayPortletResponse)
-				).setParameter(
-					"repositoryId", scopeGroupId
 				).setParameter(
 					"searchFolderId", dlAdminDisplayContext.getRootFolderId()
 				).setParameter(
@@ -130,13 +124,12 @@ List<Folder> mountFolders = DLAppServiceUtil.getMountFolders(scopeGroupId, DLFol
 
 				<%
 				for (Folder mountFolder : mountFolders) {
-					searchRepositoryURL.setParameter("repositoryId", String.valueOf(mountFolder.getRepositoryId()));
 					searchRepositoryURL.setParameter("searchFolderId", String.valueOf(mountFolder.getFolderId()));
 					searchRepositoryURL.setParameter("searchRepositoryId", String.valueOf(mountFolder.getRepositoryId()));
 				%>
 
 					<clay:link
-						cssClass='<%= (mountFolder.getFolderId() == searchFolderId) ? "active" : "" %>'
+						cssClass='<%= (searchFolderId == mountFolder.getFolderId()) ? "active" : "" %>'
 						displayType="secondary"
 						href="<%= searchRepositoryURL.toString() %>"
 						icon="repository"

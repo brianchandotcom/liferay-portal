@@ -65,7 +65,7 @@ public class ValidatorTest {
 			true, false,
 			Arrays.asList(
 				"[ERROR] WebId " + _TEST_WEB_ID +
-					" already exists in target database"));
+					" already exists in the target database"));
 	}
 
 	@Test
@@ -82,7 +82,7 @@ public class ValidatorTest {
 		_executeAndAssert(
 			true, false,
 			Arrays.asList(
-				"[ERROR] Module module2.service needs to be upgraded in " +
+				"[ERROR] Module module2.service needs to be upgraded in the " +
 					"target database before the migration"));
 	}
 
@@ -127,7 +127,7 @@ public class ValidatorTest {
 		_executeAndAssert(
 			true, false,
 			Arrays.asList(
-				"[ERROR] Module module1 needs to be upgraded in source " +
+				"[ERROR] Module module1 needs to be upgraded in the source " +
 					"database before the migration"));
 	}
 
@@ -152,8 +152,8 @@ public class ValidatorTest {
 		_executeAndAssert(
 			false, true,
 			Arrays.asList(
-				"[WARN] Table table4 is not present in source database",
-				"[WARN] Table table2 is not present in target database"));
+				"[WARN] Table table4 is not present in the source database",
+				"[WARN] Table table2 is not present in the target database"));
 	}
 
 	@Test
@@ -167,8 +167,8 @@ public class ValidatorTest {
 		_executeAndAssert(
 			false, true,
 			Arrays.asList(
-				"[WARN] Table table2 is not present in source database",
-				"[WARN] Table table5 is not present in source database"));
+				"[WARN] Table table2 is not present in the source database",
+				"[WARN] Table table5 is not present in the source database"));
 	}
 
 	@Test
@@ -182,8 +182,8 @@ public class ValidatorTest {
 		_executeAndAssert(
 			false, true,
 			Arrays.asList(
-				"[WARN] Table table2 is not present in target database",
-				"[WARN] Table table5 is not present in target database"));
+				"[WARN] Table table2 is not present in the target database",
+				"[WARN] Table table5 is not present in the target database"));
 	}
 
 	@Test

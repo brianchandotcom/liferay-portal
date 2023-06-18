@@ -67,13 +67,13 @@ public class Validator {
 
 			recorder.registerWarning(
 				"Table " + sourcePartitionedTableName +
-					" is not present in target database");
+					" is not present in the target database");
 		}
 
 		for (String targetPartitionedTableName : targetPartitionedTableNames) {
 			recorder.registerWarning(
 				"Table " + targetPartitionedTableName +
-					" is not present in source database");
+					" is not present in the source database");
 		}
 	}
 
@@ -147,10 +147,10 @@ public class Validator {
 			"needs to be installed in the source database before the migration",
 			missingTargetServiceModules);
 		recorder.registerErrors(
-			"needs to be upgraded in source database before the migration",
+			"needs to be upgraded in the source database before the migration",
 			lowerVersionModules);
 		recorder.registerErrors(
-			"needs to be upgraded in target database before the migration",
+			"needs to be upgraded in the target database before the migration",
 			higherVersionModules);
 		recorder.registerErrors(
 			"needs to be verified in the source database before the migration",
@@ -199,7 +199,8 @@ public class Validator {
 
 		if (DatabaseUtil.hasWebId(targetConnection, sourceWebId)) {
 			recorder.registerError(
-				"WebId " + sourceWebId + " already exists in target database");
+				"WebId " + sourceWebId +
+					" already exists in the target database");
 		}
 	}
 

@@ -43,6 +43,8 @@ public class LiferayIntegrationTestRule extends AggregateTestRule {
 			testRules.add(TimeoutTestRule.INSTANCE);
 		}
 
+		testRules.add(PortalRunModeClassTestRule.INSTANCE);
+		testRules.add(FeatureFlagTestRule.INSTANCE);
 		testRules.add(DestinationAwaitClassTestRule.INSTANCE);
 		testRules.add(SynchronousDestinationTestRule.INSTANCE);
 		testRules.add(DataGuardTestRule.INSTANCE);
@@ -53,8 +55,6 @@ public class LiferayIntegrationTestRule extends AggregateTestRule {
 		testRules.add(CompanyProviderClassTestRule.INSTANCE);
 		testRules.add(DeleteAfterTestRunMethodTestRule.INSTANCE);
 		testRules.add(InjectTestRule.INSTANCE);
-		testRules.add(FeatureFlagTestRule.INSTANCE);
-		testRules.add(PortalRunModeClassTestRule.INSTANCE);
 
 		return testRules.toArray(new TestRule[0]);
 	}

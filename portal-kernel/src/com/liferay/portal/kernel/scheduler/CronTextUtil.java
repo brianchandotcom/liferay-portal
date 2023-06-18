@@ -150,17 +150,18 @@ public class CronTextUtil {
 				recurrence.setInterval(yearlyInterval);
 			}
 			else {
-				int yearlyPos = ParamUtil.getInteger(
-					portletRequest, "yearlyPos");
 				int yearlyDay = ParamUtil.getInteger(
 					portletRequest, "yearlyDay1");
 				int yearlyMonth = ParamUtil.getInteger(
 					portletRequest, "yearlyMonth1");
+				int yearlyPos = ParamUtil.getInteger(
+					portletRequest, "yearlyPos");
 
 				recurrence.setByDay(
 					new DayAndPosition[] {
 						new DayAndPosition(yearlyDay, yearlyPos)
 					});
+
 				recurrence.setByMonth(new int[] {yearlyMonth});
 
 				int yearlyInterval = ParamUtil.getInteger(

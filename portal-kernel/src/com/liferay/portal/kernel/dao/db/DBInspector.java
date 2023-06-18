@@ -177,19 +177,11 @@ public class DBInspector {
 			if (!expectedColumnNullable &&
 				(actualColumnNullable == DatabaseMetaData.columnNoNulls)) {
 
-				String expectedColumnDefaultValue = _getColumnDefaultValue(
-					columnType);
-
-				String actualColumnDefaultValue = resultSet.getString(
-					"COLUMN_DEF");
-
-				if (actualColumnDefaultValue != null) {
-					actualColumnDefaultValue = _getStoredColumnDefaultValue(
-						actualColumnDefaultValue, DB::getDefaultValue);
-				}
-
 				return StringUtil.equals(
-					expectedColumnDefaultValue, actualColumnDefaultValue);
+					_getColumnDefaultValue(columnType),
+					_getColumnDefaultValue(
+						resultSet.getString("COLUMN_DEF"),
+						DB::getDefaultValue));
 			}
 
 			return true;
@@ -345,6 +337,16 @@ public class DBInspector {
 		return null;
 	}
 
+	private String _getColumnDefaultValue(
+		String columnDef, BiFunction<DB, String, String> biFunction) {
+
+		if (Validator.isNull(columnDef)) {
+			return columnDef;
+		}
+
+		return biFunction.apply(DBManagerUtil.getDB(), columnDef);
+	}
+
 	private int _getColumnSize(String columnType) throws Exception {
 		Matcher matcher = _columnSizePattern.matcher(columnType);
 
@@ -375,12 +377,6 @@ public class DBInspector {
 		}
 
 		return DB.SQL_SIZE_NONE;
-	}
-
-	private String _getStoredColumnDefaultValue(
-		String columnDef, BiFunction<DB, String, String> biFunction) {
-
-		return biFunction.apply(DBManagerUtil.getDB(), columnDef);
 	}
 
 	private boolean _hasTable(String tableName) throws Exception {

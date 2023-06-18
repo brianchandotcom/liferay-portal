@@ -62,10 +62,8 @@ public class CronTextUtil {
 			int dailyType = ParamUtil.getInteger(portletRequest, "dailyType");
 
 			if (dailyType == 0) {
-				int dailyInterval = ParamUtil.getInteger(
-					portletRequest, "dailyInterval", 1);
-
-				recurrence.setInterval(dailyInterval);
+				recurrence.setInterval(
+					ParamUtil.getInteger(portletRequest, "dailyInterval", 1));
 			}
 			else {
 				recurrence.setByDay(
@@ -79,10 +77,8 @@ public class CronTextUtil {
 			}
 		}
 		else if (recurrenceType == Recurrence.WEEKLY) {
-			int weeklyInterval = ParamUtil.getInteger(
-				portletRequest, "weeklyInterval");
-
-			recurrence.setInterval(weeklyInterval);
+			recurrence.setInterval(
+				ParamUtil.getInteger(portletRequest, "weeklyInterval"));
 
 			List<DayAndPosition> dayPos = new ArrayList<>();
 
@@ -105,69 +101,54 @@ public class CronTextUtil {
 				portletRequest, "monthlyType");
 
 			if (monthlyType == 0) {
-				int monthlyDay = ParamUtil.getInteger(
-					portletRequest, "monthlyDay0", 1);
-
-				recurrence.setByMonthDay(new int[] {monthlyDay});
-
-				int monthlyInterval = ParamUtil.getInteger(
-					portletRequest, "monthlyInterval0", 1);
-
-				recurrence.setInterval(monthlyInterval);
+				recurrence.setByMonthDay(
+					new int[] {
+						ParamUtil.getInteger(portletRequest, "monthlyDay0", 1)
+					});
+				recurrence.setInterval(
+					ParamUtil.getInteger(
+						portletRequest, "monthlyInterval0", 1));
 			}
 			else {
-				int monthlyPos = ParamUtil.getInteger(
-					portletRequest, "monthlyPos");
-				int monthlyDay = ParamUtil.getInteger(
-					portletRequest, "monthlyDay1");
-
 				recurrence.setByDay(
 					new DayAndPosition[] {
-						new DayAndPosition(monthlyDay, monthlyPos)
+						new DayAndPosition(
+							ParamUtil.getInteger(portletRequest, "monthlyDay1"),
+							ParamUtil.getInteger(portletRequest, "monthlyPos"))
 					});
-
-				int monthlyInterval = ParamUtil.getInteger(
-					portletRequest, "monthlyInterval1", 1);
-
-				recurrence.setInterval(monthlyInterval);
+				recurrence.setInterval(
+					ParamUtil.getInteger(
+						portletRequest, "monthlyInterval1", 1));
 			}
 		}
 		else if (recurrenceType == Recurrence.YEARLY) {
 			int yearlyType = ParamUtil.getInteger(portletRequest, "yearlyType");
 
 			if (yearlyType == 0) {
-				int yearlyMonth = ParamUtil.getInteger(
-					portletRequest, "yearlyMonth0");
-				int yearlyDay = ParamUtil.getInteger(
-					portletRequest, "yearlyDay0", 1);
-
-				recurrence.setByMonth(new int[] {yearlyMonth});
-				recurrence.setByMonthDay(new int[] {yearlyDay});
-
-				int yearlyInterval = ParamUtil.getInteger(
-					portletRequest, "yearlyInterval0", 1);
-
-				recurrence.setInterval(yearlyInterval);
+				recurrence.setByMonth(
+					new int[] {
+						ParamUtil.getInteger(portletRequest, "yearlyMonth0")
+					});
+				recurrence.setByMonthDay(
+					new int[] {
+						ParamUtil.getInteger(portletRequest, "yearlyDay0", 1)
+					});
+				recurrence.setInterval(
+					ParamUtil.getInteger(portletRequest, "yearlyInterval0", 1));
 			}
 			else {
-				int yearlyDay = ParamUtil.getInteger(
-					portletRequest, "yearlyDay1");
-				int yearlyMonth = ParamUtil.getInteger(
-					portletRequest, "yearlyMonth1");
-				int yearlyPos = ParamUtil.getInteger(
-					portletRequest, "yearlyPos");
-
 				recurrence.setByDay(
 					new DayAndPosition[] {
-						new DayAndPosition(yearlyDay, yearlyPos)
+						new DayAndPosition(
+							ParamUtil.getInteger(portletRequest, "yearlyDay1"),
+							ParamUtil.getInteger(portletRequest, "yearlyPos"))
 					});
-
-				recurrence.setByMonth(new int[] {yearlyMonth});
-
-				int yearlyInterval = ParamUtil.getInteger(
-					portletRequest, "yearlyInterval1", 1);
-
-				recurrence.setInterval(yearlyInterval);
+				recurrence.setByMonth(
+					new int[] {
+						ParamUtil.getInteger(portletRequest, "yearlyMonth1")
+					});
+				recurrence.setInterval(
+					ParamUtil.getInteger(portletRequest, "yearlyInterval1", 1));
 			}
 		}
 

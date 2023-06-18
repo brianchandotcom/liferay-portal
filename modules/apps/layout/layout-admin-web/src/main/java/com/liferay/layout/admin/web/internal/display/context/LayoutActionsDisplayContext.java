@@ -115,7 +115,6 @@ public class LayoutActionsDisplayContext {
 						dropdownItem -> {
 							dropdownItem.putData(
 								"action", "convertToPageTemplate");
-
 							dropdownItem.setIcon("page-template");
 							dropdownItem.setLabel(
 								LanguageUtil.get(

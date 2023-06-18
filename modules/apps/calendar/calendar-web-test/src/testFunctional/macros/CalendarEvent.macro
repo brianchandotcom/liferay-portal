@@ -166,8 +166,8 @@ definition {
 	macro addAllDay {
 		CalendarEvent.editTitle(eventTitle = ${eventTitle});
 
-		var endDateTime = "11:59 PM";
-		var startDateTime = "12:00 AM";
+		var endDateTime = "11:00 PM";
+		var startDateTime = "10:00 PM";
 
 		Check(locator1 = "CalendarEditEvent#ALL_DAY_CHECKBOX");
 
@@ -310,11 +310,13 @@ definition {
 		AssertNotChecked(locator1 = "CalendarEditEvent#REPEAT_CHECKBOX");
 
 		var endDate = selenium.getElementValue("CalendarEditEvent#END_DATE");
-		var endDateTime = selenium.getElementValue("CalendarEditEvent#END_DATE_TIME");
+		var endDateTimeHour = CalendarEvent.getTimeHour(status = "End");
+		var endDateTimeMinute = CalendarEvent.getTimeMinutes(status = "End");
+		var endDateTimeAMPM = CalendarEvent.getTimeAMPM(status = "End");
+		var startDateTimeHour = CalendarEvent.getTimeHour(status = "Start");
+		var startDateTimeMinute = CalendarEvent.getTimeMinutes(status = "Start");
+		var startDateTimeAMPM = CalendarEvent.getTimeAMPM(status = "Start");
 		var startDate = selenium.getElementValue("CalendarEditEvent#START_DATE");
-		var startDateTime = selenium.getElementValue("CalendarEditEvent#START_DATE_TIME");
-		var endDateTime = StringUtil.trim(${endDateTime});
-		var startDateTime = StringUtil.trim(${startDateTime});
 
 		CalendarEvent.selectCalendar(calendarName = ${calendarName});
 
@@ -365,10 +367,10 @@ definition {
 
 		CalendarScheduler._viewRegularEventTitleViaMonthView(
 			endDate = ${endDate},
-			endDateTime = ${endDateTime},
+			endDateTime = "${endDateTimeHour}:${endDateTimeMinute} ${endDateTimeAMPM}",
 			eventTitle = ${eventTitle},
 			startDate = ${startDate},
-			startDateTime = ${startDateTime});
+			startDateTime = "${startDateTimeHour}:${startDateTimeMinute} ${startDateTimeAMPM}");
 	}
 
 	macro addRegularInCustomSite {
@@ -379,11 +381,13 @@ definition {
 		AssertNotChecked(locator1 = "CalendarEditEvent#REPEAT_CHECKBOX");
 
 		var endDate = selenium.getElementValue("CalendarEditEvent#END_DATE");
-		var endDateTime = selenium.getElementValue("CalendarEditEvent#END_DATE_TIME");
 		var startDate = selenium.getElementValue("CalendarEditEvent#START_DATE");
-		var startDateTime = selenium.getElementValue("CalendarEditEvent#START_DATE_TIME");
-		var endDateTime = StringUtil.trim(${endDateTime});
-		var startDateTime = StringUtil.trim(${startDateTime});
+		var endDateTimeHour = CalendarEvent.getTimeHour(status = "End");
+		var endDateTimeMinute = CalendarEvent.getTimeMinutes(status = "End");
+		var endDateTimeAMPM = CalendarEvent.getTimeAMPM(status = "End");
+		var startDateTimeHour = CalendarEvent.getTimeHour(status = "Start");
+		var startDateTimeMinute = CalendarEvent.getTimeMinutes(status = "Start");
+		var startDateTimeAMPM = CalendarEvent.getTimeAMPM(status = "Start");
 
 		CalendarEvent.selectCalendar(calendarName = ${calendarName});
 
@@ -401,21 +405,23 @@ definition {
 
 		CalendarScheduler._viewRegularEventTitleViaMonthView(
 			endDate = ${endDate},
-			endDateTime = ${endDateTime},
+			endDateTime = "${endDateTimeHour}:${endDateTimeMinute} ${endDateTimeAMPM}",
 			eventTitle = ${eventTitle},
 			startDate = ${startDate},
-			startDateTime = ${startDateTime});
+			startDateTime = "${startDateTimeHour}:${startDateTimeMinute} ${startDateTimeAMPM}");
 	}
 
 	macro addRepeating {
 		CalendarEvent.editTitle(eventTitle = ${eventTitle});
 
 		var endDate = selenium.getElementValue("CalendarEditEvent#END_DATE");
-		var endDateTime = selenium.getElementValue("CalendarEditEvent#END_DATE_TIME");
 		var startDate = selenium.getElementValue("CalendarEditEvent#START_DATE");
-		var startDateTime = selenium.getElementValue("CalendarEditEvent#START_DATE_TIME");
-		var endDateTime = StringUtil.trim(${endDateTime});
-		var startDateTime = StringUtil.trim(${startDateTime});
+		var endDateTimeHour = CalendarEvent.getTimeHour(status = "End");
+		var endDateTimeMinute = CalendarEvent.getTimeMinutes(status = "End");
+		var endDateTimeAMPM = CalendarEvent.getTimeAMPM(status = "End");
+		var startDateTimeHour = CalendarEvent.getTimeHour(status = "Start");
+		var startDateTimeMinute = CalendarEvent.getTimeMinutes(status = "Start");
+		var startDateTimeAMPM = CalendarEvent.getTimeAMPM(status = "Start");
 
 		CalendarEvent.setRepeating(
 			frequency = ${frequency},
@@ -465,9 +471,9 @@ definition {
 		}
 
 		var key_endDate = ${endDate};
-		var key_endDateTime = ${endDateTime};
+		var key_endDateTime = "${endDateTimeHour}:${endDateTimeMinute} ${endDateTimeAMPM}";
 		var key_startDate = ${startDate};
-		var key_startDateTime = ${startDateTime};
+		var key_startDateTime = "${startDateTimeHour}:${startDateTimeMinute} ${startDateTimeAMPM}";
 
 		if (!(IsElementPresent(locator1 = "Calendar#SCHEDULER_EVENT_REPEAT"))) {
 			Click(locator1 = "Calendar#VIEW_NEXT_BUTTON");
@@ -933,6 +939,67 @@ definition {
 		ScrollWebElementIntoView(locator1 = "CalendarEditEvent#RESOURCES_AVAILABILITY_PANEL_COLLAPSED");
 
 		Click(locator1 = "CalendarEditEvent#RESOURCES_AVAILABILITY_PANEL_COLLAPSED");
+	}
+
+	macro getTimeAMPM {
+		if (${status} == "End") {
+			var timeString = selenium.getElementValue("CalendarEditEvent#END_DATE_TIME");
+		}
+
+		if (${status} == "Start") {
+			var timeString = selenium.getElementValue("CalendarEditEvent#START_DATE_TIME");
+		}
+
+		var hours = RegexUtil.replace(${timeString}, "([0-9]*):([0-9]*)", 1);
+
+		var changeHour = MathUtil.isGreaterThan(${hours}, 12);
+
+		if (${changeHour} == "true") {
+			var ampm = "PM";
+		}
+		else {
+			var ampm = "AM";
+		}
+
+		return ${ampm};
+	}
+
+	macro getTimeHour {
+		if (${status} == "End") {
+			var timeString = selenium.getElementValue("CalendarEditEvent#END_DATE_TIME");
+		}
+
+		if (${status} == "Start") {
+			var timeString = selenium.getElementValue("CalendarEditEvent#START_DATE_TIME");
+		}
+
+		var hours = RegexUtil.replace(${timeString}, "([0-9]*):([0-9]*)", 1);
+
+		var changeHour = MathUtil.isGreaterThan(${hours}, 12);
+
+		if (${changeHour} == "true") {
+			var hours = ${hours} - 12;
+		}
+
+		if (${hours} == 00) {
+			var hours = 12;
+		}
+
+		return ${hours};
+	}
+
+	macro getTimeMinutes {
+		if (${status} == "End") {
+			var timeString = selenium.getElementValue("CalendarEditEvent#END_DATE_TIME");
+		}
+
+		if (${status} == "Start") {
+			var timeString = selenium.getElementValue("CalendarEditEvent#START_DATE_TIME");
+		}
+
+		var minutes = RegexUtil.replace(${timeString}, "([0-9]*):([0-9]*)", 2);
+
+		return ${minutes};
 	}
 
 	macro gotoConfigureInvitations {

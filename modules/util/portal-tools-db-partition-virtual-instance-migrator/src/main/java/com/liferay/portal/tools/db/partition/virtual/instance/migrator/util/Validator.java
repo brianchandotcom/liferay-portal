@@ -70,11 +70,9 @@ public class Validator {
 					" is not present in target database");
 		}
 
-		for (String destinationPartitionedTableName :
-				targetPartitionedTableNames) {
-
+		for (String targetPartitionedTableName : targetPartitionedTableNames) {
 			recorder.registerWarning(
-				"Table " + destinationPartitionedTableName +
+				"Table " + targetPartitionedTableName +
 					" is not present in source database");
 		}
 	}

@@ -14,11 +14,6 @@
 <!-- GENERAL_PATHS -->
 
 <tr>
-	<td>INPUT_FIELD</td>
-	<td>//label[contains(., '${key_inputValue}')]/..//input</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SIGN_IN</td>
 	<td>//div//a[contains(@class,'btn-solid') and contains(.,'Sign In')]</td>
 	<td></td>

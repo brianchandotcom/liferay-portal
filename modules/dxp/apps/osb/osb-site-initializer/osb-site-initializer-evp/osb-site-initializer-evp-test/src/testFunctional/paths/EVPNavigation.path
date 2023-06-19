@@ -15,11 +15,6 @@
 	<td>//ol[contains(@class,'breadcrumb')]//li[contains(@class,'active')] | //ol[contains(@class,'breadcrumb')]//span[contains(@class,'active')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td>NAV_LINK</td>
-	<td>//*[contains(@class,'nav-link') and contains(.,'${key_navItem}')]</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

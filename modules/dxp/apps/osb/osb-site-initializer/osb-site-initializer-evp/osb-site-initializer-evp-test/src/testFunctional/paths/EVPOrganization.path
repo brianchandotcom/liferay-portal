@@ -11,8 +11,8 @@
 
 <tbody>
 <tr>
-	<td>ASSERT_STATUS</td>
-	<td>//p[normalize-space()='${key_organizationName}']//following::p[normalize-space()='${key_email}']//following::p[normalize-space()='${key_status}']</td>
+	<td>ORGANIZATION_STATUS</td>
+	<td>//*[normalize-space()='${key_organizationName}']//following::p[normalize-space()='${key_status}']</td>
 	<td></td>
 </tr>
 </tbody>

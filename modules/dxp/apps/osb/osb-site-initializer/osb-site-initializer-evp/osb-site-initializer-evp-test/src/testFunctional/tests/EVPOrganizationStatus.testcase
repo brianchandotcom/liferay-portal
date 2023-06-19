@@ -20,6 +20,27 @@ definition {
 		task ("Create a new EVP Site") {
 			EVPUtils.addEVPSite();
 		}
+
+		task ("Create an organization") {
+			EVPUtils.gotoEVP();
+
+			EVPOrganization.goToCreateOrganization();
+
+			EVPOrganization.fillOrganizationForm(
+				bankingInfo = "Bank Test",
+				city = "City Test",
+				contactEmail = "test@liferay.com",
+				contactName = "Contact Test",
+				contactPhone = 12345,
+				country = "Country Test",
+				organizationName = "Organization Test",
+				organizationSite = "www.test.com.br",
+				smallDescription = "Description Test",
+				state = "State Test",
+				street = "Street Test",
+				taxId = 12345,
+				zipCode = "12.345-67");
+		}
 	}
 
 	tearDown {
@@ -38,142 +59,74 @@ definition {
 	@description = "Story ID: LPS-164733 | Test Summary: Verify that Only the Employee user can not see 'Review button' when organization are in 'Awaiting Approval On EVP' status"
 	@priority = 5
 	test EmployeeCanNotSeeReviewInAwaitingEVPStatus {
-		task ("Given that the Manager user create a organization") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "manager@liferay.com",
-				userLoginFullName = "Manager User");
-
-			EVPUtils.gotoEVP();
-
-			EVPOrganization.createAnOrganization();
-
-			EVPOrganization.fillOrganizationForm(
-				bankingInfo = "Bank Test",
-				city = "City Test",
-				contactEmail = "test@liferay.com",
-				contactName = "Contact Test",
-				contactPhone = 12345,
-				country = "Country Test",
-				organizationName = "Organization Test",
-				organizationSite = "www.test.com.br",
-				smallDescription = "Description Test",
-				state = "State Test",
-				street = "Street Test",
-				taxId = 12345,
-				zip = "12.345-67");
-
-			Button.click(button = "Done");
-		}
-
-		task ("When the employee go to organization created") {
+		task ("Given that login with Employee user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "employee@liferay.com",
 				userLoginFullName = "Employee User");
+		}
 
+		task ("When the Employee goes to organization page") {
 			EVPUtils.gotoEVP();
 
 			EVPNavigator.goToNavItem(navItem = "Organization");
 		}
 
-		task ("Then the employee user can not see Awaiting Approval On EVP status") {
-			EVPOrganization.actionKebabMenuNotPresent(
-				actionKebab = "Awaiting Approval On EVP",
-				organizationName = "Organization Test");
+		task ("Then the employee user can not see Review option in kebab menu") {
+			EVPOrganization.kebabMenuOrganization(organizationName = "Organization Test");
+
+			MenuItem.viewNotPresent(menuItem = "Review");
 		}
 	}
 
 	@description = "Story ID: LPS-164733 | Test Summary: Verify that Only the Finance user can not see 'Review button' when organization are in 'Awaiting Approval On EVP' status"
 	@priority = 5
 	test FinanceCanNotSeeReviewInAwaitingEVPStatus {
-		task ("Given that the Manager user create a organization") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "manager@liferay.com",
-				userLoginFullName = "Manager User");
-
-			EVPUtils.gotoEVP();
-
-			EVPOrganization.createAnOrganization();
-
-			EVPOrganization.fillOrganizationForm(
-				bankingInfo = "Bank Test",
-				city = "City Test",
-				contactEmail = "test@liferay.com",
-				contactName = "Contact Test",
-				contactPhone = 12345,
-				country = "Country Test",
-				organizationName = "Organization Test",
-				organizationSite = "www.test.com.br",
-				smallDescription = "Description Test",
-				state = "State Test",
-				street = "Street Test",
-				taxId = 12345,
-				zip = "12.345-67");
-
-			Button.click(button = "Done");
-		}
-
-		task ("When the finance user go to organization created") {
+		task ("Given that login with Finance user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "finance@liferay.com",
 				userLoginFullName = "Finance User");
+		}
 
+		task ("When the finance user goes to organization page") {
 			EVPUtils.gotoEVP();
 
 			EVPNavigator.goToNavItem(navItem = "Organization");
 		}
 
-		task ("Then the finance user can not see Awaiting Approval On EVP status") {
-			EVPOrganization.actionKebabMenuNotPresent(
-				actionKebab = "Awaiting Approval On EVP",
-				organizationName = "Organization Test");
+		task ("Then the finance user can not see Review option in kebab menu") {
+			EVPOrganization.kebabMenuOrganization(organizationName = "Organization Test");
+
+			MenuItem.viewNotPresent(menuItem = "Review");
 		}
 	}
 
 	@description = "Story ID: LPS-164733 | Test Summary: Verify that the EVP Staff can approve a new organization"
 	@priority = 4
 	test ManagerCanApproveOrganization {
-		task ("Given that Sign as Manager user and Navigate to EVP Site") {
+		task ("Given that Sign as Manager user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "manager@liferay.com",
 				userLoginFullName = "Manager User");
-
-			EVPUtils.gotoEVP();
 		}
 
-		task ("And that the manager create a organization") {
-			EVPOrganization.createAnOrganization();
+		task ("And go to organization page") {
+			EVPUtils.gotoEVP();
 
-			EVPOrganization.fillOrganizationForm(
-				bankingInfo = "Bank Test",
-				city = "City Test",
-				contactEmail = "test@liferay.com",
-				contactName = "Contact Test",
-				contactPhone = 12345,
-				country = "Country Test",
-				organizationName = "Organization Test",
-				organizationSite = "www.test.com.br",
-				smallDescription = "Description Test",
-				state = "State Test",
-				street = "Street Test",
-				taxId = 12345,
-				zip = "12.345-67");
-
-			Button.click(button = "Done");
+			EVPNavigator.goToNavItem(navItem = "Organization");
 		}
 
 		task ("When the manager approve the organization created") {
-			EVPOrganization.kebabMenuOrganization(
-				kebabOption = "Review",
-				organizationName = "Organization Test");
+			EVPOrganization.kebabMenuOrganization(organizationName = "Organization Test");
 
-			EVPOrganization.reviewOrganization(
+			MenuItem.click(menuItem = "Review");
+
+			EVPOrganization.changeStatus(
 				button = "Approve",
 				typeMessage = "Your organization has been approved!");
 		}
 
-		task ("Then can view the status Awaiting Finance Approval") {
-			EVPOrganization.assertStatus(
-				email = "test@liferay.com",
+		task ("Then the status will be updated to 'Awaiting Finance Approval'") {
+			EVPOrganization.viewStatus(
 				organizationName = "Organization Test",
 				status = "Awaiting Finance Approval");
 		}
@@ -182,95 +135,62 @@ definition {
 	@description = "Story ID: LPS-164733 | Test Summary: Verify that the Manager can not see 'Review button' when organization are in 'Awaiting Finance Approval' status"
 	@priority = 4
 	test ManagerCannotSeeReviewButtonInAwaitingFinanceStatus {
-		task ("Given that the Manager user create a organization") {
+		task ("Given that Sign as Manager user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "manager@liferay.com",
 				userLoginFullName = "Manager User");
+		}
 
+		task ("And go to organization page") {
 			EVPUtils.gotoEVP();
 
-			EVPOrganization.createAnOrganization();
-
-			EVPOrganization.fillOrganizationForm(
-				bankingInfo = "Bank Test",
-				city = "City Test",
-				contactEmail = "test@liferay.com",
-				contactName = "Contact Test",
-				contactPhone = 12345,
-				country = "Country Test",
-				organizationName = "Organization Test",
-				organizationSite = "www.test.com.br",
-				smallDescription = "Description Test",
-				state = "State Test",
-				street = "Street Test",
-				taxId = 12345,
-				zip = "12.345-67");
-
-			Button.click(button = "Done");
+			EVPNavigator.goToNavItem(navItem = "Organization");
 		}
 
 		task ("When the manager approve the organization created") {
-			EVPOrganization.kebabMenuOrganization(
-				kebabOption = "Review",
-				organizationName = "Organization Test");
+			EVPOrganization.kebabMenuOrganization(organizationName = "Organization Test");
 
-			EVPOrganization.reviewOrganization(
+			MenuItem.click(menuItem = "Review");
+
+			EVPOrganization.changeStatus(
 				button = "Approve",
 				typeMessage = "Your organization has been approved!");
 		}
 
-		task ("Then the manager user can not see Awaiting Finance Approval status") {
-			EVPOrganization.actionKebabMenuNotPresent(
-				actionKebab = "Awaiting Finance Approval",
-				organizationName = "Organization Test");
+		task ("Then the manager user can not see Review option in kebab menu") {
+			EVPOrganization.kebabMenuOrganization(organizationName = "Organization Test");
+
+			MenuItem.viewNotPresent(menuItem = "Review");
 		}
 	}
 
 	@description = "Story ID: LPS-164733 | Test Summary: Verify that the EVP Staff can Reject a new organization"
 	@priority = 5
 	test ManagerCanRejectOrganization {
-		task ("Given that Sign as Manager user and Navigate to EVP Site") {
+		task ("Given that Sign as Manager user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "manager@liferay.com",
 				userLoginFullName = "Manager User");
+		}
 
+		task ("And go to organization page") {
 			EVPUtils.gotoEVP();
+
+			EVPNavigator.goToNavItem(navItem = "Organization");
 		}
 
-		task ("And that the manager create a organization") {
-			EVPOrganization.createAnOrganization();
+		task ("When the manager reject the organization created") {
+			EVPOrganization.kebabMenuOrganization(organizationName = "Organization Test");
 
-			EVPOrganization.fillOrganizationForm(
-				bankingInfo = "Bank Test",
-				city = "City Test",
-				contactEmail = "test@liferay.com",
-				contactName = "Contact Test",
-				contactPhone = 12345,
-				country = "Country Test",
-				organizationName = "Organization Test",
-				organizationSite = "www.test.com.br",
-				smallDescription = "Description Test",
-				state = "State Test",
-				street = "Street Test",
-				taxId = 12345,
-				zip = "12.345-67");
+			MenuItem.click(menuItem = "Review");
 
-			Button.click(button = "Done");
-		}
-
-		task ("When the manager approve the organization created") {
-			EVPOrganization.kebabMenuOrganization(
-				kebabOption = "Review",
-				organizationName = "Organization Test");
-
-			EVPOrganization.reviewOrganization(
+			EVPOrganization.changeStatus(
 				button = "Reject",
 				typeMessage = "Your organization has been Reject");
 		}
 
-		task ("Then can view the status Awaiting Finance Approval") {
-			EVPOrganization.assertStatus(
-				email = "test@liferay.com",
+		task ("Then the status will be updated to 'Rejected'") {
+			EVPOrganization.viewStatus(
 				organizationName = "Organization Test",
 				status = "Rejected");
 		}

@@ -9,7 +9,7 @@ definition {
 	macro goToNavItem {
 		Click(
 			key_navItem = ${navItem},
-			locator1 = "EVPNavigation#NAV_LINK");
+			locator1 = "NavBar#NAV_ITEM_REDIRECTION");
 
 		WaitForPageLoad();
 	}

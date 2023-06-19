@@ -45,28 +45,6 @@ public class DLSizeLimitConfigurationDisplayContext {
 		_scopePK = scopePK;
 	}
 
-	public long getMaxSizeToCopy() {
-		if (_scope.equals(
-				ExtendedObjectClassDefinition.Scope.COMPANY.getValue())) {
-
-			return _dlSizeLimitConfigurationProvider.getCompanyMaxSizeToCopy(
-				_scopePK);
-		}
-		else if (_scope.equals(
-					ExtendedObjectClassDefinition.Scope.GROUP.getValue())) {
-
-			return _dlSizeLimitConfigurationProvider.getGroupMaxSizeToCopy(
-				_scopePK);
-		}
-		else if (_scope.equals(
-					ExtendedObjectClassDefinition.Scope.SYSTEM.getValue())) {
-
-			return _dlSizeLimitConfigurationProvider.getSystemMaxSizeToCopy();
-		}
-
-		throw new IllegalArgumentException("Unsupported scope: " + _scope);
-	}
-
 	public String getEditDLSizeLimitConfigurationURL() {
 		return PortletURLBuilder.createActionURL(
 			_liferayPortletResponse
@@ -121,6 +99,28 @@ public class DLSizeLimitConfigurationDisplayContext {
 		).put(
 			"sizeList", sizeList
 		).build();
+	}
+
+	public long getMaxSizeToCopy() {
+		if (_scope.equals(
+				ExtendedObjectClassDefinition.Scope.COMPANY.getValue())) {
+
+			return _dlSizeLimitConfigurationProvider.getCompanyMaxSizeToCopy(
+				_scopePK);
+		}
+		else if (_scope.equals(
+					ExtendedObjectClassDefinition.Scope.GROUP.getValue())) {
+
+			return _dlSizeLimitConfigurationProvider.getGroupMaxSizeToCopy(
+				_scopePK);
+		}
+		else if (_scope.equals(
+					ExtendedObjectClassDefinition.Scope.SYSTEM.getValue())) {
+
+			return _dlSizeLimitConfigurationProvider.getSystemMaxSizeToCopy();
+		}
+
+		throw new IllegalArgumentException("Unsupported scope: " + _scope);
 	}
 
 	private Map<String, Long> _getMimeTypeSizeLimit() {

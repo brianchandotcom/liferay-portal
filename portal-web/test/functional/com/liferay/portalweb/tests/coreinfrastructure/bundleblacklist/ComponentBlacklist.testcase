@@ -51,10 +51,7 @@ definition {
 
 		GogoShell.viewNoOutput(outputContent = "ACTIVE");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings");
+		SystemSettings.openSystemSettingsAdmin();
 
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "Module Container",
@@ -113,10 +110,7 @@ definition {
 
 		WaitForConsoleTextPresent(value1 = "Disabling com.liferay.portal.security.ldap.internal.authenticator.LDAPAuth");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "Gogo Shell");
+		GogoShell.openGogoShellAdmin();
 
 		GogoShell.executeCommand(commandName = "scr:info authenticator.LDAPAuth");
 
@@ -147,10 +141,7 @@ definition {
 
 		WaitForConsoleTextPresent(value1 = "Disabling com.liferay.portal.security.ldap.internal.authenticator.LDAPAuth");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "Gogo Shell");
+		GogoShell.openGogoShellAdmin();
 
 		GogoShell.executeCommand(commandName = "scr:info authenticator.LDAPAuth");
 
@@ -160,10 +151,7 @@ definition {
 
 		WaitForConsoleTextPresent(value1 = "Enabling com.liferay.portal.security.ldap.internal.authenticator.LDAPAuth from bundle com.liferay.portal.security.ldap.impl");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "Gogo Shell");
+		GogoShell.openGogoShellAdmin();
 
 		GogoShell.executeCommand(commandName = "scr:info authenticator.LDAPAuth");
 

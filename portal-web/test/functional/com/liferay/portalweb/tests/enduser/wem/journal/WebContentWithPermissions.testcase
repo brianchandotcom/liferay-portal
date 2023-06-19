@@ -41,58 +41,13 @@ definition {
 			roleKey = "Regular Role Name",
 			roleTitle = "Regular Role Name");
 
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "VIEW_SITE_ADMINISTRATION",
-			resourceName = "com.liferay.portal.kernel.model.Group",
-			roleTitle = "Regular Role Name");
+		Permissions.definePermissionsViaJSONAPI(
+			resourceNameActionList = "com.liferay.portal.kernel.model.Group,VIEW_SITE_ADMINISTRATION:com_liferay_journal_web_portlet_JournalPortlet,ACCESS_IN_CONTROL_PANEL,VIEW:com.liferay.journal,ADD_ARTICLE,VIEW",
+			roleTitle = "Regular Role Name",
+			roleType = "regular");
 
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "ACCESS_IN_CONTROL_PANEL",
-			resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
-			roleTitle = "Regular Role Name");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "VIEW",
-			resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
-			roleTitle = "Regular Role Name");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "ADD_ARTICLE",
-			resourceName = "com.liferay.journal",
-			roleTitle = "Regular Role Name");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "VIEW",
-			resourceName = "com.liferay.journal",
-			roleTitle = "Regular Role Name");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "VIEW",
-			resourceName = "com.liferay.journal",
-			roleTitle = "Site Member",
-			roleType = "site");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "ADD_ARTICLE",
-			resourceName = "com.liferay.journal",
-			roleTitle = "Site Member",
-			roleType = "site");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "VIEW_SITE_ADMINISTRATION",
-			resourceName = "com.liferay.portal.kernel.model.Group",
-			roleTitle = "Site Member",
-			roleType = "site");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "VIEW",
-			resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
-			roleTitle = "Site Member",
-			roleType = "site");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "ACCESS_IN_CONTROL_PANEL",
-			resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
+		Permissions.definePermissionsViaJSONAPI(
+			resourceNameActionList = "com.liferay.portal.kernel.model.Group,VIEW_SITE_ADMINISTRATION:com_liferay_journal_web_portlet_JournalPortlet,ACCESS_IN_CONTROL_PANEL,VIEW:com.liferay.journal,ADD_ARTICLE,VIEW",
 			roleTitle = "Site Member",
 			roleType = "site");
 
@@ -214,17 +169,10 @@ definition {
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test");
 
-		for (var resourceActionIndex : list "ADD_SUBFOLDER,ADD_ARTICLE,VIEW") {
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = ${resourceActionIndex},
-				resourceName = "com.liferay.journal.model.JournalFolder",
-				roleTitle = "Regular Role Name");
-		}
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "UPDATE",
-			resourceName = "com.liferay.journal.model.JournalArticle",
-			roleTitle = "Regular Role Name");
+		Permissions.definePermissionsViaJSONAPI(
+			resourceNameActionList = "com.liferay.journal.model.JournalFolder,ADD_SUBFOLDER,ADD_ARTICLE,VIEW:com.liferay.journal.model.JournalArticle,UPDATE",
+			roleTitle = "Regular Role Name",
+			roleType = "regular");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 

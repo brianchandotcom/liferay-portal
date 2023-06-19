@@ -595,7 +595,7 @@ definition {
 				structureDescription = "WC Structure Description",
 				structureName = "WC Structure Name");
 
-			DataEngine.addFields(fieldNameList = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Web Content,Geolocation,Link to Page,Separator");
+			DataEngine.addFieldsWithDefaultReference(fieldNameList = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Web Content,Geolocation,Link to Page,Separator");
 
 			WebContentStructures.saveCP(structureName = "WC Structure Name");
 		}
@@ -628,12 +628,9 @@ definition {
 		}
 
 		task ("Create a template") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = ${siteURLKey});
-
-			NavItem.gotoTemplates();
+			WebContentNavigator.gotoManageTemplatesViaStructures(structureName = "WC Structure Name");
 
 			WebContentTemplates.addCP(
-				structureName = "WC Structure Name",
 				templateDescription = "WC Template Description",
 				templateFieldNames = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Web Content,Geolocation,Link to Page",
 				templateName = "WC Template Name");

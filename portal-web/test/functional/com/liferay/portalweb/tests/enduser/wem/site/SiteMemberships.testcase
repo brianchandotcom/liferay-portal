@@ -488,10 +488,7 @@ definition {
 			defaultURL = "false",
 			portletName = "Message Boards");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin();
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
@@ -505,10 +502,7 @@ definition {
 				userEmailAddress = "userea${i}@liferay.com");
 		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin();
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
@@ -546,87 +540,28 @@ definition {
 			roleKey = "Movie Blogger Name",
 			roleTitle = "Movie Blogger Name");
 
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "ADD_ENTRY",
-			resourceName = "com.liferay.blogs",
+		Permissions.definePermissionsViaJSONAPI(
+			resourceNameActionList = "com.liferay.blogs,ADD_ENTRY:com.liferay.blogs.model.BlogsEntry,VIEW:com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet,ADD_TO_PAGE,VIEW",
 			roleTitle = "Movie Blogger Name",
 			roleType = "site");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "VIEW",
-			resourceName = "com.liferay.blogs.model.BlogsEntry",
-			roleTitle = "Movie Blogger Name",
-			roleType = "site");
-
-		for (var resourceActionIndex : list "VIEW,ADD_TO_PAGE") {
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = ${resourceActionIndex},
-				resourceName = "com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet",
-				roleTitle = "Movie Blogger Name",
-				roleType = "site");
-		}
 
 		JSONRole.addSiteRole(
 			roleKey = "Music Fan Name",
 			roleTitle = "Music Fan Name");
 
-		for (var resourceActionIndex : list "VIEW,ADD_CATEGORY,ADD_MESSAGE") {
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = ${resourceActionIndex},
-				resourceName = "com.liferay.message.boards",
-				roleTitle = "Music Fan Name",
-				roleType = "site");
-		}
-
-		for (var resourceActionIndex : list "VIEW,ADD_MESSAGE") {
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = ${resourceActionIndex},
-				resourceName = "com.liferay.message.boards.kernel.model.MBCategory",
-				roleTitle = "Music Fan Name",
-				roleType = "site");
-		}
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "VIEW",
-			resourceName = "com.liferay.message.boards.kernel.model.MBMessage",
+		Permissions.definePermissionsViaJSONAPI(
+			resourceNameActionList = "com.liferay.message.boards,ADD_CATEGORY,ADD_MESSAGE,VIEW:com.liferay.message.boards.kernel.model.MBCategory,ADD_MESSAGE,VIEW:com.liferay.message.boards.kernel.model.MBMessage,VIEW:com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet,ADD_TO_PAGE,VIEW",
 			roleTitle = "Music Fan Name",
 			roleType = "site");
-
-		for (var resourceActionIndex : list "VIEW,ADD_TO_PAGE") {
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = ${resourceActionIndex},
-				resourceName = "com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet",
-				roleTitle = "Music Fan Name",
-				roleType = "site");
-		}
 
 		JSONRole.addSiteRole(
 			roleKey = "Sports Journalist Name",
 			roleTitle = "Sports Journalist Name");
 
-		for (var resourceActionIndex : list "ADD_DISCUSSION,DELETE,DELETE_DISCUSSION,EXPIRE,PERMISSIONS,SUBSCRIBE,UPDATE,UPDATE_DISCUSSION,VIEW") {
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = ${resourceActionIndex},
-				resourceName = "com.liferay.journal.model.JournalArticle",
-				roleTitle = "Sports Journalist Name",
-				roleType = "site");
-		}
-
-		for (var resourceActionIndex : list "ADD_ARTICLE,ADD_FEED,ADD_FOLDER,ADD_STRUCTURE,ADD_TEMPLATE,PERMISSIONS,SUBSCRIBE,UPDATE,VIEW") {
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = ${resourceActionIndex},
-				resourceName = "com.liferay.journal",
-				roleTitle = "Sports Journalist Name",
-				roleType = "site");
-		}
-
-		for (var resourceActionIndex : list "VIEW,ADD_TO_PAGE") {
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = ${resourceActionIndex},
-				resourceName = "com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet",
-				roleTitle = "Sports Journalist Name",
-				roleType = "site");
-		}
+		Permissions.definePermissionsViaJSONAPI(
+			resourceNameActionList = "com.liferay.journal.model.JournalArticle,ADD_DISCUSSION,DELETE,DELETE_DISCUSSION,EXPIRE,PERMISSIONS,SUBSCRIBE,UPDATE,UPDATE_DISCUSSION,VIEW:com.liferay.journal,ADD_ARTICLE,ADD_FEED,ADD_FOLDER,ADD_STRUCTURE,ADD_TEMPLATE,PERMISSIONS,SUBSCRIBE,UPDATE,VIEW:com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet,ADD_TO_PAGE,VIEW",
+			roleTitle = "Sports Journalist Name",
+			roleType = "site");
 
 		JSONUser.addUserToSite(
 			groupName = "Site Name",

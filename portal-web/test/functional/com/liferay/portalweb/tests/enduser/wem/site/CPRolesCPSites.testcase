@@ -46,20 +46,10 @@ definition {
 				userLastName = "userln",
 				userScreenName = "usersn");
 
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "VIEW_CONTROL_PANEL",
-				resourceName = 90,
-				roleTitle = "Regrole Name");
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "ACCESS_IN_CONTROL_PANEL",
-				resourceName = "com_liferay_site_admin_web_portlet_SiteAdminPortlet",
-				roleTitle = "Regrole Name");
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "ACCESS_IN_CONTROL_PANEL",
-				resourceName = "com_liferay_roles_admin_web_portlet_RolesAdminPortlet",
-				roleTitle = "Regrole Name");
+			Permissions.definePermissionsViaJSONAPI(
+				resourceNameActionList = "90,VIEW_CONTROL_PANEL:com_liferay_site_admin_web_portlet_SiteAdminPortlet,ACCESS_IN_CONTROL_PANEL:com_liferay_roles_admin_web_portlet_RolesAdminPortlet,ACCESS_IN_CONTROL_PANEL",
+				roleTitle = "Regrole Name",
+				roleType = "regular");
 		}
 
 		task ("Login as the user with created role") {
@@ -273,32 +263,15 @@ definition {
 		}
 
 		task ("Give permissions to regular role to add site in site admin") {
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "ADD_COMMUNITY",
-				resourceName = 90,
-				roleTitle = "Regrole Name");
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "VIEW_CONTROL_PANEL",
-				resourceName = 90,
-				roleTitle = "Regrole Name");
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "ACCESS_IN_CONTROL_PANEL",
-				resourceName = "com_liferay_site_admin_web_portlet_SiteAdminPortlet",
-				roleTitle = "Regrole Name");
+			Permissions.definePermissionsViaJSONAPI(
+				resourceNameActionList = "90,ADD_COMMUNITY,VIEW_CONTROL_PANEL:com_liferay_site_admin_web_portlet_SiteAdminPortlet,ACCESS_IN_CONTROL_PANEL",
+				roleTitle = "Regrole Name",
+				roleType = "regular");
 		}
 
 		task ("Give permissions to site role to add and update site") {
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "UPDATE",
-				resourceName = "com.liferay.portal.kernel.model.Group",
-				roleTitle = "Siterole Name",
-				roleType = "site");
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "ADD_COMMUNITY",
-				resourceName = "com.liferay.portal.kernel.model.Group",
+			Permissions.definePermissionsViaJSONAPI(
+				resourceNameActionList = "com.liferay.portal.kernel.model.Group,ADD_COMMUNITY,UPDATE",
 				roleTitle = "Siterole Name",
 				roleType = "site");
 		}

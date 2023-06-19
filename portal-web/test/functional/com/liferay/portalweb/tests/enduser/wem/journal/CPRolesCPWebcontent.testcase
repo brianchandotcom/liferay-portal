@@ -1,37 +1,65 @@
 @component-name = "portal-wcm"
 definition {
 
+	property custom.properties = "jsonws.web.service.paths.excludes=";
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property testcase.url = "http://localhost:8080";
 	property testray.component.names = "Roles";
 	property testray.main.component.name = "Web Content Administration";
 
+	static var randomSiteName = StringUtil.randomString(8);
+	static var randomUserEmailAddress = StringUtil.randomString(8);
+	var userFirstName = StringUtil.randomString(8);
+	var userLastName = StringUtil.randomString(8);
+	var userScreenName = StringUtil.randomString(8);
+	static var randomRoleKey = StringUtil.randomString(8);
+
 	setUp {
-		TestCase.setUpPortalInstance();
-
-		User.firstLoginPG();
-	}
-
-	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
-		if (${testPortalInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
+		task ("Sign in") {
 			User.firstLoginPG();
+		}
 
-			PortalSettings.tearDownCP();
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${randomSiteName});
+		}
 
-			JSONUser.tearDownNonAdminUsers();
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Page Name");
+		}
 
-			Role.tearDownCP();
+		task ("Add a Web Content Display to page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Page Name",
+				widgetName = "Web Content Display");
+		}
 
-			Organization.tearDownCP();
+		task ("Add a new user") {
+			JSONUser.addUser(
+				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"),
+				userFirstName = ${userFirstName},
+				userLastName = ${userLastName},
+				userScreenName = StringUtil.toLowerCase(${userScreenName}));
 
-			Site.tearDownCP();
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
+		}
 
-			PagesAdmin.tearDownCP();
+		task ("Assign the user to site") {
+			JSONUser.addUserToSite(
+				groupName = ${randomSiteName},
+				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
+		}
+
+		task ("Add a new site role") {
+			JSONRole.addSiteRole(
+				roleKey = ${randomRoleKey},
+				roleTitle = ${randomRoleKey});
 		}
 	}
 
@@ -39,43 +67,16 @@ definition {
 	test AddFolderSiteRoleDefaultPermission {
 		property portal.acceptance = "true";
 
-		Permissions.setUpSiteRoleCP(
-			page = "Public Pages",
-			pageName = "Web Content Page",
-			portletName = "Web Content",
-			roleTitle = "Roles Siterole Name",
-			roleType = "Site",
-			siteName = "Site Name",
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "VIEW",
-			resourceName = "com.liferay.journal",
-			roleTitle = "Roles Siterole Name",
+		Permissions.definePermissionsViaJSONAPI(
+			resourceNameActionList = "com.liferay.journal,VIEW:com.liferay.portal.kernel.model.Group,VIEW_SITE_ADMINISTRATION:com_liferay_journal_web_portlet_JournalPortlet,ACCESS_IN_CONTROL_PANEL",
+			roleTitle = ${randomRoleKey},
 			roleType = "site");
 
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "VIEW_SITE_ADMINISTRATION",
-			resourceName = "com.liferay.portal.kernel.model.Group",
-			roleTitle = "Roles Siterole Name",
-			roleType = "site");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "ACCESS_IN_CONTROL_PANEL",
-			resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
-			roleTitle = "Roles Siterole Name",
-			roleType = "site");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
+		User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 
 		Navigator.gotoSitePage(
-			pageName = "Web Content Page",
-			siteName = "Site Name");
+			pageName = "Test Page Name",
+			siteName = ${randomSiteName});
 
 		AssertElementNotPresent(locator1 = "Button#PLUS");
 	}
@@ -85,57 +86,19 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CPRolesCPWebcontent#AddFolderSiteRoleDefinePermission";
 
-		Permissions.setUpSiteRoleCP(
-			page = "Public Pages",
-			pageName = "Web Content Page",
-			portletName = "Web Content",
-			roleTitle = "Roles Siterole Name",
-			roleType = "Site",
-			siteName = "Site Name",
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "VIEW",
-			resourceName = "com.liferay.journal",
-			roleTitle = "Roles Siterole Name",
+		Permissions.definePermissionsViaJSONAPI(
+			resourceNameActionList = "com.liferay.journal,ADD_FOLDER,VIEW:com.liferay.portal.kernel.model.Group,VIEW_SITE_ADMINISTRATION:com_liferay_journal_web_portlet_JournalPortlet,ACCESS_IN_CONTROL_PANEL",
+			roleTitle = ${randomRoleKey},
 			roleType = "site");
 
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "ADD_FOLDER",
-			resourceName = "com.liferay.journal",
-			roleTitle = "Roles Siterole Name",
-			roleType = "site");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "VIEW_SITE_ADMINISTRATION",
-			resourceName = "com.liferay.portal.kernel.model.Group",
-			roleTitle = "Roles Siterole Name",
-			roleType = "site");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "ACCESS_IN_CONTROL_PANEL",
-			resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
-			roleTitle = "Roles Siterole Name",
-			roleType = "site");
-
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Web Content");
-
-		WebContentFolder.addCP(
+		JSONWebcontent.addFolder(
 			folderDescription = "WC Folder Description",
-			folderName = "WC Folder Name 1");
+			folderName = "WC Folder Name 1",
+			groupName = ${randomSiteName});
 
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
+		User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 
-		Navigator.openSiteURL(siteName = "Site Name");
+		Navigator.openSiteURL(siteName = ${randomSiteName});
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -145,7 +108,7 @@ definition {
 			folderDescription = "WC Folder Description",
 			folderName = "WC Folder Name 2");
 
-		Navigator.openSiteURL(siteName = "Site Name");
+		Navigator.openSiteURL(siteName = ${randomSiteName});
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -156,7 +119,7 @@ definition {
 			subfolderDescription = "WC SubFolder Description",
 			subfolderName = "WC SubFolder Name");
 
-		Navigator.openSiteURL(siteName = "Site Name");
+		Navigator.openSiteURL(siteName = ${randomSiteName});
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -176,13 +139,11 @@ definition {
 			roleTitle = "Roles Siterole Name",
 			roleType = "site");
 
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
+		User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 
 		Navigator.gotoSitePage(
-			pageName = "Web Content Page",
-			siteName = "Site Name");
+			pageName = "Test Page Name",
+			siteName = ${randomSiteName});
 
 		AssertElementNotPresent(locator1 = "Button#PLUS");
 	}
@@ -191,43 +152,16 @@ definition {
 	test AddStructureSiteRoleDefaultPermission {
 		property portal.acceptance = "true";
 
-		Permissions.setUpSiteRoleCP(
-			page = "Public Pages",
-			pageName = "Web Content Page",
-			portletName = "Web Content",
-			roleTitle = "Roles Siterole Name",
-			roleType = "Site",
-			siteName = "Site Name",
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "VIEW",
-			resourceName = "com.liferay.journal",
-			roleTitle = "Roles Siterole Name",
+		Permissions.definePermissionsViaJSONAPI(
+			resourceNameActionList = "com.liferay.journal,VIEW:com.liferay.portal.kernel.model.Group,VIEW_SITE_ADMINISTRATION:com_liferay_journal_web_portlet_JournalPortlet,ACCESS_IN_CONTROL_PANEL",
+			roleTitle = ${randomRoleKey},
 			roleType = "site");
 
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "VIEW_SITE_ADMINISTRATION",
-			resourceName = "com.liferay.portal.kernel.model.Group",
-			roleTitle = "Roles Siterole Name",
-			roleType = "site");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "ACCESS_IN_CONTROL_PANEL",
-			resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
-			roleTitle = "Roles Siterole Name",
-			roleType = "site");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
+		User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 
 		Navigator.gotoSitePage(
-			pageName = "Web Content Page",
-			siteName = "Site Name");
+			pageName = "Test Page Name",
+			siteName = ${randomSiteName});
 
 		AssertElementNotPresent(locator1 = "Toolbar#MANAGE");
 	}
@@ -237,47 +171,14 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CPRolesCPWebcontent#AddStructureSiteRoleDefinePermission";
 
-		Permissions.setUpSiteRoleCP(
-			page = "Public Pages",
-			pageName = "Web Content Page",
-			portletName = "Web Content",
-			roleTitle = "Roles Siterole Name",
-			roleType = "Site",
-			siteName = "Site Name",
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "VIEW",
-			resourceName = "com.liferay.journal",
-			roleTitle = "Roles Siterole Name",
+		Permissions.definePermissionsViaJSONAPI(
+			resourceNameActionList = "com.liferay.journal,ADD_STRUCTURE,VIEW:com.liferay.portal.kernel.model.Group,VIEW_SITE_ADMINISTRATION:com_liferay_journal_web_portlet_JournalPortlet,ACCESS_IN_CONTROL_PANEL",
+			roleTitle = ${randomRoleKey},
 			roleType = "site");
 
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "VIEW_SITE_ADMINISTRATION",
-			resourceName = "com.liferay.portal.kernel.model.Group",
-			roleTitle = "Roles Siterole Name",
-			roleType = "site");
+		User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "ACCESS_IN_CONTROL_PANEL",
-			resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
-			roleTitle = "Roles Siterole Name",
-			roleType = "site");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "ADD_STRUCTURE",
-			resourceName = "com.liferay.journal",
-			roleTitle = "Roles Siterole Name",
-			roleType = "site");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		Navigator.openSiteURL(siteName = "Site Name");
+		Navigator.openSiteURL(siteName = ${randomSiteName});
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -305,13 +206,11 @@ definition {
 			roleTitle = "Roles Siterole Name",
 			roleType = "site");
 
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
+		User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 
 		Navigator.gotoSitePage(
-			pageName = "Web Content Page",
-			siteName = "Site Name");
+			pageName = "Test Page Name",
+			siteName = ${randomSiteName});
 
 		AssertElementNotPresent(locator1 = "Toolbar#MANAGE");
 	}
@@ -321,43 +220,16 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CPRolesCPWebcontent#AddTemplateSiteRoleDefaultPermission";
 
-		Permissions.setUpSiteRoleCP(
-			page = "Public Pages",
-			pageName = "Web Content Page",
-			portletName = "Web Content",
-			roleTitle = "Roles Siterole Name",
-			roleType = "Site",
-			siteName = "Site Name",
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "VIEW",
-			resourceName = "com.liferay.journal",
-			roleTitle = "Roles Siterole Name",
+		Permissions.definePermissionsViaJSONAPI(
+			resourceNameActionList = "com.liferay.journal,VIEW:com.liferay.portal.kernel.model.Group,VIEW_SITE_ADMINISTRATION:com_liferay_journal_web_portlet_JournalPortlet,ACCESS_IN_CONTROL_PANEL",
+			roleTitle = ${randomRoleKey},
 			roleType = "site");
 
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "VIEW_SITE_ADMINISTRATION",
-			resourceName = "com.liferay.portal.kernel.model.Group",
-			roleTitle = "Roles Siterole Name",
-			roleType = "site");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "ACCESS_IN_CONTROL_PANEL",
-			resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
-			roleTitle = "Roles Siterole Name",
-			roleType = "site");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
+		User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 
 		Navigator.gotoSitePage(
-			pageName = "Web Content Page",
-			siteName = "Site Name");
+			pageName = "Test Page Name",
+			siteName = ${randomSiteName});
 
 		AssertElementNotPresent(locator1 = "Toolbar#MANAGE");
 	}
@@ -367,47 +239,14 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CPRolesCPWebcontent#AddTemplateSiteRoleDefinePermission";
 
-		Permissions.setUpSiteRoleCP(
-			page = "Public Pages",
-			pageName = "Web Content Page",
-			portletName = "Web Content",
-			roleTitle = "Roles Siterole Name",
-			roleType = "Site",
-			siteName = "Site Name",
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "VIEW",
-			resourceName = "com.liferay.journal",
-			roleTitle = "Roles Siterole Name",
+		Permissions.definePermissionsViaJSONAPI(
+			resourceNameActionList = "com.liferay.journal,ADD_TEMPLATE,VIEW:com.liferay.portal.kernel.model.Group,VIEW_SITE_ADMINISTRATION:com_liferay_journal_web_portlet_JournalPortlet,ACCESS_IN_CONTROL_PANEL",
+			roleTitle = ${randomRoleKey},
 			roleType = "site");
 
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "VIEW_SITE_ADMINISTRATION",
-			resourceName = "com.liferay.portal.kernel.model.Group",
-			roleTitle = "Roles Siterole Name",
-			roleType = "site");
+		User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "ACCESS_IN_CONTROL_PANEL",
-			resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
-			roleTitle = "Roles Siterole Name",
-			roleType = "site");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "ADD_TEMPLATE",
-			resourceName = "com.liferay.journal",
-			roleTitle = "Roles Siterole Name",
-			roleType = "site");
-
-		Navigator.openSiteURL(siteName = "Site Name");
+		Navigator.openSiteURL(siteName = ${randomSiteName});
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -429,13 +268,11 @@ definition {
 			roleTitle = "Roles Siterole Name",
 			roleType = "site");
 
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
+		User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 
 		Navigator.gotoSitePage(
-			pageName = "Web Content Page",
-			siteName = "Site Name");
+			pageName = "Test Page Name",
+			siteName = ${randomSiteName});
 
 		AssertElementNotPresent(locator1 = "Toolbar#MANAGE");
 	}
@@ -444,43 +281,16 @@ definition {
 	test AddWebContentSiteRoleDefaultPermission {
 		property portal.acceptance = "true";
 
-		Permissions.setUpSiteRoleCP(
-			page = "Public Pages",
-			pageName = "Web Content Page",
-			portletName = "Web Content",
-			roleTitle = "Roles Siterole Name",
-			roleType = "Site",
-			siteName = "Site Name",
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "VIEW",
-			resourceName = "com.liferay.journal",
-			roleTitle = "Roles Siterole Name",
+		Permissions.definePermissionsViaJSONAPI(
+			resourceNameActionList = "com.liferay.journal,VIEW:com.liferay.portal.kernel.model.Group,VIEW_SITE_ADMINISTRATION:com_liferay_journal_web_portlet_JournalPortlet,ACCESS_IN_CONTROL_PANEL",
+			roleTitle = ${randomRoleKey},
 			roleType = "site");
 
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "VIEW_SITE_ADMINISTRATION",
-			resourceName = "com.liferay.portal.kernel.model.Group",
-			roleTitle = "Roles Siterole Name",
-			roleType = "site");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "ACCESS_IN_CONTROL_PANEL",
-			resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
-			roleTitle = "Roles Siterole Name",
-			roleType = "site");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
+		User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 
 		Navigator.gotoSitePage(
-			pageName = "Web Content Page",
-			siteName = "Site Name");
+			pageName = "Test Page Name",
+			siteName = ${randomSiteName});
 
 		AssertElementNotPresent(locator1 = "Button#PLUS");
 	}
@@ -490,47 +300,14 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CPRolesCPWebcontent#AddWebContentSiteRoleDefinePermission";
 
-		Permissions.setUpSiteRoleCP(
-			page = "Public Pages",
-			pageName = "Web Content Page",
-			portletName = "Web Content",
-			roleTitle = "Roles Siterole Name",
-			roleType = "Site",
-			siteName = "Site Name",
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "VIEW",
-			resourceName = "com.liferay.journal",
-			roleTitle = "Roles Siterole Name",
+		Permissions.definePermissionsViaJSONAPI(
+			resourceNameActionList = "com.liferay.journal,ADD_ARTICLE,VIEW:com.liferay.portal.kernel.model.Group,VIEW_SITE_ADMINISTRATION:com_liferay_journal_web_portlet_JournalPortlet,ACCESS_IN_CONTROL_PANEL",
+			roleTitle = ${randomRoleKey},
 			roleType = "site");
 
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "ADD_ARTICLE",
-			resourceName = "com.liferay.journal",
-			roleTitle = "Roles Siterole Name",
-			roleType = "site");
+		User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "VIEW_SITE_ADMINISTRATION",
-			resourceName = "com.liferay.portal.kernel.model.Group",
-			roleTitle = "Roles Siterole Name",
-			roleType = "site");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "ACCESS_IN_CONTROL_PANEL",
-			resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
-			roleTitle = "Roles Siterole Name",
-			roleType = "site");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		Navigator.openSiteURL(siteName = "Site Name");
+		Navigator.openSiteURL(siteName = ${randomSiteName});
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -556,13 +333,11 @@ definition {
 			roleTitle = "Roles Siterole Name",
 			roleType = "site");
 
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
+		User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 
 		Navigator.gotoSitePage(
-			pageName = "Web Content Page",
-			siteName = "Site Name");
+			pageName = "Test Page Name",
+			siteName = ${randomSiteName});
 
 		AssertElementNotPresent(locator1 = "Button#PLUS");
 	}
@@ -571,33 +346,35 @@ definition {
 	test ViewWebContentPortletRegRole {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
-		Permissions.setUpRegRoleLoginUserCP(
-			roleTitle = "Regrole Name",
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
+		var userEmailAddress = StringUtil.randomString(8);
+		var userFirstName = StringUtil.randomString(8);
+		var userLastName = StringUtil.randomString(8);
+		var userScreenName = StringUtil.randomString(8);
+		var roleKey = StringUtil.randomString(8);
 
-		Navigator.openURL();
+		JSONUser.addUser(
+			userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"),
+			userFirstName = ${userFirstName},
+			userLastName = ${userLastName},
+			userScreenName = StringUtil.toLowerCase(${userScreenName}));
 
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "VIEW",
-			resourceName = "com.liferay.journal",
-			roleTitle = "Regrole Name");
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
 
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "VIEW_SITE_ADMINISTRATION",
-			resourceName = "com.liferay.portal.kernel.model.Group",
-			roleTitle = "Regrole Name");
+		JSONRole.addRegularRole(roleTitle = ${roleKey});
 
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "ACCESS_IN_CONTROL_PANEL",
-			resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
-			roleTitle = "Regrole Name");
+		JSONRole.assignRoleToUser(
+			roleTitle = ${roleKey},
+			userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
 
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
+		Permissions.definePermissionsViaJSONAPI(
+			resourceNameActionList = "com.liferay.journal,VIEW:com.liferay.portal.kernel.model.Group,VIEW_SITE_ADMINISTRATION:com_liferay_journal_web_portlet_JournalPortlet,ACCESS_IN_CONTROL_PANEL",
+			roleTitle = ${roleKey},
+			roleType = "regular");
+
+		User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
 
 		Navigator.openURL();
 
@@ -610,46 +387,14 @@ definition {
 
 	@priority = 4
 	test ViewWebContentPortletSiteRole {
-		Permissions.setUpSiteRoleLoginUserCP(
-			pageName = "Web Content Page",
-			portletName = "Web Content",
-			roleTitle = "Roles Siterole Name",
-			roleType = "Site",
-			siteName = "Site Name",
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln",
-			userScreenName = "usersn");
-
-		Navigator.gotoSitePage(
-			pageName = "Web Content Page",
-			siteName = "Site Name");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "VIEW",
-			resourceName = "com.liferay.journal",
-			roleTitle = "Roles Siterole Name",
+		Permissions.definePermissionsViaJSONAPI(
+			resourceNameActionList = "com.liferay.journal,VIEW:com.liferay.portal.kernel.model.Group,VIEW_SITE_ADMINISTRATION:com_liferay_journal_web_portlet_JournalPortlet,ACCESS_IN_CONTROL_PANEL",
+			roleTitle = ${randomRoleKey},
 			roleType = "site");
 
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "VIEW_SITE_ADMINISTRATION",
-			resourceName = "com.liferay.portal.kernel.model.Group",
-			roleTitle = "Roles Siterole Name",
-			roleType = "site");
+		User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "ACCESS_IN_CONTROL_PANEL",
-			resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
-			roleTitle = "Roles Siterole Name",
-			roleType = "site");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		Navigator.openSiteURL(siteName = "Site Name");
+		Navigator.openSiteURL(siteName = ${randomSiteName});
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",

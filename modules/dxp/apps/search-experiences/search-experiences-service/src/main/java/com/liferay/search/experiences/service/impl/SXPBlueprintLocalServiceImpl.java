@@ -18,7 +18,6 @@ import com.liferay.asset.util.AssetHelper;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
@@ -293,9 +292,6 @@ public class SXPBlueprintLocalServiceImpl
 
 	@Reference
 	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private Language _language;
 
 	@Reference
 	private ResourceLocalService _resourceLocalService;

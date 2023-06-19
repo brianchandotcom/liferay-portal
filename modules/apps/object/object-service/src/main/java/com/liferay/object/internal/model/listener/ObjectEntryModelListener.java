@@ -29,11 +29,15 @@ import com.liferay.object.model.ObjectFieldTable;
 import com.liferay.object.model.ObjectRelationshipTable;
 import com.liferay.object.model.ObjectViewFilterColumn;
 import com.liferay.object.model.ObjectViewFilterColumnTable;
+import com.liferay.object.model.listener.ObjectDefinitionObjectEntryModelListener;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectValidationRuleLocalService;
 import com.liferay.object.service.ObjectViewFilterColumnLocalService;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -66,6 +70,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -84,6 +90,12 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 
 		_executeObjectActions(
 			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD, null, objectEntry);
+
+		_runObjectDefinitionObjectEntryModelListeners(
+			objectEntry,
+			objectDefinitionObjectEntryModelListener ->
+				objectDefinitionObjectEntryModelListener.onAfterCreate(
+					objectEntry));
 	}
 
 	@Override
@@ -102,6 +114,12 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 		_executeObjectActions(
 			ObjectActionTriggerConstants.KEY_ON_AFTER_DELETE, objectEntry,
 			objectEntry);
+
+		_runObjectDefinitionObjectEntryModelListeners(
+			objectEntry,
+			objectDefinitionObjectEntryModelListener ->
+				objectDefinitionObjectEntryModelListener.onAfterRemove(
+					objectEntry));
 	}
 
 	@Override
@@ -129,6 +147,12 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 		catch (PortalException portalException) {
 			throw new ModelListenerException(portalException);
 		}
+
+		_runObjectDefinitionObjectEntryModelListeners(
+			objectEntry,
+			objectDefinitionObjectEntryModelListener ->
+				objectDefinitionObjectEntryModelListener.onAfterUpdate(
+					originalObjectEntry, objectEntry));
 	}
 
 	@Override
@@ -136,6 +160,23 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 		throws ModelListenerException {
 
 		_validateObjectEntry(null, objectEntry);
+
+		_runObjectDefinitionObjectEntryModelListeners(
+			objectEntry,
+			objectDefinitionObjectEntryModelListener ->
+				objectDefinitionObjectEntryModelListener.onBeforeCreate(
+					objectEntry));
+	}
+
+	@Override
+	public void onBeforeRemove(ObjectEntry objectEntry)
+		throws ModelListenerException {
+
+		_runObjectDefinitionObjectEntryModelListeners(
+			objectEntry,
+			objectDefinitionObjectEntryModelListener ->
+				objectDefinitionObjectEntryModelListener.onBeforeRemove(
+					objectEntry));
 	}
 
 	@Override
@@ -144,6 +185,19 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 		throws ModelListenerException {
 
 		_validateObjectEntry(originalObjectEntry, objectEntry);
+
+		_runObjectDefinitionObjectEntryModelListeners(
+			objectEntry,
+			objectDefinitionObjectEntryModelListener ->
+				objectDefinitionObjectEntryModelListener.onBeforeUpdate(
+					originalObjectEntry, objectEntry));
+	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_objectDefinitionObjectEntryModelListeners =
+			ServiceTrackerListFactory.open(
+				bundleContext, ObjectDefinitionObjectEntryModelListener.class);
 	}
 
 	private void _executeObjectActions(
@@ -326,6 +380,30 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 		}
 	}
 
+	private void _runObjectDefinitionObjectEntryModelListeners(
+		ObjectEntry objectEntry,
+		UnsafeConsumer
+			<ObjectDefinitionObjectEntryModelListener, ModelListenerException>
+				unsafeConsumer) {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				objectEntry.getObjectDefinitionId());
+
+		for (ObjectDefinitionObjectEntryModelListener
+				objectDefinitionObjectEntryModelListener :
+					_objectDefinitionObjectEntryModelListeners) {
+
+			if (Objects.equals(
+					objectDefinition.getExternalReferenceCode(),
+					objectDefinitionObjectEntryModelListener.
+						getObjectDefinitionExternalReferenceCode())) {
+
+				unsafeConsumer.accept(objectDefinitionObjectEntryModelListener);
+			}
+		}
+	}
+
 	private void _updateObjectViewFilterColumn(
 			String externalReferenceCode, ObjectEntry objectEntry)
 		throws PortalException {
@@ -438,6 +516,9 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	private ServiceTrackerList<ObjectDefinitionObjectEntryModelListener>
+		_objectDefinitionObjectEntryModelListeners;
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;

@@ -22,6 +22,7 @@ Export-Package:\
 	com.liferay.object.field.util,\
 	com.liferay.object.filter.util,\
 	com.liferay.object.model,\
+	com.liferay.object.model.listener,\
 	com.liferay.object.odata.filter.expression.field.predicate.provider,\
 	com.liferay.object.petra.sql.dsl,\
 	com.liferay.object.related.models,\

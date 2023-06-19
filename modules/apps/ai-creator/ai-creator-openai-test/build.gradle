@@ -1,0 +1,7 @@
+dependencies {
+	testIntegrationCompile project(":apps:ai-creator:ai-creator-openai-api")
+	testIntegrationCompile project(":apps:journal:journal-api")
+	testIntegrationCompile project(":apps:layout:layout-test-util")
+	testIntegrationCompile project(":apps:portal-configuration:portal-configuration-test-util")
+	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+}

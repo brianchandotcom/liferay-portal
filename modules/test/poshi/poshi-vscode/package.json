@@ -116,7 +116,7 @@
 	"publisher": "LiferayInc",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/drewbrokke/vscode-poshi-language-support"
+		"url": "https://github.com/liferay/liferay-portal/tree/master/modules/test/poshi/poshi-vscode"
 	},
 	"scripts": {
 		"compile": "tsc -p ./",

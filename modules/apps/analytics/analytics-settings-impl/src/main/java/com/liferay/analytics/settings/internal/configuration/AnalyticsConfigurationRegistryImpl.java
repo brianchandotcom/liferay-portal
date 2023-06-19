@@ -56,6 +56,7 @@ import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.service.access.policy.model.SAPEntry;
@@ -76,12 +77,15 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.cm.ManagedServiceFactory;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
@@ -90,31 +94,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.analytics.settings.configuration.AnalyticsConfiguration",
-	property = Constants.SERVICE_PID + "=com.liferay.analytics.settings.configuration.AnalyticsConfiguration.scoped",
-	service = {
-		AnalyticsConfigurationRegistry.class, ManagedServiceFactory.class
-	}
+	service = AnalyticsConfigurationRegistry.class
 )
 public class AnalyticsConfigurationRegistryImpl
-	implements AnalyticsConfigurationRegistry, ManagedServiceFactory {
-
-	@Override
-	public void deleted(String pid) {
-		long companyId = getCompanyId(pid);
-
-		_unmapPid(pid);
-
-		long companyThreadLocalCompanyId = CompanyThreadLocal.getCompanyId();
-
-		CompanyThreadLocal.setCompanyId(companyId);
-
-		try {
-			_disable(companyId);
-		}
-		finally {
-			CompanyThreadLocal.setCompanyId(companyThreadLocalCompanyId);
-		}
-	}
+	implements AnalyticsConfigurationRegistry {
 
 	@Override
 	public AnalyticsConfiguration getAnalyticsConfiguration(long companyId) {
@@ -177,12 +160,6 @@ public class AnalyticsConfigurationRegistryImpl
 	}
 
 	@Override
-	public String getName() {
-		return "com.liferay.analytics.settings.configuration." +
-			"AnalyticsConfiguration.scoped";
-	}
-
-	@Override
 	public boolean isActive() {
 		if (!_active && _hasConfiguration()) {
 			_active = true;
@@ -194,28 +171,29 @@ public class AnalyticsConfigurationRegistryImpl
 		return _active;
 	}
 
-	@Override
-	public void updated(String pid, Dictionary<String, ?> dictionary) {
-		_unmapPid(pid);
+	@Activate
+	protected void activate(
+		BundleContext bundleContext, Map<String, Object> properties) {
 
-		long companyThreadLocalCompanyId = CompanyThreadLocal.getCompanyId();
+		modified(properties);
 
-		long companyId = GetterUtil.getLong(
-			dictionary.get("companyId"), CompanyConstants.SYSTEM);
-
-		CompanyThreadLocal.setCompanyId(companyId);
-
-		try {
-			_updated(companyId, pid, dictionary);
-		}
-		finally {
-			CompanyThreadLocal.setCompanyId(companyThreadLocalCompanyId);
-		}
+		_serviceRegistration = bundleContext.registerService(
+			ManagedServiceFactory.class,
+			new AnalyticsConfigurationManagedServiceFactory(),
+			HashMapDictionaryBuilder.put(
+				Constants.SERVICE_PID,
+				"com.liferay.analytics.settings.configuration." +
+					"AnalyticsConfiguration.scoped"
+			).build());
 	}
 
-	@Activate
+	@Deactivate
+	protected void deactivate() {
+		_serviceRegistration.unregister();
+	}
+
 	@Modified
-	protected void activate(Map<String, Object> properties) {
+	protected void modified(Map<String, Object> properties) {
 		_systemAnalyticsConfiguration = ConfigurableUtil.createConfigurable(
 			AnalyticsConfiguration.class, properties);
 	}
@@ -1132,9 +1110,60 @@ public class AnalyticsConfigurationRegistryImpl
 	@Reference
 	private SAPEntryLocalService _sapEntryLocalService;
 
+	private ServiceRegistration<ManagedServiceFactory> _serviceRegistration;
 	private volatile AnalyticsConfiguration _systemAnalyticsConfiguration;
 
 	@Reference
 	private UserLocalService _userLocalService;
+
+	private class AnalyticsConfigurationManagedServiceFactory
+		implements ManagedServiceFactory {
+
+		@Override
+		public void deleted(String pid) {
+			long companyId = getCompanyId(pid);
+
+			_unmapPid(pid);
+
+			long companyThreadLocalCompanyId =
+				CompanyThreadLocal.getCompanyId();
+
+			CompanyThreadLocal.setCompanyId(companyId);
+
+			try {
+				_disable(companyId);
+			}
+			finally {
+				CompanyThreadLocal.setCompanyId(companyThreadLocalCompanyId);
+			}
+		}
+
+		@Override
+		public String getName() {
+			return "com.liferay.analytics.settings.configuration." +
+				"AnalyticsConfiguration.scoped";
+		}
+
+		@Override
+		public void updated(String pid, Dictionary<String, ?> dictionary) {
+			_unmapPid(pid);
+
+			long companyThreadLocalCompanyId =
+				CompanyThreadLocal.getCompanyId();
+
+			long companyId = GetterUtil.getLong(
+				dictionary.get("companyId"), CompanyConstants.SYSTEM);
+
+			CompanyThreadLocal.setCompanyId(companyId);
+
+			try {
+				_updated(companyId, pid, dictionary);
+			}
+			finally {
+				CompanyThreadLocal.setCompanyId(companyThreadLocalCompanyId);
+			}
+		}
+
+	}
 
 }

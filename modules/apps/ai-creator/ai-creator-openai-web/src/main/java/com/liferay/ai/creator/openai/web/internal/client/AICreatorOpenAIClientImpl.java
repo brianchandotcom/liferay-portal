@@ -39,7 +39,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Lourdes Fernández Besada
  */
-@Component(service = AICreatorOpenAIClient.class)
+@Component(
+	property = "service.ranking:Integer=100",
+	service = AICreatorOpenAIClient.class
+)
 public class AICreatorOpenAIClientImpl implements AICreatorOpenAIClient {
 
 	@Override

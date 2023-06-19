@@ -44,10 +44,8 @@ public class RankingIndexCreatorImpl implements RankingIndexCreator {
 		CreateIndexRequest createIndexRequest = new CreateIndexRequest(
 			rankingIndexName.getIndexName());
 
-		createIndexRequest.setMappings(
-			_readJSON(_INDEX_MAPPINGS_FILE_NAME));
-		createIndexRequest.setSettings(
-			_readJSON(_INDEX_SETTINGS_FILE_NAME));
+		createIndexRequest.setMappings(_readJSON(_INDEX_MAPPINGS_FILE_NAME));
+		createIndexRequest.setSettings(_readJSON(_INDEX_SETTINGS_FILE_NAME));
 
 		_searchEngineAdapter.execute(createIndexRequest);
 	}

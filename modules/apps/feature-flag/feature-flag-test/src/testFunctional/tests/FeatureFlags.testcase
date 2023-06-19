@@ -31,7 +31,6 @@ definition {
 	@description = "LPS-167698 - This tests asserts that a feature flag can be Disabled"
 	@priority = 5
 	test CanBeDisabled {
-
 		task ("And a feature flag is enabled") {
 			if (IsElementPresent(locator1 = "FeatureFlags#TOGGLE_ROW", title_row = "Terms and Conditions pages", toggle_state = "Disabled")) {
 				Check.checkToggleSwitch(
@@ -59,7 +58,6 @@ definition {
 	@description = "LPS-167698 - This tests asserts that a feature flag can be enabled"
 	@priority = 5
 	test CanBeEnabled {
-
 		task ("And a feature flag is disabled") {
 			if (IsElementPresent(locator1 = "FeatureFlags#TOGGLE_ROW", title_row = "Terms and Conditions pages", toggle_state = "Enabled")) {
 				Check.checkToggleSwitch(

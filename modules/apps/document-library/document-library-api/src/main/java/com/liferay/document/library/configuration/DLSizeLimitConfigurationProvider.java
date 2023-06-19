@@ -26,13 +26,19 @@ public interface DLSizeLimitConfigurationProvider {
 
 	public long getCompanyFileMaxSize(long companyId);
 
+	public long getCompanyMaxSizeToCopy(long companyId);
+
 	public Map<String, Long> getCompanyMimeTypeSizeLimit(long companyId);
 
 	public long getGroupFileMaxSize(long groupId);
 
+	public long getGroupMaxSizeToCopy(long groupId);
+
 	public Map<String, Long> getGroupMimeTypeSizeLimit(long groupId);
 
 	public long getSystemFileMaxSize();
+
+	public long getSystemMaxSizeToCopy();
 
 	public Map<String, Long> getSystemMimeTypeSizeLimit();
 

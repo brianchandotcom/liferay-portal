@@ -66,6 +66,13 @@ public class DLSizeLimitManagedServiceFactory implements ManagedServiceFactory {
 		return dlSizeLimitConfiguration.fileMaxSize();
 	}
 
+	public long getCompanyMaxSizeToCopy(long companyId) {
+		DLSizeLimitConfiguration dlSizeLimitConfiguration =
+			_getCompanyDLSizeLimitConfiguration(companyId);
+
+		return dlSizeLimitConfiguration.maxSizeToCopy();
+	}
+
 	public Map<String, Long> getCompanyMimeTypeSizeLimit(long companyId) {
 		return _companyMimeTypeSizeLimitsMap.computeIfAbsent(
 			companyId, this::_computeCompanyMimeTypeSizeLimit);
@@ -95,6 +102,13 @@ public class DLSizeLimitManagedServiceFactory implements ManagedServiceFactory {
 			_getGroupDLSizeLimitConfiguration(groupId);
 
 		return dlSizeLimitConfiguration.fileMaxSize();
+	}
+
+	public long getGroupMaxSizeToCopy(long groupId) {
+		DLSizeLimitConfiguration dlSizeLimitConfiguration =
+			_getGroupDLSizeLimitConfiguration(groupId);
+
+		return dlSizeLimitConfiguration.maxSizeToCopy();
 	}
 
 	public Map<String, Long> getGroupMimeTypeSizeLimit(long groupId) {
@@ -129,6 +143,10 @@ public class DLSizeLimitManagedServiceFactory implements ManagedServiceFactory {
 
 	public long getSystemFileMaxSize() {
 		return _systemDLSizeLimitConfiguration.fileMaxSize();
+	}
+
+	public long getSystemMaxSizeToCopy() {
+		return _systemDLSizeLimitConfiguration.maxSizeToCopy();
 	}
 
 	public Map<String, Long> getSystemMimeTypeSizeLimit() {

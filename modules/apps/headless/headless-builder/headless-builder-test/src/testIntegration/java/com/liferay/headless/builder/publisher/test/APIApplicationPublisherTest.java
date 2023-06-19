@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -52,6 +53,7 @@ import org.osgi.util.tracker.ServiceTracker;
 /**
  * @author Luis Miguel Barcos
  */
+@FeatureFlags({"LPS-186757", "LPS-184413", "LPS-167253", "LPS-153117"})
 @RunWith(Arquillian.class)
 public class APIApplicationPublisherTest {
 

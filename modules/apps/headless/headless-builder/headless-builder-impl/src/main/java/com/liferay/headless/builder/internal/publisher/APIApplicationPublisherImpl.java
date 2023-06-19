@@ -17,6 +17,7 @@ package com.liferay.headless.builder.internal.publisher;
 import com.liferay.headless.builder.application.APIApplication;
 import com.liferay.headless.builder.application.publisher.APIApplicationPublisher;
 import com.liferay.headless.builder.internal.jaxrs.application.HeadlessBuilderApplication;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 
 import java.util.HashMap;
@@ -38,6 +39,11 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 
 	@Override
 	public void publish(APIApplication apiApplication) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-186757")) {
+			throw new UnsupportedOperationException(
+				"APIApplicationPublisher not available");
+		}
+
 		_headlessBuilderApplicationServiceRegistrationMap.putIfAbsent(
 			apiApplication.getOSGiJaxRsName(),
 			_registerHeadlessBuilderApplication(apiApplication));
@@ -45,6 +51,11 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 
 	@Override
 	public void unpublish(APIApplication apiApplication) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-186757")) {
+			throw new UnsupportedOperationException(
+				"APIApplicationPublisher not available");
+		}
+
 		ServiceRegistration<Application> applicationServiceRegistration =
 			_headlessBuilderApplicationServiceRegistrationMap.remove(
 				apiApplication.getOSGiJaxRsName());

@@ -276,28 +276,24 @@ const FDSViews = ({
 		});
 	};
 
+	const creationMenuNewItem = {
+		label: Liferay.Language.get('new-data-set-view'),
+		onClick: ({loadData}: {loadData: Function}) => {
+			openModal({
+				contentComponent: ({closeModal}: {closeModal: Function}) => (
+					<AddFDSViewModalContent
+						closeModal={closeModal}
+						fdsEntryId={fdsEntryId}
+						loadData={loadData}
+						namespace={namespace}
+					/>
+				),
+			});
+		},
+	};
+
 	const creationMenu = {
-		primaryItems: [
-			{
-				label: Liferay.Language.get('new-data-set-view'),
-				onClick: ({loadData}: {loadData: Function}) => {
-					openModal({
-						contentComponent: ({
-							closeModal,
-						}: {
-							closeModal: Function;
-						}) => (
-							<AddFDSViewModalContent
-								closeModal={closeModal}
-								fdsEntryId={fdsEntryId}
-								loadData={loadData}
-								namespace={namespace}
-							/>
-						),
-					});
-				},
-			},
-		],
+		primaryItems: [creationMenuNewItem],
 	};
 
 	const TitleRenderer = ({itemData}: {itemData: FDSViewType}) => {
@@ -334,7 +330,11 @@ const FDSViews = ({
 			apiURL={`${API_URL.FDS_VIEWS}/?filter=(${OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW_ID} eq '${fdsEntryId}')`}
 			creationMenu={creationMenu}
 			emptyState={{
-				button: Liferay.Language.get('new-data-set-view'),
+				button: creationMenuNewItem,
+				description: Liferay.Language.get(
+					'start-creating-one-to-show-your-data'
+				),
+				image: '/states/empty_state.gif',
 				title: Liferay.Language.get('no-views-created'),
 			}}
 			id={`${namespace}FDSViews`}

@@ -126,7 +126,9 @@ export interface IFrontendDataSetProps {
 	customViews?: string;
 	customViewsEnabled?: boolean;
 	emptyState?: {
-		button?: string;
+		button?: any;
+		description?: string;
+		image?: string;
 		title?: string;
 	};
 	enableInlineAddModeSetting?: {

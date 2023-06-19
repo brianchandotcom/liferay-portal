@@ -821,28 +821,24 @@ const FDSEntries = ({
 	namespace,
 	restApplications,
 }: IFDSEntriesInterface) => {
+	const creationMenuNewItem = {
+		label: Liferay.Language.get('new-data-set'),
+		onClick: ({loadData}: {loadData: Function}) => {
+			openModal({
+				contentComponent: ({closeModal}: {closeModal: Function}) => (
+					<AddFDSEntryModalContent
+						closeModal={closeModal}
+						loadData={loadData}
+						namespace={namespace}
+						restApplications={restApplications}
+					/>
+				),
+			});
+		},
+	};
+
 	const creationMenu = {
-		primaryItems: [
-			{
-				label: Liferay.Language.get('new-data-set'),
-				onClick: ({loadData}: {loadData: Function}) => {
-					openModal({
-						contentComponent: ({
-							closeModal,
-						}: {
-							closeModal: Function;
-						}) => (
-							<AddFDSEntryModalContent
-								closeModal={closeModal}
-								loadData={loadData}
-								namespace={namespace}
-								restApplications={restApplications}
-							/>
-						),
-					});
-				},
-			},
-		],
+		primaryItems: [creationMenuNewItem],
 	};
 
 	const getViewURL = (itemData: FDSEntryType) => {
@@ -984,7 +980,11 @@ const FDSEntries = ({
 					viewsCount: ViewsCountRenderer,
 				}}
 				emptyState={{
-					button: Liferay.Language.get('new-data-set'),
+					button: creationMenuNewItem,
+					description: Liferay.Language.get(
+						'start-creating-one-to-show-your-data'
+					),
+					image: '/states/empty_state.gif',
 					title: Liferay.Language.get('no-data-sets-created'),
 				}}
 				id={`${namespace}FDSEntries`}

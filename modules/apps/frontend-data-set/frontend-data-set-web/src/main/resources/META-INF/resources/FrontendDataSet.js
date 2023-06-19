@@ -491,18 +491,17 @@ const FrontendDataSet = ({
 				) : (
 					<ClayEmptyState
 						description={
-							emptyState
-								? Liferay.Language.get(
-										'start-creating-one-to-show-your-data'
-								  )
+							emptyState.description
+								? emptyState.description
 								: Liferay.Language.get(
 										'sorry,-no-results-were-found'
 								  )
 						}
 						imgSrc={
-							emptyState
-								? `${themeDisplay.getPathThemeImages()}/states/empty_state.gif`
-								: `${themeDisplay.getPathThemeImages()}/states/search_state.gif`
+							themeDisplay.getPathThemeImages() +
+							(emptyState.image
+								? emptyState.image
+								: '/states/search_state.gif')
 						}
 						title={
 							emptyState.title
@@ -514,12 +513,10 @@ const FrontendDataSet = ({
 							<ClayButton
 								displayType="secondary"
 								onClick={() => {
-									creationMenu.primaryItems[0].onClick(
-										loadData
-									);
+									emptyState.button.onClick(loadData);
 								}}
 							>
-								{emptyState.button}
+								{emptyState.button.label}
 							</ClayButton>
 						)}
 					</ClayEmptyState>

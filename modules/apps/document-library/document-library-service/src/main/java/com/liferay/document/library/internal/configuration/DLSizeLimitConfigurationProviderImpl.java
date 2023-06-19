@@ -43,6 +43,12 @@ public class DLSizeLimitConfigurationProviderImpl
 	}
 
 	@Override
+	public long getCompanyMaxSizeToCopy(long companyId) {
+		return _dlSizeLimitManagedServiceFactory.getCompanyMaxSizeToCopy(
+			companyId);
+	}
+
+	@Override
 	public Map<String, Long> getCompanyMimeTypeSizeLimit(long companyId) {
 		return _dlSizeLimitManagedServiceFactory.getCompanyMimeTypeSizeLimit(
 			companyId);
@@ -54,6 +60,11 @@ public class DLSizeLimitConfigurationProviderImpl
 	}
 
 	@Override
+	public long getGroupMaxSizeToCopy(long groupId) {
+		return _dlSizeLimitManagedServiceFactory.getGroupMaxSizeToCopy(groupId);
+	}
+
+	@Override
 	public Map<String, Long> getGroupMimeTypeSizeLimit(long groupId) {
 		return _dlSizeLimitManagedServiceFactory.getGroupMimeTypeSizeLimit(
 			groupId);
@@ -62,6 +73,11 @@ public class DLSizeLimitConfigurationProviderImpl
 	@Override
 	public long getSystemFileMaxSize() {
 		return _dlSizeLimitManagedServiceFactory.getSystemFileMaxSize();
+	}
+
+	@Override
+	public long getSystemMaxSizeToCopy() {
+		return _dlSizeLimitManagedServiceFactory.getSystemMaxSizeToCopy();
 	}
 
 	@Override

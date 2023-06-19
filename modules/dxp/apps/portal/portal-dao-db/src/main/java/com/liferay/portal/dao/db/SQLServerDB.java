@@ -110,7 +110,7 @@ public class SQLServerDB extends BaseDB {
 
 	@Override
 	public String getDefaultValue(String columnDef) {
-		Matcher matcher = defaultValuePattern.matcher(columnDef);
+		Matcher matcher = _defaultValuePattern.matcher(columnDef);
 
 		if (matcher.find()) {
 			if (matcher.group(1) == null) {
@@ -310,9 +310,6 @@ public class SQLServerDB extends BaseDB {
 		}
 	}
 
-	protected static final Pattern defaultValuePattern = Pattern.compile(
-		"^\\('(.*)'\\)|\\(\\((\\d*)\\)\\)", Pattern.CASE_INSENSITIVE);
-
 	private void _dropDefaultConstraint(
 			Connection connection, String tableName, String columnName)
 		throws Exception {
@@ -370,5 +367,8 @@ public class SQLServerDB extends BaseDB {
 	};
 
 	private static final boolean _SUPPORTS_NEW_UUID_FUNCTION = true;
+
+	private static final Pattern _defaultValuePattern = Pattern.compile(
+		"^\\('(.*)'\\)|\\(\\((\\d*)\\)\\)", Pattern.CASE_INSENSITIVE);
 
 }

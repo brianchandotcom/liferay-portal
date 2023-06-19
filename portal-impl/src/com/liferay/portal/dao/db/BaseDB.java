@@ -298,7 +298,7 @@ public abstract class BaseDB implements DB {
 
 	@Override
 	public String getDefaultValue(String columnDef) {
-		Matcher matcher = defaultValuePattern.matcher(columnDef);
+		Matcher matcher = _defaultValuePattern.matcher(columnDef);
 
 		if (matcher.find()) {
 			return matcher.group(2);
@@ -1065,8 +1065,6 @@ public abstract class BaseDB implements DB {
 
 	protected static final Pattern columnTypePattern = Pattern.compile(
 		"(^\\w+)", Pattern.CASE_INSENSITIVE);
-	protected static final Pattern defaultValuePattern = Pattern.compile(
-		"^('?)(\\d+|.*)\\1(::.*| )?", Pattern.CASE_INSENSITIVE);
 
 	private void _addIndexes(
 			Connection connection, String indexesSQL,
@@ -1196,6 +1194,8 @@ public abstract class BaseDB implements DB {
 
 	private static final Pattern _columnLengthPattern = Pattern.compile(
 		"([^,(\\s]+)\\[\\$COLUMN_LENGTH:(\\d+)\\$\\]");
+	private static final Pattern _defaultValuePattern = Pattern.compile(
+		"^('?)(\\d+|.*)\\1(::.*| )?", Pattern.CASE_INSENSITIVE);
 	private static final Pattern _templatePattern;
 
 	static {

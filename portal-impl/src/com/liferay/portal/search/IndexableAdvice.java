@@ -100,33 +100,31 @@ public class IndexableAdvice extends ChainableMethodAdvice {
 
 		Indexer<Object> indexer = IndexerRegistryUtil.getIndexer(name);
 
-		if (indexer == null) {
-			long companyId = CompanyThreadLocal.getCompanyId();
-
-			DependencyManagerSyncUtil.registerSyncCallable(
-				() -> {
-					Indexer<Object> curIndexer = IndexerRegistryUtil.getIndexer(
-						name);
-
-					if (curIndexer == null) {
-						return null;
-					}
-
-					try (SafeCloseable safeCloseable =
-							CompanyThreadLocal.setWithSafeCloseable(
-								companyId)) {
-
-						_reindex(
-							curIndexer, indexableContext, arguments, result);
-					}
-
-					return null;
-				});
+		if (indexer != null) {
+			_reindex(indexer, indexableContext, arguments, result);
 
 			return;
 		}
 
-		_reindex(indexer, indexableContext, arguments, result);
+		long companyId = CompanyThreadLocal.getCompanyId();
+
+		DependencyManagerSyncUtil.registerSyncCallable(
+			() -> {
+				Indexer<Object> curIndexer = IndexerRegistryUtil.getIndexer(
+					name);
+
+				if (curIndexer == null) {
+					return null;
+				}
+
+				try (SafeCloseable safeCloseable =
+						CompanyThreadLocal.setWithSafeCloseable(companyId)) {
+
+					_reindex(curIndexer, indexableContext, arguments, result);
+				}
+
+				return null;
+			});
 	}
 
 	private int _getServiceContextParameterIndex(Method method) {

@@ -110,6 +110,10 @@ definition {
 	}
 
 	macro assertPinSize {
+		AssertElementPresent(
+			key_text = ${pinSize},
+			locator1 = "CommerceDiagrams#DIAGRAM_PIN_SIZE_BUTTON_TEXT");
+
 		if (${pinSize} == "Small") {
 			AssertElementPresent(locator1 = "CommerceDiagrams#DIAGRAM_PIN_SIZE_SMALL");
 		}
@@ -118,6 +122,13 @@ definition {
 		}
 		else if (${pinSize} == "Large") {
 			AssertElementPresent(locator1 = "CommerceDiagrams#DIAGRAM_PIN_SIZE_LARGE");
+		}
+		else if (${pinSize} == "Custom") {
+			Variables.assertDefined(parameterList = ${value});
+
+			AssertElementPresent(
+				key_value = ${value},
+				locator1 = "CommerceDiagrams#DIAGRAM_PIN_SIZE_CUSTOM");
 		}
 	}
 

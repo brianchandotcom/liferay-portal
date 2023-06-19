@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.asset.auto.tagger.tensorflow.internal;
+package com.liferay.document.library.asset.auto.tagger.tensorflow.internal.display.context;
 
 import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.configuration.TensorFlowImageAssetAutoTagProviderCompanyConfiguration;
 import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.util.TensorFlowDownloadHelper;

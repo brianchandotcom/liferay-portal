@@ -23,7 +23,7 @@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.document.library.asset.auto.tagger.tensorflow.internal.EditConfigurationDisplayContext" %>
+<%@ page import="com.liferay.document.library.asset.auto.tagger.tensorflow.internal.display.context.EditConfigurationDisplayContext" %>
 
 <liferay-frontend:defineObjects />
 

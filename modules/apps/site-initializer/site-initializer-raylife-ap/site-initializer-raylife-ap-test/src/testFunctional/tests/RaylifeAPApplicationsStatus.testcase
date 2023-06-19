@@ -212,6 +212,64 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-146249 | Test Summary: Verify that when doing a complete flow until the page Congrats in Raylife d2c, the status 'Bound' appears in the Applications status of Raylife AP"
+	@priority = 5
+	test AssertStatusBoundAppearsInApplicationsStatus {
+		property test.name.name.portal.instance = "RaylifeAPApplicationsStatus#AssertStatusBoundAppearsInApplicationsStatus";
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		task ("Given that the user goes to Raylife D2C with an admin account") {
+			User.firstLoginPG();
+
+			ApplicationsMenu.gotoSite(key_site = "Raylife D2C");
+		}
+
+		task ("And do the complete flow") {
+			RaylifePaymentMethod.configurationPaypal();
+
+			ApplicationsMenu.gotoSite(key_site = "Raylife D2C");
+
+			RaylifeHomePage.startFlow();
+
+			Raylife.formsFlow();
+
+			RaylifeCreateAccount.createAccount(createAccount = "true");
+
+			Click(locator1 = "RaylifeCreateAccount#CREATE_ACCOUNT");
+
+			RaylifeUploadDocuments.uploadDocuments(
+				dmDocumentFileList = "Document_1.pdf",
+				title = "Business");
+
+			RaylifeUploadDocuments.uploadDocuments(
+				dmDocumentFileList = "Document_1.jpg",
+				title = "Build");
+
+			Click(locator1 = "RaylifeUploadDocuments#BUTTON_CONFIRM_UPLOADS");
+
+			Click(locator1 = "RaylifePaymentMethod#PAYMENT_METHOD_PAYPAL");
+
+			Click(locator1 = "RaylifePaymentMethod#TERMS_CONDITIONS_CHECKBOX");
+
+			Click(locator1 = "RaylifePaymentMethod#PAY_NOW");
+
+			AssertElementPresent(locator1 = "RaylifePaymentMethod#CONGRATS");
+		}
+
+		task ("When the user go to Raylife AP") {
+			ApplicationsMenu.gotoSite(key_site = "Raylife AP");
+		}
+
+		task ("Then assert if the status 'Bound' appears in the Applications status of Raylife AP") {
+			RaylifeAPNavigator.gotoSidebarItem(itemName = "Applications");
+
+			AssertElementPresent(
+				key_legendItem = "Bound",
+				locator1 = "RaylifeAPApplications#STATUS_LEGEND");
+		}
+	}
+
 	@description = "Story ID: LPS-154592 | Test Summary: Check if when making an incomplete Flow until the section Business in the Raylife d2c, the status 'Open' appears in the Applications status of Raylife ap"
 	@priority = 4
 	test AssertStatusOpenAppearsInApplicationsStatus {

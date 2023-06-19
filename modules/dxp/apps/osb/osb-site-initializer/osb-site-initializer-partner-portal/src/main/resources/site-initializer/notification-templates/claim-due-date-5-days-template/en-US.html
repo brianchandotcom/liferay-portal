@@ -26,19 +26,20 @@
 					</svg>
 
 					<div>
-					<svg class="mb-4 mt-4" fill="none" height="2" viewBox="0 0 592 2" width="592" xmlns="http://www.w3.org/2000/svg">
+					<svg class="mb-4 mt-4 section-line" fill="none" height="2" viewBox="0 0 592 2" width="592" xmlns="http://www.w3.org/2000/svg">
 						<rect fill="#6B6C7E" height="1" width="592" y="0.90625" />
 					</svg>
 				</div>
 			</header>
 
 			<main class="main-container">
-				<div>
+				<div >
 					<h1 class="text-primary mb-4">Liferay MDF Claim is Due Soon</h1>
-
+				</div>
+				<div class="email-body">
 					<p>Dear [%ACTIVITY_CREATOR%],</p>
 					<p>Your Liferay Marketing Development Fund Claim is Due on 5 days.</p>
-					<p>Please provide your claim documents no later than [%ACTIVITY_ENDDATE%] in order to be reimbursed for the claimed activities.</p>
+					<p>Please provide your claim documents no later than the due date in order to be reimbursed for the claimed activities.</p>
 
 					<p class="mt-4 mb-4">Thank you,</p>
 				</div>
@@ -48,14 +49,14 @@
 						<button class="btn btn-primary">View MDF Request</button>
 					</a>
 
-					<p class="text-secondary mt-2 mb-2">OR copy and paste the link below into your browser.</p>
-					<p class="text-secondary">[$PORTAL_URL$]/web[$GROUP_FRIENDLY_URL$]/l/[%MDFREQUEST_ID%]</p>
+					<p class="text-secondary mt-2 mb-2 link">OR copy and paste the link below into your browser.</p>
+					<p class="text-secondary link">[$PORTAL_URL$]/web[$GROUP_FRIENDLY_URL$]/l/[%MDFREQUEST_ID%]</p>
 				</div>
 			</main>
 
 			<footer class="text-center">
 				<div>
-					<svg fill="none" height="251" viewBox="0 0 598 251" width="598" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+					<svg class="main-container" fill="none" height="251" viewBox="0 0 598 251" width="598" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 						<rect fill="url(#pattern0)" height="250" width="598" y="0.90625" />
 
 						<defs>
@@ -69,7 +70,7 @@
 				</div>
 
 				<div>
-					<svg class="mb-5 mt-5" fill="none" height="2" viewBox="0 0 592 2" width="592" xmlns="http://www.w3.org/2000/svg">
+					<svg class="mb-5 mt-5 section-line" fill="none" height="2" viewBox="0 0 592 2" width="592" xmlns="http://www.w3.org/2000/svg">
 						<rect fill="#6B6C7E" height="1" width="592" y="0.90625" />
 					</svg>
 				</div>
@@ -150,6 +151,36 @@
 			width: 598px;
 			margin: 0 auto;
 		}
+
+		.link{
+				font-size: 14px;
+				word-wrap: break-word;
+				line-height: 150%;
+			}
+
+		@media (max-width: 480px) {
+			.main-container {
+				width: 318px;
+				margin: 0 auto;
+			}
+
+			.section-line {
+				width: 318px;
+			}
+
+			.email-body{
+				width: 318px;
+				margin-top: 60px;
+			}
+
+			.link{
+				font-size: 14px;
+				word-wrap: break-word;
+				line-height: 150%;
+			}
+		}
+
+
 
 	</style>
 </html>

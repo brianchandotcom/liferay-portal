@@ -2529,12 +2529,26 @@ definition {
 	}
 
 	macro selectFilterItems {
-		IFrame.selectModalFrame();
-
 		if (${clearAll} == "true") {
-			Click(
-				key_text = "Clear All",
-				locator1 = "Link#ANY");
+			SelectFrameTop();
+
+			if (IsTextEqual(locator1 = "Modal#HEADER", value1 = "Filter by Extension")) {
+				IFrame.selectModalFrame();
+
+				Click(
+					key_text = "Clear All",
+					locator1 = "Link#ANY");
+			}
+			else if (IsTextEqual(locator1 = "Modal#HEADER", value1 = "Filter by Categories")) {
+				IFrame.selectModalFrame();
+
+				Click(
+					key_text = "Clear All",
+					locator1 = "Button#ANY");
+			}
+		}
+		else {
+			IFrame.selectModalFrame();
 		}
 
 		for (var category : list ${categories}) {

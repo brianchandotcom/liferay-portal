@@ -14,27 +14,29 @@
 
 package com.liferay.headless.builder.internal.model.listener;
 
-import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
-import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.model.listener.ObjectDefinitionObjectEntryModelListener;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
-import com.liferay.portal.kernel.model.ModelListener;
 
 import java.io.Serializable;
 
 import java.util.Map;
-import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sergio Jiménez del Coso
  */
-@Component(service = ModelListener.class)
+@Component(service = ObjectDefinitionObjectEntryModelListener.class)
 public class APISchemaObjectEntryModelListener
-	extends BaseModelListener<ObjectEntry> {
+	extends BaseModelListener<ObjectEntry>
+	implements ObjectDefinitionObjectEntryModelListener {
+
+	@Override
+	public String getObjectDefinitionExternalReferenceCode() {
+		return "MSOD_API_SCHEMA";
+	}
 
 	@Override
 	public void onBeforeCreate(ObjectEntry objectEntry)
@@ -52,17 +54,6 @@ public class APISchemaObjectEntryModelListener
 	}
 
 	private void _validate(ObjectEntry objectEntry) {
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.fetchObjectDefinition(
-				objectEntry.getObjectDefinitionId());
-
-		if (!Objects.equals(
-				objectDefinition.getExternalReferenceCode(),
-				"MSOD_API_SCHEMA")) {
-
-			return;
-		}
-
 		Map<String, Serializable> objectEntryValues = objectEntry.getValues();
 
 		try {
@@ -77,8 +68,5 @@ public class APISchemaObjectEntryModelListener
 			throw new ModelListenerException(exception);
 		}
 	}
-
-	@Reference
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 }

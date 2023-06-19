@@ -14,29 +14,31 @@
 
 package com.liferay.headless.builder.internal.model.listener;
 
-import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
-import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.model.listener.ObjectDefinitionObjectEntryModelListener;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
-import com.liferay.portal.kernel.model.ModelListener;
 
 import java.io.Serializable;
 
 import java.util.Map;
-import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sergio Jiménez del Coso
  */
-@Component(service = ModelListener.class)
+@Component(service = ObjectDefinitionObjectEntryModelListener.class)
 public class APIApplicationObjectEntryModelListener
-	extends BaseModelListener<ObjectEntry> {
+	extends BaseModelListener<ObjectEntry>
+	implements ObjectDefinitionObjectEntryModelListener {
+
+	@Override
+	public String getObjectDefinitionExternalReferenceCode() {
+		return "MSOD_API_APPLICATION";
+	}
 
 	@Override
 	public void onBeforeCreate(ObjectEntry objectEntry)
@@ -70,17 +72,6 @@ public class APIApplicationObjectEntryModelListener
 		// you are an APIApplication. My mom is a woman, but not every woman is
 		// my mom.
 
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.fetchObjectDefinition(
-				objectEntry.getObjectDefinitionId());
-
-		if (!Objects.equals(
-				objectDefinition.getExternalReferenceCode(),
-				"MSOD_API_APPLICATION")) {
-
-			return;
-		}
-
 		try {
 			Matcher matcher = _baseURLPattern.matcher(baseURL);
 
@@ -97,8 +88,5 @@ public class APIApplicationObjectEntryModelListener
 
 	private static final Pattern _baseURLPattern = Pattern.compile(
 		"[a-zA-Z0-9-]{1,255}");
-
-	@Reference
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 }

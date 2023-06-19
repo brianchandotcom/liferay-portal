@@ -16,6 +16,7 @@ package com.liferay.headless.builder.internal.model.listener;
 
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.listener.ObjectDefinitionObjectEntryModelListener;
 import com.liferay.object.rest.petra.sql.dsl.expression.FilterPredicateFactory;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
@@ -23,7 +24,6 @@ import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
-import com.liferay.portal.kernel.model.ModelListener;
 
 import java.io.Serializable;
 
@@ -39,17 +39,19 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Sergio Jiménez del Coso
  */
-@Component(service = ModelListener.class)
+@Component(service = ObjectDefinitionObjectEntryModelListener.class)
 public class APIEndpointObjectEntryModelListener
-	extends BaseModelListener<ObjectEntry> {
+	extends BaseModelListener<ObjectEntry>
+	implements ObjectDefinitionObjectEntryModelListener {
+
+	@Override
+	public String getObjectDefinitionExternalReferenceCode() {
+		return "MSOD_API_ENDPOINT";
+	}
 
 	@Override
 	public void onBeforeCreate(ObjectEntry objectEntry)
 		throws ModelListenerException {
-
-		if (!_isAPIEndpointObjectDefinition(objectEntry)) {
-			return;
-		}
 
 		_validate(objectEntry);
 	}
@@ -59,26 +61,9 @@ public class APIEndpointObjectEntryModelListener
 			ObjectEntry originalObjectEntry, ObjectEntry objectEntry)
 		throws ModelListenerException {
 
-		if (_isAPIEndpointObjectDefinition(objectEntry) &&
-			_validateNewAPIEndpointValues(originalObjectEntry, objectEntry)) {
-
+		if (_validateNewAPIEndpointValues(originalObjectEntry, objectEntry)) {
 			_validate(objectEntry);
 		}
-	}
-
-	private boolean _isAPIEndpointObjectDefinition(ObjectEntry objectEntry) {
-		ObjectDefinition apiEndpointObjectDefinition =
-			_objectDefinitionLocalService.fetchObjectDefinition(
-				objectEntry.getObjectDefinitionId());
-
-		if (Objects.equals(
-				apiEndpointObjectDefinition.getExternalReferenceCode(),
-				"MSOD_API_ENDPOINT")) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	private void _validate(ObjectEntry objectEntry) {

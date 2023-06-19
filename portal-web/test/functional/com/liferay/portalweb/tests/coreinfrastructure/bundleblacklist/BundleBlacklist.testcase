@@ -288,8 +288,8 @@ definition {
 	}
 
 	@priority = 3
-	test CanRemoveBlacklistedModuleLPKGViaUI {
-		property test.name.skip.portal.instance = "BundleBlacklist#CanRemoveBlacklistedModuleLPKGViaUI";
+	test CanRemoveBlacklistedModuleLPKG {
+		property test.name.skip.portal.instance = "BundleBlacklist#CanRemoveBlacklistedModuleLPKG";
 
 		var testRunEnvironment = PropsUtil.get("test.run.environment");
 
@@ -332,9 +332,9 @@ definition {
 	}
 
 	@priority = 3
-	test CanRemoveBlacklistedModuleWarViaUI {
+	test CanRemoveBlacklistedModuleWar {
 		property osgi.module.configurations = "blacklistBundleSymbolicNames=[\"minium-theme\"]";
-		property test.name.skip.portal.instance = "BundleBlacklist#CanRemoveBlacklistedModuleWarViaUI";
+		property test.name.skip.portal.instance = "BundleBlacklist#CanRemoveBlacklistedModuleWar";
 
 		AssertConsoleTextPresent(value1 = "Stopping blacklisted bundle minium-theme");
 
@@ -457,8 +457,8 @@ definition {
 	}
 
 	@priority = 3
-	test RestartCanNotEnableBlacklistedModuleJarViaUI {
-		property test.name.skip.portal.instance = "BundleBlacklist#RestartCanNotEnableBlacklistedModuleJarViaUI";
+	test RestartCanNotEnableBlacklistedModuleJar {
+		property test.name.skip.portal.instance = "BundleBlacklist#RestartCanNotEnableBlacklistedModuleJar";
 
 		OSGiConfig.deployOSGiConfigFile(
 			osgiConfigFileName = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config",
@@ -486,8 +486,8 @@ definition {
 	}
 
 	@priority = 3
-	test RestartCanNotEnableBlacklistedModuleLPKGViaUI {
-		property test.name.skip.portal.instance = "BundleBlacklist#RestartCanNotEnableBlacklistedModuleLPKGViaUI";
+	test RestartCanNotEnableBlacklistedModuleLPKG {
+		property test.name.skip.portal.instance = "BundleBlacklist#RestartCanNotEnableBlacklistedModuleLPKG";
 
 		var testRunEnvironment = PropsUtil.get("test.run.environment");
 
@@ -536,8 +536,8 @@ definition {
 	}
 
 	@priority = 3
-	test RestartCanNotEnableBlacklistedModuleWarViaUI {
-		property test.name.skip.portal.instance = "BundleBlacklist#RestartCanNotEnableBlacklistedModuleWarViaUI";
+	test RestartCanNotEnableBlacklistedModuleWar {
+		property test.name.skip.portal.instance = "BundleBlacklist#RestartCanNotEnableBlacklistedModuleWar";
 
 		OSGiConfig.deployOSGiConfigFile(
 			osgiConfigFileName = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config",

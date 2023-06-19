@@ -174,9 +174,7 @@ public class DBInspector {
 				return false;
 			}
 
-			if (!expectedColumnNullable &&
-				(actualColumnNullable == DatabaseMetaData.columnNoNulls)) {
-
+			if (!expectedColumnNullable) {
 				return StringUtil.equals(
 					_getColumnDefaultValue(columnType),
 					_getColumnDefaultValue(

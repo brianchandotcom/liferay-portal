@@ -1,0 +1,282 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.headless.delivery.client.serdes.v1_0;
+
+import com.liferay.headless.delivery.client.dto.v1_0.FragmentFieldAction;
+import com.liferay.headless.delivery.client.json.BaseJSONParser;
+
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.TreeMap;
+
+import javax.annotation.Generated;
+
+/**
+ * @author Javier Gamarra
+ * @generated
+ */
+@Generated("")
+public class FragmentFieldActionSerDes {
+
+	public static FragmentFieldAction toDTO(String json) {
+		FragmentFieldActionJSONParser fragmentFieldActionJSONParser =
+			new FragmentFieldActionJSONParser();
+
+		return fragmentFieldActionJSONParser.parseToDTO(json);
+	}
+
+	public static FragmentFieldAction[] toDTOs(String json) {
+		FragmentFieldActionJSONParser fragmentFieldActionJSONParser =
+			new FragmentFieldActionJSONParser();
+
+		return fragmentFieldActionJSONParser.parseToDTOs(json);
+	}
+
+	public static String toJSON(FragmentFieldAction fragmentFieldAction) {
+		if (fragmentFieldAction == null) {
+			return "null";
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("{");
+
+		if (fragmentFieldAction.getAction() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"action\": ");
+
+			if (fragmentFieldAction.getAction() instanceof String) {
+				sb.append("\"");
+				sb.append((String)fragmentFieldAction.getAction());
+				sb.append("\"");
+			}
+			else {
+				sb.append(fragmentFieldAction.getAction());
+			}
+		}
+
+		if (fragmentFieldAction.getOnError() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"onError\": ");
+
+			sb.append(String.valueOf(fragmentFieldAction.getOnError()));
+		}
+
+		if (fragmentFieldAction.getOnSuccess() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"onSuccess\": ");
+
+			sb.append(String.valueOf(fragmentFieldAction.getOnSuccess()));
+		}
+
+		if (fragmentFieldAction.getText() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"text\": ");
+
+			if (fragmentFieldAction.getText() instanceof String) {
+				sb.append("\"");
+				sb.append((String)fragmentFieldAction.getText());
+				sb.append("\"");
+			}
+			else {
+				sb.append(fragmentFieldAction.getText());
+			}
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
+
+	public static Map<String, Object> toMap(String json) {
+		FragmentFieldActionJSONParser fragmentFieldActionJSONParser =
+			new FragmentFieldActionJSONParser();
+
+		return fragmentFieldActionJSONParser.parseToMap(json);
+	}
+
+	public static Map<String, String> toMap(
+		FragmentFieldAction fragmentFieldAction) {
+
+		if (fragmentFieldAction == null) {
+			return null;
+		}
+
+		Map<String, String> map = new TreeMap<>();
+
+		if (fragmentFieldAction.getAction() == null) {
+			map.put("action", null);
+		}
+		else {
+			map.put("action", String.valueOf(fragmentFieldAction.getAction()));
+		}
+
+		if (fragmentFieldAction.getOnError() == null) {
+			map.put("onError", null);
+		}
+		else {
+			map.put(
+				"onError", String.valueOf(fragmentFieldAction.getOnError()));
+		}
+
+		if (fragmentFieldAction.getOnSuccess() == null) {
+			map.put("onSuccess", null);
+		}
+		else {
+			map.put(
+				"onSuccess",
+				String.valueOf(fragmentFieldAction.getOnSuccess()));
+		}
+
+		if (fragmentFieldAction.getText() == null) {
+			map.put("text", null);
+		}
+		else {
+			map.put("text", String.valueOf(fragmentFieldAction.getText()));
+		}
+
+		return map;
+	}
+
+	public static class FragmentFieldActionJSONParser
+		extends BaseJSONParser<FragmentFieldAction> {
+
+		@Override
+		protected FragmentFieldAction createDTO() {
+			return new FragmentFieldAction();
+		}
+
+		@Override
+		protected FragmentFieldAction[] createDTOArray(int size) {
+			return new FragmentFieldAction[size];
+		}
+
+		@Override
+		protected void setField(
+			FragmentFieldAction fragmentFieldAction, String jsonParserFieldName,
+			Object jsonParserFieldValue) {
+
+			if (Objects.equals(jsonParserFieldName, "action")) {
+				if (jsonParserFieldValue != null) {
+					fragmentFieldAction.setAction((Object)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "onError")) {
+				if (jsonParserFieldValue != null) {
+					fragmentFieldAction.setOnError(
+						ActionExecutionResultSerDes.toDTO(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "onSuccess")) {
+				if (jsonParserFieldValue != null) {
+					fragmentFieldAction.setOnSuccess(
+						ActionExecutionResultSerDes.toDTO(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "text")) {
+				if (jsonParserFieldValue != null) {
+					fragmentFieldAction.setText((Object)jsonParserFieldValue);
+				}
+			}
+		}
+
+	}
+
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		for (String[] strings : BaseJSONParser.JSON_ESCAPE_STRINGS) {
+			string = string.replace(strings[0], strings[1]);
+		}
+
+		return string;
+	}
+
+	private static String _toJSON(Map<String, ?> map) {
+		StringBuilder sb = new StringBuilder("{");
+
+		@SuppressWarnings("unchecked")
+		Set set = map.entrySet();
+
+		@SuppressWarnings("unchecked")
+		Iterator<Map.Entry<String, ?>> iterator = set.iterator();
+
+		while (iterator.hasNext()) {
+			Map.Entry<String, ?> entry = iterator.next();
+
+			sb.append("\"");
+			sb.append(entry.getKey());
+			sb.append("\": ");
+
+			Object value = entry.getValue();
+
+			Class<?> valueClass = value.getClass();
+
+			if (value instanceof Map) {
+				sb.append(_toJSON((Map)value));
+			}
+			else if (valueClass.isArray()) {
+				Object[] values = (Object[])value;
+
+				sb.append("[");
+
+				for (int i = 0; i < values.length; i++) {
+					sb.append("\"");
+					sb.append(_escape(values[i]));
+					sb.append("\"");
+
+					if ((i + 1) < values.length) {
+						sb.append(", ");
+					}
+				}
+
+				sb.append("]");
+			}
+			else if (value instanceof String) {
+				sb.append("\"");
+				sb.append(_escape(entry.getValue()));
+				sb.append("\"");
+			}
+			else {
+				sb.append(String.valueOf(entry.getValue()));
+			}
+
+			if (iterator.hasNext()) {
+				sb.append(", ");
+			}
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
+
+}

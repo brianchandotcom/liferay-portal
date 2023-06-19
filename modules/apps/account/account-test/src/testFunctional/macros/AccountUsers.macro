@@ -142,7 +142,7 @@ definition {
 			value1 = ${accountUserPassword});
 
 		Type(
-			locator1 = "TextInput#ENTER_AGAIN",
+			locator1 = "TextInput#REENTER_PASSWORD",
 			value1 = ${accountUserPassword});
 
 		Button.clickSave();

@@ -1146,7 +1146,7 @@ definition {
 				value1 = "test1");
 
 			Type(
-				locator1 = "TextInput#ENTER_AGAIN",
+				locator1 = "TextInput#REENTER_PASSWORD",
 				value1 = "test1");
 
 			Button.clickSave();
@@ -1179,7 +1179,7 @@ definition {
 				value1 = "test1");
 
 			Type(
-				locator1 = "TextInput#ENTER_AGAIN",
+				locator1 = "TextInput#REENTER_PASSWORD",
 				value1 = "test1");
 
 			PortletEntry.save();
@@ -1272,7 +1272,7 @@ definition {
 			value1 = ${newPassword});
 
 		Type(
-			locator1 = "TextInput#ENTER_AGAIN",
+			locator1 = "TextInput#REENTER_PASSWORD",
 			value1 = ${newPassword});
 
 		Button.clickSave();
@@ -1457,7 +1457,7 @@ definition {
 			value1 = ${newPassword});
 
 		Type(
-			locator1 = "TextInput#ENTER_AGAIN",
+			locator1 = "TextInput#REENTER_PASSWORD",
 			value1 = ${newPassword});
 
 		if (IsElementPresent(checkboxName = "Require Password Reset", locator1 = "Checkbox#ANY_CHECKBOX")) {
@@ -2337,7 +2337,7 @@ definition {
 			else {
 				Button.clickSubmitButton();
 
-				AssertElementNotPresent(locator1 = "TextInput#ENTER_AGAIN");
+				AssertElementNotPresent(locator1 = "TextInput#REENTER_PASSWORD");
 			}
 		}
 	}

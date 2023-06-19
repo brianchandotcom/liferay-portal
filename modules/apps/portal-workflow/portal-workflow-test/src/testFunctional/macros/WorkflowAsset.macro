@@ -38,7 +38,7 @@ definition {
 			value1 = ${newPassword});
 
 		Type(
-			locator1 = "TextInput#ENTER_AGAIN",
+			locator1 = "TextInput#REENTER_PASSWORD",
 			value1 = ${newPassword});
 
 		Button.clickSave();

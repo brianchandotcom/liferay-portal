@@ -711,7 +711,7 @@ definition {
 		if (${disablePassword} == "true") {
 			AssertElementNotPresent(locator1 = "TextInput#PASSWORD");
 
-			AssertElementNotPresent(locator1 = "TextInput#ENTER_AGAIN");
+			AssertElementNotPresent(locator1 = "TextInput#REENTER_PASSWORD");
 		}
 		else {
 			Type(
@@ -719,7 +719,7 @@ definition {
 				value1 = ${newPassword});
 
 			Type(
-				locator1 = "TextInput#ENTER_AGAIN",
+				locator1 = "TextInput#REENTER_PASSWORD",
 				value1 = ${newPassword});
 		}
 

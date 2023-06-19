@@ -24,44 +24,26 @@ definition {
 	test BlacklistComponent {
 		property test.liferay.virtual.instance = "false";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings");
+		OSGiConfig.deployOSGiConfigFile(
+			osgiConfigFileName = "com.liferay.portal.component.blacklist.internal.configuration.ComponentBlacklistConfiguration.config",
+			osgiConfigs = "blacklistComponentNames=[\"com.liferay.portal.security.ldap.internal.authenticator.LDAPAuth\" ]");
 
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Module Container",
-			configurationName = "Component Blacklist",
-			configurationScope = "System Scope");
-
-		BundleBlacklist.blacklistModuleAndComponentConfiguration(
-			label = "Blacklist Component Names",
-			symbolicName = "com.liferay.portal.security.ldap.internal.authenticator.LDAPAuth");
-
-		AssertConsoleTextPresent(value1 = "Disabling com.liferay.portal.security.ldap.internal.authenticator.LDAPAuth from bundle com.liferay.portal.security.ldap.impl");
+		WaitForConsoleTextPresent(value1 = "Disabling com.liferay.portal.security.ldap.internal.authenticator.LDAPAuth from bundle com.liferay.portal.security.ldap.impl");
 
 		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Reset Default Values");
 
-		AssertConsoleTextPresent(value1 = "Enabling com.liferay.portal.security.ldap.internal.authenticator.LDAPAuth from bundle com.liferay.portal.security.ldap.impl");
+		WaitForConsoleTextPresent(value1 = "Enabling com.liferay.portal.security.ldap.internal.authenticator.LDAPAuth from bundle com.liferay.portal.security.ldap.impl");
 	}
 
 	@priority = 3
 	test CanExportComponentBlacklistConfig {
 		property test.liferay.virtual.instance = "false";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings");
+		OSGiConfig.deployOSGiConfigFile(
+			osgiConfigFileName = "com.liferay.portal.component.blacklist.internal.configuration.ComponentBlacklistConfiguration.config",
+			osgiConfigs = "blacklistComponentNames=[\"com.liferay.portal.security.ldap.internal.authenticator.LDAPAuth\" ]");
 
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Module Container",
-			configurationName = "Component Blacklist",
-			configurationScope = "System Scope");
-
-		BundleBlacklist.blacklistModuleAndComponentConfiguration(
-			label = "Blacklist Component Names",
-			symbolicName = "com.liferay.portal.security.ldap.internal.authenticator.LDAPAuth");
+		WaitForConsoleTextPresent(value1 = "Disabling com.liferay.portal.security.ldap.internal.authenticator.LDAPAuth from bundle com.liferay.portal.security.ldap.impl");
 
 		GogoShell.openGogoShellAdmin();
 
@@ -98,19 +80,11 @@ definition {
 	test CanRemoveBlacklistedComponentViaUI {
 		property test.liferay.virtual.instance = "false";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings");
+		OSGiConfig.deployOSGiConfigFile(
+			osgiConfigFileName = "com.liferay.portal.component.blacklist.internal.configuration.ComponentBlacklistConfiguration.config",
+			osgiConfigs = "blacklistComponentNames=[\"com.liferay.portal.security.ldap.internal.authenticator.LDAPAuth\" ]");
 
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Module Container",
-			configurationName = "Component Blacklist",
-			configurationScope = "System Scope");
-
-		BundleBlacklist.blacklistModuleAndComponentConfiguration(
-			label = "Blacklist Component Names",
-			symbolicName = "com.liferay.portal.security.ldap.internal.authenticator.LDAPAuth");
+		WaitForConsoleTextPresent(value1 = "Disabling com.liferay.portal.security.ldap.internal.authenticator.LDAPAuth from bundle com.liferay.portal.security.ldap.impl");
 
 		GogoShell.openGogoShellAdmin();
 
@@ -118,19 +92,9 @@ definition {
 
 		GogoShell.viewNoOutput(outputContent = "ACTIVE");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings");
+		OSGiConfig.deleteOSGiConfigFile(osgiConfigFileName = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config");
 
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Module Container",
-			configurationName = "Component Blacklist",
-			configurationScope = "System Scope");
-
-		BundleBlacklist.blacklistModuleAndComponentConfiguration(
-			label = "Blacklist Component Names",
-			symbolicName = " ");
+		WaitForConsoleTextPresent(value1 = "Enabling com.liferay.portal.security.ldap.internal.authenticator.LDAPAuth from bundle com.liferay.portal.security.ldap.impl");
 
 		GogoShell.openGogoShellAdmin();
 
@@ -193,6 +157,8 @@ definition {
 		GogoShell.viewNoOutput(outputContent = "ACTIVE");
 
 		OSGiConfig.deleteOSGiConfigFile(osgiConfigFileName = "com.liferay.portal.component.blacklist.internal.configuration.ComponentBlacklistConfiguration.config");
+
+		WaitForConsoleTextPresent(value1 = "Enabling com.liferay.portal.security.ldap.internal.authenticator.LDAPAuth from bundle com.liferay.portal.security.ldap.impl");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",

@@ -43,6 +43,18 @@ public class AICreatorOpenAIClientException extends RuntimeException {
 		super(throwable.getMessage(), throwable);
 	}
 
+	public String getCompletionLocalizedMessage(Locale locale) {
+		if ((_responseCode == 429) || (_responseCode == 500)) {
+			return LanguageUtil.get(
+				locale, "openai-is-experiencing-issues-on-their-servers");
+		}
+
+		return LanguageUtil.get(
+			locale,
+			"an-unexpected-error-occurred-while-generating-your-content.-" +
+				"please-ensure-your-api-key-is-correct");
+	}
+
 	public String getLocalizedMessage(Locale locale) {
 		if ((_responseCode == HttpURLConnection.HTTP_UNAUTHORIZED) ||
 			Objects.equals(_code, "invalid_api_key")) {
@@ -56,6 +68,10 @@ public class AICreatorOpenAIClientException extends RuntimeException {
 		return LanguageUtil.get(
 			locale,
 			"an-unexpected-error-occurred-while-validating-the-api-key");
+	}
+
+	public int getResponseCode() {
+		return _responseCode;
 	}
 
 	private String _code = "unexpected_error";

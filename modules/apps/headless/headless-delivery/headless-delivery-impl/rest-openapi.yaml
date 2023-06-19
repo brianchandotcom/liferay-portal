@@ -1,5 +1,24 @@
 components:
     schemas:
+        ActionExecutionResult:
+            # @review
+            description:
+                Represents a definition of an action execution result.
+            properties:
+                type:
+                    # @review
+                    description:
+                        The type of result.
+                    enum: [None, Notification, Page, URL]
+                    type:
+                        string
+                value:
+                    oneOf:
+                        - $ref: "#/components/schemas/NoneActionExecutionResult"
+                        - $ref: "#/components/schemas/NotificationActionExecutionResult"
+                        - $ref: "#/components/schemas/SitePageActionExecutionResult"
+                        - $ref: "#/components/schemas/URLActionExecutionResult"
+            type: object
         AggregateRating:
             description:
                 Represents the average rating. See [AggregateRating](https://www.schema.org/AggregateRating) for more
@@ -3255,6 +3274,34 @@ components:
                     type: string
                 useCustomName:
                     type: boolean
+        NoneActionExecutionResult:
+            # @review
+            description:
+                Represents a definition of an action execution result of type none.
+            properties:
+                reload:
+                    # @review
+                    description:
+                        Whether to reload the page after the action is executed.
+                    type: boolean
+            type: object
+        NotificationActionExecutionResult:
+            # @review
+            description:
+                Represents a definition of an action execution result of type notification.
+            properties:
+                reload:
+                    # @review
+                    description:
+                        Whether to reload the page after the action is executed.
+                    type: boolean
+                text:
+                    allOf:
+                        - $ref: "#/components/schemas/FragmentInlineValue"
+                    # @review
+                    description:
+                        The localized text to display when an action is executed.
+            type: object
         OpenGraphSettings:
             # @review
             description:
@@ -4826,6 +4873,18 @@ components:
             required:
                 - title
             type: object
+        SitePageActionExecutionResult:
+            # @review
+            description:
+                Represents a definition of an action execution of type page.
+            properties:
+                itemReference:
+                    allOf:
+                        - $ref: "#/components/schemas/ClassFieldsReference"
+                    # @review
+                    description:
+                        The reference to a page.
+            type: object
         SitePageFormSubmissionResult:
             # @review
             description:
@@ -5215,6 +5274,18 @@ components:
                     required:
                         - externalReferenceCode
                     type: object
+            type: object
+        URLActionExecutionResult:
+            # @review
+            description:
+                Represents a definition of an action execution result of type URL.
+            properties:
+                url:
+                    allOf:
+                        - $ref: "#/components/schemas/FragmentInlineValue"
+                    # @review
+                    description:
+                        The localized action execution result of type URL.
             type: object
         URLFormSubmissionResult:
             # @review

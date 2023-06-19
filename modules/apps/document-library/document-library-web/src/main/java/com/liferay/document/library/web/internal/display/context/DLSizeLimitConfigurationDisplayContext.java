@@ -45,7 +45,7 @@ public class DLSizeLimitConfigurationDisplayContext {
 		_scopePK = scopePK;
 	}
 
-	public long getCopyFilesMaxSize() {
+	public long getMaxSizeToCopy() {
 		if (_scope.equals(
 				ExtendedObjectClassDefinition.Scope.COMPANY.getValue())) {
 

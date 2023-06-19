@@ -5,6 +5,10 @@ definition {
 
 		var baseURL = ${baseURL};
 
+		if (!(isSet(accountId))) {
+			var accountId = 0;
+		}
+
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
 		}
@@ -21,6 +25,7 @@ definition {
 				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
 				-d '{
+					"accountId": "${accountId}",
 					"externalReferenceCode": "${externalReferenceCode}",
 					"siteGroupId": 0,
 					"name": "${channelName}",
@@ -63,6 +68,27 @@ definition {
 		else {
 			echo("No Commerce Channels to be deleted");
 		}
+	}
+
+	macro _getCommerceAccountIdByChannelId {
+		var baseURL = ${baseURL};
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var channelId = CommerceJSONChannelsAPI._getCommerceChannelIdByName(channelName = ${channelName});
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-channel/v1.0/channels/${channelId} \
+				-u ${userLoginInfo} \
+				-H 'accept: application/json' \
+		''';
+
+		var accountId = JSONCurlUtil.get(${curl}, "$..['accountId']");
+
+		return ${accountId};
 	}
 
 	macro _getCommerceChannelIdByName {

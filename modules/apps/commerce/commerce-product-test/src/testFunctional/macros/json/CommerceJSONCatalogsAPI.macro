@@ -59,6 +59,27 @@ definition {
 		}
 	}
 
+	macro _getCommerceAccountIdByCatalogId {
+		var baseURL = ${baseURL};
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var catalogId = CommerceJSONCatalogsAPI._getCommerceCatalogIdByName(catalogName = ${catalogName});
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-catalog/v1.0/catalog/${catalogId} \
+				-u ${userLoginInfo} \
+				-H 'accept: application/json' \
+		''';
+
+		var accountId = JSONCurlUtil.get(${curl}, "$..['accountId']");
+
+		return ${accountId};
+	}
+
 	macro _getCommerceCatalogIdByName {
 		Variables.assertDefined(parameterList = ${catalogName});
 

@@ -606,9 +606,7 @@ const AddFDSEntryModalContent = ({
 	return (
 		<>
 			<ClayModal.Header>
-				{rename
-					? Liferay.Language.get('rename-data-set')
-					: Liferay.Language.get('new-data-set')}
+				{Liferay.Language.get('new-data-set')}
 			</ClayModal.Header>
 
 			<ClayModal.Body>

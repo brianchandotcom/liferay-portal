@@ -68,6 +68,10 @@ export default function FormFragmentsConfiguration({
 						{Liferay.Language.get(
 							'define-the-default-form-fragments-for-this-site'
 						)}
+
+						{Liferay.Language.get(
+							'the-selected-fragments-are-displayed-in-the-forms-created-on-the-pages-by-default'
+						)}
 					</p>
 
 					<ClayTable className="c-mb-4">

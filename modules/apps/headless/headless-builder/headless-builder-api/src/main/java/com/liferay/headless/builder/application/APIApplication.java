@@ -65,7 +65,15 @@ public interface APIApplication {
 
 		public String getName();
 
-		public String getType();
+		public Type getType();
+
+		public enum Type {
+
+			AGGREGATION, ATTACHMENT, BOOLEAN, DATE, DATE_TIME, DECIMAL, INTEGER,
+			LONG_INTEGER, LONG_TEXT, MULTISELECT_PICKLIST, PICKLIST,
+			PRECISION_DECIMAL, RICH_TEXT, TEXT
+
+		}
 
 	}
 

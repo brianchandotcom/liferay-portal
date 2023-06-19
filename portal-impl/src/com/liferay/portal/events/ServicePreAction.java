@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.exception.LayoutPermissionException;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.interval.IntervalActionProcessor;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -1002,7 +1001,10 @@ public class ServicePreAction extends Action {
 			Group layoutGroup = layout.getGroup();
 
 			if (layoutGroup.isUser()) {
-				if (!FeatureFlagManagerUtil.isEnabled("LPS-155692")) {
+				if (GetterUtil.getBoolean(
+						PropsUtil.get(
+							PropsKeys.LAYOUT_USER_PLID_ACCESS_DENIED))) {
+
 					long originalPlid = ParamUtil.getLong(
 						PortalUtil.getOriginalServletRequest(
 							httpServletRequest),

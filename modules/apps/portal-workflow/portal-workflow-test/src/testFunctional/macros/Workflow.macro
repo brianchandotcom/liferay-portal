@@ -1290,7 +1290,7 @@ definition {
 	macro viewDefinitionPublished {
 		var key_workflowDefinitionTitle = ${workflowDefinitionTitle};
 
-		AssertTextEquals(
+		AssertVisible(
 			locator1 = "WorkflowDefinition#DEFINITION_TABLE_TITLE_PUBLISHED",
 			value1 = ${workflowDefinitionTitle});
 	}

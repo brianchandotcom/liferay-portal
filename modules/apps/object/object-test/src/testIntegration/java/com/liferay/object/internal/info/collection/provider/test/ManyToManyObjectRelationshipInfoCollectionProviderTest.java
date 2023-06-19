@@ -178,8 +178,8 @@ public class ManyToManyObjectRelationshipInfoCollectionProviderTest {
 			TestPropsValues.getUserId(), false, false,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			"A" + RandomTestUtil.randomString(), null, null,
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()), true,
-			ObjectDefinitionConstants.SCOPE_SITE,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			true, ObjectDefinitionConstants.SCOPE_SITE,
 			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 			Arrays.asList(objectField));
 	}

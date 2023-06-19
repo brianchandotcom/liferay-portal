@@ -174,8 +174,9 @@ public class ObjectDefinitionLocalServiceImpl
 	public ObjectDefinition addCustomObjectDefinition(
 			long userId, boolean enableComments, boolean enableLocalization,
 			Map<Locale, String> labelMap, String name, String panelAppOrder,
-			String panelCategoryKey, Map<Locale, String> pluralLabelMap, Boolean portlet,
-			String scope, String storageType, List<ObjectField> objectFields)
+			String panelCategoryKey, Map<Locale, String> pluralLabelMap,
+			Boolean portlet, String scope, String storageType,
+			List<ObjectField> objectFields)
 		throws PortalException {
 
 		return _addObjectDefinition(
@@ -332,8 +333,8 @@ public class ObjectDefinitionLocalServiceImpl
 		return _addObjectDefinition(
 			userId, className, dbTableName, enableComments, false, labelMap,
 			modifiable, name, panelAppOrder, panelCategoryKey,
-			pkObjectFieldDBColumnName, pkObjectFieldName, pluralLabelMap, false, scope,
-			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT, true,
+			pkObjectFieldDBColumnName, pkObjectFieldName, pluralLabelMap, false,
+			scope, ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT, true,
 			titleObjectFieldName, version, status, objectFields);
 	}
 
@@ -945,7 +946,8 @@ public class ObjectDefinitionLocalServiceImpl
 			pkObjectFieldDBColumnName);
 		objectDefinition.setPKObjectFieldName(pkObjectFieldName);
 		objectDefinition.setPluralLabelMap(pluralLabelMap);
-		objectDefinition.setPortlet(_isPortletNotNull(portlet)?portlet:true);
+		objectDefinition.setPortlet(
+			_isPortletNotNull(portlet) ? portlet : true);
 		objectDefinition.setScope(scope);
 		objectDefinition.setStorageType(
 			Validator.isNotNull(storageType) ? storageType :
@@ -1279,12 +1281,12 @@ public class ObjectDefinitionLocalServiceImpl
 		}
 	}
 
-	private boolean _isPortletNotNull(Boolean portlet){
-		if (portlet!=null){
+	private boolean _isPortletNotNull(Boolean portlet) {
+		if (portlet != null) {
 			return true;
-		}else{
-			return false;
 		}
+
+		return false;
 	}
 
 	private boolean _isUnmodifiableSystemObject(

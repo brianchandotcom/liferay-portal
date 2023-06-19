@@ -289,8 +289,8 @@ public class ObjectRelatedModelsProviderTest {
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				"C" + RandomTestUtil.randomString(), null,
 				PortletCategoryKeys.SITE_ADMINISTRATION_CONTENT,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()), true,
-				ObjectDefinitionConstants.SCOPE_SITE,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				true, ObjectDefinitionConstants.SCOPE_SITE,
 				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
@@ -577,8 +577,8 @@ public class ObjectRelatedModelsProviderTest {
 				TestPropsValues.getUserId(), false, false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				"A" + RandomTestUtil.randomString(), null, null,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()), true,
-				ObjectDefinitionConstants.SCOPE_COMPANY,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				true, ObjectDefinitionConstants.SCOPE_COMPANY,
 				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 				Collections.emptyList());
 

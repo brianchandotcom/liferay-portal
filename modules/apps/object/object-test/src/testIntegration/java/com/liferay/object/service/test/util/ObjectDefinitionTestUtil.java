@@ -58,8 +58,8 @@ public class ObjectDefinitionTestUtil {
 			TestPropsValues.getUserId(), false, enableLocalization,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			"A" + RandomTestUtil.randomString(), null, null,
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()), true,
-			ObjectDefinitionConstants.SCOPE_COMPANY,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			true, ObjectDefinitionConstants.SCOPE_COMPANY,
 			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT, objectFields);
 	}
 

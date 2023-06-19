@@ -134,8 +134,8 @@ public class ObjectDefinitionLocalServiceTest {
 				TestPropsValues.getUserId(), false, false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				"Test", null, null,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()), true,
-				ObjectDefinitionConstants.SCOPE_COMPANY,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				true, ObjectDefinitionConstants.SCOPE_COMPANY,
 				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
@@ -181,8 +181,8 @@ public class ObjectDefinitionLocalServiceTest {
 				TestPropsValues.getUserId(), false, false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				"Test", null, null,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()), true,
-				"", ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				true, "", ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,

@@ -214,8 +214,8 @@ public class ObjectDefinitionServiceTest {
 			user.getUserId(), false, false,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			"A" + RandomTestUtil.randomString(), null, null,
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()), true,
-			ObjectDefinitionConstants.SCOPE_COMPANY,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			true, ObjectDefinitionConstants.SCOPE_COMPANY,
 			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 			Arrays.asList(
 				ObjectFieldUtil.createObjectField(
@@ -244,8 +244,8 @@ public class ObjectDefinitionServiceTest {
 						RandomTestUtil.randomString()),
 					"A" + RandomTestUtil.randomString(), null, null,
 					LocalizedMapUtil.getLocalizedMap(
-						RandomTestUtil.randomString()), true,
-					ObjectDefinitionConstants.SCOPE_COMPANY,
+						RandomTestUtil.randomString()),
+					true, ObjectDefinitionConstants.SCOPE_COMPANY,
 					ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 					Arrays.asList(
 						ObjectFieldUtil.createObjectField(
@@ -325,8 +325,8 @@ public class ObjectDefinitionServiceTest {
 						RandomTestUtil.randomString()),
 					"A" + RandomTestUtil.randomString(), null, null,
 					LocalizedMapUtil.getLocalizedMap(
-						RandomTestUtil.randomString()), true,
-					ObjectDefinitionConstants.SCOPE_COMPANY,
+						RandomTestUtil.randomString()),
+					true, ObjectDefinitionConstants.SCOPE_COMPANY,
 					ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 					Arrays.asList(
 						ObjectFieldUtil.createObjectField(
@@ -362,8 +362,8 @@ public class ObjectDefinitionServiceTest {
 						RandomTestUtil.randomString()),
 					"A" + RandomTestUtil.randomString(), null, null,
 					LocalizedMapUtil.getLocalizedMap(
-						RandomTestUtil.randomString()), true,
-					ObjectDefinitionConstants.SCOPE_COMPANY,
+						RandomTestUtil.randomString()),
+					true, ObjectDefinitionConstants.SCOPE_COMPANY,
 					ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 					Arrays.asList(
 						ObjectFieldUtil.createObjectField(
@@ -404,8 +404,8 @@ public class ObjectDefinitionServiceTest {
 						RandomTestUtil.randomString()),
 					"A" + RandomTestUtil.randomString(), null, null,
 					LocalizedMapUtil.getLocalizedMap(
-						RandomTestUtil.randomString()), true,
-					ObjectDefinitionConstants.SCOPE_COMPANY,
+						RandomTestUtil.randomString()),
+					true, ObjectDefinitionConstants.SCOPE_COMPANY,
 					ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 					Arrays.asList(
 						ObjectFieldUtil.createObjectField(

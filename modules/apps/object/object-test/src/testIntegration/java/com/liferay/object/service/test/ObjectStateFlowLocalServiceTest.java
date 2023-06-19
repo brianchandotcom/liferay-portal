@@ -92,8 +92,8 @@ public class ObjectStateFlowLocalServiceTest {
 				TestPropsValues.getUserId(), false, false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				"A" + RandomTestUtil.randomString(), null, null,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()), true,
-				ObjectDefinitionConstants.SCOPE_COMPANY,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				true, ObjectDefinitionConstants.SCOPE_COMPANY,
 				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 				Collections.emptyList());
 

@@ -24,7 +24,7 @@ import classNames from 'classnames';
 import {fetch, navigate, openModal, openToast} from 'frontend-js-web';
 import React, {useRef, useState} from 'react';
 
-import {API_URL, OBJECT_RELATIONSHIP, PAGINATION_PROPS} from './Constants';
+import {API_URL, FDS_DEFAULT_PROPS, OBJECT_RELATIONSHIP} from './Constants';
 import {FDSEntryType} from './FDSEntries';
 import RequiredMark from './components/RequiredMark';
 
@@ -330,6 +330,7 @@ const FDSViews = ({
 
 	return (
 		<FrontendDataSet
+			{...FDS_DEFAULT_PROPS}
 			apiURL={`${API_URL.FDS_VIEWS}/?filter=(${OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW_ID} eq '${fdsEntryId}')`}
 			creationMenu={creationMenu}
 			id={`${namespace}FDSViews`}
@@ -345,9 +346,7 @@ const FDSViews = ({
 					onClick: onDeleteClick,
 				},
 			]}
-			style="fluid"
 			views={views}
-			{...PAGINATION_PROPS}
 		/>
 	);
 };

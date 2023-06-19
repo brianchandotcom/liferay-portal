@@ -17,7 +17,7 @@ import ClayModal from '@clayui/modal';
 import {FrontendDataSet} from '@liferay/frontend-data-set-web';
 import React, {useState} from 'react';
 
-import {API_URL, PAGINATION_PROPS} from '../../js/Constants';
+import {API_URL, FDS_DEFAULT_PROPS} from '../../js/Constants';
 
 import './FDSViewItemSelector.scss';
 
@@ -48,6 +48,7 @@ const FDSViewItemSelector = ({
 		<div className="fds-view-item-selector">
 			<ClayModal.Body>
 				<FrontendDataSet
+					{...FDS_DEFAULT_PROPS}
 					apiURL={API_URL.FDS_VIEWS}
 					id={`${namespace}FDSViewsItemSelector`}
 					onSelect={({
@@ -59,9 +60,7 @@ const FDSViewItemSelector = ({
 					}}
 					selectedItemsKey="id"
 					selectionType="single"
-					style="fluid"
 					views={views}
-					{...PAGINATION_PROPS}
 				/>
 			</ClayModal.Body>
 

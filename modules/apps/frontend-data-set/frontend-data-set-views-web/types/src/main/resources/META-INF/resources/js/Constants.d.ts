@@ -36,12 +36,13 @@ declare const OBJECT_RELATIONSHIP: {
 	readonly FDS_VIEW_FDS_SORT: 'fdsViewFDSSortRelationship';
 	readonly FDS_VIEW_FDS_SORT_ID: 'r_fdsViewFDSSortRelationship_c_fdsViewId';
 };
-declare const PAGINATION_PROPS: {
+declare const FDS_DEFAULT_PROPS: {
 	pagination: {
 		deltas: {
 			label: number;
 		}[];
 		initialDelta: number;
 	};
+	style: 'fluid';
 };
-export {API_URL, FUZZY_OPTIONS, OBJECT_RELATIONSHIP, PAGINATION_PROPS};
+export {API_URL, FDS_DEFAULT_PROPS, FUZZY_OPTIONS, OBJECT_RELATIONSHIP};

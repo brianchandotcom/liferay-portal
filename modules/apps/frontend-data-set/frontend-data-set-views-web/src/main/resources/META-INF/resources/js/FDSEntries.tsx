@@ -27,9 +27,9 @@ import React, {useRef, useState} from 'react';
 import '../css/FDSEntries.scss';
 import {
 	API_URL,
+	FDS_DEFAULT_PROPS,
 	FUZZY_OPTIONS,
 	OBJECT_RELATIONSHIP,
-	PAGINATION_PROPS,
 } from './Constants';
 import {FDSViewType} from './FDSViews';
 import RequiredMark from './components/RequiredMark';
@@ -845,6 +845,7 @@ const FDSEntries = ({
 	return (
 		<div className="fds-entries">
 			<FrontendDataSet
+				{...FDS_DEFAULT_PROPS}
 				apiURL={`${API_URL.FDS_ENTRIES}?nestedFields=${OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW}`}
 				creationMenu={creationMenu}
 				customDataRenderers={{
@@ -867,9 +868,7 @@ const FDSEntries = ({
 					},
 				]}
 				sorting={[{direction: 'desc', key: 'dateCreated'}]}
-				style="fluid"
 				views={views}
-				{...PAGINATION_PROPS}
 			/>
 		</div>
 	);

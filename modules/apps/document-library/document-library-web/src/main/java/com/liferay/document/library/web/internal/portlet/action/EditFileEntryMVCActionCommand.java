@@ -567,7 +567,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest);
 
 		SessionMessages.add(
-			httpServletRequest, "friendlyURLChanged_requestProcessedWarning",
+			httpServletRequest, "friendlyURLChangedRequestProcessedWarning",
 			_language.format(
 				httpServletRequest,
 				"the-friendly-url-x-was-changed-to-x-to-ensure-uniqueness",

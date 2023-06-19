@@ -299,7 +299,7 @@ definition {
 
 		FormFields.viewFieldSize(
 			fieldName = ${fieldTextField1},
-			size = 6);
+			size = 5);
 
 		Form.editFieldLabelMetal(fieldValue = "Text edited");
 
@@ -361,7 +361,7 @@ definition {
 
 		FormFields.viewFieldSize(
 			fieldName = ${fieldTextField1},
-			size = 6);
+			size = 5);
 
 		Form.save();
 
@@ -457,7 +457,7 @@ definition {
 
 		FormFields.viewFieldSize(
 			fieldName = "Fields Group",
-			size = 6);
+			size = 5);
 
 		Form.save();
 
@@ -467,7 +467,7 @@ definition {
 
 		FormFields.viewFieldSize(
 			fieldName = "Fields Group",
-			size = 6);
+			size = 5);
 	}
 
 	@description = "Verify that a second field can be added to the same row as a resized field"
@@ -497,11 +497,11 @@ definition {
 
 		FormFields.viewFieldSize(
 			fieldName = "Text",
-			size = 6);
+			size = 5);
 
 		FormFields.viewFieldSize(
 			fieldName = "Numeric",
-			size = 6);
+			size = 7);
 
 		Form.save();
 
@@ -567,7 +567,7 @@ definition {
 
 		FormFields.viewFieldSize(
 			fieldName = ${copyFieldGroup},
-			size = 7);
+			size = 8);
 	}
 
 	@description = "Verify that when there is more than one Fields Group per row and one of the Fields Groups is resized, the non-resized Fields Group adapts its width as well"
@@ -615,11 +615,11 @@ definition {
 
 		FormFields.viewFieldSize(
 			fieldName = "Fields Group",
-			size = 6);
+			size = 5);
 
 		FormFields.viewFieldSize(
 			fieldName = ${copyFieldGroup},
-			size = 6);
+			size = 7);
 
 		FormFields.viewFieldPosition(
 			fieldLabel = "Fields Group",
@@ -635,11 +635,11 @@ definition {
 
 		FormFields.viewFieldSize(
 			fieldName = "Fields Group",
-			size = 7);
+			size = 6);
 
 		FormFields.viewFieldSize(
 			fieldName = ${copyFieldGroup},
-			size = 5);
+			size = 6);
 	}
 
 	@description = "Verify that when there is more than one field per row and one of those fields is resized, the non-resized field adapts its width as well"
@@ -665,11 +665,11 @@ definition {
 
 		FormFields.viewFieldSize(
 			fieldName = "Text",
-			size = 6);
+			size = 5);
 
 		FormFields.viewFieldSize(
 			fieldName = "Numeric",
-			size = 6);
+			size = 7);
 
 		FormFields.viewFieldsSameRow(
 			fieldNames = "Text,Numeric",
@@ -681,11 +681,11 @@ definition {
 
 		FormFields.viewFieldSize(
 			fieldName = "Text",
-			size = 4);
+			size = 3);
 
 		FormFields.viewFieldSize(
 			fieldName = "Numeric",
-			size = 8);
+			size = 9);
 	}
 
 }

@@ -1,7 +1,7 @@
 @component-name = "portal-feature-flags"
 definition {
 
-	property custom.properties = "feature.flag.LPS-xxxxxx=false${line.separator}feature.flag.LPS-xxxxxx.status=beta${line.separator}feature.flag.LPS-xxxxxx.title=Terms and Conditions pages${line.separator}feature.flag.LPS-xxxxxx.description=Create your own terms and conditions pages${line.separator}feature.flag.LPS-yyyyyy=false${line.separator}feature.flag.LPS-yyyyyy.status=beta${line.separator}feature.flag.LPS-yyyyyy.dependencies=LPS-xxxxxx";
+	property custom.properties = "feature.flag.LPS-162766=false${line.separator}feature.flag.LPS-162766.type=beta${line.separator}feature.flag.LPS-162766.title=Terms and Conditions pages${line.separator}feature.flag.LPS-162766.description=Create your own terms and conditions pages${line.separator}feature.flag.LPS-162766.dependencies=LPS-162765";
 	property portal.acceptance = "true";
 	property testray.main.component.name = "Feature Flags";
 
@@ -48,7 +48,7 @@ definition {
 		}
 
 		task ("Then assert the toggle is disabled state") {
-			VerifyElementPresent(
+			AssertElementPresent(
 				locator1 = "FeatureFlags#TOGGLE_ROW",
 				title_row = "Terms and Conditions pages",
 				toggle_state = "Disabled");
@@ -75,7 +75,7 @@ definition {
 		}
 
 		task ("Then assert the toggle is enabled state") {
-			VerifyElementPresent(
+			AssertElementPresent(
 				locator1 = "FeatureFlags#TOGGLE_ROW",
 				title_row = "Terms and Conditions pages",
 				toggle_state = "Enabled");

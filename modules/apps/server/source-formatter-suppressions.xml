@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<source-check>
+		<suppress checks="IllegalTaglibsCheck" files="server-admin-web/src/main/resources/META-INF/resources/resources\.jsp" />
+	</source-check>
+</suppressions>

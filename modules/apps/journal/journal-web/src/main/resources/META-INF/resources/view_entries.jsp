@@ -372,7 +372,13 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 							colspan="<%= 2 %>"
 						>
 							<clay:horizontal-card
+								additionalProps='<%=
+									HashMapBuilder.<String, Object>put(
+										"trashEnabled", componentContext.get("trashEnabled")
+									).build()
+								%>'
 								horizontalCard="<%= new JournalFolderHorizontalCard(curFolder, journalDisplayContext.getDisplayStyle(), renderRequest, renderResponse, searchContainer.getRowChecker(), trashHelper) %>"
+								propsTransformer="js/ElementsDefaultPropsTransformer"
 							/>
 						</liferay-ui:search-container-column-text>
 					</c:when>

@@ -448,6 +448,17 @@ public class EditFragmentEntryDisplayContext {
 		).put(
 			"fragmentCollectionId", getFragmentCollectionId()
 		).put(
+			"fragmentConfigurationURL",
+			PortletURLBuilder.createRenderURL(
+				PortalUtil.getLiferayPortletResponse(_renderResponse)
+			).setMVCPath(
+				"/configuration/icon/configuration.jsp"
+			).setRedirect(
+				_themeDisplay.getURLCurrent()
+			).setBackURL(
+				_themeDisplay.getURLCurrent()
+			).buildString()
+		).put(
 			"fragmentEntryId", getFragmentEntryId()
 		).put(
 			"freeMarkerTaglibs", freeMarkerTaglibs

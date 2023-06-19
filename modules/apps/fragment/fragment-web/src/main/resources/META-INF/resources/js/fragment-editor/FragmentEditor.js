@@ -48,6 +48,7 @@ const FragmentEditor = ({
 		dataAttributes,
 		fieldTypes: availableFieldTypes,
 		fragmentCollectionId,
+		fragmentConfigurationURL,
 		fragmentEntryId,
 		htmlEditorCustomEntities,
 		initialCSS,
@@ -375,16 +376,25 @@ const FragmentEditor = ({
 					<div className="fragment-editor fragment-editor__configuration">
 						<div className="sheet sheet-lg">
 							{showFieldTypes && (
-								<FieldTypeSelector
-									availableFieldTypes={availableFieldTypes}
-									description={Liferay.Language.get(
-										'specify-which-field-types-this-fragment-supports'
-									)}
-									fieldTypes={fieldTypes}
-									onChangeFieldTypes={setFieldTypes}
-									readOnly={readOnly}
-									title={Liferay.Language.get('field-types')}
-								/>
+								<>
+									<FieldTypeSelector
+										availableFieldTypes={
+											availableFieldTypes
+										}
+										description={Liferay.Language.get(
+											'specify-which-field-types-this-fragment-supports'
+										)}
+										fieldTypes={fieldTypes}
+										fragmentConfigurationURL={
+											fragmentConfigurationURL
+										}
+										onChangeFieldTypes={setFieldTypes}
+										readOnly={readOnly}
+										title={Liferay.Language.get(
+											'field-types'
+										)}
+									/>
+								</>
 							)}
 
 							<ClayForm.Group>

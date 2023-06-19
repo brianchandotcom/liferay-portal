@@ -43,7 +43,7 @@ public class AccessibilitySettingsUtil {
 
 		return ListUtil.fromArray(
 			new AccessibilitySetting(
-				"c-prefers-link-underline", true,
+				"c-prefers-link-underline", false,
 				AccessibilitySettingConstants.
 					ACCESSIBILITY_SETTING_SHOW_UNDERLINE,
 				LanguageUtil.get(

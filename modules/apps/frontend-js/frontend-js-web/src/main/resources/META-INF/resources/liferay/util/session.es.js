@@ -33,11 +33,11 @@ function getSessionClickFormData(cmd) {
 
 function getSessionClickURL() {
 	let sessionClickURL = `${Liferay.ThemeDisplay.getPortalURL()}${Liferay.ThemeDisplay.getPathMain()}/portal/session_click`;
-	
+
 	if (Liferay.ThemeDisplay.getScopeGroupId()) {
 		sessionClickURL += `?doAsGroupId=${Liferay.ThemeDisplay.getScopeGroupId()}`;
 	}
-	
+
 	return sessionClickURL;
 }
 

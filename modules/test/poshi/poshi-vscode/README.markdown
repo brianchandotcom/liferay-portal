@@ -96,6 +96,11 @@ This is a work in progress. If enabled, it is recommended that you disable forma
 
 ## Release Notes
 
+### 0.3.0
+
+- POSHI-406: Adds command to run test case from cursor position
+- POSHI-485: Update syntax highlighting
+
 ### 0.2.0
 
 - Provides method completion from multiple possible files

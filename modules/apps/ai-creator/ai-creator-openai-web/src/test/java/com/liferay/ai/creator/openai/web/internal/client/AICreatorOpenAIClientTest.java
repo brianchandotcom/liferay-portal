@@ -62,7 +62,7 @@ public class AICreatorOpenAIClientTest {
 
 	@Before
 	public void setUp() throws IOException {
-		_aiCreatorOpenAIClient = new AICreatorOpenAIClient();
+		_aiCreatorOpenAIClient = new AICreatorOpenAIClientImpl();
 
 		_http = Mockito.mock(Http.class);
 
@@ -112,7 +112,7 @@ public class AICreatorOpenAIClientTest {
 
 		_assertOptions(
 			apiKey, content, ContentTypes.APPLICATION_JSON,
-			AICreatorOpenAIClient.ENDPOINT_COMPLETION);
+			AICreatorOpenAIClientImpl.ENDPOINT_COMPLETION);
 		_assertResponse(response);
 	}
 
@@ -124,7 +124,7 @@ public class AICreatorOpenAIClientTest {
 
 		_testIOException(
 			content, ContentTypes.APPLICATION_JSON,
-			AICreatorOpenAIClient.ENDPOINT_COMPLETION,
+			AICreatorOpenAIClientImpl.ENDPOINT_COMPLETION,
 			apiKey -> _aiCreatorOpenAIClient.getCompletion(
 				apiKey, content, LocaleUtil.getDefault(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomInt()));
@@ -138,7 +138,7 @@ public class AICreatorOpenAIClientTest {
 
 		_testResponseWithErrorKey(
 			content, ContentTypes.APPLICATION_JSON,
-			AICreatorOpenAIClient.ENDPOINT_COMPLETION,
+			AICreatorOpenAIClientImpl.ENDPOINT_COMPLETION,
 			apiKey -> _aiCreatorOpenAIClient.getCompletion(
 				apiKey, content, LocaleUtil.getDefault(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomInt()));
@@ -152,7 +152,7 @@ public class AICreatorOpenAIClientTest {
 
 		_testUnauthorizedResponseCode(
 			content, ContentTypes.APPLICATION_JSON,
-			AICreatorOpenAIClient.ENDPOINT_COMPLETION,
+			AICreatorOpenAIClientImpl.ENDPOINT_COMPLETION,
 			apiKey -> _aiCreatorOpenAIClient.getCompletion(
 				apiKey, content, LocaleUtil.getDefault(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomInt()));
@@ -169,7 +169,7 @@ public class AICreatorOpenAIClientTest {
 
 		_aiCreatorOpenAIClient.validateAPIKey(apiKey);
 
-		_assertOptions(apiKey, AICreatorOpenAIClient.ENDPOINT_VALIDATION);
+		_assertOptions(apiKey, AICreatorOpenAIClientImpl.ENDPOINT_VALIDATION);
 
 		_assertResponse(response);
 		_assertResponseJSONObject(responseJSONObject);
@@ -178,21 +178,21 @@ public class AICreatorOpenAIClientTest {
 	@Test
 	public void testValidateAPIKeyIOException() throws Exception {
 		_testIOException(
-			null, null, AICreatorOpenAIClient.ENDPOINT_VALIDATION,
+			null, null, AICreatorOpenAIClientImpl.ENDPOINT_VALIDATION,
 			apiKey -> _aiCreatorOpenAIClient.validateAPIKey(apiKey));
 	}
 
 	@Test
 	public void testValidateAPIKeyResponseWithErrorKey() throws Exception {
 		_testResponseWithErrorKey(
-			null, null, AICreatorOpenAIClient.ENDPOINT_VALIDATION,
+			null, null, AICreatorOpenAIClientImpl.ENDPOINT_VALIDATION,
 			apiKey -> _aiCreatorOpenAIClient.validateAPIKey(apiKey));
 	}
 
 	@Test
 	public void testValidateAPIKeyUnauthorizedResponseCode() throws Exception {
 		_testUnauthorizedResponseCode(
-			null, null, AICreatorOpenAIClient.ENDPOINT_VALIDATION,
+			null, null, AICreatorOpenAIClientImpl.ENDPOINT_VALIDATION,
 			apiKey -> _aiCreatorOpenAIClient.validateAPIKey(apiKey));
 	}
 

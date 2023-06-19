@@ -15,23 +15,17 @@
 package com.liferay.headless.builder.test.validation.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Ignore;
 import org.junit.Rule;
@@ -50,19 +44,6 @@ public class APIEndpointObjectEntryModelListenerTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Before
-	public void setUp() throws PortalException {
-		_apiApplicationObjectDefinition =
-			_objectDefinitionLocalService.
-				getObjectDefinitionByExternalReferenceCode(
-					"MSOD_API_APPLICATION", CompanyThreadLocal.getCompanyId());
-
-		_apiEndpointObjectDefinition =
-			_objectDefinitionLocalService.
-				getObjectDefinitionByExternalReferenceCode(
-					"MSOD_API_ENDPOINT", CompanyThreadLocal.getCompanyId());
-	}
-
 	@Test
 	public void testInvalidPathAPIEndpoint() throws Exception {
 		JSONObject jsonObject = HTTPTestUtil.invoke(
@@ -78,8 +59,7 @@ public class APIEndpointObjectEntryModelListenerTest {
 			).put(
 				"scope", "company"
 			).toString(),
-			_apiEndpointObjectDefinition.getRESTContextPath(),
-			Http.Method.POST);
+			"headless-builder/endpoints", Http.Method.POST);
 
 		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
 		Assert.assertEquals(
@@ -101,8 +81,7 @@ public class APIEndpointObjectEntryModelListenerTest {
 			).put(
 				"scope", "company"
 			).toString(),
-			_apiEndpointObjectDefinition.getRESTContextPath(),
-			Http.Method.POST);
+			"headless-builder/endpoints", Http.Method.POST);
 
 		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
 		Assert.assertEquals(
@@ -129,8 +108,7 @@ public class APIEndpointObjectEntryModelListenerTest {
 			).put(
 				"scope", "company"
 			).toString(),
-			_apiEndpointObjectDefinition.getRESTContextPath(),
-			Http.Method.POST);
+			"headless-builder/endpoints", Http.Method.POST);
 
 		Assert.assertEquals(
 			0,
@@ -166,8 +144,7 @@ public class APIEndpointObjectEntryModelListenerTest {
 			).put(
 				"scope", "company"
 			).toString(),
-			_apiEndpointObjectDefinition.getRESTContextPath(),
-			Http.Method.POST);
+			"headless-builder/endpoints", Http.Method.POST);
 
 		Assert.assertEquals(
 			jsonObject.get("r_apiApplicationToAPIEndpoints_c_apiApplicationId"),
@@ -186,8 +163,7 @@ public class APIEndpointObjectEntryModelListenerTest {
 			).put(
 				"scope", "company"
 			).toString(),
-			_apiEndpointObjectDefinition.getRESTContextPath(),
-			Http.Method.POST);
+			"headless-builder/endpoints", Http.Method.POST);
 
 		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
 		Assert.assertEquals(
@@ -213,8 +189,7 @@ public class APIEndpointObjectEntryModelListenerTest {
 			).put(
 				"scope", "company"
 			).toString(),
-			_apiEndpointObjectDefinition.getRESTContextPath(),
-			Http.Method.POST);
+			"headless-builder/endpoints", Http.Method.POST);
 
 		Assert.assertEquals(
 			0,
@@ -234,14 +209,7 @@ public class APIEndpointObjectEntryModelListenerTest {
 			).put(
 				"title", RandomTestUtil.randomString()
 			).toString(),
-			_apiApplicationObjectDefinition.getRESTContextPath(),
-			Http.Method.POST);
+			"headless-builder/applications", Http.Method.POST);
 	}
-
-	private ObjectDefinition _apiApplicationObjectDefinition;
-	private ObjectDefinition _apiEndpointObjectDefinition;
-
-	@Inject
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 }

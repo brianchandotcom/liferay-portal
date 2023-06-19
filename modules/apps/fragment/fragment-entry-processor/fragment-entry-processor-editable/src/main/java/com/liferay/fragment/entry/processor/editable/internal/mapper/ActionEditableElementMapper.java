@@ -14,6 +14,7 @@
 
 package com.liferay.fragment.entry.processor.editable.internal.mapper;
 
+import com.liferay.fragment.entry.processor.editable.element.constants.ActionEditableElementConstants;
 import com.liferay.fragment.entry.processor.editable.mapper.EditableElementMapper;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
@@ -122,13 +123,15 @@ public class ActionEditableElementMapper implements EditableElementMapper {
 		String interaction = jsonObject.getString("interaction");
 
 		if (Validator.isNull(interaction)) {
-			interaction = _INTERACTION_NONE;
+			interaction = ActionEditableElementConstants.INTERACTION_NONE;
 		}
 
 		element.attr("data-lfr-on-" + resultType + "-interaction", interaction);
 
-		if ((interaction.equals(_INTERACTION_NONE) ||
-			 interaction.equals(_INTERACTION_NOTIFICATION)) &&
+		if ((interaction.equals(
+				ActionEditableElementConstants.INTERACTION_NONE) ||
+			 interaction.equals(
+				 ActionEditableElementConstants.INTERACTION_NOTIFICATION)) &&
 			jsonObject.getBoolean("reload")) {
 
 			element.attr(
@@ -148,7 +151,9 @@ public class ActionEditableElementMapper implements EditableElementMapper {
 			return;
 		}
 
-		if (interaction.equals(_INTERACTION_NOTIFICATION)) {
+		if (interaction.equals(
+				ActionEditableElementConstants.INTERACTION_NOTIFICATION)) {
+
 			JSONObject textJSONObject = jsonObject.getJSONObject("text");
 
 			if (textJSONObject == null) {
@@ -164,7 +169,9 @@ public class ActionEditableElementMapper implements EditableElementMapper {
 
 			element.attr("data-lfr-on-" + resultType + "-text", text);
 		}
-		else if (interaction.equals(_INTERACTION_PAGE)) {
+		else if (interaction.equals(
+					ActionEditableElementConstants.INTERACTION_PAGE)) {
+
 			JSONObject pageJSONObject = jsonObject.getJSONObject("page");
 
 			if (pageJSONObject == null) {
@@ -184,7 +191,9 @@ public class ActionEditableElementMapper implements EditableElementMapper {
 				"data-lfr-on-" + resultType + "-page-url",
 				_portal.getLayoutURL(layout, themeDisplay));
 		}
-		else if (interaction.equals(_INTERACTION_URL)) {
+		else if (interaction.equals(
+					ActionEditableElementConstants.INTERACTION_URL)) {
+
 			JSONObject urlJSONObject = jsonObject.getJSONObject("url");
 
 			if (urlJSONObject == null) {
@@ -206,14 +215,6 @@ public class ActionEditableElementMapper implements EditableElementMapper {
 			element.attr("data-lfr-on-" + resultType + "-page-url", url);
 		}
 	}
-
-	private static final String _INTERACTION_NONE = "none";
-
-	private static final String _INTERACTION_NOTIFICATION = "notification";
-
-	private static final String _INTERACTION_PAGE = "page";
-
-	private static final String _INTERACTION_URL = "url";
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

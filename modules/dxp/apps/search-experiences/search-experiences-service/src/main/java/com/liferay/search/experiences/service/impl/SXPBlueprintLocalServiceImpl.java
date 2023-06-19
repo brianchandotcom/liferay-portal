@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -243,7 +244,7 @@ public class SXPBlueprintLocalServiceImpl
 					InfoCollectionProvider.class,
 					new SXPBlueprintInfoCollectionProvider(
 						_assetHelper, _searcher, _searchRequestBuilderFactory,
-						sxpBlueprint),
+						sxpBlueprint, _groupLocalService),
 					HashMapDictionaryBuilder.<String, Object>put(
 						"company.id", sxpBlueprint.getCompanyId()
 					).put(
@@ -289,6 +290,9 @@ public class SXPBlueprintLocalServiceImpl
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Language _language;

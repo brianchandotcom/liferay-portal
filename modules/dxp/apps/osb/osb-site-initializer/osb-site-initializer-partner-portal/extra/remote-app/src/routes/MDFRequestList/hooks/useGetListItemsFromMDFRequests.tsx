@@ -37,7 +37,8 @@ export default function useGetListItemsFromMDFRequests(
 				...getMDFBudgetInfos(
 					item.totalCostOfExpense,
 					item.totalMDFRequestAmount,
-					item.currency
+					item.currency,
+					item.mdfRequestStatus.key
 				),
 			})),
 		[items]

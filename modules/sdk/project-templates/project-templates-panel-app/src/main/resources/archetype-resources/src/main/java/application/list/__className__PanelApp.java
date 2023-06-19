@@ -27,6 +27,15 @@ public class ${className}PanelApp extends BasePanelApp {
 		return ${className}PortletKeys.${className.toUpperCase()};
 	}
 
+#if (${liferayVersion.startsWith("7.4")})
+	@Override
+	public Portlet getPortlet() {
+		return _portlet;
+	}
+
+	@Reference(target = "(javax.portlet.name=" + ${className}PortletKeys.${className.toUpperCase()} + ")")
+	private Portlet _portlet;
+#else
 	@Override
 	@Reference(
 		target = "(javax.portlet.name=" + ${className}PortletKeys.${className.toUpperCase()} + ")",
@@ -35,5 +44,6 @@ public class ${className}PanelApp extends BasePanelApp {
 	public void setPortlet(Portlet portlet) {
 		super.setPortlet(portlet);
 	}
+#end
 
 }

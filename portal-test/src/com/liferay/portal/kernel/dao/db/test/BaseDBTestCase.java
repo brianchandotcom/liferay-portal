@@ -36,8 +36,8 @@ public abstract class BaseDBTestCase {
 		Assert.assertEquals(
 			StringBundler.concat(
 				"select * from SomeTable where someColumn1 = ",
-				_db.getTemplateFalse(), " and someColumn2 = ",
-				_db.getTemplateTrue(), StringPool.NEW_LINE),
+				db.getTemplateFalse(), " and someColumn2 = ",
+				db.getTemplateTrue(), StringPool.NEW_LINE),
 			buildSQL(_BOOLEAN_LITERAL_QUERY));
 
 		Assert.assertEquals(
@@ -46,12 +46,14 @@ public abstract class BaseDBTestCase {
 	}
 
 	protected String buildSQL(String query) throws IOException, SQLException {
-		return _db.buildSQL(query);
+		return db.buildSQL(query);
 	}
 
 	protected abstract DB getDB();
 
 	protected static final String RENAME_TABLE_QUERY = "alter_table_name a b";
+
+	protected final DB db = getDB();
 
 	private static final String _BOOLEAN_LITERAL_QUERY =
 		"select * from SomeTable where someColumn1 = FALSE and someColumn2 = " +
@@ -60,7 +62,5 @@ public abstract class BaseDBTestCase {
 	private static final String _BOOLEAN_PATTERN_QUERY =
 		"select * from SomeTable where someColumn1 = [$FALSE$] and " +
 			"someColumn2 = [$TRUE$]";
-
-	private final DB _db = getDB();
 
 }

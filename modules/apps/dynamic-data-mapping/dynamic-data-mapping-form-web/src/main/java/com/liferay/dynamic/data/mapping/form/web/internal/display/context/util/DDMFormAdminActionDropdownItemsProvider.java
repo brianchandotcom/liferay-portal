@@ -212,7 +212,7 @@ public class DDMFormAdminActionDropdownItemsProvider {
 				).build());
 			dropdownItem.setDisabled(_invalidDDMFormInstance);
 			dropdownItem.setLabel(
-				LanguageUtil.get(_httpServletRequest, "export"));
+				LanguageUtil.get(_httpServletRequest, "export-entries"));
 		};
 	}
 

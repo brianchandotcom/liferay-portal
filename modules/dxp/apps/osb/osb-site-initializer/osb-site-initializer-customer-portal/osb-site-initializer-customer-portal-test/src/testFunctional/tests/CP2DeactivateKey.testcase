@@ -71,7 +71,7 @@ definition {
 
 	@description = "Automation ID: LPS-150690 | Test Summary: Assert that the deactivated key is no longer displayed in the table"
 	@ignore = "true"
-	@priority = 5
+	@priority = 3
 	test CannotViewDeactivatedKeysForPortal {
 
 		// Needs refactor since it depends on example NASA ICE account
@@ -215,7 +215,7 @@ definition {
 
 	@description = "Automation ID: LPS-150687 | Test Summary: Assert that no changes were made after the user clicked 'Cancel' in the deactivation modal"
 	@ignore = "true"
-	@priority = 4
+	@priority = 3
 	test CanViewThatNoChangesWereMadeAfterClickingCancel {
 
 		// Needs refactor since it depends on example NASA ICE account
@@ -257,7 +257,7 @@ definition {
 
 	@description = "Automation ID: LPS-150685 | Test Summary: Assert that a pop-up is displayed after the user clicks the disable button."
 	@ignore = "true"
-	@priority = 5
+	@priority = 3
 	test CanViewTheDeactivationPopUp {
 
 		// Needs refactor since it depends on example NASA ICE account

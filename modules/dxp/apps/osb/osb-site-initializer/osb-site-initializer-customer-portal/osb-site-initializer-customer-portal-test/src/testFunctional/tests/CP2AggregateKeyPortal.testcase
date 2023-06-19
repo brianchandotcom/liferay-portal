@@ -50,34 +50,10 @@ definition {
 
 	}
 
-	@description = "Automation ID: LPS-150693 | Test Summary: Verify if the management bar displays a Download button after the user selects one or more activation keys"
-	@priority = 3
-	test CanSeeDownloadButton {
-
-		// TODO LPS-150693 CanSeeDownloadButton pending implementation
-
-	}
-
-	@description = "Automation ID: LPS-150694 | Test Summary: Verify if when the user selects two or more keys, the Download button a drop-down menu appears with the following option Aggregate Key (single file)"
-	@priority = 3
-	test CanSeeDropdownMenu {
-
-		// TODO LPS-150693 CanSeeDropdownMenu pending implementation
-
-	}
-
-	@description = "Automation ID: LPS-150692 | Test Summary: Verify if the management bar displays the amount of keys selected by the user"
-	@priority = 3
-	test CanViewQuantityOfSelectedKeys {
-
-		// TODO LPS-150692 CanViewQuantityOfSelectedKeys pending implementation
-
-	}
-
 	@description = "Automation ID: LPS-150695 | Test Summary: Verify if when the key is downloaded a success message is displayed on the screen"
 	@ignore = "true"
 	@priority = 4
-	test CanViewTheDownloadSuccessfulMessage {
+	test AssertTheDownloadOfAggregatedKeys {
 
 		// Needs refactor since it depends on example Avangrid Portals account
 
@@ -132,6 +108,30 @@ definition {
 		task ("And I assert that the Activation Key was downloaded") {
 			CP2FileUtil.assertDownloadedFileIsPresent(downloadedFileName = ${downloadedFileName});
 		}
+	}
+
+	@description = "Automation ID: LPS-150693 | Test Summary: Verify if the management bar displays a Download button after the user selects one or more activation keys"
+	@priority = 3
+	test CanSeeDownloadButton {
+
+		// TODO LPS-150693 CanSeeDownloadButton pending implementation
+
+	}
+
+	@description = "Automation ID: LPS-150694 | Test Summary: Verify if when the user selects two or more keys, the Download button a drop-down menu appears with the following option Aggregate Key (single file)"
+	@priority = 3
+	test CanSeeDropdownMenu {
+
+		// TODO LPS-150693 CanSeeDropdownMenu pending implementation
+
+	}
+
+	@description = "Automation ID: LPS-150692 | Test Summary: Verify if the management bar displays the amount of keys selected by the user"
+	@priority = 3
+	test CanViewQuantityOfSelectedKeys {
+
+		// TODO LPS-150692 CanViewQuantityOfSelectedKeys pending implementation
+
 	}
 
 	@description = "Automation ID: LPS-150698 | Test Summary: Verify if when you hover the mouse over the key a tooltip appears on the screen with the message same as the Info Alert"

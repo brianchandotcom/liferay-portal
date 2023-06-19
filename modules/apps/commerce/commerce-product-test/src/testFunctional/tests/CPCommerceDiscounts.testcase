@@ -1222,10 +1222,10 @@ definition {
 			checkboxName = "Never Expire",
 			locator1 = "Checkbox#ANY_CHECKBOX");
 
-		Type(
+		Type.sendKeys(
 			inputFieldId = "expirationDateTime",
 			locator1 = "TextInput#INPUT_ID",
-			value1 = "${hours}:${minutes} ${ampm}");
+			value1 = "${hours}:${minutes}${ampm}");
 
 		Button.clickPublish();
 

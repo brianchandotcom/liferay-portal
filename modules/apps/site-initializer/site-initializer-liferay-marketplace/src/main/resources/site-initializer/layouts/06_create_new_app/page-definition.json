@@ -2,29 +2,29 @@
 	"pageElement": {
 		"pageElements": [
 			{
-						"definition": {
-							"fragment": {
-								"key": "notification-welcome",
-								"siteKey": "Marketplace"
-							},
-							"fragmentConfig": {
-							},
-							"fragmentFields": [
-							],
-							"indexed": true
-						},
-						"type": "Fragment"
+				"definition": {
+					"fragment": {
+						"key": "notification-welcome",
+						"siteKey": "Marketplace"
 					},
-					{
-						"definition": {
-							"widgetInstance": {
-								"widgetConfig": {
-								},
-								"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_[$COMPANY_ID$]_LXC_liferay_marketplace_custom_element_create_app"
-							}
+					"fragmentConfig": {
+					},
+					"fragmentFields": [
+					],
+					"indexed": true
+				},
+				"type": "Fragment"
+			},
+			{
+				"definition": {
+					"widgetInstance": {
+						"widgetConfig": {
 						},
-						"type": "Widget"
+						"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_[$COMPANY_ID$]_LXC_liferay_marketplace_custom_element_create_app"
 					}
+				},
+				"type": "Widget"
+			}
 		],
 		"type": "Root"
 	},

@@ -25,21 +25,20 @@ import com.liferay.portal.util.PropsValues;
 
 import java.util.Date;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Raymond Augé
  * @author Tina Tian
  */
-@Component(
-	service = {
-		ClusterMasterTokenTransitionListener.class,
-		SchedulerJobConfiguration.class
-	}
-)
+@Component(service = SchedulerJobConfiguration.class)
 public class CheckEntrySchedulerJobConfiguration
-	implements ClusterMasterTokenTransitionListener, SchedulerJobConfiguration {
+	implements SchedulerJobConfiguration {
 
 	@Override
 	public UnsafeRunnable<Exception> getJobExecutorUnsafeRunnable() {
@@ -64,13 +63,16 @@ public class CheckEntrySchedulerJobConfiguration
 			PropsValues.ANNOUNCEMENTS_ENTRY_CHECK_INTERVAL, TimeUnit.MINUTE);
 	}
 
-	@Override
-	public void masterTokenAcquired() {
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceRegistration = bundleContext.registerService(
+			ClusterMasterTokenTransitionListener.class,
+			new CheckEntryClusterMasterTokenTransitionListener(), null);
 	}
 
-	@Override
-	public void masterTokenReleased() {
-		_previousEndDate = null;
+	@Deactivate
+	protected void deactivate() {
+		_serviceRegistration.unregister();
 	}
 
 	private static final long _ANNOUNCEMENTS_ENTRY_CHECK_INTERVAL =
@@ -80,5 +82,21 @@ public class CheckEntrySchedulerJobConfiguration
 	private AnnouncementsEntryLocalService _announcementsEntryLocalService;
 
 	private Date _previousEndDate;
+	private ServiceRegistration<ClusterMasterTokenTransitionListener>
+		_serviceRegistration;
+
+	private class CheckEntryClusterMasterTokenTransitionListener
+		implements ClusterMasterTokenTransitionListener {
+
+		@Override
+		public void masterTokenAcquired() {
+		}
+
+		@Override
+		public void masterTokenReleased() {
+			_previousEndDate = null;
+		}
+
+	}
 
 }

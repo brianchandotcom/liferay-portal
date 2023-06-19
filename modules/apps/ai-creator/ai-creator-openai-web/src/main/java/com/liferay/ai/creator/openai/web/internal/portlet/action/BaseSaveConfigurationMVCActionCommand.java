@@ -32,6 +32,8 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
 
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Lourdes Fernández Besada
@@ -92,8 +94,11 @@ public abstract class BaseSaveConfigurationMVCActionCommand
 			String apiKey, boolean enableOpenAI, ThemeDisplay themeDisplay)
 		throws ConfigurationException;
 
-	@Reference
-	protected AICreatorOpenAIClient aiCreatorOpenAIClient;
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	protected volatile AICreatorOpenAIClient aiCreatorOpenAIClient;
 
 	@Reference
 	protected Language language;

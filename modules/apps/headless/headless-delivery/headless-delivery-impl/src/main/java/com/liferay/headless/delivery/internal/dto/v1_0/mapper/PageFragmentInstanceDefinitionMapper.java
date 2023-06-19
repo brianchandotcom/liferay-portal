@@ -16,6 +16,7 @@ package com.liferay.headless.delivery.internal.dto.v1_0.mapper;
 
 import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
+import com.liferay.fragment.entry.processor.editable.element.constants.ActionEditableElementConstants;
 import com.liferay.fragment.entry.processor.util.EditableFragmentEntryProcessorUtil;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
@@ -23,9 +24,11 @@ import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
+import com.liferay.headless.delivery.dto.v1_0.ActionExecutionResult;
 import com.liferay.headless.delivery.dto.v1_0.ClassPKReference;
 import com.liferay.headless.delivery.dto.v1_0.Fragment;
 import com.liferay.headless.delivery.dto.v1_0.FragmentField;
+import com.liferay.headless.delivery.dto.v1_0.FragmentFieldAction;
 import com.liferay.headless.delivery.dto.v1_0.FragmentFieldBackgroundImage;
 import com.liferay.headless.delivery.dto.v1_0.FragmentFieldHTML;
 import com.liferay.headless.delivery.dto.v1_0.FragmentFieldImage;
@@ -40,7 +43,11 @@ import com.liferay.headless.delivery.dto.v1_0.FragmentMappedValue;
 import com.liferay.headless.delivery.dto.v1_0.FragmentStyle;
 import com.liferay.headless.delivery.dto.v1_0.FragmentViewport;
 import com.liferay.headless.delivery.dto.v1_0.Mapping;
+import com.liferay.headless.delivery.dto.v1_0.NoneActionExecutionResult;
+import com.liferay.headless.delivery.dto.v1_0.NotificationActionExecutionResult;
 import com.liferay.headless.delivery.dto.v1_0.PageFragmentInstanceDefinition;
+import com.liferay.headless.delivery.dto.v1_0.SitePageActionExecutionResult;
+import com.liferay.headless.delivery.dto.v1_0.URLActionExecutionResult;
 import com.liferay.headless.delivery.dto.v1_0.WidgetInstance;
 import com.liferay.headless.delivery.internal.dto.v1_0.mapper.util.FragmentMappedValueUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.mapper.util.LocalizedValueUtil;
@@ -314,7 +321,7 @@ public class PageFragmentInstanceDefinitionMapper {
 				_getTextFragmentFields(
 					EditableFragmentEntryProcessorUtil.getEditableTypes(
 						fragmentEntryLink.getHtml()),
-					jsonObject, saveMapping));
+					jsonObject, saveInlineContent, saveMapping));
 		}
 
 		return fragmentFields.toArray(new FragmentField[0]);
@@ -344,7 +351,7 @@ public class PageFragmentInstanceDefinitionMapper {
 
 	private List<FragmentField> _getTextFragmentFields(
 		Map<String, String> editableTypes, JSONObject jsonObject,
-		boolean saveMapping) {
+		boolean saveInlineContent, boolean saveMapping) {
 
 		List<FragmentField> fragmentFields = new ArrayList<>();
 
@@ -353,7 +360,8 @@ public class PageFragmentInstanceDefinitionMapper {
 		for (String textId : textIds) {
 			fragmentFields.add(
 				_toFragmentField(
-					editableTypes, jsonObject, saveMapping, textId));
+					editableTypes, jsonObject, saveInlineContent, saveMapping,
+					textId));
 		}
 
 		return fragmentFields;
@@ -378,6 +386,108 @@ public class PageFragmentInstanceDefinitionMapper {
 		}
 
 		return widgetInstances.toArray(new WidgetInstance[0]);
+	}
+
+	private ActionExecutionResult _toActionExecutionResult(
+		JSONObject jsonObject, boolean saveInlineContent, boolean saveMapping) {
+
+		if (jsonObject == null) {
+			return null;
+		}
+
+		String interaction = jsonObject.getString("interaction", null);
+
+		if (interaction.equals(
+				ActionEditableElementConstants.INTERACTION_NONE)) {
+
+			return new ActionExecutionResult() {
+				{
+					setType(ActionExecutionResult.Type.NONE);
+					setValue(
+						new NoneActionExecutionResult() {
+							{
+								setReload(jsonObject.getBoolean("reload"));
+							}
+						});
+				}
+			};
+		}
+		else if (interaction.equals(
+					ActionEditableElementConstants.INTERACTION_NOTIFICATION)) {
+
+			return new ActionExecutionResult() {
+				{
+					setType(ActionExecutionResult.Type.NOTIFICATION);
+					setValue(
+						() -> {
+							if (!saveInlineContent || !jsonObject.has("text")) {
+								return null;
+							}
+
+							return new NotificationActionExecutionResult() {
+								{
+									setReload(jsonObject.getBoolean("reload"));
+									setText(
+										_toFragmentInlineValue(
+											jsonObject.getJSONObject("text")));
+								}
+							};
+						});
+				}
+			};
+		}
+		else if (interaction.equals(
+					ActionEditableElementConstants.INTERACTION_PAGE)) {
+
+			return new ActionExecutionResult() {
+				{
+					setType(ActionExecutionResult.Type.PAGE);
+					setValue(
+						() -> {
+							if (!saveMapping || !jsonObject.has("page")) {
+								return null;
+							}
+
+							JSONObject pageJSONObject =
+								jsonObject.getJSONObject("page");
+
+							return new SitePageActionExecutionResult() {
+								{
+									setItemReference(
+										FragmentMappedValueUtil.
+											toLayoutClassFieldsReference(
+												pageJSONObject));
+								}
+							};
+						});
+				}
+			};
+		}
+		else if (interaction.equals(
+					ActionEditableElementConstants.INTERACTION_URL)) {
+
+			return new ActionExecutionResult() {
+				{
+					setType(ActionExecutionResult.Type.URL);
+					setValue(
+						() -> {
+							if (!saveInlineContent || !jsonObject.has("url")) {
+								return null;
+							}
+
+							return new URLActionExecutionResult() {
+								{
+									setUrl(
+										_toFragmentInlineValue(
+											jsonObject.getJSONObject("url")));
+								}
+							};
+						});
+				}
+			};
+		}
+
+		return null;
 	}
 
 	private Map<String, ClassPKReference> _toClassPKReferences(
@@ -531,7 +641,7 @@ public class PageFragmentInstanceDefinitionMapper {
 
 	private FragmentField _toFragmentField(
 		Map<String, String> editableTypes, JSONObject jsonObject,
-		boolean saveMapping, String textId) {
+		boolean saveInlineContent, boolean saveMapping, String textId) {
 
 		JSONObject textJSONObject = jsonObject.getJSONObject(textId);
 
@@ -543,6 +653,11 @@ public class PageFragmentInstanceDefinitionMapper {
 					() -> {
 						String type = editableTypes.getOrDefault(
 							textId, "text");
+
+						if (Objects.equals(type, "action")) {
+							return _toFragmentFieldAction(
+								textJSONObject, saveInlineContent, saveMapping);
+						}
 
 						if (Objects.equals(type, "html")) {
 							return _toFragmentFieldHTML(
@@ -556,6 +671,67 @@ public class PageFragmentInstanceDefinitionMapper {
 
 						return _toFragmentFieldText(
 							textJSONObject, saveMapping);
+					});
+			}
+		};
+	}
+
+	private FragmentFieldAction _toFragmentFieldAction(
+		JSONObject jsonObject, boolean saveInlineContent, boolean saveMapping) {
+
+		JSONObject configJSONObject = jsonObject.getJSONObject("config");
+
+		if (configJSONObject == null) {
+			return null;
+		}
+
+		return new FragmentFieldAction() {
+			{
+				onError = _toActionExecutionResult(
+					configJSONObject.getJSONObject("onError"),
+					saveInlineContent, saveMapping);
+				onSuccess = _toActionExecutionResult(
+					configJSONObject.getJSONObject("onSuccess"),
+					saveInlineContent, saveMapping);
+
+				setAction(
+					() -> {
+						JSONObject mappedActionJSONObject =
+							configJSONObject.getJSONObject("mappedAction");
+
+						if (!FragmentMappedValueUtil.isSaveFragmentMappedValue(
+								mappedActionJSONObject, saveMapping)) {
+
+							return null;
+						}
+
+						return _toFragmentMappedValue(
+							_toDefaultMappingValue(jsonObject, null),
+							mappedActionJSONObject);
+					});
+
+				setText(
+					() -> {
+						if (FragmentMappedValueUtil.isSaveFragmentMappedValue(
+								jsonObject, saveMapping)) {
+
+							return _toFragmentMappedValue(
+								_toDefaultMappingValue(jsonObject, null),
+								jsonObject);
+						}
+
+						Map<String, String> localizedValues =
+							LocalizedValueUtil.toLocalizedValues(jsonObject);
+
+						if (MapUtil.isEmpty(localizedValues)) {
+							return null;
+						}
+
+						return new FragmentInlineValue() {
+							{
+								value_i18n = localizedValues;
+							}
+						};
 					});
 			}
 		};
@@ -757,6 +933,14 @@ public class PageFragmentInstanceDefinitionMapper {
 							});
 					}
 				};
+			}
+		};
+	}
+
+	private FragmentInlineValue _toFragmentInlineValue(JSONObject jsonObject) {
+		return new FragmentInlineValue() {
+			{
+				value_i18n = LocalizedValueUtil.toLocalizedValues(jsonObject);
 			}
 		};
 	}

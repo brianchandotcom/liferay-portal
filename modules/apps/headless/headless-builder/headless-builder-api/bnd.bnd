@@ -3,4 +3,5 @@ Bundle-SymbolicName: com.liferay.headless.builder.api
 Bundle-Version: 2.0.0
 Export-Package:\
 	com.liferay.headless.builder.application,\
-	com.liferay.headless.builder.application.provider
+	com.liferay.headless.builder.application.provider,\
+	com.liferay.headless.builder.application.publisher

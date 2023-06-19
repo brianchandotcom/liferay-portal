@@ -54,6 +54,7 @@ export function FormContent({portletNamespace}: Props) {
 				<ClayInput
 					id={descriptionId}
 					name={descriptionId}
+					placeholder={Liferay.Language.get('write-something')}
 					required
 					type="text"
 				/>

@@ -1381,6 +1381,9 @@ public interface PropsKeys {
 	public static final String LAYOUT_URL_FRIENDLIABLE =
 		"layout.url.friendliable";
 
+	public static final String LAYOUT_USER_PLID_ACCESS_DENIED =
+		"layout.user.plid.access.denied";
+
 	public static final String LAYOUT_USER_PRIVATE_LAYOUTS_AUTO_CREATE =
 		"layout.user.private.layouts.auto.create";
 

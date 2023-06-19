@@ -352,9 +352,15 @@ public class SkuUtil {
 						}
 
 						try {
-							return _getCPDefinitionOptionRelKey(
-								GetterUtil.getLongStrict(skuOption.getKey()),
-								cpDefinitionOptionRelService);
+							String cpDefinitionOptionRelKey =
+								_getCPDefinitionOptionRelKey(
+									GetterUtil.getLongStrict(
+										skuOption.getKey()),
+									cpDefinitionOptionRelService);
+
+							if (Validator.isNotNull(cpDefinitionOptionRelKey)) {
+								return cpDefinitionOptionRelKey;
+							}
 						}
 						catch (NumberFormatException numberFormatException) {
 							if (_log.isDebugEnabled()) {
@@ -376,10 +382,17 @@ public class SkuUtil {
 							}
 
 							try {
-								return _getCPDefinitionOptionValueRelKey(
-									GetterUtil.getLongStrict(
-										skuOption.getValue()),
-									cpDefinitionOptionValueRelService);
+								String cpDefinitionOptionValueRelKey =
+									_getCPDefinitionOptionValueRelKey(
+										GetterUtil.getLongStrict(
+											skuOption.getValue()),
+										cpDefinitionOptionValueRelService);
+
+								if (Validator.isNotNull(
+										cpDefinitionOptionValueRelKey)) {
+
+									return cpDefinitionOptionValueRelKey;
+								}
 							}
 							catch (NumberFormatException
 										numberFormatException) {

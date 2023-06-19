@@ -109,9 +109,8 @@ public class SQLServerDB extends BaseDB {
 	}
 
 	@Override
-	public String getDefaultValue(String databaseStoredDefaultValue) {
-		Matcher matcher = databaseStoredDefaultValuePattern.matcher(
-			databaseStoredDefaultValue);
+	public String getDefaultValue(String columnDef) {
+		Matcher matcher = defaultValuePattern.matcher(columnDef);
 
 		if (matcher.find()) {
 			if (matcher.group(1) == null) {
@@ -121,7 +120,7 @@ public class SQLServerDB extends BaseDB {
 			return matcher.group(1);
 		}
 
-		return databaseStoredDefaultValue;
+		return columnDef;
 	}
 
 	@Override
@@ -311,9 +310,8 @@ public class SQLServerDB extends BaseDB {
 		}
 	}
 
-	protected static final Pattern databaseStoredDefaultValuePattern =
-		Pattern.compile(
-			"^\\('(.*)'\\)|\\(\\((\\d*)\\)\\)", Pattern.CASE_INSENSITIVE);
+	protected static final Pattern defaultValuePattern = Pattern.compile(
+		"^\\('(.*)'\\)|\\(\\((\\d*)\\)\\)", Pattern.CASE_INSENSITIVE);
 
 	private void _dropDefaultConstraint(
 			Connection connection, String tableName, String columnName)

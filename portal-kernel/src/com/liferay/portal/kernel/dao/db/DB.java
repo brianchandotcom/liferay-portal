@@ -80,7 +80,7 @@ public interface DB {
 
 	public DBType getDBType();
 
-	public String getDefaultValue(String databaseStoredDefaultValue);
+	public String getDefaultValue(String columnDef);
 
 	public List<Index> getIndexes(Connection connection) throws SQLException;
 

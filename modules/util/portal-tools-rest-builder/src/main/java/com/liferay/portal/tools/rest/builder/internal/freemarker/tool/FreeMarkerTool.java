@@ -148,13 +148,6 @@ public class FreeMarkerTool {
 		return null;
 	}
 
-	public String getResourceMethodName(
-		List<JavaMethodSignature> javaMethodSignatures, String propertyName) {
-
-		return ResourceOpenAPIParser.getResourceMethodName(
-			javaMethodSignatures, propertyName);
-	}
-
 	public Map<String, Schema> getAllSchemas(
 		Map<String, Schema> allExternalSchemas, OpenAPIYAML openAPIYAML,
 		Map<String, Schema> schemas) {
@@ -744,6 +737,13 @@ public class FreeMarkerTool {
 		JavaMethodSignature javaMethodSignature) {
 
 		return ResourceOpenAPIParser.getMethodAnnotations(javaMethodSignature);
+	}
+
+	public String getResourceMethodName(
+		List<JavaMethodSignature> javaMethodSignatures, String propertyName) {
+
+		return ResourceOpenAPIParser.getResourceMethodName(
+			javaMethodSignatures, propertyName);
 	}
 
 	public String getResourceParameters(

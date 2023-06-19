@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -436,16 +437,21 @@ public class SalesforceObjectEntryManagerImpl
 
 			Object value = entry.getValue();
 
-			if (Objects.equals(
-					objectField.getBusinessType(),
+			if (objectField.compareBusinessType(
 					ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
 
-				Map<String, String> valueMap = (HashMap<String, String>)value;
+				String valueString = GetterUtil.getString(value);
+
+				if (value instanceof Map) {
+					Map<String, String> valueMap =
+						(HashMap<String, String>)value;
+
+					valueString = valueMap.get("key");
+				}
 
 				ListTypeEntry listTypeEntry =
 					_listTypeEntryLocalService.getListTypeEntry(
-						objectField.getListTypeDefinitionId(),
-						valueMap.get("key"));
+						objectField.getListTypeDefinitionId(), valueString);
 
 				value = listTypeEntry.getExternalReferenceCode();
 			}

@@ -1623,6 +1623,7 @@ components:
                     type: string
                 value:
                     anyOf:
+                        - $ref: "#/components/schemas/FragmentFieldAction"
                         - $ref: "#/components/schemas/FragmentFieldBackgroundImage"
                         - $ref: "#/components/schemas/FragmentFieldHTML"
                         - $ref: "#/components/schemas/FragmentFieldImage"
@@ -1630,6 +1631,37 @@ components:
                     # @review
                     description:
                         The fragment field's value.
+            type: object
+        FragmentFieldAction:
+            # @review
+            description:
+                Represents a fragment field with an action.
+            properties:
+                action:
+                    # @review
+                    description:
+                        The fragment field's action. Must be mapped to an external value.
+                    oneOf:
+                        - $ref: "#/components/schemas/FragmentMappedValue"
+                onError:
+                    allOf:
+                        - $ref: "#/components/schemas/ActionExecutionResult"
+                    # @review
+                    description:
+                        The action execution result in case the action fails.
+                onSuccess:
+                    allOf:
+                        - $ref: "#/components/schemas/ActionExecutionResult"
+                    # @review
+                    description:
+                        The action execution result in case the action succeeds.
+                text:
+                    # @review
+                    description:
+                        The fragment field's text.
+                    oneOf:
+                        - $ref: "#/components/schemas/FragmentInlineValue"
+                        - $ref: "#/components/schemas/FragmentMappedValue"
             type: object
         FragmentFieldBackgroundImage:
             # @review

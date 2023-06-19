@@ -43,6 +43,10 @@ public class AICreatorOpenAIClientException extends RuntimeException {
 		super(throwable.getMessage(), throwable);
 	}
 
+	public String getCode() {
+		return _code;
+	}
+
 	public String getCompletionLocalizedMessage(Locale locale) {
 		if ((_responseCode == 429) || (_responseCode == 500)) {
 			return LanguageUtil.get(

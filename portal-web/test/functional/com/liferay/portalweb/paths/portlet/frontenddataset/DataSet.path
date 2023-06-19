@@ -215,6 +215,21 @@
 	<td>//*[contains(text(), 'Date range is invalid. "From" must be before "to"')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>FILTER_TOOLTIP</td>
+	<td>//span[contains(@class,"label-icon lfr-portal-tooltip ml-2") and contains(@data-restore-title,'${key_title}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILTER_SELECTION</td>
+	<td>//div[contains(@class,"form-group") and contains(.,'${key_type}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SOURCE_OPTIONS_SELECT</td>
+	<td>//div[label[contains(.,'Source Options')]]/select</td>
+	<td></td>
+</tr>
 
 <!-- DATA SET PAGINATION -->
 

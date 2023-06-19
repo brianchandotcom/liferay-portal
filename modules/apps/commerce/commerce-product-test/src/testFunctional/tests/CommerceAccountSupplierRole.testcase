@@ -75,4 +75,72 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-11516. When a supplier account is deleted after being linked to a catalog, the account will not be shown as linked to the catalog"
+	@priority = 3
+	test CannotViewDeletedSupplierAccountLinkedToCatalogViaAPI {
+		property portal.acceptance = "false";
+
+		task ("Given a 'Supplier' type of account is created") {
+			CommerceJSONAccountsAPI._addCommerceAccount(
+				accountName = "Supplier Account",
+				accountType = "Supplier",
+				externalReferenceCode = "Supplier Account ERC");
+		}
+
+		task ("And a catalog is created and the supplier account is linked to it") {
+			var accountEntryId = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = "Supplier Account");
+
+			CommerceJSONCatalogsAPI._addCatalog(
+				accountEntryId = ${accountEntryId},
+				catalogName = "Test Catalog");
+		}
+
+		task ("When the supplier account is deleted") {
+			CommerceJSONAccountsAPI._deleteAllCommerceAccounts();
+		}
+
+		task ("Then the supplier account will not be shown as linked to the catalog") {
+			var accountId = CommerceJSONCatalogsAPI._getCommerceAccountIdByCatalogId(catalogName = "Test Catalog");
+
+			TestUtils.assertNotEquals(
+				actual = ${accountId},
+				expected = ${accountEntryId});
+		}
+	}
+
+	@description = "This is a test for COMMERCE-11516. When a supplier account is deleted after being linked to a channel, the account will not be shown as linked to the channel"
+	@priority = 3
+	test CannotViewDeletedSupplierAccountLinkedToChannelViaAPI {
+		property portal.acceptance = "false";
+
+		task ("Given a 'Supplier' type of account is created") {
+			CommerceJSONAccountsAPI._addCommerceAccount(
+				accountName = "Supplier Account",
+				accountType = "Supplier",
+				externalReferenceCode = "Supplier Account ERC");
+		}
+
+		task ("And a channel is created and the supplier account is linked to it") {
+			var accountEntryId = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = "Supplier Account");
+
+			CommerceJSONChannelsAPI._addChannel(
+				accountId = ${accountEntryId},
+				channelName = "Test Channel",
+				channelType = "site",
+				currencyCode = "USD");
+		}
+
+		task ("When the supplier account is deleted") {
+			CommerceJSONAccountsAPI._deleteAllCommerceAccounts();
+		}
+
+		task ("Then the supplier account will not be shown as linked to the channel") {
+			var accountId = CommerceJSONChannelsAPI._getCommerceAccountIdByChannelId(channelName = "Test Channel");
+
+			TestUtils.assertNotEquals(
+				actual = ${accountId},
+				expected = ${accountEntryId});
+		}
+	}
+
 }

@@ -67,8 +67,11 @@ definition {
 	test ViewCreatedEventVisibleOnScheduler {
 		CalendarNavigator.gotoAddEvent();
 
-		var endDateTime = selenium.getElementValue("CalendarEditEvent#END_DATE_TIME");
-		var startDateTime = selenium.getElementValue("CalendarEditEvent#START_DATE_TIME");
+		var endDateTime = CalendarEvent.getCalendarTimeHour(status = "End");
+		var startDateTime = CalendarEvent.getCalendarTimeHour(status = "Start");
+
+		var startDateTime = CalendarEvent.format12To24Hours(time12Hours = ${startDateTime});
+		var endDateTime = CalendarEvent.format12To24Hours(time12Hours = ${endDateTime});
 
 		CalendarEvent.viewTimes(
 			endDateTime = ${endDateTime},

@@ -39,6 +39,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>END_DATE_TIME_INSTANT</td>
+	<td>//input[contains(@aria-labeledby,'endDateContainerLabel') and contains(@value,'${key_endDateTime}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>START_DATE_TIME_INSTANT</td>
+	<td>//input[contains(@aria-labeledby,'startDateContainerLabel') and contains(@value,'${key_startDateTime}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>START_DATE_TIME_24_HOUR</td>
 	<td>//input[contains(@id,'_startTimeTime')]</td>
 	<td></td>

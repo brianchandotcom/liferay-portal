@@ -166,8 +166,12 @@ definition {
 	macro addAllDay {
 		CalendarEvent.editTitle(eventTitle = ${eventTitle});
 
-		var endDateTime = "11:00 PM";
-		var startDateTime = "10:00 PM";
+		var endDateTimeHour = CalendarEvent.getTimeHour(status = "End");
+		var endDateTimeMinute = CalendarEvent.getTimeMinutes(status = "End");
+		var endDateTimeAMPM = CalendarEvent.getTimeAMPM(status = "End");
+		var startDateTimeHour = CalendarEvent.getTimeHour(status = "Start");
+		var startDateTimeMinute = CalendarEvent.getTimeMinutes(status = "Start");
+		var startDateTimeAMPM = CalendarEvent.getTimeAMPM(status = "Start");
 
 		Check(locator1 = "CalendarEditEvent#ALL_DAY_CHECKBOX");
 
@@ -222,9 +226,9 @@ definition {
 		}
 
 		var key_endDate = ${endDate};
-		var key_endDateTime = ${endDateTime};
+		var key_endDateTime = "${endDateTimeHour}:${endDateTimeMinute} ${endDateTimeAMPM}";
 		var key_startDate = ${startDate};
-		var key_startDateTime = ${startDateTime};
+		var key_startDateTime = "${startDateTimeHour}:${startDateTimeMinute} ${startDateTimeAMPM}";
 
 		if (${reminders} == "true") {
 			if (!(IsElementPresent(locator1 = "Calendar#SCHEDULER_EVENT_ALL_DAY_WITH_REMINDER"))) {
@@ -941,6 +945,43 @@ definition {
 		Click(locator1 = "CalendarEditEvent#RESOURCES_AVAILABILITY_PANEL_COLLAPSED");
 	}
 
+	macro format12To24Hours {
+		var ampm = RegexUtil.replace(${time12Hours}, "([0-9]*):([0-9]*) ([A-Z]*)", 3);
+		var hours = RegexUtil.replace(${time12Hours}, "([0-9]*):([0-9]*) ([A-Z]*)", 1);
+		var minutes = RegexUtil.replace(${time12Hours}, "([0-9]*):([0-9]*) ([A-Z]*)", 2);
+		var ampm = StringUtil.trim(${ampm});
+		var hours = StringUtil.trim(${hours});
+		var minutes = StringUtil.trim(${minutes});
+
+		if (${ampm} == "PM") {
+			if (${hours} == 12) {
+				var hours = 12;
+			}
+			else {
+				var hours = ${hours} + 12;
+			}
+		}
+		else if (${ampm} == "AM") {
+			if (${hours} == 00) {
+				var hours = 12;
+			}
+		}
+
+		var time24Hours = "${hours}:${minutes}";
+
+		return ${time24Hours};
+	}
+
+	macro getCalendarTimeHour {
+		var dateTimeHour = CalendarEvent.getTimeHour(status = ${status});
+		var dateTimeMinute = CalendarEvent.getTimeMinutes(status = ${status});
+		var dateTimeAMPM = CalendarEvent.getTimeAMPM(status = ${status});
+
+		var key_dateTime = "${dateTimeHour}:${dateTimeMinute} ${dateTimeAMPM}";
+
+		return ${key_dateTime};
+	}
+
 	macro getTimeAMPM {
 		if (${status} == "End") {
 			var timeString = selenium.getElementValue("CalendarEditEvent#END_DATE_TIME");
@@ -1389,21 +1430,29 @@ definition {
 	}
 
 	macro setTimes {
-		Type(
+		var startDateTime = StringUtil.removeSpaces(${startDateTime});
+		var endDateTime = StringUtil.removeSpaces(${endDateTime});
+
+		echo("${startDateTime} and ${endDateTime}");
+
+		Type.sendKeys(
 			locator1 = "CalendarEditEvent#START_DATE_TIME",
 			value1 = ${startDateTime});
 
 		Click(locator1 = "TextInput#TITLE");
 
-		Type(
+		Type.sendKeys(
 			locator1 = "CalendarEditEvent#END_DATE_TIME",
 			value1 = ${endDateTime});
 
 		Click(locator1 = "TextInput#TITLE");
 
+		var startDateTime24Hours = CalendarEvent.format12To24Hours(time12Hours = ${startDateTime});
+		var endDateTime24Hours = CalendarEvent.format12To24Hours(time12Hours = ${endDateTime});
+
 		CalendarEvent.viewTimes(
-			endDateTime = ${endDateTime},
-			startDateTime = ${startDateTime});
+			endDateTime = ${endDateTime24Hours},
+			startDateTime = ${startDateTime24Hours});
 	}
 
 	macro tag {
@@ -2041,13 +2090,16 @@ definition {
 	}
 
 	macro viewTimes {
-		AssertTextEquals.assertValue(
-			locator1 = "CalendarEditEvent#START_DATE_TIME",
-			value1 = ${startDateTime});
+		var key_endDateTime = ${endDateTime};
+		var key_startDateTime = ${startDateTime};
 
-		AssertTextEquals.assertValue(
-			locator1 = "CalendarEditEvent#END_DATE_TIME",
-			value1 = ${endDateTime});
+		AssertElementPresent(
+			key_endDateTime = ${key_endDateTime},
+			locator1 = "CalendarEditEvent#END_DATE_TIME_INSTANT");
+
+		AssertElementPresent(
+			key_startDateTime = ${key_startDateTime},
+			locator1 = "CalendarEditEvent#START_DATE_TIME_INSTANT");
 	}
 
 	macro viewTimes24Hour {

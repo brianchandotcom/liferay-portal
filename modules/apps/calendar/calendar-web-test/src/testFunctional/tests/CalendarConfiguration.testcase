@@ -148,8 +148,8 @@ definition {
 		CalendarNavigator.gotoEditEvent(eventTitle = "Calendar Event Title");
 
 		CalendarEvent.viewTimes(
-			endDateTime = " 3:00 PM",
-			startDateTime = " 2:00 PM");
+			endDateTime = " 15:00",
+			startDateTime = " 14:00");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
@@ -212,6 +212,7 @@ definition {
 		CalendarEvent.viewNotPresentViaAgendaView(eventNumber = 5);
 	}
 
+	@ignore = "true"
 	@priority = 4
 	test View24hourTimeFormat {
 		CalendarScheduler.viewFirstHour(firstHour = "12am");

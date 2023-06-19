@@ -63,7 +63,7 @@ public class CPTaxCategoryServiceImpl extends CPTaxCategoryServiceBaseImpl {
 
 		_portletResourcePermission.check(
 			getPermissionChecker(), null,
-			CPActionKeys.MANAGE_COMMERCE_PRODUCT_TAX_CATEGORIES);
+			CPActionKeys.VIEW_COMMERCE_PRODUCT_TAX_CATEGORIES);
 
 		return cpTaxCategoryLocalService.countCPTaxCategoriesByCompanyId(
 			companyId, keyword);
@@ -87,7 +87,7 @@ public class CPTaxCategoryServiceImpl extends CPTaxCategoryServiceBaseImpl {
 
 		_portletResourcePermission.check(
 			getPermissionChecker(), null,
-			CPActionKeys.MANAGE_COMMERCE_PRODUCT_TAX_CATEGORIES);
+			CPActionKeys.VIEW_COMMERCE_PRODUCT_TAX_CATEGORIES);
 
 		return cpTaxCategoryLocalService.findCPTaxCategoriesByCompanyId(
 			companyId, keyword, start, end);
@@ -99,7 +99,7 @@ public class CPTaxCategoryServiceImpl extends CPTaxCategoryServiceBaseImpl {
 
 		_portletResourcePermission.check(
 			getPermissionChecker(), null,
-			CPActionKeys.MANAGE_COMMERCE_PRODUCT_TAX_CATEGORIES);
+			CPActionKeys.VIEW_COMMERCE_PRODUCT_TAX_CATEGORIES);
 
 		return cpTaxCategoryLocalService.getCPTaxCategories(companyId);
 	}
@@ -112,7 +112,7 @@ public class CPTaxCategoryServiceImpl extends CPTaxCategoryServiceBaseImpl {
 
 		_portletResourcePermission.check(
 			getPermissionChecker(), null,
-			CPActionKeys.MANAGE_COMMERCE_PRODUCT_TAX_CATEGORIES);
+			CPActionKeys.VIEW_COMMERCE_PRODUCT_TAX_CATEGORIES);
 
 		return cpTaxCategoryLocalService.getCPTaxCategories(
 			companyId, start, end, orderByComparator);
@@ -122,7 +122,7 @@ public class CPTaxCategoryServiceImpl extends CPTaxCategoryServiceBaseImpl {
 	public int getCPTaxCategoriesCount(long companyId) throws PortalException {
 		_portletResourcePermission.check(
 			getPermissionChecker(), null,
-			CPActionKeys.MANAGE_COMMERCE_PRODUCT_TAX_CATEGORIES);
+			CPActionKeys.VIEW_COMMERCE_PRODUCT_TAX_CATEGORIES);
 
 		return cpTaxCategoryLocalService.getCPTaxCategoriesCount(companyId);
 	}
@@ -133,7 +133,7 @@ public class CPTaxCategoryServiceImpl extends CPTaxCategoryServiceBaseImpl {
 
 		_portletResourcePermission.check(
 			getPermissionChecker(), null,
-			CPActionKeys.MANAGE_COMMERCE_PRODUCT_TAX_CATEGORIES);
+			CPActionKeys.VIEW_COMMERCE_PRODUCT_TAX_CATEGORIES);
 
 		return cpTaxCategoryLocalService.getCPTaxCategory(cpTaxCategoryId);
 	}

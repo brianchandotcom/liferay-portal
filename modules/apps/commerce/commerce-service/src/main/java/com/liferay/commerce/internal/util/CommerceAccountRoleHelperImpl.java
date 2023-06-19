@@ -21,7 +21,9 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.commerce.constants.CommercePortletKeys;
+import com.liferay.commerce.notification.constants.CommerceNotificationActionKeys;
 import com.liferay.commerce.pricing.constants.CommercePricingPortletKeys;
+import com.liferay.commerce.product.constants.CPActionKeys;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.util.CommerceAccountRoleHelper;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -219,6 +221,21 @@ public class CommerceAccountRoleHelperImpl
 					portletId,
 					new String[] {ActionKeys.ACCESS_IN_CONTROL_PANEL});
 			}
+
+			companyResourceActionIds.put(
+				"com.liferay.commerce.channel",
+				new String[] {
+					CommerceNotificationActionKeys.
+						VIEW_COMMERCE_NOTIFICATION_QUEUE_ENTRIES,
+					CommerceNotificationActionKeys.
+						ADD_COMMERCE_NOTIFICATION_TEMPLATE
+				});
+
+			companyResourceActionIds.put(
+				"com.liferay.commerce.tax",
+				new String[] {
+					CPActionKeys.VIEW_COMMERCE_PRODUCT_TAX_CATEGORIES
+				});
 
 			companyResourceActionIds.put(
 				PortletKeys.PORTAL,

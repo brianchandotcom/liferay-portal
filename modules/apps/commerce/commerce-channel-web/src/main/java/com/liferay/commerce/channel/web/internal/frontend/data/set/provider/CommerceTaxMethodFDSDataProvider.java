@@ -21,7 +21,7 @@ import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.commerce.tax.CommerceTaxEngine;
 import com.liferay.commerce.tax.model.CommerceTaxMethod;
-import com.liferay.commerce.tax.service.CommerceTaxMethodService;
+import com.liferay.commerce.tax.service.CommerceTaxMethodLocalService;
 import com.liferay.commerce.util.CommerceTaxEngineRegistry;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
@@ -78,7 +78,7 @@ public class CommerceTaxMethodFDSDataProvider
 			CommerceTaxEngine commerceTaxEngine = entry.getValue();
 
 			CommerceTaxMethod commerceTaxMethod =
-				_commerceTaxMethodService.fetchCommerceTaxMethod(
+				_commerceTaxMethodLocalService.fetchCommerceTaxMethod(
 					commerceChannel.getGroupId(), entry.getKey());
 
 			String commerceTaxDescription = commerceTaxEngine.getDescription(
@@ -130,6 +130,6 @@ public class CommerceTaxMethodFDSDataProvider
 	private CommerceTaxEngineRegistry _commerceTaxEngineRegistry;
 
 	@Reference
-	private CommerceTaxMethodService _commerceTaxMethodService;
+	private CommerceTaxMethodLocalService _commerceTaxMethodLocalService;
 
 }

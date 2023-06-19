@@ -57,6 +57,9 @@ public class CPActionKeys {
 	public static final String VIEW_COMMERCE_PRODUCT_IMAGES =
 		"VIEW_COMMERCE_PRODUCT_IMAGES";
 
+	public static final String VIEW_COMMERCE_PRODUCT_TAX_CATEGORIES =
+		"VIEW_COMMERCE_PRODUCT_TAX_CATEGORIES";
+
 	public static final String VIEW_PRICE = "VIEW_PRICE";
 
 }

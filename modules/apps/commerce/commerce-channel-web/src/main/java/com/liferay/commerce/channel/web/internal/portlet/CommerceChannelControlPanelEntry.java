@@ -41,6 +41,10 @@ public class CommerceChannelControlPanelEntry extends BaseControlPanelEntry {
 			PermissionChecker permissionChecker, Group group, Portlet portlet)
 		throws Exception {
 
+		if (super.hasAccessPermission(permissionChecker, group, portlet)) {
+			return true;
+		}
+
 		return _portletResourcePermission.contains(
 			permissionChecker, group, CPActionKeys.VIEW_COMMERCE_CHANNELS);
 	}

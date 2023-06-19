@@ -163,9 +163,7 @@ const Activities = ({
 			) : (
 				<Listing
 					{...arrayHelpers}
-					activities={values.activities?.filter(
-						(activity) => !activity.removed
-					)}
+					activities={values.activities}
 					currency={values.currency}
 					hasActivityErrorsByIndex={hasActivityErrorsByIndex}
 					onAdd={onAdd}

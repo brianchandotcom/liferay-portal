@@ -51,14 +51,18 @@ const Listing = ({
 			<div>
 				{!!activities.length &&
 					activities.map((activity, index) => (
-						<ActivityPanel
-							activity={activity}
-							hasErrors={hasActivityErrorsByIndex(index)}
-							key={index}
-							onEdit={() => onEdit(index)}
-							onRemove={() => onRemove(index)}
-							overallCampaignName={overallCampaignName}
-						/>
+						<>
+							{!activity.removed && (
+								<ActivityPanel
+									activity={activity}
+									hasErrors={hasActivityErrorsByIndex(index)}
+									key={index}
+									onEdit={() => onEdit(index)}
+									onRemove={() => onRemove(index)}
+									overallCampaignName={overallCampaignName}
+								/>
+							)}
+						</>
 					))}
 
 				{!activities.length && (

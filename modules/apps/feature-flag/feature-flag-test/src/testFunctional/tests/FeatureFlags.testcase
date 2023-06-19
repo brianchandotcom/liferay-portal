@@ -3,7 +3,6 @@ definition {
 
 	property custom.properties = "feature.flag.LPS-xxxxxx=false${line.separator}feature.flag.LPS-xxxxxx.status=beta${line.separator}feature.flag.LPS-xxxxxx.title=Terms and Conditions pages${line.separator}feature.flag.LPS-xxxxxx.description=Create your own terms and conditions pages${line.separator}feature.flag.LPS-yyyyyy=false${line.separator}feature.flag.LPS-yyyyyy.status=beta${line.separator}feature.flag.LPS-yyyyyy.dependencies=LPS-xxxxxx";
 	property portal.acceptance = "true";
-	property portal.upstream = "true";
 	property testray.main.component.name = "Feature Flags";
 
 	setUp {
@@ -32,7 +31,6 @@ definition {
 	@description = "LPS-167698 - This tests asserts that a feature flag can be Disabled"
 	@priority = 5
 	test CanBeDisabled {
-		property portal.acceptance = "true";
 
 		task ("And a feature flag is enabled") {
 			if (IsElementPresent(locator1 = "FeatureFlags#TOGGLE_ROW", title_row = "Terms and Conditions pages", toggle_state = "Disabled")) {
@@ -61,7 +59,6 @@ definition {
 	@description = "LPS-167698 - This tests asserts that a feature flag can be enabled"
 	@priority = 5
 	test CanBeEnabled {
-		property portal.acceptance = "true";
 
 		task ("And a feature flag is disabled") {
 			if (IsElementPresent(locator1 = "FeatureFlags#TOGGLE_ROW", title_row = "Terms and Conditions pages", toggle_state = "Enabled")) {

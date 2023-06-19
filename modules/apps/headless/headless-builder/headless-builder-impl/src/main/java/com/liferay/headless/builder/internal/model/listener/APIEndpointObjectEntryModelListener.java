@@ -121,6 +121,13 @@ public class APIEndpointObjectEntryModelListener
 					"There is an endpoint with the same http method and path " +
 						"combination");
 			}
+
+			if ((long)objectEntryValues.get(
+					"r_apiApplicationToAPIEndpoints_c_apiApplicationId") == 0) {
+
+				throw new IllegalArgumentException(
+					"An endpoint must be related to an application");
+			}
 		}
 		catch (Exception exception) {
 			throw new ModelListenerException(exception);

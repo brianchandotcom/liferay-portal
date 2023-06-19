@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search;
 
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.aop.AopMethodInvocation;
 import com.liferay.portal.kernel.aop.ChainableMethodAdvice;
 import com.liferay.portal.kernel.dependency.manager.DependencyManagerSyncUtil;
@@ -26,6 +27,7 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.util.PortalInstances;
 
@@ -99,12 +101,21 @@ public class IndexableAdvice extends ChainableMethodAdvice {
 		Indexer<Object> indexer = IndexerRegistryUtil.getIndexer(name);
 
 		if (indexer == null) {
+			long companyId = CompanyThreadLocal.getCompanyId();
+
 			DependencyManagerSyncUtil.registerSyncCallable(
 				() -> {
 					Indexer<Object> curIndexer = IndexerRegistryUtil.getIndexer(
 						name);
 
-					if (curIndexer != null) {
+					if (curIndexer == null) {
+						return null;
+					}
+
+					try (SafeCloseable safeCloseable =
+							CompanyThreadLocal.setWithSafeCloseable(
+								companyId)) {
+
 						_reindex(
 							curIndexer, indexableContext, arguments, result);
 					}

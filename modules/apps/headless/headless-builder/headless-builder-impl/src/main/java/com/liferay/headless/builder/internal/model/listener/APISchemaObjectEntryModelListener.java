@@ -54,10 +54,10 @@ public class APISchemaObjectEntryModelListener
 	}
 
 	private void _validate(ObjectEntry objectEntry) {
-		Map<String, Serializable> objectEntryValues = objectEntry.getValues();
+		Map<String, Serializable> values = objectEntry.getValues();
 
 		try {
-			if ((long)objectEntryValues.get(
+			if ((long)values.get(
 					"r_apiApplicationToAPISchemas_c_apiApplicationId") == 0) {
 
 				throw new IllegalArgumentException(

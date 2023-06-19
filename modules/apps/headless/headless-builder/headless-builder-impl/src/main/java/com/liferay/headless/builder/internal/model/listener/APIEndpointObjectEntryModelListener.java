@@ -72,41 +72,39 @@ public class APIEndpointObjectEntryModelListener
 				objectEntry.getObjectDefinitionId());
 
 		try {
-			Map<String, Serializable> objectEntryValues =
-				objectEntry.getValues();
+			Map<String, Serializable> values = objectEntry.getValues();
 
-			if (!_validateEndpointPath((String)objectEntryValues.get("path"))) {
+			if (!_validateEndpointPath((String)values.get("path"))) {
 				throw new IllegalArgumentException(
 					"Path can have a maximum of 255 alphanumeric characters");
 			}
 
 			String filterString = StringBundler.concat(
 				"id ne '", objectEntry.getObjectEntryId(),
-				"' and httpMethod eq '", objectEntryValues.get("httpMethod"),
-				"' and path eq '", objectEntryValues.get("path"),
+				"' and httpMethod eq '", values.get("httpMethod"),
+				"' and path eq '", values.get("path"),
 				"' and r_apiApplicationToAPIEndpoints_c_apiApplicationId eq '",
-				objectEntryValues.get(
-					"r_apiApplicationToAPIEndpoints_c_apiApplicationId"),
+				values.get("r_apiApplicationToAPIEndpoints_c_apiApplicationId"),
 				"'");
 
 			Predicate predicate = _filterPredicateFactory.create(
 				filterString,
 				apiEndpointObjectDefinition.getObjectDefinitionId());
 
-			List<Map<String, Serializable>> definedAPIEndpointList =
+			List<Map<String, Serializable>> valuesList =
 				_objectEntryLocalService.getValuesList(
 					objectEntry.getGroupId(), objectEntry.getCompanyId(),
 					objectEntry.getUserId(),
 					apiEndpointObjectDefinition.getObjectDefinitionId(),
 					predicate, null, -1, -1, null);
 
-			if (!definedAPIEndpointList.isEmpty()) {
+			if (!valuesList.isEmpty()) {
 				throw new IllegalArgumentException(
 					"There is an endpoint with the same http method and path " +
 						"combination");
 			}
 
-			if ((long)objectEntryValues.get(
+			if ((long)values.get(
 					"r_apiApplicationToAPIEndpoints_c_apiApplicationId") == 0) {
 
 				throw new IllegalArgumentException(
@@ -127,20 +125,16 @@ public class APIEndpointObjectEntryModelListener
 	private boolean _validateNewAPIEndpointValues(
 		ObjectEntry originalObjectEntry, ObjectEntry objectEntry) {
 
-		Map<String, Serializable> objectEntryValues = objectEntry.getValues();
-		Map<String, Serializable> originalObjectEntryValues =
+		Map<String, Serializable> values = objectEntry.getValues();
+		Map<String, Serializable> originalValues =
 			originalObjectEntry.getValues();
 
 		if (Objects.equals(
-				objectEntryValues.get("httpMethod"),
-				originalObjectEntryValues.get("httpMethod")) &&
+				values.get("httpMethod"), originalValues.get("httpMethod")) &&
+			Objects.equals(values.get("path"), originalValues.get("path")) &&
 			Objects.equals(
-				objectEntryValues.get("path"),
-				originalObjectEntryValues.get("path")) &&
-			Objects.equals(
-				objectEntryValues.get(
-					"r_apiApplicationToAPIEndpoints_c_apiApplicationId"),
-				originalObjectEntryValues.get(
+				values.get("r_apiApplicationToAPIEndpoints_c_apiApplicationId"),
+				originalValues.get(
 					"r_apiApplicationToAPIEndpoints_c_apiApplicationId"))) {
 
 			return false;

@@ -60,9 +60,9 @@ public class APIApplicationObjectEntryModelListener
 		// APIApplication is defined in headless-builder.json and has a required
 		// object field called "baseURL".
 
-		Map<String, Serializable> objectEntryValues = objectEntry.getValues();
+		Map<String, Serializable> values = objectEntry.getValues();
 
-		String baseURL = (String)objectEntryValues.get("baseURL");
+		String baseURL = (String)values.get("baseURL");
 
 		if (baseURL == null) {
 			return;

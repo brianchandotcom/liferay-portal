@@ -16,22 +16,9 @@ package com.liferay.source.formatter.util;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.io.IOException;
-
-import java.net.HttpURLConnection;
-import java.net.URL;
-
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Hugo Huijser
@@ -72,75 +59,5 @@ public class JIRAUtil {
 					"in ci.properties in the liferay-portal repository."));
 		}
 	}
-
-	public static void validateJIRATicketIds(
-			List<String> commitMessages, int maxNumberOfTickets)
-		throws Exception {
-
-		Set<String> validatedTicketIds = new HashSet<>();
-
-		for (String commitMessage : commitMessages) {
-			if (validatedTicketIds.size() == maxNumberOfTickets) {
-				return;
-			}
-
-			String jiraTicketId = _getJIRATicketId(commitMessage);
-
-			if ((jiraTicketId == null) ||
-				!validatedTicketIds.add(jiraTicketId)) {
-
-				continue;
-			}
-
-			try {
-				if (_getJIRATicketResponseCode(jiraTicketId) ==
-						HttpServletResponse.SC_NOT_FOUND) {
-
-					throw new Exception(
-						StringBundler.concat(
-							"Found formatting issues:\n",
-							"Commit message is pointing to non-existing JIRA ",
-							"issue: ", jiraTicketId));
-				}
-			}
-			catch (IOException ioException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(ioException);
-				}
-
-				return;
-			}
-		}
-	}
-
-	private static String _getJIRATicketId(String commitMessage) {
-		Matcher matcher = _jiraTicketIdPattern.matcher(commitMessage);
-
-		if (matcher.find()) {
-			return matcher.group();
-		}
-
-		return null;
-	}
-
-	private static int _getJIRATicketResponseCode(String jiraTicketId)
-		throws IOException {
-
-		URL url = new URL(
-			"https://liferay.atlassian.net/rest/api/3/issue/" + jiraTicketId);
-
-		HttpURLConnection httpURLConnection =
-			(HttpURLConnection)url.openConnection();
-
-		httpURLConnection.setConnectTimeout(10000);
-		httpURLConnection.setReadTimeout(10000);
-
-		return httpURLConnection.getResponseCode();
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(JIRAUtil.class);
-
-	private static final Pattern _jiraTicketIdPattern = Pattern.compile(
-		"^[A-Z0-9]+-[0-9]+");
 
 }

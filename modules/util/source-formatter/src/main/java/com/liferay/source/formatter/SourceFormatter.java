@@ -1303,7 +1303,6 @@ public class SourceFormatter {
 
 		JIRAUtil.validateJIRAProjectNames(
 			commitMessages, _getPropertyValues("jira.project.keys"));
-		JIRAUtil.validateJIRATicketIds(commitMessages, 20);
 
 		for (String commitMessage : commitMessages) {
 			for (String keyword :

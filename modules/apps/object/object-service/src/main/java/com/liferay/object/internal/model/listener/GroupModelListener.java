@@ -14,6 +14,7 @@
 
 package com.liferay.object.internal.model.listener;
 
+import com.liferay.object.entry.util.ObjectEntryThreadLocal;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -80,7 +81,18 @@ public class GroupModelListener extends BaseModelListener<Group> {
 			(ObjectEntry objectEntry) ->
 				_objectEntryLocalService.deleteObjectEntry(objectEntry));
 
-		actionableDynamicQuery.performActions();
+		boolean disassociateRelatedModels =
+			ObjectEntryThreadLocal.isDisassociateRelatedModels();
+
+		try {
+			ObjectEntryThreadLocal.setDisassociateRelatedModels(true);
+
+			actionableDynamicQuery.performActions();
+		}
+		finally {
+			ObjectEntryThreadLocal.setDisassociateRelatedModels(
+				disassociateRelatedModels);
+		}
 	}
 
 	@Reference

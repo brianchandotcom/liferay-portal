@@ -111,10 +111,7 @@ definition {
 		property create.osgi.hidden.file = "true";
 		property test.assert.warning.exceptions = "true";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings");
+		SystemSettings.openSystemSettingsAdmin();
 
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "Web Content",

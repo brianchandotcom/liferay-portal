@@ -69,7 +69,7 @@ public class AICreatorOpenAIClientExceptionTest {
 			new AICreatorOpenAIClientException(
 				HttpURLConnection.HTTP_CLIENT_TIMEOUT),
 			RandomTestUtil.randomString(),
-			"an-unexpected-error-occurred-while-validating-the-api-key");
+			AICreatorOpenAIClientException.AN_UNEXPECTED_ERROR_MESSAGE_KEY);
 	}
 
 	@Test
@@ -78,8 +78,7 @@ public class AICreatorOpenAIClientExceptionTest {
 			new AICreatorOpenAIClientException(
 				HttpURLConnection.HTTP_UNAUTHORIZED),
 			"invalid_api_key",
-			"incorrect-api-key-provided.-ensure-the-api-key-used-is-correct,-" +
-				"clear-your-browser-cache,-or-generate-a-new-key");
+			AICreatorOpenAIClientException.INCORRECT_API_KEY_MESSAGE_KEY);
 	}
 
 	@Test
@@ -87,7 +86,7 @@ public class AICreatorOpenAIClientExceptionTest {
 		_assertGetLocalizedMessage(
 			new AICreatorOpenAIClientException(new IOException()),
 			RandomTestUtil.randomString(),
-			"an-unexpected-error-occurred-while-validating-the-api-key");
+			AICreatorOpenAIClientException.AN_UNEXPECTED_ERROR_MESSAGE_KEY);
 	}
 
 	@Test
@@ -96,8 +95,7 @@ public class AICreatorOpenAIClientExceptionTest {
 			new AICreatorOpenAIClientException(
 				HttpURLConnection.HTTP_UNAUTHORIZED),
 			RandomTestUtil.randomString(),
-			"incorrect-api-key-provided.-ensure-the-api-key-used-is-correct,-" +
-				"clear-your-browser-cache,-or-generate-a-new-key");
+			AICreatorOpenAIClientException.INCORRECT_API_KEY_MESSAGE_KEY);
 	}
 
 	private void _assertGetLocalizedMessage(

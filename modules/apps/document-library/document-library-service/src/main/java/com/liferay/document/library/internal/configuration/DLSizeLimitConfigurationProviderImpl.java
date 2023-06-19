@@ -87,7 +87,7 @@ public class DLSizeLimitConfigurationProviderImpl
 
 	@Override
 	public void updateCompanySizeLimit(
-			long companyId, long fileMaxSize,
+			long companyId, long fileMaxSize, long maxSizeToCopy,
 			Map<String, Long> mimeTypeSizeLimit)
 		throws Exception {
 
@@ -113,13 +113,15 @@ public class DLSizeLimitConfigurationProviderImpl
 		_updateMimeTypeSizeLimitProperty(properties, mimeTypeSizeLimit);
 
 		properties.put("fileMaxSize", fileMaxSize);
+		properties.put("maxSizeToCopy", maxSizeToCopy);
 
 		configuration.update(properties);
 	}
 
 	@Override
 	public void updateGroupSizeLimit(
-			long groupId, long fileMaxSize, Map<String, Long> mimeTypeSizeLimit)
+			long groupId, long fileMaxSize, long maxSizeToCopy,
+			Map<String, Long> mimeTypeSizeLimit)
 		throws Exception {
 
 		Dictionary<String, Object> properties = null;
@@ -144,13 +146,15 @@ public class DLSizeLimitConfigurationProviderImpl
 		_updateMimeTypeSizeLimitProperty(properties, mimeTypeSizeLimit);
 
 		properties.put("fileMaxSize", fileMaxSize);
+		properties.put("maxSizeToCopy", maxSizeToCopy);
 
 		configuration.update(properties);
 	}
 
 	@Override
 	public void updateSystemSizeLimit(
-			long fileMaxSize, Map<String, Long> mimeTypeSizeLimit)
+			long fileMaxSize, long maxSizeToCopy,
+			Map<String, Long> mimeTypeSizeLimit)
 		throws Exception {
 
 		Configuration configuration = _configurationAdmin.getConfiguration(
@@ -165,6 +169,7 @@ public class DLSizeLimitConfigurationProviderImpl
 		_updateMimeTypeSizeLimitProperty(properties, mimeTypeSizeLimit);
 
 		properties.put("fileMaxSize", fileMaxSize);
+		properties.put("maxSizeToCopy", maxSizeToCopy);
 
 		configuration.update(properties);
 	}

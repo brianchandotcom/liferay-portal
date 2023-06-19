@@ -121,24 +121,28 @@ public class EditSizeLimitsMVCActionCommand extends BaseMVCActionCommand {
 		throws Exception {
 
 		long fileMaxSize = ParamUtil.getLong(actionRequest, "fileMaxSize");
+		long maxSizeToCopy = ParamUtil.getLong(actionRequest, "maxSizeToCopy");
 
 		if (scope.equals(
 				ExtendedObjectClassDefinition.Scope.COMPANY.getValue())) {
 
 			_dlSizeLimitConfigurationProvider.updateCompanySizeLimit(
-				scopePK, fileMaxSize, _getMimeTypeSizeLimits(actionRequest));
+				scopePK, fileMaxSize, maxSizeToCopy,
+				_getMimeTypeSizeLimits(actionRequest));
 		}
 		else if (scope.equals(
 					ExtendedObjectClassDefinition.Scope.GROUP.getValue())) {
 
 			_dlSizeLimitConfigurationProvider.updateGroupSizeLimit(
-				scopePK, fileMaxSize, _getMimeTypeSizeLimits(actionRequest));
+				scopePK, fileMaxSize, maxSizeToCopy,
+				_getMimeTypeSizeLimits(actionRequest));
 		}
 		else if (scope.equals(
 					ExtendedObjectClassDefinition.Scope.SYSTEM.getValue())) {
 
 			_dlSizeLimitConfigurationProvider.updateSystemSizeLimit(
-				fileMaxSize, _getMimeTypeSizeLimits(actionRequest));
+				fileMaxSize, maxSizeToCopy,
+				_getMimeTypeSizeLimits(actionRequest));
 		}
 		else {
 			throw new PortalException("Unsupported scope: " + scope);

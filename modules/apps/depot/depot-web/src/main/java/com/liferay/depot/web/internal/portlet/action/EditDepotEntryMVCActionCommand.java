@@ -152,7 +152,7 @@ public class EditDepotEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		_dlSizeLimitConfigurationProvider.updateGroupSizeLimit(
-			groupId, 0L, mimeTypeSizeLimits);
+			groupId, 0L, 0L, mimeTypeSizeLimits);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

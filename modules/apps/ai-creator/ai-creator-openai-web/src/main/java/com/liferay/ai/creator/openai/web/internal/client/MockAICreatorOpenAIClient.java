@@ -94,7 +94,7 @@ public class MockAICreatorOpenAIClient implements AICreatorOpenAIClient {
 	}
 
 	private String _getSampleCompletion(long sleepMillis) {
-		if (sleepMillis <= 0) {
+		if ((sleepMillis <= 0) || (sleepMillis > 10000)) {
 			return "OPENAI_API_COMPLETION_RESPONSE_CONTENT";
 		}
 

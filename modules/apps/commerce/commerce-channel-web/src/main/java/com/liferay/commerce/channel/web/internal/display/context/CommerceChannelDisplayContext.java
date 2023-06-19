@@ -24,7 +24,7 @@ import com.liferay.commerce.configuration.CommerceOrderFieldsConfiguration;
 import com.liferay.commerce.configuration.CommerceOrderImporterDateFormatConfiguration;
 import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
-import com.liferay.commerce.currency.service.CommerceCurrencyService;
+import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.frontend.model.HeaderActionModel;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel;
@@ -101,7 +101,7 @@ public class CommerceChannelDisplayContext
 			commerceChannelModelResourcePermission,
 		CommerceChannelService commerceChannelService,
 		CommerceChannelTypeRegistry commerceChannelTypeRegistry,
-		CommerceCurrencyService commerceCurrencyService,
+		CommerceCurrencyLocalService commerceCurrencyLocalService,
 		ConfigurationProvider configurationProvider,
 		CPTaxCategoryLocalService cpTaxCategoryLocalService,
 		DLAppLocalService dlAppLocalService,
@@ -119,7 +119,7 @@ public class CommerceChannelDisplayContext
 			commerceChannelModelResourcePermission;
 		_commerceChannelService = commerceChannelService;
 		_commerceChannelTypeRegistry = commerceChannelTypeRegistry;
-		_commerceCurrencyService = commerceCurrencyService;
+		_commerceCurrencyLocalService = commerceCurrencyLocalService;
 		_configurationProvider = configurationProvider;
 		_cpTaxCategoryLocalService = cpTaxCategoryLocalService;
 		_dlAppLocalService = dlAppLocalService;
@@ -256,7 +256,7 @@ public class CommerceChannelDisplayContext
 	public List<CommerceCurrency> getCommerceCurrencies()
 		throws PortalException {
 
-		return _commerceCurrencyService.getCommerceCurrencies(
+		return _commerceCurrencyLocalService.getCommerceCurrencies(
 			cpRequestHelper.getCompanyId(), true, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -597,7 +597,7 @@ public class CommerceChannelDisplayContext
 	private final CommerceChannelRequestHelper _commerceChannelRequestHelper;
 	private final CommerceChannelService _commerceChannelService;
 	private final CommerceChannelTypeRegistry _commerceChannelTypeRegistry;
-	private final CommerceCurrencyService _commerceCurrencyService;
+	private final CommerceCurrencyLocalService _commerceCurrencyLocalService;
 	private CommerceOrderFieldsConfiguration _commerceOrderFieldsConfiguration;
 	private final ConfigurationProvider _configurationProvider;
 	private final CPTaxCategoryLocalService _cpTaxCategoryLocalService;

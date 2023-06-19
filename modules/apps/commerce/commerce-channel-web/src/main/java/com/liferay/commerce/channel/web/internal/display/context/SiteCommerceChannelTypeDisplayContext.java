@@ -15,7 +15,7 @@
 package com.liferay.commerce.channel.web.internal.display.context;
 
 import com.liferay.account.service.AccountEntryService;
-import com.liferay.commerce.currency.service.CommerceCurrencyService;
+import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.item.selector.criterion.SimpleSiteItemSelectorCriterion;
 import com.liferay.commerce.product.channel.CommerceChannelHealthStatusRegistry;
 import com.liferay.commerce.product.channel.CommerceChannelTypeRegistry;
@@ -54,7 +54,7 @@ public class SiteCommerceChannelTypeDisplayContext
 			commerceChannelModelResourcePermission,
 		CommerceChannelService commerceChannelService,
 		CommerceChannelTypeRegistry commerceChannelTypeRegistry,
-		CommerceCurrencyService commerceCurrencyService,
+		CommerceCurrencyLocalService commerceCurrencyLocalService,
 		ConfigurationProvider configurationProvider,
 		CPTaxCategoryLocalService cpTaxCategoryLocalService,
 		DLAppLocalService dlAppLocalService,
@@ -67,7 +67,7 @@ public class SiteCommerceChannelTypeDisplayContext
 		super(
 			accountEntryService, commerceChannelHealthStatusRegistry,
 			commerceChannelModelResourcePermission, commerceChannelService,
-			commerceChannelTypeRegistry, commerceCurrencyService,
+			commerceChannelTypeRegistry, commerceCurrencyLocalService,
 			configurationProvider, cpTaxCategoryLocalService, dlAppLocalService,
 			httpServletRequest, itemSelector, portal,
 			workflowDefinitionLinkLocalService, workflowDefinitionManager);

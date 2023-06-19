@@ -75,26 +75,29 @@ export function CreateAPIApplicationModalContent({
 			headers,
 			method: 'POST',
 		})
-			.then(({ok}) => {
-				if (ok) {
+			.then((response) => {
+				if (response.ok) {
 					closeModal();
 					loadData();
 					openToast({
 						message: Liferay.Language.get(
-							'your-request-completed-successfully'
+							'new-api-application-created'
 						),
 						type: 'success',
 					});
 				}
 				else {
-					throw new Error();
+					return response.json();
 				}
 			})
-			.catch(() => {
+			.then((responseJson) => {
+				if (responseJson) {
+					throw new Error(responseJson.title);
+				}
+			})
+			.catch((error) => {
 				openToast({
-					message: Liferay.Language.get(
-						'an-unexpected-error-occurred'
-					),
+					message: error,
 					type: 'danger',
 				});
 			});

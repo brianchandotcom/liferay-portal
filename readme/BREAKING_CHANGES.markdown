@@ -1426,3 +1426,26 @@ Use `drl`, `groovy` or `java` as the scripting language type, and rewrite the sc
 ### Why was this change made?
 
 Liferay no longer supports these scripting language types.
+
+---------------------------------------
+
+## Removed ScriptingExecutorExtender and ScriptBundleProvider
+
+- **Date:** 2023-June-19
+- **JIRA Ticket:** [LPS-169777](https://issues.liferay.com/browse/LPS-169777)
+
+### What changed?
+
+`ScriptingExecutorExtender` class and `ScriptBundleProvider` interface were removed.
+
+### Who is affected?
+
+This affects anyone implementing this interface: `ScriptBundleProvider`, and having some script files in this path: `/META-INF/resources/scripts/` in the same module.
+
+### How should I update my code?
+
+Delete implementations of `ScriptBundleProvider`, remove script files in `/META-INF/resources/scripts/` and rewrite the logic in the script files in an immediate component.
+
+### Why was this change made?
+
+An immediate OSGI component can achieve the same functionality, and using OSGI components can make development more elegant and avoid security issues due to misuse of script files.

@@ -29,6 +29,12 @@ definition {
 			osgiConfigs = "blacklistComponentNames=[\"com.liferay.portal.security.ldap.internal.authenticator.LDAPAuth\" ]");
 
 		WaitForConsoleTextPresent(value1 = "Disabling com.liferay.portal.security.ldap.internal.authenticator.LDAPAuth from bundle com.liferay.portal.security.ldap.impl");
+
+		GogoShell.openGogoShellAdmin();
+
+		GogoShell.executeCommand(commandName = "scr:info authenticator.LDAPAuth");
+
+		GogoShell.viewNoOutput(outputContent = "ACTIVE");
 	}
 
 	@priority = 3

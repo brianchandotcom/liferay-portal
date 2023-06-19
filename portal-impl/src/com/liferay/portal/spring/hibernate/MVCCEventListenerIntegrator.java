@@ -46,7 +46,7 @@ public class MVCCEventListenerIntegrator implements Integrator {
 			sessionFactoryServiceRegistry.getService(
 				EventListenerRegistry.class);
 
-		eventListenerRegistry.setListeners(
+		eventListenerRegistry.appendListeners(
 			EventType.POST_UPDATE,
 			MVCCSynchronizerPostUpdateEventListener.INSTANCE);
 	}

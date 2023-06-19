@@ -23,7 +23,16 @@ jest.mock(
 
 jest.mock(
 	'../../../../src/main/resources/META-INF/resources/page_editor/app/services/LayoutService',
-	() => ({markItemForDeletion: jest.fn(() => Promise.resolve())})
+	() => ({
+		markItemForDeletion: jest.fn(() =>
+			Promise.resolve({
+				layoutData: {
+					items: {container: {children: []}},
+					rootItems: {main: 'container'},
+				},
+			})
+		),
+	})
 );
 
 const STATE = {

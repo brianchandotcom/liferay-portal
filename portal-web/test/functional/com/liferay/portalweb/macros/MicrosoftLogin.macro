@@ -61,7 +61,7 @@ definition {
 	macro confirmSharepointApp {
 		WaitForElementPresent.waitForLastScript();
 
-		var app_name = "SP2022";
+		var app_name = "SharePoint Online";
 
 		if (IsElementPresent(locator1 = "MicrosoftLogin#LOGIN_STAY_SIGNED_IN_CONFIRMATION")) {
 			AssertClick(

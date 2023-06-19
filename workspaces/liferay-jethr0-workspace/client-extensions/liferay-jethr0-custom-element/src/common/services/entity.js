@@ -14,14 +14,12 @@
 
 import api from './liferay/api.js';
 
-const getEntities = async (name, filter, options = {}) => {
-	var url = 'o/c/' + name;
+const entities = async (name, filter, options = {}) => {
+	const params = new URLSearchParams();
 
-	if (filter != null) {
-		url += '?filter=' + filter;
-	}
+	params.append('filter', filter);
 
-	const response = await api(url, options);
+	const response = await api('/o/c/' + name, params, options);
 
 	if (!response.ok) {
 		throw new Error(response.statusText);
@@ -32,4 +30,4 @@ const getEntities = async (name, filter, options = {}) => {
 	return data;
 };
 
-export default getEntities;
+export default entities;

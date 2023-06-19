@@ -35,10 +35,10 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("And a feature flag is enabled") {
-			if (IsElementPresent(locator1 = "FeatureFlags#TOGGLE_ROW", title_row = "Proxy Object", toggle_state = "Disabled")) {
+			if (IsElementPresent(locator1 = "FeatureFlags#TOGGLE_ROW", title_row = "Terms and Conditions pages", toggle_state = "Disabled")) {
 				Check.checkToggleSwitch(
 					locator1 = "FeatureFlags#TOGGLE_ROW",
-					title_row = "Proxy Object",
+					title_row = "Terms and Conditions pages",
 					toggle_state = "Disabled");
 			}
 		}
@@ -46,14 +46,14 @@ definition {
 		task ("When the administrator disables a feature flag") {
 			Check.checkToggleSwitch(
 				locator1 = "FeatureFlags#TOGGLE_ROW",
-				title_row = "Proxy Object",
+				title_row = "Terms and Conditions pages",
 				toggle_state = "Enabled");
 		}
 
 		task ("Then assert the toggle is disabled state") {
 			VerifyElementPresent(
 				locator1 = "FeatureFlags#TOGGLE_ROW",
-				title_row = "Proxy Object",
+				title_row = "Terms and Conditions pages",
 				toggle_state = "Disabled");
 		}
 	}
@@ -64,10 +64,10 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("And a feature flag is disabled") {
-			if (IsElementPresent(locator1 = "FeatureFlags#TOGGLE_ROW", title_row = "Proxy Object", toggle_state = "Enabled")) {
+			if (IsElementPresent(locator1 = "FeatureFlags#TOGGLE_ROW", title_row = "Terms and Conditions pages", toggle_state = "Enabled")) {
 				Check.checkToggleSwitch(
 					locator1 = "FeatureFlags#TOGGLE_ROW",
-					title_row = "Proxy Object",
+					title_row = "Terms and Conditions pages",
 					toggle_state = "Enabled");
 			}
 		}
@@ -75,14 +75,14 @@ definition {
 		task ("When the administrator enables a feature flag") {
 			Check.checkToggleSwitch(
 				locator1 = "FeatureFlags#TOGGLE_ROW",
-				title_row = "Proxy Object",
+				title_row = "Terms and Conditions pages",
 				toggle_state = "Disabled");
 		}
 
 		task ("Then assert the toggle is enabled state") {
 			VerifyElementPresent(
 				locator1 = "FeatureFlags#TOGGLE_ROW",
-				title_row = "Proxy Object",
+				title_row = "Terms and Conditions pages",
 				toggle_state = "Enabled");
 		}
 	}

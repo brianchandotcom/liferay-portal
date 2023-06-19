@@ -68,9 +68,7 @@ public class ScriptActionExecutor implements ActionExecutor {
 			kaleoAction.getScript());
 	}
 
-	private static final String[] _ACTION_EXECUTOR_KEYS = {
-		"beanshell", "groovy", "javascript", "python", "ruby"
-	};
+	private static final String[] _ACTION_EXECUTOR_KEYS = {"groovy"};
 
 	@Reference
 	private KaleoScriptingEvaluator _kaleoScriptingEvaluator;

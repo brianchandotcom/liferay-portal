@@ -100,6 +100,22 @@ public class AICreatorOpenAIEditorConfigurationTest {
 	}
 
 	@Test
+	public void testAICreatorToolbarCompanyAndGroupEnabledWithAPIKeyNoJournalPortlet()
+		throws Exception {
+
+		_aiCreatorOpenAIConfigurationManager.
+			saveAICreatorOpenAICompanyConfiguration(
+				_group.getCompanyId(), RandomTestUtil.randomString(), true);
+
+		_aiCreatorOpenAIConfigurationManager.
+			saveAICreatorOpenAIGroupConfiguration(
+				_group.getGroupId(), RandomTestUtil.randomString(), true);
+
+		_assertEditorConfigurationConfigJSONObject(
+			false, false, RandomTestUtil.randomString());
+	}
+
+	@Test
 	public void testAICreatorToolbarCompanyAndGroupEnabledWithoutAPIKey()
 		throws Exception {
 

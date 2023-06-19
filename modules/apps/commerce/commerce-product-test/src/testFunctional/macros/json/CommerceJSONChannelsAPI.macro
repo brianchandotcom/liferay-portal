@@ -13,6 +13,10 @@ definition {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
+		if (!(isSet(accountId))) {
+			var accountId = "";
+		}
+
 		if (!(isSet(externalReferenceCode))) {
 			var externalReferenceCode = "";
 		}

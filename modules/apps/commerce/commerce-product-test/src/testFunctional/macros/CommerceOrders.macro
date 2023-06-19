@@ -513,6 +513,13 @@ definition {
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
+		if (isSet(orderItemDiscount)) {
+			Type(
+				key_fieldLabel = "Discount",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = ${orderItemDiscount});
+		}
+
 		if (isSet(orderItemQuantity)) {
 			Type(
 				key_fieldLabel = "Quantity",
@@ -525,6 +532,13 @@ definition {
 				key_fieldLabel = "Price",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
 				value1 = ${orderItemPrice});
+		}
+
+		if (isSet(orderItemTotal)) {
+			Type(
+				key_fieldLabel = "Total",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = ${orderItemTotal});
 		}
 
 		if (isSet(orderItemRequestedDeliveryDate)) {

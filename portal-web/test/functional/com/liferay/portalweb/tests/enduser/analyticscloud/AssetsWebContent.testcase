@@ -148,8 +148,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8448 | Test Summary: Web content audience card shows expected amount of known and anonymous individuals"
 	@priority = 5
 	test AudienceCardShowsExpectedAmountKnowAndAnonymousIndividualsInWC {
-		property analytics.cloud.upstream = "false";
-
 		var usernameList = "ac,liferay";
 		var emailList = "ac@liferay.com,liferay@liferay.com";
 
@@ -609,7 +607,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8131 | Test Summary: Web content known individuals shows which individuals interact with the web content"
 	@priority = 5
 	test KnownIndividualsShowsWhichIndividualsInteractWithWebContent {
-		property analytics.cloud.upstream = "false";
 		property test.name.skip.portal.instance = "AssetsWebContent#KnownIndividualsShowsWhichIndividualsInteractWithWebContent";
 
 		var nameList = "ac ac,liferay liferay,dxp dxp";

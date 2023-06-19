@@ -64,8 +64,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8483 | Test Summary: Add members from different pages"
 	@priority = 3
 	test CanAddMembersFromDifferentPages {
-		property analytics.cloud.upstream = "false";
-
 		var usernameList = "user1,user2,user3,user4,user5";
 		var emailList = "userea@liferay.com,user1@liferay.com,user2@liferay.com,user3@liferay.com,user4@liferay.com,user5@liferay.com";
 
@@ -161,8 +159,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8476 | Test Summary: Cancel Creating a Dynamic Segment"
 	@priority = 3
 	test CanCancelCreatingDynamicSegment {
-		property analytics.cloud.upstream = "false";
-
 		task ("Sign in as new user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "userea@liferay.com",
@@ -213,8 +209,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8477 | Test Summary: Cancel creating a static segment"
 	@priority = 3
 	test CanCancelCreatingStaticSegment {
-		property analytics.cloud.upstream = "false";
-
 		task ("Sign in as new user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "userea@liferay.com",
@@ -263,7 +257,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8478 | Test Summary: Create a Dynamic Individuals Segment By Date"
 	@priority = 4
 	test CanCreateDynamicIndividualsSegmentByDate {
-		property analytics.cloud.upstream = "false";
 		property test.name.skip.portal.instance = "SegmentsCreation#CanCreateDynamicIndividualsSegmentByDate";
 
 		var fullNameList = "userfn userln,user1 user1";
@@ -728,7 +721,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8482 | Test Summary: Create a nested criteria"
 	@priority = 3
 	test CanCreateNestedCriteria {
-		property analytics.cloud.upstream = "false";
 		property test.name.skip.portal.instance = "SegmentsCreation#CanCreateNestedCriteria";
 
 		var usernameList = "userea,user1,test";
@@ -877,8 +869,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-7962 | Test Summary: Create a segment that contains anonymous individuals"
 	@priority = 5
 	test CanCreateSegmentWithAnonymousIndividuals {
-		property analytics.cloud.upstream = "false";
-
 		var usernameList = "ac,liferay,dxp";
 		var emailList = "ac@liferay.com,liferay@liferay.com,dxp@liferay.com";
 		var nameList = "ac ac,liferay liferay,dxp dxp";
@@ -1096,7 +1086,6 @@ definition {
 	@description = "Create a static segment with individual"
 	@priority = 5
 	test CanCreateStaticSegmentWithIndividuals {
-		property analytics.cloud.upstream = "false";
 		property test.name.skip.portal.instance = "SegmentsCreation#CanCreateStaticSegmentWithIndividuals";
 
 		task ("Sign in as new user") {
@@ -1318,7 +1307,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8472 | Test Summary: Paginate static segment 'Add Members' creation model"
 	@priority = 3
 	test CanPaginateStaticSegmentAddMembers {
-		property analytics.cloud.upstream = "false";
 		property test.name.skip.portal.instance = "SegmentsCreation#CanPaginateStaticSegmentAddMembers";
 
 		var usernameList = "user1,user2,user3,user4,user5";
@@ -1401,7 +1389,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8475 | Test Summary: Dynamic segment members preview in real time"
 	@priority = 3
 	test CanPreviewDynamicSegmentMembers {
-		property analytics.cloud.upstream = "false";
 		property test.name.skip.portal.instance = "SegmentsCreation#CanPreviewDynamicSegmentMembers";
 
 		var emailList = "userea@liferay.com,user1@liferay.com";
@@ -1488,7 +1475,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8473 | Test Summary: Filter the Segment 'Add Members' Modal"
 	@priority = 3
 	test CanSearchUserInAddMembersModal {
-		property analytics.cloud.upstream = "false";
 		property test.name.skip.portal.instance = "SegmentsCreation#CanSearchUserInAddMembersModal";
 
 		var emailList = "userea@liferay.com,user1@liferay.com";
@@ -1609,8 +1595,6 @@ definition {
 	@description = "Bug: LRAC-10972 | Automation ID: LRAC-11506 | Test Summary: Check Autocomplete Suggestions For All Criteria Types"
 	@priority = 3
 	test CheckAutocompleteSuggestionsForAllCriteriaTypes {
-		property analytics.cloud.upstream = "false";
-
 		task ("Sign in as new user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "userea@liferay.com",

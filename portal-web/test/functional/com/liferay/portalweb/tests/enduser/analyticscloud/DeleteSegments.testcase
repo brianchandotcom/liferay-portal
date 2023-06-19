@@ -48,7 +48,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8595 | Test Summary: Delete a criteria"
 	@priority = 3
 	test CanDeleteCriteria {
-		property analytics.cloud.upstream = "false";
 		property test.name.skip.portal.instance = "DeleteSegments#CanDeleteCriteria";
 
 		task ("Get site assigned property name") {
@@ -167,7 +166,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8597 | Test Summary: Delete a Segment via the Segment List"
 	@priority = 4
 	test CanDeleteSegmentViaSegmentList {
-		property analytics.cloud.upstream = "false";
 		property test.name.skip.portal.instance = "DeleteSegments#CanDeleteSegmentViaSegmentList";
 
 		task ("Get site assigned property name") {
@@ -230,7 +228,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8138 | Test Summary: Delete a static segment"
 	@priority = 5
 	test CanDeleteStaticSegment {
-		property analytics.cloud.upstream = "false";
 		property test.name.skip.portal.instance = "DeleteSegments#CanDeleteStaticSegment";
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
@@ -283,7 +280,6 @@ definition {
 	@description = "Bug: LRAC-10247 | Automation ID: LRAC-10247 | Test Summary: Deleting a static segment does not remove user in known individuals"
 	@priority = 5
 	test CheckIfKnownIndividualsDontDisappearAfterDeleteStaticSegment {
-		property analytics.cloud.upstream = "false";
 		property test.name.skip.portal.instance = "DeleteSegments#CheckIfKnownIndividualsDontDisappearAfterDeleteStaticSegment";
 
 		task ("Connect the DXP to AC") {
@@ -374,7 +370,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8592 | Test Summary: Deleting a custom field that is used by a segment should reset the data"
 	@priority = 4
 	test DeleteCustomFieldUsedSegmentResetData {
-		property analytics.cloud.upstream = "false";
 		property test.name.skip.portal.instance = "DeleteSegments#DeleteCustomFieldUsedSegmentResetData";
 
 		task ("Connect DXP to AC") {
@@ -619,8 +614,6 @@ definition {
 	@description = "Bug: LRAC-8239 | Automation ID: LRAC-11536 | Test Summary: Delete a segment in edit mode"
 	@priority = 2
 	test DeleteSegmentInEditMode {
-		property analytics.cloud.upstream = "false";
-
 		var staticSegmentName = "New Static Segment";
 		var dynamicSegmentName = "New Dynamic Segment";
 

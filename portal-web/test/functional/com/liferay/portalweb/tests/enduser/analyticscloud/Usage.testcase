@@ -274,7 +274,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8148 | Test Summary: Individuals usage update in real time"
 	@priority = 5
 	test IndividualsUpdatesInRealTime {
-		property analytics.cloud.upstream = "false";
 		property portal.acceptance = "false";
 
 		var usernameList = "user1,user2,user3";

@@ -116,8 +116,6 @@ definition {
 	@description = "Bug: LRAC-10257 | Automation ID: LRAC-10257 | Test Summary: Assert total amount of views in all cards"
 	@priority = 5
 	test AssertTotalAmountOfViewsInAllCards {
-		property analytics.cloud.upstream = "false";
-
 		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		task ("Add a new user in DXP") {
@@ -321,8 +319,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8279 | Test Summary: Site Activity Card: Can hover over a point on the graph to get detailed stats"
 	@priority = 5
 	test CanHoverOverPointOnGraphGetStats {
-		property analytics.cloud.upstream = "false";
-
 		var usernameList = "ac,liferay";
 		var emailList = "ac@liferay.com,liferay@liferay.com";
 		var nameList = "ac ac,liferay liferay";
@@ -549,8 +545,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8290 | Test Summary: Unique Visitors label is shown on the tabs of Pages dashboards"
 	@priority = 3
 	test CanUniqueVisitorsLabelShowPagesDashboards {
-		property analytics.cloud.upstream = "false";
-
 		task ("Site and blogs creation and connection with AC") {
 			ACUtils.createBlogsAndAddToPage();
 

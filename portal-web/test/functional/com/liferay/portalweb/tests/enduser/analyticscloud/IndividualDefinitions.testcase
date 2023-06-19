@@ -35,8 +35,6 @@ definition {
 	@description = "Assert a newly connected data source is listed as a source of individual attributes in Definitions > Individuals."
 	@priority = 5
 	test AssertNewSourceInSourceListForIndividualAttribute {
-		property analytics.cloud.upstream = "false";
-
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 
 		var dataSource = StringUtil.replace(${propertyName}, " Combined Property", "");

@@ -52,7 +52,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8911 | Test Summary: Enriched profiles increases by 1 when an anonymous individual converted to a known individual"
 	@priority = 5
 	test IncreaseByOneWhenAnonymousIndividualConvertedToKnownIndividual {
-		property analytics.cloud.upstream = "false";
 		property portal.acceptance = "false";
 		property portal.release = "false";
 

@@ -929,7 +929,6 @@ definition {
 	@description = "Feature ID: LRAC-10405 | Automation ID: LRAC-11118 | Test Summary: Empty state Page cards with data source and property no data"
 	@priority = 2
 	test CheckAllPagesMessagesWhenHasPropertyAndDataSource {
-		property analytics.cloud.upstream = "false";
 		property test.name.skip.portal.instance = "EmptyState#CheckAllPagesMessagesWhenHasPropertyAndDataSource";
 
 		task ("Check the first screen of the onboarding modal") {

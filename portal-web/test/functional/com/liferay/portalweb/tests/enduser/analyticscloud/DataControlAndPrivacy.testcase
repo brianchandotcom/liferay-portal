@@ -74,7 +74,6 @@ definition {
 	@description = "Automation ID: LRAC-8119 | Test Summary: Create Access Request"
 	@priority = 5
 	test CanCreateAccessRequest {
-		property analytics.cloud.upstream = "false";
 		property test.name.skip.portal.instance = "DataControlAndPrivacy#CanCreateAccessRequest";
 
 		var userEmail = "dcp1@liferay.com";
@@ -122,7 +121,6 @@ definition {
 	@description = "Automation ID: LRAC-8117 | Test Summary: Create Delete Request"
 	@priority = 5
 	test CanCreateDeleteRequest {
-		property analytics.cloud.upstream = "false";
 		property test.name.skip.portal.instance = "DataControlAndPrivacy#CanCreateDeleteRequest";
 
 		var userEmail = "dcp2@liferay.com";

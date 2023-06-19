@@ -69,8 +69,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8613 | Test Summary: Assert no interest found in segment"
 	@priority = 3
 	test AssertNoInterestFoundInSegment {
-		property analytics.cloud.upstream = "false";
-
 		task ("Add new user") {
 			JSONUser.addUser(
 				userEmailAddress = "user1@liferay.com",

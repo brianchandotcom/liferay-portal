@@ -54,8 +54,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8327 | Test Summary: Assert Sites Cohort Analysis sort Anonymous Visitors"
 	@priority = 3
 	test AssertSitesCohortAnalysisSortAnonymousVisitors {
-		property analytics.cloud.upstream = "false";
-
 		task ("Logout from DXP") {
 			User.logoutPG();
 		}
@@ -90,8 +88,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8326 | Test Summary: Site overview cohort analysis card shows which individuals are returning after their first views"
 	@priority = 5
 	test ShowsIndividualsReturningAfterFirstViews {
-		property analytics.cloud.upstream = "false";
-
 		task ("Add a new user") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",

@@ -68,7 +68,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8565 | Test Summary: Add segment using an individual property 'role'"
 	@priority = 4
 	test CanAddSegmentUsingIndividualPropertyRole {
-		property analytics.cloud.upstream = "false";
 		property test.name.skip.portal.instance = "SegmentsCreationIndividualAttributes#CanAddSegmentUsingIndividualPropertyRole";
 
 		task ("Add a new regular role and assign to the user") {
@@ -283,7 +282,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8566 | Test Summary: Add segment using an individual property 'team'"
 	@priority = 4
 	test CanAddSegmentUsingIndividualPropertyTeam {
-		property analytics.cloud.upstream = "false";
 		property test.name.skip.portal.instance = "SegmentsCreationIndividualAttributes#CanAddSegmentUsingIndividualPropertyTeam";
 
 		task ("Assign the site to user") {
@@ -421,7 +419,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8567 | Test Summary: Add segment using an individual property 'user group'"
 	@priority = 4
 	test CanAddSegmentUsingIndividualPropertyUserGroup {
-		property analytics.cloud.upstream = "false";
 		property test.name.skip.portal.instance = "SegmentsCreationIndividualAttributes#CanAddSegmentUsingIndividualPropertyUserGroup";
 
 		task ("Add a new user group and assign to the user") {
@@ -486,7 +483,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8569 | Test Summary: Add segment with custom field for individuals"
 	@priority = 4
 	test CanAddSegmentWithCustomFieldsForIndividuals {
-		property analytics.cloud.upstream = "false";
 		property test.name.skip.portal.instance = "SegmentsCreationIndividualAttributes#CanAddSegmentWithCustomFieldsForIndividuals";
 
 		task ("Add a user custom field") {
@@ -581,7 +577,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8570 | Test Summary: Add segment with custom fields for organizations"
 	@priority = 4
 	test CanAddSegmentWithCustomFieldsForOrganizations {
-		property analytics.cloud.upstream = "false";
 		property test.name.skip.portal.instance = "SegmentsCreationIndividualAttributes#CanAddSegmentWithCustomFieldsForOrganizations";
 
 		task ("Add a new organization and assign to the user") {
@@ -839,8 +834,6 @@ definition {
 	@description = "Bug: LRAC-11460 | Automation ID: LRAC-11634 | Test Summary: Add a dynamic segment using an individual property "email" selecting one of the suggested autocomplete options and assert in the Known Individuals tab search this individual exists"
 	@priority = 3
 	test CheckIfAutocompleteSuggestionEmailPresentInKnownIndividualsList {
-		property analytics.cloud.upstream = "false";
-
 		var username = "ac ac";
 		var individualEmail = "ac@liferay.com";
 

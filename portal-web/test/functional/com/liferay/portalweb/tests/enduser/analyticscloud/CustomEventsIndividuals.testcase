@@ -187,8 +187,6 @@ definition {
 	@description = "Feature ID: LRAC-7536 | Automation ID: LRAC-10513 | Test Summary: Empty individual events state"
 	@priority = 3
 	test AssertEmptyIndividualEvents {
-		property analytics.cloud.upstream = "false";
-
 		task ("Fill fields and create custom event") {
 			var customEventName1 = ACCustomEvents.generateCustomEventName();
 
@@ -241,8 +239,6 @@ definition {
 	@description = "Feature ID: LRAC-7536 | Automation ID: LRAC-10509 | Test Summary: Individual activities with session attributes"
 	@priority = 5
 	test ViewIndividualActivitiesWithSessionAttributes {
-		property analytics.cloud.upstream = "false";
-
 		task ("Fill fields and create custom event") {
 			var customEventName1 = ACCustomEvents.generateCustomEventName();
 

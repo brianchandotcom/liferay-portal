@@ -414,8 +414,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8132 | Test Summary: Custom asset list shows a list of custom assets"
 	@priority = 5
 	test CanShowsCustomAssetList {
-		property analytics.cloud.upstream = "false";
-
 		var assetName = "Custom Asset Analytics Cloud,Custom Asset Analytics Cloud 2,Custom Asset Analytics Cloud 3";
 
 		for (var layoutName : list "AC Page 2,AC Page 3") {

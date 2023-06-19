@@ -134,7 +134,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8460 | Test Summary: Order the Segment List By Name"
 	@priority = 4
 	test OrderSegmentListByName {
-		property analytics.cloud.upstream = "false";
 		property test.name.skip.portal.instance = "SegmentsList#OrderSegmentListByName";
 
 		task ("Add a new user in DXP") {
@@ -232,7 +231,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8461 | Test Summary: Paginate Segment list"
 	@priority = 3
 	test PaginateSegmentList {
-		property analytics.cloud.upstream = "false";
 		property test.name.skip.portal.instance = "SegmentsList#PaginateSegmentList";
 
 		task ("Add a new user in DXP") {

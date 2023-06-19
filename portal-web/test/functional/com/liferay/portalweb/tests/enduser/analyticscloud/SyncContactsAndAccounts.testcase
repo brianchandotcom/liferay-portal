@@ -328,7 +328,6 @@ definition {
 	@description = "Story: LRAC-10859 | Automation ID: LRAC-12659 | Test Summary: Can sync all contacts"
 	@priority = 5
 	test CanSyncAllContacts {
-		property analytics.cloud.upstream = "false";
 		property portal.release = "true";
 
 		for (var userName : list "dxp,lxc") {
@@ -494,7 +493,6 @@ definition {
 	@description = "Story: LRAC-10859 | Automation ID: LRAC-12665 | Test Summary: Can sync all contacts by groups"
 	@priority = 5
 	test CanSyncAllContactsByGroups {
-		property analytics.cloud.upstream = "false";
 		property portal.release = "true";
 
 		task ("Add user, group and assign user to group") {
@@ -589,7 +587,6 @@ definition {
 	@description = "Story: LRAC-10859 | Automation ID: LRAC-12662 | Test Summary: Can sync all contacts by organizations"
 	@priority = 5
 	test CanSyncAllContactsByOrganizations {
-		property analytics.cloud.upstream = "false";
 		property portal.release = "true";
 
 		task ("Create a new user, a new organization and assign the organization for the created user") {

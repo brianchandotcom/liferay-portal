@@ -90,8 +90,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8423 | Test Summary: Forms audience card shows expected amount of known and anonymous individuals"
 	@priority = 5
 	test AudienceCardShowsExpectedAmountKnowAndAnonymousIndividualsInForms {
-		property analytics.cloud.upstream = "false";
-
 		var usernameList = "ac,ac2";
 		var emailList = "ac@liferay.com,ac2@liferay.com";
 
@@ -633,7 +631,6 @@ definition {
 	@description = "Form known individuals shows which individuals interact with the form"
 	@priority = 5
 	test KnownIndividualsShowsWhichIndividualsInteractWithForm {
-		property analytics.cloud.upstream = "false";
 		property test.name.skip.portal.instance = "AssetsForms#KnownIndividualsShowsWhichIndividualsInteractWithForm";
 
 		var nameList = "ac ac,liferay liferay,dxp dxp";

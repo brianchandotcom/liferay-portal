@@ -128,8 +128,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8916 | Test Summary: Selected individual activity point can clear date selection"
 	@priority = 3
 	test AssertIndividualActivitiesOverviewClearDate {
-		property analytics.cloud.upstream = "false";
-
 		task ("Add DM to AC Page") {
 			ACUtils.createDMAndAddToPage();
 		}
@@ -298,8 +296,6 @@ definition {
 	@priority = 5
 	test CanAssertIndividualSegment {
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
-
-		property analytics.cloud.upstream = "false";
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",

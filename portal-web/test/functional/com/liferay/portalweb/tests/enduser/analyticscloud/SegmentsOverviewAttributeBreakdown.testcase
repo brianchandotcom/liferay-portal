@@ -40,8 +40,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8505 | Test Summary: Segment Overview distribution filtered by date"
 	@priority = 3
 	test SegmentOverviewDistributionFilteredByDate {
-		property analytics.cloud.upstream = "false";
-
 		var users = "ac1,ac2";
 		var emailList = "ac1@liferay.com,ac2@liferay.com";
 		var nameList = "ac1 ac1,ac2 ac2";
@@ -120,8 +118,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8507 | Test Summary: Segment Overview distribution filtered by text"
 	@priority = 3
 	test SegmentOverviewDistributionFilteredByText {
-		property analytics.cloud.upstream = "false";
-
 		var users = "ac,liferay";
 		var emailList = "ac@liferay.com,liferay@liferay.com";
 		var nameList = "ac ac,liferay liferay";

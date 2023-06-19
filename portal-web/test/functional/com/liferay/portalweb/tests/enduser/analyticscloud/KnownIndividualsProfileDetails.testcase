@@ -62,8 +62,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8938 | Test Summary: All attributes of the individual appear in a list"
 	@priority = 5
 	test AllIndividualAttributesAppearInList {
-		property analytics.cloud.upstream = "false";
-
 		task ("Sign in as new user to view the site page") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "user1@liferay.com",
@@ -126,8 +124,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8938 | Test Summary: Order an Individual's Details"
 	@priority = 3
 	test OrderIndividualDetails {
-		property analytics.cloud.upstream = "false";
-
 		task ("Sign in as new user to view the site page") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "user1@liferay.com",

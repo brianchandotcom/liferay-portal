@@ -43,7 +43,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8490 | Test Summary: Order a Dynamic Segment's Membership Preview Modal"
 	@priority = 3
 	test OrderDynamicSegmentMembershipPreview {
-		property analytics.cloud.upstream = "false";
 		property test.name.skip.portal.instance = "SegmentsOverViewMembership#OrderDynamicSegmentMembershipPreview";
 
 		var usernameList = "user1,user2,user3";

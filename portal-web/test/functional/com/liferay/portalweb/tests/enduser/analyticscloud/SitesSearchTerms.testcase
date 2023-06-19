@@ -88,8 +88,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8298 | Test Summary: Site overview search terms shows what keywords are being searched for"
 	@priority = 5
 	test ShowsKeywordsBeingSearched {
-		property analytics.cloud.upstream = "false";
-
 		task ("Connect DXP to AC") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 		}

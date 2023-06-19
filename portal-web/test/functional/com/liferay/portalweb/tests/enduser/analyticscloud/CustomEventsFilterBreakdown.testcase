@@ -181,7 +181,6 @@ definition {
 	@description = "Feature ID: LRAC-7868 | Automation ID: LRAC-10269 | Test Summary: Attribute breakdowns are sorted by the highest event count"
 	@priority = 4
 	test AssertAttributeBreakdownsSortedByHighestEventCount {
-		property analytics.cloud.upstream = "false";
 		property test.name.skip.portal.instance = "CustomEventsFilterBreakdown#AssertAttributeBreakdownsSortedByHighestEventCount";
 
 		var attributeName = "pageTitle";

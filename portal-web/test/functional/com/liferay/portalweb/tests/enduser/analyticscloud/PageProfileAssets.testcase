@@ -41,7 +41,6 @@ definition {
 	@ignore = "true"
 	@priority = 5
 	test ShowsWhichAssetsOnPage {
-		property analytics.cloud.upstream = "false";
 
 		// Displayed Assets tests are no longer possible to run due to this ticket LRAC-11652
 

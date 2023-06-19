@@ -63,8 +63,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8626 | Test Summary: Segment distribution chart can be filtered by date property"
 	@priority = 5
 	test CanDistributionChartFilteredDateProperty {
-		property analytics.cloud.upstream = "false";
-
 		task ("View AC Page as new user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "userea@liferay.com",
@@ -282,8 +280,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8625 | Test Summary: Search the Segment Profile Distribution"
 	@priority = 3
 	test CanSearchTheSegmentProfileDistribution {
-		property analytics.cloud.upstream = "false";
-
 		var userList = "ac,dxp";
 		var emailList = "ac@liferay.com,dxp@liferay.com,userea@liferay.com";
 		var nameList = "ac ac,dxp dxp,userfn userln";
@@ -364,8 +360,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8624 | Test Summary: Order the Segment Profile Distribution"
 	@priority = 3
 	test OrderSegmentProfileDistribution {
-		property analytics.cloud.upstream = "false";
-
 		var userList = "ac,liferay";
 		var emailList = "ac@liferay.com,liferay@liferay.com";
 		var nameList = "ac ac,liferay liferay";

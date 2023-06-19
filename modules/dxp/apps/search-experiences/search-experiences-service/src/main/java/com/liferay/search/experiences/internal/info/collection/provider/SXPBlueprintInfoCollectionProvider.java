@@ -33,10 +33,12 @@ import com.liferay.info.pagination.InfoPage;
 import com.liferay.info.pagination.Pagination;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -173,6 +175,21 @@ public class SXPBlueprintInfoCollectionProvider
 
 		for (Group group : groups) {
 			if ((group != null) && group.isSite() && !group.isGuest()) {
+				User user = themeDisplay.getUser();
+
+				try {
+					List<Group> userSiteGroups = user.getSiteGroups();
+
+					if (!ArrayUtil.contains(
+							userSiteGroups.toArray(new Group[0]), group)) {
+
+						continue;
+					}
+				}
+				catch (PortalException portalException) {
+					_log.error(portalException);
+				}
+
 				options.add(
 					new SelectInfoFieldType.Option(
 						new ResourceBundleInfoLocalizedValue(

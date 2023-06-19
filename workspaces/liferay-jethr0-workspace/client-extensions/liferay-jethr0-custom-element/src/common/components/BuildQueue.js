@@ -14,21 +14,15 @@
 
 import React from 'react';
 
-import getEntities from '../services/entity.js';
+import entities from '../services/entity.js';
 
 function BuildQueue() {
 	const [data, setData] = React.useState(null);
 
-	getEntities('projects', '((state eq \'opened\') or (state eq \'queued\') or (state eq \'running\'))')
-		.then((data) => {
-			const projects = [];
-
-			data.items.map(project => {
-				projects.push(project);
-			})
-
-			setData(projects)
-		});
+	projects()
+	.then((projects) => {
+		setData(projects);
+	});
 
 	if (!data) {
 		return <div>Loading...</div>;
@@ -43,9 +37,27 @@ function BuildQueue() {
 					<th>Priority</th>
 					<th>State</th>
 					<th>Type</th>
+					<th>Running</th>
+					<th>Completed</th>
+					<th>Total</th>
 				</tr>
 				{
 					data.map(project => {
+						var runningBuilds = 0;
+						var completedBuilds = 0;
+						var totalBuilds = 0;
+
+						for (const build of project.builds) {
+							if (build.state.name == 'completed') {
+								completedBuilds++;
+							}
+							else {
+								runningBuilds++;
+							}
+
+							totalBuilds++;
+						}
+
 						return (
 							<tr>
 								<td>{project.id}</td>
@@ -53,6 +65,9 @@ function BuildQueue() {
 								<td>{project.priority}</td>
 								<td>{project.state.name}</td>
 								<td>{project.type.name}</td>
+								<td>{runningBuilds}</td>
+								<td>{completedBuilds}</td>
+								<td>{totalBuilds}</td>
 							</tr>
 						)}
 					)
@@ -61,5 +76,23 @@ function BuildQueue() {
 		</div>
 	);
 }
+
+const projects = async () => {
+    const projects = [];
+
+	await entities('projects', '((state eq \'opened\') or (state eq \'queued\') or (state eq \'running\'))')
+	.then(async (data) => {
+		for (const project of data.items) {
+			await entities('builds', 'r_projectToBuilds_c_projectId eq \'' + project.id + '\'')
+			.then((data) => {
+				project.builds = data.items;
+			});
+
+			projects.push(project);
+		}
+	});
+
+	return projects;
+};
 
 export default BuildQueue;

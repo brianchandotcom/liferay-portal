@@ -54,7 +54,7 @@ public class ObjectDefinitionTestUtil {
 				userId, false, false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				"A" + RandomTestUtil.randomString(), null, null,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()), true,
 				scope, ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 				objectFields);
 

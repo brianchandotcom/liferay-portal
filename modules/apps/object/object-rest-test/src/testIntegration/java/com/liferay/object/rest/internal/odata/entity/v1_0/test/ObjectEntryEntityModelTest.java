@@ -325,7 +325,7 @@ public class ObjectEntryEntityModelTest {
 				TestPropsValues.getUserId(), false, false,
 				LocalizedMapUtil.getLocalizedMap(objectDefinitionName),
 				objectDefinitionName, null, null,
-				LocalizedMapUtil.getLocalizedMap(objectDefinitionName),
+				LocalizedMapUtil.getLocalizedMap(objectDefinitionName), true,
 				ObjectDefinitionConstants.SCOPE_COMPANY,
 				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT, objectFields);
 

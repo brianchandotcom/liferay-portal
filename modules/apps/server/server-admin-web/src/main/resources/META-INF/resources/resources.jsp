@@ -214,9 +214,29 @@ long usedMemory = totalMemory - runtime.freeMemory();
 					</div>
 
 					<div class="autofit-col">
-						<aui:button cssClass="save-server-button" data-cmd="dlPreviews" value="execute" />
+						<aui:button cssClass="save-server-button" data-cmd="dlDeletePreviews" value="execute" />
 					</div>
 				</li>
+
+				<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPS-188027") %>'>
+					<li class="list-group-item list-group-item-flex">
+						<div class="autofit-col autofit-col-expand">
+							<p class="list-group-title text-truncate">
+								<liferay-ui:message key="regenerate-preview-and-thumbnail-of-pdf-files-in-documents-and-media" /> <liferay-ui:icon-help message="regenerate-preview-and-thumbnail-of-pdf-files-in-documents-and-media-help" />
+							</p>
+						</div>
+
+						<div class="autofit-col">
+
+							<%
+							List<BackgroundTask> pdfPreviewBackgroundTasks = BackgroundTaskManagerUtil.getBackgroundTasks(CompanyConstants.SYSTEM, "com.liferay.document.library.preview.pdf.internal.background.task.PDFPreviewBackgroundTaskExecutor", BackgroundTaskConstants.STATUS_IN_PROGRESS);
+							%>
+
+							<aui:button cssClass="save-server-button" data-cmd="dlGeneratePDFPreviews" disabled="<%= (pdfPreviewBackgroundTasks.size() > 0) ? true : false %>" value="execute" />
+						</div>
+					</li>
+				</c:if>
+
 				<li class="list-group-item list-group-item-flex">
 					<div class="autofit-col autofit-col-expand">
 						<p class="list-group-title text-truncate">

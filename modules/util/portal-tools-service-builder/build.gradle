@@ -16,12 +16,12 @@ configurations {
 }
 
 dependencies {
+	compile group: "com.liferay", name: "org.apache.logging.log4j.core", version: "2.17.1.LIFERAY-PATCHED-1"
 	compile group: "com.puppycrawl.tools", name: "checkstyle", version: "8.29"
 	compile group: "com.thoughtworks.qdox", name: "qdox", version: "2.0-M5"
 	compile group: "commons-io", name: "commons-io", version: "2.11.0"
 	compile group: "jalopy", name: "jalopy", transitive: false, version: "1.5rc3"
 	compile group: "jaxen", name: "jaxen", transitive: false, version: "1.1.1"
-	compile group: "log4j", name: "log4j", version: "1.2.17"
 	compile group: "org.dom4j", name: "dom4j", transitive: false, version: "2.1.3"
 	compile group: "org.freemarker", name: "freemarker", transitive: false, version: "2.3.23"
 

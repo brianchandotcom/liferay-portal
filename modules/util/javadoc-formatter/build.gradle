@@ -11,8 +11,8 @@ buildPluginDescriptor {
 }
 
 dependencies {
+	compile group: "com.liferay", name: "org.apache.logging.log4j.core", version: "2.17.1.LIFERAY-PATCHED-1"
 	compile group: "com.thoughtworks.qdox", name: "qdox", version: "2.0-M5"
-	compile group: "log4j", name: "log4j", version: "1.2.17"
 	compile group: "org.apache.ant", name: "ant", version: "1.10.11"
 	compile group: "org.dom4j", name: "dom4j", transitive: false, version: "2.1.3"
 

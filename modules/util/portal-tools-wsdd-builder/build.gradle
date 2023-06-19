@@ -13,11 +13,11 @@ buildPluginDescriptor {
 dependencies {
 	compile group: "axis", name: "axis-wsdl4j", version: "1.5.1"
 	compile group: "com.liferay", name: "org.apache.axis", version: "1.4.LIFERAY-PATCHED-6"
+	compile group: "com.liferay", name: "org.apache.logging.log4j.core", version: "2.17.1.LIFERAY-PATCHED-1"
 	compile group: "com.sun.mail", name: "jakarta.mail", version: "1.6.6"
 	compile group: "commons-discovery", name: "commons-discovery", version: "0.2"
 	compile group: "commons-logging", name: "commons-logging", version: "1.2"
 	compile group: "javax.activation", name: "activation", version: "1.1"
-	compile group: "log4j", name: "log4j", version: "1.2.17"
 	compile group: "org.apache.ant", name: "ant", version: "1.10.11"
 	compile group: "org.apache.axis", name: "axis-ant", version: "1.4"
 	compile group: "org.apache.axis", name: "axis-jaxrpc", version: "1.4"

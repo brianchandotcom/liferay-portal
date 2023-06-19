@@ -108,17 +108,19 @@ export function CreateAPIApplicationModalContent({
 
 	function validateData() {
 		let isDataValid = true;
+		const mandatoryFields = ['baseURL', 'title'];
 
 		if (!Object.keys(data).length) {
-			setDisplayError({
-				baseURL: true,
-				title: true,
-			});
+			const errors = mandatoryFields.reduce(
+				(errors, field) => ({...errors, [field]: true}),
+				{}
+			);
+			setDisplayError(errors as DataError);
 
 			isDataValid = false;
 		}
 		else {
-			for (const field in data) {
+			mandatoryFields.forEach((field) => {
 				if (data[field as keyof Data]) {
 					setDisplayError((previousErrors) => ({
 						...previousErrors,
@@ -130,10 +132,9 @@ export function CreateAPIApplicationModalContent({
 						...previousErrors,
 						[field]: true,
 					}));
-
 					isDataValid = false;
 				}
-			}
+			});
 		}
 
 		return isDataValid;

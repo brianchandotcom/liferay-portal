@@ -121,7 +121,7 @@ public class ActionsOpenAPIContributor implements OpenAPIContributor {
 	private Schema _getActionSchema(
 		String actionName, ActionInfo actionInfo, UriInfo uriInfo) {
 
-		Map<String, String> action = ActionUtil.addAction(
+		Map<String, String> map = ActionUtil.addAction(
 			actionName, actionInfo.getResourceClass(), null,
 			actionInfo.getResourceMethodName(),
 			(ModelResourcePermission<?>)null, (Long)null, uriInfo);
@@ -130,9 +130,9 @@ public class ActionsOpenAPIContributor implements OpenAPIContributor {
 			{
 				setProperties(
 					HashMapBuilder.put(
-						"href", _getStringSchema(action.get("href"))
+						"href", _getStringSchema(map.get("href"))
 					).put(
-						"method", _getStringSchema(action.get("method"))
+						"method", _getStringSchema(map.get("method"))
 					).build());
 			}
 		};

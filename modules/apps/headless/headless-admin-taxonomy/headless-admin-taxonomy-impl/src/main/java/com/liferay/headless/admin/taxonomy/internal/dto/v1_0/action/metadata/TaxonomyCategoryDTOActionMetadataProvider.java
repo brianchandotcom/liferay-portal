@@ -17,7 +17,7 @@ package com.liferay.headless.admin.taxonomy.internal.dto.v1_0.action.metadata;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.headless.admin.taxonomy.internal.resource.v1_0.TaxonomyCategoryResourceImpl;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.vulcan.action.ActionInfo;
+import com.liferay.portal.vulcan.dto.action.ActionInfo;
 
 /**
  * @author Javier Gamarra

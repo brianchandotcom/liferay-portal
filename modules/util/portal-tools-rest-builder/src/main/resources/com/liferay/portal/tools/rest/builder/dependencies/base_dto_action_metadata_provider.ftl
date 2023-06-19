@@ -2,7 +2,7 @@ package ${configYAML.apiPackagePath}.internal.dto.${escapedVersion}.action.metad
 
 import ${configYAML.apiPackagePath}.internal.resource.${escapedVersion}.${schemaName}ResourceImpl;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.vulcan.action.ActionInfo;
+import com.liferay.portal.vulcan.dto.action.ActionInfo;
 
 import java.util.HashMap;
 import java.util.Map;

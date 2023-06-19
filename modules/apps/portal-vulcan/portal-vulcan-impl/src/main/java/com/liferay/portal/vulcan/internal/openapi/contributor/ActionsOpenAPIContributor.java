@@ -19,8 +19,8 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.vulcan.action.ActionInfo;
-import com.liferay.portal.vulcan.action.DTOActionProvider;
+import com.liferay.portal.vulcan.dto.action.ActionInfo;
+import com.liferay.portal.vulcan.dto.action.DTOActionProvider;
 import com.liferay.portal.vulcan.openapi.OpenAPIContext;
 import com.liferay.portal.vulcan.openapi.contributor.OpenAPIContributor;
 import com.liferay.portal.vulcan.util.ActionUtil;
@@ -65,6 +65,12 @@ public class ActionsOpenAPIContributor implements OpenAPIContributor {
 				continue;
 			}
 
+			Schema schema = entry.getValue();
+
+			Map<String, Schema> properties = schema.getProperties();
+
+			Schema actionsSchema = properties.get("actions");
+
 			Map<String, Schema> actionSchemas = new HashMap<>();
 
 			Map<String, ActionInfo> actionInfos =
@@ -88,12 +94,6 @@ public class ActionsOpenAPIContributor implements OpenAPIContributor {
 						actionInfoEntry.getKey(), actionInfoEntry.getValue(),
 						openAPIContext.getUriInfo()));
 			}
-
-			Schema schema = entry.getValue();
-
-			Map<String, Schema> properties = schema.getProperties();
-
-			Schema actionsSchema = properties.get("actions");
 
 			properties.put(
 				"actions",

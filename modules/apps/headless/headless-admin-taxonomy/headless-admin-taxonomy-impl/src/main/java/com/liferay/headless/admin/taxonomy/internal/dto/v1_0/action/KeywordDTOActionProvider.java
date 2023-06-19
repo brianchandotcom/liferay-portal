@@ -16,8 +16,8 @@ package com.liferay.headless.admin.taxonomy.internal.dto.v1_0.action;
 
 import com.liferay.headless.admin.taxonomy.internal.dto.v1_0.action.metadata.KeywordDTOActionMetadataProvider;
 import com.liferay.oauth2.provider.scope.ScopeChecker;
-import com.liferay.portal.vulcan.action.ActionInfo;
-import com.liferay.portal.vulcan.action.DTOActionProvider;
+import com.liferay.portal.vulcan.dto.action.ActionInfo;
+import com.liferay.portal.vulcan.dto.action.DTOActionProvider;
 import com.liferay.portal.vulcan.util.ActionUtil;
 import com.liferay.portal.vulcan.util.UriInfoUtil;
 

@@ -2,8 +2,8 @@ package ${configYAML.apiPackagePath}.internal.dto.${escapedVersion}.action;
 
 import ${configYAML.apiPackagePath}.internal.dto.${escapedVersion}.action.metadata.${schemaName}DTOActionMetadataProvider;
 import com.liferay.oauth2.provider.scope.ScopeChecker;
-import com.liferay.portal.vulcan.action.ActionInfo;
-import com.liferay.portal.vulcan.action.DTOActionProvider;
+import com.liferay.portal.vulcan.dto.action.ActionInfo;
+import com.liferay.portal.vulcan.dto.action.DTOActionProvider;
 import com.liferay.portal.vulcan.util.ActionUtil;
 import com.liferay.portal.vulcan.util.UriInfoUtil;
 

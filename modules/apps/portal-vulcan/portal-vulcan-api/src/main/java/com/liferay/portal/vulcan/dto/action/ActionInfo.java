@@ -12,20 +12,35 @@
  * details.
  */
 
-package com.liferay.portal.vulcan.action;
-
-import java.util.Map;
-
-import javax.ws.rs.core.UriInfo;
+package com.liferay.portal.vulcan.dto.action;
 
 /**
  * @author Carlos Correa
  */
-public interface DTOActionProvider {
+public class ActionInfo {
 
-	public Map<String, ActionInfo> getActionInfos() throws Exception;
+	public ActionInfo(
+		String actionName, Class<?> resourceClass, String resourceMethodName) {
 
-	public Map<String, Map<String, String>> getActions(
-		long groupId, long primaryKey, UriInfo uriInfo, long userId);
+		_actionName = actionName;
+		_resourceClass = resourceClass;
+		_resourceMethodName = resourceMethodName;
+	}
+
+	public String getActionName() {
+		return _actionName;
+	}
+
+	public Class<?> getResourceClass() {
+		return _resourceClass;
+	}
+
+	public String getResourceMethodName() {
+		return _resourceMethodName;
+	}
+
+	private final String _actionName;
+	private final Class<?> _resourceClass;
+	private final String _resourceMethodName;
 
 }

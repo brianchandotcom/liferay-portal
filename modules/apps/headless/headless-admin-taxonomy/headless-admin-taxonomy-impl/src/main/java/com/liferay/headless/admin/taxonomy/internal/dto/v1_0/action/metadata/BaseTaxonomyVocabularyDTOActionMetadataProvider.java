@@ -16,7 +16,7 @@ package com.liferay.headless.admin.taxonomy.internal.dto.v1_0.action.metadata;
 
 import com.liferay.headless.admin.taxonomy.internal.resource.v1_0.TaxonomyVocabularyResourceImpl;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.vulcan.action.ActionInfo;
+import com.liferay.portal.vulcan.dto.action.ActionInfo;
 
 import java.util.HashMap;
 import java.util.Map;

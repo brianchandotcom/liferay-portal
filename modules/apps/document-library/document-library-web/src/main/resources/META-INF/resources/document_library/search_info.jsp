@@ -32,6 +32,12 @@ List<Folder> mountFolders = DLAppServiceUtil.getMountFolders(scopeGroupId, DLFol
 
 <c:if test="<%= (folder != null) || !mountFolders.isEmpty() %>">
 	<div class="search-info">
+		<c:if test='<%= dlAdminManagementToolbarDisplayContext.hasFilterLabelItems() && !mountFolders.isEmpty() && FeatureFlagManagerUtil.isEnabled("LPS-84424") %>'>
+			<clay:alert
+				displayType="info"
+				message="filters-only-apply-to-documents-in-local-repositories"
+			/>
+		</c:if>
 
 		<%
 		long repositoryId = ParamUtil.getLong(request, "repositoryId");

@@ -74,6 +74,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -362,88 +363,11 @@ public class DLAdminManagementToolbarDisplayContext
 
 	@Override
 	public List<LabelItem> getFilterLabelItems() {
-		long fileEntryTypeId = _getFileEntryTypeId();
+		if (_filterLabelItems == null) {
+			_filterLabelItems = _getFilterLabelItems();
+		}
 
-		LabelItemListBuilder.LabelItemListWrapper labelItemListWrapper =
-			new LabelItemListBuilder.LabelItemListWrapper();
-
-		_addAssetCategoriesFilterLabelItems(labelItemListWrapper);
-
-		_addExtensionFilterLabelItems(labelItemListWrapper);
-
-		_addAssetTagsFilterLabelItems(labelItemListWrapper);
-
-		labelItemListWrapper.add(
-			() -> fileEntryTypeId != -1,
-			labelItem -> {
-				labelItem.putData(
-					"removeLabelURL",
-					PortletURLBuilder.create(
-						PortletURLUtil.clone(
-							_currentURLObj, _liferayPortletResponse)
-					).setParameter(
-						"fileEntryTypeId", (String)null
-					).buildString());
-
-				labelItem.setCloseable(true);
-
-				String fileEntryTypeName = LanguageUtil.get(
-					_httpServletRequest, "basic-document");
-
-				if (fileEntryTypeId !=
-						DLFileEntryTypeConstants.
-							FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT) {
-
-					DLFileEntryType fileEntryType =
-						DLFileEntryTypeLocalServiceUtil.getFileEntryType(
-							fileEntryTypeId);
-
-					fileEntryTypeName = fileEntryType.getName(
-						_themeDisplay.getLocale());
-				}
-
-				labelItem.setLabel(
-					_getLabel("document-type", fileEntryTypeName));
-			});
-
-		labelItemListWrapper.add(
-			() -> Objects.equals(_getNavigation(), "mine"),
-			labelItem -> {
-				labelItem.putData(
-					"removeLabelURL",
-					PortletURLBuilder.create(
-						PortletURLUtil.clone(
-							_currentURLObj, _liferayPortletResponse)
-					).setNavigation(
-						(String)null
-					).buildString());
-
-				labelItem.setCloseable(true);
-
-				User user = _themeDisplay.getUser();
-
-				labelItem.setLabel(_getLabel("owner", user.getFullName()));
-			});
-
-		labelItemListWrapper.add(
-			_dlAdminDisplayContext::isNavigationRecent,
-			labelItem -> {
-				labelItem.putData(
-					"removeLabelURL",
-					PortletURLBuilder.create(
-						PortletURLUtil.clone(
-							_currentURLObj, _liferayPortletResponse)
-					).setNavigation(
-						(String)null
-					).buildString());
-
-				labelItem.setCloseable(true);
-
-				labelItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "recent"));
-			});
-
-		return labelItemListWrapper.build();
+		return _filterLabelItems;
 	}
 
 	@Override
@@ -548,6 +472,14 @@ public class DLAdminManagementToolbarDisplayContext
 				}
 			}
 		};
+	}
+
+	public boolean hasFilterLabelItems() {
+		if (ListUtil.isEmpty(getFilterLabelItems())) {
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override
@@ -784,6 +716,91 @@ public class DLAdminManagementToolbarDisplayContext
 
 	private long _getFileEntryTypeId() {
 		return ParamUtil.getLong(_httpServletRequest, "fileEntryTypeId", -1);
+	}
+
+	private List<LabelItem> _getFilterLabelItems() {
+		long fileEntryTypeId = _getFileEntryTypeId();
+
+		LabelItemListBuilder.LabelItemListWrapper labelItemListWrapper =
+			new LabelItemListBuilder.LabelItemListWrapper();
+
+		_addAssetCategoriesFilterLabelItems(labelItemListWrapper);
+
+		_addExtensionFilterLabelItems(labelItemListWrapper);
+
+		_addAssetTagsFilterLabelItems(labelItemListWrapper);
+
+		labelItemListWrapper.add(
+			() -> fileEntryTypeId != -1,
+			labelItem -> {
+				labelItem.putData(
+					"removeLabelURL",
+					PortletURLBuilder.create(
+						PortletURLUtil.clone(
+							_currentURLObj, _liferayPortletResponse)
+					).setParameter(
+						"fileEntryTypeId", (String)null
+					).buildString());
+
+				labelItem.setCloseable(true);
+
+				String fileEntryTypeName = LanguageUtil.get(
+					_httpServletRequest, "basic-document");
+
+				if (fileEntryTypeId !=
+						DLFileEntryTypeConstants.
+							FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT) {
+
+					DLFileEntryType fileEntryType =
+						DLFileEntryTypeLocalServiceUtil.getFileEntryType(
+							fileEntryTypeId);
+
+					fileEntryTypeName = fileEntryType.getName(
+						_themeDisplay.getLocale());
+				}
+
+				labelItem.setLabel(
+					_getLabel("document-type", fileEntryTypeName));
+			});
+
+		labelItemListWrapper.add(
+			() -> Objects.equals(_getNavigation(), "mine"),
+			labelItem -> {
+				labelItem.putData(
+					"removeLabelURL",
+					PortletURLBuilder.create(
+						PortletURLUtil.clone(
+							_currentURLObj, _liferayPortletResponse)
+					).setNavigation(
+						(String)null
+					).buildString());
+
+				labelItem.setCloseable(true);
+
+				User user = _themeDisplay.getUser();
+
+				labelItem.setLabel(_getLabel("owner", user.getFullName()));
+			});
+
+		labelItemListWrapper.add(
+			_dlAdminDisplayContext::isNavigationRecent,
+			labelItem -> {
+				labelItem.putData(
+					"removeLabelURL",
+					PortletURLBuilder.create(
+						PortletURLUtil.clone(
+							_currentURLObj, _liferayPortletResponse)
+					).setNavigation(
+						(String)null
+					).buildString());
+
+				labelItem.setCloseable(true);
+
+				labelItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "recent"));
+			});
+
+		return labelItemListWrapper.build();
 	}
 
 	private List<DropdownItem> _getFilterNavigationDropdownItems() {
@@ -1165,6 +1182,7 @@ public class DLAdminManagementToolbarDisplayContext
 		_dlPortletInstanceSettingsHelper;
 	private final DLRequestHelper _dlRequestHelper;
 	private final DLTrashHelper _dlTrashHelper;
+	private List<LabelItem> _filterLabelItems;
 	private Boolean _hasValidAssetVocabularies;
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;

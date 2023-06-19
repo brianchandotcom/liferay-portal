@@ -48,18 +48,6 @@ public class CommentUtil {
 			Comment comment, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		User commentUser = comment.getUser();
-
-		String portraitURL = StringPool.BLANK;
-
-		if (commentUser.getPortraitId() > 0) {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			portraitURL = commentUser.getPortraitURL(themeDisplay);
-		}
-
 		Date createDate = comment.getCreateDate();
 
 		String dateDescription = LanguageUtil.format(
@@ -77,14 +65,7 @@ public class CommentUtil {
 				System.currentTimeMillis() - modifiedDate.getTime(), true));
 
 		return JSONUtil.put(
-			"author",
-			JSONUtil.put(
-				"fullName", commentUser.getFullName()
-			).put(
-				"portraitURL", portraitURL
-			).put(
-				"userId", commentUser.getUserId()
-			)
+			"author", _getAuthorJSONObject(comment, httpServletRequest)
 		).put(
 			"body", comment.getBody()
 		).put(
@@ -119,6 +100,41 @@ public class CommentUtil {
 
 				return serviceContext;
 			});
+	}
+
+	private static JSONObject _getAuthorJSONObject(
+			Comment comment, HttpServletRequest httpServletRequest)
+		throws PortalException {
+
+		User commentUser = comment.getUser();
+
+		if (commentUser == null) {
+			return JSONUtil.put(
+				"fullName", LanguageUtil.get(httpServletRequest, "deleted-user")
+			).put(
+				"portraitURL", StringPool.BLANK
+			).put(
+				"userId", 0L
+			);
+		}
+
+		String portraitURL = StringPool.BLANK;
+
+		if (commentUser.getPortraitId() > 0) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			portraitURL = commentUser.getPortraitURL(themeDisplay);
+		}
+
+		return JSONUtil.put(
+			"fullName", commentUser.getFullName()
+		).put(
+			"portraitURL", portraitURL
+		).put(
+			"userId", commentUser.getUserId()
+		);
 	}
 
 	private static int _getWorkflowAction(ActionRequest actionRequest) {

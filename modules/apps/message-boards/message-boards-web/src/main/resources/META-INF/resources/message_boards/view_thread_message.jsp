@@ -84,7 +84,7 @@ User messageUser = UserLocalServiceUtil.fetchUser(message.getUserId());
 					</c:choose>
 
 					<c:if test="<%= message.isAnswer() %>">
-						(<liferay-ui:message key="answer" />)
+						(<liferay-ui:message key="answer[noun]" />)
 					</c:if>
 				</h4>
 

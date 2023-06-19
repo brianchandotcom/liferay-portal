@@ -62,7 +62,7 @@ DecimalFormat decimalFormat = portletConfigurationCSSPortletDisplayContext.getDe
 			<aui:option label="justify" selected='<%= Objects.equals(portletConfigurationCSSPortletDisplayContext.getTextDataProperty("textAlign"), "justify") %>' />
 			<aui:option label="left" selected='<%= Objects.equals(portletConfigurationCSSPortletDisplayContext.getTextDataProperty("textAlign"), "left") %>' />
 			<aui:option label="right" selected='<%= Objects.equals(portletConfigurationCSSPortletDisplayContext.getTextDataProperty("textAlign"), "right") %>' />
-			<aui:option label="center" selected='<%= Objects.equals(portletConfigurationCSSPortletDisplayContext.getTextDataProperty("textAlign"), "center") %>' />
+			<aui:option label="center[alignment]" selected='<%= Objects.equals(portletConfigurationCSSPortletDisplayContext.getTextDataProperty("textAlign"), "center") %>' />
 		</aui:select>
 
 		<aui:select label="text-decoration" name="textDecoration" showEmptyOption="<%= true %>">

@@ -83,7 +83,7 @@ if (messageId > 0) {
 						<%= HtmlUtil.escape(message.getSubject()) %>
 
 						<c:if test="<%= message.isAnswer() %>">
-							(<liferay-ui:message key="answer" />)
+							(<liferay-ui:message key="answer[noun]" />)
 						</c:if>
 					</h4>
 

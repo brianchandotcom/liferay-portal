@@ -112,6 +112,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DIAGRAM_PIN_SIZE_BUTTON_TEXT</td>
+	<td>//label[contains(.,'Pin Size')]//following-sibling::div/button[contains(@class,'dropdown-toggle') and (@type='button') and contains(.,'${key_text}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DIAGRAM_PIN_SIZE_DROPDOWN</td>
 	<td>//div[@class='dropdown-menu show']//button[contains(.,'${key_pinSize}')]</td>
 	<td></td>
@@ -129,6 +134,11 @@
 <tr>
 	<td>DIAGRAM_PIN_SIZE_LARGE</td>
 	<td>//*[name()='svg']//*[name()='g' and @transform='scale(2)']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DIAGRAM_PIN_SIZE_CUSTOM</td>
+	<td>//*[name()='svg']//*[name()='g' and @transform='scale(${key_value})']</td>
 	<td></td>
 </tr>
 <tr>

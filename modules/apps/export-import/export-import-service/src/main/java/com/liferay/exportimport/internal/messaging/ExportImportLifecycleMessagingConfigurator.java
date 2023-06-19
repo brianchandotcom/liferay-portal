@@ -42,12 +42,10 @@ public class ExportImportLifecycleMessagingConfigurator {
 		_bundleContext = bundleContext;
 
 		_registerDestination(
-			bundleContext,
-			DestinationNames.EXPORT_IMPORT_LIFECYCLE_EVENT_ASYNC,
+			bundleContext, DestinationNames.EXPORT_IMPORT_LIFECYCLE_EVENT_ASYNC,
 			DestinationConfiguration.DESTINATION_TYPE_SERIAL);
 		_registerDestination(
-			bundleContext,
-			DestinationNames.EXPORT_IMPORT_LIFECYCLE_EVENT_SYNC,
+			bundleContext, DestinationNames.EXPORT_IMPORT_LIFECYCLE_EVENT_SYNC,
 			DestinationConfiguration.DESTINATION_TYPE_SYNCHRONOUS);
 	}
 

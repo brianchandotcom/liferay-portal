@@ -19,6 +19,8 @@ definition {
 	}
 
 	macro viewProductMenuBlacklistedModule {
+		WaitForConsoleTextPresent(value1 = ${consoleText});
+
 		ApplicationsMenuHelper.openApplicationsMenu();
 
 		Navigator.gotoNavTab(navTab = ${panel});
@@ -28,8 +30,6 @@ definition {
 			key_portlet = ${portlet},
 			locator1 = "ApplicationsMenu#PORTLET",
 			value1 = ${portlet});
-
-		AssertConsoleTextPresent(value1 = ${consoleText});
 	}
 
 }

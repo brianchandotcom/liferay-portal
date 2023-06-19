@@ -334,12 +334,9 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-7023. EditTheDefaultSettingForPinsCreation"
-	@ignore = "true"
 	@priority = 3
 	test EditTheDefaultSettingForPinsCreation {
 		property portal.acceptance = "false";
-
-		// Test is ignored due to COMMERCE-9646
 
 		task ("Given a diagram product with an image") {
 			CommerceNavigator.gotoPortlet(
@@ -379,6 +376,10 @@ definition {
 
 			CommerceDiagram.selectPinSize(pinSize = "Small");
 
+			Button.clickPublish();
+
+			Refresh();
+
 			CommerceDiagram.addPin(
 				label = "Test",
 				pinNumber = 1,
@@ -395,21 +396,30 @@ definition {
 		task ("Then the user can change and assert the pin size") {
 			CommerceDiagram.assertPinSize(pinSize = "Small");
 
-			CommerceDiagram.selectPinSize(pinSize = "Medium");
+			for (var pinSize : list "Medium,Large") {
+				CommerceDiagram.selectPinSize(pinSize = ${pinSize});
+
+				Button.clickPublish();
+
+				Refresh();
+
+				CommerceDiagram.assertPinSize(pinSize = ${pinSize});
+			}
+
+			Click(locator1 = "CommerceDiagrams#DIAGRAM_PIN_SIZE_BUTTON");
+
+			KeyPress(
+				key_dateId = "custom",
+				locator1 = "FrontendDataSet#FILTER_DATE_RANGE",
+				value1 = "\RIGHT");
 
 			Button.clickPublish();
 
 			Refresh();
 
-			CommerceDiagram.assertPinSize(pinSize = "Medium");
-
-			CommerceDiagram.selectPinSize(pinSize = "Large");
-
-			Button.clickPublish();
-
-			Refresh();
-
-			CommerceDiagram.assertPinSize(pinSize = "Large");
+			CommerceDiagram.assertPinSize(
+				pinSize = "Custom",
+				value = "2.25");
 		}
 	}
 

@@ -16,8 +16,12 @@ import {Liferay} from './liferay.js';
 
 const {REACT_APP_LIFERAY_HOST = window.location.origin} = process.env;
 
-const baseFetch = async (url, options = {}) => {
-	return fetch(REACT_APP_LIFERAY_HOST + '/' + url, {
+const baseFetch = async (url, params, options = {}) => {
+	const urlObject = new URL(REACT_APP_LIFERAY_HOST + url);
+
+	urlObject.search = params.toString();
+
+	return fetch(urlObject, {
 		headers: {
 			'Content-Type': 'application/json',
 			'x-csrf-token': Liferay.authToken,

@@ -127,7 +127,7 @@ public class JIRAUtil {
 		throws IOException {
 
 		URL url = new URL(
-			"https://issues.liferay.com/rest/api/2/issue/" + jiraTicketId);
+			"https://liferay.atlassian.net/rest/api/3/issue/" + jiraTicketId);
 
 		HttpURLConnection httpURLConnection =
 			(HttpURLConnection)url.openConnection();

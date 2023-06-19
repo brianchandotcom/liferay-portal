@@ -14,6 +14,7 @@
 
 package com.liferay.headless.builder.test.validation.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -33,11 +34,13 @@ import org.junit.ClassRule;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Sergio Jiménez del Coso
  */
 @Ignore
+@RunWith(Arquillian.class)
 public class APISchemaObjectEntryModelListenerTest {
 
 	@ClassRule

@@ -62,7 +62,15 @@ public class APISchemaObjectEntryModelListenerTest {
 
 	@Test
 	public void testPostAPISchemaRelatedWithAPIApplication() throws Exception {
-		JSONObject apiApplicationJSONObject = _createAPIApplicationJSONObject();
+		JSONObject apiApplicationJSONObject = HTTPTestUtil.invoke(
+			JSONUtil.put(
+				"applicationStatus", "published"
+			).put(
+				"baseURL", RandomTestUtil.randomString()
+			).put(
+				"title", RandomTestUtil.randomString()
+			).toString(),
+			"headless-builder/applications", Http.Method.POST);
 
 		JSONObject jsonObject = HTTPTestUtil.invoke(
 			JSONUtil.put(
@@ -82,18 +90,6 @@ public class APISchemaObjectEntryModelListenerTest {
 			).get(
 				"code"
 			));
-	}
-
-	private JSONObject _createAPIApplicationJSONObject() throws Exception {
-		return HTTPTestUtil.invoke(
-			JSONUtil.put(
-				"applicationStatus", "published"
-			).put(
-				"baseURL", RandomTestUtil.randomString()
-			).put(
-				"title", RandomTestUtil.randomString()
-			).toString(),
-			"headless-builder/applications", Http.Method.POST);
 	}
 
 }

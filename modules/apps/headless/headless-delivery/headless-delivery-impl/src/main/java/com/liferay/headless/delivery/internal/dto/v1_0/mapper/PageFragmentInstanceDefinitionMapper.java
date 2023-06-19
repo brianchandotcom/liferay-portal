@@ -59,6 +59,7 @@ import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONException;
@@ -678,6 +679,10 @@ public class PageFragmentInstanceDefinitionMapper {
 
 	private FragmentFieldAction _toFragmentFieldAction(
 		JSONObject jsonObject, boolean saveInlineContent, boolean saveMapping) {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-169992")) {
+			return null;
+		}
 
 		JSONObject configJSONObject = jsonObject.getJSONObject("config");
 

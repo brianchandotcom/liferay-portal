@@ -17,6 +17,7 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.util.MappingContentUtil;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -28,6 +29,8 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.Locale;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -63,9 +66,8 @@ public class GetMappingFieldsMVCResourceCommand extends BaseMVCResourceCommand {
 		try {
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,
-				MappingContentUtil.getMappingFieldsJSONArray(
-					classTypeId, themeDisplay.getScopeGroupId(),
-					_infoItemServiceRegistry, _portal.getClassName(classNameId),
+				_getMappingFieldsJSONArray(
+					classNameId, classTypeId, themeDisplay.getScopeGroupId(),
 					themeDisplay.getLocale()));
 		}
 		catch (Exception exception) {
@@ -79,6 +81,15 @@ public class GetMappingFieldsMVCResourceCommand extends BaseMVCResourceCommand {
 						themeDisplay.getRequest(),
 						"an-unexpected-error-occurred")));
 		}
+	}
+
+	private JSONArray _getMappingFieldsJSONArray(
+			long classNameId, String classTypeId, long groupId, Locale locale)
+		throws Exception {
+
+		return MappingContentUtil.getMappingFieldsJSONArray(
+			classTypeId, groupId, _infoItemServiceRegistry,
+			_portal.getClassName(classNameId), locale);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

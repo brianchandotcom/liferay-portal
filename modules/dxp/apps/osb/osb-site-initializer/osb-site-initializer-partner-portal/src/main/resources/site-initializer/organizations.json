@@ -2,99 +2,95 @@
 	{
 		"childOrganizations": [
 			{
-				"externalReferenceCode": "PRM-ORG-AFRICA",
+				"externalReferenceCode": "d5393ad9-0574-224e-4b23-0456312ff197",
 				"name": "Africa"
 			},
 			{
-				"externalReferenceCode": "PRM-ORG-ANZ",
+				"externalReferenceCode": "ffec0d1f-7378-3136-c9a6-00256b76a91a",
 				"name": "ANZ"
 			},
 			{
-				"externalReferenceCode": "PRM-ORG-ARG-URU-PAR",
-				"name": "Argentina, Uruguay, Paraguay"
-			},
-			{
-				"externalReferenceCode": "PRM-ORG-BENELUX",
+				"externalReferenceCode": "42d01404-6c60-fc48-2f1b-65126e130ee0",
 				"name": "BENELUX"
 			},
 			{
-				"externalReferenceCode": "PRM-ORG-CANADA",
+				"externalReferenceCode": "a0ea6113-ca59-02f5-5365-c0d241a18be4",
 				"name": "Canada"
 			},
 			{
-				"externalReferenceCode": "PRM-ORG-CEN-AMERICA",
+				"externalReferenceCode": "cb8e2c59-5e8f-bd99-9fe5-f2a3c820a035",
 				"name": "Central America"
 			},
 			{
-				"externalReferenceCode": "PRM-ORG-CEN-EAST-EUR",
+				"externalReferenceCode": "ca13b399-56ea-ccc2-9a1f-eed2c15d305b",
 				"name": "CENTRAL AND EASTERN EUROPE"
 			},
 			{
-				"externalReferenceCode": "PRM-ORG-CHILE-PERU",
-				"name": "Chile, Peru"
+				"externalReferenceCode": "c6646814-e32f-7a88-7477-557d4093329f",
+				"name": "Chile, Peru, Argentina, Uruguay, Paraguay"
 			},
 			{
-				"externalReferenceCode": "PRM-ORG-CHINA",
+				"externalReferenceCode": "fad5c76b-70da-3384-1b4c-a880474efeb3",
 				"name": "China"
 			},
 			{
-				"externalReferenceCode": "PRM-ORG-COL-ECU",
+				"externalReferenceCode": "bdb765a0-02f1-e288-e0af-58731e111a7f",
 				"name": "Colombia, Ecuador"
 			},
 			{
-				"externalReferenceCode": "PRM-ORG-DACH",
+				"externalReferenceCode": "b840c017-57b2-d63c-0375-d3f8762e0ada",
 				"name": "DACH"
 			},
 			{
-				"externalReferenceCode": "PRM-ORG-FRANCE",
+				"externalReferenceCode": "a6902a22-baf8-7b0e-1349-d4fb39217f3a",
 				"name": "France"
 			},
 			{
-				"externalReferenceCode": "PRM-ORG-INDIA",
+				"externalReferenceCode": "b85f2ff4-6e90-b4d2-ffd8-5c41dbf47fdb",
 				"name": "India"
 			},
 			{
-				"externalReferenceCode": "PRM-ORG-ITGRCY",
+				"externalReferenceCode": "bfa5751a-ac30-53ea-f05e-d1f0026c704c",
 				"name": "itGrCy"
 			},
 			{
-				"externalReferenceCode": "PRM-ORG-JAPAN",
+				"externalReferenceCode": "b330e43c-bd94-aa00-4083-262229477bf8",
 				"name": "Japan"
 			},
 			{
-				"externalReferenceCode": "PRM-ORG-LAT-AMERICA",
+				"externalReferenceCode": "b575c839-75c4-42c4-429d-478bee98995f",
 				"name": "Latim America"
 			},
 			{
-				"externalReferenceCode": "PRM-ORG-MEXICO",
+				"externalReferenceCode": "9a5f9487-19c3-78ca-8b5f-fdc370c991a6",
 				"name": "Mexico"
 			},
 			{
-				"externalReferenceCode": "PRM-ORG-MIDDLE-EAST",
+				"externalReferenceCode": "f584e439-df69-1610-a10e-697cde79ade1",
 				"name": "Middle East"
 			},
 			{
-				"externalReferenceCode": "PRM-ORG-NORDICS",
+				"externalReferenceCode": "9297346a-a3d2-98fa-0384-a331d5c1baec",
 				"name": "Nordics"
 			},
 			{
-				"externalReferenceCode": "PRM-ORG-SINGAPORE",
+				"externalReferenceCode": "f5fac655-34e8-2d85-03c3-fbd311d772a2",
 				"name": "Singapore"
 			},
 			{
-				"externalReferenceCode": "PRM-ORG-SPA-POR",
+				"externalReferenceCode": "36c869c6-9f2e-2b82-8e2f-390931759555",
 				"name": "SpainPortugal"
 			},
 			{
-				"externalReferenceCode": "PRM-ORG-UK",
+				"externalReferenceCode": "4936f77f-a2ad-6f73-2417-4847eb6517af",
 				"name": "UK"
 			},
 			{
-				"externalReferenceCode": "PRM-ORG-US",
+				"externalReferenceCode": "074b0d0c-a330-a8cd-92c2-ef26d027f071",
 				"name": "US"
 			}
 		],
-		"externalReferenceCode": "PRM-ORG-GLOBAL",
+		"externalReferenceCode": "9f923dc5-d18c-33c0-369b-266311e3a5d2",
 		"name": "Global"
 	}
 ]

@@ -114,6 +114,8 @@ public class SXPBlueprintInfoCollectionProvider
 				"scope"
 			).attribute(
 				SelectInfoFieldType.OPTIONS, _getOptions()
+			).attribute(
+				SelectInfoFieldType.MULTIPLE, true
 			).labelInfoLocalizedValue(
 				InfoLocalizedValue.localize(getClass(), "Scope")
 			).localizable(
@@ -162,6 +164,7 @@ public class SXPBlueprintInfoCollectionProvider
 
 		List<SelectInfoFieldType.Option> options = ListUtil.fromArray(
 			new SelectInfoFieldType.Option(
+				true,
 				new ResourceBundleInfoLocalizedValue(getClass(), "This Site"),
 				String.valueOf(serviceContext.getScopeGroupId())));
 
@@ -190,11 +193,19 @@ public class SXPBlueprintInfoCollectionProvider
 		Map<String, String[]> configuration =
 			collectionQuery.getConfiguration();
 
+		String[] scopes = configuration.get("scope");
+
+		long[] groupIds = new long[scopes.length];
+
+		for (String scope : scopes) {
+			groupIds = ArrayUtil.append(groupIds, GetterUtil.getLong(scope));
+		}
+
 		return _searchRequestBuilderFactory.builder(
 		).companyId(
 			serviceContext.getCompanyId()
 		).groupIds(
-			GetterUtil.getLong(configuration.get("scope")[0])
+			groupIds
 		).from(
 			pagination.getStart()
 		).emptySearchEnabled(

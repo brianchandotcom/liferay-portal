@@ -586,7 +586,11 @@ typeSettings=&#91;&quot;friendlyURLMapping=perico&quot;,&quot;instanceable=false
 						f{a[$0]=$0}' ${1} |
 					sed 's=/[^/]*$==;s/\,$//' |
 					sed 's/_x_.*//' |
-					sed '/lpartition_/d'
+					sed 's/\/\*.*\*//' |
+					sed 's/.*ENGINE\=InnoDB.*/ENDCREATE/' |
+					sed '/SET /d' |
+					sed '/lpartition_/d' |
+					sed '/^$/d'
 				]]>
 			</echo>
 

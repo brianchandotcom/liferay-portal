@@ -5199,8 +5199,8 @@ definition {
 
 			SAML.addIDPConfigurationsToServiceProvider(
 				idpAttributeMapping = "UUID,emailAddress,firstName,lastName,screenName",
-				idpEntityId = "http://www.okta.com/exk4vnzhchhTz7tAc697",
-				idpMetadataURLRaw = "https://trial-1460961.okta.com/app/exk4vnzhchhTz7tAc697/sso/saml/metadata",
+				idpEntityId = "http://www.okta.com/exka0uuf1q7RZCdmV5d7",
+				idpMetadataURLRaw = "https://dev-68908313.okta.com/app/exka0uuf1q7RZCdmV5d7/sso/saml/metadata",
 				idpUserMembershipsAttributeMapping = "userGroups",
 				idpUserMembershipsAttributeMappingText = "userGroup",
 				nameIdentifierFormat = "Email Address",
@@ -5256,8 +5256,8 @@ definition {
 
 			SAML.addIDPConfigurationsToServiceProvider(
 				idpAttributeMapping = "UUID,emailAddress,firstName,lastName,screenName",
-				idpEntityId = "http://www.okta.com/exk4vnzhchhTz7tAc697",
-				idpMetadataURLRaw = "https://trial-1460961.okta.com/app/exk4vnzhchhTz7tAc697/sso/saml/metadata",
+				idpEntityId = "http://www.okta.com/exka0uuf1q7RZCdmV5d7",
+				idpMetadataURLRaw = "https://dev-68908313.okta.com/app/exka0uuf1q7RZCdmV5d7/sso/saml/metadata",
 				idpUserMembershipsAttributeMapping = "userGroups",
 				idpUserMembershipsAttributeMappingText = "userGroup",
 				nameIdentifierFormat = "Email Address",
@@ -5335,8 +5335,8 @@ definition {
 
 			SAML.addIDPConfigurationsToServiceProvider(
 				idpAttributeMapping = "UUID,emailAddress,firstName,lastName,screenName",
-				idpEntityId = "http://www.okta.com/exk4vnzhchhTz7tAc697",
-				idpMetadataURLRaw = "https://trial-1460961.okta.com/app/exk4vnzhchhTz7tAc697/sso/saml/metadata",
+				idpEntityId = "http://www.okta.com/exka0uuf1q7RZCdmV5d7",
+				idpMetadataURLRaw = "https://dev-68908313.okta.com/app/exka0uuf1q7RZCdmV5d7/sso/saml/metadata",
 				idpUserMembershipsAttributeMapping = "userGroups",
 				idpUserMembershipsAttributeMappingText = "userGroup",
 				nameIdentifierFormat = "Email Address",
@@ -5402,8 +5402,8 @@ definition {
 
 			SAML.addIDPConfigurationsToServiceProvider(
 				idpAttributeMapping = "UUID,emailAddress,firstName,lastName,screenName",
-				idpEntityId = "http://www.okta.com/exk4vnzhchhTz7tAc697",
-				idpMetadataURLRaw = "https://trial-1460961.okta.com/app/exk4vnzhchhTz7tAc697/sso/saml/metadata",
+				idpEntityId = "http://www.okta.com/exka0uuf1q7RZCdmV5d7",
+				idpMetadataURLRaw = "https://dev-68908313.okta.com/app/exka0uuf1q7RZCdmV5d7/sso/saml/metadata",
 				idpUserMembershipsAttributeMapping = "userGroups",
 				idpUserMembershipsAttributeMappingText = "userGroup",
 				nameIdentifierFormat = "Email Address",

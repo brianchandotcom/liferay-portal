@@ -7,7 +7,7 @@ components:
             properties:
                 externalReferenceCode:
                     description:
-                        The optional external key of this account.
+                        The site's external reference code.
                     type: string
                 friendlyUrlPath:
                     readOnly: true

@@ -118,8 +118,6 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
 		task ("Delete subtask, task, routine, case type, factor category and project via API") {
 			JSONTestrayAPI.deleteObjectViaAPI(
 				object = "subtasks",
@@ -152,6 +150,8 @@ definition {
 			Testray.testrayApisTearDown();
 		}
 
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
@@ -160,6 +160,8 @@ definition {
 	@description = "Story ID: LPS-164985 | Test Summary: Verify that can go to the build associated with a task from the sidebar"
 	@priority = 3
 	test AdminCanGoToBuildFromTheSidebar {
+		property test.name.skip.portal.instance = "TestraySubtaskSidebar#AdminCanGoToBuildFromTheSidebar";
+
 		task ("Given that the user reanalyze a task") {
 			TestrayTestflow.goToTask(taskName = "Task_1");
 
@@ -187,6 +189,8 @@ definition {
 	@description = "Story ID: LPS-164985 | Test Summary: Verify that can go to the Subtask from the sidebar"
 	@priority = 3
 	test AdminCanGoToSubtaskFromTheSidebar {
+		property test.name.skip.portal.instance = "TestraySubtaskSidebar#AdminCanGoToSubtaskFromTheSidebar";
+
 		task ("Given that the user reanalyze a task") {
 			TestrayTestflow.goToTask(taskName = "Task_1");
 
@@ -223,6 +227,8 @@ definition {
 	@description = "Story ID: LPS-164985 | Test Summary: Verify that can go to the task from the sidebar"
 	@priority = 3
 	test AdminCanGoToTaskFromTheSidebar {
+		property test.name.skip.portal.instance = "TestraySubtaskSidebar#AdminCanGoToTaskFromTheSidebar";
+
 		task ("Given that the user reanalyze a task") {
 			TestrayTestflow.goToTask(taskName = "Task_1");
 
@@ -249,6 +255,8 @@ definition {
 	@description = "Story ID: LPS-164985 | Test Summary: Verify that can see the details of a re-examined subtask in the sidebar"
 	@priority = 3
 	test AdminCanSeeSubtaskReexaminedInSidebar {
+		property test.name.skip.portal.instance = "TestraySubtaskSidebar#AdminCanSeeSubtaskReexaminedInSidebar";
+
 		task ("Given that the user reanalyze a task") {
 			TestrayTestflow.goToTask(taskName = "Task_1");
 

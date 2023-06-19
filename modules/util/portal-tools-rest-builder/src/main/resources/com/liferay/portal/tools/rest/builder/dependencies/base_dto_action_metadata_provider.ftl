@@ -20,7 +20,7 @@ public abstract class Base${schemaName}DTOActionMetadataProvider {
 
 	public Base${schemaName}DTOActionMetadataProvider() {
 		<#list actionPropertyNames as actionPropertyName>
-			_actionInfoMap.put("${actionPropertyName}", new ActionInfo(get${actionPropertyName?cap_first}ActionKey(), ${schemaName}ResourceImpl.class, get${actionPropertyName?cap_first}ResourceMethodName()));
+			_actionInfoMap.put("${actionPropertyName}", new ActionInfo(get${actionPropertyName?cap_first}ActionName(), ${schemaName}ResourceImpl.class, get${actionPropertyName?cap_first}ResourceMethodName()));
 		</#list>
 	}
 
@@ -35,17 +35,17 @@ public abstract class Base${schemaName}DTOActionMetadataProvider {
 	public abstract String getPermissionName();
 
 	<#list actionPropertyNames as actionPropertyName>
-		<#assign actionKey = freeMarkerTool.getActionKey(actionPropertyName)!"" />
+		<#assign actionName = freeMarkerTool.getActionName(actionPropertyName)!"" />
 
-		protected String get${actionPropertyName?cap_first}ActionKey() {
-			return ActionKeys.${actionKey!};
+		protected String get${actionPropertyName?cap_first}ActionName() {
+			return ActionKeys.${actionName!};
 		}
 
-		<#assign actionResourceName = freeMarkerTool.getActionResourceName(javaMethodSignatures, actionPropertyName)!"" />
+		<#assign resourceMethodName = freeMarkerTool.getResourceMethodName(javaMethodSignatures, actionPropertyName)!"" />
 
-		<#if actionResourceName?has_content>
+		<#if resourceMethodName?has_content>
 			protected String get${actionPropertyName?cap_first}ResourceMethodName() {
-				return "${actionResourceName!}";
+				return "${resourceMethodName!}";
 			}
 		<#else>
 			protected abstract String get${actionPropertyName?cap_first}ResourceMethodName();

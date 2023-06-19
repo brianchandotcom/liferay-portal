@@ -66,7 +66,7 @@ import java.util.function.Consumer;
  */
 public class ResourceOpenAPIParser {
 
-	public static String getActionResourceName(
+	public static String getResourceMethodName(
 		List<JavaMethodSignature> javaMethodSignatures, String propertyName) {
 
 		for (JavaMethodSignature javaMethodSignature : javaMethodSignatures) {

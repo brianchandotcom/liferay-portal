@@ -44,17 +44,17 @@ public class KeywordDTOActionMetadataProvider
 	}
 
 	@Override
-	protected String getDeleteActionKey() {
+	protected String getDeleteActionName() {
 		return ActionKeys.MANAGE_TAG;
 	}
 
 	@Override
-	protected String getGetActionKey() {
+	protected String getGetActionName() {
 		return ActionKeys.MANAGE_TAG;
 	}
 
 	@Override
-	protected String getReplaceActionKey() {
+	protected String getReplaceActionName() {
 		return ActionKeys.MANAGE_TAG;
 	}
 

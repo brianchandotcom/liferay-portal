@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.vulcan.dto.action.ActionInfo;
 
 /**
- * @author Javier Gamarra
+ * @author Carlos Correa
  */
 public class TaxonomyCategoryDTOActionMetadataProvider
 	extends BaseTaxonomyCategoryDTOActionMetadataProvider {

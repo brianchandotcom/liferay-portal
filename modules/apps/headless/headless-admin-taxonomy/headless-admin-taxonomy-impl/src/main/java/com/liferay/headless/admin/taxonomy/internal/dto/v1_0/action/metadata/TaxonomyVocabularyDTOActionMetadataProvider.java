@@ -17,7 +17,7 @@ package com.liferay.headless.admin.taxonomy.internal.dto.v1_0.action.metadata;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 
 /**
- * @author Javier Gamarra
+ * @author Carlos Correa
  */
 public class TaxonomyVocabularyDTOActionMetadataProvider
 	extends BaseTaxonomyVocabularyDTOActionMetadataProvider {

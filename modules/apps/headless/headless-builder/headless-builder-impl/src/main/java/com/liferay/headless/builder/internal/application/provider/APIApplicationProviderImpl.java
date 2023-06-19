@@ -33,6 +33,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import javax.ws.rs.NotFoundException;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -52,7 +54,8 @@ public class APIApplicationProviderImpl implements APIApplicationProvider {
 			companyId, "baseURL eq '" + baseURL + "'", "MSOD_API_APPLICATION");
 
 		if (objectEntry == null) {
-			return null;
+			throw new NotFoundException(
+				"APIApplication with baseURL " + baseURL + " not found.");
 		}
 
 		List<APIApplication.Schema> schemas = _getSchemas(

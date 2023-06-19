@@ -20,11 +20,11 @@ import com.liferay.content.dashboard.info.item.ClassNameClassPKInfoItemIdentifie
 import com.liferay.content.dashboard.item.ContentDashboardItemFactory;
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtype;
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtypeFactory;
-import com.liferay.content.dashboard.web.internal.display.context.ContentDashboardItemSubtypeItemSelectorViewDisplayContext;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactoryRegistry;
 import com.liferay.content.dashboard.web.internal.item.selector.criteria.content.dashboard.type.criterion.ContentDashboardItemSubtypeItemSelectorCriterion;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
+import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemFormVariation;
 import com.liferay.info.item.InfoItemReference;
@@ -50,11 +50,15 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.template.react.renderer.ComponentDescriptor;
+import com.liferay.portal.template.react.renderer.ReactRenderer;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -67,11 +71,9 @@ import java.util.Set;
 
 import javax.portlet.PortletURL;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -110,28 +112,27 @@ public class ContentDashboardItemSubtypeItemSelectorView
 			ContentDashboardItemSubtypeItemSelectorCriterion
 				contentDashboardItemSubtypeItemSelectorCriterion,
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
-		throws IOException, ServletException {
+		throws IOException {
 
-		try {
-			servletRequest.setAttribute(
-				ContentDashboardItemSubtypeItemSelectorViewDisplayContext.class.
-					getName(),
-				new ContentDashboardItemSubtypeItemSelectorViewDisplayContext(
-					_getContentDashboardItemTypesJSONArray(
-						servletRequest,
-						(ThemeDisplay)servletRequest.getAttribute(
-							WebKeys.THEME_DISPLAY)),
-					itemSelectedEventName));
-		}
-		catch (JSONException jsonException) {
-			throw new IOException(jsonException);
-		}
+		PrintWriter writer = servletResponse.getWriter();
 
-		RequestDispatcher requestDispatcher =
-			_servletContext.getRequestDispatcher(
-				"/view_content_dashboard_item_types.jsp");
+		writer.write("<section class=\"h-100\">");
 
-		requestDispatcher.include(servletRequest, servletResponse);
+		String moduleName = _npmResolver.resolveModuleName(
+			"@liferay/content-dashboard-web");
+
+		_reactRenderer.renderReact(
+			new ComponentDescriptor(
+				moduleName + "/js/components/SelectTypeAndSubtype"),
+			HashMapBuilder.<String, Object>put(
+				"contentDashboardItemTypes",
+				_getContentDashboardItemTypesJSONArray(servletRequest)
+			).put(
+				"itemSelectorSaveEvent", itemSelectedEventName
+			).build(),
+			(HttpServletRequest)servletRequest, writer);
+
+		writer.write("</section>");
 	}
 
 	private Set<InfoItemReference>
@@ -168,8 +169,10 @@ public class ContentDashboardItemSubtypeItemSelectorView
 	}
 
 	private JSONArray _getContentDashboardItemTypesJSONArray(
-			ServletRequest servletRequest, ThemeDisplay themeDisplay)
-		throws JSONException {
+		ServletRequest servletRequest) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)servletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		Set<InfoItemReference>
 			checkedContentDashboardItemSubtypesInfoItemReferences =
@@ -440,9 +443,10 @@ public class ContentDashboardItemSubtypeItemSelectorView
 	@Reference
 	private Language _language;
 
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.content.dashboard.web)"
-	)
-	private ServletContext _servletContext;
+	@Reference
+	private NPMResolver _npmResolver;
+
+	@Reference
+	private ReactRenderer _reactRenderer;
 
 }

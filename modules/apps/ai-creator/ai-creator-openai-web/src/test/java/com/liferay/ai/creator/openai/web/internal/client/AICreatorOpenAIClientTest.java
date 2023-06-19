@@ -15,6 +15,7 @@
 package com.liferay.ai.creator.openai.web.internal.client;
 
 import com.liferay.ai.creator.openai.web.internal.exception.AICreatorOpenAIClientException;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONObjectImpl;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -119,111 +120,44 @@ public class AICreatorOpenAIClientTest {
 
 	@Test
 	public void testGetCompletionIOException() throws Exception {
-		IOException ioException = new IOException();
-
-		Mockito.when(
-			_http.URLtoInputStream(Mockito.any(Http.Options.class))
-		).thenThrow(
-			ioException
-		);
-
 		_mockLanguage();
 
-		String apiKey = RandomTestUtil.randomString();
 		String content = RandomTestUtil.randomString();
 
-		try {
-			_aiCreatorOpenAIClient.getCompletion(
+		_testIOException(
+			content, ContentTypes.APPLICATION_JSON,
+			"https://api.openai.com/v1/chat/completions",
+			apiKey -> _aiCreatorOpenAIClient.getCompletion(
 				apiKey, content, LocaleUtil.getDefault(),
-				RandomTestUtil.randomString(), RandomTestUtil.randomInt());
-
-			Assert.fail();
-		}
-		catch (AICreatorOpenAIClientException aiCreatorOpenAIClientException) {
-			Assert.assertEquals(
-				ioException, aiCreatorOpenAIClientException.getCause());
-		}
-
-		_assertOptions(
-			apiKey, content, ContentTypes.APPLICATION_JSON,
-			"https://api.openai.com/v1/chat/completions");
+				RandomTestUtil.randomString(), RandomTestUtil.randomInt()));
 	}
 
 	@Test
 	public void testGetCompletionResponseWithErrorKey() throws Exception {
-		JSONObject errorJSONObject = JSONUtil.put(
-			"code", RandomTestUtil.randomString()
-		).put(
-			"message", RandomTestUtil.randomString()
-		);
-
-		Http.Response response = _getMockResponse(
-			HttpURLConnection.HTTP_OK, JSONUtil.put("error", errorJSONObject));
-
 		_mockLanguage();
 
-		String apiKey = RandomTestUtil.randomString();
 		String content = RandomTestUtil.randomString();
 
-		try {
-			_aiCreatorOpenAIClient.getCompletion(
+		_testResponseWithErrorKey(
+			content, ContentTypes.APPLICATION_JSON,
+			"https://api.openai.com/v1/chat/completions",
+			apiKey -> _aiCreatorOpenAIClient.getCompletion(
 				apiKey, content, LocaleUtil.getDefault(),
-				RandomTestUtil.randomString(), RandomTestUtil.randomInt());
-
-			Assert.fail();
-		}
-		catch (AICreatorOpenAIClientException aiCreatorOpenAIClientException) {
-			Assert.assertEquals(
-				errorJSONObject.getString("code"),
-				aiCreatorOpenAIClientException.getCode());
-			Assert.assertEquals(
-				errorJSONObject.getString("message"),
-				aiCreatorOpenAIClientException.getMessage());
-
-			Assert.assertEquals(
-				HttpURLConnection.HTTP_OK,
-				aiCreatorOpenAIClientException.getResponseCode());
-		}
-
-		_assertOptions(
-			apiKey, content, ContentTypes.APPLICATION_JSON,
-			"https://api.openai.com/v1/chat/completions");
-
-		_assertResponse(response);
+				RandomTestUtil.randomString(), RandomTestUtil.randomInt()));
 	}
 
 	@Test
 	public void testGetCompletionUnauthorizedResponseCode() throws Exception {
-		JSONObject responseJSONObject = Mockito.mock(JSONObject.class);
-
-		Http.Response response = _getMockResponse(
-			HttpURLConnection.HTTP_UNAUTHORIZED, responseJSONObject);
-
 		_mockLanguage();
 
-		String apiKey = RandomTestUtil.randomString();
 		String content = RandomTestUtil.randomString();
 
-		try {
-			_aiCreatorOpenAIClient.getCompletion(
+		_testUnauthorizedResponseCode(
+			content, ContentTypes.APPLICATION_JSON,
+			"https://api.openai.com/v1/chat/completions",
+			apiKey -> _aiCreatorOpenAIClient.getCompletion(
 				apiKey, content, LocaleUtil.getDefault(),
-				RandomTestUtil.randomString(), RandomTestUtil.randomInt());
-
-			Assert.fail();
-		}
-		catch (AICreatorOpenAIClientException aiCreatorOpenAIClientException) {
-			Assert.assertEquals(
-				HttpURLConnection.HTTP_UNAUTHORIZED,
-				aiCreatorOpenAIClientException.getResponseCode());
-		}
-
-		_assertOptions(
-			apiKey, content, ContentTypes.APPLICATION_JSON,
-			"https://api.openai.com/v1/chat/completions");
-
-		_assertResponseJSONObject(responseJSONObject);
-
-		_assertResponse(response, Mockito.times(2));
+				RandomTestUtil.randomString(), RandomTestUtil.randomInt()));
 	}
 
 	@Test
@@ -247,93 +181,23 @@ public class AICreatorOpenAIClientTest {
 
 	@Test
 	public void testValidateAPIKeyIOException() throws Exception {
-		IOException ioException = new IOException();
-
-		Mockito.when(
-			_http.URLtoInputStream(Mockito.any(Http.Options.class))
-		).thenThrow(
-			ioException
-		);
-
-		String apiKey = RandomTestUtil.randomString();
-
-		try {
-			_aiCreatorOpenAIClient.validateAPIKey(apiKey);
-
-			Assert.fail();
-		}
-		catch (AICreatorOpenAIClientException aiCreatorOpenAIClientException) {
-			Assert.assertEquals(
-				ioException, aiCreatorOpenAIClientException.getCause());
-		}
-
-		_assertOptions(
-			apiKey, "https://api.openai.com/v1/models/text-davinci-003");
+		_testIOException(
+			null, null, "https://api.openai.com/v1/models/text-davinci-003",
+			apiKey -> _aiCreatorOpenAIClient.validateAPIKey(apiKey));
 	}
 
 	@Test
 	public void testValidateAPIKeyResponseWithErrorKey() throws Exception {
-		JSONObject errorJSONObject = JSONUtil.put(
-			"code", RandomTestUtil.randomString()
-		).put(
-			"message", RandomTestUtil.randomString()
-		);
-
-		Http.Response response = _getMockResponse(
-			HttpURLConnection.HTTP_OK, JSONUtil.put("error", errorJSONObject));
-
-		String apiKey = RandomTestUtil.randomString();
-
-		try {
-			_aiCreatorOpenAIClient.validateAPIKey(apiKey);
-
-			Assert.fail();
-		}
-		catch (AICreatorOpenAIClientException aiCreatorOpenAIClientException) {
-			Assert.assertEquals(
-				errorJSONObject.getString("code"),
-				aiCreatorOpenAIClientException.getCode());
-			Assert.assertEquals(
-				errorJSONObject.getString("message"),
-				aiCreatorOpenAIClientException.getMessage());
-
-			Assert.assertEquals(
-				HttpURLConnection.HTTP_OK,
-				aiCreatorOpenAIClientException.getResponseCode());
-		}
-
-		_assertOptions(
-			apiKey, "https://api.openai.com/v1/models/text-davinci-003");
-
-		_assertResponse(response);
+		_testResponseWithErrorKey(
+			null, null, "https://api.openai.com/v1/models/text-davinci-003",
+			apiKey -> _aiCreatorOpenAIClient.validateAPIKey(apiKey));
 	}
 
 	@Test
 	public void testValidateAPIKeyUnauthorizedResponseCode() throws Exception {
-		JSONObject responseJSONObject = Mockito.mock(JSONObject.class);
-
-		Http.Response response = _getMockResponse(
-			HttpURLConnection.HTTP_UNAUTHORIZED, responseJSONObject);
-
-		String apiKey = RandomTestUtil.randomString();
-
-		try {
-			_aiCreatorOpenAIClient.validateAPIKey(apiKey);
-
-			Assert.fail();
-		}
-		catch (AICreatorOpenAIClientException aiCreatorOpenAIClientException) {
-			Assert.assertEquals(
-				HttpURLConnection.HTTP_UNAUTHORIZED,
-				aiCreatorOpenAIClientException.getResponseCode());
-		}
-
-		_assertOptions(
-			apiKey, "https://api.openai.com/v1/models/text-davinci-003");
-
-		_assertResponseJSONObject(responseJSONObject);
-
-		_assertResponse(response, Mockito.times(2));
+		_testUnauthorizedResponseCode(
+			null, null, "https://api.openai.com/v1/models/text-davinci-003",
+			apiKey -> _aiCreatorOpenAIClient.validateAPIKey(apiKey));
 	}
 
 	private static void _assertResponse(Http.Response response) {
@@ -515,6 +379,103 @@ public class AICreatorOpenAIClientTest {
 		LanguageUtil languageUtil = new LanguageUtil();
 
 		languageUtil.setLanguage(_language);
+	}
+
+	private void _testIOException(
+			String content, String contentType, String location,
+			UnsafeConsumer<String, Exception> unsafeConsumer)
+		throws Exception {
+
+		IOException ioException = new IOException();
+
+		Mockito.when(
+			_http.URLtoInputStream(Mockito.any(Http.Options.class))
+		).thenThrow(
+			ioException
+		);
+
+		String apiKey = RandomTestUtil.randomString();
+
+		try {
+			unsafeConsumer.accept(apiKey);
+
+			Assert.fail();
+		}
+		catch (AICreatorOpenAIClientException aiCreatorOpenAIClientException) {
+			Assert.assertEquals(
+				ioException, aiCreatorOpenAIClientException.getCause());
+		}
+
+		_assertOptions(apiKey, content, contentType, location);
+	}
+
+	private void _testResponseWithErrorKey(
+			String content, String contentType, String location,
+			UnsafeConsumer<String, Exception> unsafeConsumer)
+		throws Exception {
+
+		JSONObject errorJSONObject = JSONUtil.put(
+			"code", RandomTestUtil.randomString()
+		).put(
+			"message", RandomTestUtil.randomString()
+		);
+
+		Http.Response response = _getMockResponse(
+			HttpURLConnection.HTTP_OK, JSONUtil.put("error", errorJSONObject));
+
+		String apiKey = RandomTestUtil.randomString();
+
+		try {
+			unsafeConsumer.accept(apiKey);
+
+			Assert.fail();
+		}
+		catch (AICreatorOpenAIClientException aiCreatorOpenAIClientException) {
+			Assert.assertEquals(
+				errorJSONObject.getString("code"),
+				aiCreatorOpenAIClientException.getCode());
+			Assert.assertEquals(
+				errorJSONObject.getString("message"),
+				aiCreatorOpenAIClientException.getMessage());
+
+			Assert.assertEquals(
+				HttpURLConnection.HTTP_OK,
+				aiCreatorOpenAIClientException.getResponseCode());
+		}
+
+		_assertOptions(apiKey, content, contentType, location);
+
+		_assertResponse(response);
+	}
+
+	private void _testUnauthorizedResponseCode(
+			String content, String contentType, String location,
+			UnsafeConsumer<String, Exception> unsafeConsumer)
+		throws Exception {
+
+		JSONObject responseJSONObject = Mockito.mock(JSONObject.class);
+
+		Http.Response response = _getMockResponse(
+			HttpURLConnection.HTTP_UNAUTHORIZED, responseJSONObject);
+
+		String apiKey = RandomTestUtil.randomString();
+
+		try {
+			unsafeConsumer.accept(apiKey);
+
+			Assert.fail();
+		}
+		catch (AICreatorOpenAIClientException aiCreatorOpenAIClientException) {
+			Assert.assertEquals(
+				HttpURLConnection.HTTP_UNAUTHORIZED,
+				aiCreatorOpenAIClientException.getResponseCode());
+		}
+
+		_assertOptions(apiKey, content, contentType, location);
+
+		_assertResponseJSONObject(responseJSONObject);
+
+		_assertResponse(response, Mockito.times(2));
 	}
 
 	private static Language _originalLanguage;

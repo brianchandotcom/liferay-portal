@@ -31,10 +31,12 @@ boolean themeSettings = MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.
 
 long pageDeletions = 0;
 
-if (modelDeletionCounters.containsKey(Layout.class.getName())) {
-	LongWrapper pageDeletionsLongWrapper = modelDeletionCounters.get(Layout.class.getName());
+if (modelDeletionCounters != null) {
+	if (modelDeletionCounters.containsKey(Layout.class.getName())) {
+		LongWrapper pageDeletionsLongWrapper = modelDeletionCounters.get(Layout.class.getName());
 
-	pageDeletions = pageDeletionsLongWrapper.getValue();
+		pageDeletions = pageDeletionsLongWrapper.getValue();
+	}
 }
 %>
 

@@ -309,7 +309,7 @@ public class DDMFormAdminActionDropdownItemsProviderTest {
 			dropdownItem.get("data"));
 		Assert.assertEquals(
 			_INVALID_DDM_FORM_INSTANCE, dropdownItem.get("disabled"));
-		Assert.assertEquals("export", dropdownItem.get("label"));
+		Assert.assertEquals("export-entries", dropdownItem.get("label"));
 	}
 
 	private void _assertActionDropdownItemPermissions(

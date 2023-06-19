@@ -14,6 +14,7 @@
 
 package com.liferay.headless.builder.internal.model.listener;
 
+import com.liferay.object.exception.ObjectEntryValuesException;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.listener.RelevantObjectEntryModelListener;
 import com.liferay.portal.kernel.exception.ModelListenerException;
@@ -60,8 +61,10 @@ public class APISchemaRelevantObjectEntryModelListener
 			if ((long)values.get(
 					"r_apiApplicationToAPISchemas_c_apiApplicationId") == 0) {
 
-				throw new IllegalArgumentException(
-					"An API schema must be related to an API application");
+				throw new ObjectEntryValuesException.InvalidObjectField(
+					"An API schema must be related to an API application",
+					"an-api-schema-must-be-related-to-an-api-application",
+					null);
 			}
 		}
 		catch (Exception exception) {

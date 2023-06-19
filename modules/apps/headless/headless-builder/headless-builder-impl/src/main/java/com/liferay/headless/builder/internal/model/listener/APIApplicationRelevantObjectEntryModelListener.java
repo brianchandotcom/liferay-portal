@@ -14,18 +14,25 @@
 
 package com.liferay.headless.builder.internal.model.listener;
 
+import com.liferay.object.exception.ObjectEntryValuesException;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.listener.RelevantObjectEntryModelListener;
+import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalService;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sergio Jiménez del Coso
@@ -76,9 +83,18 @@ public class APIApplicationRelevantObjectEntryModelListener
 			Matcher matcher = _baseURLPattern.matcher(baseURL);
 
 			if (!matcher.matches()) {
-				throw new IllegalArgumentException(
-					"Base URL can have a maximum of 255 alphanumeric " +
-						"characters");
+				User user = _userLocalService.getUser(objectEntry.getUserId());
+
+				ObjectField objectField =
+					_objectFieldLocalService.getObjectField(
+						objectEntry.getObjectDefinitionId(), "baseURL");
+
+				throw new ObjectEntryValuesException.InvalidObjectField(
+					String.format(
+						"%s can have a maximum of 255 alphanumeric characters",
+						objectField.getLabel(user.getLocale())),
+					"x-can-have-a-maximum-of-255-alphanumeric-characters",
+					Arrays.asList(objectField.getLabel(user.getLocale())));
 			}
 		}
 		catch (Exception exception) {
@@ -88,5 +104,11 @@ public class APIApplicationRelevantObjectEntryModelListener
 
 	private static final Pattern _baseURLPattern = Pattern.compile(
 		"[a-zA-Z0-9-]{1,255}");
+
+	@Reference
+	private ObjectFieldLocalService _objectFieldLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

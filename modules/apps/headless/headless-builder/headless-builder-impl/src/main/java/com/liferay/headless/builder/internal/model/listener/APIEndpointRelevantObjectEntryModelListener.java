@@ -14,19 +14,25 @@
 
 package com.liferay.headless.builder.internal.model.listener;
 
+import com.liferay.object.exception.ObjectEntryValuesException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.listener.RelevantObjectEntryModelListener;
 import com.liferay.object.rest.petra.sql.dsl.expression.FilterPredicateFactory;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalService;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -89,14 +95,28 @@ public class APIEndpointRelevantObjectEntryModelListener
 	}
 
 	private void _validate(ObjectEntry objectEntry) {
+		ObjectDefinition apiEndpointObjectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				objectEntry.getObjectDefinitionId());
+
 		try {
 			Map<String, Serializable> values = objectEntry.getValues();
 
 			Matcher matcher = _pathPattern.matcher((String)values.get("path"));
 
 			if (!matcher.matches()) {
-				throw new IllegalArgumentException(
-					"Path can have a maximum of 255 alphanumeric characters");
+				User user = _userLocalService.getUser(objectEntry.getUserId());
+
+				ObjectField objectField =
+					_objectFieldLocalService.getObjectField(
+						objectEntry.getObjectDefinitionId(), "path");
+
+				throw new ObjectEntryValuesException.InvalidObjectField(
+					String.format(
+						"%s can have a maximum of 255 alphanumeric characters",
+						objectField.getLabel(user.getLocale())),
+					"x-can-have-a-maximum-of-255-alphanumeric-characters",
+					Arrays.asList(objectField.getLabel(user.getLocale())));
 			}
 
 			String filterString = StringBundler.concat(
@@ -106,10 +126,6 @@ public class APIEndpointRelevantObjectEntryModelListener
 				"' and r_apiApplicationToAPIEndpoints_c_apiApplicationId eq '",
 				values.get("r_apiApplicationToAPIEndpoints_c_apiApplicationId"),
 				"'");
-
-			ObjectDefinition apiEndpointObjectDefinition =
-				_objectDefinitionLocalService.fetchObjectDefinition(
-					objectEntry.getObjectDefinitionId());
 
 			Predicate predicate = _filterPredicateFactory.create(
 				filterString,
@@ -123,16 +139,21 @@ public class APIEndpointRelevantObjectEntryModelListener
 					predicate, null, -1, -1, null);
 
 			if (!valuesList.isEmpty()) {
-				throw new IllegalArgumentException(
+				throw new ObjectEntryValuesException.InvalidObjectField(
 					"There is an API endpoint with the same HTTP method and " +
-						"path");
+						"path",
+					"there-is-an-api-endpoint-with-the-same-http-method-and-" +
+						"path",
+					null);
 			}
 
 			if ((long)values.get(
 					"r_apiApplicationToAPIEndpoints_c_apiApplicationId") == 0) {
 
-				throw new IllegalArgumentException(
-					"An API endpoint must be related to an API application");
+				throw new ObjectEntryValuesException.InvalidObjectField(
+					"An API endpoint must be related to an API application",
+					"an-api-endpoint-must-be-related-to-an-api-application",
+					null);
 			}
 		}
 		catch (Exception exception) {
@@ -151,5 +172,11 @@ public class APIEndpointRelevantObjectEntryModelListener
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Reference
+	private ObjectFieldLocalService _objectFieldLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

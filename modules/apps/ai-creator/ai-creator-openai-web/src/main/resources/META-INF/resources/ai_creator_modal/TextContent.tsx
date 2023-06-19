@@ -21,7 +21,7 @@ interface Props {
 }
 
 export function TextContent({content, portletNamespace}: Props) {
-	const textContentId = `${portletNamespace}content`;
+	const textContentId = `${portletNamespace}generatedContent`;
 
 	return (
 		<ClayForm.Group>

@@ -288,7 +288,7 @@ definition {
 	}
 
 	@priority = 3
-	test CanRemoveBlacklistedModuleLPKGViaUI {
+	test CanRemoveBlacklistedModuleLPKG {
 		property test.liferay.virtual.instance = "false";
 
 		var testRunEnvironment = PropsUtil.get("test.run.environment");
@@ -332,7 +332,7 @@ definition {
 	}
 
 	@priority = 3
-	test CanRemoveBlacklistedModuleWarViaUI {
+	test CanRemoveBlacklistedModuleWar {
 		property osgi.module.configurations = "blacklistBundleSymbolicNames=[\"minium-theme\"]";
 		property test.liferay.virtual.instance = "false";
 
@@ -457,7 +457,7 @@ definition {
 	}
 
 	@priority = 3
-	test RestartCanNotEnableBlacklistedModuleJarViaUI {
+	test RestartCanNotEnableBlacklistedModuleJar {
 		property test.liferay.virtual.instance = "false";
 
 		OSGiConfig.deployOSGiConfigFile(
@@ -486,7 +486,7 @@ definition {
 	}
 
 	@priority = 3
-	test RestartCanNotEnableBlacklistedModuleLPKGViaUI {
+	test RestartCanNotEnableBlacklistedModuleLPKG {
 		property test.liferay.virtual.instance = "false";
 
 		var testRunEnvironment = PropsUtil.get("test.run.environment");
@@ -536,7 +536,7 @@ definition {
 	}
 
 	@priority = 3
-	test RestartCanNotEnableBlacklistedModuleWarViaUI {
+	test RestartCanNotEnableBlacklistedModuleWar {
 		property test.liferay.virtual.instance = "false";
 
 		OSGiConfig.deployOSGiConfigFile(

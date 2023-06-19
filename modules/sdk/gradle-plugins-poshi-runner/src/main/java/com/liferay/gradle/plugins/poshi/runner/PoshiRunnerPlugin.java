@@ -668,7 +668,7 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 	}
 
 	private String _getChromeDriverVersion(
-		Project project, String chromeBinaryPath) {
+		Project project, String chromeBinaryPath, Properties poshiProperties) {
 
 		if (chromeBinaryPath == null) {
 			chromeBinaryPath = "/usr/bin/google-chrome";
@@ -720,9 +720,11 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(ExecSpec execSpec) {
-					System.out.println(
-						"Using Google Chrome binary at " +
-							finalChromeBinaryPath);
+					if (_isDownloadWebDriverBrowserBinary(poshiProperties)) {
+						System.out.println(
+							"Using Google Chrome binary at " +
+								finalChromeBinaryPath);
+					}
 
 					if (OSDetector.isWindows()) {
 						execSpec.commandLine(
@@ -1005,7 +1007,8 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 				"browser.chrome.bin.file", poshiProperties);
 
 			url = _getChromeDriverURL(
-				_getChromeDriverVersion(project, chromeBinaryPath));
+				_getChromeDriverVersion(
+					project, chromeBinaryPath, poshiProperties));
 		}
 		else if (browserType.equals("edge")) {
 			url = _getEdgeDriverURL(_getEdgeDriverVersion(project, null));
@@ -1045,7 +1048,7 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 	private boolean _isDownloadWebDriverBrowserBinary(
 		Properties poshiProperties) {
 
-		if(poshiProperties.containsKey("seleniumRemoteDriverURL")){
+		if (poshiProperties.containsKey("seleniumRemoteDriverURL")) {
 			return false;
 		}
 

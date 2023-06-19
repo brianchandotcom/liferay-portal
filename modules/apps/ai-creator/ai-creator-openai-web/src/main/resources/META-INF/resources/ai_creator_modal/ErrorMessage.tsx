@@ -20,30 +20,41 @@ import React from 'react';
 
 interface Props {
 	message: string;
+	showRetryMessage: boolean;
 }
 
-export function ErrorMessage({message}: Props) {
+export function ErrorMessage({message, showRetryMessage}: Props) {
+	const children = [];
+
+	children.push(
+		<span className="alert-indicator">
+			<ClayIcon symbol="exclamation-full" />
+		</span>,
+		<strong className="lead">{Liferay.Language.get('error')}</strong>
+	);
+
+	if (showRetryMessage) {
+		children.push(
+			<span className="d-inline-block"> {message} </span>,
+			<ClayButton
+				className="btn-link text-underline"
+				displayType="unstyled"
+				type="submit"
+			>
+				{Liferay.Language.get('retry-your-request')}
+			</ClayButton>
+		);
+	}
+	else {
+		children.push(<span className="d-inline-block"> {message}</span>);
+	}
+
 	return (
 		<div
 			className="alert alert-danger alert-dismissible alert-fluid c-mb-1"
 			role="alert"
 		>
-			<div className="c-px-4 c-py-3">
-				<span className="alert-indicator">
-					<ClayIcon symbol="exclamation-full" />
-				</span>
-				<strong className="lead">
-					{Liferay.Language.get('error')}
-				</strong>{' '}
-				<span className="d-inline-block">{message}</span>{' '}
-				<ClayButton
-					className="btn-link text-underline"
-					displayType="unstyled"
-					type="submit"
-				>
-					{Liferay.Language.get('retry-your-request')}
-				</ClayButton>
-			</div>
+			<div className="c-px-4 c-py-3">{children}</div>
 		</div>
 	);
 }

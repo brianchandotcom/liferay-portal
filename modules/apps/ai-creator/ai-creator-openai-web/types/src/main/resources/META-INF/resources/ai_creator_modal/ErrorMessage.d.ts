@@ -16,6 +16,10 @@
 
 interface Props {
 	message: string;
+	showRetryMessage: boolean;
 }
-export declare function ErrorMessage({message}: Props): JSX.Element;
+export declare function ErrorMessage({
+	message,
+	showRetryMessage,
+}: Props): JSX.Element;
 export {};

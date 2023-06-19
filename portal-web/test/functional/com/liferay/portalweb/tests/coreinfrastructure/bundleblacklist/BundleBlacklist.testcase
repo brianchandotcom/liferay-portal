@@ -162,15 +162,13 @@ definition {
 			AssertConsoleTextPresent(value1 = "Stopping blacklisted bundle com.liferay.frontend.taglib.clay.sample.web");
 		}
 
-		task ("When the portlet jar is removed from the blacklist") {
-			FileInstall.deleteConfigFile(configFile = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config");
+		task ("When the jar is removed from the blacklist after shutdown") {
+			Portlet.shutdownServer();
 
-			WaitForConsoleTextPresent(value1 = "STARTED com.liferay.frontend.taglib.clay.sample.web");
+			FileInstall.deleteConfigFile(configFile = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config");
 		}
 
 		task ("And the portal is restarted") {
-			Portlet.shutdownServer();
-
 			Portlet.startServer(keepOsGiState = "true");
 		}
 
@@ -231,9 +229,9 @@ definition {
 			panel = "Control Panel",
 			portlet = "Gogo Shell");
 
-		OSGiConfig.deleteOSGiConfigFile(osgiConfigFileName = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config");
-
 		Portlet.shutdownServer();
+
+		OSGiConfig.deleteOSGiConfigFile(osgiConfigFileName = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config");
 
 		Portlet.startServer(keepOsGiState = "true");
 
@@ -266,15 +264,15 @@ definition {
 			WaitForConsoleTextPresent(value1 = "STOPPED test-theme");
 		}
 
-		task ("When the portlet jar is removed from the blacklist") {
+		task ("When the portlet war is removed from the blacklist during shutdown") {
+			Portlet.shutdownServer();
+
 			FileInstall.deleteConfigFile(configFile = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config");
 
 			WaitForConsoleTextPresent(value1 = "STARTED test-theme");
 		}
 
 		task ("And the portal is restarted") {
-			Portlet.shutdownServer();
-
 			Portlet.startServer(keepOsGiState = "true");
 		}
 

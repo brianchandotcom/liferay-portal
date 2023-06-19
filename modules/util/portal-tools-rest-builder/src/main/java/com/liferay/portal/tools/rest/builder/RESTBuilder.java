@@ -331,15 +331,6 @@ public class RESTBuilder {
 					schemaName,
 					_getRelatedSchemaNames(allSchemas, javaMethodSignatures));
 
-				if (ConfigUtil.isVersionCompatible(_configYAML, 3)) {
-					_createBaseDTOActionMetadataProviderFile(
-						context, escapedVersion, schemaName);
-					_createDTOActionMetadataProviderFile(
-						context, escapedVersion, schemaName);
-					_createDTOActionProviderFile(
-						context, escapedVersion, schemaName);
-				}
-
 				_createBaseResourceImplFile(
 					context, escapedVersion, schemaName);
 				_createLiberalPermissionCheckerFile(context);
@@ -364,6 +355,15 @@ public class RESTBuilder {
 					_createBaseResourceTestCaseFile(
 						context, escapedVersion, schemaName);
 					_createResourceTestFile(
+						context, escapedVersion, schemaName);
+				}
+
+				if (ConfigUtil.isVersionCompatible(_configYAML, 3)) {
+					_createBaseDTOActionMetadataProviderFile(
+						context, escapedVersion, schemaName);
+					_createDTOActionMetadataProviderFile(
+						context, escapedVersion, schemaName);
+					_createDTOActionProviderFile(
 						context, escapedVersion, schemaName);
 				}
 			}

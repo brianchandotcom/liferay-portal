@@ -42,12 +42,13 @@ public class ExportImportLifecycleMessagingConfigurator {
 		_bundleContext = bundleContext;
 
 		_registerDestination(
-			bundleContext, DestinationConfiguration.DESTINATION_TYPE_SERIAL,
-			DestinationNames.EXPORT_IMPORT_LIFECYCLE_EVENT_ASYNC);
+			bundleContext,
+			DestinationNames.EXPORT_IMPORT_LIFECYCLE_EVENT_ASYNC,
+			DestinationConfiguration.DESTINATION_TYPE_SERIAL);
 		_registerDestination(
 			bundleContext,
-			DestinationConfiguration.DESTINATION_TYPE_SYNCHRONOUS,
-			DestinationNames.EXPORT_IMPORT_LIFECYCLE_EVENT_SYNC);
+			DestinationNames.EXPORT_IMPORT_LIFECYCLE_EVENT_SYNC,
+			DestinationConfiguration.DESTINATION_TYPE_SYNCHRONOUS);
 	}
 
 	@Deactivate
@@ -67,8 +68,8 @@ public class ExportImportLifecycleMessagingConfigurator {
 	}
 
 	private ServiceRegistration<Destination> _registerDestination(
-		BundleContext bundleContext, String destinationType,
-		String destinationName) {
+		BundleContext bundleContext, String destinationName,
+		String destinationType) {
 
 		DestinationConfiguration destinationConfiguration =
 			new DestinationConfiguration(destinationType, destinationName);

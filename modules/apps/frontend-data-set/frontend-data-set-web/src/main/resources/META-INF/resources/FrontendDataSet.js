@@ -488,31 +488,41 @@ const FrontendDataSet = ({
 						style={style}
 						{...currentViewProps}
 					/>
-				) : emptyState ? (
-					<ClayEmptyState
-						description={Liferay.Language.get(
-							'start-creating-one-to-show-your-data'
-						)}
-						imgSrc={`${themeDisplay.getPathThemeImages()}/states/empty_state.gif`}
-						title={emptyState.title}
-					>
-						<ClayButton
-							displayType="secondary"
-							onClick={() => {
-								creationMenu.primaryItems[0].onClick(loadData);
-							}}
-						>
-							{emptyState.button}
-						</ClayButton>
-					</ClayEmptyState>
 				) : (
 					<ClayEmptyState
-						description={Liferay.Language.get(
-							'sorry,-no-results-were-found'
+						description={
+							emptyState
+								? Liferay.Language.get(
+										'start-creating-one-to-show-your-data'
+								  )
+								: Liferay.Language.get(
+										'sorry,-no-results-were-found'
+								  )
+						}
+						imgSrc={
+							emptyState
+								? `${themeDisplay.getPathThemeImages()}/states/empty_state.gif`
+								: `${themeDisplay.getPathThemeImages()}/states/search_state.gif`
+						}
+						title={
+							emptyState.title
+								? emptyState.title
+								: Liferay.Language.get('no-results-found')
+						}
+					>
+						{emptyState.button && (
+							<ClayButton
+								displayType="secondary"
+								onClick={() => {
+									creationMenu.primaryItems[0].onClick(
+										loadData
+									);
+								}}
+							>
+								{emptyState.button}
+							</ClayButton>
 						)}
-						imgSrc={`${themeDisplay.getPathThemeImages()}/states/search_state.gif`}
-						title={Liferay.Language.get('no-results-found')}
-					/>
+					</ClayEmptyState>
 				)}
 			</div>
 		) : (

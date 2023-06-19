@@ -353,6 +353,14 @@ definition {
 			Clustering.deployClusteringModule(nodePort = ${serverPort});
 		}
 
+		Clustering.viewTextPresentOnSpecificNode(
+			expectedText = "STARTED com.liferay.portal.cluster.multiple.sample.web",
+			nodePort = 8080);
+
+		Clustering.viewTextPresentOnSpecificNode(
+			expectedText = "STARTED com.liferay.portal.cluster.multiple.sample.web",
+			nodePort = 9080);
+
 		for (var method : list "invoke-method-module,invoke-method-portal") {
 			AntCommands.runCommand("build-test.xml", "cluster-invoke-method -Dcluster.invoke.method=${method}");
 

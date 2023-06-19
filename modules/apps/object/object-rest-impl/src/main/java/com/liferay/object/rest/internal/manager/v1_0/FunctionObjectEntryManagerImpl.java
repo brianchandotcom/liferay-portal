@@ -265,8 +265,6 @@ public class FunctionObjectEntryManagerImpl
 				).put(
 					"scopeKey", scopeKey
 				).put(
-					"uriInfo", dtoConverterContext.getUriInfo()
-				).put(
 					"userId", dtoConverterContext.getUserId()
 				).build()));
 	}

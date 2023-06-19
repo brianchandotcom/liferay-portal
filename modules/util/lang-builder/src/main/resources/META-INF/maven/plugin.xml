@@ -7,7 +7,7 @@
 	<description/>
 	<groupId>com.liferay</groupId>
 	<artifactId>com.liferay.lang.builder</artifactId>
-	<version>1.0.49</version>
+	<version>1.0.50</version>
 	<goalPrefix>lang-builder</goalPrefix>
 	<isolatedRealm>false</isolatedRealm>
 	<inheritedByDefault>true</inheritedByDefault>
@@ -84,6 +84,12 @@
 	</mojos>
 	<dependencies>
 		<dependency>
+			<groupId>com.liferay</groupId>
+			<artifactId>org.apache.logging.log4j.core</artifactId>
+			<type>jar</type>
+			<version>2.17.1.LIFERAY-PATCHED-1</version>
+		</dependency>
+		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
 			<type>jar</type>
@@ -100,12 +106,6 @@
 			<artifactId>json-simple</artifactId>
 			<type>jar</type>
 			<version>1.1</version>
-		</dependency>
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<type>jar</type>
-			<version>1.2.17</version>
 		</dependency>
 	</dependencies>
 </plugin>

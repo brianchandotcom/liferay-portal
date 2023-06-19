@@ -7,7 +7,7 @@
 	<description/>
 	<groupId>com.liferay</groupId>
 	<artifactId>com.liferay.portal.tools.wsdd.builder</artifactId>
-	<version>1.0.15</version>
+	<version>1.0.16</version>
 	<goalPrefix>wsdd-builder</goalPrefix>
 	<isolatedRealm>false</isolatedRealm>
 	<inheritedByDefault>true</inheritedByDefault>
@@ -101,6 +101,12 @@
 			<version>1.6.3</version>
 		</dependency>
 		<dependency>
+			<groupId>com.liferay</groupId>
+			<artifactId>org.apache.logging.log4j.core</artifactId>
+			<type>jar</type>
+			<version>2.17.1.LIFERAY-PATCHED-1</version>
+		</dependency>
+		<dependency>
 			<groupId>com.sun.mail</groupId>
 			<artifactId>jakarta.mail</artifactId>
 			<type>jar</type>
@@ -129,12 +135,6 @@
 			<artifactId>activation</artifactId>
 			<type>jar</type>
 			<version>1.1</version>
-		</dependency>
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<type>jar</type>
-			<version>1.2.17</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.ant</groupId>

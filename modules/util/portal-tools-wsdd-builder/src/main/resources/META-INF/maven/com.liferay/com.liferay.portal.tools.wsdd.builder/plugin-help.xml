@@ -7,7 +7,7 @@
 	<description/>
 	<groupId>com.liferay</groupId>
 	<artifactId>com.liferay.portal.tools.wsdd.builder</artifactId>
-	<version>1.0.15</version>
+	<version>1.0.16</version>
 	<goalPrefix>wsdd-builder</goalPrefix>
 	<mojos>
 		<mojo>

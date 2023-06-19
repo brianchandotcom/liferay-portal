@@ -7,7 +7,7 @@
 	<description/>
 	<groupId>com.liferay</groupId>
 	<artifactId>com.liferay.javadoc.formatter</artifactId>
-	<version>1.0.36</version>
+	<version>1.0.37</version>
 	<goalPrefix>javadoc-formatter</goalPrefix>
 	<mojos>
 		<mojo>

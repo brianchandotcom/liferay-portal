@@ -7,7 +7,7 @@
 	<description/>
 	<groupId>com.liferay</groupId>
 	<artifactId>com.liferay.lang.builder</artifactId>
-	<version>1.0.49</version>
+	<version>1.0.50</version>
 	<goalPrefix>lang-builder</goalPrefix>
 	<mojos>
 		<mojo>

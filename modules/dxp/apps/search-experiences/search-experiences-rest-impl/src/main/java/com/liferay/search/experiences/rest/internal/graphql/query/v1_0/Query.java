@@ -285,6 +285,24 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {sXPBlueprintByExternalReferenceCode(externalReferenceCode: ___){actions, configuration, createDate, description, description_i18n, elementInstances, externalReferenceCode, id, modifiedDate, schemaVersion, title, title_i18n, userName, version}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public SXPBlueprint sXPBlueprintByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_sxpBlueprintResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			sxpBlueprintResource ->
+				sxpBlueprintResource.getSXPBlueprintByExternalReferenceCode(
+					externalReferenceCode));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {sXPBlueprint(sxpBlueprintId: ___){actions, configuration, createDate, description, description_i18n, elementInstances, externalReferenceCode, id, modifiedDate, schemaVersion, title, title_i18n, userName, version}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField

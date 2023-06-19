@@ -18,6 +18,7 @@ import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.search.Sort;
@@ -273,6 +274,72 @@ public abstract class BaseSXPBlueprintResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/search-experiences-rest/v1.0/sxp-blueprints/by-external-reference-code/{externalReferenceCode}'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "externalReferenceCode"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "SXPBlueprint")}
+	)
+	@javax.ws.rs.GET
+	@javax.ws.rs.Path(
+		"/sxp-blueprints/by-external-reference-code/{externalReferenceCode}"
+	)
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public SXPBlueprint getSXPBlueprintByExternalReferenceCode(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode)
+		throws Exception {
+
+		return new SXPBlueprint();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/search-experiences-rest/v1.0/sxp-blueprints/by-external-reference-code/{externalReferenceCode}' -d $'{"configuration": ___, "createDate": ___, "description": ___, "description_i18n": ___, "elementInstances": ___, "externalReferenceCode": ___, "id": ___, "modifiedDate": ___, "schemaVersion": ___, "title": ___, "title_i18n": ___, "userName": ___, "version": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "externalReferenceCode"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "SXPBlueprint")}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.Path(
+		"/sxp-blueprints/by-external-reference-code/{externalReferenceCode}"
+	)
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@javax.ws.rs.PUT
+	@Override
+	public SXPBlueprint putSXPBlueprintByExternalReferenceCode(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode,
+			SXPBlueprint sxpBlueprint)
+		throws Exception {
+
+		return new SXPBlueprint();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/search-experiences-rest/v1.0/sxp-blueprints/validate'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.tags.Tags(
@@ -511,6 +578,32 @@ public abstract class BaseSXPBlueprintResourceImpl
 				sxpBlueprint);
 		}
 
+		if (StringUtil.equalsIgnoreCase(createStrategy, "UPSERT")) {
+			String updateStrategy = (String)parameters.getOrDefault(
+				"updateStrategy", "UPDATE");
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
+				sxpBlueprintUnsafeConsumer = sxpBlueprint -> {
+					try {
+						SXPBlueprint getSXPBlueprint =
+							getSXPBlueprintByExternalReferenceCode(
+								sxpBlueprint.getExternalReferenceCode());
+
+						patchSXPBlueprint(
+							getSXPBlueprint.getId() != null ?
+								getSXPBlueprint.getId() :
+									_parseLong(
+										(String)parameters.get(
+											"sxpBlueprintId")),
+							sxpBlueprint);
+					}
+					catch (NoSuchModelException noSuchModelException) {
+						postSXPBlueprint(sxpBlueprint);
+					}
+				};
+			}
+		}
+
 		if (sxpBlueprintUnsafeConsumer == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
@@ -540,7 +633,7 @@ public abstract class BaseSXPBlueprintResourceImpl
 	}
 
 	public Set<String> getAvailableCreateStrategies() {
-		return SetUtil.fromArray("INSERT");
+		return SetUtil.fromArray("UPSERT", "INSERT");
 	}
 
 	public Set<String> getAvailableUpdateStrategies() {

@@ -192,6 +192,11 @@ public class ServletDataImpl implements ServletData {
 							SXPBlueprintResourceImpl.class,
 							"postSXPBlueprintBatch"));
 					put(
+						"mutation#updateSXPBlueprintByExternalReferenceCode",
+						new ObjectValuePair<>(
+							SXPBlueprintResourceImpl.class,
+							"putSXPBlueprintByExternalReferenceCode"));
+					put(
 						"mutation#createSXPBlueprintValidate",
 						new ObjectValuePair<>(
 							SXPBlueprintResourceImpl.class,
@@ -308,6 +313,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							SXPBlueprintResourceImpl.class,
 							"getSXPBlueprintsPage"));
+					put(
+						"query#sXPBlueprintByExternalReferenceCode",
+						new ObjectValuePair<>(
+							SXPBlueprintResourceImpl.class,
+							"getSXPBlueprintByExternalReferenceCode"));
 					put(
 						"query#sXPBlueprint",
 						new ObjectValuePair<>(

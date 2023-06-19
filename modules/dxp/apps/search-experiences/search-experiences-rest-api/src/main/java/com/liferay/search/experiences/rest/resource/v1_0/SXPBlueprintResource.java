@@ -73,6 +73,14 @@ public interface SXPBlueprintResource {
 			SXPBlueprint sxpBlueprint, String callbackURL, Object object)
 		throws Exception;
 
+	public SXPBlueprint getSXPBlueprintByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public SXPBlueprint putSXPBlueprintByExternalReferenceCode(
+			String externalReferenceCode, SXPBlueprint sxpBlueprint)
+		throws Exception;
+
 	public SXPBlueprint postSXPBlueprintValidate(String string)
 		throws Exception;
 

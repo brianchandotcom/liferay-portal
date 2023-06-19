@@ -530,6 +530,147 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 	}
 
 	@Test
+	public void testGetSXPBlueprintByExternalReferenceCode() throws Exception {
+		SXPBlueprint postSXPBlueprint =
+			testGetSXPBlueprintByExternalReferenceCode_addSXPBlueprint();
+
+		SXPBlueprint getSXPBlueprint =
+			sxpBlueprintResource.getSXPBlueprintByExternalReferenceCode(
+				postSXPBlueprint.getExternalReferenceCode());
+
+		assertEquals(postSXPBlueprint, getSXPBlueprint);
+		assertValid(getSXPBlueprint);
+	}
+
+	protected SXPBlueprint
+			testGetSXPBlueprintByExternalReferenceCode_addSXPBlueprint()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetSXPBlueprintByExternalReferenceCode()
+		throws Exception {
+
+		SXPBlueprint sxpBlueprint =
+			testGraphQLGetSXPBlueprintByExternalReferenceCode_addSXPBlueprint();
+
+		Assert.assertTrue(
+			equals(
+				sxpBlueprint,
+				SXPBlueprintSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"sXPBlueprintByExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"externalReferenceCode",
+											"\"" +
+												sxpBlueprint.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/sXPBlueprintByExternalReferenceCode"))));
+	}
+
+	@Test
+	public void testGraphQLGetSXPBlueprintByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"sXPBlueprintByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected SXPBlueprint
+			testGraphQLGetSXPBlueprintByExternalReferenceCode_addSXPBlueprint()
+		throws Exception {
+
+		return testGraphQLSXPBlueprint_addSXPBlueprint();
+	}
+
+	@Test
+	public void testPutSXPBlueprintByExternalReferenceCode() throws Exception {
+		SXPBlueprint postSXPBlueprint =
+			testPutSXPBlueprintByExternalReferenceCode_addSXPBlueprint();
+
+		SXPBlueprint randomSXPBlueprint = randomSXPBlueprint();
+
+		SXPBlueprint putSXPBlueprint =
+			sxpBlueprintResource.putSXPBlueprintByExternalReferenceCode(
+				postSXPBlueprint.getExternalReferenceCode(),
+				randomSXPBlueprint);
+
+		assertEquals(randomSXPBlueprint, putSXPBlueprint);
+		assertValid(putSXPBlueprint);
+
+		SXPBlueprint getSXPBlueprint =
+			sxpBlueprintResource.getSXPBlueprintByExternalReferenceCode(
+				putSXPBlueprint.getExternalReferenceCode());
+
+		assertEquals(randomSXPBlueprint, getSXPBlueprint);
+		assertValid(getSXPBlueprint);
+
+		SXPBlueprint newSXPBlueprint =
+			testPutSXPBlueprintByExternalReferenceCode_createSXPBlueprint();
+
+		putSXPBlueprint =
+			sxpBlueprintResource.putSXPBlueprintByExternalReferenceCode(
+				newSXPBlueprint.getExternalReferenceCode(), newSXPBlueprint);
+
+		assertEquals(newSXPBlueprint, putSXPBlueprint);
+		assertValid(putSXPBlueprint);
+
+		getSXPBlueprint =
+			sxpBlueprintResource.getSXPBlueprintByExternalReferenceCode(
+				putSXPBlueprint.getExternalReferenceCode());
+
+		assertEquals(newSXPBlueprint, getSXPBlueprint);
+
+		Assert.assertEquals(
+			newSXPBlueprint.getExternalReferenceCode(),
+			putSXPBlueprint.getExternalReferenceCode());
+	}
+
+	protected SXPBlueprint
+			testPutSXPBlueprintByExternalReferenceCode_createSXPBlueprint()
+		throws Exception {
+
+		return randomSXPBlueprint();
+	}
+
+	protected SXPBlueprint
+			testPutSXPBlueprintByExternalReferenceCode_addSXPBlueprint()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testPostSXPBlueprintValidate() throws Exception {
 		SXPBlueprint randomSXPBlueprint = randomSXPBlueprint();
 

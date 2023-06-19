@@ -244,6 +244,12 @@ definition {
 				fail("Could not find 'There are 1 message board threads in the Guest site'");
 			}
 		}
+
+		task ("Workaround for LPS-187832") {
+			var liferayHome = PropsUtil.get("liferay.home.dir.name");
+
+			FileUtil.delete("${liferayHome}/osgi/modules/liferay-sample-etc-cron.zip");
+		}
 	}
 
 	@description = "Smoke test Liferay Sample Etc Spring Boot"

@@ -20,6 +20,7 @@ import com.liferay.info.field.InfoFieldSet;
 import com.liferay.info.field.InfoFieldSetEntry;
 import com.liferay.info.field.type.ActionInfoFieldType;
 import com.liferay.info.field.type.FileInfoFieldType;
+import com.liferay.info.field.type.ImageInfoFieldType;
 import com.liferay.info.field.type.LongTextInfoFieldType;
 import com.liferay.info.field.type.MultiselectInfoFieldType;
 import com.liferay.info.field.type.NumberInfoFieldType;
@@ -387,7 +388,7 @@ public class ObjectEntryInfoItemFormProvider
 				).infoFieldSetEntry(
 					InfoField.builder(
 					).infoFieldType(
-						TextInfoFieldType.INSTANCE
+						ImageInfoFieldType.INSTANCE
 					).namespace(
 						ObjectField.class.getSimpleName()
 					).name(

@@ -236,7 +236,7 @@ public class ObjectEntryInfoItemFieldValuesProvider
 				new InfoFieldValue<>(
 					InfoField.builder(
 					).infoFieldType(
-						URLInfoFieldType.INSTANCE
+						ImageInfoFieldType.INSTANCE
 					).namespace(
 						ObjectField.class.getSimpleName()
 					).name(

@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -41,6 +42,7 @@ import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -65,6 +67,23 @@ public class AICreatorOpenAIEditorConfigurationTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+
+		_originalAPIKey =
+			_aiCreatorOpenAIConfigurationManager.
+				getAICreatorOpenAICompanyAPIKey(_group.getCompanyId());
+
+		_originalEnabled =
+			_aiCreatorOpenAIConfigurationManager.
+				isAICreatorOpenAICompanyEnabled(_group.getCompanyId());
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		_aiCreatorOpenAIConfigurationManager.
+			saveAICreatorOpenAICompanyConfiguration(
+				_group.getCompanyId(), _originalAPIKey, _originalEnabled);
+
+		_groupLocalService.deleteGroup(_group);
 	}
 
 	@Test
@@ -272,6 +291,12 @@ public class AICreatorOpenAIEditorConfigurationTest {
 	private EditorConfigurationFactory _editorConfigurationFactory;
 
 	private Group _group;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
+
+	private String _originalAPIKey;
+	private boolean _originalEnabled;
 
 	@Inject
 	private Portal _portal;

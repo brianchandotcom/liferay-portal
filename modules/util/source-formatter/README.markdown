@@ -100,7 +100,7 @@ Checks are configured in the following files:
 - ### By File Extensions:
    - [.action, .function, .jelly, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd](src/main/resources/documentation/xml_source_processor_checks.markdown#checks-for-action-function-jelly-jrxml-macro-pom-project-properties-svg-testcase-toggle-tpl-wsdl-xml-or-xsd)
    - [.bnd](src/main/resources/documentation/bnd_source_processor_checks.markdown#checks-for-bnd)
-   - [.bnd, .gradle, .java or .vm](src/main/resources/documentation/upgrade_source_processor_checks.markdown#checks-for-bnd-gradle-java-or-vm)
+   - [.bnd, .ftl, .gradle, .java, .jsp, .jspf or .vm](src/main/resources/documentation/upgrade_source_processor_checks.markdown#checks-for-bnd-ftl-gradle-java-jsp-jspf-or-vm)
    - [.bndrun](src/main/resources/documentation/bnd_run_source_processor_checks.markdown#checks-for-bndrun)
    - [.cfg or .config](src/main/resources/documentation/config_source_processor_checks.markdown#checks-for-cfg-or-config)
    - [.cql](src/main/resources/documentation/cql_source_processor_checks.markdown#checks-for-cql)

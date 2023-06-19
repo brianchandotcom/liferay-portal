@@ -34,7 +34,8 @@ public class UpgradeSourceProcessor extends BaseSourceProcessor {
 	}
 
 	private static final String[] _INCLUDES = {
-		"**/*.bnd", "**/*.gradle", "**/*.java", "**/*.vm"
+		"**/*.bnd", "**/*.ftl", "**/*.gradle", "**/*.java", "**/*.jsp",
+		"**/*.jspf", "**/*.vm"
 	};
 
 }

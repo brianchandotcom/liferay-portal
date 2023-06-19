@@ -126,8 +126,10 @@ public class GetCompletionMVCResourceCommand extends BaseMVCResourceCommand {
 				resourceRequest, resourceResponse,
 				JSONUtil.put(
 					"error",
-					aiCreatorOpenAIClientException.getLocalizedMessage(
-						themeDisplay.getLocale())));
+					JSONUtil.put(
+						"message",
+						aiCreatorOpenAIClientException.getLocalizedMessage(
+							themeDisplay.getLocale()))));
 		}
 	}
 

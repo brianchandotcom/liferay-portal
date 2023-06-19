@@ -207,6 +207,16 @@ public class ObjectEntryValuesException extends PortalException {
 
 	}
 
+	public static class InvalidObjectField extends ObjectEntryValuesException {
+
+		public InvalidObjectField(
+			String message, String messageKey, List<Object> arguments) {
+
+			super(arguments, message, messageKey);
+		}
+
+	}
+
 	public static class InvalidObjectStateTransition
 		extends ObjectEntryValuesException {
 

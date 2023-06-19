@@ -18,7 +18,7 @@ import ClayIcon from '@clayui/icon';
 import ClayModal from '@clayui/modal';
 import ClayMultiSelect from '@clayui/multi-select';
 import {fetch} from 'frontend-js-web';
-import React, {useEffect, useState} from 'react';
+import React, {useMemo, useState} from 'react';
 
 const ORGANIZATIONS_ROOT_ENDPOINT = '/o/headless-admin-user/v1.0/organizations';
 
@@ -32,7 +32,6 @@ export default function AccountCreationModalBody({
 	accountTypes,
 	setAccountData,
 }) {
-	const [availableOrganizations, setAvailableOrganizations] = useState([]);
 	const [organizationQuery, setOrganizationQuery] = useState('');
 	const [organizationError, setOrganizationError] = useState(false);
 
@@ -52,14 +51,16 @@ export default function AccountCreationModalBody({
 		onNetworkStatusChange: setNetworkStatus,
 	});
 
-	useEffect(() => {
+	const availableOrganizations = useMemo(() => {
+		if (!resource) {
+			return [];
+		}
+
 		const accountValues = accountData.organizations.map(
 			(item) => item.value
 		);
 
-		setAvailableOrganizations(
-			resource.filter((org) => !accountValues.includes(org.value))
-		);
+		return resource.filter((org) => !accountValues.includes(org.value));
 	}, [accountData.organizations, resource]);
 
 	return (

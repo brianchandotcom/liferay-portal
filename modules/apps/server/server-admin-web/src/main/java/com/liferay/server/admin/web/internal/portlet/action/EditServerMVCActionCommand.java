@@ -16,6 +16,7 @@ package com.liferay.server.admin.web.internal.portlet.action;
 
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.document.library.kernel.util.DLPreviewableProcessor;
+import com.liferay.document.library.kernel.util.PDFProcessor;
 import com.liferay.mail.kernel.model.Account;
 import com.liferay.mail.kernel.service.MailService;
 import com.liferay.petra.string.CharPool;
@@ -209,8 +210,11 @@ public class EditServerMVCActionCommand
 		else if (cmd.startsWith("convertProcess.")) {
 			redirect = _convertProcess(actionRequest, actionResponse, cmd);
 		}
-		else if (cmd.equals("dlPreviews")) {
+		else if (cmd.equals("dlDeletePreviews")) {
 			DLPreviewableProcessor.deleteFiles();
+		}
+		else if (cmd.equals("dlGeneratePDFPreviews")) {
+			_pdfProcessor.generatePDFPreviews(themeDisplay.getUserId());
 		}
 		else if (cmd.equals("gc")) {
 			_gc();
@@ -905,6 +909,9 @@ public class EditServerMVCActionCommand
 	@Reference
 	private OrganizationMembershipPolicyFactory
 		_organizationMembershipPolicyFactory;
+
+	@Reference
+	private PDFProcessor _pdfProcessor;
 
 	@Reference
 	private Portal _portal;

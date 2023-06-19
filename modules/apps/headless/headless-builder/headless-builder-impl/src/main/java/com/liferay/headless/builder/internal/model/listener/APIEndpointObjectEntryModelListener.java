@@ -82,11 +82,10 @@ public class APIEndpointObjectEntryModelListener
 
 			String filterString = StringBundler.concat(
 				"id ne '", objectEntry.getObjectEntryId(),
-				"' and httpMethod eq '",
-				(String)objectEntryValues.get("httpMethod"), "' and path eq '",
-				(String)objectEntryValues.get("path"),
+				"' and httpMethod eq '", objectEntryValues.get("httpMethod"),
+				"' and path eq '", objectEntryValues.get("path"),
 				"' and r_apiApplicationToAPIEndpoints_c_apiApplicationId eq '",
-				(long)objectEntryValues.get(
+				objectEntryValues.get(
 					"r_apiApplicationToAPIEndpoints_c_apiApplicationId"),
 				"'");
 

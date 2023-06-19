@@ -127,8 +127,6 @@ definition {
 
 			WaitForPageLoad();
 
-			Navigator.gotoNavTab(navTab = "Design");
-
 			AssertAttributeValue(
 				attribute1 = "placeholder",
 				key_text = "Theme CSS",
@@ -247,8 +245,6 @@ definition {
 
 			WaitForPageLoad();
 
-			Navigator.gotoNavTab(navTab = "Design");
-
 			PagesAdmin.addThemeCSSExtension(extensionName = ${randomEntryName1});
 
 			PortletEntry.save();
@@ -275,8 +271,6 @@ definition {
 			Click(locator1 = "PageEditor#MORE_LINK");
 
 			WaitForPageLoad();
-
-			Navigator.gotoNavTab(navTab = "Design");
 
 			PagesAdmin.addThemeCSSExtension(extensionName = ${randomEntryName2});
 
@@ -317,8 +311,6 @@ definition {
 
 			WaitForPageLoad();
 
-			Navigator.gotoNavTab(navTab = "Design");
-
 			PagesAdmin.addThemeCSSExtension(extensionName = ${randomEntryName1});
 
 			PortletEntry.save();
@@ -344,8 +336,6 @@ definition {
 			Click(locator1 = "PageEditor#MORE_LINK");
 
 			WaitForPageLoad();
-
-			Navigator.gotoNavTab(navTab = "Design");
 
 			AssertAttributeValue(
 				attribute1 = "placeholder",
@@ -387,8 +377,6 @@ definition {
 			DropdownMenuItem.click(menuItem = "Configuration");
 
 			WaitForPageLoad();
-
-			Navigator.gotoNavTab(navTab = "Design");
 
 			PagesAdmin.addThemeCSSExtension(extensionName = ${randomEntryName1});
 

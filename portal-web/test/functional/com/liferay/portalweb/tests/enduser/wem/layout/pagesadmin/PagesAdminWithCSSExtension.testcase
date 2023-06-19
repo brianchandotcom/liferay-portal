@@ -122,8 +122,6 @@ definition {
 
 			WaitForPageLoad();
 
-			Navigator.gotoNavTab(navTab = "Design");
-
 			AssertElementPresent(locator1 = "PagesAdmin#NO_CSS_THEME_LOADED");
 		}
 
@@ -156,8 +154,6 @@ definition {
 			DropdownMenuItem.click(menuItem = "Configuration");
 
 			WaitForPageLoad();
-
-			Navigator.gotoNavTab(navTab = "Design");
 
 			AssertElementPresent(locator1 = "PagesAdmin#NO_CSS_THEME_LOADED");
 		}
@@ -232,8 +228,6 @@ definition {
 
 			WaitForPageLoad();
 
-			Navigator.gotoNavTab(navTab = "Design");
-
 			PagesAdmin.addCSSExtensions(extensionNameList = ${randomEntryName1});
 
 			PortletEntry.save();
@@ -266,8 +260,6 @@ definition {
 
 			WaitForPageLoad();
 
-			Navigator.gotoNavTab(navTab = "Design");
-
 			PagesAdmin.addCSSExtensions(extensionNameList = ${randomEntryName2});
 
 			AssertVisible(
@@ -295,8 +287,6 @@ definition {
 			Click(locator1 = "PageEditor#MORE_LINK");
 
 			WaitForPageLoad();
-
-			Navigator.gotoNavTab(navTab = "Design");
 
 			for (var extensionName : list "${randomEntryName2},${randomEntryName1}") {
 				Click(
@@ -533,8 +523,6 @@ definition {
 
 			WaitForPageLoad();
 
-			Navigator.gotoNavTab(navTab = "Design");
-
 			PagesAdmin.addCSSExtensions(extensionNameList = ${randomEntryName1});
 
 			PortletEntry.save();
@@ -566,8 +554,6 @@ definition {
 			Click(locator1 = "PageEditor#MORE_LINK");
 
 			WaitForPageLoad();
-
-			Navigator.gotoNavTab(navTab = "Design");
 
 			AssertVisible(
 				key_tableEntry = ${randomEntryName1},

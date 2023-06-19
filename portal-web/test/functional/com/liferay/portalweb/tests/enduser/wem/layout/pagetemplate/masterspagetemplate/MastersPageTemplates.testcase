@@ -269,8 +269,6 @@ definition {
 
 			Click(locator1 = "PageEditor#MORE_LINK");
 
-			Navigator.gotoNavTab(navTab = "Design");
-
 			AssertTextEquals(
 				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME",
 				value1 = "Blank");
@@ -322,8 +320,6 @@ definition {
 			PageEditor.gotoTab(tabName = "Page Design Options");
 
 			Click(locator1 = "PageEditor#MORE_LINK");
-
-			Navigator.gotoNavTab(navTab = "Design");
 
 			AssertTextEquals(
 				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME",
@@ -418,8 +414,6 @@ definition {
 
 			Click(locator1 = "PageEditor#MORE_LINK");
 
-			Navigator.gotoNavTab(navTab = "Design");
-
 			AssertTextEquals(
 				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME",
 				value1 = "Blank");
@@ -481,8 +475,6 @@ definition {
 			PageEditor.gotoTab(tabName = "Page Design Options");
 
 			Click(locator1 = "PageEditor#MORE_LINK");
-
-			Navigator.gotoNavTab(navTab = "Design");
 
 			AssertTextEquals(
 				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME",
@@ -1551,8 +1543,6 @@ definition {
 			PageEditor.gotoTab(tabName = "Page Design Options");
 
 			Click(locator1 = "PageEditor#MORE_LINK");
-
-			Navigator.gotoNavTab(navTab = "Design");
 
 			Click(
 				ariaLabel = "Edit Master",

@@ -188,8 +188,6 @@ definition {
 
 			WaitForPageLoad();
 
-			Navigator.gotoNavTab(navTab = "Design");
-
 			Navigator.gotoNavTab(navTab = "JavaScript");
 
 			AssertElementPresent(locator1 = "PagesAdmin#NO_JAVASCRIPT_EXTENSIONS_LOADED");
@@ -221,8 +219,6 @@ definition {
 			DropdownMenuItem.click(menuItem = "Configuration");
 
 			WaitForPageLoad();
-
-			Navigator.gotoNavTab(navTab = "Design");
 
 			Navigator.gotoNavTab(navTab = "JavaScript");
 
@@ -371,8 +367,6 @@ definition {
 
 			Click(locator1 = "PageEditor#MORE_LINK");
 
-			Navigator.gotoNavTab(navTab = "Design");
-
 			Navigator.gotoNavTab(navTab = "JavaScript");
 
 			PagesAdmin.addJavaScriptExtensions(
@@ -406,8 +400,6 @@ definition {
 
 			WaitForPageLoad();
 
-			Navigator.gotoNavTab(navTab = "Design");
-
 			Navigator.gotoNavTab(navTab = "JavaScript");
 
 			AssertVisible(
@@ -436,8 +428,6 @@ definition {
 			Click(locator1 = "PageEditor#MORE_LINK");
 
 			WaitForPageLoad();
-
-			Navigator.gotoNavTab(navTab = "Design");
 
 			Navigator.gotoNavTab(navTab = "JavaScript");
 
@@ -632,8 +622,6 @@ definition {
 
 			WaitForPageLoad();
 
-			Navigator.gotoNavTab(navTab = "Design");
-
 			Navigator.gotoNavTab(navTab = "JavaScript");
 
 			PagesAdmin.addJavaScriptExtensions(
@@ -663,8 +651,6 @@ definition {
 			Click(locator1 = "PageEditor#MORE_LINK");
 
 			WaitForPageLoad();
-
-			Navigator.gotoNavTab(navTab = "Design");
 
 			Navigator.gotoNavTab(navTab = "JavaScript");
 
@@ -700,8 +686,6 @@ definition {
 
 			Click(locator1 = "PageEditor#MORE_LINK");
 
-			Navigator.gotoNavTab(navTab = "Design");
-
 			Navigator.gotoNavTab(navTab = "JavaScript");
 
 			PagesAdmin.addJavaScriptExtensions(
@@ -729,8 +713,6 @@ definition {
 			PageEditor.gotoTab(tabName = "Page Design Options");
 
 			Click(locator1 = "PageEditor#MORE_LINK");
-
-			Navigator.gotoNavTab(navTab = "Design");
 
 			Navigator.gotoNavTab(navTab = "JavaScript");
 

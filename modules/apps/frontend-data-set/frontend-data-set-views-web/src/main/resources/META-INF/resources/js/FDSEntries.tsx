@@ -30,6 +30,7 @@ import {
 	FDS_DEFAULT_PROPS,
 	FUZZY_OPTIONS,
 	OBJECT_RELATIONSHIP,
+	ALLOWED_ENDPOINTS_PARAMETERS
 } from './Constants';
 import {FDSViewType} from './FDSViews';
 import RequiredMark from './components/RequiredMark';
@@ -387,6 +388,21 @@ const AddFDSEntryModalContent = ({
 		}
 	};
 
+	const validatePath = (path: string, allowedParameters: string[]):boolean => {
+		const paramsMatcher = RegExp('\{(.*?)\}', 'g');
+		let isValid = true;
+		let matches;
+	
+		while ((matches = paramsMatcher.exec(path)) !== null) {
+			if (! allowedParameters.includes(matches[1])){
+				isValid = false;
+				break;
+			}
+		}
+
+		return isValid;
+	}	
+
 	const getRESTSchemas = async (restApplication: string) => {
 		if (!restApplication) {
 			return;
@@ -406,10 +422,10 @@ const AddFDSEntryModalContent = ({
 
 			schemaNames.forEach((schemaName) => {
 				paths.forEach((path: string) => {
-					if (path.includes('{')) {
+					if (! validatePath(path, ALLOWED_ENDPOINTS_PARAMETERS)){
 						return;
 					}
-
+				
 					if (
 						responseJson.paths[
 							path

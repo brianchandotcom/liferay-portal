@@ -179,6 +179,75 @@ definition {
 			locator1 = "CustomerPortalSite#FIELD_VALUE",
 			value1 = ${value});
 	}
+	
+	@summary = "This macro Fulfills the form of guest users, that can be accessed by direct link"
+	macro fulfillGuestForm {
+		CP2Utils.fulfillGuestFormFields(
+			fieldInput = "test@liferay.com",
+			fieldName = "Contact Email Address",
+			typeField = "true");
+
+		CP2Utils.fulfillGuestFormFields(
+			fieldInput = "Liferay",
+			fieldName = "Company Name",
+			typeField = "true");
+
+		CP2Utils.fulfillGuestFormFields(
+			fieldInput = "Asia Pacific",
+			fieldName = "Support Region");
+
+		KeyPress(
+			key_option = "Sup",
+			locator1 = "CP2Utils#GUEST_FORM_OPTIONS",
+			value1 = "\ENTER");
+
+		CP2Utils.fulfillGuestFormFields(
+			fieldInput = "I need",
+			fieldName = "Please explain why you need a replacement activation key",
+			typeField = "true");
+
+		CP2Utils.fulfillGuestFormFields(
+			fieldInput = "Backup",
+			fieldName = "Type of Server");
+
+		KeyPress(
+			key_option = "Server",
+			locator1 = "CP2Utils#GUEST_FORM_OPTIONS",
+			value1 = "\ENTER");
+
+		CP2Utils.fulfillGuestFormFields(
+			fieldInput = "Single instance",
+			fieldName = "Clustered?");
+
+		KeyPress(
+			key_option = "Clustered",
+			locator1 = "CP2Utils#GUEST_FORM_OPTIONS",
+			value1 = "\ENTER");
+
+		Click.clickNoWaitForVisible(
+			key_fieldName = "acknowledgement",
+			locator1 = "Checkbox#CHECKBOX_NAME");
+
+		if (isSet(submit)) {
+			Button.click(button = "Submit");
+		}
+	}
+
+	@summary = "This macro complement the macro above"
+	macro fulfillGuestFormFields {
+		if (isSet(typeField)) {
+			Type(
+				key_fieldsname = ${fieldName},
+				locator1 = "CP2Utils#GUEST_FORM_FIELDS",
+				value1 = ${fieldInput});
+		}
+		else {
+			Type(
+				key_option = ${fieldName},
+				locator1 = "CP2Utils#GUEST_FORM_OPTIONS",
+				value1 = ${fieldInput});
+		}
+	}
 
 	// Workaround for LPS-168369
 

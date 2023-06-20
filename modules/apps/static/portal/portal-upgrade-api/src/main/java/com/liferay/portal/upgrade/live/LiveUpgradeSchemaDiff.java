@@ -25,6 +25,12 @@ public class LiveUpgradeSchemaDiff {
 		throw new UnsupportedOperationException("Not implemented");
 	}
 
+	public void recordAddColumns(String... columnDefinitions)
+		throws IllegalArgumentException {
+
+		throw new UnsupportedOperationException("Not implemented");
+	}
+
 	public void recordAlterColumnName(
 			String oldColumnName, String newColumnDefinition)
 		throws IllegalArgumentException {
@@ -33,6 +39,12 @@ public class LiveUpgradeSchemaDiff {
 	}
 
 	public void recordAlterColumnType(String columnName, String newColumnType)
+		throws IllegalArgumentException {
+
+		throw new UnsupportedOperationException("Not implemented");
+	}
+
+	public void recordDropColumns(String... columnNames)
 		throws IllegalArgumentException {
 
 		throw new UnsupportedOperationException("Not implemented");

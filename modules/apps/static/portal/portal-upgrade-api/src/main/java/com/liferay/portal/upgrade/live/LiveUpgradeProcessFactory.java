@@ -22,6 +22,17 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
  */
 public class LiveUpgradeProcessFactory {
 
+	public static LiveUpgradeProcess addColumns(String... columnDefinitions) {
+		return (tableName, liveUpgradeSchemaDiff) -> {
+			UpgradeProcess upgradeProcess = UpgradeProcessFactory.addColumns(
+				tableName, columnDefinitions);
+
+			upgradeProcess.upgrade();
+
+			liveUpgradeSchemaDiff.recordAddColumns(columnDefinitions);
+		};
+	}
+
 	public static LiveUpgradeProcess alterColumnName(
 		String oldColumnName, String newColumnDefinition) {
 
@@ -49,6 +60,17 @@ public class LiveUpgradeProcessFactory {
 
 			liveUpgradeSchemaDiff.recordAlterColumnType(
 				columnName, newColumnType);
+		};
+	}
+
+	public static LiveUpgradeProcess dropColumns(String... columnNames) {
+		return (tableName, liveUpgradeSchemaDiff) -> {
+			UpgradeProcess upgradeProcess = UpgradeProcessFactory.dropColumns(
+				tableName, columnNames);
+
+			upgradeProcess.upgrade();
+
+			liveUpgradeSchemaDiff.recordDropColumns(columnNames);
 		};
 	}
 

@@ -3,6 +3,7 @@ Bundle-SymbolicName: com.liferay.portal.tools.db.partition.virtual.instance.migr
 Bundle-Version: 1.0.0
 Main-Class: com.liferay.portal.tools.db.partition.virtual.instance.migrator.DBPartitionVirtualInstanceMigrator
 -includeresource:\
+	@com.liferay.petra.function-*.jar!/com.liferay.petra.function/UnsafeRunnable.class,\
 	@com.liferay.petra.lang-*.jar!/com/liferay/petra/lang/CentralizedThreadLocal.class,\
 	@com.liferay.petra.lang-*.jar!/com/liferay/petra/lang/HashUtil.class,\
 	@com.liferay.petra.string-*.jar!/com/liferay/petra/string/CharPool.class,\

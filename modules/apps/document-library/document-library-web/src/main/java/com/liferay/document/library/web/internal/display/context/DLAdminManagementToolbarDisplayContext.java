@@ -520,7 +520,7 @@ public class DLAdminManagementToolbarDisplayContext
 	private void _addAssetCategoriesFilterLabelItems(
 		LabelItemListBuilder.LabelItemListWrapper labelItemListWrapper) {
 
-		Set<Long> assetCategoryIds = _getSelectedAssetCategoryIds();
+		Set<Long> assetCategoryIds = SetUtil.fromArray(_getAssetCategoryIds());
 
 		for (Long assetCategoryId : assetCategoryIds) {
 			labelItemListWrapper.add(
@@ -562,7 +562,7 @@ public class DLAdminManagementToolbarDisplayContext
 	private void _addAssetTagsFilterLabelItems(
 		LabelItemListBuilder.LabelItemListWrapper labelItemListWrapper) {
 
-		Set<String> assetTagIds = _getSelectedAssetTagIds();
+		Set<String> assetTagIds = SetUtil.fromArray(_getAssetTagIds());
 
 		for (String assetTagId : assetTagIds) {
 			labelItemListWrapper.add(
@@ -612,6 +612,10 @@ public class DLAdminManagementToolbarDisplayContext
 		}
 	}
 
+	private long[] _getAssetCategoryIds() {
+		return _dlAdminDisplayContext.getAssetCategoryIds();
+	}
+
 	private String _getAssetCategorySelectorURL() throws PortalException {
 		return PortletURLBuilder.create(
 			PortletProviderUtil.getPortletURL(
@@ -622,7 +626,7 @@ public class DLAdminManagementToolbarDisplayContext
 			_liferayPortletResponse.getNamespace() + "selectedAssetCategory"
 		).setParameter(
 			"selectedCategories",
-			StringUtil.merge(_getSelectedAssetCategoryIds(), StringPool.COMMA)
+			StringUtil.merge(_getAssetCategoryIds(), StringPool.COMMA)
 		).setParameter(
 			"showSelectedCounter", true
 		).setParameter(
@@ -642,6 +646,10 @@ public class DLAdminManagementToolbarDisplayContext
 		).buildString();
 	}
 
+	private String[] _getAssetTagIds() {
+		return _dlAdminDisplayContext.getAssetTagIds();
+	}
+
 	private String _getAssetTagSelectorURL() throws PortalException {
 		return PortletURLBuilder.create(
 			PortletProviderUtil.getPortletURL(
@@ -658,7 +666,7 @@ public class DLAdminManagementToolbarDisplayContext
 				StringPool.COMMA)
 		).setParameter(
 			"selectedTagNames",
-			StringUtil.merge(_getSelectedAssetTagIds(), StringPool.COMMA)
+			StringUtil.merge(_getAssetTagIds(), StringPool.COMMA)
 		).setWindowState(
 			LiferayWindowState.POP_UP
 		).buildString();
@@ -680,7 +688,7 @@ public class DLAdminManagementToolbarDisplayContext
 	}
 
 	private String[] _getExtensions() {
-		return ParamUtil.getStringValues(_httpServletRequest, "extension");
+		return _dlAdminDisplayContext.getExtensions();
 	}
 
 	private String _getExtensionsItemSelectorURL() {
@@ -715,7 +723,7 @@ public class DLAdminManagementToolbarDisplayContext
 	}
 
 	private long _getFileEntryTypeId() {
-		return ParamUtil.getLong(_httpServletRequest, "fileEntryTypeId", -1);
+		return _dlAdminDisplayContext.getFileEntryTypeId();
 	}
 
 	private List<LabelItem> _getFilterLabelItems() {
@@ -764,7 +772,7 @@ public class DLAdminManagementToolbarDisplayContext
 			});
 
 		labelItemListWrapper.add(
-			() -> Objects.equals(_getNavigation(), "mine"),
+			_dlAdminDisplayContext::isNavigationMine,
 			labelItem -> {
 				labelItem.putData(
 					"removeLabelURL",
@@ -804,22 +812,18 @@ public class DLAdminManagementToolbarDisplayContext
 	}
 
 	private List<DropdownItem> _getFilterNavigationDropdownItems() {
+		boolean assetCategoryIdsIsEmpty = ArrayUtil.isEmpty(
+			_getAssetCategoryIds());
+		boolean assetTagIdsIsEmpty = ArrayUtil.isEmpty(_getAssetTagIds());
 		boolean extensionsIsEmpty = ArrayUtil.isEmpty(_getExtensions());
 		long fileEntryTypeId = _getFileEntryTypeId();
-		String navigation = ParamUtil.getString(
-			_httpServletRequest, "navigation", "home");
-		boolean selectedAssetCategoryIdsIsEmpty = SetUtil.isEmpty(
-			_getSelectedAssetCategoryIds());
-		boolean selectedAssetTagIdsIsEmpty = SetUtil.isEmpty(
-			_getSelectedAssetTagIds());
 
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {
 				dropdownItem.setActive(
 					extensionsIsEmpty && (fileEntryTypeId == -1) &&
-					navigation.equals("home") &&
-					selectedAssetCategoryIdsIsEmpty &&
-					selectedAssetTagIdsIsEmpty);
+					_dlAdminDisplayContext.isNavigationHome() &&
+					assetCategoryIdsIsEmpty && assetTagIdsIsEmpty);
 				dropdownItem.setHref(
 					PortletURLBuilder.create(
 						PortletURLUtil.clone(
@@ -844,7 +848,8 @@ public class DLAdminManagementToolbarDisplayContext
 			}
 		).add(
 			dropdownItem -> {
-				dropdownItem.setActive(navigation.equals("recent"));
+				dropdownItem.setActive(
+					_dlAdminDisplayContext.isNavigationRecent());
 				dropdownItem.setHref(
 					PortletURLBuilder.create(
 						PortletURLUtil.clone(
@@ -860,7 +865,8 @@ public class DLAdminManagementToolbarDisplayContext
 		).add(
 			_themeDisplay::isSignedIn,
 			dropdownItem -> {
-				dropdownItem.setActive(navigation.equals("mine"));
+				dropdownItem.setActive(
+					_dlAdminDisplayContext.isNavigationMine());
 				dropdownItem.setHref(
 					PortletURLBuilder.create(
 						PortletURLUtil.clone(
@@ -879,7 +885,7 @@ public class DLAdminManagementToolbarDisplayContext
 				dropdownItem.putData("action", "openCategoriesSelector");
 				dropdownItem.putData(
 					"categoriesFilterURL", _getAssetCategorySelectorURL());
-				dropdownItem.setActive(!selectedAssetCategoryIdsIsEmpty);
+				dropdownItem.setActive(!assetCategoryIdsIsEmpty);
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "categories") +
 						StringPool.TRIPLE_PERIOD);
@@ -931,7 +937,7 @@ public class DLAdminManagementToolbarDisplayContext
 				dropdownItem.putData("action", "openTagsSelector");
 				dropdownItem.putData(
 					"tagsFilterURL", _getAssetTagSelectorURL());
-				dropdownItem.setActive(!selectedAssetTagIdsIsEmpty);
+				dropdownItem.setActive(!assetTagIdsIsEmpty);
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "tags") +
 						StringPool.TRIPLE_PERIOD);
@@ -958,7 +964,7 @@ public class DLAdminManagementToolbarDisplayContext
 	}
 
 	private String _getNavigation() {
-		return ParamUtil.getString(_httpServletRequest, "navigation", "home");
+		return _dlAdminDisplayContext.getNavigation();
 	}
 
 	private String _getOrderByCol() {
@@ -1028,28 +1034,6 @@ public class DLAdminManagementToolbarDisplayContext
 
 	private long _getRepositoryId() {
 		return _dlAdminDisplayContext.getRepositoryId();
-	}
-
-	private Set<Long> _getSelectedAssetCategoryIds() {
-		if (_assetCategoryIds != null) {
-			return _assetCategoryIds;
-		}
-
-		_assetCategoryIds = SetUtil.fromArray(
-			ParamUtil.getLongValues(_httpServletRequest, "assetCategoryId"));
-
-		return _assetCategoryIds;
-	}
-
-	private Set<String> _getSelectedAssetTagIds() {
-		if (_assetTagIds != null) {
-			return _assetTagIds;
-		}
-
-		_assetTagIds = SetUtil.fromArray(
-			ParamUtil.getStringValues(_httpServletRequest, "assetTagId"));
-
-		return _assetTagIds;
 	}
 
 	private String _getViewMvcRenderCommandName(long folderId) {
@@ -1132,12 +1116,10 @@ public class DLAdminManagementToolbarDisplayContext
 
 	private void _setFilterParameters(PortletURL portletURL) {
 		portletURL.setParameter(
-			"assetCategoryId",
-			ArrayUtil.toStringArray(
-				ArrayUtil.toLongArray(_getSelectedAssetCategoryIds())));
+			"assetCategoryId", ArrayUtil.toStringArray(_getAssetCategoryIds()));
 
 		portletURL.setParameter(
-			"assetTagId", ArrayUtil.toStringArray(_getSelectedAssetTagIds()));
+			"assetTagId", ArrayUtil.toStringArray(_getAssetTagIds()));
 
 		portletURL.setParameter("extension", _getExtensions());
 
@@ -1174,8 +1156,6 @@ public class DLAdminManagementToolbarDisplayContext
 		portletURL.setParameter("showSearchInfo", Boolean.TRUE.toString());
 	}
 
-	private Set<Long> _assetCategoryIds;
-	private Set<String> _assetTagIds;
 	private final PortletURL _currentURLObj;
 	private final DLAdminDisplayContext _dlAdminDisplayContext;
 	private final DLPortletInstanceSettingsHelper

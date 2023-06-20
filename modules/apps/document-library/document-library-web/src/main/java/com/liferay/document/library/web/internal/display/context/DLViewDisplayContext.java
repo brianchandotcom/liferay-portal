@@ -41,7 +41,6 @@ import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.asset.util.comparator.AssetVocabularyGroupLocalizedTitleComparator;
@@ -434,17 +433,11 @@ public class DLViewDisplayContext {
 	}
 
 	private long _getFileEntryTypeId() {
-		return ParamUtil.getLong(_httpServletRequest, "fileEntryTypeId", -1);
+		return _dlAdminDisplayContext.getFileEntryTypeId();
 	}
 
 	private String _getNavigation() {
-		if (_navigation != null) {
-			return _navigation;
-		}
-
-		_navigation = ParamUtil.getString(_httpServletRequest, "navigation");
-
-		return _navigation;
+		return _dlAdminDisplayContext.getNavigation();
 	}
 
 	private String _getRedirect() {
@@ -457,7 +450,6 @@ public class DLViewDisplayContext {
 	private final DLPortletInstanceSettingsHelper
 		_dlPortletInstanceSettingsHelper;
 	private final HttpServletRequest _httpServletRequest;
-	private String _navigation;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 

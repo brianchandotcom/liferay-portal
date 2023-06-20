@@ -160,6 +160,24 @@ public class DLAdminDisplayContext {
 		_computeFolders();
 	}
 
+	public long[] getAssetCategoryIds() {
+		if (_assetCategoryIds == null) {
+			_assetCategoryIds = ParamUtil.getLongValues(
+				_httpServletRequest, "assetCategoryId");
+		}
+
+		return _assetCategoryIds;
+	}
+
+	public String[] getAssetTagIds() {
+		if (_assetTagIds == null) {
+			_assetTagIds = ParamUtil.getStringValues(
+				_httpServletRequest, "assetTagId");
+		}
+
+		return _assetTagIds;
+	}
+
 	public String getDisplayStyle() {
 		if (_displayStyle != null) {
 			return _displayStyle;
@@ -168,6 +186,24 @@ public class DLAdminDisplayContext {
 		_displayStyle = _getDisplayStyle(PropsValues.DL_DEFAULT_DISPLAY_VIEW);
 
 		return _displayStyle;
+	}
+
+	public String[] getExtensions() {
+		if (_extensions == null) {
+			_extensions = ParamUtil.getStringValues(
+				_httpServletRequest, "extension");
+		}
+
+		return _extensions;
+	}
+
+	public long getFileEntryTypeId() {
+		if (_fileEntryTypeId == null) {
+			_fileEntryTypeId = ParamUtil.getLong(
+				_httpServletRequest, "fileEntryTypeId", -1);
+		}
+
+		return _fileEntryTypeId;
 	}
 
 	public Folder getFolder() {
@@ -179,12 +215,10 @@ public class DLAdminDisplayContext {
 	}
 
 	public String getNavigation() {
-		if (_navigation != null) {
-			return _navigation;
+		if (_navigation == null) {
+			_navigation = ParamUtil.getString(
+				_httpServletRequest, "navigation", "home");
 		}
-
-		_navigation = ParamUtil.getString(
-			_httpServletRequest, "navigation", "home");
 
 		return _navigation;
 	}
@@ -201,10 +235,7 @@ public class DLAdminDisplayContext {
 		String orderByCol = ParamUtil.getString(
 			_httpServletRequest, "orderByCol");
 
-		long fileEntryTypeId = ParamUtil.getLong(
-			_httpServletRequest, "fileEntryTypeId", -1);
-
-		if (orderByCol.equals("downloads") && (fileEntryTypeId >= 0)) {
+		if (orderByCol.equals("downloads") && (getFileEntryTypeId() >= 0)) {
 			orderByCol = "modifiedDate";
 		}
 
@@ -420,6 +451,22 @@ public class DLAdminDisplayContext {
 
 	public boolean isDefaultFolderView() {
 		return _defaultFolderView;
+	}
+
+	public boolean isNavigationHome() {
+		if (Objects.equals(getNavigation(), "home")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isNavigationMine() {
+		if (Objects.equals(getNavigation(), "mine")) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isNavigationRecent() {
@@ -650,19 +697,6 @@ public class DLAdminDisplayContext {
 	private SearchContainer<RepositoryEntry> _getDLSearchContainer()
 		throws PortalException {
 
-		String navigation = ParamUtil.getString(
-			_httpServletRequest, "navigation", "home");
-		long fileEntryTypeId = ParamUtil.getLong(
-			_httpServletRequest, "fileEntryTypeId", -1);
-		String[] extensions = ParamUtil.getStringValues(
-			_httpServletRequest, "extension");
-		long[] assetCategoryIds = ParamUtil.getLongValues(
-			_httpServletRequest, "assetCategoryId");
-		String[] assetTagIds = ParamUtil.getStringValues(
-			_httpServletRequest, "assetTagId");
-
-		int status = _getStatus();
-
 		long folderId = getFolderId();
 
 		PortletURL portletURL = PortletURLBuilder.createRenderURL(
@@ -670,12 +704,14 @@ public class DLAdminDisplayContext {
 		).setMVCRenderCommandName(
 			getViewMvcRenderCommandName(folderId)
 		).setNavigation(
-			navigation
+			getNavigation()
 		).setParameter(
-			"extension", extensions
+			"extension", getExtensions()
 		).setParameter(
 			"fileEntryTypeId",
 			() -> {
+				long fileEntryTypeId = getFileEntryTypeId();
+
 				if (fileEntryTypeId >= 0) {
 					return fileEntryTypeId;
 				}
@@ -690,7 +726,7 @@ public class DLAdminDisplayContext {
 			new SearchContainer<>(
 				_liferayPortletRequest, null, null, "curEntry",
 				_dlPortletInstanceSettings.getEntriesPerPage(), portletURL,
-				null, _getEmptyResultsMessage(fileEntryTypeId));
+				null, _getEmptyResultsMessage());
 
 		dlSearchContainer.setHeaderNames(
 			ListUtil.fromArray(
@@ -698,17 +734,16 @@ public class DLAdminDisplayContext {
 		dlSearchContainer.setOrderByCol(getOrderByCol());
 		dlSearchContainer.setOrderByType(getOrderByType());
 
-		if (ArrayUtil.isNotEmpty(assetCategoryIds) || (fileEntryTypeId >= 0) ||
-			ArrayUtil.isNotEmpty(assetTagIds) ||
-			ArrayUtil.isNotEmpty(extensions) || navigation.equals("mine") ||
-			navigation.equals("recent")) {
+		if (ArrayUtil.isNotEmpty(getAssetCategoryIds()) ||
+			(getFileEntryTypeId() >= 0) ||
+			ArrayUtil.isNotEmpty(getAssetTagIds()) ||
+			ArrayUtil.isNotEmpty(getExtensions()) || isNavigationMine() ||
+			isNavigationRecent()) {
 
 			SearchContext searchContext = _getSearchContext(
 				dlSearchContainer, "none");
 
-			_initializeFilterSearchContext(
-				searchContext, assetCategoryIds, assetTagIds, extensions,
-				fileEntryTypeId, folderId, navigation, status);
+			_initializeFilterSearchContext(searchContext);
 
 			Indexer<?> indexer = IndexerRegistryUtil.getIndexer(
 				DLFileEntryConstants.getClassName());
@@ -775,7 +810,7 @@ public class DLAdminDisplayContext {
 				AssetEntryServiceUtil.getEntriesCount(assetEntryQuery));
 		}
 		else {
-			int dlAppStatus = status;
+			int dlAppStatus = _getStatus();
 
 			dlSearchContainer.setResultsAndTotal(
 				() ->
@@ -793,8 +828,8 @@ public class DLAdminDisplayContext {
 		return dlSearchContainer;
 	}
 
-	private String _getEmptyResultsMessage(long fileEntryTypeId)
-		throws PortalException {
+	private String _getEmptyResultsMessage() throws PortalException {
+		long fileEntryTypeId = getFileEntryTypeId();
 
 		if (fileEntryTypeId < 0) {
 			return "there-are-no-documents-or-media-files-in-this-folder";
@@ -839,15 +874,7 @@ public class DLAdminDisplayContext {
 			searchContainer, "regular");
 
 		if (FeatureFlagManagerUtil.isEnabled("LPS-84424")) {
-			_initializeFilterSearchContext(
-				searchContext,
-				ParamUtil.getLongValues(_httpServletRequest, "assetCategoryId"),
-				ParamUtil.getStringValues(_httpServletRequest, "assetTagId"),
-				ParamUtil.getStringValues(_httpServletRequest, "extension"),
-				ParamUtil.getLong(_httpServletRequest, "fileEntryTypeId", -1),
-				getFolderId(),
-				ParamUtil.getString(_httpServletRequest, "navigation", "home"),
-				_getStatus());
+			_initializeFilterSearchContext(searchContext);
 		}
 
 		long searchRepositoryId = ParamUtil.getLong(
@@ -1069,14 +1096,11 @@ public class DLAdminDisplayContext {
 		return status;
 	}
 
-	private void _initializeFilterSearchContext(
-		SearchContext searchContext, long[] assetCategoryIds,
-		String[] assetTagIds, String[] extensions, long fileEntryTypeId,
-		long folderId, String navigation, int status) {
-
+	private void _initializeFilterSearchContext(SearchContext searchContext) {
+		int status = _getStatus();
 		long userId = 0;
 
-		if (navigation.equals("mine") && _themeDisplay.isSignedIn()) {
+		if (isNavigationMine() && _themeDisplay.isSignedIn()) {
 			status = WorkflowConstants.STATUS_ANY;
 			userId = _themeDisplay.getUserId();
 		}
@@ -1084,8 +1108,10 @@ public class DLAdminDisplayContext {
 		searchContext.setAttribute("status", status);
 		searchContext.setBooleanClauses(
 			_getBooleanClauses(
-				assetCategoryIds, assetTagIds, extensions, fileEntryTypeId,
-				userId));
+				getAssetCategoryIds(), getAssetTagIds(), getExtensions(),
+				getFileEntryTypeId(), userId));
+
+		long folderId = getFolderId();
 
 		if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			searchContext.setFolderIds(new long[] {folderId});
@@ -1136,6 +1162,8 @@ public class DLAdminDisplayContext {
 		DLAdminDisplayContext.class);
 
 	private final AssetAutoTaggerConfiguration _assetAutoTaggerConfiguration;
+	private long[] _assetCategoryIds;
+	private String[] _assetTagIds;
 	private boolean _defaultFolderView;
 	private String _displayStyle;
 	private final DLFileOrderConfigurationProvider
@@ -1144,6 +1172,8 @@ public class DLAdminDisplayContext {
 	private final DLPortletInstanceSettingsHelper
 		_dlPortletInstanceSettingsHelper;
 	private final DLRequestHelper _dlRequestHelper;
+	private String[] _extensions;
+	private Long _fileEntryTypeId;
 	private Folder _folder;
 	private long _folderId;
 	private final HttpServletRequest _httpServletRequest;

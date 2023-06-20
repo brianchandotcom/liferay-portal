@@ -1,0 +1,53 @@
+@component-name = "portal-solutions"
+definition {
+
+	property osgi.modules.includes = "osb-site-initializer-customer-portal";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "OSB Site Initializer Customer Portal";
+
+	var testSiteName = "Customer Portal Site";
+	var testSiteURL = "customer-portal-site";
+	var testAccount = "Test Account Portal";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		User.firstLoginPG();
+
+		CustomerPortal.customerPortalApisTearDown();
+	}
+    @description = "Story ID: LPS-152144 | Test Summary: Verify that the form can only be sent after filling out all required fields"
+	@ignore = "true"
+	@priority = 4
+	test AssertTheUserCanSubmitTheForm {
+
+        task("Given the user logout from customer portal site") {
+            User.logoutPG();
+            }
+        
+        task("And go to Form for guest users") {
+			 var portalURL = PropsUtil.get("portal.url");
+
+            Navigator.openSpecificURL(url = "${portalURL}/web/cp/replacement-activation-key-form");   
+        }
+
+        task("When fulfill the form") {
+            CP2Utils.fulfillGuestForm(submit = "true");
+        }
+
+		task("Then assert the success message") {
+			AssertElementPresent( locator1= "CP2Utils#GUEST_FORM_CONGRATS");
+		}
+	}
+}

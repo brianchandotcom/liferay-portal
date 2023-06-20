@@ -524,4 +524,45 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-11736. Can create a new product relation type with XSS Script"
+	@priority = 5
+	test CanCreateNewRelationTypeWithXSS {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "CPCommerceProductRelationsWorkflow#CanCreateNewRelationTypeWithXSS";
+
+		task ("Given a product relation with XSS type is configured") {
+			SystemSettings.openToConfigInSystemSettings(portletId = "com.liferay.commerce.product.configuration.CPDefinitionLinkTypeConfiguration");
+
+			SelectFrameTop();
+
+			Type(
+				key_counter = 1,
+				locator1 = "TextArea#CONFIGURATION",
+				value1 = "<script>alert(1);</script>");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("When the admin creates a product relation using the XSS type") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "ABS Sensor");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Product Relations");
+
+			CommerceRelations.addAnyProductRelation(
+				key_product = "Hoses",
+				key_relation = "<script>alert(1);</script> Product");
+		}
+
+		task ("Then the related product with XSS type is added") {
+			AssertElementPresent(
+				key_productName = "Hoses",
+				key_value = "<script>alert(1);</script>",
+				locator1 = "CommerceEntry#VALUE_PRODUCT_RELATIONS");
+		}
+	}
+
 }

@@ -95,14 +95,6 @@ public class FileEntryInfoItemObjectProvider
 		}
 	}
 
-	@Override
-	public FileEntry getInfoItem(long classPK) throws NoSuchInfoItemException {
-		InfoItemIdentifier infoItemIdentifier = new ClassPKInfoItemIdentifier(
-			classPK);
-
-		return getInfoItem(infoItemIdentifier);
-	}
-
 	@Reference
 	private RepositoryProvider _repositoryProvider;
 

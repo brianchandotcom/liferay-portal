@@ -75,14 +75,6 @@ public class KBArticleInfoItemObjectProvider
 		return kbArticle;
 	}
 
-	@Override
-	public KBArticle getInfoItem(long classPK) throws NoSuchInfoItemException {
-		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
-			new ClassPKInfoItemIdentifier(classPK);
-
-		return getInfoItem(classPKInfoItemIdentifier);
-	}
-
 	private KBArticle _getKbArticle(
 		String version, ClassPKInfoItemIdentifier classPKInfoItemIdentifier) {
 

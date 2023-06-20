@@ -64,16 +64,6 @@ public class CSDiagramEntryInfoItemObjectProvider
 		}
 	}
 
-	@Override
-	public CSDiagramEntry getInfoItem(long classPK)
-		throws NoSuchInfoItemException {
-
-		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
-			new ClassPKInfoItemIdentifier(classPK);
-
-		return getInfoItem(classPKInfoItemIdentifier);
-	}
-
 	@Reference
 	private CSDiagramEntryLocalService _csDiagramEntryLocalService;
 

@@ -62,16 +62,6 @@ public class CommerceOrderInfoItemObjectProvider
 		}
 	}
 
-	@Override
-	public CommerceOrder getInfoItem(long classPK)
-		throws NoSuchInfoItemException {
-
-		InfoItemIdentifier infoItemIdentifier = new ClassPKInfoItemIdentifier(
-			classPK);
-
-		return getInfoItem(infoItemIdentifier);
-	}
-
 	@Reference
 	private CommerceOrderLocalService _commerceOrderLocalService;
 

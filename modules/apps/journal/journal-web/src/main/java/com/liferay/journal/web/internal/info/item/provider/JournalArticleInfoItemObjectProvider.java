@@ -136,16 +136,6 @@ public class JournalArticleInfoItemObjectProvider
 		return article;
 	}
 
-	@Override
-	public JournalArticle getInfoItem(long classPK)
-		throws NoSuchInfoItemException {
-
-		InfoItemIdentifier infoItemIdentifier = new ClassPKInfoItemIdentifier(
-			classPK);
-
-		return getInfoItem(infoItemIdentifier);
-	}
-
 	private JournalArticle _getArticle(long classPK, String version)
 		throws PortalException {
 

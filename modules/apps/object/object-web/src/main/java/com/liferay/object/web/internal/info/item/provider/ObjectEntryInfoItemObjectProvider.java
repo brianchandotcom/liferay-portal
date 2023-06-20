@@ -57,16 +57,6 @@ public class ObjectEntryInfoItemObjectProvider
 		return objectEntry;
 	}
 
-	@Override
-	public ObjectEntry getInfoItem(long classPK)
-		throws NoSuchInfoItemException {
-
-		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
-			new ClassPKInfoItemIdentifier(classPK);
-
-		return getInfoItem(classPKInfoItemIdentifier);
-	}
-
 	private final ObjectEntryLocalService _objectEntryLocalService;
 
 }

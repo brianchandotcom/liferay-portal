@@ -66,14 +66,6 @@ public class AssetEntryInfoItemObjectProvider
 		}
 	}
 
-	@Override
-	public AssetEntry getInfoItem(long classPK) throws NoSuchInfoItemException {
-		InfoItemIdentifier infoItemIdentifier = new ClassPKInfoItemIdentifier(
-			classPK);
-
-		return getInfoItem(infoItemIdentifier);
-	}
-
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
 

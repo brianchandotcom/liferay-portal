@@ -65,16 +65,6 @@ public class CPDefinitionSpecificationOptionValueInfoItemObjectProvider
 		}
 	}
 
-	@Override
-	public CPDefinitionSpecificationOptionValue getInfoItem(long classPK)
-		throws NoSuchInfoItemException {
-
-		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
-			new ClassPKInfoItemIdentifier(classPK);
-
-		return getInfoItem(classPKInfoItemIdentifier);
-	}
-
 	@Reference
 	private CPDefinitionSpecificationOptionValueLocalService
 		_cpDefinitionSpecificationOptionValueLocalService;

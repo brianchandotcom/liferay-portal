@@ -81,14 +81,6 @@ public class BlogsEntryInfoItemObjectProvider
 		return blogsEntry;
 	}
 
-	@Override
-	public BlogsEntry getInfoItem(long classPK) throws NoSuchInfoItemException {
-		InfoItemIdentifier infoItemIdentifier = new ClassPKInfoItemIdentifier(
-			classPK);
-
-		return getInfoItem(infoItemIdentifier);
-	}
-
 	@Reference
 	private BlogsEntryLocalService _blogsEntryLocalService;
 

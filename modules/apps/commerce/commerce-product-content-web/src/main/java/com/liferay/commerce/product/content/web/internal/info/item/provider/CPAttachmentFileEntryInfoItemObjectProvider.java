@@ -64,16 +64,6 @@ public class CPAttachmentFileEntryInfoItemObjectProvider
 		}
 	}
 
-	@Override
-	public CPAttachmentFileEntry getInfoItem(long classPK)
-		throws NoSuchInfoItemException {
-
-		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
-			new ClassPKInfoItemIdentifier(classPK);
-
-		return getInfoItem(classPKInfoItemIdentifier);
-	}
-
 	@Reference
 	private CPAttachmentFileEntryLocalService
 		_cpAttachmentFileEntryLocalService;

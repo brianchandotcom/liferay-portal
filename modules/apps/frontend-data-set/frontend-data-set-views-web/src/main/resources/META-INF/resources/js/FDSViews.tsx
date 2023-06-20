@@ -334,7 +334,7 @@ const FDSViews = ({
 			apiURL={`${API_URL.FDS_VIEWS}/?filter=(${OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW_ID} eq '${fdsEntryId}')`}
 			creationMenu={creationMenu}
 			emptyState={{
-				button: creationMenu,
+				actionItems: creationMenu,
 				description: Liferay.Language.get(
 					'start-creating-one-to-show-your-data'
 				),

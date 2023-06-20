@@ -126,7 +126,7 @@ export interface IFrontendDataSetProps {
 	customViews?: string;
 	customViewsEnabled?: boolean;
 	emptyState?: {
-		button?: any;
+		actionItems?: object;
 		description?: string;
 		image?: string;
 		title?: string;

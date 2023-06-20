@@ -92,7 +92,7 @@ public class
 		}
 
 		if (MoneyOrderCommercePaymentMethod.KEY.equals(
-				commercePaymentMethodGroupRel.getEngineKey())) {
+				commercePaymentMethodGroupRel.getPaymentIntegrationKey())) {
 
 			return true;
 		}

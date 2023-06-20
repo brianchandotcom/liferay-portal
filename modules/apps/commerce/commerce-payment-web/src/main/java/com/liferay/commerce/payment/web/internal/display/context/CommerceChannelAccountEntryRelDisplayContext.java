@@ -138,7 +138,8 @@ public class CommerceChannelAccountEntryRelDisplayContext {
 		}
 
 		if ((_commercePaymentMethodGroupRel != null) &&
-			key.equals(_commercePaymentMethodGroupRel.getEngineKey())) {
+			key.equals(
+				_commercePaymentMethodGroupRel.getPaymentIntegrationKey())) {
 
 			return true;
 		}

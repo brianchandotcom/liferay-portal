@@ -86,7 +86,7 @@ public class CommercePaymentMethodFDSDataProvider
 				new PaymentMethod(
 					commercePaymentMethodGroupRel.getDescription(
 						themeDisplay.getLocale()),
-					commercePaymentMethodGroupRel.getEngineKey(),
+					commercePaymentMethodGroupRel.getPaymentIntegrationKey(),
 					_getThumbnail(commercePaymentMethodGroupRel, themeDisplay),
 					commercePaymentMethodGroupRel.getName(
 						themeDisplay.getLocale())));

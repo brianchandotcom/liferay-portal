@@ -126,9 +126,9 @@ public class EditCommercePaymentMethodGroupRelMVCActionCommand
 			actionRequest, "nameMapAsXML");
 		Map<Locale, String> descriptionMap = _localization.getLocalizationMap(
 			actionRequest, "descriptionMapAsXML");
+		boolean active = ParamUtil.getBoolean(actionRequest, "active");
 		File imageFile = uploadPortletRequest.getFile("imageFile");
 		double priority = ParamUtil.getDouble(actionRequest, "priority");
-		boolean active = ParamUtil.getBoolean(actionRequest, "active");
 
 		long commercePaymentMethodGroupRelId = ParamUtil.getLong(
 			actionRequest, "commercePaymentMethodGroupRelId");
@@ -147,8 +147,8 @@ public class EditCommercePaymentMethodGroupRelMVCActionCommand
 				_commercePaymentMethodGroupRelService.
 					addCommercePaymentMethodGroupRel(
 						commerceChannel.getGroupId(), nameMap, descriptionMap,
-						imageFile, commercePaymentMethodEngineKey, priority,
-						active);
+						active, imageFile, commercePaymentMethodEngineKey,
+						priority, null);
 		}
 		else {
 			commercePaymentMethodGroupRel =

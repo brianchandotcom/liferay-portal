@@ -116,8 +116,8 @@ public class CommercePaymentEngineTest {
 			addCommercePaymentMethodGroupRel(
 				_user.getUserId(), _commerceChannel.getGroupId(),
 				RandomTestUtil.randomLocaleStringMap(),
-				RandomTestUtil.randomLocaleStringMap(), null,
-				TestCommercePaymentMethod.KEY, 99, true);
+				RandomTestUtil.randomLocaleStringMap(), true, null,
+				TestCommercePaymentMethod.KEY, 99, null);
 
 		_httpServletRequest = new MockHttpServletRequest("GET", "");
 

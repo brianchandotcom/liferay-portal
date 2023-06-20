@@ -280,8 +280,8 @@ public class PaymentMethodGroupRelOrderTypeResourceTest
 				addCommercePaymentMethodGroupRel(
 					_user.getUserId(), _commerceChannel.getGroupId(),
 					RandomTestUtil.randomLocaleStringMap(),
-					RandomTestUtil.randomLocaleStringMap(), null,
-					RandomTestUtil.randomString(), 99, true);
+					RandomTestUtil.randomLocaleStringMap(), true, null,
+					RandomTestUtil.randomString(), 99, null);
 
 		_commercePaymentMethodGroupRels.add(commercePaymentMethodGroupRel);
 

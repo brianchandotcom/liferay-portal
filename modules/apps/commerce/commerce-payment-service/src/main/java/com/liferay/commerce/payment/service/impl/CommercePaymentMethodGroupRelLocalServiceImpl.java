@@ -89,7 +89,7 @@ public class CommercePaymentMethodGroupRelLocalServiceImpl
 	public CommercePaymentMethodGroupRel addCommercePaymentMethodGroupRel(
 			long userId, long groupId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, File imageFile,
-			String engineKey, double priority, boolean active)
+			String paymentIntegrationKey, double priority, boolean active)
 		throws PortalException {
 
 		// Commerce payment method
@@ -98,7 +98,7 @@ public class CommercePaymentMethodGroupRelLocalServiceImpl
 			imageFile = null;
 		}
 
-		_validate(nameMap, engineKey);
+		_validate(nameMap, paymentIntegrationKey);
 
 		CommercePaymentMethodGroupRel commercePaymentMethodGroupRel =
 			commercePaymentMethodGroupRelPersistence.create(
@@ -112,17 +112,18 @@ public class CommercePaymentMethodGroupRelLocalServiceImpl
 		commercePaymentMethodGroupRel.setUserId(user.getUserId());
 		commercePaymentMethodGroupRel.setUserName(user.getFullName());
 
-		commercePaymentMethodGroupRel.setNameMap(nameMap);
+		commercePaymentMethodGroupRel.setActive(active);
 		commercePaymentMethodGroupRel.setDescriptionMap(descriptionMap);
+		commercePaymentMethodGroupRel.setNameMap(nameMap);
 
 		if (imageFile != null) {
 			commercePaymentMethodGroupRel.setImageId(
 				counterLocalService.increment());
 		}
 
-		commercePaymentMethodGroupRel.setEngineKey(engineKey);
+		commercePaymentMethodGroupRel.setPaymentIntegrationKey(
+			paymentIntegrationKey);
 		commercePaymentMethodGroupRel.setPriority(priority);
-		commercePaymentMethodGroupRel.setActive(active);
 
 		commercePaymentMethodGroupRel =
 			commercePaymentMethodGroupRelPersistence.update(
@@ -215,10 +216,10 @@ public class CommercePaymentMethodGroupRelLocalServiceImpl
 
 	@Override
 	public CommercePaymentMethodGroupRel fetchCommercePaymentMethodGroupRel(
-		long groupId, String engineKey) {
+		long groupId, String paymentIntegrationKey) {
 
-		return commercePaymentMethodGroupRelPersistence.fetchByG_E(
-			groupId, engineKey);
+		return commercePaymentMethodGroupRelPersistence.fetchByG_P(
+			groupId, paymentIntegrationKey);
 	}
 
 	@Override
@@ -244,11 +245,11 @@ public class CommercePaymentMethodGroupRelLocalServiceImpl
 
 	@Override
 	public CommercePaymentMethodGroupRel getCommercePaymentMethodGroupRel(
-			long groupId, String engineKey)
+			long groupId, String paymentIntegrationKey)
 		throws NoSuchPaymentMethodGroupRelException {
 
-		return commercePaymentMethodGroupRelPersistence.findByG_E(
-			groupId, engineKey);
+		return commercePaymentMethodGroupRelPersistence.findByG_P(
+			groupId, paymentIntegrationKey);
 	}
 
 	@Override
@@ -383,8 +384,8 @@ public class CommercePaymentMethodGroupRelLocalServiceImpl
 				counterLocalService.increment());
 		}
 
-		commercePaymentMethodGroupRel.setPriority(priority);
 		commercePaymentMethodGroupRel.setActive(active);
+		commercePaymentMethodGroupRel.setPriority(priority);
 
 		commercePaymentMethodGroupRel =
 			commercePaymentMethodGroupRelPersistence.update(

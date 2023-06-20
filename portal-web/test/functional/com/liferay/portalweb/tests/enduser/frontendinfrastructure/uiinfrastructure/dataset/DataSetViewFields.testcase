@@ -279,6 +279,48 @@ definition {
 		}
 	}
 
+	@description = "LPS-178736. Confirm that the user can change the Cell Renderer type on Edit"
+	@priority = 5
+	test CanChangeCellRenderer {
+		task ("And add an id Field") {
+			DataSetAdmin.addFields(key_fieldList = "id");
+		}
+
+		task ("Then assert the "Default" is present from the column Cell Renderer") {
+			AssertElementPresent(
+				key_tableColumn = "Cell Renderer",
+				key_tableRow = "default",
+				locator1 = "DataSet#FIELDS_TABLE_AND_ROW");
+		}
+
+		task ("When the user clicks on the edit option from the id Field") {
+			Click(
+				key_fieldName = "id",
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
+
+			MenuItem.click(menuItem = "Edit");
+		}
+
+		task ("And change the Cell Renderer to "Label"") {
+			Click(
+				dropdownLabel = "Cell Renderer",
+				locator1 = "ObjectField#ANY_DROPDOWN_LABEL");
+
+			MenuItem.click(menuItem = "Label");
+
+			Click(
+				key_text = "Save",
+				locator1 = "CP2ActivationKeys#KEY_DEACTIVATION_TERMS");
+		}
+
+		task ("Then assert the "Label" is present from the column Cell Renderer") {
+			AssertElementPresent(
+				key_tableColumn = "Cell Renderer",
+				key_tableRow = "Label",
+				locator1 = "DataSet#FIELDS_TABLE_AND_ROW");
+		}
+	}
+
 	@description = "LPS-185229. Confirm that the user can change the field's order on Fields tab page."
 	@priority = 4
 	test CanChangeFieldOrder {

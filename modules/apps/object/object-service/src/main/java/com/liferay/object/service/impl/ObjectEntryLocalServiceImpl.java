@@ -2757,12 +2757,21 @@ public class ObjectEntryLocalServiceImpl
 							objectRelationship.getType(),
 							ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
 
+					String objectDefinitionDBColumnName =
+						objectDefinition.getPKObjectFieldDBColumnName();
+					String relatedObjectDefinitionDBColumnName =
+						relatedObjectDefinition.getPKObjectFieldDBColumnName();
+
+					if (objectRelationship.isSelf()) {
+						objectDefinitionDBColumnName += "1";
+						relatedObjectDefinitionDBColumnName += "2";
+					}
+
 					DynamicObjectRelationshipMappingTable
 						dynamicObjectRelationshipMappingTable =
 							new DynamicObjectRelationshipMappingTable(
-								objectDefinition.getPKObjectFieldDBColumnName(),
-								relatedObjectDefinition.
-									getPKObjectFieldDBColumnName(),
+								objectDefinitionDBColumnName,
+								relatedObjectDefinitionDBColumnName,
 								objectRelationship.getDBTableName());
 
 					Column<DynamicObjectRelationshipMappingTable, Long>

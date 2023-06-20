@@ -23,9 +23,17 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.workflow.WorkflowHandler;
+import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowTaskAssignee;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.workflow.kaleo.model.KaleoAction;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
@@ -33,6 +41,8 @@ import com.liferay.portal.workflow.kaleo.runtime.action.executor.ActionExecutor;
 import com.liferay.portal.workflow.kaleo.runtime.action.executor.ActionExecutorException;
 import com.liferay.portal.workflow.kaleo.runtime.internal.configuration.FunctionActionExecutorImplConfiguration;
 import com.liferay.portal.workflow.kaleo.runtime.util.ScriptingContextBuilder;
+
+import java.io.Serializable;
 
 import java.util.List;
 import java.util.Map;
@@ -180,6 +190,38 @@ public class FunctionActionExecutorImpl implements ActionExecutor {
 			return;
 		}
 
+		WorkflowHandler<?> workflowHandler =
+			WorkflowHandlerRegistryUtil.getWorkflowHandler(
+				(String)inputObjects.get(
+					WorkflowConstants.CONTEXT_ENTRY_CLASS_NAME));
+
+		payloadJSONObject.put(
+			"entry",
+			workflowHandler.getEntryJSONObject(
+				GetterUtil.getLong(
+					inputObjects.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK)),
+				(dtoClassName, model) -> {
+					DTOConverter<Serializable, Serializable> dtoConverter =
+						(DTOConverter<Serializable, Serializable>)
+							_dtoConverterRegistry.getDTOConverter(dtoClassName);
+
+					if (dtoConverter == null) {
+						return null;
+					}
+
+					ServiceContext serviceContext =
+						executionContext.getServiceContext();
+
+					Serializable serializable = dtoConverter.toDTO(
+						new DefaultDTOConverterContext(
+							false, null, null, null, serviceContext.getLocale(),
+							null, null),
+						model);
+
+					return _jsonFactory.createJSONObject(
+						serializable.toString());
+				}));
+
 		_portalCatapult.launch(
 			_companyId, Http.Method.POST,
 			_functionActionExecutorImplConfiguration.
@@ -197,6 +239,9 @@ public class FunctionActionExecutorImpl implements ActionExecutor {
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private DTOConverterRegistry _dtoConverterRegistry;
 
 	private FunctionActionExecutorImplConfiguration
 		_functionActionExecutorImplConfiguration;

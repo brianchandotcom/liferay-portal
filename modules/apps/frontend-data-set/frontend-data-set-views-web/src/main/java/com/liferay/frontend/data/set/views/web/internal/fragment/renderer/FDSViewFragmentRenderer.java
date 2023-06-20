@@ -14,7 +14,6 @@
 
 package com.liferay.frontend.data.set.views.web.internal.fragment.renderer;
 
-import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.type.FDSCellRendererCET;
 import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.fragment.model.FragmentEntryLink;
@@ -51,7 +50,6 @@ import java.io.PrintWriter;
 import java.io.Writer;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -336,27 +334,17 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 								fdsFieldProperties.get("rendererType"));
 
 							if (rendererType.equals("clientExtension")) {
-								List<FDSCellRendererCET> fdsCellRendererCETs =
-									(List)_cetManager.getCETs(
-										fragmentEntryLink.getCompanyId(), null,
-										ClientExtensionEntryConstants.
-											TYPE_FDS_CELL_RENDERER,
-										Pagination.of(
-											QueryUtil.ALL_POS,
-											QueryUtil.ALL_POS),
-										null);
+								FDSCellRendererCET fdsCellRendererCET =
+									(FDSCellRendererCET)_cetManager.getCET(
+										fragmentEntryLink.getCompanyId(),
+										String.valueOf(
+											fdsFieldProperties.get(
+												"renderer")));
 
-								for (FDSCellRendererCET fdsCellRendererCET :
-										fdsCellRendererCETs) {
-
-									if (!fdsCellRendererCET.isReadOnly()) {
-										clientExtension = true;
-										moduleName =
-											fdsCellRendererCET.getURL();
-
-										break;
-									}
-								}
+								clientExtension = true;
+								moduleName =
+									"default from " +
+										fdsCellRendererCET.getURL();
 							}
 
 							return JSONUtil.put(
@@ -365,7 +353,7 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 									fdsFieldProperties.get("renderer"))
 							).put(
 								"contentRendererClientExtension",
-								(boolean)clientExtension
+								clientExtension
 							).put(
 								"contentRendererModuleURL", moduleName
 							).put(

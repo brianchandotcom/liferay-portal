@@ -160,8 +160,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				AssetRendererFactory.class,
 				new ObjectEntryAssetRendererFactory(
 					_assetDisplayPageFriendlyURLProvider, objectDefinition,
-					_objectEntryDisplayContextFactory, _objectEntryService,
-					_servletContext),
+					_objectEntryDisplayContextFactory, _objectEntryLocalService,
+					_objectEntryService, _servletContext),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"company.id", objectDefinition.getCompanyId()
 				).put(

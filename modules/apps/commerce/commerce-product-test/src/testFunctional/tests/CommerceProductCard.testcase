@@ -1,6 +1,7 @@
 @component-name = "portal-commerce"
 definition {
 
+	property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
@@ -1207,6 +1208,103 @@ definition {
 		AssertElementPresent(
 			key_productSku = "MIN93016A",
 			locator1 = "CommerceFrontStore#FS_PRODUCT_SKU");
+	}
+
+	@description = "COMMERCE-10066. User can only view the allowed quantities that match the minimum, max and multiple quantities of a product"
+	@priority = 5
+	test CanViewOnlyCorrectAllowedQuantitiesAreSelectableForProductCard {
+		property portal.acceptance = "true";
+
+		task ("Given allowed quantities, maximum quantity, minimum quantity and multiple quantity are configured for three products") {
+			CommerceJSONProductsAPI._patchCommerceProductConfiguration(
+				allowedOrderQuantities = "1,2,6,8",
+				minOrderQuantity = 2,
+				productName = "U-Joint");
+
+			CommerceJSONProductsAPI._patchCommerceProductConfiguration(
+				allowedOrderQuantities = "1,2,6,8",
+				maxOrderQuantity = 7,
+				productName = "Transmission Cooler Line Assembly");
+
+			CommerceJSONProductsAPI._patchCommerceProductConfiguration(
+				allowedOrderQuantities = "1,3,6,9",
+				multipleOrderQuantity = 3,
+				productName = "Torque Converters");
+		}
+
+		task ("Add a account with a buyer user is created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("When the buyer user does the log in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("Then only the quantities that meet the configuration are displayed on the products card") {
+			Click(
+				key_productName = "U-Joint",
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_SELECT_FIELD");
+
+			for (var number : list "2,6,8") {
+				AssertElementPresent(
+					key_optionValue = ${number},
+					key_productName = "U-Joint",
+					locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_SELECT_FIELD_OPTION_VALUE");
+			}
+
+			AssertElementNotPresent(
+				key_optionValue = 1,
+				key_productName = "U-Joint",
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_SELECT_FIELD_OPTION_VALUE");
+
+			Click(
+				key_productName = "Transmission Cooler Line Assembly",
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_SELECT_FIELD");
+
+			for (var number : list "1,2,6") {
+				AssertElementPresent(
+					key_optionValue = ${number},
+					key_productName = "Transmission Cooler Line Assembly",
+					locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_SELECT_FIELD_OPTION_VALUE");
+			}
+
+			AssertElementNotPresent(
+				key_optionValue = 8,
+				key_productName = "Transmission Cooler Line Assembly",
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_SELECT_FIELD_OPTION_VALUE");
+
+			Click(
+				key_productName = "Torque Converters",
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_SELECT_FIELD");
+
+			for (var number : list "3,6,9") {
+				AssertElementPresent(
+					key_optionValue = ${number},
+					key_productName = "Torque Converters",
+					locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_SELECT_FIELD_OPTION_VALUE");
+			}
+
+			AssertElementNotPresent(
+				key_optionValue = 1,
+				key_productName = "Torque Converters",
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_SELECT_FIELD_OPTION_VALUE");
+		}
 	}
 
 	@description = "COMMERCE-5868. Verify buyers can compare products by selecting which products to compare from the catalog product cards."

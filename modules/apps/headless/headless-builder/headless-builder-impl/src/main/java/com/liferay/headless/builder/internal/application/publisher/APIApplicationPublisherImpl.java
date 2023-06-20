@@ -16,15 +16,19 @@ package com.liferay.headless.builder.internal.application.publisher;
 
 import com.liferay.headless.builder.application.APIApplication;
 import com.liferay.headless.builder.application.publisher.APIApplicationPublisher;
+import com.liferay.headless.builder.internal.resource.HeadlessBuilderResourceImpl;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.ws.rs.core.Application;
 
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.PrototypeServiceFactory;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -45,7 +49,9 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 
 		_headlessBuilderApplicationServiceRegistrationMap.computeIfAbsent(
 			apiApplication.getOSGiJaxRsName(),
-			key -> _registerHeadlessBuilderApplication(apiApplication));
+			key -> new ObjectValuePair<>(
+				_registerHeadlessBuilderApplication(apiApplication),
+				_registerHeadlessBuilderApplicationResource(apiApplication)));
 	}
 
 	@Override
@@ -55,12 +61,15 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 				"APIApplicationPublisher not available");
 		}
 
-		ServiceRegistration<Application> applicationServiceRegistration =
-			_headlessBuilderApplicationServiceRegistrationMap.remove(
-				apiApplication.getOSGiJaxRsName());
+		ObjectValuePair
+			<ServiceRegistration<Application>,
+			 ServiceRegistration<HeadlessBuilderResourceImpl>> objectValuePair =
+				_headlessBuilderApplicationServiceRegistrationMap.remove(
+					apiApplication.getOSGiJaxRsName());
 
-		if (applicationServiceRegistration != null) {
-			_unregisterServiceRegistration(applicationServiceRegistration);
+		if (objectValuePair != null) {
+			_unregisterServiceRegistration(objectValuePair.getKey());
+			_unregisterServiceRegistration(objectValuePair.getValue());
 		}
 	}
 
@@ -71,10 +80,15 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 
 	@Deactivate
 	protected void deactivate() {
-		for (ServiceRegistration<Application> serviceRegistration :
-				_headlessBuilderApplicationServiceRegistrationMap.values()) {
+		for (ObjectValuePair
+				<ServiceRegistration<Application>,
+				 ServiceRegistration<HeadlessBuilderResourceImpl>>
+					objectValuePair :
+						_headlessBuilderApplicationServiceRegistrationMap.
+							values()) {
 
-			_unregisterServiceRegistration(serviceRegistration);
+			_unregisterServiceRegistration(objectValuePair.getKey());
+			_unregisterServiceRegistration(objectValuePair.getValue());
 		}
 
 		_headlessBuilderApplicationServiceRegistrationMap.clear();
@@ -103,6 +117,42 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 			).build());
 	}
 
+	private ServiceRegistration<HeadlessBuilderResourceImpl>
+		_registerHeadlessBuilderApplicationResource(
+			APIApplication apiApplication) {
+
+		return _bundleContext.registerService(
+			HeadlessBuilderResourceImpl.class,
+			new PrototypeServiceFactory<HeadlessBuilderResourceImpl>() {
+
+				@Override
+				public HeadlessBuilderResourceImpl getService(
+					Bundle bundle,
+					ServiceRegistration<HeadlessBuilderResourceImpl>
+						serviceRegistration) {
+
+					return new HeadlessBuilderResourceImpl();
+				}
+
+				@Override
+				public void ungetService(
+					Bundle bundle,
+					ServiceRegistration<HeadlessBuilderResourceImpl>
+						serviceRegistration,
+					HeadlessBuilderResourceImpl headlessBuilderResourceImpl) {
+				}
+
+			},
+			HashMapDictionaryBuilder.<String, Object>put(
+				"api.version", "v1.0"
+			).put(
+				"osgi.jaxrs.application.select",
+				"(osgi.jaxrs.name=" + apiApplication.getOSGiJaxRsName() + ")"
+			).put(
+				"osgi.jaxrs.resource", "true"
+			).build());
+	}
+
 	private void _unregisterServiceRegistration(
 		ServiceRegistration<?> serviceRegistration) {
 
@@ -113,7 +163,12 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 
 	private static BundleContext _bundleContext;
 
-	private final Map<String, ServiceRegistration<Application>>
-		_headlessBuilderApplicationServiceRegistrationMap = new HashMap<>();
+	private final Map
+		<String,
+		 ObjectValuePair
+			 <ServiceRegistration<Application>,
+			  ServiceRegistration<HeadlessBuilderResourceImpl>>>
+				_headlessBuilderApplicationServiceRegistrationMap =
+					new HashMap<>();
 
 }

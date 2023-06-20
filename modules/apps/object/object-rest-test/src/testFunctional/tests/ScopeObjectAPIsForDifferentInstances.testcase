@@ -199,4 +199,35 @@ definition {
 		}
 	}
 
+	@priority = 4
+	test CanScopeObjectByInstanceInExportTask {
+		property custom.properties = "include-and-override=portal-liferay-online.properties${line.separator}feature.flag.COMMERCE-8087=true";
+		property portal.acceptance = "true";
+
+		task ("And Given an object definition Student with a custom field is created and published on virtual instance") {
+			var virtualInstanceToken = OAuth2ForObject.createTokenWithOAuth2Scopes(
+				baseURL = "http://www.able.com:8080",
+				resourceCheckList = "Liferay.Headless.Portal.Instances.everything,Liferay.Object.Admin.REST.everything",
+				resourcePanels = "Liferay.Headless.Portal.Instances,Liferay.Object.Admin.REST");
+
+			ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				en_US_label = "Student",
+				en_US_plural_label = "Students",
+				name = "Student",
+				requiredStringFieldName = "name",
+				token = ${virtualInstanceToken},
+				virtualHost = "www.able.com");
+		}
+
+		task ("When create an export task on default instance") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.gotoExport();
+		}
+
+		task ("Then C_Student is not in the available Entity Type list") {
+			AssertTextNotPresent(value1 = "C_Student (v1_0 - Liferay Object REST)");
+		}
+	}
+
 }

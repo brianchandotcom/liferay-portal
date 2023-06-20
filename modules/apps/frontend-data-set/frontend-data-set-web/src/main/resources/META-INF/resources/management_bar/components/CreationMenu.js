@@ -29,6 +29,7 @@ function CreationMenu({defaultButton, primaryItems}) {
 	const [active, setActive] = useState(false);
 
 	const buttonDataTooltipAlign = 'top';
+	const buttonLabel = primaryItems[0].label ?? Liferay.Language.get('new');
 	const buttonOnClick = () => {
 		const item = primaryItems[0];
 
@@ -100,23 +101,16 @@ function CreationMenu({defaultButton, primaryItems}) {
 							displayType="secondary"
 							onClick={() => buttonOnClick()}
 						>
-							{primaryItems[0].label ??
-								Liferay.Language.get('new')}
+							{buttonLabel}
 						</ClayButton>
 					) : (
 						<ClayButtonWithIcon
-							aria-label={
-								primaryItems[0].label ??
-								Liferay.Language.get('new')
-							}
+							aria-label={buttonLabel}
 							className="nav-btn nav-btn-monospaced"
 							data-tooltip-align={buttonDataTooltipAlign}
 							onClick={() => buttonOnClick()}
 							symbol="plus"
-							title={
-								primaryItems[0].label ??
-								Liferay.Language.get('new')
-							}
+							title={buttonLabel}
 						/>
 					)}
 				</li>

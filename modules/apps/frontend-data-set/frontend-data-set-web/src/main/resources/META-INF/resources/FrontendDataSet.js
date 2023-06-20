@@ -491,22 +491,16 @@ const FrontendDataSet = ({
 				) : (
 					<ClayEmptyState
 						description={
-							emptyState.description
-								? emptyState.description
-								: Liferay.Language.get(
-										'sorry,-no-results-were-found'
-								  )
+							emptyState.description ??
+							Liferay.Language.get('sorry,-no-results-were-found')
 						}
 						imgSrc={
 							themeDisplay.getPathThemeImages() +
-							(emptyState.image
-								? emptyState.image
-								: '/states/search_state.gif')
+							(emptyState.image ?? '/states/search_state.gif')
 						}
 						title={
-							emptyState.title
-								? emptyState.title
-								: Liferay.Language.get('no-results-found')
+							emptyState.title ??
+							Liferay.Language.get('no-results-found')
 						}
 					>
 						{emptyState.button && (

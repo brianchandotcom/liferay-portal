@@ -289,12 +289,13 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 
 							@Override
 							public void execute(CopySpec copySpec) {
-								Map<String, Object> poshiProperties =
-									poshiRunnerExtension.getPoshiProperties();
+								String seleniumRemoteDriverURL =
+									_getPoshiPropertyValue(
+										"selenium.remote.driver.url",
+										_getPoshiProperties(
+											poshiRunnerExtension));
 
-								if (!poshiProperties.containsKey(
-										"seleniumRemoteDriverURL")) {
-
+								if (Validator.isNull(seleniumRemoteDriverURL)) {
 									File file = _getWebDriverBrowserBinaryFile(
 										project,
 										_getPoshiProperties(
@@ -1048,7 +1049,10 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 	private boolean _isDownloadWebDriverBrowserBinary(
 		Properties poshiProperties) {
 
-		if (poshiProperties.containsKey("seleniumRemoteDriverURL")) {
+		String seleniumRemoteDriverURL = _getPoshiPropertyValue(
+			"selenium.remote.driver.url", poshiProperties);
+
+		if (Validator.isNotNull(seleniumRemoteDriverURL)) {
 			return false;
 		}
 

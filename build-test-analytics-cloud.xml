@@ -359,6 +359,101 @@ OSB_FARO_FRONTEND_URL=${analytics.cloud.faro.frontend.url}</echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="start-analytics-cloud-integration">
+		<sequential>
+			<fail message="Please set the property ${env.DOCKER_ENABLED}." unless="env.DOCKER_ENABLED" />
+
+			<replaceregexp
+				file="${analytics.cloud.asah.dir}/docker-compose.integration-test.yml"
+				match="\&quot;9200:9200\&quot;"
+				replace="&quot;${analytics.cloud.asah.elasticsearch.port}:9200&quot;"
+			/>
+
+			<local name="short.hostname" />
+
+			<propertyregex
+				input="${env.HOSTNAME}"
+				override="true"
+				property="short.hostname"
+				regexp="(cloud-[^\.]+|test-\d+-\d+-\d+)(\.lax\.liferay\.com)?"
+				replace="\1"
+			/>
+
+			<if>
+				<isset property="short.hostname" />
+				<then>
+					<echo append="true" file="${analytics.cloud.asah.dir}/docker-compose.integration-test.yml"><![CDATA[
+networks:
+    default:
+        external:
+            name: ${short.hostname}]]></echo>
+				</then>
+			</if>
+
+			<pull-docker-image-dependencies
+				analytics.cloud.image.names.excludes="${analytics.cloud.asah.image.names.excludes}"
+				analytics.cloud.repository.dir="${analytics.cloud.asah.dir}"
+			/>
+
+			<execute dir="${analytics.cloud.asah.dir}">
+				docker-compose -f docker-compose.integration-test.yml up -d
+
+				docker ps
+			</execute>
+
+			<exec executable="/bin/bash" outputproperty="network.ip.address">
+				<arg value="-c" />
+				<arg value="docker inspect ${short.hostname} -f '{{range .NetworkSettings.Networks}}{{.Gateway}}{{end}}'" />
+			</exec>
+
+			<echo file="${analytics.cloud.asah.dir}/temp-build-ext.gradle">import org.apache.tools.ant.taskdefs.condition.Os
+
+subprojects {
+	tasks.withType(Test) {
+		doFirst {
+			environment "LCP_ENGINE_ELASTICSEARCH_SERVER_IP", "${network.ip.address}"
+			environment "LCP_PROJECT_ID", "test"
+			environment "POSTGRESQL_SERVER_IP", "test_postgresql"
+			environment "OSB_ASAH_BIG_QUERY_URL", "http://${network.ip.address}:9050"
+			environment "OSB_ASAH_PUBSUB_EMULATOR_URL", "http://${network.ip.address}:8095"
+			environment "OSB_ASAH_REDIS_URL", "http://${network.ip.address}:6379"
+			environment.remove("GOOGLE_APPLICATION_CREDENTIALS")
+		}
+
+		maxHeapSize = "4096m"
+	}
+}
+
+if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+	subprojects {
+		afterEvaluate {
+			project.tasks.withType(Test) {
+				environment "DOCKER_COMPOSE_LOCATION", "C:/Program Files/Docker/Docker/resources/bin/docker-compose.exe"
+				environment "DOCKER_LOCATION", "C:/Program Files/Docker/Docker/resources/bin/docker.exe"
+			}
+		}
+	}
+}</echo>
+
+			<copy
+				file="${analytics.cloud.asah.dir}/temp-build-ext.gradle"
+				tofile="${analytics.cloud.asah.dir}/build-ext.gradle"
+			/>
+
+			<execute dir="${analytics.cloud.asah.dir}">
+				docker ps
+
+				docker network ls
+
+				docker network inspect ${short.hostname}
+
+				cat build-ext.gradle
+
+				./gradlew testIntegration
+			</execute>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="stop-analytics-cloud">
 		<sequential>
 			<fail message="Please set the property ${env.DOCKER_ENABLED}." unless="env.DOCKER_ENABLED" />
@@ -385,6 +480,12 @@ OSB_FARO_FRONTEND_URL=${analytics.cloud.faro.frontend.url}</echo>
 		<stop-analytics-cloud />
 
 		<start-analytics-cloud />
+	</target>
+
+	<target name="start-analytics-cloud-integration">
+		<stop-analytics-cloud />
+
+		<start-analytics-cloud-integration />
 	</target>
 
 	<target name="stop-analytics-cloud">

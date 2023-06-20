@@ -53,7 +53,9 @@ export function getDTOFromMDFRequest(
 		submitted: mdfRequest.submitted,
 		targetAudienceRoles: mdfRequest.targetAudienceRoles?.join('; '),
 		targetMarkets: mdfRequest.targetMarkets?.join('; '),
+		totalClaimedRequest:mdfRequest.totalClaimedRequest,
 		totalCostOfExpense: mdfRequest.totalCostOfExpense,
 		totalMDFRequestAmount: mdfRequest.totalMDFRequestAmount,
+		totalPaidAmount:mdfRequest.totalPaidAmount,
 	};
 }

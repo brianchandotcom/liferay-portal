@@ -34,13 +34,13 @@ export default function useGetListItemsFromMDFRequests(
 				[MDFColumnKey.STATUS]: item.mdfRequestStatus?.name,
 				[MDFColumnKey.PARTNER]: item.companyName,
 				[MDFColumnKey.PAID]:
-					item.totalPaidAmount == 0
+					item.totalPaidAmount == 0 || item.totalPaidAmount == undefined
 						? '-'
 						: getIntlNumberFormat(item.currency).format(
 								item.totalPaidAmount
 						  ),
 				[MDFColumnKey.AMOUNT_CLAIMED]:
-					item.totalClaimedRequest == 0
+					item.totalClaimedRequest == 0 || item.totalClaimedRequest == undefined
 						? '-'
 						: getIntlNumberFormat(item.currency).format(
 								item.totalClaimedRequest

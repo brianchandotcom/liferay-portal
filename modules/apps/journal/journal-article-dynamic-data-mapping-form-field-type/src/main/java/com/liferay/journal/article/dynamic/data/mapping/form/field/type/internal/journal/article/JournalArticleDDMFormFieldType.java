@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
 		"ddm.form.field.type.icon=web-content",
 		"ddm.form.field.type.label=journal-article",
 		"ddm.form.field.type.name=" + JournalArticleDDMFormFieldTypeConstants.JOURNAL_ARTICLE,
-		"ddm.form.field.type.scope=journal"
+		"ddm.form.field.type.scope=document-library,journal"
 	},
 	service = DDMFormFieldType.class
 )

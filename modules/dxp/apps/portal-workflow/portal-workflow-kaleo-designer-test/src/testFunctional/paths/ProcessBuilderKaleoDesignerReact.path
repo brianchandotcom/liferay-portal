@@ -605,8 +605,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ICON_TRASH_ROLE_TYPE</td>
-	<td>//div[@class='panel-body']//input[contains(@id,'notificationName') and contains(@value,'')]/../..//*[contains(@class, 'icon-trash')]</td>
+	<td>ICON_TRASH_ROLE_TYPE_BY_POSITION</td>
+	<td>xpath=(//div[@class='panel-body']//input[contains(@id,'notificationName') and contains(@value,'')]/../..//*[contains(@class, 'icon-trash')])[${key_index}]</td>
 	<td></td>
 </tr>
 <tr>

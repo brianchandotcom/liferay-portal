@@ -79,7 +79,6 @@ import com.liferay.segments.context.RequestContextMapper;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -323,15 +322,14 @@ public class RenderLayoutStructureDisplayContext {
 		}
 
 		String formInputLabel = _getFormInputLabel(
-			infoFormValidationException.getInfoFieldUniqueId(),
-			_themeDisplay.getLocale());
+			infoFormValidationException.getInfoFieldUniqueId());
 
 		if (Validator.isNotNull(formInputLabel)) {
 			return infoFormValidationException.getLocalizedMessage(
 				formInputLabel, _themeDisplay.getLocale());
 		}
 
-		InfoField infoField = infoForm.getInfoField(
+		InfoField<?> infoField = infoForm.getInfoField(
 			infoFormValidationException.getInfoFieldUniqueId());
 
 		formInputLabel = infoField.getLabel(_themeDisplay.getLocale());
@@ -480,8 +478,7 @@ public class RenderLayoutStructureDisplayContext {
 		}
 		else if (backgroundImageJSONObject.has("mappedField")) {
 			fileEntryId = _getFileEntryId(
-				backgroundImageJSONObject.getString("mappedField"),
-				_themeDisplay.getLocale());
+				backgroundImageJSONObject.getString("mappedField"));
 		}
 
 		if (fileEntryId != 0) {
@@ -607,7 +604,7 @@ public class RenderLayoutStructureDisplayContext {
 		return false;
 	}
 
-	private String _getBackgroundImage(JSONObject jsonObject) throws Exception {
+	private String _getBackgroundImage(JSONObject jsonObject) {
 		if (jsonObject == null) {
 			return StringPool.BLANK;
 		}
@@ -695,9 +692,7 @@ public class RenderLayoutStructureDisplayContext {
 		return StringPool.BLANK;
 	}
 
-	private long _getFileEntryId(String fieldId, Locale locale)
-		throws Exception {
-
+	private long _getFileEntryId(String fieldId) throws Exception {
 		InfoItemDetails infoItemDetails =
 			(InfoItemDetails)_httpServletRequest.getAttribute(
 				InfoDisplayWebKeys.INFO_ITEM_DETAILS);
@@ -728,10 +723,11 @@ public class RenderLayoutStructureDisplayContext {
 
 		return fragmentEntryProcessorHelper.getFileEntryId(
 			PortalUtil.getClassNameId(infoItemReference.getClassName()),
-			classPKInfoItemIdentifier.getClassPK(), fieldId, locale);
+			classPKInfoItemIdentifier.getClassPK(), fieldId,
+			_themeDisplay.getLocale());
 	}
 
-	private String _getFormInputLabel(String infoFieldUniqueId, Locale locale) {
+	private String _getFormInputLabel(String infoFieldUniqueId) {
 		FragmentEntryConfigurationParser fragmentEntryConfigurationParser =
 			ServletContextUtil.getFragmentEntryConfigurationParser();
 
@@ -773,7 +769,7 @@ public class RenderLayoutStructureDisplayContext {
 					new FragmentConfigurationField(
 						"inputFieldId", "string", StringPool.BLANK, false,
 						"text"),
-					locale));
+					_themeDisplay.getLocale()));
 
 			if (!Objects.equals(inputFieldId, infoFieldUniqueId)) {
 				continue;
@@ -784,7 +780,7 @@ public class RenderLayoutStructureDisplayContext {
 					fragmentEntryLink.getEditableValues(),
 					new FragmentConfigurationField(
 						"inputLabel", "string", StringPool.BLANK, true, "text"),
-					locale));
+					_themeDisplay.getLocale()));
 		}
 
 		return StringPool.BLANK;

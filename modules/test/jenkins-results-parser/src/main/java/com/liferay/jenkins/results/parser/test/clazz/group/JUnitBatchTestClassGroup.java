@@ -600,6 +600,14 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 		File workingDirectory = portalGitWorkingDirectory.getWorkingDirectory();
 
+		JobProperty jobProperty = getJobProperty("git.working.directory");
+
+		String jobPropertyValue = jobProperty.getValue();
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(jobPropertyValue)) {
+			workingDirectory = new File(jobPropertyValue);
+		}
+
 		try {
 			Files.walkFileTree(
 				workingDirectory.toPath(),

@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -183,14 +184,9 @@ public class ObjectEntryItemSelectorViewDescriptor
 		long objectDefinitionId,
 		com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry) {
 
-		Long id = objectEntry.getId();
-
-		if (id == null) {
-			id = 0L;
-		}
-
 		ObjectEntry serviceBuilderObjectEntry =
-			_objectEntryLocalService.createObjectEntry(id);
+			_objectEntryLocalService.createObjectEntry(
+				GetterUtil.getLong(objectEntry.getId()));
 
 		serviceBuilderObjectEntry.setObjectDefinitionId(objectDefinitionId);
 

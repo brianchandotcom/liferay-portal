@@ -403,6 +403,34 @@ definition {
 		}
 	}
 
+	@description = "LPS-178736. Confirm that the Name field on Edit is not editable"
+	@priority = 4
+	test CannotEditNameFieldOnEdit {
+		task ("And add an id Field") {
+			DataSetAdmin.addFields(key_fieldList = "id");
+		}
+
+		task ("When the user clicks on the edit option from the id Field") {
+			Click(
+				key_fieldName = "id",
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
+
+			MenuItem.click(menuItem = "Edit");
+		}
+
+		task ("Then the Edit Field modal is displayed") {
+			AssertElementPresent(
+				locator1 = "Portlet#MODAL_TITLE",
+				value1 = "Edit id");
+		}
+
+		task ("And asserts the name field is not editable") {
+			AssertElementPresent(
+				key_fieldLabel = "Name",
+				locator1 = "FormFields#FIELD_DISABLED");
+		}
+	}
+
 	@description = "LPS-185501. Confirm that fields are not updated if proccess is canceled on cancel button."
 	@priority = 4
 	test CannotUpdateFieldsIfCancelOnCancelButton {

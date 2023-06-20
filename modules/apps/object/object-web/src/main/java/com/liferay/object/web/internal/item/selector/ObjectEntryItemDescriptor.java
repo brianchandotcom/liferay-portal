@@ -17,7 +17,6 @@ package com.liferay.object.web.internal.item.selector;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
-import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -39,21 +38,13 @@ public class ObjectEntryItemDescriptor
 
 	public ObjectEntryItemDescriptor(
 		HttpServletRequest httpServletRequest,
-		ObjectDefinitionLocalService objectDefinitionLocalService,
-		ObjectEntry objectEntry, Portal portal) {
+		ObjectDefinition objectDefinition, ObjectEntry objectEntry,
+		Portal portal) {
 
 		_httpServletRequest = httpServletRequest;
+		_objectDefinition = objectDefinition;
 		_objectEntry = objectEntry;
 		_portal = portal;
-
-		try {
-			_objectDefinition =
-				objectDefinitionLocalService.getObjectDefinition(
-					objectEntry.getObjectDefinitionId());
-		}
-		catch (PortalException portalException) {
-			throw new RuntimeException(portalException);
-		}
 	}
 
 	@Override

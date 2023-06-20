@@ -93,8 +93,7 @@ public class ObjectEntryItemSelectorViewDescriptor
 	@Override
 	public ItemDescriptor getItemDescriptor(ObjectEntry objectEntry) {
 		return new ObjectEntryItemDescriptor(
-			_httpServletRequest, _objectDefinitionLocalService, objectEntry,
-			_portal);
+			_httpServletRequest, _objectDefinition, objectEntry, _portal);
 	}
 
 	@Override

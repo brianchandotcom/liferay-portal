@@ -315,7 +315,7 @@ definition {
 
 		SignInNavigator.gotoCreateAccount();
 
-		for (var text : list "Screen Name,First Name,Last Name,Password,Enter Again") {
+		for (var text : list "Screen Name,First Name,Last Name,Password,Reenter Password") {
 			var value1 = StringUtil.replace(${text}, " ", "");
 
 			Type(
@@ -325,7 +325,7 @@ definition {
 		}
 
 		Type(
-			key_text = "Enter Again",
+			key_text = "Reenter Password",
 			locator1 = "TextInput#ANY",
 			value1 = "Password");
 

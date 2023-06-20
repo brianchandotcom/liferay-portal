@@ -16,6 +16,7 @@ package com.liferay.poshi.core.util;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * @author Calum Ragan
@@ -42,8 +43,12 @@ public class MapUtil {
 		return false;
 	}
 
-	public static Map<String, Object> newMap() {
+	public static Map<String, Object> newHashMap() {
 		return new HashMap<>();
+	}
+
+	public static Map<String, Object> newTreeMap() {
+		return new TreeMap<>();
 	}
 
 	public static void put(Map<String, Object> map, String key, Object value) {

@@ -69,6 +69,24 @@ public class DBInspector {
 		return _connection.getCatalog();
 	}
 
+	public ResultSet getColumnsResultSet(String tableName) throws SQLException {
+		return getColumnsResultSet(tableName, null);
+	}
+
+	public ResultSet getColumnsResultSet(String tableName, String columnName)
+		throws SQLException {
+
+		DatabaseMetaData databaseMetaData = _connection.getMetaData();
+
+		if (columnName != null) {
+			columnName = normalizeName(columnName, databaseMetaData);
+		}
+
+		return databaseMetaData.getColumns(
+			getCatalog(), getSchema(),
+			normalizeName(tableName, databaseMetaData), columnName);
+	}
+
 	public String getSchema() {
 		try {
 			return _connection.getSchema();
@@ -104,12 +122,7 @@ public class DBInspector {
 	public boolean hasColumn(String tableName, String columnName)
 		throws Exception {
 
-		DatabaseMetaData databaseMetaData = _connection.getMetaData();
-
-		try (ResultSet resultSet = databaseMetaData.getColumns(
-				getCatalog(), getSchema(), normalizeName(tableName),
-				normalizeName(columnName))) {
-
+		try (ResultSet resultSet = getColumnsResultSet(tableName, columnName)) {
 			if (!resultSet.next()) {
 				return false;
 			}
@@ -127,13 +140,7 @@ public class DBInspector {
 			String tableName, String columnName, String columnType)
 		throws Exception {
 
-		DatabaseMetaData databaseMetaData = _connection.getMetaData();
-
-		try (ResultSet resultSet = databaseMetaData.getColumns(
-				getCatalog(), getSchema(),
-				normalizeName(tableName, databaseMetaData),
-				normalizeName(columnName, databaseMetaData))) {
-
+		try (ResultSet resultSet = getColumnsResultSet(tableName, columnName)) {
 			if (!resultSet.next()) {
 				return false;
 			}
@@ -271,13 +278,7 @@ public class DBInspector {
 	public boolean isNullable(String tableName, String columnName)
 		throws SQLException {
 
-		DatabaseMetaData databaseMetaData = _connection.getMetaData();
-
-		try (ResultSet resultSet = databaseMetaData.getColumns(
-				getCatalog(), getSchema(),
-				normalizeName(tableName, databaseMetaData),
-				normalizeName(columnName, databaseMetaData))) {
-
+		try (ResultSet resultSet = getColumnsResultSet(tableName, columnName)) {
 			if (!resultSet.next()) {
 				throw new SQLException(
 					StringBundler.concat(

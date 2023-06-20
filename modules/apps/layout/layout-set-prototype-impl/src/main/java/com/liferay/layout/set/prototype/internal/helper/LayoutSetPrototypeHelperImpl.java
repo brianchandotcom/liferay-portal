@@ -66,7 +66,7 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 			layout);
 
 		if (conflictLayout != null) {
-			Collections.singletonList(conflictLayout);
+			return Collections.singletonList(conflictLayout);
 		}
 
 		return Collections.emptyList();

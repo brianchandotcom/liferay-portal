@@ -188,14 +188,14 @@ public class FragmentEntriesDisplayContext {
 		if (isSearch()) {
 			fragmentEntries = FragmentEntryLocalServiceUtil.getFragmentEntries(
 				_group.getGroupId(), getFragmentCollectionId(), _getKeywords(),
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				searchContainer.getOrderByComparator());
+				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, searchContainer.getOrderByComparator());
 		}
 		else {
 			fragmentEntries = FragmentEntryLocalServiceUtil.getFragmentEntries(
 				_group.getGroupId(), getFragmentCollectionId(),
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				searchContainer.getOrderByComparator());
+				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, searchContainer.getOrderByComparator());
 		}
 
 		searchContainer.setResultsAndTotal(

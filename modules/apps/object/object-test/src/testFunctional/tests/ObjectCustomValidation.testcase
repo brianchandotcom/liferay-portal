@@ -2141,7 +2141,7 @@ definition {
 		property ci.retries.disabled = "true";
 		property test.name.skip.portal.instance = "ObjectCustomValidation#CanUserDefineValidationActiveOrInactive";
 
-		task ("Given a custom object that contains a simple field") {
+		task ("Given a custom object with a text field") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 153552",
 				objectName = "CustomObject153552",
@@ -2158,7 +2158,7 @@ definition {
 			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject153552");
 		}
 
-		task ("And given a simple custom validation that contains the field created before, but the validation is deactivated") {
+		task ("And given a deactivated custom validation that prevents entries which have a value greater than 2500") {
 			ObjectAdmin.openObjectAdmin();
 
 			ObjectPortlet.selectCustomObject(label = "Custom Object 153552");
@@ -2180,14 +2180,14 @@ definition {
 			PortletEntry.save();
 		}
 
-		task ("And given a custom object entry that the validation not accept") {
+		task ("And given a custom object entry with a value greater than 2500") {
 			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 				fieldName = "customField",
 				objectName = "CustomObject153552",
 				value = 4500);
 		}
 
-		task ("When the custom validation is actived") {
+		task ("When the custom validation is activated and the user attempts to add an entry with a value greater than 2500") {
 			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
 
 			ObjectCustomValidation.activeValidation();
@@ -2207,7 +2207,7 @@ definition {
 			Button.clickSave();
 		}
 
-		task ("Then assert that exist only the entry created when the validation was false") {
+		task ("Then the entry isn't created and the previously added entry is present on the table") {
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject153552");
 
 			ObjectPortlet.assertEntryNotPresent(entry = 3500);

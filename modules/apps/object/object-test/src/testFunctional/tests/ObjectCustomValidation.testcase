@@ -2193,9 +2193,7 @@ definition {
 			ObjectCustomValidation.activeValidation();
 
 			PortletEntry.save();
-		}
 
-		task ("And When tried add a new entry that the validation not accept") {
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject153552");
 
 			LexiconEntry.gotoAdd();

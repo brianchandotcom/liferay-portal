@@ -84,6 +84,8 @@ public abstract class BaseSaveConfigurationMVCActionCommand
 		SessionMessages.add(
 			actionRequest, "requestProcessed",
 			language.get(themeDisplay.getLocale(), successMessageKey));
+
+		sendRedirect(actionRequest, actionResponse);
 	}
 
 	protected abstract void saveAICreatorOpenAIConfiguration(

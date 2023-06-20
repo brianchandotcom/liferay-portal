@@ -415,7 +415,9 @@ definition {
 	}
 
 	macro deleteRoleTypeInNotifications {
-		Click.mouseOverClick(locator1 = "ProcessBuilderKaleoDesignerReact#ICON_TRASH_ROLE_TYPE");
+		Click.mouseOverClick(
+			key_index = ${index},
+			locator1 = "ProcessBuilderKaleoDesignerReact#ICON_TRASH_ROLE_TYPE_BY_POSITION");
 	}
 
 	macro deleteTimerAction {

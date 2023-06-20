@@ -179,7 +179,7 @@ definition {
 			locator1 = "CustomerPortalSite#FIELD_VALUE",
 			value1 = ${value});
 	}
-	
+
 	@summary = "This macro Fulfills the form of guest users, that can be accessed by direct link"
 	macro fulfillGuestForm {
 		CP2Utils.fulfillGuestFormFields(

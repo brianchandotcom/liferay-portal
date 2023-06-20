@@ -243,8 +243,7 @@ public class RenderLayoutStructureDisplayContext {
 					PortalUtil.getClassName(classNameId),
 					new ClassPKInfoItemIdentifier(classPK));
 
-				String value = _getMappedCollectionValue(
-					fieldId, infoItemReference);
+				String value = _getValue(fieldId, infoItemReference);
 
 				if (Validator.isNotNull(value)) {
 					return value;
@@ -256,13 +255,13 @@ public class RenderLayoutStructureDisplayContext {
 			"collectionFieldId");
 
 		if (Validator.isNotNull(collectionFieldId)) {
-			String mappedCollectionValue = _getMappedCollectionValue(
+			String value = _getValue(
 				collectionFieldId,
 				(InfoItemReference)_httpServletRequest.getAttribute(
 					InfoDisplayWebKeys.INFO_ITEM_REFERENCE));
 
-			if (Validator.isNotNull(mappedCollectionValue)) {
-				return mappedCollectionValue;
+			if (Validator.isNotNull(value)) {
+				return value;
 			}
 		}
 
@@ -685,19 +684,17 @@ public class RenderLayoutStructureDisplayContext {
 			return StringPool.BLANK;
 		}
 
-		String mappedCollectionValue = StringPool.BLANK;
-
 		String collectionFieldId = jsonObject.getString("collectionFieldId");
 
 		if (Validator.isNotNull(collectionFieldId)) {
-			mappedCollectionValue = _getMappedCollectionValue(
+			String value = _getValue(
 				collectionFieldId,
 				(InfoItemReference)_httpServletRequest.getAttribute(
 					InfoDisplayWebKeys.INFO_ITEM_REFERENCE));
-		}
 
-		if (Validator.isNotNull(mappedCollectionValue)) {
-			return mappedCollectionValue;
+			if (Validator.isNotNull(value)) {
+				return value;
+			}
 		}
 
 		String mappedField = jsonObject.getString("mappedField");
@@ -760,8 +757,7 @@ public class RenderLayoutStructureDisplayContext {
 					PortalUtil.getClassName(classNameId),
 					new ClassPKInfoItemIdentifier(classPK));
 
-				String value = _getMappedCollectionValue(
-					fieldId, infoItemReference);
+				String value = _getValue(fieldId, infoItemReference);
 
 				if (Validator.isNotNull(value)) {
 					return value;
@@ -959,8 +955,8 @@ public class RenderLayoutStructureDisplayContext {
 		return _layoutStructure.getMainItemId();
 	}
 
-	private String _getMappedCollectionValue(
-		String collectionFieldId, InfoItemReference infoItemReference) {
+	private String _getValue(
+		String fieldId, InfoItemReference infoItemReference) {
 
 		String className = InfoSearchClassMapperRegistryUtil.getClassName(
 			infoItemReference.getClassName());
@@ -984,7 +980,7 @@ public class RenderLayoutStructureDisplayContext {
 
 		InfoFieldValue<Object> infoFieldValue =
 			infoItemFieldValuesProvider.getInfoFieldValue(
-				_getInfoItem(infoItemReference), collectionFieldId);
+				_getInfoItem(infoItemReference), fieldId);
 
 		if (infoFieldValue == null) {
 			return StringPool.BLANK;

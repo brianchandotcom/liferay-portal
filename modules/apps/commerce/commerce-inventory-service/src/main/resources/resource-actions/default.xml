@@ -14,8 +14,6 @@
 				<action-key>ADD_WAREHOUSE</action-key>
 				<action-key>MANAGE_INVENTORY</action-key>
 			</supports>
-			<site-member-defaults/>
-			<guest-defaults/>
 			<guest-unsupported>
 				<action-key>ADD_WAREHOUSE</action-key>
 				<action-key>MANAGE_INVENTORY</action-key>
@@ -38,16 +36,11 @@
 				<action-key>UPDATE</action-key>
 				<action-key>VIEW</action-key>
 			</supports>
-			<site-member-defaults>
-				<action-key>VIEW</action-key>
-			</site-member-defaults>
-			<guest-defaults>
-				<action-key>VIEW</action-key>
-			</guest-defaults>
 			<guest-unsupported>
 				<action-key>DELETE</action-key>
 				<action-key>PERMISSIONS</action-key>
 				<action-key>UPDATE</action-key>
+				<action-key>VIEW</action-key>
 			</guest-unsupported>
 		</permissions>
 	</model-resource>

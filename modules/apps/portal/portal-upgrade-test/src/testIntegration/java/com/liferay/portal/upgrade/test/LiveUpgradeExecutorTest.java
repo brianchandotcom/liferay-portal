@@ -89,6 +89,19 @@ public class LiveUpgradeExecutorTest {
 	}
 
 	@Test
+	public void testAddColumns() throws Exception {
+		_liveUpgradeExecutor.upgrade(
+			_TABLE_NAME,
+			LiveUpgradeProcessFactory.addColumns(
+				"version LONG null", "content SBLOB"));
+
+		String tempTableName = _getTempTableName();
+
+		Assert.assertTrue(_dbInspector.hasColumn(tempTableName, "version"));
+		Assert.assertTrue(_dbInspector.hasColumn(tempTableName, "content"));
+	}
+
+	@Test
 	public void testAlterColumnName() throws Exception {
 		_liveUpgradeExecutor.upgrade(
 			_TABLE_NAME,
@@ -120,6 +133,14 @@ public class LiveUpgradeExecutorTest {
 	}
 
 	@Test
+	public void testDropColumns() throws Exception {
+		_liveUpgradeExecutor.upgrade(
+			_TABLE_NAME, LiveUpgradeProcessFactory.dropColumns("name"));
+
+		Assert.assertFalse(_dbInspector.hasColumn(_getTempTableName(), "name"));
+	}
+
+	@Test
 	public void testEmptyUpgrade() throws Exception {
 		try {
 			_liveUpgradeExecutor.upgrade(_TABLE_NAME);
@@ -137,20 +158,43 @@ public class LiveUpgradeExecutorTest {
 	public void testMultipleUpgrades() throws Exception {
 		_liveUpgradeExecutor.upgrade(
 			_TABLE_NAME,
+			LiveUpgradeProcessFactory.addColumns(
+				"version LONG null", "content SBLOB"),
 			LiveUpgradeProcessFactory.alterColumnName(
 				"name", "title VARCHAR(128) not null"),
 			LiveUpgradeProcessFactory.alterColumnType(
-				"title", "VARCHAR(255) null"));
+				"title", "VARCHAR(255) null"),
+			LiveUpgradeProcessFactory.dropColumns("content"));
 
 		String tempTableName = _getTempTableName();
 
 		Assert.assertFalse(_dbInspector.hasColumn(tempTableName, "name"));
+		Assert.assertFalse(_dbInspector.hasColumn(tempTableName, "content"));
+
+		Assert.assertTrue(_dbInspector.hasColumn(tempTableName, "id"));
 		Assert.assertTrue(_dbInspector.hasColumn(tempTableName, "title"));
+		Assert.assertTrue(_dbInspector.hasColumn(tempTableName, "version"));
+
 		Assert.assertTrue(
 			_dbInspector.hasColumnType(
 				tempTableName, "title", "VARCHAR(255) null"));
 
-		_checkData(tempTableName, "title");
+		try (PreparedStatement preparedStatement = _connection.prepareStatement(
+				"select * from " + tempTableName + " order by id asc");
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			Assert.assertTrue(resultSet.next());
+			Assert.assertEquals(1, resultSet.getLong("id"));
+			Assert.assertEquals(0, resultSet.getLong("version"));
+			Assert.assertEquals("test_a", resultSet.getString("title"));
+
+			Assert.assertTrue(resultSet.next());
+			Assert.assertEquals(2, resultSet.getLong("id"));
+			Assert.assertEquals(0, resultSet.getLong("version"));
+			Assert.assertEquals("test_b", resultSet.getString("title"));
+
+			Assert.assertFalse(resultSet.next());
+		}
 	}
 
 	private void _checkData(String tempTableName, String columnName)

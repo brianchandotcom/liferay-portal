@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.BaseUuidUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
@@ -143,6 +145,12 @@ public class CommerceInventoryServiceUpgradeStepRegistrator
 			new com.liferay.commerce.inventory.internal.upgrade.v2_6_0.
 				CommerceInventoryWarehouseUpgradeProcess());
 
+		registry.register(
+			"2.6.0", "2.6.1",
+			new com.liferay.commerce.inventory.internal.upgrade.v2_6_1.
+				CommercePermissionUpgradeProcess(
+					_resourcePermissionLocalService, _roleLocalService));
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce inventory upgrade step registrator finished");
 		}
@@ -159,5 +167,11 @@ public class CommerceInventoryServiceUpgradeStepRegistrator
 
 	@Reference
 	private ResourceLocalService _resourceLocalService;
+
+	@Reference
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
 
 }

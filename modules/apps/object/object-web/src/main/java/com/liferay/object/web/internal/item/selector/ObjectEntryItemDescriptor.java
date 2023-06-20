@@ -15,6 +15,7 @@
 package com.liferay.object.web.internal.item.selector;
 
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.petra.string.StringBundler;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -59,6 +61,13 @@ public class ObjectEntryItemDescriptor
 
 	@Override
 	public Date getModifiedDate() {
+		if (Objects.equals(
+				_objectDefinition.getStorageType(),
+				ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE)) {
+
+			return null;
+		}
+
 		return _objectEntry.getModifiedDate();
 	}
 
@@ -74,22 +83,29 @@ public class ObjectEntryItemDescriptor
 			"classNameId",
 			_portal.getClassNameId(_objectDefinition.getClassName())
 		).put(
-			"classPK", _objectEntry.getObjectEntryId()
+			"classPK", _getId()
 		).put(
 			"title",
 			StringBundler.concat(
 				_objectDefinition.getLabel(themeDisplay.getLocale()),
-				StringPool.SPACE, _objectEntry.getObjectEntryId())
+				StringPool.SPACE, _getId())
 		).toString();
 	}
 
 	@Override
 	public String getSubtitle(Locale locale) {
-		return String.valueOf(_objectEntry.getObjectEntryId());
+		return _getId();
 	}
 
 	@Override
 	public String getTitle(Locale locale) {
+		if (Objects.equals(
+				_objectDefinition.getStorageType(),
+				ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE)) {
+
+			return _objectEntry.getExternalReferenceCode();
+		}
+
 		try {
 			return _objectEntry.getTitleValue();
 		}
@@ -100,12 +116,37 @@ public class ObjectEntryItemDescriptor
 
 	@Override
 	public long getUserId() {
+		if (Objects.equals(
+				_objectDefinition.getStorageType(),
+				ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE)) {
+
+			return 0;
+		}
+
 		return _objectEntry.getUserId();
 	}
 
 	@Override
 	public String getUserName() {
+		if (Objects.equals(
+				_objectDefinition.getStorageType(),
+				ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE)) {
+
+			return StringPool.BLANK;
+		}
+
 		return _objectEntry.getUserName();
+	}
+
+	private String _getId() {
+		if (Objects.equals(
+				_objectDefinition.getStorageType(),
+				ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE)) {
+
+			return _objectEntry.getExternalReferenceCode();
+		}
+
+		return String.valueOf(_objectEntry.getObjectEntryId());
 	}
 
 	private final HttpServletRequest _httpServletRequest;

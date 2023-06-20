@@ -1,0 +1,7 @@
+assemble:
+    - from: build
+      into: static
+liferay-sample-fds-filter:
+    name: Liferay Sample FDS Filter
+    type: fdsFilter
+    url: index.js

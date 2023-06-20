@@ -1832,10 +1832,10 @@
   dependencies:
     jquery ">=1.5"
 
-"@liferay/js-api@0.2.0-pre.0":
-  version "0.2.0-pre.0"
-  resolved "https://registry.yarnpkg.com/@liferay/js-api/-/js-api-0.2.0-pre.0.tgz#3f41867a281ec5f38aaf263febaeca222ceca7fd"
-  integrity sha512-WhMR/eSB622wBdnu7t2zoL4SlPYcvMSd2hCq4ZyuSfN+ko1qAtAHfYy3GjGXea5Y4J0l/z/J6+15zhWZLsqZZQ==
+"@liferay/js-api@0.3.0-pre.0":
+  version "0.3.0-pre.0"
+  resolved "https://registry.yarnpkg.com/@liferay/js-api/-/js-api-0.3.0-pre.0.tgz#8bf4038878cc704eebc699617f63330b076f0aff"
+  integrity sha512-OEjqmDyziskS0frCQDZmg5wlF83yhXda+4w6t/h88LQkzPcB6VwezTRdsRtPKk94BvfEPZoA/uFNs7/tJUbCYA==
 
 "@liferay/js-toolkit-core@3.0.1":
   version "3.0.1"

@@ -15,6 +15,7 @@
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import React, {useContext, useEffect, useState} from 'react';
 
+import ClientExtensionRenderer from '../../../components/ClientExtensionRenderer';
 import {getComponentByModuleURL} from '../../../utils/modules';
 import ViewsContext from '../../../views/ViewsContext';
 import {VIEWS_ACTION_TYPES} from '../../../views/viewsReducer';
@@ -54,6 +55,22 @@ const getOdataFilterString = (filter) => {
 	}
 };
 
+/**
+ * @typedef {Object} Props
+ * @prop {import("@liferay/js-api/data-set").FDSFilterArgs} args
+ * @prop {import("@liferay/js-api/data-set").FDSFilter} renderer
+ */
+
+/**
+ * @param {Props} props
+ */
+const ClientExtensionRendererWrapper = (props) => {
+
+	// This wrapper exists so that we can keep TS consistent
+
+	return <ClientExtensionRenderer {...props} />;
+};
+
 const Filter = ({moduleURL, type, ...otherProps}) => {
 	const [{filters}, viewsDispatch] = useContext(ViewsContext);
 
@@ -74,11 +91,24 @@ const Filter = ({moduleURL, type, ...otherProps}) => {
 
 	useEffect(() => {
 		if (moduleURL) {
-			getComponentByModuleURL(moduleURL).then((FetchedComponent) =>
-				setComponent(() => FetchedComponent)
-			);
+			if (type === 'client-extension') {
+				const getModule = async () => {
+					const cetModule = await import(
+						/* webpackIgnore: true */ moduleURL
+					);
+
+					setComponent(() => cetModule['default']);
+				};
+
+				getModule();
+			}
+			else {
+				getComponentByModuleURL(moduleURL).then((FetchedComponent) =>
+					setComponent(() => FetchedComponent)
+				);
+			}
 		}
-	}, [moduleURL]);
+	}, [moduleURL, type]);
 
 	const setFilter = ({id, ...otherProps}) => {
 		viewsDispatch({
@@ -92,7 +122,22 @@ const Filter = ({moduleURL, type, ...otherProps}) => {
 
 	return Component ? (
 		<div className="data-set-filter">
-			<Component setFilter={setFilter} {...otherProps} />
+			{type === 'client-extension' ? (
+				<ClientExtensionRendererWrapper
+					args={{
+						filter: otherProps,
+						setFilter: (filter) =>
+							setFilter({
+								active: true,
+								id: otherProps.id,
+								...filter,
+							}),
+					}}
+					renderer={Component}
+				/>
+			) : (
+				<Component setFilter={setFilter} {...otherProps} />
+			)}
 		</div>
 	) : (
 		<ClayLoadingIndicator size="sm" />

@@ -652,16 +652,10 @@ gradle.taskGraph.useFilter {
 			return false
 		}
 
-		File appDir = task.project.projectDir
+		File appDir = _getRootDir(task.project.projectDir, "app.bnd")
 
-		boolean isCoreApp = appDir.toString().contains("/modules/core/")
-
-		if ((buildProfile != null) && System.properties["liferay.releng.bundle"] && !isCoreApp) {
+		if ((buildProfile != null) && (buildProfile != "portal-pre") && appDir) {
 			File appBndFile = new File(appDir, "app.bnd")
-
-			if (!appBndFile.exists()) {
-				return false
-			}
 
 			String liferayRelengBundle = System.properties["liferay.releng.bundle"]
 

@@ -5941,6 +5941,36 @@ information. Make sure to commit in all format-javadoc results.
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" />
 	</target>
 
+	<target name="modules-integration-analytics-cloud">
+		<run-batch-test>
+			<test-action>
+				<ant antfile="build-test-analytics-cloud.xml" target="start-analytics-cloud-integration" />
+			</test-action>
+
+			<test-set-up>
+				<if>
+					<isset property="TEST_CLASS_GROUP_${axis.variable}" />
+					<then>
+						<local name="test.class.group" />
+
+						<propertycopy from="TEST_CLASS_GROUP_${axis.variable}" name="test.class.group" />
+
+						<echo file="${project.dir}/test.class.file.names.properties">TEST_CLASS_GROUP_${axis.variable}=${test.class.group}</echo>
+					</then>
+					<else>
+						<antcall inheritAll="false" target="record-test-class-file-names">
+							<param name="test.class.groups.size" value="${test.batch.size}" />
+						</antcall>
+					</else>
+				</if>
+			</test-set-up>
+
+			<test-tear-down>
+				<ant antfile="build-test-analytics-cloud.xml" target="stop-analytics-cloud" />
+			</test-tear-down>
+		</run-batch-test>
+	</target>
+
 	<target name="modules-integration-aws-s3-mysql57-jdk8">
 		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
 

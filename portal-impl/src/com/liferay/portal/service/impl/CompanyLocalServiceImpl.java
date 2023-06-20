@@ -2069,6 +2069,11 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 					return null;
 				});
+
+			// Preferences
+
+			_portalPreferencesLocalService.getPreferences(
+				company.getCompanyId(), PortletKeys.PREFS_OWNER_TYPE_COMPANY);
 		}
 		finally {
 			LocaleThreadLocal.setDefaultLocale(localeThreadLocalDefaultLocale);

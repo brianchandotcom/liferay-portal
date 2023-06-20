@@ -209,23 +209,12 @@ public class RenderLayoutStructureDisplayContext {
 							infoItemDetails.getClassName());
 
 				if (infoItemFieldValuesProvider != null) {
-					InfoFieldValue<Object> infoFieldValue =
+					String value = _parseInfoFieldValue(
 						infoItemFieldValuesProvider.getInfoFieldValue(
-							infoItem, mappedField);
+							infoItem, mappedField));
 
-					if (infoFieldValue != null) {
-						Object object = infoFieldValue.getValue(
-							LocaleUtil.getDefault());
-
-						if (object instanceof String) {
-							String fieldValue = (String)object;
-
-							if (Validator.isNotNull(fieldValue)) {
-								return fieldValue;
-							}
-
-							return StringPool.BLANK;
-						}
+					if (Validator.isNotNull(value)) {
+						return value;
 					}
 				}
 			}
@@ -716,29 +705,12 @@ public class RenderLayoutStructureDisplayContext {
 							infoItemDetails.getClassName());
 
 				if (infoItemFieldValuesProvider != null) {
-					InfoFieldValue<Object> infoFieldValue =
+					String value = _parseInfoFieldValue(
 						infoItemFieldValuesProvider.getInfoFieldValue(
-							infoItem, mappedField);
+							infoItem, mappedField));
 
-					if (infoFieldValue != null) {
-						Object object = infoFieldValue.getValue(
-							LocaleUtil.getDefault());
-
-						if (object instanceof JSONObject) {
-							JSONObject fieldValueJSONObject =
-								(JSONObject)object;
-
-							return fieldValueJSONObject.getString(
-								"url", StringPool.BLANK);
-						}
-						else if (object instanceof String) {
-							return (String)object;
-						}
-						else if (object instanceof WebImage) {
-							WebImage webImage = (WebImage)object;
-
-							return webImage.getUrl();
-						}
+					if (Validator.isNotNull(value)) {
+						return value;
 					}
 				}
 			}

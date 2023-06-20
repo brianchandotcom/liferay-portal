@@ -142,9 +142,9 @@ public class CommerceInventoryWarehouseItemsDisplayContext {
 		}
 
 		_commerceInventoryWarehouses =
-			_commerceInventoryWarehouseService.getCommerceInventoryWarehouses(
-				_cpRequestHelper.getCompanyId(), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null);
+			_commerceInventoryWarehouseService.search(
+				_cpRequestHelper.getCompanyId(), null, null, null,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		return _commerceInventoryWarehouses;
 	}

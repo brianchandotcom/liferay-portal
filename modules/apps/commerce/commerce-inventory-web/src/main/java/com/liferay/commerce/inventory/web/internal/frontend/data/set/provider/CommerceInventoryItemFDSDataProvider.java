@@ -15,7 +15,6 @@
 package com.liferay.commerce.inventory.web.internal.frontend.data.set.provider;
 
 import com.liferay.commerce.inventory.constants.CommerceInventoryActionKeys;
-import com.liferay.commerce.inventory.model.CIWarehouseItem;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseItemLocalService;
 import com.liferay.commerce.inventory.web.internal.constants.CommerceInventoryFDSNames;
@@ -23,6 +22,7 @@ import com.liferay.commerce.inventory.web.internal.model.InventoryItem;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.Portal;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -59,28 +59,23 @@ public class CommerceInventoryItemFDSDataProvider
 			_commerceInventoryWarehouseModelResourcePermission.
 				getPortletResourcePermission();
 
-		portletResourcePermission.contains(
-			PermissionThreadLocal.getPermissionChecker(), null,
-			CommerceInventoryActionKeys.MANAGE_INVENTORY);
+		if (portletResourcePermission.contains(
+				PermissionThreadLocal.getPermissionChecker(), null,
+				CommerceInventoryActionKeys.MANAGE_INVENTORY)) {
 
-		List<InventoryItem> inventoryItems = new ArrayList<>();
-
-		List<CIWarehouseItem> ciWarehouseItems =
-			_commerceInventoryWarehouseItemLocalService.getItemsByCompanyId(
-				_portal.getCompanyId(httpServletRequest),
-				fdsKeywords.getKeywords(), fdsPagination.getStartPosition(),
-				fdsPagination.getEndPosition());
-
-		for (CIWarehouseItem ciWarehouseItem : ciWarehouseItems) {
-			inventoryItems.add(
-				new InventoryItem(
+			return TransformUtil.transform(
+				_commerceInventoryWarehouseItemLocalService.getItemsByCompanyId(
+					_portal.getCompanyId(httpServletRequest),
+					fdsKeywords.getKeywords(), fdsPagination.getStartPosition(),
+					fdsPagination.getEndPosition()),
+				ciWarehouseItem -> new InventoryItem(
 					ciWarehouseItem.getSkuCode(),
 					ciWarehouseItem.getStockQuantity(),
 					ciWarehouseItem.getBookedQuantity(),
 					ciWarehouseItem.getReplenishmentQuantity()));
 		}
 
-		return inventoryItems;
+		return Collections.emptyList();
 	}
 
 	@Override

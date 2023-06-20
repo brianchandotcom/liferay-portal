@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
@@ -100,10 +101,10 @@ public class APIApplicationPublisherTest {
 				public Application addingService(
 					ServiceReference<Application> serviceReference) {
 
-					Boolean property = (Boolean)serviceReference.getProperty(
-						"liferay.headless.builder.application");
+					if (GetterUtil.getBoolean(
+							serviceReference.getProperty(
+								"liferay.headless.builder.application"))) {
 
-					if ((property != null) && property) {
 						addedCountLatch.countDown();
 
 						return super.addingService(serviceReference);
@@ -117,10 +118,10 @@ public class APIApplicationPublisherTest {
 					ServiceReference<Application> serviceReference,
 					Application service) {
 
-					Boolean property = (Boolean)serviceReference.getProperty(
-						"liferay.headless.builder.application");
+					if (GetterUtil.getBoolean(
+							serviceReference.getProperty(
+								"liferay.headless.builder.application"))) {
 
-					if ((property != null) && property) {
 						removedCountLatch.countDown();
 
 						super.removedService(serviceReference, service);
@@ -172,10 +173,10 @@ public class APIApplicationPublisherTest {
 				public Application addingService(
 					ServiceReference<Application> serviceReference) {
 
-					Boolean property = (Boolean)serviceReference.getProperty(
-						"liferay.headless.builder.application");
+					if (GetterUtil.getBoolean(
+							serviceReference.getProperty(
+								"liferay.headless.builder.application"))) {
 
-					if ((property != null) && property) {
 						addedCountLatch.countDown();
 
 						return super.addingService(serviceReference);
@@ -189,10 +190,10 @@ public class APIApplicationPublisherTest {
 					ServiceReference<Application> serviceReference,
 					Application service) {
 
-					Boolean property = (Boolean)serviceReference.getProperty(
-						"liferay.headless.builder.application");
+					if (GetterUtil.getBoolean(
+							serviceReference.getProperty(
+								"liferay.headless.builder.application"))) {
 
-					if ((property != null) && property) {
 						removedCountLatch.countDown();
 
 						super.removedService(serviceReference, service);

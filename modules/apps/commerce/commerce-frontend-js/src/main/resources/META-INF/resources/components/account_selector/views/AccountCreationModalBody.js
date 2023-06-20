@@ -113,7 +113,7 @@ export default function AccountCreationModalBody({
 							if (
 								resource.find(
 									(organization) =>
-										organization.name.toLowerCase() ===
+										organization.label.toLowerCase() ===
 										item.label.toLowerCase()
 								)
 							) {

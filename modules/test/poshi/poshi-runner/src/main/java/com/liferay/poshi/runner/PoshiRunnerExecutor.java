@@ -592,7 +592,7 @@ public class PoshiRunnerExecutor {
 			Object value = executeElement.attributeValue("value" + i);
 
 			if (value == null) {
-				value = (String)_poshiVariablesContext.getObjectFromCommandMap(
+				value = _poshiVariablesContext.getObjectFromCommandMap(
 					"value" + i);
 			}
 

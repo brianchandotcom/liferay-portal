@@ -21,7 +21,6 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.commerce.constants.CommercePortletKeys;
-import com.liferay.commerce.currency.constants.CommerceCurrencyActionKeys;
 import com.liferay.commerce.price.list.constants.CommercePriceListActionKeys;
 import com.liferay.commerce.pricing.constants.CommercePricingPortletKeys;
 import com.liferay.commerce.product.constants.CPActionKeys;
@@ -222,12 +221,6 @@ public class CommerceAccountRoleHelperImpl
 					portletId,
 					new String[] {ActionKeys.ACCESS_IN_CONTROL_PANEL});
 			}
-
-			companyResourceActionIds.put(
-				"com.liferay.commerce.currency",
-				new String[] {
-					CommerceCurrencyActionKeys.MANAGE_COMMERCE_CURRENCIES
-				});
 
 			companyResourceActionIds.put(
 				"com.liferay.commerce.price.list",

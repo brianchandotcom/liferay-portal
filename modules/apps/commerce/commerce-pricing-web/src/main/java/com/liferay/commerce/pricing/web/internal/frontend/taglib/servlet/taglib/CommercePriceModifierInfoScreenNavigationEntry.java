@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.pricing.web.internal.frontend.taglib.servlet.taglib;
 
-import com.liferay.commerce.currency.service.CommerceCurrencyService;
+import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceListService;
 import com.liferay.commerce.pricing.model.CommercePriceModifier;
@@ -91,7 +91,7 @@ public class CommercePriceModifierInfoScreenNavigationEntry
 		try {
 			CommercePriceListDisplayContext commercePriceListDisplayContext =
 				new CommercePriceListDisplayContext(
-					_commerceCatalogService, _commerceCurrencyService,
+					_commerceCatalogService, _commerceCurrencyLocalService,
 					_commercePriceListModelResourcePermission,
 					_commercePriceListService, _commercePriceModifierService,
 					_commercePriceModifierTypeRegistry, httpServletRequest);
@@ -116,7 +116,7 @@ public class CommercePriceModifierInfoScreenNavigationEntry
 	private CommerceCatalogService _commerceCatalogService;
 
 	@Reference
-	private CommerceCurrencyService _commerceCurrencyService;
+	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.commerce.price.list.model.CommercePriceList)"

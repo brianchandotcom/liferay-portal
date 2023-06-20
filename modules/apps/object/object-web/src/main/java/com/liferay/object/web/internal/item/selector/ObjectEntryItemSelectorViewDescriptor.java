@@ -188,6 +188,8 @@ public class ObjectEntryItemSelectorViewDescriptor
 			_objectEntryLocalService.createObjectEntry(
 				GetterUtil.getLong(objectEntry.getId()));
 
+		serviceBuilderObjectEntry.setExternalReferenceCode(
+			objectEntry.getExternalReferenceCode());
 		serviceBuilderObjectEntry.setObjectDefinitionId(objectDefinitionId);
 
 		return serviceBuilderObjectEntry;

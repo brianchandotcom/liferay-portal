@@ -130,8 +130,6 @@ public class SessionReplicationHttpSessionWrapper extends HttpSessionWrapper {
 			}
 		}
 
-		super.setAttribute(name, value);
-
 		if (originalValue != value) {
 			Set<String> scrubbedNames = (Set<String>)super.getAttribute(
 				_SCRUBBED_NAMES_NAME);
@@ -145,6 +143,8 @@ public class SessionReplicationHttpSessionWrapper extends HttpSessionWrapper {
 
 			super.setAttribute(_SCRUBBED_NAMES_NAME, scrubbedNames);
 		}
+
+		super.setAttribute(name, value);
 	}
 
 	private static final String _SCRUBBED_NAMES_NAME =

@@ -27,7 +27,7 @@ import org.osgi.framework.Bundle;
  * @author Nilton Vieira
  */
 @ProviderType
-public interface SiteInitializerCommerceExtension {
+public interface CommerceSiteInitializerExtension {
 
 	public void addAccountGroups(
 			ServiceContext serviceContext, ServletContext servletContext)

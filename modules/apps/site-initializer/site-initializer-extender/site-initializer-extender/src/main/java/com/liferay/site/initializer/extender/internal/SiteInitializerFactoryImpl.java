@@ -83,7 +83,7 @@ import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.initializer.SiteInitializerFactory;
-import com.liferay.site.initializer.extender.SiteInitializerCommerceExtension;
+import com.liferay.site.initializer.extender.CommerceSiteInitializerExtension;
 import com.liferay.site.initializer.extender.internal.file.backed.osgi.FileBackedBundleDelegate;
 import com.liferay.site.initializer.extender.internal.file.backed.servlet.FileBackedServletContextDelegate;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
@@ -166,12 +166,12 @@ public class SiteInitializerFactoryImpl implements SiteInitializerFactory {
 			_workflowDefinitionLinkLocalService,
 			_workflowDefinitionResourceFactory);
 
-		ServiceReference<SiteInitializerCommerceExtension> serviceReference =
+		ServiceReference<CommerceSiteInitializerExtension> serviceReference =
 			_bundleContext.getServiceReference(
-				SiteInitializerCommerceExtension.class);
+				CommerceSiteInitializerExtension.class);
 
 		if (serviceReference != null) {
-			bundleSiteInitializer.setSiteInitializerCommerceExtension(
+			bundleSiteInitializer.setCommerceSiteInitializerExtension(
 				_bundleContext.getService(serviceReference));
 		}
 

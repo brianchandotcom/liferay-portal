@@ -1166,9 +1166,7 @@ public class ObjectDefinitionLocalServiceTest {
 			objectDefinition2.getAccountEntryRestrictedObjectFieldId() > 0);
 		Assert.assertFalse(objectDefinition2.isSystem());
 
-		// Enable account restriction between two custom object definitions
-
-		ObjectDefinition finalObjectDefinition = objectDefinition2;
+		// Enabling account restriction between two custom object definitions
 
 		AssertUtils.assertFailure(
 			ObjectDefinitionAccountEntryRestrictedException.class,
@@ -1176,7 +1174,9 @@ public class ObjectDefinitionLocalServiceTest {
 			() -> _objectDefinitionLocalService.enableAccountEntryRestricted(
 				_objectRelationshipLocalService.addObjectRelationship(
 					TestPropsValues.getUserId(),
-					finalObjectDefinition.getObjectDefinitionId(),
+					_addCustomObjectDefinition(
+						"Test" + RandomTestUtil.randomString()
+					).getObjectDefinitionId(),
 					_addCustomObjectDefinition(
 						"Test" + RandomTestUtil.randomString()
 					).getObjectDefinitionId(),
@@ -1185,11 +1185,31 @@ public class ObjectDefinitionLocalServiceTest {
 						RandomTestUtil.randomString()),
 					StringUtil.randomId(),
 					ObjectRelationshipConstants.TYPE_ONE_TO_MANY)));
-	}
 
-	@Test
-	public void testEnableAccountEntryRestrictedForNondefaultStorageType()
-		throws Exception {
+		// Enabling account restriction for default storage object definition
+		// using salesforce method
+
+		AssertUtils.assertFailure(
+			UnsupportedOperationException.class, null,
+			() ->
+				_objectDefinitionLocalService.
+					enableAccountEntryRestrictedForNondefaultStorageType(
+						ObjectFieldUtil.addCustomObjectField(
+							new TextObjectFieldBuilder(
+							).userId(
+								TestPropsValues.getUserId()
+							).labelMap(
+								LocalizedMapUtil.getLocalizedMap(
+									RandomTestUtil.randomString())
+							).name(
+								StringUtil.randomId()
+							).objectDefinitionId(
+								_addCustomObjectDefinition(
+									"Test" + RandomTestUtil.randomString()
+								).getObjectDefinitionId()
+							).required(
+								true
+							).build())));
 
 		// Enabling account restriction to a custom salesforce object definition
 
@@ -1229,6 +1249,32 @@ public class ObjectDefinitionLocalServiceTest {
 			ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE);
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
+
+		// Enabling account restriction using a forbidden type field
+
+		AssertUtils.assertFailure(
+			ObjectDefinitionAccountEntryRestrictedException.class,
+			"Custom object definitions can only be restricted by a Integer, " +
+				"Long Integer or Text field",
+			() ->
+				_objectDefinitionLocalService.
+					enableAccountEntryRestrictedForNondefaultStorageType(
+						ObjectFieldUtil.addCustomObjectField(
+							new DateObjectFieldBuilder(
+							).userId(
+								TestPropsValues.getUserId()
+							).labelMap(
+								LocalizedMapUtil.getLocalizedMap(
+									RandomTestUtil.randomString())
+							).name(
+								StringUtil.randomId()
+							).objectDefinitionId(
+								_addCustomObjectDefinition(
+									"Test" + RandomTestUtil.randomString()
+								).getObjectDefinitionId()
+							).required(
+								true
+							).build())));
 
 		// Switching account restricted field
 
@@ -1292,57 +1338,6 @@ public class ObjectDefinitionLocalServiceTest {
 			objectField.getObjectFieldId());
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
-
-		// Enabling account restriction for default storage object definition
-		// using salesforce method
-
-		AssertUtils.assertFailure(
-			UnsupportedOperationException.class, null,
-			() ->
-				_objectDefinitionLocalService.
-					enableAccountEntryRestrictedForNondefaultStorageType(
-						ObjectFieldUtil.addCustomObjectField(
-							new TextObjectFieldBuilder(
-							).userId(
-								TestPropsValues.getUserId()
-							).labelMap(
-								LocalizedMapUtil.getLocalizedMap(
-									RandomTestUtil.randomString())
-							).name(
-								StringUtil.randomId()
-							).objectDefinitionId(
-								_addCustomObjectDefinition(
-									"Test" + RandomTestUtil.randomString()
-								).getObjectDefinitionId()
-							).required(
-								true
-							).build())));
-
-		// Enabling account restriction using a forbidden type field
-
-		AssertUtils.assertFailure(
-			ObjectDefinitionAccountEntryRestrictedException.class,
-			"Custom object definitions can only be restricted by a Integer, " +
-				"Long Integer or Text field",
-			() ->
-				_objectDefinitionLocalService.
-					enableAccountEntryRestrictedForNondefaultStorageType(
-						ObjectFieldUtil.addCustomObjectField(
-							new DateObjectFieldBuilder(
-							).userId(
-								TestPropsValues.getUserId()
-							).labelMap(
-								LocalizedMapUtil.getLocalizedMap(
-									RandomTestUtil.randomString())
-							).name(
-								StringUtil.randomId()
-							).objectDefinitionId(
-								_addCustomObjectDefinition(
-									"Test" + RandomTestUtil.randomString()
-								).getObjectDefinitionId()
-							).required(
-								true
-							).build())));
 	}
 
 	@Test

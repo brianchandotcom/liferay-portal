@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.util.ParamUtil;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.portlet.PortletURL;
@@ -89,10 +90,21 @@ public class CommerceAccountGroupItemSelectorViewDisplayContext {
 		_searchContainer.setOrderByCol(getOrderByCol());
 		_searchContainer.setOrderByType(getOrderByType());
 
+		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
+
+		long accountEntryId = ParamUtil.getLong(
+			_commerceAccountItemSelectorRequestHelper.getRenderRequest(),
+			"accountEntryId");
+
+		if (accountEntryId > 0) {
+			params.put("accountEntryIds", new long[] {accountEntryId});
+		}
+
 		BaseModelSearchResult<AccountGroup> baseModelSearchResult =
 			_accountGroupLocalService.searchAccountGroups(
 				_commerceAccountItemSelectorRequestHelper.getCompanyId(),
-				getKeywords(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+				getKeywords(), params, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				null);
 
 		_searchContainer.setResultsAndTotal(
 			() -> (List<AccountGroup>)baseModelSearchResult.getBaseModels(),

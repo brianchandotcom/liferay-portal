@@ -266,14 +266,6 @@ public class CommerceInventoryWarehouseServiceImpl
 			String keywords, int start, int end, Sort sort)
 		throws PortalException {
 
-		PortletResourcePermission portletResourcePermission =
-			_commerceInventoryWarehouseModelResourcePermission.
-				getPortletResourcePermission();
-
-		portletResourcePermission.check(
-			getPermissionChecker(), null,
-			CommerceInventoryActionKeys.MANAGE_INVENTORY);
-
 		return commerceInventoryWarehouseLocalService.search(
 			companyId, active, commerceCountryCode, keywords, start, end, sort);
 	}

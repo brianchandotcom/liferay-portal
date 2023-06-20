@@ -231,15 +231,6 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 
 	@Override
 	public List<CommerceInventoryWarehouseItem>
-		getCommerceInventoryWarehouseItems(
-			long companyId, String sku, int start, int end) {
-
-		return commerceInventoryWarehouseItemPersistence.findByCompanyId_Sku(
-			companyId, sku, start, end);
-	}
-
-	@Override
-	public List<CommerceInventoryWarehouseItem>
 		getCommerceInventoryWarehouseItemsByCompanyId(
 			long companyId, int start, int end) {
 

@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -427,6 +428,9 @@ public class CommerceInventoryWarehouseLocalServiceImpl
 
 		if (sort != null) {
 			searchContext.setSorts(sort);
+		}
+		else {
+			searchContext.setSorts(SortFactoryUtil.getDefaultSorts());
 		}
 
 		searchContext.setStart(start);

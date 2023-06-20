@@ -295,7 +295,8 @@ public class ObjectDefinitionResourceImpl
 					objectDefinition.getPanelCategoryKey(),
 					LocalizedMapUtil.getLocalizedMap(
 						objectDefinition.getPluralLabel()),
-					objectDefinition.getPortlet(), objectDefinition.getScope(),
+					GetterUtil.getBoolean(objectDefinition.getPortlet(), true),
+					objectDefinition.getScope(),
 					objectDefinition.getStorageType(),
 					transformToList(
 						ArrayUtil.filter(

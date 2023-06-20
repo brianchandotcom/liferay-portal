@@ -175,7 +175,7 @@ public class ObjectDefinitionLocalServiceImpl
 			long userId, boolean enableComments, boolean enableLocalization,
 			Map<Locale, String> labelMap, String name, String panelAppOrder,
 			String panelCategoryKey, Map<Locale, String> pluralLabelMap,
-			Boolean portlet, String scope, String storageType,
+			boolean portlet, String scope, String storageType,
 			List<ObjectField> objectFields)
 		throws PortalException {
 
@@ -885,7 +885,7 @@ public class ObjectDefinitionLocalServiceImpl
 			Map<Locale, String> labelMap, boolean modifiable, String name,
 			String panelAppOrder, String panelCategoryKey,
 			String pkObjectFieldDBColumnName, String pkObjectFieldName,
-			Map<Locale, String> pluralLabelMap, Boolean portlet, String scope,
+			Map<Locale, String> pluralLabelMap, boolean portlet, String scope,
 			String storageType, boolean system, String titleObjectFieldName,
 			int version, int status, List<ObjectField> objectFields)
 		throws PortalException {
@@ -946,8 +946,7 @@ public class ObjectDefinitionLocalServiceImpl
 			pkObjectFieldDBColumnName);
 		objectDefinition.setPKObjectFieldName(pkObjectFieldName);
 		objectDefinition.setPluralLabelMap(pluralLabelMap);
-		objectDefinition.setPortlet(
-			_isPortletNotNull(portlet) ? portlet : true);
+		objectDefinition.setPortlet(portlet);
 		objectDefinition.setScope(scope);
 		objectDefinition.setStorageType(
 			Validator.isNotNull(storageType) ? storageType :
@@ -1279,14 +1278,6 @@ public class ObjectDefinitionLocalServiceImpl
 						StringPool.DASH, locale, StringPool.DASH, 0));
 			}
 		}
-	}
-
-	private boolean _isPortletNotNull(Boolean portlet) {
-		if (portlet != null) {
-			return true;
-		}
-
-		return false;
 	}
 
 	private boolean _isUnmodifiableSystemObject(

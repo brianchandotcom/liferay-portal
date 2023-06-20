@@ -252,7 +252,7 @@ public class APIApplicationPublisherTest {
 	}
 
 	private APIApplication _createAPIApplication(
-			String baseURL, String apiApplicationERC, String title)
+			String baseURL, String externalReferenceCode, String title)
 		throws Exception {
 
 		HTTPTestUtil.invoke(
@@ -299,7 +299,7 @@ public class APIApplicationPublisherTest {
 			).put(
 				"baseURL", baseURL
 			).put(
-				"externalReferenceCode", apiApplicationERC
+				"externalReferenceCode", externalReferenceCode
 			).put(
 				"title", title
 			).toString(),

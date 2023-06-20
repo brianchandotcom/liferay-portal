@@ -473,6 +473,10 @@ public class FragmentEntryProcessorHelperImpl
 				InfoItemObjectProvider.class, className,
 				infoItemIdentifier.getInfoItemServiceFilter());
 
+		if (infoItemObjectProvider == null) {
+			return null;
+		}
+
 		try {
 			return infoItemObjectProvider.getInfoItem(infoItemIdentifier);
 		}

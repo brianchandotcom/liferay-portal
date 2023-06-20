@@ -370,6 +370,40 @@ definition {
 		}
 	}
 
+	@description = "LPS-178736. Confirm that the user can edit Label field on Edit"
+	@priority = 5
+	test CanEditLabelFieldOnEdit {
+		task ("And add an id Field") {
+			DataSetAdmin.addFields(key_fieldList = "id");
+		}
+
+		task ("When the user clicks on the edit option from the id Field") {
+			Click(
+				key_fieldName = "id",
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
+
+			MenuItem.click(menuItem = "Edit");
+		}
+
+		task ("And change the label to "Id Edited"") {
+			Type(
+				key_text = "Label",
+				locator1 = "TextInput#ANY",
+				value1 = "Id Edited");
+
+			Click(
+				key_text = "Save",
+				locator1 = "CP2ActivationKeys#KEY_DEACTIVATION_TERMS");
+		}
+
+		task ("Then assert the "Id Edited" is present from the column label") {
+			AssertElementPresent(
+				key_tableColumn = "Label",
+				key_tableRow = "Id Edited",
+				locator1 = "DataSet#FIELDS_TABLE_AND_ROW");
+		}
+	}
+
 	@description = "LPS-185228. Confirm that a field is not added after checking and unchecking it."
 	@priority = 5
 	test CannotAddFieldAfterUncheckingIt {

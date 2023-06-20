@@ -81,10 +81,10 @@ public class ObjectDefinitionServiceImpl
 
 	@Override
 	public ObjectDefinition addSystemObjectDefinition(
-			long userId, boolean enableComments, Map<Locale, String> labelMap,
-			String name, String panelAppOrder, String panelCategoryKey,
-			Map<Locale, String> pluralLabelMap, String scope,
-			List<ObjectField> objectFields)
+			String externalReferenceCode, long userId, boolean enableComments,
+			Map<Locale, String> labelMap, String name, String panelAppOrder,
+			String panelCategoryKey, Map<Locale, String> pluralLabelMap,
+			String scope, List<ObjectField> objectFields)
 		throws PortalException {
 
 		_portletResourcePermission.check(
@@ -92,9 +92,10 @@ public class ObjectDefinitionServiceImpl
 			ObjectActionKeys.ADD_OBJECT_DEFINITION);
 
 		return objectDefinitionLocalService.addSystemObjectDefinition(
-			userId, null, null, enableComments, labelMap, true, name,
-			panelAppOrder, panelCategoryKey, null, null, pluralLabelMap, scope,
-			null, 1, WorkflowConstants.STATUS_DRAFT, objectFields);
+			externalReferenceCode, userId, null, null, enableComments, labelMap,
+			true, name, panelAppOrder, panelCategoryKey, null, null,
+			pluralLabelMap, scope, null, 1, WorkflowConstants.STATUS_DRAFT,
+			objectFields);
 	}
 
 	@Override

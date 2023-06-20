@@ -176,8 +176,8 @@ public class ObjectDefinitionLocalServiceImpl
 		throws PortalException {
 
 		return _addObjectDefinition(
-			userId, null, null, enableComments, enableLocalization, labelMap,
-			true, name, panelAppOrder, panelCategoryKey, null, null,
+			null, userId, null, null, enableComments, enableLocalization,
+			labelMap, true, name, panelAppOrder, panelCategoryKey, null, null,
 			pluralLabelMap, portlet, scope, storageType, false, null, 0,
 			WorkflowConstants.STATUS_DRAFT, objectFields);
 	}
@@ -248,6 +248,7 @@ public class ObjectDefinitionLocalServiceImpl
 				systemObjectDefinitionManager.getPrimaryKeyColumn();
 
 			return addSystemObjectDefinition(
+				systemObjectDefinitionManager.getExternalReferenceCode(),
 				userId, systemObjectDefinitionManager.getModelClassName(),
 				table.getTableName(), false,
 				systemObjectDefinitionManager.getLabelMap(), false,
@@ -322,20 +323,22 @@ public class ObjectDefinitionLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ObjectDefinition addSystemObjectDefinition(
-			long userId, String className, String dbTableName,
-			boolean enableComments, Map<Locale, String> labelMap,
-			boolean modifiable, String name, String panelAppOrder,
-			String panelCategoryKey, String pkObjectFieldDBColumnName,
-			String pkObjectFieldName, Map<Locale, String> pluralLabelMap,
-			String scope, String titleObjectFieldName, int version, int status,
+			String externalReferenceCode, long userId, String className,
+			String dbTableName, boolean enableComments,
+			Map<Locale, String> labelMap, boolean modifiable, String name,
+			String panelAppOrder, String panelCategoryKey,
+			String pkObjectFieldDBColumnName, String pkObjectFieldName,
+			Map<Locale, String> pluralLabelMap, String scope,
+			String titleObjectFieldName, int version, int status,
 			List<ObjectField> objectFields)
 		throws PortalException {
 
 		return _addObjectDefinition(
-			userId, className, dbTableName, enableComments, false, labelMap,
-			modifiable, name, panelAppOrder, panelCategoryKey,
-			pkObjectFieldDBColumnName, pkObjectFieldName, pluralLabelMap, false,
-			scope, ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT, true,
+			externalReferenceCode, userId, className, dbTableName,
+			enableComments, false, labelMap, modifiable, name, panelAppOrder,
+			panelCategoryKey, pkObjectFieldDBColumnName, pkObjectFieldName,
+			pluralLabelMap, false, scope,
+			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT, true,
 			titleObjectFieldName, version, status, objectFields);
 	}
 
@@ -878,14 +881,15 @@ public class ObjectDefinitionLocalServiceImpl
 	}
 
 	private ObjectDefinition _addObjectDefinition(
-			long userId, String className, String dbTableName,
-			boolean enableComments, boolean enableLocalization,
-			Map<Locale, String> labelMap, boolean modifiable, String name,
-			String panelAppOrder, String panelCategoryKey,
-			String pkObjectFieldDBColumnName, String pkObjectFieldName,
-			Map<Locale, String> pluralLabelMap, boolean portlet, String scope,
-			String storageType, boolean system, String titleObjectFieldName,
-			int version, int status, List<ObjectField> objectFields)
+			String externalReferenceCode, long userId, String className,
+			String dbTableName, boolean enableComments,
+			boolean enableLocalization, Map<Locale, String> labelMap,
+			boolean modifiable, String name, String panelAppOrder,
+			String panelCategoryKey, String pkObjectFieldDBColumnName,
+			String pkObjectFieldName, Map<Locale, String> pluralLabelMap,
+			boolean portlet, String scope, String storageType, boolean system,
+			String titleObjectFieldName, int version, int status,
+			List<ObjectField> objectFields)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(userId);
@@ -919,6 +923,7 @@ public class ObjectDefinitionLocalServiceImpl
 		ObjectDefinition objectDefinition = objectDefinitionPersistence.create(
 			counterLocalService.increment());
 
+		objectDefinition.setExternalReferenceCode(externalReferenceCode);
 		objectDefinition.setCompanyId(user.getCompanyId());
 		objectDefinition.setUserId(user.getUserId());
 		objectDefinition.setUserName(user.getFullName());

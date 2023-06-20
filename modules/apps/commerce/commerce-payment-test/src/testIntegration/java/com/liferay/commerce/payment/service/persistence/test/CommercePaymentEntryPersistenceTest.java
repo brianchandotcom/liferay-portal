@@ -139,6 +139,8 @@ public class CommercePaymentEntryPersistenceTest {
 
 		newCommercePaymentEntry.setModifiedDate(RandomTestUtil.nextDate());
 
+		newCommercePaymentEntry.setChannelId(RandomTestUtil.nextLong());
+
 		newCommercePaymentEntry.setClassNameId(RandomTestUtil.nextLong());
 
 		newCommercePaymentEntry.setClassPK(RandomTestUtil.nextLong());
@@ -146,12 +148,18 @@ public class CommercePaymentEntryPersistenceTest {
 		newCommercePaymentEntry.setAmount(
 			new BigDecimal(RandomTestUtil.nextDouble()));
 
+		newCommercePaymentEntry.setCallbackURL(RandomTestUtil.randomString());
+
 		newCommercePaymentEntry.setCurrencyCode(RandomTestUtil.randomString());
 
-		newCommercePaymentEntry.setPaymentMethodName(
+		newCommercePaymentEntry.setPaymentMethodKey(
 			RandomTestUtil.randomString());
 
+		newCommercePaymentEntry.setPaymentMethodType(RandomTestUtil.nextInt());
+
 		newCommercePaymentEntry.setPaymentStatus(RandomTestUtil.nextInt());
+
+		newCommercePaymentEntry.setRedirectURL(RandomTestUtil.randomString());
 
 		newCommercePaymentEntry.setTransactionCode(
 			RandomTestUtil.randomString());
@@ -187,6 +195,9 @@ public class CommercePaymentEntryPersistenceTest {
 				existingCommercePaymentEntry.getModifiedDate()),
 			Time.getShortTimestamp(newCommercePaymentEntry.getModifiedDate()));
 		Assert.assertEquals(
+			existingCommercePaymentEntry.getChannelId(),
+			newCommercePaymentEntry.getChannelId());
+		Assert.assertEquals(
 			existingCommercePaymentEntry.getClassNameId(),
 			newCommercePaymentEntry.getClassNameId());
 		Assert.assertEquals(
@@ -196,14 +207,23 @@ public class CommercePaymentEntryPersistenceTest {
 			existingCommercePaymentEntry.getAmount(),
 			newCommercePaymentEntry.getAmount());
 		Assert.assertEquals(
+			existingCommercePaymentEntry.getCallbackURL(),
+			newCommercePaymentEntry.getCallbackURL());
+		Assert.assertEquals(
 			existingCommercePaymentEntry.getCurrencyCode(),
 			newCommercePaymentEntry.getCurrencyCode());
 		Assert.assertEquals(
-			existingCommercePaymentEntry.getPaymentMethodName(),
-			newCommercePaymentEntry.getPaymentMethodName());
+			existingCommercePaymentEntry.getPaymentMethodKey(),
+			newCommercePaymentEntry.getPaymentMethodKey());
+		Assert.assertEquals(
+			existingCommercePaymentEntry.getPaymentMethodType(),
+			newCommercePaymentEntry.getPaymentMethodType());
 		Assert.assertEquals(
 			existingCommercePaymentEntry.getPaymentStatus(),
 			newCommercePaymentEntry.getPaymentStatus());
+		Assert.assertEquals(
+			existingCommercePaymentEntry.getRedirectURL(),
+			newCommercePaymentEntry.getRedirectURL());
 		Assert.assertEquals(
 			existingCommercePaymentEntry.getTransactionCode(),
 			newCommercePaymentEntry.getTransactionCode());
@@ -256,9 +276,10 @@ public class CommercePaymentEntryPersistenceTest {
 			"CommercePaymentEntry", "mvccVersion", true,
 			"commercePaymentEntryId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
-			"classNameId", true, "classPK", true, "amount", true,
-			"currencyCode", true, "paymentMethodName", true, "paymentStatus",
-			true, "transactionCode", true);
+			"channelId", true, "classNameId", true, "classPK", true, "amount",
+			true, "currencyCode", true, "paymentMethodKey", true,
+			"paymentMethodType", true, "paymentStatus", true, "transactionCode",
+			true);
 	}
 
 	@Test
@@ -514,6 +535,8 @@ public class CommercePaymentEntryPersistenceTest {
 
 		commercePaymentEntry.setModifiedDate(RandomTestUtil.nextDate());
 
+		commercePaymentEntry.setChannelId(RandomTestUtil.nextLong());
+
 		commercePaymentEntry.setClassNameId(RandomTestUtil.nextLong());
 
 		commercePaymentEntry.setClassPK(RandomTestUtil.nextLong());
@@ -521,12 +544,17 @@ public class CommercePaymentEntryPersistenceTest {
 		commercePaymentEntry.setAmount(
 			new BigDecimal(RandomTestUtil.nextDouble()));
 
+		commercePaymentEntry.setCallbackURL(RandomTestUtil.randomString());
+
 		commercePaymentEntry.setCurrencyCode(RandomTestUtil.randomString());
 
-		commercePaymentEntry.setPaymentMethodName(
-			RandomTestUtil.randomString());
+		commercePaymentEntry.setPaymentMethodKey(RandomTestUtil.randomString());
+
+		commercePaymentEntry.setPaymentMethodType(RandomTestUtil.nextInt());
 
 		commercePaymentEntry.setPaymentStatus(RandomTestUtil.nextInt());
+
+		commercePaymentEntry.setRedirectURL(RandomTestUtil.randomString());
 
 		commercePaymentEntry.setTransactionCode(RandomTestUtil.randomString());
 

@@ -1835,135 +1835,133 @@ public class BundleSiteInitializerTest {
 	}
 
 	private void _assertObjectDefinitions1() throws Exception {
-		ObjectDefinition objectDefinition1 =
+		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinition(
 				_group.getCompanyId(), "C_TestObjectDefinition1");
 
-		Assert.assertFalse(objectDefinition1.isAccountEntryRestricted());
-		Assert.assertFalse(objectDefinition1.isSystem());
+		Assert.assertFalse(objectDefinition.isAccountEntryRestricted());
+		Assert.assertFalse(objectDefinition.isSystem());
 		Assert.assertEquals(
-			objectDefinition1.getStatus(), WorkflowConstants.STATUS_APPROVED);
+			objectDefinition.getStatus(), WorkflowConstants.STATUS_APPROVED);
 
-		_assertObjectActions(3, objectDefinition1);
-		_assertObjectEntries(_group.getGroupId(), objectDefinition1, 0);
-		_assertObjectFields(objectDefinition1, 10);
-		_assertObjectRelationships1(objectDefinition1, _serviceContext);
+		_assertObjectActions(3, objectDefinition);
+		_assertObjectEntries(_group.getGroupId(), objectDefinition, 0);
+		_assertObjectFields(objectDefinition, 10);
+		_assertObjectRelationships1(objectDefinition, _serviceContext);
 
-		ObjectDefinition objectDefinition2 =
+		objectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinition(
 				_group.getCompanyId(), "C_TestObjectDefinition2");
 
-		Assert.assertFalse(objectDefinition2.isAccountEntryRestricted());
-		Assert.assertFalse(objectDefinition2.isSystem());
+		Assert.assertFalse(objectDefinition.isAccountEntryRestricted());
+		Assert.assertFalse(objectDefinition.isSystem());
 		Assert.assertEquals(
-			objectDefinition2.getStatus(), WorkflowConstants.STATUS_APPROVED);
+			objectDefinition.getStatus(), WorkflowConstants.STATUS_APPROVED);
 
-		_assertObjectActions(2, objectDefinition2);
-		_assertObjectEntries(_group.getGroupId(), objectDefinition2, 0);
-		_assertObjectFields(objectDefinition2, 8);
+		_assertObjectActions(2, objectDefinition);
+		_assertObjectEntries(_group.getGroupId(), objectDefinition, 0);
+		_assertObjectFields(objectDefinition, 8);
 
-		ObjectDefinition objectDefinition3 =
+		objectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinition(
 				_group.getCompanyId(), "C_TestObjectDefinition3");
 
 		Assert.assertEquals(
-			objectDefinition3.getScope(),
+			objectDefinition.getScope(),
 			ObjectDefinitionConstants.SCOPE_COMPANY);
-		Assert.assertFalse(objectDefinition3.isSystem());
+		Assert.assertFalse(objectDefinition.isSystem());
 		Assert.assertEquals(
-			objectDefinition3.getStatus(), WorkflowConstants.STATUS_APPROVED);
+			objectDefinition.getStatus(), WorkflowConstants.STATUS_APPROVED);
 
-		_assertObjectActions(0, objectDefinition3);
-		_assertObjectEntries(0, objectDefinition3, 5);
-		_assertObjectFields(objectDefinition3, 7);
+		_assertObjectActions(0, objectDefinition);
+		_assertObjectEntries(0, objectDefinition, 5);
+		_assertObjectFields(objectDefinition, 7);
 
-		ObjectDefinition objectDefinition4 =
+		objectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinition(
 				_group.getCompanyId(), "C_TestObjectDefinition4");
 
-		Assert.assertTrue(objectDefinition4.isAccountEntryRestricted());
+		Assert.assertTrue(objectDefinition.isAccountEntryRestricted());
 		Assert.assertTrue(
-			objectDefinition4.getAccountEntryRestrictedObjectFieldId() > 0);
-		Assert.assertFalse(objectDefinition4.isSystem());
+			objectDefinition.getAccountEntryRestrictedObjectFieldId() > 0);
+		Assert.assertFalse(objectDefinition.isSystem());
 		Assert.assertEquals(
-			objectDefinition4.getStatus(), WorkflowConstants.STATUS_APPROVED);
+			objectDefinition.getStatus(), WorkflowConstants.STATUS_APPROVED);
 	}
 
 	private void _assertObjectDefinitions2() throws Exception {
-		ObjectDefinition objectDefinition1 =
+		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinition(
 				_group.getCompanyId(), "C_TestObjectDefinition1");
 
-		Assert.assertFalse(objectDefinition1.isAccountEntryRestricted());
-		Assert.assertFalse(objectDefinition1.isSystem());
+		Assert.assertFalse(objectDefinition.isAccountEntryRestricted());
+		Assert.assertFalse(objectDefinition.isSystem());
 		Assert.assertEquals(
-			objectDefinition1.getStatus(), WorkflowConstants.STATUS_APPROVED);
+			objectDefinition.getStatus(), WorkflowConstants.STATUS_APPROVED);
 
-		_assertObjectActions(3, objectDefinition1);
-		_assertObjectEntries(_group.getGroupId(), objectDefinition1, 0);
-		_assertObjectFields(objectDefinition1, 10);
-		_assertObjectRelationships2(objectDefinition1, _serviceContext);
+		_assertObjectActions(3, objectDefinition);
+		_assertObjectEntries(_group.getGroupId(), objectDefinition, 0);
+		_assertObjectFields(objectDefinition, 10);
+		_assertObjectRelationships2(objectDefinition, _serviceContext);
 
-		ObjectDefinition objectDefinition2 =
+		objectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinition(
 				_group.getCompanyId(), "C_TestObjectDefinition2");
 
-		Assert.assertFalse(objectDefinition2.isAccountEntryRestricted());
+		Assert.assertFalse(objectDefinition.isAccountEntryRestricted());
 		Assert.assertEquals(
 			"Test Object Definition 2 Update",
-			objectDefinition2.getLabel(LocaleUtil.getSiteDefault()));
+			objectDefinition.getLabel(LocaleUtil.getSiteDefault()));
 		Assert.assertEquals(
 			"Test Object Definitions 2 Update",
-			objectDefinition2.getPluralLabel(LocaleUtil.getSiteDefault()));
-		Assert.assertFalse(objectDefinition2.isSystem());
+			objectDefinition.getPluralLabel(LocaleUtil.getSiteDefault()));
+		Assert.assertFalse(objectDefinition.isSystem());
 		Assert.assertEquals(
-			objectDefinition2.getStatus(), WorkflowConstants.STATUS_APPROVED);
+			objectDefinition.getStatus(), WorkflowConstants.STATUS_APPROVED);
 
-		_assertObjectActions(2, objectDefinition2);
-		_assertObjectEntries(_group.getGroupId(), objectDefinition2, 0);
-		_assertObjectFields(objectDefinition2, 8);
+		_assertObjectActions(2, objectDefinition);
+		_assertObjectEntries(_group.getGroupId(), objectDefinition, 0);
+		_assertObjectFields(objectDefinition, 8);
 
-		ObjectDefinition objectDefinition3 =
+		objectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinition(
 				_group.getCompanyId(), "C_TestObjectDefinition3");
 
-		Assert.assertFalse(objectDefinition3.isAccountEntryRestricted());
+		Assert.assertFalse(objectDefinition.isAccountEntryRestricted());
 		Assert.assertEquals(
-			objectDefinition3.getScope(),
+			objectDefinition.getScope(),
 			ObjectDefinitionConstants.SCOPE_COMPANY);
-		Assert.assertFalse(objectDefinition3.isSystem());
+		Assert.assertFalse(objectDefinition.isSystem());
 		Assert.assertEquals(
-			objectDefinition3.getStatus(), WorkflowConstants.STATUS_APPROVED);
+			objectDefinition.getStatus(), WorkflowConstants.STATUS_APPROVED);
 
-		_assertObjectActions(0, objectDefinition3);
-		_assertObjectEntries(0, objectDefinition3, 5);
-		_assertObjectFields(objectDefinition3, 7);
+		_assertObjectActions(0, objectDefinition);
+		_assertObjectEntries(0, objectDefinition, 5);
+		_assertObjectFields(objectDefinition, 7);
 
-		ObjectDefinition objectDefinition4 =
+		objectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinition(
 				_group.getCompanyId(), "C_TestObjectDefinition4");
 
-		Assert.assertTrue(objectDefinition4.isAccountEntryRestricted());
+		Assert.assertTrue(objectDefinition.isAccountEntryRestricted());
 		Assert.assertTrue(
-			objectDefinition4.getAccountEntryRestrictedObjectFieldId() > 0);
-		Assert.assertTrue(objectDefinition4.isEnableCategorization());
-		Assert.assertTrue(objectDefinition4.isEnableComments());
-		Assert.assertTrue(objectDefinition4.isDefaultStorageType());
-		Assert.assertFalse(objectDefinition4.isSystem());
+			objectDefinition.getAccountEntryRestrictedObjectFieldId() > 0);
+		Assert.assertTrue(objectDefinition.isDefaultStorageType());
+		Assert.assertFalse(objectDefinition.isSystem());
 		Assert.assertEquals(
-			objectDefinition4.getStatus(), WorkflowConstants.STATUS_APPROVED);
+			objectDefinition.getStatus(), WorkflowConstants.STATUS_APPROVED);
 
-		ObjectDefinition objectDefinition5 =
+		objectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinition(
 				_group.getCompanyId(), "C_TestObjectDefinition5");
 
-		Assert.assertTrue(objectDefinition5.isAccountEntryRestricted());
+		Assert.assertTrue(objectDefinition.isAccountEntryRestricted());
 		Assert.assertTrue(
-			objectDefinition5.getAccountEntryRestrictedObjectFieldId() > 0);
-		Assert.assertTrue(objectDefinition5.isDefaultStorageType());
-		Assert.assertFalse(objectDefinition5.isSystem());
+			objectDefinition.getAccountEntryRestrictedObjectFieldId() > 0);
+		Assert.assertTrue(objectDefinition.isDefaultStorageType());
+		Assert.assertFalse(objectDefinition.isSystem());
 		Assert.assertEquals(
-			objectDefinition5.getStatus(), WorkflowConstants.STATUS_APPROVED);
+			objectDefinition.getStatus(), WorkflowConstants.STATUS_APPROVED);
 	}
 
 	private void _assertObjectEntries(

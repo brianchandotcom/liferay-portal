@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 
@@ -99,7 +100,10 @@ public class ObjectEntryInfoItemCreator
 				_objectDefinition,
 				new ObjectEntry() {
 					{
+						keywords = serviceContext.getAssetTagNames();
 						properties = _toProperties(infoItemFieldValues);
+						taxonomyCategoryIds = ArrayUtil.toLongArray(
+							serviceContext.getAssetCategoryIds());
 					}
 				},
 				_getScopeKey(groupId));

@@ -336,7 +336,7 @@ public class SetupWizardUtil {
 			PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX + StringPool.AT +
 				company.getMx());
 
-		PropsValues.ADMIN_EMAIL_FROM_ADDRESS = emailAddress;
+		PropsUtil.set(PropsKeys.ADMIN_EMAIL_FROM_ADDRESS, emailAddress);
 
 		unicodeProperties.put(PropsKeys.ADMIN_EMAIL_FROM_ADDRESS, emailAddress);
 
@@ -370,7 +370,7 @@ public class SetupWizardUtil {
 			company, themeDisplay.getLocale(), themeDisplay.getLanguageId(),
 			emailAddress, firstName, lastName, passwordReset);
 
-		PropsValues.ADMIN_EMAIL_FROM_NAME = user.getFullName();
+		PropsUtil.set(PropsKeys.ADMIN_EMAIL_FROM_NAME, user.getFullName());
 
 		unicodeProperties.put(
 			PropsKeys.ADMIN_EMAIL_FROM_NAME, user.getFullName());
@@ -379,7 +379,7 @@ public class SetupWizardUtil {
 
 		String companyDefaultWebId = emailAddress.substring(index + 1);
 
-		PropsValues.COMPANY_DEFAULT_WEB_ID = companyDefaultWebId;
+		PropsUtil.set(PropsKeys.COMPANY_DEFAULT_WEB_ID, companyDefaultWebId);
 
 		unicodeProperties.put(
 			PropsKeys.COMPANY_DEFAULT_WEB_ID, companyDefaultWebId);
@@ -391,8 +391,9 @@ public class SetupWizardUtil {
 			PropsKeys.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX,
 			defaultAdminEmailAddressPrefix);
 
-		PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX =
-			defaultAdminEmailAddressPrefix;
+		PropsUtil.set(
+			PropsKeys.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX,
+			defaultAdminEmailAddressPrefix);
 
 		HttpSession httpSession = httpServletRequest.getSession();
 
@@ -423,7 +424,7 @@ public class SetupWizardUtil {
 			httpServletRequest, httpServletResponse, languageId,
 			LocaleUtil.fromLanguageId(languageId));
 
-		PropsValues.COMPANY_DEFAULT_LOCALE = languageId;
+		PropsUtil.set(PropsKeys.COMPANY_DEFAULT_LOCALE, languageId);
 
 		unicodeProperties.put(PropsKeys.COMPANY_DEFAULT_LOCALE, languageId);
 

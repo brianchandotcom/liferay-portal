@@ -853,6 +853,7 @@
 		<exception>ObjectDefinitionEnableComments</exception>
 		<exception>ObjectDefinitionEnableLocalization</exception>
 		<exception>ObjectDefinitionEnableObjectEntryHistory</exception>
+		<exception>ObjectDefinitionExternalReferenceCode</exception>
 		<exception>ObjectDefinitionLabel</exception>
 		<exception>ObjectDefinitionModifiable</exception>
 		<exception>ObjectDefinitionName</exception>

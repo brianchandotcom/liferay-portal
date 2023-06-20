@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
+import com.liferay.portal.kernel.service.permission.GroupPermission;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 
@@ -86,8 +87,8 @@ public class CommerceChannelSiteScreenNavigationEntry
 					_commerceChannelService, _commerceChannelTypeRegistry,
 					_commerceCurrencyLocalService, _configurationProvider,
 					_cpTaxCategoryLocalService, _dlAppLocalService,
-					_groupLocalService, httpServletRequest, _itemSelector,
-					_portal, _workflowDefinitionLinkLocalService,
+					_groupLocalService, _groupPermission, httpServletRequest,
+					_itemSelector, _portal, _workflowDefinitionLinkLocalService,
 					_workflowDefinitionManager);
 
 		httpServletRequest.setAttribute(
@@ -135,6 +136,9 @@ public class CommerceChannelSiteScreenNavigationEntry
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private GroupPermission _groupPermission;
 
 	@Reference
 	private ItemSelector _itemSelector;

@@ -225,7 +225,7 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 	</div>
 </aui:form>
 
-<c:if test="<%= (commerceChannel.getSiteGroupId() > 0) && commerceChannelDisplayContext.hasUnsatisfiedCommerceHealthChecks() %>">
+<c:if test="<%= (commerceChannel.getSiteGroupId() > 0) && commerceChannelDisplayContext.hasUnsatisfiedCommerceHealthChecks() && commerceChannelDisplayContext.hasAddLayoutPermission() %>">
 	<commerce-ui:panel
 		bodyClasses="p-0"
 		title='<%= LanguageUtil.get(request, "health-checks") %>'

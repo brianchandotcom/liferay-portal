@@ -63,9 +63,12 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
+import com.liferay.portal.kernel.service.permission.GroupPermission;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
@@ -104,7 +107,7 @@ public class CommerceChannelDisplayContext
 		CommerceCurrencyLocalService commerceCurrencyLocalService,
 		ConfigurationProvider configurationProvider,
 		CPTaxCategoryLocalService cpTaxCategoryLocalService,
-		DLAppLocalService dlAppLocalService,
+		DLAppLocalService dlAppLocalService, GroupPermission groupPermission,
 		HttpServletRequest httpServletRequest, ItemSelector itemSelector,
 		Portal portal,
 		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService,
@@ -123,6 +126,7 @@ public class CommerceChannelDisplayContext
 		_configurationProvider = configurationProvider;
 		_cpTaxCategoryLocalService = cpTaxCategoryLocalService;
 		_dlAppLocalService = dlAppLocalService;
+		_groupPermission = groupPermission;
 		_itemSelector = itemSelector;
 		_portal = portal;
 		_workflowDefinitionLinkLocalService =
@@ -438,6 +442,14 @@ public class CommerceChannelDisplayContext
 			CPActionKeys.ADD_COMMERCE_CHANNEL);
 	}
 
+	public boolean hasAddLayoutPermission() throws PortalException {
+		CommerceChannel commerceChannel = getCommerceChannel();
+
+		return _groupPermission.contains(
+			PermissionThreadLocal.getPermissionChecker(),
+			commerceChannel.getSiteGroupId(), ActionKeys.ADD_LAYOUT);
+	}
+
 	public boolean hasManageLinkSupplierPermission() {
 		PortletResourcePermission portletResourcePermission =
 			_commerceChannelModelResourcePermission.
@@ -602,6 +614,7 @@ public class CommerceChannelDisplayContext
 	private final ConfigurationProvider _configurationProvider;
 	private final CPTaxCategoryLocalService _cpTaxCategoryLocalService;
 	private final DLAppLocalService _dlAppLocalService;
+	private final GroupPermission _groupPermission;
 	private final ItemSelector _itemSelector;
 	private final Portal _portal;
 	private final WorkflowDefinitionLinkLocalService

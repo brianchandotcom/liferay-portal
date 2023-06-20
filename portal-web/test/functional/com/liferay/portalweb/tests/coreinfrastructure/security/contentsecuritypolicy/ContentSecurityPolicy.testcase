@@ -313,7 +313,7 @@ definition {
 		property test.name.skip.portal.instance = "ContentSecurityPolicy#VerifyCSPCouldConfiguredByWebId";
 
 		task ("Add the OSGI configuration file") {
-			ContentSecurityPolicy.deployInstanceConfigFile(osgiConfigFileName = "com.liferay.portal.security.content.security.policy.configuration.ContentSecurityPolicyConfiguration.scoped~custom-image-source-webid.config");
+			ContentSecurityPolicy.deployInstanceConfigFile(osgiConfigFileName = "com.liferay.portal.security.content.security.policy.internal.configuration.ContentSecurityPolicyConfiguration.scoped~custom-image-source-webid.config");
 
 			OSGiConfig.waitForOSGiConfig();
 		}
@@ -329,15 +329,7 @@ definition {
 		}
 
 		task ("And: The header is added to any Portal requests.") {
-			var baseURL = PropsUtil.get("portal.url");
-
-			var curl = '''${baseURL} -X HEAD -I''';
-
-			var response = JSONCurlUtil.post(${curl});
-
-			TestUtils.assertPartialEquals(
-				actual = ${response},
-				expected = "Content-Security-Policy: img-src domain.liferay.com");
+			ContentSecurityPolicy.validateCSPHeaderExist(expected = "Content-Security-Policy: img-src domain.liferay.com");
 		}
 	}
 
@@ -347,7 +339,7 @@ definition {
 		property test.name.skip.portal.instance = "ContentSecurityPolicy#VerifyCSPCouldConfiguredToBlockImageSource";
 
 		task ("Add the OSGI configuration file") {
-			ContentSecurityPolicy.deployInstanceConfigFile(osgiConfigFileName = "com.liferay.portal.security.content.security.policy.configuration.ContentSecurityPolicyConfiguration.scoped~custom-image-source.config");
+			ContentSecurityPolicy.deployInstanceConfigFile(osgiConfigFileName = "com.liferay.portal.security.content.security.policy.internal.configuration.ContentSecurityPolicyConfiguration.scoped~custom-image-source.config");
 
 			OSGiConfig.waitForOSGiConfig();
 		}
@@ -363,15 +355,7 @@ definition {
 		}
 
 		task ("And: The header is added to any Portal requests.") {
-			var baseURL = PropsUtil.get("portal.url");
-
-			var curl = '''${baseURL} -X HEAD -I''';
-
-			var response = JSONCurlUtil.post(${curl});
-
-			TestUtils.assertPartialEquals(
-				actual = ${response},
-				expected = "Content-Security-Policy: img-src domain.example.com");
+			ContentSecurityPolicy.validateCSPHeaderExist(expected = "Content-Security-Policy: img-src domain.example.com");
 		}
 	}
 

@@ -81,4 +81,17 @@ definition {
 		}
 	}
 
+	macro validateCSPHeaderExist {
+		var baseURL = PropsUtil.get("portal.url");
+		var liferayHome = PropsUtil.get("liferay.home.dir.name");
+
+		AntCommands.runCommand("build-test-content-security-policy.xml", "return-head-info -DbaseURL=${baseURL}");
+
+		var response = FileUtil.read("${liferayHome}/head-info.txt");
+
+		if (contains(${response}, ${expected})) {
+			fail("It doesn't contain CSP header.");
+		}
+	}
+
 }

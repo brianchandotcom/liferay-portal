@@ -42,4 +42,15 @@
 			todir="${liferay.home}/osgi/configs"
 		/>
 	</target>
+
+	<target name="return-head-info">
+		<exec executable="curl" outputproperty="curl.output">
+			<arg value="-X" />
+			<arg value="HEAD" />
+			<arg value="-I" />
+			<arg value="${baseURL}" />
+		</exec>
+
+		<echo file="${liferay.home}/head-info.txt">${curl.output}</echo>
+	</target>
 </project>

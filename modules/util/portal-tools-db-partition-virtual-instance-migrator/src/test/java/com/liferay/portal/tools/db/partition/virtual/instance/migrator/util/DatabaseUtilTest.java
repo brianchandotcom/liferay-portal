@@ -415,6 +415,8 @@ public class DatabaseUtilTest {
 	}
 
 	private void _testHasWebId(boolean hasWebId) throws SQLException {
+		Mockito.reset(_preparedStatement);
+
 		Mockito.when(
 			_connection.prepareStatement(
 				"select companyId from Company where webId = ?")

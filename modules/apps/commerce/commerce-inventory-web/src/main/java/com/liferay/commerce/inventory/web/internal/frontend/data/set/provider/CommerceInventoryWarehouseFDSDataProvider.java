@@ -59,7 +59,7 @@ public class CommerceInventoryWarehouseFDSDataProvider
 
 		List<CommerceInventoryWarehouseItem> commerceInventoryWarehouseItems =
 			_commerceInventoryWarehouseItemService.
-				getCommerceInventoryWarehouseItems(
+				getCommerceInventoryWarehouseItemsByCompanyIdAndSku(
 					_portal.getCompanyId(httpServletRequest), sku,
 					fdsPagination.getStartPosition(),
 					fdsPagination.getEndPosition());

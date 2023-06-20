@@ -31,7 +31,7 @@ import ContributorInputSetItem from './contributor_input_set_item/index';
 /**
  * Cleans up the fields array by removing those that do not have the required
  * fields (contributorName, displayGroupName, size). If blueprint, check
- * for sxpBlueprintId as well.
+ * for sxpBlueprintExternalReferenceCode as well.
  * @param {Array} fields The list of fields.
  * @return {Array} The cleaned up list of fields.
  */
@@ -42,7 +42,7 @@ const removeEmptyFields = (fields) =>
 				contributorName &&
 				displayGroupName &&
 				size &&
-				attributes?.sxpBlueprintId
+				attributes?.sxpBlueprintExternalReferenceCode
 			);
 		}
 
@@ -182,7 +182,7 @@ function SearchBarConfigurationSuggestions({
 					fields: [],
 					includeAssetSearchSummary: true,
 					includeAssetURL: true,
-					sxpBlueprintId: '',
+					sxpBlueprintExternalReferenceCode: '',
 				},
 				contributorName,
 				displayGroupName: '',

@@ -14,6 +14,11 @@
 
 package com.liferay.portal.upgrade.live;
 
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -21,33 +26,124 @@ import java.util.Map;
  */
 public class LiveUpgradeSchemaDiff {
 
+	public LiveUpgradeSchemaDiff(Collection<String> columnNames) {
+		for (String columnName : columnNames) {
+			_resultColumnsMap.put(columnName, new Column(columnName, false));
+		}
+	}
+
 	public Map<String, String> getResultColumnNamesMap() {
-		throw new UnsupportedOperationException("Not implemented");
+		Map<String, String> resultColumnNamesMap = new HashMap<>();
+
+		for (Column column : _resultColumnsMap.values()) {
+			if (column.isAdded()) {
+				continue;
+			}
+
+			resultColumnNamesMap.put(
+				column.getOldColumnName(), column.getNewColumnName());
+		}
+
+		return resultColumnNamesMap;
 	}
 
 	public void recordAddColumns(String... columnDefinitions)
 		throws IllegalArgumentException {
 
-		throw new UnsupportedOperationException("Not implemented");
+		for (String columnDefinition : columnDefinitions) {
+			String columnName = StringUtil.extractFirst(
+				columnDefinition, StringPool.SPACE);
+
+			if (_resultColumnsMap.containsKey(columnName)) {
+				throw new IllegalArgumentException(
+					"Column " + columnName + " already exists");
+			}
+
+			_resultColumnsMap.put(columnName, new Column(columnName, true));
+		}
 	}
 
 	public void recordAlterColumnName(
 			String oldColumnName, String newColumnDefinition)
 		throws IllegalArgumentException {
 
-		throw new UnsupportedOperationException("Not implemented");
+		String newColumnName = StringUtil.extractFirst(
+			newColumnDefinition, StringPool.SPACE);
+
+		Column column = _resultColumnsMap.remove(oldColumnName);
+
+		if (column == null) {
+			throw new IllegalArgumentException(
+				"Column " + oldColumnName + " does not exist");
+		}
+		else if (_resultColumnsMap.containsKey(newColumnName)) {
+			throw new IllegalArgumentException(
+				"Column " + newColumnName + " already exists");
+		}
+
+		column.setNewColumnName(newColumnName);
+
+		_resultColumnsMap.put(newColumnName, column);
 	}
 
 	public void recordAlterColumnType(String columnName, String newColumnType)
 		throws IllegalArgumentException {
 
-		throw new UnsupportedOperationException("Not implemented");
+		Column column = _resultColumnsMap.get(columnName);
+
+		if (column == null) {
+			throw new IllegalArgumentException(
+				"Column " + columnName + " does not exist");
+		}
+
+		// TODO: Validate and record column type
+
 	}
 
 	public void recordDropColumns(String... columnNames)
 		throws IllegalArgumentException {
 
-		throw new UnsupportedOperationException("Not implemented");
+		for (String columnName : columnNames) {
+			Column column = _resultColumnsMap.remove(columnName);
+
+			if (column == null) {
+				throw new IllegalArgumentException(
+					"Column " + columnName + " does not exist");
+			}
+		}
+	}
+
+	private final Map<String, Column> _resultColumnsMap = new HashMap<>();
+
+	private static class Column {
+
+		public Column(String columnName, boolean added) {
+			_added = added;
+
+			_newColumnName = columnName;
+			_oldColumnName = columnName;
+		}
+
+		public String getNewColumnName() {
+			return _newColumnName;
+		}
+
+		public String getOldColumnName() {
+			return _oldColumnName;
+		}
+
+		public boolean isAdded() {
+			return _added;
+		}
+
+		public void setNewColumnName(String newColumnName) {
+			_newColumnName = newColumnName;
+		}
+
+		private final boolean _added;
+		private String _newColumnName;
+		private final String _oldColumnName;
+
 	}
 
 }

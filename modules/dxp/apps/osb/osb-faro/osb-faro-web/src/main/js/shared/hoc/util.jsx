@@ -89,13 +89,17 @@ export const withLoading = (options = {}) => Component => ({
 	const page = get(options, 'page', pageDisplay);
 	const fadeIn = get(options, 'fadeIn');
 	const displayCard = get(options, 'displayCard');
+	const inline = get(options, 'inline');
 
 	if (loading) {
 		return page ? (
 			<LoadingPage className={className} fadeIn={fadeIn} key='LOADING' />
 		) : displayCard ? (
 			<div
-				className={getCN('loading-root', {'display-card': displayCard})}
+				className={getCN('loading-root', {
+					'display-card': displayCard,
+					'spinner-inline': inline
+				})}
 			>
 				<ClayLoadingIndicator
 					className={getCN(className, 'spinner-root')}
@@ -103,10 +107,9 @@ export const withLoading = (options = {}) => Component => ({
 			</div>
 		) : (
 			<ClayLoadingIndicator
-				className={getCN(
-					className,
-					'display-card loading-root spinner-root'
-				)}
+				className={getCN(className, 'spinner-root', {
+					'spinner-inline': inline
+				})}
 			/>
 		);
 	}

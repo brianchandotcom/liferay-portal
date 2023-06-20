@@ -27,7 +27,7 @@
 </tr>
 <tr>
 	<td>CATEGORY_AUTOCOMPLETE_SPECIFIC</td>
-	<td>//div[contains(@class,'autocomplete-dropdown-menu')]//ul/li//button[.='${key_categoryName}']</td>
+	<td>//div[contains(@class,'dropdown-menu')]//ul/li//button[.='${key_categoryName}']</td>
 	<td></td>
 </tr>
 <tr>

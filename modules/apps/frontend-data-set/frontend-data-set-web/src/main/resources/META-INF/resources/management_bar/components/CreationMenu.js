@@ -12,36 +12,60 @@
  * details.
  */
 
-import {ClayButtonWithIcon} from '@clayui/button';
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
 
 import FrontendDataSetContext from '../../FrontendDataSetContext';
 import {triggerAction} from '../../utils/actionItems/index';
 
-function CreationMenu({primaryItems}) {
+function CreationMenu({defaultButton, primaryItems}) {
 	const frontendDataSetContext = useContext(FrontendDataSetContext);
 
 	const {loadData} = frontendDataSetContext;
 
 	const [active, setActive] = useState(false);
 
+	const buttonDataTooltipAlign = 'top';
+	const buttonOnClick = () => {
+		const item = primaryItems[0];
+
+		item.onClick?.({
+			loadData,
+		});
+
+		if (item.href || item.target) {
+			triggerAction(item, frontendDataSetContext);
+		}
+	};
+
 	return (
 		primaryItems?.length > 0 && (
-			<ul className="navbar-nav">
+			<ul
+				className={classNames('navbar-nav', {
+					'd-inline-flex': defaultButton,
+				})}
+			>
 				<li className="nav-item">
 					{primaryItems.length > 1 ? (
 						<ClayDropDown
 							active={active}
 							onActiveChange={setActive}
 							trigger={
-								<ClayButtonWithIcon
-									aria-label={Liferay.Language.get('new')}
-									className="nav-btn nav-btn-monospaced"
-									symbol="plus"
-									title={Liferay.Language.get('new')}
-								/>
+								defaultButton ? (
+									<ClayButton displayType="secondary">
+										{Liferay.Language.get('new')}
+									</ClayButton>
+								) : (
+									<ClayButtonWithIcon
+										aria-label={Liferay.Language.get('new')}
+										className="nav-btn nav-btn-monospaced"
+										symbol="plus"
+										title={Liferay.Language.get('new')}
+									/>
+								)
 							}
 						>
 							<ClayDropDown.ItemList>
@@ -70,6 +94,15 @@ function CreationMenu({primaryItems}) {
 								))}
 							</ClayDropDown.ItemList>
 						</ClayDropDown>
+					) : defaultButton ? (
+						<ClayButton
+							data-tooltip-align={buttonDataTooltipAlign}
+							displayType="secondary"
+							onClick={() => buttonOnClick()}
+						>
+							{primaryItems[0].label ??
+								Liferay.Language.get('new')}
+						</ClayButton>
 					) : (
 						<ClayButtonWithIcon
 							aria-label={
@@ -77,18 +110,8 @@ function CreationMenu({primaryItems}) {
 								Liferay.Language.get('new')
 							}
 							className="nav-btn nav-btn-monospaced"
-							data-tooltip-align="top"
-							onClick={() => {
-								const item = primaryItems[0];
-
-								item.onClick?.({
-									loadData,
-								});
-
-								if (item.href || item.target) {
-									triggerAction(item, frontendDataSetContext);
-								}
-							}}
+							data-tooltip-align={buttonDataTooltipAlign}
+							onClick={() => buttonOnClick()}
 							symbol="plus"
 							title={
 								primaryItems[0].label ??

@@ -14,11 +14,17 @@
 
 package com.liferay.fragment.service.persistence.impl;
 
+import com.liferay.fragment.model.FragmentCompositionTable;
+import com.liferay.fragment.model.FragmentEntryTable;
 import com.liferay.fragment.model.impl.FragmentCompositionImpl;
 import com.liferay.fragment.model.impl.FragmentEntryImpl;
 import com.liferay.fragment.service.persistence.FragmentCompositionUtil;
 import com.liferay.fragment.service.persistence.FragmentEntryFinder;
 import com.liferay.fragment.service.persistence.FragmentEntryUtil;
+import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.petra.sql.dsl.spi.expression.Scalar;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
@@ -341,6 +347,150 @@ public class FragmentEntryFinderImpl
 		finally {
 			closeSession(session);
 		}
+	}
+
+	private DSLQuery _findFC_ByG_FCI(
+		long groupId, long fragmentCollectionId, int status) {
+
+		return fragmentEntryLinkPersistence.dslQuery(
+			DSLQueryFactoryUtil.selectDistinct(
+				FragmentCompositionTable.INSTANCE.fragmentCompositionId.as(
+					"fragmentCompositionId"),
+				new Scalar<>(
+					0L
+				).as(
+					"fragmentEntryId"
+				),
+				FragmentCompositionTable.INSTANCE.createDate.as("createDate"),
+				FragmentCompositionTable.INSTANCE.modifiedDate.as(
+					"modifiedDate"),
+				FragmentCompositionTable.INSTANCE.name.as("name")
+			).from(
+				FragmentCompositionTable.INSTANCE
+			).where(
+				FragmentCompositionTable.INSTANCE.groupId.eq(
+					groupId
+				).and(
+					FragmentCompositionTable.INSTANCE.fragmentCollectionId.eq(
+						fragmentCollectionId)
+				).and(
+					FragmentCompositionTable.INSTANCE.status.eq(status)
+				)
+			));
+	}
+
+	private DSLQuery _findFC_ByG_FCI_N(
+		long groupId, long fragmentCollectionId, String name, int status) {
+
+		return fragmentEntryLinkPersistence.dslQuery(
+			DSLQueryFactoryUtil.selectDistinct(
+				FragmentCompositionTable.INSTANCE.fragmentCompositionId.as(
+					"fragmentCompositionId"),
+				new Scalar<>(
+					0L
+				).as(
+					"fragmentEntryId"
+				),
+				FragmentCompositionTable.INSTANCE.createDate.as("createDate"),
+				FragmentCompositionTable.INSTANCE.modifiedDate.as(
+					"modifiedDate"),
+				FragmentCompositionTable.INSTANCE.name.as("name")
+			).from(
+				FragmentCompositionTable.INSTANCE
+			).where(
+				FragmentCompositionTable.INSTANCE.groupId.eq(
+					groupId
+				).and(
+					FragmentCompositionTable.INSTANCE.fragmentCollectionId.eq(
+						fragmentCollectionId)
+				).and(
+					DSLFunctionFactoryUtil.lower(
+						FragmentCompositionTable.INSTANCE.name
+					).like(
+						name
+					)
+				).and(
+					FragmentCompositionTable.INSTANCE.status.eq(status)
+				)
+			));
+	}
+
+	private DSLQuery _findFE_ByG_FCI(
+		long groupId, long fragmentCollectionId, int status) {
+
+		return fragmentEntryLinkPersistence.dslQuery(
+			DSLQueryFactoryUtil.selectDistinct(
+				new Scalar<>(
+					0L
+				).as(
+					"fragmentCompositionId"
+				),
+				FragmentEntryTable.INSTANCE.fragmentEntryId.as(
+					"fragmentEntryId"),
+				FragmentEntryTable.INSTANCE.createDate.as("createDate"),
+				FragmentEntryTable.INSTANCE.modifiedDate.as("modifiedDate"),
+				FragmentEntryTable.INSTANCE.name.as("name")
+			).from(
+				FragmentEntryTable.INSTANCE
+			).where(
+				FragmentEntryTable.INSTANCE.groupId.eq(
+					groupId
+				).and(
+					FragmentEntryTable.INSTANCE.fragmentCollectionId.eq(
+						fragmentCollectionId)
+				).and(
+					FragmentEntryTable.INSTANCE.head.eq(
+						true
+					).or(
+						FragmentEntryTable.INSTANCE.headId.eq(
+							FragmentEntryTable.INSTANCE.fragmentEntryId)
+					)
+				).and(
+					FragmentCompositionTable.INSTANCE.status.eq(status)
+				)
+			));
+	}
+
+	private DSLQuery _findFE_ByG_FCI_N(
+		long groupId, long fragmentCollectionId, String name, int status) {
+
+		return fragmentEntryLinkPersistence.dslQuery(
+			DSLQueryFactoryUtil.selectDistinct(
+				new Scalar<>(
+					0L
+				).as(
+					"fragmentCompositionId"
+				),
+				FragmentEntryTable.INSTANCE.fragmentEntryId.as(
+					"fragmentEntryId"),
+				FragmentEntryTable.INSTANCE.createDate.as("createDate"),
+				FragmentEntryTable.INSTANCE.modifiedDate.as("modifiedDate"),
+				FragmentEntryTable.INSTANCE.name.as("name")
+			).from(
+				FragmentEntryTable.INSTANCE
+			).where(
+				FragmentEntryTable.INSTANCE.groupId.eq(
+					groupId
+				).and(
+					FragmentEntryTable.INSTANCE.fragmentCollectionId.eq(
+						fragmentCollectionId)
+				).and(
+					FragmentEntryTable.INSTANCE.head.eq(
+						true
+					).or(
+						FragmentEntryTable.INSTANCE.headId.eq(
+							FragmentEntryTable.INSTANCE.fragmentEntryId)
+					)
+				).and(
+					DSLFunctionFactoryUtil.lower(
+						FragmentCompositionTable.INSTANCE.name
+					).like(
+						name
+					)
+				).and(
+					FragmentCompositionTable.INSTANCE.status.eq(status)
+				)
+			));
 	}
 
 	@Reference

@@ -262,6 +262,7 @@ public class ObjectDefinitionResourceImpl
 
 			serviceBuilderObjectDefinition =
 				_objectDefinitionService.addSystemObjectDefinition(
+					objectDefinition.getExternalReferenceCode(),
 					contextUser.getUserId(),
 					GetterUtil.getBoolean(objectDefinition.getEnableComments()),
 					LocalizedMapUtil.getLocalizedMap(

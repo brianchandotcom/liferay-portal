@@ -671,7 +671,7 @@ gradle.taskGraph.useFilter {
 				appBndProperties.load(it)
 			}
 
-			if ((appBndProperties["Liferay-Releng-Bundle"] != liferayRelengBundle)) {
+			if (appBndProperties["Liferay-Releng-Bundle"] != liferayRelengBundle) {
 				return false
 			}
 		}

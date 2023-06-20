@@ -101,6 +101,13 @@ public class JobPropertyFactory {
 				 (type == JobProperty.Type.FILTER_GLOB) ||
 				 (type == JobProperty.Type.INCLUDE_GLOB)) {
 
+			if (testBatchName.equals("modules-integration-analytics-cloud") &&
+				(testBaseDir == null)) {
+
+				testBaseDir = new File(
+					"/opt/dev/projects/github/com-liferay-osb-asah-private");
+			}
+
 			jobProperty = new DefaultGlobJobProperty(
 				job, type, testBaseDir, basePropertyName, useBasePropertyName,
 				testSuiteName, testBatchName);

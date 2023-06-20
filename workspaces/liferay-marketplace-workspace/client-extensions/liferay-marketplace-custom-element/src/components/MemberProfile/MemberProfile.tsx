@@ -42,12 +42,7 @@ interface MemberProfileProps {
 	member: MemberProps;
 	renderToast: (message: string, title: string, type: DisplayType) => void;
 	setSelectedMember: (value: MemberProps | undefined) => void;
-	userLogged?: {
-		accountBriefs: any;
-		isAdminAccount: boolean;
-		isCustomerAccount: boolean;
-		isPublisherAccount: boolean;
-	};
+	userLogged?: UserLogged;
 }
 
 export function MemberProfile({

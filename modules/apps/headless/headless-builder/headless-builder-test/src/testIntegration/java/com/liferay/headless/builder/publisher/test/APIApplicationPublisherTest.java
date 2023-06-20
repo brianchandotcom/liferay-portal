@@ -38,6 +38,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.ws.rs.core.Application;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -82,6 +83,21 @@ public class APIApplicationPublisherTest {
 				completableFuture.join();
 			}
 		}
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		HTTPTestUtil.invoke(
+			null,
+			"headless-builder/applications/by-external-reference-code/" +
+				_API_APPLICATION_ERC_1,
+			Http.Method.DELETE);
+
+		HTTPTestUtil.invoke(
+			null,
+			"headless-builder/applications/by-external-reference-code/" +
+				_API_APPLICATION_ERC_2,
+			Http.Method.DELETE);
 	}
 
 	@Test
@@ -130,7 +146,8 @@ public class APIApplicationPublisherTest {
 
 			};
 
-		APIApplication apiApplication = _createAPIApplication("test", "test");
+		APIApplication apiApplication = _createAPIApplication(
+			"test", _API_APPLICATION_ERC_1, "test");
 
 		try {
 			serviceTracker.open();
@@ -203,9 +220,9 @@ public class APIApplicationPublisherTest {
 			};
 
 		APIApplication apiApplication1 = _createAPIApplication(
-			"test1", "test1");
+			"test1", _API_APPLICATION_ERC_1, "test1");
 		APIApplication apiApplication2 = _createAPIApplication(
-			"test2", "test2");
+			"test2", _API_APPLICATION_ERC_2, "test2");
 
 		try {
 			serviceTracker.open();
@@ -234,7 +251,8 @@ public class APIApplicationPublisherTest {
 		}
 	}
 
-	private APIApplication _createAPIApplication(String baseURL, String title)
+	private APIApplication _createAPIApplication(
+			String baseURL, String apiApplicationERC, String title)
 		throws Exception {
 
 		HTTPTestUtil.invoke(
@@ -281,6 +299,8 @@ public class APIApplicationPublisherTest {
 			).put(
 				"baseURL", baseURL
 			).put(
+				"externalReferenceCode", apiApplicationERC
+			).put(
 				"title", title
 			).toString(),
 			"headless-builder/applications", Http.Method.POST);
@@ -298,6 +318,10 @@ public class APIApplicationPublisherTest {
 		return _apiApplicationProvider.getAPIApplication(
 			baseURL, TestPropsValues.getCompanyId());
 	}
+
+	private static final String _API_APPLICATION_ERC_1 = "APPLICATION1";
+
+	private static final String _API_APPLICATION_ERC_2 = "APPLICATION2";
 
 	@Inject
 	private APIApplicationProvider _apiApplicationProvider;

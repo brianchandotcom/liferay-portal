@@ -955,59 +955,6 @@ public class RenderLayoutStructureDisplayContext {
 		return _layoutStructure.getMainItemId();
 	}
 
-	private String _getValue(
-		String fieldId, InfoItemReference infoItemReference) {
-
-		String className = InfoSearchClassMapperRegistryUtil.getClassName(
-			infoItemReference.getClassName());
-
-		InfoItemServiceRegistry infoItemServiceRegistry =
-			ServletContextUtil.getInfoItemServiceRegistry();
-
-		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
-			infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemFieldValuesProvider.class, className);
-
-		if (infoItemFieldValuesProvider == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to get info item field values provider for class " +
-						className);
-			}
-
-			return StringPool.BLANK;
-		}
-
-		InfoFieldValue<Object> infoFieldValue =
-			infoItemFieldValuesProvider.getInfoFieldValue(
-				_getInfoItem(infoItemReference), fieldId);
-
-		if (infoFieldValue == null) {
-			return StringPool.BLANK;
-		}
-
-		Object value = infoFieldValue.getValue(
-			LocaleUtil.fromLanguageId(_themeDisplay.getLanguageId()));
-
-		if (value instanceof String) {
-			return (String)value;
-		}
-
-		if (!(value instanceof WebImage)) {
-			return StringPool.BLANK;
-		}
-
-		WebImage webImage = (WebImage)value;
-
-		String url = webImage.getUrl();
-
-		if (Validator.isNotNull(url)) {
-			return url;
-		}
-
-		return StringPool.BLANK;
-	}
-
 	private long _getPreviewClassNameId() {
 		if (_previewClassNameId != null) {
 			return _previewClassNameId;
@@ -1083,6 +1030,61 @@ public class RenderLayoutStructureDisplayContext {
 			requestContextMapper.map(_httpServletRequest));
 
 		return _segmentsEntryIds;
+	}
+
+	private String _getValue(
+		String fieldId, InfoItemReference infoItemReference) {
+
+		String className = InfoSearchClassMapperRegistryUtil.getClassName(
+			infoItemReference.getClassName());
+
+		InfoItemServiceRegistry infoItemServiceRegistry =
+			ServletContextUtil.getInfoItemServiceRegistry();
+
+		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
+			infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemFieldValuesProvider.class, className);
+
+		if (infoItemFieldValuesProvider == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to get info item field values provider for class " +
+						className);
+			}
+
+			return StringPool.BLANK;
+		}
+
+		return _parseInfoFieldValue(
+			infoItemFieldValuesProvider.getInfoFieldValue(
+				_getInfoItem(infoItemReference), fieldId));
+	}
+
+	private String _parseInfoFieldValue(InfoFieldValue<?> infoFieldValue) {
+		if (infoFieldValue == null) {
+			return StringPool.BLANK;
+		}
+
+		Object value = infoFieldValue.getValue(
+			LocaleUtil.fromLanguageId(_themeDisplay.getLanguageId()));
+
+		if (value instanceof String) {
+			return (String)value;
+		}
+
+		if (!(value instanceof WebImage)) {
+			return StringPool.BLANK;
+		}
+
+		WebImage webImage = (WebImage)value;
+
+		String url = webImage.getUrl();
+
+		if (Validator.isNotNull(url)) {
+			return url;
+		}
+
+		return StringPool.BLANK;
 	}
 
 	private static final String _COLLECTION_STYLED_LAYOUT_STRUCTURE_ITEM_IDS =

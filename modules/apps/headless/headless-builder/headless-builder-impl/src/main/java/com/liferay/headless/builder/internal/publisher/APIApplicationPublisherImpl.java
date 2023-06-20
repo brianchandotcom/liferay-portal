@@ -71,7 +71,13 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 
 	@Deactivate
 	protected void deactivate() {
-		_unpublishAll();
+		for (ServiceRegistration<Application> serviceRegistration :
+				_headlessBuilderApplicationServiceRegistrationMap.values()) {
+
+			_unregisterServiceRegistration(serviceRegistration);
+		}
+
+		_headlessBuilderApplicationServiceRegistrationMap.clear();
 	}
 
 	private ServiceRegistration<Application>
@@ -95,16 +101,6 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 			).put(
 				"osgi.jaxrs.name", apiApplication.getOSGiJaxRsName()
 			).build());
-	}
-
-	private void _unpublishAll() {
-		for (ServiceRegistration<Application> serviceRegistration :
-				_headlessBuilderApplicationServiceRegistrationMap.values()) {
-
-			_unregisterServiceRegistration(serviceRegistration);
-		}
-
-		_headlessBuilderApplicationServiceRegistrationMap.clear();
 	}
 
 	private void _unregisterServiceRegistration(

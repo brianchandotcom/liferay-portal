@@ -74,7 +74,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -303,33 +302,6 @@ public class DLAdminManagementToolbarDisplayContext
 		return creationMenu;
 	}
 
-	public PortletURL getCurrentRenderURL() {
-		PortletURL renderURL = _liferayPortletResponse.createRenderURL();
-
-		long folderId = _getFolderId();
-
-		if (_isSearch()) {
-			renderURL.setParameter(
-				"mvcRenderCommandName", "/document_library/search");
-
-			if (FeatureFlagManagerUtil.isEnabled("LPS-84424")) {
-				_setFilterParameters(renderURL);
-			}
-
-			_setSearchParameters(renderURL);
-		}
-		else {
-			renderURL.setParameter(
-				"mvcRenderCommandName", _getViewMvcRenderCommandName(folderId));
-
-			_setFilterParameters(renderURL);
-		}
-
-		renderURL.setParameter("folderId", String.valueOf(folderId));
-
-		return renderURL;
-	}
-
 	@Override
 	public String getDefaultEventHandler() {
 		return liferayPortletResponse.getNamespace() + "DocumentLibrary";
@@ -388,19 +360,7 @@ public class DLAdminManagementToolbarDisplayContext
 
 	@Override
 	public String getSearchActionURL() {
-		PortletURL searchURL = PortletURLBuilder.createRenderURL(
-			_liferayPortletResponse
-		).setMVCRenderCommandName(
-			"/document_library/search"
-		).setParameter(
-			"folderId", _getFolderId()
-		).buildPortletURL();
-
-		if (FeatureFlagManagerUtil.isEnabled("LPS-84424")) {
-			_setFilterParameters(searchURL);
-		}
-
-		_setSearchParameters(searchURL);
+		PortletURL searchURL = _dlAdminDisplayContext.getSearchRenderURL();
 
 		return searchURL.toString();
 	}
@@ -426,10 +386,11 @@ public class DLAdminManagementToolbarDisplayContext
 		}
 
 		return PortletURLBuilder.create(
-			getCurrentRenderURL()
+			_getCurrentRenderURL()
 		).setParameter(
 			"orderByType",
-			Objects.equals(_getOrderByType(), "asc") ? "desc" : "asc"
+			Objects.equals(_dlAdminDisplayContext.getOrderByType(), "asc") ?
+				"desc" : "asc"
 		).buildString();
 	}
 
@@ -444,7 +405,7 @@ public class DLAdminManagementToolbarDisplayContext
 			return null;
 		}
 
-		PortletURL renderURL = getCurrentRenderURL();
+		PortletURL renderURL = _getCurrentRenderURL();
 
 		int curEntry = ParamUtil.getInteger(_httpServletRequest, "curEntry");
 
@@ -474,20 +435,12 @@ public class DLAdminManagementToolbarDisplayContext
 		};
 	}
 
-	public boolean hasFilterLabelItems() {
-		if (ListUtil.isEmpty(getFilterLabelItems())) {
-			return false;
-		}
-
-		return true;
-	}
-
 	@Override
 	public Boolean isDisabled() {
 		try {
 			int count =
 				DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(
-					_getRepositoryId(), _getFolderId(),
+					_dlAdminDisplayContext.getRepositoryId(), _getFolderId(),
 					WorkflowConstants.STATUS_ANY, true);
 
 			if (count <= 0) {
@@ -670,6 +623,10 @@ public class DLAdminManagementToolbarDisplayContext
 		).setWindowState(
 			LiferayWindowState.POP_UP
 		).buildString();
+	}
+
+	private PortletURL _getCurrentRenderURL() {
+		return _dlAdminDisplayContext.getCurrentRenderURL();
 	}
 
 	private String _getDisplayStyle() {
@@ -953,18 +910,10 @@ public class DLAdminManagementToolbarDisplayContext
 		return _dlAdminDisplayContext.getFolderId();
 	}
 
-	private String _getKeywords() {
-		return ParamUtil.getString(_httpServletRequest, "keywords");
-	}
-
 	private String _getLabel(String key, String value) {
 		return String.format(
 			"%s: %s", LanguageUtil.get(_httpServletRequest, key),
 			HtmlUtil.escape(value));
-	}
-
-	private String _getNavigation() {
-		return _dlAdminDisplayContext.getNavigation();
 	}
 
 	private String _getOrderByCol() {
@@ -1003,7 +952,7 @@ public class DLAdminManagementToolbarDisplayContext
 							dropdownItem.setActive(
 								orderByCol.equals(_getOrderByCol()));
 							dropdownItem.setHref(
-								getCurrentRenderURL(), "orderByCol",
+								_getCurrentRenderURL(), "orderByCol",
 								orderByCol);
 							dropdownItem.setLabel(
 								LanguageUtil.get(
@@ -1013,10 +962,6 @@ public class DLAdminManagementToolbarDisplayContext
 				}
 			}
 		};
-	}
-
-	private String _getOrderByType() {
-		return _dlAdminDisplayContext.getOrderByType();
 	}
 
 	private String _getRemoveLabelURL(
@@ -1030,14 +975,6 @@ public class DLAdminManagementToolbarDisplayContext
 		).setParameter(
 			key, valueUnsafeSupplier
 		).buildString();
-	}
-
-	private long _getRepositoryId() {
-		return _dlAdminDisplayContext.getRepositoryId();
-	}
-
-	private String _getViewMvcRenderCommandName(long folderId) {
-		return _dlAdminDisplayContext.getViewMvcRenderCommandName(folderId);
 	}
 
 	private boolean _hasValidAssetVocabularies(long scopeGroupId)
@@ -1112,48 +1049,6 @@ public class DLAdminManagementToolbarDisplayContext
 		}
 
 		return false;
-	}
-
-	private void _setFilterParameters(PortletURL portletURL) {
-		portletURL.setParameter(
-			"assetCategoryId", ArrayUtil.toStringArray(_getAssetCategoryIds()));
-
-		portletURL.setParameter(
-			"assetTagId", ArrayUtil.toStringArray(_getAssetTagIds()));
-
-		portletURL.setParameter("extension", _getExtensions());
-
-		long fileEntryTypeId = _getFileEntryTypeId();
-
-		if (fileEntryTypeId != -1) {
-			portletURL.setParameter(
-				"fileEntryTypeId", String.valueOf(fileEntryTypeId));
-		}
-
-		portletURL.setParameter(
-			"navigation", HtmlUtil.escapeJS(_getNavigation()));
-	}
-
-	private void _setSearchParameters(PortletURL portletURL) {
-		portletURL.setParameter("keywords", _getKeywords());
-
-		long repositoryId = _getRepositoryId();
-
-		portletURL.setParameter("repositoryId", String.valueOf(repositoryId));
-
-		long searchFolderId = ParamUtil.getLong(
-			_httpServletRequest, "searchFolderId", _getFolderId());
-
-		portletURL.setParameter(
-			"searchFolderId", String.valueOf(searchFolderId));
-
-		long searchRepositoryId = ParamUtil.getLong(
-			_httpServletRequest, "searchRepositoryId", repositoryId);
-
-		portletURL.setParameter(
-			"searchRepositoryId", String.valueOf(searchRepositoryId));
-
-		portletURL.setParameter("showSearchInfo", Boolean.TRUE.toString());
 	}
 
 	private final PortletURL _currentURLObj;

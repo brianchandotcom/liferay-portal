@@ -18,7 +18,6 @@
 
 <%
 DLAdminDisplayContext dlAdminDisplayContext = (DLAdminDisplayContext)request.getAttribute(DLAdminDisplayContext.class.getName());
-DLAdminManagementToolbarDisplayContext dlAdminManagementToolbarDisplayContext = (DLAdminManagementToolbarDisplayContext)request.getAttribute(DLAdminManagementToolbarDisplayContext.class.getName());
 
 Folder folder = null;
 long folderId = ParamUtil.getLong(request, "folderId");
@@ -32,7 +31,7 @@ List<Folder> mountFolders = DLAppServiceUtil.getMountFolders(scopeGroupId, DLFol
 
 <c:if test="<%= (folder != null) || !mountFolders.isEmpty() %>">
 	<div class="search-info">
-		<c:if test='<%= dlAdminManagementToolbarDisplayContext.hasFilterLabelItems() && !mountFolders.isEmpty() && FeatureFlagManagerUtil.isEnabled("LPS-84424") %>'>
+		<c:if test='<%= dlAdminDisplayContext.hasFilterParameters() && !mountFolders.isEmpty() && FeatureFlagManagerUtil.isEnabled("LPS-84424") %>'>
 			<clay:alert
 				displayType="info"
 				message="filters-only-apply-to-documents-in-local-repositories"
@@ -52,7 +51,7 @@ List<Folder> mountFolders = DLAppServiceUtil.getMountFolders(scopeGroupId, DLFol
 			searchRepositoryId = repositoryId;
 		}
 
-		PortletURL searchURL = dlAdminManagementToolbarDisplayContext.getCurrentRenderURL();
+		PortletURL searchURL = dlAdminDisplayContext.getSearchRenderURL();
 
 		long searchFolderId = ParamUtil.getLong(request, "searchFolderId");
 		%>

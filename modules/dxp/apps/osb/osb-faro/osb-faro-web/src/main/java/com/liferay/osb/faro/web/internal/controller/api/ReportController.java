@@ -14,6 +14,7 @@
 
 package com.liferay.osb.faro.web.internal.controller.api;
 
+import com.liferay.oauth2.provider.scope.RequiresNoScope;
 import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.osb.faro.util.FaroThreadLocal;
 import com.liferay.osb.faro.web.internal.context.GroupInfo;
@@ -57,6 +58,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(service = ReportController.class)
 @Path("/reports")
 @Produces(MediaType.APPLICATION_JSON)
+@RequiresNoScope
 public class ReportController extends BaseFaroController {
 
 	@GET

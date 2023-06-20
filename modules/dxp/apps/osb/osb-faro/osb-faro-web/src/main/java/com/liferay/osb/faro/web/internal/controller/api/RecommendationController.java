@@ -14,6 +14,7 @@
 
 package com.liferay.osb.faro.web.internal.controller.api;
 
+import com.liferay.oauth2.provider.scope.RequiresNoScope;
 import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.osb.faro.web.internal.context.GroupInfo;
 import com.liferay.osb.faro.web.internal.controller.BaseFaroController;
@@ -41,6 +42,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(service = RecommendationController.class)
 @Path("/recommendations")
 @Produces(MediaType.APPLICATION_JSON)
+@RequiresNoScope
 public class RecommendationController extends BaseFaroController {
 
 	@GET

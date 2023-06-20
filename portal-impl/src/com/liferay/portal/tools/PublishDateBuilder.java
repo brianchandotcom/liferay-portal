@@ -51,6 +51,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.TimeZone;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -221,6 +222,8 @@ public class PublishDateBuilder {
 
 		DateFormat dateFormat = new SimpleDateFormat(format);
 
+		dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+
 		Timestamp timestamp = new Timestamp(time);
 
 		return dateFormat.format(timestamp);
@@ -276,11 +279,11 @@ public class PublishDateBuilder {
 		Path path = Paths.get(file.getAbsolutePath());
 
 		try {
-			BufferedReader reader = Files.newBufferedReader(path);
+			BufferedReader bufferedReader = Files.newBufferedReader(path);
 
-			String content;
+			String content = null;
 
-			while ((content = reader.readLine()) != null) {
+			while ((content = bufferedReader.readLine()) != null) {
 				if (StringUtil.startsWith(content, "Bundle-SymbolicName")) {
 					int start = content.indexOf(StringPool.COLON);
 
@@ -312,9 +315,9 @@ public class PublishDateBuilder {
 		Path path = Paths.get(gradleFile.getAbsolutePath());
 
 		try {
-			BufferedReader reader = Files.newBufferedReader(path);
+			BufferedReader bufferedReader = Files.newBufferedReader(path);
 
-			String content;
+			String content = null;
 
 			String artifactJar = StringUtil.extractLast(
 				fileNameElementText, StringPool.EXCLAMATION);
@@ -329,7 +332,7 @@ public class PublishDateBuilder {
 			regexSB.append(artifactName);
 			regexSB.append("\".*version:.*");
 
-			while ((content = reader.readLine()) != null) {
+			while ((content = bufferedReader.readLine()) != null) {
 				if (content.matches(regexSB.toString())) {
 					dependency = _extractGradleDependency(content);
 
@@ -524,8 +527,6 @@ public class PublishDateBuilder {
 
 			_dependenciesProperties.load(developmentPropertiesInputStream);
 			_dependenciesProperties.load(portalPropertiesInputStream);
-
-			// Fake the dependencies JARs added directly to /lib/development
 
 			_dependenciesProperties.put(
 				"ant-contrib", "ant-contrib:ant-contrib:1.0b3");

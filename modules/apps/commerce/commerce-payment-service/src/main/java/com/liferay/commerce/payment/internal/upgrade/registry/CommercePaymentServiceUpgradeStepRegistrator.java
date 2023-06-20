@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -75,6 +76,23 @@ public class CommercePaymentServiceUpgradeStepRegistrator
 			CommercePaymentEntryAuditTable.create(),
 			new CommercePaymentEntryUpgradeProcess(
 				_resourceActionLocalService));
+
+		registry.register(
+			"1.4.0", "1.5.0",
+			UpgradeProcessFactory.alterColumnName(
+				"CommercePaymentEntry", "paymentMethodName",
+				"paymentIntegrationKey VARCHAR(75) null"),
+			UpgradeProcessFactory.alterColumnType(
+				"CommercePaymentEntry", "transactionCode", "VARCHAR(255) null"),
+			UpgradeProcessFactory.addColumns(
+				"CommercePaymentEntry", "callbackURL TEXT null",
+				"commerceChannelId LONG", "paymentIntegrationType INTEGER",
+				"redirectURL TEXT null"),
+			UpgradeProcessFactory.alterColumnName(
+				"CommercePaymentMethodGroupRel", "engineKey",
+				"paymentIntegrationKey VARCHAR(75) null"),
+			UpgradeProcessFactory.addColumns(
+				"CommercePaymentMethodGroupRel", "typeSettings TEXT null"));
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce payment upgrade step registrator finished");

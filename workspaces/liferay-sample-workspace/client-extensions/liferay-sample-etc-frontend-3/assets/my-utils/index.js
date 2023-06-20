@@ -11,5 +11,5 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-export {default as getHello} from './getHello';
-export {default as getBye} from './getBye';
+export {default as getHello} from './getHello.js';
+export {default as getBye} from './getBye.js';

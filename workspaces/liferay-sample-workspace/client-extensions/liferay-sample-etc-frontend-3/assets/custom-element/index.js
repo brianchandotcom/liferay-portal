@@ -12,8 +12,8 @@
  * details.
  */
 
-import getBye from '../my-utils/getBye.js';
-import getHello from '../my-utils/getHello.js';
+// This are imported via "import maps". See how these are declared in the client-extension.yaml
+import {getBye, getHello} from 'my-utils';
 
 class CustomElement extends HTMLElement {
 	constructor() {

@@ -391,7 +391,6 @@ type UserAccount = {
 	password: string;
 };
 
-
 type RequestBody = {
 	alternateName: string;
 	emailAddress: string;
@@ -399,3 +398,8 @@ type RequestBody = {
 	givenName: string;
 	password: string;
 };
+
+interface CheckboxRole {
+	isChecked: boolean;
+	roleName: string;
+}

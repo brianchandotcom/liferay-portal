@@ -1,5 +1,4 @@
 .member-profile {
-
 	&-content-header {
 		display: flex;
 	}
@@ -32,24 +31,24 @@
 
 		.icon-container-reload {
 			margin-left: 0.4rem;
-    		margin-right: 7px;
+			margin-right: 7px;
 		}
 	}
 
-	&-button-edit-member{
-		background-color: #FFFFFF;
-		border: 1px solid #2B3A4B;
+	&-button-edit-member {
+		background-color: #fff;
+		border: 1px solid #2b3a4b;
 		border-radius: 8px;
-		color: #2B3A4B;
+		color: #2b3a4b;
 		font-size: 1rem;
 		font-weight: 600;
 		height: 2.5rem;
 		line-height: 1.5rem;
 		width: max-content;
 
-		&-label-edit{
+		&-label-edit {
 			margin-left: 0.5rem;
-    		margin-right: 0.3rem;
+			margin-right: 0.3rem;
 		}
 		.icon-container-angle-down-small {
 			margin-left: 0.2rem;
@@ -62,7 +61,7 @@
 		display: flex;
 		margin-bottom: 1rem;
 		width: 15%;
-		
+
 		svg {
 			margin-top: 1px;
 		}

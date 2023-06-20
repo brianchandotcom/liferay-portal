@@ -112,6 +112,19 @@
 			"name": "accountGroupERC",
 			"required": false,
 			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Picklist",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Send Type"
+			},
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Send Type$]",
+			"name": "sendType",
+			"required": false,
+			"type": "String"
 		}
 	],
 	"panelCategoryKey": "control_panel.object",

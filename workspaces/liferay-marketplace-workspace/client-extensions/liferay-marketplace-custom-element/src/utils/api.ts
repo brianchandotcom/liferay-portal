@@ -656,6 +656,7 @@ export async function getUserAccounts() {
 			method: 'GET',
 		}
 	);
+
 	return await response.json();
 }
 
@@ -940,10 +941,9 @@ export async function updateProductSpecification({
 
 	return await response.json();
 }
-export async function updateUseradditionalinfos(body: Object, id: number) {
-	
+export async function updateUserAdditionalinfos(body: Object, id: number) {
 	const response = await fetch(
-		`${baseURL}/o/c/useradditionalinfos/${id}`,
+		`${baseURL}/o/c/useradditionalinfos/${id}/?filter=contains(sendType,'shipping')`,
 		{
 			body: JSON.stringify(body),
 			headers,
@@ -954,29 +954,28 @@ export async function updateUseradditionalinfos(body: Object, id: number) {
 	return await response.json();
 }
 
-
-export async function getMyUserAditionalInfos (userId: number) {
-
+export async function getMyUserAditionalInfos(userId: number) {
 	const userAdditionalInfos = await fetch(
-		`${baseURL}/o/c/useradditionalinfos/?filter=r_userToUserAddInfo_userId eq '${userId}'`,
+		`${baseURL}/o/c/useradditionalinfos/?filter=r_userToUserAddInfo_userId eq '${userId}' and contains(sendType,'shipping')`,
 		{headers}
 	);
-	
+
 	const response = await userAdditionalInfos.json();
 
-	if(!response.acceptInviteStatus){
+	if (!response.acceptInviteStatus) {
 		return response;
 	}
-};
+}
 
 export async function updateUserPassword(password: string, id: number) {
-	
-	const response = await fetch(`/o/headless-admin-user/v1.0/user-accounts/${id}`, {
-		body: JSON.stringify({password}),
-		headers,
-		method: 'PATCH',
-	});
+	const response = await fetch(
+		`/o/headless-admin-user/v1.0/user-accounts/${id}`,
+		{
+			body: JSON.stringify({password}),
+			headers,
+			method: 'PATCH',
+		}
+	);
 
 	return response.json();
-
 }

@@ -420,12 +420,35 @@ public class FragmentEntryLocalServiceWrapper
 
 	@Override
 	public java.util.List<FragmentEntry> getFragmentEntries(
+		long groupId, long fragmentCollectionId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
+			orderByComparator) {
+
+		return _fragmentEntryLocalService.getFragmentEntries(
+			groupId, fragmentCollectionId, status, start, end,
+			orderByComparator);
+	}
+
+	@Override
+	public java.util.List<FragmentEntry> getFragmentEntries(
 		long groupId, long fragmentCollectionId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
 			orderByComparator) {
 
 		return _fragmentEntryLocalService.getFragmentEntries(
 			groupId, fragmentCollectionId, start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<FragmentEntry> getFragmentEntries(
+		long groupId, long fragmentCollectionId, String name, int status,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
+			orderByComparator) {
+
+		return _fragmentEntryLocalService.getFragmentEntries(
+			groupId, fragmentCollectionId, name, status, start, end,
+			orderByComparator);
 	}
 
 	@Override

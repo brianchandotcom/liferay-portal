@@ -367,11 +367,30 @@ public class FragmentEntryLocalServiceUtil {
 	}
 
 	public static List<FragmentEntry> getFragmentEntries(
+		long groupId, long fragmentCollectionId, int status, int start, int end,
+		OrderByComparator<FragmentEntry> orderByComparator) {
+
+		return getService().getFragmentEntries(
+			groupId, fragmentCollectionId, status, start, end,
+			orderByComparator);
+	}
+
+	public static List<FragmentEntry> getFragmentEntries(
 		long groupId, long fragmentCollectionId, int start, int end,
 		OrderByComparator<FragmentEntry> orderByComparator) {
 
 		return getService().getFragmentEntries(
 			groupId, fragmentCollectionId, start, end, orderByComparator);
+	}
+
+	public static List<FragmentEntry> getFragmentEntries(
+		long groupId, long fragmentCollectionId, String name, int status,
+		int start, int end,
+		OrderByComparator<FragmentEntry> orderByComparator) {
+
+		return getService().getFragmentEntries(
+			groupId, fragmentCollectionId, name, status, start, end,
+			orderByComparator);
 	}
 
 	public static List<FragmentEntry> getFragmentEntries(

@@ -327,8 +327,18 @@ public interface FragmentEntryLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<FragmentEntry> getFragmentEntries(
+		long groupId, long fragmentCollectionId, int status, int start, int end,
+		OrderByComparator<FragmentEntry> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<FragmentEntry> getFragmentEntries(
 		long groupId, long fragmentCollectionId, int start, int end,
 		OrderByComparator<FragmentEntry> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<FragmentEntry> getFragmentEntries(
+		long groupId, long fragmentCollectionId, String name, int status,
+		int start, int end, OrderByComparator<FragmentEntry> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<FragmentEntry> getFragmentEntries(

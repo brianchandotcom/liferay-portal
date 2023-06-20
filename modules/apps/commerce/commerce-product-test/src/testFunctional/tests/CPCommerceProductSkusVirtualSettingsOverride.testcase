@@ -37,6 +37,152 @@ definition {
 		CommerceConfiguration.commerceTearDown();
 	}
 
+	@description = "COMMERCE-11379 | To verify that a buyer user can download the virtual product by the URL retrieved using API when SKU override is enabled"
+	@priority = 4
+	test CanDownloadConfiguredVirtualProductWithSKUOverride {
+		property portal.acceptance = "false";
+
+		var baseURL = PropsUtil.get("portal.url");
+
+		task ("Given a virtual product with Activation Status is set") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.searchEntry(entryName = '''"Virtual T-Shirt''');
+
+			CommerceNavigator.gotoEntry(entryName = "Virtual T-Shirt");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Virtual");
+
+			CommerceProducts.configureVirtualProduct(
+				activationStatus = "Processing",
+				assertUploaded = "true",
+				attachment = "Commerce_Black.jpg",
+				maxDownloads = 2);
+		}
+
+		task ("And the admin enables the override for the SKU") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.searchEntry(entryName = '''"Virtual T-Shirt"''');
+
+			CommerceNavigator.gotoEntry(entryName = "Virtual T-Shirt");
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceNavigator.gotoTableListEntry(entryName = "VIRTUALSKU");
+
+			CommerceProducts.updateProductVirtualSettingOverride(
+				activationStatus = "Pending",
+				key_contentType = "Base Information",
+				key_fieldLabel = "Activation Status",
+				maxDownloads = 3,
+				virtualProductFile = "Commerce_White.jpg");
+		}
+
+		task ("When the buyer log in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And add something to the cart") {
+			FrontStore.addInitializerProductToCart(
+				productName = "Virtual T-Shirt",
+				productQuantity = 1);
+
+			var orderId = selenium.getText("CommerceEntry#ACTIVE_ORDER_ID");
+		}
+
+		task ("Then the GET order API is called") {
+			var virtualItemURLs = CommerceJSONOrdersAPI.getOrderField(
+				email = "buyer@liferay.com",
+				jsonPath = "$..virtualItemURLs[:1]",
+				orderId = ${orderId},
+				parameter = "nestedFields",
+				parameterValue = "orderItems",
+				password = "test");
+		}
+
+		task ("And the virtualItemURLs field is empty") {
+			if (${virtualItemURLs} != "") {
+				fail("The Order Activation Status is not respected");
+			}
+		}
+
+		task ("When the checkout is completed") {
+			CommerceCheckout.gotoCheckoutViaMiniCart();
+
+			CommerceCheckout.initializersCheckout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				productName = "Virtual T-Shirt",
+				productQuantity = 1);
+		}
+
+		task ("And the GET order API is called") {
+			var virtualItemURLs = CommerceJSONOrdersAPI.getOrderField(
+				email = "buyer@liferay.com",
+				jsonPath = "$..virtualItemURLs[:1]",
+				orderId = ${orderId},
+				parameter = "nestedFields",
+				parameterValue = "orderItems",
+				password = "test");
+		}
+
+		task ("And the GET order item API is called") {
+			var tempVirtualItemURLs = CommerceJSONOrdersAPI.getOrderItemField(
+				email = "buyer@liferay.com",
+				jsonPath = "$..virtualItemURLs[:1]",
+				orderId = ${orderId},
+				password = "test");
+		}
+
+		task ("Then the URL into the response is the same for both the API calls") {
+			if (${virtualItemURLs} == "") {
+				fail("The URL is not present");
+			}
+
+			if (${tempVirtualItemURLs} == ${virtualItemURLs}) {
+				echo("The URL is the same");
+			}
+			else {
+				fail("The URL is not the same");
+			}
+		}
+
+		task ("When the Max Number of Downloads is reached") {
+			var destinationPath = PropsUtil.get("output.dir.name");
+
+			for (var list : list "1,2,3") {
+				Navigator.openSpecificURL(url = "${baseURL}${virtualItemURLs}");
+
+				ImportExport.assertDownloadedFileName(downloadedFile = "Commerce_White*");
+
+				FileUtil.delete(${destinationPath});
+			}
+		}
+
+		task ("Then is not possible to download the file anymore") {
+			Navigator.openSpecificURL(url = "${baseURL}${virtualItemURLs}");
+
+			AssertElementPresent(
+				key_parameterValue = "You do not have permission to access the requested resource",
+				locator1 = "JSFShowcase#PARAMETER_VALUE");
+
+			var file = CommerceUtilities.assertDownloadedFile(downloadedFileName = "Commerce_White.jpg");
+
+			if (${file} == "true") {
+				fail("Exceeded the Max Number of Downloads set");
+			}
+		}
+	}
+
 	@description = "COMMERCE-11379 | To verify that a buyer user can not download the virtual product by the URL retrieved using API without permissions"
 	@priority = 4
 	test CanDownloadConfiguredVirtualProductWithSKUOverrideAndWithoutPermissions {

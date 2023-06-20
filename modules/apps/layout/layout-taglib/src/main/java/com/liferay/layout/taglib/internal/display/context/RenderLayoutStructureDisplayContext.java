@@ -238,51 +238,16 @@ public class RenderLayoutStructureDisplayContext {
 			long classNameId = linkJSONObject.getLong("classNameId");
 			long classPK = linkJSONObject.getLong("classPK");
 
-			if ((classNameId != 0L) && (classPK != 0L)) {
-				InfoItemServiceRegistry infoItemServiceRegistry =
-					ServletContextUtil.getInfoItemServiceRegistry();
+			if ((classNameId > 0) && (classPK > 0)) {
+				InfoItemReference infoItemReference = new InfoItemReference(
+					PortalUtil.getClassName(classNameId),
+					new ClassPKInfoItemIdentifier(classPK));
 
-				String className = PortalUtil.getClassName(classNameId);
+				String value = _getMappedCollectionValue(
+					fieldId, infoItemReference);
 
-				InfoItemFieldValuesProvider<Object>
-					infoItemFieldValuesProvider =
-						infoItemServiceRegistry.getFirstInfoItemService(
-							InfoItemFieldValuesProvider.class, className);
-
-				InfoItemObjectProvider<Object> infoItemObjectProvider =
-					infoItemServiceRegistry.getFirstInfoItemService(
-						InfoItemObjectProvider.class, className,
-						ClassPKInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER);
-
-				if ((infoItemObjectProvider != null) &&
-					(infoItemFieldValuesProvider != null)) {
-
-					InfoItemIdentifier infoItemIdentifier =
-						new ClassPKInfoItemIdentifier(classPK);
-
-					Object infoItem = infoItemObjectProvider.getInfoItem(
-						infoItemIdentifier);
-
-					if (infoItem != null) {
-						InfoFieldValue<Object> infoFieldValue =
-							infoItemFieldValuesProvider.getInfoFieldValue(
-								infoItem, fieldId);
-
-						if (infoFieldValue != null) {
-							Object object = infoFieldValue.getValue(
-								LocaleUtil.getDefault());
-
-							if (object instanceof String) {
-								String fieldValue = (String)object;
-
-								if (Validator.isNotNull(fieldValue)) {
-									return fieldValue;
-								}
-
-								return StringPool.BLANK;
-							}
-						}
-					}
+				if (Validator.isNotNull(value)) {
+					return value;
 				}
 			}
 		}
@@ -790,57 +755,16 @@ public class RenderLayoutStructureDisplayContext {
 			long classNameId = jsonObject.getLong("classNameId");
 			long classPK = jsonObject.getLong("classPK");
 
-			if ((classNameId != 0L) && (classPK != 0L)) {
-				InfoItemServiceRegistry infoItemServiceRegistry =
-					ServletContextUtil.getInfoItemServiceRegistry();
+			if ((classNameId > 0) && (classPK > 0)) {
+				InfoItemReference infoItemReference = new InfoItemReference(
+					PortalUtil.getClassName(classNameId),
+					new ClassPKInfoItemIdentifier(classPK));
 
-				String className = PortalUtil.getClassName(classNameId);
+				String value = _getMappedCollectionValue(
+					fieldId, infoItemReference);
 
-				InfoItemFieldValuesProvider<Object>
-					infoItemFieldValuesProvider =
-						infoItemServiceRegistry.getFirstInfoItemService(
-							InfoItemFieldValuesProvider.class, className);
-
-				InfoItemObjectProvider<Object> infoItemObjectProvider =
-					infoItemServiceRegistry.getFirstInfoItemService(
-						InfoItemObjectProvider.class, className,
-						ClassPKInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER);
-
-				if ((infoItemObjectProvider != null) &&
-					(infoItemFieldValuesProvider != null)) {
-
-					InfoItemIdentifier infoItemIdentifier =
-						new ClassPKInfoItemIdentifier(classPK);
-
-					Object infoItem = infoItemObjectProvider.getInfoItem(
-						infoItemIdentifier);
-
-					if (infoItem != null) {
-						InfoFieldValue<Object> infoFieldValue =
-							infoItemFieldValuesProvider.getInfoFieldValue(
-								infoItem, fieldId);
-
-						if (infoFieldValue != null) {
-							Object object = infoFieldValue.getValue(
-								LocaleUtil.getDefault());
-
-							if (object instanceof JSONObject) {
-								JSONObject fieldValueJSONObject =
-									(JSONObject)object;
-
-								return fieldValueJSONObject.getString(
-									"url", StringPool.BLANK);
-							}
-							else if (object instanceof String) {
-								return (String)object;
-							}
-							else if (object instanceof WebImage) {
-								WebImage webImage = (WebImage)object;
-
-								return webImage.getUrl();
-							}
-						}
-					}
+				if (Validator.isNotNull(value)) {
+					return value;
 				}
 			}
 		}

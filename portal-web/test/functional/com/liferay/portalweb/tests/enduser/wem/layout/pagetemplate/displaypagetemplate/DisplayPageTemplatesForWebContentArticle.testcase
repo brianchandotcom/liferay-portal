@@ -1504,6 +1504,8 @@ definition {
 	@description = "This is a test for LPS-168698. Expired Web Content Display Pages are not accessible"
 	@priority = 4
 	test ViewNotFoundWhenAccessToAssociatedDisplayPageOfExpiredWebContent {
+		property custom.properties = "virtual.hosts.default.site.name=Guest";
+
 		task ("Given a site administrator has an associated display page for web content") {
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 

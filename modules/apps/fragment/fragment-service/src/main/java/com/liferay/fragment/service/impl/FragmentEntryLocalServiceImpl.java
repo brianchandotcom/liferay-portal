@@ -430,11 +430,39 @@ public class FragmentEntryLocalServiceImpl
 
 	@Override
 	public List<FragmentEntry> getFragmentEntries(
+		long groupId, long fragmentCollectionId, int status, int start, int end,
+		OrderByComparator<FragmentEntry> orderByComparator) {
+
+		return fragmentEntryPersistence.findByG_FCI_S(
+			groupId, fragmentCollectionId, status, start, end,
+			orderByComparator);
+	}
+
+	@Override
+	public List<FragmentEntry> getFragmentEntries(
 		long groupId, long fragmentCollectionId, int start, int end,
 		OrderByComparator<FragmentEntry> orderByComparator) {
 
 		return fragmentEntryPersistence.findByG_FCI(
 			groupId, fragmentCollectionId, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<FragmentEntry> getFragmentEntries(
+		long groupId, long fragmentCollectionId, String name, int status,
+		int start, int end,
+		OrderByComparator<FragmentEntry> orderByComparator) {
+
+		if (Validator.isNull(name)) {
+			return fragmentEntryPersistence.findByG_FCI_S(
+				groupId, fragmentCollectionId, status, start, end,
+				orderByComparator);
+		}
+
+		return fragmentEntryPersistence.findByG_FCI_LikeN_S(
+			groupId, fragmentCollectionId,
+			_customSQL.keywords(name, false, WildcardMode.SURROUND)[0], status,
+			start, end, orderByComparator);
 	}
 
 	@Override

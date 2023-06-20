@@ -17,6 +17,7 @@ package com.liferay.poshi.runner.selenium;
 import com.liferay.poshi.runner.exception.ElementNotFoundPoshiRunnerException;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -25,6 +26,7 @@ import org.openqa.selenium.ElementNotInteractableException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 
 /**
  * @author Brian Wing Shun Chan
@@ -75,6 +77,15 @@ public class ChromeWebDriverImpl extends BaseWebDriverImpl {
 			throw new ElementNotInteractableException(
 				message, webDriverException);
 		}
+	}
+
+	@Override
+	public void executeCDPCommand(
+		String commandName, Map<String, Object> commandParameters) {
+
+		ChromeDriver chromeDriver = (ChromeDriver)getWebDriver();
+
+		chromeDriver.executeCdpCommand(commandName, commandParameters);
 	}
 
 	@Override

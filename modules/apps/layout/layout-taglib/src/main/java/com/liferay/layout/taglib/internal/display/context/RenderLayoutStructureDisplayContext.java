@@ -68,7 +68,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -181,7 +180,7 @@ public class RenderLayoutStructureDisplayContext {
 		}
 
 		JSONObject localizedJSONObject = linkJSONObject.getJSONObject(
-			LocaleUtil.toLanguageId(_themeDisplay.getLocale()));
+			_themeDisplay.getLanguageId());
 
 		if ((localizedJSONObject != null) &&
 			(localizedJSONObject.length() > 0)) {
@@ -286,8 +285,7 @@ public class RenderLayoutStructureDisplayContext {
 		JSONObject hrefJSONObject = linkJSONObject.getJSONObject("href");
 
 		if (hrefJSONObject != null) {
-			return hrefJSONObject.getString(
-				LocaleUtil.toLanguageId(_themeDisplay.getLocale()));
+			return hrefJSONObject.getString(_themeDisplay.getLanguageId());
 		}
 
 		return StringPool.BLANK;
@@ -304,7 +302,7 @@ public class RenderLayoutStructureDisplayContext {
 		}
 
 		JSONObject localizedJSONObject = linkJSONObject.getJSONObject(
-			LocaleUtil.toLanguageId(_themeDisplay.getLocale()));
+			_themeDisplay.getLanguageId());
 
 		if ((localizedJSONObject != null) &&
 			(localizedJSONObject.length() > 0)) {
@@ -538,7 +536,7 @@ public class RenderLayoutStructureDisplayContext {
 				backgroundImageJSONObject.getLong("classNameId"),
 				backgroundImageJSONObject.getLong("classPK"),
 				backgroundImageJSONObject.getString("fieldId"),
-				LocaleUtil.fromLanguageId(_themeDisplay.getLanguageId()));
+				_themeDisplay.getLocale());
 		}
 		else if (backgroundImageJSONObject.has("collectionFieldId")) {
 			FragmentEntryProcessorHelper fragmentEntryProcessorHelper =
@@ -548,12 +546,12 @@ public class RenderLayoutStructureDisplayContext {
 				(InfoItemReference)_httpServletRequest.getAttribute(
 					InfoDisplayWebKeys.INFO_ITEM_REFERENCE),
 				backgroundImageJSONObject.getString("collectionFieldId"),
-				LocaleUtil.fromLanguageId(_themeDisplay.getLanguageId()));
+				_themeDisplay.getLocale());
 		}
 		else if (backgroundImageJSONObject.has("mappedField")) {
 			fileEntryId = _getFileEntryId(
 				backgroundImageJSONObject.getString("mappedField"),
-				LocaleUtil.fromLanguageId(_themeDisplay.getLanguageId()));
+				_themeDisplay.getLocale());
 		}
 
 		if (fileEntryId != 0) {
@@ -1065,8 +1063,7 @@ public class RenderLayoutStructureDisplayContext {
 			return StringPool.BLANK;
 		}
 
-		Object value = infoFieldValue.getValue(
-			LocaleUtil.fromLanguageId(_themeDisplay.getLanguageId()));
+		Object value = infoFieldValue.getValue(_themeDisplay.getLocale());
 
 		if (value instanceof String) {
 			return (String)value;

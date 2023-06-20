@@ -393,8 +393,14 @@ public class ObjectEntryItemSelectorView
 			long objectDefinitionId,
 			com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry) {
 
+			Long id = objectEntry.getId();
+
+			if (id == null) {
+				id = 0L;
+			}
+
 			ObjectEntry serviceBuilderObjectEntry =
-				_objectEntryLocalService.createObjectEntry(objectEntry.getId());
+				_objectEntryLocalService.createObjectEntry(id);
 
 			serviceBuilderObjectEntry.setObjectDefinitionId(objectDefinitionId);
 

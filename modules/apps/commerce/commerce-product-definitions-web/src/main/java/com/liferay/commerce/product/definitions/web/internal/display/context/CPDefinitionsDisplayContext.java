@@ -127,6 +127,19 @@ public class CPDefinitionsDisplayContext
 				requestBackedPortletURLFactory, "accountGroupSelectItem",
 				commerceAccountGroupItemSelectorCriterion)
 		).setParameter(
+			"accountEntryId",
+			() -> {
+				long accountEntryId = 0;
+
+				CommerceCatalog commerceCatalog = getCommerceCatalog();
+
+				if (commerceCatalog != null) {
+					accountEntryId = commerceCatalog.getAccountEntryId();
+				}
+
+				return accountEntryId;
+			}
+		).setParameter(
 			"checkedCommerceAccountGroupIds",
 			StringUtil.merge(
 				TransformUtil.transformToLongArray(

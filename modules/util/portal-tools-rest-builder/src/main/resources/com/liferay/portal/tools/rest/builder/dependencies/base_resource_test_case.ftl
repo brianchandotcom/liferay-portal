@@ -731,11 +731,23 @@ public abstract class Base${schemaName}ResourceTestCase {
 					}
 
 					@Test
+					public void test${javaMethodSignature.methodName?cap_first}WithFilterStringContains() throws Exception {
+						test${javaMethodSignature.methodName?cap_first}WithFilter("contains", EntityField.Type.STRING);
+					}
+
+					@Test
 					public void test${javaMethodSignature.methodName?cap_first}WithFilterStringEquals() throws Exception {
 						test${javaMethodSignature.methodName?cap_first}WithFilter("eq", EntityField.Type.STRING);
 					}
 
-					protected void test${javaMethodSignature.methodName?cap_first}WithFilter(String operator, EntityField.Type type) {
+					@Test
+					public void test${javaMethodSignature.methodName?cap_first}WithFilterStringStartsWith() throws Exception {
+						test${javaMethodSignature.methodName?cap_first}WithFilter("startswith", EntityField.Type.STRING);
+					}
+
+					protected void test${javaMethodSignature.methodName?cap_first}WithFilter(String operator, EntityField.Type type)
+						throws Exception {
+
 						List<EntityField> entityFields = getEntityFields(type);
 
 						if (entityFields.isEmpty()) {
@@ -2643,9 +2655,47 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 					return sb.toString();
 				<#elseif stringUtil.equals(properties[propertyName], "String")>
-					sb.append("'");
-					sb.append(String.valueOf(${schemaVarName}.get${propertyName?cap_first}()));
-					sb.append("'");
+					Object object = ${schemaVarName}.get${propertyName?cap_first}();
+
+					String value = String.valueOf(object);
+
+					if (operator.equals("contains")) {
+						sb = new StringBundler();
+
+						sb.append("contains(");
+						sb.append(entityFieldName);
+						sb.append(",'");
+
+						if ((object != null) && (value.length() > 2)) {
+							sb.append(value.substring(1, value.length() - 1));
+						}
+						else {
+							sb.append(value);
+						}
+
+						sb.append("')");
+					}
+					else if (operator.equals("startswith")) {
+						sb = new StringBundler();
+
+						sb.append("startswith(");
+						sb.append(entityFieldName);
+						sb.append(",'");
+
+						if ((object != null) && (value.length() > 1)) {
+							sb.append(value.substring(0, value.length() - 1));
+						}
+						else {
+							sb.append(value);
+						}
+
+						sb.append("')");
+					}
+					else {
+						sb.append("'");
+						sb.append(value);
+						sb.append("'");
+					}
 
 					return sb.toString();
 				<#else>

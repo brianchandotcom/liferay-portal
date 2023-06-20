@@ -71,6 +71,11 @@ public class SXPServiceUpgradeStepRegistrator
 			"1.3.2", "1.3.3",
 			new com.liferay.search.experiences.internal.upgrade.v1_3_3.
 				SXPBlueprintUpgradeProcess());
+
+		registry.register(
+			"1.3.3", "2.0.0",
+			new com.liferay.search.experiences.internal.upgrade.v2_0_0.
+				SXPBlueprintUpgradeProcess());
 	}
 
 }

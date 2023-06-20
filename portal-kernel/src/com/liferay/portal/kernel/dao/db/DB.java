@@ -68,7 +68,7 @@ public interface DB {
 
 	public void copyTableRows(
 			Connection connection, String sourceTableName,
-			String targetTableName)
+			String targetTableName, Map<String, String> columnNamesMap)
 		throws Exception;
 
 	public void copyTableStructure(

@@ -357,7 +357,14 @@ public class DBTest {
 				" (id, notNilColumn, typeString) values (1, '1', ",
 				"'testTable2Value1')"));
 
-		_db.copyTableRows(_connection, _TABLE_NAME_1, _TABLE_NAME_2);
+		Map<String, String> columnNameMap = new HashMap<>();
+
+		for (String columnName : _SYNC_TABLES_COLUMN_NAMES) {
+			columnNameMap.put(columnName, columnName);
+		}
+
+		_db.copyTableRows(
+			_connection, _TABLE_NAME_1, _TABLE_NAME_2, columnNameMap);
 
 		try (PreparedStatement preparedStatement = _connection.prepareStatement(
 				"select * from " + _TABLE_NAME_2 + " order by id asc");

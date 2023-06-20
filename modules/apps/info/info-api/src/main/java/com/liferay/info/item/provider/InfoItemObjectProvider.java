@@ -26,15 +26,8 @@ public interface InfoItemObjectProvider<T> {
 	public default T getInfoItem(InfoItemIdentifier infoItemIdentifier)
 		throws NoSuchInfoItemException {
 
-		if (!(infoItemIdentifier instanceof ClassPKInfoItemIdentifier)) {
-			throw new NoSuchInfoItemException(
-				"Unsupported info item identifier type " + infoItemIdentifier);
-		}
-
-		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
-			(ClassPKInfoItemIdentifier)infoItemIdentifier;
-
-		return getInfoItem(classPKInfoItemIdentifier.getClassPK());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	/**
@@ -42,6 +35,11 @@ public interface InfoItemObjectProvider<T> {
 	 *             #getInfoItem(InfoItemIdentifier)}
 	 */
 	@Deprecated
-	public T getInfoItem(long classPK) throws NoSuchInfoItemException;
+	public default T getInfoItem(long classPK) throws NoSuchInfoItemException {
+		InfoItemIdentifier infoItemIdentifier = new ClassPKInfoItemIdentifier(
+			classPK);
+
+		return getInfoItem(infoItemIdentifier);
+	}
 
 }

@@ -393,7 +393,7 @@ public class ObjectEntryInfoItemFieldValuesProvider
 
 		ThemeDisplay themeDisplay = _getThemeDisplay();
 
-		if (themeDisplay != null) {
+		if (themeDisplay == null) {
 			return Collections.emptyList();
 		}
 

@@ -13,8 +13,7 @@
  */
 
 import ClayBadge from '@clayui/badge';
-import ClayIcon from '@clayui/icon';
-import classNames from 'classnames';
+import ClayPanel from '@clayui/panel';
 import {parse} from 'date-fns';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -88,7 +87,7 @@ const CriteriaSidebarCollapse = ({
 	const _handleClick = (key, editing) => () => onCollapseClick(key, editing);
 
 	return (
-		<ul className="c-mb-0 c-pl-0 d-flex sidebar-collapse-groups">
+		<ClayPanel.Group className="c-mt-1">
 			{propertyGroups.map((propertyGroup) => {
 				const key = propertyGroup.propertyKey;
 
@@ -186,7 +185,7 @@ const CriteriaSidebarCollapse = ({
 					</li>
 				);
 			})}
-		</ul>
+		</ClayPanel.Group>
 	);
 };
 

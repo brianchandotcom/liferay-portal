@@ -23,6 +23,7 @@ import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
 import com.liferay.item.selector.criteria.ActionableInfoItemItemSelectorReturnType;
 import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.related.models.ObjectRelatedModelsProvider;
@@ -45,6 +46,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -328,6 +330,18 @@ public class ObjectEntryItemSelectorView
 		@Override
 		public boolean isMultipleSelection() {
 			return _infoItemItemSelectorCriterion.isMultiSelection();
+		}
+
+		@Override
+		public boolean isShowBreadcrumb() {
+			if (StringUtil.equals(
+					_objectDefinition.getScope(),
+					ObjectDefinitionConstants.SCOPE_SITE)) {
+
+				return true;
+			}
+
+			return false;
 		}
 
 		private DTOConverterContext _getDTOConverterContext() {

@@ -16,6 +16,7 @@ package com.liferay.object.service.impl;
 
 import com.liferay.object.constants.ObjectLayoutBoxConstants;
 import com.liferay.object.exception.DefaultObjectLayoutException;
+import com.liferay.object.exception.DuplicateObjectLayoutExternalReferenceCodeException;
 import com.liferay.object.exception.ObjectDefinitionModifiableException;
 import com.liferay.object.exception.ObjectLayoutBoxCategorizationTypeException;
 import com.liferay.object.exception.ObjectLayoutColumnSizeException;
@@ -71,8 +72,9 @@ public class ObjectLayoutLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ObjectLayout addObjectLayout(
-			long userId, long objectDefinitionId, boolean defaultObjectLayout,
-			Map<Locale, String> nameMap, List<ObjectLayoutTab> objectLayoutTabs)
+			String externalReferenceCode, long userId, long objectDefinitionId,
+			boolean defaultObjectLayout, Map<Locale, String> nameMap,
+			List<ObjectLayoutTab> objectLayoutTabs)
 		throws PortalException {
 
 		ObjectDefinition objectDefinition =
@@ -82,10 +84,20 @@ public class ObjectLayoutLocalServiceImpl
 			throw new ObjectDefinitionModifiableException.MustBeModifiable();
 		}
 
+		_validateExternalReferenceCode(
+			externalReferenceCode, 0, objectDefinition.getCompanyId(),
+			objectDefinitionId);
+
 		_validate(0, objectDefinitionId, defaultObjectLayout, objectLayoutTabs);
 
 		ObjectLayout objectLayout = objectLayoutPersistence.create(
 			counterLocalService.increment());
+
+		if (Validator.isNull(externalReferenceCode)) {
+			externalReferenceCode = objectLayout.getUuid();
+		}
+
+		objectLayout.setExternalReferenceCode(externalReferenceCode);
 
 		User user = _userLocalService.getUser(userId);
 
@@ -105,6 +117,44 @@ public class ObjectLayoutLocalServiceImpl
 				user, objectDefinitionId, objectLayout, objectLayoutTabs));
 
 		return objectLayout;
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public ObjectLayout addOrUpdateObjectLayout(
+			String externalReferenceCode, long objectLayoutId, long userId,
+			long objectDefinitionId, boolean defaultObjectLayout,
+			Map<Locale, String> nameMap, List<ObjectLayoutTab> objectLayoutTabs)
+		throws PortalException {
+
+		ObjectLayout existingObjectLayout = null;
+
+		if (objectLayoutId > 0) {
+			existingObjectLayout = objectLayoutPersistence.fetchByPrimaryKey(
+				objectLayoutId);
+		}
+
+		if ((existingObjectLayout == null) &&
+			Validator.isNotNull(externalReferenceCode)) {
+
+			ObjectDefinition objectDefinition =
+				_objectDefinitionPersistence.findByPrimaryKey(
+					objectDefinitionId);
+
+			existingObjectLayout = objectLayoutPersistence.fetchByERC_C_ODI(
+				externalReferenceCode, objectDefinition.getCompanyId(),
+				objectDefinitionId);
+		}
+
+		if (existingObjectLayout != null) {
+			return updateObjectLayout(
+				externalReferenceCode, existingObjectLayout.getObjectLayoutId(),
+				defaultObjectLayout, nameMap, objectLayoutTabs);
+		}
+
+		return addObjectLayout(
+			externalReferenceCode, userId, objectDefinitionId,
+			defaultObjectLayout, nameMap, objectLayoutTabs);
 	}
 
 	@Indexable(type = IndexableType.DELETE)
@@ -156,6 +206,22 @@ public class ObjectLayoutLocalServiceImpl
 		objectLayout.setObjectLayoutTabs(_getObjectLayoutTabs(objectLayout));
 
 		return objectLayout;
+	}
+
+	@Override
+	public ObjectLayout
+			fetchObjectLayoutByObjectDefinitionExternalReferenceCodeObjectLayoutExternalReferenceCode(
+				String objectDefinitionExternalReferenceCode,
+				String objectLayoutExternalReferenceCode, long companyId)
+		throws PortalException {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.fetchByERC_C(
+				objectDefinitionExternalReferenceCode, companyId);
+
+		return objectLayoutPersistence.fetchByERC_C_ODI(
+			objectLayoutExternalReferenceCode, companyId,
+			objectDefinition.getObjectDefinitionId());
 	}
 
 	@Override
@@ -213,18 +279,27 @@ public class ObjectLayoutLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ObjectLayout updateObjectLayout(
-			long objectLayoutId, boolean defaultObjectLayout,
-			Map<Locale, String> nameMap, List<ObjectLayoutTab> objectLayoutTabs)
+			String externalReferenceCode, long objectLayoutId,
+			boolean defaultObjectLayout, Map<Locale, String> nameMap,
+			List<ObjectLayoutTab> objectLayoutTabs)
 		throws PortalException {
 
 		ObjectLayout objectLayout = objectLayoutPersistence.findByPrimaryKey(
 			objectLayoutId);
+
+		_validateExternalReferenceCode(
+			externalReferenceCode, 0, objectLayout.getCompanyId(),
+			objectLayout.getObjectDefinitionId());
 
 		_validate(
 			objectLayoutId, objectLayout.getObjectDefinitionId(),
 			defaultObjectLayout, objectLayoutTabs);
 
 		_deleteObjectLayoutTabs(objectLayoutId);
+
+		if (Validator.isNotNull(externalReferenceCode)) {
+			objectLayout.setExternalReferenceCode(externalReferenceCode);
+		}
 
 		objectLayout.setDefaultObjectLayout(defaultObjectLayout);
 		objectLayout.setNameMap(nameMap);
@@ -620,6 +695,25 @@ public class ObjectLayoutLocalServiceImpl
 						"Categorization layout box must not have layout rows");
 				}
 			}
+		}
+	}
+
+	private void _validateExternalReferenceCode(
+			String externalReferenceCode, long objectLayoutId, long companyId,
+			long objectDefinitionId)
+		throws PortalException {
+
+		if (Validator.isNull(externalReferenceCode)) {
+			return;
+		}
+
+		ObjectLayout objectLayout = objectLayoutPersistence.fetchByERC_C_ODI(
+			externalReferenceCode, companyId, objectDefinitionId);
+
+		if ((objectLayout != null) &&
+			(objectLayout.getObjectLayoutId() != objectLayoutId)) {
+
+			throw new DuplicateObjectLayoutExternalReferenceCodeException();
 		}
 	}
 

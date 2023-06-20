@@ -407,7 +407,8 @@ public class DefaultCommerceCheckoutStepHttpHelper
 						String key = curCommercePaymentMethod.getKey();
 
 						if (key.equals(
-								commercePaymentMethodGroupRel.getEngineKey())) {
+								commercePaymentMethodGroupRel.
+									getPaymentIntegrationKey())) {
 
 							commercePaymentMethod = curCommercePaymentMethod;
 

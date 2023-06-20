@@ -175,8 +175,8 @@ public class OrderTypeResourceTest extends BaseOrderTypeResourceTestCase {
 					addCommercePaymentMethodGroupRel(
 						_user.getUserId(), _commerceChannel.getGroupId(),
 						RandomTestUtil.randomLocaleStringMap(),
-						RandomTestUtil.randomLocaleStringMap(), null,
-						TestCommercePaymentMethod.KEY, 99, true);
+						RandomTestUtil.randomLocaleStringMap(), true, null,
+						TestCommercePaymentMethod.KEY, 99, null);
 		}
 
 		OrderType orderType = _toOrderType(_addCommerceOrderType());

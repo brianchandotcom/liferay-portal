@@ -162,8 +162,8 @@ public class TermResourceTest extends BaseTermResourceTestCase {
 				addCommercePaymentMethodGroupRel(
 					_user.getUserId(), _commerceChannel.getGroupId(),
 					RandomTestUtil.randomLocaleStringMap(),
-					RandomTestUtil.randomLocaleStringMap(), null,
-					TestCommercePaymentMethod.KEY, 99, true);
+					RandomTestUtil.randomLocaleStringMap(), true, null,
+					TestCommercePaymentMethod.KEY, 99, null);
 
 		Term term = _toTerm(_addCommerceTermEntry());
 

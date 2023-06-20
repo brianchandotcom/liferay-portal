@@ -75,7 +75,7 @@ public class CommercePaymentMethodGroupRelsDisplayContext {
 
 	public String getCommercePaymentMethodEngineKey() {
 		if (_commercePaymentMethodGroupRel != null) {
-			return _commercePaymentMethodGroupRel.getEngineKey();
+			return _commercePaymentMethodGroupRel.getPaymentIntegrationKey();
 		}
 
 		return ParamUtil.getString(

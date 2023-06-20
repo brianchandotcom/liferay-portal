@@ -90,7 +90,7 @@ public class MercanetCommercePaymentMethodConfigurationScreenNavigationEntry
 		}
 
 		if (Objects.equals(
-				commercePaymentMethod.getEngineKey(),
+				commercePaymentMethod.getPaymentIntegrationKey(),
 				MercanetCommercePaymentMethod.KEY)) {
 
 			return true;

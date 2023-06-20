@@ -43,8 +43,8 @@ public class CommercePaymentEntryModelDocumentContributor
 			document.addKeyword(
 				"currencyCode", commercePaymentEntry.getCurrencyCode());
 			document.addKeyword(
-				"paymentMethodName",
-				commercePaymentEntry.getPaymentMethodName());
+				"paymentIntegrationKey",
+				commercePaymentEntry.getPaymentIntegrationKey());
 			document.addKeyword(
 				"transactionCode", commercePaymentEntry.getTransactionCode());
 			document.addKeyword(

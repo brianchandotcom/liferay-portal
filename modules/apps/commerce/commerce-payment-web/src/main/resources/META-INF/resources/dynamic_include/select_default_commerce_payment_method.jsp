@@ -40,7 +40,7 @@ CommerceChannelAccountEntryRelDisplayContext commerceChannelAccountEntryRelDispl
 		for (CommercePaymentMethodGroupRel commercePaymentMethodGroupRel : commerceChannelAccountEntryRelDisplayContext.getCommercePaymentMethodGroupRels()) {
 		%>
 
-			<aui:input checked="<%= commerceChannelAccountEntryRelDisplayContext.isCommercePaymentChecked(commercePaymentMethodGroupRel.getEngineKey()) %>" label="<%= commercePaymentMethodGroupRel.getName(locale) %>" name="commercePaymentMethodGroupRelId" type="radio" value="<%= commercePaymentMethodGroupRel.getCommercePaymentMethodGroupRelId() %>" />
+			<aui:input checked="<%= commerceChannelAccountEntryRelDisplayContext.isCommercePaymentChecked(commercePaymentMethodGroupRel.getPaymentIntegrationKey()) %>" label="<%= commercePaymentMethodGroupRel.getName(locale) %>" name="commercePaymentMethodGroupRelId" type="radio" value="<%= commercePaymentMethodGroupRel.getCommercePaymentMethodGroupRelId() %>" />
 
 		<%
 		}

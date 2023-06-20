@@ -236,7 +236,7 @@ public class CommerceTestUtil {
 				userId, commerceChannel.getGroupId());
 
 		commerceOrder.setCommercePaymentMethodKey(
-			commercePaymentMethodGroupRel.getEngineKey());
+			commercePaymentMethodGroupRel.getPaymentIntegrationKey());
 
 		CommerceShippingMethod commerceShippingMethod =
 			addCommerceShippingMethod(userId, commerceChannel.getGroupId());
@@ -354,8 +354,8 @@ public class CommerceTestUtil {
 
 		return CommercePaymentMethodGroupRelLocalServiceUtil.
 			addCommercePaymentMethodGroupRel(
-				userId, groupId, nameMap, null, null,
-				TestCommercePaymentMethod.KEY, 1, true);
+				userId, groupId, nameMap, null, true, null,
+				TestCommercePaymentMethod.KEY, 1, null);
 	}
 
 	public static CommerceShippingFixedOption addCommerceShippingFixedOption(

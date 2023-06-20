@@ -133,7 +133,9 @@ public class OfflineCommercePaymentMethod implements CommercePaymentMethod {
 		for (CommercePaymentMethodGroupRel commercePaymentMethodGroupRel :
 				commercePaymentMethodGroupRels) {
 
-			if (key.equals(commercePaymentMethodGroupRel.getEngineKey())) {
+			if (key.equals(
+					commercePaymentMethodGroupRel.getPaymentIntegrationKey())) {
+
 				_commercePaymentMethodGroupRelLocalService.
 					deleteCommercePaymentMethodGroupRel(
 						commercePaymentMethodGroupRel.
@@ -160,7 +162,9 @@ public class OfflineCommercePaymentMethod implements CommercePaymentMethod {
 
 			String key = (String)properties.get("key");
 
-			if (key.equals(commercePaymentMethodGroupRel.getEngineKey())) {
+			if (key.equals(
+					commercePaymentMethodGroupRel.getPaymentIntegrationKey())) {
+
 				_commercePaymentMethodGroupRelLocalService.
 					deleteCommercePaymentMethodGroupRel(
 						commercePaymentMethodGroupRel.

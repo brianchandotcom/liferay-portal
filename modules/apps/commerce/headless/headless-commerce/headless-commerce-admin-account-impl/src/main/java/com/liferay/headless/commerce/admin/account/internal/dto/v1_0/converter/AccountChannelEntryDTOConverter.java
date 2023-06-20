@@ -185,9 +185,9 @@ public class AccountChannelEntryDTOConverter
 							commerceChannelAccountEntryRel.getClassPK()));
 
 			if (!Validator.isBlank(
-					commercePaymentMethodGroupRel.getEngineKey())) {
+					commercePaymentMethodGroupRel.getPaymentIntegrationKey())) {
 
-				return commercePaymentMethodGroupRel.getEngineKey();
+				return commercePaymentMethodGroupRel.getPaymentIntegrationKey();
 			}
 		}
 		else if (type ==

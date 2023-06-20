@@ -8,14 +8,14 @@
 	width: $sidebarWidth;
 
 	.sidebar-header,
-	.sidebar-collapse-header,
+	.panel-header,
 	.empty-message {
 		font-weight: 600;
 	}
 
 	.sidebar-header,
 	.sidebar-search,
-	.sidebar-collapse-header,
+	.panel-header,
 	.empty-message {
 		padding: 1rem 1.5rem;
 	}
@@ -24,10 +24,7 @@
 		flex-basis: 0;
 		flex-grow: 1;
 		flex-shrink: 1;
-	}
-
-	.sidebar-collapse-groups {
-		flex-flow: column nowrap;
+		overflow-x: hidden;
 	}
 
 	.sidebar-collapse-item {
@@ -40,7 +37,7 @@
 		}
 	}
 
-	.sidebar-collapse-header {
+	.panel-header {
 		color: $dark;
 		font-size: 0.875rem;
 		word-wrap: break-word;
@@ -49,7 +46,7 @@
 			transition: transform $segmentsTransition;
 			will-change: transform;
 
-			&.active {
+			&.expanded {
 				transform: rotate(90deg);
 			}
 		}
@@ -60,7 +57,7 @@
 			content: '';
 			left: 1.5rem;
 			position: absolute;
-			right: 1.5rem;
+			right: 1.25rem;
 		}
 	}
 

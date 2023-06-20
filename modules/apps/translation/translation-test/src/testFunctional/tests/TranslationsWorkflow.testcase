@@ -875,11 +875,9 @@ definition {
 				title = "Translation of WebContentTitle to ${language}");
 		}
 
-		WebContentNavigator.openToEditWCInSite(
-			groupName = "Guest",
-			siteURLKey = "guest",
-			version = "1.1",
-			webContentTitle = "WebContentTitle");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WebContentTitle");
 
 		PortletEntry.changeLocale(locale = "de-DE");
 

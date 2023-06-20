@@ -1155,6 +1155,9 @@ public class ObjectEntryRelatedObjectsResourceTest {
 
 		UserAccount putUserAccount = UserAccountTestUtil.randomUserAccount();
 
+		putUserAccount.setEmailAddress(
+			StringUtil.toLowerCase(RandomTestUtil.randomString()) +
+				"@liferay.com");
 		putUserAccount.setExternalReferenceCode(
 			() -> {
 				JSONObject systemObjectEntryJSONObject = HTTPTestUtil.invoke(
@@ -1182,10 +1185,6 @@ public class ObjectEntryRelatedObjectsResourceTest {
 				return systemObjectEntryJSONObject.getString(
 					"externalReferenceCode");
 			});
-
-		putUserAccount.setEmailAddress(
-			StringUtil.toLowerCase(RandomTestUtil.randomString()) +
-				"@liferay.com");
 
 		String systemObjectFieldValue = RandomTestUtil.randomString();
 
@@ -1253,6 +1252,9 @@ public class ObjectEntryRelatedObjectsResourceTest {
 
 		UserAccount putUserAccount = UserAccountTestUtil.randomUserAccount();
 
+		putUserAccount.setEmailAddress(
+			StringUtil.toLowerCase(RandomTestUtil.randomString()) +
+				"@liferay.com");
 		putUserAccount.setExternalReferenceCode(
 			() -> {
 				JSONObject systemObjectEntryJSONObject = HTTPTestUtil.invoke(
@@ -1280,9 +1282,6 @@ public class ObjectEntryRelatedObjectsResourceTest {
 				return systemObjectEntryJSONObject.getString(
 					"externalReferenceCode");
 			});
-		putUserAccount.setEmailAddress(
-			StringUtil.toLowerCase(RandomTestUtil.randomString()) +
-				"@liferay.com");
 
 		String systemObjectFieldValue = RandomTestUtil.randomString();
 

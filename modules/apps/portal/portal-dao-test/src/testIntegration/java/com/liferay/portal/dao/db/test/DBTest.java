@@ -65,8 +65,9 @@ public class DBTest {
 
 		_db = DBManagerUtil.getDB();
 
-		for (int i = 0; i < _COLUMN_NAMES_1.length; i++) {
-			_COLUMN_NAMES_1[i] = _dbInspector.normalizeName(_COLUMN_NAMES_1[i]);
+		for (int i = 0; i < _SYNC_TABLES_COLUMN_NAMES.length; i++) {
+			_SYNC_TABLES_COLUMN_NAMES[i] = _dbInspector.normalizeName(
+				_SYNC_TABLES_COLUMN_NAMES[i]);
 		}
 	}
 
@@ -460,7 +461,7 @@ public class DBTest {
 
 		Map<String, String> columnNameMap = new HashMap<>();
 
-		for (String columnName : _COLUMN_NAMES_1) {
+		for (String columnName : _SYNC_TABLES_COLUMN_NAMES) {
 			columnNameMap.put(columnName, columnName);
 		}
 
@@ -520,7 +521,7 @@ public class DBTest {
 
 		Map<String, String> columnNameMap = new HashMap<>();
 
-		for (String columnName : _COLUMN_NAMES_1) {
+		for (String columnName : _SYNC_TABLES_COLUMN_NAMES) {
 			columnNameMap.put(columnName, columnName + "2");
 		}
 
@@ -592,17 +593,17 @@ public class DBTest {
 			ArrayUtil.sortedUnique(indexMetadata.getColumnNames()));
 	}
 
-	private static final String[] _COLUMN_NAMES_1 = {
-		"id", "notNilColumn", "nilColumn", "typeBlob", "typeBoolean",
-		"typeDate", "typeDouble", "typeInteger", "typeLong", "typeSBlob",
-		"typeString", "typeText", "typeVarchar"
-	};
-
 	private static final String _INDEX_NAME = "IX_TEMP";
 
 	private static final String _SQL_CREATE_TABLE_2 =
 		"create table " + DBTest._TABLE_NAME_2 +
 			" (id1 LONG not null, id2 LONG not null, primary key (id2, id1))";
+
+	private static final String[] _SYNC_TABLES_COLUMN_NAMES = {
+		"id", "notNilColumn", "nilColumn", "typeBlob", "typeBoolean",
+		"typeDate", "typeDouble", "typeInteger", "typeLong", "typeSBlob",
+		"typeString", "typeText", "typeVarchar"
+	};
 
 	private static final String _TABLE_NAME_1 = "DBTest1";
 

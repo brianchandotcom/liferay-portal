@@ -17,7 +17,6 @@ definition {
 
 			User.firstLoginPG();
 		}
-
 	}
 
 	tearDown {
@@ -27,27 +26,28 @@ definition {
 
 		CustomerPortal.customerPortalApisTearDown();
 	}
-    @description = "Story ID: LPS-152144 | Test Summary: Verify that the form can only be sent after filling out all required fields"
+
+	@description = "Story ID: LPS-152144 | Test Summary: Verify that the form can only be sent after filling out all required fields"
 	@ignore = "true"
 	@priority = 4
 	test AssertTheUserCanSubmitTheForm {
+		task ("Given the user logout from customer portal site") {
+			User.logoutPG();
+		}
 
-        task("Given the user logout from customer portal site") {
-            User.logoutPG();
-            }
-        
-        task("And go to Form for guest users") {
-			 var portalURL = PropsUtil.get("portal.url");
+		task ("And go to Form for guest users") {
+			var portalURL = PropsUtil.get("portal.url");
 
-            Navigator.openSpecificURL(url = "${portalURL}/web/cp/replacement-activation-key-form");   
-        }
+			Navigator.openSpecificURL(url = "${portalURL}/web/cp/replacement-activation-key-form");
+		}
 
-        task("When fulfill the form") {
-            CP2Utils.fulfillGuestForm(submit = "true");
-        }
+		task ("When fulfill the form") {
+			CP2Utils.fulfillGuestForm(submit = "true");
+		}
 
-		task("Then assert the success message") {
-			AssertElementPresent( locator1= "CP2Utils#GUEST_FORM_CONGRATS");
+		task ("Then assert the success message") {
+			AssertElementPresent(locator1 = "CP2Utils#GUEST_FORM_CONGRATS");
 		}
 	}
+
 }

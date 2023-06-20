@@ -182,6 +182,19 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		</if>
 	</target>
 
+	<target depends="compile" name="build-lib-versions-with-date">
+		<java
+			classname="com.liferay.portal.tools.PublishDateBuilder"
+			classpathref="project.classpath"
+			fork="true"
+			inputstring="${project.dir}/lib/versions.xml,${project.dir}/lib/versions-ext.xml,${project.dir}/lib/versions-complete.xml"
+			newenvironment="true"
+		>
+			<jvmarg value="-Dproject.dir=${project.dir}" />
+			<jvmarg value="-Dproject.modules.dir=${project.dir}/modules" />
+		</java>
+	</target>
+
 	<target name="build-service">
 		<path id="service.builder.classpath">
 			<fileset

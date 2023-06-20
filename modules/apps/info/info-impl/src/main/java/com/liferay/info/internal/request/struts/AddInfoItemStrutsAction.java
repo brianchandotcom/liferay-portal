@@ -36,11 +36,14 @@ import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.creator.InfoItemCreator;
+import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
+import com.liferay.layout.page.template.info.item.provider.DisplayPageInfoItemFieldSetProvider;
 import com.liferay.layout.provider.LayoutStructureProvider;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.captcha.CaptchaException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
@@ -162,7 +165,7 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 				throw new InfoFormException();
 			}
 
-			infoItemCreator.createFromInfoItemFieldValues(
+			Object infoItem = infoItemCreator.createFromInfoItemFieldValues(
 				groupId,
 				InfoItemFieldValues.builder(
 				).infoFieldValues(
@@ -171,9 +174,17 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 					new InfoItemReference(className, 0)
 				).build());
 
+			String displayPageURL = _getDisplayPageURL(
+				className,
+				ParamUtil.getString(httpServletRequest, "displayPage"),
+				infoItem);
+
 			redirect = ParamUtil.getString(httpServletRequest, "redirect");
 
-			if (Validator.isNull(redirect)) {
+			if (Validator.isNotNull(displayPageURL)) {
+				redirect = displayPageURL;
+			}
+			else if (Validator.isNull(redirect)) {
 				redirect = ParamUtil.getString(httpServletRequest, "backURL");
 
 				SessionMessages.add(httpServletRequest, formItemId);
@@ -273,6 +284,28 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 	protected void activate() {
 		_infoRequestFieldValuesProviderHelper =
 			new InfoRequestFieldValuesProviderHelper(_infoItemServiceRegistry);
+	}
+
+	private String _getDisplayPageURL(
+		String className, String displayPage, Object infoItem) {
+
+		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemFieldValuesProvider.class, className);
+
+		if (infoItemFieldValuesProvider == null) {
+			return StringPool.BLANK;
+		}
+
+		InfoFieldValue<Object> infoFieldValue =
+			infoItemFieldValuesProvider.getInfoFieldValue(
+				infoItem, displayPage);
+
+		if (infoFieldValue == null) {
+			return StringPool.BLANK;
+		}
+
+		return GetterUtil.getString(infoFieldValue.getValue());
 	}
 
 	private String _getValue(InfoFieldValue<?> infoFieldValue) {
@@ -509,6 +542,10 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AddInfoItemStrutsAction.class);
+
+	@Reference
+	private DisplayPageInfoItemFieldSetProvider
+		_displayPageInfoItemFieldSetProvider;
 
 	@Reference
 	private FragmentCollectionContributorRegistry

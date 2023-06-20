@@ -134,7 +134,7 @@ EOF
 
 import React from 'react';
 
-import {Liferay} from '../services/liferay/liferay.js';
+import {Liferay} from '../services/liferay/liferay';
 
 let oAuth2Client;
 
@@ -250,13 +250,13 @@ EOF
 import React from 'react';
 import {createRoot} from 'react-dom/client';
 
-import Comic from './common/components/Comic.js';
-import DadJoke from './common/components/DadJoke.js';
-import api from './common/services/liferay/api.js';
-import {Liferay} from './common/services/liferay/liferay.js';
-import HelloBar from './routes/hello-bar/pages/HelloBar.js';
-import HelloFoo from './routes/hello-foo/pages/HelloFoo.js';
-import HelloWorld from './routes/hello-world/pages/HelloWorld.js';
+import Comic from './common/components/Comic';
+import DadJoke from './common/components/DadJoke';
+import api from './common/services/liferay/api';
+import {Liferay} from './common/services/liferay/liferay';
+import HelloBar from './routes/hello-bar/pages/HelloBar';
+import HelloFoo from './routes/hello-foo/pages/HelloFoo';
+import HelloWorld from './routes/hello-world/pages/HelloWorld';
 
 import './common/styles/index.scss';
 

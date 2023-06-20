@@ -144,7 +144,7 @@ public class DefaultObjectEntryManagerImpl
 			String scopeKey)
 		throws Exception {
 
-		validateReadOnly(null, objectDefinition, objectEntry);
+		validateReadOnlyObjectFields(null, objectDefinition, objectEntry);
 
 		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
 			_objectEntryService.addObjectEntry(
@@ -770,7 +770,7 @@ public class DefaultObjectEntryManagerImpl
 		_checkObjectEntryObjectDefinitionId(
 			objectDefinition, serviceBuilderObjectEntry);
 
-		validateReadOnly(
+		validateReadOnlyObjectFields(
 			serviceBuilderObjectEntry.getExternalReferenceCode(),
 			objectDefinition, objectEntry);
 
@@ -800,7 +800,8 @@ public class DefaultObjectEntryManagerImpl
 			ObjectEntry objectEntry, String scopeKey)
 		throws Exception {
 
-		validateReadOnly(externalReferenceCode, objectDefinition, objectEntry);
+		validateReadOnlyObjectFields(
+			externalReferenceCode, objectDefinition, objectEntry);
 
 		long groupId = getGroupId(objectDefinition, scopeKey);
 

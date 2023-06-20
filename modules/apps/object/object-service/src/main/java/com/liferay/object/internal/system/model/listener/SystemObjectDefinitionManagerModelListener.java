@@ -17,7 +17,7 @@ package com.liferay.object.internal.system.model.listener;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.object.action.engine.ObjectActionEngine;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
-import com.liferay.object.entry.util.ObjectEntryReadOnlyUtil;
+import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -347,7 +347,7 @@ public class SystemObjectDefinitionManagerModelListener<T extends BaseModel<T>>
 		return baseModel.getModelAttributes();
 	}
 
-	private void _validateReadOnly(
+	private void _validateReadOnlyObjectFields(
 			T originalModel, T model, ObjectDefinition objectDefinition)
 		throws PortalException {
 
@@ -363,7 +363,7 @@ public class SystemObjectDefinitionManagerModelListener<T extends BaseModel<T>>
 				objectDefinition.getObjectDefinitionId());
 
 		if (originalModel == null) {
-			ObjectEntryReadOnlyUtil.validateReadOnly(
+			ObjectFieldUtil.validateReadOnlyObjectFields(
 				new HashMap<>(), extendedProperties, _ddmExpressionFactory,
 				objectFields);
 
@@ -376,7 +376,7 @@ public class SystemObjectDefinitionManagerModelListener<T extends BaseModel<T>>
 			return;
 		}
 
-		ObjectEntryReadOnlyUtil.validateReadOnly(
+		ObjectFieldUtil.validateReadOnlyObjectFields(
 			HashMapBuilder.putAll(
 				originalModel.getModelAttributes()
 			).putAll(
@@ -408,7 +408,8 @@ public class SystemObjectDefinitionManagerModelListener<T extends BaseModel<T>>
 				userId = _getUserId(model);
 			}
 
-			_validateReadOnly(originalModel, model, objectDefinition);
+			_validateReadOnlyObjectFields(
+				originalModel, model, objectDefinition);
 
 			_objectValidationRuleLocalService.validate(
 				model, objectDefinition.getObjectDefinitionId(),

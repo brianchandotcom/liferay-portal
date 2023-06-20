@@ -16,7 +16,7 @@ package com.liferay.object.rest.manager.v1_0;
 
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
-import com.liferay.object.entry.util.ObjectEntryReadOnlyUtil;
+import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.scope.ObjectScopeProvider;
@@ -105,7 +105,7 @@ public abstract class BaseObjectEntryManager {
 		return modelResourcePermission.getPortletResourcePermission();
 	}
 
-	protected void validateReadOnly(
+	protected void validateReadOnlyObjectFields(
 			String externalReferenceCode, ObjectDefinition objectDefinition,
 			com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry)
 		throws Exception {
@@ -130,7 +130,7 @@ public abstract class BaseObjectEntryManager {
 					serviceBuilderObjectEntry));
 		}
 
-		ObjectEntryReadOnlyUtil.validateReadOnly(
+		ObjectFieldUtil.validateReadOnlyObjectFields(
 			values, objectEntry.getProperties(), ddmExpressionFactory,
 			objectFieldLocalService.getObjectFields(
 				objectDefinition.getObjectDefinitionId()));

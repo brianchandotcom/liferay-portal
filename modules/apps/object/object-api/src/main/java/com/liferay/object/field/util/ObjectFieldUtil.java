@@ -14,14 +14,33 @@
 
 package com.liferay.object.field.util;
 
+import com.liferay.dynamic.data.mapping.expression.CreateExpressionRequest;
+import com.liferay.dynamic.data.mapping.expression.DDMExpression;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.constants.ObjectFieldSettingConstants;
+import com.liferay.object.constants.ObjectRelationshipConstants;
+import com.liferay.object.dynamic.data.mapping.expression.ObjectEntryDDMExpressionFieldAccessor;
+import com.liferay.object.entry.util.ObjectEntryThreadLocal;
+import com.liferay.object.exception.ObjectFieldReadOnlyException;
+import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.service.ObjectFieldLocalServiceUtil;
+import com.liferay.object.service.ObjectFieldSettingLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Guilherme Camacho
@@ -147,6 +166,109 @@ public class ObjectFieldUtil {
 			businessType, null, dbType, false, false, null, label, 0, name,
 			objectFieldSettings, ObjectFieldConstants.READ_ONLY_FALSE, null,
 			false, false);
+	}
+
+	public static void validateReadOnlyObjectFields(
+			Map<String, Object> existingValues, Map<String, Object> values,
+			DDMExpressionFactory ddmExpressionFactory,
+			List<ObjectField> objectFields)
+		throws PortalException {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-170122") ||
+			ObjectEntryThreadLocal.isSkipReadOnlyValidation()) {
+
+			return;
+		}
+
+		if (MapUtil.isEmpty(existingValues)) {
+			for (ObjectField objectField : objectFields) {
+				existingValues.put(
+					objectField.getName(),
+					ObjectFieldSettingUtil.getDefaultValueAsString(
+						null, objectField.getObjectFieldId(),
+						ObjectFieldSettingLocalServiceUtil.getService(), null));
+			}
+		}
+
+		existingValues.put("currentUserId", PrincipalThreadLocal.getUserId());
+
+		Map<String, ObjectField> objectFieldMap = new HashMap<>();
+
+		for (ObjectField objectField : objectFields) {
+			objectFieldMap.put(objectField.getName(), objectField);
+		}
+
+		for (ObjectField objectField :
+				ListUtil.filter(
+					objectFields,
+					objectField1 -> Objects.equals(
+						objectField1.getRelationshipType(),
+						ObjectRelationshipConstants.TYPE_ONE_TO_MANY))) {
+
+			String objectRelationshipERCObjectFieldName =
+				ObjectFieldSettingUtil.getValue(
+					ObjectFieldSettingConstants.
+						NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME,
+					objectField);
+
+			objectFieldsMap.put(
+				objectRelationshipERCObjectFieldName, objectField);
+		}
+
+		for (Map.Entry<String, Object> entry : values.entrySet()) {
+			if (Objects.equals(entry.getKey(), "status")) {
+				continue;
+			}
+
+			ObjectField objectField = objectFieldMap.get(entry.getKey());
+
+			if (Objects.equals(
+					objectField.getReadOnly(),
+					ObjectFieldConstants.READ_ONLY_FALSE)) {
+
+				continue;
+			}
+
+			if (Objects.equals(
+					objectField.getReadOnly(),
+					ObjectFieldConstants.READ_ONLY_TRUE)) {
+
+				_validateNewValue(
+					existingValues.get(entry.getKey()), objectField.getName(),
+					entry.getValue());
+
+				continue;
+			}
+
+			DDMExpression<Boolean> ddmExpression =
+				ddmExpressionFactory.createExpression(
+					CreateExpressionRequest.Builder.newBuilder(
+						objectField.getReadOnlyConditionExpression()
+					).withDDMExpressionFieldAccessor(
+						new ObjectEntryDDMExpressionFieldAccessor(
+							existingValues)
+					).build());
+
+			ddmExpression.setVariables(existingValues);
+
+			if (ddmExpression.evaluate()) {
+				_validateNewValue(
+					existingValues.get(entry.getKey()), objectField.getName(),
+					entry.getValue());
+			}
+		}
+	}
+
+	private static void _validateNewValue(
+			Object existingValue, String objectFieldName, Object value)
+		throws PortalException {
+
+		if (!((Validator.isNull(existingValue) && Validator.isNull(value)) ||
+			  Objects.equals(existingValue, value))) {
+
+			throw new ObjectFieldReadOnlyException(
+				"The object field " + objectFieldName + " is readOnly");
+		}
 	}
 
 }

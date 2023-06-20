@@ -96,7 +96,7 @@ public class SalesforceObjectEntryManagerImpl
 			ObjectActionKeys.ADD_OBJECT_ENTRY, objectDefinition, scopeKey,
 			dtoConverterContext.getUser());
 
-		validateReadOnly(null, objectDefinition, objectEntry);
+		validateReadOnlyObjectFields(null, objectDefinition, objectEntry);
 
 		JSONObject responseJSONObject = _salesforceHttp.post(
 			objectDefinition.getCompanyId(),
@@ -191,7 +191,8 @@ public class SalesforceObjectEntryManagerImpl
 			ActionKeys.UPDATE, objectDefinition, scopeKey,
 			dtoConverterContext.getUser());
 
-		validateReadOnly(externalReferenceCode, objectDefinition, objectEntry);
+		validateReadOnlyObjectFields(
+			externalReferenceCode, objectDefinition, objectEntry);
 
 		_salesforceHttp.patch(
 			companyId, getGroupId(objectDefinition, scopeKey),

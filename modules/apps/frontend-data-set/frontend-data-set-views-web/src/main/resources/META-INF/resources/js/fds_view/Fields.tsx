@@ -72,7 +72,7 @@ const getRendererLabel = ({
 }: {
 	cetRenderers?: FDSClientExtensionCellRenderer[];
 	rendererName: string;
-}) => {
+}): string => {
 	const AVAILABLE_CELL_RENDERERS = [
 		...FDS_INTERNAL_CELL_RENDERERS,
 		...cetRenderers,
@@ -81,12 +81,11 @@ const getRendererLabel = ({
 	const renderer = AVAILABLE_CELL_RENDERERS.filter((renderer: any) => {
 		return (
 			renderer.name === rendererName ||
-			renderer.label === rendererName ||
 			renderer.erc === rendererName
 		);
 	})[0];
 
-	return renderer.label || renderer.name;
+	return renderer?.label || renderer?.name || rendererName;
 };
 
 const SaveFDSFieldsModalContent = ({

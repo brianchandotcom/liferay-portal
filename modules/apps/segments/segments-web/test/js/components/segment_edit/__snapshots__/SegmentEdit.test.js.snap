@@ -481,22 +481,38 @@ exports[`SegmentEdit renders with given values 1`] = `
               </div>
             </div>
             <div
-              class="overflow-auto position-relative sidebar-collapse"
+              class="overflow-y-auto position-relative sidebar-collapse"
             >
-              <ul
-                class="c-mb-0 c-pl-0 d-flex sidebar-collapse-groups"
+              <div
+                aria-orientation="vertical"
+                class="panel-group c-mt-1"
+                role="tablist"
               >
-                <li
-                  class="d-flex flex-column sidebar-collapse-item sidebar-collapse-first-test-values-group active"
+                <div
+                  class="panel c-mr-2"
+                  role="tablist"
                 >
-                  <a
-                    class="d-flex justify-content-between position-relative sidebar-collapse-header text-decoration-none text-uppercase"
-                    tabindex="0"
+                  <button
+                    aria-expanded="true"
+                    class="panel-header panel-header-link collapse-icon collapse-icon-middle show btn btn-unstyled"
+                    role="tab"
+                    type="button"
                   >
-                    First Test Values Group
-                    <span>
+                    <div
+                      class="c-inner"
+                      tabindex="-1"
+                    >
+                      <div
+                        class="d-flex justify-content-between text-uppercase"
+                      >
+                        First Test Values Group
+                      </div>
+                    </div>
+                    <span
+                      class="collapse-icon-closed"
+                    >
                       <svg
-                        class="lexicon-icon lexicon-icon-angle-right active"
+                        class="lexicon-icon lexicon-icon-angle-right"
                         role="presentation"
                       >
                         <use
@@ -504,57 +520,74 @@ exports[`SegmentEdit renders with given values 1`] = `
                         />
                       </svg>
                     </span>
-                  </a>
-                  <div
-                    class="flex-grow-1 overflow-y-auto sidebar-collapse-body"
-                  >
-                    <p
-                      class="c-pt-3 c-px-4 text-secondary"
+                    <span
+                      class="collapse-icon-open"
                     >
-                      inherited-attributes-are-not-taken-into-account-to-include-members-in-segments
-                    </p>
-                    <ul
-                      class="c-pl-0"
-                    >
-                      <li
-                        class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-3 c-my-1 c-mx-0 d-flex  color--first-test-values-group"
-                        draggable="true"
-                        tabindex="0"
+                      <svg
+                        class="lexicon-icon lexicon-icon-angle-down"
+                        role="presentation"
                       >
-                        <span
-                          class="inline-item"
-                        >
-                          <svg
-                            class="lexicon-icon lexicon-icon-drag"
-                            role="presentation"
-                          >
-                            <use
-                              xlink:href="#drag"
-                            />
-                          </svg>
-                        </span>
-                        <span
-                          class="c-mx-2 c-my-0 criteria-sidebar-item-type sticker sticker-dark"
+                        <use
+                          xlink:href="#angle-down"
+                        />
+                      </svg>
+                    </span>
+                  </button>
+                  <div
+                    class="panel-collapse"
+                    role="tabpanel"
+                  >
+                    <div
+                      class="panel-body c-px-0"
+                    >
+                      <p
+                        class="c-pt-1 c-px-4 text-secondary"
+                      >
+                        inherited-attributes-are-not-taken-into-account-to-include-members-in-segments
+                      </p>
+                      <ul
+                        class="c-pl-0"
+                      >
+                        <li
+                          class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-3 c-my-1 c-mx-0 d-flex  color--first-test-values-group"
+                          draggable="true"
+                          tabindex="0"
                         >
                           <span
                             class="inline-item"
                           >
                             <svg
-                              class="lexicon-icon lexicon-icon-text"
+                              class="lexicon-icon lexicon-icon-drag"
                               role="presentation"
                             >
                               <use
-                                xlink:href="#text"
+                                xlink:href="#drag"
                               />
                             </svg>
                           </span>
-                        </span>
-                        Value
-                      </li>
-                    </ul>
+                          <span
+                            class="c-mx-2 c-my-0 criteria-sidebar-item-type sticker sticker-dark"
+                          >
+                            <span
+                              class="inline-item"
+                            >
+                              <svg
+                                class="lexicon-icon lexicon-icon-text"
+                                role="presentation"
+                              >
+                                <use
+                                  xlink:href="#text"
+                                />
+                              </svg>
+                            </span>
+                          </span>
+                          Value
+                        </li>
+                      </ul>
+                    </div>
                   </div>
-                </li>
-              </ul>
+                </div>
+              </div>
             </div>
           </div>
         </div>

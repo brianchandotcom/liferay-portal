@@ -120,6 +120,8 @@ export default function propsTransformer({
 			id: `${portletNamespace}selectFragmentCollection`,
 			onSelect(selectedItem) {
 				if (selectedItem) {
+					const itemValue = JSON.parse(selectedItem.value);
+
 					const form = document.getElementById(
 						`${portletNamespace}fragmentEntryFm`
 					);
@@ -135,7 +137,7 @@ export default function propsTransformer({
 					if (fragmentCollectionIdElement) {
 						fragmentCollectionIdElement.setAttribute(
 							'value',
-							selectedItem.id
+							itemValue.fragmentCollectionId
 						);
 					}
 

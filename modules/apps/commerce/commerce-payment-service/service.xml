@@ -20,12 +20,16 @@
 
 		<!-- Other fields -->
 
+		<column name="channelId" type="long" />
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
 		<column name="amount" type="BigDecimal" />
+		<column name="callbackURL" type="String" />
 		<column name="currencyCode" type="String" />
-		<column name="paymentMethodName" type="String" />
+		<column name="paymentMethodKey" type="String" />
+		<column name="paymentMethodType" type="int" />
 		<column name="paymentStatus" type="int" />
+		<column name="redirectURL" type="String" />
 		<column name="transactionCode" type="String" />
 
 		<!-- Order -->

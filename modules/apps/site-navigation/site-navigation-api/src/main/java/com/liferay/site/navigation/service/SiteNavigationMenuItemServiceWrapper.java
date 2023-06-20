@@ -114,6 +114,16 @@ public class SiteNavigationMenuItemServiceWrapper
 	}
 
 	@Override
+	public java.util.List<SiteNavigationMenuItem> getSiteNavigationMenuItems(
+		long siteNavigationMenuId,
+		com.liferay.portal.kernel.util.OrderByComparator<SiteNavigationMenuItem>
+			orderByComparator) {
+
+		return _siteNavigationMenuItemService.getSiteNavigationMenuItems(
+			siteNavigationMenuId, orderByComparator);
+	}
+
+	@Override
 	public SiteNavigationMenuItem updateSiteNavigationMenuItem(
 			long siteNavigationMenuId, long parentSiteNavigationMenuItemId,
 			int order)

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 
 import java.util.List;
@@ -90,6 +91,11 @@ public interface SiteNavigationMenuItemService extends BaseService {
 	public List<SiteNavigationMenuItem> getSiteNavigationMenuItems(
 			long siteNavigationMenuId, long parentSiteNavigationMenuItemId)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<SiteNavigationMenuItem> getSiteNavigationMenuItems(
+		long siteNavigationMenuId,
+		OrderByComparator<SiteNavigationMenuItem> orderByComparator);
 
 	public SiteNavigationMenuItem updateSiteNavigationMenuItem(
 			long siteNavigationMenuId, long parentSiteNavigationMenuItemId,

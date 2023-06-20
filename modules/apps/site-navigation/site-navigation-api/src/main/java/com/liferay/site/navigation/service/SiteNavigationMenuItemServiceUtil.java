@@ -15,6 +15,7 @@
 package com.liferay.site.navigation.service;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 
 import java.util.List;
@@ -100,6 +101,14 @@ public class SiteNavigationMenuItemServiceUtil {
 
 		return getService().getSiteNavigationMenuItems(
 			siteNavigationMenuId, parentSiteNavigationMenuItemId);
+	}
+
+	public static List<SiteNavigationMenuItem> getSiteNavigationMenuItems(
+		long siteNavigationMenuId,
+		OrderByComparator<SiteNavigationMenuItem> orderByComparator) {
+
+		return getService().getSiteNavigationMenuItems(
+			siteNavigationMenuId, orderByComparator);
 	}
 
 	public static SiteNavigationMenuItem updateSiteNavigationMenuItem(

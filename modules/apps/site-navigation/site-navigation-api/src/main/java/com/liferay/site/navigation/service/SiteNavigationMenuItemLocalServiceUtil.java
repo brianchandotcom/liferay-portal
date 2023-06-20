@@ -384,6 +384,14 @@ public class SiteNavigationMenuItemLocalServiceUtil {
 			siteNavigationMenuId, parentSiteNavigationMenuItemId);
 	}
 
+	public static List<SiteNavigationMenuItem> getSiteNavigationMenuItems(
+		long siteNavigationMenuId,
+		OrderByComparator<SiteNavigationMenuItem> orderByComparator) {
+
+		return getService().getSiteNavigationMenuItems(
+			siteNavigationMenuId, orderByComparator);
+	}
+
 	/**
 	 * Returns all the site navigation menu items matching the UUID and company.
 	 *

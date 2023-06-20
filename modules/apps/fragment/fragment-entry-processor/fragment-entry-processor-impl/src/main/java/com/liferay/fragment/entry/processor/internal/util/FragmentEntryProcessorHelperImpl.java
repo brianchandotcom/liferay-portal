@@ -212,8 +212,8 @@ public class FragmentEntryProcessorHelperImpl
 		}
 
 		return _getMappedInfoItemFieldValue(
-			editableValueJSONObject, fieldName, infoItemFieldValuesProvider,
-			fragmentEntryProcessorContext.getLocale(), object);
+			editableValueJSONObject, fieldName, infoItemFieldValues,
+			fragmentEntryProcessorContext.getLocale());
 	}
 
 	@Override
@@ -509,11 +509,10 @@ public class FragmentEntryProcessorHelperImpl
 
 	private Object _getMappedInfoItemFieldValue(
 		JSONObject editableValueJSONObject, String fieldName,
-		InfoItemFieldValuesProvider infoItemFieldValuesProvider, Locale locale,
-		Object object) {
+		InfoItemFieldValues infoItemFieldValues, Locale locale) {
 
 		InfoFieldValue<Object> infoFieldValue =
-			infoItemFieldValuesProvider.getInfoFieldValue(object, fieldName);
+			infoItemFieldValues.getInfoFieldValue(fieldName);
 
 		if (infoFieldValue == null) {
 			return null;

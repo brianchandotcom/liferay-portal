@@ -1493,3 +1493,25 @@ The removal of this extension point has no direct replacement.
 ### Why was this change made?
 
 `SOAP` is deprecated in 7.3, and Liferay decided to not support this extension point.
+
+---------------------------------------
+
+## Removed AMImageConfiguration imageMaxSize property and AMImageConfigurationProvider
+- **Date:** 2023-June-29
+- **JIRA Ticket:** [LPS-185768](https://issues.liferay.com/browse/LPS-185768)
+
+### What changed?
+
+`AMImageConfiguration imageMaxSize` and its provider `AMImageConfigurationProvider` are removed.
+
+### Who is affected?
+
+This affects anyone using this configuration right now.
+
+### How should I update my code?
+
+Replace configuration usage with `DLFileEntryConfiguration` `previewableProcessorMaxSize`
+
+### Why was this change made?
+
+`AMImageConfiguration` `imageMaxSize` property has been deprecated since 7.2.x in favor of using `DLFileEntryConfiguration` `previewableProcessorMaxSize`.

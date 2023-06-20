@@ -51,6 +51,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.io.IOException;
 
@@ -316,7 +317,8 @@ public class ObjectEntryItemSelectorView
 				searchContainer.setResultsAndTotal(
 					_getObjectEntries(
 						ParamUtil.getLong(
-							_portletRequest, "objectDefinitionId")));
+							_portletRequest, "objectDefinitionId"),
+						searchContainer.getCur(), searchContainer.getDelta()));
 			}
 			catch (Exception exception) {
 				_log.error(exception);
@@ -350,7 +352,8 @@ public class ObjectEntryItemSelectorView
 				_themeDisplay.getLocale(), null, _themeDisplay.getUser());
 		}
 
-		private List<ObjectEntry> _getObjectEntries(long objectDefinitionId)
+		private List<ObjectEntry> _getObjectEntries(
+				long objectDefinitionId, int curPage, int pageSize)
 			throws Exception {
 
 			if (objectDefinitionId == 0) {
@@ -360,8 +363,8 @@ public class ObjectEntryItemSelectorView
 					_objectEntryManager.getObjectEntries(
 						_themeDisplay.getCompanyId(), _objectDefinition,
 						scopeGroup.getGroupKey(), null,
-						_getDTOConverterContext(), StringPool.BLANK, null, null,
-						null);
+						_getDTOConverterContext(), StringPool.BLANK,
+						Pagination.of(curPage, pageSize), null, null);
 
 				return TransformUtil.transform(
 					page.getItems(),

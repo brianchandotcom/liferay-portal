@@ -39,8 +39,6 @@ if (searchFolderId > 0) {
 	folder = DLAppServiceUtil.getFolder(searchFolderId);
 }
 
-String keywords = ParamUtil.getString(request, "keywords");
-
 DLAdminDisplayContext dlAdminDisplayContext = (DLAdminDisplayContext)request.getAttribute(DLAdminDisplayContext.class.getName());
 DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(dlRequestHelper);
 DLViewEntriesDisplayContext dlViewEntriesDisplayContext = new DLViewEntriesDisplayContext(liferayPortletRequest, liferayPortletResponse);
@@ -68,7 +66,6 @@ entriesChecker.setRememberCheckBoxStateURLRegex("^(?!.*" + liferayPortletRespons
 
 	<div class="document-container" id="<portlet:namespace />entriesContainer">
 		<liferay-ui:search-container
-			emptyResultsMessage='<%= LanguageUtil.format(request, "no-documents-were-found-that-matched-the-keywords-x", HtmlUtil.escape(keywords), false) %>'
 			id="entries"
 			searchContainer="<%= dlSearchContainer %>"
 			total="<%= dlSearchContainer.getTotal() %>"

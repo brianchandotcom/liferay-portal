@@ -729,7 +729,7 @@ public class DLAdminDisplayContext {
 			new SearchContainer<>(
 				_liferayPortletRequest, null, null, "curEntry",
 				_dlPortletInstanceSettings.getEntriesPerPage(),
-				getViewRenderURL(), null, _getEmptyResultsMessage());
+				getViewRenderURL(), null, _getFilterEmptyResultsMessage());
 
 		dlSearchContainer.setHeaderNames(
 			ListUtil.fromArray(
@@ -827,7 +827,21 @@ public class DLAdminDisplayContext {
 		return dlSearchContainer;
 	}
 
-	private String _getEmptyResultsMessage() throws PortalException {
+	private Filter _getExtensionsFilter(String[] extensions) {
+		if (ArrayUtil.isEmpty(extensions)) {
+			return null;
+		}
+
+		TermsFilter termsFilter = new TermsFilter("extension");
+
+		for (String extension : extensions) {
+			termsFilter.addValue(extension);
+		}
+
+		return termsFilter;
+	}
+
+	private String _getFilterEmptyResultsMessage() throws PortalException {
 		long fileEntryTypeId = getFileEntryTypeId();
 
 		if (fileEntryTypeId < 0) {
@@ -850,20 +864,6 @@ public class DLAdminDisplayContext {
 			_httpServletRequest,
 			"there-are-no-documents-or-media-files-of-type-x",
 			HtmlUtil.escape(dlFileEntryTypeName), false);
-	}
-
-	private Filter _getExtensionsFilter(String[] extensions) {
-		if (ArrayUtil.isEmpty(extensions)) {
-			return null;
-		}
-
-		TermsFilter termsFilter = new TermsFilter("extension");
-
-		for (String extension : extensions) {
-			termsFilter.addValue(extension);
-		}
-
-		return termsFilter;
 	}
 
 	private Hits _getHits(SearchContainer<RepositoryEntry> searchContainer)
@@ -999,6 +999,25 @@ public class DLAdminDisplayContext {
 		return searchContext;
 	}
 
+	private String _getSearchEmptyResultsMessage() {
+		String message = "no-documents-were-found-that-matched-the-keywords-x";
+
+		if (hasFilterParameters()) {
+			if (_isExternalRepositorySearch()) {
+				return "there-are-no-documents-or-media-files-that-matched-" +
+					"the-filters-in-this-repository";
+			}
+
+			message =
+				"no-documents-were-found-that-matched-the-filters-and-the-" +
+					"keywords-x";
+		}
+
+		return LanguageUtil.format(
+			_httpServletRequest, message, HtmlUtil.escape(_getKeywords()),
+			false);
+	}
+
 	private long _getSearchFolderId() {
 		if (_searchFolderId == null) {
 			_searchFolderId = ParamUtil.getLong(
@@ -1068,7 +1087,12 @@ public class DLAdminDisplayContext {
 
 		SearchContainer<RepositoryEntry> searchContainer =
 			new SearchContainer<>(
-				_liferayPortletRequest, getSearchRenderURL(), null, null);
+				_liferayPortletRequest, getSearchRenderURL(), null,
+				_getSearchEmptyResultsMessage());
+
+		if (_isExternalRepositorySearch() && hasFilterParameters()) {
+			return searchContainer;
+		}
 
 		searchContainer.setOrderByCol(getOrderByCol());
 		searchContainer.setOrderByType(getOrderByType());
@@ -1155,6 +1179,14 @@ public class DLAdminDisplayContext {
 				dlFileEntry.getTreePath(), CharPool.FORWARD_SLASH));
 
 		return treePaths.contains(String.valueOf(folderId));
+	}
+
+	private boolean _isExternalRepositorySearch() {
+		if (_getSearchRepositoryId() != _themeDisplay.getScopeGroupId()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private void _setFilterParameters(PortletURL portletURL) {

@@ -93,7 +93,8 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 			InfoItemObjectProvider<Object> infoItemObjectProvider =
 				_infoItemServiceRegistry.getFirstInfoItemService(
 					InfoItemObjectProvider.class,
-					infoItemReference.getClassName());
+					infoItemReference.getClassName(),
+					ClassPKInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER);
 
 			InfoItemFieldValues infoItemFieldValues =
 				InfoItemFieldValues.builder(

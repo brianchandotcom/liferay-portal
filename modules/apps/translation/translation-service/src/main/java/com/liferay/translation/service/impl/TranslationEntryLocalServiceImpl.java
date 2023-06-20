@@ -306,7 +306,8 @@ public class TranslationEntryLocalServiceImpl
 			InfoItemObjectProvider<Object> infoItemObjectProvider =
 				_infoItemServiceRegistry.getFirstInfoItemService(
 					InfoItemObjectProvider.class,
-					translationEntry.getClassName());
+					translationEntry.getClassName(),
+					ClassPKInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER);
 
 			String content = translationEntry.getContent();
 

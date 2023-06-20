@@ -250,7 +250,8 @@ public class FriendlyURLServlet extends HttpServlet {
 
 		InfoItemObjectProvider<Object> infoItemObjectProvider =
 			_infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemObjectProvider.class, className);
+				InfoItemObjectProvider.class, className,
+				ClassPKInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER);
 
 		Object object = infoItemObjectProvider.getInfoItem(
 			new ClassPKInfoItemIdentifier(classPK));

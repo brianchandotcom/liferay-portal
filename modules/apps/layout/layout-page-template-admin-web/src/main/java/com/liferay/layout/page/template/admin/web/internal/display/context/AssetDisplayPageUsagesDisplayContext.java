@@ -209,7 +209,8 @@ public class AssetDisplayPageUsagesDisplayContext {
 		InfoItemObjectProvider<?> infoItemObjectProvider =
 			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemObjectProvider.class,
-				_portal.getClassName(getClassNameId()));
+				_portal.getClassName(getClassNameId()),
+				ClassPKInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER);
 
 		if (infoItemObjectProvider == null) {
 			return StringPool.BLANK;

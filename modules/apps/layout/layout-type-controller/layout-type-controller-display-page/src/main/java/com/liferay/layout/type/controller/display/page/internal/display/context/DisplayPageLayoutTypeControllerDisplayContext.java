@@ -70,7 +70,8 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 			InfoItemObjectProvider<Object> infoItemObjectProvider =
 				(InfoItemObjectProvider<Object>)
 					infoItemServiceRegistry.getFirstInfoItemService(
-						InfoItemObjectProvider.class, className);
+						InfoItemObjectProvider.class, className,
+						ClassPKInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER);
 
 			InfoItemIdentifier infoItemIdentifier =
 				new ClassPKInfoItemIdentifier(assetEntry.getClassPK());

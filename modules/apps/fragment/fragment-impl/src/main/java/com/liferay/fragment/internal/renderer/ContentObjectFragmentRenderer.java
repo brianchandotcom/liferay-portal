@@ -27,6 +27,7 @@ import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.item.provider.InfoItemPermissionProvider;
+import com.liferay.info.item.provider.filter.InfoItemServiceFilter;
 import com.liferay.info.item.renderer.InfoItemRenderer;
 import com.liferay.info.item.renderer.InfoItemRendererRegistry;
 import com.liferay.info.item.renderer.InfoItemTemplatedRenderer;
@@ -262,9 +263,20 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 	private Object _getDisplayObject(
 		String className, long classPK, InfoItemReference infoItemReference) {
 
+		InfoItemServiceFilter infoItemServiceFilter =
+			ClassPKInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER;
+
+		if (infoItemReference != null) {
+			InfoItemIdentifier infoItemIdentifier =
+				infoItemReference.getInfoItemIdentifier();
+
+			infoItemServiceFilter =
+				infoItemIdentifier.getInfoItemServiceFilter();
+		}
+
 		InfoItemObjectProvider<?> infoItemObjectProvider =
 			_infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemObjectProvider.class, className);
+				InfoItemObjectProvider.class, className, infoItemServiceFilter);
 
 		if (infoItemObjectProvider == null) {
 			return _getInfoItem(infoItemReference);

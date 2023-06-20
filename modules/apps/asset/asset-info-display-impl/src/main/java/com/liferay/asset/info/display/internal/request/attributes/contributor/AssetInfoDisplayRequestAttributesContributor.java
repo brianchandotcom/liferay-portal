@@ -93,7 +93,8 @@ public class AssetInfoDisplayRequestAttributesContributor
 
 			InfoItemObjectProvider<?> infoItemObjectProvider =
 				_infoItemServiceRegistry.getFirstInfoItemService(
-					InfoItemObjectProvider.class, assetEntry.getClassName());
+					InfoItemObjectProvider.class, assetEntry.getClassName(),
+					ClassPKInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER);
 
 			if (infoItemObjectProvider != null) {
 				Object infoItem = infoItemObjectProvider.getInfoItem(

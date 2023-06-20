@@ -99,7 +99,8 @@ public class ExportTranslationMVCRenderCommand implements MVCRenderCommand {
 
 		InfoItemObjectProvider<Object> infoItemObjectProvider =
 			_infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemObjectProvider.class, className);
+				InfoItemObjectProvider.class, className,
+				ClassPKInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER);
 
 		List<Object> models = new ArrayList<>(classPKs.length);
 

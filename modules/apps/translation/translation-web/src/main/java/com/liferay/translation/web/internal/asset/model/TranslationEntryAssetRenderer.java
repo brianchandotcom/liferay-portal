@@ -152,7 +152,8 @@ public class TranslationEntryAssetRenderer
 				InfoItemFormProvider.class, _translationEntry.getClassName());
 		InfoItemObjectProvider<Object> infoItemObjectProvider =
 			_infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemObjectProvider.class, _translationEntry.getClassName());
+				InfoItemObjectProvider.class, _translationEntry.getClassName(),
+				ClassPKInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER);
 
 		String content = _translationEntry.getContent();
 

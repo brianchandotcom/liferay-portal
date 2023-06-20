@@ -44,7 +44,8 @@ public class FileEntryAnalyticsReportsInfoItemObjectProvider
 
 		InfoItemObjectProvider<Object> infoItemObjectProvider =
 			_infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemObjectProvider.class, getClassName());
+				InfoItemObjectProvider.class, getClassName(),
+				classPKInfoItemIdentifier.getInfoItemServiceFilter());
 
 		try {
 			return (FileEntry)infoItemObjectProvider.getInfoItem(

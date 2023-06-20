@@ -15,6 +15,7 @@
 package com.liferay.translation.web.internal.helper;
 
 import com.liferay.info.field.InfoFieldValue;
+import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
@@ -53,13 +54,17 @@ public class InfoItemHelper {
 			InfoItemReference infoItemReference =
 				infoItemReferenceSuffixObjectValuePair.getKey();
 
+			InfoItemIdentifier infoItemIdentifier =
+				infoItemReference.getInfoItemIdentifier();
+
 			InfoItemObjectProvider<Object> infoItemObjectProvider =
 				_infoItemServiceRegistry.getFirstInfoItemService(
 					InfoItemObjectProvider.class,
-					infoItemReference.getClassName());
+					infoItemReference.getClassName(),
+					infoItemIdentifier.getInfoItemServiceFilter());
 
 			Object object = infoItemObjectProvider.getInfoItem(
-				infoItemReference.getInfoItemIdentifier());
+				infoItemIdentifier);
 
 			if (object == null) {
 				return null;

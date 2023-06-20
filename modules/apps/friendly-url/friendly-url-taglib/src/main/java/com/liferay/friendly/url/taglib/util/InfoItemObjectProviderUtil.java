@@ -37,7 +37,8 @@ public class InfoItemObjectProviderUtil {
 
 			InfoItemObjectProvider<Object> infoItemObjectProvider =
 				infoItemServiceRegistry.getFirstInfoItemService(
-					InfoItemObjectProvider.class, className);
+					InfoItemObjectProvider.class, className,
+					ClassPKInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER);
 
 			return infoItemObjectProvider.getInfoItem(
 				new ClassPKInfoItemIdentifier(classPK));

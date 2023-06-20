@@ -21,13 +21,13 @@ import com.liferay.headless.builder.application.APIApplication;
 import com.liferay.headless.builder.application.provider.APIApplicationProvider;
 import com.liferay.headless.builder.application.provider.test.APIApplicationProviderTest;
 import com.liferay.headless.builder.application.publisher.APIApplicationPublisher;
+import com.liferay.headless.builder.publisher.test.util.APIApplicationPublisherUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
@@ -40,10 +40,7 @@ import java.nio.charset.StandardCharsets;
 
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
 
-import javax.ws.rs.core.Application;
 import javax.ws.rs.core.HttpHeaders;
 
 import org.junit.After;
@@ -57,8 +54,6 @@ import org.junit.runner.RunWith;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceReference;
-import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Luis Miguel Barcos
@@ -106,207 +101,98 @@ public class HeadlessBuilderResourceTest {
 			"headless-builder/applications/by-external-reference-code/" +
 				_API_APPLICATION_ERC_2,
 			Http.Method.DELETE);
+
+		APIApplicationPublisherUtil.unpublishRemainingAPIApplications(
+			_apiApplicationPublisher);
 	}
 
 	@Test
 	public void testEndpointIsReachable() throws Exception {
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-		BundleContext bundleContext = bundle.getBundleContext();
-
-		CountDownLatch addedCountLatch = new CountDownLatch(1);
-		CountDownLatch removedCountLatch = new CountDownLatch(1);
-
-		ServiceTracker<?, ?> serviceTracker =
-			new ServiceTracker<Application, Application>(
-				bundleContext, Application.class, null) {
-
-				@Override
-				public Application addingService(
-					ServiceReference<Application> serviceReference) {
-
-					if (GetterUtil.getBoolean(
-							serviceReference.getProperty(
-								"liferay.headless.builder.application"))) {
-
-						addedCountLatch.countDown();
-
-						return super.addingService(serviceReference);
-					}
-
-					return null;
-				}
-
-				@Override
-				public void removedService(
-					ServiceReference<Application> serviceReference,
-					Application service) {
-
-					if (GetterUtil.getBoolean(
-							serviceReference.getProperty(
-								"liferay.headless.builder.application"))) {
-
-						removedCountLatch.countDown();
-
-						super.removedService(serviceReference, service);
-					}
-				}
-
-			};
-
 		APIApplication apiApplication = _createAPIApplication(
 			"test", _API_APPLICATION_ERC_1, "test");
 
-		try {
-			serviceTracker.open();
+		HttpURLConnection httpURLConnection = _createHttpURLConnection(
+			apiApplication.getBaseURL(), Http.Method.GET);
 
-			HttpURLConnection httpURLConnection = _createHttpURLConnection(
-				apiApplication.getBaseURL(), Http.Method.GET);
+		httpURLConnection.connect();
 
-			httpURLConnection.connect();
+		Assert.assertEquals(404, httpURLConnection.getResponseCode());
 
-			Assert.assertEquals(404, httpURLConnection.getResponseCode());
+		APIApplicationPublisherUtil.publishApplications(
+			_apiApplicationPublisher, apiApplication);
 
-			_apiApplicationPublisher.publish(apiApplication);
+		httpURLConnection = _createHttpURLConnection(
+			apiApplication.getBaseURL(), Http.Method.GET);
 
-			addedCountLatch.await(1, TimeUnit.MINUTES);
+		httpURLConnection.connect();
 
-			httpURLConnection = _createHttpURLConnection(
-				apiApplication.getBaseURL(), Http.Method.GET);
+		Assert.assertEquals(200, httpURLConnection.getResponseCode());
 
-			httpURLConnection.connect();
+		APIApplicationPublisherUtil.unpublishApplications(
+			_apiApplicationPublisher, apiApplication);
 
-			Assert.assertEquals(200, httpURLConnection.getResponseCode());
+		httpURLConnection = _createHttpURLConnection(
+			apiApplication.getBaseURL(), Http.Method.GET);
 
-			_apiApplicationPublisher.unpublish(apiApplication);
+		httpURLConnection.connect();
 
-			removedCountLatch.await(1, TimeUnit.MINUTES);
-
-			httpURLConnection = _createHttpURLConnection(
-				apiApplication.getBaseURL(), Http.Method.GET);
-
-			httpURLConnection.connect();
-
-			Assert.assertEquals(404, httpURLConnection.getResponseCode());
-		}
-		finally {
-			serviceTracker.close();
-
-			_apiApplicationPublisher.unpublish(apiApplication);
-		}
+		Assert.assertEquals(404, httpURLConnection.getResponseCode());
 	}
 
 	@Test
 	public void testEndpointsAreReachable() throws Exception {
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-		BundleContext bundleContext = bundle.getBundleContext();
-
-		CountDownLatch addedCountLatch = new CountDownLatch(2);
-		CountDownLatch removedCountLatch = new CountDownLatch(1);
-
-		ServiceTracker<?, ?> serviceTracker =
-			new ServiceTracker<Application, Application>(
-				bundleContext, Application.class, null) {
-
-				@Override
-				public Application addingService(
-					ServiceReference<Application> serviceReference) {
-
-					if (GetterUtil.getBoolean(
-							serviceReference.getProperty(
-								"liferay.headless.builder.application"))) {
-
-						addedCountLatch.countDown();
-
-						return super.addingService(serviceReference);
-					}
-
-					return null;
-				}
-
-				@Override
-				public void removedService(
-					ServiceReference<Application> serviceReference,
-					Application service) {
-
-					if (GetterUtil.getBoolean(
-							serviceReference.getProperty(
-								"liferay.headless.builder.application"))) {
-
-						removedCountLatch.countDown();
-
-						super.removedService(serviceReference, service);
-					}
-				}
-
-			};
-
 		APIApplication apiApplication1 = _createAPIApplication(
 			"test1", _API_APPLICATION_ERC_1, "test1");
 		APIApplication apiApplication2 = _createAPIApplication(
 			"test2", _API_APPLICATION_ERC_2, "test2");
 
-		try {
-			serviceTracker.open();
+		HttpURLConnection httpURLConnection = _createHttpURLConnection(
+			apiApplication1.getBaseURL(), Http.Method.GET);
 
-			HttpURLConnection httpURLConnection = _createHttpURLConnection(
-				apiApplication1.getBaseURL(), Http.Method.GET);
+		httpURLConnection.connect();
 
-			httpURLConnection.connect();
+		Assert.assertEquals(404, httpURLConnection.getResponseCode());
 
-			Assert.assertEquals(404, httpURLConnection.getResponseCode());
+		httpURLConnection = _createHttpURLConnection(
+			apiApplication2.getBaseURL(), Http.Method.GET);
 
-			httpURLConnection = _createHttpURLConnection(
-				apiApplication2.getBaseURL(), Http.Method.GET);
+		httpURLConnection.connect();
 
-			httpURLConnection.connect();
+		Assert.assertEquals(404, httpURLConnection.getResponseCode());
 
-			Assert.assertEquals(404, httpURLConnection.getResponseCode());
+		APIApplicationPublisherUtil.publishApplications(
+			_apiApplicationPublisher, apiApplication1, apiApplication2);
 
-			_apiApplicationPublisher.publish(apiApplication1);
-			_apiApplicationPublisher.publish(apiApplication2);
+		httpURLConnection = _createHttpURLConnection(
+			apiApplication1.getBaseURL(), Http.Method.GET);
 
-			addedCountLatch.await(1, TimeUnit.MINUTES);
+		httpURLConnection.connect();
 
-			httpURLConnection = _createHttpURLConnection(
-				apiApplication1.getBaseURL(), Http.Method.GET);
+		Assert.assertEquals(200, httpURLConnection.getResponseCode());
 
-			httpURLConnection.connect();
+		httpURLConnection = _createHttpURLConnection(
+			apiApplication2.getBaseURL(), Http.Method.GET);
 
-			Assert.assertEquals(200, httpURLConnection.getResponseCode());
+		httpURLConnection.connect();
 
-			httpURLConnection = _createHttpURLConnection(
-				apiApplication2.getBaseURL(), Http.Method.GET);
+		Assert.assertEquals(200, httpURLConnection.getResponseCode());
 
-			httpURLConnection.connect();
+		APIApplicationPublisherUtil.unpublishApplications(
+			_apiApplicationPublisher, apiApplication1);
 
-			Assert.assertEquals(200, httpURLConnection.getResponseCode());
+		httpURLConnection = _createHttpURLConnection(
+			apiApplication1.getBaseURL(), Http.Method.GET);
 
-			_apiApplicationPublisher.unpublish(apiApplication1);
+		httpURLConnection.connect();
 
-			removedCountLatch.await(1, TimeUnit.MINUTES);
+		Assert.assertEquals(404, httpURLConnection.getResponseCode());
 
-			httpURLConnection = _createHttpURLConnection(
-				apiApplication1.getBaseURL(), Http.Method.GET);
+		httpURLConnection = _createHttpURLConnection(
+			apiApplication2.getBaseURL(), Http.Method.GET);
 
-			httpURLConnection.connect();
+		httpURLConnection.connect();
 
-			Assert.assertEquals(404, httpURLConnection.getResponseCode());
-
-			httpURLConnection = _createHttpURLConnection(
-				apiApplication2.getBaseURL(), Http.Method.GET);
-
-			httpURLConnection.connect();
-
-			Assert.assertEquals(200, httpURLConnection.getResponseCode());
-		}
-		finally {
-			serviceTracker.close();
-
-			_apiApplicationPublisher.unpublish(apiApplication1);
-			_apiApplicationPublisher.unpublish(apiApplication2);
-		}
+		Assert.assertEquals(200, httpURLConnection.getResponseCode());
 	}
 
 	private APIApplication _createAPIApplication(

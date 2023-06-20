@@ -17,6 +17,7 @@ package com.liferay.headless.builder.application.publisher.test;
 import com.liferay.headless.builder.application.APIApplication;
 import com.liferay.headless.builder.application.provider.APIApplicationProvider;
 import com.liferay.headless.builder.application.publisher.APIApplicationPublisher;
+import com.liferay.headless.builder.publisher.test.util.APIApplicationPublisherUtil;
 import com.liferay.headless.builder.test.BaseTestCase;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -28,12 +29,11 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
-
 import javax.ws.rs.core.Application;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import org.osgi.framework.Bundle;
@@ -48,82 +48,74 @@ import org.osgi.util.tracker.ServiceTracker;
 @FeatureFlags({"LPS-186757", "LPS-153117", "LPS-167253", "LPS-184413"})
 public class APIApplicationPublisherTest extends BaseTestCase {
 
+	@Before
+	public void setUp() throws Exception {
+		super.setUp();
+
+		Bundle testBundle = FrameworkUtil.getBundle(
+			APIApplicationPublisherTest.class);
+
+		BundleContext bundleContext = testBundle.getBundleContext();
+
+		_serviceTracker = new ServiceTracker<Application, Application>(
+			bundleContext, Application.class, null) {
+
+			@Override
+			public Application addingService(
+				ServiceReference<Application> serviceReference) {
+
+				if (GetterUtil.getBoolean(
+						serviceReference.getProperty(
+							"liferay.headless.builder.application"))) {
+
+					return super.addingService(serviceReference);
+				}
+
+				return null;
+			}
+
+		};
+
+		_serviceTracker.open();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		HTTPTestUtil.invoke(
+			null,
+			"headless-builder/applications/by-external-reference-code/" +
+				_API_APPLICATION_ERC_1,
+			Http.Method.DELETE);
+		HTTPTestUtil.invoke(
+			null,
+			"headless-builder/applications/by-external-reference-code/" +
+				_API_APPLICATION_ERC_2,
+			Http.Method.DELETE);
+
+		_serviceTracker.close();
+
+		APIApplicationPublisherUtil.unpublishRemainingAPIApplications(
+			_apiApplicationPublisher);
+	}
+
 	@Test
 	public void testPublish() throws Exception {
-		CountDownLatch addedCountLatch = new CountDownLatch(2);
-		CountDownLatch removedCountLatch = new CountDownLatch(2);
-
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-		BundleContext bundleContext = bundle.getBundleContext();
-
-		ServiceTracker<?, ?> serviceTracker =
-			new ServiceTracker<Application, Application>(
-				bundleContext, Application.class, null) {
-
-				@Override
-				public Application addingService(
-					ServiceReference<Application> serviceReference) {
-
-					if (GetterUtil.getBoolean(
-							serviceReference.getProperty(
-								"liferay.headless.builder.application"))) {
-
-						addedCountLatch.countDown();
-
-						return super.addingService(serviceReference);
-					}
-
-					return null;
-				}
-
-				@Override
-				public void removedService(
-					ServiceReference<Application> serviceReference,
-					Application service) {
-
-					if (GetterUtil.getBoolean(
-							serviceReference.getProperty(
-								"liferay.headless.builder.application"))) {
-
-						removedCountLatch.countDown();
-
-						super.removedService(serviceReference, service);
-					}
-				}
-
-			};
-
 		APIApplication apiApplication1 = _addAPIApplication(
 			_API_APPLICATION_ERC_1);
 		APIApplication apiApplication2 = _addAPIApplication(
 			_API_APPLICATION_ERC_2);
 
-		try {
-			serviceTracker.open();
+		Assert.assertEquals(0, _serviceTracker.size());
 
-			Assert.assertEquals(0, serviceTracker.size());
+		APIApplicationPublisherUtil.publishApplications(
+			_apiApplicationPublisher, apiApplication1, apiApplication2);
 
-			_apiApplicationPublisher.publish(apiApplication1);
-			_apiApplicationPublisher.publish(apiApplication2);
+		Assert.assertEquals(2, _serviceTracker.size());
 
-			addedCountLatch.await(1, TimeUnit.MINUTES);
+		APIApplicationPublisherUtil.unpublishApplications(
+			_apiApplicationPublisher, apiApplication1, apiApplication2);
 
-			Assert.assertEquals(2, serviceTracker.size());
-
-			_apiApplicationPublisher.unpublish(apiApplication1);
-			_apiApplicationPublisher.unpublish(apiApplication2);
-
-			removedCountLatch.await(1, TimeUnit.MINUTES);
-
-			Assert.assertEquals(0, serviceTracker.size());
-		}
-		finally {
-			serviceTracker.close();
-
-			_apiApplicationPublisher.unpublish(apiApplication1);
-			_apiApplicationPublisher.unpublish(apiApplication2);
-		}
+		Assert.assertEquals(0, _serviceTracker.size());
 	}
 
 	private APIApplication _addAPIApplication(String externalReferenceCode)
@@ -216,5 +208,7 @@ public class APIApplicationPublisherTest extends BaseTestCase {
 
 	@Inject
 	private APIApplicationPublisher _apiApplicationPublisher;
+
+	private ServiceTracker<Application, Application> _serviceTracker;
 
 }

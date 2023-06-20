@@ -727,61 +727,16 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 					@Test
 					public void test${javaMethodSignature.methodName?cap_first}WithFilterDoubleEquals() throws Exception {
-						List<EntityField> entityFields = getEntityFields(EntityField.Type.DOUBLE);
-
-						if (entityFields.isEmpty()) {
-							return;
-						}
-
-						<#list javaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
-							${javaMethodParameter.parameterType} ${javaMethodParameter.parameterName} = test${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}();
-						</#list>
-
-						${schemaName} ${schemaVarName}1 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}(
-
-						<#list javaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
-							${javaMethodParameter.parameterName},
-						</#list>
-
-						random${schemaName}());
-
-						@SuppressWarnings("PMD.UnusedLocalVariable")
-						${schemaName} ${schemaVarName}2 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}(
-
-						<#list javaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
-							${javaMethodParameter.parameterName},
-						</#list>
-
-						random${schemaName}());
-
-						for (EntityField entityField : entityFields) {
-							Page<${schemaName}> page = ${schemaVarName}Resource.${javaMethodSignature.methodName}(
-
-							<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
-								<#if !javaMethodParameter?is_first>
-									,
-								</#if>
-
-								<#if stringUtil.equals(javaMethodParameter.parameterName, "filter")>
-									getFilterString(entityField, "eq", ${schemaVarName}1)
-								<#elseif stringUtil.equals(javaMethodParameter.parameterName, "pagination")>
-									Pagination.of(1, 2)
-								<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
-									${javaMethodParameter.parameterName}
-								<#else>
-									null
-								</#if>
-							</#list>
-
-							);
-
-							assertEquals(Collections.singletonList(${schemaVarName}1), (List<${schemaName}>)page.getItems());
-						}
+						test${javaMethodSignature.methodName?cap_first}WithFilter("eq", EntityField.Type.DOUBLE);
 					}
 
 					@Test
 					public void test${javaMethodSignature.methodName?cap_first}WithFilterStringEquals() throws Exception {
-						List<EntityField> entityFields = getEntityFields(EntityField.Type.STRING);
+						test${javaMethodSignature.methodName?cap_first}WithFilter("eq", EntityField.Type.STRING);
+					}
+
+					protected void test${javaMethodSignature.methodName?cap_first}WithFilter(String operator, EntityField.Type type) {
+						List<EntityField> entityFields = getEntityFields(type);
 
 						if (entityFields.isEmpty()) {
 							return;
@@ -817,7 +772,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 								</#if>
 
 								<#if stringUtil.equals(javaMethodParameter.parameterName, "filter")>
-									getFilterString(entityField, "eq", ${schemaVarName}1)
+									getFilterString(entityField, operator, ${schemaVarName}1)
 								<#elseif stringUtil.equals(javaMethodParameter.parameterName, "pagination")>
 									Pagination.of(1, 2)
 								<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>

@@ -115,7 +115,7 @@ const IndividualAttributes: React.FC<IIndividualAttributesProps> = ({
 									? sub(Liferay.Language.get('x-sources'), [
 											dataSources.length
 									  ])
-									: dataSources[0].dataSourceName,
+									: dataSources[0]?.dataSourceName,
 							label: Liferay.Language.get('sources')
 						},
 						{

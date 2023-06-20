@@ -614,22 +614,18 @@ public class FragmentEntryConfigurationParserImpl
 		try {
 			JSONObject jsonObject = _jsonFactory.createJSONObject(value);
 
-			String className = GetterUtil.getString(
-				jsonObject.getString("className"));
-
 			InfoItemObjectProvider<?> infoItemObjectProvider =
 				_infoItemServiceRegistry.getFirstInfoItemService(
-					InfoItemObjectProvider.class, className,
+					InfoItemObjectProvider.class,
+					jsonObject.getString("className"),
 					ClassPKInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER);
 
 			if (infoItemObjectProvider == null) {
 				return null;
 			}
 
-			long classPK = GetterUtil.getLong(jsonObject.getString("classPK"));
-
 			return infoItemObjectProvider.getInfoItem(
-				new ClassPKInfoItemIdentifier(classPK));
+				new ClassPKInfoItemIdentifier(jsonObject.getLong("classPK")));
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

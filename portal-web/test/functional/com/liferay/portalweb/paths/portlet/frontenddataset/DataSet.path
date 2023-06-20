@@ -83,6 +83,11 @@
 	<td>//*[contains(@class,'nav-link')]//span[contains(text(),'${key_tabName}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>FIELDS_TABLE_AND_ROW</td>
+	<td>//th[contains(text(),'${key_tableColumn}')]/ancestor::table[contains(@class,'table-list')]//tr[@class='orderable-table-row']//*[contains(.,'${key_tableRow}')]</td>
+	<td></td>
+</tr>
 
 <!--DATA SET FIELDS-->
 

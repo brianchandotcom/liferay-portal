@@ -50,6 +50,7 @@ import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemService;
 import com.liferay.site.navigation.service.SiteNavigationMenuService;
+import com.liferay.site.navigation.util.comparator.SiteNavigationMenuItemOrderComparator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -452,7 +453,8 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 		Map<Long, List<SiteNavigationMenuItem>> siteNavigationMenuItemsMap =
 			_getSiteNavigationMenuItemsMap(
 				_siteNavigationMenuItemService.getSiteNavigationMenuItems(
-					siteNavigationMenu.getSiteNavigationMenuId()));
+					siteNavigationMenu.getSiteNavigationMenuId(),
+					new SiteNavigationMenuItemOrderComparator()));
 
 		return new NavigationMenu() {
 			{

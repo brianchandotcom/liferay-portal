@@ -2178,8 +2178,6 @@ definition {
 			ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
 
 			PortletEntry.save();
-
-			Refresh();
 		}
 
 		task ("And given a custom object entry that the validation not accept") {
@@ -2195,8 +2193,6 @@ definition {
 			ObjectCustomValidation.activeValidation();
 
 			PortletEntry.save();
-
-			Refresh();
 		}
 
 		task ("And When tried add a new entry that the validation not accept") {

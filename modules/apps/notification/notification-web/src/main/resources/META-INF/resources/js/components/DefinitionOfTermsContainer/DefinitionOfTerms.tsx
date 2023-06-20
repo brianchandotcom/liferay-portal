@@ -160,7 +160,7 @@ export function DefinitionOfTerms({
 							onActionDropdownItemClick={
 								onActionDropdownItemClick
 							}
-							selectedItemsKey="id"
+							selectedItemsKey="termName"
 							showManagementBar={false}
 							showPagination={false}
 							showSearch={false}
@@ -249,7 +249,7 @@ export function DefinitionOfTerms({
 								onActionDropdownItemClick={
 									onActionDropdownItemClick
 								}
-								selectedItemsKey="id"
+								selectedItemsKey="termName"
 								showManagementBar={false}
 								showPagination={false}
 								showSearch={false}

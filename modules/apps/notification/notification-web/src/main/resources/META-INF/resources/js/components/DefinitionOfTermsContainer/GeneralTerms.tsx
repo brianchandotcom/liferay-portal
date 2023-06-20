@@ -85,6 +85,7 @@ export function GeneralTerms({baseResourceURL}: GeneralTermsProps) {
 						},
 					]}
 					onActionDropdownItemClick={onActionDropdownItemClick}
+					selectedItemsKey="termName"
 					showManagementBar={false}
 					showPagination={false}
 					showSearch={false}

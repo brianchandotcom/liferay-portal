@@ -354,7 +354,7 @@ export default function PredefinedValuesTable({
 							},
 						]}
 						onActionDropdownItemClick={onActionDropdownItemClick}
-						selectedItemsKey="id"
+						selectedItemsKey="name"
 						showManagementBar={true}
 						showPagination={false}
 						showSearch={false}

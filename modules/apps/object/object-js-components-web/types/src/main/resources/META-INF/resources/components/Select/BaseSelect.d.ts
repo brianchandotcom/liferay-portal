@@ -19,6 +19,7 @@ export interface CustomItem<T = string> {
 	description?: string;
 	disabled?: boolean;
 	label: string;
+	name?: string;
 	popover?: {
 		body: string;
 		header: string;

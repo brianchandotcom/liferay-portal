@@ -56,7 +56,7 @@ export function SingleSelect<
 				}
 
 				return (
-					<Fragment key={option.value}>
+					<Fragment key={option.name ?? option.value ?? index}>
 						<ClayPopover
 							alignPosition="right"
 							disableScroll={false}

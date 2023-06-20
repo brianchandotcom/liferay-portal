@@ -20,12 +20,16 @@
 
 		<!-- Other fields -->
 
+		<column name="commerceChannelId" type="long" />
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
 		<column name="amount" type="BigDecimal" />
+		<column name="callbackURL" type="String" />
 		<column name="currencyCode" type="String" />
-		<column name="paymentMethodName" type="String" />
+		<column name="paymentIntegrationKey" type="String" />
+		<column name="paymentIntegrationType" type="int" />
 		<column name="paymentStatus" type="int" />
+		<column name="redirectURL" type="String" />
 		<column name="transactionCode" type="String" />
 
 		<!-- Order -->
@@ -101,10 +105,11 @@
 
 		<column localized="true" name="name" type="String" />
 		<column localized="true" name="description" type="String" />
-		<column name="imageId" type="long" />
-		<column name="engineKey" type="String" />
-		<column name="priority" type="double" />
 		<column name="active" type="boolean" />
+		<column name="imageId" type="long" />
+		<column name="paymentIntegrationKey" type="String" />
+		<column name="priority" type="double" />
+		<column name="typeSettings" type="String" />
 
 		<!-- Order -->
 
@@ -117,13 +122,13 @@
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>
-		<finder name="G_E" return-type="CommercePaymentMethodGroupRel" unique="true">
-			<finder-column name="groupId" />
-			<finder-column name="engineKey" />
-		</finder>
 		<finder name="G_A" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="active" />
+		</finder>
+		<finder name="G_P" return-type="CommercePaymentMethodGroupRel" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="paymentIntegrationKey" />
 		</finder>
 	</entity>
 	<entity local-service="true" name="CommercePaymentMethodGroupRelQualifier" remote-service="true" table="CPMethodGroupRelQualifier">

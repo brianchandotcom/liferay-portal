@@ -47,6 +47,7 @@ import com.liferay.portal.test.rule.Inject;
 import java.io.InputStream;
 
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -97,7 +98,7 @@ public class StructuredContentResourceTest
 			testGetSiteStructuredContentsPage_getSiteId(),
 			RandomTestUtil.randomDouble());
 
-		StructuredContent postStructuredContent =
+		StructuredContent structuredContent =
 			_addDraftStructuredContentWithPriority(
 				testGetSiteStructuredContentsPage_getSiteId(),
 				Double.valueOf(1));
@@ -105,7 +106,7 @@ public class StructuredContentResourceTest
 		com.liferay.headless.delivery.client.dto.v1_0.StructuredContent
 			patchStructuredContent =
 				_structuredContentResource.patchStructuredContent(
-					postStructuredContent.getId(),
+					structuredContent.getId(),
 					new com.liferay.headless.delivery.client.dto.v1_0.
 						StructuredContent() {
 
@@ -126,41 +127,52 @@ public class StructuredContentResourceTest
 			(List<StructuredContent>)page.getItems());
 
 		assertValid(page);
-	}
 
-	@Test
-	public void testGetSiteStructuredContentsPageWithSort() throws Exception {
-		StructuredContent postStructuredContent1 =
+		page = structuredContentResource.getSiteStructuredContentsPage(
+			testGroup.getGroupId(), true, null, null, null,
+			Pagination.of(1, 10), null);
+
+		List<StructuredContent> structuredContents =
+			(List<StructuredContent>)page.getItems();
+
+		Iterator<StructuredContent> iterator = structuredContents.iterator();
+
+		while (iterator.hasNext()) {
+			_structuredContentResource.deleteStructuredContent(
+				iterator.next(
+				).getId());
+		}
+
+		StructuredContent draftStructuredContent1 =
 			_addDraftStructuredContentWithPriority(
 				testGetSiteStructuredContentsPage_getSiteId(),
 				Double.valueOf(0.99));
 
-		StructuredContent postStructuredContent2 =
+		StructuredContent draftStructuredContent2 =
 			_addDraftStructuredContentWithPriority(
 				testGetSiteStructuredContentsPage_getSiteId(),
 				Double.valueOf(1));
 
-		StructuredContent postStructuredContent3 =
+		StructuredContent draftStructuredContent3 =
 			_addDraftStructuredContentWithPriority(
 				testGetSiteStructuredContentsPage_getSiteId(),
 				Double.valueOf(1.1));
 
-		StructuredContent postStructuredContent4 =
+		StructuredContent draftStructuredContent4 =
 			_addDraftStructuredContentWithPriority(
 				testGetSiteStructuredContentsPage_getSiteId(),
 				Double.valueOf(2.99));
 
-		Page<StructuredContent> page =
-			structuredContentResource.getSiteStructuredContentsPage(
-				testGroup.getGroupId(), true, null, null, "priority ne 1.0",
-				Pagination.of(1, 10), "priority:asc");
+		page = structuredContentResource.getSiteStructuredContentsPage(
+			testGroup.getGroupId(), true, null, null, "priority ne 1.0",
+			Pagination.of(1, 10), "priority:asc");
 
 		Assert.assertEquals(3, page.getTotalCount());
 
 		assertEquals(
 			Arrays.asList(
-				postStructuredContent1, postStructuredContent3,
-				postStructuredContent4),
+				draftStructuredContent1, draftStructuredContent3,
+				draftStructuredContent4),
 			(List<StructuredContent>)page.getItems());
 
 		assertValid(page);
@@ -173,8 +185,8 @@ public class StructuredContentResourceTest
 
 		assertEquals(
 			Arrays.asList(
-				postStructuredContent4, postStructuredContent3,
-				postStructuredContent2),
+				draftStructuredContent4, draftStructuredContent3,
+				draftStructuredContent2),
 			(List<StructuredContent>)page.getItems());
 
 		assertValid(page);
@@ -187,8 +199,8 @@ public class StructuredContentResourceTest
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(
-				postStructuredContent1, postStructuredContent2,
-				postStructuredContent3, postStructuredContent4),
+				draftStructuredContent1, draftStructuredContent2,
+				draftStructuredContent3, draftStructuredContent4),
 			(List<StructuredContent>)page.getItems());
 
 		assertValid(page);
@@ -200,7 +212,7 @@ public class StructuredContentResourceTest
 		Assert.assertEquals(2, page.getTotalCount());
 
 		assertEquals(
-			Arrays.asList(postStructuredContent3, postStructuredContent4),
+			Arrays.asList(draftStructuredContent3, draftStructuredContent4),
 			(List<StructuredContent>)page.getItems());
 
 		assertValid(page);

@@ -784,7 +784,8 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 
 		serviceBuilderObjectEntry.setExternalReferenceCode(
 			objectEntry.getExternalReferenceCode());
-		serviceBuilderObjectEntry.setObjectEntryId(objectEntry.getId());
+		serviceBuilderObjectEntry.setObjectEntryId(
+			GetterUtil.getLong(objectEntry.getId()));
 		serviceBuilderObjectEntry.setObjectDefinitionId(objectDefinitionId);
 
 		return serviceBuilderObjectEntry;

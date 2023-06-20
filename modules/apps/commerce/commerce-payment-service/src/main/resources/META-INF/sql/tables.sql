@@ -19,13 +19,17 @@ create table CommercePaymentEntry (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
+	commerceChannelId LONG,
 	classNameId LONG,
 	classPK LONG,
 	amount DECIMAL(30, 16) null,
+	callbackURL TEXT null,
 	currencyCode VARCHAR(75) null,
-	paymentMethodName VARCHAR(75) null,
+	paymentMethodKey VARCHAR(75) null,
+	paymentMethodType INTEGER,
 	paymentStatus INTEGER,
-	transactionCode VARCHAR(75) null
+	redirectURL TEXT null,
+	transactionCode VARCHAR(255) null
 );
 
 create table CommercePaymentEntryAudit (

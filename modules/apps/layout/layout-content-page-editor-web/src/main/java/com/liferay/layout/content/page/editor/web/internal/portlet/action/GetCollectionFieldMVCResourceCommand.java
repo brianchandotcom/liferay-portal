@@ -533,12 +533,9 @@ public class GetCollectionFieldMVCResourceCommand
 			return null;
 		}
 
-		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
-			new ClassPKInfoItemIdentifier(classPK);
-
 		try {
 			return infoItemObjectProvider.getInfoItem(
-				classPKInfoItemIdentifier);
+				new ClassPKInfoItemIdentifier(classPK));
 		}
 		catch (NoSuchInfoItemException noSuchInfoItemException) {
 			if (_log.isDebugEnabled()) {

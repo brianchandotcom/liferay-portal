@@ -17,7 +17,7 @@ import ClayIcon from '@clayui/icon';
 import ClayManagementToolbar from '@clayui/management-toolbar';
 import {useModal} from '@clayui/modal';
 import classNames from 'classnames';
-import {navigate} from 'frontend-js-web';
+import {navigate, sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
 import './index.scss';
@@ -136,6 +136,12 @@ export function ManagementToolbar({
 								</span>
 
 								<ClayButton
+									aria-label={sub(
+										Liferay.Language.get('edit-x'),
+										Liferay.Language.get(
+											'external-reference-code'
+										)
+									)}
 									className="ml-3 p-0 text-secondary"
 									displayType="unstyled"
 									onClick={() => setVisibleModal(true)}

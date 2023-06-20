@@ -29,7 +29,13 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Jorge Ferrer
  */
-@Component(service = InfoItemObjectProvider.class)
+@Component(
+	property = {
+		"info.item.identifier=com.liferay.info.item.ClassPKInfoItemIdentifier",
+		"service.ranking:Integer=100"
+	},
+	service = InfoItemObjectProvider.class
+)
 public class AssetEntryInfoItemObjectProvider
 	implements InfoItemObjectProvider<AssetEntry> {
 

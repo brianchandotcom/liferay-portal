@@ -10823,8 +10823,27 @@ send_user $expect_out(buffer)]]></echo>
 	<target name="merge-test-results">
 		<mkdir dir="test-results" />
 
+		<if>
+			<available file="${analytics.cloud.asah.dir}/osb-asah-backend/build/test-results/testIntegration" type="dir" />
+			<then>
+				<mkdir dir="asah-integration/test-results" />
+
+				<copy
+					todir="asah-integration/test-results"
+				>
+					<fileset
+						casesensitive="yes"
+						dir="${analytics.cloud.asah.dir}"
+					>
+						<include name="**/TEST-*.xml" />
+					</fileset>
+				</copy>
+			</then>
+		</if>
+
 		<path id="junit.reports.paths">
 			<multirootfileset erroronmissingdir="false">
+				<basedir file="asah-integration/test-results" />
 				<basedir file="modules" />
 				<basedir file="portal-impl/test-results" />
 				<basedir file="portal-kernel/test-results" />

@@ -16,7 +16,6 @@ package com.liferay.headless.builder.internal.publisher;
 
 import com.liferay.headless.builder.application.APIApplication;
 import com.liferay.headless.builder.application.publisher.APIApplicationPublisher;
-import com.liferay.headless.builder.internal.jaxrs.application.HeadlessBuilderApplication;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 
@@ -79,7 +78,7 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 		_registerHeadlessBuilderApplication(APIApplication apiApplication) {
 
 		return _bundleContext.registerService(
-			Application.class, new HeadlessBuilderApplication(),
+			Application.class, new Application(),
 			HashMapDictionaryBuilder.<String, Object>put(
 				"companyId", apiApplication.getCompanyId()
 			).put(

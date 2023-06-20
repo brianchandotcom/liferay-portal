@@ -126,6 +126,22 @@
 		"actionIds": [
 			"ADD_OBJECT_ENTRY"
 		],
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:LeadNotification$]",
+		"roleName": "Partner Manager (PM)",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"ADD_OBJECT_ENTRY"
+		],
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:LeadNotification$]",
+		"roleName": "Partner Sales User (PSU)",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"ADD_OBJECT_ENTRY"
+		],
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:MDFRequest$]",
 		"roleName": "Partner Manager (PM)",
 		"scope": 1

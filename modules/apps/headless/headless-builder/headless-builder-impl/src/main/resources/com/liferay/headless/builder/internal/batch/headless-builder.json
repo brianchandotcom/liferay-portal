@@ -636,6 +636,12 @@
 						"en_US": "Title"
 					},
 					"name": "title",
+					"objectFieldSettings": [
+						{
+							"name": "uniqueValues",
+							"value": true
+						}
+					],
 					"required": true,
 					"state": false,
 					"system": false,

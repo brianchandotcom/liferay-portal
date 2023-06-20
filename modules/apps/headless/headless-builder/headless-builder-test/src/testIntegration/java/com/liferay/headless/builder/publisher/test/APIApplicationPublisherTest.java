@@ -18,6 +18,7 @@ import com.liferay.headless.builder.application.APIApplication;
 import com.liferay.headless.builder.application.provider.APIApplicationProvider;
 import com.liferay.headless.builder.application.publisher.APIApplicationPublisher;
 import com.liferay.headless.builder.test.BaseHeadlessBuilderTestCase;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -217,6 +218,10 @@ public class APIApplicationPublisherTest extends BaseHeadlessBuilderTestCase {
 			String baseURL, String externalReferenceCode, String title)
 		throws Exception {
 
+		String schemaExternalReferenceCode = externalReferenceCode + "_SCHEMA";
+		String endpointExternalReferenceCode =
+			externalReferenceCode + "_ENDPOINT";
+
 		HTTPTestUtil.invoke(
 			JSONUtil.put(
 				"apiApplicationToAPIEndpoints",
@@ -224,7 +229,7 @@ public class APIApplicationPublisherTest extends BaseHeadlessBuilderTestCase {
 					JSONUtil.put(
 						"description", "description"
 					).put(
-						"externalReferenceCode", "ENDPOINT"
+						"externalReferenceCode", endpointExternalReferenceCode
 					).put(
 						"httpMethod", "get"
 					).put(
@@ -250,7 +255,7 @@ public class APIApplicationPublisherTest extends BaseHeadlessBuilderTestCase {
 					).put(
 						"description", "description"
 					).put(
-						"externalReferenceCode", "SCHEMA"
+						"externalReferenceCode", schemaExternalReferenceCode
 					).put(
 						"mainObjectDefinitionERC", "MSOD_API_APPLICATION"
 					).put(
@@ -268,13 +273,18 @@ public class APIApplicationPublisherTest extends BaseHeadlessBuilderTestCase {
 			"headless-builder/applications", Http.Method.POST);
 		HTTPTestUtil.invoke(
 			null,
-			"headless-builder/schemas/by-external-reference-code/SCHEMA" +
-				"/requestAPISchemaToAPIEndpoints/ENDPOINT",
+			StringBundler.concat(
+				"headless-builder/schemas/by-external-reference-code/",
+				schemaExternalReferenceCode, "/requestAPISchemaToAPIEndpoints/",
+				endpointExternalReferenceCode),
 			Http.Method.PUT);
 		HTTPTestUtil.invoke(
 			null,
-			"headless-builder/schemas/by-external-reference-code/SCHEMA" +
-				"/responseAPISchemaToAPIEndpoints/ENDPOINT",
+			StringBundler.concat(
+				"headless-builder/schemas/by-external-reference-code/",
+				schemaExternalReferenceCode,
+				"/responseAPISchemaToAPIEndpoints/",
+				endpointExternalReferenceCode),
 			Http.Method.PUT);
 
 		return _apiApplicationProvider.getAPIApplication(

@@ -26,6 +26,7 @@ import com.liferay.portal.test.rule.Inject;
 
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -34,6 +35,15 @@ import org.junit.Test;
  */
 @FeatureFlags({"LPS-184413", "LPS-167253", "LPS-153117"})
 public class APIApplicationProviderTest extends BaseHeadlessBuilderTestCase {
+
+	@After
+	public void tearDown() throws Exception {
+		HTTPTestUtil.invoke(
+			null,
+			"headless-builder/applications/by-external-reference-code" +
+				"/APPLICATION",
+			Http.Method.DELETE);
+	}
 
 	@Test
 	public void test() throws Exception {
@@ -80,6 +90,8 @@ public class APIApplicationProviderTest extends BaseHeadlessBuilderTestCase {
 				"applicationStatus", "published"
 			).put(
 				"baseURL", "test"
+			).put(
+				"externalReferenceCode", "APPLICATION"
 			).put(
 				"title", "title"
 			).toString(),

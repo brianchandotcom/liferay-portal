@@ -188,69 +188,10 @@ public class RenderLayoutStructureDisplayContext {
 			linkJSONObject = localizedJSONObject;
 		}
 
-		String mappedField = linkJSONObject.getString("mappedField");
+		String value = _getFieldValue(linkJSONObject);
 
-		if (Validator.isNotNull(mappedField)) {
-			Object infoItem = _httpServletRequest.getAttribute(
-				InfoDisplayWebKeys.INFO_ITEM);
-
-			InfoItemDetails infoItemDetails =
-				(InfoItemDetails)_httpServletRequest.getAttribute(
-					InfoDisplayWebKeys.INFO_ITEM_DETAILS);
-
-			if ((infoItem != null) && (infoItemDetails != null)) {
-				InfoItemServiceRegistry infoItemServiceRegistry =
-					ServletContextUtil.getInfoItemServiceRegistry();
-
-				InfoItemFieldValuesProvider<Object>
-					infoItemFieldValuesProvider =
-						infoItemServiceRegistry.getFirstInfoItemService(
-							InfoItemFieldValuesProvider.class,
-							infoItemDetails.getClassName());
-
-				if (infoItemFieldValuesProvider != null) {
-					String value = _parseInfoFieldValue(
-						infoItemFieldValuesProvider.getInfoFieldValue(
-							infoItem, mappedField));
-
-					if (Validator.isNotNull(value)) {
-						return value;
-					}
-				}
-			}
-		}
-
-		String fieldId = linkJSONObject.getString("fieldId");
-
-		if (Validator.isNotNull(fieldId)) {
-			long classNameId = linkJSONObject.getLong("classNameId");
-			long classPK = linkJSONObject.getLong("classPK");
-
-			if ((classNameId > 0) && (classPK > 0)) {
-				InfoItemReference infoItemReference = new InfoItemReference(
-					PortalUtil.getClassName(classNameId),
-					new ClassPKInfoItemIdentifier(classPK));
-
-				String value = _getValue(fieldId, infoItemReference);
-
-				if (Validator.isNotNull(value)) {
-					return value;
-				}
-			}
-		}
-
-		String collectionFieldId = linkJSONObject.getString(
-			"collectionFieldId");
-
-		if (Validator.isNotNull(collectionFieldId)) {
-			String value = _getValue(
-				collectionFieldId,
-				(InfoItemReference)_httpServletRequest.getAttribute(
-					InfoDisplayWebKeys.INFO_ITEM_REFERENCE));
-
-			if (Validator.isNotNull(value)) {
-				return value;
-			}
+		if (Validator.isNotNull(value)) {
+			return value;
 		}
 
 		JSONObject layoutJSONObject = linkJSONObject.getJSONObject("layout");
@@ -671,6 +612,22 @@ public class RenderLayoutStructureDisplayContext {
 			return StringPool.BLANK;
 		}
 
+		String value = _getFieldValue(jsonObject);
+
+		if (Validator.isNotNull(value)) {
+			return value;
+		}
+
+		String backgroundImageURL = jsonObject.getString("url");
+
+		if (Validator.isNotNull(backgroundImageURL)) {
+			return PortalUtil.getPathContext() + backgroundImageURL;
+		}
+
+		return StringPool.BLANK;
+	}
+
+	private String _getFieldValue(JSONObject jsonObject) {
 		String collectionFieldId = jsonObject.getString("collectionFieldId");
 
 		if (Validator.isNotNull(collectionFieldId)) {
@@ -733,12 +690,6 @@ public class RenderLayoutStructureDisplayContext {
 					return value;
 				}
 			}
-		}
-
-		String backgroundImageURL = jsonObject.getString("url");
-
-		if (Validator.isNotNull(backgroundImageURL)) {
-			return PortalUtil.getPathContext() + backgroundImageURL;
 		}
 
 		return StringPool.BLANK;

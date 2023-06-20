@@ -18,6 +18,7 @@ import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.form.InfoForm;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
@@ -254,7 +255,8 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 				return null;
 			}
 
-			return infoItemObjectProvider.getInfoItem(classPK);
+			return infoItemObjectProvider.getInfoItem(
+				new ClassPKInfoItemIdentifier(classPK));
 		}
 		catch (NoSuchInfoItemException noSuchInfoItemException) {
 			if (_log.isDebugEnabled()) {

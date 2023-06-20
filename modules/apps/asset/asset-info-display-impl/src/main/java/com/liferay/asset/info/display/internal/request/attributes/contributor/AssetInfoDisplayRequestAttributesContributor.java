@@ -19,6 +19,7 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.util.LinkedAssetEntryIdsUtil;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.display.request.attributes.contributor.InfoDisplayRequestAttributesContributor;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemDetailsProvider;
@@ -96,7 +97,7 @@ public class AssetInfoDisplayRequestAttributesContributor
 
 			if (infoItemObjectProvider != null) {
 				Object infoItem = infoItemObjectProvider.getInfoItem(
-					assetEntry.getClassPK());
+					new ClassPKInfoItemIdentifier(assetEntry.getClassPK()));
 
 				httpServletRequest.setAttribute(
 					InfoDisplayWebKeys.INFO_ITEM, infoItem);

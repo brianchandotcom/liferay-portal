@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormProvider;
@@ -170,7 +171,8 @@ public class TranslationEntryAssetRenderer
 				httpServletRequest,
 				infoItemFormProvider.getInfoForm(
 					infoItemObjectProvider.getInfoItem(
-						_translationEntry.getClassPK())),
+						new ClassPKInfoItemIdentifier(
+							_translationEntry.getClassPK()))),
 				_translationInfoFieldChecker, translationSnapshot));
 
 		return super.include(httpServletRequest, httpServletResponse, template);

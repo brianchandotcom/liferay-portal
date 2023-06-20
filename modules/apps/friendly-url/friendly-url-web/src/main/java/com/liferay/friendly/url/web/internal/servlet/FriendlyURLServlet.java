@@ -18,6 +18,7 @@ import com.liferay.friendly.url.info.item.provider.InfoItemFriendlyURLProvider;
 import com.liferay.friendly.url.info.item.updater.InfoItemFriendlyURLUpdater;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
@@ -251,7 +252,8 @@ public class FriendlyURLServlet extends HttpServlet {
 			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemObjectProvider.class, className);
 
-		Object object = infoItemObjectProvider.getInfoItem(classPK);
+		Object object = infoItemObjectProvider.getInfoItem(
+			new ClassPKInfoItemIdentifier(classPK));
 
 		InfoItemFriendlyURLProvider<Object> infoItemFriendlyURLProvider =
 			_infoItemServiceRegistry.getFirstInfoItemService(

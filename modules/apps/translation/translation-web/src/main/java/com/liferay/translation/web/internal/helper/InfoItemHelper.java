@@ -59,7 +59,7 @@ public class InfoItemHelper {
 					infoItemReference.getClassName());
 
 			Object object = infoItemObjectProvider.getInfoItem(
-				infoItemReference.getClassPK());
+				infoItemReference.getInfoItemIdentifier());
 
 			if (object == null) {
 				return null;

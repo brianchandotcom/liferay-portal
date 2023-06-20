@@ -393,16 +393,24 @@ public class DefaultObjectEntryManagerImplTest {
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		_addAggregationObjectField(
-			"AVERAGE", "precisionDecimalObjectFieldName",
-			objectRelationship1.getName());
+			"precisionDecimalObjectFieldName", "AVERAGE",
+			_objectDefinition1.getObjectDefinitionId(),
+			"averageAggregationObjectFieldName", objectRelationship1.getName());
 		_addAggregationObjectField(
-			"COUNT", null, objectRelationship1.getName());
+			null, "COUNT", _objectDefinition1.getObjectDefinitionId(),
+			"countAggregationObjectFieldName", objectRelationship1.getName());
 		_addAggregationObjectField(
-			"MAX", "integerObjectFieldName", objectRelationship1.getName());
+			"integerObjectFieldName", "MAX",
+			_objectDefinition1.getObjectDefinitionId(),
+			"maxAggregationObjectFieldName", objectRelationship1.getName());
 		_addAggregationObjectField(
-			"MIN", "longIntegerObjectFieldName", objectRelationship1.getName());
+			"longIntegerObjectFieldName", "MIN",
+			_objectDefinition1.getObjectDefinitionId(),
+			"minAggregationObjectFieldName", objectRelationship1.getName());
 		_addAggregationObjectField(
-			"SUM", "decimalObjectFieldName", objectRelationship1.getName());
+			"decimalObjectFieldName", "SUM",
+			_objectDefinition1.getObjectDefinitionId(),
+			"sumAggregationObjectFieldName", objectRelationship1.getName());
 
 		ObjectField objectField = _objectFieldLocalService.getObjectField(
 			objectRelationship1.getObjectFieldId2());
@@ -2450,7 +2458,8 @@ public class DefaultObjectEntryManagerImplTest {
 	}
 
 	private void _addAggregationObjectField(
-			String functionName, String objectFieldName,
+			String argumentObjectFieldName, String functionName,
+			long objectDefinitionId, String objectFieldName,
 			String objectRelationshipName)
 		throws Exception {
 
@@ -2461,7 +2470,8 @@ public class DefaultObjectEntryManagerImplTest {
 
 		if (!Objects.equals(functionName, "COUNT")) {
 			objectFieldSettings.add(
-				_createObjectFieldSetting("objectFieldName", objectFieldName));
+				_createObjectFieldSetting(
+					"objectFieldName", argumentObjectFieldName));
 		}
 
 		objectFieldSettings.add(
@@ -2473,10 +2483,9 @@ public class DefaultObjectEntryManagerImplTest {
 			).labelMap(
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
 			).name(
-				StringUtil.lowerCase(functionName) +
-					"AggregationObjectFieldName"
+				objectFieldName
 			).objectDefinitionId(
-				_objectDefinition1.getObjectDefinitionId()
+				objectDefinitionId
 			).objectFieldSettings(
 				objectFieldSettings
 			).build());

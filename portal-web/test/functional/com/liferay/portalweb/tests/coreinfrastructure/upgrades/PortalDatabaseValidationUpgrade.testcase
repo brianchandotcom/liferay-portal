@@ -28,9 +28,7 @@ definition {
 		}
 
 		task ("When the user rebuild the database And clean the missing partitions") {
-			AntCommand(
-				locator1 = "build-test.xml",
-				value1 = "rebuild-database -Ddatabase.type=mysql -Dsql.dir=sql/create-bare/ -Dsql.file=create-bare-mysql.sql");
+			AntCommands.runCommand("build-test.xml", "rebuild-database -Ddatabase.type=mysql -Dsql.dir=sql/create-bare/ -Dsql.file=create-bare-mysql.sql");
 
 			SQL.executeMySQLStatement(mysqlStatement = "DROP DATABASE lpartition_42638;");
 

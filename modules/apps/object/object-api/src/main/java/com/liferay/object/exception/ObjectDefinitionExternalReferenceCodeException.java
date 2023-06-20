@@ -14,29 +14,41 @@
 
 package com.liferay.object.exception;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
- * @author Marco Leo
+ * @author Selton Guedes
  */
 public class ObjectDefinitionExternalReferenceCodeException
 	extends PortalException {
 
-	public ObjectDefinitionExternalReferenceCodeException() {
+	public static class
+		ForbiddenUnmodifiableSystemObjectDefinitionExternalReferenceCode
+			extends ObjectDefinitionExternalReferenceCodeException {
+
+		public ForbiddenUnmodifiableSystemObjectDefinitionExternalReferenceCode(
+			String externalReferenceCode) {
+
+			super(
+				StringBundler.concat(
+					"Forbidden unmodifiable system object definition external ",
+					"reference code ", externalReferenceCode));
+		}
+
 	}
 
-	public ObjectDefinitionExternalReferenceCodeException(String msg) {
+	public static class MustNotStartWithPrefix
+		extends ObjectDefinitionExternalReferenceCodeException {
+
+		public MustNotStartWithPrefix() {
+			super("The prefix L_ is reserved for Liferay");
+		}
+
+	}
+
+	private ObjectDefinitionExternalReferenceCodeException(String msg) {
 		super(msg);
-	}
-
-	public ObjectDefinitionExternalReferenceCodeException(
-		String msg, Throwable throwable) {
-
-		super(msg, throwable);
-	}
-
-	public ObjectDefinitionExternalReferenceCodeException(Throwable throwable) {
-		super(throwable);
 	}
 
 }

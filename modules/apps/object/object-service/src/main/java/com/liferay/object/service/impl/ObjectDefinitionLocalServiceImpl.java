@@ -551,9 +551,12 @@ public class ObjectDefinitionLocalServiceImpl
 				ObjectField objectField)
 		throws PortalException {
 
-		if (!Objects.equals(objectField.getBusinessType(), "Integer") &&
-			!Objects.equals(objectField.getBusinessType(), "LongInteger") &&
-			!Objects.equals(objectField.getBusinessType(), "Text")) {
+		if (!objectField.compareBusinessType(
+				ObjectFieldConstants.BUSINESS_TYPE_INTEGER) &&
+			!objectField.compareBusinessType(
+				ObjectFieldConstants.BUSINESS_TYPE_LONG_INTEGER) &&
+			!objectField.compareBusinessType(
+				ObjectFieldConstants.BUSINESS_TYPE_TEXT)) {
 
 			throw new ObjectDefinitionAccountEntryRestrictedException(
 				"Custom object definitions can only be restricted by a " +

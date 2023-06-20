@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = CommerceDiscountTarget.class
 )
-public class ApplyToPricingClassCommerceDiscountTargetImpl
+public class ApplyToPricingClassCommerceDiscountTarget
 	extends BaseCommerceDiscountTarget {
 
 	@Override

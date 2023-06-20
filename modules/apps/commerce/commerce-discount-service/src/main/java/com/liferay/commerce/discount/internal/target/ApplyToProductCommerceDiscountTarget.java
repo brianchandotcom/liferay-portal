@@ -25,22 +25,17 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"commerce.discount.target.key=" + CommerceDiscountConstants.TARGET_TOTAL,
-		"commerce.discount.target.order:Integer=50"
+		"commerce.discount.target.key=" + CommerceDiscountConstants.TARGET_PRODUCTS,
+		"commerce.discount.target.order:Integer=20"
 	},
 	service = CommerceDiscountTarget.class
 )
-public class ApplyToTotalCommerceDiscountTargetImpl
+public class ApplyToProductCommerceDiscountTarget
 	extends BaseCommerceDiscountTarget {
 
 	@Override
 	public String getKey() {
-		return CommerceDiscountConstants.TARGET_TOTAL;
-	}
-
-	@Override
-	public Type getType() {
-		return Type.APPLY_TO_TOTAL;
+		return CommerceDiscountConstants.TARGET_PRODUCTS;
 	}
 
 }

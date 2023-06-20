@@ -23,6 +23,7 @@ import {fromControlsId} from '../../../../../app/components/layout_data_items/Co
 import getAllPortals from '../../../../../app/components/layout_data_items/getAllPortals';
 import hasDropZoneChild from '../../../../../app/components/layout_data_items/hasDropZoneChild';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../app/config/constants/editableFragmentEntryProcessor';
+import {EDITABLE_TYPE_LABELS} from '../../../../../app/config/constants/editableTypeLabels';
 import {EDITABLE_TYPES} from '../../../../../app/config/constants/editableTypes';
 import {FRAGMENT_ENTRY_TYPES} from '../../../../../app/config/constants/fragmentEntryTypes';
 import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../app/config/constants/freemarkerFragmentEntryProcessor';
@@ -65,16 +66,6 @@ import getSelectedField from '../../../../../app/utils/getSelectedField';
 import StructureTreeNode from './StructureTreeNode';
 import StructureTreeNodeActions from './StructureTreeNodeActions';
 import VisibilityButton from './VisibilityButton';
-
-const EDITABLE_LABEL = {
-	[EDITABLE_TYPES.action]: Liferay.Language.get('action'),
-	[EDITABLE_TYPES.backgroundImage]: Liferay.Language.get('background-image'),
-	[EDITABLE_TYPES.html]: Liferay.Language.get('html'),
-	[EDITABLE_TYPES.image]: Liferay.Language.get('image'),
-	[EDITABLE_TYPES.link]: Liferay.Language.get('link'),
-	[EDITABLE_TYPES['rich-text']]: Liferay.Language.get('rich-text'),
-	[EDITABLE_TYPES.text]: Liferay.Language.get('text'),
-};
 
 const EDITABLE_TYPE_ICONS = {
 	[EDITABLE_TYPES.action]: 'cursor',
@@ -707,7 +698,7 @@ function visit(
 					onHoverNode,
 					parentId: item.parentId,
 					removable: false,
-					tooltipTitle: EDITABLE_LABEL[type],
+					tooltipTitle: EDITABLE_TYPE_LABELS[type],
 				});
 			}
 			else {

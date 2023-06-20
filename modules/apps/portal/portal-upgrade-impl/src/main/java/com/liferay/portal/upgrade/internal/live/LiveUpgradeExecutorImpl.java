@@ -60,7 +60,12 @@ public class LiveUpgradeExecutorImpl implements LiveUpgradeExecutor {
 					tempTableName, liveUpgradeSchemaDiff);
 			}
 
-			db.copyTableRows(connection, tableName, tempTableName);
+			try (AutoCloseable autoCloseable = db.syncTables(
+					connection, tableName, tempTableName,
+					liveUpgradeSchemaDiff.getResultColumnNamesMap())) {
+
+				db.copyTableRows(connection, tableName, tempTableName);
+			}
 		}
 	}
 

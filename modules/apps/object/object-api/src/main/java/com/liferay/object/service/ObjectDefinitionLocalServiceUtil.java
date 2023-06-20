@@ -49,7 +49,7 @@ public class ObjectDefinitionLocalServiceUtil {
 			long userId, boolean enableComments, boolean enableLocalization,
 			Map<java.util.Locale, String> labelMap, String name,
 			String panelAppOrder, String panelCategoryKey,
-			Map<java.util.Locale, String> pluralLabelMap, Boolean portlet,
+			Map<java.util.Locale, String> pluralLabelMap, boolean portlet,
 			String scope, String storageType,
 			List<com.liferay.object.model.ObjectField> objectFields)
 		throws PortalException {

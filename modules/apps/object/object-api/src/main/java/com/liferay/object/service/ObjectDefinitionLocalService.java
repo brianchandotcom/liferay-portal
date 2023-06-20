@@ -75,7 +75,7 @@ public interface ObjectDefinitionLocalService
 			long userId, boolean enableComments, boolean enableLocalization,
 			Map<Locale, String> labelMap, String name, String panelAppOrder,
 			String panelCategoryKey, Map<Locale, String> pluralLabelMap,
-			Boolean portlet, String scope, String storageType,
+			boolean portlet, String scope, String storageType,
 			List<ObjectField> objectFields)
 		throws PortalException;
 

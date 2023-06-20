@@ -117,13 +117,12 @@ const main = async () => {
 
 		const [accountBrief] = myUserAccount.accountBriefs ?? [];
 		const [roleBrief] = accountBrief.roleBriefs ?? [];
-		
+
 		if (accountBrief && userAccountContainer) {
 			userAccountContainer.textContent = accountBrief.name;
 		}
-		
+
 		if (accountBrief?.id && roleBrief?.id) {
-			
 			const accountId = accountBrief.id;
 
 			await unassignUserRole(accountId, roleBrief?.id);

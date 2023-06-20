@@ -44,7 +44,6 @@ interface InviteMemberModalProps {
 	selectedAccount: Account;
 }
 
-
 export function InviteMemberModal({
 	handleClose,
 	listOfRoles,
@@ -194,17 +193,19 @@ export function InviteMemberModal({
 			accountName: selectedAccount.name,
 			emailOfMember: formFields.email,
 			inviteURL:
-			  Liferay.ThemeDisplay.getPortalURL() +
-			  '/c/login?redirect=' +
-			  getSiteURL() + '/loading',
+				Liferay.ThemeDisplay.getPortalURL() +
+				'/c/login?redirect=' +
+				getSiteURL() +
+				'/loading',
 			inviterName: myUser.givenName,
 			mothersName: userPassword,
-			r_accountEntryToUserAdditionalInfo_accountEntryId: selectedAccount.id,
+			r_accountEntryToUserAdditionalInfo_accountEntryId:
+				selectedAccount.id,
 			r_userToUserAddInfo_userId: user.id,
 			roles: getCheckedRoles(),
-			sendType:{key:"shipping", name:"Shipping"},
+			sendType: {key: 'shipping', name: 'Shipping'},
 			userFirstName: formFields.firstName,
-		  });
+		});
 
 		renderToast(
 			'invited succesfully',

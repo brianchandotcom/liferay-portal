@@ -100,6 +100,26 @@
 	<td>//*[contains(text(), '${key_text}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>GUEST_FORM_FIELDS</td>
+	<td>//form[contains(@enctype,'multipart/form-data')]//div[contains(@id,'form-group') and contains(., '${key_fieldsname}')]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GUEST_FORM_OPTIONS</td>
+	<td>//div[contains(@class,'from-list')]//*[contains(.,'${key_option}')]//*[contains(@id,'from-list')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GUEST_FORM_CONGRATS</td>
+	<td>//div[normalize-space(text())= "Thank you. Your information was successfully received."]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACTIVE_LIFERAY_SUBSCRIPTION_GUESTFORM</td>
+	<td>//div//input[contains(@name,'activeLiferaySubscription')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -726,28 +726,28 @@ public class KBDropdownItemsProvider {
 			return dropdownItem -> {
 				dropdownItem.putData("action", "move");
 				dropdownItem.putData(
-					"kbEntryClassNameId",
+					"kbObjectClassNameId",
 					String.valueOf(kbArticle.getClassNameId()));
 				dropdownItem.putData(
-					"kbEntryId",
+					"kbObjectId",
 					String.valueOf(kbArticle.getResourcePrimKey()));
-				dropdownItem.putData("kbEntryTitle", kbArticle.getTitle());
-				dropdownItem.putData("kbEntryType", KBConstants.TYPE_ARTICLE);
+				dropdownItem.putData("kbObjectTitle", kbArticle.getTitle());
+				dropdownItem.putData("kbObjectType", KBConstants.TYPE_ARTICLE);
 				dropdownItem.putData(
-					"moveKBItemActionURL",
+					"moveKBObjectActionURL",
 					PortletURLBuilder.createActionURL(
 						_liferayPortletResponse
 					).setActionName(
 						"/knowledge_base/move_kb_object"
 					).buildString());
 				dropdownItem.putData(
-					"moveKBItemModalURL",
+					"moveKBObjectModalURL",
 					PortletURLBuilder.createRenderURL(
 						_liferayPortletResponse
 					).setMVCPath(
 						"/admin/common/move_kb_object_modal.jsp"
 					).setParameter(
-						"kbEntryVersion", kbArticle.getVersion()
+						"kbObjectVersion", kbArticle.getVersion()
 					).setWindowState(
 						LiferayWindowState.POP_UP
 					).buildString());
@@ -795,21 +795,21 @@ public class KBDropdownItemsProvider {
 			return dropdownItem -> {
 				dropdownItem.putData("action", "move");
 				dropdownItem.putData(
-					"kbEntryClassNameId",
+					"kbObjectClassNameId",
 					String.valueOf(kbFolder.getClassNameId()));
 				dropdownItem.putData(
-					"kbEntryId", String.valueOf(kbFolder.getKbFolderId()));
-				dropdownItem.putData("kbEntryTitle", kbFolder.getName());
-				dropdownItem.putData("kbEntryType", KBConstants.TYPE_FOLDER);
+					"kbObjectId", String.valueOf(kbFolder.getKbFolderId()));
+				dropdownItem.putData("kbObjectTitle", kbFolder.getName());
+				dropdownItem.putData("kbObjectType", KBConstants.TYPE_FOLDER);
 				dropdownItem.putData(
-					"moveKBItemActionURL",
+					"moveKBObjectActionURL",
 					PortletURLBuilder.createActionURL(
 						_liferayPortletResponse
 					).setActionName(
 						"/knowledge_base/move_kb_object"
 					).buildString());
 				dropdownItem.putData(
-					"moveKBItemModalURL",
+					"moveKBObjectModalURL",
 					PortletURLBuilder.createRenderURL(
 						_liferayPortletResponse
 					).setMVCPath(

@@ -37,12 +37,12 @@ const ACTIONS = {
 
 	move(
 		{
-			kbEntryClassNameId,
-			kbEntryId,
-			kbEntryTitle,
-			kbEntryType,
-			moveKBItemActionURL,
-			moveKBItemModalURL,
+			kbObjectClassNameId,
+			kbObjectId,
+			kbObjectTitle,
+			kbObjectType,
+			moveKBObjectActionURL,
+			moveKBObjectModalURL,
 		},
 		portletNamespace
 	) {
@@ -52,7 +52,7 @@ const ACTIONS = {
 			multiple: true,
 			onSelect: ({destinationItem, index}) => {
 				if (
-					kbEntryType === ITEM_TYPES.folder &&
+					kbObjectType === ITEM_TYPES.folder &&
 					destinationItem.type === ITEM_TYPES.article
 				) {
 					openToast({
@@ -65,12 +65,12 @@ const ACTIONS = {
 					return false;
 				}
 
-				fetch(moveKBItemActionURL, {
+				fetch(moveKBObjectActionURL, {
 					body: objectToFormData({
 						[`${portletNamespace}dragAndDrop`]: true,
 						[`${portletNamespace}position`]: index?.next ?? -1,
-						[`${portletNamespace}resourceClassNameId`]: kbEntryClassNameId,
-						[`${portletNamespace}resourcePrimKey`]: kbEntryId,
+						[`${portletNamespace}resourceClassNameId`]: kbObjectClassNameId,
+						[`${portletNamespace}resourcePrimKey`]: kbObjectId,
 						[`${portletNamespace}parentResourceClassNameId`]: destinationItem.classNameId,
 						[`${portletNamespace}parentResourcePrimKey`]: destinationItem.id,
 					}),
@@ -107,10 +107,10 @@ const ACTIONS = {
 			},
 			selectEventName: `selectKBMoveFolder`,
 			size: 'md',
-			title: sub(Liferay.Language.get('move-x-to'), kbEntryTitle),
+			title: sub(Liferay.Language.get('move-x-to'), kbObjectTitle),
 			url: addParams(
-				`${portletNamespace}kbEntryToMoveId=${kbEntryId}&${portletNamespace}kbEntryToMoveType=${kbEntryType}`,
-				moveKBItemModalURL
+				`${portletNamespace}kbObjectToMoveId=${kbObjectId}&${portletNamespace}kbObjectToMoveType=${kbObjectType}`,
+				moveKBObjectModalURL
 			),
 		});
 	},

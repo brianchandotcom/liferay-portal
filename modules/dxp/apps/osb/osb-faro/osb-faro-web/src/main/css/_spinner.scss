@@ -1,0 +1,10 @@
+.spinner-root {
+	&.spinner-inline {
+		margin: initial;
+		width: auto;
+
+		.loading-animation {
+			position: relative;
+		}
+	}
+}

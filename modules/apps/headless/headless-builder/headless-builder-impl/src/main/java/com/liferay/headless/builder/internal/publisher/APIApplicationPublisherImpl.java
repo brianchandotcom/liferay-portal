@@ -44,9 +44,9 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 				"APIApplicationPublisher not available");
 		}
 
-		_headlessBuilderApplicationServiceRegistrationMap.putIfAbsent(
+		_headlessBuilderApplicationServiceRegistrationMap.computeIfAbsent(
 			apiApplication.getOSGiJaxRsName(),
-			_registerHeadlessBuilderApplication(apiApplication));
+			key -> _registerHeadlessBuilderApplication(apiApplication));
 	}
 
 	@Override

@@ -12,8 +12,6 @@
  * details.
  */
 
-/// <reference types="react" />
-
 import '../css/FDSEntries.scss';
 import {OBJECT_RELATIONSHIP} from './Constants';
 import {FDSViewType} from './FDSViews';

@@ -12,8 +12,6 @@
  * details.
  */
 
-/// <reference types="react" />
-
 import {IClientExtensionCellRenderer} from './api';
 import '../css/FDSView.scss';
 import {FDSViewType} from './FDSViews';

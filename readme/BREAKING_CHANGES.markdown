@@ -1448,4 +1448,4 @@ Delete implementations of `ScriptBundleProvider`, remove script files in `/META-
 
 ### Why was this change made?
 
-An immediate OSGI component can achieve the same functionality, and using OSGI components can make development more elegant and avoid security issues due to misuse of script files.
+This change was made to address security vulnerabilities.

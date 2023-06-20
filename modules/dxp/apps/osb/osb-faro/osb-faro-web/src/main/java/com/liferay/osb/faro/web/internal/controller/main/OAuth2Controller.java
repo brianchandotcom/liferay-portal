@@ -294,7 +294,7 @@ public class OAuth2Controller extends BaseFaroController {
 
 		Future<String> future = invocation.submit(String.class);
 
-		return future.get(3, TimeUnit.SECONDS);
+		return future.get(5, TimeUnit.SECONDS);
 	}
 
 	private TokenDisplay _mapTokenDisplay(

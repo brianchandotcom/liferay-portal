@@ -63,6 +63,10 @@ public class UserPasswordScreenNavigationEntry
 		try {
 			PasswordPolicy passwordPolicy = selUser.getPasswordPolicy();
 
+			if (passwordPolicy == null) {
+				return true;
+			}
+
 			return passwordPolicy.isChangeable();
 		}
 		catch (PortalException portalException) {

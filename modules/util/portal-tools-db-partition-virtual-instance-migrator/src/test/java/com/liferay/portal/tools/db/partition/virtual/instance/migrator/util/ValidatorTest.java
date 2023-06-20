@@ -83,7 +83,13 @@ public class ValidatorTest {
 			releases
 		);
 
-		Map<String, Release> releaseMap = new HashMap<>();
+		Map<String, Release> releasesMap = new HashMap<>();
+
+		_databaseMockedStatic.when(
+			() -> DatabaseUtil.getReleasesMap(_targetConnection)
+		).thenReturn(
+			releasesMap
+		);
 
 		for (Release release : releases) {
 			if (!release.getServletContextName(
@@ -91,15 +97,9 @@ public class ValidatorTest {
 					"module1"
 				)) {
 
-				releaseMap.put(release.getServletContextName(), release);
+				releasesMap.put(release.getServletContextName(), release);
 			}
 		}
-
-		_databaseMockedStatic.when(
-			() -> DatabaseUtil.getReleasesMap(_targetConnection)
-		).thenReturn(
-			releaseMap
-		);
 
 		_executeAndAssert(
 			false, true,
@@ -117,8 +117,8 @@ public class ValidatorTest {
 			() -> _executeAndAssert(
 				false, true,
 				Arrays.asList(
-					"[WARN] Table table4 is not present in the source database",
-					"[WARN] Table table2 is not present in the target " +
+					"[WARN] Table table2 is not present in the target database",
+					"[WARN] Table table4 is not present in the source " +
 						"database")));
 
 		_testMissingTables(
@@ -331,14 +331,14 @@ public class ValidatorTest {
 			String servletContextName, UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {
 
-		List<Release> releases = _createReleaseElements();
-
-		Map<String, Release> releaseMap = new HashMap<>();
-
 		List<Release> missingTargetModuleReleases = new ArrayList<>();
 
+		List<Release> releases = _createReleaseElements();
+
+		Map<String, Release> releasesMap = new HashMap<>();
+
 		for (Release release : releases) {
-			releaseMap.put(release.getServletContextName(), release);
+			releasesMap.put(release.getServletContextName(), release);
 
 			if (!servletContextName.equals(release.getServletContextName())) {
 				missingTargetModuleReleases.add(release);
@@ -354,7 +354,7 @@ public class ValidatorTest {
 		_databaseMockedStatic.when(
 			() -> DatabaseUtil.getReleasesMap(_targetConnection)
 		).thenReturn(
-			releaseMap
+			releasesMap
 		);
 
 		unsafeRunnable.run();
@@ -373,7 +373,13 @@ public class ValidatorTest {
 			releases
 		);
 
-		Map<String, Release> releaseMap = new HashMap<>();
+		Map<String, Release> releasesMap = new HashMap<>();
+
+		_databaseMockedStatic.when(
+			() -> DatabaseUtil.getReleasesMap(_targetConnection)
+		).thenReturn(
+			releasesMap
+		);
 
 		for (Release release : releases) {
 			if (servletContextName.equals(release.getServletContextName())) {
@@ -382,14 +388,8 @@ public class ValidatorTest {
 					release.getVerified());
 			}
 
-			releaseMap.put(release.getServletContextName(), release);
+			releasesMap.put(release.getServletContextName(), release);
 		}
-
-		_databaseMockedStatic.when(
-			() -> DatabaseUtil.getReleasesMap(_targetConnection)
-		).thenReturn(
-			releaseMap
-		);
 
 		unsafeRunnable.run();
 	}
@@ -409,6 +409,12 @@ public class ValidatorTest {
 
 		Map<String, Release> releaseMap = new HashMap<>();
 
+		_databaseMockedStatic.when(
+			() -> DatabaseUtil.getReleasesMap(_targetConnection)
+		).thenReturn(
+			releaseMap
+		);
+
 		for (Release release : releases) {
 			if (servletContextName.equals(release.getServletContextName())) {
 				release = new Release(
@@ -417,12 +423,6 @@ public class ValidatorTest {
 
 			releaseMap.put(release.getServletContextName(), release);
 		}
-
-		_databaseMockedStatic.when(
-			() -> DatabaseUtil.getReleasesMap(_targetConnection)
-		).thenReturn(
-			releaseMap
-		);
 
 		unsafeRunnable.run();
 	}

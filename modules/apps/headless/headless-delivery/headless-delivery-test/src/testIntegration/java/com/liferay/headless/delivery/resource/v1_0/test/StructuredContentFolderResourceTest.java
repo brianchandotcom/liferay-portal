@@ -149,6 +149,48 @@ public class StructuredContentFolderResourceTest
 	}
 
 	@Override
+	@Test
+	public void testPutAssetLibraryStructuredContentFolderByExternalReferenceCode()
+		throws Exception {
+
+		super.
+			testPutAssetLibraryStructuredContentFolderByExternalReferenceCode();
+
+		StructuredContentFolder parentStructuredContentFolder =
+			testPostAssetLibraryStructuredContentFolder_addStructuredContentFolder(
+				_randomStructuredContentFolder());
+
+		StructuredContentFolder postStructuredContentFolder =
+			structuredContentFolderResource.
+				postStructuredContentFolderStructuredContentFolder(
+					parentStructuredContentFolder.getId(),
+					_randomStructuredContentFolder());
+
+		StructuredContentFolder randomStructuredContentFolder =
+			new StructuredContentFolder() {
+				{
+					name = postStructuredContentFolder.getName();
+				}
+			};
+
+		StructuredContentFolder putStructuredContentFolder =
+			structuredContentFolderResource.
+				putAssetLibraryStructuredContentFolderByExternalReferenceCode(
+					testDepotEntry.getDepotEntryId(),
+					StringUtil.toLowerCase(RandomTestUtil.randomString()),
+					randomStructuredContentFolder);
+
+		Assert.assertEquals(
+			postStructuredContentFolder.getName(),
+			putStructuredContentFolder.getName());
+		Assert.assertNotEquals(
+			postStructuredContentFolder.getExternalReferenceCode(),
+			putStructuredContentFolder.getExternalReferenceCode());
+
+		assertValid(putStructuredContentFolder);
+	}
+
+	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"description", "name"};
 	}

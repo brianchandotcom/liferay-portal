@@ -29,7 +29,9 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.PropsImpl;
 import com.liferay.portal.util.PropsUtil;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.junit.Assert;
@@ -54,7 +56,13 @@ public class CompanyFeatureFlagsTest {
 			_betaFeatureFlag, _devFeatureFlag, _releaseFeatureFlag
 		};
 
-		_companyFeatureFlags = new CompanyFeatureFlags(_expectedFeatureFlags);
+		Map<String, FeatureFlag> featureFlagsMap = new HashMap<>();
+
+		for (FeatureFlag featureFlag : _expectedFeatureFlags) {
+			featureFlagsMap.put(featureFlag.getKey(), featureFlag);
+		}
+
+		_companyFeatureFlags = new CompanyFeatureFlags(featureFlagsMap);
 	}
 
 	@Test

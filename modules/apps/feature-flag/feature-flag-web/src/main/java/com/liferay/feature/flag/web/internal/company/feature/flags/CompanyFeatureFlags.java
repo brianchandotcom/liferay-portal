@@ -24,7 +24,6 @@ import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
@@ -33,16 +32,6 @@ import java.util.function.Predicate;
  * @author Drew Brokke
  */
 public class CompanyFeatureFlags {
-
-	public CompanyFeatureFlags(FeatureFlag... featureFlags) {
-		Map<String, FeatureFlag> featureFlagsMap = new HashMap<>();
-
-		for (FeatureFlag featureFlag : featureFlags) {
-			featureFlagsMap.put(featureFlag.getKey(), featureFlag);
-		}
-
-		_featureFlagsMap = featureFlagsMap;
-	}
 
 	public CompanyFeatureFlags(Map<String, FeatureFlag> featureFlagsMap) {
 		_featureFlagsMap = featureFlagsMap;

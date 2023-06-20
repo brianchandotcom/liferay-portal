@@ -87,7 +87,7 @@ const CriteriaSidebarCollapse = ({
 	const _handleClick = (key, editing) => () => onCollapseClick(key, editing);
 
 	return (
-		<ClayPanel.Group className="c-mt-1">
+		<ClayPanel.Group className="c-ml-1 c-mr-1 c-mt-1">
 			{propertyGroups.map((propertyGroup) => {
 				const key = propertyGroup.propertyKey;
 
@@ -101,88 +101,71 @@ const CriteriaSidebarCollapse = ({
 					: properties;
 
 				return (
-					<li
-						className={classNames(
-							`d-flex flex-column sidebar-collapse-item sidebar-collapse-${propertyGroup.propertyKey}`,
-							{
-								active,
-							}
-						)}
-						key={key}
-					>
-						<a
-							className="d-flex justify-content-between position-relative sidebar-collapse-header text-decoration-none text-uppercase"
-							onClick={_handleClick(key, active)}
-							tabIndex="0"
-						>
-							{propertyGroup.name}
+					<ClayPanel
+						collapsable={true}
+						displayTitle={
+							<div className="c-inner" tabIndex="-1">
+								<ClayPanel.Title className="d-flex justify-content-between text-uppercase">
+									{propertyGroup.name}
 
-							{searchValue && (
-								<ClayBadge
-									className="c-ml-auto c-mr-2"
-									displayType="secondary"
-									label={filteredProperties.length}
-								/>
-							)}
-
-							<span>
-								<ClayIcon
-									className={classNames({
-										active,
-									})}
-									symbol="angle-right"
-								/>
-							</span>
-						</a>
-
-						{active && (
-							<div className="flex-grow-1 overflow-y-auto sidebar-collapse-body">
-								<p className="c-pt-3 c-px-4 text-secondary">
-									{Liferay.Language.get(
-										'inherited-attributes-are-not-taken-into-account-to-include-members-in-segments'
+									{searchValue && (
+										<ClayBadge
+											className="mr-4 my-0"
+											displayType="secondary"
+											label={filteredProperties.length}
+										/>
 									)}
-								</p>
-
-								<ul className="c-pl-0">
-									{!filteredProperties.length && (
-										<li className="align-items-center d-flex empty-message h-100 justify-content-center position-relative">
-											{Liferay.Language.get(
-												'no-results-were-found'
-											)}
-										</li>
-									)}
-
-									{!!filteredProperties.length &&
-										filteredProperties.map(
-											({label, name, options, type}) => {
-												const defaultValue = getDefaultValue(
-													{
-														label,
-														name,
-														options,
-														type,
-													}
-												);
-
-												return (
-													<CriteriaSidebarItem
-														className={`color--${key}`}
-														defaultValue={
-															defaultValue
-														}
-														key={name}
-														label={label}
-														name={name}
-														propertyKey={key}
-														type={type}
-													/>
-												);
-											}
-										)}
-								</ul>
+								</ClayPanel.Title>
 							</div>
-						)}
-					</li>
+						}
+						expanded={active}
+						key={key}
+						onExpandedChange={_handleClick(key, active)}
+					>
+						<ClayPanel.Body className="c-px-0">
+							<p className="c-pt-1 c-px-4 text-secondary">
+								{Liferay.Language.get(
+									'inherited-attributes-are-not-taken-into-account-to-include-members-in-segments'
+								)}
+							</p>
+
+							<ul className="c-pl-0">
+								{!filteredProperties.length && (
+									<li className="align-items-center d-flex empty-message h-100 justify-content-center position-relative">
+										{Liferay.Language.get(
+											'no-results-were-found'
+										)}
+									</li>
+								)}
+
+								{!!filteredProperties.length &&
+									filteredProperties.map(
+										({label, name, options, type}) => {
+											const defaultValue = getDefaultValue(
+												{
+													label,
+													name,
+													options,
+													type,
+												}
+											);
+
+											return (
+												<CriteriaSidebarItem
+													className={`color--${key}`}
+													defaultValue={defaultValue}
+													key={name}
+													label={label}
+													name={name}
+													propertyKey={key}
+													type={type}
+												/>
+											);
+										}
+									)}
+							</ul>
+						</ClayPanel.Body>
+					</ClayPanel>
 				);
 			})}
 		</ClayPanel.Group>

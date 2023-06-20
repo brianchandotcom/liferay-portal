@@ -1,7 +1,7 @@
 @component-name = "portal-upgrades"
 definition {
 
-	property custom.properties = "feature.flag.LPS-155692=true";
+	property custom.properties = "layout.user.plid.access.denied=false";
 	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 	property portal.release = "true";
 	property portal.upgrades = "true";

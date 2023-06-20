@@ -780,7 +780,7 @@ definition {
 
 	@priority = 4
 	test AssertNonAdminsCannotAddCertainWidgets {
-		property custom.properties = "feature.flag.LPS-155692=true";
+		property custom.properties = "layout.user.plid.access.denied=false";
 
 		JSONRole.addRegularRole(
 			roleKey = "Can Add Widgets",

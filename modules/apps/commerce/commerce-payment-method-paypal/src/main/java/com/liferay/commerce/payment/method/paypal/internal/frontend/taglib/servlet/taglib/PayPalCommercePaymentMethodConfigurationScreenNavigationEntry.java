@@ -89,7 +89,7 @@ public class PayPalCommercePaymentMethodConfigurationScreenNavigationEntry
 		}
 
 		if (PayPalCommercePaymentMethod.KEY.equals(
-				commercePaymentMethod.getEngineKey())) {
+				commercePaymentMethod.getPaymentIntegrationKey())) {
 
 			return true;
 		}

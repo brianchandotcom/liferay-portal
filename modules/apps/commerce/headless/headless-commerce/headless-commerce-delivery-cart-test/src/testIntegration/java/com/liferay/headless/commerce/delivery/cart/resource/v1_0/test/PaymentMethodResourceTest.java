@@ -125,7 +125,7 @@ public class PaymentMethodResourceTest
 						LocaleUtil.US, paymentMethod.getName()),
 					Collections.singletonMap(
 						LocaleUtil.US, paymentMethod.getDescription()),
-					null, paymentMethod.getKey(), 1, true);
+					true, null, paymentMethod.getKey(), 1, null);
 
 		_commercePaymentMethodGroupRels.add(commercePaymentMethodGroupRel);
 
@@ -133,7 +133,7 @@ public class PaymentMethodResourceTest
 			{
 				description = commercePaymentMethodGroupRel.getDescription(
 					LocaleUtil.US);
-				key = commercePaymentMethodGroupRel.getEngineKey();
+				key = commercePaymentMethodGroupRel.getPaymentIntegrationKey();
 				name = commercePaymentMethodGroupRel.getName(LocaleUtil.US);
 			}
 		};

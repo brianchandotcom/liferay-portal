@@ -541,7 +541,7 @@ public class CommercePaymentEngineImpl implements CommercePaymentEngine {
 
 			CommercePaymentMethod commercePaymentMethod =
 				_commercePaymentMethodRegistry.getCommercePaymentMethod(
-					commercePaymentMethodGroupRel.getEngineKey());
+					commercePaymentMethodGroupRel.getPaymentIntegrationKey());
 
 			if ((commercePaymentMethod == null) ||
 				!permissionChecker.hasPermission(

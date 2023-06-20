@@ -90,7 +90,7 @@ public class AuthorizeNetCommercePaymentMethodConfigurationScreenNavigationEntry
 		}
 
 		if (AuthorizeNetCommercePaymentMethod.KEY.equals(
-				commercePaymentMethodGroupRel.getEngineKey())) {
+				commercePaymentMethodGroupRel.getPaymentIntegrationKey())) {
 
 			return true;
 		}

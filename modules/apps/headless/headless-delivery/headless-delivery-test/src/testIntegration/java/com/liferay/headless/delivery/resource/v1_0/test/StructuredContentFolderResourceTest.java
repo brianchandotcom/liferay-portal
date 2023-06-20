@@ -21,6 +21,7 @@ import com.liferay.headless.delivery.client.pagination.Pagination;
 import com.liferay.headless.delivery.client.problem.Problem;
 import com.liferay.headless.delivery.client.resource.v1_0.StructuredContentFolderResource;
 import com.liferay.journal.model.JournalFolder;
+import com.liferay.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -113,6 +114,38 @@ public class StructuredContentFolderResourceTest
 			).getProfileURL());
 
 		assertValid(page);
+	}
+
+	@Override
+	@Test
+	public void testPostStructuredContentFolderStructuredContentFolder()
+		throws Exception {
+
+		super.testPostStructuredContentFolderStructuredContentFolder();
+
+		StructuredContentFolder parentStructuredContentFolder =
+			testPostAssetLibraryStructuredContentFolder_addStructuredContentFolder(
+				_randomStructuredContentFolder());
+
+		StructuredContentFolder randomStructuredContentFolder =
+			_randomStructuredContentFolder();
+
+		randomStructuredContentFolder.setExternalReferenceCode("");
+
+		StructuredContentFolder postStructuredContentFolder =
+			structuredContentFolderResource.
+				postStructuredContentFolderStructuredContentFolder(
+					parentStructuredContentFolder.getId(),
+					randomStructuredContentFolder);
+
+		JournalFolder journalFolder = JournalFolderLocalServiceUtil.getFolder(
+			postStructuredContentFolder.getId());
+
+		Assert.assertEquals(
+			postStructuredContentFolder.getExternalReferenceCode(),
+			journalFolder.getUuid());
+
+		assertValid(postStructuredContentFolder);
 	}
 
 	@Override

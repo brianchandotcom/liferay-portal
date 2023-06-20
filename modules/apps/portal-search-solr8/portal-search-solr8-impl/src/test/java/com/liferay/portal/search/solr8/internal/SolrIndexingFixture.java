@@ -17,6 +17,7 @@ package com.liferay.portal.search.solr8.internal;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.search.IndexSearcher;
 import com.liferay.portal.kernel.search.IndexWriter;
+import com.liferay.portal.kernel.search.suggest.NGramHolderBuilder;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Digester;
@@ -122,7 +123,7 @@ public class SolrIndexingFixture implements IndexingFixture {
 			_solrSearchEngineAdapterFixture.getSearchEngineAdapter();
 
 		_serviceRegistration = _bundleContext.registerService(
-			NGramHolderBuilderImpl.class, new NGramHolderBuilderImpl(), null);
+			NGramHolderBuilder.class, new NGramHolderBuilderImpl(), null);
 
 		_indexSearcher = createIndexSearcher(
 			searchEngineAdapter, solrClientManager);
@@ -345,8 +346,7 @@ public class SolrIndexingFixture implements IndexingFixture {
 
 	private static final BundleContext _bundleContext =
 		SystemBundleUtil.getBundleContext();
-	private static ServiceRegistration<NGramHolderBuilderImpl>
-		_serviceRegistration;
+	private static ServiceRegistration<NGramHolderBuilder> _serviceRegistration;
 
 	private FacetProcessor<SolrQuery> _facetProcessor;
 	private IndexSearcher _indexSearcher;

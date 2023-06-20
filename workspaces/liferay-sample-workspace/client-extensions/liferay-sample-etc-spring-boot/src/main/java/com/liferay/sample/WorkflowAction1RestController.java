@@ -47,7 +47,7 @@ public class WorkflowAction1RestController extends BaseRestController {
 	public ResponseEntity<String> post(
 		@AuthenticationPrincipal Jwt jwt, @RequestBody String json) {
 
-		log(jwt, _log);
+		log(jwt, _log, json);
 
 		try {
 			WebClient.Builder builder = WebClient.builder();

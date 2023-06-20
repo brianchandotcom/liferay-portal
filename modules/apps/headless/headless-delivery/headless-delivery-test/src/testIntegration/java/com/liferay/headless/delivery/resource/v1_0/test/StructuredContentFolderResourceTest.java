@@ -118,6 +118,30 @@ public class StructuredContentFolderResourceTest
 
 	@Override
 	@Test
+	public void testPostAssetLibraryStructuredContentFolder() throws Exception {
+		super.testPostAssetLibraryStructuredContentFolder();
+
+		StructuredContentFolder randomStructuredContentFolder =
+			_randomStructuredContentFolder();
+
+		randomStructuredContentFolder.setExternalReferenceCode("");
+
+		StructuredContentFolder postStructuredContentFolder =
+			testPostAssetLibraryStructuredContentFolder_addStructuredContentFolder(
+				randomStructuredContentFolder);
+
+		JournalFolder journalFolder = JournalFolderLocalServiceUtil.getFolder(
+			postStructuredContentFolder.getId());
+
+		Assert.assertEquals(
+			postStructuredContentFolder.getExternalReferenceCode(),
+			journalFolder.getUuid());
+
+		assertValid(postStructuredContentFolder);
+	}
+
+	@Override
+	@Test
 	public void testPostStructuredContentFolderStructuredContentFolder()
 		throws Exception {
 

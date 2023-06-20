@@ -148,7 +148,8 @@ public class EditRolePermissionsNavigationDisplayContext {
 
 		return NavigationItem.create(
 			LanguageUtil.get(_locale, "applications"),
-			navigationItem -> navigationItem.addItems(navigationItems));
+			navigationItem -> navigationItem.addNavigationItems(
+				navigationItems));
 	}
 
 	private String _getBackURL() {
@@ -230,7 +231,8 @@ public class EditRolePermissionsNavigationDisplayContext {
 
 		return NavigationItem.create(
 			panelCategory.getLabel(_locale),
-			navigationItem -> navigationItem.addItems(navigationItems));
+			navigationItem -> navigationItem.addNavigationItems(
+				navigationItems));
 	}
 
 	private List<NavigationItem> _getPanelCategoryNavigationItems(
@@ -327,48 +329,48 @@ public class EditRolePermissionsNavigationDisplayContext {
 	private NavigationItem _getTopLevelNavigationItem() {
 		NavigationItem topLevelNavigationItem = new NavigationItem(null);
 
-		topLevelNavigationItem.addItems(_getSummaryNavigationItem());
+		topLevelNavigationItem.addNavigationItems(_getSummaryNavigationItem());
 
 		int roleType = _role.getType();
 
 		if (roleType == RoleConstants.TYPE_ORGANIZATION) {
-			topLevelNavigationItem.addItems(
+			topLevelNavigationItem.addNavigationItems(
 				_getUsersAndOrganizationsNavigationItem());
 		}
 		else if (roleType == RoleConstants.TYPE_REGULAR) {
-			topLevelNavigationItem.addItems(
+			topLevelNavigationItem.addNavigationItems(
 				NavigationItem.create(
 					LanguageUtil.get(_locale, "control-panel"),
 					navigationItem -> {
-						navigationItem.addItems(
+						navigationItem.addNavigationItems(
 							NavigationItem.create(
 								LanguageUtil.get(
 									_locale, "general-permissions"),
 								_getPortletResourceNavigationItemConsumer(
 									PortletKeys.PORTAL)));
 
-						navigationItem.addItems(
+						navigationItem.addNavigationItems(
 							_getPanelCategoryNavigationItems(
 								PanelCategoryKeys.CONTROL_PANEL));
 
 						navigationItem.setInitialExpanded(true);
 					}));
 
-			topLevelNavigationItem.addItems(
+			topLevelNavigationItem.addNavigationItems(
 				NavigationItem.create(
 					LanguageUtil.get(_locale, "commerce"),
 					navigationItem -> {
-						navigationItem.addItems(
+						navigationItem.addNavigationItems(
 							_getPanelCategoryNavigationItems(
 								PanelCategoryKeys.COMMERCE));
 						navigationItem.setInitialExpanded(true);
 					}));
 
-			topLevelNavigationItem.addItems(
+			topLevelNavigationItem.addNavigationItems(
 				NavigationItem.create(
 					LanguageUtil.get(_locale, "applications-menu"),
 					navigationItem -> {
-						navigationItem.addItems(
+						navigationItem.addNavigationItems(
 							_getPanelCategoryNavigationItems(
 								PanelCategoryKeys.
 									APPLICATIONS_MENU_APPLICATIONS));
@@ -392,27 +394,28 @@ public class EditRolePermissionsNavigationDisplayContext {
 						excludedPanelAppKeys);
 
 				if (panelCategoryNavigationItem != null) {
-					topLevelNavigationItem.addItems(
+					topLevelNavigationItem.addNavigationItems(
 						panelCategoryNavigationItem);
 				}
 			}
 		}
 
-		topLevelNavigationItem.addItems(
+		topLevelNavigationItem.addNavigationItems(
 			NavigationItem.create(
 				LanguageUtil.get(
 					_locale, "site-and-asset-library-administration"),
 				navigationItem -> {
-					navigationItem.addItems(
+					navigationItem.addNavigationItems(
 						_getSiteAdministrationPanelCategoryNavigationItems());
-					navigationItem.addItems(_getApplicationsNavigationItem());
+					navigationItem.addNavigationItems(
+						_getApplicationsNavigationItem());
 				}));
 
 		if (roleType == RoleConstants.TYPE_REGULAR) {
-			topLevelNavigationItem.addItems(
+			topLevelNavigationItem.addNavigationItems(
 				NavigationItem.create(
 					LanguageUtil.get(_locale, "user"),
-					navigationItem -> navigationItem.addItems(
+					navigationItem -> navigationItem.addNavigationItems(
 						_getUserNavigationItems())));
 
 			List<PanelCategory> panelCategories = new ArrayList<>();
@@ -433,7 +436,7 @@ public class EditRolePermissionsNavigationDisplayContext {
 							panelCategory);
 
 					if (panelCategoryNavigationItem != null) {
-						topLevelNavigationItem.addItems(
+						topLevelNavigationItem.addNavigationItems(
 							panelCategoryNavigationItem);
 					}
 				}
@@ -462,7 +465,7 @@ public class EditRolePermissionsNavigationDisplayContext {
 							_themeDisplay.getCompanyId(),
 							panelApp.getPortletId());
 
-					navigationItem.addItems(
+					navigationItem.addNavigationItems(
 						NavigationItem.create(
 							PortalUtil.getPortletLongTitle(
 								panelAppPortlet, _servletContext, _locale),
@@ -541,12 +544,14 @@ public class EditRolePermissionsNavigationDisplayContext {
 			this.label = label;
 		}
 
-		public void addItems(Collection<NavigationItem> navigationItems) {
-			items.addAll(navigationItems);
+		public void addNavigationItems(
+			Collection<NavigationItem> navigationItems) {
+
+			this.navigationItems.addAll(navigationItems);
 		}
 
-		public void addItems(NavigationItem... navigationItems) {
-			addItems(Arrays.asList(navigationItems));
+		public void addNavigationItems(NavigationItem... navigationItems) {
+			addNavigationItems(Arrays.asList(navigationItems));
 		}
 
 		public void put(String key, Object value) {
@@ -575,10 +580,10 @@ public class EditRolePermissionsNavigationDisplayContext {
 		protected boolean initialExpanded;
 
 		@JsonProperty
-		protected List<NavigationItem> items = new ArrayList<>();
-
-		@JsonProperty
 		protected final String label;
+
+		@JsonProperty("items")
+		protected List<NavigationItem> navigationItems = new ArrayList<>();
 
 		@JsonAnyGetter
 		protected final Map<String, Object> properties = new HashMap<>();

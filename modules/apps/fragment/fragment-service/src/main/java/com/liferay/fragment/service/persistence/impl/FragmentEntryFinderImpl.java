@@ -23,14 +23,16 @@ import com.liferay.fragment.service.persistence.FragmentEntryFinder;
 import com.liferay.fragment.service.persistence.FragmentEntryUtil;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.petra.sql.dsl.query.FromStep;
+import com.liferay.petra.sql.dsl.query.GroupByStep;
 import com.liferay.petra.sql.dsl.spi.expression.Scalar;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
@@ -62,18 +64,6 @@ public class FragmentEntryFinderImpl
 
 	public static final String COUNT_FE_BY_G_FCI_N =
 		FragmentEntryFinder.class.getName() + ".countFE_ByG_FCI_N";
-
-	public static final String FIND_FC_BY_G_FCI =
-		FragmentEntryFinder.class.getName() + ".findFC_ByG_FCI";
-
-	public static final String FIND_FC_BY_G_FCI_N =
-		FragmentEntryFinder.class.getName() + ".findFC_ByG_FCI_N";
-
-	public static final String FIND_FE_BY_G_FCI =
-		FragmentEntryFinder.class.getName() + ".findFE_ByG_FCI";
-
-	public static final String FIND_FE_BY_G_FCI_N =
-		FragmentEntryFinder.class.getName() + ".findFE_ByG_FCI_N";
 
 	@Override
 	public int countFC_FE_ByG_FCI(
@@ -198,51 +188,33 @@ public class FragmentEntryFinderImpl
 		long groupId, long fragmentCollectionId,
 		QueryDefinition<?> queryDefinition) {
 
-		Session session = null;
-
 		try {
-			session = openSession();
+			Table<?> tempFragmentEntryTable = _findFC_ByG_FCI(
+				groupId, fragmentCollectionId, queryDefinition.getStatus()
+			).unionAll(
+				_findFE_ByG_FCI(
+					groupId, fragmentCollectionId, queryDefinition.getStatus())
+			).as(
+				"tempFragmentEntryTable"
+			);
 
-			String sql = StringBundler.concat(
-				StringPool.OPEN_PARENTHESIS,
-				_customSQL.get(
-					getClass(), FIND_FC_BY_G_FCI, queryDefinition,
-					FragmentCompositionImpl.TABLE_NAME),
-				") UNION ALL (",
-				_customSQL.get(
-					getClass(), FIND_FE_BY_G_FCI, queryDefinition,
-					FragmentEntryImpl.TABLE_NAME),
-				StringPool.CLOSE_PARENTHESIS);
-
-			sql = _customSQL.replaceOrderBy(
-				sql, queryDefinition.getOrderByComparator());
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addScalar("fragmentCompositionId", Type.LONG);
-			sqlQuery.addScalar("fragmentEntryId", Type.LONG);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(groupId);
-			queryPos.add(fragmentCollectionId);
-			queryPos.add(queryDefinition.getStatus());
-
-			queryPos.add(groupId);
-			queryPos.add(fragmentCollectionId);
-			queryPos.add(queryDefinition.getStatus());
+			DSLQuery dslQuery = DSLQueryFactoryUtil.select(
+				tempFragmentEntryTable
+			).from(
+				tempFragmentEntryTable
+			).orderBy(
+				tempFragmentEntryTable, queryDefinition.getOrderByComparator()
+			).limit(
+				queryDefinition.getStart(), queryDefinition.getEnd()
+			);
 
 			List<Object> models = new ArrayList<>();
 
-			Iterator<Object[]> iterator = (Iterator<Object[]>)QueryUtil.iterate(
-				sqlQuery, getDialect(), queryDefinition.getStart(),
-				queryDefinition.getEnd());
-
-			while (iterator.hasNext()) {
-				Object[] array = iterator.next();
+			for (Object[] array :
+					(List<Object[]>)fragmentEntryLinkPersistence.dslQuery(
+						dslQuery)) {
 
 				long fragmentCompositionId = (Long)array[0];
-
 				Object object = null;
 
 				if (fragmentCompositionId > 0) {
@@ -263,9 +235,6 @@ public class FragmentEntryFinderImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-		finally {
-			closeSession(session);
 		}
 	}
 
@@ -274,52 +243,32 @@ public class FragmentEntryFinderImpl
 		long groupId, long fragmentCollectionId, String name,
 		QueryDefinition<?> queryDefinition) {
 
-		Session session = null;
-
 		try {
-			session = openSession();
+			Table<?> tempFragmentEntryTable = _findFC_ByG_FCI_N(
+				groupId, fragmentCollectionId, name, queryDefinition.getStatus()
+			).unionAll(
+				_findFE_ByG_FCI_N(
+					groupId, fragmentCollectionId, name,
+					queryDefinition.getStatus())
+			).as(
+				"tempFragmentEntryTable"
+			);
 
-			String sql = StringBundler.concat(
-				StringPool.OPEN_PARENTHESIS,
-				_customSQL.get(
-					getClass(), FIND_FC_BY_G_FCI_N, queryDefinition,
-					FragmentCompositionImpl.TABLE_NAME),
-				") UNION ALL (",
-				_customSQL.get(
-					getClass(), FIND_FE_BY_G_FCI_N, queryDefinition,
-					FragmentEntryImpl.TABLE_NAME),
-				StringPool.CLOSE_PARENTHESIS);
-
-			sql = _customSQL.replaceOrderBy(
-				sql, queryDefinition.getOrderByComparator());
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addScalar("fragmentCompositionId", Type.LONG);
-			sqlQuery.addScalar("fragmentEntryId", Type.LONG);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			name = _customSQL.keywords(name, true, WildcardMode.SURROUND)[0];
-
-			queryPos.add(groupId);
-			queryPos.add(fragmentCollectionId);
-			queryPos.add(name);
-			queryPos.add(queryDefinition.getStatus());
-
-			queryPos.add(groupId);
-			queryPos.add(fragmentCollectionId);
-			queryPos.add(name);
-			queryPos.add(queryDefinition.getStatus());
+			DSLQuery dslQuery = DSLQueryFactoryUtil.select(
+				tempFragmentEntryTable
+			).from(
+				tempFragmentEntryTable
+			).orderBy(
+				tempFragmentEntryTable, queryDefinition.getOrderByComparator()
+			).limit(
+				queryDefinition.getStart(), queryDefinition.getEnd()
+			);
 
 			List<Object> models = new ArrayList<>();
 
-			Iterator<Object[]> iterator = (Iterator<Object[]>)QueryUtil.iterate(
-				sqlQuery, getDialect(), queryDefinition.getStart(),
-				queryDefinition.getEnd());
-
-			while (iterator.hasNext()) {
-				Object[] array = iterator.next();
+			for (Object[] array :
+					(List<Object[]>)fragmentEntryLinkPersistence.dslQuery(
+						dslQuery)) {
 
 				long fragmentCompositionId = (Long)array[0];
 
@@ -344,58 +293,54 @@ public class FragmentEntryFinderImpl
 		catch (Exception exception) {
 			throw new SystemException(exception);
 		}
-		finally {
-			closeSession(session);
-		}
 	}
 
-	private DSLQuery _findFC_ByG_FCI(
+	private GroupByStep _findFC_ByG_FCI(
 		long groupId, long fragmentCollectionId, int status) {
 
-		return fragmentEntryLinkPersistence.dslQuery(
-			DSLQueryFactoryUtil.selectDistinct(
-				FragmentCompositionTable.INSTANCE.fragmentCompositionId.as(
-					"fragmentCompositionId"),
-				new Scalar<>(
-					0L
-				).as(
-					"fragmentEntryId"
-				),
-				FragmentCompositionTable.INSTANCE.createDate.as("createDate"),
-				FragmentCompositionTable.INSTANCE.modifiedDate.as(
-					"modifiedDate"),
-				FragmentCompositionTable.INSTANCE.name.as("name")
-			).from(
-				FragmentCompositionTable.INSTANCE
-			).where(
-				FragmentCompositionTable.INSTANCE.groupId.eq(
-					groupId
-				).and(
-					FragmentCompositionTable.INSTANCE.fragmentCollectionId.eq(
-						fragmentCollectionId)
-				).and(
-					FragmentCompositionTable.INSTANCE.status.eq(status)
-				)
-			));
+		FromStep fromStep = DSLQueryFactoryUtil.selectDistinct(
+			FragmentCompositionTable.INSTANCE.fragmentCompositionId.as(
+				"fragmentCompositionId"),
+			new Scalar<>(
+				0L
+			).as(
+				"fragmentEntryId"
+			),
+			FragmentCompositionTable.INSTANCE.createDate.as("createDate"),
+			FragmentCompositionTable.INSTANCE.modifiedDate.as("modifiedDate"),
+			FragmentCompositionTable.INSTANCE.name.as("name"));
+
+		return fromStep.from(
+			FragmentCompositionTable.INSTANCE
+		).where(
+			FragmentCompositionTable.INSTANCE.groupId.eq(
+				groupId
+			).and(
+				FragmentCompositionTable.INSTANCE.fragmentCollectionId.eq(
+					fragmentCollectionId)
+			).and(
+				FragmentCompositionTable.INSTANCE.status.eq(status)
+			)
+		);
 	}
 
-	private DSLQuery _findFC_ByG_FCI_N(
+	private GroupByStep _findFC_ByG_FCI_N(
 		long groupId, long fragmentCollectionId, String name, int status) {
 
+		FromStep fromStep = DSLQueryFactoryUtil.selectDistinct(
+			FragmentCompositionTable.INSTANCE.fragmentCompositionId.as(
+				"fragmentCompositionId"),
+			new Scalar<>(
+				0L
+			).as(
+				"fragmentEntryId"
+			),
+			FragmentCompositionTable.INSTANCE.createDate.as("createDate"),
+			FragmentCompositionTable.INSTANCE.modifiedDate.as("modifiedDate"),
+			FragmentCompositionTable.INSTANCE.name.as("name"));
+
 		return fragmentEntryLinkPersistence.dslQuery(
-			DSLQueryFactoryUtil.selectDistinct(
-				FragmentCompositionTable.INSTANCE.fragmentCompositionId.as(
-					"fragmentCompositionId"),
-				new Scalar<>(
-					0L
-				).as(
-					"fragmentEntryId"
-				),
-				FragmentCompositionTable.INSTANCE.createDate.as("createDate"),
-				FragmentCompositionTable.INSTANCE.modifiedDate.as(
-					"modifiedDate"),
-				FragmentCompositionTable.INSTANCE.name.as("name")
-			).from(
+			fromStep.from(
 				FragmentCompositionTable.INSTANCE
 			).where(
 				FragmentCompositionTable.INSTANCE.groupId.eq(
@@ -415,58 +360,57 @@ public class FragmentEntryFinderImpl
 			));
 	}
 
-	private DSLQuery _findFE_ByG_FCI(
+	private GroupByStep _findFE_ByG_FCI(
 		long groupId, long fragmentCollectionId, int status) {
 
-		return fragmentEntryLinkPersistence.dslQuery(
-			DSLQueryFactoryUtil.selectDistinct(
-				new Scalar<>(
-					0L
-				).as(
-					"fragmentCompositionId"
-				),
-				FragmentEntryTable.INSTANCE.fragmentEntryId.as(
-					"fragmentEntryId"),
-				FragmentEntryTable.INSTANCE.createDate.as("createDate"),
-				FragmentEntryTable.INSTANCE.modifiedDate.as("modifiedDate"),
-				FragmentEntryTable.INSTANCE.name.as("name")
-			).from(
-				FragmentEntryTable.INSTANCE
-			).where(
-				FragmentEntryTable.INSTANCE.groupId.eq(
-					groupId
-				).and(
-					FragmentEntryTable.INSTANCE.fragmentCollectionId.eq(
-						fragmentCollectionId)
-				).and(
-					FragmentEntryTable.INSTANCE.head.eq(
-						true
-					).or(
-						FragmentEntryTable.INSTANCE.headId.eq(
-							FragmentEntryTable.INSTANCE.fragmentEntryId)
-					)
-				).and(
-					FragmentCompositionTable.INSTANCE.status.eq(status)
+		FromStep fromStep = DSLQueryFactoryUtil.selectDistinct(
+			new Scalar<>(
+				0L
+			).as(
+				"fragmentCompositionId"
+			),
+			FragmentEntryTable.INSTANCE.fragmentEntryId.as("fragmentEntryId"),
+			FragmentEntryTable.INSTANCE.createDate.as("createDate"),
+			FragmentEntryTable.INSTANCE.modifiedDate.as("modifiedDate"),
+			FragmentEntryTable.INSTANCE.name.as("name"));
+
+		return fromStep.from(
+			FragmentEntryTable.INSTANCE
+		).where(
+			FragmentEntryTable.INSTANCE.groupId.eq(
+				groupId
+			).and(
+				FragmentEntryTable.INSTANCE.fragmentCollectionId.eq(
+					fragmentCollectionId)
+			).and(
+				FragmentEntryTable.INSTANCE.head.eq(
+					true
+				).or(
+					FragmentEntryTable.INSTANCE.headId.eq(
+						FragmentEntryTable.INSTANCE.fragmentEntryId)
 				)
-			));
+			).and(
+				FragmentEntryTable.INSTANCE.status.eq(status)
+			)
+		);
 	}
 
-	private DSLQuery _findFE_ByG_FCI_N(
+	private GroupByStep _findFE_ByG_FCI_N(
 		long groupId, long fragmentCollectionId, String name, int status) {
 
+		FromStep fromStep = DSLQueryFactoryUtil.selectDistinct(
+			new Scalar<>(
+				0L
+			).as(
+				"fragmentCompositionId"
+			),
+			FragmentEntryTable.INSTANCE.fragmentEntryId.as("fragmentEntryId"),
+			FragmentEntryTable.INSTANCE.createDate.as("createDate"),
+			FragmentEntryTable.INSTANCE.modifiedDate.as("modifiedDate"),
+			FragmentEntryTable.INSTANCE.name.as("name"));
+
 		return fragmentEntryLinkPersistence.dslQuery(
-			DSLQueryFactoryUtil.selectDistinct(
-				new Scalar<>(
-					0L
-				).as(
-					"fragmentCompositionId"
-				),
-				FragmentEntryTable.INSTANCE.fragmentEntryId.as(
-					"fragmentEntryId"),
-				FragmentEntryTable.INSTANCE.createDate.as("createDate"),
-				FragmentEntryTable.INSTANCE.modifiedDate.as("modifiedDate"),
-				FragmentEntryTable.INSTANCE.name.as("name")
-			).from(
+			fromStep.from(
 				FragmentEntryTable.INSTANCE
 			).where(
 				FragmentEntryTable.INSTANCE.groupId.eq(
@@ -483,12 +427,12 @@ public class FragmentEntryFinderImpl
 					)
 				).and(
 					DSLFunctionFactoryUtil.lower(
-						FragmentCompositionTable.INSTANCE.name
+						FragmentEntryTable.INSTANCE.name
 					).like(
 						name
 					)
 				).and(
-					FragmentCompositionTable.INSTANCE.status.eq(status)
+					FragmentEntryTable.INSTANCE.status.eq(status)
 				)
 			));
 	}

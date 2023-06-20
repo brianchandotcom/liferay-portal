@@ -59,68 +59,6 @@
 				([$STATUS$])
 		]]>
 	</sql>
-	<sql id="com.liferay.fragment.service.persistence.FragmentEntryFinder.findFC_ByG_FCI">
-		<![CDATA[
-			SELECT
-				DISTINCT FragmentComposition.fragmentCompositionId AS fragmentCompositionId, 0 AS fragmentEntryId,
-				FragmentComposition.createDate AS createDate, FragmentComposition.modifiedDate AS modifiedDate, FragmentComposition.name AS name
-			FROM
-				FragmentComposition
-			WHERE
-				(FragmentComposition.groupId = ?) AND
-				(FragmentComposition.fragmentCollectionId = ?) AND
-				([$STATUS$])
-		]]>
-	</sql>
-	<sql id="com.liferay.fragment.service.persistence.FragmentEntryFinder.findFC_ByG_FCI_N">
-		<![CDATA[
-			SELECT
-				DISTINCT FragmentComposition.fragmentCompositionId AS fragmentCompositionId, 0 AS fragmentEntryId,
-				FragmentComposition.createDate AS createDate, FragmentComposition.modifiedDate AS modifiedDate, FragmentComposition.name AS name
-			FROM
-				FragmentComposition
-			WHERE
-				(FragmentComposition.groupId = ?) AND
-				(FragmentComposition.fragmentCollectionId = ?) AND
-				(LOWER(FragmentComposition.name) LIKE ?) AND
-				([$STATUS$])
-		]]>
-	</sql>
-	<sql id="com.liferay.fragment.service.persistence.FragmentEntryFinder.findFE_ByG_FCI">
-		<![CDATA[
-			SELECT
-				DISTINCT 0 AS fragmentCompositionId, FragmentEntry.fragmentEntryId AS fragmentEntryId,
-				FragmentEntry.createDate AS createDate, FragmentEntry.modifiedDate AS modifiedDate, FragmentEntry.name AS name
-			FROM
-				FragmentEntry
-			WHERE
-				(FragmentEntry.groupId = ?) AND
-				(FragmentEntry.fragmentCollectionId = ?) AND
-				(
-					(FragmentEntry.head = [$TRUE$]) OR
-					(FragmentEntry.headId = FragmentEntry.fragmentEntryId)
-				) AND
-				([$STATUS$])
-		]]>
-	</sql>
-	<sql id="com.liferay.fragment.service.persistence.FragmentEntryFinder.findFE_ByG_FCI_N">
-		<![CDATA[
-			SELECT
-				DISTINCT 0 AS fragmentCompositionId, FragmentEntry.fragmentEntryId AS fragmentEntryId,
-				FragmentEntry.createDate AS createDate, FragmentEntry.modifiedDate AS modifiedDate, FragmentEntry.name AS name
-			FROM
-				FragmentEntry
-			WHERE
-				(FragmentEntry.groupId = ?) AND
-				(FragmentEntry.fragmentCollectionId = ?) AND
-				(
-					(FragmentEntry.head = [$TRUE$]) OR
-					(FragmentEntry.headId = FragmentEntry.fragmentEntryId)
-				) AND
-				(LOWER(FragmentEntry.name) LIKE ?) AND
-				([$STATUS$])
-		]]>
-	</sql>
 	<sql id="com.liferay.fragment.service.persistence.FragmentEntryLinkFinder.countByG_F">
 		<![CDATA[
 			SELECT

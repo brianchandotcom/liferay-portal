@@ -32,6 +32,7 @@ import com.liferay.object.exception.ObjectDefinitionActiveException;
 import com.liferay.object.exception.ObjectDefinitionEnableCategorizationException;
 import com.liferay.object.exception.ObjectDefinitionEnableCommentsException;
 import com.liferay.object.exception.ObjectDefinitionEnableObjectEntryHistoryException;
+import com.liferay.object.exception.ObjectDefinitionExternalReferenceCodeException;
 import com.liferay.object.exception.ObjectDefinitionLabelException;
 import com.liferay.object.exception.ObjectDefinitionModifiableException;
 import com.liferay.object.exception.ObjectDefinitionNameException;
@@ -818,6 +819,10 @@ public class ObjectDefinitionLocalServiceImpl
 		ObjectDefinition objectDefinition =
 			objectDefinitionPersistence.fetchByPrimaryKey(objectDefinitionId);
 
+		_validateExternalReferenceCode(
+			false, externalReferenceCode, objectDefinition.isModifiable(),
+			objectDefinition.getName(), objectDefinition.isSystem());
+
 		_validateObjectFieldId(objectDefinition, titleObjectFieldId);
 
 		objectDefinition.setExternalReferenceCode(externalReferenceCode);
@@ -911,6 +916,9 @@ public class ObjectDefinitionLocalServiceImpl
 		storageType = Validator.isNotNull(storageType) ? storageType :
 			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT;
 
+		_validateExternalReferenceCode(
+			true, externalReferenceCode, modifiable, name, system);
+
 		_validateEnableComments(
 			enableComments, modifiable, storageType, system);
 
@@ -924,6 +932,7 @@ public class ObjectDefinitionLocalServiceImpl
 			counterLocalService.increment());
 
 		objectDefinition.setExternalReferenceCode(externalReferenceCode);
+
 		objectDefinition.setCompanyId(user.getCompanyId());
 		objectDefinition.setUserId(user.getUserId());
 		objectDefinition.setUserName(user.getFullName());
@@ -1371,6 +1380,10 @@ public class ObjectDefinitionLocalServiceImpl
 
 		boolean originalActive = objectDefinition.isActive();
 
+		_validateExternalReferenceCode(
+			false, externalReferenceCode, objectDefinition.isModifiable(), name,
+			objectDefinition.isSystem());
+
 		_validateAccountEntryRestrictedObjectFieldId(
 			accountEntryRestrictedObjectFieldId, accountEntryRestricted,
 			objectDefinition);
@@ -1645,6 +1658,29 @@ public class ObjectDefinitionLocalServiceImpl
 			throw new ObjectDefinitionEnableObjectEntryHistoryException(
 				"Enable object entry history is only allowed for object " +
 					"definitions with the default storage type");
+		}
+	}
+
+	private void _validateExternalReferenceCode(
+			boolean addObjectDefinition, String externalReferenceCode,
+			boolean modifiable, String name, boolean system)
+		throws PortalException {
+
+		if (addObjectDefinition && !modifiable && system &&
+			!ObjectDefinitionUtil.
+				isAllowedUnmodifiableSystemObjectDefinitionExternalReferenceCode(
+					externalReferenceCode, name)) {
+
+			throw new ObjectDefinitionExternalReferenceCodeException.
+				ForbiddenUnmodifiableSystemObjectDefinitionExternalReferenceCode(
+					externalReferenceCode);
+		}
+
+		if (!system && (externalReferenceCode != null) &&
+			externalReferenceCode.startsWith("L_")) {
+
+			throw new ObjectDefinitionExternalReferenceCodeException.
+				MustNotStartWithPrefix();
 		}
 	}
 

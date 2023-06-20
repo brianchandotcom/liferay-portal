@@ -12,7 +12,8 @@
  * details.
  */
 
-// This are imported via "import maps". See how these are declared in the client-extension.yaml
+// This is imported via "import maps". See how that client extension is
+// declared in `client-extension.yaml`.
 
 import {getBye, getHello} from 'my-utils';
 

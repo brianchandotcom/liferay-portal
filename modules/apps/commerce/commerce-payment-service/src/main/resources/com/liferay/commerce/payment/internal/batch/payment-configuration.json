@@ -1,0 +1,157 @@
+{
+	"configuration": {
+		"className": "com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
+		"companyId": 0,
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"featureFlag": "COMMERCE-11181",
+			"importStrategy": "ON_ERROR_FAIL",
+			"taskItemDelegateName": "DEFAULT",
+			"updateStrategy": "UPDATE"
+		},
+		"userId": 0,
+		"version": "v1.0"
+	},
+	"items": [
+		{
+			"accountEntryRestricted": false,
+			"active": true,
+			"externalReferenceCode": "MSOD_PAYMENT_CONFIGURATION",
+			"label": {
+				"en_US": "Commerce Payment Configuration"
+			},
+			"modifiable": true,
+			"name": "CommercePaymentConfiguration",
+			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "AUTHORIZE_ENDPOINT",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Authorize Endpoint"
+					},
+					"name": "authorizeEndpoint",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "CANCEL_ENDPOINT",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Cancel Endpoint"
+					},
+					"name": "cancelEndpoint",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "CAPTURE_ENDPOINT",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Capture Endpoint"
+					},
+					"name": "captureEndpoint",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "Long",
+					"businessType": "LongInteger",
+					"externalReferenceCode": "COMMERCE_CHANNEL_ID",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Commerce Channel ID"
+					},
+					"name": "commerceChannelId",
+					"required": true,
+					"state": false,
+					"system": false,
+					"type": "Long"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "PAYMENT_INTEGRATION_KEY",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Payment Integration Key"
+					},
+					"name": "paymentIntegrationKey",
+					"required": true,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "REFUND_ENDPOINT",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Refund Endpoint"
+					},
+					"name": "refundEndpoint",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "Integer",
+					"businessType": "Integer",
+					"externalReferenceCode": "TYPE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Type"
+					},
+					"name": "type",
+					"required": true,
+					"state": false,
+					"system": false,
+					"type": "Integer"
+				}
+			],
+			"objectValidationRules": [
+				{
+					"active": true,
+					"engine": "ddm",
+					"engineLabel": "Expression Builder",
+					"errorLabel": {
+						"en_US": "Error!"
+					},
+					"name": {
+						"en_US": "Erc Validation"
+					},
+					"script": "externalReferenceCode=concat(paymentIntegrationKey, commerceChannelId)"
+				}
+			],
+			"pluralLabel": {
+				"en_US": "Commerce Payments Configurations"
+			},
+			"scope": "company",
+			"status": {
+				"code": 0
+			},
+			"system": true
+		}
+	]
+}

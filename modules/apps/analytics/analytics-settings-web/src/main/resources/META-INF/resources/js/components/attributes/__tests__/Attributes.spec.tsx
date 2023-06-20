@@ -107,10 +107,10 @@ describe('Attributes', () => {
 
 		expect(screen.getByText('products')).toBeInTheDocument();
 
-		expect(screen.getByText('order')).toBeInTheDocument();
+		expect(screen.getByText('order[buy]')).toBeInTheDocument();
 	});
 
-	it('renders Attributes with values for account, order, people, product', async () => {
+	it('renders Attributes with values for account, order[buy], people, product', async () => {
 		fetch.mockResponseOnce(JSON.stringify(response));
 
 		render(<Attributes />);
@@ -138,7 +138,9 @@ describe('Attributes', () => {
 			/selected/i
 		);
 
-		expect(await screen.findByRole(/order/i)).toHaveTextContent(/order0/i);
+		expect(await screen.findByRole(/order/i)).toHaveTextContent(
+			/order[buy]0/i
+		);
 
 		expect(await screen.findByRole(/order/i)).toHaveTextContent(
 			/selected/i

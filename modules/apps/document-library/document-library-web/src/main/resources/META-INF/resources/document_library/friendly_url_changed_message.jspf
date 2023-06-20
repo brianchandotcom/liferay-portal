@@ -15,7 +15,7 @@
 --%>
 
 <%
-String friendlyURLChangedMessage = GetterUtil.getString(MultiSessionMessages.get(renderRequest, "friendlyURLChanged_requestProcessedWarning"));
+String friendlyURLChangedMessage = GetterUtil.getString(MultiSessionMessages.get(renderRequest, "friendlyURLChangedRequestProcessedWarning"));
 %>
 
 <c:if test="<%= Validator.isNotNull(friendlyURLChangedMessage) %>">

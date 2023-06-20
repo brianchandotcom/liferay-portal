@@ -602,7 +602,7 @@ describe('FragmentsSidebar', () => {
 			userEvent.click(screen.getByTitle('switch-to-card-view'));
 
 			expect(
-				screen.getByTitle('switch-to-list-view')
+				screen.getByTitle('switch-to-list[noun]-view')
 			).toBeInTheDocument();
 		});
 	});

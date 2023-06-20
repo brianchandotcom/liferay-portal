@@ -242,7 +242,7 @@ describe('RuleList', () => {
 				container.querySelector(
 					'.list-group .list-group-item .autofit-col'
 				).textContent
-			).toRule('if user user belongs-to list Guest require Foo');
+			).toRule('if user user belongs-to list[noun] Guest require Foo');
 		});
 
 		it('list the condition by comparing the Grid value with the foo:bar value and then show Foo', () => {

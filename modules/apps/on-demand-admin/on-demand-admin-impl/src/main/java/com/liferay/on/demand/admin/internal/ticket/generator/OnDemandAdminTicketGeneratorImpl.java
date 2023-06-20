@@ -103,16 +103,18 @@ public class OnDemandAdminTicketGeneratorImpl
 		Role role = _roleLocalService.getRole(
 			company.getCompanyId(), RoleConstants.ADMINISTRATOR);
 
+		String screenName = _getScreenName(requestorUser.getUserId(), 0);
+
 		User user = _userLocalService.addUser(
 			requestorUser.getUserId(), company.getCompanyId(), false, password,
-			password, true, null, requestorUser.getEmailAddress(),
+			password, true, null, screenName + StringPool.AT + company.getMx(),
 			requestorUser.getLocale(), requestorUser.getFirstName(),
 			requestorUser.getMiddleName(), requestorUser.getLastName(), 0, 0,
 			requestorUser.getMale(), date.getMonth(), date.getDay(),
 			date.getYear(), null, UserConstants.TYPE_REGULAR, null, null,
 			new long[] {role.getRoleId()}, null, false, new ServiceContext());
 
-		String screenName = _getScreenName(
+		screenName = _getScreenName(
 			requestorUser.getUserId(), user.getUserId());
 
 		user.setScreenName(screenName);

@@ -40,9 +40,9 @@ export default interface MDFRequestDTO
 	r_usrToMDFReqs_userId?: number;
 	targetAudienceRoles?: string;
 	targetMarkets?: string;
-	totalClaimedRequest?: number;
+	totalClaimedRequest?: string;
 	totalCostOfExpense: number;
 	totalMDFRequestAmount: number;
-	totalPaidAmount?: number;
+	totalPaidAmount?: string;
 	totalRequested?: number;
 }

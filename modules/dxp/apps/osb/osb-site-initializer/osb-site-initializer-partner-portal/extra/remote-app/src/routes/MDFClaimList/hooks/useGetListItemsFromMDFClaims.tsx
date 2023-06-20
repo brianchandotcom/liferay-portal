@@ -1,4 +1,3 @@
-/* eslint-disable eqeqeq */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -44,12 +43,9 @@ export default function useGetListItemsFromMDFClaims(
 					item.dateCreated as string,
 					customFormatDateOptions.SHORT_MONTH
 				),
-				[MDFClaimColumnKey.PAID]:
-					item.claimPaid == 0 || item.claimPaid == undefined
-						? '-'
-						: getIntlNumberFormat(item.currency).format(
-								item.claimPaid
-						  ),
+				[MDFClaimColumnKey.PAID]: !item.claimPaid
+					? '-'
+					: getIntlNumberFormat(item.currency).format(item.claimPaid),
 			})),
 		[swrResponse.data?.items]
 	);

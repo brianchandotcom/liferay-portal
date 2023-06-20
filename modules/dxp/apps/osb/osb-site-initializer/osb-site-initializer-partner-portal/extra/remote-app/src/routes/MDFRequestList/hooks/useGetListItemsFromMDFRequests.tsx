@@ -1,4 +1,3 @@
-/* eslint-disable eqeqeq */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -33,18 +32,16 @@ export default function useGetListItemsFromMDFRequests(
 				),
 				[MDFColumnKey.STATUS]: item.mdfRequestStatus?.name,
 				[MDFColumnKey.PARTNER]: item.companyName,
-				[MDFColumnKey.PAID]:
-					item.totalPaidAmount == 0 || item.totalPaidAmount == undefined
-						? '-'
-						: getIntlNumberFormat(item.currency).format(
-								item.totalPaidAmount
-						  ),
-				[MDFColumnKey.AMOUNT_CLAIMED]:
-					item.totalClaimedRequest == 0 || item.totalClaimedRequest == undefined
-						? '-'
-						: getIntlNumberFormat(item.currency).format(
-								item.totalClaimedRequest
-						  ),
+				[MDFColumnKey.PAID]: !Number(item.totalPaidAmount)
+					? '-'
+					: getIntlNumberFormat(item.currency).format(
+							Number(item.totalPaidAmount)
+					  ),
+				[MDFColumnKey.AMOUNT_CLAIMED]: !Number(item.totalClaimedRequest)
+					? '-'
+					: getIntlNumberFormat(item.currency).format(
+							Number(item.totalClaimedRequest)
+					  ),
 				...getMDFDates(item.dateCreated, item.dateModified),
 				...getMDFBudgetInfos(
 					item.totalCostOfExpense,

@@ -35,5 +35,53 @@
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:UserAdditionalInfo$]",
 		"roleName": "User",
 		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"ASSIGN_MEMBERS",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.portal.kernel.model.Role",
+		"roleName": "Account Administrator (Regular)",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"ADD_USER"
+		],
+		"primKey": "0",
+		"resourceName": "90",
+		"roleName": "Account Administrator (Regular)",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"VIEW_ACCOUNT_GROUPS"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.account.model.AccountEntry",
+		"roleName": "Account Administrator (Regular)",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.portal.kernel.model.User",
+		"roleName": "Account Administrator (Regular)",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:UserAdditionalInfo$]",
+		"roleName": "Account Administrator (Regular)",
+		"scope": "1"
 	}
+	
 ]

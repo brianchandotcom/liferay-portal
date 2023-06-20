@@ -252,7 +252,10 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					"company.id", objectDefinition.getCompanyId()
 				).put(
 					"info.item.identifier",
-					"com.liferay.info.item.ClassPKInfoItemIdentifier"
+					new String[] {
+						"com.liferay.info.item.ClassPKInfoItemIdentifier",
+						"com.liferay.info.item.ERCInfoItemIdentifier"
+					}
 				).put(
 					"item.class.name", objectDefinition.getClassName()
 				).build()),

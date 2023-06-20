@@ -15,6 +15,8 @@
 package com.liferay.layout.admin.web.internal.info.item.provider;
 
 import com.liferay.info.exception.NoSuchInfoItemException;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.segments.model.SegmentsExperience;
@@ -34,16 +36,25 @@ public class LayoutSegmentsExperienceInfoItemObjectProvider
 	implements InfoItemObjectProvider<SegmentsExperience> {
 
 	@Override
-	public SegmentsExperience getInfoItem(long classPK)
+	public SegmentsExperience getInfoItem(InfoItemIdentifier infoItemIdentifier)
 		throws NoSuchInfoItemException {
+
+		if (!(infoItemIdentifier instanceof ClassPKInfoItemIdentifier)) {
+			throw new NoSuchInfoItemException(
+				"Unsupported info item identifier type " + infoItemIdentifier);
+		}
+
+		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+			(ClassPKInfoItemIdentifier)infoItemIdentifier;
 
 		try {
 			return _segmentsExperienceLocalService.getSegmentsExperience(
-				classPK);
+				classPKInfoItemIdentifier.getClassPK());
 		}
 		catch (PortalException portalException) {
 			throw new NoSuchInfoItemException(
-				"No segments experience found with ID " + classPK,
+				"No segments experience found with ID " +
+					classPKInfoItemIdentifier.getClass(),
 				portalException);
 		}
 	}

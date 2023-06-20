@@ -15,6 +15,8 @@
 package com.liferay.layout.admin.web.internal.info.item.provider;
 
 import com.liferay.info.exception.NoSuchInfoItemException;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
@@ -34,13 +36,26 @@ public class LayoutInfoItemObjectProvider
 	implements InfoItemObjectProvider<Layout> {
 
 	@Override
-	public Layout getInfoItem(long classPK) throws NoSuchInfoItemException {
+	public Layout getInfoItem(InfoItemIdentifier infoItemIdentifier)
+		throws NoSuchInfoItemException {
+
+		if (!(infoItemIdentifier instanceof ClassPKInfoItemIdentifier)) {
+			throw new NoSuchInfoItemException(
+				"Unsupported info item identifier type " + infoItemIdentifier);
+		}
+
+		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+			(ClassPKInfoItemIdentifier)infoItemIdentifier;
+
 		try {
-			return _layoutLocalService.getLayout(classPK);
+			return _layoutLocalService.getLayout(
+				classPKInfoItemIdentifier.getClassPK());
 		}
 		catch (PortalException portalException) {
 			throw new NoSuchInfoItemException(
-				"No layout found with PLID " + classPK, portalException);
+				"No layout found with PLID " +
+					classPKInfoItemIdentifier.getClassPK(),
+				portalException);
 		}
 	}
 

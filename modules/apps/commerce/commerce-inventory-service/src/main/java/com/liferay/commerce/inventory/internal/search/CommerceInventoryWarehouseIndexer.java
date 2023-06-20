@@ -66,6 +66,7 @@ public class CommerceInventoryWarehouseIndexer
 
 	public CommerceInventoryWarehouseIndexer() {
 		setFilterSearch(true);
+		setPermissionAware(false);
 	}
 
 	@Override

@@ -137,7 +137,7 @@ const Attributes: React.FC = () => {
 				count: order,
 				icon: 'shopping-cart',
 				onOpenModal: () => onOpenChangeOrderAttributes(true),
-				title: Liferay.Language.get('order[buy]'),
+				title: Liferay.Language.get('order'),
 			},
 		];
 	}, [

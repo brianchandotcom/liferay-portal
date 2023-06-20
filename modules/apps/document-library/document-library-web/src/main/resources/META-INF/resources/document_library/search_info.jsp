@@ -26,17 +26,11 @@ if (folderId != dlAdminDisplayContext.getRootFolderId()) {
 	folder = DLAppServiceUtil.getFolder(folderId);
 }
 
-List<Folder> mountFolders = DLAppServiceUtil.getMountFolders(scopeGroupId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+List<Folder> mountFolders = dlAdminDisplayContext.getMountFolders();
 %>
 
 <c:if test="<%= (folder != null) || !mountFolders.isEmpty() %>">
 	<div class="search-info">
-		<c:if test='<%= dlAdminDisplayContext.hasFilterParameters() && !mountFolders.isEmpty() && FeatureFlagManagerUtil.isEnabled("LPS-84424") %>'>
-			<clay:alert
-				displayType="info"
-				message="filters-only-apply-to-documents-in-local-repositories"
-			/>
-		</c:if>
 
 		<%
 		long repositoryId = ParamUtil.getLong(request, "repositoryId");

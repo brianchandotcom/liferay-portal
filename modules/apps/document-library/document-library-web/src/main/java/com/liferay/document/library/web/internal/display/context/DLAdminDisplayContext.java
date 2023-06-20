@@ -222,6 +222,16 @@ public class DLAdminDisplayContext {
 		return _folderId;
 	}
 
+	public List<Folder> getMountFolders() throws PortalException {
+		if (_mountFolders == null) {
+			_mountFolders = DLAppServiceUtil.getMountFolders(
+				_themeDisplay.getScopeGroupId(),
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+		}
+
+		return _mountFolders;
+	}
+
 	public String getNavigation() {
 		if (_navigation == null) {
 			_navigation = ParamUtil.getString(
@@ -1275,6 +1285,7 @@ public class DLAdminDisplayContext {
 	private String _keywords;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
+	private List<Folder> _mountFolders;
 	private String _navigation;
 	private String _orderByCol;
 	private String _orderByType;

@@ -6,6 +6,7 @@ Export-Package:\
 	com.liferay.portal.vulcan.aggregation,\
 	com.liferay.portal.vulcan.batch.engine,\
 	com.liferay.portal.vulcan.batch.engine.resource,\
+	com.liferay.portal.vulcan.dto.action,\
 	com.liferay.portal.vulcan.dto.converter,\
 	com.liferay.portal.vulcan.dto.converter.util,\
 	com.liferay.portal.vulcan.extension,\

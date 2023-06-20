@@ -127,7 +127,7 @@ public class FDSViewsPortlet extends MVCPortlet {
 				userId, false, false,
 				LocalizedMapUtil.getLocalizedMap("FDS Entry"), "FDSEntry",
 				"100", null, LocalizedMapUtil.getLocalizedMap("FDS Entries"),
-				ObjectDefinitionConstants.SCOPE_COMPANY,
+				true, ObjectDefinitionConstants.SCOPE_COMPANY,
 				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
@@ -157,7 +157,7 @@ public class FDSViewsPortlet extends MVCPortlet {
 			_objectDefinitionLocalService.addCustomObjectDefinition(
 				userId, false, false,
 				LocalizedMapUtil.getLocalizedMap("FDS View"), "FDSView", "200",
-				null, LocalizedMapUtil.getLocalizedMap("FDS Views"),
+				null, LocalizedMapUtil.getLocalizedMap("FDS Views"), true,
 				ObjectDefinitionConstants.SCOPE_COMPANY,
 				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 				Arrays.asList(
@@ -223,7 +223,7 @@ public class FDSViewsPortlet extends MVCPortlet {
 				userId, false, false,
 				LocalizedMapUtil.getLocalizedMap("FDS Field"), "FDSField",
 				"300", null, LocalizedMapUtil.getLocalizedMap("FDS Fields"),
-				ObjectDefinitionConstants.SCOPE_COMPANY,
+				true, ObjectDefinitionConstants.SCOPE_COMPANY,
 				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
@@ -268,7 +268,7 @@ public class FDSViewsPortlet extends MVCPortlet {
 				userId, false, false,
 				LocalizedMapUtil.getLocalizedMap("FDS Date Filter"),
 				"FDSDateFilter", "300", null,
-				LocalizedMapUtil.getLocalizedMap("FDS Date Filters"),
+				LocalizedMapUtil.getLocalizedMap("FDS Date Filters"), true,
 				ObjectDefinitionConstants.SCOPE_COMPANY,
 				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 				Arrays.asList(
@@ -310,7 +310,7 @@ public class FDSViewsPortlet extends MVCPortlet {
 				userId, false, false,
 				LocalizedMapUtil.getLocalizedMap("FDS Dynamic Filter"),
 				"FDSDynamicFilter", "300", null,
-				LocalizedMapUtil.getLocalizedMap("FDS Dynamic Filters"),
+				LocalizedMapUtil.getLocalizedMap("FDS Dynamic Filters"), true,
 				ObjectDefinitionConstants.SCOPE_COMPANY,
 				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 				Arrays.asList(
@@ -357,7 +357,7 @@ public class FDSViewsPortlet extends MVCPortlet {
 			_objectDefinitionLocalService.addCustomObjectDefinition(
 				userId, false, false,
 				LocalizedMapUtil.getLocalizedMap("FDS Sort"), "FDSSort", "300",
-				null, LocalizedMapUtil.getLocalizedMap("FDS Sorts"),
+				null, LocalizedMapUtil.getLocalizedMap("FDS Sorts"), true,
 				ObjectDefinitionConstants.SCOPE_COMPANY,
 				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 				Arrays.asList(

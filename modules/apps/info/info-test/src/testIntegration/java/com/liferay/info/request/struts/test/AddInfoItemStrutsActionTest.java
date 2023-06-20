@@ -302,7 +302,7 @@ public class AddInfoItemStrutsActionTest {
 				"A" + RandomTestUtil.randomString(), null,
 				"control_panel.sites",
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				ObjectDefinitionConstants.SCOPE_COMPANY,
+				true, ObjectDefinitionConstants.SCOPE_COMPANY,
 				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT, objectFields);
 
 		ObjectField objectField = ObjectFieldUtil.addCustomObjectField(

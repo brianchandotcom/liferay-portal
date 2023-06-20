@@ -821,24 +821,28 @@ const FDSEntries = ({
 	namespace,
 	restApplications,
 }: IFDSEntriesInterface) => {
-	const creationMenuNewItem = {
-		label: Liferay.Language.get('new-data-set'),
-		onClick: ({loadData}: {loadData: Function}) => {
-			openModal({
-				contentComponent: ({closeModal}: {closeModal: Function}) => (
-					<AddFDSEntryModalContent
-						closeModal={closeModal}
-						loadData={loadData}
-						namespace={namespace}
-						restApplications={restApplications}
-					/>
-				),
-			});
-		},
-	};
-
 	const creationMenu = {
-		primaryItems: [creationMenuNewItem],
+		primaryItems: [
+			{
+				label: Liferay.Language.get('new-data-set'),
+				onClick: ({loadData}: {loadData: Function}) => {
+					openModal({
+						contentComponent: ({
+							closeModal,
+						}: {
+							closeModal: Function;
+						}) => (
+							<AddFDSEntryModalContent
+								closeModal={closeModal}
+								loadData={loadData}
+								namespace={namespace}
+								restApplications={restApplications}
+							/>
+						),
+					});
+				},
+			},
+		],
 	};
 
 	const getViewURL = (itemData: FDSEntryType) => {
@@ -980,7 +984,7 @@ const FDSEntries = ({
 					viewsCount: ViewsCountRenderer,
 				}}
 				emptyState={{
-					button: creationMenuNewItem,
+					button: creationMenu.primaryItems,
 					description: Liferay.Language.get(
 						'start-creating-one-to-show-your-data'
 					),

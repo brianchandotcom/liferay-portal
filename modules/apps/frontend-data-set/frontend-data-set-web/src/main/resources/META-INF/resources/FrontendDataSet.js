@@ -27,6 +27,7 @@ import React, {
 import './styles/main.scss';
 
 import ClayButton from '@clayui/button';
+import ClayDropDown from '@clayui/drop-down';
 import ClayEmptyState from '@clayui/empty-state';
 
 import FrontendDataSetContext from './FrontendDataSetContext';
@@ -509,16 +510,40 @@ const FrontendDataSet = ({
 								: Liferay.Language.get('no-results-found')
 						}
 					>
-						{emptyState.button && (
-							<ClayButton
-								displayType="secondary"
-								onClick={() => {
-									emptyState.button.onClick(loadData);
-								}}
-							>
-								{emptyState.button.label}
-							</ClayButton>
-						)}
+						{emptyState.button &&
+							(emptyState.button.length > 1 ? (
+								<ClayDropDown
+									trigger={
+										<ClayButton displayType="secondary">
+											{Liferay.Language.get('new')}
+										</ClayButton>
+									}
+								>
+									<ClayDropDown.ItemList
+										items={emptyState.button}
+									>
+										{(item) => (
+											<ClayDropDown.Item
+												key={item.label}
+												onClick={() => {
+													item.onClick(loadData);
+												}}
+											>
+												{item.label}
+											</ClayDropDown.Item>
+										)}
+									</ClayDropDown.ItemList>
+								</ClayDropDown>
+							) : (
+								<ClayButton
+									displayType="secondary"
+									onClick={() => {
+										emptyState.button[0].onClick(loadData);
+									}}
+								>
+									{emptyState.button[0].label}
+								</ClayButton>
+							))}
 					</ClayEmptyState>
 				)}
 			</div>

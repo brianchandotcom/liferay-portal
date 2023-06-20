@@ -30,6 +30,8 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
@@ -141,19 +143,26 @@ public class DisplayPageInfoItemFieldSetProviderImpl
 				itemClassName, itemClassPK, themeDisplay);
 		}
 
-		AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(
-			itemClassPK);
+		try {
+			AssetRenderer<?> assetRenderer =
+				assetRendererFactory.getAssetRenderer(itemClassPK);
 
-		if (assetRenderer == null) {
-			return _assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-				itemClassName, itemClassPK, themeDisplay);
+			if (assetRenderer == null) {
+				return _assetDisplayPageFriendlyURLProvider.getFriendlyURL(
+					itemClassName, itemClassPK, themeDisplay);
+			}
+
+			String viewInContextURL = assetRenderer.getURLViewInContext(
+				themeDisplay, StringPool.BLANK);
+
+			if (Validator.isNotNull(viewInContextURL)) {
+				return viewInContextURL;
+			}
 		}
-
-		String viewInContextURL = assetRenderer.getURLViewInContext(
-			themeDisplay, StringPool.BLANK);
-
-		if (Validator.isNotNull(viewInContextURL)) {
-			return viewInContextURL;
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
 		}
 
 		return _assetDisplayPageFriendlyURLProvider.getFriendlyURL(
@@ -214,6 +223,9 @@ public class DisplayPageInfoItemFieldSetProviderImpl
 		return LayoutPageTemplateEntry.class.getSimpleName() +
 			StringPool.UNDERLINE + layoutPageTemplateEntryKey;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DisplayPageInfoItemFieldSetProviderImpl.class);
 
 	@Reference
 	private AssetDisplayPageFriendlyURLProvider

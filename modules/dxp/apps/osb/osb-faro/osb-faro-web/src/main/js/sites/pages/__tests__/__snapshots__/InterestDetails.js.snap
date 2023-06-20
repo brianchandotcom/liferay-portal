@@ -100,7 +100,7 @@ exports[`Sites Dashboard InterestDetails render 1`] = `
                   </div>
                   <span
                     aria-hidden="true"
-                    class="display-card loading-root spinner-root loading-animation"
+                    class="spinner-root spinner-inline loading-animation"
                   />
                 </div>
               </nav>

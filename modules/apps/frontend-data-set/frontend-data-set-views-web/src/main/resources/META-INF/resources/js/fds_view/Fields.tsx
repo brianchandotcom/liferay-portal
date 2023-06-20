@@ -82,7 +82,7 @@ const getRendererLabel = ({
 		return (
 			renderer.name === rendererName ||
 			renderer.label === rendererName ||
-			renderer.erc
+			renderer.erc === rendererName
 		);
 	})[0];
 

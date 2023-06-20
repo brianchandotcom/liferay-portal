@@ -26,6 +26,6 @@ FDSFilterCET fdsFilterCET = editClientExtensionEntryDisplayContext.getCET();
 	<aui:input label="js-url" name="url" required="<%= true %>" type="text" value="<%= fdsFilterCET.getURL() %>" />
 
 	<div class="form-text">
-		<liferay-ui:message key="enter-the-url-of-the-javascript-file-to-customize-a-data-set-filter" />
+		<liferay-ui:message key="enter-the-url-of-the-javascript-file-to-customize-a-frontend-data-set-filter" />
 	</div>
 </aui:field-wrapper>

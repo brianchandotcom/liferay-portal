@@ -3,12 +3,12 @@
 		"@liferay/js-api": "^0.3.0-pre.0",
 		"serve": "^14.2.0"
 	},
-	"description": "Liferay Sample Data Set Filter",
+	"description": "Liferay Sample FDS Filter",
 	"devDependencies": {
 		"typescript": "^5.0.4"
 	},
 	"main": "./src/index.ts",
-	"name": "liferay-sample-data-set-filter",
+	"name": "liferay-sample-fds-filter",
 	"scripts": {
 		"build": "tsc",
 		"start": "PORT=3000 serve --cors",

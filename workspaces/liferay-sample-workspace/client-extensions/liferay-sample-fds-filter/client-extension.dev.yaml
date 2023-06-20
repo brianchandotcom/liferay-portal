@@ -1,2 +1,2 @@
-liferay-sample-data-set-filter:
+liferay-sample-fds-filter:
     baseURL: http://localhost:3000/build

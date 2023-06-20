@@ -282,8 +282,7 @@ public class CommerceAccountRoleHelperImpl
 		CommercePricingPortletKeys.COMMERCE_PRICE_LIST,
 		CommercePricingPortletKeys.COMMERCE_PROMOTION,
 		CPPortletKeys.COMMERCE_CATALOGS, CPPortletKeys.COMMERCE_CHANNELS,
-		CPPortletKeys.COMMERCE_INVENTORY,
-		CPPortletKeys.COMMERCE_INVENTORY_WAREHOUSE, CPPortletKeys.CP_DEFINITIONS
+		CPPortletKeys.CP_DEFINITIONS
 	};
 
 	@Reference

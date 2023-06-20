@@ -32,11 +32,9 @@ import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -57,7 +55,6 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -176,92 +173,6 @@ public class ObjectEntryItemSelectorView
 		_objectRelatedModelsProviderRegistry;
 	private final Portal _portal;
 
-	private class ObjectEntryItemDescriptor
-		implements ItemSelectorViewDescriptor.ItemDescriptor {
-
-		public ObjectEntryItemDescriptor(
-			ObjectEntry objectEntry, HttpServletRequest httpServletRequest) {
-
-			_objectEntry = objectEntry;
-			_httpServletRequest = httpServletRequest;
-
-			try {
-				_objectDefinition =
-					_objectDefinitionLocalService.getObjectDefinition(
-						objectEntry.getObjectDefinitionId());
-			}
-			catch (PortalException portalException) {
-				throw new RuntimeException(portalException);
-			}
-		}
-
-		@Override
-		public String getIcon() {
-			return null;
-		}
-
-		@Override
-		public String getImageURL() {
-			return null;
-		}
-
-		@Override
-		public Date getModifiedDate() {
-			return _objectEntry.getModifiedDate();
-		}
-
-		@Override
-		public String getPayload() {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)_httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			return JSONUtil.put(
-				"className", _objectDefinition.getClassName()
-			).put(
-				"classNameId",
-				_portal.getClassNameId(_objectDefinition.getClassName())
-			).put(
-				"classPK", _objectEntry.getObjectEntryId()
-			).put(
-				"title",
-				StringBundler.concat(
-					_objectDefinition.getLabel(themeDisplay.getLocale()),
-					StringPool.SPACE, _objectEntry.getObjectEntryId())
-			).toString();
-		}
-
-		@Override
-		public String getSubtitle(Locale locale) {
-			return String.valueOf(_objectEntry.getObjectEntryId());
-		}
-
-		@Override
-		public String getTitle(Locale locale) {
-			try {
-				return _objectEntry.getTitleValue();
-			}
-			catch (PortalException portalException) {
-				throw new RuntimeException(portalException);
-			}
-		}
-
-		@Override
-		public long getUserId() {
-			return _objectEntry.getUserId();
-		}
-
-		@Override
-		public String getUserName() {
-			return _objectEntry.getUserName();
-		}
-
-		private HttpServletRequest _httpServletRequest;
-		private final ObjectDefinition _objectDefinition;
-		private final ObjectEntry _objectEntry;
-
-	}
-
 	private class ObjectItemSelectorViewDescriptor
 		implements ItemSelectorViewDescriptor<ObjectEntry> {
 
@@ -296,7 +207,8 @@ public class ObjectEntryItemSelectorView
 		@Override
 		public ItemDescriptor getItemDescriptor(ObjectEntry objectEntry) {
 			return new ObjectEntryItemDescriptor(
-				objectEntry, _httpServletRequest);
+				_httpServletRequest, _objectDefinitionLocalService, objectEntry,
+				_portal);
 		}
 
 		@Override

@@ -83,7 +83,29 @@ public class ObjectEntryItemDescriptor
 			"classNameId",
 			_portal.getClassNameId(_objectDefinition.getClassName())
 		).put(
-			"classPK", _getId()
+			"classPK",
+			() -> {
+				if (Objects.equals(
+						_objectDefinition.getStorageType(),
+						ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE)) {
+
+					return null;
+				}
+
+				return _objectEntry.getObjectEntryId();
+			}
+		).put(
+			"externalReferenceCode",
+			() -> {
+				if (Objects.equals(
+						_objectDefinition.getStorageType(),
+						ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE)) {
+
+					return _objectEntry.getExternalReferenceCode();
+				}
+
+				return null;
+			}
 		).put(
 			"title",
 			StringBundler.concat(

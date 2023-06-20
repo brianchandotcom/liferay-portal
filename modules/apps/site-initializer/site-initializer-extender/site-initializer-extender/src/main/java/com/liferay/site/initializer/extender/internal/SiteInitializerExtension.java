@@ -81,7 +81,7 @@ import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalSe
 import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.site.initializer.SiteInitializer;
-import com.liferay.site.initializer.extender.CommerceSiteInitializerExtension;
+import com.liferay.site.initializer.extender.CommerceSiteInitializer;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
@@ -232,10 +232,9 @@ public class SiteInitializerExtension {
 		ServiceDependency serviceDependency =
 			_dependencyManager.createServiceDependency();
 
-		serviceDependency.setCallbacks(
-			"setCommerceSiteInitializerExtension", null);
+		serviceDependency.setCallbacks("setCommerceSiteInitializer", null);
 		serviceDependency.setRequired(false);
-		serviceDependency.setService(CommerceSiteInitializerExtension.class);
+		serviceDependency.setService(CommerceSiteInitializer.class);
 
 		_component.add(serviceDependency);
 

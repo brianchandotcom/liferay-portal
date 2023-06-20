@@ -86,7 +86,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
-import com.liferay.site.initializer.extender.CommerceSiteInitializerExtension;
+import com.liferay.site.initializer.extender.CommerceSiteInitializer;
 import com.liferay.site.initializer.extender.SiteInitializerUtil;
 
 import java.math.BigDecimal;
@@ -108,9 +108,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Rafael Praxedes
  */
-@Component(service = CommerceSiteInitializerExtension.class)
-public class CommerceSiteInitializer
-	implements CommerceSiteInitializerExtension {
+@Component(service = CommerceSiteInitializer.class)
+public class CommerceSiteInitializerImpl implements CommerceSiteInitializer {
 
 	public void addAccountGroups(
 			ServiceContext serviceContext, ServletContext servletContext)
@@ -958,7 +957,7 @@ public class CommerceSiteInitializer
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CommerceSiteInitializer.class);
+		CommerceSiteInitializerImpl.class);
 
 	@Reference
 	private AdminAccountGroupResource.Factory _adminAccountGroupResourceFactory;

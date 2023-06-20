@@ -101,6 +101,15 @@ definition {
 		}
 	}
 
+	@description = "LPS-179151. Confirm the change in the field label field."
+	@ignore = "true"
+	@priority = 5
+	test CanAssertChangeInTheLabelField {
+
+		// TODO LPS-179151 CanAssertChangeInTheLabelField pending implementation
+
+	}
+
 	@description = "LPS-185498. Confirm that when trying to delete field, modal appears."
 	@priority = 4
 	test CanAssertModalWhenDeleteField {
@@ -121,6 +130,15 @@ definition {
 				key_modalText = "Are you sure you want to delete this field? It will be removed immediately. Fragments using it will be affected. This action cannot be undone.",
 				locator1 = "DataSet#DELETE_DATA_SET_MODAL_BODY");
 		}
+	}
+
+	@description = "LPS-179151. Confirm that the Checkbox in the Field edit modal is displayed."
+	@ignore = "true"
+	@priority = 5
+	test CanAssertTheSortableCheckbox {
+
+		// TODO LPS-179151 CanAssertTheSortableCheckbox pending implementation
+
 	}
 
 	@description = "LPS-185230. Confirm that the user can cancel adding a field by clicking on cancel button."
@@ -211,6 +229,24 @@ definition {
 		}
 	}
 
+	@description = "LPS-179151. Confirm the cancellation of the field edit by clicking on the Cancel button."
+	@ignore = "true"
+	@priority = 5
+	test CanCancelEditOnCancelButton {
+
+		// TODO LPS-179151 CanCancelEditOnCancelButton pending implementation
+
+	}
+
+	@description = "LPS-179151. Confirm the cancellation of the field edit by clicking on the Close button."
+	@ignore = "true"
+	@priority = 5
+	test CanCancelEditOnCloseButton {
+
+		// TODO LPS-179151 CanCancelEditOnCloseButton pending implementation
+
+	}
+
 	@description = "LPS-185500. Confirm that can cancel field deletion on cancel button."
 	@priority = 4
 	test CanCancelFieldDeletion {
@@ -296,6 +332,24 @@ definition {
 		task ("Then Confirm that all fields are unchecked ") {
 			DataSetAdmin.assertFieldsNotChecked(key_fieldList = "name,creator,externalReferenceCode,id,status,createDate,label,modifiedDate,renderer,r_fdsViewFDSFieldRelationship_c_fdsViewId,r_fdsViewFDSFieldRelationship_c_fdsViewERC,sortable,type");
 		}
+	}
+
+	@description = "LPS-179151. Confirm that the checkbox in the field edit modal is checked."
+	@ignore = "true"
+	@priority = 5
+	test CanConfirmCheckedSortableCheckbox {
+
+		// TODO LPS-179151 CanConfirmCheckedSortableCheckbox pending implementation
+
+	}
+
+	@description = "LPS-179151. Confirm that the checkbox in the field edit modal is unchecked."
+	@ignore = "true"
+	@priority = 5
+	test CanConfirmUncheckedSortableCheckbox {
+
+		// TODO LPS-179151 CanConfirmUncheckedSortableCheckbox pending implementation
+
 	}
 
 	@description = "LPS-185499. Confirm that field can be deleted."
@@ -666,6 +720,15 @@ definition {
 		task ("Then Confirm that the fields are unchecked ") {
 			DataSetAdmin.assertFieldsNotChecked(key_fieldList = "creator,id,name");
 		}
+	}
+
+	@description = "LPS-179151. Confirm that the Field Edit modal is displayed."
+	@ignore = "true"
+	@priority = 5
+	test TheEditFieldModalIsDisplayed {
+
+		// TODO LPS-179151 TheEditFieldModalIsDisplayed pending implementation
+
 	}
 
 }

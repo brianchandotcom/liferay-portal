@@ -158,6 +158,8 @@ definition {
 				key_fieldLabel = "Link Channel to a Supplier",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "Supplier Account 1");
+		}
+	}
 
 	@description = "This is a test for COMMERCE-11516. When a supplier account is deleted after being linked to a catalog, the account will not be shown as linked to the catalog"
 	@priority = 3

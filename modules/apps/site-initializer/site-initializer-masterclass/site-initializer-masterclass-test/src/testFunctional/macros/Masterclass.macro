@@ -31,7 +31,7 @@ definition {
 			value1 = ${password});
 
 		Type(
-			labelTitle = "Enter Again",
+			labelTitle = "Reenter Password",
 			locator1 = "Masterclass#SIGN_IN_FORM",
 			value1 = ${password});
 

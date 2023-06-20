@@ -37,6 +37,11 @@ public interface InfoItemObjectProvider<T> {
 		return getInfoItem(classPKInfoItemIdentifier.getClassPK());
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #getInfoItem(InfoItemIdentifier)}
+	 */
+	@Deprecated
 	public T getInfoItem(long classPK) throws NoSuchInfoItemException;
 
 }

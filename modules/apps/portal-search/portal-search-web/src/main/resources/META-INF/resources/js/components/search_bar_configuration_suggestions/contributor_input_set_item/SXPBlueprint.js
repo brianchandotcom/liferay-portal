@@ -44,11 +44,11 @@ function SXPBlueprint({index, onBlur, onInputSetItemChange, touched, value}) {
 		});
 	};
 
-	const _handleChangeSXPBlueprint = (id) => {
+	const _handleChangeSXPBlueprint = (externalReferenceCode) => {
 		onInputSetItemChange(index, {
 			attributes: {
 				...value.attributes,
-				sxpBlueprintId: id,
+				sxpBlueprintExternalReferenceCode: externalReferenceCode,
 			},
 		});
 	};
@@ -91,10 +91,16 @@ function SXPBlueprint({index, onBlur, onInputSetItemChange, touched, value}) {
 
 			<div className="c-mb-3 form-group-autofit">
 				<SXPBlueprintSelectorInput
-					onBlur={onBlur('attributes.sxpBlueprintId')}
+					onBlur={onBlur(
+						'attributes.sxpBlueprintExternalReferenceCode'
+					)}
 					onSubmit={_handleChangeSXPBlueprint}
-					sxpBlueprintId={value.attributes?.sxpBlueprintId}
-					touched={touched['attributes.sxpBlueprintId']}
+					sxpBlueprintExternalReferenceCode={
+						value.attributes?.sxpBlueprintExternalReferenceCode
+					}
+					touched={
+						touched['attributes.sxpBlueprintExternalReferenceCode']
+					}
 				/>
 			</div>
 

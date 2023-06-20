@@ -39,7 +39,12 @@ function truncateString(value) {
 		: value;
 }
 
-const SelectSXPBlueprintModal = ({observer, onClose, onSubmit, selectedId}) => {
+const SelectSXPBlueprintModal = ({
+	observer,
+	onClose,
+	onSubmit,
+	selectedExternalReferenceCode,
+}) => {
 	const [activePage, setActivePage] = useState(1);
 	const [delta, setDelta] = useState(20);
 	const [search, setSearch] = useState('');
@@ -101,8 +106,8 @@ const SelectSXPBlueprintModal = ({observer, onClose, onSubmit, selectedId}) => {
 		setSearch(value);
 	};
 
-	const _handleSubmit = (id, title) => {
-		onSubmit(id, title);
+	const _handleSubmit = (externalReferenceCode, title) => {
+		onSubmit(externalReferenceCode, title);
 
 		onClose();
 	};
@@ -173,7 +178,7 @@ const SelectSXPBlueprintModal = ({observer, onClose, onSubmit, selectedId}) => {
 
 						<ClayTable.Body>
 							{resource?.items?.map((item) => (
-								<ClayTable.Row key={item.id}>
+								<ClayTable.Row key={item.externalReferenceCode}>
 									<ClayTable.Cell headingTitle>
 										{item.title}
 									</ClayTable.Cell>
@@ -197,19 +202,19 @@ const SelectSXPBlueprintModal = ({observer, onClose, onSubmit, selectedId}) => {
 									<ClayTable.Cell align="right">
 										<ClayButton
 											disabled={
-												item.id?.toString() ===
-												selectedId?.toString()
+												item.externalReferenceCode ===
+												selectedExternalReferenceCode?.toString()
 											}
 											displayType="secondary"
 											onClick={() =>
 												_handleSubmit(
-													item.id,
+													item.externalReferenceCode,
 													item.title
 												)
 											}
 										>
-											{item.id?.toString() ===
-											selectedId?.toString()
+											{item.externalReferenceCode ===
+											selectedExternalReferenceCode?.toString()
 												? Liferay.Language.get(
 														'selected'
 												  )

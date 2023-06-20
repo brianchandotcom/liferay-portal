@@ -15,7 +15,7 @@
 package com.liferay.commerce.pricing.web.internal.display.context;
 
 import com.liferay.commerce.currency.model.CommerceCurrency;
-import com.liferay.commerce.currency.service.CommerceCurrencyService;
+import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.currency.util.comparator.CommerceCurrencyPriorityComparator;
 import com.liferay.commerce.frontend.model.HeaderActionModel;
 import com.liferay.commerce.price.list.constants.CommercePriceListActionKeys;
@@ -67,7 +67,7 @@ public class CommercePriceListDisplayContext
 
 	public CommercePriceListDisplayContext(
 		CommerceCatalogService commerceCatalogService,
-		CommerceCurrencyService commerceCurrencyService,
+		CommerceCurrencyLocalService commerceCurrencyLocalService,
 		ModelResourcePermission<CommercePriceList>
 			commercePriceListModelResourcePermission,
 		CommercePriceListService commercePriceListService,
@@ -79,7 +79,7 @@ public class CommercePriceListDisplayContext
 			commerceCatalogService, commercePriceListModelResourcePermission,
 			commercePriceListService, httpServletRequest);
 
-		_commerceCurrencyService = commerceCurrencyService;
+		_commerceCurrencyLocalService = commerceCurrencyLocalService;
 		_commercePriceModifierService = commercePriceModifierService;
 		_commercePriceModifierTypeRegistry = commercePriceModifierTypeRegistry;
 	}
@@ -123,7 +123,7 @@ public class CommercePriceListDisplayContext
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		return _commerceCurrencyService.getCommerceCurrencies(
+		return _commerceCurrencyLocalService.getCommerceCurrencies(
 			themeDisplay.getCompanyId(), true, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, new CommerceCurrencyPriorityComparator(true));
 	}
@@ -456,7 +456,7 @@ public class CommercePriceListDisplayContext
 		return portletURL.toString();
 	}
 
-	private final CommerceCurrencyService _commerceCurrencyService;
+	private final CommerceCurrencyLocalService _commerceCurrencyLocalService;
 	private CommercePriceModifier _commercePriceModifier;
 	private final CommercePriceModifierService _commercePriceModifierService;
 	private final CommercePriceModifierTypeRegistry

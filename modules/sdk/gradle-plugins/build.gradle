@@ -54,7 +54,7 @@ dependencies {
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.service.builder", version: "4.0.127"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.source.formatter", version: "5.2.33"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.test.integration", version: "4.0.1"
-	compile group: "com.liferay", name: "com.liferay.gradle.plugins.tld.formatter", version: "1.0.13"
+	compile group: "com.liferay", name: "com.liferay.gradle.plugins.tld.formatter", version: "1.0.14"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.tlddoc.builder", version: "2.0.0"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.upgrade.table.builder", version: "3.0.3"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.wsdd.builder", version: "1.0.21"

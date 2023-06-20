@@ -14,14 +14,28 @@
 
 package com.liferay.portal.upgrade.live;
 
+import java.util.Map;
+
 /**
  * @author Kevin Lee
  */
-@FunctionalInterface
-public interface LiveUpgradeProcess {
+public class LiveUpgradeSchemaDiff {
 
-	public void upgrade(
-			String tableName, LiveUpgradeSchemaDiff liveUpgradeSchemaDiff)
-		throws Exception;
+	public Map<String, String> getResultColumnNamesMap() {
+		throw new UnsupportedOperationException("Not implemented");
+	}
+
+	public void recordAlterColumnName(
+			String oldColumnName, String newColumnDefinition)
+		throws IllegalArgumentException {
+
+		throw new UnsupportedOperationException("Not implemented");
+	}
+
+	public void recordAlterColumnType(String columnName, String newColumnType)
+		throws IllegalArgumentException {
+
+		throw new UnsupportedOperationException("Not implemented");
+	}
 
 }

@@ -25,24 +25,30 @@ public class LiveUpgradeProcessFactory {
 	public static LiveUpgradeProcess alterColumnName(
 		String oldColumnName, String newColumnDefinition) {
 
-		return tableName -> {
+		return (tableName, liveUpgradeSchemaDiff) -> {
 			UpgradeProcess upgradeProcess =
 				UpgradeProcessFactory.alterColumnName(
 					tableName, oldColumnName, newColumnDefinition);
 
 			upgradeProcess.upgrade();
+
+			liveUpgradeSchemaDiff.recordAlterColumnName(
+				oldColumnName, newColumnDefinition);
 		};
 	}
 
 	public static LiveUpgradeProcess alterColumnType(
 		String columnName, String newColumnType) {
 
-		return tableName -> {
+		return (tableName, liveUpgradeSchemaDiff) -> {
 			UpgradeProcess upgradeProcess =
 				UpgradeProcessFactory.alterColumnType(
 					tableName, columnName, newColumnType);
 
 			upgradeProcess.upgrade();
+
+			liveUpgradeSchemaDiff.recordAlterColumnType(
+				columnName, newColumnType);
 		};
 	}
 

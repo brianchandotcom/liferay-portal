@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.upgrade.live.LiveUpgradeExecutor;
 import com.liferay.portal.upgrade.live.LiveUpgradeProcess;
+import com.liferay.portal.upgrade.live.LiveUpgradeSchemaDiff;
 
 import java.sql.Connection;
 
@@ -51,8 +52,12 @@ public class LiveUpgradeExecutorImpl implements LiveUpgradeExecutor {
 
 			db.copyTableStructure(connection, tableName, tempTableName);
 
+			LiveUpgradeSchemaDiff liveUpgradeSchemaDiff =
+				new LiveUpgradeSchemaDiff();
+
 			for (LiveUpgradeProcess liveUpgradeProcess : liveUpgradeProcesses) {
-				liveUpgradeProcess.upgrade(tempTableName);
+				liveUpgradeProcess.upgrade(
+					tempTableName, liveUpgradeSchemaDiff);
 			}
 
 			db.copyTableRows(connection, tableName, tempTableName);

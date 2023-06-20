@@ -477,8 +477,10 @@ const ApplicationsMenu = ({
 					observer={observer}
 					status="info"
 				>
-					<ClayModal.Header className="sr-only">
-						{Liferay.Language.get('applications-menu')}
+					<ClayModal.Header className="sr-only" withTitle={false}>
+						<ClayModal.Title>
+							{Liferay.Language.get('applications-menu')}
+						</ClayModal.Title>
 					</ClayModal.Header>
 
 					<ClayModal.Body className="p-0">

@@ -478,9 +478,7 @@ definition {
 
 		var key_orgName = ${subOrgName};
 
-		AssertClick(
-			locator1 = "UsersAndOrganizationsEditOrganization#PARENT_ORGANIZATION_SELECT_BUTTON",
-			value1 = "Change");
+		Click(locator1 = "UsersAndOrganizationsEditOrganization#PARENT_ORGANIZATION_SELECT_BUTTON");
 
 		SelectFrame(
 			key_title = "Select Parent Organization",
@@ -493,7 +491,7 @@ definition {
 			value1 = ${subOrgName});
 
 		AssertTextEquals(
-			key_columnName = "parent-organization",
+			key_columnName = "path",
 			key_rowEntry = ${subOrgName},
 			locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER_TD",
 			value1 = ${parentOrgName});

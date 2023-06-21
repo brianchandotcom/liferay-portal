@@ -478,7 +478,9 @@ public class APIApplicationOpenAPIContributorTest extends BaseTestCase {
 			});
 
 		JSONAssert.assertEquals(
-			_read("expected_openapi.json"),
+			new String(
+				FileUtil.getBytes(
+					getClass(), "dependencies/expected_openapi.json")),
 			_objectMapper.writeValueAsString(openAPI), JSONCompareMode.STRICT);
 	}
 
@@ -511,11 +513,6 @@ public class APIApplicationOpenAPIContributorTest extends BaseTestCase {
 
 		return _objectDefinitionLocalService.publishCustomObjectDefinition(
 			userId, objectDefinition.getObjectDefinitionId());
-	}
-
-	private String _read(String fileName) throws Exception {
-		return new String(
-			FileUtil.getBytes(getClass(), "dependencies/" + fileName));
 	}
 
 	private static final String _API_APPLICATION_ERC =

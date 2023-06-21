@@ -270,6 +270,34 @@ definition {
 		}
 	}
 
+	@description = "LPS-181572 - Verify if is possible clicks on Data Set View Name and go to datail view page"
+	@priority = 5
+	test CanClickOnCreatedDataViewName {
+		task ("And create a Dataset view") {
+			DataSetAdmin.createDataSetView(
+				description = "View Test Description",
+				key_name = "View Test");
+		}
+
+		task ("When the user hovers over the name of the created dataset view") {
+			MouseOver(
+				key_text = "View Test",
+				locator1 = "CP2Utils#ANY_TEXT");
+		}
+
+		task ("When the user clicks on the name of the created dataset view") {
+			Click(
+				key_text = "View Test",
+				locator1 = "CP2Utils#ANY_TEXT");
+		}
+
+		task ("Then confirm that views admin page are displayed") {
+			AssertElementPresent(
+				key_objectLabel = "View Test",
+				locator1 = "ObjectPortlet#OBJECT_PORTLET_HEADER");
+		}
+	}
+
 	@description = "LPS-181572 - Verify if is possible clicks on Data Set Test Name and go to view page"
 	@priority = 5
 	test CanClickOnDataSetNameCreated {

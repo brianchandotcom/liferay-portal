@@ -14,7 +14,7 @@
 
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
-import {Option, Picker, Text} from '@clayui/core';
+import {Text} from '@clayui/core';
 import ClayDropDown, {Align} from '@clayui/drop-down';
 import {ClaySelectWithOption} from '@clayui/form';
 import Label from '@clayui/label';
@@ -56,13 +56,22 @@ function SegmentsAndExperiencesSelector({
 	const [
 		selectedSegmentsExperience,
 		setSelectedSegmentsExperience,
-	] = useState(segmentsExperiences?.[0]?.segmentsExperienceId);
+	] = useState(segmentsExperiences?.[0]);
 	const [segmentSelectorActive, setSegmentSelectorActive] = useState(false);
+	const [
+		segmentExperienceSelectorActive,
+		setSegmentExperienceSelectorActive,
+	] = useState(false);
 
 	const segmentEntriesShortList =
 		segmentsEntries.length > 8
 			? segmentsEntries.slice(0, 8)
 			: segmentsEntries;
+
+	const segmentExperiencesShortList =
+		segmentsExperiences.length > 8
+			? segmentsExperiences.slice(0, 8)
+			: segmentsExperiences;
 
 	const formRef = useRef(null);
 	const firstRenderRef = useRef(true);
@@ -132,7 +141,9 @@ function SegmentsAndExperiencesSelector({
 
 	useEffect(() => {
 		if (!firstRenderRef.current) {
-			simulateSegmentsExperiment(selectedSegmentsExperience);
+			simulateSegmentsExperiment(
+				selectedSegmentsExperience.segmentsExperienceId
+			);
 		}
 	}, [selectedSegmentsExperience, simulateSegmentsExperiment]);
 
@@ -156,7 +167,9 @@ function SegmentsAndExperiencesSelector({
 				body: new FormData(formRef.current),
 				method: 'POST',
 			}).then(() => {
-				simulateSegmentsExperiment(selectedSegmentsExperience);
+				simulateSegmentsExperiment(
+					selectedSegmentsExperience.segmentsExperienceId
+				);
 			});
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -315,76 +328,123 @@ function SegmentsAndExperiencesSelector({
 								id={`${namespace}segmentsExperienceId`}
 								name={`${namespace}segmentsExperienceId`}
 								type="hidden"
-								value={selectedSegmentsExperience}
+								value={
+									selectedSegmentsExperience.segmentsExperienceId
+								}
 							/>
 
-							<Picker
-								aria-labelledby={`${namespace}segmentsExperienceLabelId`}
-								id={`${namespace}segmentsExperienceSelector`}
-								items={segmentsExperiences}
-								onSelectionChange={
-									setSelectedSegmentsExperience
+							<ClayDropDown
+								active={segmentExperienceSelectorActive}
+								alignmentPosition={Align.BottomLeft}
+								menuElementAttrs={{
+									containerProps: {
+										className: 'cadmin',
+									},
+								}}
+								onActiveChange={
+									setSegmentExperienceSelectorActive
 								}
-								selectedKey={selectedSegmentsExperience}
-								type="button"
-							>
-								{(segmentsExperience) => (
-									<Option
-										key={
-											segmentsExperience.segmentsExperienceId
-										}
-										textValue={
-											segmentsExperience.segmentsExperienceName
-										}
+								trigger={
+									<ClayButton
+										className="form-control-select text-left w-100"
+										displayType="secondary"
+										size="sm"
+										type="button"
 									>
-										<Layout.ContentRow>
-											<Layout.ContentCol
-												className="pl-0"
-												expand
+										<span>
+											{
+												selectedSegmentsExperience.segmentsExperienceName
+											}
+										</span>
+									</ClayButton>
+								}
+							>
+								<ClayDropDown.ItemList>
+									{segmentExperiencesShortList.map(
+										(segmentsExperience) => (
+											<ClayDropDown.Item
+												key={
+													segmentsExperience.segmentsExperienceId
+												}
+												onClick={() => {
+													setSegmentExperienceSelectorActive(
+														false
+													);
+													setSelectedSegmentsExperience(
+														segmentsExperience
+													);
+												}}
 											>
-												<Text
-													id={`${segmentsExperience.segmentsExperienceId}-title`}
-													size={3}
-													weight="semi-bold"
-												>
-													{
-														segmentsExperience.segmentsExperienceName
-													}
-												</Text>
+												<Layout.ContentRow>
+													<Layout.ContentCol
+														className="pl-0"
+														expand
+													>
+														<Text
+															id={`${segmentsExperience.segmentsExperienceId}-title`}
+															size={3}
+															weight="semi-bold"
+														>
+															{
+																segmentsExperience.segmentsExperienceName
+															}
+														</Text>
 
-												<Text
-													aria-hidden
-													color="secondary"
-													id={`${segmentsExperience.segmentsExperienceId}-description`}
-													size={3}
-												>
-													{`${Liferay.Language.get(
-														'segment'
-													)}:
+														<Text
+															aria-hidden
+															color="secondary"
+															id={`${segmentsExperience.segmentsExperienceId}-description`}
+															size={3}
+														>
+															{`${Liferay.Language.get(
+																'segment'
+															)}:
 														${segmentsExperience.segmentsEntryName}`}
-												</Text>
-											</Layout.ContentCol>
+														</Text>
+													</Layout.ContentCol>
 
-											<Layout.ContentCol className="pr-0">
-												<Label
-													aria-hidden
-													className="mr-0"
-													displayType={
-														segmentsExperience.segmentsExperienceActive
-															? 'success'
-															: 'secondary'
-													}
-													id={`${segmentsExperience.segmentsExperienceId}-status`}
-												>
-													{
-														segmentsExperience.segmentsExperienceStatusLabel
-													}
-												</Label>
-											</Layout.ContentCol>
-										</Layout.ContentRow>
-									</Option>
-								)}
-							</Picker>
+													<Layout.ContentCol className="pr-0">
+														<Label
+															aria-hidden
+															className="mr-0"
+															displayType={
+																segmentsExperience.segmentsExperienceActive
+																	? 'success'
+																	: 'secondary'
+															}
+															id={`${segmentsExperience.segmentsExperienceId}-status`}
+														>
+															{
+																segmentsExperience.segmentsExperienceStatusLabel
+															}
+														</Label>
+													</Layout.ContentCol>
+												</Layout.ContentRow>
+											</ClayDropDown.Item>
+										)
+									)}
+
+									{segmentsExperiences.length >
+										MAXIMUM_DROPDOWN_ENTRIES && (
+										<ClayDropDown.Section>
+											<ClayButton
+												displayType="secondary w-100"
+												onClick={() => {
+													setSegmentExperienceSelectorActive(
+														false
+													);
+
+													handleMoreButtonClick();
+												}}
+											>
+												{Liferay.Language.get(
+													'more-experiences'
+												)}
+											</ClayButton>
+										</ClayDropDown.Section>
+									)}
+								</ClayDropDown.ItemList>
+							</ClayDropDown>
 						</div>
 					)}
 				</form>

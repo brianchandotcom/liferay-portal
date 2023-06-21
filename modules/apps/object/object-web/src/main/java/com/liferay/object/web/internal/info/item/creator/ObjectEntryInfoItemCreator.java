@@ -29,13 +29,14 @@ import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.exception.ObjectEntryValuesException;
 import com.liferay.object.exception.ObjectValidationRuleEngineException;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
-import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
+import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.object.service.ObjectFieldSettingLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
@@ -49,6 +50,7 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 
 import java.text.Format;
@@ -68,12 +70,14 @@ public class ObjectEntryInfoItemCreator
 		GroupLocalService groupLocalService,
 		InfoItemFormProvider<ObjectEntry> infoItemFormProvider,
 		ObjectDefinition objectDefinition,
+		ObjectEntryLocalService objectEntryLocalService,
 		ObjectEntryManagerRegistry objectEntryManagerRegistry,
 		ObjectScopeProviderRegistry objectScopeProviderRegistry) {
 
 		_groupLocalService = groupLocalService;
 		_infoItemFormProvider = infoItemFormProvider;
 		_objectDefinition = objectDefinition;
+		_objectEntryLocalService = objectEntryLocalService;
 		_objectEntryManagerRegistry = objectEntryManagerRegistry;
 		_objectScopeProviderRegistry = objectScopeProviderRegistry;
 	}
@@ -93,20 +97,32 @@ public class ObjectEntryInfoItemCreator
 
 			ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
-			return objectEntryManager.addObjectEntry(
-				new DefaultDTOConverterContext(
-					false, null, null, null, null, themeDisplay.getLocale(),
-					null, themeDisplay.getUser()),
-				_objectDefinition,
-				new ObjectEntry() {
-					{
-						keywords = serviceContext.getAssetTagNames();
-						properties = _toProperties(infoItemFieldValues);
-						taxonomyCategoryIds = ArrayUtil.toLongArray(
-							serviceContext.getAssetCategoryIds());
-					}
-				},
-				_getScopeKey(groupId));
+			com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry =
+				objectEntryManager.addObjectEntry(
+					new DefaultDTOConverterContext(
+						false, null, null, null, null, themeDisplay.getLocale(),
+						null, themeDisplay.getUser()),
+					_objectDefinition,
+					new com.liferay.object.rest.dto.v1_0.ObjectEntry() {
+						{
+							keywords = serviceContext.getAssetTagNames();
+							properties = _toProperties(infoItemFieldValues);
+							taxonomyCategoryIds = ArrayUtil.toLongArray(
+								serviceContext.getAssetCategoryIds());
+						}
+					},
+					_getScopeKey(groupId));
+
+			ObjectEntry serviceBuilderObjectEntry =
+				_objectEntryLocalService.createObjectEntry(
+					GetterUtil.getLong(objectEntry.getId()));
+
+			serviceBuilderObjectEntry.setExternalReferenceCode(
+				objectEntry.getExternalReferenceCode());
+			serviceBuilderObjectEntry.setObjectDefinitionId(
+				_objectDefinition.getObjectDefinitionId());
+
+			return serviceBuilderObjectEntry;
 		}
 		catch (ModelListenerException modelListenerException) {
 			Throwable throwable = modelListenerException.getCause();
@@ -358,6 +374,7 @@ public class ObjectEntryInfoItemCreator
 	private final GroupLocalService _groupLocalService;
 	private final InfoItemFormProvider<ObjectEntry> _infoItemFormProvider;
 	private final ObjectDefinition _objectDefinition;
+	private final ObjectEntryLocalService _objectEntryLocalService;
 	private final ObjectEntryManagerRegistry _objectEntryManagerRegistry;
 	private final ObjectScopeProviderRegistry _objectScopeProviderRegistry;
 

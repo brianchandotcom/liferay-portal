@@ -17,10 +17,8 @@ package com.liferay.portal.workflow.kaleo.runtime.internal.node;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.workflow.kaleo.definition.NodeType;
-import com.liferay.portal.workflow.kaleo.definition.ScriptLanguage;
 import com.liferay.portal.workflow.kaleo.model.KaleoCondition;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
@@ -28,13 +26,13 @@ import com.liferay.portal.workflow.kaleo.model.KaleoTransition;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.condition.ConditionEvaluator;
 import com.liferay.portal.workflow.kaleo.runtime.graph.PathElement;
+import com.liferay.portal.workflow.kaleo.runtime.internal.util.ServiceSelectorUtil;
 import com.liferay.portal.workflow.kaleo.runtime.node.BaseNodeExecutor;
 import com.liferay.portal.workflow.kaleo.runtime.node.NodeExecutor;
 import com.liferay.portal.workflow.kaleo.service.KaleoConditionLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoInstanceLocalService;
 
 import java.util.List;
-import java.util.Objects;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -114,41 +112,15 @@ public class ConditionNodeExecutor extends BaseNodeExecutor {
 			KaleoCondition kaleoCondition, ExecutionContext executionContext)
 		throws PortalException {
 
-		ConditionEvaluator conditionEvaluator = null;
-
-		String scriptLanguage = kaleoCondition.getScriptLanguage();
-
-		List<ConditionEvaluator> conditionEvaluators =
-			_serviceTrackerMap.getService(scriptLanguage);
-
-		if (conditionEvaluators != null) {
-			if (Objects.equals(
-					String.valueOf(ScriptLanguage.JAVA), scriptLanguage)) {
-
-				String className = StringUtil.trim(kaleoCondition.getScript());
-
-				for (ConditionEvaluator innerConditionEvaluator :
-						conditionEvaluators) {
-
-					if (Objects.equals(
-							className,
-							ClassUtil.getClassName(innerConditionEvaluator))) {
-
-						conditionEvaluator = innerConditionEvaluator;
-
-						break;
-					}
-				}
-			}
-			else {
-				conditionEvaluator = conditionEvaluators.get(0);
-			}
-		}
+		ConditionEvaluator conditionEvaluator =
+			ServiceSelectorUtil.getServiceByScriptLanguage(
+				StringUtil.trim(kaleoCondition.getScript()),
+				kaleoCondition.getScriptLanguage(), _serviceTrackerMap);
 
 		if (conditionEvaluator == null) {
 			throw new IllegalArgumentException(
 				"No condition evaluator found for script language " +
-					scriptLanguage);
+					kaleoCondition.getScriptLanguage());
 		}
 
 		return conditionEvaluator.evaluate(kaleoCondition, executionContext);

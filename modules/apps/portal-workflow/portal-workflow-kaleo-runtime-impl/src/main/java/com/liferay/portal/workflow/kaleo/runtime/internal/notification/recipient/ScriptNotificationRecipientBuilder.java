@@ -18,12 +18,11 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.workflow.kaleo.definition.NotificationReceptionType;
-import com.liferay.portal.workflow.kaleo.definition.ScriptLanguage;
 import com.liferay.portal.workflow.kaleo.model.KaleoNotificationRecipient;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignmentInstance;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
+import com.liferay.portal.workflow.kaleo.runtime.internal.util.ServiceSelectorUtil;
 import com.liferay.portal.workflow.kaleo.runtime.notification.NotificationRecipient;
 import com.liferay.portal.workflow.kaleo.runtime.notification.recipient.NotificationRecipientBuilder;
 import com.liferay.portal.workflow.kaleo.runtime.notification.recipient.script.NotificationRecipientEvaluator;
@@ -34,7 +33,6 @@ import java.io.Serializable;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.osgi.framework.BundleContext;
@@ -120,47 +118,16 @@ public class ScriptNotificationRecipientBuilder
 			ExecutionContext executionContext)
 		throws Exception {
 
-		NotificationRecipientEvaluator notificationRecipientEvaluator = null;
-
-		String scriptLanguage =
-			kaleoNotificationRecipient.getRecipientScriptLanguage();
-
-		List<NotificationRecipientEvaluator> notificationRecipientEvaluators =
-			_serviceTrackerMap.getService(scriptLanguage);
-
-		if (notificationRecipientEvaluators != null) {
-			if (Objects.equals(
-					String.valueOf(ScriptLanguage.JAVA), scriptLanguage)) {
-
-				String className =
-					kaleoNotificationRecipient.getRecipientScript();
-
-				for (NotificationRecipientEvaluator
-						innerNotificationRecipientEvaluator :
-							notificationRecipientEvaluators) {
-
-					if (Objects.equals(
-							className,
-							ClassUtil.getClassName(
-								innerNotificationRecipientEvaluator))) {
-
-						notificationRecipientEvaluator =
-							innerNotificationRecipientEvaluator;
-
-						break;
-					}
-				}
-			}
-			else {
-				notificationRecipientEvaluator =
-					notificationRecipientEvaluators.get(0);
-			}
-		}
+		NotificationRecipientEvaluator notificationRecipientEvaluator =
+			ServiceSelectorUtil.getServiceByScriptLanguage(
+				kaleoNotificationRecipient.getRecipientScript(),
+				kaleoNotificationRecipient.getRecipientScriptLanguage(),
+				_serviceTrackerMap);
 
 		if (notificationRecipientEvaluator == null) {
 			throw new IllegalArgumentException(
 				"No notification recipient evaluator for script language " +
-					scriptLanguage);
+					kaleoNotificationRecipient.getRecipientScriptLanguage());
 		}
 
 		return notificationRecipientEvaluator.evaluate(

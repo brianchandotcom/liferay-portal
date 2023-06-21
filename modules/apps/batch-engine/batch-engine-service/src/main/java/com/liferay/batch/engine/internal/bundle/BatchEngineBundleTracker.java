@@ -17,11 +17,13 @@ package com.liferay.batch.engine.internal.bundle;
 import com.liferay.batch.engine.unit.BatchEngineUnitProcessor;
 import com.liferay.batch.engine.unit.BatchEngineUnitReader;
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.FileUtil;
 
 import java.io.File;
 import java.io.IOException;
 
+import java.util.Dictionary;
 import java.util.Map;
 import java.util.Objects;
 
@@ -98,7 +100,12 @@ public class BatchEngineBundleTracker {
 
 		@Override
 		public Void addingBundle(Bundle bundle, BundleEvent bundleEvent) {
-			if (!_isAlreadyProcessed(bundle)) {
+			Dictionary<String, String> headers = bundle.getHeaders(
+				StringPool.BLANK);
+
+			String batchPath = headers.get("Liferay-Client-Extension-Batch");
+
+			if ((batchPath != null) && !_isAlreadyProcessed(bundle)) {
 				_batchEngineUnitProcessor.processBatchEngineUnits(
 					_batchEngineUnitReader.getBatchEngineUnits(bundle));
 			}

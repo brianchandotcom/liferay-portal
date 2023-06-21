@@ -26,7 +26,7 @@ public class ObjectLayoutModelDocumentContributor
 	public void contribute(Document document, ObjectLayout objectLayout) {
 		document.addLocalizedText(Field.NAME, objectLayout.getNameMap());
 		document.addLocalizedKeyword(
-			"localized_name", objectLayout.getNameMap(), true);
+			"localized_name", objectLayout.getNameMap(), true, true);
 		document.addKeyword(
 			"objectDefinitionId", objectLayout.getObjectDefinitionId());
 		document.remove(Field.USER_NAME);

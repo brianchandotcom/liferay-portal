@@ -687,6 +687,11 @@ definition {
 				roleTitle = "User",
 				update = "false",
 				view = "true");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "MANAGE_COMMERCE_PRODUCT_CHANNEL_VISIBILITY",
+				resourceName = "com.liferay.commerce.product",
+				roleTitle = "User");
 		}
 
 		task ("When the buyer logs in and goes to the Minium channel") {
@@ -972,6 +977,11 @@ definition {
 			CommercePermissions.defineChannelPermissionsViaJSONAPI(
 				roleTitle = "User",
 				view = "true");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "MANAGE_COMMERCE_PRODUCT_CHANNEL_VISIBILITY",
+				resourceName = "com.liferay.commerce.product",
+				roleTitle = "User");
 
 			CommercePermissions.defineProductPermissionsViaJSONAPI(
 				roleTitle = "User",

@@ -402,10 +402,7 @@ export default function PageStructureSidebar() {
 										: 'right'
 								}
 								onMouseLeave={(event) => {
-									if (
-										item.id ===
-										fromControlsId(hoveredItemId)
-									) {
+									if (item.hovered) {
 										event.stopPropagation();
 										hoverItem(null);
 									}

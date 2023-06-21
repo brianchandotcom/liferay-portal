@@ -43,7 +43,6 @@ import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
-import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
@@ -246,15 +245,14 @@ public class APIApplicationOpenAPIContributorTest extends BaseTestCase {
 					"textField"
 				).build()));
 
-		_objectRelationship =
-			_objectRelationshipLocalService.addObjectRelationship(
-				TestPropsValues.getUserId(),
-				_objectDefinition1.getObjectDefinitionId(),
-				_objectDefinition2.getObjectDefinitionId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"oneToManyRelationshipName",
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+		_objectRelationshipLocalService.addObjectRelationship(
+			TestPropsValues.getUserId(),
+			_objectDefinition1.getObjectDefinitionId(),
+			_objectDefinition2.getObjectDefinitionId(), 0,
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			"oneToManyRelationshipName",
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		ObjectField aggregationObjectField = new AggregationObjectFieldBuilder(
 		).externalReferenceCode(
@@ -599,8 +597,6 @@ public class APIApplicationOpenAPIContributorTest extends BaseTestCase {
 
 	@Inject
 	private ObjectFieldSettingLocalService _objectFieldSettingLocalService;
-
-	private ObjectRelationship _objectRelationship;
 
 	@Inject
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;

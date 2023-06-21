@@ -1,0 +1,5 @@
+dependencies {
+	testIntegrationCompile project(":apps:portal-configuration:portal-configuration-test-util")
+	testIntegrationCompile project(":dxp:apps:analytics:analytics-audit-header")
+	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+}

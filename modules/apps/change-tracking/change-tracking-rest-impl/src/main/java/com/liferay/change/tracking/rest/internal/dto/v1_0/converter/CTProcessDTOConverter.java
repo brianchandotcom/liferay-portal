@@ -65,6 +65,7 @@ public class CTProcessDTOConverter
 		return new CTProcess() {
 			{
 				actions = dtoConverterContext.getActions();
+				ctCollectionId = ctCollection.getCtCollectionId();
 				datePublished = ctProcess.getCreateDate();
 				description = ctCollection.getDescription();
 				id = ctProcess.getCtProcessId();

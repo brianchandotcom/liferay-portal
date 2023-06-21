@@ -31,12 +31,4 @@ public interface FragmentEntryFinder {
 		long groupId, long fragmentCollectionId, String name,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition);
 
-	public java.util.List<Object> findFC_FE_ByG_FCI(
-		long groupId, long fragmentCollectionId,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition);
-
-	public java.util.List<Object> findFC_FE_ByG_FCI_N(
-		long groupId, long fragmentCollectionId, String name,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition);
-
 }

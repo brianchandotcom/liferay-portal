@@ -3220,9 +3220,11 @@ definition {
 		task ("Then the SLA status should be related to the moment the pause timer triggered") {
 			WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
 
+			Pause(locator1 = 60000);
+
 			Click(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
 
-			while ((IsElementNotPresent(locator1 = "WorkflowAllItems#DETAIL_PAGE_SLA_PAUSED")) && (maxIterations = "25")) {
+			while ((IsElementNotPresent(locator1 = "WorkflowAllItems#DETAIL_PAGE_SLA_PAUSED")) && (maxIterations = "20")) {
 				Refresh();
 
 				Click(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");

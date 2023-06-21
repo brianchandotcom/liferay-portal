@@ -31,6 +31,44 @@ portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
 
 renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
+
+VerticalNavItemList verticalNavItemList = new VerticalNavItemList();
+
+verticalNavItemList.add(
+	verticalNavItem -> {
+		String name = LanguageUtil.get(request, "basic-templates");
+
+		verticalNavItem.setHref(layoutsAdminDisplayContext.getSelectLayoutPageTemplateEntryURL(0, layoutsAdminDisplayContext.getSelPlid(), "basic-templates", layoutsAdminDisplayContext.isPrivateLayout()));
+		verticalNavItem.setLabel(name);
+		verticalNavItem.setId(name);
+		verticalNavItem.setActive(selectLayoutPageTemplateEntryDisplayContext.isBasicTemplates());
+	});
+
+verticalNavItemList.add(
+	verticalNavItem -> {
+		String name = LanguageUtil.get(request, "basic-templates");
+
+		verticalNavItem.setHref(layoutsAdminDisplayContext.getSelectLayoutPageTemplateEntryURL(0, layoutsAdminDisplayContext.getSelPlid(), "global-templates", layoutsAdminDisplayContext.isPrivateLayout()));
+		verticalNavItem.setLabel(name);
+		verticalNavItem.setId(name);
+		verticalNavItem.setActive(selectLayoutPageTemplateEntryDisplayContext.isGlobalTemplates());
+	});
+
+for (LayoutPageTemplateCollection layoutPageTemplateCollection : LayoutPageTemplateCollectionServiceUtil.getLayoutPageTemplateCollections(scopeGroupId)) {
+	int layoutPageTemplateEntriesCount = LayoutPageTemplateEntryServiceUtil.getLayoutPageTemplateEntriesCount(themeDisplay.getScopeGroupId(), layoutPageTemplateCollection.getLayoutPageTemplateCollectionId(), WorkflowConstants.STATUS_APPROVED);
+
+	if (layoutPageTemplateEntriesCount > 0) {
+		String name = HtmlUtil.escape(layoutPageTemplateCollection.getName());
+
+		verticalNavItemList.add(
+			verticalNavItem -> {
+				verticalNavItem.setHref(layoutsAdminDisplayContext.getSelectLayoutPageTemplateEntryURL(layoutPageTemplateCollection.getLayoutPageTemplateCollectionId(), layoutsAdminDisplayContext.getSelPlid(), layoutsAdminDisplayContext.isPrivateLayout()));
+				verticalNavItem.setLabel(name);
+				verticalNavItem.setId(name);
+				verticalNavItem.setActive(selectLayoutPageTemplateEntryDisplayContext.getLayoutPageTemplateCollectionId() == layoutPageTemplateCollection.getLayoutPageTemplateCollectionId());
+			});
+	}
+}
 %>
 
 <clay:container-fluid
@@ -41,46 +79,13 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 		<clay:col
 			lg="3"
 		>
-			<nav class="menubar menubar-transparent menubar-vertical-expand-lg">
-				<ul class="nav nav-nested">
-					<li class="nav-item">
-						<p class="text-uppercase">
-							<strong><liferay-ui:message key="page-template-sets" /></strong>
-						</p>
+			<div class="c-mb-3 h5 text-uppercase">
+				<liferay-ui:message key="page-template-sets" />
+			</div>
 
-						<ul class="nav nav-stacked">
-							<li class="nav-item">
-								<a class="nav-link text-truncate <%= selectLayoutPageTemplateEntryDisplayContext.isBasicTemplates() ? "active" : StringPool.BLANK %>" href="<%= layoutsAdminDisplayContext.getSelectLayoutPageTemplateEntryURL(0, layoutsAdminDisplayContext.getSelPlid(), "basic-templates", layoutsAdminDisplayContext.isPrivateLayout()) %>">
-									<liferay-ui:message key="basic-templates" />
-								</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link text-truncate <%= selectLayoutPageTemplateEntryDisplayContext.isGlobalTemplates() ? "active" : StringPool.BLANK %>" href="<%= layoutsAdminDisplayContext.getSelectLayoutPageTemplateEntryURL(0, layoutsAdminDisplayContext.getSelPlid(), "global-templates", layoutsAdminDisplayContext.isPrivateLayout()) %>">
-									<liferay-ui:message key="global-templates" />
-								</a>
-							</li>
-
-							<%
-							for (LayoutPageTemplateCollection layoutPageTemplateCollection : LayoutPageTemplateCollectionServiceUtil.getLayoutPageTemplateCollections(scopeGroupId)) {
-								int layoutPageTemplateEntriesCount = LayoutPageTemplateEntryServiceUtil.getLayoutPageTemplateEntriesCount(themeDisplay.getScopeGroupId(), layoutPageTemplateCollection.getLayoutPageTemplateCollectionId(), WorkflowConstants.STATUS_APPROVED);
-							%>
-
-								<c:if test="<%= layoutPageTemplateEntriesCount > 0 %>">
-									<li class="nav-item">
-										<a class="nav-link text-truncate <%= (selectLayoutPageTemplateEntryDisplayContext.getLayoutPageTemplateCollectionId() == layoutPageTemplateCollection.getLayoutPageTemplateCollectionId()) ? "active" : StringPool.BLANK %>" href="<%= layoutsAdminDisplayContext.getSelectLayoutPageTemplateEntryURL(layoutPageTemplateCollection.getLayoutPageTemplateCollectionId(), layoutsAdminDisplayContext.getSelPlid(), layoutsAdminDisplayContext.isPrivateLayout()) %>">
-											<%= HtmlUtil.escape(layoutPageTemplateCollection.getName()) %>
-										</a>
-									</li>
-								</c:if>
-
-							<%
-							}
-							%>
-
-						</ul>
-					</li>
-				</ul>
-			</nav>
+			<clay:vertical-nav
+				verticalNavItems="<%= verticalNavItemList %>"
+			/>
 		</clay:col>
 
 		<clay:col

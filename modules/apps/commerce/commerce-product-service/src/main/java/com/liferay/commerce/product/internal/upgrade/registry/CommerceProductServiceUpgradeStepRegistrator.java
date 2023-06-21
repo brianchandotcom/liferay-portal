@@ -39,6 +39,7 @@ import com.liferay.commerce.product.internal.upgrade.v2_5_0.FriendlyURLEntryUpgr
 import com.liferay.commerce.product.internal.upgrade.v3_9_2.MiniumSiteInitializerUpgradeProcess;
 import com.liferay.commerce.product.internal.upgrade.v4_0_0.util.CommerceChannelAccountEntryRelTable;
 import com.liferay.commerce.product.internal.upgrade.v4_0_2.CommerceRepositoryUpgradeProcess;
+import com.liferay.commerce.product.internal.upgrade.v5_4_0.CommercePermissionUpgradeProcess;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
@@ -49,6 +50,8 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.RepositoryLocalService;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.BaseUuidUpgradeProcess;
@@ -373,6 +376,11 @@ public class CommerceProductServiceUpgradeStepRegistrator
 			UpgradeProcessFactory.addColumns(
 				"CommerceChannel", "accountEntryId LONG"));
 
+		registry.register(
+			"5.3.0", "5.4.0",
+			new CommercePermissionUpgradeProcess(
+				_resourceActionLocalService, _resourcePermissionLocalService));
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce product upgrade step registrator finished");
 		}
@@ -416,6 +424,12 @@ public class CommerceProductServiceUpgradeStepRegistrator
 
 	@Reference
 	private RepositoryLocalService _repositoryLocalService;
+
+	@Reference
+	private ResourceActionLocalService _resourceActionLocalService;
+
+	@Reference
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
 	@Reference
 	private SettingsFactory _settingsFactory;

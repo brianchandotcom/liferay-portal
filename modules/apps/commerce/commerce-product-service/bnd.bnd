@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Commerce Product Service
 Bundle-SymbolicName: com.liferay.commerce.product.service
 Bundle-Version: 6.0.116
-Liferay-Require-SchemaVersion: 5.3.0
+Liferay-Require-SchemaVersion: 5.4.0
 Liferay-Service: true
 -dsannotations-options: inherit

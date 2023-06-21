@@ -374,9 +374,12 @@ export const getUserAccountByEmail = gql`
 	query GetUserAccounts($filter: String) {
 		userAccounts(filter: $filter) {
 			items {
-				name
+				alternateName
 				emailAddress
+				familyName
+				givenName
 				id
+				name
 			}
 		}
 	}
@@ -391,9 +394,10 @@ export const patchUserAccount = gql`
 			userAccountId: $userAccountId
 			userAccount: $userAccount
 		) {
-			id
+			alternateName
 			familyName
 			givenName
+			id
 		}
 	}
 `;

@@ -211,52 +211,73 @@ const InviteTeamMembersPage = ({
 		let displaySuccess = true;
 		const invitedAccounts = [];
 
-		const _getUserAccountByEmails = async (email) => {
+		const context = {
+			displayErrors: false,
+			displayServerError: false,
+			displaySuccess: false,
+		};
+
+		const _getUserAccountByEmails = async (emails) => {
 			const getUserAccount = await client.query({
+				context,
 				query: getUserAccountByEmail,
 				variables: {
-					filter: SearchBuilder.eq('emailAddress', email),
+					filter: Array.isArray(emails)
+						? SearchBuilder.in('emailAddress', emails)
+						: SearchBuilder.eq('emailAddress', emails),
 				},
 			});
 
 			return getUserAccount?.data?.userAccounts?.items ?? [];
 		};
 
+		const userAccounts = await _getUserAccountByEmails(
+			values?.invites?.map(({email}) => email)
+		);
+
 		for (const inviteMember of inviteMembers) {
 			try {
 				await associateUserWithAccount({
-					context: {
-						displayServerError: false,
-						displaySuccess: false,
-					},
+					context,
 					variables: {
 						accountKey: project.accountKey,
 						emailAddress: inviteMember.email,
 					},
 				});
-				const [
-					invitedMemberUserAccount,
-				] = await _getUserAccountByEmails(inviteMember.email);
 
-				if (invitedMemberUserAccount) {
-					await updateUserAccount({
-						variables: {
-							userAccount: {
-								alternateName: `${new Date().getTime()}`,
-								emailAddress: inviteMember.email,
-								familyName: inviteMember.familyName,
-								givenName: inviteMember.givenName,
-							},
-							userAccountId: invitedMemberUserAccount.id,
-						},
-					});
+				const currentUserAccount = userAccounts.find(
+					({emailAddress}) => emailAddress === inviteMember.email
+				);
+
+				const isCurrentUserAccountWithSameNames =
+					currentUserAccount?.familyName ===
+						inviteMember.familyName &&
+					currentUserAccount?.givenName === inviteMember.givenName;
+
+				if (!isCurrentUserAccountWithSameNames) {
+					const [
+						invitedMemberUserAccount,
+					] = await _getUserAccountByEmails(inviteMember.email);
+
+					if (invitedMemberUserAccount) {
+						try {
+							await updateUserAccount({
+								context,
+								variables: {
+									userAccount: {
+										emailAddress: inviteMember.email,
+										familyName: inviteMember.familyName,
+										givenName: inviteMember.givenName,
+									},
+									userAccountId: invitedMemberUserAccount.id,
+								},
+							});
+						} catch (error) {}
+					}
 				}
 
 				await associateUserAccountWithAccountRole({
-					context: {
-						displayServerError: false,
-						displaySuccess: false,
-					},
+					context,
 					variables: {
 						accountKey: project.accountKey,
 						accountRoleId: inviteMember.role.id,
@@ -290,6 +311,7 @@ const InviteTeamMembersPage = ({
 					displaySuccess,
 					type: 'liferay-rest',
 				},
+				notifyOnNetworkStatusChange: false,
 				variables: {
 					TeamMembersInvitation: invitedAccounts.map(
 						({email, familyName, givenName, role}) => ({

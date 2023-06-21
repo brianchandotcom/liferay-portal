@@ -42,30 +42,30 @@ export default function useGlobalNetworkIndicator(networkStatus) {
 					type: DEFAULT_ERROR.type,
 				});
 			}
-			else {
-				Liferay.Util.openToast(DEFAULT_ERROR);
-			}
 		}
-
 		if (errorStatus?.response) {
 			const displayErrors = errorStatus.operation.getContext()
 				.displayErrors;
 
-			const errors = errorStatus.response.map((error) => {
-				if (displayErrors && displayErrors[error.exception.errno]) {
-					const displayError = displayErrors[error.exception.errno];
+			if (displayErrors) {
+				const errors = errorStatus.response.map((error) => {
+					if (displayErrors && displayErrors[error.exception.errno]) {
+						const displayError =
+							displayErrors[error.exception.errno];
 
-					return {
-						message: displayError.message || DEFAULT_ERROR.message,
-						title: displayError.title || DEFAULT_ERROR.title,
-						type: displayError.type || DEFAULT_ERROR.type,
-					};
-				}
+						return {
+							message:
+								displayError.message || DEFAULT_ERROR.message,
+							title: displayError.title || DEFAULT_ERROR.title,
+							type: displayError.type || DEFAULT_ERROR.type,
+						};
+					}
 
-				return DEFAULT_ERROR;
-			});
+					return DEFAULT_ERROR;
+				});
 
-			errors.forEach((error) => Liferay.Util.openToast(error));
+				errors.forEach((error) => Liferay.Util.openToast(error));
+			}
 		}
 
 		if (success) {
@@ -73,10 +73,10 @@ export default function useGlobalNetworkIndicator(networkStatus) {
 				.displaySuccess;
 
 			const isValidMutation =
-				isOperationType(success.operation, 'mutation') &&
-				displaySuccess !== false;
+				displaySuccess &&
+				isOperationType(success.operation, 'mutation');
 
-			if (isValidMutation || displaySuccess) {
+			if (isValidMutation) {
 				Liferay.Util.openToast({
 					message: displaySuccess?.message || DEFAULT_SUCCESS.message,
 					title: displaySuccess?.title || DEFAULT_SUCCESS.title,

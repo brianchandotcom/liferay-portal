@@ -163,7 +163,7 @@ const TeamMembersTable = ({
 				sessionId={sessionId}
 			/>
 
-			<div className="cp-team-members-table-wrapper overflow-auto">
+			<div className="cp-team-members-table-wrapper">
 				{!totalUserAccounts && !(loading || searching) && (
 					<div className="d-flex justify-content-center pt-4">
 						{i18n.translate('no-team-members-were-found')}

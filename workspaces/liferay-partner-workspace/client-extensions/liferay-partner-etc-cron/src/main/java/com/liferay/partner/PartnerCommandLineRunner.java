@@ -14,6 +14,8 @@
 
 package com.liferay.partner;
 
+import com.liferay.petra.string.StringBundler;
+
 import java.net.URI;
 
 import java.time.ZonedDateTime;
@@ -109,12 +111,13 @@ public class PartnerCommandLineRunner implements CommandLineRunner {
 
 		responseJSONObject = _get(
 			uriBuilder -> uriBuilder.path(
-				"/o/c/mdfclaimactivities"
+				"/o/c/activities"
 			).queryParam(
 				"filter",
-				"selected eq true and actToMDFClmActs/submitted eq true and actToMDFClmActs/activityStatus eq 'active' and actToMDFClmActs/endDate le " +
-					_toString(zonedDateTime.minusDays(15)) +
-						" and mdfClmToMDFClmActs/mdfClaimStatus ne 'draft' and mdfClmToMDFClmActs/mdfClaimStatus ne 'moreInfoRequested'"
+				StringBundler.concat(
+					"submitted eq true and activityStatus eq 'active' and ",
+					"endDate le ", _toString(zonedDateTime.minusDays(15)),
+					" and mdfReqToActs/mdfRequestStatus eq 'approved'")
 			).queryParam(
 				"nestedFields", "actToMDFClmActs"
 			).queryParam(
@@ -129,50 +132,68 @@ public class PartnerCommandLineRunner implements CommandLineRunner {
 			for (int i = 0; i < itemsJSONArray.length(); i++) {
 				JSONObject itemJSONObject = itemsJSONArray.getJSONObject(i);
 
-				String activityERC = itemJSONObject.getString(
-					"r_actToMDFClmActs_c_activityERC");
-
-				JSONObject activityJSONObject = itemJSONObject.getJSONObject(
-					"r_actToMDFClmActs_c_activity");
+				long activityId = itemJSONObject.getLong("id");
 
 				ZonedDateTime zonedActivityEndDate = ZonedDateTime.parse(
-					activityJSONObject.getString("endDate"));
+					itemJSONObject.getString("endDate"));
 
 				ZonedDateTime zonedActivityExpirationDate =
 					zonedActivityEndDate.plusDays(30);
 
-				if (zonedActivityExpirationDate.toLocalDate(
-					).isEqual(
-						zonedDateTime.plusDays(
-							15
-						).toLocalDate()
-					)) {
+				JSONArray mdfClaimActivitiesJSONArray =
+					itemJSONObject.getJSONArray("actToMDFClmActs");
 
-					_sendNotification(itemsJSONArray.toString(), activityERC);
+				JSONArray claimedMdfClaimActivityJSONArray = new JSONArray();
 
-					return;
+				if (mdfClaimActivitiesJSONArray.length() == 0) {
+					_sendNotification(
+						activityId, zonedActivityExpirationDate, zonedDateTime);
 				}
-				else if (zonedActivityExpirationDate.toLocalDate(
-						).isEqual(
-							zonedDateTime.plusDays(
-								5
-							).toLocalDate()
-						)) {
+				else {
+					for (int j = 0; j < mdfClaimActivitiesJSONArray.length();
+						 j++) {
 
-					_sendNotification(itemsJSONArray.toString(), activityERC);
+						JSONObject mdfClaimActivityJSONObject =
+							mdfClaimActivitiesJSONArray.getJSONObject(j);
 
-					return;
+						Boolean selectedActivity =
+							mdfClaimActivityJSONObject.getBoolean("selected");
+
+						if (selectedActivity) {
+							long mdfClaimId =
+								mdfClaimActivityJSONObject.getLong(
+									"r_mdfClmToMDFClmActs_c_mdfClaimId");
+
+							responseJSONObject = _get(
+								uriBuilder -> uriBuilder.path(
+									"/o/c/mdfclaims/" + mdfClaimId
+								).build());
+
+							JSONObject mdfClaimStatusJSONObject =
+								responseJSONObject.getJSONObject(
+									"mdfClaimStatus");
+
+							String mdfClaimStatusKey =
+								mdfClaimStatusJSONObject.getString("key");
+
+							if (!mdfClaimStatusKey.equals("draft") &&
+								!mdfClaimStatusKey.equals(
+									"moreInfoRequested") &&
+								!mdfClaimStatusKey.equals("cancel") &&
+								!mdfClaimStatusKey.equals("rejected")) {
+
+								claimedMdfClaimActivityJSONArray.put(
+									mdfClaimActivityJSONObject);
+
+								break;
+							}
+						}
+					}
 				}
-				else if (zonedActivityExpirationDate.toLocalDate(
-						).isEqual(
-							zonedDateTime.plusDays(
-								1
-							).toLocalDate()
-						)) {
 
-					_sendNotification(itemsJSONArray.toString(), activityERC);
-
-					return;
+				if (claimedMdfClaimActivityJSONArray.length() == 0) {
+					_sendNotification(
+						activityId, zonedActivityExpirationDate, zonedDateTime);
 				}
 			}
 		}
@@ -218,13 +239,45 @@ public class PartnerCommandLineRunner implements CommandLineRunner {
 	}
 
 	private void _sendNotification(
-		String bodyValue, String externalReferenceCode) {
+		long activityId, ZonedDateTime zonedActivityExpirationDate,
+		ZonedDateTime zonedDateTime) {
 
-		_put(
-			bodyValue,
-			"/o/c/activities/by-external-reference-code/" +
-				externalReferenceCode +
-					"/object-actions/notificationDueDateTemplateAction");
+		if (zonedActivityExpirationDate.toLocalDate(
+			).isEqual(
+				zonedDateTime.plusDays(
+					15
+				).toLocalDate()
+			)) {
+
+			_put(
+				"",
+				"/o/c/activities/" + activityId +
+					"/object-actions/notificationDueDate15DaysTemplateAction");
+		}
+		else if (zonedActivityExpirationDate.toLocalDate(
+				).isEqual(
+					zonedDateTime.plusDays(
+						5
+					).toLocalDate()
+				)) {
+
+			_put(
+				"",
+				"/o/c/activities/" + activityId +
+					"/object-actions/notificationDueDate5DaysTemplateAction");
+		}
+		else if (zonedActivityExpirationDate.toLocalDate(
+				).isEqual(
+					zonedDateTime.plusDays(
+						1
+					).toLocalDate()
+				)) {
+
+			_put(
+				"",
+				"/o/c/activities/" + activityId +
+					"/object-actions/notificationDueDate1DayTemplateAction");
+		}
 	}
 
 	private String _toString(ZonedDateTime zonedDateTime) {

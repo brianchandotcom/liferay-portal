@@ -6,5 +6,5 @@ liferay-partner-etc-cron-oauth-application-headless-server:
     name: Liferay Partner Etc Cron OAuth Application Headless Server
     scopes:
         - C_Activity.everything
-        - C_MDFClaimActivity.everything.read
+        - C_MDFClaim.everything.read
     type: oAuthApplicationHeadlessServer

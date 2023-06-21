@@ -999,15 +999,18 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 			long paymentCommerceTermEntryId, String languageId)
 		throws PortalException {
 
+		CommerceOrder commerceOrder =
+			commerceOrderLocalService.getCommerceOrder(commerceOrderId);
+
 		if (deliveryCommerceTermEntryId > 0) {
-			_commerceOrderModelResourcePermission.check(
-				getPermissionChecker(), commerceOrderId,
+			_portletResourcePermission.check(
+				getPermissionChecker(), commerceOrder.getGroupId(),
 				CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_DELIVERY_TERMS);
 		}
 
 		if (paymentCommerceTermEntryId > 0) {
-			_commerceOrderModelResourcePermission.check(
-				getPermissionChecker(), commerceOrderId,
+			_portletResourcePermission.check(
+				getPermissionChecker(), commerceOrder.getGroupId(),
 				CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_PAYMENT_TERMS);
 		}
 

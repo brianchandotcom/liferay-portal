@@ -273,6 +273,39 @@ definition {
 		}
 	}
 
+	@description = "Ignored due to LPS-189103"
+	@ignore = "true"
+	@priority = 3
+	test SaveImportCustomObjectAsTemplate {
+		task ("And Given I create an import task with custom objects") {
+			ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				en_US_label = "student",
+				en_US_plural_label = "students",
+				name = "Student",
+				requiredStringFieldName = "name");
+
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.importFile(
+				entityType = "C_Student (v1_0 - Liferay Object REST)",
+				fieldMappings = "name:Student Name,externalReferenceCode:External Reference Code",
+				fileName = "csv_student_import.csv",
+				noExport = "true");
+		}
+
+		task ("When save as template with a template name") {
+			ImportExport.saveAsTemplate(templateName = "Template Name");
+		}
+
+		task ("Then the template saved successfully") {
+			ImportExport.openImportExportAdmin();
+
+			Navigator.gotoNavTab(navTab = "Templates");
+
+			LexiconEntry.viewEntryName(rowEntry = "Template Name");
+		}
+	}
+
 	@priority = 4
 	test SelectCustomObjectAsEntityType {
 		property portal.acceptance = "true";

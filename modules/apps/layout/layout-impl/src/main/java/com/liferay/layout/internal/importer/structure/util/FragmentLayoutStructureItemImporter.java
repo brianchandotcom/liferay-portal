@@ -19,6 +19,7 @@ import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
+import com.liferay.fragment.entry.processor.editable.element.constants.ActionEditableElementConstants;
 import com.liferay.fragment.entry.processor.util.EditableFragmentEntryProcessorUtil;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
@@ -32,6 +33,7 @@ import com.liferay.fragment.service.FragmentCollectionService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.validator.FragmentEntryValidator;
+import com.liferay.headless.delivery.dto.v1_0.ActionExecutionResult;
 import com.liferay.headless.delivery.dto.v1_0.FragmentLink;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.layout.internal.importer.LayoutStructureItemImporterContext;
@@ -850,6 +852,169 @@ public class FragmentLayoutStructureItemImporter
 			new String[] {fragmentKey});
 	}
 
+	private void _processActionFieldValue(
+		JSONObject fragmentFieldJSONObject,
+		LayoutStructureItemImporterContext layoutStructureItemImporterContext,
+		Map<String, Object> valueMap) {
+
+		if (valueMap == null) {
+			return;
+		}
+
+		Map<String, Object> actionMap = (Map<String, Object>)valueMap.get(
+			"action");
+
+		if (actionMap == null) {
+			return;
+		}
+
+		JSONObject configJSONObject = _jsonFactory.createJSONObject();
+
+		fragmentFieldJSONObject.put("config", configJSONObject);
+
+		JSONObject mappedActionJSONObject = _jsonFactory.createJSONObject();
+
+		configJSONObject.put("mappedAction", mappedActionJSONObject);
+
+		processMapping(
+			mappedActionJSONObject, layoutStructureItemImporterContext,
+			(Map<String, Object>)actionMap.get("mapping"));
+
+		_processOnResult(
+			configJSONObject, layoutStructureItemImporterContext,
+			(Map<String, Object>)valueMap.get("onError"), "onError");
+		_processOnResult(
+			configJSONObject, layoutStructureItemImporterContext,
+			(Map<String, Object>)valueMap.get("onSuccess"), "onSuccess");
+	}
+
+	private void _processOnResult(
+		JSONObject configJSONObject,
+		LayoutStructureItemImporterContext layoutStructureItemImporterContext,
+		Map<String, Object> onResultMap, String resultType) {
+
+		JSONObject resultJSONObject = _jsonFactory.createJSONObject();
+
+		configJSONObject.put(resultType, resultJSONObject);
+
+		Map<String, Object> valueMap = (Map<String, Object>)onResultMap.get(
+			"value");
+
+		if (Objects.equals(
+				onResultMap.get("type"),
+				ActionExecutionResult.Type.NONE.getValue())) {
+
+			resultJSONObject.put(
+				"interaction", ActionEditableElementConstants.INTERACTION_NONE);
+
+			if (valueMap == null) {
+				return;
+			}
+
+			Boolean reload = (Boolean)valueMap.get("reload");
+
+			if (reload != null) {
+				resultJSONObject.put("reload", reload);
+			}
+		}
+		else if (Objects.equals(
+					onResultMap.get("type"),
+					ActionExecutionResult.Type.NOTIFICATION.getValue())) {
+
+			resultJSONObject.put(
+				"interaction",
+				ActionEditableElementConstants.INTERACTION_NOTIFICATION);
+
+			if (valueMap == null) {
+				return;
+			}
+
+			Boolean reload = (Boolean)valueMap.get("reload");
+
+			if (reload != null) {
+				resultJSONObject.put("reload", reload);
+			}
+
+			Map<String, Object> textMap = (Map<String, Object>)valueMap.get(
+				"text");
+
+			if (textMap == null) {
+				return;
+			}
+
+			Map<String, String> valueI18nMap = (Map<String, String>)textMap.get(
+				"value_i18n");
+
+			if (valueI18nMap == null) {
+				return;
+			}
+
+			JSONObject textJSONObject = _jsonFactory.createJSONObject();
+
+			resultJSONObject.put("text", textJSONObject);
+
+			for (Map.Entry<String, String> entry : valueI18nMap.entrySet()) {
+				textJSONObject.put(entry.getKey(), entry.getValue());
+			}
+		}
+		else if (Objects.equals(
+					onResultMap.get("type"),
+					ActionExecutionResult.Type.PAGE.getValue())) {
+
+			resultJSONObject.put(
+				"interaction", ActionEditableElementConstants.INTERACTION_PAGE);
+
+			if ((valueMap == null) || !valueMap.containsKey("itemReference")) {
+				return;
+			}
+
+			Map<String, Object> itemReference =
+				(Map<String, Object>)valueMap.get("itemReference");
+
+			if (itemReference == null) {
+				return;
+			}
+
+			resultJSONObject.put(
+				"page",
+				getLayoutFromItemReferenceJSONObject(
+					itemReference, layoutStructureItemImporterContext));
+		}
+		else if (Objects.equals(
+					onResultMap.get("type"),
+					ActionExecutionResult.Type.URL.getValue())) {
+
+			resultJSONObject.put(
+				"interaction", ActionEditableElementConstants.INTERACTION_URL);
+
+			if (valueMap == null) {
+				return;
+			}
+
+			Map<String, Object> urlMap = (Map<String, Object>)valueMap.get(
+				"url");
+
+			if (urlMap == null) {
+				return;
+			}
+
+			Map<String, String> valueI18nMap = (Map<String, String>)urlMap.get(
+				"value_i18n");
+
+			if (valueI18nMap == null) {
+				return;
+			}
+
+			JSONObject urlJSONObject = _jsonFactory.createJSONObject();
+
+			resultJSONObject.put("url", urlJSONObject);
+
+			for (Map.Entry<String, String> entry : valueI18nMap.entrySet()) {
+				urlJSONObject.put(entry.getKey(), entry.getValue());
+			}
+		}
+	}
+
 	private void _processWidgetInstances(
 			FragmentEntryLink fragmentEntryLink, Layout layout,
 			Set<String> warningMessages, List<Object> widgetInstances)
@@ -1013,6 +1178,10 @@ public class FragmentLayoutStructureItemImporter
 			if (valueMap == null) {
 				continue;
 			}
+
+			_processActionFieldValue(
+				fragmentFieldJSONObject, layoutStructureItemImporterContext,
+				valueMap);
 
 			JSONObject editableFieldConfigJSONObject =
 				_createFragmentLinkConfigJSONObject(

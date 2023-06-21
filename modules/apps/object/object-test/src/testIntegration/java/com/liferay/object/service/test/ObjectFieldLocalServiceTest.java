@@ -1510,7 +1510,8 @@ public class ObjectFieldLocalServiceTest {
 		throws Exception {
 
 		return ObjectDefinitionTestUtil.addUnmodifiableSystemObjectDefinition(
-			TestPropsValues.getUserId(), RandomTestUtil.randomString(), null,
+			null, TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			objectDefinitionName, null, null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),

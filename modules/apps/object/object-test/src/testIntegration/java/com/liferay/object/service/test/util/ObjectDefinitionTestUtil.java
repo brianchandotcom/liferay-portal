@@ -42,10 +42,10 @@ public class ObjectDefinitionTestUtil {
 		throws Exception {
 
 		return objectDefinitionLocalService.addSystemObjectDefinition(
-			userId, null, dbTableName, false, labelMap, true, name, null, null,
-			pkObjectFieldDBColumnName, pkObjectFieldName, pluralLabelMap, scope,
-			titleObjectFieldName, version, WorkflowConstants.STATUS_DRAFT,
-			objectFields);
+			null, userId, null, dbTableName, false, labelMap, true, name, null,
+			null, pkObjectFieldDBColumnName, pkObjectFieldName, pluralLabelMap,
+			scope, titleObjectFieldName, version,
+			WorkflowConstants.STATUS_DRAFT, objectFields);
 	}
 
 	public static ObjectDefinition addObjectDefinition(
@@ -71,8 +71,8 @@ public class ObjectDefinitionTestUtil {
 	}
 
 	public static ObjectDefinition addUnmodifiableSystemObjectDefinition(
-			long userId, String className, String dbTableName,
-			Map<Locale, String> labelMap, String name,
+			String externalReferenceCode, long userId, String className,
+			String dbTableName, Map<Locale, String> labelMap, String name,
 			String pkObjectFieldDBColumnName, String pkObjectFieldName,
 			Map<Locale, String> pluralLabelMap, String scope,
 			String titleObjectFieldName, int version,
@@ -81,10 +81,10 @@ public class ObjectDefinitionTestUtil {
 		throws Exception {
 
 		return objectDefinitionLocalService.addSystemObjectDefinition(
-			userId, className, dbTableName, false, labelMap, false, name, null,
-			null, pkObjectFieldDBColumnName, pkObjectFieldName, pluralLabelMap,
-			scope, titleObjectFieldName, version,
-			WorkflowConstants.STATUS_APPROVED, objectFields);
+			externalReferenceCode, userId, className, dbTableName, false,
+			labelMap, false, name, null, null, pkObjectFieldDBColumnName,
+			pkObjectFieldName, pluralLabelMap, scope, titleObjectFieldName,
+			version, WorkflowConstants.STATUS_APPROVED, objectFields);
 	}
 
 }

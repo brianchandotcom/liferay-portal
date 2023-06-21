@@ -81,4 +81,15 @@ definition {
 		}
 	}
 
+	@description = "Ignored due to LPS-176805"
+	@ignore = "true"
+	@priority = 3
+	test CanSelectItemActionsAsFieldToExportWithJSONT {
+		task ("Then actions field is visible to select on the list of fields to include in the export file") {
+			AssertElementPresent(
+				key_checkboxOption = "action",
+				locator1 = "Checkbox#SPECIFIC_CHECKBOX_IN_TABLE");
+		}
+	}
+
 }

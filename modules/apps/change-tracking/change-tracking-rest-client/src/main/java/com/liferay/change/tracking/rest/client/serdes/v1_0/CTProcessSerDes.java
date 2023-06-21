@@ -69,6 +69,16 @@ public class CTProcessSerDes {
 			sb.append(_toJSON(ctProcess.getActions()));
 		}
 
+		if (ctProcess.getCtCollectionId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"ctCollectionId\": ");
+
+			sb.append(ctProcess.getCtCollectionId());
+		}
+
 		if (ctProcess.getDatePublished() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -174,6 +184,15 @@ public class CTProcessSerDes {
 			map.put("actions", String.valueOf(ctProcess.getActions()));
 		}
 
+		if (ctProcess.getCtCollectionId() == null) {
+			map.put("ctCollectionId", null);
+		}
+		else {
+			map.put(
+				"ctCollectionId",
+				String.valueOf(ctProcess.getCtCollectionId()));
+		}
+
 		if (ctProcess.getDatePublished() == null) {
 			map.put("datePublished", null);
 		}
@@ -243,6 +262,12 @@ public class CTProcessSerDes {
 					ctProcess.setActions(
 						(Map)CTProcessSerDes.toMap(
 							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "ctCollectionId")) {
+				if (jsonParserFieldValue != null) {
+					ctProcess.setCtCollectionId(
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "datePublished")) {

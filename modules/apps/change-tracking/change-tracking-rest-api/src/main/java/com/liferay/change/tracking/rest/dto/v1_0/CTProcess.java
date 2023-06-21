@@ -95,6 +95,34 @@ public class CTProcess implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	@Schema
+	public Long getCtCollectionId() {
+		return ctCollectionId;
+	}
+
+	public void setCtCollectionId(Long ctCollectionId) {
+		this.ctCollectionId = ctCollectionId;
+	}
+
+	@JsonIgnore
+	public void setCtCollectionId(
+		UnsafeSupplier<Long, Exception> ctCollectionIdUnsafeSupplier) {
+
+		try {
+			ctCollectionId = ctCollectionIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Long ctCollectionId;
+
 	@Schema(description = "The publication's published date.")
 	public Date getDatePublished() {
 		return datePublished;
@@ -298,6 +326,16 @@ public class CTProcess implements Serializable {
 			sb.append("\"actions\": ");
 
 			sb.append(_toJSON(actions));
+		}
+
+		if (ctCollectionId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"ctCollectionId\": ");
+
+			sb.append(ctCollectionId);
 		}
 
 		if (datePublished != null) {

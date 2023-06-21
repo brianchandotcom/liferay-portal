@@ -665,6 +665,14 @@ public abstract class BaseCTProcessResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("ctCollectionId", additionalAssertFieldName)) {
+				if (ctProcess.getCtCollectionId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("datePublished", additionalAssertFieldName)) {
 				if (ctProcess.getDatePublished() == null) {
 					valid = false;
@@ -826,6 +834,17 @@ public abstract class BaseCTProcessResourceTestCase {
 				if (!equals(
 						(Map)ctProcess1.getActions(),
 						(Map)ctProcess2.getActions())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("ctCollectionId", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						ctProcess1.getCtCollectionId(),
+						ctProcess2.getCtCollectionId())) {
 
 					return false;
 				}
@@ -1003,6 +1022,11 @@ public abstract class BaseCTProcessResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("ctCollectionId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("datePublished")) {
 			if (operator.equals("between")) {
 				sb = new StringBundler();
@@ -1113,6 +1137,7 @@ public abstract class BaseCTProcessResourceTestCase {
 	protected CTProcess randomCTProcess() throws Exception {
 		return new CTProcess() {
 			{
+				ctCollectionId = RandomTestUtil.randomLong();
 				datePublished = RandomTestUtil.nextDate();
 				description = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());

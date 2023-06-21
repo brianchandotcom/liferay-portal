@@ -58,6 +58,27 @@ public class CTProcess implements Cloneable, Serializable {
 
 	protected Map<String, Map<String, String>> actions;
 
+	public Long getCtCollectionId() {
+		return ctCollectionId;
+	}
+
+	public void setCtCollectionId(Long ctCollectionId) {
+		this.ctCollectionId = ctCollectionId;
+	}
+
+	public void setCtCollectionId(
+		UnsafeSupplier<Long, Exception> ctCollectionIdUnsafeSupplier) {
+
+		try {
+			ctCollectionId = ctCollectionIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long ctCollectionId;
+
 	public Date getDatePublished() {
 		return datePublished;
 	}

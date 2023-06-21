@@ -187,7 +187,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cTProcess(ctProcessId: ___){actions, datePublished, description, id, name, ownerName, status}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cTProcess(ctProcessId: ___){actions, ctCollectionId, datePublished, description, id, name, ownerName, status}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public CTProcess cTProcess(@GraphQLName("ctProcessId") Long ctProcessId)
@@ -199,11 +199,11 @@ public class Query {
 			ctProcessResource -> ctProcessResource.getCTProcess(ctProcessId));
 	}
 
-	@GraphQLTypeExtension(CTEntry.class)
+	@GraphQLTypeExtension(CTProcess.class)
 	public class GetCTCollectionTypeExtension {
 
-		public GetCTCollectionTypeExtension(CTEntry cTEntry) {
-			_cTEntry = cTEntry;
+		public GetCTCollectionTypeExtension(CTProcess cTProcess) {
+			_cTProcess = cTProcess;
 		}
 
 		@GraphQLField
@@ -212,10 +212,10 @@ public class Query {
 				_ctCollectionResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
 				ctCollectionResource -> ctCollectionResource.getCTCollection(
-					_cTEntry.getCtCollectionId()));
+					_cTProcess.getCtCollectionId()));
 		}
 
-		private CTEntry _cTEntry;
+		private CTProcess _cTProcess;
 
 	}
 

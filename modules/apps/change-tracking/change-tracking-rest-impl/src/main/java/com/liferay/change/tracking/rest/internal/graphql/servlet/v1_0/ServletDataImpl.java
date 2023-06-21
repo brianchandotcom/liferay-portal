@@ -187,7 +187,7 @@ public class ServletDataImpl implements ServletData {
 							CTProcessResourceImpl.class, "getCTProcess"));
 
 					put(
-						"query#CTEntry.cTCollection",
+						"query#CTProcess.cTCollection",
 						new ObjectValuePair<>(
 							CTCollectionResourceImpl.class, "getCTCollection"));
 					put(

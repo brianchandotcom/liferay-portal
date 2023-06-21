@@ -81,6 +81,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PREVIEW_ENTRY_CONTENT_FIELDS</td>
+	<td>//div[@class='lfr-form-content']//*[text()='${key_contentName}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PREVIEW_ENTRY_FIELD</td>
 	<td>//div[@class="modal-content"]//tr/td[contains(.,'${key_entryName}')]//following-sibling::td[contains(.,'${key_previewField}')] | //div[@class="modal-content"]//tr/td[contains(.,'${key_entryName}')]//preceding-sibling::td[contains(.,'${key_previewField}')]</td>
 	<td></td>

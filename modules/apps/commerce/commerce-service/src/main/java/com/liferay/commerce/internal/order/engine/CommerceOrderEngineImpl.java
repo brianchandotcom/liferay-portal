@@ -486,10 +486,15 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 			DTOConverter<?, ?> commerceOrderDTOConverter)
 		throws Exception {
 
-		Object commerceOrderObject = commerceOrderDTOConverter.toDTO(
+		DefaultDTOConverterContext dtoConverterContext =
 			new DefaultDTOConverterContext(
 				_dtoConverterRegistry, commerceOrder.getCommerceOrderId(),
-				LocaleUtil.getSiteDefault(), null, null));
+				LocaleUtil.getSiteDefault(), null, null);
+
+		dtoConverterContext.setAttribute("secure", Boolean.FALSE);
+
+		Object commerceOrderObject = commerceOrderDTOConverter.toDTO(
+			dtoConverterContext);
 
 		JSONObject commerceOrderJSONObject = _jsonFactory.createJSONObject(
 			commerceOrderObject.toString());
@@ -504,12 +509,15 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 			commerceOrder.getCommerceOrderItems();
 
 		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
+			dtoConverterContext = new DefaultDTOConverterContext(
+				_dtoConverterRegistry,
+				commerceOrderItem.getCommerceOrderItemId(),
+				LocaleUtil.getSiteDefault(), null, null);
+
+			dtoConverterContext.setAttribute("secure", Boolean.FALSE);
+
 			Object commerceOrderItemObject =
-				commerceOrderItemDTOConverter.toDTO(
-					new DefaultDTOConverterContext(
-						_dtoConverterRegistry,
-						commerceOrderItem.getCommerceOrderItemId(),
-						LocaleUtil.getSiteDefault(), null, null));
+				commerceOrderItemDTOConverter.toDTO(dtoConverterContext);
 
 			JSONObject commerceOrderItemJSONObject =
 				_jsonFactory.createJSONObject(

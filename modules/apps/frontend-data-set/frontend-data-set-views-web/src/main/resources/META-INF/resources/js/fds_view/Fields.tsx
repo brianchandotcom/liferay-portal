@@ -67,12 +67,6 @@ interface ISaveFDSFieldsModalContentProps {
 	saveFDSFieldsURL: string;
 }
 
-interface IContentRendererProps {
-	cetRenderers?: FDSClientExtensionCellRenderer[];
-	item: IFDSField;
-	query: string;
-}
-
 const getRendererLabel = ({
 	cetRenderers = [],
 	rendererName,
@@ -92,11 +86,17 @@ const getRendererLabel = ({
 	return renderer?.label || renderer?.name || rendererName;
 };
 
-const CellRendererComponent = ({
+interface IRendererLabelCellRendererComponentProps {
+	cetRenderers?: FDSClientExtensionCellRenderer[];
+	item: IFDSField;
+	query: string;
+}
+
+const RendererLabelCellRendererComponent = ({
 	cetRenderers = [],
 	item,
 	query,
-}: IContentRendererProps) => {
+}: IRendererLabelCellRendererComponentProps) => {
 	const itemFieldValue = getRendererLabel({
 		cetRenderers,
 		rendererName: item.renderer,
@@ -905,7 +905,7 @@ const Fields = ({
 						{
 							contentRenderer: {
 								component: ({item, query}) => (
-									<CellRendererComponent
+									<RendererLabelCellRendererComponent
 										cetRenderers={
 											fdsClientExtensionCellRenderers
 										}

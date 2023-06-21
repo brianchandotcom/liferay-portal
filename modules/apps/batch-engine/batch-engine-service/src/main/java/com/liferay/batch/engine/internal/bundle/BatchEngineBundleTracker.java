@@ -103,9 +103,9 @@ public class BatchEngineBundleTracker {
 			Dictionary<String, String> headers = bundle.getHeaders(
 				StringPool.BLANK);
 
-			String batchPath = headers.get("Liferay-Client-Extension-Batch");
+			if ((headers.get("Liferay-Client-Extension-Batch") != null) &&
+				!_isAlreadyProcessed(bundle)) {
 
-			if ((batchPath != null) && !_isAlreadyProcessed(bundle)) {
 				_batchEngineUnitProcessor.processBatchEngineUnits(
 					_batchEngineUnitReader.getBatchEngineUnits(bundle));
 			}

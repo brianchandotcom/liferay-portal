@@ -21,7 +21,7 @@ const ITEM_TYPES_SYMBOL = {
 
 const SELECT_EVENT_NAME = 'selectKBMoveFolder';
 
-export default function MoveModal({itemToMoveParent, items: initialItems}) {
+export default function MoveModal({itemToMoveParentId, items: initialItems}) {
 	const items = useMemo(() => normalizeItems(initialItems), [initialItems]);
 
 	const searchItems = useMemo(() => getSearchItems(initialItems), [
@@ -62,7 +62,7 @@ export default function MoveModal({itemToMoveParent, items: initialItems}) {
 			{!searchActive && (
 				<ClayTreeView
 					defaultItems={items}
-					defaultSelectedKeys={new Set([itemToMoveParent])}
+					defaultSelectedKeys={new Set([itemToMoveParentId])}
 					nestedKey="children"
 					onItemMove={handleItemMove}
 					showExpanderOnHover={false}
@@ -128,6 +128,6 @@ const itemShape = {
 itemShape.children = PropTypes.arrayOf(PropTypes.shape(itemShape));
 
 MoveModal.propTypes = {
-	itemToMoveParent: PropTypes.number.isRequired,
+	itemToMoveParentId: PropTypes.number.isRequired,
 	items: PropTypes.arrayOf(PropTypes.shape(itemShape)),
 };

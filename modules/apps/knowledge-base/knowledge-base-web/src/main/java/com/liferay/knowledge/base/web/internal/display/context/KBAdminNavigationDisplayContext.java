@@ -123,7 +123,7 @@ public class KBAdminNavigationDisplayContext {
 			));
 	}
 
-	public long getKBObjectToMoveParent() throws PortalException {
+	public long getKBObjectToMoveParentId() throws PortalException {
 		String kbObjectToMoveType = ParamUtil.getString(
 			_httpServletRequest, "kbObjectToMoveType");
 
@@ -137,11 +137,11 @@ public class KBAdminNavigationDisplayContext {
 			return kbFolder.getParentKBFolderId();
 		}
 
-		int articleVersion = ParamUtil.getInteger(
+		int kbObjectVersion = ParamUtil.getInteger(
 			_httpServletRequest, "kbObjectVersion", -1);
 
 		KBArticle kbArticle = KBArticleLocalServiceUtil.getKBArticle(
-			kbObjectToMoveId, articleVersion);
+			kbObjectToMoveId, kbObjectVersion);
 
 		return kbArticle.getParentResourcePrimKey();
 	}

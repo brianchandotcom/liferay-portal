@@ -27,7 +27,7 @@ definition {
 			var response = JSONCurlUtil.post(${curl}, "$");
 		}
 
-		task ("Then the site administrater should see 403 in the body response") {
+		task ("Then the site administrater should see 403 in the response body") {
 			TestUtils.assertEquals(
 				actual = ${response},
 				expected = "{}");

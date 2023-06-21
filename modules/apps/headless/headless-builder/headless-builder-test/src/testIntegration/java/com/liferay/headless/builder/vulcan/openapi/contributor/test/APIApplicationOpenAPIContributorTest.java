@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.headless.builder.application.openapi.contributor.test;
+package com.liferay.headless.builder.vulcan.openapi.contributor.test;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -574,7 +574,7 @@ public class APIApplicationOpenAPIContributorTest extends BaseTestCase {
 	};
 
 	@Inject(
-		filter = "component.name=com.liferay.headless.builder.internal.application.openapi.contributor.APIApplicationOpenApiContributor"
+		filter = "component.name=com.liferay.headless.builder.internal.vulcan.openapi.contributor.APIApplicationOpenApiContributor"
 	)
 	private OpenAPIContributor _apiApplicationOpenAPIContributor;
 

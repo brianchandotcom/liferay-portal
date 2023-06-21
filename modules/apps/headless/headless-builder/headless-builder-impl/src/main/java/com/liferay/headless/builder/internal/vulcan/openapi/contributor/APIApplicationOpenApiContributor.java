@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.headless.builder.internal.application.openapi.contributor;
+package com.liferay.headless.builder.internal.vulcan.openapi.contributor;
 
 import com.liferay.headless.builder.application.APIApplication;
 import com.liferay.headless.builder.application.provider.APIApplicationProvider;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.headless.builder.internal.publisher;
+package com.liferay.headless.builder.internal.application.publisher;
 
 import com.liferay.headless.builder.application.APIApplication;
 import com.liferay.headless.builder.application.publisher.APIApplicationPublisher;

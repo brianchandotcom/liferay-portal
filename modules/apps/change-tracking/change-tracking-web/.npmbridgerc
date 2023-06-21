@@ -1,0 +1,15 @@
+{
+	"change-tracking-web": {
+		"dest-mod-name-mapper": {
+			"from": "(.*)\\.js$",
+			"to": "bridge/change-tracking-web/$1"
+		},
+		"file-globs": "**/*.js,**/*.soy.js",
+		"input": "build/node/packageRunBuild/resources",
+		"output": "build/node/packageRunBuild/resources/bridge/change-tracking-web",
+		"src-mod-name-mapper": {
+			"from": "(.*)\\.js$",
+			"to": "change-tracking-web/$1"
+		}
+	}
+}

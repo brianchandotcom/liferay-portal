@@ -61,8 +61,10 @@ public class PublicationsHistoryTableFDSView extends BaseTableFDSView {
 			"ownerName", "published-by"
 		).add(
 			"status", "status",
-			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"status")
+			fdsTableSchemaField ->
+				fdsTableSchemaField.setContentRendererModuleURL(
+					"change-tracking-web/publications/js/components" +
+						"/StatusRenderer")
 		).build();
 	}
 

@@ -68,11 +68,13 @@ public class PublicationsOngoingTableFDSView extends BaseTableFDSView {
 			)
 		).add(
 			"status", "status",
-			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"status"
-			).setSortable(
-				true
-			)
+			fdsTableSchemaField ->
+				fdsTableSchemaField.setContentRendererModuleURL(
+					"change-tracking-web/publications/js/components" +
+						"/StatusRenderer"
+				).setSortable(
+					true
+				)
 		).add(
 			"ownerName", "owner",
 			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)

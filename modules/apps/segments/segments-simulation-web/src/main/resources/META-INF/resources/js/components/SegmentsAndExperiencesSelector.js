@@ -20,7 +20,7 @@ import {ClaySelectWithOption} from '@clayui/form';
 import Label from '@clayui/label';
 import Layout from '@clayui/layout';
 import ClayLink from '@clayui/link';
-import {fetch} from 'frontend-js-web';
+import {fetch, openSelectionModal, sub} from 'frontend-js-web';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 const PREVIEW_OPTIONS = [
@@ -39,10 +39,13 @@ const MAXIMUM_DROPDOWN_ENTRIES = 8;
 function SegmentsAndExperiencesSelector({
 	deactivateSimulationURL,
 	namespace,
+	portletNamespace,
 	segmentationEnabled,
 	segmentsCompanyConfigurationURL,
 	segmentsEntries,
 	segmentsExperiences,
+	selectSegmentsEntryURL,
+	selectSegmentsExperienceURL,
 	showEmptyMessage,
 	simulateSegmentsEntriesURL,
 }) {
@@ -107,11 +110,40 @@ function SegmentsAndExperiencesSelector({
 		}
 	}, []);
 
-	const handleMoreButtonClick = useCallback(() => {
+	const handleMoreSegmentEntriesButtonClick = () => {
+		openSelectionModal({
+			onSelect: (selectedItem) => {
+				const valueJSON = JSON.parse(selectedItem.value);
+				setSelectedSegmentEntry({
+					id: valueJSON.segmentsEntryId,
+					name: valueJSON.segmentsEntryName,
+				});
+			},
+			selectEventName: `${portletNamespace}selectSegmentsEntry`,
+			title: sub(
+				Liferay.Language.get('select-x'),
+				Liferay.Language.get('segment')
+			),
+			url: selectSegmentsEntryURL,
+		});
+	};
 
-		// TODO
-
-	}, []);
+	const handleMoreSegmentExperiencesButtonClick = () => {
+		openSelectionModal({
+			onSelect: (selectedItem) => {
+				const valueJSON = JSON.parse(selectedItem.value);
+				const selectedExperience = segmentsExperiences.find(
+					(exp) =>
+						exp.segmentsExperienceId ===
+						valueJSON.segmentsExperienceId
+				);
+				setSelectedSegmentsExperience(selectedExperience);
+			},
+			selectEventName: `${portletNamespace}selectSegmentsExperience`,
+			title: Liferay.Language.get('select-experience'),
+			url: selectSegmentsExperienceURL,
+		});
+	};
 
 	useEffect(() => {
 		const deactivateSimulationEventHandler = Liferay.on(
@@ -301,7 +333,7 @@ function SegmentsAndExperiencesSelector({
 														false
 													);
 
-													handleMoreButtonClick();
+													handleMoreSegmentEntriesButtonClick();
 												}}
 											>
 												{Liferay.Language.get(
@@ -434,7 +466,7 @@ function SegmentsAndExperiencesSelector({
 														false
 													);
 
-													handleMoreButtonClick();
+													handleMoreSegmentExperiencesButtonClick();
 												}}
 											>
 												{Liferay.Language.get(

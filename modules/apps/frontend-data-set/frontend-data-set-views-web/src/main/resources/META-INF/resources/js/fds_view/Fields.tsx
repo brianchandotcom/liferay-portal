@@ -74,16 +74,30 @@ const getRendererLabel = ({
 	cetRenderers?: FDSClientExtensionCellRenderer[];
 	rendererName: string;
 }): string => {
-	const AVAILABLE_CELL_RENDERERS = [
-		...FDS_INTERNAL_CELL_RENDERERS,
-		...cetRenderers,
-	];
+	let clientExtensionRenderer;
 
-	const renderer = AVAILABLE_CELL_RENDERERS.filter((renderer: any) => {
-		return renderer.name === rendererName || renderer.erc === rendererName;
-	})[0];
+	const internalRenderer = FDS_INTERNAL_CELL_RENDERERS.find(
+		(renderer: FDSInternalCellRenderer) => {
+			return renderer.name === rendererName;
+		}
+	);
 
-	return renderer?.label || renderer?.name || rendererName;
+	if (internalRenderer?.label) {
+		return internalRenderer.label;
+	}
+	else {
+		clientExtensionRenderer = cetRenderers.find(
+			(renderer: FDSClientExtensionCellRenderer) => {
+				return renderer.erc === rendererName;
+			}
+		);
+
+		if (clientExtensionRenderer?.name) {
+			return clientExtensionRenderer.name;
+		}
+
+		return rendererName;
+	}
 };
 
 interface IRendererLabelCellRendererComponentProps {

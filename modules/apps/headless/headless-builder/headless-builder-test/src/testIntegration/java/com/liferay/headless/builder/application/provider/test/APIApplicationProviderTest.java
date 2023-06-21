@@ -140,7 +140,8 @@ public class APIApplicationProviderTest extends BaseTestCase {
 
 		Assert.assertEquals("description", property.getDescription());
 		Assert.assertEquals("name", property.getName());
-		Assert.assertEquals("Picklist", property.getType());
+		Assert.assertEquals(
+			APIApplication.Property.Type.PICKLIST, property.getType());
 	}
 
 	private static final String _API_APPLICATION_ERC =

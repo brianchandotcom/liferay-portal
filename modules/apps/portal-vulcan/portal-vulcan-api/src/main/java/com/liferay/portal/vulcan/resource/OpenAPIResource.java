@@ -61,6 +61,8 @@ public interface OpenAPIResource {
 		return null;
 	}
 
+	public Map<String, Schema> getSchemas(Class<?> entityClass);
+
 	public Map<String, Schema> getSchemas(Set<Class<?>> resourceClasses)
 		throws Exception;
 

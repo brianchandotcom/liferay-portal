@@ -42,6 +42,8 @@ import com.liferay.portal.vulcan.openapi.contributor.OpenAPIContributor;
 import com.liferay.portal.vulcan.resource.OpenAPIResource;
 import com.liferay.portal.vulcan.util.UriInfoUtil;
 
+import io.swagger.v3.core.converter.AnnotatedType;
+import io.swagger.v3.core.converter.ModelConverters;
 import io.swagger.v3.core.filter.AbstractSpecFilter;
 import io.swagger.v3.core.filter.OpenAPISpecFilter;
 import io.swagger.v3.core.filter.SpecFilter;
@@ -152,6 +154,15 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 		throws Exception {
 
 		return getOpenAPI(null, null, resourceClasses, type, uriInfo);
+	}
+
+	@Override
+	public Map<String, Schema> getSchemas(Class<?> entityClass) {
+		return new HashMap<>(
+			ModelConverters.getInstance(
+			).readAll(
+				new AnnotatedType(entityClass)
+			));
 	}
 
 	@Override

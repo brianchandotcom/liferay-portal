@@ -17,6 +17,7 @@ package com.liferay.headless.builder.internal.application.provider;
 import com.liferay.headless.builder.application.APIApplication;
 import com.liferay.headless.builder.application.provider.APIApplicationProvider;
 import com.liferay.headless.builder.internal.helper.ObjectEntryHelper;
+import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.rest.dto.v1_0.ListEntry;
@@ -24,6 +25,7 @@ import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -210,8 +212,18 @@ public class APIApplicationProviderImpl implements APIApplicationProvider {
 					}
 
 					@Override
-					public String getType() {
-						return objectField.getBusinessType();
+					public Type getType() {
+						Type type = _propertyTypes.get(
+							objectField.getBusinessType());
+
+						if (type == null) {
+							throw new IllegalStateException(
+								"Object field type " +
+									objectField.getBusinessType() +
+										" not supported");
+						}
+
+						return type;
 					}
 
 				};
@@ -276,6 +288,51 @@ public class APIApplicationProviderImpl implements APIApplicationProvider {
 				};
 			});
 	}
+
+	private static final Map<String, APIApplication.Property.Type>
+		_propertyTypes = HashMapBuilder.put(
+			ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION,
+			APIApplication.Property.Type.AGGREGATION
+		).put(
+			ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT,
+			APIApplication.Property.Type.ATTACHMENT
+		).put(
+			ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN,
+			APIApplication.Property.Type.BOOLEAN
+		).put(
+			ObjectFieldConstants.BUSINESS_TYPE_DATE,
+			APIApplication.Property.Type.DATE
+		).put(
+			ObjectFieldConstants.BUSINESS_TYPE_DATE_TIME,
+			APIApplication.Property.Type.DATE_TIME
+		).put(
+			ObjectFieldConstants.BUSINESS_TYPE_DECIMAL,
+			APIApplication.Property.Type.DECIMAL
+		).put(
+			ObjectFieldConstants.BUSINESS_TYPE_INTEGER,
+			APIApplication.Property.Type.INTEGER
+		).put(
+			ObjectFieldConstants.BUSINESS_TYPE_LONG_INTEGER,
+			APIApplication.Property.Type.LONG_INTEGER
+		).put(
+			ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT,
+			APIApplication.Property.Type.LONG_TEXT
+		).put(
+			ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST,
+			APIApplication.Property.Type.MULTISELECT_PICKLIST
+		).put(
+			ObjectFieldConstants.BUSINESS_TYPE_PICKLIST,
+			APIApplication.Property.Type.PICKLIST
+		).put(
+			ObjectFieldConstants.BUSINESS_TYPE_PRECISION_DECIMAL,
+			APIApplication.Property.Type.PRECISION_DECIMAL
+		).put(
+			ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT,
+			APIApplication.Property.Type.RICH_TEXT
+		).put(
+			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+			APIApplication.Property.Type.TEXT
+		).build();
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

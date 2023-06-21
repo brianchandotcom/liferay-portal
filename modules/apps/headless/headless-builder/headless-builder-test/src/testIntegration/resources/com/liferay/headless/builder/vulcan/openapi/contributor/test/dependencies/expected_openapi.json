@@ -1,0 +1,251 @@
+{
+	"components": {
+		"schemas": {
+			"Facet": {
+				"properties": {
+					"facetCriteria": {
+						"type": "string"
+					},
+					"facetValues": {
+						"items": {
+							"$ref": "#/components/schemas/FacetValue"
+						},
+						"type": "array"
+					}
+				},
+				"type": "object"
+			},
+			"FacetValue": {
+				"properties": {
+					"numberOfOccurrences": {
+						"format": "int32",
+						"type": "integer"
+					},
+					"term": {
+						"type": "string"
+					}
+				},
+				"type": "object"
+			},
+			"FileEntry": {
+				"properties": {
+					"id": {
+						"format": "int64",
+						"type": "integer"
+					},
+					"link": {
+						"$ref": "#/components/schemas/Link"
+					},
+					"name": {
+						"type": "string"
+					},
+					"x-class-name": {
+						"default": "com.liferay.object.rest.dto.v1_0.FileEntry",
+						"readOnly": true,
+						"type": "string"
+					}
+				},
+				"type": "object",
+				"xml": {
+					"name": "FileEntry"
+				}
+			},
+			"Link": {
+				"properties": {
+					"href": {
+						"type": "string"
+					},
+					"label": {
+						"type": "string"
+					},
+					"x-class-name": {
+						"default": "com.liferay.object.rest.dto.v1_0.Link",
+						"readOnly": true,
+						"type": "string"
+					}
+				},
+				"readOnly": true,
+				"type": "object",
+				"xml": {
+					"name": "Link"
+				}
+			},
+			"ListEntry": {
+				"properties": {
+					"key": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"name_i18n": {
+						"additionalProperties": {
+							"type": "string"
+						},
+						"readOnly": true,
+						"type": "object"
+					},
+					"x-class-name": {
+						"default": "com.liferay.object.rest.dto.v1_0.ListEntry",
+						"readOnly": true,
+						"type": "string"
+					}
+				},
+				"type": "object",
+				"xml": {
+					"name": "ListEntry"
+				}
+			},
+			"PageSchemaName": {
+				"properties": {
+					"actions": {
+						"additionalProperties": {
+							"additionalProperties": {
+								"type": "string"
+							},
+							"type": "object"
+						},
+						"type": "object"
+					},
+					"facets": {
+						"items": {
+							"$ref": "#/components/schemas/Facet"
+						},
+						"type": "array"
+					},
+					"items": {
+						"items": {
+							"$ref": "#/components/schemas/SchemaName"
+						},
+						"type": "array"
+					},
+					"lastPage": {
+						"format": "int64",
+						"type": "integer"
+					},
+					"page": {
+						"format": "int64",
+						"type": "integer"
+					},
+					"pageSize": {
+						"format": "int64",
+						"type": "integer"
+					},
+					"totalCount": {
+						"format": "int64",
+						"type": "integer"
+					}
+				},
+				"type": "object"
+			},
+			"SchemaName": {
+				"description": "description",
+				"properties": {
+					"aggregationProperty": {
+						"description": "aggregationProperty description",
+						"type": "string"
+					},
+					"attachmentProperty": {
+						"$ref": "#/components/schemas/FileEntry",
+						"description": "attachmentProperty description"
+					},
+					"booleanProperty": {
+						"description": "booleanProperty description",
+						"type": "boolean"
+					},
+					"dateProperty": {
+						"description": "dateProperty description",
+						"format": "date",
+						"type": "string"
+					},
+					"dateTimeProperty": {
+						"description": "dateTimeProperty description",
+						"format": "date-time",
+						"type": "string"
+					},
+					"decimalProperty": {
+						"description": "decimalProperty description",
+						"format": "double",
+						"type": "number"
+					},
+					"integerProperty": {
+						"description": "integerProperty description",
+						"format": "int32",
+						"type": "integer"
+					},
+					"longIntegerProperty": {
+						"description": "longIntegerProperty description",
+						"format": "int64",
+						"type": "integer"
+					},
+					"longTextProperty": {
+						"description": "longTextProperty description",
+						"type": "string"
+					},
+					"multiselectPicklistProperty": {
+						"description": "multiselectPicklistProperty description",
+						"items": {
+							"$ref": "#/components/schemas/ListEntry"
+						},
+						"type": "array"
+					},
+					"picklistProperty": {
+						"$ref": "#/components/schemas/ListEntry",
+						"description": "picklistProperty description"
+					},
+					"precisionDecimalProperty": {
+						"description": "precisionDecimalProperty description",
+						"format": "double",
+						"type": "number"
+					},
+					"richTextProperty": {
+						"description": "richTextProperty description",
+						"type": "string"
+					},
+					"textProperty": {
+						"description": "textProperty description",
+						"type": "string"
+					}
+				},
+				"type": "object"
+			}
+		}
+	},
+	"info": {
+		"description": "OpenAPI Specification of the title REST API",
+		"license": {
+			"name": "Apache 2.0",
+			"url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+		},
+		"title": "title",
+		"version": "v1.0"
+	},
+	"openapi": "3.0.1",
+	"paths": {
+		"/path": {
+			"get": {
+				"operationId": "getSchemaNamesPage",
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PageSchemaName"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/PageSchemaName"
+								}
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"SchemaName"
+				]
+			}
+		}
+	}
+}

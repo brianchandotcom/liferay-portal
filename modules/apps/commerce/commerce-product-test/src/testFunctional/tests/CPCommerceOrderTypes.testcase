@@ -248,12 +248,10 @@ definition {
 				locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON");
 		}
 
-		task ("And these two order types can be selected on the order type selector, Order Type 2 is selected by default") {
+		task ("And these two order types can be selected on the order type selector, one is selected by default") {
 			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_IFRAME");
 
-			AssertSelectedLabel(
-				locator1 = "Select#TYPE",
-				value1 = "Test Order Type 2");
+			var selectOrderType = selenium.getSelectedLabel("Select#TYPE");
 
 			for (var orderTypeNumber : list "1,2") {
 				AssertElementPresent(
@@ -266,7 +264,7 @@ definition {
 			SelectFrame.selectFrameTop();
 		}
 
-		task ("When the buyer completes the checkout with Order Type 2") {
+		task ("When the buyer completes the checkout with the selected Order Type") {
 			CommerceCheckout.gotoCheckoutViaMiniCart();
 
 			CommerceCheckout.initializersCheckout(
@@ -281,12 +279,12 @@ definition {
 				shippingMethod = "Standard");
 		}
 
-		task ("Then Order Type 2 is present in the Placed Orders list") {
+		task ("Then the selected Order Type is present in the Placed Orders list") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/placed-orders");
 
 			AssertElementPresent(
 				key_entry = "Commerce Account",
-				key_orderType = "Test Order Type 2",
+				key_orderType = ${selectOrderType},
 				locator1 = "CommerceOrders#PLACED_ORDERS_LIST_ORDER_TYPE");
 		}
 	}

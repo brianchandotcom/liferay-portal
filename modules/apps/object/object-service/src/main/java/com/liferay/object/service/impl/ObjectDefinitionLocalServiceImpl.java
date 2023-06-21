@@ -23,7 +23,6 @@ import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
-import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
@@ -58,7 +57,6 @@ import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.model.impl.ObjectDefinitionImpl;
 import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionLocalizationTable;
 import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionTable;
-import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
@@ -659,13 +657,12 @@ public class ObjectDefinitionLocalServiceImpl
 			new ObjectDefinitionDeployerImpl(
 				_accountEntryLocalService,
 				_accountEntryOrganizationRelLocalService,
-				_assetCategoryLocalService, _assetEntryLocalService,
-				_assetTagLocalService, _assetVocabularyLocalService,
+				_assetEntryLocalService,
 				_bundleContext, _dynamicQueryBatchIndexingActionableFactory,
-				_groupLocalService, _listTypeEntryLocalService,
+				_groupLocalService,
 				_listTypeLocalService, _modelSearchRegistrarHelper,
 				_objectActionLocalService, this, _objectEntryLocalService,
-				_objectEntryManagerRegistry, _objectEntryService,
+				_objectEntryService,
 				_objectFieldLocalService, _objectLayoutLocalService,
 				_objectLayoutTabLocalService, _objectRelationshipLocalService,
 				_objectScopeProviderRegistry, _objectViewLocalService,
@@ -1837,16 +1834,7 @@ public class ObjectDefinitionLocalServiceImpl
 		_accountEntryOrganizationRelLocalService;
 
 	@Reference
-	private AssetCategoryLocalService _assetCategoryLocalService;
-
-	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
-
-	@Reference
-	private AssetTagLocalService _assetTagLocalService;
-
-	@Reference
-	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
 	private BundleContext _bundleContext;
 
@@ -1878,9 +1866,6 @@ public class ObjectDefinitionLocalServiceImpl
 		_layoutClassedModelUsageLocalService;
 
 	@Reference
-	private ListTypeEntryLocalService _listTypeEntryLocalService;
-
-	@Reference
 	private ListTypeLocalService _listTypeLocalService;
 
 	@Reference
@@ -1897,9 +1882,6 @@ public class ObjectDefinitionLocalServiceImpl
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;
-
-	@Reference
-	private ObjectEntryManagerRegistry _objectEntryManagerRegistry;
 
 	@Reference
 	private ObjectEntryPersistence _objectEntryPersistence;

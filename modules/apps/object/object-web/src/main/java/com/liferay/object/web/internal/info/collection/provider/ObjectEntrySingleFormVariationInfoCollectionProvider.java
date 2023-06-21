@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.object.internal.info.collection.provider;
+package com.liferay.object.web.internal.info.collection.provider;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;

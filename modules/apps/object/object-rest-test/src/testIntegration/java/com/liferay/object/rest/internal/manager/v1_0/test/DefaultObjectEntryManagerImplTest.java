@@ -849,9 +849,7 @@ public class DefaultObjectEntryManagerImplTest {
 
 		Organization organization1 = OrganizationTestUtil.addOrganization();
 
-		_accountEntryOrganizationRelLocalService.addAccountEntryOrganizationRel(
-			accountEntry1.getAccountEntryId(),
-			organization1.getOrganizationId());
+		_addAccountEntryOrganizationRel(accountEntry1, organization1);
 
 		_user = _addUser();
 
@@ -868,10 +866,7 @@ public class DefaultObjectEntryManagerImplTest {
 				accountEntry2.getAccountEntryId()),
 			() -> _addObjectEntry(accountEntry2));
 
-		_accountEntryOrganizationRelLocalService.
-			deleteAccountEntryOrganizationRel(
-				accountEntry1.getAccountEntryId(),
-				organization1.getOrganizationId());
+		_deleteAccountEntryOrganizationRel(accountEntry1, organization1);
 
 		// Account entry restricted with suborganization scope
 
@@ -879,9 +874,7 @@ public class DefaultObjectEntryManagerImplTest {
 			organization1.getOrganizationId(), RandomTestUtil.randomString(),
 			false);
 
-		_accountEntryOrganizationRelLocalService.addAccountEntryOrganizationRel(
-			accountEntry1.getAccountEntryId(),
-			suborganization1.getOrganizationId());
+		_addAccountEntryOrganizationRel(accountEntry1, suborganization1);
 
 		_user = _addUser();
 
@@ -895,10 +888,7 @@ public class DefaultObjectEntryManagerImplTest {
 				accountEntry2.getAccountEntryId()),
 			() -> _addObjectEntry(accountEntry2));
 
-		_accountEntryOrganizationRelLocalService.
-			deleteAccountEntryOrganizationRel(
-				accountEntry1.getAccountEntryId(),
-				suborganization1.getOrganizationId());
+		_deleteAccountEntryOrganizationRel(accountEntry1, suborganization1);
 
 		_removeResourcePermission(
 			ObjectActionKeys.ADD_OBJECT_ENTRY, _accountManagerRole);
@@ -912,9 +902,7 @@ public class DefaultObjectEntryManagerImplTest {
 
 		// Check account entry permission with organization
 
-		_accountEntryOrganizationRelLocalService.addAccountEntryOrganizationRel(
-			accountEntry1.getAccountEntryId(),
-			organization1.getOrganizationId());
+		_addAccountEntryOrganizationRel(accountEntry1, organization1);
 
 		_user = _addUser();
 
@@ -944,9 +932,7 @@ public class DefaultObjectEntryManagerImplTest {
 			organization2.getOrganizationId(), RandomTestUtil.randomString(),
 			false);
 
-		_accountEntryOrganizationRelLocalService.addAccountEntryOrganizationRel(
-			accountEntry2.getAccountEntryId(),
-			suborganization2.getOrganizationId());
+		_addAccountEntryOrganizationRel(accountEntry2, suborganization2);
 
 		_user = _addUser();
 
@@ -1100,15 +1086,11 @@ public class DefaultObjectEntryManagerImplTest {
 
 		_assignOrganizationRole(organization1, _accountManagerRole, _user);
 
-		_accountEntryOrganizationRelLocalService.addAccountEntryOrganizationRel(
-			accountEntry1.getAccountEntryId(),
-			organization1.getOrganizationId());
+		_addAccountEntryOrganizationRel(accountEntry1, organization1);
 
 		Organization organization2 = OrganizationTestUtil.addOrganization();
 
-		_accountEntryOrganizationRelLocalService.addAccountEntryOrganizationRel(
-			accountEntry2.getAccountEntryId(),
-			organization2.getOrganizationId());
+		_addAccountEntryOrganizationRel(accountEntry2, organization2);
 
 		_assertObjectEntriesSize(1);
 
@@ -1136,15 +1118,8 @@ public class DefaultObjectEntryManagerImplTest {
 
 		_assertObjectEntriesSize(0);
 
-		_accountEntryOrganizationRelLocalService.
-			deleteAccountEntryOrganizationRel(
-				accountEntry1.getAccountEntryId(),
-				organization1.getOrganizationId());
-
-		_accountEntryOrganizationRelLocalService.
-			deleteAccountEntryOrganizationRel(
-				accountEntry2.getAccountEntryId(),
-				organization2.getOrganizationId());
+		_deleteAccountEntryOrganizationRel(accountEntry1, organization1);
+		_deleteAccountEntryOrganizationRel(accountEntry2, organization2);
 
 		// Suborganization scope
 
@@ -1163,17 +1138,13 @@ public class DefaultObjectEntryManagerImplTest {
 			organization1.getOrganizationId(), RandomTestUtil.randomString(),
 			false);
 
-		_accountEntryOrganizationRelLocalService.addAccountEntryOrganizationRel(
-			accountEntry1.getAccountEntryId(),
-			suborganization1.getOrganizationId());
+		_addAccountEntryOrganizationRel(accountEntry1, suborganization1);
 
 		Organization suborganization2 = OrganizationTestUtil.addOrganization(
 			organization2.getOrganizationId(), RandomTestUtil.randomString(),
 			false);
 
-		_accountEntryOrganizationRelLocalService.addAccountEntryOrganizationRel(
-			accountEntry2.getAccountEntryId(),
-			suborganization2.getOrganizationId());
+		_addAccountEntryOrganizationRel(accountEntry2, suborganization2);
 
 		_assertObjectEntriesSize(1);
 
@@ -1784,12 +1755,8 @@ public class DefaultObjectEntryManagerImplTest {
 
 		Organization organization1 = OrganizationTestUtil.addOrganization();
 
-		_accountEntryOrganizationRelLocalService.addAccountEntryOrganizationRel(
-			accountEntry1.getAccountEntryId(),
-			organization1.getOrganizationId());
-		_accountEntryOrganizationRelLocalService.addAccountEntryOrganizationRel(
-			accountEntry2.getAccountEntryId(),
-			organization1.getOrganizationId());
+		_addAccountEntryOrganizationRel(accountEntry1, organization1);
+		_addAccountEntryOrganizationRel(accountEntry2, organization1);
 
 		_user = _addUser();
 
@@ -1798,10 +1765,7 @@ public class DefaultObjectEntryManagerImplTest {
 
 		_assertObjectEntriesSize(2);
 
-		_accountEntryOrganizationRelLocalService.
-			deleteAccountEntryOrganizationRel(
-				accountEntry2.getAccountEntryId(),
-				organization1.getOrganizationId());
+		_deleteAccountEntryOrganizationRel(accountEntry2, organization1);
 
 		_assertObjectEntriesSize(1);
 
@@ -1810,10 +1774,7 @@ public class DefaultObjectEntryManagerImplTest {
 
 		_assertObjectEntriesSize(0);
 
-		_accountEntryOrganizationRelLocalService.
-			deleteAccountEntryOrganizationRel(
-				accountEntry1.getAccountEntryId(),
-				organization1.getOrganizationId());
+		_deleteAccountEntryOrganizationRel(accountEntry1, organization1);
 
 		// Check suborganizations
 
@@ -1821,9 +1782,7 @@ public class DefaultObjectEntryManagerImplTest {
 			organization1.getOrganizationId(), RandomTestUtil.randomString(),
 			false);
 
-		_accountEntryOrganizationRelLocalService.addAccountEntryOrganizationRel(
-			accountEntry1.getAccountEntryId(),
-			suborganization1.getOrganizationId());
+		_addAccountEntryOrganizationRel(accountEntry1, suborganization1);
 
 		Organization organization2 = OrganizationTestUtil.addOrganization();
 
@@ -1831,9 +1790,7 @@ public class DefaultObjectEntryManagerImplTest {
 			organization2.getOrganizationId(), RandomTestUtil.randomString(),
 			false);
 
-		_accountEntryOrganizationRelLocalService.addAccountEntryOrganizationRel(
-			accountEntry2.getAccountEntryId(),
-			suborganization2.getOrganizationId());
+		_addAccountEntryOrganizationRel(accountEntry2, suborganization2);
 
 		_user = _addUser();
 
@@ -2179,15 +2136,11 @@ public class DefaultObjectEntryManagerImplTest {
 
 		_assignOrganizationRole(organization1, _accountManagerRole, _user);
 
-		_accountEntryOrganizationRelLocalService.addAccountEntryOrganizationRel(
-			accountEntry1.getAccountEntryId(),
-			organization1.getOrganizationId());
+		_addAccountEntryOrganizationRel(accountEntry1, organization1);
 
 		Organization organization2 = OrganizationTestUtil.addOrganization();
 
-		_accountEntryOrganizationRelLocalService.addAccountEntryOrganizationRel(
-			accountEntry2.getAccountEntryId(),
-			organization2.getOrganizationId());
+		_addAccountEntryOrganizationRel(accountEntry2, organization2);
 
 		AssertUtils.assertFailure(
 			PrincipalException.MustHavePermission.class,
@@ -2213,17 +2166,13 @@ public class DefaultObjectEntryManagerImplTest {
 			organization1.getOrganizationId(), RandomTestUtil.randomString(),
 			false);
 
-		_accountEntryOrganizationRelLocalService.addAccountEntryOrganizationRel(
-			accountEntry1.getAccountEntryId(),
-			suborganization1.getOrganizationId());
+		_addAccountEntryOrganizationRel(accountEntry1, suborganization1);
 
 		Organization suborganization2 = OrganizationTestUtil.addOrganization(
 			organization2.getOrganizationId(), RandomTestUtil.randomString(),
 			false);
 
-		_accountEntryOrganizationRelLocalService.addAccountEntryOrganizationRel(
-			accountEntry2.getAccountEntryId(),
-			suborganization2.getOrganizationId());
+		_addAccountEntryOrganizationRel(accountEntry2, suborganization2);
 
 		_user = _addUser();
 
@@ -2256,6 +2205,14 @@ public class DefaultObjectEntryManagerImplTest {
 			AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
 			WorkflowConstants.STATUS_APPROVED,
 			ServiceContextTestUtil.getServiceContext());
+	}
+
+	private void _addAccountEntryOrganizationRel(
+			AccountEntry accountEntry, Organization organization)
+		throws Exception {
+
+		_accountEntryOrganizationRelLocalService.addAccountEntryOrganizationRel(
+			accountEntry.getAccountEntryId(), organization.getOrganizationId());
 	}
 
 	private void _addAggregationObjectField(
@@ -2747,6 +2704,16 @@ public class DefaultObjectEntryManagerImplTest {
 		objectFieldSetting.setValue(value);
 
 		return objectFieldSetting;
+	}
+
+	private void _deleteAccountEntryOrganizationRel(
+			AccountEntry accountEntry, Organization organization)
+		throws Exception {
+
+		_accountEntryOrganizationRelLocalService.
+			deleteAccountEntryOrganizationRel(
+				accountEntry.getAccountEntryId(),
+				organization.getOrganizationId());
 	}
 
 	private Long _getAttachmentObjectFieldValue() throws Exception {

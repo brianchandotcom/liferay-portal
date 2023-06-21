@@ -95,18 +95,18 @@ public class CommerceOrderSystemObjectDefinitionManager
 	}
 
 	@Override
-	public String getExternalReferenceCode() {
-		return "L_COMMERCE_ORDER";
-	}
-
-	@Override
-	public String getExternalReferenceCode(long primaryKey)
+	public String getBaseModelExternalReferenceCode(long primaryKey)
 		throws PortalException {
 
 		CommerceOrder commerceOrder =
 			_commerceOrderLocalService.getCommerceOrder(primaryKey);
 
 		return commerceOrder.getExternalReferenceCode();
+	}
+
+	@Override
+	public String getExternalReferenceCode() {
+		return "L_COMMERCE_ORDER";
 	}
 
 	@Override

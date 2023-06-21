@@ -49,10 +49,10 @@ public interface SystemObjectDefinitionManager {
 			String externalReferenceCode, long companyId)
 		throws PortalException;
 
-	public String getExternalReferenceCode();
-
-	public String getExternalReferenceCode(long primaryKey)
+	public String getBaseModelExternalReferenceCode(long primaryKey)
 		throws PortalException;
+
+	public String getExternalReferenceCode();
 
 	public JaxRsApplicationDescriptor getJaxRsApplicationDescriptor();
 

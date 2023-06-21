@@ -91,7 +91,7 @@ public class OrganizationSystemObjectDefinitionManager
 	}
 
 	@Override
-	public String getExternalReferenceCode(long primaryKey)
+	public String getBaseModelExternalReferenceCode(long primaryKey)
 		throws PortalException {
 
 		com.liferay.portal.kernel.model.Organization organization =

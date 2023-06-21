@@ -92,12 +92,7 @@ public class CommercePricingClassSystemObjectDefinitionManager
 	}
 
 	@Override
-	public String getExternalReferenceCode() {
-		return "L_COMMERCE_PRODUCT_GROUP";
-	}
-
-	@Override
-	public String getExternalReferenceCode(long primaryKey)
+	public String getBaseModelExternalReferenceCode(long primaryKey)
 		throws PortalException {
 
 		CommercePricingClass commercePricingClass =
@@ -105,6 +100,11 @@ public class CommercePricingClassSystemObjectDefinitionManager
 				primaryKey);
 
 		return commercePricingClass.getExternalReferenceCode();
+	}
+
+	@Override
+	public String getExternalReferenceCode() {
+		return "L_COMMERCE_PRODUCT_GROUP";
 	}
 
 	@Override

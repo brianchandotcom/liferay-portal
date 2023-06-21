@@ -87,18 +87,18 @@ public class AccountEntrySystemObjectDefinitionManager
 	}
 
 	@Override
-	public String getExternalReferenceCode() {
-		return "L_ACCOUNT";
-	}
-
-	@Override
-	public String getExternalReferenceCode(long primaryKey)
+	public String getBaseModelExternalReferenceCode(long primaryKey)
 		throws PortalException {
 
 		AccountEntry accountEntry = _accountEntryLocalService.getAccountEntry(
 			primaryKey);
 
 		return accountEntry.getExternalReferenceCode();
+	}
+
+	@Override
+	public String getExternalReferenceCode() {
+		return "L_ACCOUNT";
 	}
 
 	@Override

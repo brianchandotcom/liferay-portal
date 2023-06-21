@@ -318,26 +318,6 @@ public class FragmentLayoutStructureItemImporter
 		JSONObject defaultEditableValuesJSONObject =
 			_jsonFactory.createJSONObject();
 
-		if (fragmentEntry != null) {
-			html = fragmentEntry.getHtml();
-			js = fragmentEntry.getJs();
-			css = fragmentEntry.getCss();
-			configuration = fragmentEntry.getConfiguration();
-			type = fragmentEntry.getType();
-
-			FragmentCollection fragmentCollection =
-				_fragmentCollectionService.fetchFragmentCollection(
-					fragmentEntry.getFragmentCollectionId());
-
-			defaultEditableValuesJSONObject =
-				_fragmentEntryProcessorRegistry.
-					getDefaultEditableValuesJSONObject(
-						_getProcessedHTML(
-							fragmentEntry.getCompanyId(), configuration,
-							fragmentCollection, html, fragmentKey, type),
-						configuration);
-		}
-
 		Map<String, String> editableTypes =
 			EditableFragmentEntryProcessorUtil.getEditableTypes(html);
 
@@ -389,6 +369,27 @@ public class FragmentLayoutStructureItemImporter
 				FragmentEntryProcessorConstants.
 					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
 				freeMarkerFragmentEntryProcessorJSONObject);
+		}
+
+		if (fragmentEntry != null) {
+			html = fragmentEntry.getHtml();
+			js = fragmentEntry.getJs();
+			css = fragmentEntry.getCss();
+			configuration = fragmentEntry.getConfiguration();
+			type = fragmentEntry.getType();
+
+			FragmentCollection fragmentCollection =
+				_fragmentCollectionService.fetchFragmentCollection(
+					fragmentEntry.getFragmentCollectionId());
+
+			defaultEditableValuesJSONObject =
+				_fragmentEntryProcessorRegistry.
+					getDefaultEditableValuesJSONObject(
+						_getProcessedHTML(
+							fragmentEntry.getCompanyId(), configuration,
+							fragmentEntryProcessorValuesJSONObject.toString(),
+							fragmentCollection, html, fragmentKey, type),
+						configuration);
 		}
 
 		JSONObject jsonObject = _deepMerge(
@@ -783,7 +784,7 @@ public class FragmentLayoutStructureItemImporter
 	}
 
 	private String _getProcessedHTML(
-			long companyId, String configuration,
+			long companyId, String configuration, String editableValues,
 			FragmentCollection fragmentCollection, String html,
 			String rendererKey, int type)
 		throws Exception {
@@ -796,6 +797,7 @@ public class FragmentLayoutStructureItemImporter
 		fragmentEntryLink.setCompanyId(companyId);
 		fragmentEntryLink.setHtml(processedHTML);
 		fragmentEntryLink.setConfiguration(configuration);
+		fragmentEntryLink.setEditableValues(editableValues);
 		fragmentEntryLink.setRendererKey(rendererKey);
 		fragmentEntryLink.setType(type);
 

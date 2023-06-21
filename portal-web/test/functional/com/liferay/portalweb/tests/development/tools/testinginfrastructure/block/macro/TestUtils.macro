@@ -12,6 +12,8 @@ return	aE.isEqualNode(e).toString();
 		var focused = selenium.getEval(${javascript});
 
 		if (${focused} != "true") {
+			takeScreenshot();
+
 			TestUtils.fail(message = "FAILED: Element is not focused");
 		}
 	}

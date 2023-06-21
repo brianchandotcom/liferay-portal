@@ -17,6 +17,11 @@ definition {
 
 			User.firstLoginPG();
 		}
+
+		task ("Create a new Customer Portal Site") {
+			CustomerPortal.addCustomerPortalSite(siteName = ${testSiteName});
+		}
+
 	}
 
 	tearDown {
@@ -38,11 +43,18 @@ definition {
 		task ("And go to Form for guest users") {
 			var portalURL = PropsUtil.get("portal.url");
 
-			Navigator.openSpecificURL(url = "${portalURL}/web/cp/replacement-activation-key-form");
+			Navigator.openSpecificURL(url = "${portalURL}/web/customer-portal-site/replacement-activation-key-form");
 		}
 
 		task ("When fulfill the form") {
-			CP2Utils.fulfillGuestForm(submit = "true");
+			CP2Utils.fulfillGuestForm(
+				submit = "true",
+				email = "test@liferay.com",
+				companyName = "Liferay",
+				supportRegion = "Asia Pacific",
+				explainField = "Test",
+				typeOfServer = "Backup",
+				clustered = "Single instance");
 		}
 
 		task ("Then assert the success message") {

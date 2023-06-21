@@ -101,6 +101,11 @@ public class OrganizationSystemObjectDefinitionManager
 	}
 
 	@Override
+	public String getExternalReferenceCode() {
+		return "L_ORGANIZATION";
+	}
+
+	@Override
 	public JaxRsApplicationDescriptor getJaxRsApplicationDescriptor() {
 		return new JaxRsApplicationDescriptor(
 			"Liferay.Headless.Admin.User", "headless-admin-user",

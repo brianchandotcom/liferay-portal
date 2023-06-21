@@ -367,9 +367,13 @@ definition {
 
 		ImportExport.mapImport(fieldMappings = ${fieldMappings});
 
-		ImportExport.startImportAndWaitForSuccess();
+		if (!(isSet(noExport))) {
+			var key_index = 1;
 
-		Click(locator1 = "Button#CLOSE");
+			ImportExport.startImportAndWaitForSuccess();
+
+			Click(locator1 = "Button#CLOSE");
+		}
 	}
 
 	macro mapExport {

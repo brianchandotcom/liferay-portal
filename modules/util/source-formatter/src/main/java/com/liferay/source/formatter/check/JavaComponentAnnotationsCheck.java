@@ -36,6 +36,7 @@ import com.liferay.source.formatter.processor.SourceProcessor;
 import java.io.File;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -388,11 +389,8 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 			configurationPid = configurationPid.substring(
 				1, configurationPid.length() - 1);
 
-			for (String configurationClass :
-					StringUtil.split(configurationPid, ", ")) {
-
-				configurationClasses.add(configurationClass);
-			}
+			Collections.addAll(
+				configurationClasses, StringUtil.split(configurationPid, ", "));
 		}
 		else {
 			configurationClasses.add(configurationPid);

@@ -78,13 +78,21 @@ For `liferay-sample-etc-cron` and `liferay-sample-etc-spring-boot` the third typ
 
 	Combine multiple frontend client extensions that use `shared-utils.js` without duplicating or rerequesting it.
 
+- *liferay-sample-etc-frontend-3*
+
+	Share code through an import map client extension.
+
 - *liferay-sample-etc-spring-boot*
 
 	Use Spring Boot and OAuth (human to server) to interact with Liferay.
 
 - *liferay-sample-fds-cell-renderer*
 
+	Build a custom cell display in a frontend data set table.
+
 - *liferay-sample-fds-filter*
+
+	Build a custom filter in a frontend data set table.
 
 - *liferay-sample-global-css*
 

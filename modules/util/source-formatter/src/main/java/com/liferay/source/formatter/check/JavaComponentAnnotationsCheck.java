@@ -398,6 +398,17 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 			configurationClasses.add(configurationPid);
 		}
 
+		if (isAttributeValue(
+				_CHECK_HAS_MULTIPLE_CONFIGURATION_PIDS_KEY, absolutePath) &&
+			(configurationClasses.size() > 1)) {
+
+			addMessage(
+				fileName,
+				"Component classes cannot have multiple configuration PIDs");
+
+			return annotation;
+		}
+
 		List<String> importNames = javaClass.getImportNames();
 
 		for (String configurationClass : configurationClasses) {
@@ -660,6 +671,9 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 
 	private static final String _CHECK_CONFIGURATION_POLICY_ATTRIBUTE_KEY =
 		"checkConfigurationPolicyAttribute";
+
+	private static final String _CHECK_HAS_MULTIPLE_CONFIGURATION_PIDS_KEY =
+		"checkHasMultipleConfigurationPids";
 
 	private static final String _CHECK_HAS_MULTIPLE_SERVICE_TYPES_KEY =
 		"checkHasMultipleServiceTypes";

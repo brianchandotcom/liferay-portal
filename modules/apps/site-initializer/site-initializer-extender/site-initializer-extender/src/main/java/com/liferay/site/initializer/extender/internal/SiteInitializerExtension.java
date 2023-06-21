@@ -144,9 +144,9 @@ public class SiteInitializerExtension {
 		ListTypeEntryLocalService listTypeEntryLocalService,
 		ListTypeEntryResource listTypeEntryResource,
 		ListTypeEntryResource.Factory listTypeEntryResourceFactory,
+		NotificationTemplateLocalService notificationTemplateLocalService,
 		NotificationTemplateResource.Factory
 			notificationTemplateResourceFactory,
-		NotificationTemplateLocalService notificationTemplateLocalService,
 		ObjectActionLocalService objectActionLocalService,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectDefinitionResource.Factory objectDefinitionResourceFactory,

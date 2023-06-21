@@ -529,4 +529,18 @@ definition {
 		}
 	}
 
+	@description = "LPS-181572 - Verify if when user create a new Data Set, the informations will appears corretly"
+	@priority = 3
+	test CanViewCreatedDataSet {
+		task ("When go to Dataset admin Page") {
+			Navigator.gotoBack();
+		}
+
+		task ("Then confirm the name, REST application, REST Schema and REST Endpoint of the created Dataset entry are displayed.") {
+			for (var key_text : list "Data Set Test,/c/fdsentries,FDSEntry,/") {
+				AssertElementPresent(locator1 = "CP2Utils#ANY_TEXT");
+			}
+		}
+	}
+
 }

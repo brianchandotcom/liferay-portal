@@ -1094,7 +1094,8 @@ public class ObjectRelationshipLocalServiceImpl
 					getSystemObjectDefinitionManager(
 						objectDefinition.getName());
 
-			systemObjectDefinitionManager.getExternalReferenceCode(primaryKey);
+			systemObjectDefinitionManager.getBaseModelExternalReferenceCode(
+				primaryKey);
 		}
 		else {
 			_objectEntryLocalService.getObjectEntry(primaryKey);

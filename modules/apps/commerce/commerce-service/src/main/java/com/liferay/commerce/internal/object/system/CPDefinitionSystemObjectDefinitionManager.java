@@ -94,17 +94,17 @@ public class CPDefinitionSystemObjectDefinitionManager
 	}
 
 	@Override
-	public String getExternalReferenceCode() {
-		return "L_COMMERCE_PRODUCT_DEFINITION";
-	}
-
-	@Override
-	public String getExternalReferenceCode(long primaryKey)
+	public String getBaseModelExternalReferenceCode(long primaryKey)
 		throws PortalException {
 
 		CProduct cProduct = _cProductLocalService.getCProduct(primaryKey);
 
 		return cProduct.getExternalReferenceCode();
+	}
+
+	@Override
+	public String getExternalReferenceCode() {
+		return "L_COMMERCE_PRODUCT_DEFINITION";
 	}
 
 	@Override

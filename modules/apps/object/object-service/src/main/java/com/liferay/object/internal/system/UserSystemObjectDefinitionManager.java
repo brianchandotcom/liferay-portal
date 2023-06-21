@@ -90,17 +90,17 @@ public class UserSystemObjectDefinitionManager
 	}
 
 	@Override
-	public String getExternalReferenceCode() {
-		return "L_USER";
-	}
-
-	@Override
-	public String getExternalReferenceCode(long primaryKey)
+	public String getBaseModelExternalReferenceCode(long primaryKey)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(primaryKey);
 
 		return user.getExternalReferenceCode();
+	}
+
+	@Override
+	public String getExternalReferenceCode() {
+		return "L_USER";
 	}
 
 	@Override

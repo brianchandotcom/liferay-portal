@@ -29,8 +29,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>VERIFY_BUTTON</td>
-	<td>//input[contains(@value,'Verify')]</td>
+	<td>SIGN_IN_BUTTON</td>
+	<td>//input[contains(@value,'Sign in')]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -24,8 +24,8 @@ definition {
 			locator1 = "OktaLogin#LOGIN_PASSWORD_FIELD",
 			value1 = ${userPassword});
 
-		if (IsElementPresent(locator1 = "OktaLogin#VERIFY_BUTTON")) {
-			Click(locator1 = "OktaLogin#VERIFY_BUTTON");
+		if (IsElementPresent(locator1 = "OktaLogin#SIGN_IN_BUTTON")) {
+			Click(locator1 = "OktaLogin#SIGN_IN_BUTTON");
 		}
 	}
 

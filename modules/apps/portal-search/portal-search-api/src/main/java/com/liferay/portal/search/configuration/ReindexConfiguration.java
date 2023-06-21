@@ -32,6 +32,14 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface ReindexConfiguration {
 
 	@Meta.AD(
+		deflt = "regular", description = "default-reindex-execution-mode-help",
+		name = "default-reindex-execution-mode",
+		optionLabels = {"regular", "concurrent"},
+		optionValues = {"regular", "concurrent"}, required = false
+	)
+	public String defaultReindexExecutionMode();
+
+	@Meta.AD(
 		deflt = "com.liferay.document.library.kernel.model.DLFileEntry=500",
 		description = "indexing-batch-sizes-help",
 		name = "indexing-batch-sizes", required = false

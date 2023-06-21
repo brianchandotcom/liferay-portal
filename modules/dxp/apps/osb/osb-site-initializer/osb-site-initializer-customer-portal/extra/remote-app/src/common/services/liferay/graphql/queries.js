@@ -344,17 +344,24 @@ export const createAndAssociateUserAccountWithAccountAndAccountRole = gql`
 	}
 `;
 
+export const associateUserAccountWithAccount = gql`
+	mutation associateUserAccountWithAccount(
+		$emailAddress: String!
+		$accountKey: String!
+	) {
+		createAccountUserAccountByExternalReferenceCodeByEmailAddress(
+			externalReferenceCode: $accountKey
+			emailAddress: $emailAddress
+		)
+	}
+`;
+
 export const associateUserAccountWithAccountAndAccountRole = gql`
 	mutation associateUserAccountWithAccountAndAccountRole(
 		$emailAddress: String!
 		$accountKey: String!
 		$accountRoleId: Long!
 	) {
-		createAccountUserAccountByExternalReferenceCodeByEmailAddress(
-			externalReferenceCode: $accountKey
-			emailAddress: $emailAddress
-		)
-
 		createAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress(
 			accountRoleId: $accountRoleId
 			emailAddress: $emailAddress

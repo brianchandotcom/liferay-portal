@@ -126,7 +126,6 @@ export interface IFrontendDataSetProps {
 	customViews?: string;
 	customViewsEnabled?: boolean;
 	emptyState?: {
-		creationMenu?: object;
 		description?: string;
 		image?: string;
 		title?: string;

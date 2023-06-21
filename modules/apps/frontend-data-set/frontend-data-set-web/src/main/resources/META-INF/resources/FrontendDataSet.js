@@ -503,9 +503,9 @@ const FrontendDataSet = ({
 							Liferay.Language.get('no-results-found')
 						}
 					>
-						{emptyState?.creationMenu && (
+						{creationMenu && (
 							<CreationMenu
-								{...emptyState.creationMenu}
+								{...creationMenu}
 								defaultButton
 							/>
 						)}

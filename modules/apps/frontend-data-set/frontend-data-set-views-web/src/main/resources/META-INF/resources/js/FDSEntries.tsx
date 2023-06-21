@@ -984,7 +984,6 @@ const FDSEntries = ({
 					viewsCount: ViewsCountRenderer,
 				}}
 				emptyState={{
-					creationMenu: creationMenu,
 					description: Liferay.Language.get(
 						'start-creating-one-to-show-your-data'
 					),

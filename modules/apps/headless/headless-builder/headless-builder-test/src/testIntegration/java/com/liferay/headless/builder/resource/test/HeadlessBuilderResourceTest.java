@@ -14,17 +14,16 @@
 
 package com.liferay.headless.builder.resource.test;
 
-import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.batch.engine.unit.BatchEngineUnitProcessor;
-import com.liferay.batch.engine.unit.BatchEngineUnitReader;
 import com.liferay.headless.builder.application.APIApplication;
 import com.liferay.headless.builder.application.provider.APIApplicationProvider;
-import com.liferay.headless.builder.application.provider.test.APIApplicationProviderTest;
 import com.liferay.headless.builder.application.publisher.APIApplicationPublisher;
 import com.liferay.headless.builder.publisher.test.util.APIApplicationPublisherUtil;
+import com.liferay.headless.builder.test.BaseTestCase;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -38,55 +37,24 @@ import java.net.URL;
 
 import java.nio.charset.StandardCharsets;
 
-import java.util.Objects;
-import java.util.concurrent.CompletableFuture;
-
 import javax.ws.rs.core.HttpHeaders;
 
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Luis Miguel Barcos
  */
 @FeatureFlags({"LPS-186757", "LPS-184413", "LPS-167253", "LPS-153117"})
-@RunWith(Arquillian.class)
-public class HeadlessBuilderResourceTest {
+public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
-
-	@Before
-	public void setUp() {
-		Bundle testBundle = FrameworkUtil.getBundle(
-			APIApplicationProviderTest.class);
-
-		BundleContext bundleContext = testBundle.getBundleContext();
-
-		for (Bundle bundle : bundleContext.getBundles()) {
-			if (Objects.equals(
-					bundle.getSymbolicName(),
-					"com.liferay.headless.builder.impl")) {
-
-				CompletableFuture<Void> completableFuture =
-					_batchEngineUnitProcessor.processBatchEngineUnits(
-						_batchEngineUnitReader.getBatchEngineUnits(bundle));
-
-				completableFuture.join();
-			}
-		}
-	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -107,44 +75,11 @@ public class HeadlessBuilderResourceTest {
 	}
 
 	@Test
-	public void testEndpointIsReachable() throws Exception {
-		APIApplication apiApplication = _createAPIApplication(
-			"test", _API_APPLICATION_ERC_1, "test");
-
-		HttpURLConnection httpURLConnection = _createHttpURLConnection(
-			apiApplication.getBaseURL(), Http.Method.GET);
-
-		httpURLConnection.connect();
-
-		Assert.assertEquals(404, httpURLConnection.getResponseCode());
-
-		APIApplicationPublisherUtil.publishApplications(
-			_apiApplicationPublisher, apiApplication);
-
-		httpURLConnection = _createHttpURLConnection(
-			apiApplication.getBaseURL(), Http.Method.GET);
-
-		httpURLConnection.connect();
-
-		Assert.assertEquals(200, httpURLConnection.getResponseCode());
-
-		APIApplicationPublisherUtil.unpublishApplications(
-			_apiApplicationPublisher, apiApplication);
-
-		httpURLConnection = _createHttpURLConnection(
-			apiApplication.getBaseURL(), Http.Method.GET);
-
-		httpURLConnection.connect();
-
-		Assert.assertEquals(404, httpURLConnection.getResponseCode());
-	}
-
-	@Test
 	public void testEndpointsAreReachable() throws Exception {
-		APIApplication apiApplication1 = _createAPIApplication(
-			"test1", _API_APPLICATION_ERC_1, "test1");
-		APIApplication apiApplication2 = _createAPIApplication(
-			"test2", _API_APPLICATION_ERC_2, "test2");
+		APIApplication apiApplication1 = _addAPIApplication(
+			_API_APPLICATION_ERC_1);
+		APIApplication apiApplication2 = _addAPIApplication(
+			_API_APPLICATION_ERC_2);
 
 		HttpURLConnection httpURLConnection = _createHttpURLConnection(
 			apiApplication1.getBaseURL(), Http.Method.GET);
@@ -195,14 +130,12 @@ public class HeadlessBuilderResourceTest {
 		Assert.assertEquals(200, httpURLConnection.getResponseCode());
 	}
 
-	private APIApplication _createAPIApplication(
-			String baseURL, String externalReferenceCode, String title)
+	private APIApplication _addAPIApplication(String externalReferenceCode)
 		throws Exception {
 
-		String endpointExternalReferenceCode =
-			externalReferenceCode + "ENDPOINT";
-
-		String schemaExternalReferenceCode = externalReferenceCode + "SCHEMA";
+		String apiEndpointExternalReferenceCode = RandomTestUtil.randomString();
+		String apiSchemaExternalReferenceCode = RandomTestUtil.randomString();
+		String baseURL = RandomTestUtil.randomString();
 
 		HTTPTestUtil.invoke(
 			JSONUtil.put(
@@ -211,7 +144,8 @@ public class HeadlessBuilderResourceTest {
 					JSONUtil.put(
 						"description", "description"
 					).put(
-						"externalReferenceCode", endpointExternalReferenceCode
+						"externalReferenceCode",
+						apiEndpointExternalReferenceCode
 					).put(
 						"httpMethod", "get"
 					).put(
@@ -237,7 +171,7 @@ public class HeadlessBuilderResourceTest {
 					).put(
 						"description", "description"
 					).put(
-						"externalReferenceCode", schemaExternalReferenceCode
+						"externalReferenceCode", apiSchemaExternalReferenceCode
 					).put(
 						"mainObjectDefinitionERC", "MSOD_API_APPLICATION"
 					).put(
@@ -250,19 +184,25 @@ public class HeadlessBuilderResourceTest {
 			).put(
 				"externalReferenceCode", externalReferenceCode
 			).put(
-				"title", title
+				"title", RandomTestUtil.randomString()
 			).toString(),
 			"headless-builder/applications", Http.Method.POST);
 
 		HTTPTestUtil.invoke(
 			null,
-			"headless-builder/schemas/by-external-reference-code/SCHEMA" +
-				"/requestAPISchemaToAPIEndpoints/ENDPOINT",
+			StringBundler.concat(
+				"headless-builder/schemas/by-external-reference-code/",
+				apiSchemaExternalReferenceCode,
+				"/requestAPISchemaToAPIEndpoints/",
+				apiEndpointExternalReferenceCode),
 			Http.Method.PUT);
 		HTTPTestUtil.invoke(
 			null,
-			"headless-builder/schemas/by-external-reference-code/SCHEMA" +
-				"/responseAPISchemaToAPIEndpoints/ENDPOINT",
+			StringBundler.concat(
+				"headless-builder/schemas/by-external-reference-code/",
+				apiSchemaExternalReferenceCode,
+				"/responseAPISchemaToAPIEndpoints/",
+				apiEndpointExternalReferenceCode),
 			Http.Method.PUT);
 
 		return _apiApplicationProvider.getAPIApplication(
@@ -294,20 +234,16 @@ public class HeadlessBuilderResourceTest {
 		return httpURLConnection;
 	}
 
-	private static final String _API_APPLICATION_ERC_1 = "APPLICATION1";
+	private static final String _API_APPLICATION_ERC_1 =
+		RandomTestUtil.randomString();
 
-	private static final String _API_APPLICATION_ERC_2 = "APPLICATION2";
+	private static final String _API_APPLICATION_ERC_2 =
+		RandomTestUtil.randomString();
 
 	@Inject
 	private APIApplicationProvider _apiApplicationProvider;
 
 	@Inject
 	private APIApplicationPublisher _apiApplicationPublisher;
-
-	@Inject
-	private BatchEngineUnitProcessor _batchEngineUnitProcessor;
-
-	@Inject
-	private BatchEngineUnitReader _batchEngineUnitReader;
 
 }

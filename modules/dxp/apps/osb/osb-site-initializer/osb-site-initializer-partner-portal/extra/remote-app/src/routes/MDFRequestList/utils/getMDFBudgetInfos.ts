@@ -13,6 +13,7 @@ import {MDFColumnKey} from '../../../common/enums/mdfColumnKey';
 import LiferayPicklist from '../../../common/interfaces/liferayPicklist';
 import getIntlNumberFormat from '../../../common/utils/getIntlNumberFormat';
 
+const APPROVED_STATUS = 'approved';
 export default function getMDFBudgetInfos(
 	totalCostOfExpense?: number,
 	totalRequested?: number,
@@ -28,7 +29,7 @@ export default function getMDFBudgetInfos(
 				totalRequested
 			),
 			[MDFColumnKey.APPROVED]:
-				requestStatus === 'approved'
+				requestStatus === APPROVED_STATUS
 					? getIntlNumberFormat(currency).format(totalRequested)
 					: '-',
 		};

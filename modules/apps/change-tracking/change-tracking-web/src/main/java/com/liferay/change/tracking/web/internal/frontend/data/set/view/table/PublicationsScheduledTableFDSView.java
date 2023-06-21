@@ -43,34 +43,38 @@ public class PublicationsScheduledTableFDSView extends BaseTableFDSView {
 
 		return fdsTableSchemaBuilder.add(
 			"name", "publication",
-			fdsTableSchemaField -> {
-				fdsTableSchemaField.setActionId("review-changes");
-				fdsTableSchemaField.setContentRenderer("actionLink");
-				fdsTableSchemaField.setSortable(true);
-			}
+			fdsTableSchemaField -> fdsTableSchemaField.setActionId(
+				"review-changes"
+			).setContentRenderer(
+				"actionLink"
+			).setSortable(
+				true
+			)
 		).add(
 			"description", "description"
 		).add(
 			"dateScheduled", "publishing",
-			fdsTableSchemaField -> {
-				fdsTableSchemaField.setContentRenderer("date");
-				fdsTableSchemaField.setSortable(true);
-			}
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"dateTime"
+			).setSortable(
+				true
+			)
 		).add(
 			"dateModified", "last-modified",
-			fdsTableSchemaField -> {
-				fdsTableSchemaField.setContentRenderer("date");
-				fdsTableSchemaField.setSortable(true);
-			}
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"dateTime"
+			).setSortable(
+				true
+			)
 		).add(
 			"dateCreated", "create-date",
-			fdsTableSchemaField -> {
-				fdsTableSchemaField.setContentRenderer("date");
-				fdsTableSchemaField.setSortable(true);
-			}
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"dateTime"
+			).setSortable(
+				true
+			)
 		).add(
-			"creator.name", "owner",
-			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
+			"ownerName", "owner"
 		).build();
 	}
 

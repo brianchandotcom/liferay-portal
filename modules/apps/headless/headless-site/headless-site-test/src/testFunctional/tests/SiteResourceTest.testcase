@@ -1,0 +1,37 @@
+@component-name = "portal-wcm"
+@disable-webdriver = "true"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testcase.url = "http://localhost:8080";
+	property testray.main.component.name = "Echo Headless";
+
+	static var randomSiteName = StringUtil.randomString(8);
+
+	@description = "This is a test for LPS-177400. The site administrater should get 403 when create a new site via POST method without authorization."
+	@priority = 3
+	test CannotAddSiteWithoutAuthorization {
+		task ("When the site administrater creates a site without authorization") {
+			var portalURL = JSONCompany.getPortalURL();
+
+			var curl = '''
+				${portalURL}/o/headless-site/v1.0/sites \
+					-H accept: application/json \
+					-H Content-Type: application/json \
+					-d {
+						"name": "${randomSiteName}"
+					}
+			''';
+
+			var response = JSONCurlUtil.post(${curl}, "$");
+		}
+
+		task ("Then the site administrater should see 403 in the body response") {
+			TestUtils.assertEquals(
+				actual = ${response},
+				expected = "{}");
+		}
+	}
+
+}

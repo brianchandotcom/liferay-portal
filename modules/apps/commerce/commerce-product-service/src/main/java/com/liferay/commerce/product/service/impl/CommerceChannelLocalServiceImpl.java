@@ -23,6 +23,7 @@ import com.liferay.commerce.pricing.constants.CommercePricingConstants;
 import com.liferay.commerce.product.channel.CommerceChannelTypeRegistry;
 import com.liferay.commerce.product.constants.CommerceChannelConstants;
 import com.liferay.commerce.product.exception.CommerceChannelTypeException;
+import com.liferay.commerce.product.exception.DuplicateCommerceChannelAccountEntryIdException;
 import com.liferay.commerce.product.exception.DuplicateCommerceChannelException;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.model.CommerceChannelTable;
@@ -63,6 +64,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -114,7 +116,7 @@ public class CommerceChannelLocalServiceImpl
 			}
 		}
 
-		_validateAccountEntry(accountEntryId);
+		_validateAccountEntry(0, accountEntryId);
 		_validateType(type);
 
 		long commerceChannelId = counterLocalService.increment();
@@ -426,7 +428,7 @@ public class CommerceChannelLocalServiceImpl
 			boolean discountsTargetNetPrice)
 		throws PortalException {
 
-		_validateAccountEntry(accountEntryId);
+		_validateAccountEntry(commerceChannelId, accountEntryId);
 		_validateType(type);
 
 		CommerceChannel commerceChannel =
@@ -590,7 +592,8 @@ public class CommerceChannelLocalServiceImpl
 			group.getGroupId(), typeSettingsUnicodeProperties.toString());
 	}
 
-	private void _validateAccountEntry(long accountEntryId)
+	private void _validateAccountEntry(
+			long commerceChannelId, long accountEntryId)
 		throws PortalException {
 
 		if (accountEntryId == 0) {
@@ -612,6 +615,28 @@ public class CommerceChannelLocalServiceImpl
 		if (accountEntry.getStatus() != WorkflowConstants.STATUS_APPROVED) {
 			throw new AccountEntryStatusException(
 				"Channel can only be assigned with an approved account entry");
+		}
+
+		List<CommerceChannel> commerceChannels =
+			getCommerceChannelsByAccountEntryId(accountEntryId);
+
+		if (ListUtil.isNotEmpty(commerceChannels)) {
+			if (commerceChannelId > 0) {
+				for (CommerceChannel commerceChannel : commerceChannels) {
+					if (commerceChannel.getCommerceChannelId() !=
+							commerceChannelId) {
+
+						throw new DuplicateCommerceChannelAccountEntryIdException(
+							"There is another channel with account entry id " +
+								accountEntryId);
+					}
+				}
+			}
+			else {
+				throw new DuplicateCommerceChannelAccountEntryIdException(
+					"There is another channel with account entry id " +
+						accountEntryId);
+			}
 		}
 	}
 

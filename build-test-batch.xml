@@ -5966,7 +5966,7 @@ information. Make sure to commit in all format-javadoc results.
 			</test-set-up>
 
 			<test-tear-down>
-				<ant antfile="build-test-analytics-cloud.xml" target="stop-analytics-cloud" />
+				<ant antfile="build-test-analytics-cloud.xml" target="stop-analytics-cloud-integration" />
 			</test-tear-down>
 		</run-batch-test>
 	</target>

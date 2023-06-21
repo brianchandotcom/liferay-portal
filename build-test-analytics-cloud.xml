@@ -476,6 +476,24 @@ if (Os.isFamily(Os.FAMILY_WINDOWS)) {
 		</sequential>
 	</macrodef>
 
+	<macrodef name="stop-analytics-cloud-integration">
+		<sequential>
+			<fail message="Please set the property ${env.DOCKER_ENABLED}." unless="env.DOCKER_ENABLED" />
+
+			<property location="${analytics.cloud.asah.dir}/docker-compose.integration-test.yml" name="analytics.cloud.docker.test.yaml" />
+
+			<execute dir="${analytics.cloud.asah.dir}">
+				docker ps -a
+
+				docker-compose --file=${analytics.cloud.docker.test.yaml} down --volumes
+
+				docker container prune -f
+				docker image prune -f
+				docker volume prune -f
+			</execute>
+		</sequential>
+	</macrodef>
+
 	<target name="start-analytics-cloud">
 		<stop-analytics-cloud />
 
@@ -483,7 +501,7 @@ if (Os.isFamily(Os.FAMILY_WINDOWS)) {
 	</target>
 
 	<target name="start-analytics-cloud-integration">
-		<stop-analytics-cloud />
+		<stop-analytics-cloud-integration />
 
 		<start-analytics-cloud-integration />
 	</target>
@@ -492,5 +510,11 @@ if (Os.isFamily(Os.FAMILY_WINDOWS)) {
 		<print-analytics-cloud-logs />
 
 		<stop-analytics-cloud />
+	</target>
+
+	<target name="stop-analytics-cloud-integration">
+		<print-analytics-cloud-logs />
+
+		<stop-analytics-cloud-integration />
 	</target>
 </project>

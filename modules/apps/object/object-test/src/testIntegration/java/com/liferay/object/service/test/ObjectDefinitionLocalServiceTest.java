@@ -22,6 +22,7 @@ import com.liferay.object.exception.NoSuchObjectFieldException;
 import com.liferay.object.exception.ObjectDefinitionAccountEntryRestrictedException;
 import com.liferay.object.exception.ObjectDefinitionActiveException;
 import com.liferay.object.exception.ObjectDefinitionEnableObjectEntryHistoryException;
+import com.liferay.object.exception.ObjectDefinitionExternalReferenceCodeException;
 import com.liferay.object.exception.ObjectDefinitionLabelException;
 import com.liferay.object.exception.ObjectDefinitionModifiableException;
 import com.liferay.object.exception.ObjectDefinitionNameException;
@@ -68,6 +69,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.FeatureFlags;
@@ -726,6 +728,31 @@ public class ObjectDefinitionLocalServiceTest {
 	@Test
 	public void testAddSystemObjectDefinition() throws Exception {
 
+		// External reference code
+
+		String liferayMode = SystemProperties.get("liferay.mode");
+
+		SystemProperties.clear("liferay.mode");
+
+		AssertUtils.assertFailure(
+			ObjectDefinitionExternalReferenceCodeException.
+				ForbiddenUnmodifiableSystemObjectDefinitionExternalReferenceCode.class,
+			"Forbidden unmodifiable system object definition external " +
+				"reference code INVALID_TEST",
+			() ->
+				ObjectDefinitionTestUtil.addUnmodifiableSystemObjectDefinition(
+					"INVALID_TEST", TestPropsValues.getUserId(), "Test", null,
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString()),
+					"Test", null, null,
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString()),
+					ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
+					_objectDefinitionLocalService,
+					Collections.<ObjectField>emptyList()));
+
+		SystemProperties.set("liferay.mode", liferayMode);
+
 		// Label is null
 
 		AssertUtils.assertFailure(
@@ -813,7 +840,7 @@ public class ObjectDefinitionLocalServiceTest {
 			ObjectDefinitionScopeException.class, "Scope is null",
 			() ->
 				ObjectDefinitionTestUtil.addUnmodifiableSystemObjectDefinition(
-					TestPropsValues.getUserId(), "Test", null,
+					null, TestPropsValues.getUserId(), "Test", null,
 					LocalizedMapUtil.getLocalizedMap(
 						RandomTestUtil.randomString()),
 					"Test", null, null,
@@ -831,7 +858,7 @@ public class ObjectDefinitionLocalServiceTest {
 			"No object scope provider found with key " + scope,
 			() ->
 				ObjectDefinitionTestUtil.addUnmodifiableSystemObjectDefinition(
-					TestPropsValues.getUserId(), "Test", null,
+					null, TestPropsValues.getUserId(), "Test", null,
 					LocalizedMapUtil.getLocalizedMap(
 						RandomTestUtil.randomString()),
 					"Test", null, null,
@@ -847,7 +874,7 @@ public class ObjectDefinitionLocalServiceTest {
 			"System object definition versions must greater than 0",
 			() ->
 				ObjectDefinitionTestUtil.addUnmodifiableSystemObjectDefinition(
-					TestPropsValues.getUserId(), "Test", null,
+					null, TestPropsValues.getUserId(), "Test", null,
 					LocalizedMapUtil.getLocalizedMap(
 						RandomTestUtil.randomString()),
 					"Test", null, null,
@@ -862,7 +889,7 @@ public class ObjectDefinitionLocalServiceTest {
 			"System object definition versions must greater than 0",
 			() ->
 				ObjectDefinitionTestUtil.addUnmodifiableSystemObjectDefinition(
-					TestPropsValues.getUserId(), "Test", null,
+					null, TestPropsValues.getUserId(), "Test", null,
 					LocalizedMapUtil.getLocalizedMap(
 						RandomTestUtil.randomString()),
 					"Test", null, null,
@@ -876,7 +903,7 @@ public class ObjectDefinitionLocalServiceTest {
 
 		objectDefinition =
 			ObjectDefinitionTestUtil.addUnmodifiableSystemObjectDefinition(
-				TestPropsValues.getUserId(), "Test", null,
+				null, TestPropsValues.getUserId(), "Test", null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				"Test", null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
@@ -990,7 +1017,7 @@ public class ObjectDefinitionLocalServiceTest {
 
 		objectDefinition =
 			ObjectDefinitionTestUtil.addUnmodifiableSystemObjectDefinition(
-				TestPropsValues.getUserId(), "Test", null,
+				null, TestPropsValues.getUserId(), "Test", null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				"Test", null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
@@ -1159,7 +1186,7 @@ public class ObjectDefinitionLocalServiceTest {
 
 		objectDefinition =
 			ObjectDefinitionTestUtil.addUnmodifiableSystemObjectDefinition(
-				TestPropsValues.getUserId(), "Test", null,
+				null, TestPropsValues.getUserId(), "Test", null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				"Test", null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
@@ -1195,24 +1222,26 @@ public class ObjectDefinitionLocalServiceTest {
 			ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE,
 			objectDefinition.getStorageType());
 
-		try {
-			_objectDefinitionLocalService.updateCustomObjectDefinition(
-				null, objectDefinition.getObjectDefinitionId(), 0, 0, 0, false,
-				false, false, false, false, true,
-				LocalizedMapUtil.getLocalizedMap("Able"), "Able", null, null,
-				false, LocalizedMapUtil.getLocalizedMap("Ables"),
-				objectDefinition.getScope());
+		long objectDefinitionId = objectDefinition.getObjectDefinitionId();
+		String scope = objectDefinition.getScope();
 
-			Assert.fail();
-		}
-		catch (ObjectDefinitionEnableObjectEntryHistoryException
-					objectDefinitionEnableObjectEntryHistoryException) {
+		AssertUtils.assertFailure(
+			ObjectDefinitionEnableObjectEntryHistoryException.class,
+			"Enable object entry history is only allowed for object " +
+				"definitions with the default storage type",
+			() -> _updateObjectDefinition(
+				null, objectDefinitionId, 0, 0, true,
+				LocalizedMapUtil.getLocalizedMap("Able"), "Able",
+				LocalizedMapUtil.getLocalizedMap("Ables"), scope));
 
-			Assert.assertEquals(
-				"Enable object entry history is only allowed for object " +
-					"definitions with the default storage type",
-				objectDefinitionEnableObjectEntryHistoryException.getMessage());
-		}
+		AssertUtils.assertFailure(
+			ObjectDefinitionExternalReferenceCodeException.
+				MustNotStartWithPrefix.class,
+			"The prefix L_ is reserved for Liferay",
+			() -> _updateObjectDefinition(
+				"L_INVALID_ERC_TEST", objectDefinitionId, 0, 0, false,
+				LocalizedMapUtil.getLocalizedMap("Able"), "Able",
+				LocalizedMapUtil.getLocalizedMap("Ables"), scope));
 
 		objectDefinition.setStorageType(
 			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT);
@@ -1224,22 +1253,13 @@ public class ObjectDefinitionLocalServiceTest {
 			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 			objectDefinition.getStorageType());
 
-		try {
-			objectDefinition =
-				_objectDefinitionLocalService.updateCustomObjectDefinition(
-					null, objectDefinition.getObjectDefinitionId(), 0,
-					RandomTestUtil.randomLong(), RandomTestUtil.randomLong(),
-					false, objectDefinition.isActive(), true, false, false,
-					false, LocalizedMapUtil.getLocalizedMap("Able"), "Able",
-					null, null, false,
-					LocalizedMapUtil.getLocalizedMap("Ables"),
-					objectDefinition.getScope());
-
-			Assert.fail();
-		}
-		catch (NoSuchObjectFieldException noSuchObjectFieldException) {
-			Assert.assertNotNull(noSuchObjectFieldException);
-		}
+		AssertUtils.assertFailure(
+			NoSuchObjectFieldException.class, null,
+			() -> _updateObjectDefinition(
+				null, objectDefinitionId, RandomTestUtil.randomLong(),
+				RandomTestUtil.randomLong(), false,
+				LocalizedMapUtil.getLocalizedMap("Able"), "Able",
+				LocalizedMapUtil.getLocalizedMap("Ables"), scope));
 
 		ObjectField objectField = ObjectFieldUtil.addCustomObjectField(
 			new TextObjectFieldBuilder(
@@ -1434,7 +1454,7 @@ public class ObjectDefinitionLocalServiceTest {
 
 		objectDefinition =
 			ObjectDefinitionTestUtil.addUnmodifiableSystemObjectDefinition(
-				TestPropsValues.getUserId(), "Test", null,
+				null, TestPropsValues.getUserId(), "Test", null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				"Test", null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
@@ -1552,7 +1572,7 @@ public class ObjectDefinitionLocalServiceTest {
 		throws Exception {
 
 		return ObjectDefinitionTestUtil.addUnmodifiableSystemObjectDefinition(
-			TestPropsValues.getUserId(), name, null,
+			null, TestPropsValues.getUserId(), name, null,
 			LocalizedMapUtil.getLocalizedMap(label), name, null, null,
 			LocalizedMapUtil.getLocalizedMap(pluralLabel),
 			ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
@@ -1880,6 +1900,20 @@ public class ObjectDefinitionLocalServiceTest {
 			_objectDefinitionLocalService.deleteObjectDefinition(
 				objectDefinition2);
 		}
+	}
+
+	private ObjectDefinition _updateObjectDefinition(
+			String externalReferenceCode, long objectDefinitionId,
+			long descriptionObjectFieldId, long titleObjectFieldId,
+			boolean enableObjectEntryHistory, Map<Locale, String> labelMap,
+			String name, Map<Locale, String> pluralLabelMap, String scope)
+		throws PortalException {
+
+		return _objectDefinitionLocalService.updateCustomObjectDefinition(
+			externalReferenceCode, objectDefinitionId, 0,
+			descriptionObjectFieldId, titleObjectFieldId, false, false, false,
+			false, false, enableObjectEntryHistory, labelMap, name, null, null,
+			false, pluralLabelMap, scope);
 	}
 
 	@Inject

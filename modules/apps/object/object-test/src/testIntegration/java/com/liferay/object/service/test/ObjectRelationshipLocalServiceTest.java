@@ -393,8 +393,8 @@ public class ObjectRelationshipLocalServiceTest {
 
 		ObjectDefinition systemObjectDefinition =
 			ObjectDefinitionTestUtil.addUnmodifiableSystemObjectDefinition(
-				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-				null,
+				null, TestPropsValues.getUserId(),
+				RandomTestUtil.randomString(), null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				"A" + RandomTestUtil.randomString(), null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),

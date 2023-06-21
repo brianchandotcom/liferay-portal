@@ -77,7 +77,7 @@ public class APIApplicationProviderTest extends BaseTestCase {
 							).put(
 								"name", "name"
 							).put(
-								"objectFieldERC", RandomTestUtil.randomString()
+								"objectFieldERC", "APPLICATION_STATUS"
 							))
 					).put(
 						"description", "description"

@@ -1,0 +1,254 @@
+@component-name = "portal-platform-experience-and-design-system"
+definition {
+
+	property osgi.modules.includes = "accessibility-menu-web";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.component.names = "Accessibility Menu";
+	property testray.main.component.name = "Accessibility Menu";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		task ("Given Accessibility Menu enabled at Instance Settings level") {
+
+			// Navigate to Application Menu > Instance Settings > Accessibility
+			// Check if not checked Accessibility Menu
+
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+
+			// Add clear browser cache
+
+		}
+		else {
+
+			// Add clear browser cache
+
+		}
+	}
+
+	@description = "LPS-178192. Verifies only if the setting has never been changed by the user, either when signed in or not signed in, will the default value be displayed.."
+	@ignore = "Test Stub"
+	@priority = 5
+	test BrowserLocalStorageSmoke {
+		task ("Given When Then") {
+
+			// Given a new created user A
+			// And signed out as guest user
+			// When toggle  show underline to OFF state
+			// And sign in as a new user for first time
+			// And toggle show under to ON
+			// And user signs out
+			// Then
+			// show underline is set to OFF
+			// And When
+			// guest user toggles show underline to ON
+			// And guest user toggles show underline to OFF
+			// And sign in as user A
+			// Then show underline is set to ON state
+
+		}
+	}
+
+	@description = "LPS-178192. Verifies the modified accessibility configuration state is persisted in database for signed in user."
+	@ignore = "Test Stub"
+	@priority = 5
+	test ChangedConfigurationSettingByAuthenticatedUserWillBeSavedInDatabase {
+		task ("Given When Then") {
+
+			// Given created new user A
+			// When sign in as user A
+			// And toggle show underline to OFF state)
+			// And sign out
+			// And guest user sets shows underline configuration to OFF
+			// And guest user sets shows underline configuration to ON
+			// And when sign in as user A
+			// When open Accessibility Menu
+			// Then show underline is set to OFF
+
+		}
+	}
+
+	@description = "LPS-178192. Verifies accessibility menu modal toggle switches are keyboard accessible."
+	@ignore = "Test Stub"
+	@priority = 3
+	test ConfigurationCanBeToggledWithKeyboard {
+		task ("Given When Then") {
+
+			// Given Accessibility Menu
+			// And show underline configuration is at ON state
+			// When focus on a configuration toggle with keyboard
+			// And toggle a configuration with "Enter" key
+			// Then configuration is toggled to OFF state
+			// And When toggle configuration with "Enter" key
+			// Then configuration is toggled to ON state
+
+		}
+	}
+
+	@description = "LPS-178192. Verifies focus remains on current configuration toggle after toggling."
+	@ignore = "Test Stub"
+	@priority = 3
+	test FocusWillRemainOnCurrentToggleSetting {
+		task ("Given When Then") {
+
+			// Given Accessibility Menu
+			// When toggle a configuration with "Enter" key
+			// Then focus stays on the current configuration toggle
+
+		}
+	}
+
+	@description = "LPS-178192. Verifies guest configured settings can persist in browser local storage."
+	@ignore = "Test Stub"
+	@priority = 4
+	test GuestConfigurationCanPersistInBrowserLocalStorage {
+		task ("Given When Then") {
+
+			// Given guest user
+			// When toggle underline to OFF state
+			// And open a new browser tab
+			// And open accessibility menu
+			// Then menu option is set to OFF state
+
+		}
+	}
+
+	@description = "LPS-178192. Verifies OFF state can persist to first login user."
+	@ignore = "Test Stub"
+	@priority = 3
+	test GuestConfigurationOffStateWillPersistForFirstLogin {
+		task ("Given When Then") {
+
+			// Given create a new user
+			// And as a guest user
+			// // sign out of admin role to become a guest user role
+			// And toggle show underline to OFF state
+			// //click show underline to OFF state
+			// When sign in as a new user for first time
+			// Then configuration is persisted to first time signed in user
+			// // assert body element does not have "c-prefers-link-underline" class present
+			// //open accessibility menu
+			// // assert configuration is OFF state
+			// Note: may need to remove any underline html attributes. see https://www.w3schools.com/howto/howto_js_remove_class.asp
+
+		}
+	}
+
+	@description = "LPS-178192. Verifies ON state can persist to first login user."
+	@ignore = "Test Stub"
+	@priority = 3
+	test GuestConfigurationOnStateWillPersistForFirstLogin {
+		task ("Given When Then") {
+
+			// Given create a new user
+			// And as a guest user
+			// // sign out of admin role to become a guest user role
+			// And toggle show underline to ON state
+			// //click show underline to ON state
+			// When sign in as a new user for first time
+			// Then configuration is persisted to first time signed in user
+			// // assert body element has "c-prefers-link-underline" class present
+			// //open accessibility menu
+			// // assert configuration is ON state
+			// Note: may need to remove any underline html attributes. see https://www.w3schools.com/howto/howto_js_remove_class.asp
+
+		}
+	}
+
+	@description = "LPS-178192. Verifies accessibility menu quick link is keyboard focusable."
+	@ignore = "Test Stub"
+	@priority = 3
+	test LinkIsKeyboardFocusable {
+		task ("When press tab key from 'Skip to Content' link") {
+
+			// Example:
+
+			//KeyPress(
+			//	key_text = "New Experience",
+			//	locator1 = "Button#ANY",
+			//	value1 = "\TAB");
+
+		}
+
+		task ("Then Accessibility Menu link is focusable") {
+
+			//TestUtils.assertElementFocused();
+
+		}
+	}
+
+	@description = "LPS-178192. Verifies accessibility menu modal can be accessed by keyboard."
+	@ignore = "Test Stub"
+	@priority = 3
+	test ModalIsKeyboardAccessible {
+		task ("Given When Then") {
+
+			// Given Accessibility Menu is focused with keyboard
+			// When access Accessibility Menu link with "Enter" key
+			// Then Accessibility Menu modal is present
+			// And can navigate to a switch toggle with keyboard
+
+		}
+	}
+
+	@description = "LPS-178192. Verifies show underline effects configuration can apply an underline class to link elements in body of page."
+	@ignore = "Test Stub"
+	@priority = 5
+	test ShowUnderlineEffectsCanApplyUnderlineClassToLinksImmediately {
+		task ("Given When Then") {
+
+			// Given home page
+			// And underline class not applied to body element
+			// // verify show underline config in accessibility menu is off
+			// // verify body element does not have "c-prefers-link-underline" class present
+			// When access Accessibility Menu
+			// And toggle ON show underline effect in links
+			// Then body element has underline class applied
+			// // assert body element has "c-prefers-link-underline" class present
+
+		}
+	}
+
+	@description = "LPS-178192. Verifies show underline effects in links toggle is enabled by default."
+	@ignore = "Test Stub"
+	@priority = 3
+	test ShowUnderlineEffectsIsDisabledByDefault {
+		task ("Given When Then") {
+
+			// Given home page
+			// When access accessibility menu
+			// Then show underline effects in links is toggled OFF state
+			// assert body element does not have "c-prefers-link-underline" class
+
+		}
+	}
+
+	@description = "LPS-178192. Verifies only if the setting has never been changed by the user, either when signed in or not signed in, will the default value be displayed.."
+	@ignore = "Test Stub"
+	@priority = 5
+	test UntoggledSettingsAreAppliedImmediately {
+		task ("Given When Then") {
+
+			// Given home page
+			// And underline class is applied to body element
+			// // verify show underline config in accessibility menu is on
+			// // verify body element does have "c-prefers-link-underline" class present
+			// When access Accessibility Menu
+			// And toggle OFF show underline effect in links
+			// Then Powered by Liferay link does not have underline class applied
+			// // assert body element does not have "c-prefers-link-underline" class present
+
+		}
+	}
+
+}

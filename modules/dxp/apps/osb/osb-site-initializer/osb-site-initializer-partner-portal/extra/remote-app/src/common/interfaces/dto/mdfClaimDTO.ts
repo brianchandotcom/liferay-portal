@@ -15,6 +15,7 @@ import MDFClaim from '../mdfClaim';
 import MDFClaimActivityDTO from './mdfClaimActivityDTO';
 
 export default interface MDFClaimDTO extends MDFClaim {
+	claimPaid?: number;
 	companyName?: string;
 	currency: LiferayPicklist;
 	externalReferenceCode?: string;
@@ -24,7 +25,6 @@ export default interface MDFClaimDTO extends MDFClaim {
 	mdfRequestExternalReferenceCode?: string;
 	mdfRequestTotalCostOfExpense?: number;
 	partial?: boolean;
-	paymentReceived?: number;
 	r_accToMDFClms_accountEntry?: AccountEntry;
 	r_accToMDFClms_accountEntryId?: number;
 	r_mdfReqToMDFClms_c_mdfRequestId: number;

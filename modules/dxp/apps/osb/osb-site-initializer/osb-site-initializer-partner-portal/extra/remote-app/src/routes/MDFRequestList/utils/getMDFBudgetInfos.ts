@@ -17,7 +17,7 @@ export default function getMDFBudgetInfos(
 	totalCostOfExpense?: number,
 	totalRequested?: number,
 	currency?: LiferayPicklist,
-	requestStatus?: string
+	requestStatus?: string,
 ) {
 	if (totalCostOfExpense && totalRequested) {
 		return {
@@ -27,7 +27,10 @@ export default function getMDFBudgetInfos(
 			[MDFColumnKey.REQUESTED]: getIntlNumberFormat(currency).format(
 				totalRequested
 			),
-			[MDFColumnKey.APPROVED]: requestStatus === 'approved' ? getIntlNumberFormat(currency).format(totalRequested) : '-',
+			[MDFColumnKey.APPROVED]:
+				requestStatus === 'approved'
+					? getIntlNumberFormat(currency).format(totalRequested)
+					: '-'
 		};
 	}
 }

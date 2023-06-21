@@ -27,6 +27,34 @@
 			"required": false,
 			"state": false,
 			"system": false
+		},
+		{
+			"DBType": "String",
+			"businessType": "Aggregation",
+			"externalReferenceCode": "7809ed6c-0ed0-11ee-be56-0242ac120002",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Total Paid Amount"
+			},
+			"name": "totalPaidAmount",
+			"objectFieldSettings": [
+				{
+					"name": "objectRelationshipName",
+					"value": "mdfReqToMDFClms"
+				},
+				{
+					"name": "function",
+					"value": "SUM"
+				},
+				{
+					"name": "objectFieldName",
+					"value": "claimPaid"
+				}
+			],
+			"required": false,
+			"state": false,
+			"system": false
 		}
 	],
 	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:MDFRequest$]"

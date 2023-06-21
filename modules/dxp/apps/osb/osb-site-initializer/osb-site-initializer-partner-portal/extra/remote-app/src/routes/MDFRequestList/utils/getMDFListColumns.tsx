@@ -174,12 +174,12 @@ export default function getMDFListColumns(
 			label: 'Requested',
 		},
 		{
-			columnKey: MDFColumnKey.AMOUNT_CLAIMED,
-			label: 'Amout Claimed',
-		},
-		{
 			columnKey: MDFColumnKey.APPROVED,
 			label: 'Approved',
+		},
+		{
+			columnKey: MDFColumnKey.AMOUNT_CLAIMED,
+			label: 'Amout Claimed',
 		},
 		{
 			columnKey: MDFColumnKey.PAID,

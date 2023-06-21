@@ -301,6 +301,19 @@
 			"name": "totalClaimAmount",
 			"required": false,
 			"type": "BigDecimal"
+		},
+		{
+			"DBType": "BigDecimal",
+			"businessType": "PrecisionDecimal",
+			"externalReferenceCode": "c69b1276-0ed0-11ee-be56-0242ac120002",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Claim Paid"
+			},
+			"name": "claimPaid",
+			"required": false,
+			"type": "BigDecimal"
 		}
 	],
 	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:MDFClaim$]"

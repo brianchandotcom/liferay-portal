@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -13,10 +14,10 @@ import {useMemo} from 'react';
 
 import {MDFColumnKey} from '../../../common/enums/mdfColumnKey';
 import MDFRequestDTO from '../../../common/interfaces/dto/mdfRequestDTO';
+import getIntlNumberFormat from '../../../common/utils/getIntlNumberFormat';
 import getMDFActivityPeriod from '../utils/getMDFActivityPeriod';
 import getMDFBudgetInfos from '../utils/getMDFBudgetInfos';
 import getMDFDates from '../utils/getMDFDates';
-import getSummaryMDFClaims from '../utils/getSummaryMDFClaims';
 
 export default function useGetListItemsFromMDFRequests(
 	items?: MDFRequestDTO[]
@@ -24,7 +25,6 @@ export default function useGetListItemsFromMDFRequests(
 	return useMemo(
 		() =>
 			items?.map((item) => ({
-				...getSummaryMDFClaims(item.currency, item.mdfReqToMDFClms),
 				[MDFColumnKey.ID]: String(item.id),
 				[MDFColumnKey.NAME]: item.overallCampaignName,
 				...getMDFActivityPeriod(
@@ -33,6 +33,18 @@ export default function useGetListItemsFromMDFRequests(
 				),
 				[MDFColumnKey.STATUS]: item.mdfRequestStatus?.name,
 				[MDFColumnKey.PARTNER]: item.companyName,
+				[MDFColumnKey.PAID]:
+					item.totalPaidAmount == 0
+						? '-'
+						: getIntlNumberFormat(item.currency).format(
+								item.totalPaidAmount
+						  ),
+				[MDFColumnKey.AMOUNT_CLAIMED]:
+					item.totalClaimedRequest == 0
+						? '-'
+						: getIntlNumberFormat(item.currency).format(
+								item.totalClaimedRequest
+						  ),
 				...getMDFDates(item.dateCreated, item.dateModified),
 				...getMDFBudgetInfos(
 					item.totalCostOfExpense,

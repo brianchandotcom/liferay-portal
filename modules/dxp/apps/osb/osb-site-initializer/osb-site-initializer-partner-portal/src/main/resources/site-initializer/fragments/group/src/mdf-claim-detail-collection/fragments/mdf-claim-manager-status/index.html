@@ -54,7 +54,7 @@
 					body:
 						`{"mdfClaimStatus": "` +
 						status +
-						`", "paymentReceived": "` +
+						`", "claimPaid": "` +
 						payment +
 						`", "checkNumber": "` +
 						checkNumber +
@@ -82,9 +82,9 @@
 				return Liferay.Util.openModal({
 					bodyHTML: `<form>
 									<div class="form-group">
-										<label for="paymentReceivedInput">Amount Received</label>
+										<label for="claimPaidInput">Amount Received</label>
 
-										<input class="form-control" id="paymentReceivedInput" placeholder="Amount Received" type="number" />
+										<input class="form-control" id="claimPaidInput" placeholder="Amount Received" type="number" />
 									</div>
 
 									<div class="form-group">
@@ -107,14 +107,14 @@
 								const checkNumber = document.getElementById(
 									'checkNumberInput'
 								).value;
-								const paymentReceived = document.getElementById(
-									'paymentReceivedInput'
+								const claimPaid = document.getElementById(
+									'claimPaidInput'
 								).value;
 
-								if (checkNumber && paymentReceived) {
+								if (checkNumber && claimPaid) {
 									return updatePaidClaimStatus(
 										status,
-										paymentReceived,
+										claimPaid,
 										checkNumber
 									);
 								}

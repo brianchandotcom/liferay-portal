@@ -79,6 +79,11 @@ public class AddressSystemObjectDefinitionManager
 	}
 
 	@Override
+	public String getExternalReferenceCode() {
+		return "L_POSTAL_ADDRESS";
+	}
+
+	@Override
 	public String getExternalReferenceCode(long primaryKey)
 		throws PortalException {
 

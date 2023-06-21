@@ -94,6 +94,11 @@ public class CPDefinitionSystemObjectDefinitionManager
 	}
 
 	@Override
+	public String getExternalReferenceCode() {
+		return "L_COMMERCE_PRODUCT_DEFINITION";
+	}
+
+	@Override
 	public String getExternalReferenceCode(long primaryKey)
 		throws PortalException {
 

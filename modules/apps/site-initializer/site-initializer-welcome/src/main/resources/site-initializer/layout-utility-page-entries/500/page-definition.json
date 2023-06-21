@@ -14,16 +14,24 @@
 								"value": "[$DOCUMENT_URL:/site-initializer/documents/group/Provided by Liferay/stars.png$]"
 							}
 						},
-						"borderRadius": "",
-						"borderWidth": "0",
-						"height": "100vh",
-						"shadow": "",
-						"textAlign": ""
+						"borderWidth": "0"
 					},
 					"fragmentViewports": [
 						{
 							"fragmentViewportStyle": {
-								"hidden": false
+								"height": ""
+							},
+							"id": "landscapeMobile"
+						},
+						{
+							"fragmentViewportStyle": {
+								"height": ""
+							},
+							"id": "portraitMobile"
+						},
+						{
+							"fragmentViewportStyle": {
+								"height": ""
 							},
 							"id": "tablet"
 						}
@@ -48,29 +56,45 @@
 				"pageElements": [
 					{
 						"definition": {
+							"customCSS": ".[$FRAGMENT_CLASS$] {\nbackground-size:contain;\n}",
+							"customCSSViewports": [
+								{
+									"customCSS": ".[$FRAGMENT_CLASS$] {\nbackground-size: 0;\n}",
+									"id": "tablet"
+								}
+							],
 							"fragmentStyle": {
-								"borderRadius": "",
+								"backgroundFragmentImage": {
+									"title": {
+										"value": "Astronaut"
+									},
+									"url": {
+										"value": "[$DOCUMENT_URL:/site-initializer/documents/group/Provided by Liferay/astronaut.png$]"
+									}
+								},
 								"borderWidth": "0",
-								"height": "100vh",
-								"shadow": "",
-								"textAlign": ""
+								"minHeight": "500px"
 							},
 							"fragmentViewports": [
 								{
 									"fragmentViewportStyle": {
+										"height": "",
 										"hidden": false
 									},
 									"id": "landscapeMobile"
 								},
 								{
 									"fragmentViewportStyle": {
+										"height": "",
 										"overflow": ""
 									},
 									"id": "portraitMobile"
 								},
 								{
 									"fragmentViewportStyle": {
-										"hidden": false
+										"height": "",
+										"hidden": false,
+										"opacity": "100"
 									},
 									"id": "tablet"
 								}
@@ -95,43 +119,29 @@
 						"pageElements": [
 							{
 								"definition": {
-									"customCSSViewports": [
-										{
-											"customCSS": ".[$FRAGMENT_CLASS$] {\nbackground-size: 0;\n}",
-											"id": "tablet"
-										}
-									],
 									"fragmentStyle": {
-										"backgroundFragmentImage": {
-											"title": {
-												"value": "Astronaut"
-											},
-											"url": {
-												"value": "[$DOCUMENT_URL:/site-initializer/documents/group/Provided by Liferay/astronaut.png$]"
-											}
-										},
-										"borderRadius": "",
 										"borderWidth": "0",
-										"height": "100vh",
-										"shadow": "",
-										"textAlign": ""
+										"height": "80vh",
+										"minHeight": "500px"
 									},
 									"fragmentViewports": [
 										{
 											"fragmentViewportStyle": {
-												"paddingTop": "200px"
+												"paddingTop": "64px"
 											},
 											"id": "landscapeMobile"
 										},
 										{
 											"fragmentViewportStyle": {
-												"paddingTop": "220px"
+												"paddingTop": "64px"
 											},
 											"id": "portraitMobile"
 										},
 										{
 											"fragmentViewportStyle": {
-												"paddingTop": "160px"
+												"height": "80vh",
+												"minHeight": "600px",
+												"paddingTop": "64px"
 											},
 											"id": "tablet"
 										}
@@ -159,19 +169,7 @@
 											"fragmentViewports": [
 												{
 													"fragmentViewportStyle": {
-														"marginTop": "-160px"
-													},
-													"id": "landscapeMobile"
-												},
-												{
-													"fragmentViewportStyle": {
-														"marginTop": "-170px"
-													},
-													"id": "portraitMobile"
-												},
-												{
-													"fragmentViewportStyle": {
-														"marginTop": "-150px",
+														"marginTop": "-120px",
 														"overflow": "hidden"
 													},
 													"id": "tablet"
@@ -232,18 +230,22 @@
 													{
 														"definition": {
 															"fragmentStyle": {
-																"borderRadius": "",
-																"borderWidth": "0",
-																"height": "700px",
+																"height": "500px",
 																"marginLeft": "16px",
 																"marginRight": "16px",
-																"shadow": "",
-																"textAlign": ""
+																"minWidth": "450px"
 															},
 															"fragmentViewports": [
 																{
 																	"fragmentViewportStyle": {
-																		"height": "400px"
+																		"minWidth": "150px"
+																	},
+																	"id": "portraitMobile"
+																},
+																{
+																	"fragmentViewportStyle": {
+																		"height": "300px",
+																		"minWidth": "300px"
 																	},
 																	"id": "tablet"
 																}
@@ -252,7 +254,6 @@
 															"layout": {
 																"borderWidth": 0,
 																"contentDisplay": "FlexColumn",
-																"flexWrap": "Wrap",
 																"justify": "Center",
 																"marginBottom": 0,
 																"marginLeft": 0,
@@ -269,15 +270,19 @@
 														"pageElements": [
 															{
 																"definition": {
-																	"customCSS": ".[$FRAGMENT_CLASS$] h1 {\nfont-size:200px;\nfont-weight: 900;\n}",
+																	"customCSS": ".[$FRAGMENT_CLASS$] h1 {\nfont-size:200px;\nfont-weight: 900;\nwhite-space: nowrap;\n}",
 																	"customCSSViewports": [
 																		{
-																			"customCSS": ".[$FRAGMENT_CLASS$] h1 {\nfont-size:150px;\nfont-weight: 900;\n}",
+																			"customCSS": ".[$FRAGMENT_CLASS$] h1 {\nfont-size:20vw;\nfont-weight: 900;\n}",
 																			"id": "landscapeMobile"
 																		},
 																		{
-																			"customCSS": ".[$FRAGMENT_CLASS$] h1 {\nfont-size:140px;\nfont-weight: 900;\n}",
+																			"customCSS": ".[$FRAGMENT_CLASS$] h1 {\nfont-size:100px;\nfont-weight: 900;\n}",
 																			"id": "portraitMobile"
+																		},
+																		{
+																			"customCSS": ".[$FRAGMENT_CLASS$] h1 {\nfont-size:20vw;\nfont-weight: 900;\n\n}",
+																			"id": "tablet"
 																		}
 																	],
 																	"fragment": {
@@ -304,6 +309,14 @@
 																		"textAlign": "center",
 																		"textColor": "#fff"
 																	},
+																	"fragmentViewports": [
+																		{
+																			"fragmentViewportStyle": {
+																				"minHeight": ""
+																			},
+																			"id": "tablet"
+																		}
+																	],
 																	"indexed": true
 																},
 																"type": "Fragment"
@@ -342,12 +355,10 @@
 																		}
 																	],
 																	"fragmentStyle": {
-																		"borderRadius": "",
 																		"fontFamily": "fontFamilyMonospace",
 																		"fontSize": "20px",
 																		"fontWeight": "700",
 																		"marginTop": "-16px",
-																		"shadow": "",
 																		"textAlign": "center",
 																		"textColor": "whiteColor"
 																	},
@@ -408,10 +419,8 @@
 													{
 														"definition": {
 															"fragmentStyle": {
-																"borderRadius": "",
 																"borderWidth": "0",
-																"height": "700px",
-																"shadow": ""
+																"height": "500px"
 															},
 															"fragmentViewports": [
 																{
@@ -444,17 +453,14 @@
 																	"fragmentStyle": {
 																		"backgroundFragmentImage": {
 																			"title": {
-																				"value": "Moon"
+																				"value": "moon.png"
 																			},
 																			"url": {
 																				"value": "[$DOCUMENT_URL:/site-initializer/documents/group/Provided by Liferay/moon.png$]"
 																			}
 																		},
-																		"borderRadius": "",
-																		"borderWidth": "0",
 																		"height": "100px",
 																		"marginTop": "16px",
-																		"shadow": "",
 																		"textAlign": "center",
 																		"width": "100px"
 																	},
@@ -529,8 +535,8 @@
 															"indexed": true,
 															"layout": {
 																"borderWidth": 0,
-																"contentDisplay": "FlexColumn",
-																"justify": "Center",
+																"contentDisplay": "FlexRow",
+																"justify": "End",
 																"marginBottom": 0,
 																"marginLeft": 0,
 																"marginRight": 0,
@@ -546,6 +552,7 @@
 														"pageElements": [
 															{
 																"definition": {
+																	"customCSS": ".[$FRAGMENT_CLASS$] {\nbackground-size:contain;\n}",
 																	"fragmentStyle": {
 																		"backgroundFragmentImage": {
 																			"title": {
@@ -555,12 +562,10 @@
 																				"value": "[$DOCUMENT_URL:/site-initializer/documents/group/Provided by Liferay/planet.png$]"
 																			}
 																		},
-																		"borderRadius": "",
 																		"borderWidth": "0",
 																		"height": "200px",
 																		"marginRight": "16px",
 																		"marginTop": "16px",
-																		"shadow": "",
 																		"textAlign": "right",
 																		"width": "250px"
 																	},

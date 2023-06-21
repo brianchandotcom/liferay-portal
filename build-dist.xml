@@ -2815,13 +2815,13 @@ plugins.includes=</echo>
 
 				<execute dir="dist/${tstamp.value}">
 					<![CDATA[
-						7z a ${project.dir}/dist/${zip.executable.file}-${lp.version}.7z liferay-portal-${lp.version}
+						7z a ${project.dir}/dist/${zip.executable.file}-${release.info.version}-${tstamp.value}.7z liferay-portal-${lp.version}
 					]]>
 				</execute>
 
 				<tar
 					compression="gzip"
-					destfile="dist/${zip.executable.file}-${lp.version}.tar.gz"
+					destfile="dist/${zip.executable.file}-${release.info.version}-${tstamp.value}.tar.gz"
 				>
 					<tarfileset
 						dir="dist/${tstamp.value}/liferay-portal-${lp.version}"
@@ -2837,7 +2837,7 @@ plugins.includes=</echo>
 				</tar>
 
 				<zip
-					destfile="dist/${zip.executable.file}-${lp.version}.zip"
+					destfile="dist/${zip.executable.file}-${release.info.version}-${tstamp.value}.zip"
 				>
 					<zipfileset
 						dir="dist/${tstamp.value}/liferay-portal-${lp.version}"

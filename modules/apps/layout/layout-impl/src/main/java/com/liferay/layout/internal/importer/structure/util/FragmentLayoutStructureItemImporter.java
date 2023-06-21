@@ -816,6 +816,10 @@ public class FragmentLayoutStructureItemImporter
 			httpServletResponse = themeDisplay.getResponse();
 		}
 
+		if ((httpServletRequest == null) && (httpServletResponse == null)) {
+			return processedHTML;
+		}
+
 		FragmentEntryProcessorContext fragmentEntryProcessorContext =
 			new DefaultFragmentEntryProcessorContext(
 				httpServletRequest, httpServletResponse,

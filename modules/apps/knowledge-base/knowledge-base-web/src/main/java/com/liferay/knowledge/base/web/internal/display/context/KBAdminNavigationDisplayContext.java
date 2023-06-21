@@ -345,73 +345,70 @@ public class KBAdminNavigationDisplayContext {
 			_httpServletRequest, "kbObjectToMoveId", -1);
 
 		for (Object kbObject : kbObjects) {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
 			if (kbObject instanceof KBFolder) {
 				KBFolder kbFolder = (KBFolder)kbObject;
 
 				if (kbObjectToMoveId != kbFolder.getKbFolderId()) {
-					jsonObject.put(
-						"actions",
-						_kbDropdownItemsProvider.getKBFolderDropdownItems(
-							kbFolder, _selectedItemAncestorIds)
-					).put(
-						"children",
-						_getKBFolderDataJSONArray(kbFolder.getKbFolderId())
-					).put(
-						"classNameId", kbFolder.getClassNameId()
-					).put(
-						"href",
-						PortletURLBuilder.createRenderURL(
-							_liferayPortletResponse
-						).setMVCPath(
-							"/admin/view_kb_folders.jsp"
-						).setParameter(
-							"parentResourceClassNameId",
-							kbFolder.getClassNameId()
-						).setParameter(
-							"parentResourcePrimKey", kbFolder.getKbFolderId()
-						).setParameter(
-							"selectedItemId", kbFolder.getKbFolderId()
-						).buildString()
-					).put(
-						"id", kbFolder.getKbFolderId()
-					).put(
-						"name", kbFolder.getName()
-					).put(
-						"type", KBConstants.TYPE_FOLDER
-					);
+					childrenJSONArray.put(
+						JSONUtil.put(
+							"actions",
+							_kbDropdownItemsProvider.getKBFolderDropdownItems(
+								kbFolder, _selectedItemAncestorIds)
+						).put(
+							"children",
+							_getKBFolderDataJSONArray(kbFolder.getKbFolderId())
+						).put(
+							"classNameId", kbFolder.getClassNameId()
+						).put(
+							"href",
+							PortletURLBuilder.createRenderURL(
+								_liferayPortletResponse
+							).setMVCPath(
+								"/admin/view_kb_folders.jsp"
+							).setParameter(
+								"parentResourceClassNameId",
+								kbFolder.getClassNameId()
+							).setParameter(
+								"parentResourcePrimKey",
+								kbFolder.getKbFolderId()
+							).setParameter(
+								"selectedItemId", kbFolder.getKbFolderId()
+							).buildString()
+						).put(
+							"id", kbFolder.getKbFolderId()
+						).put(
+							"name", kbFolder.getName()
+						).put(
+							"type", KBConstants.TYPE_FOLDER
+						));
 				}
 			}
 			else {
 				KBArticle kbArticle = (KBArticle)kbObject;
 
 				if (kbObjectToMoveId != kbArticle.getResourcePrimKey()) {
-					jsonObject.put(
-						"actions",
-						_kbDropdownItemsProvider.getKBArticleDropdownItems(
-							kbArticle, _selectedItemAncestorIds)
-					).put(
-						"children", _getChildKBArticlesJSONArray(kbArticle)
-					).put(
-						"classNameId", kbArticle.getClassNameId()
-					).put(
-						"href",
-						_kbArticleURLHelper.createViewWithRedirectURL(
-							kbArticle,
-							PortalUtil.getCurrentURL(_httpServletRequest))
-					).put(
-						"id", kbArticle.getResourcePrimKey()
-					).put(
-						"name", kbArticle.getTitle()
-					).put(
-						"type", KBConstants.TYPE_ARTICLE
-					);
+					childrenJSONArray.put(
+						JSONUtil.put(
+							"actions",
+							_kbDropdownItemsProvider.getKBArticleDropdownItems(
+								kbArticle, _selectedItemAncestorIds)
+						).put(
+							"children", _getChildKBArticlesJSONArray(kbArticle)
+						).put(
+							"classNameId", kbArticle.getClassNameId()
+						).put(
+							"href",
+							_kbArticleURLHelper.createViewWithRedirectURL(
+								kbArticle,
+								PortalUtil.getCurrentURL(_httpServletRequest))
+						).put(
+							"id", kbArticle.getResourcePrimKey()
+						).put(
+							"name", kbArticle.getTitle()
+						).put(
+							"type", KBConstants.TYPE_ARTICLE
+						));
 				}
-			}
-
-			if (!jsonObject.isNull("id")) {
-				childrenJSONArray.put(jsonObject);
 			}
 		}
 

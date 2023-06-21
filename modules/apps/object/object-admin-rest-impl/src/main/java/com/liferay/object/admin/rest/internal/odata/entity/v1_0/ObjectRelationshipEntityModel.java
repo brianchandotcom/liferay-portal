@@ -6,6 +6,7 @@
 package com.liferay.object.admin.rest.internal.odata.entity.v1_0;
 
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.DateTimeEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -29,6 +30,11 @@ public class ObjectRelationshipEntityModel implements EntityModel {
 				"dateModified",
 				locale -> Field.getSortableFieldName(Field.MODIFIED_DATE),
 				locale -> Field.MODIFIED_DATE),
+			new StringEntityField(
+				"label",
+				locale -> Field.getSortableFieldName(
+					"localized_label_".concat(
+						LocaleUtil.toLanguageId(locale)))),
 			new IntegerEntityField("userId", locale -> Field.USER_ID),
 			new StringEntityField(
 				"name", locale -> Field.getSortableFieldName("name")));

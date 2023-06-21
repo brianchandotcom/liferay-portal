@@ -26,6 +26,8 @@ public class ObjectRelationshipModelDocumentContributor
 	public void contribute(
 		Document document, ObjectRelationship objectRelationship) {
 
+		document.addLocalizedKeyword(
+			"localized_label", objectRelationship.getLabelMap(), true, true);
 		document.addText(Field.NAME, objectRelationship.getName());
 		document.addKeyword(
 			"objectDefinitionId", objectRelationship.getObjectDefinitionId1());

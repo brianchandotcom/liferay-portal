@@ -9991,6 +9991,24 @@ org.apache.catalina.tribes.level = FINE]]>
 		</if>
 	</target>
 
+	<target name="deploy-maven-module">
+		<execute dir="${module.base.dir}">
+			mvn clean package
+		</execute>
+
+		<copy
+			flatten="true"
+			todir="${liferay.home}/deploy/"
+		>
+			<fileset
+				dir="${module.base.dir}"
+				includes="**/target/*.war"
+			/>
+		</copy>
+
+		<delete dir="${module.base.dir}/target" />
+	</target>
+
 	<target name="deploy-osgi-apps">
 		<for list="${osgi.app.includes}" param="osgi.app.name">
 			<sequential>

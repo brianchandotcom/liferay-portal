@@ -115,6 +115,10 @@ components:
                         type: object
                     readOnly: true
                     type: object
+                ctCollectionId:
+                    format: int64
+                    readOnly: true
+                    type: integer
                 datePublished:
                     description:
                         The publication's published date.

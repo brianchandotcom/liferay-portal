@@ -65,6 +65,9 @@ public class UpdateObjectEntryObjectActionExecutorImpl
 
 		TransactionCommitCallbackUtil.registerCallback(
 			() -> {
+				ObjectEntryThreadLocal.setSkipReadOnlyObjectFieldsValidation(
+					true);
+
 				_execute(
 					objectDefinition,
 					GetterUtil.getLong(payloadJSONObject.getLong("classPK")),
@@ -107,7 +110,7 @@ public class UpdateObjectEntryObjectActionExecutorImpl
 
 		try {
 			ObjectEntryThreadLocal.setSkipObjectEntryResourcePermission(true);
-			ObjectEntryThreadLocal.setSkipReadOnlyValidation(true);
+			ObjectEntryThreadLocal.setSkipReadOnlyObjectFieldsValidation(true);
 
 			DefaultObjectEntryManager defaultObjectEntryManager =
 				DefaultObjectEntryManagerProvider.provide(
@@ -128,7 +131,7 @@ public class UpdateObjectEntryObjectActionExecutorImpl
 		finally {
 			ObjectEntryThreadLocal.setSkipObjectEntryResourcePermission(
 				skipObjectEntryResourcePermission);
-			ObjectEntryThreadLocal.setSkipReadOnlyValidation(false);
+			ObjectEntryThreadLocal.setSkipReadOnlyObjectFieldsValidation(false);
 		}
 	}
 

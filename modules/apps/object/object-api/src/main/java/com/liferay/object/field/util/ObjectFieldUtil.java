@@ -175,7 +175,7 @@ public class ObjectFieldUtil {
 		throws PortalException {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPS-170122") ||
-			ObjectEntryThreadLocal.isSkipReadOnlyValidation()) {
+			ObjectEntryThreadLocal.isSkipReadOnlyObjectFieldsValidation()) {
 
 			return;
 		}

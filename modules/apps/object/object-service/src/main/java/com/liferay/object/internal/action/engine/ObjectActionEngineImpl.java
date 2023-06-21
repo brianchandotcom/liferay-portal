@@ -114,13 +114,15 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 			return;
 		}
 
+		boolean skipReadOnlyObjectFieldsValidation =
+			ObjectEntryThreadLocal.isSkipReadOnlyObjectFieldsValidation();
 		String name = PrincipalThreadLocal.getName();
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
 		try {
 			ObjectEntryThreadLocal.setSkipObjectEntryResourcePermission(true);
-			ObjectEntryThreadLocal.setSkipReadOnlyValidation(true);
+			ObjectEntryThreadLocal.setSkipReadOnlyObjectFieldsValidation(true);
 			PrincipalThreadLocal.setName(userId);
 			PermissionThreadLocal.setPermissionChecker(
 				_permissionCheckerFactory.create(user));
@@ -149,7 +151,8 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 		}
 		finally {
 			ObjectEntryThreadLocal.setSkipObjectEntryResourcePermission(false);
-			ObjectEntryThreadLocal.setSkipReadOnlyValidation(false);
+			ObjectEntryThreadLocal.setSkipReadOnlyObjectFieldsValidation(
+				skipReadOnlyObjectFieldsValidation);
 			PrincipalThreadLocal.setName(name);
 			PermissionThreadLocal.setPermissionChecker(permissionChecker);
 		}

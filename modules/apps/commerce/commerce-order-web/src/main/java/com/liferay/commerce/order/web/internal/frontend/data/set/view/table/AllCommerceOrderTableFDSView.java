@@ -61,11 +61,11 @@ public class AllCommerceOrderTableFDSView extends BaseTableFDSView {
 		).add(
 			"orderStatusInfo", "order-status",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"status")
+				"commerceStatusDataRenderer")
 		).add(
 			"workflowStatusInfo", "acceptance-workflow-status",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"status")
+				"commerceStatusDataRenderer")
 		).build();
 	}
 

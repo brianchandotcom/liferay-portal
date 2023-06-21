@@ -214,28 +214,48 @@ public class StructuredContentFolderResourceTest
 					parentStructuredContentFolder.getId(),
 					_randomStructuredContentFolder());
 
-		StructuredContentFolder randomStructuredContentFolder =
+		StructuredContentFolder randomStructuredContentFolder1 =
 			new StructuredContentFolder() {
 				{
 					name = postStructuredContentFolder.getName();
 				}
 			};
 
-		StructuredContentFolder putStructuredContentFolder =
+		StructuredContentFolder putStructuredContentFolder1 =
 			structuredContentFolderResource.
 				putAssetLibraryStructuredContentFolderByExternalReferenceCode(
 					testDepotEntry.getDepotEntryId(),
 					StringUtil.toLowerCase(RandomTestUtil.randomString()),
-					randomStructuredContentFolder);
+					randomStructuredContentFolder1);
 
 		Assert.assertEquals(
 			postStructuredContentFolder.getName(),
-			putStructuredContentFolder.getName());
+			putStructuredContentFolder1.getName());
 		Assert.assertNotEquals(
 			postStructuredContentFolder.getExternalReferenceCode(),
-			putStructuredContentFolder.getExternalReferenceCode());
+			putStructuredContentFolder1.getExternalReferenceCode());
 
-		assertValid(putStructuredContentFolder);
+		assertValid(putStructuredContentFolder1);
+
+		StructuredContentFolder randomStructuredContentFolder2 =
+			_randomStructuredContentFolder();
+
+		StructuredContentFolder structuredContentFolder =
+			testPostAssetLibraryStructuredContentFolder_addStructuredContentFolder(
+				randomStructuredContentFolder2);
+
+		randomStructuredContentFolder2.setExternalReferenceCode(
+			StringUtil.toLowerCase(RandomTestUtil.randomString()));
+
+		StructuredContentFolder putStructuredContentFolder2 =
+			structuredContentFolderResource.
+				putAssetLibraryStructuredContentFolderByExternalReferenceCode(
+					testDepotEntry.getDepotEntryId(),
+					structuredContentFolder.getExternalReferenceCode(),
+					randomStructuredContentFolder2);
+
+		assertEquals(putStructuredContentFolder2, structuredContentFolder);
+		assertValid(putStructuredContentFolder2);
 	}
 
 	@Override

@@ -11,7 +11,7 @@
 
 import {MockedProvider} from '@apollo/client/testing';
 
-import {act, cleanup, render, screen} from '@testing-library/react';
+import {act, cleanup, render} from '@testing-library/react';
 import gql from 'graphql-tag';
 import {MemoryRouter} from 'react-router-dom';
 import {vi} from 'vitest';
@@ -20,12 +20,23 @@ import SetupDXPCloudForm from './index';
 const queryUser = gql`
 	query getDXPCloudPageInfo($accountSubscriptionsFilter: String) {
 		c {
+			accountSubscriptions(filter: $accountSubscriptionsFilter) {
+				items {
+					accountKey
+					externalReferenceCode
+					hasDisasterDataCenterRegion
+					name
+				}
+				totalCount
+			}
+
 			dXPCDataCenterRegions(sort: "name:asc") {
 				items {
 					dxpcDataCenterRegionId
 					name
 					value
 				}
+				totalCount
 			}
 		}
 	}
@@ -35,11 +46,22 @@ const mocksmocks = [
 	{
 		request: {
 			query: queryUser,
-			variables: {accountSubscriptionsFilter: ''},
+			variables: {accountSubscriptionsFilter: `(accountKey eq 'undefined') and (hasDisasterDataCenterRegion eq true or (name eq 'HA DR' or name eq 'Std DR'))`},
 		},
 		result: {
 			data: {
 				c: {
+					accountSubscriptions: {
+						items: [
+							{
+								accountKey: 1,
+								externalReferenceCode: 'CP',
+								hasDisasterDataCenterRegion: true,
+								name: 'Customer Portal'
+							}
+						],
+						totalCount: 1
+					},
 					dXPCDataCenterRegions: {
 						items: [
 							{
@@ -68,23 +90,10 @@ describe('SetupDXPCloudForm', () => {
 			disasterDataCenterRegion: dXPCDataCenterRegions[0].value,
 		},
 	};
+	let client;
 
 	beforeEach(() => {
-		vi.useFakeTimers();
-	});
-
-	afterEach(() => {
-		cleanup();
-		vi.clearAllTimers();
-		vi.restoreAllMocks();
-	});
-
-	afterAll(() => {
-		vi.useRealTimers();
-	});
-
-	it(`Renders`, async () => {
-		const client = {
+		client = {
 			query: vi.fn().mockImplementation(() => ({
 				data: {
 					listTypeDefinitions: {
@@ -107,7 +116,23 @@ describe('SetupDXPCloudForm', () => {
 			})),
 		};
 
-		const {debug} = render(
+		vi.useFakeTimers();
+	});
+
+	afterEach(() => {
+		cleanup();
+		vi.clearAllTimers();
+		vi.restoreAllMocks();
+	});
+
+	afterAll(() => {
+		vi.useRealTimers();
+	});
+
+	it('renders', async () => {
+
+
+		const {asFragment} = render(
 			<MemoryRouter>
 				<MockedProvider mocks={mocksmocks}>
 					<SetupDXPCloudForm
@@ -129,20 +154,21 @@ describe('SetupDXPCloudForm', () => {
 			vi.runAllTimers();
 		});
 
-		debug();
+		expect(asFragment()).toMatchSnapshot();
 	});
 
-	it.skip('disable options based on the value of dxp.disasterDataCenterRegion', () => {
-		render(
+	it('disable options based on the value of dxp.disasterDataCenterRegion', async () => {
+		const {queryByLabelText} =render(
 			<MemoryRouter>
 				<MockedProvider mocks={mocksmocks}>
 					<SetupDXPCloudForm
+						client={client}
 						dxpVersion=""
 						errors={{}}
 						handlePage={() => {}}
 						leftButton=""
 						listType=""
-						project={{}}
+						project={{name: 'disasterRecovery'}}
 						setFieldValue={() => {}}
 						setFormAlreadySubmitted={() => {}}
 						subscriptionGroupId=""
@@ -153,16 +179,25 @@ describe('SetupDXPCloudForm', () => {
 			</MemoryRouter>
 		);
 
-		const selectElement = screen.getByLabelText(
+
+		await act(async () => {
+			vi.runAllTimers();
+		});
+
+		const selectPrimaryRegion = queryByLabelText(
+			'Primary Data Center Region'
+		);
+
+		const selectDisasterRegion = queryByLabelText(
 			'Disaster Recovery Data Center Region'
 		);
-		const options = Array.from(selectElement.querySelectorAll('option'));
-		const expectedDisabledOptions = ['Doha, Qatar'];
+		
 
-		const disabledOptions = options
-			.filter((option) => option.disabled)
-			.map((option) => option.value);
-
-		expect(disabledOptions).toEqual(expectedDisabledOptions);
+		expect(selectPrimaryRegion).toBeInTheDocument();
+		expect(selectDisasterRegion).toBeInTheDocument();
+		expect(selectPrimaryRegion.value).toBe('doha-qatar');
+		expect(selectDisasterRegion.value).toBe('frankfurt-germany');
+		expect(selectPrimaryRegion.children[1].disabled).toBe(true);
+		expect(selectDisasterRegion.children[0].disabled).toBe(true);
 	});
 });

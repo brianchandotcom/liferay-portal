@@ -333,7 +333,8 @@ const SetupDXPCloudPage = ({
 
 								{!!hasDisasterRecovery && (
 									<Select
-										groupStyle="mb-0 pt-2"
+									groupStyle="mb-0 pt-2"
+									id="disasterRecovery"
 										label="Disaster Recovery Data Center Region"
 										name="dxp.disasterDataCenterRegion"
 										options={dXPCDataCenterRegions.map(

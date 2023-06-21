@@ -22,6 +22,10 @@ import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.SearchException;
 
+import java.io.Serializable;
+
+import java.util.Map;
+
 /**
  * @author Michael C. Han
  */
@@ -29,10 +33,12 @@ public class IndexOnStartupPortalInstanceLifecycleListener
 	extends BasePortalInstanceLifecycleListener {
 
 	public IndexOnStartupPortalInstanceLifecycleListener(
-		IndexWriterHelper indexWriterHelper, String className) {
+		IndexWriterHelper indexWriterHelper, String className,
+		Map<String, Serializable> taskContextMap) {
 
 		_indexWriterHelper = indexWriterHelper;
 		_className = className;
+		_taskContextMap = taskContextMap;
 	}
 
 	@Override
@@ -41,7 +47,8 @@ public class IndexOnStartupPortalInstanceLifecycleListener
 			_indexWriterHelper.reindex(
 				UserConstants.USER_ID_DEFAULT,
 				"reindexOnActivate#" + _className,
-				new long[] {company.getCompanyId()}, _className, null);
+				new long[] {company.getCompanyId()}, _className,
+				_taskContextMap);
 		}
 		catch (SearchException searchException) {
 			_log.error("Unable to reindex on activation", searchException);
@@ -53,5 +60,6 @@ public class IndexOnStartupPortalInstanceLifecycleListener
 
 	private final String _className;
 	private final IndexWriterHelper _indexWriterHelper;
+	private final Map<String, Serializable> _taskContextMap;
 
 }

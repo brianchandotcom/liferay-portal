@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.internal;
 
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -21,10 +22,14 @@ import com.liferay.portal.kernel.search.BaseSearcher;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.configuration.ReindexConfiguration;
 import com.liferay.portal.search.internal.instance.lifecycle.IndexOnStartupPortalInstanceLifecycleListener;
 import com.liferay.portal.util.PropsValues;
+
+import java.io.Serializable;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -47,7 +52,10 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 /**
  * @author Michael C. Han
  */
-@Component(service = {})
+@Component(
+	configurationPid = "com.liferay.portal.search.configuration.ReindexConfiguration",
+	service = {}
+)
 public class IndexOnStartupExecutor
 	implements ServiceTrackerCustomizer<Indexer<?>, Indexer<?>> {
 
@@ -80,7 +88,11 @@ public class IndexOnStartupExecutor
 
 			PortalInstanceLifecycleListener portalInstanceLifecycleListener =
 				new IndexOnStartupPortalInstanceLifecycleListener(
-					_indexWriterHelper, className);
+					_indexWriterHelper, className,
+					HashMapBuilder.<String, Serializable>put(
+						"executionMode",
+						_reindexConfiguration.defaultReindexExecutionMode()
+					).build());
 
 			ServiceRegistration<PortalInstanceLifecycleListener>
 				serviceRegistration = _bundleContext.registerService(
@@ -114,8 +126,13 @@ public class IndexOnStartupExecutor
 	}
 
 	@Activate
-	protected void activate(BundleContext bundleContext) {
+	protected void activate(
+		BundleContext bundleContext, Map<String, Object> properties) {
+
 		_bundleContext = bundleContext;
+
+		_reindexConfiguration = ConfigurableUtil.createConfigurable(
+			ReindexConfiguration.class, properties);
 
 		if (PropsValues.INDEX_ON_STARTUP) {
 			ScheduledExecutorService scheduledExecutorService =
@@ -186,6 +203,7 @@ public class IndexOnStartupExecutor
 	@Reference
 	private IndexWriterHelper _indexWriterHelper;
 
+	private volatile ReindexConfiguration _reindexConfiguration;
 	private final Map
 		<String, ServiceRegistration<PortalInstanceLifecycleListener>>
 			_serviceRegistrations = new HashMap<>();

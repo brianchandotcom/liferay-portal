@@ -77,6 +77,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.audit.AuditMessageProcessor;
+import com.liferay.portal.security.audit.event.generators.constants.EventTypes;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
@@ -871,8 +872,6 @@ public class UserLocalServiceTest {
 		return userIds;
 	}
 
-	private static final String _LOGIN_DNE = "LOGIN_DNE";
-
 	@Inject
 	private AnnouncementsDeliveryLocalService
 		_announcementsDeliveryLocalService;
@@ -917,7 +916,8 @@ public class UserLocalServiceTest {
 		public void process(AuditMessage auditMessage) {
 			Assert.assertNotNull(auditMessage);
 
-			Assert.assertEquals(_LOGIN_DNE, auditMessage.getEventType());
+			Assert.assertEquals(
+				EventTypes.LOGIN_DNE, auditMessage.getEventType());
 
 			JSONObject additionalInfoJSONObject =
 				auditMessage.getAdditionalInfo();
@@ -944,7 +944,7 @@ public class UserLocalServiceTest {
 			_serviceRegistration = _bundleContext.registerService(
 				AuditMessageProcessor.class, _auditMessageProcessor,
 				HashMapDictionaryBuilder.<String, Object>put(
-					"eventTypes", _LOGIN_DNE
+					"eventTypes", EventTypes.LOGIN_DNE
 				).build());
 		}
 

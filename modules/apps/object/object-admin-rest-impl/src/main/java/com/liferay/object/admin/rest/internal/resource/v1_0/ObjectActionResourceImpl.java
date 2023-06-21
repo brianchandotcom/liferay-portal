@@ -9,6 +9,7 @@ import com.liferay.notification.service.NotificationTemplateLocalService;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectAction;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.dto.v1_0.util.ObjectActionUtil;
+import com.liferay.object.admin.rest.internal.odata.entity.v1_0.ObjectActionEntityModel;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectActionResource;
 import com.liferay.object.service.ObjectActionService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -17,12 +18,15 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
+
+import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -42,6 +46,11 @@ public class ObjectActionResourceImpl
 	@Override
 	public void deleteObjectAction(Long objectActionId) throws Exception {
 		_objectActionService.deleteObjectAction(objectActionId);
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
+		return _entityModel;
 	}
 
 	@Override
@@ -210,6 +219,9 @@ public class ObjectActionResourceImpl
 			_notificationTemplateLocalService, _objectDefinitionLocalService,
 			objectAction);
 	}
+
+	private static final EntityModel _entityModel =
+		new ObjectActionEntityModel();
 
 	@Reference
 	private NotificationTemplateLocalService _notificationTemplateLocalService;

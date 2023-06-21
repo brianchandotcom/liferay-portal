@@ -25,7 +25,6 @@ import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -101,7 +100,7 @@ public class EditableDocumentFragmentEntryProcessor
 			JSONObject editableValueJSONObject =
 				editableValuesJSONObject.getJSONObject(id);
 
-			String value = StringPool.BLANK;
+			String value = null;
 
 			JSONObject mappedValueConfigJSONObject =
 				_jsonFactory.createJSONObject();
@@ -167,7 +166,9 @@ public class EditableDocumentFragmentEntryProcessor
 				configJSONObject = localizedJSONObject;
 			}
 
-			editableElementParser.replace(element, value, configJSONObject);
+			if (value != null) {
+				editableElementParser.replace(element, value, configJSONObject);
+			}
 
 			if (!fragmentEntryProcessorContext.isEditMode()) {
 				if (Validator.isNull(mapperType)) {

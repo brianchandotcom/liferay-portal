@@ -100,7 +100,9 @@ export function MappingPanel({item}) {
 			)}
 
 			<MappingSelector
-				fieldType={type}
+				fieldType={
+					type === EDITABLE_TYPES.action ? EDITABLE_TYPES.text : type
+				}
 				mappedItem={editableValue}
 				onMappingSelect={updateEditableValue}
 			/>

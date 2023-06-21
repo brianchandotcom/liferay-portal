@@ -46,6 +46,9 @@ public abstract class BaseTestCase {
 
 	@Before
 	public void setUp() {
+
+		// TODO Delete the bundle deployment when the FF LPS-184413 is removed
+
 		Bundle testBundle = FrameworkUtil.getBundle(BaseTestCase.class);
 
 		BundleContext bundleContext = testBundle.getBundleContext();

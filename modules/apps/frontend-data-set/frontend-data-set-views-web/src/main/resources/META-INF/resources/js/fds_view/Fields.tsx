@@ -25,9 +25,10 @@ import {
 } from '@liferay/frontend-data-set-web';
 import {ManagementToolbar} from 'frontend-js-components-web';
 import {fetch, navigate, openModal, openToast} from 'frontend-js-web';
+import fuzzy from 'fuzzy';
 import React, {useEffect, useRef, useState} from 'react';
 
-import {API_URL, OBJECT_RELATIONSHIP} from '../Constants';
+import {API_URL, FUZZY_OPTIONS, OBJECT_RELATIONSHIP} from '../Constants';
 import {IFDSViewSectionInterface} from '../FDSView';
 import {FDSViewType} from '../FDSViews';
 import {
@@ -66,6 +67,12 @@ interface ISaveFDSFieldsModalContentProps {
 	saveFDSFieldsURL: string;
 }
 
+interface IContentRendererProps {
+	cetRenderers?: FDSClientExtensionCellRenderer[];
+	item: IFDSField;
+	query: string;
+}
+
 const getRendererLabel = ({
 	cetRenderers = [],
 	rendererName,
@@ -79,13 +86,37 @@ const getRendererLabel = ({
 	];
 
 	const renderer = AVAILABLE_CELL_RENDERERS.filter((renderer: any) => {
-		return (
-			renderer.name === rendererName ||
-			renderer.erc === rendererName
-		);
+		return renderer.name === rendererName || renderer.erc === rendererName;
 	})[0];
 
 	return renderer?.label || renderer?.name || rendererName;
+};
+
+const CellRendererComponent = ({
+	cetRenderers = [],
+	item,
+	query,
+}: IContentRendererProps) => {
+	const itemFieldValue = getRendererLabel({
+		cetRenderers,
+		rendererName: item.renderer,
+	});
+
+	const fuzzyMatch = fuzzy.match(query, itemFieldValue, FUZZY_OPTIONS);
+
+	return (
+		<span>
+			{fuzzyMatch ? (
+				<span
+					dangerouslySetInnerHTML={{
+						__html: fuzzyMatch.rendered,
+					}}
+				/>
+			) : (
+				<span>{itemFieldValue}</span>
+			)}
+		</span>
+	);
 };
 
 const SaveFDSFieldsModalContent = ({
@@ -405,7 +436,7 @@ const EditFDSFieldModalContent = ({
 			});
 		}
 
-		const editedFDSFieldResponse = await response.json();
+		const editedFDSField = await response.json();
 
 		closeModal();
 
@@ -415,13 +446,7 @@ const EditFDSFieldModalContent = ({
 			),
 			type: 'success',
 		});
-		const editedFDSField: any = {
-			...editedFDSFieldResponse,
-			rendererLabel: getRendererLabel({
-				cetRenderers: fdsClientExtensionCellRenderers,
-				rendererName: editedFDSFieldResponse.renderer,
-			}),
-		};
+
 		onSave({editedFDSField});
 	};
 
@@ -614,16 +639,7 @@ const Fields = ({
 
 		const responseJSON = await response.json();
 
-		const storedFDSFields = responseJSON?.items.map(
-			(field: IFDSField): IFDSField => {
-				field.rendererLabel = getRendererLabel({
-					cetRenderers: fdsClientExtensionCellRenderers,
-					rendererName: field.renderer,
-				});
-
-				return field;
-			}
-		);
+		const storedFDSFields = responseJSON?.items;
 
 		if (!storedFDSFields) {
 			openToast({
@@ -816,9 +832,6 @@ const Fields = ({
 						});
 
 						createdFDSFields.forEach((fdsField) => {
-							fdsField.rendererLabel = getRendererLabel({
-								rendererName: fdsField.renderer,
-							});
 							newFDSFields.push(fdsField);
 						});
 
@@ -890,8 +903,24 @@ const Fields = ({
 							name: 'type',
 						},
 						{
+							contentRenderer: {
+								component: ({item, query}) => (
+									<CellRendererComponent
+										cetRenderers={
+											fdsClientExtensionCellRenderers
+										}
+										item={item}
+										query={query}
+									/>
+								),
+								textMatch: (item: IFDSField) =>
+									getRendererLabel({
+										cetRenderers: fdsClientExtensionCellRenderers,
+										rendererName: item.renderer,
+									}),
+							},
 							label: Liferay.Language.get('cell-renderer'),
-							name: 'rendererLabel',
+							name: 'renderer',
 						},
 						{
 							label: Liferay.Language.get('sortable'),

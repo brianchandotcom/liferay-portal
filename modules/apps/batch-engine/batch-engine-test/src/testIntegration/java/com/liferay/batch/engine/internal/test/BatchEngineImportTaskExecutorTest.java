@@ -14,8 +14,6 @@
 
 package com.liferay.batch.engine.internal.test;
 
-import com.liferay.account.model.AccountEntry;
-import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.batch.engine.BatchEngineImportTaskExecutor;
 import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
@@ -27,14 +25,19 @@ import com.liferay.batch.engine.model.BatchEngineImportTaskError;
 import com.liferay.batch.engine.service.BatchEngineImportTaskErrorLocalService;
 import com.liferay.batch.engine.service.BatchEngineImportTaskLocalService;
 import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.headless.admin.user.client.dto.v1_0.Account;
+import com.liferay.headless.admin.user.client.http.HttpInvoker;
+import com.liferay.headless.admin.user.client.resource.v1_0.AccountResource;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -59,7 +62,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -72,6 +74,9 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
 
 /**
  * @author Ivica Cardic
@@ -431,6 +436,168 @@ public class BatchEngineImportTaskExecutorTest
 			_getBlogPostingsXLSDeleteContent(blogsEntries), "XLS", null);
 
 		_assertDeletedBlogPostings();
+	}
+
+	@Test
+	public void testImportAccountSystemObjectDefinitionsJSON()
+		throws Exception {
+
+		// Successful import
+
+		AccountResource accountResource = AccountResource.builder(
+		).authentication(
+			"test@liferay.com", "test"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				TestPropsValues.getCompanyId(), "AccountEntry");
+
+		String integerFieldName = "a" + RandomTestUtil.randomString();
+
+		_objectFieldLocalService.addCustomObjectField(
+			null, user.getUserId(), 0, objectDefinition.getObjectDefinitionId(),
+			"Integer", "Integer", true, false, null,
+			HashMapBuilder.put(
+				LocaleUtil.fromLanguageId("en_US"), integerFieldName
+			).build(),
+			false, integerFieldName, null, null, true, false,
+			Collections.emptyList());
+
+		String textFieldName = "a" + RandomTestUtil.randomString();
+
+		_objectFieldLocalService.addCustomObjectField(
+			null, user.getUserId(), 0, objectDefinition.getObjectDefinitionId(),
+			"Text", "String", true, false, "en_US",
+			HashMapBuilder.put(
+				LocaleUtil.fromLanguageId("en_US"), textFieldName
+			).build(),
+			false, textFieldName, null, null, false, false,
+			Collections.emptyList());
+
+		Account account1 = new Account() {
+			{
+				setExternalReferenceCode(RandomTestUtil.randomString());
+				setName(RandomTestUtil.randomString());
+				setType(Account.Type.PERSON);
+			}
+		};
+		Account account2 = new Account() {
+			{
+				setExternalReferenceCode(RandomTestUtil.randomString());
+				setName(RandomTestUtil.randomString());
+				setType(Account.Type.PERSON);
+			}
+		};
+		int integerFieldValue1 = RandomTestUtil.randomInt();
+		int integerFieldValue2 = RandomTestUtil.randomInt();
+		String textFieldValue1 = RandomTestUtil.randomString();
+		String textFieldValue2 = RandomTestUtil.randomString();
+
+		String json = JSONUtil.putAll(
+			JSONFactoryUtil.createJSONObject(
+				account1.toString()
+			).put(
+				integerFieldName, integerFieldValue1
+			).put(
+				textFieldName, textFieldValue1
+			),
+			JSONFactoryUtil.createJSONObject(
+				account2.toString()
+			).put(
+				integerFieldName, integerFieldValue2
+			).put(
+				textFieldName, textFieldValue2
+			)
+		).toString();
+
+		_batchEngineImportTask =
+			_batchEngineImportTaskLocalService.addBatchEngineImportTask(
+				null, TestPropsValues.getCompanyId(), user.getUserId(),
+				_BATCH_SIZE, null,
+				"com.liferay.headless.admin.user.dto.v1_0.Account",
+				_compressContent(json.getBytes(), "JSON"), "JSON",
+				BatchEngineTaskExecuteStatus.INITIAL.name(), null,
+				BatchEngineImportTaskConstants.IMPORT_STRATEGY_ON_ERROR_FAIL,
+				BatchEngineTaskOperation.CREATE.toString(), new HashMap<>(),
+				null);
+
+		_batchEngineImportTaskExecutor.execute(_batchEngineImportTask);
+
+		Assert.assertEquals(
+			BatchEngineTaskExecuteStatus.COMPLETED.toString(),
+			_batchEngineImportTask.getExecuteStatus());
+
+		HttpInvoker.HttpResponse httpResponse =
+			accountResource.getAccountByExternalReferenceCodeHttpResponse(
+				account1.getExternalReferenceCode());
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				integerFieldName, integerFieldValue1
+			).put(
+				textFieldName, textFieldValue1
+			).put(
+				"externalReferenceCode", account1.getExternalReferenceCode()
+			).toString(),
+			httpResponse.getContent(), JSONCompareMode.LENIENT);
+
+		httpResponse =
+			accountResource.getAccountByExternalReferenceCodeHttpResponse(
+				account2.getExternalReferenceCode());
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				integerFieldName, integerFieldValue2
+			).put(
+				textFieldName, textFieldValue2
+			).put(
+				"externalReferenceCode", account2.getExternalReferenceCode()
+			).toString(),
+			httpResponse.getContent(), JSONCompareMode.LENIENT);
+
+		// Unsuccessful import
+
+		account1 = new Account() {
+			{
+				setExternalReferenceCode(RandomTestUtil.randomString());
+				setName(RandomTestUtil.randomString());
+				setType(Account.Type.PERSON);
+			}
+		};
+
+		json = JSONUtil.put(
+			JSONFactoryUtil.createJSONObject(
+				account1.toString()
+			).put(
+				textFieldName, RandomTestUtil.randomString()
+			)
+		).toString();
+
+		_batchEngineImportTask =
+			_batchEngineImportTaskLocalService.addBatchEngineImportTask(
+				null, TestPropsValues.getCompanyId(), user.getUserId(),
+				_BATCH_SIZE, null,
+				"com.liferay.headless.admin.user.dto.v1_0.Account",
+				_compressContent(json.getBytes(), "JSON"), "JSON",
+				BatchEngineTaskExecuteStatus.INITIAL.name(), null,
+				BatchEngineImportTaskConstants.IMPORT_STRATEGY_ON_ERROR_FAIL,
+				BatchEngineTaskOperation.CREATE.toString(), new HashMap<>(),
+				null);
+
+		_batchEngineImportTaskExecutor.execute(_batchEngineImportTask);
+
+		Assert.assertEquals(
+			BatchEngineTaskExecuteStatus.FAILED.toString(),
+			_batchEngineImportTask.getExecuteStatus());
+
+		httpResponse =
+			accountResource.getAccountByExternalReferenceCodeHttpResponse(
+				account1.getExternalReferenceCode());
+
+		Assert.assertEquals(404, httpResponse.getStatusCode());
 	}
 
 	@Test
@@ -1115,9 +1282,6 @@ public class BatchEngineImportTaskExecutorTest
 
 	private static Map<String, String> _fieldNamesMappingMap;
 
-	@Inject
-	private AccountEntryLocalService _accountEntryLocalService;
-
 	@DeleteAfterTestRun
 	private BatchEngineImportTask _batchEngineImportTask;
 
@@ -1134,9 +1298,6 @@ public class BatchEngineImportTaskExecutorTest
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
-
-	@Inject
-	private ObjectEntryLocalService _objectEntryLocalService;
 
 	@Inject
 	private ObjectFieldLocalService _objectFieldLocalService;

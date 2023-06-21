@@ -11,8 +11,11 @@ dependencies {
 	testIntegrationCompile group: "org.apache.xmlbeans", name: "xmlbeans", version: "3.1.0"
 	testIntegrationCompile group: "org.osgi", name: "org.osgi.service.component", version: "1.4.0"
 	testIntegrationCompile group: "org.osgi", name: "osgi.core", version: "6.0.0"
+	testIntegrationCompile group: "org.skyscreamer", name: "jsonassert", version: "1.2.3"
 	testIntegrationCompile project(":apps:batch-engine:batch-engine-api")
 	testIntegrationCompile project(":apps:blogs:blogs-api")
+	testIntegrationCompile project(":apps:headless:headless-admin-user:headless-admin-user-client")
+	testIntegrationCompile project(":apps:object:object-api")
 	testIntegrationCompile project(":apps:portal-odata:portal-odata-api")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

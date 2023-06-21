@@ -8,9 +8,7 @@ package com.liferay.change.tracking.internal.spi.reference;
 import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
-import com.liferay.portal.kernel.model.CompanyTable;
 import com.liferay.portal.kernel.model.PortletPreferenceValueTable;
-import com.liferay.portal.kernel.model.PortletPreferencesTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.PortletPreferenceValuePersistence;
 
@@ -34,14 +32,6 @@ public class PortletPreferenceValueTableReferenceDefinition
 	public void defineParentTableReferences(
 		ParentTableReferenceInfoBuilder<PortletPreferenceValueTable>
 			parentTableReferenceInfoBuilder) {
-
-		parentTableReferenceInfoBuilder.singleColumnReference(
-			PortletPreferenceValueTable.INSTANCE.companyId,
-			CompanyTable.INSTANCE.companyId
-		).singleColumnReference(
-			PortletPreferenceValueTable.INSTANCE.portletPreferencesId,
-			PortletPreferencesTable.INSTANCE.portletPreferencesId
-		);
 	}
 
 	@Override

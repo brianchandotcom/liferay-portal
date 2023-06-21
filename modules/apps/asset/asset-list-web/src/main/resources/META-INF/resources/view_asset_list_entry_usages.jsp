@@ -31,6 +31,68 @@ portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
 renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
+
+VerticalNavItemList verticalNavItemList = new VerticalNavItemList();
+
+verticalNavItemList.add(
+	verticalNavItem -> {
+		String name = LanguageUtil.format(request, "all-x", assetListEntryUsagesDisplayContext.getAllUsageCount(), false);
+
+		verticalNavItem.setHref(
+			PortletURLBuilder.create(
+				assetListEntryUsagesDisplayContext.getPortletURL()
+			).setNavigation(
+				"all"
+			).buildString());
+		verticalNavItem.setLabel(name);
+		verticalNavItem.setId(name);
+		verticalNavItem.setActive(Objects.equals(assetListEntryUsagesDisplayContext.getNavigation(), "all"));
+	});
+
+verticalNavItemList.add(
+	verticalNavItem -> {
+		String name = LanguageUtil.format(request, "pages-x", assetListEntryUsagesDisplayContext.getPagesUsageCount(), false);
+
+		verticalNavItem.setHref(
+			PortletURLBuilder.create(
+				assetListEntryUsagesDisplayContext.getPortletURL()
+			).setNavigation(
+				"pages"
+			).buildString());
+		verticalNavItem.setLabel(name);
+		verticalNavItem.setId(name);
+		verticalNavItem.setActive(Objects.equals(assetListEntryUsagesDisplayContext.getNavigation(), "pages"));
+	});
+
+verticalNavItemList.add(
+	verticalNavItem -> {
+		String name = LanguageUtil.format(request, "page-templates-x", assetListEntryUsagesDisplayContext.getPageTemplatesUsageCount(), false);
+
+		verticalNavItem.setHref(
+			PortletURLBuilder.create(
+				assetListEntryUsagesDisplayContext.getPortletURL()
+			).setNavigation(
+				"page-templates"
+			).buildString());
+		verticalNavItem.setLabel(name);
+		verticalNavItem.setId(name);
+		verticalNavItem.setActive(Objects.equals(assetListEntryUsagesDisplayContext.getNavigation(), "page-templates"));
+	});
+
+verticalNavItemList.add(
+	verticalNavItem -> {
+		String name = LanguageUtil.format(request, "display-page-templates-x", assetListEntryUsagesDisplayContext.getDisplayPagesUsageCount(), false);
+
+		verticalNavItem.setHref(
+			PortletURLBuilder.create(
+				assetListEntryUsagesDisplayContext.getPortletURL()
+			).setNavigation(
+				"display-page-templates"
+			).buildString());
+		verticalNavItem.setLabel(name);
+		verticalNavItem.setId(name);
+		verticalNavItem.setActive(Objects.equals(assetListEntryUsagesDisplayContext.getNavigation(), "display-page-templates"));
+	});
 %>
 
 <clay:container-fluid
@@ -40,74 +102,13 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 		<clay:col
 			lg="3"
 		>
-			<nav class="menubar menubar-transparent menubar-vertical-expand-lg">
-				<ul class="nav nav-nested">
-					<li class="nav-item">
-						<strong class="text-uppercase">
-							<liferay-ui:message key="usages" />
-						</strong>
+			<div class="c-mb-3 h5 text-uppercase">
+				<liferay-ui:message key="usages" />
+			</div>
 
-						<ul class="nav nav-stacked">
-							<li class="nav-item">
-								<a
-									class="nav-link <%= Objects.equals(assetListEntryUsagesDisplayContext.getNavigation(), "all") ? "active" : StringPool.BLANK %>"
-									href="<%=
-										PortletURLBuilder.create(
-											assetListEntryUsagesDisplayContext.getPortletURL()
-										).setNavigation(
-											"all"
-										).buildString()
-									%>"
-								>
-									<liferay-ui:message arguments="<%= assetListEntryUsagesDisplayContext.getAllUsageCount() %>" key="all-x" />
-								</a>
-							</li>
-							<li class="nav-item">
-								<a
-									class="nav-link <%= Objects.equals(assetListEntryUsagesDisplayContext.getNavigation(), "pages") ? "active" : StringPool.BLANK %>"
-									href="<%=
-										PortletURLBuilder.create(
-											assetListEntryUsagesDisplayContext.getPortletURL()
-										).setNavigation(
-											"pages"
-										).buildString()
-									%>"
-								>
-									<liferay-ui:message arguments="<%= assetListEntryUsagesDisplayContext.getPagesUsageCount() %>" key="pages-x" />
-								</a>
-							</li>
-							<li class="nav-item">
-								<a
-									class="nav-link <%= Objects.equals(assetListEntryUsagesDisplayContext.getNavigation(), "page-templates") ? "active" : StringPool.BLANK %>"
-									href="<%=
-										PortletURLBuilder.create(
-											assetListEntryUsagesDisplayContext.getPortletURL()
-										).setNavigation(
-											"page-templates"
-										).buildString()
-									%>"
-								>
-									<liferay-ui:message arguments="<%= assetListEntryUsagesDisplayContext.getPageTemplatesUsageCount() %>" key="page-templates-x" />
-								</a>
-							</li>
-							<li class="nav-item">
-								<a
-									class="nav-link <%= Objects.equals(assetListEntryUsagesDisplayContext.getNavigation(), "display-page-templates") ? "active" : StringPool.BLANK %>"
-									href="<%=
-										PortletURLBuilder.create(
-											assetListEntryUsagesDisplayContext.getPortletURL()
-										).setNavigation(
-											"display-page-templates"
-										).buildString()
-									%>"
-								>
-									<liferay-ui:message arguments="<%= assetListEntryUsagesDisplayContext.getDisplayPagesUsageCount() %>" key="display-page-templates-x" />
-								</a>
-							</li>
-						</ul>
-					</li>
-				</ul>
-			</nav>
+			<clay:vertical-nav
+				verticalNavItems="<%= verticalNavItemList %>"
+			/>
 		</clay:col>
 
 		<clay:col

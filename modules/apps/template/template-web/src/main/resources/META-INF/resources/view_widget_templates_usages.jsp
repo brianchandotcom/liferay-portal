@@ -34,23 +34,24 @@ renderResponse.setTitle(HtmlUtil.escape(ddmTemplate.getName(locale)));
 		<clay:col
 			lg="3"
 		>
-			<nav class="menubar menubar-transparent menubar-vertical-expand-lg">
-				<ul class="nav nav-nested">
-					<li class="nav-item">
-						<strong class="text-uppercase">
-							<liferay-ui:message key="usages" />
-						</strong>
+			<div class="c-mb-3 h5 text-uppercase">
+				<liferay-ui:message key="usages" />
+			</div>
 
-						<ul class="nav nav-stacked">
-							<li class="nav-item">
-								<a class="active nav-link">
-									<liferay-ui:message arguments="<%= widgetTemplatesTemplateViewUsagesDisplayContext.getUsagesCount() %>" key="all-x" />
-								</a>
-							</li>
-						</ul>
-					</li>
-				</ul>
-			</nav>
+			<clay:vertical-nav
+				verticalNavItems='<%=
+					new VerticalNavItemList() {
+						{
+							add(
+								verticalNavItem -> {
+									verticalNavItem.setLabel(LanguageUtil.format(request, "all-x", widgetTemplatesTemplateViewUsagesDisplayContext.getUsagesCount(), false));
+									verticalNavItem.setId(LanguageUtil.format(request, "all-x", widgetTemplatesTemplateViewUsagesDisplayContext.getUsagesCount(), false));
+									verticalNavItem.setActive(true);
+								});
+						}
+					}
+				%>'
+			/>
 		</clay:col>
 
 		<clay:col

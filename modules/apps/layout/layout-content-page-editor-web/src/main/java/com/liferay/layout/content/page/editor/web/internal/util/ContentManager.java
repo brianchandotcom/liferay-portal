@@ -579,6 +579,25 @@ public class ContentManager {
 					layoutDisplayPageObjectProviders.addAll(
 						_getLocalizedLayoutDisplayPageObjectProviders(
 							configJSONObject, mappedClassPKs));
+
+					JSONObject mappedActionJSONObject =
+						editableJSONObject.getJSONObject("mappedAction");
+
+					if ((mappedActionJSONObject != null) &&
+						(mappedActionJSONObject.length() > 0)) {
+
+						LayoutDisplayPageObjectProvider<?>
+							mappedActionLayoutDisplayPageObjectProvider =
+								_getLayoutDisplayPageObjectProvider(
+									mappedActionJSONObject, mappedClassPKs);
+
+						if (mappedActionLayoutDisplayPageObjectProvider !=
+								null) {
+
+							layoutDisplayPageObjectProviders.add(
+								mappedActionLayoutDisplayPageObjectProvider);
+						}
+					}
 				}
 
 				JSONObject itemSelectorJSONObject =

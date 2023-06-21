@@ -67,7 +67,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -288,15 +287,6 @@ public class APIApplicationOpenAPIContributorTest extends BaseTestCase {
 			aggregationObjectField.isRequired(),
 			aggregationObjectField.isState(),
 			aggregationObjectField.getObjectFieldSettings());
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		HTTPTestUtil.invoke(
-			null,
-			"headless-builder/applications/by-external-reference-code/" +
-				_API_APPLICATION_ERC,
-			Http.Method.DELETE);
 	}
 
 	@Test

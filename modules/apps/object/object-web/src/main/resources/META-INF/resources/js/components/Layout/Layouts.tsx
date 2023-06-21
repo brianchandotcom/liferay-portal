@@ -108,7 +108,7 @@ export default function Layouts({
 							fieldName: 'name',
 							label: Liferay.Language.get('label'),
 							localizeLabel: true,
-							sortable: false,
+							sortable: true,
 						},
 						{
 							contentRenderer: 'objectLayoutDefaultDataRenderer',

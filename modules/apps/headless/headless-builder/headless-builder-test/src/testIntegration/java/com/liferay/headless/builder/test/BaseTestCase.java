@@ -17,19 +17,13 @@ package com.liferay.headless.builder.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.batch.engine.unit.BatchEngineUnitProcessor;
 import com.liferay.batch.engine.unit.BatchEngineUnitReader;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.util.HTTPTestUtil;
-import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Objects;
-import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -71,31 +65,6 @@ public abstract class BaseTestCase {
 				completableFuture.join();
 			}
 		}
-
-		_externalReferenceCodes = _getExternalReferenceCodes();
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		Set<String> externalReferenceCodes = _getExternalReferenceCodes();
-
-		externalReferenceCodes.removeAll(_externalReferenceCodes);
-
-		for (String externalReferenceCode : externalReferenceCodes) {
-			HTTPTestUtil.invoke(
-				null,
-				"headless-builder/applications/by-external-reference-code/" +
-					externalReferenceCode,
-				Http.Method.DELETE);
-		}
-	}
-
-	private Set<String> _getExternalReferenceCodes() throws Exception {
-		JSONObject jsonObject = HTTPTestUtil.invoke(
-			null, "headless-builder/applications", Http.Method.GET);
-
-		return JSONUtil.toStringSet(
-			jsonObject.getJSONArray("items"), "externalReferenceCode");
 	}
 
 	@Inject
@@ -103,7 +72,5 @@ public abstract class BaseTestCase {
 
 	@Inject
 	private BatchEngineUnitReader _batchEngineUnitReader;
-
-	private Set<String> _externalReferenceCodes;
 
 }

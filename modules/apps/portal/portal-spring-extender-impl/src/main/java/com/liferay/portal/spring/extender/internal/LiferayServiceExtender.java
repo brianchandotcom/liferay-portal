@@ -133,13 +133,6 @@ public class LiferayServiceExtender
 			BundleContext extendeeBundleContext =
 				_extendeeBundle.getBundleContext();
 
-			_serviceRegistrations.add(
-				extendeeBundleContext.registerService(
-					DataSource.class, _dataSource,
-					MapUtil.singletonDictionary(
-						"origin.bundle.symbolic.name",
-						_extendeeBundle.getSymbolicName())));
-
 			InitialUpgradeStep initialUpgradeStep = new InitialUpgradeStep(
 				_extendeeBundle, _dataSource);
 
@@ -160,6 +153,24 @@ public class LiferayServiceExtender
 				(SessionFactoryImplementor)
 					portletHibernateConfiguration.getObject();
 
+			DefaultTransactionExecutor defaultTransactionExecutor =
+				_getTransactionExecutor(
+					_dataSource, _sessionFactoryImplementor);
+
+			_serviceRegistrations.add(
+				extendeeBundleContext.registerService(
+					TransactionExecutor.class, defaultTransactionExecutor,
+					MapUtil.singletonDictionary(
+						"origin.bundle.symbolic.name",
+						_extendeeBundle.getSymbolicName())));
+
+			_serviceRegistrations.add(
+				extendeeBundleContext.registerService(
+					DataSource.class, _dataSource,
+					MapUtil.singletonDictionary(
+						"origin.bundle.symbolic.name",
+						_extendeeBundle.getSymbolicName())));
+
 			SessionFactoryImpl sessionFactoryImpl = new SessionFactoryImpl();
 
 			sessionFactoryImpl.setSessionFactoryClassLoader(classLoader);
@@ -173,17 +184,6 @@ public class LiferayServiceExtender
 			_serviceRegistrations.add(
 				extendeeBundleContext.registerService(
 					SessionFactory.class, sessionFactory,
-					MapUtil.singletonDictionary(
-						"origin.bundle.symbolic.name",
-						_extendeeBundle.getSymbolicName())));
-
-			DefaultTransactionExecutor defaultTransactionExecutor =
-				_getTransactionExecutor(
-					_dataSource, _sessionFactoryImplementor);
-
-			_serviceRegistrations.add(
-				extendeeBundleContext.registerService(
-					TransactionExecutor.class, defaultTransactionExecutor,
 					MapUtil.singletonDictionary(
 						"origin.bundle.symbolic.name",
 						_extendeeBundle.getSymbolicName())));

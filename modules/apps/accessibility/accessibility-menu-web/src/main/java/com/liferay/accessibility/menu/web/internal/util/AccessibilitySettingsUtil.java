@@ -45,30 +45,30 @@ public class AccessibilitySettingsUtil {
 			new AccessibilitySetting(
 				"c-prefers-link-underline", false,
 				AccessibilitySettingConstants.
-					ACCESSIBILITY_SETTING_SHOW_UNDERLINE,
-				LanguageUtil.get(
-					httpServletRequest, "underlined-links"),
+					ACCESSIBILITY_SETTING_UNDERLINED_LINKS,
+				LanguageUtil.get(httpServletRequest, "underlined-links"),
 				_getSessionClicksValue(
 					httpServletRequest,
 					AccessibilitySettingConstants.
-						ACCESSIBILITY_SETTING_SHOW_UNDERLINE)),
+						ACCESSIBILITY_SETTING_UNDERLINED_LINKS)),
 			new AccessibilitySetting(
 				"c-prefers-letter-spacing-1", false,
 				AccessibilitySettingConstants.
-					ACCESSIBILITY_SETTING_INCREASE_TEXT_SPACING,
+					ACCESSIBILITY_SETTING_INCREASED_TEXT_SPACING,
 				LanguageUtil.get(httpServletRequest, "increased-text-spacing"),
 				_getSessionClicksValue(
 					httpServletRequest,
 					AccessibilitySettingConstants.
-						ACCESSIBILITY_SETTING_INCREASE_TEXT_SPACING)),
+						ACCESSIBILITY_SETTING_INCREASED_TEXT_SPACING)),
 			new AccessibilitySetting(
 				"c-prefers-expanded-text", false,
-				AccessibilitySettingConstants.ACCESSIBILITY_SETTING_EXPAND_TEXT,
+				AccessibilitySettingConstants.
+					ACCESSIBILITY_SETTING_EXPANDED_TEXT,
 				LanguageUtil.get(httpServletRequest, "expanded-text"),
 				_getSessionClicksValue(
 					httpServletRequest,
 					AccessibilitySettingConstants.
-						ACCESSIBILITY_SETTING_EXPAND_TEXT)));
+						ACCESSIBILITY_SETTING_EXPANDED_TEXT)));
 	}
 
 	public static boolean isAccessibilityMenuEnabled(

@@ -1220,6 +1220,7 @@
 		<exception>CPSpecificationOptionTitle</exception>
 		<exception>CPTaxCategoryName</exception>
 		<exception>DuplicateCommerceChannel</exception>
+		<exception>DuplicateCommerceChannelAccountEntryId</exception>
 		<exception>DuplicateCommerceChannelAccountEntryRel</exception>
 		<exception>DuplicateCommerceChannelRel</exception>
 		<exception>DuplicateCPAttachmentFileEntry</exception>

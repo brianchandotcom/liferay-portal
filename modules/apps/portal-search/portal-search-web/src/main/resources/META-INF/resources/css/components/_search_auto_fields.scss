@@ -1,0 +1,21 @@
+html#{$cadmin-selector} {
+	.portlet-modified-facet,
+	.portlet-search-options,
+	.portlet-sort {
+		.cadmin {
+			.lfr-autorow-controls {
+				display: flex;
+				flex-direction: row-reverse;
+				position: relative;
+				right: 0;
+
+				.btn {
+					background-color: var(--white, $white);
+					border-color: var(--gray-400, $secondary-l2);
+					color: var(--gray-600, $secondary);
+					margin-left: 4px;
+				}
+			}
+		}
+	}
+}

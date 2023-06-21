@@ -485,7 +485,7 @@ function SortConfigurationOptions({
 							className="field-form-row lfr-form-row lfr-form-row-inline"
 							key={index}
 						>
-							<div className="c-pb-5 row-fields">
+							<div className="row-fields">
 								<div className="c-mb-2 form-group">
 									<label htmlFor={`label_${index}`}>
 										{Liferay.Language.get('label')}
@@ -503,7 +503,7 @@ function SortConfigurationOptions({
 									/>
 								</div>
 
-								<div className="c-mb-2 form-group">
+								<div className="c-mb-3 form-group">
 									<label htmlFor={`field_${index}`}>
 										{Liferay.Language.get('field')}
 									</label>

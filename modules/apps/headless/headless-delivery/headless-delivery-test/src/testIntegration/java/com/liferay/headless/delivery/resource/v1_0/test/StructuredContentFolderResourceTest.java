@@ -16,6 +16,7 @@ package com.liferay.headless.delivery.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.delivery.client.dto.v1_0.StructuredContentFolder;
+import com.liferay.headless.delivery.client.http.HttpInvoker;
 import com.liferay.headless.delivery.client.pagination.Page;
 import com.liferay.headless.delivery.client.pagination.Pagination;
 import com.liferay.headless.delivery.client.problem.Problem;
@@ -145,23 +146,46 @@ public class StructuredContentFolderResourceTest
 	public void testPostAssetLibraryStructuredContentFolder() throws Exception {
 		super.testPostAssetLibraryStructuredContentFolder();
 
-		StructuredContentFolder randomStructuredContentFolder =
+		StructuredContentFolder randomStructuredContentFolder1 =
 			_randomStructuredContentFolder();
 
-		randomStructuredContentFolder.setExternalReferenceCode("");
+		randomStructuredContentFolder1.setExternalReferenceCode("");
 
-		StructuredContentFolder postStructuredContentFolder =
+		StructuredContentFolder postStructuredContentFolder1 =
 			testPostAssetLibraryStructuredContentFolder_addStructuredContentFolder(
-				randomStructuredContentFolder);
+				randomStructuredContentFolder1);
 
 		JournalFolder journalFolder = JournalFolderLocalServiceUtil.getFolder(
-			postStructuredContentFolder.getId());
+			postStructuredContentFolder1.getId());
 
 		Assert.assertEquals(
-			postStructuredContentFolder.getExternalReferenceCode(),
+			postStructuredContentFolder1.getExternalReferenceCode(),
 			journalFolder.getUuid());
 
-		assertValid(postStructuredContentFolder);
+		assertValid(postStructuredContentFolder1);
+
+		StructuredContentFolder postStructuredContentFolder2 =
+			testPostAssetLibraryStructuredContentFolder_addStructuredContentFolder(
+				_randomStructuredContentFolder());
+
+		StructuredContentFolder randomStructuredContentFolder2 =
+			_randomStructuredContentFolder();
+
+		randomStructuredContentFolder2.setExternalReferenceCode(
+			postStructuredContentFolder2.getExternalReferenceCode());
+
+		HttpInvoker.HttpResponse httpResponse =
+			structuredContentFolderResource.
+				postAssetLibraryStructuredContentFolderHttpResponse(
+					testDepotEntry.getDepotEntryId(),
+					randomStructuredContentFolder2);
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				"Duplicate journal folder external reference code ",
+				postStructuredContentFolder2.getExternalReferenceCode(),
+				" in group ", testDepotEntry.getGroupId()),
+			httpResponse.getContent());
 	}
 
 	@Override

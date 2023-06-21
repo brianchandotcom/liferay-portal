@@ -32,6 +32,8 @@ public class ObjectActionModelDocumentContributor
 			_localization.populateLocalizationMap(
 				objectAction.getLabelMap(), objectAction.getDefaultLanguageId(),
 				0));
+		document.addLocalizedKeyword(
+			"localized_label", objectAction.getLabelMap(), true, true);
 		document.addKeyword(
 			"objectDefinitionId", objectAction.getObjectDefinitionId());
 		document.remove(Field.USER_NAME);

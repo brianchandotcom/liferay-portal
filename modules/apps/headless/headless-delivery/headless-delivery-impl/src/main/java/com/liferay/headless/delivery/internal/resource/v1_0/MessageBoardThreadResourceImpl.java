@@ -190,7 +190,7 @@ public class MessageBoardThreadResourceImpl
 							pagination.getStartPosition(),
 							pagination.getEndPosition(),
 							new ThreadCreateDateComparator())),
-					mbThread -> _toMessageBoardThread(mbThread, false)),
+					mbThread -> _toMessageBoardThread(mbThread, true)),
 				pagination,
 				_mbThreadService.getThreadsCount(
 					mbCategory.getGroupId(), mbCategory.getCategoryId(),
@@ -648,7 +648,7 @@ public class MessageBoardThreadResourceImpl
 			document -> _toMessageBoardThread(
 				_mbMessageService.getMessage(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))),
-				false));
+				true));
 	}
 
 	private SPIRatingResource<Rating> _getSPIRatingResource() {

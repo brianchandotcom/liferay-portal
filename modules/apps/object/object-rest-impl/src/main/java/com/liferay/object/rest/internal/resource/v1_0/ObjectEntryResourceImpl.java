@@ -15,6 +15,7 @@
 package com.liferay.object.rest.internal.resource.v1_0;
 
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.internal.odata.entity.v1_0.ObjectEntryEntityModel;
@@ -267,6 +268,32 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 	}
 
 	@Override
+	public ObjectEntry patchByExternalReferenceCode(
+			String externalReferenceCode, ObjectEntry objectEntry)
+		throws Exception {
+
+		ObjectEntry existingObjectEntry = getByExternalReferenceCode(
+			externalReferenceCode);
+
+		preparePatch(objectEntry, existingObjectEntry);
+
+		return putByExternalReferenceCode(
+			externalReferenceCode, existingObjectEntry);
+	}
+
+	@Override
+	public ObjectEntry patchObjectEntry(
+			Long objectEntryId, ObjectEntry objectEntry)
+		throws Exception {
+
+		ObjectEntry existingObjectEntry = getObjectEntry(objectEntryId);
+
+		preparePatch(objectEntry, existingObjectEntry);
+
+		return putObjectEntry(objectEntryId, existingObjectEntry);
+	}
+
+	@Override
 	public ObjectEntry postObjectEntry(ObjectEntry objectEntry)
 		throws Exception {
 
@@ -472,6 +499,66 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 
 		return ObjectDefinition.class.getName() + "#" +
 			_objectDefinition.getObjectDefinitionId();
+	}
+
+	@Override
+	protected void preparePatch(
+		ObjectEntry objectEntry, ObjectEntry existingObjectEntry) {
+
+		if (objectEntry.getDateCreated() != null) {
+			existingObjectEntry.setDateCreated(objectEntry.getDateCreated());
+		}
+
+		if (objectEntry.getDateModified() != null) {
+			existingObjectEntry.setDateModified(objectEntry.getDateModified());
+		}
+
+		if (objectEntry.getKeywords() != null) {
+			existingObjectEntry.setKeywords(objectEntry.getKeywords());
+		}
+
+		if (objectEntry.getTaxonomyCategoryIds() != null) {
+			existingObjectEntry.setTaxonomyCategoryIds(
+				objectEntry.getTaxonomyCategoryIds());
+		}
+
+		Map<String, Object> properties = objectEntry.getProperties();
+
+		if (properties == null) {
+			return;
+		}
+
+		Map<String, Object> existingProperties =
+			existingObjectEntry.getProperties();
+
+		for (ObjectField objectField :
+				_objectFieldLocalService.getObjectFields(
+					_objectDefinition.getObjectDefinitionId())) {
+
+			if (!objectField.isLocalized()) {
+				Object value = properties.get(objectField.getName());
+
+				if (value != null) {
+					existingProperties.put(objectField.getName(), value);
+				}
+
+				continue;
+			}
+
+			Map<String, String> localizedValues =
+				(Map<String, String>)properties.get(
+					objectField.getI18nObjectFieldName());
+
+			if (localizedValues == null) {
+				continue;
+			}
+
+			Map<String, String> existingLocalizedValues =
+				(Map<String, String>)existingProperties.get(
+					objectField.getI18nObjectFieldName());
+
+			existingLocalizedValues.putAll(localizedValues);
+		}
 	}
 
 	private DefaultDTOConverterContext _getDTOConverterContext(

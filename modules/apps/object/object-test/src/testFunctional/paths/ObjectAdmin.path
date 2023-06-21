@@ -327,7 +327,7 @@
 	</tr>
 	<tr>
 		<td>OBJECT_LABEL_COLUMN</td>
-		<td>//div[contains(@class,'dnd-th') and contains(text(),'Label')]</td>
+		<td>//div[contains(@class,'dnd-th')]//button[contains(text(),'Label')]</td>
 		<td></td>
 	</tr>
 	<tr>

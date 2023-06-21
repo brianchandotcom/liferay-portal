@@ -4,18 +4,15 @@
  */
 
 import {FDSCellRendererArgs} from '@liferay/js-api/data-set';
+import {ClientExtension} from 'frontend-js-components-web';
+import {TRenderer, getRenderer} from 'frontend-js-web';
 import React, {ComponentType, useContext, useEffect, useState} from 'react';
 
 // @ts-ignore
 
 import FrontendDataSetContext from '../../FrontendDataSetContext';
 import {getInternalCellRenderer} from '../../cell_renderers/getInternalCellRenderer';
-import ClientExtensionRenderer from '../../components/ClientExtensionRenderer';
-import {
-	CellRenderer,
-	getCellRendererByURL,
-	getInputRendererById,
-} from '../../utils/renderer';
+import {getInputRendererById} from '../../utils/renderer';
 
 // @ts-ignore
 
@@ -87,39 +84,37 @@ function TableCell({
 
 	const contentRenderer = view.contentRenderer || 'default';
 
-	const [cellRenderer, setCellRenderer] = useState<CellRenderer | null>(
-		() => {
-			if (view.contentRendererModuleURL) {
-				return null;
-			}
-
-			if (customDataRenderers && customDataRenderers[contentRenderer]) {
-				return {
-					component: customDataRenderers[contentRenderer],
-					type: 'internal',
-				};
-			}
-
-			return getInternalCellRenderer(contentRenderer);
+	const [cellRenderer, setCellRenderer] = useState<TRenderer | null>(() => {
+		if (view.contentRendererModuleURL) {
+			return null;
 		}
-	);
+
+		if (customDataRenderers && customDataRenderers[contentRenderer]) {
+			return {
+				component: customDataRenderers[contentRenderer],
+				type: 'internal',
+			};
+		}
+
+		return getInternalCellRenderer(contentRenderer);
+	});
 
 	useEffect(() => {
 		if (!loading && view.contentRendererModuleURL && !cellRenderer) {
 			setLoading(true);
 
-			getCellRendererByURL(
-				view.contentRendererModuleURL,
-				view.contentRendererClientExtension
+			getRenderer({
+				type: view.contentRendererClientExtension
 					? 'clientExtension'
-					: 'internal'
-			)
-				.then((cellRenderer) => {
-					setCellRenderer(() => cellRenderer);
+					: 'internal',
+				url: view.contentRendererModuleURL,
+			})
+				.then((renderer: TRenderer) => {
+					setCellRenderer(() => renderer);
 
 					setLoading(false);
 				})
-				.catch((error) => {
+				.catch((error: string) => {
 					console.error(
 						`Unable to load FDS cell renderer at ${view.contentRendererModuleURL}:`,
 						error
@@ -163,34 +158,38 @@ function TableCell({
 		);
 	}
 
-	if (cellRenderer.type === 'clientExtension') {
+	if (cellRenderer.type === 'clientExtension' && cellRenderer.htmlBuilder) {
 		return (
 			<DndTableCell columnName={String(options.fieldName)}>
-				<ClientExtensionRenderer<FDSCellRendererArgs>
+				<ClientExtension<FDSCellRendererArgs>
 					args={{value}}
-					renderer={cellRenderer.renderer}
+					htmlBuilder={cellRenderer.htmlBuilder}
 				/>
 			</DndTableCell>
 		);
 	}
 
-	const CellRendererComponent = cellRenderer.component;
+	if (cellRenderer.type === 'internal' && cellRenderer.component) {
+		const CellRendererComponent = cellRenderer.component;
 
-	return (
-		<DndTableCell columnName={String(options.fieldName)}>
-			<CellRendererComponent
-				actions={actions}
-				itemData={itemData}
-				itemId={itemId}
-				loadData={loadData}
-				openSidePanel={openSidePanel}
-				options={options}
-				rootPropertyName={rootPropertyName}
-				value={value}
-				valuePath={valuePath}
-			/>
-		</DndTableCell>
-	);
+		return (
+			<DndTableCell columnName={String(options.fieldName)}>
+				{CellRendererComponent && (
+					<CellRendererComponent
+						actions={actions}
+						itemData={itemData}
+						itemId={itemId}
+						loadData={loadData}
+						openSidePanel={openSidePanel}
+						options={options}
+						rootPropertyName={rootPropertyName}
+						value={value}
+						valuePath={valuePath}
+					/>
+				)}
+			</DndTableCell>
+		);
+	}
 }
 
 export default TableCell;

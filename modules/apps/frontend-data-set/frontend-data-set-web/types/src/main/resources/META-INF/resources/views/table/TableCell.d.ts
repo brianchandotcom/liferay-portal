@@ -16,5 +16,5 @@ declare function TableCell({
 	value,
 	valuePath,
 	view,
-}: any): JSX.Element;
+}: any): JSX.Element | undefined;
 export default TableCell;

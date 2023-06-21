@@ -160,9 +160,4 @@ export interface IFrontendDataSetProps {
 	views: TViews[];
 }
 
-export {
-	INTERNAL_CELL_RENDERERS as FDS_INTERNAL_CELL_RENDERERS,
-	InternalCellRenderer as FDSInternalCellRenderer,
-} from './cell_renderers/InternalCellRenderer';
-
-export {InternalRenderer} from './utils/renderer';
+export {INTERNAL_CELL_RENDERERS as FDS_INTERNAL_CELL_RENDERERS} from './cell_renderers/InternalCellRenderer';

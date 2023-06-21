@@ -3,13 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import DefaultRenderer from './DefaultRenderer';
-import {
-	INTERNAL_CELL_RENDERERS,
-	InternalCellRenderer,
-} from './InternalCellRenderer';
+import {IInternalRenderer} from 'frontend-js-web';
 
-export function getInternalCellRenderer(name: string): InternalCellRenderer {
+import DefaultRenderer from './DefaultRenderer';
+import {INTERNAL_CELL_RENDERERS} from './InternalCellRenderer';
+
+export function getInternalCellRenderer(name: string): IInternalRenderer {
 	const renderer = INTERNAL_CELL_RENDERERS.find(
 		(renderer) => renderer.name === name
 	);

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Renderer} from '../utils/renderer';
+import {IInternalRenderer} from 'frontend-js-web';
 
 // @ts-ignore
 
@@ -42,14 +42,7 @@ import QuantitySelectorRenderer from './QuantitySelectorRenderer';
 
 import StatusRenderer from './StatusRenderer';
 
-export interface InternalCellRenderer extends Renderer {
-	component: React.ComponentType<any>;
-	label?: string;
-	name?: string;
-	type: 'internal';
-}
-
-export const INTERNAL_CELL_RENDERERS: Array<InternalCellRenderer> = [
+export const INTERNAL_CELL_RENDERERS: Array<IInternalRenderer> = [
 	{
 		component: ActionsLinkRenderer,
 		label: Liferay.Language.get('action-link'),

@@ -270,6 +270,32 @@ definition {
 		}
 	}
 
+	@description = "LPS-181572 - Verify if is possible clicks on Data Set Test Name and go to view page"
+	@priority = 5
+	test CanClickOnDataSetNameCreated {
+		task ("And go to Dataset admin Page") {
+			Navigator.gotoBack();
+		}
+
+		task ("When the user hovers over the name of the created dataset") {
+			MouseOver(
+				key_text = "Data Set Test",
+				locator1 = "CP2Utils#ANY_TEXT");
+		}
+
+		task ("When the user clicks on the name of the created dataset") {
+			Click(
+				key_text = "Data Set Test",
+				locator1 = "CP2Utils#ANY_TEXT");
+		}
+
+		task ("Then confirm that views admin page is shown") {
+			AssertElementPresent(
+				key_objectLabel = "Data Set Test",
+				locator1 = "ObjectPortlet#OBJECT_PORTLET_HEADER");
+		}
+	}
+
 	@description = "LPS-172396. Confirm that the user can create more than one view"
 	@priority = 4
 	test CanCreateMultipleViews {

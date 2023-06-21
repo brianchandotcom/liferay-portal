@@ -242,8 +242,8 @@ public class SXPBlueprintLocalServiceImpl
 				_bundleContext.registerService(
 					InfoCollectionProvider.class,
 					new SXPBlueprintInfoCollectionProvider(
-						_assetHelper, _searcher, _searchRequestBuilderFactory,
-						sxpBlueprint, _groupLocalService),
+						_assetHelper, _groupLocalService, _searcher,
+						_searchRequestBuilderFactory, sxpBlueprint),
 					HashMapDictionaryBuilder.<String, Object>put(
 						"company.id", sxpBlueprint.getCompanyId()
 					).put(

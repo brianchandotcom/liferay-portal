@@ -1972,6 +1972,59 @@ definition {
 		}
 	}
 
+	@description = "LPS-179803 - Verify the user cannot delete the only custom field in an object definition"
+	@priority = 5
+	test CannotDeleteSoleCustomField {
+		property custom.properties = "feature.flag.LPS-179803=true";
+		property portal.acceptance = "true";
+
+		task ("Given a custom object with a custom field") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object",
+				objectName = "CustomObject",
+				pluralLabelName = "Custom Objects");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+			ObjectAdmin.goToFieldsTab();
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Attachment",
+				fieldLabelName = "Custom Attachment",
+				fieldName = "customAttachment",
+				fieldType = "Long",
+				fileSource = "userComputer",
+				isRequired = "false",
+				objectName = "CustomObject");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		}
+
+		task ("When the user attempts to delete the custom field") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+			ObjectAdmin.goToFieldsTab();
+
+			ObjectAdmin.selectKebabMenuOption(kebabOption = "Delete");
+		}
+
+		task ("Then a message is seen stating the custom field cannot be deleted and the custom field isn't deleted") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Modal#BODY",
+				value1 = "\"Custom Attachment\" is the only field of the published object definition and cannot be deleted.");
+
+			Button.click(button = "Done");
+
+			AssertElementPresent(
+				key_name = "Custom Attachment",
+				locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
+		}
+	}
+
 	@description = "LPS-162174 - Verify that it is not possible to edit ERC fields in Objects management."
 	@priority = 5
 	test CannotEditERCField {

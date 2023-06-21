@@ -39,14 +39,14 @@ import {
 } from '../InviteMemberModal/services';
 
 interface MemberProfileProps {
-	member: MemberProps;
+	memberUser: MemberProps;
 	renderToast: (message: string, title: string, type: DisplayType) => void;
 	setSelectedMember: (value: MemberProps | undefined) => void;
 	userLogged?: UserLogged;
 }
 
 export function MemberProfile({
-	member,
+	memberUser,
 	renderToast,
 	setSelectedMember,
 	userLogged,
@@ -57,7 +57,7 @@ export function MemberProfile({
 		event.preventDefault();
 
 		const myUserAdditionalInfos = await getMyUserAditionalInfos(
-			member.userId
+			memberUser.userId
 		);
 		const newPassword = createPassword();
 
@@ -68,7 +68,7 @@ export function MemberProfile({
 			);
 
 			if (response.sendType.key === 'canceled') {
-				await updateUserPassword(newPassword, member.userId);
+				await updateUserPassword(newPassword, memberUser.userId);
 
 				const roles = await getAccountRolesOnAPI(
 					response.r_accountEntryToUserAdditionalInfo_accountEntryId
@@ -110,7 +110,7 @@ export function MemberProfile({
 					: `Please contact Administrator`;
 				const toastType = newInvite.ok ? 'success' : 'danger';
 
-				renderToast(toastMessage, `${member.name}`, toastType);
+				renderToast(toastMessage, `${memberUser.name}`, toastType);
 			}
 		}
 	};
@@ -118,7 +118,7 @@ export function MemberProfile({
 	return (
 		<div className="member-profile-view-container">
 			<a
-				className="member-profile-back-button"
+				className="align-items-center d-flex member-profile-back-button"
 				onClick={() => setSelectedMember(undefined)}
 			>
 				<ClayIcon symbol="order-arrow-left" />
@@ -128,40 +128,42 @@ export function MemberProfile({
 				</div>
 			</a>
 
-			<div className="member-profile-content-header">
+			<div className="d-flex member-profile-content-header">
 				<div className="member-profile-image">
 					<Avatar
-						emailAddress={member.email}
+						emailAddress={memberUser.email}
 						gravatarAPI={gravatarAPI}
-						initialImage={member.image}
-						userName={member.name}
+						initialImage={memberUser.image}
+						userName={memberUser.name}
 					/>
 				</div>
 
 				<div className="member-profile-heading-container">
-					<h2 className="member-profile-heading">{member.name}</h2>
+					<h2 className="member-profile-heading">
+						{memberUser.name}
+					</h2>
 
-					{member.lastLoginDate ? (
+					{memberUser.lastLoginDate ? (
 						<div className="member-profile-subheading">
 							<div className="member-profile-subheading-email">
-								{member.email},&nbsp;
+								{memberUser.email},&nbsp;
 							</div>
 
 							<div className="member-profile-subheading-date">
-								Last Login at {member.lastLoginDate}
+								Last Login at {memberUser.lastLoginDate}
 							</div>
 						</div>
 					) : (
 						<div className="member-account-never-logged-in-text">
-							{member.email}, Never Logged In
+							{memberUser.email}, Never Logged In
 						</div>
 					)}
 				</div>
 
-				{userLogged?.isAdminAccount ? (
-					<div className="member-profile-resend-invitation">
+				{userLogged?.isAdminAccount && (
+					<div className="member-profile-resend-invitation ml-auto">
 						<button
-							className="member-profile-button-resend-invitation"
+							className="h-50 member-profile-button-resend-invitation mr-3"
 							onClick={(event) => handlePut(event)}
 						>
 							Resend invitation
@@ -170,7 +172,7 @@ export function MemberProfile({
 							</span>
 						</button>
 
-						<button className="member-profile-button-edit-member">
+						<button className="h-50 member-profile-button-edit-member mr-3">
 							<span className="member-profile-button-edit-member-label-edit">
 								Edit
 							</span>
@@ -180,8 +182,6 @@ export function MemberProfile({
 							</span>
 						</button>
 					</div>
-				) : (
-					<div></div>
 				)}
 			</div>
 
@@ -197,19 +197,19 @@ export function MemberProfile({
 								Name
 							</th>
 
-							<td>{member.name}</td>
+							<td>{memberUser.name}</td>
 						</tr>
 
 						<tr>
 							<th>Email</th>
 
-							<td>{member.email}</td>
+							<td>{memberUser.email}</td>
 						</tr>
 
 						<tr>
 							<th>User ID</th>
 
-							<td>{member.userId}</td>
+							<td>{memberUser.userId}</td>
 						</tr>
 					</table>
 				</DetailedCard>
@@ -225,7 +225,7 @@ export function MemberProfile({
 								Permissions
 							</th>
 
-							<td>{member.role}</td>
+							<td>{memberUser.role}</td>
 						</tr>
 					</table>
 				</DetailedCard>
@@ -243,7 +243,7 @@ export function MemberProfile({
 								Membership
 							</th>
 
-							<td>Invited On {member.dateCreated}</td>
+							<td>Invited On {memberUser.dateCreated}</td>
 						</tr>
 
 						<tr>
@@ -254,9 +254,9 @@ export function MemberProfile({
 									Last Login at&nbsp;
 								</div>
 
-								{member.lastLoginDate ? (
+								{memberUser.lastLoginDate ? (
 									<div className="d-inline-block member-account-lasted-logged-in">
-										{member.lastLoginDate}
+										{memberUser.lastLoginDate}
 									</div>
 								) : (
 									<div className="d-inline-block member-account-never-logged-in-text">

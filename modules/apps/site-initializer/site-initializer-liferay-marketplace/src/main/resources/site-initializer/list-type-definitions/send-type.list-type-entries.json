@@ -1,6 +1,6 @@
 [
 	{
-		"externalReferenceCode": "MKP-PICKLIST-SENDTYPE-SHIPPING",
+		"externalReferenceCode": "SHIPPING",
 		"key": "shipping",
 		"name": "Shipping",
 		"name_i18n": {
@@ -9,7 +9,7 @@
 		"type": "string"
 	},
 	{
-		"externalReferenceCode": "MKP-PICKLIST-SENDTYPE-CANCELED",
+		"externalReferenceCode": "CANCELED",
 		"key": "canceled",
 		"name": "Canceled",
 		"name_i18n": {
@@ -18,7 +18,7 @@
 		"type": "string"
 	},
 	{
-		"externalReferenceCode": "MKP-PICKLIST-SENDTYPE-EXPIRED",
+		"externalReferenceCode": "EXPIRED",
 		"key": "expired",
 		"name": "Expired",
 		"name_i18n": {

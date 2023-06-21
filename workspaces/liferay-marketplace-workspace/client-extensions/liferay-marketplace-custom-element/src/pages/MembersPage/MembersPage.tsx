@@ -238,7 +238,7 @@ export function MembersPage({
 				>
 					{selectedMember ? (
 						<MemberProfile
-							member={selectedMember}
+							memberUser={selectedMember}
 							renderToast={renderToast}
 							setSelectedMember={setSelectedMember}
 							userLogged={userLogged}

@@ -1,24 +1,5 @@
 .member-profile {
-	&-content-header {
-		display: flex;
-	}
-
-	&-resend-invitation {
-		margin-left: auto;
-	}
-
 	&-button-resend-invitation {
-		background-color: #0053f0;
-		border: none;
-		border-radius: 0.5rem;
-		color: #fff;
-		font-size: 1rem;
-		font-weight: 600;
-		height: 2.5rem;
-		line-height: 1.5rem;
-		margin-right: 1rem;
-		width: max-content;
-
 		&:hover {
 			background-color: #ffff;
 			border: 1px solid #0053f0;
@@ -42,9 +23,7 @@
 		color: #2b3a4b;
 		font-size: 1rem;
 		font-weight: 600;
-		height: 2.5rem;
 		line-height: 1.5rem;
-		width: max-content;
 
 		&-label-edit {
 			margin-left: 0.5rem;
@@ -56,9 +35,7 @@
 	}
 
 	&-back-button {
-		align-items: center;
 		cursor: pointer;
-		display: flex;
 		margin-bottom: 1rem;
 		width: 15%;
 

@@ -392,11 +392,7 @@ type UserAccount = {
 };
 
 type RequestBody = {
-	alternateName: string;
-	emailAddress: string;
-	familyName: string;
-	givenName: string;
-	password: string;
+	[keys: string]: string;
 };
 
 interface CheckboxRole {
@@ -409,4 +405,4 @@ type UserLogged = {
 	isAdminAccount: boolean;
 	isCustomerAccount: boolean;
 	isPublisherAccount: boolean;
-}
+};

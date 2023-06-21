@@ -18,8 +18,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.batch.engine.unit.BatchEngineUnitProcessor;
-import com.liferay.batch.engine.unit.BatchEngineUnitReader;
 import com.liferay.headless.builder.test.BaseTestCase;
 import com.liferay.list.type.entry.util.ListTypeEntryUtil;
 import com.liferay.list.type.model.ListTypeDefinition;
@@ -584,12 +582,6 @@ public class APIApplicationOpenAPIContributorTest extends BaseTestCase {
 		filter = "component.name=com.liferay.headless.builder.internal.application.openapi.contributor.APIApplicationOpenApiContributor"
 	)
 	private OpenAPIContributor _apiApplicationOpenAPIContributor;
-
-	@Inject
-	private BatchEngineUnitProcessor _batchEngineUnitProcessor;
-
-	@Inject
-	private BatchEngineUnitReader _batchEngineUnitReader;
 
 	private ListTypeDefinition _listTypeDefinition;
 

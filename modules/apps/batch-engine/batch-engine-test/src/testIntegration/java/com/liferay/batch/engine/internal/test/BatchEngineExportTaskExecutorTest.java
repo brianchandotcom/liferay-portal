@@ -26,6 +26,7 @@ import com.liferay.batch.engine.service.BatchEngineExportTaskLocalService;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.petra.io.unsync.UnsyncBufferedReader;
 import com.liferay.petra.string.CharPool;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -84,7 +85,7 @@ public class BatchEngineExportTaskExecutorTest
 		super.setUp();
 
 		_parameters = HashMapBuilder.<String, Serializable>put(
-			"siteId", group.getGroupId()
+			"siteId", TestPropsValues.getGroupId()
 		).build();
 	}
 
@@ -233,7 +234,7 @@ public class BatchEngineExportTaskExecutorTest
 				blogPosting.getId()
 			},
 			HashMapBuilder.<String, Serializable>put(
-				"siteId", group.getGroupId()
+				"siteId", TestPropsValues.getGroupId()
 			).build());
 	}
 
@@ -248,7 +249,7 @@ public class BatchEngineExportTaskExecutorTest
 			_testExportBlogPostingsToXLSFile(
 				Collections.emptyList(), rowValues -> new Object[0],
 				HashMapBuilder.<String, Serializable>put(
-					"siteId", group.getGroupId()
+					"siteId", TestPropsValues.getGroupId()
 				).build());
 		}
 	}
@@ -263,7 +264,7 @@ public class BatchEngineExportTaskExecutorTest
 				rowValues[0], rowValues[1], rowValues[2], rowValues[3]
 			},
 			HashMapBuilder.<String, Serializable>put(
-				"siteId", group.getGroupId()
+				"siteId", TestPropsValues.getGroupId()
 			).build());
 	}
 
@@ -398,10 +399,11 @@ public class BatchEngineExportTaskExecutorTest
 	}
 
 	private void _exportBlogPostings(
-		String contentType, List<String> fieldNames,
-		Map<String, Serializable> parameters) {
+			String contentType, List<String> fieldNames,
+			Map<String, Serializable> parameters)
+		throws Exception {
 
-		parameters.put("siteId", group.getGroupId());
+		parameters.put("siteId", TestPropsValues.getGroupId());
 
 		_batchEngineExportTask =
 			_batchEngineExportTaskLocalService.addBatchEngineExportTask(

@@ -33,7 +33,6 @@ import java.util.concurrent.TimeUnit;
 
 import javax.ws.rs.core.Application;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -48,20 +47,6 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 @FeatureFlags({"LPS-186757", "LPS-184413", "LPS-167253", "LPS-153117"})
 public class APIApplicationPublisherTest extends BaseTestCase {
-
-	@After
-	public void tearDown() throws Exception {
-		HTTPTestUtil.invoke(
-			null,
-			"headless-builder/applications/by-external-reference-code/" +
-				_API_APPLICATION_ERC_1,
-			Http.Method.DELETE);
-		HTTPTestUtil.invoke(
-			null,
-			"headless-builder/applications/by-external-reference-code/" +
-				_API_APPLICATION_ERC_2,
-			Http.Method.DELETE);
-	}
 
 	@Test
 	public void testPublish() throws Exception {

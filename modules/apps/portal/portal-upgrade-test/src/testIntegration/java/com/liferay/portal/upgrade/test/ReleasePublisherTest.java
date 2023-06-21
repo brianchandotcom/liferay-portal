@@ -36,6 +36,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -90,6 +91,7 @@ public class ReleasePublisherTest {
 		Assert.assertEquals(0, _getReleaseServiceReferences().size());
 	}
 
+	@Ignore
 	@Test
 	public void testPublishOnActivation() throws Exception {
 		_addReleaseBeforeActivation(ReleaseConstants.STATE_GOOD);

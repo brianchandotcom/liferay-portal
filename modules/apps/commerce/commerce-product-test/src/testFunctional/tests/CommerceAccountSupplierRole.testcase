@@ -251,8 +251,9 @@ definition {
 				requireReset = "false",
 				userEmailAddress = "supplier@liferay.com");
 
-			JSONRole.assignRoleToUser(
-				roleTitle = "Supplier",
+			JSONAccountRole.associateUser(
+				accountEntryName = "Commerce Supplier",
+				accountRole = "Account Supplier",
 				userEmailAddress = "supplier@liferay.com");
 		}
 

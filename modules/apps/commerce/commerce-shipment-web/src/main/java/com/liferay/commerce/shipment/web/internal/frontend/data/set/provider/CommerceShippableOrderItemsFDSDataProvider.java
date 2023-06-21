@@ -30,8 +30,8 @@ import com.liferay.commerce.model.CommerceShippingEngine;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.model.CommerceShippingOption;
 import com.liferay.commerce.product.model.CPDefinition;
-import com.liferay.commerce.service.CommerceAddressService;
-import com.liferay.commerce.service.CommerceOrderItemService;
+import com.liferay.commerce.service.CommerceAddressLocalService;
+import com.liferay.commerce.service.CommerceOrderItemLocalService;
 import com.liferay.commerce.service.CommerceShipmentItemService;
 import com.liferay.commerce.service.CommerceShipmentService;
 import com.liferay.commerce.util.CommerceShippingEngineRegistry;
@@ -79,7 +79,7 @@ public class CommerceShippableOrderItemsFDSDataProvider
 			_commerceShipmentService.getCommerceShipment(commerceShipmentId);
 
 		List<CommerceOrderItem> commerceOrderItems =
-			_commerceOrderItemService.getCommerceOrderItems(
+			_commerceOrderItemLocalService.getCommerceOrderItems(
 				commerceShipment.getGroupId(),
 				commerceShipment.getCommerceAccountId(), orderStatuses,
 				fdsPagination.getStartPosition(),
@@ -146,7 +146,7 @@ public class CommerceShippableOrderItemsFDSDataProvider
 		CommerceShipment commerceShipment =
 			_commerceShipmentService.getCommerceShipment(commerceShipmentId);
 
-		return _commerceOrderItemService.getCommerceOrderItemsCount(
+		return _commerceOrderItemLocalService.getCommerceOrderItemsCount(
 			commerceShipment.getGroupId(),
 			commerceShipment.getCommerceAccountId(), orderStatuses);
 	}
@@ -161,10 +161,10 @@ public class CommerceShippableOrderItemsFDSDataProvider
 		throws PortalException {
 
 		CommerceAddress commerceOrderShippingCommerceAddress =
-			_commerceAddressService.fetchCommerceAddress(
+			_commerceAddressLocalService.fetchCommerceAddress(
 				commerceOrder.getShippingAddressId());
 		CommerceAddress commerceShipmentCommerceAddress =
-			_commerceAddressService.fetchCommerceAddress(
+			_commerceAddressLocalService.fetchCommerceAddress(
 				commerceShipment.getCommerceAddressId());
 
 		if ((commerceOrderShippingCommerceAddress != null) &&
@@ -227,13 +227,13 @@ public class CommerceShippableOrderItemsFDSDataProvider
 	}
 
 	@Reference
-	private CommerceAddressService _commerceAddressService;
+	private CommerceAddressLocalService _commerceAddressLocalService;
 
 	@Reference
 	private CommerceInventoryEngine _commerceInventoryEngine;
 
 	@Reference
-	private CommerceOrderItemService _commerceOrderItemService;
+	private CommerceOrderItemLocalService _commerceOrderItemLocalService;
 
 	@Reference
 	private CommerceShipmentItemService _commerceShipmentItemService;

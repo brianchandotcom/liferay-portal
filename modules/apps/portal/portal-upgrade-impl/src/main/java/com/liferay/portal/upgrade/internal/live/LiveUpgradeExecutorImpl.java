@@ -68,14 +68,15 @@ public class LiveUpgradeExecutorImpl implements LiveUpgradeExecutor {
 					tempTableName, liveUpgradeSchemaDiff);
 			}
 
-			Map<String, String> columnNamesMap =
+			Map<String, String> resultColumnNamesMap =
 				liveUpgradeSchemaDiff.getResultColumnNamesMap();
 
 			try (AutoCloseable autoCloseable = db.syncTables(
-					connection, tableName, tempTableName, columnNamesMap)) {
+					connection, tableName, tempTableName,
+					resultColumnNamesMap)) {
 
 				db.copyTableRows(
-					connection, tableName, tempTableName, columnNamesMap);
+					connection, tableName, tempTableName, resultColumnNamesMap);
 			}
 		}
 	}

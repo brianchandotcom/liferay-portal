@@ -45,6 +45,6 @@ public class ClientDataRequestHelperUtil {
 	private static volatile ClientDataRequestHelper _clientDataRequestHelper =
 		ServiceProxyFactory.newServiceTrackedInstance(
 			ClientDataRequestHelper.class, ClientDataRequestHelperUtil.class,
-			"_clientDataRequestHelper", true);
+			"_clientDataRequestHelper", false);
 
 }

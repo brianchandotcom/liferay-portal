@@ -37,7 +37,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -168,6 +168,18 @@ public class ObjectFieldUtil {
 			false, false);
 	}
 
+	public static Map<String, ObjectField> toObjectFieldsMap(
+		List<ObjectField> objectFields) {
+
+		Map<String, ObjectField> objectFieldsMap = new LinkedHashMap<>();
+
+		for (ObjectField objectField : objectFields) {
+			objectFieldsMap.put(objectField.getName(), objectField);
+		}
+
+		return objectFieldsMap;
+	}
+
 	public static void validateReadOnlyObjectFields(
 			Map<String, Object> existingValues, Map<String, Object> values,
 			DDMExpressionFactory ddmExpressionFactory,
@@ -192,11 +204,8 @@ public class ObjectFieldUtil {
 
 		existingValues.put("currentUserId", PrincipalThreadLocal.getUserId());
 
-		Map<String, ObjectField> objectFieldMap = new HashMap<>();
-
-		for (ObjectField objectField : objectFields) {
-			objectFieldMap.put(objectField.getName(), objectField);
-		}
+		Map<String, ObjectField> objectFieldsMap = toObjectFieldsMap(
+			objectFields);
 
 		for (ObjectField objectField :
 				ListUtil.filter(
@@ -220,7 +229,7 @@ public class ObjectFieldUtil {
 				continue;
 			}
 
-			ObjectField objectField = objectFieldMap.get(entry.getKey());
+			ObjectField objectField = objectFieldsMap.get(entry.getKey());
 
 			if (Objects.equals(
 					objectField.getReadOnly(),

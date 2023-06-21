@@ -32,6 +32,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterGetRequest;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterGetResponse;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterSaveRequest;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterSaveResponse;
+import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
@@ -66,7 +67,6 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -348,8 +348,8 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 				objectField.getName(), objectField.getDBType());
 		}
 
-		Map<String, ObjectField> objectFieldsMap = _toObjectFieldsMap(
-			objectFields);
+		Map<String, ObjectField> objectFieldsMap =
+			ObjectFieldUtil.toObjectFieldsMap(objectFields);
 
 		for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
 			DDMFormField ddmFormField = ddmFormFieldsMap.get(
@@ -551,18 +551,6 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 		}
 
 		return value;
-	}
-
-	private Map<String, ObjectField> _toObjectFieldsMap(
-		List<ObjectField> objectFields) {
-
-		Map<String, ObjectField> objectFieldsMap = new LinkedHashMap<>();
-
-		for (ObjectField objectField : objectFields) {
-			objectFieldsMap.put(objectField.getName(), objectField);
-		}
-
-		return objectFieldsMap;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

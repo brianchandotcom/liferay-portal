@@ -24,6 +24,7 @@ import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectWebKeys;
+import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
@@ -47,7 +48,6 @@ import java.io.Serializable;
 
 import java.text.Format;
 
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -142,15 +142,11 @@ public class ObjectEntryRowInfoItemRenderer
 		Map<String, Serializable> values = _objectEntryLocalService.getValues(
 			objectEntry);
 
-		Map<String, ObjectField> objectFieldsMap = new HashMap<>();
-
-		for (ObjectField objectField :
+		Map<String, ObjectField> objectFieldsMap =
+			ObjectFieldUtil.toObjectFieldsMap(
 				_objectFieldLocalService.getActiveObjectFields(
 					_objectFieldLocalService.getObjectFields(
-						objectEntry.getObjectDefinitionId()))) {
-
-			objectFieldsMap.put(objectField.getName(), objectField);
-		}
+						objectEntry.getObjectDefinitionId())));
 
 		for (Map.Entry<String, Serializable> entry : values.entrySet()) {
 			ObjectField objectField = objectFieldsMap.get(entry.getKey());

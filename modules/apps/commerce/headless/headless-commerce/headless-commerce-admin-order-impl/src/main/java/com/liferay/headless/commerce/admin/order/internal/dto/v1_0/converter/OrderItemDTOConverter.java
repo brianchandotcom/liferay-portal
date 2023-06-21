@@ -22,6 +22,7 @@ import com.liferay.commerce.product.model.CPMeasurementUnit;
 import com.liferay.commerce.product.service.CPMeasurementUnitService;
 import com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItem;
 import com.liferay.commerce.product.type.virtual.order.service.CommerceVirtualOrderItemService;
+import com.liferay.commerce.service.CommerceOrderItemLocalService;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.util.CommerceOrderItemQuantityFormatter;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderItem;
@@ -31,6 +32,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
@@ -57,9 +59,8 @@ public class OrderItemDTOConverter
 	public OrderItem toDTO(DTOConverterContext dtoConverterContext)
 		throws Exception {
 
-		CommerceOrderItem commerceOrderItem =
-			_commerceOrderItemService.getCommerceOrderItem(
-				(Long)dtoConverterContext.getId());
+		CommerceOrderItem commerceOrderItem = _getCommerceOrderItem(
+			dtoConverterContext);
 
 		CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
 		CPInstance cpInstance = commerceOrderItem.fetchCPInstance();
@@ -185,6 +186,27 @@ public class OrderItemDTOConverter
 		};
 	}
 
+	private CommerceOrderItem _getCommerceOrderItem(
+			DTOConverterContext dtoConverterContext)
+		throws Exception {
+
+		boolean secure = GetterUtil.getBoolean(
+			dtoConverterContext.getAttribute("secure"), true);
+		CommerceOrderItem commerceOrderItem = null;
+
+		if (secure) {
+			commerceOrderItem = _commerceOrderItemService.getCommerceOrderItem(
+				(Long)dtoConverterContext.getId());
+		}
+		else {
+			commerceOrderItem =
+				_commerceOrderItemLocalService.getCommerceOrderItem(
+					(Long)dtoConverterContext.getId());
+		}
+
+		return commerceOrderItem;
+	}
+
 	private String _getSkuExternalReferenceCode(CPInstance cpInstance) {
 		if (cpInstance == null) {
 			return StringPool.BLANK;
@@ -206,6 +228,9 @@ public class OrderItemDTOConverter
 
 	@Reference
 	private CommerceMediaResolver _commerceMediaResolver;
+
+	@Reference
+	private CommerceOrderItemLocalService _commerceOrderItemLocalService;
 
 	@Reference
 	private CommerceOrderItemQuantityFormatter

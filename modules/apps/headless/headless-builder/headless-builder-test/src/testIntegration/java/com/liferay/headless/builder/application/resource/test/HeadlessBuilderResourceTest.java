@@ -20,6 +20,7 @@ import com.liferay.headless.builder.application.publisher.APIApplicationPublishe
 import com.liferay.headless.builder.application.publisher.test.util.APIApplicationPublisherUtil;
 import com.liferay.headless.builder.test.BaseTestCase;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
@@ -56,45 +57,63 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 	@Test
 	public void test() throws Exception {
 		APIApplication apiApplication1 = _addAPIApplication(
-			_API_APPLICATION_ERC_1);
+			_API_APPLICATION_ERC_1, _API_APPLICATION_ENDPOINT_PATH_1);
 		APIApplication apiApplication2 = _addAPIApplication(
-			_API_APPLICATION_ERC_2);
+			_API_APPLICATION_ERC_2, _API_APPLICATION_ENDPOINT_PATH_2);
+
+		String endpointPath1 =
+			apiApplication1.getBaseURL() + _API_APPLICATION_ENDPOINT_PATH_1;
+		String endpointPath2 =
+			apiApplication2.getBaseURL() + _API_APPLICATION_ENDPOINT_PATH_2;
 
 		Assert.assertEquals(
 			404,
-			HTTPTestUtil.invokeHttpCode(
-				null, apiApplication1.getBaseURL(), Http.Method.GET));
+			HTTPTestUtil.invokeHttpCode(null, endpointPath1, Http.Method.GET));
 		Assert.assertEquals(
 			404,
-			HTTPTestUtil.invokeHttpCode(
-				null, apiApplication2.getBaseURL(), Http.Method.GET));
+			HTTPTestUtil.invokeHttpCode(null, endpointPath2, Http.Method.GET));
 
 		APIApplicationPublisherUtil.publishApplications(
 			_apiApplicationPublisher, apiApplication1, apiApplication2);
 
 		Assert.assertEquals(
 			200,
-			HTTPTestUtil.invokeHttpCode(
-				null, apiApplication1.getBaseURL(), Http.Method.GET));
+			HTTPTestUtil.invokeHttpCode(null, endpointPath1, Http.Method.GET));
 		Assert.assertEquals(
 			200,
+			HTTPTestUtil.invokeHttpCode(null, endpointPath2, Http.Method.GET));
+
+		String randomEndpointPath1 =
+			apiApplication1.getBaseURL() + StringPool.SLASH +
+				RandomTestUtil.randomString();
+
+		Assert.assertEquals(
+			404,
 			HTTPTestUtil.invokeHttpCode(
-				null, apiApplication2.getBaseURL(), Http.Method.GET));
+				null, randomEndpointPath1, Http.Method.GET));
+
+		String randomEndpointPath2 =
+			apiApplication2.getBaseURL() + StringPool.SLASH +
+				RandomTestUtil.randomString();
+
+		Assert.assertEquals(
+			404,
+			HTTPTestUtil.invokeHttpCode(
+				null, randomEndpointPath2, Http.Method.GET));
 
 		APIApplicationPublisherUtil.unpublishApplications(
 			_apiApplicationPublisher, apiApplication1);
 
 		Assert.assertEquals(
 			404,
-			HTTPTestUtil.invokeHttpCode(
-				null, apiApplication1.getBaseURL(), Http.Method.GET));
+			HTTPTestUtil.invokeHttpCode(null, endpointPath1, Http.Method.GET));
 		Assert.assertEquals(
 			200,
-			HTTPTestUtil.invokeHttpCode(
-				null, apiApplication2.getBaseURL(), Http.Method.GET));
+			HTTPTestUtil.invokeHttpCode(null, endpointPath2, Http.Method.GET));
 	}
 
-	private APIApplication _addAPIApplication(String externalReferenceCode)
+	private APIApplication _addAPIApplication(
+			String externalReferenceCode, String path)
 		throws Exception {
 
 		String apiEndpointExternalReferenceCode = RandomTestUtil.randomString();
@@ -115,7 +134,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 					).put(
 						"name", "name"
 					).put(
-						"path", "path"
+						"path", path
 					).put(
 						"scope", "company"
 					))
@@ -172,6 +191,12 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 		return _apiApplicationProvider.fetchAPIApplication(
 			baseURL, TestPropsValues.getCompanyId());
 	}
+
+	private static final String _API_APPLICATION_ENDPOINT_PATH_1 =
+		StringPool.SLASH + RandomTestUtil.randomString();
+
+	private static final String _API_APPLICATION_ENDPOINT_PATH_2 =
+		StringPool.SLASH + RandomTestUtil.randomString();
 
 	private static final String _API_APPLICATION_ERC_1 =
 		RandomTestUtil.randomString();

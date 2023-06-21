@@ -164,7 +164,8 @@ const Question = ({
 					setError(errorObject);
 
 					setLoading(false);
-				} else {
+				}
+				else {
 					setQuestion(messageBoardThreadByFriendlyUrlPath);
 					setLoading(false);
 				}
@@ -282,7 +283,8 @@ const Question = ({
 			});
 
 			setIsVisibleEditor(false);
-		} catch (error) {
+		}
+		catch (error) {
 			processGraphQLError(error);
 		}
 

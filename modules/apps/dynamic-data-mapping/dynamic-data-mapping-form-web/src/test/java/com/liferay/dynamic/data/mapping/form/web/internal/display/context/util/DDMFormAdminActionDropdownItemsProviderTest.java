@@ -288,7 +288,7 @@ public class DDMFormAdminActionDropdownItemsProviderTest {
 			_INVALID_DDM_FORM_INSTANCE, dropdownItem.get("disabled"));
 		Assert.assertTrue(Validator.isNotNull(dropdownItem.get("href")));
 		Assert.assertEquals("copy", dropdownItem.get("icon"));
-		Assert.assertEquals("duplicate", dropdownItem.get("label"));
+		Assert.assertEquals("duplicate-form", dropdownItem.get("label"));
 	}
 
 	private void _assertActionDropdownItemEdit(DropdownItem dropdownItem) {

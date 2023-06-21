@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
@@ -35,11 +34,9 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -213,20 +210,10 @@ public class DDMSearchHelper {
 
 			Hits hits = indexer.search(searchContext);
 
-			List<T> models = new ArrayList<>();
-
-			for (Document document : hits.getDocs()) {
-				long entryClassPK = GetterUtil.getLong(
-					document.get(Field.ENTRY_CLASS_PK));
-
-				Optional.ofNullable(
-					getModelUnsafeFunction.apply(entryClassPK)
-				).ifPresent(
-					models::add
-				);
-			}
-
-			return models;
+			return TransformUtil.transformToList(
+				hits.getDocs(),
+				document -> getModelUnsafeFunction.apply(
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))));
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {

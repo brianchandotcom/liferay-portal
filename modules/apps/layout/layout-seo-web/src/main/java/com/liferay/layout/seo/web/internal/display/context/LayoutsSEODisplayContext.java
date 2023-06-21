@@ -44,6 +44,7 @@ import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.model.LayoutSEOSite;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalServiceUtil;
 import com.liferay.layout.seo.service.LayoutSEOSiteLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -75,7 +76,6 @@ import com.liferay.site.display.context.GroupDisplayContextHelper;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import javax.portlet.MimeResponse;
 import javax.portlet.PortletRequest;
@@ -486,25 +486,26 @@ public class LayoutsSEODisplayContext {
 			"defaultLanguageId", _selLayout.getDefaultLanguageId()
 		).put(
 			"fields",
-			infoForm.getAllInfoFields(
-			).stream(
-			).filter(
-				infoField -> !StringUtil.startsWith(
-					infoField.getName(),
-					PortletDisplayTemplate.DISPLAY_STYLE_PREFIX)
-			).map(
-				infoField -> JSONUtil.put(
-					"key", infoField.getName()
-				).put(
-					"label", infoField.getLabel(_themeDisplay.getLocale())
-				).put(
-					"type",
-					infoField.getInfoFieldType(
-					).getName()
-				)
-			).collect(
-				Collectors.toList()
-			)
+			TransformUtil.transform(
+				infoForm.getAllInfoFields(),
+				infoField -> {
+					if (StringUtil.startsWith(
+							infoField.getName(),
+							PortletDisplayTemplate.DISPLAY_STYLE_PREFIX)) {
+
+						return null;
+					}
+
+					return JSONUtil.put(
+						"key", infoField.getName()
+					).put(
+						"label", infoField.getLabel(_themeDisplay.getLocale())
+					).put(
+						"type",
+						infoField.getInfoFieldType(
+						).getName()
+					);
+				})
 		).put(
 			"selectedSource",
 			JSONUtil.put(

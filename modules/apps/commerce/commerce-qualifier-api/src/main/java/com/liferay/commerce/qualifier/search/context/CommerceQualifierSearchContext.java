@@ -14,12 +14,12 @@
 
 package com.liferay.commerce.qualifier.search.context;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
+
 import java.io.Serializable;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.LongStream;
 
 /**
  * @author Riccardo Alberti
@@ -85,14 +85,7 @@ public class CommerceQualifierSearchContext implements Serializable {
 		}
 
 		public Builder setTargetAttribute(String key, long[] value) {
-			LongStream longStream = Arrays.stream(value);
-
-			_targetAttributes.put(
-				key,
-				longStream.boxed(
-				).toArray(
-					Long[]::new
-				));
+			_targetAttributes.put(key, ArrayUtil.toLongArray(value));
 
 			return this;
 		}

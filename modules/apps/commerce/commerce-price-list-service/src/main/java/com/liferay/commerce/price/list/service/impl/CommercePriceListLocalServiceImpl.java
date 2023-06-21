@@ -106,7 +106,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.LongStream;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -1594,15 +1593,10 @@ public class CommercePriceListLocalServiceImpl
 					commercePriceListId.eq(
 						CommercePriceListTable.INSTANCE.commercePriceListId));
 
-			LongStream longStream = Arrays.stream(commerceAccountGroupIds);
-
 			predicate = predicate.and(
 				CommercePriceListCommerceAccountGroupRelTable.INSTANCE.
 					commerceAccountGroupId.in(
-						longStream.boxed(
-						).toArray(
-							Long[]::new
-						)));
+						ArrayUtil.toLongArray(commerceAccountGroupIds)));
 		}
 		else {
 			joinStep = joinStep.leftJoinOn(
@@ -1691,12 +1685,8 @@ public class CommercePriceListLocalServiceImpl
 		if ((commerceAccountGroupIds != null) &&
 			(commerceAccountGroupIds.length > 0)) {
 
-			LongStream longStream = Arrays.stream(commerceAccountGroupIds);
-
-			commerceAccountGroupObjs = longStream.boxed(
-			).toArray(
-				Long[]::new
-			);
+			commerceAccountGroupObjs = ArrayUtil.toLongArray(
+				commerceAccountGroupIds);
 		}
 
 		Predicate predicate = CommercePriceListTable.INSTANCE.status.eq(

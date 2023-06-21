@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.admin.web.internal.display.context.IndexActionsDisplayContext;
 import com.liferay.portal.search.capabilities.SearchCapabilities;
+import com.liferay.portal.search.configuration.ReindexConfiguration;
 
 import java.util.Map;
 
@@ -45,11 +46,13 @@ import javax.servlet.http.HttpServletRequest;
 public class IndexActionsDisplayContextBuilder {
 
 	public IndexActionsDisplayContextBuilder(
-		Language language, Portal portal, RenderRequest renderRequest,
+		Language language, Portal portal,
+		ReindexConfiguration reindexConfiguration, RenderRequest renderRequest,
 		RenderResponse renderResponse, SearchCapabilities searchCapabilities) {
 
 		_language = language;
 		_portal = portal;
+		_reindexConfiguration = reindexConfiguration;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_searchCapabilities = searchCapabilities;
@@ -87,7 +90,9 @@ public class IndexActionsDisplayContextBuilder {
 	}
 
 	private String _getInitialExecutionMode() {
-		return ParamUtil.getString(_httpServletRequest, "executionMode");
+		return ParamUtil.getString(
+			_httpServletRequest, "executionMode",
+			_reindexConfiguration.defaultReindexExecutionMode());
 	}
 
 	private String _getInitialScope() {
@@ -137,6 +142,7 @@ public class IndexActionsDisplayContextBuilder {
 	private final HttpServletRequest _httpServletRequest;
 	private final Language _language;
 	private final Portal _portal;
+	private final ReindexConfiguration _reindexConfiguration;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private final SearchCapabilities _searchCapabilities;

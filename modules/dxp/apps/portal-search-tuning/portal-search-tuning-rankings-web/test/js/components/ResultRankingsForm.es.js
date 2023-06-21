@@ -87,7 +87,7 @@ describe('ResultRankingsForm', () => {
 		${['one', 'two', 'three']} | ${[]}        | ${''}         | ${['one', 'two', 'three']}         | ${'initial aliases'}
 		${[]}                      | ${['one']}   | ${''}         | ${['one']}                         | ${'added alias'}
 		${['one', 'two', 'three']} | ${['four']}  | ${''}         | ${['one', 'two', 'three', 'four']} | ${'added alias with initial'}
-		${[]}                      | ${[' ']}     | ${''}         | ${[]}                              | ${'blank alias'}
+		${[]}                      | ${['']}      | ${''}         | ${[]}                              | ${'blank alias'}
 		${[]}                      | ${[' one ']} | ${''}         | ${['one']}                         | ${'trimmed alias'}
 		${['one', 'two', 'three']} | ${['one']}   | ${''}         | ${['one', 'two', 'three']}         | ${'no duplicate aliases'}
 	`(

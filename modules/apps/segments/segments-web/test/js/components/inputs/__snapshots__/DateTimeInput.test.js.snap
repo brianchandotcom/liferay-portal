@@ -30,7 +30,7 @@ exports[`DateTimeInput renders date with no change in the input 1`] = `
             class="input-group-inset-item input-group-inset-item-after"
           >
             <button
-              aria-controls="clay-id-6"
+              aria-controls="clay-id-16"
               aria-expanded="false"
               aria-haspopup="dialog"
               aria-label="Test label: select-date"
@@ -84,7 +84,7 @@ exports[`DateTimeInput renders date-time with no change in the input 1`] = `
             class="input-group-inset-item input-group-inset-item-after"
           >
             <button
-              aria-controls="clay-id-5"
+              aria-controls="clay-id-13"
               aria-expanded="false"
               aria-haspopup="dialog"
               aria-label="Test label: select-date"
@@ -138,7 +138,7 @@ exports[`DateTimeInput renders previous date with wrong date 1`] = `
             class="input-group-inset-item input-group-inset-item-after"
           >
             <button
-              aria-controls="clay-id-4"
+              aria-controls="clay-id-10"
               aria-expanded="false"
               aria-haspopup="dialog"
               aria-label="Test label: select-date"
@@ -192,7 +192,7 @@ exports[`DateTimeInput renders previous date with wrong date-time 1`] = `
             class="input-group-inset-item input-group-inset-item-after"
           >
             <button
-              aria-controls="clay-id-2"
+              aria-controls="clay-id-4"
               aria-expanded="false"
               aria-haspopup="dialog"
               aria-label="Test label: select-date"
@@ -246,7 +246,7 @@ exports[`DateTimeInput renders type date 1`] = `
             class="input-group-inset-item input-group-inset-item-after"
           >
             <button
-              aria-controls="clay-id-3"
+              aria-controls="clay-id-7"
               aria-expanded="false"
               aria-haspopup="dialog"
               aria-label="Test label: select-date"

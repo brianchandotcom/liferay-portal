@@ -944,6 +944,7 @@ public class DDMFormValuesValidatorTest {
 				}
 
 			});
+
 		ReflectionTestUtil.setFieldValue(
 			_ddmFormValuesValidatorImpl, "_ddmExpressionFactory",
 			ddmExpressionFactoryImpl);

@@ -102,12 +102,42 @@ definition {
 	}
 
 	@description = "LPS-179151. Confirm the change in the field label field."
-	@ignore = "true"
 	@priority = 5
 	test CanAssertChangeInTheLabelField {
+		task ("And adds two or more fields") {
+			DataSetAdmin.addFields(key_fieldList = "id,label");
+		}
 
-		// TODO LPS-179151 CanAssertChangeInTheLabelField pending implementation
+		task ("And clicks on ellipsis button on one of these fields") {
+			Click(
+				key_fieldName = "id",
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
+		}
 
+		task ("And clicks on Edit option") {
+			MenuItem.click(menuItem = "Edit");
+		}
+
+		task ("And the user changes the label field to "test"") {
+			Type(
+				key_text = "Label",
+				locator1 = "TextInput#ANY",
+				value1 = "test");
+		}
+
+		task ("And clicks on Save button") {
+			Click(
+				key_text = "Save",
+				locator1 = "CP2ActivationKeys#KEY_DEACTIVATION_TERMS");
+		}
+
+		task ("Then the field label is changed the field should have “test” as its label") {
+			AssertElementPresent(
+				chosenFilter = "test",
+				key_tableColumn = 1,
+				key_tableRow = 1,
+				locator1 = "DataSet#FILTER_TABLE_CELL");
+		}
 	}
 
 	@description = "LPS-185498. Confirm that when trying to delete field, modal appears."
@@ -133,12 +163,33 @@ definition {
 	}
 
 	@description = "LPS-179151. Confirm that the Checkbox in the Field edit modal is displayed."
-	@ignore = "true"
 	@priority = 5
 	test CanAssertTheSortableCheckbox {
+		task ("And adds two or more fields") {
+			DataSetAdmin.addFields(key_fieldList = "id,label");
+		}
 
-		// TODO LPS-179151 CanAssertTheSortableCheckbox pending implementation
+		task ("And clicks on ellipsis button on one of these fields") {
+			Click(
+				key_fieldName = "id",
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
+		}
 
+		task ("And clicks on Edit option") {
+			MenuItem.click(menuItem = "Edit");
+		}
+
+		task ("Then Edit field modal is displayed") {
+			AssertVisible(
+				locator1 = "Portlet#MODAL_TITLE",
+				value1 = "Edit id");
+		}
+
+		task ("And contains Sortable checkbox") {
+			AssertElementPresent(
+				key_checkboxOption = "Sortable",
+				locator1 = "AppBuilder#CHECKBOX_OPTION_LABEL");
+		}
 	}
 
 	@description = "LPS-185230. Confirm that the user can cancel adding a field by clicking on cancel button."
@@ -264,21 +315,91 @@ definition {
 	}
 
 	@description = "LPS-179151. Confirm the cancellation of the field edit by clicking on the Cancel button."
-	@ignore = "true"
 	@priority = 5
 	test CanCancelEditOnCancelButton {
+		task ("And adds two or more fields") {
+			DataSetAdmin.addFields(key_fieldList = "id,label");
+		}
 
-		// TODO LPS-179151 CanCancelEditOnCancelButton pending implementation
+		task ("And clicks on ellipsis button on one of these fields") {
+			Click(
+				key_fieldName = "id",
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
+		}
 
+		task ("And clicks on Edit option") {
+			MenuItem.click(menuItem = "Edit");
+		}
+
+		task ("And the user changes the label field value to "test"") {
+			Type(
+				key_text = "Label",
+				locator1 = "TextInput#ANY",
+				value1 = "test");
+		}
+
+		task ("And clicks on Cancel button") {
+			Button.clickCancel();
+		}
+
+		task ("Then Edit field modal is closed") {
+			AssertElementNotPresent(
+				locator1 = "Portlet#MODAL_TITLE",
+				value1 = "Edit id");
+		}
+
+		task ("And the changes are not applied") {
+			AssertElementNotPresent(
+				chosenFilter = "test",
+				key_tableColumn = 1,
+				key_tableRow = 1,
+				locator1 = "DataSet#FILTER_TABLE_CELL");
+		}
 	}
 
 	@description = "LPS-179151. Confirm the cancellation of the field edit by clicking on the Close button."
-	@ignore = "true"
 	@priority = 5
 	test CanCancelEditOnCloseButton {
+		task ("And adds two or more fields") {
+			DataSetAdmin.addFields(key_fieldList = "id,label");
+		}
 
-		// TODO LPS-179151 CanCancelEditOnCloseButton pending implementation
+		task ("And clicks on ellipsis button on one of these fields") {
+			Click(
+				key_fieldName = "id",
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
+		}
 
+		task ("And clicks on Edit option") {
+			MenuItem.click(menuItem = "Edit");
+		}
+
+		task ("And the user changes the label field to "test"") {
+			Type(
+				key_text = "Label",
+				locator1 = "TextInput#ANY",
+				value1 = "test");
+		}
+
+		task ("And clicks on Close button") {
+			Click(
+				key_modalTitle = "Edit id",
+				locator1 = "Button#CLOSE_MODAL");
+		}
+
+		task ("Then Edit field modal is closed") {
+			AssertElementNotPresent(
+				locator1 = "Portlet#MODAL_TITLE",
+				value1 = "Edit id");
+		}
+
+		task ("And the changes are not applied") {
+			AssertElementNotPresent(
+				chosenFilter = "test",
+				key_tableColumn = 1,
+				key_tableRow = 1,
+				locator1 = "DataSet#FILTER_TABLE_CELL");
+		}
 	}
 
 	@description = "LPS-185500. Confirm that can cancel field deletion on cancel button."
@@ -411,21 +532,95 @@ definition {
 	}
 
 	@description = "LPS-179151. Confirm that the checkbox in the field edit modal is checked."
-	@ignore = "true"
 	@priority = 5
 	test CanConfirmCheckedSortableCheckbox {
+		task ("And adds two or more fields") {
+			DataSetAdmin.addFields(key_fieldList = "id,label");
+		}
 
-		// TODO LPS-179151 CanConfirmCheckedSortableCheckbox pending implementation
+		task ("And clicks on ellipsis button on one of these fields") {
+			Click(
+				key_fieldName = "id",
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
+		}
 
+		task ("And clicks on Edit option") {
+			MenuItem.click(menuItem = "Edit");
+		}
+
+		task ("Then Edit field modal is displayed") {
+			AssertVisible(
+				locator1 = "Portlet#MODAL_TITLE",
+				value1 = "Edit id");
+		}
+
+		task ("When the user unchecks and check on Sortable checkbox") {
+			Click(
+				key_checkboxOption = "Sortable",
+				locator1 = "AppBuilder#CHECKBOX_OPTION_LABEL");
+
+			Click(
+				key_checkboxOption = "Sortable",
+				locator1 = "AppBuilder#CHECKBOX_OPTION_LABEL");
+		}
+
+		task ("And clicks on Save button") {
+			Click(
+				key_text = "Save",
+				locator1 = "CP2ActivationKeys#KEY_DEACTIVATION_TERMS");
+		}
+
+		task ("Then the sortable field value is "yes" or "true"") {
+			AssertElementPresent(
+				chosenFilter = "true",
+				key_tableColumn = 1,
+				key_tableRow = 1,
+				locator1 = "DataSet#FILTER_TABLE_CELL");
+		}
 	}
 
 	@description = "LPS-179151. Confirm that the checkbox in the field edit modal is unchecked."
-	@ignore = "true"
 	@priority = 5
 	test CanConfirmUncheckedSortableCheckbox {
+		task ("And adds two or more fields") {
+			DataSetAdmin.addFields(key_fieldList = "id,label");
+		}
 
-		// TODO LPS-179151 CanConfirmUncheckedSortableCheckbox pending implementation
+		task ("And clicks on ellipsis button on one of these fields") {
+			Click(
+				key_fieldName = "id",
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
+		}
 
+		task ("And clicks on Edit option") {
+			MenuItem.click(menuItem = "Edit");
+		}
+
+		task ("Then Edit field modal is displayed") {
+			AssertVisible(
+				locator1 = "Portlet#MODAL_TITLE",
+				value1 = "Edit id");
+		}
+
+		task ("When the user unchecks on Sortable checkbox") {
+			Click(
+				key_checkboxOption = "Sortable",
+				locator1 = "AppBuilder#CHECKBOX_OPTION_LABEL");
+		}
+
+		task ("And clicks on Save button") {
+			Click(
+				key_text = "Save",
+				locator1 = "CP2ActivationKeys#KEY_DEACTIVATION_TERMS");
+		}
+
+		task ("Then the sortable field value is "no" or "false"") {
+			AssertElementPresent(
+				chosenFilter = "false",
+				key_tableColumn = 1,
+				key_tableRow = 1,
+				locator1 = "DataSet#FILTER_TABLE_CELL");
+		}
 	}
 
 	@description = "LPS-185499. Confirm that field can be deleted."
@@ -861,12 +1056,21 @@ definition {
 	}
 
 	@description = "LPS-179151. Confirm that the Field Edit modal is displayed."
-	@ignore = "true"
 	@priority = 5
 	test TheEditFieldModalIsDisplayed {
+		task ("And adds two or more fields") {
+			DataSetAdmin.addFields(key_fieldList = "id,label");
+		}
 
-		// TODO LPS-179151 TheEditFieldModalIsDisplayed pending implementation
+		task ("And clicks on ellipsis button on one of these fields") {
+			Click(
+				key_fieldName = "id",
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
+		}
 
+		task ("Then a dropdown is displayed that contains Edit option") {
+			MenuItem.viewVisible(menuItem = "Edit");
+		}
 	}
 
 }

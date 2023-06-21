@@ -30,6 +30,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -52,6 +53,7 @@ import java.io.Writer;
 import java.util.Collection;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -327,35 +329,13 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 							Map<String, Object> fdsFieldProperties =
 								fdsField.getProperties();
 
-							boolean clientExtension = false;
-							String moduleName = null;
+							JSONObject jsonObject =
+								_jsonFactory.createJSONObject();
 
-							String rendererType = String.valueOf(
-								fdsFieldProperties.get("rendererType"));
-
-							if (rendererType.equals("clientExtension")) {
-								FDSCellRendererCET fdsCellRendererCET =
-									(FDSCellRendererCET)_cetManager.getCET(
-										fragmentEntryLink.getCompanyId(),
-										String.valueOf(
-											fdsFieldProperties.get(
-												"renderer")));
-
-								clientExtension = true;
-								moduleName =
-									"default from " +
-										fdsCellRendererCET.getURL();
-							}
-
-							return JSONUtil.put(
+							jsonObject.put(
 								"contentRenderer",
 								String.valueOf(
 									fdsFieldProperties.get("renderer"))
-							).put(
-								"contentRendererClientExtension",
-								clientExtension
-							).put(
-								"contentRendererModuleURL", moduleName
 							).put(
 								"fieldName",
 								String.valueOf(fdsFieldProperties.get("name"))
@@ -363,11 +343,33 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 								"label",
 								String.valueOf(fdsFieldProperties.get("label"))
 							).put(
-								"rendererType", rendererType
-							).put(
 								"sortable",
 								(boolean)fdsFieldProperties.get("sortable")
 							);
+
+							String rendererType = String.valueOf(
+								fdsFieldProperties.get("rendererType"));
+
+							if (Objects.equals(
+									rendererType, "clientExtension")) {
+
+								FDSCellRendererCET fdsCellRendererCET =
+									(FDSCellRendererCET)_cetManager.getCET(
+										fragmentEntryLink.getCompanyId(),
+										String.valueOf(
+											fdsFieldProperties.get(
+												"renderer")));
+
+								jsonObject.put(
+									"contentRendererClientExtension", true
+								).put(
+									"contentRendererModuleURL",
+									"default from " +
+										fdsCellRendererCET.getURL()
+								);
+							}
+
+							return jsonObject;
 						}))
 			));
 	}
@@ -377,6 +379,9 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 
 	@Reference
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Language _language;

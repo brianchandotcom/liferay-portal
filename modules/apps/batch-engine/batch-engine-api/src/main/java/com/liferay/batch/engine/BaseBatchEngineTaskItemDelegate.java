@@ -46,8 +46,10 @@ public abstract class BaseBatchEngineTaskItemDelegate<T>
 			items, item -> createItem(item, parameters));
 	}
 
-	public void createItem(T item, Map<String, Serializable> parameters)
+	public T createItem(T item, Map<String, Serializable> parameters)
 		throws Exception {
+
+		return null;
 	}
 
 	@Override

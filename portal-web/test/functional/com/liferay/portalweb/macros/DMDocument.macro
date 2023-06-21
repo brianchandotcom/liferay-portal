@@ -4373,7 +4373,7 @@ definition {
 		DMDocument.expandInfo();
 
 		for (var tagName : list ${tagName}) {
-			ScrollWebElementIntoView(locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_TAGS_HEADER");
+			ScrollWebElementIntoView(locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_RATING");
 
 			var tagName = StringUtil.lowerCase(${tagName});
 

@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+
+	<!-- Seting the JSF 2 PROJECT_STAGE to Development will cause the JSF implementation will do the following at runtime: -->
+
+	<!-- 1. Log more verbose messages. -->
+
+	<!-- 2. Render tips and/or warnings in the view markup. -->
+
+	<!-- 3. Cause the default ExceptionHandler to display a developer-friendly error page. -->
+
+	<context-param>
+		<param-name>javax.faces.PROJECT_STAGE</param-name>
+		<param-value>Development</param-value>
+	</context-param>
+
+	<!-- JSF 2.2 now allows for composite components and resources to be hidden under WEB-INF -->
+
+	<context-param>
+		<param-name>javax.faces.WEBAPP_RESOURCES_DIRECTORY</param-name>
+		<param-value>/WEB-INF/resources</param-value>
+	</context-param>
+
+	<!-- Although the FacesServlet will not be invoked by any portlet requests, it is required to initialize JSF. -->
+
+	<servlet>
+		<servlet-name>Faces Servlet</servlet-name>
+		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<security-constraint>
+		<display-name>Prevent direct access to Facelet XHTML</display-name>
+		<web-resource-collection>
+			<web-resource-name>Facelet XHTML</web-resource-name>
+			<url-pattern>*.xhtml</url-pattern>
+		</web-resource-collection>
+		<auth-constraint/>
+	</security-constraint>
+</web-app>

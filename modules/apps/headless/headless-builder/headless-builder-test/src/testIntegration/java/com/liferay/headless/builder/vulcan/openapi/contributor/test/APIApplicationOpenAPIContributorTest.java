@@ -244,13 +244,15 @@ public class APIApplicationOpenAPIContributorTest extends BaseTestCase {
 					"textField"
 				).build()));
 
+		String relationshipName = "a" + RandomTestUtil.randomString();
+
 		_objectRelationshipLocalService.addObjectRelationship(
 			TestPropsValues.getUserId(),
 			_objectDefinition1.getObjectDefinitionId(),
 			_objectDefinition2.getObjectDefinitionId(), 0,
 			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			"oneToManyRelationshipName",
+			relationshipName,
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		ObjectField aggregationObjectField = new AggregationObjectFieldBuilder(
@@ -266,7 +268,7 @@ public class APIApplicationOpenAPIContributorTest extends BaseTestCase {
 			Arrays.asList(
 				_createObjectFieldSetting("function", "COUNT"),
 				_createObjectFieldSetting(
-					"objectRelationshipName", "oneToManyRelationshipName"))
+					"objectRelationshipName", relationshipName))
 		).build();
 
 		_objectFieldLocalService.addCustomObjectField(

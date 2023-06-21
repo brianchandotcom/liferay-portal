@@ -7,6 +7,7 @@
 		{
 			"DBType": "Long",
 			"businessType": "Attachment",
+			"defaultValue": "",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "en_US",
@@ -21,7 +22,7 @@
 				},
 				{
 					"name": "maximumFileSize",
-					"value": 5
+					"value": "5"
 				},
 				{
 					"name": "fileSource",
@@ -36,8 +37,6 @@
 					"value": "/EVPUploadReceipt"
 				}
 			],
-			"readOnly": "false",
-			"readOnlyConditionExpression": "",
 			"required": true,
 			"state": false,
 			"system": false,
@@ -46,6 +45,7 @@
 		{
 			"DBType": "BigDecimal",
 			"businessType": "PrecisionDecimal",
+			"defaultValue": "",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "",
@@ -53,10 +53,6 @@
 				"en_US": "Receipt Value"
 			},
 			"name": "receiptValue",
-			"objectFieldSettings": [
-			],
-			"readOnly": "false",
-			"readOnlyConditionExpression": "",
 			"required": true,
 			"state": false,
 			"system": false,

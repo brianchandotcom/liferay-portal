@@ -184,6 +184,10 @@ public abstract class BasePortletDataHandlerTestCase {
 
 		Group cleanGroup = GroupTestUtil.addGroup();
 
+		portletDataContext.setDataStrategy(
+			PortletDataHandlerKeys.DATA_STRATEGY_MIRROR);
+		portletDataContext.setGroupId(cleanGroup.getGroupId());
+		portletDataContext.setScopeGroupId(cleanGroup.getGroupId());
 		portletDataContext.setUserIdStrategy(
 			userUuid -> {
 				try {
@@ -193,12 +197,8 @@ public abstract class BasePortletDataHandlerTestCase {
 					return 0;
 				}
 			});
-		portletDataContext.setDataStrategy(
-			PortletDataHandlerKeys.DATA_STRATEGY_MIRROR);
 		portletDataContext.setZipReader(
 			_zipReaderFactory.getZipReader(exportZipWriter.getFile()));
-		portletDataContext.setScopeGroupId(cleanGroup.getGroupId());
-		portletDataContext.setGroupId(cleanGroup.getGroupId());
 
 		portletDataContext.clearScopedPrimaryKeys();
 

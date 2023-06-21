@@ -9,6 +9,8 @@ import type {Atom} from '@liferay/frontend-js-state-web';
 
 export const activeLanguageIdsAtom: Atom<any>;
 
+export {default as ClientExtension} from './ClientExtension';
+
 export {default as ManagementToolbar} from './management_toolbar/ManagementToolbar';
 
 export {default as Treeview} from './treeview/Treeview';

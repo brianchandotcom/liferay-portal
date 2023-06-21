@@ -372,13 +372,11 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-		var key_rowEntry = ${teamName};
-
-		AssertClick(
-			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
-			value1 = ${teamName});
+		Click(
+			key_listEntry = ${teamName},
+			locator1 = "LexiconList#ANY_LIST");
 
 		SelectFrame(value1 = "relative=top");
 

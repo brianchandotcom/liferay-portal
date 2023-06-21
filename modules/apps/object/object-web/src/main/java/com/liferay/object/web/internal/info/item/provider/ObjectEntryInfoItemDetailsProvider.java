@@ -14,14 +14,18 @@
 
 package com.liferay.object.web.internal.info.item.provider;
 
+import com.liferay.info.item.ERCInfoItemIdentifier;
 import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemDetails;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.provider.InfoItemDetailsProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.portal.kernel.util.LocaleUtil;
+
+import java.util.Objects;
 
 /**
  * @author Guilherme Camacho
@@ -50,6 +54,18 @@ public class ObjectEntryInfoItemDetailsProvider
 
 	@Override
 	public InfoItemDetails getInfoItemDetails(ObjectEntry objectEntry) {
+		if (Objects.equals(
+				_objectDefinition.getStorageType(),
+				ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE)) {
+
+			return new InfoItemDetails(
+				getInfoItemClassDetails(),
+				new InfoItemReference(
+					_objectDefinition.getClassName(),
+					new ERCInfoItemIdentifier(
+						objectEntry.getExternalReferenceCode())));
+		}
+
 		return new InfoItemDetails(
 			getInfoItemClassDetails(),
 			new InfoItemReference(

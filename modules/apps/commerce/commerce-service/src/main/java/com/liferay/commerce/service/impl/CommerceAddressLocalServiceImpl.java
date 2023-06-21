@@ -58,7 +58,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alec Sloan
  */
 @Component(
-	property = "model.class.name=com.liferay.commerce.model.CommerceAddress",
+	property = {
+		"liferay.service=false",
+		"model.class.name=com.liferay.commerce.model.CommerceAddress"
+	},
 	service = AopService.class
 )
 public class CommerceAddressLocalServiceImpl

@@ -9,6 +9,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.module.util.BundleUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.spring.aop.AopCacheManager;
@@ -44,7 +45,10 @@ public class AopServiceRegistrar {
 		_aopService = aopService;
 		_aopServiceInterfaces = aopServiceInterfaces;
 
-		if (BundleUtil.isLiferayServiceBundle(serviceReference.getBundle())) {
+		if (BundleUtil.isLiferayServiceBundle(serviceReference.getBundle()) &&
+			GetterUtil.getBoolean(
+				serviceReference.getProperty("liferay.service"), true)) {
+
 			_liferayService = true;
 		}
 		else {

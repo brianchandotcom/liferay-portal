@@ -77,6 +77,7 @@ import com.liferay.object.service.ObjectLayoutLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.web.internal.display.context.helper.ObjectRequestHelper;
 import com.liferay.object.web.internal.security.permission.resource.util.ObjectDefinitionResourcePermissionUtil;
+import com.liferay.object.web.internal.util.ObjectEntryUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -1319,17 +1320,8 @@ public class ObjectEntryDisplayContextImpl
 
 		ObjectDefinition objectDefinition = getObjectDefinition1();
 
-		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
-			_objectEntryLocalService.createObjectEntry(0L);
-
-		serviceBuilderObjectEntry.setExternalReferenceCode(
-			objectEntry.getExternalReferenceCode());
-		serviceBuilderObjectEntry.setObjectEntryId(
-			GetterUtil.getLong(objectEntry.getId()));
-		serviceBuilderObjectEntry.setObjectDefinitionId(
-			objectDefinition.getObjectDefinitionId());
-
-		return serviceBuilderObjectEntry;
+		return ObjectEntryUtil.toObjectEntry(
+			objectDefinition.getObjectDefinitionId(), objectEntry);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -24,7 +24,7 @@ import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.related.models.ObjectRelatedModelsProvider;
 import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
-import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.web.internal.util.ObjectEntryUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -62,7 +61,6 @@ public class ObjectEntryItemSelectorViewDescriptor
 		HttpServletRequest httpServletRequest,
 		InfoItemItemSelectorCriterion infoItemItemSelectorCriterion,
 		ObjectDefinition objectDefinition,
-		ObjectEntryLocalService objectEntryLocalService,
 		ObjectEntryManager objectEntryManager,
 		ObjectRelatedModelsProviderRegistry objectRelatedModelsProviderRegistry,
 		Portal portal, PortletURL portletURL) {
@@ -70,7 +68,6 @@ public class ObjectEntryItemSelectorViewDescriptor
 		_httpServletRequest = httpServletRequest;
 		_infoItemItemSelectorCriterion = infoItemItemSelectorCriterion;
 		_objectDefinition = objectDefinition;
-		_objectEntryLocalService = objectEntryLocalService;
 		_objectEntryManager = objectEntryManager;
 		_objectRelatedModelsProviderRegistry =
 			objectRelatedModelsProviderRegistry;
@@ -160,7 +157,7 @@ public class ObjectEntryItemSelectorViewDescriptor
 
 			return TransformUtil.transform(
 				page.getItems(),
-				objectEntry -> _toObjectEntry(
+				objectEntry -> ObjectEntryUtil.toObjectEntry(
 					_objectDefinition.getObjectDefinitionId(), objectEntry));
 		}
 
@@ -177,28 +174,12 @@ public class ObjectEntryItemSelectorViewDescriptor
 			ParamUtil.getLong(_portletRequest, "objectRelationshipId"));
 	}
 
-	private ObjectEntry _toObjectEntry(
-		long objectDefinitionId,
-		com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry) {
-
-		ObjectEntry serviceBuilderObjectEntry =
-			_objectEntryLocalService.createObjectEntry(
-				GetterUtil.getLong(objectEntry.getId()));
-
-		serviceBuilderObjectEntry.setExternalReferenceCode(
-			objectEntry.getExternalReferenceCode());
-		serviceBuilderObjectEntry.setObjectDefinitionId(objectDefinitionId);
-
-		return serviceBuilderObjectEntry;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectEntryItemSelectorViewDescriptor.class);
 
 	private final HttpServletRequest _httpServletRequest;
 	private final InfoItemItemSelectorCriterion _infoItemItemSelectorCriterion;
 	private final ObjectDefinition _objectDefinition;
-	private final ObjectEntryLocalService _objectEntryLocalService;
 	private final ObjectEntryManager _objectEntryManager;
 	private final ObjectRelatedModelsProviderRegistry
 		_objectRelatedModelsProviderRegistry;

@@ -16,10 +16,7 @@ package com.liferay.object.service.impl;
 
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
-import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
-import com.liferay.asset.kernel.service.AssetTagLocalService;
-import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
@@ -657,19 +654,17 @@ public class ObjectDefinitionLocalServiceImpl
 			new ObjectDefinitionDeployerImpl(
 				_accountEntryLocalService,
 				_accountEntryOrganizationRelLocalService,
-				_assetEntryLocalService,
-				_bundleContext, _dynamicQueryBatchIndexingActionableFactory,
-				_groupLocalService,
+				_assetEntryLocalService, _bundleContext,
+				_dynamicQueryBatchIndexingActionableFactory, _groupLocalService,
 				_listTypeLocalService, _modelSearchRegistrarHelper,
 				_objectActionLocalService, this, _objectEntryLocalService,
-				_objectEntryService,
-				_objectFieldLocalService, _objectLayoutLocalService,
-				_objectLayoutTabLocalService, _objectRelationshipLocalService,
-				_objectScopeProviderRegistry, _objectViewLocalService,
-				_organizationLocalService, _persistedModelLocalServiceRegistry,
-				_ploEntryLocalService, _portal, _portletLocalService,
-				_resourceActions, _userLocalService,
-				_resourcePermissionLocalService,
+				_objectEntryService, _objectFieldLocalService,
+				_objectLayoutLocalService, _objectLayoutTabLocalService,
+				_objectRelationshipLocalService, _objectScopeProviderRegistry,
+				_objectViewLocalService, _organizationLocalService,
+				_persistedModelLocalServiceRegistry, _ploEntryLocalService,
+				_portal, _portletLocalService, _resourceActions,
+				_userLocalService, _resourcePermissionLocalService,
 				_workflowStatusModelPreFilterContributor,
 				_userGroupRoleLocalService));
 

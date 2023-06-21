@@ -55,6 +55,7 @@ import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectLayoutLocalService;
+import com.liferay.object.web.internal.util.ObjectEntryUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -460,7 +461,7 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 		return InfoPage.of(
 			TransformUtil.transform(
 				objectEntries,
-				objectEntry -> _toObjectEntry(
+				objectEntry -> ObjectEntryUtil.toObjectEntry(
 					_objectDefinition.getObjectDefinitionId(), objectEntry)),
 			collectionQuery.getPagination(), objectEntries.size());
 	}
@@ -773,22 +774,6 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 		}
 
 		return false;
-	}
-
-	private ObjectEntry _toObjectEntry(
-		long objectDefinitionId,
-		com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry) {
-
-		ObjectEntry serviceBuilderObjectEntry =
-			_objectEntryLocalService.createObjectEntry(0L);
-
-		serviceBuilderObjectEntry.setExternalReferenceCode(
-			objectEntry.getExternalReferenceCode());
-		serviceBuilderObjectEntry.setObjectEntryId(
-			GetterUtil.getLong(objectEntry.getId()));
-		serviceBuilderObjectEntry.setObjectDefinitionId(objectDefinitionId);
-
-		return serviceBuilderObjectEntry;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

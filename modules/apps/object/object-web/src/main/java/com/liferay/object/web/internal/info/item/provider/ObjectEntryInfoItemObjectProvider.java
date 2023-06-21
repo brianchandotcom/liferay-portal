@@ -24,12 +24,12 @@ import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.web.internal.util.ObjectEntryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 
 /**
@@ -98,7 +98,8 @@ public class ObjectEntryInfoItemObjectProvider
 					_objectDefinition, null);
 
 			if (objectEntry != null) {
-				return _toObjectEntry(objectEntry);
+				return ObjectEntryUtil.toObjectEntry(
+					_objectDefinition.getObjectDefinitionId(), objectEntry);
 			}
 		}
 		catch (Exception exception) {
@@ -110,21 +111,6 @@ public class ObjectEntryInfoItemObjectProvider
 		throw new NoSuchInfoItemException(
 			"Unable to get object entry " +
 				ercInfoItemIdentifier.getExternalReferenceCode());
-	}
-
-	private ObjectEntry _toObjectEntry(
-		com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry) {
-
-		ObjectEntry serviceBuilderObjectEntry =
-			_objectEntryLocalService.createObjectEntry(
-				GetterUtil.getLong(objectEntry.getId()));
-
-		serviceBuilderObjectEntry.setExternalReferenceCode(
-			objectEntry.getExternalReferenceCode());
-		serviceBuilderObjectEntry.setObjectDefinitionId(
-			_objectDefinition.getObjectDefinitionId());
-
-		return serviceBuilderObjectEntry;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

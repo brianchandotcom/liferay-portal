@@ -328,7 +328,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				ItemSelectorView.class,
 				new ObjectEntryItemSelectorView(
 					infoPermissionProvider, _itemSelectorViewDescriptorRenderer,
-					objectDefinition, _objectEntryLocalService,
+					objectDefinition,
 					_objectEntryManagerRegistry.getObjectEntryManager(
 						objectDefinition.getStorageType()),
 					_objectRelatedModelsProviderRegistry, _portal),

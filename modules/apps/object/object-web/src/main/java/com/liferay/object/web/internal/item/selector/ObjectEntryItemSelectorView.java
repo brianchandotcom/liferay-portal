@@ -26,7 +26,6 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
-import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
@@ -59,7 +58,6 @@ public class ObjectEntryItemSelectorView
 		ItemSelectorViewDescriptorRenderer<InfoItemItemSelectorCriterion>
 			itemSelectorViewDescriptorRenderer,
 		ObjectDefinition objectDefinition,
-		ObjectEntryLocalService objectEntryLocalService,
 		ObjectEntryManager objectEntryManager,
 		ObjectRelatedModelsProviderRegistry objectRelatedModelsProviderRegistry,
 		Portal portal) {
@@ -68,7 +66,6 @@ public class ObjectEntryItemSelectorView
 		_itemSelectorViewDescriptorRenderer =
 			itemSelectorViewDescriptorRenderer;
 		_objectDefinition = objectDefinition;
-		_objectEntryLocalService = objectEntryLocalService;
 		_objectEntryManager = objectEntryManager;
 		_objectRelatedModelsProviderRegistry =
 			objectRelatedModelsProviderRegistry;
@@ -128,8 +125,8 @@ public class ObjectEntryItemSelectorView
 			new ObjectEntryItemSelectorViewDescriptor(
 				(HttpServletRequest)servletRequest,
 				infoItemItemSelectorCriterion, _objectDefinition,
-				_objectEntryLocalService, _objectEntryManager,
-				_objectRelatedModelsProviderRegistry, _portal, portletURL));
+				_objectEntryManager, _objectRelatedModelsProviderRegistry,
+				_portal, portletURL));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -145,7 +142,6 @@ public class ObjectEntryItemSelectorView
 	private final ItemSelectorViewDescriptorRenderer
 		<InfoItemItemSelectorCriterion> _itemSelectorViewDescriptorRenderer;
 	private final ObjectDefinition _objectDefinition;
-	private final ObjectEntryLocalService _objectEntryLocalService;
 	private final ObjectEntryManager _objectEntryManager;
 	private final ObjectRelatedModelsProviderRegistry
 		_objectRelatedModelsProviderRegistry;

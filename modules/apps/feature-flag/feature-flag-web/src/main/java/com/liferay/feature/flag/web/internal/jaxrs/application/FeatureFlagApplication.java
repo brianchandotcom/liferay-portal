@@ -14,7 +14,7 @@
 
 package com.liferay.feature.flag.web.internal.jaxrs.application;
 
-import com.liferay.feature.flag.web.internal.manager.FeatureFlagPreferencesManager;
+import com.liferay.feature.flag.web.internal.company.feature.flags.CompanyFeatureFlagsProvider;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.util.Collections;
@@ -55,7 +55,7 @@ public class FeatureFlagApplication extends Application {
 		@Context HttpServletResponse httpServletResponse,
 		@FormParam("enabled") boolean enabled, @FormParam("key") String key) {
 
-		_featureFlagPreferencesManager.setEnabled(
+		_companyFeatureFlagsProvider.setEnabled(
 			_portal.getCompanyId(httpServletRequest), key, enabled);
 
 		return Response.ok(
@@ -67,7 +67,7 @@ public class FeatureFlagApplication extends Application {
 	}
 
 	@Reference
-	private FeatureFlagPreferencesManager _featureFlagPreferencesManager;
+	private CompanyFeatureFlagsProvider _companyFeatureFlagsProvider;
 
 	@Reference
 	private Portal _portal;

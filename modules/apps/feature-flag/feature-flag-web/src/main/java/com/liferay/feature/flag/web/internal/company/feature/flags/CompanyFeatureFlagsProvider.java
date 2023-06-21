@@ -58,6 +58,10 @@ public class CompanyFeatureFlagsProvider {
 			companyId, key -> _createCompanyFeatureFlags(key));
 	}
 
+	public void setEnabled(long companyId, String key, boolean enabled) {
+		_featureFlagPreferencesManager.setEnabled(companyId, key, enabled);
+	}
+
 	public <T> T withCompanyFeatureFlags(
 		long companyId, Function<CompanyFeatureFlags, T> function) {
 

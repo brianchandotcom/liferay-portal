@@ -129,15 +129,15 @@ export async function getExportedLicenseKeys(
 	return response;
 }
 
-export async function associateContactRoleNameByEmailByProject(
+export async function associateContactRoleNameByEmailByProject({
 	accountKey,
-	provisioningServerAPI,
-	sessionId,
-	firstName,
 	emailURI,
+	firstName,
 	lastName,
-	roleName
-) {
+	provisioningServerAPI,
+	roleName,
+	sessionId,
+}) {
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(
 		`${provisioningServerAPI}/accounts/${accountKey}/contacts/by-email-address/${emailURI}/roles?contactRoleNames=${roleName}&firstName=${firstName}&lastName=${lastName}`,

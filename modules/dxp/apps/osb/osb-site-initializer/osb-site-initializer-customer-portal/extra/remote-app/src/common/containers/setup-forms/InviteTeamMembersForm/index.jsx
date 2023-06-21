@@ -211,21 +211,16 @@ const InviteTeamMembersPage = ({
 		let displaySuccess = true;
 		const invitedAccounts = [];
 
-		const _getUserAccountByEmails = async () => {
+		const _getUserAccountByEmails = async (email) => {
 			const getUserAccount = await client.query({
 				query: getUserAccountByEmail,
 				variables: {
-					filter: SearchBuilder.in(
-						'emailAddress',
-						inviteMembers.map(({email}) => email)
-					),
+					filter: SearchBuilder.eq('emailAddress', email),
 				},
 			});
 
 			return getUserAccount?.data?.userAccounts?.items ?? [];
 		};
-
-		const userAccounts = await _getUserAccountByEmails();
 
 		for (const inviteMember of inviteMembers) {
 			try {
@@ -239,10 +234,9 @@ const InviteTeamMembersPage = ({
 						emailAddress: inviteMember.email,
 					},
 				});
-
-				const invitedMemberUserAccount = userAccounts.find(
-					({emailAddress}) => emailAddress === inviteMember.email
-				);
+				const [
+					invitedMemberUserAccount,
+				] = await _getUserAccountByEmails(inviteMember.email);
 
 				if (invitedMemberUserAccount) {
 					await updateUserAccount({

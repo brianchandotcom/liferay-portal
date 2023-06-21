@@ -382,6 +382,22 @@ export const getUserAccountByEmail = gql`
 	}
 `;
 
+export const patchUserAccount = gql`
+	mutation patchUserAccount(
+		$userAccountId: Long!
+		$userAccount: InputUserAccount!
+	) {
+		patchUserAccount(
+			userAccountId: $userAccountId
+			userAccount: $userAccount
+		) {
+			id
+			familyName
+			givenName
+		}
+	}
+`;
+
 export const getAccountFlags = gql`
 	query getAccountFlags($filter: String) {
 		c {

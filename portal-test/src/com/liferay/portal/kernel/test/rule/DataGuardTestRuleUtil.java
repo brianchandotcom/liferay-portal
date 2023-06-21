@@ -174,7 +174,12 @@ public class DataGuardTestRuleUtil {
 				persistedModelLocalService.deletePersistedModel(persistedModel);
 			}
 			else {
-				deleteMethod.invoke(persistedModelLocalService, persistedModel);
+				BaseModel<?> baseModel = (BaseModel<?>)persistedModel;
+
+				deleteMethod.invoke(
+					persistedModelLocalService,
+					persistedModelLocalService.getPersistedModel(
+						baseModel.getPrimaryKeyObj()));
 			}
 		}
 		catch (Throwable throwable1) {

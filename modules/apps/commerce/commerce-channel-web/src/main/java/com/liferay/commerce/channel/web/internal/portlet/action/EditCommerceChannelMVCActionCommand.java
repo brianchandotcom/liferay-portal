@@ -23,6 +23,7 @@ import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.product.exception.DuplicateCommerceChannelAccountEntryIdException;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.permission.CommerceChannelPermission;
 import com.liferay.commerce.product.service.CommerceChannelService;
@@ -105,6 +106,8 @@ public class EditCommerceChannelMVCActionCommand
 		catch (Exception exception) {
 			if (exception instanceof AccountEntryStatusException ||
 				exception instanceof AccountEntryTypeException ||
+				exception instanceof
+					DuplicateCommerceChannelAccountEntryIdException ||
 				exception instanceof FileExtensionException ||
 				exception instanceof InvalidFileException) {
 

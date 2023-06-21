@@ -34,6 +34,7 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 <liferay-ui:error embed="<%= false %>" exception="<%= AccountEntryTypeException.class %>" message="please-select-a-valid-supplier" />
 <liferay-ui:error embed="<%= false %>" exception="<%= FileExtensionException.class %>" message="please-select-a-valid-jrxml-file" />
 <liferay-ui:error embed="<%= false %>" exception="<%= InvalidFileException.class %>" message="please-select-a-valid-jrxml-file" />
+<liferay-ui:error embed="<%= false %>" exception="<%= DuplicateCommerceChannelAccountEntryIdException.class %>" message="a-supplier-account-can-be-linked-only-to-one-channel" />
 
 <portlet:actionURL name="/commerce_channels/edit_commerce_channel" var="editCommerceChannelActionURL" />
 

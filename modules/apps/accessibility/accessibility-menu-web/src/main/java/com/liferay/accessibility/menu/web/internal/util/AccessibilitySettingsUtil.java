@@ -47,7 +47,7 @@ public class AccessibilitySettingsUtil {
 				AccessibilitySettingConstants.
 					ACCESSIBILITY_SETTING_SHOW_UNDERLINE,
 				LanguageUtil.get(
-					httpServletRequest, "show-underline-effect-in-links"),
+					httpServletRequest, "underlined-links"),
 				_getSessionClicksValue(
 					httpServletRequest,
 					AccessibilitySettingConstants.

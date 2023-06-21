@@ -36,7 +36,6 @@ import com.liferay.portal.search.configuration.ReindexConfiguration;
 import java.util.Map;
 
 import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -48,13 +47,12 @@ public class IndexActionsDisplayContextBuilder {
 	public IndexActionsDisplayContextBuilder(
 		Language language, Portal portal,
 		ReindexConfiguration reindexConfiguration, RenderRequest renderRequest,
-		RenderResponse renderResponse, SearchCapabilities searchCapabilities) {
+		SearchCapabilities searchCapabilities) {
 
 		_language = language;
 		_portal = portal;
 		_reindexConfiguration = reindexConfiguration;
 		_renderRequest = renderRequest;
-		_renderResponse = renderResponse;
 		_searchCapabilities = searchCapabilities;
 
 		_httpServletRequest = portal.getHttpServletRequest(renderRequest);
@@ -144,7 +142,6 @@ public class IndexActionsDisplayContextBuilder {
 	private final Portal _portal;
 	private final ReindexConfiguration _reindexConfiguration;
 	private final RenderRequest _renderRequest;
-	private final RenderResponse _renderResponse;
 	private final SearchCapabilities _searchCapabilities;
 
 }

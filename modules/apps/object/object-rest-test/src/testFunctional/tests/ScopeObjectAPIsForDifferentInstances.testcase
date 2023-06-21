@@ -79,19 +79,12 @@ definition {
 
 		OAuth2.deleteApplication(applicationName = "OAuth Application");
 
-		OAuth2.openOAuth2Admin(baseURL = "http://www.able.com:8080");
+		ApplicationsMenu.gotoPortlet(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "Virtual Instances");
 
-		var virtualInstanceToken = OAuth2ForObject.createTokenWithOAuth2Scopes(
-			baseURL = "http://www.able.com:8080",
-			resourceCheckList = "Liferay.Headless.Portal.Instances.everything,Liferay.Object.Admin.REST.everything",
-			resourcePanels = "Liferay.Headless.Portal.Instances,Liferay.Object.Admin.REST");
-
-		ObjectAdmin.deleteObjectViaAPI(
-			objectName = "Test",
-			token = ${virtualInstanceToken},
-			virtualHost = "www.able.com");
-
-		OAuth2.deleteApplication(applicationName = "OAuth Application");
+		PortalInstances.deleteCP(virtualHost = "www.able.com");
 
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
@@ -203,6 +196,7 @@ definition {
 	test CanScopeObjectByInstanceInExportTask {
 		property custom.properties = "include-and-override=portal-liferay-online.properties${line.separator}feature.flag.COMMERCE-8087=true";
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "ScopeObjectAPIsForDifferentInstances#CanScopeObjectByInstanceInExportTask";
 
 		task ("And Given an object definition Student with a custom field is created and published on virtual instance") {
 			var virtualInstanceToken = OAuth2ForObject.createTokenWithOAuth2Scopes(

@@ -175,7 +175,7 @@ const MDFClaimPage = ({
 
 					<ResumeCard
 						className="mb-4"
-						leftContent="Total MDF Requested Amount"
+						leftContent="Total Activity Cost"
 						rightContent={getIntlNumberFormat(
 							values.currency
 						).format(values.totalMDFRequestedAmount || 0)}

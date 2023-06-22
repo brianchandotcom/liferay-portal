@@ -430,11 +430,10 @@ definition {
 
 	@priority = 5
 	test ExportBundleBlacklistConfig {
+		property osgi.module.configurations = "blacklistBundleSymbolicNames=[\"com.liferay.gogo.shell.web\" ]";
 		property test.liferay.virtual.instance = "false";
 
-		OSGiConfig.deployOSGiConfigFile(
-			osgiConfigFileName = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config",
-			osgiConfigs = "blacklistBundleSymbolicNames=[\"com.liferay.gogo.shell.web\" ]");
+		AssertConsoleTextPresent(value1 = "Stopping blacklisted bundle com.liferay.gogo.shell.web");
 
 		SystemSettings.openSystemSettingsAdmin();
 

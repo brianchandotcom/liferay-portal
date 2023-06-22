@@ -36,6 +36,10 @@ public class ObjectViewTable extends BaseTable<ObjectViewTable> {
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<ObjectViewTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<ObjectViewTable, String> externalReferenceCode =
+		createColumn(
+			"externalReferenceCode", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<ObjectViewTable, Long> objectViewId = createColumn(
 		"objectViewId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<ObjectViewTable, Long> companyId = createColumn(

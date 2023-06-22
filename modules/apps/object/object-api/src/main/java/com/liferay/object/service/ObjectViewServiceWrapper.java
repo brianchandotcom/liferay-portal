@@ -36,7 +36,8 @@ public class ObjectViewServiceWrapper
 
 	@Override
 	public com.liferay.object.model.ObjectView addObjectView(
-			long objectDefinitionId, boolean defaultObjectView,
+			String externalReferenceCode, long objectDefinitionId,
+			boolean defaultObjectView,
 			java.util.Map<java.util.Locale, String> nameMap,
 			java.util.List<com.liferay.object.model.ObjectViewColumn>
 				objectViewColumns,
@@ -47,7 +48,27 @@ public class ObjectViewServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectViewService.addObjectView(
-			objectDefinitionId, defaultObjectView, nameMap, objectViewColumns,
+			externalReferenceCode, objectDefinitionId, defaultObjectView,
+			nameMap, objectViewColumns, objectViewFilterColumns,
+			objectViewSortColumns);
+	}
+
+	@Override
+	public com.liferay.object.model.ObjectView addOrUpdateObjectView(
+			String externalReferenceCode, long objectViewId, long userId,
+			long objectDefinitionId, boolean defaultObjectView,
+			java.util.Map<java.util.Locale, String> nameMap,
+			java.util.List<com.liferay.object.model.ObjectViewColumn>
+				objectViewColumns,
+			java.util.List<com.liferay.object.model.ObjectViewFilterColumn>
+				objectViewFilterColumns,
+			java.util.List<com.liferay.object.model.ObjectViewSortColumn>
+				objectViewSortColumns)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectViewService.addOrUpdateObjectView(
+			externalReferenceCode, objectViewId, userId, objectDefinitionId,
+			defaultObjectView, nameMap, objectViewColumns,
 			objectViewFilterColumns, objectViewSortColumns);
 	}
 
@@ -57,6 +78,19 @@ public class ObjectViewServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectViewService.deleteObjectView(objectViewId);
+	}
+
+	@Override
+	public com.liferay.object.model.ObjectView
+			fetchObjectViewByObjectDefinitionExternalReferenceCodeObjectViewExternalReferenceCode(
+				String objectDefinitionExternalReferenceCode,
+				String objectViewExternalReferenceCode, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectViewService.
+			fetchObjectViewByObjectDefinitionExternalReferenceCodeObjectViewExternalReferenceCode(
+				objectDefinitionExternalReferenceCode,
+				objectViewExternalReferenceCode, companyId);
 	}
 
 	@Override
@@ -78,7 +112,8 @@ public class ObjectViewServiceWrapper
 
 	@Override
 	public com.liferay.object.model.ObjectView updateObjectView(
-			long objectViewId, boolean defaultObjectView,
+			String externalReferenceCode, long objectViewId,
+			boolean defaultObjectView,
 			java.util.Map<java.util.Locale, String> nameMap,
 			java.util.List<com.liferay.object.model.ObjectViewColumn>
 				objectViewColumns,
@@ -89,8 +124,8 @@ public class ObjectViewServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectViewService.updateObjectView(
-			objectViewId, defaultObjectView, nameMap, objectViewColumns,
-			objectViewFilterColumns, objectViewSortColumns);
+			externalReferenceCode, objectViewId, defaultObjectView, nameMap,
+			objectViewColumns, objectViewFilterColumns, objectViewSortColumns);
 	}
 
 	@Override

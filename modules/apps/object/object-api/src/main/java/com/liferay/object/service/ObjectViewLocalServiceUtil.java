@@ -45,20 +45,6 @@ public class ObjectViewLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectViewLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static ObjectView addObjectView(
-			long userId, long objectDefinitionId, boolean defaultObjectView,
-			Map<java.util.Locale, String> nameMap,
-			List<com.liferay.object.model.ObjectViewColumn> objectViewColumns,
-			List<com.liferay.object.model.ObjectViewFilterColumn>
-				objectViewFilterColumns,
-			List<com.liferay.object.model.ObjectViewSortColumn>
-				objectViewSortColumns)
-		throws PortalException {
-
-		return getService().addObjectView(
-			userId, objectDefinitionId, defaultObjectView, nameMap,
-			objectViewColumns, objectViewFilterColumns, objectViewSortColumns);
-	}
 
 	/**
 	 * Adds the object view to the database. Also notifies the appropriate model listeners.
@@ -72,6 +58,39 @@ public class ObjectViewLocalServiceUtil {
 	 */
 	public static ObjectView addObjectView(ObjectView objectView) {
 		return getService().addObjectView(objectView);
+	}
+
+	public static ObjectView addObjectView(
+			String externalReferenceCode, long userId, long objectDefinitionId,
+			boolean defaultObjectView, Map<java.util.Locale, String> nameMap,
+			List<com.liferay.object.model.ObjectViewColumn> objectViewColumns,
+			List<com.liferay.object.model.ObjectViewFilterColumn>
+				objectViewFilterColumns,
+			List<com.liferay.object.model.ObjectViewSortColumn>
+				objectViewSortColumns)
+		throws PortalException {
+
+		return getService().addObjectView(
+			externalReferenceCode, userId, objectDefinitionId,
+			defaultObjectView, nameMap, objectViewColumns,
+			objectViewFilterColumns, objectViewSortColumns);
+	}
+
+	public static ObjectView addOrUpdateObjectView(
+			String externalReferenceCode, long objectViewId, long userId,
+			long objectDefinitionId, boolean defaultObjectView,
+			Map<java.util.Locale, String> nameMap,
+			List<com.liferay.object.model.ObjectViewColumn> objectViewColumns,
+			List<com.liferay.object.model.ObjectViewFilterColumn>
+				objectViewFilterColumns,
+			List<com.liferay.object.model.ObjectViewSortColumn>
+				objectViewSortColumns)
+		throws PortalException {
+
+		return getService().addOrUpdateObjectView(
+			externalReferenceCode, objectViewId, userId, objectDefinitionId,
+			defaultObjectView, nameMap, objectViewColumns,
+			objectViewFilterColumns, objectViewSortColumns);
 	}
 
 	/**
@@ -234,6 +253,18 @@ public class ObjectViewLocalServiceUtil {
 		return getService().fetchObjectView(objectViewId);
 	}
 
+	public static ObjectView
+			fetchObjectViewByObjectDefinitionExternalReferenceCodeObjectViewExternalReferenceCode(
+				String objectDefinitionExternalReferenceCode,
+				String objectViewExternalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().
+			fetchObjectViewByObjectDefinitionExternalReferenceCodeObjectViewExternalReferenceCode(
+				objectDefinitionExternalReferenceCode,
+				objectViewExternalReferenceCode, companyId);
+	}
+
 	/**
 	 * Returns the object view with the matching UUID and company.
 	 *
@@ -348,21 +379,6 @@ public class ObjectViewLocalServiceUtil {
 		getService().unassociateObjectField(objectField);
 	}
 
-	public static ObjectView updateObjectView(
-			long objectViewId, boolean defaultObjectView,
-			Map<java.util.Locale, String> nameMap,
-			List<com.liferay.object.model.ObjectViewColumn> objectViewColumns,
-			List<com.liferay.object.model.ObjectViewFilterColumn>
-				objectViewFilterColumns,
-			List<com.liferay.object.model.ObjectViewSortColumn>
-				objectViewSortColumns)
-		throws PortalException {
-
-		return getService().updateObjectView(
-			objectViewId, defaultObjectView, nameMap, objectViewColumns,
-			objectViewFilterColumns, objectViewSortColumns);
-	}
-
 	/**
 	 * Updates the object view in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -375,6 +391,21 @@ public class ObjectViewLocalServiceUtil {
 	 */
 	public static ObjectView updateObjectView(ObjectView objectView) {
 		return getService().updateObjectView(objectView);
+	}
+
+	public static ObjectView updateObjectView(
+			String externalReferenceCode, long objectViewId,
+			boolean defaultObjectView, Map<java.util.Locale, String> nameMap,
+			List<com.liferay.object.model.ObjectViewColumn> objectViewColumns,
+			List<com.liferay.object.model.ObjectViewFilterColumn>
+				objectViewFilterColumns,
+			List<com.liferay.object.model.ObjectViewSortColumn>
+				objectViewSortColumns)
+		throws PortalException {
+
+		return getService().updateObjectView(
+			externalReferenceCode, objectViewId, defaultObjectView, nameMap,
+			objectViewColumns, objectViewFilterColumns, objectViewSortColumns);
 	}
 
 	public static ObjectViewLocalService getService() {

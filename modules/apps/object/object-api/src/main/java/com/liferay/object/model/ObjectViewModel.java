@@ -98,6 +98,21 @@ public interface ObjectViewModel
 	public void setUuid(String uuid);
 
 	/**
+	 * Returns the external reference code of this object view.
+	 *
+	 * @return the external reference code of this object view
+	 */
+	@AutoEscape
+	public String getExternalReferenceCode();
+
+	/**
+	 * Sets the external reference code of this object view.
+	 *
+	 * @param externalReferenceCode the external reference code of this object view
+	 */
+	public void setExternalReferenceCode(String externalReferenceCode);
+
+	/**
 	 * Returns the object view ID of this object view.
 	 *
 	 * @return the object view ID of this object view

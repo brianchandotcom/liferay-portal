@@ -45,6 +45,7 @@ public class ObjectViewWrapper
 
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
+		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("objectViewId", getObjectViewId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -70,6 +71,13 @@ public class ObjectViewWrapper
 
 		if (uuid != null) {
 			setUuid(uuid);
+		}
+
+		String externalReferenceCode = (String)attributes.get(
+			"externalReferenceCode");
+
+		if (externalReferenceCode != null) {
+			setExternalReferenceCode(externalReferenceCode);
 		}
 
 		Long objectViewId = (Long)attributes.get("objectViewId");
@@ -171,6 +179,16 @@ public class ObjectViewWrapper
 	@Override
 	public boolean getDefaultObjectView() {
 		return model.getDefaultObjectView();
+	}
+
+	/**
+	 * Returns the external reference code of this object view.
+	 *
+	 * @return the external reference code of this object view
+	 */
+	@Override
+	public String getExternalReferenceCode() {
+		return model.getExternalReferenceCode();
 	}
 
 	/**
@@ -412,6 +430,16 @@ public class ObjectViewWrapper
 	@Override
 	public void setDefaultObjectView(boolean defaultObjectView) {
 		model.setDefaultObjectView(defaultObjectView);
+	}
+
+	/**
+	 * Sets the external reference code of this object view.
+	 *
+	 * @param externalReferenceCode the external reference code of this object view
+	 */
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		model.setExternalReferenceCode(externalReferenceCode);
 	}
 
 	/**

@@ -57,6 +57,15 @@ public interface ObjectViewService extends BaseService {
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectViewServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the object view remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link ObjectViewServiceUtil} if injection and service tracking are not available.
 	 */
 	public ObjectView addObjectView(
+			String externalReferenceCode, long objectDefinitionId,
+			boolean defaultObjectView, Map<Locale, String> nameMap,
+			List<ObjectViewColumn> objectViewColumns,
+			List<ObjectViewFilterColumn> objectViewFilterColumns,
+			List<ObjectViewSortColumn> objectViewSortColumns)
+		throws PortalException;
+
+	public ObjectView addOrUpdateObjectView(
+			String externalReferenceCode, long objectViewId, long userId,
 			long objectDefinitionId, boolean defaultObjectView,
 			Map<Locale, String> nameMap,
 			List<ObjectViewColumn> objectViewColumns,
@@ -65,6 +74,13 @@ public interface ObjectViewService extends BaseService {
 		throws PortalException;
 
 	public ObjectView deleteObjectView(long objectViewId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ObjectView
+			fetchObjectViewByObjectDefinitionExternalReferenceCodeObjectViewExternalReferenceCode(
+				String objectDefinitionExternalReferenceCode,
+				String objectViewExternalReferenceCode, long companyId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -78,8 +94,8 @@ public interface ObjectViewService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 	public ObjectView updateObjectView(
-			long objectViewId, boolean defaultObjectView,
-			Map<Locale, String> nameMap,
+			String externalReferenceCode, long objectViewId,
+			boolean defaultObjectView, Map<Locale, String> nameMap,
 			List<ObjectViewColumn> objectViewColumns,
 			List<ObjectViewFilterColumn> objectViewFilterColumns,
 			List<ObjectViewSortColumn> objectViewSortColumns)

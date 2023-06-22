@@ -81,6 +81,7 @@ public class ObjectViewModelImpl
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"externalReferenceCode", Types.VARCHAR},
 		{"objectViewId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
@@ -94,6 +95,7 @@ public class ObjectViewModelImpl
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("objectViewId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
@@ -106,7 +108,7 @@ public class ObjectViewModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ObjectView (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectViewId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,objectDefinitionId LONG,defaultObjectView BOOLEAN,name STRING null)";
+		"create table ObjectView (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,objectViewId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,objectDefinitionId LONG,defaultObjectView BOOLEAN,name STRING null)";
 
 	public static final String TABLE_SQL_DROP = "drop table ObjectView";
 
@@ -138,20 +140,26 @@ public class ObjectViewModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long OBJECTDEFINITIONID_COLUMN_BITMASK = 4L;
+	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 4L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long UUID_COLUMN_BITMASK = 8L;
+	public static final long OBJECTDEFINITIONID_COLUMN_BITMASK = 8L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long UUID_COLUMN_BITMASK = 16L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long OBJECTVIEWID_COLUMN_BITMASK = 16L;
+	public static final long OBJECTVIEWID_COLUMN_BITMASK = 32L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -264,6 +272,8 @@ public class ObjectViewModelImpl
 				"mvccVersion", ObjectView::getMvccVersion);
 			attributeGetterFunctions.put("uuid", ObjectView::getUuid);
 			attributeGetterFunctions.put(
+				"externalReferenceCode", ObjectView::getExternalReferenceCode);
+			attributeGetterFunctions.put(
 				"objectViewId", ObjectView::getObjectViewId);
 			attributeGetterFunctions.put("companyId", ObjectView::getCompanyId);
 			attributeGetterFunctions.put("userId", ObjectView::getUserId);
@@ -298,6 +308,10 @@ public class ObjectViewModelImpl
 				(BiConsumer<ObjectView, Long>)ObjectView::setMvccVersion);
 			attributeSetterBiConsumers.put(
 				"uuid", (BiConsumer<ObjectView, String>)ObjectView::setUuid);
+			attributeSetterBiConsumers.put(
+				"externalReferenceCode",
+				(BiConsumer<ObjectView, String>)
+					ObjectView::setExternalReferenceCode);
 			attributeSetterBiConsumers.put(
 				"objectViewId",
 				(BiConsumer<ObjectView, Long>)ObjectView::setObjectViewId);
@@ -374,6 +388,35 @@ public class ObjectViewModelImpl
 	@Deprecated
 	public String getOriginalUuid() {
 		return getColumnOriginalValue("uuid_");
+	}
+
+	@JSON
+	@Override
+	public String getExternalReferenceCode() {
+		if (_externalReferenceCode == null) {
+			return "";
+		}
+		else {
+			return _externalReferenceCode;
+		}
+	}
+
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_externalReferenceCode = externalReferenceCode;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalExternalReferenceCode() {
+		return getColumnOriginalValue("externalReferenceCode");
 	}
 
 	@JSON
@@ -796,6 +839,7 @@ public class ObjectViewModelImpl
 
 		objectViewImpl.setMvccVersion(getMvccVersion());
 		objectViewImpl.setUuid(getUuid());
+		objectViewImpl.setExternalReferenceCode(getExternalReferenceCode());
 		objectViewImpl.setObjectViewId(getObjectViewId());
 		objectViewImpl.setCompanyId(getCompanyId());
 		objectViewImpl.setUserId(getUserId());
@@ -818,6 +862,8 @@ public class ObjectViewModelImpl
 		objectViewImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
 		objectViewImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		objectViewImpl.setExternalReferenceCode(
+			this.<String>getColumnOriginalValue("externalReferenceCode"));
 		objectViewImpl.setObjectViewId(
 			this.<Long>getColumnOriginalValue("objectViewId"));
 		objectViewImpl.setCompanyId(
@@ -919,6 +965,17 @@ public class ObjectViewModelImpl
 
 		if ((uuid != null) && (uuid.length() == 0)) {
 			objectViewCacheModel.uuid = null;
+		}
+
+		objectViewCacheModel.externalReferenceCode = getExternalReferenceCode();
+
+		String externalReferenceCode =
+			objectViewCacheModel.externalReferenceCode;
+
+		if ((externalReferenceCode != null) &&
+			(externalReferenceCode.length() == 0)) {
+
+			objectViewCacheModel.externalReferenceCode = null;
 		}
 
 		objectViewCacheModel.objectViewId = getObjectViewId();
@@ -1028,6 +1085,7 @@ public class ObjectViewModelImpl
 
 	private long _mvccVersion;
 	private String _uuid;
+	private String _externalReferenceCode;
 	private long _objectViewId;
 	private long _companyId;
 	private long _userId;
@@ -1072,6 +1130,8 @@ public class ObjectViewModelImpl
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
 		_columnOriginalValues.put("uuid_", _uuid);
+		_columnOriginalValues.put(
+			"externalReferenceCode", _externalReferenceCode);
 		_columnOriginalValues.put("objectViewId", _objectViewId);
 		_columnOriginalValues.put("companyId", _companyId);
 		_columnOriginalValues.put("userId", _userId);
@@ -1108,23 +1168,25 @@ public class ObjectViewModelImpl
 
 		columnBitmasks.put("uuid_", 2L);
 
-		columnBitmasks.put("objectViewId", 4L);
+		columnBitmasks.put("externalReferenceCode", 4L);
 
-		columnBitmasks.put("companyId", 8L);
+		columnBitmasks.put("objectViewId", 8L);
 
-		columnBitmasks.put("userId", 16L);
+		columnBitmasks.put("companyId", 16L);
 
-		columnBitmasks.put("userName", 32L);
+		columnBitmasks.put("userId", 32L);
 
-		columnBitmasks.put("createDate", 64L);
+		columnBitmasks.put("userName", 64L);
 
-		columnBitmasks.put("modifiedDate", 128L);
+		columnBitmasks.put("createDate", 128L);
 
-		columnBitmasks.put("objectDefinitionId", 256L);
+		columnBitmasks.put("modifiedDate", 256L);
 
-		columnBitmasks.put("defaultObjectView", 512L);
+		columnBitmasks.put("objectDefinitionId", 512L);
 
-		columnBitmasks.put("name", 1024L);
+		columnBitmasks.put("defaultObjectView", 1024L);
+
+		columnBitmasks.put("name", 2048L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

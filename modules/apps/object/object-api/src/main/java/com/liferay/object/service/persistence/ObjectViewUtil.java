@@ -840,6 +840,89 @@ public class ObjectViewUtil {
 	}
 
 	/**
+	 * Returns the object view where externalReferenceCode = &#63; and companyId = &#63; and objectDefinitionId = &#63; or throws a <code>NoSuchObjectViewException</code> if it could not be found.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param objectDefinitionId the object definition ID
+	 * @return the matching object view
+	 * @throws NoSuchObjectViewException if a matching object view could not be found
+	 */
+	public static ObjectView findByERC_C_ODI(
+			String externalReferenceCode, long companyId,
+			long objectDefinitionId)
+		throws com.liferay.object.exception.NoSuchObjectViewException {
+
+		return getPersistence().findByERC_C_ODI(
+			externalReferenceCode, companyId, objectDefinitionId);
+	}
+
+	/**
+	 * Returns the object view where externalReferenceCode = &#63; and companyId = &#63; and objectDefinitionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param objectDefinitionId the object definition ID
+	 * @return the matching object view, or <code>null</code> if a matching object view could not be found
+	 */
+	public static ObjectView fetchByERC_C_ODI(
+		String externalReferenceCode, long companyId, long objectDefinitionId) {
+
+		return getPersistence().fetchByERC_C_ODI(
+			externalReferenceCode, companyId, objectDefinitionId);
+	}
+
+	/**
+	 * Returns the object view where externalReferenceCode = &#63; and companyId = &#63; and objectDefinitionId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param objectDefinitionId the object definition ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching object view, or <code>null</code> if a matching object view could not be found
+	 */
+	public static ObjectView fetchByERC_C_ODI(
+		String externalReferenceCode, long companyId, long objectDefinitionId,
+		boolean useFinderCache) {
+
+		return getPersistence().fetchByERC_C_ODI(
+			externalReferenceCode, companyId, objectDefinitionId,
+			useFinderCache);
+	}
+
+	/**
+	 * Removes the object view where externalReferenceCode = &#63; and companyId = &#63; and objectDefinitionId = &#63; from the database.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param objectDefinitionId the object definition ID
+	 * @return the object view that was removed
+	 */
+	public static ObjectView removeByERC_C_ODI(
+			String externalReferenceCode, long companyId,
+			long objectDefinitionId)
+		throws com.liferay.object.exception.NoSuchObjectViewException {
+
+		return getPersistence().removeByERC_C_ODI(
+			externalReferenceCode, companyId, objectDefinitionId);
+	}
+
+	/**
+	 * Returns the number of object views where externalReferenceCode = &#63; and companyId = &#63; and objectDefinitionId = &#63;.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param objectDefinitionId the object definition ID
+	 * @return the number of matching object views
+	 */
+	public static int countByERC_C_ODI(
+		String externalReferenceCode, long companyId, long objectDefinitionId) {
+
+		return getPersistence().countByERC_C_ODI(
+			externalReferenceCode, companyId, objectDefinitionId);
+	}
+
+	/**
 	 * Caches the object view in the entity cache if it is enabled.
 	 *
 	 * @param objectView the object view

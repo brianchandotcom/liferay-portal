@@ -51,8 +51,8 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class ObjectViewServiceHttp {
 
 	public static com.liferay.object.model.ObjectView addObjectView(
-			HttpPrincipal httpPrincipal, long objectDefinitionId,
-			boolean defaultObjectView,
+			HttpPrincipal httpPrincipal, String externalReferenceCode,
+			long objectDefinitionId, boolean defaultObjectView,
 			java.util.Map<java.util.Locale, String> nameMap,
 			java.util.List<com.liferay.object.model.ObjectViewColumn>
 				objectViewColumns,
@@ -68,7 +68,59 @@ public class ObjectViewServiceHttp {
 				_addObjectViewParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, objectDefinitionId, defaultObjectView, nameMap,
+				methodKey, externalReferenceCode, objectDefinitionId,
+				defaultObjectView, nameMap, objectViewColumns,
+				objectViewFilterColumns, objectViewSortColumns);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.object.model.ObjectView)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.object.model.ObjectView addOrUpdateObjectView(
+			HttpPrincipal httpPrincipal, String externalReferenceCode,
+			long objectViewId, long userId, long objectDefinitionId,
+			boolean defaultObjectView,
+			java.util.Map<java.util.Locale, String> nameMap,
+			java.util.List<com.liferay.object.model.ObjectViewColumn>
+				objectViewColumns,
+			java.util.List<com.liferay.object.model.ObjectViewFilterColumn>
+				objectViewFilterColumns,
+			java.util.List<com.liferay.object.model.ObjectViewSortColumn>
+				objectViewSortColumns)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				ObjectViewServiceUtil.class, "addOrUpdateObjectView",
+				_addOrUpdateObjectViewParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, externalReferenceCode, objectViewId, userId,
+				objectDefinitionId, defaultObjectView, nameMap,
 				objectViewColumns, objectViewFilterColumns,
 				objectViewSortColumns);
 
@@ -107,10 +159,55 @@ public class ObjectViewServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				ObjectViewServiceUtil.class, "deleteObjectView",
-				_deleteObjectViewParameterTypes1);
+				_deleteObjectViewParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, objectViewId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.object.model.ObjectView)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.object.model.ObjectView
+			fetchObjectViewByObjectDefinitionExternalReferenceCodeObjectViewExternalReferenceCode(
+				HttpPrincipal httpPrincipal,
+				String objectDefinitionExternalReferenceCode,
+				String objectViewExternalReferenceCode, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				ObjectViewServiceUtil.class,
+				"fetchObjectViewByObjectDefinitionExternalReferenceCodeObjectViewExternalReferenceCode",
+				_fetchObjectViewByObjectDefinitionExternalReferenceCodeObjectViewExternalReferenceCodeParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, objectDefinitionExternalReferenceCode,
+				objectViewExternalReferenceCode, companyId);
 
 			Object returnObj = null;
 
@@ -147,7 +244,7 @@ public class ObjectViewServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				ObjectViewServiceUtil.class, "getObjectView",
-				_getObjectViewParameterTypes2);
+				_getObjectViewParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, objectViewId);
@@ -181,8 +278,8 @@ public class ObjectViewServiceHttp {
 	}
 
 	public static com.liferay.object.model.ObjectView updateObjectView(
-			HttpPrincipal httpPrincipal, long objectViewId,
-			boolean defaultObjectView,
+			HttpPrincipal httpPrincipal, String externalReferenceCode,
+			long objectViewId, boolean defaultObjectView,
 			java.util.Map<java.util.Locale, String> nameMap,
 			java.util.List<com.liferay.object.model.ObjectViewColumn>
 				objectViewColumns,
@@ -195,12 +292,12 @@ public class ObjectViewServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				ObjectViewServiceUtil.class, "updateObjectView",
-				_updateObjectViewParameterTypes3);
+				_updateObjectViewParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, objectViewId, defaultObjectView, nameMap,
-				objectViewColumns, objectViewFilterColumns,
-				objectViewSortColumns);
+				methodKey, externalReferenceCode, objectViewId,
+				defaultObjectView, nameMap, objectViewColumns,
+				objectViewFilterColumns, objectViewSortColumns);
 
 			Object returnObj = null;
 
@@ -235,16 +332,25 @@ public class ObjectViewServiceHttp {
 
 	private static final Class<?>[] _addObjectViewParameterTypes0 =
 		new Class[] {
-			long.class, boolean.class, java.util.Map.class,
+			String.class, long.class, boolean.class, java.util.Map.class,
 			java.util.List.class, java.util.List.class, java.util.List.class
 		};
-	private static final Class<?>[] _deleteObjectViewParameterTypes1 =
-		new Class[] {long.class};
-	private static final Class<?>[] _getObjectViewParameterTypes2 =
-		new Class[] {long.class};
-	private static final Class<?>[] _updateObjectViewParameterTypes3 =
+	private static final Class<?>[] _addOrUpdateObjectViewParameterTypes1 =
 		new Class[] {
-			long.class, boolean.class, java.util.Map.class,
+			String.class, long.class, long.class, long.class, boolean.class,
+			java.util.Map.class, java.util.List.class, java.util.List.class,
+			java.util.List.class
+		};
+	private static final Class<?>[] _deleteObjectViewParameterTypes2 =
+		new Class[] {long.class};
+	private static final Class<?>[]
+		_fetchObjectViewByObjectDefinitionExternalReferenceCodeObjectViewExternalReferenceCodeParameterTypes3 =
+			new Class[] {String.class, String.class, long.class};
+	private static final Class<?>[] _getObjectViewParameterTypes4 =
+		new Class[] {long.class};
+	private static final Class<?>[] _updateObjectViewParameterTypes5 =
+		new Class[] {
+			String.class, long.class, boolean.class, java.util.Map.class,
 			java.util.List.class, java.util.List.class, java.util.List.class
 		};
 

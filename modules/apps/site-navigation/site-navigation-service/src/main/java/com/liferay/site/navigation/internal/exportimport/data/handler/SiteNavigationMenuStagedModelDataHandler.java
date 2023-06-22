@@ -22,6 +22,8 @@ import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 
+import java.util.Map;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -59,6 +61,28 @@ public class SiteNavigationMenuStagedModelDataHandler
 			siteNavigationMenuElement,
 			ExportImportPathUtil.getModelPath(siteNavigationMenu),
 			siteNavigationMenu);
+	}
+
+	@Override
+	protected void doImportMissingReference(
+			PortletDataContext portletDataContext, String uuid, long groupId,
+			long siteNavigationMenuId)
+		throws Exception {
+
+		SiteNavigationMenu existingSiteNavigationMenu = fetchMissingReference(
+			uuid, groupId);
+
+		if (existingSiteNavigationMenu == null) {
+			return;
+		}
+
+		Map<Long, Long> siteNavigationMenuIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				SiteNavigationMenu.class);
+
+		siteNavigationMenuIds.put(
+			siteNavigationMenuId,
+			existingSiteNavigationMenu.getSiteNavigationMenuId());
 	}
 
 	@Override

@@ -20,6 +20,7 @@ import com.google.re2j.Pattern;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.redirect.constants.RedirectConstants;
 import com.liferay.redirect.internal.configuration.RedirectPatternConfiguration;
@@ -38,32 +39,21 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.cm.ConfigurationException;
 import org.osgi.service.cm.ManagedServiceFactory;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
  */
-@Component(
-	property = Constants.SERVICE_PID + "=com.liferay.redirect.internal.configuration.RedirectPatternConfiguration.scoped",
-	service = {ManagedServiceFactory.class, RedirectProvider.class}
-)
-public class RedirectProviderImpl
-	implements ManagedServiceFactory, RedirectProvider {
-
-	@Override
-	public void deleted(String pid) {
-		_unmapPid(pid);
-	}
-
-	@Override
-	public String getName() {
-		return "com.liferay.redirect.internal.configuration." +
-			"RedirectPatternConfiguration.scoped";
-	}
+@Component(service = RedirectProvider.class)
+public class RedirectProviderImpl implements RedirectProvider {
 
 	@Override
 	public Redirect getRedirect(
@@ -123,28 +113,21 @@ public class RedirectProviderImpl
 		return new ArrayList<>();
 	}
 
-	@Override
-	public void updated(String pid, Dictionary<String, ?> dictionary)
-		throws ConfigurationException {
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceRegistration = bundleContext.registerService(
+			ManagedServiceFactory.class,
+			new RedirectProviderManagedServiceFactory(),
+			HashMapDictionaryBuilder.put(
+				Constants.SERVICE_PID,
+				"com.liferay.redirect.internal.configuration." +
+					"RedirectPatternConfiguration.scoped"
+			).build());
+	}
 
-		_unmapPid(pid);
-
-		long groupId = GetterUtil.getLong(
-			dictionary.get("groupId"), GroupConstants.DEFAULT_PARENT_GROUP_ID);
-
-		if (groupId == GroupConstants.DEFAULT_PARENT_GROUP_ID) {
-			return;
-		}
-
-		_groupIds.put(pid, groupId);
-
-		RedirectPatternConfiguration redirectPatternConfiguration =
-			ConfigurableUtil.createConfigurable(
-				RedirectPatternConfiguration.class, dictionary);
-
-		_redirectPatternEntries.put(
-			groupId,
-			PatternUtil.parse(redirectPatternConfiguration.patternStrings()));
+	@Deactivate
+	protected void deactivate() {
+		_serviceRegistration.unregister();
 	}
 
 	protected void setCrawlerUserAgentsMatcher(
@@ -214,6 +197,7 @@ public class RedirectProviderImpl
 
 	private Map<Long, List<RedirectPatternEntry>> _redirectPatternEntries =
 		new ConcurrentHashMap<>();
+	private ServiceRegistration<ManagedServiceFactory> _serviceRegistration;
 
 	@Reference
 	private UserAgentMatcher _userAgentMatcher;
@@ -237,6 +221,48 @@ public class RedirectProviderImpl
 
 		private final String _destinationURL;
 		private final boolean _permanent;
+
+	}
+
+	private class RedirectProviderManagedServiceFactory
+		implements ManagedServiceFactory {
+
+		@Override
+		public void deleted(String pid) {
+			_unmapPid(pid);
+		}
+
+		@Override
+		public String getName() {
+			return "com.liferay.redirect.internal.configuration." +
+				"RedirectPatternConfiguration.scoped";
+		}
+
+		@Override
+		public void updated(String pid, Dictionary<String, ?> dictionary)
+			throws ConfigurationException {
+
+			_unmapPid(pid);
+
+			long groupId = GetterUtil.getLong(
+				dictionary.get("groupId"),
+				GroupConstants.DEFAULT_PARENT_GROUP_ID);
+
+			if (groupId == GroupConstants.DEFAULT_PARENT_GROUP_ID) {
+				return;
+			}
+
+			_groupIds.put(pid, groupId);
+
+			RedirectPatternConfiguration redirectPatternConfiguration =
+				ConfigurableUtil.createConfigurable(
+					RedirectPatternConfiguration.class, dictionary);
+
+			_redirectPatternEntries.put(
+				groupId,
+				PatternUtil.parse(
+					redirectPatternConfiguration.patternStrings()));
+		}
 
 	}
 

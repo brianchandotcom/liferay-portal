@@ -112,6 +112,20 @@ public class ObjectViewSerDes {
 			sb.append(objectView.getDefaultObjectView());
 		}
 
+		if (objectView.getExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(objectView.getExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (objectView.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -278,6 +292,15 @@ public class ObjectViewSerDes {
 				String.valueOf(objectView.getDefaultObjectView()));
 		}
 
+		if (objectView.getExternalReferenceCode() == null) {
+			map.put("externalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"externalReferenceCode",
+				String.valueOf(objectView.getExternalReferenceCode()));
+		}
+
 		if (objectView.getId() == null) {
 			map.put("id", null);
 		}
@@ -382,6 +405,14 @@ public class ObjectViewSerDes {
 				if (jsonParserFieldValue != null) {
 					objectView.setDefaultObjectView(
 						(Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					objectView.setExternalReferenceCode(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {

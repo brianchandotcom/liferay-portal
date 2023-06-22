@@ -182,6 +182,7 @@ public abstract class BaseObjectViewResourceTestCase {
 
 		ObjectView objectView = randomObjectView();
 
+		objectView.setExternalReferenceCode(regex);
 		objectView.setObjectDefinitionExternalReferenceCode(regex);
 
 		String json = ObjectViewSerDes.toJSON(objectView);
@@ -190,6 +191,7 @@ public abstract class BaseObjectViewResourceTestCase {
 
 		objectView = ObjectViewSerDes.toDTO(json);
 
+		Assert.assertEquals(regex, objectView.getExternalReferenceCode());
 		Assert.assertEquals(
 			regex, objectView.getObjectDefinitionExternalReferenceCode());
 	}
@@ -361,6 +363,191 @@ public abstract class BaseObjectViewResourceTestCase {
 	protected ObjectView
 			testPostObjectDefinitionByExternalReferenceCodeObjectView_addObjectView(
 				ObjectView objectView)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectViewByExternalReferenceCodeObjectViewExternalReferenceCode()
+		throws Exception {
+
+		ObjectView postObjectView =
+			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectViewByExternalReferenceCodeObjectViewExternalReferenceCode_addObjectView();
+
+		ObjectView getObjectView =
+			objectViewResource.
+				getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectViewByExternalReferenceCodeObjectViewExternalReferenceCode(
+					testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectViewByExternalReferenceCodeObjectViewExternalReferenceCode_getObjectDefinitionExternalReferenceCode(
+						postObjectView),
+					testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectViewByExternalReferenceCodeObjectViewExternalReferenceCode_getObjectViewExternalReferenceCode());
+
+		assertEquals(postObjectView, getObjectView);
+		assertValid(getObjectView);
+	}
+
+	protected String
+			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectViewByExternalReferenceCodeObjectViewExternalReferenceCode_getObjectDefinitionExternalReferenceCode(
+				ObjectView objectView)
+		throws Exception {
+
+		return objectView.getObjectDefinitionExternalReferenceCode();
+	}
+
+	protected String
+			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectViewByExternalReferenceCodeObjectViewExternalReferenceCode_getObjectViewExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected ObjectView
+			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectViewByExternalReferenceCodeObjectViewExternalReferenceCode_addObjectView()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectViewByExternalReferenceCodeObjectViewExternalReferenceCode()
+		throws Exception {
+
+		ObjectView objectView =
+			testGraphQLGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectViewByExternalReferenceCodeObjectViewExternalReferenceCode_addObjectView();
+
+		Assert.assertTrue(
+			equals(
+				objectView,
+				ObjectViewSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"objectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectViewByExternalReferenceCodeObjectViewExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"objectDefinitionExternalReferenceCode",
+											"\"" +
+												testGraphQLGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectViewByExternalReferenceCodeObjectViewExternalReferenceCode_getObjectDefinitionExternalReferenceCode(
+													objectView) + "\"");
+
+										put(
+											"objectViewExternalReferenceCode",
+											"\"" +
+												testGraphQLGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectViewByExternalReferenceCodeObjectViewExternalReferenceCode_getObjectViewExternalReferenceCode() +
+													"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/objectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectViewByExternalReferenceCodeObjectViewExternalReferenceCode"))));
+	}
+
+	protected String
+			testGraphQLGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectViewByExternalReferenceCodeObjectViewExternalReferenceCode_getObjectDefinitionExternalReferenceCode(
+				ObjectView objectView)
+		throws Exception {
+
+		return objectView.getObjectDefinitionExternalReferenceCode();
+	}
+
+	protected String
+			testGraphQLGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectViewByExternalReferenceCodeObjectViewExternalReferenceCode_getObjectViewExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectViewByExternalReferenceCodeObjectViewExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantObjectDefinitionExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+		String irrelevantObjectViewExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"objectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectViewByExternalReferenceCodeObjectViewExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"objectDefinitionExternalReferenceCode",
+									irrelevantObjectDefinitionExternalReferenceCode);
+								put(
+									"objectViewExternalReferenceCode",
+									irrelevantObjectViewExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected ObjectView
+			testGraphQLGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectViewByExternalReferenceCodeObjectViewExternalReferenceCode_addObjectView()
+		throws Exception {
+
+		return testGraphQLObjectView_addObjectView();
+	}
+
+	@Test
+	public void testPutObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectViewByExternalReferenceCodeObjectViewExternalReferenceCode()
+		throws Exception {
+
+		ObjectView postObjectView =
+			testPutObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectViewByExternalReferenceCodeObjectViewExternalReferenceCode_addObjectView();
+
+		ObjectView randomObjectView = randomObjectView();
+
+		ObjectView putObjectView =
+			objectViewResource.
+				putObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectViewByExternalReferenceCodeObjectViewExternalReferenceCode(
+					testPutObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectViewByExternalReferenceCodeObjectViewExternalReferenceCode_getObjectDefinitionExternalReferenceCode(
+						postObjectView),
+					testPutObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectViewByExternalReferenceCodeObjectViewExternalReferenceCode_getObjectViewExternalReferenceCode(),
+					randomObjectView);
+
+		assertEquals(randomObjectView, putObjectView);
+		assertValid(putObjectView);
+
+		ObjectView getObjectView =
+			objectViewResource.
+				getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectViewByExternalReferenceCodeObjectViewExternalReferenceCode(
+					testPutObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectViewByExternalReferenceCodeObjectViewExternalReferenceCode_getObjectDefinitionExternalReferenceCode(
+						putObjectView),
+					testPutObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectViewByExternalReferenceCodeObjectViewExternalReferenceCode_getObjectViewExternalReferenceCode());
+
+		assertEquals(randomObjectView, getObjectView);
+		assertValid(getObjectView);
+	}
+
+	protected String
+			testPutObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectViewByExternalReferenceCodeObjectViewExternalReferenceCode_getObjectDefinitionExternalReferenceCode(
+				ObjectView objectView)
+		throws Exception {
+
+		return objectView.getObjectDefinitionExternalReferenceCode();
+	}
+
+	protected String
+			testPutObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectViewByExternalReferenceCodeObjectViewExternalReferenceCode_getObjectViewExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected ObjectView
+			testPutObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectViewByExternalReferenceCodeObjectViewExternalReferenceCode_addObjectView()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -810,6 +997,16 @@ public abstract class BaseObjectViewResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (objectView.getExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (objectView.getName() == null) {
 					valid = false;
@@ -1026,6 +1223,19 @@ public abstract class BaseObjectViewResourceTestCase {
 				if (!Objects.deepEquals(
 						objectView1.getDefaultObjectView(),
 						objectView2.getDefaultObjectView())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						objectView1.getExternalReferenceCode(),
+						objectView2.getExternalReferenceCode())) {
 
 					return false;
 				}
@@ -1297,6 +1507,52 @@ public abstract class BaseObjectViewResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("externalReferenceCode")) {
+			Object object = objectView.getExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1421,6 +1677,8 @@ public abstract class BaseObjectViewResourceTestCase {
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				defaultObjectView = RandomTestUtil.randomBoolean();
+				externalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				objectDefinitionExternalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());

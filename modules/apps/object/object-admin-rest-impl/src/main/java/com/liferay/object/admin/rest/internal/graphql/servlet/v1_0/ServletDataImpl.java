@@ -387,6 +387,11 @@ public class ServletDataImpl implements ServletData {
 							ObjectViewResourceImpl.class,
 							"postObjectDefinitionByExternalReferenceCodeObjectView"));
 					put(
+						"mutation#updateObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectViewByExternalReferenceCodeObjectViewExternalReferenceCode",
+						new ObjectValuePair<>(
+							ObjectViewResourceImpl.class,
+							"putObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectViewByExternalReferenceCodeObjectViewExternalReferenceCode"));
+					put(
 						"mutation#createObjectDefinitionObjectViewsPageExportBatch",
 						new ObjectValuePair<>(
 							ObjectViewResourceImpl.class,
@@ -517,6 +522,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							ObjectViewResourceImpl.class,
 							"getObjectDefinitionByExternalReferenceCodeObjectViewsPage"));
+					put(
+						"query#objectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectViewByExternalReferenceCodeObjectViewExternalReferenceCode",
+						new ObjectValuePair<>(
+							ObjectViewResourceImpl.class,
+							"getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectViewByExternalReferenceCodeObjectViewExternalReferenceCode"));
 					put(
 						"query#objectDefinitionObjectViews",
 						new ObjectValuePair<>(

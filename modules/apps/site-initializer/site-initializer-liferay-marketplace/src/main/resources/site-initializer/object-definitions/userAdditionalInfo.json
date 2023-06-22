@@ -121,7 +121,7 @@
 			"label": {
 				"en_US": "Send Type"
 			},
-			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:sendType$]",
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Send Type$]",
 			"name": "sendType",
 			"required": false,
 			"type": "String"

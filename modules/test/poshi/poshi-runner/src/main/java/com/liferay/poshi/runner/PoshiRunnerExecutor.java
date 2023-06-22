@@ -1021,6 +1021,10 @@ public class PoshiRunnerExecutor {
 		List<String> argumentsList = new ArrayList<>();
 
 		for (Object argument : arguments) {
+			if (argument == null) {
+				continue;
+			}
+
 			argumentsList.add(argument.toString());
 		}
 

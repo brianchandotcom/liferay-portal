@@ -1449,3 +1449,25 @@ Delete implementations of `ScriptBundleProvider`, remove script files in `/META-
 ### Why was this change made?
 
 This change was made to address security vulnerabilities.
+
+---------------------------------------
+
+## Removed IndexStatusManagerInternalConfiguration
+- **Date:** 2023-June-21
+- **JIRA Ticket:** [LPS-185105](https://issues.liferay.com/browse/LPS-185105)
+
+### What changed?
+
+`IndexStatusManagerInternalConfiguration` is being removed.
+
+### Who is affected?
+
+This affects anyone using this configuration.
+
+### How should I update my code?
+
+This removal of the configuration has no replacement.
+
+### Why was this change made?
+
+Liferay decided to not support this configuration.

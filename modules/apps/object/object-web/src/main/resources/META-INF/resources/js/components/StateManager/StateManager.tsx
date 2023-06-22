@@ -110,7 +110,7 @@ export default function StateManager({
 							fieldName: 'label',
 							label: Liferay.Language.get('label'),
 							localizeLabel: true,
-							sortable: false,
+							sortable: true,
 						},
 					],
 				},
@@ -119,5 +119,10 @@ export default function StateManager({
 		],
 	};
 
-	return <FrontendDataSet {...dataSetProps} />;
+	return (
+		<FrontendDataSet
+			sorting={[{direction: 'asc', key: 'label'}]}
+			{...dataSetProps}
+		/>
+	);
 }

@@ -40,6 +40,15 @@
 			let button = null;
 			let popover = null;
 
+			function debounce(fn, delay) {
+				let timeoutId;
+
+				return () => {
+					clearTimeout(timeoutId);
+					timeoutId = setTimeout(fn, delay);
+				};
+			}
+
 			function hidePopover() {
 				if (popover) {
 					if (document.body.contains(popover)) {
@@ -48,12 +57,8 @@
 
 					popover = null;
 
-					if (button) {
-						if (document.body.contains(button)) {
-							button.focus();
-						}
-
-						button = null;
+					if (button && document.body.contains(button)) {
+						button.focus();
 					}
 				}
 			}
@@ -61,7 +66,6 @@
 			function showPopover() {
 				hidePopover();
 
-				button = editor.container.findOne('.cke_button__aicreator').$;
 				popover = document.createElement('div');
 
 				popover.className = 'clay-popover-top fade popover show';
@@ -142,6 +146,19 @@
 					: 'openAICreatorConfigurationPopover',
 				icon: `${plugin.path}assets/ai_creator.png`,
 				label: Liferay.Language.get('ai-creator'),
+			});
+
+			requestAnimationFrame(() => {
+				button = editor.container.findOne('.cke_button__aicreator').$;
+
+				if (!editor.config.isAICreatorOpenAIAPIKey) {
+					button.removeAttribute('title');
+
+					const debouncedShowPopover = debounce(showPopover, 300);
+
+					button.addEventListener('mouseenter', debouncedShowPopover);
+					button.addEventListener('mouseleave', hidePopover);
+				}
 			});
 		},
 	});

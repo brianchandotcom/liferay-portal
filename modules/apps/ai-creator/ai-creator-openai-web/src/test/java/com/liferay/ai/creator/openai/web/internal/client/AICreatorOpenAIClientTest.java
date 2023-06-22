@@ -112,7 +112,7 @@ public class AICreatorOpenAIClientTest {
 		_assertMessageRoleSystemContent(LocaleUtil.getDefault(), tone, words);
 		_assertOptions(
 			apiKey, content, ContentTypes.APPLICATION_JSON,
-			AICreatorOpenAIClient.ENDPOINT_CHAT_COMPLETION);
+			AICreatorOpenAIClient.ENDPOINT_COMPLETION);
 		_assertResponse(response);
 	}
 
@@ -124,7 +124,7 @@ public class AICreatorOpenAIClientTest {
 
 		_testIOException(
 			content, ContentTypes.APPLICATION_JSON,
-			AICreatorOpenAIClient.ENDPOINT_CHAT_COMPLETION,
+			AICreatorOpenAIClient.ENDPOINT_COMPLETION,
 			apiKey -> _aiCreatorOpenAIClient.getCompletion(
 				apiKey, content, LocaleUtil.getDefault(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomInt()));
@@ -138,7 +138,7 @@ public class AICreatorOpenAIClientTest {
 
 		_testResponseWithErrorKey(
 			content, ContentTypes.APPLICATION_JSON,
-			AICreatorOpenAIClient.ENDPOINT_CHAT_COMPLETION,
+			AICreatorOpenAIClient.ENDPOINT_COMPLETION,
 			apiKey -> _aiCreatorOpenAIClient.getCompletion(
 				apiKey, content, LocaleUtil.getDefault(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomInt()));
@@ -152,7 +152,7 @@ public class AICreatorOpenAIClientTest {
 
 		_testUnauthorizedResponseCode(
 			content, ContentTypes.APPLICATION_JSON,
-			AICreatorOpenAIClient.ENDPOINT_CHAT_COMPLETION,
+			AICreatorOpenAIClient.ENDPOINT_COMPLETION,
 			apiKey -> _aiCreatorOpenAIClient.getCompletion(
 				apiKey, content, LocaleUtil.getDefault(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomInt()));

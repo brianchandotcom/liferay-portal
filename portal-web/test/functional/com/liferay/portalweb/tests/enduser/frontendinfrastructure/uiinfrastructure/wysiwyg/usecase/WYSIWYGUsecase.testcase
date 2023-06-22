@@ -27,8 +27,7 @@ definition {
 		}
 	}
 
-	@description = "Ignored due to LPS-185764 | LRQA-67229. Verify if aad blog entry with image via blog images is possible"
-	@ignore = "true"
+	@description = "LRQA-67229. Verify if aad blog entry with image via blog images is possible"
 	@priority = 4
 	@refactordone
 	test CanAddBlogsEntryWithImageViaBlogsImages {

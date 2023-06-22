@@ -425,7 +425,7 @@ public class ValidatorTest {
 		}
 	}
 
-	private static final String _TEST_WEB_ID = "www.able.com";
+	private static final String _TEST_WEB_ID = "test.com";
 
 	private final ByteArrayOutputStream _byteArrayOutputStream =
 		new ByteArrayOutputStream();

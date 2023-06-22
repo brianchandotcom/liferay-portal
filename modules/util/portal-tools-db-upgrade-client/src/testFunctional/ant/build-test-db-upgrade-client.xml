@@ -11,7 +11,7 @@
 
 			<exec executable="/bin/bash" logError="true" output="true">
 				<arg value="-c" />
-				<arg value="pkill -f db.upgrade" />
+				<arg value="pkill -f db.upgrade.client" />
 			</exec>
 
 			<delete failonerror="false" file="${db.upgrade.client.log}" />

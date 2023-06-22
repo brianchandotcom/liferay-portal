@@ -685,7 +685,7 @@ definition {
 		task ("And given the buyer has permission to view a channel's configuration") {
 			CommercePermissions.defineChannelPermissionsViaJSONAPI(
 				roleTitle = "User",
-				update = "true",
+				update = "false",
 				view = "true");
 		}
 
@@ -699,13 +699,18 @@ definition {
 
 			CommerceChannels.openChannelsAdmin();
 
-			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+			AssertTextEquals(
+				key_columnIndex = 1,
+				key_rowIndex = 1,
+				locator1 = "CommerceEntry#TABLE_ENTRY_ROW_FIELD_GENERIC",
+				value1 = "Minium Portal");
 		}
 
 		task ("Then the buyer is unable to change the channel currency code") {
 			AssertElementNotPresent(
-				key_title = "Currency",
-				locator1 = "CommerceEntry#CATALOGS_FORM");
+				key_entryName = "Minium Portal",
+				locator1 = "CommerceNavigation#ENTRY_NAME",
+				value1 = "Minium Portal");
 		}
 	}
 

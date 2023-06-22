@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.search.spi.model.permission.SearchPermissionFilterContributor;
 
 import java.util.List;
@@ -53,14 +53,6 @@ public class CommerceChannelSearchPermissionFilterContributor
 		}
 
 		try {
-			if (!_roleLocalService.hasUserRole(
-					permissionChecker.getUserId(),
-					permissionChecker.getCompanyId(),
-					AccountRoleConstants.ROLE_NAME_SUPPLIER, true)) {
-
-				return;
-			}
-
 			List<AccountEntry> accountEntries =
 				_accountEntryLocalService.getUserAccountEntries(
 					permissionChecker.getUserId(), 0L, StringPool.BLANK,
@@ -70,6 +62,14 @@ public class CommerceChannelSearchPermissionFilterContributor
 			TermsFilter termsFilter = new TermsFilter("accountEntryId");
 
 			for (AccountEntry accountEntry : accountEntries) {
+				if (!_userGroupRoleLocalService.hasUserGroupRole(
+						permissionChecker.getUserId(),
+						accountEntry.getAccountEntryGroupId(),
+						AccountRoleConstants.ROLE_NAME_ACCOUNT_SUPPLIER)) {
+
+					continue;
+				}
+
 				termsFilter.addValue(
 					String.valueOf(accountEntry.getAccountEntryId()));
 			}
@@ -90,6 +90,6 @@ public class CommerceChannelSearchPermissionFilterContributor
 	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Reference
-	private RoleLocalService _roleLocalService;
+	private UserGroupRoleLocalService _userGroupRoleLocalService;
 
 }

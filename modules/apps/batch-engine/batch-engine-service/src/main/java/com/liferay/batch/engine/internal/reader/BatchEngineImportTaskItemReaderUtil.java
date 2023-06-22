@@ -21,6 +21,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 
+import com.liferay.batch.engine.action.ItemReaderPostAction;
+import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -33,6 +35,7 @@ import java.lang.reflect.Field;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -42,9 +45,12 @@ import java.util.Objects;
 public class BatchEngineImportTaskItemReaderUtil {
 
 	public static <T> T convertValue(
-			Class<T> itemClass, Map<String, Object> fieldNameValueMap)
+			BatchEngineImportTask batchEngineImportTask, Class<T> itemClass,
+			Map<String, Object> fieldNameValueMap,
+			List<ItemReaderPostAction> itemReaderPostActions)
 		throws ReflectiveOperationException {
 
+		Map<String, Serializable> extendedProperties = new HashMap<>();
 		T item = itemClass.newInstance();
 
 		for (Map.Entry<String, Object> entry : fieldNameValueMap.entrySet()) {
@@ -86,14 +92,23 @@ public class BatchEngineImportTaskItemReaderUtil {
 			}
 
 			if (field == null) {
-				throw new NoSuchFieldException(entry.getKey());
+				extendedProperties.put(
+					entry.getKey(), (Serializable)entry.getValue());
 			}
+			else {
+				field.setAccessible(true);
 
-			field.setAccessible(true);
+				Map<String, Object> map = (Map)field.get(item);
 
-			Map<String, Object> map = (Map)field.get(item);
+				map.put(entry.getKey(), entry.getValue());
+			}
+		}
 
-			map.put(entry.getKey(), entry.getValue());
+		for (ItemReaderPostAction itemReaderPostAction :
+				itemReaderPostActions) {
+
+			itemReaderPostAction.run(
+				batchEngineImportTask, extendedProperties, item);
 		}
 
 		return item;

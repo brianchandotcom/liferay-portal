@@ -581,9 +581,21 @@ public class OpenAPIParserUtil {
 	private static String _getItemsDataType(
 		Map<String, String> javaDataTypeMap, Items items) {
 
+		String type = items.getType();
+
+		if (StringUtil.equals(type, "array")) {
+			Items childItems = items.getItems();
+
+			if (childItems == null) {
+				throw new IllegalArgumentException(
+					"Items of type array must contain items");
+			}
+
+			return "[" + _getItemsDataType(javaDataTypeMap, childItems);
+		}
+
 		String javaDataType = _openAPIDataTypeMap.get(
-			new AbstractMap.SimpleImmutableEntry<>(
-				items.getType(), items.getFormat()));
+			new AbstractMap.SimpleImmutableEntry<>(type, items.getFormat()));
 
 		if (items.getAdditionalPropertySchema() != null) {
 			javaDataType = Map.class.getName();

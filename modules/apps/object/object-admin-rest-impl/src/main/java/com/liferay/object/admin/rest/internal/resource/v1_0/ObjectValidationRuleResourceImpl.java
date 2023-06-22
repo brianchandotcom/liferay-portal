@@ -16,14 +16,17 @@ package com.liferay.object.admin.rest.internal.resource.v1_0;
 
 import com.liferay.object.admin.rest.dto.v1_0.ObjectValidationRule;
 import com.liferay.object.admin.rest.internal.dto.v1_0.converter.constants.DTOConverterConstants;
+import com.liferay.object.admin.rest.internal.odata.entity.v1_0.ObjectValidationRuleEntityModel;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectValidationRuleResource;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectValidationRuleService;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
@@ -32,6 +35,8 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
+
+import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -57,10 +62,15 @@ public class ObjectValidationRuleResourceImpl
 	}
 
 	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
+		return _entityModel;
+	}
+
+	@Override
 	public Page<ObjectValidationRule>
 			getObjectDefinitionByExternalReferenceCodeObjectValidationRulesPage(
 				String externalReferenceCode, String search,
-				Pagination pagination)
+				Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		ObjectDefinition objectDefinition =
@@ -69,7 +79,8 @@ public class ObjectValidationRuleResourceImpl
 					externalReferenceCode, contextCompany.getCompanyId());
 
 		return getObjectDefinitionObjectValidationRulesPage(
-			objectDefinition.getObjectDefinitionId(), search, pagination);
+			objectDefinition.getObjectDefinitionId(), search, pagination,
+			sorts);
 	}
 
 	@NestedField(
@@ -79,7 +90,8 @@ public class ObjectValidationRuleResourceImpl
 	@Override
 	public Page<ObjectValidationRule>
 			getObjectDefinitionObjectValidationRulesPage(
-				Long objectDefinitionId, String search, Pagination pagination)
+				Long objectDefinitionId, String search, Pagination pagination,
+				Sort[] sorts)
 		throws Exception {
 
 		return SearchUtil.search(
@@ -124,7 +136,7 @@ public class ObjectValidationRuleResourceImpl
 					"objectDefinitionId", objectDefinitionId);
 				searchContext.setCompanyId(contextCompany.getCompanyId());
 			},
-			null,
+			sorts,
 			document -> _toObjectValidationRule(
 				_objectValidationRuleService.getObjectValidationRule(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
@@ -224,6 +236,9 @@ public class ObjectValidationRuleResourceImpl
 				null),
 			serviceBuilderObjectValidationRule);
 	}
+
+	private static final EntityModel _entityModel =
+		new ObjectValidationRuleEntityModel();
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

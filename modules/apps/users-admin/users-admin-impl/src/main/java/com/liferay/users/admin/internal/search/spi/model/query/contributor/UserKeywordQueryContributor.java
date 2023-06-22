@@ -77,7 +77,8 @@ public class UserKeywordQueryContributor implements KeywordQueryContributor {
 				keywords = StringUtil.toLowerCase(keywords);
 
 				booleanQuery.add(
-					_getTrailingWildcardQuery("emailAddress", keywords),
+					_getTrailingWildcardQuery(
+						"emailAddress", StringUtil.unquote(keywords)),
 					BooleanClauseOccur.SHOULD);
 				booleanQuery.add(
 					_getTrailingWildcardQuery("emailAddressDomain", keywords),

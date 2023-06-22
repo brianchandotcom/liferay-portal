@@ -29,7 +29,7 @@ import java.util.List;
 public interface CommerceOrderEngine {
 
 	public CommerceOrder checkCommerceOrderShipmentStatus(
-			CommerceOrder commerceOrder)
+			CommerceOrder commerceOrder, boolean secure)
 		throws PortalException;
 
 	public CommerceOrder checkoutCommerceOrder(
@@ -44,7 +44,8 @@ public interface CommerceOrderEngine {
 		throws PortalException;
 
 	public CommerceOrder transitionCommerceOrder(
-			CommerceOrder commerceOrder, int orderStatus, long userId)
+			CommerceOrder commerceOrder, int orderStatus, long userId,
+			boolean secure)
 		throws PortalException;
 
 	public CommerceOrder updateCommerceOrder(

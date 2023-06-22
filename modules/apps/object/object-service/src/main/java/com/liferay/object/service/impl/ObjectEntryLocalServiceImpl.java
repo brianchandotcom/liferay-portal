@@ -218,7 +218,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.function.BiFunction;
 
 import javax.crypto.spec.SecretKeySpec;
 
@@ -1365,8 +1364,9 @@ public class ObjectEntryLocalServiceImpl
 
 		Map<String, Serializable> transientValues = objectEntry.getValues();
 
-		_insertIntoOrUpdateLocalizationTable(
-			objectDefinition, objectEntryId, values);
+		_deleteObjectDefinitionLocalizationTableValues(
+			objectDefinition, objectEntryId);
+		_insertIntoLocalizationTable(objectDefinition, objectEntryId, values);
 		_updateTable(
 			_getDynamicObjectDefinitionTable(
 				objectEntry.getObjectDefinitionId()),
@@ -1732,6 +1732,25 @@ public class ObjectEntryLocalServiceImpl
 				pkObjectFieldDBColumnName, " = ", primaryKey));
 
 		FinderCacheUtil.clearDSLQueryCache(dbTableName);
+	}
+
+	private void _deleteObjectDefinitionLocalizationTableValues(
+			ObjectDefinition objectDefinition, long objectEntryId)
+		throws PortalException {
+
+		DynamicObjectDefinitionLocalizationTable
+			dynamicObjectDefinitionLocalizationTable =
+				DynamicObjectDefinitionLocalizationTableFactory.create(
+					objectDefinition, _objectFieldLocalService);
+
+		if (dynamicObjectDefinitionLocalizationTable == null) {
+			return;
+		}
+
+		_deleteFromTable(
+			dynamicObjectDefinitionLocalizationTable.getTableName(),
+			dynamicObjectDefinitionLocalizationTable.getForeignKeyColumnName(),
+			objectEntryId);
 	}
 
 	private void _fillDefaultValue(
@@ -3065,87 +3084,6 @@ public class ObjectEntryLocalServiceImpl
 		}
 	}
 
-	private void _insertIntoOrUpdateLocalizationTable(
-			ObjectDefinition objectDefinition, long objectEntryId,
-			Map<String, Serializable> values)
-		throws PortalException {
-
-		DynamicObjectDefinitionLocalizationTable
-			dynamicObjectDefinitionLocalizationTable =
-				DynamicObjectDefinitionLocalizationTableFactory.create(
-					objectDefinition, _objectFieldLocalService);
-
-		if (dynamicObjectDefinitionLocalizationTable == null) {
-			return;
-		}
-
-		Map<String, Serializable> insertValues = new HashMap<>();
-		Map<String, Serializable> updateValues = new HashMap<>();
-
-		List<String> languageIds = new ArrayList<>(
-			objectEntryPersistence.dslQuery(
-				DSLQueryFactoryUtil.select(
-					dynamicObjectDefinitionLocalizationTable.
-						getLanguageIdColumn()
-				).from(
-					dynamicObjectDefinitionLocalizationTable
-				).where(
-					dynamicObjectDefinitionLocalizationTable.
-						getForeignKeyColumn(
-						).eq(
-							objectEntryId
-						)
-				)));
-
-		for (ObjectField objectField :
-				dynamicObjectDefinitionLocalizationTable.getObjectFields()) {
-
-			if (!values.containsKey(objectField.getI18nObjectFieldName())) {
-				continue;
-			}
-
-			Map<String, String> localizedValues =
-				(Map<String, String>)values.get(
-					objectField.getI18nObjectFieldName());
-
-			for (Map.Entry<String, String> entry : localizedValues.entrySet()) {
-				BiFunction<String, Serializable, Serializable> biFunction =
-					(key, value) -> {
-						if (value == null) {
-							return HashMapBuilder.put(
-								entry.getKey(), entry.getValue()
-							).build();
-						}
-
-						MapUtil.merge(
-							HashMapBuilder.put(
-								entry.getKey(), entry.getValue()
-							).build(),
-							(Map<String, String>)value);
-
-						return (Serializable)value;
-					};
-
-				if (languageIds.contains(entry.getKey())) {
-					updateValues.compute(
-						objectField.getI18nObjectFieldName(), biFunction);
-
-					continue;
-				}
-
-				insertValues.compute(
-					objectField.getI18nObjectFieldName(), biFunction);
-			}
-		}
-
-		_insertIntoLocalizationTable(
-			objectDefinition, objectEntryId, insertValues);
-		_updateLocalizationTable(
-			objectDefinition.getCompanyId(),
-			dynamicObjectDefinitionLocalizationTable, objectEntryId,
-			updateValues);
-	}
-
 	private void _insertIntoTable(
 			DynamicObjectDefinitionTable dynamicObjectDefinitionTable,
 			long objectEntryId, User user, Map<String, Serializable> values)
@@ -3636,115 +3574,6 @@ public class ObjectEntryLocalServiceImpl
 		return StringUtil.replace(
 			value, value.charAt(NumberUtil.getDecimalSeparatorIndex(value)),
 			'.');
-	}
-
-	private void _updateLocalizationTable(
-		long companyId,
-		DynamicObjectDefinitionLocalizationTable
-			dynamicObjectDefinitionLocalizationTable,
-		long objectEntryId, Map<String, Serializable> values) {
-
-		StringBundler sb = new StringBundler();
-
-		sb.append("update ");
-		sb.append(dynamicObjectDefinitionLocalizationTable.getName());
-		sb.append(" set ");
-
-		int count = 0;
-
-		List<ObjectField> objectFields =
-			dynamicObjectDefinitionLocalizationTable.getObjectFields();
-
-		for (ObjectField objectField : objectFields) {
-			if (!values.containsKey(objectField.getI18nObjectFieldName())) {
-				continue;
-			}
-
-			if (count > 0) {
-				sb.append(", ");
-			}
-
-			sb.append(objectField.getDBColumnName());
-			sb.append(" = ?");
-
-			count++;
-		}
-
-		if (count == 0) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"No values were provided for object entry " +
-						objectEntryId);
-			}
-
-			return;
-		}
-
-		sb.append(" where ");
-		sb.append(
-			dynamicObjectDefinitionLocalizationTable.getForeignKeyColumnName());
-		sb.append(" = ? and languageId = ?");
-
-		String sql = sb.toString();
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("SQL: " + sql);
-		}
-
-		Set<Locale> locales = _getLocales(companyId, objectFields, values);
-
-		Connection connection = _currentConnection.getConnection(
-			objectEntryPersistence.getDataSource());
-
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				sql)) {
-
-			for (Locale locale : locales) {
-				String languageId = LocaleUtil.toLanguageId(locale);
-
-				int index = 1;
-
-				for (ObjectField objectField : objectFields) {
-					if (!values.containsKey(
-							objectField.getI18nObjectFieldName())) {
-
-						continue;
-					}
-
-					Column<?, ?> column =
-						dynamicObjectDefinitionLocalizationTable.getColumn(
-							objectField.getDBColumnName());
-
-					Map<String, String> localizedValues =
-						(Map<String, String>)values.get(
-							objectField.getI18nObjectFieldName());
-
-					String localizedValue = localizedValues.get(languageId);
-
-					if (localizedValue == null) {
-						localizedValue = StringPool.BLANK;
-					}
-
-					_setColumn(
-						preparedStatement, index++, column.getSQLType(),
-						localizedValue);
-				}
-
-				_setColumn(
-					preparedStatement, index++, Types.BIGINT, objectEntryId);
-				_setColumn(preparedStatement, index, Types.VARCHAR, languageId);
-
-				preparedStatement.addBatch();
-			}
-
-			preparedStatement.executeBatch();
-
-			FinderCacheUtil.clearDSLQueryCache(
-				dynamicObjectDefinitionLocalizationTable.getTableName());
-		}
-		catch (Exception exception) {
-			throw new SystemException(exception);
-		}
 	}
 
 	private void _updateTable(

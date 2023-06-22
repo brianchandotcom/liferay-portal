@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Stian Sigvartsen
  */
 @Component(property = "key=auth.failure", service = AuthFailure.class)
-public class LoginFailure implements AuthFailure {
+public class LoginAuthFailure implements AuthFailure {
 
 	@Override
 	public void onFailureByEmailAddress(
@@ -143,7 +143,8 @@ public class LoginFailure implements AuthFailure {
 		return auditMessage;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(LoginFailure.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		LoginAuthFailure.class);
 
 	@Reference
 	private AuditRouter _auditRouter;

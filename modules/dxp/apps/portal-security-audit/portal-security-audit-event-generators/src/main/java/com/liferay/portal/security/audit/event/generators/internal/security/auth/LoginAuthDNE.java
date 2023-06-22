@@ -34,11 +34,11 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Nikoletta Buza
  */
-@Component(property = "key=auth.dne", service = AuthDNE.class)
-public class LoginDNE implements AuthDNE {
+@Component(service = AuthDNE.class)
+public class LoginAuthDNE implements AuthDNE {
 
 	@Override
-	public void onUserDoesNotExist(
+	public void onDoesNotExist(
 		String authType, long companyId, String login,
 		Map<String, String[]> headerMap, Map<String, String[]> parameterMap) {
 
@@ -84,7 +84,7 @@ public class LoginDNE implements AuthDNE {
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(LoginDNE.class);
+	private static final Log _log = LogFactoryUtil.getLog(LoginAuthDNE.class);
 
 	@Reference
 	private AuditRouter _auditRouter;

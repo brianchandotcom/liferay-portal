@@ -14,6 +14,8 @@
 
 package com.liferay.portal.security.auth;
 
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.model.CompanyConstants;
@@ -61,6 +63,31 @@ public class AuthPipeline {
 		return _authenticate(
 			key, companyId, String.valueOf(userId), password,
 			CompanyConstants.AUTH_TYPE_ID, headerMap, parameterMap);
+	}
+
+	public static void onDoesNotExist(
+			String authType, long companyId, String login,
+			Map<String, String[]> headerMap, Map<String, String[]> parameterMap)
+		throws AuthException {
+
+		List<AuthDNE> authDNEs = _authDNEServiceTrackerList.toList();
+
+		if (authDNEs.isEmpty()) {
+			return;
+		}
+
+		for (AuthDNE authDNE : authDNEs) {
+			try {
+				authDNE.onDoesNotExist(
+					authType, companyId, login, headerMap, parameterMap);
+			}
+			catch (AuthException authException) {
+				throw authException;
+			}
+			catch (Exception exception) {
+				throw new AuthException(exception);
+			}
+		}
 	}
 
 	public static void onFailureByEmailAddress(
@@ -117,31 +144,6 @@ public class AuthPipeline {
 		throws AuthException {
 
 		onFailureByUserId(key, companyId, userId, headerMap, parameterMap);
-	}
-
-	public static void onUserDoesNotExist(
-			String authType, long companyId, String login,
-			Map<String, String[]> headerMap, Map<String, String[]> parameterMap)
-		throws AuthException {
-
-		List<AuthDNE> authDNEs = _authDNEs.getService("auth.dne");
-
-		if (authDNEs.isEmpty()) {
-			return;
-		}
-
-		for (AuthDNE authDNE : authDNEs) {
-			try {
-				authDNE.onUserDoesNotExist(
-					authType, companyId, login, headerMap, parameterMap);
-			}
-			catch (AuthException authException) {
-				throw authException;
-			}
-			catch (Exception exception) {
-				throw new AuthException(exception);
-			}
-		}
 	}
 
 	private static int _authenticate(
@@ -236,9 +238,9 @@ public class AuthPipeline {
 		}
 	}
 
-	private static final ServiceTrackerMap<String, List<AuthDNE>> _authDNEs =
-		ServiceTrackerMapFactory.openMultiValueMap(
-			SystemBundleUtil.getBundleContext(), AuthDNE.class, "key");
+	private static final ServiceTrackerList<AuthDNE>
+		_authDNEServiceTrackerList = ServiceTrackerListFactory.open(
+			SystemBundleUtil.getBundleContext(), AuthDNE.class);
 	private static final ServiceTrackerMap<String, List<Authenticator>>
 		_authenticators = ServiceTrackerMapFactory.openMultiValueMap(
 			SystemBundleUtil.getBundleContext(), Authenticator.class, "key");

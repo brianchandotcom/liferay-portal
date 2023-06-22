@@ -21,7 +21,7 @@ import java.util.Map;
  */
 public interface AuthDNE {
 
-	public void onUserDoesNotExist(
+	public void onDoesNotExist(
 			String authType, long companyId, String login,
 			Map<String, String[]> headerMap, Map<String, String[]> parameterMap)
 		throws AuthException;

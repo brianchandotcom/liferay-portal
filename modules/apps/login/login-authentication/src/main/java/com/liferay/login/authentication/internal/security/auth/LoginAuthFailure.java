@@ -12,21 +12,23 @@
  * details.
  */
 
-package com.liferay.portal.security.auth;
+package com.liferay.login.authentication.internal.security.auth;
 
 import com.liferay.portal.kernel.security.auth.AuthException;
 import com.liferay.portal.kernel.security.auth.AuthFailure;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+import com.liferay.portal.kernel.service.UserLocalService;
 
 import java.util.Map;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Scott Lee
  */
-@OSGiBeanProperties(property = "key=auth.failure")
-public class LoginFailure implements AuthFailure {
+@Component(property = "key=auth.failure", service = AuthFailure.class)
+public class LoginAuthFailure implements AuthFailure {
 
 	@Override
 	public void onFailureByEmailAddress(
@@ -35,7 +37,7 @@ public class LoginFailure implements AuthFailure {
 		throws AuthException {
 
 		try {
-			UserLocalServiceUtil.checkLoginFailureByEmailAddress(
+			_userLocalService.checkLoginFailureByEmailAddress(
 				companyId, emailAddress);
 		}
 		catch (Exception exception) {
@@ -50,7 +52,7 @@ public class LoginFailure implements AuthFailure {
 		throws AuthException {
 
 		try {
-			UserLocalServiceUtil.checkLoginFailureByScreenName(
+			_userLocalService.checkLoginFailureByScreenName(
 				companyId, screenName);
 		}
 		catch (Exception exception) {
@@ -65,11 +67,14 @@ public class LoginFailure implements AuthFailure {
 		throws AuthException {
 
 		try {
-			UserLocalServiceUtil.checkLoginFailureById(userId);
+			_userLocalService.checkLoginFailureById(userId);
 		}
 		catch (Exception exception) {
 			throw new AuthException(exception);
 		}
 	}
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

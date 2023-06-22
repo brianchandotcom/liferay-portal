@@ -12,21 +12,23 @@
  * details.
  */
 
-package com.liferay.portal.security.auth;
+package com.liferay.login.authentication.internal.security.auth;
 
 import com.liferay.portal.kernel.security.auth.AuthException;
 import com.liferay.portal.kernel.security.auth.AuthFailure;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+import com.liferay.portal.kernel.service.UserLocalService;
 
 import java.util.Map;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Scott Lee
  */
-@OSGiBeanProperties(property = "key=auth.max.failures")
-public class LoginMaxFailures implements AuthFailure {
+@Component(property = "key=auth.max.failures", service = AuthFailure.class)
+public class LoginMaxAuthFailure implements AuthFailure {
 
 	@Override
 	public void onFailureByEmailAddress(
@@ -35,7 +37,7 @@ public class LoginMaxFailures implements AuthFailure {
 		throws AuthException {
 
 		try {
-			UserLocalServiceUtil.updateLockoutByEmailAddress(
+			_userLocalService.updateLockoutByEmailAddress(
 				companyId, emailAddress, true);
 		}
 		catch (Exception exception) {
@@ -50,7 +52,7 @@ public class LoginMaxFailures implements AuthFailure {
 		throws AuthException {
 
 		try {
-			UserLocalServiceUtil.updateLockoutByScreenName(
+			_userLocalService.updateLockoutByScreenName(
 				companyId, screenName, true);
 		}
 		catch (Exception exception) {
@@ -65,11 +67,14 @@ public class LoginMaxFailures implements AuthFailure {
 		throws AuthException {
 
 		try {
-			UserLocalServiceUtil.updateLockoutById(userId, true);
+			_userLocalService.updateLockoutById(userId, true);
 		}
 		catch (Exception exception) {
 			throw new AuthException(exception);
 		}
 	}
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

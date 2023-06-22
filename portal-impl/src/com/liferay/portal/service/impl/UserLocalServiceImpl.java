@@ -5682,7 +5682,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			}
 
 			try {
-				AuthPipeline.onUserDoesNotExist(
+				AuthPipeline.onDoesNotExist(
 					authType, companyId, login, headerMap, parameterMap);
 			}
 			catch (Exception exception) {
@@ -6027,7 +6027,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		if (user == null) {
 			try {
-				AuthPipeline.onUserDoesNotExist(
+				AuthPipeline.onDoesNotExist(
 					authType, companyId, login, headerMap, parameterMap);
 			}
 			catch (Exception exception) {
@@ -6058,7 +6058,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 			if (user == null) {
 				try {
-					AuthPipeline.onUserDoesNotExist(
+					AuthPipeline.onDoesNotExist(
 						authType, companyId, login, headerMap, parameterMap);
 				}
 				catch (Exception exception) {

@@ -21,6 +21,10 @@ import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.constants.ObjectFieldSettingConstants;
+import com.liferay.object.field.business.type.ObjectFieldBusinessType;
+import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
+import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.rest.dto.v1_0.ListEntry;
@@ -96,7 +100,7 @@ public class SalesforceObjectEntryManagerImpl
 			objectDefinition.getCompanyId(),
 			getGroupId(objectDefinition, scopeKey),
 			"sobjects/" + objectDefinition.getExternalReferenceCode(),
-			_toJSONObject(objectDefinition, objectEntry));
+			_toJSONObject(dtoConverterContext, objectDefinition, objectEntry));
 
 		return getObjectEntry(
 			objectDefinition.getCompanyId(), dtoConverterContext,
@@ -190,7 +194,7 @@ public class SalesforceObjectEntryManagerImpl
 			StringBundler.concat(
 				"sobjects/", objectDefinition.getExternalReferenceCode(), "/",
 				externalReferenceCode),
-			_toJSONObject(objectDefinition, objectEntry));
+			_toJSONObject(dtoConverterContext, objectDefinition, objectEntry));
 
 		return getObjectEntry(
 			companyId, dtoConverterContext, externalReferenceCode,
@@ -416,6 +420,7 @@ public class SalesforceObjectEntryManagerImpl
 	}
 
 	private JSONObject _toJSONObject(
+			DTOConverterContext dtoConverterContext,
 			ObjectDefinition objectDefinition, ObjectEntry objectEntry)
 		throws Exception {
 
@@ -427,15 +432,19 @@ public class SalesforceObjectEntryManagerImpl
 
 		Map<String, Object> properties = objectEntry.getProperties();
 
-		for (Map.Entry<String, Object> entry : properties.entrySet()) {
-			ObjectField objectField = _getObjectFieldByName(
-				entry.getKey(), objectFields);
+		for (String key : properties.keySet()) {
+			ObjectField objectField = _getObjectFieldByName(key, objectFields);
 
 			if (objectField == null) {
 				continue;
 			}
 
-			Object value = entry.getValue();
+			ObjectFieldBusinessType objectFieldBusinessType =
+				_objectFieldBusinessTypeRegistry.getObjectFieldBusinessType(
+					objectField.getBusinessType());
+
+			Object value = objectFieldBusinessType.getValue(
+				objectField, dtoConverterContext.getUserId(), properties);
 
 			if (objectField.compareBusinessType(
 					ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
@@ -547,12 +556,30 @@ public class SalesforceObjectEntryManagerImpl
 
 			Object value = jsonObject.get(key);
 
-			if (Objects.equals(
-					objectField.getBusinessType(),
-					ObjectFieldConstants.BUSINESS_TYPE_INTEGER) ||
-				Objects.equals(
-					objectField.getBusinessType(),
-					ObjectFieldConstants.BUSINESS_TYPE_LONG_INTEGER)) {
+			if (objectField.compareBusinessType(
+					ObjectFieldConstants.BUSINESS_TYPE_DATE_TIME)) {
+
+				String pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS";
+
+				if (StringUtil.equals(
+						ObjectFieldSettingUtil.getValue(
+							ObjectFieldSettingConstants.NAME_TIME_STORAGE,
+							objectField),
+						ObjectFieldSettingConstants.VALUE_CONVERT_TO_UTC)) {
+
+					pattern += "Z";
+				}
+
+				SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
+					pattern);
+
+				value = simpleDateFormat.format(
+					simpleDateFormat.parse(GetterUtil.getString(value)));
+			}
+			else if (objectField.compareBusinessType(
+						ObjectFieldConstants.BUSINESS_TYPE_INTEGER) ||
+					 objectField.compareBusinessType(
+						 ObjectFieldConstants.BUSINESS_TYPE_LONG_INTEGER)) {
 
 				if (value instanceof BigDecimal) {
 					BigDecimal bigDecimalValue = (BigDecimal)value;
@@ -560,8 +587,7 @@ public class SalesforceObjectEntryManagerImpl
 					value = bigDecimalValue.toBigInteger();
 				}
 			}
-			else if (Objects.equals(
-						objectField.getBusinessType(),
+			else if (objectField.compareBusinessType(
 						ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
 
 				ListTypeEntry listTypeEntry =
@@ -620,6 +646,9 @@ public class SalesforceObjectEntryManagerImpl
 
 	@Reference
 	private ListTypeEntryLocalService _listTypeEntryLocalService;
+
+	@Reference
+	private ObjectFieldBusinessTypeRegistry _objectFieldBusinessTypeRegistry;
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;

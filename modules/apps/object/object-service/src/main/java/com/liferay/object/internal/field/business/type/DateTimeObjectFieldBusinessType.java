@@ -162,6 +162,9 @@ public class DateTimeObjectFieldBusinessType
 		else if ((value.length() == 24) && (value.charAt(10) == 'T')) {
 			return "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
 		}
+		else if ((value.length() == 28) && (value.charAt(23) == '+')) {
+			return "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
+		}
 
 		return DateUtil.ISO_8601_PATTERN;
 	}

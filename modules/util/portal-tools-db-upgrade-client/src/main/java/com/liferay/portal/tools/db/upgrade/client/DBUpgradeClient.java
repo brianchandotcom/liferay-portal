@@ -245,31 +245,33 @@ public class DBUpgradeClient {
 		}
 
 		if (upgradeFailed || _shell) {
+			String message = "Connecting to Gogo shell";
+
+			if (upgradeFailed) {
+				message += " because the upgrade failed or is incomplete";
+			}
+
+			System.out.println(message);
+
 			try (GogoShellClient gogoShellClient = _initGogoShellClient()) {
-				String message = "Connecting to Gogo shell ";
+				if (_isPortalUpgradeFinished(gogoShellClient)) {
+					_printHelp();
 
-				if (upgradeFailed) {
-					message += "because the upgrade failed or is incomplete";
-				}
+					_consoleReader.setPrompt(_GOGO_SHELL_PREFIX);
 
-				System.out.println(message);
+					String line = _consoleReader.readLine();
 
-				_printHelp();
-
-				_consoleReader.setPrompt(_GOGO_SHELL_PREFIX);
-
-				String line = _consoleReader.readLine();
-
-				if (line == null) {
-					System.out.println("Unable to open Gogo shell");
-				}
-
-				while (line != null) {
-					if (!_processGogoShellCommand(gogoShellClient, line)) {
-						break;
+					if (line == null) {
+						System.out.println("Unable to open Gogo shell");
 					}
 
-					line = _consoleReader.readLine();
+					while (line != null) {
+						if (!_processGogoShellCommand(gogoShellClient, line)) {
+							break;
+						}
+
+						line = _consoleReader.readLine();
+					}
 				}
 			}
 			catch (Exception exception) {
@@ -411,6 +413,20 @@ public class DBUpgradeClient {
 		int port = Integer.parseInt(matcher.group(2));
 
 		return new GogoShellClient(host, port);
+	}
+
+	private boolean _isPortalUpgradeFinished(GogoShellClient gogoShellClient)
+		throws IOException {
+
+		String upgradeList = gogoShellClient.send("upgrade:list");
+
+		if (upgradeList.contains("CommandNotFoundException")) {
+			System.out.print("Portal upgrade failed. Fix the issue and retry.");
+
+			return false;
+		}
+
+		return true;
 	}
 
 	private void _printHelp() {

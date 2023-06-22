@@ -48,4 +48,5 @@ public class UpgradeJavaMultiVMPoolUtilCheck {
 
 	@Reference
 	private CalledParameterClassTest _calledParameterClassTest;
+
 }

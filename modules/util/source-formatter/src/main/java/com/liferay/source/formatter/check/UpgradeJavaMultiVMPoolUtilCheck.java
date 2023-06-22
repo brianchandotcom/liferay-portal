@@ -73,7 +73,7 @@ public class UpgradeJavaMultiVMPoolUtilCheck extends BaseFileCheck {
 			_WARNING_CASE_TYPE + " _multiVMPool.getPortalCache(");
 		content = StringUtil.replaceLast(
 			content, CharPool.CLOSE_CURLY_BRACE,
-			"\n\t@Reference\n\tprivate MultiVMPool _multiVMPool;\n}");
+			"\n\t@Reference\n\tprivate MultiVMPool _multiVMPool;\n\n}");
 
 		return content;
 	}

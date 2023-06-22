@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.model.CompanyConstants;
+import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.repository.event.FileVersionPreviewEventListener;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -129,14 +130,15 @@ public class PDFProcessorImpl
 	}
 
 	@Override
-	public void generatePDFPreviews(long userId) {
+	public void generatePDFPreviews() {
 		_companyLocalService.forEachCompanyId(
 			companyId -> {
 				try {
 					String jobName = "generatePDFPreviews-" + companyId;
 
 					_backgroundTaskManager.addBackgroundTask(
-						userId, CompanyConstants.SYSTEM, jobName,
+						UserConstants.USER_ID_DEFAULT, CompanyConstants.SYSTEM,
+						jobName,
 						PDFPreviewBackgroundTaskExecutor.class.getName(),
 						HashMapBuilder.<String, Serializable>put(
 							BackgroundTaskContextMapConstants.DELETE_ON_SUCCESS,

@@ -214,7 +214,7 @@ public class EditServerMVCActionCommand
 			DLPreviewableProcessor.deleteFiles();
 		}
 		else if (cmd.equals("dlGeneratePDFPreviews")) {
-			_pdfProcessor.generatePDFPreviews(themeDisplay.getUserId());
+			_pdfProcessor.generatePDFPreviews();
 		}
 		else if (cmd.equals("gc")) {
 			_gc();

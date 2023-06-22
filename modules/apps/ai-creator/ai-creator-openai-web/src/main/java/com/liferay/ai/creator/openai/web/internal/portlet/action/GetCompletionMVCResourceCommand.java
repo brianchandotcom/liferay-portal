@@ -18,6 +18,7 @@ import com.liferay.ai.creator.openai.configuration.manager.AICreatorOpenAIConfig
 import com.liferay.ai.creator.openai.web.internal.client.AICreatorOpenAIClient;
 import com.liferay.ai.creator.openai.web.internal.constants.AICreatorOpenAIPortletKeys;
 import com.liferay.ai.creator.openai.web.internal.exception.AICreatorOpenAIClientException;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
@@ -67,7 +68,8 @@ public class GetCompletionMVCResourceCommand extends BaseMVCResourceCommand {
 						_language.get(
 							themeDisplay.getLocale(),
 							"openai-is-disabled.-enable-openai-from-the-" +
-								"settings-page-or-contact-your-administrator")
+								"instance-or-site-settings-or-contact-your-" +
+									"administrator")
 					).put(
 						"retry", false
 					)));
@@ -88,9 +90,10 @@ public class GetCompletionMVCResourceCommand extends BaseMVCResourceCommand {
 						"message",
 						_language.get(
 							themeDisplay.getLocale(),
-							"api-authentication-is-needed-to-use-this-" +
-								"feature.-add-an-api-key-from-the-settings-" +
-									"page-or-contact-your-administrator")
+							StringBundler.concat(
+								"api-authentication-is-needed-to-use-this-",
+								"feature.-add-an-api-key-from-the-instance-or-",
+								"site-settings-or-contact-your-administrator"))
 					).put(
 						"retry", false
 					)));

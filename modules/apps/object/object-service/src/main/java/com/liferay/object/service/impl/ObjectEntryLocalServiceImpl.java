@@ -1593,6 +1593,11 @@ public class ObjectEntryLocalServiceImpl
 			values.put(
 				objectFieldColumn.getName() + "i18n",
 				(Serializable)localizedValues);
+
+			values.putIfAbsent(
+				StringUtil.removeLast(
+					objectFieldColumn.getName(), StringPool.UNDERLINE),
+				StringPool.BLANK);
 		}
 	}
 

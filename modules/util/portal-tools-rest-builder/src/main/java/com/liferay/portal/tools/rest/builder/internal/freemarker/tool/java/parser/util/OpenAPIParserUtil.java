@@ -272,22 +272,7 @@ public class OpenAPIParserUtil {
 		}
 
 		if (schema.getItems() != null) {
-			Items items = schema.getItems();
-
-			String javaDataType = _openAPIDataTypeMap.get(
-				new AbstractMap.SimpleImmutableEntry<>(
-					items.getType(), items.getFormat()));
-
-			if (items.getAdditionalPropertySchema() != null) {
-				javaDataType = Map.class.getName();
-			}
-
-			if (items.getReference() != null) {
-				javaDataType = javaDataTypeMap.get(
-					getReferenceName(items.getReference()));
-			}
-
-			return getArrayClassName(javaDataType);
+			return _getItemsDataType(javaDataTypeMap, schema.getItems());
 		}
 
 		if (Objects.equals(schema.getType(), "object")) {
@@ -591,6 +576,25 @@ public class OpenAPIParserUtil {
 				}
 			}
 		}
+	}
+
+	private static String _getItemsDataType(
+		Map<String, String> javaDataTypeMap, Items items) {
+
+		String javaDataType = _openAPIDataTypeMap.get(
+			new AbstractMap.SimpleImmutableEntry<>(
+				items.getType(), items.getFormat()));
+
+		if (items.getAdditionalPropertySchema() != null) {
+			javaDataType = Map.class.getName();
+		}
+
+		if (items.getReference() != null) {
+			javaDataType = javaDataTypeMap.get(
+				getReferenceName(items.getReference()));
+		}
+
+		return getArrayClassName(javaDataType);
 	}
 
 	private static String _getMapType(

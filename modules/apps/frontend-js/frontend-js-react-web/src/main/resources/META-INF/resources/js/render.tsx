@@ -12,9 +12,13 @@
  * details.
  */
 
+import {Provider} from '@clayui/core';
 import {ClayIconSpriteContext} from '@clayui/icon';
-import React from 'react';
+import {accessibilityMenuAtom} from '@liferay/accessibility-menu-web';
+import React, {useMemo} from 'react';
 import ReactDOM from 'react-dom';
+
+import useLiferayState from './hooks/useLiferayState';
 
 let counter = 0;
 
@@ -104,9 +108,9 @@ export default function render(
 
 		// eslint-disable-next-line @liferay/portal/no-react-dom-render
 		ReactDOM.render(
-			<ClayIconSpriteContext.Provider value={spritemap}>
+			<LiferayProvider spritemap={spritemap}>
 				{Component ? <Component {...renderData} /> : renderable}
-			</ClayIconSpriteContext.Provider>,
+			</LiferayProvider>,
 			container
 		);
 	}
@@ -115,4 +119,35 @@ export default function render(
 			render(renderable, renderData, container);
 		});
 	}
+}
+
+type Props = {
+	children: React.ReactNode;
+	spritemap: string;
+};
+
+function LiferayProvider({children, spritemap}: Props) {
+	const [accessibilityMenu] = useLiferayState(accessibilityMenuAtom);
+
+	const reducedMotion = useMemo(() => {
+		const setting = accessibilityMenu.find(
+			(setting) =>
+				setting.key === 'ACCESSIBILITY_SETTING_PREFERS_REDUCED_MOTION'
+		);
+
+		if (setting!.value) {
+			return 'always';
+		}
+		else {
+			return 'user';
+		}
+	}, [accessibilityMenu]);
+
+	return (
+		<Provider reducedMotion={reducedMotion} spritemap={spritemap}>
+			<ClayIconSpriteContext.Provider value={spritemap}>
+				{children}
+			</ClayIconSpriteContext.Provider>
+		</Provider>
+	);
 }

@@ -78,7 +78,8 @@ public class SegmentsExperienceItemSelectorView
 			segmentsExperienceItemSelectorCriterion, portletURL,
 			itemSelectedEventName, search,
 			new SegmentsExperienceItemSelectorViewDescriptor(
-				httpServletRequest, portletURL));
+				httpServletRequest, portletURL,
+				segmentsExperienceItemSelectorCriterion));
 	}
 
 	private static final List<ItemSelectorReturnType>

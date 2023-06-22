@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.segments.item.selector.criterion.SegmentsExperienceItemSelectorCriterion;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 
@@ -37,10 +38,14 @@ public class SegmentsExperienceItemSelectorViewDescriptor
 	implements ItemSelectorViewDescriptor<SegmentsExperience> {
 
 	public SegmentsExperienceItemSelectorViewDescriptor(
-		HttpServletRequest httpServletRequest, PortletURL portletURL) {
+		HttpServletRequest httpServletRequest, PortletURL portletURL,
+		SegmentsExperienceItemSelectorCriterion
+			segmentsExperienceItemSelectorCriterion) {
 
 		_httpServletRequest = httpServletRequest;
 		_portletURL = portletURL;
+		_segmentsExperienceItemSelectorCriterion =
+			segmentsExperienceItemSelectorCriterion;
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -81,8 +86,8 @@ public class SegmentsExperienceItemSelectorViewDescriptor
 
 		searchContainer.setResultsAndTotal(
 			SegmentsExperienceLocalServiceUtil.getSegmentsExperiences(
-				_themeDisplay.getScopeGroupId(), _themeDisplay.getPlid(),
-				true));
+				_themeDisplay.getScopeGroupId(),
+				_segmentsExperienceItemSelectorCriterion.getPlid(), true));
 
 		return searchContainer;
 	}
@@ -94,6 +99,8 @@ public class SegmentsExperienceItemSelectorViewDescriptor
 
 	private final HttpServletRequest _httpServletRequest;
 	private final PortletURL _portletURL;
+	private final SegmentsExperienceItemSelectorCriterion
+		_segmentsExperienceItemSelectorCriterion;
 	private final ThemeDisplay _themeDisplay;
 
 }

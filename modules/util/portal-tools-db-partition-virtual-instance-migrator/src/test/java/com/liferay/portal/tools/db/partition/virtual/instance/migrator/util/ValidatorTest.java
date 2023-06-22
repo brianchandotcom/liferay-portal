@@ -264,11 +264,9 @@ public class ValidatorTest {
 
 		List<Release> missingTargetModuleReleases = new ArrayList<>();
 
-		List<Release> releases = _createReleases();
-
 		Map<String, Release> releasesMap = new HashMap<>();
 
-		for (Release release : releases) {
+		for (Release release : _createReleases()) {
 			releasesMap.put(release.getServletContextName(), release);
 
 			if (!servletContextName.equals(release.getServletContextName())) {

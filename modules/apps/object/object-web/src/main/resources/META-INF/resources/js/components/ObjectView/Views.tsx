@@ -117,7 +117,7 @@ export default function Views({
 							fieldName: 'name',
 							label: Liferay.Language.get('label'),
 							localizeLabel: true,
-							sortable: false,
+							sortable: true,
 						},
 						{
 							contentRenderer: 'objectLayoutDefaultDataRenderer',
@@ -134,5 +134,10 @@ export default function Views({
 		],
 	};
 
-	return <FrontendDataSet {...dataSetProps} />;
+	return (
+		<FrontendDataSet
+			sorting={[{direction: 'asc', key: 'name'}]}
+			{...dataSetProps}
+		/>
+	);
 }

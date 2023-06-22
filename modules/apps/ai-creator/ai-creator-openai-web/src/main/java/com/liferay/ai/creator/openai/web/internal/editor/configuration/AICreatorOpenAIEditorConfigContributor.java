@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Map;
@@ -78,6 +79,10 @@ public class AICreatorOpenAIEditorConfigContributor
 				LiferayWindowState.POP_UP
 			).buildString()
 		).put(
+			"aiCreatorPortletNamespace",
+			() -> _portal.getPortletNamespace(
+				AICreatorOpenAIPortletKeys.AI_CREATOR_OPENAI)
+		).put(
 			"isAICreatorOpenAIAPIKey",
 			() -> {
 				try {
@@ -126,5 +131,8 @@ public class AICreatorOpenAIEditorConfigContributor
 	@Reference
 	private AICreatorOpenAIConfigurationManager
 		_aiCreatorOpenAIConfigurationManager;
+
+	@Reference
+	private Portal _portal;
 
 }

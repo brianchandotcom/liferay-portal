@@ -29,6 +29,10 @@ public class Items {
 		return _format;
 	}
 
+	public Items getItems() {
+		return _items;
+	}
+
 	public Map<String, Schema> getPropertySchemas() {
 		return _propertySchemas;
 	}
@@ -49,6 +53,10 @@ public class Items {
 		_format = format;
 	}
 
+	public void setItems(Items items) {
+		_items = items;
+	}
+
 	public void setPropertySchemas(Map<String, Schema> propertySchemas) {
 		_propertySchemas = propertySchemas;
 	}
@@ -63,6 +71,7 @@ public class Items {
 
 	private Schema _additionalPropertySchema;
 	private String _format;
+	private Items _items;
 	private Map<String, Schema> _propertySchemas;
 	private String _reference;
 	private String _type;

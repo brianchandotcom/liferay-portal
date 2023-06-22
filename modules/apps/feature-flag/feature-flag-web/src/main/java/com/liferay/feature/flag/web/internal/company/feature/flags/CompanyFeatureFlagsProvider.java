@@ -24,12 +24,16 @@ import com.liferay.feature.flag.web.internal.model.PreferenceAwareFeatureFlag;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.cluster.ClusterExecutor;
+import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.util.ArrayList;
@@ -61,6 +65,32 @@ public class CompanyFeatureFlagsProvider {
 	public void setEnabled(long companyId, String key, boolean enabled) {
 		_featureFlagPreferencesManager.setEnabled(companyId, key, enabled);
 
+		_setEnabled(companyId, key, enabled);
+
+		if (!_clusterExecutor.isEnabled()) {
+			return;
+		}
+
+		MethodHandler methodHandler = new MethodHandler(
+			_setEnabledMethodKey, companyId, key, enabled);
+
+		ClusterRequest clusterRequest = ClusterRequest.createMulticastRequest(
+			methodHandler, true);
+
+		clusterRequest.setFireAndForget(true);
+
+		_clusterExecutor.execute(clusterRequest);
+	}
+
+	public <T> T withCompanyFeatureFlags(
+		long companyId, Function<CompanyFeatureFlags, T> function) {
+
+		return function.apply(getOrCreateCompanyFeatureFlags(companyId));
+	}
+
+	private static void _setEnabled(
+		long companyId, String key, boolean enabled) {
+
 		CompanyFeatureFlags companyFeatureFlags = _companyFeatureFlagsMap.get(
 			companyId);
 
@@ -69,12 +99,6 @@ public class CompanyFeatureFlagsProvider {
 		}
 
 		companyFeatureFlags.setEnabled(key, enabled);
-	}
-
-	public <T> T withCompanyFeatureFlags(
-		long companyId, Function<CompanyFeatureFlags, T> function) {
-
-		return function.apply(getOrCreateCompanyFeatureFlags(companyId));
 	}
 
 	private CompanyFeatureFlags _createCompanyFeatureFlags(long companyId) {
@@ -157,10 +181,15 @@ public class CompanyFeatureFlagsProvider {
 	private static final Log _log = LogFactoryUtil.getLog(
 		CompanyFeatureFlagsProvider.class);
 
+	private static final Map<Long, CompanyFeatureFlags>
+		_companyFeatureFlagsMap = new ConcurrentHashMap<>();
 	private static final Pattern _pattern = Pattern.compile("^([A-Z\\-0-9]+)$");
+	private static final MethodKey _setEnabledMethodKey = new MethodKey(
+		CompanyFeatureFlagsProvider.class, "_setEnabled", long.class,
+		String.class, boolean.class);
 
-	private final Map<Long, CompanyFeatureFlags> _companyFeatureFlagsMap =
-		new ConcurrentHashMap<>();
+	@Reference
+	private ClusterExecutor _clusterExecutor;
 
 	@Reference
 	private FeatureFlagPreferencesManager _featureFlagPreferencesManager;

@@ -46,7 +46,7 @@ definition {
 		property portal.version = "6.2.10.21";
 		property test.assert.warning.exceptions = "false";
 
-		Log.viewLogFileContentPresent(logContent = "Detected reserved friendly URL \"/a\" Update the friendly URL for the layout with PLID");
+		AssertConsoleTextPresent(value1 = "Detected reserved friendly URL \"/a\" Update the friendly URL for the layout with PLID");
 
 		Portlet.shutdownServer();
 

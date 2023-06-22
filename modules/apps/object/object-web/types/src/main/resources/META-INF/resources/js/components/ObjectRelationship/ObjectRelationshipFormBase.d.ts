@@ -18,6 +18,7 @@ interface ObjectRelationshipFormBaseProps {
 	errors: FormError<ObjectRelationship>;
 	ffOneToOneRelationshipConfigurationEnabled?: boolean;
 	handleChange: React.ChangeEventHandler<HTMLInputElement>;
+	isAddressSystemObjectDefinition?: boolean;
 	readonly?: boolean;
 	setValues: (values: Partial<ObjectRelationship>) => void;
 	values: Partial<ObjectRelationship>;
@@ -47,6 +48,7 @@ export declare function ObjectRelationshipFormBase({
 	errors,
 	ffOneToOneRelationshipConfigurationEnabled,
 	handleChange,
+	isAddressSystemObjectDefinition,
 	readonly,
 	setValues,
 	values,

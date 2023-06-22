@@ -31,6 +31,7 @@ import SelectRelationship from './SelectRelationship';
 
 function ModalAddObjectRelationship({
 	ffOneToOneRelationshipConfigurationEnabled,
+	isAddressSystemObjectDefinition,
 	objectDefinitionExternalReferenceCode,
 	observer,
 	onClose,
@@ -100,6 +101,9 @@ function ModalAddObjectRelationship({
 							ffOneToOneRelationshipConfigurationEnabled
 						}
 						handleChange={handleChange}
+						isAddressSystemObjectDefinition={
+							isAddressSystemObjectDefinition
+						}
 						setValues={setValues}
 						values={{
 							...values,
@@ -150,6 +154,7 @@ function ModalAddObjectRelationship({
 
 export default function AddRelationship({
 	ffOneToOneRelationshipConfigurationEnabled,
+	isAddressSystemObjectDefinition,
 	objectDefinitionExternalReferenceCode,
 	parameterRequired,
 }: IProps) {
@@ -173,6 +178,9 @@ export default function AddRelationship({
 					ffOneToOneRelationshipConfigurationEnabled={
 						ffOneToOneRelationshipConfigurationEnabled
 					}
+					isAddressSystemObjectDefinition={
+						isAddressSystemObjectDefinition
+					}
 					objectDefinitionExternalReferenceCode={
 						objectDefinitionExternalReferenceCode
 					}
@@ -187,6 +195,7 @@ export default function AddRelationship({
 
 interface IProps {
 	ffOneToOneRelationshipConfigurationEnabled: boolean;
+	isAddressSystemObjectDefinition: boolean;
 	objectDefinitionExternalReferenceCode: string;
 	observer: Observer;
 	onClose: () => void;

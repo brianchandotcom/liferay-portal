@@ -33,6 +33,7 @@ interface ObjectRelationshipFormBaseProps {
 	errors: FormError<ObjectRelationship>;
 	ffOneToOneRelationshipConfigurationEnabled?: boolean;
 	handleChange: React.ChangeEventHandler<HTMLInputElement>;
+	isAddressSystemObjectDefinition?: boolean;
 	readonly?: boolean;
 	setValues: (values: Partial<ObjectRelationship>) => void;
 	values: Partial<ObjectRelationship>;
@@ -122,6 +123,7 @@ export function ObjectRelationshipFormBase({
 	errors,
 	ffOneToOneRelationshipConfigurationEnabled,
 	handleChange,
+	isAddressSystemObjectDefinition,
 	readonly,
 	setValues,
 	values,
@@ -136,13 +138,21 @@ export function ObjectRelationshipFormBase({
 	const [query, setQuery] = useState<string>('');
 
 	const [types, selectedType] = useMemo(() => {
-		const types = [ONE_TO_MANY, MANY_TO_MANY];
+		const types = [ONE_TO_MANY];
 		if (ffOneToOneRelationshipConfigurationEnabled) {
 			types.push(ONE_TO_ONE);
 		}
 
+		if (!isAddressSystemObjectDefinition) {
+			types.push(MANY_TO_MANY);
+		}
+
 		return [types, types.find(({value}) => value === values.type)?.label];
-	}, [ffOneToOneRelationshipConfigurationEnabled, values.type]);
+	}, [
+		ffOneToOneRelationshipConfigurationEnabled,
+		isAddressSystemObjectDefinition,
+		values.type,
+	]);
 
 	const filteredRelationships = useMemo(() => {
 		return filterArrayByQuery({

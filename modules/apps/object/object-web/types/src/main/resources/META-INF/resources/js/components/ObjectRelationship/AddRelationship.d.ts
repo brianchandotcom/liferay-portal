@@ -17,11 +17,13 @@
 import {Observer} from '@clayui/modal/lib/types';
 export default function AddRelationship({
 	ffOneToOneRelationshipConfigurationEnabled,
+	isAddressSystemObjectDefinition,
 	objectDefinitionExternalReferenceCode,
 	parameterRequired,
 }: IProps): JSX.Element;
 interface IProps {
 	ffOneToOneRelationshipConfigurationEnabled: boolean;
+	isAddressSystemObjectDefinition: boolean;
 	objectDefinitionExternalReferenceCode: string;
 	observer: Observer;
 	onClose: () => void;

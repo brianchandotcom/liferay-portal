@@ -25,74 +25,12 @@ if (Validator.isNull(redirect)) {
 	redirect = portletURL.toString();
 }
 
-AssetListEntryUsagesDisplayContext assetListEntryUsagesDisplayContext = new AssetListEntryUsagesDisplayContext(renderRequest, renderResponse);
+AssetListEntryUsagesDisplayContext assetListEntryUsagesDisplayContext = new AssetListEntryUsagesDisplayContext(request, renderRequest, renderResponse);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
 renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
-
-VerticalNavItemList verticalNavItemList = new VerticalNavItemList();
-
-verticalNavItemList.add(
-	verticalNavItem -> {
-		String name = LanguageUtil.format(request, "all-x", assetListEntryUsagesDisplayContext.getAllUsageCount(), false);
-
-		verticalNavItem.setHref(
-			PortletURLBuilder.create(
-				assetListEntryUsagesDisplayContext.getPortletURL()
-			).setNavigation(
-				"all"
-			).buildString());
-		verticalNavItem.setLabel(name);
-		verticalNavItem.setId(name);
-		verticalNavItem.setActive(Objects.equals(assetListEntryUsagesDisplayContext.getNavigation(), "all"));
-	});
-
-verticalNavItemList.add(
-	verticalNavItem -> {
-		String name = LanguageUtil.format(request, "pages-x", assetListEntryUsagesDisplayContext.getPagesUsageCount(), false);
-
-		verticalNavItem.setHref(
-			PortletURLBuilder.create(
-				assetListEntryUsagesDisplayContext.getPortletURL()
-			).setNavigation(
-				"pages"
-			).buildString());
-		verticalNavItem.setLabel(name);
-		verticalNavItem.setId(name);
-		verticalNavItem.setActive(Objects.equals(assetListEntryUsagesDisplayContext.getNavigation(), "pages"));
-	});
-
-verticalNavItemList.add(
-	verticalNavItem -> {
-		String name = LanguageUtil.format(request, "page-templates-x", assetListEntryUsagesDisplayContext.getPageTemplatesUsageCount(), false);
-
-		verticalNavItem.setHref(
-			PortletURLBuilder.create(
-				assetListEntryUsagesDisplayContext.getPortletURL()
-			).setNavigation(
-				"page-templates"
-			).buildString());
-		verticalNavItem.setLabel(name);
-		verticalNavItem.setId(name);
-		verticalNavItem.setActive(Objects.equals(assetListEntryUsagesDisplayContext.getNavigation(), "page-templates"));
-	});
-
-verticalNavItemList.add(
-	verticalNavItem -> {
-		String name = LanguageUtil.format(request, "display-page-templates-x", assetListEntryUsagesDisplayContext.getDisplayPagesUsageCount(), false);
-
-		verticalNavItem.setHref(
-			PortletURLBuilder.create(
-				assetListEntryUsagesDisplayContext.getPortletURL()
-			).setNavigation(
-				"display-page-templates"
-			).buildString());
-		verticalNavItem.setLabel(name);
-		verticalNavItem.setId(name);
-		verticalNavItem.setActive(Objects.equals(assetListEntryUsagesDisplayContext.getNavigation(), "display-page-templates"));
-	});
 %>
 
 <clay:container-fluid
@@ -107,7 +45,7 @@ verticalNavItemList.add(
 			</div>
 
 			<clay:vertical-nav
-				verticalNavItems="<%= verticalNavItemList %>"
+				verticalNavItems="<%= assetListEntryUsagesDisplayContext.getVerticalNavItemList() %>"
 			/>
 		</clay:col>
 

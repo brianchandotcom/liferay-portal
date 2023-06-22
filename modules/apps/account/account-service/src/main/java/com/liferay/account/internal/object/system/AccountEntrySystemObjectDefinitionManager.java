@@ -20,7 +20,7 @@ import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.headless.admin.user.dto.v1_0.Account;
 import com.liferay.headless.admin.user.resource.v1_0.AccountResource;
 import com.liferay.object.constants.ObjectDefinitionConstants;
-import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.system.BaseSystemObjectDefinitionManager;
 import com.liferay.object.system.JaxRsApplicationDescriptor;
@@ -116,18 +116,34 @@ public class AccountEntrySystemObjectDefinitionManager
 	@Override
 	public List<ObjectField> getObjectFields() {
 		return Arrays.asList(
-			createObjectField(
-				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-				ObjectFieldConstants.DB_TYPE_STRING, "name", "name", true,
-				true),
-			createObjectField(
-				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-				ObjectFieldConstants.DB_TYPE_STRING, "description",
-				"description", false, true),
-			createObjectField(
-				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-				ObjectFieldConstants.DB_TYPE_STRING, "type", "type", true,
-				true));
+			new TextObjectFieldBuilder(
+			).labelMap(
+				createLabelMap("description")
+			).name(
+				"description"
+			).system(
+				true
+			).build(),
+			new TextObjectFieldBuilder(
+			).labelMap(
+				createLabelMap("name")
+			).name(
+				"name"
+			).required(
+				true
+			).system(
+				true
+			).build(),
+			new TextObjectFieldBuilder(
+			).labelMap(
+				createLabelMap("type")
+			).name(
+				"type"
+			).required(
+				true
+			).system(
+				true
+			).build());
 	}
 
 	@Override

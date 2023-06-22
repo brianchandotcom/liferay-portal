@@ -29,6 +29,7 @@ import com.liferay.object.exception.ObjectDefinitionScopeException;
 import com.liferay.object.exception.ObjectDefinitionStatusException;
 import com.liferay.object.exception.ObjectDefinitionVersionException;
 import com.liferay.object.exception.ObjectFieldRelationshipTypeException;
+import com.liferay.object.field.builder.BooleanObjectFieldBuilder;
 import com.liferay.object.field.builder.DateObjectFieldBuilder;
 import com.liferay.object.field.builder.LongIntegerObjectFieldBuilder;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
@@ -480,19 +481,30 @@ public class ObjectDefinitionLocalServiceTest {
 					@Override
 					public List<ObjectField> getObjectFields() {
 						return Arrays.asList(
-							createObjectField(
-								ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN,
-								ObjectFieldConstants.DB_TYPE_BOOLEAN,
-								"Action Required", "actionRequired", true,
-								false),
-							createObjectField(
-								ObjectFieldConstants.BUSINESS_TYPE_LONG_INTEGER,
-								ObjectFieldConstants.DB_TYPE_LONG,
-								"Delivery Type", "deliveryType", false, false),
-							createObjectField(
-								ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-								"type_", ObjectFieldConstants.DB_TYPE_STRING,
-								"Type", "type", true, false));
+							new BooleanObjectFieldBuilder(
+							).labelMap(
+								createLabelMap("Action Required")
+							).name(
+								"actionRequired"
+							).required(
+								true
+							).build(),
+							new LongIntegerObjectFieldBuilder(
+							).labelMap(
+								createLabelMap("Delivery Type")
+							).name(
+								"deliveryType"
+							).build(),
+							new TextObjectFieldBuilder(
+							).dbColumnName(
+								"type_"
+							).labelMap(
+								createLabelMap("Type")
+							).name(
+								"type"
+							).required(
+								true
+							).build());
 					}
 
 					@Override
@@ -629,18 +641,30 @@ public class ObjectDefinitionLocalServiceTest {
 					@Override
 					public List<ObjectField> getObjectFields() {
 						return Arrays.asList(
-							createObjectField(
-								ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN,
-								ObjectFieldConstants.DB_TYPE_BOOLEAN,
-								"Archived", "archived", true, false),
-							createObjectField(
-								ObjectFieldConstants.BUSINESS_TYPE_LONG_INTEGER,
-								ObjectFieldConstants.DB_TYPE_LONG,
-								"Delivery Type", "deliveryType", true, false),
-							createObjectField(
-								ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-								"type_", ObjectFieldConstants.DB_TYPE_STRING,
-								"Type", "type", false, false));
+							new BooleanObjectFieldBuilder(
+							).labelMap(
+								createLabelMap("Archived")
+							).name(
+								"archived"
+							).required(
+								true
+							).build(),
+							new LongIntegerObjectFieldBuilder(
+							).labelMap(
+								createLabelMap("Delivery Type")
+							).name(
+								"deliveryType"
+							).required(
+								true
+							).build(),
+							new TextObjectFieldBuilder(
+							).dbColumnName(
+								"type_"
+							).labelMap(
+								createLabelMap("Type")
+							).name(
+								"type"
+							).build());
 					}
 
 					@Override

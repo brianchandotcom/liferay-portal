@@ -17,7 +17,8 @@ package com.liferay.object.internal.system;
 import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.resource.v1_0.UserAccountResource;
 import com.liferay.object.constants.ObjectDefinitionConstants;
-import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.field.builder.DateObjectFieldBuilder;
+import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.system.BaseSystemObjectDefinitionManager;
@@ -117,34 +118,82 @@ public class UserSystemObjectDefinitionManager
 	@Override
 	public List<ObjectField> getObjectFields() {
 		return Arrays.asList(
-			createObjectField(
-				ObjectFieldConstants.BUSINESS_TYPE_TEXT, "middleName",
-				ObjectFieldConstants.DB_TYPE_STRING, "middle-name",
-				"additionalName", false, true),
-			createObjectField(
-				ObjectFieldConstants.BUSINESS_TYPE_TEXT, "screenName",
-				ObjectFieldConstants.DB_TYPE_STRING, "screen-name",
-				"alternateName", true, true),
-			createObjectField(
-				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-				ObjectFieldConstants.DB_TYPE_STRING, "email-address",
-				"emailAddress", true, true),
-			createObjectField(
-				ObjectFieldConstants.BUSINESS_TYPE_TEXT, "lastName",
-				ObjectFieldConstants.DB_TYPE_STRING, "last-name", "familyName",
-				true, true),
-			createObjectField(
-				ObjectFieldConstants.BUSINESS_TYPE_TEXT, "firstName",
-				ObjectFieldConstants.DB_TYPE_STRING, "first-name", "givenName",
-				true, true),
-			createObjectField(
-				ObjectFieldConstants.BUSINESS_TYPE_DATE, "lastLoginDate",
-				ObjectFieldConstants.DB_TYPE_DATE, "last-login-date",
-				"lastLoginDate", false, true),
-			createObjectField(
-				ObjectFieldConstants.BUSINESS_TYPE_TEXT, "uuid_",
-				ObjectFieldConstants.DB_TYPE_STRING, "uuid", "uuid", false,
-				true));
+			new TextObjectFieldBuilder(
+			).dbColumnName(
+				"middleName"
+			).labelMap(
+				createLabelMap("middle-name")
+			).name(
+				"additionalName"
+			).system(
+				true
+			).build(),
+			new TextObjectFieldBuilder(
+			).dbColumnName(
+				"screenName"
+			).labelMap(
+				createLabelMap("screen-name")
+			).name(
+				"alternateName"
+			).required(
+				true
+			).system(
+				true
+			).build(),
+			new TextObjectFieldBuilder(
+			).labelMap(
+				createLabelMap("email-address")
+			).name(
+				"emailAddress"
+			).required(
+				true
+			).system(
+				true
+			).build(),
+			new TextObjectFieldBuilder(
+			).dbColumnName(
+				"lastName"
+			).labelMap(
+				createLabelMap("last-name")
+			).name(
+				"familyName"
+			).required(
+				true
+			).system(
+				true
+			).build(),
+			new TextObjectFieldBuilder(
+			).dbColumnName(
+				"firstName"
+			).labelMap(
+				createLabelMap("first-name")
+			).name(
+				"givenName"
+			).required(
+				true
+			).system(
+				true
+			).build(),
+			new DateObjectFieldBuilder(
+			).dbColumnName(
+				"lastLoginDate"
+			).labelMap(
+				createLabelMap("last-login-date")
+			).name(
+				"lastLoginDate"
+			).system(
+				true
+			).build(),
+			new TextObjectFieldBuilder(
+			).dbColumnName(
+				"uuid_"
+			).labelMap(
+				createLabelMap("uuid")
+			).name(
+				"uuid"
+			).system(
+				true
+			).build());
 	}
 
 	@Override

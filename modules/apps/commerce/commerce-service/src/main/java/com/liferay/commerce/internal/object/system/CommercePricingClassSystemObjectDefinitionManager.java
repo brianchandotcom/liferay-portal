@@ -20,7 +20,8 @@ import com.liferay.commerce.pricing.service.CommercePricingClassLocalService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductGroup;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductGroupResource;
 import com.liferay.object.constants.ObjectDefinitionConstants;
-import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.field.builder.IntegerObjectFieldBuilder;
+import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.system.BaseSystemObjectDefinitionManager;
 import com.liferay.object.system.JaxRsApplicationDescriptor;
@@ -121,18 +122,32 @@ public class CommercePricingClassSystemObjectDefinitionManager
 	@Override
 	public List<ObjectField> getObjectFields() {
 		return Arrays.asList(
-			createObjectField(
-				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-				ObjectFieldConstants.DB_TYPE_STRING, "description",
-				"description", false, true),
-			createObjectField(
-				ObjectFieldConstants.BUSINESS_TYPE_INTEGER,
-				ObjectFieldConstants.DB_TYPE_INTEGER, "number-of-products",
-				"productsCount", false, true),
-			createObjectField(
-				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-				ObjectFieldConstants.DB_TYPE_STRING, "title", "title", true,
-				true));
+			new TextObjectFieldBuilder(
+			).labelMap(
+				createLabelMap("description")
+			).name(
+				"description"
+			).system(
+				true
+			).build(),
+			new IntegerObjectFieldBuilder(
+			).labelMap(
+				createLabelMap("number-of-products")
+			).name(
+				"productsCount"
+			).system(
+				true
+			).build(),
+			new TextObjectFieldBuilder(
+			).labelMap(
+				createLabelMap("title")
+			).name(
+				"title"
+			).required(
+				true
+			).system(
+				true
+			).build());
 	}
 
 	@Override

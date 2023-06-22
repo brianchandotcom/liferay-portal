@@ -22,7 +22,9 @@ import com.liferay.commerce.product.service.CProductLocalService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductResource;
 import com.liferay.object.constants.ObjectDefinitionConstants;
-import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.field.builder.BooleanObjectFieldBuilder;
+import com.liferay.object.field.builder.LongIntegerObjectFieldBuilder;
+import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.system.BaseSystemObjectDefinitionManager;
 import com.liferay.object.system.JaxRsApplicationDescriptor;
@@ -116,46 +118,96 @@ public class CPDefinitionSystemObjectDefinitionManager
 	@Override
 	public List<ObjectField> getObjectFields() {
 		return Arrays.asList(
-			createObjectField(
-				ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN,
-				ObjectFieldConstants.DB_TYPE_BOOLEAN, "active", "active", true,
-				true),
-			createObjectField(
-				ObjectFieldConstants.BUSINESS_TYPE_LONG_INTEGER,
-				ObjectFieldConstants.DB_TYPE_LONG, "catalog-id", "catalogId",
-				true, true),
-			createObjectField(
-				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-				ObjectFieldConstants.DB_TYPE_STRING, "description",
-				"description", false, true),
-			createObjectField(
-				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-				ObjectFieldConstants.DB_TYPE_STRING, "name", "name", true,
-				true),
-			createObjectField(
-				ObjectFieldConstants.BUSINESS_TYPE_TEXT, "CPDefinitionId",
-				ObjectFieldConstants.DB_TYPE_STRING, "product-id", "productId",
-				false, true),
-			createObjectField(
-				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-				ObjectFieldConstants.DB_TYPE_STRING, "product-type",
-				"productType", true, true),
-			createObjectField(
-				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-				ObjectFieldConstants.DB_TYPE_STRING, "short-description",
-				"shortDescription", false, true),
-			createObjectField(
-				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-				ObjectFieldConstants.DB_TYPE_STRING, "sku", "skuFormatted",
-				false, true),
-			createObjectField(
-				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-				ObjectFieldConstants.DB_TYPE_STRING, "thumbnail", "thumbnail",
-				false, true),
-			createObjectField(
-				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-				ObjectFieldConstants.DB_TYPE_STRING, "uuid", "uuid", false,
-				true));
+			new BooleanObjectFieldBuilder(
+			).labelMap(
+				createLabelMap("active")
+			).name(
+				"active"
+			).required(
+				true
+			).system(
+				true
+			).build(),
+			new LongIntegerObjectFieldBuilder(
+			).labelMap(
+				createLabelMap("catalog-id")
+			).name(
+				"catalogId"
+			).required(
+				true
+			).system(
+				true
+			).build(),
+			new TextObjectFieldBuilder(
+			).labelMap(
+				createLabelMap("description")
+			).name(
+				"description"
+			).system(
+				true
+			).build(),
+			new TextObjectFieldBuilder(
+			).labelMap(
+				createLabelMap("name")
+			).name(
+				"name"
+			).required(
+				true
+			).system(
+				true
+			).build(),
+			new TextObjectFieldBuilder(
+			).dbColumnName(
+				"CPDefinitionId"
+			).labelMap(
+				createLabelMap("product-id")
+			).name(
+				"productId"
+			).system(
+				true
+			).build(),
+			new TextObjectFieldBuilder(
+			).labelMap(
+				createLabelMap("product-type")
+			).name(
+				"productType"
+			).required(
+				true
+			).system(
+				true
+			).build(),
+			new TextObjectFieldBuilder(
+			).labelMap(
+				createLabelMap("short-description")
+			).name(
+				"shortDescription"
+			).system(
+				true
+			).build(),
+			new TextObjectFieldBuilder(
+			).labelMap(
+				createLabelMap("sku")
+			).name(
+				"skuFormatted"
+			).system(
+				true
+			).build(),
+			new TextObjectFieldBuilder(
+			).labelMap(
+				createLabelMap("thumbnail")
+			).name(
+				"thumbnail"
+			).system(
+				true
+			).build(),
+			new TextObjectFieldBuilder(
+			).labelMap(
+				createLabelMap("uuid")
+			).name(
+				"uuid"
+			).system(
+				true
+			).build());
 	}
 
 	@Override

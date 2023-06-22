@@ -84,7 +84,7 @@ class EntityListItem extends React.Component {
 				<ListGroup.ItemField>
 					{type === EntityTypes.IndividualsSegment ? (
 						<Sticker
-							display='light'
+							display='primary'
 							symbol={
 								segmentType === SegmentTypes.Static
 									? 'individual-static-segment'

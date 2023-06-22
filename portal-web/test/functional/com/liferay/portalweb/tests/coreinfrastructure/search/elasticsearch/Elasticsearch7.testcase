@@ -285,33 +285,6 @@ definition {
 		AssertConsoleTextPresent(value1 = "Limit of total fields \[100\] has been exceeded");
 	}
 
-	@priority = 4
-	test CanReindexSelectedInstance {
-		property test.name.skip.portal.instance = "Elasticsearch7#CanReindexSelectedInstance";
-
-		var baseURL = PropsUtil.get("portal.url");
-
-		ServerAdministration.openServerAdmin();
-
-		ServerAdministration.addCategoryLogLevels(
-			categoryLevel = "DEBUG",
-			categoryName = "com.liferay.portal.search.internal.background.task");
-
-		SearchAdministration.executeReindex(executionScope = "System");
-
-		var companyId = JSONCompany.getCompanyId();
-
-		AssertConsoleTextNotPresent(value1 = "phase=portalStart, defaultLocale=en_US, companyId=${companyId}");
-
-		AssertConsoleTextPresent(value1 = "phase=portalStart, defaultLocale=en_US, companyId=0");
-
-		SearchAdministration.executeReindex(executionScope = "liferay.com");
-
-		AssertConsoleTextPresent(value1 = "phase=portalStart, defaultLocale=en_US, companyId=${companyId}");
-
-		SearchAdministration.executeReindex(executionScope = "All Instances");
-	}
-
 	@priority = 5
 	test ElasticsearchClusteringSmokeTest {
 		property elasticsearch.cluster.size = "2";
@@ -475,6 +448,32 @@ definition {
 		Navigator.openSpecificURL(url = "http://${portalHostname}:9201");
 
 		Elasticsearch.viewClusterStatus(clusterStatus = "\"cluster_name\" : \"LiferayElasticsearchCluster1\"");
+	}
+
+	@description = "This is a use case for LPS-130753."
+	@priority = 4
+	test ReindexSpecificPortalInstances {
+		property test.name.skip.portal.instance = "Elasticsearch7#ReindexSpecificPortalInstances";
+
+		ServerAdministration.openServerAdmin();
+
+		ServerAdministration.addCategoryLogLevels(
+			categoryLevel = "DEBUG",
+			categoryName = "com.liferay.portal.search.internal.background.task");
+
+		SearchAdministration.executeReindex(executionScope = "System");
+
+		var companyId = JSONCompany.getCompanyId();
+
+		AssertConsoleTextNotPresent(value1 = "phase=portalStart, defaultLocale=en_US, companyId=${companyId}");
+
+		AssertConsoleTextPresent(value1 = "phase=portalStart, defaultLocale=en_US, companyId=0");
+
+		SearchAdministration.executeReindex(executionScope = "liferay.com");
+
+		AssertConsoleTextPresent(value1 = "phase=portalStart, defaultLocale=en_US, companyId=${companyId}");
+
+		SearchAdministration.executeReindex(executionScope = "All Instances");
 	}
 
 	@description = "This is a use case for LPS-177665."

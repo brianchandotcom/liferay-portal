@@ -40,19 +40,44 @@ public class ObjectLayoutServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectLayoutServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static ObjectLayout addObjectLayout(
+			String externalReferenceCode, long objectDefinitionId,
+			boolean defaultObjectLayout, Map<java.util.Locale, String> nameMap,
+			List<com.liferay.object.model.ObjectLayoutTab> objectLayoutTabs)
+		throws PortalException {
+
+		return getService().addObjectLayout(
+			externalReferenceCode, objectDefinitionId, defaultObjectLayout,
+			nameMap, objectLayoutTabs);
+	}
+
+	public static ObjectLayout addOrUpdateObjectLayout(
+			String externalReferenceCode, long objectLayoutId, long userId,
 			long objectDefinitionId, boolean defaultObjectLayout,
 			Map<java.util.Locale, String> nameMap,
 			List<com.liferay.object.model.ObjectLayoutTab> objectLayoutTabs)
 		throws PortalException {
 
-		return getService().addObjectLayout(
-			objectDefinitionId, defaultObjectLayout, nameMap, objectLayoutTabs);
+		return getService().addOrUpdateObjectLayout(
+			externalReferenceCode, objectLayoutId, userId, objectDefinitionId,
+			defaultObjectLayout, nameMap, objectLayoutTabs);
 	}
 
 	public static ObjectLayout deleteObjectLayout(long objectLayoutId)
 		throws PortalException {
 
 		return getService().deleteObjectLayout(objectLayoutId);
+	}
+
+	public static ObjectLayout
+			fetchObjectLayoutByObjectDefinitionExternalReferenceCodeObjectLayoutExternalReferenceCode(
+				String objectDefinitionExternalReferenceCode,
+				String objectLayoutExternalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().
+			fetchObjectLayoutByObjectDefinitionExternalReferenceCodeObjectLayoutExternalReferenceCode(
+				objectDefinitionExternalReferenceCode,
+				objectLayoutExternalReferenceCode, companyId);
 	}
 
 	public static ObjectLayout getObjectLayout(long objectLayoutId)
@@ -71,13 +96,14 @@ public class ObjectLayoutServiceUtil {
 	}
 
 	public static ObjectLayout updateObjectLayout(
-			long objectLayoutId, boolean defaultObjectLayout,
-			Map<java.util.Locale, String> nameMap,
+			String externalReferenceCode, long objectLayoutId,
+			boolean defaultObjectLayout, Map<java.util.Locale, String> nameMap,
 			List<com.liferay.object.model.ObjectLayoutTab> objectLayoutTabs)
 		throws PortalException {
 
 		return getService().updateObjectLayout(
-			objectLayoutId, defaultObjectLayout, nameMap, objectLayoutTabs);
+			externalReferenceCode, objectLayoutId, defaultObjectLayout, nameMap,
+			objectLayoutTabs);
 	}
 
 	public static ObjectLayoutService getService() {

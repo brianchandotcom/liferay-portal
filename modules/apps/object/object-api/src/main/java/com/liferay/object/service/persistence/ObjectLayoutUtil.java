@@ -843,6 +843,89 @@ public class ObjectLayoutUtil {
 	}
 
 	/**
+	 * Returns the object layout where externalReferenceCode = &#63; and companyId = &#63; and objectDefinitionId = &#63; or throws a <code>NoSuchObjectLayoutException</code> if it could not be found.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param objectDefinitionId the object definition ID
+	 * @return the matching object layout
+	 * @throws NoSuchObjectLayoutException if a matching object layout could not be found
+	 */
+	public static ObjectLayout findByERC_C_ODI(
+			String externalReferenceCode, long companyId,
+			long objectDefinitionId)
+		throws com.liferay.object.exception.NoSuchObjectLayoutException {
+
+		return getPersistence().findByERC_C_ODI(
+			externalReferenceCode, companyId, objectDefinitionId);
+	}
+
+	/**
+	 * Returns the object layout where externalReferenceCode = &#63; and companyId = &#63; and objectDefinitionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param objectDefinitionId the object definition ID
+	 * @return the matching object layout, or <code>null</code> if a matching object layout could not be found
+	 */
+	public static ObjectLayout fetchByERC_C_ODI(
+		String externalReferenceCode, long companyId, long objectDefinitionId) {
+
+		return getPersistence().fetchByERC_C_ODI(
+			externalReferenceCode, companyId, objectDefinitionId);
+	}
+
+	/**
+	 * Returns the object layout where externalReferenceCode = &#63; and companyId = &#63; and objectDefinitionId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param objectDefinitionId the object definition ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching object layout, or <code>null</code> if a matching object layout could not be found
+	 */
+	public static ObjectLayout fetchByERC_C_ODI(
+		String externalReferenceCode, long companyId, long objectDefinitionId,
+		boolean useFinderCache) {
+
+		return getPersistence().fetchByERC_C_ODI(
+			externalReferenceCode, companyId, objectDefinitionId,
+			useFinderCache);
+	}
+
+	/**
+	 * Removes the object layout where externalReferenceCode = &#63; and companyId = &#63; and objectDefinitionId = &#63; from the database.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param objectDefinitionId the object definition ID
+	 * @return the object layout that was removed
+	 */
+	public static ObjectLayout removeByERC_C_ODI(
+			String externalReferenceCode, long companyId,
+			long objectDefinitionId)
+		throws com.liferay.object.exception.NoSuchObjectLayoutException {
+
+		return getPersistence().removeByERC_C_ODI(
+			externalReferenceCode, companyId, objectDefinitionId);
+	}
+
+	/**
+	 * Returns the number of object layouts where externalReferenceCode = &#63; and companyId = &#63; and objectDefinitionId = &#63;.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param objectDefinitionId the object definition ID
+	 * @return the number of matching object layouts
+	 */
+	public static int countByERC_C_ODI(
+		String externalReferenceCode, long companyId, long objectDefinitionId) {
+
+		return getPersistence().countByERC_C_ODI(
+			externalReferenceCode, companyId, objectDefinitionId);
+	}
+
+	/**
 	 * Caches the object layout in the entity cache if it is enabled.
 	 *
 	 * @param objectLayout the object layout

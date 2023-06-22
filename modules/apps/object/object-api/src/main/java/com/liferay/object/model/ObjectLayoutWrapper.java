@@ -45,6 +45,7 @@ public class ObjectLayoutWrapper
 
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
+		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("objectLayoutId", getObjectLayoutId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -70,6 +71,13 @@ public class ObjectLayoutWrapper
 
 		if (uuid != null) {
 			setUuid(uuid);
+		}
+
+		String externalReferenceCode = (String)attributes.get(
+			"externalReferenceCode");
+
+		if (externalReferenceCode != null) {
+			setExternalReferenceCode(externalReferenceCode);
 		}
 
 		Long objectLayoutId = (Long)attributes.get("objectLayoutId");
@@ -171,6 +179,16 @@ public class ObjectLayoutWrapper
 	@Override
 	public boolean getDefaultObjectLayout() {
 		return model.getDefaultObjectLayout();
+	}
+
+	/**
+	 * Returns the external reference code of this object layout.
+	 *
+	 * @return the external reference code of this object layout
+	 */
+	@Override
+	public String getExternalReferenceCode() {
+		return model.getExternalReferenceCode();
 	}
 
 	/**
@@ -402,6 +420,16 @@ public class ObjectLayoutWrapper
 	@Override
 	public void setDefaultObjectLayout(boolean defaultObjectLayout) {
 		model.setDefaultObjectLayout(defaultObjectLayout);
+	}
+
+	/**
+	 * Sets the external reference code of this object layout.
+	 *
+	 * @param externalReferenceCode the external reference code of this object layout
+	 */
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		model.setExternalReferenceCode(externalReferenceCode);
 	}
 
 	/**

@@ -45,16 +45,6 @@ public class ObjectLayoutLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectLayoutLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static ObjectLayout addObjectLayout(
-			long userId, long objectDefinitionId, boolean defaultObjectLayout,
-			Map<java.util.Locale, String> nameMap,
-			List<com.liferay.object.model.ObjectLayoutTab> objectLayoutTabs)
-		throws PortalException {
-
-		return getService().addObjectLayout(
-			userId, objectDefinitionId, defaultObjectLayout, nameMap,
-			objectLayoutTabs);
-	}
 
 	/**
 	 * Adds the object layout to the database. Also notifies the appropriate model listeners.
@@ -68,6 +58,29 @@ public class ObjectLayoutLocalServiceUtil {
 	 */
 	public static ObjectLayout addObjectLayout(ObjectLayout objectLayout) {
 		return getService().addObjectLayout(objectLayout);
+	}
+
+	public static ObjectLayout addObjectLayout(
+			String externalReferenceCode, long userId, long objectDefinitionId,
+			boolean defaultObjectLayout, Map<java.util.Locale, String> nameMap,
+			List<com.liferay.object.model.ObjectLayoutTab> objectLayoutTabs)
+		throws PortalException {
+
+		return getService().addObjectLayout(
+			externalReferenceCode, userId, objectDefinitionId,
+			defaultObjectLayout, nameMap, objectLayoutTabs);
+	}
+
+	public static ObjectLayout addOrUpdateObjectLayout(
+			String externalReferenceCode, long objectLayoutId, long userId,
+			long objectDefinitionId, boolean defaultObjectLayout,
+			Map<java.util.Locale, String> nameMap,
+			List<com.liferay.object.model.ObjectLayoutTab> objectLayoutTabs)
+		throws PortalException {
+
+		return getService().addOrUpdateObjectLayout(
+			externalReferenceCode, objectLayoutId, userId, objectDefinitionId,
+			defaultObjectLayout, nameMap, objectLayoutTabs);
 	}
 
 	/**
@@ -235,6 +248,18 @@ public class ObjectLayoutLocalServiceUtil {
 		return getService().fetchObjectLayout(objectLayoutId);
 	}
 
+	public static ObjectLayout
+			fetchObjectLayoutByObjectDefinitionExternalReferenceCodeObjectLayoutExternalReferenceCode(
+				String objectDefinitionExternalReferenceCode,
+				String objectLayoutExternalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().
+			fetchObjectLayoutByObjectDefinitionExternalReferenceCodeObjectLayoutExternalReferenceCode(
+				objectDefinitionExternalReferenceCode,
+				objectLayoutExternalReferenceCode, companyId);
+	}
+
 	/**
 	 * Returns the object layout with the matching UUID and company.
 	 *
@@ -360,16 +385,6 @@ public class ObjectLayoutLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static ObjectLayout updateObjectLayout(
-			long objectLayoutId, boolean defaultObjectLayout,
-			Map<java.util.Locale, String> nameMap,
-			List<com.liferay.object.model.ObjectLayoutTab> objectLayoutTabs)
-		throws PortalException {
-
-		return getService().updateObjectLayout(
-			objectLayoutId, defaultObjectLayout, nameMap, objectLayoutTabs);
-	}
-
 	/**
 	 * Updates the object layout in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -382,6 +397,17 @@ public class ObjectLayoutLocalServiceUtil {
 	 */
 	public static ObjectLayout updateObjectLayout(ObjectLayout objectLayout) {
 		return getService().updateObjectLayout(objectLayout);
+	}
+
+	public static ObjectLayout updateObjectLayout(
+			String externalReferenceCode, long objectLayoutId,
+			boolean defaultObjectLayout, Map<java.util.Locale, String> nameMap,
+			List<com.liferay.object.model.ObjectLayoutTab> objectLayoutTabs)
+		throws PortalException {
+
+		return getService().updateObjectLayout(
+			externalReferenceCode, objectLayoutId, defaultObjectLayout, nameMap,
+			objectLayoutTabs);
 	}
 
 	public static ObjectLayoutLocalService getService() {

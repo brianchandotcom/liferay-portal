@@ -98,6 +98,21 @@ public interface ObjectLayoutModel
 	public void setUuid(String uuid);
 
 	/**
+	 * Returns the external reference code of this object layout.
+	 *
+	 * @return the external reference code of this object layout
+	 */
+	@AutoEscape
+	public String getExternalReferenceCode();
+
+	/**
+	 * Sets the external reference code of this object layout.
+	 *
+	 * @param externalReferenceCode the external reference code of this object layout
+	 */
+	public void setExternalReferenceCode(String externalReferenceCode);
+
+	/**
 	 * Returns the object layout ID of this object layout.
 	 *
 	 * @return the object layout ID of this object layout

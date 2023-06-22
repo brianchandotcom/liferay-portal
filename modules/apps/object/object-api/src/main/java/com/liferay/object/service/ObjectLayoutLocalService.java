@@ -68,11 +68,6 @@ public interface ObjectLayoutLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectLayoutLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the object layout local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link ObjectLayoutLocalServiceUtil} if injection and service tracking are not available.
 	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public ObjectLayout addObjectLayout(
-			long userId, long objectDefinitionId, boolean defaultObjectLayout,
-			Map<Locale, String> nameMap, List<ObjectLayoutTab> objectLayoutTabs)
-		throws PortalException;
 
 	/**
 	 * Adds the object layout to the database. Also notifies the appropriate model listeners.
@@ -86,6 +81,20 @@ public interface ObjectLayoutLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public ObjectLayout addObjectLayout(ObjectLayout objectLayout);
+
+	@Indexable(type = IndexableType.REINDEX)
+	public ObjectLayout addObjectLayout(
+			String externalReferenceCode, long userId, long objectDefinitionId,
+			boolean defaultObjectLayout, Map<Locale, String> nameMap,
+			List<ObjectLayoutTab> objectLayoutTabs)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public ObjectLayout addOrUpdateObjectLayout(
+			String externalReferenceCode, long objectLayoutId, long userId,
+			long objectDefinitionId, boolean defaultObjectLayout,
+			Map<Locale, String> nameMap, List<ObjectLayoutTab> objectLayoutTabs)
+		throws PortalException;
 
 	/**
 	 * Creates a new object layout with the primary key. Does not add the object layout to the database.
@@ -221,6 +230,13 @@ public interface ObjectLayoutLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ObjectLayout fetchObjectLayout(long objectLayoutId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ObjectLayout
+			fetchObjectLayoutByObjectDefinitionExternalReferenceCodeObjectLayoutExternalReferenceCode(
+				String objectDefinitionExternalReferenceCode,
+				String objectLayoutExternalReferenceCode, long companyId)
+		throws PortalException;
+
 	/**
 	 * Returns the object layout with the matching UUID and company.
 	 *
@@ -317,12 +333,6 @@ public interface ObjectLayoutLocalService
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
-	@Indexable(type = IndexableType.REINDEX)
-	public ObjectLayout updateObjectLayout(
-			long objectLayoutId, boolean defaultObjectLayout,
-			Map<Locale, String> nameMap, List<ObjectLayoutTab> objectLayoutTabs)
-		throws PortalException;
-
 	/**
 	 * Updates the object layout in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -335,5 +345,12 @@ public interface ObjectLayoutLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public ObjectLayout updateObjectLayout(ObjectLayout objectLayout);
+
+	@Indexable(type = IndexableType.REINDEX)
+	public ObjectLayout updateObjectLayout(
+			String externalReferenceCode, long objectLayoutId,
+			boolean defaultObjectLayout, Map<Locale, String> nameMap,
+			List<ObjectLayoutTab> objectLayoutTabs)
+		throws PortalException;
 
 }

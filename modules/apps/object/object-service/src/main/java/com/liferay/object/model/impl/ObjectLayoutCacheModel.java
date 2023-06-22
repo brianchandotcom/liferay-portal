@@ -77,12 +77,14 @@ public class ObjectLayoutCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
 		sb.append(", uuid=");
 		sb.append(uuid);
+		sb.append(", externalReferenceCode=");
+		sb.append(externalReferenceCode);
 		sb.append(", objectLayoutId=");
 		sb.append(objectLayoutId);
 		sb.append(", companyId=");
@@ -117,6 +119,13 @@ public class ObjectLayoutCacheModel
 		}
 		else {
 			objectLayoutImpl.setUuid(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			objectLayoutImpl.setExternalReferenceCode("");
+		}
+		else {
+			objectLayoutImpl.setExternalReferenceCode(externalReferenceCode);
 		}
 
 		objectLayoutImpl.setObjectLayoutId(objectLayoutId);
@@ -163,6 +172,7 @@ public class ObjectLayoutCacheModel
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
+		externalReferenceCode = objectInput.readUTF();
 
 		objectLayoutId = objectInput.readLong();
 
@@ -188,6 +198,13 @@ public class ObjectLayoutCacheModel
 		}
 		else {
 			objectOutput.writeUTF(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(externalReferenceCode);
 		}
 
 		objectOutput.writeLong(objectLayoutId);
@@ -220,6 +237,7 @@ public class ObjectLayoutCacheModel
 
 	public long mvccVersion;
 	public String uuid;
+	public String externalReferenceCode;
 	public long objectLayoutId;
 	public long companyId;
 	public long userId;

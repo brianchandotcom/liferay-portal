@@ -644,6 +644,68 @@ public interface ObjectLayoutPersistence extends BasePersistence<ObjectLayout> {
 		long objectDefinitionId, boolean defaultObjectLayout);
 
 	/**
+	 * Returns the object layout where externalReferenceCode = &#63; and companyId = &#63; and objectDefinitionId = &#63; or throws a <code>NoSuchObjectLayoutException</code> if it could not be found.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param objectDefinitionId the object definition ID
+	 * @return the matching object layout
+	 * @throws NoSuchObjectLayoutException if a matching object layout could not be found
+	 */
+	public ObjectLayout findByERC_C_ODI(
+			String externalReferenceCode, long companyId,
+			long objectDefinitionId)
+		throws NoSuchObjectLayoutException;
+
+	/**
+	 * Returns the object layout where externalReferenceCode = &#63; and companyId = &#63; and objectDefinitionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param objectDefinitionId the object definition ID
+	 * @return the matching object layout, or <code>null</code> if a matching object layout could not be found
+	 */
+	public ObjectLayout fetchByERC_C_ODI(
+		String externalReferenceCode, long companyId, long objectDefinitionId);
+
+	/**
+	 * Returns the object layout where externalReferenceCode = &#63; and companyId = &#63; and objectDefinitionId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param objectDefinitionId the object definition ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching object layout, or <code>null</code> if a matching object layout could not be found
+	 */
+	public ObjectLayout fetchByERC_C_ODI(
+		String externalReferenceCode, long companyId, long objectDefinitionId,
+		boolean useFinderCache);
+
+	/**
+	 * Removes the object layout where externalReferenceCode = &#63; and companyId = &#63; and objectDefinitionId = &#63; from the database.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param objectDefinitionId the object definition ID
+	 * @return the object layout that was removed
+	 */
+	public ObjectLayout removeByERC_C_ODI(
+			String externalReferenceCode, long companyId,
+			long objectDefinitionId)
+		throws NoSuchObjectLayoutException;
+
+	/**
+	 * Returns the number of object layouts where externalReferenceCode = &#63; and companyId = &#63; and objectDefinitionId = &#63;.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param objectDefinitionId the object definition ID
+	 * @return the number of matching object layouts
+	 */
+	public int countByERC_C_ODI(
+		String externalReferenceCode, long companyId, long objectDefinitionId);
+
+	/**
 	 * Caches the object layout in the entity cache if it is enabled.
 	 *
 	 * @param objectLayout the object layout

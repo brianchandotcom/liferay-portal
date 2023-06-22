@@ -2274,6 +2274,294 @@ public class ObjectLayoutPersistenceImpl
 	private static final String _FINDER_COLUMN_ODI_DOL_DEFAULTOBJECTLAYOUT_2 =
 		"objectLayout.defaultObjectLayout = ?";
 
+	private FinderPath _finderPathFetchByERC_C_ODI;
+	private FinderPath _finderPathCountByERC_C_ODI;
+
+	/**
+	 * Returns the object layout where externalReferenceCode = &#63; and companyId = &#63; and objectDefinitionId = &#63; or throws a <code>NoSuchObjectLayoutException</code> if it could not be found.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param objectDefinitionId the object definition ID
+	 * @return the matching object layout
+	 * @throws NoSuchObjectLayoutException if a matching object layout could not be found
+	 */
+	@Override
+	public ObjectLayout findByERC_C_ODI(
+			String externalReferenceCode, long companyId,
+			long objectDefinitionId)
+		throws NoSuchObjectLayoutException {
+
+		ObjectLayout objectLayout = fetchByERC_C_ODI(
+			externalReferenceCode, companyId, objectDefinitionId);
+
+		if (objectLayout == null) {
+			StringBundler sb = new StringBundler(8);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("externalReferenceCode=");
+			sb.append(externalReferenceCode);
+
+			sb.append(", companyId=");
+			sb.append(companyId);
+
+			sb.append(", objectDefinitionId=");
+			sb.append(objectDefinitionId);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchObjectLayoutException(sb.toString());
+		}
+
+		return objectLayout;
+	}
+
+	/**
+	 * Returns the object layout where externalReferenceCode = &#63; and companyId = &#63; and objectDefinitionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param objectDefinitionId the object definition ID
+	 * @return the matching object layout, or <code>null</code> if a matching object layout could not be found
+	 */
+	@Override
+	public ObjectLayout fetchByERC_C_ODI(
+		String externalReferenceCode, long companyId, long objectDefinitionId) {
+
+		return fetchByERC_C_ODI(
+			externalReferenceCode, companyId, objectDefinitionId, true);
+	}
+
+	/**
+	 * Returns the object layout where externalReferenceCode = &#63; and companyId = &#63; and objectDefinitionId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param objectDefinitionId the object definition ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching object layout, or <code>null</code> if a matching object layout could not be found
+	 */
+	@Override
+	public ObjectLayout fetchByERC_C_ODI(
+		String externalReferenceCode, long companyId, long objectDefinitionId,
+		boolean useFinderCache) {
+
+		externalReferenceCode = Objects.toString(externalReferenceCode, "");
+
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {
+				externalReferenceCode, companyId, objectDefinitionId
+			};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByERC_C_ODI, finderArgs, this);
+		}
+
+		if (result instanceof ObjectLayout) {
+			ObjectLayout objectLayout = (ObjectLayout)result;
+
+			if (!Objects.equals(
+					externalReferenceCode,
+					objectLayout.getExternalReferenceCode()) ||
+				(companyId != objectLayout.getCompanyId()) ||
+				(objectDefinitionId != objectLayout.getObjectDefinitionId())) {
+
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler sb = new StringBundler(5);
+
+			sb.append(_SQL_SELECT_OBJECTLAYOUT_WHERE);
+
+			boolean bindExternalReferenceCode = false;
+
+			if (externalReferenceCode.isEmpty()) {
+				sb.append(_FINDER_COLUMN_ERC_C_ODI_EXTERNALREFERENCECODE_3);
+			}
+			else {
+				bindExternalReferenceCode = true;
+
+				sb.append(_FINDER_COLUMN_ERC_C_ODI_EXTERNALREFERENCECODE_2);
+			}
+
+			sb.append(_FINDER_COLUMN_ERC_C_ODI_COMPANYID_2);
+
+			sb.append(_FINDER_COLUMN_ERC_C_ODI_OBJECTDEFINITIONID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindExternalReferenceCode) {
+					queryPos.add(externalReferenceCode);
+				}
+
+				queryPos.add(companyId);
+
+				queryPos.add(objectDefinitionId);
+
+				List<ObjectLayout> list = query.list();
+
+				if (list.isEmpty()) {
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByERC_C_ODI, finderArgs, list);
+					}
+				}
+				else {
+					ObjectLayout objectLayout = list.get(0);
+
+					result = objectLayout;
+
+					cacheResult(objectLayout);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (ObjectLayout)result;
+		}
+	}
+
+	/**
+	 * Removes the object layout where externalReferenceCode = &#63; and companyId = &#63; and objectDefinitionId = &#63; from the database.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param objectDefinitionId the object definition ID
+	 * @return the object layout that was removed
+	 */
+	@Override
+	public ObjectLayout removeByERC_C_ODI(
+			String externalReferenceCode, long companyId,
+			long objectDefinitionId)
+		throws NoSuchObjectLayoutException {
+
+		ObjectLayout objectLayout = findByERC_C_ODI(
+			externalReferenceCode, companyId, objectDefinitionId);
+
+		return remove(objectLayout);
+	}
+
+	/**
+	 * Returns the number of object layouts where externalReferenceCode = &#63; and companyId = &#63; and objectDefinitionId = &#63;.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param objectDefinitionId the object definition ID
+	 * @return the number of matching object layouts
+	 */
+	@Override
+	public int countByERC_C_ODI(
+		String externalReferenceCode, long companyId, long objectDefinitionId) {
+
+		externalReferenceCode = Objects.toString(externalReferenceCode, "");
+
+		FinderPath finderPath = _finderPathCountByERC_C_ODI;
+
+		Object[] finderArgs = new Object[] {
+			externalReferenceCode, companyId, objectDefinitionId
+		};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_SQL_COUNT_OBJECTLAYOUT_WHERE);
+
+			boolean bindExternalReferenceCode = false;
+
+			if (externalReferenceCode.isEmpty()) {
+				sb.append(_FINDER_COLUMN_ERC_C_ODI_EXTERNALREFERENCECODE_3);
+			}
+			else {
+				bindExternalReferenceCode = true;
+
+				sb.append(_FINDER_COLUMN_ERC_C_ODI_EXTERNALREFERENCECODE_2);
+			}
+
+			sb.append(_FINDER_COLUMN_ERC_C_ODI_COMPANYID_2);
+
+			sb.append(_FINDER_COLUMN_ERC_C_ODI_OBJECTDEFINITIONID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindExternalReferenceCode) {
+					queryPos.add(externalReferenceCode);
+				}
+
+				queryPos.add(companyId);
+
+				queryPos.add(objectDefinitionId);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String
+		_FINDER_COLUMN_ERC_C_ODI_EXTERNALREFERENCECODE_2 =
+			"objectLayout.externalReferenceCode = ? AND ";
+
+	private static final String
+		_FINDER_COLUMN_ERC_C_ODI_EXTERNALREFERENCECODE_3 =
+			"(objectLayout.externalReferenceCode IS NULL OR objectLayout.externalReferenceCode = '') AND ";
+
+	private static final String _FINDER_COLUMN_ERC_C_ODI_COMPANYID_2 =
+		"objectLayout.companyId = ? AND ";
+
+	private static final String _FINDER_COLUMN_ERC_C_ODI_OBJECTDEFINITIONID_2 =
+		"objectLayout.objectDefinitionId = ?";
+
 	public ObjectLayoutPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -2298,6 +2586,15 @@ public class ObjectLayoutPersistenceImpl
 	public void cacheResult(ObjectLayout objectLayout) {
 		entityCache.putResult(
 			ObjectLayoutImpl.class, objectLayout.getPrimaryKey(), objectLayout);
+
+		finderCache.putResult(
+			_finderPathFetchByERC_C_ODI,
+			new Object[] {
+				objectLayout.getExternalReferenceCode(),
+				objectLayout.getCompanyId(),
+				objectLayout.getObjectDefinitionId()
+			},
+			objectLayout);
 	}
 
 	private int _valueObjectFinderCacheListThreshold;
@@ -2366,6 +2663,21 @@ public class ObjectLayoutPersistenceImpl
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(ObjectLayoutImpl.class, primaryKey);
 		}
+	}
+
+	protected void cacheUniqueFindersCache(
+		ObjectLayoutModelImpl objectLayoutModelImpl) {
+
+		Object[] args = new Object[] {
+			objectLayoutModelImpl.getExternalReferenceCode(),
+			objectLayoutModelImpl.getCompanyId(),
+			objectLayoutModelImpl.getObjectDefinitionId()
+		};
+
+		finderCache.putResult(
+			_finderPathCountByERC_C_ODI, args, Long.valueOf(1));
+		finderCache.putResult(
+			_finderPathFetchByERC_C_ODI, args, objectLayoutModelImpl);
 	}
 
 	/**
@@ -2505,6 +2817,10 @@ public class ObjectLayoutPersistenceImpl
 			objectLayout.setUuid(uuid);
 		}
 
+		if (Validator.isNull(objectLayout.getExternalReferenceCode())) {
+			objectLayout.setExternalReferenceCode(objectLayout.getUuid());
+		}
+
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
@@ -2550,6 +2866,8 @@ public class ObjectLayoutPersistenceImpl
 
 		entityCache.putResult(
 			ObjectLayoutImpl.class, objectLayoutModelImpl, false, true);
+
+		cacheUniqueFindersCache(objectLayoutModelImpl);
 
 		if (isNew) {
 			objectLayout.setNew(false);
@@ -2907,6 +3225,28 @@ public class ObjectLayoutPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByODI_DOL",
 			new String[] {Long.class.getName(), Boolean.class.getName()},
 			new String[] {"objectDefinitionId", "defaultObjectLayout"}, false);
+
+		_finderPathFetchByERC_C_ODI = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C_ODI",
+			new String[] {
+				String.class.getName(), Long.class.getName(),
+				Long.class.getName()
+			},
+			new String[] {
+				"externalReferenceCode", "companyId", "objectDefinitionId"
+			},
+			true);
+
+		_finderPathCountByERC_C_ODI = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByERC_C_ODI",
+			new String[] {
+				String.class.getName(), Long.class.getName(),
+				Long.class.getName()
+			},
+			new String[] {
+				"externalReferenceCode", "companyId", "objectDefinitionId"
+			},
+			false);
 
 		ObjectLayoutUtil.setPersistence(this);
 	}

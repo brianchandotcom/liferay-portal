@@ -38,19 +38,6 @@ public class ObjectLayoutLocalServiceWrapper
 		_objectLayoutLocalService = objectLayoutLocalService;
 	}
 
-	@Override
-	public com.liferay.object.model.ObjectLayout addObjectLayout(
-			long userId, long objectDefinitionId, boolean defaultObjectLayout,
-			java.util.Map<java.util.Locale, String> nameMap,
-			java.util.List<com.liferay.object.model.ObjectLayoutTab>
-				objectLayoutTabs)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _objectLayoutLocalService.addObjectLayout(
-			userId, objectDefinitionId, defaultObjectLayout, nameMap,
-			objectLayoutTabs);
-	}
-
 	/**
 	 * Adds the object layout to the database. Also notifies the appropriate model listeners.
 	 *
@@ -66,6 +53,34 @@ public class ObjectLayoutLocalServiceWrapper
 		com.liferay.object.model.ObjectLayout objectLayout) {
 
 		return _objectLayoutLocalService.addObjectLayout(objectLayout);
+	}
+
+	@Override
+	public com.liferay.object.model.ObjectLayout addObjectLayout(
+			String externalReferenceCode, long userId, long objectDefinitionId,
+			boolean defaultObjectLayout,
+			java.util.Map<java.util.Locale, String> nameMap,
+			java.util.List<com.liferay.object.model.ObjectLayoutTab>
+				objectLayoutTabs)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectLayoutLocalService.addObjectLayout(
+			externalReferenceCode, userId, objectDefinitionId,
+			defaultObjectLayout, nameMap, objectLayoutTabs);
+	}
+
+	@Override
+	public com.liferay.object.model.ObjectLayout addOrUpdateObjectLayout(
+			String externalReferenceCode, long objectLayoutId, long userId,
+			long objectDefinitionId, boolean defaultObjectLayout,
+			java.util.Map<java.util.Locale, String> nameMap,
+			java.util.List<com.liferay.object.model.ObjectLayoutTab>
+				objectLayoutTabs)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectLayoutLocalService.addOrUpdateObjectLayout(
+			externalReferenceCode, objectLayoutId, userId, objectDefinitionId,
+			defaultObjectLayout, nameMap, objectLayoutTabs);
 	}
 
 	/**
@@ -265,6 +280,19 @@ public class ObjectLayoutLocalServiceWrapper
 		return _objectLayoutLocalService.fetchObjectLayout(objectLayoutId);
 	}
 
+	@Override
+	public com.liferay.object.model.ObjectLayout
+			fetchObjectLayoutByObjectDefinitionExternalReferenceCodeObjectLayoutExternalReferenceCode(
+				String objectDefinitionExternalReferenceCode,
+				String objectLayoutExternalReferenceCode, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectLayoutLocalService.
+			fetchObjectLayoutByObjectDefinitionExternalReferenceCodeObjectLayoutExternalReferenceCode(
+				objectDefinitionExternalReferenceCode,
+				objectLayoutExternalReferenceCode, companyId);
+	}
+
 	/**
 	 * Returns the object layout with the matching UUID and company.
 	 *
@@ -415,18 +443,6 @@ public class ObjectLayoutLocalServiceWrapper
 		return _objectLayoutLocalService.getPersistedModel(primaryKeyObj);
 	}
 
-	@Override
-	public com.liferay.object.model.ObjectLayout updateObjectLayout(
-			long objectLayoutId, boolean defaultObjectLayout,
-			java.util.Map<java.util.Locale, String> nameMap,
-			java.util.List<com.liferay.object.model.ObjectLayoutTab>
-				objectLayoutTabs)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _objectLayoutLocalService.updateObjectLayout(
-			objectLayoutId, defaultObjectLayout, nameMap, objectLayoutTabs);
-	}
-
 	/**
 	 * Updates the object layout in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -442,6 +458,20 @@ public class ObjectLayoutLocalServiceWrapper
 		com.liferay.object.model.ObjectLayout objectLayout) {
 
 		return _objectLayoutLocalService.updateObjectLayout(objectLayout);
+	}
+
+	@Override
+	public com.liferay.object.model.ObjectLayout updateObjectLayout(
+			String externalReferenceCode, long objectLayoutId,
+			boolean defaultObjectLayout,
+			java.util.Map<java.util.Locale, String> nameMap,
+			java.util.List<com.liferay.object.model.ObjectLayoutTab>
+				objectLayoutTabs)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectLayoutLocalService.updateObjectLayout(
+			externalReferenceCode, objectLayoutId, defaultObjectLayout, nameMap,
+			objectLayoutTabs);
 	}
 
 	@Override

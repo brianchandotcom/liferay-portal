@@ -60,7 +60,7 @@ public interface ObjectViewResource {
 	public Page<ObjectView>
 			getObjectDefinitionByExternalReferenceCodeObjectViewsPage(
 				String externalReferenceCode, String search,
-				Pagination pagination)
+				Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public ObjectView postObjectDefinitionByExternalReferenceCodeObjectView(
@@ -68,12 +68,13 @@ public interface ObjectViewResource {
 		throws Exception;
 
 	public Page<ObjectView> getObjectDefinitionObjectViewsPage(
-			Long objectDefinitionId, String search, Pagination pagination)
+			Long objectDefinitionId, String search, Pagination pagination,
+			Sort[] sorts)
 		throws Exception;
 
 	public Response postObjectDefinitionObjectViewsPageExportBatch(
-			Long objectDefinitionId, String search, String callbackURL,
-			String contentType, String fieldNames)
+			Long objectDefinitionId, String search, Sort[] sorts,
+			String callbackURL, String contentType, String fieldNames)
 		throws Exception;
 
 	public ObjectView postObjectDefinitionObjectView(

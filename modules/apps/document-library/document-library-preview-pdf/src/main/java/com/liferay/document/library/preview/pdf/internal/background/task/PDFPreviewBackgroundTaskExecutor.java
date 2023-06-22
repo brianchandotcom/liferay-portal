@@ -69,7 +69,7 @@ public class PDFPreviewBackgroundTaskExecutor
 
 		long companyId = GetterUtil.getLong(taskContextMap.get("COMPANY_ID"));
 
-		generatePreviews(companyId);
+		_generatePreviews(companyId);
 
 		return BackgroundTaskResult.SUCCESS;
 	}
@@ -88,7 +88,7 @@ public class PDFPreviewBackgroundTaskExecutor
 			DLFileEntryConfiguration.class, properties);
 	}
 
-	private void generatePreviews(long companyId) {
+	private void _generatePreviews(long companyId) {
 		ActionableDynamicQuery actionableDynamicQuery =
 			_dlFileEntryLocalService.getActionableDynamicQuery();
 

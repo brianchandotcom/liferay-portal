@@ -111,32 +111,12 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 			long segmentsExperienceId, Layout sourceLayout, Layout targetLayout)
 		throws Exception {
 
-		long defaultSegmentsExperienceId =
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				targetLayout.getPlid());
-
-		boolean copyLayout = CopyLayoutThreadLocal.isCopyLayout();
-
-		ServiceContext currentServiceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		try {
-			CopyLayoutThreadLocal.setCopyLayout(true);
-
-			return TransactionInvokerUtil.invoke(
-				_transactionConfig,
-				new CopyLayoutCallable(
-					true, sourceLayout, new long[] {segmentsExperienceId},
-					targetLayout, new long[] {defaultSegmentsExperienceId}));
-		}
-		catch (Throwable throwable) {
-			throw new Exception(throwable);
-		}
-		finally {
-			CopyLayoutThreadLocal.setCopyLayout(copyLayout);
-
-			ServiceContextThreadLocal.pushServiceContext(currentServiceContext);
-		}
+		return _copyLayoutContent(
+			true, sourceLayout, new long[] {segmentsExperienceId}, targetLayout,
+			new long[] {
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(targetLayout.getPlid())
+			});
 	}
 
 	@Override
@@ -145,28 +125,9 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 			Layout targetLayout)
 		throws Exception {
 
-		boolean copyLayout = CopyLayoutThreadLocal.isCopyLayout();
-
-		ServiceContext currentServiceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		try {
-			CopyLayoutThreadLocal.setCopyLayout(true);
-
-			return TransactionInvokerUtil.invoke(
-				_transactionConfig,
-				new CopyLayoutCallable(
-					false, sourceLayout, segmentsExperiencesIds, targetLayout,
-					segmentsExperiencesIds));
-		}
-		catch (Throwable throwable) {
-			throw new Exception(throwable);
-		}
-		finally {
-			CopyLayoutThreadLocal.setCopyLayout(copyLayout);
-
-			ServiceContextThreadLocal.pushServiceContext(currentServiceContext);
-		}
+		return _copyLayoutContent(
+			false, sourceLayout, segmentsExperiencesIds, targetLayout,
+			segmentsExperiencesIds);
 	}
 
 	private void _copyAssetCategoryIdsAndAssetTagNames(
@@ -239,6 +200,36 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 				sourceLayoutLayoutClassedModelUsage.getContainerType(),
 				targetLayout.getPlid(),
 				ServiceContextThreadLocal.getServiceContext());
+		}
+	}
+
+	private Layout _copyLayoutContent(
+			boolean copyExperience, Layout sourceLayout,
+			long[] sourceSegmentsExperiencesIds, Layout targetLayout,
+			long[] targetSegmentsExperiencesIds)
+		throws Exception {
+
+		boolean copyLayout = CopyLayoutThreadLocal.isCopyLayout();
+
+		ServiceContext currentServiceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		try {
+			CopyLayoutThreadLocal.setCopyLayout(true);
+
+			return TransactionInvokerUtil.invoke(
+				_transactionConfig,
+				new CopyLayoutCallable(
+					copyExperience, sourceLayout, sourceSegmentsExperiencesIds,
+					targetLayout, targetSegmentsExperiencesIds));
+		}
+		catch (Throwable throwable) {
+			throw new Exception(throwable);
+		}
+		finally {
+			CopyLayoutThreadLocal.setCopyLayout(copyLayout);
+
+			ServiceContextThreadLocal.pushServiceContext(currentServiceContext);
 		}
 	}
 

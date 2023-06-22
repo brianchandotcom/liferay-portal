@@ -185,8 +185,8 @@ definition {
 					value1 = ${accountOrganizations});
 
 				Click.mouseDownMouseUp(
-					key_organizationName = ${accountOrganizations},
-					locator1 = "CommerceAccelerators#ORGANIZATION_AUTOCOMPLETE_SPECIFIC");
+					key_categoryName = ${accountOrganizations},
+					locator1 = "CommerceEntry#COMMERCE_CATEGORY_AUTOCOMPLETE_SPECIFIC");
 			}
 		}
 

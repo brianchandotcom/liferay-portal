@@ -17,6 +17,7 @@ package com.liferay.osb.faro.web.internal.messaging;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
+import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.Trigger;
 
@@ -29,7 +30,10 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Rachael Koestartyo
  */
-@Component(service = SendWeeklyEmailReportMessageListener.class)
+@Component(
+	property = "destination.name=" + DestinationNames.SCHEDULER_DISPATCH,
+	service = MessageListener.class
+)
 public class SendWeeklyEmailReportMessageListener
 	extends BaseEmailReportMessageListener {
 

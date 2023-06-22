@@ -165,44 +165,40 @@ const FragmentContent = ({
 
 			Promise.all(
 				getAllEditables(fragmentElement).map((editable) => {
-					if (Object.keys(editableValues).length) {
-						const editableValue =
-							editableValues[editable.editableValueNamespace][
-								editable.editableId
-							];
+					const editableValue =
+						editableValues[editable.editableValueNamespace][
+							editable.editableId
+						];
 
-						return Promise.all([
-							resolveEditableValue(
-								editableValue,
-								languageId,
-								getFieldValue
-							),
-							resolveEditableConfig(
-								editableValue?.config || {},
-								languageId,
-								getFieldValue
-							),
-						]).then(([value, editableConfig]) => {
-							editable.processor.render(
-								editable.element,
-								value,
-								editableConfig,
-								languageId,
-								withinCollection
+					return Promise.all([
+						resolveEditableValue(
+							editableValue,
+							languageId,
+							getFieldValue
+						),
+						resolveEditableConfig(
+							editableValue?.config || {},
+							languageId,
+							getFieldValue
+						),
+					]).then(([value, editableConfig]) => {
+						editable.processor.render(
+							editable.element,
+							value,
+							editableConfig,
+							languageId,
+							withinCollection
+						);
+
+						editable.element.classList.add('page-editor__editable');
+
+						if (TEXT_EDITABLE_TYPES.has(editable.type)) {
+							editable.element.setAttribute(
+								'data-tooltip-floating',
+								true
 							);
-
-							editable.element.classList.add(
-								'page-editor__editable'
-							);
-
-							if (TEXT_EDITABLE_TYPES.has(editable.type)) {
-								editable.element.setAttribute(
-									'data-tooltip-floating',
-									true
-								);
-							}
-						});
-					}
+						}
+					});
 				})
 			).then(() => {
 				if (isMounted() && fragmentElement) {

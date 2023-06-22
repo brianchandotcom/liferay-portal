@@ -40,6 +40,8 @@ boolean viewOnly = !commerceCatalogDisplayContext.hasPermission(commerceCatalog.
 	<aui:input name="basePromotionCommercePriceListId" type="hidden" value="<%= commerceCatalogDisplayContext.getBaseCommercePriceListId(CommercePriceListConstants.TYPE_PROMOTION) %>" />
 	<aui:input name="commerceCatalogId" type="hidden" value="<%= (commerceCatalog == null) ? 0 : commerceCatalog.getCommerceCatalogId() %>" />
 
+	<liferay-ui:error exception="<%= AccountEntryStatusException.class %>" message="please-select-a-valid-supplier" />
+	<liferay-ui:error exception="<%= AccountEntryTypeException.class %>" message="please-select-a-valid-supplier" />
 	<liferay-ui:error exception="<%= NoSuchFileEntryException.class %>" message="please-select-an-existing-file" />
 	<liferay-ui:error exception="<%= NoSuchPriceListException.class %>" message="please-select-an-existing-price-list-or-promotion" />
 
@@ -170,13 +172,29 @@ boolean viewOnly = !commerceCatalogDisplayContext.hasPermission(commerceCatalog.
 							});
 						</aui:script>
 					</c:if>
+
+					<c:if test='<%= FeatureFlagManagerUtil.isEnabled("COMMERCE-10890") %>'>
+						<aui:select disabled="<%= !commerceCatalogDisplayContext.hasManageLinkSupplierPermission() %>" label="link-catalog-to-a-supplier" name="accountEntryId" showEmptyOption="<%= true %>">
+
+							<%
+							for (AccountEntry accountEntry : commerceCatalogDisplayContext.getSupplierAccountEntries()) {
+							%>
+
+								<aui:option label="<%= accountEntry.getName() %>" selected="<%= (commerceCatalog != null) && (accountEntry.getAccountEntryId() == commerceCatalog.getAccountEntryId()) %>" value="<%= accountEntry.getAccountEntryId() %>" />
+
+							<%
+							}
+							%>
+
+						</aui:select>
+					</c:if>
 				</div>
 			</commerce-ui:panel>
 		</div>
 
 		<div class="col-4">
 			<commerce-ui:panel
-				elementClasses="flex-fill h-100"
+				elementClasses="flex-fill"
 				title='<%= LanguageUtil.get(request, "default-catalog-image") %>'
 			>
 				<div class="row">

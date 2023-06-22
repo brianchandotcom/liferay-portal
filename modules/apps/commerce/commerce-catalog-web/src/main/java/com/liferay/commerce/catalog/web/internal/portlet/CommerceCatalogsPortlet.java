@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.catalog.web.internal.portlet;
 
+import com.liferay.account.service.AccountEntryService;
 import com.liferay.commerce.catalog.web.internal.display.context.CommerceCatalogDisplayContext;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.inventory.method.CommerceInventoryMethodRegistry;
@@ -81,7 +82,7 @@ public class CommerceCatalogsPortlet extends MVCPortlet {
 
 		CommerceCatalogDisplayContext commerceCatalogDisplayContext =
 			new CommerceCatalogDisplayContext(
-				_attachmentsConfiguration,
+				_accountEntryService, _attachmentsConfiguration,
 				_portal.getHttpServletRequest(renderRequest),
 				_commerceCatalogDefaultImage, _commerceCatalogService,
 				_commerceCatalogModelResourcePermission,
@@ -101,6 +102,9 @@ public class CommerceCatalogsPortlet extends MVCPortlet {
 		_attachmentsConfiguration = ConfigurableUtil.createConfigurable(
 			AttachmentsConfiguration.class, properties);
 	}
+
+	@Reference
+	private AccountEntryService _accountEntryService;
 
 	private volatile AttachmentsConfiguration _attachmentsConfiguration;
 

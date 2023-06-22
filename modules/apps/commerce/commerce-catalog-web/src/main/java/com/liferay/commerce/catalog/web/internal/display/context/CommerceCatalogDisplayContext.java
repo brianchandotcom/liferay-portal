@@ -14,6 +14,9 @@
 
 package com.liferay.commerce.catalog.web.internal.display.context;
 
+import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryService;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.frontend.model.HeaderActionModel;
@@ -50,15 +53,20 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.settings.SystemSettingsLocator;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -79,6 +87,7 @@ import javax.servlet.http.HttpServletRequest;
 public class CommerceCatalogDisplayContext {
 
 	public CommerceCatalogDisplayContext(
+		AccountEntryService accountEntryService,
 		AttachmentsConfiguration attachmentsConfiguration,
 		HttpServletRequest httpServletRequest,
 		CommerceCatalogDefaultImage commerceCatalogDefaultImage,
@@ -91,6 +100,7 @@ public class CommerceCatalogDisplayContext {
 		ConfigurationProvider configurationProvider, DLAppService dlAppService,
 		ItemSelector itemSelector, Portal portal) {
 
+		_accountEntryService = accountEntryService;
 		_attachmentsConfiguration = attachmentsConfiguration;
 		_commerceCatalogDefaultImage = commerceCatalogDefaultImage;
 		_commerceCatalogService = commerceCatalogService;
@@ -333,6 +343,23 @@ public class CommerceCatalogDisplayContext {
 			encodedFilter;
 	}
 
+	public List<AccountEntry> getSupplierAccountEntries()
+		throws PortalException {
+
+		BaseModelSearchResult<AccountEntry> baseModelSearchResult =
+			_accountEntryService.searchAccountEntries(
+				null,
+				LinkedHashMapBuilder.<String, Object>put(
+					"status", WorkflowConstants.STATUS_APPROVED
+				).put(
+					"types",
+					new String[] {AccountConstants.ACCOUNT_ENTRY_TYPE_SUPPLIER}
+				).build(),
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, "name", false);
+
+		return baseModelSearchResult.getBaseModels();
+	}
+
 	public boolean hasAddCatalogPermission() {
 		PortletResourcePermission portletResourcePermission =
 			_commerceCatalogModelResourcePermission.
@@ -341,6 +368,22 @@ public class CommerceCatalogDisplayContext {
 		return portletResourcePermission.contains(
 			cpRequestHelper.getPermissionChecker(), null,
 			CPActionKeys.ADD_COMMERCE_CATALOG);
+	}
+
+	public boolean hasManageLinkSupplierPermission() {
+		PortletResourcePermission portletResourcePermission =
+			_commerceCatalogModelResourcePermission.
+				getPortletResourcePermission();
+
+		HttpServletRequest httpServletRequest = cpRequestHelper.getRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		return portletResourcePermission.contains(
+			themeDisplay.getPermissionChecker(), null,
+			CPActionKeys.VIEW_COMMERCE_CATALOGS);
 	}
 
 	public boolean hasPermission(long commerceCatalogId, String actionId)
@@ -379,6 +422,7 @@ public class CommerceCatalogDisplayContext {
 
 	protected final CPRequestHelper cpRequestHelper;
 
+	private final AccountEntryService _accountEntryService;
 	private final AttachmentsConfiguration _attachmentsConfiguration;
 	private final CommerceCatalogDefaultImage _commerceCatalogDefaultImage;
 	private final ModelResourcePermission<CommerceCatalog>

@@ -45,6 +45,9 @@ public class CPActionKeys {
 	public static final String MANAGE_COMMERCE_PRODUCT_TAX_CATEGORIES =
 		"MANAGE_COMMERCE_PRODUCT_TAX_CATEGORIES";
 
+	public static final String VIEW_COMMERCE_CATALOGS =
+		"VIEW_COMMERCE_CATALOGS";
+
 	public static final String VIEW_COMMERCE_CHANNELS =
 		"VIEW_COMMERCE_CHANNELS";
 

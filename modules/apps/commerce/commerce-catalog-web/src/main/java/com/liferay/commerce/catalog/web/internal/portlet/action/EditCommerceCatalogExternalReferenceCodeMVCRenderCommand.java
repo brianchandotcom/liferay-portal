@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.catalog.web.internal.portlet.action;
 
+import com.liferay.account.service.AccountEntryService;
 import com.liferay.commerce.catalog.web.internal.display.context.CommerceCatalogDisplayContext;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.inventory.method.CommerceInventoryMethodRegistry;
@@ -64,7 +65,7 @@ public class EditCommerceCatalogExternalReferenceCodeMVCRenderCommand
 
 		CommerceCatalogDisplayContext commerceCatalogDisplayContext =
 			new CommerceCatalogDisplayContext(
-				_attachmentsConfiguration,
+				_accountEntryService, _attachmentsConfiguration,
 				_portal.getHttpServletRequest(renderRequest),
 				_commerceCatalogDefaultImage, _commerceCatalogService,
 				_commerceCatalogModelResourcePermission,
@@ -84,6 +85,9 @@ public class EditCommerceCatalogExternalReferenceCodeMVCRenderCommand
 		_attachmentsConfiguration = ConfigurableUtil.createConfigurable(
 			AttachmentsConfiguration.class, properties);
 	}
+
+	@Reference
+	private AccountEntryService _accountEntryService;
 
 	private volatile AttachmentsConfiguration _attachmentsConfiguration;
 

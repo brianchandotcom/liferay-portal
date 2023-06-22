@@ -15,6 +15,8 @@
 package com.liferay.commerce.catalog.web.internal.portlet.action;
 
 import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.exception.AccountEntryStatusException;
+import com.liferay.account.exception.AccountEntryTypeException;
 import com.liferay.commerce.inventory.constants.CommerceInventoryConstants;
 import com.liferay.commerce.media.constants.CommerceMediaConstants;
 import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
@@ -94,7 +96,9 @@ public class EditCommerceCatalogMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 		catch (Throwable throwable) {
-			if (throwable instanceof CommerceCatalogProductsException ||
+			if (throwable instanceof AccountEntryStatusException ||
+				throwable instanceof AccountEntryTypeException ||
+				throwable instanceof CommerceCatalogProductsException ||
 				throwable instanceof CommerceCatalogSystemException ||
 				throwable instanceof NoSuchPriceListException) {
 
@@ -204,8 +208,10 @@ public class EditCommerceCatalogMVCActionCommand extends BaseMVCActionCommand {
 		else {
 			commerceCatalog = _commerceCatalogService.updateCommerceCatalog(
 				commerceCatalog.getCommerceCatalogId(),
-				commerceCatalog.getAccountEntryId(), name, commerceCurrencyCode,
-				catalogDefaultLanguageId);
+				ParamUtil.getLong(
+					actionRequest, "accountEntryId",
+					AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT),
+				name, commerceCurrencyCode, catalogDefaultLanguageId);
 		}
 
 		return commerceCatalog;

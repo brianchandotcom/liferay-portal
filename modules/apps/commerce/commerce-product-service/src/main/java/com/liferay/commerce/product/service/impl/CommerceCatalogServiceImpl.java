@@ -21,6 +21,7 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -162,8 +163,24 @@ public class CommerceCatalogServiceImpl extends CommerceCatalogServiceBaseImpl {
 			String commerceCurrencyCode, String catalogDefaultLanguageId)
 		throws PortalException {
 
+		PermissionChecker permissionChecker = getPermissionChecker();
+
 		_commerceCatalogModelResourcePermission.check(
-			getPermissionChecker(), commerceCatalogId, ActionKeys.UPDATE);
+			permissionChecker, commerceCatalogId, ActionKeys.UPDATE);
+
+		PortletResourcePermission portletResourcePermission =
+			_commerceCatalogModelResourcePermission.
+				getPortletResourcePermission();
+
+		if (!portletResourcePermission.contains(
+				permissionChecker, null, CPActionKeys.VIEW_COMMERCE_CATALOGS)) {
+
+			CommerceCatalog commerceCatalog =
+				commerceCatalogLocalService.getCommerceCatalog(
+					commerceCatalogId);
+
+			accountEntryId = commerceCatalog.getAccountEntryId();
+		}
 
 		return commerceCatalogLocalService.updateCommerceCatalog(
 			commerceCatalogId, accountEntryId, name, commerceCurrencyCode,

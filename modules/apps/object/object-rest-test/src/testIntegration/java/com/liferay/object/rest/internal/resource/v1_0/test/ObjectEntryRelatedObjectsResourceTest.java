@@ -72,7 +72,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -544,7 +543,6 @@ public class ObjectEntryRelatedObjectsResourceTest {
 		}
 	}
 
-	@Ignore
 	@Test
 	public void testPostCustomObjectEntryWithNestedSystemObjectEntry()
 		throws Exception {
@@ -580,7 +578,6 @@ public class ObjectEntryRelatedObjectsResourceTest {
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY));
 	}
 
-	@Ignore
 	@Test
 	public void testPutCustomObjectEntryWithNestedSystemObjectEntry()
 		throws Exception {
@@ -616,7 +613,6 @@ public class ObjectEntryRelatedObjectsResourceTest {
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY));
 	}
 
-	@Ignore
 	@Test
 	public void testPutCustomObjectEntryWithNestedSystemObjectEntryByExternalReferenceCode()
 		throws Exception {
@@ -627,7 +623,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			TestPropsValues.getUserId(),
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 			ObjectFieldConstants.DB_TYPE_STRING, _userSystemObjectDefinition,
-			_SYSTEM_OBJECT_FIELD_NAME_2);
+			_SYSTEM_OBJECT_FIELD_NAME_3);
 
 		_testPutCustomObjectEntryWithNestedSystemObjectEntryByExternalReferenceCode(
 			false,
@@ -901,24 +897,6 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			_getEndpoint(name), StringPool.SLASH, primaryKey);
 	}
 
-	private String _getExternalReferenceCodeEndpoint(
-		boolean manyToOne, String objectEntryExternalReferenceCode,
-		String objectRelationshipName) {
-
-		if (manyToOne) {
-			return StringBundler.concat(
-				_objectDefinition1.getRESTContextPath(),
-				"/by-external-reference-code/",
-				objectEntryExternalReferenceCode, "?nestedFields=",
-				objectRelationshipName);
-		}
-
-		return StringBundler.concat(
-			_objectDefinition1.getRESTContextPath(), StringPool.SLASH,
-			objectEntryExternalReferenceCode, StringPool.SLASH,
-			objectRelationshipName);
-	}
-
 	private String _getSystemObjectEntryId(
 			String customObjectEntryId, boolean manyToOne,
 			ObjectRelationship objectRelationship)
@@ -1106,10 +1084,12 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			));
 
 		if (manyToOne) {
-			_assertSystemObjectEntry(
-				jsonObject.getJSONObject(objectRelationship.getName()),
-				_SYSTEM_OBJECT_FIELD_NAME_1, _SYSTEM_OBJECT_FIELD_VALUE,
-				userAccount);
+			JSONObject systemObjectEntryJSONObject = jsonObject.getJSONObject(
+				objectRelationship.getName());
+
+			Assert.assertEquals(
+				systemObjectEntryJSONObject.get("emailAddress"),
+				userAccount.getEmailAddress());
 		}
 		else {
 			JSONArray relatedSystemObjectEntriesJSONArray =
@@ -1200,10 +1180,12 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			Http.Method.PUT);
 
 		if (manyToOne) {
-			_assertSystemObjectEntry(
-				jsonObject.getJSONObject(objectRelationship.getName()),
-				_SYSTEM_OBJECT_FIELD_NAME_2, systemObjectFieldValue,
-				putUserAccount);
+			JSONObject systemObjectEntryJSONObject = jsonObject.getJSONObject(
+				objectRelationship.getName());
+
+			Assert.assertEquals(
+				systemObjectEntryJSONObject.get("emailAddress"),
+				putUserAccount.getEmailAddress());
 		}
 		else {
 			JSONArray relatedSystemObjectEntriesJSONArray =
@@ -1243,12 +1225,15 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			_toBody(
 				manyToOne, objectRelationship,
 				_createSystemObjectEntryJSONObject(
-					_SYSTEM_OBJECT_FIELD_NAME_2, _SYSTEM_OBJECT_FIELD_VALUE,
+					_SYSTEM_OBJECT_FIELD_NAME_3, _SYSTEM_OBJECT_FIELD_VALUE,
 					UserAccountTestUtil.randomUserAccount())),
 			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
 
 		String customObjectEntryExternalReferenceCode =
 			customObjectEntryJSONObject.getString("externalReferenceCode");
+
+		String customObjectEntryId = customObjectEntryJSONObject.getString(
+			"id");
 
 		UserAccount putUserAccount = UserAccountTestUtil.randomUserAccount();
 
@@ -1259,8 +1244,8 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			() -> {
 				JSONObject systemObjectEntryJSONObject = HTTPTestUtil.invoke(
 					null,
-					_getExternalReferenceCodeEndpoint(
-						manyToOne, customObjectEntryExternalReferenceCode,
+					_getEndpoint(
+						manyToOne, customObjectEntryId,
 						objectRelationship.getName()),
 					Http.Method.GET);
 
@@ -1289,7 +1274,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			_toBody(
 				manyToOne, objectRelationship,
 				_createSystemObjectEntryJSONObject(
-					_SYSTEM_OBJECT_FIELD_NAME_2, systemObjectFieldValue,
+					_SYSTEM_OBJECT_FIELD_NAME_3, systemObjectFieldValue,
 					putUserAccount)),
 			StringBundler.concat(
 				_objectDefinition1.getRESTContextPath(),
@@ -1298,10 +1283,12 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			Http.Method.PUT);
 
 		if (manyToOne) {
-			_assertSystemObjectEntry(
-				jsonObject.getJSONObject(objectRelationship.getName()),
-				_SYSTEM_OBJECT_FIELD_NAME_2, systemObjectFieldValue,
-				putUserAccount);
+			JSONObject systemObjectEntryJSONObject = jsonObject.getJSONObject(
+				objectRelationship.getName());
+
+			Assert.assertEquals(
+				systemObjectEntryJSONObject.get("emailAddress"),
+				putUserAccount.getEmailAddress());
 		}
 		else {
 			JSONArray relatedSystemObjectEntriesJSONArray =
@@ -1312,7 +1299,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 
 			_assertSystemObjectEntry(
 				relatedSystemObjectEntriesJSONArray.getJSONObject(0),
-				_SYSTEM_OBJECT_FIELD_NAME_2, systemObjectFieldValue,
+				_SYSTEM_OBJECT_FIELD_NAME_3, systemObjectFieldValue,
 				putUserAccount);
 		}
 
@@ -1329,7 +1316,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 						customObjectEntryJSONObject.getString("id"), manyToOne,
 						objectRelationship)),
 				Http.Method.GET),
-			_SYSTEM_OBJECT_FIELD_NAME_2, systemObjectFieldValue,
+			_SYSTEM_OBJECT_FIELD_NAME_3, systemObjectFieldValue,
 			putUserAccount);
 	}
 
@@ -1360,6 +1347,9 @@ public class ObjectEntryRelatedObjectsResourceTest {
 		"x" + RandomTestUtil.randomString();
 
 	private static final String _SYSTEM_OBJECT_FIELD_NAME_2 =
+		"x" + RandomTestUtil.randomString();
+
+	private static final String _SYSTEM_OBJECT_FIELD_NAME_3 =
 		"x" + RandomTestUtil.randomString();
 
 	private static final String _SYSTEM_OBJECT_FIELD_VALUE =

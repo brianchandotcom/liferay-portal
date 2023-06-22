@@ -58,6 +58,10 @@ definition {
 
 		HeadlessSite.addSite(siteName = "Test Site Name 1");
 
+		JSONLayoututilitypage.deleteLayoutUtilityPage(
+			groupName = "Test Site Name 1",
+			layoutUtilityPageName = "404 Error");
+
 		var groupId1 = JSONGroupAPI._getGroupIdByName(
 			groupName = "Test Site Name 1",
 			site = "true");

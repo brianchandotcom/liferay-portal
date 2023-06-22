@@ -1580,6 +1580,10 @@
 			<description name="Checks if the property value `-includeresource` or `Include-Resource` exists and removes it" />
 			<weight>1</weight>
 		</check>
+		<check name="UpgradeGetPortletGroupIdMethodCheck">
+			<category name="Upgrade" />
+			<description name="Run code migration of the method 'getPortletGroupId' to 'getScopeGroupId'" />
+		</check>
 		<check name="UpgradeGradleIncludeResourceCheck">
 			<category name="Upgrade" />
 			<description name="Replaces with `compileInclude` the configuration attribute for dependencies in `build.gradle` that are listed at `Include-Resource` property at `bnd.bnd` associated file." />
@@ -1596,10 +1600,6 @@
 		<check name="UpgradeJavaExtractTextMethodCheck">
 			<category name="Upgrade" />
 			<description name="Replaces the references of the method `HtmlUtil.extractText(` with the method `extractText(` of `HtmlParser` class" />
-		</check>
-		<check name="UpgradeJavaGetPortletGroupIdMethodCheck">
-			<category name="Upgrade" />
-			<description name="Run code migration of the method 'getPortletGroupId' to 'getScopeGroupId'" />
 		</check>
 		<check name="UpgradeJavaMultiVMPoolUtilCheck">
 			<category name="Upgrade" />

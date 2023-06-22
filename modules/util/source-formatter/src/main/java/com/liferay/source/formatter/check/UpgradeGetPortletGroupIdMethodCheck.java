@@ -23,7 +23,7 @@ import java.util.regex.Pattern;
 /**
  * @author Tamyris Bernardo
  */
-public class UpgradeJavaGetPortletGroupIdMethodCheck extends BaseFileCheck {
+public class UpgradeGetPortletGroupIdMethodCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(

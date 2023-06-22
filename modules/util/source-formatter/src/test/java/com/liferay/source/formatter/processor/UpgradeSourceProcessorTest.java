@@ -44,6 +44,13 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testUpgradeGetPortletGroupIdMethodCheck() throws Exception {
+		test("upgrade/UpgradeFtlGetPortletGroupIdMethodCheck.testftl");
+		test("upgrade/UpgradeJavaGetPortletGroupIdMethodCheck.testjava");
+		test("upgrade/UpgradeJspGetPortletGroupIdMethodCheck.testjsp");
+	}
+
+	@Test
 	public void testUpgradeGradleIncludeResourceCheck() throws Exception {
 		test(
 			SourceProcessorTestParameters.create(
@@ -66,13 +73,6 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 	@Test
 	public void testUpgradeJavaExtractTextMethodCheck() throws Exception {
 		test("upgrade/UpgradeJavaExtractTextMethodCheck.testjava");
-	}
-
-	@Test
-	public void testUpgradeJavaGetPortletGroupIdMethodCheck() throws Exception {
-		test("upgrade/UpgradeFtlGetPortletGroupIdMethodCheck.testftl");
-		test("upgrade/UpgradeJavaGetPortletGroupIdMethodCheck.testjava");
-		test("upgrade/UpgradeJspGetPortletGroupIdMethodCheck.testjsp");
 	}
 
 	@Test

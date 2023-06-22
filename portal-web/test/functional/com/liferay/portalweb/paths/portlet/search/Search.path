@@ -146,6 +146,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REINDEX_IN_PROGRESS_IDICATOR</td>
+	<td>//div[contains(.,'The portal is currently reindexing.')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SEARCH_BAR_WIDGET</td>
 	<td>//input[not(ancestor::header[@id='banner'])][contains(@data-qa-id,'searchInput')]</td>
 	<td></td>

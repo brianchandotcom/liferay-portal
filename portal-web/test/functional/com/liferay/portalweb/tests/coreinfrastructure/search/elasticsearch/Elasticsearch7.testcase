@@ -523,7 +523,7 @@ definition {
 		task ("Assert that search results are still returned during a reindex") {
 			Search.openSearchPage(searchTerm = "test");
 
-			AssertElementPresent(locator1 = "ControlMenu#RELOAD_TOOLTIP");
+			AssertElementPresent(locator1 = "Search#REINDEX_IN_PROGRESS_IDICATOR");
 
 			SearchResultPortlet.viewSearchResults(
 				searchAssetTitle = "Test Test",

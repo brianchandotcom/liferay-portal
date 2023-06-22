@@ -141,7 +141,7 @@ definition {
 				}
 			}
 
-			while (((contains(${elasticsearchTasks}, "indices:data/write/bulk") || (IsElementPresent.isElementPresentNoSPARefresh(locator1 = "ControlMenu#RELOAD_TOOLTIP")) || (IsElementPresent.isElementPresentNoSPARefresh(locator1 = "//html[contains(@class,'lfr-spa-loading')]"))) && (${reindexElapsedTime} != 240)) && (maxIterations = "24")) {
+			while (((contains(${elasticsearchTasks}, "indices:data/write/bulk") || (IsElementPresent.isElementPresentNoSPARefresh(locator1 = "Search#REINDEX_IN_PROGRESS_IDICATOR")) || (IsElementPresent.isElementPresentNoSPARefresh(locator1 = "//html[contains(@class,'lfr-spa-loading')]"))) && (${reindexElapsedTime} != 240)) && (maxIterations = "24")) {
 				Pause.pauseNoSPARefresh(locator1 = 10000);
 
 				var reindexElapsedTime = ${reindexElapsedTime} + 10;
@@ -152,7 +152,7 @@ definition {
 			}
 		}
 		else if (contains(${searchEngineVendor}, "Solr")) {
-			while ((IsElementNotPresent(locator1 = "ControlMenu#RELOAD_TOOLTIP")) && (${reindexStartTime} != 60)) {
+			while ((IsElementNotPresent(locator1 = "Search#REINDEX_IN_PROGRESS_IDICATOR")) && (${reindexStartTime} != 60)) {
 				Pause.pauseNoSPARefresh(locator1 = 1000);
 
 				var reindexStartTime = ${reindexStartTime} + 1;
@@ -165,7 +165,7 @@ definition {
 				echo("Started reindexing ${reindexStartTime} second(s) after clicking 'Execute'.");
 			}
 
-			while ((((IsElementPresent.isElementPresentNoSPARefresh(locator1 = "ControlMenu#RELOAD_TOOLTIP")) || (IsElementPresent.isElementPresentNoSPARefresh(locator1 = "//html[contains(@class,'lfr-spa-loading')]"))) && (${reindexElapsedTime} != 240)) && (maxIterations = "24")) {
+			while ((((IsElementPresent.isElementPresentNoSPARefresh(locator1 = "Search#REINDEX_IN_PROGRESS_IDICATOR")) || (IsElementPresent.isElementPresentNoSPARefresh(locator1 = "//html[contains(@class,'lfr-spa-loading')]"))) && (${reindexElapsedTime} != 240)) && (maxIterations = "24")) {
 				Pause.pauseNoSPARefresh(locator1 = 10000);
 
 				var reindexElapsedTime = ${reindexElapsedTime} + 10;

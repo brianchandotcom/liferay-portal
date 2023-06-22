@@ -41,13 +41,15 @@ public class UpgradeGetPortletGroupIdMethodCheck extends BaseFileCheck {
 			content);
 
 		while (getPortletGroupIdMatcher.find()) {
-			String methodCall = getPortletGroupIdMatcher.group();
+			String variableName = getPortletGroupIdMatcher.group(1);
 
 			if (!fileName.endsWith(".java") &&
-				!methodCall.contains("themeDisplay")) {
+				!variableName.equals("themeDisplay")) {
 
 				return newContent;
 			}
+
+			String methodCall = getPortletGroupIdMatcher.group(0);
 
 			if (fileName.endsWith(".java") &&
 				!hasClassOrVariableName(
@@ -66,6 +68,6 @@ public class UpgradeGetPortletGroupIdMethodCheck extends BaseFileCheck {
 	}
 
 	private static final Pattern _getPortletGroupIdPattern = Pattern.compile(
-		"\\w*\\.getPortletGroupId\\(\\s*\\)");
+		"(\\w+)\\.getPortletGroupId\\(\\s*\\)");
 
 }

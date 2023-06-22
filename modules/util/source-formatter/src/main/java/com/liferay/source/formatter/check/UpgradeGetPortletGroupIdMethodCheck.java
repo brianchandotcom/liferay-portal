@@ -46,7 +46,7 @@ public class UpgradeGetPortletGroupIdMethodCheck extends BaseFileCheck {
 			if (!fileName.endsWith(".java") &&
 				!variableName.equals("themeDisplay")) {
 
-				return newContent;
+				continue;
 			}
 
 			String methodCall = getPortletGroupIdMatcher.group(0);
@@ -55,7 +55,7 @@ public class UpgradeGetPortletGroupIdMethodCheck extends BaseFileCheck {
 				!hasClassOrVariableName(
 					"ThemeDisplay", newContent, methodCall)) {
 
-				return newContent;
+				continue;
 			}
 
 			newContent = StringUtil.replace(

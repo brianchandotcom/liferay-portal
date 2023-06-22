@@ -67,6 +67,19 @@ public interface ObjectLayoutResource {
 			String externalReferenceCode, ObjectLayout objectLayout)
 		throws Exception;
 
+	public ObjectLayout
+			getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectLayoutByExternalReferenceCodeObjectLayoutExternalReferenceCode(
+				String objectDefinitionExternalReferenceCode,
+				String objectLayoutExternalReferenceCode)
+		throws Exception;
+
+	public ObjectLayout
+			putObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectLayoutByExternalReferenceCodeObjectLayoutExternalReferenceCode(
+				String objectDefinitionExternalReferenceCode,
+				String objectLayoutExternalReferenceCode,
+				ObjectLayout objectLayout)
+		throws Exception;
+
 	public Page<ObjectLayout> getObjectDefinitionObjectLayoutsPage(
 			Long objectDefinitionId, String search, Pagination pagination)
 		throws Exception;

@@ -182,6 +182,7 @@ public abstract class BaseObjectLayoutResourceTestCase {
 
 		ObjectLayout objectLayout = randomObjectLayout();
 
+		objectLayout.setExternalReferenceCode(regex);
 		objectLayout.setObjectDefinitionExternalReferenceCode(regex);
 
 		String json = ObjectLayoutSerDes.toJSON(objectLayout);
@@ -190,6 +191,7 @@ public abstract class BaseObjectLayoutResourceTestCase {
 
 		objectLayout = ObjectLayoutSerDes.toDTO(json);
 
+		Assert.assertEquals(regex, objectLayout.getExternalReferenceCode());
 		Assert.assertEquals(
 			regex, objectLayout.getObjectDefinitionExternalReferenceCode());
 	}
@@ -365,6 +367,191 @@ public abstract class BaseObjectLayoutResourceTestCase {
 	protected ObjectLayout
 			testPostObjectDefinitionByExternalReferenceCodeObjectLayout_addObjectLayout(
 				ObjectLayout objectLayout)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectLayoutByExternalReferenceCodeObjectLayoutExternalReferenceCode()
+		throws Exception {
+
+		ObjectLayout postObjectLayout =
+			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectLayoutByExternalReferenceCodeObjectLayoutExternalReferenceCode_addObjectLayout();
+
+		ObjectLayout getObjectLayout =
+			objectLayoutResource.
+				getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectLayoutByExternalReferenceCodeObjectLayoutExternalReferenceCode(
+					testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectLayoutByExternalReferenceCodeObjectLayoutExternalReferenceCode_getObjectDefinitionExternalReferenceCode(
+						postObjectLayout),
+					testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectLayoutByExternalReferenceCodeObjectLayoutExternalReferenceCode_getObjectLayoutExternalReferenceCode());
+
+		assertEquals(postObjectLayout, getObjectLayout);
+		assertValid(getObjectLayout);
+	}
+
+	protected String
+			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectLayoutByExternalReferenceCodeObjectLayoutExternalReferenceCode_getObjectDefinitionExternalReferenceCode(
+				ObjectLayout objectLayout)
+		throws Exception {
+
+		return objectLayout.getObjectDefinitionExternalReferenceCode();
+	}
+
+	protected String
+			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectLayoutByExternalReferenceCodeObjectLayoutExternalReferenceCode_getObjectLayoutExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected ObjectLayout
+			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectLayoutByExternalReferenceCodeObjectLayoutExternalReferenceCode_addObjectLayout()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectLayoutByExternalReferenceCodeObjectLayoutExternalReferenceCode()
+		throws Exception {
+
+		ObjectLayout objectLayout =
+			testGraphQLGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectLayoutByExternalReferenceCodeObjectLayoutExternalReferenceCode_addObjectLayout();
+
+		Assert.assertTrue(
+			equals(
+				objectLayout,
+				ObjectLayoutSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"objectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectLayoutByExternalReferenceCodeObjectLayoutExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"objectDefinitionExternalReferenceCode",
+											"\"" +
+												testGraphQLGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectLayoutByExternalReferenceCodeObjectLayoutExternalReferenceCode_getObjectDefinitionExternalReferenceCode(
+													objectLayout) + "\"");
+
+										put(
+											"objectLayoutExternalReferenceCode",
+											"\"" +
+												testGraphQLGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectLayoutByExternalReferenceCodeObjectLayoutExternalReferenceCode_getObjectLayoutExternalReferenceCode() +
+													"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/objectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectLayoutByExternalReferenceCodeObjectLayoutExternalReferenceCode"))));
+	}
+
+	protected String
+			testGraphQLGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectLayoutByExternalReferenceCodeObjectLayoutExternalReferenceCode_getObjectDefinitionExternalReferenceCode(
+				ObjectLayout objectLayout)
+		throws Exception {
+
+		return objectLayout.getObjectDefinitionExternalReferenceCode();
+	}
+
+	protected String
+			testGraphQLGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectLayoutByExternalReferenceCodeObjectLayoutExternalReferenceCode_getObjectLayoutExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectLayoutByExternalReferenceCodeObjectLayoutExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantObjectDefinitionExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+		String irrelevantObjectLayoutExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"objectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectLayoutByExternalReferenceCodeObjectLayoutExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"objectDefinitionExternalReferenceCode",
+									irrelevantObjectDefinitionExternalReferenceCode);
+								put(
+									"objectLayoutExternalReferenceCode",
+									irrelevantObjectLayoutExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected ObjectLayout
+			testGraphQLGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectLayoutByExternalReferenceCodeObjectLayoutExternalReferenceCode_addObjectLayout()
+		throws Exception {
+
+		return testGraphQLObjectLayout_addObjectLayout();
+	}
+
+	@Test
+	public void testPutObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectLayoutByExternalReferenceCodeObjectLayoutExternalReferenceCode()
+		throws Exception {
+
+		ObjectLayout postObjectLayout =
+			testPutObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectLayoutByExternalReferenceCodeObjectLayoutExternalReferenceCode_addObjectLayout();
+
+		ObjectLayout randomObjectLayout = randomObjectLayout();
+
+		ObjectLayout putObjectLayout =
+			objectLayoutResource.
+				putObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectLayoutByExternalReferenceCodeObjectLayoutExternalReferenceCode(
+					testPutObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectLayoutByExternalReferenceCodeObjectLayoutExternalReferenceCode_getObjectDefinitionExternalReferenceCode(
+						postObjectLayout),
+					testPutObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectLayoutByExternalReferenceCodeObjectLayoutExternalReferenceCode_getObjectLayoutExternalReferenceCode(),
+					randomObjectLayout);
+
+		assertEquals(randomObjectLayout, putObjectLayout);
+		assertValid(putObjectLayout);
+
+		ObjectLayout getObjectLayout =
+			objectLayoutResource.
+				getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectLayoutByExternalReferenceCodeObjectLayoutExternalReferenceCode(
+					testPutObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectLayoutByExternalReferenceCodeObjectLayoutExternalReferenceCode_getObjectDefinitionExternalReferenceCode(
+						putObjectLayout),
+					testPutObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectLayoutByExternalReferenceCodeObjectLayoutExternalReferenceCode_getObjectLayoutExternalReferenceCode());
+
+		assertEquals(randomObjectLayout, getObjectLayout);
+		assertValid(getObjectLayout);
+	}
+
+	protected String
+			testPutObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectLayoutByExternalReferenceCodeObjectLayoutExternalReferenceCode_getObjectDefinitionExternalReferenceCode(
+				ObjectLayout objectLayout)
+		throws Exception {
+
+		return objectLayout.getObjectDefinitionExternalReferenceCode();
+	}
+
+	protected String
+			testPutObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectLayoutByExternalReferenceCodeObjectLayoutExternalReferenceCode_getObjectLayoutExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected ObjectLayout
+			testPutObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectLayoutByExternalReferenceCodeObjectLayoutExternalReferenceCode_addObjectLayout()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -814,6 +1001,16 @@ public abstract class BaseObjectLayoutResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (objectLayout.getExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (objectLayout.getName() == null) {
 					valid = false;
@@ -1011,6 +1208,19 @@ public abstract class BaseObjectLayoutResourceTestCase {
 				if (!Objects.deepEquals(
 						objectLayout1.getDefaultObjectLayout(),
 						objectLayout2.getDefaultObjectLayout())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						objectLayout1.getExternalReferenceCode(),
+						objectLayout2.getExternalReferenceCode())) {
 
 					return false;
 				}
@@ -1258,6 +1468,52 @@ public abstract class BaseObjectLayoutResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("externalReferenceCode")) {
+			Object object = objectLayout.getExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1372,6 +1628,8 @@ public abstract class BaseObjectLayoutResourceTestCase {
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				defaultObjectLayout = RandomTestUtil.randomBoolean();
+				externalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				objectDefinitionExternalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());

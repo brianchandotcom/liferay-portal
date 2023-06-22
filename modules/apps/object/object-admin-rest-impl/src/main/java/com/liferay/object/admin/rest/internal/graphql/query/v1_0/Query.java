@@ -352,6 +352,30 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectLayoutByExternalReferenceCodeObjectLayoutExternalReferenceCode(objectDefinitionExternalReferenceCode: ___, objectLayoutExternalReferenceCode: ___){actions, dateCreated, dateModified, defaultObjectLayout, externalReferenceCode, id, name, objectDefinitionExternalReferenceCode, objectDefinitionId, objectLayoutTabs}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public ObjectLayout
+			objectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectLayoutByExternalReferenceCodeObjectLayoutExternalReferenceCode(
+				@GraphQLName("objectDefinitionExternalReferenceCode") String
+					objectDefinitionExternalReferenceCode,
+				@GraphQLName("objectLayoutExternalReferenceCode") String
+					objectLayoutExternalReferenceCode)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_objectLayoutResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectLayoutResource ->
+				objectLayoutResource.
+					getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectLayoutByExternalReferenceCodeObjectLayoutExternalReferenceCode(
+						objectDefinitionExternalReferenceCode,
+						objectLayoutExternalReferenceCode));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectDefinitionObjectLayouts(objectDefinitionId: ___, page: ___, pageSize: ___, search: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
@@ -374,7 +398,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectLayout(objectLayoutId: ___){actions, dateCreated, dateModified, defaultObjectLayout, id, name, objectDefinitionExternalReferenceCode, objectDefinitionId, objectLayoutTabs}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectLayout(objectLayoutId: ___){actions, dateCreated, dateModified, defaultObjectLayout, externalReferenceCode, id, name, objectDefinitionExternalReferenceCode, objectDefinitionId, objectLayoutTabs}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public ObjectLayout objectLayout(

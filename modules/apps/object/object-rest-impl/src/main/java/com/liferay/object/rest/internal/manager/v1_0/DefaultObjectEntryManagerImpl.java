@@ -862,7 +862,7 @@ public class DefaultObjectEntryManagerImpl
 				}
 
 				for (ObjectEntry nestedObjectEntry : nestedObjectEntries) {
-					if (_isFromManySide(
+					if (_isManytoOneObjectRelationship(
 							objectDefinition, objectRelationship,
 							relatedObjectDefinition)) {
 
@@ -883,7 +883,7 @@ public class DefaultObjectEntryManagerImpl
 						relatedObjectDefinition, nestedObjectEntry,
 						relatedObjectDefinition.getScope());
 
-					if (!_isFromManySide(
+					if (!_isManytoOneObjectRelationship(
 							objectDefinition, objectRelationship,
 							relatedObjectDefinition)) {
 
@@ -1184,7 +1184,7 @@ public class DefaultObjectEntryManagerImpl
 		return false;
 	}
 
-	private boolean _isFromManySide(
+	private boolean _isManytoOneObjectRelationship(
 		ObjectDefinition objectDefinition,
 		ObjectRelationship objectRelationship,
 		ObjectDefinition relatedObjectDefinition) {

@@ -6646,6 +6646,7 @@ go</echo>
 				</elseif>
 				<elseif>
 					<or>
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.4.13.u73" />
 						<equals arg1="@{liferay.portal.bundle}" arg2="7.4.13.u75" />
 						<equals arg1="@{liferay.portal.bundle}" arg2="7.4.13.u76" />
 						<equals arg1="@{liferay.portal.bundle}" arg2="7.4.13.u77" />

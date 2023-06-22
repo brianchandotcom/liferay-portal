@@ -21,7 +21,7 @@ import React, {useContext, useState} from 'react';
 import FrontendDataSetContext from '../../FrontendDataSetContext';
 import {triggerAction} from '../../utils/actionItems/index';
 
-function CreationMenu({defaultButton, primaryItems}) {
+function CreationMenu({inEmptyState, primaryItems}) {
 	const frontendDataSetContext = useContext(FrontendDataSetContext);
 
 	const {loadData} = frontendDataSetContext;
@@ -46,7 +46,7 @@ function CreationMenu({defaultButton, primaryItems}) {
 		primaryItems?.length > 0 && (
 			<ul
 				className={classNames('navbar-nav', {
-					'd-inline-flex': defaultButton,
+					'd-inline-flex': inEmptyState,
 				})}
 			>
 				<li className="nav-item">
@@ -55,7 +55,7 @@ function CreationMenu({defaultButton, primaryItems}) {
 							active={active}
 							onActiveChange={setActive}
 							trigger={
-								defaultButton ? (
+								inEmptyState ? (
 									<ClayButton displayType="secondary">
 										{Liferay.Language.get('new')}
 									</ClayButton>
@@ -95,7 +95,7 @@ function CreationMenu({defaultButton, primaryItems}) {
 								))}
 							</ClayDropDown.ItemList>
 						</ClayDropDown>
-					) : defaultButton ? (
+					) : inEmptyState ? (
 						<ClayButton
 							data-tooltip-align={buttonDataTooltipAlign}
 							displayType="secondary"

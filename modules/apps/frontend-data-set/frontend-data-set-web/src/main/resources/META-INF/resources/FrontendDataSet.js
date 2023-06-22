@@ -506,7 +506,7 @@ const FrontendDataSet = ({
 						{creationMenu && (
 							<CreationMenu
 								{...creationMenu}
-								defaultButton
+								inEmptyState
 							/>
 						)}
 					</ClayEmptyState>

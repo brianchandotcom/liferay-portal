@@ -768,7 +768,8 @@ public class FragmentEntryLinkLocalServiceImpl
 						fragmentEntryProcessorKey);
 
 				if (editableFragmentEntryProcessorJSONObject == null) {
-					continue;
+					editableFragmentEntryProcessorJSONObject =
+						_jsonFactory.createJSONObject();
 				}
 
 				JSONObject defaultEditableFragmentEntryProcessorJSONObject =

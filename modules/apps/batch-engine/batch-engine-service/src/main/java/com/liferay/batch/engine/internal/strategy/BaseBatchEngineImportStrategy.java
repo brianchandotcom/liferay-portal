@@ -51,24 +51,30 @@ public abstract class BaseBatchEngineImportStrategy
 		throws Exception {
 
 		for (T item : collection) {
-			for (ImportTaskPreAction importTaskPreAction :
-					importTaskPreActions) {
+			importItem(
+				item,
+				element -> {
+					for (ImportTaskPreAction importTaskPreAction :
+							importTaskPreActions) {
 
-				importTaskPreAction.run(batchEngineImportTask, item);
-			}
+						importTaskPreAction.run(batchEngineImportTask, element);
+					}
 
-			T persistedItem = importItem(item, unsafeFunction);
+					T persistedItem = unsafeFunction.apply(element);
 
-			if (persistedItem == null) {
-				continue;
-			}
+					if (persistedItem == null) {
+						return null;
+					}
 
-			for (ImportTaskPostAction importTaskPostAction :
-					importTaskPostActions) {
+					for (ImportTaskPostAction importTaskPostAction :
+							importTaskPostActions) {
 
-				importTaskPostAction.run(
-					batchEngineImportTask, item, persistedItem);
-			}
+						importTaskPostAction.run(
+							batchEngineImportTask, element, persistedItem);
+					}
+
+					return persistedItem;
+				});
 		}
 	}
 

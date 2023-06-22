@@ -246,7 +246,13 @@ public class DBUpgradeClient {
 
 		if (upgradeFailed || _shell) {
 			try (GogoShellClient gogoShellClient = _initGogoShellClient()) {
-				System.out.println("Connecting to Gogo shell...");
+				String message = "Connecting to Gogo shell ";
+
+				if (upgradeFailed) {
+					message += "because the upgrade failed or is incomplete";
+				}
+
+				System.out.println(message);
 
 				_printHelp();
 

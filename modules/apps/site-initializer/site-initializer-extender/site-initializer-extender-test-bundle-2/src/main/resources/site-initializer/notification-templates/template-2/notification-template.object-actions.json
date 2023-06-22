@@ -1,0 +1,13 @@
+[
+	{
+		"active": true,
+		"externalReferenceCode": "TEST-OBJECT-ACTION-2",
+		"label": {
+			"en_US": "Test Object Action 4"
+		},
+		"name": "TestObjectAction4",
+		"objectActionExecutorKey": "notification",
+		"objectActionTriggerKey": "onAfterUpdate",
+		"objectDefinitionId": "[$OBJECT_DEFINITION_ID:TestObjectDefinition1$]"
+	}
+]

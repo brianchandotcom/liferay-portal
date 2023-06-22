@@ -19,6 +19,7 @@ import com.liferay.fragment.collection.item.selector.criterion.FragmentCollectio
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
+import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -31,7 +32,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -124,8 +125,9 @@ public class FragmentCollectionSiteItemSelectorView
 		FragmentCollectionSiteItemSelectorView.class);
 
 	private static final List<ItemSelectorReturnType>
-		_supportedItemSelectorReturnTypes = Collections.singletonList(
-			new FragmentCollectionItemSelectorReturnType());
+		_supportedItemSelectorReturnTypes = Arrays.asList(
+			new FragmentCollectionItemSelectorReturnType(),
+			new UUIDItemSelectorReturnType());
 
 	@Reference
 	private ItemSelectorViewDescriptorRenderer

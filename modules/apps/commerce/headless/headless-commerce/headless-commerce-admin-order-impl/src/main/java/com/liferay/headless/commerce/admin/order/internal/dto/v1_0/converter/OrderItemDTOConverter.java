@@ -190,9 +190,10 @@ public class OrderItemDTOConverter
 			DTOConverterContext dtoConverterContext)
 		throws Exception {
 
+		CommerceOrderItem commerceOrderItem = null;
+
 		boolean secure = GetterUtil.getBoolean(
 			dtoConverterContext.getAttribute("secure"), true);
-		CommerceOrderItem commerceOrderItem = null;
 
 		if (secure) {
 			commerceOrderItem = _commerceOrderItemService.getCommerceOrderItem(

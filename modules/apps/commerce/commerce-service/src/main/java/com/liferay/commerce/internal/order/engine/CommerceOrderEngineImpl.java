@@ -493,11 +493,9 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 
 		dtoConverterContext.setAttribute("secure", Boolean.FALSE);
 
-		Object commerceOrderObject = commerceOrderDTOConverter.toDTO(
-			dtoConverterContext);
-
 		JSONObject commerceOrderJSONObject = _jsonFactory.createJSONObject(
-			commerceOrderObject.toString());
+			String.valueOf(
+				commerceOrderDTOConverter.toDTO(dtoConverterContext)));
 
 		JSONArray commerceOrderItemsJSONArray = _jsonFactory.createJSONArray();
 
@@ -516,12 +514,11 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 
 			dtoConverterContext.setAttribute("secure", Boolean.FALSE);
 
-			Object commerceOrderItemObject =
-				commerceOrderItemDTOConverter.toDTO(dtoConverterContext);
-
 			JSONObject commerceOrderItemJSONObject =
 				_jsonFactory.createJSONObject(
-					_jsonFactory.looseSerializeDeep(commerceOrderItemObject));
+					_jsonFactory.looseSerializeDeep(
+						commerceOrderItemDTOConverter.toDTO(
+							dtoConverterContext)));
 
 			commerceOrderItemsJSONArray.put(commerceOrderItemJSONObject);
 		}

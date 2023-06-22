@@ -275,11 +275,9 @@ public class SplitCommerceOrderByCatalogObjectActionExecutorImpl
 					newCommerceOrderItem.setCustomerCommerceOrderItemId(
 						commerceOrderItem.getCommerceOrderItemId());
 					newCommerceOrderItem.setParentCommerceOrderItemId(0);
-
 					newCommerceOrderItem.setDiscountManuallyAdjusted(true);
 					newCommerceOrderItem.setManuallyAdjusted(true);
 					newCommerceOrderItem.setPriceManuallyAdjusted(true);
-
 					newCommerceOrderItem.setBookedQuantityId(0);
 
 					_commerceOrderItemLocalService.addCommerceOrderItem(

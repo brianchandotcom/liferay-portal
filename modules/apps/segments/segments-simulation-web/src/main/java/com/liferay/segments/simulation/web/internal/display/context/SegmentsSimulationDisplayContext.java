@@ -279,6 +279,8 @@ public class SegmentsSimulationDisplayContext {
 
 		segmentsExperienceItemSelectorCriterion.
 			setDesiredItemSelectorReturnTypes(new UUIDItemSelectorReturnType());
+		segmentsExperienceItemSelectorCriterion.setPlid(
+			_themeDisplay.getPlid());
 
 		return String.valueOf(
 			_itemSelector.getItemSelectorURL(

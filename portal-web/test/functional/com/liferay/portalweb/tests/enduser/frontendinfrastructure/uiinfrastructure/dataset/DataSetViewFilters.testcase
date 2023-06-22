@@ -113,6 +113,54 @@ definition {
 		}
 	}
 
+	@description = "LPS-183056. Confirm that the filter edit modal is displayed."
+	@priority = 3
+	test CanAssertEditFilterModal {
+		task ("And creating a picklist") {
+			Picklist.addPicklistViaAPI(picklistName = "Custom Picklist");
+
+			Picklist.addPicklistItemViaAPI(
+				itemKey = "bike",
+				itemName = "bike",
+				picklistName = "Custom Picklist");
+		}
+
+		task ("And go to the filters tab inside the View test") {
+			for (var key_filterType : list "creator") {
+				LexiconEntry.gotoAdd();
+
+				Type(
+					locator1 = "DataSet#NEW_FILTER_NAME",
+					value1 = "Test Filter");
+
+				Select(
+					locator1 = "DataSet#FILTER_BY_SELECT",
+					value1 = ${key_filterType});
+			}
+		}
+
+		task ("And Preselected Values: bike") {
+			DataSetAdmin.selectPreselectedValue(
+				key_sortOption = "bike",
+				picklist = "Custom Picklist",
+				preselectType = "bike");
+		}
+
+		task ("When the user try to edit filter") {
+			Click(
+				key_fieldName = "creator",
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
+
+			MenuItem.click(menuItem = "Edit");
+		}
+
+		task ("Then the title of the modal is "Edit creator Filter"") {
+			AssertElementPresent(
+				locator1 = "Portlet#MODAL_TITLE",
+				value1 = "Edit creator Filter");
+		}
+	}
+
 	@description = "LPS-176187. Confirm that the fields Name and Filter by are present in the New Filter modal."
 	@ignore = "true"
 	@priority = 5
@@ -141,6 +189,52 @@ definition {
 			AssertElementNotPresent(
 				key_label = "Source Options",
 				locator1 = "DataSet#LABEL");
+		}
+	}
+
+	@description = "LPS-183056. Confirm that the "Filter by" field is not editable after the filter is created."
+	@priority = 4
+	test CanAssertFilterByIsNotEditable {
+		task ("And creating a picklist") {
+			Picklist.addPicklistViaAPI(picklistName = "Custom Picklist");
+
+			Picklist.addPicklistItemViaAPI(
+				itemKey = "bike",
+				itemName = "bike",
+				picklistName = "Custom Picklist");
+		}
+
+		task ("And go to the filters tab inside the View test and create a new filter") {
+			for (var key_filterType : list "creator") {
+				LexiconEntry.gotoAdd();
+
+				Type(
+					locator1 = "DataSet#NEW_FILTER_NAME",
+					value1 = "TestFilter");
+
+				Select(
+					locator1 = "DataSet#FILTER_BY_SELECT",
+					value1 = ${key_filterType});
+			}
+		}
+
+		task ("And Preselected Values: bike") {
+			DataSetAdmin.selectPreselectedValue(
+				key_sortOption = "bike",
+				picklist = "Custom Picklist",
+				preselectType = "bike");
+		}
+
+		task ("When the user tries to edit the filter") {
+			Click(
+				key_fieldName = "creator",
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
+
+			MenuItem.click(menuItem = "Edit");
+		}
+
+		task ("Then Assert the Filter by field is not editable") {
+			AssertNotEditable(locator1 = "DataSet#FILTER_BY_SELECT");
 		}
 	}
 
@@ -196,6 +290,142 @@ definition {
 			AssertTextEquals.assertText(
 				locator1 = "Message#EMPTY_STATE_TEXT",
 				value1 = "Start creating a Filter to display specific Data.");
+		}
+	}
+
+	@description = "LPS-183056. Confirm that the preselect option shows Ana as the value."
+	@priority = 5
+	test CanAssertPreselectShowsAna {
+		task ("And creating two picklist Cars and Names, with two items Civic and Ana") {
+			Picklist.addPicklistViaAPI(picklistName = "Cars");
+
+			Picklist.addPicklistItemViaAPI(
+				itemKey = "Civic",
+				itemName = "Civic",
+				picklistName = "Cars");
+
+			Picklist.addPicklistViaAPI(picklistName = "Names");
+
+			Picklist.addPicklistItemViaAPI(
+				itemKey = "Ana",
+				itemName = "Ana",
+				picklistName = "Names");
+		}
+
+		task ("And go to the filters tab inside the View test") {
+			for (var key_filterType : list "creator") {
+				LexiconEntry.gotoAdd();
+
+				Type(
+					locator1 = "DataSet#NEW_FILTER_NAME",
+					value1 = "Test Filter");
+
+				Select(
+					locator1 = "DataSet#FILTER_BY_SELECT",
+					value1 = ${key_filterType});
+			}
+		}
+
+		task ("And Preselected Values Civic") {
+			DataSetAdmin.selectPreselectedValue(
+				key_sortOption = "Civic",
+				picklist = "Cars",
+				preselectType = "Civic");
+		}
+
+		task ("And go to filter edit page") {
+			Click(
+				key_fieldName = "creator",
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
+
+			MenuItem.click(menuItem = "Edit");
+		}
+
+		task ("And Change the Source Options for Names, Preselected Values to Ana") {
+			DataSetAdmin.selectPreselectedValue(
+				key_sortOption = "Ana",
+				picklist = "Names",
+				preselectType = "Ana");
+		}
+
+		task ("And go to filter edit page again") {
+			Click(
+				key_fieldName = "creator",
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
+
+			MenuItem.click(menuItem = "Edit");
+		}
+
+		task ("Then Confirm that the Preselected Values field shows Ana, and not Civic") {
+			AssertElementPresent(
+				key_type = "Ana",
+				locator1 = "DataSet#FILTER_SELECTION");
+
+			AssertElementNotPresent(
+				key_type = "Civic",
+				locator1 = "DataSet#FILTER_SELECTION");
+		}
+	}
+
+	@description = "LPS-183056. Confirm that the "Multiple" and "Include" radio buttons are deselected."
+	@priority = 5
+	test CanAssertRadioButtonsIsDeselected {
+		task ("And creating a picklist") {
+			Picklist.addPicklistViaAPI(picklistName = "Custom Picklist");
+
+			Picklist.addPicklistItemViaAPI(
+				itemKey = "bike",
+				itemName = "bike",
+				picklistName = "Custom Picklist");
+		}
+
+		task ("And go to the filters tab inside the View test and create a new filter") {
+			for (var key_filterType : list "creator") {
+				LexiconEntry.gotoAdd();
+
+				Type(
+					locator1 = "DataSet#NEW_FILTER_NAME",
+					value1 = "TestFilter");
+
+				Select(
+					locator1 = "DataSet#FILTER_BY_SELECT",
+					value1 = ${key_filterType});
+			}
+		}
+
+		task ("And Preselected Values: bike") {
+			DataSetAdmin.selectPreselectedValue(
+				key_sortOption = "bike",
+				picklist = "Custom Picklist",
+				preselectType = "bike");
+		}
+
+		task ("When the user tries to edit the filter") {
+			Click(
+				key_fieldName = "creator",
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
+
+			MenuItem.click(menuItem = "Edit");
+		}
+
+		task ("And Select the option single and Select the option Filter Mode exclude") {
+			Click.clickAtNotVisible(
+				key_radioOption = "Single",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+
+			Click.clickAtNotVisible(
+				key_radioOption = "Exclude",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+		}
+
+		task ("Then Confirm the "multiple" option is not selected And Confirm the "Include" option is not selected") {
+			AssertNotChecked.assertNotCheckedNotVisible(
+				key_radioOption = "Multiple",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+
+			AssertNotChecked.assertNotCheckedNotVisible(
+				key_radioOption = "Include",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
 		}
 	}
 
@@ -291,6 +521,79 @@ definition {
 		}
 	}
 
+	@description = "LPS-183056. Confirm the change of the Source Options from Cars to Names."
+	@priority = 5
+	test CanAssertSourceOptionsIsNames {
+		task ("And creating two picklist Cars and Names, with two items Civic and Ana") {
+			Picklist.addPicklistViaAPI(picklistName = "Cars");
+
+			Picklist.addPicklistItemViaAPI(
+				itemKey = "Civic",
+				itemName = "Civic",
+				picklistName = "Cars");
+
+			Picklist.addPicklistViaAPI(picklistName = "Names");
+
+			Picklist.addPicklistItemViaAPI(
+				itemKey = "Ana",
+				itemName = "Ana",
+				picklistName = "Names");
+		}
+
+		task ("And go to the filters tab inside the View test") {
+			for (var key_filterType : list "creator") {
+				LexiconEntry.gotoAdd();
+
+				Type(
+					locator1 = "DataSet#NEW_FILTER_NAME",
+					value1 = "Test Filter");
+
+				Select(
+					locator1 = "DataSet#FILTER_BY_SELECT",
+					value1 = ${key_filterType});
+			}
+		}
+
+		task ("And Preselected Values Civic") {
+			DataSetAdmin.selectPreselectedValue(
+				key_sortOption = "Civic",
+				picklist = "Cars",
+				preselectType = "Civic");
+		}
+
+		task ("When go to filter edit page") {
+			Click(
+				key_fieldName = "creator",
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
+
+			MenuItem.click(menuItem = "Edit");
+		}
+
+		task ("And Change the Source Options for Names and click Save") {
+			Select(
+				locator1 = "DataSet#SOURCE_OPTIONS_SELECT",
+				value1 = "Names");
+
+			Click(
+				key_text = "Save",
+				locator1 = "CP2ActivationKeys#KEY_DEACTIVATION_TERMS");
+		}
+
+		task ("And go to filter edit page again") {
+			Click(
+				key_fieldName = "creator",
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
+
+			MenuItem.click(menuItem = "Edit");
+		}
+
+		task ("Then Confirm that the Source Options field shows the Name") {
+			AssertElementPresent(
+				locator1 = "DataSet#SOURCE_OPTIONS_SELECT",
+				value1 = "Names");
+		}
+	}
+
 	@description = "LPS-176187. Confirm the text message in the Source Option Tooltip."
 	@ignore = "true"
 	@priority = 3
@@ -378,6 +681,130 @@ definition {
 			AssertElementNotPresent(
 				key_modalTitle = "creator",
 				locator1 = "DataSet#FILTERS_ENTRY");
+		}
+	}
+
+	@description = "LPS-183056. Confirm that the filter name has been changed ."
+	@priority = 5
+	test CanAssertTheNameFieldIsChanged {
+		task ("And creating a picklist") {
+			Picklist.addPicklistViaAPI(picklistName = "Custom Picklist");
+
+			Picklist.addPicklistItemViaAPI(
+				itemKey = "bike",
+				itemName = "bike",
+				picklistName = "Custom Picklist");
+		}
+
+		task ("And go to the filters tab inside the View test and create new Filter") {
+			for (var key_filterType : list "creator") {
+				LexiconEntry.gotoAdd();
+
+				Type(
+					locator1 = "DataSet#NEW_FILTER_NAME",
+					value1 = "TestFilter");
+
+				Select(
+					locator1 = "DataSet#FILTER_BY_SELECT",
+					value1 = ${key_filterType});
+			}
+		}
+
+		task ("And Preselected Values: bike") {
+			DataSetAdmin.selectPreselectedValue(
+				key_sortOption = "bike",
+				picklist = "Custom Picklist",
+				preselectType = "bike");
+		}
+
+		task ("When the user tries to edit the filter") {
+			Click(
+				key_fieldName = "creator",
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
+
+			MenuItem.click(menuItem = "Edit");
+		}
+
+		task ("And Change the name for Filter test modified, click save") {
+			Type(
+				locator1 = "DataSet#NEW_FILTER_NAME",
+				value1 = "Test Filter Edited");
+
+			Click(
+				key_text = "Save",
+				locator1 = "CP2ActivationKeys#KEY_DEACTIVATION_TERMS");
+		}
+
+		task ("Then confirm that the filter name has changed") {
+			AssertElementPresent(
+				chosenFilter = "Test Filter Edited",
+				key_tableColumn = 1,
+				key_tableRow = 1,
+				locator1 = "DataSet#FILTER_TABLE_CELL");
+		}
+	}
+
+	@description = "LPS-183056. Confirm that there is only one option of car in Custom Picklist / Preselected."
+	@priority = 4
+	test CanAssertThereIsOnlyTheCarOption {
+		task ("And creating a picklist") {
+			Picklist.addPicklistViaAPI(picklistName = "Custom Picklist");
+
+			Picklist.addPicklistItemViaAPI(
+				itemKey = "car",
+				itemName = "car",
+				picklistName = "Custom Picklist");
+
+			Picklist.addPicklistItemViaAPI(
+				itemKey = "bike",
+				itemName = "bike",
+				picklistName = "Custom Picklist");
+		}
+
+		task ("And go to the filters tab inside the View test and create Filter") {
+			for (var key_filterType : list "creator") {
+				LexiconEntry.gotoAdd();
+
+				Type(
+					locator1 = "DataSet#NEW_FILTER_NAME",
+					value1 = "TestFilter");
+
+				Select(
+					locator1 = "DataSet#FILTER_BY_SELECT",
+					value1 = ${key_filterType});
+			}
+		}
+
+		task ("And Preselected Values: bike") {
+			DataSetAdmin.selectPreselectedValue(
+				key_sortOption = "bike",
+				picklist = "Custom Picklist",
+				preselectType = "bike");
+		}
+
+		task ("When the user tries to edit the filter") {
+			Click(
+				key_fieldName = "creator",
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
+
+			MenuItem.click(menuItem = "Edit");
+		}
+
+		task ("And remove the bike option and Add Car from the pre-selected values field") {
+			Click(
+				ariaLabel = "Remove bike",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
+
+			DataSetAdmin.selectPreselectedValue(
+				key_sortOption = "car",
+				picklist = "Custom Picklist",
+				preselectType = "car");
+		}
+
+		task ("Then the changes are saved and a success message is displayed") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#SUCCESS",
+				value1 = "Your request completed successfully.");
 		}
 	}
 
@@ -470,6 +897,124 @@ definition {
 			DataSetAdmin.assertFieldsOnTable(
 				key_position = 1,
 				keyName = "from");
+		}
+	}
+
+	@description = "LPS-183056. Confirm the cancellation of the edit with the Cancel button."
+	@priority = 3
+	test CanCancelEditOnCancelButton {
+		task ("And creating a picklist, and an item to the created picklist "bike"") {
+			Picklist.addPicklistViaAPI(picklistName = "Custom Picklist");
+
+			Picklist.addPicklistItemViaAPI(
+				itemKey = "bike",
+				itemName = "bike",
+				picklistName = "Custom Picklist");
+		}
+
+		task ("And go to the filters tab inside the View test") {
+			for (var key_filterType : list "creator") {
+				LexiconEntry.gotoAdd();
+
+				Type(
+					locator1 = "DataSet#NEW_FILTER_NAME",
+					value1 = "Test Filter");
+
+				Select(
+					locator1 = "DataSet#FILTER_BY_SELECT",
+					value1 = ${key_filterType});
+			}
+		}
+
+		task ("Preselected Values: bike") {
+			DataSetAdmin.selectPreselectedValue(
+				key_sortOption = "bike",
+				picklist = "Custom Picklist",
+				preselectType = "bike");
+		}
+
+		task ("When the user tries to edit the filter, Change the name for Test Filter Edited") {
+			Click(
+				key_fieldName = "creator",
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
+
+			MenuItem.click(menuItem = "Edit");
+
+			Type(
+				locator1 = "DataSet#NEW_FILTER_NAME",
+				value1 = "Test Filter Edited");
+		}
+
+		task ("And Clicking Cancel") {
+			Button.clickCancel();
+		}
+
+		task ("Then confirm that the filter name has no changed") {
+			AssertElementPresent(
+				chosenFilter = "Test Filter",
+				key_tableColumn = 1,
+				key_tableRow = 1,
+				locator1 = "DataSet#FILTER_TABLE_CELL");
+		}
+	}
+
+	@description = "LPS-183056. Confirm the cancellation of the edit with the Close button."
+	@priority = 2
+	test CanCancelEditOnCloseButton {
+		task ("And creating a picklist") {
+			Picklist.addPicklistViaAPI(picklistName = "Custom Picklist");
+
+			Picklist.addPicklistItemViaAPI(
+				itemKey = "bike",
+				itemName = "bike",
+				picklistName = "Custom Picklist");
+		}
+
+		task ("And go to the filters tab inside the View test and create a Filter") {
+			for (var key_filterType : list "creator") {
+				LexiconEntry.gotoAdd();
+
+				Type(
+					locator1 = "DataSet#NEW_FILTER_NAME",
+					value1 = "Test Filter");
+
+				Select(
+					locator1 = "DataSet#FILTER_BY_SELECT",
+					value1 = ${key_filterType});
+			}
+		}
+
+		task ("And Preselected Values: bike") {
+			DataSetAdmin.selectPreselectedValue(
+				key_sortOption = "bike",
+				picklist = "Custom Picklist",
+				preselectType = "bike");
+		}
+
+		task ("When the user tries to edit the filter, the name for Test Filter Edited") {
+			Click(
+				key_fieldName = "creator",
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
+
+			MenuItem.click(menuItem = "Edit");
+
+			Type(
+				locator1 = "DataSet#NEW_FILTER_NAME",
+				value1 = "Test Filter Edited");
+		}
+
+		task ("And Clicking Close button") {
+			Click(
+				key_modalTitle = "Edit Test Filter Filter",
+				locator1 = "Button#CLOSE_MODAL");
+		}
+
+		task ("Then confirm that the filter name has no changed") {
+			AssertElementPresent(
+				chosenFilter = "Test Filter",
+				key_tableColumn = 1,
+				key_tableRow = 1,
+				locator1 = "DataSet#FILTER_TABLE_CELL");
 		}
 	}
 
@@ -760,6 +1305,68 @@ definition {
 		}
 
 		task ("Then the corresponding result is displayed.") {
+			AssertElementPresent(
+				chosenFilter = "creator",
+				key_tableColumn = 1,
+				key_tableRow = 1,
+				locator1 = "DataSet#FILTER_TABLE_CELL");
+		}
+	}
+
+	@description = "LPS-183056. Confirm that the Name field cannot be empty."
+	@priority = 3
+	test TheNameFieldCannotBeEmpty {
+		task ("And creating a picklist") {
+			Picklist.addPicklistViaAPI(picklistName = "Custom Picklist");
+
+			Picklist.addPicklistItemViaAPI(
+				itemKey = "bike",
+				itemName = "bike",
+				picklistName = "Custom Picklist");
+		}
+
+		task ("And go to the filters tab inside the View test") {
+			for (var key_filterType : list "creator") {
+				LexiconEntry.gotoAdd();
+
+				Type(
+					locator1 = "DataSet#NEW_FILTER_NAME",
+					value1 = "TestFilter");
+
+				Select(
+					locator1 = "DataSet#FILTER_BY_SELECT",
+					value1 = ${key_filterType});
+			}
+		}
+
+		task ("And Preselected Values: bike") {
+			DataSetAdmin.selectPreselectedValue(
+				key_sortOption = "bike",
+				picklist = "Custom Picklist",
+				preselectType = "bike");
+		}
+
+		task ("When the user tries to edit the filter") {
+			Click(
+				key_fieldName = "creator",
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
+
+			MenuItem.click(menuItem = "Edit");
+		}
+
+		task ("And leaves the name field blank and saved") {
+			DoubleClick(locator1 = "DataSet#NEW_FILTER_NAME");
+
+			KeyPress(
+				locator1 = "DataSet#NEW_FILTER_NAME",
+				value1 = "\BACK_SPACE");
+
+			Click(
+				key_text = "Save",
+				locator1 = "CP2ActivationKeys#KEY_DEACTIVATION_TERMS");
+		}
+
+		task ("Then the filter's name is changed, receiving the value "creator"") {
 			AssertElementPresent(
 				chosenFilter = "creator",
 				key_tableColumn = 1,

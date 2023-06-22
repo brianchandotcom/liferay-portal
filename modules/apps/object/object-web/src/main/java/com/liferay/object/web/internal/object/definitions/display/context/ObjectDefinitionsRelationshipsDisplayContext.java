@@ -34,9 +34,11 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Arrays;
@@ -208,6 +210,18 @@ public class ObjectDefinitionsRelationshipsDisplayContext
 			systemObjectDefinitionManager.getJaxRsApplicationDescriptor();
 
 		return jaxRsApplicationDescriptor.getRESTContextPath();
+	}
+
+	public boolean isAddressSystemObjectDefinition() {
+		ObjectDefinition objectDefinition = getObjectDefinition();
+
+		if (StringUtil.equals(
+				objectDefinition.getClassName(), Address.class.getName())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isFFOneToOneRelationshipConfigurationEnabled() {

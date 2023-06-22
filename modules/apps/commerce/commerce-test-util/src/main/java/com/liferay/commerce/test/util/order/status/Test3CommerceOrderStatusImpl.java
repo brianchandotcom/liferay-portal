@@ -44,7 +44,8 @@ public class Test3CommerceOrderStatusImpl implements CommerceOrderStatus {
 	public static final int PRIORITY = 54;
 
 	@Override
-	public CommerceOrder doTransition(CommerceOrder commerceOrder, long userId)
+	public CommerceOrder doTransition(
+			CommerceOrder commerceOrder, long userId, boolean secure)
 		throws PortalException {
 
 		commerceOrder.setOrderStatus(KEY);

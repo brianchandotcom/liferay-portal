@@ -34,6 +34,8 @@ public class ObjectValidationRuleModelDocumentContributor
 			_localization.populateLocalizationMap(
 				objectValidationRule.getNameMap(),
 				objectValidationRule.getDefaultLanguageId(), 0));
+		document.addLocalizedKeyword(
+			"localized_name", objectValidationRule.getNameMap(), true, true);
 		document.addKeyword(
 			"objectDefinitionId", objectValidationRule.getObjectDefinitionId());
 		document.remove(Field.USER_NAME);

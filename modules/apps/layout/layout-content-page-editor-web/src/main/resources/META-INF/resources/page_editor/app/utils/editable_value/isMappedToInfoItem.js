@@ -14,6 +14,9 @@
 
 export default function isMappedToInfoItem(editable) {
 	return (
-		editable && editable.classNameId && editable.classPK && editable.fieldId
+		editable &&
+		editable.classNameId &&
+		(editable.classPK || editable.externalReferenceCode) &&
+		editable.fieldId
 	);
 }

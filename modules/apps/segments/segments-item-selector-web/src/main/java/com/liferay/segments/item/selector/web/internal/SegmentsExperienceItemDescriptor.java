@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.model.SegmentsExperience;
 
+import java.util.Date;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -51,6 +52,11 @@ public class SegmentsExperienceItemDescriptor
 	}
 
 	@Override
+	public Date getModifiedDate() {
+		return _segmentsExperience.getModifiedDate();
+	}
+
+	@Override
 	public String getPayload() {
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_httpServletRequest.getAttribute(
@@ -72,6 +78,16 @@ public class SegmentsExperienceItemDescriptor
 	@Override
 	public String getTitle(Locale locale) {
 		return HtmlUtil.escape(_segmentsExperience.getName(locale));
+	}
+
+	@Override
+	public long getUserId() {
+		return _segmentsExperience.getUserId();
+	}
+
+	@Override
+	public String getUserName() {
+		return _segmentsExperience.getUserName();
 	}
 
 	private final HttpServletRequest _httpServletRequest;

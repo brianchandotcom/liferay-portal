@@ -63,7 +63,7 @@ exports[`AssociatedSegmentsCard should render 1`] = `
               class="autofit-col"
             >
               <div
-                class="sticker sticker-root sticker-static sticker-rounded sticker-light"
+                class="sticker sticker-root sticker-static sticker-rounded sticker-primary"
               >
                 <svg
                   class="lexicon-icon lexicon-icon-individual-dynamic-segment icon-root"
@@ -104,7 +104,7 @@ exports[`AssociatedSegmentsCard should render 1`] = `
               class="autofit-col"
             >
               <div
-                class="sticker sticker-root sticker-static sticker-rounded sticker-light"
+                class="sticker sticker-root sticker-static sticker-rounded sticker-primary"
               >
                 <svg
                   class="lexicon-icon lexicon-icon-individual-dynamic-segment icon-root"

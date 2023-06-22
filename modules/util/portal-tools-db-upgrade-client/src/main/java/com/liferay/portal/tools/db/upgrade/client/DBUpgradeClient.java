@@ -244,8 +244,8 @@ public class DBUpgradeClient {
 			ioException.printStackTrace();
 		}
 
-		try (GogoShellClient gogoShellClient = _initGogoShellClient()) {
-			if (upgradeFailed || _shell) {
+		if (upgradeFailed || _shell) {
+			try (GogoShellClient gogoShellClient = _initGogoShellClient()) {
 				System.out.println("Connecting to Gogo shell...");
 
 				_printHelp();
@@ -266,8 +266,8 @@ public class DBUpgradeClient {
 					line = _consoleReader.readLine();
 				}
 			}
-		}
-		catch (Exception exception) {
+			catch (Exception exception) {
+			}
 		}
 
 		_close(process.getErrorStream());

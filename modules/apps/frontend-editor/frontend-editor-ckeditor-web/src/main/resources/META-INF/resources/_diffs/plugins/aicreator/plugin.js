@@ -50,12 +50,19 @@
 						}
 					);
 
+					const url = new URL(editor.config.aiCreatorOpenAIURL);
+
+					url.searchParams.set(
+						`${editor.config.aiCreatorPortletNamespace}languageId`,
+						editor.config.contentsLanguage
+					);
+
 					Liferay.Util.openModal({
 						height: '550px',
 						onClose: () => closeModalHandler.detach(),
 						size: 'lg',
 						title: Liferay.Language.get('ai-creator'),
-						url: editor.config.aiCreatorOpenAIURL,
+						url: url.toString(),
 					});
 				},
 			});

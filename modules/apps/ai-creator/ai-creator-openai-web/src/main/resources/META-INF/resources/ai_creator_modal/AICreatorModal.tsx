@@ -72,8 +72,16 @@ export default function AICreatorModal({
 			});
 		};
 
+		const formData = new FormData(event.target as HTMLFormElement);
+		const url = new URL(window.location.href);
+
+		formData.append(
+			`${portletNamespace}languageId`,
+			url.searchParams.get(`${portletNamespace}languageId`)!
+		);
+
 		fetch(getCompletionURL, {
-			body: new FormData(event.target as HTMLFormElement),
+			body: formData,
 			method: 'POST',
 		})
 			.then((response) => response.json())

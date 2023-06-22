@@ -31,44 +31,6 @@ portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
 
 renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
-
-VerticalNavItemList verticalNavItemList = new VerticalNavItemList();
-
-verticalNavItemList.add(
-	verticalNavItem -> {
-		String name = LanguageUtil.get(request, "basic-templates");
-
-		verticalNavItem.setHref(layoutsAdminDisplayContext.getSelectLayoutPageTemplateEntryURL(0, layoutsAdminDisplayContext.getSelPlid(), "basic-templates", layoutsAdminDisplayContext.isPrivateLayout()));
-		verticalNavItem.setLabel(name);
-		verticalNavItem.setId(name);
-		verticalNavItem.setActive(selectLayoutPageTemplateEntryDisplayContext.isBasicTemplates());
-	});
-
-verticalNavItemList.add(
-	verticalNavItem -> {
-		String name = LanguageUtil.get(request, "basic-templates");
-
-		verticalNavItem.setHref(layoutsAdminDisplayContext.getSelectLayoutPageTemplateEntryURL(0, layoutsAdminDisplayContext.getSelPlid(), "global-templates", layoutsAdminDisplayContext.isPrivateLayout()));
-		verticalNavItem.setLabel(name);
-		verticalNavItem.setId(name);
-		verticalNavItem.setActive(selectLayoutPageTemplateEntryDisplayContext.isGlobalTemplates());
-	});
-
-for (LayoutPageTemplateCollection layoutPageTemplateCollection : LayoutPageTemplateCollectionServiceUtil.getLayoutPageTemplateCollections(scopeGroupId)) {
-	int layoutPageTemplateEntriesCount = LayoutPageTemplateEntryServiceUtil.getLayoutPageTemplateEntriesCount(themeDisplay.getScopeGroupId(), layoutPageTemplateCollection.getLayoutPageTemplateCollectionId(), WorkflowConstants.STATUS_APPROVED);
-
-	if (layoutPageTemplateEntriesCount > 0) {
-		String name = HtmlUtil.escape(layoutPageTemplateCollection.getName());
-
-		verticalNavItemList.add(
-			verticalNavItem -> {
-				verticalNavItem.setHref(layoutsAdminDisplayContext.getSelectLayoutPageTemplateEntryURL(layoutPageTemplateCollection.getLayoutPageTemplateCollectionId(), layoutsAdminDisplayContext.getSelPlid(), layoutsAdminDisplayContext.isPrivateLayout()));
-				verticalNavItem.setLabel(name);
-				verticalNavItem.setId(name);
-				verticalNavItem.setActive(selectLayoutPageTemplateEntryDisplayContext.getLayoutPageTemplateCollectionId() == layoutPageTemplateCollection.getLayoutPageTemplateCollectionId());
-			});
-	}
-}
 %>
 
 <clay:container-fluid
@@ -84,7 +46,7 @@ for (LayoutPageTemplateCollection layoutPageTemplateCollection : LayoutPageTempl
 			</div>
 
 			<clay:vertical-nav
-				verticalNavItems="<%= verticalNavItemList %>"
+				verticalNavItems="<%= layoutsAdminDisplayContext.getVerticalNavItemList(selectLayoutPageTemplateEntryDisplayContext) %>"
 			/>
 		</clay:col>
 

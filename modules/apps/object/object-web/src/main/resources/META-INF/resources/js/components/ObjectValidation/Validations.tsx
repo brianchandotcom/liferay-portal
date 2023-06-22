@@ -122,7 +122,7 @@ export default function Validations({
 							fieldName: 'name',
 							label: Liferay.Language.get('label'),
 							localizeLabel: true,
-							sortable: false,
+							sortable: true,
 						},
 						{
 							expand: false,

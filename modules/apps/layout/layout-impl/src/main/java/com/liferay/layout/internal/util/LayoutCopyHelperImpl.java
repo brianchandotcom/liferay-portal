@@ -217,6 +217,11 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 		try {
 			CopyLayoutThreadLocal.setCopyLayout(true);
 
+			if (currentServiceContext == null) {
+				ServiceContextThreadLocal.pushServiceContext(
+					new ServiceContext());
+			}
+
 			return TransactionInvokerUtil.invoke(
 				_transactionConfig,
 				new CopyLayoutCallable(
@@ -875,14 +880,6 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 
 		@Override
 		public Layout call() throws Exception {
-			ServiceContext serviceContext =
-				ServiceContextThreadLocal.getServiceContext();
-
-			if (serviceContext == null) {
-				ServiceContextThreadLocal.pushServiceContext(
-					new ServiceContext());
-			}
-
 			if (Objects.equals(
 					_sourceLayout.getType(), LayoutConstants.TYPE_PORTLET)) {
 

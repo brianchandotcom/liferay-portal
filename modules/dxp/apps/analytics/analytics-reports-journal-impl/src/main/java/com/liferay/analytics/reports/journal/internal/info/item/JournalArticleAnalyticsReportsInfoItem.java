@@ -15,7 +15,6 @@
 package com.liferay.analytics.reports.journal.internal.info.item;
 
 import com.liferay.analytics.reports.info.item.AnalyticsReportsInfoItem;
-import com.liferay.analytics.reports.layout.display.page.info.item.LayoutDisplayPageObjectProviderAnalyticsReportsInfoItem;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
@@ -171,8 +170,10 @@ public class JournalArticleAnalyticsReportsInfoItem
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;
 
-	@Reference
-	private LayoutDisplayPageObjectProviderAnalyticsReportsInfoItem
+	@Reference(
+		target = "(model.class.name=com.liferay.layout.display.page.LayoutDisplayPageObjectProvider)"
+	)
+	private AnalyticsReportsInfoItem<LayoutDisplayPageObjectProvider>
 		_layoutDisplayPageObjectProviderAnalyticsReportsInfoItem;
 
 	@Reference

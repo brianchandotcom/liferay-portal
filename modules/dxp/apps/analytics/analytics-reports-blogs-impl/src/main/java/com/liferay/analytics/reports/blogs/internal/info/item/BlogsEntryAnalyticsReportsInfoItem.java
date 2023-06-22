@@ -15,7 +15,6 @@
 package com.liferay.analytics.reports.blogs.internal.info.item;
 
 import com.liferay.analytics.reports.info.item.AnalyticsReportsInfoItem;
-import com.liferay.analytics.reports.layout.display.page.info.item.LayoutDisplayPageObjectProviderAnalyticsReportsInfoItem;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemFieldValues;
@@ -141,8 +140,10 @@ public class BlogsEntryAnalyticsReportsInfoItem
 	@Reference
 	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
-	@Reference
-	private LayoutDisplayPageObjectProviderAnalyticsReportsInfoItem
+	@Reference(
+		target = "(model.class.name=com.liferay.layout.display.page.LayoutDisplayPageObjectProvider)"
+	)
+	private AnalyticsReportsInfoItem<LayoutDisplayPageObjectProvider>
 		_layoutDisplayPageObjectProviderAnalyticsReportsInfoItem;
 
 	@Reference

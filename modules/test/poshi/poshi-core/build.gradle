@@ -1,5 +1,5 @@
 dependencies {
-	api group: "com.google.guava", name: "guava", version: "31.0.1-jre"
+	api group: "com.google.guava", name: "guava", version: "32.0.1-jre"
 	api group: "commons-io", name: "commons-io", version: "2.11.0"
 	api group: "commons-lang", name: "commons-lang", version: "2.6"
 	api group: "org.apache.commons", name: "commons-lang3", version: "3.0"

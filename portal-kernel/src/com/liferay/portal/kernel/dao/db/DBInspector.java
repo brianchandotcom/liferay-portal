@@ -70,21 +70,7 @@ public class DBInspector {
 	}
 
 	public ResultSet getColumnsResultSet(String tableName) throws SQLException {
-		return getColumnsResultSet(tableName, null);
-	}
-
-	public ResultSet getColumnsResultSet(String tableName, String columnName)
-		throws SQLException {
-
-		DatabaseMetaData databaseMetaData = _connection.getMetaData();
-
-		if (columnName != null) {
-			columnName = normalizeName(columnName, databaseMetaData);
-		}
-
-		return databaseMetaData.getColumns(
-			getCatalog(), getSchema(),
-			normalizeName(tableName, databaseMetaData), columnName);
+		return _getColumnsResultSet(tableName, null);
 	}
 
 	public String getSchema() {
@@ -122,7 +108,9 @@ public class DBInspector {
 	public boolean hasColumn(String tableName, String columnName)
 		throws Exception {
 
-		try (ResultSet resultSet = getColumnsResultSet(tableName, columnName)) {
+		try (ResultSet resultSet = _getColumnsResultSet(
+				tableName, columnName)) {
+
 			if (!resultSet.next()) {
 				return false;
 			}
@@ -140,7 +128,9 @@ public class DBInspector {
 			String tableName, String columnName, String columnType)
 		throws Exception {
 
-		try (ResultSet resultSet = getColumnsResultSet(tableName, columnName)) {
+		try (ResultSet resultSet = _getColumnsResultSet(
+				tableName, columnName)) {
+
 			if (!resultSet.next()) {
 				return false;
 			}
@@ -278,7 +268,9 @@ public class DBInspector {
 	public boolean isNullable(String tableName, String columnName)
 		throws SQLException {
 
-		try (ResultSet resultSet = getColumnsResultSet(tableName, columnName)) {
+		try (ResultSet resultSet = _getColumnsResultSet(
+				tableName, columnName)) {
+
 			if (!resultSet.next()) {
 				throw new SQLException(
 					StringBundler.concat(
@@ -376,6 +368,20 @@ public class DBInspector {
 		}
 
 		return DB.SQL_SIZE_NONE;
+	}
+
+	private ResultSet _getColumnsResultSet(String tableName, String columnName)
+		throws SQLException {
+
+		DatabaseMetaData databaseMetaData = _connection.getMetaData();
+
+		if (columnName != null) {
+			columnName = normalizeName(columnName, databaseMetaData);
+		}
+
+		return databaseMetaData.getColumns(
+			getCatalog(), getSchema(),
+			normalizeName(tableName, databaseMetaData), columnName);
 	}
 
 	private boolean _hasTable(String tableName) throws Exception {

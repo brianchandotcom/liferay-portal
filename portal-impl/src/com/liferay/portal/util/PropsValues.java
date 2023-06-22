@@ -329,11 +329,6 @@ public class PropsValues {
 	public static final String CDN_HOST_HTTPS = PropsUtil.get(
 		PropsKeys.CDN_HOST_HTTPS);
 
-	public static int CHANGE_TRACKING_SQL_TRANSFORMER_CACHE_SIZE =
-		GetterUtil.getInteger(
-			PropsUtil.get(
-				PropsKeys.CHANGE_TRACKING_SQL_TRANSFORMER_CACHE_SIZE));
-
 	public static final boolean CLUSTER_LINK_ENABLED = GetterUtil.getBoolean(
 		PropsUtil.get(PropsKeys.CLUSTER_LINK_ENABLED));
 

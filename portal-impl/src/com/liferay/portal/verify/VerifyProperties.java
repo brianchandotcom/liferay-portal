@@ -1697,6 +1697,7 @@ public class VerifyProperties {
 		"captcha.engine.simplecaptcha.noise.producers",
 		"captcha.engine.simplecaptcha.text.producers",
 		"captcha.engine.simplecaptcha.word.renderers", "cas.validate.url",
+		"change.tracking.sql.transformer.cache.size",
 		"cluster.executor.heartbeat.interval",
 		"cluster.link.node.bootup.response.timeout",
 		"com.liferay.filters.doubleclick.DoubleClickFilter",

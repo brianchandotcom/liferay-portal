@@ -12,8 +12,6 @@
  * details.
  */
 
-/// <reference types="react" />
-
 import './FDSViewItemSelector.scss';
 declare const FDSViewItemSelector: ({
 	className,

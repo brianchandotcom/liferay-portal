@@ -24,7 +24,8 @@ import java.util.Locale;
  */
 public interface CommerceOrderStatus {
 
-	public CommerceOrder doTransition(CommerceOrder commerceOrder, long userId)
+	public CommerceOrder doTransition(
+			CommerceOrder commerceOrder, long userId, boolean secure)
 		throws PortalException;
 
 	public int getKey();

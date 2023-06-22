@@ -64,6 +64,21 @@ public class ObjectLayoutResourceImpl
 	}
 
 	@Override
+	public ObjectLayout
+			getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectLayoutByExternalReferenceCodeObjectLayoutExternalReferenceCode(
+				String objectDefinitionExternalReferenceCode,
+				String objectLayoutExternalReferenceCode)
+		throws Exception {
+
+		return _toObjectLayout(
+			_objectLayoutService.
+				fetchObjectLayoutByObjectDefinitionExternalReferenceCodeObjectLayoutExternalReferenceCode(
+					objectDefinitionExternalReferenceCode,
+					objectLayoutExternalReferenceCode,
+					contextCompany.getCompanyId()));
+	}
+
+	@Override
 	public Page<ObjectLayout>
 			getObjectDefinitionByExternalReferenceCodeObjectLayoutsPage(
 				String externalReferenceCode, String search,
@@ -160,13 +175,41 @@ public class ObjectLayoutResourceImpl
 
 		return _toObjectLayout(
 			_objectLayoutService.addObjectLayout(
-				objectDefinitionId,
+				objectLayout.getExternalReferenceCode(), objectDefinitionId,
 				GetterUtil.getBoolean(objectLayout.getDefaultObjectLayout()),
 				LocalizedMapUtil.getLocalizedMap(objectLayout.getName()),
 				transformToList(
 					objectLayout.getObjectLayoutTabs(),
 					objectLayoutTab -> _toObjectLayoutTab(
 						objectDefinitionId, objectLayoutTab))));
+	}
+
+	@Override
+	public ObjectLayout
+			putObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectLayoutByExternalReferenceCodeObjectLayoutExternalReferenceCode(
+				String objectDefinitionExternalReferenceCode,
+				String objectLayoutExternalReferenceCode,
+				ObjectLayout objectLayout)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					objectDefinitionExternalReferenceCode,
+					contextCompany.getCompanyId());
+
+		return _toObjectLayout(
+			_objectLayoutService.addOrUpdateObjectLayout(
+				objectLayoutExternalReferenceCode, objectLayout.getId(),
+				contextUser.getUserId(),
+				objectDefinition.getObjectDefinitionId(),
+				GetterUtil.getBoolean(objectLayout.getDefaultObjectLayout()),
+				LocalizedMapUtil.getLocalizedMap(objectLayout.getName()),
+				transformToList(
+					objectLayout.getObjectLayoutTabs(),
+					objectLayoutTab -> _toObjectLayoutTab(
+						objectDefinition.getObjectDefinitionId(),
+						objectLayoutTab))));
 	}
 
 	@Override
@@ -189,7 +232,8 @@ public class ObjectLayoutResourceImpl
 
 		return _toObjectLayout(
 			_objectLayoutService.updateObjectLayout(
-				objectLayoutId, objectLayout.getDefaultObjectLayout(),
+				objectLayout.getExternalReferenceCode(), objectLayoutId,
+				objectLayout.getDefaultObjectLayout(),
 				LocalizedMapUtil.getLocalizedMap(objectLayout.getName()),
 				transformToList(
 					objectLayout.getObjectLayoutTabs(),

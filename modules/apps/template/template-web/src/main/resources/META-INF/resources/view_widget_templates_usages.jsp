@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-WidgetTemplatesTemplateViewUsagesDisplayContext widgetTemplatesTemplateViewUsagesDisplayContext = new WidgetTemplatesTemplateViewUsagesDisplayContext(renderRequest, renderResponse);
+WidgetTemplatesTemplateViewUsagesDisplayContext widgetTemplatesTemplateViewUsagesDisplayContext = new WidgetTemplatesTemplateViewUsagesDisplayContext(request, renderRequest, renderResponse);
 
 DDMTemplate ddmTemplate = widgetTemplatesTemplateViewUsagesDisplayContext.getDDMTemplate();
 
@@ -39,18 +39,7 @@ renderResponse.setTitle(HtmlUtil.escape(ddmTemplate.getName(locale)));
 			</div>
 
 			<clay:vertical-nav
-				verticalNavItems='<%=
-					new VerticalNavItemList() {
-						{
-							add(
-								verticalNavItem -> {
-									verticalNavItem.setLabel(LanguageUtil.format(request, "all-x", widgetTemplatesTemplateViewUsagesDisplayContext.getUsagesCount(), false));
-									verticalNavItem.setId(LanguageUtil.format(request, "all-x", widgetTemplatesTemplateViewUsagesDisplayContext.getUsagesCount(), false));
-									verticalNavItem.setActive(true);
-								});
-						}
-					}
-				%>'
+				verticalNavItems="<%= widgetTemplatesTemplateViewUsagesDisplayContext.getVerticalItemList() %>"
 			/>
 		</clay:col>
 

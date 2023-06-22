@@ -86,13 +86,13 @@ public class AICreatorOpenAIClientTest {
 
 	@Test
 	public void testGetCompletion() throws Exception {
-		String content = RandomTestUtil.randomString();
+		String messageContent = RandomTestUtil.randomString();
 
 		JSONObject responseJSONObject = JSONUtil.put(
 			"choices",
 			JSONUtil.put(
 				JSONUtil.put(
-					"message", JSONUtil.put("content", content))));
+					"message", JSONUtil.put("content", messageContent))));
 
 		Http.Response response = _getMockResponse(
 			HttpURLConnection.HTTP_OK, responseJSONObject);
@@ -105,7 +105,7 @@ public class AICreatorOpenAIClientTest {
 		int words = RandomTestUtil.randomInt();
 
 		Assert.assertEquals(
-			content,
+			messageContent,
 			_aiCreatorOpenAIClient.getCompletion(
 				apiKey, content, LocaleUtil.getDefault(), tone, words));
 

@@ -1,0 +1,25 @@
+liferay-marketplace-custom-element-create-app:
+    urls:
+        - http://localhost:3000/@vite/client
+        - http://localhost:3000/@vite/refresh.ts
+        - http://localhost:3000/src/main.tsx
+liferay-marketplace-custom-element-get-app:
+    urls:
+        - http://localhost:3000/@vite/client
+        - http://localhost:3000/@vite/refresh.ts
+        - http://localhost:3000/src/main.tsx
+liferay-marketplace-custom-element-next-steps:
+    urls:
+        - http://localhost:3000/@vite/client
+        - http://localhost:3000/@vite/refresh.ts
+        - http://localhost:3000/src/main.tsx
+liferay-marketplace-custom-element-published-apps:
+    urls:
+        - http://localhost:3000/@vite/client
+        - http://localhost:3000/@vite/refresh.ts
+        - http://localhost:3000/src/main.tsx
+liferay-marketplace-custom-element-purchased-apps:
+    urls:
+        - http://localhost:3000/@vite/client
+        - http://localhost:3000/@vite/refresh.ts
+        - http://localhost:3000/src/main.tsx

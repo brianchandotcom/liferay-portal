@@ -155,7 +155,7 @@ definition {
 
 		IFrame.closeFrame();
 
-		CalendarEvent.disableEventBySiteCalendarName(calendarName = "Liferay DXP");
+		CalendarEvent.disableEventBySiteCalendarName(calendarName = ${siteName});
 
 		CalendarScheduler.viewSpecificEventNotPresent(eventTitle = "Calendar Event Title 2");
 

@@ -249,17 +249,16 @@ public class AICreatorOpenAIClientTest {
 		).format(
 			Mockito.eq(locale),
 			Mockito.eq(
-				"i-want-you-to-create-a-text-using-x-as-the-language,-of-" +
-					"approximately-x-words,-and-using-a-x-tone"),
+				"i-want-you-to-create-a-text-of-approximately-x-words,-and-" +
+					"using-a-x-tone"),
 			argumentCaptor.capture()
 		);
 
 		String[] arguments = argumentCaptor.getValue();
 
-		Assert.assertEquals(arguments.toString(), 3, arguments.length);
-		Assert.assertEquals(locale.getDisplayName(locale), arguments[0]);
-		Assert.assertEquals(String.valueOf(words), arguments[1]);
-		Assert.assertEquals(tone, arguments[2]);
+		Assert.assertEquals(arguments.toString(), 2, arguments.length);
+		Assert.assertEquals(String.valueOf(words), arguments[0]);
+		Assert.assertEquals(tone, arguments[1]);
 	}
 
 	private void _assertOptions(String apiKey, String location)

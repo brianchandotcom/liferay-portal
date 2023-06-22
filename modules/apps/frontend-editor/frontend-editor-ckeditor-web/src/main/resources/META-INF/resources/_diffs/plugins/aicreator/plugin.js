@@ -37,6 +37,59 @@
 		init(editor) {
 			const plugin = this;
 
+			let button = null;
+			let popover = null;
+
+			function hidePopover() {
+				if (popover) {
+					if (document.body.contains(popover)) {
+						document.body.removeChild(popover);
+					}
+
+					popover = null;
+
+					if (button) {
+						if (document.body.contains(button)) {
+							button.focus();
+						}
+
+						button = null;
+					}
+				}
+			}
+
+			function showPopover() {
+				hidePopover();
+
+				button = editor.container.findOne('.cke_button__aicreator').$;
+				popover = document.createElement('div');
+
+				popover.className = 'clay-popover-top fade popover show';
+				popover.innerHTML = POPOVER_CONTENT_TEMPLATE;
+				popover.setAttribute('role', 'alert');
+				popover.setAttribute('tabindex', '0');
+
+				document.body.appendChild(popover);
+
+				requestAnimationFrame(() => {
+					const buttonRect = button.getBoundingClientRect();
+					const popoverRect = popover.getBoundingClientRect();
+
+					popover.style.bottom = 'initial';
+					popover.style.right = 'initial';
+
+					popover.style.top = `${
+						buttonRect.top - popoverRect.height
+					}px`;
+
+					popover.style.left = `${Math.floor(
+						buttonRect.left +
+							buttonRect.width / 2 -
+							popoverRect.width / 2
+					)}px`;
+				});
+			}
+
 			editor.addCommand('openAICreatorDialog', {
 				exec: () => {
 					const closeModalHandler = Liferay.on(
@@ -69,49 +122,16 @@
 
 			editor.addCommand('openAICreatorConfigurationPopover', {
 				exec: () => {
-					const button = editor.container.findOne(
-						'.cke_button__aicreator'
-					).$;
-					const popover = document.createElement('div');
-
-					popover.className = 'clay-popover-top fade popover show';
-					popover.innerHTML = POPOVER_CONTENT_TEMPLATE;
-					popover.setAttribute('role', 'alert');
-					popover.setAttribute('tabindex', '0');
+					showPopover();
 
 					const removePopover = () => {
 						popover.removeEventListener('blur', removePopover);
-
-						if (document.body.contains(popover)) {
-							document.body.removeChild(popover);
-
-							if (document.body.contains(button)) {
-								button.focus();
-							}
-						}
+						hidePopover();
 					};
-
-					document.body.appendChild(popover);
 
 					requestAnimationFrame(() => {
 						popover.focus();
 						popover.addEventListener('blur', removePopover);
-
-						const buttonRect = button.getBoundingClientRect();
-						const popoverRect = popover.getBoundingClientRect();
-
-						popover.style.bottom = 'initial';
-						popover.style.right = 'initial';
-
-						popover.style.top = `${
-							buttonRect.top - popoverRect.height
-						}px`;
-
-						popover.style.left = `${Math.floor(
-							buttonRect.left +
-								buttonRect.width / 2 -
-								popoverRect.width / 2
-						)}px`;
 					});
 				},
 			});

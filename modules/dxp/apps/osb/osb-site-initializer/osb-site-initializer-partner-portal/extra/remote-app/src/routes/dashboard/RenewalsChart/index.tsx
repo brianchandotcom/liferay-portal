@@ -100,8 +100,9 @@ export default function () {
 							<div
 								className={classNames(
 									'mr-3 status-bar-vertical',
-									getCurrentStatusColor(item)
+									getCurrentStatusColor(item),
 								)}
+								style={{ height: '40px', width: '10px' }}
 							></div>
 
 							<div>

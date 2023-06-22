@@ -366,6 +366,26 @@ definition {
 			value1 = ${filterType});
 	}
 
+	macro selectPreselectedValue {
+		Select(
+			locator1 = "DataSet#SOURCE_OPTIONS_SELECT",
+			value1 = ${picklist});
+
+		Type(
+			key_fieldName = "Select a default value for your filter.",
+			locator1 = "ObjectCustomViews#FROM_DATE_INPUT",
+			value1 = ${preselectType});
+
+		Click(
+			key_sortOption = ${key_sortOption},
+			locator1 = "ObjectCustomViews#SORT_OPTION",
+			value1 = ${key_sortOption});
+
+		Click(
+			key_text = "Save",
+			locator1 = "CP2ActivationKeys#KEY_DEACTIVATION_TERMS");
+	}
+
 	macro selectProvider {
 		Click(
 			dropdownLabel = "Choose an Option",

@@ -365,6 +365,10 @@
 	</entity>
 	<entity local-service="true" name="ObjectLayout" remote-service="true" uuid="true">
 
+		<!-- External reference code -->
+
+		<column name="externalReferenceCode" type="String" />
+
 		<!-- PK fields -->
 
 		<column name="objectLayoutId" primary="true" type="long" />
@@ -391,6 +395,11 @@
 		<finder name="ODI_DOL" return-type="Collection">
 			<finder-column name="objectDefinitionId" />
 			<finder-column name="defaultObjectLayout" />
+		</finder>
+		<finder name="ERC_C_ODI" return-type="ObjectEntry" unique="true">
+			<finder-column name="externalReferenceCode" />
+			<finder-column name="companyId" />
+			<finder-column name="objectDefinitionId" />
 		</finder>
 	</entity>
 	<entity local-service="false" name="ObjectLayoutBox" remote-service="false" uuid="true">

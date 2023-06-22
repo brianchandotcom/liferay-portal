@@ -64,6 +64,6 @@ public class UpgradeGetPortletGroupIdMethodCheck extends BaseFileCheck {
 	}
 
 	private static final Pattern _getPortletGroupIdPattern = Pattern.compile(
-		"(\\w+)\\.getPortletGroupId\\(\\s*\\)");
+		"(\\w+)\\.getPortletGroupId\\(\\)");
 
 }

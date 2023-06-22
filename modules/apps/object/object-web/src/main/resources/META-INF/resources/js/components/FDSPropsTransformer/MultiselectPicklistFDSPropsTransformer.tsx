@@ -29,7 +29,7 @@ export default function MultiselectPicklistFDSPropsTransformer({
 			multiselectPicklistDataRenderer: ({
 				value,
 			}: MultiselectPicklistDataRendererProps) =>
-				value.map((v) => v.name).join(', '),
+				value ? value.map((v) => v.name).join(', ') : '',
 		},
 	};
 }

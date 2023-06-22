@@ -245,10 +245,8 @@ definition {
 			}
 		}
 
-		task ("Workaround for LPS-187832") {
-			var liferayHome = PropsUtil.get("liferay.home.dir.name");
-
-			FileUtil.delete("${liferayHome}/osgi/modules/liferay-sample-etc-cron.zip");
+		task ("Workaround for LPS-187832. Set property so the sample will be undeployed during tearDown") {
+			var clientExtensionSamples = "liferay-sample-etc-cron";
 		}
 	}
 

@@ -183,17 +183,17 @@ definition {
 	@summary = "This macro Fulfills the form of guest users, that can be accessed by direct link"
 	macro fulfillGuestForm {
 		CP2Utils.fulfillGuestFormFields(
-			fieldInput = "${email}",
+			fieldInput = ${email},
 			fieldName = "Contact Email Address",
 			typeField = "true");
 
 		CP2Utils.fulfillGuestFormFields(
-			fieldInput = "${companyName}",
+			fieldInput = ${companyName},
 			fieldName = "Company Name",
 			typeField = "true");
 
 		CP2Utils.fulfillGuestFormFields(
-			fieldInput = "${supportRegion}",
+			fieldInput = ${supportRegion},
 			fieldName = "Support Region");
 
 		KeyPress(
@@ -202,12 +202,12 @@ definition {
 			value1 = "\ENTER");
 
 		CP2Utils.fulfillGuestFormFields(
-			fieldInput = "${explainField}",
+			fieldInput = ${explainField},
 			fieldName = "Please explain why you need a replacement activation key",
 			typeField = "true");
 
 		CP2Utils.fulfillGuestFormFields(
-			fieldInput = "${typeOfServer}",
+			fieldInput = ${typeOfServer},
 			fieldName = "Type of Server");
 
 		KeyPress(
@@ -216,7 +216,7 @@ definition {
 			value1 = "\ENTER");
 
 		CP2Utils.fulfillGuestFormFields(
-			fieldInput = "${clustered}",
+			fieldInput = ${clustered},
 			fieldName = "Clustered?");
 
 		KeyPress(

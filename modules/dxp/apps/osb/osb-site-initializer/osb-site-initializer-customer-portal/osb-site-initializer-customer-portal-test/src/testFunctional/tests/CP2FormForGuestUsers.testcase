@@ -21,7 +21,6 @@ definition {
 		task ("Create a new Customer Portal Site") {
 			CustomerPortal.addCustomerPortalSite(siteName = ${testSiteName});
 		}
-
 	}
 
 	tearDown {
@@ -48,13 +47,13 @@ definition {
 
 		task ("When fulfill the form") {
 			CP2Utils.fulfillGuestForm(
-				submit = "true",
-				email = "test@liferay.com",
+				clustered = "Single instance",
 				companyName = "Liferay",
-				supportRegion = "Asia Pacific",
+				email = "test@liferay.com",
 				explainField = "Test",
-				typeOfServer = "Backup",
-				clustered = "Single instance");
+				submit = "true",
+				supportRegion = "Asia Pacific",
+				typeOfServer = "Backup");
 		}
 
 		task ("Then assert the success message") {

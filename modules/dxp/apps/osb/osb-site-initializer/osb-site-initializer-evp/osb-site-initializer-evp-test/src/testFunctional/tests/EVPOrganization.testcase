@@ -61,4 +61,26 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-172949. Make sure the edit button does not appear when the user's role is 'User manager'."
+	@priority = 5
+	test ManagerCannotEditOrganizationInAwatingApprovalStatus {
+		task ("Given the Manager user is in the Organization page") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "manager@liferay.com",
+				userLoginFullName = "Manager User");
+
+			EVPUtils.gotoEVP();
+
+			EVPNavigator.goToNavItem(navItem = "Organization");
+		}
+
+		task ("When the Manager user clicks on ellipsis button of an Organization with 'Awaiting Finance Approval' status") {
+			EVPOrganization.kebabMenuOrganization(organizationName = "Organization 2");
+		}
+
+		task ("Then the edit button dont appear") {
+			MenuItem.viewNotPresent(menuItem = "Edit");
+		}
+	}
+
 }

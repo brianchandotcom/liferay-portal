@@ -26,7 +26,7 @@ public class AICreatorConfigurationCategory implements ConfigurationCategory {
 
 	@Override
 	public String getCategoryIcon() {
-		return "bolt";
+		return "stars";
 	}
 
 	@Override

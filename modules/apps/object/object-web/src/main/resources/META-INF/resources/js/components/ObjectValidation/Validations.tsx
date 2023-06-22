@@ -131,7 +131,7 @@ export default function Validations({
 							fieldName: 'name',
 							label: Liferay.Language.get('label'),
 							localizeLabel: true,
-							sortable: false,
+							sortable: true,
 						},
 						{
 							expand: false,
@@ -165,5 +165,10 @@ export default function Validations({
 		],
 	};
 
-	return <FrontendDataSet {...dataSetProps} />;
+	return (
+		<FrontendDataSet
+			sorting={[{direction: 'asc', key: 'name'}]}
+			{...dataSetProps}
+		/>
+	);
 }

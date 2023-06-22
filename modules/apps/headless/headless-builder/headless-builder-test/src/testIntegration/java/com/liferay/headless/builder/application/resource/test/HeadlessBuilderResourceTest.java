@@ -58,6 +58,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 	@After
 	public void tearDown() throws Exception {
+		super.tearDown();
+
 		APIApplicationPublisherUtil.unpublishRemainingAPIApplications(
 			_apiApplicationPublisher);
 	}

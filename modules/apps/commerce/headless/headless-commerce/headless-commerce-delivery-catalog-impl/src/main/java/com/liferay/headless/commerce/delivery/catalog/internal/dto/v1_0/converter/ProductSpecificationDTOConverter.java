@@ -65,7 +65,7 @@ public class ProductSpecificationDTOConverter
 		String languageId = _language.getLanguageId(
 			dtoConverterContext.getLocale());
 
-		return new ProductSpecification() {
+		ProductSpecification productSpecification = new ProductSpecification() {
 			{
 				id =
 					cpDefinitionSpecificationOptionValue.
@@ -75,8 +75,6 @@ public class ProductSpecificationDTOConverter
 						getCPOptionCategoryId();
 				priority = cpDefinitionSpecificationOptionValue.getPriority();
 				productId = cpDefinition.getCProductId();
-				specificationGroupKey = cpOptionCategory.getKey();
-				specificationGroupTitle = cpOptionCategory.getTitle(languageId);
 				specificationId =
 					cpSpecificationOption.getCPSpecificationOptionId();
 				specificationKey = cpSpecificationOption.getKey();
@@ -85,6 +83,15 @@ public class ProductSpecificationDTOConverter
 					languageId);
 			}
 		};
+
+		if (cpOptionCategory != null) {
+			productSpecification.setSpecificationGroupKey(
+				cpOptionCategory.getKey());
+			productSpecification.setSpecificationGroupTitle(
+				cpOptionCategory.getTitle(languageId));
+		}
+
+		return productSpecification;
 	}
 
 	@Reference

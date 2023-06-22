@@ -37,24 +37,20 @@ public class UpgradeGetPortletGroupIdMethodCheck extends BaseFileCheck {
 
 		String newContent = content;
 
-		Matcher getPortletGroupIdMatcher = _getPortletGroupIdPattern.matcher(
-			content);
+		Matcher matcher = _getPortletGroupIdPattern.matcher(content);
 
-		while (getPortletGroupIdMatcher.find()) {
-			String variableName = getPortletGroupIdMatcher.group(1);
+		while (matcher.find()) {
+			String methodCall = matcher.group(0);
+			String variableName = matcher.group(1);
 
-			if (!fileName.endsWith(".java") &&
-				!variableName.equals("themeDisplay")) {
+			if (fileName.endsWith(".java")) {
+				if (!hasClassOrVariableName(
+						"ThemeDisplay", newContent, methodCall)) {
 
-				continue;
+					continue;
+				}
 			}
-
-			String methodCall = getPortletGroupIdMatcher.group(0);
-
-			if (fileName.endsWith(".java") &&
-				!hasClassOrVariableName(
-					"ThemeDisplay", newContent, methodCall)) {
-
+			else if (!variableName.equals("themeDisplay")) {
 				continue;
 			}
 

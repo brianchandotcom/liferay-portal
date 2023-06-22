@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.InputStream;
@@ -61,13 +60,9 @@ public class AICreatorOpenAIClient {
 						"content",
 						_language.format(
 							locale,
-							"i-want-you-to-create-a-text-using-x-as-the-" +
-								"language,-of-approximately-x-words,-and-" +
-									"using-a-x-tone",
-							new String[] {
-								LocaleUtil.getLocaleDisplayName(locale, locale),
-								String.valueOf(words), tone
-							})
+							"i-want-you-to-create-a-text-of-approximately-x-" +
+								"words,-and-using-a-x-tone",
+							new String[] {String.valueOf(words), tone})
 					).put(
 						"role", "system"
 					),

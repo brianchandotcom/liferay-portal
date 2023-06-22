@@ -15,7 +15,6 @@
 package com.liferay.portal.upgrade.internal.live;
 
 import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -25,11 +24,7 @@ import com.liferay.portal.upgrade.live.LiveUpgradeProcess;
 import com.liferay.portal.upgrade.live.LiveUpgradeSchemaDiff;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -60,8 +55,7 @@ public class LiveUpgradeExecutorImpl implements LiveUpgradeExecutor {
 			db.copyTableStructure(connection, tableName, tempTableName);
 
 			LiveUpgradeSchemaDiff liveUpgradeSchemaDiff =
-				new LiveUpgradeSchemaDiff(
-					_getColumnNames(connection, tableName));
+				new LiveUpgradeSchemaDiff(connection, tableName);
 
 			for (LiveUpgradeProcess liveUpgradeProcess : liveUpgradeProcesses) {
 				liveUpgradeProcess.upgrade(
@@ -79,23 +73,6 @@ public class LiveUpgradeExecutorImpl implements LiveUpgradeExecutor {
 					connection, tableName, tempTableName, resultColumnNamesMap);
 			}
 		}
-	}
-
-	private List<String> _getColumnNames(
-			Connection connection, String tableName)
-		throws SQLException {
-
-		DBInspector dbInspector = new DBInspector(connection);
-
-		List<String> columnNames = new ArrayList<>();
-
-		try (ResultSet resultSet = dbInspector.getColumnsResultSet(tableName)) {
-			while (resultSet.next()) {
-				columnNames.add(resultSet.getString("COLUMN_NAME"));
-			}
-		}
-
-		return columnNames;
 	}
 
 	private String _getTempTableName(String tableName) {

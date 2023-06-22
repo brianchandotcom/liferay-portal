@@ -12,39 +12,69 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.internal.live;
+package com.liferay.portal.upgrade.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.test.rule.LiferayUnitTestRule;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upgrade.live.LiveUpgradeSchemaDiff;
 
-import java.util.Arrays;
+import java.sql.Connection;
+
 import java.util.Map;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Kevin Lee
  */
+@RunWith(Arquillian.class)
 public class LiveUpgradeSchemaDiffTest {
 
 	@ClassRule
 	@Rule
-	public static final LiferayUnitTestRule liferayUnitTestRule =
-		LiferayUnitTestRule.INSTANCE;
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		_connection = DataAccess.getConnection();
+
+		_db = DBManagerUtil.getDB();
+
+		_db.runSQL(
+			StringBundler.concat(
+				"create table ", _TABLE_NAME,
+				" (id LONG not null primary key, name VARCHAR(128) not null)"));
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		_db.runSQL("DROP_TABLE_IF_EXISTS(" + _TABLE_NAME + ")");
+
+		DataAccess.cleanUp(_connection);
+	}
 
 	@Before
-	public void setUp() {
+	public void setUp() throws Exception {
 		_liveUpgradeSchemaDiff = new LiveUpgradeSchemaDiff(
-			Arrays.asList("id", "name"));
+			_connection, _TABLE_NAME);
 	}
 
 	@Test
-	public void testRecordAddColumns() {
+	public void testRecordAddColumns() throws Exception {
 		_liveUpgradeSchemaDiff.recordAddColumns(
 			"version LONG default 0 not null");
 
@@ -57,7 +87,7 @@ public class LiveUpgradeSchemaDiffTest {
 	}
 
 	@Test
-	public void testRecordAlterColumnName() {
+	public void testRecordAlterColumnName() throws Exception {
 		_liveUpgradeSchemaDiff.recordAlterColumnName(
 			"name", "title VARCHAR(128) not null");
 
@@ -70,7 +100,7 @@ public class LiveUpgradeSchemaDiffTest {
 	}
 
 	@Test
-	public void testRecordAlterColumnType() {
+	public void testRecordAlterColumnType() throws Exception {
 		_liveUpgradeSchemaDiff.recordAlterColumnName(
 			"name", "VARCHAR(255) null");
 
@@ -86,7 +116,7 @@ public class LiveUpgradeSchemaDiffTest {
 	}
 
 	@Test
-	public void testRecordDropColumns() {
+	public void testRecordDropColumns() throws Exception {
 		_liveUpgradeSchemaDiff.recordDropColumns("name");
 
 		_checkResultColumnNamesMap(
@@ -114,6 +144,11 @@ public class LiveUpgradeSchemaDiffTest {
 				expectedColumnNamesMap.get(entry.getKey()), entry.getValue());
 		}
 	}
+
+	private static final String _TABLE_NAME = "LiveUpgradeSchemaTest";
+
+	private static Connection _connection;
+	private static DB _db;
 
 	private LiveUpgradeSchemaDiff _liveUpgradeSchemaDiff;
 

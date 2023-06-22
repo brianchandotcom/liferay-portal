@@ -15,9 +15,13 @@
 package com.liferay.portal.upgrade.live;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.util.Collection;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,9 +30,20 @@ import java.util.Map;
  */
 public class LiveUpgradeSchemaDiff {
 
-	public LiveUpgradeSchemaDiff(Collection<String> columnNames) {
-		for (String columnName : columnNames) {
-			_resultColumnsMap.put(columnName, new Column(columnName, false));
+	public LiveUpgradeSchemaDiff(Connection connection, String tableName)
+		throws Exception {
+
+		_dbInspector = new DBInspector(connection);
+
+		try (ResultSet resultSet = _dbInspector.getColumnsResultSet(
+				tableName)) {
+
+			while (resultSet.next()) {
+				String columnName = resultSet.getString("COLUMN_NAME");
+
+				_resultColumnsMap.put(
+					columnName, new Column(columnName, false));
+			}
 		}
 	}
 
@@ -47,12 +62,10 @@ public class LiveUpgradeSchemaDiff {
 		return resultColumnNamesMap;
 	}
 
-	public void recordAddColumns(String... columnDefinitions)
-		throws IllegalArgumentException {
-
+	public void recordAddColumns(String... columnDefinitions) throws Exception {
 		for (String columnDefinition : columnDefinitions) {
-			String columnName = StringUtil.extractFirst(
-				columnDefinition, StringPool.SPACE);
+			String columnName = _dbInspector.normalizeName(
+				StringUtil.extractFirst(columnDefinition, StringPool.SPACE));
 
 			if (_resultColumnsMap.containsKey(columnName)) {
 				throw new IllegalArgumentException(
@@ -65,10 +78,12 @@ public class LiveUpgradeSchemaDiff {
 
 	public void recordAlterColumnName(
 			String oldColumnName, String newColumnDefinition)
-		throws IllegalArgumentException {
+		throws Exception {
 
-		String newColumnName = StringUtil.extractFirst(
-			newColumnDefinition, StringPool.SPACE);
+		oldColumnName = _dbInspector.normalizeName(oldColumnName);
+
+		String newColumnName = _dbInspector.normalizeName(
+			StringUtil.extractFirst(newColumnDefinition, StringPool.SPACE));
 
 		Column column = _resultColumnsMap.remove(oldColumnName);
 
@@ -87,7 +102,9 @@ public class LiveUpgradeSchemaDiff {
 	}
 
 	public void recordAlterColumnType(String columnName, String newColumnType)
-		throws IllegalArgumentException {
+		throws Exception {
+
+		columnName = _dbInspector.normalizeName(columnName);
 
 		Column column = _resultColumnsMap.get(columnName);
 
@@ -100,10 +117,10 @@ public class LiveUpgradeSchemaDiff {
 
 	}
 
-	public void recordDropColumns(String... columnNames)
-		throws IllegalArgumentException {
-
+	public void recordDropColumns(String... columnNames) throws SQLException {
 		for (String columnName : columnNames) {
+			columnName = _dbInspector.normalizeName(columnName);
+
 			Column column = _resultColumnsMap.remove(columnName);
 
 			if (column == null) {
@@ -113,6 +130,7 @@ public class LiveUpgradeSchemaDiff {
 		}
 	}
 
+	private final DBInspector _dbInspector;
 	private final Map<String, Column> _resultColumnsMap = new HashMap<>();
 
 	private static class Column {

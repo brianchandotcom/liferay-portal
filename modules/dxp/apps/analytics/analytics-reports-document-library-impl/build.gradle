@@ -11,5 +11,4 @@ dependencies {
 	compileOnly project(":apps:layout:layout-page-template-api")
 	compileOnly project(":core:petra:petra-string")
 	compileOnly project(":dxp:apps:analytics:analytics-reports-api")
-	compileOnly project(":dxp:apps:analytics:analytics-reports-layout-display-page-api")
 }

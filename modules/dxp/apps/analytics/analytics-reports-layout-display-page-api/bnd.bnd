@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Analytics Reports Layout Display Page API
-Bundle-SymbolicName: com.liferay.analytics.reports.layout.display.page.api
-Bundle-Version: 1.0.7
-Export-Package: com.liferay.analytics.reports.layout.display.page.info.item

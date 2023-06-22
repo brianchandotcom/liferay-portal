@@ -72,7 +72,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "model.class.name=com.liferay.layout.display.page.LayoutDisplayPageObjectProvider",
 	service = AnalyticsReportsInfoItem.class
 )
-public class LayoutDisplayPageObjectProviderAnalyticsReportsInfoItemImpl
+public class LayoutDisplayPageObjectProviderAnalyticsReportsInfoItem
 	implements AnalyticsReportsInfoItem<LayoutDisplayPageObjectProvider> {
 
 	@Override
@@ -366,7 +366,7 @@ public class LayoutDisplayPageObjectProviderAnalyticsReportsInfoItemImpl
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		LayoutDisplayPageObjectProviderAnalyticsReportsInfoItemImpl.class);
+		LayoutDisplayPageObjectProviderAnalyticsReportsInfoItem.class);
 
 	@Reference
 	private AssetDisplayPageEntryLocalService

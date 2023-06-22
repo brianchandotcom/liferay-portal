@@ -70,16 +70,9 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 
 	@Test
 	public void testUpgradeJavaGetPortletGroupIdMethodCheck() throws Exception {
-		List<String> filesName = new ArrayList<>();
-
-		filesName.add("upgrade/UpgradeFtlGetPortletGroupIdMethodCheck.testftl");
-		filesName.add(
-			"upgrade/UpgradeJavaGetPortletGroupIdMethodCheck.testjava");
-		filesName.add("upgrade/UpgradeJspGetPortletGroupIdMethodCheck.testjsp");
-
-		for (String fileName : filesName) {
-			test(fileName);
-		}
+		test("upgrade/UpgradeFtlGetPortletGroupIdMethodCheck.testftl");
+		test("upgrade/UpgradeJavaGetPortletGroupIdMethodCheck.testjava");
+		test("upgrade/UpgradeJspGetPortletGroupIdMethodCheck.testjsp");
 	}
 
 	@Test

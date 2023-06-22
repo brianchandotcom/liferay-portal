@@ -19,6 +19,9 @@ package com.liferay.accessibility.menu.web.internal.constants;
  */
 public class AccessibilitySettingConstants {
 
+	public static final String ACCESSIBILITY_SETTING_PREFERS_REDUCED_MOTION =
+		"ACCESSIBILITY_SETTING_PREFERS_REDUCED_MOTION";
+
 	public static final String ACCESSIBILITY_SETTING_EXPANDED_TEXT =
 		"ACCESSIBILITY_SETTING_EXPANDED_TEXT";
 

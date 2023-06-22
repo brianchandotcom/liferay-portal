@@ -68,7 +68,15 @@ public class AccessibilitySettingsUtil {
 				_getSessionClicksValue(
 					httpServletRequest,
 					AccessibilitySettingConstants.
-						ACCESSIBILITY_SETTING_EXPANDED_TEXT)));
+						ACCESSIBILITY_SETTING_EXPANDED_TEXT)),
+			new AccessibilitySetting(
+				"c-prefers-reduced-motion", false,
+				AccessibilitySettingConstants.ACCESSIBILITY_SETTING_PREFERS_REDUCED_MOTION,
+				LanguageUtil.get(httpServletRequest, "prefers-reduced-motion"),
+				_getSessionClicksValue(
+					httpServletRequest,
+					AccessibilitySettingConstants.
+						ACCESSIBILITY_SETTING_PREFERS_REDUCED_MOTION)));
 	}
 
 	public static boolean isAccessibilityMenuEnabled(

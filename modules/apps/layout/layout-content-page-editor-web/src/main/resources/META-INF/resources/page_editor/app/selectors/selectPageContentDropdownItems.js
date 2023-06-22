@@ -14,13 +14,11 @@
 
 import {openModal, sub} from 'frontend-js-web';
 
-import {selectPageContents} from './selectPageContents';
+import findPageContent from '../utils/findPageContent';
 
-export function selectPageContentDropdownItems(classPK, label = '') {
+export function selectPageContentDropdownItems(item, label = '') {
 	return (state) => {
-		const pageContent = selectPageContents(state)?.find(
-			(pageContent) => pageContent.classPK === classPK
-		);
+		const pageContent = findPageContent(state.pageContents, item);
 
 		if (!pageContent) {
 			return null;

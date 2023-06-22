@@ -69,7 +69,9 @@ const PageContentList = ({pageContents, type}) => (
 		{pageContents[type || CONTENT_TYPE_LABELS.allContent]?.map(
 			(pageContent, index) => (
 				<PageContent
-					key={`${pageContent.classPK}${index}`}
+					key={`${
+						pageContent.classPK || pageContent.externalReferenceCode
+					}${index}`}
 					{...pageContent}
 				/>
 			)

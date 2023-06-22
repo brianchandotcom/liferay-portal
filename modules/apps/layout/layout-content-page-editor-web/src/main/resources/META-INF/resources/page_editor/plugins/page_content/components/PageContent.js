@@ -48,6 +48,7 @@ export default function PageContent({
 	classNameId,
 	classPK,
 	editableId,
+	externalReferenceCode,
 	icon,
 	isRestricted = false,
 	subtype,
@@ -76,9 +77,11 @@ export default function PageContent({
 
 	const dropdownItems = useSelectorCallback(
 		(state) => {
-			const pageContentDropdownItems = selectPageContentDropdownItems(
-				classPK
-			)(state);
+			const pageContentDropdownItems = selectPageContentDropdownItems({
+				classNameId,
+				classPK,
+				externalReferenceCode,
+			})(state);
 
 			return pageContentDropdownItems?.map((item) => {
 				if (item.label === Liferay.Language.get('edit-image')) {
@@ -104,7 +107,7 @@ export default function PageContent({
 				return item;
 			});
 		},
-		[classPK]
+		[classNameId, classPK, externalReferenceCode]
 	);
 
 	useEffect(() => {

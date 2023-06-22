@@ -23,6 +23,7 @@ import React, {useCallback} from 'react';
 import {config} from '../../app/config/index';
 import {useSelectorCallback} from '../../app/contexts/StoreContext';
 import {selectPageContentDropdownItems} from '../../app/selectors/selectPageContentDropdownItems';
+import findPageContent from '../../app/utils/findPageContent';
 import {useId} from '../hooks/useId';
 import {openItemSelector} from '../openItemSelector';
 
@@ -143,9 +144,9 @@ export default function ItemSelector({
 		(state) => {
 			const menuItems = [];
 
-			if (selectedItem?.classPK) {
+			if (selectedItem?.classPK || selectedItem?.externalReferenceCode) {
 				const contentMenuItems = selectPageContentDropdownItems(
-					selectedItem.classPK,
+					selectedItem,
 					label
 				)(state)?.filter(
 					(item) => item.label !== Liferay.Language.get('edit-image')
@@ -180,18 +181,15 @@ export default function ItemSelector({
 				return '';
 			}
 
-			return (
+			const content = findPageContent(
 				[
 					...(quickMappedInfoItems || []),
 					...(state.pageContents || []),
-				].find(
-					(item) =>
-						item.classNameId === selectedItem.classNameId &&
-						item.classPK === selectedItem.classPK
-				)?.title ||
-				selectedItem.title ||
-				''
+				],
+				selectedItem
 			);
+
+			return content?.title || selectedItem.title || '';
 		},
 		[quickMappedInfoItems, selectedItem]
 	);
@@ -326,6 +324,7 @@ ItemSelector.propTypes = {
 		PropTypes.shape({
 			classNameId: PropTypes.string,
 			classPK: PropTypes.string,
+			externalReferenceCode: PropTypes.string,
 			title: PropTypes.string,
 		})
 	),

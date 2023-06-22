@@ -56,6 +56,7 @@ import canActivateEditable from '../../../../../app/utils/canActivateEditable';
 import {DragAndDropContextProvider} from '../../../../../app/utils/drag_and_drop/useDragAndDrop';
 import isMapped from '../../../../../app/utils/editable_value/isMapped';
 import isMappedToCollection from '../../../../../app/utils/editable_value/isMappedToCollection';
+import findPageContent from '../../../../../app/utils/findPageContent';
 import {formIsMapped} from '../../../../../app/utils/formIsMapped';
 import {formIsRestricted} from '../../../../../app/utils/formIsRestricted';
 import getMappingFieldsKey from '../../../../../app/utils/getMappingFieldsKey';
@@ -486,10 +487,7 @@ function getMappedFieldLabel(
 	pageContents,
 	mappingFields
 ) {
-	const infoItem = pageContents.find(
-		({classNameId, classPK}) =>
-			editable.classNameId === classNameId && editable.classPK === classPK
-	);
+	const infoItem = findPageContent(pageContents, editable);
 
 	const {selectedMappingTypes} = config;
 

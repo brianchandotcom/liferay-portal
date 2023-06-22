@@ -51,7 +51,7 @@ public class APIApplicationRelevantObjectEntryModelListenerTest
 
 		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
 		Assert.assertEquals(
-			"Base URL can have a maximum of 255 alphanumeric characters",
+			"Base URL can have a maximum of 255 alphanumeric characters.",
 			jsonObject.get("title"));
 
 		// Success

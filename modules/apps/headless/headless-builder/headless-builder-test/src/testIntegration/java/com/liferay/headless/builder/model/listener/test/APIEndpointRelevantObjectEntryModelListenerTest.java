@@ -53,7 +53,7 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 
 		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
 		Assert.assertEquals(
-			"An API endpoint must be related to an API application",
+			"An API endpoint must be related to an API application.",
 			jsonObject.get("title"));
 
 		// Path can have a maximum of 255 alphanumeric characters
@@ -75,7 +75,7 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 
 		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
 		Assert.assertEquals(
-			"Path can have a maximum of 255 alphanumeric characters",
+			"Path can have a maximum of 255 alphanumeric characters.",
 			jsonObject.get("title"));
 
 		// Success
@@ -157,7 +157,7 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 
 		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
 		Assert.assertEquals(
-			"There is an API endpoint with the same HTTP method and path",
+			"There is an API endpoint with the same HTTP method and path.",
 			jsonObject.get("title"));
 	}
 

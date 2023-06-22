@@ -71,12 +71,13 @@ public class AccessibilitySettingsUtil {
 						ACCESSIBILITY_SETTING_EXPANDED_TEXT)),
 			new AccessibilitySetting(
 				"c-prefers-reduced-motion", false,
-				AccessibilitySettingConstants.ACCESSIBILITY_SETTING_PREFERS_REDUCED_MOTION,
-				LanguageUtil.get(httpServletRequest, "prefers-reduced-motion"),
+				AccessibilitySettingConstants.
+					ACCESSIBILITY_SETTING_REDUCED_MOTION,
+				LanguageUtil.get(httpServletRequest, "reduced-motion"),
 				_getSessionClicksValue(
 					httpServletRequest,
 					AccessibilitySettingConstants.
-						ACCESSIBILITY_SETTING_PREFERS_REDUCED_MOTION)));
+						ACCESSIBILITY_SETTING_REDUCED_MOTION)));
 	}
 
 	public static boolean isAccessibilityMenuEnabled(

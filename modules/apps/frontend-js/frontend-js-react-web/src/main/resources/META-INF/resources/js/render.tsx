@@ -131,8 +131,7 @@ function LiferayProvider({children, spritemap}: Props) {
 
 	const reducedMotion = useMemo(() => {
 		const setting = accessibilityMenu.find(
-			(setting) =>
-				setting.key === 'ACCESSIBILITY_SETTING_PREFERS_REDUCED_MOTION'
+			(setting) => setting.key === 'ACCESSIBILITY_SETTING_REDUCED_MOTION'
 		);
 
 		if (setting!.value) {

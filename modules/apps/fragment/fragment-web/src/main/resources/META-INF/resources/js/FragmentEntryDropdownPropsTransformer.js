@@ -109,9 +109,12 @@ const ACTIONS = {
 						`${portletNamespace}fragmentEntryFm`
 					);
 
+					const itemValue = JSON.parse(selectedItem.value);
+
 					if (form) {
 						setFormValues(form, {
-							fragmentCollectionId: selectedItem.id,
+							fragmentCollectionId:
+								itemValue.fragmentCollectionId,
 							fragmentEntryIds: fragmentEntryId,
 						});
 					}

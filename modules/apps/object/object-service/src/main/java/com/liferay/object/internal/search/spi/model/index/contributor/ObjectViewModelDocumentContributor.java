@@ -26,7 +26,7 @@ public class ObjectViewModelDocumentContributor
 	public void contribute(Document document, ObjectView objectView) {
 		document.addLocalizedText(Field.NAME, objectView.getNameMap());
 		document.addLocalizedKeyword(
-			"localized_name", objectView.getNameMap(), true);
+			"localized_name", objectView.getNameMap(), true, true);
 		document.addKeyword(
 			"objectDefinitionId", objectView.getObjectDefinitionId());
 		document.remove(Field.USER_NAME);

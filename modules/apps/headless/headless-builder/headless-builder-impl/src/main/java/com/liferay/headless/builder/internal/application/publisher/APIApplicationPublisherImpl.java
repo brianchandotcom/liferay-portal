@@ -16,7 +16,7 @@ package com.liferay.headless.builder.internal.application.publisher;
 
 import com.liferay.headless.builder.application.APIApplication;
 import com.liferay.headless.builder.application.publisher.APIApplicationPublisher;
-import com.liferay.headless.builder.internal.resource.HeadlessBuilderResourceImpl;
+import com.liferay.headless.builder.internal.application.resource.HeadlessBuilderResourceImpl;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 

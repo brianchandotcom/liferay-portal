@@ -12,20 +12,21 @@
  * details.
  */
 
-package com.liferay.headless.builder.internal.resource;
+package com.liferay.headless.builder.internal.application.resource;
 
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
 /**
  * @author Luis Miguel Barcos
  */
-public class HeadlessBuilderResourceImpl
-	extends BaseHeadlessBuilderResourceImpl {
+public abstract class BaseHeadlessBuilderResourceImpl {
 
-	@Override
-	public Response get() throws Exception {
-		return Response.ok(
-		).build();
-	}
+	@GET
+	@Path("{any: .*}")
+	@Produces({"application/json", "application/xml"})
+	public abstract Response get() throws Exception;
 
 }

@@ -17,7 +17,7 @@ package com.liferay.headless.builder.application.publisher.test;
 import com.liferay.headless.builder.application.APIApplication;
 import com.liferay.headless.builder.application.provider.APIApplicationProvider;
 import com.liferay.headless.builder.application.publisher.APIApplicationPublisher;
-import com.liferay.headless.builder.publisher.test.util.APIApplicationPublisherUtil;
+import com.liferay.headless.builder.application.publisher.test.util.APIApplicationPublisherUtil;
 import com.liferay.headless.builder.test.BaseTestCase;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -81,19 +81,6 @@ public class APIApplicationPublisherTest extends BaseTestCase {
 
 	@After
 	public void tearDown() throws Exception {
-		HTTPTestUtil.invoke(
-			null,
-			"headless-builder/applications/by-external-reference-code/" +
-				_API_APPLICATION_ERC_1,
-			Http.Method.DELETE);
-		HTTPTestUtil.invoke(
-			null,
-			"headless-builder/applications/by-external-reference-code/" +
-				_API_APPLICATION_ERC_2,
-			Http.Method.DELETE);
-
-		_serviceTracker.close();
-
 		APIApplicationPublisherUtil.unpublishRemainingAPIApplications(
 			_apiApplicationPublisher);
 	}

@@ -201,6 +201,39 @@ public class ObjectViewResourceImpl
 	}
 
 	@Override
+	public ObjectView
+			putObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectViewByExternalReferenceCodeObjectViewExternalReferenceCode(
+				String objectDefinitionExternalReferenceCode,
+				String objectViewExternalReferenceCode, ObjectView objectView)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					objectDefinitionExternalReferenceCode,
+					contextCompany.getCompanyId());
+
+		return _toObjectView(
+			_objectViewService.addOrUpdateObjectView(
+				objectViewExternalReferenceCode, objectView.getId(),
+				contextUser.getUserId(),
+				objectDefinition.getObjectDefinitionId(),
+				GetterUtil.getBoolean(objectView.getDefaultObjectView()),
+				LocalizedMapUtil.getLocalizedMap(objectView.getName()),
+				transformToList(
+					objectView.getObjectViewColumns(),
+					objectViewColumn -> _toObjectViewColumn(objectViewColumn)),
+				transformToList(
+					objectView.getObjectViewFilterColumns(),
+					objectFilterColumn -> _toObjectViewFilterColumn(
+						objectFilterColumn)),
+				transformToList(
+					objectView.getObjectViewSortColumns(),
+					objectViewSortColumn -> _toObjectViewSortColumn(
+						objectViewSortColumn))));
+	}
+
+	@Override
 	public ObjectView putObjectView(Long objectViewId, ObjectView objectView)
 		throws Exception {
 

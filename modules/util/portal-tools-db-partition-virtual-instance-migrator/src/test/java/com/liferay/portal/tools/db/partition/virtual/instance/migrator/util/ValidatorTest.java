@@ -100,6 +100,28 @@ public class ValidatorTest {
 	}
 
 	@Test
+	public void testValidateReleaseHigherVersionModules() throws Exception {
+		_testValidateReleaseVersionModule(
+			"1.0.0", "module2.service",
+			() -> _validateAndAssert(
+				true, false,
+				Arrays.asList(
+					"[ERROR] Module module2.service needs to be upgraded in " +
+						"the target database before the migration")));
+	}
+
+	@Test
+	public void testValidateReleaseLowerVersionModules() throws Exception {
+		_testValidateReleaseVersionModule(
+			"10.0.0", "module1",
+			() -> _validateAndAssert(
+				true, false,
+				Arrays.asList(
+					"[ERROR] Module module1 needs to be upgraded in the " +
+						"source database before the migration")));
+	}
+
+	@Test
 	public void testValidateReleaseMissingSourceModules() throws Exception {
 		List<Release> releases = _createReleases();
 
@@ -198,25 +220,6 @@ public class ValidatorTest {
 	}
 
 	@Test
-	public void testValidateReleaseVersionModules() throws Exception {
-		_testValidateReleaseVersionModule(
-			"1.0.0", "module2.service",
-			() -> _validateAndAssert(
-				true, false,
-				Arrays.asList(
-					"[ERROR] Module module2.service needs to be upgraded in " +
-						"the target database before the migration")));
-
-		_testValidateReleaseVersionModule(
-			"10.0.0", "module1",
-			() -> _validateAndAssert(
-				true, false,
-				Arrays.asList(
-					"[ERROR] Module module1 needs to be upgraded in the " +
-						"source database before the migration")));
-	}
-
-	@Test
 	public void testValidateWebId() throws Exception {
 		_testValidateWebId(
 			false,
@@ -259,7 +262,8 @@ public class ValidatorTest {
 	}
 
 	private void _testValidateReleaseMissingTargetModule(
-			String servletContextName, UnsafeRunnable<Exception> unsafeRunnable)
+			String targetServletContextName,
+			UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {
 
 		List<Release> missingTargetModuleReleases = new ArrayList<>();
@@ -269,7 +273,9 @@ public class ValidatorTest {
 		for (Release release : _createReleases()) {
 			releasesMap.put(release.getServletContextName(), release);
 
-			if (!servletContextName.equals(release.getServletContextName())) {
+			if (!targetServletContextName.equals(
+					release.getServletContextName())) {
+
 				missingTargetModuleReleases.add(release);
 			}
 		}
@@ -311,7 +317,7 @@ public class ValidatorTest {
 	}
 
 	private void _testValidateReleaseUnverifiedModule(
-			String servletContextName, boolean verified,
+			String targetServletContextName, boolean targetVerified,
 			UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {
 
@@ -332,9 +338,12 @@ public class ValidatorTest {
 		);
 
 		for (Release release : releases) {
-			if (servletContextName.equals(release.getServletContextName())) {
+			if (targetServletContextName.equals(
+					release.getServletContextName())) {
+
 				release = new Release(
-					release.getSchemaVersion(), servletContextName, verified);
+					release.getSchemaVersion(), targetServletContextName,
+					targetVerified);
 			}
 
 			releaseMap.put(release.getServletContextName(), release);
@@ -344,7 +353,7 @@ public class ValidatorTest {
 	}
 
 	private void _testValidateReleaseVersionModule(
-			String schemaVersion, String servletContextName,
+			String targetVersion, String targetServletContextName,
 			UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {
 
@@ -365,10 +374,12 @@ public class ValidatorTest {
 		);
 
 		for (Release release : releases) {
-			if (servletContextName.equals(release.getServletContextName())) {
+			if (targetServletContextName.equals(
+					release.getServletContextName())) {
+
 				release = new Release(
-					Version.parseVersion(schemaVersion), servletContextName,
-					release.getVerified());
+					Version.parseVersion(targetVersion),
+					targetServletContextName, release.getVerified());
 			}
 
 			releasesMap.put(release.getServletContextName(), release);

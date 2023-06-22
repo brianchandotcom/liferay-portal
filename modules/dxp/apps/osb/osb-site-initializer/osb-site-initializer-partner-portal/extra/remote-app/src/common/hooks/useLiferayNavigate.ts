@@ -11,15 +11,8 @@
 
 import {useMemo} from 'react';
 
-import {Liferay} from '../services/liferay';
+import {siteURL} from '../components/dashboard/utils/siteURL';
 
 export default function useLiferayNavigate() {
-	return useMemo(
-		() =>
-			Liferay.ThemeDisplay.getLayoutRelativeURL()
-				.split('/')
-				.slice(0, 3)
-				.join('/'),
-		[]
-	);
+	return useMemo(() => siteURL, []);
 }

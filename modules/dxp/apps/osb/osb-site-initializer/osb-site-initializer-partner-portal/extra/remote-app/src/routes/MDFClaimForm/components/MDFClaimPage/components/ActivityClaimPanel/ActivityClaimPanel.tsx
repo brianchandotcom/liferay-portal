@@ -18,10 +18,10 @@ import {useCallback, useState} from 'react';
 import PRMForm from '../../../../../../common/components/PRMForm';
 import InputMultipleFilesListing from '../../../../../../common/components/PRMForm/components/fields/InputMultipleFilesListing';
 import PRMFormik from '../../../../../../common/components/PRMFormik';
-import {useWebDAV} from '../../../../../../common/context/WebDAV';
 import LiferayFile from '../../../../../../common/interfaces/liferayFile';
 import MDFClaim from '../../../../../../common/interfaces/mdfClaim';
 import MDFClaimActivity from '../../../../../../common/interfaces/mdfClaimActivity';
+import {Liferay} from '../../../../../../common/services/liferay';
 import {Status} from '../../../../../../common/utils/constants/status';
 import getIntlNumberFormat from '../../../../../../common/utils/getIntlNumberFormat';
 import BudgetClaimPanel from './components/BudgetClaimPanel';
@@ -63,7 +63,9 @@ const ActivityClaimPanel = ({
 	setFieldValue,
 }: IProps & Pick<FormikContextType<MDFClaim>, 'setFieldValue'>) => {
 	const [expanded, setExpanded] = useState<boolean>(!activity.selected);
-	const webDAV = useWebDAV();
+	const siteURL = Liferay.ThemeDisplay.getLayoutRelativeControlPanelURL().split(
+		'/'
+	)[2];
 
 	useBudgetsAmount(
 		activity.budgets,
@@ -209,7 +211,7 @@ const ActivityClaimPanel = ({
 									button
 									displayType="secondary"
 									download
-									href={`${webDAV}/claim/qualified_leads_template.xlsx`}
+									href={`${Liferay.ThemeDisplay.getPortalURL()}/documents/d/${siteURL}/qualified_leads_template-xlsx`}
 									small
 									target="_blank"
 								>

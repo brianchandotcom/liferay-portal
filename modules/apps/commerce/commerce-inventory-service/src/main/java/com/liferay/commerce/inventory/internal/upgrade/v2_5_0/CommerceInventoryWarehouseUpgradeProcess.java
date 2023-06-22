@@ -15,14 +15,8 @@
 package com.liferay.commerce.inventory.internal.upgrade.v2_5_0;
 
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
-import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
-import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-
-import java.sql.ResultSet;
-import java.sql.Statement;
 
 import java.util.Arrays;
 
@@ -32,13 +26,9 @@ import java.util.Arrays;
 public class CommerceInventoryWarehouseUpgradeProcess extends UpgradeProcess {
 
 	public CommerceInventoryWarehouseUpgradeProcess(
-		CompanyLocalService companyLocalService,
-		ResourceActionLocalService resourceActionLocalService,
-		ResourceLocalService resourceLocalService) {
+		ResourceActionLocalService resourceActionLocalService) {
 
-		_companyLocalService = companyLocalService;
 		_resourceActionLocalService = resourceActionLocalService;
-		_resourceLocalService = resourceLocalService;
 	}
 
 	@Override
@@ -46,37 +36,12 @@ public class CommerceInventoryWarehouseUpgradeProcess extends UpgradeProcess {
 		_resourceActionLocalService.checkResourceActions(
 			CommerceInventoryWarehouse.class.getName(),
 			Arrays.asList(_OWNER_PERMISSIONS), true);
-
-		String selectCommerceInventoryWarehouseSQL =
-			"select companyId, CIWarehouseId from CIWarehouse";
-
-		try (Statement s = connection.createStatement();
-			ResultSet resultSet = s.executeQuery(
-				selectCommerceInventoryWarehouseSQL)) {
-
-			while (resultSet.next()) {
-				long companyId = resultSet.getLong("companyId");
-
-				Company company = _companyLocalService.getCompany(companyId);
-
-				long commerceInventoryWarehouseId = resultSet.getLong(
-					"CIWarehouseId");
-
-				_resourceLocalService.updateResources(
-					companyId, company.getGroupId(),
-					CommerceInventoryWarehouse.class.getName(),
-					commerceInventoryWarehouseId, new String[] {"VIEW"},
-					new String[] {"VIEW"});
-			}
-		}
 	}
 
 	private static final String[] _OWNER_PERMISSIONS = {
 		"DELETE", "PERMISSIONS", "UPDATE", "VIEW"
 	};
 
-	private final CompanyLocalService _companyLocalService;
 	private final ResourceActionLocalService _resourceActionLocalService;
-	private final ResourceLocalService _resourceLocalService;
 
 }

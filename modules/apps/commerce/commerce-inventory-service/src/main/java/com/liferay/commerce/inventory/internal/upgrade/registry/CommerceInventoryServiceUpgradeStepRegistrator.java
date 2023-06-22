@@ -132,8 +132,7 @@ public class CommerceInventoryServiceUpgradeStepRegistrator
 			"2.4.1", "2.5.0",
 			new com.liferay.commerce.inventory.internal.upgrade.v2_5_0.
 				CommerceInventoryWarehouseUpgradeProcess(
-					_companyLocalService, _resourceActionLocalService,
-					_resourceLocalService));
+					_resourceActionLocalService));
 
 		registry.register(
 			"2.5.0", "2.5.1",

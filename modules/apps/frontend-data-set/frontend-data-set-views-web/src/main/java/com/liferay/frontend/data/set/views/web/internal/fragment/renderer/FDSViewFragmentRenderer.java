@@ -26,6 +26,7 @@ import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManagerProvider;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -33,10 +34,12 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.template.react.renderer.ComponentDescriptor;
 import com.liferay.portal.template.react.renderer.ReactRenderer;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
@@ -53,6 +56,8 @@ import java.util.Collection;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -202,7 +207,7 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 		_reactRenderer.renderReact(
 			componentDescriptor,
 			HashMapBuilder.<String, Object>put(
-				"apiURL", _getAPIURL(fdsEntryObjectEntry)
+				"apiURL", _getAPIURL(fdsEntryObjectEntry, httpServletRequest)
 			).put(
 				"id", "FDS_" + fragmentRendererContext.getFragmentElementId()
 			).put(
@@ -236,9 +241,44 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 		return sb.toString();
 	}
 
-	private String _getAPIURL(ObjectEntry fdsEntryObjectEntry) {
-		Map<String, Object> properties = fdsEntryObjectEntry.getProperties();
+	private String _embedURLParameters(String apiUrl, HttpServletRequest httpServletRequest){
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		Pattern pattern = Pattern.compile("\\{(.*?)\\}", Pattern.CASE_INSENSITIVE);
+		Matcher matcher = pattern.matcher(apiUrl);
+	
+		if(matcher.find()) {
+			String[] ALLOWED_PARAMETERS = {"siteId", "scopeKey", "userId"};
+
+			for (String param : ALLOWED_PARAMETERS){
+				String paramValue = "";
+
+				switch (param) {
+					case "siteId":
+						paramValue = Long.toString(themeDisplay.getScopeGroupId());
+						break;
+					case "scopeKey":
+						paramValue = Long.toString(themeDisplay.getScopeGroupId());
+						break;
+					case "userId":
+						paramValue = Long.toString(themeDisplay.getUserId());
+						break;
+				}
+
+				apiUrl = apiUrl.replace('{' + param + '}', paramValue);
+			}
+		} 
+
+		return apiUrl;
+	}
+
+	private String _getAPIURL(ObjectEntry fdsEntryObjectEntry, HttpServletRequest httpServletRequest) {
+
+		Map<String, Object> properties = fdsEntryObjectEntry.getProperties();
+	
 		StringBundler sb = new StringBundler(3);
 
 		sb.append("/o");
@@ -247,8 +287,8 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 				String.valueOf(properties.get("restApplication")), "/v1.0",
 				StringPool.BLANK));
 		sb.append(String.valueOf(properties.get("restEndpoint")));
-
-		return sb.toString();
+		
+		return _embedURLParameters(sb.toString(), httpServletRequest);
 	}
 
 	private JSONArray _getFieldsJSONArray(

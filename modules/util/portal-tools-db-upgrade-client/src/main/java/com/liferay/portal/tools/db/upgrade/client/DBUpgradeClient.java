@@ -211,7 +211,7 @@ public class DBUpgradeClient {
 
 		Process process = processBuilder.start();
 
-		boolean gogoShell = false;
+		boolean upgradeFailed = false;
 
 		try (ObjectOutputStream bootstrapObjectOutputStream =
 				new ObjectOutputStream(process.getOutputStream());
@@ -228,7 +228,7 @@ public class DBUpgradeClient {
 
 			while ((line = bufferedReader.readLine()) != null) {
 				if (line.contains("UpgradeRecorder") && line.contains("fail")) {
-					gogoShell = true;
+					upgradeFailed = true;
 				}
 
 				if (line.equals("Exiting DBUpgrader#main(String[]).")) {
@@ -245,7 +245,7 @@ public class DBUpgradeClient {
 		}
 
 		try (GogoShellClient gogoShellClient = _initGogoShellClient()) {
-			if (gogoShell || _shell) {
+			if (upgradeFailed || _shell) {
 				System.out.println("Connecting to Gogo shell...");
 
 				_printHelp();

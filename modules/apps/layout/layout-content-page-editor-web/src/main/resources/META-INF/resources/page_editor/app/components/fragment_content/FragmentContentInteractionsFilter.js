@@ -45,6 +45,7 @@ import selectLanguageId from '../../selectors/selectLanguageId';
 import canActivateEditable from '../../utils/canActivateEditable';
 import {deepEqual} from '../../utils/checkDeepEqual';
 import isMapped from '../../utils/editable_value/isMapped';
+import getEditableId from '../../utils/getEditableId';
 import {fromControlsId} from '../layout_data_items/Collection';
 import {getEditableElement} from './getEditableElement';
 
@@ -170,8 +171,8 @@ function FragmentContentInteractionsFilter({
 				const editableId =
 					hoveredItemType === ITEM_TYPES.mappedContent
 						? editableValue.classNameId
-							? `${editableValue.classNameId}-${editableValue.classPK}`
-							: `${localizedEditableValue.classNameId}-${localizedEditableValue.classPK}`
+							? getEditableId(editableValue)
+							: getEditableId(localizedEditableValue)
 						: editable.itemId;
 
 				const hovered =

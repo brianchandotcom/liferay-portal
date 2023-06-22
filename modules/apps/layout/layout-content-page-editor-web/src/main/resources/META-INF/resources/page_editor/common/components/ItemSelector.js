@@ -24,6 +24,7 @@ import {config} from '../../app/config/index';
 import {useSelectorCallback} from '../../app/contexts/StoreContext';
 import {selectPageContentDropdownItems} from '../../app/selectors/selectPageContentDropdownItems';
 import findPageContent from '../../app/utils/findPageContent';
+import getEditableId from '../../app/utils/getEditableId';
 import {useId} from '../hooks/useId';
 import {openItemSelector} from '../openItemSelector';
 
@@ -90,7 +91,7 @@ export default function ItemSelector({
 			}
 
 			const transformMappedItem = (item) => ({
-				'data-item-id': `${item.classNameId}-${item.classPK}`,
+				'data-item-id': getEditableId(item),
 				'label': item.title,
 				'onClick': () => onItemSelect(item),
 			});

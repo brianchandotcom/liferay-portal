@@ -60,6 +60,15 @@ public class CompanyFeatureFlagsProvider {
 
 	public void setEnabled(long companyId, String key, boolean enabled) {
 		_featureFlagPreferencesManager.setEnabled(companyId, key, enabled);
+
+		CompanyFeatureFlags companyFeatureFlags = _companyFeatureFlagsMap.get(
+			companyId);
+
+		if (companyFeatureFlags == null) {
+			return;
+		}
+
+		companyFeatureFlags.setEnabled(key, enabled);
 	}
 
 	public <T> T withCompanyFeatureFlags(

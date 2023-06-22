@@ -35,6 +35,10 @@ public class FeatureFlagWrapper implements FeatureFlag {
 		return _featureFlag.getDescription(locale);
 	}
 
+	public FeatureFlag getFeatureFlag() {
+		return _featureFlag;
+	}
+
 	@Override
 	public FeatureFlagType getFeatureFlagType() {
 		return _featureFlag.getFeatureFlagType();

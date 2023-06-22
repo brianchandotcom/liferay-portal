@@ -16,6 +16,8 @@ package com.liferay.feature.flag.web.internal.company.feature.flags;
 
 import com.liferay.feature.flag.web.internal.constants.FeatureFlagConstants;
 import com.liferay.feature.flag.web.internal.model.FeatureFlag;
+import com.liferay.feature.flag.web.internal.model.FeatureFlagWrapper;
+import com.liferay.feature.flag.web.internal.model.PreferenceAwareFeatureFlag;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -60,13 +62,21 @@ public class CompanyFeatureFlags {
 			return PropsValues.FEATURE_FLAGS_JSON;
 		}
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		String json = _json;
 
-		for (FeatureFlag featureFlag : _featureFlagsMap.values()) {
-			jsonObject.put(featureFlag.getKey(), featureFlag.isEnabled());
+		if (json == null) {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+			for (FeatureFlag featureFlag : _featureFlagsMap.values()) {
+				jsonObject.put(featureFlag.getKey(), featureFlag.isEnabled());
+			}
+
+			json = jsonObject.toString();
+
+			_json = json;
 		}
 
-		return jsonObject.toString();
+		return json;
 	}
 
 	public boolean isEnabled(String key) {
@@ -80,6 +90,33 @@ public class CompanyFeatureFlags {
 			PropsUtil.get(FeatureFlagConstants.getKey(key)));
 	}
 
+	public void setEnabled(String key, boolean enabled) {
+		FeatureFlag featureFlag = _featureFlagsMap.get(key);
+
+		if ((featureFlag == null) || (enabled == featureFlag.isEnabled())) {
+			return;
+		}
+
+		while (featureFlag instanceof FeatureFlagWrapper) {
+			if (featureFlag instanceof PreferenceAwareFeatureFlag) {
+				PreferenceAwareFeatureFlag preferenceAwareFeatureFlag =
+					(PreferenceAwareFeatureFlag)featureFlag;
+
+				preferenceAwareFeatureFlag.setEnabled(enabled);
+
+				_json = null;
+
+				break;
+			}
+
+			FeatureFlagWrapper featureFlagWrapper =
+				(FeatureFlagWrapper)featureFlag;
+
+			featureFlag = featureFlagWrapper.getFeatureFlag();
+		}
+	}
+
 	private final Map<String, FeatureFlag> _featureFlagsMap;
+	private volatile String _json;
 
 }

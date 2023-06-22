@@ -171,6 +171,8 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 				if (_log.isWarnEnabled()) {
 					_log.warn(exception);
 				}
+
+				throw new RuntimeException(exception);
 			}
 		};
 

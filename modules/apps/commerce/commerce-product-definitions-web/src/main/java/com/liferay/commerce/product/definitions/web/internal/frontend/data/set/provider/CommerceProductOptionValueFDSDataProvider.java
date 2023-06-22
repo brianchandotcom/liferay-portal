@@ -15,7 +15,7 @@
 package com.liferay.commerce.product.definitions.web.internal.frontend.data.set.provider;
 
 import com.liferay.commerce.currency.model.CommerceCurrency;
-import com.liferay.commerce.currency.service.CommerceCurrencyService;
+import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.product.definitions.web.internal.constants.CommerceProductFDSNames;
 import com.liferay.commerce.product.definitions.web.internal.model.ProductOptionValue;
@@ -145,7 +145,7 @@ public class CommerceProductOptionValueFDSDataProvider
 			_commerceCatalogService.fetchCommerceCatalogByGroupId(
 				cpDefinitionOptionRel.getGroupId());
 
-		return _commerceCurrencyService.getCommerceCurrency(
+		return _commerceCurrencyLocalService.getCommerceCurrency(
 			commerceCatalog.getCompanyId(),
 			commerceCatalog.getCommerceCurrencyCode());
 	}
@@ -193,7 +193,7 @@ public class CommerceProductOptionValueFDSDataProvider
 	private CommerceCatalogService _commerceCatalogService;
 
 	@Reference
-	private CommerceCurrencyService _commerceCurrencyService;
+	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
 
 	@Reference
 	private CommercePriceFormatter _commercePriceFormatter;

@@ -202,6 +202,8 @@ public class AICreatorOpenAIEditorConfigurationTest {
 		Assert.assertEquals(
 			expectedEnabled, configJSONObject.has("aiCreatorOpenAIURL"));
 		Assert.assertEquals(
+			expectedEnabled, configJSONObject.has("aiCreatorPortletNamespace"));
+		Assert.assertEquals(
 			expectedEnabled, configJSONObject.has("isAICreatorOpenAIAPIKey"));
 		Assert.assertEquals(
 			expectedAPIKey && expectedEnabled,

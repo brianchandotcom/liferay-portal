@@ -1,0 +1,64 @@
+@component-name = "OSB Site Initializer EVP"
+definition {
+
+	var baseURL = PropsUtil.get("portal.url");
+
+	property custom.properties = "feature.flag.LPS-169981=true";
+	property osgi.modules.includes = "osb-site-initializer-evp";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "OSB Site Initializer EVP";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Create a new EVP Site") {
+			EVPUtils.addEVPSite();
+		}
+
+		task ("Navigate to EVP Site") {
+			EVPUtils.gotoEVP();
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		ObjectAdmin.deleteAllCustomObjectsViaAPI();
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "EVP Portal");
+		}
+	}
+
+	@description = "This is a test for LPS-172949. Make sure the edit button does not appear when the user's role is 'User employee'."
+	@priority = 5
+	test EmployeeCannotEditOrganizationInAwatingApprovalStatus {
+		task ("Given the Employee user is in the Organization page") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "employee@liferay.com",
+				userLoginFullName = "Employee User");
+
+			EVPUtils.gotoEVP();
+
+			EVPNavigator.goToNavItem(navItem = "Organization");
+		}
+
+		task ("When the Employee user clicks on ellipsis button of an Organization with 'Awaiting Finance Approval' status") {
+			EVPOrganization.kebabMenuOrganization(organizationName = "Organization 2");
+		}
+
+		task ("Then the edit button dont appear") {
+			MenuItem.viewNotPresent(menuItem = "Edit");
+		}
+	}
+
+}

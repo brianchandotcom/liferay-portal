@@ -1,0 +1,181 @@
+<project basedir="." default="update-portal" name="release-license" xmlns:antelope="antlib:ise.antelope.tasks">
+	<target name="update-portal">
+		<copy includeemptydirs="false" todir="${portal.dir}/portal-impl/src/com/liferay/portal/license">
+			<fileset dir="${ext.dir}/ext-impl/src/com/liferay/portal/license" />
+		</copy>
+
+		<if>
+			<istrue value="${use.legacy.portal.encrypter}" />
+			<then>
+				<copy includeemptydirs="false" todir="${portal.dir}/portal-impl/src/com/liferay/portal/kernel/encryptor">
+					<fileset dir="${ext.dir}/ext-impl/src/com/liferay/portal/kernel/encryptor" />
+				</copy>
+			</then>
+		</if>
+
+		<replace encoding="UTF-8" file="${portal.dir}/modules/core/portal-app-license-resolver-hook/src/main/java/com/liferay/portal/app/license/resolver/hook/AppResolverHook.java">
+			<replacetoken><![CDATA[if (productId == null) {]]></replacetoken>
+			<replacevalue><![CDATA[if ((productId == null) && properties.containsKey("product-type")) {
+				productId = bundleRevision.getSymbolicName();
+			}
+
+			if (productId == null) {]]></replacevalue>
+		</replace>
+
+		<replace encoding="UTF-8" file="${portal.dir}/portal-impl/src/META-INF/util-spring.xml">
+			<replacetoken><![CDATA[com.liferay.portal.license.util.DefaultLicenseManagerImpl]]></replacetoken>
+			<replacevalue><![CDATA[com.liferay.portal.license.util.LocalLicenseManagerImpl]]></replacevalue>
+		</replace>
+
+		<replace encoding="UTF-8" file="${portal.dir}/portal-impl/src/com/liferay/portal/util/LicenseUtil.java">
+			<replacetoken><![CDATA["version", 2]]></replacetoken>
+			<replacevalue><![CDATA["version", 1]]></replacevalue>
+		</replace>
+
+		<replace encoding="UTF-8" file="${portal.dir}/portal-impl/src/com/liferay/portal/util/LicenseUtil.java">
+			<replacetoken><![CDATA[Arrays.toString(getServerIdBytes())]]></replacetoken>
+			<replacevalue><![CDATA[com.liferay.portal.license.LicenseManager.getServerId()]]></replacevalue>
+		</replace>
+
+		<copy todir="${portal.dir}/modules">
+			<fileset dir="${ext.dir}/ext-modules" />
+		</copy>
+
+		<if>
+			<and>
+				<istrue value="${portal.release.edition.private}" />
+				<not>
+					<istrue value="${update.portal.override}" />
+				</not>
+			</and>
+			<then>
+				<copy includeemptydirs="false" todir="${portal.dir}/portal-impl/src/com/liferay/portal/ee">
+					<fileset dir="${ext.dir}/ext-impl/src/com/liferay/portal/ee" excludes="**/ClassEncryptorBuilder.java" />
+				</copy>
+
+				<replace encoding="UTF-8" file="${portal.dir}/portal-impl/src/META-INF/util-spring.xml">
+					<replacetoken><![CDATA[<bean class="com.liferay.portal.license.util.LocalLicenseManagerImpl" id="com.liferay.portal.kernel.license.util.LicenseManager" />]]></replacetoken>
+					<replacevalue><![CDATA[<bean class="com.liferay.portal.license.util.LocalLicenseManagerImpl" id="com.liferay.portal.kernel.license.util.LicenseManager" />
+					<bean class="com.liferay.portal.ee.license.LicenseBottomJSPDynamicInclude" id="com.liferay.portal.ee.license.LicenseBottomJSPDynamicInclude" />]]></replacevalue>
+				</replace>
+
+				<replace encoding="UTF-8" file="${portal.dir}/portal-impl/src/META-INF/portal-log4j.xml">
+					<replacetoken><![CDATA[<Logger level="INFO" name="com.liferay.portal.license" />]]></replacetoken>
+					<replacevalue><![CDATA[<Logger level="INFO" name="com.liferay.portal.license" />
+			<Logger level="INFO" name="com.liferay.portal.ee.license" />]]></replacevalue>
+				</replace>
+
+				<replace encoding="UTF-8" file="${portal.dir}/portal-impl/src/com/liferay/portal/events/EventsProcessorUtil.java">
+					<replacetoken><![CDATA[if (lifecycleActions != null) {]]></replacetoken>
+					<replacevalue><![CDATA[if (key.equals(com.liferay.portal.kernel.util.PropsKeys.SERVLET_SERVICE_EVENTS_PRE)) {
+			_lifecycleAction.processLifecycleEvent(lifecycleEvent);
+		}
+
+		if (lifecycleActions != null) {]]></replacevalue>
+				</replace>
+
+				<replace encoding="UTF-8" file="${portal.dir}/portal-impl/src/com/liferay/portal/events/EventsProcessorUtil.java">
+					<replacetoken><![CDATA[private static final Log _log = LogFactoryUtil.getLog(]]></replacetoken>
+					<replacevalue><![CDATA[private static final LifecycleAction _lifecycleAction = com.liferay.portal.ee.license.LCSLicenseManager.getLifecycleAction();
+
+	private static final Log _log = LogFactoryUtil.getLog(]]></replacevalue>
+				</replace>
+
+				<replace encoding="UTF-8" file="${portal.dir}/portal-impl/src/com/liferay/portal/service/impl/UserLocalServiceImpl.java">
+					<replacefilter token="// PLACEHOLDER 01"><replacevalue><![CDATA[com.liferay.portal.ee.license.LCSLicenseManager.checkUserLicense();]]></replacevalue></replacefilter>
+				</replace>
+
+				<replace encoding="UTF-8" file="${portal.dir}/portal-impl/src/com/liferay/portal/internal/servlet/MainServlet.java">
+					<replacetoken><![CDATA[StartupAction startupAction = new StartupAction();]]></replacetoken>
+					<replacevalue><![CDATA[StartupAction startupAction = com.liferay.portal.ee.license.LCSLicenseManager.getStartupAction();]]></replacevalue>
+				</replace>
+
+				<replace encoding="UTF-8" file="${portal.dir}/portal-web/docroot/html/portal/license.jsp">
+					<replacetoken><![CDATA[Register Your Application]]></replacetoken>
+					<replacevalue><![CDATA[Register Your Server or Application]]></replacevalue>
+				</replace>
+
+				<replace encoding="UTF-8" file="${portal.dir}/portal-web/docroot/html/portal/license.jsp">
+					<replacetoken><![CDATA[List<Map<String, String>> licenseProperties = LicenseManagerUtil.getLicenseProperties();]]></replacetoken>
+					<replacevalue><![CDATA[List<Map<String, String>> licenseProperties = LicenseManagerUtil.getLicenseProperties();
+
+		int portalLicenseState = 0;
+		String portalLicenseType = StringPool.BLANK;
+
+		if ((licenseProperties != null) && (licenseProperties.size() > 0)) {
+			Map<String, String> portalLicenseProperties = licenseProperties.get(0);
+
+			String productId = GetterUtil.getString(portalLicenseProperties.get("productId"));
+
+			if (productId.equals("Portal")) {
+				portalLicenseState = GetterUtil.getInteger(portalLicenseProperties.get("licenseState"));
+				portalLicenseType = portalLicenseProperties.get("type");
+			}
+		}
+
+		if (portalLicenseState <= 0) {
+			portalLicenseState = 1;
+		}
+		%>
+
+		<c:choose>
+			<c:when test="<%= portalLicenseState == 2 %>">
+				<div class="portlet-msg-error">
+					Your activation key has expired. Please update your activation key to continue using Liferay DXP.
+				</div>
+			</c:when>
+			<c:when test="<%= portalLicenseState == 4 %>">
+				<div class="portlet-msg-error">
+					Your activation key has been deactivated.
+				</div>
+			</c:when>
+			<c:when test="<%= portalLicenseState == 5 %>">
+				<div class="portlet-msg-error">
+					Your activation key is not valid for this server.
+				</div>
+			</c:when>
+			<c:when test="<%= portalLicenseState == 6 %>">
+				<div class="portlet-msg-error">
+					<c:choose>
+						<c:when test='<%= portalLicenseType.equals("limited") || portalLicenseType.equals("production") %>'>
+							Your activation key is currently in use by another instance.
+						</c:when>
+						<c:when test='<%= portalLicenseType.equals("per-user") %>'>
+							Your server has exceeded the maximum number of users.
+						</c:when>
+						<c:otherwise>
+							You have exceeded the developer activation key connection limit. Click <a href="<%= themeDisplay.getPathMain() %>/portal/license?cmd=resetState&resetToken=<%= com.liferay.portal.ee.license.LCSLicenseManager.getResetToken() %>">here</a> to reset all connections.
+						</c:otherwise>
+					</c:choose>
+				</div>
+			</c:when>
+		</c:choose>
+
+		<%]]></replacevalue>
+				</replace>
+
+				<replace encoding="UTF-8" file="${portal.dir}/portal-web/docroot/WEB-INF/struts-config.xml">
+					<replacetoken><![CDATA[<action path="/portal/license" type="com.liferay.portal.action.UpdateLicenseAction">]]></replacetoken>
+					<replacevalue><![CDATA[<action forward="portal.license_activation" path="/portal/license_activation" />
+
+		<action path="/portal/license" type="com.liferay.portal.ee.license.UpdateLicenseAction">]]></replacevalue>
+				</replace>
+
+		<replace encoding="UTF-8" file="${portal.dir}/portal-web/docroot/WEB-INF/tiles-defs.xml">
+			<replacetoken><![CDATA[<definition extends="portal" name="portal.license">]]></replacetoken>
+			<replacevalue><![CDATA[<definition extends="portal" name="portal.license_activation">
+		<put name="pop_up" value="true" />
+		<put name="title" value="license" />
+		<put name="content" value="/portal/license_activation.jsp" />
+	</definition>
+
+	<definition extends="portal" name="portal.license">]]></replacevalue>
+				</replace>
+
+				<copy todir="${portal.dir}/portal-web/docroot">
+					<fileset dir="${ext.dir}/ext-web/docroot" />
+				</copy>
+			</then>
+		</if>
+	</target>
+</project>

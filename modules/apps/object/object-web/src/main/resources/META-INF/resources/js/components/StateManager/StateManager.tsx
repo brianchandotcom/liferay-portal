@@ -101,7 +101,7 @@ export default function StateManager({
 							fieldName: 'label',
 							label: Liferay.Language.get('label'),
 							localizeLabel: true,
-							sortable: false,
+							sortable: true,
 						},
 					],
 				},

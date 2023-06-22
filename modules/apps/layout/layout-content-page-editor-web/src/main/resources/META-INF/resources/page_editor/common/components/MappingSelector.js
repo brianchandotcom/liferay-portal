@@ -227,7 +227,7 @@ export default function MappingSelectorWrapper({
 				label={fieldSelectorLabel}
 				onValueSelect={(event) => {
 					if (event.target.value === UNMAPPED_OPTION.value) {
-						onMappingSelect({collectionFieldId: ''});
+						onMappingSelect({});
 					}
 					else {
 						onMappingSelect({

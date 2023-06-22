@@ -71,10 +71,6 @@ export function MappingPanel({item}) {
 			};
 		}
 
-		if (!isMapped(nextEditableValue)) {
-			delete nextEditableValue.collectionFieldId;
-		}
-
 		const nextEditableValues = {
 			...fragmentEntryLink.editableValues,
 			[processoryKey]: {

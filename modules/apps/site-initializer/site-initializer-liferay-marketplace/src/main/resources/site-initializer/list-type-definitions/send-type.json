@@ -1,7 +1,6 @@
 {
 	"externalReferenceCode": "MARKETPLACE-SENDTYPE",
-	"name": "sendType",
 	"name_i18n": {
-		"en-US": "Send Type"
+		"en-US": "sendType"
 	}
 }

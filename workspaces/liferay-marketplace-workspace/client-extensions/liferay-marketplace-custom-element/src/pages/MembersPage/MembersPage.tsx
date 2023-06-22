@@ -242,7 +242,7 @@ export function MembersPage({
 							renderToast={renderToast}
 							setSelectedMember={setSelectedMember}
 							userLogged={userLogged}
-						></MemberProfile>
+						/>
 					) : (
 						<DashboardTable<MemberProps>
 							emptyStateMessage={memberMessages.emptyStateMessage}

@@ -246,22 +246,39 @@ public class DefaultObjectEntryManagerImpl
 			ObjectDefinition relatedObjectDefinition, long userId)
 		throws Exception {
 
-		ObjectRelatedModelsProvider objectRelatedModelsProvider =
-			_objectRelatedModelsProviderRegistry.getObjectRelatedModelsProvider(
-				relatedObjectDefinition.getClassName(),
-				relatedObjectDefinition.getCompanyId(),
-				objectRelationship.getType());
+		ObjectRelatedModelsProvider objectRelatedModelsProvider = null;
 
-		if ((objectRelationship.getObjectDefinitionId1() !=
-				objectDefinition.getObjectDefinitionId()) &&
-			Objects.equals(
-				ObjectRelationshipConstants.TYPE_MANY_TO_MANY,
-				objectRelationship.getType())) {
+		if (_isManyToOneRelationship(
+				relatedObjectDefinition, objectRelationship,
+				objectDefinition) &&
+			relatedObjectDefinition.isUnmodifiableSystemObject()) {
 
-			objectRelationship =
-				_objectRelationshipLocalService.getObjectRelationship(
-					objectDefinition.getObjectDefinitionId(),
-					objectRelationship.getName());
+			objectRelatedModelsProvider =
+				_objectRelatedModelsProviderRegistry.
+					getObjectRelatedModelsProvider(
+						objectDefinition.getClassName(),
+						objectDefinition.getCompanyId(),
+						objectRelationship.getType());
+		}
+		else {
+			objectRelatedModelsProvider =
+				_objectRelatedModelsProviderRegistry.
+					getObjectRelatedModelsProvider(
+						relatedObjectDefinition.getClassName(),
+						relatedObjectDefinition.getCompanyId(),
+						objectRelationship.getType());
+
+			if ((objectRelationship.getObjectDefinitionId1() !=
+					objectDefinition.getObjectDefinitionId()) &&
+				Objects.equals(
+					ObjectRelationshipConstants.TYPE_MANY_TO_MANY,
+					objectRelationship.getType())) {
+
+				objectRelationship =
+					_objectRelationshipLocalService.getObjectRelationship(
+						objectDefinition.getObjectDefinitionId(),
+						objectRelationship.getName());
+			}
 		}
 
 		for (Object relatedModel :
@@ -862,7 +879,7 @@ public class DefaultObjectEntryManagerImpl
 				}
 
 				for (ObjectEntry nestedObjectEntry : nestedObjectEntries) {
-					if (_isFromManySide(
+					if (_isManyToOneRelationship(
 							objectDefinition, objectRelationship,
 							relatedObjectDefinition)) {
 
@@ -883,7 +900,7 @@ public class DefaultObjectEntryManagerImpl
 						relatedObjectDefinition, nestedObjectEntry,
 						relatedObjectDefinition.getScope());
 
-					if (!_isFromManySide(
+					if (!_isManyToOneRelationship(
 							objectDefinition, objectRelationship,
 							relatedObjectDefinition)) {
 
@@ -1184,7 +1201,7 @@ public class DefaultObjectEntryManagerImpl
 		return false;
 	}
 
-	private boolean _isFromManySide(
+	private boolean _isManyToOneRelationship(
 		ObjectDefinition objectDefinition,
 		ObjectRelationship objectRelationship,
 		ObjectDefinition relatedObjectDefinition) {

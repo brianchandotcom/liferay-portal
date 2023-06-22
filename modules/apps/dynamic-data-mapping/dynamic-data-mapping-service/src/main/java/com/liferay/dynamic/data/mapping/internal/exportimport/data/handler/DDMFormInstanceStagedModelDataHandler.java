@@ -31,7 +31,14 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Element;
 
 import java.util.List;
@@ -187,9 +194,14 @@ public class DDMFormInstanceStagedModelDataHandler
 		return _stagedModelRepository;
 	}
 
+	private String _addInnerValue(String string) {
+		return String.format("[\"%s\"]", string);
+	}
+
 	private void _exportFormInstanceSettings(
-		PortletDataContext portletDataContext, DDMFormInstance formInstance,
-		Element formInstanceElement) {
+			PortletDataContext portletDataContext, DDMFormInstance formInstance,
+			Element formInstanceElement)
+		throws Exception {
 
 		String settingsDDMFormValuesPath = ExportImportPathUtil.getModelPath(
 			formInstance, "settings-ddm-form-values.json");
@@ -198,7 +210,8 @@ public class DDMFormInstanceStagedModelDataHandler
 			"settings-ddm-form-values-path", settingsDDMFormValuesPath);
 
 		portletDataContext.addZipEntry(
-			settingsDDMFormValuesPath, formInstance.getSettings());
+			settingsDDMFormValuesPath,
+			_includeObjectDefinitionSettings(formInstance.getSettings()));
 	}
 
 	private DDMFormValues _getImportFormInstanceSettings(
@@ -211,9 +224,192 @@ public class DDMFormInstanceStagedModelDataHandler
 			"settings-ddm-form-values-path");
 
 		String serializedSettingsDDMFormValues =
-			portletDataContext.getZipEntryAsString(settingsDDMFormValuesPath);
+			_updateObjectDefinitionIdInSettingsDDMFormValues(
+				portletDataContext.getZipEntryAsString(
+					settingsDDMFormValuesPath));
 
 		return deserialize(serializedSettingsDDMFormValues, ddmForm);
+	}
+
+	private String _getInnerValue(String string) {
+		if (string == null) {
+			return null;
+		}
+		else if (string.length() < 4) {
+			return string;
+		}
+		else if (string.startsWith("[\"") && string.endsWith("\"]")) {
+			return string.substring(2, string.length() - 2);
+		}
+
+		return string;
+	}
+
+	private String _includeObjectDefinitionSettings(String settings)
+		throws Exception {
+
+		JSONObject settingsJSONObject = _jsonFactory.createJSONObject(settings);
+
+		JSONArray fieldValuesJSONArray = settingsJSONObject.getJSONArray(
+			"fieldValues");
+
+		ObjectDefinition objectDefinition = null;
+
+		for (Object fieldValue : fieldValuesJSONArray) {
+			JSONObject fieldValueJSONObject = (JSONObject)fieldValue;
+
+			if (StringUtil.equals(
+					fieldValueJSONObject.getString("name"),
+					"objectDefinitionId")) {
+
+				objectDefinition =
+					_objectDefinitionLocalService.fetchObjectDefinition(
+						GetterUtil.getLong(
+							_getInnerValue(
+								fieldValueJSONObject.getString("value"))));
+
+				break;
+			}
+		}
+
+		if (objectDefinition == null) {
+			return settings;
+		}
+
+		JSONObject companyIdJSONObject = _jsonFactory.createJSONObject();
+
+		companyIdJSONObject.put(
+			"name", "objectDefinitionCompanyId"
+		).put(
+			"value",
+			_addInnerValue(String.valueOf(objectDefinition.getCompanyId()))
+		);
+
+		JSONObject externalReferenceJSONObject =
+			_jsonFactory.createJSONObject();
+
+		externalReferenceJSONObject.put(
+			"name", "objectDefinitionExternalReferenceCode"
+		).put(
+			"value", _addInnerValue(objectDefinition.getExternalReferenceCode())
+		);
+
+		boolean hasObjectDefinitionCompanyId = false;
+		boolean hasObjectDefinitionExternalReferenceCode = false;
+		JSONArray updatedJSONArray = _jsonFactory.createJSONArray();
+
+		for (int i = 0; i < fieldValuesJSONArray.length(); i++) {
+			JSONObject fieldValueJSONObject =
+				fieldValuesJSONArray.getJSONObject(i);
+
+			if (StringUtil.equals(
+					fieldValueJSONObject.getString("name"),
+					"objectDefinitionCompanyId")) {
+
+				hasObjectDefinitionCompanyId = true;
+				updatedJSONArray.put(companyIdJSONObject);
+			}
+			else if (StringUtil.equals(
+						fieldValueJSONObject.getString("name"),
+						"objectDefinitionExternalReferenceCode")) {
+
+				hasObjectDefinitionExternalReferenceCode = true;
+				updatedJSONArray.put(externalReferenceJSONObject);
+			}
+			else {
+				updatedJSONArray.put(fieldValueJSONObject);
+			}
+		}
+
+		if (!hasObjectDefinitionCompanyId) {
+			updatedJSONArray.put(companyIdJSONObject);
+		}
+
+		if (!hasObjectDefinitionExternalReferenceCode) {
+			updatedJSONArray.put(externalReferenceJSONObject);
+		}
+
+		settingsJSONObject.put("fieldValues", updatedJSONArray);
+
+		return settingsJSONObject.toString();
+	}
+
+	private String _updateObjectDefinitionIdInSettingsDDMFormValues(
+			String serializedSettingsDDMFormValues)
+		throws Exception {
+
+		JSONObject settingsJSONObject = _jsonFactory.createJSONObject(
+			serializedSettingsDDMFormValues);
+
+		JSONArray fieldValuesJSONArray = settingsJSONObject.getJSONArray(
+			"fieldValues");
+
+		long objectDefinitionCompanyId = 0;
+		String objectDefinitionExternalReferenceCode = null;
+
+		for (Object fieldValue : fieldValuesJSONArray) {
+			JSONObject fieldValueJSONObject = _jsonFactory.createJSONObject(
+				fieldValue.toString());
+
+			if (StringUtil.equals(
+					fieldValueJSONObject.get(
+						"name"
+					).toString(),
+					"objectDefinitionCompanyId")) {
+
+				objectDefinitionCompanyId = GetterUtil.getLong(
+					_getInnerValue(fieldValueJSONObject.getString("value")));
+			}
+			else if (StringUtil.equals(
+						fieldValueJSONObject.getString("name"),
+						"objectDefinitionExternalReferenceCode")) {
+
+				objectDefinitionExternalReferenceCode = _getInnerValue(
+					fieldValueJSONObject.getString("value"));
+			}
+		}
+
+		if ((objectDefinitionCompanyId == 0) ||
+			(objectDefinitionExternalReferenceCode == null)) {
+
+			return serializedSettingsDDMFormValues;
+		}
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.
+				fetchObjectDefinitionByExternalReferenceCode(
+					objectDefinitionExternalReferenceCode,
+					objectDefinitionCompanyId);
+
+		if (objectDefinition == null) {
+			return serializedSettingsDDMFormValues;
+		}
+
+		JSONArray updatedJSONArray = _jsonFactory.createJSONArray();
+
+		for (Object fieldValue : fieldValuesJSONArray) {
+			JSONObject fieldValueJSONObject = (JSONObject)fieldValue;
+
+			if (StringUtil.equals(
+					fieldValueJSONObject.getString("name"),
+					"objectDefinitionId")) {
+
+				updatedJSONArray.put(
+					fieldValueJSONObject.put(
+						"value",
+						_addInnerValue(
+							String.valueOf(
+								objectDefinition.getObjectDefinitionId()))));
+
+				continue;
+			}
+
+			updatedJSONArray.put(fieldValueJSONObject);
+		}
+
+		return settingsJSONObject.put(
+			"fieldValues", updatedJSONArray
+		).toString();
 	}
 
 	@Reference
@@ -221,6 +417,12 @@ public class DDMFormInstanceStagedModelDataHandler
 
 	@Reference(target = "(ddm.form.values.deserializer.type=json)")
 	private DDMFormValuesDeserializer _jsonDDMFormValuesDeserializer;
+
+	@Reference
+	private JSONFactory _jsonFactory;
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.dynamic.data.mapping.model.DDMFormInstance)"

@@ -2154,7 +2154,7 @@ public class ObjectEntryLocalServiceImpl
 			}
 
 			for (String languageId : localizedValues.keySet()) {
-				locales.add(LocaleUtil.fromLanguageId(languageId));
+				locales.add(LocaleUtil.fromLanguageId(languageId, true, false));
 			}
 		}
 

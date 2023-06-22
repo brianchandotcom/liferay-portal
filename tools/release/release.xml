@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+
+<project default="build-release-tomcat" name="release">
+	<property location="ext" name="ext.dir" />
+	<property location="../.." name="portal.dir" />
+
+	<import file="${ext.dir}/build-release-license.xml" />
+	<import file="${portal.dir}/build.xml" />
+
+	<target name="build-release-tomcat">
+		<antcall target="update-portal" />
+		<antcall target="all" />
+		<ant antfile="build-dist.xml" dir="${portal.dir}" inheritall="false" target="zip-tomcat" />
+	</target>
+</project>

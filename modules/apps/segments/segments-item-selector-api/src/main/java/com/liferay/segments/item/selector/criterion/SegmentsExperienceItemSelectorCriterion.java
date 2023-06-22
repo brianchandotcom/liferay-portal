@@ -21,4 +21,15 @@ import com.liferay.item.selector.BaseItemSelectorCriterion;
  */
 public class SegmentsExperienceItemSelectorCriterion
 	extends BaseItemSelectorCriterion {
+
+	public long getPlid() {
+		return _plid;
+	}
+
+	public void setPlid(long plid) {
+		_plid = plid;
+	}
+
+	private long _plid;
+
 }

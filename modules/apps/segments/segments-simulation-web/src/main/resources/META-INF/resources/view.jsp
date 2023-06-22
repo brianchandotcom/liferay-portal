@@ -27,7 +27,7 @@ SegmentsSimulationDisplayContext segmentsSimulationDisplayContext = (SegmentsSim
 	<c:choose>
 		<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPS-186155") %>'>
 			<react:component
-				module="js/components/SegmentsAndExperiencesSelector"
+				module="js/components/PageContentSelectors"
 				props="<%= segmentsSimulationDisplayContext.getData() %>"
 			/>
 		</c:when>

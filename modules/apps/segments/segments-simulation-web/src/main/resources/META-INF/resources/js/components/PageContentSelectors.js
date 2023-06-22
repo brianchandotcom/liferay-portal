@@ -13,15 +13,13 @@
  */
 
 import ClayAlert from '@clayui/alert';
-import ClayButton from '@clayui/button';
-import {Text} from '@clayui/core';
-import ClayDropDown, {Align} from '@clayui/drop-down';
 import {ClaySelectWithOption} from '@clayui/form';
-import Label from '@clayui/label';
-import Layout from '@clayui/layout';
 import ClayLink from '@clayui/link';
 import {fetch, openSelectionModal, sub} from 'frontend-js-web';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
+
+import ExperienceSelector from './ExperienceSelector';
+import SegmentSelector from './SegmentSelector';
 
 const PREVIEW_OPTIONS = [
 	{
@@ -36,7 +34,7 @@ const PREVIEW_OPTIONS = [
 
 const MAXIMUM_DROPDOWN_ENTRIES = 8;
 
-function SegmentsAndExperiencesSelector({
+function PageContentSelectors({
 	deactivateSimulationURL,
 	namespace,
 	portletNamespace,
@@ -60,21 +58,6 @@ function SegmentsAndExperiencesSelector({
 		selectedSegmentsExperience,
 		setSelectedSegmentsExperience,
 	] = useState(segmentsExperiences?.[0]);
-	const [segmentSelectorActive, setSegmentSelectorActive] = useState(false);
-	const [
-		segmentExperienceSelectorActive,
-		setSegmentExperienceSelectorActive,
-	] = useState(false);
-
-	const segmentEntriesShortList =
-		segmentsEntries.length > 8
-			? segmentsEntries.slice(0, 8)
-			: segmentsEntries;
-
-	const segmentExperiencesShortList =
-		segmentsExperiences.length > 8
-			? segmentsExperiences.slice(0, 8)
-			: segmentsExperiences;
 
 	const formRef = useRef(null);
 	const firstRenderRef = useRef(true);
@@ -272,212 +255,33 @@ function SegmentsAndExperiencesSelector({
 						)}
 
 					{selectedPreviewOption === 'segments' && (
-						<div className="form-group">
-							<label htmlFor={`${namespace}segmentsEntryId`}>
-								{Liferay.Language.get('segment')}
-							</label>
-
-							<input
-								id={`${namespace}segmentsEntryId`}
-								name={`${namespace}segmentsEntryId`}
-								type="hidden"
-								value={selectedSegmentEntry.id}
-							/>
-
-							<ClayDropDown
-								active={segmentSelectorActive}
-								alignmentPosition={Align.BottomLeft}
-								menuElementAttrs={{
-									containerProps: {
-										className: 'cadmin',
-									},
-								}}
-								onActiveChange={setSegmentSelectorActive}
-								trigger={
-									<ClayButton
-										className="form-control-select text-left w-100"
-										displayType="secondary"
-										size="sm"
-										type="button"
-									>
-										<span>{selectedSegmentEntry.name}</span>
-									</ClayButton>
-								}
-							>
-								<ClayDropDown.ItemList>
-									{segmentEntriesShortList.map(
-										(segmentEntry) => (
-											<ClayDropDown.Item
-												key={segmentEntry.id}
-												onClick={() => {
-													setSegmentSelectorActive(
-														false
-													);
-													setSelectedSegmentEntry(
-														segmentEntry
-													);
-												}}
-											>
-												{segmentEntry.name}
-											</ClayDropDown.Item>
-										)
-									)}
-
-									{segmentsEntries.length >
-										MAXIMUM_DROPDOWN_ENTRIES && (
-										<ClayDropDown.Section>
-											<ClayButton
-												displayType="secondary w-100"
-												onClick={() => {
-													setSegmentSelectorActive(
-														false
-													);
-
-													handleMoreSegmentEntriesButtonClick();
-												}}
-											>
-												{Liferay.Language.get(
-													'more-segments'
-												)}
-											</ClayButton>
-										</ClayDropDown.Section>
-									)}
-								</ClayDropDown.ItemList>
-							</ClayDropDown>
-						</div>
+						<SegmentSelector
+							maximumDropdownEntries={MAXIMUM_DROPDOWN_ENTRIES}
+							namespace={namespace}
+							onMoreSegmentEntriesButtonClick={
+								handleMoreSegmentEntriesButtonClick
+							}
+							onSelectSegmentEntry={setSelectedSegmentEntry}
+							segmentsEntries={segmentsEntries}
+							selectedSegmentEntry={selectedSegmentEntry}
+						/>
 					)}
 
 					{selectedPreviewOption === 'experiences' && (
-						<div className="form-group">
-							<label
-								htmlFor={`${namespace}segmentsExperienceSelector`}
-								id={`${namespace}segmentsExperienceLabelId`}
-							>
-								{Liferay.Language.get('experience')}
-							</label>
-
-							<input
-								id={`${namespace}segmentsExperienceId`}
-								name={`${namespace}segmentsExperienceId`}
-								type="hidden"
-								value={
-									selectedSegmentsExperience.segmentsExperienceId
-								}
-							/>
-
-							<ClayDropDown
-								active={segmentExperienceSelectorActive}
-								alignmentPosition={Align.BottomLeft}
-								menuElementAttrs={{
-									containerProps: {
-										className: 'cadmin',
-									},
-								}}
-								onActiveChange={
-									setSegmentExperienceSelectorActive
-								}
-								trigger={
-									<ClayButton
-										className="form-control-select text-left w-100"
-										displayType="secondary"
-										size="sm"
-										type="button"
-									>
-										<span>
-											{
-												selectedSegmentsExperience.segmentsExperienceName
-											}
-										</span>
-									</ClayButton>
-								}
-							>
-								<ClayDropDown.ItemList>
-									{segmentExperiencesShortList.map(
-										(segmentsExperience) => (
-											<ClayDropDown.Item
-												key={
-													segmentsExperience.segmentsExperienceId
-												}
-												onClick={() => {
-													setSegmentExperienceSelectorActive(
-														false
-													);
-													setSelectedSegmentsExperience(
-														segmentsExperience
-													);
-												}}
-											>
-												<Layout.ContentRow>
-													<Layout.ContentCol
-														className="pl-0"
-														expand
-													>
-														<Text
-															id={`${segmentsExperience.segmentsExperienceId}-title`}
-															size={3}
-															weight="semi-bold"
-														>
-															{
-																segmentsExperience.segmentsExperienceName
-															}
-														</Text>
-
-														<Text
-															aria-hidden
-															color="secondary"
-															id={`${segmentsExperience.segmentsExperienceId}-description`}
-															size={3}
-														>
-															{`${Liferay.Language.get(
-																'segment'
-															)}:
-														${segmentsExperience.segmentsEntryName}`}
-														</Text>
-													</Layout.ContentCol>
-
-													<Layout.ContentCol className="pr-0">
-														<Label
-															aria-hidden
-															className="mr-0"
-															displayType={
-																segmentsExperience.segmentsExperienceActive
-																	? 'success'
-																	: 'secondary'
-															}
-															id={`${segmentsExperience.segmentsExperienceId}-status`}
-														>
-															{
-																segmentsExperience.segmentsExperienceStatusLabel
-															}
-														</Label>
-													</Layout.ContentCol>
-												</Layout.ContentRow>
-											</ClayDropDown.Item>
-										)
-									)}
-
-									{segmentsExperiences.length >
-										MAXIMUM_DROPDOWN_ENTRIES && (
-										<ClayDropDown.Section>
-											<ClayButton
-												displayType="secondary w-100"
-												onClick={() => {
-													setSegmentExperienceSelectorActive(
-														false
-													);
-
-													handleMoreSegmentExperiencesButtonClick();
-												}}
-											>
-												{Liferay.Language.get(
-													'more-experiences'
-												)}
-											</ClayButton>
-										</ClayDropDown.Section>
-									)}
-								</ClayDropDown.ItemList>
-							</ClayDropDown>
-						</div>
+						<ExperienceSelector
+							maximumDropdownEntries={MAXIMUM_DROPDOWN_ENTRIES}
+							namespace={namespace}
+							onMoreSegmentExperiencesButtonClick={
+								handleMoreSegmentExperiencesButtonClick
+							}
+							onSelectSegmentExperience={
+								setSelectedSegmentsExperience
+							}
+							segmentsExperiences={segmentsExperiences}
+							selectedSegmentsExperience={
+								selectedSegmentsExperience
+							}
+						/>
 					)}
 				</form>
 			)}
@@ -485,4 +289,4 @@ function SegmentsAndExperiencesSelector({
 	);
 }
 
-export default SegmentsAndExperiencesSelector;
+export default PageContentSelectors;

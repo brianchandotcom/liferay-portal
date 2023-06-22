@@ -1,0 +1,10 @@
+liferay-marketplace-custom-element-create-app:
+    dxp.lxc.liferay.com.virtualInstanceId: solutions.marketplace
+liferay-marketplace-custom-element-get-app:
+    dxp.lxc.liferay.com.virtualInstanceId: solutions.marketplace
+liferay-marketplace-custom-element-next-steps:
+    dxp.lxc.liferay.com.virtualInstanceId: solutions.marketplace
+liferay-marketplace-custom-element-published-apps:
+    dxp.lxc.liferay.com.virtualInstanceId: solutions.marketplace
+liferay-marketplace-custom-element-purchased-apps:
+    dxp.lxc.liferay.com.virtualInstanceId: solutions.marketplace

@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
@@ -57,7 +58,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Matthew Kong
  */
-@Component(service = CheckFaroProjectsMessageListener.class)
+@Component(
+	property = "destination.name=" + DestinationNames.SCHEDULER_DISPATCH,
+	service = MessageListener.class
+)
 public class CheckFaroProjectsMessageListener extends BaseMessageListener {
 
 	@Activate

@@ -2868,7 +2868,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 			notificationTemplate =
 				notificationTemplateResource.
 					putNotificationTemplateByExternalReferenceCode(
-						serviceBuilderNotificationTemplate.getExternalReferenceCode(),
+						serviceBuilderNotificationTemplate.
+							getExternalReferenceCode(),
 						notificationTemplate);
 		}
 

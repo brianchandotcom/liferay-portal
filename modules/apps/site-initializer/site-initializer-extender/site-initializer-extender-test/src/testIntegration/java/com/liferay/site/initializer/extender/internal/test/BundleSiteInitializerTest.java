@@ -1778,27 +1778,46 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertNotNull(notificationTemplateResource);
 
+		Map<String, String> bodyMap = notificationTemplate.getBody();
+
 		Assert.assertEquals(
-			"Test Notification Template", notificationTemplate.getName());
+			"<p>\n\tThis is a template email for Test Notification Template " +
+				"1.\n</p>",
+			bodyMap.get("en_US"));
+
+		Assert.assertEquals(
+			"Test Notification Template 1", notificationTemplate.getName());
 
 		Map<String, String> subjectMap = notificationTemplate.getSubject();
 
-		Assert.assertNotNull(subjectMap);
+		Assert.assertTrue(
+			Objects.equals(
+				subjectMap.get("en_US"),
+				StringUtil.getTitleCase(subjectMap.get("en_US"), true, "DXP")));
 
-		String subject = subjectMap.get("en_US");
+		notificationTemplate =
+			notificationTemplateResource.
+				getNotificationTemplateByExternalReferenceCode(
+					"TESTNOTIFICATIONTEMPLATE2");
+
+		Assert.assertNotNull(notificationTemplateResource);
+
+		bodyMap = notificationTemplate.getBody();
+
+		Assert.assertEquals(
+			"<p>\n\tThis is a template email for Test Notification Template " +
+				"2.\n</p>",
+			bodyMap.get("en_US"));
+
+		Assert.assertEquals(
+			"Test Notification Template 2", notificationTemplate.getName());
+
+		subjectMap = notificationTemplate.getSubject();
 
 		Assert.assertTrue(
 			Objects.equals(
-				subject, StringUtil.getTitleCase(subject, true, "DXP")));
-
-		Map<String, String> templateContentMap = notificationTemplate.getBody();
-
-		String templateContent = templateContentMap.get("en_US");
-
-		Assert.assertEquals(
-			"<p>\n\tThis is a template email for Test Notification " +
-				"Template.\n</p>",
-			templateContent);
+				subjectMap.get("en_US"),
+				StringUtil.getTitleCase(subjectMap.get("en_US"), true, "DXP")));
 	}
 
 	private void _assertNotificationTemplate2() throws Exception {
@@ -1814,31 +1833,74 @@ public class BundleSiteInitializerTest {
 		NotificationTemplate notificationTemplate =
 			notificationTemplateResource.
 				getNotificationTemplateByExternalReferenceCode(
+					"TESTNOTIFICATIONTEMPLATE1");
+
+		Assert.assertNotNull(notificationTemplateResource);
+
+		Map<String, String> bodyMap = notificationTemplate.getBody();
+
+		Assert.assertEquals(
+			"<p>\n\tThis is a template email for Test Notification Template " +
+				"1.\n</p>",
+			bodyMap.get("en_US"));
+
+		Assert.assertEquals(
+			"Test Notification Template 1", notificationTemplate.getName());
+
+		Map<String, String> subjectMap = notificationTemplate.getSubject();
+
+		Assert.assertTrue(
+			Objects.equals(
+				subjectMap.get("en_US"),
+				StringUtil.getTitleCase(subjectMap.get("en_US"), true, "DXP")));
+
+		notificationTemplate =
+			notificationTemplateResource.
+				getNotificationTemplateByExternalReferenceCode(
 					"TESTNOTIFICATIONTEMPLATE2");
 
 		Assert.assertNotNull(notificationTemplateResource);
 
-		Assert.assertEquals(
-			"Test Notification Template", notificationTemplate.getName());
-
-		Map<String, String> subjectMap = notificationTemplate.getSubject();
-
-		Assert.assertNotNull(subjectMap);
-
-		String subject = subjectMap.get("en_US");
-
-		Assert.assertTrue(
-			Objects.equals(
-				subject, StringUtil.getTitleCase(subject, true, "DXP")));
-
-		Map<String, String> templateContentMap = notificationTemplate.getBody();
-
-		String templateContent = templateContentMap.get("en_US");
+		bodyMap = notificationTemplate.getBody();
 
 		Assert.assertEquals(
 			"<p>\n\tThis is a template email for Test Notification Template " +
-				"2.\n</p>",
-			templateContent);
+				"3.\n</p>",
+			bodyMap.get("en_US"));
+
+		Assert.assertEquals(
+			"Test Notification Template 2", notificationTemplate.getName());
+
+		subjectMap = notificationTemplate.getSubject();
+
+		Assert.assertTrue(
+			Objects.equals(
+				subjectMap.get("en_US"),
+				StringUtil.getTitleCase(subjectMap.get("en_US"), true, "DXP")));
+
+		notificationTemplate =
+			notificationTemplateResource.
+				getNotificationTemplateByExternalReferenceCode(
+					"TESTNOTIFICATIONTEMPLATE3");
+
+		Assert.assertNotNull(notificationTemplateResource);
+
+		bodyMap = notificationTemplate.getBody();
+
+		Assert.assertEquals(
+			"<p>\n\tThis is a template email for Test Notification Template " +
+				"3.\n</p>",
+			bodyMap.get("en_US"));
+
+		Assert.assertEquals(
+			"Test Notification Template 3", notificationTemplate.getName());
+
+		subjectMap = notificationTemplate.getSubject();
+
+		Assert.assertTrue(
+			Objects.equals(
+				subjectMap.get("en_US"),
+				StringUtil.getTitleCase(subjectMap.get("en_US"), true, "DXP")));
 	}
 
 	private void _assertObjectActions(

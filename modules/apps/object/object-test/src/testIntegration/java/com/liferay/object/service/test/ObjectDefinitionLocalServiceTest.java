@@ -1159,10 +1159,10 @@ public class ObjectDefinitionLocalServiceTest {
 					StringUtil.randomId(),
 					ObjectRelationshipConstants.TYPE_ONE_TO_MANY));
 
-		Assert.assertTrue(objectDefinition.isAccountEntryRestricted());
+		Assert.assertFalse(objectDefinition.isSystem());
 		Assert.assertTrue(
 			objectDefinition.getAccountEntryRestrictedObjectFieldId() > 0);
-		Assert.assertFalse(objectDefinition.isSystem());
+		Assert.assertTrue(objectDefinition.isAccountEntryRestricted());
 
 		// Enabling account restriction between two custom object definitions
 
@@ -1238,13 +1238,13 @@ public class ObjectDefinitionLocalServiceTest {
 							true
 						).build()));
 
-		Assert.assertTrue(objectDefinition.isAccountEntryRestricted());
-		Assert.assertTrue(
-			objectDefinition.getAccountEntryRestrictedObjectFieldId() > 0);
-		Assert.assertFalse(objectDefinition.isSystem());
 		Assert.assertEquals(
 			objectDefinition.getStorageType(),
 			ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE);
+		Assert.assertFalse(objectDefinition.isSystem());
+		Assert.assertTrue(
+			objectDefinition.getAccountEntryRestrictedObjectFieldId() > 0);
+		Assert.assertTrue(objectDefinition.isAccountEntryRestricted());
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 
@@ -1303,13 +1303,13 @@ public class ObjectDefinitionLocalServiceTest {
 							true
 						).build()));
 
-		Assert.assertTrue(objectDefinition.isAccountEntryRestricted());
-		Assert.assertTrue(
-			objectDefinition.getAccountEntryRestrictedObjectFieldId() > 0);
-		Assert.assertFalse(objectDefinition.isSystem());
 		Assert.assertEquals(
 			objectDefinition.getStorageType(),
 			ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE);
+		Assert.assertFalse(objectDefinition.isSystem());
+		Assert.assertTrue(
+			objectDefinition.getAccountEntryRestrictedObjectFieldId() > 0);
+		Assert.assertTrue(objectDefinition.isAccountEntryRestricted());
 
 		ObjectField objectField = ObjectFieldUtil.addCustomObjectField(
 			new TextObjectFieldBuilder(
@@ -1330,10 +1330,10 @@ public class ObjectDefinitionLocalServiceTest {
 				enableAccountEntryRestrictedForNondefaultStorageType(
 					objectField);
 
-		Assert.assertTrue(objectDefinition.isAccountEntryRestricted());
 		Assert.assertEquals(
 			objectDefinition.getAccountEntryRestrictedObjectFieldId(),
 			objectField.getObjectFieldId());
+		Assert.assertTrue(objectDefinition.isAccountEntryRestricted());
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 	}

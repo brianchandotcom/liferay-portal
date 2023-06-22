@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.search.ml.embedding.EmbeddingProviderInformation;
 import com.liferay.portal.search.ml.embedding.EmbeddingProviderStatus;
 import com.liferay.search.experiences.configuration.SemanticSearchConfiguration;
 import com.liferay.search.experiences.configuration.SemanticSearchConfigurationProvider;
@@ -42,10 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Petteri Karttunen
  */
-@Component(
-	enabled = false,
-	service = {EmbeddingProviderInformation.class, TextEmbeddingRetriever.class}
-)
+@Component(enabled = false, service = TextEmbeddingRetriever.class)
 public class TextEmbeddingRetrieverImpl implements TextEmbeddingRetriever {
 
 	@Override

@@ -10,10 +10,6 @@
 				"name": "ANZ"
 			},
 			{
-				"externalReferenceCode": "PRM-ORG-ARG-URU-PAR",
-				"name": "Argentina, Uruguay, Paraguay"
-			},
-			{
 				"externalReferenceCode": "PRM-ORG-BENELUX",
 				"name": "BENELUX"
 			},
@@ -22,24 +18,20 @@
 				"name": "Canada"
 			},
 			{
-				"externalReferenceCode": "PRM-ORG-CEN-AMERICA",
-				"name": "Central America"
+				"externalReferenceCode": "PRM-ORG-COL-ECU-CEN-AMERICA",
+				"name": "Colombia, Ecuador, Central America"
 			},
 			{
 				"externalReferenceCode": "PRM-ORG-CEN-EAST-EUR",
 				"name": "CENTRAL AND EASTERN EUROPE"
 			},
 			{
-				"externalReferenceCode": "PRM-ORG-CHILE-PERU",
-				"name": "Chile, Peru"
+				"externalReferenceCode": "PRM-ORG-CH-PE-ARG-URU-PAR",
+				"name": "Chile, Peru, Argentina, Uruguay, Paraguay"
 			},
 			{
 				"externalReferenceCode": "PRM-ORG-CHINA",
 				"name": "China"
-			},
-			{
-				"externalReferenceCode": "PRM-ORG-COL-ECU",
-				"name": "Colombia, Ecuador"
 			},
 			{
 				"externalReferenceCode": "PRM-ORG-DACH",

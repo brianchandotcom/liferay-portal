@@ -246,6 +246,8 @@ components:
                     type: string
                 defaultObjectLayout:
                     type: boolean
+                externalReferenceCode:
+                    type: string
                 id:
                     format: int64
                     readOnly: true
@@ -1166,6 +1168,61 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/ObjectView"
             tags: ["ObjectView"]
+    "/object-definitions/by-external-reference-code/{objectDefinitionExternalReferenceCode}/object-layouts/by-external-reference-code/{objectLayoutExternalReferenceCode}":
+        get:
+            operationId: getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectLayoutByExternalReferenceCodeObjectLayoutExternalReferenceCode
+            parameters:
+                - in: path
+                  name: objectDefinitionExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: objectLayoutExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ObjectLayout"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ObjectLayout"
+            tags: [ "ObjectLayout" ]
+        put:
+            operationId: putObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectLayoutByExternalReferenceCodeObjectLayoutExternalReferenceCode
+            parameters:
+                - in: path
+                  name: objectDefinitionExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: objectLayoutExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ObjectLayout"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ObjectLayout"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ObjectLayout"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ObjectLayout"
+            tags: ["ObjectLayout"]
     "/object-definitions/by-external-reference-code/{objectDefinitionExternalReferenceCode}/object-views/by-external-reference-code/{objectViewExternalReferenceCode}":
         get:
             operationId: getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectViewByExternalReferenceCodeObjectViewExternalReferenceCode

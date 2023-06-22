@@ -146,6 +146,9 @@ public class OpenAPIParserUtil {
 		else if (name.startsWith("[L") && name.endsWith(";")) {
 			return name.substring(2, name.length() - 1);
 		}
+		else if (name.startsWith("[[")) {
+			return getElementClassName(name.substring(1)) + "[]";
+		}
 
 		return name;
 	}

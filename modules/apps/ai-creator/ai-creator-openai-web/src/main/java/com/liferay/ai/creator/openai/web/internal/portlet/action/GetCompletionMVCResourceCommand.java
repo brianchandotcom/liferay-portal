@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -124,7 +125,11 @@ public class GetCompletionMVCResourceCommand extends BaseMVCResourceCommand {
 					JSONUtil.put(
 						"content",
 						aiCreatorOpenAIClient.getCompletion(
-							apiKey, content, themeDisplay.getLocale(),
+							apiKey, content,
+							LocaleUtil.fromLanguageId(
+								ParamUtil.getString(
+									resourceRequest, "languageId",
+									themeDisplay.getLanguageId())),
 							ParamUtil.getString(
 								resourceRequest, "tone", "formal"),
 							ParamUtil.getInteger(resourceRequest, "words")))));

@@ -12,8 +12,15 @@
  * details.
  */
 
-module.exports = {
-	build: {
-		main: 'src/main/resources/META-INF/resources/js/index.ts',
-	},
-};
+export declare function getSettingValue(
+	defaultValue: boolean,
+	sessionClicksValue: boolean | undefined | null,
+	key: string
+): boolean;
+export declare function isNullOrUndefined(
+	value: boolean | string | undefined | null
+): boolean;
+export declare function toggleClassName(
+	className: string,
+	value: boolean
+): void;

@@ -14,9 +14,16 @@
 
 import {localStorage} from 'frontend-js-web';
 
-export function getSettingValue(defaultValue, sessionClicksValue, key) {
-	if (themeDisplay.isSignedIn() && !isNullOrUndefined(sessionClicksValue)) {
-		return sessionClicksValue;
+export function getSettingValue(
+	defaultValue: boolean,
+	sessionClicksValue: boolean | undefined | null,
+	key: string
+) {
+	if (
+		window.themeDisplay.isSignedIn() &&
+		!isNullOrUndefined(sessionClicksValue)
+	) {
+		return sessionClicksValue as boolean;
 	}
 	else {
 		const localStorageValue = localStorage.getItem(
@@ -32,10 +39,10 @@ export function getSettingValue(defaultValue, sessionClicksValue, key) {
 	return defaultValue;
 }
 
-export function isNullOrUndefined(value) {
+export function isNullOrUndefined(value: boolean | string | undefined | null) {
 	return value === null || value === undefined;
 }
 
-export function toggleClassName(className, value) {
-	document.querySelector('body').classList.toggle(className, value);
+export function toggleClassName(className: string, value: boolean) {
+	window.document.querySelector('body')!.classList.toggle(className, value);
 }

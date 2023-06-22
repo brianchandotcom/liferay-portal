@@ -30,11 +30,33 @@ import React, {useCallback, useEffect, useState} from 'react';
 import AccessibilitySetting from './AccessibilitySetting';
 import {getSettingValue, toggleClassName} from './util';
 
+type Setting = {
+	className: string;
+	defaultValue: boolean;
+	key: string;
+	label: string;
+	sessionClicksValue: boolean;
+};
+
+type AccessibilityMenuSetting = {
+	className: string;
+	key: string;
+	label: string;
+	updating?: boolean;
+	value: boolean;
+};
+
+type Props = {
+	settings: Array<Setting>;
+};
+
 const OPEN_ACCESSIBILITY_MENU_EVENT_NAME = 'openAccessibilityMenu';
 
-export const accessibilityMenuAtom = State.atom('accessibility-menu', []);
+export const accessibilityMenuAtom = State.atom<
+	Array<AccessibilityMenuSetting>
+>('accessibility-menu', []);
 
-const AccessibilityMenu = (props) => {
+const AccessibilityMenu = (props: Props) => {
 	const [settings, setSettings] = useLiferayState(accessibilityMenuAtom);
 
 	const [
@@ -82,8 +104,11 @@ const AccessibilityMenu = (props) => {
 	}, [onOpenChange]);
 
 	const updateSetting = useCallback(
-		(settingKey, settingUpdates) => {
-			setSettings((settings) =>
+		(
+			settingKey: string,
+			settingUpdates: Partial<AccessibilityMenuSetting>
+		) => {
+			setSettings(
 				settings.map((setting) => {
 					if (settingKey === setting.key) {
 						return {
@@ -97,7 +122,7 @@ const AccessibilityMenu = (props) => {
 				})
 			);
 		},
-		[setSettings]
+		[settings, setSettings]
 	);
 
 	const afterSettingValueChange = useCallback(
@@ -110,14 +135,14 @@ const AccessibilityMenu = (props) => {
 	);
 
 	const handleAccessiblitySettingChange = useCallback(
-		(value, setting) => {
+		(value: boolean, setting: AccessibilityMenuSetting) => {
 			if (setting.updating) {
 				return;
 			}
 
 			updateSetting(setting.key, {updating: true});
 
-			if (themeDisplay.isSignedIn()) {
+			if (window.themeDisplay.isSignedIn()) {
 				return setSessionValue(setting.key, value).then(() => {
 					afterSettingValueChange(value, setting);
 				});
@@ -146,12 +171,12 @@ const AccessibilityMenu = (props) => {
 	}, []);
 
 	const isSettingsDisabled =
-		!hasFunctionalCookiesConsent && !themeDisplay.isSignedIn();
+		!hasFunctionalCookiesConsent && !window.themeDisplay.isSignedIn();
 
 	return (
 		<>
 			{open && (
-				<ClayModal observer={observer} size="md">
+				<ClayModal observer={observer}>
 					<ClayModal.Header>
 						{Liferay.Language.get('accessibility-help-menu')}
 					</ClayModal.Header>

@@ -857,7 +857,7 @@ type Storage = {
 
 	setItem(
 		key: string,
-		value: string,
+		value: string | boolean,
 		type: TYPE_VALUES,
 		options?: {
 			'domain'?: string;
@@ -877,3 +877,18 @@ type Storage = {
 export const localStorage: Storage;
 
 export const sessionStorage: Storage;
+
+export const COOKIE_TYPES: {
+	FUNCTIONAL: 'CONSENT_TYPE_FUNCTIONAL';
+	NECESSARY: 'CONSENT_TYPE_NECESSARY';
+	PERFORMANCE: 'CONSENT_TYPE_PERFORMANCE';
+	PERSONALIZATION: 'CONSENT_TYPE_PERSONALIZATION';
+};
+
+export function checkConsent(type: TYPE_VALUES): boolean;
+
+export function setSessionValue(
+	key: string,
+	value: Record<string, any> | string | boolean,
+	options?: {useHttpSession: boolean}
+): Promise<any>;

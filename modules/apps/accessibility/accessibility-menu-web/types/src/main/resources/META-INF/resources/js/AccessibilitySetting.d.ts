@@ -12,21 +12,18 @@
  * details.
  */
 
-import type {Atom} from '@liferay/frontend-js-state-web';
-
-type AccessibilityMenuSetting = {
+declare type Props = {
 	className: string;
-	key: string;
+	disabled: boolean;
 	label: string;
-	updating: boolean;
+	onChange: (value: boolean) => void;
 	value: boolean;
 };
-
-export const accessibilityMenuAtom: Atom<Array<AccessibilityMenuSetting>>;
-
-export const CONSTANTS: {
-	ACCESSIBILITY_SETTING_EXPAND_TEXT: 'ACCESSIBILITY_SETTING_EXPAND_TEXT';
-	ACCESSIBILITY_SETTING_INCREASE_TEXT_SPACING: 'ACCESSIBILITY_SETTING_INCREASE_TEXT_SPACING';
-	ACCESSIBILITY_SETTING_REDUCED_MOTION: 'ACCESSIBILITY_SETTING_REDUCED_MOTION';
-	ACCESSIBILITY_SETTING_SHOW_UNDERLINE: 'ACCESSIBILITY_SETTING_SHOW_UNDERLINE';
-};
+declare const AccessibilitySetting: ({
+	className,
+	disabled,
+	label,
+	onChange,
+	value,
+}: Props) => JSX.Element;
+export default AccessibilitySetting;

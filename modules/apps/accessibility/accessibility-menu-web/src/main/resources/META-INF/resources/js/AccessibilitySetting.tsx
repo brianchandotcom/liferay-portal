@@ -13,10 +13,17 @@
  */
 
 import {ClayToggle} from '@clayui/form';
-import PropTypes from 'prop-types';
 import React from 'react';
 
 const KEY_EVENT = 'Enter';
+
+type Props = {
+	className: string;
+	disabled: boolean;
+	label: string;
+	onChange: (value: boolean) => void;
+	value: boolean;
+};
 
 const AccessibilitySetting = ({
 	className,
@@ -24,7 +31,7 @@ const AccessibilitySetting = ({
 	label,
 	onChange,
 	value,
-}) => (
+}: Props) => (
 	<li className={className}>
 		<ClayToggle
 			disabled={disabled}
@@ -39,13 +46,5 @@ const AccessibilitySetting = ({
 		/>
 	</li>
 );
-
-AccessibilitySetting.propTypes = {
-	className: PropTypes.string,
-	disabled: PropTypes.bool,
-	label: PropTypes.string,
-	onChange: PropTypes.func.isRequired,
-	value: PropTypes.bool,
-};
 
 export default AccessibilitySetting;

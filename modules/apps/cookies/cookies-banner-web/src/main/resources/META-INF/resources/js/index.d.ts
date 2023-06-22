@@ -12,8 +12,13 @@
  * details.
  */
 
-module.exports = {
-	build: {
-		main: 'src/main/resources/META-INF/resources/js/index.ts',
-	},
-};
+import type {TYPE_VALUES} from 'frontend-js-web';
+
+export function checkCookieConsentForTypes(
+	cookieTypes: TYPE_VALUES,
+	modalOptions?: {
+		alertDisplayType: string;
+		alertMessage: string;
+		customTitle: string;
+	}
+): Promise<void>;

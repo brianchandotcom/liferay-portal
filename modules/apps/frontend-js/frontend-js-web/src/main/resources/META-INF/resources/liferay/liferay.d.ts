@@ -726,6 +726,7 @@ declare module Liferay {
 	): void;
 }
 interface ThemeDisplay {
+	isSignedIn(): boolean;
 	isStatePopUp(): boolean;
 }
 

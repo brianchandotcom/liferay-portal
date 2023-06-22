@@ -1,5 +1,5 @@
 {
-	"@generated": "f3a0b2be41670e006067e2a063092d50e67054cb",
+	"@generated": "ef1cd2c35d9ff2d6f173ecd8973f049606ee42cd",
 	"@overrides": {
 	},
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT OUTSIDE @overrides **",
@@ -13,15 +13,6 @@
 		"moduleResolution": "node",
 		"outDir": "./types",
 		"paths": {
-			"@liferay/cookies-banner-web": [
-				"../../cookies/cookies-banner-web/src/main/resources/META-INF/resources/js/index.d.ts"
-			],
-			"@liferay/frontend-js-react-web": [
-				"../../frontend-js/frontend-js-react-web/src/main/resources/META-INF/resources/js/index.ts"
-			],
-			"@liferay/frontend-js-state-web": [
-				"../../frontend-js/frontend-js-state-web/src/main/resources/META-INF/resources/index.ts"
-			],
 			"frontend-js-web": [
 				"../../frontend-js/frontend-js-web/src/main/resources/META-INF/resources/index.d.ts"
 			]
@@ -44,15 +35,6 @@
 		"../../../global.d.ts"
 	],
 	"references": [
-		{
-			"path": "../../cookies/cookies-banner-web"
-		},
-		{
-			"path": "../../frontend-js/frontend-js-react-web"
-		},
-		{
-			"path": "../../frontend-js/frontend-js-state-web"
-		},
 		{
 			"path": "../../frontend-js/frontend-js-web"
 		}

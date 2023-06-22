@@ -12,8 +12,10 @@
  * details.
  */
 
-module.exports = {
-	build: {
-		main: 'src/main/resources/META-INF/resources/js/index.ts',
-	},
+export {accessibilityMenuAtom} from './AccessibilityMenu';
+export declare const CONSTANTS: {
+	ACCESSIBILITY_SETTING_EXPAND_TEXT: string;
+	ACCESSIBILITY_SETTING_INCREASE_TEXT_SPACING: string;
+	ACCESSIBILITY_SETTING_REDUCED_MOTION: string;
+	ACCESSIBILITY_SETTING_SHOW_UNDERLINE: string;
 };

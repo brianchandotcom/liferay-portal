@@ -48,12 +48,14 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
+import com.liferay.portal.kernel.service.ThemeLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.Mergeable;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.TimeZoneThreadLocal;
@@ -1506,8 +1508,18 @@ public class ThemeDisplay
 		setPathColorSchemeImages(
 			cdnBaseURL + themeStaticResourcePath +
 				colorScheme.getColorSchemeImagesPath());
+
+		String adminThemeId = PrefsPropsUtil.getString(
+			_company.getCompanyId(),
+			PropsKeys.CONTROL_PANEL_LAYOUT_REGULAR_THEME_ID);
+
+		Theme adminTheme = ThemeLocalServiceUtil.getTheme(
+			_company.getCompanyId(), adminThemeId);
+
 		setPathControlPanelSpritemap(
-			cdnBaseURL + "/o/admin-theme/images/clay/icons.svg");
+			StringBundler.concat(
+				cdnBaseURL, adminTheme.getStaticResourcePath(),
+				adminTheme.getImagesPath(), "/clay/icons.svg"));
 
 		String dynamicResourcesHost = getCDNDynamicResourcesHost();
 

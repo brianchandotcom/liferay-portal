@@ -485,10 +485,6 @@ public class ContentPageEditorDisplayContext {
 				_getResourceURL(
 					"/layout_content_page_editor/get_info_item_field_value")
 			).put(
-				"getInfoItemMappingFieldsURL",
-				_getResourceURL(
-					"/layout_content_page_editor/get_info_item_mapping_fields")
-			).put(
 				"getLayoutFriendlyURL",
 				_getResourceURL(
 					"/layout_content_page_editor/get_layout_friendly_url")

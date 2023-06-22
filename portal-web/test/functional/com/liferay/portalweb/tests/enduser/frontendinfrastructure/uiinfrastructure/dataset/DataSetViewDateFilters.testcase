@@ -159,6 +159,28 @@ definition {
 		}
 	}
 
+	@description = "LPS-183056. Confirm that the "Filter by" field is not editable after the filter is created."
+	@priority = 4
+	test CanAssertFilterbyInDateIsNotEditable {
+		task ("And create a new filter") {
+			DataSetAdmin.createFilters(
+				filterName = "Test Filter",
+				key_filterList = "dateCreated");
+		}
+
+		task ("And create a new filter") {
+			Click(
+				key_fieldName = "dateCreated",
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
+
+			MenuItem.click(menuItem = "Edit");
+		}
+
+		task ("Then Assert the Filter by field is not editable") {
+			AssertNotEditable(locator1 = "DataSet#FILTER_BY_SELECT");
+		}
+	}
+
 	@description = "LPS-181281. Confirms the user can cancel a new date filter creation."
 	@priority = 4
 	test CanCancelDateFilterCreation {
@@ -190,6 +212,66 @@ definition {
 
 		task ("Then New filter modal is closed and the changes are not applied") {
 			AssertVisible(locator1 = "DataSet#CREATE_FILTER_BUTTON");
+		}
+	}
+
+	@description = "LPS-183056. Confirm the changes made to the filter date."
+	@priority = 5
+	test CanConfirmChangesInDate {
+		task ("And create a new filter") {
+			DataSetAdmin.createFilters(
+				filterName = "Test Filter",
+				key_filterList = "dateCreated");
+		}
+
+		task ("When the user tries to edit the filter") {
+			Click(
+				key_fieldName = "dateCreated",
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
+
+			MenuItem.click(menuItem = "Edit");
+		}
+
+		task ("And Edit the date") {
+			Click(
+				key_dateField = "From",
+				locator1 = "DataSet#DATEPICKER_BUTTON");
+
+			Select(
+				key_type = "month",
+				locator1 = "DataSet#SELECT_MONTH",
+				value1 = "April");
+
+			Click(
+				key_dateNumber = 30,
+				key_line = 5,
+				locator1 = "DataSet#SELECT_DAY");
+
+			DoubleClick(
+				key_dateField = "To",
+				locator1 = "DataSet#DATEPICKER_BUTTON");
+
+			Select(
+				key_type = "month",
+				locator1 = "DataSet#SELECT_MONTH",
+				value1 = "May");
+
+			Click(
+				key_dateNumber = 25,
+				key_line = 3,
+				locator1 = "DataSet#SELECT_DAY");
+		}
+
+		task ("When Clicking save button") {
+			Click(
+				key_text = "Save",
+				locator1 = "CP2ActivationKeys#KEY_DEACTIVATION_TERMS");
+		}
+
+		task ("Then the changes are saved and a success message is displayed") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#SUCCESS",
+				value1 = "Your request completed successfully.");
 		}
 	}
 

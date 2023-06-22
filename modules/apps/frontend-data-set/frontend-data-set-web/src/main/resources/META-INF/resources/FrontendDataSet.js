@@ -504,10 +504,7 @@ const FrontendDataSet = ({
 						}
 					>
 						{creationMenu && (
-							<CreationMenu
-								{...creationMenu}
-								inEmptyState
-							/>
+							<CreationMenu {...creationMenu} inEmptyState />
 						)}
 					</ClayEmptyState>
 				)}

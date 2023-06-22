@@ -12,8 +12,9 @@
  * details.
  */
 
-import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
+import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
+import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
@@ -28,19 +29,8 @@ function CreationMenu({inEmptyState, primaryItems}) {
 
 	const [active, setActive] = useState(false);
 
-	const buttonDataTooltipAlign = 'top';
-	const buttonLabel = primaryItems[0].label ?? Liferay.Language.get('new');
-	const buttonOnClick = () => {
-		const item = primaryItems[0];
-
-		item.onClick?.({
-			loadData,
-		});
-
-		if (item.href || item.target) {
-			triggerAction(item, frontendDataSetContext);
-		}
-	};
+	const labelNew = Liferay.Language.get('new');
+	const buttonLabel = primaryItems[0].label ?? labelNew;
 
 	return (
 		primaryItems?.length > 0 && (
@@ -55,18 +45,20 @@ function CreationMenu({inEmptyState, primaryItems}) {
 							active={active}
 							onActiveChange={setActive}
 							trigger={
-								inEmptyState ? (
-									<ClayButton displayType="secondary">
-										{Liferay.Language.get('new')}
-									</ClayButton>
-								) : (
-									<ClayButtonWithIcon
-										aria-label={Liferay.Language.get('new')}
-										className="nav-btn nav-btn-monospaced"
-										symbol="plus"
-										title={Liferay.Language.get('new')}
-									/>
-								)
+								<ClayButton
+									aria-label={!inEmptyState && labelNew}
+									className={classNames({
+										'nav-btn nav-btn-monospaced': !inEmptyState,
+									})}
+									displayType="secondary"
+									title={!inEmptyState && labelNew}
+								>
+									{inEmptyState ? (
+										labelNew
+									) : (
+										<ClayIcon symbol="plus" />
+									)}
+								</ClayButton>
 							}
 						>
 							<ClayDropDown.ItemList>
@@ -95,23 +87,33 @@ function CreationMenu({inEmptyState, primaryItems}) {
 								))}
 							</ClayDropDown.ItemList>
 						</ClayDropDown>
-					) : inEmptyState ? (
-						<ClayButton
-							data-tooltip-align={buttonDataTooltipAlign}
-							displayType="secondary"
-							onClick={() => buttonOnClick()}
-						>
-							{buttonLabel}
-						</ClayButton>
 					) : (
-						<ClayButtonWithIcon
-							aria-label={buttonLabel}
-							className="nav-btn nav-btn-monospaced"
-							data-tooltip-align={buttonDataTooltipAlign}
-							onClick={() => buttonOnClick()}
-							symbol="plus"
-							title={buttonLabel}
-						/>
+						<ClayButton
+							aria-label={!inEmptyState && buttonLabel}
+							className={classNames({
+								'nav-btn nav-btn-monospaced': !inEmptyState,
+							})}
+							data-tooltip-align="top"
+							displayType={inEmptyState && 'secondary'}
+							onClick={() => {
+								const item = primaryItems[0];
+
+								item.onClick?.({
+									loadData,
+								});
+
+								if (item.href || item.target) {
+									triggerAction(item, frontendDataSetContext);
+								}
+							}}
+							title={!inEmptyState && buttonLabel}
+						>
+							{inEmptyState ? (
+								buttonLabel
+							) : (
+								<ClayIcon symbol="plus" />
+							)}
+						</ClayButton>
 					)}
 				</li>
 			</ul>

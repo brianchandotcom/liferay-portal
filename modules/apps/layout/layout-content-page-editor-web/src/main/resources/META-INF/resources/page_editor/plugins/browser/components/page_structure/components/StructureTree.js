@@ -464,26 +464,20 @@ function getDocumentFragment(content) {
 function getKey({collectionConfig, editable, infoItem, selectedMappingTypes}) {
 	if (collectionConfig) {
 		if (collectionConfig.classNameId) {
-			return getMappingFieldsKey(
-				collectionConfig.classNameId,
-				collectionConfig.classPK
-			);
+			return getMappingFieldsKey(collectionConfig);
 		}
 		else {
 			return collectionConfig.key;
 		}
 	}
 	else if (editable.mappedField) {
-		return getMappingFieldsKey(
-			selectedMappingTypes.type.id,
-			selectedMappingTypes.subtype.id || 0
-		);
+		return getMappingFieldsKey(selectedMappingTypes);
 	}
 	else if (!infoItem) {
 		return null;
 	}
 
-	return getMappingFieldsKey(infoItem.classNameId, infoItem.classTypeId);
+	return getMappingFieldsKey(infoItem);
 }
 
 function getMappedFieldLabel(

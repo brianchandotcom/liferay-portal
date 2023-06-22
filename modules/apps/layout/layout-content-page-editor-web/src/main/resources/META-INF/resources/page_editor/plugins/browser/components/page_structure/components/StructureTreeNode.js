@@ -131,14 +131,13 @@ export default function StructureTreeNode({node, setEditingNodeId}) {
 
 			const {
 				classNameId,
-				classPK,
 				itemSubtype,
 				itemType,
 				key: collectionKey,
 			} = item.config.collection;
 
 			const key = classNameId
-				? getMappingFieldsKey(classNameId, classPK)
+				? getMappingFieldsKey(item.config.collection)
 				: collectionKey;
 
 			if (!mappingFields[key]) {

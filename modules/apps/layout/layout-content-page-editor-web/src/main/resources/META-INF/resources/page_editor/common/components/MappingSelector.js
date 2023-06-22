@@ -147,10 +147,8 @@ export default function MappingSelectorWrapper({
 			return;
 		}
 
-		const {classNameId, classPK} = collectionConfig.collection;
-
-		const key = classNameId
-			? getMappingFieldsKey(classNameId, classPK)
+		const key = collectionConfig.collection.classNameId
+			? getMappingFieldsKey(collectionConfig.collection)
 			: collectionConfig.collection.key;
 
 		const fields = mappingFields[key];
@@ -361,14 +359,8 @@ function MappingSelector({
 
 		const key =
 			selectedSourceType === MAPPING_SOURCE_TYPES.content
-				? getMappingFieldsKey(
-						infoItem.classNameId,
-						infoItem.classTypeId
-				  )
-				: getMappingFieldsKey(
-						selectedMappingTypes.type.id,
-						selectedMappingTypes.subtype.id || 0
-				  );
+				? getMappingFieldsKey(infoItem)
+				: getMappingFieldsKey(selectedMappingTypes);
 
 		const fields = mappingFields[key];
 

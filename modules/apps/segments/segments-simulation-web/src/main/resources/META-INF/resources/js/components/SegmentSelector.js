@@ -32,68 +32,75 @@ function SegmentSelector({
 	);
 
 	return (
-		<div className="form-group">
-			<label htmlFor={`${namespace}segmentsEntryId`}>
-				{Liferay.Language.get('segment')}
-			</label>
+		<>
+			{!segmentsEntries.length ? (
+				<p>{Liferay.Language.get('no-segments-have-been-added-yet')}</p>
+			) : (
+				<div className="form-group">
+					<label htmlFor={`${namespace}segmentsEntryId`}>
+						{Liferay.Language.get('segment')}
+					</label>
 
-			<input
-				id={`${namespace}segmentsEntryId`}
-				name={`${namespace}segmentsEntryId`}
-				type="hidden"
-				value={selectedSegmentEntry.id}
-			/>
+					<input
+						id={`${namespace}segmentsEntryId`}
+						name={`${namespace}segmentsEntryId`}
+						type="hidden"
+						value={selectedSegmentEntry.id}
+					/>
 
-			<ClayDropDown
-				active={segmentSelectorActive}
-				alignmentPosition={Align.BottomLeft}
-				menuElementAttrs={{
-					containerProps: {
-						className: 'cadmin',
-					},
-				}}
-				onActiveChange={setSegmentSelectorActive}
-				trigger={
-					<ClayButton
-						className="form-control-select text-left w-100"
-						displayType="secondary"
-						size="sm"
-						type="button"
-					>
-						<span>{selectedSegmentEntry.name}</span>
-					</ClayButton>
-				}
-			>
-				<ClayDropDown.ItemList>
-					{segmentEntriesShortList.map((segmentEntry) => (
-						<ClayDropDown.Item
-							key={segmentEntry.id}
-							onClick={() => {
-								setSegmentSelectorActive(false);
-								onSelectSegmentEntry(segmentEntry);
-							}}
-						>
-							{segmentEntry.name}
-						</ClayDropDown.Item>
-					))}
-
-					{segmentsEntries.length > maximumDropdownEntries && (
-						<ClayDropDown.Section>
+					<ClayDropDown
+						active={segmentSelectorActive}
+						alignmentPosition={Align.BottomLeft}
+						menuElementAttrs={{
+							containerProps: {
+								className: 'cadmin',
+							},
+						}}
+						onActiveChange={setSegmentSelectorActive}
+						trigger={
 							<ClayButton
-								displayType="secondary w-100"
-								onClick={() => {
-									setSegmentSelectorActive(false);
-
-									onMoreSegmentEntriesButtonClick();
-								}}
+								className="form-control-select text-left w-100"
+								displayType="secondary"
+								size="sm"
+								type="button"
 							>
-								{Liferay.Language.get('more-segments')}
+								<span>{selectedSegmentEntry.name}</span>
 							</ClayButton>
-						</ClayDropDown.Section>
-					)}
-				</ClayDropDown.ItemList>
-			</ClayDropDown>
-		</div>
+						}
+					>
+						<ClayDropDown.ItemList>
+							{segmentEntriesShortList.map((segmentEntry) => (
+								<ClayDropDown.Item
+									key={segmentEntry.id}
+									onClick={() => {
+										setSegmentSelectorActive(false);
+										onSelectSegmentEntry(segmentEntry);
+									}}
+								>
+									{segmentEntry.name}
+								</ClayDropDown.Item>
+							))}
+
+							{segmentsEntries.length >
+								maximumDropdownEntries && (
+								<ClayDropDown.Section>
+									<ClayButton
+										displayType="secondary w-100"
+										onClick={() => {
+											setSegmentSelectorActive(false);
+
+											onMoreSegmentEntriesButtonClick();
+										}}
+									>
+										{Liferay.Language.get('more-segments')}
+									</ClayButton>
+								</ClayDropDown.Section>
+							)}
+						</ClayDropDown.ItemList>
+					</ClayDropDown>
+				</div>
+			)}
+		</>
 	);
 }
 

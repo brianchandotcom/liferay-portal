@@ -103,8 +103,6 @@ public class SegmentsSimulationDisplayContext {
 		).put(
 			"selectSegmentsExperienceURL", _getSelectSegmentsExperienceURL()
 		).put(
-			"showEmptyMessage", isShowEmptyMessage()
-		).put(
 			"simulateSegmentsEntriesURL", getSimulateSegmentsEntriesURL()
 		).build();
 	}

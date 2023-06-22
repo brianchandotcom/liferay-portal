@@ -44,7 +44,6 @@ function PageContentSelectors({
 	segmentsExperiences,
 	selectSegmentsEntryURL,
 	selectSegmentsExperienceURL,
-	showEmptyMessage,
 	simulateSegmentsEntriesURL,
 }) {
 	const [alertVisible, setAlertVisible] = useState(!segmentationEnabled);
@@ -195,97 +194,78 @@ function PageContentSelectors({
 	]);
 
 	return (
-		<>
-			{showEmptyMessage ? (
-				<p className="mb-4 mt-1 small">
-					{Liferay.Language.get('no-segments-have-been-added-yet')}
-				</p>
-			) : (
-				<form method="post" name="segmentsSimulationFm" ref={formRef}>
-					{alertVisible && (
-						<ClayAlert
-							dismissible
-							displayType="warning"
-							onClose={() => {
-								setAlertVisible(false);
-							}}
-						>
-							<strong>
-								{Liferay.Language.get(
-									'experiences-cannot-be-displayed-because-segmentation-is-disabled'
-								)}
-							</strong>
-
-							{segmentsCompanyConfigurationURL ? (
-								<ClayLink
-									href={segmentsCompanyConfigurationURL}
-								>
-									{Liferay.Language.get(
-										'to-enable,-go-to-instance-settings'
-									)}
-								</ClayLink>
-							) : (
-								<span>
-									{Liferay.Language.get(
-										'contact-your-system-administrator-to-enable-it'
-									)}
-								</span>
-							)}
-						</ClayAlert>
-					)}
-
-					{!!segmentsEntries.length &&
-						segmentsExperiences.length > 1 && (
-							<div className="form-group">
-								<label
-									htmlFor={`${namespace}segmentsOrExperiences`}
-								>
-									{Liferay.Language.get('preview-by')}
-								</label>
-
-								<ClaySelectWithOption
-									id={`${namespace}segmentsOrExperiences`}
-									onChange={({target}) => {
-										setSelectedPreviewOption(target.value);
-									}}
-									options={PREVIEW_OPTIONS}
-									value={selectedPreviewOption}
-								/>
-							</div>
+		<form method="post" name="segmentsSimulationFm" ref={formRef}>
+			{alertVisible && (
+				<ClayAlert
+					dismissible
+					displayType="warning"
+					onClose={() => {
+						setAlertVisible(false);
+					}}
+				>
+					<strong>
+						{Liferay.Language.get(
+							'experiences-cannot-be-displayed-because-segmentation-is-disabled'
 						)}
+					</strong>
 
-					{selectedPreviewOption === 'segments' && (
-						<SegmentSelector
-							maximumDropdownEntries={MAXIMUM_DROPDOWN_ENTRIES}
-							namespace={namespace}
-							onMoreSegmentEntriesButtonClick={
-								handleMoreSegmentEntriesButtonClick
-							}
-							onSelectSegmentEntry={setSelectedSegmentEntry}
-							segmentsEntries={segmentsEntries}
-							selectedSegmentEntry={selectedSegmentEntry}
-						/>
+					{segmentsCompanyConfigurationURL ? (
+						<ClayLink href={segmentsCompanyConfigurationURL}>
+							{Liferay.Language.get(
+								'to-enable,-go-to-instance-settings'
+							)}
+						</ClayLink>
+					) : (
+						<span>
+							{Liferay.Language.get(
+								'contact-your-system-administrator-to-enable-it'
+							)}
+						</span>
 					)}
-
-					{selectedPreviewOption === 'experiences' && (
-						<ExperienceSelector
-							maximumDropdownEntries={MAXIMUM_DROPDOWN_ENTRIES}
-							namespace={namespace}
-							onMoreSegmentExperiencesButtonClick={
-								handleMoreSegmentExperiencesButtonClick
-							}
-							onSelectSegmentExperience={
-								setSelectedSegmentsExperience
-							}
-							segmentsExperiences={segmentsExperiences}
-							selectedSegmentsExperience={
-								selectedSegmentsExperience
-							}
-						/>
-					)}
-				</form>
+				</ClayAlert>
 			)}
-		</>
+
+			<div className="form-group">
+				<label htmlFor={`${namespace}segmentsOrExperiences`}>
+					{Liferay.Language.get('preview-by')}
+				</label>
+
+				<ClaySelectWithOption
+					id={`${namespace}segmentsOrExperiences`}
+					onChange={({target}) => {
+						setSelectedPreviewOption(target.value);
+					}}
+					options={PREVIEW_OPTIONS}
+					value={selectedPreviewOption}
+				/>
+			</div>
+
+			{selectedPreviewOption === 'segments' && (
+				<SegmentSelector
+					maximumDropdownEntries={MAXIMUM_DROPDOWN_ENTRIES}
+					namespace={namespace}
+					onMoreSegmentEntriesButtonClick={
+						handleMoreSegmentEntriesButtonClick
+					}
+					onSelectSegmentEntry={setSelectedSegmentEntry}
+					segmentsEntries={segmentsEntries}
+					selectedSegmentEntry={selectedSegmentEntry}
+				/>
+			)}
+
+			{selectedPreviewOption === 'experiences' && (
+				<ExperienceSelector
+					maximumDropdownEntries={MAXIMUM_DROPDOWN_ENTRIES}
+					namespace={namespace}
+					onMoreSegmentExperiencesButtonClick={
+						handleMoreSegmentExperiencesButtonClick
+					}
+					onSelectSegmentExperience={setSelectedSegmentsExperience}
+					segmentsExperiences={segmentsExperiences}
+					selectedSegmentsExperience={selectedSegmentsExperience}
+				/>
+			)}
+		</form>
 	);
 }
 

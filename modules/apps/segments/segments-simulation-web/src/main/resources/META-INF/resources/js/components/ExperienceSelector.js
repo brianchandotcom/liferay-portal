@@ -38,114 +38,142 @@ function ExperienceSelector({
 	);
 
 	return (
-		<div className="form-group">
-			<label
-				htmlFor={`${namespace}segmentsExperienceSelector`}
-				id={`${namespace}segmentsExperienceLabelId`}
-			>
-				{Liferay.Language.get('experience')}
-			</label>
-
-			<input
-				id={`${namespace}segmentsExperienceId`}
-				name={`${namespace}segmentsExperienceId`}
-				type="hidden"
-				value={selectedSegmentsExperience.segmentsExperienceId}
-			/>
-
-			<ClayDropDown
-				active={segmentExperienceSelectorActive}
-				alignmentPosition={Align.BottomLeft}
-				menuElementAttrs={{
-					containerProps: {
-						className: 'cadmin',
-					},
-				}}
-				onActiveChange={setSegmentExperienceSelectorActive}
-				trigger={
-					<ClayButton
-						className="form-control-select text-left w-100"
-						displayType="secondary"
-						size="sm"
-						type="button"
+		<>
+			{segmentsExperiences.length < 2 ? (
+				<p>
+					{Liferay.Language.get('no-experiences-have-been-added-yet')}
+				</p>
+			) : (
+				<div className="form-group">
+					<label
+						htmlFor={`${namespace}segmentsExperienceSelector`}
+						id={`${namespace}segmentsExperienceLabelId`}
 					>
-						<span>
-							{selectedSegmentsExperience.segmentsExperienceName}
-						</span>
-					</ClayButton>
-				}
-			>
-				<ClayDropDown.ItemList>
-					{segmentExperiencesShortList.map((segmentsExperience) => (
-						<ClayDropDown.Item
-							key={segmentsExperience.segmentsExperienceId}
-							onClick={() => {
-								setSegmentExperienceSelectorActive(false);
-								onSelectSegmentExperience(segmentsExperience);
-							}}
-						>
-							<Layout.ContentRow>
-								<Layout.ContentCol className="pl-0" expand>
-									<Text
-										id={`${segmentsExperience.segmentsExperienceId}-title`}
-										size={3}
-										weight="semi-bold"
-									>
-										{
-											segmentsExperience.segmentsExperienceName
-										}
-									</Text>
+						{Liferay.Language.get('experience')}
+					</label>
 
-									<Text
-										aria-hidden
-										color="secondary"
-										id={`${segmentsExperience.segmentsExperienceId}-description`}
-										size={3}
+					<input
+						id={`${namespace}segmentsExperienceId`}
+						name={`${namespace}segmentsExperienceId`}
+						type="hidden"
+						value={selectedSegmentsExperience.segmentsExperienceId}
+					/>
+
+					<ClayDropDown
+						active={segmentExperienceSelectorActive}
+						alignmentPosition={Align.BottomLeft}
+						menuElementAttrs={{
+							containerProps: {
+								className: 'cadmin',
+							},
+						}}
+						onActiveChange={setSegmentExperienceSelectorActive}
+						trigger={
+							<ClayButton
+								className="form-control-select text-left w-100"
+								displayType="secondary"
+								size="sm"
+								type="button"
+							>
+								<span>
+									{
+										selectedSegmentsExperience.segmentsExperienceName
+									}
+								</span>
+							</ClayButton>
+						}
+					>
+						<ClayDropDown.ItemList>
+							{segmentExperiencesShortList.map(
+								(segmentsExperience) => (
+									<ClayDropDown.Item
+										key={
+											segmentsExperience.segmentsExperienceId
+										}
+										onClick={() => {
+											setSegmentExperienceSelectorActive(
+												false
+											);
+											onSelectSegmentExperience(
+												segmentsExperience
+											);
+										}}
 									>
-										{`${Liferay.Language.get('segment')}:
+										<Layout.ContentRow>
+											<Layout.ContentCol
+												className="pl-0"
+												expand
+											>
+												<Text
+													id={`${segmentsExperience.segmentsExperienceId}-title`}
+													size={3}
+													weight="semi-bold"
+												>
+													{
+														segmentsExperience.segmentsExperienceName
+													}
+												</Text>
+
+												<Text
+													aria-hidden
+													color="secondary"
+													id={`${segmentsExperience.segmentsExperienceId}-description`}
+													size={3}
+												>
+													{`${Liferay.Language.get(
+														'segment'
+													)}:
                                         ${
 											segmentsExperience.segmentsEntryName
 										}`}
-									</Text>
-								</Layout.ContentCol>
+												</Text>
+											</Layout.ContentCol>
 
-								<Layout.ContentCol className="pr-0">
-									<Label
-										aria-hidden
-										className="mr-0"
-										displayType={
-											segmentsExperience.segmentsExperienceActive
-												? 'success'
-												: 'secondary'
-										}
-										id={`${segmentsExperience.segmentsExperienceId}-status`}
+											<Layout.ContentCol className="pr-0">
+												<Label
+													aria-hidden
+													className="mr-0"
+													displayType={
+														segmentsExperience.segmentsExperienceActive
+															? 'success'
+															: 'secondary'
+													}
+													id={`${segmentsExperience.segmentsExperienceId}-status`}
+												>
+													{
+														segmentsExperience.segmentsExperienceStatusLabel
+													}
+												</Label>
+											</Layout.ContentCol>
+										</Layout.ContentRow>
+									</ClayDropDown.Item>
+								)
+							)}
+
+							{segmentsExperiences.length >
+								maximumDropdownEntries && (
+								<ClayDropDown.Section>
+									<ClayButton
+										displayType="secondary w-100"
+										onClick={() => {
+											setSegmentExperienceSelectorActive(
+												false
+											);
+
+											onMoreSegmentExperiencesButtonClick();
+										}}
 									>
-										{
-											segmentsExperience.segmentsExperienceStatusLabel
-										}
-									</Label>
-								</Layout.ContentCol>
-							</Layout.ContentRow>
-						</ClayDropDown.Item>
-					))}
-
-					{segmentsExperiences.length > maximumDropdownEntries && (
-						<ClayDropDown.Section>
-							<ClayButton
-								displayType="secondary w-100"
-								onClick={() => {
-									setSegmentExperienceSelectorActive(false);
-
-									onMoreSegmentExperiencesButtonClick();
-								}}
-							>
-								{Liferay.Language.get('more-experiences')}
-							</ClayButton>
-						</ClayDropDown.Section>
-					)}
-				</ClayDropDown.ItemList>
-			</ClayDropDown>
-		</div>
+										{Liferay.Language.get(
+											'more-experiences'
+										)}
+									</ClayButton>
+								</ClayDropDown.Section>
+							)}
+						</ClayDropDown.ItemList>
+					</ClayDropDown>
+				</div>
+			)}
+		</>
 	);
 }
 

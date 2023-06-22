@@ -15,7 +15,6 @@
 package com.liferay.source.formatter.check;
 
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -44,26 +43,23 @@ public class UpgradeGetPortletGroupIdMethodCheck extends BaseFileCheck {
 		while (getPortletGroupIdMatcher.find()) {
 			String methodCall = getPortletGroupIdMatcher.group();
 
-			if (Validator.isNotNull(methodCall)) {
-				if (!fileName.endsWith(".java") &&
-					!methodCall.contains("themeDisplay")) {
+			if (!fileName.endsWith(".java") &&
+				!methodCall.contains("themeDisplay")) {
 
-					return newContent;
-				}
-
-				if (fileName.endsWith(".java") &&
-					!hasClassOrVariableName(
-						"ThemeDisplay", newContent, methodCall)) {
-
-					return newContent;
-				}
-
-				newContent = StringUtil.replace(
-					newContent, methodCall,
-					StringUtil.replace(
-						methodCall, ".getPortletGroupId()",
-						".getScopeGroupId()"));
+				return newContent;
 			}
+
+			if (fileName.endsWith(".java") &&
+				!hasClassOrVariableName(
+					"ThemeDisplay", newContent, methodCall)) {
+
+				return newContent;
+			}
+
+			newContent = StringUtil.replace(
+				newContent, methodCall,
+				StringUtil.replace(
+					methodCall, ".getPortletGroupId()", ".getScopeGroupId()"));
 		}
 
 		return newContent;

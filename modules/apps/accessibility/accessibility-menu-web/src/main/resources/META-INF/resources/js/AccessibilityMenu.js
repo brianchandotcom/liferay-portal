@@ -16,6 +16,8 @@ import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayModal, {useModal} from '@clayui/modal';
 import {checkCookieConsentForTypes} from '@liferay/cookies-banner-web';
+import {useLiferayState} from '@liferay/frontend-js-react-web';
+import {State} from '@liferay/frontend-js-state-web';
 import {
 	COOKIE_TYPES,
 	checkConsent,
@@ -30,28 +32,10 @@ import {getSettingValue, toggleClassName} from './util';
 
 const OPEN_ACCESSIBILITY_MENU_EVENT_NAME = 'openAccessibilityMenu';
 
-const getInitialSettings = (settings) => {
-	return settings.map((setting) => {
-		const {
-			className,
-			defaultValue,
-			key,
-			label,
-			sessionClicksValue,
-		} = setting;
-
-		const value = getSettingValue(defaultValue, sessionClicksValue, key);
-
-		toggleClassName(className, value);
-
-		return {className, key, label, value};
-	});
-};
+export const accessibilityMenuAtom = State.atom('accessibility-menu', []);
 
 const AccessibilityMenu = (props) => {
-	const [settings, setSettings] = useState(() =>
-		getInitialSettings(props.settings)
-	);
+	const [settings, setSettings] = useLiferayState(accessibilityMenuAtom);
 
 	const [
 		hasFunctionalCookiesConsent,
@@ -59,6 +43,30 @@ const AccessibilityMenu = (props) => {
 	] = useState(checkConsent(COOKIE_TYPES.FUNCTIONAL));
 
 	const {observer, onOpenChange, open} = useModal();
+
+	useEffect(() => {
+		setSettings(
+			props.settings.map((setting) => {
+				const {
+					className,
+					defaultValue,
+					key,
+					label,
+					sessionClicksValue,
+				} = setting;
+
+				const value = getSettingValue(
+					defaultValue,
+					sessionClicksValue,
+					key
+				);
+
+				toggleClassName(className, value);
+
+				return {className, key, label, value};
+			})
+		);
+	}, [setSettings, props.settings]);
 
 	useEffect(() => {
 		const openAccessibilityMenu = () => onOpenChange(true);
@@ -73,21 +81,24 @@ const AccessibilityMenu = (props) => {
 		};
 	}, [onOpenChange]);
 
-	const updateSetting = useCallback((settingKey, settingUpdates) => {
-		setSettings((settings) =>
-			settings.map((setting) => {
-				if (settingKey === setting.key) {
-					return {
-						...setting,
-						...settingUpdates,
-					};
-				}
-				else {
-					return setting;
-				}
-			})
-		);
-	}, []);
+	const updateSetting = useCallback(
+		(settingKey, settingUpdates) => {
+			setSettings((settings) =>
+				settings.map((setting) => {
+					if (settingKey === setting.key) {
+						return {
+							...setting,
+							...settingUpdates,
+						};
+					}
+					else {
+						return setting;
+					}
+				})
+			);
+		},
+		[setSettings]
+	);
 
 	const afterSettingValueChange = useCallback(
 		(value, setting) => {

@@ -24,6 +24,9 @@ module.exports = {
 		bundler: {
 			config: {
 				imports: {
+					'@liferay/accessibility-menu-web': {
+						'/': '*',
+					},
 					'@liferay/address-web': {
 						'/': '*',
 					},

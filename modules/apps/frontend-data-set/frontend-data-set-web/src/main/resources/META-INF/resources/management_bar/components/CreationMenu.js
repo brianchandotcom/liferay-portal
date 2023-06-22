@@ -50,7 +50,7 @@ function CreationMenu({inEmptyState, primaryItems}) {
 									className={classNames({
 										'nav-btn nav-btn-monospaced': !inEmptyState,
 									})}
-									displayType="secondary"
+									displayType={inEmptyState && 'secondary'}
 									title={!inEmptyState && labelNew}
 								>
 									{inEmptyState ? (

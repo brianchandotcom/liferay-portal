@@ -14,8 +14,6 @@
 
 package com.liferay.object.system;
 
-import com.liferay.object.field.util.ObjectFieldUtil;
-import com.liferay.object.model.ObjectField;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -96,24 +94,8 @@ public abstract class BaseSystemObjectDefinitionManager
 	}
 
 	protected Map<Locale, String> createLabelMap(String labelKey) {
-		return LocalizedMapUtil.getLocalizedMap(_translate(labelKey));
-	}
-
-	protected ObjectField createObjectField(
-		String businessType, String dbType, String labelKey, String name,
-		boolean required, boolean system) {
-
-		return createObjectField(
-			businessType, null, dbType, labelKey, name, required, system);
-	}
-
-	protected ObjectField createObjectField(
-		String businessType, String dbColumnName, String dbType,
-		String labelKey, String name, boolean required, boolean system) {
-
-		return ObjectFieldUtil.createObjectField(
-			0, businessType, dbColumnName, dbType, false, false, null,
-			_translate(labelKey), name, required, system);
+		return LocalizedMapUtil.getLocalizedMap(
+			LanguageUtil.get(LocaleUtil.getDefault(), labelKey));
 	}
 
 	protected Map<String, String> getLanguageIdMap(
@@ -172,9 +154,5 @@ public abstract class BaseSystemObjectDefinitionManager
 
 	@Reference
 	protected ExtensionProviderRegistry extensionProviderRegistry;
-
-	private String _translate(String labelKey) {
-		return LanguageUtil.get(LocaleUtil.getDefault(), labelKey);
-	}
 
 }

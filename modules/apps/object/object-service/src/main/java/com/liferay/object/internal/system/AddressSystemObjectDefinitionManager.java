@@ -15,6 +15,7 @@
 package com.liferay.object.internal.system;
 
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.system.BaseSystemObjectDefinitionManager;
@@ -106,10 +107,14 @@ public class AddressSystemObjectDefinitionManager
 	@Override
 	public List<ObjectField> getObjectFields() {
 		return Arrays.asList(
-			createObjectField("Text", "String", "name", "name", true, true),
 			createObjectField(
-				"Text", "street1", "String", "street1", "streetAddressLine1",
-				true, true));
+				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+				ObjectFieldConstants.DB_TYPE_STRING, "name", "name", true,
+				true),
+			createObjectField(
+				ObjectFieldConstants.BUSINESS_TYPE_TEXT, "street1",
+				ObjectFieldConstants.DB_TYPE_STRING, "street1",
+				"streetAddressLine1", true, true));
 	}
 
 	@Override

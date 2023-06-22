@@ -17,6 +17,7 @@ package com.liferay.object.internal.system;
 import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.resource.v1_0.UserAccountResource;
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.system.BaseSystemObjectDefinitionManager;
@@ -117,24 +118,33 @@ public class UserSystemObjectDefinitionManager
 	public List<ObjectField> getObjectFields() {
 		return Arrays.asList(
 			createObjectField(
-				"Text", "middleName", "String", "middle-name", "additionalName",
-				false, true),
+				ObjectFieldConstants.BUSINESS_TYPE_TEXT, "middleName",
+				ObjectFieldConstants.DB_TYPE_STRING, "middle-name",
+				"additionalName", false, true),
 			createObjectField(
-				"Text", "screenName", "String", "screen-name", "alternateName",
+				ObjectFieldConstants.BUSINESS_TYPE_TEXT, "screenName",
+				ObjectFieldConstants.DB_TYPE_STRING, "screen-name",
+				"alternateName", true, true),
+			createObjectField(
+				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+				ObjectFieldConstants.DB_TYPE_STRING, "email-address",
+				"emailAddress", true, true),
+			createObjectField(
+				ObjectFieldConstants.BUSINESS_TYPE_TEXT, "lastName",
+				ObjectFieldConstants.DB_TYPE_STRING, "last-name", "familyName",
 				true, true),
 			createObjectField(
-				"Text", "String", "email-address", "emailAddress", true, true),
+				ObjectFieldConstants.BUSINESS_TYPE_TEXT, "firstName",
+				ObjectFieldConstants.DB_TYPE_STRING, "first-name", "givenName",
+				true, true),
 			createObjectField(
-				"Text", "lastName", "String", "last-name", "familyName", true,
-				true),
-			createObjectField(
-				"Text", "firstName", "String", "first-name", "givenName", true,
-				true),
-			createObjectField(
-				"Date", "lastLoginDate", "Date", "last-login-date",
+				ObjectFieldConstants.BUSINESS_TYPE_DATE, "lastLoginDate",
+				ObjectFieldConstants.DB_TYPE_DATE, "last-login-date",
 				"lastLoginDate", false, true),
 			createObjectField(
-				"Text", "uuid_", "String", "uuid", "uuid", false, true));
+				ObjectFieldConstants.BUSINESS_TYPE_TEXT, "uuid_",
+				ObjectFieldConstants.DB_TYPE_STRING, "uuid", "uuid", false,
+				true));
 	}
 
 	@Override

@@ -22,6 +22,7 @@ import com.liferay.commerce.product.service.CProductLocalService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductResource;
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.system.BaseSystemObjectDefinitionManager;
 import com.liferay.object.system.JaxRsApplicationDescriptor;
@@ -116,25 +117,45 @@ public class CPDefinitionSystemObjectDefinitionManager
 	public List<ObjectField> getObjectFields() {
 		return Arrays.asList(
 			createObjectField(
-				"Boolean", "Boolean", "active", "active", true, true),
+				ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN,
+				ObjectFieldConstants.DB_TYPE_BOOLEAN, "active", "active", true,
+				true),
 			createObjectField(
-				"LongInteger", "Long", "catalog-id", "catalogId", true, true),
+				ObjectFieldConstants.BUSINESS_TYPE_LONG_INTEGER,
+				ObjectFieldConstants.DB_TYPE_LONG, "catalog-id", "catalogId",
+				true, true),
 			createObjectField(
-				"Text", "String", "description", "description", false, true),
-			createObjectField("Text", "String", "name", "name", true, true),
+				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+				ObjectFieldConstants.DB_TYPE_STRING, "description",
+				"description", false, true),
 			createObjectField(
-				"Text", "CPDefinitionId", "String", "product-id", "productId",
+				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+				ObjectFieldConstants.DB_TYPE_STRING, "name", "name", true,
+				true),
+			createObjectField(
+				ObjectFieldConstants.BUSINESS_TYPE_TEXT, "CPDefinitionId",
+				ObjectFieldConstants.DB_TYPE_STRING, "product-id", "productId",
 				false, true),
 			createObjectField(
-				"Text", "String", "product-type", "productType", true, true),
+				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+				ObjectFieldConstants.DB_TYPE_STRING, "product-type",
+				"productType", true, true),
 			createObjectField(
-				"Text", "String", "short-description", "shortDescription",
+				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+				ObjectFieldConstants.DB_TYPE_STRING, "short-description",
+				"shortDescription", false, true),
+			createObjectField(
+				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+				ObjectFieldConstants.DB_TYPE_STRING, "sku", "skuFormatted",
 				false, true),
 			createObjectField(
-				"Text", "String", "sku", "skuFormatted", false, true),
+				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+				ObjectFieldConstants.DB_TYPE_STRING, "thumbnail", "thumbnail",
+				false, true),
 			createObjectField(
-				"Text", "String", "thumbnail", "thumbnail", false, true),
-			createObjectField("Text", "String", "uuid", "uuid", false, true));
+				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+				ObjectFieldConstants.DB_TYPE_STRING, "uuid", "uuid", false,
+				true));
 	}
 
 	@Override

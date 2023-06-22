@@ -20,6 +20,7 @@ import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.Order;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.OrderResource;
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.system.BaseSystemObjectDefinitionManager;
 import com.liferay.object.system.JaxRsApplicationDescriptor;
@@ -121,23 +122,34 @@ public class CommerceOrderSystemObjectDefinitionManager
 	public List<ObjectField> getObjectFields() {
 		return Arrays.asList(
 			createObjectField(
-				"LongInteger", "Long", "account-id", "accountId", true, true),
+				ObjectFieldConstants.BUSINESS_TYPE_LONG_INTEGER,
+				ObjectFieldConstants.DB_TYPE_LONG, "account-id", "accountId",
+				true, true),
 			createObjectField(
-				"LongInteger", "Long", "channel-id", "channelId", true, true),
+				ObjectFieldConstants.BUSINESS_TYPE_LONG_INTEGER,
+				ObjectFieldConstants.DB_TYPE_LONG, "channel-id", "channelId",
+				true, true),
 			createObjectField(
-				"Text", "String", "currency-code", "currencyCode", true, true),
+				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+				ObjectFieldConstants.DB_TYPE_STRING, "currency-code",
+				"currencyCode", true, true),
 			createObjectField(
-				"Integer", "Integer", "order-status", "orderStatus", true,
-				true),
+				ObjectFieldConstants.BUSINESS_TYPE_INTEGER,
+				ObjectFieldConstants.DB_TYPE_INTEGER, "order-status",
+				"orderStatus", true, true),
 			createObjectField(
-				"Text", "orderTypeExternalReferenceCode", "String",
+				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+				"orderTypeExternalReferenceCode",
+				ObjectFieldConstants.DB_TYPE_STRING,
 				"orderTypeExternalReferenceCode",
 				"orderTypeExternalReferenceCode", false, true),
 			createObjectField(
-				"LongInteger", "orderTypeId", "Long", "order-type-id",
+				ObjectFieldConstants.BUSINESS_TYPE_LONG_INTEGER, "orderTypeId",
+				ObjectFieldConstants.DB_TYPE_LONG, "order-type-id",
 				"orderTypeId", false, true),
 			createObjectField(
-				"PrecisionDecimal", "BigDecimal", "shipping-amount",
+				ObjectFieldConstants.BUSINESS_TYPE_PRECISION_DECIMAL,
+				ObjectFieldConstants.DB_TYPE_BIG_DECIMAL, "shipping-amount",
 				"shippingAmount", true, true));
 	}
 

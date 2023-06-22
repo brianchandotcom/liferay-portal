@@ -17,6 +17,7 @@ package com.liferay.organizations.internal.object.system;
 import com.liferay.headless.admin.user.dto.v1_0.Organization;
 import com.liferay.headless.admin.user.resource.v1_0.OrganizationResource;
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.system.BaseSystemObjectDefinitionManager;
@@ -120,10 +121,13 @@ public class OrganizationSystemObjectDefinitionManager
 	public List<ObjectField> getObjectFields() {
 		return Arrays.asList(
 			createObjectField(
-				"Text", "comments", "String", "comments", "comments", false,
-				true),
+				ObjectFieldConstants.BUSINESS_TYPE_TEXT, "comments",
+				ObjectFieldConstants.DB_TYPE_STRING, "comments", "comments",
+				false, true),
 			createObjectField(
-				"Text", "name", "String", "name", "name", true, true));
+				ObjectFieldConstants.BUSINESS_TYPE_TEXT, "name",
+				ObjectFieldConstants.DB_TYPE_STRING, "name", "name", true,
+				true));
 	}
 
 	@Override

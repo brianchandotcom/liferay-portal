@@ -211,6 +211,8 @@ public class DBUpgradeClient {
 
 		Process process = processBuilder.start();
 
+		boolean gogoShell = false;
+
 		try (ObjectOutputStream bootstrapObjectOutputStream =
 				new ObjectOutputStream(process.getOutputStream());
 			InputStreamReader inputStreamReader = new InputStreamReader(
@@ -225,6 +227,10 @@ public class DBUpgradeClient {
 			String line = null;
 
 			while ((line = bufferedReader.readLine()) != null) {
+				if (line.contains("UpgradeRecorder") && line.contains("fail")) {
+					gogoShell = true;
+				}
+
 				if (line.equals("Exiting DBUpgrader#main(String[]).")) {
 					break;
 				}
@@ -239,7 +245,7 @@ public class DBUpgradeClient {
 		}
 
 		try (GogoShellClient gogoShellClient = _initGogoShellClient()) {
-			if (!_isModuleUpgradesFinished(gogoShellClient) || _shell) {
+			if (gogoShell || _shell) {
 				System.out.println("Connecting to Gogo shell...");
 
 				_printHelp();
@@ -399,37 +405,6 @@ public class DBUpgradeClient {
 		int port = Integer.parseInt(matcher.group(2));
 
 		return new GogoShellClient(host, port);
-	}
-
-	private boolean _isModuleUpgradesFinished(GogoShellClient gogoShellClient)
-		throws IOException {
-
-		String upgradeCheck = gogoShellClient.send("upgrade:check");
-
-		if (upgradeCheck.contains("CommandNotFoundException")) {
-			System.out.print("Portal upgrade failed. Fix the issue and retry.");
-
-			return true;
-		}
-
-		System.out.println("Checking to see if all upgrades have completed...");
-
-		String upgradeSteps = gogoShellClient.send(
-			"upgrade:list | grep Registered | grep step");
-
-		if (!upgradeCheck.equals("upgrade:check") ||
-			upgradeSteps.contains("true")) {
-
-			System.out.println(
-				"Module upgrades have failed, have not started, or are still " +
-					"running.");
-
-			return false;
-		}
-
-		System.out.println("Looks good.");
-
-		return true;
 	}
 
 	private void _printHelp() {

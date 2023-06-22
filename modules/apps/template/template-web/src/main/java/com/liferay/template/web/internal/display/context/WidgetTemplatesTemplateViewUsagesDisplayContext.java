@@ -16,6 +16,7 @@ package com.liferay.template.web.internal.display.context;
 
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.VerticalNavItemList;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
@@ -40,14 +41,18 @@ import java.util.List;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Eudaldo Alonso
  */
 public class WidgetTemplatesTemplateViewUsagesDisplayContext {
 
 	public WidgetTemplatesTemplateViewUsagesDisplayContext(
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
+		RenderResponse renderResponse) {
 
+		_httpServletRequest = httpServletRequest;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 
@@ -140,6 +145,25 @@ public class WidgetTemplatesTemplateViewUsagesDisplayContext {
 					HtmlUtil.escape(_ddmTemplate.getTemplateKey()));
 	}
 
+	public VerticalNavItemList getVerticalItemList() {
+		return new VerticalNavItemList() {
+			{
+				add(
+					verticalNavItem -> {
+						verticalNavItem.setLabel(
+							LanguageUtil.format(
+								_httpServletRequest, "all-x", getUsagesCount(),
+								false));
+						verticalNavItem.setId(
+							LanguageUtil.format(
+								_httpServletRequest, "all-x", getUsagesCount(),
+								false));
+						verticalNavItem.setActive(true);
+					});
+			}
+		};
+	}
+
 	public SearchContainer<PortletPreferences>
 		getWidgetTemplatesUsagesSearchContainer() {
 
@@ -214,6 +238,7 @@ public class WidgetTemplatesTemplateViewUsagesDisplayContext {
 
 	private DDMTemplate _ddmTemplate;
 	private Long _ddmTemplateId;
+	private final HttpServletRequest _httpServletRequest;
 	private String _redirect;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;

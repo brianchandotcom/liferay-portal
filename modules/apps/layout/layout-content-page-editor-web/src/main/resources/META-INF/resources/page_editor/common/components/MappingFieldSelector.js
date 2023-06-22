@@ -68,7 +68,7 @@ export default function MappingFieldSelector({
 							const key = `${fieldSet.label || ''}${index}`;
 
 							const Wrapper = ({children, ...props}) =>
-								fieldSet.label ? (
+								fieldSet.label && fields.length > 1 ? (
 									<ClaySelect.OptGroup {...props}>
 										{children}
 									</ClaySelect.OptGroup>

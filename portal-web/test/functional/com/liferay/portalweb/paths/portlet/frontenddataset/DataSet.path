@@ -235,6 +235,16 @@
 	<td>//div[label[contains(.,'Source Options')]]/select</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SELECT_MONTH</td>
+	<td>//div[contains(@class,"dropdown-menu date-picker-dropdown-menu show")]//select[contains(@class,'form-control form-control-sm') and contains(@name,'${key_type}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_DAY</td>
+	<td>//div[contains(@class, 'date-picker-dropdown-menu show')]//div[@data-index="${key_line}"]//button[contains(text(), '${key_dateNumber}')]</td>
+	<td></td>
+</tr>
 
 <!-- DATA SET PAGINATION -->
 

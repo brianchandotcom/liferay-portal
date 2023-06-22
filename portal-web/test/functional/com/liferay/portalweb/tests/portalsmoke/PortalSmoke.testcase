@@ -141,6 +141,8 @@ definition {
 
 		SignIn.signInTestSetup();
 
+		Navigator.openURL();
+
 		Smoke.viewWelcomeContentPage();
 
 		Smoke.runSmoke();

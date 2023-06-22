@@ -482,6 +482,8 @@ components:
                     type: string
                 defaultObjectView:
                     type: boolean
+                externalReferenceCode:
+                    type: string
                 id:
                     format: int64
                     readOnly: true
@@ -1164,6 +1166,61 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/ObjectView"
             tags: ["ObjectView"]
+    "/object-definitions/by-external-reference-code/{objectDefinitionExternalReferenceCode}/object-views/by-external-reference-code/{objectViewExternalReferenceCode}":
+        get:
+            operationId: getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectViewByExternalReferenceCodeObjectViewExternalReferenceCode
+            parameters:
+                - in: path
+                  name: objectDefinitionExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: objectViewExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ObjectView"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ObjectView"
+            tags: ["ObjectView"]
+        put:
+            operationId: putObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectViewByExternalReferenceCodeObjectViewExternalReferenceCode
+            parameters:
+                - in: path
+                  name: objectDefinitionExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: objectViewExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ObjectView"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ObjectView"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ObjectView"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ObjectView"
+            tags: [ "ObjectView" ]
     "/object-definitions/{objectDefinitionId}":
         delete:
             operationId: deleteObjectDefinition

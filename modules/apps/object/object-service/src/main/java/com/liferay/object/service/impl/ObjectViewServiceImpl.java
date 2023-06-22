@@ -105,6 +105,26 @@ public class ObjectViewServiceImpl extends ObjectViewServiceBaseImpl {
 	}
 
 	@Override
+	public ObjectView
+			fetchObjectViewByObjectDefinitionExternalReferenceCodeObjectViewExternalReferenceCode(
+				String objectDefinitionExternalReferenceCode,
+				String objectViewExternalReferenceCode, long companyId)
+		throws PortalException {
+
+		ObjectView objectView =
+			objectViewLocalService.
+				fetchObjectViewByObjectDefinitionExternalReferenceCodeObjectViewExternalReferenceCode(
+					objectDefinitionExternalReferenceCode,
+					objectViewExternalReferenceCode, companyId);
+
+		_objectDefinitionModelResourcePermission.check(
+			getPermissionChecker(), objectView.getObjectDefinitionId(),
+			ActionKeys.VIEW);
+
+		return objectView;
+	}
+
+	@Override
 	public ObjectView getObjectView(long objectViewId) throws PortalException {
 		ObjectView objectView = objectViewPersistence.findByPrimaryKey(
 			objectViewId);

@@ -228,6 +228,22 @@ public class ObjectViewLocalServiceImpl extends ObjectViewLocalServiceBaseImpl {
 	}
 
 	@Override
+	public ObjectView
+			fetchObjectViewByObjectDefinitionExternalReferenceCodeObjectViewExternalReferenceCode(
+				String objectDefinitionExternalReferenceCode,
+				String objectViewExternalReferenceCode, long companyId)
+		throws PortalException {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.fetchByERC_C(
+				objectDefinitionExternalReferenceCode, companyId);
+
+		return objectViewPersistence.fetchByERC_C_ODI(
+			objectViewExternalReferenceCode, companyId,
+			objectDefinition.getObjectDefinitionId());
+	}
+
+	@Override
 	public ObjectView getObjectView(long objectViewId) throws PortalException {
 		ObjectView objectView = objectViewPersistence.findByPrimaryKey(
 			objectViewId);

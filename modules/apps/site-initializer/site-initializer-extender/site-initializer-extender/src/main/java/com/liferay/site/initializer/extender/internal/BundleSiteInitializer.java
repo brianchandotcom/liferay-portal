@@ -95,10 +95,12 @@ import com.liferay.notification.rest.dto.v1_0.NotificationTemplate;
 import com.liferay.notification.rest.resource.v1_0.NotificationTemplateResource;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectField;
+import com.liferay.object.admin.rest.dto.v1_0.ObjectLayout;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectRelationship;
 import com.liferay.object.admin.rest.dto.v1_0.util.ObjectActionUtil;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectFieldResource;
+import com.liferay.object.admin.rest.resource.v1_0.ObjectLayoutResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectRelationshipResource;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
@@ -284,6 +286,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		ObjectEntryManager objectEntryManager,
 		ObjectFieldLocalService objectFieldLocalService,
 		ObjectFieldResource.Factory objectFieldResourceFactory,
+		ObjectLayoutResource.Factory objectLayoutResourceFactory,
 		ObjectRelationshipLocalService objectRelationshipLocalService,
 		ObjectRelationshipResource.Factory objectRelationshipResourceFactory,
 		OrganizationLocalService organizationLocalService,
@@ -365,6 +368,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_objectEntryManager = objectEntryManager;
 		_objectFieldLocalService = objectFieldLocalService;
 		_objectFieldResourceFactory = objectFieldResourceFactory;
+		_objectLayoutResourceFactory = objectLayoutResourceFactory;
 		_objectRelationshipLocalService = objectRelationshipLocalService;
 		_objectRelationshipResourceFactory = objectRelationshipResourceFactory;
 		_organizationLocalService = organizationLocalService;
@@ -551,6 +555,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 					_ddmStructureLocalService, _ddmTemplateLocalService,
 					documentsStringUtilReplaceValues, serviceContext,
 					siteNavigationMenuItemSettingsBuilder));
+			
+			_invoke(() -> _addOrUpdateObjectLayouts(serviceContext));
 
 			_invoke(
 				() -> _addOrUpdateNotificationTemplates(
@@ -3096,6 +3102,44 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
+	private void _addOrUpdateObjectLayouts(ServiceContext serviceContext)
+		throws Exception {
+
+		Set<String> resourcePaths = _servletContext.getResourcePaths(
+			"/site-initializer/object-layouts");
+
+		if (SetUtil.isEmpty(resourcePaths)) {
+			return;
+		}
+
+		ObjectLayoutResource.Builder objectLayoutResourceBuilder =
+			_objectLayoutResourceFactory.create();
+
+		ObjectLayoutResource objectLayoutResource =
+			objectLayoutResourceBuilder.user(
+				serviceContext.fetchUser()
+			).build();
+
+		for (String resourcePath : resourcePaths) {
+			String json = SiteInitializerUtil.read(
+				resourcePath, _servletContext);
+
+			ObjectLayout objectLayout = ObjectLayout.toDTO(json);
+
+			if (objectLayout == null) {
+				_log.error(
+					"Unable to transform object layout from JSON: " + json);
+
+				continue;
+			}
+
+			objectLayoutResource.
+				putObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectLayoutByExternalReferenceCodeObjectLayoutExternalReferenceCode(
+					objectLayout.getObjectDefinitionExternalReferenceCode(),
+					objectLayout.getExternalReferenceCode(), objectLayout);
+		}
+	}
+
 	private void _addOrUpdateObjectRelationships(
 			Map<String, String> objectDefinitionIdsStringUtilReplaceValues,
 			ServiceContext serviceContext)
@@ -5167,6 +5211,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final ObjectEntryManager _objectEntryManager;
 	private final ObjectFieldLocalService _objectFieldLocalService;
 	private final ObjectFieldResource.Factory _objectFieldResourceFactory;
+	private final ObjectLayoutResource.Factory _objectLayoutResourceFactory;
 	private final ObjectRelationshipLocalService
 		_objectRelationshipLocalService;
 	private final ObjectRelationshipResource.Factory

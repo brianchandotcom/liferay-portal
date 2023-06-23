@@ -19,7 +19,7 @@ import com.liferay.flags.service.FlagsEntryService;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
-import com.liferay.portal.kernel.messaging.DestinationFactoryUtil;
+import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
@@ -137,7 +137,7 @@ public class FlagsEntryServiceTest {
 				DestinationConfiguration.DESTINATION_TYPE_SYNCHRONOUS,
 				DestinationNames.SUBSCRIPTION_SENDER);
 
-		Destination destination = DestinationFactoryUtil.createDestination(
+		Destination destination = _destinationFactory.createDestination(
 			destinationConfiguration);
 
 		destination.register(messageListener);
@@ -152,6 +152,9 @@ public class FlagsEntryServiceTest {
 	}
 
 	private BundleContext _bundleContext;
+
+	@Inject
+	private DestinationFactory _destinationFactory;
 
 	@Inject
 	private FlagsEntryService _flagsEntryService;

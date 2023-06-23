@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.DestinationEventListener;
 import com.liferay.portal.kernel.messaging.DestinationFactory;
-import com.liferay.portal.kernel.messaging.DestinationFactoryUtil;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageBusEventListener;
 import com.liferay.portal.kernel.messaging.MessageListener;
@@ -27,6 +26,7 @@ import com.liferay.portal.kernel.module.util.ServiceLatch;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 import java.util.ArrayList;
 import java.util.Dictionary;
@@ -186,7 +186,7 @@ public class DefaultMessagingConfigurator implements MessagingConfigurator {
 				_destinationConfigurations) {
 
 			_destinations.add(
-				DestinationFactoryUtil.createDestination(
+				_destinationFactory.createDestination(
 					destinationConfiguration));
 		}
 
@@ -221,6 +221,11 @@ public class DefaultMessagingConfigurator implements MessagingConfigurator {
 					null));
 		}
 	}
+
+	private static volatile DestinationFactory _destinationFactory =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			DestinationFactory.class, DefaultMessagingConfigurator.class,
+			"_destinationFactory", false);
 
 	private final Set<DestinationConfiguration> _destinationConfigurations =
 		new HashSet<>();

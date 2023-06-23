@@ -20,7 +20,7 @@ import com.liferay.portal.db.partition.test.util.BaseDBPartitionTestCase;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
-import com.liferay.portal.kernel.messaging.DestinationFactoryUtil;
+import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageBusInterceptor;
@@ -266,7 +266,7 @@ public abstract class BaseDBPartitionMessageBusInterceptorTestCase
 
 		_testDBPartitionMessageListener = new TestDBPartitionMessageListener();
 
-		Destination destination = DestinationFactoryUtil.createDestination(
+		Destination destination = _destinationFactory.createDestination(
 			new DestinationConfiguration(destinationType, _DESTINATION_NAME));
 
 		destination.register(_testDBPartitionMessageListener);
@@ -294,6 +294,9 @@ public abstract class BaseDBPartitionMessageBusInterceptorTestCase
 		filter = "component.name=com.liferay.portal.db.partition.internal.messaging.DBPartitionMessageBusInterceptor"
 	)
 	private static MessageBusInterceptor _dbPartitionMessageBusInterceptor;
+
+	@Inject
+	private static DestinationFactory _destinationFactory;
 
 	private static Map<String, Destination> _destinations;
 

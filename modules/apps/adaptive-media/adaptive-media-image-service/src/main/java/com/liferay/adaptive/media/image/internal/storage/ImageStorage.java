@@ -53,7 +53,7 @@ public class ImageStorage {
 
 			return _store.getFileAsStream(
 				fileVersion.getCompanyId(), CompanyConstants.SYSTEM,
-				fileVersionPath, StringPool.BLANK);
+				fileVersionPath, Store.VERSION_DEFAULT);
 		}
 		catch (PortalException portalException) {
 			throw new AMRuntimeException.IOException(portalException);

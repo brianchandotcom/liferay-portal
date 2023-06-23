@@ -2949,7 +2949,7 @@ definition {
 
 			Check.checkToggleSwitch(locator1 = "Search#SORT_WIDGET_CONFIGURATION_RELEVANCE_TOGGLE");
 
-			Type.type(
+			Type(
 				locator1 = "Search#SORT_WIDGET_CONFIGURATION_RELEVANCE_DISPLAY_LABEL",
 				value1 = "Relevant Test");
 		}

@@ -225,7 +225,7 @@ definition {
 
 			DataSetAdmin.assertFieldsOnTable(
 				key_position = 1,
-				keyName = "default");
+				keyName = "Default");
 		}
 	}
 

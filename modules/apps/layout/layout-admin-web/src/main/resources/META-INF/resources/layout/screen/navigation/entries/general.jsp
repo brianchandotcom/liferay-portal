@@ -57,7 +57,6 @@ LayoutType selLayoutType = selLayout.getLayoutType();
 	<aui:input name="stagingGroupId" type="hidden" value="<%= layoutsAdminDisplayContext.getStagingGroupId() %>" />
 	<aui:input name="selPlid" type="hidden" value="<%= layoutsAdminDisplayContext.getSelPlid() %>" />
 	<aui:input name="type" type="hidden" value="<%= selLayout.getType() %>" />
-	<aui:input name="<%= PortletDataHandlerKeys.SELECTED_LAYOUTS %>" type="hidden" />
 
 	<c:if test="<%= group.isLayoutPrototype() || !(selLayoutType.isURLFriendliable() && !layoutsAdminDisplayContext.isDraft() && !selLayout.isSystem()) %>">
 		<aui:input name="friendlyURL" type="hidden" value="<%= HttpComponentsUtil.decodeURL(selLayout.getFriendlyURL()) %>" />

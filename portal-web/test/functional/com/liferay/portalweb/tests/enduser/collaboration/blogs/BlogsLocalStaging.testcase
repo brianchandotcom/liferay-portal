@@ -1163,6 +1163,12 @@ definition {
 			site = "false",
 			siteURLKey = "site-name-staging");
 
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "Test YouTube Video");
+
 		DMDocument.editFriendlyURL(
 			dmDocumentTitle = "Test YouTube Video",
 			friendlyURLEdit = "new-custom-url");

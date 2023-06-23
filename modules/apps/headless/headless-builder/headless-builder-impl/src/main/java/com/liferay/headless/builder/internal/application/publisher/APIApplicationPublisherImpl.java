@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 
 import javax.ws.rs.core.Application;
 
@@ -57,11 +58,13 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 				{
 					add(_registerHeadlessBuilderApplication(apiApplication));
 					add(
-						_registerHeadlessBuilderApplicationResource(
-							apiApplication));
+						_registerResource(
+							apiApplication, HeadlessBuilderResourceImpl.class,
+							() -> new HeadlessBuilderResourceImpl()));
 					add(
-						_registerHeadlessBuilderOpenAPIResource(
-							apiApplication));
+						_registerResource(
+							apiApplication, OpenAPIResourceImpl.class,
+							() -> new OpenAPIResourceImpl(_openAPIResource)));
 				}
 			});
 	}
@@ -121,64 +124,25 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 			).build());
 	}
 
-	private ServiceRegistration<HeadlessBuilderResourceImpl>
-		_registerHeadlessBuilderApplicationResource(
-			APIApplication apiApplication) {
+	private <T> ServiceRegistration<T> _registerResource(
+		APIApplication apiApplication, Class<T> resourceClass,
+		Supplier<T> resourceSupplier) {
 
 		return _bundleContext.registerService(
-			HeadlessBuilderResourceImpl.class,
-			new PrototypeServiceFactory<HeadlessBuilderResourceImpl>() {
+			resourceClass,
+			new PrototypeServiceFactory<T>() {
 
 				@Override
-				public HeadlessBuilderResourceImpl getService(
-					Bundle bundle,
-					ServiceRegistration<HeadlessBuilderResourceImpl>
-						serviceRegistration) {
+				public T getService(
+					Bundle bundle, ServiceRegistration<T> serviceRegistration) {
 
-					return new HeadlessBuilderResourceImpl();
+					return resourceSupplier.get();
 				}
 
 				@Override
 				public void ungetService(
-					Bundle bundle,
-					ServiceRegistration<HeadlessBuilderResourceImpl>
-						serviceRegistration,
-					HeadlessBuilderResourceImpl headlessBuilderResourceImpl) {
-				}
-
-			},
-			HashMapDictionaryBuilder.<String, Object>put(
-				"api.version", "v1.0"
-			).put(
-				"osgi.jaxrs.application.select",
-				"(osgi.jaxrs.name=" + apiApplication.getOSGiJaxRsName() + ")"
-			).put(
-				"osgi.jaxrs.resource", "true"
-			).build());
-	}
-
-	private ServiceRegistration<OpenAPIResourceImpl>
-		_registerHeadlessBuilderOpenAPIResource(APIApplication apiApplication) {
-
-		return _bundleContext.registerService(
-			OpenAPIResourceImpl.class,
-			new PrototypeServiceFactory<OpenAPIResourceImpl>() {
-
-				@Override
-				public OpenAPIResourceImpl getService(
-					Bundle bundle,
-					ServiceRegistration<OpenAPIResourceImpl>
-						serviceRegistration) {
-
-					return new OpenAPIResourceImpl(_openAPIResource);
-				}
-
-				@Override
-				public void ungetService(
-					Bundle bundle,
-					ServiceRegistration<OpenAPIResourceImpl>
-						serviceRegistration,
-					OpenAPIResourceImpl openAPIResourceImpl) {
+					Bundle bundle, ServiceRegistration<T> serviceRegistration,
+					T t) {
 				}
 
 			},

@@ -589,12 +589,9 @@ public class OpenAPIParserUtil {
 		if (StringUtil.equals(type, "array")) {
 			Items childItems = items.getItems();
 
-			if (childItems == null) {
-				throw new IllegalArgumentException(
-					"Items of type array must contain items");
+			if (childItems != null) {
+				return "[" + _getItemsDataType(javaDataTypeMap, childItems);
 			}
-
-			return "[" + _getItemsDataType(javaDataTypeMap, childItems);
 		}
 
 		String javaDataType = _openAPIDataTypeMap.get(

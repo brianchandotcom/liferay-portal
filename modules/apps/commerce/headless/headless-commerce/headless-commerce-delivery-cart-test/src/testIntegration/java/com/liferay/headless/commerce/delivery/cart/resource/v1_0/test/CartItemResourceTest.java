@@ -191,16 +191,12 @@ public class CartItemResourceTest extends BaseCartItemResourceTestCase {
 			10);
 
 		if (priceOnApplication) {
-			CommercePriceEntry commercePriceEntry =
-				_commercePriceEntryLocalService.
-					getInstanceBaseCommercePriceEntry(
-						cpInstance.getCPInstanceUuid(),
-						CommercePriceListConstants.TYPE_PRICE_LIST);
-
-			commercePriceEntry.setPriceOnApplication(priceOnApplication);
-
-			_commercePriceEntryLocalService.updateCommercePriceEntry(
-				commercePriceEntry);
+			_updateCommercePriceEntry(
+				cpInstance, priceOnApplication,
+				CommercePriceListConstants.TYPE_PRICE_LIST);
+			_updateCommercePriceEntry(
+				cpInstance, priceOnApplication,
+				CommercePriceListConstants.TYPE_PROMOTION);
 		}
 
 		return cpInstance;
@@ -236,6 +232,24 @@ public class CartItemResourceTest extends BaseCartItemResourceTestCase {
 		Price price = getCartItem.getPrice();
 
 		Assert.assertEquals(priceOnApplication, price.getPriceOnApplication());
+	}
+
+	private void _updateCommercePriceEntry(
+		CPInstance cpInstance, boolean priceOnApplication,
+		String typePriceList) {
+
+		CommercePriceEntry commercePriceEntry =
+			_commercePriceEntryLocalService.getInstanceBaseCommercePriceEntry(
+				cpInstance.getCPInstanceUuid(), typePriceList);
+
+		if (commercePriceEntry == null) {
+			return;
+		}
+
+		commercePriceEntry.setPriceOnApplication(priceOnApplication);
+
+		_commercePriceEntryLocalService.updateCommercePriceEntry(
+			commercePriceEntry);
 	}
 
 	@DeleteAfterTestRun

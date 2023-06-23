@@ -66,6 +66,7 @@ public class JournalContentPortletPreferencesUpdater
 		portletPreferences.setValue(
 			"groupId", String.valueOf(article.getGroupId()));
 		portletPreferences.setValue("articleId", article.getArticleId());
+
 		portletPreferences.setValue(
 			"assetEntryId", String.valueOf(assetEntry.getEntryId()));
 

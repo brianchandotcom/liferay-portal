@@ -14,18 +14,38 @@
 
 import {openConfirmModal} from 'frontend-js-web';
 
+import {checkFriendlyURL} from './checkFriendlyURL';
+
 interface Options {
-	checkFriendlyURL: string;
 	getFriendlyURLWarningURL: string;
 	namespace: string;
+	shouldCheckFriendlyURL: string;
 }
 
-export default function EditLayout({namespace}: Options) {
+export default function EditLayout({
+	getFriendlyURLWarningURL,
+	namespace,
+	shouldCheckFriendlyURL,
+}: Options) {
 	const form = document.getElementById(
 		`${namespace}editLayoutFm`
 	) as HTMLFormElement;
 
-	const onSubmit = () => {
+	const onSubmit = async (event: Event) => {
+		event.preventDefault();
+		event.stopPropagation();
+
+		if (shouldCheckFriendlyURL) {
+			const {shouldSubmit} = await checkFriendlyURL(
+				getFriendlyURLWarningURL,
+				new FormData(form)
+			);
+
+			if (!shouldSubmit) {
+				return;
+			}
+		}
+
 		const applyLayoutPrototype = document.getElementById(
 			`${namespace}applyLayoutPrototype`
 		) as HTMLInputElement;

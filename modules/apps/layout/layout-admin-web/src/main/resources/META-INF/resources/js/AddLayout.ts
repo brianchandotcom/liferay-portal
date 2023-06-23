@@ -14,20 +14,26 @@
 
 import {fetch, getOpener, openToast} from 'frontend-js-web';
 
+import {checkFriendlyURL} from './checkFriendlyURL';
+
 interface Options {
 	getFriendlyURLWarningURL: string;
 	namespace: string;
-	shouldCheckFriendlyURL: string;
+	shouldCheckFriendlyURL: boolean;
 }
 
-export default function AddLayout({namespace}: Options) {
+export default function AddLayout({
+	getFriendlyURLWarningURL,
+	namespace,
+	shouldCheckFriendlyURL,
+}: Options) {
 	const addButton = document.getElementById(
 		`${namespace}addButton`
 	) as HTMLButtonElement;
 
 	const form = document.getElementById(`${namespace}fm`) as HTMLFormElement;
 
-	const onSubmit = (event: Event) => {
+	const onSubmit = async (event: Event) => {
 		event.preventDefault();
 		event.stopPropagation();
 
@@ -38,6 +44,19 @@ export default function AddLayout({namespace}: Options) {
 		addButton.disabled = true;
 
 		const formData = new FormData(form);
+
+		if (shouldCheckFriendlyURL) {
+			const {shouldSubmit} = await checkFriendlyURL(
+				getFriendlyURLWarningURL,
+				formData
+			);
+
+			if (!shouldSubmit) {
+				addButton.disabled = false;
+
+				return;
+			}
+		}
 
 		fetch(form.action, {
 			body: formData,

@@ -23,7 +23,7 @@
 						"definition": {
 							"fragment": {
 								"key": "notification-welcome",
-								"siteKey": "Marketplace"
+								"siteKey": "[$GROUP_KEY$]"
 							},
 							"fragmentConfig": {
 							},

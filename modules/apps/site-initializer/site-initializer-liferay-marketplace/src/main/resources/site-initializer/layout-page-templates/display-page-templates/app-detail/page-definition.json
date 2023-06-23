@@ -115,7 +115,7 @@
 												"definition": {
 													"fragment": {
 														"key": "image",
-														"siteKey": "Marketplace"
+														"siteKey": "[$GROUP_KEY$]"
 													},
 													"fragmentConfig": {
 														"imageSize": "w-100"
@@ -208,7 +208,7 @@
 														"definition": {
 															"fragment": {
 																"key": "text",
-																"siteKey": "Marketplace"
+																"siteKey": "[$GROUP_KEY$]"
 															},
 															"fragmentConfig": {
 																"fontSize": "font-size-paragraph-base",
@@ -282,12 +282,6 @@
 																			"id": "element-html",
 																			"value": {
 																				"html": {
-																					"mapping": {
-																						"fieldKey": "AssetVocabulary_47184",
-																						"itemReference": {
-																							"contextSource": "DisplayPageItem"
-																						}
-																					}
 																				}
 																			}
 																		}
@@ -1414,7 +1408,7 @@
 																								"definition": {
 																									"fragment": {
 																										"key": "icon",
-																										"siteKey": "Marketplace"
+																										"siteKey": "[$GROUP_KEY$]"
 																									},
 																									"fragmentConfig": {
 																										"alignment": "",
@@ -1496,7 +1490,7 @@
 																						"definition": {
 																							"fragment": {
 																								"key": "icon",
-																								"siteKey": "Marketplace"
+																								"siteKey": "[$GROUP_KEY$]"
 																							},
 																							"fragmentConfig": {
 																								"alignment": "",

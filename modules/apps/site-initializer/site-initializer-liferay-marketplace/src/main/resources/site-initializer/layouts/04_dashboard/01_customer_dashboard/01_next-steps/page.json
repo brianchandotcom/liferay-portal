@@ -1,0 +1,13 @@
+{
+	"description": "",
+	"fragmentCompositionDefinitionPath": "page-definition.json",
+	"friendlyURL": "/next-steps",
+	"hidden": true,
+	"name": "Next Steps",
+	"name_i18n": {
+		"en_US": "Next Steps"
+	},
+	"private": false,
+	"system": false,
+	"type": "content"
+}

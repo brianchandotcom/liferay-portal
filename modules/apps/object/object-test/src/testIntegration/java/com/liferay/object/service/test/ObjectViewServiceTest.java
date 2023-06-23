@@ -133,7 +133,8 @@ public class ObjectViewServiceTest {
 
 	private ObjectView _addObjectView(User user) throws Exception {
 		return _objectViewLocalService.addObjectView(
-			user.getUserId(), _objectDefinition.getObjectDefinitionId(), false,
+			RandomTestUtil.randomString(), user.getUserId(),
+			_objectDefinition.getObjectDefinitionId(), false,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			Collections.emptyList(), Collections.emptyList(),
 			Collections.emptyList());
@@ -153,6 +154,7 @@ public class ObjectViewServiceTest {
 			_setUser(user);
 
 			objectView = _objectViewService.addObjectView(
+				RandomTestUtil.randomString(),
 				_objectDefinition.getObjectDefinitionId(), false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				Collections.emptyList(), Collections.emptyList(),
@@ -191,7 +193,8 @@ public class ObjectViewServiceTest {
 			objectView = _addObjectView(user);
 
 			objectView = _objectViewService.updateObjectView(
-				objectView.getObjectViewId(), false,
+				RandomTestUtil.randomString(), objectView.getObjectViewId(),
+				false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				Collections.emptyList(), Collections.emptyList(),
 				Collections.emptyList());

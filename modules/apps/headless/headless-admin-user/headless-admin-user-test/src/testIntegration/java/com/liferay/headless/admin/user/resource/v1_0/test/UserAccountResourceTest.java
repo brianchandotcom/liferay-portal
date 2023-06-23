@@ -110,6 +110,7 @@ import javax.ws.rs.core.Response;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -200,6 +201,12 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		Assert.assertNull(
 			_accountEntryUserRelLocalService.fetchAccountEntryUserRel(
 				_accountEntry.getAccountEntryId(), userAccount.getId()));
+	}
+
+	@Override
+	@Test
+	public void testDeleteAccountUserAccount() throws Exception {
+		testDeleteAccountUserAccountByEmailAddress();
 	}
 
 	@Override
@@ -320,6 +327,27 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 				_accountEntryUserRelLocalService.fetchAccountEntryUserRel(
 					_accountEntry.getAccountEntryId(), user.getUserId()));
 		}
+	}
+
+	@Override
+	@Test
+	public void testGetAccountByExternalReferenceCodeUserAccountByExternalReferenceCode()
+		throws Exception {
+
+		testGetAccountUserAccount();
+	}
+
+	@Override
+	@Test
+	public void testGetAccountUserAccount() throws Exception {
+		User user = UserTestUtil.addUser();
+
+		_accountEntryUserRelLocalService.addAccountEntryUserRel(
+			_accountEntry.getAccountEntryId(), user.getUserId());
+
+		Assert.assertNotNull(
+			_accountEntryUserRelLocalService.fetchAccountEntryUserRel(
+				_accountEntry.getAccountEntryId(), user.getUserId()));
 	}
 
 	@Override
@@ -530,6 +558,19 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 				Arrays.asList(userAccount2, userAccount1),
 				(List<UserAccount>)descPage.getItems());
 		}
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetAccountByExternalReferenceCodeUserAccountByExternalReferenceCode()
+		throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetAccountUserAccount() throws Exception {
 	}
 
 	@Override

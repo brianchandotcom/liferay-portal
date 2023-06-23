@@ -196,27 +196,8 @@ LayoutType selLayoutType = selLayout.getLayoutType();
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 
-<aui:script>
-	var form = document.getElementById('<portlet:namespace />editLayoutFm');
-
-	form.addEventListener('submit', (event) => {
-		var applyLayoutPrototype = document.getElementById(
-			'<portlet:namespace />applyLayoutPrototype'
-		);
-
-		if (!applyLayoutPrototype || applyLayoutPrototype.value === 'false') {
-			submitForm(form);
-		}
-		else if (applyLayoutPrototype && applyLayoutPrototype.value === 'true') {
-			Liferay.Util.openConfirmModal({
-				message:
-					'<%= UnicodeLanguageUtil.get(request, "reactivating-inherited-changes-may-update-the-page-with-the-possible-changes-that-could-have-been-made-in-the-original-template") %>',
-				onConfirm: (isConfirm) => {
-					if (isConfirm) {
-						submitForm(form);
-					}
-				},
-			});
-		}
-	});
-</aui:script>
+<liferay-frontend:component
+	componentId='<%= liferayPortletResponse.getNamespace() + "editLayout" %>'
+	context="<%= layoutsAdminDisplayContext.getProps() %>"
+	module="js/EditLayout"
+/>

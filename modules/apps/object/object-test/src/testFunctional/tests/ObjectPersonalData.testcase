@@ -113,6 +113,157 @@ definition {
 		}
 	}
 
+	@description = "LPS-176582 - Verify that the entries of a object can be deleted"
+	@priority = 5
+	test CanDeleteObjectEntries {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property portal.acceptance = "true";
+
+		task ("Given a custom object in a M:M relationship with itself") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 186467",
+				objectName = "CustomObject186467",
+				pluralLabelName = "Custom Objects 186467");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customObjectField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject186467");
+
+			ObjectAdmin.addObjectRelationshipViaAPI(
+				objectName_1 = "CustomObject186467",
+				objectName_2 = "CustomObject186467",
+				relationshipLabel = "Relationship",
+				relationshipName = "relationship",
+				relationshipType = "manyToMany");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject186467");
+		}
+
+		task ("And given a custom layout that contains the relationship") {
+			ObjectAdmin.addObjectLayoutViaAPI(
+				layoutName = "Layout Name",
+				objectName = "CustomObject186467");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 186467");
+
+			CreateObject.selectTitleField(fieldLabel = "Custom Field");
+
+			CreateObject.saveObject();
+
+			ObjectAdmin.goToLayoutsTab();
+
+			ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+
+			ObjectAdmin.markLayoutAsDefault();
+
+			ObjectAdmin.goToLayoutTabOnLayouts();
+
+			ObjectAdmin.addTabFieldsOnLayout(
+				blockName = "Block 1",
+				columnsNumber = 1,
+				fieldList = "Custom Field",
+				tabName = "Field Tab");
+
+			ObjectAdmin.addTabRelationshipsOnLayout(
+				relationshipsLabelName = "Relationship",
+				tabName = "Relationship Tab");
+
+			PortletEntry.save();
+		}
+
+		task ("And given an object entry, Entry A") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customObjectField",
+				objectName = "CustomObject186467",
+				value = "Entry A");
+		}
+
+		task ("And given a user with permission to add and view object entries") {
+			JSONUser.addUserWithRole(
+				roleTitle = "Administrator",
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+		}
+
+		task ("And given four object entries added by the user, Entry B, Entry C, Entry D and Entry E") {
+			for (var entryName : list "B,C,D,E") {
+				ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+					fieldName = "customObjectField",
+					objectName = "CustomObject186467",
+					userEmailAddress = "userea@liferay.com",
+					value = "Entry ${entryName}");
+			}
+		}
+
+		task ("And given Entry A and Entry B are related") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject186467");
+
+			ObjectPortlet.viewEntryDetails(entry = "Entry A");
+
+			ObjectAdmin.gotoRelationshipsTab();
+
+			CreateObject.addRelationshipAndSelectEntry(titleFieldName = "Entry B");
+		}
+
+		task ("And given Entry C and Entry D are related") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject186467");
+
+			ObjectPortlet.viewEntryDetails(entry = "Entry C");
+
+			ObjectAdmin.gotoRelationshipsTab();
+
+			CreateObject.addRelationshipAndSelectEntry(titleFieldName = "Entry D");
+		}
+
+		task ("When the admin user deletes the user's personal data and reactivates the user in Users and Organizations") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Users and Organizations");
+
+			User.deletePersonalDataCP(
+				userFirstName = "userfn",
+				userLastName = "userln");
+
+			GDPR.filterByApplications(
+				applicationItemsCount = 4,
+				applications = "Objects",
+				totalItemsCount = 4);
+
+			PortletEntry.selectAll();
+
+			Click(locator1 = "Icon#TOOLBAR_ELLIPSIS");
+
+			MenuItem.clickNoError(menuItem = "Delete");
+
+			AssertConfirm.assertConfirmationNoError(value1 = "Are you sure you want to delete the selected items?");
+
+			Confirm.dismissAlert();
+
+			User.openUsersAdmin();
+
+			User.activateCP(
+				userName = "userfn userln",
+				userScreenName = "usersn");
+		}
+
+		task ("Then the entries created by the user are no longer present") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject186467");
+
+			for (var entryName : list "B,C,D,E") {
+				ObjectPortlet.assertEntryNotPresent(entry = "Entry ${entryName}");
+			}
+		}
+	}
+
 	@description = "LPS-176582 - Verify a user's personal data can be exported"
 	@priority = 5
 	test CanExportObjectEntries {

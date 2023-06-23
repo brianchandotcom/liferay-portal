@@ -53,13 +53,14 @@ public class ServiceBuilderCountryUtil {
 			String addressCountryKeyWord =
 				StringPool.QUOTE + addressCountry + StringPool.QUOTE;
 
-			OrderByComparator comparator = OrderByComparatorFactoryUtil.create(
-				CountryImpl.TABLE_NAME, "name", true);
+			OrderByComparator<Country> orderByComparator =
+				OrderByComparatorFactoryUtil.create(
+					CountryImpl.TABLE_NAME, "name", true);
 
 			BaseModelSearchResult<Country> baseModelSearchResult =
 				CountryServiceUtil.searchCountries(
 					companyId, true, addressCountryKeyWord, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, comparator);
+					QueryUtil.ALL_POS, orderByComparator);
 
 			List<Country> countries = baseModelSearchResult.getBaseModels();
 

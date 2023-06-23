@@ -211,12 +211,25 @@ public class SXPBlueprintInfoCollectionProvider
 		Map<String, String[]> configuration =
 			collectionQuery.getConfiguration();
 
+		if (configuration == null) {
+			configuration = Collections.emptyMap();
+		}
+
+		String[] scopes = configuration.get("scope");
+
+		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+		if (scopes == null) {
+			scopes = new String[] {
+				String.valueOf(themeDisplay.getScopeGroupId())
+			};
+		}
+
 		return _searchRequestBuilderFactory.builder(
 		).companyId(
 			serviceContext.getCompanyId()
 		).groupIds(
-			ListUtil.toLongArray(
-				Arrays.asList(configuration.get("scope")), GetterUtil::getLong)
+			ListUtil.toLongArray(Arrays.asList(scopes), GetterUtil::getLong)
 		).from(
 			pagination.getStart()
 		).emptySearchEnabled(
@@ -259,8 +272,6 @@ public class SXPBlueprintInfoCollectionProvider
 				searchContext.setAttribute(
 					"search.experiences.ip.address",
 					serviceContext.getRemoteAddr());
-
-				ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
 				searchContext.setAttribute(
 					"search.experiences.scope.group.id",

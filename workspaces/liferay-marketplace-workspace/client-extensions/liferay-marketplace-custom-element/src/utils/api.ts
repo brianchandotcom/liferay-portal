@@ -941,7 +941,7 @@ export async function updateProductSpecification({
 
 	return await response.json();
 }
-export async function updateUserAdditionalinfos(body: Object, id: number) {
+export async function updateUserAdditionalInfos(body: Object, id: number) {
 	const response = await fetch(
 		`${baseURL}/o/c/useradditionalinfos/${id}/?filter=contains(sendType,'shipping')`,
 		{

@@ -29,11 +29,11 @@ import {
 	addAdditionalInfo,
 	addAdminRegularRole,
 	addExistentUserIntoAccount,
-	callRolesApi,
 	createNewUser,
 	getAccountRolesOnAPI,
 	getSiteURL,
 	getUserByEmail,
+	sendRoleAccountUser,
 } from './services';
 
 interface InviteMemberModalProps {
@@ -125,7 +125,7 @@ export function InviteMemberModal({
 				);
 
 				if (matchingAccountRole) {
-					await callRolesApi(
+					await sendRoleAccountUser(
 						selectedAccount.id,
 						matchingAccountRole.id,
 						user.id

@@ -25,7 +25,7 @@ import {Liferay} from '../../liferay/liferay';
 import {useAppContext} from '../../manage-app-state/AppManageState';
 import {
 	getMyUserAditionalInfos,
-	updateUserAdditionalinfos,
+	updateUserAdditionalInfos,
 	updateUserPassword,
 } from '../../utils/api';
 import {createPassword} from '../../utils/createPassword';
@@ -33,9 +33,9 @@ import {Avatar} from '../Avatar/Avatar';
 import {DetailedCard} from '../DetailedCard/DetailedCard';
 import {
 	addAdditionalInfo,
-	callRolesApi,
 	getAccountRolesOnAPI,
 	getSiteURL,
+	sendRoleAccountUser,
 } from '../InviteMemberModal/services';
 
 interface MemberProfileProps {
@@ -53,7 +53,13 @@ export function MemberProfile({
 }: MemberProfileProps) {
 	const [{gravatarAPI}, _] = useAppContext();
 
-	const handlePut = async (event: React.FormEvent) => {
+	const url =
+		Liferay.ThemeDisplay.getPortalURL() +
+		'/c/login?redirect=' +
+		getSiteURL() +
+		'/loading';
+
+	const handleInvitationResend = async (event: React.FormEvent) => {
 		event.preventDefault();
 
 		const myUserAdditionalInfos = await getMyUserAditionalInfos(
@@ -62,47 +68,43 @@ export function MemberProfile({
 		const newPassword = createPassword();
 
 		for (const userAdditionInfo of myUserAdditionalInfos.items || []) {
-			const response = await updateUserAdditionalinfos(
+			const updatedUserInfos = await updateUserAdditionalInfos(
 				{sendType: {key: 'canceled', name: 'Canceled'}},
 				userAdditionInfo.id
 			);
 
-			if (response.sendType.key === 'canceled') {
+			if (updatedUserInfos.sendType.key === 'canceled') {
 				await updateUserPassword(newPassword, memberUser.userId);
 
 				const roles = await getAccountRolesOnAPI(
-					response.r_accountEntryToUserAdditionalInfo_accountEntryId
+					updatedUserInfos.r_accountEntryToUserAdditionalInfo_accountEntryId
 				);
-				const accountsRole = roles?.find(
+				const accountRoles = roles?.find(
 					(accountRole: AccountRole) =>
 						accountRole.name === 'Invited Member'
 				);
 
-				await callRolesApi(
-					response.r_accountEntryToUserAdditionalInfo_accountEntryId,
-					accountsRole.id,
-					response.r_userToUserAddInfo_userId
+				await sendRoleAccountUser(
+					updatedUserInfos.r_accountEntryToUserAdditionalInfo_accountEntryId,
+					accountRoles.id,
+					updatedUserInfos.r_userToUserAddInfo_userId
 				);
 
 				const newInvite = await addAdditionalInfo({
 					acceptInviteStatus: false,
-					accountGroupERC: response.accountGroupERC,
-					accountName: response.accountName,
-					emailOfMember: response.emailOfMember,
-					inviteURL:
-						Liferay.ThemeDisplay.getPortalURL() +
-						'/c/login?redirect=' +
-						getSiteURL() +
-						'/loading',
-					inviterName: response.inviterName,
+					accountGroupERC: updatedUserInfos.accountGroupERC,
+					accountName: updatedUserInfos.accountName,
+					emailOfMember: updatedUserInfos.emailOfMember,
+					inviteURL: url,
+					inviterName: updatedUserInfos.inviterName,
 					mothersName: newPassword,
 					r_accountEntryToUserAdditionalInfo_accountEntryId:
-						response.r_accountEntryToUserAdditionalInfo_accountEntryId,
+						updatedUserInfos.r_accountEntryToUserAdditionalInfo_accountEntryId,
 					r_userToUserAddInfo_userId:
-						response.r_userToUserAddInfo_userId,
-					roles: response.roles,
+						updatedUserInfos.r_userToUserAddInfo_userId,
+					roles: updatedUserInfos.roles,
 					sendType: {key: 'shipping', name: 'Shipping'},
-					userFirstName: response.userFirstName,
+					userFirstName: updatedUserInfos.userFirstName,
 				});
 
 				const toastMessage = newInvite.ok
@@ -164,7 +166,7 @@ export function MemberProfile({
 					<div className="member-profile-resend-invitation ml-auto">
 						<button
 							className="h-50 member-profile-button-resend-invitation mr-3"
-							onClick={(event) => handlePut(event)}
+							onClick={(event) => handleInvitationResend(event)}
 						>
 							Resend invitation
 							<span className="icon-container-reload">

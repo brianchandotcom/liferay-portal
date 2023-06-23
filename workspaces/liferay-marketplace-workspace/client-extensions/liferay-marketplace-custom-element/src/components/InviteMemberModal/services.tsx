@@ -125,7 +125,7 @@ export async function getUserByEmail(userEmail: String) {
 	}
 }
 
-export async function callRolesApi(
+export async function sendRoleAccountUser(
 	accountId: number,
 	roleId: number,
 	userId: number

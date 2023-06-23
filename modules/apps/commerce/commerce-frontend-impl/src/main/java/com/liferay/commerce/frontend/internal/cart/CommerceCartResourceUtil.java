@@ -141,10 +141,12 @@ public class CommerceCartResourceUtil {
 		throws Exception {
 
 		PriceModel priceModel = new PriceModel(
-			unitPriceCommerceMoney.format(locale));
+			unitPriceCommerceMoney, unitPriceCommerceMoney.format(locale));
 
 		if (promoPriceCommerceMoney != null) {
-			priceModel.setPromoPrice(promoPriceCommerceMoney.format(locale));
+			priceModel.setPromoPrice(
+				promoPriceCommerceMoney,
+				promoPriceCommerceMoney.format(locale));
 		}
 
 		if (discountAmountCommerceMoney == null) {
@@ -159,7 +161,9 @@ public class CommerceCartResourceUtil {
 			return priceModel;
 		}
 
-		priceModel.setDiscount(discountAmountCommerceMoney.format(locale));
+		priceModel.setDiscount(
+			discountAmountCommerceMoney,
+			discountAmountCommerceMoney.format(locale));
 		priceModel.setDiscountPercentage(
 			_commercePriceFormatter.format(discountPercentage, locale));
 
@@ -191,7 +195,8 @@ public class CommerceCartResourceUtil {
 
 		priceModel.setDiscountPercentages(discountPercentages);
 
-		priceModel.setFinalPrice(finalPriceCommerceMoney.format(locale));
+		priceModel.setFinalPrice(
+			finalPriceCommerceMoney, finalPriceCommerceMoney.format(locale));
 
 		return priceModel;
 	}

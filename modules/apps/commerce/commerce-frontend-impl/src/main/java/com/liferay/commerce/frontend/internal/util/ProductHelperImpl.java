@@ -71,15 +71,11 @@ public class ProductHelperImpl implements ProductHelper {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		PriceModel priceModel = new PriceModel(
+		return new PriceModel(
+			cpDefinitionMinimumPriceCommerceMoney,
 			_language.format(
 				resourceBundle, "from-x",
 				cpDefinitionMinimumPriceCommerceMoney.format(locale), false));
-
-		priceModel.setPriceOnApplication(
-			cpDefinitionMinimumPriceCommerceMoney.isPriceOnApplication());
-
-		return priceModel;
 	}
 
 	@Override
@@ -214,26 +210,18 @@ public class ProductHelperImpl implements ProductHelper {
 		throws PortalException {
 
 		PriceModel priceModel = new PriceModel(
-			unitPriceCommerceMoney.format(locale));
+			unitPriceCommerceMoney, unitPriceCommerceMoney.format(locale));
 
-		boolean priceOnApplication = false;
-
-		if (unitPriceCommerceMoney.isPriceOnApplication() ||
-			unitPromoPriceCommerceMoney.isPriceOnApplication()) {
-
-			priceOnApplication = true;
-		}
-
-		priceModel.setPriceOnApplication(priceOnApplication);
-
-		if (!unitPromoPriceCommerceMoney.isEmpty() && !priceOnApplication) {
+		if (!unitPromoPriceCommerceMoney.isEmpty()) {
 			BigDecimal unitPrice = unitPriceCommerceMoney.getPrice();
 			BigDecimal unitPromoPrice = unitPromoPriceCommerceMoney.getPrice();
 
 			if ((unitPromoPrice.compareTo(BigDecimal.ZERO) > 0) &&
-				(unitPromoPrice.compareTo(unitPrice) < 0)) {
+				((unitPromoPrice.compareTo(unitPrice) < 0) ||
+				 unitPriceCommerceMoney.isPriceOnApplication())) {
 
 				priceModel.setPromoPrice(
+					unitPromoPriceCommerceMoney,
 					unitPromoPriceCommerceMoney.format(locale));
 			}
 		}
@@ -271,7 +259,9 @@ public class ProductHelperImpl implements ProductHelper {
 		CommerceMoney discountAmountCommerceMoney =
 			commerceDiscountValue.getDiscountAmount();
 
-		priceModel.setDiscount(discountAmountCommerceMoney.format(locale));
+		priceModel.setDiscount(
+			discountAmountCommerceMoney,
+			discountAmountCommerceMoney.format(locale));
 
 		CommerceCurrency commerceCurrency =
 			discountAmountCommerceMoney.getCommerceCurrency();
@@ -285,7 +275,8 @@ public class ProductHelperImpl implements ProductHelper {
 		priceModel.setDiscountPercentages(
 			_getFormattedDiscountPercentages(
 				commerceDiscountValue.getPercentages(), locale));
-		priceModel.setFinalPrice(finalPriceCommerceMoney.format(locale));
+		priceModel.setFinalPrice(
+			finalPriceCommerceMoney, finalPriceCommerceMoney.format(locale));
 
 		return priceModel;
 	}

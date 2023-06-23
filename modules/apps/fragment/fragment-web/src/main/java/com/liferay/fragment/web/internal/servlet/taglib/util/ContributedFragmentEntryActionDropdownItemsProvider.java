@@ -22,7 +22,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuil
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -90,15 +89,6 @@ public class ContributedFragmentEntryActionDropdownItemsProvider {
 					"/fragment/copy_fragment_entry"
 				).setRedirect(
 					_themeDisplay.getURLCurrent()
-				).buildString());
-			dropdownItem.putData(
-				"selectFragmentCollectionURL",
-				PortletURLBuilder.createRenderURL(
-					_renderResponse
-				).setMVCRenderCommandName(
-					"/fragment/select_fragment_collection"
-				).setWindowState(
-					LiferayWindowState.POP_UP
 				).buildString());
 			dropdownItem.setIcon("copy");
 			dropdownItem.setLabel(

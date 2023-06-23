@@ -21,7 +21,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuil
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -115,15 +114,6 @@ public class InheritedFragmentManagementToolbarDisplayContext
 		).put(
 			"fragmentCollectionId",
 			ParamUtil.getLong(liferayPortletRequest, "fragmentCollectionId")
-		).put(
-			"selectFragmentCollectionURL",
-			() -> PortletURLBuilder.createActionURL(
-				liferayPortletResponse
-			).setMVCRenderCommandName(
-				"/fragment/select_fragment_collection"
-			).setWindowState(
-				LiferayWindowState.POP_UP
-			).buildString()
 		).build();
 	}
 

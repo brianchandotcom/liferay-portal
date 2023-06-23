@@ -1,5 +1,5 @@
 {
-	"@generated": "f3a0b2be41670e006067e2a063092d50e67054cb",
+	"@generated": "253b68ff50d1afcef3e2a9e5b606bb2561af44f0",
 	"@overrides": {
 	},
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT OUTSIDE @overrides **",
@@ -15,9 +15,6 @@
 		"paths": {
 			"@liferay/cookies-banner-web": [
 				"../../cookies/cookies-banner-web/src/main/resources/META-INF/resources/js/index.d.ts"
-			],
-			"@liferay/frontend-js-react-web": [
-				"../../frontend-js/frontend-js-react-web/src/main/resources/META-INF/resources/js/index.ts"
 			],
 			"@liferay/frontend-js-state-web": [
 				"../../frontend-js/frontend-js-state-web/src/main/resources/META-INF/resources/index.ts"
@@ -46,9 +43,6 @@
 	"references": [
 		{
 			"path": "../../cookies/cookies-banner-web"
-		},
-		{
-			"path": "../../frontend-js/frontend-js-react-web"
 		},
 		{
 			"path": "../../frontend-js/frontend-js-state-web"

@@ -12,7 +12,8 @@
  * details.
  */
 
-import type {Atom, Immutable, Selector} from '@liferay/frontend-js-state-web';
+import type {Atom, Selector} from '../State';
+import type {Immutable} from '../types';
 
 /**
  * Hook-based abstraction over `State.read()`, `State.write()`, and

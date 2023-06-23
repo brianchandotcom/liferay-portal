@@ -16,8 +16,7 @@ import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayModal, {useModal} from '@clayui/modal';
 import {checkCookieConsentForTypes} from '@liferay/cookies-banner-web';
-import {useLiferayState} from '@liferay/frontend-js-react-web';
-import {State} from '@liferay/frontend-js-state-web';
+import {State, useLiferayState} from '@liferay/frontend-js-state-web';
 import {
 	COOKIE_TYPES,
 	checkConsent,

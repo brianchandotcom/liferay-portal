@@ -14,7 +14,8 @@
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import {useIsMounted, useLiferayState} from '@liferay/frontend-js-react-web';
+import {useIsMounted} from '@liferay/frontend-js-react-web';
+import {useLiferayState} from '@liferay/frontend-js-state-web';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useState} from 'react';

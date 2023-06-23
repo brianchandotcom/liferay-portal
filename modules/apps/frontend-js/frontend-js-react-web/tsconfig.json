@@ -1,5 +1,5 @@
 {
-	"@generated": "1267bcbb40f77af97331bd19a5540ba85fd1b6c9",
+	"@generated": "93b681d75316e593300e30b8d6e0f5c1c0d857b4",
 	"@overrides": {
 	},
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT OUTSIDE @overrides **",
@@ -39,10 +39,10 @@
 	],
 	"references": [
 		{
-			"path": "../frontend-js-state-web"
+			"path": "../../accessibility/accessibility-menu-web"
 		},
 		{
-			"path": "../../accessibility/accessibility-menu-web"
+			"path": "../frontend-js-state-web"
 		}
 	]
 }

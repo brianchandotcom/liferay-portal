@@ -3,8 +3,9 @@ assemble:
 liferay-sample-etc-cron-oauth-application-headless-server:
     .serviceAddress: localhost:8080
     .serviceScheme: http
-    name: Liferay Sample Etc Cron Oauth Application Headless Server
+    name: Liferay Sample Etc Cron OAuth Application Headless Server
     scopes:
         - Liferay.Headless.Admin.User.everything.read
         - Liferay.Headless.Delivery.everything
     type: oAuthApplicationHeadlessServer
+    userAccountScreenName: default-service-account

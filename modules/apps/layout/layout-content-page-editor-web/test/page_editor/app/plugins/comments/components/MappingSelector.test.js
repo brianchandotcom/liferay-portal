@@ -360,6 +360,7 @@ describe('MappingSelector', () => {
 			mappedItem: {
 				classNameId: 'mappedItemClassNameId',
 				classPK: 'mappedItemClassPK',
+				fieldId: 'mappedFieldId',
 			},
 		});
 

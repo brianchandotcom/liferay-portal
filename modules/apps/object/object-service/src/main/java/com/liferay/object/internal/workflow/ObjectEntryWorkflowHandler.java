@@ -14,15 +14,12 @@
 
 package com.liferay.object.internal.workflow;
 
-import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryLocalService;
-import com.liferay.petra.function.UnsafeBiFunction;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -55,36 +52,6 @@ public class ObjectEntryWorkflowHandler
 	@Override
 	public String getClassName() {
 		return _objectDefinition.getClassName();
-	}
-
-	@Override
-	public JSONObject getEntryJSONObject(
-			long classPK,
-			UnsafeBiFunction<String, Serializable, JSONObject, Exception>
-				unsafeBiFunction)
-		throws Exception {
-
-		AssetRenderer<ObjectEntry> assetRenderer = getAssetRenderer(classPK);
-
-		if ((assetRenderer == null) ||
-			(assetRenderer.getAssetObject() == null)) {
-
-			return null;
-		}
-
-		JSONObject objectEntryJSONObject = unsafeBiFunction.apply(
-			ObjectEntry.class.getName(), assetRenderer.getAssetObject());
-
-		JSONObject propertiesJSONObject = objectEntryJSONObject.getJSONObject(
-			"properties");
-
-		for (String key : propertiesJSONObject.keySet()) {
-			objectEntryJSONObject.put(key, propertiesJSONObject.get(key));
-		}
-
-		objectEntryJSONObject.remove("properties");
-
-		return objectEntryJSONObject;
 	}
 
 	@Override

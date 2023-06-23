@@ -16,9 +16,7 @@ package com.liferay.portal.kernel.workflow;
 
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.petra.function.UnsafeBiFunction;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -68,16 +66,6 @@ public class WorkflowHandlerWrapper<T> implements WorkflowHandler<T> {
 		Map<String, Serializable> workflowContext) {
 
 		return _workflowHandler.getDiscussionClassPK(workflowContext);
-	}
-
-	@Override
-	public JSONObject getEntryJSONObject(
-			long classPK,
-			UnsafeBiFunction<String, Serializable, JSONObject, Exception>
-				unsafeBiFunction)
-		throws Exception {
-
-		return _workflowHandler.getEntryJSONObject(classPK, unsafeBiFunction);
 	}
 
 	@Override

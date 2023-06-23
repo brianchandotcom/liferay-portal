@@ -14,6 +14,8 @@
 
 package com.liferay.portal.workflow.kaleo.runtime.internal.action.executor;
 
+import com.liferay.asset.kernel.model.AssetRenderer;
+import com.liferay.object.model.ObjectEntry;
 import com.liferay.osgi.util.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.catapult.PortalCatapult;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -21,6 +23,7 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -190,37 +193,14 @@ public class FunctionActionExecutorImpl implements ActionExecutor {
 			return;
 		}
 
-		WorkflowHandler<?> workflowHandler =
-			WorkflowHandlerRegistryUtil.getWorkflowHandler(
-				(String)inputObjects.get(
-					WorkflowConstants.CONTEXT_ENTRY_CLASS_NAME));
-
 		payloadJSONObject.put(
-			"entry",
-			workflowHandler.getEntryJSONObject(
+			"entryDTO",
+			_getEntryDTOJSONObject(
+				(String)inputObjects.get(
+					WorkflowConstants.CONTEXT_ENTRY_CLASS_NAME),
 				GetterUtil.getLong(
 					inputObjects.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK)),
-				(dtoClassName, model) -> {
-					DTOConverter<Serializable, Serializable> dtoConverter =
-						(DTOConverter<Serializable, Serializable>)
-							_dtoConverterRegistry.getDTOConverter(dtoClassName);
-
-					if (dtoConverter == null) {
-						return null;
-					}
-
-					ServiceContext serviceContext =
-						executionContext.getServiceContext();
-
-					Serializable serializable = dtoConverter.toDTO(
-						new DefaultDTOConverterContext(
-							false, null, null, null, serviceContext.getLocale(),
-							null, null),
-						model);
-
-					return _jsonFactory.createJSONObject(
-						serializable.toString());
-				}));
+				executionContext));
 
 		_portalCatapult.launch(
 			_companyId, Http.Method.POST,
@@ -229,6 +209,59 @@ public class FunctionActionExecutorImpl implements ActionExecutor {
 			payloadJSONObject,
 			_functionActionExecutorImplConfiguration.resourcePath(),
 			workflowTaskAssignee.getAssigneeClassPK());
+	}
+
+	private JSONObject _getEntryDTOJSONObject(
+			String className, long classPK, ExecutionContext executionContext)
+		throws Exception {
+
+		WorkflowHandler<?> workflowHandler =
+			WorkflowHandlerRegistryUtil.getWorkflowHandler(className);
+
+		AssetRenderer<?> assetRenderer = workflowHandler.getAssetRenderer(
+			classPK);
+
+		BaseModel<?> baseModel = (BaseModel<?>)assetRenderer.getAssetObject();
+
+		if ((assetRenderer == null) || (baseModel == null)) {
+			return null;
+		}
+
+		String dtoclassName = assetRenderer.getClassName();
+
+		if (baseModel instanceof ObjectEntry) {
+			dtoclassName = ObjectEntry.class.getName();
+		}
+
+		DTOConverter<Serializable, Serializable> dtoConverter =
+			(DTOConverter<Serializable, Serializable>)
+				_dtoConverterRegistry.getDTOConverter(dtoclassName);
+
+		ServiceContext serviceContext = executionContext.getServiceContext();
+
+		Serializable serializable = dtoConverter.toDTO(
+			new DefaultDTOConverterContext(
+				false, null, null, null, serviceContext.getLocale(), null,
+				null),
+			baseModel);
+
+		JSONObject entryDTOJSONObject = _jsonFactory.createJSONObject(
+			serializable.toString());
+
+		if (!(baseModel instanceof ObjectEntry)) {
+			return entryDTOJSONObject;
+		}
+
+		JSONObject propertiesJSONObject = entryDTOJSONObject.getJSONObject(
+			"properties");
+
+		for (String key : propertiesJSONObject.keySet()) {
+			entryDTOJSONObject.put(key, propertiesJSONObject.get(key));
+		}
+
+		entryDTOJSONObject.remove("properties");
+
+		return entryDTOJSONObject;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

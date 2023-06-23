@@ -17,10 +17,8 @@ package com.liferay.portal.kernel.workflow;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.petra.function.UnsafeBiFunction;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
@@ -75,26 +73,6 @@ public abstract class BaseWorkflowHandler<T> implements WorkflowHandler<T> {
 		return (AssetRendererFactory<T>)
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
 				getClassName());
-	}
-
-	@Override
-	public JSONObject getEntryJSONObject(
-			long classPK,
-			UnsafeBiFunction<String, Serializable, JSONObject, Exception>
-				unsafeBiFunction)
-		throws Exception {
-
-		AssetRenderer<T> assetRenderer = getAssetRenderer(classPK);
-
-		if ((assetRenderer == null) ||
-			(assetRenderer.getAssetObject() == null)) {
-
-			return null;
-		}
-
-		return unsafeBiFunction.apply(
-			assetRenderer.getClassName(),
-			(Serializable)assetRenderer.getAssetObject());
 	}
 
 	@Override

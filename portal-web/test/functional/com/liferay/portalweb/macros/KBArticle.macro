@@ -231,7 +231,9 @@ definition {
 
 				echo("## * expirationDateTime: ${expirationDateTime}");
 
-				Type(
+				var expirationDateTime = StringUtil.removeSpaces(${expirationDateTime});
+
+				Type.sendKeys(
 					locator1 = "TextInput#EXPIRATION_DATE_TIME",
 					value1 = ${expirationDateTime});
 			}
@@ -650,7 +652,9 @@ definition {
 
 				echo("## * expirationDateTime: ${expirationDateTime}");
 
-				Type(
+				var expirationDateTime = StringUtil.removeSpaces(${expirationDateTime});
+
+				Type.sendKeys(
 					locator1 = "TextInput#EXPIRATION_DATE_TIME",
 					value1 = ${expirationDateTime});
 			}
@@ -1153,7 +1157,9 @@ definition {
 			locator1 = "TextInput#REVIEW_DATE",
 			value1 = ${reviewDate});
 
-		Type(
+		var reviewDateTime = StringUtil.removeSpaces(${reviewDateTime});
+
+		Type.sendKeys(
 			locator1 = "TextInput#REVIEW_DATE_TIME",
 			value1 = ${reviewDateTime});
 	}

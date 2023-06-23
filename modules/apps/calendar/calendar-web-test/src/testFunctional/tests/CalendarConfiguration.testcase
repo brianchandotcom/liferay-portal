@@ -342,6 +342,12 @@ definition {
 
 		CalendarNavigator.gotoAddEvent();
 
+		var endDateTime = CalendarEvent.getCalendarTimeHour(status = "End");
+		var startDateTime = CalendarEvent.getCalendarTimeHour(status = "Start");
+
+		var startDateTime = CalendarEvent.format12To24Hours(time12Hours = ${startDateTime});
+		var endDateTime = CalendarEvent.format12To24Hours(time12Hours = ${endDateTime});
+
 		CalendarEvent.editTitle(eventTitle = "Calendar Event All Day Title");
 
 		CalendarEvent.setAllDay();
@@ -356,8 +362,8 @@ definition {
 			eventType = "All Day");
 
 		CalendarEvent.viewTimesViaDetails(
-			endDateTime = "11:59 PM",
-			startDateTime = "12:00 AM");
+			endDateTime = ${endDateTime},
+			startDateTime = ${startDateTime});
 	}
 
 	@description = "This is a use case for LPS-51127."

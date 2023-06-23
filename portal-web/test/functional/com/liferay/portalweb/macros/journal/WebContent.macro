@@ -1153,7 +1153,9 @@ definition {
 			value1 = ${displayDate});
 
 		if (isSet(displayTime)) {
-			Type.clickAtType(
+			var displayTime = StringUtil.removeSpaces(${displayTime});
+
+			Type.sendKeys(
 				locator1 = "TextInput#DISPLAY_DATE_TIME",
 				value1 = ${displayTime});
 		}

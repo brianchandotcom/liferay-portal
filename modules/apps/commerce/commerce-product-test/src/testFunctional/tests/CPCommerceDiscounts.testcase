@@ -1218,7 +1218,7 @@ definition {
 			var minutes = ${minutes} + 2;
 		}
 
-		Uncheck.uncheckToggleSwitch(
+		Uncheck.uncheckNotVisible(
 			checkboxName = "Never Expire",
 			locator1 = "Checkbox#ANY_CHECKBOX");
 

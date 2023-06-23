@@ -2611,7 +2611,9 @@ definition {
 			locator1 = "TextInput#EXPIRATION_DATE",
 			value1 = ${expirationDate});
 
-		Type(
+		var expirationDateTime = StringUtil.removeSpaces(${expirationDateTime});
+
+		Type.sendKeys(
 			locator1 = "TextInput#EXPIRATION_DATE_TIME",
 			value1 = ${expirationDateTime});
 
@@ -2653,7 +2655,7 @@ definition {
 			locator1 = "TextInput#REVIEW_DATE",
 			value1 = ${reviewDate});
 
-		Type(
+		Type.sendKeys(
 			locator1 = "TextInput#REVIEW_DATE_TIME",
 			value1 = ${reviewDateTime});
 

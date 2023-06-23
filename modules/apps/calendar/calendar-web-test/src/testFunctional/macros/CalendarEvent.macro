@@ -570,9 +570,9 @@ definition {
 
 	macro compareEventDateAndTimeToResourcesAvailabilityDateAndTime {
 		var endDate = selenium.getElementValue("CalendarEditEvent#END_DATE");
-		var endDateTime = selenium.getElementValue("CalendarEditEvent#END_DATE_TIME");
 		var startDate = selenium.getElementValue("CalendarEditEvent#START_DATE");
-		var startDateTime = selenium.getElementValue("CalendarEditEvent#START_DATE_TIME");
+		var endDateTime = CalendarEvent.getCalendarTimeHour(status = "End");
+		var startDateTime = CalendarEvent.getCalendarTimeHour(status = "Start");
 		var endDateTime = StringUtil.trim(${endDateTime});
 		var startDateTime = StringUtil.trim(${startDateTime});
 

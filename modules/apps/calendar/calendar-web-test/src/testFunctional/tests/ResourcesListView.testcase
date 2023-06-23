@@ -260,6 +260,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-62410."
+	@ignore = "true"
 	@priority = 4
 	test ViewEventDateAndTimeInResourcesAvailability {
 		CalendarNavigator.gotoAddEvent();

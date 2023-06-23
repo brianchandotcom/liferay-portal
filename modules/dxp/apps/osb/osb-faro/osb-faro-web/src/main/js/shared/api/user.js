@@ -76,7 +76,7 @@ export function updateLanguage({languageId}) {
 	return sendRequest({
 		baseURL: '/c/portal',
 		contentType: '',
-		data: {languageId, redirect: location.href},
+		data: {languageId, redirect: location.pathname},
 		method: 'GET',
 		path: 'update_language'
 	});

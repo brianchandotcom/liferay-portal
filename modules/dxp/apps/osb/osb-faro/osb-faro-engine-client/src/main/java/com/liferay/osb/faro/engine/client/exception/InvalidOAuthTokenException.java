@@ -26,12 +26,12 @@ public class InvalidOAuthTokenException extends RuntimeException {
 		super(msg);
 	}
 
-	public InvalidOAuthTokenException(String msg, Throwable throwable) {
-		super(msg, throwable);
+	public InvalidOAuthTokenException(String msg, Throwable cause) {
+		super(msg, cause);
 	}
 
-	public InvalidOAuthTokenException(Throwable throwable) {
-		super(throwable);
+	public InvalidOAuthTokenException(Throwable cause) {
+		super(cause);
 	}
 
 }

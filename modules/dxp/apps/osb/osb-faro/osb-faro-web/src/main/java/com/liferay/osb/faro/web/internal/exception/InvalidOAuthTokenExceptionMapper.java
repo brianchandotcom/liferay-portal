@@ -15,8 +15,8 @@
 package com.liferay.osb.faro.web.internal.exception;
 
 import com.liferay.osb.faro.engine.client.exception.InvalidOAuthTokenException;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.ws.rs.core.Response;
@@ -32,11 +32,10 @@ public class InvalidOAuthTokenExceptionMapper
 	public Response toResponse(
 		InvalidOAuthTokenException invalidOAuthTokenException) {
 
-		Map<String, String> stringMap = HashMapBuilder.put(
-			"message", invalidOAuthTokenException.getMessage()
-		).put(
-			"status", "ERROR"
-		).build();
+		Map<String, String> stringMap = new HashMap<>();
+
+		stringMap.put("message", invalidOAuthTokenException.getMessage());
+		stringMap.put("status", "ERROR");
 
 		Response.ResponseBuilder responseBuilder = Response.status(401);
 

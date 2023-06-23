@@ -15,7 +15,6 @@
 package com.liferay.osb.faro.web.internal.context;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
-import com.liferay.oauth2.provider.exception.NoSuchOAuth2AuthorizationException;
 import com.liferay.oauth2.provider.model.OAuth2Authorization;
 import com.liferay.oauth2.provider.service.OAuth2AuthorizationLocalService;
 import com.liferay.osb.faro.engine.client.exception.InvalidOAuthTokenException;
@@ -61,13 +60,10 @@ public class GroupInfoContextProvider implements ContextProvider<GroupInfo> {
 			return new GroupInfo(
 				(long)expandoBridge.getAttribute("groupId", false));
 		}
-		catch (NoSuchOAuth2AuthorizationException
-					noSuchOAuth2AuthorizationException) {
-
+		catch (Exception exception) {
 			throw new InvalidOAuthTokenException(
 				"Your access token is invalid. Please check your token and " +
-					"try again.",
-				noSuchOAuth2AuthorizationException);
+					"try again.");
 		}
 	}
 

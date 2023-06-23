@@ -154,6 +154,10 @@ definition {
 				value1 = "Updating the field set or workflow will cause loss of data.");
 		}
 
+		if (IsElementNotPresent(key_rowEntry = ${kfFieldSetName}, locator1 = "Icon#ROW_VERTICAL_ELLIPSIS")) {
+			Refresh();
+		}
+
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Choose",
 			rowEntry = ${kfFieldSetName});

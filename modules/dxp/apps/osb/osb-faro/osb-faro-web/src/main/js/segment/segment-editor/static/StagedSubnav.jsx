@@ -61,7 +61,7 @@ class StagedSubnav extends React.Component {
 				<SubnavTbar.Item expand>
 					<ClayButton
 						borderless
-						className='button-root'
+						className='button-root btn-link'
 						displayType='unstyled'
 						onClick={onToggle}
 					>

@@ -288,7 +288,7 @@ const ProfileCard: React.FC<IProfileCardProps> = ({
 							{selected && (
 								<ClayButton
 									className='button-root'
-									displayType='unstyled'
+									displayType='link'
 									onClick={() => handleChangeSelection(null)}
 									size='sm'
 								>

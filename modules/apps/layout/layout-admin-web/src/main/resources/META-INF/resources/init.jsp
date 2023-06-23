@@ -83,7 +83,6 @@ page import="com.liferay.portal.kernel.exception.NoSuchRoleException" %><%@
 page import="com.liferay.portal.kernel.exception.RequiredLayoutException" %><%@
 page import="com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
-page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.ColorScheme" %><%@
 page import="com.liferay.portal.kernel.model.Group" %><%@
 page import="com.liferay.portal.kernel.model.GroupConstants" %><%@

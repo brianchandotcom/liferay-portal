@@ -14,16 +14,20 @@
 
 import {fetch, getOpener, openToast} from 'frontend-js-web';
 
-export default function ({
-	getFriendlyURLWarningURL,
-	namespace,
-	shouldCheckFriendlyURL,
-}) {
-	const addButton = document.getElementById(`${namespace}addButton`);
+interface Options {
+	getFriendlyURLWarningURL: string;
+	namespace: string;
+	shouldCheckFriendlyURL: string;
+}
 
-	const form = document.getElementById(`${namespace}fm`);
+export default function AddLayout({namespace}: Options) {
+	const addButton = document.getElementById(
+		`${namespace}addButton`
+	) as HTMLButtonElement;
 
-	form.addEventListener('submit', (event) => {
+	const form = document.getElementById(`${namespace}fm`) as HTMLFormElement;
+
+	const onSubmit = (event: Event) => {
 		event.preventDefault();
 		event.stopPropagation();
 
@@ -77,5 +81,13 @@ export default function ({
 					});
 				}
 			});
-	});
+	};
+
+	form.addEventListener('submit', onSubmit);
+
+	return {
+		dispose() {
+			form.removeEventListener('submit', onSubmit);
+		},
+	};
 }

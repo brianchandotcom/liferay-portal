@@ -21,7 +21,7 @@ import com.liferay.headless.builder.application.APIApplication;
  */
 public interface APIApplicationProvider {
 
-	public APIApplication getAPIApplication(String baseURL, long companyId)
+	public APIApplication fetchAPIApplication(String baseURL, long companyId)
 		throws Exception;
 
 }

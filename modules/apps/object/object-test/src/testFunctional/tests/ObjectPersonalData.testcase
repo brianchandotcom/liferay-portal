@@ -22,6 +22,97 @@ definition {
 		}
 	}
 
+	@description = "LPS-176582 - Verify the object entries can be anonymized"
+	@priority = 5
+	test CanAnonymizeObjectEntries {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property portal.acceptance = "true";
+
+		task ("Given a custom object and an object entry") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 186468",
+				objectName = "CustomObject186468",
+				pluralLabelName = "Custom Objects 186468");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customObjectField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject186468");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject186468");
+
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customObjectField",
+				objectName = "CustomObject186468",
+				value = "Entry A");
+		}
+
+		task ("And given a user with permission to add object entries") {
+			JSONUser.addUserWithRole(
+				roleTitle = "Administrator",
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+		}
+
+		task ("And given several object entries added by the user") {
+			for (var entryName : list "B,C,D,E") {
+				ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+					fieldName = "customObjectField",
+					objectName = "CustomObject186468",
+					userEmailAddress = "userea@liferay.com",
+					value = "Entry ${entryName}");
+			}
+		}
+
+		task ("When the admin user anonymizes the user's personal data in Users and Organizations") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Users and Organizations");
+
+			User.deletePersonalDataCP(
+				userFirstName = "userfn",
+				userLastName = "userln");
+
+			GDPR.filterByApplications(
+				applicationItemsCount = 4,
+				applications = "Objects",
+				totalItemsCount = 4);
+
+			PortletEntry.selectAll();
+
+			Click(locator1 = "Icon#TOOLBAR_ELLIPSIS");
+
+			MenuItem.clickNoError(menuItem = "Anonymize");
+
+			Confirm.acceptAlert();
+
+			Confirm.dismissAlert();
+		}
+
+		task ("Then the author of the entries created by the user is Anonymous Anonymous") {
+			User.openUsersAdmin();
+
+			User.activateCP(
+				userName = "userfn userln",
+				userScreenName = "usersn");
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject186468");
+
+			for (var key_order : list "2,3,4,5") {
+				AssertElementPresent(
+					key_entry = "Anonymous Anonymous",
+					key_order = ${key_order},
+					locator1 = "ObjectPortlet#ENTRY_VALUE_BY_POSITION");
+			}
+		}
+	}
+
 	@description = "LPS-176582 - Verify a user's personal data can be exported"
 	@priority = 5
 	test CanExportObjectEntries {

@@ -14,14 +14,13 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.deep.pagination.configuration;
 
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.search.elasticsearch7.configuration.DeepPaginationConfiguration;
 
-import java.util.Map;
-
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Gustavo Lima
@@ -32,8 +31,24 @@ import org.osgi.service.component.annotations.Modified;
 )
 public class DeepPaginationConfigurationWrapper {
 
-	public boolean getEnableDeepPagination() {
-		return _deepPaginationConfiguration.enableDeepPagination();
+	public DeepPaginationConfiguration getDeepPaginationConfiguration(
+		long companyId) {
+
+		try {
+			DeepPaginationConfiguration deepPaginationConfiguration =
+				_configurationProvider.getSystemConfiguration(
+					DeepPaginationConfiguration.class);
+
+			if (!deepPaginationConfiguration.enableDeepPagination()) {
+				return _configurationProvider.getCompanyConfiguration(
+					DeepPaginationConfiguration.class, companyId);
+			}
+
+			return deepPaginationConfiguration;
+		}
+		catch (ConfigurationException configurationException) {
+			return ReflectionUtil.throwException(configurationException);
+		}
 	}
 
 	public int getPointInTimeKeepAliveSeconds() {
@@ -41,11 +56,11 @@ public class DeepPaginationConfigurationWrapper {
 			_deepPaginationConfiguration.pointInTimeKeepAliveSeconds());
 	}
 
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> map) {
-		_deepPaginationConfiguration = ConfigurableUtil.createConfigurable(
-			DeepPaginationConfiguration.class, map);
+	public boolean isEnableDeepPagination(long companyId) {
+		_deepPaginationConfiguration = getDeepPaginationConfiguration(
+			companyId);
+
+		return _deepPaginationConfiguration.enableDeepPagination();
 	}
 
 	private int _validatePointInTimeKeepAliveSeconds(
@@ -59,6 +74,9 @@ public class DeepPaginationConfigurationWrapper {
 
 		return 60;
 	}
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	private volatile DeepPaginationConfiguration _deepPaginationConfiguration;
 

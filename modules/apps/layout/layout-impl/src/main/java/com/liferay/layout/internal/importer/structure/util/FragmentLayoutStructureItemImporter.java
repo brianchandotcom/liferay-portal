@@ -318,10 +318,50 @@ public class FragmentLayoutStructureItemImporter
 		JSONObject defaultEditableValuesJSONObject =
 			_jsonFactory.createJSONObject();
 
+		if (fragmentEntry != null) {
+			js = fragmentEntry.getJs();
+			css = fragmentEntry.getCss();
+			configuration = fragmentEntry.getConfiguration();
+			type = fragmentEntry.getType();
+		}
+
+		JSONObject fragmentEntryProcessorValuesJSONObject =
+			_jsonFactory.createJSONObject();
+
+		JSONObject freeMarkerFragmentEntryProcessorJSONObject =
+			_toFreeMarkerFragmentEntryProcessorJSONObject(
+				_getConfigurationTypes(configuration),
+				(Map<String, Object>)definitionMap.get("fragmentConfig"));
+
+		_fragmentEntryValidator.validateConfigurationValues(
+			configuration, fragmentEntryProcessorValuesJSONObject);
+
+		if (freeMarkerFragmentEntryProcessorJSONObject.length() > 0) {
+			fragmentEntryProcessorValuesJSONObject.put(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+				freeMarkerFragmentEntryProcessorJSONObject);
+		}
+
+		if (fragmentEntry != null) {
+			FragmentCollection fragmentCollection =
+				_fragmentCollectionService.fetchFragmentCollection(
+					fragmentEntry.getFragmentCollectionId());
+
+			html = _getProcessedHTML(
+				fragmentEntry.getCompanyId(), configuration,
+				fragmentEntryProcessorValuesJSONObject.toString(),
+				fragmentCollection, fragmentEntry.getHtml(), fragmentKey, type);
+
+			defaultEditableValuesJSONObject =
+				_fragmentEntryProcessorRegistry.
+					getDefaultEditableValuesJSONObject(html, configuration);
+		}
+
 		Map<String, String> editableTypes =
 			EditableFragmentEntryProcessorUtil.getEditableTypes(html);
 
-		JSONObject fragmentEntryProcessorValuesJSONObject = JSONUtil.put(
+		fragmentEntryProcessorValuesJSONObject.put(
 			FragmentEntryProcessorConstants.
 				KEY_BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
 			() -> {
@@ -355,42 +395,6 @@ public class FragmentLayoutStructureItemImporter
 				return null;
 			}
 		);
-
-		JSONObject freeMarkerFragmentEntryProcessorJSONObject =
-			_toFreeMarkerFragmentEntryProcessorJSONObject(
-				_getConfigurationTypes(configuration),
-				(Map<String, Object>)definitionMap.get("fragmentConfig"));
-
-		_fragmentEntryValidator.validateConfigurationValues(
-			configuration, fragmentEntryProcessorValuesJSONObject);
-
-		if (freeMarkerFragmentEntryProcessorJSONObject.length() > 0) {
-			fragmentEntryProcessorValuesJSONObject.put(
-				FragmentEntryProcessorConstants.
-					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
-				freeMarkerFragmentEntryProcessorJSONObject);
-		}
-
-		if (fragmentEntry != null) {
-			html = fragmentEntry.getHtml();
-			js = fragmentEntry.getJs();
-			css = fragmentEntry.getCss();
-			configuration = fragmentEntry.getConfiguration();
-			type = fragmentEntry.getType();
-
-			FragmentCollection fragmentCollection =
-				_fragmentCollectionService.fetchFragmentCollection(
-					fragmentEntry.getFragmentCollectionId());
-
-			defaultEditableValuesJSONObject =
-				_fragmentEntryProcessorRegistry.
-					getDefaultEditableValuesJSONObject(
-						_getProcessedHTML(
-							fragmentEntry.getCompanyId(), configuration,
-							fragmentEntryProcessorValuesJSONObject.toString(),
-							fragmentCollection, html, fragmentKey, type),
-						configuration);
-		}
 
 		JSONObject jsonObject = _deepMerge(
 			defaultEditableValuesJSONObject,

@@ -94,7 +94,7 @@ public class ObjectLayoutLocalServiceTest {
 			"All required object fields must be associated to the first tab " +
 				"of a default object layout",
 			() -> _objectLayoutLocalService.addObjectLayout(
-				TestPropsValues.getUserId(),
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 				_objectDefinition.getObjectDefinitionId(), true,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				Arrays.asList(_addObjectLayoutTab(), _addObjectLayoutTab())));
@@ -120,7 +120,7 @@ public class ObjectLayoutLocalServiceTest {
 			ObjectDefinitionModifiableException.class,
 			"A modifiable object definition is required",
 			() -> _objectLayoutLocalService.addObjectLayout(
-				TestPropsValues.getUserId(),
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 				_objectDefinition.getObjectDefinitionId(), false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				Collections.singletonList(_addObjectLayoutTab())));
@@ -154,7 +154,7 @@ public class ObjectLayoutLocalServiceTest {
 							ObjectLayoutBoxConstants.TYPE_CATEGORIZATION)));
 
 				_objectLayoutLocalService.addObjectLayout(
-					TestPropsValues.getUserId(),
+					RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 					_objectDefinition.getObjectDefinitionId(), false,
 					LocalizedMapUtil.getLocalizedMap(
 						RandomTestUtil.randomString()),
@@ -189,7 +189,7 @@ public class ObjectLayoutLocalServiceTest {
 				objectLayoutTab.setPriority(0);
 
 				_objectLayoutLocalService.addObjectLayout(
-					TestPropsValues.getUserId(),
+					RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 					_objectDefinition.getObjectDefinitionId(), false,
 					LocalizedMapUtil.getLocalizedMap(
 						RandomTestUtil.randomString()),
@@ -224,7 +224,7 @@ public class ObjectLayoutLocalServiceTest {
 					Arrays.asList(_addObjectLayoutBox(), objectLayoutBox));
 
 				_objectLayoutLocalService.addObjectLayout(
-					TestPropsValues.getUserId(),
+					RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 					_objectDefinition.getObjectDefinitionId(), false,
 					LocalizedMapUtil.getLocalizedMap(
 						RandomTestUtil.randomString()),
@@ -253,7 +253,7 @@ public class ObjectLayoutLocalServiceTest {
 						_addObjectLayoutBox(), _addObjectLayoutBox(null)));
 
 				_objectLayoutLocalService.addObjectLayout(
-					TestPropsValues.getUserId(),
+					RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 					_objectDefinition.getObjectDefinitionId(), false,
 					LocalizedMapUtil.getLocalizedMap(
 						RandomTestUtil.randomString()),
@@ -285,7 +285,7 @@ public class ObjectLayoutLocalServiceTest {
 				objectLayoutColumn.setSize(13);
 
 				_objectLayoutLocalService.addObjectLayout(
-					TestPropsValues.getUserId(),
+					RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 					_objectDefinition.getObjectDefinitionId(), false,
 					LocalizedMapUtil.getLocalizedMap(
 						RandomTestUtil.randomString()),
@@ -328,7 +328,7 @@ public class ObjectLayoutLocalServiceTest {
 							ObjectLayoutBoxConstants.TYPE_CATEGORIZATION)));
 
 				_objectLayoutLocalService.addObjectLayout(
-					TestPropsValues.getUserId(),
+					RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 					_objectDefinition.getObjectDefinitionId(), false,
 					LocalizedMapUtil.getLocalizedMap(
 						RandomTestUtil.randomString()),
@@ -344,14 +344,14 @@ public class ObjectLayoutLocalServiceTest {
 				ObjectLayoutTab objectLayoutTab = _addObjectLayoutTab();
 
 				_objectLayoutLocalService.addObjectLayout(
-					TestPropsValues.getUserId(),
+					RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 					_objectDefinition.getObjectDefinitionId(), true,
 					LocalizedMapUtil.getLocalizedMap(
 						RandomTestUtil.randomString()),
 					Collections.singletonList(objectLayoutTab));
 
 				_objectLayoutLocalService.addObjectLayout(
-					TestPropsValues.getUserId(),
+					RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 					_objectDefinition.getObjectDefinitionId(), true,
 					LocalizedMapUtil.getLocalizedMap(
 						RandomTestUtil.randomString()),
@@ -467,7 +467,7 @@ public class ObjectLayoutLocalServiceTest {
 		ObjectLayoutTab objectLayoutTab1 = _addObjectLayoutTab();
 
 		ObjectLayout objectLayout = _objectLayoutLocalService.addObjectLayout(
-			TestPropsValues.getUserId(),
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 			_objectDefinition.getObjectDefinitionId(), true,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			Collections.singletonList(objectLayoutTab1));
@@ -493,6 +493,7 @@ public class ObjectLayoutLocalServiceTest {
 			screenNavigationCategories.size());
 
 		_objectLayoutLocalService.updateObjectLayout(
+			objectLayout.getExternalReferenceCode(),
 			objectLayout.getObjectLayoutId(), false, objectLayout.getNameMap(),
 			Arrays.asList(objectLayoutTab1));
 
@@ -526,7 +527,7 @@ public class ObjectLayoutLocalServiceTest {
 
 	private ObjectLayout _addObjectLayout() throws Exception {
 		return _objectLayoutLocalService.addObjectLayout(
-			TestPropsValues.getUserId(),
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 			_objectDefinition.getObjectDefinitionId(), false,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			Collections.singletonList(_addObjectLayoutTab()));

@@ -28,6 +28,10 @@ public class SXPBlueprintOptionsPortletPreferencesUtil {
 	public static String getValue(
 		PortletPreferences portletPreferences, String key) {
 
+		if (portletPreferences == null) {
+			return StringPool.BLANK;
+		}
+
 		String value = portletPreferences.getValue(key, StringPool.BLANK);
 
 		value = StringUtil.trim(value);

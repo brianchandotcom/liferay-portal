@@ -852,8 +852,9 @@ public class DLAdminManagementToolbarDisplayContext
 
 				dropdownItem.putData("action", "openDocumentTypesSelector");
 
-				String label = LanguageUtil.get(
-					_httpServletRequest, "document-type");
+				String label =
+					LanguageUtil.get(_httpServletRequest, "type") +
+						StringPool.TRIPLE_PERIOD;
 
 				if (fileEntryTypeId != -1) {
 					String fileEntryTypeName = LanguageUtil.get(

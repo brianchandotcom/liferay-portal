@@ -222,7 +222,7 @@ export default function propsTransformer({
 				}
 			},
 			selectEventName: `${portletNamespace}selectFileEntryType`,
-			title: Liferay.Language.get('select-document-type'),
+			title: Liferay.Language.get('filter-by-type'),
 			url: selectFileEntryTypeURL,
 		});
 	};

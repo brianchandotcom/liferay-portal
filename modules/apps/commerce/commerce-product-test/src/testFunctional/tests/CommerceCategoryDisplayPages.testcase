@@ -103,9 +103,10 @@ definition {
 				value1 = "Categories");
 
 			AssertClick(
+				key_indexNumber = 2,
 				key_permissionNavHeader = "Categorization",
 				key_permissionNavItem = "Categories",
-				locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVIGATION",
+				locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVIGATION_N",
 				value1 = "Categories");
 
 			PortletEntry.save();

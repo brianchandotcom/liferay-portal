@@ -1815,10 +1815,12 @@ definition {
 
 			CommerceEntry.gotoMenuTab(menuTab = "Configuration");
 
+			var escapedScript = '''Approx &lt;script&gt;alert(123)&lt;/script&gt; Days''';
+
 			Select(
 				key_title = "Availability Estimate",
 				locator1 = "CommerceEntry#CATALOGS_FORM",
-				value1 = "Approx <script>alert(123)</script> Days");
+				value1 = ${escapedScript});
 
 			Button.clickPublish();
 		}

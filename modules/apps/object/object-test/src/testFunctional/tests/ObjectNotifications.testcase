@@ -71,6 +71,69 @@ definition {
 		}
 	}
 
+	@description = "LPS-178816 - Verify an email notification can be added to the queue using the endpoint"
+	@priority = 5
+	test CanAddEmailNotificationToQueueViaAPI {
+		property portal.acceptance = "true";
+		property test.smtp.server.enabled = "true";
+
+		task ("Given a new user with permission to view notifications and add notifications to the queue via API") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONRole.addRegularRole(roleTitle = "Regular Role");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "Regular Role",
+				userEmailAddress = "userea@liferay.com");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "ACCESS_IN_CONTROL_PANEL",
+				resourceName = "com_liferay_notification_web_internal_portlet_NotificationQueueEntriesPortlet",
+				roleTitle = "Regular Role");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW",
+				resourceName = "com.liferay.notification.model.NotificationQueueEntry",
+				roleTitle = "Regular Role");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "ADD_NOTIFICATION_QUEUE_ENTRY",
+				resourceName = "com.liferay.notification.queue",
+				roleTitle = "Regular Role");
+
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("When the user adds an email notification to the queue using the endpoint") {
+			ObjectNotifications.addNotificationViaAPI(
+				body = "The quick brown fox jumps over the lazy dog",
+				subject = "Pangram Test",
+				type = "email");
+		}
+
+		task ("Then the email notification appears in the queue and an email is sent") {
+			Notifications.goToNotificationQueueAdmin();
+
+			AssertElementPresent(
+				key_entryLabel = "Added via API",
+				key_entryStatus = "Sent",
+				locator1 = "ObjectNotifications#VIEW_NOTIFICATION_ENTRIES");
+
+			MockMock.viewMail(
+				asset = "Pangram Test",
+				content = "The quick brown fox jumps over the lazy dog",
+				recipient = "test@liferay",
+				sender = "Liferay",
+				subject = "Pangram Test");
+		}
+	}
+
 	@description = "LPS-183441 - Verify the data source can be updated to use an attachment field from a different object"
 	@priority = 3
 	test CanChangeDataSource {

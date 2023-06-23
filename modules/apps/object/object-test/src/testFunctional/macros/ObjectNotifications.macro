@@ -70,6 +70,20 @@ definition {
 		Click(locator1 = "ObjectNotifications#FIELD_ATTACHMENTS_OBJECT_SELECT_FIELD");
 	}
 
+	macro addNotificationViaAPI {
+		JSONNotifications.addEntryNotificationQueue(
+			bcc = ${bcc},
+			body = ${body},
+			cc = ${cc},
+			fromAddress = ${fromAddress},
+			fromName = ${fromName},
+			subject = ${subject},
+			to = ${to},
+			type = ${type},
+			userEmailAddress = ${userEmailAddress},
+			userPassword = ${userPassword});
+	}
+
 	macro deleteNotificationEntry {
 		Click(
 			key_text = ${triggerBy},

@@ -1,0 +1,68 @@
+definition {
+
+	macro addEntryNotificationQueue {
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
+		if (!(isSet(fromName))) {
+			var fromName = "Liferay";
+		}
+
+		if (!(isSet(cc))) {
+			var cc = "cc@liferay.com";
+		}
+
+		if (!(isSet(bcc))) {
+			var bcc = "bcc@liferay.com";
+		}
+
+		if (!(isSet(fromAddress))) {
+			var fromAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(to))) {
+			var to = "test@liferay.com";
+		}
+
+		var curl = '''
+			${portalURL}/o/notification/v1.0/notification-queue-entries \
+				-H 'Content-Type: application/json' \
+				-u ${userEmailAddress}:${userPassword} \
+				-d '{
+					"body": "${body}",
+					"recipients": [
+						{
+							"cc": "${cc}",
+							"bcc": "${bcc}",
+							"fromName": "${fromName}",
+							"from": "${fromAddress}",
+							"to": "${to}"
+						}
+					],
+					"recipientsSummary": "${userEmailAddress}",
+					"subject": "${subject}",
+					"type": "${type}"
+				}'
+		''';
+
+		var response = JSONCurlUtil.post(${curl});
+
+		var responseSend = JSONPathUtil.getIdValue(response = ${response});
+
+		var send = '''
+			${portalURL}/o/notification/v1.0/notification-queue-entries/${responseSend}/resend \
+                -H 'Content-Type: application/json' \
+				-u ${userEmailAddress}:${userPassword} \
+		''';
+
+		JSONCurlUtil.put(${send});
+	}
+
+}

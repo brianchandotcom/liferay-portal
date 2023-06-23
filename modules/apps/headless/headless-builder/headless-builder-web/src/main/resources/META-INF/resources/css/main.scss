@@ -1,6 +1,6 @@
 #createAPIApplicationModal {
 	textarea.form-control {
-		height: 136px !important;
+		min-height: 136px !important;
 	}
 
 	#modalURLField {
@@ -9,6 +9,40 @@
 
 	#hostTextPreview {
 		margin-bottom: 7px !important;
+	}
+}
+
+#portlet_com_liferay_headless_builder_web_internal_portlet_HeadlessBuilderPortlet {
+	.card-type-asset {
+		.card-body {
+			padding: 1.5rem;
+
+			:last-child {
+				margin-bottom: 0;
+			}
+
+			textarea.form-control {
+				min-height: 136px !important;
+			}
+
+			#modalURLField {
+				margin-bottom: 3px !important;
+			}
+
+			#hostTextPreview {
+				margin-bottom: 7px !important;
+			}
+		}
+	}
+
+	.management-bar {
+		h2.toolbar-title {
+			font-size: 1.1875rem;
+		}
+	}
+
+	.api-app-details {
+		max-width: 1000px;
 	}
 }
 

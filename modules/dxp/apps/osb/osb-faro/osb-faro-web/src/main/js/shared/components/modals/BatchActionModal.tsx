@@ -99,11 +99,9 @@ const BatchActionModal: React.FC<IBatchActionModalProps> = ({
 						trigger={
 							<ClayButton
 								className='button-root'
-								displayType='unstyled'
+								displayType='secondary'
 							>
-								<span className='text-truncate'>
-									{selectedKey}
-								</span>
+								<span>{selectedKey}</span>
 
 								<ClayIcon
 									className='icon-root ml-2'

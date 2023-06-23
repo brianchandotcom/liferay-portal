@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -63,6 +64,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -95,8 +97,8 @@ public class ViewInPanelJournalArticleContentDashboardItemActionProviderTest {
 
 		DDMStructure ddmStructure = _journalArticle.getDDMStructure();
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+		_serviceContext = ServiceContextTestUtil.getServiceContext(
+			_group.getGroupId());
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
@@ -104,17 +106,22 @@ public class ViewInPanelJournalArticleContentDashboardItemActionProviderTest {
 				_portal.getClassNameId(JournalArticle.class.getName()),
 				ddmStructure.getStructureId(), RandomTestUtil.randomString(),
 				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE, 0, true,
-				0, 0, 0, 0, serviceContext);
+				0, 0, 0, 0, _serviceContext);
 
 		_assetDisplayPageEntryLocalService.addAssetDisplayPageEntry(
 			_journalArticle.getUserId(), _group.getGroupId(),
 			_portal.getClassNameId(JournalArticle.class.getName()),
 			_journalArticle.getResourcePrimKey(),
 			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
-			AssetDisplayPageConstants.TYPE_DEFAULT, serviceContext);
+			AssetDisplayPageConstants.TYPE_DEFAULT, _serviceContext);
 
 		_layout = _layoutLocalService.getLayout(
 			layoutPageTemplateEntry.getPlid());
+	}
+
+	@After
+	public void tearDown() {
+		ServiceContextThreadLocal.popServiceContext();
 	}
 
 	@Test
@@ -248,6 +255,10 @@ public class ViewInPanelJournalArticleContentDashboardItemActionProviderTest {
 			WebKeys.THEME_DISPLAY,
 			_getThemeDisplay(mockHttpServletRequest, user));
 
+		_serviceContext.setRequest(mockHttpServletRequest);
+
+		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
+
 		return mockHttpServletRequest;
 	}
 
@@ -312,6 +323,8 @@ public class ViewInPanelJournalArticleContentDashboardItemActionProviderTest {
 
 	@Inject
 	private Portal _portal;
+
+	private ServiceContext _serviceContext;
 
 	@Inject
 	private UserLocalService _userLocalService;

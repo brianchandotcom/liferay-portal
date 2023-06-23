@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -201,6 +200,7 @@ public class JournalArticleAnalyticsReportsInfoItemTest {
 			themeDisplay.setLayoutSet(layout.getLayoutSet());
 
 			themeDisplay.setRequest(mockHttpServletRequest);
+			themeDisplay.setScopeGroupId(_group.getGroupId());
 			themeDisplay.setSiteGroupId(_group.getGroupId());
 
 			mockHttpServletRequest.setAttribute(
@@ -317,9 +317,6 @@ public class JournalArticleAnalyticsReportsInfoItemTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
-
-	@Inject
-	private LayoutLocalService _layoutLocalService;
 
 	@Inject
 	private LayoutPageTemplateEntryLocalService

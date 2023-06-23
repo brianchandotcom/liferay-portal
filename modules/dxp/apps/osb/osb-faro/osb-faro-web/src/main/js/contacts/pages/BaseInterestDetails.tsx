@@ -2,8 +2,8 @@ import * as API from 'shared/api';
 import Card from 'shared/components/Card';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
+import ClayNavigationBar from '@clayui/navigation-bar';
 import InterestPagesList from 'contacts/components/InterestPagesList';
-import Nav from 'shared/components/Nav';
 import React from 'react';
 import SearchableEntityTable from 'shared/components/SearchableEntityTable';
 import {Account, Segment} from 'shared/util/records';
@@ -215,17 +215,19 @@ const BaseInterestDetails: React.FC<IBaseInterestDetailsProps> = ({
 				</Card.Header>
 
 				<Card.Header>
-					<Nav
+					<ClayNavigationBar
 						className='page-subnav'
-						display='underline'
 						key='subnav'
+						triggerLabel='label'
 					>
 						{navigationItems.map(({active, href, label}) => (
-							<Nav.Item active={active} href={href} key={label}>
-								<h4>{label}</h4>
-							</Nav.Item>
+							<ClayNavigationBar.Item active={active} key={label}>
+								<ClayLink href={href}>
+									<h4>{label}</h4>
+								</ClayLink>
+							</ClayNavigationBar.Item>
 						))}
-					</Nav>
+					</ClayNavigationBar>
 
 					<h4 className='list-title'>
 						{tabId === tabIds.INDIVIDUALS

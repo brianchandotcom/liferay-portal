@@ -31,8 +31,8 @@ export default function useGlobalNetworkIndicator(networkStatus) {
 		const {error: errorStatus, success} = networkStatus;
 
 		if (errorStatus?.networkError) {
-			const displayServerError = errorStatus.operation.getContext()
-				.displayServerError;
+			const displayServerError =
+				errorStatus.operation.getContext().displayServerError ?? true;
 
 			if (displayServerError) {
 				Liferay.Util.openToast({
@@ -43,17 +43,20 @@ export default function useGlobalNetworkIndicator(networkStatus) {
 				});
 			}
 		}
+
 		if (errorStatus?.response) {
-			const displayErrors = errorStatus.operation.getContext()
-				.displayErrors;
+			const displayErrors =
+				errorStatus.operation.getContext().displayErrors ?? true;
 
 			if (displayErrors) {
-				const errors = errorStatus.response.map((error) => {
+				errorStatus.response.forEach((error) => {
+					let errorToast = DEFAULT_ERROR;
+
 					if (displayErrors && displayErrors[error.exception.errno]) {
 						const displayError =
 							displayErrors[error.exception.errno];
 
-						return {
+						errorToast = {
 							message:
 								displayError.message || DEFAULT_ERROR.message,
 							title: displayError.title || DEFAULT_ERROR.title,
@@ -61,16 +64,14 @@ export default function useGlobalNetworkIndicator(networkStatus) {
 						};
 					}
 
-					return DEFAULT_ERROR;
+					Liferay.Util.openToast(errorToast);
 				});
-
-				errors.forEach((error) => Liferay.Util.openToast(error));
 			}
 		}
 
 		if (success) {
-			const displaySuccess = success.operation.getContext()
-				.displaySuccess;
+			const displaySuccess =
+				success.operation.getContext().displaySuccess ?? true;
 
 			const isValidMutation =
 				displaySuccess &&

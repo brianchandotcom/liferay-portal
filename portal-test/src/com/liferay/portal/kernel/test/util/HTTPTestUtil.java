@@ -54,6 +54,32 @@ public class HTTPTestUtil {
 		return JSONFactoryUtil.createJSONObject(HttpUtil.URLtoString(options));
 	}
 
+	public static int invokeHttpCode(
+			String body, String endpoint, Http.Method httpMethod)
+		throws Exception {
+
+		Http.Options options = new Http.Options();
+
+		options.addHeader(
+			HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
+		options.addHeader(
+			"Authorization", "Basic " + Base64.encode(_credentials.getBytes()));
+		options.setLocation("http://localhost:8080/o/" + endpoint);
+		options.setMethod(httpMethod);
+
+		if (body != null) {
+			options.setBody(
+				body, ContentTypes.APPLICATION_JSON,
+				StandardCharsets.UTF_8.name());
+		}
+
+		HttpUtil.URLtoString(options);
+
+		Http.Response response = options.getResponse();
+
+		return response.getResponseCode();
+	}
+
 	public static <T extends Throwable> void withCredentials(
 			String emailAddress, String password,
 			UnsafeRunnable<T> unsafeRunnable)

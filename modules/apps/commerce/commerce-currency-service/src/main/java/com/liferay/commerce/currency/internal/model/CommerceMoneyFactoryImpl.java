@@ -129,7 +129,7 @@ public class CommerceMoneyFactoryImpl implements CommerceMoneyFactory {
 
 			@Override
 			public CommerceCurrency getCommerceCurrency() {
-				throw new UnsupportedOperationException();
+				return null;
 			}
 
 			@Override

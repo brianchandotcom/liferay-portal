@@ -118,39 +118,33 @@ public class CommerceProductPriceCalculationV2Impl
 		CommerceMoney unitPriceCommerceMoney = _getUnitPrice(
 			commercePriceListId, cpInstanceId, quantity, commerceContext);
 
-		BigDecimal finalPrice = unitPriceCommerceMoney.getPrice();
-
-		CommerceMoney promoPriceCommerceMoney =
-			commerceMoneyFactory.emptyCommerceMoney();
-
 		boolean priceOnApplication =
 			unitPriceCommerceMoney.isPriceOnApplication();
 
-		if (!priceOnApplication) {
-			long commercePromoPriceListId = _getCommercePromoPriceListId(
-				cpInstanceId, commerceContext);
+		BigDecimal finalPrice = unitPriceCommerceMoney.getPrice();
 
-			promoPriceCommerceMoney = _getPromoPrice(
-				commercePromoPriceListId, cpInstanceId, quantity,
-				commerceContext);
+		long commercePromoPriceListId = _getCommercePromoPriceListId(
+			cpInstanceId, commerceContext);
 
-			if (promoPriceCommerceMoney.isPriceOnApplication() ||
-				(!promoPriceCommerceMoney.isEmpty() &&
-				 CommerceBigDecimalUtil.gt(
-					 promoPriceCommerceMoney.getPrice(), BigDecimal.ZERO) &&
-				 CommerceBigDecimalUtil.lte(
-					 promoPriceCommerceMoney.getPrice(),
-					 unitPriceCommerceMoney.getPrice()))) {
+		CommerceMoney promoPriceCommerceMoney = _getPromoPrice(
+			commercePromoPriceListId, cpInstanceId, quantity, commerceContext);
 
-				commercePriceListId = commercePromoPriceListId;
-				finalPrice = promoPriceCommerceMoney.getPrice();
-				priceOnApplication =
-					promoPriceCommerceMoney.isPriceOnApplication();
-			}
-			else {
-				promoPriceCommerceMoney =
-					commerceMoneyFactory.emptyCommerceMoney();
-			}
+		if (!promoPriceCommerceMoney.isEmpty() &&
+			CommerceBigDecimalUtil.gt(
+				promoPriceCommerceMoney.getPrice(), BigDecimal.ZERO) &&
+			(CommerceBigDecimalUtil.lt(
+				promoPriceCommerceMoney.getPrice(),
+				unitPriceCommerceMoney.getPrice()) ||
+			 unitPriceCommerceMoney.isPriceOnApplication())) {
+
+			commercePriceListId = commercePromoPriceListId;
+			finalPrice = promoPriceCommerceMoney.getPrice();
+			priceOnApplication =
+				priceOnApplication &&
+				promoPriceCommerceMoney.isPriceOnApplication();
+		}
+		else {
+			promoPriceCommerceMoney = commerceMoneyFactory.emptyCommerceMoney();
 		}
 
 		BigDecimal[] updatedPrices = getUpdatedPrices(

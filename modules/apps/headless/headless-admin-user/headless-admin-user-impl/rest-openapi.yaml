@@ -926,7 +926,6 @@ components:
                     description:
                         The user's ID.
                     format: int64
-                    readOnly: true
                     type: integer
                 image:
                     description:
@@ -1267,6 +1266,32 @@ paths:
                     content:
                         application/json: {}
                         application/xml: {}
+            tags: ["UserAccount"]
+        get:
+            # @review
+            description:
+                Gets a user by their external reference code to an account by external reference code
+            operationId: getAccountByExternalReferenceCodeUserAccountByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: accountExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/UserAccount"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/UserAccount"
             tags: ["UserAccount"]
         post:
             # @review
@@ -2463,6 +2488,59 @@ paths:
                   required: true
                   schema:
                       type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/UserAccount"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/UserAccount"
+            tags: ["UserAccount"]
+    "/accounts/{accountId}/user-accounts/{userAccountId}":
+        delete:
+            # @review
+            description:
+                Removes a user assigned to an account
+            operationId: deleteAccountUserAccount
+            parameters:
+                - in: path
+                  name: accountId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: userAccountId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["UserAccount"]
+        get:
+            # @review
+            description:
+                Gets a user assigned to an account
+            operationId: getAccountUserAccount
+            parameters:
+                - in: path
+                  name: accountId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: userAccountId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
             responses:
                 200:
                     content:

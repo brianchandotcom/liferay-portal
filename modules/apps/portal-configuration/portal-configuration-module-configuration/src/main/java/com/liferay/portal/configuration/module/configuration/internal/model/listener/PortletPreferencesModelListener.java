@@ -5,7 +5,6 @@
 
 package com.liferay.portal.configuration.module.configuration.internal.model.listener;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.internal.ConfigurationOverrideInstance;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
@@ -14,34 +13,16 @@ import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsLocatorHelper;
 import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
-import com.liferay.portal.kernel.util.StringUtil;
 
-import org.osgi.service.cm.ConfigurationEvent;
-import org.osgi.service.cm.ConfigurationListener;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Drew Brokke
  */
-@Component(service = {ConfigurationListener.class, ModelListener.class})
+@Component(service = ModelListener.class)
 public class PortletPreferencesModelListener
-	extends BaseModelListener<PortletPreferences>
-	implements ConfigurationListener {
-
-	@Override
-	public void configurationEvent(ConfigurationEvent configurationEvent) {
-		String key = configurationEvent.getPid();
-
-		String factoryPid = configurationEvent.getFactoryPid();
-
-		if (factoryPid != null) {
-			key = StringUtil.replaceLast(
-				factoryPid, ".scoped", StringPool.BLANK);
-		}
-
-		ConfigurationOverrideInstance.clearConfigurationOverrideInstance(key);
-	}
+	extends BaseModelListener<PortletPreferences> {
 
 	@Override
 	public void onAfterCreate(PortletPreferences portletPreferences)

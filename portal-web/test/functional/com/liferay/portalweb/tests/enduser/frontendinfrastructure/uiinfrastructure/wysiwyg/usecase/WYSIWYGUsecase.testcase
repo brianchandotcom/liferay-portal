@@ -27,7 +27,7 @@ definition {
 		}
 	}
 
-	@description = "LRQA-67229. Verify if aad blog entry with image via blog images is possible"
+	@description = "LRQA-67229. Verify if add blog entry with image via blog images is possible"
 	@priority = 4
 	@refactordone
 	test CanAddBlogsEntryWithImageViaBlogsImages {

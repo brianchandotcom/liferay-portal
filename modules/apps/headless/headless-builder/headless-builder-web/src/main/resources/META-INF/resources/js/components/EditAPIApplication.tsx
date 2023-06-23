@@ -182,6 +182,12 @@ export default function EditAPIApplication({
 		<>
 			<APIApplicationManagementToolbar
 				itemData={data}
+				onPublish={() =>
+					handleUpdate(
+						'published',
+						Liferay.Language.get('api-application-published')
+					)
+				}
 				onSave={() =>
 					handleUpdate(
 						'unpublished',

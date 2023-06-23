@@ -48,6 +48,7 @@ interface ItemData {
 
 interface FDSItem {
 	action: {id: string};
+	id: number;
 	itemData: ItemData;
 	loadData: voidReturn;
 	value: string;

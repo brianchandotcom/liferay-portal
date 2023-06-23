@@ -22,12 +22,14 @@ import {CancelEditAPIApplicationModalContent} from './modals/CancelEditAPIApplic
 
 interface APIApplicationManagementToolbarProps {
 	itemData: Partial<ItemData>;
+	onPublish: voidReturn;
 	onSave: voidReturn;
 	title: string;
 }
 
 export function APIApplicationManagementToolbar({
 	itemData,
+	onPublish,
 	onSave,
 	title,
 }: APIApplicationManagementToolbarProps) {
@@ -106,6 +108,15 @@ export function APIApplicationManagementToolbar({
 								{Liferay.Language.get('save')}
 							</ClayButton>
 						)}
+
+						<ClayButton
+							displayType="primary"
+							id="apiAppManagementToolbarPublishButton"
+							name="publish"
+							onClick={() => onPublish()}
+						>
+							{Liferay.Language.get('publish')}
+						</ClayButton>
 					</ClayButton.Group>
 				</ClayManagementToolbar.ItemList>
 			</ClayManagementToolbar>

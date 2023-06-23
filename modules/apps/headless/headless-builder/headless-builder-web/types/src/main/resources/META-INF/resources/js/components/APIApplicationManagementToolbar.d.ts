@@ -15,11 +15,13 @@
 
 interface APIApplicationManagementToolbarProps {
 	itemData: Partial<ItemData>;
+	onPublish: voidReturn;
 	onSave: voidReturn;
 	title: string;
 }
 export declare function APIApplicationManagementToolbar({
 	itemData,
+	onPublish,
 	onSave,
 	title,
 }: APIApplicationManagementToolbarProps): JSX.Element;

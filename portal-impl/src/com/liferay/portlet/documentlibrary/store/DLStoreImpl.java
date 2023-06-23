@@ -114,7 +114,7 @@ public class DLStoreImpl implements DLStore {
 						companyId, repositoryId, fileName, fromVersionLabel),
 					StoreArea.NEW.getPath(
 						companyId, repositoryId, fileName, toVersionLabel)),
-				StoreArea.LIVE, StoreArea.NEW);
+				StoreArea.LIVE, StoreArea.NEW, StoreArea.DELETED);
 		}
 		else {
 			_wrappedStore.addFile(
@@ -249,7 +249,7 @@ public class DLStoreImpl implements DLStore {
 						StoreArea.NEW.getPath(
 							companyId, newRepositoryId, fileName,
 							versionLabel)),
-					StoreArea.LIVE, StoreArea.NEW);
+					StoreArea.LIVE, StoreArea.NEW, StoreArea.DELETED);
 			}
 			else {
 				_wrappedStore.addFile(
@@ -276,7 +276,7 @@ public class DLStoreImpl implements DLStore {
 						companyId, repositoryId, fileName, fromVersionLabel),
 					StoreArea.NEW.getPath(
 						companyId, repositoryId, fileName, toVersionLabel)),
-				StoreArea.LIVE, StoreArea.NEW);
+				StoreArea.LIVE, StoreArea.NEW, StoreArea.DELETED);
 		}
 		else {
 			_wrappedStore.addFile(

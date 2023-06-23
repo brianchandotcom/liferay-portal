@@ -30,11 +30,14 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+
 /**
  * @author André de Oliveira
  */
 @RunWith(Arquillian.class)
-public class CompanyModelListenerTest {
+public class SXPElementUtilTest {
 
 	@ClassRule
 	@Rule
@@ -43,8 +46,13 @@ public class CompanyModelListenerTest {
 
 	@Test
 	public void testSXPElements() throws Exception {
+		Bundle bundle = FrameworkUtil.getBundle(_modelListener.getClass());
+
+		Class<?> clazz = bundle.loadClass(
+			"com.liferay.search.experiences.internal.util.SXPElementUtil");
+
 		List<SXPElement> sxpElements = ReflectionTestUtil.getFieldValue(
-			_modelListener, "_sxpElements");
+			clazz, "_sxpElements");
 
 		Assert.assertNotEquals(0, sxpElements.size());
 

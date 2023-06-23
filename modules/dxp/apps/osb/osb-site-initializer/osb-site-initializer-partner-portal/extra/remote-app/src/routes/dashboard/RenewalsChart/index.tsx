@@ -15,6 +15,7 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
 import {useEffect, useState} from 'react';
 
+import './index.css';
 import Container from '../../../common/components/dashboard/components/Container';
 import {status} from '../../../common/components/dashboard/utils/constants/statusColumns';
 import getFilteredRenewals from '../../../common/components/dashboard/utils/getFilteredRenewalsData';
@@ -102,7 +103,6 @@ export default function () {
 									'mr-3 status-bar-vertical',
 									getCurrentStatusColor(item)
 								)}
-								style={{height: '40px', width: '10px'}}
 							></div>
 
 							<div>

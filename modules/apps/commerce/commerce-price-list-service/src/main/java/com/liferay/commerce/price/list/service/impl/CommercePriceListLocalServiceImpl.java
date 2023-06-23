@@ -829,7 +829,7 @@ public class CommercePriceListLocalServiceImpl
 					commerceChannelId, commerceOrderTypeId, cPInstanceUuid, type
 				).orderBy(
 					CommercePriceEntryTable.INSTANCE.priceOnApplication.
-						descending(),
+						ascending(),
 					CommercePriceEntryTable.INSTANCE.price.ascending()
 				).limit(
 					0, 1

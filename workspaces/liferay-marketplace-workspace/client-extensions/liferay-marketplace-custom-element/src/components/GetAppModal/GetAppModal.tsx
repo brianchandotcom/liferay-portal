@@ -587,6 +587,7 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 
 										<span className="get-app-modal-body-content-app-info-version">
 											{appVersion} by{' '}
+
 											{accountPublisher?.name}
 										</span>
 									</div>

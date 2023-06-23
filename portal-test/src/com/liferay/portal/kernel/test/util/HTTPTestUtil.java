@@ -36,20 +36,7 @@ public class HTTPTestUtil {
 			String body, String endpoint, Http.Method httpMethod)
 		throws Exception {
 
-		Http.Options options = new Http.Options();
-
-		options.addHeader(
-			HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
-		options.addHeader(
-			"Authorization", "Basic " + Base64.encode(_credentials.getBytes()));
-		options.setLocation("http://localhost:8080/o/" + endpoint);
-		options.setMethod(httpMethod);
-
-		if (body != null) {
-			options.setBody(
-				body, ContentTypes.APPLICATION_JSON,
-				StandardCharsets.UTF_8.name());
-		}
+		Http.Options options = _getHttpOptions(body, endpoint, httpMethod);
 
 		return JSONFactoryUtil.createJSONObject(HttpUtil.URLtoString(options));
 	}
@@ -58,20 +45,7 @@ public class HTTPTestUtil {
 			String body, String endpoint, Http.Method httpMethod)
 		throws Exception {
 
-		Http.Options options = new Http.Options();
-
-		options.addHeader(
-			HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
-		options.addHeader(
-			"Authorization", "Basic " + Base64.encode(_credentials.getBytes()));
-		options.setLocation("http://localhost:8080/o/" + endpoint);
-		options.setMethod(httpMethod);
-
-		if (body != null) {
-			options.setBody(
-				body, ContentTypes.APPLICATION_JSON,
-				StandardCharsets.UTF_8.name());
-		}
+		Http.Options options = _getHttpOptions(body, endpoint, httpMethod);
 
 		HttpUtil.URLtoString(options);
 
@@ -95,6 +69,27 @@ public class HTTPTestUtil {
 		finally {
 			_credentials = credentials;
 		}
+	}
+
+	private static Http.Options _getHttpOptions(
+		String body, String endpoint, Http.Method httpMethod) {
+
+		Http.Options options = new Http.Options();
+
+		options.addHeader(
+			HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
+		options.addHeader(
+			"Authorization", "Basic " + Base64.encode(_credentials.getBytes()));
+		options.setLocation("http://localhost:8080/o/" + endpoint);
+		options.setMethod(httpMethod);
+
+		if (body != null) {
+			options.setBody(
+				body, ContentTypes.APPLICATION_JSON,
+				StandardCharsets.UTF_8.name());
+		}
+
+		return options;
 	}
 
 	private static String _credentials = "test@liferay.com:test";

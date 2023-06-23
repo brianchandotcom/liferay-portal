@@ -1,0 +1,329 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.info.request.struts.test;
+
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.object.constants.ObjectActionExecutorConstants;
+import com.liferay.object.constants.ObjectActionTriggerConstants;
+import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.field.builder.TextObjectFieldBuilder;
+import com.liferay.object.field.util.ObjectFieldUtil;
+import com.liferay.object.model.ObjectAction;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectField;
+import com.liferay.object.service.ObjectActionLocalService;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.petra.io.unsync.UnsyncStringWriter;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.events.EventsProcessorUtil;
+import com.liferay.portal.json.JSONFactoryImpl;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.servlet.PipingServletResponse;
+import com.liferay.portal.kernel.struts.StrutsAction;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.File;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.test.rule.FeatureFlags;
+import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.upload.UploadPortletRequestImpl;
+import com.liferay.portal.upload.UploadServletRequestImpl;
+import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+
+import java.io.Serializable;
+
+import java.util.Collections;
+import java.util.Locale;
+import java.util.Map;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.mock.web.MockMultipartHttpServletRequest;
+
+/**
+ * @author Rubén Pulido
+ */
+@FeatureFlags("LPS-169992")
+@RunWith(Arquillian.class)
+public class ExecuteInfoItemActionStrutsActionTest {
+
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
+
+	@Before
+	public void setUp() throws Exception {
+		_group = GroupTestUtil.addGroup();
+
+		_user = UserTestUtil.getAdminUser(_group.getCompanyId());
+
+		UserTestUtil.setUser(_user);
+
+		ObjectDefinition objectDefinition = _addObjectDefinition();
+
+		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			objectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"text", RandomTestUtil.randomString()
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		_classPK = String.valueOf(objectEntry.getPrimaryKey());
+
+		_fileName = _file.createTempFileName("action-executed-", "txt");
+
+		_errorMessageMap = LocalizedMapUtil.getLocalizedMap(
+			RandomTestUtil.randomString());
+
+		_objectAction = _objectActionLocalService.addObjectAction(
+			RandomTestUtil.randomString(), _user.getUserId(),
+			objectDefinition.getObjectDefinitionId(), true, StringPool.BLANK,
+			RandomTestUtil.randomString(), _errorMessageMap,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			RandomTestUtil.randomString(),
+			ObjectActionExecutorConstants.KEY_GROOVY,
+			ObjectActionTriggerConstants.KEY_STANDALONE,
+			UnicodePropertiesBuilder.put(
+				"script",
+				"File file = new File('" + _fileName +
+					"'); file.append('true');"
+			).build());
+
+		_classNameId = String.valueOf(
+			_portal.getClassNameId(
+				ObjectDefinition.class.getName() + "#" +
+					objectDefinition.getObjectDefinitionId()));
+
+		_layout = _layoutLocalService.addLayout(
+			_user.getUserId(), _group.getGroupId(), false,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, 0, 0,
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(), Collections.emptyMap(),
+			Collections.emptyMap(), Collections.emptyMap(),
+			LayoutConstants.TYPE_CONTENT,
+			UnicodePropertiesBuilder.put(
+				"published", "true"
+			).buildString(),
+			false, false, Collections.emptyMap(), 0,
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), _user.getUserId()));
+	}
+
+	@After
+	public void tearDown() {
+		if (_fileName != null) {
+			java.io.File file = new java.io.File(_fileName);
+
+			file.delete();
+		}
+	}
+
+	@Test
+	public void testExecuteInfoItemActionFailureGuest() throws Exception {
+		_user = _userLocalService.getGuestUser(_group.getCompanyId());
+
+		UserTestUtil.setUser(_user);
+
+		_testExecuteInfoItemAction(false);
+	}
+
+	@Test
+	public void testExecuteInfoItemActionSuccess() throws Exception {
+		_testExecuteInfoItemAction(true);
+	}
+
+	private ObjectDefinition _addObjectDefinition() throws Exception {
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.addCustomObjectDefinition(
+				_user.getUserId(), false, false,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"A" + RandomTestUtil.randomString(), null,
+				"control_panel.sites",
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				false, ObjectDefinitionConstants.SCOPE_SITE,
+				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT, null);
+
+		ObjectField objectField = ObjectFieldUtil.addCustomObjectField(
+			new TextObjectFieldBuilder(
+			).userId(
+				_user.getUserId()
+			).indexed(
+				true
+			).indexedAsKeyword(
+				true
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).name(
+				"myText"
+			).objectDefinitionId(
+				objectDefinition.getObjectDefinitionId()
+			).build());
+
+		objectDefinition.setTitleObjectFieldId(objectField.getObjectFieldId());
+
+		objectDefinition = _objectDefinitionLocalService.updateObjectDefinition(
+			objectDefinition);
+
+		return _objectDefinitionLocalService.publishCustomObjectDefinition(
+			_user.getUserId(), objectDefinition.getObjectDefinitionId());
+	}
+
+	private void _processEvents(
+			UploadPortletRequest uploadPortletRequest,
+			MockHttpServletResponse mockHttpServletResponse, User user)
+		throws Exception {
+
+		uploadPortletRequest.setAttribute(
+			WebKeys.CURRENT_URL, "/portal/execute_info_item_action");
+
+		uploadPortletRequest.setAttribute(WebKeys.USER, user);
+
+		EventsProcessorUtil.process(
+			PropsKeys.SERVLET_SERVICE_EVENTS_PRE,
+			PropsValues.SERVLET_SERVICE_EVENTS_PRE, uploadPortletRequest,
+			mockHttpServletResponse);
+	}
+
+	private void _testExecuteInfoItemAction(boolean successExpected)
+		throws Exception {
+
+		MockMultipartHttpServletRequest mockMultipartHttpServletRequest =
+			new MockMultipartHttpServletRequest();
+
+		UploadPortletRequest uploadPortletRequest =
+			new UploadPortletRequestImpl(
+				new UploadServletRequestImpl(
+					mockMultipartHttpServletRequest, null,
+					HashMapBuilder.put(
+						"classNameId", Collections.singletonList(_classNameId)
+					).put(
+						"classPK", Collections.singletonList(_classPK)
+					).put(
+						"fieldId",
+						Collections.singletonList(
+							ObjectAction.class.getSimpleName() +
+								StringPool.UNDERLINE + _objectAction.getName())
+					).put(
+						"p_l_mode", Collections.singletonList(Constants.VIEW)
+					).put(
+						"plid",
+						Collections.singletonList(
+							String.valueOf(_layout.getPlid()))
+					).build()),
+				null, RandomTestUtil.randomString());
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
+
+		PipingServletResponse pipingServletResponse = new PipingServletResponse(
+			mockHttpServletResponse, unsyncStringWriter);
+
+		_processEvents(uploadPortletRequest, mockHttpServletResponse, _user);
+
+		_executeInfoItemActionStrutsAction.execute(
+			uploadPortletRequest, pipingServletResponse);
+
+		String responseBody = unsyncStringWriter.toString();
+
+		if (successExpected) {
+			Assert.assertTrue(_file.exists(_fileName));
+			Assert.assertEquals("{}", responseBody);
+		}
+		else {
+			Assert.assertFalse(_file.exists(_fileName));
+
+			JSONObject jsonObject = _jsonFactory.createJSONObject(responseBody);
+
+			Assert.assertEquals(
+				_errorMessageMap.get(LocaleUtil.getDefault()),
+				jsonObject.get("error"));
+		}
+	}
+
+	private String _classNameId;
+	private String _classPK;
+	private Map<Locale, String> _errorMessageMap;
+
+	@Inject(filter = "component.name=*.ExecuteInfoItemActionStrutsAction")
+	private StrutsAction _executeInfoItemActionStrutsAction;
+
+	@Inject
+	private File _file;
+
+	private String _fileName;
+
+	@DeleteAfterTestRun
+	private Group _group;
+
+	private final JSONFactory _jsonFactory = new JSONFactoryImpl();
+	private Layout _layout;
+
+	@Inject
+	private LayoutLocalService _layoutLocalService;
+
+	private ObjectAction _objectAction;
+
+	@Inject
+	private ObjectActionLocalService _objectActionLocalService;
+
+	@Inject
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Inject
+	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Inject
+	private Portal _portal;
+
+	private User _user;
+
+	@Inject
+	private UserLocalService _userLocalService;
+
+}

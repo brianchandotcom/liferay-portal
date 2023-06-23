@@ -445,14 +445,12 @@ definition {
 			SelectWindow(value1 = "title=Properties - Settings - Analytics Cloud");
 		}
 
-		task ("Go to Definitions then go to Individuals and check the empty page status message") {
+		task ("Go to Definitions then go to Individuals and check the list of field mapping attributes") {
 			ACSettings.goToDefinitions();
 
 			ACDefinitions.goToDefinitionType(definitionType = "Individuals");
 
-			ACUtils.viewGenericText(textValueList = "No Individuals Synced from Data Sources,Connect a data source with people data.,Access our documentation to learn more.");
-
-			ACUtils.viewGenericButton(buttonName = "Connect Data Source");
+			ACUtils.viewGenericText(textValueList = "additionalName,birthDate,email,familyName,givenName,jobTitle,languageId,modifiedDate,screenName");
 		}
 
 		task ("Go back to Definitions and go to Event Attributes and check the empty page status message then check the if the hyperlink is taking the user to the documentation") {

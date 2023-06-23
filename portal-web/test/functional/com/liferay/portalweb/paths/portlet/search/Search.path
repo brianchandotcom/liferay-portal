@@ -252,7 +252,7 @@
 </tr>
 <tr>
 	<td>SORT_WIDGET_CONFIGURATION_OPTION_DRAG_HANDLE</td>
-	<td>//div[contains(@class,'form-group')][.//input[@value='${key_displayLabel}']]//button[contains(@class,'drag-handle')]</td>
+	<td>//div[contains(@class,'form-group')][.//input[@value='${key_displayLabel}']]//button[contains(@aria-label,'Move')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -267,7 +267,7 @@
 </tr>
 <tr>
 	<td>SORT_WIDGET_CONFIGURATION_RELEVANCE_TOGGLE</td>
-	<td>//div[contains(@class,'relevance')]//input[contains(@class,'toggle-switch-check')]</td>
+	<td>//div[contains(@class,'input-group')][.//*[@id='relevance']]//input[contains(@class,'toggle-switch-check')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -14,21 +14,16 @@
 
 package com.liferay.portal.tools.rest.builder;
 
-import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.util.StringUtil;
-
-import java.io.File;
+import java.io.IOException;
 
 import java.net.URL;
 
-import java.nio.charset.StandardCharsets;
+import java.nio.file.FileVisitResult;
+import java.nio.file.FileVisitor;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-
-import java.util.List;
-
-import org.apache.commons.io.FileUtils;
+import java.nio.file.attribute.BasicFileAttributes;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -40,199 +35,79 @@ public class RESTBuilderTest {
 
 	@Test
 	public void testCreateRESTBuilder() throws Exception {
-		String dependenciesPath = _getDependenciesPath();
+		Path dependenciesPath = _getDependenciesPath();
+
+		Path copyrightFilePath = dependenciesPath.resolve("copyright.txt");
 
 		RESTBuilder restBuilder = new RESTBuilder(
-			new File(dependenciesPath, "copyright.txt"),
-			new File(dependenciesPath), null, null);
+			copyrightFilePath.toFile(), dependenciesPath.toFile(), null, null);
 
 		restBuilder.build();
 
-		String filesPath = _getFilesPath();
-
-		File applicationFile = new File(
-			filesPath + "/sample-impl/src/main/java/com/example/sample" +
-				"/internal/jaxrs/application/SampleApplication.java");
-
-		Assert.assertTrue(applicationFile.exists());
-
-		_assertBooleanParameterName(filesPath);
-
-		_assertResourceFilesExist(filesPath, "Document");
-		_assertResourceFilesExist(filesPath, "Folder");
-		_assertResourceFilesExist(filesPath, "Test");
-
-		_assertDTOFile(filesPath, "UnreferencedSchemaComponent");
-
-		_assertPropertiesWithHyphens(
-			filesPath, "Test", "property-with-hyphens");
-		_assertPropertiesWithXML(filesPath, "Test", "xmlProperty");
-
-		_assertForcePredictableOperationId(filesPath);
-
-		File sampleApiDir = new File(filesPath + "/sample-api");
-
-		FileUtils.deleteDirectory(sampleApiDir);
-
-		Assert.assertFalse(sampleApiDir.exists());
-
-		File sampleImplDir = new File(filesPath + "/sample-impl");
-
-		FileUtils.deleteDirectory(sampleImplDir);
-
-		Assert.assertFalse(sampleImplDir.exists());
+		_assertDirectoryEquals(
+			dependenciesPath.resolve("expected"), _getActualPath());
 	}
 
-	private void _assertBooleanParameterName(String filesPath)
+	private void _assertDirectoryEquals(Path expectedPath, Path actualPath)
 		throws Exception {
 
-		File file = new File(
-			filesPath.concat(
-				"/sample-impl/src/main/java/com/example/sample/internal" +
-					"/resource/v1_0_0/BaseTestBooleanResourceImpl.java"));
+		Files.walkFileTree(
+			expectedPath,
+			new FileVisitor<Path>() {
 
-		String text = new String(
-			Files.readAllBytes(file.toPath()), StandardCharsets.UTF_8);
+				@Override
+				public FileVisitResult postVisitDirectory(
+					Path path, IOException ioException) {
 
-		Assert.assertTrue(text.contains("Boolean booleanValue"));
+					return FileVisitResult.CONTINUE;
+				}
+
+				@Override
+				public FileVisitResult preVisitDirectory(
+					Path path, BasicFileAttributes basicFileAttributes) {
+
+					return FileVisitResult.CONTINUE;
+				}
+
+				@Override
+				public FileVisitResult visitFile(
+						Path path, BasicFileAttributes basicFileAttributes)
+					throws IOException {
+
+					Path relativePath = expectedPath.relativize(path);
+
+					Assert.assertEquals(
+						"Error comparing " + relativePath,
+						new String(Files.readAllBytes(path)),
+						new String(
+							Files.readAllBytes(
+								actualPath.resolve(relativePath))));
+
+					return FileVisitResult.CONTINUE;
+				}
+
+				@Override
+				public FileVisitResult visitFileFailed(
+					Path file, IOException ioException) {
+
+					return FileVisitResult.TERMINATE;
+				}
+
+			});
 	}
 
-	private void _assertDTOFile(String filesPath, String resourceName) {
-		File file = new File(
-			_getResourcePath(
-				filesPath,
-				"/sample-api/src/main/java/com/example/sample/dto/v1_0_0/",
-				resourceName, ".java"));
-
-		Assert.assertTrue(file.exists());
-	}
-
-	private void _assertForcePredictableOperationId(String filesPath)
-		throws Exception {
-
-		File file = new File(
-			filesPath.concat(
-				"/sample-impl/src/main/java/com/example/sample/internal" +
-					"/graphql/query/v1_0_0/Query.java"));
-
-		String text = new String(
-			Files.readAllBytes(file.toPath()), StandardCharsets.UTF_8);
-
-		Assert.assertFalse(text.contains("ForcePredictableOperationIdTest"));
-	}
-
-	private void _assertPropertiesWithHyphens(
-			String filesPath, String resourceName, String propertyName)
-		throws Exception {
-
-		File file = new File(
-			_getResourcePath(
-				filesPath,
-				"/sample-api/src/main/java/com/example/sample/dto/v1_0_0/",
-				resourceName, ".java"));
-
-		List<String> lines = Files.readAllLines(file.toPath());
-
-		Assert.assertTrue(
-			_matches(
-				lines,
-				"access = JsonProperty.Access.READ_WRITE, value = \"" +
-					propertyName + "\""));
-
-		Assert.assertTrue(
-			_matches(lines, "sb.append(\"\\\"" + propertyName + "\\\": \");"));
-	}
-
-	private void _assertPropertiesWithXML(
-			String filesPath, String resourceName, String xmlPropertyName)
-		throws Exception {
-
-		File file = new File(
-			_getResourcePath(
-				filesPath,
-				"/sample-api/src/main/java/com/example/sample/dto/v1_0_0/",
-				resourceName, ".java"));
-
-		List<String> lines = Files.readAllLines(file.toPath());
-
-		Assert.assertTrue(
-			_matches(lines, "@XmlElement(name = \"" + xmlPropertyName + "\")"));
-	}
-
-	private void _assertResourceFilesExist(
-		String filesPath, String resourceName) {
-
-		File baseResourceImplFile = new File(
-			_getResourcePath(
-				filesPath,
-				"/sample-impl/src/main/java/com/example/sample/internal" +
-					"/resource/v1_0_0/Base",
-				resourceName, "ResourceImpl.java"));
-
-		Assert.assertTrue(baseResourceImplFile.exists());
-
-		File folderResourceImplFile = new File(
-			_getResourcePath(
-				filesPath,
-				"/sample-impl/src/main/java/com/example/sample/internal" +
-					"/resource/v1_0_0/",
-				resourceName, "ResourceImpl.java"));
-
-		Assert.assertTrue(folderResourceImplFile.exists());
-
-		File propertiesFile = new File(
-			_getResourcePath(
-				filesPath,
-				"/sample-impl/src/main/resources/OSGI-INF/liferay/rest/v1_0_0/",
-				StringUtil.toLowerCase(resourceName), ".properties"));
-
-		Assert.assertTrue(propertiesFile.exists());
-
-		File resourceFolderFile = new File(
-			_getResourcePath(
-				filesPath,
-				"/sample-api/src/main/java/com/example/sample/resource/v1_0_0/",
-				resourceName, "Resource.java"));
-
-		Assert.assertTrue(resourceFolderFile.exists());
-
-		_assertDTOFile(filesPath, resourceName);
-	}
-
-	private String _getDependenciesPath() {
-		URL resource = getClass().getResource("");
-
-		String path = resource.getPath();
-
-		return path + "dependencies/";
-	}
-
-	private String _getFilesPath() {
+	private Path _getActualPath() {
 		Path path = Paths.get("");
 
 		Path absolutePath = path.toAbsolutePath();
 
-		Path parentPath = absolutePath.getParent();
-
-		return parentPath.toString();
+		return Paths.get(absolutePath.toString(), "test-classes", "actual");
 	}
 
-	private String _getResourcePath(
-		String filesPath, String resourcePathPrefix, String resourceName,
-		String resourcePathSuffix) {
+	private Path _getDependenciesPath() {
+		URL resource = getClass().getResource("");
 
-		return StringBundler.concat(
-			filesPath, resourcePathPrefix, resourceName, resourcePathSuffix);
-	}
-
-	private boolean _matches(List<String> lines, String text) {
-		for (String line : lines) {
-			if (line.contains(text)) {
-				return true;
-			}
-		}
-
-		return false;
+		return Paths.get(resource.getPath(), "dependencies");
 	}
 
 }

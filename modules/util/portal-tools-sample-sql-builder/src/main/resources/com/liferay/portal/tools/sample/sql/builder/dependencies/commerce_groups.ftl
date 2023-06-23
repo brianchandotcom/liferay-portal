@@ -1,6 +1,6 @@
 <#if dataFactory.maxCommerceGroupCount != 0>
 	<#assign
-		commerceAccountEntryModels = dataFactory.newCommerceAccountEntryModels()
+		accountEntryModels = dataFactory.newAccountEntryModels()
 		commerceCurrencyModel = dataFactory.newCommerceCurrencyModel()
 		commerceGroupModels = dataFactory.newCommerceGroupModels()
 		commerceInventoryWarehouseModels = dataFactory.newCommerceInventoryWarehouseModels()
@@ -145,23 +145,23 @@
 		</#list>
 	</#list>
 
-	<#list dataFactory.newCommerceOrderModels(commerceChannelGroupModels[0].groupId, commerceAccountEntryModels[0].accountEntryId, commerceCurrencyModel.commerceCurrencyId, 0, 0, 0, "", 2) as openCommerceOrderModel>
+	<#list dataFactory.newCommerceOrderModels(commerceChannelGroupModels[0].groupId, accountEntryModels[0].accountEntryId, commerceCurrencyModel.commerceCurrencyId, 0, 0, 0, "", 2) as openCommerceOrderModel>
 		${dataFactory.toInsertSQL(openCommerceOrderModel)}
 
 		${dataFactory.toInsertSQL(dataFactory.newCommerceOrderItemModel(openCommerceOrderModel, commercePriceListModel.commercePriceListId, cProductModels[dataFactory.getRandomCProductModelIndex()]))}
 	</#list>
 
-	<#list commerceAccountEntryModels as commerceAccountEntryModel>
-		${dataFactory.toInsertSQL(commerceAccountEntryModel)}
+	<#list accountEntryModels as accountEntryModel>
+		${dataFactory.toInsertSQL(accountEntryModel)}
 
-		${dataFactory.toInsertSQL(dataFactory.newAccountEntryUserRelModel(sampleUserModel, commerceAccountEntryModel.accountEntryId))}
+		${dataFactory.toInsertSQL(dataFactory.newAccountEntryUserRelModel(sampleUserModel, accountEntryModel.accountEntryId))}
 
-		${dataFactory.toInsertSQL(dataFactory.newCommerceAccountEntryGroupModel(commerceAccountEntryModel))}
+		${dataFactory.toInsertSQL(dataFactory.newAccountEntryGroupModel(accountEntryModel))}
 
 		<#assign
-			addressModel = dataFactory.newAddressModel(commerceAccountEntryModel.accountEntryId, countryModel.countryId)
+			addressModel = dataFactory.newAddressModel(accountEntryModel.accountEntryId, countryModel.countryId)
 
-			accountEntryCommerceOrderModels = dataFactory.newAccountEntryCommerceOrderModels(commerceChannelGroupModels[0].groupId, commerceAccountEntryModel.accountEntryId, commerceCurrencyModel.commerceCurrencyId, addressModel.addressId, addressModel.addressId, commerceShippingMethodModels[0].commerceShippingMethodId, "Standard Delivery", 2)
+			accountEntryCommerceOrderModels = dataFactory.newAccountEntryCommerceOrderModels(commerceChannelGroupModels[0].groupId, accountEntryModel.accountEntryId, commerceCurrencyModel.commerceCurrencyId, addressModel.addressId, addressModel.addressId, commerceShippingMethodModels[0].commerceShippingMethodId, "Standard Delivery", 2)
 		/>
 
 		${dataFactory.toInsertSQL(addressModel)}
@@ -172,12 +172,12 @@
 			${dataFactory.toInsertSQL(dataFactory.newCommerceOrderItemModel(accountEntryCommerceOrderModel, commercePriceListModel.commercePriceListId, cProductModels[dataFactory.getRandomCProductModelIndex()]))}
 		</#list>
 
-		<#if dataFactory.maxCommerceAccountEntryCommerceOrderCount != 0>
+		<#if dataFactory.maxAccountEntryCommerceOrderCount != 0>
 			<#assign
 				accountEntryCommerceOrderItemModel = dataFactory.newCommerceOrderItemModel(accountEntryCommerceOrderModels[0], commercePriceListModel.commercePriceListId, cProductModels[dataFactory.getRandomCProductModelIndex()])
 			/>
 
-			${csvFileWriter.write("commerceDeliveryAPI", virtualHostModel.hostname + "," + commerceAccountEntryModel.accountEntryId + "," + commerceChannelModels[0].commerceChannelId + "," + addressModel.addressId + "," + addressModel.countryId + "," + commerceCurrencyModel.code + "," + commerceShippingMethodModels[0].engineKey + "," + accountEntryCommerceOrderItemModel.CProductId + "," + accountEntryCommerceOrderItemModel.CPInstanceId + "," + accountEntryCommerceOrderModels[0].commerceOrderId + "\n")}
+			${csvFileWriter.write("commerceDeliveryAPI", virtualHostModel.hostname + "," + accountEntryModel.accountEntryId + "," + commerceChannelModels[0].commerceChannelId + "," + addressModel.addressId + "," + addressModel.countryId + "," + commerceCurrencyModel.code + "," + commerceShippingMethodModels[0].engineKey + "," + accountEntryCommerceOrderItemModel.CProductId + "," + accountEntryCommerceOrderItemModel.CPInstanceId + "," + accountEntryCommerceOrderModels[0].commerceOrderId + "\n")}
 		</#if>
 	</#list>
 
@@ -238,13 +238,13 @@
 
 		${dataFactory.toInsertSQL(commerceShippingFixedOptionModel)}
 
-		<#list dataFactory.newCommerceOrderModels(commerceChannelGroupModel.groupId, commerceAccountEntryModels[0].accountEntryId, commerceCurrencyModel.commerceCurrencyId, commerceShippingMethodModel.commerceShippingMethodId, 8) as cancelledCommerceOrderModel>
+		<#list dataFactory.newCommerceOrderModels(commerceChannelGroupModel.groupId, accountEntryModels[0].accountEntryId, commerceCurrencyModel.commerceCurrencyId, commerceShippingMethodModel.commerceShippingMethodId, 8) as cancelledCommerceOrderModel>
 			${dataFactory.toInsertSQL(cancelledCommerceOrderModel)}
 
 			${dataFactory.toInsertSQL(dataFactory.newCommerceOrderItemModel(cancelledCommerceOrderModel, commercePriceListModel.commercePriceListId, cProductModels[0]))}
 		</#list>
 
-		<#list dataFactory.newCommerceOrderModels(commerceChannelGroupModel.groupId, commerceAccountEntryModels[0].accountEntryId, commerceCurrencyModel.commerceCurrencyId, commerceShippingMethodModel.commerceShippingMethodId, 1) as pendingCommerceOrderModel>
+		<#list dataFactory.newCommerceOrderModels(commerceChannelGroupModel.groupId, accountEntryModels[0].accountEntryId, commerceCurrencyModel.commerceCurrencyId, commerceShippingMethodModel.commerceShippingMethodId, 1) as pendingCommerceOrderModel>
 			${dataFactory.toInsertSQL(pendingCommerceOrderModel)}
 
 			<#assign

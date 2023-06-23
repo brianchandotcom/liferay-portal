@@ -88,8 +88,10 @@ public class AccountGroupResourceImpl extends BaseAccountGroupResourceImpl {
 				_accountResourceDTOConverter.getAccountEntryId(
 					accountExternalReferenceCode));
 
-		_accountGroupRelService.deleteAccountGroupRel(
-			accountGroupRel.getAccountGroupRelId());
+		if (accountGroupRel != null) {
+			_accountGroupRelService.deleteAccountGroupRel(
+				accountGroupRel.getAccountGroupRelId());
+		}
 	}
 
 	@Override

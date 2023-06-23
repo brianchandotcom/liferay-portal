@@ -5105,7 +5105,6 @@ components:
                     description:
                         The ID of the folder where structured content is stored.
                     format: int64
-                    readOnly: true
                     type: integer
                 subscribed:
                     # @review

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.headless.builder.vulcan.openapi.contributor.test;
+package com.liferay.headless.builder.application.resource.test;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -79,7 +79,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
  */
 @FeatureFlags({"LPS-153117", "LPS-167253", "LPS-184413"})
 @RunWith(Arquillian.class)
-public class APIApplicationOpenAPIContributorTest extends BaseTestCase {
+public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 
 	@Before
 	public void setUp() throws Exception {

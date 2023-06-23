@@ -173,15 +173,13 @@ public class OrganizationResourceImpl
 			String externalReferenceCode, String organizationId)
 		throws Exception {
 
-		AccountEntry accountEntry =
-			_accountEntryService.fetchAccountEntryByExternalReferenceCode(
-				contextCompany.getCompanyId(), externalReferenceCode);
+		AccountEntry accountEntry = _accountEntryService.getAccountEntry(
+			_accountResourceDTOConverter.getAccountEntryId(
+				externalReferenceCode));
 
 		AccountEntryOrganizationRel accountEntryOrganizationRel =
-			_accountEntryOrganizationRelService.
-				fetchAccountEntryOrganizationRel(
-					accountEntry.getAccountEntryId(),
-					Long.valueOf(organizationId));
+			_accountEntryOrganizationRelService.getAccountEntryOrganizationRel(
+				accountEntry.getAccountEntryId(), Long.valueOf(organizationId));
 
 		return _toOrganization(
 			String.valueOf(accountEntryOrganizationRel.getOrganizationId()));

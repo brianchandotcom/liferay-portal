@@ -62,6 +62,20 @@ components:
                         name: xmlProperty
                 property-with-hyphens:
                     type: string
+        TestNestedArrayItems:
+            description:
+                Test Component to test the REST Builder support for nested array items
+            properties:
+                name:
+                    type: string
+                values:
+                    items:
+                        items:
+                            type: string
+                        type: array
+                    type: array
+            title: TestArray
+            type: object
         UnreferencedSchemaComponent:
             properties:
                 description:

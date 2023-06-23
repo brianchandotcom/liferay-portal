@@ -71,6 +71,8 @@ definition {
 	macro _export {
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
+		Alert.viewWarningSpecific(warningMessage = "Export process and export LAR file will be deleted after 30 days.");
+
 		if (isSet(contentLastRange)) {
 			Click(locator1 = "Radio#CHOOSE_CONTENT_LAST_CHANGE");
 		}
@@ -604,6 +606,8 @@ definition {
 		}
 
 		Click(locator1 = "Icon#PLUS");
+
+		Alert.viewWarningSpecific(warningMessage = "Export process and export LAR file will be deleted after 30 days.");
 
 		if (${privateLayout} == "true") {
 			Click(locator1 = "PagesConfiguration#CHANGE_TO_PRIVATE_PAGES");

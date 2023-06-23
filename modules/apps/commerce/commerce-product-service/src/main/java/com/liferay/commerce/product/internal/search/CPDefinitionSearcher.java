@@ -53,7 +53,8 @@ public class CPDefinitionSearcher extends BaseSearcher {
 			CPField.PRODUCT_TYPE_NAME, CPField.SHORT_DESCRIPTION,
 			Field.DESCRIPTION, Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK,
 			Field.GROUP_ID, Field.NAME, Field.UID, Field.URL);
-		setDefaultSelectedLocalizedFieldNames(Field.NAME);
+		setDefaultSelectedLocalizedFieldNames(
+			CPField.SHORT_DESCRIPTION, Field.DESCRIPTION, Field.NAME);
 	}
 
 	@Override

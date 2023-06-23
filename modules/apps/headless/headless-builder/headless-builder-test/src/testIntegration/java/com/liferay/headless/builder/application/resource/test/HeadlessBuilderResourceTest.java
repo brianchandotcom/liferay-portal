@@ -48,7 +48,7 @@ import org.junit.Test;
 /**
  * @author Luis Miguel Barcos
  */
-@FeatureFlags({"LPS-186757", "LPS-184413", "LPS-167253", "LPS-153117"})
+@FeatureFlags({"LPS-153117", "LPS-167253", "LPS-184413", "LPS-186757"})
 public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 	@ClassRule

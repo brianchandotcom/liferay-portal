@@ -400,13 +400,8 @@ definition {
 	}
 
 	@description = "Feature ID: LRAC-9248 | Automation ID: LRAC-10727 | Test Summary: Empty state of pages with no data source and no property"
-	@ignore = "true"
 	@priority = 2
 	test CheckAllMessagesRelatedToSettings {
-
-		// AC Bug: Individuals Attribute empty state showing blank page
-		// AC Bug ticket: LRAC-13973
-
 		property test.run.type = "single";
 
 		task ("Close the onboarding modal") {
@@ -551,7 +546,6 @@ definition {
 
 			ACUtils.viewGenericText(textValueList = "Data Control and Privacy");
 		}
-
 	}
 
 	@description = "Feature ID: LRAC-10405 | Automation ID: LRAC-11119 | Test Summary: Empty state of no assets with data source and property"

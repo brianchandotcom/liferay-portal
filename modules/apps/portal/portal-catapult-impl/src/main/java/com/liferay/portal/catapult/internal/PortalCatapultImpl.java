@@ -49,9 +49,12 @@ public class PortalCatapultImpl implements PortalCatapult {
 
 		options.addHeader(
 			HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
-		options.setBody(
-			payloadJSONObject.toString(), ContentTypes.APPLICATION_JSON,
-			StringPool.UTF8);
+
+		if (payloadJSONObject != null) {
+			options.setBody(
+				payloadJSONObject.toString(), ContentTypes.APPLICATION_JSON,
+				StringPool.UTF8);
+		}
 
 		OAuth2Application oAuth2Application =
 			_oAuth2ApplicationLocalService.

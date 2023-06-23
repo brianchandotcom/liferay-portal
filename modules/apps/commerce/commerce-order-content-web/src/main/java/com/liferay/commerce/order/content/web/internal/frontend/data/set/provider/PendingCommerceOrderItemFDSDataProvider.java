@@ -32,6 +32,7 @@ import com.liferay.commerce.product.util.CPSubscriptionType;
 import com.liferay.commerce.product.util.CPSubscriptionTypeRegistry;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderService;
+import com.liferay.commerce.util.CommerceBigDecimalUtil;
 import com.liferay.commerce.util.CommerceOrderItemQuantityFormatter;
 import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
@@ -116,6 +117,10 @@ public class PendingCommerceOrderItemFDSDataProvider
 			CommerceOrderItemPrice commerceOrderItemPrice, Locale locale)
 		throws Exception {
 
+		if (commerceOrderItemPrice.isPriceOnApplication()) {
+			return StringPool.DASH;
+		}
+
 		if (commerceOrderItemPrice.getDiscountAmount() == null) {
 			return StringPool.BLANK;
 		}
@@ -130,6 +135,10 @@ public class PendingCommerceOrderItemFDSDataProvider
 			CommerceOrderItemPrice commerceOrderItemPrice, Locale locale)
 		throws Exception {
 
+		if (commerceOrderItemPrice.isPriceOnApplication()) {
+			return StringPool.DASH;
+		}
+
 		if (commerceOrderItemPrice.getFinalPrice() == null) {
 			return StringPool.BLANK;
 		}
@@ -143,6 +152,10 @@ public class PendingCommerceOrderItemFDSDataProvider
 	private String _formatPromoPrice(
 			CommerceOrderItemPrice commerceOrderItemPrice, Locale locale)
 		throws Exception {
+
+		if (commerceOrderItemPrice.isPriceOnApplication()) {
+			return StringPool.DASH;
+		}
 
 		CommerceMoney promoPriceCommerceMoney =
 			commerceOrderItemPrice.getPromoPrice();
@@ -202,12 +215,28 @@ public class PendingCommerceOrderItemFDSDataProvider
 			CommerceOrderItemPrice commerceOrderItemPrice, Locale locale)
 		throws Exception {
 
-		if (commerceOrderItemPrice.getUnitPrice() == null) {
-			return StringPool.BLANK;
+		if (commerceOrderItemPrice.isPriceOnApplication()) {
+			return _language.get(locale, "price-on-application");
 		}
 
 		CommerceMoney unitPriceCommerceMoney =
 			commerceOrderItemPrice.getUnitPrice();
+
+		if (unitPriceCommerceMoney == null) {
+			return StringPool.BLANK;
+		}
+
+		CommerceMoney promoPriceCommerceMoney =
+			commerceOrderItemPrice.getPromoPrice();
+
+		if (CommerceBigDecimalUtil.eq(
+				unitPriceCommerceMoney.getPrice(), BigDecimal.ZERO) &&
+			(promoPriceCommerceMoney != null) &&
+			CommerceBigDecimalUtil.gt(
+				promoPriceCommerceMoney.getPrice(), BigDecimal.ZERO)) {
+
+			return _language.get(locale, "price-on-application");
+		}
 
 		return unitPriceCommerceMoney.format(locale);
 	}
@@ -335,35 +364,6 @@ public class PendingCommerceOrderItemFDSDataProvider
 				CommerceOrderItemPrice commerceOrderItemPrice =
 					_commerceOrderPriceCalculation.getCommerceOrderItemPrice(
 						commerceOrder.getCommerceCurrency(), commerceOrderItem);
-
-				if ((commerceOrderItemPrice != null) &&
-					commerceOrderItemPrice.isPriceOnApplication()) {
-
-					return new OrderItem(
-						commerceOrderItem.getCPInstanceId(), StringPool.DASH,
-						_getCommerceOrderErrorMessages(
-							commerceOrderItem,
-							commerceOrderValidatorResultsMap),
-						_commerceOrderItemQuantityFormatter.format(
-							commerceOrderItem, locale),
-						_formatSubscriptionPeriod(commerceOrderItem, locale),
-						commerceOrderItem.getName(locale),
-						_getCommerceOrderOptions(commerceOrderItem, locale),
-						commerceOrderItem.getCommerceOrderId(),
-						commerceOrderItem.getCommerceOrderItemId(),
-						_getChildOrderItems(
-							commerceOrderItem, httpServletRequest),
-						commerceOrderItem.getParentCommerceOrderItemId(),
-						_language.get(locale, "price-on-application"),
-						StringPool.DASH, 0, commerceOrderItem.getSku(),
-						_cpInstanceHelper.getCPInstanceThumbnailSrc(
-							CommerceUtil.getCommerceAccountId(
-								(CommerceContext)
-									httpServletRequest.getAttribute(
-										CommerceWebKeys.COMMERCE_CONTEXT)),
-							commerceOrderItem.getCPInstanceId()),
-						StringPool.DASH);
-				}
 
 				return new OrderItem(
 					commerceOrderItem.getCPInstanceId(),

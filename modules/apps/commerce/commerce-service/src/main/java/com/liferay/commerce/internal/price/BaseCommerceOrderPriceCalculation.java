@@ -618,8 +618,9 @@ public abstract class BaseCommerceOrderPriceCalculation
 			commerceOrderItemPrice.getUnitPrice();
 
 		if (!_greaterThanZero(promoPrice) ||
-			CommerceBigDecimalUtil.gte(
-				promoPrice, unitPriceCommerceMoney.getPrice())) {
+			(CommerceBigDecimalUtil.gte(
+				promoPrice, unitPriceCommerceMoney.getPrice()) &&
+			 _greaterThanZero(unitPriceCommerceMoney.getPrice()))) {
 
 			return;
 		}

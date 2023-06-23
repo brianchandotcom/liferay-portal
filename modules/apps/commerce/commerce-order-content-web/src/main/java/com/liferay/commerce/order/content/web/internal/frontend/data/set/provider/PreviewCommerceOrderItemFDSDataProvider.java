@@ -134,28 +134,6 @@ public class PreviewCommerceOrderItemFDSDataProvider
 				CommerceOrderItemPrice commerceOrderItemPrice =
 					commerceOrderImporterItem.getCommerceOrderItemPrice();
 
-				if ((commerceOrderItemPrice != null) &&
-					commerceOrderItemPrice.isPriceOnApplication()) {
-
-					return new PreviewOrderItem(
-						externalReferenceCode,
-						_getImportStatus(commerceOrderImporterItem, locale),
-						_getCommerceOrderOptions(
-							commerceOrderImporterItem, locale),
-						commerceOrderImporterItem.getName(locale),
-						commerceOrderImporterItem.getQuantity(),
-						commerceOrderImporterItem.getReplacingSKU(),
-						_formatImportDate(
-							commerceOrderImporterItem.
-								getRequestedDeliveryDateString(),
-							commerceOrderImporterDateFormatConfiguration.
-								orderImporterDateFormat(),
-							themeDisplay.getLocale()),
-						integerWrapper.increment(),
-						commerceOrderImporterItem.getSKU(), StringPool.DASH,
-						_language.get(locale, "price-on-application"));
-				}
-
 				return new PreviewOrderItem(
 					externalReferenceCode,
 					_getImportStatus(commerceOrderImporterItem, locale),
@@ -221,6 +199,10 @@ public class PreviewCommerceOrderItemFDSDataProvider
 			return StringPool.BLANK;
 		}
 
+		if (commerceOrderItemPrice.isPriceOnApplication()) {
+			return StringPool.DASH;
+		}
+
 		CommerceMoney unitPriceCommerceMoney =
 			commerceOrderItemPrice.getUnitPrice();
 
@@ -274,6 +256,10 @@ public class PreviewCommerceOrderItemFDSDataProvider
 			(commerceOrderItemPrice.getUnitPrice() == null)) {
 
 			return StringPool.BLANK;
+		}
+
+		if (commerceOrderItemPrice.isPriceOnApplication()) {
+			return _language.get(locale, "price-on-application");
 		}
 
 		CommerceMoney unitPriceCommerceMoney =

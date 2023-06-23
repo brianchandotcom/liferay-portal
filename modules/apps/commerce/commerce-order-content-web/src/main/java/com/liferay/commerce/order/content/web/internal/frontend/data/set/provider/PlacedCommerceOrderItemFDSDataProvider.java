@@ -29,6 +29,7 @@ import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.product.util.CPSubscriptionType;
 import com.liferay.commerce.product.util.CPSubscriptionTypeRegistry;
 import com.liferay.commerce.service.CommerceOrderItemService;
+import com.liferay.commerce.util.CommerceBigDecimalUtil;
 import com.liferay.commerce.util.CommerceOrderItemQuantityFormatter;
 import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
@@ -109,6 +110,10 @@ public class PlacedCommerceOrderItemFDSDataProvider
 			CommerceOrderItemPrice commerceOrderItemPrice, Locale locale)
 		throws Exception {
 
+		if (commerceOrderItemPrice.isPriceOnApplication()) {
+			return StringPool.DASH;
+		}
+
 		if (commerceOrderItemPrice.getDiscountAmount() == null) {
 			return StringPool.BLANK;
 		}
@@ -123,6 +128,10 @@ public class PlacedCommerceOrderItemFDSDataProvider
 			CommerceOrderItemPrice commerceOrderItemPrice, Locale locale)
 		throws Exception {
 
+		if (commerceOrderItemPrice.isPriceOnApplication()) {
+			return StringPool.DASH;
+		}
+
 		if (commerceOrderItemPrice.getFinalPrice() == null) {
 			return StringPool.BLANK;
 		}
@@ -136,6 +145,10 @@ public class PlacedCommerceOrderItemFDSDataProvider
 	private String _formatPromoPrice(
 			CommerceOrderItemPrice commerceOrderItemPrice, Locale locale)
 		throws Exception {
+
+		if (commerceOrderItemPrice.isPriceOnApplication()) {
+			return StringPool.DASH;
+		}
 
 		CommerceMoney promoPriceCommerceMoney =
 			commerceOrderItemPrice.getPromoPrice();
@@ -195,12 +208,28 @@ public class PlacedCommerceOrderItemFDSDataProvider
 			CommerceOrderItemPrice commerceOrderItemPrice, Locale locale)
 		throws Exception {
 
-		if (commerceOrderItemPrice.getUnitPrice() == null) {
-			return StringPool.BLANK;
+		if (commerceOrderItemPrice.isPriceOnApplication()) {
+			return _language.get(locale, "price-on-application");
 		}
 
 		CommerceMoney unitPriceCommerceMoney =
 			commerceOrderItemPrice.getUnitPrice();
+
+		if (unitPriceCommerceMoney == null) {
+			return StringPool.BLANK;
+		}
+
+		CommerceMoney promoPriceCommerceMoney =
+			commerceOrderItemPrice.getPromoPrice();
+
+		if (CommerceBigDecimalUtil.eq(
+				unitPriceCommerceMoney.getPrice(), BigDecimal.ZERO) &&
+			(promoPriceCommerceMoney != null) &&
+			CommerceBigDecimalUtil.gt(
+				promoPriceCommerceMoney.getPrice(), BigDecimal.ZERO)) {
+
+			return _language.get(locale, "price-on-application");
+		}
 
 		return unitPriceCommerceMoney.format(locale);
 	}
@@ -288,62 +317,29 @@ public class PlacedCommerceOrderItemFDSDataProvider
 				_commerceOrderPriceCalculation.getCommerceOrderItemPrice(
 					commerceOrder.getCommerceCurrency(), commerceOrderItem);
 
-			if ((commerceOrderItemPrice != null) &&
-				commerceOrderItemPrice.isPriceOnApplication()) {
-
-				orderItems.add(
-					new OrderItem(
-						commerceOrderItem.getCPInstanceId(), StringPool.DASH,
-						null,
-						_commerceOrderItemQuantityFormatter.format(
-							commerceOrderItem, locale),
-						_formatSubscriptionPeriod(commerceOrderItem, locale),
-						commerceOrderItem.getName(locale),
-						_getCommerceOrderOptions(commerceOrderItem, locale),
-						commerceOrderItem.getCommerceOrderId(),
-						commerceOrderItem.getCommerceOrderItemId(),
-						_getChildOrderItems(
-							commerceOrderItem, httpServletRequest),
-						commerceOrderItem.getParentCommerceOrderItemId(),
-						_language.get(locale, "price-on-application"),
-						StringPool.DASH, commerceOrderItem.getShippedQuantity(),
-						commerceOrderItem.getSku(),
-						_cpInstanceHelper.getCPInstanceThumbnailSrc(
-							CommerceUtil.getCommerceAccountId(
-								(CommerceContext)
-									httpServletRequest.getAttribute(
-										CommerceWebKeys.COMMERCE_CONTEXT)),
-							commerceOrderItem.getCPInstanceId()),
-						StringPool.DASH));
-			}
-			else {
-				orderItems.add(
-					new OrderItem(
-						commerceOrderItem.getCPInstanceId(),
-						_formatDiscountAmount(commerceOrderItemPrice, locale),
-						null,
-						_commerceOrderItemQuantityFormatter.format(
-							commerceOrderItem, locale),
-						_formatSubscriptionPeriod(commerceOrderItem, locale),
-						commerceOrderItem.getName(locale),
-						_getCommerceOrderOptions(commerceOrderItem, locale),
-						commerceOrderItem.getCommerceOrderId(),
-						commerceOrderItem.getCommerceOrderItemId(),
-						_getChildOrderItems(
-							commerceOrderItem, httpServletRequest),
-						commerceOrderItem.getParentCommerceOrderItemId(),
-						_formatUnitPrice(commerceOrderItemPrice, locale),
-						_formatPromoPrice(commerceOrderItemPrice, locale),
-						commerceOrderItem.getShippedQuantity(),
-						commerceOrderItem.getSku(),
-						_cpInstanceHelper.getCPInstanceThumbnailSrc(
-							CommerceUtil.getCommerceAccountId(
-								(CommerceContext)
-									httpServletRequest.getAttribute(
-										CommerceWebKeys.COMMERCE_CONTEXT)),
-							commerceOrderItem.getCPInstanceId()),
-						_formatFinalPrice(commerceOrderItemPrice, locale)));
-			}
+			orderItems.add(
+				new OrderItem(
+					commerceOrderItem.getCPInstanceId(),
+					_formatDiscountAmount(commerceOrderItemPrice, locale), null,
+					_commerceOrderItemQuantityFormatter.format(
+						commerceOrderItem, locale),
+					_formatSubscriptionPeriod(commerceOrderItem, locale),
+					commerceOrderItem.getName(locale),
+					_getCommerceOrderOptions(commerceOrderItem, locale),
+					commerceOrderItem.getCommerceOrderId(),
+					commerceOrderItem.getCommerceOrderItemId(),
+					_getChildOrderItems(commerceOrderItem, httpServletRequest),
+					commerceOrderItem.getParentCommerceOrderItemId(),
+					_formatUnitPrice(commerceOrderItemPrice, locale),
+					_formatPromoPrice(commerceOrderItemPrice, locale),
+					commerceOrderItem.getShippedQuantity(),
+					commerceOrderItem.getSku(),
+					_cpInstanceHelper.getCPInstanceThumbnailSrc(
+						CommerceUtil.getCommerceAccountId(
+							(CommerceContext)httpServletRequest.getAttribute(
+								CommerceWebKeys.COMMERCE_CONTEXT)),
+						commerceOrderItem.getCPInstanceId()),
+					_formatFinalPrice(commerceOrderItemPrice, locale)));
 		}
 
 		return orderItems;

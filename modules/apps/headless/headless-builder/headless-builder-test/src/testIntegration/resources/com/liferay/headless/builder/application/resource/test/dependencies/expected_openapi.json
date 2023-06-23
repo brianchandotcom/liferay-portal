@@ -222,6 +222,32 @@
 	},
 	"openapi": "3.0.1",
 	"paths": {
+		"/openapi.{type}": {
+			"get": {
+				"operationId": "getOpenAPI",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "type",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+							},
+							"application/yaml": {
+							}
+						},
+						"description": "default response"
+					}
+				}
+			}
+		},
 		"/path": {
 			"get": {
 				"operationId": "getSchemaNamesPage",
@@ -247,5 +273,10 @@
 				]
 			}
 		}
-	}
+	},
+	"servers": [
+		{
+			"url": "http://localhost:8080/o/${BASE_URL}/"
+		}
+	]
 }

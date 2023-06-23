@@ -14,10 +14,11 @@
 
 package com.liferay.headless.builder.application.resource.test;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.headless.builder.application.APIApplication;
+import com.liferay.headless.builder.application.provider.APIApplicationProvider;
+import com.liferay.headless.builder.application.publisher.APIApplicationPublisher;
+import com.liferay.headless.builder.application.publisher.test.util.APIApplicationPublisherUtil;
 import com.liferay.headless.builder.test.BaseTestCase;
 import com.liferay.list.type.entry.util.ListTypeEntryUtil;
 import com.liferay.list.type.model.ListTypeDefinition;
@@ -48,25 +49,35 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.Base64;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
-import com.liferay.portal.vulcan.openapi.OpenAPIContext;
 import com.liferay.portal.vulcan.openapi.contributor.OpenAPIContributor;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
-import io.swagger.v3.oas.models.OpenAPI;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+import java.nio.charset.StandardCharsets;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import javax.ws.rs.core.HttpHeaders;
+
+import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -77,7 +88,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 /**
  * @author Carlos Correa
  */
-@FeatureFlags({"LPS-153117", "LPS-167253", "LPS-184413"})
+@FeatureFlags({"LPS-153117", "LPS-167253", "LPS-184413", "LPS-186757"})
 @RunWith(Arquillian.class)
 public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 
@@ -290,6 +301,12 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 			aggregationObjectField.getObjectFieldSettings());
 	}
 
+	@After
+	public void tearDown() throws Exception {
+		APIApplicationPublisherUtil.unpublishRemainingAPIApplications(
+			_apiApplicationPublisher);
+	}
+
 	@Test
 	public void test() throws Exception {
 		HTTPTestUtil.invoke(
@@ -458,21 +475,54 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 				_API_ENDPOINT_ERC),
 			Http.Method.PUT);
 
-		OpenAPI openAPI = new OpenAPI();
+		APIApplication apiApplication =
+			_apiApplicationProvider.getAPIApplication(
+				_API_BASE_URL, TestPropsValues.getCompanyId());
 
-		_apiApplicationOpenAPIContributor.contribute(
-			openAPI,
-			new OpenAPIContext() {
-				{
-					setPath("/o/" + _API_BASE_URL + "/");
-				}
-			});
+		HttpURLConnection httpURLConnection = _createHttpURLConnection(
+			apiApplication.getBaseURL() + "/openapi.json", Http.Method.GET);
+
+		httpURLConnection.connect();
+
+		Assert.assertEquals(404, httpURLConnection.getResponseCode());
+
+		APIApplicationPublisherUtil.publishApplications(
+			_apiApplicationPublisher, apiApplication);
+
+		JSONObject jsonObject = HTTPTestUtil.invoke(
+			null, apiApplication.getBaseURL() + "/openapi.json",
+			Http.Method.GET);
 
 		JSONAssert.assertEquals(
-			new String(
-				FileUtil.getBytes(
-					getClass(), "dependencies/expected_openapi.json")),
-			_objectMapper.writeValueAsString(openAPI), JSONCompareMode.STRICT);
+			StringUtil.replace(
+				new String(
+					FileUtil.getBytes(
+						getClass(), "dependencies/expected_openapi.json")),
+				"${BASE_URL}", apiApplication.getBaseURL()),
+			jsonObject.toString(), JSONCompareMode.STRICT);
+	}
+
+	private HttpURLConnection _createHttpURLConnection(
+			String endpoint, Http.Method method)
+		throws Exception {
+
+		URL url = new URL("http://localhost:8080/o/" + endpoint);
+
+		HttpURLConnection httpURLConnection =
+			(HttpURLConnection)url.openConnection();
+
+		httpURLConnection.setRequestMethod(method.toString());
+		httpURLConnection.setRequestProperty(HttpHeaders.ACCEPT, "*/*");
+		httpURLConnection.setRequestProperty(
+			HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
+
+		String encodedUserNameAndPassword = Base64.encode(
+			"test@liferay.com:test".getBytes(StandardCharsets.UTF_8));
+
+		httpURLConnection.setRequestProperty(
+			"Authorization", "Basic " + encodedUserNameAndPassword);
+
+		return httpURLConnection;
 	}
 
 	private ObjectFieldSetting _createObjectFieldSetting(
@@ -557,16 +607,16 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 	private static final String _API_SCHEMA_TEXT_FIELD_ERC =
 		RandomTestUtil.randomString();
 
-	private static final ObjectMapper _objectMapper = new ObjectMapper() {
-		{
-			setSerializationInclusion(JsonInclude.Include.NON_ABSENT);
-		}
-	};
-
 	@Inject(
 		filter = "component.name=com.liferay.headless.builder.internal.vulcan.openapi.contributor.APIApplicationOpenApiContributor"
 	)
 	private OpenAPIContributor _apiApplicationOpenAPIContributor;
+
+	@Inject
+	private APIApplicationProvider _apiApplicationProvider;
+
+	@Inject
+	private APIApplicationPublisher _apiApplicationPublisher;
 
 	private ListTypeDefinition _listTypeDefinition;
 

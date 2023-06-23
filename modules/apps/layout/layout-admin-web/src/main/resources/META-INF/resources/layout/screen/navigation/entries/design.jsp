@@ -36,8 +36,8 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 LayoutRevision layoutRevision = LayoutStagingUtil.getLayoutRevision(selLayout);
 %>
 
-<portlet:actionURL name="/layout_admin/edit_layout" var="editLayoutURL">
-	<portlet:param name="mvcRenderCommandName" value="/layout_admin/edit_layout" />
+<portlet:actionURL name="/layout_admin/edit_layout_design" var="editLayoutURL">
+	<portlet:param name="mvcRenderCommandName" value="/layout_admin/edit_layout_design" />
 </portlet:actionURL>
 
 <liferay-frontend:edit-form

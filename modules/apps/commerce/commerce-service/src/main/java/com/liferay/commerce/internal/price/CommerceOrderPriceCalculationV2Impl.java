@@ -142,6 +142,21 @@ public class CommerceOrderPriceCalculationV2Impl
 
 				shippingDiscounted = shippingDiscounted.subtract(
 					discountAmountCommerceMoney.getPrice());
+
+				BigDecimal discountPercentage =
+					orderShippingCommerceDiscountValue.getDiscountPercentage();
+
+				BigDecimal shippingTaxAmount =
+					shippingTaxAmountCommerceMoney.getPrice();
+
+				BigDecimal shippingTaxValueDifference =
+					shippingTaxAmount.multiply(discountPercentage);
+
+				shippingTaxValueDifference = shippingTaxValueDifference.divide(
+					_ONE_HUNDRED);
+
+				totalTaxValue = totalTaxValue.subtract(
+					shippingTaxValueDifference);
 			}
 
 			totalDiscounted = totalAmount;
@@ -395,6 +410,8 @@ public class CommerceOrderPriceCalculationV2Impl
 
 		return getTotal(commerceOrder, true, commerceContext);
 	}
+
+	private static final BigDecimal _ONE_HUNDRED = BigDecimal.valueOf(100);
 
 	@Reference
 	private CommerceDiscountCalculation _commerceDiscountCalculation;

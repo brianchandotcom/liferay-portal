@@ -74,7 +74,7 @@ export default class DetailsCard extends React.PureComponent {
 						{Liferay.Language.get('view-all-details')}
 
 						<ClayIcon
-							classname='icon-root ml-2'
+							className='icon-root ml-2'
 							symbol='angle-right-small'
 						/>
 					</ClayLink>

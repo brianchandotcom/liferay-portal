@@ -150,13 +150,14 @@ List<CommerceCurrency> commerceCurrencies = commerceCatalogDisplayContext.getCom
 							},
 						});
 					})
-					.catch(() => {
+					.catch((error) => {
 						window.parent.Liferay.fire(events.IS_LOADING_MODAL, {
 							isLoading: false,
 						});
 
 						window.parent.Liferay.Util.openToast({
 							message:
+								error.title ||
 								'<liferay-ui:message key="an-unexpected-error-occurred" />',
 							title: '<liferay-ui:message key="danger" />',
 							type: 'danger',

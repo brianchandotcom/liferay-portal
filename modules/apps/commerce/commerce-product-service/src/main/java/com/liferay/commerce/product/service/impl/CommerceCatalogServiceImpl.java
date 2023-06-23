@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.service.impl;
 
+import com.liferay.account.exception.AccountEntryTypeException;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.commerce.product.constants.CPActionKeys;
@@ -22,8 +23,8 @@ import com.liferay.commerce.product.service.base.CommerceCatalogServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -59,6 +60,10 @@ public class CommerceCatalogServiceImpl extends CommerceCatalogServiceBaseImpl {
 
 		portletResourcePermission.check(
 			getPermissionChecker(), null, CPActionKeys.ADD_COMMERCE_CATALOG);
+
+		if ((accountEntryId == 0) && !_hasViewCommerceCatalogsPermission()) {
+			throw new AccountEntryTypeException();
+		}
 
 		_checkAccountEntry(accountEntryId);
 
@@ -167,18 +172,10 @@ public class CommerceCatalogServiceImpl extends CommerceCatalogServiceBaseImpl {
 			String commerceCurrencyCode, String catalogDefaultLanguageId)
 		throws PortalException {
 
-		PermissionChecker permissionChecker = getPermissionChecker();
-
 		_commerceCatalogModelResourcePermission.check(
-			permissionChecker, commerceCatalogId, ActionKeys.UPDATE);
+			getPermissionChecker(), commerceCatalogId, ActionKeys.UPDATE);
 
-		PortletResourcePermission portletResourcePermission =
-			_commerceCatalogModelResourcePermission.
-				getPortletResourcePermission();
-
-		if (!portletResourcePermission.contains(
-				permissionChecker, null, CPActionKeys.VIEW_COMMERCE_CATALOGS)) {
-
+		if (!_hasViewCommerceCatalogsPermission()) {
 			CommerceCatalog commerceCatalog =
 				commerceCatalogLocalService.getCommerceCatalog(
 					commerceCatalogId);
@@ -218,6 +215,17 @@ public class CommerceCatalogServiceImpl extends CommerceCatalogServiceBaseImpl {
 				getPermissionChecker(), accountEntry.getAccountEntryId(),
 				ActionKeys.VIEW);
 		}
+	}
+
+	private boolean _hasViewCommerceCatalogsPermission()
+		throws PrincipalException {
+
+		PortletResourcePermission portletResourcePermission =
+			_commerceCatalogModelResourcePermission.
+				getPortletResourcePermission();
+
+		return portletResourcePermission.contains(
+			getPermissionChecker(), null, CPActionKeys.VIEW_COMMERCE_CATALOGS);
 	}
 
 	@Reference

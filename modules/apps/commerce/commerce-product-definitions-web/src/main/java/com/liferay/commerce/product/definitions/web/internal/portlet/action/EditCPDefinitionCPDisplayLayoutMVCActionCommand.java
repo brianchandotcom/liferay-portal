@@ -171,14 +171,14 @@ public class EditCPDefinitionCPDisplayLayoutMVCActionCommand
 				layoutUuid);
 		}
 		else {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
 			long commerceChannelId = ParamUtil.getLong(
 				actionRequest, "commerceChannelId");
 
 			CommerceChannel commerceChannel =
 				_commerceChannelService.getCommerceChannel(commerceChannelId);
-
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
 			_cpDisplayLayoutLocalService.addCPDisplayLayout(
 				themeDisplay.getUserId(), commerceChannel.getSiteGroupId(),

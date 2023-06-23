@@ -50,12 +50,6 @@ function BuildQueue() {
 					<th>Total</th>
 				</tr>
 
-				{
-					data.map(project => {
-						let runningBuilds = 0;
-						let completedBuilds = 0;
-						let totalBuilds = 0;
-
 				{data.map((project) => {
 					let runningBuilds = 0;
 					let completedBuilds = 0;
@@ -69,27 +63,29 @@ function BuildQueue() {
 							runningBuilds++;
 						}
 
-						return (
-							<tr>
-								<td>{project.id}</td>
+						totalBuilds++;
+					}
 
-								<td>{project.name}</td>
+					return (
+						<tr key={project.id}>
+							<td>{project.id}</td>
 
-								<td>{project.priority}</td>
+							<td>{project.name}</td>
 
-								<td>{project.state.name}</td>
+							<td>{project.priority}</td>
 
-								<td>{project.type.name}</td>
+							<td>{project.state.name}</td>
 
-								<td>{runningBuilds}</td>
+							<td>{project.type.name}</td>
 
-								<td>{completedBuilds}</td>
+							<td>{runningBuilds}</td>
 
-								<td>{totalBuilds}</td>
-							</tr>
-						)}
-					)
-				}
+							<td>{completedBuilds}</td>
+
+							<td>{totalBuilds}</td>
+						</tr>
+					);
+				})}
 			</table>
 		</div>
 	);

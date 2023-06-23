@@ -1,5 +1,10 @@
 .member-profile {
 	&-button-resend-invitation {
+		background-color: #0053f0;
+		border: none;
+		border-radius: 0.5rem;
+		color: #ffff;
+
 		&:hover {
 			background-color: #ffff;
 			border: 1px solid #0053f0;

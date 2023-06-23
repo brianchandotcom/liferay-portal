@@ -17,6 +17,7 @@ package com.liferay.portal.upgrade.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -52,6 +53,8 @@ public class LiveUpgradeSchemaDiffTest {
 	public static void setUpClass() throws Exception {
 		_connection = DataAccess.getConnection();
 
+		_dbInspector = new DBInspector(_connection);
+
 		_db = DBManagerUtil.getDB();
 
 		_db.runSQL(
@@ -75,8 +78,7 @@ public class LiveUpgradeSchemaDiffTest {
 
 	@Test
 	public void testRecordAddColumns() throws Exception {
-		_liveUpgradeSchemaDiff.recordAddColumns(
-			"version LONG default 0 not null");
+		_liveUpgradeSchemaDiff.recordAddColumns("version LONG not null");
 
 		_checkResultColumnNamesMap(
 			HashMapBuilder.put(
@@ -101,7 +103,7 @@ public class LiveUpgradeSchemaDiffTest {
 
 	@Test
 	public void testRecordAlterColumnType() throws Exception {
-		_liveUpgradeSchemaDiff.recordAlterColumnName(
+		_liveUpgradeSchemaDiff.recordAlterColumnType(
 			"name", "VARCHAR(255) null");
 
 		_checkResultColumnNamesMap(
@@ -126,7 +128,8 @@ public class LiveUpgradeSchemaDiffTest {
 	}
 
 	private void _checkResultColumnNamesMap(
-		Map<String, String> expectedColumnNamesMap) {
+			Map<String, String> expectedColumnNamesMap)
+		throws Exception {
 
 		Map<String, String> actualColumnNamesMap =
 			_liveUpgradeSchemaDiff.getResultColumnNamesMap();
@@ -136,12 +139,17 @@ public class LiveUpgradeSchemaDiffTest {
 			actualColumnNamesMap.size());
 
 		for (Map.Entry<String, String> entry :
-				actualColumnNamesMap.entrySet()) {
+				expectedColumnNamesMap.entrySet()) {
+
+			String expectedOldColumnName = _dbInspector.normalizeName(
+				entry.getKey());
 
 			Assert.assertTrue(
-				expectedColumnNamesMap.containsKey(entry.getKey()));
+				actualColumnNamesMap.containsKey(expectedOldColumnName));
+
 			Assert.assertEquals(
-				expectedColumnNamesMap.get(entry.getKey()), entry.getValue());
+				_dbInspector.normalizeName(entry.getValue()),
+				actualColumnNamesMap.get(expectedOldColumnName));
 		}
 	}
 
@@ -149,6 +157,7 @@ public class LiveUpgradeSchemaDiffTest {
 
 	private static Connection _connection;
 	private static DB _db;
+	private static DBInspector _dbInspector;
 
 	private LiveUpgradeSchemaDiff _liveUpgradeSchemaDiff;
 

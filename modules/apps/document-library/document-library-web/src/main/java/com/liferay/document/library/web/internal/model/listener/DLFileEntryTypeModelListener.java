@@ -49,13 +49,9 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Jürgen Kappler
  */
-@Component(
-	enabled = false,
-	service = {ModelListener.class, PortalInstanceLifecycleListener.class}
-)
+@Component(enabled = false, service = ModelListener.class)
 public class DLFileEntryTypeModelListener
-	extends BaseModelListener<DLFileEntryType>
-	implements PortalInstanceLifecycleListener {
+	extends BaseModelListener<DLFileEntryType> {
 
 	@Override
 	public void onAfterCreate(DLFileEntryType dlFileEntryType)
@@ -92,20 +88,13 @@ public class DLFileEntryTypeModelListener
 		}
 	}
 
-	@Override
-	public void portalInstanceRegistered(Company company) {
-		_registerCompanyDLFileEntryTypes(company);
-		_registerDefaultDLFileEntryType();
-	}
-
-	@Override
-	public void portalInstanceUnregistered(Company company) {
-		_unregisterCompanyDLFileEntryTypes(company.getCompanyId());
-	}
-
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
+
+		_serviceRegistration = bundleContext.registerService(
+			PortalInstanceLifecycleListener.class,
+			new DLFileEntryTypePortalInstanceLifecycleListener(), null);
 	}
 
 	@Deactivate
@@ -114,6 +103,8 @@ public class DLFileEntryTypeModelListener
 
 		_companyLocalService.forEachCompanyId(
 			companyId -> _unregisterCompanyDLFileEntryTypes(companyId));
+
+		_serviceRegistration.unregister();
 	}
 
 	private void _registerCompanyDLFileEntryTypes(Company company) {
@@ -198,8 +189,26 @@ public class DLFileEntryTypeModelListener
 	@Reference
 	private GroupLocalService _groupLocalService;
 
+	private ServiceRegistration<PortalInstanceLifecycleListener>
+		_serviceRegistration;
 	private final Map<Long, Map<Long, ServiceRegistration<?>>>
 		_serviceRegistrations = Collections.synchronizedMap(
 			new LinkedHashMap<>());
+
+	private class DLFileEntryTypePortalInstanceLifecycleListener
+		implements PortalInstanceLifecycleListener {
+
+		@Override
+		public void portalInstanceRegistered(Company company) {
+			_registerCompanyDLFileEntryTypes(company);
+			_registerDefaultDLFileEntryType();
+		}
+
+		@Override
+		public void portalInstanceUnregistered(Company company) {
+			_unregisterCompanyDLFileEntryTypes(company.getCompanyId());
+		}
+
+	}
 
 }

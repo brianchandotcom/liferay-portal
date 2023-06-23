@@ -22,7 +22,7 @@ import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
 import com.liferay.commerce.product.exception.NoSuchCPDisplayLayoutException;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CommerceChannel;
-import com.liferay.commerce.product.service.CPDisplayLayoutLocalService;
+import com.liferay.commerce.product.service.CPDisplayLayoutService;
 import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -35,12 +35,10 @@ import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsFactory;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -125,7 +123,7 @@ public class EditCPDefinitionCPDisplayLayoutMVCActionCommand
 		}
 
 		for (long deleteCPDisplayLayoutId : deleteCPDisplayLayoutIds) {
-			_cpDisplayLayoutLocalService.deleteCPDisplayLayout(
+			_cpDisplayLayoutService.deleteCPDisplayLayout(
 				deleteCPDisplayLayoutId);
 		}
 	}
@@ -166,24 +164,20 @@ public class EditCPDefinitionCPDisplayLayoutMVCActionCommand
 		String layoutUuid = ParamUtil.getString(actionRequest, "layoutUuid");
 
 		if (cpDisplayLayoutId > 0) {
-			_cpDisplayLayoutLocalService.updateCPDisplayLayout(
+			_cpDisplayLayoutService.updateCPDisplayLayout(
 				cpDisplayLayoutId, classPK, layoutPageTemplateEntryUuid,
 				layoutUuid);
 		}
 		else {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
-
 			long commerceChannelId = ParamUtil.getLong(
 				actionRequest, "commerceChannelId");
 
 			CommerceChannel commerceChannel =
 				_commerceChannelService.getCommerceChannel(commerceChannelId);
 
-			_cpDisplayLayoutLocalService.addCPDisplayLayout(
-				themeDisplay.getUserId(), commerceChannel.getSiteGroupId(),
-				CPDefinition.class, classPK, layoutPageTemplateEntryUuid,
-				layoutUuid);
+			_cpDisplayLayoutService.addCPDisplayLayout(
+				commerceChannel.getSiteGroupId(), CPDefinition.class, classPK,
+				layoutPageTemplateEntryUuid, layoutUuid);
 		}
 	}
 
@@ -194,7 +188,7 @@ public class EditCPDefinitionCPDisplayLayoutMVCActionCommand
 	private CommerceChannelService _commerceChannelService;
 
 	@Reference
-	private CPDisplayLayoutLocalService _cpDisplayLayoutLocalService;
+	private CPDisplayLayoutService _cpDisplayLayoutService;
 
 	@Reference
 	private Portal _portal;

@@ -16,7 +16,6 @@ package com.liferay.adaptive.media.image.internal.storage;
 
 import com.liferay.adaptive.media.exception.AMRuntimeException;
 import com.liferay.document.library.kernel.store.Store;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.repository.model.FileVersion;

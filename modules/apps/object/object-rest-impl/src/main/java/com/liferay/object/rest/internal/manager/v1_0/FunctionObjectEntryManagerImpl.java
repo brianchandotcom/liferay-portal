@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
@@ -103,14 +104,16 @@ public class FunctionObjectEntryManagerImpl
 			ActionKeys.DELETE, objectDefinition, scopeKey,
 			dtoConverterContext.getUser());
 
+		String resourcePath = StringBundler.concat(
+			_functionObjectEntryManagerConfiguration.resourcePath(),
+			StringPool.SLASH,
+			HttpComponentsUtil.encodePath(
+				objectDefinition.getExternalReferenceCode()),
+			StringPool.SLASH, externalReferenceCode);
+
 		_launch(
-			Http.Method.DELETE, _toJSONObject(dtoConverterContext, scopeKey),
-			StringBundler.concat(
-				_functionObjectEntryManagerConfiguration.resourcePath(),
-				StringPool.SLASH,
-				HttpComponentsUtil.encodePath(
-					objectDefinition.getExternalReferenceCode()),
-				StringPool.SLASH, externalReferenceCode),
+			Http.Method.DELETE, null,
+			_appendBaseParameters(dtoConverterContext, resourcePath, scopeKey),
 			dtoConverterContext.getUserId());
 	}
 
@@ -126,27 +129,21 @@ public class FunctionObjectEntryManagerImpl
 			ActionKeys.VIEW, objectDefinition, scopeKey,
 			dtoConverterContext.getUser());
 
+		String resourcePath = StringBundler.concat(
+			_functionObjectEntryManagerConfiguration.resourcePath(),
+			StringPool.SLASH,
+			HttpComponentsUtil.encodePath(
+				objectDefinition.getExternalReferenceCode()));
+
+		resourcePath = _appendBaseParameters(
+			dtoConverterContext, resourcePath, scopeKey);
+
+		resourcePath = _appendCollectionParameters(
+			filterString, pagination, resourcePath, search, sorts);
+
 		return _toObjectEntries(
 			_launch(
-				Http.Method.GET,
-				_toJSONObject(
-					dtoConverterContext, scopeKey
-				).put(
-					"aggregation", aggregation
-				).put(
-					"filter", filterString
-				).put(
-					"pagination", pagination
-				).put(
-					"search", search
-				).put(
-					"sorts", sorts
-				),
-				StringBundler.concat(
-					_functionObjectEntryManagerConfiguration.resourcePath(),
-					StringPool.SLASH,
-					HttpComponentsUtil.encodePath(
-						objectDefinition.getExternalReferenceCode())),
+				Http.Method.GET, null, resourcePath,
 				dtoConverterContext.getUserId()),
 			objectDefinition, pagination, scopeKey,
 			dtoConverterContext.getUser());
@@ -167,15 +164,18 @@ public class FunctionObjectEntryManagerImpl
 			return null;
 		}
 
+		String resourcePath = StringBundler.concat(
+			_functionObjectEntryManagerConfiguration.resourcePath(),
+			StringPool.SLASH,
+			HttpComponentsUtil.encodePath(
+				objectDefinition.getExternalReferenceCode()),
+			StringPool.SLASH, externalReferenceCode);
+
 		return _toObjectEntry(
 			_launch(
-				Http.Method.GET, _toJSONObject(dtoConverterContext, scopeKey),
-				StringBundler.concat(
-					_functionObjectEntryManagerConfiguration.resourcePath(),
-					StringPool.SLASH,
-					HttpComponentsUtil.encodePath(
-						objectDefinition.getExternalReferenceCode()),
-					StringPool.SLASH, externalReferenceCode),
+				Http.Method.GET, null,
+				_appendBaseParameters(
+					dtoConverterContext, resourcePath, scopeKey),
 				dtoConverterContext.getUserId()),
 			objectDefinition, scopeKey, dtoConverterContext.getUser());
 	}
@@ -237,6 +237,73 @@ public class FunctionObjectEntryManagerImpl
 				FunctionObjectEntryManagerConfiguration.class, properties);
 		_storageLabel = GetterUtil.getString(properties.get("name"));
 		_storageType = GetterUtil.getString(properties.get("storage.type"));
+	}
+
+	private String _appendBaseParameters(
+		DTOConverterContext dtoConverterContext, String resourcePath,
+		String scopeKey) {
+
+		resourcePath = HttpComponentsUtil.addParameter(
+			resourcePath, "companyId", _companyId);
+		resourcePath = HttpComponentsUtil.addParameter(
+			resourcePath, "languageId",
+			LocaleUtil.toLanguageId(dtoConverterContext.getLocale()));
+		resourcePath = HttpComponentsUtil.addParameter(
+			resourcePath, "scopeKey", scopeKey);
+		resourcePath = HttpComponentsUtil.addParameter(
+			resourcePath, "userId", dtoConverterContext.getUserId());
+
+		return resourcePath;
+	}
+
+	private String _appendCollectionParameters(
+		String filterString, Pagination pagination, String resourcePath,
+		String search, Sort[] sorts) {
+
+		if (Validator.isNotNull(filterString)) {
+			resourcePath = HttpComponentsUtil.addParameter(
+				resourcePath, "filter", filterString);
+		}
+
+		if (pagination != null) {
+			resourcePath = HttpComponentsUtil.addParameter(
+				resourcePath, "page", pagination.getPage());
+			resourcePath = HttpComponentsUtil.addParameter(
+				resourcePath, "pageSize", pagination.getPageSize());
+		}
+
+		if (search != null) {
+			resourcePath = HttpComponentsUtil.addParameter(
+				resourcePath, "search", search);
+		}
+
+		if (ArrayUtil.isNotEmpty(sorts)) {
+			StringBundler sb = new StringBundler(sorts.length * 3);
+
+			for (int i = 0; i < sorts.length; i++) {
+				Sort sort = sorts[i];
+
+				sb.append(sort.getFieldName());
+
+				sb.append(StringPool.COLON);
+
+				if (sort.isReverse()) {
+					sb.append("desc");
+				}
+				else {
+					sb.append("asc");
+				}
+
+				if (i != (sorts.length - 1)) {
+					sb.append(StringPool.COMMA);
+				}
+			}
+
+			resourcePath = HttpComponentsUtil.addParameter(
+				resourcePath, "sort", sb.toString());
+		}
+
+		return resourcePath;
 	}
 
 	private byte[] _launch(

@@ -180,13 +180,23 @@ public class SegmentsSimulationDisplayContext {
 			return _segmentsEntriesJSONArray;
 		}
 
-		_segmentsEntriesJSONArray = JSONUtil.toJSONArray(
-			getSegmentsEntries(),
-			segmentsEntry -> JSONUtil.put(
-				"id", segmentsEntry.getSegmentsEntryId()
+		_segmentsEntriesJSONArray = JSONUtil.put(
+			JSONUtil.put(
+				"id", SegmentsEntryConstants.ID_DEFAULT
 			).put(
-				"name", segmentsEntry.getName(_themeDisplay.getLocale())
+				"name",
+				SegmentsEntryConstants.getDefaultSegmentsEntryName(
+					_themeDisplay.getLocale())
 			));
+
+		for (SegmentsEntry segmentsEntry : getSegmentsEntries()) {
+			_segmentsEntriesJSONArray.put(
+				JSONUtil.put(
+					"id", segmentsEntry.getSegmentsEntryId()
+				).put(
+					"name", segmentsEntry.getName(_themeDisplay.getLocale())
+				));
+		}
 
 		return _segmentsEntriesJSONArray;
 	}

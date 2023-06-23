@@ -33,7 +33,7 @@ function SegmentSelector({
 
 	return (
 		<>
-			{!segmentsEntries.length ? (
+			{segmentsEntries.length < 2 ? (
 				<p>{Liferay.Language.get('no-segments-have-been-added-yet')}</p>
 			) : (
 				<div className="form-group">

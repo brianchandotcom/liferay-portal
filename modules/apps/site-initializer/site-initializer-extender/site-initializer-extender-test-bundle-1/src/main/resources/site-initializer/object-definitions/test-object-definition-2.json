@@ -1,4 +1,6 @@
 {
+	"accountEntryRestricted": false,
+	"externalReferenceCode": "TESTOBJECTDEFINITION2",
 	"label": {
 		"en_US": "Test Object Definition 2"
 	},

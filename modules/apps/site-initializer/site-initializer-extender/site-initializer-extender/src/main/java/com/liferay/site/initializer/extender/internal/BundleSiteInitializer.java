@@ -97,11 +97,13 @@ import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectField;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectLayout;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectRelationship;
+import com.liferay.object.admin.rest.dto.v1_0.ObjectView;
 import com.liferay.object.admin.rest.dto.v1_0.util.ObjectActionUtil;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectFieldResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectLayoutResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectRelationshipResource;
+import com.liferay.object.admin.rest.resource.v1_0.ObjectViewResource;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
@@ -287,6 +289,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		ObjectFieldLocalService objectFieldLocalService,
 		ObjectFieldResource.Factory objectFieldResourceFactory,
 		ObjectLayoutResource.Factory objectLayoutResourceFactory,
+		ObjectViewResource.Factory objectViewResourceFactory,
 		ObjectRelationshipLocalService objectRelationshipLocalService,
 		ObjectRelationshipResource.Factory objectRelationshipResourceFactory,
 		OrganizationLocalService organizationLocalService,
@@ -369,6 +372,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_objectFieldLocalService = objectFieldLocalService;
 		_objectFieldResourceFactory = objectFieldResourceFactory;
 		_objectLayoutResourceFactory = objectLayoutResourceFactory;
+		_objectViewResourceFactory = objectViewResourceFactory;
 		_objectRelationshipLocalService = objectRelationshipLocalService;
 		_objectRelationshipResourceFactory = objectRelationshipResourceFactory;
 		_organizationLocalService = organizationLocalService;
@@ -557,6 +561,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 					siteNavigationMenuItemSettingsBuilder));
 			
 			_invoke(() -> _addOrUpdateObjectLayouts(serviceContext));
+			_invoke(() -> _addOrUpdateObjectViews(serviceContext));
 
 			_invoke(
 				() -> _addOrUpdateNotificationTemplates(
@@ -3198,6 +3203,43 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
+	private void _addOrUpdateObjectViews(ServiceContext serviceContext)
+		throws Exception {
+
+		Set<String> resourcePaths = _servletContext.getResourcePaths(
+			"/site-initializer/object-views");
+
+		if (SetUtil.isEmpty(resourcePaths)) {
+			return;
+		}
+
+		ObjectViewResource.Builder objectViewResourceBuilder =
+			_objectViewResourceFactory.create();
+
+		ObjectViewResource objectViewResource = objectViewResourceBuilder.user(
+			serviceContext.fetchUser()
+		).build();
+
+		for (String resourcePath : resourcePaths) {
+			String json = SiteInitializerUtil.read(
+				resourcePath, _servletContext);
+
+			ObjectView objectView = ObjectView.toDTO(json);
+
+			if (objectView == null) {
+				_log.error(
+					"Unable to transform object view from JSON: " + json);
+
+				continue;
+			}
+
+			objectViewResource.
+				putObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectViewByExternalReferenceCodeObjectViewExternalReferenceCode(
+					objectView.getObjectDefinitionExternalReferenceCode(),
+					objectView.getExternalReferenceCode(), objectView);
+		}
+	}
+
 	private void _addOrUpdateOrganization(
 			JSONObject jsonObject, Organization parentOrganization,
 			ServiceContext serviceContext)
@@ -5216,6 +5258,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_objectRelationshipLocalService;
 	private final ObjectRelationshipResource.Factory
 		_objectRelationshipResourceFactory;
+	private final ObjectViewResource.Factory _objectViewResourceFactory;
 	private final OrganizationLocalService _organizationLocalService;
 	private final OrganizationResource.Factory _organizationResourceFactory;
 	private final PLOEntryLocalService _ploEntryLocalService;

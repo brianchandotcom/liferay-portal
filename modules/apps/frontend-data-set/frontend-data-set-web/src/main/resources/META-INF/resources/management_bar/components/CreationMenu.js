@@ -29,74 +29,34 @@ function CreationMenu({inEmptyState, primaryItems}) {
 
 	const [active, setActive] = useState(false);
 
-	const labelNew = Liferay.Language.get('new');
-	const buttonLabel = primaryItems[0].label ?? labelNew;
+	const CreationMenuButton = ({label}) => {
+		const buttonLabel = !label && primaryItems[0].label;
 
-	return (
-		primaryItems?.length > 0 && (
-			<ul
-				className={classNames('navbar-nav', {
-					'd-inline-flex': inEmptyState,
-				})}
+		return label ? (
+			<ClayDropDown
+				active={active}
+				onActiveChange={setActive}
+				trigger={
+					<ClayButton
+						aria-label={!inEmptyState && label}
+						className={classNames({
+							'nav-btn nav-btn-monospaced': !inEmptyState,
+						})}
+						displayType={inEmptyState && 'secondary'}
+						title={!inEmptyState && label}
+					>
+						{inEmptyState ? label : <ClayIcon symbol="plus" />}
+					</ClayButton>
+				}
 			>
-				<li className="nav-item">
-					{primaryItems.length > 1 ? (
-						<ClayDropDown
-							active={active}
-							onActiveChange={setActive}
-							trigger={
-								<ClayButton
-									aria-label={!inEmptyState && labelNew}
-									className={classNames({
-										'nav-btn nav-btn-monospaced': !inEmptyState,
-									})}
-									displayType={inEmptyState && 'secondary'}
-									title={!inEmptyState && labelNew}
-								>
-									{inEmptyState ? (
-										labelNew
-									) : (
-										<ClayIcon symbol="plus" />
-									)}
-								</ClayButton>
-							}
-						>
-							<ClayDropDown.ItemList>
-								{primaryItems.map((item, i) => (
-									<ClayDropDown.Item
-										key={i}
-										onClick={(event) => {
-											event.preventDefault();
+				<ClayDropDown.ItemList>
+					{primaryItems.map((item, i) => (
+						<ClayDropDown.Item
+							key={i}
+							onClick={(event) => {
+								event.preventDefault();
 
-											setActive(false);
-
-											item.onClick?.({
-												loadData,
-											});
-
-											if (item.href || item.target) {
-												triggerAction(
-													item,
-													frontendDataSetContext
-												);
-											}
-										}}
-									>
-										{item.label}
-									</ClayDropDown.Item>
-								))}
-							</ClayDropDown.ItemList>
-						</ClayDropDown>
-					) : (
-						<ClayButton
-							aria-label={!inEmptyState && buttonLabel}
-							className={classNames({
-								'nav-btn nav-btn-monospaced': !inEmptyState,
-							})}
-							data-tooltip-align="top"
-							displayType={inEmptyState && 'secondary'}
-							onClick={() => {
-								const item = primaryItems[0];
+								setActive(false);
 
 								item.onClick?.({
 									loadData,
@@ -106,15 +66,52 @@ function CreationMenu({inEmptyState, primaryItems}) {
 									triggerAction(item, frontendDataSetContext);
 								}
 							}}
-							title={!inEmptyState && buttonLabel}
 						>
-							{inEmptyState ? (
-								buttonLabel
-							) : (
-								<ClayIcon symbol="plus" />
-							)}
-						</ClayButton>
-					)}
+							{item.label}
+						</ClayDropDown.Item>
+					))}
+				</ClayDropDown.ItemList>
+			</ClayDropDown>
+		) : (
+			<ClayButton
+				aria-label={!inEmptyState && buttonLabel}
+				className={classNames({
+					'nav-btn nav-btn-monospaced': !inEmptyState,
+				})}
+				data-tooltip-align="top"
+				displayType={inEmptyState && 'secondary'}
+				onClick={() => {
+					const item = primaryItems[0];
+
+					item.onClick?.({
+						loadData,
+					});
+
+					if (item.href || item.target) {
+						triggerAction(item, frontendDataSetContext);
+					}
+				}}
+				title={!inEmptyState && buttonLabel}
+			>
+				{inEmptyState ? buttonLabel : <ClayIcon symbol="plus" />}
+			</ClayButton>
+		);
+	};
+
+	return (
+		primaryItems?.length > 0 && (
+			<ul
+				className={classNames('navbar-nav', {
+					'd-inline-flex': inEmptyState,
+				})}
+			>
+				<li className="nav-item">
+					<CreationMenuButton
+						label={
+							primaryItems.length > 1 &&
+							Liferay.Language.get('new')
+						}
+					/>
 				</li>
 			</ul>
 		)

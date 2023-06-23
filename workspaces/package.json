@@ -1,7 +1,7 @@
 {
 	"dependencies": {
 		"@liferay/eslint-plugin": "1.4.0",
-		"@liferay/npm-scripts": "47.18.1"
+		"@liferay/npm-scripts": "48.1.0"
 	},
 	"private": true,
 	"scripts": {

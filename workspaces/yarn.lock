@@ -1383,10 +1383,10 @@
     source-map "^0.7.3"
     webpack "^5.11.1"
 
-"@liferay/npm-scripts@47.18.1":
-  version "47.18.1"
-  resolved "https://registry.yarnpkg.com/@liferay/npm-scripts/-/npm-scripts-47.18.1.tgz#b06c29d3a33c7839bb20c4ed1836948c80f99593"
-  integrity sha512-NBLW1Gu/fvJnVKYHAhua3Me0+Fj7c0zHxhfyA2qWRGwxje5Vbpo1BmLy0aO8KIweA3mYOL0zE3nbjW7kHGBB0Q==
+"@liferay/npm-scripts@48.1.0":
+  version "48.1.0"
+  resolved "https://registry.yarnpkg.com/@liferay/npm-scripts/-/npm-scripts-48.1.0.tgz#0c9066dddc5e81f2a9bf17684786d88b185f678f"
+  integrity sha512-AIVD7MAvM1ZT/AIpvLuKrpD6sDiRgNfrjwAg2b9fpDEXApNYPPpgtL57GGvwAqBXkKoiTPOGKJly8S+lolC8ww==
   dependencies:
     "@babel/cli" "^7.2.3"
     "@babel/core" "^7.8.3"

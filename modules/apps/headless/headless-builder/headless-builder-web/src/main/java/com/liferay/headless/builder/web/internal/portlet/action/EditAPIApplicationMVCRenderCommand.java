@@ -12,18 +12,15 @@
  * details.
  */
 
-package com.liferay.headless.builder.web.internal.portlet;
+package com.liferay.headless.builder.web.internal.portlet.action;
 
 import com.liferay.headless.builder.web.internal.constants.HeadlessBuilderPortletKeys;
 import com.liferay.headless.builder.web.internal.display.context.HeadlessBuilderWebDisplayContext;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactory;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.io.IOException;
-
-import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -36,36 +33,17 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = {
-		"com.liferay.portlet.add-default-resource=true",
-		"com.liferay.portlet.display-category=category.hidden",
-		"com.liferay.portlet.display-category=category.sample",
-		"com.liferay.portlet.header-portlet-css=/css/main.css",
-		"com.liferay.portlet.instanceable=true",
-		"com.liferay.portlet.preferences-owned-by-group=true",
-		"com.liferay.portlet.preferences-unique-per-layout=false",
-		"com.liferay.portlet.private-request-attributes=false",
-		"com.liferay.portlet.private-session-attributes=false",
-		"com.liferay.portlet.render-weight=50",
-		"com.liferay.portlet.scopeable=false",
-		"com.liferay.portlet.use-default-template=true",
-		"javax.portlet.display-name=Headless Builder",
-		"javax.portlet.expiration-cache=0",
-		"javax.portlet.init-param.portlet-title-based-navigation=true",
-		"javax.portlet.init-param.template-path=/META-INF/resources/",
-		"javax.portlet.init-param.view-template=/view.jsp",
 		"javax.portlet.name=" + HeadlessBuilderPortletKeys.HEADLESS_BUILDER,
-		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.security-role-ref=power-user,user",
-		"javax.portlet.version=3.0"
+		"mvc.command.name=/headless_builder/edit_api_application"
 	},
-	service = Portlet.class
+	service = MVCRenderCommand.class
 )
-public class HeadlessBuilderPortlet extends MVCPortlet {
+public class EditAPIApplicationMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
-	public void render(
+	public String render(
 			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws IOException, PortletException {
+		throws PortletException {
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -73,7 +51,7 @@ public class HeadlessBuilderPortlet extends MVCPortlet {
 				_editorConfigurationFactory,
 				_portal.getHttpServletRequest(renderRequest)));
 
-		super.render(renderRequest, renderResponse);
+		return "/headless_builder/edit_api_application.jsp";
 	}
 
 	@Reference

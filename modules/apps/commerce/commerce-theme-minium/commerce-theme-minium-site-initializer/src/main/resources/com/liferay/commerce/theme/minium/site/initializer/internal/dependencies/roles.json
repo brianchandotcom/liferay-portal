@@ -180,6 +180,23 @@
 					"VIEW"
 				],
 				"resource": "com.liferay.commerce.product.model.CommerceCatalog"
+			},
+			{
+				"actionIds": [
+					"ACCESS_IN_CONTROL_PANEL",
+					"ADD_TO_PAGE",
+					"CONFIGURATION",
+					"PERMISSIONS",
+					"PREFERENCES",
+					"VIEW"
+				],
+				"resource": "com_liferay_asset_tags_admin_web_portlet_AssetTagsAdminPortlet"
+			},
+			{
+				"actionIds": [
+					"VIEW_SITE_ADMINISTRATION"
+				],
+				"resource": "com.liferay.portal.kernel.model.Group"
 			}
 		],
 		"name": "Category Manager",

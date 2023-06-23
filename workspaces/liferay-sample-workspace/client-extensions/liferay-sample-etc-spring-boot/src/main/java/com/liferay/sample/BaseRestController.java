@@ -14,6 +14,8 @@
 
 package com.liferay.sample;
 
+import java.util.Map;
+
 import org.apache.commons.logging.Log;
 
 import org.json.JSONObject;
@@ -33,6 +35,16 @@ public abstract class BaseRestController {
 			log.info("JWT Claims: " + jwt.getClaims());
 			log.info("JWT ID: " + jwt.getId());
 			log.info("JWT Subject: " + jwt.getSubject());
+		}
+	}
+
+	protected void log(Jwt jwt, Log log, Map<String, String> parameters) {
+		if (log.isInfoEnabled()) {
+			log.info("JWT Claims: " + jwt.getClaims());
+			log.info("JWT ID: " + jwt.getId());
+			log.info("JWT Subject: " + jwt.getSubject());
+
+			log.info("Parameters: " + parameters);
 		}
 	}
 

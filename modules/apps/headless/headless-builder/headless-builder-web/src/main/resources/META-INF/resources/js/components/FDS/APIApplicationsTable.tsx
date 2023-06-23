@@ -22,12 +22,14 @@ import {getAPIApplicationsFDSProps} from './fdsUtils/fdsProps';
 
 interface APIApplicationsTableProps {
 	apiURLPaths: APIURLPaths;
+	editURL: string;
 	portletId: string;
 	readOnly: boolean;
 }
 
 export default function APIApplicationsTable({
 	apiURLPaths,
+	editURL,
 	portletId,
 	readOnly,
 }: APIApplicationsTableProps) {
@@ -70,7 +72,11 @@ export default function APIApplicationsTable({
 
 	return (
 		<FrontendDataSet
-			{...getAPIApplicationsFDSProps(apiURLPaths.applications, portletId)}
+			{...getAPIApplicationsFDSProps(
+				apiURLPaths.applications,
+				editURL,
+				portletId
+			)}
 			creationMenu={{
 				primaryItems: readOnly ? [] : ([createAPIApplication] as any),
 			}}

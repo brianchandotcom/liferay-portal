@@ -16,11 +16,13 @@
 
 interface APIApplicationsTableProps {
 	apiURLPaths: APIURLPaths;
+	editURL: string;
 	portletId: string;
 	readOnly: boolean;
 }
 export default function APIApplicationsTable({
 	apiURLPaths,
+	editURL,
 	portletId,
 	readOnly,
 }: APIApplicationsTableProps): JSX.Element;

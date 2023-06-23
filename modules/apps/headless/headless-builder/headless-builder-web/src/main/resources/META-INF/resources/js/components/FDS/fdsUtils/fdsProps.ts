@@ -14,11 +14,13 @@
 
 import {IFrontendDataSetProps} from '@liferay/frontend-data-set-web';
 
+import {openEditURL} from '../../utils/urlUtil';
 import {getAPIApplicationsFDSFilters} from './fdsFilters';
 import {itemPathRenderer, itemStatusRenderer} from './fdsRenderers';
 
 export function getAPIApplicationsFDSProps(
 	apiApplicationsURLPath: string,
+	editURL: string,
 	portletId: string
 ): IFrontendDataSetProps {
 	return {
@@ -32,9 +34,13 @@ export function getAPIApplicationsFDSProps(
 		id: portletId,
 		itemsActions: [
 			{
-				icon: 'view',
-				id: 'editAPIApplication',
-				label: Liferay.Language.get('view'),
+				data: {
+					id: 'editAPIApplication',
+				},
+				icon: 'pencil',
+				label: Liferay.Language.get('edit'),
+				onClick: ({itemData}: FDSItem) =>
+					openEditURL({editURL, id: itemData.id, portletId}),
 			},
 			{
 				data: {
@@ -55,6 +61,7 @@ export function getAPIApplicationsFDSProps(
 		showManagementBar: true,
 		showPagination: true,
 		showSearch: true,
+		sidePanelId: 'none',
 		style: 'fluid',
 		views: [
 			{
@@ -64,6 +71,7 @@ export function getAPIApplicationsFDSProps(
 				schema: {
 					fields: [
 						{
+							actionId: 'editAPIApplication',
 							contentRenderer: 'actionLink',
 							fieldName: 'title',
 							label: Liferay.Language.get('title'),

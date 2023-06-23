@@ -25,19 +25,10 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.Base64;
-import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
-import java.net.HttpURLConnection;
-import java.net.URL;
-
-import java.nio.charset.StandardCharsets;
-
-import javax.ws.rs.core.HttpHeaders;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -69,53 +60,41 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 		APIApplication apiApplication2 = _addAPIApplication(
 			_API_APPLICATION_ERC_2);
 
-		HttpURLConnection httpURLConnection = _createHttpURLConnection(
-			apiApplication1.getBaseURL(), Http.Method.GET);
+		Assert.assertEquals(
+			404,
+			HTTPTestUtil.invokeHttpCode(
+				null, apiApplication1.getBaseURL(), Http.Method.GET));
 
-		httpURLConnection.connect();
-
-		Assert.assertEquals(404, httpURLConnection.getResponseCode());
-
-		httpURLConnection = _createHttpURLConnection(
-			apiApplication2.getBaseURL(), Http.Method.GET);
-
-		httpURLConnection.connect();
-
-		Assert.assertEquals(404, httpURLConnection.getResponseCode());
+		Assert.assertEquals(
+			404,
+			HTTPTestUtil.invokeHttpCode(
+				null, apiApplication2.getBaseURL(), Http.Method.GET));
 
 		APIApplicationPublisherUtil.publishApplications(
 			_apiApplicationPublisher, apiApplication1, apiApplication2);
 
-		httpURLConnection = _createHttpURLConnection(
-			apiApplication1.getBaseURL(), Http.Method.GET);
+		Assert.assertEquals(
+			200,
+			HTTPTestUtil.invokeHttpCode(
+				null, apiApplication1.getBaseURL(), Http.Method.GET));
 
-		httpURLConnection.connect();
-
-		Assert.assertEquals(200, httpURLConnection.getResponseCode());
-
-		httpURLConnection = _createHttpURLConnection(
-			apiApplication2.getBaseURL(), Http.Method.GET);
-
-		httpURLConnection.connect();
-
-		Assert.assertEquals(200, httpURLConnection.getResponseCode());
+		Assert.assertEquals(
+			200,
+			HTTPTestUtil.invokeHttpCode(
+				null, apiApplication2.getBaseURL(), Http.Method.GET));
 
 		APIApplicationPublisherUtil.unpublishApplications(
 			_apiApplicationPublisher, apiApplication1);
 
-		httpURLConnection = _createHttpURLConnection(
-			apiApplication1.getBaseURL(), Http.Method.GET);
+		Assert.assertEquals(
+			404,
+			HTTPTestUtil.invokeHttpCode(
+				null, apiApplication1.getBaseURL(), Http.Method.GET));
 
-		httpURLConnection.connect();
-
-		Assert.assertEquals(404, httpURLConnection.getResponseCode());
-
-		httpURLConnection = _createHttpURLConnection(
-			apiApplication2.getBaseURL(), Http.Method.GET);
-
-		httpURLConnection.connect();
-
-		Assert.assertEquals(200, httpURLConnection.getResponseCode());
+		Assert.assertEquals(
+			200,
+			HTTPTestUtil.invokeHttpCode(
+				null, apiApplication2.getBaseURL(), Http.Method.GET));
 	}
 
 	private APIApplication _addAPIApplication(String externalReferenceCode)
@@ -195,29 +174,6 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 		return _apiApplicationProvider.fetchAPIApplication(
 			baseURL, TestPropsValues.getCompanyId());
-	}
-
-	private HttpURLConnection _createHttpURLConnection(
-			String endpoint, Http.Method method)
-		throws Exception {
-
-		URL url = new URL("http://localhost:8080/o/" + endpoint);
-
-		HttpURLConnection httpURLConnection =
-			(HttpURLConnection)url.openConnection();
-
-		httpURLConnection.setRequestMethod(method.toString());
-		httpURLConnection.setRequestProperty(HttpHeaders.ACCEPT, "*/*");
-		httpURLConnection.setRequestProperty(
-			HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
-
-		String encodedUserNameAndPassword = Base64.encode(
-			"test@liferay.com:test".getBytes(StandardCharsets.UTF_8));
-
-		httpURLConnection.setRequestProperty(
-			"Authorization", "Basic " + encodedUserNameAndPassword);
-
-		return httpURLConnection;
 	}
 
 	private static final String _API_APPLICATION_ERC_1 =

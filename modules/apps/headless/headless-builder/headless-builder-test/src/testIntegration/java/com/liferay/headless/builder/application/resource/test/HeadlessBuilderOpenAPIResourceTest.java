@@ -54,8 +54,6 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.Base64;
-import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -65,16 +63,9 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.vulcan.openapi.contributor.OpenAPIContributor;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
-import java.net.HttpURLConnection;
-import java.net.URL;
-
-import java.nio.charset.StandardCharsets;
-
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-
-import javax.ws.rs.core.HttpHeaders;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -311,12 +302,11 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 	public void testGetOpenAPI() throws Exception {
 		APIApplication apiApplication = _addAPIApplication();
 
-		HttpURLConnection httpURLConnection = _createHttpURLConnection(
-			apiApplication.getBaseURL() + "/openapi.json", Http.Method.GET);
-
-		httpURLConnection.connect();
-
-		Assert.assertEquals(404, httpURLConnection.getResponseCode());
+		Assert.assertEquals(
+			404,
+			HTTPTestUtil.invokeHttpCode(
+				null, apiApplication.getBaseURL() + "/openapi.json",
+				Http.Method.GET));
 
 		APIApplicationPublisherUtil.publishApplications(
 			_apiApplicationPublisher, apiApplication);
@@ -527,29 +517,6 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 
 		return _apiApplicationProvider.fetchAPIApplication(
 			_API_BASE_URL, TestPropsValues.getCompanyId());
-	}
-
-	private HttpURLConnection _createHttpURLConnection(
-			String endpoint, Http.Method method)
-		throws Exception {
-
-		URL url = new URL("http://localhost:8080/o/" + endpoint);
-
-		HttpURLConnection httpURLConnection =
-			(HttpURLConnection)url.openConnection();
-
-		httpURLConnection.setRequestMethod(method.toString());
-		httpURLConnection.setRequestProperty(HttpHeaders.ACCEPT, "*/*");
-		httpURLConnection.setRequestProperty(
-			HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
-
-		String encodedUserNameAndPassword = Base64.encode(
-			"test@liferay.com:test".getBytes(StandardCharsets.UTF_8));
-
-		httpURLConnection.setRequestProperty(
-			"Authorization", "Basic " + encodedUserNameAndPassword);
-
-		return httpURLConnection;
 	}
 
 	private ObjectFieldSetting _createObjectFieldSetting(

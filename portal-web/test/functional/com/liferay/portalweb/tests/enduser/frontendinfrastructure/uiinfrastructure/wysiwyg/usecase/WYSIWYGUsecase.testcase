@@ -428,16 +428,6 @@ definition {
 		AssertElementPresent(locator1 = "//p[normalize-space(text())='sample text']");
 	}
 
-	@description = "Verify a styling button can be toggled on text"
-	@ignore = "Test Stub"
-	@priority = 5
-	test CanToggleTextStyling {
-		property portal.acceptance = "false";
-
-		// TODO LPS-133050 CanToggleContentStyling pending implementation
-
-	}
-
 	@description = "LRQA-67229. Verify styled content can be added from source view"
 	@priority = 4
 	@refactordone

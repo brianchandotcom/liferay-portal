@@ -188,29 +188,184 @@
 											},
 											{
 												"definition": {
-													"fragment": {
-														"key": "INPUTS-submit-button"
-													},
-													"fragmentConfig": {
-														"buttonSize": "nm",
-														"buttonType": "primary"
-													},
-													"fragmentFields": [
-														{
-															"id": "submit-button-text",
-															"value": {
-																"fragmentLink": {
-																}
-															}
-														}
-													],
 													"fragmentStyle": {
 														"marginBottom": "5",
-														"marginTop": "4"
+														"marginTop": "5",
+														"paddingBottom": "5"
 													},
-													"indexed": true
+													"indexed": true,
+													"layout": {
+														"marginBottom": 4,
+														"marginTop": 4,
+														"opacity": 100,
+														"paddingBottom": 4,
+														"widthType": "Fluid"
+													},
+													"name": "Button Container"
 												},
-												"type": "Fragment"
+												"pageElements": [
+													{
+														"definition": {
+															"fragmentStyle": {
+																"textAlign": "right"
+															},
+															"gutters": true,
+															"indexed": true,
+															"modulesPerRow": 2,
+															"numberOfColumns": 2,
+															"reverseOrder": false,
+															"rowViewports": [
+																{
+																	"id": "landscapeMobile",
+																	"rowViewportDefinition": {
+																		"modulesPerRow": 1
+																	}
+																},
+																{
+																	"id": "portraitMobile",
+																	"rowViewportDefinition": {
+																	}
+																},
+																{
+																	"id": "tablet",
+																	"rowViewportDefinition": {
+																	}
+																}
+															],
+															"verticalAlignment": "top"
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"columnViewports": [
+																		{
+																			"columnViewportDefinition": {
+																				"size": 12
+																			},
+																			"id": "landscapeMobile"
+																		},
+																		{
+																			"columnViewportDefinition": {
+																			},
+																			"id": "portraitMobile"
+																		},
+																		{
+																			"columnViewportDefinition": {
+																			},
+																			"id": "tablet"
+																		}
+																	],
+																	"size": 10
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "BASIC_COMPONENT-button"
+																			},
+																			"fragmentConfig": {
+																				"buttonSize": "nm",
+																				"buttonType": "secondary",
+																				"type": "link"
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "link",
+																					"value": {
+																						"fragmentLink": {
+																							"value": {
+																								"href": {
+																									"mapping": {
+																										"itemReference": {
+																											"className": "com.liferay.portal.kernel.model.Layout",
+																											"fields": [
+																												{
+																													"fieldName": "friendlyURL",
+																													"fieldValue": "/request"
+																												},
+																												{
+																													"fieldName": "privatePage",
+																													"fieldValue": "false"
+																												},
+																												{
+																													"fieldName": "siteKey",
+																													"fieldValue": "[$GROUP_KEY$]"
+																												}
+																											]
+																										}
+																									}
+																								}
+																							}
+																						},
+																						"text": {
+																							"value_i18n": {
+																								"en_US": "Cancel"
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"indexed": true,
+																			"name": "Cancel Button"
+																		},
+																		"type": "Fragment"
+																	}
+																],
+																"type": "Column"
+															},
+															{
+																"definition": {
+																	"columnViewports": [
+																		{
+																			"columnViewportDefinition": {
+																				"size": 12
+																			},
+																			"id": "landscapeMobile"
+																		},
+																		{
+																			"columnViewportDefinition": {
+																			},
+																			"id": "portraitMobile"
+																		},
+																		{
+																			"columnViewportDefinition": {
+																			},
+																			"id": "tablet"
+																		}
+																	],
+																	"size": 2
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "INPUTS-submit-button"
+																			},
+																			"fragmentConfig": {
+																				"buttonSize": "nm",
+																				"buttonType": "primary"
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "submit-button-text",
+																					"value": {
+																						"fragmentLink": {
+																						}
+																					}
+																				}
+																			],
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	}
+																],
+																"type": "Column"
+															}
+														],
+														"type": "Row"
+													}
+												],
+												"type": "Section"
 											}
 										],
 										"type": "Form"

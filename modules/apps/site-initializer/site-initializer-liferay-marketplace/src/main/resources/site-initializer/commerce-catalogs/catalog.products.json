@@ -1,0 +1,15 @@
+[
+	{
+		"categories": [
+			"App"
+		],
+		"description": "Description of the free product",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "TESTFREEPRODUCT",
+		"name": "Test Free Product",
+		"price": 0,
+		"specificationOptions": [
+		]
+	}
+]

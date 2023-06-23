@@ -1,0 +1,24 @@
+{
+  "defaultObjectView": true,
+  "externalReferenceCode": "TESTOBJECTVIEW3",
+  "name": {
+    "en_US": "Test Object View 3"
+  },
+  "objectDefinitionExternalReferenceCode": "TESTOBJECTDEFINITION3",
+  "objectViewColumns": [
+    {
+      "label": {
+        "en_US": "Field 1"
+      },
+      "objectFieldName": "field1",
+      "priority": 0
+    }
+  ],
+  "objectViewSortColumns": [
+    {
+      "objectFieldName": "field1",
+      "priority": 0,
+      "sortOrder": "asc"
+    }
+  ]
+}

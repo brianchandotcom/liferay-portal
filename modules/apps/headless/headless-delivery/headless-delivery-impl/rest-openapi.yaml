@@ -5088,7 +5088,6 @@ components:
                         A list of related contents to this structured content.
                     items:
                         $ref: "#/components/schemas/RelatedContent"
-                    readOnly: true
                     type: array
                 renderedContents:
                     description:

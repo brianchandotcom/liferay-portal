@@ -253,6 +253,11 @@ public class SplitCommerceOrderByCatalogObjectActionExecutorImpl
 						commerceChannel.getGroupId());
 				}
 
+				supplierCommerceOrder.setManuallyAdjusted(true);
+				supplierCommerceOrder.setShippingAmount(BigDecimal.ZERO);
+				supplierCommerceOrder.setShippingDiscountAmount(
+					BigDecimal.ZERO);
+
 				BigDecimal subtotal = BigDecimal.ZERO;
 				BigDecimal taxAmount = BigDecimal.ZERO;
 
@@ -271,6 +276,7 @@ public class SplitCommerceOrderByCatalogObjectActionExecutorImpl
 							commerceChannel.getGroupId());
 					}
 
+					newCommerceOrderItem.setBookedQuantityId(0);
 					newCommerceOrderItem.setCommerceOrderId(newCommerceOrderId);
 					newCommerceOrderItem.setCustomerCommerceOrderItemId(
 						commerceOrderItem.getCommerceOrderItemId());
@@ -278,7 +284,6 @@ public class SplitCommerceOrderByCatalogObjectActionExecutorImpl
 					newCommerceOrderItem.setDiscountManuallyAdjusted(true);
 					newCommerceOrderItem.setManuallyAdjusted(true);
 					newCommerceOrderItem.setPriceManuallyAdjusted(true);
-					newCommerceOrderItem.setBookedQuantityId(0);
 
 					_commerceOrderItemLocalService.addCommerceOrderItem(
 						newCommerceOrderItem);
@@ -297,12 +302,7 @@ public class SplitCommerceOrderByCatalogObjectActionExecutorImpl
 					taxAmount = taxAmount.add(tax);
 				}
 
-				supplierCommerceOrder.setManuallyAdjusted(true);
-				supplierCommerceOrder.setShippingAmount(BigDecimal.ZERO);
-				supplierCommerceOrder.setShippingDiscountAmount(
-					BigDecimal.ZERO);
 				supplierCommerceOrder.setSubtotal(subtotal);
-				supplierCommerceOrder.setTaxAmount(taxAmount);
 
 				BigDecimal newSubtotalDiscountAmount =
 					_calculateSubtotalDiscountAmount(
@@ -310,6 +310,8 @@ public class SplitCommerceOrderByCatalogObjectActionExecutorImpl
 
 				supplierCommerceOrder.setSubtotalDiscountAmount(
 					newSubtotalDiscountAmount);
+
+				supplierCommerceOrder.setTaxAmount(taxAmount);
 
 				BigDecimal supplierTotal = subtotal.add(taxAmount);
 
@@ -319,9 +321,6 @@ public class SplitCommerceOrderByCatalogObjectActionExecutorImpl
 
 				supplierCommerceOrder.setTotalDiscountAmount(
 					newTotalDiscountAmount);
-
-				supplierCommerceOrder.setShippingDiscountAmount(
-					BigDecimal.ZERO);
 
 				supplierTotal = supplierTotal.subtract(
 					newSubtotalDiscountAmount);

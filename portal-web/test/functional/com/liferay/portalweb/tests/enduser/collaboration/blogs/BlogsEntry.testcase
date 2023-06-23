@@ -518,6 +518,52 @@ definition {
 			entryTitle2 = "Blogs Entry2 Title");
 	}
 
+	@description = "LPS-186698 Confirm that the blog is created via API, check that the console, and the Title and Content fields are faulty."
+	@priority = 4
+	test CanAssertThatTheBlogContentViaAPI {
+		task ("Given go to http://localhost:8080/o/api and create a new blog post") {
+			var blogPostingId = BlogPostingAPI.getIdOfCreatedBlogPosting(
+				articleBody = "test",
+				headline = "test");
+		}
+
+		task ("And navigate to the DM admin and check the blog entry") {
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Blogs");
+
+			Click(
+				key_card = "test",
+				locator1 = "Card#CARD_TITLE_LINK");
+		}
+
+		task ("Blogs will display titles and content correctly") {
+			AssertElementPresent(
+				key_value = "test",
+				locator1 = "CommerceFrontStore#TEXTAREA_FIELD");
+
+			AssertElementPresent(
+				key_eventDescription = "test",
+				locator1 = "CalendarViewEventDetails#EVENT_DESCRIPTION");
+
+			Click(locator1 = "Button#PUBLISH");
+		}
+
+		task ("The blog content disappeared and the browser console reported an error") {
+			AssertConsoleTextNotPresent(value1 = "TypeError: propsTransformer is not a function");
+		}
+
+		task ("The options button for the blog should be available.") {
+			AssertElementPresent(locator1 = "WorkflowAllItems#KEBAB_DROPDOWN_DISABLED");
+		}
+
+		task ("The blog can be deleted from DM admin page.") {
+			Click(locator1 = "WorkflowAllItems#KEBAB_DROPDOWN_DISABLED");
+
+			ClickNoError(locator1 = "ObjectPortlet#DELETE_ENTRY_BUTTON");
+		}
+	}
+
 	@description = "This checks that a blog entry can be automatically saved as a draft."
 	@priority = 5
 	@refactordone

@@ -60,7 +60,7 @@ LayoutType selLayoutType = selLayout.getLayoutType();
 	<aui:input name="<%= PortletDataHandlerKeys.SELECTED_LAYOUTS %>" type="hidden" />
 
 	<c:if test="<%= group.isLayoutPrototype() || !(selLayoutType.isURLFriendliable() && !layoutsAdminDisplayContext.isDraft() && !selLayout.isSystem()) %>">
-		<aui:input name="friendlyURL" type="hidden" value="<%= (selLayout != null) ? HttpComponentsUtil.decodeURL(selLayout.getFriendlyURL()) : StringPool.BLANK %>" />
+		<aui:input name="friendlyURL" type="hidden" value="<%= HttpComponentsUtil.decodeURL(selLayout.getFriendlyURL()) %>" />
 	</c:if>
 
 	<%

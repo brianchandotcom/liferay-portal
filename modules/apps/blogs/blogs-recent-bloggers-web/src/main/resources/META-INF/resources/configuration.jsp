@@ -103,7 +103,8 @@ if (organizationId > 0) {
 							selectEventName: '<portlet:namespace />selectOrganization',
 							title:
 								'<liferay-ui:message arguments="organization" key="select-x" />',
-							url: '<%= request.getAttribute(RecentBloggersWebKeys.ORGANIZATION_ITEM_SELECTOR_URL) %>',
+							url:
+								'<%= request.getAttribute(RecentBloggersWebKeys.ORGANIZATION_ITEM_SELECTOR_URL) %>',
 						});
 					}
 				);

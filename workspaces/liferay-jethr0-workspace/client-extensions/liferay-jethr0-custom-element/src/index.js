@@ -23,18 +23,14 @@ const App = () => {
 		<div>
 			<h2>Build Queue</h2>
 
-			{Liferay.ThemeDisplay.isSignedIn() && (
-				<BuildQueue />
-			)}
+			{Liferay.ThemeDisplay.isSignedIn() && <BuildQueue />}
 		</div>
 	);
 };
 
 class WebComponent extends HTMLElement {
 	connectedCallback() {
-		createRoot(this).render(
-			<App />
-		);
+		createRoot(this).render(<App />);
 	}
 }
 

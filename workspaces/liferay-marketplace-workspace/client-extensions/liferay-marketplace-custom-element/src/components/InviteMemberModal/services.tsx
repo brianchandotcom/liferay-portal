@@ -180,37 +180,37 @@ export async function addAdditionalInfo(
 }
 
 export async function addAdminRegularRole(userID: number) {
-  let adminRegularRole: RoleBrief[] = [];
-  const responseGetRegularRoles = await fetch(
-    `/o/headless-admin-user/v1.0/roles`,
-    {
-      headers: {
-        accept: 'application/json',
-        'x-csrf-token': Liferay.authToken,
-      },
-    }
-  );
+	let adminRegularRole: RoleBrief[] = [];
+	const responseGetRegularRoles = await fetch(
+		`/o/headless-admin-user/v1.0/roles`,
+		{
+			headers: {
+				'accept': 'application/json',
+				'x-csrf-token': Liferay.authToken,
+			},
+		}
+	);
 
-  if (responseGetRegularRoles.ok) {
-    const regularRoles = await responseGetRegularRoles.json();
+	if (responseGetRegularRoles.ok) {
+		const regularRoles = await responseGetRegularRoles.json();
 
-    adminRegularRole = regularRoles.items.filter(
-      (role: RoleBrief) => role.name === 'Account Administrator (Regular)'
-    );
-  }
-  if (adminRegularRole.length >= 0) {
-    return fetch(
-      `/o/headless-admin-user/v1.0/roles/${adminRegularRole[0].id}/association/user-account/${userID}`,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          accept: 'application/json',
-          'x-csrf-token': Liferay.authToken,
-        },
-        method: 'POST',
-      }
-    );
-  }
+		adminRegularRole = regularRoles.items.filter(
+			(role: RoleBrief) => role.name === 'Account Administrator (Regular)'
+		);
+	}
+	if (adminRegularRole.length >= 0) {
+		return fetch(
+			`/o/headless-admin-user/v1.0/roles/${adminRegularRole[0].id}/association/user-account/${userID}`,
+			{
+				headers: {
+					'Content-Type': 'application/json',
+					'accept': 'application/json',
+					'x-csrf-token': Liferay.authToken,
+				},
+				method: 'POST',
+			}
+		);
+	}
 }
 
-export { getSiteURL };
+export {getSiteURL};

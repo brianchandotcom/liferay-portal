@@ -434,25 +434,25 @@ export function PurchasedAppsDashboardPage() {
 						)}
 					</DashboardTable>
 
-          {purchasedAppTable.items.length ? (
-            <ClayPaginationBarWithBasicItems
-              active={page}
-              activeDelta={purchasedAppTable.pageSize}
-              defaultActive={1}
-              ellipsisBuffer={3}
-              ellipsisProps={{
-                'aria-label': 'More',
-                "title": 'More',
-              }}
-              onActiveChange={setPage}
-              showDeltasDropDown={false}
-              totalItems={purchasedAppTable?.totalCount}
-            />
-          ) : (
-            <></>
-          )}
-        </DashboardPage>
-      )}
+					{purchasedAppTable.items.length ? (
+						<ClayPaginationBarWithBasicItems
+							active={page}
+							activeDelta={purchasedAppTable.pageSize}
+							defaultActive={1}
+							ellipsisBuffer={3}
+							ellipsisProps={{
+								'aria-label': 'More',
+								'title': 'More',
+							}}
+							onActiveChange={setPage}
+							showDeltasDropDown={false}
+							totalItems={purchasedAppTable?.totalCount}
+						/>
+					) : (
+						<></>
+					)}
+				</DashboardPage>
+			)}
 
 			{!loading && selectedNavigationItem === 'Solutions' && (
 				<DashboardPage

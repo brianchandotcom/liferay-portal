@@ -20,9 +20,10 @@ function BuildQueue() {
 	const [data, setData] = React.useState(null);
 
 	projects()
-	.then((projects) => {
-		setData(projects);
-	});
+		.then((projects) => {
+			setData(projects);
+		})
+		.catch(() => setData(null));
 
 	if (!data) {
 		return <div>Loading...</div>;
@@ -33,58 +34,75 @@ function BuildQueue() {
 			<table border="1">
 				<tr>
 					<th>ID</th>
+
 					<th>Name</th>
+
 					<th>Priority</th>
+
 					<th>State</th>
+
 					<th>Type</th>
+
 					<th>Running</th>
+
 					<th>Completed</th>
+
 					<th>Total</th>
 				</tr>
-				{
-					data.map(project => {
-						var runningBuilds = 0;
-						var completedBuilds = 0;
-						var totalBuilds = 0;
 
-						for (const build of project.builds) {
-							if (build.state.name == 'completed') {
-								completedBuilds++;
-							}
-							else {
-								runningBuilds++;
-							}
+				{data.map((project) => {
+					let runningBuilds = 0;
+					let completedBuilds = 0;
+					let totalBuilds = 0;
 
-							totalBuilds++;
+					for (const build of project.builds) {
+						if (build.state.name === 'completed') {
+							completedBuilds++;
+						}
+						else {
+							runningBuilds++;
 						}
 
-						return (
-							<tr>
-								<td>{project.id}</td>
-								<td>{project.name}</td>
-								<td>{project.priority}</td>
-								<td>{project.state.name}</td>
-								<td>{project.type.name}</td>
-								<td>{runningBuilds}</td>
-								<td>{completedBuilds}</td>
-								<td>{totalBuilds}</td>
-							</tr>
-						)}
-					)
-				}
+						totalBuilds++;
+					}
+
+					return (
+						<tr key={project.id}>
+							<td>{project.id}</td>
+
+							<td>{project.name}</td>
+
+							<td>{project.priority}</td>
+
+							<td>{project.state.name}</td>
+
+							<td>{project.type.name}</td>
+
+							<td>{runningBuilds}</td>
+
+							<td>{completedBuilds}</td>
+
+							<td>{totalBuilds}</td>
+						</tr>
+					);
+				})}
 			</table>
 		</div>
 	);
 }
 
 const projects = async () => {
-    const projects = [];
+	const projects = [];
 
-	await entities('projects', '((state eq \'opened\') or (state eq \'queued\') or (state eq \'running\'))')
-	.then(async (data) => {
+	await entities(
+		'projects',
+		"((state eq 'opened') or (state eq 'queued') or (state eq 'running'))"
+	).then(async (data) => {
 		for (const project of data.items) {
-			await entities('builds', 'r_projectToBuilds_c_projectId eq \'' + project.id + '\'')
-			.then((data) => {
+			await entities(
+				'builds',
+				"r_projectToBuilds_c_projectId eq '" + project.id + "'"
+			).then((data) => {
 				project.builds = data.items;
 			});
 

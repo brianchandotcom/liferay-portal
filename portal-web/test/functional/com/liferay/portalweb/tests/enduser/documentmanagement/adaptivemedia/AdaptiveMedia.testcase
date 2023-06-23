@@ -463,7 +463,7 @@ definition {
 
 		AdaptiveMedia.selectAdaptiveMediaImage(imageName = "High Resolution");
 
-		AdaptiveMedia.viewNumberOfAdaptedImages(numberOfAdaptedImages = "0/7");
+		AdaptiveMedia.viewNumberOfAdaptedImages(numberOfAdaptedImages = "0/8");
 
 		AdaptiveMedia.editImageResolution(
 			imageName = "High Resolution",
@@ -473,7 +473,7 @@ definition {
 
 		AdaptiveMedia.selectAdaptiveMediaImage(imageName = "High Resolution Edited");
 
-		AdaptiveMedia.viewNumberOfAdaptedImages(numberOfAdaptedImages = "0/7");
+		AdaptiveMedia.viewNumberOfAdaptedImages(numberOfAdaptedImages = "0/8");
 	}
 
 	@priority = 4

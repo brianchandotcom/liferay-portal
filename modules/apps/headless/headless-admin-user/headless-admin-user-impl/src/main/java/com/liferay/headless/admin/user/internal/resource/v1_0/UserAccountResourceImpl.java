@@ -16,6 +16,7 @@ package com.liferay.headless.admin.user.internal.resource.v1_0;
 
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryUserRel;
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.account.service.AccountEntryUserRelService;
 import com.liferay.announcements.kernel.service.AnnouncementsDeliveryLocalService;
@@ -150,6 +151,17 @@ public class UserAccountResourceImpl
 	}
 
 	@Override
+	public void deleteAccountUserAccount(Long accountId, Long userAccountId)
+		throws Exception {
+
+		User user = _userLocalService.getUserById(
+			contextCompany.getCompanyId(), userAccountId);
+
+		deleteAccountUserAccountByEmailAddress(
+			accountId, user.getEmailAddress());
+	}
+
+	@Override
 	public void deleteAccountUserAccountByEmailAddress(
 			Long accountId, String emailAddress)
 		throws Exception {
@@ -203,6 +215,35 @@ public class UserAccountResourceImpl
 		deleteUserAccount(
 			DTOConverterUtil.getModelPrimaryKey(
 				_userResourceDTOConverter, externalReferenceCode));
+	}
+
+	@Override
+	public UserAccount
+			getAccountByExternalReferenceCodeUserAccountByExternalReferenceCode(
+				String accountExternalReferenceCode,
+				String externalReferenceCode)
+		throws Exception {
+
+		AccountEntryUserRel accountEntryUserRel =
+			_accountEntryUserRelLocalService.fetchAccountEntryUserRel(
+				_accountResourceDTOConverter.getAccountEntryId(
+					accountExternalReferenceCode),
+				_userResourceDTOConverter.getUserId(externalReferenceCode));
+
+		return _toUserAccount(
+			_userService.getUserById(accountEntryUserRel.getAccountUserId()));
+	}
+
+	@Override
+	public UserAccount getAccountUserAccount(Long accountId, Long userAccountId)
+		throws Exception {
+
+		AccountEntryUserRel accountEntryUserRel =
+			_accountEntryUserRelLocalService.getAccountEntryUserRel(
+				accountId, userAccountId);
+
+		return _toUserAccount(
+			_userService.getUserById(accountEntryUserRel.getAccountUserId()));
 	}
 
 	@Override
@@ -1242,6 +1283,9 @@ public class UserAccountResourceImpl
 
 	private static final EntityModel _entityModel =
 		new UserAccountEntityModel();
+
+	@Reference
+	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Reference(
 		policy = ReferencePolicy.DYNAMIC,

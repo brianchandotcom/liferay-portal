@@ -104,7 +104,7 @@ public class APIApplicationProviderTest extends BaseTestCase {
 			Http.Method.PUT);
 
 		APIApplication apiApplication =
-			_apiApplicationProvider.getAPIApplication(
+			_apiApplicationProvider.fetchAPIApplication(
 				"test", TestPropsValues.getCompanyId());
 
 		Assert.assertEquals("test", apiApplication.getBaseURL());

@@ -525,7 +525,7 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 				_API_ENDPOINT_ERC),
 			Http.Method.PUT);
 
-		return _apiApplicationProvider.getAPIApplication(
+		return _apiApplicationProvider.fetchAPIApplication(
 			_API_BASE_URL, TestPropsValues.getCompanyId());
 	}
 

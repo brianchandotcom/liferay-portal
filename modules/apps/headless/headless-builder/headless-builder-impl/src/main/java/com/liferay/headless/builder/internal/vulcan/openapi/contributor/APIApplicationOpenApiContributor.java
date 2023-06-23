@@ -19,9 +19,6 @@ import com.liferay.headless.builder.application.provider.APIApplicationProvider;
 import com.liferay.object.rest.dto.v1_0.FileEntry;
 import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.NoSuchModelException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
@@ -67,7 +64,9 @@ import org.osgi.service.component.annotations.Reference;
 public class APIApplicationOpenApiContributor implements OpenAPIContributor {
 
 	@Override
-	public void contribute(OpenAPI openAPI, OpenAPIContext openAPIContext) {
+	public void contribute(OpenAPI openAPI, OpenAPIContext openAPIContext)
+		throws Exception {
+
 		if (openAPIContext == null) {
 			return;
 		}
@@ -143,7 +142,9 @@ public class APIApplicationOpenApiContributor implements OpenAPIContributor {
 		}
 	}
 
-	private APIApplication _fetchAPIApplication(OpenAPIContext openAPIContext) {
+	private APIApplication _fetchAPIApplication(OpenAPIContext openAPIContext)
+		throws Exception {
+
 		String path = openAPIContext.getPath();
 
 		if (path.startsWith("/o")) {
@@ -158,17 +159,8 @@ public class APIApplicationOpenApiContributor implements OpenAPIContributor {
 			path = path.substring(0, path.length() - 1);
 		}
 
-		try {
-			return _apiApplicationProvider.getAPIApplication(
-				path, CompanyThreadLocal.getCompanyId());
-		}
-		catch (Exception exception) {
-			if (!(exception instanceof NoSuchModelException)) {
-				_log.error(exception);
-			}
-
-			return null;
-		}
+		return _apiApplicationProvider.fetchAPIApplication(
+			path, CompanyThreadLocal.getCompanyId());
 	}
 
 	private String _formatPath(String path) {
@@ -375,9 +367,6 @@ public class APIApplicationOpenApiContributor implements OpenAPIContributor {
 
 		return schemas;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		APIApplicationOpenApiContributor.class);
 
 	@Reference
 	private APIApplicationProvider _apiApplicationProvider;

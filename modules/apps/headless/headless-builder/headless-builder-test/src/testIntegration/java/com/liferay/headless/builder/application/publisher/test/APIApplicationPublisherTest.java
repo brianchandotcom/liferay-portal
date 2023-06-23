@@ -182,7 +182,7 @@ public class APIApplicationPublisherTest extends BaseTestCase {
 				apiEndpointExternalReferenceCode),
 			Http.Method.PUT);
 
-		return _apiApplicationProvider.getAPIApplication(
+		return _apiApplicationProvider.fetchAPIApplication(
 			baseURL, TestPropsValues.getCompanyId());
 	}
 

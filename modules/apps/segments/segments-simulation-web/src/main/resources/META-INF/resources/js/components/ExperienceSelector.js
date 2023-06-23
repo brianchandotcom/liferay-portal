@@ -87,6 +87,10 @@ function ExperienceSelector({
 							{segmentExperiencesShortList.map(
 								(segmentsExperience) => (
 									<ClayDropDown.Item
+										active={
+											segmentsExperience.segmentsExperienceId ===
+											selectedSegmentsExperience.segmentsExperienceId
+										}
 										key={
 											segmentsExperience.segmentsExperienceId
 										}

@@ -71,6 +71,10 @@ function SegmentSelector({
 						<ClayDropDown.ItemList>
 							{segmentEntriesShortList.map((segmentEntry) => (
 								<ClayDropDown.Item
+									active={
+										segmentEntry.id ===
+										selectedSegmentEntry.id
+									}
 									key={segmentEntry.id}
 									onClick={() => {
 										setSegmentSelectorActive(false);

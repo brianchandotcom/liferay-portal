@@ -410,7 +410,23 @@ public class DLReferencesExportImportContentProcessor
 			}
 		}
 
+		long urlPort = 0;
+
+		if (colonPos > 0) {
+			urlPort = GetterUtil.getLong(
+				content.substring(beginPos - colonPos + 1, beginPos));
+		}
+
 		for (String hostName : hostNames) {
+			if (urlPort > 0) {
+				int serverPort = _portal.getPortalServerPort(
+					hostName.startsWith(Http.HTTPS_WITH_SLASH));
+
+				if (urlPort != serverPort) {
+					continue;
+				}
+			}
+
 			int curBeginPos = beginPos - hostName.length() - colonPos;
 
 			if (curBeginPos < 0) {

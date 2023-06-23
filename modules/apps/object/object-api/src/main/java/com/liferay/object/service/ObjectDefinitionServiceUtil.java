@@ -63,7 +63,7 @@ public class ObjectDefinitionServiceUtil {
 	}
 
 	public static ObjectDefinition addSystemObjectDefinition(
-			long userId, boolean enableComments,
+			String externalReferenceCode, long userId, boolean enableComments,
 			Map<java.util.Locale, String> labelMap, String name,
 			String panelAppOrder, String panelCategoryKey,
 			Map<java.util.Locale, String> pluralLabelMap, String scope,
@@ -71,8 +71,9 @@ public class ObjectDefinitionServiceUtil {
 		throws PortalException {
 
 		return getService().addSystemObjectDefinition(
-			userId, enableComments, labelMap, name, panelAppOrder,
-			panelCategoryKey, pluralLabelMap, scope, objectFields);
+			externalReferenceCode, userId, enableComments, labelMap, name,
+			panelAppOrder, panelCategoryKey, pluralLabelMap, scope,
+			objectFields);
 	}
 
 	public static ObjectDefinition deleteObjectDefinition(

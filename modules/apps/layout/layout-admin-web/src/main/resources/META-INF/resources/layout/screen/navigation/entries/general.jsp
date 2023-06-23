@@ -41,7 +41,7 @@ LayoutType selLayoutType = selLayout.getLayoutType();
 </portlet:actionURL>
 
 <liferay-frontend:edit-form
-	action='<%= HttpComponentsUtil.addParameter(editLayoutURL, "refererPlid", plid) %>'
+	action="<%= editLayoutURL %>"
 	cssClass="c-pt-0"
 	enctype="multipart/form-data"
 	method="post"

@@ -83,8 +83,6 @@ public class APIApplicationPublisherTest extends BaseTestCase {
 
 	@After
 	public void tearDown() throws Exception {
-		super.tearDown();
-
 		APIApplicationPublisherUtil.unpublishRemainingAPIApplications(
 			_apiApplicationPublisher);
 	}

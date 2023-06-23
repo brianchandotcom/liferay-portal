@@ -5,6 +5,7 @@
 	},
 	"private": true,
 	"scripts": {
+		"checkFormat": "liferay-npm-scripts lint && liferay-npm-scripts format:check",
 		"format": "liferay-npm-scripts lint:fix && liferay-npm-scripts format"
 	}
 }

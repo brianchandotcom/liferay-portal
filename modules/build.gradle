@@ -89,8 +89,16 @@ if (FileUtil.exists(rootProject, "private/yarn.lock")) {
 File workspacesYarnLockFile = new File(rootDir.parentFile, "workspaces/yarn.lock")
 
 if (workspacesYarnLockFile.exists()) {
+	task portalWorkspacesYarnCheckFormat(type: PackageRunTask)
 	task portalWorkspacesYarnFormat(type: PackageRunTask)
 	task portalWorkspacesYarnInstall(type: ExecutePackageManagerTask)
+
+	portalWorkspacesYarnCheckFormat {
+		dependsOn portalWorkspacesYarnInstall
+
+		scriptName = "checkFormat"
+		workingDir = new File(rootDir.parentFile, "workspaces")
+	}
 
 	portalWorkspacesYarnFormat {
 		dependsOn portalWorkspacesYarnInstall
@@ -104,6 +112,7 @@ if (workspacesYarnLockFile.exists()) {
 		workingDir = new File(rootDir.parentFile, "workspaces")
 	}
 
+	portalYarnCheckFormat.finalizedBy portalWorkspacesYarnCheckFormat
 	portalYarnFormat.finalizedBy portalWorkspacesYarnFormat
 }
 

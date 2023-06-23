@@ -3,6 +3,88 @@
 	"$schema": "http://json-schema.org/draft-07/schema#",
 	"additionalProperties": false,
 	"definitions": {
+		"ActionExecutionResult": {
+			"allOf": [
+				{
+					"if": {
+						"properties": {
+							"type": {
+								"const": "None"
+							}
+						}
+					},
+					"then": {
+						"properties": {
+							"value": {
+								"$ref": "#/definitions/NoneActionExecutionResult"
+							}
+						}
+					}
+				},
+				{
+					"if": {
+						"properties": {
+							"type": {
+								"const": "Notification"
+							}
+						}
+					},
+					"then": {
+						"properties": {
+							"value": {
+								"$ref": "#/definitions/NotificationActionExecutionResult"
+							}
+						}
+					}
+				},
+				{
+					"if": {
+						"properties": {
+							"type": {
+								"const": "Page"
+							}
+						}
+					},
+					"then": {
+						"properties": {
+							"value": {
+								"$ref": "#/definitions/SitePageActionExecutionResult"
+							}
+						}
+					}
+				},
+				{
+					"if": {
+						"properties": {
+							"type": {
+								"const": "URL"
+							}
+						}
+					},
+					"then": {
+						"properties": {
+							"value": {
+								"$ref": "#/definitions/URLActionExecutionResult"
+							}
+						}
+					}
+				}
+			],
+			"properties": {
+				"type": {
+					"enum": [
+						"None",
+						"Notification",
+						"Page",
+						"URL"
+					],
+					"title": "The type Schema",
+					"type": "string"
+				}
+			},
+			"title": "The FragmentFieldAction Schema",
+			"type": "object"
+		},
 		"ClassFieldReference": {
 			"additionalProperties": false,
 			"properties": {
@@ -235,6 +317,9 @@
 		"FragmentField": {
 			"anyOf": [
 				{
+					"$ref": "#/definitions/FragmentFieldAction"
+				},
+				{
 					"$ref": "#/definitions/FragmentFieldBackgroundImage"
 				},
 				{
@@ -248,6 +333,45 @@
 				}
 			],
 			"title": "The FragmentField Schema",
+			"type": "object"
+		},
+		"FragmentFieldAction": {
+			"additionalProperties": false,
+			"properties": {
+				"action": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/FragmentMappedValue"
+						}
+					]
+				},
+				"onError": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/ActionExecutionResult"
+						}
+					]
+				},
+				"onSuccess": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/ActionExecutionResult"
+						}
+					]
+				},
+				"text": {
+					"oneOf": [
+						{
+							"$ref": "#/definitions/FragmentInlineValue"
+						},
+						{
+							"$ref": "#/definitions/FragmentMappedValue"
+						}
+					],
+					"type": "object"
+				}
+			},
+			"title": "The FragmentFieldAction Schema",
 			"type": "object"
 		},
 		"FragmentFieldBackgroundImage": {
@@ -841,6 +965,31 @@
 				"id"
 			],
 			"title": "The FragmentViewport Schema",
+			"type": "object"
+		},
+		"NoneActionExecutionResult": {
+			"additionalProperties": false,
+			"properties": {
+				"reload": {
+					"title": "The reload Schema",
+					"type": "boolean"
+				}
+			},
+			"title": "The NoneActionExecutionResult Schema",
+			"type": "object"
+		},
+		"NotificationActionExecutionResult": {
+			"additionalProperties": false,
+			"properties": {
+				"reload": {
+					"title": "The reload Schema",
+					"type": "boolean"
+				},
+				"text": {
+					"$ref": "#/definitions/FragmentInlineValue"
+				}
+			},
+			"title": "The NotificationActionExecutionResult Schema",
 			"type": "object"
 		},
 		"PageCollectionDefinition": {
@@ -2116,6 +2265,26 @@
 				"rowViewportDefinition"
 			],
 			"title": "The RowViewport Schema",
+			"type": "object"
+		},
+		"SitePageActionExecutionResult": {
+			"additionalProperties": false,
+			"properties": {
+				"itemReference": {
+					"$ref": "#/definitions/ClassFieldsReference"
+				}
+			},
+			"title": "The SitePageActionExecutionResult Schema",
+			"type": "object"
+		},
+		"URLActionExecutionResult": {
+			"additionalProperties": false,
+			"properties": {
+				"url": {
+					"$ref": "#/definitions/FragmentInlineValue"
+				}
+			},
+			"title": "The URLActionExecutionResult Schema",
 			"type": "object"
 		},
 		"WidgetInstance": {

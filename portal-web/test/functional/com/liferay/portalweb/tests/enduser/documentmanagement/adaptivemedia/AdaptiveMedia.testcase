@@ -421,7 +421,7 @@ definition {
 
 		AdaptiveMedia.selectAdaptiveMediaImage(imageName = "Low Resolution");
 
-		AdaptiveMedia.viewNumberOfAdaptedImages(numberOfAdaptedImages = "8/9");
+		AdaptiveMedia.viewNumberOfAdaptedImages(numberOfAdaptedImages = "9/10");
 	}
 
 	@priority = 5

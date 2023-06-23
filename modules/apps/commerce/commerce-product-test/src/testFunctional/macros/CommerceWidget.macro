@@ -73,7 +73,7 @@ definition {
 		var optionName = ${optionName};
 
 		var javaScriptCountElement = '''
-		
+
 		const stringToMatch = "${optionName}";
 
 		return document.querySelectorAll(`[data-qa-id='${stringToMatch}'] li`).length.toString();

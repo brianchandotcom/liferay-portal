@@ -103,7 +103,7 @@ definition {
 		}
 
 		task ("Then the account is present in the admin console") {
-			CommerceWidget.assertOrganizationManagementWigetTitlePresent(key_text = "Commerce Account");
+			CommerceWidget.assertOrganizationManagementWigetTitlePresent(key_nodeName = "Commerce Account");
 		}
 	}
 

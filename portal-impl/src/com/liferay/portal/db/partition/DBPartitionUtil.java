@@ -125,7 +125,7 @@ public class DBPartitionUtil {
 		return true;
 	}
 
-	public static void checkCompanyThreadLocal(Object object) {
+	public static void checkCompanyId(Object object) {
 		if (!_DATABASE_PARTITION_ENABLED) {
 			return;
 		}

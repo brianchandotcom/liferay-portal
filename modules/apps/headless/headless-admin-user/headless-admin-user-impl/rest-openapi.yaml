@@ -95,6 +95,40 @@ components:
                     readOnly: true
                     type: array
             type: object
+        AccountGroup:
+            properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    # @review
+                    description:
+                        Block of actions allowed by the user making the request.
+                    readOnly: true
+                    type: object
+                customFields:
+                    items:
+                        $ref: "#/components/schemas/CustomField"
+                    type: array
+                description:
+                    example: AccountGroup Description
+                    type: string
+                externalReferenceCode:
+                    example: AB-34098-789-N
+                    type: string
+                id:
+                    example: 30130
+                    format: int64
+                    minimum: 0
+                    readOnly: true
+                    type: integer
+                name:
+                    example: AccountGroup Name
+                    type: string
+            required:
+                - name
+            type: object
         AccountRole:
             # @review
             description:
@@ -1121,6 +1155,324 @@ info:
     version: v1.0
 openapi: 3.0.1
 paths:
+    "/accountGroups":
+        get:
+            # @review
+            description:
+                Retrieves the account groups. Results can be paginated, filtered, searched, and sorted.
+            operationId: getAccountGroupsPage
+            parameters:
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/AccountGroup"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/AccountGroup"
+                                type: array
+            tags: ["AccountGroup"]
+        post:
+            description:
+                Creates a new account group
+            operationId: postAccountGroup
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/AccountGroup"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/AccountGroup"
+            responses:
+                201:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/AccountGroup"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/AccountGroup"
+                    # @review
+                    description:
+                        "AccountGroup successfully created"
+            tags: ["AccountGroup"]
+    "/accountGroups/by-external-reference-code/{accountExternalReferenceCode}/accounts/{externalReferenceCode}":
+        delete:
+            # @review
+            description:
+                Removes an account by their external reference code from an account group by external reference code
+            operationId: deleteAccountGroupByExternalReferenceCodeAccountByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: accountExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["AccountGroup"]
+        post:
+            # @review
+            description:
+                Assigns an account by its external reference code to an account group by external reference code
+            operationId: postAccountGroupByExternalReferenceCodeAccountByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: accountExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["AccountGroup"]
+    "/accountGroups/by-external-reference-code/{externalReferenceCode}":
+        delete:
+            # @review
+            description:
+                Deletes an account group.
+            operationId: deleteAccountGroupByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["AccountGroup"]
+        get:
+            operationId: getAccountGroupByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/AccountGroup"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/AccountGroup"
+            tags: ["AccountGroup"]
+        patch:
+            # @review
+            description:
+                Updates the account with information sent in the request body. Only the provided fields are updated.
+            operationId: patchAccountGroupByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/AccountGroup"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/AccountGroup"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/AccountGroup"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/AccountGroup"
+                    # @review
+                    description:
+                        "AccountGroup successfully updated"
+            tags: ["AccountGroup"]
+        put:
+            # @review
+            description:
+                Replaces the account group with information sent in the request body. Any missing fields are deleted
+                unless they are required.
+            operationId: putAccountGroupByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/AccountGroup"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/AccountGroup"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/AccountGroup"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/AccountGroup"
+                    # @review
+                    description:
+                        "AccountGroup successfully replaced"
+            tags: ["AccountGroup"]
+    "/accountGroups/{accountGroupId}":
+        delete:
+            # @review
+            description:
+                Deletes an account group.
+            operationId: deleteAccountGroup
+            parameters:
+                - in: path
+                  name: accountGroupId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["AccountGroup"]
+        get:
+            operationId: getAccountGroup
+            parameters:
+                - in: path
+                  name: accountGroupId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/AccountGroup"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/AccountGroup"
+            tags: ["AccountGroup"]
+        patch:
+            # @review
+            description:
+                Updates the account group with information sent in the request body. Only the provided fields are
+                updated.
+            operationId: patchAccountGroup
+            parameters:
+                - in: path
+                  name: accountGroupId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/AccountGroup"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/AccountGroup"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/AccountGroup"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/AccountGroup"
+                    # @review
+                    description:
+                        "AccountGroup successfully updated"
+            tags: ["AccountGroup"]
+        put:
+            # @review
+            description:
+                Replaces the account group with information sent in the request body. Any missing fields are deleted
+                unless they are required.
+            operationId: putAccountGroup
+            parameters:
+                - in: path
+                  name: accountGroupId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/AccountGroup"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/AccountGroup"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/AccountGroup"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/AccountGroup"
+                    # @review
+                    description:
+                        "AccountGroup successfully replaced"
+            tags: ["AccountGroup"]
     "/accounts":
         get:
             # @review
@@ -1906,6 +2258,38 @@ paths:
                                     $ref: "#/components/schemas/AccountRole"
                                 type: array
             tags: ["AccountRole"]
+    "/accounts/by-externalReferenceCode/{accountExternalReferenceCode}/accountGroups":
+        get:
+            parameters:
+                - in: path
+                  name: accountExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/AccountGroup"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/AccountGroup"
+                                type: array
+            tags: ["AccountGroup"]
     "/accounts/{accountId}":
         delete:
             # @review
@@ -2151,6 +2535,39 @@ paths:
                         application/json: {}
                         application/xml: {}
             tags: ["AccountRole"]
+    "/accounts/{accountId}/accountGroups":
+        get:
+            parameters:
+                - in: path
+                  name: accountId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/AccountGroup"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/AccountGroup"
+                                type: array
+            tags: ["AccountGroup"]
     "/accounts/{accountId}/organizations":
         get:
             description:

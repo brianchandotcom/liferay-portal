@@ -225,11 +225,11 @@ exports[`UsageOverview should render 1`] = `
                     class="trigger"
                   >
                     <svg
-                      class="icon-root lexicon-icon lexicon-icon-angle-up"
-                      viewBox=""
+                      class="lexicon-icon lexicon-icon-angle-up icon-root"
+                      role="presentation"
                     >
                       <use
-                        xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-up"
+                        xlink:href="#angle-up"
                       />
                     </svg>
                   </div>
@@ -268,11 +268,11 @@ exports[`UsageOverview should render 1`] = `
                       <ul>
                         <li>
                           <svg
-                            class="icon-root lexicon-icon lexicon-icon-ac-individual"
-                            viewBox=""
+                            class="lexicon-icon lexicon-icon-ac-individual icon-root"
+                            role="presentation"
                           >
                             <use
-                              xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-individual"
+                              xlink:href="#ac-individual"
                             />
                           </svg>
                           <span
@@ -288,11 +288,11 @@ exports[`UsageOverview should render 1`] = `
                         </li>
                         <li>
                           <svg
-                            class="icon-root lexicon-icon lexicon-icon-faro-page-views"
-                            viewBox=""
+                            class="lexicon-icon lexicon-icon-faro-page-views icon-root"
+                            role="presentation"
                           >
                             <use
-                              xlink:href="/o/osb-faro-web/dist/sprite.svg#faro-page-views"
+                              xlink:href="#faro-page-views"
                             />
                           </svg>
                           <span
@@ -308,11 +308,11 @@ exports[`UsageOverview should render 1`] = `
                         </li>
                         <li>
                           <svg
-                            class="icon-root lexicon-icon lexicon-icon-ac-users"
-                            viewBox=""
+                            class="lexicon-icon lexicon-icon-ac-users icon-root"
+                            role="presentation"
                           >
                             <use
-                              xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-users"
+                              xlink:href="#ac-users"
                             />
                           </svg>
                           <span

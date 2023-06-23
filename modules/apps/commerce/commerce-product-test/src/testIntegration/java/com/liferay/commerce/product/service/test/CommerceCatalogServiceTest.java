@@ -62,6 +62,11 @@ public class CommerceCatalogServiceTest {
 			ResourceConstants.SCOPE_COMPANY,
 			String.valueOf(TestPropsValues.getCompanyId()),
 			CPActionKeys.ADD_COMMERCE_CATALOG);
+		RoleTestUtil.addResourcePermission(
+			"User", CPConstants.RESOURCE_NAME_CATALOG,
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(TestPropsValues.getCompanyId()),
+			CPActionKeys.VIEW_COMMERCE_CATALOGS);
 
 		User user1 = UserTestUtil.addUser();
 

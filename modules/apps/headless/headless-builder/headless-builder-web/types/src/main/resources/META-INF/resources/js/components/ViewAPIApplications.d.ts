@@ -15,9 +15,14 @@
 /// <reference types="react" />
 
 import '../../css/main.scss';
-interface AppProps {
+interface APIApplicationsProps {
 	apiURLPaths: APIURLPaths;
+	editURL: string;
 	portletId: string;
 }
-export default function App({apiURLPaths, portletId}: AppProps): JSX.Element;
+export default function ViewAPIApplications({
+	apiURLPaths,
+	editURL,
+	portletId,
+}: APIApplicationsProps): JSX.Element;
 export {};

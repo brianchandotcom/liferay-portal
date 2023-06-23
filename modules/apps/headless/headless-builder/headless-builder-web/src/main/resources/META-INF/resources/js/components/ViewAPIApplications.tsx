@@ -12,14 +12,29 @@
  * details.
  */
 
-/// <reference types="react" />
+import React from 'react';
+
+import APIApplicationsTable from './FDS/APIApplicationsTable';
+
+import '../../css/main.scss';
 
 interface APIApplicationsProps {
 	apiURLPaths: APIURLPaths;
+	editURL: string;
 	portletId: string;
 }
-export default function ListAPIApplications({
+
+export default function ViewAPIApplications({
 	apiURLPaths,
+	editURL,
 	portletId,
-}: APIApplicationsProps): JSX.Element;
-export {};
+}: APIApplicationsProps) {
+	return (
+		<APIApplicationsTable
+			apiURLPaths={apiURLPaths}
+			editURL={editURL}
+			portletId={portletId}
+			readOnly={false}
+		/>
+	);
+}

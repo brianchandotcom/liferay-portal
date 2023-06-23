@@ -229,19 +229,51 @@ const NotificationsInfo = ({
 	};
 
 	const updateSelectedItem = (values) => {
+		const initialValues = {
+			descriptionValues: [],
+			executionTypeValues: [],
+			nameValues: [],
+			notificationTypesValues: [],
+			templateLanguageValues: [],
+			templateValues: [],
+		};
+
+		values.map(
+			({
+				description,
+				executionType,
+				name,
+				notificationTypes,
+				template,
+				templateLanguage,
+			}) => {
+				initialValues.descriptionValues.push(
+					description ? description : ''
+				);
+				initialValues.executionTypeValues.push(
+					executionType ? executionType : null
+				);
+				initialValues.nameValues.push(name ? name : '');
+				initialValues.notificationTypesValues.push(
+					notificationTypes ? notificationTypes : null
+				);
+				initialValues.templateLanguageValues.push(
+					templateLanguage ? templateLanguage : null
+				);
+				initialValues.templateValues.push(
+					template ? executionType : null
+				);
+			}
+		);
 		setSelectedItem((previousItem) => ({
 			...previousItem,
 			data: {
 				...previousItem.data,
 				notifications: {
-					description: values.map(({description}) => description),
-					executionType: values.map(
-						({executionType}) => executionType
-					),
-					name: values.map(({name}) => name),
-					notificationTypes: values.map(
-						({notificationTypes}) => notificationTypes
-					),
+					description: initialValues.descriptionValues,
+					executionType: initialValues.executionTypeValues,
+					name: initialValues.nameValues,
+					notificationTypes: initialValues.notificationTypesValues,
 					recipients: !previousItem.data.notifications?.recipients
 						? [
 								{
@@ -249,10 +281,8 @@ const NotificationsInfo = ({
 								},
 						  ]
 						: [...previousItem.data.notifications.recipients],
-					template: values.map(({template}) => template),
-					templateLanguage: values.map(
-						({templateLanguage}) => templateLanguage
-					),
+					template: initialValues.templateValues,
+					templateLanguage: initialValues.templateLanguageValues,
 				},
 			},
 		}));

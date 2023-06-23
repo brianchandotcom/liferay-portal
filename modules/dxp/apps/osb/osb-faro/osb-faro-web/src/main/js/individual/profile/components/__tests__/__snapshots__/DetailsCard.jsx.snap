@@ -36,8 +36,7 @@ exports[`IndividualDetailsCard should render 1`] = `
       >
         View All Details
         <svg
-          class="lexicon-icon lexicon-icon-angle-right-small"
-          classname="icon-root ml-2"
+          class="lexicon-icon lexicon-icon-angle-right-small icon-root ml-2"
           role="presentation"
         >
           <use

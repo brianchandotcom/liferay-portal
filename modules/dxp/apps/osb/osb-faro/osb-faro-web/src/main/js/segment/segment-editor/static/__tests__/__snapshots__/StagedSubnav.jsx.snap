@@ -33,7 +33,7 @@ exports[`StagedSubnav should render 1`] = `
             class="tbar-section text-truncate"
           >
             <button
-              class="button-root btn btn-outline-borderless btn-outline-unstyled"
+              class="button-root btn-link btn btn-outline-borderless btn-outline-unstyled"
               type="button"
             >
               view added items

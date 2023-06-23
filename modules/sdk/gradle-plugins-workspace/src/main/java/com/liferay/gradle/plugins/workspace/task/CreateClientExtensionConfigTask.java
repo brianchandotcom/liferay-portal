@@ -159,6 +159,9 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 			classificationGrouping, getInputLcpJsonFile(), getLcpJsonFile(),
 			substitutionMap);
 
+		_addRequiredDeploymentContexts(
+			pluginPackageProperties, getLcpJsonFile());
+
 		_storePluginPackageProperties(pluginPackageProperties);
 
 		_createClientExtensionConfigFile(jsonMap);
@@ -210,6 +213,10 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 
 	public void setType(String type) {
 		_type = type;
+	}
+
+	private void _addRequiredDeploymentContexts(
+		Properties pluginPackageProperties, File lcpJsonFile) {
 	}
 
 	private Provider<RegularFile> _addTaskOutputFile(String path) {

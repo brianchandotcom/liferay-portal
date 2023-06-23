@@ -33,6 +33,7 @@ export function adaptLegacyPriceModel(priceModel) {
 	return {
 		discountPercentage: parseFloat(discountPercentage || 0),
 		finalPriceFormatted: finalPrice || priceFormatted || price,
+		price,
 		priceFormatted: priceFormatted || price,
 		priceOnApplication: priceOnApplication || false,
 

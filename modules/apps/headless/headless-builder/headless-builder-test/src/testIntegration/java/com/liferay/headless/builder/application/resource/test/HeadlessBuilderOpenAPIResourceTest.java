@@ -309,175 +309,7 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 
 	@Test
 	public void testGetOpenAPI() throws Exception {
-		HTTPTestUtil.invoke(
-			JSONUtil.put(
-				"apiApplicationToAPIEndpoints",
-				JSONUtil.put(
-					JSONUtil.put(
-						"description", "description"
-					).put(
-						"externalReferenceCode", _API_ENDPOINT_ERC
-					).put(
-						"httpMethod", "get"
-					).put(
-						"name", "name"
-					).put(
-						"path", "path"
-					).put(
-						"scope", "company"
-					))
-			).put(
-				"apiApplicationToAPISchemas",
-				JSONUtil.put(
-					JSONUtil.put(
-						"apiSchemaToAPIProperties",
-						JSONUtil.putAll(
-							JSONUtil.put(
-								"description", "aggregationProperty description"
-							).put(
-								"name", "aggregationProperty"
-							).put(
-								"objectFieldERC",
-								_API_SCHEMA_AGGREGATION_FIELD_ERC
-							),
-							JSONUtil.put(
-								"description", "attachmentProperty description"
-							).put(
-								"name", "attachmentProperty"
-							).put(
-								"objectFieldERC",
-								_API_SCHEMA_ATTACHMENT_FIELD_ERC
-							),
-							JSONUtil.put(
-								"description", "booleanProperty description"
-							).put(
-								"name", "booleanProperty"
-							).put(
-								"objectFieldERC", _API_SCHEMA_BOOLEAN_FIELD_ERC
-							),
-							JSONUtil.put(
-								"description", "dateProperty description"
-							).put(
-								"name", "dateProperty"
-							).put(
-								"objectFieldERC", _API_SCHEMA_DATE_FIELD_ERC
-							),
-							JSONUtil.put(
-								"description", "dateTimeProperty description"
-							).put(
-								"name", "dateTimeProperty"
-							).put(
-								"objectFieldERC",
-								_API_SCHEMA_DATE_TIME_FIELD_ERC
-							),
-							JSONUtil.put(
-								"description", "decimalProperty description"
-							).put(
-								"name", "decimalProperty"
-							).put(
-								"objectFieldERC", _API_SCHEMA_DECIMAL_FIELD_ERC
-							),
-							JSONUtil.put(
-								"description", "integerProperty description"
-							).put(
-								"name", "integerProperty"
-							).put(
-								"objectFieldERC", _API_SCHEMA_INTEGER_FIELD_ERC
-							),
-							JSONUtil.put(
-								"description", "longIntegerProperty description"
-							).put(
-								"name", "longIntegerProperty"
-							).put(
-								"objectFieldERC",
-								_API_SCHEMA_LONG_INTEGER_FIELD_ERC
-							),
-							JSONUtil.put(
-								"description", "longTextProperty description"
-							).put(
-								"name", "longTextProperty"
-							).put(
-								"objectFieldERC",
-								_API_SCHEMA_LONG_TEXT_FIELD_ERC
-							),
-							JSONUtil.put(
-								"description",
-								"multiselectPicklistProperty description"
-							).put(
-								"name", "multiselectPicklistProperty"
-							).put(
-								"objectFieldERC",
-								_API_SCHEMA_MULTISELECT_PICKLIST_FIELD_ERC
-							),
-							JSONUtil.put(
-								"description", "picklistProperty description"
-							).put(
-								"name", "picklistProperty"
-							).put(
-								"objectFieldERC", _API_SCHEMA_PICKLIST_FIELD_ERC
-							),
-							JSONUtil.put(
-								"description",
-								"precisionDecimalProperty description"
-							).put(
-								"name", "precisionDecimalProperty"
-							).put(
-								"objectFieldERC",
-								_API_SCHEMA_PRECISION_DECIMAL_FIELD_ERC
-							),
-							JSONUtil.put(
-								"description", "richTextProperty description"
-							).put(
-								"name", "richTextProperty"
-							).put(
-								"objectFieldERC",
-								_API_SCHEMA_RICH_TEXT_FIELD_ERC
-							),
-							JSONUtil.put(
-								"description", "textProperty description"
-							).put(
-								"name", "textProperty"
-							).put(
-								"objectFieldERC", _API_SCHEMA_TEXT_FIELD_ERC
-							))
-					).put(
-						"description", "description"
-					).put(
-						"externalReferenceCode", _API_SCHEMA_ERC
-					).put(
-						"mainObjectDefinitionERC",
-						_objectDefinition1.getExternalReferenceCode()
-					).put(
-						"name", "SchemaName"
-					))
-			).put(
-				"applicationStatus", "published"
-			).put(
-				"baseURL", _API_BASE_URL
-			).put(
-				"externalReferenceCode", _API_APPLICATION_ERC
-			).put(
-				"title", "title"
-			).toString(),
-			"headless-builder/applications", Http.Method.POST);
-		HTTPTestUtil.invoke(
-			null,
-			StringBundler.concat(
-				"headless-builder/schemas/by-external-reference-code/",
-				_API_SCHEMA_ERC, "/requestAPISchemaToAPIEndpoints/",
-				_API_ENDPOINT_ERC),
-			Http.Method.PUT);
-		HTTPTestUtil.invoke(
-			null,
-			StringBundler.concat(
-				"headless-builder/schemas/by-external-reference-code/",
-				_API_SCHEMA_ERC, "/responseAPISchemaToAPIEndpoints/",
-				_API_ENDPOINT_ERC),
-			Http.Method.PUT);
-
-		APIApplication apiApplication =
-			_apiApplicationProvider.getAPIApplication(
-				_API_BASE_URL, TestPropsValues.getCompanyId());
+		APIApplication apiApplication = _addAPIApplication();
 
 		HttpURLConnection httpURLConnection = _createHttpURLConnection(
 			apiApplication.getBaseURL() + "/openapi.json", Http.Method.GET);
@@ -504,6 +336,29 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 
 	@Test
 	public void testGetOpenAPIURLEntry() throws Exception {
+		APIApplication apiApplication = _addAPIApplication();
+
+		JSONObject jsonObject = HTTPTestUtil.invoke(
+			null, "/openapi", Http.Method.GET);
+
+		Assert.assertFalse(jsonObject.has("/" + apiApplication.getBaseURL()));
+
+		APIApplicationPublisherUtil.publishApplications(
+			_apiApplicationPublisher, apiApplication);
+
+		jsonObject = HTTPTestUtil.invoke(null, "/openapi", Http.Method.GET);
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"/" + apiApplication.getBaseURL(),
+				JSONUtil.put(
+					"http://localhost:8080/o/" + apiApplication.getBaseURL() +
+						"/openapi.yaml")
+			).toString(),
+			jsonObject.toString(), JSONCompareMode.LENIENT);
+	}
+
+	private APIApplication _addAPIApplication() throws Exception {
 		HTTPTestUtil.invoke(
 			JSONUtil.put(
 				"apiApplicationToAPIEndpoints",
@@ -670,28 +525,8 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 				_API_ENDPOINT_ERC),
 			Http.Method.PUT);
 
-		APIApplication apiApplication =
-			_apiApplicationProvider.getAPIApplication(
-				_API_BASE_URL, TestPropsValues.getCompanyId());
-
-		JSONObject jsonObject = HTTPTestUtil.invoke(
-			null, "/openapi", Http.Method.GET);
-
-		Assert.assertFalse(jsonObject.has("/" + apiApplication.getBaseURL()));
-
-		APIApplicationPublisherUtil.publishApplications(
-			_apiApplicationPublisher, apiApplication);
-
-		jsonObject = HTTPTestUtil.invoke(null, "/openapi", Http.Method.GET);
-
-		JSONAssert.assertEquals(
-			JSONUtil.put(
-				"/" + apiApplication.getBaseURL(),
-				JSONUtil.put(
-					"http://localhost:8080/o/" + apiApplication.getBaseURL() +
-						"/openapi.yaml")
-			).toString(),
-			jsonObject.toString(), JSONCompareMode.LENIENT);
+		return _apiApplicationProvider.getAPIApplication(
+			_API_BASE_URL, TestPropsValues.getCompanyId());
 	}
 
 	private HttpURLConnection _createHttpURLConnection(

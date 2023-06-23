@@ -43,53 +43,94 @@ exports[`BaseInterestDetails should render 1`] = `
       <div
         class="card-header"
       >
-        <ul
-          class="nav-root page-subnav nav nav-underline"
-          role="tablist"
+        <nav
+          class="page-subnav navbar navbar-collapse-relative navbar-expand-md navbar-underline navigation-bar navigation-bar-light"
         >
-          <li
-            class="nav-item active"
-            role="presentation"
+          <div
+            class="container-fluid container-fluid-max-xl"
           >
-            <a
-              class="nav-link active"
-              href="/workspace/23/123/contacts/segments/test/interests/1/individuals"
-              role="tab"
+            <button
+              aria-expanded="false"
+              class="navbar-toggler navbar-toggler-link collapsed btn btn-unstyled"
+              type="button"
             >
-              <h4>
-                Individuals
-              </h4>
-            </a>
-          </li>
-          <li
-            class="nav-item"
-            role="presentation"
-          >
-            <a
-              class="nav-link"
-              href="/workspace/23/123/contacts/segments/test/interests/1/pages?active=true"
-              role="tab"
+              <span
+                class="navbar-text-truncate"
+              >
+                label
+              </span>
+              <svg
+                class="lexicon-icon lexicon-icon-caret-bottom"
+                role="presentation"
+              >
+                <use
+                  xlink:href="#caret-bottom"
+                />
+              </svg>
+            </button>
+            <div
+              class="navbar-collapse collapse"
             >
-              <h4>
-                Active Pages
-              </h4>
-            </a>
-          </li>
-          <li
-            class="nav-item"
-            role="presentation"
-          >
-            <a
-              class="nav-link"
-              href="/workspace/23/123/contacts/segments/test/interests/1/pages?active=false"
-              role="tab"
-            >
-              <h4>
-                Inactive Pages
-              </h4>
-            </a>
-          </li>
-        </ul>
+              <div
+                class="container-fluid container-fluid-max-xl"
+              >
+                <ul
+                  class="navbar-nav"
+                >
+                  <li
+                    class="nav-item"
+                  >
+                    <a
+                      aria-current="page"
+                      class="nav-link active"
+                      href="/workspace/23/123/contacts/segments/test/interests/1/individuals"
+                    >
+                      <span
+                        class="navbar-text-truncate"
+                      >
+                        <h4>
+                          Individuals
+                        </h4>
+                      </span>
+                    </a>
+                  </li>
+                  <li
+                    class="nav-item"
+                  >
+                    <a
+                      class="nav-link"
+                      href="/workspace/23/123/contacts/segments/test/interests/1/pages?active=true"
+                    >
+                      <span
+                        class="navbar-text-truncate"
+                      >
+                        <h4>
+                          Active Pages
+                        </h4>
+                      </span>
+                    </a>
+                  </li>
+                  <li
+                    class="nav-item"
+                  >
+                    <a
+                      class="nav-link"
+                      href="/workspace/23/123/contacts/segments/test/interests/1/pages?active=false"
+                    >
+                      <span
+                        class="navbar-text-truncate"
+                      >
+                        <h4>
+                          Inactive Pages
+                        </h4>
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </nav>
         <h4
           class="list-title"
         >

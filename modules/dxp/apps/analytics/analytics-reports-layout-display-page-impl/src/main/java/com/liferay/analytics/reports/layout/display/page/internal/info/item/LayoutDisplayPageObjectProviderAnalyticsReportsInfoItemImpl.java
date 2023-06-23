@@ -310,9 +310,15 @@ public class LayoutDisplayPageObjectProviderAnalyticsReportsInfoItemImpl
 			return null;
 		}
 
+		ThemeDisplay themeDisplay = _getThemeDisplay();
+
+		if (themeDisplay == null) {
+			return null;
+		}
+
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			AssetDisplayPageUtil.getAssetDisplayPageLayoutPageTemplateEntry(
-				layoutDisplayPageObjectProvider.getGroupId(),
+				themeDisplay.getScopeGroupId(),
 				layoutDisplayPageObjectProvider.getClassNameId(),
 				layoutDisplayPageObjectProvider.getClassPK(),
 				layoutDisplayPageObjectProvider.getClassTypeId());

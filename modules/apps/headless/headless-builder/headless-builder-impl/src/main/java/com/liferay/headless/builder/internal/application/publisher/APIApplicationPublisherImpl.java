@@ -17,8 +17,10 @@ package com.liferay.headless.builder.internal.application.publisher;
 import com.liferay.headless.builder.application.APIApplication;
 import com.liferay.headless.builder.application.publisher.APIApplicationPublisher;
 import com.liferay.headless.builder.internal.application.resource.HeadlessBuilderResourceImpl;
+import com.liferay.headless.builder.internal.application.resource.OpenAPIResourceImpl;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.vulcan.resource.OpenAPIResource;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,6 +36,7 @@ import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Luis Miguel Barcos
@@ -55,6 +58,9 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 					add(_registerHeadlessBuilderApplication(apiApplication));
 					add(
 						_registerHeadlessBuilderApplicationResource(
+							apiApplication));
+					add(
+						_registerHeadlessBuilderOpenAPIResource(
 							apiApplication));
 				}
 			});
@@ -151,6 +157,41 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 			).build());
 	}
 
+	private ServiceRegistration<OpenAPIResourceImpl>
+		_registerHeadlessBuilderOpenAPIResource(APIApplication apiApplication) {
+
+		return _bundleContext.registerService(
+			OpenAPIResourceImpl.class,
+			new PrototypeServiceFactory<OpenAPIResourceImpl>() {
+
+				@Override
+				public OpenAPIResourceImpl getService(
+					Bundle bundle,
+					ServiceRegistration<OpenAPIResourceImpl>
+						serviceRegistration) {
+
+					return new OpenAPIResourceImpl(_openAPIResource);
+				}
+
+				@Override
+				public void ungetService(
+					Bundle bundle,
+					ServiceRegistration<OpenAPIResourceImpl>
+						serviceRegistration,
+					OpenAPIResourceImpl openAPIResourceImpl) {
+				}
+
+			},
+			HashMapDictionaryBuilder.<String, Object>put(
+				"api.version", "v1.0"
+			).put(
+				"osgi.jaxrs.application.select",
+				"(osgi.jaxrs.name=" + apiApplication.getOSGiJaxRsName() + ")"
+			).put(
+				"osgi.jaxrs.resource", "true"
+			).build());
+	}
+
 	private void _unregisterServiceRegistrations(
 		List<ServiceRegistration<?>> serviceRegistrations) {
 
@@ -167,5 +208,8 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 
 	private final Map<String, List<ServiceRegistration<?>>>
 		_headlessBuilderApplicationServiceRegistrationsMap = new HashMap<>();
+
+	@Reference
+	private OpenAPIResource _openAPIResource;
 
 }

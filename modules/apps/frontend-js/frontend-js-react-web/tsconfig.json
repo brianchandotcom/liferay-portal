@@ -1,5 +1,5 @@
 {
-	"@generated": "93b681d75316e593300e30b8d6e0f5c1c0d857b4",
+	"@generated": "46441445ab03ac0787d6296400dcbf5a8f9dea1e",
 	"@overrides": {
 	},
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT OUTSIDE @overrides **",
@@ -14,7 +14,7 @@
 		"outDir": "./types",
 		"paths": {
 			"@liferay/accessibility-menu-web": [
-				"../../accessibility/accessibility-menu-web/src/main/resources/META-INF/resources/js/index.d.ts"
+				"../../accessibility/accessibility-menu-web/src/main/resources/META-INF/resources/js/index.ts"
 			],
 			"@liferay/frontend-js-state-web": [
 				"../frontend-js-state-web/src/main/resources/META-INF/resources/index.ts"

@@ -29,17 +29,29 @@ import React, {useCallback, useEffect, useState} from 'react';
 import AccessibilitySetting from './AccessibilitySetting';
 import {getSettingValue, toggleClassName} from './util';
 
+export const CONSTANTS = {
+	ACCESSIBILITY_SETTING_EXPANDED_TEXT: 'ACCESSIBILITY_SETTING_EXPANDED_TEXT',
+	ACCESSIBILITY_SETTING_INCREASED_TEXT_SPACING:
+		'ACCESSIBILITY_SETTING_INCREASED_TEXT_SPACING',
+	ACCESSIBILITY_SETTING_REDUCED_MOTION:
+		'ACCESSIBILITY_SETTING_REDUCED_MOTION',
+	ACCESSIBILITY_SETTING_UNDERLINED_LINKS:
+		'ACCESSIBILITY_SETTING_UNDERLINED_LINKS',
+} as const;
+
+type KEYS = keyof typeof CONSTANTS;
+
 type Setting = {
 	className: string;
 	defaultValue: boolean;
-	key: string;
+	key: KEYS;
 	label: string;
 	sessionClicksValue: boolean;
 };
 
 type AccessibilityMenuSetting = {
 	className: string;
-	key: string;
+	key: KEYS;
 	label: string;
 	updating?: boolean;
 	value: boolean;
@@ -52,8 +64,8 @@ type Props = {
 const OPEN_ACCESSIBILITY_MENU_EVENT_NAME = 'openAccessibilityMenu';
 
 export const accessibilityMenuAtom = State.atom<
-	Array<AccessibilityMenuSetting>
->('accessibility-menu', []);
+	Record<KEYS, AccessibilityMenuSetting>
+>('accessibility-menu', {} as any);
 
 const AccessibilityMenu = (props: Props) => {
 	const [settings, setSettings] = useLiferayState(accessibilityMenuAtom);
@@ -67,25 +79,30 @@ const AccessibilityMenu = (props: Props) => {
 
 	useEffect(() => {
 		setSettings(
-			props.settings.map((setting) => {
-				const {
-					className,
-					defaultValue,
-					key,
-					label,
-					sessionClicksValue,
-				} = setting;
+			props.settings.reduce<Record<KEYS, AccessibilityMenuSetting>>(
+				(prev, setting) => {
+					const {
+						className,
+						defaultValue,
+						key,
+						label,
+						sessionClicksValue,
+					} = setting;
 
-				const value = getSettingValue(
-					defaultValue,
-					sessionClicksValue,
-					key
-				);
+					const value = getSettingValue(
+						defaultValue,
+						sessionClicksValue,
+						key
+					);
 
-				toggleClassName(className, value);
+					toggleClassName(className, value);
 
-				return {className, key, label, value};
-			})
+					prev[key] = {className, key, label, value};
+
+					return prev;
+				},
+				{} as any
+			)
 		);
 	}, [setSettings, props.settings]);
 
@@ -103,24 +120,14 @@ const AccessibilityMenu = (props: Props) => {
 	}, [onOpenChange]);
 
 	const updateSetting = useCallback(
-		(
-			settingKey: string,
-			settingUpdates: Partial<AccessibilityMenuSetting>
-		) => {
-			setSettings(
-				settings.map((setting) => {
-					if (settingKey === setting.key) {
-						return {
-							...setting,
-							...settingUpdates,
-						};
-					}
-					else {
-						return setting;
-					}
-				})
-			);
-		},
+		(settingKey: KEYS, settingUpdates: Partial<AccessibilityMenuSetting>) =>
+			setSettings({
+				...settings,
+				[settingKey]: {
+					...settings[settingKey],
+					...settingUpdates,
+				},
+			}),
 		[settings, setSettings]
 	);
 
@@ -207,25 +214,27 @@ const AccessibilityMenu = (props: Props) => {
 						)}
 
 						<ul className="list-unstyled mb-0">
-							{settings.map((setting, index) => (
-								<AccessibilitySetting
-									className={
-										index + 1 < settings.length
-											? 'mb-3'
-											: ''
-									}
-									disabled={isSettingsDisabled}
-									key={setting.key}
-									label={setting.label}
-									onChange={(value) =>
-										handleAccessiblitySettingChange(
-											value,
-											setting
-										)
-									}
-									value={setting.value}
-								/>
-							))}
+							{(Object.keys(settings) as Array<KEYS>).map(
+								(key, index, array) => (
+									<AccessibilitySetting
+										className={
+											index + 1 < array.length
+												? 'mb-3'
+												: ''
+										}
+										disabled={isSettingsDisabled}
+										key={settings[key].key}
+										label={settings[key].label}
+										onChange={(value) =>
+											handleAccessiblitySettingChange(
+												value,
+												settings[key]
+											)
+										}
+										value={settings[key].value}
+									/>
+								)
+							)}
 						</ul>
 					</ClayModal.Body>
 				</ClayModal>

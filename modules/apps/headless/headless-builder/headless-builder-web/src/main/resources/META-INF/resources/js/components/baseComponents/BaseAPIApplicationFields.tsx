@@ -37,12 +37,14 @@ interface BaseAPIApplicationFieldsProps {
 	data: Partial<Data>;
 	displayError: DataError;
 	setData: Dispatch<SetStateAction<Partial<Data>>>;
+	urlAutoFill?: boolean;
 }
 
 export default function BaseAPIApplicationFields({
 	data,
 	displayError,
 	setData,
+	urlAutoFill,
 }: BaseAPIApplicationFieldsProps) {
 	const [userEditedURL, setUserEditedURL] = useState(false);
 
@@ -66,9 +68,10 @@ export default function BaseAPIApplicationFields({
 						setData((previousData) => ({
 							...previousData,
 							title: value,
-							...(!userEditedURL && {
-								baseURL: makeURLPathString(value),
-							}),
+							...(urlAutoFill &&
+								!userEditedURL && {
+									baseURL: makeURLPathString(value),
+								}),
 						}))
 					}
 					placeholder={Liferay.Language.get('enter-title')}

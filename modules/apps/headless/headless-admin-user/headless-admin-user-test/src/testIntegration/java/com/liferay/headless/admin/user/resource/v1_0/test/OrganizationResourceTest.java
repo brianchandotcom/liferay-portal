@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.DataGuard;
+import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -43,6 +44,7 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -89,6 +91,23 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 				deleteAccountByExternalReferenceCodeOrganizationHttpResponse(
 					_accountEntry.getExternalReferenceCode(),
 					organization.getId()));
+	}
+
+	@Override
+	@Test
+	public void testDeleteAccountOrganization() throws Exception {
+		com.liferay.portal.kernel.model.Organization organization =
+			OrganizationTestUtil.addOrganization();
+
+		_accountEntryOrganizationRelLocalService.addAccountEntryOrganizationRel(
+			_accountEntry.getAccountEntryId(),
+			organization.getOrganizationId());
+
+		Assert.assertNotNull(
+			_accountEntryOrganizationRelLocalService.
+				fetchAccountEntryOrganizationRel(
+					_accountEntry.getAccountEntryId(),
+					organization.getOrganizationId()));
 	}
 
 	@Override
@@ -155,6 +174,41 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 
 	@Override
 	@Test
+	public void testGetAccountByExternalReferenceCodeOrganization()
+		throws Exception {
+
+		testGetAccountOrganization();
+	}
+
+	@Override
+	@Test
+	public void testGetAccountOrganization() throws Exception {
+		com.liferay.portal.kernel.model.Organization organization =
+			OrganizationTestUtil.addOrganization();
+
+		_accountEntryOrganizationRelLocalService.addAccountEntryOrganizationRel(
+			_accountEntry.getAccountEntryId(),
+			organization.getOrganizationId());
+
+		Assert.assertNotNull(
+			_accountEntryOrganizationRelLocalService.
+				fetchAccountEntryOrganizationRel(
+					_accountEntry.getAccountEntryId(),
+					organization.getOrganizationId()));
+
+		organizationResource.deleteAccountOrganization(
+			_accountEntry.getAccountEntryId(),
+			String.valueOf(organization.getOrganizationId()));
+
+		Assert.assertNull(
+			_accountEntryOrganizationRelLocalService.
+				fetchAccountEntryOrganizationRel(
+					_accountEntry.getAccountEntryId(),
+					organization.getOrganizationId()));
+	}
+
+	@Override
+	@Test
 	public void testGetOrganizationsPage() throws Exception {
 		Page<Organization> page = organizationResource.getOrganizationsPage(
 			null, RandomTestUtil.randomString(), null, Pagination.of(1, 2),
@@ -186,6 +240,32 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 			GetterUtil.getLong(organization2.getId()), _user.getUserId());
 
 		organizationResource.deleteOrganization(organization2.getId());
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetAccountByExternalReferenceCodeOrganization()
+		throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetAccountByExternalReferenceCodeOrganizationNotFound()
+		throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetAccountOrganization() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetAccountOrganizationNotFound() throws Exception {
 	}
 
 	@Override

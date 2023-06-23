@@ -37,6 +37,10 @@ public class AccountEntryUserRelModelListener
 	public void onAfterCreate(AccountEntryUserRel accountEntryUserRel)
 		throws ModelListenerException {
 
+		if (accountEntryUserRel.getAccountEntryId() == 0) {
+			return;
+		}
+
 		try {
 			_commerceAccountHelper.addDefaultRoles(
 				accountEntryUserRel.getAccountUserId());

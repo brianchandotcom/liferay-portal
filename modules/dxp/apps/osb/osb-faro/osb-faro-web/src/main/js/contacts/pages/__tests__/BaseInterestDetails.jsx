@@ -56,8 +56,12 @@ describe('BaseInterestDetails', () => {
 
 		jest.runAllTimers();
 
+		const individualsGrandparentElement = getByText('Individuals')
+			.parentElement?.parentElement;
+
 		expect(getByText('Individuals')).toBeTruthy();
-		expect(getByText('Individuals').parentElement).toHaveClass('active');
+
+		expect(individualsGrandparentElement).toHaveClass('active');
 	});
 
 	it('should render an active pages list tab', () => {
@@ -80,8 +84,12 @@ describe('BaseInterestDetails', () => {
 
 		jest.runAllTimers();
 
+		const activePagesGrandparentElement = getByText('Active Pages')
+			.parentElement?.parentElement;
+
 		expect(getByText('Active Pages')).toBeTruthy();
-		expect(getByText('Active Pages').parentElement).toHaveClass('active');
+
+		expect(activePagesGrandparentElement).toHaveClass('active');
 	});
 
 	it('should render a pages list tab of inactive pages', () => {
@@ -104,7 +112,11 @@ describe('BaseInterestDetails', () => {
 
 		jest.runAllTimers();
 
+		const InactivePagesGrandparentElement = getByText('Inactive Pages')
+			.parentElement?.parentElement;
+
 		expect(getByText('Inactive Pages')).toBeTruthy();
-		expect(getByText('Inactive Pages').parentElement).toHaveClass('active');
+
+		expect(InactivePagesGrandparentElement).toHaveClass('active');
 	});
 });

@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.search.spi.model.permission.SearchPermissionFilterContributor;
 
 import java.util.List;
@@ -53,14 +53,6 @@ public class CommercePriceListSearchPermissionFilterContributor
 		}
 
 		try {
-			if (!_roleLocalService.hasUserRole(
-					permissionChecker.getUserId(),
-					permissionChecker.getCompanyId(),
-					AccountRoleConstants.ROLE_NAME_SUPPLIER, true)) {
-
-				return;
-			}
-
 			TermsFilter termsFilter = new TermsFilter("accountEntryId");
 
 			List<AccountEntry> accountEntries =
@@ -70,8 +62,14 @@ public class CommercePriceListSearchPermissionFilterContributor
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 			for (AccountEntry accountEntry : accountEntries) {
-				termsFilter.addValue(
-					String.valueOf(accountEntry.getAccountEntryId()));
+				if (_userGroupRoleLocalService.hasUserGroupRole(
+						permissionChecker.getUserId(),
+						accountEntry.getAccountEntryGroupId(),
+						AccountRoleConstants.ROLE_NAME_ACCOUNT_SUPPLIER)) {
+
+					termsFilter.addValue(
+						String.valueOf(accountEntry.getAccountEntryId()));
+				}
 			}
 
 			if (!termsFilter.isEmpty()) {
@@ -90,6 +88,6 @@ public class CommercePriceListSearchPermissionFilterContributor
 	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Reference
-	private RoleLocalService _roleLocalService;
+	private UserGroupRoleLocalService _userGroupRoleLocalService;
 
 }

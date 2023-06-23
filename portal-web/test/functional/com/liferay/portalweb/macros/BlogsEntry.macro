@@ -1293,11 +1293,19 @@ definition {
 		var key_uploadFileName = ${uploadFileName};
 
 		if (isSet(entryContent)) {
+			WaitForElementPresent(
+				locator1 = "BlogsEntry#CONTENT_INLINE_IMAGE_SPECIFIC",
+				value1 = ${uploadFileName});
+
 			AssertVisible(
 				key_entryContent = ${entryContent},
 				locator1 = "BlogsEntry#CONTENT_INLINE_IMAGE_SPECIFIC");
 		}
 		else {
+			WaitForElementPresent(
+				locator1 = "BlogsEntry#CONTENT_INLINE_IMAGE",
+				value1 = ${uploadFileName});
+
 			AssertVisible(locator1 = "BlogsEntry#CONTENT_INLINE_IMAGE");
 		}
 	}

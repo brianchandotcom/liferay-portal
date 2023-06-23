@@ -323,7 +323,7 @@ definition {
 		task ("Then assert the "Default" is present from the column Cell Renderer") {
 			AssertElementPresent(
 				key_tableColumn = "Cell Renderer",
-				key_tableRow = "default",
+				key_tableRow = "Default",
 				locator1 = "DataSet#FIELDS_TABLE_AND_ROW");
 		}
 

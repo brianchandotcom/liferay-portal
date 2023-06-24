@@ -359,8 +359,11 @@ public class EditUserMVCActionCommand
 		String emailAddress = BeanParamUtil.getString(
 			user, actionRequest, "emailAddress");
 
-		if (!screenName.equals(oldScreenName) ||
-			!emailAddress.equals(oldEmailAddress)) {
+		Company company = portal.getCompany(actionRequest);
+
+		if (company.isUpdatePasswordRequired() &&
+			(!screenName.equals(oldScreenName) ||
+			 !emailAddress.equals(oldEmailAddress))) {
 
 			int authResult = _userLocalService.authenticateByUserId(
 				themeDisplay.getCompanyId(), portal.getUserId(actionRequest),
@@ -460,8 +463,6 @@ public class EditUserMVCActionCommand
 
 			updateLanguageId = true;
 		}
-
-		Company company = portal.getCompany(actionRequest);
 
 		if (company.isStrangersVerify() &&
 			!StringUtil.equalsIgnoreCase(oldEmailAddress, emailAddress)) {

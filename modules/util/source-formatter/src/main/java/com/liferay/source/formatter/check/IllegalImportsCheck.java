@@ -182,6 +182,20 @@ public class IllegalImportsCheck extends BaseFileCheck {
 					"org.slf4j.Logger");
 		}
 
+		if (isAttributeValue(_AVOID_OPTIONAL_KEY, absolutePath) &&
+			content.contains("java.util.Optional")) {
+
+			addMessage(
+				fileName, "Do not use java.util.Optional, see LPS-170503");
+		}
+
+		if (isAttributeValue(_AVOID_STREAM_KEY, absolutePath) &&
+			content.contains("java.util.stream")) {
+
+			addMessage(
+				fileName, "Do not use java.util.stream.Stream, see LPS-170503");
+		}
+
 		SourceProcessor sourceProcessor = getSourceProcessor();
 
 		SourceFormatterArgs sourceFormatterArgs =
@@ -217,22 +231,6 @@ public class IllegalImportsCheck extends BaseFileCheck {
 
 						break;
 					}
-				}
-
-				if (isAttributeValue(_AVOID_OPTIONAL_KEY, absolutePath) &&
-					line.contains("java.util.Optional")) {
-
-					addMessage(
-						fileName,
-						"Do not use java.util.Optional, see LPS-170503");
-				}
-
-				if (isAttributeValue(_AVOID_STREAM_KEY, absolutePath) &&
-					line.contains("java.util.stream")) {
-
-					addMessage(
-						fileName,
-						"Do not use java.util.stream.Stream, see LPS-170503");
 				}
 			}
 		}

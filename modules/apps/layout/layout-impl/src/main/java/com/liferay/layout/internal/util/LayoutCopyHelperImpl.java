@@ -225,8 +225,9 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 			return TransactionInvokerUtil.invoke(
 				_transactionConfig,
 				new CopyLayoutCallable(
-					copySegmentsExperience, sourceLayout, sourceSegmentsExperiencesIds,
-					targetLayout, targetSegmentsExperiencesIds));
+					copySegmentsExperience, sourceLayout,
+					sourceSegmentsExperiencesIds, targetLayout,
+					targetSegmentsExperiencesIds));
 		}
 		catch (Throwable throwable) {
 			throw new Exception(throwable);

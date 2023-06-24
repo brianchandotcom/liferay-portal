@@ -12948,6 +12948,7 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 			</then>
 		</if>
 
+		<get-testcase-property property.name="test.liferay.virtual.instance" />
 		<get-testcase-property property.name="test.skip.tear.down" />
 
 		<if>
@@ -13013,7 +13014,7 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		<get-testcase-property property.name="test.liferay.virtual.instance" />
 
 		<if>
-			<isset property="${test.liferay.virtual.instance}" />
+			<isset property="test.liferay.virtual.instance" />
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
 					test.liferay.virtual.instance=${test.liferay.virtual.instance}

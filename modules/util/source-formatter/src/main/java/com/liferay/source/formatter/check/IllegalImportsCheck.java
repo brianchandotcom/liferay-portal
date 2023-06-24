@@ -182,18 +182,23 @@ public class IllegalImportsCheck extends BaseFileCheck {
 					"org.slf4j.Logger");
 		}
 
-		if (isAttributeValue(_AVOID_OPTIONAL_KEY, absolutePath) &&
-			content.contains("java.util.Optional")) {
+		if (!absolutePath.contains("/modules/etl/") &&
+			!absolutePath.contains("/modules/sdk/")) {
 
-			addMessage(
-				fileName, "Do not use java.util.Optional, see LPS-170503");
-		}
+			if (isAttributeValue(_AVOID_OPTIONAL_KEY, absolutePath) &&
+				content.contains("java.util.Optional")) {
 
-		if (isAttributeValue(_AVOID_STREAM_KEY, absolutePath) &&
-			content.contains("java.util.stream")) {
+				addMessage(
+					fileName, "Do not use java.util.Optional, see LPS-170503");
+			}
 
-			addMessage(
-				fileName, "Do not use java.util.stream.Stream, see LPS-170503");
+			if (isAttributeValue(_AVOID_STREAM_KEY, absolutePath) &&
+				content.contains("java.util.stream")) {
+
+				addMessage(
+					fileName,
+					"Do not use java.util.stream.Stream, see LPS-170503");
+			}
 		}
 
 		SourceProcessor sourceProcessor = getSourceProcessor();

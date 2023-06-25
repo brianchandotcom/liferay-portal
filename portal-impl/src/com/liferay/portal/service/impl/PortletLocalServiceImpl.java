@@ -559,10 +559,10 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 			portlet = new PortletImpl(CompanyConstants.SYSTEM, portletId);
 
-			portlet.setPortletApp(getPortletApp(StringPool.BLANK));
-			portlet.setPortletName(portletId);
 			portlet.setDisplayName(portletId);
+			portlet.setPortletApp(getPortletApp(StringPool.BLANK));
 			portlet.setPortletClass(UndeployedPortlet.class.getName());
+			portlet.setPortletName(portletId);
 
 			Set<String> mimeTypePortletModes = new HashSet<>();
 
@@ -2038,15 +2038,15 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			portletModel = new PortletImpl(CompanyConstants.SYSTEM, portletId);
 		}
 
-		portletModel.setPluginPackage(pluginPackage);
-		portletModel.setPortletApp(portletApp);
-		portletModel.setPortletName(portletName);
 		portletModel.setDisplayName(
 			GetterUtil.getString(
 				portletElement.elementText("display-name"),
 				portletModel.getDisplayName()));
+		portletModel.setPluginPackage(pluginPackage);
+		portletModel.setPortletApp(portletApp);
 		portletModel.setPortletClass(
 			GetterUtil.getString(portletElement.elementText("portlet-class")));
+		portletModel.setPortletName(portletName);
 
 		Map<String, String> initParams = new HashMap<>();
 

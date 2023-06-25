@@ -160,9 +160,9 @@ public class LiferayInputStreamTest {
 	protected void testGetCachedInputStream(boolean readable, byte[] content)
 		throws Exception {
 
-		_mockHttpServletRequest.setContent(content);
 		_mockHttpServletRequest.setAttribute(
 			LiferayInputStream.COPY_MULTIPART_STREAM_TO_FILE, readable);
+		_mockHttpServletRequest.setContent(content);
 
 		_liferayInputStream = new LiferayInputStream(_mockHttpServletRequest);
 

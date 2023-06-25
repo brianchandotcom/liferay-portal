@@ -28,6 +28,7 @@ import com.liferay.info.field.type.GridInfoFieldType;
 import com.liferay.info.field.type.HTMLInfoFieldType;
 import com.liferay.info.field.type.ImageInfoFieldType;
 import com.liferay.info.field.type.InfoFieldType;
+import com.liferay.info.field.type.MultiselectInfoFieldType;
 import com.liferay.info.field.type.NumberInfoFieldType;
 import com.liferay.info.field.type.SelectInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
@@ -87,10 +88,9 @@ public class DDMFormFieldInfoFieldConverterImpl
 				ddmFormField.getType(),
 				DDMFormFieldTypeConstants.CHECKBOX_MULTIPLE)) {
 
-			finalStep.attribute(SelectInfoFieldType.MULTIPLE, true);
 			finalStep.attribute(
-				SelectInfoFieldType.OPTIONS,
-				_getInfoFieldOptions(ddmFormField));
+				MultiselectInfoFieldType.OPTIONS,
+				_getMultiselectInfoFieldTypeOptions(ddmFormField));
 		}
 
 		if (Objects.equals(
@@ -105,18 +105,22 @@ public class DDMFormFieldInfoFieldConverterImpl
 
 			finalStep.attribute(
 				SelectInfoFieldType.OPTIONS,
-				_getInfoFieldOptions(ddmFormField));
+				_getSelectInfoFieldTypeOptions(ddmFormField));
 		}
 
 		if (Objects.equals(
 				ddmFormField.getType(), DDMFormFieldTypeConstants.SELECT)) {
 
-			finalStep.attribute(
-				SelectInfoFieldType.MULTIPLE,
-				GetterUtil.getBoolean(ddmFormField.getProperty("multiple")));
-			finalStep.attribute(
-				SelectInfoFieldType.OPTIONS,
-				_getInfoFieldOptions(ddmFormField));
+			if (GetterUtil.getBoolean(ddmFormField.getProperty("multiple"))) {
+				finalStep.attribute(
+					MultiselectInfoFieldType.OPTIONS,
+					_getMultiselectInfoFieldTypeOptions(ddmFormField));
+			}
+			else {
+				finalStep.attribute(
+					SelectInfoFieldType.OPTIONS,
+					_getSelectInfoFieldTypeOptions(ddmFormField));
+			}
 		}
 
 		if (Objects.equals(
@@ -130,27 +134,6 @@ public class DDMFormFieldInfoFieldConverterImpl
 		return finalStep;
 	}
 
-	private List<SelectInfoFieldType.Option> _getInfoFieldOptions(
-		DDMFormField ddmFormField) {
-
-		List<SelectInfoFieldType.Option> options = new ArrayList<>();
-
-		DDMFormFieldOptions ddmFormFieldOptions =
-			ddmFormField.getDDMFormFieldOptions();
-
-		for (String value : ddmFormFieldOptions.getOptionsValues()) {
-			LocalizedValue localizedValue = ddmFormFieldOptions.getOptionLabels(
-				value);
-
-			options.add(
-				new SelectInfoFieldType.Option(
-					new FunctionInfoLocalizedValue<>(localizedValue::getString),
-					value));
-		}
-
-		return options;
-	}
-
 	private InfoFieldType _getInfoFieldType(DDMFormField ddmFormField) {
 		String ddmFormFieldType = ddmFormField.getType();
 
@@ -161,13 +144,9 @@ public class DDMFormFieldInfoFieldConverterImpl
 		}
 		else if (Objects.equals(
 					ddmFormFieldType,
-					DDMFormFieldTypeConstants.CHECKBOX_MULTIPLE) ||
-				 Objects.equals(
-					 ddmFormFieldType, DDMFormFieldTypeConstants.RADIO) ||
-				 Objects.equals(
-					 ddmFormFieldType, DDMFormFieldTypeConstants.SELECT)) {
+					DDMFormFieldTypeConstants.CHECKBOX_MULTIPLE)) {
 
-			return SelectInfoFieldType.INSTANCE;
+			return MultiselectInfoFieldType.INSTANCE;
 		}
 		else if (Objects.equals(
 					ddmFormFieldType, DDMFormFieldTypeConstants.DATE)) {
@@ -201,6 +180,13 @@ public class DDMFormFieldInfoFieldConverterImpl
 			return NumberInfoFieldType.INSTANCE;
 		}
 		else if (Objects.equals(
+					ddmFormFieldType, DDMFormFieldTypeConstants.RADIO) ||
+				 Objects.equals(
+					 ddmFormFieldType, DDMFormFieldTypeConstants.SELECT)) {
+
+			return SelectInfoFieldType.INSTANCE;
+		}
+		else if (Objects.equals(
 					ddmFormField.getType(),
 					DDMFormFieldTypeConstants.RICH_TEXT)) {
 
@@ -210,12 +196,55 @@ public class DDMFormFieldInfoFieldConverterImpl
 		return TextInfoFieldType.INSTANCE;
 	}
 
+	private List<MultiselectInfoFieldType.Option>
+		_getMultiselectInfoFieldTypeOptions(DDMFormField ddmFormField) {
+
+		List<MultiselectInfoFieldType.Option> options = new ArrayList<>();
+
+		DDMFormFieldOptions ddmFormFieldOptions =
+			ddmFormField.getDDMFormFieldOptions();
+
+		for (String value : ddmFormFieldOptions.getOptionsValues()) {
+			LocalizedValue localizedValue = ddmFormFieldOptions.getOptionLabels(
+				value);
+
+			options.add(
+				new MultiselectInfoFieldType.Option(
+					new FunctionInfoLocalizedValue<>(localizedValue::getString),
+					value));
+		}
+
+		return options;
+	}
+
+	private List<SelectInfoFieldType.Option> _getSelectInfoFieldTypeOptions(
+		DDMFormField ddmFormField) {
+
+		List<SelectInfoFieldType.Option> options = new ArrayList<>();
+
+		DDMFormFieldOptions ddmFormFieldOptions =
+			ddmFormField.getDDMFormFieldOptions();
+
+		for (String value : ddmFormFieldOptions.getOptionsValues()) {
+			LocalizedValue localizedValue = ddmFormFieldOptions.getOptionLabels(
+				value);
+
+			options.add(
+				new SelectInfoFieldType.Option(
+					new FunctionInfoLocalizedValue<>(localizedValue::getString),
+					value));
+		}
+
+		return options;
+	}
+
 	private boolean _isInfoFieldEditable(InfoFieldType infoFieldType) {
 		if (Objects.equals(infoFieldType, BooleanInfoFieldType.INSTANCE) ||
 			Objects.equals(infoFieldType, SelectInfoFieldType.INSTANCE) ||
 			Objects.equals(infoFieldType, DateInfoFieldType.INSTANCE) ||
 			Objects.equals(infoFieldType, HTMLInfoFieldType.INSTANCE) ||
 			Objects.equals(infoFieldType, ImageInfoFieldType.INSTANCE) ||
+			Objects.equals(infoFieldType, MultiselectInfoFieldType.INSTANCE) ||
 			Objects.equals(infoFieldType, NumberInfoFieldType.INSTANCE) ||
 			Objects.equals(infoFieldType, TextInfoFieldType.INSTANCE)) {
 

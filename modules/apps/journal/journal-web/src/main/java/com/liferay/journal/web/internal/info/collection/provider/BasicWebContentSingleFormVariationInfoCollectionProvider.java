@@ -24,7 +24,7 @@ import com.liferay.info.collection.provider.FilteredInfoCollectionProvider;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.collection.provider.SingleFormVariationInfoCollectionProvider;
 import com.liferay.info.field.InfoField;
-import com.liferay.info.field.type.SelectInfoFieldType;
+import com.liferay.info.field.type.MultiselectInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.filter.InfoFilter;
 import com.liferay.info.filter.KeywordsInfoFilter;
@@ -124,7 +124,7 @@ public class BasicWebContentSingleFormVariationInfoCollectionProvider
 	}
 
 	private InfoField<?> _getAssetTagsInfoField() {
-		List<SelectInfoFieldType.Option> options = new ArrayList<>();
+		List<MultiselectInfoFieldType.Option> options = new ArrayList<>();
 
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
@@ -137,22 +137,20 @@ public class BasicWebContentSingleFormVariationInfoCollectionProvider
 
 		for (AssetTag assetTag : assetTags) {
 			options.add(
-				new SelectInfoFieldType.Option(
+				new MultiselectInfoFieldType.Option(
 					new SingleValueInfoLocalizedValue<>(assetTag.getName()),
 					assetTag.getName()));
 		}
 
 		InfoField.FinalStep<?> finalStep = InfoField.builder(
 		).infoFieldType(
-			SelectInfoFieldType.INSTANCE
+			MultiselectInfoFieldType.INSTANCE
 		).namespace(
 			StringPool.BLANK
 		).name(
 			Field.ASSET_TAG_NAMES
 		).attribute(
-			SelectInfoFieldType.MULTIPLE, true
-		).attribute(
-			SelectInfoFieldType.OPTIONS, options
+			MultiselectInfoFieldType.OPTIONS, options
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.localize(getClass(), "tag")
 		).localizable(

@@ -278,6 +278,7 @@ public class InfoRequestFieldValuesProviderHelper {
 
 		if (infoField.getInfoFieldType() instanceof FileInfoFieldType ||
 			infoField.getInfoFieldType() instanceof HTMLInfoFieldType ||
+			infoField.getInfoFieldType() instanceof MultiselectInfoFieldType ||
 			infoField.getInfoFieldType() instanceof LongTextInfoFieldType ||
 			infoField.getInfoFieldType() instanceof RelationshipInfoFieldType ||
 			infoField.getInfoFieldType() instanceof SelectInfoFieldType ||

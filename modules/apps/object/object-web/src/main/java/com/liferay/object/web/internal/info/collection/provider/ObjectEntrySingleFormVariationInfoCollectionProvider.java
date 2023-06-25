@@ -29,6 +29,7 @@ import com.liferay.info.collection.provider.SingleFormVariationInfoCollectionPro
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldSet;
 import com.liferay.info.field.InfoFieldSetEntry;
+import com.liferay.info.field.type.MultiselectInfoFieldType;
 import com.liferay.info.field.type.SelectInfoFieldType;
 import com.liferay.info.filter.InfoFilter;
 import com.liferay.info.filter.KeywordsInfoFilter;
@@ -582,26 +583,24 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 
 		assetTags.sort(new AssetTagNameComparator(true));
 
-		List<SelectInfoFieldType.Option> options = new ArrayList<>();
+		List<MultiselectInfoFieldType.Option> options = new ArrayList<>();
 
 		for (AssetTag assetTag : assetTags) {
 			options.add(
-				new SelectInfoFieldType.Option(
+				new MultiselectInfoFieldType.Option(
 					new SingleValueInfoLocalizedValue<>(assetTag.getName()),
 					assetTag.getName()));
 		}
 
 		InfoField.FinalStep<?> finalStep = InfoField.builder(
 		).infoFieldType(
-			SelectInfoFieldType.INSTANCE
+			MultiselectInfoFieldType.INSTANCE
 		).namespace(
 			StringPool.BLANK
 		).name(
 			Field.ASSET_TAG_NAMES
 		).attribute(
-			SelectInfoFieldType.MULTIPLE, true
-		).attribute(
-			SelectInfoFieldType.OPTIONS, options
+			MultiselectInfoFieldType.OPTIONS, options
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.localize(getClass(), "tag")
 		).localizable(
@@ -628,7 +627,7 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 		for (AssetVocabulary assetVocabulary :
 				_getAssetVocabularies(serviceContext)) {
 
-			List<SelectInfoFieldType.Option> options = new ArrayList<>();
+			List<MultiselectInfoFieldType.Option> options = new ArrayList<>();
 
 			for (AssetCategory assetCategory :
 					_assetCategoryLocalService.getVocabularyCategories(
@@ -636,7 +635,7 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 						QueryUtil.ALL_POS, null)) {
 
 				options.add(
-					new SelectInfoFieldType.Option(
+					new MultiselectInfoFieldType.Option(
 						new SingleValueInfoLocalizedValue<>(
 							assetCategory.getName()),
 						String.valueOf(assetCategory.getCategoryId())));
@@ -646,15 +645,13 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 				fieldSetEntries.add(
 					InfoField.builder(
 					).infoFieldType(
-						SelectInfoFieldType.INSTANCE
+						MultiselectInfoFieldType.INSTANCE
 					).namespace(
 						StringPool.BLANK
 					).name(
 						String.valueOf(assetVocabulary.getVocabularyId())
 					).attribute(
-						SelectInfoFieldType.MULTIPLE, true
-					).attribute(
-						SelectInfoFieldType.OPTIONS, options
+						MultiselectInfoFieldType.OPTIONS, options
 					).labelInfoLocalizedValue(
 						InfoLocalizedValue.singleValue(
 							assetVocabulary.getTitle(

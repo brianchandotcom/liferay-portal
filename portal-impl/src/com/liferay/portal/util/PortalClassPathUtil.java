@@ -64,13 +64,13 @@ public class PortalClassPathUtil {
 		ProcessConfig.Builder builder = new ProcessConfig.Builder(
 			_portalProcessConfig);
 
-		builder.setRuntimeClassPath(
-			_buildRuntimeClasspath(
-				seedClass, _portalProcessConfig.getRuntimeClassPath()));
 		builder.setReactClassLoader(
 			AggregateClassLoader.getAggregateClassLoader(
 				PortalClassLoaderUtil.getClassLoader(),
 				seedClass.getClassLoader()));
+		builder.setRuntimeClassPath(
+			_buildRuntimeClasspath(
+				seedClass, _portalProcessConfig.getRuntimeClassPath()));
 
 		return builder.build();
 	}

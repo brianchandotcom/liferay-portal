@@ -1666,37 +1666,25 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		VerifyProductTask verifyProductTask = GradleUtil.addTask(
 			project, VERIFY_PRODUCT_TASK_NAME, VerifyProductTask.class);
 
+		verifyProductTask.onlyIf(
+			new Spec<Task>() {
+
+				@Override
+				public boolean isSatisfiedBy(Task task) {
+					return Validator.isNotNull(workspaceExtension.getProduct());
+				}
+
+			});
+
 		project.afterEvaluate(
 			new Action<Project>() {
 
 				@Override
 				public void execute(Project project) {
-					if (Objects.nonNull(workspaceExtension.getProduct())) {
-						WorkspaceExtension.ProductInfo productInfo =
-							workspaceExtension.getProductInfo();
-
-						if (Objects.nonNull(productInfo)) {
-							verifyProductTask.setBundleUrl(
-								productInfo.getBundleUrl());
-							verifyProductTask.setDockerImageLiferay(
-								productInfo.getLiferayDockerImage());
-							verifyProductTask.setTargetPlatformVersion(
-								productInfo.getTargetPlatformVersion());
-						}
-						else {
-							verifyProductTask.setErrorMessage(
-								"The product key is invalid. Please provide " +
-									"a valid product key.");
-						}
-					}
-					else {
-						verifyProductTask.setBundleUrl(
-							workspaceExtension.getBundleUrl());
-						verifyProductTask.setDockerImageLiferay(
-							workspaceExtension.getDockerImageLiferay());
-						verifyProductTask.setTargetPlatformVersion(
-							workspaceExtension.getTargetPlatformVersion());
-					}
+					verifyProductTask.setProduct(
+						workspaceExtension.getProduct());
+					verifyProductTask.setProductInfo(
+						workspaceExtension.getProductInfo());
 				}
 
 			});

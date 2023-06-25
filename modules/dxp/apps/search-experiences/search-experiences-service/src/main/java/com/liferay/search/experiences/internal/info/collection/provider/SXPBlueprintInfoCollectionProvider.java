@@ -21,7 +21,7 @@ import com.liferay.info.collection.provider.ConfigurableInfoCollectionProvider;
 import com.liferay.info.collection.provider.FilteredInfoCollectionProvider;
 import com.liferay.info.collection.provider.SingleFormVariationInfoCollectionProvider;
 import com.liferay.info.field.InfoField;
-import com.liferay.info.field.type.SelectInfoFieldType;
+import com.liferay.info.field.type.MultiselectInfoFieldType;
 import com.liferay.info.filter.CategoriesInfoFilter;
 import com.liferay.info.filter.InfoFilter;
 import com.liferay.info.filter.KeywordsInfoFilter;
@@ -110,15 +110,13 @@ public class SXPBlueprintInfoCollectionProvider
 		).infoFieldSetEntry(
 			InfoField.builder(
 			).infoFieldType(
-				SelectInfoFieldType.INSTANCE
+				MultiselectInfoFieldType.INSTANCE
 			).namespace(
 				StringPool.BLANK
 			).name(
 				"scope"
 			).attribute(
-				SelectInfoFieldType.OPTIONS, _getOptions()
-			).attribute(
-				SelectInfoFieldType.MULTIPLE, true
+				MultiselectInfoFieldType.OPTIONS, _getOptions()
 			).labelInfoLocalizedValue(
 				InfoLocalizedValue.localize(getClass(), "Scope")
 			).localizable(
@@ -159,12 +157,12 @@ public class SXPBlueprintInfoCollectionProvider
 		return FeatureFlagManagerUtil.isEnabled("LPS-129412");
 	}
 
-	private List<SelectInfoFieldType.Option> _getOptions() {
+	private List<MultiselectInfoFieldType.Option> _getOptions() {
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		List<SelectInfoFieldType.Option> options = ListUtil.fromArray(
-			new SelectInfoFieldType.Option(
+		List<MultiselectInfoFieldType.Option> options = ListUtil.fromArray(
+			new MultiselectInfoFieldType.Option(
 				true,
 				new ResourceBundleInfoLocalizedValue(getClass(), "This Site"),
 				String.valueOf(serviceContext.getScopeGroupId())));
@@ -195,7 +193,7 @@ public class SXPBlueprintInfoCollectionProvider
 			}
 
 			options.add(
-				new SelectInfoFieldType.Option(
+				new MultiselectInfoFieldType.Option(
 					new ResourceBundleInfoLocalizedValue(
 						getClass(), group.getNameCurrentValue()),
 					String.valueOf(group.getGroupId())));

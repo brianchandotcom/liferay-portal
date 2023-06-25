@@ -25,7 +25,7 @@ import com.liferay.info.collection.provider.CollectionQuery;
 import com.liferay.info.collection.provider.ConfigurableInfoCollectionProvider;
 import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
 import com.liferay.info.field.InfoField;
-import com.liferay.info.field.type.SelectInfoFieldType;
+import com.liferay.info.field.type.MultiselectInfoFieldType;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.info.localized.bundle.ModelResourceLocalizedValue;
@@ -198,7 +198,7 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 	}
 
 	private InfoField _getItemTypesInfoField() {
-		List<SelectInfoFieldType.Option> options = new ArrayList<>();
+		List<MultiselectInfoFieldType.Option> options = new ArrayList<>();
 
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
@@ -230,7 +230,7 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 				assetRendererFactories) {
 
 			options.add(
-				new SelectInfoFieldType.Option(
+				new MultiselectInfoFieldType.Option(
 					new ModelResourceLocalizedValue(
 						assetRendererFactory.getClassName()),
 					assetRendererFactory.getClassName()));
@@ -238,15 +238,13 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 
 		InfoField.FinalStep finalStep = InfoField.builder(
 		).infoFieldType(
-			SelectInfoFieldType.INSTANCE
+			MultiselectInfoFieldType.INSTANCE
 		).namespace(
 			StringPool.BLANK
 		).name(
 			"item_types"
 		).attribute(
-			SelectInfoFieldType.MULTIPLE, true
-		).attribute(
-			SelectInfoFieldType.OPTIONS, options
+			MultiselectInfoFieldType.OPTIONS, options
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.localize(getClass(), "item-type")
 		).localizable(

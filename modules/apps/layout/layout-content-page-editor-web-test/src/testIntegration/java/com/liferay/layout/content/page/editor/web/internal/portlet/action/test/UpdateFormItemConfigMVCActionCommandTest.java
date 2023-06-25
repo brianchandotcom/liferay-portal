@@ -27,6 +27,7 @@ import com.liferay.info.field.type.DateInfoFieldType;
 import com.liferay.info.field.type.FileInfoFieldType;
 import com.liferay.info.field.type.InfoFieldType;
 import com.liferay.info.field.type.LongTextInfoFieldType;
+import com.liferay.info.field.type.MultiselectInfoFieldType;
 import com.liferay.info.field.type.NumberInfoFieldType;
 import com.liferay.info.field.type.RelationshipInfoFieldType;
 import com.liferay.info.field.type.SelectInfoFieldType;
@@ -663,6 +664,10 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 
 		if (infoFieldType instanceof LongTextInfoFieldType) {
 			return "INPUTS-textarea";
+		}
+
+		if (infoFieldType instanceof MultiselectInfoFieldType) {
+			return "INPUTS-multiselect-list";
 		}
 
 		if (infoFieldType instanceof NumberInfoFieldType) {

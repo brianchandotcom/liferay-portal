@@ -176,7 +176,25 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 		String label = StringPool.BLANK;
 		String value = StringPool.BLANK;
 
-		if (infoFieldType instanceof SelectInfoFieldType) {
+		if (infoFieldType instanceof MultiselectInfoFieldType) {
+			List<MultiselectInfoFieldType.Option> options =
+				(List<MultiselectInfoFieldType.Option>)infoField.getAttribute(
+					MultiselectInfoFieldType.OPTIONS);
+
+			if (options == null) {
+				options = Collections.emptyList();
+			}
+
+			for (MultiselectInfoFieldType.Option option : options) {
+				if (option.isActive()) {
+					label = option.getLabel(locale);
+					value = option.getValue();
+
+					break;
+				}
+			}
+		}
+		else if (infoFieldType instanceof SelectInfoFieldType) {
 			List<SelectInfoFieldType.Option> options =
 				(List<SelectInfoFieldType.Option>)infoField.getAttribute(
 					SelectInfoFieldType.OPTIONS);

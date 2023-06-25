@@ -262,13 +262,18 @@ public class ObjectEntryInfoItemFormProvider
 					objectField.getBusinessType(),
 					ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
 
-			finalStep.attribute(
-				SelectInfoFieldType.MULTIPLE,
-				objectField.compareBusinessType(
-					ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST)
-			).attribute(
-				SelectInfoFieldType.OPTIONS, _getOptions(objectField)
-			);
+			if (objectField.compareBusinessType(
+					ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
+
+				finalStep.attribute(
+					MultiselectInfoFieldType.OPTIONS,
+					_getMultiselectInfoFieldTypeOptions(objectField));
+			}
+			else {
+				finalStep.attribute(
+					SelectInfoFieldType.OPTIONS,
+					_getSelectInfoFieldTypeOptions(objectField));
+			}
 		}
 		else if (Objects.equals(
 					objectField.getBusinessType(),
@@ -613,6 +618,30 @@ public class ObjectEntryInfoItemFormProvider
 		return ObjectDefinition.class.getName() + "#" + objectDefinitionId;
 	}
 
+	private List<MultiselectInfoFieldType.Option>
+		_getMultiselectInfoFieldTypeOptions(ObjectField objectField) {
+
+		List<MultiselectInfoFieldType.Option> options = new ArrayList<>();
+
+		List<ListTypeEntry> listTypeEntries =
+			_listTypeEntryLocalService.getListTypeEntries(
+				objectField.getListTypeDefinitionId());
+
+		for (ListTypeEntry listTypeEntry : listTypeEntries) {
+			options.add(
+				new MultiselectInfoFieldType.Option(
+					Objects.equals(
+						ObjectFieldSettingUtil.getDefaultValueAsString(
+							null, objectField.getObjectFieldId(),
+							_objectFieldSettingLocalService, null),
+						listTypeEntry.getKey()),
+					new FunctionInfoLocalizedValue<>(listTypeEntry::getName),
+					listTypeEntry.getKey()));
+		}
+
+		return options;
+	}
+
 	private List<InfoFieldSetEntry> _getObjectActionInfoFieldSetEntries() {
 		if (!FeatureFlagManagerUtil.isEnabled("LPS-169992")) {
 			return Collections.emptyList();
@@ -721,30 +750,6 @@ public class ObjectEntryInfoItemFormProvider
 		).name(
 			name
 		).build();
-	}
-
-	private List<SelectInfoFieldType.Option> _getOptions(
-		ObjectField objectField) {
-
-		List<SelectInfoFieldType.Option> options = new ArrayList<>();
-
-		List<ListTypeEntry> listTypeEntries =
-			_listTypeEntryLocalService.getListTypeEntries(
-				objectField.getListTypeDefinitionId());
-
-		for (ListTypeEntry listTypeEntry : listTypeEntries) {
-			options.add(
-				new SelectInfoFieldType.Option(
-					Objects.equals(
-						ObjectFieldSettingUtil.getDefaultValueAsString(
-							null, objectField.getObjectFieldId(),
-							_objectFieldSettingLocalService, null),
-						listTypeEntry.getKey()),
-					new FunctionInfoLocalizedValue<>(listTypeEntry::getName),
-					listTypeEntry.getKey()));
-		}
-
-		return options;
 	}
 
 	private List<InfoFieldSetEntry> _getParentsInfoFieldSets(
@@ -870,6 +875,30 @@ public class ObjectEntryInfoItemFormProvider
 
 		return PortalUtil.getPortalURL(serviceContext.getRequest()) +
 			PortalUtil.getPathContext() + restContextPath;
+	}
+
+	private List<SelectInfoFieldType.Option> _getSelectInfoFieldTypeOptions(
+		ObjectField objectField) {
+
+		List<SelectInfoFieldType.Option> options = new ArrayList<>();
+
+		List<ListTypeEntry> listTypeEntries =
+			_listTypeEntryLocalService.getListTypeEntries(
+				objectField.getListTypeDefinitionId());
+
+		for (ListTypeEntry listTypeEntry : listTypeEntries) {
+			options.add(
+				new SelectInfoFieldType.Option(
+					Objects.equals(
+						ObjectFieldSettingUtil.getDefaultValueAsString(
+							null, objectField.getObjectFieldId(),
+							_objectFieldSettingLocalService, null),
+						listTypeEntry.getKey()),
+					new FunctionInfoLocalizedValue<>(listTypeEntry::getName),
+					listTypeEntry.getKey()));
+		}
+
+		return options;
 	}
 
 	private boolean _isGuestUser() {

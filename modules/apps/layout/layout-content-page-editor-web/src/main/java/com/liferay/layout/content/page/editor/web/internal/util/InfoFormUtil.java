@@ -164,7 +164,33 @@ public class InfoFormUtil {
 			"type", _getType(infoFieldType)
 		);
 
-		if (infoFieldType instanceof SelectInfoFieldType) {
+		if (infoFieldType instanceof CategoriesInfoFieldType) {
+			jsonObject.put(
+				"typeOptions",
+				JSONUtil.put(
+					"dependency",
+					() -> {
+						KeyValuePair dependencyKeyValuePair =
+							(KeyValuePair)infoField.getAttribute(
+								CategoriesInfoFieldType.DEPENDENCY);
+
+						if (dependencyKeyValuePair == null) {
+							return null;
+						}
+
+						return JSONUtil.put(
+							dependencyKeyValuePair.getKey(),
+							dependencyKeyValuePair.getValue());
+					}
+				).put(
+					"infoItemSelectorURL",
+					(String)infoField.getAttribute(
+						CategoriesInfoFieldType.INFO_ITEM_SELECTOR_URL)
+				).put(
+					"modalSize", "md"
+				));
+		}
+		else if (infoFieldType instanceof SelectInfoFieldType) {
 			List<SelectInfoFieldType.Option> options = new ArrayList<>();
 
 			if (infoField.getAttribute(SelectInfoFieldType.OPTIONS) != null) {
@@ -230,32 +256,6 @@ public class InfoFormUtil {
 					_log.debug(exception);
 				}
 			}
-		}
-		else if (infoFieldType instanceof CategoriesInfoFieldType) {
-			jsonObject.put(
-				"typeOptions",
-				JSONUtil.put(
-					"dependency",
-					() -> {
-						KeyValuePair dependencyKeyValuePair =
-							(KeyValuePair)infoField.getAttribute(
-								CategoriesInfoFieldType.DEPENDENCY);
-
-						if (dependencyKeyValuePair == null) {
-							return null;
-						}
-
-						return JSONUtil.put(
-							dependencyKeyValuePair.getKey(),
-							dependencyKeyValuePair.getValue());
-					}
-				).put(
-					"infoItemSelectorURL",
-					(String)infoField.getAttribute(
-						CategoriesInfoFieldType.INFO_ITEM_SELECTOR_URL)
-				).put(
-					"modalSize", "md"
-				));
 		}
 
 		return jsonObject;

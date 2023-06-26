@@ -1511,8 +1511,6 @@ definition {
 		}
 
 		task ("Define the custom CSS") {
-			Navigator.gotoNavTab(navTab = "Design");
-
 			Theme.configureLookAndFeelSpecificLook();
 
 			Theme.configureLookAndFeelCustomCSS(cssText = '''div.component-paragraph {background-color: red; color:white;}''');
@@ -1569,8 +1567,6 @@ definition {
 		}
 
 		task ("Change the custom CSS") {
-			Navigator.gotoNavTab(navTab = "Design");
-
 			Theme.configureLookAndFeelCustomCSS(cssText = '''div.component-paragraph {background-color: blue; color:black;}''');
 
 			PortletEntry.save();

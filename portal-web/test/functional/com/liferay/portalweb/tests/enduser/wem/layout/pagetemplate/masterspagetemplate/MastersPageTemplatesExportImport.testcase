@@ -272,8 +272,6 @@ definition {
 
 			Click(locator1 = "PageEditor#MORE_LINK");
 
-			Navigator.gotoNavTab(navTab = "Design");
-
 			Theme.configureLookAndFeelShowFooter(showFooter = "true");
 
 			Theme.configureLookAndFeelShowHeader(showHeader = "true");
@@ -321,8 +319,6 @@ definition {
 			Click(locator1 = "PageEditor#MORE_LINK");
 
 			WaitForPageLoad();
-
-			Navigator.gotoNavTab(navTab = "Design");
 
 			AssertChecked.assertCheckedNotVisible(locator1 = "Radio#SPECIFIC_LOOK");
 

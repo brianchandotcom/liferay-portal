@@ -653,8 +653,6 @@ definition {
 
 				WaitForPageLoad();
 
-				Navigator.gotoNavTab(navTab = "Design");
-
 				Click(
 					ariaLabel = "Edit Master",
 					locator1 = "Link#ANY_WITH_ARIA_LABEL");

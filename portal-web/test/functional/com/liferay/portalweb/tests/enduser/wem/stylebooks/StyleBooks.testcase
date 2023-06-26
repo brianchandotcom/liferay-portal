@@ -220,8 +220,6 @@ definition {
 
 			Click(locator1 = "PageEditor#MORE_LINK");
 
-			Navigator.gotoNavTab(navTab = "Design");
-
 			AssertTextEquals(
 				locator1 = "PagesAdmin#STYLE_BOOK_NAME",
 				value1 = "Styles from Theme");
@@ -291,8 +289,6 @@ definition {
 			PageEditor.gotoTab(tabName = "Page Design Options");
 
 			Click(locator1 = "PageEditor#MORE_LINK");
-
-			Navigator.gotoNavTab(navTab = "Design");
 
 			AssertTextEquals(
 				locator1 = "PagesAdmin#STYLE_BOOK_NAME",
@@ -648,8 +644,6 @@ definition {
 
 			Click(locator1 = "PageEditor#MORE_LINK");
 
-			Navigator.gotoNavTab(navTab = "Design");
-
 			Theme.configureLookAndFeelSpecificLook();
 
 			Theme.changeCurrentTheme(themeName = "Minium");
@@ -662,7 +656,7 @@ definition {
 		task ("Select style book via Page Design Options panel") {
 			PageEditor.gotoTab(tabName = "Page Design Options");
 
-			Navigator.gotoNavTab(navTab = "Style Book");
+			StyleBooks.selectStyleBookViaPageDesignOptions(styleBookName = "Test Style Book Name");
 		}
 	}
 

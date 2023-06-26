@@ -452,8 +452,6 @@ definition {
 
 			WaitForPageLoad();
 
-			Navigator.gotoNavTab(navTab = "Design");
-
 			PagesAdmin.addThemeCSSExtension(extensionName = ${randomEntryName1});
 
 			PortletEntry.save();
@@ -485,8 +483,6 @@ definition {
 			Click(locator1 = "PageEditor#MORE_LINK");
 
 			WaitForPageLoad();
-
-			Navigator.gotoNavTab(navTab = "Design");
 
 			AssertTextEquals(
 				key_text = "Theme CSS",
@@ -541,8 +537,6 @@ definition {
 
 			WaitForPageLoad();
 
-			Navigator.gotoNavTab(navTab = "Design");
-
 			PagesAdmin.addThemeCSSExtension(extensionName = ${randomEntryName1});
 
 			AssertTextEquals(
@@ -566,8 +560,6 @@ definition {
 		}
 
 		task ("Then the site designer could clear the theme CSS extension selection") {
-			Navigator.gotoNavTab(navTab = "Design");
-
 			Click(
 				key_fieldLabel = "Theme CSS",
 				key_text = "trash",

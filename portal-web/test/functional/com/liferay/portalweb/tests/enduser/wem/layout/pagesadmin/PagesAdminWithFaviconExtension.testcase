@@ -204,8 +204,6 @@ definition {
 
 			WaitForPageLoad();
 
-			Navigator.gotoNavTab(navTab = "Design");
-
 			PagesAdmin.selectFaviconExtension(extensionName = ${randomEntryName1});
 
 			PortletEntry.save();
@@ -224,8 +222,6 @@ definition {
 		}
 
 		task ("Then the site designer could clear the favicon extension selection") {
-			Navigator.gotoNavTab(navTab = "Design");
-
 			AssertTextEquals(
 				locator1 = "PagesAdmin#FAVICON_NAME",
 				value1 = ${randomEntryName1});
@@ -272,8 +268,6 @@ definition {
 
 			WaitForPageLoad();
 
-			Navigator.gotoNavTab(navTab = "Design");
-
 			PagesAdmin.selectFaviconExtension(extensionName = ${randomEntryName1});
 
 			PortletEntry.save();
@@ -297,8 +291,6 @@ definition {
 			Click(locator1 = "PageEditor#MORE_LINK");
 
 			WaitForPageLoad();
-
-			Navigator.gotoNavTab(navTab = "Design");
 
 			AssertTextEquals(
 				locator1 = "PagesAdmin#FAVICON_NAME",
@@ -348,8 +340,6 @@ definition {
 
 			WaitForPageLoad();
 
-			Navigator.gotoNavTab(navTab = "Design");
-
 			PagesAdmin.selectFaviconExtension(extensionName = ${randomEntryName1});
 
 			PortletEntry.save();
@@ -377,8 +367,6 @@ definition {
 		}
 
 		task ("Then the site designer could apply a new favicon extension") {
-			Navigator.gotoNavTab(navTab = "Design");
-
 			PagesAdmin.selectFaviconExtension(extensionName = ${randomEntryName2});
 
 			AssertTextEquals(
@@ -421,8 +409,6 @@ definition {
 
 			WaitForPageLoad();
 
-			Navigator.gotoNavTab(navTab = "Design");
-
 			PagesAdmin.selectFaviconExtension(extensionName = ${randomEntryName1});
 
 			PortletEntry.save();
@@ -453,8 +439,6 @@ definition {
 			Click(locator1 = "PageEditor#MORE_LINK");
 
 			WaitForPageLoad();
-
-			Navigator.gotoNavTab(navTab = "Design");
 
 			AssertTextEquals(
 				locator1 = "PagesAdmin#FAVICON_NAME",

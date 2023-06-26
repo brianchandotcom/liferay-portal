@@ -271,8 +271,6 @@ definition {
 
 			Click(locator1 = "PageEditor#MORE_LINK");
 
-			Navigator.gotoNavTab(navTab = "Design");
-
 			AssertTextEquals(
 				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME",
 				value1 = "Custom Masters Page Template");
@@ -430,8 +428,6 @@ definition {
 
 			Click(locator1 = "PageEditor#MORE_LINK");
 
-			Navigator.gotoNavTab(navTab = "Design");
-
 			Theme.configureLookAndFeelSpecificLook();
 
 			Theme.configureLookAndFeelShowFooter(showFooter = "false");
@@ -487,8 +483,6 @@ definition {
 			Click(locator1 = "PageEditor#MORE_LINK");
 
 			WaitForPageLoad();
-
-			Navigator.gotoNavTab(navTab = "Design");
 
 			AssertChecked.assertCheckedNotVisible(locator1 = "Radio#SPECIFIC_LOOK");
 

@@ -99,8 +99,6 @@ definition {
 
 			Click(locator1 = "PageEditor#MORE_LINK");
 
-			Navigator.gotoNavTab(navTab = "Design");
-
 			AssertTextEquals(
 				locator1 = "PagesAdmin#STYLE_BOOK_NAME",
 				value1 = "Styles from Theme");
@@ -170,8 +168,6 @@ definition {
 			PageEditor.gotoTab(tabName = "Page Design Options");
 
 			Click(locator1 = "PageEditor#MORE_LINK");
-
-			Navigator.gotoNavTab(navTab = "Design");
 
 			AssertTextEquals(
 				locator1 = "PagesAdmin#STYLE_BOOK_NAME",

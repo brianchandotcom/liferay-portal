@@ -43,8 +43,6 @@ definition {
 		}
 
 		task ("Then the page creator accesses to the Look and Feel settings") {
-			Navigator.gotoNavTab(navTab = "Design");
-
 			AssertElementPresent(
 				key_title = "Design",
 				locator1 = "Header#H2_TITLE");

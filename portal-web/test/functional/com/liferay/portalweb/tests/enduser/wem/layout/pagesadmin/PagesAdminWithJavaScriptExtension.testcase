@@ -288,8 +288,6 @@ definition {
 
 			Click(locator1 = "PageEditor#MORE_LINK");
 
-			Navigator.gotoNavTab(navTab = "Design");
-
 			Navigator.gotoNavTab(navTab = "JavaScript");
 
 			PagesAdmin.addJavaScriptExtensions(
@@ -307,8 +305,6 @@ definition {
 			PageEditor.gotoTab(tabName = "Page Design Options");
 
 			Click(locator1 = "PageEditor#MORE_LINK");
-
-			Navigator.gotoNavTab(navTab = "Design");
 
 			Navigator.gotoNavTab(navTab = "JavaScript");
 
@@ -473,8 +469,6 @@ definition {
 
 			Click(locator1 = "PageEditor#MORE_LINK");
 
-			Navigator.gotoNavTab(navTab = "Design");
-
 			Navigator.gotoNavTab(navTab = "JavaScript");
 
 			PagesAdmin.addJavaScriptExtensions(
@@ -499,8 +493,6 @@ definition {
 		}
 
 		task ("Then the site designer could clear the JavaScript extension selection") {
-			Navigator.gotoNavTab(navTab = "Design");
-
 			Navigator.gotoNavTab(navTab = "JavaScript");
 
 			Click(
@@ -820,8 +812,6 @@ definition {
 
 			Click(locator1 = "PageEditor#MORE_LINK");
 
-			Navigator.gotoNavTab(navTab = "Design");
-
 			Navigator.gotoNavTab(navTab = "JavaScript");
 
 			PagesAdmin.addJavaScriptExtensions(
@@ -849,8 +839,6 @@ definition {
 			PageEditor.gotoTab(tabName = "Page Design Options");
 
 			Click(locator1 = "PageEditor#MORE_LINK");
-
-			Navigator.gotoNavTab(navTab = "Design");
 
 			Navigator.gotoNavTab(navTab = "JavaScript");
 
@@ -978,8 +966,6 @@ definition {
 
 				Click(locator1 = "PageEditor#MORE_LINK");
 
-				Navigator.gotoNavTab(navTab = "Design");
-
 				Navigator.gotoNavTab(navTab = "JavaScript");
 
 				PagesAdmin.addJavaScriptExtensions(
@@ -1014,8 +1000,6 @@ definition {
 				PageEditor.gotoTab(tabName = "Page Design Options");
 
 				Click(locator1 = "PageEditor#MORE_LINK");
-
-				Navigator.gotoNavTab(navTab = "Design");
 
 				Navigator.gotoNavTab(navTab = "JavaScript");
 

@@ -335,8 +335,6 @@ definition {
 
 			WaitForPageLoad();
 
-			Navigator.gotoNavTab(navTab = "Design");
-
 			PagesAdmin.addCSSExtensions(extensionNameList = ${randomEntryName1});
 
 			AssertVisible(
@@ -359,8 +357,6 @@ definition {
 		}
 
 		task ("Then the site designer could clear the CSS extension selection") {
-			Navigator.gotoNavTab(navTab = "Design");
-
 			Click(
 				key_tableEntry = ${randomEntryName1},
 				locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
@@ -403,8 +399,6 @@ definition {
 
 			WaitForPageLoad();
 
-			Navigator.gotoNavTab(navTab = "Design");
-
 			PagesAdmin.addCSSExtensions(extensionNameList = ${randomEntryName2});
 
 			PortletEntry.save();
@@ -435,8 +429,6 @@ definition {
 			Click(locator1 = "PageEditor#MORE_LINK");
 
 			WaitForPageLoad();
-
-			Navigator.gotoNavTab(navTab = "Design");
 
 			LexiconTable.viewTableEntryInfo(
 				index = 3,
@@ -579,8 +571,6 @@ definition {
 			Click(locator1 = "PageEditor#MORE_LINK");
 
 			WaitForPageLoad();
-
-			Navigator.gotoNavTab(navTab = "Design");
 
 			PagesAdmin.addCSSExtensions(extensionNameList = "${randomEntryName1},${randomEntryName2}");
 

@@ -14,7 +14,6 @@
 
 package com.liferay.journal.web.internal.info.collection.provider;
 
-import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
@@ -40,6 +39,7 @@ import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.web.internal.util.JournalSearcherUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.QueryConfig;
@@ -55,7 +55,6 @@ import com.liferay.portlet.asset.util.comparator.AssetTagNameComparator;
 
 import java.io.Serializable;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -131,9 +130,8 @@ public class BasicWebContentSingleFormVariationInfoCollectionProvider
 
 		List<AssetTag> assetTags = new ArrayList<>(
 			_assetTagLocalService.getGroupTags(
-				serviceContext.getScopeGroupId()));
-
-		assetTags.sort(new AssetTagNameComparator(true));
+				serviceContext.getScopeGroupId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, new AssetTagNameComparator(true)));
 
 		InfoField.FinalStep<?> finalStep = InfoField.builder(
 		).infoFieldType(

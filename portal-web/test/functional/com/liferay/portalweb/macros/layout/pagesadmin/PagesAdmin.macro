@@ -743,6 +743,8 @@ definition {
 			menuItem = "Configure",
 			pageName = ${pageName});
 
+		Navigator.gotoNavTab(navTab = "Design");
+
 		PagesAdmin.uploadIcon(logoFile = ${logoFile});
 	}
 
@@ -871,7 +873,9 @@ definition {
 				menuItem = "Configure",
 				pageName = ${pageName});
 
-			Click(
+			Navigator.gotoNavTab(navTab = "Design");
+
+			Click.javaScriptClick(
 				key_title = "Clear Icon",
 				locator1 = "Button#ANY_TITLE");
 		}

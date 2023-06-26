@@ -51,6 +51,9 @@ public class FragmentCollectionItemDescriptor
 	@Override
 	public String getPayload() {
 		return JSONUtil.put(
+			"fragmentCollectionId",
+			_fragmentCollection.getFragmentCollectionId()
+		).put(
 			"fragmentCollectionKey",
 			_fragmentCollection.getFragmentCollectionKey()
 		).put(

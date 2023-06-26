@@ -67,17 +67,18 @@ li.selected {
 
 .select-item-btn svg {
 	position: absolute;
-	right: 14px;
 	top: 50%;
 	transition: transform 0.3s linear;
-	width: 16px;
 }
 
 .select-item-btn .svg-caret-double {
+	align-items: center;
 	background: var(--form-input-background-color);
 	border: 1px solid black;
 	border-radius: 0px 5px 5px 0px;
-	padding: 20px;
+	display: flex;
+	height: 42px;
+	justify-content: center;
 	width: 47px;
 }
 

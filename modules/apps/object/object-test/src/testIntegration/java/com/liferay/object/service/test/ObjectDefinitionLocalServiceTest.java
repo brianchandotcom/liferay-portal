@@ -15,6 +15,8 @@
 package com.liferay.object.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.object.constants.ObjectActionExecutorConstants;
+import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
@@ -36,10 +38,13 @@ import com.liferay.object.field.builder.DateObjectFieldBuilder;
 import com.liferay.object.field.builder.LongIntegerObjectFieldBuilder;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.field.util.ObjectFieldUtil;
+import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntryTable;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.service.ObjectActionLocalService;
+import com.liferay.object.service.ObjectActionLocalServiceUtil;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
@@ -54,11 +59,13 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.model.UserNotificationEventTable;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
@@ -71,6 +78,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.TextFormatter;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
@@ -444,7 +452,7 @@ public class ObjectDefinitionLocalServiceTest {
 
 					@Override
 					public String getExternalReferenceCode() {
-						return null;
+						return "L_USER_NOTIFICATION_EVENT";
 					}
 
 					@Override
@@ -463,6 +471,13 @@ public class ObjectDefinitionLocalServiceTest {
 					@Override
 					public Class<?> getModelClass() {
 						return UserNotificationEvent.class;
+					}
+
+					@Override
+					public List<ObjectAction> getObjectActions() {
+						return Collections.singletonList(
+							_createUpdateUserNotificationEventObjectAction(
+								"updateDeliveryType1"));
 					}
 
 					@Override
@@ -566,6 +581,11 @@ public class ObjectDefinitionLocalServiceTest {
 			objectDefinition, "deliveryType", "Long", "deliveryType", false);
 		_assertObjectField(objectDefinition, "type_", "String", "type", true);
 
+		Assert.assertNotNull(
+			_objectActionLocalService.getObjectAction(
+				objectDefinition.getObjectDefinitionId(), "updateDeliveryType1",
+				ObjectActionTriggerConstants.KEY_ON_AFTER_ADD));
+
 		objectDefinition =
 			_objectDefinitionLocalService.addOrUpdateSystemObjectDefinition(
 				TestPropsValues.getCompanyId(),
@@ -610,7 +630,7 @@ public class ObjectDefinitionLocalServiceTest {
 
 					@Override
 					public String getExternalReferenceCode() {
-						return null;
+						return "L_USER_NOTIFICATION_EVENT";
 					}
 
 					@Override
@@ -629,6 +649,13 @@ public class ObjectDefinitionLocalServiceTest {
 					@Override
 					public Class<?> getModelClass() {
 						return UserNotificationEvent.class;
+					}
+
+					@Override
+					public List<ObjectAction> getObjectActions() {
+						return Collections.singletonList(
+							_createUpdateUserNotificationEventObjectAction(
+								"updateDeliveryType2"));
 					}
 
 					@Override
@@ -721,6 +748,11 @@ public class ObjectDefinitionLocalServiceTest {
 		_assertObjectField(
 			objectDefinition, "deliveryType", "Long", "deliveryType", true);
 		_assertObjectField(objectDefinition, "type_", "String", "type", false);
+
+		Assert.assertNotNull(
+			_objectActionLocalService.getObjectAction(
+				objectDefinition.getObjectDefinitionId(), "updateDeliveryType2",
+				ObjectActionTriggerConstants.KEY_ON_AFTER_ADD));
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 	}
@@ -1646,6 +1678,45 @@ public class ObjectDefinitionLocalServiceTest {
 			expectedObjectField.isState(), objectField.isState());
 	}
 
+	private ObjectAction _createUpdateUserNotificationEventObjectAction(
+		String objectActionName) {
+
+		ObjectAction objectAction =
+			ObjectActionLocalServiceUtil.createObjectAction(0);
+
+		objectAction.setExternalReferenceCode(objectActionName);
+		objectAction.setActive(true);
+		objectAction.setConditionExpression(StringPool.BLANK);
+		objectAction.setDescription(RandomTestUtil.randomString());
+		objectAction.setErrorMessageMap(
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()));
+		objectAction.setLabelMap(
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()));
+		objectAction.setName(objectActionName);
+		objectAction.setObjectActionExecutorKey(
+			ObjectActionExecutorConstants.KEY_UPDATE_OBJECT_ENTRY);
+		objectAction.setObjectActionTriggerKey(
+			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD);
+		objectAction.setParameters(
+			UnicodePropertiesBuilder.put(
+				"objectDefinitionExternalReferenceCode",
+				"L_USER_NOTIFICATION_EVENT"
+			).put(
+				"predefinedValues",
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"inputAsValue", true
+					).put(
+						"name", "deliveryType"
+					).put(
+						"value", UserNotificationDeliveryConstants.TYPE_SMS
+					)
+				).toString()
+			).buildString());
+
+		return objectAction;
+	}
+
 	private boolean _hasColumn(String tableName, String columnName)
 		throws Exception {
 
@@ -1918,6 +1989,9 @@ public class ObjectDefinitionLocalServiceTest {
 
 	@Inject
 	private MessageBus _messageBus;
+
+	@Inject
+	private ObjectActionLocalService _objectActionLocalService;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

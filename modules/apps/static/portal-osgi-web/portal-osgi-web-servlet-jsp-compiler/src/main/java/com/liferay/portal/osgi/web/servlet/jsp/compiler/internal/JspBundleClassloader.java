@@ -124,6 +124,10 @@ public class JspBundleClassloader extends URLClassLoader {
 	private static final Log _log = LogFactoryUtil.getLog(
 		JspBundleClassloader.class);
 
+	static {
+		ClassLoader.registerAsParallelCapable();
+	}
+
 	private final Bundle[] _bundles;
 
 }

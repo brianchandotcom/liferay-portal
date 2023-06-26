@@ -118,6 +118,10 @@ public class FreeMarkerBundleClassloader extends URLClassLoader {
 	private static final Log _log = LogFactoryUtil.getLog(
 		FreeMarkerBundleClassloader.class);
 
+	static {
+		ClassLoader.registerAsParallelCapable();
+	}
+
 	private final Set<ClassLoader> _classLoaders;
 
 }

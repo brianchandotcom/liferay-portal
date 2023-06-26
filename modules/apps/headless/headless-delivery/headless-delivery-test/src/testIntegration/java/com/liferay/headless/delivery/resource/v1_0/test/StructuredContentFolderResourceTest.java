@@ -72,14 +72,14 @@ public class StructuredContentFolderResourceTest
 				problem.getTitle());
 		}
 
-		StructuredContentFolder parentStructuredContentFolder =
+		StructuredContentFolder parentStructuredContentFolder1 =
 			testPostAssetLibraryStructuredContentFolder_addStructuredContentFolder(
 				_randomStructuredContentFolder());
 
-		StructuredContentFolder postStructuredContentFolder =
+		StructuredContentFolder postStructuredContentFolder1 =
 			structuredContentFolderResource.
 				postStructuredContentFolderStructuredContentFolder(
-					parentStructuredContentFolder.getId(),
+					parentStructuredContentFolder1.getId(),
 					_randomStructuredContentFolder());
 
 		assertHttpResponseStatusCode(
@@ -87,13 +87,43 @@ public class StructuredContentFolderResourceTest
 			structuredContentFolderResource.
 				deleteAssetLibraryStructuredContentFolderByExternalReferenceCodeHttpResponse(
 					testDeleteAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId(),
-					postStructuredContentFolder.getExternalReferenceCode()));
+					postStructuredContentFolder1.getExternalReferenceCode()));
 		assertHttpResponseStatusCode(
 			404,
 			structuredContentFolderResource.
 				getAssetLibraryStructuredContentFolderByExternalReferenceCodeHttpResponse(
 					testDeleteAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId(),
-					postStructuredContentFolder.getExternalReferenceCode()));
+					postStructuredContentFolder1.getExternalReferenceCode()));
+
+		StructuredContentFolder parentStructuredContentFolder2 =
+			testPostAssetLibraryStructuredContentFolder_addStructuredContentFolder(
+				_randomStructuredContentFolder());
+
+		StructuredContentFolder postStructuredContentFolder2 =
+			structuredContentFolderResource.
+				postStructuredContentFolderStructuredContentFolder(
+					parentStructuredContentFolder2.getId(),
+					_randomStructuredContentFolder());
+
+		assertHttpResponseStatusCode(
+			204,
+			structuredContentFolderResource.
+				deleteAssetLibraryStructuredContentFolderByExternalReferenceCodeHttpResponse(
+					testDeleteAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId(),
+					parentStructuredContentFolder2.getExternalReferenceCode()));
+		assertHttpResponseStatusCode(
+			404,
+			structuredContentFolderResource.
+				getAssetLibraryStructuredContentFolderByExternalReferenceCodeHttpResponse(
+					testDeleteAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId(),
+					parentStructuredContentFolder2.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			structuredContentFolderResource.
+				getAssetLibraryStructuredContentFolderByExternalReferenceCodeHttpResponse(
+					testDeleteAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId(),
+					postStructuredContentFolder2.getExternalReferenceCode()));
 	}
 
 	@Override

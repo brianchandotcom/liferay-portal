@@ -29,34 +29,77 @@ function CreationMenu({inEmptyState, primaryItems}) {
 
 	const [active, setActive] = useState(false);
 
-	const CreationMenuButton = ({label}) => {
-		const buttonLabel = !label && primaryItems[0].label;
-
-		return label ? (
-			<ClayDropDown
-				active={active}
-				onActiveChange={setActive}
-				trigger={
-					<ClayButton
-						aria-label={!inEmptyState && label}
-						className={classNames({
-							'nav-btn nav-btn-monospaced': !inEmptyState,
-						})}
-						displayType={inEmptyState && 'secondary'}
-						title={!inEmptyState && label}
-					>
-						{inEmptyState ? label : <ClayIcon symbol="plus" />}
-					</ClayButton>
-				}
+	return (
+		primaryItems?.length > 0 && (
+			<ul
+				className={classNames('navbar-nav', {
+					'd-inline-flex': inEmptyState,
+				})}
 			>
-				<ClayDropDown.ItemList>
-					{primaryItems.map((item, i) => (
-						<ClayDropDown.Item
-							key={i}
-							onClick={(event) => {
-								event.preventDefault();
+				<li className="nav-item">
+					{primaryItems.length > 1 ? (
+						<ClayDropDown
+							active={active}
+							onActiveChange={setActive}
+							trigger={
+								<ClayButton
+									aria-label={
+										!inEmptyState &&
+										Liferay.Language.get('new')
+									}
+									className={classNames({
+										'nav-btn nav-btn-monospaced': !inEmptyState,
+									})}
+									displayType={inEmptyState && 'secondary'}
+									title={
+										!inEmptyState &&
+										Liferay.Language.get('new')
+									}
+								>
+									{inEmptyState ? (
+										Liferay.Language.get('new')
+									) : (
+										<ClayIcon symbol="plus" />
+									)}
+								</ClayButton>
+							}
+						>
+							<ClayDropDown.ItemList>
+								{primaryItems.map((item, i) => (
+									<ClayDropDown.Item
+										key={i}
+										onClick={(event) => {
+											event.preventDefault();
 
-								setActive(false);
+											setActive(false);
+
+											item.onClick?.({
+												loadData,
+											});
+
+											if (item.href || item.target) {
+												triggerAction(
+													item,
+													frontendDataSetContext
+												);
+											}
+										}}
+									>
+										{item.label}
+									</ClayDropDown.Item>
+								))}
+							</ClayDropDown.ItemList>
+						</ClayDropDown>
+					) : (
+						<ClayButton
+							aria-label={!inEmptyState && primaryItems[0].label}
+							className={classNames({
+								'nav-btn nav-btn-monospaced': !inEmptyState,
+							})}
+							data-tooltip-align="top"
+							displayType={inEmptyState && 'secondary'}
+							onClick={() => {
+								const item = primaryItems[0];
 
 								item.onClick?.({
 									loadData,
@@ -66,52 +109,15 @@ function CreationMenu({inEmptyState, primaryItems}) {
 									triggerAction(item, frontendDataSetContext);
 								}
 							}}
+							title={!inEmptyState && primaryItems[0].label}
 						>
-							{item.label}
-						</ClayDropDown.Item>
-					))}
-				</ClayDropDown.ItemList>
-			</ClayDropDown>
-		) : (
-			<ClayButton
-				aria-label={!inEmptyState && buttonLabel}
-				className={classNames({
-					'nav-btn nav-btn-monospaced': !inEmptyState,
-				})}
-				data-tooltip-align="top"
-				displayType={inEmptyState && 'secondary'}
-				onClick={() => {
-					const item = primaryItems[0];
-
-					item.onClick?.({
-						loadData,
-					});
-
-					if (item.href || item.target) {
-						triggerAction(item, frontendDataSetContext);
-					}
-				}}
-				title={!inEmptyState && buttonLabel}
-			>
-				{inEmptyState ? buttonLabel : <ClayIcon symbol="plus" />}
-			</ClayButton>
-		);
-	};
-
-	return (
-		primaryItems?.length > 0 && (
-			<ul
-				className={classNames('navbar-nav', {
-					'd-inline-flex': inEmptyState,
-				})}
-			>
-				<li className="nav-item">
-					<CreationMenuButton
-						label={
-							primaryItems.length > 1 &&
-							Liferay.Language.get('new')
-						}
-					/>
+							{inEmptyState ? (
+								primaryItems[0].label
+							) : (
+								<ClayIcon symbol="plus" />
+							)}
+						</ClayButton>
+					)}
 				</li>
 			</ul>
 		)

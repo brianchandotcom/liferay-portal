@@ -249,7 +249,7 @@ public class DefaultObjectEntryManagerImpl
 
 		ObjectRelatedModelsProvider objectRelatedModelsProvider = null;
 
-		if (_isManyToOneRelationship(
+		if (_isManyToOneObjectRelationship(
 				relatedObjectDefinition, objectRelationship,
 				objectDefinition) &&
 			relatedObjectDefinition.isUnmodifiableSystemObject()) {

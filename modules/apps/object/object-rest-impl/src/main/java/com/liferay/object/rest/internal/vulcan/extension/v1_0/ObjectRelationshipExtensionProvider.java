@@ -101,7 +101,7 @@ public class ObjectRelationshipExtensionProvider
 					return null;
 				}
 
-				if (isManyToOneObjectRelationship(
+				if (_isManyToOneObjectRelationship(
 						objectDefinition, objectRelationship,
 						relatedObjectDefinition)) {
 
@@ -323,7 +323,7 @@ public class ObjectRelationshipExtensionProvider
 			relatedObjectDefinitionId);
 	}
 
-	private boolean isManyToOneObjectRelationship(
+	private boolean _isManyToOneObjectRelationship(
 		ObjectDefinition objectDefinition,
 		ObjectRelationship objectRelationship,
 		ObjectDefinition relatedObjectDefinition) {

@@ -3300,9 +3300,9 @@ definition {
 			LexiconEntry.gotoAdd();
 
 			for (var fieldType : list "User,Organization,Session") {
-				AssertElementPresent(
-					key_typeName = ${fieldType},
-					locator1 = "Segmentation#SEGMENT_FIELDS_TYPE");
+				AssertVisible(
+					key_panel = ${fieldType},
+					locator1 = "Panel#PANEL");
 			}
 		}
 	}

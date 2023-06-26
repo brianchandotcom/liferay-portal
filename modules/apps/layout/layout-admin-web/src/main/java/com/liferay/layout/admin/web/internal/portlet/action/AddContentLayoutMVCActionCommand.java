@@ -19,6 +19,7 @@ import com.liferay.layout.admin.web.internal.handler.LayoutExceptionRequestHandl
 import com.liferay.layout.admin.web.internal.security.permission.resource.LayoutPageTemplateEntryPermission;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
 import com.liferay.portal.kernel.change.tracking.CTTransactionException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -161,6 +162,9 @@ public class AddContentLayoutMVCActionCommand
 
 			MultiSessionMessages.add(actionRequest, "layoutAdded", layout);
 
+			ActionUtil.addFriendlyURLWarningSessionMessages(
+				layout, actionRequest, _layoutSetPrototypeHelper);
+
 			JSONPortletResponseUtil.writeJSON(
 				actionRequest, actionResponse,
 				JSONUtil.put("redirectURL", redirectURL));
@@ -203,6 +207,9 @@ public class AddContentLayoutMVCActionCommand
 
 	@Reference
 	private LayoutService _layoutService;
+
+	@Reference
+	private LayoutSetPrototypeHelper _layoutSetPrototypeHelper;
 
 	@Reference
 	private Sites _sites;

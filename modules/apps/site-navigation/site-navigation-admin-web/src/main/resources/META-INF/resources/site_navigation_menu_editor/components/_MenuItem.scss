@@ -2,9 +2,7 @@
 
 .site_navigation_menu_editor_MenuItem {
 	box-sizing: content-box;
-	padding-left: calc(
-		var(--nesting-margin) * (var(--nesting-level) - 1) * 1px
-	);
+	margin-left: calc(var(--nesting-margin) * (var(--nesting-level) - 1) * 1px);
 	position: relative;
 	width: 40ch;
 
@@ -12,18 +10,21 @@
 	&:focus-within,
 	&:hover,
 	&.active {
-		outline: none;
-
-		.card {
-			box-shadow: 0 0 0 2px $primary-l1;
-		}
-
 		.menu-item-options-button,
 		.site_navigation_menu_editor_MenuItem-add-button {
 			opacity: 1;
 		}
 	}
 
+	&.active .card {
+		background-color: $info-l2;
+	}
+
+	&:focus .card {
+		box-shadow: 0 0 0 2px $primary-l1;
+	}
+
+	.menu-item-options-button,
 	&-add-button {
 		opacity: 0;
 
@@ -47,18 +48,6 @@
 		&.top-button {
 			top: 0;
 			transform: translate(50%, -50%);
-		}
-
-		&:focus {
-			opacity: 1;
-		}
-	}
-
-	.menu-item-options-button {
-		opacity: 0;
-
-		&:focus {
-			opacity: 1;
 		}
 	}
 

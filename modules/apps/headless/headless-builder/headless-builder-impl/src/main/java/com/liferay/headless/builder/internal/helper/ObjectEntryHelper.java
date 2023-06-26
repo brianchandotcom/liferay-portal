@@ -73,8 +73,12 @@ public class ObjectEntryHelper {
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.
-				getObjectDefinitionByExternalReferenceCode(
+				fetchObjectDefinitionByExternalReferenceCode(
 					objectDefinitionExternalReferenceCode, companyId);
+
+		if (objectDefinition == null) {
+			return null;
+		}
 
 		PermissionThreadLocal.setPermissionChecker(
 			_permissionCheckerFactory.create(

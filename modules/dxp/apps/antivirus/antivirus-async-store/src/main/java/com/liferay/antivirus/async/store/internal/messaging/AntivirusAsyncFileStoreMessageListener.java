@@ -27,9 +27,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.messaging.Destination;
-import com.liferay.portal.kernel.messaging.DestinationConfiguration;
-import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageListener;
@@ -40,7 +37,6 @@ import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.MapUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -59,11 +55,9 @@ import java.util.Map;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
-import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -105,31 +99,12 @@ public class AntivirusAsyncFileStoreMessageListener implements MessageListener {
 		_batchCronExpression =
 			antivirusAsyncConfiguration.batchScanCronExpression();
 
-		DestinationConfiguration destinationConfiguration =
-			DestinationConfiguration.createSerialDestinationConfiguration(
-				AntivirusAsyncDestinationNames.ANTIVIRUS_BATCH);
-
-		destinationConfiguration.setMaximumQueueSize(1);
-
-		Destination destination = _destinationFactory.createDestination(
-			destinationConfiguration);
-
-		_serviceRegistration = bundleContext.registerService(
-			Destination.class, destination,
-			MapUtil.singletonDictionary(
-				"destination.name", destination.getName()));
-
 		try {
 			_init((File)_storeServiceReference.getProperty("rootDir"));
 		}
 		catch (SchedulerException schedulerException) {
 			ReflectionUtil.throwException(schedulerException);
 		}
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_serviceRegistration.unregister();
 	}
 
 	private Trigger _createTrigger(String jobName) {
@@ -317,9 +292,6 @@ public class AntivirusAsyncFileStoreMessageListener implements MessageListener {
 	private String _batchCronExpression;
 
 	@Reference
-	private DestinationFactory _destinationFactory;
-
-	@Reference
 	private com.liferay.portal.kernel.util.File _file;
 
 	@Reference
@@ -327,8 +299,6 @@ public class AntivirusAsyncFileStoreMessageListener implements MessageListener {
 
 	@Reference
 	private SchedulerEngineHelper _schedulerEngineHelper;
-
-	private ServiceRegistration<Destination> _serviceRegistration;
 
 	@Reference(target = "(rootDir=*)")
 	private ServiceReference<Store> _storeServiceReference;

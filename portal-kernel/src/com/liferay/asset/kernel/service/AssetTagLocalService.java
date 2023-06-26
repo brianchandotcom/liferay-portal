@@ -477,6 +477,21 @@ public interface AssetTagLocalService
 	public List<AssetTag> getGroupTags(long groupId, int start, int end);
 
 	/**
+	 * Returns a range of all the asset tags in the group.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param start the lower bound of the range of asset tags
+	 * @param end the upper bound of the range of asset tags (not inclusive)
+	 * @param orderByComparator the comparator to order the asset tags
+	 (optionally <code>null</code>)
+	 * @return the range of matching asset tags
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetTag> getGroupTags(
+		long groupId, int start, int end,
+		OrderByComparator<AssetTag> orderByComparator);
+
+	/**
 	 * Returns the number of asset tags in the group.
 	 *
 	 * @param groupId the primary key of the group

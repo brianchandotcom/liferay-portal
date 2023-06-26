@@ -47,7 +47,7 @@ definition {
 		task ("Then I can see get with DELETE and o/c/students/{studentId}") {
 			APIExplorer.assertExposedActionsInSchema(
 				method = "DELETE",
-				objectHref = "students/{studentId}",
+				objectHref = "c/students/{studentId}",
 				property = "delete",
 				schema = "Student");
 		}
@@ -64,7 +64,7 @@ definition {
 		task ("Then I can see get with GET and o/c/students/{studentId}") {
 			APIExplorer.assertExposedActionsInSchema(
 				method = "GET",
-				objectHref = "students/{studentId}",
+				objectHref = "c/students/{studentId}",
 				property = "get",
 				schema = "Student");
 		}
@@ -83,7 +83,7 @@ definition {
 		task ("Then I can see permissions with GET and o/c/students/{studentId}/permissions") {
 			APIExplorer.assertExposedActionsInSchema(
 				method = "GET",
-				objectHref = "students/{studentId}/permissions",
+				objectHref = "c/students/{studentId}/permissions",
 				property = "permissions",
 				schema = "Student");
 		}
@@ -100,7 +100,7 @@ definition {
 		task ("Then I can see get with PUT and o/c/students/{studentId}") {
 			APIExplorer.assertExposedActionsInSchema(
 				method = "PUT",
-				objectHref = "students/{studentId}",
+				objectHref = "c/students/{studentId}",
 				property = "replace",
 				schema = "Student");
 		}
@@ -137,7 +137,7 @@ definition {
 		task ("Then I can see myCustomAction with PUT and o/c/students/by-external-reference-code/{studentExternalReferenceCode}/object-actions/myCustomAction") {
 			APIExplorer.assertExposedActionsInSchema(
 				method = "PUT",
-				objectHref = "students/by-external-reference-code/{studentExternalReferenceCode}/object-actions/myCustomAction",
+				objectHref = "c/students/by-external-reference-code/{studentExternalReferenceCode}/object-actions/myCustomAction",
 				property = "myCustomAction",
 				schema = "Student");
 		}
@@ -154,7 +154,7 @@ definition {
 		task ("Then I can see get with PATCH and o/c/students/{studentId}") {
 			APIExplorer.assertExposedActionsInSchema(
 				method = "PATCH",
-				objectHref = "students/{studentId}",
+				objectHref = "c/students/{studentId}",
 				property = "update",
 				schema = "Student");
 		}

@@ -47,7 +47,7 @@ definition {
 		task ("Then I can see create with POST and /o/c/students/batch") {
 			APIExplorer.assertExposedActionsInSchema(
 				method = "POST",
-				objectHref = "students/batch",
+				objectHref = "c/students/batch",
 				property = "createBatch",
 				schema = "PageStudent");
 		}
@@ -64,7 +64,7 @@ definition {
 		task ("Then I can see create with POST and /o/c/students") {
 			APIExplorer.assertExposedActionsInSchema(
 				method = "POST",
-				objectHref = "students/",
+				objectHref = "c/students/",
 				property = "create",
 				schema = "PageStudent");
 		}
@@ -81,7 +81,7 @@ definition {
 		task ("Then I can see deleteBatch with DELETE and /o/c/students/batch") {
 			APIExplorer.assertExposedActionsInSchema(
 				method = "DELETE",
-				objectHref = "students/batch",
+				objectHref = "c/students/batch",
 				property = "deleteBatch",
 				schema = "PageStudent");
 		}
@@ -100,7 +100,7 @@ definition {
 		task ("Then I can see updateBatch with PUT and /o/c/students/batch") {
 			APIExplorer.assertExposedActionsInSchema(
 				method = "PUT",
-				objectHref = "students/batch",
+				objectHref = "c/students/batch",
 				property = "updateBatch",
 				schema = "PageStudent");
 		}

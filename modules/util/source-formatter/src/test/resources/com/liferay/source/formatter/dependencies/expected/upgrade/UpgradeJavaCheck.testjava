@@ -72,7 +72,7 @@ public class UpgradeJavaCheck extends BaseTableFDSView {
 			_fDSTableSchemaBuilderFactory.create();
 
 		FDSTableSchemaField nameFDSTableSchemaField =
-			fDSTableSchemaBuilder.addFDSTableSchemaField("name", "name");
+			fDSTableSchemaBuilder.add("name", "name");
 
 		return fDSTableSchemaBuilder.build();
 	}

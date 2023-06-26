@@ -285,7 +285,7 @@ public class ExecuteInfoItemActionStrutsActionTest {
 	private String _classPK;
 	private Map<Locale, String> _errorMessageMap;
 
-	@Inject(filter = "component.name=*.ExecuteInfoItemActionStrutsAction")
+	@Inject(filter = "component.name=com.liferay.info.internal.request.struts.ExecuteInfoItemActionStrutsAction")
 	private StrutsAction _executeInfoItemActionStrutsAction;
 
 	@Inject

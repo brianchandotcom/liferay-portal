@@ -15,30 +15,23 @@
 package com.liferay.antivirus.async.store.internal.retry;
 
 import com.liferay.antivirus.async.store.configuration.AntivirusAsyncConfiguration;
-import com.liferay.antivirus.async.store.constants.AntivirusAsyncConstants;
-import com.liferay.antivirus.async.store.constants.AntivirusAsyncDestinationNames;
 import com.liferay.antivirus.async.store.retry.AntivirusAsyncRetryScheduler;
-import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
-import com.liferay.portal.kernel.scheduler.SchedulerException;
-import com.liferay.portal.kernel.scheduler.StorageType;
-import com.liferay.portal.kernel.scheduler.Trigger;
-import com.liferay.portal.kernel.scheduler.TriggerFactory;
-import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.TransientValue;
 
-import java.time.Instant;
-
-import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
+import org.osgi.service.component.ComponentFactory;
+import org.osgi.service.component.ComponentInstance;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -54,49 +47,6 @@ public class AntivirusAsyncRetrySchedulerImpl
 
 	@Override
 	public void schedule(Message message) {
-		try {
-			_schedule(message);
-		}
-		catch (SchedulerException schedulerException) {
-			ReflectionUtil.throwException(schedulerException);
-		}
-	}
-
-	@Activate
-	protected void activate(Map<String, Object> properties) {
-		AntivirusAsyncConfiguration antivirusAsyncConfiguration =
-			ConfigurableUtil.createConfigurable(
-				AntivirusAsyncConfiguration.class, properties);
-
-		_retryCronExpression =
-			antivirusAsyncConfiguration.retryCronExpression();
-	}
-
-	private Trigger _createTrigger(String jobName) {
-		Instant now = Instant.now();
-
-		return _triggerFactory.createTrigger(
-			jobName, AntivirusAsyncConstants.SCHEDULER_GROUP_NAME_ANTIVIRUS,
-			Date.from(now.plusSeconds(10)), null, _retryCronExpression);
-	}
-
-	private void _schedule(Message message) throws SchedulerException {
-		String jobName = message.getString("jobName");
-
-		SchedulerResponse schedulerResponse =
-			_schedulerEngineHelper.getScheduledJob(
-				jobName, AntivirusAsyncConstants.SCHEDULER_GROUP_NAME_ANTIVIRUS,
-				StorageType.MEMORY_CLUSTERED);
-
-		if (schedulerResponse != null) {
-			return;
-		}
-
-		Trigger trigger = _createTrigger(jobName);
-
-		// Avoid a log message reporting "Unable to deserialize
-		// com.liferay.portal.kernel.util.TransientValue"
-
 		Map<String, Object> map = message.getValues();
 
 		Set<Map.Entry<String, Object>> entrySet = map.entrySet();
@@ -111,17 +61,52 @@ public class AntivirusAsyncRetrySchedulerImpl
 			}
 		}
 
-		_schedulerEngineHelper.schedule(
-			trigger, StorageType.MEMORY_CLUSTERED, trigger.getJobName(),
-			AntivirusAsyncDestinationNames.ANTIVIRUS, message);
+		_componentInstances.computeIfAbsent(
+			message.getString("jobName"),
+			key -> _componentFactory.newInstance(
+				HashMapDictionaryBuilder.<String, Object>put(
+					"jobName", key
+				).put(
+					"message", message
+				).put(
+					"retryCronExpression",
+					_antivirusAsyncConfiguration.retryCronExpression()
+				).build()));
 	}
 
-	private volatile String _retryCronExpression;
+	@Override
+	public void unschedule(Message message) {
+		ComponentInstance<?> componentInstance = _componentInstances.remove(
+			message.getString("jobName"));
 
-	@Reference
-	private SchedulerEngineHelper _schedulerEngineHelper;
+		if (componentInstance != null) {
+			componentInstance.dispose();
+		}
+	}
 
-	@Reference
-	private TriggerFactory _triggerFactory;
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_antivirusAsyncConfiguration = ConfigurableUtil.createConfigurable(
+			AntivirusAsyncConfiguration.class, properties);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		for (ComponentInstance<?> componentInstance :
+				_componentInstances.values()) {
+
+			componentInstance.dispose();
+		}
+	}
+
+	private AntivirusAsyncConfiguration _antivirusAsyncConfiguration;
+
+	@Reference(
+		target = "(component.factory=com.liferay.antivirus.async.store.internal.scheduler.AntivirusAsyncFileSchedulerJobConfiguration)"
+	)
+	private ComponentFactory<?> _componentFactory;
+
+	private final Map<String, ComponentInstance<?>> _componentInstances =
+		new ConcurrentHashMap<>();
 
 }

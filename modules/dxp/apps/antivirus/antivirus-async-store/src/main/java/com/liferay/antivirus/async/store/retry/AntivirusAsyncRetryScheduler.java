@@ -23,4 +23,6 @@ public interface AntivirusAsyncRetryScheduler {
 
 	public void schedule(Message message);
 
+	public void unschedule(Message message);
+
 }

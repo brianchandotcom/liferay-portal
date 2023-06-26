@@ -1,5 +1,5 @@
-/* eslint-disable radix */
 /* eslint-disable @liferay/portal/no-global-fetch */
+/* eslint-disable radix */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -10,6 +10,8 @@
  * permissions and limitations under the License, including but not limited to
  * distribution rights of the Software.
  */
+
+const editPage = window.location.pathname.includes('edit-request-form');
 
 const requests = [];
 const userId = parseInt(
@@ -111,7 +113,9 @@ function main() {
 	handleDocumentClick(requestType);
 }
 
-document.addEventListener('click', main);
+if (!editPage) {
+	document.addEventListener('click', main);
+}
 
 function updateValue(requestType) {
 	const serviceForm = document.getElementsByClassName('.service-form');
@@ -183,8 +187,7 @@ function toggleServiceRequired(service) {
 		service.querySelector('[name="totalHoursRequested"]').required = false;
 		service.querySelector('[name="startDate"]').required = false;
 		service.querySelector('[name="endDate"]').required = false;
-	}
-	else {
+	} else {
 		service.querySelector('[name="managerEmailAddress"]').required = true;
 		service.querySelector('[name="totalHoursRequested"]').required = true;
 		service.querySelector('[name="startDate"]').required = true;
@@ -195,8 +198,7 @@ function toggleServiceRequired(service) {
 function toggleGrantRequired(grant) {
 	if (grant.querySelector('[name="grantAmount"]').required) {
 		grant.querySelector('[name="grantAmount"]').required = false;
-	}
-	else {
+	} else {
 		grant.querySelector('[name="grantAmount"]').required = true;
 	}
 }
@@ -226,7 +228,6 @@ const setDefaultUserInfo = async () => {
 
 	const fullNameInput = document.querySelector('[name="fullName"]');
 	fullNameInput.readOnly = true;
-	fullNameInput.value = userInformation[0]?.name;
 	fullNameInput.style.cursor = 'not-allowed';
 	fullNameInput.style.color = '#b1b2b8';
 
@@ -234,18 +235,22 @@ const setDefaultUserInfo = async () => {
 	emailAddressInput.readOnly = true;
 	emailAddressInput.style.cursor = 'not-allowed';
 	emailAddressInput.style.color = '#b1b2b8';
-	emailAddressInput.value = userInformation[0]?.emailAddress;
 
 	const phoneNumber =
 		userInformation[0]?.userAccountContactInformation?.telephones[0]
 			?.phoneNumber;
 	const phoneInput = document.querySelector('[name="phoneNumber"]');
 
-	if (phoneNumber) {
-		phoneInput.readOnly = true;
+	if (!editPage) {
+		fullNameInput.value = userInformation[0]?.name;
+		emailAddressInput.value = userInformation[0]?.emailAddress;
 		phoneInput.value = phoneNumber;
-		phoneInput.style.cursor = 'not-allowed';
-		phoneInput.style.color = '#b1b2b8';
+
+		if (phoneNumber) {
+			phoneInput.readOnly = true;
+			phoneInput.style.cursor = 'not-allowed';
+			phoneInput.style.color = '#b1b2b8';
+		}
 	}
 };
 
@@ -281,16 +286,14 @@ const compareGrants = async () => {
 				errorMsg.style.display = 'block';
 			}
 			document.querySelector('button[type="submit"]').disabled = true;
-		}
-		else {
+		} else {
 			const errorMsg = document.querySelector('.error-msg');
 			if (errorMsg) {
 				errorMsg.style.display = 'none';
 			}
 			document.querySelector('button[type="submit"]').disabled = false;
 		}
-	}
-	catch (error) {
+	} catch (error) {
 		console.error(error);
 	}
 };
@@ -313,8 +316,7 @@ const compareHours = async () => {
 			errorMsg.style.position = 'absolute';
 		}
 		document.querySelector('button[type="submit"]').disabled = true;
-	}
-	else {
+	} else {
 		const errorMsg = document.querySelector('.error-msg');
 		if (errorMsg) {
 			errorMsg.style.display = 'none';
@@ -324,3 +326,197 @@ const compareHours = async () => {
 };
 
 hoursInput.addEventListener('change', compareHours);
+
+/** EDIT REQUEST FORM PAGE */
+const evpRequestEditForm = document.querySelector('.evp-request-form');
+async function getEVPRequest(requestId) {
+	const searchParams = new URLSearchParams();
+	searchParams.set(
+		'fields',
+		'r_organization_c_evpOrganizationId,requestType,endDate,fullName,managerEmailAddress,requestBehalf,totalHoursRequested,grantAmount,requestDescription,requestPurposes,emailAddress,phoneNumber,grantRequestType,startDate'
+	);
+
+	const response = await fetch(
+		`/o/c/evprequests/${requestId}?${searchParams.toString()}`,
+		{
+			headers: {
+				'Content-type': 'application/json',
+				'x-csrf-token': Liferay.authToken,
+			},
+		}
+	);
+
+	const data = await response.json();
+
+	return data;
+}
+
+async function getEVPRequestOrganization(organizationId) {
+	const searchParams = new URLSearchParams();
+	searchParams.set('fields', 'id,organizationName,taxId');
+
+	const response = await fetch(
+		`/o/c/evporganizations/${organizationId}?${searchParams.toString()}`,
+		{
+			headers: {
+				'Content-type': 'application/json',
+				'x-csrf-token': Liferay.authToken,
+			},
+		}
+	);
+
+	const data = await response.json();
+
+	return data;
+}
+
+async function updateEVPRequest(requestId, requestEditForm) {
+	await fetch(`/o/c/evprequests/${requestId}`, {
+		body: JSON.stringify(requestEditForm),
+		headers: {
+			'content-type': 'application/json',
+			'x-csrf-token': Liferay.authToken,
+		},
+		method: 'PATCH',
+	});
+}
+
+function getRequestEditFormValues() {
+	const ignoreFields = [
+		'backURL',
+		'classNameId',
+		'classTypeId',
+		'formItemId',
+		'groupId',
+		'p_l_id',
+		'p_l_mode',
+		'plid',
+		'grantRequestType-label',
+		'r_organization_c_evpOrganizationId-label',
+		'requestPurposes-label',
+		'requestType-label',
+		'requestBehalf-label',
+		'segmentsExperienceId',
+		'redirect',
+	];
+
+	if (!evpRequestEditForm) {
+		return console.error('Evp Form not found');
+	}
+
+	const requestEditForm = {};
+	const formData = new FormData(evpRequestEditForm);
+
+	for (const [key, value] of Array.from(formData.entries())) {
+		if (!ignoreFields.includes(key)) {
+			requestEditForm[key] = value;
+		}
+	}
+
+	return requestEditForm;
+}
+
+if (editPage) {
+	const queryString = window.location.search;
+	const requestId = queryString.split('=')[1];
+
+	const FIELD = {
+		ENDDATE: 'endDate',
+		ORGANIZATIONID: 'r_organization_c_evpOrganizationId',
+		REQUESTTYPE: 'requestType',
+		STARTDATE: 'startDate',
+	};
+
+	/** Fill Request Form */
+	getEVPRequest(requestId).then((request) => {
+		for (const [key, keyValue] of Object.entries(request)) {
+			const formInput = document.querySelector(`[name='${key}']`);
+			const formInputLabel = document.querySelector(
+				`[name='${key}-label']`
+			);
+
+			if (formInput) {
+				if (formInputLabel) {
+					if (formInput.name === FIELD.ORGANIZATIONID) {
+						getEVPRequestOrganization(keyValue).then((response) => {
+							const organizationInput = document.querySelector(
+								'#selected-org'
+							);
+
+							/** Set shown organization input value */
+							organizationInput.value = `${response['id']} - ${response['organizationName']} - ${response['taxId']} `;
+							organizationInput.setAttribute(
+								'disabled',
+								'disabled'
+							);
+
+							/** Set hidden organization input value */
+							formInput.value = response['id'];
+							formInputLabel.value = response['organizationName'];
+						});
+
+						continue;
+					}
+
+					formInput.value = keyValue.key;
+					formInput.previousSibling.previousSibling.value =
+						keyValue.name;
+					formInputLabel.value = keyValue.name;
+
+					if (formInput.name === FIELD.REQUESTTYPE) {
+						formInput.previousSibling.previousSibling.setAttribute(
+							'disabled',
+							'disabled'
+						);
+
+						formInput.parentElement.parentElement
+							.querySelector('span button')
+							.setAttribute('disabled', true);
+
+						main();
+					}
+
+					continue;
+				}
+
+				if (
+					formInput.name === FIELD.ENDDATE ||
+					formInput.name === FIELD.STARTDATE
+				) {
+					formInput.value = keyValue.split('T')[0];
+					continue;
+				}
+
+				formInput.value = keyValue;
+			}
+		}
+	});
+
+	/** Update Request */
+	if (!evpRequestEditForm) {
+		return;
+	}
+
+	evpRequestEditForm.addEventListener('submit', (event) => {
+		event.preventDefault();
+
+		const requestEditForm = getRequestEditFormValues();
+		requestEditForm.requestStatus = {
+			key: 'awaitingApprovalOnEvp',
+			name: 'Awaiting Approval On EVP',
+		};
+
+		try {
+			updateEVPRequest(requestId, requestEditForm).then(() => {
+				const groupKey = Liferay.ThemeDisplay.getSiteAdminURL()
+					.split('group')[1]
+					.split('/')[1];
+
+				const redirect = `${Liferay.ThemeDisplay.getPortalURL()}/web/${groupKey}/request-form-submit-page`;
+				window.location.href = redirect;
+			});
+		} catch (error) {
+			console.error(error);
+		}
+	});
+}

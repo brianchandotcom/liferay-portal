@@ -15,17 +15,14 @@
 package com.liferay.dynamic.data.mapping.internal.exportimport.data.handler;
 
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeRequest;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeResponse;
-import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceSettings;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
-import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
+import com.liferay.dynamic.data.mapping.util.DDMFormValuesDeserializeUtil;
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -39,13 +36,10 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 
-import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -68,131 +62,141 @@ public class DDMFormInstanceStagedModelDataHandler
 	}
 
 	@Override
-	public String getDisplayName(DDMFormInstance formInstance) {
-		return formInstance.getNameCurrentValue();
-	}
-
-	protected DDMFormValues deserialize(String content, DDMForm ddmForm) {
-		DDMFormValuesDeserializerDeserializeRequest.Builder builder =
-			DDMFormValuesDeserializerDeserializeRequest.Builder.newBuilder(
-				content, ddmForm);
-
-		DDMFormValuesDeserializerDeserializeResponse
-			ddmFormValuesDeserializerDeserializeResponse =
-				_jsonDDMFormValuesDeserializer.deserialize(builder.build());
-
-		return ddmFormValuesDeserializerDeserializeResponse.getDDMFormValues();
+	public String getDisplayName(DDMFormInstance ddmFormInstance) {
+		return ddmFormInstance.getNameCurrentValue();
 	}
 
 	@Override
 	protected void doExportStagedModel(
-			PortletDataContext portletDataContext, DDMFormInstance formInstance)
+			PortletDataContext portletDataContext,
+			DDMFormInstance ddmFormInstance)
 		throws Exception {
 
-		DDMStructure ddmStructure = formInstance.getStructure();
+		DDMStructure ddmStructure = ddmFormInstance.getStructure();
 
 		StagedModelDataHandlerUtil.exportReferenceStagedModel(
-			portletDataContext, formInstance, ddmStructure,
+			portletDataContext, ddmFormInstance, ddmStructure,
 			PortletDataContext.REFERENCE_TYPE_STRONG);
 
-		List<DDMTemplate> ddmTemplates = ddmStructure.getTemplates();
-
-		Element formInstanceElement = portletDataContext.getExportDataElement(
-			formInstance);
-
-		for (DDMTemplate ddmTemplate : ddmTemplates) {
+		for (DDMTemplate ddmTemplate : ddmStructure.getTemplates()) {
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, formInstance, ddmTemplate,
+				portletDataContext, ddmFormInstance, ddmTemplate,
 				PortletDataContext.REFERENCE_TYPE_STRONG);
 		}
 
-		_exportFormInstanceSettings(
-			formInstance, formInstanceElement, portletDataContext,
-			ddmStructure.getStorageType());
+		Element element = portletDataContext.getExportDataElement(
+			ddmFormInstance);
+
+		String settingsDDMFormValuesPath = ExportImportPathUtil.getModelPath(
+			ddmFormInstance, "settings-ddm-form-values.json");
+
+		element.addAttribute(
+			"settings-ddm-form-values-path", settingsDDMFormValuesPath);
+
+		if (StringUtil.equals(ddmStructure.getStorageType(), "object")) {
+			portletDataContext.addZipEntry(
+				settingsDDMFormValuesPath,
+				_addObjectDefinitionExternalReferenceCode(
+					_jsonFactory.createJSONObject(
+						ddmFormInstance.getSettings())));
+		}
+		else {
+			portletDataContext.addZipEntry(
+				settingsDDMFormValuesPath, ddmFormInstance.getSettings());
+		}
 
 		portletDataContext.addClassedModel(
-			formInstanceElement,
-			ExportImportPathUtil.getModelPath(formInstance), formInstance);
+			element, ExportImportPathUtil.getModelPath(ddmFormInstance),
+			ddmFormInstance);
 	}
 
 	@Override
 	protected void doImportMissingReference(
 			PortletDataContext portletDataContext, String uuid, long groupId,
-			long formInstanceId)
+			long ddmFormInstanceId)
 		throws Exception {
 
-		DDMFormInstance existingFormInstance = fetchMissingReference(
+		DDMFormInstance existingDDMFormInstance = fetchMissingReference(
 			uuid, groupId);
 
-		if (existingFormInstance == null) {
+		if (existingDDMFormInstance == null) {
 			return;
 		}
 
-		Map<Long, Long> formInstanceIds =
+		Map<Long, Long> ddmFormInstanceIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				DDMFormInstance.class);
 
-		formInstanceIds.put(
-			formInstanceId, existingFormInstance.getFormInstanceId());
+		ddmFormInstanceIds.put(
+			ddmFormInstanceId, existingDDMFormInstance.getFormInstanceId());
 	}
 
 	@Override
 	protected void doImportStagedModel(
-			PortletDataContext portletDataContext, DDMFormInstance formInstance)
+			PortletDataContext portletDataContext,
+			DDMFormInstance ddmFormInstance)
 		throws Exception {
 
-		Map<Long, Long> ddmStructureIds =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				DDMStructure.class);
+		DDMFormInstance importedDDMFormInstance =
+			(DDMFormInstance)ddmFormInstance.clone();
 
-		long ddmStructureId = MapUtil.getLong(
-			ddmStructureIds, formInstance.getStructureId(),
-			formInstance.getStructureId());
+		importedDDMFormInstance.setGroupId(
+			portletDataContext.getScopeGroupId());
+		importedDDMFormInstance.setStructureId(
+			MapUtil.getLong(
+				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+					DDMStructure.class),
+				ddmFormInstance.getStructureId(),
+				ddmFormInstance.getStructureId()));
 
-		DDMFormInstance importedFormInstance =
-			(DDMFormInstance)formInstance.clone();
-
-		importedFormInstance.setGroupId(portletDataContext.getScopeGroupId());
-		importedFormInstance.setStructureId(ddmStructureId);
-
-		DDMFormInstance existingFormInstance =
+		DDMFormInstance existingDDMFormInstance =
 			_stagedModelRepository.fetchStagedModelByUuidAndGroupId(
-				formInstance.getUuid(), portletDataContext.getScopeGroupId());
+				ddmFormInstance.getUuid(),
+				portletDataContext.getScopeGroupId());
 
-		if ((existingFormInstance == null) ||
+		if ((existingDDMFormInstance == null) ||
 			!portletDataContext.isDataStrategyMirror()) {
 
-			importedFormInstance = _stagedModelRepository.addStagedModel(
-				portletDataContext, importedFormInstance);
+			importedDDMFormInstance = _stagedModelRepository.addStagedModel(
+				portletDataContext, importedDDMFormInstance);
 		}
 		else {
-			importedFormInstance.setMvccVersion(
-				existingFormInstance.getMvccVersion());
-			importedFormInstance.setFormInstanceId(
-				existingFormInstance.getFormInstanceId());
+			importedDDMFormInstance.setMvccVersion(
+				existingDDMFormInstance.getMvccVersion());
+			importedDDMFormInstance.setFormInstanceId(
+				existingDDMFormInstance.getFormInstanceId());
 
-			importedFormInstance = _stagedModelRepository.updateStagedModel(
-				portletDataContext, importedFormInstance);
+			importedDDMFormInstance = _stagedModelRepository.updateStagedModel(
+				portletDataContext, importedDDMFormInstance);
 		}
 
-		Element formInstanceElement = portletDataContext.getImportDataElement(
-			formInstance);
+		Element element = portletDataContext.getImportDataElement(
+			ddmFormInstance);
 
-		DDMStructure ddmStructure = _ddmStructureLocalService.getDDMStructure(
-			importedFormInstance.getStructureId());
+		String serializedSettingsDDMFormValues =
+			portletDataContext.getZipEntryAsString(
+				element.attributeValue("settings-ddm-form-values-path"));
+
+		if (StringUtil.equals(
+				importedDDMFormInstance.getStorageType(), "object")) {
+
+			serializedSettingsDDMFormValues = _addObjectDefinitionId(
+				_jsonFactory.createJSONObject(serializedSettingsDDMFormValues));
+		}
 
 		_ddmFormInstanceLocalService.updateFormInstance(
-			importedFormInstance.getFormInstanceId(),
-			importedFormInstance.getStructureId(),
-			importedFormInstance.getNameMap(),
-			importedFormInstance.getDescriptionMap(),
-			_getImportFormInstanceSettings(
-				formInstanceElement, portletDataContext,
-				ddmStructure.getStorageType()),
-			portletDataContext.createServiceContext(importedFormInstance));
+			importedDDMFormInstance.getFormInstanceId(),
+			importedDDMFormInstance.getStructureId(),
+			importedDDMFormInstance.getNameMap(),
+			importedDDMFormInstance.getDescriptionMap(),
+			DDMFormValuesDeserializeUtil.deserialize(
+				serializedSettingsDDMFormValues,
+				DDMFormFactory.create(DDMFormInstanceSettings.class),
+				_jsonDDMFormValuesDeserializer),
+			portletDataContext.createServiceContext(importedDDMFormInstance));
 
 		portletDataContext.importClassedModel(
-			formInstance, importedFormInstance);
+			ddmFormInstance, importedDDMFormInstance);
 	}
 
 	@Override
@@ -202,130 +206,39 @@ public class DDMFormInstanceStagedModelDataHandler
 		return _stagedModelRepository;
 	}
 
-	private void _exportFormInstanceSettings(
-			DDMFormInstance formInstance, Element formInstanceElement,
-			PortletDataContext portletDataContext, String storageType)
+	private String _addObjectDefinitionExternalReferenceCode(
+			JSONObject jsonObject)
 		throws Exception {
 
-		String settingsDDMFormValuesPath = ExportImportPathUtil.getModelPath(
-			formInstance, "settings-ddm-form-values.json");
+		JSONObject fieldValueJSONObject = _getFieldValueJSONObject(
+			jsonObject.getJSONArray("fieldValues"), "objectDefinitionId");
 
-		formInstanceElement.addAttribute(
-			"settings-ddm-form-values-path", settingsDDMFormValuesPath);
-
-		String formInstanceString = formInstance.getSettings();
-
-		if (StringUtil.equals(storageType, "object")) {
-			formInstanceString = _includeObjectDefinitionExternalReferenceCode(
-				_jsonFactory.createJSONObject(formInstanceString));
+		if (fieldValueJSONObject == null) {
+			return jsonObject.toString();
 		}
 
-		portletDataContext.addZipEntry(
-			settingsDDMFormValuesPath, formInstanceString);
-	}
+		JSONArray valueJSONArray = _jsonFactory.createJSONArray(
+			fieldValueJSONObject.getString("value"));
 
-	private DDMFormValues _getImportFormInstanceSettings(
-			Element formInstanceElement, PortletDataContext portletDataContext,
-			String storageType)
-		throws Exception {
-
-		String serializedSettingsDDMFormValues =
-			portletDataContext.getZipEntryAsString(
-				formInstanceElement.attributeValue(
-					"settings-ddm-form-values-path"));
-
-		if (StringUtil.equals(storageType, "object")) {
-			serializedSettingsDDMFormValues = _updateObjectDefinitionId(
-				_jsonFactory.createJSONObject(serializedSettingsDDMFormValues));
-		}
-
-		return deserialize(
-			serializedSettingsDDMFormValues,
-			DDMFormFactory.create(DDMFormInstanceSettings.class));
-	}
-
-	private String _includeObjectDefinitionExternalReferenceCode(
-		JSONObject formInstanceSettingsJSONObject) {
-
-		JSONArray fieldValuesJSONArray =
-			formInstanceSettingsJSONObject.getJSONArray("fieldValues");
-
-		ObjectDefinition objectDefinition = null;
-
-		for (int i = 0; i < fieldValuesJSONArray.length(); i++) {
-			JSONObject fieldValueJSONObject =
-				fieldValuesJSONArray.getJSONObject(i);
-
-			if (StringUtil.equals(
-					fieldValueJSONObject.getString("name"),
-					"objectDefinitionId")) {
-
-				objectDefinition =
-					_objectDefinitionLocalService.fetchObjectDefinition(
-						GetterUtil.getLong(
-							StringUtil.removeSubstrings(
-								fieldValueJSONObject.getString("value"), "[\"",
-								"\"]")));
-
-				break;
-			}
-		}
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				valueJSONArray.getLong(0));
 
 		if (objectDefinition == null) {
-			return formInstanceSettingsJSONObject.toString();
+			return jsonObject.toString();
 		}
 
-		formInstanceSettingsJSONObject.put(
-			"fieldValues",
-			fieldValuesJSONArray.put(
-				JSONUtil.put(
-					"name", "objectDefinitionExternalReferenceCode"
-				).put(
-					"value", objectDefinition.getExternalReferenceCode()
-				)));
-
-		return formInstanceSettingsJSONObject.toString();
+		return jsonObject.put(
+			"objectDefinitionExternalReferenceCode",
+			objectDefinition.getExternalReferenceCode()
+		).toString();
 	}
 
-	private String _updateObjectDefinitionId(
-		JSONObject formInstanceSettingsJSONObject) {
+	private String _addObjectDefinitionId(JSONObject jsonObject) {
+		String objectDefinitionExternalReferenceCode = jsonObject.getString(
+			"objectDefinitionExternalReferenceCode");
 
-		JSONArray fieldValuesJSONArray =
-			formInstanceSettingsJSONObject.getJSONArray("fieldValues");
-		JSONArray newFieldValuesJSONArray = _jsonFactory.createJSONArray();
-
-		String objectDefinitionExternalReferenceCode = null;
-		JSONObject objectDefinitionIdJSONObject = null;
-
-		for (int i = 0; i < fieldValuesJSONArray.length(); i++) {
-			JSONObject fieldValueJSONObject =
-				fieldValuesJSONArray.getJSONObject(i);
-
-			if (StringUtil.equals(
-					fieldValueJSONObject.getString("name"),
-					"objectDefinitionExternalReferenceCode")) {
-
-				objectDefinitionExternalReferenceCode =
-					fieldValueJSONObject.getString("value");
-
-				continue;
-			}
-			else if (StringUtil.equals(
-						fieldValueJSONObject.getString("name"),
-						"objectDefinitionId")) {
-
-				objectDefinitionIdJSONObject = fieldValueJSONObject;
-			}
-
-			newFieldValuesJSONArray.put(fieldValueJSONObject);
-		}
-
-		formInstanceSettingsJSONObject.put(
-			"fieldValues", newFieldValuesJSONArray);
-
-		if (Validator.isNull(objectDefinitionExternalReferenceCode)) {
-			return formInstanceSettingsJSONObject.toString();
-		}
+		jsonObject.remove("objectDefinitionExternalReferenceCode");
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.
@@ -333,15 +246,40 @@ public class DDMFormInstanceStagedModelDataHandler
 					objectDefinitionExternalReferenceCode,
 					CompanyThreadLocal.getCompanyId());
 
-		if ((objectDefinition != null) &&
-			(objectDefinitionIdJSONObject != null)) {
-
-			objectDefinitionIdJSONObject.put(
-				"value",
-				"[\"" + objectDefinition.getObjectDefinitionId() + "\"]");
+		if (objectDefinition == null) {
+			return jsonObject.toString();
 		}
 
-		return formInstanceSettingsJSONObject.toString();
+		JSONObject fieldValueJSONObject = _getFieldValueJSONObject(
+			jsonObject.getJSONArray("fieldValues"), "objectDefinitionId");
+
+		if (fieldValueJSONObject == null) {
+			return jsonObject.toString();
+		}
+
+		fieldValueJSONObject.put(
+			"value",
+			JSONUtil.put(
+				String.valueOf(objectDefinition.getObjectDefinitionId())));
+
+		return jsonObject.toString();
+	}
+
+	private JSONObject _getFieldValueJSONObject(
+		JSONArray fieldValuesJSONArray, String name) {
+
+		for (int i = 0; i < fieldValuesJSONArray.length(); i++) {
+			JSONObject fieldValueJSONObject =
+				fieldValuesJSONArray.getJSONObject(i);
+
+			if (StringUtil.equals(
+					fieldValueJSONObject.getString("name"), name)) {
+
+				return fieldValueJSONObject;
+			}
+		}
+
+		return null;
 	}
 
 	@Reference

@@ -20,10 +20,9 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaClassParser;
-import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
-import java.io.File;
+import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -95,7 +94,7 @@ public class UpgradeJavaCheck extends BaseFileCheck {
 
 	private synchronized Map<String, String> _getImportsMap() throws Exception {
 		if (_importsMap == null) {
-			_importsMap = _getMap("/imports.txt");
+			_importsMap = _getMap("imports.txt");
 		}
 
 		return _importsMap;
@@ -104,17 +103,18 @@ public class UpgradeJavaCheck extends BaseFileCheck {
 	private Map<String, String> _getMap(String fileName) throws Exception {
 		Map<String, String> map = new HashMap<>();
 
-		File importsFile = SourceFormatterUtil.getFile(
-			getBaseDirName(),
-			"modules/util/source-formatter/src/main/resources/dependencies/" +
-				fileName,
-			getMaxDirLevel());
+		Class<?> clazz = getClass();
 
-		if (importsFile == null) {
+		ClassLoader classLoader = clazz.getClassLoader();
+
+		InputStream inputStream = classLoader.getResourceAsStream(
+			"dependencies/" + fileName);
+
+		if (inputStream == null) {
 			return map;
 		}
 
-		String[] lines = StringUtil.splitLines(FileUtil.read(importsFile));
+		String[] lines = StringUtil.splitLines(StringUtil.read(inputStream));
 
 		for (String line : lines) {
 			int separatorIndex = line.indexOf(StringPool.EQUAL);

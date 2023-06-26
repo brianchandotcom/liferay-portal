@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.dao.db;
 
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 
 import java.io.IOException;
 
@@ -138,6 +139,11 @@ public interface DB {
 		throws Exception;
 
 	public void removePrimaryKey(Connection connection, String tableName)
+		throws Exception;
+
+	public void renameTables(
+			Connection connection,
+			ObjectValuePair<String, String>... tableNamePairs)
 		throws Exception;
 
 	public default void runSQL(

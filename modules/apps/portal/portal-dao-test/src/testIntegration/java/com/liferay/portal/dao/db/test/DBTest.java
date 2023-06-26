@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.sql.Connection;
@@ -92,6 +93,7 @@ public class DBTest {
 	public void tearDown() throws Exception {
 		_db.runSQL("DROP_TABLE_IF_EXISTS(" + _TABLE_NAME_1 + ")");
 		_db.runSQL("DROP_TABLE_IF_EXISTS(" + _TABLE_NAME_2 + ")");
+		_db.runSQL("DROP_TABLE_IF_EXISTS(" + _TABLE_NAME_3 + ")");
 	}
 
 	@Test
@@ -444,6 +446,23 @@ public class DBTest {
 	}
 
 	@Test
+	public void testRenameTables() throws Exception {
+		_db.runSQL(_SQL_CREATE_TABLE_2);
+
+		_db.renameTables(
+			_connection,
+			new ObjectValuePair<>(_TABLE_NAME_1, _TABLE_NAME_3),
+			new ObjectValuePair<>(_TABLE_NAME_2, _TABLE_NAME_1),
+			new ObjectValuePair<>(_TABLE_NAME_3, _TABLE_NAME_2));
+
+		Assert.assertTrue(_dbInspector.hasTable(_TABLE_NAME_1));
+		Assert.assertTrue(_dbInspector.hasTable(_TABLE_NAME_2));
+
+		Assert.assertTrue(_dbInspector.hasColumn(_TABLE_NAME_1, "id1"));
+		Assert.assertTrue(_dbInspector.hasColumn(_TABLE_NAME_2, "id"));
+	}
+
+	@Test
 	public void testSyncTables() throws Exception {
 		_db.runSQL(
 			StringBundler.concat(
@@ -616,6 +635,8 @@ public class DBTest {
 	private static final String _TABLE_NAME_1 = "DBTest1";
 
 	private static final String _TABLE_NAME_2 = "DBTest2";
+
+	private static final String _TABLE_NAME_3 = "DBTest3";
 
 	private static Connection _connection;
 	private static DB _db;

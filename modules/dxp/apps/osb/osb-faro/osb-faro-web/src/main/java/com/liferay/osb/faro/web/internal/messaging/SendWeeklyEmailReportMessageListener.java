@@ -79,7 +79,7 @@ public class SendWeeklyEmailReportMessageListener
 				return;
 			}
 
-			schedulerEngineHelper.unschedule(
+			schedulerEngineHelper.delete(
 				_trigger.getJobName(), _trigger.getGroupName(),
 				StorageType.PERSISTED);
 		}

@@ -95,7 +95,7 @@ public class CleanDLFileEntryMessageListener extends BaseMessageListener {
 				return;
 			}
 
-			_schedulerEngineHelper.unschedule(
+			_schedulerEngineHelper.delete(
 				_trigger.getJobName(), _trigger.getGroupName(),
 				StorageType.PERSISTED);
 		}

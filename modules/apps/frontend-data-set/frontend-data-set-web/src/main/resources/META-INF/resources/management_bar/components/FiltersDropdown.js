@@ -65,6 +65,7 @@ const FiltersDropdown = () => {
 				<>
 					<li className="dropdown-subheader">
 						<ClayButtonWithIcon
+							aria-label={Liferay.Language.get('back')}
 							className="btn-filter-navigation"
 							displayType="unstyled"
 							onClick={() => {
@@ -72,7 +73,7 @@ const FiltersDropdown = () => {
 
 								setFilters(initialFilters);
 							}}
-							small
+							size="sm"
 							symbol="angle-left"
 						/>
 

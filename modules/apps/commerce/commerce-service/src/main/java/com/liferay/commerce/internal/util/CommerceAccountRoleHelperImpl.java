@@ -228,6 +228,9 @@ public class CommerceAccountRoleHelperImpl
 				PortletKeys.PORTAL,
 				new String[] {ActionKeys.VIEW_CONTROL_PANEL});
 			companyResourceActionIds.put(
+				"com.liferay.commerce.catalog",
+				new String[] {CPActionKeys.ADD_COMMERCE_CATALOG});
+			companyResourceActionIds.put(
 				"com.liferay.commerce.channel",
 				new String[] {
 					CommerceNotificationActionKeys.

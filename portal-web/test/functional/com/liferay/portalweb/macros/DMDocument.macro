@@ -2887,6 +2887,32 @@ definition {
 		SystemSettings.saveConfiguration();
 	}
 
+	macro updateFileOrder {
+		if (isSet(instanceSettings)) {
+			DMNavigator.openToConfigInInstanceSettings(portlet = "File Order");
+		}
+		else if (isSet(siteSettings)) {
+			DMNavigator.openToConfigInSiteSettings(
+				portlet = "File Order",
+				siteURLKey = ${siteURLKey});
+		}
+		else {
+			DMNavigator.openToConfigInSystemSettings(portlet = "File Order");
+		}
+
+		Click(locator1 = "Dropdown#TRIGGER");
+
+		DropdownMenuItem.click(menuItem = ${orderBy});
+
+		if (isSet(sortDirection)) {
+			Click(locator1 = "Dropdown#TRIGGER_2");
+
+			DropdownMenuItem.click(menuItem = ${sortDirection});
+		}
+
+		SystemSettings.saveConfiguration();
+	}
+
 	macro updateMaximumFileSize {
 		if (isSet(instanceSettings)) {
 			DMNavigator.openToConfigInInstanceSettings(portlet = "Documents and Media Size Limits");

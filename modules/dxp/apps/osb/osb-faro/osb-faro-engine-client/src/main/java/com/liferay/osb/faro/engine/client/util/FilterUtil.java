@@ -141,7 +141,7 @@ public class FilterUtil {
 	}
 
 	public static String getNullFilter(String fieldName, String operator) {
-		return operator + StringPool.NULL;
+		return fieldName + operator + StringPool.NULL;
 	}
 
 	public static String negate(String filterString) {

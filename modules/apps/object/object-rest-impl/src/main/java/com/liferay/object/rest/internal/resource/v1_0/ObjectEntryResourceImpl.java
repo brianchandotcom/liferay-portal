@@ -30,7 +30,7 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipService;
 import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
-import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -95,32 +95,32 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 				_objectDefinition.getScope());
 
 		if (objectScopeProvider.isGroupAware()) {
-			UnsafeConsumer<ObjectEntry, Exception> objectEntryUnsafeConsumer =
-				null;
+			UnsafeFunction<ObjectEntry, ObjectEntry, Exception>
+				objectEntryUnsafeFunction = null;
 
 			String createStrategy = (String)parameters.getOrDefault(
 				"createStrategy", "INSERT");
 
 			if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
-				objectEntryUnsafeConsumer = objectEntry -> postScopeScopeKey(
+				objectEntryUnsafeFunction = objectEntry -> postScopeScopeKey(
 					(String)parameters.get("scopeKey"), objectEntry);
 			}
 
 			if (StringUtil.equalsIgnoreCase(createStrategy, "UPSERT")) {
-				objectEntryUnsafeConsumer =
+				objectEntryUnsafeFunction =
 					objectEntry -> putScopeScopeKeyByExternalReferenceCode(
 						(String)parameters.get("scopeKey"),
 						objectEntry.getExternalReferenceCode(), objectEntry);
 			}
 
-			if (objectEntryUnsafeConsumer == null) {
+			if (objectEntryUnsafeFunction == null) {
 				throw new NotSupportedException(
 					"Create strategy \"" + createStrategy +
 						"\" is not supported for object entry");
 			}
 
-			contextBatchUnsafeConsumer.accept(
-				objectEntries, objectEntryUnsafeConsumer);
+			contextBatchUnsafeBiConsumer.accept(
+				objectEntries, objectEntryUnsafeFunction);
 		}
 		else {
 			super.create(objectEntries, parameters);

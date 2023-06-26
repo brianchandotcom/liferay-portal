@@ -56,7 +56,7 @@ public class AccountForecastResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		contextBatchUnsafeConsumer.accept(
+		contextBatchUnsafeBiConsumer.accept(
 			accountForecasts,
 			accountForecast -> {
 				CommerceAccountCommerceMLForecast
@@ -87,6 +87,8 @@ public class AccountForecastResourceImpl
 				_commerceAccountCommerceMLForecastManager.
 					addCommerceAccountCommerceMLForecast(
 						commerceAccountCommerceMLForecast);
+
+				return null;
 			});
 	}
 

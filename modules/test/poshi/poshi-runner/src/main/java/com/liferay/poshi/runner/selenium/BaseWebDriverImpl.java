@@ -374,6 +374,24 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
+	public void assertElementFocused(String locator) throws Exception {
+		WebElement element = getWebElement(locator);
+
+		WebDriver webDriver = getWebDriver();
+
+		TargetLocator targetLocator = webDriver.switchTo();
+
+		WebElement activeElement = targetLocator.activeElement();
+
+		if (element.equals(activeElement)) {
+			return;
+		}
+
+		throw new RuntimeException(
+			"Element from locator " + locator + " is not focused element");
+	}
+
+	@Override
 	public void assertElementNotPresent(String locator) throws Exception {
 		Condition elementNotPresentCondition = getElementNotPresentCondition(
 			locator);

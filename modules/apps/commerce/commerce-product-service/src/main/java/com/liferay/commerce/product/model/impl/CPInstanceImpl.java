@@ -15,12 +15,17 @@
 package com.liferay.commerce.product.model.impl;
 
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
 import com.liferay.commerce.product.model.CPSubscriptionInfo;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CPDefinitionLocalServiceUtil;
+import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+
+import java.util.List;
 
 /**
  * @author Marco Leo
@@ -41,6 +46,24 @@ public class CPInstanceImpl extends CPInstanceBaseImpl {
 	public CPDefinition getCPDefinition() throws PortalException {
 		return CPDefinitionLocalServiceUtil.getCPDefinition(
 			getCPDefinitionId());
+	}
+
+	@Override
+	public CPInstanceUnitOfMeasure getCPInstanceUnitOfMeasure(String key)
+		throws PortalException {
+
+		return CPInstanceUnitOfMeasureLocalServiceUtil.
+			getCPInstanceUnitOfMeasure(getCPInstanceId(), key);
+	}
+
+	@Override
+	public List<CPInstanceUnitOfMeasure> getCPInstanceUnitOfMeasures(
+		int start, int end,
+		OrderByComparator<CPInstanceUnitOfMeasure> orderByComparator) {
+
+		return CPInstanceUnitOfMeasureLocalServiceUtil.
+			getCPInstanceUnitOfMeasures(
+				getCPInstanceId(), start, end, orderByComparator);
 	}
 
 	@Override

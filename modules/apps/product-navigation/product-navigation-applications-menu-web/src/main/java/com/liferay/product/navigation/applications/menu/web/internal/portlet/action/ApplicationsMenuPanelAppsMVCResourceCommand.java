@@ -309,7 +309,7 @@ public class ApplicationsMenuPanelAppsMVCResourceCommand
 				sitesJSONObject.put(
 					"mySites",
 					_getSitesJSONArray(
-						ListUtil.subList(filteredGroups, 0, max),
+						ListUtil.subList(filteredGroups, 0, Math.max(0, max)),
 						resourceRequest, themeDisplay));
 
 				max -= filteredGroups.size();

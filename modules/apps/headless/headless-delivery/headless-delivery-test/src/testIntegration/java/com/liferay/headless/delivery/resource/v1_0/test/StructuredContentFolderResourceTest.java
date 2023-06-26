@@ -123,6 +123,16 @@ public class StructuredContentFolderResourceTest
 		assertEquals(postStructuredContentFolder1, getStructuredContentFolder1);
 		assertValid(getStructuredContentFolder1);
 
+		StructuredContentFolder getParentStructuredContentFolder =
+			structuredContentFolderResource.
+				getAssetLibraryStructuredContentFolderByExternalReferenceCode(
+					testGetAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId(),
+					parentStructuredContentFolder1.getExternalReferenceCode());
+
+		assertEquals(
+			parentStructuredContentFolder1, getParentStructuredContentFolder);
+		assertValid(getParentStructuredContentFolder);
+
 		StructuredContentFolder parentStructuredContentFolder2 =
 			testPostAssetLibraryStructuredContentFolder_addStructuredContentFolder(
 				_randomStructuredContentFolder());

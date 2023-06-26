@@ -56,7 +56,7 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "Widgets");
 
-			for (var sectionName : list "Highlighted,Accounts") {
+			for (var sectionName : list "Highlighted,Accounts,Collaboration") {
 				Panel.collapsePanel(panel = ${sectionName});
 			}
 
@@ -72,7 +72,7 @@ definition {
 				key_tab = "Widgets",
 				locator1 = "NavTab#ACTIVE_TAB_LINK");
 
-			for (var sectionName : list "Highlighted,Accounts") {
+			for (var sectionName : list "Highlighted,Accounts,Collaboration") {
 				AssertElementPresent(
 					key_panel = ${sectionName},
 					locator1 = "Panel#PANEL_COLLAPSED");
@@ -124,7 +124,7 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "Widgets");
 
-			for (var sectionName : list "Highlighted,Accounts,Business Intelligence & Reporting") {
+			for (var sectionName : list "Highlighted,Accounts,Collaboration") {
 				Panel.collapsePanel(panel = ${sectionName});
 			}
 
@@ -140,7 +140,7 @@ definition {
 				key_tab = "Widgets",
 				locator1 = "NavTab#ACTIVE_TAB_LINK");
 
-			for (var sectionName : list "Highlighted,Accounts,Business Intelligence & Reporting") {
+			for (var sectionName : list "Highlighted,Accounts,Collaboration") {
 				AssertElementPresent(
 					key_panel = ${sectionName},
 					locator1 = "Panel#PANEL_COLLAPSED");

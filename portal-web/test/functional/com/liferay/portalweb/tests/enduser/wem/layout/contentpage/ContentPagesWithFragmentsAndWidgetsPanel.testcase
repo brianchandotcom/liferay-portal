@@ -189,7 +189,7 @@ definition {
 			Navigator.gotoNavTab(navTab = "Widgets");
 
 			AssertVisible(
-				index = 4,
+				index = 3,
 				key_panel = "Commerce",
 				locator1 = "Panel#TAB_PANEL_BY_INDEX");
 		}
@@ -260,7 +260,7 @@ definition {
 			Navigator.gotoNavTab(navTab = "Widgets");
 
 			AssertVisible(
-				index = 5,
+				index = 4,
 				key_panel = "Commerce",
 				locator1 = "Panel#TAB_PANEL_BY_INDEX");
 		}
@@ -279,7 +279,7 @@ definition {
 
 		task ("Then the site administrator sees the customized order of fragment sets and widget categories on Fragments and Widgets panel") {
 			AssertVisible(
-				index = 3,
+				index = 2,
 				key_panel = "Collaboration",
 				locator1 = "Panel#TAB_PANEL_BY_INDEX");
 
@@ -534,7 +534,7 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "Widgets");
 
-			for (var sectionName : list "Highlighted,Accounts") {
+			for (var sectionName : list "Highlighted,Accounts,Collaboration") {
 				Panel.collapsePanel(panel = ${sectionName});
 			}
 
@@ -552,7 +552,7 @@ definition {
 				key_tab = "Widgets",
 				locator1 = "NavTab#ACTIVE_TAB_LINK");
 
-			for (var sectionName : list "Highlighted,Accounts") {
+			for (var sectionName : list "Highlighted,Accounts,Collaboration") {
 				AssertElementPresent(
 					key_panel = ${sectionName},
 					locator1 = "Panel#PANEL_COLLAPSED");
@@ -618,7 +618,7 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "Widgets");
 
-			for (var sectionName : list "Highlighted,Accounts,Business Intelligence & Reporting") {
+			for (var sectionName : list "Highlighted,Accounts,Collaboration") {
 				Panel.collapsePanel(panel = ${sectionName});
 			}
 
@@ -636,7 +636,7 @@ definition {
 				key_tab = "Widgets",
 				locator1 = "NavTab#ACTIVE_TAB_LINK");
 
-			for (var sectionName : list "Highlighted,Accounts,Business Intelligence & Reporting") {
+			for (var sectionName : list "Highlighted,Accounts,Collaboration") {
 				AssertElementPresent(
 					key_panel = ${sectionName},
 					locator1 = "Panel#PANEL_COLLAPSED");

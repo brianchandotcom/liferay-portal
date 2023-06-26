@@ -69,6 +69,7 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutServiceUtil;
@@ -1029,6 +1030,14 @@ public class LayoutsAdminDisplayContext {
 	public String getPreviewDraftURL(Layout layout) throws PortalException {
 		return PortalUtil.getLayoutFriendlyURL(
 			layout.fetchDraftLayout(), themeDisplay);
+	}
+
+	public Map<String, Object> getProps() {
+		return HashMapBuilder.<String, Object>put(
+			"getFriendlyURLWarningURL", () -> _getFriendlyURLWarningURL()
+		).put(
+			"shouldCheckFriendlyURL", () -> _isShouldCheckFriendlyURL()
+		).build();
 	}
 
 	public String getRedirect() {
@@ -2124,6 +2133,20 @@ public class LayoutsAdminDisplayContext {
 			layoutFullURL, "p_l_mode", Constants.EDIT);
 	}
 
+	private String _getFriendlyURLWarningURL() {
+		return ResourceURLBuilder.createResourceURL(
+			_liferayPortletResponse
+		).setParameter(
+			"groupId", getGroupId()
+		).setParameter(
+			"plid", getSelPlid()
+		).setParameter(
+			"privateLayout", isPrivateLayout()
+		).setResourceID(
+			"/layout_admin/get_friendly_url_warning"
+		).buildString();
+	}
+
 	private long[] _getGroupIds() {
 		try {
 			return PortalUtil.getCurrentAndAncestorSiteGroupIds(
@@ -2305,6 +2328,26 @@ public class LayoutsAdminDisplayContext {
 		};
 
 		return _types;
+	}
+
+	private boolean _isShouldCheckFriendlyURL() {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-174417")) {
+			return false;
+		}
+
+		Group group = getGroup();
+
+		if (group.isLayoutSetPrototype()) {
+			return true;
+		}
+
+		LayoutSet layoutSet = getSelLayoutSet();
+
+		if (layoutSet.isLayoutSetPrototypeLinkEnabled()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private boolean _matchesHostname(

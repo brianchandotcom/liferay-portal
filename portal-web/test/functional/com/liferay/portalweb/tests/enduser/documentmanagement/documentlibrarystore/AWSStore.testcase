@@ -90,7 +90,7 @@ definition {
 				mimeType = "text/plain",
 				sourceFileName = "Document_1.txt");
 
-			AntCommands.runCommand("build-test-s3-store.xml", "assert-no-document-in-bucket -Ds3.bucket.id=${bucketId} -DcompanyId=${companyId} -DgroupId=${groupId}");
+			AntCommands.runCommand("build-test-s3-store.xml", "assert-no-document-in-bucket -DcompanyId=${companyId} -DgroupId=${groupId} -Ds3.bucket.id=${bucketId}");
 		}
 
 		task ("And given the user cannot migrate data to AWS S3 store without setting up a connection configuration") {
@@ -133,7 +133,7 @@ definition {
 		}
 
 		task ("Then the document is migrated over from the default store to the AWS S3 store") {
-			AntCommands.runCommand("build-test-s3-store.xml", "assert-document-in-bucket -Ds3.bucket.id=${bucketId} -DcompanyId=${companyId} -DgroupId=${groupId}");
+			AntCommands.runCommand("build-test-s3-store.xml", "assert-document-in-bucket -DcompanyId=${companyId} -DgroupId=${groupId} -Ds3.bucket.id=${bucketId}");
 		}
 
 		task ("And the user can configure the portal to use AWS S3 store without issue") {

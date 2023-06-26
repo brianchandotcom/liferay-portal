@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-const messageReceived = localStorage.getItem('sucess');
+const messageReceived = localStorage.getItem('success');
 
 if (messageReceived) {
 	const modal = document.getElementsByClassName('alert-success')[0];
@@ -18,5 +18,5 @@ if (messageReceived) {
 	setTimeout(() => {
 		modal.classList.replace('d-show', 'd-none');
 	}, 4000);
-	localStorage.removeItem('sucess');
+	localStorage.removeItem('success');
 }

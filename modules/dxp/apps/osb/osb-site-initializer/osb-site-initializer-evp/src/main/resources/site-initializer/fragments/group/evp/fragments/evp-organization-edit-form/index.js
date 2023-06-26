@@ -20,6 +20,7 @@ const FIELD = {
 	TAXID: 'taxId',
 };
 
+/** Fill Organization Form */
 const queryString = window.location.search;
 const urlParams = queryString.split('=');
 const organizationId = urlParams[1];
@@ -34,27 +35,6 @@ searchParams.set(
 	'fields',
 	'bankingInfo,city,contactEmail,contactName,contactPhone,country,id,organizationName,organizationSiteSocialMediaLink,smallDescription,state,street,taxId,zip'
 );
-
-function getOrganizationFormValues() {
-	const evpOrganizationForm = document.querySelector(
-		'.evp-organization-form'
-	);
-
-	if (!evpOrganizationForm) {
-		return console.error('Evp Form not found');
-	}
-
-	const organizationForm = {};
-	const formData = new FormData(evpOrganizationForm);
-
-	for (const [key, value] of Array.from(formData.entries())) {
-		if (!ignoreFields.includes(key)) {
-			organizationForm[key] = value;
-		}
-	}
-
-	return organizationForm;
-}
 
 async function getEVPOrganizations() {
 	const response = await fetch(
@@ -93,6 +73,7 @@ getEVPOrganizations().then((organizations) => {
 	}
 });
 
+/** Update Organization Values */
 const ignoreFields = [
 	'classTypeId',
 	'classNameId',
@@ -103,6 +84,27 @@ const ignoreFields = [
 	'organizationStatus',
 	'organizationStatus-label',
 ];
+
+function getOrganizationFormValues() {
+	const evpOrganizationForm = document.querySelector(
+		'.evp-organization-form'
+	);
+
+	if (!evpOrganizationForm) {
+		return console.error('Evp Form not found');
+	}
+
+	const organizationForm = {};
+	const formData = new FormData(evpOrganizationForm);
+
+	for (const [key, value] of Array.from(formData.entries())) {
+		if (!ignoreFields.includes(key)) {
+			organizationForm[key] = value;
+		}
+	}
+
+	return organizationForm;
+}
 
 const organizationUpdate = async () => {
 	const organizationForm = getOrganizationFormValues();
@@ -126,7 +128,7 @@ const organizationUpdate = async () => {
 		},
 		method: 'PATCH',
 	});
-	localStorage.setItem('sucess', 'Sucess');
+	localStorage.setItem('success', 'Success');
 };
 
 const formInputName = document.querySelector('.submit-button');

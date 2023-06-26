@@ -54,6 +54,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.SystemEnv;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.uuid.PortalUUID;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
@@ -134,7 +135,8 @@ public class PDFProcessorImpl
 		_companyLocalService.forEachCompanyId(
 			companyId -> {
 				try {
-					String jobName = "generatePDFPreviews-" + companyId;
+					String jobName = "generatePreviews-".concat(
+						_portalUUID.generate());
 
 					_backgroundTaskManager.addBackgroundTask(
 						UserConstants.USER_ID_DEFAULT, CompanyConstants.SYSTEM,
@@ -1127,6 +1129,9 @@ public class PDFProcessorImpl
 
 	@Reference
 	private PDFPreviewManagedServiceFactory _pdfPreviewManagedServiceFactory;
+
+	@Reference
+	private PortalUUID _portalUUID;
 
 	@Reference
 	private ProcessExecutor _processExecutor;

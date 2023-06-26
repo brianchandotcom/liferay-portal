@@ -1,6 +1,5 @@
 import Card from 'shared/components/Card';
 import ClayButton from '@clayui/button';
-import ClayLink from '@clayui/link';
 import Constants, {OrderByDirections, Sizes} from 'shared/util/constants';
 import CrossPageSelect from 'shared/hoc/CrossPageSelect';
 import DataControlRequest from '../queries/DataControlRequestMutation';
@@ -456,10 +455,8 @@ const RequestList: React.FC<IRequestListProps> = ({
 					<Nav>
 						<Nav.Item>
 							{selectedItems.size ? (
-								<ClayLink
-									button
-									className='button-root nav-btn'
-									displayType='primary'
+								<a
+									className='button-root btn-primary nav-btn '
 									href={`/o/proxy/download/data-control-tasks?projectGroupId=${groupId}&filter=(id eq ${selectedItems
 										.map(({id}) => id)
 										.join(' or id eq ')})`}
@@ -470,7 +467,7 @@ const RequestList: React.FC<IRequestListProps> = ({
 									}
 								>
 									{Liferay.Language.get('download-all')}
-								</ClayLink>
+								</a>
 							) : (
 								<ClayButton
 									className='button-root nav-btn'

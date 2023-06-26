@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.SourceFormatterExcludes;
 import com.liferay.source.formatter.check.util.BNDSourceUtil;
 import com.liferay.source.formatter.check.util.JavaSourceUtil;
+import com.liferay.source.formatter.check.util.SourceUtil;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaClassParser;
 import com.liferay.source.formatter.parser.ParseException;
@@ -36,6 +37,10 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.Element;
+
 /**
  * @author Hugo Huijser
  */
@@ -44,7 +49,7 @@ public class BNDSchemaVersionCheck extends BaseFileCheck {
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
-		throws IOException, ParseException {
+		throws DocumentException, IOException, ParseException {
 
 		String schemaVersion = BNDSourceUtil.getDefinitionValue(
 			content, "Liferay-Require-SchemaVersion");
@@ -52,14 +57,26 @@ public class BNDSchemaVersionCheck extends BaseFileCheck {
 		if (GetterUtil.getBoolean(
 				BNDSourceUtil.getDefinitionValue(content, "Liferay-Service"))) {
 
-			if (schemaVersion != null) {
-				return _fixSchemaVersion(absolutePath, content, schemaVersion);
-			}
-
 			int pos = absolutePath.lastIndexOf(CharPool.SLASH);
 
 			File serviceXMLfile = new File(
 				absolutePath.substring(0, pos + 1) + "service.xml");
+
+			if (schemaVersion != null) {
+				if (!serviceXMLfile.exists() ||
+					_isAllEmptyEntity(serviceXMLfile)) {
+
+					addMessage(
+						fileName,
+						"Do not include the header Liferay-Require-" +
+							"SchemaVersion when the service.xml only " +
+								"contains empty entity with no columns");
+
+					return content;
+				}
+
+				return _fixSchemaVersion(absolutePath, content, schemaVersion);
+			}
 
 			if (serviceXMLfile.exists()) {
 				addMessage(fileName, "Missing 'Liferay-Require-SchemaVersion'");
@@ -182,6 +199,26 @@ public class BNDSchemaVersionCheck extends BaseFileCheck {
 		}
 
 		return null;
+	}
+
+	private boolean _isAllEmptyEntity(File file)
+		throws DocumentException, IOException {
+
+		Document document = SourceUtil.readXML(FileUtil.read(file));
+
+		Element rootElement = document.getRootElement();
+
+		for (Element entityElement :
+				(List<Element>)rootElement.elements("entity")) {
+
+			List<Element> columnElements = entityElement.elements("column");
+
+			if (!columnElements.isEmpty()) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

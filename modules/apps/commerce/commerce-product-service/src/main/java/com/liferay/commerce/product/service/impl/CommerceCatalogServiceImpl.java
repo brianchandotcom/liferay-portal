@@ -14,6 +14,8 @@
 
 package com.liferay.commerce.product.service.impl;
 
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.commerce.product.constants.CPActionKeys;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.base.CommerceCatalogServiceBaseImpl;
@@ -57,6 +59,8 @@ public class CommerceCatalogServiceImpl extends CommerceCatalogServiceBaseImpl {
 
 		portletResourcePermission.check(
 			getPermissionChecker(), null, CPActionKeys.ADD_COMMERCE_CATALOG);
+
+		_checkAccountEntry(accountEntryId);
 
 		return commerceCatalogLocalService.addCommerceCatalog(
 			externalReferenceCode, accountEntryId, name, commerceCurrencyCode,
@@ -181,6 +185,9 @@ public class CommerceCatalogServiceImpl extends CommerceCatalogServiceBaseImpl {
 
 			accountEntryId = commerceCatalog.getAccountEntryId();
 		}
+		else {
+			_checkAccountEntry(accountEntryId);
+		}
 
 		return commerceCatalogLocalService.updateCommerceCatalog(
 			commerceCatalogId, accountEntryId, name, commerceCurrencyCode,
@@ -199,6 +206,28 @@ public class CommerceCatalogServiceImpl extends CommerceCatalogServiceBaseImpl {
 			updateCommerceCatalogExternalReferenceCode(
 				externalReferenceCode, commerceCatalogId);
 	}
+
+	private void _checkAccountEntry(long accountEntryId)
+		throws PortalException {
+
+		if (accountEntryId > 0) {
+			AccountEntry accountEntry =
+				_accountEntryLocalService.getAccountEntry(accountEntryId);
+
+			_accountEntryModelResourcePermission.check(
+				getPermissionChecker(), accountEntry.getAccountEntryId(),
+				ActionKeys.VIEW);
+		}
+	}
+
+	@Reference
+	private AccountEntryLocalService _accountEntryLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.account.model.AccountEntry)"
+	)
+	private ModelResourcePermission<AccountEntry>
+		_accountEntryModelResourcePermission;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.commerce.product.model.CommerceCatalog)"

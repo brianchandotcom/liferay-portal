@@ -58,14 +58,12 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.settings.SystemSettingsLocator;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
@@ -117,6 +115,29 @@ public class CommerceCatalogDisplayContext {
 		cpRequestHelper = new CPRequestHelper(httpServletRequest);
 	}
 
+	public String getAccountEntriesAPIURL() {
+		String encodedFilter = URLCodec.encodeURL(
+			StringBundler.concat(
+				"(status/any(x:(x eq ", WorkflowConstants.STATUS_APPROVED,
+				"))) and type eq '",
+				AccountConstants.ACCOUNT_ENTRY_TYPE_SUPPLIER,
+				StringPool.APOSTROPHE),
+			true);
+
+		return "/o/headless-admin-user/v1.0/accounts?filter=" + encodedFilter;
+	}
+
+	public AccountEntry getAccountEntry() throws PortalException {
+		CommerceCatalog commerceCatalog = getCommerceCatalog();
+
+		if (commerceCatalog == null) {
+			return null;
+		}
+
+		return _accountEntryService.fetchAccountEntry(
+			commerceCatalog.getAccountEntryId());
+	}
+
 	public String getAddCommerceCatalogRenderURL() throws Exception {
 		return PortletURLBuilder.createRenderURL(
 			cpRequestHelper.getLiferayPortletResponse()
@@ -149,6 +170,10 @@ public class CommerceCatalogDisplayContext {
 	}
 
 	public CommerceCatalog getCommerceCatalog() throws PortalException {
+		if (_commerceCatalog != null) {
+			return _commerceCatalog;
+		}
+
 		long commerceCatalogId = ParamUtil.getLong(
 			cpRequestHelper.getRequest(), "commerceCatalogId");
 
@@ -156,7 +181,10 @@ public class CommerceCatalogDisplayContext {
 			return null;
 		}
 
-		return _commerceCatalogService.fetchCommerceCatalog(commerceCatalogId);
+		_commerceCatalog = _commerceCatalogService.fetchCommerceCatalog(
+			commerceCatalogId);
+
+		return _commerceCatalog;
 	}
 
 	public long getCommerceCatalogId() throws PortalException {
@@ -184,7 +212,7 @@ public class CommerceCatalogDisplayContext {
 	public CreationMenu getCreationMenu() throws Exception {
 		CreationMenu creationMenu = new CreationMenu();
 
-		if (hasAddCatalogPermission()) {
+		if (_hasPortletResourcePermission(CPActionKeys.ADD_COMMERCE_CATALOG)) {
 			creationMenu.addDropdownItem(
 				dropdownItem -> {
 					dropdownItem.setHref(getAddCommerceCatalogRenderURL());
@@ -196,6 +224,28 @@ public class CommerceCatalogDisplayContext {
 		}
 
 		return creationMenu;
+	}
+
+	public AccountEntry getDefaultAccountEntry() throws PortalException {
+		BaseModelSearchResult<AccountEntry> baseModelSearchResult =
+			_accountEntryService.searchAccountEntries(
+				null,
+				LinkedHashMapBuilder.<String, Object>put(
+					"status", WorkflowConstants.STATUS_APPROVED
+				).put(
+					"types",
+					new String[] {AccountConstants.ACCOUNT_ENTRY_TYPE_SUPPLIER}
+				).build(),
+				0, 2, "name", false);
+
+		if (baseModelSearchResult.getLength() == 1) {
+			List<AccountEntry> accountEntries =
+				baseModelSearchResult.getBaseModels();
+
+			return accountEntries.get(0);
+		}
+
+		return null;
 	}
 
 	public FileEntry getDefaultFileEntry() throws PortalException {
@@ -259,7 +309,9 @@ public class CommerceCatalogDisplayContext {
 
 		headerActionModels.add(cancelHeaderActionModel);
 
-		if (hasPermission(getCommerceCatalogId(), ActionKeys.UPDATE)) {
+		if (hasModelResourcePermission(
+				getCommerceCatalogId(), ActionKeys.UPDATE)) {
+
 			headerActionModels.add(
 				new HeaderActionModel(
 					"btn-primary", renderResponse.getNamespace() + "fm",
@@ -343,50 +395,25 @@ public class CommerceCatalogDisplayContext {
 			encodedFilter;
 	}
 
-	public List<AccountEntry> getSupplierAccountEntries()
-		throws PortalException {
+	public boolean hasManageLinkSupplierPermission(String command) {
+		if (_hasPortletResourcePermission(
+				CPActionKeys.VIEW_COMMERCE_CATALOGS)) {
 
-		BaseModelSearchResult<AccountEntry> baseModelSearchResult =
-			_accountEntryService.searchAccountEntries(
-				null,
-				LinkedHashMapBuilder.<String, Object>put(
-					"status", WorkflowConstants.STATUS_APPROVED
-				).put(
-					"types",
-					new String[] {AccountConstants.ACCOUNT_ENTRY_TYPE_SUPPLIER}
-				).build(),
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, "name", false);
+			if (Constants.UPDATE.equals(command)) {
+				return true;
+			}
+		}
+		else {
+			if (Constants.ADD.equals(command)) {
+				return true;
+			}
+		}
 
-		return baseModelSearchResult.getBaseModels();
+		return false;
 	}
 
-	public boolean hasAddCatalogPermission() {
-		PortletResourcePermission portletResourcePermission =
-			_commerceCatalogModelResourcePermission.
-				getPortletResourcePermission();
-
-		return portletResourcePermission.contains(
-			cpRequestHelper.getPermissionChecker(), null,
-			CPActionKeys.ADD_COMMERCE_CATALOG);
-	}
-
-	public boolean hasManageLinkSupplierPermission() {
-		PortletResourcePermission portletResourcePermission =
-			_commerceCatalogModelResourcePermission.
-				getPortletResourcePermission();
-
-		HttpServletRequest httpServletRequest = cpRequestHelper.getRequest();
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		return portletResourcePermission.contains(
-			themeDisplay.getPermissionChecker(), null,
-			CPActionKeys.VIEW_COMMERCE_CATALOGS);
-	}
-
-	public boolean hasPermission(long commerceCatalogId, String actionId)
+	public boolean hasModelResourcePermission(
+			long commerceCatalogId, String actionId)
 		throws PortalException {
 
 		return _commerceCatalogModelResourcePermission.contains(
@@ -422,8 +449,18 @@ public class CommerceCatalogDisplayContext {
 
 	protected final CPRequestHelper cpRequestHelper;
 
+	private boolean _hasPortletResourcePermission(String actionId) {
+		PortletResourcePermission portletResourcePermission =
+			_commerceCatalogModelResourcePermission.
+				getPortletResourcePermission();
+
+		return portletResourcePermission.contains(
+			cpRequestHelper.getPermissionChecker(), null, actionId);
+	}
+
 	private final AccountEntryService _accountEntryService;
 	private final AttachmentsConfiguration _attachmentsConfiguration;
+	private CommerceCatalog _commerceCatalog;
 	private final CommerceCatalogDefaultImage _commerceCatalogDefaultImage;
 	private final ModelResourcePermission<CommerceCatalog>
 		_commerceCatalogModelResourcePermission;

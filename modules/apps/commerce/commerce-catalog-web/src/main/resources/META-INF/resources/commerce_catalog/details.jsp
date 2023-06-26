@@ -28,7 +28,7 @@ CommercePriceList basePromotionCommercePriceList = commerceCatalogDisplayContext
 
 long fileEntryId = BeanParamUtil.getLong(fileEntry, request, "fileEntryId");
 
-boolean viewOnly = !commerceCatalogDisplayContext.hasPermission(commerceCatalog.getCommerceCatalogId(), ActionKeys.UPDATE);
+boolean viewOnly = !commerceCatalogDisplayContext.hasModelResourcePermission(commerceCatalog.getCommerceCatalogId(), ActionKeys.UPDATE);
 %>
 
 <portlet:actionURL name="/commerce_catalogs/edit_commerce_catalog" var="editCommerceCatalogActionURL" />
@@ -174,19 +174,36 @@ boolean viewOnly = !commerceCatalogDisplayContext.hasPermission(commerceCatalog.
 					</c:if>
 
 					<c:if test='<%= FeatureFlagManagerUtil.isEnabled("COMMERCE-10890") %>'>
-						<aui:select disabled="<%= !commerceCatalogDisplayContext.hasManageLinkSupplierPermission() %>" label="link-catalog-to-a-supplier" name="accountEntryId" showEmptyOption="<%= true %>">
 
-							<%
-							for (AccountEntry accountEntry : commerceCatalogDisplayContext.getSupplierAccountEntries()) {
-							%>
+						<%
+						AccountEntry accountEntry = commerceCatalogDisplayContext.getAccountEntry();
+						%>
 
-								<aui:option label="<%= accountEntry.getName() %>" selected="<%= (commerceCatalog != null) && (accountEntry.getAccountEntryId() == commerceCatalog.getAccountEntryId()) %>" value="<%= accountEntry.getAccountEntryId() %>" />
+						<c:choose>
+							<c:when test="<%= commerceCatalogDisplayContext.hasManageLinkSupplierPermission(Constants.UPDATE) && !viewOnly %>">
+								<label class="control-label" for="accountEntryId"><liferay-ui:message key="link-catalog-to-a-supplier" /></label>
 
-							<%
-							}
-							%>
+								<div class="mb-4" id="link-account-entry-autocomplete-root"></div>
 
-						</aui:select>
+								<aui:script require="commerce-frontend-js/components/autocomplete/entry as autocomplete">
+									autocomplete.default('autocomplete', 'link-account-entry-autocomplete-root', {
+										apiUrl: '<%= commerceCatalogDisplayContext.getAccountEntriesAPIURL() %>',
+										initialLabel:
+											'<%= (accountEntry == null) ? StringPool.BLANK : HtmlUtil.escapeJS(accountEntry.getName()) %>',
+										initialValue:
+											'<%= (accountEntry == null) ? 0 : accountEntry.getAccountEntryId() %>',
+										inputId: '<%= liferayPortletResponse.getNamespace() %>accountEntryId',
+										inputName: '<%= liferayPortletResponse.getNamespace() %>accountEntryId',
+										itemsKey: 'id',
+										itemsLabel: 'name',
+										required: false,
+									});
+								</aui:script>
+							</c:when>
+							<c:otherwise>
+								<aui:input disabled="<%= true %>" label="link-catalog-to-a-supplier" name="" value="<%= (accountEntry != null) ? accountEntry.getName() : StringPool.BLANK %>" />
+							</c:otherwise>
+						</c:choose>
 					</c:if>
 				</div>
 			</commerce-ui:panel>

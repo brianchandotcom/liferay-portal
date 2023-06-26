@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
 
@@ -125,11 +126,15 @@ public class CommerceCatalogPermissionImpl
 			CommerceCatalog commerceCatalog, String actionId)
 		throws PortalException {
 
-		if (permissionChecker.isCompanyAdmin(commerceCatalog.getCompanyId()) ||
-			permissionChecker.hasOwnerPermission(
+		if (permissionChecker.hasOwnerPermission(
 				commerceCatalog.getCompanyId(), CommerceCatalog.class.getName(),
 				commerceCatalog.getCommerceCatalogId(),
-				commerceCatalog.getUserId(), actionId)) {
+				commerceCatalog.getUserId(), actionId) ||
+			permissionChecker.hasPermission(
+				commerceCatalog.getGroupId(), CommerceCatalog.class.getName(),
+				commerceCatalog.getCommerceCatalogId(), actionId) ||
+			permissionChecker.isCompanyAdmin(commerceCatalog.getCompanyId()) ||
+			permissionChecker.isOmniadmin()) {
 
 			return true;
 		}
@@ -141,9 +146,7 @@ public class CommerceCatalogPermissionImpl
 			return true;
 		}
 
-		return permissionChecker.hasPermission(
-			commerceCatalog.getGroupId(), CommerceCatalog.class.getName(),
-			commerceCatalog.getCommerceCatalogId(), actionId);
+		return false;
 	}
 
 	private boolean _hasRoleAccountSupplier(
@@ -159,7 +162,8 @@ public class CommerceCatalogPermissionImpl
 			_accountEntryLocalService.getUserAccountEntries(
 				permissionChecker.getUserId(), 0L, StringPool.BLANK,
 				new String[] {AccountConstants.ACCOUNT_ENTRY_TYPE_SUPPLIER},
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
 
 		for (AccountEntry accountEntry : accountEntries) {
 			if ((commerceCatalog.getAccountEntryId() ==

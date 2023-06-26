@@ -14,7 +14,6 @@
 
 package com.liferay.object.web.internal.info.collection.provider;
 
-import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.model.AssetVocabulary;
@@ -628,19 +627,15 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 		for (AssetVocabulary assetVocabulary :
 				_getAssetVocabularies(serviceContext)) {
 
-			List<OptionInfoFieldType> optionInfoFieldTypes = new ArrayList<>();
-
-			for (AssetCategory assetCategory :
+			List<OptionInfoFieldType> optionInfoFieldTypes =
+				TransformUtil.transform(
 					_assetCategoryLocalService.getVocabularyCategories(
 						assetVocabulary.getVocabularyId(), QueryUtil.ALL_POS,
-						QueryUtil.ALL_POS, null)) {
-
-				optionInfoFieldTypes.add(
-					new OptionInfoFieldType(
+						QueryUtil.ALL_POS, null),
+					assetCategory -> new OptionInfoFieldType(
 						new SingleValueInfoLocalizedValue<>(
 							assetCategory.getName()),
 						String.valueOf(assetCategory.getCategoryId())));
-			}
 
 			if (!optionInfoFieldTypes.isEmpty()) {
 				fieldSetEntries.add(

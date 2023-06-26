@@ -34,6 +34,7 @@ import com.liferay.info.localized.SingleValueInfoLocalizedValue;
 import com.liferay.info.pagination.InfoPage;
 import com.liferay.info.pagination.Pagination;
 import com.liferay.info.sort.Sort;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -193,8 +194,6 @@ public class BasicDocumentSingleFormVariationInfoCollectionProvider
 	}
 
 	private InfoField<?> _getAssetTagsInfoField() {
-		List<OptionInfoFieldType> optionInfoFieldTypes = new ArrayList<>();
-
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
@@ -204,13 +203,6 @@ public class BasicDocumentSingleFormVariationInfoCollectionProvider
 
 		assetTags.sort(new AssetTagNameComparator(true));
 
-		for (AssetTag assetTag : assetTags) {
-			optionInfoFieldTypes.add(
-				new OptionInfoFieldType(
-					new SingleValueInfoLocalizedValue<>(assetTag.getName()),
-					assetTag.getName()));
-		}
-
 		InfoField.FinalStep<?> finalStep = InfoField.builder(
 		).infoFieldType(
 			MultiselectInfoFieldType.INSTANCE
@@ -219,7 +211,12 @@ public class BasicDocumentSingleFormVariationInfoCollectionProvider
 		).name(
 			Field.ASSET_TAG_NAMES
 		).attribute(
-			MultiselectInfoFieldType.OPTIONS, optionInfoFieldTypes
+			MultiselectInfoFieldType.OPTIONS,
+			TransformUtil.transform(
+				assetTags,
+				assetTag -> new OptionInfoFieldType(
+					new SingleValueInfoLocalizedValue<>(assetTag.getName()),
+					assetTag.getName()))
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.localize(getClass(), "tag")
 		).localizable(

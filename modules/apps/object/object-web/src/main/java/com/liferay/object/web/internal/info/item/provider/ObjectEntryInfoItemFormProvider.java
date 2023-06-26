@@ -35,7 +35,6 @@ import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.info.localized.bundle.FunctionInfoLocalizedValue;
 import com.liferay.layout.page.template.info.item.provider.DisplayPageInfoItemFieldSetProvider;
-import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
@@ -732,25 +731,17 @@ public class ObjectEntryInfoItemFormProvider
 	private List<OptionInfoFieldType> _getOptionInfoFieldTypes(
 		ObjectField objectField) {
 
-		List<OptionInfoFieldType> optionInfoFieldTypes = new ArrayList<>();
-
-		List<ListTypeEntry> listTypeEntries =
+		return TransformUtil.transform(
 			_listTypeEntryLocalService.getListTypeEntries(
-				objectField.getListTypeDefinitionId());
-
-		for (ListTypeEntry listTypeEntry : listTypeEntries) {
-			optionInfoFieldTypes.add(
-				new OptionInfoFieldType(
-					Objects.equals(
-						ObjectFieldSettingUtil.getDefaultValueAsString(
-							null, objectField.getObjectFieldId(),
-							_objectFieldSettingLocalService, null),
-						listTypeEntry.getKey()),
-					new FunctionInfoLocalizedValue<>(listTypeEntry::getName),
-					listTypeEntry.getKey()));
-		}
-
-		return optionInfoFieldTypes;
+				objectField.getListTypeDefinitionId()),
+			listTypeEntry -> new OptionInfoFieldType(
+				Objects.equals(
+					ObjectFieldSettingUtil.getDefaultValueAsString(
+						null, objectField.getObjectFieldId(),
+						_objectFieldSettingLocalService, null),
+					listTypeEntry.getKey()),
+				new FunctionInfoLocalizedValue<>(listTypeEntry::getName),
+				listTypeEntry.getKey()));
 	}
 
 	private List<InfoFieldSetEntry> _getParentsInfoFieldSets(

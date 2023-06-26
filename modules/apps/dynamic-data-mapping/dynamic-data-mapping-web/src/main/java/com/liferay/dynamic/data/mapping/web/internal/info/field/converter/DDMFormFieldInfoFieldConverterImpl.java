@@ -36,9 +36,9 @@ import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.field.type.URLInfoFieldType;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.info.localized.bundle.FunctionInfoLocalizedValue;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -200,22 +200,19 @@ public class DDMFormFieldInfoFieldConverterImpl
 	private List<OptionInfoFieldType> _getOptionInfoFieldTypes(
 		DDMFormField ddmFormField) {
 
-		List<OptionInfoFieldType> optionInfoFieldTypes = new ArrayList<>();
-
 		DDMFormFieldOptions ddmFormFieldOptions =
 			ddmFormField.getDDMFormFieldOptions();
 
-		for (String value : ddmFormFieldOptions.getOptionsValues()) {
-			LocalizedValue localizedValue = ddmFormFieldOptions.getOptionLabels(
-				value);
+		return TransformUtil.transform(
+			ddmFormFieldOptions.getOptionsValues(),
+			value -> {
+				LocalizedValue localizedValue =
+					ddmFormFieldOptions.getOptionLabels(value);
 
-			optionInfoFieldTypes.add(
-				new OptionInfoFieldType(
+				return new OptionInfoFieldType(
 					new FunctionInfoLocalizedValue<>(localizedValue::getString),
-					value));
-		}
-
-		return optionInfoFieldTypes;
+					value);
+			});
 	}
 
 	private boolean _isInfoFieldEditable(InfoFieldType infoFieldType) {

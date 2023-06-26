@@ -30,7 +30,7 @@ definition {
 			locator1 = "OpenAPI#SCHEMA_PROPERTY",
 			property = ${property},
 			schema = ${schema},
-			value1 = "${property} { method string default: ${method} href string default: ${portalURL}/o/c/${objectHref} }");
+			value1 = "${property} { method string default: ${method} href string default: ${portalURL}/o/${objectHref} }");
 	}
 
 	macro executeAPIMethodWithParameters {

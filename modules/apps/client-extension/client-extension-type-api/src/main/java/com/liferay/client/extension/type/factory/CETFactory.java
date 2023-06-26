@@ -55,6 +55,11 @@ public interface CETFactory {
 
 	public final Map<String, String> FEATURE_FLAG_KEYS = HashMapBuilder.put(
 
+		// feature.flag.LPS-164563
+
+		ClientExtensionEntryConstants.TYPE_FDS_CELL_RENDERER, "LPS-164563"
+	).put(
+
 		// feature.flag.LPS-166479
 
 		ClientExtensionEntryConstants.TYPE_THEME_SPRITEMAP, "LPS-166479"
@@ -63,11 +68,6 @@ public interface CETFactory {
 		// feature.flag.LPS-172903
 
 		ClientExtensionEntryConstants.TYPE_JS_IMPORT_MAPS_ENTRY, "LPS-172903"
-	).put(
-
-		// feature.flag.LPS-172904
-
-		ClientExtensionEntryConstants.TYPE_FDS_CELL_RENDERER, "LPS-172904"
 	).put(
 
 		// feature.flag.LPS-177027

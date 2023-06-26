@@ -1,6 +1,6 @@
 definition {
 
-	property custom.properties = "feature.flag.LPS-172904=true";
+	property custom.properties = "feature.flag.LPS-164563=true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.component.names = "Client Extensions";

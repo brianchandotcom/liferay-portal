@@ -122,16 +122,14 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 			Map<String, Serializable> workflowContext)
 		throws PortalException {
 
+		// TODO apply the permission validation using the
+		//  getAssignableUsers(workflowTaskId) method when the proper story for
+		//  providing scripted assignment in LXC env is done
+
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
-		List<User> assignableUsers = getAssignableUsers(workflowTaskId);
-
-		User assigneeUser = _userLocalService.getUser(assigneeUserId);
-
-		if (!assignableUsers.contains(assigneeUser) ||
-			(permissionChecker.getUserId() != userId)) {
-
+		if (permissionChecker.getUserId() != userId) {
 			throw new PrincipalException.MustHavePermission(
 				userId, WorkflowTask.class.getName(), workflowTaskId,
 				ActionKeys.VIEW);
@@ -922,6 +920,26 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 
 			for (KaleoTaskAssignment kaleoTaskAssignment :
 					kaleoTaskAssignments) {
+
+				_populateAllowedUsers(
+					actionType, allowedUsers, assignedUserId,
+					kaleoTaskAssignment, kaleoTaskInstanceToken);
+			}
+
+			// TODO remove this temporary work around when the proper story for
+			//  providing scripted assignment in LXC env is done
+
+			for (KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance :
+					kaleoTaskInstanceToken.getKaleoTaskAssignmentInstances()) {
+
+				KaleoTaskAssignment kaleoTaskAssignment =
+					_kaleoTaskAssignmentLocalService.createKaleoTaskAssignment(
+						0L);
+
+				kaleoTaskAssignment.setAssigneeClassName(
+					kaleoTaskAssignmentInstance.getAssigneeClassName());
+				kaleoTaskAssignment.setAssigneeClassPK(
+					kaleoTaskAssignmentInstance.getAssigneeClassPK());
 
 				_populateAllowedUsers(
 					actionType, allowedUsers, assignedUserId,

@@ -1515,3 +1515,26 @@ Replace configuration usage with `DLFileEntryConfiguration` `previewableProcesso
 ### Why was this change made?
 
 `AMImageConfiguration` `imageMaxSize` property has been deprecated since 7.2.x in favor of using `DLFileEntryConfiguration` `previewableProcessorMaxSize`.
+
+---------------------------------------
+
+## Changed default value of virtual.hosts.valid.hosts from '*' to 'localhost,127.0.0.1,[::1],[0:0:0:0:0:0:0:1]'
+
+- **Date:** 2023-June-2
+- **JIRA Ticket:** [LPS-184385](https://issues.liferay.com/browse/LPS-184385)
+
+### What changed?
+
+Default value of virtual.hosts.valid.hosts is no longer '*'
+
+### Who is affected?
+
+Anyone setting virtual.hosts.valid.hosts besides localhost, 127.0.0.1, [::1], [0:0:0:0:0:0:0:1]
+
+### How should I update my code?
+
+Upgrade the default value of virtual.hosts.valid.hosts in portal-impl/src/portal.properties to match the value being used in your current configuration
+
+### Why was this change made?
+
+This change was made to address security vulnerabilities.

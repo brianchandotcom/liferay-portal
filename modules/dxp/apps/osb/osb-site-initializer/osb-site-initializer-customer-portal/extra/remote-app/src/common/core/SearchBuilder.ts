@@ -104,7 +104,7 @@ export default class SearchBuilder {
 	}
 
 	static startsWith(key: Key, value: Value) {
-		return `${key} startsWith '${value}'`;
+		return `startswith(${key}, '${value}')`;
 	}
 
 	static removeEmptyFilter(filter: Filter) {
@@ -177,6 +177,10 @@ export default class SearchBuilder {
 
 	public group(type: 'CLOSE' | 'OPEN') {
 		return this.setContext(SearchBuilder.group(type));
+	}
+
+	public startsWith(key: Key, value: Value) {
+		return this.setContext(SearchBuilder.startsWith(key, value));
 	}
 
 	private setContext(query: string) {

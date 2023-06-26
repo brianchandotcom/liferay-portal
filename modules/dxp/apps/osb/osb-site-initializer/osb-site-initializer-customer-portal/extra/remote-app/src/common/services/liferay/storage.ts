@@ -9,15 +9,17 @@
  * distribution rights of the Software.
  */
 
-import {Liferay} from '../../services/liferay';
+import {Liferay} from '.';
 
 export const storage = {
-	getItem: (key, consentType = Liferay.Util.SessionStorage.TYPES.NECESSARY) =>
-		Liferay.Util.SessionStorage.getItem(key, consentType),
-	removeItem: (key) => Liferay.Util.SessionStorage.removeItem(key),
-	setItem: (
-		key,
-		value,
+	getItem: (
+		key: string,
 		consentType = Liferay.Util.SessionStorage.TYPES.NECESSARY
-	) => Liferay.Util.SessionStorage.setItem(key, value, consentType),
+	) => (Liferay.Util.SessionStorage as any).getItem(key, consentType),
+	removeItem: (key: string) => Liferay.Util.SessionStorage.removeItem(key),
+	setItem: (
+		key: string,
+		value: any,
+		consentType = Liferay.Util.SessionStorage.TYPES.NECESSARY
+	) => (Liferay.Util.SessionStorage as any).setItem(key, value, consentType),
 };

@@ -15,6 +15,9 @@ import ClayIcon from '@clayui/icon';
 import {FieldArray, Formik} from 'formik';
 
 import {useEffect, useMemo, useState} from 'react';
+import {useAppPropertiesContext} from '~/common/contexts/AppPropertiesContext';
+import SearchBuilder from '~/common/core/SearchBuilder';
+import NotificationQueueService from '~/common/services/actions/notificationAction';
 import {
 	addAdminDXPCloud,
 	addDXPCloudEnvironment,
@@ -28,9 +31,10 @@ import {STATUS_TAG_TYPE_NAMES} from '../../../../routes/customer-portal/utils/co
 import i18n from '../../../I18n';
 import {Button, Input, Select} from '../../../components';
 import getInitialDXPAdmin from '../../../utils/getInitialDXPAdmin';
-import getKebabCase from '../../../utils/getKebabCase';
-import Layout from '../Layout';
 
+import getKebabCase from '../../../utils/getKebabCase';
+
+import Layout from '../Layout';
 import AdminInputs from './AdminInputs';
 
 const INITIAL_SETUP_ADMIN_COUNT = 1;
@@ -61,13 +65,14 @@ const SetupDXPCloudPage = ({
 			accountSubscriptionsFilter: `(accountKey eq '${project.accountKey}') and (hasDisasterDataCenterRegion eq true or (name eq '${HA_DR_FILTER}' or name eq '${STD_DR_FILTER}'))`,
 		},
 	});
+	const {featureFlags} = useAppPropertiesContext();
 
 	useEffect(() => {
 		const fetchListTypeDefinitions = async () => {
 			const {data: typeDefinitionResponse} = await client.query({
 				query: getListTypeDefinitions,
 				variables: {
-					filter: `name eq '${listType}'`,
+					filter: SearchBuilder.eq('name', listType),
 				},
 			});
 
@@ -131,7 +136,7 @@ const SetupDXPCloudPage = ({
 			const {data: dxpCloudEnvironmentData} = await client.query({
 				query: getDXPCloudEnvironment,
 				variables: {
-					filter: `accountKey eq '${accountKey}'`,
+					filter: SearchBuilder.eq('accountKey', accountKey),
 				},
 			});
 
@@ -215,6 +220,36 @@ const SetupDXPCloudPage = ({
 						id: subscriptionGroupId,
 					},
 				});
+
+				if (featureFlags.includes('LPS-181033')) {
+					const notificationTemplateService = new NotificationQueueService(
+						client
+					);
+
+					try {
+						await notificationTemplateService.send(
+							'SETUP-DXP-CLOUD-ENVIRONMENT-NOTIFICATION-TEMPLATE',
+							{
+								'[%DATE_AND_TIME_SUBMITTED%]': new Date().toUTCString(),
+								'[%PROJECT_CODE%]': project.code,
+								'[%PROJECT_DATA_CENTER_REGION%]':
+									dxp?.dataCenterRegion,
+								'[%PROJECT_DISASTER_CENTER_REGION%]': dxp?.disasterDataCenterRegion
+									? `Primary Disaster Center Region - ${dxp?.disasterDataCenterRegion}`
+									: '',
+								'[%PROJECT_ID%]': dxp?.projectId,
+								'[%PROJECT_VERSION%]': dxpVersion,
+								'[%USER_EMAIL%]': dxp?.admins[0]?.email,
+								'[%USER_FIRST_NAME%]':
+									dxp?.admins[0]?.firstName,
+								'[%USER_GITHUB]': dxp?.admins[0]?.github,
+								'[%USER_LAST_NAME%]': dxp?.admins[0]?.lastName,
+							}
+						);
+					} catch (error) {
+						console.error(error);
+					}
+				}
 
 				handlePage(true);
 			}

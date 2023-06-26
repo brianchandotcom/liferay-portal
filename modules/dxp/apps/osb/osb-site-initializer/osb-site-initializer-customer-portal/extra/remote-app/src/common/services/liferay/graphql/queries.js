@@ -643,3 +643,36 @@ export const deleteAccountUserAccount = gql`
 		)
 	}
 `;
+
+export const getNotificationTemplateByExternalRefenceCode = gql`
+	query getNotificationTemplateByExternalRefenceCode(
+		$externalReferenceCode: String!
+	) {
+		notificationTemplateByExternalReferenceCode(
+			externalReferenceCode: $externalReferenceCode
+		) {
+			body
+			dateCreated
+			id
+			name
+			recipients
+			subject
+			type
+		}
+	}
+`;
+
+export const notificationQueueEntry = gql`
+	mutation createNotificationQueueEntry(
+		$notificationQueueEntry: InputNotificationQueueEntry!
+	) {
+		createNotificationQueueEntry(
+			notificationQueueEntry: $notificationQueueEntry
+		) {
+			body
+			id
+			recipients
+			subject
+		}
+	}
+`;

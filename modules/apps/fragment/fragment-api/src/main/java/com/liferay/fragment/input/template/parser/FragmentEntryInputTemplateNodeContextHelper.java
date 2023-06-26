@@ -26,6 +26,7 @@ import com.liferay.info.field.type.InfoFieldType;
 import com.liferay.info.field.type.LongTextInfoFieldType;
 import com.liferay.info.field.type.MultiselectInfoFieldType;
 import com.liferay.info.field.type.NumberInfoFieldType;
+import com.liferay.info.field.type.OptionInfoFieldType;
 import com.liferay.info.field.type.RelationshipInfoFieldType;
 import com.liferay.info.field.type.SelectInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
@@ -177,36 +178,40 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 		String value = StringPool.BLANK;
 
 		if (infoFieldType instanceof MultiselectInfoFieldType) {
-			List<MultiselectInfoFieldType.Option> options =
-				(List<MultiselectInfoFieldType.Option>)infoField.getAttribute(
+			List<OptionInfoFieldType> optionInfoFieldTypes =
+				(List<OptionInfoFieldType>)infoField.getAttribute(
 					MultiselectInfoFieldType.OPTIONS);
 
-			if (options == null) {
-				options = Collections.emptyList();
+			if (optionInfoFieldTypes == null) {
+				optionInfoFieldTypes = Collections.emptyList();
 			}
 
-			for (MultiselectInfoFieldType.Option option : options) {
-				if (option.isActive()) {
-					label = option.getLabel(locale);
-					value = option.getValue();
+			for (OptionInfoFieldType optionInfoFieldType :
+					optionInfoFieldTypes) {
+
+				if (optionInfoFieldType.isActive()) {
+					label = optionInfoFieldType.getLabel(locale);
+					value = optionInfoFieldType.getValue();
 
 					break;
 				}
 			}
 		}
 		else if (infoFieldType instanceof SelectInfoFieldType) {
-			List<SelectInfoFieldType.Option> options =
-				(List<SelectInfoFieldType.Option>)infoField.getAttribute(
+			List<OptionInfoFieldType> optionInfoFieldTypes =
+				(List<OptionInfoFieldType>)infoField.getAttribute(
 					SelectInfoFieldType.OPTIONS);
 
-			if (options == null) {
-				options = Collections.emptyList();
+			if (optionInfoFieldTypes == null) {
+				optionInfoFieldTypes = Collections.emptyList();
 			}
 
-			for (SelectInfoFieldType.Option option : options) {
-				if (option.isActive()) {
-					label = option.getLabel(locale);
-					value = option.getValue();
+			for (OptionInfoFieldType optionInfoFieldType :
+					optionInfoFieldTypes) {
+
+				if (optionInfoFieldType.isActive()) {
+					label = optionInfoFieldType.getLabel(locale);
+					value = optionInfoFieldType.getValue();
 
 					break;
 				}
@@ -335,19 +340,15 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 
 			List<InputTemplateNode.Option> options = new ArrayList<>();
 
-			List<MultiselectInfoFieldType.Option>
-				multiselectInfoFieldTypeOptions =
-					(List<MultiselectInfoFieldType.Option>)
-						infoField.getAttribute(
-							MultiselectInfoFieldType.OPTIONS);
+			List<OptionInfoFieldType> multiselectInfoFieldTypeOptions =
+				(List<OptionInfoFieldType>)infoField.getAttribute(
+					MultiselectInfoFieldType.OPTIONS);
 
 			if (multiselectInfoFieldTypeOptions == null) {
 				multiselectInfoFieldTypeOptions = Collections.emptyList();
 			}
 
-			for (MultiselectInfoFieldType.Option option :
-					multiselectInfoFieldTypeOptions) {
-
+			for (OptionInfoFieldType option : multiselectInfoFieldTypeOptions) {
 				options.add(
 					new InputTemplateNode.Option(
 						option.getLabel(locale), option.getValue()));
@@ -412,17 +413,15 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 		else if (infoField.getInfoFieldType() instanceof SelectInfoFieldType) {
 			List<InputTemplateNode.Option> options = new ArrayList<>();
 
-			List<SelectInfoFieldType.Option> selectInfoFieldTypeOptions =
-				(List<SelectInfoFieldType.Option>)infoField.getAttribute(
+			List<OptionInfoFieldType> selectInfoFieldTypeOptions =
+				(List<OptionInfoFieldType>)infoField.getAttribute(
 					SelectInfoFieldType.OPTIONS);
 
 			if (selectInfoFieldTypeOptions == null) {
 				selectInfoFieldTypeOptions = Collections.emptyList();
 			}
 
-			for (SelectInfoFieldType.Option option :
-					selectInfoFieldTypeOptions) {
-
+			for (OptionInfoFieldType option : selectInfoFieldTypeOptions) {
 				options.add(
 					new InputTemplateNode.Option(
 						option.getLabel(locale), option.getValue()));

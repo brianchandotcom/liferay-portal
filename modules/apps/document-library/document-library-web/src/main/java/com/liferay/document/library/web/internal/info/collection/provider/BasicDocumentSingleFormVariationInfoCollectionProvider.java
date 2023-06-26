@@ -25,6 +25,7 @@ import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.collection.provider.SingleFormVariationInfoCollectionProvider;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.type.MultiselectInfoFieldType;
+import com.liferay.info.field.type.OptionInfoFieldType;
 import com.liferay.info.filter.CategoriesInfoFilter;
 import com.liferay.info.filter.InfoFilter;
 import com.liferay.info.form.InfoForm;
@@ -192,7 +193,7 @@ public class BasicDocumentSingleFormVariationInfoCollectionProvider
 	}
 
 	private InfoField<?> _getAssetTagsInfoField() {
-		List<MultiselectInfoFieldType.Option> options = new ArrayList<>();
+		List<OptionInfoFieldType> optionInfoFieldTypes = new ArrayList<>();
 
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
@@ -204,8 +205,8 @@ public class BasicDocumentSingleFormVariationInfoCollectionProvider
 		assetTags.sort(new AssetTagNameComparator(true));
 
 		for (AssetTag assetTag : assetTags) {
-			options.add(
-				new MultiselectInfoFieldType.Option(
+			optionInfoFieldTypes.add(
+				new OptionInfoFieldType(
 					new SingleValueInfoLocalizedValue<>(assetTag.getName()),
 					assetTag.getName()));
 		}
@@ -218,7 +219,7 @@ public class BasicDocumentSingleFormVariationInfoCollectionProvider
 		).name(
 			Field.ASSET_TAG_NAMES
 		).attribute(
-			MultiselectInfoFieldType.OPTIONS, options
+			MultiselectInfoFieldType.OPTIONS, optionInfoFieldTypes
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.localize(getClass(), "tag")
 		).localizable(

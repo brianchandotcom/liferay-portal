@@ -30,6 +30,7 @@ import com.liferay.info.field.type.ImageInfoFieldType;
 import com.liferay.info.field.type.InfoFieldType;
 import com.liferay.info.field.type.MultiselectInfoFieldType;
 import com.liferay.info.field.type.NumberInfoFieldType;
+import com.liferay.info.field.type.OptionInfoFieldType;
 import com.liferay.info.field.type.SelectInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.field.type.URLInfoFieldType;
@@ -196,31 +197,10 @@ public class DDMFormFieldInfoFieldConverterImpl
 		return TextInfoFieldType.INSTANCE;
 	}
 
-	private List<MultiselectInfoFieldType.Option>
-		_getMultiselectInfoFieldTypeOptions(DDMFormField ddmFormField) {
-
-		List<MultiselectInfoFieldType.Option> options = new ArrayList<>();
-
-		DDMFormFieldOptions ddmFormFieldOptions =
-			ddmFormField.getDDMFormFieldOptions();
-
-		for (String value : ddmFormFieldOptions.getOptionsValues()) {
-			LocalizedValue localizedValue = ddmFormFieldOptions.getOptionLabels(
-				value);
-
-			options.add(
-				new MultiselectInfoFieldType.Option(
-					new FunctionInfoLocalizedValue<>(localizedValue::getString),
-					value));
-		}
-
-		return options;
-	}
-
-	private List<SelectInfoFieldType.Option> _getSelectInfoFieldTypeOptions(
+	private List<OptionInfoFieldType> _getMultiselectInfoFieldTypeOptions(
 		DDMFormField ddmFormField) {
 
-		List<SelectInfoFieldType.Option> options = new ArrayList<>();
+		List<OptionInfoFieldType> optionInfoFieldTypes = new ArrayList<>();
 
 		DDMFormFieldOptions ddmFormFieldOptions =
 			ddmFormField.getDDMFormFieldOptions();
@@ -229,13 +209,34 @@ public class DDMFormFieldInfoFieldConverterImpl
 			LocalizedValue localizedValue = ddmFormFieldOptions.getOptionLabels(
 				value);
 
-			options.add(
-				new SelectInfoFieldType.Option(
+			optionInfoFieldTypes.add(
+				new OptionInfoFieldType(
 					new FunctionInfoLocalizedValue<>(localizedValue::getString),
 					value));
 		}
 
-		return options;
+		return optionInfoFieldTypes;
+	}
+
+	private List<OptionInfoFieldType> _getSelectInfoFieldTypeOptions(
+		DDMFormField ddmFormField) {
+
+		List<OptionInfoFieldType> optionInfoFieldTypes = new ArrayList<>();
+
+		DDMFormFieldOptions ddmFormFieldOptions =
+			ddmFormField.getDDMFormFieldOptions();
+
+		for (String value : ddmFormFieldOptions.getOptionsValues()) {
+			LocalizedValue localizedValue = ddmFormFieldOptions.getOptionLabels(
+				value);
+
+			optionInfoFieldTypes.add(
+				new OptionInfoFieldType(
+					new FunctionInfoLocalizedValue<>(localizedValue::getString),
+					value));
+		}
+
+		return optionInfoFieldTypes;
 	}
 
 	private boolean _isInfoFieldEditable(InfoFieldType infoFieldType) {

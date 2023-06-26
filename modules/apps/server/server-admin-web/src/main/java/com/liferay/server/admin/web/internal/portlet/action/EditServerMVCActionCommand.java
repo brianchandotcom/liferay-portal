@@ -213,8 +213,8 @@ public class EditServerMVCActionCommand
 		else if (cmd.equals("dlDeletePreviews")) {
 			DLPreviewableProcessor.deleteFiles();
 		}
-		else if (cmd.equals("dlGeneratePDFPreviews")) {
-			_pdfProcessor.generatePDFPreviews();
+		else if (cmd.equals("dlGeneratePreviews")) {
+			_pdfProcessor.generatePreviews();
 		}
 		else if (cmd.equals("gc")) {
 			_gc();

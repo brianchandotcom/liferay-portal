@@ -40,7 +40,7 @@ public interface PDFProcessor {
 			FileVersion sourceFileVersion, FileVersion destinationFileVersion)
 		throws Exception;
 
-	public void generatePDFPreviews();
+	public void generatePreviews();
 
 	public InputStream getPreviewAsStream(FileVersion fileVersion, int index)
 		throws Exception;

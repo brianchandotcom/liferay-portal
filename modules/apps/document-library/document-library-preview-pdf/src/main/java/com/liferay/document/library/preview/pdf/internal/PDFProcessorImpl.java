@@ -130,7 +130,7 @@ public class PDFProcessorImpl
 	}
 
 	@Override
-	public void generatePDFPreviews() {
+	public void generatePreviews() {
 		_companyLocalService.forEachCompanyId(
 			companyId -> {
 				try {

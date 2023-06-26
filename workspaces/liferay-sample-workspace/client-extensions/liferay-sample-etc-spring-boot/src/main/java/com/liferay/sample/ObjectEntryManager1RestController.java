@@ -133,6 +133,15 @@ public class ObjectEntryManager1RestController extends BaseRestController {
 
 		JSONObject objectEntryJSONObject = _getObjectEntryJSONObject(json);
 
+		if (objectEntryJSONObject.isNull("creator")) {
+			Faker faker = new Faker();
+
+			Name name = faker.name();
+
+			objectEntryJSONObject.put(
+				"creator", Collections.singletonMap("name", name.fullName()));
+		}
+
 		String externalReferenceCode =
 			!objectEntryJSONObject.isNull("externalReferenceCode") ?
 				objectEntryJSONObject.getString("externalReferenceCode") : null;
@@ -175,13 +184,6 @@ public class ObjectEntryManager1RestController extends BaseRestController {
 		}
 
 		JSONObject objectEntryJSONObject = _getObjectEntryJSONObject(json);
-
-		Faker faker = new Faker();
-
-		Name name = faker.name();
-
-		objectEntryJSONObject.put(
-			"creator", Collections.singletonMap("name", name.fullName()));
 
 		objectEntryJSONObjects.put(
 			externalReferenceCode, objectEntryJSONObject);

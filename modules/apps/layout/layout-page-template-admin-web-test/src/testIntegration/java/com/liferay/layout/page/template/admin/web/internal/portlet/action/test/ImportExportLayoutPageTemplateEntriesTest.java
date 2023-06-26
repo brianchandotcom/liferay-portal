@@ -39,6 +39,18 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.object.constants.ObjectActionExecutorConstants;
+import com.liferay.object.constants.ObjectActionTriggerConstants;
+import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.field.builder.TextObjectFieldBuilder;
+import com.liferay.object.field.util.ObjectFieldUtil;
+import com.liferay.object.model.ObjectAction;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectField;
+import com.liferay.object.service.ObjectActionLocalService;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -70,16 +82,20 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 
 import java.net.URL;
 
@@ -528,6 +544,41 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 			"form/success_message_url/expected", null, null);
 		File inputFile = _generateZipFile(
 			"form/success_message_url/input", null, null);
+
+		_validateImportExport(expectedFile, inputFile);
+	}
+
+	@FeatureFlags("LPS-169992")
+	@Test
+	public void testImportExportLayoutPageTemplateEntryFragmentActionFieldMappedAction()
+		throws Exception {
+
+		_addActionFragmentEntry();
+
+		ObjectEntry objectEntry = _addObjectEntry();
+
+		ObjectAction objectAction = _addObjectAction(objectEntry);
+
+		Map<String, String> numberValuesMap = HashMapBuilder.put(
+			"CLASS_PK", String.valueOf(objectEntry.getObjectEntryId())
+		).build();
+
+		Map<String, String> stringValuesMap = HashMapBuilder.put(
+			"ACTION_NAME",
+			ObjectAction.class.getSimpleName() + StringPool.DASH +
+				objectAction.getName()
+		).put(
+			"CLASS_NAME", objectEntry.getModelClassName()
+		).put(
+			"SITE_KEY", _group1.getGroupKey()
+		).build();
+
+		File expectedFile = _generateZipFile(
+			"fragment/action_field/mapped_value/expected", numberValuesMap,
+			stringValuesMap);
+		File inputFile = _generateZipFile(
+			"fragment/action_field/mapped_value/input", numberValuesMap,
+			stringValuesMap);
 
 		_validateImportExport(expectedFile, inputFile);
 	}
@@ -1047,6 +1098,16 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 		_validateImportExport(expectedFile, inputFile);
 	}
 
+	private void _addActionFragmentEntry() throws Exception {
+		String html =
+			"<button data-lfr-editable-id=\"action\" data-lfr-editable-type" +
+				"=\"action\">Action Button Fragment</button>";
+
+		_addFragmentEntry(
+			_group1.getGroupId(), "test-action-fragment",
+			"Test Action Fragment", html);
+	}
+
 	private AssetListEntry _addAssetListEntry(long groupId)
 		throws PortalException {
 
@@ -1123,6 +1184,68 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 			"https://avatars1.githubusercontent.com/u/131436");
 
 		return JournalTestUtil.updateArticle(journalArticle);
+	}
+
+	private ObjectAction _addObjectAction(ObjectEntry objectEntry)
+		throws Exception {
+
+		return _objectActionLocalService.addObjectAction(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			objectEntry.getObjectDefinitionId(), true, StringPool.BLANK,
+			RandomTestUtil.randomString(),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			RandomTestUtil.randomString(),
+			ObjectActionExecutorConstants.KEY_GROOVY,
+			ObjectActionTriggerConstants.KEY_STANDALONE,
+			UnicodePropertiesBuilder.put(
+				"script", StringPool.BLANK
+			).build());
+	}
+
+	private ObjectEntry _addObjectEntry() throws Exception {
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.addCustomObjectDefinition(
+				TestPropsValues.getUserId(), false, false,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"A" + RandomTestUtil.randomString(), null,
+				"control_panel.sites",
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				false, ObjectDefinitionConstants.SCOPE_SITE,
+				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT, null);
+
+		ObjectField objectField = ObjectFieldUtil.addCustomObjectField(
+			new TextObjectFieldBuilder(
+			).userId(
+				TestPropsValues.getUserId()
+			).indexed(
+				true
+			).indexedAsKeyword(
+				true
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).name(
+				"myText"
+			).objectDefinitionId(
+				objectDefinition.getObjectDefinitionId()
+			).build());
+
+		objectDefinition.setTitleObjectFieldId(objectField.getObjectFieldId());
+
+		objectDefinition = _objectDefinitionLocalService.updateObjectDefinition(
+			objectDefinition);
+
+		_objectDefinitionLocalService.publishCustomObjectDefinition(
+			TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId());
+
+		return _objectEntryLocalService.addObjectEntry(
+			TestPropsValues.getUserId(), _group1.getGroupId(),
+			objectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"text", RandomTestUtil.randomString()
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
 	}
 
 	private void _addTextFragmentEntry() throws Exception {
@@ -1470,6 +1593,15 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 		filter = "mvc.command.name=/layout_page_template_admin/export_layout_page_template_entries"
 	)
 	private MVCResourceCommand _mvcResourceCommand;
+
+	@Inject
+	private ObjectActionLocalService _objectActionLocalService;
+
+	@Inject
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Inject
+	private ObjectEntryLocalService _objectEntryLocalService;
 
 	private ObjectMapper _objectMapper;
 

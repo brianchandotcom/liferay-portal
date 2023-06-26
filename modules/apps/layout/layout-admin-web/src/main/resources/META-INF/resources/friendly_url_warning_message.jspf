@@ -15,7 +15,7 @@
 --%>
 
 <%
-String layoutSetPrototypeFriendlyURLWarning = GetterUtil.getString(MultiSessionMessages.get(renderRequest, "layoutSetPrototypeFriendlyURLWarning"));
+String layoutSetPrototypeFriendlyURLWarning = GetterUtil.getString(MultiSessionMessages.get(renderRequest, "layoutSetPrototypeFriendlyURL_requestProcessedWarning"));
 %>
 
 <c:if test="<%= Validator.isNotNull(layoutSetPrototypeFriendlyURLWarning) %>">

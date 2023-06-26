@@ -86,7 +86,7 @@ public class ActionUtil {
 
 		MultiSessionMessages.add(
 			portletRequest,
-			"layoutSetPrototypeFriendlyURLWarning",
+			"layoutSetPrototypeFriendlyURL_requestProcessedWarning",
 			LanguageUtil.get(themeDisplay.getLocale(), key));
 	}
 

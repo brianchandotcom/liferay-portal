@@ -97,7 +97,7 @@ export function getAPIApplicationsFDSProps(
 							truncate: true,
 						},
 						{
-							contentRenderer: 'date',
+							contentRenderer: 'dateTime',
 							fieldName: 'dateModified',
 							label: Liferay.Language.get('last-updated'),
 							localizeLabel: true,

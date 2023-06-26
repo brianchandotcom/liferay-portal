@@ -22,6 +22,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -442,8 +443,22 @@ public class BaseContainerTag extends AttributesTagSupport {
 	}
 
 	protected void writeDynamicAttributes() throws Exception {
+		Map<String, Object> escapedDynamicAttributes = new HashMap<>();
+		Map<String, Object> dynamicAttributes = getDynamicAttributes();
+
+		for (Map.Entry<String, Object> entry : dynamicAttributes.entrySet()) {
+			if (entry.getValue() instanceof String) {
+				escapedDynamicAttributes.put(
+					entry.getKey(),
+					HtmlUtil.escapeAttribute((String)entry.getValue()));
+			}
+			else {
+				escapedDynamicAttributes.put(entry.getKey(), entry.getValue());
+			}
+		}
+
 		String dynamicAttributesString = InlineUtil.buildDynamicAttributes(
-			getDynamicAttributes());
+			escapedDynamicAttributes);
 
 		if (!dynamicAttributesString.isEmpty()) {
 			JspWriter jspWriter = pageContext.getOut();

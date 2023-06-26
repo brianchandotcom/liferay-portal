@@ -1,8 +1,8 @@
 {
 	"dependencies": {
-		"@clayui/drop-down": "*",
-		"@clayui/form": "*",
-		"@clayui/multi-select": "*",
+		"@clayui/drop-down": "3.98.0",
+		"@clayui/form": "3.96.0",
+		"@clayui/multi-select": "3.98.0",
 		"@liferay/frontend-data-set-web": "*",
 		"classnames": "2.3.1",
 		"frontend-js-components-web": "*",

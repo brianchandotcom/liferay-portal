@@ -91,6 +91,8 @@ public class VerticalNavDisplayContext {
 								parent.get("href") + suffix);
 							verticalNavItem.setLabel(
 								parent.get("label") + suffix);
+							verticalNavItem.setId(
+								parent.get("id") + suffix);
 
 							if (size == 4) {
 								verticalNavItem.setItems(

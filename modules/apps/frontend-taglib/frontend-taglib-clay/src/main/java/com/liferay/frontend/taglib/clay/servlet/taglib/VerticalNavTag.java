@@ -41,6 +41,14 @@ public class VerticalNavTag extends BaseContainerTag {
 		return super.doStartTag();
 	}
 
+	public String getActive() {
+		if (_active != null) {
+			return _active;
+		}
+
+		return _getActiveVerticalNavItemKey(getVerticalNavItems());
+	}
+
 	public boolean getDecorated() {
 		return _decorated;
 	}
@@ -51,6 +59,10 @@ public class VerticalNavTag extends BaseContainerTag {
 
 	public List<VerticalNavItem> getVerticalNavItems() {
 		return _verticalNavItems;
+	}
+
+	public void setActive(String active) {
+		_active = active;
 	}
 
 	public void setDecorated(boolean decorated) {
@@ -69,6 +81,7 @@ public class VerticalNavTag extends BaseContainerTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
+		_active = null;
 		_decorated = false;
 		_large = false;
 		_verticalNavItems = null;
@@ -81,6 +94,7 @@ public class VerticalNavTag extends BaseContainerTag {
 
 	@Override
 	protected Map<String, Object> prepareProps(Map<String, Object> props) {
+		props.put("active", getActive());
 		props.put("decorated", _decorated);
 		props.put("large", _large);
 		props.put("items", _verticalNavItems);
@@ -118,6 +132,35 @@ public class VerticalNavTag extends BaseContainerTag {
 		return EVAL_BODY_INCLUDE;
 	}
 
+	private String _getActiveVerticalNavItemKey(
+		List<VerticalNavItem> verticalNavItems) {
+
+		for (VerticalNavItem verticalNavItem : verticalNavItems) {
+			VerticalNavItemList items =
+				(VerticalNavItemList)verticalNavItem.get("items");
+
+			Boolean active = (Boolean)verticalNavItem.get("active");
+
+			if (active == null) {
+				active = Boolean.FALSE;
+			}
+
+			if (active) {
+				return (String)verticalNavItem.get("id");
+			}
+
+			if (items != null) {
+				String activeKey = _getActiveVerticalNavItemKey(items);
+
+				if (activeKey != null) {
+					return activeKey;
+				}
+			}
+		}
+
+		return null;
+	}
+
 	private void _renderVerticalNavItems(
 			JspWriter jspWriter, List<VerticalNavItem> verticalNavItems,
 			int depth)
@@ -142,6 +185,10 @@ public class VerticalNavTag extends BaseContainerTag {
 
 			if (active == null) {
 				active = Boolean.FALSE;
+
+				if (_active != null) {
+					active = _active.equals(verticalNavItem.get("id"));
+				}
 			}
 
 			Boolean expanded = (Boolean)verticalNavItem.get("expanded");
@@ -226,6 +273,7 @@ public class VerticalNavTag extends BaseContainerTag {
 
 	private static final String _ATTRIBUTE_NAMESPACE = "clay:vertical_nav:";
 
+	private String _active;
 	private boolean _decorated;
 	private boolean _large;
 	private List<VerticalNavItem> _verticalNavItems;

@@ -73,7 +73,8 @@ const Details = ({
 					fdsViewLabelRef.current?.value ?? ''
 				);
 			}
-		} else {
+		}
+		else {
 			openToast({
 				message: Liferay.Language.get(
 					'your-request-failed-to-complete'

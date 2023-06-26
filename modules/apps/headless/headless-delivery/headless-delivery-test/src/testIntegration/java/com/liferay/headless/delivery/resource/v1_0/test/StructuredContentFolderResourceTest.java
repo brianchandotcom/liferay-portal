@@ -104,24 +104,51 @@ public class StructuredContentFolderResourceTest
 		super.
 			testGetAssetLibraryStructuredContentFolderByExternalReferenceCode();
 
-		StructuredContentFolder parentStructuredContentFolder =
+		StructuredContentFolder parentStructuredContentFolder1 =
 			testPostAssetLibraryStructuredContentFolder_addStructuredContentFolder(
 				_randomStructuredContentFolder());
 
-		StructuredContentFolder postStructuredContentFolder =
+		StructuredContentFolder postStructuredContentFolder1 =
 			structuredContentFolderResource.
 				postStructuredContentFolderStructuredContentFolder(
-					parentStructuredContentFolder.getId(),
+					parentStructuredContentFolder1.getId(),
 					_randomStructuredContentFolder());
 
-		StructuredContentFolder getStructuredContentFolder =
+		StructuredContentFolder getStructuredContentFolder1 =
 			structuredContentFolderResource.
 				getAssetLibraryStructuredContentFolderByExternalReferenceCode(
 					testGetAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId(),
-					postStructuredContentFolder.getExternalReferenceCode());
+					postStructuredContentFolder1.getExternalReferenceCode());
 
-		assertEquals(postStructuredContentFolder, getStructuredContentFolder);
-		assertValid(getStructuredContentFolder);
+		assertEquals(postStructuredContentFolder1, getStructuredContentFolder1);
+		assertValid(getStructuredContentFolder1);
+
+		StructuredContentFolder parentStructuredContentFolder2 =
+			testPostAssetLibraryStructuredContentFolder_addStructuredContentFolder(
+				_randomStructuredContentFolder());
+
+		StructuredContentFolder randomStructuredContentFolder =
+			_randomStructuredContentFolder();
+
+		randomStructuredContentFolder.setExternalReferenceCode("");
+
+		StructuredContentFolder postStructuredContentFolder2 =
+			structuredContentFolderResource.
+				postStructuredContentFolderStructuredContentFolder(
+					parentStructuredContentFolder2.getId(),
+					randomStructuredContentFolder);
+
+		JournalFolder journalFolder = JournalFolderLocalServiceUtil.getFolder(
+			postStructuredContentFolder2.getId());
+
+		StructuredContentFolder getStructuredContentFolder2 =
+			structuredContentFolderResource.
+				getAssetLibraryStructuredContentFolderByExternalReferenceCode(
+					testGetAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId(),
+					journalFolder.getUuid());
+
+		assertEquals(postStructuredContentFolder2, getStructuredContentFolder2);
+		assertValid(getStructuredContentFolder2);
 	}
 
 	@Override

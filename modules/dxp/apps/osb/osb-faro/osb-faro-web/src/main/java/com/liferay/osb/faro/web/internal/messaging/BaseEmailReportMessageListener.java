@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import java.util.Map;
 import java.util.Objects;
 
+import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -38,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 public abstract class BaseEmailReportMessageListener
 	extends BaseMessageListener {
 
-	protected abstract void activate();
+	protected abstract void activate(BundleContext bundleContext);
 
 	protected abstract void deactivate();
 

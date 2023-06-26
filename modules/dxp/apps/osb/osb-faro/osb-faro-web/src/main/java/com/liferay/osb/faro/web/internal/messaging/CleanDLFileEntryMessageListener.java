@@ -20,13 +20,15 @@ import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFileVersionLocalService;
 import com.liferay.osb.faro.engine.client.model.DataSource;
+import com.liferay.osb.faro.web.internal.constants.FaroMessageDestinationNames;
+import com.liferay.osb.faro.web.internal.messaging.destination.creator.DestinationCreator;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
-import com.liferay.portal.kernel.messaging.DestinationNames;
+import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
@@ -40,6 +42,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import java.util.Date;
 import java.util.List;
 
+import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -49,14 +52,19 @@ import org.osgi.service.component.annotations.Reference;
  * @author Matthew Kong
  */
 @Component(
-	property = "destination.name=" + DestinationNames.SCHEDULER_DISPATCH,
+	property = "destination.name=" + FaroMessageDestinationNames.FARO_CLEAN_DL_FILE_ENTRY_MESSAGE_PROCESSOR,
 	service = MessageListener.class
 )
 public class CleanDLFileEntryMessageListener extends BaseMessageListener {
 
 	@Activate
-	protected void activate() {
+	protected void activate(BundleContext bundleContext) {
 		try {
+			_destinationCreator.createDestination(
+				bundleContext, _destinationFactory,
+				FaroMessageDestinationNames.
+					FARO_CLEAN_DL_FILE_ENTRY_MESSAGE_PROCESSOR);
+
 			Class<?> clazz = getClass();
 
 			_trigger = _triggerFactory.createTrigger(
@@ -65,7 +73,9 @@ public class CleanDLFileEntryMessageListener extends BaseMessageListener {
 
 			_schedulerEngineHelper.schedule(
 				_trigger, StorageType.PERSISTED, null,
-				DestinationNames.SCHEDULER_DISPATCH, null);
+				FaroMessageDestinationNames.
+					FARO_CLEAN_DL_FILE_ENTRY_MESSAGE_PROCESSOR,
+				null);
 		}
 		catch (Exception exception) {
 			_log.error(exception);
@@ -75,6 +85,12 @@ public class CleanDLFileEntryMessageListener extends BaseMessageListener {
 	@Deactivate
 	protected void deactivate() {
 		try {
+			if (_destinationCreator != null) {
+				_destinationCreator.removeDestination();
+
+				_destinationCreator = null;
+			}
+
 			if (_trigger == null) {
 				return;
 			}
@@ -125,6 +141,11 @@ public class CleanDLFileEntryMessageListener extends BaseMessageListener {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CleanDLFileEntryMessageListener.class);
+
+	private DestinationCreator _destinationCreator = new DestinationCreator();
+
+	@Reference
+	private DestinationFactory _destinationFactory;
 
 	@Reference
 	private DLFileEntryLocalService _dlFileEntryLocalService;

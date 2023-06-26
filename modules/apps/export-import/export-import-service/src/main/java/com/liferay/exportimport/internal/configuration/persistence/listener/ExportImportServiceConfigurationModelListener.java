@@ -60,14 +60,14 @@ public class ExportImportServiceConfigurationModelListener
 		throws ConfigurationModelListenerException {
 
 		try {
-			ExportImportServiceConfiguration exportImportServiceConfiguration =
-				ConfigurableUtil.createConfigurable(
-					ExportImportServiceConfiguration.class, properties);
-
 			ExportImportServiceConfigurationWhitelistedURLPatternsHelper
 				exportImportServiceConfigurationWhitelistedURLPatternsHelper =
 					_exportImportServiceConfigurationWhitelistedURLPatternsHelperSnapshot.
 						get();
+
+			ExportImportServiceConfiguration exportImportServiceConfiguration =
+				ConfigurableUtil.createConfigurable(
+					ExportImportServiceConfiguration.class, properties);
 
 			exportImportServiceConfigurationWhitelistedURLPatternsHelper.
 				rebuildURLPatternMapper(

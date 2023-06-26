@@ -41,7 +41,6 @@ definition {
 		property osgi.module.configurations = "promptEnabled=\"true\"";
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 		property test.name.skip.portal.instance = "AssetPublisherUseCase#AddAndEditWebContentViaAssetPublisherInOrganizationSiteWithVirtualHost";
-		property timeout.explicit.wait = "20";
 
 		task ("Add an organization with site") {
 			JSONOrganization.addOrganization(

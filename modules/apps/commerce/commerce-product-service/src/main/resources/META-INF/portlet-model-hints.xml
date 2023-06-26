@@ -420,8 +420,8 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="active" type="boolean" />
 		<field name="CPInstanceId" type="long" />
+		<field name="active" type="boolean" />
 		<field name="incrementalOrderQuantity" type="BigDecimal">
 			<validator name="required" />
 		</field>

@@ -64,6 +64,14 @@ public interface CPInstance extends CPInstanceModel, PersistedModel {
 	public CPDefinition getCPDefinition()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public CPInstanceUnitOfMeasure getCPInstanceUnitOfMeasure(String key)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public java.util.List<CPInstanceUnitOfMeasure> getCPInstanceUnitOfMeasures(
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator
+			<CPInstanceUnitOfMeasure> orderByComparator);
+
 	public CPSubscriptionInfo getCPSubscriptionInfo()
 		throws com.liferay.portal.kernel.exception.PortalException;
 

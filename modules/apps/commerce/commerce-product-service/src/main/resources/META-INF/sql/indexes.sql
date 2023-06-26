@@ -117,6 +117,13 @@ create index IX_167F10D7 on CPInstanceOptionValueRel (uuid_[$COLUMN_LENGTH:75$],
 create index IX_842818AD on CPInstanceOptionValueRel (uuid_[$COLUMN_LENGTH:75$], ctCollectionId);
 create unique index IX_BF0C9D99 on CPInstanceOptionValueRel (uuid_[$COLUMN_LENGTH:75$], groupId, ctCollectionId);
 
+create index IX_B21822C6 on CPInstanceUOM (CPInstanceId, ctCollectionId);
+create unique index IX_C6BA8E9A on CPInstanceUOM (CPInstanceId, key_[$COLUMN_LENGTH:75$], ctCollectionId);
+create index IX_B3B4A5A on CPInstanceUOM (companyId, sku[$COLUMN_LENGTH:75$], ctCollectionId);
+create index IX_49013BA0 on CPInstanceUOM (key_[$COLUMN_LENGTH:75$], sku[$COLUMN_LENGTH:75$], ctCollectionId);
+create index IX_58C2C7A9 on CPInstanceUOM (uuid_[$COLUMN_LENGTH:75$], companyId, ctCollectionId);
+create index IX_B2D2711B on CPInstanceUOM (uuid_[$COLUMN_LENGTH:75$], ctCollectionId);
+
 create index IX_262058AD on CPMeasurementUnit (companyId, ctCollectionId);
 create unique index IX_7AC67B41 on CPMeasurementUnit (companyId, key_[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_583ED653 on CPMeasurementUnit (companyId, primary_, type_, ctCollectionId);

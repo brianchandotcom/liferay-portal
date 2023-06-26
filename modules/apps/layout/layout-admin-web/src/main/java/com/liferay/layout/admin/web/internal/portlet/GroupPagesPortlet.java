@@ -219,6 +219,7 @@ public class GroupPagesPortlet extends MVCPortlet {
 			LayoutsAdminDisplayContext layoutsAdminDisplayContext =
 				new LayoutsAdminDisplayContext(
 					_itemSelector, layoutActionsHelper, _layoutCopyHelper,
+					_layoutSetPrototypeHelper,
 					_portal.getLiferayPortletRequest(renderRequest),
 					_portal.getLiferayPortletResponse(renderResponse));
 

@@ -44,6 +44,14 @@ if (!group.isLayoutPrototype() && selLayoutType.isURLFriendliable() && !layoutsA
 	name="friendlyURL"
 />
 
+<c:if test="<%= layoutsAdminDisplayContext.isShowFriendlyURLWarningMessage() %>">
+	<clay:alert
+		dismissible="<%= true %>"
+		displayType="warning"
+		message="<%= layoutsAdminDisplayContext.getFriendlyURLWarningMessage() %>"
+	/>
+</c:if>
+
 <c:if test="<%= layoutsAdminDisplayContext.isURLAdvancedSettingsVisible() %>">
 
 	<%

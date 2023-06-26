@@ -36,6 +36,8 @@ portletDisplay.setShowStagingIcon(false);
 
 		<liferay-ui:success key="layoutPublished" message="the-page-was-published-successfully" />
 
+		<%@ include file="/friendly_url_warning_message.jspf" %>
+
 		<liferay-ui:error embed="<%= false %>" exception="<%= GroupInheritContentException.class %>" message="this-page-cannot-be-deleted-and-cannot-have-child-pages-because-it-is-associated-with-a-site-template" />
 
 		<clay:management-toolbar

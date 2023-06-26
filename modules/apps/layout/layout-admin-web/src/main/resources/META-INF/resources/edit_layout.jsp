@@ -123,5 +123,7 @@ renderResponse.setTitle(layoutsAdminDisplayContext.getConfigurationTitle(selLayo
 			navCssClass="col-lg-3"
 			portletURL="<%= layoutsAdminDisplayContext.getLayoutScreenNavigationPortletURL() %>"
 		/>
+
+		<%@ include file="/friendly_url_warning_message.jspf" %>
 	</c:otherwise>
 </c:choose>

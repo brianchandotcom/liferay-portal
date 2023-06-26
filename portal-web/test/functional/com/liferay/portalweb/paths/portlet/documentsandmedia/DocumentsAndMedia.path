@@ -66,6 +66,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SORTED_DOWN_ICON</td>
+	<td>//*[name()='svg'][contains(@class,'lexicon-icon-order-list-down')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SORTED_UP_ICON</td>
+	<td>//*[name()='svg'][contains(@class,'lexicon-icon-order-list-up')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TAG</td>
 	<td>//span//span[contains(.,'${key_tagName}')]</td>
 	<td></td>

@@ -76,6 +76,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TRIGGER_2</td>
+	<td>xpath=(//a[*[name()='svg'][contains(@class,'icon-caret-double')]])[2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

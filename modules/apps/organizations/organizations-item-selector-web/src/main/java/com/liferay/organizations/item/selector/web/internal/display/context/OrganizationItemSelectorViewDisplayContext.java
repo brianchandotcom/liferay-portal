@@ -20,9 +20,8 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
-import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.service.OrganizationLocalService;
+import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portlet.usersadmin.search.OrganizationSearch;
@@ -42,12 +41,11 @@ public class OrganizationItemSelectorViewDisplayContext {
 
 	public OrganizationItemSelectorViewDisplayContext(
 		OrganizationItemSelectorCriterion organizationItemSelectorCriterion,
-		OrganizationLocalService organizationLocalService,
-		UsersAdmin usersAdmin, HttpServletRequest httpServletRequest,
-		PortletURL portletURL) {
+		OrganizationService organizationService, UsersAdmin usersAdmin,
+		HttpServletRequest httpServletRequest, PortletURL portletURL) {
 
 		_organizationItemSelectorCriterion = organizationItemSelectorCriterion;
-		_organizationLocalService = organizationLocalService;
+		_organizationService = organizationService;
 		_usersAdmin = usersAdmin;
 		_portletURL = portletURL;
 
@@ -87,14 +85,16 @@ public class OrganizationItemSelectorViewDisplayContext {
 			(OrganizationSearchTerms)_searchContainer.getSearchTerms();
 
 		_searchContainer.setResultsAndTotal(
-			_organizationLocalService.searchOrganizations(
+			() -> _organizationService.getOrganizations(
 				CompanyThreadLocal.getCompanyId(),
 				OrganizationConstants.ANY_PARENT_ORGANIZATION_ID,
-				organizationSearchTerms.getKeywords(), null,
+				organizationSearchTerms.getKeywords(),
 				_searchContainer.getStart(), _searchContainer.getEnd(),
-				SortFactoryUtil.getSort(
-					Organization.class, _searchContainer.getOrderByCol(),
-					_searchContainer.getOrderByType())));
+				_searchContainer.getOrderByComparator()),
+			_organizationService.getOrganizationsCount(
+				CompanyThreadLocal.getCompanyId(),
+				OrganizationConstants.ANY_PARENT_ORGANIZATION_ID,
+				organizationSearchTerms.getKeywords()));
 
 		_searchContainer.setRowChecker(
 			new OrganizationItemSelectorChecker(
@@ -107,7 +107,7 @@ public class OrganizationItemSelectorViewDisplayContext {
 
 	private final OrganizationItemSelectorCriterion
 		_organizationItemSelectorCriterion;
-	private final OrganizationLocalService _organizationLocalService;
+	private final OrganizationService _organizationService;
 	private final PortletURL _portletURL;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;

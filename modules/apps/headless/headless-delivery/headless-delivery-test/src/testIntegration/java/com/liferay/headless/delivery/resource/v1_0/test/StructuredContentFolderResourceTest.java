@@ -129,6 +129,34 @@ public class StructuredContentFolderResourceTest
 				getAssetLibraryStructuredContentFolderByExternalReferenceCodeHttpResponse(
 					testDeleteAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId(),
 					postStructuredContentFolder2.getExternalReferenceCode()));
+
+		StructuredContentFolder randomStructuredContentFolder =
+			_randomStructuredContentFolder();
+
+		randomStructuredContentFolder.setExternalReferenceCode("");
+
+		StructuredContentFolder postStructuredContentFolder3 =
+			structuredContentFolderResource.
+				postAssetLibraryStructuredContentFolder(
+					testDeleteAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId(),
+					randomStructuredContentFolder);
+
+		JournalFolder journalFolder = JournalFolderLocalServiceUtil.getFolder(
+			postStructuredContentFolder3.getId());
+
+		assertHttpResponseStatusCode(
+			204,
+			structuredContentFolderResource.
+				deleteAssetLibraryStructuredContentFolderByExternalReferenceCodeHttpResponse(
+					testDeleteAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId(),
+					journalFolder.getUuid()));
+
+		assertHttpResponseStatusCode(
+			404,
+			structuredContentFolderResource.
+				getAssetLibraryStructuredContentFolderByExternalReferenceCodeHttpResponse(
+					testDeleteAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId(),
+					postStructuredContentFolder3.getExternalReferenceCode()));
 	}
 
 	@Override

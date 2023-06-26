@@ -15,10 +15,6 @@
 package com.liferay.commerce.price.list.internal.model.listener;
 
 import com.liferay.commerce.price.list.internal.helper.CommerceBasePriceListHelper;
-import com.liferay.commerce.price.list.model.CommercePriceList;
-import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
-import com.liferay.commerce.product.model.CommerceCatalog;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
@@ -98,29 +94,6 @@ public class CommerceCatalogModelListener
 			if (_log.isWarnEnabled()) {
 				_log.warn(portalException);
 			}
-		}
-	}
-
-	private void _reindexPriceLists(CommerceCatalog commerceCatalog)
-		throws PortalException {
-
-		List<CommercePriceList> commercePriceLists =
-			_commercePriceListLocalService.getCommercePriceLists(
-				new long[] {commerceCatalog.getGroupId()},
-				commerceCatalog.getCompanyId(), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
-
-		if (commercePriceLists.isEmpty()) {
-			return;
-		}
-
-		Indexer<CommercePriceList> indexer =
-			IndexerRegistryUtil.nullSafeGetIndexer(CommercePriceList.class);
-
-		for (CommercePriceList commercePriceList : commercePriceLists) {
-			indexer.reindex(
-				CommercePriceList.class.getName(),
-				commercePriceList.getCommercePriceListId());
 		}
 	}
 

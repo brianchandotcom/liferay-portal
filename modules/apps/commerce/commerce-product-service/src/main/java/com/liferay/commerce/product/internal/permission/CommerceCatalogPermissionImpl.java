@@ -134,32 +134,46 @@ public class CommerceCatalogPermissionImpl
 			return true;
 		}
 
-		if ((commerceCatalog.getAccountEntryId() > 0) &&
-			(actionId.equals(ActionKeys.UPDATE) ||
-			 actionId.equals(ActionKeys.VIEW))) {
+		if ((actionId.equals(ActionKeys.UPDATE) ||
+			 actionId.equals(ActionKeys.VIEW)) &&
+			_hasRoleAccountSupplier(permissionChecker, commerceCatalog)) {
 
-			List<AccountEntry> accountEntries =
-				_accountEntryLocalService.getUserAccountEntries(
-					permissionChecker.getUserId(), 0L, StringPool.BLANK,
-					new String[] {AccountConstants.ACCOUNT_ENTRY_TYPE_SUPPLIER},
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-			for (AccountEntry accountEntry : accountEntries) {
-				if ((commerceCatalog.getAccountEntryId() ==
-						accountEntry.getAccountEntryId()) &&
-					_userGroupRoleLocalService.hasUserGroupRole(
-						permissionChecker.getUserId(),
-						accountEntry.getAccountEntryGroupId(),
-						AccountRoleConstants.ROLE_NAME_ACCOUNT_SUPPLIER)) {
-
-					return true;
-				}
-			}
+			return true;
 		}
 
 		return permissionChecker.hasPermission(
 			commerceCatalog.getGroupId(), CommerceCatalog.class.getName(),
 			commerceCatalog.getCommerceCatalogId(), actionId);
+	}
+
+	private boolean _hasRoleAccountSupplier(
+			PermissionChecker permissionChecker,
+			CommerceCatalog commerceCatalog)
+		throws PortalException {
+
+		if (commerceCatalog.getAccountEntryId() == 0) {
+			return false;
+		}
+
+		List<AccountEntry> accountEntries =
+			_accountEntryLocalService.getUserAccountEntries(
+				permissionChecker.getUserId(), 0L, StringPool.BLANK,
+				new String[] {AccountConstants.ACCOUNT_ENTRY_TYPE_SUPPLIER},
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		for (AccountEntry accountEntry : accountEntries) {
+			if ((commerceCatalog.getAccountEntryId() ==
+					accountEntry.getAccountEntryId()) &&
+				_userGroupRoleLocalService.hasUserGroupRole(
+					permissionChecker.getUserId(),
+					accountEntry.getAccountEntryGroupId(),
+					AccountRoleConstants.ROLE_NAME_ACCOUNT_SUPPLIER)) {
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	@Reference

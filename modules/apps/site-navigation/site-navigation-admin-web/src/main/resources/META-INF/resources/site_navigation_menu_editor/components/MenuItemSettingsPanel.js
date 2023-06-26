@@ -19,7 +19,7 @@ import {useItems} from '../contexts/ItemsContext';
 import {useSelectedMenuItemId} from '../contexts/SelectedMenuItemIdContext';
 import {SidebarPanelContent} from './SidebarPanelContent';
 
-export function MenuItemSettingsPanel() {
+export function MenuItemSettingsPanel({configButtonRef}) {
 	const {editSiteNavigationMenuItemURL} = useConstants();
 	const items = useItems();
 
@@ -36,6 +36,7 @@ export function MenuItemSettingsPanel() {
 
 	return (
 		<SidebarPanelContent
+			configButtonRef={configButtonRef}
 			contentRequestBody={contentRequestBody}
 			contentUrl={editSiteNavigationMenuItemURL}
 			title={title}

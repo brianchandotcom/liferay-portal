@@ -32,6 +32,7 @@ export function AppLayout({
 	sidebarPanels = DEFAULT_SIDEBAR_PANELS,
 	toolbarChildren,
 	sidebarPanelRef,
+	configButtonRef,
 }) {
 	const setSidebarPanelId = useSetSidebarPanelId();
 	const sidebarPanelId = useSidebarPanelId();
@@ -107,7 +108,9 @@ export function AppLayout({
 					ref={sidebarPanelRef}
 					tabIndex={-1}
 				>
-					{SidebarPanel && <SidebarPanel />}
+					{SidebarPanel && (
+						<SidebarPanel configButtonRef={configButtonRef} />
+					)}
 				</div>
 
 				<KeyboardMovementText />

@@ -77,10 +77,12 @@ export function App(props) {
 }
 
 const AppLayoutWrapper = () => {
+	const configButtonRef = useRef(null);
 	const sidebarPanelRef = useRef(null);
 
 	return (
 		<AppLayout
+			configButtonRef={configButtonRef}
 			contentChildren={
 				useItems().length ? (
 					<Menu sidebarPanelRef={sidebarPanelRef} />
@@ -90,7 +92,12 @@ const AppLayoutWrapper = () => {
 			}
 			sidebarPanelRef={sidebarPanelRef}
 			sidebarPanels={SIDEBAR_PANELS}
-			toolbarChildren={<Toolbar sidebarPanelRef={sidebarPanelRef} />}
+			toolbarChildren={
+				<Toolbar
+					configButtonRef={configButtonRef}
+					sidebarPanelRef={sidebarPanelRef}
+				/>
+			}
 		/>
 	);
 };

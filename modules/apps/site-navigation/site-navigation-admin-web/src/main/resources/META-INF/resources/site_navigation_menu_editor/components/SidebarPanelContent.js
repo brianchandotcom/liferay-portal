@@ -37,7 +37,12 @@ import {
 } from '../contexts/SelectedMenuItemIdContext';
 import {useSetSidebarPanelId} from '../contexts/SidebarPanelIdContext';
 
-export function SidebarPanelContent({contentRequestBody, contentUrl, title}) {
+export function SidebarPanelContent({
+	configButtonRef,
+	contentRequestBody,
+	contentUrl,
+	title,
+}) {
 	const [body, setBody] = useState(null);
 
 	const changedRef = useRef(false);
@@ -143,6 +148,14 @@ export function SidebarPanelContent({contentRequestBody, contentUrl, title}) {
 		setScrollPosition(null);
 	}, [setScrollPosition]);
 
+	const onClose = () => {
+		if (changedRef.current) {
+			confirmUnsavedChanges();
+		}
+
+		setSidebarPanelId(null);
+	};
+
 	return (
 		<>
 			<div className="sidebar-header">
@@ -162,13 +175,24 @@ export function SidebarPanelContent({contentRequestBody, contentUrl, title}) {
 							)}
 							displayType="unstyled"
 							monospaced
-							onClick={() => {
-								if (changedRef.current) {
-									confirmUnsavedChanges();
-								}
+							onClick={onClose}
+							onKeyDown={(event) => {
+								if (event.key === 'Enter') {
+									onClose();
 
-								setSelectedMenuItemId(null);
-								setSidebarPanelId(null);
+									requestAnimationFrame(() => {
+										if (selectedMenuItemId) {
+											document
+												.querySelector(
+													`[data-item-id="${selectedMenuItemId}"]`
+												)
+												.focus();
+										}
+										else {
+											configButtonRef.current.focus();
+										}
+									});
+								}
 							}}
 							title={Liferay.Language.get(
 								'close-configuration-panel'

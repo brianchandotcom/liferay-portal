@@ -17,7 +17,7 @@ import React, {useMemo} from 'react';
 import {useConstants} from '../contexts/ConstantsContext';
 import {SidebarPanelContent} from './SidebarPanelContent';
 
-export function MenuSettingsPanel() {
+export function MenuSettingsPanel({configButtonRef}) {
 	const {
 		editSiteNavigationMenuSettingsURL,
 		siteNavigationMenuId,
@@ -30,6 +30,7 @@ export function MenuSettingsPanel() {
 
 	return (
 		<SidebarPanelContent
+			configButtonRef={configButtonRef}
 			contentRequestBody={contentRequestBody}
 			contentUrl={editSiteNavigationMenuSettingsURL}
 			title={siteNavigationMenuName}

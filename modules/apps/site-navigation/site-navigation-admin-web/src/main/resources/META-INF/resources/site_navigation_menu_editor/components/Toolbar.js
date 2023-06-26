@@ -26,7 +26,7 @@ import {AddItemDropDown} from './AddItemDropdown';
 import {AppLayout} from './AppLayout';
 import {PreviewModal} from './PreviewModal';
 
-export function Toolbar({sidebarPanelRef}) {
+export function Toolbar({configButtonRef, sidebarPanelRef}) {
 	const setSidebarPanelId = useSetSidebarPanelId();
 	const sidebarPanelId = useSidebarPanelId();
 
@@ -99,6 +99,7 @@ export function Toolbar({sidebarPanelRef}) {
 							}
 						}
 					}}
+					ref={configButtonRef}
 					size="sm"
 					symbol="cog"
 					title={

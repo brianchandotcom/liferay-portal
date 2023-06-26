@@ -885,6 +885,51 @@
 			<finder-column name="CPInstanceId" />
 		</finder>
 	</entity>
+	<entity local-service="true" name="CPInstanceUnitOfMeasure" remote-service="true" table="CPInstanceUOM" uuid="true">
+
+		<!-- PK fields -->
+
+		<column db-name="CPInstanceUOMId" name="CPInstanceUnitOfMeasureId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="CPInstanceId" type="long" />
+		<column name="active" type="boolean" />
+		<column name="incrementalOrderQuantity" type="BigDecimal" />
+		<column name="key" type="String" />
+		<column localized="true" name="name" type="String" />
+		<column name="precision" type="int" />
+		<column name="primary" type="boolean" />
+		<column name="priority" type="double" />
+		<column name="rate" type="BigDecimal" />
+		<column name="sku" type="String" />
+
+		<!-- Finder methods -->
+
+		<finder name="CPInstanceId" return-type="Collection">
+			<finder-column name="CPInstanceId" />
+		</finder>
+		<finder name="C_SKU" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="sku" />
+		</finder>
+		<finder name="C_K" return-type="CPInstanceUnitOfMeasure" unique="true">
+			<finder-column name="CPInstanceId" />
+			<finder-column name="key" />
+		</finder>
+		<finder name="K_SKU" return-type="Collection">
+			<finder-column name="key" />
+			<finder-column name="sku" />
+		</finder>
+	</entity>
 	<entity external-reference-code="company" local-service="true" name="CPMeasurementUnit" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
@@ -1210,6 +1255,10 @@
 		<exception>CPInstanceReplacementCPInstanceUuid</exception>
 		<exception>CPInstanceSku</exception>
 		<exception>CPInstanceSubscriptionLength</exception>
+		<exception>CPInstanceUnitOfMeasureIncrementalOrderQuantity</exception>
+		<exception>CPInstanceUnitOfMeasureKey</exception>
+		<exception>CPInstanceUnitOfMeasureRate</exception>
+		<exception>CPInstanceUnitOfMeasureSku</exception>
 		<exception>CPMeasurementUnitType</exception>
 		<exception>CPOptionCategoryKey</exception>
 		<exception>CPOptionKey</exception>
@@ -1226,6 +1275,7 @@
 		<exception>DuplicateCPAttachmentFileEntry</exception>
 		<exception>DuplicateCPDefinitionOptionRelKey</exception>
 		<exception>DuplicateCPInstance</exception>
+		<exception>DuplicateCPInstanceUnitOfMeasureKey</exception>
 		<exception>DuplicateCPMeasurementUnitExternalReferenceCode</exception>
 		<exception>DuplicateCPMeasurementUnitKey</exception>
 		<exception>DuplicateCProduct</exception>

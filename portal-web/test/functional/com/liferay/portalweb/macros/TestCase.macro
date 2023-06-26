@@ -106,20 +106,9 @@ definition {
 
 	macro getSiteName {
 		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-		var testNameSkipPortalInstance = PropsUtil.get("test.name.skip.portal.instance");
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
 		if ((${siteName} == "Liferay") || !(isSet(siteName))) {
-			if ((${testPortalInstance} == "true") && !(IsTestName(locator1 = "", value1 = ${testNameSkipPortalInstance}))) {
-				var portalURL = PropsUtil.get("portal.url");
-
-				var portalURL = Regex.removeHTTP(url = ${portalURL});
-
-				var portalURL = Regex.removePortNumber(url = ${portalURL});
-
-				return ${portalURL};
-			}
-			else if (${testLiferayVirtualInstance} == "true") {
+			if (${testLiferayVirtualInstance} == "true") {
 				var portalURL = PropsUtil.get("portal.url");
 
 				var portalURL = Regex.removeHTTP(url = ${portalURL});
@@ -172,23 +161,6 @@ definition {
 	}
 
 	macro setUpCustomPortalInstance {
-		var testNameSkipPortalInstance = PropsUtil.get("test.name.skip.portal.instance");
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
-		if (!(IsTestName(locator1 = "", value1 = ${testNameSkipPortalInstance}))) {
-			var portalURL = PropsUtil.get("portal.url");
-
-			var portalURL = StringUtil.replace(${portalURL}, "http://", "");
-
-			var portalInstanceId = StringUtil.replace(${portalURL}, ":8080", "");
-
-			HeadlessPortalInstanceAPI.deletePortalInstance(portalInstanceId = ${portalInstanceId});
-
-			if (${testPortalInstance} == "true") {
-				SignIn.signInPortalInstanceSetUp();
-			}
-		}
-
 		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		if (${testLiferayVirtualInstance} == "true") {
@@ -200,43 +172,22 @@ definition {
 
 			HeadlessPortalInstanceAPI.deletePortalInstance(portalInstanceId = ${portalInstanceId});
 
-			if (${testPortalInstance} == "true") {
-				SignIn.signInPortalInstanceSetUp();
-			}
+			SignIn.signInPortalInstanceSetUp();
 		}
 	}
 
 	macro setUpPortalInstance {
-		var testNameSkipPortalInstance = PropsUtil.get("test.name.skip.portal.instance");
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
-		if (!(IsTestName(locator1 = "", value1 = ${testNameSkipPortalInstance}))) {
-			HeadlessPortalInstanceAPI.cleanAllPortalInstances(authenticationMethod = ${authenticationMethod});
-
-			if (${testPortalInstance} == "true") {
-				SignIn.signInPortalInstanceSetUp();
-			}
-		}
-
 		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		if (${testLiferayVirtualInstance} == "true") {
 			HeadlessPortalInstanceAPI.cleanAllPortalInstances(authenticationMethod = ${authenticationMethod});
 
-			if (${testPortalInstance} == "true") {
-				SignIn.signInPortalInstanceSetUp();
-			}
+			SignIn.signInPortalInstanceSetUp();
 		}
 	}
 
 	macro setUpPortalInstanceNoSelenium {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
 		HeadlessPortalInstanceAPI.cleanAllPortalInstances(authenticationMethod = ${authenticationMethod});
-
-		if (${testPortalInstance} == "true") {
-			SignIn.signInPortalInstanceSetUp();
-		}
 
 		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 

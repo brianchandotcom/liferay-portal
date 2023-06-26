@@ -22,12 +22,8 @@ definition {
 	@summary = "Delete all marketplace initializers"
 	macro marketplaceInitializersTearDown {
 		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if (${testPortalInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else if (${testLiferayVirtualInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {

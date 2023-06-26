@@ -15,7 +15,6 @@
 package com.liferay.object.web.internal.info.collection.provider;
 
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
-import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
@@ -578,21 +577,7 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 			groupId = serviceContext.getScopeGroupId();
 		}
 
-		List<AssetTag> assetTags = new ArrayList<>(
-			_assetTagLocalService.getGroupTags(
-				groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				new AssetTagNameComparator(true)));
-
-		List<OptionInfoFieldType> optionInfoFieldTypes = new ArrayList<>();
-
-		for (AssetTag assetTag : assetTags) {
-			optionInfoFieldTypes.add(
-				new OptionInfoFieldType(
-					new SingleValueInfoLocalizedValue<>(assetTag.getName()),
-					assetTag.getName()));
-		}
-
-		InfoField.FinalStep<?> finalStep = InfoField.builder(
+		return InfoField.builder(
 		).infoFieldType(
 			MultiselectInfoFieldType.INSTANCE
 		).namespace(
@@ -600,14 +585,19 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 		).name(
 			Field.ASSET_TAG_NAMES
 		).attribute(
-			MultiselectInfoFieldType.OPTIONS, optionInfoFieldTypes
+			MultiselectInfoFieldType.OPTIONS,
+			TransformUtil.transform(
+				_assetTagLocalService.getGroupTags(
+					groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					new AssetTagNameComparator(true)),
+				assetTag -> new OptionInfoFieldType(
+					new SingleValueInfoLocalizedValue<>(assetTag.getName()),
+					assetTag.getName()))
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.localize(getClass(), "tag")
 		).localizable(
 			true
-		);
-
-		return finalStep.build();
+		).build();
 	}
 
 	private List<InfoFieldSetEntry> _getInfoFieldSetEntries() {

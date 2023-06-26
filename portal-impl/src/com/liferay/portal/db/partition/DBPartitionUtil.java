@@ -139,8 +139,13 @@ public class DBPartitionUtil {
 				((companyId != CompanyConstants.SYSTEM) ||
 				 (currentCompanyId != _defaultCompanyId))) {
 
+				String className = object.getClass(
+				).getName();
+
 				throw new UnsupportedOperationException(
-					"Invalid partition for object");
+					StringBundler.concat(
+						"Invalid partition for object ", className,
+						" and company ID ", companyId));
 			}
 		}
 	}

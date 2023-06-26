@@ -418,9 +418,7 @@ definition {
 	}
 
 	macro gotoSidebar {
-		Click(
-			key_typeName = ${fieldType},
-			locator1 = "Segmentation#SEGMENT_FIELDS_TYPE");
+		Panel.expandPanel(panel = ${fieldType});
 	}
 
 	macro openSegmentOptions {

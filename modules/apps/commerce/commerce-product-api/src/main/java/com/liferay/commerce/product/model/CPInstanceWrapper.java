@@ -474,6 +474,22 @@ public class CPInstanceWrapper
 		return model.getCPInstanceId();
 	}
 
+	@Override
+	public CPInstanceUnitOfMeasure getCPInstanceUnitOfMeasure(String key)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getCPInstanceUnitOfMeasure(key);
+	}
+
+	@Override
+	public java.util.List<CPInstanceUnitOfMeasure> getCPInstanceUnitOfMeasures(
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator
+			<CPInstanceUnitOfMeasure> orderByComparator) {
+
+		return model.getCPInstanceUnitOfMeasures(start, end, orderByComparator);
+	}
+
 	/**
 	 * Returns the cp instance uuid of this cp instance.
 	 *

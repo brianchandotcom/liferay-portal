@@ -474,6 +474,8 @@ export function PurchasedAppsDashboardPage() {
 				<MembersPage
 					dashboardNavigationItems={dashboardNavigationItems}
 					icon={membersIcon}
+					isCustomerDashboard = {true}
+					isPublisherDashboard = {false}
 					listOfRoles={customerRoles}
 					rolesPermissionDescription={customerPermissionDescriptions}
 					selectedAccount={selectedAccount}

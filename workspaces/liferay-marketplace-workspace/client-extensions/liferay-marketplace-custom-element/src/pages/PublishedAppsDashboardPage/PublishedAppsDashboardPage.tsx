@@ -466,6 +466,8 @@ export function PublishedAppsDashboardPage() {
 				<MembersPage
 					dashboardNavigationItems={dashboardNavigationItems}
 					icon={membersIcon}
+					isCustomerDashboard={false}
+					isPublisherDashboard={true}
 					listOfRoles={publisherRoles}
 					rolesPermissionDescription={publisherPermissionDescriptions}
 					selectedAccount={selectedAccount}

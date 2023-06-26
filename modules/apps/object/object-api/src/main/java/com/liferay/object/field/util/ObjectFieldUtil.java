@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
@@ -192,8 +191,8 @@ public class ObjectFieldUtil {
 			return;
 		}
 
-		if (MapUtil.isEmpty(existingValues)) {
-			for (ObjectField objectField : objectFields) {
+		for (ObjectField objectField : objectFields) {
+			if (existingValues.get(objectField.getName()) == null) {
 				existingValues.put(
 					objectField.getName(),
 					ObjectFieldSettingUtil.getDefaultValueAsString(

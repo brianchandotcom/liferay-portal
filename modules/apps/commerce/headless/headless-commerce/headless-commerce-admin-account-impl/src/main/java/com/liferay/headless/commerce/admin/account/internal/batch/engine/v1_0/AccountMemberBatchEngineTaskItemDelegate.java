@@ -51,7 +51,7 @@ public class AccountMemberBatchEngineTaskItemDelegate
 	extends BaseBatchEngineTaskItemDelegate<AccountMember> {
 
 	@Override
-	public void createItem(
+	public AccountMember createItem(
 			AccountMember accountMember, Map<String, Serializable> parameters)
 		throws Exception {
 
@@ -67,6 +67,8 @@ public class AccountMemberBatchEngineTaskItemDelegate
 				_userLocalService, accountMember,
 				contextCompany.getCompanyId()),
 			_serviceContextHelper.getServiceContext());
+
+		return null;
 	}
 
 	@Override

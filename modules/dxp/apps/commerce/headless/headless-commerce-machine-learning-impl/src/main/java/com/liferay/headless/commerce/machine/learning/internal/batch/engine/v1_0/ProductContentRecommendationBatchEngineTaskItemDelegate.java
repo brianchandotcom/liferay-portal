@@ -39,7 +39,7 @@ public class ProductContentRecommendationBatchEngineTaskItemDelegate
 	extends BaseBatchEngineTaskItemDelegate<ProductContentRecommendation> {
 
 	@Override
-	public void createItem(
+	public ProductContentRecommendation createItem(
 			ProductContentRecommendation productContentRecommendation,
 			Map<String, Serializable> parameters)
 		throws Exception {
@@ -66,6 +66,8 @@ public class ProductContentRecommendationBatchEngineTaskItemDelegate
 		_productContentCommerceMLRecommendationManager.
 			addProductContentCommerceMLRecommendation(
 				productContentCommerceMLRecommendation);
+
+		return null;
 	}
 
 	@Override

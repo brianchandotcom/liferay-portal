@@ -20,9 +20,12 @@
 SelectStructureFieldDisplayContext selectStructureFieldDisplayContext = (SelectStructureFieldDisplayContext)request.getAttribute(AssetListWebKeys.SELECT_STRUCTURE_FIELD_DISPLAY_CONTEXT);
 %>
 
-<div class="alert alert-danger hide" id="<portlet:namespace />message">
-	<span class="error-message"><liferay-ui:message key="the-field-value-is-invalid" /></span>
-</div>
+<clay:alert
+	cssClass="error-message hide"
+	displayType="danger"
+	id='<%= liferayPortletResponse.getNamespace() + "message" %>'
+	message="the-field-value-is-invalid"
+/>
 
 <clay:container-fluid
 	id='<%= liferayPortletResponse.getNamespace() + "selectDDMStructureFieldForm" %>'

@@ -40,7 +40,7 @@ public class FrequentPatternRecommendationBatchEngineTaskItemDelegate
 	extends BaseBatchEngineTaskItemDelegate<FrequentPatternRecommendation> {
 
 	@Override
-	public void createItem(
+	public FrequentPatternRecommendation createItem(
 			FrequentPatternRecommendation frequentPatternRecommendation,
 			Map<String, Serializable> parameters)
 		throws Exception {
@@ -68,6 +68,8 @@ public class FrequentPatternRecommendationBatchEngineTaskItemDelegate
 		_frequentPatternCommerceMLRecommendationManager.
 			addFrequentPatternCommerceMLRecommendation(
 				frequentPatternCommerceMLRecommendation);
+
+		return null;
 	}
 
 	@Override

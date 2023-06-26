@@ -40,7 +40,7 @@ public class UserRecommendationBatchEngineTaskItemDelegate
 	extends BaseBatchEngineTaskItemDelegate<UserRecommendation> {
 
 	@Override
-	public void createItem(
+	public UserRecommendation createItem(
 			UserRecommendation userRecommendation,
 			Map<String, Serializable> parameters)
 		throws Exception {
@@ -63,6 +63,8 @@ public class UserRecommendationBatchEngineTaskItemDelegate
 
 		_userCommerceMLRecommendationManager.addUserCommerceMLRecommendation(
 			userCommerceMLRecommendation);
+
+		return null;
 	}
 
 	@Override

@@ -44,7 +44,7 @@ public class SkuForecastBatchEngineTaskItemDelegate
 	public static final String KEY = "sku-monthly-quantity-forecast";
 
 	@Override
-	public void createItem(
+	public SkuForecast createItem(
 			SkuForecast skuForecast, Map<String, Serializable> parameters)
 		throws Exception {
 
@@ -73,6 +73,8 @@ public class SkuForecastBatchEngineTaskItemDelegate
 
 		_skuCommerceMLForecastManager.addSkuCommerceMLForecast(
 			skuCommerceMLForecast);
+
+		return null;
 	}
 
 	@Override

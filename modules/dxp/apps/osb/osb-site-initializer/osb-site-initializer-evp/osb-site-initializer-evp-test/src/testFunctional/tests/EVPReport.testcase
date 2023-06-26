@@ -53,13 +53,13 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-164731. Verify that user can access Reports page through 'Reports' Tab on top menu and it is visible to EVP Manager"
+	@description = "This is a test for LPS-164731. Verify that user can access Reports page through 'Reports' Tab on top menu and it is visible to EVP Finance"
 	@priority = 5
-	test ManagerCanAccessReportPage {
-		task ("Given the manager user are logged") {
+	test FinanceCanAccessReportPage {
+		task ("Given the finance user are logged") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "manager@liferay.com",
-				userLoginFullName = "Manager User");
+				userLoginEmailAddress = "finance@liferay.com",
+				userLoginFullName = "Finance User");
 		}
 
 		task ("When he goes to Reports Page") {
@@ -73,13 +73,13 @@ definition {
 		}
 	}
 
-    @description = "This is a test for LPS-164731. Verify that user can access Reports page through 'Reports' Tab on top menu and it is visible to EVP Finance"
+	@description = "This is a test for LPS-164731. Verify that user can access Reports page through 'Reports' Tab on top menu and it is visible to EVP Manager"
 	@priority = 5
-	test FinanceCanAccessReportPage {
-		task ("Given the finance user are logged") {
+	test ManagerCanAccessReportPage {
+		task ("Given the manager user are logged") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "finance@liferay.com",
-				userLoginFullName = "Finance User");
+				userLoginEmailAddress = "manager@liferay.com",
+				userLoginFullName = "Manager User");
 		}
 
 		task ("When he goes to Reports Page") {

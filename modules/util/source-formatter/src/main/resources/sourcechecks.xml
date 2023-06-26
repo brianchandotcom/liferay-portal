@@ -1607,6 +1607,11 @@
 			<category name="Upgrade" />
 			<description name="Replaces the references of the method `HtmlUtil.extractText(` with the method `extractText(` of `HtmlParser` class" />
 		</check>
+		<check name="UpgradeJavaFDSActionProviderCheck">
+			<category name="Upgrade" />
+			<description name="Reorder parameters in the getDropdownItems method of the FDSDataProvider interface" />
+			<weight>1</weight>
+		</check>
 		<check name="UpgradeJavaFDSDataProviderCheck">
 			<category name="Upgrade" />
 			<description name="Reorder parameters in the getItems and getItemsCount methods of the FDSDataProvider interface" />

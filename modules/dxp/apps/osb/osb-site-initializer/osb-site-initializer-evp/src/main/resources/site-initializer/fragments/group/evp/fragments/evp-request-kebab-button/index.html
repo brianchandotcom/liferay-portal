@@ -7,11 +7,13 @@
 
 [#if requestId?? && requestId?hasContent]
 
-[#assign requestStatus = (restClient.get("/c/evprequests/" + requestId).requestStatus.key)! /]
+[#assign requestInformation = restClient.get("/c/evprequests/" + requestId)]
+
+[#assign requestStatus = requestInformation.requestStatus.key /]
 [#assign requestStatusListing = ["rejected","awaitingMoreInfoFromEmployee", "verified", "closed", "
 Await Company Verification", "Awaiting Finance Review"] /]
-[#assign requestName = (restClient.get("/c/evprequests/" + requestId).id)! /]
-[#assign grantRequestType = (restClient.get("/c/evprequests/" + requestId).grantRequestType.key)! /]
+[#assign requestName = requestInformation.id /]
+[#assign grantRequestType = requestInformation.grantRequestType.key /]
 
 <input class="requestID" type="hidden" value="${requestId}" />
 
@@ -34,6 +36,14 @@ Await Company Verification", "Awaiting Finance Review"] /]
 		/]
 
 		[#list userRoles as role]
+		[#if role.name == "Employee" && requestStatus == "awaitingMoreInfoFromEmployee" && user.userId == requestInformation.creator.id]
+				 [@liferay_ui["icon"]
+					 message="Edit"
+					 url=URL + "/edit-request-form?id=" + requestId
+				 /]
+
+			[/#if]
+
 			[#if approvedRoles?seqContains(role.name)]
 				[#if requestStatus == "awaitingPaymentConfirmation"]
 					[@liferay_ui["icon"]

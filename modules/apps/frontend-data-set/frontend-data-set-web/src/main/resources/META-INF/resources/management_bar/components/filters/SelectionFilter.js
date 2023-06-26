@@ -99,7 +99,10 @@ function SelectionFilter({
 	selectedData,
 	setFilter,
 }) {
-	const [search, setSearch] = useState('');
+	const [searchOptions, setSearchOptions] = useState({
+		currentPage: 1,
+		query: '',
+	});
 	const [selectedItems, setSelectedItems] = useState(
 		selectedData?.selectedItems || []
 	);
@@ -107,9 +110,7 @@ function SelectionFilter({
 	const [localItems, setLocalItems] = useState(
 		initialItems.length ? initialItems : []
 	);
-	const [firstRequest, setFirstRequest] = useState(true);
 	const [loading, setLoading] = useState(false);
-	const [currentPage, setCurrentPage] = useState(1);
 	const [total, setTotal] = useState(apiURL ? 0 : initialItems?.length);
 	const scrollingAreaRef = useRef(null);
 	const [scrollingAreaRendered, setScrollingAreaRendered] = useState(false);
@@ -123,11 +124,19 @@ function SelectionFilter({
 		setSelectedItems(selectedData?.selectedItems || []);
 	}, [selectedData]);
 
-	const loadSelectionItems = function () {
+	const handleAutocompleteQuery = debounce((value) => {
+		setSearchOptions({currentPage: 1, search: value});
+	}, DEFAULT_DEBOUNCE_DELAY);
+
+	const isMounted = useIsMounted();
+
+	const firstRequestRef = useRef(true);
+
+	useEffect(() => {
 		if (apiURL && !localItems.length) {
 			setLoading(true);
 
-			fetchData(apiURL, search, currentPage)
+			fetchData(apiURL, searchOptions.query, searchOptions.currentPage)
 				.then((response) => {
 					const selectionItems = response.items.map((item) => {
 						return {
@@ -144,7 +153,7 @@ function SelectionFilter({
 
 					setLoading(false);
 
-					if (currentPage === 1) {
+					if (searchOptions.currentPage === 1) {
 						setItems(selectionItems);
 					}
 					else {
@@ -152,7 +161,7 @@ function SelectionFilter({
 					}
 
 					if (
-						firstRequest &&
+						firstRequestRef.current &&
 						response.totalCount <= DEFAULT_PAGE_SIZE &&
 						autocompleteEnabled
 					) {
@@ -160,7 +169,8 @@ function SelectionFilter({
 					}
 
 					setTotal(response.totalCount);
-					setFirstRequest(false);
+
+					firstRequestRef.current = false;
 				})
 				.catch(() => {
 					if (isMounted()) {
@@ -170,27 +180,24 @@ function SelectionFilter({
 		}
 		else if (localItems.length && autocompleteEnabled) {
 			setItems(
-				search
+				searchOptions.query
 					? localItems.filter(({label}) =>
-							label.toLowerCase().match(search.toLowerCase())
+							label
+								.toLowerCase()
+								.match(searchOptions.query.toLowerCase())
 					  )
 					: localItems
 			);
 		}
-	};
-
-	const handleAutocompleteQuery = debounce((value) => {
-		setCurrentPage(1);
-		setSearch(value);
-	}, DEFAULT_DEBOUNCE_DELAY);
-
-	const isMounted = useIsMounted();
-
-	useEffect(() => {
-		loadSelectionItems();
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [search, currentPage]);
+	}, [
+		apiURL,
+		autocompleteEnabled,
+		isMounted,
+		itemKey,
+		itemLabel,
+		localItems,
+		searchOptions,
+	]);
 
 	const setScrollingArea = useCallback((node) => {
 		scrollingAreaRef.current = node;
@@ -224,7 +231,9 @@ function SelectionFilter({
 				return;
 			}
 
-			setCurrentPage((page) => page + 1);
+			setSearchOptions((options) => {
+				return {...options, currentPage: options.currentPage + 1};
+			});
 		}, options);
 
 		observer.observe(infiniteLoaderRef.current);

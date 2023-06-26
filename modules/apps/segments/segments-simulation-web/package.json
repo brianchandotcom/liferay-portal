@@ -1,4 +1,7 @@
 {
+	"dependencies": {
+		"@liferay/frontend-js-react-web": "*"
+	},
 	"name": "segments-simulation-web",
 	"scripts": {
 		"build": "liferay-npm-scripts build",

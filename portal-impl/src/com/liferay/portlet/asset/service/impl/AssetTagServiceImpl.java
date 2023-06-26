@@ -36,10 +36,7 @@ import com.liferay.portlet.asset.service.permission.AssetTagsPermission;
 import com.liferay.portlet.asset.util.comparator.AssetTagNameComparator;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
 
 /**
  * Provides the remote service for accessing, adding, checking, deleting,
@@ -86,13 +83,10 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 
 	@Override
 	public List<AssetTag> getGroupsTags(long[] groupIds) {
-		Set<AssetTag> groupsTags = new TreeSet<>(new AssetTagNameComparator());
-
-		for (long groupId : groupIds) {
-			groupsTags.addAll(getGroupTags(groupId));
-		}
-
-		return new ArrayList<>(groupsTags);
+		return sanitize(
+			assetTagPersistence.findByGroupId(
+				groupIds, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				new AssetTagNameComparator()));
 	}
 
 	@Override

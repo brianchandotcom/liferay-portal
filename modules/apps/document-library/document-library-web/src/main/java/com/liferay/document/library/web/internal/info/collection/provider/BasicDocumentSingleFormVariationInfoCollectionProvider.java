@@ -14,7 +14,6 @@
 
 package com.liferay.document.library.web.internal.info.collection.provider;
 
-import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
@@ -36,6 +35,7 @@ import com.liferay.info.pagination.Pagination;
 import com.liferay.info.sort.Sort;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -199,9 +199,8 @@ public class BasicDocumentSingleFormVariationInfoCollectionProvider
 
 		List<AssetTag> assetTags = new ArrayList<>(
 			_assetTagLocalService.getGroupTags(
-				serviceContext.getScopeGroupId()));
-
-		assetTags.sort(new AssetTagNameComparator(true));
+				serviceContext.getScopeGroupId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, new AssetTagNameComparator(true)));
 
 		InfoField.FinalStep<?> finalStep = InfoField.builder(
 		).infoFieldType(

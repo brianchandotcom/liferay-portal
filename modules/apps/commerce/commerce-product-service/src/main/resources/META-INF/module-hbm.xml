@@ -16,6 +16,7 @@
 	<import class="com.liferay.commerce.product.model.CPDisplayLayout" />
 	<import class="com.liferay.commerce.product.model.CPInstance" />
 	<import class="com.liferay.commerce.product.model.CPInstanceOptionValueRel" />
+	<import class="com.liferay.commerce.product.model.CPInstanceUnitOfMeasure" />
 	<import class="com.liferay.commerce.product.model.CPMeasurementUnit" />
 	<import class="com.liferay.commerce.product.model.CPOption" />
 	<import class="com.liferay.commerce.product.model.CPOptionCategory" />
@@ -376,6 +377,29 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="CPDefinitionOptionRelId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="CPDefinitionOptionValueRelId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="CPInstanceId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+	</class>
+	<class dynamic-update="true" name="com.liferay.commerce.product.model.impl.CPInstanceUnitOfMeasureImpl" table="CPInstanceUOM">
+		<id access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="CPInstanceUOMId" name="CPInstanceUnitOfMeasureId" type="long">
+			<generator class="assigned" />
+		</id>
+		<version access="com.liferay.portal.dao.orm.hibernate.PrivateFieldPropertyAccessor" name="mvccVersion" type="long" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="ctCollectionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="CPInstanceId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="active_" name="active" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="incrementalOrderQuantity" type="org.hibernate.type.BigDecimalType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="key_" name="key" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="precision_" name="precision" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="primary_" name="primary" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="priority" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="rate" type="org.hibernate.type.BigDecimalType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="sku" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class dynamic-update="true" name="com.liferay.commerce.product.model.impl.CPMeasurementUnitImpl" table="CPMeasurementUnit">
 		<id access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="CPMeasurementUnitId" type="long">

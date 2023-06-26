@@ -314,7 +314,7 @@ export function MenuItem({item, onMenuItemRemoved, sidebarPanelRef}) {
 					title
 				)}
 			>
-				<ClayCard className="mb-3">
+				<ClayCard className="mb-4">
 					<ClayCard.Body className="px-0">
 						<div ref={handlerRef}>
 							<ClayCard.Row>

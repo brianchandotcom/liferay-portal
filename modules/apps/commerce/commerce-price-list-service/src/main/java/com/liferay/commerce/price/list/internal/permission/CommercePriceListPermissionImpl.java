@@ -161,9 +161,9 @@ public class CommercePriceListPermissionImpl
 				commercePriceList.getGroupId());
 
 		if ((commerceCatalog != null) &&
-			(commerceCatalog.getAccountEntryId() > 0)) {
+			(commerceCatalog.getAccountEntryId() == 0)) {
 
-			return true;
+			return false;
 		}
 
 		List<AccountEntry> accountEntries =

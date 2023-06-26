@@ -12,6 +12,8 @@
  * details.
  */
 
+/// <reference types="react" />
+
 declare type Props = {
 	className: string;
 	disabled: boolean;

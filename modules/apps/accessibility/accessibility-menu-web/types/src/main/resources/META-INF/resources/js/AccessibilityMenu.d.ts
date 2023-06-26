@@ -12,6 +12,8 @@
  * details.
  */
 
+/// <reference types="react" />
+
 import PropTypes from 'prop-types';
 export declare const CONSTANTS: {
 	readonly ACCESSIBILITY_SETTING_EXPANDED_TEXT: 'ACCESSIBILITY_SETTING_EXPANDED_TEXT';

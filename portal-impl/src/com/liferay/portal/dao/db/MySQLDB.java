@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.dao.db.IndexMetadata;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
@@ -133,6 +134,33 @@ public class MySQLDB extends BaseDB {
 	@Override
 	public boolean isSupportsUpdateWithInnerJoin() {
 		return _SUPPORTS_UPDATE_WITH_INNER_JOIN;
+	}
+
+	@Override
+	public void renameTables(
+			Connection connection,
+			ObjectValuePair<String, String>... tableNamePairs)
+		throws Exception {
+
+		if (tableNamePairs.length == 0) {
+			return;
+		}
+
+		StringBundler sb = new StringBundler((tableNamePairs.length * 4) + 1);
+
+		sb.append("rename table ");
+
+		for (int i = 0; i < tableNamePairs.length; i++) {
+			if (i > 0) {
+				sb.append(", ");
+			}
+
+			sb.append(tableNamePairs[i].getKey());
+			sb.append(" to ");
+			sb.append(tableNamePairs[i].getValue());
+		}
+
+		runSQL(connection, sb.toString());
 	}
 
 	protected MySQLDB(DBType dbType, int majorVersion, int minorVersion) {

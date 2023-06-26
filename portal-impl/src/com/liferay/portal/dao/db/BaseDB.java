@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -460,6 +461,42 @@ public abstract class BaseDB implements DB {
 		runSQL(
 			StringBundler.concat(
 				"alter table ", normalizedTableName, " drop primary key"));
+	}
+
+	@Override
+	public void renameTables(
+			Connection connection,
+			ObjectValuePair<String, String>... tableNamePairs)
+		throws Exception {
+
+		if (tableNamePairs.length == 0) {
+			return;
+		}
+
+		boolean autoCommit = connection.getAutoCommit();
+
+		try {
+			connection.setAutoCommit(false);
+
+			for (ObjectValuePair<String, String> tableNamePair :
+					tableNamePairs) {
+
+				runSQL(
+					connection,
+					getRenameTableSQL(
+						tableNamePair.getKey(), tableNamePair.getValue()));
+			}
+
+			connection.commit();
+		}
+		catch (Exception exception) {
+			connection.rollback();
+
+			throw exception;
+		}
+		finally {
+			connection.setAutoCommit(autoCommit);
+		}
 	}
 
 	@Override
@@ -1155,6 +1192,13 @@ public abstract class BaseDB implements DB {
 		}
 
 		return new ArrayList<>(indexMetadatas);
+	}
+
+	protected String getRenameTableSQL(
+		String oldTableName, String newTableName) {
+
+		return StringBundler.concat(
+			"alter table ", oldTableName, " rename to ", newTableName);
 	}
 
 	protected abstract int[] getSQLTypes();

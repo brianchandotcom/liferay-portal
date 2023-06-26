@@ -386,6 +386,13 @@ public class SQLServerDB extends BaseDB {
 			" where 1 = 0");
 	}
 
+	protected String getRenameTableSQL(
+		String oldTableName, String newTableName) {
+
+		return StringBundler.concat(
+			"exec sp_rename ", oldTableName, ", ", newTableName);
+	}
+
 	@Override
 	protected int[] getSQLTypes() {
 		return _SQL_TYPES;

@@ -385,6 +385,14 @@ public class DB2DB extends BaseDB {
 	}
 
 	@Override
+	protected String getRenameTableSQL(
+		String oldTableName, String newTableName) {
+
+		return StringBundler.concat(
+			"rename table ", oldTableName, " to ", newTableName);
+	}
+
+	@Override
 	protected int[] getSQLTypes() {
 		return _SQL_TYPES;
 	}

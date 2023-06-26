@@ -15,6 +15,7 @@
 package com.liferay.document.library.internal.util;
 
 import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Subscription;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -22,7 +23,6 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionUtil;
 import com.liferay.portal.kernel.util.GroupSubscriptionCheckSubscriptionSender;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 /**
  * @author To Trinh
@@ -45,8 +45,8 @@ public class DLSubscriptionSender
 		throws PortalException {
 
 		if (!ModelResourcePermissionUtil.contains(
-				_dlFolderModelResourcePermission, permissionChecker,
-				subscription.getGroupId(), _targetFolderId,
+				_dlFolderModelResourcePermissionSnapshot.get(),
+				permissionChecker, subscription.getGroupId(), _targetFolderId,
 				ActionKeys.SUBSCRIBE)) {
 
 			return false;
@@ -55,12 +55,11 @@ public class DLSubscriptionSender
 		return super.hasSubscribePermission(permissionChecker, subscription);
 	}
 
-	private static volatile ModelResourcePermission<DLFolder>
-		_dlFolderModelResourcePermission =
-			ServiceProxyFactory.newServiceTrackedInstance(
-				ModelResourcePermission.class, DLSubscriptionSender.class,
-				"_dlFolderModelResourcePermission",
-				"(model.class.name=" + DLFolder.class.getName() + ")", true);
+	private static final Snapshot<ModelResourcePermission<DLFolder>>
+		_dlFolderModelResourcePermissionSnapshot = new Snapshot<>(
+			DLSubscriptionSender.class,
+			Snapshot.cast(ModelResourcePermission.class),
+			"(model.class.name=" + DLFolder.class.getName() + ")");
 
 	private long _targetFolderId;
 

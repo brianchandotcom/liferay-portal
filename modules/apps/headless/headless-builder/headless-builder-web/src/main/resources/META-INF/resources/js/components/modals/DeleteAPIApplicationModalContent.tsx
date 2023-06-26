@@ -45,7 +45,7 @@ export function DeleteAPIApplicationModalContent({
 					loadData();
 					openToast({
 						message: Liferay.Language.get(
-							'your-request-completed-successfully'
+							'api-application-was-deleted'
 						),
 						type: 'success',
 					});

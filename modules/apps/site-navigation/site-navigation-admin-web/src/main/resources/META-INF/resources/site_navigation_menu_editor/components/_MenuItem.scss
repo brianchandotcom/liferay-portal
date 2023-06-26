@@ -12,7 +12,7 @@
 	&.active {
 		.menu-item-options-button,
 		.site_navigation_menu_editor_MenuItem-add-button {
-			opacity: 1;
+			visibility: visible;
 		}
 	}
 
@@ -26,11 +26,7 @@
 
 	.menu-item-options-button,
 	&-add-button {
-		opacity: 0;
-
-		&:focus {
-			opacity: 1;
-		}
+		visibility: hidden;
 	}
 
 	&-add-button-dropdown {

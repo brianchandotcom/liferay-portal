@@ -241,36 +241,19 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 		return sb.toString();
 	}
 
-	private String _embedURLParameters(String apiUrl, HttpServletRequest httpServletRequest){
+	private String _interpolateURL(String apiUrl, HttpServletRequest httpServletRequest){
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		Pattern pattern = Pattern.compile("\\{(.*?)\\}", Pattern.CASE_INSENSITIVE);
-		Matcher matcher = pattern.matcher(apiUrl);
-	
-		if(matcher.find()) {
-			String[] ALLOWED_PARAMETERS = {"siteId", "scopeKey", "userId"};
+		apiUrl = StringUtil.replace(apiUrl, "{siteId}", Long.toString(themeDisplay.getScopeGroupId()));
+		apiUrl = StringUtil.replace(apiUrl, "{scopeKey}", Long.toString(themeDisplay.getScopeGroupId()));
+		apiUrl = StringUtil.replace(apiUrl, "{userId}", Long.toString(themeDisplay.getUserId()));
 
-			for (String param : ALLOWED_PARAMETERS){
-				String paramValue = "";
-
-				switch (param) {
-					case "siteId":
-						paramValue = Long.toString(themeDisplay.getScopeGroupId());
-						break;
-					case "scopeKey":
-						paramValue = Long.toString(themeDisplay.getScopeGroupId());
-						break;
-					case "userId":
-						paramValue = Long.toString(themeDisplay.getUserId());
-						break;
-				}
-
-				apiUrl = apiUrl.replace('{' + param + '}', paramValue);
-			}
-		} 
+		if (StringUtil.contains(apiUrl, "{")) {
+			System.out.println("Unsupported parameter in API url: " + apiUrl);
+		}
 
 		return apiUrl;
 	}
@@ -288,7 +271,7 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 				StringPool.BLANK));
 		sb.append(String.valueOf(properties.get("restEndpoint")));
 		
-		return _embedURLParameters(sb.toString(), httpServletRequest);
+		return _interpolateURL(sb.toString(), httpServletRequest);
 	}
 
 	private JSONArray _getFieldsJSONArray(

@@ -388,19 +388,17 @@ const AddFDSEntryModalContent = ({
 		}
 	};
 
-	const validatePath = (path: string, allowedParameters: string[]):boolean => {
+	const isValidPath = (path: string, allowedParameters: string[]):boolean => {
 		const paramsMatcher = RegExp('\{(.*?)\}', 'g');
-		let isValid = true;
 		let matches;
 	
 		while ((matches = paramsMatcher.exec(path)) !== null) {
 			if (! allowedParameters.includes(matches[1])){
-				isValid = false;
-				break;
+				return false;
 			}
 		}
 
-		return isValid;
+		return true;
 	}	
 
 	const getRESTSchemas = async (restApplication: string) => {
@@ -422,7 +420,7 @@ const AddFDSEntryModalContent = ({
 
 			schemaNames.forEach((schemaName) => {
 				paths.forEach((path: string) => {
-					if (! validatePath(path, ALLOWED_ENDPOINTS_PARAMETERS)){
+					if (! isValidPath(path, ALLOWED_ENDPOINTS_PARAMETERS)){
 						return;
 					}
 				

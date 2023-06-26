@@ -42,6 +42,7 @@ export function SidebarPanelContent({
 	contentRequestBody,
 	contentUrl,
 	title,
+	titleId,
 }) {
 	const [body, setBody] = useState(null);
 
@@ -161,9 +162,15 @@ export function SidebarPanelContent({
 			<div className="sidebar-header">
 				<ClayLayout.ContentRow className="sidebar-section">
 					<ClayLayout.ContentCol expand>
-						<p className="component-title">
+						<p className="component-title" id={titleId}>
 							<span className="text-truncate-inline">
 								<span className="text-truncate">{title}</span>
+
+								<span className="sr-only">
+									{Liferay.Language.get(
+										'configuration-panel'
+									)}
+								</span>
 							</span>
 						</p>
 					</ClayLayout.ContentCol>

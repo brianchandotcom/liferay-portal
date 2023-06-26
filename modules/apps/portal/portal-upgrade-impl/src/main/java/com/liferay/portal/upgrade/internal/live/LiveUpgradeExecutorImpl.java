@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.upgrade.live.LiveUpgradeExecutor;
 import com.liferay.portal.upgrade.live.LiveUpgradeProcess;
@@ -72,15 +73,30 @@ public class LiveUpgradeExecutorImpl implements LiveUpgradeExecutor {
 				db.copyTableRows(
 					connection, tableName, tempTableName, resultColumnNamesMap);
 			}
+
+			db.renameTables(
+				connection,
+				new ObjectValuePair<>(
+					tableName, _getArchiveTableName(tableName)),
+				new ObjectValuePair<>(tempTableName, tableName));
 		}
 	}
 
-	private String _getTempTableName(String tableName) {
-		return _UPGRADE_LIVE_TABLE_NAME_PREFIX.concat(tableName);
+	private String _getArchiveTableName(String tableName) {
+		return _UPGRADE_LIVE_ARCHIVE_TABLE_NAME_PREFIX.concat(tableName);
 	}
 
-	private static final String _UPGRADE_LIVE_TABLE_NAME_PREFIX =
+	private String _getTempTableName(String tableName) {
+		return _UPGRADE_LIVE_TEMP_TABLE_NAME_PREFIX.concat(tableName);
+	}
+
+	private static final String _UPGRADE_LIVE_ARCHIVE_TABLE_NAME_PREFIX =
 		GetterUtil.get(
-			PropsUtil.get("upgrade.live.table.name.prefix"), "tmp_live_");
+			PropsUtil.get("upgrade.live.archive.table.name.prefix"),
+			"archive_live_");
+
+	private static final String _UPGRADE_LIVE_TEMP_TABLE_NAME_PREFIX =
+		GetterUtil.get(
+			PropsUtil.get("upgrade.live.temp.table.name.prefix"), "tmp_live_");
 
 }

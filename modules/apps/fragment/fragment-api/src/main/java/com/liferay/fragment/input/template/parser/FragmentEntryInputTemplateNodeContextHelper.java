@@ -35,6 +35,7 @@ import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -338,23 +339,14 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 		else if (infoField.getInfoFieldType() instanceof
 					MultiselectInfoFieldType) {
 
-			List<InputTemplateNode.Option> options = new ArrayList<>();
-
-			List<OptionInfoFieldType> multiselectInfoFieldTypeOptions =
-				(List<OptionInfoFieldType>)infoField.getAttribute(
-					MultiselectInfoFieldType.OPTIONS);
-
-			if (multiselectInfoFieldTypeOptions == null) {
-				multiselectInfoFieldTypeOptions = Collections.emptyList();
-			}
-
-			for (OptionInfoFieldType option : multiselectInfoFieldTypeOptions) {
-				options.add(
-					new InputTemplateNode.Option(
-						option.getLabel(locale), option.getValue()));
-			}
-
-			inputTemplateNode.addAttribute("options", options);
+			inputTemplateNode.addAttribute(
+				"options",
+				TransformUtil.transform(
+					(List<OptionInfoFieldType>)infoField.getAttribute(
+						MultiselectInfoFieldType.OPTIONS),
+					optionInfoFieldType -> new InputTemplateNode.Option(
+						optionInfoFieldType.getLabel(locale),
+						optionInfoFieldType.getValue())));
 		}
 		else if (infoField.getInfoFieldType() instanceof NumberInfoFieldType) {
 			String dataType = "integer";
@@ -413,22 +405,28 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 		else if (infoField.getInfoFieldType() instanceof SelectInfoFieldType) {
 			List<InputTemplateNode.Option> options = new ArrayList<>();
 
-			List<OptionInfoFieldType> selectInfoFieldTypeOptions =
+			List<OptionInfoFieldType> optionInfoFieldTypes =
 				(List<OptionInfoFieldType>)infoField.getAttribute(
 					SelectInfoFieldType.OPTIONS);
 
-			if (selectInfoFieldTypeOptions == null) {
-				selectInfoFieldTypeOptions = Collections.emptyList();
+			if (optionInfoFieldTypes == null) {
+				optionInfoFieldTypes = Collections.emptyList();
 			}
 
-			for (OptionInfoFieldType option : selectInfoFieldTypeOptions) {
+			for (OptionInfoFieldType optionInfoFieldType :
+					optionInfoFieldTypes) {
+
 				options.add(
 					new InputTemplateNode.Option(
-						option.getLabel(locale), option.getValue()));
+						optionInfoFieldType.getLabel(locale),
+						optionInfoFieldType.getValue()));
 
-				if ((value != null) && value.equals(option.getValue())) {
+				if ((value != null) &&
+					value.equals(optionInfoFieldType.getValue())) {
+
 					inputTemplateNode.addAttribute(
-						"selectedOptionLabel", option.getLabel(locale));
+						"selectedOptionLabel",
+						optionInfoFieldType.getLabel(locale));
 				}
 			}
 

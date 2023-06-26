@@ -31,6 +31,7 @@ export function AppLayout({
 	contentChildren,
 	sidebarPanels = DEFAULT_SIDEBAR_PANELS,
 	toolbarChildren,
+	sidebarPanelRef,
 }) {
 	const setSidebarPanelId = useSetSidebarPanelId();
 	const sidebarPanelId = useSidebarPanelId();
@@ -103,6 +104,8 @@ export function AppLayout({
 							'site_navigation_menu_editor_AppLayout-sidebar--visible': !!SidebarPanel,
 						}
 					)}
+					ref={sidebarPanelRef}
+					tabIndex={-1}
 				>
 					{SidebarPanel && <SidebarPanel />}
 				</div>

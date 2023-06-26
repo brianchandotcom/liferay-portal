@@ -12,7 +12,7 @@
  * details.
  */
 
-import React from 'react';
+import React, {useRef} from 'react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 
@@ -76,10 +76,21 @@ export function App(props) {
 	);
 }
 
-const AppLayoutWrapper = () => (
-	<AppLayout
-		contentChildren={useItems().length ? <Menu /> : <EmptyState />}
-		sidebarPanels={SIDEBAR_PANELS}
-		toolbarChildren={<Toolbar />}
-	/>
-);
+const AppLayoutWrapper = () => {
+	const sidebarPanelRef = useRef(null);
+
+	return (
+		<AppLayout
+			contentChildren={
+				useItems().length ? (
+					<Menu sidebarPanelRef={sidebarPanelRef} />
+				) : (
+					<EmptyState />
+				)
+			}
+			sidebarPanelRef={sidebarPanelRef}
+			sidebarPanels={SIDEBAR_PANELS}
+			toolbarChildren={<Toolbar sidebarPanelRef={sidebarPanelRef} />}
+		/>
+	);
+};

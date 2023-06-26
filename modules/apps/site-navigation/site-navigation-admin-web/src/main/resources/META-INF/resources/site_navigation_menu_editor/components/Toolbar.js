@@ -26,7 +26,7 @@ import {AddItemDropDown} from './AddItemDropdown';
 import {AppLayout} from './AppLayout';
 import {PreviewModal} from './PreviewModal';
 
-export function Toolbar() {
+export function Toolbar({sidebarPanelRef}) {
 	const setSidebarPanelId = useSetSidebarPanelId();
 	const sidebarPanelId = useSidebarPanelId();
 
@@ -90,6 +90,15 @@ export function Toolbar() {
 					displayType="unstyled"
 					monospaced
 					onClick={onSettingsButtonClick}
+					onKeyDown={(event) => {
+						if (event.key === 'Enter') {
+							onSettingsButtonClick();
+
+							if (!settingsPanelOpen) {
+								sidebarPanelRef.current.focus();
+							}
+						}
+					}}
 					size="sm"
 					symbol="cog"
 					title={

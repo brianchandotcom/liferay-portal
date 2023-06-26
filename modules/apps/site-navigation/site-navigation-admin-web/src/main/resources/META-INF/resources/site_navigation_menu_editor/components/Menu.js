@@ -17,7 +17,7 @@ import React, {useRef} from 'react';
 import {useItems} from '../contexts/ItemsContext';
 import {MenuItem} from './MenuItem';
 
-export function Menu() {
+export function Menu({sidebarPanelRef}) {
 	const items = useItems();
 	const menuRef = useRef();
 
@@ -46,6 +46,7 @@ export function Menu() {
 					item={item}
 					key={item.siteNavigationMenuItemId}
 					onMenuItemRemoved={() => onMenuItemRemoved(index)}
+					sidebarPanelRef={sidebarPanelRef}
 				/>
 			))}
 		</div>

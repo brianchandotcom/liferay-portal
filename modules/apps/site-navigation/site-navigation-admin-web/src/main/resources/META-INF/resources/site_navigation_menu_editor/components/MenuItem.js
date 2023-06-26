@@ -39,7 +39,7 @@ import useKeyboardNavigation from '../utils/useKeyboardNavigation';
 import {AddItemDropDown} from './AddItemDropdown';
 import MenuItemOptions from './MenuItemOptions';
 
-export function MenuItem({item, onMenuItemRemoved}) {
+export function MenuItem({item, onMenuItemRemoved, sidebarPanelRef}) {
 	const setItems = useSetItems();
 	const setSelectedMenuItemId = useSetSelectedMenuItemId();
 	const setSidebarPanelId = useSetSidebarPanelId();
@@ -285,6 +285,8 @@ export function MenuItem({item, onMenuItemRemoved}) {
 					) {
 						setSelectedMenuItemId(siteNavigationMenuItemId);
 						setSidebarPanelId(SIDEBAR_PANEL_IDS.menuItemSettings);
+
+						sidebarPanelRef.current.focus();
 					}
 
 					onKeyDown(event);

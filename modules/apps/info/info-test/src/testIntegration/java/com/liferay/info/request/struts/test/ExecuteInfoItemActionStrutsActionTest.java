@@ -102,12 +102,12 @@ public class ExecuteInfoItemActionStrutsActionTest {
 
 		UserTestUtil.setUser(_user);
 
+		ObjectDefinition objectDefinition = _addObjectDefinition();
+
 		_classNameId = String.valueOf(
 			_portal.getClassNameId(
 				ObjectDefinition.class.getName() + "#" +
 					objectDefinition.getObjectDefinitionId()));
-
-		ObjectDefinition objectDefinition = _addObjectDefinition();
 
 		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), _group.getGroupId(),

@@ -114,10 +114,12 @@ public class StoreAreaAwareStoreWrapper implements Store {
 						companyId, repositoryId, fileName, versionLabel)),
 				StoreArea.LIVE, StoreArea.NEW);
 
-			StoreArea.withStoreArea(
-				storeArea,
-				() -> store.deleteFile(
-					companyId, repositoryId, fileName, versionLabel));
+			if (storeArea != null) {
+				StoreArea.withStoreArea(
+					storeArea,
+					() -> store.deleteFile(
+						companyId, repositoryId, fileName, versionLabel));
+			}
 		}
 		else {
 			store.deleteFile(companyId, repositoryId, fileName, versionLabel);

@@ -14,4 +14,10 @@ definition {
 		WaitForPageLoad();
 	}
 
+	macro navItemNotPresent {
+		AssertElementNotPresent(
+			key_navItem = ${navItem},
+			locator1 = "NavBar#NAV_ITEM_REDIRECTION");
+	}
+
 }

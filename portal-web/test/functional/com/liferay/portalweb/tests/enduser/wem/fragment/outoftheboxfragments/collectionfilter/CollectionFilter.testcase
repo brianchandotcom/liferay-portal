@@ -3116,17 +3116,19 @@ definition {
 	@description = "This is a test for LPS-111807. Can filter the results of a collection page based on manual collection with via selecting subcategories from Global site."
 	@priority = 4
 	test FilterResultsOfCollectionPageBasedOnManualCollectionBySubcategoryFromGlobalSite {
+		var categoryName = StringUtil.randomString(8);
+
 		task ("Add a category in Topic from Global site") {
 			var categoryId = JSONCategory.addCategory(
 				groupName = "Global",
-				title = "Category Name",
+				title = ${categoryName},
 				vocabularyName = "Topic");
 		}
 
 		task ("Add a subcategory") {
 			var subcategoryId = JSONCategory.addSubcategory(
 				groupName = "Global",
-				parentCategoryName = "Category Name",
+				parentCategoryName = ${categoryName},
 				title = "Subcategory Name",
 				vocabularyName = "Topic");
 		}
@@ -3240,8 +3242,8 @@ definition {
 
 		task ("Select the Category Name in Collection Filter") {
 			PageEditor.editCollectionFilter(
-				categoryName = "Category Name",
-				categoryNameList = "Category Name",
+				categoryName = ${categoryName},
+				categoryNameList = ${categoryName},
 				filter = "Category",
 				fragmentName = "Collection Filter",
 				singleSelection = "true",
@@ -3255,7 +3257,7 @@ definition {
 				index = 1,
 				key_fragmentName = "Collection Filter",
 				locator1 = "Fragment#FRAGMENT_CONTENT",
-				value1 = "Category Name");
+				value1 = ${categoryName});
 		}
 
 		task ("Open the Preview modal") {
@@ -3284,7 +3286,7 @@ definition {
 			Page.selectFilterInCollectionFilter(
 				filterName = "Subcategory Name",
 				selectedName = "Subcategory Name",
-				title = "Category Name");
+				title = ${categoryName});
 
 			var n = 1;
 
@@ -3337,7 +3339,7 @@ definition {
 			Page.selectFilterInCollectionFilter(
 				filterName = "Subcategory Name",
 				selectedName = "Subcategory Name",
-				title = "Category Name");
+				title = ${categoryName});
 
 			var n = 1;
 

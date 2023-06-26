@@ -202,20 +202,20 @@ public class StructuredContentFolderResourceTest
 		super.
 			testPutAssetLibraryStructuredContentFolderByExternalReferenceCode();
 
-		StructuredContentFolder parentStructuredContentFolder =
+		StructuredContentFolder parentStructuredContentFolder1 =
 			testPostAssetLibraryStructuredContentFolder_addStructuredContentFolder(
 				_randomStructuredContentFolder());
 
-		StructuredContentFolder postStructuredContentFolder =
+		StructuredContentFolder postStructuredContentFolder1 =
 			structuredContentFolderResource.
 				postStructuredContentFolderStructuredContentFolder(
-					parentStructuredContentFolder.getId(),
+					parentStructuredContentFolder1.getId(),
 					_randomStructuredContentFolder());
 
 		StructuredContentFolder randomStructuredContentFolder1 =
 			new StructuredContentFolder() {
 				{
-					name = postStructuredContentFolder.getName();
+					name = postStructuredContentFolder1.getName();
 				}
 			};
 
@@ -227,10 +227,10 @@ public class StructuredContentFolderResourceTest
 					randomStructuredContentFolder1);
 
 		Assert.assertEquals(
-			postStructuredContentFolder.getName(),
+			postStructuredContentFolder1.getName(),
 			putStructuredContentFolder1.getName());
 		Assert.assertNotEquals(
-			postStructuredContentFolder.getExternalReferenceCode(),
+			postStructuredContentFolder1.getExternalReferenceCode(),
 			putStructuredContentFolder1.getExternalReferenceCode());
 
 		assertValid(putStructuredContentFolder1);
@@ -254,6 +254,40 @@ public class StructuredContentFolderResourceTest
 
 		assertEquals(putStructuredContentFolder2, structuredContentFolder);
 		assertValid(putStructuredContentFolder2);
+
+		StructuredContentFolder parentStructuredContentFolder2 =
+			testPostAssetLibraryStructuredContentFolder_addStructuredContentFolder(
+				_randomStructuredContentFolder());
+
+		StructuredContentFolder postStructuredContentFolder2 =
+			structuredContentFolderResource.
+				postStructuredContentFolderStructuredContentFolder(
+					parentStructuredContentFolder2.getId(),
+					_randomStructuredContentFolder());
+
+		StructuredContentFolder randomStructuredContentFolder3 =
+			new StructuredContentFolder() {
+				{
+					name = StringUtil.toLowerCase(
+						RandomTestUtil.randomString());
+				}
+			};
+
+		StructuredContentFolder putStructuredContentFolder3 =
+			structuredContentFolderResource.
+				putAssetLibraryStructuredContentFolderByExternalReferenceCode(
+					testDepotEntry.getDepotEntryId(),
+					postStructuredContentFolder2.getExternalReferenceCode(),
+					randomStructuredContentFolder3);
+
+		Assert.assertEquals(
+			randomStructuredContentFolder3.getName(),
+			putStructuredContentFolder3.getName());
+		Assert.assertEquals(
+			postStructuredContentFolder2.getExternalReferenceCode(),
+			putStructuredContentFolder3.getExternalReferenceCode());
+
+		assertValid(putStructuredContentFolder3);
 	}
 
 	@Override

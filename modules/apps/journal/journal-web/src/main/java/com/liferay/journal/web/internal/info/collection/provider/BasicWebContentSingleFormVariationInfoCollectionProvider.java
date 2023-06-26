@@ -128,12 +128,7 @@ public class BasicWebContentSingleFormVariationInfoCollectionProvider
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		List<AssetTag> assetTags = new ArrayList<>(
-			_assetTagLocalService.getGroupTags(
-				serviceContext.getScopeGroupId(), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, new AssetTagNameComparator(true)));
-
-		InfoField.FinalStep<?> finalStep = InfoField.builder(
+		return InfoField.builder(
 		).infoFieldType(
 			MultiselectInfoFieldType.INSTANCE
 		).namespace(
@@ -143,7 +138,9 @@ public class BasicWebContentSingleFormVariationInfoCollectionProvider
 		).attribute(
 			MultiselectInfoFieldType.OPTIONS,
 			TransformUtil.transform(
-				assetTags,
+				_assetTagLocalService.getGroupTags(
+					serviceContext.getScopeGroupId(), QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, new AssetTagNameComparator(true)),
 				assetTag -> new OptionInfoFieldType(
 					new SingleValueInfoLocalizedValue<>(assetTag.getName()),
 					assetTag.getName()))
@@ -151,9 +148,7 @@ public class BasicWebContentSingleFormVariationInfoCollectionProvider
 			InfoLocalizedValue.localize(getClass(), "tag")
 		).localizable(
 			true
-		);
-
-		return finalStep.build();
+		).build();
 	}
 
 	private long _getDDDMStructureId() {

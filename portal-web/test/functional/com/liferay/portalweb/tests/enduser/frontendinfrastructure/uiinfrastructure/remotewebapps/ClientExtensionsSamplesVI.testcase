@@ -197,15 +197,15 @@ definition {
 
 			OAuth2.openOAuth2Admin();
 
-			while (IsElementNotPresent(key_rowEntry = "Liferay Sample Etc Cron Oauth Application Headless Server", locator1 = "Icon#ROW_VERTICAL_ELLIPSIS")) {
+			while (IsElementNotPresent(key_rowEntry = "Liferay Sample Etc Cron OAuth Application Headless Server", locator1 = "Icon#ROW_VERTICAL_ELLIPSIS")) {
 				OAuth2.openOAuth2Admin();
 			}
 
 			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "Edit",
-				rowEntry = "Liferay Sample Etc Cron Oauth Application Headless Server");
+				rowEntry = "Liferay Sample Etc Cron OAuth Application Headless Server");
 
-			OAuth2.assertPortletHeader(header = "Liferay Sample Etc Cron Oauth Application Headless Server");
+			OAuth2.assertPortletHeader(header = "Liferay Sample Etc Cron OAuth Application Headless Server");
 
 			var clientSecret = selenium.getElementValue("OAuth2#ADMIN_INPUT_FORM_CLIENT_SECRET");
 		}

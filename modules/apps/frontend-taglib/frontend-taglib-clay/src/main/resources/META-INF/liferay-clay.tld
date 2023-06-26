@@ -3070,6 +3070,12 @@
 		</attribute>
 		<attribute>
 			<description></description>
+			<name>defaultExpandedKeys</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
 			<name>large</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

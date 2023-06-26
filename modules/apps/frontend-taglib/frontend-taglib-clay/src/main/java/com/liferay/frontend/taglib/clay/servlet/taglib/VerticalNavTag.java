@@ -19,6 +19,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.VerticalNavItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.VerticalNavItemList;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -53,6 +54,18 @@ public class VerticalNavTag extends BaseContainerTag {
 		return _decorated;
 	}
 
+	public List<String> getDefaultExpandedKeys() {
+		if (_defaultExpandedKeys != null) {
+			return _defaultExpandedKeys;
+		}
+
+		List<String> defaultExpandedKeys = new ArrayList<>();
+
+		_computeDefaultExpandedKeys(defaultExpandedKeys, getVerticalNavItems());
+
+		return defaultExpandedKeys;
+	}
+
 	public boolean getLarge() {
 		return _large;
 	}
@@ -69,6 +82,10 @@ public class VerticalNavTag extends BaseContainerTag {
 		_decorated = decorated;
 	}
 
+	public void setDefaultExpandedKeys(List<String> defaultExpandedKeys) {
+		_defaultExpandedKeys = defaultExpandedKeys;
+	}
+
 	public void setLarge(boolean large) {
 		_large = large;
 	}
@@ -83,6 +100,7 @@ public class VerticalNavTag extends BaseContainerTag {
 
 		_active = null;
 		_decorated = false;
+		_defaultExpandedKeys = null;
 		_large = false;
 		_verticalNavItems = null;
 	}
@@ -96,6 +114,7 @@ public class VerticalNavTag extends BaseContainerTag {
 	protected Map<String, Object> prepareProps(Map<String, Object> props) {
 		props.put("active", getActive());
 		props.put("decorated", _decorated);
+		props.put("defaultExpandedKeys", getDefaultExpandedKeys());
 		props.put("large", _large);
 		props.put("items", _verticalNavItems);
 
@@ -130,6 +149,30 @@ public class VerticalNavTag extends BaseContainerTag {
 		jspWriter.write("</div>");
 
 		return EVAL_BODY_INCLUDE;
+	}
+
+	private void _computeDefaultExpandedKeys(
+		List<String> defaultExpandedKeys,
+		List<VerticalNavItem> verticalNavItems) {
+
+		for (VerticalNavItem verticalNavItem : verticalNavItems) {
+			VerticalNavItemList items =
+				(VerticalNavItemList)verticalNavItem.get("items");
+
+			Boolean expanded = (Boolean)verticalNavItem.get("expanded");
+
+			if (expanded == null) {
+				expanded = Boolean.FALSE;
+			}
+
+			if (expanded) {
+				defaultExpandedKeys.add((String)verticalNavItem.get("id"));
+			}
+
+			if (items != null) {
+				_computeDefaultExpandedKeys(defaultExpandedKeys, items);
+			}
+		}
 	}
 
 	private String _getActiveVerticalNavItemKey(
@@ -195,6 +238,11 @@ public class VerticalNavTag extends BaseContainerTag {
 
 			if (expanded == null) {
 				expanded = Boolean.FALSE;
+
+				if (_defaultExpandedKeys != null) {
+					expanded = _defaultExpandedKeys.contains(
+						(String)verticalNavItem.get("id"));
+				}
 			}
 
 			String href = (String)verticalNavItem.get("href");
@@ -275,6 +323,7 @@ public class VerticalNavTag extends BaseContainerTag {
 
 	private String _active;
 	private boolean _decorated;
+	private List<String> _defaultExpandedKeys;
 	private boolean _large;
 	private List<VerticalNavItem> _verticalNavItems;
 

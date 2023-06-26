@@ -14,7 +14,6 @@
 
 package com.liferay.portal.search.admin.web.internal.portlet;
 
-import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -88,8 +87,7 @@ public class SearchAdminPortlet extends MVCPortlet {
 			new SearchAdminDisplayContextBuilder(
 				_language, _portal, renderRequest, renderResponse);
 
-		searchAdminDisplayContextBuilder.setIndexInformation(
-			_indexInformationSnapshot.get());
+		searchAdminDisplayContextBuilder.setIndexInformation(_indexInformation);
 
 		List<String> indexReindexerClassNames = ListUtil.fromCollection(
 			_indexReindexerRegistry.getIndexReindexerClassNames());
@@ -113,7 +111,7 @@ public class SearchAdminPortlet extends MVCPortlet {
 					new SearchEngineDisplayContextBuilder();
 
 			searchEngineDisplayContextBuilder.setSearchEngineInformation(
-				_searchEngineInformationSnapshot.get());
+				_searchEngineInformation);
 
 			renderRequest.setAttribute(
 				SearchAdminWebKeys.SEARCH_ENGINE_DISPLAY_CONTEXT,
@@ -129,7 +127,7 @@ public class SearchAdminPortlet extends MVCPortlet {
 			fieldMappingsDisplayContextBuilder.setCurrentURL(
 				_portal.getCurrentURL(renderRequest));
 			fieldMappingsDisplayContextBuilder.setIndexInformation(
-				_indexInformationSnapshot.get());
+				_indexInformation);
 			fieldMappingsDisplayContextBuilder.setNamespace(
 				renderResponse.getNamespace());
 			fieldMappingsDisplayContextBuilder.setSelectedIndexName(
@@ -160,13 +158,8 @@ public class SearchAdminPortlet extends MVCPortlet {
 			ReindexConfiguration.class, properties);
 	}
 
-	private static final Snapshot<IndexInformation> _indexInformationSnapshot =
-		new Snapshot<>(
-			SearchAdminPortlet.class, IndexInformation.class, null, true);
-	private static final Snapshot<SearchEngineInformation>
-		_searchEngineInformationSnapshot = new Snapshot<>(
-			SearchAdminPortlet.class, SearchEngineInformation.class, null,
-			true);
+	@Reference
+	private IndexInformation _indexInformation;
 
 	@Reference
 	private IndexReindexerRegistry _indexReindexerRegistry;
@@ -181,5 +174,8 @@ public class SearchAdminPortlet extends MVCPortlet {
 
 	@Reference
 	private SearchCapabilities _searchCapabilities;
+
+	@Reference
+	private SearchEngineInformation _searchEngineInformation;
 
 }

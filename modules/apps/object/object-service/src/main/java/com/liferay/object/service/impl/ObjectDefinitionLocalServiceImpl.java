@@ -47,6 +47,7 @@ import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
 import com.liferay.object.internal.definition.util.ObjectDefinitionUtil;
 import com.liferay.object.internal.deployer.ObjectDefinitionDeployerImpl;
 import com.liferay.object.internal.petra.sql.dsl.DynamicObjectDefinitionLocalizationTableFactory;
+import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectEntryTable;
@@ -248,7 +249,7 @@ public class ObjectDefinitionLocalServiceImpl
 			Column<?, Long> primaryKeyColumn =
 				systemObjectDefinitionManager.getPrimaryKeyColumn();
 
-			return addSystemObjectDefinition(
+			objectDefinition = addSystemObjectDefinition(
 				systemObjectDefinitionManager.getExternalReferenceCode(),
 				userId, systemObjectDefinitionManager.getModelClassName(),
 				table.getTableName(), false,
@@ -261,6 +262,12 @@ public class ObjectDefinitionLocalServiceImpl
 				systemObjectDefinitionManager.getVersion(),
 				WorkflowConstants.STATUS_APPROVED,
 				systemObjectDefinitionManager.getObjectFields());
+
+			_addOrUpdateObjectActions(
+				userId, objectDefinition.getObjectDefinitionId(),
+				systemObjectDefinitionManager.getObjectActions());
+
+			return objectDefinition;
 		}
 
 		objectDefinition.setVersion(systemObjectDefinitionManager.getVersion());
@@ -317,6 +324,10 @@ public class ObjectDefinitionLocalServiceImpl
 				}
 			}
 		}
+
+		_addOrUpdateObjectActions(
+			userId, objectDefinition.getObjectDefinitionId(),
+			systemObjectDefinitionManager.getObjectActions());
 
 		return objectDefinition;
 	}
@@ -1026,6 +1037,25 @@ public class ObjectDefinitionLocalServiceImpl
 		}
 
 		return objectDefinition;
+	}
+
+	private void _addOrUpdateObjectActions(
+			long userId, long objectDefinitionId,
+			List<ObjectAction> objectActions)
+		throws PortalException {
+
+		for (ObjectAction objectAction : objectActions) {
+			_objectActionLocalService.addOrUpdateObjectAction(
+				objectAction.getExternalReferenceCode(), 0, userId,
+				objectDefinitionId, objectAction.getActive(),
+				objectAction.getConditionExpression(),
+				objectAction.getDescription(),
+				objectAction.getErrorMessageMap(), objectAction.getLabelMap(),
+				objectAction.getName(),
+				objectAction.getObjectActionExecutorKey(),
+				objectAction.getObjectActionTriggerKey(),
+				objectAction.getParametersUnicodeProperties());
+		}
 	}
 
 	private void _addSystemObjectFields(

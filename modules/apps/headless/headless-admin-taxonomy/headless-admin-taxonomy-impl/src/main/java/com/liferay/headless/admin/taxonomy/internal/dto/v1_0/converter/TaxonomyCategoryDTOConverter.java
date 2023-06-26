@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.dto.action.DTOActionProvider;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.fields.NestedFieldsSupplier;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import javax.ws.rs.core.MultivaluedMap;
@@ -172,34 +173,37 @@ public class TaxonomyCategoryDTOConverter
 						};
 					});
 				setTaxonomyCategoryUsageCount(
-					() -> {
-						UriInfo uriInfo = dtoConverterContext.getUriInfo();
+					NestedFieldsSupplier.<Integer>supply(
+						"taxonomyCategoryUsageCount",
+						fieldName -> {
+							UriInfo uriInfo = dtoConverterContext.getUriInfo();
 
-						if (uriInfo != null) {
-							MultivaluedMap<String, String> queryParameters =
-								uriInfo.getQueryParameters();
+							if (uriInfo != null) {
+								MultivaluedMap<String, String> queryParameters =
+									uriInfo.getQueryParameters();
 
-							if (StringUtil.contains(
-									queryParameters.getFirst("restrictFields"),
-									"taxonomyCategoryUsageCount")) {
+								if (StringUtil.contains(
+										queryParameters.getFirst(
+											"restrictFields"),
+										"taxonomyCategoryUsageCount")) {
 
-								return null;
+									return null;
+								}
 							}
-						}
 
-						return (int)_assetEntryLocalService.searchCount(
-							assetCategory.getCompanyId(),
-							new long[] {assetCategory.getGroupId()},
-							assetCategory.getUserId(), null, -1, null,
-							String.valueOf(assetCategory.getCategoryId()), null,
-							false, false,
-							new int[] {
-								WorkflowConstants.STATUS_APPROVED,
-								WorkflowConstants.STATUS_PENDING,
-								WorkflowConstants.STATUS_SCHEDULED
-							},
-							false);
-					});
+							return (int)_assetEntryLocalService.searchCount(
+								assetCategory.getCompanyId(),
+								new long[] {assetCategory.getGroupId()},
+								assetCategory.getUserId(), null, -1, null,
+								String.valueOf(assetCategory.getCategoryId()),
+								null, false, false,
+								new int[] {
+									WorkflowConstants.STATUS_APPROVED,
+									WorkflowConstants.STATUS_PENDING,
+									WorkflowConstants.STATUS_SCHEDULED
+								},
+								false);
+						}));
 			}
 		};
 	}

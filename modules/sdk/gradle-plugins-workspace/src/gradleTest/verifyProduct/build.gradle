@@ -1,0 +1,23 @@
+task runGradleTest
+
+Object error = ""
+
+gradle.liferayWorkspace {
+	product = "portal-7.1-ga3"
+}
+
+gradle.taskGraph.afterTask {
+	Task task, TaskState taskState ->
+
+	if (task.name.equals("verifyProduct")) {
+		error = taskState.failure
+	}
+}
+
+runGradleTest {
+	dependsOn verifyProduct
+
+	doLast {
+		assert error == null
+	}
+}

@@ -1,0 +1,19 @@
+task runGradleTest
+
+String skipMessage = ""
+
+gradle.taskGraph.afterTask {
+	Task task, TaskState taskState ->
+
+	if (task.name.equals("verifyProduct")) {
+		skipMessage = taskState.skipMessage
+	}
+}
+
+runGradleTest {
+	dependsOn verifyProduct
+
+	doLast {
+		assert skipMessage == "SKIPPED"
+	}
+}

@@ -1,0 +1,94 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"indexed": true,
+					"layout": {
+						"widthType": "Fluid"
+					},
+					"name": "Submit Container"
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"indexed": true,
+							"layout": {
+								"opacity": 100,
+								"widthType": "Fluid"
+							},
+							"name": "Breadcrumb container"
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"widgetInstance": {
+										"widgetConfig": {
+										},
+										"widgetName": "com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet"
+									}
+								},
+								"type": "Widget"
+							}
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"fragmentStyle": {
+								"marginBottom": "5"
+							},
+							"indexed": true,
+							"layout": {
+								"align": "Center",
+								"contentDisplay": "FlexRow",
+								"justify": "Center",
+								"marginBottom": 4,
+								"widthType": "Fluid"
+							},
+							"name": "Message Container"
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "DIALECT-dialect-text"
+									},
+									"fragmentConfig": {
+										"textType": "text-paragraph-lg"
+									},
+									"fragmentFields": [
+										{
+											"id": "element-text",
+											"value": {
+												"fragmentLink": {
+												},
+												"text": {
+													"value_i18n": {
+														"en_US": "Thank you. Your information was successfully received."
+													}
+												}
+											}
+										}
+									],
+									"indexed": true,
+									"name": "Submit Message"
+								},
+								"type": "Fragment"
+							}
+						],
+						"type": "Section"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "main-template"
+		}
+	},
+	"version": 1.1
+}

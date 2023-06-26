@@ -60,6 +60,8 @@ public class ObjectDefinitionUtil {
 			"APISort", "/headless-builder/sorts"
 		).put(
 			"Bookmark", "/bookmarks"
+		).put(
+			"CommercePaymentConfiguration", "/commerce-payment-configuration"
 		).build();
 
 }

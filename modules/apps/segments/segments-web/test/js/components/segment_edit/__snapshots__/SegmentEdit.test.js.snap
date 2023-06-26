@@ -485,11 +485,11 @@ exports[`SegmentEdit renders with given values 1`] = `
             >
               <div
                 aria-orientation="vertical"
-                class="panel-group c-mt-1"
+                class="panel-group c-ml-1 c-mr-1 c-mt-1"
                 role="tablist"
               >
                 <div
-                  class="panel c-mr-2"
+                  class="panel"
                   role="tablist"
                 >
                   <button

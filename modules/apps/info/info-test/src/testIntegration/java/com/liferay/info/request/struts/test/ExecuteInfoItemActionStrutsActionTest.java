@@ -102,6 +102,11 @@ public class ExecuteInfoItemActionStrutsActionTest {
 
 		UserTestUtil.setUser(_user);
 
+		_classNameId = String.valueOf(
+			_portal.getClassNameId(
+				ObjectDefinition.class.getName() + "#" +
+					objectDefinition.getObjectDefinitionId()));
+
 		ObjectDefinition objectDefinition = _addObjectDefinition();
 
 		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
@@ -114,10 +119,22 @@ public class ExecuteInfoItemActionStrutsActionTest {
 
 		_classPK = String.valueOf(objectEntry.getPrimaryKey());
 
-		_fileName = _file.createTempFileName("action-executed-", "txt");
-
 		_errorMessageMap = LocalizedMapUtil.getLocalizedMap(
 			RandomTestUtil.randomString());
+		_fileName = _file.createTempFileName("action-executed-", "txt");
+		_layout = _layoutLocalService.addLayout(
+			_user.getUserId(), _group.getGroupId(), false,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, 0, 0,
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(), Collections.emptyMap(),
+			Collections.emptyMap(), Collections.emptyMap(),
+			LayoutConstants.TYPE_CONTENT,
+			UnicodePropertiesBuilder.put(
+				"published", "true"
+			).buildString(),
+			false, false, Collections.emptyMap(), 0,
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), _user.getUserId()));
 
 		_objectAction = _objectActionLocalService.addObjectAction(
 			RandomTestUtil.randomString(), _user.getUserId(),
@@ -132,25 +149,6 @@ public class ExecuteInfoItemActionStrutsActionTest {
 				"File file = new File('" + _fileName +
 					"'); file.append('true');"
 			).build());
-
-		_classNameId = String.valueOf(
-			_portal.getClassNameId(
-				ObjectDefinition.class.getName() + "#" +
-					objectDefinition.getObjectDefinitionId()));
-
-		_layout = _layoutLocalService.addLayout(
-			_user.getUserId(), _group.getGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, 0, 0,
-			RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomLocaleStringMap(), Collections.emptyMap(),
-			Collections.emptyMap(), Collections.emptyMap(),
-			LayoutConstants.TYPE_CONTENT,
-			UnicodePropertiesBuilder.put(
-				"published", "true"
-			).buildString(),
-			false, false, Collections.emptyMap(), 0,
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), _user.getUserId()));
 	}
 
 	@After
@@ -219,7 +217,6 @@ public class ExecuteInfoItemActionStrutsActionTest {
 
 		uploadPortletRequest.setAttribute(
 			WebKeys.CURRENT_URL, "/portal/execute_info_item_action");
-
 		uploadPortletRequest.setAttribute(WebKeys.USER, user);
 
 		EventsProcessorUtil.process(
@@ -228,9 +225,7 @@ public class ExecuteInfoItemActionStrutsActionTest {
 			mockHttpServletResponse);
 	}
 
-	private void _testExecuteInfoItemAction(boolean successExpected)
-		throws Exception {
-
+	private void _testExecuteInfoItemAction(boolean success) throws Exception {
 		MockMultipartHttpServletRequest mockMultipartHttpServletRequest =
 			new MockMultipartHttpServletRequest();
 
@@ -271,7 +266,7 @@ public class ExecuteInfoItemActionStrutsActionTest {
 
 		String responseBody = unsyncStringWriter.toString();
 
-		if (successExpected) {
+		if (success) {
 			Assert.assertTrue(_file.exists(_fileName));
 			Assert.assertEquals("{}", responseBody);
 		}

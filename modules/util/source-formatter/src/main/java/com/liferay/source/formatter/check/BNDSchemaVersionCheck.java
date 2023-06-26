@@ -17,6 +17,7 @@ package com.liferay.source.formatter.check;
 import aQute.bnd.version.Version;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -68,9 +69,11 @@ public class BNDSchemaVersionCheck extends BaseFileCheck {
 
 					addMessage(
 						fileName,
-						"Do not include the header Liferay-Require-" +
-							"SchemaVersion when the service.xml only " +
-								"contains empty entity with no columns");
+						StringBundler.concat(
+							"Do not include the header Liferay-Require-",
+							"SchemaVersion and Liferay-Service when the ",
+							"service.xml only contains empty entity with no ",
+							"columns"));
 
 					return content;
 				}

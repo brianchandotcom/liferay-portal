@@ -189,6 +189,29 @@ public class StructuredContentFolderResourceTest
 
 		assertEquals(postStructuredContentFolder2, getStructuredContentFolder2);
 		assertValid(getStructuredContentFolder2);
+
+		String externalReferenceCode = StringUtil.toLowerCase(
+			RandomTestUtil.randomString());
+
+		try {
+			structuredContentFolderResource.
+				getAssetLibraryStructuredContentFolderByExternalReferenceCode(
+					testGetAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId(),
+					externalReferenceCode);
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("NOT_FOUND", problem.getStatus());
+			Assert.assertEquals(
+				StringBundler.concat(
+					"No JournalFolder exists with the key {",
+					"externalReferenceCode=", externalReferenceCode,
+					", groupId=", testDepotEntry.getGroupId(), "}"),
+				problem.getTitle());
+		}
 	}
 
 	@Override

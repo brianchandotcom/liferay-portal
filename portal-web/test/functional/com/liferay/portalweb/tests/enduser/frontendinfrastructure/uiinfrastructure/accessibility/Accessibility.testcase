@@ -33,14 +33,4 @@ definition {
 		AssertAccessible();
 	}
 
-	@description = "Verify poshi function AssertAccessible can fail a page that has a WCAG 2.0 AA violation"
-	@ignore = "Test Stub"
-	@priority = 5
-	test CanAssertNotAccessible {
-		property portal.acceptance = "false";
-
-		// TODO LPS-133020 CanAssertNotAccessible pending implementation
-
-	}
-
 }

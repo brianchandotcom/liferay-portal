@@ -24,7 +24,8 @@ function handleDropDown() {
 	wrapper.classList.toggle('active');
 	if (wrapper.classList.contains('active')) {
 		document.addEventListener('click', closeDropDown);
-	} else {
+	}
+	else {
 		document.removeEventListener('click', closeDropDown);
 	}
 }

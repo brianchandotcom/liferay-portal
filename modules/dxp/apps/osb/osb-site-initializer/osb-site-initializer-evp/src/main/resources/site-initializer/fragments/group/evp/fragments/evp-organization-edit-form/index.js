@@ -20,7 +20,6 @@ const FIELD = {
 	TAXID: 'taxId',
 };
 
-/** Fill Organization Form */
 const queryString = window.location.search;
 const urlParams = queryString.split('=');
 const organizationId = urlParams[1];
@@ -73,7 +72,6 @@ getEVPOrganizations().then((organizations) => {
 	}
 });
 
-/** Update Organization Values */
 const ignoreFields = [
 	'classTypeId',
 	'classNameId',

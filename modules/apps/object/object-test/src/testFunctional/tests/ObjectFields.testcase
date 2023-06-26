@@ -977,6 +977,67 @@ definition {
 		}
 	}
 
+	@description = "LPS-179803 - Verify the field in an object entry is removed when the user deletes a custom field that was added before the initial publication"
+	@priority = 5
+	test CanDeleteOriginalFieldFromEntry {
+		property custom.properties = "feature.flag.LPS-179803=true";
+		property portal.acceptance = "true";
+
+		task ("Given a custom object with two custom fields and an object entry") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 187082",
+				objectName = "CustomObject187082",
+				pluralLabelName = "Custom Objects 187082");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Integer",
+				fieldLabelName = "Custom Integer",
+				fieldName = "customObjectFieldA",
+				fieldType = "Integer",
+				isRequired = "false",
+				objectName = "CustomObject187082");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "LongInteger",
+				fieldLabelName = "Custom Long Integer",
+				fieldName = "customObjectFieldB",
+				fieldType = "Long",
+				isRequired = "false",
+				objectName = "CustomObject187082");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject187082");
+
+			JSONObject.addObjectEntryViaJSONAPI(
+				fieldList = "customObjectFieldA/18,customObjectFieldB/187082187082",
+				objectName = "CustomObject187082",
+				scope = "company");
+		}
+
+		task ("When a custom field is deleted") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 187082");
+
+			ObjectAdmin.goToFieldsTab();
+
+			Click(
+				key_entry = "Custom Long Integer",
+				locator1 = "ObjectPortlet#ENTRY_KEBAB_MENU");
+
+			ClickNoError(locator1 = "ObjectPortlet#DELETE_ENTRY_BUTTON");
+
+			Button.clickDelete();
+		}
+
+		task ("Then the custom field is removed from the object entry") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject187082");
+
+			AssertElementNotPresent(
+				key_column = "Custom Long Integer",
+				locator1 = "ObjectPortlet#ENTRY_COLUMN");
+		}
+	}
+
 	@description = "LPS-148112 - Verify if turn off the 'Show files' option on field settings"
 	@priority = 4
 	test CanDisableShowFilesOptionOnFieldSettings {

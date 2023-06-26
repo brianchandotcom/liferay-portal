@@ -85,6 +85,7 @@ public class LiveUpgradeExecutorTest {
 	@After
 	public void tearDown() throws Exception {
 		_db.runSQL("DROP_TABLE_IF_EXISTS(" + _TABLE_NAME + ")");
+		_db.runSQL("DROP_TABLE_IF_EXISTS(" + _getArchiveTableName() + ")");
 		_db.runSQL("DROP_TABLE_IF_EXISTS(" + _getTempTableName() + ")");
 	}
 
@@ -95,10 +96,8 @@ public class LiveUpgradeExecutorTest {
 			LiveUpgradeProcessFactory.addColumns(
 				"content SBLOB", "version LONG null"));
 
-		String tempTableName = _getTempTableName();
-
-		Assert.assertTrue(_dbInspector.hasColumn(tempTableName, "content"));
-		Assert.assertTrue(_dbInspector.hasColumn(tempTableName, "version"));
+		Assert.assertTrue(_dbInspector.hasColumn(_TABLE_NAME, "content"));
+		Assert.assertTrue(_dbInspector.hasColumn(_TABLE_NAME, "version"));
 	}
 
 	@Test
@@ -108,12 +107,10 @@ public class LiveUpgradeExecutorTest {
 			LiveUpgradeProcessFactory.alterColumnName(
 				"name", "title VARCHAR(128) not null"));
 
-		String tempTableName = _getTempTableName();
+		Assert.assertFalse(_dbInspector.hasColumn(_TABLE_NAME, "name"));
+		Assert.assertTrue(_dbInspector.hasColumn(_TABLE_NAME, "title"));
 
-		Assert.assertFalse(_dbInspector.hasColumn(tempTableName, "name"));
-		Assert.assertTrue(_dbInspector.hasColumn(tempTableName, "title"));
-
-		_checkData(tempTableName, "title");
+		_checkData("title");
 	}
 
 	@Test
@@ -123,13 +120,11 @@ public class LiveUpgradeExecutorTest {
 			LiveUpgradeProcessFactory.alterColumnType(
 				"name", "VARCHAR(255) null"));
 
-		String tempTableName = _getTempTableName();
-
 		Assert.assertTrue(
 			_dbInspector.hasColumnType(
-				tempTableName, "name", "VARCHAR(255) null"));
+				_TABLE_NAME, "name", "VARCHAR(255) null"));
 
-		_checkData(tempTableName, "name");
+		_checkData("name");
 	}
 
 	@Test
@@ -137,7 +132,7 @@ public class LiveUpgradeExecutorTest {
 		_liveUpgradeExecutor.upgrade(
 			_TABLE_NAME, LiveUpgradeProcessFactory.dropColumns("name"));
 
-		Assert.assertFalse(_dbInspector.hasColumn(_getTempTableName(), "name"));
+		Assert.assertFalse(_dbInspector.hasColumn(_TABLE_NAME, "name"));
 	}
 
 	@Test
@@ -166,20 +161,18 @@ public class LiveUpgradeExecutorTest {
 				"title", "VARCHAR(255) null"),
 			LiveUpgradeProcessFactory.dropColumns("content"));
 
-		String tempTableName = _getTempTableName();
-
-		Assert.assertFalse(_dbInspector.hasColumn(tempTableName, "content"));
-		Assert.assertTrue(_dbInspector.hasColumn(tempTableName, "id"));
-		Assert.assertFalse(_dbInspector.hasColumn(tempTableName, "name"));
-		Assert.assertTrue(_dbInspector.hasColumn(tempTableName, "title"));
-		Assert.assertTrue(_dbInspector.hasColumn(tempTableName, "version"));
+		Assert.assertFalse(_dbInspector.hasColumn(_TABLE_NAME, "content"));
+		Assert.assertTrue(_dbInspector.hasColumn(_TABLE_NAME, "id"));
+		Assert.assertFalse(_dbInspector.hasColumn(_TABLE_NAME, "name"));
+		Assert.assertTrue(_dbInspector.hasColumn(_TABLE_NAME, "title"));
+		Assert.assertTrue(_dbInspector.hasColumn(_TABLE_NAME, "version"));
 
 		Assert.assertTrue(
 			_dbInspector.hasColumnType(
-				tempTableName, "title", "VARCHAR(255) null"));
+				_TABLE_NAME, "title", "VARCHAR(255) null"));
 
 		try (PreparedStatement preparedStatement = _connection.prepareStatement(
-				"select * from " + tempTableName + " order by id asc");
+				"select * from " + _TABLE_NAME + " order by id asc");
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			Assert.assertTrue(resultSet.next());
@@ -198,11 +191,9 @@ public class LiveUpgradeExecutorTest {
 		}
 	}
 
-	private void _checkData(String tempTableName, String columnName)
-		throws Exception {
-
+	private void _checkData(String columnName) throws Exception {
 		try (PreparedStatement preparedStatement = _connection.prepareStatement(
-				"select * from " + tempTableName + " order by id asc");
+				"select * from " + _TABLE_NAME + " order by id asc");
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			Assert.assertTrue(resultSet.next());
@@ -217,6 +208,12 @@ public class LiveUpgradeExecutorTest {
 
 			Assert.assertFalse(resultSet.next());
 		}
+	}
+
+	private String _getArchiveTableName() {
+		return ReflectionTestUtil.invoke(
+			_liveUpgradeExecutor, "_getArchiveTableName",
+			new Class<?>[] {String.class}, _TABLE_NAME);
 	}
 
 	private String _getTempTableName() {

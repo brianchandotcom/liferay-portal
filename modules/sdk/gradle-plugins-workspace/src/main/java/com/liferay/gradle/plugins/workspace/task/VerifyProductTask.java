@@ -5,9 +5,6 @@
 
 package com.liferay.gradle.plugins.workspace.task;
 
-import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
-import com.liferay.gradle.util.Validator;
-
 import java.util.Objects;
 
 import org.gradle.api.DefaultTask;
@@ -15,6 +12,10 @@ import org.gradle.api.GradleException;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.TaskAction;
+
+import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
+import com.liferay.gradle.plugins.workspace.WorkspaceExtension.ProductInfo;
+import com.liferay.gradle.util.Validator;
 
 /**
  * @author Simon Jiang
@@ -29,66 +30,79 @@ public class VerifyProductTask extends DefaultTask {
 
 	@Input
 	@Optional
-	public WorkspaceExtension.ProductInfo getProcutInfo() {
-		return _productInfo;
+	public WorkspaceExtension getExtension() {
+		return _extension;
 	}
 
 	public void setProduct(String product) {
 		_product = product;
 	}
 
-	public void setProductInfo(WorkspaceExtension.ProductInfo productInfo) {
-		_productInfo = productInfo;
+	public void setExtension(WorkspaceExtension extension) {
+		_extension = extension;
 	}
 
 	@TaskAction
 	public void verifyProduct() throws Exception {
-		if (Objects.isNull(_productInfo)) {
+		ProductInfo productInfo = _extension.getProductInfo();
+		
+		if (Objects.isNull(productInfo)) {
 			throw new GradleException(
-				"Can not get produtInfo for prdocut " + _product);
+				"Can not get produtInfo for prdocut '" + _product + "'");
 		}
 
-		if (Validator.isNull(_productInfo.getAppServerTomcatVersion())) {
+		String appServerTomcatVersion = _extension.getAppServerTomcatVersion();
+		String defaultAppServerTomcatVersion = productInfo.getAppServerTomcatVersion();
+		
+		if (Objects.equals(appServerTomcatVersion, defaultAppServerTomcatVersion) 
+				&& Validator.isNull(defaultAppServerTomcatVersion)) {
 			throw new GradleException(
-				"Can not get correct tomcat version for prdocut " +
-					_product);
+				"Can not get correct tomcat version for prdocut '" + _product +
+					"'");
 		}
 
-		if (Validator.isNull(_productInfo.getBundleChecksumMD5())) {
+		String bundleChecksumMD5 = _extension.getBundleChecksumMD5();
+		String defaultBundleChecksumMD5 = productInfo.getBundleChecksumMD5();
+		
+		if (Objects.equals(bundleChecksumMD5, defaultBundleChecksumMD5) 
+				&& Validator.isNull(defaultBundleChecksumMD5)) {
 			throw new GradleException(
-				"Can not get correct bundleChecksumMD5 for prdocut " +
-					_product);
+				"Can not get correct bundleChecksumMD5 for prdocut '" +
+					_product + "'");
 		}
 
-		if (Validator.isNull(_productInfo.getBundleUrl())) {
+		String bundleUrl = _extension.getBundleUrl();
+		String defaultBundleUrl = productInfo.getBundleUrl();		
+		
+		if (Objects.equals(bundleUrl, defaultBundleUrl) 
+				&& Validator.isNull(defaultBundleUrl)) {
 			throw new GradleException(
-				"Can not get correct bundle url for prdocut " + _product);
+				"Can not get correct bundle url for prdocut '" + _product +
+					"'");
 		}
 
-		if (Validator.isNull(_productInfo.getLiferayDockerImage())) {
+		String dockerImage = _extension.getDockerImageLiferay();
+		String defaultLiferayDockerImage = productInfo.getLiferayDockerImage();	
+		
+		if (Objects.equals(dockerImage, defaultLiferayDockerImage) 
+				&& Validator.isNull(defaultLiferayDockerImage)) {
 			throw new GradleException(
-				"Can not get correct liferay docker image for prdocut " +
-					_product);
+				"Can not get correct liferay docker image for prdocut '" +
+					_product + "'");
 		}
 
-		if (Validator.isNull(_productInfo.getLiferayProductVersion())) {
+		String targetPlatformVersion = _extension.getTargetPlatformVersion();
+		String defaultTargetPlatformVersion = productInfo.getTargetPlatformVersion();			
+		
+		if (Objects.equals(targetPlatformVersion, defaultTargetPlatformVersion) 
+				&& Validator.isNull(defaultTargetPlatformVersion)) {
 			throw new GradleException(
-				"Can not get correct product version for prdocut " + _product);
-		}
-
-		if (Validator.isNull(_productInfo.getReleaseDate())) {
-			throw new GradleException(
-				"Can not get correct release date for prdocut " + _product);
-		}
-
-		if (Validator.isNull(_productInfo.getTargetPlatformVersion())) {
-			throw new GradleException(
-				"Can not get correct tareget platform version for prdocut " +
-					_product);
+				"Can not get correct tareget platform version for prdocut '" +
+					_product + "'");
 		}
 	}
 
 	private String _product;
-	private WorkspaceExtension.ProductInfo _productInfo;
+	private WorkspaceExtension _extension;
 
 }

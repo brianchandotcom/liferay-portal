@@ -1683,8 +1683,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 				public void execute(Project project) {
 					verifyProductTask.setProduct(
 						workspaceExtension.getProduct());
-					verifyProductTask.setProductInfo(
-						workspaceExtension.getProductInfo());
+					verifyProductTask.setExtension(workspaceExtension);
 				}
 
 			});

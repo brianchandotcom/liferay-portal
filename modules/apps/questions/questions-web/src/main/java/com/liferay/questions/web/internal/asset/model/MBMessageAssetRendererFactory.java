@@ -10,6 +10,7 @@ import com.liferay.asset.kernel.model.BaseAssetRendererFactory;
 import com.liferay.message.boards.constants.MBPortletKeys;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.MBMessageLocalService;
+import com.liferay.portal.kernel.comment.DiscussionPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -28,11 +29,13 @@ public class MBMessageAssetRendererFactory
 	public static final String TYPE = "message";
 
 	public MBMessageAssetRendererFactory(
-		CompanyLocalService companyLocalService, String historyRouterPath,
+		CompanyLocalService companyLocalService,
+		DiscussionPermission discussionPermission, String historyRouterPath,
 		MBMessageLocalService mbMessageLocalService,
 		ModelResourcePermission<MBMessage> mbMessageModelResourcePermission) {
 
 		_companyLocalService = companyLocalService;
+		_discussionPermission = discussionPermission;
 		_historyRouterPath = historyRouterPath;
 		_mbMessageLocalService = mbMessageLocalService;
 		_mbMessageModelResourcePermission = mbMessageModelResourcePermission;
@@ -51,7 +54,7 @@ public class MBMessageAssetRendererFactory
 		MBMessageAssetRenderer mbMessageAssetRenderer =
 			new MBMessageAssetRenderer(
 				_companyLocalService.getCompany(mbMessage.getCompanyId()),
-				_historyRouterPath, mbMessage,
+				_discussionPermission, _historyRouterPath, mbMessage,
 				_mbMessageModelResourcePermission);
 
 		mbMessageAssetRenderer.setAssetRendererType(type);
@@ -92,6 +95,7 @@ public class MBMessageAssetRendererFactory
 	}
 
 	private final CompanyLocalService _companyLocalService;
+	private final DiscussionPermission _discussionPermission;
 	private final String _historyRouterPath;
 	private final MBMessageLocalService _mbMessageLocalService;
 	private final ModelResourcePermission<MBMessage>

@@ -12,7 +12,7 @@ import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.message.boards.constants.MBPortletKeys;
 import com.liferay.message.boards.model.MBMessage;
-import com.liferay.message.boards.service.permission.MBDiscussionPermission;
+import com.liferay.portal.kernel.comment.DiscussionPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -57,9 +57,11 @@ public class MBMessageAssetRenderer
 	extends BaseJSPAssetRenderer<MBMessage> implements TrashRenderer {
 
 	public MBMessageAssetRenderer(
-		HtmlParser htmlParser, MBMessage message,
+		DiscussionPermission discussionPermission, HtmlParser htmlParser,
+		MBMessage message,
 		ModelResourcePermission<MBMessage> messageModelResourcePermission) {
 
+		_discussionPermission = discussionPermission;
 		_htmlParser = htmlParser;
 		_message = message;
 		_messageModelResourcePermission = messageModelResourcePermission;
@@ -263,8 +265,8 @@ public class MBMessageAssetRenderer
 		throws PortalException {
 
 		if (_message.isDiscussion()) {
-			return MBDiscussionPermission.contains(
-				permissionChecker, _message, ActionKeys.UPDATE);
+			return _discussionPermission.hasPermission(
+				permissionChecker, _message.getMessageId(), ActionKeys.UPDATE);
 		}
 
 		return _messageModelResourcePermission.contains(
@@ -276,8 +278,8 @@ public class MBMessageAssetRenderer
 		throws PortalException {
 
 		if (_message.isDiscussion()) {
-			return MBDiscussionPermission.contains(
-				permissionChecker, _message, ActionKeys.VIEW);
+			return _discussionPermission.hasPermission(
+				permissionChecker, _message.getMessageId(), ActionKeys.VIEW);
 		}
 
 		return _messageModelResourcePermission.contains(
@@ -346,6 +348,7 @@ public class MBMessageAssetRenderer
 
 	private AssetDisplayPageFriendlyURLProvider
 		_assetDisplayPageFriendlyURLProvider;
+	private final DiscussionPermission _discussionPermission;
 	private final HtmlParser _htmlParser;
 	private final MBMessage _message;
 	private final ModelResourcePermission<MBMessage>

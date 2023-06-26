@@ -14,6 +14,7 @@
 
 package com.liferay.object.system;
 
+import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.petra.sql.dsl.Column;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -63,6 +65,10 @@ public interface SystemObjectDefinitionManager {
 	public String getModelClassName();
 
 	public String getName();
+
+	public default List<ObjectAction> getObjectActions() {
+		return new ArrayList<>();
+	}
 
 	public List<ObjectField> getObjectFields();
 

@@ -87,6 +87,8 @@ public class AccountForecastResourceImpl
 				_commerceAccountCommerceMLForecastManager.
 					addCommerceAccountCommerceMLForecast(
 						commerceAccountCommerceMLForecast);
+
+				return null;
 			});
 	}
 

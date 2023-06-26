@@ -90,6 +90,8 @@ public class AccountCategoryForecastResourceImpl
 				_assetCategoryCommerceMLForecastManager.
 					addAssetCategoryCommerceMLForecast(
 						assetCategoryCommerceMLForecast);
+
+				return null;
 			});
 	}
 

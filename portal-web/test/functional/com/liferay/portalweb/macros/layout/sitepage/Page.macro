@@ -69,8 +69,6 @@ definition {
 
 		Click(locator1 = "PageEditor#MORE_LINK");
 
-		Navigator.gotoNavTab(navTab = "Design");
-
 		Theme.configureLookAndFeelSpecificLook();
 
 		Click(

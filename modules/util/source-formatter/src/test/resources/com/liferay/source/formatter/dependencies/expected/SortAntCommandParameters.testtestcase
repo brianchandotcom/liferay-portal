@@ -1,9 +1,7 @@
 definition {
 
 	test CanImportEntryWithImageAfterCleaningDB {
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "rebuild-database -Ddatabase.type=mysql -Dkeep.osgi.state=true -Dsql.dir=sql/create-bare/ -Dsql.file=create-bare-mysql.sql");
+		AntCommands.runCommand("build-test.xml", "move-file -Dfile=${sourceFilePath} -Dtofile=${deployFolder}/${fileName}");
 	}
 
 }

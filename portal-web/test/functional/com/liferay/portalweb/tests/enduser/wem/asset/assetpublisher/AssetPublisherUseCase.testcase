@@ -624,6 +624,7 @@ definition {
 	@priority = 5
 	test FilterAndOrderAssetsByField {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "AssetPublisherUseCase#FilterAndOrderAssetsByField";
 
 		task ("Add a Language Selector to page") {
 			JSONLayout.addWidgetToPublicLayout(
@@ -1957,6 +1958,8 @@ definition {
 	@description = "LPS-103624 - URLs are not well formed when changing language in classic Display Pages."
 	@priority = 4
 	test ViewInContextTranslatedWCWithFriendlyURL {
+		property test.name.skip.portal.instance = "AssetPublisherUseCase#ViewInContextTranslatedWCWithFriendlyURL";
+
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = ${randomSiteName},
 			layoutName = "Asset Publisher Page",
@@ -2020,6 +2023,8 @@ definition {
 	@description = "View localized web content with localized categories."
 	@priority = 3
 	test ViewLocalizedWebContentWithLocalizedCategories {
+		property test.name.skip.portal.instance = "AssetPublisherUseCase#ViewLocalizedWebContentWithLocalizedCategories";
+
 		task ("Add a vocabulary with localized title") {
 			JSONCategory.addVocabulary(
 				groupName = ${randomSiteName},

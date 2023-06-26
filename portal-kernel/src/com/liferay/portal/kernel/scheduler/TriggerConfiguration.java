@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.scheduler;
 
+import java.util.Date;
+
 /**
  * @author Tina Tian
  */
@@ -39,8 +41,16 @@ public class TriggerConfiguration {
 		return _interval;
 	}
 
+	public Date getStartDate() {
+		return _startDate;
+	}
+
 	public TimeUnit getTimeUnit() {
 		return _timeUnit;
+	}
+
+	public void setStartDate(Date startDate) {
+		_startDate = startDate;
 	}
 
 	private TriggerConfiguration(int interval, TimeUnit timeUnit) {
@@ -67,6 +77,7 @@ public class TriggerConfiguration {
 
 	private String _cronExpression;
 	private int _interval;
+	private Date _startDate;
 	private TimeUnit _timeUnit;
 
 }

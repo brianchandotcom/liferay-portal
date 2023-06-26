@@ -563,13 +563,15 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 			if (Validator.isNotNull(triggerConfiguration.getCronExpression())) {
 				trigger = _triggerFactory.createTrigger(
 					schedulerJobConfiguration.getName(),
-					schedulerJobConfiguration.getName(), null, null,
+					schedulerJobConfiguration.getName(),
+					triggerConfiguration.getStartDate(), null,
 					triggerConfiguration.getCronExpression());
 			}
 			else {
 				trigger = _triggerFactory.createTrigger(
 					schedulerJobConfiguration.getName(),
-					schedulerJobConfiguration.getName(), null, null,
+					schedulerJobConfiguration.getName(),
+					triggerConfiguration.getStartDate(), null,
 					triggerConfiguration.getInterval(),
 					triggerConfiguration.getTimeUnit());
 			}

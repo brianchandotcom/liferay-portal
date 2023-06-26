@@ -276,6 +276,6 @@ public class DLStoreUtil {
 
 	private static volatile DLStore _store =
 		ServiceProxyFactory.newServiceTrackedInstance(
-			DLStore.class, DLStoreUtil.class, "_store", true);
+			DLStore.class, DLStoreUtil.class, "_store", false);
 
 }

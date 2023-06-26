@@ -136,11 +136,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SEGMENT_FIELDS_TYPE</td>
-	<td>//a[contains(@class, 'sidebar-collapse-header') and contains(text(),'${key_typeName}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>TITLE_FIELD</td>
 	<td>//input[@data-testid='localized-main-input']</td>
 	<td></td>

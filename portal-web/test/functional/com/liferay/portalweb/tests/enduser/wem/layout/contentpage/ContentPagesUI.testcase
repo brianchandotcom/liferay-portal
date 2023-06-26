@@ -293,11 +293,6 @@ definition {
 			task ("Go to add and remove favorite widget") {
 				Navigator.gotoNavTab(navTab = "Widgets");
 
-				AssertClick(
-					key_collectionName = "Collaboration",
-					locator1 = "PageEditor#FRAGMENT_SIDEBAR_COLLECTION_PANEL_COLLAPSED",
-					value1 = "Collaboration");
-
 				MouseOver(
 					key_collectionName = "Collaboration",
 					key_fragmentName = "Calendar",

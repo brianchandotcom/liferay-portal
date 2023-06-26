@@ -72,7 +72,7 @@ public class UserPasswordScreenNavigationEntry
 		catch (PortalException portalException) {
 			_log.error(portalException);
 
-			return false;
+			return true;
 		}
 	}
 

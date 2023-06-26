@@ -1045,6 +1045,18 @@ export default function ChangeTrackingRenderView({
 						colSpan={2}
 					>
 						{renderViewDropdown()}
+
+						{
+							<td className="publications-render-view-type">
+								{Liferay.Language.get('production')}
+							</td>
+						}
+
+						{
+							<td className="publications-render-view-type">
+								{Liferay.Language.get('publication')}
+							</td>
+						}
 					</td>
 				</tr>
 			);

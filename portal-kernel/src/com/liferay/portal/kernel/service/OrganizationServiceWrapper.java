@@ -331,11 +331,33 @@ public class OrganizationServiceWrapper
 
 	@Override
 	public java.util.List<Organization> getOrganizations(
+		long companyId, long parentOrganizationId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Organization>
+			orderByComparator) {
+
+		return _organizationService.getOrganizations(
+			companyId, parentOrganizationId, start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<Organization> getOrganizations(
 		long companyId, long parentOrganizationId, String name, int start,
 		int end) {
 
 		return _organizationService.getOrganizations(
 			companyId, parentOrganizationId, name, start, end);
+	}
+
+	@Override
+	public java.util.List<Organization> getOrganizations(
+		long companyId, long parentOrganizationId, String name, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Organization>
+			orderByComparator) {
+
+		return _organizationService.getOrganizations(
+			companyId, parentOrganizationId, name, start, end,
+			orderByComparator);
 	}
 
 	/**

@@ -1,17 +1,27 @@
 definition {
 
+	macro addSourceContent {
+		Click(locator1 = "CKEditor#TOOLBAR_SOURCE_BUTTON");
+
+		Type.typeCodeMirrorEditorNoError(
+			locator1 = "CKEditor#BODY_FIELD_SOURCE_ON",
+			value1 = ${content});
+
+		Click(locator1 = "CKEditor#TOOLBAR_SOURCE_BUTTON");
+	}
+
 	macro configureURLPattern {
 		Type(
 			locator1 = "ExportImport#URL_PATTERN",
 			value1 = ${urlPattern});
 
 		if (isSet(multipleURL)) {
-			FormFields.addRepeatableField(
-				fieldName = "whitelistedURLPatterns",
-				repeatableFieldNumber = 1);
+			Click.javaScriptClick(
+				key_title = "Duplicate",
+				locator1 = "Button#ANY_TITLE");
 
 			FormFields.editRepeatableTextMultiline(
-				fieldName = "whitelistedURLPatterns",
+				fieldName = "URLPatterns",
 				fieldValue = ${multipleURL},
 				repeatableFieldNumber = 2);
 		}
@@ -138,6 +148,7 @@ definition {
 		if (${queryResult} != "") {
 			fail("The modifiedDate of the portlet background task failed to modify.");
 		}
+	}
 
 	macro viewValidationMessage {
 		AssertTextPresent(

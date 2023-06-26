@@ -975,6 +975,62 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-184978. TC-11: URL Pattern configuration works well after upgrading from 7.3 SP1."
+	@priority = 5
+	test URLPatternShouldWorkAfterUpgrade73101 {
+		property custom.properties = "virtual.hosts.default.site.name=Guest";
+		property data.archive.type = "data-archive-web-content-with-custom-url";
+		property portal.version = "7.3.10.1";
+
+		task ("When: Not set URL pattern and edit web content") {
+			StagingNavigator.openToConfigInInstanceSettings(portlet = "Export/Import, Staging");
+
+			AssertTextEquals(
+				locator1 = "ExportImport#URL_PATTERN",
+				value1 = "");
+
+			takeScreenshot();
+		}
+
+		task ("Then: Custom URLs cannot bypass validation") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+			Button.clickPublish();
+
+			ExportImport.viewValidationMessage(
+				url = "/dl/XYZ123",
+				urlPattern = "/dl");
+		}
+
+		task ("When: Add custom URL in URL Pattern in Instance Settings") {
+			StagingNavigator.openToConfigInInstanceSettings(portlet = "Export/Import, Staging");
+
+			ExportImport.configureURLPattern(urlPattern = "/dl/*");
+		}
+
+		task ("Then: Custom URL can bypass validation") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+			WebContent.editCP(webContentTitleEdit = "Web Content Title Edit");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addCP(webContentTitle = "Web Content Title B");
+
+			var portalURL = PropsUtil.get("portal.url");
+
+			ExportImport.addSourceContent(content = '''<p><a href="${portalURL}/dl/XYZ123">${portalURL}/dl/XYZ123</a></p>''');
+
+			PortletEntry.publish();
+		}
+	}
+
 	@description = "This is a use case for LPS-87237 and LPS-126769."
 	@priority = 5
 	test ViewStagingDefaultSettingAfterUpgrade704 {

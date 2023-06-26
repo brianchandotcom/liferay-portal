@@ -221,10 +221,9 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 				return true;
 			});
 
-		Locale locale = serviceContext.getLocale();
-
 		assetRendererFactories.sort(
-			new AssetRendererFactoryTypeNameComparator(locale));
+			new AssetRendererFactoryTypeNameComparator(
+				serviceContext.getLocale()));
 
 		InfoField.FinalStep finalStep = InfoField.builder(
 		).infoFieldType(

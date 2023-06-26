@@ -91,7 +91,7 @@ public class DDMFormFieldInfoFieldConverterImpl
 
 			finalStep.attribute(
 				MultiselectInfoFieldType.OPTIONS,
-				_getMultiselectInfoFieldTypeOptions(ddmFormField));
+				_getOptionInfoFieldTypes(ddmFormField));
 		}
 
 		if (Objects.equals(
@@ -106,7 +106,7 @@ public class DDMFormFieldInfoFieldConverterImpl
 
 			finalStep.attribute(
 				SelectInfoFieldType.OPTIONS,
-				_getSelectInfoFieldTypeOptions(ddmFormField));
+				_getOptionInfoFieldTypes(ddmFormField));
 		}
 
 		if (Objects.equals(
@@ -115,12 +115,12 @@ public class DDMFormFieldInfoFieldConverterImpl
 			if (GetterUtil.getBoolean(ddmFormField.getProperty("multiple"))) {
 				finalStep.attribute(
 					MultiselectInfoFieldType.OPTIONS,
-					_getMultiselectInfoFieldTypeOptions(ddmFormField));
+					_getOptionInfoFieldTypes(ddmFormField));
 			}
 			else {
 				finalStep.attribute(
 					SelectInfoFieldType.OPTIONS,
-					_getSelectInfoFieldTypeOptions(ddmFormField));
+					_getOptionInfoFieldTypes(ddmFormField));
 			}
 		}
 
@@ -197,28 +197,7 @@ public class DDMFormFieldInfoFieldConverterImpl
 		return TextInfoFieldType.INSTANCE;
 	}
 
-	private List<OptionInfoFieldType> _getMultiselectInfoFieldTypeOptions(
-		DDMFormField ddmFormField) {
-
-		List<OptionInfoFieldType> optionInfoFieldTypes = new ArrayList<>();
-
-		DDMFormFieldOptions ddmFormFieldOptions =
-			ddmFormField.getDDMFormFieldOptions();
-
-		for (String value : ddmFormFieldOptions.getOptionsValues()) {
-			LocalizedValue localizedValue = ddmFormFieldOptions.getOptionLabels(
-				value);
-
-			optionInfoFieldTypes.add(
-				new OptionInfoFieldType(
-					new FunctionInfoLocalizedValue<>(localizedValue::getString),
-					value));
-		}
-
-		return optionInfoFieldTypes;
-	}
-
-	private List<OptionInfoFieldType> _getSelectInfoFieldTypeOptions(
+	private List<OptionInfoFieldType> _getOptionInfoFieldTypes(
 		DDMFormField ddmFormField) {
 
 		List<OptionInfoFieldType> optionInfoFieldTypes = new ArrayList<>();

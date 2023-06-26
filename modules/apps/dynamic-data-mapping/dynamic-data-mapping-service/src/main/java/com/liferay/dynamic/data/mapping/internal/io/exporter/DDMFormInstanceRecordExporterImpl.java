@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.text.Format;
@@ -148,7 +147,7 @@ public class DDMFormInstanceRecordExporterImpl
 			String value = ddmFormFieldValueRenderer.render(
 				ddmFormFieldValue, locale);
 
-			if (Validator.isNotNull(value)) {
+			if (value != null) {
 				sb.append(value);
 				sb.append(StringPool.COMMA_AND_SPACE);
 			}

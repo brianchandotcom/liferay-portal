@@ -53,4 +53,24 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-164731. Verify that user can access Reports page through 'Reports' Tab on top menu and it is visible to EVP Manager"
+	@priority = 5
+	test ManagerCanAccessReportPage {
+		task ("Given the manager user are logged") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "manager@liferay.com",
+				userLoginFullName = "Manager User");
+		}
+
+		task ("When he goes to Reports Page") {
+			EVPUtils.gotoEVP();
+
+			EVPNavigator.goToNavItem(navItem = "Reports");
+		}
+
+		task ("Then he can see the cards present in the page") {
+			EVPUtils.assertCardTitle(listcardTitle = "EVP Requests Listing,EVP Financial Report");
+		}
+	}
+
 }

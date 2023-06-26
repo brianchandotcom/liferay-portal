@@ -195,7 +195,7 @@ public class PoshiVariablesContext {
 			Object varValue = getObjectFromCommandMap(matcher.group(1));
 
 			token = StringUtil.replace(
-				token, matcher.group(), (String)varValue);
+				token, matcher.group(), varValue.toString());
 		}
 
 		return token;

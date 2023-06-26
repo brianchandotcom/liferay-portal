@@ -82,7 +82,9 @@ public class IllegalTaglibsCheck extends BaseFileCheck {
 					continue;
 				}
 
-				if (line.contains(replacedTaglibArray[0])) {
+				if (line.endsWith("<" + replacedTaglibArray[0]) ||
+					line.contains("<" + replacedTaglibArray[0] + " ")) {
+
 					addMessage(
 						fileName,
 						StringBundler.concat(

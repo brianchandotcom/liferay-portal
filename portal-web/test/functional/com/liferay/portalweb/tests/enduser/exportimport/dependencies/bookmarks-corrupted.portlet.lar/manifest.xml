@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-
-<root>
-	<header build-number="7000" export-date="Tue, 20 Jan 2015 18:30:08 +0000" group-id="14" private-layout="false" root-portlet-id="28" type="portlet" />
-	<portlet layout-id="1" path="/groups/14/portlets/28/8440537/portlet.xml" portlet-id="28" />
-	<locale available-locales="zh_CN,en_US,en_GB,fr_FR,de_DE,it_IT,ja_JP,pt_BR,es_ES" />
-</root>

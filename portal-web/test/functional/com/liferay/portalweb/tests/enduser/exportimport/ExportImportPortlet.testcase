@@ -837,32 +837,6 @@ definition {
 		}
 	}
 
-	@description = "Verify is possible import corrupted file."
-	@priority = 5
-	test ImportCorruptedFile {
-		property portal.acceptance = "true";
-		property portal.release = "false";
-
-		task ("When: User tries to import corrupted LAR file in Bookmarks") {
-			Navigator.openURL();
-
-			ProductMenu.gotoPortlet(
-				category = "Content & Data",
-				portlet = "Bookmarks");
-
-			AssertTextEquals(
-				locator1 = "Portlet#HEADER",
-				value1 = "Bookmarks");
-		}
-
-		task ("Then: Import process should fail") {
-			LAR.importPortlet(
-				cannotImport = "true",
-				larFileName = "bookmarks-corrupted.portlet.lar",
-				uploadFrom = "dependencies");
-		}
-	}
-
 	@description = "This is a use case for LPS-84290. Verify is possible export Home Folder Permissions."
 	@priority = 3
 	test ImportSiteHomeFolderPermissions {

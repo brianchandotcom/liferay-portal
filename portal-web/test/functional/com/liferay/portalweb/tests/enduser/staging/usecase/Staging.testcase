@@ -2718,10 +2718,9 @@ definition {
 		Staging.viewHistoryVersionPG(historyVersion = ${historyVersion});
 	}
 
-	@description = "This is a use case for LPS-79092. Specific for Bookmarks"
+	@description = "This is a use case for LPS-79092."
 	@priority = 4
 	test ViewLastPublishDateBehaviourAfterInitialPublication {
-		property portal.release = "false";
 		property test.name.skip.portal.instance = "Staging#ViewLastPublishDateBehaviourAfterInitialPublication";
 
 		JSONWebcontent.addWebContent(
@@ -2785,17 +2784,6 @@ definition {
 
 		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
-		Navigator.openStagingSiteURL(siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Bookmarks");
-
-		Bookmark.addCP(
-			bookmarkDescription = "This is a test bookmark!",
-			bookmarkName = "Test Bookmark",
-			bookmarkURL = "https://www.liferay.com");
-
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
 			siteName = "Site Name");
@@ -2810,21 +2798,7 @@ definition {
 			key_itemName = "Documents and Media",
 			locator1 = "StagingPublishToLive#SIMPLE_PUBLICATION_CONTENT_TYPE");
 
-		AssertElementPresent(
-			key_itemName = "Bookmarks",
-			locator1 = "StagingPublishToLive#SIMPLE_PUBLICATION_CONTENT_TYPE");
-
 		Staging.publishToLive();
-
-		ProductMenu.gotoLiveSite(site = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Bookmarks");
-
-		Bookmark.viewBookmark(
-			bookmarkName = "Test Bookmark",
-			bookmarkURL = "https://www.liferay.com");
 	}
 
 	@priority = 4

@@ -57,6 +57,9 @@ String taglibLabel = null;
 if (group.isLayoutPrototype()) {
 	taglibLabel = LanguageUtil.get(request, "use-the-same-look-and-feel-of-the-pages-in-which-this-template-is-used");
 }
+else if (FeatureFlagManagerUtil.isEnabled("LPS-153951")) {
+	taglibLabel = LanguageUtil.get(request, "use-the-inherited-theme");
+}
 else {
 	taglibLabel = LanguageUtil.format(request, "use-the-inherited-theme-x", rootNodeNameLink, false);
 }

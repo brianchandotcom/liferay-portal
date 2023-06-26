@@ -14,7 +14,7 @@
 
 package com.liferay.analytics.audit.header.internal.servlet.filter;
 
-import com.liferay.analytics.audit.header.internal.configuration.AuditHeaderConfiguration;
+import com.liferay.analytics.audit.header.internal.configuration.AnalyticsAuditHeaderConfiguration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alvaro Saugar
  */
 @Component(
-	configurationPid = "com.liferay.analytics.audit.header.internal.configuration.AuditHeaderConfiguration",
+	configurationPid = "com.liferay.analytics.audit.header.internal.configuration.AnalyticsAuditHeaderConfiguration",
 	property = {
 		"after-filter=Portal CORS Servlet Filter", "dispatcher=FORWARD",
 		"dispatcher=REQUEST", "servlet-context-name=",
@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = Filter.class
 )
-public class AuditHeaderFilter extends BaseFilter implements TryFilter {
+public class AnalyticsAuditHeaderFilter extends BaseFilter implements TryFilter {
 
 	public static final String REQUEST_PARAMETER_X_LIFERAY_REQUEST =
 		"X-Liferay-Request";
@@ -64,7 +64,7 @@ public class AuditHeaderFilter extends BaseFilter implements TryFilter {
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		Boolean enabledMALU = _auditHeaderConfiguration.enabledMALU();
+		Boolean enabledMALU = _analyticsAuditHeaderConfiguration.enabledMALU();
 
 		if (enabledMALU) {
 			long userId = _portal.getUserId(httpServletRequest);
@@ -88,7 +88,7 @@ public class AuditHeaderFilter extends BaseFilter implements TryFilter {
 			}
 		}
 
-		Boolean enabledAPV = _auditHeaderConfiguration.enabledAPV();
+		Boolean enabledAPV = _analyticsAuditHeaderConfiguration.enabledAPV();
 
 		if (enabledAPV) {
 			long userId = _portal.getUserId(httpServletRequest);
@@ -99,7 +99,7 @@ public class AuditHeaderFilter extends BaseFilter implements TryFilter {
 			}
 		}
 
-		Boolean enabledScope = _auditHeaderConfiguration.enabledScope();
+		Boolean enabledScope = _analyticsAuditHeaderConfiguration.enabledScope();
 
 		if (enabledScope) {
 			long userId = _portal.getUserId(httpServletRequest);
@@ -124,9 +124,9 @@ public class AuditHeaderFilter extends BaseFilter implements TryFilter {
 	@Override
 	public boolean isFilterEnabled() {
 		if (!FeatureFlagManagerUtil.isEnabled("LPS-177196") ||
-			!(_auditHeaderConfiguration.enabledMALU() ||
-			  _auditHeaderConfiguration.enabledAPV() ||
-			  _auditHeaderConfiguration.enabledScope())) {
+			!(_analyticsAuditHeaderConfiguration.enabledMALU() ||
+			  _analyticsAuditHeaderConfiguration.enabledAPV() ||
+			  _analyticsAuditHeaderConfiguration.enabledScope())) {
 
 			return false;
 		}
@@ -138,8 +138,8 @@ public class AuditHeaderFilter extends BaseFilter implements TryFilter {
 	protected void activate(
 		BundleContext bundleContext, Map<String, Object> properties) {
 
-		_auditHeaderConfiguration = ConfigurableUtil.createConfigurable(
-			AuditHeaderConfiguration.class, properties);
+		_analyticsAuditHeaderConfiguration = ConfigurableUtil.createConfigurable(
+			AnalyticsAuditHeaderConfiguration.class, properties);
 	}
 
 	@Override
@@ -148,9 +148,9 @@ public class AuditHeaderFilter extends BaseFilter implements TryFilter {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		AuditHeaderFilter.class);
+		AnalyticsAuditHeaderFilter.class);
 
-	private AuditHeaderConfiguration _auditHeaderConfiguration;
+	private AnalyticsAuditHeaderConfiguration _analyticsAuditHeaderConfiguration;
 
 	@Reference
 	private Portal _portal;

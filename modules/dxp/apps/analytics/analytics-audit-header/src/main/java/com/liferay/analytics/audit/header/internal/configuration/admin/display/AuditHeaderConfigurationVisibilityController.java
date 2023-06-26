@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Alvaro Saugar
  */
 @Component(
-	property = "configuration.pid=com.liferay.analytics.audit.header.internal.configuration.AuditHeaderConfiguration",
+	property = "configuration.pid=com.liferay.analytics.audit.header.internal.configuration.AnalyticsAuditHeaderConfiguration",
 	service = ConfigurationVisibilityController.class
 )
 public class AuditHeaderConfigurationVisibilityController

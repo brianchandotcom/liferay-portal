@@ -43,7 +43,7 @@ import org.junit.runner.RunWith;
  */
 @FeatureFlags("LPS-177196")
 @RunWith(Arquillian.class)
-public class AuditHeaderFilterTest {
+public class AnalyticsAuditHeaderFilterTest {
 
 	@ClassRule
 	@Rule
@@ -116,8 +116,8 @@ public class AuditHeaderFilterTest {
 		throws Exception {
 
 		return new ConfigurationTemporarySwapper(
-			"com.liferay.osb.analytics.audit.header.internal.configuration." +
-				"AuditHeaderConfiguration",
+			"com.liferay.analytics.audit.header.internal.configuration." +
+				"AnalyticsAuditHeaderConfiguration",
 			HashMapDictionaryBuilder.<String, Object>put(
 				"enabledAPV", enabledAPV
 			).put(

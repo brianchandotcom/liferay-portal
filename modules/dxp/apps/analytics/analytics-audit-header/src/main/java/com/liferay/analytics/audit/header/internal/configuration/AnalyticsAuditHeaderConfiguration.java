@@ -23,10 +23,10 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(category = "audit")
 @Meta.OCD(
-	id = "com.liferay.analytics.audit.header.internal.configuration.AuditHeaderConfiguration",
+	id = "com.liferay.analytics.audit.header.internal.configuration.AnalyticsAuditHeaderConfiguration",
 	localization = "content/Language", name = "audit-header-configuration-name"
 )
-public interface AuditHeaderConfiguration {
+public interface AnalyticsAuditHeaderConfiguration {
 
 	@Meta.AD(
 		deflt = "false",

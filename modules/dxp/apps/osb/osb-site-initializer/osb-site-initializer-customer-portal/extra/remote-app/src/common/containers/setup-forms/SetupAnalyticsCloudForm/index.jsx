@@ -37,6 +37,7 @@ import getKebabCase from '../../../utils/getKebabCase';
 import Layout from '../Layout';
 import IncidentReportInput from './IncidentReportInput';
 
+const BLANK_TEXT = '< none >';
 const INITIAL_SETUP_ADMIN_COUNT = 1;
 const FETCH_DELAY_AFTER_TYPING = 500;
 const MAX_LENGTH = 255;
@@ -202,31 +203,9 @@ const SetupAnalyticsCloudPage = ({
 				);
 
 				if (featureFlags.includes('LPS-181031')) {
-					const emailIncidentReportContact = analyticsCloud?.incidentReportContact?.map(
-						({email}) => {
-							return email + ' ';
-						}
-					);
-
-					const currentDateAndTime = new Date().toUTCString();
-
-					const showWorkspaceFriendlyUrl =
-						analyticsCloud.workspaceFriendlyUrl !== '' &&
-						analyticsCloud.workspaceFriendlyUrl !== undefined
-							? analyticsCloud.workspaceFriendlyUrl
-							: '< none >';
-
-					const showAllowedEmailDomains =
-						analyticsCloud.workspaceFriendlyUrl !== '' &&
-						analyticsCloud.workspaceFriendlyUrl !== undefined
-							? analyticsCloud.allowedEmailDomains
-							: '< none >';
-
-					const showtimeZone =
-						analyticsCloud.workspaceFriendlyUrl !== '' &&
-						analyticsCloud.workspaceFriendlyUrl !== undefined
-							? analyticsCloud.timeZone
-							: '< none >';
+					const emailIncidentReportContact = analyticsCloud?.incidentReportContact
+						?.map(({email}) => email)
+						.join(', ');
 
 					const notificationTemplateService = new NotificationQueueService(
 						client
@@ -237,13 +216,18 @@ const SetupAnalyticsCloudPage = ({
 						{
 							'[%AC_DATA_CENTER_LOCATION]':
 								analyticsCloud.dataCenterLocation,
-							'[%AC_DATA_TIME]': currentDateAndTime,
-							'[%AC_EMAIL_DOMAINS]': showAllowedEmailDomains,
+							'[%AC_DATA_TIME]': new Date().toUTCString(),
+							'[%AC_EMAIL_DOMAINS]':
+								analyticsCloud.allowedEmailDomains ||
+								BLANK_TEXT,
 							'[%AC_INCIDENT_REPORT_CONTACT]': emailIncidentReportContact,
 							'[%AC_OWNER_EMAIL]':
 								analyticsCloud.ownerEmailAddress,
-							'[%AC_TIME_ZONE]': showtimeZone,
-							'[%AC_WORKSPACE_FRIENDLY_URL]': showWorkspaceFriendlyUrl,
+							'[%AC_TIME_ZONE]':
+								analyticsCloud.timeZone || BLANK_TEXT,
+							'[%AC_WORKSPACE_FRIENDLY_URL]':
+								analyticsCloud.workspaceFriendlyUrl ||
+								BLANK_TEXT,
 							'[%AC_WORKSPACE_NAME]':
 								analyticsCloud.workspaceName,
 							'[%PROJECT_ID]': project?.code,
@@ -251,6 +235,7 @@ const SetupAnalyticsCloudPage = ({
 					);
 				}
 			}
+
 			handlePage(true);
 		}
 	};

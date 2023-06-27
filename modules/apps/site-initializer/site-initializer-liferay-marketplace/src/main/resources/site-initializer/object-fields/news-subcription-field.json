@@ -1,0 +1,16 @@
+{
+	"object-fields": [
+		{
+			"DBType": "Boolean",
+			"externalReferenceCode": "NEWS-SUBSCRIPTION",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "News Subscription"
+			},
+			"name": "newsSubscription",
+			"required": false
+		}
+	],
+	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:User$]"
+}

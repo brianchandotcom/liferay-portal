@@ -35,7 +35,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-164731. Verify that Reports page is not visible on top menu for Employee users."
+	@description = "LPS-164731 - Reports bar Should not be visible on top menu for Employee users."
 	@priority = 4
 	test EmployeeCanNotSeeReportPage {
 		task ("Given the employee user are logged") {
@@ -53,9 +53,9 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-164731. Verify that user can access Reports page through 'Reports' Tab on top menu and it is visible to EVP Finance"
+	@description = "LPS-164731 - Finance user should be able to see the Report card through 'Reports' Tab on top menu"
 	@priority = 5
-	test FinanceCanAccessReportPage {
+	test ReportCardShouldBeVisibleForFinanceUsers {
 		task ("Given the finance user are logged") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "finance@liferay.com",
@@ -73,9 +73,9 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-164731. Verify that user can access Reports page through 'Reports' Tab on top menu and it is visible to EVP Manager"
+	@description = "LPS-164731 - Manager user should be able to see the Report card through 'Reports' Tab on top menu"
 	@priority = 5
-	test ManagerCanAccessReportPage {
+	test ReportCardShouldBeVisibleForManagerUsers {
 		task ("Given the manager user are logged") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "manager@liferay.com",

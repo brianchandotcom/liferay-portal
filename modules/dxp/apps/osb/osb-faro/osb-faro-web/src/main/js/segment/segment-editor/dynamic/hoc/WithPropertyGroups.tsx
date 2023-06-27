@@ -229,6 +229,6 @@ export const withPropertyGroups = WrappedComponent =>
 	};
 
 export default compose(
-	withRequest(fetchPropertyGroups, mapResultToProps, {fadeIn: false}),
+	withRequest(fetchPropertyGroups, mapResultToProps),
 	withPropertyGroups
 );

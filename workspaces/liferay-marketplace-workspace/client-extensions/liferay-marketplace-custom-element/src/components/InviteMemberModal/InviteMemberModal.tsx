@@ -22,9 +22,9 @@ import './inviteMemberModal.scss';
 import {DisplayType} from '@clayui/alert';
 import ClayIcon from '@clayui/icon';
 
-import {Liferay} from '../../liferay/liferay';
-import {getAccountGroup, getMyUserAccount} from '../../utils/api';
-import {createPassword} from '../../utils/createPassword';
+import { Liferay } from "../../liferay/liferay";
+import { getMyUserAccount } from "../../utils/api";
+import { createPassword } from "../../utils/createPassword";
 import {
 	addAdditionalInfo,
 	addAdminRegularRole,
@@ -152,20 +152,6 @@ export function InviteMemberModal({
 			return;
 		}
 
-		const accountGroups = await getAccountGroup(selectedAccount.id);
-		const accountGroupERC =
-			accountGroups && accountGroups[0]?.externalReferenceCode;
-
-		if (!accountGroupERC) {
-			renderToast(
-				'To invite a member, the account must be associated with an accountGroup',
-				'',
-				'danger'
-			);
-
-			return onClose();
-		}
-
 		// eslint-disable-next-line prefer-const
 		let [user, myUser] = await Promise.all([
 			getUserByEmail(formFields.email),
@@ -199,8 +185,8 @@ export function InviteMemberModal({
 
 		await addAdditionalInfo({
 			acceptInviteStatus: false,
-			accountGroupERC,
 			accountName: selectedAccount.name,
+			dashboard: paths[paths.length-1],
 			emailOfMember: formFields.email,
 			inviteURL: `${Liferay.ThemeDisplay.getPortalURL()}/c/login?redirect=${getSiteURL()}/${finalPath}`,
 			inviterName: myUser.givenName,

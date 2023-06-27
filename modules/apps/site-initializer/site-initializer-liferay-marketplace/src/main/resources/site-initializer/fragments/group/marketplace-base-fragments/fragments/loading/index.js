@@ -15,10 +15,7 @@
 
 const baseURL = Liferay.ThemeDisplay.getPortalURL();
 const myUserId = Liferay.ThemeDisplay.getUserId();
-const accountGroups = {
-	'MKP-CUSTOMERS-GROUP': 'customer-dashboard',
-	'MKP-PUBLISHERS-GROUP': 'publisher-dashboard',
-};
+
 
 const fetcher = async (url, {method = 'GET', ...options} = {}) => {
 	const response = await fetch(`${baseURL}${url}`, {
@@ -142,7 +139,7 @@ const main = async () => {
 					);
 
 					window.location.href = `${Liferay.ThemeDisplay.getPortalURL()}${getSiteURL()}/${
-						accountGroups[userAdditionalInfo.accountGroupERC] ??
+						userAdditionalInfo.dashboard ??
 						'home'
 					}`;
 				}

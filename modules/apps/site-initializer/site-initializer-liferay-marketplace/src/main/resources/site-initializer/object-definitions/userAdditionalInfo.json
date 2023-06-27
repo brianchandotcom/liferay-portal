@@ -107,9 +107,9 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Account Group ERC"
+				"en_US": "Dashboard"
 			},
-			"name": "accountGroupERC",
+			"name": "dashboard",
 			"required": false,
 			"type": "String"
 		},

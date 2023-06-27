@@ -565,7 +565,7 @@ definition {
 	@description = "This is a test for LPS-177286. Able to enable and disable the propagation of Contributed Fragments on the instance startup."
 	@priority = 4
 	test ManuallyPropagateChanges {
-		property test.name.skip.portal.instance = "FragmentsAdmin#ManuallyPropagateChanges";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given a site administrator accesses to the Page Fragments configuration of Instance Settings") {
 			PortalSettings.gotoConfiguration(
@@ -963,7 +963,7 @@ definition {
 	@description = "This is a test for LPS-177286. View error alert and feedback message when failing to Propagate Contributed Fragments Changes During Deploy Process Automatically."
 	@priority = 3
 	test ViewErrorMessageWhenFailToPropagateChanges {
-		property test.name.skip.portal.instance = "FragmentsAdmin#ViewErrorMessageWhenFailToPropagateChanges";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given a site administrator unchecks the Propagate Default Fragments Changes During Deploy Process Automatically") {
 			PortalSettings.gotoConfiguration(

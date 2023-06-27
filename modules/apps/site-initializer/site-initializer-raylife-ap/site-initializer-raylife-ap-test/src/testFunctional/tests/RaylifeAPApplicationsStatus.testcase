@@ -34,11 +34,11 @@ definition {
 	tearDown {
 		User.firstLoginPG();
 
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		Raylife.tearDownCP();
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -49,7 +49,7 @@ definition {
 	@description = "Story ID: LPS-159688 - Verify if the details of the Summary on the Bound application view appears."
 	@priority = 4
 	test AssertCanOpenBoundAppDetails {
-		property test.name.skip.portal.instance = "RaylifeAPApplicationsStatus#AssertCanOpenBoundAppDetails";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -152,7 +152,7 @@ definition {
 	@description = "Story ID: LPS-154598 | Test Summary: Verify that when an incomplete application is saved, through Raylife D2C, it appears in the Application List, on Raylife AP."
 	@priority = 5
 	test AssertIncompleteD2CApplicationAppearsInAP {
-		property test.name.skip.portal.instance = "RaylifeAPApplicationsStatus#AssertIncompleteD2CApplicationAppearsInAP";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -193,7 +193,7 @@ definition {
 	@description = "Story ID:LPS-154587 | Test Summary:  Verify that the number in the center of the graph is equal to the total amount of registered status"
 	@priority = 4
 	test AssertNumberInCenterGraphIsEqualNumberOfStatus {
-		property test.name.skip.portal.instance = "RaylifeAPApplicationsStatus#AssertNumberInCenterGraphIsEqualNumberOfStatus";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -273,7 +273,7 @@ definition {
 	@description = "Story ID: LPS-154592 | Test Summary: Check if when making an incomplete Flow until the section Business in the Raylife d2c, the status 'Open' appears in the Applications status of Raylife ap"
 	@priority = 4
 	test AssertStatusOpenAppearsInApplicationsStatus {
-		property test.name.skip.portal.instance = "RaylifeAPApplicationsStatus#AssertStatusOpenAppearsInApplicationsStatus";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -312,7 +312,7 @@ definition {
 	@priority = 4
 	test AssertStatusQuotedAppearsInApplicationsStatus {
 		property solutions.acceptance = "true";
-		property test.name.skip.portal.instance = "RaylifeAPApplicationsStatus#AssertStatusQuotedAppearsInApplicationsStatus";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -353,8 +353,8 @@ definition {
 	@description = "Story ID: LPS-159688 | Test Summary: Verify if the details of the Summary on the Bound application view appears"
 	@priority = 4
 	test AssertThatTheUserCanOpenAppDetailsInBoundApplications {
-		property test.name.skip.portal.instance = "RaylifeAPApplicationsStatus#AssertThatTheUserCanOpenAppDetailsInBoundApplications";
-		property test.name.skip.portal.instance = "RaylifeAPApplicationsStatus#AssertThatTheUserCanOpenAppDetailsInBoundApplications";
+		property test.liferay.virtual.instance = "false";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 

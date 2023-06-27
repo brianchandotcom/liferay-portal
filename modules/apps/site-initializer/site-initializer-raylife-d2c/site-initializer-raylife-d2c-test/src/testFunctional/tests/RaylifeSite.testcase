@@ -17,11 +17,11 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		Raylife.tearDownCP();
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -33,7 +33,7 @@ definition {
 	@priority = 5
 	test AllObjectsIsCreatedForRaylifeD2c {
 		property solutions.acceptance = "true";
-		property test.name.skip.portal.instance = "RaylifeSite#AllObjectsIsCreatedForRaylifeD2c";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -49,7 +49,7 @@ definition {
 	@description = "Verify if Raylife can be created"
 	@priority = 5
 	test CanRaylifeBeCreated {
-		property test.name.skip.portal.instance = "RaylifeSite#CanRaylifeBeCreated";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -65,7 +65,7 @@ definition {
 	@description = "LPS-142178 - Verify if when Raylife is created, a Catalog in Commerce will be created for it as well."
 	@priority = 5
 	test CatalogForRaylifeIsCreated {
-		property test.name.skip.portal.instance = "RaylifeSite#CatalogForRaylifeIsCreated";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -91,7 +91,7 @@ definition {
 	@description = "LPS-142180 - Verify if, when Raylife is created, Products related to Raylife are also created."
 	@priority = 5
 	test ProductsForRaylifeIsCreated {
-		property test.name.skip.portal.instance = "RaylifeSite#ProductsForRaylifeIsCreated";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 

@@ -28,9 +28,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -102,7 +102,7 @@ definition {
 
 	@priority = 4
 	test StagingBlogsRolesWorkflow {
-		property test.name.skip.portal.instance = "CPRolesPGStaging#StagingBlogsRolesWorkflow";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: Three users are created") {
 			JSONUser.addUser(

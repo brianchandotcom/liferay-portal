@@ -1311,7 +1311,7 @@ definition {
 	@description = "This is a test for LPS-129536. View the configuration settings of widget after execute Clean Up Orphaned Theme Portlet Preferences."
 	@priority = 4
 	test ViewConfigurationSettingsOfWidgetAfterCleanUpOrphanedThemePortletPreferences {
-		property test.name.skip.portal.instance = "ContentPages#ViewConfigurationSettingsOfWidgetAfterCleanUpOrphanedThemePortletPreferences";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add a web content") {
 			JSONWebcontent.addWebContent(

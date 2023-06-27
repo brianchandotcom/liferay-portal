@@ -19,7 +19,7 @@ definition {
 	@priority = 3
 	test ActivateOfflinePaymentMethodsAndAddDescription {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CommercePaymentMethod#ActivateOfflinePaymentMethodsAndAddDescription";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given a Channel") {
 			CommerceJSONChannelsAPI._addChannel(
@@ -61,7 +61,7 @@ definition {
 	@priority = 5
 	test AddEditAndDeleteOfflinePaymentMethod {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CommercePaymentMethod#AddEditAndDeleteOfflinePaymentMethod";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given the System Integrator navigates to the Offline Payment Method Keys configuration under the Payment category in System Settings") {
 			SystemSettings.openSystemSettingsAdmin();
@@ -125,7 +125,7 @@ definition {
 	@priority = 5
 	test AnOfflinePaymentMethodCanBeUsedForAnOrder {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CommercePaymentMethod#AnOfflinePaymentMethodCanBeUsedForAnOrder";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given a Minium site with a buyer user") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -188,7 +188,7 @@ definition {
 	@priority = 5
 	test AssertAndEditNewPaymentMethodInOrdersPage {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CommercePaymentMethod#AssertAndEditNewPaymentMethodInOrdersPage";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given a Minium site with a buyer user") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -284,7 +284,7 @@ definition {
 	@priority = 3
 	test CreateOrderWithMultipleActivePaymentMethods {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CommercePaymentMethod#CreateOrderWithMultipleActivePaymentMethods";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given a Minium site with a buyer user") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");

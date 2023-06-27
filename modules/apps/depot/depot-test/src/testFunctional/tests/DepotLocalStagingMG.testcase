@@ -36,9 +36,9 @@ definition {
 
 		Depot.disableStagingDepot(depotName = "Test Depot Name");
 
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -662,7 +662,7 @@ definition {
 	@description = "This test covers LPS-154424. It ensures that an external video with a custom friendlyURL can be displayed properly in the Media Gallery Display widget after its friendlyURL is edited and published from an asset library. Skip the instance for performance improvement."
 	@priority = 4
 	test CanViewExternalVideoAfterFriendlyURLIsUpdated {
-		property test.name.skip.portal.instance = "DepotLocalStagingMG#CanViewExternalVideoAfterFriendlyURLIsUpdated";
+		property test.liferay.virtual.instance = "false";
 
 		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
 

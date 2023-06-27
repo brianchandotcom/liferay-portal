@@ -19,9 +19,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -153,7 +153,7 @@ definition {
 		property databases.size = "1";
 		property minimum.slave.ram = "24";
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "PGStaging#ActivateRemoteStaging";
+		property test.liferay.virtual.instance = "false";
 
 		Staging.remoteStagingSetUp(
 			remotePort = 9080,
@@ -765,7 +765,7 @@ definition {
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
 		property databases.size = "1";
 		property minimum.slave.ram = "24";
-		property test.name.skip.portal.instance = "PGStaging#PublishWCWithPagesVariationViaRemoteStaging";
+		property test.liferay.virtual.instance = "false";
 
 		Staging.remoteStagingSetUp(
 			pageVersioningEnabled = "true",

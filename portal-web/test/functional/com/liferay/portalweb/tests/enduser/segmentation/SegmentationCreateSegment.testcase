@@ -25,9 +25,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -393,7 +393,7 @@ definition {
 	@uitest
 	test AddSegmentByOrganizationRegion {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "SegmentationCreateSegment#AddSegmentByOrganizationRegion";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add user") {
 			JSONUser.addUser(
@@ -1807,7 +1807,7 @@ definition {
 	@uitest
 	test AddSegmentByUserSiteOrganizationRole {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "SegmentationCreateSegment#AddSegmentByUserSiteOrganizationRole";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add user") {
 			JSONUser.addUser(
@@ -2048,7 +2048,7 @@ definition {
 	@priority = 4
 	test AddSegmentUsingCustomFields {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "SegmentationCreateSegment#AddSegmentUsingCustomFields";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add custom field in User") {
 			ApplicationsMenu.gotoPortlet(
@@ -2542,7 +2542,7 @@ definition {
 	@description = "LPS-130919 Given the Session Property Vocabularies in Instance Settings When the user is adding a vocabulary to a session property Then the breadcrumb to go to Segments, or Instance Settings is available"
 	@priority = 3
 	test InstanceSettingsSessionPropertyVocabulariesBreadcrumb {
-		property test.name.skip.portal.instance = "SegmentationCreateSegment#InstanceSettingsSessionPropertyVocabulariesBreadcrumb";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Go to Instance Settings > Segments > Session Property Vocabulary") {
 			PortalSettings.openInstanceSettingsAdmin();
@@ -2573,7 +2573,7 @@ definition {
 	@description = "LPS-130919 Given the adding a vocabulary to a session property view When the user clicks on Cancel button Then the user is lead to the main tab Session Property Vocabularies"
 	@priority = 3
 	test InstanceSettingsSessionPropertyVocabulariesCancelButton {
-		property test.name.skip.portal.instance = "SegmentationCreateSegment#InstanceSettingsSessionPropertyVocabulariesCancelButton";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Go to Instance Settings > Segments > Session Property Vocabulary") {
 			PortalSettings.openInstanceSettingsAdmin();
@@ -2603,7 +2603,7 @@ definition {
 	@priority = 5
 	test InstanceSettingsSessionPropertyVocabularyInSegmentsEditor {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "SegmentationCreateSegment#InstanceSettingsSessionPropertyVocabularyInSegmentsEditor";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Set Session Property Vocabulary") {
 			Segmentation.setVocabularySessionProperty(
@@ -2668,7 +2668,7 @@ definition {
 	@priority = 4
 	test KeepInfomationOfDeleteVocabularyInSegment {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "SegmentationCreateSegment#KeepInfomationOfDeleteVocabularyInSegment";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Set Session Property Vocabulary") {
 			Segmentation.setVocabularySessionProperty(
@@ -3311,7 +3311,7 @@ definition {
 	@priority = 4
 	test VocabulariesListedInSystemSettingsSegments {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "SegmentationCreateSegment#VocabulariesListedInSystemSettingsSegments";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add two vocabularies to global site") {
 			for (var n : list "1,2") {

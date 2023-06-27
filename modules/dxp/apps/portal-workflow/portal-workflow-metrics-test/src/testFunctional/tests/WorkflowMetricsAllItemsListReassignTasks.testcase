@@ -9,7 +9,7 @@ definition {
 	setUp {
 		TestCase.setUpPortalInstance();
 
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		User.firstLoginPG();
 
@@ -22,9 +22,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
@@ -271,7 +271,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = 3
 	test FilterOptionsAreAlphabeticallyOrdered {
-		property test.name.skip.portal.instance = "WorkflowMetricsAllItemsListReassignTasks#FilterOptionsAreAlphabeticallyOrdered";
+		property test.liferay.virtual.instance = "false";
 
 		WorkflowMetrics.createUsersGroovy(numberOfUsers = 1);
 
@@ -608,7 +608,7 @@ definition {
 	@priority = 3
 	test UserCanFilterInstanceWithPendingTasksInParallelByStep {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "WorkflowMetricsAllItemsListReassignTasks#UserCanFilterInstanceWithPendingTasksInParallelByStep";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",

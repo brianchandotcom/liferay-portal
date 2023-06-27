@@ -23,9 +23,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -1000,7 +1000,7 @@ definition {
 	@description = "LPS-135554 This test asserts that the Web Content Article Structures should appear after uncheck Search With Index configuration."
 	@priority = 4
 	test WebContentArticleStructuresCanAppearAfterUncheckingSearchWithIndexConfiguration {
-		property test.name.skip.portal.instance = "AssetPublisher#WebContentArticleStructuresCanAppearAfterUncheckingSearchWithIndexConfiguration";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Uncheck Search with Index Configuration") {
 			APNavigator.openToConfigInSystemSettings(portlet = "Asset Publisher");

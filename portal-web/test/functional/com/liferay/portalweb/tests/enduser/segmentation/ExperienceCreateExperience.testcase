@@ -40,9 +40,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -941,7 +941,7 @@ definition {
 	@priority = 5
 	test AddNewExperienceOrganizationRegionSegment {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ExperienceCreateExperience#AddNewExperienceOrganizationRegionSegment";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add a Organization via JSONWS") {
 			JSONOrganization.addOrganization(
@@ -1104,7 +1104,7 @@ definition {
 	@priority = 5
 	test AddNewExperienceOrganizationTypeSegment {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ExperienceCreateExperience#AddNewExperienceOrganizationTypeSegment";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Configure organization type") {
 			ApplicationsMenu.gotoPortlet(
@@ -1599,7 +1599,7 @@ definition {
 	@priority = 5
 	test AddNewExperienceSessionHostnameSegment {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ExperienceCreateExperience#AddNewExperienceSessionHostnameSegment";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Create a new Portal Instance") {
 			HeadlessPortalInstanceAPI.addPortalInstance(
@@ -1716,7 +1716,7 @@ definition {
 	@priority = 4
 	test AddNewExperienceSessionIPGeocoderCountry {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ExperienceCreateExperience#AddNewExperienceSessionIPGeocoderCountry";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add a session IP Geocoder Country segment") {
 			JSONSegmentsentry.addSegment(
@@ -2783,7 +2783,7 @@ definition {
 	@priority = 5
 	test AddNewExperienceUserSiteOrganizationRoleSegment {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ExperienceCreateExperience#AddNewExperienceUserSiteOrganizationRoleSegment";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Assign userea1 to Test Site group") {
 			JSONGroup.assignUserToGroup(
@@ -3076,7 +3076,7 @@ definition {
 	@priority = 5
 	test AddNewExperienceUserUserGroupSegment {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ExperienceCreateExperience#AddNewExperienceUserUserGroupSegment";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Create an user group via JSONWS") {
 			JSONUserGroup.addUserGroup(
@@ -5215,7 +5215,7 @@ definition {
 	@priority = 4
 	test RemoveFragmentAndChangeBackToDefaultExperience {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ExperienceCreateExperience#RemoveFragmentAndChangeBackToDefaultExperience";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add a Web Content via JSONWS") {
 			JSONWebcontent.addWebContent(

@@ -1853,7 +1853,7 @@ definition {
 	@priority = 3
 	test CannotSetSpecialCharacterAsProductURLSeparators {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CommerceProductDetails#CannotSetSpecialCharacterAsProductURLSeparators";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given a Minium site with a buyer user") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");

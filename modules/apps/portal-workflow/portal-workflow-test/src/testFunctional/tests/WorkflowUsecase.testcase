@@ -12,9 +12,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -298,7 +298,7 @@ definition {
 	@priority = 5
 	test AddDDLRecordWithDoubleApproverDefinition {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "WorkflowUsecase#AddDDLRecordWithDoubleApproverDefinition";
+		property test.liferay.virtual.instance = "false";
 		property testray.component.names = "Training";
 
 		ApplicationsMenu.gotoPortlet(
@@ -466,7 +466,7 @@ definition {
 	@priority = 4
 	test AddWebContentWithCategorySpecificDefinition {
 		property portal.upstream = "quarantine";
-		property test.name.skip.portal.instance = "WorkflowUsecase#AddWebContentWithCategorySpecificDefinition";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -799,7 +799,7 @@ definition {
 	@priority = 5
 	test UnpublishAndDeleteUploadedDefinition {
 		property portal.acceptance = "quarantine";
-		property test.name.skip.portal.instance = "WorkflowUsecase#UnpublishAndDeleteUploadedDefinition";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -927,7 +927,7 @@ definition {
 	@ignore = "true"
 	@priority = 4
 	test ViewInvalidDefinitionAlert {
-		property test.name.skip.portal.instance = "WorkflowUsecase#ViewInvalidDefinitionAlert";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",

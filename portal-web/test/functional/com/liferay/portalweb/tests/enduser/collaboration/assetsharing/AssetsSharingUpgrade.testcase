@@ -24,7 +24,7 @@ definition {
 	test CanViewSharedAssetsArchive72101 {
 		property data.archive.type = "data-archive-asset-sharing";
 		property portal.version = "7.2.10.1";
-		property test.name.skip.portal.instance = "AssetsSharingUpgrade#CanViewSharedAssetsArchive72101";
+		property test.liferay.virtual.instance = "false";
 
 		ValidateAssetSharingUpgrade.viewSharedDocument(dmDocumentTitle = "DM Document Title 1");
 

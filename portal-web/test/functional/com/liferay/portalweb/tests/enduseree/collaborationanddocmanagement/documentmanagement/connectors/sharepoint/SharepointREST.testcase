@@ -119,9 +119,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
@@ -129,7 +129,7 @@ definition {
 	@priority = 4
 	@refactordone
 	test CanCheckinDocument {
-		property test.name.skip.portal.instance = "SharepointREST#CanCheckinDocument";
+		property test.liferay.virtual.instance = "false";
 
 		DMRepository.cleanRepository(dmDocumentTitle = "Document_3.txt");
 
@@ -173,7 +173,7 @@ definition {
 	@priority = 4
 	@refactordone
 	test CanDeleteDocumentInSubfolder {
-		property test.name.skip.portal.instance = "SharepointREST#CanDeleteDocumentInSubfolder";
+		property test.liferay.virtual.instance = "false";
 
 		DMRepository.cleanRepository(dmFolderName = "DM Folder3 Name");
 
@@ -226,7 +226,7 @@ definition {
 	@priority = 4
 	@refactordone
 	test CanDeleteSubfolder {
-		property test.name.skip.portal.instance = "SharepointREST#CanDeleteSubfolder";
+		property test.liferay.virtual.instance = "false";
 
 		DMRepository.cleanRepository(dmFolderName = "DM Folder Name");
 
@@ -251,7 +251,7 @@ definition {
 	@description = "This is a test for LPS-182965. It checks that a file can be downloaded from Sharepoint."
 	@priority = 4
 	test CanDownloadFile {
-		property test.name.skip.portal.instance = "SharepointREST#CanDownloadFile";
+		property test.liferay.virtual.instance = "false";
 
 		DMDocument.addCP(
 			dmDocumentFile = "Commerce_Black.jpg",
@@ -270,7 +270,7 @@ definition {
 	@refactordone
 	test CanEditDocumentFile {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "SharepointREST#CanEditDocumentFile";
+		property test.liferay.virtual.instance = "false";
 
 		DMRepository.cleanRepository(dmDocumentTitle = "Document_3.doc");
 
@@ -320,7 +320,7 @@ definition {
 	@refactordone
 	test CanEnterRepository {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "SharepointREST#CanEnterRepository";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openSpecificURL(url = "https://localhost:8443/group/guest/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet");
 
@@ -373,7 +373,7 @@ definition {
 	@priority = 4
 	@refactordone
 	test CanMoveCheckedoutDocumentToFolder {
-		property test.name.skip.portal.instance = "SharepointREST#CanMoveCheckedoutDocumentToFolder";
+		property test.liferay.virtual.instance = "false";
 
 		DMRepository.cleanRepository(dmFolderName = "Sharepoint Subfolder");
 
@@ -437,7 +437,7 @@ definition {
 	@priority = 4
 	@refactordone
 	test CanMoveDocumentToHome {
-		property test.name.skip.portal.instance = "SharepointREST#CanMoveDocumentToHome";
+		property test.liferay.virtual.instance = "false";
 
 		DMRepository.cleanRepository(dmDocumentTitle = "Document_1.odt");
 
@@ -466,7 +466,7 @@ definition {
 	@priority = 4
 	test CannotCopyAssetsFromRepository {
 		property custom.properties = "feature.flag.LPS-182512=true";
-		property test.name.skip.portal.instance = "SharepointREST#CannotCopyAssetsFromRepository";
+		property test.liferay.virtual.instance = "false";
 
 		DMDocument.addCP(
 			dmDocumentFile = "Document_1.jpg",
@@ -486,7 +486,7 @@ definition {
 	@description = "This is a test for LPS-136821. It checks that a repository can be published."
 	@priority = 3
 	test CanPublishRepository {
-		property test.name.skip.portal.instance = "SharepointREST#CanPublishRepository";
+		property test.liferay.virtual.instance = "false";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -520,7 +520,7 @@ definition {
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
 		property databases.size = "1";
 		property minimum.slave.ram = "24";
-		property test.name.skip.portal.instance = "SharepointREST#CanRemotePublishRepositoryInDepot";
+		property test.liferay.virtual.instance = "false";
 
 		User.logoutPG();
 
@@ -642,7 +642,7 @@ definition {
 	@priority = 4
 	@refactordone
 	test CanSearchForDocumentFromHome {
-		property test.name.skip.portal.instance = "SharepointREST#CanSearchForDocumentFromHome";
+		property test.liferay.virtual.instance = "false";
 
 		DMRepository.cleanRepository(dmDocumentTitle = "Document_3.odt");
 
@@ -664,7 +664,7 @@ definition {
 	@priority = 4
 	@refactordone
 	test CanViewDocumentAsGuest {
-		property test.name.skip.portal.instance = "SharepointREST#CanViewDocumentAsGuest";
+		property test.liferay.virtual.instance = "false";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -723,7 +723,7 @@ definition {
 	@priority = 4
 	@refactordone
 	test CanViewEditedCheckedoutDocument {
-		property test.name.skip.portal.instance = "SharepointREST#CanViewEditedCheckedoutDocument";
+		property test.liferay.virtual.instance = "false";
 
 		DMRepository.cleanRepository(dmDocumentTitle = "Document_1.xls");
 
@@ -769,7 +769,7 @@ definition {
 	@priority = 4
 	@refactordone
 	test OriginalFileExtensionIsPreservedAfterInvalidChange {
-		property test.name.skip.portal.instance = "SharepointREST#OriginalFileExtensionIsPreservedAfterInvalidChange";
+		property test.liferay.virtual.instance = "false";
 
 		DMRepository.cleanRepository(dmDocumentTitle = "Document_1.docx");
 

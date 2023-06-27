@@ -12,9 +12,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -29,7 +29,7 @@ definition {
 	@description = "This test ensures that user is not able to upload the mimetypes files that bigger than the limit set when the admin sets a size limit for multiple mimetypes."
 	@priority = 4
 	test CanLimitMultipleMimeTypesSize {
-		property test.name.skip.portal.instance = "DMMimeTypeLimits#CanLimitMultipleMimeTypesSize";
+		property test.liferay.virtual.instance = "false";
 
 		DMDocument.updateMimeTypeSizeLimit(
 			maximumFileSizeValue = 40960,
@@ -67,7 +67,7 @@ definition {
 	@e2etest
 	@priority = 4
 	test CanLimitSizeOnlyInCurrentSite {
-		property test.name.skip.portal.instance = "DMMimeTypeLimits#CanLimitSizeOnlyInCurrentSite";
+		property test.liferay.virtual.instance = "false";
 
 		HeadlessSite.addSite(siteName = "Site Name");
 
@@ -170,7 +170,7 @@ definition {
 	@description = "This test ensures that users can not save the size limits settings when one of the fields is empty."
 	@priority = 3
 	test CannotSaveFileSizeLimitsWithEmptyValue {
-		property test.name.skip.portal.instance = "DMMimeTypeLimits#CannotSaveFileSizeLimitsWithEmptyValue";
+		property test.liferay.virtual.instance = "false";
 
 		DMDocument.updateMimeTypeSizeLimit(
 			instanceSettings = "true",
@@ -204,7 +204,7 @@ definition {
 	@description = "This test ensures that an error alert will be displayed when saving a new file size limits settings with an invalid value."
 	@priority = 3
 	test CannotSaveFileSizeLimitsWithInvalidValue {
-		property test.name.skip.portal.instance = "DMMimeTypeLimits#CannotSaveFileSizeLimitsWithInvalidValue";
+		property test.liferay.virtual.instance = "false";
 
 		DMDocument.updateMimeTypeSizeLimit(
 			maximumFileSizeValue = 10240,
@@ -237,7 +237,7 @@ definition {
 	@description = "This test ensures that an error alert will be displayed when updating an existing file size limits settings with an invalid value."
 	@priority = 3
 	test CannotUpdateFileSizeLimitsWithInvalidValue {
-		property test.name.skip.portal.instance = "DMMimeTypeLimits#CannotUpdateFileSizeLimitsWithInvalidValue";
+		property test.liferay.virtual.instance = "false";
 
 		DMDocument.updateMimeTypeSizeLimit(
 			instanceSettings = "true",
@@ -283,7 +283,7 @@ definition {
 	@description = "This test ensures that the configured file size limites can be removed."
 	@priority = 3
 	test CanRemoveConfiguredFileSizeLimits {
-		property test.name.skip.portal.instance = "DMMimeTypeLimits#CanRemoveConfiguredFileSizeLimits";
+		property test.liferay.virtual.instance = "false";
 
 		DMDocument.updateMimeTypeSizeLimit(
 			maximumFileSizeValue = 10240,
@@ -305,7 +305,7 @@ definition {
 	@e2etest
 	@priority = 4
 	test InstanceTakesEffectOverSystemLimit {
-		property test.name.skip.portal.instance = "DMMimeTypeLimits#InstanceTakesEffectOverSystemLimit";
+		property test.liferay.virtual.instance = "false";
 
 		DMDocument.updateMimeTypeSizeLimit(
 			maximumFileSizeValue = 30720,
@@ -337,7 +337,7 @@ definition {
 	@description = "This test ensures that when setting the multiple mime type size limit at site and instance levels, the lower limit from the site will take effect."
 	@priority = 3
 	test SiteSizeLimitTakesEffectOverInstanceSettingsWithMultipleLimits {
-		property test.name.skip.portal.instance = "DMMimeTypeLimits#SiteSizeLimitTakesEffectOverInstanceSettingsWithMultipleLimits";
+		property test.liferay.virtual.instance = "false";
 
 		DMDocument.updateMimeTypeSizeLimit(
 			instanceSettings = "true",
@@ -379,7 +379,7 @@ definition {
 	@e2etest
 	@priority = 4
 	test SiteSizeLimitTakesEffectOverSystemAndInstanceSettings {
-		property test.name.skip.portal.instance = "DMMimeTypeLimits#SiteSizeLimitTakesEffectOverSystemAndInstanceSettings";
+		property test.liferay.virtual.instance = "false";
 
 		DMDocument.updateMimeTypeSizeLimit(
 			maximumFileSizeValue = 51200,

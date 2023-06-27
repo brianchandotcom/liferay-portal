@@ -28,9 +28,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -147,7 +147,7 @@ definition {
 	@priority = 4
 	test CanCreateCellRendererViaOSGI {
 		property fdsCellRenderer.client.extension.created = "true";
-		property test.name.skip.portal.instance = "ClientExtensionOSGI#CanCreateCellRendererViaApi";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given creating a Cell Renderer via OSGI") {
 			ClientExtension.createGlobalVariableClientExtensionType(type = "fdsCellRenderer");

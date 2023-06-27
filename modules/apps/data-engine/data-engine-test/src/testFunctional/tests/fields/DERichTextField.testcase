@@ -16,9 +16,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -340,7 +340,7 @@ definition {
 	@description = "This is a test for LRQA-68646. This test verifies that Default Searchable property is Disable when System Setting is left unchecked"
 	@priority = 3
 	test CanSetDefaultSearchablePropertyToDisable {
-		property test.name.skip.portal.instance = "DERichTextField#CanSetDefaultSearchablePropertyToDisable";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -374,7 +374,7 @@ definition {
 	@description = "This is a test for LRQA-68646. This test verifies that Default Searchable property is Text when System Setting is checked"
 	@priority = 3
 	test CanSetDefaultSearchablePropertyToText {
-		property test.name.skip.portal.instance = "DERichTextField#CanSetDefaultSearchablePropertyToText";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",

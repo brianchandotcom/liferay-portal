@@ -14,9 +14,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
@@ -116,7 +116,7 @@ definition {
 	test AssertSuggestionsCannotOfferInvalidWordsAsSuggestion {
 		property custom.properties = "locales.enabled=de_DE,en_US${line.separator}locales=de_DE,en_US${line.separator}index.search.spell.checker.dictionary[de_DE]=spellchecker/dictionary_de_DE.txt${line.separator}index.search.spell.checker.supported.locales=en_US,es_ES,de_DE";
 		property index.search.spell.checker.enabled = "true";
-		property test.name.skip.portal.instance = "SolrSearch#AssertSuggestionsCannotOfferInvalidWordsAsSuggestion";
+		property test.liferay.virtual.instance = "false";
 
 		JSONWebcontent.addBasicWebContentLocalized(
 			contentMap = "en_US:WC Content,de_DE:ächten angreifen anmarschieren",
@@ -1416,7 +1416,7 @@ definition {
 
 	@priority = 5
 	test ViewSearchResultDetails {
-		property test.name.skip.portal.instance = "SolrSearch#ViewSearchResultDetails";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",

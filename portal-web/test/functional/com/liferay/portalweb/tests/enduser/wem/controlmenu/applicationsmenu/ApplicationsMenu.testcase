@@ -12,9 +12,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -198,7 +198,7 @@ definition {
 	@uitest
 	test ViewProductMenuWhenDisableApplicationsMenuInDefaultInstance {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ApplicationsMenu#ViewProductMenuWhenDisableApplicationsMenuInDefaultInstance";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Assert Applications Menu icon is shown in Control Menu by default") {
 			AssertElementPresent(locator1 = "ControlMenu#APPLICATIONS_MENU_ICON");
@@ -251,7 +251,7 @@ definition {
 	@priority = 4
 	@uitest
 	test ViewProductMenuWhenDisableApplicationsMenuInVirtualInstance {
-		property test.name.skip.portal.instance = "ApplicationsMenu#ViewProductMenuWhenDisableApplicationsMenuInVirtualInstance";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add a virtual instance") {
 			HeadlessPortalInstanceAPI.addPortalInstance(

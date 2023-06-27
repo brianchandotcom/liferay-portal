@@ -34,9 +34,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -53,7 +53,7 @@ definition {
 	@description = "This test ensures that the title and the file name will be renamed when the created Google doc title duplicates the existing document file name."
 	@priority = 4
 	test AddGoogleEntryWithDuplicateFileName {
-		property test.name.skip.portal.instance = "GoogleDrive#AddGoogleEntryWithDuplicateFileName";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -117,7 +117,7 @@ definition {
 	@description = "This test ensures that the title and the file name will be renamed when the created Google doc title duplicates the existing document title."
 	@priority = 4
 	test AddGoogleEntryWithDuplicateTitle {
-		property test.name.skip.portal.instance = "GoogleDrive#AddGoogleEntryWithDuplicateTitle";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -181,7 +181,7 @@ definition {
 	@description = "This test ensures that a Google Doc is autotagged once checked in."
 	@priority = 4
 	test AutoTagGoogleDoc {
-		property test.name.skip.portal.instance = "GoogleDrive#AutoTagGoogleDoc";
+		property test.liferay.virtual.instance = "false";
 
 		AutoTagging.enableOpenNLP(
 			assetType = "Document",
@@ -214,7 +214,7 @@ definition {
 	@description = "This test ensures no document is generated if a user cancels creating a Google Doc."
 	@priority = 5
 	test CancelGoogleDocCreation {
-		property test.name.skip.portal.instance = "GoogleDrive#CancelGoogleDocCreation";
+		property test.liferay.virtual.instance = "false";
 
 		DMNavigator.openToConfigInSystemSettings(portlet = "Google Drive");
 
@@ -239,7 +239,7 @@ definition {
 	@description = "This test ensures the title of a document is not changed if a user cancels editing a Google Doc."
 	@priority = 5
 	test CancelGoogleDocEdit {
-		property test.name.skip.portal.instance = "GoogleDrive#CancelGoogleDocEdit";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -273,7 +273,7 @@ definition {
 	@description = "This test ensures no document is generated if a user cancels creating a Google Doc."
 	@priority = 5
 	test CancelGoogleSheetCreation {
-		property test.name.skip.portal.instance = "GoogleDrive#CancelGoogleSheetCreation";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -292,7 +292,7 @@ definition {
 	@description = "This test ensures the title of a document is not changed if a user cancels editing a Google Sheet."
 	@priority = 5
 	test CancelGoogleSheetEdit {
-		property test.name.skip.portal.instance = "GoogleDrive#CancelGoogleSheetEdit";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -326,7 +326,7 @@ definition {
 	@description = "This test ensures no document is generated if a user cancels creating a Google Doc."
 	@priority = 5
 	test CancelGoogleSlideCreation {
-		property test.name.skip.portal.instance = "GoogleDrive#CancelGoogleSlideCreation";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -345,7 +345,7 @@ definition {
 	@description = "This test ensures the title of a document is not changed if a user cancels editing a Google Slide."
 	@priority = 5
 	test CancelGoogleSlideEdit {
-		property test.name.skip.portal.instance = "GoogleDrive#CancelGoogleSlideEdit";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -380,7 +380,7 @@ definition {
 	@priority = 5
 	test CanCopyGoogleDocFromDepotToSite {
 		property custom.properties = "feature.flag.LPS-182512=true";
-		property test.name.skip.portal.instance = "GoogleDrive#CanCopyGoogleDocFromDepotToSite";
+		property test.liferay.virtual.instance = "false";
 
 		HeadlessSite.addSite(siteName = "Site Name");
 
@@ -420,7 +420,7 @@ definition {
 	@priority = 5
 	test CanCopyGoogleDocToOtherFolderInDepot {
 		property custom.properties = "feature.flag.LPS-182512=true";
-		property test.name.skip.portal.instance = "GoogleDrive#CanCopyGoogleDocToOtherFolderInDepot";
+		property test.liferay.virtual.instance = "false";
 
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -464,7 +464,7 @@ definition {
 	@priority = 5
 	test CanCopyGoogleDocToOtherSite {
 		property custom.properties = "feature.flag.LPS-182512=true";
-		property test.name.skip.portal.instance = "GoogleDrive#CanCopyGoogleDocToOtherSite";
+		property test.liferay.virtual.instance = "false";
 
 		HeadlessSite.addSite(siteName = "Site Name");
 
@@ -499,7 +499,7 @@ definition {
 	@priority = 4
 	test CheckOutGoogleDoc {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property test.name.skip.portal.instance = "GoogleDrive#CheckOutGoogleDoc";
+		property test.liferay.virtual.instance = "false";
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -581,7 +581,7 @@ definition {
 	@priority = 4
 	test CheckOutGoogleSheet {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property test.name.skip.portal.instance = "GoogleDrive#CheckOutGoogleSheet";
+		property test.liferay.virtual.instance = "false";
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -646,7 +646,7 @@ definition {
 	@description = "This test ensures a Google Doc title can be changed through the editor"
 	@priority = 4
 	test EditGoogleDoc {
-		property test.name.skip.portal.instance = "GoogleDrive#EditGoogleDoc";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -706,7 +706,7 @@ definition {
 	@description = "This test ensures that special characters  can be saved through the Google Doc editor"
 	@priority = 4
 	test EditGoogleDocWithSpecialCharacters {
-		property test.name.skip.portal.instance = "GoogleDrive#EditGoogleDocWithSpecialCharacters";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -744,7 +744,7 @@ definition {
 	@description = "This test covers LPS-107165 and LPS-184221. It ensures that Google doc can be Edited when enabling Workflow."
 	@priority = 4
 	test EditGoogleDocWithWorkflow {
-		property test.name.skip.portal.instance = "GoogleDrive#EditGoogleDocWithWorkflow";
+		property test.liferay.virtual.instance = "false";
 
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
@@ -831,7 +831,7 @@ definition {
 	@description = "This test ensures a Google Sheet title can be changed through the editor"
 	@priority = 4
 	test EditGoogleSheet {
-		property test.name.skip.portal.instance = "GoogleDrive#EditGoogleSheet";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -891,7 +891,7 @@ definition {
 	@description = "This test ensures a Google Slide title can be changed through the editor"
 	@priority = 4
 	test EditGoogleSlide {
-		property test.name.skip.portal.instance = "GoogleDrive#EditGoogleSlide";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -953,7 +953,7 @@ definition {
 	@description = "This test ensures that a document is checked out when the Google Doc editor is being used"
 	@priority = 5
 	test GoogleDocSmoke {
-		property test.name.skip.portal.instance = "GoogleDrive#GoogleDocSmoke";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -976,7 +976,7 @@ definition {
 	@description = "This test ensures that a document is checked out when the Google Sheet editor is being used"
 	@priority = 5
 	test GoogleSheetSmoke {
-		property test.name.skip.portal.instance = "GoogleDrive#GoogleSheetSmoke";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -999,7 +999,7 @@ definition {
 	@description = "This test ensures that a document is checked out when the Google Slide editor is being used"
 	@priority = 5
 	test GoogleSlideSmoke {
-		property test.name.skip.portal.instance = "GoogleDrive#GoogleSlideSmoke";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -1022,7 +1022,7 @@ definition {
 	@description = "This test covers LPS-93897. It ensures that previously entered Google credentials can be cleared."
 	@priority = 5
 	test RevokeGoogleDriveCredentials {
-		property test.name.skip.portal.instance = "GoogleDrive#RevokeGoogleDriveCredential";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -1064,7 +1064,7 @@ definition {
 	@description = "This test covers LPS-91174. It ensures that a user cannot save a Google Doc in Portal after logging out."
 	@priority = 5
 	test SaveGoogleDocAfterLoggingOut {
-		property test.name.skip.portal.instance = "GoogleDrive#SaveGoogleDocAfterLoggingOut";
+		property test.liferay.virtual.instance = "false";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -1093,7 +1093,7 @@ definition {
 	@description = "This test ensures that the Google Drive file can be added with Japanese."
 	@priority = 5
 	test TitleAndFileNameCanBeDisplayedCorrectlyWithJapanese {
-		property test.name.skip.portal.instance = "GoogleDrive#TitleAndFileNameCanBeDisplayedCorrectlyWithJapanese";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 

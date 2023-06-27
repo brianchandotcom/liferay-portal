@@ -13,16 +13,16 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@priority = 3
 	test ExecuteScriptWithEmbeddedHTML {
-		property test.name.skip.portal.instance = "GroovyScript#ExecuteScriptWithEmbeddedHTML";
+		property test.liferay.virtual.instance = "false";
 
 		ServerAdministration.openServerAdmin();
 
@@ -58,7 +58,7 @@ definition {
 	@priority = 5
 	test ExecuteScriptWithLiferayClasses {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "GroovyScript#ExecuteScriptWithLiferayClasses";
+		property test.liferay.virtual.instance = "false";
 
 		ServerAdministration.openServerAdmin();
 
@@ -88,7 +88,7 @@ definition {
 	@priority = 4
 	test ExecuteScriptWithPredefinedProperty {
 		property custom.properties = "partnerstamm-api-user = his_user";
-		property test.name.skip.portal.instance = "GroovyScript#ExecuteScriptWithPredefinedProperty";
+		property test.liferay.virtual.instance = "false";
 
 		ServerAdministration.openServerAdmin();
 
@@ -118,7 +118,7 @@ definition {
 
 	@priority = 4
 	test ExecuteScriptWithPredefinedVariables {
-		property test.name.skip.portal.instance = "GroovyScript#ExecuteScriptWithPredefinedVariables";
+		property test.liferay.virtual.instance = "false";
 
 		ServerAdministration.openServerAdmin();
 
@@ -144,7 +144,7 @@ definition {
 	@priority = 5
 	test ExecuteSimpleScript {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "GroovyScript#ExecuteSimpleScript";
+		property test.liferay.virtual.instance = "false";
 
 		ServerAdministration.openServerAdmin();
 

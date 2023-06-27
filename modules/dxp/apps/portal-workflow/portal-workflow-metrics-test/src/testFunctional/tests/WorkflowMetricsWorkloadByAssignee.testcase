@@ -9,7 +9,7 @@ definition {
 	setUp {
 		TestCase.setUpPortalInstance();
 
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		User.firstLoginPG();
 
@@ -22,9 +22,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
@@ -186,7 +186,7 @@ definition {
 	@description = "LPS-97669 - Verify that when editing a user name with pending instances, the Workload by Assignee card is updated accordingly"
 	@priority = 3
 	test CardIsUpdatedWhenUserNameIsEdited {
-		property test.name.skip.portal.instance = "WorkflowMetricsWorkloadByAssignee#CardIsUpdatedWhenUserNameIsEdited";
+		property test.liferay.virtual.instance = "false";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -225,7 +225,7 @@ definition {
 	@description = "LPS-97669 - Verify that when deleting a user with pending instances, the Workload by Assignee card is updated accordingly"
 	@priority = 4
 	test CardIsUpdatedWhenUserWithPendingInstanceIsDeleted {
-		property test.name.skip.portal.instance = "WorkflowMetricsWorkloadByAssignee#CardIsUpdatedWhenUserWithPendingInstanceIsDeleted";
+		property test.liferay.virtual.instance = "false";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -539,7 +539,7 @@ definition {
 	@description = "LPS-103365 - Verify that when the filters inside (Workload by Assignee) page are higher than 496px, a search bar on it should be included"
 	@priority = 3
 	test SearchBarIsIncludedWhenDropdownIsHigherThan496Px {
-		property test.name.skip.portal.instance = "WorkflowMetricsWorkloadByAssignee#SearchBarIsIncludedWhenDropdownIsHigherThan496Px";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -596,7 +596,7 @@ definition {
 	@description = "LPS-98518 - Verify that a search bar is present in the step filter when the dropdown is higher than 496px"
 	@priority = 3
 	test SearchBarIsPresentInStepFilter {
-		property test.name.skip.portal.instance = "WorkflowMetricsWorkloadByAssignee#SearchBarIsPresentInStepFilter";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -733,7 +733,7 @@ definition {
 	@description = "LPS-97669 - Verify that the sum of items Overdue and On time of 'Workload by Assignee' page are never bigger than the Total items"
 	@priority = 3
 	test SumOfOverdueAndOnTimeAreNeverBiggerThanTotalItems {
-		property test.name.skip.portal.instance = "WorkflowMetricsWorkloadByAssignee#SumOfOverdueAndOnTimeAreNeverBiggerThanTotalItems";
+		property test.liferay.virtual.instance = "false";
 
 		WorkflowMetrics.setSLADefinitionsJobInterval(
 			definitionsJobInterval = 1,
@@ -926,7 +926,7 @@ definition {
 	test WorkloadByAssigneeCardDisplaysUpTo10Users {
 		property portal.acceptance = "true";
 		property portal.upstream = "quarantine";
-		property test.name.skip.portal.instance = "WorkflowMetricsWorkloadByAssignee#WorkloadByAssigneeCardDisplaysUpTo10Users";
+		property test.liferay.virtual.instance = "false";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 

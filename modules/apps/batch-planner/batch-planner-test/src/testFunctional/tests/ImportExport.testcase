@@ -13,9 +13,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -1203,7 +1203,7 @@ definition {
 	@description = "Verify users can schedule an import"
 	@priority = 3
 	test CanScheduleImport {
-		property test.name.skip.portal.instance = "ImportExport#CanScheduleImport";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given an account import template") {
 			ImportExport.openImportExportAdmin();

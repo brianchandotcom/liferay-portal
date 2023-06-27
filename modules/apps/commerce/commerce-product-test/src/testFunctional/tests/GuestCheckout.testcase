@@ -1131,7 +1131,7 @@ definition {
 	@priority = 5
 	test UserAccountIsNotCombinedWithExistingGuestAccount {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "GuestCheckout#UserAccountIsNotCombinedWithExistingGuestAccount";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",

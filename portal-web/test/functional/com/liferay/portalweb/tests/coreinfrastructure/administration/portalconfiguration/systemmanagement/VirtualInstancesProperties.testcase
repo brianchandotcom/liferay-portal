@@ -14,9 +14,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
@@ -25,7 +25,7 @@ definition {
 	@priority = 3
 	test CanOverrideHookProperties {
 		property custom.system.properties = "company-id-properties=true";
-		property test.name.skip.portal.instance = "VirtualInstancesProperties#CanOverrideHookProperties";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given the default theme is set to Classic") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "guest");
@@ -69,7 +69,7 @@ definition {
 	test CanSetPortalPropertyViaEnvironmentVariable {
 		property custom.system.properties = "company-id-properties=true";
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "VirtualInstancesProperties#CanSetPortalPropertyViaEnvironmentVariable";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given a feature flag is disabled") {
 			ApplicationsMenuHelper.openApplicationsMenu();
@@ -106,7 +106,7 @@ definition {
 	@priority = 5
 	test CanSetPortalPropertyViaJVM {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "VirtualInstancesProperties#CanSetPortalPropertyViaJVM";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given a feature flag is disabled") {
 			ApplicationsMenuHelper.openApplicationsMenu();

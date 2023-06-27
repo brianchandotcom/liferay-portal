@@ -58,9 +58,9 @@ definition {
 			Testray.testrayApisTearDown();
 		}
 
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
@@ -68,7 +68,7 @@ definition {
 	@description = "Story ID: LPS-165584 | Test Summary: Verify as an administrator I can add another Cases in the Add Another button"
 	@priority = 2
 	test AdminCanAddAnotherCase {
-		property test.name.skip.portal.instance = "TestrayCasesAdministrator#AdminCanAddAnotherCase";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given I go to the Cases page") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
@@ -114,7 +114,7 @@ definition {
 	@description = "Story ID: LPS-146923 | Test Summary: Verify if as an Administrator I am able to add Cases without Subcomponents"
 	@priority = 4
 	test AdminCanAddCase {
-		property test.name.skip.portal.instance = "TestrayCasesAdministrator#AdminCanAddCase";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that I create a new Case via API") {
 			JSONTestray.addCases(
@@ -147,7 +147,7 @@ definition {
 	@description = "Story ID: LPS-165583 | Test Summary: Verify if as an Administrator I am able to delete Cases without Subcomponents"
 	@priority = 4
 	test AdminCanDeleteCase {
-		property test.name.skip.portal.instance = "TestrayCasesAdministrator#AdminCanDeleteCase";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that I create a new Case via API") {
 			JSONTestray.addCases(
@@ -185,7 +185,7 @@ definition {
 	@description = "Story ID: LPS-165583 | Test Summary: Verify that an administrator can delete cases in the 'Select Cases to Export' modal"
 	@priority = 2
 	test AdminCanDeleteCasesInModalExportCases {
-		property test.name.skip.portal.instance = "TestrayCasesAdministrator#AdminCanDeleteCasesInModalExportCases";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that I create a new Case via API") {
 			JSONTestray.addCases(
@@ -231,7 +231,7 @@ definition {
 	@description = "Story ID: LPS-146923 | Test Summary: Verify if as an Administrator I am able to edit Cases without Subcomponents"
 	@priority = 4
 	test AdminCanEditCase {
-		property test.name.skip.portal.instance = "TestrayCasesAdministrator#AdminCanEditCase";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that I create a new Case via API") {
 			JSONTestray.addCases(
@@ -288,7 +288,7 @@ definition {
 	@description = "Story ID: LPS-160751 | Test Summary: Verify if As an Administrator, I should be able to link and unlink Requirements to a Case"
 	@priority = 3
 	test AdminCanLinkAndUnlinkRequirements {
-		property test.name.skip.portal.instance = "TestrayCasesAdministrator#AdminCanLinkAndUnlinkRequirements";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that I create a new Case and new Requirement via API") {
 			JSONTestray.addCases(
@@ -342,7 +342,7 @@ definition {
 	@description = "Story ID: LPS-146923 | Test Summary: Verify that cases be added with an estimated duration less than zero"
 	@priority = 2
 	test AdminCanNotAddCasesWithEstimatedDurationLessThanZero {
-		property test.name.skip.portal.instance = "TestrayCasesAdministrator#AdminCanNotAddCasesWithEstimatedDurationLessThanZero";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given I go to the Cases page") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
@@ -377,7 +377,7 @@ definition {
 	@description = "Story ID: LPS-165582 | Test Summary: Verify if as an Administrator I should not be able to add a duplicate case"
 	@priority = 3
 	test AdminCannotAddDuplicatedCase {
-		property test.name.skip.portal.instance = "TestrayCasesAdministrator#AdminCannotAddDuplicatedCase";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that I create a new Case via API") {
 			JSONTestray.addCases(
@@ -418,7 +418,7 @@ definition {
 	@description = "Story ID: LPS-165583 | Test Summary: Verify that as administrator cases cannot be exported without linked Cases"
 	@priority = 2
 	test AdminCannotExportCasesWithoutCasesLinked {
-		property test.name.skip.portal.instance = "TestrayCasesAdministrator#AdminCannotExportCasesWithoutCasesLinked";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that I create a new Case via API") {
 			JSONTestray.addCases(
@@ -477,7 +477,7 @@ definition {
 	@description = "Story ID: LPS-146923 | Test Summary: Verify that the user can not create a case if all the required fields are not filled in"
 	@priority = 2
 	test AdminCanViewRequiredField {
-		property test.name.skip.portal.instance = "TestrayCasesAdministrator#AdminCanViewRequiredField";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given I go to the Cases page") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});

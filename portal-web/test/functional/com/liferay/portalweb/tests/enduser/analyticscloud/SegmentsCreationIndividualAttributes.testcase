@@ -47,7 +47,7 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		// It is not possible to delete properties and data source after LRAC-13389. This functionality should return after LRAC-8040
 
@@ -55,7 +55,7 @@ definition {
 
 		ACUtils.tearDownDXP();
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -68,7 +68,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8565 | Test Summary: Add segment using an individual property 'role'"
 	@priority = 4
 	test CanAddSegmentUsingIndividualPropertyRole {
-		property test.name.skip.portal.instance = "SegmentsCreationIndividualAttributes#CanAddSegmentUsingIndividualPropertyRole";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add a new regular role and assign to the user") {
 			JSONRole.addRegularRole(
@@ -282,7 +282,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8566 | Test Summary: Add segment using an individual property 'team'"
 	@priority = 4
 	test CanAddSegmentUsingIndividualPropertyTeam {
-		property test.name.skip.portal.instance = "SegmentsCreationIndividualAttributes#CanAddSegmentUsingIndividualPropertyTeam";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Assign the site to user") {
 			JSONGroup.assignUserToGroup(
@@ -419,7 +419,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8567 | Test Summary: Add segment using an individual property 'user group'"
 	@priority = 4
 	test CanAddSegmentUsingIndividualPropertyUserGroup {
-		property test.name.skip.portal.instance = "SegmentsCreationIndividualAttributes#CanAddSegmentUsingIndividualPropertyUserGroup";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add a new user group and assign to the user") {
 			JSONUserGroup.addUserGroup(
@@ -483,7 +483,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8569 | Test Summary: Add segment with custom field for individuals"
 	@priority = 4
 	test CanAddSegmentWithCustomFieldsForIndividuals {
-		property test.name.skip.portal.instance = "SegmentsCreationIndividualAttributes#CanAddSegmentWithCustomFieldsForIndividuals";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add a user custom field") {
 			CustomFields.openCustomFieldAdmin();
@@ -577,7 +577,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8570 | Test Summary: Add segment with custom fields for organizations"
 	@priority = 4
 	test CanAddSegmentWithCustomFieldsForOrganizations {
-		property test.name.skip.portal.instance = "SegmentsCreationIndividualAttributes#CanAddSegmentWithCustomFieldsForOrganizations";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add a new organization and assign to the user") {
 			JSONOrganization.addOrganization(organizationName = "Organization Name");

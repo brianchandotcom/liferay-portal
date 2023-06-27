@@ -23,9 +23,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -40,7 +40,7 @@ definition {
 	@description = "LPS-135888 - Verify that the user with Account role type receives the notification for review"
 	@priority = 4
 	test AccountUserReceivesNotification {
-		property test.name.skip.portal.instance = "WorkflowNotifications#AccountUserReceivesNotification";
+		property test.liferay.virtual.instance = "false";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -113,7 +113,7 @@ definition {
 	@description = "Verify that the user can open new user details by notifications"
 	@priority = 3
 	test CanOpenNewUserDetailsByNotifications {
-		property test.name.skip.portal.instance = "WorkflowNotifications#CanOpenNewUserDetailsByNotifications";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given Workflow is configured to Single Approver for User") {
 			Workflow.openWorkflowListView();
@@ -152,7 +152,7 @@ definition {
 	@description = "LPS-135888 - Verify that when the user delete the order, the notifications are not displayed"
 	@priority = 4
 	test NotificationIsNotAvailableWhenOrderIsDeleted {
-		property test.name.skip.portal.instance = "WorkflowNotifications#NotificationIsNotAvailableWhenOrderIsDeleted";
+		property test.liferay.virtual.instance = "false";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 

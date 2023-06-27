@@ -14,9 +14,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -97,7 +97,7 @@ definition {
 	test AreDuplicatedWhenTheFormIsDuplicated {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
-		property test.name.skip.portal.instance = "FormRules#AreDuplicatedWhenTheFormIsDuplicated";
+		property test.liferay.virtual.instance = "false";
 
 		FormsAdmin.addForm();
 
@@ -308,7 +308,7 @@ definition {
 	test CanBeCreatedUsingAFieldWithAPredefinedValue {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
-		property test.name.skip.portal.instance = "FormRules#CanBeCreatedUsingAFieldWithAPredefinedValue";
+		property test.liferay.virtual.instance = "false";
 
 		FormsAdmin.addForm();
 
@@ -438,7 +438,7 @@ definition {
 	test CanBeEdited {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
-		property test.name.skip.portal.instance = "FormRules#CanBeEdited";
+		property test.liferay.virtual.instance = "false";
 
 		FormsAdmin.addForm();
 
@@ -568,7 +568,7 @@ definition {
 	@priority = 4
 	test CanUseRuleOnMultipleSelectionField {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "FormRules#CanUseRuleOnMultipleSelectionField";
+		property test.liferay.virtual.instance = "false";
 
 		FormsAdmin.addForm();
 
@@ -1061,7 +1061,7 @@ definition {
 	test SyncBetweenFormAndRuleBuilder {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
-		property test.name.skip.portal.instance = "FormRules#SyncBetweenFormAndRuleBuilder";
+		property test.liferay.virtual.instance = "false";
 
 		FormsAdmin.addForm();
 

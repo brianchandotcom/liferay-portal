@@ -53,9 +53,9 @@ definition {
 			Testray.testrayApisTearDown();
 		}
 
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
@@ -63,7 +63,7 @@ definition {
 	@description = "Story ID: LPS-146913 | Test Summary: Verify if as an Administrator I should be able to add and delete a Routine with Default Environment Factors"
 	@priority = 3
 	test AdminCanAddAndDeleteRoutineWithDefaultEnvironmentFactors {
-		property test.name.skip.portal.instance = "TestrayRoutinesAdministrator#AdminCanAddAndDeleteRoutineWithDefaultEnvironmentFactors";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that the user add a new Routine") {
 			JSONTestray.addRoutine(
@@ -93,7 +93,7 @@ definition {
 	@description = "Story ID: LPS-146913 | Test Summary: Verify if as an Administrator I am able to add a Routine"
 	@priority = 5
 	test AdminCanAddRoutine {
-		property test.name.skip.portal.instance = "TestrayRoutinesAdministrator#AdminCanAddRoutine";
+		property test.liferay.virtual.instance = "false";
 
 		task ("When the user add a new Routine") {
 			Testray.goToProjectPage(projectName = ${projectName});
@@ -109,7 +109,7 @@ definition {
 	@description = "Story ID: LPS-146913 | Test Summary: Verify if as an Administrator I am able to delete a Routine"
 	@priority = 5
 	test AdminCanDeleteRoutine {
-		property test.name.skip.portal.instance = "TestrayRoutinesAdministrator#AdminCanDeleteRoutine";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that the user add a new Routine") {
 			JSONTestray.addRoutine(
@@ -135,7 +135,7 @@ definition {
 	@description = "Story ID: LPS-146913 | Test Summary: Verify if as an Administrator I should be able to delete a routine that contains builds"
 	@priority = 4
 	test AdminCanDeleteRoutineWithBuilds {
-		property test.name.skip.portal.instance = "TestrayRoutinesAdministrator#AdminCanDeleteRoutineWithBuilds";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that the user add a new Routine and a new Case") {
 			JSONTestray.addTeam(
@@ -208,7 +208,7 @@ definition {
 	@description = "Story ID: LPS-146913 | Test Summary: Verify if as an Administrator I am able to edit a Routine"
 	@priority = 5
 	test AdminCanEditRoutine {
-		property test.name.skip.portal.instance = "TestrayRoutinesAdministrator#AdminCanEditRoutine";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that the user add a new Routine") {
 			JSONTestray.addRoutine(
@@ -234,7 +234,7 @@ definition {
 	@description = "Story ID: LPS-165582 | Test Summary: Verify if as an Administrator I should not be able to add a duplicate routine"
 	@priority = 3
 	test AdminCanNotAddDuplicateRoutine {
-		property test.name.skip.portal.instance = "TestrayRoutinesAdministrator#AdminCanNotAddDuplicateRoutine";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that the user add Routine with duplicated name") {
 			JSONTestray.addRoutine(
@@ -254,7 +254,7 @@ definition {
 	@description = "Story ID: LPS-146913 | Test Summary: Verify that the user can not create a routine if all the required fields are not filled in"
 	@priority = 2
 	test AdminCanViewRequiredField {
-		property test.name.skip.portal.instance = "TestrayRoutinesAdministrator#AdminCanViewRequiredField";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that the user add a new Routine without name") {
 			Testray.goToProjectPage(projectName = ${projectName});
@@ -272,7 +272,7 @@ definition {
 	@description = "Story ID: LPS-146908 | Test Summary: Verify the user can access a project on Project Directory"
 	@priority = 2
 	test CanGoToProjectDirectory {
-		property test.name.skip.portal.instance = "TestrayRoutinesAdministrator#CanGoToProjectDirectory";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that the user add a new Project") {
 			JSONTestray.addProject(

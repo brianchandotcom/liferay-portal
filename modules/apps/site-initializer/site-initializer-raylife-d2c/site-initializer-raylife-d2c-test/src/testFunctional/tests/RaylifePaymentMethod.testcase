@@ -18,11 +18,11 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		Raylife.tearDownCP();
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -34,7 +34,7 @@ definition {
 	@priority = 5
 	test CanViewConfirmSuccessfulPayment {
 		property solutions.acceptance = "true";
-		property test.name.skip.portal.instance = "RaylifePaymentMethod#CanViewConfirmSuccessfulPayment";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -70,7 +70,7 @@ definition {
 	@description = "LPS-144583 - Check if the payment method is not selected by default"
 	@priority = 3
 	test CanViewPaymentMethodNotSelected {
-		property test.name.skip.portal.instance = "RaylifePaymentMethod#CanViewPaymentMethodNotSelected";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -100,7 +100,7 @@ definition {
 	@description = "LPS-144580 - Check if the Raylife terms and conditions option is unchecked by default"
 	@priority = 3
 	test CheckRaylifeTermsAndConditionsNotSelected {
-		property test.name.skip.portal.instance = "RaylifePaymentMethod#CheckRaylifeTermsAndConditionsNotSelected";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -132,7 +132,7 @@ definition {
 	@description = "LPS-144579 - Check if user can select the option to pay in installments"
 	@priority = 3
 	test CheckSelectInstallmentPayment {
-		property test.name.skip.portal.instance = "RaylifePaymentMethod#CheckSelectInstallmentPayment";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -170,7 +170,7 @@ definition {
 	@description = "LPS-144581 - Check if the Pay Now button is enabled when selecting Raylife terms and conditions"
 	@priority = 4
 	test IsPayNowButtonEnabled {
-		property test.name.skip.portal.instance = "RaylifePaymentMethod#IsPayNowButtonEnabled";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -204,7 +204,7 @@ definition {
 	@description = "LPS-144577 - Check if after you finish uploading the documents the payment section is expanded"
 	@priority = 4
 	test ViewExtendedPaymentSection {
-		property test.name.skip.portal.instance = "RaylifePaymentMethod#ViewExtendedPaymentSection";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -234,7 +234,7 @@ definition {
 	@description = "LPS-144578 - Verify that when selecting the PayPal payment method, the payment collection options are displayed"
 	@priority = 4
 	test ViewPaymentCollectionOptions {
-		property test.name.skip.portal.instance = "RaylifePaymentMethod#ViewPaymentCollectionOptions";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 

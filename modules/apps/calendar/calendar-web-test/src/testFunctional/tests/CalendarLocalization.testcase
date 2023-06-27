@@ -34,9 +34,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -53,7 +53,7 @@ definition {
 	@description = "This is a use case for LPS-58649."
 	@priority = 3
 	test EditLanguageSelectorAndViewEvent {
-		property test.name.skip.portal.instance = "CalendarLocalization#EditLanguageSelectorAndViewEvent";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 

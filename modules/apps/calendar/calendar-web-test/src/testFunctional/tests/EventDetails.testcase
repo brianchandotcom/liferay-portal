@@ -34,9 +34,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -200,7 +200,7 @@ definition {
 	@priority = 5
 	test DeleteRegular {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Calendar#DeleteEventRegular";
+		property test.liferay.virtual.instance = "false";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -248,7 +248,7 @@ definition {
 	@priority = 5
 	test DeleteRepeatingAllFollowing {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Calendar#DeleteEventRepeatingAllFollowing";
+		property test.liferay.virtual.instance = "false";
 
 		CalendarNavigator.gotoAddEvent();
 
@@ -984,7 +984,7 @@ definition {
 	@priority = 5
 	test ViewCalendarEventDetailViaMailLink {
 		property portal.upstream = "quarantine";
-		property test.name.skip.portal.instance = "EventDetails#ViewCalendarEventDetailViaMailLink";
+		property test.liferay.virtual.instance = "false";
 		property test.smtp.server.enabled = "true";
 
 		HeadlessSite.addSite(siteName = "Site Name");

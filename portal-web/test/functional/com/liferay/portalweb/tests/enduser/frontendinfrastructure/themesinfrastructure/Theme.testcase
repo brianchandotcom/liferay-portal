@@ -11,9 +11,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -27,7 +27,7 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanBeAppliedToPage {
-		property test.name.skip.portal.instance = "Theme#CanBeAppliedToPage";
+		property test.liferay.virtual.instance = "false";
 
 		User.firstLoginPG();
 
@@ -59,7 +59,7 @@ definition {
 	@refactordone
 	test CanBeAppliedToPageWhenClassicThemeNotAvailable {
 		property portal.upstream = "true";
-		property test.name.skip.portal.instance = "Theme#CanBeAppliedToPageWhenClassicThemeNotAvailable";
+		property test.liferay.virtual.instance = "false";
 
 		AntCommands.runCommand("build-test.xml", "delete-portal-theme -Dtheme-name=classic-theme");
 
@@ -88,7 +88,7 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanBeDeactivatedAndReactivated {
-		property test.name.skip.portal.instance = "Theme#CanBeDeactivatedAndReactivated";
+		property test.liferay.virtual.instance = "false";
 
 		var appName = "test-theme";
 
@@ -163,7 +163,7 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanBeUnInstalledAndRedeployed {
-		property test.name.skip.portal.instance = "Theme#CanBeUnInstalledAndRedeployed";
+		property test.liferay.virtual.instance = "false";
 
 		var appName = "test-theme";
 

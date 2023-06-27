@@ -14,9 +14,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -634,7 +634,7 @@ definition {
 	@priority = 4
 	@refactorneeded
 	test CannotDeleteEntryWhenOrgRoleHasNoPermissions {
-		property test.name.skip.portal.instance = "BlogsPermissions#CannotDeleteEntryWhenOrgRoleHasNoPermissions";
+		property test.liferay.virtual.instance = "false";
 
 		Permissions.setUpOrgRoleLoginUserPG(
 			orgName = "Organization Name",
@@ -1110,7 +1110,7 @@ definition {
 	@priority = 4
 	@refactorneeded
 	test CannotEditEntryWhenOwnerHasNoPermissions {
-		property test.name.skip.portal.instance = "BlogsPermissions#CannotEditEntryWhenOwnerHasNoPermissions";
+		property test.liferay.virtual.instance = "false";
 
 		Permissions.setUpRegRoleLoginUserPG(
 			pageName = "Blogs Page",
@@ -1425,7 +1425,7 @@ definition {
 	@refactorneeded
 	test CannotSubscribeToEntryWhenRegRoleHasNoPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property test.name.skip.portal.instance = "BlogsPermissions#CannotSubscribeToEntryWhenRegRoleHasNoPermissions";
+		property test.liferay.virtual.instance = "false";
 
 		Permissions.setUpRegRoleLoginUserCP(
 			roleTitle = "Regrole Name",
@@ -1700,7 +1700,7 @@ definition {
 	@priority = 4
 	@refactordone
 	test CannotViewEntryAsGuestWhenPermissionsAreRemoved {
-		property test.name.skip.portal.instance = "BlogsPermissions#CannotViewEntryAsGuestWhenPermissionsAreRemoved";
+		property test.liferay.virtual.instance = "false";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",

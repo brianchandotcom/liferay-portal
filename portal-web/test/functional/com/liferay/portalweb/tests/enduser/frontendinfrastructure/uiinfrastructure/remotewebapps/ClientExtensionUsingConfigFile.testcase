@@ -13,9 +13,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -41,7 +41,7 @@ definition {
 	@priority = 5
 	test CanUseOsgiClientExtensionIframeAsPortlet {
 		property iframe.client.extension.created = "true";
-		property test.name.skip.portal.instance = "ClientExtensionUsingConfigFile#CanUseOsgiClientExtensionIframeAsPortlet";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given config file for client extension of type iframe created") {
 			ClientExtension.createGlobalVariableClientExtensionType(type = "iframe");
@@ -64,7 +64,7 @@ definition {
 	@priority = 5
 	test OsgiClientExtensionOfTypeCustomElementRendersCorrectlyWhenPlacedOnWidgetPage {
 		property custom.element.client.extension.created = "true";
-		property test.name.skip.portal.instance = "ClientExtensionUsingConfigFile#CanUseOsgiClientExtensionCustomElementAsPortlet";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given config file for client extension of type custom element created") {
 			ClientExtension.createGlobalVariableClientExtensionType(type = "customElement");

@@ -18,11 +18,11 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		Raylife.tearDownCP();
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -33,7 +33,7 @@ definition {
 	@description = "LPS-144587 - Verify if its possible to see the user application number."
 	@priority = 4
 	test CanSeeUserApplicationNumber {
-		property test.name.skip.portal.instance = "RaylifeSummarySection#CanSeeUserApplicationNumber";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 

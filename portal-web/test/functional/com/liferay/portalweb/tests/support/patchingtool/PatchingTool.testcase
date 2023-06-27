@@ -20,7 +20,7 @@ definition {
 	test RevertFixPack {
 		property skip.install-patch = "true";
 		property test.assert.warning.exceptions = "true";
-		property test.name.skip.portal.instance = "PatchingTool#RevertFixPack";
+		property test.liferay.virtual.instance = "false";
 
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -82,7 +82,7 @@ definition {
 		property portal.hotfix.release = "true";
 		property portal.release = "true";
 		property test.assert.warning.exceptions = "true";
-		property test.name.skip.portal.instance = "PatchingTool#RevertHotfix";
+		property test.liferay.virtual.instance = "false";
 
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -129,7 +129,7 @@ definition {
 	test RevertToLatestHeavyFixPack {
 		property skip.install-patch = "true";
 		property test.assert.warning.exceptions = "true";
-		property test.name.skip.portal.instance = "PatchingTool#RevertToLatestHeavyFixPack";
+		property test.liferay.virtual.instance = "false";
 
 		if (${testBuildFixPackZipURLPrevious} == ${testBuildFixPackZipURLLatestHeavy}) {
 			echo("Skip test since the heavey fixpack equal to previous fixpack");

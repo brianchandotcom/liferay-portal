@@ -81,11 +81,11 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		ACUtils.tearDownDXP();
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -101,7 +101,7 @@ definition {
 	@description = "LPS-96574 Given I have edit, delete and permission permissions for segments And I have connected my DXP instance with AC When I create an Individual Segment in AC and it shows in the DXP Segments administration Then I don't see the edit action"
 	@priority = 3
 	test CheckNotEditableSegmentFromACAtDXP {
-		property test.name.skip.portal.instance = "ACSegmentsInDXP#CheckNotEditableSegmentFromACAtDXP";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Update Segments Analytics Cloud in System Settings") {
 			Segmentation.updateSegmentsInterval(interval = 1);
@@ -132,7 +132,7 @@ definition {
 	@priority = 5
 	test DefaultInstanceNotSynchronizedWithAC {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ACSegmentsInDXP#DefaultInstanceNotSynchronizedWithAC";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Update Segments Analytics Cloud in System Settings") {
 			Segmentation.updateSegmentsInterval();
@@ -193,7 +193,7 @@ definition {
 	@priority = 4
 	test PersistSegmentFromACAtDXP {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ACSegmentsInDXP#PersistSegmentFromACAtDXP";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Change 'Check Interval' at Segment Analytics Cloud in System Settings") {
 			Segmentation.updateSegmentsInterval(interval = 1);
@@ -255,7 +255,7 @@ definition {
 	@priority = 5
 	test RedirectToSegmentPageAC {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ACSegmentsInDXP#RedirectToSegmentPageAC";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Update Segments Analytics Cloud in System Settings") {
 			Segmentation.updateSegmentsInterval(interval = 1);
@@ -294,7 +294,7 @@ definition {
 	@priority = 4
 	test RedirectToSegmentPageErrorAC {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ACSegmentsInDXP#RedirectToSegmentPageErrorAC";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Update Segments Analytics Cloud in System Settings") {
 			Segmentation.updateSegmentsInterval(interval = 1);
@@ -380,7 +380,7 @@ definition {
 	@priority = 4
 	test ShoudNotRedirectToSegmentPageAC {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ACSegmentsInDXP#ShoudNotRedirectToSegmentPageAC";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Update Segments Analytics Cloud in System Settings") {
 			Segmentation.updateSegmentsInterval();

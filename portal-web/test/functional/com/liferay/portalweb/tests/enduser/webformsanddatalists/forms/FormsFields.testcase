@@ -14,9 +14,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -37,7 +37,7 @@ definition {
 	test AddingANewFieldCreatesADefaultLabel {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
-		property test.name.skip.portal.instance = "FormsFields#AddingANewFieldCreatesADefaultLabel";
+		property test.liferay.virtual.instance = "false";
 
 		FormsAdmin.addForm();
 
@@ -69,7 +69,7 @@ definition {
 	test CanBeDuplicated {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
-		property test.name.skip.portal.instance = "FormsFields#CanBeDuplicated";
+		property test.liferay.virtual.instance = "false";
 
 		FormsAdmin.addForm();
 
@@ -108,7 +108,7 @@ definition {
 	@priority = 5
 	test CanBeSubmittedWithAllFields {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "FormsFields#CanBeSubmittedWithAllFields";
+		property test.liferay.virtual.instance = "false";
 		property testray.component.names = "Training";
 
 		FormsAdmin.addForm();
@@ -576,7 +576,7 @@ definition {
 	test ViewFieldValidationIsNotBypassedWhenNextButtonIsHitTwice {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
-		property test.name.skip.portal.instance = "FormsFields#ViewFieldValidationIsNotBypassedWhenNextButtonIsHitTwice";
+		property test.liferay.virtual.instance = "false";
 
 		FormsAdmin.addForm();
 

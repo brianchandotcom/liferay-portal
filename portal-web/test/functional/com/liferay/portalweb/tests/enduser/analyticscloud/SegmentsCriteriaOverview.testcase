@@ -19,7 +19,7 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		// It is not possible to delete properties and data source after LRAC-13389. This functionality should return after LRAC-8040
 
@@ -27,7 +27,7 @@ definition {
 
 		ACUtils.tearDownDXP();
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
@@ -35,7 +35,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8498 | Test Summary: Link to view all criteria allows the user to scroll down and see more"
 	@priority = 4
 	test LinkToViewAllCriteriaAllowsUserScrollDownAndSeeMore {
-		property test.name.skip.portal.instance = "SegmentsCreationOverview#LinkToViewAllCriteriaAllowsUserScrollDownAndSeeMore";
+		property test.liferay.virtual.instance = "false";
 
 		var criteriasAcount = "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20";
 

@@ -25,9 +25,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -40,7 +40,7 @@ definition {
 	@uitest
 	test AddElementToEachPanel {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Tabs#AddElementToEachPanel";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add a Tabs fragment to a content page") {
 			ContentPagesNavigator.openEditContentPage(
@@ -95,7 +95,7 @@ definition {
 	@description = "This is for LPS-109298. Each tab of Tabs fragment is able to contain any elements in custom master."
 	@priority = 4
 	test AddElementToEachPanelInMasterPageTemplate {
-		property test.name.skip.portal.instance = "Tabs#AddElementToEachPanelInMasterPageTemplate";
+		property test.liferay.virtual.instance = "false";
 		property testray.main.component.name = "Master Page Templates";
 
 		task ("Add a custom master") {

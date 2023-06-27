@@ -36,11 +36,11 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		RaylifeAP.tearDownCP();
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -51,7 +51,7 @@ definition {
 	@description = "LPS-146328 - Verify if the 'New Applications' button from the side-bar option 'Applications', works."
 	@priority = 5
 	test CanAccessNewApplicationFromSideBar {
-		property test.name.skip.portal.instance = "RaylifeAPTypeOfInsurance#CanAccessNewApplicationFromSideBar";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -69,7 +69,7 @@ definition {
 	@description = "LPS-146328 - Verify if the user can swicth between the cards."
 	@priority = 3
 	test CanSwitchBetweenCards {
-		property test.name.skip.portal.instance = "RaylifeAPTypeOfInsurance#CanSwitchBetweenCards";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -89,7 +89,7 @@ definition {
 	@description = "LPS-146328 - Verify if when the user selects a card, go to next page and click on 'Previous' button the card still selected (active)."
 	@priority = 4
 	test CardStillSelectedWhenUserGoToPreviousPage {
-		property test.name.skip.portal.instance = "RaylifeAPTypeOfInsurance#CardStillSelectedWhenUserGoToPreviousPage";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 

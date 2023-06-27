@@ -32,7 +32,7 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		// It is not possible to delete properties and data source after LRAC-13389. This functionality should return after LRAC-8040
 
@@ -40,7 +40,7 @@ definition {
 
 		ACUtils.tearDownDXP();
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
@@ -48,7 +48,7 @@ definition {
 	@description = "Search for specific segment"
 	@priority = 5
 	test CanSearchForSegment {
-		property test.name.skip.portal.instance = "SegmentsList#CanSearchForSegment";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Switch the property in AC") {
 			ACUtils.launchAC();
@@ -96,7 +96,7 @@ definition {
 	@description = "Segment list shows a list of segments"
 	@priority = 5
 	test CanShowSegmentList {
-		property test.name.skip.portal.instance = "SegmentsList#CanShowSegmentList";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Switch the property in AC") {
 			ACUtils.launchAC();
@@ -134,7 +134,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8460 | Test Summary: Order the Segment List By Name"
 	@priority = 4
 	test OrderSegmentListByName {
-		property test.name.skip.portal.instance = "SegmentsList#OrderSegmentListByName";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add a new user in DXP") {
 			JSONUser.addUser(
@@ -231,7 +231,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8461 | Test Summary: Paginate Segment list"
 	@priority = 3
 	test PaginateSegmentList {
-		property test.name.skip.portal.instance = "SegmentsList#PaginateSegmentList";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add a new user in DXP") {
 			JSONUser.addUser(

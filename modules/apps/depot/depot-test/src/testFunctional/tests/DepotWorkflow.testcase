@@ -23,9 +23,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -119,7 +119,7 @@ definition {
 	@refactordone
 	test CanApproveWCArticle {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "DepotWorkflow#CanApproveWCArticle";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -351,7 +351,7 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanApproveWCInFolder {
-		property test.name.skip.portal.instance = "DepotWorkflow#CanApproveWCInFolder";
+		property test.liferay.virtual.instance = "false";
 
 		JSONWebcontent.addFolder(
 			folderName = "WC Folder Name",
@@ -456,7 +456,7 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanRejectAndResubmitImage {
-		property test.name.skip.portal.instance = "DepotWorkflow#CanRejectAndResubmitImage";
+		property test.liferay.virtual.instance = "false";
 
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
@@ -582,7 +582,7 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanRejectAndResubmitWC {
-		property test.name.skip.portal.instance = "DepotWorkflow#CanRejectAndResubmitWC";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",

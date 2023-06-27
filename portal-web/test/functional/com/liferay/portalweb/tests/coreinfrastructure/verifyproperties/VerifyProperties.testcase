@@ -23,7 +23,7 @@ definition {
 		property skip.start.app.server = "true";
 		property skip.upgrade-legacy-database = "true";
 		property test.assert.warning.exceptions = "false";
-		property test.name.skip.portal.instance = "VerifyProperties#UpgradeStopsIfVerifyPropertiesFail";
+		property test.liferay.virtual.instance = "false";
 
 		AntCommands.runCommand("build-test.xml", "start-app-server-tomcat-simple");
 
@@ -88,7 +88,7 @@ definition {
 		property portal.version = "7.4.13";
 		property skip.get.testcase.database.properties = "true";
 		property skip.upgrade-legacy-database = "true";
-		property test.name.skip.portal.instance = "VerifyProperties#VerifyPropertiesIsExecutedUsingAutoUpgrade";
+		property test.liferay.virtual.instance = "false";
 
 		AssertConsoleTextPresent(value1 = "Completed com.liferay.portal.verify.VerifyProperties#verifySystemProperties");
 
@@ -102,7 +102,7 @@ definition {
 	test VerifyPropertiesIsOnlyExecutedInUpgradeProcess {
 		property data.archive.type = "data-archive-portal";
 		property portal.version = "7.4.13";
-		property test.name.skip.portal.instance = "VerifyProperties#VerifyPropertiesIsOnlyExecutedInUpgradeProcess";
+		property test.liferay.virtual.instance = "false";
 
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
@@ -129,7 +129,7 @@ definition {
 	@description = "LRQA-78468: Verify Properties not run when start portal with empty database"
 	@priority = 3
 	test VerifyPropertiesNotRunWithEmptyDatabase {
-		property test.name.skip.portal.instance = "VerifyProperties#VerifyPropertiesNotRunWithEmptyDatabase";
+		property test.liferay.virtual.instance = "false";
 
 		AssertConsoleTextNotPresent(value1 = "Completed com.liferay.portal.verify.VerifyProperties#verifySystemProperties");
 

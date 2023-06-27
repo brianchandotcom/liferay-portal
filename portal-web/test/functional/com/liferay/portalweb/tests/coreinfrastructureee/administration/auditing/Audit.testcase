@@ -18,7 +18,7 @@ definition {
 	@description = "LPS-133646 and LPS-133653 TC-1: Verify that information is present in the logs after enabling log context & Incoming X-Request-ID."
 	@priority = 5
 	test AssertAuditConsoleInformationIsPresentAfterEnabledLog {
-		property test.name.skip.portal.instance = "Audit#AssertAuditConsoleInformationIsPresentAfterEnabledLog";
+		property test.liferay.virtual.instance = "false";
 
 		var companyId = JSONCompany.getCompanyId();
 		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "test@liferay.com");
@@ -49,7 +49,7 @@ definition {
 	@description = "This is a use case for LPS-155728. TC-1: Assert the email address is present in the audit log context in a human-readable format."
 	@priority = 2
 	test AssertEmailAddressIsPresentInReadable {
-		property test.name.skip.portal.instance = "Audit#AssertEmailAddressIsPresentInReadable";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: Enable log context and Incoming X-Request-ID") {
 			Audit.gotoSystemSettings(portlet = "Audit Log Context");
@@ -75,7 +75,7 @@ definition {
 	test AssertInvalidXRequestId {
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.audit.wiring.internal.configuration.AuditLogContextConfiguration.config";
 		property osgi.module.configurations = "enabled=\"true\"${line.separator}useIncomingXRequestId=\"true\"";
-		property test.name.skip.portal.instance = "Audit#AssertInvalidXRequestId";
+		property test.liferay.virtual.instance = "false";
 
 		var companyId = JSONCompany.getCompanyId();
 		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "test@liferay.com");
@@ -99,7 +99,7 @@ definition {
 	@priority = 2
 	test AssertSessionIdIsNotPresentInAuditLogContext {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Audit#AssertSessionIdIsNotPresentInAuditLogContext";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: Enable log context and Incoming X-Request-ID") {
 			Audit.gotoSystemSettings(portlet = "Audit Log Context");
@@ -126,7 +126,7 @@ definition {
 	@priority = 2
 	test AssertSessionIdIsNotPresentInAuditLogPortlet {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Audit#AssertSessionIdIsNotPresentInAuditLogPortlet";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: Enable log context and Incoming X-Request-ID") {
 			Audit.gotoSystemSettings(portlet = "Audit Log Context");
@@ -166,7 +166,7 @@ definition {
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.audit.wiring.internal.configuration.AuditLogContextConfiguration.config";
 		property osgi.module.configurations = "enabled=\"true\"${line.separator}useIncomingXRequestId=\"true\"";
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Audit#AssertValidXRequestId";
+		property test.liferay.virtual.instance = "false";
 
 		var companyId = JSONCompany.getCompanyId();
 		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "test@liferay.com");
@@ -190,7 +190,7 @@ definition {
 		property custom.properties = "feature.flag.LPS-177194=true";
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.audit.router.configuration.PersistentAuditMessageProcessorConfiguration.config";
 		property osgi.module.configurations = "enabled=B\"true\"";
-		property test.name.skip.portal.instance = "Audit#AuditDataCanBeFilteredBySiteID";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given a new Object definition with site scope is created") {
 			ObjectAdmin.addObjectViaAPI(
@@ -327,7 +327,7 @@ definition {
 		property custom.properties = "feature.flag.LPS-177194=true";
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.audit.router.configuration.PersistentAuditMessageProcessorConfiguration.config";
 		property osgi.module.configurations = "enabled=B\"true\"";
-		property test.name.skip.portal.instance = "Audit#CanExportCSVFilteredAuditDataFile";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given Login portal with wrong password login with correct password search LOGIN_FAILURE in Audit") {
 			User.logoutPG();
@@ -400,7 +400,7 @@ definition {
 		property custom.properties = "feature.flag.LPS-177194=true";
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.audit.router.configuration.PersistentAuditMessageProcessorConfiguration.config";
 		property osgi.module.configurations = "enabled=B\"true\"";
-		property test.name.skip.portal.instance = "Audit#CanExportCSVFilteredAuditDataFileOnVirtualInstance";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given Add virtual instance login with wrong password login with correct password search LOGIN_FAILURE in Audit") {
 			HeadlessPortalInstanceAPI.addPortalInstance(
@@ -470,7 +470,7 @@ definition {
 		property custom.properties = "feature.flag.LPS-177194=true";
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.audit.router.configuration.PersistentAuditMessageProcessorConfiguration.config";
 		property osgi.module.configurations = "enabled=B\"true\"";
-		property test.name.skip.portal.instance = "Audit#CanStoreSiteIDForAuditEvent";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given a new Object definition with site scope is created") {
 			ObjectAdmin.addObjectViaAPI(
@@ -587,7 +587,7 @@ definition {
 		property custom.properties = "feature.flag.LPS-177194=true";
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.audit.router.configuration.PersistentAuditMessageProcessorConfiguration.config";
 		property osgi.module.configurations = "enabled=B\"true\"";
-		property test.name.skip.portal.instance = "Audit#CanStoreSiteIDForAuditEventOnVirtualInstance";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given a new Object definition with site scope is created on virtual instance") {
 			HeadlessPortalInstanceAPI.addPortalInstance(
@@ -725,7 +725,7 @@ definition {
 	test VerifyCorrectClientIP {
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.audit.wiring.internal.configuration.AuditLogContextConfiguration.config";
 		property osgi.module.configurations = "enabled=\"true\"${line.separator}useIncomingXRequestId=\"true\"";
-		property test.name.skip.portal.instance = "Audit#VerifyCorrectClientIP";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add the OSGI configuration file") {
 			OSGiConfig.copyOSGiConfigFile(

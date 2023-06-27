@@ -24,7 +24,7 @@ definition {
 	@description = "This ensures that AWS translation can be used to auto-translate a content page."
 	@priority = 5
 	test CanTranslateContentPage {
-		property test.name.skip.portal.instance = "AutoTranslationAWS#CanTranslateContentPage";
+		property test.liferay.virtual.instance = "false";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -79,7 +79,7 @@ definition {
 	@description = "This ensures that the fragment filed on content page can be translated independently."
 	@priority = 5
 	test CanTranslateContentPageFieldIndependently {
-		property test.name.skip.portal.instance = "AutoTranslationAWS#CanTranslateContentPageFieldIndependently";
+		property test.liferay.virtual.instance = "false";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -134,7 +134,7 @@ definition {
 	@description = "This ensures that AWS translation can be used to auto-translate a web content."
 	@priority = 5
 	test CanTranslateWC {
-		property test.name.skip.portal.instance = "AutoTranslationAWS#CanTranslateWC";
+		property test.liferay.virtual.instance = "false";
 
 		JSONWebcontent.addWebContent(
 			content = "WC content",
@@ -175,7 +175,7 @@ definition {
 	@description = "This ensures that the web content title can be translated independently"
 	@priority = 5
 	test CanTranslateWCFieldIndependently {
-		property test.name.skip.portal.instance = "AutoTranslationAWS#CanTranslateWCFieldIndependently";
+		property test.liferay.virtual.instance = "false";
 
 		JSONWebcontent.addWebContent(
 			content = "WC content",

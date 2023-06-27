@@ -27,7 +27,7 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		// It is not possible to delete properties and data source after LRAC-13389. This functionality should return after LRAC-8040
 
@@ -35,7 +35,7 @@ definition {
 
 		ACUtils.tearDownDXP();
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
@@ -43,7 +43,7 @@ definition {
 	@description = "Feature ID: LRAC-12058 | Automation ID: LRAC-12141 | Test Summary: Request search keywords using all parameters"
 	@priority = 3
 	test RequestKeywordsUsingAllParameters {
-		property test.name.skip.portal.instance = "SearchAPI#RequestKeywordsUsingAllParameters";
+		property test.liferay.virtual.instance = "false";
 
 		var groupId = JSONGroupSetter.setGroupId(groupName = "Guest");
 		var keyword = "all parameters";
@@ -75,7 +75,7 @@ definition {
 	@description = "Feature ID: LRAC-12058 | Automation ID: LRAC-12143 | Test Summary: Fetch keywords with displayLanguageId parameter"
 	@priority = 3
 	test RequestKeywordsUsingDisplayLanguageId {
-		property test.name.skip.portal.instance = "SearchAPI#RequestKeywordsUsingDisplayLanguageId";
+		property test.liferay.virtual.instance = "false";
 
 		var parametersDisplay1 = "size=10\&displayLanguageId=${displayLanguageId1}\&page=0\&sort=counts,desc,lastModifiedDate,desc";
 		var parametersDisplay2 = "size=10\&displayLanguageId=${displayLanguageId2}\&page=0\&sort=counts,desc,lastModifiedDate,desc";
@@ -123,7 +123,7 @@ definition {
 	@description = "Feature ID: LRAC-12058 | Automation ID: LRAC-12144 | Test Summary: Request search keywords using groupID"
 	@priority = 3
 	test RequestKeywordsUsingGroupID {
-		property test.name.skip.portal.instance = "SearchAPI#RequestKeywordsUsingGroupID";
+		property test.liferay.virtual.instance = "false";
 
 		HeadlessSite.addSite(siteName = "Site Name");
 
@@ -173,7 +173,7 @@ definition {
 	@description = "Feature ID: LRAC-12058 | Automation ID: LRAC-12142 | Test Summary: Fetch keywords without optional parameters"
 	@priority = 3
 	test RequestKeywordsUsingNoParameters {
-		property test.name.skip.portal.instance = "SearchAPI#RequestKeywordsUsingNoParameters";
+		property test.liferay.virtual.instance = "false";
 
 		var keyword1 = "without optional parameters 1";
 		var keyword2 = "without optional parameters 2";
@@ -212,7 +212,7 @@ definition {
 	@description = "Feature ID: LRAC-12058 | Automation ID: LRAC-12145 | Test Summary: Fetch keywords with page parameter"
 	@priority = 3
 	test RequestKeywordsUsingPage {
-		property test.name.skip.portal.instance = "SearchAPI#RequestKeywordsUsingPage";
+		property test.liferay.virtual.instance = "false";
 
 		var parametersFirstPage = "size=${size}\&page=${firstPage}\&sort=counts,desc,lastModifiedDate,desc";
 		var parametersSecondPage = "size=${size}\&page=${secondPage}\&sort=counts,desc,lastModifiedDate,desc";
@@ -282,7 +282,7 @@ definition {
 	@description = "Feature ID: LRAC-12058 | Automation ID: LRAC-12146 | Test Summary: Fetch keywords with size parameter "
 	@priority = 3
 	test RequestKeywordsUsingSize {
-		property test.name.skip.portal.instance = "SearchAPI#RequestKeywordsUsingSize";
+		property test.liferay.virtual.instance = "false";
 
 		var keyword1 = "with size parameters 1";
 		var keyword2 = "with size parameters 2";
@@ -330,7 +330,7 @@ definition {
 	@description = "Feature ID: LRAC-12058 | Automation ID: LRAC-12147 | Test Summary: Request search keywords using sort"
 	@priority = 3
 	test RequestKeywordsUsingSort {
-		property test.name.skip.portal.instance = "SearchAPI#RequestKeywordsUsingSort";
+		property test.liferay.virtual.instance = "false";
 
 		var keyword1 = "first key word";
 		var keyword2 = "second key word";

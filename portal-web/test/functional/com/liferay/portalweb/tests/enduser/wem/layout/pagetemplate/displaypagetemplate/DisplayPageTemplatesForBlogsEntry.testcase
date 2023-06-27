@@ -25,9 +25,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -38,7 +38,7 @@ definition {
 	@description = "This is a test for LPS-121571. A user can map Reading Time of blogs entry to editable field."
 	@priority = 4
 	test MapReadingTimeToEditableField {
-		property test.name.skip.portal.instance = "DisplayPageTemplatesForBlogsEntry#MapReadingTimeToEditableField";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Enable the Reading Time") {
 			BlogsConfiguration.enableReadingTime();

@@ -2198,7 +2198,7 @@ definition {
 	@priority = 3
 	test CanRemoveOfflinePaymentSetAsDefaultPaymentMethod {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommerceChannelsDefaultPaymentMethods#RemoveOfflinePaymentLinkedAsDefaultPaymentMethod";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given a new offline payment method") {
 			CommercePaymentMethods.addOfflinePaymentMethod(key = "Test Offline Payment Method");

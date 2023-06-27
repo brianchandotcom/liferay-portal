@@ -17,9 +17,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
@@ -29,7 +29,7 @@ definition {
 	test CanModuleBeShutdownDuringReplicateSession {
 		property cluster.session.replicated = "true";
 		property custom.properties = "portlet.session.replicate.enabled=true";
-		property test.name.skip.portal.instance = "ClusteringCache#CanModuleBeShutdownDuringReplicateSession";
+		property test.liferay.virtual.instance = "false";
 
 		Clustering.deployClusteringModule(nodePort = 8080);
 
@@ -89,7 +89,7 @@ definition {
 	test CanSessionReplicateBetweenNodes {
 		property cluster.session.replicated = "true";
 		property custom.properties = "portlet.session.replicate.enabled=true";
-		property test.name.skip.portal.instance = "ClusteringCache#CanSessionReplicateBetweenNodes";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openNodePort(nodePort = 9080);
 
@@ -149,7 +149,7 @@ definition {
 	@priority = 4
 	test DoNotReplicatePut {
 		property custom.properties = "ehcache.replicator.properties.test.cache=replicatePuts=false";
-		property test.name.skip.portal.instance = "ClusteringCache#DoNotReplicatePut";
+		property test.liferay.virtual.instance = "false";
 
 		Clustering.viewClusterStatusInConsole();
 
@@ -217,7 +217,7 @@ definition {
 	@priority = 4
 	test ReplicateByCopy {
 		property custom.properties = "ehcache.replicator.properties.test.cache=replicatePutsViaCopy=true";
-		property test.name.skip.portal.instance = "ClusteringCache#ReplicateByCopy";
+		property test.liferay.virtual.instance = "false";
 
 		Clustering.viewClusterStatusInConsole();
 
@@ -272,7 +272,7 @@ definition {
 	@priority = 4
 	test ReplicateByRemove {
 		property custom.properties = "ehcache.replicator.properties.test.cache=replicatePutsViaCopy=false";
-		property test.name.skip.portal.instance = "ClusteringCache#ReplicateByRemove";
+		property test.liferay.virtual.instance = "false";
 
 		Clustering.viewClusterStatusInConsole();
 

@@ -45,7 +45,7 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		// It is not possible to delete properties and data source after LRAC-13389. This functionality should return after LRAC-8040
 
@@ -53,7 +53,7 @@ definition {
 
 		ACUtils.tearDownDXP();
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -257,7 +257,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8478 | Test Summary: Create a Dynamic Individuals Segment By Date"
 	@priority = 4
 	test CanCreateDynamicIndividualsSegmentByDate {
-		property test.name.skip.portal.instance = "SegmentsCreation#CanCreateDynamicIndividualsSegmentByDate";
+		property test.liferay.virtual.instance = "false";
 
 		var fullNameList = "userfn userln,user1 user1";
 
@@ -355,7 +355,7 @@ definition {
 		// AC Quarantine Reason: The membership list takes a long time to update
 		// AC Refactor ticket: LRAC-10769
 
-		property test.name.skip.portal.instance = "SegmentsCreation#CanCreateDynamicSegmentWithIndividualCriteriaUsesBooleanAndDoesNotContain";
+		property test.liferay.virtual.instance = "false";
 
 		var usernameList = "user1,user2,user3";
 		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com";
@@ -492,7 +492,7 @@ definition {
 		// AC Quarantine Reason: The membership list takes a long time to update
 		// AC Refactor ticket: LRAC-10769
 
-		property test.name.skip.portal.instance = "SegmentsCreation#CanCreateDynamicSegmentWithIndividualCriteriaUsesIsKnownAndIsNot";
+		property test.liferay.virtual.instance = "false";
 
 		var usernameList = "user1,user2,user3";
 		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com";
@@ -721,7 +721,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8482 | Test Summary: Create a nested criteria"
 	@priority = 3
 	test CanCreateNestedCriteria {
-		property test.name.skip.portal.instance = "SegmentsCreation#CanCreateNestedCriteria";
+		property test.liferay.virtual.instance = "false";
 
 		var usernameList = "userea,user1,test";
 		var emailList = "userea@liferay.com,user1@liferay.com,test@liferay.com";
@@ -964,7 +964,7 @@ definition {
 		// AC Quarantine Reason: The membership list takes a long time to update
 		// AC Refactor ticket: LRAC-10769
 
-		property test.name.skip.portal.instance = "SegmentsCreation#CanCreateSegmentWithNumberProperty";
+		property test.liferay.virtual.instance = "false";
 
 		var usernameList = "user1,user2,user3";
 		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com";
@@ -1086,7 +1086,7 @@ definition {
 	@description = "Create a static segment with individual"
 	@priority = 5
 	test CanCreateStaticSegmentWithIndividuals {
-		property test.name.skip.portal.instance = "SegmentsCreation#CanCreateStaticSegmentWithIndividuals";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Sign in as new user") {
 			User.logoutAndLoginPG(
@@ -1134,7 +1134,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8474 | Test Summary: Duplicate a criteria"
 	@priority = 3
 	test CanDuplicateCriteria {
-		property test.name.skip.portal.instance = "SegmentsCreation#CanDuplicateCriteria";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
@@ -1209,7 +1209,7 @@ definition {
 		// AC Quarantine Reason: The membership list takes a long time to update
 		// AC Refactor ticket: LRAC-10769
 
-		property test.name.skip.portal.instance = "SegmentsCreation#CanPaginateSegmentProfileInMembershipList";
+		property test.liferay.virtual.instance = "false";
 
 		var usernameList = "user1,user2,user3,user4,user5";
 		var emailList = "userea@liferay.com,user1@liferay.com,user2@liferay.com,user3@liferay.com,user4@liferay.com,user5@liferay.com";
@@ -1307,7 +1307,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8472 | Test Summary: Paginate static segment 'Add Members' creation model"
 	@priority = 3
 	test CanPaginateStaticSegmentAddMembers {
-		property test.name.skip.portal.instance = "SegmentsCreation#CanPaginateStaticSegmentAddMembers";
+		property test.liferay.virtual.instance = "false";
 
 		var usernameList = "user1,user2,user3,user4,user5";
 		var emailList = "userea@liferay.com,user1@liferay.com,user2@liferay.com,user3@liferay.com,user4@liferay.com,user5@liferay.com";
@@ -1389,7 +1389,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8475 | Test Summary: Dynamic segment members preview in real time"
 	@priority = 3
 	test CanPreviewDynamicSegmentMembers {
-		property test.name.skip.portal.instance = "SegmentsCreation#CanPreviewDynamicSegmentMembers";
+		property test.liferay.virtual.instance = "false";
 
 		var emailList = "userea@liferay.com,user1@liferay.com";
 		var usernameList = "userfn userln,user1 user1";
@@ -1475,7 +1475,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8473 | Test Summary: Filter the Segment 'Add Members' Modal"
 	@priority = 3
 	test CanSearchUserInAddMembersModal {
-		property test.name.skip.portal.instance = "SegmentsCreation#CanSearchUserInAddMembersModal";
+		property test.liferay.virtual.instance = "false";
 
 		var emailList = "userea@liferay.com,user1@liferay.com";
 
@@ -1544,7 +1544,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8133 | Test Summary: Create button shows option to create static or dynamic"
 	@priority = 5
 	test CanSeeOptionsToCreateStaticOrDynamicSegment {
-		property test.name.skip.portal.instance = "SegmentsCreation#CanSeeOptionsToCreateStaticOrDynamicSegment";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Sign in as new user") {
 			User.logoutAndLoginPG(
@@ -1973,7 +1973,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8484 | Test Summary: Segment Form Validation"
 	@priority = 5
 	test ViewSegmentFormValidation {
-		property test.name.skip.portal.instance = "SegmentsCreation#ViewSegmentFormValidation";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Sign in as new user") {
 			User.logoutAndLoginPG(

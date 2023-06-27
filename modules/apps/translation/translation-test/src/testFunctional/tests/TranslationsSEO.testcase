@@ -15,9 +15,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -30,7 +30,7 @@ definition {
 	@description = "This ensures that all languages hreflang tag will be displayed after disabling OTH from SEO settings."
 	@priority = 4
 	test CanViewAllHreflangTagsAfterDisabling {
-		property test.name.skip.portal.instance = "TranslationsSEO#CanViewAllHreflangTagsAfterDisabling";
+		property test.liferay.virtual.instance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -87,7 +87,7 @@ definition {
 	@description = "This ensures that only translated page hreflang is tag displayed when a user accesses an untranslated content page."
 	@priority = 5
 	test CanViewTranslatedLanguageHreflangTagOnContentPage {
-		property test.name.skip.portal.instance = "TranslationsSEO#CanViewTranslatedLanguageHreflangTagOnContentPage";
+		property test.liferay.virtual.instance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -139,7 +139,7 @@ definition {
 	@description = "This ensures that only translated page hreflang tag is displayed when a user accesses an untranslated display page."
 	@priority = 5
 	test CanViewTranslatedLanguageHreflangTagOnDisplayPage {
-		property test.name.skip.portal.instance = "TranslationsSEO#CanViewTranslatedLanguageHreflangTagOnDisplayPage";
+		property test.liferay.virtual.instance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -214,7 +214,7 @@ definition {
 	@description = "This ensures that only translated page hreflang tag is displayed when a user accesses an untranslated widget page."
 	@priority = 5
 	test CanViewTranslatedLanguageHreflangTagOnWidgetPage {
-		property test.name.skip.portal.instance = "TranslationsSEO#CanViewTranslatedLanguageHreflangTagOnWidgetPage";
+		property test.liferay.virtual.instance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
 

@@ -733,7 +733,7 @@ definition {
 	@priority = 5
 	test CanLocaleBePrependedForProductOnSiteMapPage {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CPCommerceProductConfigurations#CanLocaleBePrependedForProductOnSiteMapPage";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given the localization for the Friendly URL is changed") {
 			ApplicationsMenu.gotoPortlet(
@@ -1013,7 +1013,7 @@ definition {
 	test CanLocaleBePrependedForProductOnSiteMapPageWhenVirtualHostIsEnabled {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CPCommerceProductConfigurations#CanLocaleBePrependedForProductOnSiteMapPageWhenVirtualHostIsEnable";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given the localization for the Friendly URL is changed") {
 			ApplicationsMenu.gotoPortlet(
@@ -1889,7 +1889,7 @@ definition {
 	@description = "This is a test for COMMERCE-11535. Sitemap contains product urls also for other than site's languages"
 	@priority = 4
 	test CanSiteCurrentLanguageAffectSiteMap {
-		property test.name.skip.portal.instance = "CPCommerceProductConfigurations#CanSiteCurrentLanguageAffectSiteMap";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given an account is created") {
 			JSONAccountEntry.addAccountEntry(
@@ -2012,7 +2012,7 @@ definition {
 	@description = "This is a test for COMMERCE-10639. Sitemaps display the language tags properly"
 	@priority = 3
 	test CanViewLanguageTagsOnSitemapPage {
-		property test.name.skip.portal.instance = "CPCommerceProductConfigurations#CanViewLanguageTagsOnSitemapPage";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given an account is created") {
 			JSONAccountEntry.addAccountEntry(

@@ -105,9 +105,9 @@ definition {
 			Testray.testrayApisTearDown();
 		}
 
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
@@ -115,7 +115,7 @@ definition {
 	@description = "Story ID: LPS-162255 | Test Summary: Verify that can back from section project through Breadcrumb Finder"
 	@priority = 3
 	test AssertCanBackSectionByBreadcrumb {
-		property test.name.skip.portal.instance = "TestrayBreadcrumbFinder#AssertCanBackSectionByBreadcrumb";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that the user go to build page") {
 			Testray.changePagination(
@@ -147,7 +147,7 @@ definition {
 	@description = "Story ID: LPS-162255 | Test Summary: Verify that can go to the case results through Breadcrumb Finder"
 	@priority = 3
 	test AssertCanGoToCaseResultsthroughBreadcrumb {
-		property test.name.skip.portal.instance = "TestrayBreadcrumbFinder#AssertCanGoToCaseResultsthroughBreadcrumb";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that the user go to the breadcrumb") {
 			Testray.gotoBreadcrumb();
@@ -170,7 +170,7 @@ definition {
 	@description = "Story ID: LPS-162255 | Test Summary: Verify that can search for a specific project in the Breadcrumb Finder"
 	@priority = 4
 	test AssertCanSearchProjectByBreadcrumb {
-		property test.name.skip.portal.instance = "TestrayBreadcrumbFinder#AssertCanSearchProjectByBreadcrumb";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that the user go to the breadcrumb") {
 			Testray.gotoBreadcrumb();

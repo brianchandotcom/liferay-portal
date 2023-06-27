@@ -14,9 +14,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -150,7 +150,7 @@ definition {
 	@priority = 4
 	test AdminCanControlWhenPropagateSiteTemplateChanges {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CPSitetemplates#AdminCanControlWhenPropagateSiteTemplateChanges";
+		property test.liferay.virtual.instance = "false";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -236,7 +236,7 @@ definition {
 	@priority = 5
 	test AssertAutomaticSiteTemplatePropagation {
 		property database.types = "mysql";
-		property test.name.skip.portal.instance = "CPSitetemplates#AssertAutomaticSiteTemplatePropagation";
+		property test.liferay.virtual.instance = "false";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 		var sQLStatement = "SELECT * FROM Layout WHERE friendlyURL = '/test';";
@@ -354,7 +354,7 @@ definition {
 	@priority = 4
 	test AssertPartialSiteTemplatePropagation {
 		property database.types = "mysql";
-		property test.name.skip.portal.instance = "CPSitetemplates#AssertPartialSiteTemplatePropagation";
+		property test.liferay.virtual.instance = "false";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -598,7 +598,7 @@ definition {
 	@priority = 4
 	test AssertSiteTemplatePropagationOnPrivatePage {
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
-		property test.name.skip.portal.instance = "CPSitetemplates#AssertSiteTemplatePropagationOnPrivatePage";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: Add new site template and a new private site based on this site template") {
 			SiteTemplates.addCP(siteTemplateName = "Site Template Name");
@@ -662,7 +662,7 @@ definition {
 	@priority = 5
 	test AssertSiteTemplatePropagationWhenOpeningSite {
 		property database.types = "mysql";
-		property test.name.skip.portal.instance = "CPSitetemplates#AssertSiteTemplatePropagationWhenOpeningSite";
+		property test.liferay.virtual.instance = "false";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 		var sQLStatement = "SELECT * FROM Layout WHERE friendlyURL = '/test';";
@@ -963,7 +963,7 @@ definition {
 	@description = "This is a use case for LPS-98548. User can import site templates to virtual instances and delete them."
 	@priority = 4
 	test DeleteSiteTemplateImportedToVirtualInstance {
-		property test.name.skip.portal.instance = "CPSitetemplates#DeleteSiteTemplateImportedToVirtualInstance";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: User adds new site template and a new site based on this site template") {
 			SiteTemplates.addCP(
@@ -1106,7 +1106,7 @@ definition {
 	@description = "Information on site template admin page should be localized corresponding to the chosen language."
 	@priority = 4
 	test LocalizeSiteTemplatesAdmin {
-		property test.name.skip.portal.instance = "CPSitetemplates#LocalizeSiteTemplatesAdmin";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: User adds new site ") {
 			SiteTemplates.addCP(siteTemplateName = "Site Template Name");
@@ -1231,7 +1231,7 @@ definition {
 	@priority = 5
 	test ResetPageChanges {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CPSitetemplates#ResetPageChanges";
+		property test.liferay.virtual.instance = "false";
 		property testray.component.names = "Training";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
@@ -1324,7 +1324,7 @@ definition {
 	@description = "This is a use case for LPS-166286. TC-5: Verify that the LAR from the Site Template export is cached, so different Sites can reuse it for content page."
 	@priority = 4
 	test SiteCanReuseCachedSiteTemplateLarFileForContentPage {
-		property test.name.skip.portal.instance = "CPSitetemplates#SiteCanReuseCachedSiteTemplateLarFileForContentPage";
+		property test.liferay.virtual.instance = "false";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -1393,7 +1393,7 @@ definition {
 	@description = "This is a use case for LPS-166286. TC-4: Verify that the LAR from the Site Template export is cached, so different Sites can reuse it for widget page."
 	@priority = 4
 	test SiteCanReuseCachedSiteTemplateLarFileForWidgetPage {
-		property test.name.skip.portal.instance = "CPSitetemplates#SiteCanReuseCachedSiteTemplateLarFileForWidgetPage";
+		property test.liferay.virtual.instance = "false";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -1674,7 +1674,7 @@ definition {
 	@priority = 4
 	test ViewCanNotAccesseSiteLinkInURLCollisionWithoutUserAccessSite {
 		property custom.properties = "feature.flag.LPS-174431=true";
-		property test.name.skip.portal.instance = "CPSitetemplates#ViewCanNotAccesseSiteLinkInURLCollisionWithoutUserAccessSite";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given User adds pages with friendly URL collision in new site and site template") {
 			SiteTemplates.addCP(siteTemplateName = "Site Template Name");
@@ -1745,7 +1745,7 @@ definition {
 	@priority = 4
 	test ViewCanNotAccesseSiteLinkInURLCollisionWithoutUserAccessSiteInSitePage {
 		property custom.properties = "feature.flag.LPS-174434=true";
-		property test.name.skip.portal.instance = "CPSitetemplates#ViewCanNotAccesseSiteLinkInURLCollisionWithoutUserAccessSite";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given User adds pages with friendly URL collision in new site and site template") {
 			SiteTemplates.addCP(

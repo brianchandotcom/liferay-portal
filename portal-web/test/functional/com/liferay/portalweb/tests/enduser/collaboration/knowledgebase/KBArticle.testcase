@@ -16,9 +16,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -445,7 +445,7 @@ definition {
 	test CanExpireAnArticle {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "KBArticle#CanExpireAnArticle";
+		property test.liferay.virtual.instance = "false";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -616,7 +616,7 @@ definition {
 	@priority = 3
 	@refactorneeded
 	test CannotAddArticleWithInvalidAttachmentSize {
-		property test.name.skip.portal.instance = "KBArticle#CannotAddArticleWithInvalidAttachmentSize";
+		property test.liferay.virtual.instance = "false";
 
 		SystemSettings.openSystemSettingsAdmin();
 
@@ -874,7 +874,7 @@ definition {
 	@priority = 5
 	test CanRepublishAnExpiredArticle {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
-		property test.name.skip.portal.instance = "KBArticle#CanRepublishAnExpiredArticle";
+		property test.liferay.virtual.instance = "false";
 
 		KBArticle.updateCheckInterval(fieldValue = 1);
 
@@ -929,7 +929,7 @@ definition {
 	test CanReviewArticleWhenReviewDateIsReached {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "kbArticle#CanReviewArticleWhenReviewDateIsReached";
+		property test.liferay.virtual.instance = "false";
 
 		KBArticle.updateCheckInterval(fieldValue = 1);
 
@@ -975,7 +975,7 @@ definition {
 	@priority = 5
 	test CanReviewArticleWhenReviewDateIsUpdated {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
-		property test.name.skip.portal.instance = "kbArticle#CanReviewArticleWhenReviewDateIsUpdated";
+		property test.liferay.virtual.instance = "false";
 
 		KBArticle.updateCheckInterval(fieldValue = 1);
 
@@ -1193,7 +1193,7 @@ definition {
 	@priority = 5
 	test CanViewExpiredArticle {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
-		property test.name.skip.portal.instance = "KBArticle#CanViewExpiredArticle";
+		property test.liferay.virtual.instance = "false";
 
 		KBArticle.updateCheckInterval(fieldValue = 1);
 
@@ -1474,7 +1474,7 @@ definition {
 	@priority = 3
 	@refactorneeded
 	test ViewKBArticleGitHubSourceURL {
-		property test.name.skip.portal.instance = "KBArticle#ViewKBArticleGitHubSourceURL";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 

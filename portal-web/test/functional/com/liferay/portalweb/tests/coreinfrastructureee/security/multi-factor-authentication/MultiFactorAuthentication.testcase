@@ -17,9 +17,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -32,7 +32,7 @@ definition {
 	test AssertDescriptionsOnTOTPConfigurationPage {
 		property osgi.module.configuration.file.names = "com.liferay.multi.factor.authentication.email.otp.configuration.MFAEmailOTPConfiguration.config";
 		property osgi.module.configurations = "emailFromAddress=\"test@liferay.com\"${line.separator}emailFromName=\"Joe\ Bloggs\"";
-		property test.name.skip.portal.instance = "MultiFactorAuthentication#AssertDescriptionsOnTOTPConfigurationPage";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Enable OTP") {
 			MultiFactorAuthentication.openToConfigInInstanceSettings();
@@ -81,7 +81,7 @@ definition {
 	@priority = 5
 	test AssertEditedEmailTemplate {
 		property database.types = "hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
-		property test.name.skip.portal.instance = "MultiFactorAuthentication#AssertEditedEmailTemplate";
+		property test.liferay.virtual.instance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -132,7 +132,7 @@ definition {
 	@priority = 5
 	test AssertLoginGoesInOtherMFAVerifierWhenIPVerifierFailed {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "MultiFactorAuthentication#AssertLoginGoesInOtherMFAVerifierWhenIPVerifierFailed";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add CP able.com") {
 			HeadlessPortalInstanceAPI.addPortalInstance(
@@ -225,7 +225,7 @@ definition {
 	@description = "LPS-86515 TC-3: As an Instance Administrator, I want to set where I want to have the configured TOTP verifier in the order of the configured verifiers."
 	@priority = 5
 	test AssertMFACheckersWithHigherOrderShownFirst {
-		property test.name.skip.portal.instance = "MultiFactorAuthentication#AssertMFACheckersWithHigherOrderShownFirst";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add CP able.com") {
 			HeadlessPortalInstanceAPI.addPortalInstance(
@@ -292,7 +292,7 @@ definition {
 		property osgi.module.configuration.file.names = "com.liferay.multi.factor.authentication.email.otp.configuration.MFAEmailOTPConfiguration.config";
 		property osgi.module.configurations = "emailFromAddress=\"test@liferay.com\"${line.separator}emailFromName=\"Joe\ Bloggs\"";
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "MultiFactorAuthentication#AssertUserIsBlockedAfterReachAllowedFailedAttempts";
+		property test.liferay.virtual.instance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -337,7 +337,7 @@ definition {
 	@priority = 5
 	test CanDisableBasicAuthenticationOnInstanceLevel {
 		property custom.properties = "access.control.sanitize.security.exception=false${line.separator}json.service.serialize.throwable=true";
-		property test.name.skip.portal.instance = "MultiFactorAuthentication#CanDisableBasicAuthenticationOnInstanceLevel";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add CP able.com") {
 			HeadlessPortalInstanceAPI.addPortalInstance(
@@ -385,7 +385,7 @@ definition {
 	@description = "LPS-102468 TC-4: Instance admin can enable and disable MFA for instance."
 	@priority = 5
 	test CanDisableOTPForInstanceOnSystemLevel {
-		property test.name.skip.portal.instance = "MultiFactorAuthentication#CanDisableOTPForInstanceOnSystemLevel";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Assert MFA is not disabled on system level") {
 			MultiFactorAuthentication.configureMFAOnSystemLevel(disabledMfa = "false");
@@ -468,7 +468,7 @@ definition {
 	@description = "This is a use case for LPS-115566. Able to remove TOTP verification and generate new TOTP verification on instance."
 	@priority = 5
 	test CanRemoveTOTPVerificationOnInstanceLevel {
-		property test.name.skip.portal.instance = "MultiFactorAuthentication#CanRemoveTOTPVerificationOnInstanceLevel";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add CP able.com") {
 			HeadlessPortalInstanceAPI.addPortalInstance(
@@ -531,7 +531,7 @@ definition {
 	test EnableOTPForInstanceAsInstanceAdminUser {
 		property database.types = "hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "MultiFactorAuthentication#EnableOTPForInstanceAsInstanceAdminUser";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Assert MFA is not disabled on system level") {
 			MultiFactorAuthentication.configureMFAOnSystemLevel(disabledMfa = "false");
@@ -613,7 +613,7 @@ definition {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property osgi.module.configuration.file.names = "com.liferay.multi.factor.authentication.email.otp.configuration.MFAEmailOTPConfiguration.config";
 		property osgi.module.configurations = "emailFromAddress=\"test@liferay.com\"${line.separator}emailFromName=\"Joe\ Bloggs\"";
-		property test.name.skip.portal.instance = "MultiFactorAuthentication#EndUserPermissionCheck";
+		property test.liferay.virtual.instance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -670,7 +670,7 @@ definition {
 	test LoginSuccessfulAfterResetPasswordAsEndUser {
 		property osgi.module.configuration.file.names = "com.liferay.multi.factor.authentication.email.otp.configuration.MFAEmailOTPConfiguration.config";
 		property osgi.module.configurations = "emailFromAddress=\"test@liferay.com\"${line.separator}emailFromName=\"Joe\ Bloggs\"";
-		property test.name.skip.portal.instance = "MultiFactorAuthentication#LoginSuccessfulAfterResetPasswordAsEndUser";
+		property test.liferay.virtual.instance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -730,7 +730,7 @@ definition {
 		property database.types = "hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property osgi.module.configuration.file.names = "com.liferay.multi.factor.authentication.email.otp.configuration.MFAEmailOTPConfiguration.config";
 		property osgi.module.configurations = "emailFromAddress=\"test@liferay.com\"${line.separator}emailFromName=\"Joe\ Bloggs\"";
-		property test.name.skip.portal.instance = "MultiFactorAuthentication#LoginSuccessfulAfterRetryTimeout";
+		property test.liferay.virtual.instance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -783,7 +783,7 @@ definition {
 		property osgi.module.configuration.file.names = "com.liferay.multi.factor.authentication.email.otp.configuration.MFAEmailOTPConfiguration.config";
 		property osgi.module.configurations = "emailFromAddress=\"test@liferay.com\"${line.separator}emailFromName=\"Joe\ Bloggs\"";
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "MultiFactorAuthentication#LoginWithIPBasedVerifierEnabled";
+		property test.liferay.virtual.instance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -889,7 +889,7 @@ definition {
 		property osgi.module.configuration.file.names = "com.liferay.multi.factor.authentication.email.otp.configuration.MFAEmailOTPConfiguration.config";
 		property osgi.module.configurations = "emailFromAddress=\"test@liferay.com\"${line.separator}emailFromName=\"Joe\ Bloggs\"";
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "MultiFactorAuthentication#LoginWithOTPEnabled";
+		property test.liferay.virtual.instance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -939,7 +939,7 @@ definition {
 		property database.types = "hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property environment.acceptance = "true";
 		property operating.system.types = "alpine,amazonlinux,centos,debian,fedora,orcllinux,osx,redhat,rockylinux,solaris,suse,ubuntu,windows";
-		property test.name.skip.portal.instance = "MultiFactorAuthentication#LoginWithOTPEnabledByCompanyId";
+		property test.liferay.virtual.instance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -997,7 +997,7 @@ definition {
 		property database.types = "hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property environment.acceptance = "true";
 		property operating.system.types = "alpine,amazonlinux,centos,debian,fedora,orcllinux,osx,redhat,rockylinux,solaris,suse,ubuntu,windows";
-		property test.name.skip.portal.instance = "MultiFactorAuthentication#LoginWithOTPEnabledByCompanyWebId";
+		property test.liferay.virtual.instance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -1054,7 +1054,7 @@ definition {
 	test LoginWithTOTPEnabledAsEndUser {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "MultiFactorAuthentication#LoginWithTOTPEnabledAsEndUser";
+		property test.liferay.virtual.instance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -1163,7 +1163,7 @@ definition {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property osgi.module.configuration.file.names = "com.liferay.multi.factor.authentication.email.otp.configuration.MFAEmailOTPConfiguration.config";
 		property osgi.module.configurations = "emailFromAddress=\"test@liferay.com\"${line.separator}emailFromName=\"Joe\ Bloggs\"";
-		property test.name.skip.portal.instance = "MultiFactorAuthentication#RemoveTOTPVerificationOfCurrentUserNotAffectOtherEndUser";
+		property test.liferay.virtual.instance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -1250,7 +1250,7 @@ definition {
 	@priority = 5
 	test UseCustomMFAVerifier {
 		property osgi.modules.includes = "multi-factor-authentication-sample";
-		property test.name.skip.portal.instance = "MultiFactorAuthentication#UseCustomMFAVerifier";
+		property test.liferay.virtual.instance = "false";
 
 		WaitForConsoleTextPresent(value1 = "STARTED com.liferay.multi.factor.authentication.sample_1.0.0");
 
@@ -1283,7 +1283,7 @@ definition {
 	@description = "This is a use case for LPS-110309 and LPS-112805. As an Instance Administrator, I want to see description texts for the MFA configuration entries."
 	@priority = 4
 	test ViewDescriptionTextsForMFAConfigurationEntries {
-		property test.name.skip.portal.instance = "MultiFactorAuthentication#ViewDescriptionTextsForMFAConfigurationEntries";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Assert Disable multi-factor authentication system-wide message is present in Multi-Factor Authentication System configuration") {
 			MultiFactorAuthentication.openToConfigInSystemSettings();
@@ -1305,7 +1305,7 @@ definition {
 	@description = "This is a use case for LPS-109786. As an Instance administrator, I want to get a notification if the MFA has been disabled/enabled in system level."
 	@priority = 4
 	test ViewNotificationsAfterMFADisabledAndEnabled {
-		property test.name.skip.portal.instance = "MultiFactorAuthentication#ViewNotificationsAfterMFADisabledAndEnabled";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add CP able.com") {
 			HeadlessPortalInstanceAPI.addPortalInstance(
@@ -1403,7 +1403,7 @@ definition {
 	@description = "This is a use case for LPS-89360. View configuration for Email OTP verifier's order."
 	@priority = 4
 	test ViewOrderOfOTPVerifier {
-		property test.name.skip.portal.instance = "MultiFactorAuthentication#ViewOrderOfOTPVerifier";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add CP able.com") {
 			HeadlessPortalInstanceAPI.addPortalInstance(
@@ -1435,7 +1435,7 @@ definition {
 	test ViewResourceActionsOfOTPVerificationFailure {
 		property osgi.module.configuration.file.names = "com.liferay.multi.factor.authentication.email.otp.configuration.MFAEmailOTPConfiguration.config";
 		property osgi.module.configurations = "emailFromAddress=\"test@liferay.com\"${line.separator}emailFromName=\"Joe\ Bloggs\"";
-		property test.name.skip.portal.instance = "MultiFactorAuthentication#ViewResourceActionsOfOTPVerificationFailure";
+		property test.liferay.virtual.instance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -1491,7 +1491,7 @@ definition {
 	@description = "This is a use case for LPS-86515. Instance level admin is able to see successful/unsuccessful login attempts with the configured TOTP verifier."
 	@priority = 5
 	test ViewResourceActionsOfTOTPVerificationAttempts {
-		property test.name.skip.portal.instance = "MultiFactorAuthentication#ViewResourceActionsOfTOTPVerificationAttempts";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add CP able.com") {
 			HeadlessPortalInstanceAPI.addPortalInstance(

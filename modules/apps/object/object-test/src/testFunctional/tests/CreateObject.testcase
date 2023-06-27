@@ -14,9 +14,9 @@ definition {
 	tearDown {
 		ObjectAdmin.deleteAllCustomObjectsViaAPI();
 
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
@@ -2100,7 +2100,7 @@ definition {
 	@description = "LPS-135390 - Verify it is not possible to publish an Object without the Publish Object Definition permission"
 	@priority = 4
 	test CannotPublishObjectWithouPublishPermission {
-		property test.name.skip.portal.instance = "CreateObject#CannotPublishObjectWithouPublishPermission";
+		property test.liferay.virtual.instance = "false";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 53",
@@ -2969,7 +2969,7 @@ definition {
 	@description = "LPS-135401 - Verify that it is possible to relate to many other entries on both objects"
 	@priority = 5
 	test CanRelateManyOtherEntriesBothObjects {
-		property test.name.skip.portal.instance = "CreateObject#CanRelateManyOtherEntriesBothObjects";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given two custom objects, A and B, each with a text field and a layout") {
 			for (var nameObject : list "A,B") {
@@ -6683,7 +6683,7 @@ definition {
 	@description = "LPS-139005 - Verify that the Object is no longer displayed on the Workflow Process Builder page when inactivated"
 	@priority = 4
 	test ObjectDisappearsProcessBuilderWhenInactivated {
-		property test.name.skip.portal.instance = "CreateObject#ObjectDisappearsProcessBuilderWhenInactivated";
+		property test.liferay.virtual.instance = "false";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 143",
@@ -6712,7 +6712,7 @@ definition {
 	@description = "LPS-139005 - Verify that the Object is no longer displayed on the Workflow Site Menu page when inactivated"
 	@priority = 4
 	test ObjectDisappearsWorkflowSiteMenuWhenInactivated {
-		property test.name.skip.portal.instance = "CreateObject#ObjectDisappearsWorkflowSiteMenuWhenInactivated";
+		property test.liferay.virtual.instance = "false";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 144",

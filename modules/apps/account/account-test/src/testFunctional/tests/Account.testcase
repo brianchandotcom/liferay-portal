@@ -12,9 +12,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -458,7 +458,7 @@ definition {
 	@description = "This test asserts that a domain blocked in one instance will not be blocked when creating a separate virtual instance."
 	@priority = 4
 	test BlockedDomainsAreInstanceWide {
-		property test.name.skip.portal.instance = "Accounts#BlockedDomainsAreInstanceWide";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Block google.com domain and create a new account") {
 			AccountConfiguration.addBlockedEmailDomain(settingValues = "google.com");
@@ -1618,7 +1618,7 @@ definition {
 	@description = "This test asserts that group scope permissions can be defined in the Roles Admin portlet."
 	@priority = 5
 	test CanDefineGroupScopePermissionsInRolesAdmin {
-		property test.name.skip.portal.instance = "Accounts#CanDefineGroupScopePermissionsInRolesAdmin";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Create a new role through Roles Admin Portlet") {
 			Role.openRolesAdmin();
@@ -2485,7 +2485,7 @@ definition {
 	@priority = 4
 	test CannotAddUserWithBlockedEmailDomain {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property test.name.skip.portal.instance = "Account#CannotAddUserWithBlockedEmailDomain";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given an account is created and is configured to have blocked domains") {
 			AccountConfiguration.enableAccountEmailDomain();
@@ -2544,7 +2544,7 @@ definition {
 	@priority = 3
 	test CannotAddUserWithInvalidEmailDomain {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property test.name.skip.portal.instance = "Account#CannotAddUserWithInvalidEmailDomain";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given an account is created and is configured to have valid email domains") {
 			AccountConfiguration.enableAccountEmailDomain();
@@ -2731,7 +2731,7 @@ definition {
 	@description = "This test removes a blocked domain in Instance Settings."
 	@priority = 4
 	test CanRemoveDomainFromBlacklist {
-		property test.name.skip.portal.instance = "Account#CanRemoveDomainFromBlacklist";
+		property test.liferay.virtual.instance = "false";
 
 		AccountConfiguration.addBlockedEmailDomain(settingValues = "yahoo.com,blocked.com,google.com");
 

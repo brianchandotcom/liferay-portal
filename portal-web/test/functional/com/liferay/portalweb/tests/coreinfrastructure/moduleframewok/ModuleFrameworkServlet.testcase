@@ -12,9 +12,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
@@ -24,7 +24,7 @@ definition {
 	test ServletMultipartConfigInShieldedContainer {
 		property configure.servlet.multipart = "true";
 		property test.assert.warning.exceptions = "true";
-		property test.name.skip.portal.instance = "ModuleFrameworkServlet#ServletMultipartConfigInShieldedContainer";
+		property test.liferay.virtual.instance = "false";
 
 		var portalURL = JSONCompany.getPortalURL();
 		var dependencyFilePath = TestCase.getDependenciesDirPath(fileName = "Document_1.txt");

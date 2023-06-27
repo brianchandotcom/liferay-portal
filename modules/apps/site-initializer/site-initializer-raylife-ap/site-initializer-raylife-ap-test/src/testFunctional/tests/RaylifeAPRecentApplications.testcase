@@ -36,11 +36,11 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		Raylife.tearDownCP();
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -51,7 +51,7 @@ definition {
 	@description = "Automtion ID: LPS-157719 | Test Summary: Check that the 'All Applications' button redirects to the 'Applications' page"
 	@priority = 4
 	test AllApplicationsRedirectedToApplicationsPage {
-		property test.name.skip.portal.instance = "RaylifeAPRecentApplications#AllApplicationsRedirectedToApplicationsPage";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -67,7 +67,7 @@ definition {
 	@description = "Story ID: LPS-157719| Test Summary: Check if I can delete a recent application on the Kebab button"
 	@priority = 4
 	test AssertCanDeleteRecentApplications {
-		property test.name.skip.portal.instance = "RaylifeAPRecentApplications#CanDeleteRecentApplications";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -84,7 +84,7 @@ definition {
 	@description = "Story ID: LPS-157719| Test Summary: Verify that when continuing the same flow in Raylife D2C, the status changes from Incompletet to Quoted"
 	@priority = 5
 	test AssertChangeFromIncompletetToBound {
-		property test.name.skip.portal.instance = "RaylifeAPRecentApplications#ChangeFromIncompletetToBound";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -170,7 +170,7 @@ definition {
 	@description = "Story ID: LPS-157719| Test Summary: Verify that when continuing the same flow in Raylife D2C, the status changes from Open to Quoted"
 	@priority = 5
 	test AssertChangeFromOpenToQuoted {
-		property test.name.skip.portal.instance = "RaylifeAPRecentApplications#ChangeFromOpenToQuoted";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -228,7 +228,7 @@ definition {
 	@description = "Story ID: LPS-157719 | Test Summary: Check if when a user make a complete flow in Raylife d2c, the status 'Bound' is add in Recent Applications"
 	@priority = 4
 	test AssertifStatusdBoundIsAddInRecentApplications {
-		property test.name.skip.portal.instance = "RaylifeAPRecentApplications#AssertifStatusdBoundIsAddInRecentApplications";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 

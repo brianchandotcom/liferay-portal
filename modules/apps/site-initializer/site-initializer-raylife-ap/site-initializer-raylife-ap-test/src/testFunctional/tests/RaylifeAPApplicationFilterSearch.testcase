@@ -36,13 +36,13 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		RaylifeAP.deleteAllCreatedEntries(searchTerm = "Testing");
 
 		Raylife.tearDownCP();
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -65,7 +65,7 @@ definition {
 	@description = "Story ID: LPS-152415 | Test Summary: Verify that the filter button is a toggle that turns the filter on and off"
 	@priority = 4
 	test CanViewTheFilterEnableAndDisable {
-		property test.name.skip.portal.instance = "RaylifeAPApplicationFilterSearch#CanViewTheFilterEnableAndDisable";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -93,7 +93,7 @@ definition {
 	@description = "Story ID: LPS-152415 | Test Summary: Verify that search dialog box searches for the application number, name and email address"
 	@priority = 4
 	test CanViewTheSearchResults {
-		property test.name.skip.portal.instance = "RaylifeAPApplicationFilterSearch#CanViewTheSearchResults";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 

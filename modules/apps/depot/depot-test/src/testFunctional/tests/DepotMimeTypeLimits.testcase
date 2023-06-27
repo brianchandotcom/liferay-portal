@@ -16,9 +16,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -36,7 +36,7 @@ definition {
 	@priority = 4
 	test ALTakesEffectOverInstanceLimit {
 		property custom.properties = "feature.flag.LPS-114786=true";
-		property test.name.skip.portal.instance = "DepotMimeTypeLimits#ALTakesEffectOverInstanceLimit";
+		property test.liferay.virtual.instance = "false";
 
 		DMNavigator.openToConfigInInstanceSettings(portlet = "Documents and Media Size Limits");
 
@@ -66,7 +66,7 @@ definition {
 	@priority = 4
 	test CanLimitMultipleMimeTypesSize {
 		property custom.properties = "feature.flag.LPS-114786=true";
-		property test.name.skip.portal.instance = "DepotMimeTypeLimits#CanLimitMultipleMimeTypesSize";
+		property test.liferay.virtual.instance = "false";
 
 		DMDocument.updateMimeTypeSizeLimit(
 			depotName = "Test Depot Name",
@@ -101,7 +101,7 @@ definition {
 	@priority = 4
 	test CanLimitSizeOnlyInCurrentDepot {
 		property custom.properties = "feature.flag.LPS-114786=true";
-		property test.name.skip.portal.instance = "DepotMimeTypeLimits#CanLimitSizeOnlyInCurrentDepot";
+		property test.liferay.virtual.instance = "false";
 
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -147,7 +147,7 @@ definition {
 	@priority = 4
 	test SystemTakesEffectOverALLimit {
 		property custom.properties = "feature.flag.LPS-114786=true";
-		property test.name.skip.portal.instance = "DepotMimeTypeLimits#SystemTakesEffectOverALLimit";
+		property test.liferay.virtual.instance = "false";
 
 		DMDocument.updateMimeTypeSizeLimit(
 			maximumFileSizeValue = 10240,

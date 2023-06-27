@@ -49,7 +49,7 @@ definition {
 	test CheckUpgradeClientGogoShellFailedUpgrade {
 		property skip.get.testcase.database.properties = "true";
 		property skip.upgrade-legacy-database = "true";
-		property test.name.skip.portal.instance = "DatabaseUpgradeClient#CheckUpgradeClientGogoShellFailedUpgrade";
+		property test.liferay.virtual.instance = "false";
 		property timeout.explicit.wait = "490";
 
 		AntCommands.runCommand("modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml", "check-upgrade-client-gogoshell-failed-upgrade");
@@ -106,7 +106,7 @@ definition {
 	test CheckUpgradeClientUpgradeCoreOnly {
 		property skip.get.testcase.database.properties = "true";
 		property skip.upgrade-legacy-database = "true";
-		property test.name.skip.portal.instance = "DatabaseUpgradeClient#CheckUpgradeClientUpgradeCoreOnly";
+		property test.liferay.virtual.instance = "false";
 		property timeout.explicit.wait = "490";
 
 		AntCommands.runCommand("modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml", "check-upgrade-client-upgrade-core-only");

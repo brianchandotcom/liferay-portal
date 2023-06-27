@@ -260,7 +260,7 @@ definition {
 	@description = "This is a use case for LPS-108216. Assert Toggle Controls doesn't affect widget pages in other virtual instance scoped."
 	@priority = 4
 	test ViewOnlyAffectCurrentInstance {
-		property test.name.skip.portal.instance = "ToggleControls#ViewOnlyAffectCurrentInstance";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add a virtual instance") {
 			HeadlessPortalInstanceAPI.addPortalInstance(

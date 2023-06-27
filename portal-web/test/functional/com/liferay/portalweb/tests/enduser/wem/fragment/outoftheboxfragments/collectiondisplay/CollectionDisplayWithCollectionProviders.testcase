@@ -25,9 +25,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -699,7 +699,7 @@ definition {
 	@priority = 5
 	test FilterWebContentByTag {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CollectionDisplayWithCollectionProviders#FilterWebContentByTag";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Enable Basic Web Content flag in Gogo Shell") {
 			GogoShell.openGogoShellAdmin();
@@ -924,7 +924,7 @@ definition {
 	@description = "This is a test for LPS-126009. The user is able to filter web contents in Collection Display using Tag and Title."
 	@priority = 4
 	test FilterWebContentByTagAndTitle {
-		property test.name.skip.portal.instance = "CollectionDisplayWithCollectionProviders#FilterWebContentByTagAndTitle";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Enable Basic Web Content flag in Gogo Shell") {
 			GogoShell.openGogoShellAdmin();
@@ -1173,7 +1173,7 @@ definition {
 	@description = "This is a test for LPS-126009. The user is able to filter web contents in Collection Display using Title."
 	@priority = 4
 	test FilterWebContentByTitle {
-		property test.name.skip.portal.instance = "CollectionDisplayWithCollectionProviders#FilterWebContentByTitle";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Enable Basic Web Content flag in Gogo Shell") {
 			GogoShell.openGogoShellAdmin();
@@ -2765,7 +2765,7 @@ definition {
 	@priority = 5
 	test ViewPrefilterResults {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CollectionDisplayWithCollectionProviders#ViewPrefilterResults";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Enable Basic Web Content flag in Gogo Shell") {
 			GogoShell.openGogoShellAdmin();

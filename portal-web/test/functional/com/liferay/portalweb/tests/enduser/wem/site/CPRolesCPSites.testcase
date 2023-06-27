@@ -13,9 +13,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -419,7 +419,7 @@ definition {
 	@priority = 4
 	test ViewSiteManagePagesRegRole {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property test.name.skip.portal.instance = "CPRolesCPSites#ViewSiteManagePagesRegRole";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Get site name") {
 			var siteName = TestCase.getSiteName(siteName = ${siteName});

@@ -14,9 +14,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -1773,7 +1773,7 @@ definition {
 	@uitest
 	test ClickTitleApprovedDPTWithNoPermissions {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ContentDashboard#ClickTitleApprovedDPTWithNoPermissions";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Create a default Display Page Template") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
@@ -1861,7 +1861,7 @@ definition {
 	@uitest
 	test ClickTitleApprovedDPTWithPermissions {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ContentDashboard#ClickTitleApprovedDPTWithPermissions";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Create a default Display Page Template") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
@@ -1963,7 +1963,7 @@ definition {
 	@priority = 3
 	@uitest
 	test ClickTitleApprovedNoDPT {
-		property test.name.skip.portal.instance = "ContentDashboard#ClickTitleApprovedNoDPT";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add web content Approved") {
 			JSONWebcontent.addWebContent(
@@ -2368,7 +2368,7 @@ definition {
 	@priority = 3
 	@uitest
 	test ClickTitleDraftNoDPT {
-		property test.name.skip.portal.instance = "ContentDashboard#ClickTitleDraftNoDPT";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add web content Draft") {
 			JSONWebcontent.addWebContent(
@@ -2397,7 +2397,7 @@ definition {
 	@priority = 3
 	@uitest
 	test ClickTitlePendingNoDPT {
-		property test.name.skip.portal.instance = "ContentDashboard#ClickTitlePendingNoDPT";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Configure Web Content Article workflow to Single Approver") {
 			Workflow.openWorkflowAdmin(siteURLKey = "test-site-name");
@@ -2433,7 +2433,7 @@ definition {
 	@priority = 3
 	@uitest
 	test ClickTitleScheduledNoDPT {
-		property test.name.skip.portal.instance = "ContentDashboard#ClickTitleScheduledNoDPT";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Create a Web Content") {
 			JSONWebcontent.addWebContent(
@@ -4234,7 +4234,7 @@ definition {
 	@priority = 4
 	test FilterByDuplicatedMimeType {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ContentDashboard#FilterByDuplicatedMimeType";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add documents with different mime types") {
 			JSONDocument.addFileWithUploadedFile(
@@ -4448,7 +4448,7 @@ definition {
 	test FilterByStatusExpiredDocument {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ContentDashboard#FilterByStatusExpiredDocument";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given an expired Document asset") {
 			task ("Set update interval") {

@@ -22,7 +22,7 @@ definition {
 	@priority = 5
 	test CookieBannerAndCookieConsentPanelElementsAreVisible {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CookiesUseCase#CookieBannerAndCookieConsentPanelElementsAreVisible";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: Cookie banner and Cookie Consent portlet are present") {
 			CookieBanner.verifyAllElementsArePresent();
@@ -45,7 +45,7 @@ definition {
 	@priority = 5
 	test CookieBannerBecameVisibleWhenCookiesAreRemovedOrExpired {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CookiesUseCase#CookieBannerBecameVisibleWhenCookiesAreRemovedOrExpired";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: Cookie Banner is present on the Site.") {
 			CookieBanner.cookiesBannerAcceptAll();
@@ -67,7 +67,7 @@ definition {
 	@priority = 5
 	test CookiesLifetimeIsSixMonthsWhenTheyAreSaved {
 		property portal.acceptance = "quarantine";
-		property test.name.skip.portal.instance = "CookiesUseCase#CookiesLifetimeIsSixMonthsWhenTheyAreSaved";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: Cookie Banner is present on the Site.") {
 			CookieBanner.cookiesBannerAcceptAll();
@@ -85,7 +85,7 @@ definition {
 	@description = "This is a use case for LPS-170904 TC-7. Verify only functional cookies are set when Instance level configuration is Disabled, and the user is a first-time visitor."
 	@priority = 5
 	test VerifyFunctionalCookiesForFirstVisitInInstanceLevelDisableImplicitMode {
-		property test.name.skip.portal.instance = "CookiesSiteLevelUseCase#VerifyFunctionalCookiesForFirstVisitInInstanceLevelDisableImplicitMode";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: Site Administrator disabled the cookie preference handling in instance level and the implicit cookie consent mode.") {
 			CookiePreferenceHandlingAdmin.disablePreferenceHandlingWithOutCookieConsentInSiteSettings(
@@ -121,7 +121,7 @@ definition {
 	@description = "This is a use case for LPS-170904 TC-6. Verify only functional cookies are set in instance level and Implicit mode, when the user is a first-time visitor."
 	@priority = 5
 	test VerifyFunctionalCookiesForFirstVisitInstanceLevelImplicitMode {
-		property test.name.skip.portal.instance = "CookiesSiteLevelUseCase#VerifyFunctionalCookiesForFirstVisitInstanceLevelImplicitMode";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: Site Administrator enabled the cookie preference handling in instance level and the explicit cookie consent mode.") {
 			CookiePreferenceHandlingAdmin.disablePreferenceHandlingWithOutCookieConsentInSiteSettings(
@@ -157,7 +157,7 @@ definition {
 	@description = "This is a use case for LPS-170904 TC-8. Verify only functional cookies are set in Site level enable then disable, when the user isn't a first-time visitor."
 	@priority = 5
 	test VerifyFunctionalCookiesForNotFirstVisitInInstanceLevelEnableThenDisable {
-		property test.name.skip.portal.instance = "CookiesSiteLevelUseCase#VerifyFunctionalCookiesForNotFirstVisitInInstanceLevelEnableThenDisable";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: Site Administrator enabled agreed on the cookie usage, then disable the cookie preference handling in site level.") {
 			UserBar.signOut();
@@ -208,7 +208,7 @@ definition {
 	@priority = 5
 	test VerifyingExplicitCookieWorfklow {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CookiesUseCase#VerifyingExplicitCookieWorfklow";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: Cookie preference handling is saved with Explicit Consent mode enabled.") {
 			CookiePreferenceHandlingAdmin.enablePreferenceHandlingWithCookieConsent();
@@ -228,7 +228,7 @@ definition {
 	@priority = 5
 	test VerifyingImplicitCookieWorfklow {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CookiesUseCase#VerifyingImplicitCookieWorfklow";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: Cookie preference handling is saved with Explicit Consent mode is disabled.") {
 			CookiePreferenceHandlingAdmin.enablePreferenceHandlingWithoutCookieConsent();
@@ -244,7 +244,7 @@ definition {
 	@description = "This is a use case for LPS-170904 TC-5. Verify no cookies are set in instance level and Explicit mode, when the user is a first-time visitor"
 	@priority = 5
 	test VerifyNoCookiesForFirstVisitInstanceLevelExplicitMode {
-		property test.name.skip.portal.instance = "CookiesSiteLevelUseCase#VerifyNoCookiesForFirstVisitInstanceLevelExplicitMode";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: Site Administrator enabled the cookie preference handling in instance level and the explicit cookie consent mode.") {
 			CookiePreferenceHandlingAdmin.disablePreferenceHandlingWithOutCookieConsentInSiteSettings(
@@ -280,7 +280,7 @@ definition {
 	@description = "This is a use case for LPS-156903. Verify the order of menu items after Cookie Preference Handling is enabled"
 	@priority = 3
 	test VerifyOrderOfMenuItemsInSiteSettings {
-		property test.name.skip.portal.instance = "CookiesUseCase#CookiesLifetimeIsSixMonthsWhenTheyAreSaved";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Verify the order of menu items in Site Settings") {
 			AssertVisible(locator1 = "CookieBannerAdmin#MENU_ITEMS_IN_ORDER");

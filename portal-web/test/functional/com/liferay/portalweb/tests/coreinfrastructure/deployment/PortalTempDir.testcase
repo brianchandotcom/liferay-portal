@@ -14,7 +14,7 @@ definition {
 
 		property osgi.module.configuration.file.names = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config";
 		property osgi.module.configurations = "blacklistBundleSymbolicNames=[\"com.liferay.ip.geocoder.impl\",\"com.liferay.ip.geocoder.sample.web\" ]";
-		property test.name.skip.portal.instance = "PortalTempDir#TempDirShouldBeEmptyAfterPortalShutdown";
+		property test.liferay.virtual.instance = "false";
 
 		var tempDir = PropsUtil.get("app.server.temp.dir");
 

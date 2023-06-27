@@ -39,9 +39,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -52,7 +52,7 @@ definition {
 	@description = "This is a test for LPS-172917. Verify that If there are multiple activities, the review page will display them as dropdown items that can be expandable"
 	@priority = 5
 	test CanExpandAndSeeMultipleActivities {
-		property test.name.skip.portal.instance = "PRMMDFRequest#CanExpandAndSeeMultipleActivities";
+		property test.liferay.virtual.instance = "false";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 
@@ -155,7 +155,7 @@ definition {
 	@priority = 5
 	test CanExportAllVisibleMDFs {
 		property solutions.acceptance = "true";
-		property test.name.skip.portal.instance = "PRMMDFRequest#CanExportAllVisibleMDFs";
+		property test.liferay.virtual.instance = "false";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 
@@ -189,7 +189,7 @@ definition {
 	@description = "This is a test for LPS-174679. Verify that is possible to export filtered MDFs"
 	@priority = 4
 	test CanExportFilteredMDFs {
-		property test.name.skip.portal.instance = "PRMMDFRequest#CanExportFilteredMDFs";
+		property test.liferay.virtual.instance = "false";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 
@@ -328,7 +328,7 @@ definition {
 	@priority = 5
 	test CannotContinueWithoutFillRequiredField {
 		property solutions.acceptance = "true";
-		property test.name.skip.portal.instance = "PRMMDFRequest#CannotContinueWithoutFillRequiredField";
+		property test.liferay.virtual.instance = "false";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 
@@ -386,7 +386,7 @@ definition {
 	@priority = 5
 	test CannotExceedTheValueOfMDFRequestedAmount {
 		property solutions.acceptance = "true";
-		property test.name.skip.portal.instance = "PRMMDFRequest#CannotExceedTheValueOfMDFRequestedAmount";
+		property test.liferay.virtual.instance = "false";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 
@@ -432,7 +432,7 @@ definition {
 	@description = "This is a test for LPS-171641. Verify that when click on '-' button, the budget value will be cleaned"
 	@priority = 3
 	test CanRemoveBudgetValue {
-		property test.name.skip.portal.instance = "PRMMDFRequest#CanRemoveBudgetValue";
+		property test.liferay.virtual.instance = "false";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 
@@ -468,7 +468,7 @@ definition {
 	@description = "This is test is for LPS-188868. Verify that the partner can submit an MDF with an Digital Marketing > Advertising activity"
 	@priority = 5
 	test CanSubmitMDFWithDigitalMarketingAdvertisingActivity {
-		property test.name.skip.portal.instance = "PRMMDFRequest#CanSubmitMDFWithDigitalMarketingAdvertisingActivity";
+		property test.liferay.virtual.instance = "false";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 
@@ -524,7 +524,7 @@ definition {
 	@description = "This is a test for LPS-169960. Verify that a submited MDF will be displayed on the list"
 	@priority = 5
 	test CanViewMDFStatusOnListing {
-		property test.name.skip.portal.instance = "PRMMDFRequest#CanViewMDFStatusOnListing";
+		property test.liferay.virtual.instance = "false";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 
@@ -560,7 +560,7 @@ definition {
 	@priority = 5
 	test DetailPageDisplaysAllMDFInformation {
 		property solutions.acceptance = "true";
-		property test.name.skip.portal.instance = "PRMMDFRequest#DetailPageDisplaysAllMDFInformation";
+		property test.liferay.virtual.instance = "false";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 
@@ -637,7 +637,7 @@ definition {
 	@priority = 5
 	test DifferenceBetweenStartAndEndDateCannotExceedSixMonths {
 		property solutions.acceptance = "true";
-		property test.name.skip.portal.instance = "PRMMDFRequest#DifferenceBetweenStartAndEndDateCannotExceedSixMonths";
+		property test.liferay.virtual.instance = "false";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 
@@ -684,7 +684,7 @@ definition {
 	@priority = 5
 	test OnlyManagersCanSeeStateManager {
 		property solutions.acceptance = "true";
-		property test.name.skip.portal.instance = "PRMMDFRequest#OnlyManagersCanSeeStateManager";
+		property test.liferay.virtual.instance = "false";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 
@@ -733,7 +733,7 @@ definition {
 	@priority = 5
 	test RequestedValueIsEqualsTo50PercentOfTotalCost {
 		property solutions.acceptance = "true";
-		property test.name.skip.portal.instance = "PRMMDFRequest#RequestedValueIsEqualsTo50PercentOfTotalCost";
+		property test.liferay.virtual.instance = "false";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 
@@ -775,7 +775,7 @@ definition {
 	@priority = 5
 	test ReviewPageDisplaysAllInputedInformation {
 		property solutions.acceptance = "true";
-		property test.name.skip.portal.instance = "PRMMDFRequest#ReviewPageDisplaysAllInputedInformation";
+		property test.liferay.virtual.instance = "false";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 
@@ -856,7 +856,7 @@ definition {
 	@priority = 5
 	test StartDateCannotBeBeforeToCurrentDate {
 		property solutions.acceptance = "true";
-		property test.name.skip.portal.instance = "PRMMDFRequest#StartDateCannotBeBeforeToCurrentDate";
+		property test.liferay.virtual.instance = "false";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 
@@ -897,7 +897,7 @@ definition {
 	@priority = 5
 	test StartDateCannotBeEqualsToCurrentDate {
 		property solutions.acceptance = "true";
-		property test.name.skip.portal.instance = "PRMMDFRequest#StartDateCannotBeEqualsToCurrentDate";
+		property test.liferay.virtual.instance = "false";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 
@@ -937,7 +937,7 @@ definition {
 	test SubmittedMDFAppearsOnListing {
 		property portal.acceptance = "true";
 		property solutions.acceptance = "true";
-		property test.name.skip.portal.instance = "PRMMDFRequest#SubmittedMDFAppearsOnListing";
+		property test.liferay.virtual.instance = "false";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 
@@ -973,7 +973,7 @@ definition {
 	@description = "This is a test for LPS-173512. Verify that If no claim was made, the message ‘You can submit up to 2 claims’ appears"
 	@priority = 5
 	test VerifyMessageWhenNoClaimWasMade {
-		property test.name.skip.portal.instance = "PRMMDFRequest#VerifyMessageWhenNoClaimWasMade";
+		property test.liferay.virtual.instance = "false";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 
@@ -1025,7 +1025,7 @@ definition {
 	@description = "This is a test for LPS-174284. Verify that If just one claim was made, so the message 'You can submit up to 1 claim' appears"
 	@priority = 5
 	test VerifyMessageWhenOneClaimWasMade {
-		property test.name.skip.portal.instance = "PRMMDFRequest#VerifyMessageWhenOneClaimWasMade";
+		property test.liferay.virtual.instance = "false";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 
@@ -1076,7 +1076,7 @@ definition {
 	@description = "This is a test for LPS-177043. Verify that If all claims (two) were made, so the message 'No more claim can be submitted' and the claim button will be not displayed anymore"
 	@priority = 5
 	test VerifyMessageWhenTwoClaimsWasMade {
-		property test.name.skip.portal.instance = "PRMMDFRequest#VerifyMessageWhenTwoClaimsWasMade";
+		property test.liferay.virtual.instance = "false";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 
@@ -1135,7 +1135,7 @@ definition {
 	@description = "This is a test for LPS-177320. Verify that when a MDF is created with the Total MDF Requested Amount higher than 15k, after submitted, the MDF status will be ‘Marketing Director’s Review’."
 	@priority = 5
 	test ViewMDFStatusWithRequestValueHigherThan15K {
-		property test.name.skip.portal.instance = "PRMMDFRequest#ViewMDFStatusWithRequestValueHigherThan15K";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that I submit an MDF with the Total MDF Requested Amount value higher than 15k") {
 			PRMMarketing.gotoAddNewMDF();
@@ -1173,7 +1173,7 @@ definition {
 	@description = "This is a test for LPS-177320. Verify that when a MDF is created with the Total MDF Requested Amount less than 15k, after submitted, the MDF status will be ‘Pending Marketing Review’."
 	@priority = 5
 	test ViewMDFStatusWithRequestValueLessThan15K {
-		property test.name.skip.portal.instance = "PRMMDFRequest#ViewMDFStatusWithRequestValueLessThan15K";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that I submit an MDF with the Total MDF Requested Amount value less than 15k") {
 			PRMMarketing.gotoAddNewMDF();
@@ -1211,7 +1211,7 @@ definition {
 	@description = "This is a test for LPS-171627. Verify that that on Target Market, just 1 ~ 3 options can be selected"
 	@priority = 4
 	test ViewTargetMarketOptionsError {
-		property test.name.skip.portal.instance = "PRMMDFRequest#ViewTargetMarketOptionsError";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that the User go to add a new MDF Request") {
 			PRMMarketing.gotoAddNewMDF();

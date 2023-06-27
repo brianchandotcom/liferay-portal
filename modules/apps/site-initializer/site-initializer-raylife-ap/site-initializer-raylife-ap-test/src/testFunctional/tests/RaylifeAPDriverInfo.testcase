@@ -36,7 +36,7 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		User.logoutPG();
 
@@ -44,7 +44,7 @@ definition {
 
 		Raylife.tearDownCP();
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -55,7 +55,7 @@ definition {
 	@description = "Story id: LPS-146335 | Test Summary: Verify if a second Driver Information can be removed."
 	@priority = 3
 	test CanSecondDriverBeRemoved {
-		property test.name.skip.portal.instance = "RaylifeAPDriverInfo#CanSecondDriverBeRemoved";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that an user starts a new application flow") {
 			RaylifeApplicationModal.openNewApplicationFlow(

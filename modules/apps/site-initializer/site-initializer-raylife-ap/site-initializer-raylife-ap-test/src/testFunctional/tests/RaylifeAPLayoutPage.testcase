@@ -36,11 +36,11 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		RaylifeAP.tearDownCP();
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -51,7 +51,7 @@ definition {
 	@description = "LPS-151595 - Check if the left sidebar it should is expand is present"
 	@priority = 4
 	test CanViewSideBarExpand {
-		property test.name.skip.portal.instance = "RaylifeAPLayoutPage#CanViewSideBarExpand";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -67,7 +67,7 @@ definition {
 	@description = "LPS-151596 - Check that the 'Applications' section is present in the sidebar"
 	@priority = 4
 	test SectionApplicationsInTheSidebar {
-		property test.name.skip.portal.instance = "RaylifeAPLayoutPage#SectionApplicationsInTheSidebar";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 

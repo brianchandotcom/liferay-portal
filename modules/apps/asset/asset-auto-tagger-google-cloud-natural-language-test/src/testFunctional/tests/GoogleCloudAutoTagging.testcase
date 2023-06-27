@@ -22,9 +22,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -37,7 +37,7 @@ definition {
 	@description = "This test ensures that a document with text in a depot can be auto-tagged after enabling GCNL."
 	@priority = 4
 	test CanAutoTagDocumentInDepot {
-		property test.name.skip.portal.instance = "GoogleCloudAutoTagging#CanAutoTagDocumentInDepot";
+		property test.liferay.virtual.instance = "false";
 
 		GoogleCloudAutoTagging.openToTextConfiguration();
 
@@ -63,7 +63,7 @@ definition {
 	@description = "This test ensures that an Image in a depot can be auto-tagged after enabling GCV."
 	@priority = 4
 	test CanAutoTagImageInDepot {
-		property test.name.skip.portal.instance = "GoogleCloudAutoTagging#CanAutoTagImageInDepot";
+		property test.liferay.virtual.instance = "false";
 
 		GoogleCloudAutoTagging.openToImageConfiguration();
 
@@ -87,7 +87,7 @@ definition {
 	@description = "This test ensures that a web content article with text in a depot can be auto-tagged after enabling GCNL."
 	@priority = 4
 	test CanAutoTagWebContentInDepot {
-		property test.name.skip.portal.instance = "GoogleCloudAutoTagging#CanAutoTagWebContentInDepot";
+		property test.liferay.virtual.instance = "false";
 
 		GoogleCloudAutoTagging.openToTextConfiguration();
 
@@ -112,7 +112,7 @@ definition {
 	@description = "This test ensures that a blog entry with a tag added by manual can not be auto-tagged after publishing."
 	@priority = 4
 	test CanOnlyViewBlogManualTag {
-		property test.name.skip.portal.instance = "GoogleCloudAutoTagging#CanOnlyViewBlogManualTag";
+		property test.liferay.virtual.instance = "false";
 
 		GoogleCloudAutoTagging.openToTextConfiguration();
 
@@ -150,7 +150,7 @@ definition {
 	@description = "This test ensures that a document with a tag added by manual can not be auto-tagged after publishing."
 	@priority = 4
 	test CanOnlyViewDocumentManualTag {
-		property test.name.skip.portal.instance = "GoogleCloudAutoTagging#CanOnlyViewDocumentManualTag";
+		property test.liferay.virtual.instance = "false";
 
 		GoogleCloudAutoTagging.openToTextConfiguration();
 
@@ -180,7 +180,7 @@ definition {
 	@description = "This test ensures that an image with a tag added by manual can not be auto-tagged after publishing."
 	@priority = 4
 	test CanOnlyViewImageManualTag {
-		property test.name.skip.portal.instance = "GoogleCloudAutoTagging#CanOnlyViewImageManualTag";
+		property test.liferay.virtual.instance = "false";
 
 		GoogleCloudAutoTagging.openToImageConfiguration();
 
@@ -206,7 +206,7 @@ definition {
 	@description = "This test ensures that a WC article with a tag added by manual can not be auto-tagged after publishing."
 	@priority = 4
 	test CanOnlyViewWebContentManualTag {
-		property test.name.skip.portal.instance = "GoogleCloudAutoTagging#CanOnlyViewWebContentManualTag";
+		property test.liferay.virtual.instance = "false";
 
 		GoogleCloudAutoTagging.openToTextConfiguration();
 
@@ -240,7 +240,7 @@ definition {
 	@description = "This test ensures that a tag added in a blog entry through GCNL can be removed."
 	@priority = 5
 	test CanRemoveBlogTag {
-		property test.name.skip.portal.instance = "GoogleCloudAutoTagging#CanRemoveBlogTag";
+		property test.liferay.virtual.instance = "false";
 
 		GoogleCloudAutoTagging.openToTextConfiguration();
 
@@ -284,7 +284,7 @@ definition {
 	@description = "This test ensures that a tag added in a document through GCNL can be removed."
 	@priority = 5
 	test CanRemoveDocumentTag {
-		property test.name.skip.portal.instance = "GoogleCloudAutoTagging#CanRemoveDocumentTag";
+		property test.liferay.virtual.instance = "false";
 
 		GoogleCloudAutoTagging.openToTextConfiguration();
 
@@ -325,7 +325,7 @@ definition {
 	@description = "This test ensures that a tag added in an image through GCVI can be removed."
 	@priority = 5
 	test CanRemoveImageTag {
-		property test.name.skip.portal.instance = "GoogleCloudAutoTagging#CanRemoveImageTag";
+		property test.liferay.virtual.instance = "false";
 
 		GoogleCloudAutoTagging.openToImageConfiguration();
 
@@ -363,7 +363,7 @@ definition {
 	@description = "This test ensures that a tag added in a WC article through GCNL can be removed."
 	@priority = 5
 	test CanRemoveWebContentTag {
-		property test.name.skip.portal.instance = "GoogleCloudAutoTagging#CanRemoveWebContentTag";
+		property test.liferay.virtual.instance = "false";
 
 		GoogleCloudAutoTagging.openToTextConfiguration();
 
@@ -404,7 +404,7 @@ definition {
 	@description = "This test ensures that auto tags can be published to live with the blog entry."
 	@priority = 4
 	test CanViewBlogAutoTagsAfterPublishing {
-		property test.name.skip.portal.instance = "GoogleCloudAutoTagging#CanViewBlogAutoTagsAfterPublishing";
+		property test.liferay.virtual.instance = "false";
 
 		GoogleCloudAutoTagging.openToTextConfiguration();
 
@@ -448,7 +448,7 @@ definition {
 	@description = "This test ensures that auto tags can be published to live with the document entry."
 	@priority = 4
 	test CanViewDocumentAutoTagsAfterPublishing {
-		property test.name.skip.portal.instance = "GoogleCloudAutoTagging#CanViewDocumentAutoTagsAfterPublishing";
+		property test.liferay.virtual.instance = "false";
 
 		GoogleCloudAutoTagging.openToTextConfiguration();
 
@@ -484,7 +484,7 @@ definition {
 	@description = "This test ensures that auto tags can be published to live with the Image."
 	@priority = 4
 	test CanViewImageAutoTagsAfterPublishing {
-		property test.name.skip.portal.instance = "GoogleCloudAutoTagging#CanViewImageAutoTagsAfterPublishing";
+		property test.liferay.virtual.instance = "false";
 
 		GoogleCloudAutoTagging.openToImageConfiguration();
 
@@ -519,7 +519,7 @@ definition {
 	@description = "This test ensures that auto tags can be published to live with the WC article."
 	@priority = 4
 	test CanViewWebContentAutoTagsAfterPublishing {
-		property test.name.skip.portal.instance = "GoogleCloudAutoTagging#CanViewWebContentAutoTagsAfterPublishing";
+		property test.liferay.virtual.instance = "false";
 
 		GoogleCloudAutoTagging.openToTextConfiguration();
 

@@ -86,9 +86,9 @@ definition {
 
 		PortalInstances.deleteCP(virtualHost = "www.able.com");
 
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
@@ -96,7 +96,7 @@ definition {
 	@priority = 4
 	test CanCreateObjectEntryByScopeKey {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ScopeObjectAPIsForDifferentInstances#CanCreateObjectEntryByScopeKey";
+		property test.liferay.virtual.instance = "false";
 
 		task ("When I use postScopeScopeKey and scopeKey to create an object entry in default instance") {
 			var defaultInstanceToken = OAuth2ForObject.createTokenWithOAuth2Scopes(
@@ -128,7 +128,7 @@ definition {
 	@priority = 4
 	test CanCreateObjectEntryInVirtualInstance {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ScopeObjectAPIsForDifferentInstances#CanCreateObjectEntryInVirtualInstance";
+		property test.liferay.virtual.instance = "false";
 
 		task ("When I use postTest to create an object entry in www.able.com instance") {
 			var virtualInstanceToken = OAuth2ForObject.createTokenWithOAuth2Scopes(
@@ -161,7 +161,7 @@ definition {
 	@priority = 4
 	test CanIncludeObjectFieldInAPIExplorer {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ScopeObjectAPIsForDifferentInstances#CanIncludeObjectFieldInAPIExplorer";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given navigate to www.able.com:8080/o/c/tests") {
 			APIExplorer.navigateToOpenAPI(
@@ -196,7 +196,7 @@ definition {
 	test CanScopeObjectByInstanceInExportTask {
 		property custom.properties = "include-and-override=portal-liferay-online.properties${line.separator}feature.flag.COMMERCE-8087=true";
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ScopeObjectAPIsForDifferentInstances#CanScopeObjectByInstanceInExportTask";
+		property test.liferay.virtual.instance = "false";
 
 		task ("And Given an object definition Student with a custom field is created and published on virtual instance") {
 			var virtualInstanceToken = OAuth2ForObject.createTokenWithOAuth2Scopes(

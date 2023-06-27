@@ -14,9 +14,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -29,7 +29,7 @@ definition {
 	@description = "This is a use case for LPS-184518. TC-1. Verify Site-level CSP configuration could be set and work for the site with SiteURL and overwrites instance level."
 	@priority = 4
 	test CanSetSiteLevelCSPAndOverwritesInstanceLevelCSP {
-		property test.name.skip.portal.instance = "ContentSecurityPolicy#CanSetSiteLevelCSPAndOverwritesInstanceLevelCSP";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: Add new site with SiteURL CSP enabled at site level and enable CSP at Instance level.") {
 			ContentSecurityPolicy.goToContentSecurityPolicyInstanceSettings();
@@ -114,7 +114,7 @@ definition {
 	@description = "This is a use case for LPS-184518. TC-2. Verify Site-level CSP disabled CSP could overwrite Instance-level CSP."
 	@priority = 4
 	test DisableSiteLevelCSPOverwritesInstanceLevelCSP {
-		property test.name.skip.portal.instance = "ContentSecurityPolicy#CanSetSiteLevelCSPAndOverwritesInstanceLevelCSP";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: Add new site with SiteURL CSP enabled at site level and enable CSP at Instance level.") {
 			ContentSecurityPolicy.goToContentSecurityPolicyInstanceSettings();
@@ -196,7 +196,7 @@ definition {
 	@description = "This is a use case for LPS-184518. TC-3. Verify After the Site-level CSP reset, the site will display Instance level CSP if configured."
 	@priority = 4
 	test SiteDisplayInstanceLevelCSPAfterResetSiteLevelCSP {
-		property test.name.skip.portal.instance = "ContentSecurityPolicy#SiteDisplayInstanceLevelCSPAfterResetSiteLevelCSP";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: Add new site with SiteURL CSP enabled at site level and enable CSP at Instance level.") {
 			ContentSecurityPolicy.goToContentSecurityPolicyInstanceSettings();
@@ -270,7 +270,7 @@ definition {
 	@description = "This is a use case for LPS-179552. TC-2. Verify the CSP configuration could be loaded from OSGi configuration file."
 	@priority = 5
 	test VerifyCSPConfigurationCanBeLoadedFromOSGiFile {
-		property test.name.skip.portal.instance = "ContentSecurityPolicy#VerifyCSPConfigurationCanBeLoadedFromOSGiFile";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given Add virtual instance and enable CSP at Instance level") {
 			HeadlessPortalInstanceAPI.addPortalInstance(
@@ -310,7 +310,7 @@ definition {
 	@description = "This is a use case for LPS-182349. TC-3. Verify the prespecified Content Security Policy settings could be configured at Instance level using Web ID."
 	@priority = 4
 	test VerifyCSPCouldConfiguredByWebId {
-		property test.name.skip.portal.instance = "ContentSecurityPolicy#VerifyCSPCouldConfiguredByWebId";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add the OSGI configuration file") {
 			ContentSecurityPolicy.deployInstanceConfigFile(osgiConfigFileName = "com.liferay.portal.security.content.security.policy.configuration.ContentSecurityPolicyConfiguration.scoped~custom-image-source-webid.config");
@@ -344,7 +344,7 @@ definition {
 	@description = "This is a use case for LPS-182349. TC-1, TC-2 and TC-4. Verify the prespecified Content Security Policy settings is present at Instance level and present in the Request headers."
 	@priority = 4
 	test VerifyCSPCouldConfiguredToBlockImageSource {
-		property test.name.skip.portal.instance = "ContentSecurityPolicy#VerifyCSPCouldConfiguredToBlockImageSource";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add the OSGI configuration file") {
 			ContentSecurityPolicy.deployInstanceConfigFile(osgiConfigFileName = "com.liferay.portal.security.content.security.policy.configuration.ContentSecurityPolicyConfiguration.scoped~custom-image-source.config");
@@ -378,7 +378,7 @@ definition {
 	@description = "This is a use case for LPS-179901. TC-2. Verify the CSP configuration could be loaded from OSGi configuration file."
 	@priority = 5
 	test VerifyCSPSiteSettingsCanBeLoadedFromOSGiFile {
-		property test.name.skip.portal.instance = "ContentSecurityPolicy#VerifyCSPSiteSettingsCanBeLoadedFromOSGiFile";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given Add new site and add a new virtual host as SiteURL") {
 			HeadlessSite.addSite(siteName = "Site Name");
@@ -425,7 +425,7 @@ definition {
 	@description = "This is a use case for LPS-179552. TC-1. Verify if 'nonce' value is added to all script and link HTML elements of the page."
 	@priority = 5
 	test VerifyNonceIsAddedWhenCSPIsEnabled {
-		property test.name.skip.portal.instance = "ContentSecurityPolicy#VerifyNonceIsAddedWhenCSPIsEnabled";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given Add virtual instance and enable CSP at Instance level") {
 			HeadlessPortalInstanceAPI.addPortalInstance(
@@ -487,7 +487,7 @@ definition {
 	@description = "This is a use case for LPS-179901. TC-1. Verify if 'nonce' value is added to all script and link HTML elements of the site page."
 	@priority = 5
 	test VerifyNonceIsAddedWhenCSPIsEnabledAtSiteLevel {
-		property test.name.skip.portal.instance = "ContentSecurityPolicy#VerifyNonceIsAddedWhenCSPIsEnabledAtSiteLevel";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given Add new site and add a new virtual host as SiteURL") {
 			HeadlessSite.addSite(siteName = "Site Name");

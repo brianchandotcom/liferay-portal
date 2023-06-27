@@ -27,9 +27,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -40,7 +40,7 @@ definition {
 	@description = "LPS-172079 - Verify that the admin user can add a new announcement."
 	@priority = 5
 	test AdminCanAddAnnouncement {
-		property test.name.skip.portal.instance = "PRMHomePage#AdminCanAddAnnouncement";
+		property test.liferay.virtual.instance = "false";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 
@@ -69,7 +69,7 @@ definition {
 	@priority = 4
 	test CanAccessDealListingViaQuickLinks {
 		property solutions.acceptance = "true";
-		property test.name.skip.portal.instance = "PRMHomePage#CanAccessDealListingViaQuickLinks";
+		property test.liferay.virtual.instance = "false";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 
@@ -88,7 +88,7 @@ definition {
 	@priority = 4
 	test CanAccessMDFRequestListingViaQuickLinks {
 		property solutions.acceptance = "true";
-		property test.name.skip.portal.instance = "PRMHomePage#CanAccessMDFRequestListingViaQuickLinks";
+		property test.liferay.virtual.instance = "false";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 

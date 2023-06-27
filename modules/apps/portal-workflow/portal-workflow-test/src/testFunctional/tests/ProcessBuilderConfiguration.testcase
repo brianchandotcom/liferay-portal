@@ -12,9 +12,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -188,7 +188,7 @@ definition {
 	@description = "Verify that the user is able to order by Workflow"
 	@priority = 3
 	test CanOrderByWorkflow {
-		property test.name.skip.portal.instance = "ProcessBuilderConfiguration#CanOrderByWorkflow";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -298,7 +298,7 @@ definition {
 	@description = "Verify that search can be done using non-ASCII character"
 	@priority = 4
 	test CanSearchNonAsciiChar {
-		property test.name.skip.portal.instance = "ProcessBuilderConfiguration#CanSearchNonAsciiChar";
+		property test.liferay.virtual.instance = "false";
 		property test.run.environment = "EE";
 
 		Workflow.duplicateSingleApproverWorkflow(workflowName = "単一承認者");

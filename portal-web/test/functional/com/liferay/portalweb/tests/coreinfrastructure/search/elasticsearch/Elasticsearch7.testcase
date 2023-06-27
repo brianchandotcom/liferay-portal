@@ -13,9 +13,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
@@ -24,7 +24,7 @@ definition {
 	test AssertIndexOnStartup {
 		property search.environment.suite.exclude = "true";
 		property test.assert.warning.exceptions = "true";
-		property test.name.skip.portal.instance = "Elasticsearch7#AssertIndexOnStartup";
+		property test.liferay.virtual.instance = "false";
 
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
@@ -132,7 +132,7 @@ definition {
 
 	@priority = 5
 	test AssertSearchAdmin {
-		property test.name.skip.portal.instance = "Elasticsearch7#AssertSearchAdmin";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -239,7 +239,7 @@ definition {
 		property portal.acceptance = "true";
 		property search.environment.suite.exclude = "true";
 		property test.assert.warning.exceptions = "true";
-		property test.name.skip.portal.instance = "Elasticsearch7#AssertSidecarAutoInstall";
+		property test.liferay.virtual.instance = "false";
 
 		AssertConsoleTextPresent(value1 = "Sidecar Elasticsearch liferay started at [\d\.]+:9201");
 
@@ -258,7 +258,7 @@ definition {
 	@priority = 3
 	test BulkExecutionFailuresAreLoggedCorrectly {
 		property search.environment.suite.exclude = "true";
-		property test.name.skip.portal.instance = "Elasticsearch7#BulkExecutionFailuresAreLoggedCorrectly";
+		property test.liferay.virtual.instance = "false";
 
 		SystemSettings.openToConfigInSystemSettings(portletId = "com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration");
 
@@ -292,7 +292,7 @@ definition {
 		property portal.acceptance = "true";
 		property remote.elasticsearch.enabled = "true";
 		property search.environment.suite.exclude = "true";
-		property test.name.skip.portal.instance = "Elasticsearch7#ElasticsearchClusteringSmokeTest";
+		property test.liferay.virtual.instance = "false";
 
 		Elasticsearch.viewClusterStatusViaClusterHealthAPI(
 			nodePort = 9200,
@@ -342,7 +342,7 @@ definition {
 		property elasticsearch.multiple.connections = "true";
 		property remote.elasticsearch.enabled = "true";
 		property search.environment.suite.exclude = "true";
-		property test.name.skip.portal.instance = "Elasticsearch7#MultipleConnectionsSmokeTest";
+		property test.liferay.virtual.instance = "false";
 
 		SearchAdministration.openSearchAdmin();
 
@@ -441,7 +441,7 @@ definition {
 		property osgi.module.configurations = "clusterName=\"LiferayElasticsearchCluster1\"";
 		property portal.acceptance = "true";
 		property search.environment.suite.exclude = "true";
-		property test.name.skip.portal.instance = "Elasticsearch7#OSGiConfigSmokeTest";
+		property test.liferay.virtual.instance = "false";
 
 		var portalHostname = PropsUtil.get("portal.hostname");
 
@@ -453,7 +453,7 @@ definition {
 	@description = "This is a use case for LPS-130753."
 	@priority = 4
 	test ReindexSpecificPortalInstances {
-		property test.name.skip.portal.instance = "Elasticsearch7#ReindexSpecificPortalInstances";
+		property test.liferay.virtual.instance = "false";
 
 		ServerAdministration.openServerAdmin();
 
@@ -482,7 +482,7 @@ definition {
 		property custom.properties = "feature.flag.LPS-177664=true";
 		property portal.release = "false";
 		property search.environment.suite.exclude = "true";
-		property test.name.skip.portal.instance = "Elasticsearch7#ReindexWithConcurrentExecutionMode";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Assert that indexNameCurrent and indexNameNext in the lportal.Company datbase table are empty when a reindex has not been executed yet") {
 			var companyId = JSONCompany.getCompanyId();
@@ -554,7 +554,7 @@ definition {
 	test ReindexWithSyncExecutionMode {
 		property custom.properties = "feature.flag.LPS-177668=true";
 		property search.environment.suite.exclude = "true";
-		property test.name.skip.portal.instance = "Elasticsearch7#ReindexWithSyncExecutionMode";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Grab the timestamp value for the 'Test Test' user document from the index before a Sync reindex is executed") {
 			var companyId = JSONCompany.getCompanyId();
@@ -647,7 +647,7 @@ definition {
 		property operating.system.types = "centos";
 		property remote.elasticsearch.enabled = "true";
 		property test.assert.warning.exceptions = "true";
-		property test.name.skip.portal.instance = "Elasticsearch7#SearchAfterRedeployingElasticsearchConnector";
+		property test.liferay.virtual.instance = "false";
 
 		GogoShell.openGogoShellAdmin();
 
@@ -680,7 +680,7 @@ definition {
 	test SearchWithNonLiferayIndex {
 		property embedded.elasticsearch.only = "true";
 		property search.environment.suite.exclude = "true";
-		property test.name.skip.portal.instance = "Elasticsearch7#SearchWithNonLiferayIndex";
+		property test.liferay.virtual.instance = "false";
 
 		var portalHostname = PropsUtil.get("portal.hostname");
 
@@ -736,7 +736,7 @@ definition {
 	test SwitchSidecarToRemote {
 		property embedded.elasticsearch.only = "true";
 		property search.environment.suite.exclude = "true";
-		property test.name.skip.portal.instance = "Elasticsearch7#SwitchSidecarToRemote";
+		property test.liferay.virtual.instance = "false";
 
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
@@ -806,7 +806,7 @@ definition {
 	@priority = 3
 	test UpdateSystemSettingsWithoutPortalRestart {
 		property embedded.elasticsearch.only = "true";
-		property test.name.skip.portal.instance = "Elasticsearch7#UpdateSystemSettingsWithoutPortalRestart";
+		property test.liferay.virtual.instance = "false";
 
 		JSONWebcontent.addWebContent(
 			content = "WC Content",
@@ -871,7 +871,7 @@ definition {
 	@priority = 4
 	test WarnTracePresentWithDataInconsistency {
 		property search.environment.suite.exclude = "true";
-		property test.name.skip.portal.instance = "Elasticsearch7#WarnTracePresentWithDataInconsistency";
+		property test.liferay.virtual.instance = "false";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentTitle = "DM Document",

@@ -31,9 +31,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -486,7 +486,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 	test DisplayWebContentAudio {
 		property dummy.socket.proxy.disabled = "true";
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "WebContentDisplay#ViewWebContentAudio";
+		property test.liferay.virtual.instance = "false";
 		property testray.component.names = "Training,Web Content Administration";
 
 		task ("Enable the FFMPEG Audio Converter in System Settings") {
@@ -1005,7 +1005,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 	@uitest
 	test UndeployWebContentDisplayModuleViaGogoShell {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "WebContentDisplay#UndeployWebContentDisplayModuleViaGogoShell";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Disable Web Content Display module via GogoShell") {
 			GogoShell.openGogoShellAdmin();
@@ -1187,7 +1187,7 @@ ${runtimeInstance}
 	@description = "View all file types are shown in Web Content Display"
 	@priority = 4
 	test ViewAllFileTypesEnabled {
-		property test.name.skip.portal.instance = "WebContentDisplay#ViewAllFileTypesEnabled";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add a web content") {
 			JSONWebcontent.addWebContent(

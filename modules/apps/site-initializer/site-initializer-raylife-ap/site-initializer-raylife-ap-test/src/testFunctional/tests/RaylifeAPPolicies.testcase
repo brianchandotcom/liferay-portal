@@ -36,13 +36,13 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		RaylifeAP.deleteAllCreatedEntries(searchTerm = "Testing");
 
 		Raylife.tearDownCP();
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -53,7 +53,7 @@ definition {
 	@description = "Story ID: LPS-146254 | Test Summary: Verify that the number in the center of the graph is equal the total number of active Policies"
 	@priority = 5
 	test AssertTheTotalNumberOfActivePolicies {
-		property test.name.skip.portal.instance = "RaylifeAPPoliceTotalActive#AssertTheTotalNumberOfActivePolicies";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -75,7 +75,7 @@ definition {
 	@description = "Story ID: LPS-146257 | Test Summary: Verify if the kebab button has and edit and delete options and then test if the delete option works"
 	@priority = 4
 	test CanDeletePolicies {
-		property test.name.skip.portal.instance = "RaylifeAPPolicies#CanDeletePolicies";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -148,7 +148,7 @@ definition {
 	@description = "Story ID: LPS-146254 | Test Summary: Check if adding a new application increases the number of Policies"
 	@priority = 5
 	test CanViewIfTheNumberOfPoliciesHasIncreased {
-		property test.name.skip.portal.instance = "RaylifeAPPolicies#CanViewIfTheNumberOfPoliciesHasIncreased";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 

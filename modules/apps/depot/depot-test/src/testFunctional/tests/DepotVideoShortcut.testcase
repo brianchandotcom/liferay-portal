@@ -22,9 +22,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -109,7 +109,7 @@ definition {
 	@priority = 5
 	@refactordone
 	test CannotSearchDepotVideoShortcutWhenSearchingIsDisabled {
-		property test.name.skip.portal.instance = "DepotVideoShortcut#CannotSearchDepotVideoShortcutWhenSearchingIsDisabled";
+		property test.liferay.virtual.instance = "false";
 
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Site Name",
@@ -184,7 +184,7 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanSearchVideoShortcutByTag {
-		property test.name.skip.portal.instance = "DepotVideoShortcut#CanSearchVideoShortcutByTag";
+		property test.liferay.virtual.instance = "false";
 
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Site Name",
@@ -535,7 +535,7 @@ definition {
 	@priority = 3
 	@refactordone
 	test CanViewVideoShortcutInRelatedAssets {
-		property test.name.skip.portal.instance = "DepotVideoShortcut#ViewInRelatedAssets";
+		property test.liferay.virtual.instance = "false";
 
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Site Name",

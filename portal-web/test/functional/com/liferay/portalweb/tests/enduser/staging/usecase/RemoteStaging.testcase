@@ -27,9 +27,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -40,7 +40,7 @@ definition {
 	@description = "This is a use case for LPP-8122. Verify that when remote publishing, the child pages are not published when they are unselected."
 	@priority = 3
 	test AssertCannotPublishChildPageWhenUnselected {
-		property test.name.skip.portal.instance = "RemoteStaging#AssertCannotPublishChildPageWhenUnselected";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: Add two children pages for Staging Test Page") {
 			for (var i : list "1,2") {
@@ -87,7 +87,7 @@ definition {
 	@description = "This is a use case for LPS-154557 TC-1: Verify detailed error message should show up with default configuration."
 	@priority = 4
 	test AssertDetailedErrorMessageWithDefaultConfiguration {
-		property test.name.skip.portal.instance = "RemoteStaging#AssertDetailedErrorMessageWithDefaultConfiguration";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: Delete the remote live site") {
 			JSONGroup.deleteGroupByName(
@@ -115,7 +115,7 @@ definition {
 	@priority = 4
 	test AssertExceptionDataIsHiddenWhenSetPropertyToTrue {
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=${line.separator}tunnel.servlet.hide.exception.data=true";
-		property test.name.skip.portal.instance = "RemoteStaging#AssertExceptionDataIsHiddenWhenSetPropertyToTrue";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: Delete the remote live site") {
 			JSONGroup.deleteGroupByName(
@@ -142,7 +142,7 @@ definition {
 	@description = "This is a use case for LPS-123156. Verify that the publication process message is shown while the publication is in progress."
 	@priority = 4
 	test AssertLongPublicationProcessMessage {
-		property test.name.skip.portal.instance = "RemoteStaging#AssertLongPublicationProcessMessage";
+		property test.liferay.virtual.instance = "false";
 
 		Staging.runGroovyScript();
 
@@ -167,7 +167,7 @@ definition {
 	@description = "This is a use case for LPS-83187. Add a publish template to the staging site then verify the title of the scheduled publication after it is finished."
 	@priority = 3
 	test AssertTemplatesTitleOfScheduledStagingPublishes {
-		property test.name.skip.portal.instance = "RemoteStaging#AssertTemplatesTitleOfScheduledStagingPublishes";
+		property test.liferay.virtual.instance = "false";
 
 		HeadlessSite.addSite(
 			portalURL = "http://localhost:9080",
@@ -202,7 +202,7 @@ definition {
 	@description = "This is a use case for LPS-123156. Verify that correct error message will appear when the publishing process encounters an error."
 	@priority = 4
 	test AssertValidationErrors {
-		property test.name.skip.portal.instance = "RemoteStaging#AssertValidationErrors";
+		property test.liferay.virtual.instance = "false";
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
 
@@ -225,7 +225,7 @@ definition {
 	@description = "This is a use case for LPS-52285. Verify that remote staging can be disabled after shutting down the remote site."
 	@priority = 4
 	test CanDisableRemoteStagingAfterShuttingDownRemoteSite {
-		property test.name.skip.portal.instance = "RemoteStaging#CanDisableRemoteStagingAfterShuttingDownRemoteSite";
+		property test.liferay.virtual.instance = "false";
 
 		task ("When: Shut down the remote live environment and attempt to disable staging settings") {
 			Clustering.shutdownSpecificServer(nodePort = 9080);
@@ -270,7 +270,7 @@ definition {
 	@ignore = "true"
 	@priority = 4
 	test CanPublishWCWithImagesViaAP {
-		property test.name.skip.portal.instance = "RemoteStaging#CanPublishWCWithImagesViaAP";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: Dm image and AP widget on staged site") {
 			JSONDocument.addFileWithUploadedFile(
@@ -377,7 +377,7 @@ definition {
 	@description = "This is a use case for LPS-146399. In the publish summary of a remote staging site only the previously published pages should be present."
 	@priority = 3
 	test OnlyPublishedPagesShouldBePresentInSummary {
-		property test.name.skip.portal.instance = "RemoteStaging#OnlyPublishedPagesShouldBePresentInSummary";
+		property test.liferay.virtual.instance = "false";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -410,7 +410,7 @@ definition {
 	@description = "This is a use case for LPS-80494. Documents can be published with link to page fields."
 	@priority = 3
 	test StagingRemoteDMDocumentType {
-		property test.name.skip.portal.instance = "RemoteStaging#StagingRemoteDMDocumentType";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
@@ -491,7 +491,7 @@ definition {
 	@description = "Web contents are only published if their content date is in correspondence with the content data range of the publish configuration."
 	@priority = 4
 	test StagingRemoteLiveWebContent {
-		property test.name.skip.portal.instance = "RemoteStaging#StagingRemoteLiveWebContent";
+		property test.liferay.virtual.instance = "false";
 
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Site Name",
@@ -606,7 +606,7 @@ definition {
 	@priority = 5
 	test StagingRemoteLiveWebContentViaPortletCP {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "RemoteStaging#StagingRemoteLiveWebContentViaPortletCP";
+		property test.liferay.virtual.instance = "false";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
@@ -643,7 +643,7 @@ definition {
 	@description = "This is a use case for LPS-81950. Web contents can be published via their portlet."
 	@priority = 5
 	test StagingRemoteLiveWebContentViaPortletPG {
-		property test.name.skip.portal.instance = "RemoteStaging#StagingRemoteLiveWebContentViaPortletPG";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.gotoSitePage(
 			pageName = "Staging Test Page",
@@ -709,7 +709,7 @@ definition {
 	@description = "This is a use case for LPS-81953. Web contents can be published with manually chosen ID."
 	@priority = 3
 	test StagingRemoteLiveWebContentWithManualChosenID {
-		property test.name.skip.portal.instance = "RemoteStaging#StagingRemoteLiveWebContentWithManualChosenID";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -791,7 +791,7 @@ definition {
 	@description = "This is a use case for LPS-178088. Verify the error message displays the missing reference information with the implicated Site's name."
 	@priority = 4
 	test VerifyErrorMessageWithMissingReferenceInformation {
-		property test.name.skip.portal.instance = "RemoteStaging#VerifyErrorMessageWithMissingReferenceInformation";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: Add site-name SiteB in 8080 remote-site in 9080 add structureA with image field in site-name") {
 			HeadlessSite.addSite(siteName = "SiteB");
@@ -851,7 +851,7 @@ definition {
 	@description = "This is a use case for LPS-182704. TC-13: Verify that a confirmation pop-up should show up when Delete Application Data Before Importing checkbox is checked during WCM portlet import process on remote live site"
 	@priority = 5
 	test ViewDeleteApplicationDataPopUpInPortletImportProgressOnRemoteLiveSite {
-		property test.name.skip.portal.instance = "RemoteStaging#ViewDeleteApplicationDataPopUpInPortletImportProgressOnRemoteLiveSite";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Export web content from the default site and add a new web content entry") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
@@ -974,7 +974,7 @@ definition {
 	@description = "This is a use case for LPS-182704. TC-12: Verify that a confirmation pop-up should show up when Delete Application Data Before Importing checkbox is checked during portlet import process on remote staging site."
 	@priority = 5
 	test ViewDeleteApplicationDataPopUpInPortletImportProgressOnRemoteStagingSite {
-		property test.name.skip.portal.instance = "RemoteStaging#ViewDeleteApplicationDataPopUpInPortletImportProgressOnRemoteStagingSite";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Export web content from the default site and add a new web content entry") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
@@ -1066,7 +1066,7 @@ definition {
 	@description = "This is a use case for LPS-74038. Expected error message will appear on the UI when the live instance is not running on remote staging and the link to it is not visible."
 	@priority = 5
 	test ViewInfoMessageAfterShutDownRemoteSite {
-		property test.name.skip.portal.instance = "RemoteStaging#ViewInfoMessageAfterShutDownRemoteSite";
+		property test.liferay.virtual.instance = "false";
 
 		Clustering.shutdownSpecificServer(nodePort = 9080);
 
@@ -1084,7 +1084,7 @@ definition {
 	@description = "This is a use case for LPS-81836. Web contents can be published via SAP."
 	@priority = 4
 	test ViewSingleAssetRemotePublication {
-		property test.name.skip.portal.instance = "RemoteStaging#ViewSingleAssetRemotePublication";
+		property test.liferay.virtual.instance = "false";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 

@@ -16,7 +16,7 @@ definition {
 		property portal.acceptance = "true";
 		property portal.context = "liferay";
 		property skip.clean-app-server-deploy-dir = "true";
-		property test.name.skip.portal.instance = "PortalContextPath#SendRedirectWorksWithNonRootContext";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given a display page template with a Heading and HTML fragment mapped to a Blogs Entry Title and Content") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
@@ -113,7 +113,7 @@ definition {
 		property portal.context = "liferay";
 		property skip.clean-app-server-deploy-dir = "true";
 		property test.assert.warning.exceptions = "true";
-		property test.name.skip.portal.instance = "PortalContextPath#Smoke";
+		property test.liferay.virtual.instance = "false";
 
 		Smoke.viewWelcomeContentPage();
 

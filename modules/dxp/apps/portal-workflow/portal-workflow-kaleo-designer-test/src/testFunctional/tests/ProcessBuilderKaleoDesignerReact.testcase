@@ -13,9 +13,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -28,7 +28,7 @@ definition {
 	@description = "Verify that, when the user adds a translation, the action reflects in the language selector"
 	@priority = 4
 	test AddedTranslationsAreDisplayedOnLanguageSelector {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#AddedTranslationsAreDisplayedOnLanguageSelector";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -73,7 +73,7 @@ definition {
 	@description = "Verify that Action can be added"
 	@priority = 4
 	test CanAddAction {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAddAction";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -103,7 +103,7 @@ definition {
 	@description = "Verify that Assignment can be added"
 	@priority = 4
 	test CanAddAssignment {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAddAssignment";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -125,7 +125,7 @@ definition {
 	@description = "Verify that the user can add Nodes into diagram by drag&drop: Condition"
 	@priority = 5
 	test CanAddConditionNode {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAddConditionNode";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -141,7 +141,7 @@ definition {
 	@description = "Verify that the user can add Nodes into diagram by drag&drop: End"
 	@priority = 5
 	test CanAddEndNode {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAddEndNode";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -157,7 +157,7 @@ definition {
 	@description = "Verify that the user can add Nodes into diagram by drag&drop: Fork"
 	@priority = 5
 	test CanAddForkNode {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAddForkNode";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -173,7 +173,7 @@ definition {
 	@description = "Verify that the user can add Nodes into diagram by drag&drop: Join"
 	@priority = 5
 	test CanAddJoinNode {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAddJoinNode";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -189,7 +189,7 @@ definition {
 	@description = "Verify that the user can add Nodes into diagram by drag&drop: Join XOR"
 	@priority = 5
 	test CanAddJoinXorNode {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAddJoinXorNode";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -205,7 +205,7 @@ definition {
 	@description = "Verify that the user can add Multiple Actions to the same node"
 	@priority = 4
 	test CanAddMultipleActions {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAddMultipleActions";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -237,7 +237,7 @@ definition {
 	@priority = 4
 	test CanAddMultipleNotifications {
 		property portal.upstream = "quarantine";
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAddMultipleNotifications";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -261,7 +261,7 @@ definition {
 	@description = "Verify that the user can add multiple Timers to a task node"
 	@priority = 4
 	test CanAddMultipleTimers {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAddMultipleTimers";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -308,7 +308,7 @@ definition {
 	@description = "Verify that is possible to add new languages"
 	@priority = 3
 	test CanAddNewLanguages {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAddNewLanguages";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -330,7 +330,7 @@ definition {
 	@description = "Verify that Notification can be added"
 	@priority = 4
 	test CanAddNotification {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAddNotification";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -357,7 +357,7 @@ definition {
 	@description = "Verify that the user is able to add a Script to define the Action"
 	@priority = 3
 	test CanAddScriptToDefineAction {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAddScriptToDefineAction";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -389,7 +389,7 @@ definition {
 	@description = "Verify that the user can add Nodes into diagram by drag&drop: Start"
 	@priority = 5
 	test CanAddStartNode {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAddStartNode";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -405,7 +405,7 @@ definition {
 	@description = "Verify that the user can add Nodes into diagram by drag&drop: State"
 	@priority = 5
 	test CanAddStateNode {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAddStateNode";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -421,7 +421,7 @@ definition {
 	@description = "Verify that the user can add Nodes into diagram by drag&drop: Task"
 	@priority = 5
 	test CanAddTaskNode {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAddTaskNode";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -437,7 +437,7 @@ definition {
 	@description = "Verify that Timers can be added"
 	@priority = 4
 	test CanAddTimers {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAddTimers";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -464,7 +464,7 @@ definition {
 	@description = "Verify that the user can add translations"
 	@priority = 4
 	test CanAddTranslations {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAddTranslations";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -505,7 +505,7 @@ definition {
 	@description = "Verify that is possible to select Account role type for role assignments"
 	@priority = 5
 	test CanAssignAccountRole {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAssignAccountRole";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -526,7 +526,7 @@ definition {
 	@description = "Verify that the user is able to assign the task node to multiple Role Types"
 	@priority = 4
 	test CanAssignMultipleRoleTypesToTaskNode {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAssignMultipleRoleTypesToTaskNode";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -594,7 +594,7 @@ definition {
 	@description = "Verify that the user is able to assign the task node to a single Role Type"
 	@priority = 3
 	test CanAssignSingleRoleTypeToTaskNode {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAssignSingleRoleTypeToTaskNode";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -615,7 +615,7 @@ definition {
 	@description = "Verify that the user is able to assign the task node to the Asset Creator"
 	@priority = 4
 	test CanAssignTaskNodeToAssetCreator {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAssignTaskNodeToAssetCreator";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -633,7 +633,7 @@ definition {
 	@description = "Verify that the user is able to assign the task node to a Resource Action"
 	@priority = 3
 	test CanAssignTaskNodeToResourceActions {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAssignTaskNodeToResourceActions";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -653,7 +653,7 @@ definition {
 	@description = "Verify that the user is able to assign the task node to a Role"
 	@priority = 4
 	test CanAssignTaskNodeToRole {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAssignTaskNodeToRole";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -682,7 +682,7 @@ definition {
 	@description = "Verify that the user is able to assign the task node to a specific User"
 	@priority = 4
 	test CanAssignTaskNodeToSpecificUser {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAssignTaskNodeToSpecificUser";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -702,7 +702,7 @@ definition {
 
 	@description = "LPS-139387 - Verify that the user can cancel the deletion of a node by clicking on the Cancel button"
 	test CanCancelDelete {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanCancelDelete";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -721,7 +721,7 @@ definition {
 	@description = "LPS-139387 - Verify that the user can cancel the deletion of a node by clicking on the X button"
 	@priority = 3
 	test CanCloseDeleteModal {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanCloseDeleteModal";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -740,7 +740,7 @@ definition {
 	@description = "Verify that when the user click “X”, the Manage Translations window closes"
 	@priority = 3
 	test CanCloseManageTranslationsWindowOnXClick {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanCloseManageTranslationsWindowOnXClick";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -769,7 +769,7 @@ definition {
 	@description = "Verify that the user can select and define an Action to be conducted once the timer expires"
 	@priority = 3
 	test CanConfigureActionAtTimers {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanConfigureActionAtTimers";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -802,7 +802,7 @@ definition {
 	@description = "Verify that the user can add multiple Actions to Timers at task node"
 	@priority = 3
 	test CanConfigureMultipleActionsAtTimers {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanConfigureMultipleActionsAtTimers";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -851,7 +851,7 @@ definition {
 	@description = "Verify that the user can select and define an Reassignment to be conducted once the timer expires"
 	@priority = 3
 	test CanConfigureReassignmentAtTimers {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanConfigureReassignmentAtTimers";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -884,7 +884,7 @@ definition {
 	@description = "Verify that the user can create a Template for Notification"
 	@priority = 4
 	test CanCreateNotificationTemplate {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanCreateNotificationTemplate";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -935,7 +935,7 @@ definition {
 	@description = "LPS-140056 - Verify that only one transition in the same direction from one node to the other can be created"
 	@priority = 4
 	test CanCreateOnlyOneTransitionInSameDirection {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanCreateOnlyOneTransitionInSameDirection";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -962,7 +962,7 @@ definition {
 	@description = "Verify that user can create transition between nodes from the edge of node"
 	@priority = 5
 	test CanCreateTransition {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanCreateTransition";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -984,7 +984,7 @@ definition {
 	@description = "Verify that the user is able to input a Groovy script to define the assignment"
 	@priority = 4
 	test CanDefineAssignmentWithGroovyScript {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDefineAssignmentWithGroovyScript";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -1002,7 +1002,7 @@ definition {
 	@description = "Verify that the user is able to define the Resource Action"
 	@priority = 3
 	test CanDefineResourceAction {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDefineResourceAction";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -1020,7 +1020,7 @@ definition {
 	@description = "Verify that the user can delete action with the trash icon at the bottom right corner"
 	@priority = 4
 	test CanDeleteAction {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteAction";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -1054,7 +1054,7 @@ definition {
 	@description = "Verify that the user can delete actions inside Timers"
 	@priority = 3
 	test CanDeleteActionsAtTimers {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteActionsAtTimers";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -1109,7 +1109,7 @@ definition {
 	@description = "Verify that the user can delete all actions with the trash icon at the top right corner"
 	@priority = 3
 	test CanDeleteAllActionsAtOnce {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteAllActionsAtOnce";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -1142,7 +1142,7 @@ definition {
 	@description = "Verify that the user can delete all Timers at once"
 	@priority = 3
 	test CanDeleteAllTimers {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteAllTimers";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -1187,7 +1187,7 @@ definition {
 	@description = "Verify that the user can delete Nodes of Condition"
 	@priority = 4
 	test CanDeleteConditionNode {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteConditionNode";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -1208,7 +1208,7 @@ definition {
 	@description = "Verify that the user can delete Nodes of End"
 	@priority = 4
 	test CanDeleteEndNode {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteEndNode";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -1227,7 +1227,7 @@ definition {
 	@description = "Verify that the user can delete Nodes of Fork"
 	@priority = 4
 	test CanDeleteForkNode {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteForkNode";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -1248,7 +1248,7 @@ definition {
 	@description = "Verify that the user can delete Nodes of Join"
 	@priority = 4
 	test CanDeleteJoinNode {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteJoinNode";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -1269,7 +1269,7 @@ definition {
 	@description = "Verify that the user can delete Nodes of Join XOR"
 	@priority = 4
 	test CanDeleteJoinXORNode {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteJoinXORNode";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -1291,7 +1291,7 @@ definition {
 	@priority = 4
 	test CanDeleteMultipleNotifications {
 		property portal.upstream = "quarantine";
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteMultipleNotifications";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -1331,7 +1331,7 @@ definition {
 	@description = "LPS-139387 - Verify that the user is able to delete a node using the Delete key"
 	@priority = 4
 	test CanDeleteNodeViaDeleteKey {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteNodeViaDeleteKey";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -1350,7 +1350,7 @@ definition {
 	@description = "LPS-139387 - Verify that the user is able to delete a node using the Delete icon in the sidebar"
 	@priority = 4
 	test CanDeleteNodeViaSidebar {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteNodeViaSidebar";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -1371,7 +1371,7 @@ definition {
 	@description = "Verify that the user can delete notification role types"
 	@priority = 3
 	test CanDeleteNotificationRoleTypes {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteNotificationRoleTypes";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -1419,7 +1419,7 @@ definition {
 	@priority = 5
 	test CanDeleteSpecificNotification {
 		property portal.upstream = "quarantine";
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteSpecificNotification";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -1459,7 +1459,7 @@ definition {
 	@description = "Verify that the user can delete Nodes of Start"
 	@priority = 4
 	test CanDeleteStartNode {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteStartNode";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -1478,7 +1478,7 @@ definition {
 	@description = "Verify that the user can delete Nodes of State"
 	@priority = 4
 	test CanDeleteStateNode {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteStateNode";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -1499,7 +1499,7 @@ definition {
 	@description = "Verify that the user can delete Nodes of Task"
 	@priority = 4
 	test CanDeleteTaskNode {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteTaskNode";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -1520,7 +1520,7 @@ definition {
 	@description = "Verify that the user can delete the Timers"
 	@priority = 4
 	test CanDeleteTimers {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteTimers";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -1550,7 +1550,7 @@ definition {
 	@description = "Verify that the user can delete A Timer clicking on trash icon in sidebar Timer Card"
 	@priority = 3
 	test CanDeleteTimersBySidebarCard {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteTimersBySidebarCard";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -1580,7 +1580,7 @@ definition {
 	@description = "Verify that is possible to delete translations"
 	@priority = 3
 	test CanDeleteTranslations {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteTranslations";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -1612,7 +1612,7 @@ definition {
 	@description = "Verify that the user can Delete a Draft workflow"
 	@priority = 3
 	test CanDeleteWorkflowDefinitionDraft {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteWorkflowDefinitionDraft";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -1634,7 +1634,7 @@ definition {
 	@description = "Verify that the user is able to designate a Role Name at a Role Type"
 	@priority = 3
 	test CanDesignateRoleTypeRoleName {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDesignateRoleTypeRoleName";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -1655,7 +1655,7 @@ definition {
 	@description = "Verify that the user can edit the Action fields"
 	@priority = 4
 	test CanEditActionFields {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanEditActionFields";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -1716,7 +1716,7 @@ definition {
 	@description = "Verify that the user can edit the Description of the Notification"
 	@priority = 4
 	test CanEditNotificationDescription {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanEditNotificationDescription";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -1750,7 +1750,7 @@ definition {
 	@description = "Verify that the user can edit the Name of the Notification"
 	@priority = 4
 	test CanEditNotificationName {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanEditNotificationName";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -1783,7 +1783,7 @@ definition {
 	@description = "Verify that the user can edit a Template for Notification"
 	@priority = 4
 	test CanEditNotificationTemplate {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanEditNotificationTemplate";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -1819,7 +1819,7 @@ definition {
 	@description = "LPS-139387 - Verify that the user is able to view and edit the node's Label in the sidebar"
 	@priority = 4
 	test CanEditStepLabel {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanEditStepLabel";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -1845,7 +1845,7 @@ definition {
 	@description = "LPS-139387 - Verify that the user is able to view and edit the nodes name in the sidebar"
 	@priority = 4
 	test CanEditStepName {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanEditStepID";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -1871,7 +1871,7 @@ definition {
 	@description = "Verify that the user can edit the Template Language of the Notification to FreeMarker"
 	@priority = 4
 	test CanEditTemplateLanguageToFreeMarker {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanEditTemplateLanguageToFreeMarker";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -1897,7 +1897,7 @@ definition {
 	@description = "Verify that the user can edit the Template Language of the Notification to Text"
 	@priority = 4
 	test CanEditTemplateLanguageToText {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanEditTemplateLanguageToText";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -1923,7 +1923,7 @@ definition {
 	@description = "Verify that the user can edit the Template Language of the Notification to Velocity"
 	@priority = 4
 	test CanEditTemplateLanguageToVelocity {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanEditTemplateLanguageToVelocity";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -1949,7 +1949,7 @@ definition {
 	@description = "Verify that the user can edit the Description of the Timer"
 	@priority = 3
 	test CanEditTimerDescription {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanEditTimerDescription";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -1985,7 +1985,7 @@ definition {
 	@description = "Verify that the user can edit the Duration of the Timer"
 	@priority = 4
 	test CanEditTimerDuration {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanEditTimerDuration";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -2026,7 +2026,7 @@ definition {
 	@description = "Verify that the user can edit the Name of the Timer"
 	@priority = 4
 	test CanEditTimerName {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanEditTimerName";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -2062,7 +2062,7 @@ definition {
 	@description = "Verify that the user can edit the Timers recurrence field"
 	@priority = 3
 	test CanEditTimerRecurrenceFields {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanEditTimerRecurrenceFields";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -2102,7 +2102,7 @@ definition {
 	@description = "LPS-140056 - Verify that the user is able to edit the transition Name"
 	@priority = 4
 	test CanEditTransitionName {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanEditTransitionName";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -2128,7 +2128,7 @@ definition {
 	@description = "LPS-139387 - Verify that the user can hide/show the information area"
 	@priority = 2
 	test CanHideShowInformationArea {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanHideShowInformationArea";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -2158,7 +2158,7 @@ definition {
 	@description = "LPS-139387 - Verify that when the user adds a translation to another language the user is able to localize the Step Label of the node."
 	@priority = 4
 	test CanLocalizeStepLabelWhenTranslated {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanLocalizeStepLabelWhenTranslated";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given adding a new workflow definition") {
 			Workflow.openWorkflowListView();
@@ -2210,7 +2210,7 @@ definition {
 	@description = "LPS-140056 - Verify that the user is able to localize the label of the transition"
 	@priority = 3
 	test CanLocalizeTransitionLabel {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanLocalizeTransitionLabel";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -2228,7 +2228,7 @@ definition {
 	@description = "Verify that the link to Manage Translations component is displayed"
 	@priority = 4
 	test CanManageTranslations {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanManageTranslations";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -2242,7 +2242,7 @@ definition {
 	@description = "Verify that the user can move nodes in diagram by drag&drop in the middle of node"
 	@priority = 4
 	test CanMoveNode {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanMoveNode";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -2273,7 +2273,7 @@ definition {
 	@description = "Verify that the user can't delete a Assignment through trash icon"
 	@priority = 4
 	test CanNotDeleteAssignmentByTrashIcon {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanNotDeleteAssignmentByTrashIcon";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -2291,7 +2291,7 @@ definition {
 	@description = "Verify that is not possible to have multiple Start nodes"
 	@priority = 4
 	test CanNotHaveMultipleStartNode {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanNotHaveMultipleStartNode";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -2331,7 +2331,7 @@ definition {
 	@description = "Verify that the user can't Publish a workflow without transitions"
 	@priority = 4
 	test CanNotPublishWorkflowWithoutTransitions {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanNotPublishWorkflowWithoutTransitions";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -2349,7 +2349,7 @@ definition {
 	@description = "LPS-139388 - Verify that is not possible to save a process with node ID not unique"
 	@priority = 4
 	test CanNotSaveProcessWithDuplicatedNodeName {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanNotSaveProcessWithDuplicatedNodeName";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -2375,7 +2375,7 @@ definition {
 	@description = "LPS-139388 - Verify that is not possible to save a process with the node ID not filled"
 	@priority = 4
 	test CanNotSaveProcessWithEmptyNodeName {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanNotSaveProcessWithEmptyNodeName";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -2397,7 +2397,7 @@ definition {
 	@description = "Verify that only the task node thas Assignments property"
 	@priority = 3
 	test CanOnlyViewAssignmentsAtTaskNode {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanOnlyViewAssignmentsAtTaskNode";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -2436,7 +2436,7 @@ definition {
 	@description = "Verify that the user can publish a definition with Condition node"
 	@priority = 5
 	test CanPublishWithConditionNode {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanPublishWithConditionNode";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -2456,7 +2456,7 @@ definition {
 	@description = "Verify that the user can publish a definition with Fork node"
 	@priority = 5
 	test CanPublishWithForkNode {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanPublishWithForkNode";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -2542,7 +2542,7 @@ definition {
 	@description = "Verify that the user can publish a definition with Join node"
 	@priority = 5
 	test CanPublishWithJoinNode {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanPublishWithJoinNode";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -2566,7 +2566,7 @@ definition {
 	@description = "Verify that the user can publish a definition with Join XOR node "
 	@priority = 5
 	test CanPublishWithJoinXORNode {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanPublishWithJoinXORNode";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -2656,7 +2656,7 @@ definition {
 	@description = "Verify that the user can publish a definition with State node"
 	@priority = 5
 	test CanPublishWithStateNode {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanPublishWithStateNode";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -2692,7 +2692,7 @@ definition {
 	@description = "Verify that the user can can publish a definition with Task node"
 	@priority = 5
 	test CanPublishWithTaskNode {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanPublishWithTaskNode";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -2726,7 +2726,7 @@ definition {
 	@description = "Verify that the user can Publish workflow"
 	@priority = 5
 	test CanPublishWorkflow {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanPublishWorkflow";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -2750,7 +2750,7 @@ definition {
 	@description = "Verify that the user can publish a workflow with Timer configured"
 	@priority = 5
 	test CanPublishWorkflowWithTimerConfigured {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanPublishWorkflowWithTimerConfigured";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -2797,7 +2797,7 @@ definition {
 	@description = "Verify that the user can restore to a previous definition version in the Revision History tab"
 	@priority = 5
 	test CanRestorePreviousVersionAtRevisionHistoryTab {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanRestorePreviousVersionAtRevisionHistoryTab";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -2837,7 +2837,7 @@ definition {
 	@description = "Verify that user can Save workflow as Draft"
 	@priority = 5
 	test CanSaveAsDraft {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSaveAsDraft";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -2856,7 +2856,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = 3
 	test CanSearchLanguages {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSearchLanguages";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -2874,7 +2874,7 @@ definition {
 	@description = "LPS-139387 - Verify that the user is able to see the Start and End nodes on the Diagram when creating a New Process"
 	@priority = 4
 	test CanSeeStartAndEndNodesByDefault {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSeeStartAndEndNodesByDefault";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -2888,7 +2888,7 @@ definition {
 	@description = "Verify that the is able to select who receives the notification: Asset Creator"
 	@priority = 5
 	test CanSelectAssetCreatorAsNotificationRecipientType {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSelectAssetCreatorAsNotificationRecipientType";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -2914,7 +2914,7 @@ definition {
 	@description = "Verify that the user can select Email as Notification type"
 	@priority = 5
 	test CanSelectEmailAsNotificationType {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSelectEmailAsNotificationType";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -2939,7 +2939,7 @@ definition {
 	@description = "Verify that the user can select each node in Diagram"
 	@priority = 4
 	test CanSelectNodeOnDiagram {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSelectNodeOnDiagram";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -2963,7 +2963,7 @@ definition {
 	@description = "Verify that the user can select On Assignment as Execution Type"
 	@priority = 4
 	test CanSelectOnAssignmentAsExecutionTypeAtActions {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSelectOnAssignmentAsExecutionTypeAtActions";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -2996,7 +2996,7 @@ definition {
 	@description = "Verify that the user can select On Assignment as the time when the notification will be sent in a task"
 	@priority = 4
 	test CanSelectOnAssignmentAsExecutionTypeAtTaskNotifications {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSelectOnAssignmentAsExecutionTypeAtTaskNotifications";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -3024,7 +3024,7 @@ definition {
 	@description = "Verify that the user can select On Entry as the time when the notification will be sent"
 	@priority = 4
 	test CanSelectOnEntryAsExecutionTypeAtNodeNotifications {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSelectOnEntryAsExecutionTypeAtNodeNotifications";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -3050,7 +3050,7 @@ definition {
 	@description = "Verify that the user can select On Entry as Execution Type"
 	@priority = 4
 	test CanSelectOnEntryExecutionTypeAtActions {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSelectOnEntryExecutionTypeAtActions";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -3083,7 +3083,7 @@ definition {
 	@description = "Verify that the user can select On Exit as Execution Type"
 	@priority = 4
 	test CanSelectOnExitAsExecutionTypeAtActions {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSelectOnExitAsExecutionTypeAtActions";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -3116,7 +3116,7 @@ definition {
 	@description = "Verify that the user can select On Exit as the time when the notification will be sent"
 	@priority = 4
 	test CanSelectOnExitAsExecutionTypeAtNodeNotifications {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSelectOnExitAsExecutionTypeAtNodeNotifications";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -3142,7 +3142,7 @@ definition {
 	@description = "Verify that the is able to select who receives the notification: Role"
 	@priority = 5
 	test CanSelectRoleAsNotificationRecipientType {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSelectRoleAsNotificationRecipientType";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -3169,7 +3169,7 @@ definition {
 	@description = "Verify that the is able to select who receives the notification: Scripted Recipient"
 	@priority = 5
 	test CanSelectScriptedRecipientAsNotificationRecipientType {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSelectScriptedRecipientAsNotificationRecipientType";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -3196,7 +3196,7 @@ definition {
 	@description = "Verify that the is able to select who receives the notification: Task Assignees"
 	@priority = 5
 	test CanSelectTaskAssigneesAsNotificationRecipientTypeAtTaskNode {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSelectTaskAssigneesAsNotificationRecipientTypeAtTaskNode";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -3224,7 +3224,7 @@ definition {
 	@description = "Verify that the user can select Email and User Notification as Notification type"
 	@priority = 5
 	test CanSelectUserNotificationAndEmailAsNotificationType {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSelectUserNotificationAndEmailAsNotificationType";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -3255,7 +3255,7 @@ definition {
 	@description = "Verify that the user can select User Notification as Notification type"
 	@priority = 5
 	test CanSelectUserNotificationAsNotificationType {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSelectUserNotificationAsNotificationType";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -3280,7 +3280,7 @@ definition {
 	@description = "Verify that the user can set the Priority for the Action"
 	@priority = 3
 	test CanSetActionsPriority {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSetActionsPriority";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -3312,7 +3312,7 @@ definition {
 	@description = "Verify that the user can set transition Default"
 	@priority = 4
 	test CanSetDefaultTransition {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSetDefaultTransition";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -3344,7 +3344,7 @@ definition {
 	@description = "Verify that the user can switch between Details and Revision Story Tab"
 	@priority = 4
 	test CanSwitchBetweenDetailsRevisionTabs {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSwitchBetweenDetailsRevisionTabs";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -3366,7 +3366,7 @@ definition {
 	@description = "Verify that the user can turn on the Timers recurrence mode"
 	@priority = 4
 	test CanTurnOnTimerRecurrenceMode {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanTurnOnTimerRecurrenceMode";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -3395,7 +3395,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = 3
 	test CanViewCurrentVersionAtRevisionHistoryTab {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanViewCurrentVersionAtRevisionHistoryTab";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -3443,7 +3443,7 @@ definition {
 	@description = "Verify that the user can see the Assignments on Single Approver"
 	@priority = 3
 	test CanViewDefaultSingleApproverAssignments {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanViewDefaultSingleApproverAssignments";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -3524,7 +3524,7 @@ definition {
 	@description = "Verify that at the Details/Revision Story sidebar Header the definition Title is present"
 	@priority = 3
 	test CanViewDefinitionTitleAtInfoHeader {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanViewDefinitionTitleAtInfoHeader";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -3548,7 +3548,7 @@ definition {
 	@description = "LPS-129928 - Verify that when the user clicks on the Diagram view button the Diagram editor appears"
 	@priority = 4
 	test CanViewDiagramEditor {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanViewDiagramEditor";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -3568,7 +3568,7 @@ definition {
 	@description = "Verify that the Details tab displays the Created date, Last Modified and Total Modifications"
 	@priority = 3
 	test CanViewFieldsAtDetailsTab {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanViewFieldsAtDetailsTab";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given publishing a new workflow with a transition from Start node to End node") {
 			Workflow.openWorkflowListView();
@@ -3599,7 +3599,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = 4
 	test CanViewPreviousVersionsListInOrderAtRevisionHistoryTab {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanViewPreviousVersionsListInOrderAtRevisionHistoryTab";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -3653,7 +3653,7 @@ definition {
 	@description = "Verify that the user can see a tooltip with 'Enter the comma separated resource actions (e.g. ADD, DELETE, UPDATE).' at Resource Actions "
 	@priority = 2
 	test CanViewResourceActionsTooltip {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanViewResourceActionsTooltip";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -3681,7 +3681,7 @@ definition {
 	@description = "Verify that a Success alert appears when the user restore a definition version (Example: Success:Restored to Revision 'X')"
 	@priority = 3
 	test CanViewRestoreVersionSuccessAlert {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanViewRestoreVersionSuccessAlert";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -3733,7 +3733,7 @@ definition {
 	@description = "LPS-129928 - Verify that when the user clicks on the Source button the Source editor appears"
 	@priority = 4
 	test CanViewSourceEditor {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanViewSourceEditor";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -3747,7 +3747,7 @@ definition {
 	@description = "Verify that the user can see the Timers Recurrence tooltip with the value 'Repeat the action at a given duration until the workflow task is completed.'"
 	@priority = 2
 	test CanViewTimerRecurrenceFieldTooltip {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanViewTimerRecurrenceFieldTooltip";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -3765,7 +3765,7 @@ definition {
 	@description = "Verify that the user can view the Timer required fields"
 	@priority = 3
 	test CanViewTimersRequiredFields {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanViewTimersRequiredFields";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -3802,7 +3802,7 @@ definition {
 	@description = "Verify that on the Details tab, the Total Modifications field follows the number of times the definition was updated"
 	@priority = 3
 	test CanViewTotalModificationsAtDetailsTab {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanViewTotalModificationsAtDetailsTab";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -3840,7 +3840,7 @@ definition {
 	@description = "LPS-129928 - Verify that when the user makes changes to the Process Builder these changes are reflected in the XML code"
 	@priority = 5
 	test ChangesOnDiagramAreReflectedOnXML {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#ChangesOnDiagramAreReflectedOnXML";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -3877,7 +3877,7 @@ definition {
 	@description = "Verify that Condition Node do not have Timers property"
 	@priority = 4
 	test ConditionHasNoTimersProperty {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#ConditionHasNoTimersProperty";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -3895,7 +3895,7 @@ definition {
 	@description = "Verify that the Condition node must have at least two outgoing transitions"
 	@priority = 4
 	test ConditionMustHaveMoreThanOneTransition {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#ConditionMustHaveMoreThanOneTransition";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -3917,7 +3917,7 @@ definition {
 	@description = "Verify that connectors can be deleted"
 	@priority = 4
 	test ConnectorCanBeDeleted {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#ConnectorCanBeDeleted";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -3939,7 +3939,7 @@ definition {
 	@description = "Verify that the user can edit the connectors label"
 	@priority = 4
 	test ConnectorsLabelCanBeEdited {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#ConnectorsLabelCanBeEdited";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -3971,7 +3971,7 @@ definition {
 	@description = "Verify that default label and ID for nodes are provided"
 	@priority = 4
 	test DefaultLabelAndIDAreProvided {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#DefaultLabelAndIDAreProvided";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -3988,7 +3988,7 @@ definition {
 	@description = "Verify that default names for nodes are provided"
 	@priority = 4
 	test DefaultLabelsAreProvided {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#DefaultLabelsAreProvided";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -4018,7 +4018,7 @@ definition {
 	@description = "LPS-140056 - Verify that the changes on Default settings, for transitions, reflects on the diagram"
 	@priority = 4
 	test DefaultSettingsChangesReflectsOnDiagram {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#DefaultSettingsChangesReflectsOnDiagram";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -4049,7 +4049,7 @@ definition {
 	@description = "Publish workflow definition with no End Node And View Error Message"
 	@priority = 4
 	test DefinitionRequiresEndNodeToPublish {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#DefinitionRequiresEndNodeToPublish";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -4067,7 +4067,7 @@ definition {
 	@description = "Publish workflow definition with no start node and view error message"
 	@priority = 4
 	test DefinitionRequiresStartNodeToPublish {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#DefinitionRequiresStartNodeToPublish";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -4089,7 +4089,7 @@ definition {
 	@description = "Verify that, when the user deletes a translation, the action reflects in the language selector"
 	@priority = 4
 	test DeletedTranslationsAreNotDisplayedOnLanguageSelector {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#DeletedTranslationsAreNotDisplayedOnLanguageSelector";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -4116,7 +4116,7 @@ definition {
 	@description = "LPS-129928 - Verify that when hovering the Process Builder view button the text Diagram view is displayed"
 	@priority = 2
 	test DiagramViewToolTipIsDisplayed {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#DiagramViewToolTipIsDisplayed";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -4130,7 +4130,7 @@ definition {
 	@description = "Verify that the Fork node must have at least two outgoing transitions"
 	@priority = 4
 	test ForkNodeMustHaveMoreThanOneTransition {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#ForkNodeMustHaveMoreThanOneTransition";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -4152,7 +4152,7 @@ definition {
 	@description = "Verify that each fork node requires a join node"
 	@priority = 4
 	test ForkNodeRequiresJoinNode {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#ForkNodeRequiresJoinNode";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -4186,7 +4186,7 @@ definition {
 	@description = "Verify that each type of Node has Actions property"
 	@priority = 4
 	test HasActionsProperty {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#HasActionsProperty";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -4288,7 +4288,7 @@ definition {
 	@description = "Verify that each type of Node has Description property"
 	@priority = 4
 	test HasDescriptionProperty {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#HasDescriptionProperty";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -4326,7 +4326,7 @@ definition {
 	@description = "Verify that each type of Node has Notifications property"
 	@priority = 4
 	test HasNotificationsProperty {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#HasNotificationsProperty";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -4368,7 +4368,7 @@ definition {
 	@description = "LPS-141713 - Verify that the imported workflow definition is shown in the Process Builder"
 	@priority = 4
 	test ImportedProcessIsShownOnDiagram {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#ImportedProcessIsShownOnDiagram";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -4388,7 +4388,7 @@ definition {
 	@description = "LPS-129928 - Verify that the node coordinates are updated in Source when node is moved in diagram"
 	@priority = 3
 	test NodeCoordinatedAreUpdated {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#NodeCoordinatedAreUpdated";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -4422,7 +4422,7 @@ definition {
 	@description = "LPS-139387 - Verify that the node info is displayed when the node is selected"
 	@priority = 4
 	test NodeInfoIsDisplayedWhenNodeIsSelected {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#NodeInfoIsDisplayedWhenNodeIsSelected";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -4444,7 +4444,7 @@ definition {
 	@description = "LPS-139388 - Verify that the active node is highlighted on the diagram"
 	@priority = 2
 	test NodeIsHighlightedWhenActive {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#NodeIsHighlightedWhenActive";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -4462,7 +4462,7 @@ definition {
 	@description = "Verify that the Role ID is a read only field"
 	@priority = 3
 	test NodeNameIsReadyOnly {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#NodeNameIsReadyOnly";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -4486,7 +4486,7 @@ definition {
 	@description = "LPS-129928 - Verify that the Publish button turns unavailable after the Workflow is published"
 	@priority = 3
 	test PublishButtonTurnsUnavailableAfterPublish {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#PublishButtonTurnsUnavailableAfterPublish";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -4507,7 +4507,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = 4
 	test SingleApproverComesWithAccountMemberAndAdmRoleName {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#SingleApproverComesWithAccountMemberAndAdmRoleName";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -4527,7 +4527,7 @@ definition {
 	@description = "Verify that the Single Approver Workflow comes with the Account role assigned"
 	@priority = 5
 	test SingleApproverComesWithAccountRole {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#SingleApproverComesWithAccountRole";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -4548,7 +4548,7 @@ definition {
 	@description = "LPS-129928 - Verify that when hovering the Source button the text Source view is displayed"
 	@priority = 2
 	test SourceViewToolTipIsDisplayed {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#SourceViewToolTipIsDisplayed";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -4560,7 +4560,7 @@ definition {
 	@description = "Verify that Start node can't have incoming transition"
 	@priority = 4
 	test StartNodeCanNotHaveIncomingTransition {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#StartNodeCanNotHaveIncomingTransition";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -4594,7 +4594,7 @@ definition {
 	@description = "Verify that the Start Node must have an outgoing transition"
 	@priority = 4
 	test StartNodeMustHaveOutgoingTransition {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#StartNodeMustHaveOutgoingTransition";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -4626,7 +4626,7 @@ definition {
 	@description = "LPS-139387 - Verify that the user can not use the same name for more than one node"
 	@priority = 5
 	test StepIDIsUnique {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#StepIDIsUnique";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -4648,7 +4648,7 @@ definition {
 	@description = "LPS-139387 - Verify that the Step Label is a required field"
 	@priority = 3
 	test StepLabelIsRequired {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#StepLabelIsRequired";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -4670,7 +4670,7 @@ definition {
 	@description = "LPS-139387 - Verify that the Node Name is a required field"
 	@priority = 3
 	test StepNameIsRequired {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#StepNameIsRequired";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -4692,7 +4692,7 @@ definition {
 	@description = "Verify that the Task Node comes with Asset Creator Assignment as default"
 	@priority = 3
 	test TaskNodeComesWithAssetCreatorAssignmentAsDefault {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#TaskNodeComesWithAssetCreatorAssignmentAsDefault";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -4708,7 +4708,7 @@ definition {
 	@description = "Verify that the Task node has Timers property"
 	@priority = 4
 	test TaskNodeHasTimersProperty {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#TaskNodeHasTimersProperty";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -4726,7 +4726,7 @@ definition {
 	@description = "LPS-130000 - Verify that the transitions do not lose the reference when the Task ID is changed"
 	@priority = 5
 	test TransitionDoNotLoseReferenceOnTaskIDChange {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#TransitionDoNotLoseReferenceOnTaskIDChange";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -4766,7 +4766,7 @@ definition {
 	@description = "LPS-130000 - Verify that the transitions do not lose the reference when the Task ID is changed"
 	@priority = 5
 	test TransitionIsDeletedWhenNodeIsDeleted {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#TransitionIsDeletedWhenNodeIsDeleted";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -4806,7 +4806,7 @@ definition {
 	@description = "LPS-129928 - Verify that the translation dropdown closes when the user selects a language."
 	@priority = 2
 	test TranslationDropdownClosesAfterSelection {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#TranslationDropdownClosesAfterSelection";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -4833,7 +4833,7 @@ definition {
 	@description = "Publish workflow definition with Invalid Join Node And View Error Message"
 	@priority = 3
 	test ViewErrorMessageAfterPublishInvalidJoinDefinition {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#ViewErrorMessageAfterPublishInvalidJoinDefinition";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -4855,7 +4855,7 @@ definition {
 	@description = "Publish workflow definition with Invalid JoinXOR Node And View Error Message"
 	@priority = 3
 	test ViewErrorMessageAfterPublishInvalidJoinXORDefinition {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#ViewErrorMessageAfterPublishInvalidJoinXORDefinition";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -4877,7 +4877,7 @@ definition {
 	@description = "This is a use case for LPS-47352 and LPS-48912."
 	@priority = 3
 	test ViewWorkflowDefinitionButtons {
-		property test.name.skip.portal.instance = "Kaleodesigner#ViewWorkflowDefinitionButtons";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -4889,7 +4889,7 @@ definition {
 	@description = "This is a use case for LPS-47352 and LPS-48912."
 	@priority = 3
 	test ViewWorkflowDefinitionButtonsViaKaleoFormsAdmin {
-		property test.name.skip.portal.instance = "Kaleodesigner#ViewWorkflowDefinitionButtonsViaKaleoFormsAdmin";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -4938,7 +4938,7 @@ definition {
 	@description = "Verify that a message warning is displayed when the user adds another transition and selects it as default"
 	@priority = 3
 	test WarningIsDisplayedWhenNewTransitionDefault {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#WarningIsDisplayedWhenNewTransitionDefault";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -4968,7 +4968,7 @@ definition {
 	@description = "Verify that a message warning is not displayed when the user adds another transition and do not selects it as default"
 	@priority = 3
 	test WarningIsNotDisplayedWhenNewTransitionNotDefault {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#WarningIsNotDisplayedWhenNewTransitionNotDefault";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 

@@ -31,9 +31,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -44,7 +44,7 @@ definition {
 	@description = "This is a test for LPS-164164. Verify if a banner is displayed when user access Marketing page and will not appear again after dismissed"
 	@priority = 5
 	test BannerIsDisplayed {
-		property test.name.skip.portal.instance = "PRMMarketing#BannerIsDisplayed";
+		property test.liferay.virtual.instance = "false";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 
@@ -82,7 +82,7 @@ definition {
 	@description = "This is a test for LPS-164166. Verify if a 'Get Tour Partner Marketing Guide' button is displayed on banner and a file will be downloaded when click on this button"
 	@priority = 4
 	test CanDownloadBannerGuide {
-		property test.name.skip.portal.instance = "PRMMarketing#CanDownloadBannerGuide";
+		property test.liferay.virtual.instance = "false";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 
@@ -104,7 +104,7 @@ definition {
 	@description = "This is a test for LPS-164165. Verify if a 'Watch a Video Tour' button is displayed on banner and a Video will be opened in a popup when click on this button"
 	@priority = 4
 	test CanWatchBannerVideo {
-		property test.name.skip.portal.instance = "PRMMarketing#CanWatchBannerVideo";
+		property test.liferay.virtual.instance = "false";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 

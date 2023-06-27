@@ -11,9 +11,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -27,7 +27,7 @@ definition {
 	@priority = 5
 	test AddFormWithSpanishAsOnlyLocale {
 		property custom.properties = "company.default.locale=es_ES${line.separator}locales.enabled=es_ES${line.separator}locales=es_ES";
-		property test.name.skip.portal.instance = "Locale#AddFormWithSpanishAsOnlyLocale";
+		property test.liferay.virtual.instance = "false";
 
 		User.firstLoginUI(
 			localization = "ES",
@@ -64,7 +64,7 @@ definition {
 
 	@priority = 4
 	test CanChangeDefaultCompanyLocale {
-		property test.name.skip.portal.instance = "Locale#CanChangeDefaultCompanyLocale";
+		property test.liferay.virtual.instance = "false";
 
 		User.firstLoginPG();
 
@@ -97,7 +97,7 @@ definition {
 	test CannotAccessDisabledLocale {
 		property custom.properties = "locales.enabled=en_US,zh_CN,es_ES,fr_FR";
 		property custom.system.properties = "user.country=US${line.separator}user.language=en";
-		property test.name.skip.portal.instance = "Locale#CannotAccessDisabledLocale";
+		property test.liferay.virtual.instance = "false";
 
 		User.firstLoginPG();
 
@@ -128,7 +128,7 @@ definition {
 	@description = "This is a use case for LPS-112343."
 	@priority = 4
 	test CanRemoveAvailableLanguageFromSite {
-		property test.name.skip.portal.instance = "Locale#CanRemoveAvailableLanguageFromSite";
+		property test.liferay.virtual.instance = "false";
 
 		User.firstLoginPG();
 
@@ -184,7 +184,7 @@ definition {
 	@priority = 3
 	test CanUpdateGroupSettingsWithDifferentAvailableLanguages {
 		property test.assert.warning.exceptions = "true";
-		property test.name.skip.portal.instance = "Locale#CanUpdateGroupSettingsWithDifferentAvailableLanguages";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given a virtual instance") {
 			User.firstLoginPG();
@@ -294,7 +294,7 @@ definition {
 	test ConfigureURLToAlwaysShowLocale {
 		property custom.properties = "locales.enabled=fr_FR,en_US,zh_CN,es_ES${line.separator}locale.prepend.friendly.url.style=2";
 		property custom.system.properties = "user.country=FR${line.separator}user.language=fr";
-		property test.name.skip.portal.instance = "Locale#ConfigureURLToAlwaysShowLocale";
+		property test.liferay.virtual.instance = "false";
 
 		User.firstLoginPG();
 
@@ -311,7 +311,7 @@ definition {
 	test EnableRedirectToDefaultLocale {
 		property custom.properties = "locales.enabled=en_US,zh_CN,fr_FR${line.separator}locale.use.default.if.not.available=true";
 		property custom.system.properties = "user.country=US${line.separator}user.language=en";
-		property test.name.skip.portal.instance = "Locale#EnableRedirectToDefaultLocale";
+		property test.liferay.virtual.instance = "false";
 
 		User.firstLoginPG();
 
@@ -386,7 +386,7 @@ definition {
 	@priority = 4
 	test InstanceCreatedOnRestartPickUpNewCompanyLocale {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Locale#InstanceCreatedOnRestartPickUpNewCompanyLocale";
+		property test.liferay.virtual.instance = "false";
 
 		User.firstLoginPG();
 
@@ -462,7 +462,7 @@ definition {
 	@priority = 4
 	test PrependFriendlyURLStyle {
 		property custom.properties = "locale.prepend.friendly.url.style=3";
-		property test.name.skip.portal.instance = "Locale#PrependFriendlyURLStyle";
+		property test.liferay.virtual.instance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -552,7 +552,7 @@ definition {
 	@priority = 3
 	test ReorderPagesWithPrependedLocale {
 		property custom.properties = "locale.prepend.friendly.url.style=2";
-		property test.name.skip.portal.instance = "Locale#ReorderPagesWithPrependedLocale";
+		property test.liferay.virtual.instance = "false";
 
 		User.firstLoginPG();
 
@@ -584,7 +584,7 @@ definition {
 	@priority = 4
 	test RestrictAvailableLocales {
 		property custom.properties = "locales=ca_ES,zh_CN,nl_NL,en_AU,en_GB,en_US,fi_FI,fr_FR,de_DE,it_IT,iw_IL,hu_HU,ja_JP,pt_BR,es_ES";
-		property test.name.skip.portal.instance = "Locale#RestrictAvailableLocales";
+		property test.liferay.virtual.instance = "false";
 
 		User.firstLoginPG();
 
@@ -613,7 +613,7 @@ definition {
 	test RestrictDefaultLocale {
 		property custom.properties = "company.default.locale=es_ES";
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Locale#RestrictDefaultLocale";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Create test site") {
 			HeadlessSite.addSite(siteName = "Test Site Name");
@@ -664,7 +664,7 @@ definition {
 	@priority = 4
 	test RestrictEnabledLocales {
 		property custom.properties = "locales.enabled=zh_CN,en_US,fr_FR,de_DE,es_ES${line.separator}locales=zh_CN,en_US,fr_FR,de_DE,es_ES,pt_BR,hu_HU";
-		property test.name.skip.portal.instance = "Locale#RestrictEnabledLocales";
+		property test.liferay.virtual.instance = "false";
 
 		User.firstLoginPG();
 
@@ -694,7 +694,7 @@ definition {
 	@priority = 3
 	test RestrictInstanceAvailableTimeZones {
 		property custom.properties = "time.zones=America/Phoenix,UTC,Asia/Tokyo";
-		property test.name.skip.portal.instance = "Locale#RestrictInstanceAvailableTimeZones";
+		property test.liferay.virtual.instance = "false";
 
 		User.firstLoginPG();
 
@@ -821,7 +821,7 @@ definition {
 	@priority = 3
 	test UserLockoutShowsTimezoneInformation {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property test.name.skip.portal.instance = "Locale#UserLockoutShowsTimezoneInformation";
+		property test.liferay.virtual.instance = "false";
 		property testray.component.names = "Password Policies";
 		property user.time.zone = "UTC";
 
@@ -885,7 +885,7 @@ definition {
 
 	@priority = 4
 	test ViewDefaultAvailableTimeZonesForInstancesAndUsers {
-		property test.name.skip.portal.instance = "Locale#ViewDefaultAvailableTimeZonesForInstancesAndUsers";
+		property test.liferay.virtual.instance = "false";
 
 		User.firstLoginPG();
 
@@ -955,7 +955,7 @@ definition {
 	test ViewLocaleInNewVirtualInstance {
 		property portal.acceptance = "true";
 		property test.assert.warning.exceptions = "true";
-		property test.name.skip.portal.instance = "Locale#ViewLocaleInNewVirtualInstance";
+		property test.liferay.virtual.instance = "false";
 
 		User.firstLoginPG();
 
@@ -1021,7 +1021,7 @@ definition {
 
 	@priority = 4
 	test ViewTimeZoneIDInNonEnglishLocale {
-		property test.name.skip.portal.instance = "Locale#ViewTimeZoneIDInNonDefaultLocale";
+		property test.liferay.virtual.instance = "false";
 
 		User.firstLoginPG();
 
@@ -1188,7 +1188,7 @@ definition {
 	@description = "This is a use case for LPS-157252."
 	@priority = 3
 	test VirtualHostLanguageCanBeChangedWithUserDefaultLanguage {
-		property test.name.skip.portal.instance = "Locale#VirtualHostLanguageCanBeChangedWithUserDefaultLanguage";
+		property test.liferay.virtual.instance = "false";
 
 		User.firstLoginPG();
 
@@ -1241,7 +1241,7 @@ definition {
 	@priority = 3
 	test WarningGeneratedWhenUsingNonStandardTimezone {
 		property skip.start.app.server = "true";
-		property test.name.skip.portal.instance = "Locale#WarningGeneratedWhenUsingNonStandardTimezone";
+		property test.liferay.virtual.instance = "false";
 
 		var tomcatBinDir = PropsUtil.get("app.server.bin.dir");
 

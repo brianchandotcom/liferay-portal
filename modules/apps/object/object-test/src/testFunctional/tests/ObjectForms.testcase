@@ -14,9 +14,9 @@ definition {
 	tearDown {
 		ObjectAdmin.deleteAllCustomObjectsViaAPI();
 
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
@@ -123,7 +123,7 @@ definition {
 	@description = "LPS-143064 - Verify that, when using objects as storage type, the user must be able to map to this field type to Rich Text Field and view its entries"
 	@priority = 4
 	test CanMapAndViewEntriesForRichTextField {
-		property test.name.skip.portal.instance = "ObjectForms#CanMapAndViewEntriesForRichTextField";
+		property test.liferay.virtual.instance = "false";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 151597",
@@ -353,7 +353,7 @@ definition {
 	@description = "LPS-135429 - It is possible to retrieve objects data from Data Providers and use in a Select from List field in Forms"
 	@priority = 4
 	test CanRetrieveDataProvidersOnSelectFromListField {
-		property test.name.skip.portal.instance = "ObjectForms#CanRetrieveDataProvidersOnSelectFromListField";
+		property test.liferay.virtual.instance = "false";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 213",
@@ -429,7 +429,7 @@ definition {
 	@description = "LPS-135429 - It is possible to retrieve objects data from Data Providers and use in a Text field in Form"
 	@priority = 4
 	test CanRetrieveDataProvidersOnTextField {
-		property test.name.skip.portal.instance = "ObjectForms#CanRetrieveDataProvidersOnTextField";
+		property test.liferay.virtual.instance = "false";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 214",

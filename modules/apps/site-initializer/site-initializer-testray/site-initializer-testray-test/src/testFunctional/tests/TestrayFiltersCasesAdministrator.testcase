@@ -87,9 +87,9 @@ definition {
 			Testray.testrayApisTearDown();
 		}
 
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
@@ -97,7 +97,7 @@ definition {
 	@description = "Story ID: LPS-173517 | Test Summary: Verify if as an Administrator I should be able to filter the case by case name"
 	@priority = 4
 	test AdminCanFilterCaseByCaseName {
-		property test.name.skip.portal.instance = "TestrayFiltersCasesAdministrator#AdminCanFilterCaseByCaseName";
+		property test.liferay.virtual.instance = "false";
 
 		task ("When the user filter a case by name") {
 			TestrayFilter.clickFilter();
@@ -123,7 +123,7 @@ definition {
 	@description = "Story ID: LPS-173517 | Test Summary: Verify if as an Administrator I should be able to filter the case by case type"
 	@priority = 3
 	test AdminCanFilterCaseByCaseType {
-		property test.name.skip.portal.instance = "TestrayFiltersCasesAdministrator#AdminCanFilterCaseByCaseType";
+		property test.liferay.virtual.instance = "false";
 
 		task ("When the user filter a case by case type") {
 			TestrayFilter.clickColumn();
@@ -154,7 +154,7 @@ definition {
 	@description = "Story ID: LPS-173517 | Test Summary: Verify if as an Administrator I should be able to filter the case by component"
 	@priority = 3
 	test AdminCanFilterCaseByComponent {
-		property test.name.skip.portal.instance = "TestrayFiltersCasesAdministrator#AdminCanFilterCaseByComponent";
+		property test.liferay.virtual.instance = "false";
 
 		task ("When the user filter a case by component") {
 			TestrayFilter.clickFilter();
@@ -179,7 +179,7 @@ definition {
 	@description = "Story ID: LPS-173517 | Test Summary: Verify if as an Administrator I should be able to filter the case by description"
 	@priority = 2
 	test AdminCanFilterCaseByDescription {
-		property test.name.skip.portal.instance = "TestrayFiltersCasesAdministrator#AdminCanFilterCaseByDescription";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given the user selects the description column") {
 			TestrayFilter.clickColumn();
@@ -212,7 +212,7 @@ definition {
 	@description = "Story ID: LPS-173517 | Test Summary: Verify if as an Administrator I should be able to filter the case by priority"
 	@priority = 3
 	test AdminCanFilterCaseByPriority {
-		property test.name.skip.portal.instance = "TestrayFiltersCasesAdministrator#AdminCanFilterCaseByPriority";
+		property test.liferay.virtual.instance = "false";
 
 		task ("When the user filter a case by priority") {
 			TestrayFilter.clickFilter();
@@ -238,7 +238,7 @@ definition {
 	@description = "Story ID: LPS-173517 | Test Summary: Verify if as an Administrator I should be able to filter the case by steps"
 	@priority = 2
 	test AdminCanFilterCaseBySteps {
-		property test.name.skip.portal.instance = "TestrayFiltersCasesAdministrator#AdminCanFilterCaseBySteps";
+		property test.liferay.virtual.instance = "false";
 
 		task ("When the user filter a case by steps") {
 			TestrayFilter.clickFilter();
@@ -263,7 +263,7 @@ definition {
 	@description = "Story ID: LPS-173517 | Test Summary: Verify if as an Administrator I should be able to filter the case by team"
 	@priority = 3
 	test AdminCanFilterCaseByTeam {
-		property test.name.skip.portal.instance = "TestrayFiltersCasesAdministrator#AdminCanFilterCaseByTeam";
+		property test.liferay.virtual.instance = "false";
 
 		task ("When the user filter a case by team") {
 			TestrayFilter.clickColumn();
@@ -292,7 +292,7 @@ definition {
 	@description = "Story ID: LPS-173517 | Test Summary: Verify if as an Administrator I should be able to filter case using multiple filtering options"
 	@priority = 4
 	test AdminCanFilterCasesWithMultipleOptions {
-		property test.name.skip.portal.instance = "TestrayFiltersCasesAdministrator#AdminCanFilterCasesWithMultipleOptions";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that the user selects the columns") {
 			TestrayFilter.clickColumn();
@@ -355,7 +355,7 @@ definition {
 	@description = "Story ID: LPS-173517 | Test Summary: Verify if as an Administrator I should not see case that don't exist when I try filtering for them"
 	@priority = 3
 	test AdminCanFilterForNonexistentCase {
-		property test.name.skip.portal.instance = "TestrayFiltersCasesAdministrator#AdminCanFilterForNonexistentCase";
+		property test.liferay.virtual.instance = "false";
 
 		task ("When the user filters a case by its non-existent name") {
 			TestrayFilter.clickFilter();
@@ -376,7 +376,7 @@ definition {
 	@description = "Story ID: LPS-173517 | Test Summary: Verify if as an Administrator I should be able to filter the filter options"
 	@priority = 2
 	test AdminCanFilterOptionsToFilter {
-		property test.name.skip.portal.instance = "TestrayFiltersCasesAdministrator#AdminCanFilterOptionsToFilter";
+		property test.liferay.virtual.instance = "false";
 
 		task ("When the user search filter called priority") {
 			TestrayFilter.clickFilter();
@@ -404,7 +404,7 @@ definition {
 	@description = "Story ID: LPS-176898 | Test Summary: Verify that can clean the filter results"
 	@priority = 2
 	test CanClearFilterResults {
-		property test.name.skip.portal.instance = "TestrayFiltersCasesAdministrator#CanClearFilterResults";
+		property test.liferay.virtual.instance = "false";
 
 		task ("When the user filters a case by its non-existent name") {
 			TestrayFilter.clickFilter();
@@ -437,7 +437,7 @@ definition {
 	@description = "Story ID: LPS-176898 | Test Summary: Verify that can clear the filter results with the close button"
 	@priority = 2
 	test CanClearFilterWithCloseButton {
-		property test.name.skip.portal.instance = "TestrayFiltersCasesAdministrator#CanClearFilterWithCloseButton";
+		property test.liferay.virtual.instance = "false";
 
 		task ("When the user filters a filter by its non-existent name") {
 			TestrayFilter.clickFilter();
@@ -459,7 +459,7 @@ definition {
 	@description = "Story ID: LPS-177202 | Test Summary: Verify that the user can pin filters"
 	@priority = 3
 	test CanPinFilterResults {
-		property test.name.skip.portal.instance = "TestrayFiltersCasesAdministrator#CanPinFilterResults";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that can see two different cases in the table") {
 			AssertElementPresent(
@@ -504,7 +504,7 @@ definition {
 	@description = "Story ID: LPS-177202 | Test Summary: Verify that the user can unpin filters"
 	@priority = 3
 	test CanUnpinFilterResults {
-		property test.name.skip.portal.instance = "TestrayFiltersCasesAdministrator#CanUnpinFilterResults";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that can see two different cases in the table") {
 			AssertElementPresent(
@@ -549,7 +549,7 @@ definition {
 	@description = "Story ID: LPS-177202 | Test Summary: Verify that the error message appears when pining without selected filters"
 	@priority = 2
 	test CanViewMessageError {
-		property test.name.skip.portal.instance = "TestrayFiltersCasesAdministrator#CanViewMessageError";
+		property test.liferay.virtual.instance = "false";
 
 		task ("When the user pin a result without filtering") {
 			Click.javaScriptClick(locator1 = "TestrayFilter#PIN_ICON");

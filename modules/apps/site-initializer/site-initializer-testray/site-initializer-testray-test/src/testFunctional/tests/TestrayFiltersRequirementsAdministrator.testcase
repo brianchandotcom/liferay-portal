@@ -75,9 +75,9 @@ definition {
 			Testray.testrayApisTearDown();
 		}
 
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
@@ -85,7 +85,7 @@ definition {
 	@description = "Story ID: LPS-173519 | Test Summary: Verify if as an Administrator I should not see requirements that don't exist when I try filtering for them"
 	@priority = 3
 	test AdminCanFilterForNonexistentRequirements {
-		property test.name.skip.portal.instance = "TestrayFiltersRequirementsAdministrator#AdminCanFilterForNonexistentRequirements";
+		property test.liferay.virtual.instance = "false";
 
 		task ("When the user filters a requirement by its non-existent name") {
 			TestrayFilter.clickFilter();
@@ -106,7 +106,7 @@ definition {
 	@description = "Story ID: LPS-173519 | Test Summary: Verify if as an Administrator I should be able to filter requirements by component"
 	@priority = 3
 	test AdminCanFilterRequirementsByComponent {
-		property test.name.skip.portal.instance = "TestrayFiltersRequirementsAdministrator#AdminCanFilterRequirementsByComponent";
+		property test.liferay.virtual.instance = "false";
 
 		task ("When the user filter a requirement by component") {
 			TestrayFilter.clickFilter();
@@ -131,7 +131,7 @@ definition {
 	@description = "Story ID: LPS-173519 | Test Summary: Verify if as an Administrator I should be able to filter requirements by link"
 	@priority = 3
 	test AdminCanFilterRequirementsByLink {
-		property test.name.skip.portal.instance = "TestrayFiltersRequirementsAdministrator#AdminCanFilterRequirementsByLink";
+		property test.liferay.virtual.instance = "false";
 
 		task ("When the user filter a requirement by link") {
 			TestrayFilter.clickFilter();
@@ -158,7 +158,7 @@ definition {
 	@description = "Story ID: LPS-173519 | Test Summary: Verify if as an Administrator I should be able to filter requirements by summary"
 	@priority = 3
 	test AdminCanFilterRequirementsBySummary {
-		property test.name.skip.portal.instance = "TestrayFiltersRequirementsAdministrator#AdminCanFilterRequirementsBySummary";
+		property test.liferay.virtual.instance = "false";
 
 		task ("When the user filter a requirement by summary") {
 			TestrayFilter.clickFilter();
@@ -181,7 +181,7 @@ definition {
 	@description = "Story ID: LPS-173519 | Test Summary: Verify if as an Administrator I should be able to filter requirements by team"
 	@priority = 3
 	test AdminCanFilterRequirementsByTeam {
-		property test.name.skip.portal.instance = "TestrayFiltersRequirementsAdministrator#AdminCanFilterRequirementsByTeam";
+		property test.liferay.virtual.instance = "false";
 
 		task ("When the user filter a requirement by team") {
 			TestrayFilter.clickFilter();
@@ -206,7 +206,7 @@ definition {
 	@description = "Story ID: LPS-173519 | Test Summary: Verify if as an Administrator I should be able to filter requirements using multiple filtering options"
 	@priority = 3
 	test AdminCanFilterRequirementsWithMultipleOptions {
-		property test.name.skip.portal.instance = "TestrayFiltersRequirementsAdministrator#AdminCanFilterRequirementsWithMultipleOptions";
+		property test.liferay.virtual.instance = "false";
 
 		task ("When the user filter a requirement with multiple options") {
 			TestrayFilter.clickFilter();
@@ -243,7 +243,7 @@ definition {
 	@description = "Story ID: LPS-173519 | Test Summary: Verify that can search for a field"
 	@priority = 2
 	test AdminCanSearchForField {
-		property test.name.skip.portal.instance = "TestrayFiltersRequirementsAdministrator#AdminCanSearchForField";
+		property test.liferay.virtual.instance = "false";
 
 		task ("When the user search field called link") {
 			TestrayFilter.clickFilter();

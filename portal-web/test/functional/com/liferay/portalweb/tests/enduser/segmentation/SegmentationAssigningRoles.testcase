@@ -32,9 +32,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -50,7 +50,7 @@ definition {
 	@priority = 4
 	test AssigningBySegmentNotWorkingDisabledInstanceSettings {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "SegmentationAssigningRoles#AssigningBySegmentNotWorkingDisabledInstanceSettings";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add user and set password") {
 			JSONUser.addUser(
@@ -142,7 +142,7 @@ definition {
 	@uitest
 	test AssignSiteRolesOptionInSegmentsEditor {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "SegmentationAssigningRoles#AssignSiteRolesOptionInSegmentsEditor";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add segment in Test Site Name") {
 			JSONSegmentsentry.addSegment(
@@ -195,7 +195,7 @@ definition {
 	@description = "LPS-130918 Given the Segment Service Configuration in Instance Settings And Enable Segmentation by roles is checked in System Settings When Enable Segmentation by roles is enabled And the user accesses the Segments tab in the role assignment screen Then no warning message is shown and the assigning will be accomplished"
 	@priority = 3
 	test CanAssignBySegmentEnabledInstanceSettings {
-		property test.name.skip.portal.instance = "SegmentationAssigningRoles#CanAssignBySegmentEnabledInstanceSettings";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add user and set password") {
 			JSONUser.addUser(
@@ -293,7 +293,7 @@ definition {
 	@priority = 4
 	test CanAssignSiteRolesToSegment {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "SegmentationAssigningRoles#CanAssignSiteRolesToSegment";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add segment in Test Site Name") {
 			JSONSegmentsentry.addSegment(
@@ -346,7 +346,7 @@ definition {
 	@description = "LPS-130918 Given the Segment Service Configuration in Instance Settings When Enable Segmentation by roles is disabled And the user accesses the Segments tab in the role assignment screen Then a message will show: ""Warning: Assigning roles by segment is disabled. To enable, go to System Settings > Segments > Segments Service."""
 	@priority = 3
 	test CheckMessageSegmentationByRolesDisabledInstanceSettings {
-		property test.name.skip.portal.instance = "SegmentationAssigningRoles#CheckMessageSegmentationByRolesDisabledInstanceSettings";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Disable segmentation by roles from instance settings") {
 			ApplicationsMenu.gotoPortlet(
@@ -386,7 +386,7 @@ definition {
 	@uitest
 	test DisableAssignRolesBySegment {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "SegmentationAssigningRoles#DisableAssignRolesBySegment";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add user and set password") {
 			JSONUser.addUser(
@@ -465,7 +465,7 @@ definition {
 	@uitest
 	test DisableAssignRolesWarningMessage {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "SegmentationAssigningRoles#DisableAssignRolesWarningMessage";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Assert the Enable Assign roles by segments checkbox is disabled") {
 			ApplicationsMenu.gotoPortlet(
@@ -504,7 +504,7 @@ definition {
 	@priority = 4
 	test DisabledAssignSiteRolesOptionInSegmentsEditor {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "SegmentationAssigningRoles#DisabledAssignSiteRolesOptionInSegmentsEditor";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add segment in Test Site Name") {
 			JSONSegmentsentry.addSegment(
@@ -560,7 +560,7 @@ definition {
 	@priority = 5
 	test EditPageAfterEnableAssignRole {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "SegmentationAssigningRoles#";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Create a Content Page") {
 			JSONLayout.addPublicLayout(
@@ -599,7 +599,7 @@ definition {
 	@uitest
 	test EnableAssignRolesBySegment {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "SegmentationAssigningRoles#EnableAssignRolesBySegment";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add user and set password") {
 			JSONUser.addUser(
@@ -684,7 +684,7 @@ definition {
 	@uitest
 	test EnableAssignRolesNoWarningMessage {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "SegmentationAssigningRoles#EnableAssignRolesNoWarningMessage";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Enable Assign roles by segment") {
 			ApplicationsMenu.gotoPortlet(

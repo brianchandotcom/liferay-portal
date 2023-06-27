@@ -9,7 +9,7 @@ definition {
 	@disable-webdriver = "true"
 	@priority = 4
 	test RemoveRedundantIndex {
-		property test.name.skip.portal.instance = "ServiceBuilderIndexes#RemoveRedundantIndex";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add a redundant index to indexes.sql") {
 			var content = '''create unique index IX_32712A55 on RedundantIndexEntry (name[\$COLUMN_LENGTH:75\$], companyId);''';

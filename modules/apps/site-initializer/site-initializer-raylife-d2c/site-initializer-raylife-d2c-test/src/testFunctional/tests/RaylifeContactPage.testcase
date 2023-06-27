@@ -18,11 +18,11 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		Raylife.tearDownCP();
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -33,7 +33,7 @@ definition {
 	@description = "LPS-142596 - Verify clicking 'Dismiss' on the Information Panel closes it (Information Panel from 'Let's get in touch.' page)"
 	@priority = 3
 	test CanDismissContactAgentPageInfoPanel {
-		property test.name.skip.portal.instance = "RaylifeContactPage#CanDismissContactAgentPageInfoPanel";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
@@ -65,7 +65,7 @@ definition {
 	@description = "LPS-142608 - Verify if you can reach the contact page by 'Let’s get to know your business!' page"
 	@priority = 5
 	test CanReachContactPageByBusinessPage {
-		property test.name.skip.portal.instance = "RaylifeContactPage#CanReachContactPageByBusinessPage";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
@@ -95,7 +95,7 @@ definition {
 	@description = "LPS-142609 - Verify if you can reach the contact page by 'Tell us about your employees!' page"
 	@priority = 5
 	test CanReachContactPageByEmployeesPage {
-		property test.name.skip.portal.instance = "RaylifeContactPage#CanReachContactPageByEmployeesPage";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
@@ -129,7 +129,7 @@ definition {
 	@description = "LPS-142610 - Verify if you can reach the contact page by 'More about... <Business Street Address>' page"
 	@priority = 5
 	test CanReachContactPageByPropertyPage {
-		property test.name.skip.portal.instance = "RaylifeContactPage#CanReachContactPageByPropertyPage";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
@@ -177,7 +177,7 @@ definition {
 	@description = "LPS-142584 - Verify if Application ID was generated after the user saved their Contact Info"
 	@priority = 5
 	test CanViewApplicationId {
-		property test.name.skip.portal.instance = "RaylifeContactPage#CanViewApplicationId";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
@@ -205,7 +205,7 @@ definition {
 	@description = "LPS-142589 - Verify if when the user click in the 'Back to edit info', the previous data persist"
 	@priority = 5
 	test DataPersistsWhenTryToEditInfo {
-		property test.name.skip.portal.instance = "RaylifeContactPage#DataPersistsWhenTryToEditInfo";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 

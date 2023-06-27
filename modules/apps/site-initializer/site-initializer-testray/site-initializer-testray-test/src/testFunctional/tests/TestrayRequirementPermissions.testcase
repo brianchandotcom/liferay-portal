@@ -77,9 +77,9 @@ definition {
 			Testray.testrayApisTearDown();
 		}
 
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
@@ -87,7 +87,7 @@ definition {
 	@description = "Story ID: LPS-178268 | Test Summary: Verify that the User with the 'Testray Analyst' role should be able to delete the requirement"
 	@priority = 3
 	test AnalystRoleCanDeleteRequirement {
-		property test.name.skip.portal.instance = "TestrayRequirementPermissions#AnalystRoleCanDeleteRequirement";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that the user login with the Testray Analyst role") {
 			User.logoutAndLoginPG(
@@ -125,7 +125,7 @@ definition {
 	@description = "Story ID: LPS-178268 | Test Summary: Verify that the User with the 'Testray Analyst' role should be able to edit the requirement"
 	@priority = 3
 	test AnalystRoleCanEditRequirement {
-		property test.name.skip.portal.instance = "TestrayRequirementPermissions#AnalystRoleCanEditRequirement";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that the user login with the Testray Analyst role") {
 			User.logoutAndLoginPG(
@@ -167,7 +167,7 @@ definition {
 	@description = "Story ID: LPS-178268 | Test Summary: Verify that the User with the 'Testray Analyst' role should be able to create the requirement"
 	@priority = 3
 	test AssertAnalystRoleCanCreateRequirement {
-		property test.name.skip.portal.instance = "TestrayRequirementPermissions#AssertAnalystRoleCanCreateRequirement";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that the user login with the Testray Analyst role") {
 			User.logoutAndLoginPG(
@@ -203,7 +203,7 @@ definition {
 	@description = "Story ID: LPS-178268 | Test Summary: Verify that the User with the 'Testray Lead' role should be able to create the requirement"
 	@priority = 3
 	test AssertLeadRoleCanCreateRequirement {
-		property test.name.skip.portal.instance = "TestrayRequirementPermissions#AssertLeadRoleCanCreateRequirement";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that the user login with the Testray Lead role") {
 			User.logoutAndLoginPG(
@@ -239,7 +239,7 @@ definition {
 	@description = "Story ID: LPS-178268 | Test Summary: Verify that the User with the 'Testray Lead' role should be able to delete the requirement"
 	@priority = 3
 	test AssertLeadRoleCanDeleteRequirement {
-		property test.name.skip.portal.instance = "TestrayRequirementPermissions#AssertLeadRoleCanDeleteRequirement";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that the user login with the Testray Lead role") {
 			User.logoutAndLoginPG(
@@ -277,7 +277,7 @@ definition {
 	@description = "Story ID: LPS-178268 | Test Summary: Verify that the User with the 'Testray Lead' role should be able to edit the requirement"
 	@priority = 3
 	test AssertLeadRoleCanEditRequirement {
-		property test.name.skip.portal.instance = "TestrayRequirementPermissions#AssertLeadRoleCanEditRequirement";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that the user login with the Testray Lead role") {
 			User.logoutAndLoginPG(
@@ -319,7 +319,7 @@ definition {
 	@description = "Story ID: LPS-178268 | Test Summary: Verify that the User with the 'Testray User' role should not be able to create the requirement"
 	@priority = 2
 	test AssertUserRoleCanNotCreateRequirement {
-		property test.name.skip.portal.instance = "TestrayRequirementPermissions#AssertUserRoleCanNotCreateRequirement";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that the user login with the Testray User role") {
 			User.logoutAndLoginPG(
@@ -347,7 +347,7 @@ definition {
 	@description = "Story ID: LPS-178268 | Test Summary: Verify that the User with the 'Testray User' role should not be able to delete the requirement"
 	@priority = 2
 	test AssertUserRoleCanNotDeleteRequirement {
-		property test.name.skip.portal.instance = "TestrayRequirementPermissions#AssertUserRoleCanNotDeleteRequirement";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that the user login with the Testray User role") {
 			User.logoutAndLoginPG(
@@ -381,7 +381,7 @@ definition {
 	@description = "Story ID: LPS-178268 | Test Summary: Verify that the User with the 'Testray User' role should not be able to edit the requirement"
 	@priority = 2
 	test AssertUserRoleCanNotEditRequirement {
-		property test.name.skip.portal.instance = "TestrayRequirementPermissions#AssertUserRoleCanNotEditRequirement";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that the user login with the Testray User role") {
 			User.logoutAndLoginPG(

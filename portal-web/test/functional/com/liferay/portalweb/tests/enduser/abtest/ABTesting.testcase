@@ -40,7 +40,7 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		// It is not possible to delete properties and data source after LRAC-13389. This functionality should return after LRAC-8040
 
@@ -48,7 +48,7 @@ definition {
 
 		ACUtils.tearDownDXP();
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -782,7 +782,7 @@ definition {
 	@description = "LPS-96781: Validate if, when the A/B Testing changes in the Liferay DXP, information about the Liferay DXP context, the changes are reflected in the test in Analytics Cloud"
 	@priority = 4
 	test CheckTestChangesInAC {
-		property test.name.skip.portal.instance = "ABTesting#CheckTestChangesInAC";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Create AB test, create variant and run the test") {
 			ABTest.createABTest(
@@ -822,7 +822,7 @@ definition {
 	@description = "LPS-97195: Validate if the variant for A/B Test that was deleted on Liferay portal is visible in the Analytics Cloud"
 	@priority = 4
 	test CheckVariantDeletedInAC {
-		property test.name.skip.portal.instance = "ABTesting#CheckVariantDeletedInAC";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Create AB test and create 2 variants") {
 			ABTest.createABTest(

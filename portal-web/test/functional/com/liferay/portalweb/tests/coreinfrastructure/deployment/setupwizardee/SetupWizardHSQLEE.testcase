@@ -13,7 +13,7 @@ definition {
 	@priority = 4
 	test HSQLtoDB2 {
 		property database.types = "db2";
-		property test.name.skip.portal.instance = "SetupWizardHSQL#HSQLtoDB2";
+		property test.liferay.virtual.instance = "false";
 
 		SetupWizard.configurePG(
 			administratorEmail = "test@liferay.com",
@@ -34,7 +34,7 @@ definition {
 	test HSQLtoDB2SampleDataEnabled {
 		property database.types = "db2";
 		property databases.size = "1";
-		property test.name.skip.portal.instance = "SetupWizardHSQL#HSQLtoDB2SampleDataEnabled";
+		property test.liferay.virtual.instance = "false";
 
 		SetupWizard.configurePG(
 			addSampleData = "true",
@@ -61,7 +61,7 @@ definition {
 	test HSQLtoOracle {
 		property database.types = "oracle";
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "SetupWizardHSQL#HSQLtoOracle";
+		property test.liferay.virtual.instance = "false";
 
 		SetupWizard.configurePG(
 			administratorEmail = "test@liferay.com",
@@ -82,7 +82,7 @@ definition {
 	test HSQLtoOracleSampleDataEnabled {
 		property database.types = "oracle";
 		property databases.size = "1";
-		property test.name.skip.portal.instance = "SetupWizardHSQL#HSQLtoOracleSampleDataEnabled";
+		property test.liferay.virtual.instance = "false";
 
 		SetupWizard.configurePG(
 			addSampleData = "true",
@@ -109,7 +109,7 @@ definition {
 	test HSQLtoSQLServer {
 		property database.types = "sqlserver";
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "SetupWizardHSQL#HSQLtoSQLServer";
+		property test.liferay.virtual.instance = "false";
 
 		SetupWizard.configurePG(
 			administratorEmail = "test@liferay.com",
@@ -130,7 +130,7 @@ definition {
 	test HSQLtoSQLServerSampleDataEnabled {
 		property database.types = "sqlserver";
 		property databases.size = "1";
-		property test.name.skip.portal.instance = "SetupWizardHSQL#HSQLtoSQLServerSampleDataEnabled";
+		property test.liferay.virtual.instance = "false";
 
 		SetupWizard.configurePG(
 			addSampleData = "true",
@@ -156,7 +156,7 @@ definition {
 	@priority = 4
 	test HSQLtoSybase {
 		property database.types = "sybase";
-		property test.name.skip.portal.instance = "SetupWizardHSQL#HSQLtoSybase";
+		property test.liferay.virtual.instance = "false";
 
 		SetupWizard.configurePG(
 			administratorEmail = "test@liferay.com",
@@ -177,7 +177,7 @@ definition {
 	test HSQLtoSybaseSampleDataEnabled {
 		property database.types = "sybase";
 		property databases.size = "1";
-		property test.name.skip.portal.instance = "SetupWizardHSQL#HSQLtoSybaseSampleDataEnabled";
+		property test.liferay.virtual.instance = "false";
 
 		SetupWizard.configurePG(
 			addSampleData = "true",

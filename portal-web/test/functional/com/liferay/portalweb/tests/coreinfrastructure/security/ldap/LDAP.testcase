@@ -13,9 +13,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -30,7 +30,7 @@ definition {
 	test AssertLDAPCredentialsDoesNotExposeInURL {
 		property apacheds.multiple.users.enabled = "true";
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "LDAP#AssertLDAPCredentialsDoesNotExposeInURL";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add LDAP server and test connection") {
 			LDAP.addLDAPServerAndTestConnection(ldapServerName = "ApacheDS Server");
@@ -55,7 +55,7 @@ definition {
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property environment.acceptance = "false";
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "LDAP#ImportLDAPUserWithBlankPassword";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add LDAP server and test connection") {
 			PortalSettings.addLDAPServer(ldapServerName = "ApacheDS Server");
@@ -105,7 +105,7 @@ definition {
 		property app.server.types = "tomcat";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property environment.acceptance = "false";
-		property test.name.skip.portal.instance = "LDAP#CanLoginViaSAMLWithLDAPPasswordCreation";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given Disable Allow Custom Password At Account Creation in Users add LDAP server and test connection configure LDAP settings") {
 			Navigator.openURL();
@@ -168,7 +168,7 @@ definition {
 		property apacheds.enabled = "true";
 		property portal.release = "quarantine";
 		property portal.upstream = "quarantine";
-		property test.name.skip.portal.instance = "LDAP#CanRemoveUserFromGroupThroughLDAP";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: User enable DEBUG log level for LDAP related loggers") {
 			LDAP.enableLDAPDebugLogs();
@@ -211,7 +211,7 @@ definition {
 	@priority = 3
 	test DeactivatedUserStayDeactivatedAfterLDAPImport {
 		property apacheds.enabled = "true";
-		property test.name.skip.portal.instance = "LDAP#DeactivatedUserStayDeactivatedAfterLDAPImport";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: User enable DEBUG log level for LDAP related loggers") {
 			LDAP.enableLDAPDebugLogs();
@@ -274,7 +274,7 @@ definition {
 	test FieldValuesNotResetForImportedLDAPUser {
 		property apacheds.enabled = "true";
 		property custom.properties = "field.enable.com.liferay.portal.kernel.model.Contact.male=true";
-		property test.name.skip.portal.instance = "LDAP#FieldValuesNotResetForImportedLDAPUser";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add LDAP server and test connection") {
 			PortalSettings.addLDAPServer();
@@ -373,7 +373,7 @@ definition {
 	@priority = 5
 	test LDAPAuthenticationWorksWithDifferentPasswordAlgorithm {
 		property apacheds.enabled = "true";
-		property test.name.skip.portal.instance = "LDAP#LDAPAuthenticationWorksWithDifferentPasswordAlgorithm";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: User enable DEBUG log level for LDAP related loggers") {
 			LDAP.enableLDAPDebugLogs();
@@ -408,7 +408,7 @@ definition {
 	@priority = 3
 	test LDAPImportIntervalCanBeSetManually {
 		property apacheds.enabled = "true";
-		property test.name.skip.portal.instance = "LDAP#LDAPImportIntervalCanBeSetManually";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: User enable DEBUG log level for LDAP related loggers") {
 			LDAP.enableLDAPDebugLogs();
@@ -444,7 +444,7 @@ definition {
 	@description = "This is a use case for LPS-73381. LDAP instance settings do not affect system settings."
 	@priority = 3
 	test LDAPInstanceSettingsDoNotAffectSystemSettings {
-		property test.name.skip.portal.instance = "LDAP#ViewInstanceSettingsEnableLDAPAuthNotAffectSystemSetting";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Enable LDAP Authentication") {
 			SystemSettings.openSystemSettingsAdmin();
@@ -474,7 +474,7 @@ definition {
 	@description = "This is a use case for LPS-73381. LDAP security credentials are obscured when entered."
 	@priority = 4
 	test LDAPSecurityCredentialsAreHidden {
-		property test.name.skip.portal.instance = "LDAP#ViewHiddenSecurityCredential";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add Server and edit security credential") {
 			SystemSettings.openSystemSettingsAdmin();
@@ -494,7 +494,7 @@ definition {
 	@priority = 3
 	test UserChangesCanBeExportedToLDAP {
 		property apacheds.enabled = "true";
-		property test.name.skip.portal.instance = "LDAP#UserChangesCanBeExportedToLDAP";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: User adds LDAP server and configure settings with group import method") {
 			var enableSettingList = "enabled,ldapImportEnabled,ldapExportEnabled";
@@ -533,7 +533,7 @@ definition {
 	@priority = 3
 	test UsersCanBeImportedFromLDAPByGroups {
 		property apacheds.enabled = "true";
-		property test.name.skip.portal.instance = "LDAP#UsersCanBeImportedFromLDAPByGroups";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: User adds LDAP server and configure settings with group import method") {
 			var enableSettingList = "enabled,ldapImportEnabled";

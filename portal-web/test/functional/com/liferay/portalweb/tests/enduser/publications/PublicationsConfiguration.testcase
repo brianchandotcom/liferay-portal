@@ -12,9 +12,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
@@ -50,7 +50,7 @@ definition {
 		property database.types = "mysql";
 		property databases.size = "1";
 		property minimum.slave.ram = "24";
-		property test.name.skip.portal.instance = "Publications#CanEnablePublicationsInRemoteLiveSite";
+		property test.liferay.virtual.instance = "false";
 
 		HeadlessSite.addSite(siteName = "Site Name");
 
@@ -123,7 +123,7 @@ definition {
 		property portal.context = "liferay";
 		property skip.clean-app-server-deploy-dir = "true";
 		property test.assert.warning.exceptions = "true";
-		property test.name.skip.portal.instance = "PublicationsConfiguration#CreatePublicationsInNonRootContext";
+		property test.liferay.virtual.instance = "false";
 
 		Publications.enablePublications();
 

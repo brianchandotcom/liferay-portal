@@ -10,7 +10,7 @@ definition {
 	@priority = 3
 	test RestartWithMissingChildPagePermission {
 		property database.types = "mysql";
-		property test.name.skip.portal.instance = "DataInconsistancy#RestartWithMissingChildPagePermission";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given a widget page with a child page") {
 			User.firstLoginPG();
@@ -51,7 +51,7 @@ definition {
 	@priority = 3
 	test RestartWithMissingPagePermission {
 		property database.types = "mysql";
-		property test.name.skip.portal.instance = "DataInconsistancy#RestartWithMissingPagePermission";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given a widget page") {
 			User.firstLoginPG();

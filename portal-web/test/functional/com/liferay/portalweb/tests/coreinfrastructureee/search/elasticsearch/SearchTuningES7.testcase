@@ -14,9 +14,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
@@ -797,7 +797,7 @@ definition {
 
 	@priority = 5
 	test ReindexingRestoresResultRankingsIndex {
-		property test.name.skip.portal.instance = "SearchTuningES7#ReindexingRestoresResultRankingsIndex";
+		property test.liferay.virtual.instance = "false";
 
 		for (var title : list "Article,Journal") {
 			JSONWebcontent.addWebContent(
@@ -844,7 +844,7 @@ definition {
 
 	@priority = 5
 	test ReindexingRestoresSynonymsIndex {
-		property test.name.skip.portal.instance = "SearchTuningES7#ReindexingRestoresSynonymsIndex";
+		property test.liferay.virtual.instance = "false";
 
 		SearchTuning.openSynonymsAdmin();
 

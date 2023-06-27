@@ -14,9 +14,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -172,7 +172,7 @@ definition {
 	@description = "This is a use case for LPS-128693. Verify can import a LAR containing WCD between instances."
 	@priority = 3
 	test CanImportWCDBetweenInstances {
-		property test.name.skip.portal.instance = "WebContentExportImport#CanImportWCDBetweenInstances";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: new site page with a web content display is exported") {
 			JSONWebcontent.addWebContent(
@@ -284,7 +284,7 @@ definition {
 	@description = "This is a test for LPS-114230. Verify that can show exported image global structures between instances."
 	@priority = 3
 	test CanShowExportedGlobalStructuresImageBetweenInstances {
-		property test.name.skip.portal.instance = "WebContentExportImport#CanShowExportedGlobalStructuresImageBetweenInstances";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: new web content with WC structure with an image field is exported") {
 			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "global");
@@ -1095,7 +1095,7 @@ definition {
 	@description = "This is a test for LPS-96545. Cancel reset and reset the default values when edit default values in imported web content structure."
 	@priority = 4
 	test ResetImportedStructureDefaultValues {
-		property test.name.skip.portal.instance = "WebContentExportImport#ResetImportedStructureDefaultValues";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add a web content based on Basic Web Content") {
 			JSONWebcontent.addWebContent(

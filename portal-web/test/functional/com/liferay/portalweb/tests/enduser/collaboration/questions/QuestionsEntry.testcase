@@ -22,9 +22,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -702,7 +702,7 @@ definition {
 	@description = "Validate if a user can view question details after restoring history router to default setting."
 	@priority = 3
 	test CanRestoreHistoryRouterToDefaultSetting {
-		property test.name.skip.portal.instance = "QuestionsEntry#CanRestoreHistoryRouterToDefaultSetting";
+		property test.liferay.virtual.instance = "false";
 
 		Questions.openToConfigInSystemSettings(portlet = "Questions");
 
@@ -1028,7 +1028,7 @@ definition {
 	@description = "Validate if the guest can check the canonical URL, also covers LPS-137636."
 	@priority = 4
 	test CanViewCanonicalURL {
-		property test.name.skip.portal.instance = "QuestionsEntry#CanViewCanonicalURL";
+		property test.liferay.virtual.instance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -1073,7 +1073,7 @@ definition {
 	@description = "Validate if the guest can check the canonical URL for duplicated questions."
 	@priority = 4
 	test CanViewCanonicalURLForDuplicatedQuestions {
-		property test.name.skip.portal.instance = "QuestionsEntry#CanViewCanonicalURLForDuplicatedQuestions";
+		property test.liferay.virtual.instance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -1139,7 +1139,7 @@ definition {
 	@description = "Validate if the guest can check the canonical URL with special characters."
 	@priority = 3
 	test CanViewCanonicalURLWithSpecialCharacters {
-		property test.name.skip.portal.instance = "QuestionsEntry#CanViewCanonicalURLWithSpecialCharacters";
+		property test.liferay.virtual.instance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -1927,7 +1927,7 @@ definition {
 	@description = "Validate if a user can view question details when using history router."
 	@priority = 4
 	test DetailsCanbeViewedWithHistoryRouter {
-		property test.name.skip.portal.instance = "QuestionsEntry#DetailsCanbeViewedWithHistoryRouter";
+		property test.liferay.virtual.instance = "false";
 
 		Questions.openToConfigInSystemSettings(portlet = "Questions");
 

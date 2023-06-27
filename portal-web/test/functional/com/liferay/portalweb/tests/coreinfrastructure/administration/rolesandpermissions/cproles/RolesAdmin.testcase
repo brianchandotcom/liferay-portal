@@ -12,9 +12,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -138,7 +138,7 @@ definition {
 
 	@priority = 4
 	test CanRemoveSiteInScope {
-		property test.name.skip.portal.instance = "RolesAdmin#CanRemoveSiteInScope";
+		property test.liferay.virtual.instance = "false";
 
 		JSONRole.addRegularRole(
 			roleKey = "Remove Permission Scope",
@@ -231,7 +231,7 @@ definition {
 	@description = "This is a use case for LPS-116055."
 	@priority = 5
 	test ChangeScope {
-		property test.name.skip.portal.instance = "RolesAdmin#ChangeScope";
+		property test.liferay.virtual.instance = "false";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 

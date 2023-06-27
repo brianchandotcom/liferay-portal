@@ -41,9 +41,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -60,7 +60,7 @@ definition {
 	@description = "This test makes sure that the Google Drive Shortcut can be added in a depot."
 	@priority = 4
 	test CanDeleteGoogleDocInDepot {
-		property test.name.skip.portal.instance = "GoogleDriveShortcut#CanDeleteGoogleDocInDepot";
+		property test.liferay.virtual.instance = "false";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -90,7 +90,7 @@ definition {
 
 	@priority = 5
 	test CanDeleteGoogleDocInSite {
-		property test.name.skip.portal.instance = "GoogleDriveShortcut#EditAndDeleteGoogleDoc";
+		property test.liferay.virtual.instance = "false";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -120,7 +120,7 @@ definition {
 	@priority = 4
 	@refactordone
 	test CanEditGoogleDocInDepot {
-		property test.name.skip.portal.instance = "GoogleDriveShortcut#CanEditGoogleDocInDepot";
+		property test.liferay.virtual.instance = "false";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -169,7 +169,7 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanEditGoogleDocInSite {
-		property test.name.skip.portal.instance = "GoogleDriveShortcut#CanEditGoogleDocInSite";
+		property test.liferay.virtual.instance = "false";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -214,7 +214,7 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanMoveGoogleDocToFolder {
-		property test.name.skip.portal.instance = "GoogleDriveShortcut#MoveGoogleDocToFolder";
+		property test.liferay.virtual.instance = "false";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 

@@ -13,9 +13,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 
@@ -44,7 +44,7 @@ definition {
 	test MSExhangeViewMBThreadAndReply {
 		property custom.properties = "admin.email.from.address=qa-exchange-pop-test@liferay.onmicrosoft.com${line.separator}jsonws.web.service.paths.excludes=${line.separator}mail.send.blacklist=noreply@liferay.com,test@liferay.com,noreply@domain.invalid,test@domain.invalid";
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "MSExchange#MSExhangeViewMBThreadAndReply";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given a gmail user with permission to add and post on message boards") {
 			JSONUser.addUserWithRole(

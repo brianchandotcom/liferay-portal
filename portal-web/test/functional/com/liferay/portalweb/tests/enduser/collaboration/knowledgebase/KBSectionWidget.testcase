@@ -16,9 +16,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -31,7 +31,7 @@ definition {
 	@description = "This test ensures that the description can be displayed on the KB section widget after enabling it in the configuration."
 	@priority = 4
 	test CanViewDescriptionAfterEnablingInConfiguration {
-		property test.name.skip.portal.instance = "KBSectionWidget#CanViewDescriptionAfterEnablingInConfiguration";
+		property test.liferay.virtual.instance = "false";
 
 		JSONLayout.addWidgetToPublicLayout(
 			column = 1,

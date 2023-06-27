@@ -12,9 +12,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -27,7 +27,7 @@ definition {
 	@description = "This test ensure that the max number of pages generated as preview for PDFs in Instance Setting can limit by the configuration in System Setting."
 	@priority = 4
 	test CanLimitMaximumPagesOfPDFPreviewInInstanceSettingsByTheConfigurationInSystemSetting {
-		property test.name.skip.portal.instance = "DMFileMaximumPagesLimits#CanLimitMaximumPagesOfPDFPreviewInInstanceSettingsByTheConfigurationInSystemSetting";
+		property test.liferay.virtual.instance = "false";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentTitle = "large_file.pdf",
@@ -96,7 +96,7 @@ definition {
 	@e2etest
 	@priority = 4
 	test CanLimitMaximumPagesOfPDFPreviewInSiteSettingsByTheConfigurationInInstanceSetting {
-		property test.name.skip.portal.instance = "DMFileMaximumPagesLimits#CanLimitMaximumPagesOfPDFPreviewInSiteSettingsByTheConfigurationInInstanceSetting";
+		property test.liferay.virtual.instance = "false";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentTitle = "large_file.pdf",
@@ -168,7 +168,7 @@ definition {
 	@description = "This test ensures that a user can configure the max number of pages generated as preview for PDFs in System Setting."
 	@priority = 4
 	test CanLimitMaximumPagesOfPDFPreviewInSystemSettings {
-		property test.name.skip.portal.instance = "DMFileMaximumPagesLimits#CanLimitMaximumPagesOfPDFPreviewInSystemSettings";
+		property test.liferay.virtual.instance = "false";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentTitle = "large_file.pdf",

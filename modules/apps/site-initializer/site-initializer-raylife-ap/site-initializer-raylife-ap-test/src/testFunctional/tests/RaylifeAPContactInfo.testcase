@@ -36,11 +36,11 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		Raylife.tearDownCP();
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -52,7 +52,7 @@ definition {
 	@ignore = "true"
 	@priority = 3
 	test AssertCenterStatusChangeAfterSaveButtonClicked {
-		property test.name.skip.portal.instance = "RaylifeAPContactInfo#AssertCenterStatusChangeAfterSaveButtonClicked";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Uskip after it is resolved
 
@@ -87,7 +87,7 @@ definition {
 	@ignore = "true"
 	@priority = 3
 	test AssertStatusChangeToUnsavedChanges {
-		property test.name.skip.portal.instance = "RaylifeAPContactInfo#AssertStatusChangeToUnsavedChanges";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -117,7 +117,7 @@ definition {
 	@description = "Story ID: LPS-146333 | Test Summary: Verify if Date picker works"
 	@priority = 4
 	test IfDatePickerWorks {
-		property test.name.skip.portal.instance = "RaylifeAPContactInfo#IfDatePickerWorks";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -145,7 +145,7 @@ definition {
 	@description = "Story ID: LPS-146333 | Test Summary: Verify after user fill out all required fields the NEXT button permits them to go to the next step"
 	@priority = 4
 	test NextButtonWorksWhenFieldsAreFilled {
-		property test.name.skip.portal.instance = "RaylifeAPContactInfo#NextButtonWorksWhenFieldsAreFilled";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 

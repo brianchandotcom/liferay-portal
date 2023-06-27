@@ -160,9 +160,9 @@ definition {
 			Testray.testrayApisTearDown();
 		}
 
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
@@ -170,7 +170,7 @@ definition {
 	@description = "Story ID: LPS-173528 | Test Summary: Verify if as an Administrator I should be able to filter component by run"
 	@priority = 3
 	test AdminCanFilterComponentByRun {
-		property test.name.skip.portal.instance = "TestrayComponentFilters#AdminCanFilterComponentByRun";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that the user has two component different in the table") {
 			AssertElementPresent(
@@ -213,7 +213,7 @@ definition {
 	@description = "Story ID: LPS-173528 | Test Summary: Verify if as an Administrator I should be able to filter component by team name"
 	@priority = 3
 	test AdminCanFilterComponentByTeamName {
-		property test.name.skip.portal.instance = "TestrayComponentFilters#AdminCanFilterComponentByTeamName";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that the user has two component different in the table") {
 			AssertElementPresent(
@@ -256,7 +256,7 @@ definition {
 	@description = "Story ID: LPS-173528 | Test Summary: Verify if as an Administrator I should be able to filter component using multiple filtering options"
 	@priority = 4
 	test AdminCanFilterComponentWithMultipleOptions {
-		property test.name.skip.portal.instance = "TestrayComponentFilters#AdminCanFilterComponentWithMultipleOptions";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that the user has two component different in the table") {
 			AssertElementPresent(
@@ -304,7 +304,7 @@ definition {
 	@description = "Story ID: LPS-173528 | Test Summary: Verify if as an User I should be able to search by a filter"
 	@priority = 2
 	test CanSearchByFilter {
-		property test.name.skip.portal.instance = "TestrayComponentFilters#CanSearchByFilter";
+		property test.liferay.virtual.instance = "false";
 
 		task ("When the user searches for a field called priority") {
 			TestrayFilter.clickFilter();

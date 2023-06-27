@@ -65,9 +65,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -101,7 +101,7 @@ definition {
 	test CompleteProcessAndViewEmailNotifications {
 		property portal.upstream = "quarantine";
 		property test.assert.javascript.errors = "false";
-		property test.name.skip.portal.instance = "KaleoFormsEditSingleApprover#CompleteProcessAndViewEmailNotifications";
+		property test.liferay.virtual.instance = "false";
 		property test.smtp.server.enabled = "true";
 
 		ApplicationsMenu.gotoPortlet(
@@ -412,7 +412,7 @@ definition {
 	@priority = 3
 	test ViewApprovedProcessNotificationWithComments {
 		property ci.retries.disabled = "true";
-		property test.name.skip.portal.instance = "KaleoFormsEditSingleApprover#ViewApprovedProcessNotificationWithComments";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 

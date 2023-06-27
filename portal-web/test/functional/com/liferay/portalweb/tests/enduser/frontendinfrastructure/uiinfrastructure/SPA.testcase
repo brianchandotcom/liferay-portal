@@ -12,9 +12,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
@@ -24,7 +24,7 @@ definition {
 	@refactordone
 	test NewURLLoadEventCanDisplayLoadingBar {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "SPA#NewURLLoadEventCanDisplayLoadingBar";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -38,7 +38,7 @@ definition {
 	@description = "LPS-67072. Set the user notification timeout to 1 second"
 	@priority = 4
 	test SPANotificationSetTimeout {
-		property test.name.skip.portal.instance = "SPAInfrastructure#SetTimeout";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: set the user notification timeout to 1 second") {
 			SystemSettings.openSystemSettingsAdmin();

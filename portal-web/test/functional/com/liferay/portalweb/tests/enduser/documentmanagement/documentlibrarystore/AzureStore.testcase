@@ -16,9 +16,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -31,7 +31,7 @@ definition {
 	@description = "This is a use case for LPS-129271."
 	@priority = 4
 	test AssertNoErrorMessageAfterExportAndImportSiteLAR {
-		property test.name.skip.portal.instance = "AzureStore#AssertNoErrorMessageAfterExportAndImportSiteLAR";
+		property test.liferay.virtual.instance = "false";
 
 		var containerId = PropsUtil.get("azure.container.id");
 		var companyId = JSONCompany.getCompanyId();
@@ -77,7 +77,7 @@ definition {
 	@priority = 3
 	test AzureStoreDataMigration {
 		property store.migration.test = "true";
-		property test.name.skip.portal.instance = "AzureStore#AzureStoreDataMigration";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given a document is added to the default store") {
 			var containerId = PropsUtil.get("azure.container.id");
@@ -156,7 +156,7 @@ definition {
 
 	@priority = 5
 	test AzureStoreSmoke {
-		property test.name.skip.portal.instance = "AzureStore#AzureStoreSmoke";
+		property test.liferay.virtual.instance = "false";
 
 		var containerId = PropsUtil.get("azure.container.id");
 		var companyId = JSONCompany.getCompanyId();

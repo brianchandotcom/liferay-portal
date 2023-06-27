@@ -30,9 +30,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -47,7 +47,7 @@ definition {
 	@refactordone
 	test CanDisableSharingAtInstanceScope {
 		property custom.properties = "dl.actions.visible=true";
-		property test.name.skip.portal.instance = "SharingUsecase#CanDisableSharingAtInstanceScope";
+		property test.liferay.virtual.instance = "false";
 
 		SystemSettings.openSystemSettingsAdmin();
 
@@ -107,7 +107,7 @@ definition {
 	@refactordone
 	test CanDisableSharingAtSystemScope {
 		property custom.properties = "dl.actions.visible=true";
-		property test.name.skip.portal.instance = "SharingUsecase#CanDisableSharingAtSystemScope";
+		property test.liferay.virtual.instance = "false";
 
 		SystemSettings.openSystemSettingsAdmin();
 

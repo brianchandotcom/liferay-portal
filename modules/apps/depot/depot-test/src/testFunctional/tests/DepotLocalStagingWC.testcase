@@ -36,9 +36,9 @@ definition {
 
 		Depot.disableStagingDepot(depotName = "Test Depot Name");
 
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -153,7 +153,7 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanEditFriendlyURL {
-		property test.name.skip.portal.instance = "DepotLocalStagingWC#CanEditFriendlyURL";
+		property test.liferay.virtual.instance = "false";
 
 		DepotNavigator.openDepotWebContentAdminStaging(depotName = "Test Depot Name");
 
@@ -357,7 +357,7 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanPublishDeletedWCCustomization {
-		property test.name.skip.portal.instance = "DepotLocalStagingWC#CanPublishDeletedWCCustomization";
+		property test.liferay.virtual.instance = "false";
 
 		DepotNavigator.openDepotAdmin();
 
@@ -440,7 +440,7 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanPublishEditedWCCustomization {
-		property test.name.skip.portal.instance = "DepotLocalStagingWC#CanPublishEditedWCCustomization";
+		property test.liferay.virtual.instance = "false";
 
 		DepotNavigator.openDepotAdmin();
 
@@ -534,7 +534,7 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanPublishWCFolder {
-		property test.name.skip.portal.instance = "DepotLocalStagingWC#CanPublishWCFolder";
+		property test.liferay.virtual.instance = "false";
 
 		DepotNavigator.openDepotWebContentAdminStaging(depotName = "Test Depot Name");
 
@@ -628,7 +628,7 @@ definition {
 	@priority = 4
 	@refactordone
 	test CanPublishWCWithCategory {
-		property test.name.skip.portal.instance = "DepotLocalStagingWC#CanPublishWCWithCategory";
+		property test.liferay.virtual.instance = "false";
 
 		DepotNavigator.openDepotCategoriesAdminStaging(depotName = "Test Depot Name");
 
@@ -690,7 +690,7 @@ definition {
 	@priority = 4
 	@refactordone
 	test CanPublishWCWithEmbeddedVideo {
-		property test.name.skip.portal.instance = "DepotLocalStagingWC#CanPublishWCWithEmbeddedVideo";
+		property test.liferay.virtual.instance = "false";
 
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",

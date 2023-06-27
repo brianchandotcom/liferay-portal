@@ -27,7 +27,7 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		// It is not possible to delete properties and data source after LRAC-13389. This functionality should return after LRAC-8040
 
@@ -35,7 +35,7 @@ definition {
 
 		ACUtils.tearDownDXP();
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -182,7 +182,7 @@ definition {
 	@description = "Bug: LRAC-7916 | Automation ID: LRAC-11529 | Test Summary: It is possible to create multiple properties in different workspaces"
 	@priority = 4
 	test CanCreateSamePropertyNameInDifferentWorkspaces {
-		property test.name.skip.portal.instance = "Properties#CanCreateSamePropertyNameInDifferentWorkspaces";
+		property test.liferay.virtual.instance = "false";
 
 		var acProperty = "AC Property Name";
 		var acWorkspace = "New AC Workspace";

@@ -97,9 +97,9 @@ definition {
 			Testray.testrayApisTearDown();
 		}
 
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
@@ -107,7 +107,7 @@ definition {
 	@description = "Story ID: LPS-162434 | Test Summary: Verify if as an Administrator I should be able to add and delete a Run"
 	@priority = 5
 	test AdminCanAddAndDeleteRun {
-		property test.name.skip.portal.instance = "TestrayRunsAdministrator#AdminCanAddAndDeleteRun";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that I add a Testray run via API") {
 			JSONTestray.addRun(
@@ -137,7 +137,7 @@ definition {
 	@description = "Story ID: LPS-162434 | Test Summary: Verify if as an Administrator I should be able to edit a Run"
 	@priority = 5
 	test AdminCanEditRun {
-		property test.name.skip.portal.instance = "TestrayRunsAdministrator#AdminCanEditRun";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that a Testray categories, options and build is created") {
 			TestrayLayout.clickManageOnSidebar();

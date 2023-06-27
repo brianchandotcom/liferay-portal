@@ -19,11 +19,11 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		Raylife.tearDownCP();
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -35,7 +35,7 @@ definition {
 	@ignore = "true"
 	@priority = 5
 	test CanConfirmEmailSent {
-		property test.name.skip.portal.instance = "RaylifeRetrieveEmail#CanConfirmEmailSent";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -74,7 +74,7 @@ definition {
 	@description = "LPS-143796 - Verify that when user fills out the form and save, user can retrieve quote by copying and pasting the email link into the browser"
 	@priority = 4
 	test CanRecoverQuotationThroughEmailLink {
-		property test.name.skip.portal.instance = "RaylifeRetrieveEmail#CanRecoverQuotationThroughEmailLink";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 

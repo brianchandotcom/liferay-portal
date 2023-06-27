@@ -26,9 +26,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -234,7 +234,7 @@ definition {
 	@priority = 5
 	test SubmitVerificationOfReCaptcha {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CaptchaFragment#SubmitVerificationOfReCaptcha";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given a site member has a content page with a reCaptcha and a Submit Button inside Form Container") {
 			task ("Add a Text field to object") {

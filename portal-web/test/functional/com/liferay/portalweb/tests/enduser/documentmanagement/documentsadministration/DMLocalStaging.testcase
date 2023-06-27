@@ -972,7 +972,7 @@ definition {
 	@refactordone
 	test CanPublishSubfolderWithDocumentsViaSAP {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "StagingDM#PublishSubfolderWithDocumentsViaSAP";
+		property test.liferay.virtual.instance = "false";
 
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
@@ -1476,7 +1476,7 @@ definition {
 	@description = "This test covers LPS-154413. It checks that an image with a custom friendlyURL added to a dynamic collection displayed in an Asset Publisher can be rendered properly on a site after its friendlyURL is edited and republished."
 	@priority = 4
 	test CanViewImageInDynamicCollectionViaAPAfterFriendlyURLIsUpdated {
-		property test.name.skip.portal.instance = "DMLocalStaging#CanViewImageInDynamicCollectionViaAPAfterFriendlyURLIsUpdated";
+		property test.liferay.virtual.instance = "false";
 
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",

@@ -18,11 +18,11 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		Raylife.tearDownCP();
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -33,7 +33,7 @@ definition {
 	@description = "LPS-142193 - Verify if Navigation is clickable for sections that are partially or fully complete."
 	@priority = 4
 	test CanNavigateByClickingInSections {
-		property test.name.skip.portal.instance = "RaylifeNavigation#CanNavigateByClickingInSections";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -75,7 +75,7 @@ definition {
 	@description = "LPS-142189 - Verify if when users complete a section, that completed section will be indicated with a check mark."
 	@priority = 5
 	test SectionIsCompleted {
-		property test.name.skip.portal.instance = "RaylifeNavigation#SectionIsCompleted";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -101,7 +101,7 @@ definition {
 	@description = "LPS-142186 - Verify if when users are viewing a current section, that section will be highlighted in blue."
 	@priority = 5
 	test SectionIsHighlighted {
-		property test.name.skip.portal.instance = "RaylifeNavigation#SectionIsHighlighted";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -123,7 +123,7 @@ definition {
 	@description = "LPS-142191 - Verify if when a section has not yet been started and the user is not currently viewing this section, that section will be grayed out."
 	@priority = 5
 	test SectionIsIncomplete {
-		property test.name.skip.portal.instance = "RaylifeNavigation#SectionIsIncomplete";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 

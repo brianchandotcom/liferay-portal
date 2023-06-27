@@ -14,9 +14,9 @@ definition {
 	tearDown {
 		ObjectAdmin.deleteAllCustomObjectsViaAPI();
 
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
@@ -24,7 +24,7 @@ definition {
 	@description = "LPS-144474 - Verify that, when adding a new entry in the Object, the user only is able to submit the entry successfully if it passes for all validations from that Object"
 	@priority = 4
 	test CanAddEntry {
-		property test.name.skip.portal.instance = "ObjectCustomValidation#CanAddEntryWhenPassesForAllValidations";
+		property test.liferay.virtual.instance = "false";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153556",
@@ -75,7 +75,7 @@ definition {
 	@description = "LPS-144474 - Verify that, when updating an existing validation, this validation must only affect the entries added after the validation update"
 	@priority = 4
 	test CanAffectOnlyEntriesAddedWhenUpdateValidationWithEntries {
-		property test.name.skip.portal.instance = "ObjectCustomValidation#CanAffectOnlyEntriesAddedWhenUpdateValidationWithEntries";
+		property test.liferay.virtual.instance = "false";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153559",
@@ -151,7 +151,7 @@ definition {
 	@description = "LPS-144474 - Verify that, when updating an existing validation, this validation must only affect the entries updated after the validation update"
 	@priority = 4
 	test CanAffectOnlyEntriesUpdateWhenUpdateValidationWithEntries {
-		property test.name.skip.portal.instance = "ObjectCustomValidation#CanAffectOnlyEntriesUpdateWhenUpdateValidationWithEntries";
+		property test.liferay.virtual.instance = "false";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153560",
@@ -234,7 +234,7 @@ definition {
 	@priority = 4
 	test CanDefineExpressionConcat {
 		task ("Create Custom Object and some Custom Fields") {
-			property test.name.skip.portal.instance = "ObjectCustomValidation#CanDefineExpressionConcat";
+			property test.liferay.virtual.instance = "false";
 
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 156694",
@@ -340,7 +340,7 @@ definition {
 	@description = "LPS-147651 - Verify that the user can define and use a expression with condiotinal logic (equals) to integer, boolean, and text fields"
 	@priority = 4
 	test CanDefineExpressionConditionalLogic {
-		property test.name.skip.portal.instance = "ObjectCustomValidation#CanDefineExpressionConditionalLogic";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Create Custom Object and Custom Fields Text") {
 			ObjectAdmin.addObjectViaAPI(
@@ -606,7 +606,7 @@ definition {
 	@priority = 4
 	test CanDefineExpressionContainsAndDoesNotContain {
 		task ("Create Custom Object and Custom Fields") {
-			property test.name.skip.portal.instance = "ObjectCustomValidation#CanDefineExpressionContainsAndDoesNotContain";
+			property test.liferay.virtual.instance = "false";
 
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 156688",
@@ -726,7 +726,7 @@ definition {
 	@priority = 4
 	test CanDefineExpressionFutureDatesAndPastDates {
 		task ("Create Custom Object and Custom Field") {
-			property test.name.skip.portal.instance = "ObjectCustomValidation#CanDefineExpressionFutureDatesAndPastDates";
+			property test.liferay.virtual.instance = "false";
 
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 156701",
@@ -835,7 +835,7 @@ definition {
 	@priority = 4
 	test CanDefineExpressionIsAnEmail {
 		task ("Create Custom Object and Custom Field") {
-			property test.name.skip.portal.instance = "ObjectCustomValidation#CanDefineExpressionIsAnEmail";
+			property test.liferay.virtual.instance = "false";
 
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 156690",
@@ -906,7 +906,7 @@ definition {
 	@priority = 4
 	test CanDefineExpressionIsDecimalOrIsInteger {
 		task ("Create Custom Object and Custom Field") {
-			property test.name.skip.portal.instance = "ObjectCustomValidation#CanDefineExpressionIsDecimalOrIsInteger";
+			property test.liferay.virtual.instance = "false";
 
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 156698",
@@ -1015,7 +1015,7 @@ definition {
 	@priority = 4
 	test CanDefineExpressionIsEmpty {
 		task ("Create Custom Object and Custom Field") {
-			property test.name.skip.portal.instance = "ObjectCustomValidation#CanDefineExpressionIsEmpty";
+			property test.liferay.virtual.instance = "false";
 
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 156695",
@@ -1087,7 +1087,7 @@ definition {
 	@description = "LPS-147651 - Verify that the user can define and use a expression with 'Is Equal To' and 'Is Not Equal To' text fields and integer fields"
 	@priority = 4
 	test CanDefineExpressionIsEqualToAndIsNotEqualTo {
-		property test.name.skip.portal.instance = "ObjectCustomValidation#CanDefineExpressionIsEqualToAndIsNotEqualTo";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Create Custom Object and Custom Field") {
 			ObjectAdmin.addObjectViaAPI(
@@ -1202,7 +1202,7 @@ definition {
 	@description = "LPS-147651 - Verify that the user can define and use a expression with 'Is Greater Than Or Equal To' to integer fields"
 	@priority = 4
 	test CanDefineExpressionIsGreaterThanOrEqualTo {
-		property test.name.skip.portal.instance = "ObjectCustomValidation#CanDefineExpressionIsGreaterThanOrEqualTo";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Create Custom Object and Custom Field") {
 			ObjectAdmin.addObjectViaAPI(
@@ -1284,7 +1284,7 @@ definition {
 	@description = "LPS-147651 - Verify that the user can define and use a expression with 'Is Less Than Or Equal To' to integer fields"
 	@priority = 4
 	test CanDefineExpressionIsLessThanOrEqualTo {
-		property test.name.skip.portal.instance = "ObjectCustomValidation#CanDefineExpressionIsLessThanOrEqualTo";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Create Custom Object and Custom Field") {
 			ObjectAdmin.addObjectViaAPI(
@@ -1366,7 +1366,7 @@ definition {
 	@description = "LPS-147651 - Verify that the user can define and use a expression with 'Is a Url' to text fields"
 	@priority = 4
 	test CanDefineExpressionIsUrl {
-		property test.name.skip.portal.instance = "ObjectCustomValidation#CanDefineExpressionIsUrl";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Create Custom Object and Custom Field") {
 			ObjectAdmin.addObjectViaAPI(
@@ -1437,7 +1437,7 @@ definition {
 	@description = "LPS-147651 - Verify that the user can define and use a expression with 'Match' (reGex expression) to text fields"
 	@priority = 4
 	test CanDefineExpressionMatch {
-		property test.name.skip.portal.instance = "ObjectCustomValidation#CanDefineExpressionMatch";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Create Custom Object and Custom Field") {
 			ObjectAdmin.addObjectViaAPI(
@@ -1508,7 +1508,7 @@ definition {
 	@description = "LPS-147651 - Verify that the user can define and use a expression with math operators to integer fields"
 	@priority = 4
 	test CanDefineExpressionOperators {
-		property test.name.skip.portal.instance = "ObjectCustomValidation#CanDefineExpressionOperators";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Create Custom Object and some Custom Fields") {
 			ObjectAdmin.addObjectViaAPI(
@@ -1799,7 +1799,7 @@ definition {
 	@description = "LPS-147651 - Verify that the user can define and use a expression with 'Range' (Future Dates and Past Dates) to date fields"
 	@priority = 4
 	test CanDefineExpressionRange {
-		property test.name.skip.portal.instance = "ObjectCustomValidation#CanDefineExpressionRange";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Create Custom Object and Custom Field") {
 			ObjectAdmin.addObjectViaAPI(
@@ -1883,7 +1883,7 @@ definition {
 	@priority = 4
 	test CanDefineExpressionSum {
 		task ("Create Custom Object and some Custom Fields") {
-			property test.name.skip.portal.instance = "ObjectCustomValidation#CanDefineExpressionSum";
+			property test.liferay.virtual.instance = "false";
 
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 156699",
@@ -1989,7 +1989,7 @@ definition {
 	@description = "LPS-144474 - Verify that, when adding validations using Groovy, the validation is not active by default"
 	@priority = 4
 	test CannotActiveByDefaultWhenAddValidationsGroovy {
-		property test.name.skip.portal.instance = "ObjectCustomValidation#CannotActiveByDefaultWhenAddValidationsGroovy";
+		property test.liferay.virtual.instance = "false";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153551",
@@ -2017,7 +2017,7 @@ definition {
 	@description = "LPS-144474 - Verify that the user, when modeling an Object, is able to add validations using Groovy"
 	@priority = 4
 	test CanPreventEntryCreationViaGroovy {
-		property test.name.skip.portal.instance = "ObjectCustomValidation#CanUserAddValidationsGroovy";
+		property test.liferay.virtual.instance = "false";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153550",
@@ -2072,7 +2072,7 @@ definition {
 	@description = "LPS-144474 - Verify that, when editing an entry in an Object, the user only is able to update the entry successfully if it passes for all validations from that Object"
 	@priority = 4
 	test CanUpdateWhenPassesForAllValidations {
-		property test.name.skip.portal.instance = "ObjectCustomValidation#CanUpdateWhenPassesForAllValidations";
+		property test.liferay.virtual.instance = "false";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153558",
@@ -2139,7 +2139,7 @@ definition {
 	@priority = 4
 	test CanUserDefineValidationActiveOrInactive {
 		property ci.retries.disabled = "true";
-		property test.name.skip.portal.instance = "ObjectCustomValidation#CanUserDefineValidationActiveOrInactive";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given a custom object with a text field") {
 			ObjectAdmin.addObjectViaAPI(
@@ -2217,7 +2217,7 @@ definition {
 	@description = "LPS-144474 - Verify that, when managing an Object validation, the user can see Basic Info tab"
 	@priority = 4
 	test CanUserSeeBasicInfoTab {
-		property test.name.skip.portal.instance = "ObjectCustomValidation#CanUserSeeBasicInfoTab";
+		property test.liferay.virtual.instance = "false";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153553",
@@ -2250,7 +2250,7 @@ definition {
 	@description = "LPS-144474 - Verify that, when managing an Object validation, the user can see Conditions tab"
 	@priority = 4
 	test CanUserSeeConditionsTab {
-		property test.name.skip.portal.instance = "ObjectCustomValidation#CanUserSeeConditionsTab";
+		property test.liferay.virtual.instance = "false";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153554",
@@ -2285,7 +2285,7 @@ definition {
 	@description = "LPS-152735 - Verify that it's possible to validate Expression Builder syntax when creating Actions"
 	@priority = 4
 	test CanValidateExpressionBuilderAction {
-		property test.name.skip.portal.instance = "ObjectCustomValidation#CanValidateExpressionBuilderAction";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Create Custom Object") {
 			ObjectAdmin.addObjectViaAPI(
@@ -2329,7 +2329,7 @@ definition {
 	@description = "LPS-152735 - Verify that it's possible to validate Expression Builder syntax when creating a Scheduled Action"
 	@priority = 4
 	test CanValidateExpressionBuilderScheduledAction {
-		property test.name.skip.portal.instance = "ObjectCustomValidation#CanValidateExpressionBuilderScheduledAction";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Create Custom Object and Custom Field") {
 			ObjectAdmin.addObjectViaAPI(
@@ -2385,7 +2385,7 @@ definition {
 	@description = "LPS-152735 - Verify that it's possible to validate Groovy syntax when creating Actions"
 	@priority = 4
 	test CanValidateGroovyAction {
-		property test.name.skip.portal.instance = "ObjectCustomValidation#CanValidateGroovyAction";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Create Custom Object and Custom Field") {
 			ObjectAdmin.addObjectViaAPI(
@@ -2459,7 +2459,7 @@ definition {
 	@description = "LPS-152735 - Verify that it's possible to validate Groovy syntax when creating a Scheduled Action"
 	@priority = 4
 	test CanValidateGroovyScheduledAction {
-		property test.name.skip.portal.instance = "ObjectCustomValidation#CanValidateGroovyScheduledAction";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Create Custom Object") {
 			ObjectAdmin.addObjectViaAPI(
@@ -2502,7 +2502,7 @@ definition {
 	@priority = 5
 	test CanValidateSystemObjectWithExpressionBuilder {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ObjectCustomValidation#CanValidateSystemObjectWithExpressionBuilder";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Go to Objects, select System Object User and click on validations tab") {
 			ObjectAdmin.openObjectAdmin();
@@ -2579,7 +2579,7 @@ definition {
 	@description = "LPS-144474 - Verify that, when there is no Validations added, the empty state view is displayed"
 	@priority = 4
 	test CanViewDefaultViewWhenEmptyValidation {
-		property test.name.skip.portal.instance = "ObjectCustomValidation#CanViewDefaultViewWhenEmptyValidation";
+		property test.liferay.virtual.instance = "false";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153547",
@@ -2600,7 +2600,7 @@ definition {
 	@description = "LPS-144474 - Verify that the default placeholder from the LocalizedInput has been changed"
 	@priority = 4
 	test CanViewLocalizedInputChanged {
-		property test.name.skip.portal.instance = "ObjectCustomValidation#CanViewLocalizedInputChanged";
+		property test.liferay.virtual.instance = "false";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153549",
@@ -2652,7 +2652,7 @@ definition {
 	@description = "LPS-144474 - Verify that, when adding a new entry in the Object, if it do not passes all validations from that Object, an alert is displayed in the lower left corner of the screen"
 	@priority = 4
 	test CanViewMessageErrorWhenDontPassesForAllValidations {
-		property test.name.skip.portal.instance = "ObjectCustomValidation#CanViewMessageErrorWhenDontPassesForAllValidations";
+		property test.liferay.virtual.instance = "false";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153546",
@@ -2705,7 +2705,7 @@ definition {
 	@description = "LPS-144474 - Verify that the message 'There was an unexpected error in fields validation. Please contact support' is displayed when the goovy sintax is incorrect"
 	@priority = 4
 	test CanViewSpecificErrorWhenGroovySintaxIsIncorrect {
-		property test.name.skip.portal.instance = "ObjectCustomValidation#CanViewSpecificErrorWhenGroovySintaxIsIncorrect";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Create a Custom Object and a Custom Field") {
 			ObjectAdmin.addObjectViaAPI(
@@ -2759,7 +2759,7 @@ definition {
 	@priority = 5
 	test CanViewValidationTab {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ObjectCustomValidation#CanViewValidationTab";
+		property test.liferay.virtual.instance = "false";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153546",
@@ -2778,7 +2778,7 @@ definition {
 	@description = "LPS-144474 - Verify that, when managing an Object validation, the Error Message field is required"
 	@priority = 4
 	test ErrorMessageFieldIsRequired {
-		property test.name.skip.portal.instance = "ObjectCustomValidation#ErrorMessageFieldIsRequired";
+		property test.liferay.virtual.instance = "false";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153555",
@@ -2811,7 +2811,7 @@ definition {
 	@description = "LPS-144474 - Verify that, when adding a New Validation, the Label field is required"
 	@priority = 4
 	test LabelFieldIsRequiredOnValidation {
-		property test.name.skip.portal.instance = "ObjectCustomValidation#LabelFieldIsRequiredOnValidation";
+		property test.liferay.virtual.instance = "false";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153548",

@@ -39,9 +39,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -76,7 +76,7 @@ definition {
 	@description = "Verify that, after approval, the Page status is Ready for Publish"
 	@priority = 4
 	test PageIsReadyForPublishAfterApproval {
-		property test.name.skip.portal.instance = "WorkflowPageRevision#PageIsReadyForPublishAfterApproval";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Site Page Name",
@@ -109,7 +109,7 @@ definition {
 
 	@priority = 4
 	test RejectPageRevisionPG {
-		property test.name.skip.portal.instance = "WorkflowPageRevision#RejectPageRevisionPG";
+		property test.liferay.virtual.instance = "false";
 
 		var pageName = "Page Revision Page";
 
@@ -198,7 +198,7 @@ definition {
 	@description = "Verify that when the Approved page is edited it's status comes to Draft"
 	@priority = 3
 	test StatusComesToDraftWhenPageIsEdited {
-		property test.name.skip.portal.instance = "WorkflowPageRevision#StatusComesToDraftWhenPageIsEdited";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Site Page Name",
@@ -234,7 +234,7 @@ definition {
 	@description = "Verify that a Staging Area Page is Pending after it is submitted for publication"
 	@priority = 5
 	test StatusIsPendingAfterSubmitForWorkflow {
-		property test.name.skip.portal.instance = "WorkflowPageRevision#StatusIsPendingAfterSubmitForWorkflow";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.gotoStagedSitePage(
 			pageName = ${pageName},
@@ -258,7 +258,7 @@ definition {
 	@description = "Verify that when the Approved page is edited the button Submit for Workflow is displayed"
 	@priority = 3
 	test SubmitForWorkflowButtonIsDisplayedWhenPageIsEdited {
-		property test.name.skip.portal.instance = "WorkflowPageRevision#SubmitForWorkflowButtonIsDisplayedWhenPageIsEdited";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.gotoStagedSitePage(
 			pageName = ${pageName},
@@ -299,7 +299,7 @@ definition {
 	@priority = 5
 	test ViewApprovedPageAfterStagingDeactivated {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "WorkflowPageRevision#ViewApprovedPageAfterStagingDeactivated";
+		property test.liferay.virtual.instance = "false";
 
 		var pageName = "New Site Page Name";
 

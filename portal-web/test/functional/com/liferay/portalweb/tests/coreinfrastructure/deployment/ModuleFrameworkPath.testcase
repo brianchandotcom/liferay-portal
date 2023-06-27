@@ -14,7 +14,7 @@ definition {
 	@priority = 4
 	test CustomPathDeploy {
 		property custom.properties = "module.framework.configs.dir=${liferay.home}/test/configs";
-		property test.name.skip.portal.instance = "ModuleFrameworkPath#CustomPathDeploy";
+		property test.liferay.virtual.instance = "false";
 
 		task ("When a config is deployed to the custom config path") {
 			var liferayHome = PropsUtil.get("liferay.home.dir.name");

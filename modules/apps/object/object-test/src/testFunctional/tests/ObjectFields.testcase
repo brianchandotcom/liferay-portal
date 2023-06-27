@@ -14,9 +14,9 @@ definition {
 	tearDown {
 		ObjectAdmin.deleteAllCustomObjectsViaAPI();
 
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
@@ -575,7 +575,7 @@ definition {
 	@priority = 5
 	test CanCreateObjectEntryWithEveryField {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ObjectFields#CanCreateObjectEntryWithEveryField";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Go to Picklist and create new Picklist and item") {
 			ApplicationsMenu.gotoPortlet(
@@ -4157,7 +4157,7 @@ definition {
 	@description = "LPS-143065 - Change the Maximum File Size to 0 (zero) and verify if the Maximum File Size is now set by the System configurations"
 	@priority = 4
 	test MaximumFileSizeIsSetBySystemConfigurationsWhenZero {
-		property test.name.skip.portal.instance = "ObjectFields#MaximumFileSizeIsSetBySystemConfigurationsWhenZero";
+		property test.liferay.virtual.instance = "false";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 151561",

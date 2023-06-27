@@ -1039,7 +1039,7 @@ definition {
 	@description = "This is a test for LPS-126159. The user can publish a content page without permissions for custom fields."
 	@priority = 4
 	test PublishContentPageWithoutCustomFieldsPermission {
-		property test.name.skip.portal.instance = "ContentPagesWithPermissions#PublishContentPageWithoutCustomFieldsPermission";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add a custom field for Page") {
 			ApplicationsMenu.gotoPortlet(

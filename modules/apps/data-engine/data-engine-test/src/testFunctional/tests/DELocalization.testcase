@@ -14,9 +14,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -27,7 +27,7 @@ definition {
 	@description = "Verify that is possible to translate Web Content fields with different Instance language set"
 	@priority = 4
 	test CanBeTranslatedWithDifferentInstanceLanguages {
-		property test.name.skip.portal.instance = "DELocalization#CanBeTranslatedWithDifferentInstanceLanguages";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -535,7 +535,7 @@ definition {
 	@description = "Verify that upon editing Default language, translated languages are not affected"
 	@priority = 5
 	test CanDefaulfLanguageChangeTranslationsAfterEdited {
-		property test.name.skip.portal.instance = "DELocalization#CanDefaulfLanguageChangeTranslationsAfterEdited";
+		property test.liferay.virtual.instance = "false";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -671,7 +671,7 @@ definition {
 	@description = "Verify Default language when Portal Instance language is changed"
 	@priority = 5
 	test CanDefaultLanguageBeChanged {
-		property test.name.skip.portal.instance = "DELocalization#CanDefaultLanguageBeChanged";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -711,7 +711,7 @@ definition {
 	@description = "Verify that upon editing Default language, translated languages are not affected"
 	@priority = 5
 	test CanDefaultLanguageBeEditedAndRemainTranslations {
-		property test.name.skip.portal.instance = "DELocalization#CanDefaultLanguageBeEditedAndRemainTranslations";
+		property test.liferay.virtual.instance = "false";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -803,7 +803,7 @@ definition {
 	@description = "Verify that a field without translation for a language follows default language translation"
 	@priority = 3
 	test CanFieldWithoutTranslationFollowsDefaultLanguage {
-		property test.name.skip.portal.instance = "DELocalization#CanFieldWithoutTranslationFollowsDefaultLanguage";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -1817,7 +1817,7 @@ definition {
 	@description = "Verify Default language when Portal Instance language is changed"
 	@priority = 4
 	test CanPortalLanguageBeChanged {
-		property test.name.skip.portal.instance = "DELocalization#CanPortalLanguageBeChanged";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",

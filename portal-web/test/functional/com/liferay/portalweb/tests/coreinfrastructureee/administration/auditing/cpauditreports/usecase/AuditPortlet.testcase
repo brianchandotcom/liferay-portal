@@ -15,9 +15,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -30,7 +30,7 @@ definition {
 	@description = "This test Audit can capture events when assign, unassign user to user group or role, and event details contain the correct info."
 	@priority = 3
 	test CanCaptureEventsAboutAssignAndUnassignUserToUserGroupAndRole {
-		property test.name.skip.portal.instance = "AuditPortlet#CanCaptureEventsAboutAssignAndUnassignUserToUserGroupAndRole";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -142,7 +142,7 @@ definition {
 	@priority = 5
 	test CanCaptureEventsAboutUserActions {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "AuditPortlet#CanCaptureEventsAboutUserActions";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -252,7 +252,7 @@ definition {
 	@description = "This test Audit can capture events when assign, unassign user to user group or role, and event details contain the correct info."
 	@priority = 3
 	test CanCaptureEventsAboutUserGroupAndRole {
-		property test.name.skip.portal.instance = "AuditPortlet#CanCaptureEventsAboutUserGroupAndRole";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -401,7 +401,7 @@ definition {
 	@priority = 4
 	test CanCaptureEventsAboutUserLoginLogoutLoginFailAndViewPages {
 		property custom.properties = "audit.message.com.liferay.portal.kernel.model.Layout.VIEW=true";
-		property test.name.skip.portal.instance = "AuditPortlet#CanCaptureEventsAboutUserLoginLogoutLoginFailAndViewPages";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Security",
@@ -483,7 +483,7 @@ definition {
 	@description = "This test Audit events can be searched with the Audit app's advanced search by various search criteria."
 	@priority = 4
 	test CanSearchEventsInAuditAdvancedSearch {
-		property test.name.skip.portal.instance = "AuditPortlet#CanSearchEventsInAuditAdvancedSearch";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Security",

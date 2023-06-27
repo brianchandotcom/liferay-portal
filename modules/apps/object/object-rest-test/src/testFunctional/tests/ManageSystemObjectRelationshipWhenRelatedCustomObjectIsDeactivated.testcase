@@ -68,7 +68,7 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		for (var objectLabel : list "foundation,secondFoundation") {
 			ObjectAdmin.openObjectAdmin();
@@ -80,7 +80,7 @@ definition {
 
 		JSONUser.tearDownNonAdminUsers();
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}

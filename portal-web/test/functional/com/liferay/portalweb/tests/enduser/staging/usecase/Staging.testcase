@@ -19,9 +19,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -32,7 +32,7 @@ definition {
 	@description = "This is a use case for LPS-72088."
 	@priority = 5
 	test ActivateStagingAfterChangingInstanceLanguageToSpanish {
-		property test.name.skip.portal.instance = "Staging#ActivateStagingAfterChangingInstanceLanguageToSpanish";
+		property test.liferay.virtual.instance = "false";
 
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Localization",
@@ -86,7 +86,7 @@ definition {
 	@priority = 5
 	test ActivateStagingPageVersioningWithCustomDefaultLanguage {
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
-		property test.name.skip.portal.instance = "Staging#ActivateStagingPageVersioningWithCustomDefaultLanguage";
+		property test.liferay.virtual.instance = "false";
 
 		JSONLayout.addPrivateLayout(
 			groupName = "Site Name",
@@ -223,7 +223,7 @@ definition {
 	@description = "This is a use case for LPS-29586 and LPS-37405. Verify that the unselected child page cannot be published on local staging."
 	@priority = 3
 	test AssertCannotPublishUnselectedChildPage {
-		property test.name.skip.portal.instance = "Staging#AssertCannotPublishUnselectedChildPage";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: Enable local staging with a blank site") {
 			JSONStaging.enableLocalStaging(groupName = "Site Name");
@@ -272,7 +272,7 @@ definition {
 	@ignore = "true"
 	@priority = 4
 	test CanEnableLocalStagingOnInheritedSite {
-		property test.name.skip.portal.instance = "Staging#CanEnableLocalStagingOnInheritedSite";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: Create a site with new site template with disable llow site administrators to modify pages associated with this site template, even when propagation of changes is enabled and Ready for Propagation,the testcase is blocked by LPS-146160.") {
 			SiteTemplates.addCP(
@@ -308,7 +308,7 @@ definition {
 		property app.server.bundles.size = "1";
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
 		property databases.size = "1";
-		property test.name.skip.portal.instance = "Staging#CanPublishWCWithURLReferenceViaRemoteStaging";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: Add 10 content pages with 2 Grid modules and 2 WCD in each") {
 			for (var pageCount : list "1,2,3") {
@@ -535,7 +535,7 @@ definition {
 	@description = "This is a use case for LPS-90127."
 	@priority = 3
 	test ConfigureDDMStructureViaAPWhenNotStagedAssets {
-		property test.name.skip.portal.instance = "Staging#ConfigureDDMStructureViaAPWhenNotStagedAssets";
+		property test.liferay.virtual.instance = "false";
 		property testray.component.name = "Data Engine";
 
 		Navigator.openSiteURL(siteName = "Site Name");
@@ -586,7 +586,7 @@ definition {
 	@description = "This is a use case for LPS-92039 and LPS-92636."
 	@priority = 3
 	test CreateWidgetTemplateWhenNotStagedADT {
-		property test.name.skip.portal.instance = "Staging#CreateWidgetTemplateWhenNotStagedADT";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "site-name");
 
@@ -825,7 +825,7 @@ definition {
 	@description = "This is a use case for LPS-124180 and LPS-136025."
 	@priority = 4
 	test PublishChildPageWithoutItsParentPage {
-		property test.name.skip.portal.instance = "Staging#PublishChildPageWithoutItsParentPage";
+		property test.liferay.virtual.instance = "false";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -893,7 +893,7 @@ definition {
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
 		property databases.size = "1";
 		property minimum.slave.ram = "24";
-		property test.name.skip.portal.instance = "Staging#PublishChildSiteViaRemoteStagingWithParentStructure";
+		property test.liferay.virtual.instance = "false";
 		property testray.component.name = "Data Engine";
 
 		HeadlessSite.addSite(
@@ -1049,7 +1049,7 @@ definition {
 	@ignore = "true"
 	@priority = 4
 	test PublishDDLViaPortletWithoutContent {
-		property test.name.skip.portal.instance = "Staging#PublishDDLViaPortletWithoutContent";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: Unable the publish displayed content by default function and enable local staging") {
 			SystemSettings.openSystemSettingsAdmin();
@@ -1258,7 +1258,7 @@ definition {
 	@description = "This is a use case for LPS-96155."
 	@priority = 4
 	test PublishReviewedPageRevision {
-		property test.name.skip.portal.instance = "Staging#PublishReviewedPageRevision";
+		property test.liferay.virtual.instance = "false";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -1459,7 +1459,7 @@ definition {
 	@priority = 4
 	test PublishTemplateWithPages {
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
-		property test.name.skip.portal.instance = "Staging#PublishTemplateWithPages";
+		property test.liferay.virtual.instance = "false";
 
 		JSONLayout.addPrivateLayout(
 			groupName = "Site Name",
@@ -1485,7 +1485,7 @@ definition {
 	@description = "This is a use case for LPS-131578 and LPS-149374. User can configure the portal to exclude displayed contents from publishing."
 	@priority = 4
 	test PublishViaPortletWithoutContent {
-		property test.name.skip.portal.instance = "Staging#PublishViaPortletWithoutContent";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: Unable the publish displayed content by default function and enable local staging") {
 			SystemSettings.openSystemSettingsAdmin();
@@ -1694,7 +1694,7 @@ definition {
 		property app.server.bundles.size = "1";
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
 		property databases.size = "1";
-		property test.name.skip.portal.instance = "Staging#PublishVocabularyDeletionViaRemoteStagingOnGlobalSite";
+		property test.liferay.virtual.instance = "false";
 
 		var companyId = JSONCompany.getCompanyId(portalURL = "http://localhost:9080");
 
@@ -1804,7 +1804,7 @@ definition {
 	@description = "This is a use case for LPS-110701."
 	@priority = 3
 	test PublishWebContentWithUnchangedReferencedContent {
-		property test.name.skip.portal.instance = "Staging#PublishWebContentWithUnchangedReferencedContent";
+		property test.liferay.virtual.instance = "false";
 
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Site Name",
@@ -2021,7 +2021,7 @@ definition {
 	@priority = 5
 	test StagingMultipleDM {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Staging#StagingMultipleDM";
+		property test.liferay.virtual.instance = "false";
 		property testray.component.names = "Training";
 
 		JSONLayout.addWidgetToPublicLayout(
@@ -2078,7 +2078,7 @@ definition {
 	@priority = 5
 	test StagingOnlyApprovedPublishToLive {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Staging#StagingOnlyApprovedPublishToLive";
+		property test.liferay.virtual.instance = "false";
 		property testray.component.names = "Training";
 
 		JSONLayout.addPublicLayout(
@@ -2249,7 +2249,7 @@ definition {
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
 		property databases.size = "1";
 		property minimum.slave.ram = "24";
-		property test.name.skip.portal.instance = "Staging#StagingRemoteWithDynamicExportLimit";
+		property test.liferay.virtual.instance = "false";
 
 		APNavigator.openToConfigInSystemSettings(portlet = "Asset Publisher");
 
@@ -2329,7 +2329,7 @@ definition {
 
 	@priority = 4
 	test StagingWithPublishTemplate {
-		property test.name.skip.portal.instance = "Staging#StagingWithPublishTemplate";
+		property test.liferay.virtual.instance = "false";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -2475,7 +2475,7 @@ definition {
 	@description = "This is a use case for LPS-110838."
 	@priority = 3
 	test StagingWithReplicateIndividualDeletionsByDefault {
-		property test.name.skip.portal.instance = "Staging#StagingWithReplicateIndividualDeletionsByDefault";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -2602,7 +2602,7 @@ definition {
 	@description = "This is a use case for LPS-89116."
 	@priority = 3
 	test ValidateFriendlyURLWithSpecialCharacters {
-		property test.name.skip.portal.instance = "Staging#ValidateFriendlyURLWithSpecialCharacters";
+		property test.liferay.virtual.instance = "false";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
@@ -2634,7 +2634,7 @@ definition {
 
 	@priority = 4
 	test ViewHistoryVersionWithDeletedUser {
-		property test.name.skip.portal.instance = "Staging#ViewHistoryVersionWithDeletedUser";
+		property test.liferay.virtual.instance = "false";
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -2721,7 +2721,7 @@ definition {
 	@description = "This is a use case for LPS-79092."
 	@priority = 4
 	test ViewLastPublishDateBehaviourAfterInitialPublication {
-		property test.name.skip.portal.instance = "Staging#ViewLastPublishDateBehaviourAfterInitialPublication";
+		property test.liferay.virtual.instance = "false";
 
 		JSONWebcontent.addWebContent(
 			content = "Web Content Content",
@@ -2803,7 +2803,7 @@ definition {
 
 	@priority = 4
 	test ViewPageOrderWithStaging {
-		property test.name.skip.portal.instance = "Staging#ViewPageOrderWithStaging";
+		property test.liferay.virtual.instance = "false";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -2829,7 +2829,7 @@ definition {
 	@description = "This is a use case for LPS-97827."
 	@priority = 2
 	test ViewParentPageNameAfterPublishChangesInChildPage {
-		property test.name.skip.portal.instance = "Staging#ViewParentPageNameAfterPublishChangesInChildPage";
+		property test.liferay.virtual.instance = "false";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -2961,7 +2961,7 @@ definition {
 	@description = "This is a use case for LPS-82355."
 	@priority = 5
 	test ViewPublishDocumentTypeWithConfiguredAssetType {
-		property test.name.skip.portal.instance = "Staging#ViewPublishDocumentTypeWithConfiguredAssetType";
+		property test.liferay.virtual.instance = "false";
 
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Site Name",
@@ -3042,7 +3042,7 @@ definition {
 	@description = "This is a use case for LPS-82688."
 	@priority = 3
 	test ViewPublishWCWithConfiguredCategoriesFilter {
-		property test.name.skip.portal.instance = "Staging#ViewPublishWCWithConfiguredCategoriesFilter";
+		property test.liferay.virtual.instance = "false";
 
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Site Name",
@@ -3147,7 +3147,7 @@ definition {
 	@description = "This is a use case for LPS-77935."
 	@priority = 4
 	test ViewSimplePublicationAfterDeleteDocumentInGlobal {
-		property test.name.skip.portal.instance = "Staging#ViewSimplePublicationAfterDeleteDocumentInGlobal";
+		property test.liferay.virtual.instance = "false";
 
 		PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "global");
 

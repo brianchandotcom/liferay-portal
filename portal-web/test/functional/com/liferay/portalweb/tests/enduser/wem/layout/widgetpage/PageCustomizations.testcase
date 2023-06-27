@@ -226,7 +226,7 @@ definition {
 	@description = "User with site member and customize permission will only see portlets in customizable view."
 	@priority = 4
 	test SiteMemberWithCustomizablePagePermissionsWillOnlySeeWidgetsInCustomizableView {
-		property test.name.skip.portal.instance = "PageCustomizations#SiteMemberWithCustomizablePagePermissionsWillOnlySeeWidgetsInCustomizableView";
+		property test.liferay.virtual.instance = "false";
 
 		var roleKey = StringUtil.randomString(8);
 

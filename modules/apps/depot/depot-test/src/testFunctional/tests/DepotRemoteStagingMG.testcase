@@ -39,9 +39,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -60,7 +60,7 @@ definition {
 	@description = "This ensures that an image stored in an asset library can be deleted and republished in Media Gallery when remote staging is enabled."
 	@priority = 4
 	test CanPublishDeletedImage {
-		property test.name.skip.portal.instance = "DepotRemoteStagingMG#CanPublishDeletedImage";
+		property test.liferay.virtual.instance = "false";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Image Description",
@@ -143,7 +143,7 @@ definition {
 	@description = "This ensures that an image stored in a DM folder of asset library can be deleted and republished in Media Gallery when remote staging is enabled."
 	@priority = 4
 	test CanPublishDeletedImageFromFolder {
-		property test.name.skip.portal.instance = "DepotRemoteStagingMG#CanPublishDeletedImageFromFolder";
+		property test.liferay.virtual.instance = "false";
 
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
@@ -233,7 +233,7 @@ definition {
 	@description = "This ensures that an image stored in an asset library can be edited and republished in Media Gallery when remote staging is enabled."
 	@priority = 4
 	test CanPublishEditedImage {
-		property test.name.skip.portal.instance = "DepotRemoteStagingMG#CanPublishEditedImage";
+		property test.liferay.virtual.instance = "false";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Image Description",
@@ -317,7 +317,7 @@ definition {
 	@description = "This ensures that an image stored in a DM folder of asset library can be edited and republished in Media Gallery when remote staging is enabled."
 	@priority = 4
 	test CanPublishEditedImageFromFolder {
-		property test.name.skip.portal.instance = "DepotRemoteStagingMG#CanPublishEditedImageFromFolder";
+		property test.liferay.virtual.instance = "false";
 
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
@@ -411,7 +411,7 @@ definition {
 	@description = "This ensures that an image stored in an asset library can be published in Media Gallery when remote staging is enabled."
 	@priority = 5
 	test CanPublishImage {
-		property test.name.skip.portal.instance = "DepotRemoteStagingMG#CanPublishImage";
+		property test.liferay.virtual.instance = "false";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Image Description",
@@ -471,7 +471,7 @@ definition {
 	@description = "This ensures that the folders stored in different asset libraries can be changed and republished in Media Gallery when remote staging is enabled."
 	@priority = 4
 	test CanPublishImageAfterChangingDepot {
-		property test.name.skip.portal.instance = "DepotRemoteStagingMG#CanPublishImageAfterChangingDepot";
+		property test.liferay.virtual.instance = "false";
 
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -582,7 +582,7 @@ definition {
 	@description = "This ensures that the folders stored in an asset library can be changed and republished in Media Gallery when remote staging is enabled."
 	@priority = 4
 	test CanPublishImageAfterChangingRootFolder {
-		property test.name.skip.portal.instance = "DepotRemoteStagingMG#CanPublishImageAfterChangingRootFolder";
+		property test.liferay.virtual.instance = "false";
 
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
@@ -674,7 +674,7 @@ definition {
 	@description = "This ensures that an image stored in a DM Folder asset library can be published in Media Gallery when remote staging is enabled."
 	@priority = 4
 	test CanPublishImageFromFolder {
-		property test.name.skip.portal.instance = "DepotRemoteStagingMG#CanPublishImageFromFolder";
+		property test.liferay.virtual.instance = "false";
 
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
@@ -740,7 +740,7 @@ definition {
 	@description = "This test covers LPS-154442. This ensures that an external video with a custom friendlyURL can be displayed properly in the Media Gallery Display widget after its friendlyURL is edited and published from an asset library."
 	@priority = 4
 	test CanViewExternalVideoAfterFriendlyURLIsUpdated {
-		property test.name.skip.portal.instance = "DepotRemoteStagingMG#CanViewExternalVideoAfterFriendlyURLIsUpdated";
+		property test.liferay.virtual.instance = "false";
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
@@ -813,7 +813,7 @@ definition {
 	@description = "This test covers LPS-154441. This ensures that an image with a custom friendlyURL can be displayed properly in the Media Gallery Display widget after its friendlyURL is edited and published from an asset library."
 	@priority = 4
 	test CanViewImageAfterFriendlyURLIsUpdated {
-		property test.name.skip.portal.instance = "DepotRemoteStagingMG#CanViewImageAfterFriendlyURLIsUpdated";
+		property test.liferay.virtual.instance = "false";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Image Description",

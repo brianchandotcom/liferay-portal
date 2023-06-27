@@ -14,9 +14,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -144,7 +144,7 @@ definition {
 	test ViewFormRulesSummary {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
-		property test.name.skip.portal.instance = "FormsJumpToPage#ViewFormRulesSummary";
+		property test.liferay.virtual.instance = "false";
 
 		FormsAdmin.addForm();
 
@@ -274,7 +274,7 @@ definition {
 	test ViewPagesAfterJump {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
-		property test.name.skip.portal.instance = "FormsJumpToPage#ViewPagesAfterJump";
+		property test.liferay.virtual.instance = "false";
 
 		FormsAdmin.addForm();
 
@@ -451,7 +451,7 @@ definition {
 	@priority = 4
 	test ViewRuleAfterLabelEdit {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "FormsJumpToPage#ViewRuleAfterLabelEdit";
+		property test.liferay.virtual.instance = "false";
 
 		FormsAdmin.addForm();
 
@@ -590,7 +590,7 @@ definition {
 	test ViewRuleAfterOptionValueEdit {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
-		property test.name.skip.portal.instance = "FormsJumpToPage#ViewRuleAfterOptionValueEdit";
+		property test.liferay.virtual.instance = "false";
 
 		FormsAdmin.addForm();
 
@@ -731,7 +731,7 @@ definition {
 	test ViewRuleAfterPageNameChange {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
-		property test.name.skip.portal.instance = "FormsJumpToPage#ViewRuleAfterPageNameChange";
+		property test.liferay.virtual.instance = "false";
 
 		FormsAdmin.addForm();
 

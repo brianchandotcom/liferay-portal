@@ -14,9 +14,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
@@ -24,7 +24,7 @@ definition {
 	@priority = 3
 	test CanConvertTrackedPathToFriendlyURL {
 		property custom.properties = "live.users.enabled=true${line.separator}session.tracker.friendly.paths.enabled=true";
-		property test.name.skip.portal.instance = "UserTracker#CanConvertTrackedPathToFriendlyURL";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -60,7 +60,7 @@ definition {
 
 	@priority = 4
 	test CanTrackUserClicks {
-		property test.name.skip.portal.instance = "UserTracker#CanTrackUserClicks";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -142,7 +142,7 @@ definition {
 	@priority = 3
 	test CanTrackUserSessionInDatabase {
 		property custom.properties = "live.users.enabled=true${line.separator}session.tracker.persistence.enabled=true";
-		property test.name.skip.portal.instance = "UserTracker#CanTrackUserSessionInDatabase";
+		property test.liferay.virtual.instance = "false";
 
 		var emptyTable = SQL.executeMySQLStatement(mysqlStatement = "SELECT * FROM lportal.UserTracker;");
 

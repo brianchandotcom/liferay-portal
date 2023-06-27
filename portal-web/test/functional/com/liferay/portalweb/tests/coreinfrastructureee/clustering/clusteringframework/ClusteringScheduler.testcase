@@ -17,16 +17,16 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@priority = 4
 	test PersistentAndMemoryJobs {
-		property test.name.skip.portal.instance = "ClusteringScheduler#PersistentAndMemoryJobs";
+		property test.liferay.virtual.instance = "false";
 
 		Groovy.runScriptViaGogoShell(
 			expectedOutput = "Persistent job 1 is added",

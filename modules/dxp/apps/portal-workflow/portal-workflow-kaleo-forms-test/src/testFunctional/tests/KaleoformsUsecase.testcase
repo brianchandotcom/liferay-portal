@@ -16,9 +16,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -132,7 +132,7 @@ definition {
 
 	@priority = 3
 	test AssertEditFormNotUsedAsCreateForm {
-		property test.name.skip.portal.instance = "KaleoformsUsecase#AssertEditFormNotUsedAsCreateForm";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -363,7 +363,7 @@ definition {
 
 	@priority = 4
 	test AssertPendingFormPresentAfterDeletingDifferentProcessDefinition {
-		property test.name.skip.portal.instance = "KaleoformsUsecase#AssertPendingFormPresentAfterDeletingDifferentProcessDefinition";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -505,7 +505,7 @@ definition {
 	@priority = 4
 	test AssignRolePermissionsAddProcessCP {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property test.name.skip.portal.instance = "KaleoformsUsecase#AssignRolePermissionsAddProcessCP";
+		property test.liferay.virtual.instance = "false";
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -622,7 +622,7 @@ definition {
 	@priority = 5
 	test AssignRolePermissionsApprovePG {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property test.name.skip.portal.instance = "KaleoformsUsecase#AssignRolePermissionsApprovePG";
+		property test.liferay.virtual.instance = "false";
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -900,7 +900,7 @@ definition {
 	@priority = 5
 	test AssignRolePermissionsRejectPG {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property test.name.skip.portal.instance = "KaleoformsUsecase#AssignRolePermissionsRejectPG";
+		property test.liferay.virtual.instance = "false";
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW",
@@ -1038,7 +1038,7 @@ definition {
 	@priority = 4
 	test AssignRolePermissionsSubmitProcessPG {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property test.name.skip.portal.instance = "KaleoformsUsecase#AssignRolePermissionsSubmitProcessPG";
+		property test.liferay.virtual.instance = "false";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -1219,7 +1219,7 @@ definition {
 	@description = "This is a use case for LPS-52709."
 	@priority = 3
 	test CompleteFormWithMultipleAssignedProcessRecordsAndViewChanges {
-		property test.name.skip.portal.instance = "KaleoformsUsecase#CompleteFormWithMultipleAssignedProcessRecordsAndViewChanges";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -1578,7 +1578,7 @@ definition {
 	@priority = 5
 	test CompleteProcessAndViewNotifications {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "KaleoformsUsecase#CompleteProcessAndViewNotifications";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -1794,7 +1794,7 @@ definition {
 	@priority = 4
 	test CompleteProcessWithEditedSingleApproverWorkflow {
 		property ci.retries.disabled = "true";
-		property test.name.skip.portal.instance = "KaleoformsUsecase#CompleteProcessWithEditedSingleApproverWorkflow";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -1915,7 +1915,7 @@ definition {
 	test CompleteProcessWithUploadedDefinition {
 		property ci.retries.disabled = "true";
 		property portal.acceptance = "quarantine";
-		property test.name.skip.portal.instance = "KaleoformsUsecase#CompleteProcessWithUploadedDefinition";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -2044,7 +2044,7 @@ definition {
 
 	@priority = 4
 	test EditProcessCreateFormAfterFormSubmission {
-		property test.name.skip.portal.instance = "KaleoformsUsecase#EditProcessCreateFormAfterFormSubmission";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -2175,7 +2175,7 @@ definition {
 
 	@priority = 3
 	test EditProcessEditFormAfterFormSubmission {
-		property test.name.skip.portal.instance = "KaleoformsUsecase#EditProcessEditFormAfterFormSubmission";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -2447,7 +2447,7 @@ definition {
 
 	@priority = 3
 	test EditProcessFieldSetBeforeFormSubmission {
-		property test.name.skip.portal.instance = "KaleoformsUsecase#EditProcessFieldSetBeforeFormSubmission";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -2854,7 +2854,7 @@ definition {
 	@priority = 4
 	test EditProcessWorkflowAfterFormSubmission {
 		property ci.retries.disabled = "true";
-		property test.name.skip.portal.instance = "KaleoformsUsecase#EditProcessWorkflowAfterFormSubmission";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -3018,7 +3018,7 @@ definition {
 	@priority = 4
 	test EditProcessWorkflowBeforeFormSubmission {
 		property ci.retries.disabled = "true";
-		property test.name.skip.portal.instance = "KaleoformsUsecase#EditProcessWorkflowBeforeFormSubmission";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -3858,7 +3858,7 @@ definition {
 
 	@priority = 4
 	test UpdateDueDate {
-		property test.name.skip.portal.instance = "KaleoformsUsecase#UpdateDueDate";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -4060,7 +4060,7 @@ definition {
 
 	@priority = 3
 	test ViewApprovedProcessRecordsSeparateAuthor {
-		property test.name.skip.portal.instance = "KaleoformsUsecase#ViewApprovedProcessRecordsSeparateAuthor";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -4606,7 +4606,7 @@ definition {
 
 	@priority = 4
 	test ViewProcessWithComments {
-		property test.name.skip.portal.instance = "KaleoformsUsecase#ViewProcessWithComments";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -4963,7 +4963,7 @@ definition {
 	@description = "This is a use case for LPS-65977."
 	@priority = 3
 	test ViewWorkflowComments {
-		property test.name.skip.portal.instance = "KaleoformsUsecase#ViewWorkflowComments";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 

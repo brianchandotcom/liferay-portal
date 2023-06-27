@@ -34,9 +34,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -197,7 +197,7 @@ definition {
 	@description = "This ensures that a user can move video stored in asset library folder to recycle bin via MG on a connected site."
 	@priority = 5
 	test CanMoveVideoToRecycleBin {
-		property test.name.skip.portal.instance = "DepotMGWidget#CanMoveVideoToRecycleBin";
+		property test.liferay.virtual.instance = "false";
 
 		DMNavigator.openToConfigInSystemSettings(portlet = "FFMPEG Video Converter");
 

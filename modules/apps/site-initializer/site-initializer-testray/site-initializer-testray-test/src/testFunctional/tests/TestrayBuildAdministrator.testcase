@@ -91,9 +91,9 @@ definition {
 			Testray.testrayApisTearDown();
 		}
 
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
@@ -101,7 +101,7 @@ definition {
 	@description = "Story ID: LPS-158466 | Test Summary: Verify if as an Administrator can Add a Build"
 	@priority = 5
 	test AdminCanAddBuild {
-		property test.name.skip.portal.instance = "TestrayBuildAdministrator#AdminCanAddBuild";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that the user add a new build") {
 			JSONTestray.addBuild(
@@ -123,7 +123,7 @@ definition {
 	@description = "Story ID: LPS-158466 | Test Summary: Verify if as an administrator can add a build with multiple options(Suite, Case, Option and Select Stacks)"
 	@priority = 4
 	test AdminCanAddBuildWithMultipleOptions {
-		property test.name.skip.portal.instance = "TestrayBuildAdministrator#AdminCanAddBuildWithMultipleOptions";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that the user add a new build") {
 			JSONTestray.addSuite(suiteName = ${suiteName});
@@ -172,7 +172,7 @@ definition {
 	@description = "Story ID: LPS-158466 | Test Summary: Verify if as an Administrator I can delete Builds"
 	@priority = 5
 	test AdminCanDeleteBuild {
-		property test.name.skip.portal.instance = "TestrayBuildAdministrator#AdminCanDeleteBuild";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Then I create a build") {
 			JSONTestray.addBuild(
@@ -204,7 +204,7 @@ definition {
 	@description = "Story ID: LPS-158466 | Test Summary: Verify if as an Administrator I should be able to delete a build that contains runs"
 	@priority = 4
 	test AdminCanDeleteBuildContainsRuns {
-		property test.name.skip.portal.instance = "TestrayBuildAdministrator#AdminCanDeleteBuildContainsRuns";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that the user add a new build with Environments Factors") {
 			Testray.goToProjectPage(projectName = ${projectName});
@@ -249,7 +249,7 @@ definition {
 	@description = "Story ID: LPS-158466 | Test Summary: Verify if as an Administrator I am able to edit Builds"
 	@priority = 5
 	test AdminCanEditBuild {
-		property test.name.skip.portal.instance = "TestrayBuildAdministrator#AdminCanEditBuild";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that the user add a new build") {
 			Testray.goToProjectPage(projectName = ${projectName});
@@ -285,7 +285,7 @@ definition {
 	@description = "Story ID: LPS-158466 | Test Summary: Verify if as an Administrator I should not be able to add a duplicate build"
 	@priority = 3
 	test AdminCanNotAddDuplicateBuild {
-		property test.name.skip.portal.instance = "TestrayBuildAdministrator#AdminCanNotAddDuplicateBuild";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that the user add a new build") {
 			JSONTestray.addBuild(
@@ -334,7 +334,7 @@ definition {
 	@description = "Story ID: LPS-158466 | Test Summary: Verify if as an Administrator I should be able to promote a build"
 	@priority = 3
 	test AdminCanPromoteBuild {
-		property test.name.skip.portal.instance = "TestrayBuildAdministrator#AdminCanPromoteBuild";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that the user add a new build") {
 			Testray.goToProjectPage(projectName = ${projectName});

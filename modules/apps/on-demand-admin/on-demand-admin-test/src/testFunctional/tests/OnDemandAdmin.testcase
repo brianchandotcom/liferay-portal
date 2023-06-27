@@ -12,9 +12,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -28,7 +28,7 @@ definition {
 	@ignore = "true"
 	@priority = 5
 	test OnDemandAdminCanChangeInstanceAdminPassword {
-		property test.name.skip.portal.instance = "OnDemandAdmin#OnDemandAdminCanChangeInstanceAdminPassword";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: a new Virtual Instance is created") {
 			HeadlessPortalInstanceAPI.addPortalInstance(
@@ -64,7 +64,7 @@ definition {
 	@description = "This test covers LPS-156154 and asserts that the portlet for On-Demand Admin is not available when accessing through a non-default instance."
 	@priority = 5
 	test OnDemandAdminUnavailableInNonDefaultInstance {
-		property test.name.skip.portal.instance = "OnDemandAdmin#OnDemandAdminUnavailableInNonDefaultInstance";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given a new Virtual Instance is created") {
 			ApplicationsMenu.gotoPortlet(

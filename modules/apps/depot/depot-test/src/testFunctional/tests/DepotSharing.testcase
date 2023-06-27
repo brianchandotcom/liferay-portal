@@ -29,9 +29,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -86,7 +86,7 @@ definition {
 	@priority = 4
 	@refactordone
 	test CanDisableDepotSharingAtInstanceScope {
-		property test.name.skip.portal.instance = "DepotSharing#CanDisableDepotSharingAtInstanceScope";
+		property test.liferay.virtual.instance = "false";
 
 		DepotNavigator.openToConfigSharingInInstanceSettings();
 
@@ -103,7 +103,7 @@ definition {
 	@priority = 4
 	@refactordone
 	test CanDisableDepotSharingAtSystemScope {
-		property test.name.skip.portal.instance = "DepotSharing#CanDisableDepotSharingAtSystemScope";
+		property test.liferay.virtual.instance = "false";
 
 		DepotNavigator.openToConfigSharingInSystemSettings();
 

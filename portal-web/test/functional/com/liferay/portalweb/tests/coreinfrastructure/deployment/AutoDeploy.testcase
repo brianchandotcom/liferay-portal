@@ -9,7 +9,7 @@ definition {
 	@priority = 3
 	test FragmentAutoDeploy {
 		property skip.start.app.server = "true";
-		property test.name.skip.portal.instance = "AutoDeploy#FragmentAutoDeploy";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given a file is deployed before startup") {
 			var dependencyFilePath = TestCase.getDependenciesDirPath(fileName = "title.zip");

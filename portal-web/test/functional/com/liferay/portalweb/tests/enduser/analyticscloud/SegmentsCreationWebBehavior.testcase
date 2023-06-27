@@ -21,7 +21,7 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		// It is not possible to delete properties and data source after LRAC-13389. This functionality should return after LRAC-8040
 
@@ -29,7 +29,7 @@ definition {
 
 		ACUtils.tearDownDXP();
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -122,7 +122,7 @@ definition {
 		// AC Quarantine Reason: The membership list takes a long time to update
 		// AC Refactor ticket: LRAC-10769
 
-		property test.name.skip.portal.instance = "SegmentsCreationWebBehavior#CanCreateWebBehaviorSegmentCriteriaLeastMostTimes";
+		property test.liferay.virtual.instance = "false";
 
 		ACUtils.createWCAndAddToPage();
 
@@ -209,7 +209,7 @@ definition {
 	@description = "Create a segment with behavior of downloading a document"
 	@priority = 5
 	test CanCreateWebBehaviorSegmentDownloadingDocument {
-		property test.name.skip.portal.instance = "SegmentsCreationWebBehavior#CanCreateWebBehaviorSegmentDownloadingDocument";
+		property test.liferay.virtual.instance = "false";
 
 		ACUtils.createDMAndAddToPage();
 
@@ -283,7 +283,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9222 | Test Summary: Create a Web Behavior since X days"
 	@priority = 4
 	test CanCreateWebBehaviorSegmentSinceXdays {
-		property test.name.skip.portal.instance = "SegmentsCreationWebBehavior#CanCreateWebBehaviorSegmentSinceXdays";
+		property test.liferay.virtual.instance = "false";
 
 		ACUtils.createWCAndAddToPage();
 
@@ -360,7 +360,7 @@ definition {
 		// AC Quarantine Reason: The membership list takes a long time to update
 		// AC Refactor ticket: LRAC-10769
 
-		property test.name.skip.portal.instance = "SegmentsCreationWebBehavior#CanCreateWebBehaviorSegmentSubmittingForm";
+		property test.liferay.virtual.instance = "false";
 
 		ACUtils.createFormAndAddToPage();
 
@@ -442,7 +442,7 @@ definition {
 		// AC Quarantine Reason: The membership list takes a long time to update
 		// AC Refactor ticket: LRAC-10769
 
-		property test.name.skip.portal.instance = "SegmentsCreationWebBehavior#CanCreateWebBehaviorSegmentUsingAfter";
+		property test.liferay.virtual.instance = "false";
 
 		ACUtils.createWCAndAddToPage();
 
@@ -523,7 +523,7 @@ definition {
 		// AC Quarantine Reason: The membership list takes a long time to update
 		// AC Refactor ticket: LRAC-10769
 
-		property test.name.skip.portal.instance = "SegmentsCreationWebBehavior#CanCreateWebBehaviorSegmentUsingBefore";
+		property test.liferay.virtual.instance = "false";
 
 		ACUtils.createWCAndAddToPage();
 
@@ -599,7 +599,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9218 | Test Summary: Add segment using a web behavior 'between' some time"
 	@priority = 4
 	test CanCreateWebBehaviorSegmentUsingBetween {
-		property test.name.skip.portal.instance = "SegmentsCreationWebBehavior#CanCreateWebBehaviorSegmentUsingBetween";
+		property test.liferay.virtual.instance = "false";
 
 		ACUtils.createWCAndAddToPage();
 
@@ -680,7 +680,7 @@ definition {
 	@description = "Add segment using a web behavior 'ever' done"
 	@priority = 5
 	test CanCreateWebBehaviorSegmentUsingEver {
-		property test.name.skip.portal.instance = "SegmentsCreationWebBehavior#CanCreateWebBehaviorSegmentUsingEver";
+		property test.liferay.virtual.instance = "false";
 
 		ACUtils.createWCAndAddToPage();
 
@@ -752,7 +752,7 @@ definition {
 	@priority = 5
 	test CanCreateWebBehaviorSegmentUsingHasNot {
 		property portal.upstream = "quarantine";
-		property test.name.skip.portal.instance = "SegmentsCreationWebBehavior#CanCreateWebBehaviorSegmentUsingHasNot";
+		property test.liferay.virtual.instance = "false";
 
 		// AC Quarantine Reason: Segment membership takes too long to update membership list
 
@@ -832,7 +832,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9219 | Test Summary: Add segment using a web behavior 'on' some time"
 	@priority = 4
 	test CanCreateWebBehaviorSegmentUsingOn {
-		property test.name.skip.portal.instance = "SegmentsCreationWebBehavior#CanCreateWebBehaviorSegmentUsingOn";
+		property test.liferay.virtual.instance = "false";
 
 		ACUtils.createWCAndAddToPage();
 
@@ -909,7 +909,7 @@ definition {
 	@description = "Add segment using a web behavior 'since' some time"
 	@priority = 5
 	test CanCreateWebBehaviorSegmentUsingSince {
-		property test.name.skip.portal.instance = "SegmentsCreationWebBehavior#CanCreateWebBehaviorSegmentUsingSince";
+		property test.liferay.virtual.instance = "false";
 
 		ACUtils.createBlogsAndAddToPage();
 
@@ -990,7 +990,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9223 | Test Summary: Create a Web Behavior Segment of Viewing a Blog"
 	@priority = 4
 	test CanCreateWebBehaviorSegmentViewingBlog {
-		property test.name.skip.portal.instance = "SegmentsCreationWebBehavior#CanCreateWebBehaviorSegmentViewingBlog";
+		property test.liferay.virtual.instance = "false";
 
 		ACUtils.createBlogsAndAddToPage();
 
@@ -1063,7 +1063,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9224 | Test Summary: Create a Web Behavior Segment of Viewing Document & Media in a Topic"
 	@priority = 4
 	test CanCreateWebBehaviorSegmentViewingDM {
-		property test.name.skip.portal.instance = "SegmentsCreationWebBehavior#CanCreateWebBehaviorSegmentViewingDM";
+		property test.liferay.virtual.instance = "false";
 
 		var username = "ac";
 
@@ -1139,7 +1139,7 @@ definition {
 	@description = "Create a segment with behavior of viewing a form"
 	@priority = 5
 	test CanCreateWebBehaviorSegmentViewingForm {
-		property test.name.skip.portal.instance = "SegmentsCreationWebBehavior#CanCreateWebBehaviorSegmentViewingForm";
+		property test.liferay.virtual.instance = "false";
 
 		var username = "ac";
 
@@ -1217,7 +1217,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9225 | Test Summary: Create a Web Behavior Segment of Viewing a Page"
 	@priority = 4
 	test CanCreateWebBehaviorSegmentViewingPage {
-		property test.name.skip.portal.instance = "SegmentsCreationWebBehavior#CanCreateWebBehaviorSegmentViewingPage";
+		property test.liferay.virtual.instance = "false";
 
 		var username = "ac";
 
@@ -1292,7 +1292,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9226 | Test Summary: Create a Web Behavior Segment of Viewing a Web Content"
 	@priority = 4
 	test CanCreateWebBehaviorSegmentViewingWC {
-		property test.name.skip.portal.instance = "SegmentsCreationWebBehavior#CanCreateWebBehaviorSegmentViewingWC";
+		property test.liferay.virtual.instance = "false";
 
 		ACUtils.createWCAndAddToPage();
 

@@ -15,9 +15,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -28,7 +28,7 @@ definition {
 	@description = "Check the publication summary that is published via local staging."
 	@priority = 4
 	test CheckPublicationSummaryLocal {
-		property test.name.skip.portal.instance = "StagingActivation#CheckPublicationSummaryLocal";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: Add a new page on site and enable local staging") {
 			JSONLayout.addPublicLayout(
@@ -76,7 +76,7 @@ definition {
 		property databases.size = "1";
 		property minimum.slave.ram = "24";
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "StagingActivation#CheckPublicationSummaryRemote";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: Enable remote staging and add a new page on site") {
 			Staging.remoteStagingSetUpViaJson(
@@ -111,7 +111,7 @@ definition {
 	@priority = 4
 	test DeleteRecycleBinOnStagingActivation {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "StagingActivation#DeleteRecycleBinOnStagingActivation";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: Add a web content entry") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");

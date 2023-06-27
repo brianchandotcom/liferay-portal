@@ -25,9 +25,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -41,7 +41,7 @@ definition {
 	@priority = 4
 	test CanConfigureCacheControlAsPrivate {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "DMCache#CanConfigureCacheControlAsPrivate";
+		property test.liferay.virtual.instance = "false";
 
 		DMDocument.configureCacheControl(
 			cacheControl = "Private",
@@ -74,7 +74,7 @@ definition {
 	@priority = 4
 	test CanConfigureCacheControlAsPublic {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "DMCache#CanConfigureCacheControlAsPublic";
+		property test.liferay.virtual.instance = "false";
 
 		DMDocument.configureCacheControl(
 			cacheControl = "Public",
@@ -103,7 +103,7 @@ definition {
 	@description = "This checks that users can configure uncacheable mime type in the cache control."
 	@priority = 3
 	test CanConfigureUncacheableMimeTypeInCacheControl {
-		property test.name.skip.portal.instance = "DMCache#CanConfigureUncacheableMimeTypeInCacheControl";
+		property test.liferay.virtual.instance = "false";
 
 		DMDocument.configureCacheControl(uncacheableMimeTypes = "image/jpeg");
 
@@ -129,7 +129,7 @@ definition {
 	@description = "This checks that the cache control configured in an instance will not affect other instance settings."
 	@priority = 4
 	test ConfiguredCacheControlOnlyWorksOnCurrentInstance {
-		property test.name.skip.portal.instance = "DMCache#ConfiguredCacheControlOnlyWorksOnCurrentInstance";
+		property test.liferay.virtual.instance = "false";
 
 		DMDocument.configureCacheControl(
 			cacheControl = "Public",

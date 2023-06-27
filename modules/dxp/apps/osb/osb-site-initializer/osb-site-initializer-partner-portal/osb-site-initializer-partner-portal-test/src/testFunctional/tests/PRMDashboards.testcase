@@ -42,9 +42,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -130,7 +130,7 @@ definition {
 	@description = "This is a test for LPS-179914. Verify that the value of Approved MDFs are displayed on MDF Dashboard"
 	@priority = 4
 	test MDFApprovedValueAppearInDashboard {
-		property test.name.skip.portal.instance = "PRMDashboards#MDFApprovedValueAppearInDashboard";
+		property test.liferay.virtual.instance = "false";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 
@@ -242,7 +242,7 @@ definition {
 	@description = "This is a test for LPS-177308. Verify that the value of Requested MDFs are displayed on MDF Dashboard"
 	@priority = 4
 	test MDFRequestedValueAppearInDashboard {
-		property test.name.skip.portal.instance = "PRMDashboards#MDFRequestedValueAppearInDashboard";
+		property test.liferay.virtual.instance = "false";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 

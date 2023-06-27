@@ -15,9 +15,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -345,7 +345,7 @@ definition {
 	@priority = 4
 	test PublishWithShortcut {
 		property app.server.types = "tomcat";
-		property test.name.skip.portal.instance = "PublicationsDM#PublishWithShortcut";
+		property test.liferay.virtual.instance = "false";
 
 		JSONPublications.addPublication(publicationName = "Publication Name");
 

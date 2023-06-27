@@ -32,9 +32,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -50,7 +50,7 @@ definition {
 	@priority = 5
 	test AllActionsAreAvailableInRepository {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "DMRemoteStaging#AllActionsAreAvailableInRepository";
+		property test.liferay.virtual.instance = "false";
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
@@ -65,7 +65,7 @@ definition {
 	@description = "This test covers LPS-72443. It validates that a user can navigate to the remote site using the staging toolbar."
 	@priority = 5
 	test CanNavigateToRemoteLiveViaToolbar {
-		property test.name.skip.portal.instance = "DMRemoteStaging#CanNavigateToRemoteLiveViaToolbar";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.gotoSitePage(
 			pageName = "Staging DM Page",
@@ -79,7 +79,7 @@ definition {
 	@description = "This test covers LPS-154433. It ensures that an external video displays properly in the Media Gallery widget after the friendlyURL has been edited and published on a site."
 	@priority = 4
 	test CanViewExternalVideoInMGAfterFriendlyURLIsUpdated {
-		property test.name.skip.portal.instance = "DMRemoteStaging#CanViewExternalVideoInMGAfterFriendlyURLIsUpdated";
+		property test.liferay.virtual.instance = "false";
 
 		DMNavigator.openToAddEntry(
 			documentTypeName = "External Video Shortcut",
@@ -140,7 +140,7 @@ definition {
 	@description = "This test covers LPS-154407. This ensures that a Media Gallery widget containing an external video with a custom friendlyURL can be published on a site."
 	@priority = 4
 	test CanViewExternalVideoInMGAfterPublish {
-		property test.name.skip.portal.instance = "DMRemoteStaging#CanViewExternalVideoInMGAfterPublish";
+		property test.liferay.virtual.instance = "false";
 
 		DMNavigator.openToAddEntry(
 			documentTypeName = "External Video Shortcut",
@@ -199,7 +199,7 @@ definition {
 	@description = "This test covers LPS-154408. It ensures that an external video with a custom friendlyURL added to the Web content field can be published on a site."
 	@priority = 4
 	test CanViewExternalVideoInWCAfterPublish {
-		property test.name.skip.portal.instance = "DMRemoteStaging#CanViewExternalVideoInWCAfterPublish";
+		property test.liferay.virtual.instance = "false";
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
@@ -269,7 +269,7 @@ definition {
 	@description = "This test covers LPS-154435. It ensures that an external video with a custom friendlyURL added to the Web content field displays properly after its friendlyURL is edited and published on a site."
 	@priority = 4
 	test CanViewExternalVideotInWCAfterFriendlyURLIsUpdated {
-		property test.name.skip.portal.instance = "DMRemoteStaging#CanViewExternalVideotInWCAfterFriendlyURLIsUpdated";
+		property test.liferay.virtual.instance = "false";
 
 		DMNavigator.openToAddEntry(
 			documentTypeName = "External Video Shortcut",
@@ -343,7 +343,7 @@ definition {
 	@description = "This test covers LPS-154431. It ensures that an image with a custom friendlyURL added to a dynamic collection displayed in an Asset Publisher can be rendered properly on a site after its friendlyURL is edited and republished."
 	@priority = 4
 	test CanViewImageInDynamicCollectionViaAPAfterFriendlyURLIsUpdated {
-		property test.name.skip.portal.instance = "DMRemoteStagingDM#CanViewImageInDynamicCollectionViaAPAfterFriendlyURLIsUpdated";
+		property test.liferay.virtual.instance = "false";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Image Description",
@@ -411,7 +411,7 @@ definition {
 	@description = "This test covers LPS-154405. It ensures that an image with a custom friendlyURL added to a dynamic collection rendered in an Asset Publisher can be published on a site."
 	@priority = 4
 	test CanViewImageInDynamicCollectionViaAPAfterPublish {
-		property test.name.skip.portal.instance = "DMRemoteStaging#CanViewImageInDynamicCollectionViaAPAfterPublish";
+		property test.liferay.virtual.instance = "false";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Image Description",
@@ -473,7 +473,7 @@ definition {
 	@description = "This test covers LPS-154430. It ensures that an image with a custom friendlyURL added to a manual collection displayed in an Asset Publisher can be rendered properly on a site after its friendlyURL is edited and republished."
 	@priority = 4
 	test CanViewImageInManualCollectionViaAPAfterFriendlyURLIsUpdated {
-		property test.name.skip.portal.instance = "DMRemoteStaging#CanViewImageInManualCollectionViaAPAfterFriendlyURLIsUpdated";
+		property test.liferay.virtual.instance = "false";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Image Description",
@@ -547,7 +547,7 @@ definition {
 	@description = "This test covers LPS-154404. It ensures that an image with a custom friendlyURL added to a manual collection rendered in an Asset Publisher can be published on a site."
 	@priority = 4
 	test CanViewImageInManualCollectionViaAPAfterPublish {
-		property test.name.skip.portal.instance = "DMRemoteStaging#CanViewImageInManualCollectionViaAPAfterPublish";
+		property test.liferay.virtual.instance = "false";
 
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -639,7 +639,7 @@ definition {
 	@description = "This test covers LPS-154432. It ensures that an image displays properly in the Media Gallery widget after the friendlyURL has been edited and published on a site."
 	@priority = 4
 	test CanViewImageInMGAfterFriendlyURLIsUpdated {
-		property test.name.skip.portal.instance = "DMRemoteStaging#CanViewImageInMGAfterFriendlyURLIsUpdated";
+		property test.liferay.virtual.instance = "false";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -697,7 +697,7 @@ definition {
 	@description = "This test covers LPS-154406. This ensures that a Media Gallery widget containing an image with a custom friendlyURL can be published on a site."
 	@priority = 4
 	test CanViewImageInMGAfterPublish {
-		property test.name.skip.portal.instance = "DMRemoteStaging#CanViewImageInMGAfterPublish";
+		property test.liferay.virtual.instance = "false";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -753,7 +753,7 @@ definition {
 	@description = "This test covers LPS-154434. It ensures that an image with a custom friendlyURL added to the Web content field displays properly after its friendlyURL is edited and published on a site."
 	@priority = 4
 	test CanViewImagetInWCAfterFriendlyURLIsUpdated {
-		property test.name.skip.portal.instance = "DMRemoteStaging#CanViewImagetInWCAfterFriendlyURLIsUpdated";
+		property test.liferay.virtual.instance = "false";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -828,7 +828,7 @@ definition {
 	@refactorneeded
 	test DeleteDocumentWithCustomType {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "DMRemoteStaging#DeleteDocumentWithCustomType";
+		property test.liferay.virtual.instance = "false";
 
 		DMNavigator.openDocumentTypesAdmin(siteURLKey = "site-name");
 
@@ -906,7 +906,7 @@ definition {
 	test DocumentCanBeRepublishedAfterCheckout {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=${line.separator}dl.actions.visible=true";
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "DMRemoteStaging#DocumentCanBeRepublishedAfterCheckout";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.gotoSitePage(
 			pageName = "Staging DM Page",
@@ -1022,7 +1022,7 @@ definition {
 	@refactorneeded
 	test EditDocumentWithCustomType {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "DMRemoteStaging#EditDocumentWithCustomType";
+		property test.liferay.virtual.instance = "false";
 
 		DMNavigator.openDocumentTypesAdmin(siteURLKey = "site-name");
 
@@ -1112,7 +1112,7 @@ definition {
 	@description = "This test covers LPS-155795. It ensures that an image that was published on a site can still be accessed after remote staging is disabled."
 	@priority = 5
 	test ImageIsStillAccessibleAfterDisablingStaging {
-		property test.name.skip.portal.instance = "DMRemoteStaging#ImageIsStillAccessibleAfterDisablingStaging";
+		property test.liferay.virtual.instance = "false";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -1180,7 +1180,7 @@ definition {
 	@priority = 5
 	@refactorneeded
 	test PublishEditsToDocumentType {
-		property test.name.skip.portal.instance = "DMRemoteStaging#PublishEditsToDocumentType";
+		property test.liferay.virtual.instance = "false";
 
 		DMNavigator.openDocumentTypesAdmin(siteURLKey = "site-name");
 
@@ -1286,7 +1286,7 @@ definition {
 	@refactorneeded
 	test PublishEditsToDocumentUsingCustomTypeAndSet {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "DMRemoteStaging#PublishEditsToDocumentUsingCustomTypeAndSet";
+		property test.liferay.virtual.instance = "false";
 
 		DMNavigator.openMetadataSetsAdmin(siteURLKey = "site-name");
 
@@ -1398,7 +1398,7 @@ definition {
 	@priority = 5
 	@refactorneeded
 	test PublishEditsToMetadataSet {
-		property test.name.skip.portal.instance = "DMRemoteStaging#PublishEditsToMetadataSet";
+		property test.liferay.virtual.instance = "false";
 
 		DMNavigator.openMetadataSetsAdmin(siteURLKey = "site-name");
 
@@ -1523,7 +1523,7 @@ definition {
 	@refactorneeded
 	test ViewRepublishedDocumentInfo {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "DMRemoteStaging#ViewRepublishedDocumentInfo";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.gotoSitePage(
 			pageName = "Staging DM Page",
@@ -1666,7 +1666,7 @@ definition {
 	@refactorneeded
 	test ViewWebContentWithDeletedImage {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "DMRemoteStaging#ViewWebContentWithDeletedImage";
+		property test.liferay.virtual.instance = "false";
 
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Site Name",
@@ -1787,7 +1787,7 @@ definition {
 	@refactorneeded
 	test ViewWebContentWithRepublishedImage {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "DMRemoteStaging#ViewWebContentWithRepublishedImage";
+		property test.liferay.virtual.instance = "false";
 
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Site Name",

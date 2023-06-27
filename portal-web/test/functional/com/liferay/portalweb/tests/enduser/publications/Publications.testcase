@@ -14,9 +14,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -765,7 +765,7 @@ definition {
 	@priority = 4
 	test CanReviewChangesWithManyDocuments {
 		property test.assert.warning.exceptions = "true";
-		property test.name.skip.portal.instance = "Publications#CanReviewChangesWithManyDocuments";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -1195,7 +1195,7 @@ definition {
 	@priority = 4
 	test IsBrowserHistoryPreserved {
 		property test.assert.warning.exceptions = "true";
-		property test.name.skip.portal.instance = "Publications#IsBrowserHistoryPreserved";
+		property test.liferay.virtual.instance = "false";
 
 		JSONPublications.addPublication(publicationName = "Publication Name");
 
@@ -1235,7 +1235,7 @@ definition {
 
 	@priority = 4
 	test IsLocalizedInPublicationsAdmin {
-		property test.name.skip.portal.instance = "Publications#IsLocalizedInPublicationsAdmin";
+		property test.liferay.virtual.instance = "false";
 
 		User.openUsersAdmin();
 
@@ -1696,7 +1696,7 @@ definition {
 	@description = "Assert that items are being properly indexed if they exists both in Production and in a Publication"
 	@priority = 3
 	test ViewItemsAreProperlyIndexedInProductionAndPublication {
-		property test.name.skip.portal.instance = "Publications#ViewItemsAreProperlyIndexedInProductionAndPublication";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Create a new tag") {
 			JSONAssettag.addTag(

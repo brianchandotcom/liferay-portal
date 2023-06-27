@@ -48,7 +48,7 @@ definition {
 	@priority = 5
 	test CannotSearchContentPageWithoutPublishedVersion {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ContentPagesWithSearch#CannotSearchContentPageWithoutPublishedVersion";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given a page creator has a content page with Heading fragment and keeps it as draft") {
 			ContentPagesNavigator.openEditContentPage(
@@ -85,7 +85,7 @@ definition {
 	@priority = 5
 	test FilterByTypeFacet {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ContentPagesWithSearch#FilterByTypeFacet";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add a Type Facet to Search page") {
 			JSONLayout.addWidgetToPublicLayout(
@@ -146,7 +146,7 @@ definition {
 	@priority = 5
 	test SearchByInlineText {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ContentPagesWithSearch#SearchByInlineText";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add a Heading fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
@@ -218,7 +218,7 @@ definition {
 	@priority = 5
 	test SearchByNotEditableText {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ContentPagesWithSearch#SearchByNotEditableText";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add a fragment collection") {
 			JSONFragment.addFragmentCollection(
@@ -277,7 +277,7 @@ definition {
 	@description = "This is a use case for LPS-120198. Search page in page select modal when map it to editable field."
 	@priority = 4
 	test SearchPageInSelectModalWhenMapPageToEditableField {
-		property test.name.skip.portal.instance = "ContentPagesWithSearch#SearchPageInSelectModalWhenMapPageToEditableField";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add a parent widget page") {
 			JSONLayout.addPublicLayout(
@@ -356,7 +356,7 @@ definition {
 	@priority = 4
 	test SearchPageWithWorkflowByInlineTextAndMapContent {
 		property ci.retries.disabled = "true";
-		property test.name.skip.portal.instance = "ContentPagesWithSearch#SearchPageWithWorkflowByInlineTextAndMapContent";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given enable workflow for Content Pages") {
 			Workflow.openWorkflowAdmin(siteURLKey = ${siteURLKey});
@@ -498,7 +498,7 @@ definition {
 	@description = "This is a test for LPS-91405. View content page is not shown in search results after deleting the associated category."
 	@priority = 3
 	test ViewContentPageNotShownInSearchResultsAfterDeleteCategory {
-		property test.name.skip.portal.instance = "ContentPagesWithSearch#ViewContentPageNotShownInSearchResultsAfterDeleteCategory";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Publish the content page") {
 			JSONLayout.publishLayout(
@@ -573,7 +573,7 @@ definition {
 	@priority = 5
 	test ViewContentPageShownInSearchResultsAfterExecuteReindexAll {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ContentPagesWithSearch#ViewContentPageShownInSearchResultsAfterExecuteReindexAll";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add a Paragraph fragment to content page") {
 			ContentPagesNavigator.openEditContentPage(

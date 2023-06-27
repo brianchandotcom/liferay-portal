@@ -14,9 +14,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -200,7 +200,7 @@ definition {
 	@description = "This is a use case for LPS-175305. As a publication admin, I would like to know log the conflicts that happened."
 	@priority = 4
 	test CanSeeConflictsInTheLog {
-		property test.name.skip.portal.instance = "PublicationsConflict#CanSeeConflictsInTheLog";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add Log level and Web Content") {
 			ServerAdministration.openServerAdmin();

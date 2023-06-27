@@ -12,9 +12,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
@@ -360,7 +360,7 @@ definition {
 	@priority = 4
 	test CanDeleteAccountRoleWithPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property test.name.skip.portal.instance = "AccountRoles#CanDeleteAccountRoleWithPermissions";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given a user is granted permissions to access Account Admin portlet Update account entry, View account role tab") {
 			JSONUser.addUser(

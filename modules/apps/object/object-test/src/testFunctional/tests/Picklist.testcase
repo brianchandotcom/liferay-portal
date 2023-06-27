@@ -16,9 +16,9 @@ definition {
 
 		Picklist.deleteAllPicklistsViaAPI();
 
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
@@ -712,7 +712,7 @@ definition {
 	@description = "LPS-136595 - Verify that the translated Picklist item's name will be displayed on Forms"
 	@priority = 3
 	test ViewTranslatedPicklistItemNameOnForms {
-		property test.name.skip.portal.instance = "Picklist#ViewTranslatedPicklistItemNameOnForms";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add a Custom Picklist and a Item (via API)") {
 			Picklist.addPicklistViaAPI(picklistName = "Picklist Test");
@@ -965,7 +965,7 @@ definition {
 	@description = "LPS-136595 - Verify that the translated Picklist name will be displayed on the Object Admin"
 	@priority = 3
 	test ViewTranslatedPicklistNameOnObjectAdmin {
-		property test.name.skip.portal.instance = "Picklist#ViewTranslatedPicklistNameOnObjectAdmin";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add a Custom Picklist (via API)") {
 			Picklist.addPicklistViaAPI(picklistName = "Picklist Test");

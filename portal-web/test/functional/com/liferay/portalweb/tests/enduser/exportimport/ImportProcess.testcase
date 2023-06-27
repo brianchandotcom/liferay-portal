@@ -13,9 +13,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -26,7 +26,7 @@ definition {
 	@description = "This is a use case for LPS-166514. TC-1: Verify that the import process related LAR file is thrown away immediately after the process."
 	@priority = 5
 	test LARFileRemovedAfterImportProcess {
-		property test.name.skip.portal.instance = "ImportProcess#LARFileRemovedAfterImportProcess";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: Import two types of LAR files") {
 			HeadlessSite.addSite(siteName = "Site Name");
@@ -70,7 +70,7 @@ definition {
 	@description = "This is a use case for LPS-166514. TC-2: Verify that the expired import process entries can be removed after triggering scheduler job manually."
 	@priority = 5
 	test TriggerSchedulerJobManuallyCanRemoveExpiredImportEntry {
-		property test.name.skip.portal.instance = "ImportProcess#TriggerSchedulerJobManuallyCanRemoveExpiredImportEntry";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: Import two types of LAR files") {
 			HeadlessSite.addSite(siteName = "Site Name");
@@ -306,7 +306,7 @@ definition {
 	@description = "This is a use case for LPS-182567. TC-4: Verify that a confirmation pop-up should show up when Delete Application Data Before Importing checkbox is checked on virtual instance."
 	@priority = 5
 	test ViewDeletingApplicationDataPopUpOnVirtualInstance {
-		property test.name.skip.portal.instance = "ImportProcess#ViewDeletingApplicationDataPopUpOnVirtualInstance";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: Add a virtual instance and create a web content article and a document file in it") {
 			PortalInstances.openVirtualInstancesAdmin();

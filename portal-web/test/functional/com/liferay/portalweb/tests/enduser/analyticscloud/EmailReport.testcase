@@ -27,7 +27,7 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		// It is not possible to delete properties and data source after LRAC-13389. This functionality should return after LRAC-8040
 
@@ -35,7 +35,7 @@ definition {
 
 		ACUtils.tearDownDXP();
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -335,7 +335,7 @@ definition {
 		// AC Quarantine Reason: Test fix look into mockmock page
 		// AC Quarantine Ticket: LRAC-12253
 
-		property test.name.skip.portal.instance = "EmailReport#CheckLinksInEmailReportAreCorrect";
+		property test.liferay.virtual.instance = "false";
 
 		var reportDetailsNameList = "Workspace,Property";
 		var reportDetailsValueList = "FARO-DEV-liferay,${assignedPropertyName}";

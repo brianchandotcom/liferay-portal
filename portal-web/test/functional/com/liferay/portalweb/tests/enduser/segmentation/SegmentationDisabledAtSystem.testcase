@@ -17,11 +17,11 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		Segmentation.resetSegmentationAtSystemSettings();
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -33,7 +33,7 @@ definition {
 	@priority = 4
 	test CheckAssignRolesDisabledAlertAtInstanceSettings {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "SegmentationDisabledAtSystem#CheckAssignRolesDisabledAlertAtInstanceSettings";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given the 'Assign Roles by Segments' is disabled at System Settings") {
 			Segmentation.disableConfigurationAtSystemSettings(checkLabel = "Enable Assign Roles by Segment");
@@ -58,7 +58,7 @@ definition {
 	@priority = 4
 	test CheckSegmentationDisabledAlertAtInstanceSettings {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "SegmentationDisabledAtSystem#CheckSegmentationDisabledAlertAtInstanceSettings";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given the 'Enable Segmentation' is disabled at System Settings") {
 			Segmentation.disableConfigurationAtSystemSettings(checkLabel = "Enable Segmentation");
@@ -82,7 +82,7 @@ definition {
 	@description = "LPS-152542: Add breadcrumbs to Instance Settings alerts"
 	@priority = 3
 	test ViewAssignRoleBySegmentDisabledWarningUserWithoutsPermissionToSystemSettings {
-		property test.name.skip.portal.instance = "SegmentationDisabled#ViewAssignRoleBySegmentDisabledWarningUserWithoutsPermissionToSystemSettings";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given the 'Assign Roles by Segments' is disabled at System Settings") {
 			Segmentation.disableConfigurationAtSystemSettings(checkLabel = "Enable Assign Roles by Segment");
@@ -128,7 +128,7 @@ definition {
 	@description = "LPS-152542: Add breadcrumbs to Instance Settings alerts"
 	@priority = 3
 	test ViewSegmentationDisabledWarningUserWithoutsPermissionToSystemSettings {
-		property test.name.skip.portal.instance = "SegmentationDisabled#ViewSegmentationDisabledWarningUserWithoutsPermissionToSystemSettings";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given 'Segmentation' is disabled at System Settings") {
 			Segmentation.disableConfigurationAtSystemSettings(checkLabel = "Enable Segmentation");

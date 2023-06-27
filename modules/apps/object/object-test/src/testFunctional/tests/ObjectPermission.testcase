@@ -16,9 +16,9 @@ definition {
 
 		JSONRole.deleteRole(roleTitle = "Regular Role");
 
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
@@ -117,7 +117,7 @@ definition {
 	@priority = 5
 	test CanDefineSinglePicklistPermissionsWithPermissionsPermission {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ObjectPermission#CanDefineSinglePicklistPermissionsWithPermissionsPermission";
+		property test.liferay.virtual.instance = "false";
 
 		JSONRole.addRegularRole(
 			roleKey = "Regular Role",
@@ -227,7 +227,7 @@ definition {
 		property osgi.module.configuration.file.names = "com.liferay.object.rest.internal.configuration.FFObjectEntryPermissionsActionConfiguration.config";
 		property osgi.module.configurations = "enabled=\"true\"";
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ObjectPermission#CanDeleteSingleObjectEntryWithDeletePermission";
+		property test.liferay.virtual.instance = "false";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
@@ -301,7 +301,7 @@ definition {
 	@priority = 5
 	test CanDeleteSingleObjectWithDeletePermission {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ObjectPermission#CanDeleteSingleObjectWithDeletePermission";
+		property test.liferay.virtual.instance = "false";
 
 		JSONRole.addRegularRole(
 			roleKey = "Regular Role",
@@ -357,7 +357,7 @@ definition {
 	@priority = 5
 	test CanDeleteSinglePicklistWithDeletePermission {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ObjectPermission#CanDeleteSinglePicklistWithDeletePermission";
+		property test.liferay.virtual.instance = "false";
 
 		JSONRole.addRegularRole(
 			roleKey = "Regular Role",
@@ -410,7 +410,7 @@ definition {
 	@priority = 5
 	test CanEditItsOwnEntryWithOnlyAddPermission {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ObjectPermission#CanEditItsOwnEntryWithOnlyAddPermission";
+		property test.liferay.virtual.instance = "false";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
@@ -526,7 +526,7 @@ definition {
 	@description = "LPS-146759 - Verify it is not possible to update a single Picklist permissions created by the user if the Permissions Owner permission is removed"
 	@priority = 4
 	test CannotDefineSinglePicklistPermissionsWithoutPermissionsOwnerPermission {
-		property test.name.skip.portal.instance = "ObjectPermission#CannotDefineSinglePicklistPermissionsWithoutPermissionsOwnerPermission";
+		property test.liferay.virtual.instance = "false";
 
 		JSONRole.addRegularRole(
 			roleKey = "Regular Role",
@@ -599,7 +599,7 @@ definition {
 	test CannotDeleteOwnSingleObjectEntryWithoutDeleteOwnerPermission {
 		property osgi.module.configuration.file.names = "com.liferay.object.rest.internal.configuration.FFObjectEntryPermissionsActionConfiguration.config";
 		property osgi.module.configurations = "enabled=\"true\"";
-		property test.name.skip.portal.instance = "ObjectPermission#CannotDeleteOwnSingleObjectEntryWithoutDeleteOwnerPermission";
+		property test.liferay.virtual.instance = "false";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
@@ -720,7 +720,7 @@ definition {
 	@description = "LPS-146758 - Verify it is not possible to delete a single Object created by the user if the Delete Owner permission is removed"
 	@priority = 4
 	test CannotDeleteSingleObjectWithoutDeleteOwnerPermission {
-		property test.name.skip.portal.instance = "ObjectPermission#CannotDeleteSingleObjectWithoutDeleteOwnerPermission";
+		property test.liferay.virtual.instance = "false";
 
 		JSONRole.addRegularRole(roleTitle = "Regular Role");
 
@@ -793,7 +793,7 @@ definition {
 	@description = "LPS-146759 - Verify it is not possible to delete a single Picklist created by the user if the Delete Owner permission is removed"
 	@priority = 4
 	test CannotDeleteSinglePicklistWithoutDeleteOwnerPermission {
-		property test.name.skip.portal.instance = "ObjectPermission#CannotDeleteSinglePicklistWithoutDeleteOwnerPermission";
+		property test.liferay.virtual.instance = "false";
 
 		JSONRole.addRegularRole(
 			roleKey = "Regular Role",
@@ -859,7 +859,7 @@ definition {
 	test CannotUpdateOwnSingleObjectEntryWithoutPermissionsOwnerPermission {
 		property osgi.module.configuration.file.names = "com.liferay.object.rest.internal.configuration.FFObjectEntryPermissionsActionConfiguration.config";
 		property osgi.module.configurations = "enabled=\"true\"";
-		property test.name.skip.portal.instance = "ObjectPermission#CannotUpdateOwnSingleObjectEntryWithoutPermissionsOwnerPermission";
+		property test.liferay.virtual.instance = "false";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
@@ -937,7 +937,7 @@ definition {
 	test CannotUpdateOwnSingleObjectEntryWithoutUpdateOwnerPermission {
 		property osgi.module.configuration.file.names = "com.liferay.object.rest.internal.configuration.FFObjectEntryPermissionsActionConfiguration.config";
 		property osgi.module.configurations = "enabled=\"true\"";
-		property test.name.skip.portal.instance = "ObjectPermission#CannotUpdateOwnSingleObjectEntryWithoutUpdateOwnerPermission";
+		property test.liferay.virtual.instance = "false";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
@@ -1087,7 +1087,7 @@ definition {
 	@description = "LPS-146758 - Verify it is not possible to update a single Object permissions created by the user if the Permissions Owner permission is removed"
 	@priority = 4
 	test CannotUpdateSingleObjectPermissionWithoutPermissionsOwnerPermission {
-		property test.name.skip.portal.instance = "ObjectPermission#CannotUpdateSingleObjectPermissionWithoutPermissionsOwnerPermission";
+		property test.liferay.virtual.instance = "false";
 
 		JSONRole.addRegularRole(
 			roleKey = "Regular Role",
@@ -1162,7 +1162,7 @@ definition {
 	@description = "LPS-146758 - Verify it is not possible to update a single Object created by the user if the Delete Owner permission is removed"
 	@priority = 4
 	test CannotUpdateSingleObjectWithoutUpdateOwnerPermission {
-		property test.name.skip.portal.instance = "ObjectPermission#CannotUpdateSingleObjectWithoutUpdateOwnerPermission";
+		property test.liferay.virtual.instance = "false";
 
 		JSONRole.addRegularRole(
 			roleKey = "Regular Role",
@@ -1232,7 +1232,7 @@ definition {
 	@description = "LPS-146759 - Verify it is not possible to update a single Picklist created by the user if the Update Owner permission is removed"
 	@priority = 4
 	test CannotUpdateSinglePicklistWithoutUpdateOwnerPermission {
-		property test.name.skip.portal.instance = "ObjectPermission#CannotUpdateSinglePicklistWithoutUpdateOwnerPermission";
+		property test.liferay.virtual.instance = "false";
 
 		JSONRole.addRegularRole(
 			roleKey = "Regular Role",
@@ -1300,7 +1300,7 @@ definition {
 	@description = "LPS-146757 - Verify it is not possible to view a single Object Entry create by the user if the View Owner permission is removed"
 	@priority = 4
 	test CannotViewOwnSingleObjectEntryWithoutViewOwnerPermission {
-		property test.name.skip.portal.instance = "ObjectPermission#CannotViewOwnSingleObjectEntryWithoutViewOwnerPermission";
+		property test.liferay.virtual.instance = "false";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
@@ -1412,7 +1412,7 @@ definition {
 	@description = "LPS-146758 - Verify it is not possible to View a single Object created by the user if the View Owner permission is removed"
 	@priority = 4
 	test CannotViewSingleObjectWithoutViewOwnerPermission {
-		property test.name.skip.portal.instance = "ObjectPermission#CannotViewSingleObjectWithoutViewOwnerPermission";
+		property test.liferay.virtual.instance = "false";
 
 		JSONRole.addRegularRole(
 			roleKey = "Regular Role",
@@ -1480,7 +1480,7 @@ definition {
 	@description = "LPS-146759 - Verify it is not possible to view a single Picklist created by the user if the View Owner permission is removed"
 	@priority = 4
 	test CannotViewSinglePicklistWithoutViewOwnerPermission {
-		property test.name.skip.portal.instance = "ObjectPermission#CannotViewSinglePicklistWithoutViewOwnerPermission";
+		property test.liferay.virtual.instance = "false";
 
 		JSONRole.addRegularRole(
 			roleKey = "Regular Role",
@@ -1602,7 +1602,7 @@ definition {
 		property osgi.module.configuration.file.names = "com.liferay.object.rest.internal.configuration.FFObjectEntryPermissionsActionConfiguration.config";
 		property osgi.module.configurations = "enabled=\"true\"";
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ObjectPermission#CanUpdateSingleObjectEntryPermissionsPermission";
+		property test.liferay.virtual.instance = "false";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
@@ -1684,7 +1684,7 @@ definition {
 		property osgi.module.configuration.file.names = "com.liferay.object.rest.internal.configuration.FFObjectEntryPermissionsActionConfiguration.config";
 		property osgi.module.configurations = "enabled=\"true\"";
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ObjectPermission#CanUpdateSingleObjectEntryWithUpdatePermission";
+		property test.liferay.virtual.instance = "false";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
@@ -1764,7 +1764,7 @@ definition {
 	@priority = 5
 	test CanUpdateSingleObjectPermissionsWithPermissionsPermission {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ObjectPermission#CanUpdateSingleObjectPermissionsWithPermissionsPermission";
+		property test.liferay.virtual.instance = "false";
 
 		JSONRole.addRegularRole(
 			roleKey = "Regular Role",
@@ -1826,7 +1826,7 @@ definition {
 	@priority = 5
 	test CanUpdateSingleObjectWithUpdatePermission {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ObjectPermission#CanUpdateSingleObjectWithUpdatePermission";
+		property test.liferay.virtual.instance = "false";
 
 		JSONRole.addRegularRole(
 			roleKey = "Regular Role",
@@ -1888,7 +1888,7 @@ definition {
 	@priority = 5
 	test CanUpdateSinglePicklistWithUpdatePermission {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ObjectPermission#CanUpdateSinglePicklistWithUpdatePermission";
+		property test.liferay.virtual.instance = "false";
 
 		JSONRole.addRegularRole(
 			roleKey = "Regular Role",
@@ -2007,7 +2007,7 @@ definition {
 	@priority = 5
 	test CanViewItsOwnEntryWithOnlyAddPermission {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ObjectPermission#CanViewItsOwnEntryWithOnlyAddPermission";
+		property test.liferay.virtual.instance = "false";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
@@ -2113,7 +2113,7 @@ definition {
 	test CanViewSingleObjectEntryWithViewPermission {
 		property osgi.module.configuration.file.names = "com.liferay.object.rest.internal.configuration.FFObjectEntryPermissionsActionConfiguration.config";
 		property osgi.module.configurations = "enabled=\"true\"";
-		property test.name.skip.portal.instance = "ObjectPermission#CanViewSingleObjectEntryWithViewPermission";
+		property test.liferay.virtual.instance = "false";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
@@ -2185,7 +2185,7 @@ definition {
 	@priority = 5
 	test CanViewSingleObjectWithViewPermission {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ObjectPermission#CanViewSingleObjectWithViewPermission";
+		property test.liferay.virtual.instance = "false";
 
 		JSONRole.addRegularRole(
 			roleKey = "Regular Role",
@@ -2239,7 +2239,7 @@ definition {
 	@priority = 5
 	test CanViewSinglePicklistWithViewPermission {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ObjectPermission#CanViewSinglePicklistWithViewPermission";
+		property test.liferay.virtual.instance = "false";
 
 		JSONRole.addRegularRole(
 			roleKey = "Regular Role",
@@ -2288,7 +2288,7 @@ definition {
 	@priority = 5
 	test GuestCanAddObjectEntriesWithAddPermission {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ObjectPermission#GuestCanAddObjectEntriesWithAddPermission";
+		property test.liferay.virtual.instance = "false";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
@@ -2384,7 +2384,7 @@ definition {
 	@priority = 5
 	test GuestCannotAddObjectEntriesWithoutAddPermission {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ObjectPermission#GuestCannotAddObjectEntriesWithoutAddPermission";
+		property test.liferay.virtual.instance = "false";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 148949",
@@ -2445,7 +2445,7 @@ definition {
 	@priority = 5
 	test GuestCannotViewObjectEntriesWithoutViewPermission {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ObjectPermission#GuestCannotViewObjectEntriesWithoutViewPermission";
+		property test.liferay.virtual.instance = "false";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 148948",
@@ -2506,7 +2506,7 @@ definition {
 	@priority = 5
 	test GuestCanViewObjectEntriesWithViewPermission {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ObjectPermission#GuestCanViewObjectEntriesWithViewPermission";
+		property test.liferay.virtual.instance = "false";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",

@@ -48,9 +48,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -62,7 +62,7 @@ definition {
 	@priority = 4
 	test CanExportAllVisibleClaims {
 		property solutions.acceptance = "true";
-		property test.name.skip.portal.instance = "PRMMDFClaim#CanExportAllVisibleClaims";
+		property test.liferay.virtual.instance = "false";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 
@@ -110,7 +110,7 @@ definition {
 	@description = "This is a test for LPS-178119. Verify that is possible to export all visible Claims"
 	@priority = 4
 	test CanExportFilteredClaims {
-		property test.name.skip.portal.instance = "PRMMDFClaim#CanExportFilteredClaims";
+		property test.liferay.virtual.instance = "false";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 
@@ -240,7 +240,7 @@ definition {
 	@priority = 4
 	test CanExportSearchedClaims {
 		property solutions.acceptance = "true";
-		property test.name.skip.portal.instance = "PRMMDFClaim#CanExportSearchedClaims";
+		property test.liferay.virtual.instance = "false";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 
@@ -313,7 +313,7 @@ definition {
 	@priority = 5
 	test CanSubmitFullClaim {
 		property solutions.acceptance = "true";
-		property test.name.skip.portal.instance = "PRMMDFClaim#CanSubmitFullClaim";
+		property test.liferay.virtual.instance = "false";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 
@@ -340,7 +340,7 @@ definition {
 	@priority = 5
 	test CanSubmitPartialClaim {
 		property solutions.acceptance = "true";
-		property test.name.skip.portal.instance = "PRMMDFClaim#CanSubmitPartialClaim";
+		property test.liferay.virtual.instance = "false";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 
@@ -366,7 +366,7 @@ definition {
 	@priority = 5
 	test CFMCanChangeStatusToClaimPaid {
 		property solutions.acceptance = "true";
-		property test.name.skip.portal.instance = "PRMMDFClaim#CFMCanChangeStatusToClaimPaid";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that a new claim is created and approved") {
 			PRMNavigator.gotoMDF(requestId = ${staticRequestId});
@@ -419,7 +419,7 @@ definition {
 	@description = "This is a test for LPS-185929. Verify that when the MDF Claim is 'In Finance Review' status, the CMD can't change to 'Claim Paid' status"
 	@priority = 5
 	test CMDCannotChangeStatusToClaimPaid {
-		property test.name.skip.portal.instance = "PRMMDFClaim#CMDCannotChangeStatusToClaimPaid";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that a new claim is created and approved") {
 			PRMNavigator.gotoMDF(requestId = ${staticRequestId});
@@ -456,7 +456,7 @@ definition {
 	@description = "This is a test for LPS-185928. Verify that when the MDF Claim is 'In Finance Review' status, the CMM can't change to 'Claim Paid' status"
 	@priority = 5
 	test CMMCannotChangeStatusToClaimPaid {
-		property test.name.skip.portal.instance = "PRMMDFClaim#CMMCannotChangeStatusToClaimPaid";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that a new claim is created and approved") {
 			PRMNavigator.gotoMDF(requestId = ${staticRequestId});
@@ -493,7 +493,7 @@ definition {
 	@description = "This is a test for LPS-179371. Verify that the Total Claim Amount reflects the value claimed per budget"
 	@priority = 5
 	test TotalClaimAmountReflectsBudgetValue {
-		property test.name.skip.portal.instance = "PRMMDFClaim#TotalClaimAmountReflectsBudgetValue";
+		property test.liferay.virtual.instance = "false";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 

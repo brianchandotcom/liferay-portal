@@ -10,7 +10,7 @@ definition {
 	test SetLiferayHomeToASymbolicLink {
 		property skip.start.app.server = "true";
 		property test.assert.warning.exceptions = "true";
-		property test.name.skip.portal.instance = "SymbolicLinks#SetLiferayHomeToASymbolicLink";
+		property test.liferay.virtual.instance = "false";
 		property testcase.url = "http://www.example.com";
 
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");

@@ -50,9 +50,9 @@ definition {
 			Testray.testrayApisTearDown();
 		}
 
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
@@ -60,7 +60,7 @@ definition {
 	@description = "Story ID: LPS-178273 | Test Summary: Verify that the User with the 'Testray Analyst' role should not be able to create/edit/delete the team"
 	@priority = 3
 	test AnalystRoleCanNotCreateEditAndDeleteTeam {
-		property test.name.skip.portal.instance = "TestrayTeamPermissions#AnalystRoleCanNotCreateEditAndDeleteTeam";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that the user login with the Testray Analyst role") {
 			User.logoutAndLoginPG(
@@ -112,7 +112,7 @@ definition {
 	@description = "Story ID: LPS-178273 | Test Summary: Verify that the User with the 'Testray Lead' role should not be able to create/edit/delete the team"
 	@priority = 3
 	test LeadRoleCanNotCreateEditAndDeleteTeam {
-		property test.name.skip.portal.instance = "TestrayTeamPermissions#LeadRoleCanNotCreateEditAndDeleteTeam";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that the user login with the Testray Lead role") {
 			User.logoutAndLoginPG(
@@ -164,7 +164,7 @@ definition {
 	@description = "Story ID: LPS-178273 | Test Summary: Verify that the User with the 'Testray User' role should not be able to create/edit/delete the team"
 	@priority = 2
 	test UserRoleCanNotCreateEditAndDeleteTeam {
-		property test.name.skip.portal.instance = "TestrayTeamPermissions#UserRoleCanNotCreateEditAndDeleteTeam";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that the user login with the Testray User role") {
 			User.logoutAndLoginPG(

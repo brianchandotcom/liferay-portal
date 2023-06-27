@@ -21,8 +21,8 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.payment.engine.CommercePaymentEngine;
 import com.liferay.commerce.payment.engine.CommerceSubscriptionEngine;
 import com.liferay.commerce.payment.result.CommercePaymentResult;
+import com.liferay.commerce.payment.util.CommercePaymentHelper;
 import com.liferay.commerce.payment.util.CommercePaymentHttpHelper;
-import com.liferay.commerce.payment.util.CommercePaymentUtils;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
@@ -227,7 +227,7 @@ public class CommercePaymentServlet extends HttpServlet {
 			_commerceOrderId);
 
 		if (commerceOrder.isSubscriptionOrder() &&
-			!_commercePaymentUtils.isDeliveryOnlySubscription(commerceOrder)) {
+			!_commercePaymentHelper.isDeliveryOnlySubscription(commerceOrder)) {
 
 			return _commerceSubscriptionEngine.processRecurringPayment(
 				_commerceOrderId, _nextUrl, httpServletRequest);
@@ -252,10 +252,10 @@ public class CommercePaymentServlet extends HttpServlet {
 	private CommercePaymentEngine _commercePaymentEngine;
 
 	@Reference
-	private CommercePaymentHttpHelper _commercePaymentHttpHelper;
+	private CommercePaymentHelper _commercePaymentHelper;
 
 	@Reference
-	private CommercePaymentUtils _commercePaymentUtils;
+	private CommercePaymentHttpHelper _commercePaymentHttpHelper;
 
 	@Reference
 	private CommerceSubscriptionEngine _commerceSubscriptionEngine;

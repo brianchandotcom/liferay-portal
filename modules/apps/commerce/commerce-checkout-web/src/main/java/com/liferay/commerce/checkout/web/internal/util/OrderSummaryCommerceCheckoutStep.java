@@ -33,7 +33,7 @@ import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
 import com.liferay.commerce.order.engine.CommerceOrderEngine;
 import com.liferay.commerce.payment.engine.CommercePaymentEngine;
 import com.liferay.commerce.payment.method.CommercePaymentMethod;
-import com.liferay.commerce.payment.util.CommercePaymentUtils;
+import com.liferay.commerce.payment.util.CommercePaymentHelper;
 import com.liferay.commerce.percentage.PercentageFormatter;
 import com.liferay.commerce.price.CommerceOrderPriceCalculation;
 import com.liferay.commerce.price.CommerceProductPriceCalculation;
@@ -371,7 +371,7 @@ public class OrderSummaryCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 			!commercePaymentMethodKey.isEmpty()) {
 
 			CommercePaymentMethod commercePaymentMethod =
-				_commercePaymentUtils.getCommercePaymentMethod(
+				_commercePaymentHelper.getCommercePaymentMethod(
 					commerceOrder.getCommerceOrderId());
 
 			if (!commercePaymentMethod.isProcessRecurringEnabled()) {
@@ -414,7 +414,7 @@ public class OrderSummaryCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 	private CommercePaymentEngine _commercePaymentEngine;
 
 	@Reference
-	private CommercePaymentUtils _commercePaymentUtils;
+	private CommercePaymentHelper _commercePaymentHelper;
 
 	@Reference
 	private CommerceProductPriceCalculation _commerceProductPriceCalculation;

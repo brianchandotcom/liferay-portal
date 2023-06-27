@@ -46,6 +46,7 @@ describe('Price tests_utilities', () => {
 				discountPercentageLevel3: 0.0,
 				discountPercentageLevel4: 0.0,
 				finalPriceFormatted: '$ 20.00',
+				price: '$ 20.00',
 				priceFormatted: '$ 20.00',
 				priceOnApplication: false,
 				promoPrice: '1',

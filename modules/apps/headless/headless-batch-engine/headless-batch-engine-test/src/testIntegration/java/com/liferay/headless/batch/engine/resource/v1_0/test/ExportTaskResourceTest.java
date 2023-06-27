@@ -165,6 +165,7 @@ public class ExportTaskResourceTest {
 				sb.append(className);
 				sb.append(": ");
 				sb.append(throwable.getMessage());
+				sb.append("\n");
 			}
 		}
 
@@ -288,6 +289,9 @@ public class ExportTaskResourceTest {
 	);
 
 	private static final List<String> _untestableDTOClassNames = Arrays.asList(
+		"com.liferay.change.tracking.rest.dto.v1_0.CTCollection",
+		"com.liferay.change.tracking.rest.dto.v1_0.CTEntry",
+		"com.liferay.change.tracking.rest.dto.v1_0.CTProcess",
 		"com.liferay.data.engine.rest.dto.v2_0.DataDefinition",
 		"com.liferay.data.engine.rest.dto.v2_0.DataDefinitionFieldLink",
 		"com.liferay.data.engine.rest.dto.v2_0.DataLayout",
@@ -297,6 +301,7 @@ public class ExportTaskResourceTest {
 		"com.liferay.digital.signature.rest.dto.v1_0.DSEnvelope",
 		"com.liferay.dispatch.rest.dto.v1_0.DispatchTrigger",
 		"com.liferay.headless.admin.address.dto.v1_0.Country",
+		"com.liferay.headless.admin.address.dto.v1_0.Region",
 		"com.liferay.headless.admin.list.type.dto.v1_0.ListTypeEntry",
 		"com.liferay.headless.admin.taxonomy.dto.v1_0.Keyword",
 		"com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyCategory",
@@ -313,9 +318,11 @@ public class ExportTaskResourceTest {
 		"com.liferay.headless.admin.user.dto.v1_0.WebUrl",
 		"com.liferay.headless.admin.workflow.dto.v1_0.Assignee",
 		"com.liferay.headless.admin.workflow.dto.v1_0.Transition",
+		"com.liferay.headless.admin.workflow.dto.v1_0.WorkflowDefinition",
 		"com.liferay.headless.admin.workflow.dto.v1_0.WorkflowInstance",
 		"com.liferay.headless.admin.workflow.dto.v1_0.WorkflowLog",
 		"com.liferay.headless.admin.workflow.dto.v1_0.WorkflowTask",
+		"com.liferay.headless.commerce.admin.account.dto.v1_0.Account",
 		"com.liferay.headless.commerce.admin.account.dto.v1_0.AccountAddress",
 		"com.liferay.headless.commerce.admin.account.dto.v1_0." +
 			"AccountChannelEntry",
@@ -324,18 +331,24 @@ public class ExportTaskResourceTest {
 		"com.liferay.headless.commerce.admin.account.dto.v1_0.AccountMember",
 		"com.liferay.headless.commerce.admin.account.dto.v1_0." +
 			"AccountOrganization",
+		"com.liferay.headless.commerce.admin.account.dto.v1_0." +
+			"AdminAccountGroup",
+		"com.liferay.headless.commerce.admin.catalog.dto.v1_0.Attachment",
 		"com.liferay.headless.commerce.admin.catalog.dto.v1_0.Catalog",
 		"com.liferay.headless.commerce.admin.catalog.dto.v1_0.Category",
 		"com.liferay.headless.commerce.admin.catalog.dto.v1_0.GroupedProduct",
 		"com.liferay.headless.commerce.admin.catalog.dto.v1_0.LinkedProduct",
 		"com.liferay.headless.commerce.admin.catalog.dto.v1_0.LowStockAction",
 		"com.liferay.headless.commerce.admin.catalog.dto.v1_0.MappedProduct",
+		"com.liferay.headless.commerce.admin.catalog.dto.v1_0.Option",
 		"com.liferay.headless.commerce.admin.catalog.dto.v1_0.OptionCategory",
 		"com.liferay.headless.commerce.admin.catalog.dto.v1_0.OptionValue",
 		"com.liferay.headless.commerce.admin.catalog.dto.v1_0.Pin",
+		"com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product",
 		"com.liferay.headless.commerce.admin.catalog.dto.v1_0." +
 			"ProductAccountGroup",
 		"com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductChannel",
+		"com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductGroup",
 		"com.liferay.headless.commerce.admin.catalog.dto.v1_0." +
 			"ProductGroupProduct",
 		"com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductOption",
@@ -344,6 +357,8 @@ public class ExportTaskResourceTest {
 		"com.liferay.headless.commerce.admin.catalog.dto.v1_0." +
 			"ProductSpecification",
 		"com.liferay.headless.commerce.admin.catalog.dto.v1_0.RelatedProduct",
+		"com.liferay.headless.commerce.admin.catalog.dto.v1_0.Sku",
+		"com.liferay.headless.commerce.admin.catalog.dto.v1_0.Specification",
 		"com.liferay.headless.commerce.admin.channel.dto.v1_0." +
 			"PaymentMethodGroupRelOrderType",
 		"com.liferay.headless.commerce.admin.channel.dto.v1_0." +
@@ -355,18 +370,26 @@ public class ExportTaskResourceTest {
 		"com.liferay.headless.commerce.admin.channel.dto.v1_0.ShippingMethod",
 		"com.liferay.headless.commerce.admin.channel.dto.v1_0.TaxCategory",
 		"com.liferay.headless.commerce.admin.inventory.dto.v1_0." +
+			"ReplenishmentItem",
+		"com.liferay.headless.commerce.admin.inventory.dto.v1_0.Warehouse",
+		"com.liferay.headless.commerce.admin.inventory.dto.v1_0." +
 			"WarehouseChannel",
 		"com.liferay.headless.commerce.admin.inventory.dto.v1_0.WarehouseItem",
 		"com.liferay.headless.commerce.admin.inventory.dto.v1_0." +
 			"WarehouseOrderType",
+		"com.liferay.headless.commerce.admin.order.dto.v1_0.Order",
 		"com.liferay.headless.commerce.admin.order.dto.v1_0.OrderNote",
+		"com.liferay.headless.commerce.admin.order.dto.v1_0.OrderRule",
 		"com.liferay.headless.commerce.admin.order.dto.v1_0.OrderRuleAccount",
 		"com.liferay.headless.commerce.admin.order.dto.v1_0." +
 			"OrderRuleAccountGroup",
 		"com.liferay.headless.commerce.admin.order.dto.v1_0.OrderRuleChannel",
 		"com.liferay.headless.commerce.admin.order.dto.v1_0.OrderRuleOrderType",
+		"com.liferay.headless.commerce.admin.order.dto.v1_0.OrderType",
 		"com.liferay.headless.commerce.admin.order.dto.v1_0.OrderTypeChannel",
+		"com.liferay.headless.commerce.admin.order.dto.v1_0.Term",
 		"com.liferay.headless.commerce.admin.order.dto.v1_0.TermOrderType",
+		"com.liferay.headless.commerce.admin.pricing.dto.v1_0.Discount",
 		"com.liferay.headless.commerce.admin.pricing.dto.v1_0." +
 			"DiscountAccountGroup",
 		"com.liferay.headless.commerce.admin.pricing.dto.v1_0.DiscountCategory",
@@ -377,6 +400,7 @@ public class ExportTaskResourceTest {
 		"com.liferay.headless.commerce.admin.pricing.dto.v1_0." +
 			"PriceListAccountGroup",
 		"com.liferay.headless.commerce.admin.pricing.dto.v1_0.TierPrice",
+		"com.liferay.headless.commerce.admin.pricing.dto.v2_0.Discount",
 		"com.liferay.headless.commerce.admin.pricing.dto.v2_0.DiscountAccount",
 		"com.liferay.headless.commerce.admin.pricing.dto.v2_0." +
 			"DiscountAccountGroup",
@@ -421,6 +445,7 @@ public class ExportTaskResourceTest {
 		"com.liferay.headless.commerce.delivery.cart.dto.v1_0.ShippingMethod",
 		"com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Attachment",
 		"com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Category",
+		"com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Channel",
 		"com.liferay.headless.commerce.delivery.catalog.dto.v1_0.LinkedProduct",
 		"com.liferay.headless.commerce.delivery.catalog.dto.v1_0.MappedProduct",
 		"com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Pin",

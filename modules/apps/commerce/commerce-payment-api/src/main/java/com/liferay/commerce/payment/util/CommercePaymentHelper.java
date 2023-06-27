@@ -17,6 +17,7 @@ package com.liferay.commerce.payment.util;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.payment.integration.CommercePaymentIntegration;
 import com.liferay.commerce.payment.method.CommercePaymentMethod;
 import com.liferay.commerce.payment.request.CommercePaymentRequest;
 import com.liferay.commerce.payment.request.CommercePaymentRequestProvider;
@@ -31,10 +32,14 @@ import javax.servlet.http.HttpServletRequest;
  * @author Luca Pellizzon
  */
 @ProviderType
-public interface CommercePaymentUtils {
+public interface CommercePaymentHelper {
 
 	public CommercePaymentResult emptyResult(
 		long commerceOrderId, String transactionId);
+
+	public CommercePaymentIntegration getCommercePaymentIntegration(
+			long commerceChannelId, String paymentMethodKey)
+		throws PortalException;
 
 	public CommercePaymentMethod getCommercePaymentMethod(long commerceOrderId)
 		throws PortalException;

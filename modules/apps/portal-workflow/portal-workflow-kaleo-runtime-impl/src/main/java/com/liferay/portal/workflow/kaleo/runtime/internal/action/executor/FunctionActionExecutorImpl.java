@@ -249,11 +249,11 @@ public class FunctionActionExecutorImpl implements ActionExecutor {
 				false, null, null, assetRenderer.getClassPK(),
 				serviceContext.getLocale(), null, null);
 
-		Serializable dtoSerializable = dtoConverter.toDTO(dtoConverterContext);
+		Serializable dtoSerializable = dtoConverter.toDTO(
+			dtoConverterContext, assetObjectSerializable);
 
 		if (dtoSerializable == null) {
-			dtoSerializable = dtoConverter.toDTO(
-				dtoConverterContext, assetObjectSerializable);
+			dtoSerializable = dtoConverter.toDTO(dtoConverterContext);
 		}
 
 		if (dtoSerializable == null) {

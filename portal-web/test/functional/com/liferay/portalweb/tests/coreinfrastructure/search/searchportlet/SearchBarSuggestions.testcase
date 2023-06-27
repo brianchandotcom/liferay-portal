@@ -417,9 +417,9 @@ definition {
 				searchAssetTitle = "Apple Strudel",
 				searchAssetType = "Web Content Article");
 
-			// Analytics Cloud needs up to 2 minutes to track searches. See LPS-164683 for details.
+			// Analytics Cloud needs up to 3 minutes to track searches. See LPS-164683 for details.
 
-			Pause.pauseNoSPARefresh(locator1 = 120000);
+			Pause.pauseNoSPARefresh(locator1 = 180000);
 		}
 
 		task ("Assert search results show up under the expected suggestion contributor display groups") {

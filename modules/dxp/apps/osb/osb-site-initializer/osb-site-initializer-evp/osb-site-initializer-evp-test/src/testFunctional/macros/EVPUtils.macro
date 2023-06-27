@@ -16,6 +16,17 @@ definition {
 		}
 	}
 
+	macro downloadFileViaCurl {
+		var currentURL = selenium.getCurrentUrl();
+		var testDependenciesDir = PropsUtil.get("output.dir.name");
+
+		var curl = '''${currentURL} --create-dirs -o ${testDependenciesDir}/${fileName}''';
+
+		echo("curl = ${curl}");
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.get(${curl});
+	}
+
 	@summary = "Navigating to EVP needs an extra click on Sign In which will redirect to Okta"
 	macro gotoEVP {
 		Navigator.openSiteURL(siteName = "EVP Portal");

@@ -1,0 +1,18 @@
+[
+	{
+		"active": true,
+		"conditionExpression": "",
+		"externalReferenceCode": "MKT-INVITE-MEMBER-ACTION",
+		"label": {
+			"en_US": "Invite Member MarketPlace"
+		},
+		"name": "InviteMemberMarketPlace",
+		"objectActionExecutorKey": "notification",
+		"objectActionTriggerKey": "onAfterAdd",
+		"objectDefinitionId": "[$OBJECT_DEFINITION_ID:UserAdditionalInfo$]",
+		"parameters": {
+			"notificationTemplateExternalReferenceCode": "MARKETPLACE-ACTION-INVITE-MEMBER",
+			"type": "email"
+		}
+	}
+]

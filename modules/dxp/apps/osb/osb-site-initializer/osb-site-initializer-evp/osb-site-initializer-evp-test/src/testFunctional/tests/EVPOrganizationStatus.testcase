@@ -57,6 +57,42 @@ definition {
 		}
 	}
 
+	@description = "LPS-177441 - Manager should see comment on Organizations details page"
+	@priority = 4
+	test CanSeeCommentOnDetailsPage {
+		task ("Given that Sign as Manager user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "manager@liferay.com",
+				userLoginFullName = "Manager User");
+		}
+
+		task ("And go to organization page") {
+			EVPUtils.gotoEVP();
+
+			EVPNavigator.goToNavItem(navItem = "Organization");
+		}
+
+		task ("When the manager approve the organization created") {
+			EVPOrganization.kebabMenuOrganization(organizationName = "Organization Test");
+
+			MenuItem.click(menuItem = "Review");
+
+			EVPOrganization.changeStatus(
+				button = "Approve",
+				typeMessage = "Your organization has been approved!");
+		}
+
+		task ("And go to details page") {
+			EVPOrganization.kebabMenuOrganization(organizationName = "Organization Test");
+
+			MenuItem.click(menuItem = "Details");
+		}
+
+		task ("Then the manager user can see the comment 'Your organization has been approved!' in the details page") {
+			EVPUtils.assertHeadersTitle(listHeaderTitle = "Organization Test,Your organization has been approved!");
+		}
+	}
+
 	@description = "Story ID: LPS-164733 | Test Summary: Verify that Only the Employee user can not see 'Review button' when organization are in 'Awaiting Approval On EVP' status"
 	@priority = 5
 	test EmployeeCanNotSeeReviewInAwaitingEVPStatus {

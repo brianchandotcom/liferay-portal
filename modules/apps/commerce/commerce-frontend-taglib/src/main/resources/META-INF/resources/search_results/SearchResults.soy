@@ -99,7 +99,7 @@
 		data-pos="{$item.pos}"
 		{if $item.selected}ref="selected"{/if}
 	>
-		Search "{$queryValue}" in {$item.title}
+		{msg desc="search x in y"}search-{$queryValue}-in-{$item.title}{/msg}
 	</div>
 {/deltemplate}
 

@@ -18,9 +18,11 @@ import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.constants.AccountRoleConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryUserRel;
+import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
+import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
@@ -1877,6 +1879,105 @@ public class DefaultObjectEntryManagerImplTest {
 	}
 
 	@Test
+	public void testGetRelatedObjectEntriesAccountEntryRestrictions()
+		throws Exception {
+
+		ObjectDefinition objectDefinition = _createObjectDefinition(
+			Arrays.asList(
+				new TextObjectFieldBuilder(
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).name(
+					"textObjectFieldName"
+				).build()));
+
+		String objectRelationship1Name = "oneToManyRelationshipParentChild";
+
+		ObjectRelationship objectRelationship1 =
+			_objectRelationshipLocalService.addObjectRelationship(
+				_adminUser.getUserId(),
+				_objectDefinition3.getObjectDefinitionId(),
+				objectDefinition.getObjectDefinitionId(), 0,
+				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				objectRelationship1Name,
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		ObjectDefinition accountEntryObjectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				_companyId, "AccountEntry");
+
+		ObjectRelationship objectRelationship2 =
+			_objectRelationshipLocalService.addObjectRelationship(
+				_adminUser.getUserId(),
+				accountEntryObjectDefinition.getObjectDefinitionId(),
+				objectDefinition.getObjectDefinitionId(), 0,
+				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"oneToManyRelationshipAccountChild",
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		objectDefinition.setAccountEntryRestrictedObjectFieldId(
+			objectRelationship2.getObjectFieldId2());
+
+		objectDefinition.setAccountEntryRestricted(true);
+
+		objectDefinition = _objectDefinitionLocalService.updateObjectDefinition(
+			objectDefinition);
+
+		_addRelatedObjectEntries(
+			_objectDefinition3, objectDefinition, "externalReferenceCode1",
+			"externalReferenceCode2", objectRelationship1);
+
+		AccountEntry accountEntry = _addAccountEntry();
+
+		AccountRole accountRole = _accountRoleLocalService.addAccountRole(
+			TestPropsValues.getUserId(), accountEntry.getAccountEntryId(),
+			RandomTestUtil.randomString(), null, null);
+
+		User user = _addUser();
+
+		_accountEntryUserRelLocalService.addAccountEntryUserRel(
+			accountEntry.getAccountEntryId(), user.getUserId());
+
+		_accountRoleLocalService.associateUser(
+			accountEntry.getAccountEntryId(), accountRole.getAccountRoleId(),
+			user.getUserId());
+
+		Role role = accountRole.getRole();
+
+		_addResourcePermission(ActionKeys.VIEW, role);
+
+		_resourcePermissionLocalService.addResourcePermission(
+			_companyId, objectDefinition.getClassName(),
+			ResourceConstants.SCOPE_GROUP_TEMPLATE, "0", role.getRoleId(),
+			ActionKeys.VIEW);
+
+		ObjectEntry objectEntry = _defaultObjectEntryManager.getObjectEntry(
+			_companyId, _simpleDTOConverterContext, "externalReferenceCode1",
+			_objectDefinition3, null);
+
+		Page<ObjectEntry> page =
+			_defaultObjectEntryManager.getObjectEntryRelatedObjectEntries(
+				_simpleDTOConverterContext, _objectDefinition3,
+				objectEntry.getId(), objectRelationship1Name, null);
+
+		Collection<ObjectEntry> objectEntries = page.getItems();
+
+		Assert.assertEquals(objectEntries.toString(), 1, objectEntries.size());
+
+		_objectRelationshipLocalService.deleteObjectRelationship(
+			objectRelationship1.getObjectRelationshipId());
+
+		_objectRelationshipLocalService.deleteObjectRelationship(
+			objectRelationship2.getObjectRelationshipId());
+
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			objectDefinition.getObjectDefinitionId());
+	}
+
+	@Test
 	public void testUpdateObjectEntry() throws Exception {
 		ObjectEntry objectEntry = _objectEntryManager.addObjectEntry(
 			_dtoConverterContext, _objectDefinition2,
@@ -2913,6 +3014,10 @@ public class DefaultObjectEntryManagerImplTest {
 	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
 
 	private Role _accountManagerRole;
+
+	@Inject
+	private AccountRoleLocalService _accountRoleLocalService;
+
 	private Role _buyerRole;
 
 	@Inject

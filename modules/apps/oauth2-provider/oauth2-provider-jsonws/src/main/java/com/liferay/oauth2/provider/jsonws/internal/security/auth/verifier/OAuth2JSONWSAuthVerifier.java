@@ -206,13 +206,31 @@ public class OAuth2JSONWSAuthVerifier implements AuthVerifier {
 					oAuth2ApplicationScopeAliasesId);
 		}
 
-		return new BearerTokenProvider.AccessToken(
-			oAuth2Application, new ArrayList<>(), StringPool.BLANK, expiresIn,
-			new HashMap<>(), StringPool.BLANK, StringPool.BLANK, issuedAt,
-			StringPool.BLANK, StringPool.BLANK, new HashMap<>(),
-			StringPool.BLANK, StringPool.BLANK, scopeAliasesList,
-			accessTokenContent, _TOKEN_KEY, oAuth2Authorization.getUserId(),
-			oAuth2Authorization.getUserName());
+		BearerTokenProvider.AccessToken accessToken =
+			new BearerTokenProvider.AccessToken(
+				oAuth2Application, new ArrayList<>(), StringPool.BLANK,
+				expiresIn, new HashMap<>(), StringPool.BLANK, StringPool.BLANK,
+				issuedAt, StringPool.BLANK, StringPool.BLANK, new HashMap<>(),
+				StringPool.BLANK, StringPool.BLANK, scopeAliasesList,
+				accessTokenContent, _TOKEN_KEY, oAuth2Authorization.getUserId(),
+				oAuth2Authorization.getUserName());
+
+		BearerTokenProvider bearerTokenProvider =
+			_bearerTokenProviderAccessor.getBearerTokenProvider(
+				oAuth2Application.getCompanyId(),
+				oAuth2Application.getClientId());
+
+		if (!bearerTokenProvider.isValid(accessToken)) {
+			oAuth2Authorization.setAccessTokenContent(
+				OAuth2ProviderConstants.EXPIRED_TOKEN);
+
+			_oAuth2AuthorizationLocalService.updateOAuth2Authorization(
+				oAuth2Authorization);
+
+			return null;
+		}
+
+		return accessToken;
 	}
 
 	private String _getAccessTokenContent(

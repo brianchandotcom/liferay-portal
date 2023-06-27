@@ -1,0 +1,32 @@
+<html>
+<head>
+<title>AccessibilityMenu</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">AccessibilityMenu</td></tr>
+</thead>
+
+<tbody>
+
+<tr>
+	<td>QUICK_LINK</td>
+	<td>//*[@aria-label="Quick Links"]//li//*[contains(text(),"${key_link}")]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MODAL_TITLE</td>
+	<td>//*[@class="modal-title"][contains(text(),"${key_modal_title}")]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_TOGGLE</td>
+	<td>//*[@class="toggle-switch simple-toggle-switch"]//span[contains(text(),"${key_toggle_label}")]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -103,6 +103,11 @@ export function Layout({components, editable, itemPath, rows, viewMode}) {
 									onChange={(properties) =>
 										dispatch(
 											createFieldChange({
+												formId: getFormId(
+													getFormNode(
+														containerElement.current
+													)
+												),
 												properties,
 												submitButtonId,
 											})

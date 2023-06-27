@@ -20,6 +20,7 @@ export default function formValidate({
 	activePage,
 	defaultLanguageId,
 	editingLanguageId,
+	formId,
 	groupId,
 	pages,
 	portletNamespace,
@@ -30,6 +31,7 @@ export default function formValidate({
 		return evaluate(null, {
 			defaultLanguageId,
 			editingLanguageId,
+			formId,
 			groupId,
 			pages,
 			portletNamespace,

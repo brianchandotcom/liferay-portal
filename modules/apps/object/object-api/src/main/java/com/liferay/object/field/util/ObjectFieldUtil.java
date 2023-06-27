@@ -180,9 +180,9 @@ public class ObjectFieldUtil {
 	}
 
 	public static void validateReadOnlyObjectFields(
-			Map<String, Object> existingValues, Map<String, Object> values,
 			DDMExpressionFactory ddmExpressionFactory,
-			List<ObjectField> objectFields)
+			Map<String, Object> existingValues, List<ObjectField> objectFields,
+			Map<String, Object> values)
 		throws PortalException {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPS-170122") ||

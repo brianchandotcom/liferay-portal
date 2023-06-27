@@ -131,9 +131,10 @@ public abstract class BaseObjectEntryManager {
 		}
 
 		ObjectFieldUtil.validateReadOnlyObjectFields(
-			values, objectEntry.getProperties(), ddmExpressionFactory,
+			ddmExpressionFactory, values,
 			objectFieldLocalService.getObjectFields(
-				objectDefinition.getObjectDefinitionId()));
+				objectDefinition.getObjectDefinitionId()),
+			objectEntry.getProperties());
 	}
 
 	@Reference

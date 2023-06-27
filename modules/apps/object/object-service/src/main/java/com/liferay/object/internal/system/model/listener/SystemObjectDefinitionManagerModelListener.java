@@ -364,8 +364,8 @@ public class SystemObjectDefinitionManagerModelListener<T extends BaseModel<T>>
 
 		if (originalModel == null) {
 			ObjectFieldUtil.validateReadOnlyObjectFields(
-				new HashMap<>(), extendedProperties, _ddmExpressionFactory,
-				objectFields);
+				_ddmExpressionFactory, new HashMap<>(), objectFields,
+				extendedProperties);
 
 			ObjectEntryThreadLocal.setSkipReadOnlyObjectFieldsValidation(true);
 
@@ -373,6 +373,7 @@ public class SystemObjectDefinitionManagerModelListener<T extends BaseModel<T>>
 		}
 
 		ObjectFieldUtil.validateReadOnlyObjectFields(
+			_ddmExpressionFactory,
 			HashMapBuilder.putAll(
 				originalModel.getModelAttributes()
 			).putAll(
@@ -381,7 +382,7 @@ public class SystemObjectDefinitionManagerModelListener<T extends BaseModel<T>>
 						objectDefinition,
 						GetterUtil.getLong(model.getPrimaryKeyObj()))
 			).build(),
-			extendedProperties, _ddmExpressionFactory, objectFields);
+			objectFields, extendedProperties);
 
 		ObjectEntryThreadLocal.setSkipReadOnlyObjectFieldsValidation(true);
 	}

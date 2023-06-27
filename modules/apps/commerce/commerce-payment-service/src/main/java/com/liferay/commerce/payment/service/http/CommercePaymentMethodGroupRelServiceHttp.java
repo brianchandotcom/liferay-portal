@@ -144,8 +144,9 @@ public class CommercePaymentMethodGroupRelServiceHttp {
 					HttpPrincipal httpPrincipal, long groupId,
 					java.util.Map<java.util.Locale, String> nameMap,
 					java.util.Map<java.util.Locale, String> descriptionMap,
-					java.io.File imageFile, String engineKey, double priority,
-					boolean active)
+					boolean active, java.io.File imageFile,
+					String paymentIntegrationKey, double priority,
+					String typeSettings)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -155,8 +156,8 @@ public class CommercePaymentMethodGroupRelServiceHttp {
 				_addCommercePaymentMethodGroupRelParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, nameMap, descriptionMap, imageFile,
-				engineKey, priority, active);
+				methodKey, groupId, nameMap, descriptionMap, active, imageFile,
+				paymentIntegrationKey, priority, typeSettings);
 
 			Object returnObj = null;
 
@@ -1032,8 +1033,8 @@ public class CommercePaymentMethodGroupRelServiceHttp {
 		};
 	private static final Class<?>[]
 		_addCommercePaymentMethodGroupRelParameterTypes2 = new Class[] {
-			long.class, java.util.Map.class, java.util.Map.class,
-			java.io.File.class, String.class, double.class, boolean.class
+			long.class, java.util.Map.class, java.util.Map.class, boolean.class,
+			java.io.File.class, String.class, double.class, String.class
 		};
 	private static final Class<?>[]
 		_deleteCommerceAddressRestrictionParameterTypes3 = new Class[] {

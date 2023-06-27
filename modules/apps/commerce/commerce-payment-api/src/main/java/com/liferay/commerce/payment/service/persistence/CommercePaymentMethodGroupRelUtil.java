@@ -383,75 +383,6 @@ public class CommercePaymentMethodGroupRelUtil {
 	}
 
 	/**
-	 * Returns the commerce payment method group rel where groupId = &#63; and engineKey = &#63; or throws a <code>NoSuchPaymentMethodGroupRelException</code> if it could not be found.
-	 *
-	 * @param groupId the group ID
-	 * @param engineKey the engine key
-	 * @return the matching commerce payment method group rel
-	 * @throws NoSuchPaymentMethodGroupRelException if a matching commerce payment method group rel could not be found
-	 */
-	public static CommercePaymentMethodGroupRel findByG_E(
-			long groupId, String engineKey)
-		throws com.liferay.commerce.payment.exception.
-			NoSuchPaymentMethodGroupRelException {
-
-		return getPersistence().findByG_E(groupId, engineKey);
-	}
-
-	/**
-	 * Returns the commerce payment method group rel where groupId = &#63; and engineKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param engineKey the engine key
-	 * @return the matching commerce payment method group rel, or <code>null</code> if a matching commerce payment method group rel could not be found
-	 */
-	public static CommercePaymentMethodGroupRel fetchByG_E(
-		long groupId, String engineKey) {
-
-		return getPersistence().fetchByG_E(groupId, engineKey);
-	}
-
-	/**
-	 * Returns the commerce payment method group rel where groupId = &#63; and engineKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param engineKey the engine key
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching commerce payment method group rel, or <code>null</code> if a matching commerce payment method group rel could not be found
-	 */
-	public static CommercePaymentMethodGroupRel fetchByG_E(
-		long groupId, String engineKey, boolean useFinderCache) {
-
-		return getPersistence().fetchByG_E(groupId, engineKey, useFinderCache);
-	}
-
-	/**
-	 * Removes the commerce payment method group rel where groupId = &#63; and engineKey = &#63; from the database.
-	 *
-	 * @param groupId the group ID
-	 * @param engineKey the engine key
-	 * @return the commerce payment method group rel that was removed
-	 */
-	public static CommercePaymentMethodGroupRel removeByG_E(
-			long groupId, String engineKey)
-		throws com.liferay.commerce.payment.exception.
-			NoSuchPaymentMethodGroupRelException {
-
-		return getPersistence().removeByG_E(groupId, engineKey);
-	}
-
-	/**
-	 * Returns the number of commerce payment method group rels where groupId = &#63; and engineKey = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param engineKey the engine key
-	 * @return the number of matching commerce payment method group rels
-	 */
-	public static int countByG_E(long groupId, String engineKey) {
-		return getPersistence().countByG_E(groupId, engineKey);
-	}
-
-	/**
 	 * Returns all the commerce payment method group rels where groupId = &#63; and active = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -725,6 +656,76 @@ public class CommercePaymentMethodGroupRelUtil {
 	 */
 	public static int filterCountByG_A(long groupId, boolean active) {
 		return getPersistence().filterCountByG_A(groupId, active);
+	}
+
+	/**
+	 * Returns the commerce payment method group rel where groupId = &#63; and paymentIntegrationKey = &#63; or throws a <code>NoSuchPaymentMethodGroupRelException</code> if it could not be found.
+	 *
+	 * @param groupId the group ID
+	 * @param paymentIntegrationKey the payment integration key
+	 * @return the matching commerce payment method group rel
+	 * @throws NoSuchPaymentMethodGroupRelException if a matching commerce payment method group rel could not be found
+	 */
+	public static CommercePaymentMethodGroupRel findByG_P(
+			long groupId, String paymentIntegrationKey)
+		throws com.liferay.commerce.payment.exception.
+			NoSuchPaymentMethodGroupRelException {
+
+		return getPersistence().findByG_P(groupId, paymentIntegrationKey);
+	}
+
+	/**
+	 * Returns the commerce payment method group rel where groupId = &#63; and paymentIntegrationKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param paymentIntegrationKey the payment integration key
+	 * @return the matching commerce payment method group rel, or <code>null</code> if a matching commerce payment method group rel could not be found
+	 */
+	public static CommercePaymentMethodGroupRel fetchByG_P(
+		long groupId, String paymentIntegrationKey) {
+
+		return getPersistence().fetchByG_P(groupId, paymentIntegrationKey);
+	}
+
+	/**
+	 * Returns the commerce payment method group rel where groupId = &#63; and paymentIntegrationKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param paymentIntegrationKey the payment integration key
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching commerce payment method group rel, or <code>null</code> if a matching commerce payment method group rel could not be found
+	 */
+	public static CommercePaymentMethodGroupRel fetchByG_P(
+		long groupId, String paymentIntegrationKey, boolean useFinderCache) {
+
+		return getPersistence().fetchByG_P(
+			groupId, paymentIntegrationKey, useFinderCache);
+	}
+
+	/**
+	 * Removes the commerce payment method group rel where groupId = &#63; and paymentIntegrationKey = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param paymentIntegrationKey the payment integration key
+	 * @return the commerce payment method group rel that was removed
+	 */
+	public static CommercePaymentMethodGroupRel removeByG_P(
+			long groupId, String paymentIntegrationKey)
+		throws com.liferay.commerce.payment.exception.
+			NoSuchPaymentMethodGroupRelException {
+
+		return getPersistence().removeByG_P(groupId, paymentIntegrationKey);
+	}
+
+	/**
+	 * Returns the number of commerce payment method group rels where groupId = &#63; and paymentIntegrationKey = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param paymentIntegrationKey the payment integration key
+	 * @return the number of matching commerce payment method group rels
+	 */
+	public static int countByG_P(long groupId, String paymentIntegrationKey) {
+		return getPersistence().countByG_P(groupId, paymentIntegrationKey);
 	}
 
 	/**

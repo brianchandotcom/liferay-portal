@@ -80,7 +80,7 @@ public class CommercePaymentEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -96,18 +96,26 @@ public class CommercePaymentEntryCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", commerceChannelId=");
+		sb.append(commerceChannelId);
 		sb.append(", classNameId=");
 		sb.append(classNameId);
 		sb.append(", classPK=");
 		sb.append(classPK);
 		sb.append(", amount=");
 		sb.append(amount);
+		sb.append(", callbackURL=");
+		sb.append(callbackURL);
 		sb.append(", currencyCode=");
 		sb.append(currencyCode);
-		sb.append(", paymentMethodName=");
-		sb.append(paymentMethodName);
+		sb.append(", paymentIntegrationKey=");
+		sb.append(paymentIntegrationKey);
+		sb.append(", paymentIntegrationType=");
+		sb.append(paymentIntegrationType);
 		sb.append(", paymentStatus=");
 		sb.append(paymentStatus);
+		sb.append(", redirectURL=");
+		sb.append(redirectURL);
 		sb.append(", transactionCode=");
 		sb.append(transactionCode);
 		sb.append("}");
@@ -147,9 +155,17 @@ public class CommercePaymentEntryCacheModel
 			commercePaymentEntryImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		commercePaymentEntryImpl.setCommerceChannelId(commerceChannelId);
 		commercePaymentEntryImpl.setClassNameId(classNameId);
 		commercePaymentEntryImpl.setClassPK(classPK);
 		commercePaymentEntryImpl.setAmount(amount);
+
+		if (callbackURL == null) {
+			commercePaymentEntryImpl.setCallbackURL("");
+		}
+		else {
+			commercePaymentEntryImpl.setCallbackURL(callbackURL);
+		}
 
 		if (currencyCode == null) {
 			commercePaymentEntryImpl.setCurrencyCode("");
@@ -158,14 +174,24 @@ public class CommercePaymentEntryCacheModel
 			commercePaymentEntryImpl.setCurrencyCode(currencyCode);
 		}
 
-		if (paymentMethodName == null) {
-			commercePaymentEntryImpl.setPaymentMethodName("");
+		if (paymentIntegrationKey == null) {
+			commercePaymentEntryImpl.setPaymentIntegrationKey("");
 		}
 		else {
-			commercePaymentEntryImpl.setPaymentMethodName(paymentMethodName);
+			commercePaymentEntryImpl.setPaymentIntegrationKey(
+				paymentIntegrationKey);
 		}
 
+		commercePaymentEntryImpl.setPaymentIntegrationType(
+			paymentIntegrationType);
 		commercePaymentEntryImpl.setPaymentStatus(paymentStatus);
+
+		if (redirectURL == null) {
+			commercePaymentEntryImpl.setRedirectURL("");
+		}
+		else {
+			commercePaymentEntryImpl.setRedirectURL(redirectURL);
+		}
 
 		if (transactionCode == null) {
 			commercePaymentEntryImpl.setTransactionCode("");
@@ -194,14 +220,20 @@ public class CommercePaymentEntryCacheModel
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 
+		commerceChannelId = objectInput.readLong();
+
 		classNameId = objectInput.readLong();
 
 		classPK = objectInput.readLong();
 		amount = (BigDecimal)objectInput.readObject();
+		callbackURL = (String)objectInput.readObject();
 		currencyCode = objectInput.readUTF();
-		paymentMethodName = objectInput.readUTF();
+		paymentIntegrationKey = objectInput.readUTF();
+
+		paymentIntegrationType = objectInput.readInt();
 
 		paymentStatus = objectInput.readInt();
+		redirectURL = (String)objectInput.readObject();
 		transactionCode = objectInput.readUTF();
 	}
 
@@ -225,10 +257,19 @@ public class CommercePaymentEntryCacheModel
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
+		objectOutput.writeLong(commerceChannelId);
+
 		objectOutput.writeLong(classNameId);
 
 		objectOutput.writeLong(classPK);
 		objectOutput.writeObject(amount);
+
+		if (callbackURL == null) {
+			objectOutput.writeObject("");
+		}
+		else {
+			objectOutput.writeObject(callbackURL);
+		}
 
 		if (currencyCode == null) {
 			objectOutput.writeUTF("");
@@ -237,14 +278,23 @@ public class CommercePaymentEntryCacheModel
 			objectOutput.writeUTF(currencyCode);
 		}
 
-		if (paymentMethodName == null) {
+		if (paymentIntegrationKey == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
-			objectOutput.writeUTF(paymentMethodName);
+			objectOutput.writeUTF(paymentIntegrationKey);
 		}
 
+		objectOutput.writeInt(paymentIntegrationType);
+
 		objectOutput.writeInt(paymentStatus);
+
+		if (redirectURL == null) {
+			objectOutput.writeObject("");
+		}
+		else {
+			objectOutput.writeObject(redirectURL);
+		}
 
 		if (transactionCode == null) {
 			objectOutput.writeUTF("");
@@ -261,12 +311,16 @@ public class CommercePaymentEntryCacheModel
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public long commerceChannelId;
 	public long classNameId;
 	public long classPK;
 	public BigDecimal amount;
+	public String callbackURL;
 	public String currencyCode;
-	public String paymentMethodName;
+	public String paymentIntegrationKey;
+	public int paymentIntegrationType;
 	public int paymentStatus;
+	public String redirectURL;
 	public String transactionCode;
 
 }

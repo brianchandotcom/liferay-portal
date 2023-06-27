@@ -66,14 +66,14 @@ public class CommercePaymentMethodGroupRelServiceUtil {
 	public static CommercePaymentMethodGroupRel
 			addCommercePaymentMethodGroupRel(
 				long groupId, Map<java.util.Locale, String> nameMap,
-				Map<java.util.Locale, String> descriptionMap,
-				java.io.File imageFile, String engineKey, double priority,
-				boolean active)
+				Map<java.util.Locale, String> descriptionMap, boolean active,
+				java.io.File imageFile, String paymentIntegrationKey,
+				double priority, String typeSettings)
 		throws PortalException {
 
 		return getService().addCommercePaymentMethodGroupRel(
-			groupId, nameMap, descriptionMap, imageFile, engineKey, priority,
-			active);
+			groupId, nameMap, descriptionMap, active, imageFile,
+			paymentIntegrationKey, priority, typeSettings);
 	}
 
 	public static void deleteCommerceAddressRestriction(

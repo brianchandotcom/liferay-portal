@@ -63,13 +63,13 @@ public class CommercePaymentEntryLocalServiceWrapper
 			addCommercePaymentEntry(
 				long userId, long classNameId, long classPK,
 				java.math.BigDecimal amount, String currencyCode,
-				String paymentMethodName, String transactionCode,
+				String paymentIntegrationKey, String transactionCode,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commercePaymentEntryLocalService.addCommercePaymentEntry(
 			userId, classNameId, classPK, amount, currencyCode,
-			paymentMethodName, transactionCode, serviceContext);
+			paymentIntegrationKey, transactionCode, serviceContext);
 	}
 
 	/**

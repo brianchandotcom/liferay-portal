@@ -99,8 +99,8 @@ public interface CommercePaymentMethodGroupRelLocalService
 
 	public CommercePaymentMethodGroupRel addCommercePaymentMethodGroupRel(
 			long userId, long groupId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, File imageFile,
-			String engineKey, double priority, boolean active)
+			Map<Locale, String> descriptionMap, boolean active, File imageFile,
+			String paymentIntegrationKey, double priority, String typeSettings)
 		throws PortalException;
 
 	/**
@@ -244,7 +244,7 @@ public interface CommercePaymentMethodGroupRelLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommercePaymentMethodGroupRel fetchCommercePaymentMethodGroupRel(
-		long groupId, String engineKey);
+		long groupId, String paymentIntegrationKey);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -272,7 +272,7 @@ public interface CommercePaymentMethodGroupRelLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommercePaymentMethodGroupRel getCommercePaymentMethodGroupRel(
-			long groupId, String engineKey)
+			long groupId, String paymentIntegrationKey)
 		throws NoSuchPaymentMethodGroupRelException;
 
 	/**

@@ -191,6 +191,20 @@ public interface CommercePaymentEntryModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+	 * Returns the commerce channel ID of this commerce payment entry.
+	 *
+	 * @return the commerce channel ID of this commerce payment entry
+	 */
+	public long getCommerceChannelId();
+
+	/**
+	 * Sets the commerce channel ID of this commerce payment entry.
+	 *
+	 * @param commerceChannelId the commerce channel ID of this commerce payment entry
+	 */
+	public void setCommerceChannelId(long commerceChannelId);
+
+	/**
 	 * Returns the fully qualified class name of this commerce payment entry.
 	 *
 	 * @return the fully qualified class name of this commerce payment entry
@@ -247,6 +261,21 @@ public interface CommercePaymentEntryModel
 	public void setAmount(BigDecimal amount);
 
 	/**
+	 * Returns the callback url of this commerce payment entry.
+	 *
+	 * @return the callback url of this commerce payment entry
+	 */
+	@AutoEscape
+	public String getCallbackURL();
+
+	/**
+	 * Sets the callback url of this commerce payment entry.
+	 *
+	 * @param callbackURL the callback url of this commerce payment entry
+	 */
+	public void setCallbackURL(String callbackURL);
+
+	/**
 	 * Returns the currency code of this commerce payment entry.
 	 *
 	 * @return the currency code of this commerce payment entry
@@ -262,19 +291,33 @@ public interface CommercePaymentEntryModel
 	public void setCurrencyCode(String currencyCode);
 
 	/**
-	 * Returns the payment method name of this commerce payment entry.
+	 * Returns the payment integration key of this commerce payment entry.
 	 *
-	 * @return the payment method name of this commerce payment entry
+	 * @return the payment integration key of this commerce payment entry
 	 */
 	@AutoEscape
-	public String getPaymentMethodName();
+	public String getPaymentIntegrationKey();
 
 	/**
-	 * Sets the payment method name of this commerce payment entry.
+	 * Sets the payment integration key of this commerce payment entry.
 	 *
-	 * @param paymentMethodName the payment method name of this commerce payment entry
+	 * @param paymentIntegrationKey the payment integration key of this commerce payment entry
 	 */
-	public void setPaymentMethodName(String paymentMethodName);
+	public void setPaymentIntegrationKey(String paymentIntegrationKey);
+
+	/**
+	 * Returns the payment integration type of this commerce payment entry.
+	 *
+	 * @return the payment integration type of this commerce payment entry
+	 */
+	public int getPaymentIntegrationType();
+
+	/**
+	 * Sets the payment integration type of this commerce payment entry.
+	 *
+	 * @param paymentIntegrationType the payment integration type of this commerce payment entry
+	 */
+	public void setPaymentIntegrationType(int paymentIntegrationType);
 
 	/**
 	 * Returns the payment status of this commerce payment entry.
@@ -289,6 +332,21 @@ public interface CommercePaymentEntryModel
 	 * @param paymentStatus the payment status of this commerce payment entry
 	 */
 	public void setPaymentStatus(int paymentStatus);
+
+	/**
+	 * Returns the redirect url of this commerce payment entry.
+	 *
+	 * @return the redirect url of this commerce payment entry
+	 */
+	@AutoEscape
+	public String getRedirectURL();
+
+	/**
+	 * Sets the redirect url of this commerce payment entry.
+	 *
+	 * @param redirectURL the redirect url of this commerce payment entry
+	 */
+	public void setRedirectURL(String redirectURL);
 
 	/**
 	 * Returns the transaction code of this commerce payment entry.

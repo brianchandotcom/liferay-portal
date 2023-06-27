@@ -69,6 +69,28 @@ definition {
 
 	}
 
+	@description = "This is a use case for LPS-187661. Verify the admin user can be configured to a non liferay domain via setup wizard."
+	@priority = 5
+	test ConfigureNonLiferayDomain {
+		property database.types = "mysql";
+		property test.assert.warning.exceptions = "true";
+		property test.liferay.virtual.instance = "false";
+
+		SetupWizard.configurePG(
+			administratorEmail = "test@test.com",
+			administratorFirstName = "Test",
+			administratorLastName = "Test",
+			databasePassword = PropsUtil.get("database.mysql.password"),
+			databaseType = "MySQL",
+			databaseUserName = PropsUtil.get("database.mysql.username"),
+			jdbcDriverClassName = PropsUtil.get("database.mysql.driver"),
+			jdbcURL = PropsUtil.get("database.mysql.url"));
+
+		Smoke.viewWelcomeContentPage();
+
+		Smoke.runSmoke();
+	}
+
 	@priority = 4
 	test HypersonicToMySQL {
 		property database.types = "mysql";

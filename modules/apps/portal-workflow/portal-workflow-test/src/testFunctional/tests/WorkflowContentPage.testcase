@@ -50,8 +50,6 @@ definition {
 			panel = "Control Panel",
 			portlet = "Sites");
 
-		Site.addBlankCP(siteName = "Site Test");
-
 		HeadlessSite.addSite(siteName = "Site Test");
 
 		JSONUser.addUser(
@@ -193,8 +191,6 @@ definition {
 			category = "Sites",
 			panel = "Control Panel",
 			portlet = "Sites");
-
-		Site.addBlankCP(siteName = "Site Test");
 
 		HeadlessSite.addSite(siteName = "Site Test");
 

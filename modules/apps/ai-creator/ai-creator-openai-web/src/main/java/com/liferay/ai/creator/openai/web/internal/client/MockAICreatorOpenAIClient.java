@@ -38,11 +38,13 @@ public class MockAICreatorOpenAIClient implements AICreatorOpenAIClient {
 	public String getCompletion(
 		String apiKey, String content, Locale locale, String tone, int words) {
 
-		if (Objects.equals(apiKey, "VALID_API_KEY")) {
+		if (Objects.equals(apiKey, "VALID_API_KEY") &&
+			Objects.equals(content, "USER_CONTENT")) {
+
 			return "OPENAI_API_COMPLETION_RESPONSE_CONTENT";
 		}
 
-		throw _getAICreatorOpenAIClientException(apiKey);
+		throw _getAICreatorOpenAIClientException(content);
 	}
 
 	@Override
@@ -55,21 +57,20 @@ public class MockAICreatorOpenAIClient implements AICreatorOpenAIClient {
 	}
 
 	private AICreatorOpenAIClientException _getAICreatorOpenAIClientException(
-		String apiKey) {
+		String key) {
 
-		if (Objects.equals(apiKey, "OPENAI_API_INVALID_API_KEY")) {
+		if (Objects.equals(key, "OPENAI_API_INVALID_API_KEY")) {
 			return new AICreatorOpenAIClientException(
 				"invalid_api_key", "invalid_api_key_message",
 				HttpURLConnection.HTTP_OK);
 		}
 
-		if (Objects.equals(apiKey, "OPENAI_API_IOEXCEPTION")) {
+		if (Objects.equals(key, "OPENAI_API_IOEXCEPTION")) {
 			return new AICreatorOpenAIClientException(new IOException());
 		}
 
 		int responseCode = GetterUtil.getInteger(
-			StringUtils.substringBetween(
-				apiKey, "OPENAI_API_", "_RESPONSE_CODE"));
+			StringUtils.substringBetween(key, "OPENAI_API_", "_RESPONSE_CODE"));
 
 		if (responseCode > 0) {
 			return new AICreatorOpenAIClientException(responseCode);
@@ -77,8 +78,7 @@ public class MockAICreatorOpenAIClient implements AICreatorOpenAIClient {
 
 		return new AICreatorOpenAIClientException(
 			new UnsupportedOperationException(
-				"Invalid API Key to use MockAICreatorOpenAIClient, API Key: " +
-					apiKey));
+				"Invalid Key to use MockAICreatorOpenAIClient, Key: " + key));
 	}
 
 }

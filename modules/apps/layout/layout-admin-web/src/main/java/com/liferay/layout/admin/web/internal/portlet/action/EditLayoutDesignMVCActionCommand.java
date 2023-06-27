@@ -188,7 +188,7 @@ public class EditLayoutDesignMVCActionCommand extends BaseMVCActionCommand {
 				layout.isDraftLayout()) {
 
 				layoutTypeSettingsUnicodeProperties.put(
-					"designConfigurationModified", StringPool.TRUE);
+					"designConfigurationModified", Boolean.TRUE.toString());
 			}
 
 			layout = _layoutService.updateLayout(

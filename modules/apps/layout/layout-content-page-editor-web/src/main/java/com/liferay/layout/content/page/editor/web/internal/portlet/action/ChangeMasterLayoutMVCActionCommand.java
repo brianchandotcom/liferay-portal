@@ -89,7 +89,7 @@ public class ChangeMasterLayoutMVCActionCommand
 				layout.getTypeSettingsProperties();
 
 			layoutTypeSettingsUnicodeProperties.put(
-				"designConfigurationModified", StringPool.TRUE);
+				"designConfigurationModified", Boolean.TRUE.toString());
 
 			updatedLayout = _layoutLocalService.updateLayout(
 				layout.getGroupId(), layout.isPrivateLayout(),

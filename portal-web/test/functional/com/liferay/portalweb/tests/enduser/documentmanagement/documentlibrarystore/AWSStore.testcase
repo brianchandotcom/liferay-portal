@@ -204,6 +204,7 @@ definition {
 		var script = '''
 			import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 			import com.liferay.document.library.kernel.store.DLStoreUtil;
+			import com.liferay.petra.string.StringPool;
  
 			List fileEntries = DLFileEntryLocalServiceUtil.getFileEntries(0,1);
  
@@ -212,7 +213,7 @@ definition {
 					InputStream is = null;
 
 					try {
-						is = DLStoreUtil.getFileAsStream(fileEntry.getCompanyId(), fileEntry.getRepositoryId(), fileEntry.getName())
+						is = DLStoreUtil.getFileAsStream(fileEntry.getCompanyId(), fileEntry.getRepositoryId(), fileEntry.getName(), StringPool.BLANK)
 					} 
 					catch (Exception e) {
 						e.printStackTrace();

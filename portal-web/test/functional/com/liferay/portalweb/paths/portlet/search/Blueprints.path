@@ -182,7 +182,7 @@
 </tr>
 <tr>
 	<td>BLUEPRINTS_ASSET_CATEGORY_FIELD_AUTOCOMPLETE_DROPDOWN_ITEM</td>
-	<td>//div[contains(@class,'autocomplete-dropdown-menu')]//button[contains(.,'${key_assetCategory}')]</td>
+	<td>//div[contains(@class,'dropdown-menu')]//button[contains(.,'${key_assetCategory}')]</td>
 	<td></td>
 </tr>
 <tr>

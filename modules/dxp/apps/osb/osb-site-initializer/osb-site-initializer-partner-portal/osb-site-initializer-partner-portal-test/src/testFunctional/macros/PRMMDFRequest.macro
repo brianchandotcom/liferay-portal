@@ -401,10 +401,39 @@ definition {
 			locator1 = "PRMMDFRequest#SELECT",
 			value1 = ${tactic});
 
-		Type(
-			key_fieldName = "activities[${activityIndex}].activityDescription.marketingActivity",
-			locator1 = "PRMMDFRequest#TEXT_FIELD",
-			value1 = ${activityDescription});
+		if ((${typeOfActivity} == "Miscellaneous Marketing") && (${tactic} == "Other")) {
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.marketingActivity",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = ${activityDescription});
+
+			Click.clickAtNotVisible(
+				key_buttonText = ${leadList},
+				key_fieldName = "activities[${activityIndex}].activityDescription.leadGenerated",
+				locator1 = "PRMMDFRequest#INPUT_BUTTON");
+		}
+
+		if ((${typeOfActivity} == "Digital Marketing") && (${tactic} == "Digital Advertising/Banner Ad")) {
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.overallMessageContentCTA",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "Overall Message");
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.specificSites",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "Specific Site");
+
+			Click.clickAtNotVisible(
+				key_buttonText = "No",
+				key_fieldName = "activities[${activityIndex}].activityDescription.assetsLiferayRequired",
+				locator1 = "PRMMDFRequest#INPUT_BUTTON");
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.howLiferayBrandUsed",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "Liferay Brand");
+		}
 
 		Click.clickAtNotVisible(
 			key_buttonText = ${leadList},
@@ -711,9 +740,11 @@ definition {
 
 	@summary = "Verify the fills done by the user on the Campaign Information"
 	macro viewMDFActivityDetails {
-		Click(
-			key_textButton = ${activityName},
-			locator1 = "PRMMDFRequest#TEXT_BUTTON");
+		if (IsElementPresent(locator1 = "PRMMDFRequest#ACTIVITY_PANEL")) {
+			Click(
+				key_textButton = ${activityName},
+				locator1 = "PRMMDFRequest#TEXT_BUTTON");
+		}
 
 		if (isSet(activityName)) {
 			AssertElementPresent(
@@ -770,6 +801,13 @@ definition {
 			AssertElementPresent(
 				key_fieldName = "Is a lead list an outcome of this activity?",
 				key_nameValue = ${leadList},
+				locator1 = "PRMMDFRequest#DETAIL_FIELD");
+		}
+
+		if (isSet(specificFieldNameList)) {
+			AssertElementPresent(
+				key_fieldName = ${specificFieldName},
+				key_nameValue = ${fieldValue},
 				locator1 = "PRMMDFRequest#DETAIL_FIELD");
 		}
 	}

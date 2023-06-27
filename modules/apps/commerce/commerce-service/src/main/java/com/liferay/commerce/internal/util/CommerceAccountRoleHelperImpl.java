@@ -20,6 +20,7 @@ import com.liferay.account.constants.AccountRoleConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.AccountRoleLocalService;
+import com.liferay.commerce.constants.CommerceActionKeys;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.notification.constants.CommerceNotificationActionKeys;
 import com.liferay.commerce.price.list.constants.CommercePriceListActionKeys;
@@ -239,6 +240,20 @@ public class CommerceAccountRoleHelperImpl
 						ADD_COMMERCE_NOTIFICATION_TEMPLATE
 				});
 			companyResourceActionIds.put(
+				"com.liferay.commerce.model.CommerceOrderType",
+				new String[] {ActionKeys.VIEW});
+			companyResourceActionIds.put(
+				"com.liferay.commerce.order",
+				new String[] {
+					"MANAGE_COMMERCE_ORDER_DELIVERY_TERMS",
+					"MANAGE_COMMERCE_ORDER_NOTES",
+					"MANAGE_COMMERCE_ORDER_PAYMENT_METHODS",
+					"MANAGE_COMMERCE_ORDER_PAYMENT_TERMS",
+					"MANAGE_COMMERCE_ORDER_PRICES",
+					"MANAGE_COMMERCE_ORDER_RESTRICTED_NOTES",
+					"MANAGE_COMMERCE_ORDER_SHIPPING_OPTIONS"
+				});
+			companyResourceActionIds.put(
 				"com.liferay.commerce.price.list",
 				new String[] {
 					CommercePriceListActionKeys.ADD_COMMERCE_PRICE_LIST
@@ -258,9 +273,13 @@ public class CommerceAccountRoleHelperImpl
 					CPActionKeys.ADD_COMMERCE_PRODUCT_SPECIFICATION_OPTION,
 					CPActionKeys.MANAGE_COMMERCE_PRODUCT_ATTACHMENTS,
 					CPActionKeys.MANAGE_COMMERCE_PRODUCT_IMAGES,
+					CPActionKeys.MANAGE_COMMERCE_PRODUCT_MEASUREMENT_UNITS,
 					CPActionKeys.VIEW_COMMERCE_PRODUCT_ATTACHMENTS,
 					CPActionKeys.VIEW_COMMERCE_PRODUCT_IMAGES
 				});
+			companyResourceActionIds.put(
+				"com.liferay.commerce.shipment",
+				new String[] {CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS});
 			companyResourceActionIds.put(
 				"com.liferay.commerce.tax",
 				new String[] {

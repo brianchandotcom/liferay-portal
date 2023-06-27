@@ -133,6 +133,11 @@ public interface CommerceInventoryWarehouseItemService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceInventoryWarehouseItemsCount(
+			long companyId, long groupId, String sku)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceInventoryWarehouseItemsCount(
 			long companyId, String sku)
 		throws PortalException;
 

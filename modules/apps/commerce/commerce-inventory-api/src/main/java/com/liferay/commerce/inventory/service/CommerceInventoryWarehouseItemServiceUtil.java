@@ -174,6 +174,14 @@ public class CommerceInventoryWarehouseItemServiceUtil {
 	}
 
 	public static int getCommerceInventoryWarehouseItemsCount(
+			long companyId, long groupId, String sku)
+		throws PortalException {
+
+		return getService().getCommerceInventoryWarehouseItemsCount(
+			companyId, groupId, sku);
+	}
+
+	public static int getCommerceInventoryWarehouseItemsCount(
 			long companyId, String sku)
 		throws PortalException {
 

@@ -358,6 +358,10 @@ public interface CommerceInventoryWarehouseItemLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceInventoryWarehouseItemsCount(
+		long companyId, long groupId, String sku);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceInventoryWarehouseItemsCount(
 		long companyId, String sku);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

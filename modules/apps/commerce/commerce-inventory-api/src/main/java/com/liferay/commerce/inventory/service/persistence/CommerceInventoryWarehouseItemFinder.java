@@ -25,6 +25,9 @@ public interface CommerceInventoryWarehouseItemFinder {
 
 	public int countItemsByCompanyId(long companyId, String sku);
 
+	public int countItemsByC_G_S(
+		long companyId, long commerceChannelGroupId, String sku);
+
 	public int countStockQuantityByC_S(long companyId, String sku);
 
 	public int countStockQuantityByC_S(

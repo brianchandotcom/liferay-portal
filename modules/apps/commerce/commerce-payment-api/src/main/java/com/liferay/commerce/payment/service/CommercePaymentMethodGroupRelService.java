@@ -72,8 +72,8 @@ public interface CommercePaymentMethodGroupRelService extends BaseService {
 
 	public CommercePaymentMethodGroupRel addCommercePaymentMethodGroupRel(
 			long groupId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, File imageFile,
-			String engineKey, double priority, boolean active)
+			Map<Locale, String> descriptionMap, boolean active, File imageFile,
+			String paymentIntegrationKey, double priority, String typeSettings)
 		throws PortalException;
 
 	public void deleteCommerceAddressRestriction(

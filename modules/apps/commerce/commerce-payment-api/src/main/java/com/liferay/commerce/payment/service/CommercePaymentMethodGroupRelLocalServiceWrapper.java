@@ -94,14 +94,15 @@ public class CommercePaymentMethodGroupRelLocalServiceWrapper
 				long userId, long groupId,
 				java.util.Map<java.util.Locale, String> nameMap,
 				java.util.Map<java.util.Locale, String> descriptionMap,
-				java.io.File imageFile, String engineKey, double priority,
-				boolean active)
+				boolean active, java.io.File imageFile,
+				String paymentIntegrationKey, double priority,
+				String typeSettings)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commercePaymentMethodGroupRelLocalService.
 			addCommercePaymentMethodGroupRel(
-				userId, groupId, nameMap, descriptionMap, imageFile, engineKey,
-				priority, active);
+				userId, groupId, nameMap, descriptionMap, active, imageFile,
+				paymentIntegrationKey, priority, typeSettings);
 	}
 
 	/**
@@ -322,10 +323,11 @@ public class CommercePaymentMethodGroupRelLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel
-		fetchCommercePaymentMethodGroupRel(long groupId, String engineKey) {
+		fetchCommercePaymentMethodGroupRel(
+			long groupId, String paymentIntegrationKey) {
 
 		return _commercePaymentMethodGroupRelLocalService.
-			fetchCommercePaymentMethodGroupRel(groupId, engineKey);
+			fetchCommercePaymentMethodGroupRel(groupId, paymentIntegrationKey);
 	}
 
 	@Override
@@ -377,12 +379,13 @@ public class CommercePaymentMethodGroupRelLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel
-			getCommercePaymentMethodGroupRel(long groupId, String engineKey)
+			getCommercePaymentMethodGroupRel(
+				long groupId, String paymentIntegrationKey)
 		throws com.liferay.commerce.payment.exception.
 			NoSuchPaymentMethodGroupRelException {
 
 		return _commercePaymentMethodGroupRelLocalService.
-			getCommercePaymentMethodGroupRel(groupId, engineKey);
+			getCommercePaymentMethodGroupRel(groupId, paymentIntegrationKey);
 	}
 
 	/**

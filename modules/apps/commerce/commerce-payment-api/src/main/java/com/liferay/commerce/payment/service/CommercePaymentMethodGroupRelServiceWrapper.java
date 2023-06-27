@@ -69,14 +69,15 @@ public class CommercePaymentMethodGroupRelServiceWrapper
 			addCommercePaymentMethodGroupRel(
 				long groupId, java.util.Map<java.util.Locale, String> nameMap,
 				java.util.Map<java.util.Locale, String> descriptionMap,
-				java.io.File imageFile, String engineKey, double priority,
-				boolean active)
+				boolean active, java.io.File imageFile,
+				String paymentIntegrationKey, double priority,
+				String typeSettings)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commercePaymentMethodGroupRelService.
 			addCommercePaymentMethodGroupRel(
-				groupId, nameMap, descriptionMap, imageFile, engineKey,
-				priority, active);
+				groupId, nameMap, descriptionMap, active, imageFile,
+				paymentIntegrationKey, priority, typeSettings);
 	}
 
 	@Override

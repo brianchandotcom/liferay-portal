@@ -64,13 +64,13 @@ public class CommercePaymentEntryLocalServiceUtil {
 	public static CommercePaymentEntry addCommercePaymentEntry(
 			long userId, long classNameId, long classPK,
 			java.math.BigDecimal amount, String currencyCode,
-			String paymentMethodName, String transactionCode,
+			String paymentIntegrationKey, String transactionCode,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addCommercePaymentEntry(
 			userId, classNameId, classPK, amount, currencyCode,
-			paymentMethodName, transactionCode, serviceContext);
+			paymentIntegrationKey, transactionCode, serviceContext);
 	}
 
 	/**

@@ -84,7 +84,7 @@ public interface CommercePaymentEntryLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public CommercePaymentEntry addCommercePaymentEntry(
 			long userId, long classNameId, long classPK, BigDecimal amount,
-			String currencyCode, String paymentMethodName,
+			String currencyCode, String paymentIntegrationKey,
 			String transactionCode, ServiceContext serviceContext)
 		throws PortalException;
 

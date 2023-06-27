@@ -79,17 +79,17 @@ public class CommercePaymentMethodGroupRelServiceImpl
 
 	@Override
 	public CommercePaymentMethodGroupRel addCommercePaymentMethodGroupRel(
-		long groupId, Map<Locale, String> nameMap,
-		Map<Locale, String> descriptionMap, boolean active, File imageFile,
-		String paymentIntegrationKey, double priority, String typeSettings)
+			long groupId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, boolean active, File imageFile,
+			String paymentIntegrationKey, double priority, String typeSettings)
 		throws PortalException {
 
 		_checkCommerceChannel(groupId);
 
 		return commercePaymentMethodGroupRelLocalService.
 			addCommercePaymentMethodGroupRel(
-				getUserId(), groupId, nameMap, descriptionMap, active, imageFile,
-				paymentIntegrationKey, priority, typeSettings);
+				getUserId(), groupId, nameMap, descriptionMap, active,
+				imageFile, paymentIntegrationKey, priority, typeSettings);
 	}
 
 	@Override

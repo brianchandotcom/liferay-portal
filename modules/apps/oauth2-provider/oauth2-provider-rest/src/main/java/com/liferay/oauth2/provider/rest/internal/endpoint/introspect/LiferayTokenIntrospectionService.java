@@ -231,6 +231,8 @@ public class LiferayTokenIntrospectionService extends AbstractTokenService {
 				oAuth2Application.getClientId());
 
 		if (!bearerTokenProvider.isValid(bearerAccessToken)) {
+			_liferayOAuthDataProvider.doRevokeAccessToken(serverAccessToken);
+
 			return Response.ok(
 				new TokenIntrospection(false)
 			).build();
@@ -267,6 +269,8 @@ public class LiferayTokenIntrospectionService extends AbstractTokenService {
 				oAuth2Application.getClientId());
 
 		if (!bearerTokenProvider.isValid(bearerRefreshToken)) {
+			_liferayOAuthDataProvider.doRevokeRefreshToken(refreshToken);
+
 			return Response.ok(
 				new TokenIntrospection(false)
 			).build();

@@ -112,7 +112,12 @@ public class VerticalNavTag extends BaseContainerTag {
 
 	@Override
 	protected Map<String, Object> prepareProps(Map<String, Object> props) {
-		props.put("active", getActive());
+		String active = getActive();
+
+		if (active != null) {
+			props.put("active", getActive());
+		}
+
 		props.put("decorated", _decorated);
 		props.put("defaultExpandedKeys", getDefaultExpandedKeys());
 		props.put("large", _large);
@@ -166,7 +171,11 @@ public class VerticalNavTag extends BaseContainerTag {
 			}
 
 			if (expanded) {
-				defaultExpandedKeys.add((String)verticalNavItem.get("id"));
+				String itemId = (String)verticalNavItem.get("id");
+
+				if (itemId != null) {
+					defaultExpandedKeys.add(itemId);
+				}
 			}
 
 			if (items != null) {

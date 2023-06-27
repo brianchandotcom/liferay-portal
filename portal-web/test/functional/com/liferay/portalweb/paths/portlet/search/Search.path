@@ -146,7 +146,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>REINDEX_IN_PROGRESS_IDICATOR</td>
+	<td>REINDEX_IN_PROGRESS_INDICATOR</td>
 	<td>//div[contains(.,'The portal is currently reindexing.')]</td>
 	<td></td>
 </tr>

@@ -3014,7 +3014,7 @@ definition {
 		task ("Click on USER field type and asser if its properties are displayed.") {
 			LexiconEntry.gotoAdd();
 
-			AssertElementPresent(
+			AssertVisible(
 				key_propertyOption = "Date of Birth",
 				locator1 = "Segmentation#ADD_FIELD_TYPE");
 		}
@@ -3022,7 +3022,7 @@ definition {
 		task ("Click on ORGANIZATION field type and asser if its properties are displayed.") {
 			Segmentation.gotoSidebar(fieldType = "Organization");
 
-			AssertElementPresent(
+			AssertVisible(
 				key_propertyOption = "Country",
 				locator1 = "Segmentation#ADD_FIELD_TYPE");
 		}
@@ -3030,7 +3030,7 @@ definition {
 		task ("Click on SESSION field type and asser if its properties are displayed.") {
 			Segmentation.gotoSidebar(fieldType = "Session");
 
-			AssertElementPresent(
+			AssertVisible(
 				key_propertyOption = "Browser",
 				locator1 = "Segmentation#ADD_FIELD_TYPE");
 		}
@@ -3038,7 +3038,7 @@ definition {
 		task ("Click on SEGMENTS field type and asser if its properties are displayed.") {
 			Segmentation.gotoSidebar(fieldType = "Segments");
 
-			AssertElementPresent(
+			AssertVisible(
 				key_propertyOption = "Segment",
 				locator1 = "Segmentation#ADD_FIELD_TYPE");
 		}

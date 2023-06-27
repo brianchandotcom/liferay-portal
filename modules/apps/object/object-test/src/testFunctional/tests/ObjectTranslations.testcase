@@ -21,6 +21,57 @@ definition {
 		}
 	}
 
+	@description = "LPS-146755 - Verify a translation cannot be added to a custom object entry if the field isn't translatable"
+	@priority = 3
+	test CannotAddTranslationToNonTranslatableField {
+		task ("Given a custom object with translations enabled") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 186674",
+				objectName = "CustomObject186674",
+				pluralLabelName = "Custom Objects 186674");
+
+			JSONObject.updateObject(
+				configKey = "enableLocalization",
+				configValue = "true",
+				objectName = "CustomObject186674");
+		}
+
+		task ("And given a long text field that isn't translatable") {
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "LongText",
+				fieldLabelName = "Custom Field",
+				fieldName = "customField",
+				fieldType = "Clob",
+				isRequired = "false",
+				objectName = "CustomObject186674");
+
+			JSONObject.updateObjectField(
+				configKey = "localized",
+				configValue = "false",
+				fieldName = "customField",
+				objectName = "CustomObject186674");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject186674");
+		}
+
+		task ("When the user adds a custom object entry") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customField",
+				objectName = "CustomObject186674",
+				value = "By building a vibrant business, making technology useful, and investing in communities, we make it possible for people to reach their full potential to serve others.");
+		}
+
+		task ("Then there is no option to add a translation for the entry") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject186674");
+
+			ObjectPortlet.viewEntryDetails(entry = "By building a vibrant business, making technology useful, and investing in communities, we make it possible for people to reach their full potential to serve others.");
+
+			AssertElementNotPresent(
+				key_locale = "en-us",
+				locator1 = "Calendar#VIEW_SELECTED_NAME_LANGUAGE");
+		}
+	}
+
 	@description = "LPS-183797 - Verify after changing the default language, the object definition cannot be saved without filling out the required fields"
 	@priority = 4
 	test CannotSaveObjectWithoutTranslation {

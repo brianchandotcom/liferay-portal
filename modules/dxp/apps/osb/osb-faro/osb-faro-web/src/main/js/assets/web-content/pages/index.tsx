@@ -3,7 +3,7 @@ import BasePage from 'shared/components/base-page';
 import BundleRouter from 'route-middleware/BundleRouter';
 import Filter from '../hocs/Filter';
 import getCN from 'classnames';
-import Loading from 'shared/pages/Loading';
+import Loading from 'shared/components/Loading';
 import React, {lazy, Suspense, useState} from 'react';
 import RouteNotFound from 'shared/components/RouteNotFound';
 import {ENABLE_GLOBAL_FILTER} from 'shared/util/constants';

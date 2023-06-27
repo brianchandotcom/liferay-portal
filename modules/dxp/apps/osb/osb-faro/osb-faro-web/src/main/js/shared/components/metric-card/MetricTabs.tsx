@@ -23,11 +23,7 @@ const MetricTabsRenderer: React.FC<IMetricTabsRendererProps> = ({
 	});
 
 	return (
-		<MetricStateRenderer
-			error={error}
-			loading={loading}
-			loadingHeight={140}
-		>
+		<MetricStateRenderer error={error} loading={loading} spacer>
 			<MetricTabs data={data} />
 		</MetricStateRenderer>
 	);

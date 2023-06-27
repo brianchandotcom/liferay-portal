@@ -3,8 +3,8 @@ import BasePage from 'shared/components/base-page';
 import Card from 'shared/components/Card';
 import ClayButton from '@clayui/button';
 import ClayLink from '@clayui/link';
-import ClayLoadingIndicator from '@clayui/loading-indicator';
 import CrossPageSelect from 'shared/hoc/CrossPageSelect';
+import Loading from 'shared/components/Loading';
 import Nav from 'shared/components/Nav';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
 import React from 'react';
@@ -192,10 +192,7 @@ const KnownIndividuals: React.FC<IKnownIndividualsProps> = ({
 		if (dataSourceLoading || isNil(dataSourceData?.total)) {
 			return (
 				<NoResultsDisplay>
-					<ClayLoadingIndicator
-						className='spinner-overlay spinner-root'
-						key='DATA_SOURCE_SPINNER'
-					/>
+					<Loading key='LOADING' />
 				</NoResultsDisplay>
 			);
 		} else if (dataSourceData?.total === 0) {

@@ -1,9 +1,9 @@
 import * as API from 'shared/api';
 import autobind from 'autobind-decorator';
 import BaseDataSourcePage from './BasePage';
-import ClayLoadingIndicator from '@clayui/loading-indicator';
 import DataTransformationList from 'settings/components/data-transformation-list';
 import ErrorDisplay from 'shared/components/ErrorDisplay';
+import Loading from 'shared/components/Loading';
 import omitDefinedProps from 'shared/util/omitDefinedProps';
 import React from 'react';
 import Sheet from 'shared/components/Sheet';
@@ -117,12 +117,7 @@ export default class BaseFieldMappingView extends React.Component {
 		} = this;
 
 		if (loading) {
-			return (
-				<ClayLoadingIndicator
-					className='spinner-root spinner-spacer'
-					key='LOADING_DISPLAY'
-				/>
-			);
+			return <Loading key='LOADING' />;
 		} else if (error) {
 			return (
 				<ErrorDisplay

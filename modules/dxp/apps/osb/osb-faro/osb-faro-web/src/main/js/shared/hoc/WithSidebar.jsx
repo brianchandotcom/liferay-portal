@@ -51,7 +51,7 @@ export default compose(
 		})
 	),
 	withError(),
-	withLoading({page: true}),
+	withLoading(),
 	withDefaultChannelId,
 	checkValidChannel,
 	WrappedComponent => {

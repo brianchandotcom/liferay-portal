@@ -1,8 +1,8 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import ClayLoadingIndicator from '@clayui/loading-indicator';
 import getCN from 'classnames';
 import Input from './Input';
+import Loading from 'shared/components/Loading';
 import Overlay from './Overlay';
 import Promise from 'metal-promise';
 import React, {useEffect, useImperativeHandle, useRef, useState} from 'react';
@@ -266,10 +266,7 @@ const BaseSelect: React.FC<IBaseSelectProps> = ({
 
 					<Input.Inset position='after'>
 						{loading ? (
-							<ClayLoadingIndicator
-								className='spinner-root'
-								size='sm'
-							/>
+							<Loading />
 						) : (
 							<ClayIcon
 								className='icon-root'

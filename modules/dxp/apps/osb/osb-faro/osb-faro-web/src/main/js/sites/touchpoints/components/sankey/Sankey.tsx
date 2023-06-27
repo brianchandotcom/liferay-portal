@@ -1,6 +1,6 @@
 import DirectAccessEdge from './edges/DirectAccessEdge';
 import EmptyStateEdge from './edges/EmptyStateEdge';
-import Loading from 'shared/pages/Loading';
+import Loading from 'shared/components/Loading';
 import ParentTouchpointEdge from './edges/ParentTouchpointEdge';
 import Paths from './Paths';
 import React, {useEffect, useRef, useState} from 'react';

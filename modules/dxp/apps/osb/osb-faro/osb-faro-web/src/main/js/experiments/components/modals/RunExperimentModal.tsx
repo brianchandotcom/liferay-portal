@@ -2,8 +2,8 @@ import Alert, {AlertTypes} from 'shared/components/Alert';
 import BaseModal from 'experiments/components/modals/BaseModal';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import ClayLoadingIndicator from '@clayui/loading-indicator';
 import getCN from 'classnames';
+import Loading from 'shared/components/Loading';
 import React, {useEffect, useState} from 'react';
 import {EXPERIMENT_ESTIMATED_DAYS_DURATION} from 'experiments/queries/ExperimentQuery';
 import {EXPERIMENT_MUTATION} from 'experiments/queries/ExperimentMutation';
@@ -325,10 +325,7 @@ const RunExperimentModal = ({dxpVariants, experimentId, observer, onClose}) => {
 						)}
 					</div>
 				) : (
-					<ClayLoadingIndicator
-						className='spinner-center spinner-root'
-						size='sm'
-					/>
+					<Loading />
 				)}
 			</div>
 		</BaseModal>

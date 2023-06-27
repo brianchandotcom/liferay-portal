@@ -1,4 +1,4 @@
-import ClayLoadingIndicator from '@clayui/loading-indicator';
+import Loading from 'shared/components/Loading';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
 import React from 'react';
 
@@ -26,9 +26,7 @@ const WrappedSafeComponent: React.FC<IWrappedSafeComponentProps> = ({
 
 	try {
 		if (loading) {
-			return (
-				<ClayLoadingIndicator className='spinner-center spinner-root' />
-			);
+			return <Loading />;
 		}
 
 		if (error) {

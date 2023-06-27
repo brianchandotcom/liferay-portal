@@ -2,8 +2,8 @@ import autobind from 'autobind-decorator';
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
-import ClayLoadingIndicator from '@clayui/loading-indicator';
 import getCN from 'classnames';
+import Loading from 'shared/components/Loading';
 import NoResultsDisplay, {
 	getFormattedTitle
 } from 'shared/components/NoResultsDisplay';
@@ -93,7 +93,7 @@ class SearchableSelect extends React.Component {
 		const {items, loading, selectedItem} = this.props;
 
 		if (loading) {
-			return <ClayLoadingIndicator className='spinner-root' />;
+			return <Loading />;
 		} else if (!items.length) {
 			return <NoResultsDisplay title={getFormattedTitle()} />;
 		} else {

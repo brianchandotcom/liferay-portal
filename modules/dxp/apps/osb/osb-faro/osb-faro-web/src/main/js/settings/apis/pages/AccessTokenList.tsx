@@ -3,9 +3,9 @@ import Alerts, {AlertTypes} from 'shared/components/Alert';
 import BasePage from 'settings/components/BasePage';
 import Card from 'shared/components/Card';
 import ClayButton from '@clayui/button';
-import ClayLoadingIndicator from '@clayui/loading-indicator';
 import CopyButton from 'shared/components/CopyButton';
 import GenerateTokenCard from '../components/GenerateTokenCard';
+import Loading, {Align} from 'shared/components/Loading';
 import moment from 'moment';
 import React, {useState} from 'react';
 import Table from 'shared/components/table';
@@ -254,7 +254,7 @@ const TokenList: React.FC<
 										{Liferay.Language.get('revoke')}
 
 										{loading && (
-											<ClayLoadingIndicator className='ml-2' />
+											<Loading align={Align.Right} />
 										)}
 									</ClayButton>
 								</>
@@ -278,7 +278,7 @@ const ListWithData = compose<any>(
 			...otherParams
 		})
 	),
-	withLoading({page: false}),
+	withLoading(),
 	withError({page: false})
 )(TokenList);
 

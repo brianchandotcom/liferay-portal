@@ -1,7 +1,7 @@
 import ClayButton from '@clayui/button';
-import ClayLoadingIndicator from '@clayui/loading-indicator';
 import Form, {validateInputMessage} from 'shared/components/form';
 import getCN from 'classnames';
+import Loading, {Align} from 'shared/components/Loading';
 import Modal from 'shared/components/modal';
 import React from 'react';
 import {sub} from 'shared/util/lang';
@@ -87,13 +87,7 @@ const DeleteConfirmationModal: React.FC<IDeleteConfirmationModalProps> = ({
 							displayType='warning'
 							type='submit'
 						>
-							{isSubmitting && (
-								<ClayLoadingIndicator
-									className='d-inline-block mr-2'
-									displayType='secondary'
-									size='sm'
-								/>
-							)}
+							{isSubmitting && <Loading align={Align.Left} />}
 
 							{deleteButtonLabel}
 						</ClayButton>

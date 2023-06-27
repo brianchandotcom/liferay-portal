@@ -3,8 +3,8 @@ import autobind from 'autobind-decorator';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
-import ClayLoadingIndicator from '@clayui/loading-indicator';
 import getCN from 'classnames';
+import Loading from 'shared/components/Loading';
 import React from 'react';
 import TextTruncate from 'shared/components/TextTruncate';
 import {autoCancel, hasRequest} from 'shared/util/request-decorator';
@@ -305,9 +305,7 @@ export default class WorkspaceListItem extends React.Component {
 						{this.renderContent()}
 					</Button>
 				)}
-				{loading && (
-					<ClayLoadingIndicator className='spinner-overlay spinner-root' />
-				)}
+				{loading && <Loading />}
 			</li>
 		);
 	}

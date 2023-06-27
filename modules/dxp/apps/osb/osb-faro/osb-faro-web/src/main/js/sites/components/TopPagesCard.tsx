@@ -215,7 +215,7 @@ const TopPagesCardWithStatesRenderer: React.FC<ITopPagesCardWithStatesRendererPr
 	loading
 }) => (
 	<StatesRenderer empty={empty} error={!!error} loading={loading}>
-		<StatesRenderer.Loading displayCard />
+		<StatesRenderer.Loading />
 		<StatesRenderer.Empty
 			description={
 				<>

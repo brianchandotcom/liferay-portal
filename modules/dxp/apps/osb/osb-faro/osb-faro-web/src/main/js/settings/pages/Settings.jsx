@@ -3,7 +3,7 @@ import checkProjectState from 'shared/hoc/CheckProjectState';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import getCN from 'classnames';
-import Loading from 'shared/pages/Loading';
+import Loading from 'shared/components/Loading';
 import React, {Fragment, lazy, Suspense} from 'react';
 import RouteNotFound from 'shared/components/RouteNotFound';
 import {compose} from 'shared/hoc';

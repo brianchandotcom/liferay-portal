@@ -35,11 +35,6 @@ $c: '.analytics-geomap';
 		}
 	}
 
-	#{$c}-loading {
-		height: 232px;
-		position: relative;
-	}
-
 	.bb-tooltip-container:after {
 		@include tooltip-arrow-bottom;
 	}

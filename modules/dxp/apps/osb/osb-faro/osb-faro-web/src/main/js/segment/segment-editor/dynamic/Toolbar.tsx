@@ -3,10 +3,10 @@ import autobind from 'autobind-decorator';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
-import ClayLoadingIndicator from '@clayui/loading-indicator';
 import debounce from 'shared/util/debounce-decorator';
 import Form, {validateRequired} from 'shared/components/form';
 import InfoPopover from 'shared/components/InfoPopover';
+import Loading from 'shared/components/Loading';
 import React from 'react';
 import TitleEditor from 'shared/components/TitleEditor';
 import {autoCancel, hasRequest} from 'shared/util/request-decorator';
@@ -153,11 +153,7 @@ export class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
 		} = this;
 
 		const totalMembersCount = countLoading ? (
-			<ClayLoadingIndicator
-				className='spinner-root'
-				key='MEMBERS_COUNT_SPINNER'
-				size='sm'
-			/>
+			<Loading key='LOADING' />
 		) : (
 			membersCount.toLocaleString()
 		);

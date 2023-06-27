@@ -1,6 +1,6 @@
 import * as API from 'shared/api';
 import ClayButton from '@clayui/button';
-import ClayLoadingIndicator from '@clayui/loading-indicator';
+import Loading, {Align} from 'shared/components/Loading';
 import Modal from 'shared/components/modal';
 import React, {useState} from 'react';
 import Table from 'shared/components/table';
@@ -211,13 +211,7 @@ const AssignSegments: React.FC<IAssignSegmentsProps> = ({groupId, onClose}) => {
 					displayType='primary'
 					onClick={handleSubmit}
 				>
-					{isSubmitting && (
-						<ClayLoadingIndicator
-							className='d-inline-block mr-2'
-							displayType='secondary'
-							size='sm'
-						/>
-					)}
+					{isSubmitting && <Loading align={Align.Left} />}
 
 					{isSubmitting
 						? Liferay.Language.get('saving')

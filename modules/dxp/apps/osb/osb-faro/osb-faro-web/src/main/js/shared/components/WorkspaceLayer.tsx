@@ -1,5 +1,5 @@
 import BundleRouter from 'route-middleware/BundleRouter';
-import Loading from 'shared/pages/Loading';
+import Loading from 'shared/components/Loading';
 import React, {lazy, Suspense, useEffect} from 'react';
 import useModalNotifications from 'shared/hooks/useModalNotifications';
 import {close, open} from 'shared/actions/modals';

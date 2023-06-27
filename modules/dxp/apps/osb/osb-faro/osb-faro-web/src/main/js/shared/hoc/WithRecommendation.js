@@ -18,7 +18,7 @@ const withRecommendation = compose(
 		}),
 		props: safeResultToProps(({jobById}) => ({job: jobById}))
 	}),
-	withLoading({page: true}),
+	withLoading(),
 	withError({page: true}),
 	withNull('job', {
 		entityType: Liferay.Language.get('recommendation-model'),

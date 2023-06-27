@@ -1,5 +1,5 @@
 import ErrorPage from '../pages/ErrorPage';
-import Loading from '../pages/Loading';
+import Loading from 'shared/components/Loading';
 import Promise from 'metal-promise';
 import React from 'react';
 import {connect} from 'react-redux';

@@ -1,8 +1,6 @@
-import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ErrorDisplay from 'shared/components/ErrorDisplay';
 import ErrorPage from 'shared/pages/ErrorPage';
-import getCN from 'classnames';
-import LoadingPage from 'shared/pages/Loading';
+import Loading from 'shared/components/Loading';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
 import React from 'react';
 import {compose} from 'redux';
@@ -80,41 +78,12 @@ export const withEmpty = (options = {}) => Component => ({
  * @returns {Function} Returns the Loading or WrappedComponent.
  */
 export const withLoading = (options = {}) => Component => ({
-	className,
-	data,
 	loading,
-	pageDisplay = true,
 	...otherProps
 }) => {
-	const page = get(options, 'page', pageDisplay);
-	const fadeIn = get(options, 'fadeIn');
-	const displayCard = get(options, 'displayCard');
-	const inline = get(options, 'inline');
+	if (loading) return <Loading {...options} />;
 
-	if (loading) {
-		return page ? (
-			<LoadingPage className={className} fadeIn={fadeIn} key='LOADING' />
-		) : displayCard ? (
-			<div
-				className={getCN('loading-root', {
-					'display-card': displayCard,
-					'spinner-inline': inline
-				})}
-			>
-				<ClayLoadingIndicator
-					className={getCN(className, 'spinner-root')}
-				/>
-			</div>
-		) : (
-			<ClayLoadingIndicator
-				className={getCN(className, 'spinner-root', {
-					'spinner-inline': inline
-				})}
-			/>
-		);
-	}
-
-	return <Component className={className} data={data} {...otherProps} />;
+	return <Component {...otherProps} />;
 };
 
 export const withNull = (key, errorProps = {}) => Component => props => {
@@ -147,7 +116,7 @@ export const withNull = (key, errorProps = {}) => Component => props => {
  * HOC for displaying results.
  */
 export const SafeResults = compose(
-	withLoading(),
+	withLoading({spacer: true}),
 	withError()
 )(({children, data}) => children(data));
 

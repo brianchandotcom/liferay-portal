@@ -1,6 +1,6 @@
 import ClayButton from '@clayui/button';
-import ClayLoadingIndicator from '@clayui/loading-indicator';
 import getCN from 'classnames';
+import Loading, {Align} from 'shared/components/Loading';
 import Modal from 'shared/components/modal';
 import ModalInfoBar from 'shared/components/ModalInfoBar';
 import NoResultsDisplay, {
@@ -103,13 +103,7 @@ const SearchableModal: React.FC<ISearchableModalProps> = ({
 							displayType='secondary'
 							onClick={() => onPageChange(page + 1)}
 						>
-							{loading && (
-								<ClayLoadingIndicator
-									className='d-inline-block mr-2'
-									displayType='secondary'
-									size='sm'
-								/>
-							)}
+							{loading && <Loading align={Align.Left} />}
 
 							{Liferay.Language.get('load-more')}
 						</ClayButton>
@@ -117,9 +111,7 @@ const SearchableModal: React.FC<ISearchableModalProps> = ({
 				</div>
 			);
 		} else if (loading) {
-			return (
-				<ClayLoadingIndicator className='spinner-root spinner-spacer' />
-			);
+			return <Loading />;
 		} else if (!data?.total) {
 			return (
 				<NoResultsDisplay

@@ -120,9 +120,7 @@ describe('HOC Util', () => {
 		});
 
 		it('should render with a loading spinner', () => {
-			const WrappedComponent = withLoading({page: false})(
-				jest.fn(() => 'test')
-			);
+			const WrappedComponent = withLoading()(jest.fn(() => 'test'));
 
 			const {container} = render(<WrappedComponent loading />);
 

@@ -216,7 +216,7 @@ const ProfileCard: React.FC<IProfileCardProps> = ({
 
 	return (
 		<WrapSafeResults
-			className='flex-grow-1 loading-root display-card'
+			className='flex-grow-1 loading-root'
 			error={error}
 			errorProps={{
 				className: 'flex-grow-1',

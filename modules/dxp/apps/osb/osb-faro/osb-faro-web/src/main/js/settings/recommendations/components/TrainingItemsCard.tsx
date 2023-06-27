@@ -1,8 +1,8 @@
 import Card from 'shared/components/Card';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import ClayLoadingIndicator from '@clayui/loading-indicator';
 import Constants from 'shared/util/constants';
+import Loading from 'shared/components/Loading';
 import React from 'react';
 import RecommendationPageAssetsQuery from '../queries/RecommendationPageAssetsQuery';
 import RuleItem from './RuleItem';
@@ -79,13 +79,7 @@ const TrainingItemsCard: React.FC<ITrainingItemsCardProps> = ({
 
 	const renderTotalTrainingUrls = () => {
 		if (loading) {
-			return (
-				<ClayLoadingIndicator
-					className='spinner-root'
-					key='LOADING_SPINNER'
-					size='sm'
-				/>
-			);
+			return <Loading key='LOADING' />;
 		}
 
 		return get(data, ['pageAssets', 'total'], 0).toLocaleString();

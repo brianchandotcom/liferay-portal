@@ -107,8 +107,6 @@ export class Activities extends React.Component {
 						onReload: this.handleFetchHistory
 					}}
 					loading={loading}
-					page={false}
-					pageDisplay={false}
 				>
 					<ActivitiesChartTimeline
 						activitiesLabel={Liferay.Language.get(

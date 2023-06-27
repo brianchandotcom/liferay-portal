@@ -44,7 +44,7 @@ const withBaseResults = (withData, configs) => {
 			showFilterAndOrder
 		}),
 		withPaginationBar({defaultDelta}),
-		withLoading({alignCenter: true, displayCard: true, page: false}),
+		withLoading(),
 		withError({page: false}),
 		withEmpty({
 			emptyDescription,

@@ -116,7 +116,7 @@ const AssetCard: React.FC<IAssetCardProps> = ({
 }) => {
 	const AssetComponent = (compose(
 		graphql(itemQuery, getMapper(panel)),
-		withLoading({alignCenter: true, displayCard: true, page: false}),
+		withLoading(),
 		withError(),
 		withEmpty()
 	)(Chart) as unknown) as React.FC<IAssetComponent>;

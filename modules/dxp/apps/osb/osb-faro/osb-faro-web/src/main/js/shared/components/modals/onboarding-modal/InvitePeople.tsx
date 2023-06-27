@@ -1,11 +1,11 @@
 import * as API from 'shared/api';
 import BaseScreen from './BaseScreen';
 import ClayButton from '@clayui/button';
-import ClayLoadingIndicator from '@clayui/loading-indicator';
 import InfoPopover from 'shared/components/InfoPopover';
 import Input from 'shared/components/Input';
 import InputList, {Display} from 'shared/components/InputList';
 import Label from 'shared/components/form/Label';
+import Loading, {Align} from 'shared/components/Loading';
 import Modal from 'shared/components/modal';
 import React, {useState} from 'react';
 import {addAlert} from 'shared/actions/alerts';
@@ -169,13 +169,7 @@ const InvitePeople: React.FC<IInvitePeopleProps> = ({
 							: handleSubmit
 					}
 				>
-					{loading && (
-						<ClayLoadingIndicator
-							className='d-inline-block mr-2'
-							displayType='secondary'
-							size='sm'
-						/>
-					)}
+					{loading && <Loading align={Align.Left} />}
 
 					{sent
 						? dxpConnected

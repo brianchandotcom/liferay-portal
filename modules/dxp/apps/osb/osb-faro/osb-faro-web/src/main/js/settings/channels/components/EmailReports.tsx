@@ -1,8 +1,8 @@
 import * as API from 'shared/api';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import ClayLoadingIndicator from '@clayui/loading-indicator';
 import getCN from 'classnames';
+import Loading, {Align} from 'shared/components/Loading';
 import React, {useEffect, useState} from 'react';
 import {addAlert} from 'shared/actions/alerts';
 import {Alert} from 'shared/types';
@@ -96,11 +96,7 @@ const EmailReports: React.FC<IEmailReportsProps> = ({
 				Liferay.Language.get('email-reports-x'),
 				[
 					!report ? (
-						<ClayLoadingIndicator
-							className='ml-2 spinner-root'
-							key='LOADING'
-							size='sm'
-						/>
+						<Loading align={Align.Left} key='LOADING' />
 					) : report.enabled ? (
 						Liferay.Language.get('enabled')
 					) : (

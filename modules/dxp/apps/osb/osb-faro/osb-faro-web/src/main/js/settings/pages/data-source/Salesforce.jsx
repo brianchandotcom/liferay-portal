@@ -1,5 +1,5 @@
 import BundleRouter from 'route-middleware/BundleRouter';
-import Loading from 'shared/pages/Loading';
+import Loading from 'shared/components/Loading';
 import React, {lazy, Suspense} from 'react';
 import {DataSource} from 'shared/util/records';
 import {PropTypes} from 'prop-types';

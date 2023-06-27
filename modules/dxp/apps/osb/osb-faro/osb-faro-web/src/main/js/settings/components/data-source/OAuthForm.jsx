@@ -1,13 +1,13 @@
 import autobind from 'autobind-decorator';
 import ClayButton from '@clayui/button';
 import ClayLink from '@clayui/link';
-import ClayLoadingIndicator from '@clayui/loading-indicator';
 import Form, {
 	toPromise,
 	validateProtocol,
 	validateRequired
 } from 'shared/components/form';
 import getCN from 'classnames';
+import Loading, {Align} from 'shared/components/Loading';
 import NavigationWarning from 'shared/components/NavigationWarning';
 import React from 'react';
 import Sheet from 'shared/components/Sheet';
@@ -341,13 +341,7 @@ export class OAuthForm extends React.Component {
 						key='SUBMIT'
 						type='submit'
 					>
-						{submitting && (
-							<ClayLoadingIndicator
-								className='d-inline-block mr-2'
-								displayType='secondary'
-								size='sm'
-							/>
-						)}
+						{submitting && <Loading align={Align.Left} />}
 
 						{Liferay.Language.get('authorize-&-save')}
 					</ClayButton>

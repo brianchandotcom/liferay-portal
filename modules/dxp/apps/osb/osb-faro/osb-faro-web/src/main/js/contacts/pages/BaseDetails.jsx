@@ -1,8 +1,8 @@
 import autobind from 'autobind-decorator';
 import Card from 'shared/components/Card';
-import ClayLoadingIndicator from '@clayui/loading-indicator';
 import EntityDetailsList from 'contacts/components/EntityDetailsList';
 import ErrorDisplay from 'shared/components/ErrorDisplay';
+import Loading from 'shared/components/Loading';
 import omitDefinedProps from 'shared/util/omitDefinedProps';
 import React from 'react';
 import {autoCancel, hasRequest} from 'shared/util/request-decorator';
@@ -60,7 +60,7 @@ export class BaseDetails extends React.Component {
 		if (loading) {
 			return (
 				<Card key='LOADING_DISPLAY' pageDisplay>
-					<ClayLoadingIndicator className='flex-grow-1 spinner-root spinner-spacer' />
+					<Loading />
 				</Card>
 			);
 		} else if (error) {

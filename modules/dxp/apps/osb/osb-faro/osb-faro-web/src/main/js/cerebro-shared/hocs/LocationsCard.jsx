@@ -19,7 +19,7 @@ const withLocationsCard = (
 	const LocationsGeoMap = compose(
 		withLocations(),
 		withCountries(),
-		withLoading({alignCenter: true, displayCard: true, page: false}),
+		withLoading(),
 		withError({page: false}),
 		withEmpty({
 			description: (

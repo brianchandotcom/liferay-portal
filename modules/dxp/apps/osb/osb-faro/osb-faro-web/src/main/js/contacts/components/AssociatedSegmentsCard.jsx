@@ -2,11 +2,11 @@ import autobind from 'autobind-decorator';
 import Card from 'shared/components/Card';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
-import ClayLoadingIndicator from '@clayui/loading-indicator';
 import debounce from 'shared/util/debounce-decorator';
 import EntityList from 'shared/components/EntityList';
 import ErrorDisplay from 'shared/components/ErrorDisplay';
 import getCN from 'classnames';
+import Loading from 'shared/components/Loading';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
 import React from 'react';
 import SearchInput from 'shared/components/SearchInput';
@@ -98,9 +98,7 @@ export default class AssociatedSegmentsCard extends React.Component {
 				/>
 			);
 		} else if (loading) {
-			return (
-				<ClayLoadingIndicator className='spinner-overlay spinner-root' />
-			);
+			return <Loading overlay />;
 		} else if (!items.length) {
 			if (searchValue) {
 				return (

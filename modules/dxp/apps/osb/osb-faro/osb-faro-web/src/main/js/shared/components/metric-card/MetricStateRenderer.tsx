@@ -6,17 +6,17 @@ import {ApolloError} from 'apollo-client';
 interface IMetricStateRendererProps {
 	error: ApolloError;
 	loading: boolean;
-	loadingHeight?: number;
+	spacer?: boolean;
 }
 
 const MetricStateRenderer: React.FC<IMetricStateRendererProps> = ({
 	children,
 	error,
 	loading,
-	loadingHeight
+	spacer = false
 }) => (
 	<StatesRenderer empty={false} error={!!error} loading={loading}>
-		<StatesRenderer.Loading style={{minHeight: loadingHeight}} />
+		<StatesRenderer.Loading spacer={spacer} />
 		<StatesRenderer.Error apolloError={error}>
 			<ErrorDisplay />
 		</StatesRenderer.Error>

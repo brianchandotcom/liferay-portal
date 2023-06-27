@@ -1,5 +1,4 @@
 import ClayButton from '@clayui/button';
-import ClayLoadingIndicator from '@clayui/loading-indicator';
 import Constants from 'shared/util/constants';
 import Form, {
 	validateMaxLength,
@@ -8,6 +7,7 @@ import Form, {
 	validateRequired
 } from 'shared/components/form';
 import getCN from 'classnames';
+import Loading, {Align} from 'shared/components/Loading';
 import NavigationWarning from 'shared/components/NavigationWarning';
 import React, {useContext, useRef, useState} from 'react';
 import Sheet from 'shared/components/Sheet';
@@ -502,11 +502,7 @@ const AddWorkspaceForm: React.FC<IAddWorkspaceFormProps> = ({
 											type='submit'
 										>
 											{isSubmitting && (
-												<ClayLoadingIndicator
-													className='d-inline-block mr-2'
-													displayType='secondary'
-													size='sm'
-												/>
+												<Loading align={Align.Left} />
 											)}
 
 											{Liferay.Language.get(
@@ -527,11 +523,7 @@ const AddWorkspaceForm: React.FC<IAddWorkspaceFormProps> = ({
 											type='submit'
 										>
 											{isSubmitting && (
-												<ClayLoadingIndicator
-													className='d-inline-block mr-2'
-													displayType='secondary'
-													size='sm'
-												/>
+												<Loading align={Align.Left} />
 											)}
 
 											{Liferay.Language.get('save')}

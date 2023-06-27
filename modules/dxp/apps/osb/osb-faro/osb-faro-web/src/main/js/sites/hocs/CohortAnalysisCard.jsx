@@ -58,7 +58,7 @@ const CohortAnalysisWithData = compose(
 	}),
 	withError({page: false}),
 	withEmpty,
-	withLoading({alignCenter: true, displayCard: true, page: false})
+	withLoading()
 )(CohortAnalysis);
 
 const CohortAnalysisCard = () => {

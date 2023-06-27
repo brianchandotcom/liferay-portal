@@ -94,7 +94,7 @@ const withDevicesCard = (
 ) => {
 	const TabsWithDevices = compose(
 		withDevices(),
-		withLoading({alignCenter: true, displayCard: true, page: false}),
+		withLoading(),
 		withError({page: false}),
 		withEmpty({
 			description: (

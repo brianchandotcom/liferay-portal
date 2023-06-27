@@ -1,5 +1,5 @@
-import ClayLoadingIndicator from '@clayui/loading-indicator';
 import getCN from 'classnames';
+import Loading from 'shared/components/Loading';
 import React from 'react';
 import {getPluralMessage, sub} from 'shared/util/lang';
 import {isNumber} from 'lodash';
@@ -27,12 +27,7 @@ const SitesSyncedStripe: React.FC<ISitesSyncedStripeProps> = ({
 							sitesSyncedCount
 						)
 					) : (
-						<ClayLoadingIndicator
-							className='spinner-root'
-							displayType='light'
-							key='LOADING_SPINNER'
-							size='sm'
-						/>
+						<Loading key='LOADING' />
 					)
 				],
 				false

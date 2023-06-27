@@ -1,11 +1,11 @@
 import Card from 'shared/components/Card';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import ClayLoadingIndicator from '@clayui/loading-indicator';
 import Form, {
 	validateMaxLength,
 	validateRequired
 } from 'shared/components/form';
+import Loading, {Align} from 'shared/components/Loading';
 import PreferenceMutation from 'settings/data-privacy/queries/PreferenceMutation';
 import PreferenceQuery from 'settings/data-privacy/queries/PreferenceQuery';
 import React, {useRef} from 'react';
@@ -299,11 +299,7 @@ export const SearchCard: React.FC<ISearchCardProps> = ({
 											type='submit'
 										>
 											{isSubmitting && (
-												<ClayLoadingIndicator
-													className='d-inline-block mr-2'
-													displayType='secondary'
-													size='sm'
-												/>
+												<Loading align={Align.Left} />
 											)}
 
 											{Liferay.Language.get('save')}

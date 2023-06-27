@@ -1,7 +1,7 @@
 import * as API from 'shared/api';
 import ClayButton from '@clayui/button';
-import ClayLoadingIndicator from '@clayui/loading-indicator';
 import Form from 'shared/components/form';
+import Loading, {Align} from 'shared/components/Loading';
 import Modal from 'shared/components/modal';
 import React, {useRef, useState} from 'react';
 import TimeZonePicker from 'shared/components/form/TimeZonePicker';
@@ -136,11 +136,7 @@ const TimeZoneSelectionModal: React.FC<ITimeZoneSelectionModal> = ({
 									type='submit'
 								>
 									{isSubmitting && (
-										<ClayLoadingIndicator
-											className='d-inline-block mr-2'
-											displayType='secondary'
-											size='sm'
-										/>
+										<Loading align={Align.Left} />
 									)}
 
 									{Liferay.Language.get('set-timezone')}

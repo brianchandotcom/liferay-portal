@@ -333,11 +333,7 @@ const MetricChartRenderer: React.FC<IMetricChartRendererProps> = ({
 	});
 
 	return (
-		<MetricStateRenderer
-			error={error}
-			loading={loading}
-			loadingHeight={375}
-		>
+		<MetricStateRenderer error={error} loading={loading}>
 			<MetricChartWrapper
 				data={data}
 				interval={interval}

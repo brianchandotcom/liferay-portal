@@ -3,7 +3,7 @@ import BasePage from 'shared/components/base-page';
 import BundleRouter from 'route-middleware/BundleRouter';
 import ClayLink from '@clayui/link';
 import getCN from 'classnames';
-import Loading from 'shared/pages/Loading';
+import Loading from 'shared/components/Loading';
 import React, {lazy, Suspense} from 'react';
 import RouteNotFound from 'shared/components/RouteNotFound';
 import StatesRenderer from 'shared/components/states-renderer/StatesRenderer';
@@ -114,7 +114,7 @@ export const Dashboard: React.FC<IDashboardProps> = ({currentUser, router}) => {
 				}}
 			>
 				<BasePage.Body>
-					<Suspense fallback={<Loading />}>
+					<Suspense fallback={<Loading center />}>
 						<StatesRenderer {...dataSourceStates}>
 							<StatesRenderer.Empty
 								description={

@@ -1,6 +1,6 @@
 import ClayIcon from '@clayui/icon';
-import ClayLoadingIndicator from '@clayui/loading-indicator';
 import getCN from 'classnames';
+import Loading from 'shared/components/Loading';
 import NoResultsDisplay from './NoResultsDisplay';
 import React, {FC, useState} from 'react';
 import Sticker from './Sticker';
@@ -200,9 +200,7 @@ const VerticalTimeline: FC<IVerticalTimelineProps> = ({
 	});
 
 	if (loading) {
-		return (
-			<ClayLoadingIndicator className='flex-grow-1 spinner-spacer spinner-root' />
-		);
+		return <Loading />;
 	} else if (!items.length && !nested) {
 		return (
 			<NoResultsDisplay

@@ -1,10 +1,10 @@
 import * as API from 'shared/api';
 import ClayButton from '@clayui/button';
-import ClayLoadingIndicator from '@clayui/loading-indicator';
 import FileDropTarget from 'shared/components/FileDropTarget';
 import Form from 'shared/components/form';
 import getCN from 'classnames';
 import Input from 'shared/components/Input';
+import Loading, {Align} from 'shared/components/Loading';
 import Modal from 'shared/components/modal';
 import React, {useRef, useState} from 'react';
 import SearchInputList from 'shared/components/SearchInputList';
@@ -362,13 +362,7 @@ const NewRequestModal: React.FC<INewRequestModalProps> = ({
 								displayType='primary'
 								type='submit'
 							>
-								{isSubmitting && (
-									<ClayLoadingIndicator
-										className='d-inline-block mr-2'
-										displayType='secondary'
-										size='sm'
-									/>
-								)}
+								{isSubmitting && <Loading align={Align.Left} />}
 
 								{Liferay.Language.get('save')}
 							</ClayButton>

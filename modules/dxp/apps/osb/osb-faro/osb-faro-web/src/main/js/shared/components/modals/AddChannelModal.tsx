@@ -1,10 +1,10 @@
 import ClayButton from '@clayui/button';
-import ClayLoadingIndicator from '@clayui/loading-indicator';
 import Form, {
 	validateMaxLength,
 	validateMinLength,
 	validateRequired
 } from 'shared/components/form';
+import Loading, {Align} from 'shared/components/Loading';
 import Modal from 'shared/components/modal';
 import React from 'react';
 import {Modal as ModalTypes} from 'shared/types';
@@ -61,13 +61,7 @@ const AddChannelModal: React.FC<IAddChannelModalProps> = ({
 							displayType='primary'
 							type='submit'
 						>
-							{isSubmitting && (
-								<ClayLoadingIndicator
-									className='d-inline-block mr-2'
-									displayType='secondary'
-									size='sm'
-								/>
-							)}
+							{isSubmitting && <Loading align={Align.Left} />}
 
 							{Liferay.Language.get('save')}
 						</ClayButton>

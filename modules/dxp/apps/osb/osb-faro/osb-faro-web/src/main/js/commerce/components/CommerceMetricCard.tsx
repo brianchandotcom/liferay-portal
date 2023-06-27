@@ -56,7 +56,7 @@ const CommerceCardWithStatesRenderer: React.FC<ICommerceMetricCardWithStatesRend
 	loading = false
 }) => (
 	<StatesRenderer empty={empty} error={!!error} loading={loading}>
-		<StatesRenderer.Loading displayCard />
+		<StatesRenderer.Loading />
 		<StatesRenderer.Empty
 			description={Liferay.Language.get(
 				'check-back-later-to-verify-if-data-has-been-received-from-your-data-sources'

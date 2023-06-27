@@ -1,7 +1,7 @@
 import ClayButton from '@clayui/button';
-import ClayLoadingIndicator from '@clayui/loading-indicator';
 import client from 'shared/apollo/client';
 import Form from 'shared/components/form';
+import Loading, {Align} from 'shared/components/Loading';
 import Modal from 'shared/components/modal';
 import React from 'react';
 import RecommendationActivitiesQuery from 'settings/recommendations/queries/RecommendationActivitiesQuery';
@@ -142,10 +142,7 @@ const ManuallyRetrainModelModal: React.FC<IManuallyRetrainModelModalProps> = ({
 
 									<span className='count'>
 										{loading ? (
-											<ClayLoadingIndicator
-												className='spinner-inline spinner-root'
-												size='sm'
-											/>
+											<Loading align={Align.Right} />
 										) : (
 											get(
 												data,
@@ -164,10 +161,7 @@ const ManuallyRetrainModelModal: React.FC<IManuallyRetrainModelModalProps> = ({
 
 									<span className='count'>
 										{loading ? (
-											<ClayLoadingIndicator
-												className='spinner-inline spinner-root'
-												size='sm'
-											/>
+											<Loading align={Align.Right} />
 										) : (
 											availableJobRuns
 										)}

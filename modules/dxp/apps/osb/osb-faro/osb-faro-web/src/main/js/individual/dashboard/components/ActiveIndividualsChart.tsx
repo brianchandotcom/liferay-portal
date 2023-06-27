@@ -1,7 +1,7 @@
 // @ts-nocheck - Fix it at this LRAC-13388
 
-import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ComposedChartWithEmptyState from 'shared/components/ComposedChartWithEmptyState';
+import Loading from 'shared/components/Loading';
 import React, {useState} from 'react';
 import URLConstants from 'shared/util/url-constants';
 import {
@@ -109,12 +109,7 @@ const ActiveIndividualsChart: React.FC<IActiveIndividualsChartProps> = ({
 	);
 
 	if (loading) {
-		return (
-			<ClayLoadingIndicator
-				className=' spinner-center spinner-root'
-				key='LOADING'
-			/>
-		);
+		return <Loading key='LOADING' />;
 	}
 
 	return (

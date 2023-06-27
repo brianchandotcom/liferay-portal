@@ -1,8 +1,8 @@
 import Alert from 'shared/components/Alert';
 import autobind from 'autobind-decorator';
 import ClayButton from '@clayui/button';
-import ClayLoadingIndicator from '@clayui/loading-indicator';
 import Form, {validateRequired} from 'shared/components/form';
+import Loading, {Align} from 'shared/components/Loading';
 import React from 'react';
 import {DataSourceTypes} from 'shared/util/constants';
 import {getTempCredentials} from 'shared/util/oauth';
@@ -112,11 +112,7 @@ export default class OAuthKit extends React.Component {
 									type='submit'
 								>
 									{isSubmitting && (
-										<ClayLoadingIndicator
-											className='d-inline-block mr-2'
-											displayType='secondary'
-											size='sm'
-										/>
+										<Loading align={Align.Left} />
 									)}
 
 									{'Get Token'}

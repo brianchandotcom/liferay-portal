@@ -2,12 +2,12 @@ import * as API from 'shared/api';
 import autobind from 'autobind-decorator';
 import BasePage from 'shared/components/base-page';
 import Card from 'shared/components/Card';
-import ClayLoadingIndicator from '@clayui/loading-indicator';
 import CollapsibleOverlay from 'shared/components/CollapsibleOverlay';
 import ErrorDisplay from 'shared/components/ErrorDisplay';
 import Form from 'shared/components/form';
 import FormSelectFieldInput from 'contacts/components/form/SelectFieldInput';
 import Label from 'shared/components/form/Label';
+import Loading from 'shared/components/Loading';
 import React from 'react';
 import SearchableEntityTable from 'shared/components/SearchableEntityTable';
 import {
@@ -642,9 +642,7 @@ export class Distribution extends React.Component {
 								/>
 							)}
 
-							{loading && (
-								<ClayLoadingIndicator className='spinner-root spinner-spacer' />
-							)}
+							{loading && <Loading />}
 
 							{!error && !loading && (
 								<div className='chart-container'>

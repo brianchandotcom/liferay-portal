@@ -1,9 +1,9 @@
 import autobind from 'autobind-decorator';
 import ClayButton from '@clayui/button';
-import ClayLoadingIndicator from '@clayui/loading-indicator';
 import EntityList from 'shared/components/EntityList';
 import ListGroup from 'shared/components/list-group';
 import ListView from 'shared/components/ListView';
+import Loading, {Align} from 'shared/components/Loading';
 import Modal from 'shared/components/modal';
 import omitDefinedProps from 'shared/util/omitDefinedProps';
 import Promise from 'metal-promise';
@@ -196,13 +196,7 @@ export default class SelectItemsModal extends React.Component {
 							displayType='primary'
 							onClick={this.handleSubmit}
 						>
-							{submitting && (
-								<ClayLoadingIndicator
-									className='d-inline-block mr-2'
-									displayType='secondary'
-									size='sm'
-								/>
-							)}
+							{submitting && <Loading align={Align.Left} />}
 
 							{submitMessage}
 						</ClayButton>

@@ -4,7 +4,7 @@ import BundleRouter from 'route-middleware/BundleRouter';
 import DropdownRangeKey from 'shared/hoc/DropdownRangeKey';
 import Filter from '../hocs/Filter';
 import getCN from 'classnames';
-import Loading from 'shared/pages/Loading';
+import Loading from 'shared/components/Loading';
 import React, {lazy, Suspense, useEffect, useState} from 'react';
 import RouteNotFound from 'shared/components/RouteNotFound';
 import TextTruncate from 'shared/components/TextTruncate';

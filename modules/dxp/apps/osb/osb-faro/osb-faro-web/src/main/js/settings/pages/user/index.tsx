@@ -6,7 +6,7 @@ import ClayBadge from '@clayui/badge';
 import ClayLink from '@clayui/link';
 import ClayNavigationBar from '@clayui/navigation-bar';
 import getCN from 'classnames';
-import Loading from 'shared/pages/Loading';
+import Loading from 'shared/components/Loading';
 import React, {lazy, Suspense, useState} from 'react';
 import {compose, withCurrentUser} from 'shared/hoc';
 import {getMatchedRoute, Routes, toRoute} from 'shared/util/router';

@@ -11,5 +11,5 @@ export default compose(
 		props: mapResultToProps
 	}),
 	withError(),
-	withLoading({inline: true, page: false})
+	withLoading({center: false})
 )(DropdownRangeKey);

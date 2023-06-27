@@ -112,16 +112,6 @@
 			}
 
 			&.geolocation-input {
-				.city,
-				.region {
-					.input-group-inset-item-after {
-						.lexicon-icon-caret-bottom,
-						.spinner-root {
-							display: none;
-						}
-					}
-				}
-
 				.form-group-autofit {
 					flex-wrap: wrap;
 

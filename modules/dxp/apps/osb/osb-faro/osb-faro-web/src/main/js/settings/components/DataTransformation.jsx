@@ -3,10 +3,10 @@ import autobind from 'autobind-decorator';
 import Checkbox from 'shared/components/Checkbox';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import ClayLoadingIndicator from '@clayui/loading-indicator';
 import DataTransformationList from './data-transformation-list';
 import FormNavigation from './FormNavigation';
 import getCN from 'classnames';
+import Loading from 'shared/components/Loading';
 import NavigationWarning from 'shared/components/NavigationWarning';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
 import React, {Fragment} from 'react';
@@ -384,9 +384,7 @@ export class DataTransformation extends React.Component {
 		const mappedFields = fieldsIListCount - unmappedFields;
 
 		if (loading) {
-			return (
-				<ClayLoadingIndicator className='spinner-root spinner-spacer' />
-			);
+			return <Loading />;
 		} else if (error) {
 			return (
 				<NoResultsDisplay

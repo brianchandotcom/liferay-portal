@@ -1,8 +1,8 @@
 import autobind from 'autobind-decorator';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import ClayLoadingIndicator from '@clayui/loading-indicator';
 import Form from 'shared/components/form';
+import Loading, {Align} from 'shared/components/Loading';
 import React from 'react';
 import TextTruncate from 'shared/components/TextTruncate';
 import {PropTypes} from 'prop-types';
@@ -119,11 +119,7 @@ export default class DefinitionItem extends React.Component {
 										type='submit'
 									>
 										{isSubmitting && (
-											<ClayLoadingIndicator
-												className='d-inline-block mr-2'
-												displayType='secondary'
-												size='sm'
-											/>
+											<Loading align={Align.Left} />
 										)}
 
 										<ClayIcon

@@ -1,7 +1,7 @@
 import ClayButton from '@clayui/button';
 import ClayLink from '@clayui/link';
-import ClayLoadingIndicator from '@clayui/loading-indicator';
 import getCN from 'classnames';
+import Loading, {Align} from 'shared/components/Loading';
 import React from 'react';
 import {PropTypes} from 'prop-types';
 
@@ -61,13 +61,7 @@ class FormNavigation extends React.Component {
 					onClick={onNextStep}
 					type={onNextStep ? 'button' : 'submit'}
 				>
-					{submitting && (
-						<ClayLoadingIndicator
-							className='d-inline-block mr-2'
-							displayType='secondary'
-							size='sm'
-						/>
-					)}
+					{submitting && <Loading align={Align.Left} />}
 
 					{submitMessage}
 				</ClayButton>

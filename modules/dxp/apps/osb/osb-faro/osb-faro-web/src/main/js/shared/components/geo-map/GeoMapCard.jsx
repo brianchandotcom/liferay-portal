@@ -1,9 +1,9 @@
 import autobind from 'autobind-decorator';
 import BasePage from 'shared/components/base-page';
-import ClayLoadingIndicator from '@clayui/loading-indicator';
 import GeoMapLangKey from './geo-map-lang-key';
 import GeomapReact from './index';
 import getCN from 'classnames';
+import Loading from 'shared/components/Loading';
 import memoize from 'memoize-one';
 import React from 'react';
 import {getFilters} from 'shared/util/filter';
@@ -313,15 +313,7 @@ class GeoLocation extends React.Component {
 		} = this.props;
 
 		if (loading) {
-			return (
-				<ClayLoadingIndicator
-					className={getCN(
-						className,
-						'spinner-root',
-						'spinner-center'
-					)}
-				/>
-			);
+			return <Loading />;
 		}
 
 		const {paths, selected} = this.state;

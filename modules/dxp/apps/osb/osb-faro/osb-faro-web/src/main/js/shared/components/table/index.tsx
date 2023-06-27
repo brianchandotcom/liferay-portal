@@ -1,6 +1,6 @@
-import ClayLoadingIndicator from '@clayui/loading-indicator';
 import getCN from 'classnames';
 import HeaderRow from './HeaderRow';
+import Loading from 'shared/components/Loading';
 import React from 'react';
 import Row from './Row';
 import {get, isArray, noop, orderBy} from 'lodash';
@@ -216,9 +216,7 @@ const Table: React.FC<ITableProps> = ({
 				)}
 			</table>
 
-			{loading && (
-				<ClayLoadingIndicator className='display-card loading-root spinner-overlay spinner-root' />
-			)}
+			{loading && <Loading overlay />}
 		</div>
 	);
 };

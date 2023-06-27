@@ -4,10 +4,10 @@ import autobind from 'autobind-decorator';
 import BasePage from 'settings/components/BasePage';
 import ClayButton from '@clayui/button';
 import ClayLink from '@clayui/link';
-import ClayLoadingIndicator from '@clayui/loading-indicator';
 import DataTransformationList from 'settings/components/data-transformation-list';
 import DefinitionItem from 'shared/components/DefinitionItem';
 import getCN from 'classnames';
+import Loading from 'shared/components/Loading';
 import React from 'react';
 import Sheet from 'shared/components/Sheet';
 import {autoCancel, hasRequest} from 'shared/util/request-decorator';
@@ -287,7 +287,7 @@ export class CSV extends React.Component {
 					</Sheet.Body>
 
 					{loading ? (
-						<ClayLoadingIndicator className='spinner-root spinner-spacer' />
+						<Loading />
 					) : (
 						<DataTransformationList
 							fieldsIList={fieldsIList}

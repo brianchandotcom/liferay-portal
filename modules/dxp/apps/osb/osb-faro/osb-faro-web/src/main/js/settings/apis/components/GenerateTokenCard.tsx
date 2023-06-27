@@ -1,8 +1,8 @@
 import * as API from 'shared/api';
 import Card from 'shared/components/Card';
 import ClayButton from '@clayui/button';
-import ClayLoadingIndicator from '@clayui/loading-indicator';
 import Form from '@clayui/form';
+import Loading, {Align} from 'shared/components/Loading';
 import React, {useState} from 'react';
 import Select from 'shared/components/Select';
 import {EXPIRATION_DATE_LABELS, ExpirationPeriod} from 'shared/util/constants';
@@ -100,7 +100,7 @@ const GenerateTokenCard: React.FC<IGenerateTokenCardProps> = ({
 				>
 					{Liferay.Language.get('generate-token')}
 
-					{loading && <ClayLoadingIndicator className='ml-2' />}
+					{loading && <Loading align={Align.Right} />}
 				</ClayButton>
 			</Card.Body>
 		</Card>

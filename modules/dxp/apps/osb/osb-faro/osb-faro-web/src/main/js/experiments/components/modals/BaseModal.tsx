@@ -1,7 +1,7 @@
 import Alert, {AlertTypes} from 'shared/components/Alert';
 import ClayButton from '@clayui/button';
-import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal from '@clayui/modal';
+import Loading, {Align} from 'shared/components/Loading';
 import React, {useState} from 'react';
 import {Observer, Size, Status} from '@clayui/modal/lib/types';
 
@@ -96,12 +96,8 @@ const BaseModal: React.FC<IBaseModalProps> = ({
 							{cancelMessage}
 						</ClayButton>
 						<ClayButton {...buttonSubmitProps}>
-							{submitting && (
-								<ClayLoadingIndicator
-									className='mr-2 spinner-root'
-									size='sm'
-								/>
-							)}{' '}
+							{submitting && <Loading align={Align.Left} />}
+
 							{submitMessage}
 						</ClayButton>
 					</ClayButton.Group>

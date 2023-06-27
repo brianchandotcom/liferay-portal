@@ -1,4 +1,4 @@
-import Loading, {ILoadingProps} from 'shared/pages/Loading';
+import Loading, {ILoadingProps} from 'shared/components/Loading';
 import NoResultsDisplay, {
 	INoResultsDisplayProps
 } from 'shared/components/NoResultsDisplay';

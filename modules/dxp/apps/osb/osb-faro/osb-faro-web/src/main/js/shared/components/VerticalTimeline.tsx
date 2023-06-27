@@ -1,6 +1,6 @@
 import ClayIcon from '@clayui/icon';
-import ClayLoadingIndicator from '@clayui/loading-indicator';
 import getCN from 'classnames';
+import Loading from 'shared/components/Loading';
 import React, {FC, useState} from 'react';
 import Sticker from './Sticker';
 import TextTruncate from './TextTruncate';
@@ -337,7 +337,7 @@ const VerticalTimeline: FC<IVerticalTimelineProps> = ({
 	timeZoneId
 }) =>
 	loading ? (
-		<ClayLoadingIndicator className='flex-grow-1 spinner-spacer spinner-root' />
+		<Loading />
 	) : (
 		<div className='vertical-timeline-root'>
 			<ul

@@ -1,6 +1,6 @@
 import ClayButton from '@clayui/button';
-import ClayLoadingIndicator from '@clayui/loading-indicator';
 import Form from 'shared/components/form';
+import Loading, {Align} from 'shared/components/Loading';
 import Modal from '../modal';
 import React from 'react';
 import {Frequency, Report} from 'settings/channels/components/EmailReports';
@@ -93,13 +93,7 @@ const EditEmailReportsModal: React.FC<IEditEmailReportsModalProps> = ({
 							displayType='primary'
 							type='submit'
 						>
-							{isSubmitting && (
-								<ClayLoadingIndicator
-									className='d-inline-block mr-2'
-									displayType='secondary'
-									size='sm'
-								/>
-							)}
+							{isSubmitting && <Loading align={Align.Left} />}
 
 							{Liferay.Language.get('save')}
 						</ClayButton>

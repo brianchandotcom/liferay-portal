@@ -5,9 +5,9 @@ import Card from 'shared/components/Card';
 import ChangeLegend from 'contacts/components/ChangeLegend';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
-import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ErrorDisplay from 'shared/components/ErrorDisplay';
 import getCN from 'classnames';
+import Loading from 'shared/components/Loading';
 import React from 'react';
 import {Account} from 'shared/util/records';
 import {autoCancel, hasRequest} from 'shared/util/request-decorator';
@@ -104,12 +104,7 @@ export default class ActivitiesCard extends React.Component {
 		} = this;
 
 		if (loading) {
-			return (
-				<ClayLoadingIndicator
-					className='spinner-root spinner-spacer'
-					key='LOADING'
-				/>
-			);
+			return <Loading key='LOADING' />;
 		} else if (error) {
 			return (
 				<ErrorDisplay

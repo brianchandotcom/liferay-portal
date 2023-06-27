@@ -1,4 +1,4 @@
-import Loading from 'shared/pages/Loading';
+import Loading from 'shared/components/Loading';
 import React from 'react';
 import {emitAuthCode, emitError, emitToken} from 'shared/util/oauth';
 import {PropTypes} from 'prop-types';

@@ -4,7 +4,7 @@ import BundleRouter from './route-middleware/BundleRouter';
 import ChannelProvider from 'shared/context/channel';
 import client from 'shared/apollo/client';
 import ErrorPage from 'shared/pages/ErrorPage';
-import Loading from './shared/pages/Loading';
+import Loading from 'shared/components/Loading';
 import ModalRenderer from 'shared/components/ModalRenderer';
 import pathToRegexp from 'path-to-regexp';
 import React, {lazy, Suspense} from 'react';

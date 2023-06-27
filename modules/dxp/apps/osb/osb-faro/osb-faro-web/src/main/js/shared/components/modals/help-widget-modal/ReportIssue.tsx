@@ -1,10 +1,10 @@
 import * as API from 'shared/api';
 import ClayButton from '@clayui/button';
-import ClayLoadingIndicator from '@clayui/loading-indicator';
 import Form, {
 	validateMaxLength,
 	validateRequired
 } from 'shared/components/form';
+import Loading, {Align} from 'shared/components/Loading';
 import Modal from 'shared/components/modal';
 import React from 'react';
 import {addAlert} from 'shared/actions/alerts';
@@ -113,13 +113,7 @@ const ReportIssue: React.FC<
 								displayType='primary'
 								type='submit'
 							>
-								{isSubmitting && (
-									<ClayLoadingIndicator
-										className='d-inline-block mr-2'
-										displayType='secondary'
-										size='sm'
-									/>
-								)}
+								{isSubmitting && <Loading align={Align.Left} />}
 
 								{Liferay.Language.get('submit')}
 							</ClayButton>

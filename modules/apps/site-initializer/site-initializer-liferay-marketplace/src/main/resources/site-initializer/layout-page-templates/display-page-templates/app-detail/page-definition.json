@@ -124,8 +124,7 @@
 														{
 															"id": "icon",
 															"value": {
-																"fragmentLink": {
-																},
+																"fragmentLink": {},
 																"text": {
 																	"mapping": {
 																		"fieldKey": "__CUSTOM_FIELD_App_Icon",
@@ -159,16 +158,13 @@
 															"value": {
 																"fragmentImage": {
 																	"description": {
-																		"value_i18n": {
-																		}
+																		"value_i18n": {}
 																	},
 																	"url": {
-																		"value_i18n": {
-																		}
+																		"value_i18n": {}
 																	}
 																},
-																"fragmentLink": {
-																}
+																"fragmentLink": {}
 															}
 														}
 													],
@@ -219,8 +215,7 @@
 																{
 																	"id": "text",
 																	"value": {
-																		"fragmentLink": {
-																		},
+																		"fragmentLink": {},
 																		"text": {
 																			"mapping": {
 																				"fieldKey": "CPDefinition_name",
@@ -275,13 +270,14 @@
 																	"fragment": {
 																		"key": "BASIC_COMPONENT-html"
 																	},
-																	"fragmentConfig": {
-																	},
+																	"fragmentConfig": {},
 																	"fragmentFields": [
 																		{
 																			"id": "element-html",
 																			"value": {
-																				"html": {
+																				"fragmentLink": {},
+																				"text": {
+																					"mapping": {}
 																				}
 																			}
 																		}
@@ -304,15 +300,13 @@
 											"fragment": {
 												"key": "BASIC_COMPONENT-html"
 											},
-											"fragmentConfig": {
-											},
+											"fragmentConfig": {},
 											"fragmentFields": [
 												{
 													"id": "element-html",
 													"value": {
 														"html": {
-															"value_i18n": {
-															}
+															"value_i18n": {}
 														}
 													}
 												}
@@ -324,8 +318,7 @@
 									{
 										"definition": {
 											"widgetInstance": {
-												"widgetConfig": {
-												},
+												"widgetConfig": {},
 												"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_[$COMPANY_ID$]_LXC_liferay_marketplace_custom_element_get_app"
 											}
 										},
@@ -381,8 +374,7 @@
 											"rowViewports": [
 												{
 													"id": "landscapeMobile",
-													"rowViewportDefinition": {
-													}
+													"rowViewportDefinition": {}
 												},
 												{
 													"id": "portraitMobile",
@@ -392,8 +384,7 @@
 												},
 												{
 													"id": "tablet",
-													"rowViewportDefinition": {
-													}
+													"rowViewportDefinition": {}
 												}
 											],
 											"verticalAlignment": "top"
@@ -403,8 +394,7 @@
 												"definition": {
 													"columnViewports": [
 														{
-															"columnViewportDefinition": {
-															},
+															"columnViewportDefinition": {},
 															"id": "landscapeMobile"
 														},
 														{
@@ -414,8 +404,7 @@
 															"id": "portraitMobile"
 														},
 														{
-															"columnViewportDefinition": {
-															},
+															"columnViewportDefinition": {},
 															"id": "tablet"
 														}
 													],
@@ -427,10 +416,8 @@
 															"fragment": {
 																"key": "com.liferay.commerce.product.content.web.internal.fragment.renderer.ImageGalleryFragmentRenderer"
 															},
-															"fragmentConfig": {
-															},
-															"fragmentFields": [
-															],
+															"fragmentConfig": {},
+															"fragmentFields": [],
 															"indexed": true
 														},
 														"type": "Fragment"
@@ -448,8 +435,7 @@
 																{
 																	"id": "title1",
 																	"value": {
-																		"fragmentLink": {
-																		},
+																		"fragmentLink": {},
 																		"text": {
 																			"value_i18n": {
 																				"en_US": "Description"
@@ -460,8 +446,7 @@
 																{
 																	"id": "title2",
 																	"value": {
-																		"fragmentLink": {
-																		},
+																		"fragmentLink": {},
 																		"text": {
 																			"value_i18n": {
 																				"en_US": "License"
@@ -472,8 +457,7 @@
 																{
 																	"id": "title3",
 																	"value": {
-																		"fragmentLink": {
-																		},
+																		"fragmentLink": {},
 																		"text": {
 																			"value_i18n": {
 																				"en_US": "Release"
@@ -484,8 +468,7 @@
 																{
 																	"id": "title4",
 																	"value": {
-																		"fragmentLink": {
-																		},
+																		"fragmentLink": {},
 																		"text": {
 																			"value_i18n": {
 																				"en_US": "Profile"
@@ -511,15 +494,13 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-html"
 																			},
-																			"fragmentConfig": {
-																			},
+																			"fragmentConfig": {},
 																			"fragmentFields": [
 																				{
 																					"id": "element-html",
 																					"value": {
 																						"html": {
-																							"value_i18n": {
-																							}
+																							"value_i18n": {}
 																						}
 																					}
 																				}
@@ -541,15 +522,13 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-html"
 																			},
-																			"fragmentConfig": {
-																			},
+																			"fragmentConfig": {},
 																			"fragmentFields": [
 																				{
 																					"id": "element-html",
 																					"value": {
 																						"html": {
-																							"value_i18n": {
-																							}
+																							"value_i18n": {}
 																						}
 																					}
 																				}
@@ -571,15 +550,13 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-html"
 																			},
-																			"fragmentConfig": {
-																			},
+																			"fragmentConfig": {},
 																			"fragmentFields": [
 																				{
 																					"id": "element-html",
 																					"value": {
 																						"html": {
-																							"value_i18n": {
-																							}
+																							"value_i18n": {}
 																						}
 																					}
 																				}
@@ -601,15 +578,13 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-html"
 																			},
-																			"fragmentConfig": {
-																			},
+																			"fragmentConfig": {},
 																			"fragmentFields": [
 																				{
 																					"id": "element-html",
 																					"value": {
 																						"html": {
-																							"value_i18n": {
-																							}
+																							"value_i18n": {}
 																						}
 																					}
 																				}
@@ -631,8 +606,7 @@
 												"definition": {
 													"columnViewports": [
 														{
-															"columnViewportDefinition": {
-															},
+															"columnViewportDefinition": {},
 															"id": "landscapeMobile"
 														},
 														{
@@ -642,8 +616,7 @@
 															"id": "portraitMobile"
 														},
 														{
-															"columnViewportDefinition": {
-															},
+															"columnViewportDefinition": {},
 															"id": "tablet"
 														}
 													],
@@ -655,14 +628,12 @@
 															"fragment": {
 																"key": "BASIC_COMPONENT-paragraph"
 															},
-															"fragmentConfig": {
-															},
+															"fragmentConfig": {},
 															"fragmentFields": [
 																{
 																	"id": "element-text",
 																	"value": {
-																		"fragmentLink": {
-																		}
+																		"fragmentLink": {}
 																	}
 																}
 															],
@@ -744,14 +715,12 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-paragraph"
 																			},
-																			"fragmentConfig": {
-																			},
+																			"fragmentConfig": {},
 																			"fragmentFields": [
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {
-																						},
+																						"fragmentLink": {},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "DEVELOPER"
@@ -772,14 +741,12 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-date"
 																			},
-																			"fragmentConfig": {
-																			},
+																			"fragmentConfig": {},
 																			"fragmentFields": [
 																				{
 																					"id": "element-date",
 																					"value": {
-																						"fragmentLink": {
-																						},
+																						"fragmentLink": {},
 																						"text": {
 																							"mapping": {
 																								"fieldKey": "CPDefinition_displayDate",
@@ -832,14 +799,12 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-paragraph"
 																			},
-																			"fragmentConfig": {
-																			},
+																			"fragmentConfig": {},
 																			"fragmentFields": [
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {
-																						},
+																						"fragmentLink": {},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Published date"
@@ -860,14 +825,12 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-date"
 																			},
-																			"fragmentConfig": {
-																			},
+																			"fragmentConfig": {},
 																			"fragmentFields": [
 																				{
 																					"id": "element-date",
 																					"value": {
-																						"fragmentLink": {
-																						},
+																						"fragmentLink": {},
 																						"text": {
 																							"mapping": {
 																								"fieldKey": "CPDefinition_displayDate",
@@ -921,14 +884,12 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-paragraph"
 																			},
-																			"fragmentConfig": {
-																			},
+																			"fragmentConfig": {},
 																			"fragmentFields": [
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {
-																						},
+																						"fragmentLink": {},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Published Date"
@@ -952,14 +913,12 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-paragraph"
 																			},
-																			"fragmentConfig": {
-																			},
+																			"fragmentConfig": {},
 																			"fragmentFields": [
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {
-																						},
+																						"fragmentLink": {},
 																						"text": {
 																							"mapping": {
 																								"fieldKey": "CPDefinition_displayDate",
@@ -1016,14 +975,12 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-paragraph"
 																			},
-																			"fragmentConfig": {
-																			},
+																			"fragmentConfig": {},
 																			"fragmentFields": [
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {
-																						},
+																						"fragmentLink": {},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "<strong>SUPPORTED OFFERINGS</strong>"
@@ -1046,13 +1003,19 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-paragraph"
 																			},
-																			"fragmentConfig": {
-																			},
+																			"fragmentConfig": {},
 																			"fragmentFields": [
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {
+																						"fragmentLink": {},
+																						"text": {
+																							"mapping": {
+																								"fieldKey": "AssetVocabulary_[$TAXONOMY_VOCABULARY_ID:Marketplace Liferay Platform Offering$]",
+																								"itemReference": {
+																									"contextSource": "DisplayPageItem"
+																								}
+																							}
 																						}
 																					}
 																				}
@@ -1098,14 +1061,12 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-paragraph"
 																			},
-																			"fragmentConfig": {
-																			},
+																			"fragmentConfig": {},
 																			"fragmentFields": [
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {
-																						},
+																						"fragmentLink": {},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Supported Versions"
@@ -1129,13 +1090,19 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-paragraph"
 																			},
-																			"fragmentConfig": {
-																			},
+																			"fragmentConfig": {},
 																			"fragmentFields": [
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {
+																						"fragmentLink": {},
+																						"text": {
+																							"mapping": {
+																								"fieldKey": "AssetVocabulary_[$TAXONOMY_VOCABULARY_ID:Marketplace Liferay Version$]",
+																								"itemReference": {
+																									"contextSource": "DisplayPageItem"
+																								}
+																							}
 																						}
 																					}
 																				}
@@ -1184,14 +1151,12 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-paragraph"
 																			},
-																			"fragmentConfig": {
-																			},
+																			"fragmentConfig": {},
 																			"fragmentFields": [
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {
-																						},
+																						"fragmentLink": {},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Edition"
@@ -1215,13 +1180,19 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-paragraph"
 																			},
-																			"fragmentConfig": {
-																			},
+																			"fragmentConfig": {},
 																			"fragmentFields": [
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {
+																						"fragmentLink": {},
+																						"text": {
+																							"mapping": {
+																								"fieldKey": "AssetVocabulary_[$TAXONOMY_VOCABULARY_ID:Marketplace Edition$]",
+																								"itemReference": {
+																									"contextSource": "DisplayPageItem"
+																								}
+																							}
 																						}
 																					}
 																				}
@@ -1241,14 +1212,12 @@
 																	"fragment": {
 																		"key": "BASIC_COMPONENT-paragraph"
 																	},
-																	"fragmentConfig": {
-																	},
+																	"fragmentConfig": {},
 																	"fragmentFields": [
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {
-																				}
+																				"fragmentLink": {}
 																			}
 																		}
 																	],
@@ -1261,14 +1230,12 @@
 																	"fragment": {
 																		"key": "BASIC_COMPONENT-paragraph"
 																	},
-																	"fragmentConfig": {
-																	},
+																	"fragmentConfig": {},
 																	"fragmentFields": [
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {
-																				}
+																				"fragmentLink": {}
 																			}
 																		}
 																	],
@@ -1310,14 +1277,12 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-paragraph"
 																			},
-																			"fragmentConfig": {
-																			},
+																			"fragmentConfig": {},
 																			"fragmentFields": [
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {
-																						},
+																						"fragmentLink": {},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "help &amp; support"
@@ -1349,13 +1314,11 @@
 																				},
 																				{
 																					"id": "portraitMobile",
-																					"rowViewportDefinition": {
-																					}
+																					"rowViewportDefinition": {}
 																				},
 																				{
 																					"id": "tablet",
-																					"rowViewportDefinition": {
-																					}
+																					"rowViewportDefinition": {}
 																				}
 																			],
 																			"verticalAlignment": "middle"
@@ -1371,13 +1334,11 @@
 																							"id": "landscapeMobile"
 																						},
 																						{
-																							"columnViewportDefinition": {
-																							},
+																							"columnViewportDefinition": {},
 																							"id": "portraitMobile"
 																						},
 																						{
-																							"columnViewportDefinition": {
-																							},
+																							"columnViewportDefinition": {},
 																							"id": "tablet"
 																						}
 																					],
@@ -1437,14 +1398,12 @@
 																									"fragment": {
 																										"key": "BASIC_COMPONENT-paragraph"
 																									},
-																									"fragmentConfig": {
-																									},
+																									"fragmentConfig": {},
 																									"fragmentFields": [
 																										{
 																											"id": "element-text",
 																											"value": {
-																												"fragmentLink": {
-																												},
+																												"fragmentLink": {},
 																												"text": {
 																													"value_i18n": {
 																														"en_US": "Terms &amp; Conditions"
@@ -1473,13 +1432,11 @@
 																							"id": "landscapeMobile"
 																						},
 																						{
-																							"columnViewportDefinition": {
-																							},
+																							"columnViewportDefinition": {},
 																							"id": "portraitMobile"
 																						},
 																						{
-																							"columnViewportDefinition": {
-																							},
+																							"columnViewportDefinition": {},
 																							"id": "tablet"
 																						}
 																					],
@@ -1556,14 +1513,12 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-paragraph"
 																			},
-																			"fragmentConfig": {
-																			},
+																			"fragmentConfig": {},
 																			"fragmentFields": [
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {
-																						},
+																						"fragmentLink": {},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "SHARE LINK"
@@ -1584,15 +1539,13 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-html"
 																			},
-																			"fragmentConfig": {
-																			},
+																			"fragmentConfig": {},
 																			"fragmentFields": [
 																				{
 																					"id": "element-html",
 																					"value": {
 																						"html": {
-																							"value_i18n": {
-																							}
+																							"value_i18n": {}
 																						}
 																					}
 																				}
@@ -1609,15 +1562,13 @@
 																	"fragment": {
 																		"key": "BASIC_COMPONENT-html"
 																	},
-																	"fragmentConfig": {
-																	},
+																	"fragmentConfig": {},
 																	"fragmentFields": [
 																		{
 																			"id": "element-html",
 																			"value": {
 																				"html": {
-																					"value_i18n": {
-																					}
+																					"value_i18n": {}
 																				}
 																			}
 																		}

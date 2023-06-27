@@ -73,4 +73,36 @@ definition {
 		}
 	}
 
+	@description = "LPS-146755 - Verify fields cannot be set as translatable if the object definition doesn't have translations enabled"
+	@priority = 3
+	test CannotSetFieldAsTranslatableIfTranslationsIsDisabled {
+		task ("Given a custom object with translation not enabled") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 186673",
+				objectName = "CustomObject186673",
+				pluralLabelName = "Custom Objects 186673");
+		}
+
+		task ("When the user adds a rich text field") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectSystemObject(label = "Custom Object 186673");
+
+			ObjectAdmin.goToFieldsTab();
+
+			ObjectAdmin.addObjectFieldViaUI(
+				fieldLabel = "Custom Field",
+				fieldName = "customField",
+				fieldType = "Text");
+		}
+
+		task ("Then the field cannot be set as translatable") {
+			ObjectAdmin.goToFieldsDetails(label = "Custom Field");
+
+			AssertElementPresent(
+				key_fieldLabel = "Enable Entry Translation",
+				locator1 = "FormFields#FIELD_DISABLED_TEXT");
+		}
+	}
+
 }

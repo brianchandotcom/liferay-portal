@@ -68,7 +68,7 @@ public class ObjectEntryThreadLocal {
 		_skipReadOnlyObjectFieldsValidationThreadLocal =
 			new CentralizedThreadLocal<>(
 				ObjectEntryThreadLocal.class +
-					"._skipReadOnlyValidationThreadLocal",
+					"._skipReadOnlyObjectFieldsValidationThreadLocal",
 				() -> false);
 
 }

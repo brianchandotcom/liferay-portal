@@ -1,0 +1,68 @@
+@component-name = "portal-document-library-store"
+definition {
+
+	property gcs.store.enabled = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property test.assert.warning.exceptions = "true";
+	property testray.main.component.name = "Document Library Stores";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		HeadlessSite.addSite(siteName = "Test Site Name");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+
+			User.logoutPG();
+		}
+	}
+
+	@ignore = "true"
+	@priority = 5
+	test GCSStoreSmoke {
+		property test.name.skip.portal.instance = "GCSStore#GCSStoreSmoke";
+
+		var bucketId = PropsUtil.get("gcs.bucket.id");
+		var companyId = JSONCompany.getCompanyId();
+		var groupId = JSONGroupAPI._getGroupIdByName(
+			groupName = "Test Site Name",
+			site = "true");
+
+		AntCommands.runCommand("build-test-gcs-store.xml", "assert-no-document-in-bucket -Dgcs.bucket.id=${bucketId} -Dcompany.id=${companyId} -Dgroup.id=${groupId}");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Test Site Name",
+			mimeType = "text/plain",
+			sourceFileName = "Document_1.txt");
+
+		AntCommands.runCommand("build-test-gcs-store.xml", "assert-document-in-bucket -Dgcs.bucket.id=${bucketId} -Dcompany.id=${companyId} -Dgroup.id=${groupId}");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+
+		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title");
+
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "test-site-name");
+
+		ProductMenu.gotoPortlet(
+			category = "Recycle Bin",
+			portlet = "Recycle Bin");
+
+		RecycleBin.emptyCP();
+
+		AntCommands.runCommand("build-test-gcs-store.xml", "assert-no-document-in-bucket -Dgcs.bucket.id=${bucketId} -Dcompany.id=${companyId} -Dgroup.id=${groupId}");
+	}
+
+}

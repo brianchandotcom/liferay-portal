@@ -12,9 +12,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -237,7 +237,7 @@ definition {
 
 	@priority = 4
 	test EditTeamPermissions {
-		property test.name.skip.portal.instance = "RolesandpermissionsUsecase#EditTeamPermissions";
+		property test.liferay.virtual.instance = "false";
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW_CONTROL_PANEL",
@@ -474,7 +474,7 @@ definition {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property osgi.app.includes = "bookmarks";
 		property portal.release = "false";
-		property test.name.skip.portal.instance = "RolesandpermissionsUsecase#GroupScopePermissionCheck";
+		property test.liferay.virtual.instance = "false";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -1324,7 +1324,7 @@ definition {
 	@priority = 4
 	test ViewRegRolePermissionsDefaultView {
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
-		property test.name.skip.portal.instance = "RolesandpermissionsUsecase#ViewRegRolePermissionsDefaultView";
+		property test.liferay.virtual.instance = "false";
 
 		JSONRole.addRegularRole(
 			roleKey = "Roles Regrole Name",

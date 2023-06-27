@@ -12,9 +12,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -28,7 +28,7 @@ definition {
 		property custom.properties = "dl.store.antivirus.enabled=true";
 		property osgi.module.configuration.file.names = "com.liferay.antivirus.clamd.scanner.internal.configuration.ClamdAntivirusScannerConfiguration.config";
 		property osgi.module.configurations = "hostname=\"clamd\"${line.separator}port=I\"3310\"";
-		property test.name.skip.portal.instance = "ClamdScanner#ClamdAntivirusSmoke";
+		property test.liferay.virtual.instance = "false";
 
 		task ("When the user tries uploading a normal document") {
 			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");

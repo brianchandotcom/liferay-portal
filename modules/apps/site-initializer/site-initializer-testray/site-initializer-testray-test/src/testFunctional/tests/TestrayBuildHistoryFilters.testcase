@@ -95,7 +95,7 @@ definition {
 
 	tearDown {
 		task ("Delete routine, case type, factor categorie and project via API, Testray Site and Client Extensions") {
-			var testPortalInstance = PropsUtil.get("test.portal.instance");
+			var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 			JSONTestrayAPI.deleteObjectViaAPI(
 				object = "routines",
@@ -114,7 +114,7 @@ definition {
 			Testray.testrayApisTearDown();
 		}
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}

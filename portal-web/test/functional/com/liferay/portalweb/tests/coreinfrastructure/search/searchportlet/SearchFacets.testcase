@@ -13,9 +13,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
@@ -516,7 +516,7 @@ definition {
 	@description = "This is a use case for LPS-160922."
 	@priority = 4
 	test AssertDefaultSearchResultsDisplayTemplate {
-		property test.name.skip.portal.instance = "SearchFacets#AssertDefaultSearchResultsDisplayTemplate";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "guest");
 

@@ -25,9 +25,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -452,7 +452,7 @@ definition {
 	@priority = 5
 	test ChangeWebContentDefaultLanguage {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "LocalizationWithWebContent#ChangeWebContentDefaultLanguage";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given the site designer enables the Changeable Default Language for web content") {
 			ApplicationsMenu.gotoPortlet(
@@ -630,7 +630,7 @@ definition {
 	@description = "This is a use case for 119020. Can add web content when the portal change the default language."
 	@priority = 4
 	test ViewChangedDefaultPortalLanguageViaWebContent {
-		property test.name.skip.portal.instance = "LocalizationWithWebContent#ViewChangedDefaultPortalLanguageViaWebContent";
+		property test.liferay.virtual.instance = "false";
 		property testray.component.names = "Localization,Web Content Administration";
 
 		task ("Given a site designer has web contents with and without translation") {

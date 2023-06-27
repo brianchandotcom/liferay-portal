@@ -17,7 +17,7 @@ definition {
 	test ProxyPathRedirect {
 		property custom.properties = "web.server.forwarded.port.enabled=true${line.separator}web.server.host=localhost${line.separator}web.server.protocol=http";
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "PortalProxyPath#ProxyPathRedirect";
+		property test.liferay.virtual.instance = "false";
 
 		// This test should be revisited when Webdriver4 is ready
 
@@ -41,7 +41,7 @@ definition {
 	test Smoke {
 		property portal.acceptance = "true";
 		property test.assert.warning.exceptions = "true";
-		property test.name.skip.portal.instance = "PortalProxyPath#Smoke";
+		property test.liferay.virtual.instance = "false";
 
 		Smoke.viewWelcomeContentPage();
 

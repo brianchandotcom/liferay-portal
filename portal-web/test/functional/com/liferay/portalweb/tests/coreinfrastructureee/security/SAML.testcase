@@ -24,7 +24,7 @@ definition {
 	@priority = 5
 	test AddUserInheritedRolesAsSAMLAttributeStatements {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "SAML#AddUserInheritedRolesAsSAMLAttributeStatements";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Configure SAML as IdP") {
 			SAML.configureLiferaySAMLAsIdP(samlEntityId = "samlidp");
@@ -120,7 +120,7 @@ definition {
 	test AssertAuthorizationOnOAuth2WithSAMLConnectionWithExistingUser {
 		property oauth2.local.enabled = "true";
 		property portal.ssl.enabled = "true";
-		property test.name.skip.portal.instance = "SAML#AssertAuthorizationOnOAuth2WithSAMLConnectionWithExistingUser";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Logout") {
 			User.logoutPG();
@@ -236,7 +236,7 @@ definition {
 	test AssertAuthorizationOnOAuth2WithSAMLConnectionWithoutExistingUser {
 		property oauth2.local.enabled = "true";
 		property portal.ssl.enabled = "true";
-		property test.name.skip.portal.instance = "SAML#AssertAuthorizationOnOAuth2WithSAMLConnectionWithoutExistingUser";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Logout") {
 			User.logoutPG();
@@ -342,7 +342,7 @@ definition {
 	@priority = 4
 	test AssertEmptyMappingCannotBeUsedForUserMatching {
 		property app.server.bundles.size = "0";
-		property test.name.skip.portal.instance = "SAML#AssertEmptyMappingCannotBeUsedForUserMatching";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Configure samlsp as SP") {
 			var baseURL = PropsUtil.get("portal.url");
@@ -371,7 +371,7 @@ definition {
 		property apacheds.enabled = "true";
 		property app.server.bundles.size = "0";
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "SAML#AssertFirstNameCannotBeUsedForUserMatchingEvenWithLDAPEnabled";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Ad LDAP server and test connection") {
 			LDAP.addLDAPServerAndTestConnection(ldapServerName = "ApacheDS Server");
@@ -410,7 +410,7 @@ definition {
 	@priority = 5
 	test AssertInstanceAdminCannotConfigureIdPWhenDisableIdPRole {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "SAML#AssertInstanceAdminCannotConfigureIdPWhenDisableIdPRole";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Disable IdP role to be configured") {
 			var baseURL = PropsUtil.get("portal.url");
@@ -444,7 +444,7 @@ definition {
 	@description = "This is a use case for LPS-94699. assert keep alive to keep my SAML session alive."
 	@priority = 4
 	test AssertKeepAliveToKeepMySAMLSessionAlive {
-		property test.name.skip.portal.instance = "SAML#AssertKeepAliveToKeepMySAMLSessionAlive";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Sign out and Login at localhost:9080") {
 			UserBar.signOut();
@@ -580,7 +580,7 @@ definition {
 	test AssertLastNameCannotBeUsedForUserMatchingEvenWithLDAPEnabled {
 		property apacheds.enabled = "true";
 		property app.server.bundles.size = "0";
-		property test.name.skip.portal.instance = "SAML#AssertLastNameCannotBeUsedForUserMatchingEvenWithLDAPEnabled";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add LDAP server and test connection") {
 			LDAP.addLDAPServerAndTestConnection(ldapServerName = "ApacheDS Server");
@@ -618,7 +618,7 @@ definition {
 	@description = "This is a use case for LPS-39013. Assert SAML SP user information updates after changing on IdP."
 	@priority = 4
 	test AssertSAMLSPUserInformationUpdatesAfterChangingOnIdP {
-		property test.name.skip.portal.instance = "SAML#AssertSAMLSPUserInformationUpdatesAfterChangingOnIdP";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Configure samlidp as IdP") {
 			SAML.configureLiferaySAMLAsIdP(samlEntityId = "samlidp");
@@ -686,7 +686,7 @@ definition {
 	@priority = 4
 	test AssertSignedSAMLMetadata {
 		property test.assert.javascript.errors = "false";
-		property test.name.skip.portal.instance = "SAML#AssertSignedSAMLMetadata";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Configure samlidp as IdP") {
 			SAML.configureLiferaySAMLAsIdP(samlEntityId = "samlidp");
@@ -718,7 +718,7 @@ definition {
 	test AssertSSOFailsWhenAlgorithmsMismatch {
 		property blacklist.saml.algorithms = "true";
 		property test.assert.javascript.errors = "false";
-		property test.name.skip.portal.instance = "SAML#AssertSSOFailsWhenAlgorithmsMismatch";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Configure samlidp as IdP") {
 			SAML.configureLiferaySAMLAsIdP(samlEntityId = "samlidp");
@@ -763,7 +763,7 @@ definition {
 	@priority = 4
 	test AssertSSOIdleSessionTakesPrecedenceOverIdPSessionTimeout {
 		property custom.properties = "session.timeout=2${line.separator}jsonws.web.service.paths.excludes=";
-		property test.name.skip.portal.instance = "SAML#AssertSSOIdleSessionTakesPrecedenceOverIdPSessionTimeout";
+		property test.liferay.virtual.instance = "false";
 		property web.xml.timeout = "2";
 
 		task ("Configure samlidp as IdP with 480 as idle timout") {
@@ -862,7 +862,7 @@ definition {
 	@priority = 4
 	test AssertSSORejectAssertionWithoutANameIDValue {
 		property app.server.bundles.size = "0";
-		property test.name.skip.portal.instance = "SAML#AssertSSORejectAssertionWithoutANameIDValue";
+		property test.liferay.virtual.instance = "false";
 
 		var identityProviderEntityId = "samlidp";
 		var serviceProviderEntityId = "samlsp";
@@ -950,7 +950,7 @@ definition {
 	@priority = 4
 	test AssertSSOSessionExistsAfterSPSessionTimeout {
 		property custom.properties = "session.timeout=2${line.separator}jsonws.web.service.paths.excludes=";
-		property test.name.skip.portal.instance = "SAML#AssertSSOSessionExistsAfterSPSessionTimeout";
+		property test.liferay.virtual.instance = "false";
 		property web.xml.timeout = "2";
 
 		task ("Configure samlidp as IdP") {
@@ -996,7 +996,7 @@ definition {
 	@priority = 4
 	test AssertSSOSessionExpiresAfterMaximumSessionAge {
 		property custom.properties = "session.timeout=2${line.separator}jsonws.web.service.paths.excludes=";
-		property test.name.skip.portal.instance = "SAML#AssertSSOSessionExpiresAfterMaximumSessionAge";
+		property test.liferay.virtual.instance = "false";
 		property web.xml.timeout = "2";
 
 		task ("Configure SAML as IdP with session maximum age as 180") {
@@ -1054,7 +1054,7 @@ definition {
 	@priority = 4
 	test AssertSSOWithEncryptionAndDecryption {
 		property app.server.bundles.size = "0";
-		property test.name.skip.portal.instance = "SAML#AssertSSOWithEncryptionAndDecryption";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Edit user screen name") {
 			MyAccount.openMyAccountAdmin();
@@ -1150,7 +1150,7 @@ definition {
 	@description = "This is a use case for LPS-128578 and LPS-69388. Assert SSO with sign auth and request."
 	@priority = 4
 	test AssertSSOWithSignAuthnRequests {
-		property test.name.skip.portal.instance = "SAML#AssertSSOWithSignAuthnRequests";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Configure samlidp as IdP") {
 			SAML.configureLiferaySAMLAsIdP(samlEntityId = "samlidp");
@@ -1327,7 +1327,7 @@ definition {
 	@priority = 3
 	test AssertVerificationForDuplicatedUserAttributeMappingSAML {
 		property app.server.bundles.size = "0";
-		property test.name.skip.portal.instance = "SAML#AssertVerificationForDuplicatedUserAttributeMappingSAML";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add virtual instance able.com") {
 			HeadlessPortalInstanceAPI.addPortalInstance(
@@ -1412,7 +1412,7 @@ definition {
 	@priority = 3
 	test AssertVerificationForEmptyUserAttributeMappingSAML {
 		property app.server.bundles.size = "0";
-		property test.name.skip.portal.instance = "SAML#AssertVerificationForEmptyUserAttributeMappingSAML";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add virtual instance able.com") {
 			HeadlessPortalInstanceAPI.addPortalInstance(
@@ -1473,7 +1473,7 @@ definition {
 	@description = "This is a use case for LPS-182493 TC-5: Verify user could log in via SAML (Portal to Portal) when password creation is disabled."
 	@priority = 3
 	test CanLoginViaSAMLWithDisablePasswordCreation {
-		property test.name.skip.portal.instance = "SAML#CanLoginViaSAMLWithDisablePasswordCreation";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given Add virtual instance able.com setup IDP as localhost:8080 and SP as able.com:8080") {
 			SAML.addVirtualInstances(virtualHosts = "www.able.com");
@@ -1564,7 +1564,7 @@ definition {
 		property app.server.bundles.size = "0";
 		property portal.release = "quarantine";
 		property portal.upstream = "quarantine";
-		property test.name.skip.portal.instance = "SAML#CannotLoginWithInvalidCustomFieldMappingInSAML";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: User adds a virtual instance") {
 			HeadlessPortalInstanceAPI.addPortalInstance(
@@ -1662,7 +1662,7 @@ definition {
 	test ConfigureSAMLToImportUsersFromLDAP {
 		property apacheds.enabled = "true";
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "SAML#ConfigureSAMLToImportUsersFromLDAP";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Configure samlidp as IdP") {
 			SAML.configureLiferaySAMLAsIdP(samlEntityId = "samlidp");
@@ -1794,7 +1794,7 @@ definition {
 	@priority = 3
 	test CreateAndSyncUserAfterSAMLSetupMatchingEmailAddressNameIDWithScreenNameAttribute {
 		property app.server.bundles.size = "0";
-		property test.name.skip.portal.instance = "SAML#CreateAndSyncUserAfterSAMLSetupMatchingEmailAddressNameIDWithScreenNameAttribute";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add virtual instance able.com") {
 			HeadlessPortalInstanceAPI.addPortalInstance(
@@ -1882,7 +1882,7 @@ definition {
 	@priority = 3
 	test CreateAndSyncUserAfterSAMLSetupMatchingScreenNameIdentifierWithUUIDAttribute {
 		property app.server.bundles.size = "0";
-		property test.name.skip.portal.instance = "SAML#CreateAndSyncUserAfterSAMLSetupMatchingScreenNameIdentifierWithUUIDAttribute";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add virtual instance able.com") {
 			HeadlessPortalInstanceAPI.addPortalInstance(
@@ -1970,7 +1970,7 @@ definition {
 	test CreateAndSyncUserAfterSAMLSetupWithMatchingScreenNameAttribute {
 		property app.server.bundles.size = "0";
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "SAML#CreateAndSyncUserAfterSAMLSetupwithMatchingScreenNameAttribute";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add virtual instance able.com") {
 			HeadlessPortalInstanceAPI.addPortalInstance(
@@ -2056,7 +2056,7 @@ definition {
 	@priority = 3
 	test CreateAndSyncUserAfterSAMLSetupWithMultipleIdPs {
 		property app.server.bundles.size = "0";
-		property test.name.skip.portal.instance = "SAML#CreateAndSyncUserAfterSAMLSetupWithMultipleIdPs";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add virtual instance able.com and baker.com") {
 			HeadlessPortalInstanceAPI.addPortalInstance(
@@ -2196,7 +2196,7 @@ definition {
 	@priority = 5
 	test CustomFieldsCanBeConfiguredForSAML {
 		property app.server.bundles.size = "0";
-		property test.name.skip.portal.instance = "SAML#CustomFieldsCanBeConfiguredForSAML";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: User adds 1 virtual instance") {
 			HeadlessPortalInstanceAPI.addPortalInstance(
@@ -2358,7 +2358,7 @@ definition {
 	@priority = 5
 	test CustomFieldsCanBeConfiguredForSAMLWithMultipleIdPs {
 		property app.server.bundles.size = "0";
-		property test.name.skip.portal.instance = "SAML#CustomFieldsCanBeConfiguredForSAMLWithMultipleIdPs";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: User adds 2 virtual instance") {
 			HeadlessPortalInstanceAPI.addPortalInstance(
@@ -2657,7 +2657,7 @@ definition {
 	@priority = 4
 	test CustomFieldsCanBeUsedForUserMatchingInSAML {
 		property app.server.bundles.size = "0";
-		property test.name.skip.portal.instance = "SAML#CustomFieldsCanBeUsedForUserMatchingInSAML";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: User adds a virtual instance") {
 			HeadlessPortalInstanceAPI.addPortalInstance(
@@ -2814,7 +2814,7 @@ definition {
 	@priority = 4
 	test CustomFieldUsedMultipleTimesCannotBeSavedInSAML {
 		property app.server.bundles.size = "0";
-		property test.name.skip.portal.instance = "SAML#CustomFieldUsedMultipleTimesCannotBeSavedInSAML";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: User adds new custom fields") {
 			CustomFields.openCustomFieldAdmin();
@@ -2864,7 +2864,7 @@ definition {
 	@priority = 3
 	test DeleteUserAfterSAMLSetupAndVerify {
 		property app.server.bundles.size = "0";
-		property test.name.skip.portal.instance = "SAML#DeleteUserAfterSAMLSetupAndVerify";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add virtual instance able.com") {
 			HeadlessPortalInstanceAPI.addPortalInstance(
@@ -2978,7 +2978,7 @@ definition {
 		property app.server.bundles.size = "0";
 		property portal.release = "quarantine";
 		property portal.upstream = "quarantine";
-		property test.name.skip.portal.instance = "SAML#DuplicatedCustomFieldMappingCannotBeSavedInSAML";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: new custom fields are added") {
 			CustomFields.openCustomFieldAdmin();
@@ -3037,7 +3037,7 @@ definition {
 	@priority = 5
 	test HotDeploySAMLApp {
 		property hot.deploy.osgi.app.includes = "saml";
-		property test.name.skip.portal.instance = "SAML#HotDeploySAMLApp";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Assert healthy instance started with liferay connector to SAML 2.0") {
 			AssertConsoleTextNotPresent(value1 = "The portal instance needs to be restarted");
@@ -3054,7 +3054,7 @@ definition {
 	@priority = 5
 	test ImportEncryptionCertificateFromPKCS12KeystoreFile {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "SAML#ImportEncryptionCertificateFromPKCS12KeystoreFile";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Configure samlidp as IdP and samlsp as SP") {
 			SAML.configureLiferaySAMLAsIdP(samlEntityId = "samlidp");
@@ -3116,7 +3116,7 @@ definition {
 		property custom.properties = "feature.flag.COMMERCE-8087=true";
 		property keystore.enabled = "true";
 		property portal.release = "false";
-		property test.name.skip.portal.instance = "SAML#ImportJSONFileToConfigureSAMLIDP";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: Add SAP") {
 			var baseURL = PropsUtil.get("portal.url");
@@ -3170,7 +3170,7 @@ definition {
 		property custom.properties = "feature.flag.COMMERCE-8087=true";
 		property keystore.enabled = "true";
 		property portal.release = "false";
-		property test.name.skip.portal.instance = "SAML#ImportJSONFileToConfigureSAMLSP";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: Add SAP") {
 			var baseURL = PropsUtil.get("portal.url");
@@ -3224,7 +3224,7 @@ definition {
 		property keystore.enabled = "true";
 		property portal.release = "false";
 		property skip.start.app.server.index = "1";
-		property test.name.skip.portal.instance = "SAML#ImportJSONFileToConfigureSAMLSPOnNonDefaultPort";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: Start up second bundle and add SAP") {
 			Clustering.startSpecificServer(
@@ -3284,7 +3284,7 @@ definition {
 	@priority = 5
 	test ImportSigningCertificateFromPKCS12KeystoreFile {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "SAML#ImportSigningCertificateFromPKCS12KeystoreFile";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Configure samlidp as IdP and samlsp as SP") {
 			SAML.configureLiferaySAMLAsIdP(samlEntityId = "samlidp");
@@ -3343,7 +3343,7 @@ definition {
 	test MetadataSourceIsChangedAfterChangedFromXMLFileToURL {
 		property app.server.bundles.size = "0";
 		property keystore.enabled = "true";
-		property test.name.skip.portal.instance = "SAML#MetadataSourceIsChangedAfterChangedFromXMLFileToURL";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: Add SAML configuration files") {
 			OSGiConfig.copyOSGiConfigFile(
@@ -3414,7 +3414,7 @@ definition {
 	test MetadataURLDisappearsAfterChangedFromURLToXMLFile {
 		property app.server.bundles.size = "0";
 		property keystore.enabled = "true";
-		property test.name.skip.portal.instance = "SAML#MetadataURLDisappearsAfterChangedFromURLToXMLFile";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: Add SAML configuration files") {
 			OSGiConfig.copyOSGiConfigFile(
@@ -3484,7 +3484,7 @@ definition {
 	@priority = 5
 	test SAMLConfigurationNotApplyToSitesAfterACSDisabled {
 		property app.server.bundles.size = "0";
-		property test.name.skip.portal.instance = "SAML#SAMLConfigurationNotApplyToSitesAfterACSDisabled";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: Create user, custom domain site and create SAML link between baker.com and able.com") {
 			SAML.addVirtualInstances(virtualHosts = "www.able.com,www.baker.com");
@@ -3612,7 +3612,7 @@ definition {
 		property app.server.bundles.size = "0";
 		property portal.release = "quarantine";
 		property portal.upstream = "quarantine";
-		property test.name.skip.portal.instance = "SAML#SPInitiatedSSODoesNotSyncAttributesIfNotMapped";
+		property test.liferay.virtual.instance = "false";
 
 		var identityProviderEntityId = "samlidp";
 		var serviceProviderEntityId = "samlsp";
@@ -3728,7 +3728,7 @@ definition {
 	@priority = 4
 	test SPInitiatedSSODoesNotSyncAttributesIfNotSent {
 		property app.server.bundles.size = "0";
-		property test.name.skip.portal.instance = "SAML#SPInitiatedSSODoesNotSyncAttributesIfNotSent";
+		property test.liferay.virtual.instance = "false";
 
 		var identityProviderEntityId = "samlidp";
 		var serviceProviderEntityId = "samlsp";
@@ -3850,7 +3850,7 @@ definition {
 		property portal.acceptance = "quarantine";
 		property portal.release = "quarantine";
 		property portal.upstream = "quarantine";
-		property test.name.skip.portal.instance = "SAML#SPInitiatedSSOSyncsUserAttributesFromIdPToSPDefaultMapping";
+		property test.liferay.virtual.instance = "false";
 
 		var identityProviderEntityId = "samlidp";
 		var serviceProviderEntityId = "samlsp";
@@ -3963,7 +3963,7 @@ definition {
 		property app.server.bundles.size = "0";
 		property portal.release = "quarantine";
 		property portal.upstream = "quarantine";
-		property test.name.skip.portal.instance = "SAML#SPInitiatedSSOSyncsUserAttributesFromMultipleIdPToSPCustomMapping";
+		property test.liferay.virtual.instance = "false";
 
 		var identityProviderEntityId1 = "samlidp1";
 		var identityProviderEntityId2 = "samlidp2";
@@ -4127,7 +4127,7 @@ definition {
 	@description = "This is a use case for LRQA-35866. SP initiated SSO with screen name identifier."
 	@priority = 4
 	test SPInitiatedSSOWithScreenNameIdentifier {
-		property test.name.skip.portal.instance = "SAML#SPInitiatedSSOWithScreenNameIdentifier";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Configure samlidp as IdP and samlsp as SP") {
 			SAML.configureLiferaySAMLAsIdP(samlEntityId = "samlidp");
@@ -4167,7 +4167,7 @@ definition {
 	@priority = 5
 	test SSOLoginLogoutWorkSameWhenSitesConfiguredAsSP {
 		property app.server.bundles.size = "0";
-		property test.name.skip.portal.instance = "SAML#SSOLoginLogoutWorkSameWhenSitesConfiguredAsSP";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: Create users, custom domain sites and create SAML links between two IdPs and two SPs") {
 			SAML.addVirtualInstances(virtualHosts = "www.able.com,www.baker.com,www.dog.com,www.fox.com");
@@ -4399,7 +4399,7 @@ definition {
 	@priority = 5
 	test ValidateVulnerabilitiesXMLAttacks {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "SAML#ValidateVulnerabilitiesXMLAttacks";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Configure samlidp as IdP and samlsp as SP") {
 			SAML.configureLiferaySAMLAsIdP(samlEntityId = "samlidp");
@@ -4469,7 +4469,7 @@ definition {
 	@priority = 4
 	test ViewIdPInitiatedSSO {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "SAML#ViewIdPInitiatedSSO";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Configure samlidp as IdP and samlsp as SP at able.com:9080") {
 			SAML.configureLiferaySAMLAsIdP(samlEntityId = "samlidp");
@@ -4517,7 +4517,7 @@ definition {
 	@description = "This is a use case for LPS-50220. IdP initiated SSO login should work regardless if 'Remember Me' is checked or not."
 	@priority = 4
 	test ViewIdPInitiatedSSOWithRememberMeChecked {
-		property test.name.skip.portal.instance = "SAML#ViewIdPInitiatedSSOWithRememberMeChecked";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Configure samlidp as IdP and samlsp as SP at able.com:9080") {
 			SAML.configureLiferaySAMLAsIdP(samlEntityId = "samlidp");
@@ -4567,7 +4567,7 @@ definition {
 	@priority = 4
 	test ViewIdPSingleLogoutWithMultipleSPs {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "SAML#ViewIdPSingleLogoutWithMultipleSPs";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add CP able.com and baker.com") {
 			HeadlessPortalInstanceAPI.addPortalInstance(
@@ -4715,7 +4715,7 @@ definition {
 	@priority = 4
 	test ViewSingleLogoutAndForceAuthWithMultipleSPs {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "SAML#ViewSingleLogoutAndForceAuthWithMultipleSPs";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Login at localhost:9080 and Add 2 CP able.com and baker.com") {
 			UserBar.signOut();
@@ -4889,7 +4889,7 @@ definition {
 	@description = "This is a use case for LPS-49666. SAML Single Logout should support HTTP-POST binding."
 	@priority = 4
 	test ViewSingleLogoutHTTPPostBindingInConsole {
-		property test.name.skip.portal.instance = "SAML#ViewSingleLogoutHTTPPostBindingInConsole";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Configure samlidp as IdP and samlsp as SP") {
 			SAML.configureLiferaySAMLAsIdP(samlEntityId = "samlidp");
@@ -4936,7 +4936,7 @@ definition {
 	test ViewSPInitiatedSSO {
 		property app.server.types = "jboss,tcserver,tomcat,wildfly";
 		property database.types = "hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
-		property test.name.skip.portal.instance = "SAML#ViewSPInitiatedSSO";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Configure samlidp as IdP and samlsp as SP") {
 			SAML.configureLiferaySAMLAsIdP(samlEntityId = "samlidp");
@@ -4982,7 +4982,7 @@ definition {
 	@description = "This is a use case for LPS-88089. View SP initiated SSO with multiple IdPs and assert render login portlet without IdPs matched."
 	@priority = 4
 	test ViewSPInitiatedSSOWithMultipleIdPsAndAssertRenderLoginPortletWithoutIdpsMatched {
-		property test.name.skip.portal.instance = "SAML#ViewSPInitiatedSSOWithMultipleIdPsAndAssertRenderLoginPortletWithoutIdpsMatched";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add CP able.com") {
 			HeadlessPortalInstanceAPI.addPortalInstance(
@@ -5183,7 +5183,7 @@ definition {
 		property database.types = "hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property portal.release = "false";
 		property portal.ssl.enabled = "true";
-		property test.name.skip.portal.instance = "SAML#ViewSPInitiatedSSOWithOktaAndUserGroups";
+		property test.liferay.virtual.instance = "false";
 
 		var userPassword = PropsUtil.get("openid.provider.okta.test.account.password");
 
@@ -5244,7 +5244,7 @@ definition {
 		property database.types = "hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property portal.release = "false";
 		property portal.ssl.enabled = "true";
-		property test.name.skip.portal.instance = "SAML#ViewSPInitiatedSSOWithOktaUserGroupCanBeAssignedLater";
+		property test.liferay.virtual.instance = "false";
 
 		var userPassword = PropsUtil.get("openid.provider.okta.test.account.password");
 
@@ -5323,7 +5323,7 @@ definition {
 		property database.types = "hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property portal.release = "false";
 		property portal.ssl.enabled = "true";
-		property test.name.skip.portal.instance = "SAML#ViewSPInitiatedSSOWithOktaUserGroupsAreNotCreatedDuringLogin";
+		property test.liferay.virtual.instance = "false";
 
 		var userPassword = PropsUtil.get("openid.provider.okta.test.account.password");
 
@@ -5382,7 +5382,7 @@ definition {
 		property database.types = "hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property portal.release = "false";
 		property portal.ssl.enabled = "true";
-		property test.name.skip.portal.instance = "SAML#ViewSPInitiatedSSOWithOktaWithMultipleUserGroups";
+		property test.liferay.virtual.instance = "false";
 
 		var userPassword = PropsUtil.get("openid.provider.okta.test.account.password");
 
@@ -5445,7 +5445,7 @@ definition {
 	@priority = 4
 	test ViewSPInitiatedSSOWithSAMLAttributeEmailAddressUsedForUserMatching {
 		property app.server.bundles.size = "0";
-		property test.name.skip.portal.instance = "SAML#ViewSPInitiatedSSOWithSAMLAttributeEmailAddressUsedForUserMatching";
+		property test.liferay.virtual.instance = "false";
 
 		var identityProviderEntityId = "samlidp";
 		var serviceProviderEntityId = "samlsp";
@@ -5557,7 +5557,7 @@ definition {
 	@priority = 4
 	test ViewSPInitiatedSSOWithSAMLAttributeScreenNameUsedForUserMatching {
 		property app.server.bundles.size = "0";
-		property test.name.skip.portal.instance = "SAML#ViewSPInitiatedSSOWithSAMLAttributeScreenNameUsedForUserMatching";
+		property test.liferay.virtual.instance = "false";
 
 		var identityProviderEntityId = "samlidp";
 		var serviceProviderEntityId = "samlsp";
@@ -5671,7 +5671,7 @@ definition {
 		property app.server.bundles.size = "0";
 		property portal.release = "quarantine";
 		property portal.upstream = "quarantine";
-		property test.name.skip.portal.instance = "SAML#ViewSPInitiatedSSOWithSAMLAttributeScreenNameUsedForUserMatchingMultipleIdP";
+		property test.liferay.virtual.instance = "false";
 
 		var identityProviderEntityId1 = "samlidp1";
 		var identityProviderEntityId2 = "samlidp2";
@@ -5815,7 +5815,7 @@ definition {
 	test ViewSPInitiatedSSOWithSAMLAttributeUUIDUsedForUserMatching {
 		property app.server.bundles.size = "0";
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "SAML#ViewSPInitiatedSSOWithSAMLAttributeUUIDUsedForUserMatching";
+		property test.liferay.virtual.instance = "false";
 
 		var identityProviderEntityId = "samlidp";
 		var serviceProviderEntityId = "samlsp";
@@ -5929,7 +5929,7 @@ definition {
 	test ViewSPInitiatedSSOWithSAMLAttributeUUIDUsedForUserMatchingMultipleSP {
 		property app.server.bundles.size = "0";
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "SAML#ViewSPInitiatedSSOWithSAMLAttributeUUIDUsedForUserMatchingMultipleSP";
+		property test.liferay.virtual.instance = "false";
 
 		var identityProviderEntityId = "samlidp";
 		var serviceProviderEntityId1 = "samlsp1";
@@ -6117,7 +6117,7 @@ definition {
 	@description = "LPS-125272 User profile match up when NameID is transient, and screenName is in SAML Attributes list."
 	@priority = 4
 	test ViewSPInitiatedSSOWithTransientNameId {
-		property test.name.skip.portal.instance = "SAML#ViewSPInitiatedSSOWithTransientNameId";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add CP able.com") {
 			HeadlessPortalInstanceAPI.addPortalInstance(
@@ -6180,7 +6180,7 @@ uuid''',
 	test ViewSPInitiatedSSOWithUploadMetadataXML {
 		property app.server.bundles.size = "0";
 		property keystore.enabled = "true";
-		property test.name.skip.portal.instance = "SAML#ViewSPInitiatedSSOWithUploadMetadataXML";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add SAML configuration files") {
 			OSGiConfig.copyOSGiConfigFile(

@@ -528,7 +528,7 @@ definition {
 	@priority = 5
 	test CanCreateNewRelationTypeWithXSS {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CPCommerceProductRelationsWorkflow#CanCreateNewRelationTypeWithXSS";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given a product relation with XSS type is configured") {
 			SystemSettings.openToConfigInSystemSettings(portletId = "com.liferay.commerce.product.configuration.CPDefinitionLinkTypeConfiguration");

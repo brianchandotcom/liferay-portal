@@ -72,7 +72,7 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		JSONUser.tearDownNonAdminUsersNoSelenium();
 
@@ -86,7 +86,7 @@ definition {
 
 		ObjectAdmin.deleteObjectViaAPI(objectName = "Student");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCPNoSelenium();
 		}
 	}

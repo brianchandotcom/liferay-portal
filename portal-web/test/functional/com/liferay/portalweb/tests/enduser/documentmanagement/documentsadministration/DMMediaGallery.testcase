@@ -29,9 +29,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -197,7 +197,7 @@ definition {
 	@description = "This test ensures that the restricted file extension cannot be uploaded via Media Gallery."
 	@priority = 3
 	test CanLimitUploadedFileExtension {
-		property test.name.skip.portal.instance = "DMMediaGallery#CanLimitUploadedFileExtension";
+		property test.liferay.virtual.instance = "false";
 
 		DMDocument.updateFileExtensions(fieldValue = ".jpg");
 
@@ -359,7 +359,7 @@ definition {
 	@refactordone
 	test CanViewVideoViaMediaGallery {
 		property test.assert.warning.exceptions = "false";
-		property test.name.skip.portal.instance = "PGMediagallery#ViewVideoViaMediaGallery";
+		property test.liferay.virtual.instance = "false";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",

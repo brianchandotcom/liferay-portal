@@ -36,13 +36,13 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		RaylifeAP.deleteAllCreatedEntries(searchTerm = "Testing");
 
 		Raylife.tearDownCP();
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -65,7 +65,7 @@ definition {
 	@description = "Story ID: LPS-146336 | Test Summary: Verify if that the Review quote button is enabled when all required fields are filled in"
 	@priority = 5
 	test IfReviewQuoteButtonIsEnableWhenFieldsFilled {
-		property test.name.skip.portal.instance = "RaylifeAPCoverages#IfReviewQuoteButtonIsEnableWhenFieldsFilled";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 		// To be deleted. This is covered tests that use the macro RaylifeApplicationModal.typeAllNewApplicationCoverageInfoFields since the macro proceeds to click the Review Quote button.

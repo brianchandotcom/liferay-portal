@@ -14,9 +14,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -36,7 +36,7 @@ definition {
 	@priority = 5
 	test CanBeCreated {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "FormsImageField#CanBeCreated";
+		property test.liferay.virtual.instance = "false";
 
 		FormsAdmin.addForm();
 
@@ -59,7 +59,7 @@ definition {
 	@priority = 5
 	test CanBeDeleted {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "FormsImageField#CanBeDeleted";
+		property test.liferay.virtual.instance = "false";
 
 		FormsAdmin.addForm();
 
@@ -130,7 +130,7 @@ definition {
 	@priority = 5
 	test CanBeEdited {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "FormsImageField#CanBeEdited";
+		property test.liferay.virtual.instance = "false";
 
 		FormsAdmin.addForm();
 
@@ -165,7 +165,7 @@ definition {
 	@priority = 5
 	test CanBeRequired {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "FormsImageField#CanBeRequired";
+		property test.liferay.virtual.instance = "false";
 
 		FormsAdmin.addForm();
 

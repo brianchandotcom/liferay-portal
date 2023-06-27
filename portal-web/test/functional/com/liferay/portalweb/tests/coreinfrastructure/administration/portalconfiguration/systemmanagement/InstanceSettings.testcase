@@ -13,9 +13,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -388,7 +388,7 @@ definition {
 	@description = "This test asserts that a user can create multi factory configurations."
 	@priority = 4
 	test CanCreateTwoFactoryConfigurations {
-		property test.name.skip.portal.instance = "InstanceSettings#CanCreateTwoFactoryConfigurations";
+		property test.liferay.virtual.instance = "false";
 
 		var openIdConnectClientId = PropsUtil.get("google.client.id.1");
 		var openIdConnectClientId1 = PropsUtil.get("google.client.id.2");
@@ -538,7 +538,7 @@ definition {
 	@priority = 3
 	test CanNotAffectOtherSystemsDueToUseOfInstanceOSGiConfigurations {
 		property custom.properties = "feature.flag.LPS-155284=true";
-		property test.name.skip.portal.instance = "SystemSettings#CanNotAffectOtherSystemsDueToUseOfInstanceOSGiConfigurations";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given change the Instance OSGi configurations to export") {
 			PortalSettings.openInstanceSettingsAdmin();
@@ -774,7 +774,7 @@ definition {
 	@priority = 3
 	test CanUseInstanceConfigurationAcrossDifferentSystems {
 		property custom.properties = "feature.flag.LPS-155284=true";
-		property test.name.skip.portal.instance = "SystemSettings#CanUseInstanceConfigurationAcrossDifferentSystems";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given change the Instance OSGi configurations to export") {
 			PortalSettings.openInstanceSettingsAdmin();
@@ -1004,7 +1004,7 @@ definition {
 	@priority = 4
 	test ExportedFactoryConfigurationCanBeImported {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "InstanceSettings#ExportedFactoryConfigurationCanBeImported";
+		property test.liferay.virtual.instance = "false";
 
 		var openIdConnectClientId = PropsUtil.get("google.client.id.1");
 		var openIdConnectClientSecret = PropsUtil.get("google.client.secret.1");
@@ -1078,7 +1078,7 @@ definition {
 
 	@priority = 4
 	test FactoryConfigurationAreInTheirProperScope {
-		property test.name.skip.portal.instance = "InstanceSettings#FactoryConfigurationAreInTheirProperScope";
+		property test.liferay.virtual.instance = "false";
 
 		var openIdConnectClientId = PropsUtil.get("google.client.id.1");
 		var openIdConnectClientSecret = PropsUtil.get("google.client.secret.1");
@@ -1123,7 +1123,7 @@ definition {
 
 	@priority = 4
 	test FactoryConfigurationCanBeDeleted {
-		property test.name.skip.portal.instance = "InstanceSettings#FactoryConfigurationCanBeDeleted";
+		property test.liferay.virtual.instance = "false";
 
 		var openIdConnectClientId = PropsUtil.get("google.client.id.1");
 		var openIdConnectClientSecret = PropsUtil.get("google.client.secret.1");
@@ -1162,7 +1162,7 @@ definition {
 
 	@priority = 4
 	test FactoryConfigurationCanBeEdited {
-		property test.name.skip.portal.instance = "InstanceSettings#FactoryConfigurationCanBeEdited";
+		property test.liferay.virtual.instance = "false";
 
 		var openIdConnectClientId = PropsUtil.get("google.client.id.1");
 		var openIdConnectClientSecret = PropsUtil.get("google.client.secret.1");
@@ -1248,7 +1248,7 @@ definition {
 
 	@priority = 4
 	test SingleFactoryConfigurationCanBeExported {
-		property test.name.skip.portal.instance = "InstanceSettings#SingleFactoryConfigurationCanBeExported";
+		property test.liferay.virtual.instance = "false";
 
 		var openIdConnectClientId = PropsUtil.get("google.client.id.1");
 		var openIdConnectClientSecret = PropsUtil.get("google.client.secret.1");
@@ -1409,7 +1409,7 @@ definition {
 	@description = "This is a use case for LPS-156105. The test assert the value of mail setting for new instance is inherited from server level."
 	@priority = 2
 	test ViewInstanceMailSettingsValueIsInheritedFromServerLevel {
-		property test.name.skip.portal.instance = "InstanceSettings#ViewInstanceMailSettingsValueIsInheritedFromServerLevel";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given change the server/company level mail setting value") {
 			ServerAdministration.openServerAdmin();
@@ -1467,7 +1467,7 @@ definition {
 	@priority = 3
 	test ViewPasswordChangedNotificationTemplateUpdated {
 		property custom.properties = "mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid";
-		property test.name.skip.portal.instance = "InstanceSettings#ViewPasswordChangedNotificationTemplateUpdated";
+		property test.liferay.virtual.instance = "false";
 		property test.smtp.server.enabled = "true";
 
 		task ("Given: Add the user's first name in the password changed notification template") {
@@ -1554,7 +1554,7 @@ definition {
 	@priority = 3
 	test ViewPasswordResetNotificationTemplateUpdated {
 		property custom.properties = "mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid";
-		property test.name.skip.portal.instance = "InstanceSettings#ViewPasswordResetNotificationTemplateUpdated";
+		property test.liferay.virtual.instance = "false";
 		property test.smtp.server.enabled = "true";
 
 		task ("Given: Add a new user and add the user's first name in the password reset notification template") {
@@ -1637,7 +1637,7 @@ definition {
 	@description = "This is a use case for LPS-97907."
 	@priority = 5
 	test ViewSystemSettingsSavedByKeyboard {
-		property test.name.skip.portal.instance = "InstanceSettings#ViewSystemSettingsSavedByKeyboard";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",

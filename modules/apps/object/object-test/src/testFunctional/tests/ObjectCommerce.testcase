@@ -14,9 +14,9 @@ definition {
 	tearDown {
 		ObjectAdmin.deleteAllCustomObjectsViaAPI();
 
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
@@ -24,7 +24,7 @@ definition {
 	@description = "LPS-151766 - Verify that it's possible to create an object entry related to Commerce Product Group"
 	@priority = 4
 	test CanCreateEntryRelatedToCommerceProductGroup {
-		property test.name.skip.portal.instance = "ObjectCommerce#CanCreateEntryRelatedToCommerceProductGroup";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Create a Custom Object") {
 			ObjectAdmin.addObjectViaAPI(
@@ -101,7 +101,7 @@ definition {
 	@description = "LPS-152408 - Verify that it's possible to create an object entry related to Commerce Products"
 	@priority = 4
 	test CanCreateEntryRelatedToCommerceProducts {
-		property test.name.skip.portal.instance = "ObjectCommerce#CanCreateEntryRelatedToCommerceProducts";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Create a Custom Object") {
 			ObjectAdmin.addObjectViaAPI(
@@ -184,7 +184,7 @@ definition {
 	@description = "LPS-136741 - Verify that Object scoped by Company is not displayed on the Commerce notification type for Site type Channel"
 	@priority = 4
 	test ObjectScopedCompanyNotDisplayedSiteChannel {
-		property test.name.skip.portal.instance = "ObjectCommerce#ObjectScopedCompanyNotDisplayedSiteChannel";
+		property test.liferay.virtual.instance = "false";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 145735",

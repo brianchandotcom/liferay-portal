@@ -9,7 +9,7 @@ definition {
 	setUp {
 		TestCase.setUpPortalInstance();
 
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		User.firstLoginPG();
 
@@ -22,9 +22,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
@@ -55,7 +55,7 @@ definition {
 	@description = "LPS-86638 - Verify that the pagination button indicates the selected page, even when there is only 1 page"
 	@priority = 3
 	test PaginationButtonIndicatesSelectedPage {
-		property test.name.skip.portal.instance = "WorkflowMetricsProcessListView#PaginationButtonIndicatesSelectedPage";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -89,7 +89,7 @@ definition {
 	@description = "LPS-86638 - Verify that pagination follows in asc/desc sequence"
 	@priority = 3
 	test PaginationFollowsAscDescSequence {
-		property test.name.skip.portal.instance = "WorkflowMetricsProcessListView#PaginationFollowsAscDescSequence";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -127,7 +127,7 @@ definition {
 	@description = "LPS-86638 - Verify that the pagination component is displayed when the table has 5 items or more"
 	@priority = 3
 	test PaginationIsDisplayedWhenTableHas5Items {
-		property test.name.skip.portal.instance = "WorkflowMetricsProcessListView#PaginationIsDisplayedWhenTableHas5Items";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -205,7 +205,7 @@ definition {
 	@description = "LPS-88573 - Verify that once an order option is made by the user, this definition should be saved by the system during the user stay in the Metrics context, even when the user makes a search query, reloads the page"
 	@priority = 3
 	test SavedOrderOptionStaysInMetricsContext {
-		property test.name.skip.portal.instance = "WorkflowMetricsProcessListView#SavedOrderOptionStaysInMetricsContext";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.duplicateSingleApproverWorkflow(workflowName = "Single Approver A");
 
@@ -332,7 +332,7 @@ definition {
 	@description = "LPS-88573 - Verify that the table entries are ordered by Overdue, from biggest to the smaller value, by default"
 	@priority = 3
 	test TableIsOrderedByOverdueDesc {
-		property test.name.skip.portal.instance = "WorkflowMetricsProcessListView#TableIsOrderedByOverdueDesc";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.duplicateSingleApproverWorkflow(workflowName = "Test Workflow");
 

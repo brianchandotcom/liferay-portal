@@ -34,13 +34,13 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		RaylifeAP.deleteAllCreatedEntries(searchTerm = "Testing");
 
 		RaylifeAP.tearDownCP();
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -51,7 +51,7 @@ definition {
 	@description = "Story ID: LPS-160816 | Test Summary: Verify if the user can access the policy details page through policy number link."
 	@priority = 4
 	test CanUserAccessPolicyDetails {
-		property test.name.skip.portal.instance = "RaylifeAPClaimsDetails#CanUserAccessPolicyDetails";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given I go to the Applications page") {
 			RaylifeAPNavigator.gotoSidebarItem(itemName = "Claims");
@@ -75,7 +75,7 @@ definition {
 	@description = "Story ID: LPS-160816 | Test Summary: Verify if the user can navigate back to the Claims dashboard in the upper left corner."
 	@priority = 4
 	test CanUserCanGoBackToClaimsPage {
-		property test.name.skip.portal.instance = "RaylifeAPClaimsDetails#CanUserCanGoBackToClaimsPage";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given I go to the Applications page") {
 			RaylifeAPNavigator.gotoSidebarItem(itemName = "Claims");
@@ -97,7 +97,7 @@ definition {
 	@description = "Story ID: LPS-160816 | Test Summary: Verify if a claim with the settled status, the status is displayed green and theres settled date and settled amount displayed."
 	@priority = 4
 	test VerifyDisplayedStatusGreen {
-		property test.name.skip.portal.instance = "RaylifeAPClaimsDetails#VerifyDisplayedStatusGreen";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given I go to the Applications page") {
 			RaylifeAPNavigator.gotoSidebarItem(itemName = "Claims");
@@ -115,7 +115,7 @@ definition {
 	@description = "Story ID: LPS-160816 | Test Summary: Verify if a claim with the Not Settled status, only the submitted date appears."
 	@priority = 4
 	test VerifyStatusNotSettled {
-		property test.name.skip.portal.instance = "RaylifeAPClaimsDetails#VerifyStatusNotSettled";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given I go to the Applications page") {
 			RaylifeAPNavigator.gotoSidebarItem(itemName = "Claims");

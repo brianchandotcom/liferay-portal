@@ -32,11 +32,11 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		Raylife.tearDownCP();
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -47,7 +47,7 @@ definition {
 	@description = "LPS-144501 - Verify that after payment by PayPal, an email from Docusign is sent with the signature document"
 	@priority = 5
 	test CanViewSentEmail {
-		property test.name.skip.portal.instance = "RaylifeDocuSignIntegration#CanViewSentEmail";
+		property test.liferay.virtual.instance = "false";
 
 		RaylifePaymentMethod.enablePayPalPayment();
 
@@ -87,7 +87,7 @@ definition {
 	@description = "LPS-144505 - Check if the email address of the envelope is the same as the one on the form"
 	@priority = 3
 	test EmailOnTheEnvelopeEqualOnTheForm {
-		property test.name.skip.portal.instance = "RaylifeDocuSignIntegration#EmailOnTheEnvelopeEqualOnTheForm";
+		property test.liferay.virtual.instance = "false";
 
 		RaylifePaymentMethod.enablePayPalPayment();
 
@@ -129,7 +129,7 @@ definition {
 	@description = "LPS-144503 - Check that the first name on the envelope is the same as on the form"
 	@priority = 3
 	test FirstNameOnEnvelopeSameAsForm {
-		property test.name.skip.portal.instance = "RaylifeDocuSignIntegration#FirstNameOnEnvelopeSameAsForm";
+		property test.liferay.virtual.instance = "false";
 
 		RaylifePaymentMethod.enablePayPalPayment();
 
@@ -167,7 +167,7 @@ definition {
 	@description = "LPS-144504 - Check that the last name on the envelope is the same as on the form"
 	@priority = 3
 	test LastNameOnEnvelopeSameAsForm {
-		property test.name.skip.portal.instance = "RaylifeDocuSignIntegration#LastNameOnEnvelopeSameAsForm";
+		property test.liferay.virtual.instance = "false";
 
 		RaylifePaymentMethod.enablePayPalPayment();
 

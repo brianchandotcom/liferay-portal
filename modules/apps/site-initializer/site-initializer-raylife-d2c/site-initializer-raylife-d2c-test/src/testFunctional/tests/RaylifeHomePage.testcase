@@ -19,11 +19,11 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		Raylife.tearDownCP();
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -34,7 +34,7 @@ definition {
 	@description = "LPS-142187 - Verify if error message appear after inserting a wrong ZipCode."
 	@priority = 4
 	test CanViewErrorMessageForWrongZipCode {
-		property test.name.skip.portal.instance = "RaylifeHomePage#CanViewErrorMessageForWrongZipCode";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
@@ -52,7 +52,7 @@ definition {
 	@description = "LPS-142182 - Verify if ZipCode is required."
 	@priority = 4
 	test ZipCodeIsRequired {
-		property test.name.skip.portal.instance = "RaylifeHomePage#ZipCodeIsRequired";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 

@@ -13,9 +13,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -63,7 +63,7 @@ definition {
 	@priority = 5
 	test EscapeUrlRedirectWithGroovyScript {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "SecurityUsecase#EscapeUrlRedirectWithGroovyScript";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Escape url redirect with groovy script") {
 			ServerAdministration.openServerAdmin();
@@ -86,7 +86,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 	@priority = 5
 	test NoPermissionFromUnauthorizedURLAsPowerUser {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "SecurityUsecase#NoPermissionFromUnauthorizedURLAsPowerUser";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add new user") {
 			JSONUser.addUser(
@@ -139,7 +139,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 	@description = "This is a use case for LPS-80905. User can access permissions window with permission from admin."
 	@priority = 5
 	test UserCanAccessPermissionsWindowWithPermissionFromAdmin {
-		property test.name.skip.portal.instance = "SecurityUsecase#UserCanAccessPermissionsWindowWithPermissionFromAdmin";
+		property test.liferay.virtual.instance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -222,7 +222,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 	@description = "This is a use case for LPS-49848."
 	@priority = 4
 	test ValidateCannotStealAdminAccount {
-		property test.name.skip.portal.instance = "SecurityUsecase#ValidateCannotStealAdminAccount";
+		property test.liferay.virtual.instance = "false";
 
 		var pAuth = Api.getPAuth();
 		var portalURL = PropsUtil.get("portal.url");
@@ -287,7 +287,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 	@description = "This is a use case for LPS-57776. Validate no LAR remote code execution."
 	@priority = 5
 	test ValidateNoLARRemoteCodeExecution {
-		property test.name.skip.portal.instance = "SecurityUsecase#ValidateNoLARRemoteCodeExecution";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Assert remote-code-execution.lar dependency is forbidden") {
 			BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
@@ -307,7 +307,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 	@description = "This is a use case for LPS-85112. Validate view permission cannot update other users password."
 	@priority = 5
 	test ValidateViewPermissionCanNotUpdateOtherUsersPassword {
-		property test.name.skip.portal.instance = "SecurityUsecase#ValidateViewPermissionCanNotUpdateOtherUsersPassword";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Define user permission") {
 			Permissions.definePermissionViaJSONAPI(

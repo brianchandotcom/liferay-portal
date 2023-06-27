@@ -22,9 +22,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -36,7 +36,7 @@ definition {
 	@priority = 4
 	@refactordone
 	test CanAssertAutoTagAfterPublishingToLive {
-		property test.name.skip.portal.instance = "WebContentAutoTagging#CanAssertAutoTagAfterPublishingToLive";
+		property test.liferay.virtual.instance = "false";
 
 		JSONStaging.enableLocalStaging(groupName = "Test Site Name");
 
@@ -77,7 +77,7 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanAssertAutoTagViaAP {
-		property test.name.skip.portal.instance = "WebContentAutoTagging#CanAssertAutoTagViaAP";
+		property test.liferay.virtual.instance = "false";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
@@ -111,7 +111,7 @@ definition {
 	@priority = 4
 	@refactordone
 	test CanDeleteAssetWithTag {
-		property test.name.skip.portal.instance = "WebContentAutoTagging#CanDeleteAssetWithTag";
+		property test.liferay.virtual.instance = "false";
 
 		JSONWebcontent.addWebContent(
 			content = "Digital Transformation or Digital Experience? When selecting a DXP, companies should decide whether they are ready for deep transformation of their business operations, or are focused primarily on marketing and brand awareness, as these priorities tend to reflect the different strengths among the DXP vendors. Having an attractive website or mobile app is good, but more substantial gains in customer experience require processes to be re-optimized with the customer in mind. In a Forrester presentation, analyst Liz Herbert notes that real digital transformation spans both the experience layer and the operations core. Having an attractive website or mobile app is good, but more substantial gains in customer experience require processes to be re-optimized with the customer in mind. This responsiveness to customer needs can be achieved in a number of ways, from basic personalization of experience, to more advanced configurable workflows, to full modularization of business services that can be quickly re-assembled in new ways. However, not all companies are prepared for that level of change, and may in the meantime want to start segmenting audiences in order to target personalized offers. Some vendors, particularly those that have had content management systems, can do this well. Ideally, your platform will have both operational and marketing capabilities, so that even if you start with digital marketing, you won’t have to go through a second vendor selection process when you are ready for operational transformation. Also, there isn’t just one way to achieve these goals. Using any category heritage of DXP in combination with an overall architecture for integration and modular services can get you there.",
@@ -146,7 +146,7 @@ definition {
 	@priority = 5
 	@refactordone
 	test CannotAutoTagForManuallyAddedEntry {
-		property test.name.skip.portal.instance = "WebContentAutoTagging#CannotAutoTagForManuallyAddedEntry";
+		property test.liferay.virtual.instance = "false";
 
 		JSONWebcontent.addWebContent(
 			assetTagNames = "liferay",
@@ -174,7 +174,7 @@ definition {
 	@priority = 4
 	@refactordone
 	test CanPublishAutoTaggedDraft {
-		property test.name.skip.portal.instance = "WebContentAutoTagging#CanPublishAutoTaggedDraft";
+		property test.liferay.virtual.instance = "false";
 
 		WebContentNavigator.openToAddBasicArticle(
 			groupName = "Test Site Name",
@@ -213,7 +213,7 @@ definition {
 	@description = "This test asserts that tags are not updated if user unchecked Update Auto Tags when updating a web content."
 	@priority = 4
 	test NoTagUpdatesAfterDisablingUpdateAutoTags {
-		property test.name.skip.portal.instance = "WebContentAutoTagging#NoTagUpdatesAfterDisablingUpdateAutoTags";
+		property test.liferay.virtual.instance = "false";
 
 		AutoTagging.enableUpdateAutoTags(enableUpdateAutoTagsFor = "Instance Settings");
 
@@ -260,7 +260,7 @@ definition {
 	@description = "This test asserts that new tags detected are added if user checked Update Auto Tags when updating a web content."
 	@priority = 4
 	test TagUpdatesAfterEnablingUpdateAutoTags {
-		property test.name.skip.portal.instance = "WebContentAutoTagging#TagUpdatesAfterEnablingUpdateAutoTags";
+		property test.liferay.virtual.instance = "false";
 
 		AutoTagging.enableUpdateAutoTags(enableUpdateAutoTagsFor = "System Settings");
 

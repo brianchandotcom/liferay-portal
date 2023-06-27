@@ -29,7 +29,7 @@ definition {
 		property minimum.slave.ram = "24";
 		property portal.acceptance = "true";
 		property remote.elasticsearch.enabled = "true";
-		property test.name.skip.portal.instance = "DatabasePartitioning#CanAddCompanyWithCluster";
+		property test.liferay.virtual.instance = "false";
 
 		Clustering.viewClusterStatusInConsole();
 
@@ -119,7 +119,7 @@ definition {
 		property minimum.slave.ram = "24";
 		property portal.acceptance = "true";
 		property remote.elasticsearch.enabled = "true";
-		property test.name.skip.portal.instance = "DatabasePartitioning#CanAddCompanyWithClusterSecondNode";
+		property test.liferay.virtual.instance = "false";
 
 		Clustering.viewClusterStatusInConsole();
 
@@ -196,7 +196,7 @@ definition {
 	test CanAddCompanyWithHeadlessAPI {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.baker.com";
 		property test.assert.warning.exceptions = "true";
-		property test.name.skip.portal.instance = "DatabasePartitioning#CanAddCompanyWithHeadlessAPI";
+		property test.liferay.virtual.instance = "false";
 
 		HeadlessPortalInstanceAPI.addPortalInstance(
 			domain = "www.baker.com",
@@ -235,7 +235,7 @@ definition {
 		property custom.properties = "database.partition.schema.name.prefix=testPartition${line.separator}virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
 		property portal.acceptance = "true";
 		property test.assert.warning.exceptions = "true";
-		property test.name.skip.portal.instance = "DatabasePartitioning#CanAddCompanyWithPortalInstancesAdminUI";
+		property test.liferay.virtual.instance = "false";
 
 		PortalInstances.openVirtualInstancesAdmin();
 
@@ -276,7 +276,7 @@ definition {
 		property custom.properties = "database.partition.schema.name.prefix=testPartition${line.separator}virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
 		property portal.acceptance = "true";
 		property test.assert.warning.exceptions = "true";
-		property test.name.skip.portal.instance = "DatabasePartitioning#CanDeleteCompany";
+		property test.liferay.virtual.instance = "false";
 
 		PortalInstances.openVirtualInstancesAdmin();
 
@@ -320,7 +320,7 @@ definition {
 	@priority = 4
 	test CanSetVirtualHostViaPages {
 		property test.assert.warning.exceptions = "true";
-		property test.name.skip.portal.instance = "DatabasePartitioning#CanSetVirtualHostViaPages";
+		property test.liferay.virtual.instance = "false";
 
 		PortalInstances.openVirtualInstancesAdmin();
 
@@ -370,7 +370,7 @@ definition {
 	@priority = 4
 	test ExecuteSchemaValidator {
 		property custom.properties = "database.partition.schema.name.prefix=testPartition${line.separator}virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com,www.baker.com";
-		property test.name.skip.portal.instance = "DatabasePartitioning#ExecuteSchemaValidator";
+		property test.liferay.virtual.instance = "false";
 
 		PortalInstances.openVirtualInstancesAdmin();
 
@@ -440,7 +440,7 @@ definition {
 	test NewCompanyStillAccessibleAfterRestart {
 		property custom.properties = "database.partition.schema.name.prefix=testPartition${line.separator}virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
 		property test.assert.warning.exceptions = "true";
-		property test.name.skip.portal.instance = "DatabasePartitioning#NewCompanyStillAccessibleAfterRestart";
+		property test.liferay.virtual.instance = "false";
 
 		HeadlessPortalInstanceAPI.addPortalInstance(
 			domain = "www.able.com",
@@ -487,7 +487,7 @@ definition {
 	test NewCompanyStillAccessibleAfterRestartWithCaseInsensitiveDatabase {
 		property database.lowercase.enabled = "true";
 		property test.assert.warning.exceptions = "true";
-		property test.name.skip.portal.instance = "DatabasePartitioning#NewCompanyStillAccessibleAfterRestartWithCaseInsensitiveDatabase";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Verify if the lower_case_table_names is enabled") {
 			var variableQueryResult = SQL.executeMySQLStatement(mysqlStatement = "show variables where Variable_name='lower_case_table_names';");
@@ -541,7 +541,7 @@ definition {
 	test ScheduleWebContentChangesWithDBPartitioningActivatedAcrossVariousCompanies {
 		property osgi.module.configuration.file.names = "com.liferay.journal.configuration.JournalServiceConfiguration.config";
 		property osgi.module.configurations = "checkInterval=I\"1\"";
-		property test.name.skip.portal.instance = "DatabasePartitioning#ScheduleWebContentChangesWithDBPartitioningActivatedAcrossVariousCompanies";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add a new Company") {
 			HeadlessPortalInstanceAPI.addPortalInstance(

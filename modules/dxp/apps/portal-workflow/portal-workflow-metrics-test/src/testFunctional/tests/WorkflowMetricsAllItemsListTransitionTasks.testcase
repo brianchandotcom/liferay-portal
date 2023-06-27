@@ -9,7 +9,7 @@ definition {
 	setUp {
 		TestCase.setUpPortalInstance();
 
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		User.firstLoginPG();
 
@@ -22,9 +22,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
@@ -639,7 +639,7 @@ definition {
 	@priority = 4
 	test TasksAreGroupedByVersionedTasks {
 		property portal.upstream = "quarantine";
-		property test.name.skip.portal.instance = "WorkflowMetricsAllItemsListTransitionTasks#TasksAreGroupedByVersionedTasks";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -711,7 +711,7 @@ definition {
 	@description = "LPS-105495 - Verify that tasks with more than 10 possible transitions have a scroll inside the dropdown field"
 	@priority = 3
 	test TasksWithMoreThan10PossibleTransitionsHasScroll {
-		property test.name.skip.portal.instance = "WorkflowMetricsAllItemsListTransitionTasks#TasksWithMoreThan10PossibleTransitionsHasScroll";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",

@@ -14,9 +14,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -442,7 +442,7 @@ definition {
 	@priority = 5
 	test LabelCanBeHidden {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "FormsMultipleSelectionField#LabelCanBeHidden";
+		property test.liferay.virtual.instance = "false";
 
 		FormsAdmin.addForm();
 
@@ -479,7 +479,7 @@ definition {
 	@priority = 3
 	test LabelCanBeHiddenWithSwitchEnabled {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "FormsMultipleSelectionField#LabelCanBeHiddenWithSwitchEnabled";
+		property test.liferay.virtual.instance = "false";
 
 		FormsAdmin.addForm();
 
@@ -616,7 +616,7 @@ definition {
 	@description = "Verify that options can be displayed as switches"
 	@priority = 5
 	test OptionsCanBeDisplayedAsSwitches {
-		property test.name.skip.portal.instance = "FormsMultipleSelectionField#OptionsCanBeDisplayedAsSwitches";
+		property test.liferay.virtual.instance = "false";
 
 		FormsAdmin.addForm();
 
@@ -742,7 +742,7 @@ definition {
 	test OptionsCanBeReordered {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
-		property test.name.skip.portal.instance = "FormsMultipleSelectionField#OptionsCanBeReordered";
+		property test.liferay.virtual.instance = "false";
 
 		FormsAdmin.addForm();
 

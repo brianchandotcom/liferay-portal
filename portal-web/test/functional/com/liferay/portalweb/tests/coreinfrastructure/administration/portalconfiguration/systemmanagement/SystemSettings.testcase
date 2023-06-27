@@ -12,9 +12,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
@@ -25,7 +25,7 @@ definition {
 		property osgi.module.configuration.file.names = "com.liferay.journal.configuration.JournalServiceConfiguration.config";
 		property osgi.module.configurations = "articleCommentsEnabled=B\"true\"";
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "SystemSettings#CanOverrideValueSetInConfigFile";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -74,7 +74,7 @@ definition {
 	@priority = 4
 	test CanOverrideValueWithoutConfigFile {
 		property custom.properties = "configuration.override.com.liferay.journal.configuration.JournalServiceConfiguration_articleCommentsEnabled=B\"false\"";
-		property test.name.skip.portal.instance = "SystemSettings#CanOverrideValueWithoutConfigFile";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -97,7 +97,7 @@ definition {
 	test CanUpdateConfigValueViaUI {
 		property osgi.module.configuration.file.names = "com.liferay.journal.configuration.JournalServiceConfiguration.config";
 		property osgi.module.configurations = "articleCommentsEnabled=B\"true\"";
-		property test.name.skip.portal.instance = "SystemSettings#CanUpdateConfigValueViaUI";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given assert the Article Comments Enabled is checked for web content in System Settings") {
 			ApplicationsMenu.gotoPortlet(
@@ -269,7 +269,7 @@ definition {
 	@priority = 3
 	test CanUseSiteConfigurationAcrossDifferentSystems {
 		property custom.properties = "feature.flag.LPS-155284=true";
-		property test.name.skip.portal.instance = "SystemSettings#CanUseSiteConfigurationAcrossDifferentSystems";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given change the Site OSGi configurations to export") {
 			Site.openSiteSettingsAdmin(siteURLKey = "guest");
@@ -365,7 +365,7 @@ definition {
 	@description = "This is a use case for LPS-79394. This test check that system settings scope is corrected."
 	@priority = 5
 	test CheckSystemSettingsScopeIsCorrected {
-		property test.name.skip.portal.instance = "SystemSettings#CheckSystemSettingsScopeIsCorrected";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Naviagte to System Settings") {
 			ApplicationsMenu.gotoPortlet(

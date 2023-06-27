@@ -36,9 +36,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -82,7 +82,7 @@ definition {
 	@description = "This test checks that the user can redirect to destination URL when the user agent configured as bot."
 	@priority = 5
 	test CanRedirectToDestinationURLWhenUserAgentConfiguredAsBot {
-		property test.name.skip.portal.instance = "RedirectPattern#CanRedirectToDestinationURLWhenUserAgentConfiguredAsBot";
+		property test.liferay.virtual.instance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
 

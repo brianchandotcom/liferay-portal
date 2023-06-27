@@ -17,9 +17,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -32,7 +32,7 @@ definition {
 	@description = "This is a use case for LPS-129271."
 	@priority = 4
 	test AssertNoErrorMessageAfterExportAndImportSiteLAR {
-		property test.name.skip.portal.instance = "AWSStore#AssertNoErrorMessageAfterExportAndImportSiteLAR";
+		property test.liferay.virtual.instance = "false";
 
 		var bucketID = PropsUtil.get("s3.bucket.id");
 		var companyId = JSONCompany.getCompanyId();
@@ -74,7 +74,7 @@ definition {
 	@priority = 3
 	test AWSS3StoreDataMigration {
 		property store.migration.test = "true";
-		property test.name.skip.portal.instance = "AWSStore#AWSS3StoreDataMigration";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given a document is added to the default store") {
 			var bucketId = PropsUtil.get("s3.bucket.id");
@@ -153,7 +153,7 @@ definition {
 
 	@priority = 5
 	test AWSS3StoreSmoke {
-		property test.name.skip.portal.instance = "AWSStore#AWSS3StoreSmoke";
+		property test.liferay.virtual.instance = "false";
 
 		var bucketId = PropsUtil.get("s3.bucket.id");
 		var companyId = JSONCompany.getCompanyId();
@@ -190,7 +190,7 @@ definition {
 	@description = "This is a use case for LPS-127589."
 	@priority = 3
 	test S3ConnectionDoesNotLeakWhenServingFileAsStream {
-		property test.name.skip.portal.instance = "AWSStore#S3ConnectionDoesNotLeakWhenServingFileAsStream";
+		property test.liferay.virtual.instance = "false";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",

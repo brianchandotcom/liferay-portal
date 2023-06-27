@@ -81,9 +81,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -117,7 +117,7 @@ definition {
 	@priority = 4
 	@refactorneeded
 	test ViewDocumentAsGuest {
-		property test.name.skip.portal.instance = "PGSharepoint2013#ViewDocumentAsGuest";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 

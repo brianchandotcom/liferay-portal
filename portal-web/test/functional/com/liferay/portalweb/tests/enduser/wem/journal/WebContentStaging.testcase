@@ -171,7 +171,7 @@ definition {
 	@description = "This is a use case for LPS-121695. Assert imported DDMStructures in Global Staging are not published in Global Live."
 	@priority = 4
 	test ImportedDDMStructuresInGlobalStagingNotPublishedInLive {
-		property test.name.skip.portal.instance = "WebContentStaging#ImportedDDMStructuresInGlobalStagingNotPublishedInLive";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Access Global Site") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "global");
@@ -370,7 +370,7 @@ definition {
 	@description = "This is a use case for LPS-82757. The feedId should be different between staging and live."
 	@priority = 3
 	test PublishWebContentWithFeeds {
-		property test.name.skip.portal.instance = "WebContentStaging#PublishWebContentWithFeeds";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given a site designer has web content feeds") {
 			JSONStaging.enableLocalStaging(groupName = ${randomSiteName});
@@ -576,7 +576,7 @@ definition {
 	@priority = 5
 	test PublishWebContentWithImportedStructureDefaultValues {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "WebContentStaging#PublishWebContentWithImportedStructureDefaultValues";
+		property test.liferay.virtual.instance = "false";
 		property timeout.explicit.wait = "20";
 
 		task ("Create a basic web content") {

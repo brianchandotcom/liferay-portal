@@ -18,11 +18,11 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		Raylife.tearDownCP();
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -33,7 +33,7 @@ definition {
 	@description = "LPS-142532 - Verify if Continue Button is only enabled when all required fields have been filled in."
 	@priority = 4
 	test CanContinueOnContactsInfoWithAllFilled {
-		property test.name.skip.portal.instance = "RaylifeContactInfo#CanContinueOnContactsInfoWithAllFilled";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
@@ -55,7 +55,7 @@ definition {
 	@description = "LPS-142208 - Verify e-mail validation is required (Must have '@' and a '.' or else display, 'Please enter a valid email address.')"
 	@priority = 4
 	test CanViewErrorMessageForEmail {
-		property test.name.skip.portal.instance = "RaylifeContactInfo#CanViewErrorMessageForEmail";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
@@ -80,7 +80,7 @@ definition {
 	@description = "LPS-142538 - Verify if Zip Code field shows error message when filling in an invalid Zip Code"
 	@priority = 4
 	test CanViewErrorMessageForInvalidZipCode {
-		property test.name.skip.portal.instance = "RaylifeContactInfo#CanViewErrorMessageForInvalidZipCode";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
@@ -110,7 +110,7 @@ definition {
 	@description = "LPS-142536 - Verify if Phone field shows error message when filling in an invalid Phone number"
 	@priority = 4
 	test CanViewErrorMessageForPhoneNumber {
-		property test.name.skip.portal.instance = "RaylifeContactInfo#CanViewErrorMessageForPhoneNumber";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
@@ -140,7 +140,7 @@ definition {
 	@description = "LPS-142207 - Verify name persistence in tip (information panel) in Basics section"
 	@priority = 3
 	test CanViewFirstNameInTip {
-		property test.name.skip.portal.instance = "RaylifeContactInfo#CanViewFirstNameInTip";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
@@ -167,7 +167,7 @@ definition {
 	@description = "LPS-142209 - Verify Max number of characters in the First Name field (max chars 256)"
 	@priority = 3
 	test FirstNameMaxNumber {
-		property test.name.skip.portal.instance = "RaylifeContactInfo#FirstNameMaxNumber";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
@@ -187,7 +187,7 @@ definition {
 	@description = "LPS-142533 - Verify Max number of characters in the Last Name field (max chars 256)"
 	@priority = 3
 	test LastNameMaxNumber {
-		property test.name.skip.portal.instance = "RaylifeContactInfo#LastNameMaxNumber";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 

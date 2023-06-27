@@ -45,7 +45,7 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		// It is not possible to delete properties and data source after LRAC-13389. This functionality should return after LRAC-8040
 
@@ -53,7 +53,7 @@ definition {
 
 		ACUtils.tearDownDXP();
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -64,7 +64,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8992 | Test Summary: Clicking an associated segment navigates to segment profile"
 	@priority = 3
 	test AssertIndividualOverviewAssociatedSegmentProfile {
-		property test.name.skip.portal.instance = "KnownIndividualsProfileSegments#AssertIndividualOverviewAssociatedSegmentProfile";
+		property test.liferay.virtual.instance = "false";
 
 		var emailList = "user1@liferay.com,user2@liferay.com";
 
@@ -129,7 +129,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8993 | Test Summary: Selecting a Segment in Individuals"
 	@priority = 3
 	test AssertIndividualsSegmentSelected {
-		property test.name.skip.portal.instance = "KnownIndividualsProfileSegments#AssertIndividualsSegmentSelected";
+		property test.liferay.virtual.instance = "false";
 
 		var emailList = "user1@liferay.com,user2@liferay.com";
 
@@ -194,7 +194,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8991 | Test Summary: Order an Individual's Associated Segments List"
 	@priority = 3
 	test OrderIndividualsAssociatedSegments {
-		property test.name.skip.portal.instance = "KnownIndividualsProfileSegments#OrderIndividualsAssociatedSegments";
+		property test.liferay.virtual.instance = "false";
 
 		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com";
 
@@ -339,7 +339,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9003 | Test Summary: Individuals Segment list has pagination"
 	@priority = 3
 	test PaginateIndividualsSegmentList {
-		property test.name.skip.portal.instance = "KnownIndividualsProfileSegments#PaginateIndividualsSegmentList";
+		property test.liferay.virtual.instance = "false";
 
 		task ("View the page as the new user") {
 			User.logoutAndLoginPG(
@@ -429,7 +429,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8948 | Test Summary: Segments the individual Belongs To appear in the list"
 	@priority = 5
 	test SegmentsIndividualBelongsToAppearInList {
-		property test.name.skip.portal.instance = "KnownIndividualsProfileSegments#SegmentsIndividualBelongsToAppearInList";
+		property test.liferay.virtual.instance = "false";
 
 		var emailList = "user1@liferay.com,user2@liferay.com";
 

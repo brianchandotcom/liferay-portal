@@ -14,9 +14,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -324,7 +324,7 @@ definition {
 
 	@priority = 4
 	test AddWebContentRemoveGuestViewPermission {
-		property test.name.skip.portal.instance = "WebContentWithPermissions#AddWebContentRemoveGuestViewPermission";
+		property test.liferay.virtual.instance = "false";
 		property testray.component.names = "Permissions,Web Content Administration";
 
 		SystemSettings.openSystemSettingsAdmin();

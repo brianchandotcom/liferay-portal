@@ -30,9 +30,9 @@ definition {
 			Testray.testrayApisTearDown();
 		}
 
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
@@ -40,7 +40,7 @@ definition {
 	@description = "This is a test for LPS-152637. Verify if Testray can be created"
 	@priority = 5
 	test AddTestraySite {
-		property test.name.skip.portal.instance = "TestraySite#CanBeCreated";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Go to Testray Site") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
@@ -63,7 +63,7 @@ definition {
 	@priority = 5
 	test RemoteAppsAreCreatedForTestray {
 		property solutions.acceptance = "true";
-		property test.name.skip.portal.instance = "TestraySite#RemoteAppsAreCreatedForTestray";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Go to Testray Site") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
@@ -84,7 +84,7 @@ definition {
 	@priority = 5
 	test StyleBooksAreCreatedForTestray {
 		property solutions.acceptance = "true";
-		property test.name.skip.portal.instance = "TestraySite#StyleBooksAreCreatedForTestray";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Go to Testray Site") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});

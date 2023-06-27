@@ -27,9 +27,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -214,7 +214,7 @@ definition {
 	@priority = 4
 	@uitest
 	test ConfigureTheme {
-		property test.name.skip.portal.instance = "DisplayPageTemplates#ConfigureTheme";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Publish the display page template") {
 			PageEditor.publish();

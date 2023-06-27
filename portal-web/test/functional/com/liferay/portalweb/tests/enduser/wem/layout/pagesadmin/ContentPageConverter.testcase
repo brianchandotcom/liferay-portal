@@ -140,7 +140,7 @@ definition {
 	@priority = 5
 	test ConvertMultipleWidgetPagesToContentPagesViaAPI {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ContentPageConverter#ConvertMultipleWidgetPagesToContentPagesViaAPI";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add 10 widget pages") {
 			for (var i : list "1,2,3,4,5,6,7,8,9,10") {
@@ -325,7 +325,7 @@ definition {
 	@description = "This is a test for LPS-98325. If there is a site with several widget pages(that can be converted) and some content pages and an api to convert bulk widget pages to content pages is executed, you should be able to convert the widget pages."
 	@priority = 2
 	test ConvertMultipleWidgetPagesWithContentPagesViaAPI {
-		property test.name.skip.portal.instance = "ContentPageConverter#ConvertMultipleWidgetPagesWithContentPagesViaAPI";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add 10 widget pages") {
 			for (var i : list "1,2,3,4,5,6,7,8,9,10") {
@@ -415,7 +415,7 @@ definition {
 	@priority = 5
 	test ConvertWidgetPagesWithNestedApplicationAndCustomizationSettingToContentPagesViaAPI {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ContentPageConverter#ConvertWidgetPagesWithNestedApplicationAndCustomizationSettingToContentPagesViaAPI";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add three widget pages") {
 			for (var i : list "1,2,3") {
@@ -619,7 +619,7 @@ definition {
 	@priority = 5
 	test ConvertWidgetPageWithNonStandardLayout {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ContentPageConverter#ConvertWidgetPageWithNonStandardLayout";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Upload the custom layout") {
 			ApplicationsMenu.gotoPortlet(
@@ -730,7 +730,7 @@ definition {
 	@description = "This is a test for LPS-105943. When convert a widget page with one Customizable column and a non-standard layout, there will be two warning messages shown in conversion preview"
 	@priority = 3
 	test ConvertWidgetPageWithNonStandardLayoutAndCustomizableColumns {
-		property test.name.skip.portal.instance = "ContentPageConverter#ConvertWidgetPageWithNonStandardLayoutAndCustomizableColumns";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Upload the custom layout") {
 			ApplicationsMenu.gotoPortlet(
@@ -849,7 +849,7 @@ definition {
 	@description = "This is a test for LPS-105943. When convert a widget page with one Nested Applications widget containing widgets and a non-standard layout, there will be two warning messages shown in conversion preview"
 	@priority = 3
 	test ConvertWidgetPageWithNonStandardLayoutAndNestedApplicationsContainingWidgets {
-		property test.name.skip.portal.instance = "ContentPageConverter#ConvertWidgetPageWithNonStandardLayoutAndNestedApplicationsContainingWidgets";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Upload the custom layout") {
 			ApplicationsMenu.gotoPortlet(

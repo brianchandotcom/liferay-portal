@@ -15,9 +15,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -194,7 +194,7 @@ definition {
 	@priority = 4
 	test CannotPublishPublicationWithPendingAssetEntries {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property test.name.skip.portal.instance = "PublicationsWorkflow#CannotPublishPublicationWithPendingAssetEntries";
+		property test.liferay.virtual.instance = "false";
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -323,7 +323,7 @@ definition {
 	@priority = 4
 	test CanPublishPublicationWithApprovedAssetEntries {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property test.name.skip.portal.instance = "PublicationsWorkflow#CanPublishPublicationWithApprovedAssetEntries";
+		property test.liferay.virtual.instance = "false";
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -415,7 +415,7 @@ definition {
 	@priority = 4
 	test NotificationCanInformUserToSwitchToRelevantPublication {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property test.name.skip.portal.instance = "PublicationsWorkflow#NotificationCanInformUserToSwitchToRelevantPublication";
+		property test.liferay.virtual.instance = "false";
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",

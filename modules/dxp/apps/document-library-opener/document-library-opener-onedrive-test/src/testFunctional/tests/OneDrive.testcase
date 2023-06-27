@@ -40,9 +40,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -59,7 +59,7 @@ definition {
 	@description = "This test ensures that an Excel sheet can be added via the OneDrive editor."
 	@priority = 5
 	test AddExcelSheet {
-		property test.name.skip.portal.instance = "OneDrive#AddExcelSheet";
+		property test.liferay.virtual.instance = "false";
 
 		var num = MathUtil.randomNumber(10);
 
@@ -108,7 +108,7 @@ definition {
 	@description = "This test ensures that the title and the file name will be renamed when the created One Drive doc title duplicates the existing document File Name."
 	@priority = 4
 	test AddOneDriveEntryWithDuplicateFileName {
-		property test.name.skip.portal.instance = "OneDrive#AddOneDriveEntryWithDuplicateFileName";
+		property test.liferay.virtual.instance = "false";
 
 		var num = MathUtil.randomNumber(10);
 
@@ -183,7 +183,7 @@ definition {
 	@description = "This test ensures that the title and the file name will be renamed when the created One Drive doc title duplicates the existing document title."
 	@priority = 4
 	test AddOneDriveEntryWithDuplicateTitle {
-		property test.name.skip.portal.instance = "OneDrive#AddOneDriveEntryWithDuplicateTitle";
+		property test.liferay.virtual.instance = "false";
 
 		var num = MathUtil.randomNumber(10);
 
@@ -258,7 +258,7 @@ definition {
 	@description = "This test ensures that a Powerpoint presentation can be added via the OneDrive editor."
 	@priority = 5
 	test AddPowerPointPresentation {
-		property test.name.skip.portal.instance = "OneDrive#AddPowerPointPresentation";
+		property test.liferay.virtual.instance = "false";
 
 		var num = MathUtil.randomNumber(10);
 
@@ -307,7 +307,7 @@ definition {
 	@description = "This test ensures that a Word document can be added via the OneDrive editor. "
 	@priority = 5
 	test AddWordDocument {
-		property test.name.skip.portal.instance = "OneDrive#AddWordDocument";
+		property test.liferay.virtual.instance = "false";
 
 		var num = MathUtil.randomNumber(10);
 
@@ -356,7 +356,7 @@ definition {
 	@description = "This test ensures that a Word Document is autotagged once checked in."
 	@priority = 4
 	test AutoTagWordDocument {
-		property test.name.skip.portal.instance = "OneDrive#AutoTagWordDocument";
+		property test.liferay.virtual.instance = "false";
 
 		var num = MathUtil.randomNumber(10);
 
@@ -391,7 +391,7 @@ definition {
 	@description = "This test ensures that the document is in draft status after canceling checkout under site admin on an Excel document during creation."
 	@priority = 4
 	test CancelCheckoutOnExcelSheet {
-		property test.name.skip.portal.instance = "OneDrive#CancelCheckoutOnExcelSheet";
+		property test.liferay.virtual.instance = "false";
 
 		var num = MathUtil.randomNumber(10);
 
@@ -421,7 +421,7 @@ definition {
 	@description = "This test ensures that the document is in draft status after canceling checkout on a Word document during creation."
 	@priority = 4
 	test CancelCheckoutOnWordDocument {
-		property test.name.skip.portal.instance = "OneDrive#CancelCheckoutOnWordDocument";
+		property test.liferay.virtual.instance = "false";
 
 		var num = MathUtil.randomNumber(10);
 
@@ -452,7 +452,7 @@ definition {
 	@priority = 5
 	test CanCopyWordDocumentFromDepotToSite {
 		property custom.properties = "feature.flag.LPS-182512=true";
-		property test.name.skip.portal.instance = "OneDrive#CanCopyWordDocumentFromDepotToSite";
+		property test.liferay.virtual.instance = "false";
 
 		var num = MathUtil.randomNumber(10);
 
@@ -496,7 +496,7 @@ definition {
 	@priority = 5
 	test CanCopyWordDocumentToOtherFolderInDepot {
 		property custom.properties = "feature.flag.LPS-182512=true";
-		property test.name.skip.portal.instance = "OneDrive#CanCopyWordDocumentToOtherFolderInDepot";
+		property test.liferay.virtual.instance = "false";
 
 		var num = MathUtil.randomNumber(10);
 
@@ -544,7 +544,7 @@ definition {
 	@priority = 5
 	test CanCopyWordDocumentToOtherSite {
 		property custom.properties = "feature.flag.LPS-182512=true";
-		property test.name.skip.portal.instance = "OneDrive#CanCopyWordDocumentToOtherSite";
+		property test.liferay.virtual.instance = "false";
 
 		var num = MathUtil.randomNumber(10);
 
@@ -583,7 +583,7 @@ definition {
 	@description = "This test covers LPS-130200. It ensures that users can edit the entry through Office 365 after checkin the entry from the document editor."
 	@priority = 4
 	test CanEditEntryThroughOneDriveAfterCheckinFromDocumentEditor {
-		property test.name.skip.portal.instance = "OneDrive#CanEditEntryThroughOneDriveAfterCheckinFromDocumentEditor";
+		property test.liferay.virtual.instance = "false";
 
 		var num = MathUtil.randomNumber(10);
 
@@ -615,7 +615,7 @@ definition {
 	@description = "This test ensures that an Excel sheet can be deleted."
 	@priority = 5
 	test DeleteExcelSheet {
-		property test.name.skip.portal.instance = "OneDrive#DeleteExcelSheet";
+		property test.liferay.virtual.instance = "false";
 
 		var num = MathUtil.randomNumber(10);
 
@@ -643,7 +643,7 @@ definition {
 	@description = "This test ensures that a PowerPoint presentation can be deleted."
 	@priority = 5
 	test DeletePowerPointPresentation {
-		property test.name.skip.portal.instance = "OneDrive#DeletePowerPointPresentation";
+		property test.liferay.virtual.instance = "false";
 
 		var num = MathUtil.randomNumber(10);
 
@@ -671,7 +671,7 @@ definition {
 	@description = "This test ensures that a Word document can be deleted."
 	@priority = 5
 	test DeleteWordDocument {
-		property test.name.skip.portal.instance = "OneDrive#DeleteWordDocument";
+		property test.liferay.virtual.instance = "false";
 
 		var num = MathUtil.randomNumber(10);
 
@@ -700,7 +700,7 @@ definition {
 	@priority = 4
 	test DocumentCheckoutIsCanceledAfterLockExpiration {
 		property custom.properties = "lock.expiration.time.com.liferay.document.library.kernel.model.DLFileEntry=90000";
-		property test.name.skip.portal.instance = "OneDrive#DocumentCheckoutIsCanceledAfterLockExpiration";
+		property test.liferay.virtual.instance = "false";
 
 		var num = MathUtil.randomNumber(10);
 
@@ -739,7 +739,7 @@ definition {
 	@description = "This test ensures that an Excel sheet title can be changed via the OneDrive editor."
 	@priority = 4
 	test EditExcelSheet {
-		property test.name.skip.portal.instance = "OneDrive#EditExcelSheet";
+		property test.liferay.virtual.instance = "false";
 
 		var num = MathUtil.randomNumber(10);
 
@@ -783,7 +783,7 @@ definition {
 	@description = "This test ensures that a Powerpoint presentation title can be changed via the OneDrive editor."
 	@priority = 4
 	test EditPowerPointPresentation {
-		property test.name.skip.portal.instance = "OneDrive#EditPowerPointPresentation";
+		property test.liferay.virtual.instance = "false";
 
 		var num = MathUtil.randomNumber(10);
 
@@ -827,7 +827,7 @@ definition {
 	@description = "This test ensures that a Word document title can be changed via the OneDrive editor."
 	@priority = 4
 	test EditWordDocument {
-		property test.name.skip.portal.instance = "OneDrive#EditWordDocument";
+		property test.liferay.virtual.instance = "false";
 
 		var num = MathUtil.randomNumber(10);
 
@@ -869,7 +869,7 @@ definition {
 	@description = "This test ensures that the One Drive file can be added with Japanese."
 	@priority = 5
 	test TitleAndFileNameCanBeDisplayedCorrectlyWithJapanese {
-		property test.name.skip.portal.instance = "OneDrive#TitleAndFileNameCanBeDisplayedCorrectlyWithJapanese";
+		property test.liferay.virtual.instance = "false";
 
 		var num = MathUtil.randomNumber(10);
 

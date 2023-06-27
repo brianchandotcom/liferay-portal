@@ -13,9 +13,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -35,7 +35,7 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanAddBlogsImageViaURL {
-		property test.name.skip.portal.instance = "ItemSelector#AddBlogsImageViaURL";
+		property test.liferay.virtual.instance = "false";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -593,7 +593,7 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanPreviewFacebookVideo {
-		property test.name.skip.portal.instance = "ItemSelector#PreviewFacebookVideo";
+		property test.liferay.virtual.instance = "false";
 
 		HeadlessSite.addSite(siteName = "Site Name");
 
@@ -695,7 +695,7 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanPreviewTwitchVideo {
-		property test.name.skip.portal.instance = "ItemSelector#PreviewTwitchVideo";
+		property test.liferay.virtual.instance = "false";
 
 		HeadlessSite.addSite(siteName = "Site Name");
 

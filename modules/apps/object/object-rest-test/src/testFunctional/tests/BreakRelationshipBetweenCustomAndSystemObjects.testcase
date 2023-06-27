@@ -118,7 +118,7 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		HeadlessPortalInstanceAPI.cleanAllPortalInstances();
 
@@ -126,7 +126,7 @@ definition {
 
 		JSONUser.tearDownNonAdminUsersNoSelenium();
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCPNoSelenium();
 		}
 	}

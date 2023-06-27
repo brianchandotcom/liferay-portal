@@ -2085,7 +2085,7 @@ definition {
 	@priority = 3
 	test ViewExpiredPL {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommercePriceLists#ViewExpiredPL";
+		property test.liferay.virtual.instance = "false";
 
 		// TODO Review
 
@@ -2212,7 +2212,7 @@ definition {
 	@priority = 3
 	test ViewExpiredPriceEntry {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommercePriceLists#ViewExpiredPriceEntry";
+		property test.liferay.virtual.instance = "false";
 
 		// TODO Review
 
@@ -2555,7 +2555,7 @@ definition {
 	@priority = 3
 	test ViewPriceNotAffectedByExpiredPriceEntities {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommercePriceLists#ViewPriceNotAffectedByExpiredPriceEntities";
+		property test.liferay.virtual.instance = "false";
 
 		// TODO Review
 

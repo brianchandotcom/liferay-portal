@@ -9,7 +9,7 @@ definition {
 	setUp {
 		TestCase.setUpPortalInstance();
 
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		User.firstLoginPG();
 
@@ -22,9 +22,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
@@ -32,7 +32,7 @@ definition {
 	@description = "LPS-105498 - Verify that when the user selects an instance with more than 1 pending task, the bulk update due date modal is triggered"
 	@priority = 5
 	test BulkUpdateModalIsDisplayedWhenMoreThan1PendingTaskIsSelected {
-		property test.name.skip.portal.instance = "WorkflowMetricsAllItemsListUpdateDueDate#BulkUpdateModalIsDisplayedWhenMoreThan1PendingTaskIsSelected";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.duplicateSingleApproverWorkflow(workflowName = "Multi Task Process");
 
@@ -177,7 +177,7 @@ definition {
 	@ignore = "true"
 	@priority = 4
 	test CanNotUpdateDueDateOfUnassignedTasks {
-		property test.name.skip.portal.instance = "WorkflowMetricsAllItemsListUpdateDueDate#CanNotUpdateDueDateOfUnassignedTasks";
+		property test.liferay.virtual.instance = "false";
 
 		JSONUser.addUser(
 			userEmailAddress = "user@liferay.com",

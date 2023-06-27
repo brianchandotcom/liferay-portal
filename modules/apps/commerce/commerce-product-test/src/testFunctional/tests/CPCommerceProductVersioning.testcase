@@ -20,7 +20,7 @@ definition {
 	@priority = 5
 	test CanCheckProductVersionsWithProductVersioningDisabled {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommerceProductVersioning#CanCheckProductVersionsWithProductVersioningDisabled";
+		property test.liferay.virtual.instance = "false";
 
 		// This test need to disable the versioning for that reason the 'skip.portal.instance' is necessary
 

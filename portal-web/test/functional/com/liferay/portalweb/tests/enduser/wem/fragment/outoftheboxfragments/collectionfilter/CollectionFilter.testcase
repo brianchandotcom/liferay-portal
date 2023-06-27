@@ -23,7 +23,7 @@ definition {
 	@description = "This is a test for LPS-137722. View alert info shown in dropdown menu when select multiple target collections without filters in common."
 	@priority = 4
 	test CannotSelectMultipleCollectionsWithoutFiltersInCommon {
-		property test.name.skip.portal.instance = "CollectionFilter#CannotSelectMultipleCollectionsWithoutFiltersInCommon";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Enable Basic Web Content and Basic Document collection providers in Gogo Shell") {
 			GogoShell.openGogoShellAdmin();

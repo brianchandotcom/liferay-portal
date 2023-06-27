@@ -9,7 +9,7 @@ definition {
 	setUp {
 		TestCase.setUpPortalInstance();
 
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		User.firstLoginPG();
 
@@ -22,9 +22,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
@@ -225,7 +225,7 @@ definition {
 	@priority = 4
 	test CanIdentifyMultipleCurrentNode {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "WorkflowMetricsAllItemsList#CanIdentifyMultipleCurrentNode";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -269,7 +269,7 @@ definition {
 	@description = "Verify that the users are able to identify the past stages that the workflow instance has already passed by"
 	@priority = 3
 	test CanIdentifyPastStagesOnWorkflow {
-		property test.name.skip.portal.instance = "WorkflowMetricsAllItemsList#CanIdentifyPastStagesOnWorkflow";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -325,7 +325,7 @@ definition {
 	@description = "LPS-92052 - Verify that the user is able to click on the table header Assignee to choose the items order (A-Z / Z-A)"
 	@priority = 5
 	test CanOrderByAssignee {
-		property test.name.skip.portal.instance = "WorkflowMetricsAllItemsList#CanOrderByAssignee";
+		property test.liferay.virtual.instance = "false";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -945,7 +945,7 @@ definition {
 	@description = "LPS-92043 - Verify that the Due Date displays the next SLA in line when a SLA didn't start counting"
 	@priority = 3
 	test DisplayNextSLAInLineWhenSLANotStarted {
-		property test.name.skip.portal.instance = "WorkflowMetricsAllItemsList#DisplayNextSLAInLineWhenSLANotStarted";
+		property test.liferay.virtual.instance = "false";
 
 		WorkflowMetrics.setSLADefinitionsJobInterval(
 			definitionsJobInterval = 1,
@@ -1059,7 +1059,7 @@ definition {
 	@description = "LPS-92053 - Verify that, in the item detail modal, the Due Date by SLA will provide a summary for the total number of entries for each group next to the section title"
 	@priority = 3
 	test DueDateBySlaProvidesSummaryForTotalNumberOfEntries {
-		property test.name.skip.portal.instance = "WorkflowMetricsAllItemsList#DueDateBySlaProvidesSummaryForTotalNumberOfEntries";
+		property test.liferay.virtual.instance = "false";
 
 		WorkflowMetrics.setSLADefinitionsJobInterval(
 			definitionsJobInterval = 1,
@@ -1127,7 +1127,7 @@ definition {
 	@priority = 4
 	test DueDateHasIconSlaNameDueDateAndResolutionStatus {
 		property portal.upstream = "quarantine";
-		property test.name.skip.portal.instance = "WorkflowMetricsAllItemsList#DueDateHasIconSlaNameDueDateAndResolutionStatus";
+		property test.liferay.virtual.instance = "false";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -1484,7 +1484,7 @@ definition {
 	@description = "LPS-92053 - Verify that, in the item detail modal, when an item is completed On Time, the icon on modal title will keep informing the SLA status but styled in grey color"
 	@priority = 3
 	test IconOnModalTitleIsGreyWhenItemIsCompletedOnTime {
-		property test.name.skip.portal.instance = "WorkflowMetricsAllItemsList#IconOnModalTitleIsGreyWhenItemIsCompletedOnTime";
+		property test.liferay.virtual.instance = "false";
 
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
@@ -1542,7 +1542,7 @@ definition {
 	@description = "LPS-92053 - Verify that, in the item detail modal, when an item is completed Overdue, the icon on modal title will keep informing the SLA status but styled in grey color "
 	@priority = 3
 	test IconOnModalTitleIsGreyWhenItemIsCompletedOverdue {
-		property test.name.skip.portal.instance = "WorkflowMetricsAllItemsList#IconOnModalTitleIsGreyWhenItemIsCompletedOverdue";
+		property test.liferay.virtual.instance = "false";
 
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
@@ -1608,7 +1608,7 @@ definition {
 	@description = "LPS-92053 - Verify that an item is considered overdue if it has at least one SLA overdue, regardless if it is resolved or open"
 	@priority = 4
 	test ItemIsConsideredOverdueWhenItHasOneSlaOverdue {
-		property test.name.skip.portal.instance = "WorkflowMetricsAllItemsList#ItemIsConsideredOverdueWhenItHasOneSlaOverdue";
+		property test.liferay.virtual.instance = "false";
 
 		WorkflowMetrics.setSLADefinitionsJobInterval(
 			definitionsJobInterval = 1,
@@ -1758,7 +1758,7 @@ definition {
 	@description = "LPS-92053 - Verify that the item modal places an icon before the modal title referring to the SLA status: On Time"
 	@priority = 3
 	test ItemModalPlacesIconReferringToSlaStatusOnTime {
-		property test.name.skip.portal.instance = "WorkflowMetricsAllItemsList#ItemModalPlacesIconReferringToSlaStatusOnTime";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -1808,7 +1808,7 @@ definition {
 	@description = "LPS-92053 - Verify that the item modal places an icon before the modal title referring to the SLA status: Overdue"
 	@priority = 3
 	test ItemModalPlacesIconReferringToSlaStatusOverdue {
-		property test.name.skip.portal.instance = "WorkflowMetricsAllItemsList#ItemModalPlacesIconReferringToSlaStatusOverdue";
+		property test.liferay.virtual.instance = "false";
 
 		WorkflowMetrics.setSLADefinitionsJobInterval(
 			definitionsJobInterval = 1,
@@ -1861,7 +1861,7 @@ definition {
 	@description = "LPS-130216 - Verify that once the order/sorting is made by the user, this definition should be preserved when the user change pagination number."
 	@priority = 3
 	test ItemOrdetationIsPreservedWhenChangesPagination {
-		property test.name.skip.portal.instance = "WorkflowMetricsAllItemsList#ItemOrdetationIsPreservedWhenChangesPagination";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -2155,7 +2155,7 @@ definition {
 	@description = "LPS-130166 - Verify that popover for Due Date will display up to 2 SLAs and the order should be from the most to the least critical SLA"
 	@priority = 3
 	test PopoverDisplaysUpTo2SlasOrderFromMostToLeastCritical {
-		property test.name.skip.portal.instance = "WorkflowMetricsAllItemsList#PopoverDisplaysUpTo2SlasOrderFromMostToLeastCritical";
+		property test.liferay.virtual.instance = "false";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -2344,7 +2344,7 @@ definition {
 	@description = "LPS-130167 - Verify that the user is able to reorder entries by clicking the Due Date column title"
 	@priority = 3
 	test ReorderEntriesClickingDueDateColumn {
-		property test.name.skip.portal.instance = "WorkflowMetricsAllItemsList#ReorderEntriesClickingDueDateColumn";
+		property test.liferay.virtual.instance = "false";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -2420,7 +2420,7 @@ definition {
 	@description = "LPS-98517 - Verify that if Assignee dropdown menu is higher than 496px a search bar is added on it as specified on Figma"
 	@priority = 3
 	test SearchBarIsAddedOnAssigneeDropdownMenuWhenItIsHigherThan496px {
-		property test.name.skip.portal.instance = "WorkflowMetricsAllItemsList#SearchBarIsAddedOnAssigneeDropdownMenuWhenItIsHigherThan496px";
+		property test.liferay.virtual.instance = "false";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -2511,7 +2511,7 @@ definition {
 	@description = "LPS-92052 - Verify that when the task has multiple assignees, the sort considers the first one displayed on the row"
 	@priority = 3
 	test SortConsidersOnlyTheFirstAssignee {
-		property test.name.skip.portal.instance = "WorkflowMetricsAllItemsList#SortConsidersOnlyTheFirstAssignee";
+		property test.liferay.virtual.instance = "false";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -2751,7 +2751,7 @@ definition {
 	@priority = 3
 	test TooltipDisplaysStepsListWhenMultipleItems {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "WorkflowMetricsAllItemsList#TooltipDisplaysBulletListWhenMultipleItems";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -2815,7 +2815,7 @@ definition {
 	@description = "Verify that when the user make changes in the Workflow, the Track Approval displays the correct version"
 	@priority = 4
 	test TrackApprovalDisplayCorrectVersionAfterChange {
-		property test.name.skip.portal.instance = "WorkflowMetricsAllItemsList#TrackApprovalDisplayCorrectVersionAfterChange";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -2871,7 +2871,7 @@ definition {
 	@priority = 5
 	test TrackApprovalDisplayWorkflowInUse {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "WorkflowMetricsAllItemsList#TrackApprovalDisplayWorkflowInUse";
+		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
 
@@ -2983,7 +2983,7 @@ definition {
 	@description = "LPS-98517 - Verify that, in the item detail modal, the usernames are separated by a comma when there is more than one assignee per item under the Process Details section"
 	@priority = 3
 	test UsernamesAreSeparatedByCommaInItemDetailModal {
-		property test.name.skip.portal.instance = "WorkflowMetricsAllItemsList#UsernamesAreSeparatedByCommaInItemDetailModal";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",

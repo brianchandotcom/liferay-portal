@@ -12,9 +12,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -38,7 +38,7 @@ definition {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
-		property test.name.skip.portal.instance = "SitesUseCase#AddChildSiteFromImportedSiteTemplate";
+		property test.liferay.virtual.instance = "false";
 		property testray.component.names = "Training";
 
 		task ("Add an organization") {
@@ -182,7 +182,7 @@ definition {
 	test AddOrganizationSitesAndDeactivate {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "SitesUseCase#AddOrganizationSitesAndDeactivate";
+		property test.liferay.virtual.instance = "false";
 		property testray.component.names = "Sites Administration,Training,Users and Organizations";
 
 		task ("Enable Show Inactive Request Message in system settings") {
@@ -788,7 +788,7 @@ definition {
 	@priority = 3
 	test SitesDeactivated {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property test.name.skip.portal.instance = "SitesUsecase#SitesDeactivated";
+		property test.liferay.virtual.instance = "false";
 		property testray.component.names = "Sites Administration";
 
 		task ("Enable Show Inactive Request Message in system settings") {
@@ -897,7 +897,7 @@ definition {
 		property osgi.module.configurations = "promptEnabled=\"true\"";
 		property portal.release = "true";
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
-		property test.name.skip.portal.instance = "SitesUsecase#SitesDemoSiteManagement";
+		property test.liferay.virtual.instance = "false";
 		property testray.component.names = "Sites Administration,Page Administration";
 
 		var portalURL = PropsUtil.get("portal.url");

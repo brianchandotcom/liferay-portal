@@ -13,9 +13,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -226,7 +226,7 @@ definition {
 		property portal.context = "liferay";
 		property skip.clean-app-server-deploy-dir = "true";
 		property test.assert.warning.exceptions = "true";
-		property test.name.skip.portal.instance = "ClientExtension#CustomElementCanBeCreatedInNonRootContext";
+		property test.liferay.virtual.instance = "false";
 		property testray.component.names = "Client Extensions,Frontend Data Set";
 
 		task ("Given a non-root portal context") {

@@ -30,7 +30,7 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		// It is not possible to delete properties and data source after LRAC-13389. This functionality should return after LRAC-8040
 
@@ -38,7 +38,7 @@ definition {
 
 		ACUtils.tearDownDXP();
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -207,7 +207,7 @@ definition {
 		// AC Quarantine Reason: The membership list takes a long time to update
 		// AC Refactor ticket: LRAC-10769 and LRAC-10024
 
-		property test.name.skip.portal.instance = "AssetsWebContent#AudienceCardShowsExpectedAmountSegmentedAndUnsegmentedInWC";
+		property test.liferay.virtual.instance = "false";
 
 		var usernameList = "ac,liferay";
 		var emailList = "ac@liferay.com,liferay@liferay.com";
@@ -362,7 +362,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8130 | Test Summary: Click a web content in the web content list navigates to the web content overview page"
 	@priority = 5
 	test CanNavigateToWebContentOverviewPage {
-		property test.name.skip.portal.instance = "AssetsWebContent#CanNavigateToWebContentOverviewPage";
+		property test.liferay.virtual.instance = "false";
 
 		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
@@ -415,7 +415,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8441 | Test Summary: Web content list is searchable"
 	@priority = 5
 	test CanSearchWebContentList {
-		property test.name.skip.portal.instance = "AssetsWebContent#CanSearchWebContentList";
+		property test.liferay.virtual.instance = "false";
 
 		var assetNameList = "Web Content AC Title,Web Content AC Title 2,Web Content AC Title 3";
 
@@ -607,7 +607,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8131 | Test Summary: Web content known individuals shows which individuals interact with the web content"
 	@priority = 5
 	test KnownIndividualsShowsWhichIndividualsInteractWithWebContent {
-		property test.name.skip.portal.instance = "AssetsWebContent#KnownIndividualsShowsWhichIndividualsInteractWithWebContent";
+		property test.liferay.virtual.instance = "false";
 
 		var nameList = "ac ac,liferay liferay,dxp dxp";
 		var usernameList = "ac,liferay,dxp";
@@ -675,7 +675,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8125 | Test Summary: Web content list shows all web content in a list"
 	@priority = 5
 	test ViewAllWebContentShownInAssetList {
-		property test.name.skip.portal.instance = "AssetsWebContent#ViewAllWebContentShownInAssetList";
+		property test.liferay.virtual.instance = "false";
 
 		var assetNameList = "Web Content AC Title,Web Content AC Title 2,Web Content AC Title 3";
 
@@ -730,7 +730,7 @@ definition {
 	@description = "Web content visitor behavior card shows expected amount of views"
 	@priority = 5
 	test VisitorBehaviorCardShowsExpectedAmountOfViewsInWC {
-		property test.name.skip.portal.instance = "AssetsWebContent#VisitorBehaviorCardShowsExpectedAmountOfViewsInWC";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Connect DXP to Analytics Cloud and get the property name") {
 			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
@@ -866,7 +866,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8454 | Test Summary: Web content submissions by technology card shows views by expected browser"
 	@priority = 5
 	test WebContentTechnologyCardShowsViewsByExpectedBrowser {
-		property test.name.skip.portal.instance = "AssetsWebContent#WebContentTechnologyCardShowsViewsByExpectedBrowser";
+		property test.liferay.virtual.instance = "false";
 
 		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 

@@ -15,9 +15,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -33,7 +33,7 @@ definition {
 		property log.context.enabled = "true";
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.audit.router.configuration.CSVLogMessageFormatterConfiguration.config:com.liferay.portal.security.audit.router.configuration.LoggingAuditMessageProcessorConfiguration.config";
 		property osgi.module.configurations = "columns=[\"eventType\",\"userId\",\"userName\"]:enabled=B\"true\"${line.separator}logMessageFormat=\"CSV\"${line.separator}outputToConsole=B\"true\"";
-		property test.name.skip.portal.instance = "AuditConfiguration#CanEnableLogAndConsoleAudit";
+		property test.liferay.virtual.instance = "false";
 
 		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "test@liferay.com");
 
@@ -66,7 +66,7 @@ definition {
 	test CanEnableOrDisableAudit {
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.audit.configuration.AuditConfiguration.config";
 		property osgi.module.configurations = "enabled=\"false\"";
-		property test.name.skip.portal.instance = "AuditConfiguration#CanEnableOrDisableAudit";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -124,7 +124,7 @@ definition {
 	test CanEnableOrDisableDatabasePersistence {
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.audit.router.configuration.PersistentAuditMessageProcessorConfiguration.config";
 		property osgi.module.configurations = "enabled=\"false\"";
-		property test.name.skip.portal.instance = "AuditConfiguration#CanEnableOrDisableDatabasePersistence";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",

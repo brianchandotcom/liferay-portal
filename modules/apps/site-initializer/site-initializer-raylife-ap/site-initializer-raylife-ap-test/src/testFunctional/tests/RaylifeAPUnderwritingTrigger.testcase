@@ -32,7 +32,7 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		User.logoutPG();
 
@@ -40,7 +40,7 @@ definition {
 
 		Raylife.tearDownCP();
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -51,7 +51,7 @@ definition {
 	@description = "Story ID: LPS-158168 | Test Summary: Verify if user can add a new Accident Citation."
 	@priority = 4
 	test CanAccidentCitationBeAdded {
-		property test.name.skip.portal.instance = "RaylifeAPUnderwritingTrigger#CanAccidentCitationBeAdded";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that an user go to Raylife AP and create a new application") {
 			RaylifeAP.goToRaylifeUserProfileMenu(raylifeSite = "Raylife AP");
@@ -110,7 +110,7 @@ definition {
 	@description = "Story ID: LPS-158168 | Test Summary: Verify, on the Application List, if the application created was flagged with an Underwriting status."
 	@priority = 4
 	test CanViewApplicationStatusAsUnderwriting {
-		property test.name.skip.portal.instance = "RaylifeAPUnderwritingTrigger#CanViewApplicationStatusAsUnderwriting";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that the user go to Raylife AP and create a new application") {
 			RaylifeAP.goToRaylifeUserProfileMenu(raylifeSite = "Raylife AP");

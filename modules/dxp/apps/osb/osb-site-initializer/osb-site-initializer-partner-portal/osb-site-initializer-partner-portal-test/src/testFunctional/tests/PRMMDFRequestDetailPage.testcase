@@ -42,9 +42,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -55,7 +55,7 @@ definition {
 	@description = "This is a test for LPS-182000. Verify that when an activity is claimed, the activity status changes to Claimed"
 	@priority = 4
 	test ViewActivityStatusWhenActivityIsClaimed {
-		property test.name.skip.portal.instance = "PRMMDFRequestDetailPage#ViewActivityStatusWhenActivityIsClaimed";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that the CMM user is logged in and approves the created MDF") {
 			User.logoutAndLoginPG(
@@ -96,7 +96,7 @@ definition {
 	@description = "This is a test for LPS-181999. Verify that when an MDf is approved, the activity status is Approved and Unclaimed"
 	@priority = 4
 	test ViewActivityStatusWhenMDFIsApproved {
-		property test.name.skip.portal.instance = "PRMMDFRequestDetailPage#ViewActivityStatusWhenMDFIsApproved";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that the CMM user is logged in and approves the created MDF") {
 			User.logoutAndLoginPG(
@@ -136,7 +136,7 @@ definition {
 	@description = "This is a test for LPS-181774. Verify that when an MDF is submitted, the activity status is Submitted and Unclaimed"
 	@priority = 4
 	test ViewActivityStatusWhenMDFIsSubmitted {
-		property test.name.skip.portal.instance = "PRMMDFRequestDetailPage#ViewActivityStatusWhenMDFIsSubmitted";
+		property test.liferay.virtual.instance = "false";
 
 		task ("When the partner go to the created MDF") {
 			PRMNavigator.openSitePage(pageName = "MDF Requests");

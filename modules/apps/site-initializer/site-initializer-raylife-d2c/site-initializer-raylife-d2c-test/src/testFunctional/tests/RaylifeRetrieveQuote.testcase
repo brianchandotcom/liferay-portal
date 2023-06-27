@@ -19,11 +19,11 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		Raylife.tearDownCP();
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -34,7 +34,7 @@ definition {
 	@description = "LPS-143993 - Check if entering a valid email address, user can retrieve all his/her quote information"
 	@priority = 4
 	test CanRetrieveAllQuote {
-		property test.name.skip.portal.instance = "RaylifeRetrieveQuote#CanRetrieveAllQuote";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -82,7 +82,7 @@ definition {
 	@description = "LPS-143994 -  Verify if entering a valid email address, the Email Sent Fragment is shown"
 	@priority = 3
 	test CanViewEmailFragmentSent {
-		property test.name.skip.portal.instance = "RaylifeRetrieveQuote#CanViewEmailFragmentSent";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -112,7 +112,7 @@ definition {
 	@description = "LPS-143992 - Check if you put in a different email address, the error message appears We could not find your quote. Please start a new one."
 	@priority = 3
 	test CanViewErrorMessageForEmailDifferent {
-		property test.name.skip.portal.instance = "RaylifeRetrieveQuote#CanViewErrorMessageForEmailDifferent";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -134,7 +134,7 @@ definition {
 	@description = "LPS-143991 - Check that the error message 'Please enter a valid e-mail address' appears, when an invalid e-mail address is entered in Retrieve a Quote."
 	@priority = 3
 	test CanViewErrorMessageForEmailInvalid {
-		property test.name.skip.portal.instance = "RaylifeRetrieveQuote#CanViewErrorMessageForEmailInvalid";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -156,7 +156,7 @@ definition {
 	@description = "LPS-144000 -  Verify if on the Email Sent Fragment, the Start a New Quote link goes to Get a Quote Fragment"
 	@priority = 3
 	test CanViewQuoteFragment {
-		property test.name.skip.portal.instance = "RaylifeRetrieveQuote#CanViewQuoteFragment";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -176,7 +176,7 @@ definition {
 	@description = "LPS-143983 - Verify that when clicking on Retrieve a Quote link, users will be navigated to view the Retrieve Quote Fragment on the Homepage"
 	@priority = 5
 	test CanViewRetrieveAQuoteInHomePage {
-		property test.name.skip.portal.instance = "RaylifeRetrieveQuote#CanViewRetrieveAQuoteInHomePage";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -190,7 +190,7 @@ definition {
 	@description = "LPS-143984 - Verify that when clicking on Start a New Quote, users will be navigated to the home page"
 	@priority = 3
 	test ClickingStartNewQuoteGoesHomePage {
-		property test.name.skip.portal.instance = "RaylifeRetrieveQuote#ClickingStartNewQuoteGoesHomePage";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -206,7 +206,7 @@ definition {
 	@description = "LPS-143998 - Verify if on the Email Sent Fragment, the user’s email is the same entered from the previous fragment"
 	@priority = 4
 	test EmailEqualsApplication {
-		property test.name.skip.portal.instance = "RaylifeRetrieveQuote#EmailEqualsApplication";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -236,7 +236,7 @@ definition {
 	@description = "LPS-143990 - Check that when entering a valid email address, the 'Continue Quote' button is enabled"
 	@priority = 3
 	test IsContinueQuoteButtonEnabledOnRetrieveAQuote {
-		property test.name.skip.portal.instance = "RaylifeRetrieveQuote#IsContinueQuoteButtonEnabledOnRetrieveAQuote";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -264,7 +264,7 @@ definition {
 	@description = "LPS-143998 - Verify if on the Email Sent Fragment, the user’s first name is the same entered from their matched quote application"
 	@priority = 4
 	test NameEqualsApplication {
-		property test.name.skip.portal.instance = "RaylifeRetrieveQuote#NameEqualsApplication";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 

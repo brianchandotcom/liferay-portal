@@ -23,7 +23,7 @@ definition {
 		property data.archive.type = "data-archive-web-content-with-fields";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.0.4";
-		property test.name.skip.portal.instance = "WebContentUpgrade#EditWCStructureWCTemplateAndViewInWCDAndAssetPublisher704";
+		property test.liferay.virtual.instance = "false";
 
 		ValidateWebContentUpgrade.EditWCStructureAndTemplateAndViewInWCDandAssetPublisher(webContentColor = "false");
 	}
@@ -34,7 +34,7 @@ definition {
 		property data.archive.type = "data-archive-web-content-with-fields";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.1.3";
-		property test.name.skip.portal.instance = "WebContentUpgrade#EditWCStructureWCTemplateAndViewInWCDAndAssetPublisher713";
+		property test.liferay.virtual.instance = "false";
 
 		ValidateWebContentUpgrade.EditWCStructureAndTemplateAndViewInWCDandAssetPublisher();
 	}
@@ -45,7 +45,7 @@ definition {
 		property data.archive.type = "data-archive-web-content-with-fields";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.2.1";
-		property test.name.skip.portal.instance = "WebContentUpgrade#EditWCStructureWCTemplateAndViewInWCDAndAssetPublisher721";
+		property test.liferay.virtual.instance = "false";
 
 		ValidateWebContentUpgrade.EditWCStructureAndTemplateAndViewInWCDandAssetPublisher();
 	}
@@ -56,7 +56,7 @@ definition {
 		property data.archive.type = "data-archive-web-content-with-fields";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.3.5";
-		property test.name.skip.portal.instance = "WebContentUpgrade#EditWCStructureWCTemplateAndViewInWCDAndAssetPublisher735";
+		property test.liferay.virtual.instance = "false";
 
 		ValidateWebContentUpgrade.EditWCStructureAndTemplateAndViewInWCDandAssetPublisher();
 	}
@@ -67,7 +67,7 @@ definition {
 		property data.archive.type = "data-archive-web-content-with-fields";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.3.10";
-		property test.name.skip.portal.instance = "WebContentUpgrade#EditWCStructureWCTemplateAndViewInWCDAndAssetPublisher7310";
+		property test.liferay.virtual.instance = "false";
 
 		ValidateWebContentUpgrade.EditWCStructureAndTemplateAndViewInWCDandAssetPublisher();
 	}
@@ -78,7 +78,7 @@ definition {
 		property data.archive.type = "data-archive-web-content-with-fields";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.1.10.3";
-		property test.name.skip.portal.instance = "WebContentUpgrade#EditWCStructureWCTemplateAndViewInWCDAndAssetPublisher71103";
+		property test.liferay.virtual.instance = "false";
 
 		ValidateWebContentUpgrade.EditWCStructureAndTemplateAndViewInWCDandAssetPublisher();
 	}
@@ -89,7 +89,7 @@ definition {
 		property data.archive.type = "data-archive-web-content-with-fields";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.2.10.1";
-		property test.name.skip.portal.instance = "WebContentUpgrade#EditWCStructureWCTemplateAndViewInWCDAndAssetPublisher72101";
+		property test.liferay.virtual.instance = "false";
 
 		ValidateWebContentUpgrade.EditWCStructureAndTemplateAndViewInWCDandAssetPublisher();
 	}
@@ -100,7 +100,7 @@ definition {
 		property data.archive.type = "data-archive-web-content-with-fields";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.0.10.14";
-		property test.name.skip.portal.instance = "WebContentUpgrade#EditWCStructureWCTemplateAndViewInWCDAndAssetPublisher701014";
+		property test.liferay.virtual.instance = "false";
 
 		ValidateWebContentUpgrade.EditWCStructureAndTemplateAndViewInWCDandAssetPublisher(webContentColor = "false");
 	}
@@ -111,7 +111,7 @@ definition {
 		property data.archive.type = "data-archive-web-content-with-fields";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.0.4";
-		property test.name.skip.portal.instance = "WebContentUpgrade#EditWebContentAndViewInWCDAndAssetPublisher704";
+		property test.liferay.virtual.instance = "false";
 
 		ValidateWebContentUpgrade.EditWebContentAndViewInWCDandAssetPublisher();
 	}
@@ -122,7 +122,7 @@ definition {
 		property data.archive.type = "data-archive-web-content-with-fields";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.1.3";
-		property test.name.skip.portal.instance = "WebContentUpgrade#EditWebContentAndViewInWCDAndAssetPublisher713";
+		property test.liferay.virtual.instance = "false";
 
 		ValidateWebContentUpgrade.EditWebContentAndViewInWCDandAssetPublisher();
 	}
@@ -133,7 +133,7 @@ definition {
 		property data.archive.type = "data-archive-web-content-with-fields";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.2.1";
-		property test.name.skip.portal.instance = "WebContentUpgrade#EditWebContentAndViewInWCDAndAssetPublisher721";
+		property test.liferay.virtual.instance = "false";
 
 		ValidateWebContentUpgrade.EditWebContentAndViewInWCDandAssetPublisher();
 	}
@@ -144,7 +144,7 @@ definition {
 		property data.archive.type = "data-archive-web-content-with-fields";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.3.5";
-		property test.name.skip.portal.instance = "WebContentUpgrade#EditWebContentAndViewInWCDAndAssetPublisher735";
+		property test.liferay.virtual.instance = "false";
 
 		ValidateWebContentUpgrade.EditWebContentAndViewInWCDandAssetPublisher();
 	}
@@ -155,7 +155,7 @@ definition {
 		property data.archive.type = "data-archive-web-content-with-fields";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.3.10";
-		property test.name.skip.portal.instance = "WebContentUpgrade#EditWebContentAndViewInWCDAndAssetPublisher7310";
+		property test.liferay.virtual.instance = "false";
 
 		ValidateWebContentUpgrade.EditWebContentAndViewInWCDandAssetPublisher();
 	}
@@ -166,7 +166,7 @@ definition {
 		property data.archive.type = "data-archive-web-content-with-fields";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.1.10.3";
-		property test.name.skip.portal.instance = "WebContentUpgrade#EditWebContentAndViewInWCDAndAssetPublisher71103";
+		property test.liferay.virtual.instance = "false";
 
 		ValidateWebContentUpgrade.EditWebContentAndViewInWCDandAssetPublisher();
 	}
@@ -177,7 +177,7 @@ definition {
 		property data.archive.type = "data-archive-web-content-with-fields";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.2.10.1";
-		property test.name.skip.portal.instance = "WebContentUpgrade#EditWebContentAndViewInWCDAndAssetPublisher72101";
+		property test.liferay.virtual.instance = "false";
 
 		ValidateWebContentUpgrade.EditWebContentAndViewInWCDandAssetPublisher();
 	}
@@ -188,7 +188,7 @@ definition {
 		property data.archive.type = "data-archive-web-content-with-fields";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.0.10.14";
-		property test.name.skip.portal.instance = "WebContentUpgrade#EditWebContentAndViewInWCDAndAssetPublisher701014";
+		property test.liferay.virtual.instance = "false";
 
 		ValidateWebContentUpgrade.EditWebContentAndViewInWCDandAssetPublisher();
 	}
@@ -252,7 +252,7 @@ definition {
 		property data.archive.type = "data-archive-web-content-with-fields";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.0.4";
-		property test.name.skip.portal.instance = "WebContentUpgrade#ViewWebContentWCStructureWCTemplateWCDAndAssetPublisher704";
+		property test.liferay.virtual.instance = "false";
 
 		ValidateWebContentUpgrade.ViewWebContentWCStructureWCTemplateWCDandAssetPublisher(webContentColor = "false");
 	}
@@ -263,7 +263,7 @@ definition {
 		property data.archive.type = "data-archive-web-content-with-fields";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.1.3";
-		property test.name.skip.portal.instance = "WebContentUpgrade#ViewWebContentWCStructureWCTemplateWCDAndAssetPublisher713";
+		property test.liferay.virtual.instance = "false";
 
 		ValidateWebContentUpgrade.ViewWebContentWCStructureWCTemplateWCDandAssetPublisher();
 	}
@@ -274,7 +274,7 @@ definition {
 		property data.archive.type = "data-archive-web-content-with-fields";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.2.1";
-		property test.name.skip.portal.instance = "WebContentUpgrade#ViewWebContentWCStructureWCTemplateWCDAndAssetPublisher721";
+		property test.liferay.virtual.instance = "false";
 
 		ValidateWebContentUpgrade.ViewWebContentWCStructureWCTemplateWCDandAssetPublisher();
 	}
@@ -285,7 +285,7 @@ definition {
 		property data.archive.type = "data-archive-web-content-with-fields";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.3.5";
-		property test.name.skip.portal.instance = "WebContentUpgrade#ViewWebContentWCStructureWCTemplateWCDAndAssetPublisher735";
+		property test.liferay.virtual.instance = "false";
 
 		ValidateWebContentUpgrade.ViewWebContentWCStructureWCTemplateWCDandAssetPublisher();
 	}
@@ -296,7 +296,7 @@ definition {
 		property data.archive.type = "data-archive-web-content-with-fields";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.3.10";
-		property test.name.skip.portal.instance = "WebContentUpgrade#ViewWebContentWCStructureWCTemplateWCDAndAssetPublisher7310";
+		property test.liferay.virtual.instance = "false";
 
 		ValidateWebContentUpgrade.ViewWebContentWCStructureWCTemplateWCDandAssetPublisher();
 	}
@@ -307,7 +307,7 @@ definition {
 		property data.archive.type = "data-archive-web-content-with-fields";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.1.10.3";
-		property test.name.skip.portal.instance = "WebContentUpgrade#ViewWebContentWCStructureWCTemplateWCDAndAssetPublisher71103";
+		property test.liferay.virtual.instance = "false";
 
 		ValidateWebContentUpgrade.ViewWebContentWCStructureWCTemplateWCDandAssetPublisher();
 	}
@@ -318,7 +318,7 @@ definition {
 		property data.archive.type = "data-archive-web-content-with-fields";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.2.10.1";
-		property test.name.skip.portal.instance = "WebContentUpgrade#ViewWebContentWCStructureWCTemplateWCDAndAssetPublisher72101";
+		property test.liferay.virtual.instance = "false";
 
 		ValidateWebContentUpgrade.ViewWebContentWCStructureWCTemplateWCDandAssetPublisher();
 	}
@@ -329,7 +329,7 @@ definition {
 		property data.archive.type = "data-archive-web-content-with-fields";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.0.10.14";
-		property test.name.skip.portal.instance = "WebContentUpgrade#ViewWebContentWCStructureWCTemplateWCDAndAssetPublisher701014";
+		property test.liferay.virtual.instance = "false";
 
 		ValidateWebContentUpgrade.ViewWebContentWCStructureWCTemplateWCDandAssetPublisher(webContentColor = "false");
 	}

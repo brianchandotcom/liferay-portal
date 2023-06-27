@@ -24,7 +24,7 @@ definition {
 	test ViewDepotArchive73101 {
 		property data.archive.type = "data-archive-depot";
 		property portal.version = "7.3.10.1";
-		property test.name.skip.portal.instance = "DepotUpgrade#ViewDepotArchive73101";
+		property test.liferay.virtual.instance = "false";
 
 		ValidateDepotUpgrade.validateDepotWCAndStructure();
 
@@ -42,7 +42,7 @@ definition {
 	test ViewDepotAutotaggingAndSharingArchive73101 {
 		property data.archive.type = "data-archive-depot";
 		property portal.version = "7.3.10.1";
-		property test.name.skip.portal.instance = "DepotUpgrade#ViewDepotAutotaggingAndSharingArchive73101";
+		property test.liferay.virtual.instance = "false";
 
 		ValidateAssetSharingUpgrade.viewSharedDocument(dmDocumentTitle = "DM Document Title Sharing");
 

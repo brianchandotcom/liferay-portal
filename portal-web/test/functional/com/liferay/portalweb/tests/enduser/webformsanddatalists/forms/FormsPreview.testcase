@@ -14,9 +14,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -39,7 +39,7 @@ definition {
 	@description = "Verify that a rule with an (Autofill) action can be previewed"
 	@priority = 5
 	test AutofillRuleCanBePreviewed {
-		property test.name.skip.portal.instance = "FormsPreview#AutofillRuleCanBePreviewed";
+		property test.liferay.virtual.instance = "false";
 
 		FormsAdminNavigator.enableLocalNetworkDataProvider();
 

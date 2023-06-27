@@ -36,9 +36,9 @@ definition {
 	tearDown {
 		Depot.disableStagingDepot(depotName = "Test Depot Name");
 
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -212,7 +212,7 @@ definition {
 	@description = "This test covers LPS-151756. It ensures that a user can add a document and publish it to live in asset library with permissions. Skip the instance for performance improvement."
 	@priority = 4
 	test CanPublishDocument {
-		property test.name.skip.portal.instance = "DepotStagingPermission#CanPublishDocument";
+		property test.liferay.virtual.instance = "false";
 
 		JSONRole.addRegularRole(
 			roleKey = "Regular Role",
@@ -270,7 +270,7 @@ definition {
 	@description = "This test ensures that a user with permissions can edit an image and publish it to live in asset library. Skip the instance for performance improvement."
 	@priority = 4
 	test CanPublishEditedImage {
-		property test.name.skip.portal.instance = "DepotStagingPermission#CanPublishEditedImage";
+		property test.liferay.virtual.instance = "false";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -335,7 +335,7 @@ definition {
 	@description = "This test ensures that a user with permissions can edit a basic article and publish it to live in asset library. Skip the instance for performance improvement."
 	@priority = 4
 	test CanPublishEditedWC {
-		property test.name.skip.portal.instance = "DepotStagingPermission#CanPublishEditedWC";
+		property test.liferay.virtual.instance = "false";
 
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
@@ -401,7 +401,7 @@ definition {
 	@description = "This test ensures that a user with permissions can add a basic article and publish it to live in asset library. Skip the instance for performance improvement."
 	@priority = 4
 	test CanPublishWC {
-		property test.name.skip.portal.instance = "DepotStagingPermission#CanPublishWC";
+		property test.liferay.virtual.instance = "false";
 
 		JSONRole.addRegularRole(
 			roleKey = "Regular Role",

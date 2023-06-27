@@ -14,9 +14,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -350,7 +350,7 @@ definition {
 	@description = "Verify that an Upload Field can be set to repeatable"
 	@priority = 5
 	test CanBeSetToRepeatable {
-		property test.name.skip.portal.instance = "FormsUploadField#CanBeSetToRepeatable";
+		property test.liferay.virtual.instance = "false";
 
 		FormsAdmin.addForm();
 
@@ -645,7 +645,7 @@ definition {
 	@priority = 2
 	test GuestUserCannotUploadFileWithInvalidSize {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "FormsUploadField#GuestUserCannotUploadFileWithInvalidSize";
+		property test.liferay.virtual.instance = "false";
 
 		FormsAdmin.addForm();
 

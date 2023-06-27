@@ -23,7 +23,7 @@ definition {
 	test ViewKBArticleArchive71105 {
 		property data.archive.type = "data-archive-collaboration";
 		property portal.version = "7.1.10.5";
-		property test.name.skip.portal.instance = "KBUpgrade#ViewKBArticleArchive71105";
+		property test.liferay.virtual.instance = "false";
 
 		ValidateKnowledgeBaseUpgrade.viewAndAddKBArticle(portalVersion = "7.1.10.5");
 

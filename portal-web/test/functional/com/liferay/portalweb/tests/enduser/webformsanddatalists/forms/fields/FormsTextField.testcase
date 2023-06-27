@@ -14,9 +14,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -36,7 +36,7 @@ definition {
 	@priority = 4
 	test CanBeAutocompletedUsingADataProvider {
 		property portal.upstream = "true";
-		property test.name.skip.portal.instance = "FormsTextField#CanBeAutocompletedUsingADataProvider";
+		property test.liferay.virtual.instance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -325,7 +325,7 @@ definition {
 	test CanBeRequired {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
-		property test.name.skip.portal.instance = "FormsTextField#CanBeRequired";
+		property test.liferay.virtual.instance = "false";
 
 		FormsAdmin.addForm();
 
@@ -383,7 +383,7 @@ definition {
 	test CanBeSetAsRepeatable {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
-		property test.name.skip.portal.instance = "FormsTextField#CanBeSetAsRepeatable";
+		property test.liferay.virtual.instance = "false";
 
 		FormsAdmin.addForm();
 
@@ -440,7 +440,7 @@ definition {
 	test CanBeSetToMultipleLines {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
-		property test.name.skip.portal.instance = "FormsTextField#CanBeSetToMultipleLines";
+		property test.liferay.virtual.instance = "false";
 
 		FormsAdmin.addForm();
 
@@ -560,7 +560,7 @@ definition {
 	test CanBeValidatedUsingTheDoesNotContainOption {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
-		property test.name.skip.portal.instance = "FormsTextField#CanBeValidatedUsingTheDoesNotContainOption";
+		property test.liferay.virtual.instance = "false";
 
 		FormsAdmin.addForm();
 

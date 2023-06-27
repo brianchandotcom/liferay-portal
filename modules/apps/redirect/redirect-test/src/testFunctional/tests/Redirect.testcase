@@ -23,9 +23,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -255,7 +255,7 @@ definition {
 	@priority = 4
 	@refactordone
 	test CanAddExpiredEntryFromActive404 {
-		property test.name.skip.portal.instance = "Redirect#CanAddExpiredEntryFromActive404";
+		property test.liferay.virtual.instance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -298,7 +298,7 @@ definition {
 	@priority = 4
 	@refactordone
 	test CanAddExpiredEntryFromIgnored404 {
-		property test.name.skip.portal.instance = "Redirect#CanAddExpiredEntryFromIgnored404";
+		property test.liferay.virtual.instance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -347,7 +347,7 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanAddPermanentEntryFromActive404 {
-		property test.name.skip.portal.instance = "Redirect#CanAddPermanentEntryFromActive404";
+		property test.liferay.virtual.instance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -389,7 +389,7 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanAddPermanentEntryFromIgnored404 {
-		property test.name.skip.portal.instance = "Redirect#CanAddPermanentEntryFromIgnored404";
+		property test.liferay.virtual.instance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -436,7 +436,7 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanAddTempEntryFromActive404 {
-		property test.name.skip.portal.instance = "Redirect#CanAddTempEntryFromActive404";
+		property test.liferay.virtual.instance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -477,7 +477,7 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanAddTempEntryFromIgnored404 {
-		property test.name.skip.portal.instance = "Redirect#CanAddTempEntryFromIgnored404";
+		property test.liferay.virtual.instance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -731,7 +731,7 @@ definition {
 	@description = "This ensures that no new 404 tracking is performed when the option is manually disabled at system settings."
 	@priority = 4
 	test CanDisable404InSystemSettings {
-		property test.name.skip.portal.instance = "Redirect#CanDisable404InSystemSettings";
+		property test.liferay.virtual.instance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -814,7 +814,7 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanIgnoreURLAfterReactivation {
-		property test.name.skip.portal.instance = "Redirect#CanIgnoreURLAfterReactivation";
+		property test.liferay.virtual.instance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -921,7 +921,7 @@ definition {
 	@description = "This ensures that the 404 tab is not shown and no new 404 tracking is performed when 404 tracking is disabled. Also covers LPS-121346, it ensures that the home page is not shown when accessing a not existing page."
 	@priority = 5
 	test CannotView404ByDefault {
-		property test.name.skip.portal.instance = "Redirect#CannotView404ByDefault";
+		property test.liferay.virtual.instance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -956,7 +956,7 @@ definition {
 	@refactordone
 	test CanOrder404URLsByRequests {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "Redirect#CanOrder404URLsByRequests";
+		property test.liferay.virtual.instance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -1164,7 +1164,7 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanView404URLsAfterReactivating {
-		property test.name.skip.portal.instance = "Redirect#CanView404URLsAfterReactivating";
+		property test.liferay.virtual.instance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -1337,7 +1337,7 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanViewIgnoredURL {
-		property test.name.skip.portal.instance = "Redirect#CanViewIgnoredURL";
+		property test.liferay.virtual.instance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
 

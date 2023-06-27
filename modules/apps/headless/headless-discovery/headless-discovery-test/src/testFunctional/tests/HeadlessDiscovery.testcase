@@ -12,7 +12,7 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		BlogPostingAPI.deleteAllBlogPostings();
 
@@ -24,7 +24,7 @@ definition {
 			groupName = "Guest",
 			vocabularyName = "Vocabulary Name");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCPNoSelenium();
 		}
 	}
@@ -122,7 +122,7 @@ definition {
 		property portal.acceptance = "true";
 		property portal.context = "world";
 		property skip.clean-app-server-deploy-dir = "true";
-		property test.name.skip.portal.instance = "HeadlessDiscovery#CanLoadAPIExplorerFromCustomContext";
+		property test.liferay.virtual.instance = "false";
 
 		task ("When I navigate to localhost:8080/world/o/api") {
 			var portalURL = PropsUtil.get("portal.url");

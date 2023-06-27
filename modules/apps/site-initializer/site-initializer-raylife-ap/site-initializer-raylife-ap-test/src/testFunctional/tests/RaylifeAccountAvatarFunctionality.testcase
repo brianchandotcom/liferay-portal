@@ -30,11 +30,11 @@ definition {
 	tearDown {
 		User.firstLoginPG();
 
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		RaylifeAP.tearDownCP();
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -45,7 +45,7 @@ definition {
 	@description = " Story ID: LPS-174056 | Test Summary: Verify if the user can access the Dashboard from Agent Portal by the menu list"
 	@priority = 4
 	test AssertThatUserCanAccessTheDashboard {
-		property test.name.skip.portal.instance = "RaylifeAccountAvatarFunctionality#AssertThatUserCanAccessTheDashboard";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -67,7 +67,7 @@ definition {
 	@description = " Story ID: LPS-174056 | Test Summary: Verify if the user can access the Account Settings page from Agent Portal by the avatar menu list."
 	@priority = 4
 	test AssertUserCanAccessAccountSettingsPage {
-		property test.name.skip.portal.instance = "RaylifeAccountAvatarFunctionality#AssertUserCanAccessAccountSettingsPage";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -89,7 +89,7 @@ definition {
 	@description = " Story ID: LPS-174056 | Test Summary: Verify if the user can access the Notification page from Agent Portal by the avatar menu list."
 	@priority = 4
 	test AssertUserCanAccessNotificationPage {
-		property test.name.skip.portal.instance = "RaylifeAccountAvatarFunctionality#AssertUserCanAccessNotificationPage";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -111,7 +111,7 @@ definition {
 	@description = " Story ID: LPS-174056 - Verify if the user can  Sing Out from Agent Portal by the option in avatar menu list."
 	@priority = 4
 	test AssertUserCanSingOut {
-		property test.name.skip.portal.instance = "RaylifeAccountAvatarFunctionality#AssertUserCanSingOut";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 

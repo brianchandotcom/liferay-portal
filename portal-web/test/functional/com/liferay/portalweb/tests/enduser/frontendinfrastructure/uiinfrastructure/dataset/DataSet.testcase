@@ -22,11 +22,11 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		DataSetAdmin.deleteAllDataSetEntries();
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
@@ -107,7 +107,7 @@ definition {
 	@description = "LPS-172882: Display a list of headless resources in new FDS View modal"
 	@priority = 5
 	test CanDisplayHeadlessDeliveryAPIResources {
-		property test.name.skip.portal.instance = "FrontendDataSetAdminSearch#CanDisplayHeadlessDeliveryAPIResources";
+		property test.liferay.virtual.instance = "false";
 
 		task ("When go to add data sets") {
 			LexiconEntry.gotoAdd();
@@ -165,7 +165,7 @@ definition {
 	@description = "LPS-172882: Display matched result in new FDS View modal"
 	@priority = 3
 	test CanReturnAMatchedResult {
-		property test.name.skip.portal.instance = "FrontendDataSetAdminSearch#CanReturnAMatchedResult";
+		property test.liferay.virtual.instance = "false";
 
 		task ("When go to add data sets") {
 			LexiconEntry.gotoAdd();

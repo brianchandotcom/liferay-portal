@@ -12,9 +12,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -351,7 +351,7 @@ definition {
 
 	@priority = 4
 	test AssignSiteRoleToUG {
-		property test.name.skip.portal.instance = "UsergroupsUsecase#AssignSiteRoleToUG";
+		property test.liferay.virtual.instance = "false";
 
 		JSONUserGroup.addUserGroup(
 			userGroupDescription = "UG User Group Description",
@@ -488,7 +488,7 @@ definition {
 	@priority = 4
 	test UserGroupSiteOwnerPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property test.name.skip.portal.instance = "UsergroupsUsecase#UserGroupSiteOwnerPermissions";
+		property test.liferay.virtual.instance = "false";
 
 		SearchAdministration.executeReindex();
 

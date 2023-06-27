@@ -14,9 +14,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -74,7 +74,7 @@ definition {
 	test CanAllowMultipleSelections {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
-		property test.name.skip.portal.instance = "FormsSelectFromListField#CanAllowMultipleSelections";
+		property test.liferay.virtual.instance = "false";
 
 		FormsAdmin.addForm();
 
@@ -465,7 +465,7 @@ definition {
 	@priority = 5
 	test CanCreateListUsingAutofill {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "FormsSelectFromListField#CanCreateListUsingAutofill";
+		property test.liferay.virtual.instance = "false";
 
 		FormsAdminNavigator.enableLocalNetworkDataProvider();
 
@@ -554,7 +554,7 @@ definition {
 	@priority = 5
 	test CanCreateListUsingDataProvider {
 		property portal.upstream = "true";
-		property test.name.skip.portal.instance = "FormsSelectFromListField#CanCreateListUsingDataProvider";
+		property test.liferay.virtual.instance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -797,7 +797,7 @@ definition {
 	test OptionsCanBeDeleted {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
-		property test.name.skip.portal.instance = "FormsSelectFromListField#OptionsCanBeDeleted";
+		property test.liferay.virtual.instance = "false";
 
 		FormsAdmin.addForm();
 

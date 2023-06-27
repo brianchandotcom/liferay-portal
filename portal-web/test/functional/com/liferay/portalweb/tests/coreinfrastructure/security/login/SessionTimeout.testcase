@@ -13,9 +13,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -27,7 +27,7 @@ definition {
 	@priority = 5
 	test RedirectOnExpire {
 		property custom.properties = "session.timeout=2${line.separator}session.timeout.redirect.on.expire=true";
-		property test.name.skip.portal.instance = "SessionTimeout#RedirectOnExpire";
+		property test.liferay.virtual.instance = "false";
 		property web.xml.timeout = "2";
 
 		task ("Add public page") {
@@ -73,7 +73,7 @@ definition {
 	@priority = 4
 	test RememberMeChecked {
 		property custom.properties = "session.timeout=2";
-		property test.name.skip.portal.instance = "SessionTimeout#RememberMeChecked";
+		property test.liferay.virtual.instance = "false";
 		property web.xml.timeout = "2";
 
 		task ("Assert session not expired and user sign in not present") {

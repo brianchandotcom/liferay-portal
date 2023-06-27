@@ -23,7 +23,7 @@ definition {
 	test ViewDMArchive72101 {
 		property data.archive.type = "data-archive-auto-tagging";
 		property portal.version = "7.2.10.1";
-		property test.name.skip.portal.instance = "DMAutoTaggingUpgrade#ViewDMArchive72101";
+		property test.liferay.virtual.instance = "false";
 
 		ValidateAutoTaggingUpgrade.editTagsAndDeleteAutoTaggedDM(
 			dmDocumentTitle = "DM Document JPG",
@@ -79,7 +79,7 @@ definition {
 	test ViewDMArchive73101 {
 		property data.archive.type = "data-archive-auto-tagging";
 		property portal.version = "7.3.10.1";
-		property test.name.skip.portal.instance = "DMAutoTaggingUpgrade#ViewDMArchive73101";
+		property test.liferay.virtual.instance = "false";
 
 		ValidateAutoTaggingUpgrade.editTagsAndDeleteAutoTaggedDM(
 			dmDocumentTitle = "DM Document JPG",

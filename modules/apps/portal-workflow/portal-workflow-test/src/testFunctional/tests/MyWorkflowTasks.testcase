@@ -25,9 +25,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -53,7 +53,7 @@ definition {
 	@priority = 5
 	test AccountUserCanApproveTask {
 		property portal.upstream = "quarantine";
-		property test.name.skip.portal.instance = "MyWorkflowTasks#AccountUserCanApproveTask";
+		property test.liferay.virtual.instance = "false";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -334,7 +334,7 @@ definition {
 
 	@priority = 4
 	test ApproveResubmitTaskByActions {
-		property test.name.skip.portal.instance = "MyWorkflowTasks#ApproveResubmitTaskByActions";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -432,7 +432,7 @@ definition {
 	@description = "Verify that the user can assign a task to current user in the Assigned to My Roles tab"
 	@priority = 5
 	test CanAssignTaskToCurrentUser {
-		property test.name.skip.portal.instance = "MyWorkflowTasks#CanAssignTaskToCurrentUser";
+		property test.liferay.virtual.instance = "false";
 
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -498,7 +498,7 @@ definition {
 	@description = "LPS-135888 - Verify that the task is assigned to the user with Account role type"
 	@priority = 4
 	test CanAssignTaskToUserWithAccountRole {
-		property test.name.skip.portal.instance = "MyWorkflowTasks#CanAssignTaskToUserWithAccountRole";
+		property test.liferay.virtual.instance = "false";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -903,7 +903,7 @@ definition {
 	@description = "Verify that the user can search for results inside Assigned to My Roles by Asset Title"
 	@priority = 5
 	test CanSearchForAssetTitleOnAssignedToMyRolesTab {
-		property test.name.skip.portal.instance = "MyWorkflowTasks#CanSearchForAssetTitleOnAssignedToMyRolesTab";
+		property test.liferay.virtual.instance = "false";
 
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -1393,7 +1393,7 @@ definition {
 	@priority = 5
 	test ResubmitTaskByDetails {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "MyWorkflowTasks#ResubmitTaskByDetails";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 

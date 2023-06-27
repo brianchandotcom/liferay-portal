@@ -23,9 +23,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -526,7 +526,7 @@ definition {
 	@priority = 5
 	test ViewWidgetTemplateEmbeddedWidgetAppliedToAssetPublisher {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ApplicationDisplayTemplatesUseCase#ADTChangeTemplatePortletPreferencesMethodContracts";
+		property test.liferay.virtual.instance = "false";
 		property testray.component.names = "Asset Publisher,Content and Application Templates";
 
 		task ("Execute reindex all search indexes") {

@@ -11,7 +11,7 @@ definition {
 	test DefaultPortalLandingPageSetByProperty {
 		property custom.properties = "default.landing.page.path=/web/guest/landing${line.separator}company.default.home.url=";
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Login#DefaultPortalLandingPageSetByProperty";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Login and add a public page ") {
 			User.firstLoginPG();
@@ -43,7 +43,7 @@ definition {
 	@priority = 4
 	test FacebookSSOSmoke {
 		property portal.ssl.enabled = "true";
-		property test.name.skip.portal.instance = "Login#FacebookSSOSmoke";
+		property test.liferay.virtual.instance = "false";
 
 		var facebookApplicationId = PropsUtil.get("facebook.application.id");
 		var facebookApplicationSecret = PropsUtil.get("facebook.application.secret");
@@ -87,7 +87,7 @@ definition {
 	@priority = 5
 	test LoginWithSpanishOnlyEnabledLocale {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Login#LoginWithSpanishOnlyEnabledLocale";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Login and configure spanish as default and current portal language") {
 			User.firstLoginPG();
@@ -129,7 +129,7 @@ definition {
 		property environment.acceptance = "true";
 		property operating.system.types = "alpine,amazonlinux,centos,debian,fedora,orcllinux,osx,redhat,rockylinux,solaris,suse,ubuntu,windows";
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Login#DefaultPortalLandingPageSetByProperty";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Login and go to control panel - roles") {
 			User.firstLoginUI();
@@ -146,7 +146,7 @@ definition {
 	test LoginWithUIUsingWrongCredentials {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
-		property test.name.skip.portal.instance = "Login#LoginWithUIUsingWrongCredentials";
+		property test.liferay.virtual.instance = "false";
 
 		task ("When: User tries to login with wrong credential") {
 			User.firstLoginUI(userEmailAddress = "wrong@liferay.com");
@@ -170,7 +170,7 @@ definition {
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property portal.release = "false";
 		property portal.upstream = "quarantine";
-		property test.name.skip.portal.instance = "Login#LoginWithUIUsingWrongCredentialsAndMFAIsEnabled";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: Login and enable OTP and Sign Out as Instance Admin") {
 			User.firstLoginUI();
@@ -204,7 +204,7 @@ definition {
 		property custom.properties = "javascript.single.page.application.enabled=false";
 		property dummy.socket.proxy.disabled = "true";
 		property openam.enabled = "true";
-		property test.name.skip.portal.instance = "Login#OpenSSOSmoke";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Go to http://test.able.com:8080/openam and run ant command") {
 			Navigator.openSpecificURL(url = "http://test.able.com:8080/openam");
@@ -270,7 +270,7 @@ definition {
 	@description = "This is a use case for LRQA-48218. User should be redirected to the changed landing page upon login."
 	@priority = 5
 	test RedirectToDefaultPortalLandingPageOnLogin {
-		property test.name.skip.portal.instance = "Login#DefaultPortalLandingPage";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Login and configure landing page CP") {
 			User.firstLoginPG();
@@ -307,7 +307,7 @@ definition {
 	@priority = 5
 	test TokenBasedSSOSmoke {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Login#TokenBasedSSOSmoke";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Login and reset token based SSO configuration") {
 			User.firstLoginPG();
@@ -373,7 +373,7 @@ definition {
 	@priority = 5
 	test UserSetNewPasswordWithoutPasswordProperty {
 		property custom.properties = "company.security.send.password.reset.link=true${line.separator}passwords.default.policy.change.required=false${line.separator}default.admin.password=${line.separator}jsonws.web.service.paths.excludes=";
-		property test.name.skip.portal.instance = "OnDemandAdmin#UserSetNewPasswordWithoutPasswordProperty";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: User opens the portal for the first time without default admin password property") {
 			Navigator.openURL();
@@ -423,7 +423,7 @@ definition {
 	@priority = 5
 	test VirtualInstancesNeedExtraInformationWithoutPasswordProperty {
 		property custom.properties = "default.admin.password=";
-		property test.name.skip.portal.instance = "OnDemandAdmin#VirtualInstancesNeedExtraInformationWithoutPasswordProperty";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: User opens the portal for the first time without default admin password property") {
 			Navigator.openURL();
@@ -468,7 +468,7 @@ definition {
 	@priority = 5
 	test VirtualInstancesNeedNoExtraInformationWithPasswordProperty {
 		property custom.properties = "company.security.send.password.reset.link=true${line.separator}passwords.default.policy.change.required=false";
-		property test.name.skip.portal.instance = "OnDemandAdmin#VirtualInstancesNeedNoExtraInformationWithPasswordProperty";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: User opens the portal with a set admin password and logs in") {
 			User.firstLoginUI();

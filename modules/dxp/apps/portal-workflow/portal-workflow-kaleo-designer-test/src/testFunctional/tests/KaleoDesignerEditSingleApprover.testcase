@@ -26,9 +26,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
@@ -36,7 +36,7 @@ definition {
 	@priority = 5
 	test DeleteTaskNode {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "KaleoDesignerEditSingleApprover#DeleteTaskNode";
+		property test.liferay.virtual.instance = "false";
 
 		PortletEntry.inputTitle(title = "Edited Workflow Definition");
 
@@ -78,7 +78,7 @@ definition {
 	@description = "This is a use case for LPS-46657."
 	@priority = 4
 	test ViewNodeNotificationRecipientPersistsAfterSwitchingTabs {
-		property test.name.skip.portal.instance = "KaleoDesignerEditSingleApprover#ViewNodeNotificationRecipientPersistsAfterSwitchingTabs";
+		property test.liferay.virtual.instance = "false";
 
 		KaleoDesigner.selectNode(nodeNodeLabel = "review");
 

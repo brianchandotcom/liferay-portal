@@ -2804,7 +2804,7 @@ definition {
 	@priority = 5
 	test UpdateShipmentItems {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CPCommerceShipments#UpdateShipmentItems";
+		property test.liferay.virtual.instance = "false";
 
 		// TODO Review
 

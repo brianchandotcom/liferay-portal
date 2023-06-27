@@ -16,7 +16,7 @@ definition {
 	@description = "LPS-158741: Upgrade Report provides the initial, final, and expected portal build number"
 	@priority = 3
 	test BuildNumberLogged {
-		property test.name.skip.portal.instance = "UpgradeReport#BuildNumberLogged";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Look for the upgrade report") {
 			var upgradeReportContent = UpgradeReport.getUpgradeReportFileContent();
@@ -55,7 +55,7 @@ definition {
 	@priority = 3
 	test DatabaseLogged {
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver";
-		property test.name.skip.portal.instance = "UpgradeReport#DatabaseLogged";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Look for the upgrade report") {
 			var upgradeReportContent = UpgradeReport.getUpgradeReportFileContent();
@@ -102,7 +102,7 @@ definition {
 	@priority = 4
 	test ErrorsLogged {
 		property custom.mysql.sql.statement = "ALTER TABLE Release_ DROP servletContextName;";
-		property test.name.skip.portal.instance = "UpgradeReport#ErrorsLogged";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given upgrade.report is enabled When the portal gets upgraded and an error was captured during the upgrade") {
 			var upgradeReportContent = UpgradeReport.getUpgradeReportFileContent();
@@ -162,7 +162,7 @@ definition {
 	@description = "LPS-154683: Upgrade Report is created when property is set to true"
 	@priority = 4
 	test ReportGeneratedWhenEnabled {
-		property test.name.skip.portal.instance = "UpgradeReport#ReportGeneratedWhenEnabled";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Look for the upgrade report") {
 			var liferayHome = PropsUtil.get("liferay.home.dir.name");
@@ -183,7 +183,7 @@ definition {
 		property custom.properties = "upgrade.database.auto.run=true${line.separator}upgrade.report.enabled=true";
 		property skip.start.app.server = "false";
 		property skip.upgrade-legacy-database = "true";
-		property test.name.skip.portal.instance = "UpgradeReport#ReportGeneratedWithAutoUpgrade";
+		property test.liferay.virtual.instance = "false";
 		property upgrade.reports.enabled = "false";
 
 		task ("Look for the upgrade report") {
@@ -445,7 +445,7 @@ definition {
 	@description = "LPS-154683: Upgrade Report is not created when property is not set to true"
 	@priority = 4
 	test ReportNotGenerated {
-		property test.name.skip.portal.instance = "UpgradeReport#ReportNotGenerated";
+		property test.liferay.virtual.instance = "false";
 		property upgrade.reports.enabled = "false";
 
 		task ("Look for the upgrade report") {
@@ -464,7 +464,7 @@ definition {
 	@description = "LPS-154683: The Upgrade Report should not be deleted on additional upgrade runs."
 	@priority = 4
 	test ReportPersistThroughAdditionalUpgradeRuns {
-		property test.name.skip.portal.instance = "UpgradeReport#ReportPersistThroughAdditionalUpgradeRuns";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Look for the upgrade report") {
 			var upgradeReportOriginal = UpgradeReport.getUpgradeReportFileContent();
@@ -559,7 +559,7 @@ definition {
 	@description = "LPS-158741: The Upgrade Report should list the initial, expected, and final schema versions."
 	@priority = 4
 	test SchemaVersionsLogged {
-		property test.name.skip.portal.instance = "UpgradeReport#SchemaVersionsLogged";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Look for the upgrade report") {
 			var upgradeReportContent = UpgradeReport.getUpgradeReportFileContent();
@@ -597,7 +597,7 @@ definition {
 	@description = "LPS-154683: The Upgrade Report logs total upgrade runtime."
 	@priority = 4
 	test TotalRuntimeLogged {
-		property test.name.skip.portal.instance = "UpgradeReport#TotalRuntimeLogged";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Look for the upgrade logs") {
 			var upgradeLogContent = Log.getUpgradeLogFileContent();
@@ -639,7 +639,7 @@ definition {
 	@description = "LPS-171387: Upgrade Report shows upgrade result"
 	@priority = 4
 	test UpgradeResultLogged {
-		property test.name.skip.portal.instance = "UpgradeReport#UpgradeResultLogged";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given upgrade.report is set When the portal gets successfully upgraded") {
 			var upgradeReportContent = UpgradeReport.getUpgradeReportFileContent();
@@ -657,7 +657,7 @@ definition {
 	@description = "LPS-171387: Upgrade Report shows upgrade status"
 	@priority = 4
 	test UpgradeStatusLogged {
-		property test.name.skip.portal.instance = "UpgradeReport#UpgradeStatusLogged";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given upgrade.report When the portal gets successfully upgraded") {
 			var upgradeReportContent = UpgradeReport.getUpgradeReportFileContent();
@@ -683,7 +683,7 @@ definition {
 	@description = "LPS-171387: Upgrade Report shows upgrade type"
 	@priority = 4
 	test UpgradeTypeLogged {
-		property test.name.skip.portal.instance = "UpgradeReport#UpgradeTypeLogged";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given upgrade.report is set and given a user views the upgrade log file When the portal gets successfully upgraded") {
 			var upgradeReportContent = UpgradeReport.getUpgradeReportFileContent();
@@ -743,7 +743,7 @@ definition {
 		property skip.get.testcase.database.properties = "true";
 		property skip.upgrade-legacy-database = "true";
 		property test.assert.warning.exceptions = "false";
-		property test.name.skip.portal.instance = "UpgradeReport#WarningsLogged";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Delete indexes.sql file from portal-impl.jar") {
 			AntCommands.runCommand("modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml", "delete-indexes-sql");

@@ -15,9 +15,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
@@ -29,7 +29,7 @@ definition {
 		property search.environment.suite.exclude = "true";
 		property skip.clean-app-server-deploy-dir = "true";
 		property test.assert.warning.exceptions = "true";
-		property test.name.skip.portal.instance = "Blueprints#AddBlueprintInNonRootContext";
+		property test.liferay.virtual.instance = "false";
 
 		Blueprints.openBlueprintsAdmin();
 
@@ -100,7 +100,7 @@ definition {
 	}
 
 	test ApplyBlueprintIDToSearchViaLLSO {
-		property test.name.skip.portal.instance = "Blueprints#ApplyBlueprintToSearchViaLLSO";
+		property test.liferay.virtual.instance = "false";
 
 		Blueprints.openBlueprintsAdmin();
 
@@ -145,7 +145,7 @@ definition {
 	}
 
 	test ApplyBlueprintJSONToSearchViaLLSO {
-		property test.name.skip.portal.instance = "Blueprints#ApplyBlueprintJSONToSearchViaLLSO";
+		property test.liferay.virtual.instance = "false";
 
 		SearchPortlets.addWidgets(searchPortletList = "Search Insights,Low Level Search Options");
 
@@ -226,7 +226,7 @@ definition {
 	}
 
 	test ApplyBlueprintToContentPageViaLLSO {
-		property test.name.skip.portal.instance = "Blueprints#ApplyBlueprintToContentPageViaLLSO";
+		property test.liferay.virtual.instance = "false";
 
 		JSONBlog.addEntry(
 			entryContent = "",
@@ -299,7 +299,7 @@ definition {
 		property search.environment.suite.exclude = "true";
 		property skip.clean-app-server-deploy-dir = "true";
 		property test.assert.warning.exceptions = "true";
-		property test.name.skip.portal.instance = "Blueprints#ApplyBlueprintViaBlueprintsOptionsInNonRootContext";
+		property test.liferay.virtual.instance = "false";
 
 		JSONBlog.addEntry(
 			entryContent = "",
@@ -529,7 +529,7 @@ definition {
 	}
 
 	test AssertBlueprintStillAppliedAfterRename {
-		property test.name.skip.portal.instance = "Blueprints#AssertBlueprintStillAppliedAfterRename";
+		property test.liferay.virtual.instance = "false";
 
 		JSONWebcontent.addWebContent(
 			content = "apple apple apple",

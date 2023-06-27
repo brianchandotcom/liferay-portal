@@ -39,9 +39,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -61,7 +61,7 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanDeleteWCInlineImage {
-		property test.name.skip.portal.instance = "DepotRemoteStagingWC#CanDeleteWCInlineImage";
+		property test.liferay.virtual.instance = "false";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -183,7 +183,7 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanEditFriendlyURL {
-		property test.name.skip.portal.instance = "DepotRemoteStagingWC#CanEditFriendlyURL";
+		property test.liferay.virtual.instance = "false";
 
 		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
@@ -312,7 +312,7 @@ definition {
 	@refactordone
 	test CanEditWCInlineImage {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "DepotRemoteStagingWC#CanEditWCInlineImage";
+		property test.liferay.virtual.instance = "false";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -421,7 +421,7 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanPublishDeletedWCCustomization {
-		property test.name.skip.portal.instance = "DepotRemoteStagingWC#CanPublishDeletedWCCustomization";
+		property test.liferay.virtual.instance = "false";
 
 		DepotNavigator.openDepotAdmin();
 
@@ -512,7 +512,7 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanPublishEditedWCCustomization {
-		property test.name.skip.portal.instance = "DepotRemoteStagingWC#CanPublishEditedWCCustomization";
+		property test.liferay.virtual.instance = "false";
 
 		DepotNavigator.openDepotAdmin();
 
@@ -627,7 +627,7 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanPublishWCFolder {
-		property test.name.skip.portal.instance = "DepotRemoteStagingWC#CanPublishWCFolder";
+		property test.liferay.virtual.instance = "false";
 
 		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
@@ -702,7 +702,7 @@ definition {
 	@priority = 4
 	@refactordone
 	test CanPublishWCWithCategory {
-		property test.name.skip.portal.instance = "DepotRemoteStagingWC#CanPublishWCWithCategory";
+		property test.liferay.virtual.instance = "false";
 
 		DepotNavigator.openDepotCategoriesAdmin(depotName = "Test Depot Name");
 
@@ -771,7 +771,7 @@ definition {
 	@priority = 4
 	@refactordone
 	test CanPublishWCWithEmbeddedVideo {
-		property test.name.skip.portal.instance = "DepotRemoteStagingWC#CanPublishWCWithEmbeddedVideo";
+		property test.liferay.virtual.instance = "false";
 
 		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 

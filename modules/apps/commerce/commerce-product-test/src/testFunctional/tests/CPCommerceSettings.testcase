@@ -18,7 +18,7 @@ definition {
 	@priority = 3
 	test BulkDeleteCountries {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommerceSettings#BulkDeleteCountries";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given a Admin goes to Countries") {
 			CommerceNavigator.gotoPortlet(
@@ -67,7 +67,7 @@ definition {
 	@priority = 5
 	test CanViewLanguageTagsForCategoryOnSitemapPage {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CPCommerceSettings#CanViewLanguageTagsForCategoryOnSitemapPage";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given a Minium site is created") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -217,7 +217,7 @@ definition {
 	@priority = 5
 	test CanViewSubcategoryForCategoryOnSitemapPage {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CPCommerceSettings#CanViewSubcategoryForCategoryOnSitemapPage";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given a Minium site is created") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");

@@ -32,9 +32,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -55,7 +55,7 @@ definition {
 	@description = "This test asserts that all applications that do not have items are visible but disabled, test with Blogs, WC and MB entries."
 	@priority = 2
 	test AppsWithNoEntriesAreDisabledInNewDataExport {
-		property test.name.skip.portal.instance = "GDPR#AppsWithNoEntriesAreDisabledInNewDataExport";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given sign in as New User and add entries supported by GDPR") {
 			JSONBlog.addEntry(
@@ -683,7 +683,7 @@ definition {
 	@description = "This test covers LPS-168719. It ensures that changing the password length does not affect anonymization"
 	@priority = 3
 	test CanAnonymizeWithPasswordLengthChange {
-		property test.name.skip.portal.instance = "GDPR#CanAnonymizeWithPasswordLengthChange";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given publish the document entry as the new admin user") {
 			var portalURL = PropsUtil.get("portal.url");
@@ -740,7 +740,7 @@ definition {
 	@description = "This test covers LPS-169408. It ensures that changing the password minimum upper case does not affect anonymization"
 	@priority = 3
 	test CanAnonymizeWithPasswordMinimumUpperCaseChange {
-		property test.name.skip.portal.instance = "GDPR#CanAnonymizeWithPasswordMinimumUpperCaseChange";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given publish the document entry as the new admin user") {
 			var portalURL = PropsUtil.get("portal.url");
@@ -852,7 +852,7 @@ definition {
 	@description = "This test deletes all entries when filtered by Personal Site scope"
 	@priority = 4
 	test CanDeleteAllEntriesFromPersonalSiteScope {
-		property test.name.skip.portal.instance = "GDPR#DeleteEntryFromPersonalSiteScope";
+		property test.liferay.virtual.instance = "false";
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Profile");
 
@@ -1043,7 +1043,7 @@ definition {
 	@description = "This test deletes and anonymizes all entries from all applications"
 	@priority = 3
 	test CanDeleteAndAnonymizeAllEntries {
-		property test.name.skip.portal.instance = "GDPR#CanDeleteAndAnonymizeAllEntries";
+		property test.liferay.virtual.instance = "false";
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -1245,7 +1245,7 @@ definition {
 	@description = "This test deletes a staged and a live entry from an application, tests with Blogs entries."
 	@priority = 3
 	test CanDeleteASingleStagedAndLiveBlogsEntry {
-		property test.name.skip.portal.instance = "GDPR#CanDeleteASingleStagedAndLiveBlogsEntry";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given Publish the staged blogs entries to live as a new admin user") {
 			HeadlessSite.addSite(siteName = "Site Name");
@@ -1680,7 +1680,7 @@ definition {
 	@description = "This test filters application to Forms, Web Content and Contacts and views all filtered data in Review Data section"
 	@priority = 3
 	test CanFilterAndViewData {
-		property test.name.skip.portal.instance = "GDPR#CanFilterAndViewData";
+		property test.liferay.virtual.instance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -2089,7 +2089,7 @@ definition {
 	@description = "This test changes pagination and assert export processes display properly."
 	@priority = 2
 	test PaginationWorksInExportPersonalData {
-		property test.name.skip.portal.instance = "GDPR#PaginationWorksInExportPersonalData";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given there are data across several different applications") {
 			JSONBlog.addEntry(

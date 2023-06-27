@@ -18,11 +18,11 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		Raylife.tearDownCP();
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -33,7 +33,7 @@ definition {
 	@description = "LPS-144519 - Check if the Building Interior Photos field is required"
 	@priority = 4
 	test BuildingInteriorPhotosFieldIsRequired {
-		property test.name.skip.portal.instance = "RaylifeUploadDocuments#BuildingInteriorPhotosFieldIsRequired";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -55,7 +55,7 @@ definition {
 	@description = "LPS-144525 - Check if I can cancel discard changes in the modal"
 	@priority = 4
 	test CanCancelChangesInModal {
-		property test.name.skip.portal.instance = "RaylifeUploadDocuments#CanCancelChangesInModal";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -83,7 +83,7 @@ definition {
 	@description = "LPS-144345 - Verify if users can delete attached files"
 	@priority = 5
 	test CanUserDeleteAttachedFiles {
-		property test.name.skip.portal.instance = "RaylifeUploadDocuments#CanUserDeleteAttachedFiles";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -111,7 +111,7 @@ definition {
 	@description = "LPS-144524 - heck that I can discard Files by clicking the Discard Changes button"
 	@priority = 4
 	test CanUserDiscardFiles {
-		property test.name.skip.portal.instance = "RaylifeUploadDocuments#CanUserDiscardFiles";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -140,7 +140,7 @@ definition {
 	@ignore = "true"
 	@priority = 4
 	test CanUserModifyAttachedFiles {
-		property test.name.skip.portal.instance = "RaylifeUploadDocuments#CanUserModifyAttachedFiles";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -189,7 +189,7 @@ definition {
 	@ignore = "true"
 	@priority = 5
 	test CanUsersDeleteAttachedPhotos {
-		property test.name.skip.portal.instance = "RaylifeUploadDocuments#CanUsersDeleteAttachedPhotos";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -218,7 +218,7 @@ definition {
 	@ignore = "true"
 	@priority = 4
 	test DeleteChangesButtonAppearsWhenAddingFiles {
-		property test.name.skip.portal.instance = "RaylifeUploadDocuments#DeleteChangesButtonAppearsWhenAddingFiles";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -241,7 +241,7 @@ definition {
 	@ignore = "true"
 	@priority = 5
 	test IsLimitOf4FilesReached {
-		property test.name.skip.portal.instance = "RaylifeUploadDocuments#IsLimitOf4FilesReached";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -258,7 +258,7 @@ definition {
 	@ignore = "true"
 	@priority = 5
 	test IsLimitOf4PhotosReached {
-		property test.name.skip.portal.instance = "RaylifeUploadDocuments#IsLimitOf4PhotosReached";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -275,7 +275,7 @@ definition {
 	@ignore = "true"
 	@priority = 5
 	test IsUploadButtonEnabled {
-		property test.name.skip.portal.instance = "RaylifeUploadDocuments#IsUploadButtonEnabled";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -304,7 +304,7 @@ definition {
 	@ignore = "true"
 	@priority = 5
 	test MaxIs4FilesToCommercialLicense {
-		property test.name.skip.portal.instance = "RaylifeUploadDocuments#MaxIs4FilesToCommercialLicense";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -321,7 +321,7 @@ definition {
 	@ignore = "true"
 	@priority = 4
 	test UploadSectionCompleted {
-		property test.name.skip.portal.instance = "RaylifeUploadDocuments#UploadSectionCompleted";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 

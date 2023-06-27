@@ -14,9 +14,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -214,7 +214,7 @@ definition {
 	test CanBeSubmittedWithARequiredField {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
-		property test.name.skip.portal.instance = "FormsSubmissions#CanBeSubmittedWithARequiredField";
+		property test.liferay.virtual.instance = "false";
 
 		FormsAdmin.addForm();
 
@@ -335,7 +335,7 @@ definition {
 	test CannotBeSubmittedWithoutARequiredField {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
-		property test.name.skip.portal.instance = "FormsSubmissions#CannotBeSubmittedWithoutARequiredField";
+		property test.liferay.virtual.instance = "false";
 
 		FormsAdmin.addForm();
 
@@ -1172,7 +1172,7 @@ definition {
 	test CanRequireCAPTCHA {
 		property captcha.enabled = "true";
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "FormsSubmissions#CanRequireCAPTCHA";
+		property test.liferay.virtual.instance = "false";
 
 		FormsAdmin.addForm();
 
@@ -1737,7 +1737,7 @@ definition {
 	test SendEmailNotificationsSubmittingForm {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
-		property test.name.skip.portal.instance = "FormsSubmissions#SendEmailNotificationsSubmittingForm";
+		property test.liferay.virtual.instance = "false";
 		property test.smtp.server.enabled = "true";
 
 		FormsAdmin.addForm();
@@ -2000,7 +2000,7 @@ definition {
 	test SuccessPageCanBeCustomized {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
-		property test.name.skip.portal.instance = "FormsSubmissions#SuccessPageCanBeCustomized";
+		property test.liferay.virtual.instance = "false";
 		property testray.component.names = "Training";
 
 		FormsAdmin.addForm();

@@ -43,9 +43,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -56,7 +56,7 @@ definition {
 	@description = "This is a test for LPS-182807. Verify that the CMM can edit MDF in Approved status"
 	@priority = 5
 	test CMMCanEditMDFInApprovedStatus {
-		property test.name.skip.portal.instance = "PRMMDFRequestEdit#CMMCanEditMDFInApprovedStatus";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that the CMM goes to the submitted MDF") {
 			User.logoutAndLoginPG(
@@ -94,7 +94,7 @@ definition {
 	@description = "This is a test for LPS-182809. Verify that the CMM can edit MDF in Canceled status"
 	@priority = 5
 	test CMMCanEditMDFInCanceledStatus {
-		property test.name.skip.portal.instance = "PRMMDFRequestEdit#CMMCanEditMDFInCanceledStatus";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that the CMM goes to the submitted MDF") {
 			User.logoutAndLoginPG(
@@ -132,7 +132,7 @@ definition {
 	@description = "This is a test for LPS-179227. Verify that the CMM can edit MDF in Marketing Director Review status"
 	@priority = 5
 	test CMMCanEditMDFInMarketingDirectorReviewStatus {
-		property test.name.skip.portal.instance = "PRMMDFRequestEdit#CMMCanEditMDFInMarketingDirectorReviewStatus";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that the CMM goes to the submitted MDF") {
 			User.logoutAndLoginPG(
@@ -170,7 +170,7 @@ definition {
 	@description = "This is a test for LPS-182806. Verify that the CMM can edit MDF in Pending Marketing Review status"
 	@priority = 5
 	test CMMCanEditMDFInPendingMarketingReviewStatus {
-		property test.name.skip.portal.instance = "PRMMDFRequestEdit#CMMCanEditMDFInPendingMarketingReviewStatus";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that the CMM goes to the submitted MDF, which is as 'Pending Marketing Review'") {
 			User.logoutAndLoginPG(
@@ -204,7 +204,7 @@ definition {
 	@description = "This is a test for LPS-182808. Verify that the CMM can edit MDF in Rejected status"
 	@priority = 5
 	test CMMCanEditMDFInRejectedStatus {
-		property test.name.skip.portal.instance = "PRMMDFRequestEdit#CMMCanEditMDFInRejectedStatus";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that the CMM goes to the submitted MDF") {
 			User.logoutAndLoginPG(
@@ -242,7 +242,7 @@ definition {
 	@description = "This is a test for LPS-187090. Verify that the PMU can edit an MDF in 'Draft' Status"
 	@priority = 5
 	test PMUCanEditMDFInDraftStatus {
-		property test.name.skip.portal.instance = "PRMMDFRequestEdit#PMUCanEditMDFInDraftStatus";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that a MDF Request is saved as draft") {
 			PRMNavigator.openSitePage(pageName = "MDF Requests");
@@ -292,7 +292,7 @@ definition {
 	@description = "This is a test for LPS-187087. Verify that the Partner can edit an MDF in 'More Info Requested' Status"
 	@priority = 5
 	test PMUCanEditMDFInRequestMoreInfoStatus {
-		property test.name.skip.portal.instance = "PRMMDFRequestEdit#PMUCanEditMDFInRequestMoreInfoStatus";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that the CMM changes the MDF status to 'More Info Requested'") {
 			JSONPRM.changeMDFStatus(

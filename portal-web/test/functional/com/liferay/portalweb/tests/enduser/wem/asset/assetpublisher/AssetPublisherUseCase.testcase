@@ -40,7 +40,7 @@ definition {
 		property osgi.module.configuration.file.names = "com.liferay.login.web.internal.configuration.AuthLoginConfiguration.config";
 		property osgi.module.configurations = "promptEnabled=\"true\"";
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
-		property test.name.skip.portal.instance = "AssetPublisherUseCase#AddAndEditWebContentViaAssetPublisherInOrganizationSiteWithVirtualHost";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add an organization with site") {
 			JSONOrganization.addOrganization(
@@ -180,7 +180,7 @@ definition {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com,www.baker.com";
 		property osgi.module.configuration.file.names = "com.liferay.login.web.internal.configuration.AuthLoginConfiguration.config";
 		property osgi.module.configurations = "promptEnabled=\"true\"";
-		property test.name.skip.portal.instance = "AssetPublisherUseCase#AddAndEditWebContentViaAssetPublisherInOrganizationSiteWithVirtualHost";
+		property test.liferay.virtual.instance = "false";
 		property timeout.explicit.wait = "20";
 
 		task ("Add an organization with site") {
@@ -341,7 +341,7 @@ definition {
 	@description = "This is a test for LPS-132428. The user could configure Asset Publisher after adding the Kaleo Forms admin portlet to blacklist."
 	@priority = 4
 	test ConfigureAssetPublisherAfterAddingKaleoFormsAdminPortletToBlackList {
-		property test.name.skip.portal.instance = "AssetPublisherUseCase#ConfigureAssetPublisherAfterAddingKaleoFormsAdminPortletToBlackList";
+		property test.liferay.virtual.instance = "false";
 		property test.run.environment = "EE";
 
 		task ("Add the Kaleo Forms admin portlet to blacklist") {
@@ -623,7 +623,7 @@ definition {
 	@priority = 5
 	test FilterAndOrderAssetsByField {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "AssetPublisherUseCase#FilterAndOrderAssetsByField";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add a Language Selector to page") {
 			JSONLayout.addWidgetToPublicLayout(
@@ -1261,7 +1261,7 @@ definition {
 	@description = "This is a test for LPS-129830. The user could remove multiple manual selection asset entries in Asset Publisher."
 	@priority = 4
 	test RemoveMultipleManualSelectionAssetEntries {
-		property test.name.skip.portal.instance = "AssetPublisherUseCase#RemoveMultipleManualSelectionAssetEntries";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Stop and start com.liferay.layout.type.controller.portlet bundle via GogoShell") {
 			GogoShell.openGogoShellAdmin(siteURLKey = ${siteURLKey});
@@ -1957,7 +1957,7 @@ definition {
 	@description = "LPS-103624 - URLs are not well formed when changing language in classic Display Pages."
 	@priority = 4
 	test ViewInContextTranslatedWCWithFriendlyURL {
-		property test.name.skip.portal.instance = "AssetPublisherUseCase#ViewInContextTranslatedWCWithFriendlyURL";
+		property test.liferay.virtual.instance = "false";
 
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = ${randomSiteName},
@@ -2022,7 +2022,7 @@ definition {
 	@description = "View localized web content with localized categories."
 	@priority = 3
 	test ViewLocalizedWebContentWithLocalizedCategories {
-		property test.name.skip.portal.instance = "AssetPublisherUseCase#ViewLocalizedWebContentWithLocalizedCategories";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add a vocabulary with localized title") {
 			JSONCategory.addVocabulary(
@@ -2139,7 +2139,7 @@ definition {
 	@description = "This is a use case for LPS-141570. The user could view non-searchable web content in Asset Publisher after disable search with index."
 	@priority = 4
 	test ViewNonSearchableWebContentAfterDisableSearchWithIndex {
-		property test.name.skip.portal.instance = "AssetPublisherUseCase#ViewNonSearchableWebContentAfterDisableSearchWithIndex";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add a normal web content") {
 			JSONWebcontent.addWebContent(
@@ -2203,7 +2203,7 @@ definition {
 	@priority = 4
 	test ViewNotificationEmailWhenSetDynamicSubscriptionLimitToZero {
 		property custom.properties = "mail.send.blacklist=";
-		property test.name.skip.portal.instance = "AssetPublisherUseCase#ViewNotificationEmailWhenSetDynamicSubscriptionLimitToZero";
+		property test.liferay.virtual.instance = "false";
 		property test.smtp.server.enabled = "true";
 
 		task ("Set the Dynamic Subscription Limit to 0 in Asset Publisher") {
@@ -2282,7 +2282,7 @@ catch (Exception e) {
 	@priority = 3
 	@uitest
 	test ViewOpenOfficeFileTypeLinks {
-		property test.name.skip.portal.instance = "AssetPublisherUseCase#AssetPublisherHasOpenOfficeFileTypeLinks";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Enable OpenOffice Integration") {
 			SystemSettings.openSystemSettingsAdmin();

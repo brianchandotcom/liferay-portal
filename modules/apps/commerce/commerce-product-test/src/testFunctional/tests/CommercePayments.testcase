@@ -127,7 +127,7 @@ definition {
 	@priority = 5
 	test MoneyOrderCheckout {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CommercePayments#MoneyOrderCheckout";
+		property test.liferay.virtual.instance = "false";
 
 		// TODO Review
 

@@ -25,9 +25,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -42,7 +42,7 @@ definition {
 	@refactordone
 	test CanPublishApprovedEntry {
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
-		property test.name.skip.portal.instance = "BlogsRemoteStaging#CanPublishApprovedEntry";
+		property test.liferay.virtual.instance = "false";
 
 		SearchAdministration.executeReindex();
 
@@ -119,7 +119,7 @@ definition {
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
 		property databases.size = "1";
 		property minimum.slave.ram = "24";
-		property test.name.skip.portal.instance = "BlogsRemoteStaging#CanPublishEntry";
+		property test.liferay.virtual.instance = "false";
 
 		Staging.remoteStagingSetUpViaJson(
 			groupName = "Site Name",
@@ -168,7 +168,7 @@ definition {
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=${line.separator}company.default.time.zone=America/Los_Angeles";
 		property databases.size = "1";
 		property minimum.slave.ram = "24";
-		property test.name.skip.portal.instance = "BlogsRemoteStaging#CanPublishScheduledEntry";
+		property test.liferay.virtual.instance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -229,7 +229,7 @@ definition {
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
 		property databases.size = "1";
 		property minimum.slave.ram = "24";
-		property test.name.skip.portal.instance = "BlogsRemoteStaging#CanPublishSmallImage";
+		property test.liferay.virtual.instance = "false";
 
 		Staging.remoteStagingSetUpViaJson(
 			groupName = "Site Name",
@@ -297,7 +297,7 @@ definition {
 	@refactordone
 	test CanPublishUpdatedCoverImage {
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
-		property test.name.skip.portal.instance = "BlogsRemoteStaging#CanPublishUpdatedCoverImage";
+		property test.liferay.virtual.instance = "false";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -379,7 +379,7 @@ definition {
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
 		property databases.size = "1";
 		property minimum.slave.ram = "24";
-		property test.name.skip.portal.instance = "BlogsRemoteStaging#CanViewExternalVideoInContentFieldAfterFriendlyURLIsUpdated";
+		property test.liferay.virtual.instance = "false";
 
 		Staging.remoteStagingSetUpViaJson(
 			groupName = "Site Name",
@@ -463,7 +463,7 @@ definition {
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
 		property databases.size = "1";
 		property minimum.slave.ram = "24";
-		property test.name.skip.portal.instance = "BlogsRemoteStaging#CanViewExternalVideotInContentFieldAfterPublish";
+		property test.liferay.virtual.instance = "false";
 
 		Staging.remoteStagingSetUpViaJson(
 			groupName = "Site Name",
@@ -530,7 +530,7 @@ definition {
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
 		property databases.size = "1";
 		property minimum.slave.ram = "24";
-		property test.name.skip.portal.instance = "BlogsRemoteStaging#CanViewImageInContentFieldAfterFriendlyURLIsUpdated";
+		property test.liferay.virtual.instance = "false";
 
 		Staging.remoteStagingSetUpViaJson(
 			groupName = "Site Name",
@@ -621,7 +621,7 @@ definition {
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
 		property databases.size = "1";
 		property minimum.slave.ram = "24";
-		property test.name.skip.portal.instance = "BlogsRemoteStaging#CanViewSmallImageAfterFriendlyURLIsUpdated";
+		property test.liferay.virtual.instance = "false";
 
 		Staging.remoteStagingSetUpViaJson(
 			groupName = "Site Name",

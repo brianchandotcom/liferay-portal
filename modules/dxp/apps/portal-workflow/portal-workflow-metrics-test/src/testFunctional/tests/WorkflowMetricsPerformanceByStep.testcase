@@ -9,7 +9,7 @@ definition {
 	setUp {
 		TestCase.setUpPortalInstance();
 
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		User.firstLoginPG();
 
@@ -22,9 +22,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
@@ -183,7 +183,7 @@ definition {
 	@priority = 4
 	test CanSeeAllVersionsTogether {
 		property ci.retries.disabled = "true";
-		property test.name.skip.portal.instance = "WorkflowMetricsPerformanceByStep#CanSeeAllVersionsTogether";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -360,7 +360,7 @@ definition {
 	@description = "LPS-100674 - Verify that the card Performance by Step has no more than 10 entries displayed"
 	@priority = 3
 	test CardDoesNotDisplayMoreThan10Entries {
-		property test.name.skip.portal.instance = "WorkflowMetricsPerformanceByStep#CardDoesNotDisplayMoreThan10Entries";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -468,7 +468,7 @@ definition {
 	@description = "LPS-101075 - Verify that the All Versions filter considers only the steps touched by the task"
 	@priority = 4
 	test FilterConsidersStepsTouchedByTaks {
-		property test.name.skip.portal.instance = "WorkflowMetricsPerformanceByStep#FilterConsidersStepsTouchedByTaks";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -561,7 +561,7 @@ definition {
 	@description = "LPS-130215 - Verify that, selecting all versions, the filter considers only the steps touched by the task"
 	@priority = 4
 	test FilterConsidersStepsTouchedByTaksOnPage {
-		property test.name.skip.portal.instance = "WorkflowMetricsPerformanceByStep#FilterConsidersStepsTouchedByTaksOnPage";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Configure Single Approver Workflow to Blogs Entry") {
 			ApplicationsMenu.gotoPortlet(
@@ -878,7 +878,7 @@ definition {
 	@description = "LPS-130215 - Verify that when a specific version is chosen, the page only considers closed instances that are in the version chosen"
 	@priority = 4
 	test PageConsidersClosedInstancesInChosenVersion {
-		property test.name.skip.portal.instance = "WorkflowMetricsPerformanceByStep#PageConsidersClosedInstancesInChosenVersion";
+		property test.liferay.virtual.instance = "false";
 
 		var documentTitle1 = "Blogs Entry Title 1";
 		var documentTitle2 = "Blogs Entry Title 2";
@@ -1110,7 +1110,7 @@ definition {
 	@description = "LPS-101075 - Verify that, when a task do not touch the workflow task, the step is not displayed for the specific version"
 	@priority = 5
 	test StepIsNotDisplayedForSpecificVersion {
-		property test.name.skip.portal.instance = "WorkflowMetricsPerformanceByStep#StepIsNotDisplayedForSpecificVersion";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Configure Single Approver Workflow to Blogs Entry") {
 			ApplicationsMenu.gotoPortlet(
@@ -1318,7 +1318,7 @@ definition {
 	@priority = 3
 	test UserCanSearchNonAsciiChars {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "WorkflowMetricsPerformanceByStep#UserCanSearchNonAsciiChars";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",

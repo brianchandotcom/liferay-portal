@@ -19,16 +19,16 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@priority = 4
 	test AssertReplicationAfterReindex {
-		property test.name.skip.portal.instance = "CrossClusterReplicationES7#AssertReplicationAfterReindex";
+		property test.liferay.virtual.instance = "false";
 
 		JSONDocument.addFile(
 			dmDocumentDescription = "DM Description",
@@ -63,7 +63,7 @@ definition {
 
 	@priority = 3
 	test AssertReplicationWithSynonyms {
-		property test.name.skip.portal.instance = "CrossClusterReplicationES7#AssertReplicationWithSynonyms";
+		property test.liferay.virtual.instance = "false";
 
 		CrossClusterReplication.setupCrossClusterReplication();
 
@@ -95,7 +95,7 @@ definition {
 
 	@priority = 3
 	test BreakWorkflowSLA {
-		property test.name.skip.portal.instance = "CrossClusterReplicationES7#BreakWorkflowSLA";
+		property test.liferay.virtual.instance = "false";
 
 		WorkflowMetrics.setSLADefinitionsJobInterval(
 			definitionsJobInterval = 1,
@@ -167,7 +167,7 @@ definition {
 	test CanReindexWithConcurrentExecutionMode {
 		property custom.properties = "feature.flag.LPS-177664=true";
 		property search.environment.suite.exclude = "true";
-		property test.name.skip.portal.instance = "CrossClusterReplicationES7#CanReindexWithConcurrentExecutionMode";
+		property test.liferay.virtual.instance = "false";
 
 		CrossClusterReplication.setupCrossClusterReplication();
 
@@ -193,7 +193,7 @@ definition {
 	@ignore = "true"
 	@priority = 3
 	test CleanAndReindexWorkflowMetricsInstances {
-		property test.name.skip.portal.instance = "CrossClusterReplicationES7#CleanAndReindexWorkflowMetricsInstances";
+		property test.liferay.virtual.instance = "false";
 
 		CrossClusterReplication.setupCrossClusterReplication();
 
@@ -219,7 +219,7 @@ definition {
 	@ignore = "true"
 	@priority = 3
 	test CleanAndReindexWorkflowMetricsNodes {
-		property test.name.skip.portal.instance = "CrossClusterReplicationES7#CleanAndReindexWorkflowMetricsNodes";
+		property test.liferay.virtual.instance = "false";
 
 		CrossClusterReplication.setupCrossClusterReplication();
 
@@ -254,7 +254,7 @@ definition {
 	@ignore = "true"
 	@priority = 3
 	test CleanAndReindexWorkflowMetricsProcesses {
-		property test.name.skip.portal.instance = "CrossClusterReplicationES7#CleanAndReindexWorkflowMetricsProcesses";
+		property test.liferay.virtual.instance = "false";
 
 		CrossClusterReplication.setupCrossClusterReplication();
 
@@ -277,7 +277,7 @@ definition {
 	@ignore = "true"
 	@priority = 3
 	test CleanAndReindexWorkflowMetricsSLAInstanceResults {
-		property test.name.skip.portal.instance = "CrossClusterReplicationES7#CleanAndReindexWorkflowMetricsSLAInstanceResults";
+		property test.liferay.virtual.instance = "false";
 
 		CrossClusterReplication.setupCrossClusterReplication();
 
@@ -300,7 +300,7 @@ definition {
 	@ignore = "true"
 	@priority = 3
 	test CleanAndReindexWorkflowMetricsSLATaskResults {
-		property test.name.skip.portal.instance = "CrossClusterReplicationES7#CleanAndReindexWorkflowMetricsSLATaskResults";
+		property test.liferay.virtual.instance = "false";
 
 		CrossClusterReplication.setupCrossClusterReplication();
 
@@ -326,7 +326,7 @@ definition {
 	@ignore = "true"
 	@priority = 3
 	test CleanAndReindexWorkflowMetricsTasks {
-		property test.name.skip.portal.instance = "CrossClusterReplicationES7#CleanAndReindexWorkflowMetricsTasks";
+		property test.liferay.virtual.instance = "false";
 
 		CrossClusterReplication.setupCrossClusterReplication();
 
@@ -369,7 +369,7 @@ definition {
 	@ignore = "true"
 	@priority = 3
 	test CleanAndReindexWorkflowMetricsTransitions {
-		property test.name.skip.portal.instance = "CrossClusterReplicationES7#CleanAndReindexWorkflowMetricsTransitions";
+		property test.liferay.virtual.instance = "false";
 
 		CrossClusterReplication.setupCrossClusterReplication();
 
@@ -416,7 +416,7 @@ definition {
 	@priority = 3
 	test CreateBlogsEntryWithNewWorkflow {
 		property portal.upstream = "false";
-		property test.name.skip.portal.instance = "CrossClusterReplicationES7#CreateBlogsEntryWithNewWorkflow";
+		property test.liferay.virtual.instance = "false";
 
 		CrossClusterReplication.setupCrossClusterReplication();
 
@@ -477,7 +477,7 @@ definition {
 
 	@priority = 3
 	test SearchWithResultRankings {
-		property test.name.skip.portal.instance = "CrossClusterReplicationES7#SearchWithResultRankings";
+		property test.liferay.virtual.instance = "false";
 
 		CrossClusterReplication.setupCrossClusterReplication();
 
@@ -519,7 +519,7 @@ definition {
 
 	@priority = 3
 	test SearchWithVirtualInstance {
-		property test.name.skip.portal.instance = "CrossClusterReplicationES7#SearchWithVirtualInstance";
+		property test.liferay.virtual.instance = "false";
 
 		JSONDocument.addFile(
 			dmDocumentDescription = "DM Description",
@@ -571,7 +571,7 @@ definition {
 	test Smoke {
 		property osgi.module.configuration.file.names = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config";
 		property osgi.module.configurations = "blacklistBundleSymbolicNames=\"com.liferay.portal.search.tuning.rankings.web\"";
-		property test.name.skip.portal.instance = "CrossClusterReplicationES7#Smoke";
+		property test.liferay.virtual.instance = "false";
 
 		JSONDocument.addFile(
 			dmDocumentDescription = "DM Description",

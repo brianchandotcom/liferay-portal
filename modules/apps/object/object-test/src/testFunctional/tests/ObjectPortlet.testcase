@@ -16,9 +16,9 @@ definition {
 
 		JSONRole.deleteRole(roleTitle = "Regular Role");
 
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
@@ -82,7 +82,7 @@ definition {
 	@description = "LPS-135390 - Verify it is possible to view and access the Custom Object portlet with the Access in Control Panel permission"
 	@priority = 4
 	test CanAccessCustomObjectWithAccessPermission {
-		property test.name.skip.portal.instance = "ObjectPortlet#CanAccessCustomObjectWithAccessPermission";
+		property test.liferay.virtual.instance = "false";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
@@ -407,7 +407,7 @@ definition {
 	@description = "LPS-135390 - Verify it is possible to add an Object entry with the Add Object Entry permission"
 	@priority = 4
 	test CanAddObjectEntryWithAddPermission {
-		property test.name.skip.portal.instance = "ObjectPortlet#CanAddObjectEntryWithAddPermission";
+		property test.liferay.virtual.instance = "false";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
@@ -583,7 +583,7 @@ definition {
 	@description = "LPS-135390 - Verify it is possible to apply a permission only to a specific site when an Object is scoped by Site"
 	@priority = 4
 	test CanApplyPermissionOnlyToSpecificSiteWhenScopedBySite {
-		property test.name.skip.portal.instance = "ObjectPortlet#CanApplyPermissionOnlyToSpecificSiteWhenScopedBySite";
+		property test.liferay.virtual.instance = "false";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
@@ -804,7 +804,7 @@ definition {
 	@description = "LPS-135390 - Verify it is possible to delete an Object entry with the Delete permission"
 	@priority = 4
 	test CanDeleteObjectEntryWithDeletePermission {
-		property test.name.skip.portal.instance = "ObjectPortlet#CanDeleteObjectEntryWithDeletePermission";
+		property test.liferay.virtual.instance = "false";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
@@ -1179,7 +1179,7 @@ definition {
 	@priority = 5
 	test CannotAddObjectEntryWithoutAddPermission {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ObjectPortlet#CannotAddObjectEntryWithoutAddPermission";
+		property test.liferay.virtual.instance = "false";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
@@ -1239,7 +1239,7 @@ definition {
 	@description = "LPS-135390 - Verify it is not possible to delete an Object entry without the Delete permission"
 	@priority = 4
 	test CannotDeleteObjectEntryWithoutDeletePermission {
-		property test.name.skip.portal.instance = "ObjectPortlet#CannotDeleteObjectEntryWithoutDeletePermission";
+		property test.liferay.virtual.instance = "false";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
@@ -1308,7 +1308,7 @@ definition {
 	@description = "LPS-135390 - Verify it is not possible to update an Object entry without the Update permission"
 	@priority = 4
 	test CannotUpdateObjectEntryWithoutUpdatePermission {
-		property test.name.skip.portal.instance = "ObjectPortlet#CannotUpdateObjectEntryWithoutUpdatePermission";
+		property test.liferay.virtual.instance = "false";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
@@ -1387,7 +1387,7 @@ definition {
 	@priority = 5
 	test CannotViewOtherUsersEntryWithOnlyAddPermission {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ObjectPortlet#CannotViewOtherUsersEntryWithOnlyAddPermission";
+		property test.liferay.virtual.instance = "false";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
@@ -1456,7 +1456,7 @@ definition {
 	@description = "LPS-135390 - Verify it is not possible to view other user's Object entry without the View permission"
 	@priority = 4
 	test CannotViewOtherUsersEntryWithoutViewPermission {
-		property test.name.skip.portal.instance = "ObjectPortlet#CannotViewOtherUsersEntryWithoutViewPermission";
+		property test.liferay.virtual.instance = "false";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
@@ -1682,7 +1682,7 @@ definition {
 	@description = "LPS-135390 - Verify it is possible to update an Object entry with the Update permission"
 	@priority = 4
 	test CanUpdateObjectEntryWithUpdatePermission {
-		property test.name.skip.portal.instance = "ObjectPortlet#CanUpdateObjectEntryWithUpdatePermission";
+		property test.liferay.virtual.instance = "false";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
@@ -1975,7 +1975,7 @@ definition {
 	@description = "LPS-135390 - Verify it is possible to view other user's Object entry with the View permission"
 	@priority = 4
 	test CanViewOtherUsersEntryWithViewPermission {
-		property test.name.skip.portal.instance = "ObjectPortlet#CanViewOtherUsersEntryWithViewPermission";
+		property test.liferay.virtual.instance = "false";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",

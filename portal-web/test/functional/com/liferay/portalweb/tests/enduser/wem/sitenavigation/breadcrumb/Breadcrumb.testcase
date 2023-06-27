@@ -18,9 +18,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -467,7 +467,7 @@ definition {
 	@description = "View Breadcrumb when navigate to page via IP address."
 	@priority = 4
 	test ViewBreadcrumbWhenNavigateToPageViaIPAddress {
-		property test.name.skip.portal.instance = "Breadcrumb#ViewBreadcrumbWhenNavigateToPageViaIPAddress";
+		property test.liferay.virtual.instance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -516,7 +516,7 @@ definition {
 	@description = "This is a use case for LPS-179500. The administrater could see the description of DDM Template Key Default."
 	@priority = 3
 	test ViewDescriptionOfDDMTemplateKeyDefault {
-		property test.name.skip.portal.instance = "Breadcrumb#ViewDescriptionOfDDMTemplateKeyDefault";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given an administrater navigates to the System Settings") {
 			SystemSettings.openSystemSettingsAdmin();

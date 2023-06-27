@@ -15,9 +15,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -31,7 +31,7 @@ definition {
 	@priority = 4
 	test CanChangeFilterWithClientExtension {
 		property osgi.modules.includes = "frontend-data-set-sample-web";
-		property test.name.skip.portal.instance = "FrontendDataSetClientExtension#CanChangeFilterWithClientExtension";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given Sample FDS portlet deployed") {
 			FileInstall.deployFileOnServer(jarFile = "liferay-sample-fds-cell-renderer.zip");

@@ -20,7 +20,7 @@ definition {
 	@priority = 5
 	test CookiesConsentPanelAcceptsOnlySelectedCookies {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CookiesConsentPanel#CookieConsentPanelAcceptsOnlySelectedCookies";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: User opens the Cookie Consent portlet from the Cookie Banner via Configuration link") {
 			CookieBanner.openCookieConsentPanel();
@@ -45,7 +45,7 @@ definition {
 	@priority = 5
 	test CookiesConsentPanelCouldBeAddedToASitePage {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CookiesConsentPanel#CookieConsentPanelCouldBeAddedToASitePage";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: User creates a site page and adds Cookie Consent Configuration widget to it.") {
 			CookieHelper.createSitePageWithCookieBannerConfigurationPortlet();
@@ -60,7 +60,7 @@ definition {
 	@priority = 5
 	test CookiesConsentPanelCouldBeEnabledAndCustomized {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CookiesConsentPanel#CookieConsentPanelCouldBeEnabledAndCustomized";
+		property test.liferay.virtual.instance = "false";
 
 		task ("When: the End User opens the 'Cookie Consent' panel") {
 			CookieNavigator.gotoInstanceSettings(portlet = "Consent Panel");
@@ -79,7 +79,7 @@ definition {
 	@priority = 5
 	test CookiesConsentPanelCouldBeEnabledAndCustomizedOnASitePage {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CookiesConsentPanel#CookieConsentPanelCouldBeEnabledAndCustomizedOnASitePage";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: a site configured to show the Banner") {
 			JSONLayout.addPublicLayout(
@@ -113,7 +113,7 @@ definition {
 	test CookiesConsentPanelCouldBeEnabledAndCustomizedViaOSGIFile {
 		property osgi.module.configuration.file.names = "com.liferay.cookies.configuration.CookiesBannerConfiguration.config";
 		property osgi.module.configurations = "enabled=\"true\"";
-		property test.name.skip.portal.instance = "CookiesConsentPanel#CookiesConsentPanelCouldBeEnabledAndCustomizedViaOSGIFile";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: a site configured to show the Consent Panel via OSGI file") {
 			OSGiConfig.copyOSGiConfigFile(
@@ -160,7 +160,7 @@ definition {
 	@priority = 5
 	test CookiesConsentPanelCouldSaveCookieSettingsViaPortletAtSiteLevel {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CookiesConsentPanel#CookiesConsentPanelCouldSaveCookieSettingsViaPortletAtSiteLevel";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: Create a site page with a Cookies Banner Configuration widget and add a new virtual host as SiteURL") {
 			CookieBanner.cookiesBannerDeclineAll();
@@ -230,7 +230,7 @@ definition {
 	@priority = 5
 	test CookiesConsentPanelCouldSaveCookieSettingsWhenItsOnASitePage {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CookiesConsentPanel#CookieConsentPanelCouldSaveCookieSettingsWhenItsOnASitePage";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: User creates a site page and adds Cookie Consent Configuration widget to it.") {
 			CookieHelper.createSitePageWithCookieBannerConfigurationPortlet();
@@ -249,7 +249,7 @@ definition {
 	@priority = 5
 	test CookiesConsentPanelDeclineAllSelected {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CookiesConsentPanel#CookieConsentDeclineAllSelected";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: Use opens the Cookie consent portlet in a popup") {
 			CookieBanner.openCookieConsentPanel();

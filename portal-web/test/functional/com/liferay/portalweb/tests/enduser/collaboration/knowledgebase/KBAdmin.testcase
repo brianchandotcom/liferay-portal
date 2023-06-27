@@ -12,9 +12,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -93,7 +93,7 @@ definition {
 	@priority = 4
 	test CanEnableArticleExpirationLabel {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
-		property test.name.skip.portal.instance = "KBAdmin#CanEnableArticleExpirationLabel";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given the Notification Date is changed to 2 weeks") {
 			KBNavigator.openToConfigInSystemSettings(portlet = "System Service");

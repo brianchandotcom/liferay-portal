@@ -60,9 +60,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -73,7 +73,7 @@ definition {
 	@description = "This is a test for LPS-181363. Verify that its possible to unselect an activity when editing"
 	@priority = 5
 	test CanUnselectClaimedActivity {
-		property test.name.skip.portal.instance = "PRMMDFClaimEdit#CanUnselectClaimedActivity";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that the PMU creates a full claim with two activities") {
 			PRMNavigator.openSitePage(pageName = "MDF Requests");
@@ -124,7 +124,7 @@ definition {
 	@description = "This is a test for LPS-183234. Verify that the CFM can edit the claim in 'Claim Paid' status"
 	@priority = 5
 	test CFMCanEditClaimInClaimdPaidStatus {
-		property test.name.skip.portal.instance = "PRMMDFClaimEdit#CFMCanEditClaimInClaimdPaidStatus";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that the PMU creates a new claim") {
 			PRMNavigator.openSitePage(pageName = "MDF Requests");
@@ -185,7 +185,7 @@ definition {
 	@description = "This is a test for LPS-183235. Verify that the CFM can edit the claim in 'In Finance Review' status"
 	@priority = 5
 	test CFMCanEditClaimInFinanceReviewStatus {
-		property test.name.skip.portal.instance = "PRMMDFClaimEdit#CFMCanEditClaimInFinanceReviewStatus";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that the partner creates a new claim") {
 			PRMNavigator.openSitePage(pageName = "MDF Requests");
@@ -241,7 +241,7 @@ definition {
 	@description = "This is a test for LPS-183233. Verify that the CMM can edit the claim in 'Approved' status"
 	@priority = 5
 	test CMMCanEditClaimInApprovedStatus {
-		property test.name.skip.portal.instance = "PRMMDFClaimEdit#CMMCanEditClaimInApprovedStatus";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that the partner creates a new claim") {
 			PRMNavigator.openSitePage(pageName = "MDF Requests");
@@ -297,7 +297,7 @@ definition {
 	@description = "This is a test for LPS-183238. Verify that the CMM can edit the claim in 'Canceled' status"
 	@priority = 5
 	test CMMCanEditClaimInCanceledStatus {
-		property test.name.skip.portal.instance = "PRMMDFClaimEdit#CMMCanEditClaimInCanceledStatus";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that the partner creates a new claim") {
 			PRMNavigator.openSitePage(pageName = "MDF Requests");
@@ -353,7 +353,7 @@ definition {
 	@description = "This is a test for LPS-183236. Verify that the CMM can edit the claim in 'In Director Review' status"
 	@priority = 5
 	test CMMCanEditClaimInDirectorReviewStatus {
-		property test.name.skip.portal.instance = "PRMMDFClaimEdit#CMMCanEditClaimInDirectorReviewStatus";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that the partner creates a new claim") {
 			PRMNavigator.openSitePage(pageName = "MDF Requests");
@@ -409,7 +409,7 @@ definition {
 	@description = "This is a test for LPS-183237. Verify that the CMM can edit the claim in 'Rejected' status"
 	@priority = 5
 	test CMMCanEditClaimInRejectedStatus {
-		property test.name.skip.portal.instance = "PRMMDFClaimEdit#CMMCanEditClaimInRejectedStatus";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that the partner creates a new claim") {
 			PRMNavigator.openSitePage(pageName = "MDF Requests");
@@ -465,7 +465,7 @@ definition {
 	@description = "This is a test for LPS-181360. Verify that the Edit button is not displayed to partner in status different from 'Draft' and 'Request More Info'"
 	@priority = 5
 	test EditButtonIsDisplayedInSpecificStatusToPartner {
-		property test.name.skip.portal.instance = "PRMMDFClaimEdit#EditButtonIsDisplayedInSpecificStatus";
+		property test.liferay.virtual.instance = "false";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 
@@ -529,7 +529,7 @@ definition {
 	@description = "This is a test for LPS-181362. Verify that is not possible to edit the MDF Claim when all required fields are not filled"
 	@priority = 5
 	test IsNotPossibleToEditClaimWithoutFillAllRequiredFields {
-		property test.name.skip.portal.instance = "PRMMDFClaimEdit#IsNotPossibleToEditClaimWithoutFillAllRequiredFields";
+		property test.liferay.virtual.instance = "false";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 
@@ -571,7 +571,7 @@ definition {
 	@description = "This is a test for LPS-181359. Verify that the Partner can Edit a Claim in 'Draft' Status"
 	@priority = 5
 	test PartnerCanEditClaimInDraftStatus {
-		property test.name.skip.portal.instance = "PRMMDFClaimEdit#PartnerCanEditClaimInDraftStatus";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that a new claim is saved as draft") {
 			PRMMDFClaim.createNewClaim(
@@ -617,7 +617,7 @@ definition {
 	@description = "This is a test for LPS-181358. Verify that the Partner can Edit a Claim in 'Request More Info' Status"
 	@priority = 5
 	test PartnerCanEditClaimInRequestMoreInfoStatus {
-		property test.name.skip.portal.instance = "PRMMDFClaimEdit#PartnerCanEditClaimInRequestMoreInfoStatus";
+		property test.liferay.virtual.instance = "false";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 

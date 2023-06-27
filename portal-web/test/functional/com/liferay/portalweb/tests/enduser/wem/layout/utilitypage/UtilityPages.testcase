@@ -18,9 +18,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -395,7 +395,7 @@ definition {
 	@priority = 5
 	test Mark404ErrorUtilityPageAsDefault {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "UtilityPages#Mark404ErrorUtilityPageAsDefault";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given a page designer has a 404 error utility page before enabling private pages") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");

@@ -18,11 +18,11 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		Raylife.tearDownCP();
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -33,7 +33,7 @@ definition {
 	@description = "LPS-144329 - Verify if clicking on the button to go back and edit information returns you to the property page"
 	@priority = 4
 	test CanGoToPropertyPageByEditButton {
-		property test.name.skip.portal.instance = "RaylifeQuoteProfile#CanGoToPropertyPageByEditButton";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -71,7 +71,7 @@ definition {
 	@description = "LPS-142603 - Verify if Quote Profile Info panel is shown"
 	@priority = 4
 	test CanViewQuoteProfileInfoPanel {
-		property test.name.skip.portal.instance = "RaylifeQuoteProfile#CanViewQuoteProfileInfoPanel";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -111,7 +111,7 @@ definition {
 	@description = "LPS-143049 - Verify if the quote profile information panel has the information about Estimated Annual Gross Revenue previously entered by the user on Employee page"
 	@priority = 4
 	test CanViewUserDataAnnualRevenue {
-		property test.name.skip.portal.instance = "RaylifeQuoteProfile#CanViewUserDataAnnualRevenue";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -151,7 +151,7 @@ definition {
 	@description = "LPS-143058 - Verify if the quote profile information panel has the information about City previously entered by the user on Basics - Contact Info page"
 	@priority = 4
 	test CanViewUserDataCity {
-		property test.name.skip.portal.instance = "RaylifeQuoteProfile#CanViewUserDataCity";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -191,7 +191,7 @@ definition {
 	@description = "LPS-142604 - Verify if the quote profile information panel has the information about Primary Industry previously entered by the user on the Basics - Primary Industry page"
 	@priority = 4
 	test CanViewUserDataPrimaryIndustry {
-		property test.name.skip.portal.instance = "RaylifeQuoteProfile#CanViewUserDataPrimaryIndustry";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -231,7 +231,7 @@ definition {
 	@description = "LPS-143059 - Verify if the quote profile information panel has the information about State previously entered by the user on Basics - Contact Info page"
 	@priority = 4
 	test CanViewUserDataState {
-		property test.name.skip.portal.instance = "RaylifeQuoteProfile#CanViewUserDataState";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -271,7 +271,7 @@ definition {
 	@description = "LPS-143057 - Verify if the quote profile information panel has the information about Street Address previously entered by the user on Basics - Contact Info page"
 	@priority = 4
 	test CanViewUserDataStreetAddress {
-		property test.name.skip.portal.instance = "RaylifeQuoteProfile#CanViewUserDataStreetAddress";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -311,7 +311,7 @@ definition {
 	@description = "LPS-143061 - Verify if the quote profile information panel has the information about Total Employees previously entered by the user on Employee page"
 	@priority = 4
 	test CanViewUserDataTotalEmployees {
-		property test.name.skip.portal.instance = "RaylifeQuoteProfile#CanViewUserDataTotalEmployees";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -351,7 +351,7 @@ definition {
 	@description = "LPS-143060 - Verify if the quote profile information panel has the information about ZipCode previously entered by the user on Basics - Contact Info page"
 	@priority = 4
 	test CanViewUserDataZipCode {
-		property test.name.skip.portal.instance = "RaylifeQuoteProfile#CanViewUserDataZipCode";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 

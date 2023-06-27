@@ -9,7 +9,7 @@ definition {
 	setUp {
 		TestCase.setUpPortalInstance();
 
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		User.firstLoginPG();
 
@@ -22,9 +22,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
@@ -177,7 +177,7 @@ definition {
 	@description = "LPS-86642 - Verify that the On Time is the total number of pending instances that didn't breach any SLAs target times"
 	@priority = 4
 	test PendingItemsThatDoNotBreachSlaIsOnTime {
-		property test.name.skip.portal.instance = "WorkflowMetricsWorkloadByStep#PendingItemsThatDoNotBreachSlaIsOnTime";
+		property test.liferay.virtual.instance = "false";
 
 		WorkflowMetrics.setSLADefinitionsJobInterval(
 			definitionsJobInterval = 1,
@@ -240,7 +240,7 @@ definition {
 	@description = "LPS-86642 - Verify that when are parallel branches on the workflow, the sum of all pending items of the steps will be greater than the total pending items"
 	@priority = 3
 	test SumOfPendingItemsGreaterThanTotalPendingWhenArePareallelBranches {
-		property test.name.skip.portal.instance = "WorkflowMetricsWorkloadByStep#SumOfPendingItemsGreaterThanTotalPendingWhenArePareallelBranches";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",

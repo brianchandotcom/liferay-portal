@@ -18,11 +18,11 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		Raylife.tearDownCP();
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -33,7 +33,7 @@ definition {
 	@description = "LPS-144323 - Verify if pressing the 'Purchase this policy' button in the 'Basic' quote redirects to another page"
 	@priority = 5
 	test CanPurchaseBasicPolicy {
-		property test.name.skip.portal.instance = "RaylifeQuoteComparison#CanPurchaseBasicPolicy";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -67,7 +67,7 @@ definition {
 	@description = "LPS-144325 - Verify if pressing the 'Purchase this policy' button in the 'Premium' quote redirects to another page"
 	@priority = 5
 	test CanPurchasePremiumPolicy {
-		property test.name.skip.portal.instance = "RaylifeQuoteComparison#CanPurchasePremiumPolicy";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -101,7 +101,7 @@ definition {
 	@description = "LPS-144324 - Verify if pressing the 'Purchase this policy' button in the 'Standard' quote redirects to another page"
 	@priority = 5
 	test CanPurchaseStandardPolicy {
-		property test.name.skip.portal.instance = "RaylifeQuoteComparison#CanPurchaseStandardPolicy";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -135,7 +135,7 @@ definition {
 	@description = "LPS-144321 = Verify Page Header's Title: <User’s First Name>, here’s your custom quote! shows the same First Name from the user input on Basics - Contact Info page"
 	@priority = 4
 	test CanViewUserNameInTitle {
-		property test.name.skip.portal.instance = "RaylifeQuoteComparison#CanViewUserNameInTitle";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 

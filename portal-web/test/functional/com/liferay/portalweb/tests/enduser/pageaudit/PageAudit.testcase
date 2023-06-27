@@ -25,13 +25,13 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		TestUtils.hardRefresh();
 
 		JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
@@ -40,7 +40,7 @@ definition {
 	@priority = 3
 	test AccessibilityFailures {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "PageAudit#AccessibilityFailures";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Set a custom page as canonical URL to have data already loaded") {
 			PageAudit.setSEOcanonicalURL(url = "https://liferay-echo.github.io/liferay-portal/page-audit-test");
@@ -399,7 +399,7 @@ definition {
 	@uitest
 	test CheckIllegibleFontSizes {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "PageAudit#CheckIllegibleFontSizes";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Set a custom page as canonical URL to have data already loaded") {
 			PageAudit.setSEOcanonicalURL(url = "https://liferay-echo.github.io/liferay-portal/page-audit-test");
@@ -429,7 +429,7 @@ definition {
 	@uitest
 	test CheckIncorrectImageAspectRatio {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "PageAudit#CheckIncorrectImageAspectRatio";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Set a custom page as canonical URL to have data already loaded") {
 			PageAudit.setSEOcanonicalURL(url = "https://liferay-echo.github.io/liferay-portal/page-audit-test");
@@ -471,7 +471,7 @@ definition {
 	@uitest
 	test CheckLinksCrawlable {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "PageAudit#CheckLinksCrawlable";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Set a custom page as canonical URL to have data already loaded") {
 			PageAudit.setSEOcanonicalURL(url = "https://liferay-echo.github.io/liferay-portal/page-audit-test");
@@ -505,7 +505,7 @@ definition {
 	@uitest
 	test CheckLowContrastRatio {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "PageAudit#CheckLowContrastRatio";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Set a custom page as canonical URL to have data already loaded") {
 			PageAudit.setSEOcanonicalURL(url = "https://liferay-echo.github.io/liferay-portal/page-audit-test");
@@ -539,7 +539,7 @@ definition {
 	@uitest
 	test CheckMissingImgALTAttributes {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "PageAudit#CheckMissingImgALTAttributes";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Set a custom page as canonical URL to have data already loaded") {
 			PageAudit.setSEOcanonicalURL(url = "https://liferay-echo.github.io/liferay-portal/page-audit-test");
@@ -573,7 +573,7 @@ definition {
 	@uitest
 	test CheckMissingInputALTAttributes {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "PageAudit#CheckMissingInputALTAttributes";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Set a custom page as canonical URL to have data already loaded") {
 			PageAudit.setSEOcanonicalURL(url = "https://liferay-echo.github.io/liferay-portal/page-audit-test");
@@ -671,7 +671,7 @@ definition {
 	@uitest
 	test CheckSmallTapTargets {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "PageAudit#CheckSmallTapTargets";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Set a custom page as canonical URL to have data already loaded") {
 			PageAudit.setSEOcanonicalURL(url = "https://liferay-echo.github.io/liferay-portal/page-audit-test");
@@ -764,7 +764,7 @@ definition {
 	@priority = 3
 	test DisplayMoreErrors {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "PageAudit#DisplayMoreErrors";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Set a custom page as canonical URL to have data already loaded") {
 			PageAudit.setSEOcanonicalURL(url = "https://liferay-echo.github.io/liferay-portal/page-audit-test-10-more-issues.html");
@@ -801,7 +801,7 @@ definition {
 	@priority = 3
 	test InvalidAPIKeyErrorIsRecovered {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "PageAudit#InvalidAPIKeyErrorIsRecovered";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Set a custom page as canonical URL to have data already loaded") {
 			PageAudit.setSEOcanonicalURL(url = "https://liferay-echo.github.io/liferay-portal/page-audit-test");
@@ -885,7 +885,7 @@ definition {
 	@priority = 4
 	test LaunchPageAudit {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "PageAudit#LaunchPageAudit";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Set a custom page as canonical URL to have data already loaded") {
 			PageAudit.setSEOcanonicalURL(url = "https://liferay-echo.github.io/liferay-portal/page-audit-test");
@@ -949,7 +949,7 @@ definition {
 	@uitest
 	test NavigateToSecondLevel {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "PageAudit#NavigateToSecondLevel";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Set a custom page as canonical URL to have data already loaded") {
 			PageAudit.setSEOcanonicalURL(url = "https://liferay-echo.github.io/liferay-portal/page-audit-test");
@@ -994,7 +994,7 @@ definition {
 	@priority = 4
 	test NavigateToSiteSettingsWhenApiKeyNotConfigured {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "PageAudit#NavigateToSiteSettingsWhenApiKeyNotConfigured";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Open Page Audit panel") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
@@ -1086,7 +1086,7 @@ definition {
 	@priority = 3
 	test PageAuditBackButton {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "PageAudit#PageAuditBackButton";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add Content Page") {
 			JSONLayout.addPublicLayout(
@@ -1126,7 +1126,7 @@ definition {
 	@priority = 3
 	test PageAuditCancelButton {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "PageAudit#PageAuditCancelButton";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add Content Page") {
 			JSONLayout.addPublicLayout(
@@ -1219,7 +1219,7 @@ definition {
 	@priority = 3
 	test SEOFailures {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "PageAudit#SEOFailures";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Set a custom page as canonical URL to have data already loaded") {
 			PageAudit.setSEOcanonicalURL(url = "https://liferay-echo.github.io/liferay-portal/page-audit-test");

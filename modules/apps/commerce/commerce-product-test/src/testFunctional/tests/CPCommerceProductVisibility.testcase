@@ -179,7 +179,7 @@ definition {
 	@priority = 5
 	test RemoveAChannelFilter {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CPCommerceProductVisibility#RemoveAChannelFilter";
+		property test.liferay.virtual.instance = "false";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",

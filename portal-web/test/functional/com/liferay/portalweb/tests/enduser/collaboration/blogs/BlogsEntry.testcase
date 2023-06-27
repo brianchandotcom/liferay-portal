@@ -14,9 +14,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -28,7 +28,7 @@ definition {
 	@priority = 3
 	@refactordone
 	test AbstractDescriptionPersistsWhenTypingInContentField {
-		property test.name.skip.portal.instance = "BlogsEntry#AbstractDescriptionPersistsWhenTypingInContentField";
+		property test.liferay.virtual.instance = "false";
 
 		BlogsNavigator.openToAddEntry(
 			layoutName = "Blogs Page",
@@ -546,7 +546,7 @@ definition {
 	@priority = 4
 	@refactordone
 	test CanChangeAScheduledEntryToThePresentAndPublish {
-		property test.name.skip.portal.instance = "BlogsEntry#CanChangeAScheduledEntryToThePresentAndPublish";
+		property test.liferay.virtual.instance = "false";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -751,7 +751,7 @@ definition {
 	@priority = 4
 	@refactorneeded
 	test CanEditCustomAbstract {
-		property test.name.skip.portal.instance = "BlogsEntry#CanEditCustomAbstract";
+		property test.liferay.virtual.instance = "false";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -843,7 +843,7 @@ definition {
 	@priority = 4
 	test CanImportEntryWithImageAfterCleaningDB {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "BlogsEntry#CanImportEntryWithImageAfterCleaningDB";
+		property test.liferay.virtual.instance = "false";
 
 		var testRunEnvironment = PropsUtil.get("test.run.environment");
 		var imageId = JSONBlog.uploadBlogImage(
@@ -949,7 +949,7 @@ definition {
 	@priority = 4
 	test CanImportEntryWithSmallImageAfterCleaningDB {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "BlogsEntry#CanImportEntryWithSmallImageAfterCleaningDB";
+		property test.liferay.virtual.instance = "false";
 
 		var testRunEnvironment = PropsUtil.get("test.run.environment");
 
@@ -1329,7 +1329,7 @@ definition {
 	@priority = 4
 	test CannotInjectBBCodeIntoCommentUsingPingback {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "BlogsEntry#CannotInjectBBCodeIntoCommentUsingPingback";
+		property test.liferay.virtual.instance = "false";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -1536,7 +1536,7 @@ definition {
 	@priority = 4
 	@refactorneeded
 	test CanViewDefaultAbstract {
-		property test.name.skip.portal.instance = "BlogsEntry#CanViewDefaultAbstract";
+		property test.liferay.virtual.instance = "false";
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 

@@ -13,9 +13,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
@@ -23,7 +23,7 @@ definition {
 	@description = "Verify custom code in a deployed OSGI fragments is executed"
 	@priority = 3
 	test OSGIFragmentsAreDetectedAsOutdated {
-		property test.name.skip.portal.instance = "JSPCompiler#OSGIFragmentsAreDetectedAsOutdated";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given an OSGI fragment with custom code is deployed") {
 			var customCode = '''<p style="color: red">changed</p>''';

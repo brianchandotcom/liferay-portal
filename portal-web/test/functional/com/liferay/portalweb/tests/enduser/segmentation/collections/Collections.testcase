@@ -16,9 +16,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -149,7 +149,7 @@ definition {
 	@priority = 5
 	test CombineContentForMultisegmentDynamicCollectionWithoutPagination {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Collections#CombineContentForMultisegmentDynamicCollectionWithoutPagination";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Create a public page") {
 			JSONLayout.addPublicLayout(
@@ -283,7 +283,7 @@ definition {
 	@priority = 5
 	test CombineContentForMultisegmentDynamicCollectionWithPagination {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Collections#CombineContentForMultisegmentDynamicCollectionWithPagination";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Create a public page") {
 			JSONLayout.addPublicLayout(
@@ -434,7 +434,7 @@ definition {
 	@priority = 5
 	test CombineContentForMultisegmentManualCollectionWithoutPagination {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Collections#CombineContentForMultisegmentManualCollectionWithoutPagination";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Create a public page") {
 			JSONLayout.addPublicLayout(
@@ -535,7 +535,7 @@ definition {
 	@priority = 5
 	test CombineContentForMultisegmentManualCollectionWithPagination {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Collections#CombineContentForMultisegmentManualCollectionWithPagination";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Create a public page") {
 			JSONLayout.addPublicLayout(
@@ -3689,7 +3689,7 @@ definition {
 	@description = "LPS-169312: https://issues.liferay.com/browse/LPS-169312"
 	@priority = 3
 	test ViewCombineContentForMultisegmentDynamicCollectionInAssetPublisher {
-		property test.name.skip.portal.instance = "Collections#ViewCombineContentForMultisegmentDynamicCollectionInAssetPublisher";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Create a public page") {
 			JSONLayout.addPublicLayout(
@@ -3790,7 +3790,7 @@ definition {
 	@description = "LPS-169312: https://issues.liferay.com/browse/LPS-169312"
 	@priority = 3
 	test ViewCombineContentForMultisegmentDynamicCollectionInCollectionDisplayFragment {
-		property test.name.skip.portal.instance = "Collections#ViewCombineContentForMultisegmentDynamicCollectionInCollectionDisplayFragment";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Create web content articles") {
 			JSONWebcontent.addWebContent(
@@ -3901,7 +3901,7 @@ definition {
 	@description = "LPS-169312: https://issues.liferay.com/browse/LPS-169312"
 	@priority = 3
 	test ViewCombineContentForMultisegmentManualCollectionInAssetPublisher {
-		property test.name.skip.portal.instance = "Collections#ViewCombineContentForMultisegmentManualCollectionInAssetPublisher";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Create a public page") {
 			JSONLayout.addPublicLayout(
@@ -4003,7 +4003,7 @@ definition {
 	@description = "LPS-169312: https://issues.liferay.com/browse/LPS-169312"
 	@priority = 3
 	test ViewCombineContentForMultisegmentManualCollectionInCollectionDisplayFragment {
-		property test.name.skip.portal.instance = "Collections#ViewCombineContentForMultisegmentManualCollectionInCollectionDisplayFragment";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Create web content articles") {
 			JSONWebcontent.addWebContent(
@@ -4116,7 +4116,7 @@ definition {
 	@description = "LPS-169312: https://issues.liferay.com/browse/LPS-169312"
 	@priority = 3
 	test ViewCombineContentOrderForMultisegmentDynamicCollection {
-		property test.name.skip.portal.instance = "Collections#ViewCombineContentOrderForMultisegmentDynamicCollection";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Create web content articles") {
 			for (var i : list "1,2,3,4") {
@@ -4239,7 +4239,7 @@ definition {
 	@description = "LPS-169312: https://issues.liferay.com/browse/LPS-169312"
 	@priority = 3
 	test ViewCombineContentOrderForMultisegmentManualCollection {
-		property test.name.skip.portal.instance = "Collections#ViewCombineContentOrderForMultisegmentManualCollection";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Create a public page") {
 			JSONLayout.addPublicLayout(

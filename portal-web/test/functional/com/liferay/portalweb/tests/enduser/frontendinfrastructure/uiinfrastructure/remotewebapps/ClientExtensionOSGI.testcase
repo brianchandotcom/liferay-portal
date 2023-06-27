@@ -21,9 +21,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
@@ -32,7 +32,7 @@ definition {
 	@priority = 4
 	test FieldsAreNotEditableWhenAccessed {
 		property custom.element.client.extension.created = "true";
-		property test.name.skip.portal.instance = "ClientExtensionOSGI#FieldsAreNotEditableWhenAccessed";
+		property test.liferay.virtual.instance = "false";
 
 		task ("When access the osgi deployed custom element") {
 			Click(
@@ -67,7 +67,7 @@ definition {
 	@priority = 3
 	test HasViewAction {
 		property custom.element.client.extension.created = "true";
-		property test.name.skip.portal.instance = "ClientExtensionOSGI#HasViewAction";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Then View action is an available option") {
 			AssertElementPresent(
@@ -86,7 +86,7 @@ definition {
 	@priority = 3
 	test OsgiClientExtensionWorkspaceLabelIsPresent {
 		property custom.element.client.extension.created = "true";
-		property test.name.skip.portal.instance = "ClientExtensionOSGI#OsgiClientExtensionWorkspaceLabelIsPresent";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Then Modified Date column is present") {
 			FrontendDataSetCustomView.assertColumnPresent(key_field = "Modified Date");
@@ -101,7 +101,7 @@ definition {
 	@priority = 3
 	test ViewActionCanDisplayFieldsAsNotEditable {
 		property custom.element.client.extension.created = "true";
-		property test.name.skip.portal.instance = "ClientExtensionOSGI#ViewActionCanDisplayFieldsAsNotEditable";
+		property test.liferay.virtual.instance = "false";
 
 		task ("When select view action") {
 			Click(locator1 = "ClientExtension#REMOTE_TABLE_ELLIPSIS");

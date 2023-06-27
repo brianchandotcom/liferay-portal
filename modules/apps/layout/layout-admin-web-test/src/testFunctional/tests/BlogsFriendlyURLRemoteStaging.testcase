@@ -33,9 +33,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -48,7 +48,7 @@ definition {
 	@description = "This ensures that the friendlyURL in Blogs can be published when remote staging is enabled."
 	@priority = 5
 	test CanPublishFriendlyURL {
-		property test.name.skip.portal.instance = "BlogsFriendlyURLRemoteStaging#CanPublishFriendlyURL";
+		property test.liferay.virtual.instance = "false";
 
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -102,7 +102,7 @@ definition {
 	@description = "This ensures that the old friendlyURL in Blogs can be removed and published when remote staging is enabled."
 	@priority = 4
 	test CanPublishRemovedOldFriendlyURL {
-		property test.name.skip.portal.instance = "BlogsFriendlyURLRemoteStaging#CanPublishRemovedOldFriendlyURL";
+		property test.liferay.virtual.instance = "false";
 
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -160,7 +160,7 @@ definition {
 	@description = "This ensures that the old friendlyURL in Blogs can be restored and published when remote staging is enabled."
 	@priority = 4
 	test CanPublishRestoredOldFriendlyURL {
-		property test.name.skip.portal.instance = "BlogsFriendlyURLRemoteStaging#CanPublishRestoredOldFriendlyURL";
+		property test.liferay.virtual.instance = "false";
 
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",

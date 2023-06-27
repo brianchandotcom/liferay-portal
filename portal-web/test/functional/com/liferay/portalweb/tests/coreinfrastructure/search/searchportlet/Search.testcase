@@ -13,9 +13,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
@@ -26,7 +26,7 @@ definition {
 		property custom.properties = "web.server.host=localhost${line.separator}redirect.url.security.mode=domain${line.separator}redirect.url.domains.allowed=${line.separator}web.server.https.port=8443${line.separator}web.server.protocol=https";
 		property portal.ssl.enabled = "true";
 		property search.environment.suite.exclude = "true";
-		property test.name.skip.portal.instance = "Search#AssertPaginationURLforHTTPS";
+		property test.liferay.virtual.instance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -368,7 +368,7 @@ definition {
 		property license.required = "true";
 		property portal.suite.search.engine = "disable";
 		property portal.upstream = "false";
-		property test.name.skip.portal.instance = "Search#DisableEnterpriseSearch";
+		property test.liferay.virtual.instance = "false";
 		property test.run.environment = "EE";
 
 		SystemSettings.openToConfigInSystemSettings(portletId = "com.liferay.portal.search.configuration.DefaultKeywordQueryConfiguration");
@@ -728,7 +728,7 @@ definition {
 
 	@priority = 3
 	test IsLocalizedInSearchAdmin {
-		property test.name.skip.portal.instance = "Search#IsLocalizedInSearchAdmin";
+		property test.liferay.virtual.instance = "false";
 
 		User.openUsersAdmin();
 
@@ -1878,7 +1878,7 @@ definition {
 		property search.environment.suite.exclude = "true";
 		property skip.clean-app-server-deploy-dir = "true";
 		property test.assert.warning.exceptions = "true";
-		property test.name.skip.portal.instance = "Search#SearchNonRootContext";
+		property test.liferay.virtual.instance = "false";
 
 		SearchAdministration.openSearchAdmin();
 
@@ -2632,7 +2632,7 @@ definition {
 	test ViewSearchResultDetails {
 		property app.server.types = "tomcat";
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Search#ViewSearchResultDetails";
+		property test.liferay.virtual.instance = "false";
 
 		SearchPortlets.searchEmbedded(searchTerm = "Test Test");
 

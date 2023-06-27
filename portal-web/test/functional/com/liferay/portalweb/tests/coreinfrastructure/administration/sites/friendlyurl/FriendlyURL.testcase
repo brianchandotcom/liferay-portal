@@ -15,9 +15,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -31,7 +31,7 @@ definition {
 	@priority = 4
 	test DoNotRedirectToDefaultInstanceWithNoCompany {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com${line.separator}virtual.hosts.strict.access=true";
-		property test.name.skip.portal.instance = "FriendlyURL#DoNotRedirectToDefaultInstanceWithNoCompany";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openSpecificURL(url = "http://www.able.com:8080");
 
@@ -56,7 +56,7 @@ definition {
 	@priority = 3
 	test RedirectToDefaultInstanceWithNoCompany {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
-		property test.name.skip.portal.instance = "FriendlyURL#RedirectToDefaultInstanceWithNoCompany";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.gotoPage(
 			baseURL = "http://www.able.com:8080",
@@ -75,7 +75,7 @@ definition {
 	@priority = 4
 	test RedirectToLocalizedFriendlyURLWithVirtualHost {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
-		property test.name.skip.portal.instance = "FriendlyURL#RedirectToLocalizedFriendlyURLWithVirtualHost";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given two pages on a site") {
 			JSONLayout.addPublicLayout(
@@ -152,7 +152,7 @@ definition {
 	@description = "This is a use case for LPS-161024. Verify uppercase virtual host names added to a site's url are converted to lowercase."
 	@priority = 3
 	test UppercaseVirtualHostNamesConvertedToLowercase {
-		property test.name.skip.portal.instance = "FriendlyURL#UppercaseVirtualHostNamesConvertedToLowercase";
+		property test.liferay.virtual.instance = "false";
 
 		task ("When an uppercase virtual host is added to a site url") {
 			Site.openSiteSettingsAdmin(siteURLKey = "test-site-name");
@@ -236,7 +236,7 @@ definition {
 	@priority = 4
 	test ViewFriendlyURLWithSharedLocalesButDifferentLanguages {
 		property custom.properties = "locale.prepend.friendly.url.style=2${line.separator}locales.enabled=en_US,fr_FR,fr_CA";
-		property test.name.skip.portal.instance = "FriendlyURL#ViewFriendlyURLWithSharedLocalesButDifferentLanguages";
+		property test.liferay.virtual.instance = "false";
 
 		for (var siteName : list "USA Site Name,France Site Name,Canada Site Name") {
 			HeadlessSite.addSite(siteName = ${siteName});

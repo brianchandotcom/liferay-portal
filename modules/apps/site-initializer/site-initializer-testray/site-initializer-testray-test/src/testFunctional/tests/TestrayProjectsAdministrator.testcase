@@ -37,9 +37,9 @@ definition {
 			Testray.testrayApisTearDown();
 		}
 
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
@@ -47,7 +47,7 @@ definition {
 	@description = "Story ID: LPS-165583 | Test Summary: Verify if as an Administrator I am able to add a Project"
 	@priority = 5
 	test AdminCanAddProject {
-		property test.name.skip.portal.instance = "TestrayProjectsAdministrator#AdminCanAddProject";
+		property test.liferay.virtual.instance = "false";
 
 		task ("When the user Create a Project") {
 			Testray.createProjectTestray(
@@ -67,7 +67,7 @@ definition {
 	@description = "Story ID: LPS-146927 | Test Summary: Verify that as an Administrator I am able to add a Project from the dropdown"
 	@priority = 3
 	test AdminCanAddProjectFromDropdown {
-		property test.name.skip.portal.instance = "TestrayProjectsAdministrator#AdminCanAddProjectFromDropdown";
+		property test.liferay.virtual.instance = "false";
 
 		task ("When the user Create a Project from the dropdown") {
 			Testray.createProjectByDropdown(
@@ -87,7 +87,7 @@ definition {
 	@description = "Story ID: LPS-146927 | Test Summary: Verify if as an Administrator I am able to delete a Project"
 	@priority = 5
 	test AdminCanDeleteProject {
-		property test.name.skip.portal.instance = "TestrayProjectsAdministrator#AdminCanDeleteProject";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that the user Create a Project via API") {
 			JSONTestray.addProject(
@@ -107,7 +107,7 @@ definition {
 	@description = "Story ID: LPS-146927 | Test Summary: Verify if as an Administrator I am able to edit a Project"
 	@priority = 5
 	test AdminCanEditProject {
-		property test.name.skip.portal.instance = "TestrayProjectsAdministrator#AdminCanEditProject";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that the user Create a Project") {
 			Testray.createProjectTestray(
@@ -141,7 +141,7 @@ definition {
 	@description = "Story ID: LPS-146927 | Test Summary: Verify if as an Administrator I should not be able to add a duplicate Project"
 	@priority = 3
 	test AdminCanNotAddDuplicateProject {
-		property test.name.skip.portal.instance = "TestrayProjectsAdministrator#AdminCanNotAddDuplicateProject";
+		property test.liferay.virtual.instance = "false";
 
 		task ("When the user tries to create a duplicate project") {
 			JSONTestray.addProject(
@@ -161,7 +161,7 @@ definition {
 	@description = "Story ID: LPS-146927 | Test Summary: Verify that the user can not create a project if all the required fields are not filled in"
 	@priority = 2
 	test AdminCanViewWarningMessage {
-		property test.name.skip.portal.instance = "TestrayProjectsAdministrator#AdminCanViewWarningMessage";
+		property test.liferay.virtual.instance = "false";
 
 		task ("When the user tries to create a project without a name") {
 			Testray.createProjectTestray(
@@ -179,7 +179,7 @@ definition {
 	@description = "Story ID: LPS-146927 | Test Summary: Verify if as an Administrator I should be able to delete a project that contains routines without associated builds"
 	@priority = 3
 	test CanDeleteProjectsThatContainRoutinesWithoutAssociatedBuilds {
-		property test.name.skip.portal.instance = "TestrayProjectsAdministrator#CanDeleteProjectsThatContainRoutinesWithoutAssociatedBuilds";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that the user Create a Project without associated builds") {
 			JSONTestray.addProject(
@@ -207,7 +207,7 @@ definition {
 	@description = "Story ID: LPS-146927 | Test Summary: Verify if as an Administrator I should not be able to delete a project that contains routines with associated builds"
 	@priority = 4
 	test CannotDeleteProjectsThatContainRoutinesWithAssociatedBuilds {
-		property test.name.skip.portal.instance = "TestrayProjectsAdministrator#CannotDeleteProjectsThatContainRoutinesWithAssociatedBuilds";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given that the user Create a Project") {
 			JSONTestray.addProject(

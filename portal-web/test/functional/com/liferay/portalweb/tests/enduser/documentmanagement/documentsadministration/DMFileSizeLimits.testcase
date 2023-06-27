@@ -12,9 +12,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -29,7 +29,7 @@ definition {
 	@description = "This test ensures that a user is not able to upload a file to an asset library that is bigger than the Maximum File Size in that instance."
 	@priority = 4
 	test CanLimitMaxFileSizeForDepotAtInstanceScope {
-		property test.name.skip.portal.instance = "DMFileSizeLimits#CanLimitMaxFileSizeForDepotAtInstanceScope";
+		property test.liferay.virtual.instance = "false";
 
 		DMDocument.updateMaximumFileSize(fieldValue = 65536);
 
@@ -52,7 +52,7 @@ definition {
 	@description = "This test ensures that a file that exceed the set maximum size cannot be uploaded via Media Gallery."
 	@priority = 3
 	test CanLimitMaxFileSizeInMediaGallery {
-		property test.name.skip.portal.instance = "DMFileSizeLimits#CanLimitMaxFileSizeInMediaGallery";
+		property test.liferay.virtual.instance = "false";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -89,7 +89,7 @@ definition {
 	@e2etest
 	@priority = 4
 	test CanLimitSizeOnlyInCurrentSite {
-		property test.name.skip.portal.instance = "DMFileSizeLimits#CanLimitSizeOnlyInCurrentSite";
+		property test.liferay.virtual.instance = "false";
 
 		HeadlessSite.addSite(siteName = "Site Name");
 
@@ -134,7 +134,7 @@ definition {
 	@e2etest
 	@priority = 4
 	test InstanceSizeLimitTakesEffectOverSiteAndSystemSettings {
-		property test.name.skip.portal.instance = "DMFileSizeLimits#InstanceSizeLimitTakesEffectOverSiteAndSystemSettings";
+		property test.liferay.virtual.instance = "false";
 
 		DMDocument.updateMaximumFileSize(fieldValue = 51200);
 
@@ -174,7 +174,7 @@ definition {
 	@description = "This test ensures that the size limits in the servlet take effect when the instance setting is default."
 	@priority = 4
 	test WhenInstanceIsDefaultItIsOverriddenByServlet {
-		property test.name.skip.portal.instance = "DMFileSizeLimits#WhenInstanceIsDefaultItIsOverriddenByServlet";
+		property test.liferay.virtual.instance = "false";
 
 		SystemSettings.openSystemSettingsAdmin();
 
@@ -206,7 +206,7 @@ definition {
 	@description = "This test ensures that the size limits in the servlet take effect when it is not bigger than the limits in the instance."
 	@priority = 4
 	test WhenServletIsSmallerItOverridesInstance {
-		property test.name.skip.portal.instance = "DMFileSizeLimits#WhenServletIsSmallerItOverridesInstance";
+		property test.liferay.virtual.instance = "false";
 
 		SystemSettings.openSystemSettingsAdmin();
 

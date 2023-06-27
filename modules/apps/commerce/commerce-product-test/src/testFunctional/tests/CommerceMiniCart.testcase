@@ -1981,7 +1981,7 @@ definition {
 	@priority = 5
 	test ViewMiniCartItemWithDiscountLevels {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CommerceMiniCart#ViewMiniCartItemWithDiscountLevels";
+		property test.liferay.virtual.instance = "false";
 
 		// TODO Review
 

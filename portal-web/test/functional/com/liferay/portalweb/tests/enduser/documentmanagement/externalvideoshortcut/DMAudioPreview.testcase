@@ -27,9 +27,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -42,7 +42,7 @@ definition {
 	@description = "This test ensures no preview will be generated for a newly added audio file once ffmpeg is disabled, "
 	@priority = 3
 	test CanNotPreviewAfterDisablingFFmpeg {
-		property test.name.skip.portal.instance = "AudioPreview#CanNotPreviewAfterDisablingFFmpeg";
+		property test.liferay.virtual.instance = "false";
 
 		DMNavigator.openToConfigInSystemSettings(portlet = "FFMPEG Audio Converter");
 
@@ -64,7 +64,7 @@ definition {
 	@priority = 4
 	test PreviewRemainsAfterDisablingFFmpeg {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "AudioPreview#PreviewRemainsAfterDisablingFFmpeg";
+		property test.liferay.virtual.instance = "false";
 
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "DM Audio Title In Site",

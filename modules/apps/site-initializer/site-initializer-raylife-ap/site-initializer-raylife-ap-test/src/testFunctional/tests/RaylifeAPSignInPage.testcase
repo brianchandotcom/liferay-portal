@@ -28,11 +28,11 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		RaylifeAP.tearDownCP();
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -43,7 +43,7 @@ definition {
 	@description = "LPS-151795 - Verify if user can enter a valid email address"
 	@priority = 5
 	test CanSignIn {
-		property test.name.skip.portal.instance = "RaylifeAPSignInPage#CanSignIn";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -71,7 +71,7 @@ definition {
 	@description = "LPS-151792 - Verify if message 'Please enter a valid email address.' appers when email is not valid"
 	@priority = 5
 	test CanViewMessageEmailNotValid {
-		property test.name.skip.portal.instance = "RaylifeAPSignInPage#CanViewMessageEmailNotValid";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -99,7 +99,7 @@ definition {
 	@description = "LPS-151790 - Check that the message 'This field is required' appears when the e-mail field is required"
 	@priority = 5
 	test CanViewMessageFieldEmailRequired {
-		property test.name.skip.portal.instance = "RaylifeAPSignInPage#CanViewMessageFieldEmailRequired";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -127,7 +127,7 @@ definition {
 	@description = "LPS-151791 - Check that the message 'This field is required' appears when the password field is required"
 	@priority = 5
 	test CanViewMessageFieldPasswordRequired {
-		property test.name.skip.portal.instance = "RaylifeAPSignInPage#CanViewMessageFieldPasswordRequired";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 

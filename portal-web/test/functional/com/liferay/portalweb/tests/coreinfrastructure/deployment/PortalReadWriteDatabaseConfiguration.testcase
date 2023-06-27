@@ -17,7 +17,7 @@ definition {
 	@priority = 3
 	test LockUnlockDMFileEntryAndMBTread {
 		property custom.properties = "lock.expiration.time.com.liferay.document.library.kernel.model.DLFileEntry=5000";
-		property test.name.skip.portal.instance = "PortalReadWriteDatabaseConfiguration#LockUnlockDMFileEntryAndMBTread";
+		property test.liferay.virtual.instance = "false";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -96,7 +96,7 @@ definition {
 		property cluster.enabled = "true";
 		property minimum.slave.ram = "24";
 		property remote.elasticsearch.enabled = "true";
-		property test.name.skip.portal.instance = "PortalReadWriteDatabaseConfiguration#SmokeWithClusteringEnabled";
+		property test.liferay.virtual.instance = "false";
 
 		Clustering.viewClusterStatusInConsole();
 
@@ -144,7 +144,7 @@ definition {
 
 	@priority = 3
 	test SmokeWithJDBC {
-		property test.name.skip.portal.instance = "PortalReadWriteDatabaseConfiguration#SmokeWithJDBC";
+		property test.liferay.virtual.instance = "false";
 
 		Smoke.viewWelcomeContentPage();
 
@@ -164,7 +164,7 @@ definition {
 	@priority = 3
 	test SmokeWithJNDI {
 		property configure.read.write.database = "jndi";
-		property test.name.skip.portal.instance = "PortalReadWriteDatabaseConfiguration#SmokeWithJNDI";
+		property test.liferay.virtual.instance = "false";
 
 		Smoke.viewWelcomeContentPage();
 

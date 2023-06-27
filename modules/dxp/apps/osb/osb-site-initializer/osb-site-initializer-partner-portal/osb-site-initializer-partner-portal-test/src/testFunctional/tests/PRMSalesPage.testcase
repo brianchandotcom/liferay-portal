@@ -29,9 +29,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -42,7 +42,7 @@ definition {
 	@description = "Verify that a Register a New Deal button is displayed on the banner and the Deal Registration Form page will be opened when click on this button"
 	@priority = 5
 	test CanAccessDealFormViaBannerButton {
-		property test.name.skip.portal.instance = "PRMSalesPage#CanAccessDealFormViaBannerButton";
+		property test.liferay.virtual.instance = "false";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 

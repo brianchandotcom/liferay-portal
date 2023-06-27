@@ -37,9 +37,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -54,7 +54,7 @@ definition {
 	@description = "This ensures that a depot category can be used to search for assets stored in the connected site. Skip the instance for performance improvement."
 	@priority = 5
 	test AssetsCanBeSearchedByCategory {
-		property test.name.skip.portal.instance = "DepotCategorySiteIntegration#AssetsCanBeSearchedByCategory";
+		property test.liferay.virtual.instance = "false";
 
 		var categoryId = JSONCategory.addCategory(
 			groupName = "Test Depot Name",

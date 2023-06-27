@@ -18,11 +18,11 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		Raylife.tearDownCP();
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -33,7 +33,7 @@ definition {
 	@description = "LPS-143610 - Verify if, by clicking on the Continue Quote button on the modal, the user is taken back to the current quote in the Basic section"
 	@priority = 3
 	test CanContinueQuoteAfterClickOnButton {
-		property test.name.skip.portal.instance = "RaylifeSaveExit#CanContinueQuoteAfterClickOnButton";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -71,7 +71,7 @@ definition {
 	@description = "LPS-143610 - Verify if, by clicking on the "x" button on the modal, the user is taken back to the current quote in the Basic section"
 	@priority = 3
 	test CanContinueQuoteAfterClickOnX {
-		property test.name.skip.portal.instance = "RaylifeSaveExit#CanContinueQuoteAfterClickOnX";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -111,7 +111,7 @@ definition {
 	@description = "LPS-143609 - Verify if, by clicking the 'send link and exit' button on the modal, the user is taken to the Raylife home page in the Basic section"
 	@priority = 4
 	test CanSendLinkAndExit {
-		property test.name.skip.portal.instance = "RaylifeSaveExit#CanSendLinkAndExit";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -133,7 +133,7 @@ definition {
 	@description = "LPS-143613 - Check if the error message is displayed 'Unable to save your information. Please try again' if the quote information is not saved successfully in the Basic section"
 	@priority = 4
 	test CanViewErrorMessageForInactiveRaylifeObject {
-		property test.name.skip.portal.instance = "RaylifeSaveExit#CanViewErrorMessageForInactiveRaylifeObject";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -172,7 +172,7 @@ definition {
 	@description = "LPS-143607 - Check when you fill in the Business Email field, the Save and Exit button is enabled in the Basics - Contact Info page"
 	@priority = 4
 	test CanViewSavedProgressModal {
-		property test.name.skip.portal.instance = "RaylifeSaveExit#CanViewSavedProgressModal";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -198,7 +198,7 @@ definition {
 	@description = "LPS-143614 - Verify if, after filling in all the mandatory fields from Basics - Contact Info page, user can click on Save and Exit Button, close the Save and Exit modal and Continue button is enabled"
 	@priority = 2
 	test IsContinueButtonEnabledAfterNotSavingAndExiting {
-		property test.name.skip.portal.instance = "RaylifeSaveExit#IsContinueButtonEnabledAfterNotSavingAndExiting";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -224,7 +224,7 @@ definition {
 	@description = "LPS-143608 - Check that the email (from a 'Progress is Saved' modal) is equal to the Business Email from the Basics - Contact Info page"
 	@priority = 4
 	test IsModalEmailEqualsToBusinessEmail {
-		property test.name.skip.portal.instance = "RaylifeSaveExit#IsModalEmailEqualsToBusinessEmail";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -262,7 +262,7 @@ definition {
 	@description = "LPS-143604 -  Check save and exit button is enabled in the Business section"
 	@priority = 4
 	test IsSaveAndExitButtonEnabledOnBusiness {
-		property test.name.skip.portal.instance = "RaylifeSaveExit#IsSaveAndExitButtonEnabledOnBusiness";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -286,7 +286,7 @@ definition {
 	@description = "LPS-143600 - Check when you fill in the Business Email field, the Save and Exit button is enabled in the Basics - Contact Info page"
 	@priority = 5
 	test IsSaveAndExitButtonEnabledOnContactInfo {
-		property test.name.skip.portal.instance = "RaylifeSaveExit#IsSaveAndExitButtonEnabledOnContactInfo";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -320,7 +320,7 @@ definition {
 	@description = "LPS-143605 - Check save and exit button is enabled in the Employees section"
 	@priority = 4
 	test IsSaveAndExitButtonEnabledOnEmployees {
-		property test.name.skip.portal.instance = "RaylifeSaveExit#IsSaveAndExitButtonEnabledOnEmployees";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -348,7 +348,7 @@ definition {
 	@description = "LPS-143601 - Check save and exit button is enabled in the Basics section - Product Selection page"
 	@priority = 4
 	test IsSaveAndExitButtonEnabledOnProductSelection {
-		property test.name.skip.portal.instance = "RaylifeSaveExit#IsSaveAndExitButtonEnabledOnProductSelection";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -372,7 +372,7 @@ definition {
 	@description = "LPS-143606 - Check save and exit button is enabled in the Property section"
 	@priority = 4
 	test IsSaveAndExitButtonEnabledOnProperty {
-		property test.name.skip.portal.instance = "RaylifeSaveExit#IsSaveAndExitButtonEnabledOnProperty";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 

@@ -25,7 +25,7 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		TestUtils.hardRefresh();
 
@@ -33,7 +33,7 @@ definition {
 
 		JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
@@ -42,7 +42,7 @@ definition {
 	@priority = 3
 	test DefaultStrategyAtInstanceSettings {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "PageAudit#DefaultStrategyAtInstanceSettings";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Set a custom page as canonical URL to have data already loaded") {
 			PageAudit.setSEOcanonicalURL(url = "https://liferay-echo.github.io/liferay-portal/page-audit-test");
@@ -73,7 +73,7 @@ definition {
 	@priority = 5
 	test InstanceSettingsHierarchy {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "PageAudit#InstanceSettingsHierarchy";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Set Google PageSpeed API") {
 			PageAudit.setAPIViaInstanceSettings(preferredStrategy = "Mobile");
@@ -107,7 +107,7 @@ definition {
 	@priority = 4
 	test MobileStrategyAtInstanceSettings {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "PageAudit#MobileStrategyAtInstanceSettings";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Set a custom page as canonical URL to have data already loaded") {
 			PageAudit.setSEOcanonicalURL(url = "https://liferay-echo.github.io/liferay-portal/page-audit-test");
@@ -138,7 +138,7 @@ definition {
 	@priority = 5
 	test SiteSettingsHierarchyOverInstanceSettings {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "PageAudit#SiteSettingsHierarchyOverInstanceSettings";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Set a custom page as canonical URL to have data already loaded") {
 			PageAudit.setSEOcanonicalURL(url = "https://liferay-echo.github.io/liferay-portal/page-audit-test");
@@ -175,7 +175,7 @@ definition {
 	@priority = 3
 	test UncheckedInstanceSettingsSiteScopeThenUncheckedAtSiteSettings {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "PageAudit#UncheckedInstanceSettingsSiteScopeThenUncheckedAtSiteSettings";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Uncheck PageSpeed at Instance Settings") {
 			PageAudit.disableGooglePageSpeedViaInstanceSettings(scope = "Site Scope");
@@ -202,7 +202,7 @@ definition {
 	@description = "LPS-128383 Given the Google PageSpeed settings tab in the Virtual Instance Scope section When the Enable Google PageSpeed Insights check is unchecked Then the ""Google PageSpeed Insights"" tab won't be visible in the "" SITE SCOPE"" section"
 	@priority = 3
 	test UncheckedInstanceSettingsVirtualInstanceThenNotVisibleAtSiteScope {
-		property test.name.skip.portal.instance = "PageAudit#UncheckedInstanceSettingsVirtualInstanceThenNotVisibleAtSiteScope";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Uncheck PageSpeed at Instance Settings") {
 			PageAudit.disableGooglePageSpeedViaInstanceSettings();
@@ -220,7 +220,7 @@ definition {
 	@priority = 3
 	test UncheckedInstanceSettingsVirtualInstanceThenNotVisibleAtSiteSettings {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "PageAudit#UncheckedInstanceSettingsVirtualInstanceThenNotVisibleAtSiteSettings";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Uncheck PageSpeed at Instance Settings") {
 			PageAudit.disableGooglePageSpeedViaInstanceSettings();
@@ -248,7 +248,7 @@ definition {
 	@priority = 3
 	test UncheckedInstanceSettingsVirtualInstanceThenNotVisiblePageAuditIcon {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "PageAudit#UncheckedInstanceSettingsVirtualInstanceThenNotVisiblePageAuditIcon";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Uncheck PageSpeed at Instance Settings") {
 			PageAudit.disableGooglePageSpeedViaInstanceSettings();

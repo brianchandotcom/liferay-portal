@@ -37,7 +37,7 @@ definition {
 	@priority = 5
 	test CannotSaveWhenConfigurationIsInvalid {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "AutoTranslationGoogle#CannotSaveWhenConfigurationIsBlank";
+		property test.liferay.virtual.instance = "false";
 
 		DMNavigator.openToConfigInSystemSettings(portlet = "Google Cloud Translator");
 
@@ -53,7 +53,7 @@ definition {
 	@description = "This ensures that the web content content can be translated independently"
 	@priority = 5
 	test CanTranslateContentFieldIndependently {
-		property test.name.skip.portal.instance = "AutoTranslationGoogle#CanTranslateContentFieldIndependently";
+		property test.liferay.virtual.instance = "false";
 
 		Translations.openToTranslateEntry(
 			groupName = "Site Name",
@@ -94,7 +94,7 @@ definition {
 	@description = "This ensures that google translation can be used to auto-translate a content page."
 	@priority = 5
 	test CanTranslateContentPage {
-		property test.name.skip.portal.instance = "AutoTranslationGoogle#CanTranslateContentPage";
+		property test.liferay.virtual.instance = "false";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -161,7 +161,7 @@ definition {
 	@description = "This ensures that the fragment filed on content page can be translated independently."
 	@priority = 5
 	test CanTranslateContentPageFieldIndependently {
-		property test.name.skip.portal.instance = "AutoTranslationGoogle#CanTranslateContentPageFieldIndependently";
+		property test.liferay.virtual.instance = "false";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -236,7 +236,7 @@ definition {
 	@description = "This ensures that the web content description can be translated independently"
 	@priority = 5
 	test CanTranslateDescriptionFieldIndependently {
-		property test.name.skip.portal.instance = "AutoTranslationGoogle#CanTranslateDescriptionFieldIndependently";
+		property test.liferay.virtual.instance = "false";
 
 		Translations.openToTranslateEntry(
 			groupName = "Site Name",
@@ -277,7 +277,7 @@ definition {
 	@description = "This ensures that the numeric and decimal fields of a customized web content can be translated independently"
 	@priority = 5
 	test CanTranslateNumericAndDecimalFieldsIndependently {
-		property test.name.skip.portal.instance = "AutoTranslationGoogle#CanTranslateNumericAndDecimalFieldsIndependently";
+		property test.liferay.virtual.instance = "false";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
@@ -361,7 +361,7 @@ definition {
 	@description = "This ensures that the rich text field of a customized web content can be translated independently"
 	@priority = 5
 	test CanTranslateRichTextFieldIndependently {
-		property test.name.skip.portal.instance = "AutoTranslationGoogle#CanTranslateRichTextFieldIndependently";
+		property test.liferay.virtual.instance = "false";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
@@ -430,7 +430,7 @@ definition {
 	@description = "This ensures that the text box field of a customized web content can be translated independently"
 	@priority = 5
 	test CanTranslateTextBoxFieldIndependently {
-		property test.name.skip.portal.instance = "AutoTranslationGoogle#CanTranslateTextBoxFieldIndependently";
+		property test.liferay.virtual.instance = "false";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
@@ -502,7 +502,7 @@ definition {
 	@description = "This ensures that the text field of a customized web content can be translated independently"
 	@priority = 5
 	test CanTranslateTextFieldIndependently {
-		property test.name.skip.portal.instance = "AutoTranslationGoogle#CanTranslateTextFieldIndependently";
+		property test.liferay.virtual.instance = "false";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
@@ -571,7 +571,7 @@ definition {
 	@description = "This ensures that the web content title can be translated independently"
 	@priority = 5
 	test CanTranslateTitleFieldIndependently {
-		property test.name.skip.portal.instance = "AutoTranslationGoogle#CanTranslateTitleFieldIndependently";
+		property test.liferay.virtual.instance = "false";
 
 		JSONWebcontent.addWebContent(
 			content = "This is the content of a web article",
@@ -619,7 +619,7 @@ definition {
 	@priority = 5
 	test CanTranslateWCToJapaneseWithGoogle {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "AutoTranslationGoogle#CanTranslateWCToJapaneseWithGoogle";
+		property test.liferay.virtual.instance = "false";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
@@ -656,7 +656,7 @@ definition {
 	@description = "The Auto Translate button should not appear in the side-by-side view after Google Translations are enabled then disabled"
 	@priority = 5
 	test CanViewTranslationAfterDisablingGoogleConfiguration {
-		property test.name.skip.portal.instance = "AutoTranslationGoogle#CanViewTranslationAfterDisablingGoogleConfiguration";
+		property test.liferay.virtual.instance = "false";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
@@ -706,7 +706,7 @@ definition {
 	@description = "The Auto Translate button should be disabled when the fields are null."
 	@priority = 4
 	test TranslateButtonIsDisabledWhenFieldIsNull {
-		property test.name.skip.portal.instance = "AutoTranslationGoogle#TranslateButtonIsDisabledWhenFieldIsNull";
+		property test.liferay.virtual.instance = "false";
 
 		JSONWebcontent.addWebContent(
 			content = "This is the content of a web article",

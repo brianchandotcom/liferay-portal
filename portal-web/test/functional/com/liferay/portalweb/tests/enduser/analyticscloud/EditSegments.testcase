@@ -21,7 +21,7 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		// It is not possible to delete properties and data source after LRAC-13389. This functionality should return after LRAC-8040
 
@@ -29,7 +29,7 @@ definition {
 
 		ACUtils.tearDownDXP();
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -40,7 +40,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8588 | Test Summary: Assert segment overview shows criteria"
 	@priority = 3
 	test AssertSegmentOverviewShowsCriteria {
-		property test.name.skip.portal.instance = "EditSegments#AssertSegmentOverviewShowsCriteria";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Create Blog and Add to Page") {
 			ACUtils.createBlogsAndAddToPage();
@@ -108,7 +108,7 @@ definition {
 	@priority = 5
 	test CanEditDynamicSegmentCheckEditSaved {
 		property portal.upstream = "quarantine";
-		property test.name.skip.portal.instance = "EditSegments#CanEditDynamicSegmentCheckEditSaved";
+		property test.liferay.virtual.instance = "false";
 
 		// AC Quarantine Reason: Segment membership takes long time to load
 		// AC refactor ticket: LRAC-10769
@@ -288,7 +288,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8136 | Test Summary: Rename Individuals Segment"
 	@priority = 5
 	test CanRenameIndividualsSegment {
-		property test.name.skip.portal.instance = "EditSegments#CanRenameIndividualsSegment";
+		property test.liferay.virtual.instance = "false";
 
 		ACUtils.createBlogsAndAddToPage();
 
@@ -350,7 +350,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8585 | Test Summary: It is not possible to add a duplicate user to a static segment"
 	@priority = 4
 	test CantDuplicateUserToStaticSegment {
-		property test.name.skip.portal.instance = "EditSegments#CantDuplicateUserToStaticSegment";
+		property test.liferay.virtual.instance = "false";
 
 		var usernameList = "ac,liferay";
 		var emailList = "ac@liferay.com,liferay@liferay.com";
@@ -400,7 +400,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8589 | Test Summary: Editor shows static segment label"
 	@priority = 3
 	test EditorShowsStaticSegmentLabel {
-		property test.name.skip.portal.instance = "EditSegments#EditorShowsStaticSegmentLabel";
+		property test.liferay.virtual.instance = "false";
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
@@ -448,7 +448,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8587 | Test Summary: Paginate list of members to be added to the segment"
 	@priority = 3
 	test PaginateListOfMembersToBeAddedToTheSegment {
-		property test.name.skip.portal.instance = "EditSegments#PaginateListOfMembersToBeAddedToTheSegment";
+		property test.liferay.virtual.instance = "false";
 
 		var users = "ac1,ac2,ac3,ac4,ac5,ac6,ac7";
 		var nameList = "ac2 ac2,ac3 ac3,ac4 ac4,ac5 ac5,ac6 ac6,ac7 ac7";
@@ -568,7 +568,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8598 | Test Summary: Segment List kebab menu contains Edit and Delete buttons"
 	@priority = 3
 	test SegmentListKebabMenuContainsEditAndDeleteButtons {
-		property test.name.skip.portal.instance = "EditSegments#SegmentListKebabMenuContainsEditAndDeleteButtons";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Create user and sincronize it") {
 			JSONUser.addUser(
@@ -626,7 +626,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8586 | Test Summary: Sort the Segment 'Add Members' Modal"
 	@priority = 3
 	test SortSegmentAddMembersModal {
-		property test.name.skip.portal.instance = "EditSegments#SortSegmentAddMembersModal";
+		property test.liferay.virtual.instance = "false";
 
 		var users = "ac,liferay,dxp";
 		var emailList = "ac@liferay.com,liferay@liferay.com,dxp@liferay.com";

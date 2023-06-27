@@ -25,9 +25,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -160,7 +160,7 @@ definition {
 	@description = "Verify that the user can modify the workflow of a Blog Entry"
 	@priority = 4
 	test CanHaveDifferentBlogsWithDifferentWorkflows {
-		property test.name.skip.portal.instance = "WorkflowBlogs#CanHaveDifferentBlogsWithDifferentWorkflows";
+		property test.liferay.virtual.instance = "false";
 		property test.run.environment = "EE";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});

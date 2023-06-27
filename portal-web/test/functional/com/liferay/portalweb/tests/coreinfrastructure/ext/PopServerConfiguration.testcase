@@ -13,9 +13,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
@@ -24,7 +24,7 @@ definition {
 	@priority = 3
 	test CanEnablePopServerNotificationsPerInstance {
 		property database.types = "mysql";
-		property test.name.skip.portal.instance = "PopServerConfiguration#CanEnablePopServerNotificationsPerInstance";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Setup: Save default instance mail settings so they appear in database") {
 			PortalSettings.gotoConfiguration(
@@ -83,7 +83,7 @@ definition {
 	@priority = 3
 	test CanEnablePopServerNotificationsViaUI {
 		property database.types = "mysql";
-		property test.name.skip.portal.instance = "PopServerConfiguration#CanEnablePopServerNotificationsViaUI";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given pop server notifications are disabled") {
 			ServerAdministration.openServerAdmin();

@@ -15,9 +15,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 
@@ -32,7 +32,7 @@ definition {
 	test BlacklistModuleBundleSymbolicName {
 		property osgi.modules.includes = "frontend-taglib-clay-sample-web";
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "BundleBlacklist#BlacklistModuleBundleSymbolicName";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given a test portlet on a page") {
 			JSONLayout.addPublicLayout(
@@ -83,7 +83,7 @@ definition {
 	@priority = 5
 	test BlacklistModuleLPKG {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "BundleBlacklist#BlacklistModuleLPKG";
+		property test.liferay.virtual.instance = "false";
 
 		var testRunEnvironment = PropsUtil.get("test.run.environment");
 
@@ -143,7 +143,7 @@ definition {
 
 	@priority = 4
 	test BlacklistModuleWar {
-		property test.name.skip.portal.instance = "BundleBlacklist#BlacklistModuleWar";
+		property test.liferay.virtual.instance = "false";
 
 		FileInstall.deployFileOnServer(jarFile = "test-theme.war");
 
@@ -172,7 +172,7 @@ definition {
 	test CanEnableBlacklistedModuleJarAfterRestart {
 		property osgi.module.configurations = "blacklistBundleSymbolicNames=[\"com.liferay.frontend.taglib.clay.sample.web\"]";
 		property osgi.modules.includes = "frontend-taglib-clay-sample-web";
-		property test.name.skip.portal.instance = "BundleBlacklist#CanEnableBlacklistedModuleJarAfterRestart";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given a portlet's jar is blacklisted") {
 			AssertConsoleTextPresent(value1 = "Stopping blacklisted bundle com.liferay.frontend.taglib.clay.sample.web");
@@ -212,7 +212,7 @@ definition {
 
 	@priority = 3
 	test CanEnableBlacklistedModuleLPKGAfterRestart {
-		property test.name.skip.portal.instance = "BundleBlacklist#CanEnableBlacklistedModuleLPKGAfterRestart";
+		property test.liferay.virtual.instance = "false";
 
 		var testRunEnvironment = PropsUtil.get("test.run.environment");
 
@@ -277,7 +277,7 @@ definition {
 
 	@priority = 3
 	test CanEnableBlacklistedModuleWarAfterRestart {
-		property test.name.skip.portal.instance = "BundleBlacklist#CanEnableBlacklistedModuleWarAfterRestart";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given a war module") {
 			FileInstall.deployFileOnServer(jarFile = "test-theme.war");
@@ -320,7 +320,7 @@ definition {
 
 	@priority = 3
 	test CanRemoveBlacklistedModuleLPKGViaUI {
-		property test.name.skip.portal.instance = "BundleBlacklist#CanRemoveBlacklistedModuleLPKGViaUI";
+		property test.liferay.virtual.instance = "false";
 
 		var testRunEnvironment = PropsUtil.get("test.run.environment");
 
@@ -377,7 +377,7 @@ definition {
 	@priority = 3
 	test CanRemoveBlacklistedModuleWarViaUI {
 		property osgi.module.configurations = "blacklistBundleSymbolicNames=[\"minium-theme\"]";
-		property test.name.skip.portal.instance = "BundleBlacklist#CanRemoveBlacklistedModuleWarViaUI";
+		property test.liferay.virtual.instance = "false";
 
 		AssertConsoleTextPresent(value1 = "Stopping blacklisted bundle minium-theme");
 
@@ -445,7 +445,7 @@ definition {
 	@priority = 3
 	test EnableBlacklistedModuleAfterShutdown {
 		property osgi.modules.includes = "frontend-taglib-clay-sample-web";
-		property test.name.skip.portal.instance = "BundleBlacklist#EnableBlacklistedModuleAfterShutdown";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given a blacklisted module") {
 			OSGiConfig.deployOSGiConfigFile(
@@ -489,7 +489,7 @@ definition {
 
 	@priority = 5
 	test ExportBundleBlacklistConfig {
-		property test.name.skip.portal.instance = "BundleBlacklist#ExportBundleBlacklistConfig";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -518,7 +518,7 @@ definition {
 
 	@priority = 3
 	test RestartCanNotEnableBlacklistedModuleJarViaUI {
-		property test.name.skip.portal.instance = "BundleBlacklist#RestartCanNotEnableBlacklistedModuleJarViaUI";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -557,7 +557,7 @@ definition {
 
 	@priority = 3
 	test RestartCanNotEnableBlacklistedModuleLPKGViaUI {
-		property test.name.skip.portal.instance = "BundleBlacklist#RestartCanNotEnableBlacklistedModuleLPKGViaUI";
+		property test.liferay.virtual.instance = "false";
 
 		var testRunEnvironment = PropsUtil.get("test.run.environment");
 
@@ -615,7 +615,7 @@ definition {
 
 	@priority = 3
 	test RestartCanNotEnableBlacklistedModuleWarViaUI {
-		property test.name.skip.portal.instance = "BundleBlacklist#RestartCanNotEnableBlacklistedModuleWarViaUI";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",

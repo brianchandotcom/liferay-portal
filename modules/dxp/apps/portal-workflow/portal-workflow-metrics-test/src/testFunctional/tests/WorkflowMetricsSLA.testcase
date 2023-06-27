@@ -9,7 +9,7 @@ definition {
 	setUp {
 		TestCase.setUpPortalInstance();
 
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		User.firstLoginPG();
 
@@ -17,9 +17,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
@@ -28,7 +28,7 @@ definition {
 	@priority = 5
 	test BlockedSLACanBeFixed {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "WorkflowMetricsSLA#BlockedSLACanBeFixed";
+		property test.liferay.virtual.instance = "false";
 
 		WorkflowMetrics.setSLADefinitionsJobInterval(
 			definitionsJobInterval = 1,
@@ -172,7 +172,7 @@ definition {
 	@description = "LPS-89014 - Verify that deleting a SLA will not be reflected in all completed instances"
 	@priority = 4
 	test DeletingSLANotReflectCompletedInstances {
-		property test.name.skip.portal.instance = "WorkflowMetricsSLA#DeletingSLANotReflectCompletedInstances";
+		property test.liferay.virtual.instance = "false";
 
 		WorkflowMetrics.setSLADefinitionsJobInterval(
 			definitionsJobInterval = 1,
@@ -244,7 +244,7 @@ definition {
 	@description = "LPS-89014 - Verify that deleting a SLA will be reflected in all instances In Progress"
 	@priority = 5
 	test DeletingSLAReflectInProgressInstances {
-		property test.name.skip.portal.instance = "WorkflowMetricsSLA#DeletingSLAReflectInProgressInstances";
+		property test.liferay.virtual.instance = "false";
 
 		WorkflowMetrics.setSLADefinitionsJobInterval(
 			definitionsJobInterval = 1,
@@ -308,7 +308,7 @@ definition {
 	@description = "LPS-89082 - Verify that the error alert will be displayed again when user enters the metrics page again after closing it"
 	@priority = 2
 	test ErrorAlertIsDisplayedAgainWhenClosed {
-		property test.name.skip.portal.instance = "WorkflowMetricsSLA#ErrorAlertIsDisplayedAgainWhenClosed";
+		property test.liferay.virtual.instance = "false";
 
 		WorkflowMetrics.setSLADefinitionsJobInterval(
 			definitionsJobInterval = 1,
@@ -369,7 +369,7 @@ definition {
 	@priority = 4
 	test ErrorMessagesAreDisplayedAndClickableWhenSLABlocked {
 		property portal.upstream = "quarantine";
-		property test.name.skip.portal.instance = "WorkflowMetricsSLA#ErrorMessagesAreDisplayedAndClickableWhenSLABlocked";
+		property test.liferay.virtual.instance = "false";
 
 		WorkflowMetrics.setSLADefinitionsJobInterval(
 			definitionsJobInterval = 1,
@@ -827,7 +827,7 @@ definition {
 	@description = "LPS-89082 - Verify that the SLA list should group SLAs into Blocked and Running sections when there is at least 1 blocked SLA"
 	@priority = 4
 	test SLAListIsGroupedWhenSLABlocked {
-		property test.name.skip.portal.instance = "WorkflowMetricsSLA#SLAListIsGroupedWhenSLABlocked";
+		property test.liferay.virtual.instance = "false";
 
 		WorkflowMetrics.setSLADefinitionsJobInterval(
 			definitionsJobInterval = 1,
@@ -903,7 +903,7 @@ definition {
 	@description = "LPS-94760 - Verify that when there is an alert message on the page, the update date should be displayed below it"
 	@priority = 3
 	test SLAProcessingDateIsDisplayedUnderAlertMessage {
-		property test.name.skip.portal.instance = "WorkflowMetricsSLA#SLAProcessingDateIsDisplayedUnderAlertMessage";
+		property test.liferay.virtual.instance = "false";
 
 		WorkflowMetrics.setSLADefinitionsJobInterval(
 			definitionsJobInterval = 1,
@@ -1212,7 +1212,7 @@ definition {
 	@description = "LPS-89416 - Verify that updating a SLA will not be reflected in completed instances"
 	@priority = 4
 	test UpdatingSLANotReflectCompletedInstances {
-		property test.name.skip.portal.instance = "WorkflowMetricsSLA#UpdatingSLANotReflectCompletedInstances";
+		property test.liferay.virtual.instance = "false";
 
 		WorkflowMetrics.setSLADefinitionsJobInterval(
 			definitionsJobInterval = 1,
@@ -1303,7 +1303,7 @@ definition {
 	@priority = 5
 	test UpdatingSLARecalculateTimeInProgressInstances {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "WorkflowMetricsSLA#UpdatingSLARecalculateTimeInProgressInstances";
+		property test.liferay.virtual.instance = "false";
 
 		WorkflowMetrics.setSLADefinitionsJobInterval(
 			definitionsJobInterval = 1,

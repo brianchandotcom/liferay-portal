@@ -12,9 +12,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -28,7 +28,7 @@ definition {
 	@priority = 5
 	test CanActivateOrDeactivateAction {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ObjectActions#CanActivateOrDeactivateAction";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add an object, field, action, and check if an action is active") {
 			ObjectAdmin.addObjectViaAPI(
@@ -507,7 +507,7 @@ definition {
 	@description = "LPS-178405 - Verify if actions works with oldValue function when trigger is On After Delete (Add an Object Entry)"
 	@priority = 4
 	test CanCreateActionAddAnObjectEntryUsingOldValueWithOnAfterDeleteTrigger {
-		property test.name.skip.portal.instance = "ObjectActions#CanCreateActionAddAnObjectEntryUsingOldValueWithOnAfterDeleteTrigger";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given two custom objects with a text field") {
 			for (var letters : list "A,B") {
@@ -1881,7 +1881,7 @@ definition {
 	@description = "LPS-156312 - Assert an Action can be created with Expression Builder."
 	@priority = 4
 	test CanCreateActionWithExpressionBuilder {
-		property test.name.skip.portal.instance = "ObjectActions#CanCreateActionWithExpressionBuilder";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given an object with a field is created") {
 			ObjectAdmin.addObjectViaAPI(
@@ -1936,7 +1936,7 @@ definition {
 	@description = "LPS-156569 - Verify that it's possible to create an Action with Groovy Script"
 	@priority = 5
 	test CanCreateActionWithGroovyScript {
-		property test.name.skip.portal.instance = "ObjectActions#CanCreateActionWithGroovyScript";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given a Groovy Script") {
 			var groovyScript = '''
@@ -2019,7 +2019,7 @@ definition {
 	@description = "LPS-161904 - Verify that it's possible to create an object entry using Actions"
 	@priority = 4
 	test CanCreateEntryWithActions {
-		property test.name.skip.portal.instance = "ObjectActions#CanCreateEntryWithActions";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given an object with a field is created") {
 			ObjectAdmin.addObjectViaAPI(
@@ -2317,7 +2317,7 @@ definition {
 	@description = "LPS-156560 - Verify that it's possible to edit an Action with Groovy Script"
 	@priority = 5
 	test CanEditActionWithGroovyScript {
-		property test.name.skip.portal.instance = "ObjectActions#CanEditActionWithGroovyScript";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given a Groovy Script") {
 			var groovyScript = '''
@@ -2412,7 +2412,7 @@ definition {
 	@priority = 5
 	test CanEditExpression {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ObjectActions#CanEditExpression";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add an Object, Field and Action") {
 			ObjectAdmin.addObjectViaAPI(
@@ -2487,7 +2487,7 @@ definition {
 	@priority = 5
 	test CanEnableAndDisableCondition {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ObjectActions#CanEnableAndDisableCondition";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add object, field, and publish then") {
 			ObjectAdmin.addObjectViaAPI(
@@ -2786,7 +2786,7 @@ definition {
 	@description = "LPS-139008 - Verify it is not possible to leave the Action Then field blank"
 	@priority = 3
 	test CannotLeaveActionThenBlank {
-		property test.name.skip.portal.instance = "ObjectActions#CannotLeaveActionThenBlank";
+		property test.liferay.virtual.instance = "false";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 187",
@@ -2816,7 +2816,7 @@ definition {
 	@description = "LPS-139008 - Verify it is not possible to leave the Action When field blank"
 	@priority = 3
 	test CannotLeaveActionWhenBlank {
-		property test.name.skip.portal.instance = "ObjectActions#CannotLeaveActionWhenBlank";
+		property test.liferay.virtual.instance = "false";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 188",
@@ -2847,7 +2847,7 @@ definition {
 	@description = "LPS-139008 - Verify it is not possible to leave the URL field blank when Webhook is selected"
 	@priority = 3
 	test CannotLeaveURLBlank {
-		property test.name.skip.portal.instance = "ObjectActions#CannotLeaveURLBlank";
+		property test.liferay.virtual.instance = "false";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 189",
@@ -2937,7 +2937,7 @@ definition {
 	@description = "LPS-156319 - Verify that the Expression Builder field is required"
 	@priority = 3
 	test CannotSaveWithoutExpressionBuilder {
-		property test.name.skip.portal.instance = "ObjectActions#CannotSaveWithoutExpressionBuilder";
+		property test.liferay.virtual.instance = "false";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
@@ -3202,7 +3202,7 @@ definition {
 	@priority = 4
 	test CanTriggerActionAfterDisablingExpression {
 		task ("Given an object with a field is created") {
-			property test.name.skip.portal.instance = "ObjectActions#CanTriggerActionAfterDisablingExpression";
+			property test.liferay.virtual.instance = "false";
 
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object",
@@ -4024,7 +4024,7 @@ definition {
 	@description = "LPS-156347 - Verify that the expression works with Webhooks"
 	@priority = 3
 	test CanUseExpressionWithWebhook {
-		property test.name.skip.portal.instance = "ObjectActions#CanUseExpressionWithWebhook";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given an object with a field is created") {
 			ObjectAdmin.addObjectViaAPI(
@@ -4148,7 +4148,7 @@ definition {
 	@description = "LPS-146871 - Verify that the Action name is required"
 	@priority = 4
 	test VerifyActionNameIsRequired {
-		property test.name.skip.portal.instance = "ObjectActions#VerifyActionNameIsRequired";
+		property test.liferay.virtual.instance = "false";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 156562",

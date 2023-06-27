@@ -13,16 +13,16 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@priority = 4
 	test BlacklistComponent {
-		property test.name.skip.portal.instance = "ComponentBlacklist#BlacklistComponent";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -47,7 +47,7 @@ definition {
 
 	@priority = 3
 	test CanExportComponentBlacklistConfig {
-		property test.name.skip.portal.instance = "ComponentBlacklist#CanExportComponentBlacklistConfig";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -96,7 +96,7 @@ definition {
 
 	@priority = 3
 	test CanRemoveBlacklistedComponentViaUI {
-		property test.name.skip.portal.instance = "ComponentBlacklist#CanRemoveBlacklistedComponentViaUI";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -141,7 +141,7 @@ definition {
 
 	@priority = 3
 	test EnableBlacklistedComponentAfterShutdown {
-		property test.name.skip.portal.instance = "ComponentBlacklist#EnableBlacklistedComponentAfterShutdown";
+		property test.liferay.virtual.instance = "false";
 
 		OSGiConfig.deployOSGiConfigFile(
 			osgiConfigFileName = "com.liferay.portal.component.blacklist.internal.configuration.ComponentBlacklistConfiguration.config",
@@ -175,7 +175,7 @@ definition {
 
 	@priority = 3
 	test EnableBlacklistedComponentAtRuntime {
-		property test.name.skip.portal.instance = "ComponentBlacklist#EnableBlacklistedComponentAtRuntime";
+		property test.liferay.virtual.instance = "false";
 
 		OSGiConfig.deployOSGiConfigFile(
 			osgiConfigFileName = "com.liferay.portal.component.blacklist.internal.configuration.ComponentBlacklistConfiguration.config",

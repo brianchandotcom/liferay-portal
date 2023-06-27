@@ -19,11 +19,11 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		Segmentation.resetSegmentationAtInstanceSettings();
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -34,7 +34,7 @@ definition {
 	@description = "LPS-153084 Given the ""Enable Assign Roles by Segment"" is disable at Instance Settings And enabled at System Settings When user navigates to Regular Roles > Assignees > Segments Then the warning alert explains how to re-enable it"
 	@priority = 3
 	test CheckRoleDisabledAlertAtInstanceSettings {
-		property test.name.skip.portal.instance = "SegmentationDisabled#CheckRoleDisabledAlertAtInstanceSettings";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Disable asssigning role by segment at Instance Settings") {
 			Segmentation.disableSegmentationAtSystemSettings();

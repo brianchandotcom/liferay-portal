@@ -31,9 +31,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -459,7 +459,7 @@ definition {
 	@priority = 4
 	@uitest
 	test EditRSSFeedViaAssetpublisherWhenSetFeedTimeToOne {
-		property test.name.skip.portal.instance = "RSS#EditRSSFeedViaAssetpublisherWhenSetFeedTimeToOne";
+		property test.liferay.virtual.instance = "false";
 		property testray.component.names = "Asset Publisher,RSS";
 
 		task ("Change the RSS Feed Time on System Settings") {
@@ -561,7 +561,7 @@ definition {
 	@description = "This is a use case for LPS-180578. The administrater could see the description of RSS Feed Time."
 	@priority = 3
 	test ViewDescriptionOfRSSCacheFeedTime {
-		property test.name.skip.portal.instance = "RSS#ViewDescriptionOfRSSCacheFeedTime";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given administrater goes to System Settings") {
 			ApplicationsMenu.gotoPortlet(

@@ -36,11 +36,11 @@ definition {
 	tearDown {
 		User.firstLoginPG();
 
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		Raylife.tearDownCP();
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -51,7 +51,7 @@ definition {
 	@description = "Story ID: LPS-159542 | Test Summary: Verify if the Address, Name, Email and Phone are displayed under the Summary section on the left side"
 	@priority = 3
 	test AssertInformationInApplicationDetailSummary {
-		property test.name.skip.portal.instance = "RaylifeAPIncompleteApplication#AssertInformationInApplicationDetailSummary";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -139,7 +139,7 @@ definition {
 	@description = "Story ID: LPS-159542 | Test Summary: Verify if inside the application details view when user click on EDIT APPLICATION, the page redirects you to the contact info page, to finish the flow."
 	@priority = 3
 	test AssertRedirectToContactInfoPage {
-		property test.name.skip.portal.instance = "RaylifeAPIncompleteApplication#AssertRedirectToContactInfoPage";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -184,7 +184,7 @@ definition {
 	@description = "Story ID: LPS-159542 | Test Summary: Verify if, when user click on the Application Number of an incomplete application, opens Incomplete Application View."
 	@priority = 3
 	test CanViewIncompleteApplicationDetailPage {
-		property test.name.skip.portal.instance = "RaylifeAPIncompleteApplication#CanViewIncompleteApplicationDetailPage";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 

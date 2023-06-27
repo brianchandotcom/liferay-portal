@@ -26,9 +26,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -313,7 +313,7 @@ definition {
 	@description = "This is a test for LPS-144156. Can Set a Hosted Video URL on a Team Extranet Fragment Video"
 	@priority = 4
 	test CanSetAHostedVideoURL {
-		property test.name.skip.portal.instance = "TeamExtranet#CanSetAHostedVideoURL";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Create a new Page by Json") {
 			JSONLayout.addPublicLayout(

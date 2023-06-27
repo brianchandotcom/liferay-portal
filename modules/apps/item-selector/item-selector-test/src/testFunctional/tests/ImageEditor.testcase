@@ -12,9 +12,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -29,7 +29,7 @@ definition {
 	@description = "This makes sure that canceling the image edition will preserve the original image."
 	@priority = 5
 	test CanDiscardChange {
-		property test.name.skip.portal.instance = "ImageEditor#CanDiscardChange";
+		property test.liferay.virtual.instance = "false";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -63,7 +63,7 @@ definition {
 	@priority = 5
 	test CanSaveResizedImage {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ImageEditor#CanSaveResizedImage";
+		property test.liferay.virtual.instance = "false";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -97,7 +97,7 @@ definition {
 	@priority = 5
 	test CanSaveResizedImagePreview {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ImageEditor#CanSaveResizedImagePreview";
+		property test.liferay.virtual.instance = "false";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -154,7 +154,7 @@ definition {
 	@description = "This makes sure that a rotated image can be saved."
 	@priority = 5
 	test CanSaveRotatedImage {
-		property test.name.skip.portal.instance = "ImageEditor#CanSaveRotatedImage";
+		property test.liferay.virtual.instance = "false";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",

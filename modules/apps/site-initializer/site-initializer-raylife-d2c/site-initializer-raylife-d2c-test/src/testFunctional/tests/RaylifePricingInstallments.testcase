@@ -18,11 +18,11 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		Raylife.tearDownCP();
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -33,7 +33,7 @@ definition {
 	@description = "LPS-149424 - When selecting payment in 1 installment, make sure it is possible to complete the payment"
 	@priority = 4
 	test CanContinueFlowOnePortion {
-		property test.name.skip.portal.instance = "RaylifePricingInstallments#CanContinueFlowOnePortion";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -73,7 +73,7 @@ definition {
 	@description = "LPS-149425 - When selecting '2 payments', make sure it is possible to complete the payment"
 	@priority = 4
 	test CanContinueFlowTwoPortion {
-		property test.name.skip.portal.instance = "RaylifePricingInstallments#CanContinueFlowTwoPortion";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -113,7 +113,7 @@ definition {
 	@description = "LPS-149422 - Make sure that when you select Pay in Full the discount appears"
 	@priority = 3
 	test CanViewDiscountAppearsOnPaypal {
-		property test.name.skip.portal.instance = "RaylifePricingInstallments#CanViewDiscountAppearsOnPaypal";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -147,7 +147,7 @@ definition {
 	@description = "LPS-149423 - Check that when selecting '2 payments' the amount appears divided into two exactly equal installments"
 	@priority = 3
 	test IfDiscountAppearsSplit {
-		property test.name.skip.portal.instance = "RaylifePricingInstallments#IfDiscountAppearsSplit";
+		property test.liferay.virtual.instance = "false";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 

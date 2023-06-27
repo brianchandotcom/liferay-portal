@@ -12,9 +12,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -27,7 +27,7 @@ definition {
 	@priority = 5
 	test CanAddAndDeletePortalInstance {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "VirtualInstances#CanAddAndDeletePortalInstance";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -47,7 +47,7 @@ definition {
 	@description = "This automates LPS-157752. It asserts that email settings can be configured in a Virtual Instance."
 	@priority = 4
 	test CanConfigureEmailSettingsInVirtualInstance {
-		property test.name.skip.portal.instance = "VirtualInstances#CanConfigureEmailSettingsInVirtualInstance";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given a new Virtual Instance is created") {
 			ApplicationsMenu.gotoPortlet(
@@ -91,7 +91,7 @@ definition {
 	@priority = 3
 	test NonAdminUserCanCreateUserInUserLimitedVirtualInstance {
 		property test.assert.warning.exceptions = "true";
-		property test.name.skip.portal.instance = "VirtualInstances#NonAdminUserCanCreateUserInUserLimitedVirtualInstance";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given a user limited virtual instance") {
 			PortalInstances.openVirtualInstancesAdmin();
@@ -158,7 +158,7 @@ definition {
 
 	@priority = 4
 	test PermissionCheckPortalInstances {
-		property test.name.skip.portal.instance = "VirtualInstances#PermissionCheckPortalInstances";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -215,7 +215,7 @@ definition {
 
 	@priority = 5
 	test ViewDeactivatedPortalInstance {
-		property test.name.skip.portal.instance = "VirtualInstances#ViewDeactivatedPortalInstance";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -331,7 +331,7 @@ definition {
 	test ViewVirtualHostPrivateSitePage {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com,www.baker.com,www.charlie.com";
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
-		property test.name.skip.portal.instance = "VirtualInstances#ViewVirtualHostPrivateSitePage";
+		property test.liferay.virtual.instance = "false";
 
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Instance Configuration",
@@ -385,7 +385,7 @@ definition {
 
 	@priority = 4
 	test ViewVirtualInstanceInheritsSystemSettings {
-		property test.name.skip.portal.instance = "VirtualInstances#ViewVirtualInstanceInheritsSystemSettings";
+		property test.liferay.virtual.instance = "false";
 
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Users",

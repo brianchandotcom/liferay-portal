@@ -27,9 +27,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -45,7 +45,7 @@ definition {
 	@priority = 3
 	@refactordone
 	test AssertNoVideoInItemSelectorAfterDisablingFFmpeg {
-		property test.name.skip.portal.instance = "DMVideoPreview#AssertNoVideoInItemSelectorAfterDisablingFFmpeg";
+		property test.liferay.virtual.instance = "false";
 
 		DMNavigator.openToConfigInSystemSettings(portlet = "FFMPEG Video Converter");
 
@@ -73,7 +73,7 @@ definition {
 	@refactordone
 	test CanAddBlogEntryWithEmbeddedVideo {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "DMVideoPreview#CanAddBlogEntryWithEmbeddedVideo";
+		property test.liferay.virtual.instance = "false";
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "Site Name");
 
@@ -104,7 +104,7 @@ definition {
 	@refactordone
 	test CanAddKBArticleWithEmbeddedVideo {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "DMVideoPreview#CanAddKBArticleWithEmbeddedVideo";
+		property test.liferay.virtual.instance = "false";
 
 		KBAdmin.openKBAdmin(siteURLKey = "Site Name");
 
@@ -131,7 +131,7 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanAddWCWithEmbeddedVideo {
-		property test.name.skip.portal.instance = "DMVideoPreview#CanAddWCWithEmbeddedVideo";
+		property test.liferay.virtual.instance = "false";
 
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -213,7 +213,7 @@ definition {
 	test CanConfigureFFmpegVideoPreviewSizePG {
 		property custom.properties = "dl.file.entry.preview.video.width=0${line.separator}dl.file.entry.preview.video.height=0";
 		property test.assert.warning.exceptions = "false";
-		property test.name.skip.portal.instance = "DMVideoPreview#CanConfigureFFmpegVideoPreviewSizePG";
+		property test.liferay.virtual.instance = "false";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -284,7 +284,7 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanImportExportedBlogWithEmbeddedVideo {
-		property test.name.skip.portal.instance = "DMVideoPreview#CanImportExportedBlogWithEmbeddedVideo";
+		property test.liferay.virtual.instance = "false";
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "Site Name");
 
@@ -326,7 +326,7 @@ definition {
 	@refactordone
 	test CanImportExportedKBWithEmbeddedVideo {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "DMVideoPreview#CanImportExportedKBWithEmbeddedVideo";
+		property test.liferay.virtual.instance = "false";
 
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -382,7 +382,7 @@ definition {
 	@refactordone
 	test CanImportExportedWebContentWithEmbeddedVideo {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "DMVideoPreview#CanImportExportedWebContentWithEmbeddedVideo";
+		property test.liferay.virtual.instance = "false";
 
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -444,7 +444,7 @@ definition {
 	@refactordone
 	test CanViewFromDisconnectedSite {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "DMVideoPreview#CanViewFromDisconnectedSite";
+		property test.liferay.virtual.instance = "false";
 
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -500,7 +500,7 @@ definition {
 	@priority = 4
 	test PreviewRemainsAfterDisablingFFmpeg {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "DMVideoPreview#PreviewRemainsAfterDisablingFFmpeg";
+		property test.liferay.virtual.instance = "false";
 
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "DM Video Title In Site",

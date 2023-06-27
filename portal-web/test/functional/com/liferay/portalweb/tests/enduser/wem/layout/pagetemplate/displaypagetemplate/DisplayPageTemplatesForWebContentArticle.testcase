@@ -26,9 +26,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -1107,7 +1107,7 @@ definition {
 	@description = "This is a test for LPS-150919. Canonical URL should be valid for DPT."
 	@priority = 2
 	test ViewCanonicalURL {
-		property test.name.skip.portal.instance = "DisplayPageTemplatesForWebContentArticle#ViewCanonicalURL";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given I select Use Localized URL as Canonical URL") {
 			SystemSettings.openSystemSettingsAdmin();

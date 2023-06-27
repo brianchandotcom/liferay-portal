@@ -25,7 +25,7 @@ definition {
 		property data.archive.type = "data-archive-depot-local-staging-with-image";
 		property portal.version = "7.3.10.1";
 		property test.assert.warning.exceptions = "false";
-		property test.name.skip.portal.instance = "DepotLocalStagingUpgrade#CanPublishBlogSmallImageAfterUpgradeFrom73101Archive";
+		property test.liferay.virtual.instance = "false";
 
 		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name Local Staging");
 
@@ -73,7 +73,7 @@ definition {
 		property data.archive.type = "data-archive-depot-local-staging-with-image";
 		property portal.version = "7.3.10.1";
 		property test.assert.warning.exceptions = "false";
-		property test.name.skip.portal.instance = "DepotLocalStagingUpgrade#CanPublishImageInBlogContentFieldAfterUpgradeFrom73101Archive";
+		property test.liferay.virtual.instance = "false";
 
 		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name Local Staging");
 
@@ -124,7 +124,7 @@ definition {
 		property data.archive.type = "data-archive-depot-local-staging-with-image";
 		property portal.version = "7.3.10.1";
 		property test.assert.warning.exceptions = "false";
-		property test.name.skip.portal.instance = "DepotLocalStagingUpgrade#CanPublishImageInMGAfterUpgradeFrom73101Archive";
+		property test.liferay.virtual.instance = "false";
 
 		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name Local Staging");
 
@@ -169,7 +169,7 @@ definition {
 		property data.archive.type = "data-archive-depot-staging";
 		property portal.version = "7.3.10.1";
 		property test.assert.warning.exceptions = "false";
-		property test.name.skip.portal.instance = "DepotLocalStagingUpgrade#ViewDepotStagingArchive73101";
+		property test.liferay.virtual.instance = "false";
 
 		ValidateDepotUpgrade.publishDMsInStagingDepot();
 

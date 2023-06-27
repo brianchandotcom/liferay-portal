@@ -22,9 +22,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -185,7 +185,7 @@ definition {
 	@description = "This case covers LPS-140006. It ensures that a valid file can be uploaded after the invalid file is discarded."
 	@priority = 3
 	test CanAddValidFileAfterInvalidFileIsDiscardedViaMultipleUpload {
-		property test.name.skip.portal.instance = "DMFileEntry#CanAddValidFileAfterInvalidFileIsDiscardedViaMultipleUpload";
+		property test.liferay.virtual.instance = "false";
 
 		DMDocument.updateFileExtensions(fieldValue = ".docx");
 
@@ -242,7 +242,7 @@ definition {
 	@refactordone
 	test CanAutocompleteCategory {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "DMFileEntry#CanAutocompleteCategory";
+		property test.liferay.virtual.instance = "false";
 
 		JSONCategory.addVocabulary(
 			groupName = "Guest",
@@ -305,7 +305,7 @@ definition {
 	@refactordone
 	test CanAutoCompleteCategory {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "DMFileEntry#CanAutoCompleteCategory";
+		property test.liferay.virtual.instance = "false";
 
 		JSONCategory.addVocabulary(
 			groupName = "Guest",
@@ -1765,7 +1765,7 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanLimitMaximumAmountOfVersions {
-		property test.name.skip.portal.instance = "DMFileEntry#CanLimitMaximumAmountOfVersions";
+		property test.liferay.virtual.instance = "false";
 
 		// Can research how to update file using JSON
 
@@ -2149,7 +2149,7 @@ definition {
 	@refactordone
 	test CannotPreviewFileThatExceedsLimit {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "DMFileEntry#CannotPreviewFileThatExceedsLimit";
+		property test.liferay.virtual.instance = "false";
 
 		DMNavigator.openToConfigInSystemSettings(portlet = "File Entries");
 
@@ -2223,7 +2223,7 @@ definition {
 	@priority = 4
 	test CannotViewExpiredDocumentAsGuest {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
-		property test.name.skip.portal.instance = "DMFileEntry#CannotViewExpiredDocumentAsGuest";
+		property test.liferay.virtual.instance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -2541,7 +2541,7 @@ definition {
 	@priority = 4
 	test CanRepublishDocumentAfterDisablingExpirationDate {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
-		property test.name.skip.portal.instance = "DMFileEntry#CanRepublishDocumentAfterDisablingExpirationDate";
+		property test.liferay.virtual.instance = "false";
 
 		DMDocument.updateCheckInterval(fieldValue = 1);
 
@@ -2631,7 +2631,7 @@ definition {
 	@refactordone
 	test CanRestrictFileExtensionToDoc {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "DMFileEntry#CanRestrictFileExtensionToDoc";
+		property test.liferay.virtual.instance = "false";
 
 		DMDocument.updateFileExtensions(fieldValue = ".doc");
 
@@ -2710,7 +2710,7 @@ definition {
 	@priority = 4
 	test CanReviewDocumentWhenDateIsChanged {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
-		property test.name.skip.portal.instance = "DMFileEntry#CanReviewDocumentWhenDateIsChanged";
+		property test.liferay.virtual.instance = "false";
 
 		DMDocument.updateCheckInterval(fieldValue = 1);
 
@@ -2763,7 +2763,7 @@ definition {
 	@priority = 4
 	test CanReviewDocumentWhenDateIsDisabled {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
-		property test.name.skip.portal.instance = "DMFileEntry#CanReviewDocumentWhenDateIsDisabled";
+		property test.liferay.virtual.instance = "false";
 
 		DMDocument.updateCheckInterval(fieldValue = 1);
 
@@ -2814,7 +2814,7 @@ definition {
 	@priority = 5
 	test CanReviewDocumentWhenDateIsSet {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
-		property test.name.skip.portal.instance = "DMFileEntry#CanReviewDocumentWhenDateIsSet";
+		property test.liferay.virtual.instance = "false";
 
 		DMDocument.updateCheckInterval(fieldValue = 1);
 
@@ -3050,7 +3050,7 @@ definition {
 	@priority = 5
 	test CanViewExpiredDocument {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
-		property test.name.skip.portal.instance = "DMFileEntry#CanViewExpiredDocument";
+		property test.liferay.virtual.instance = "false";
 
 		DMDocument.updateCheckInterval(fieldValue = 1);
 
@@ -3090,7 +3090,7 @@ definition {
 	@priority = 4
 	test CanViewExpiredDocumentAsContentReviewer {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles${line.separator}jsonws.web.service.paths.excludes=";
-		property test.name.skip.portal.instance = "DMFileEntry#CanViewExpiredDocumentAsContentReviewer";
+		property test.liferay.virtual.instance = "false";
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -3598,7 +3598,7 @@ definition {
 	@priority = 3
 	@refactordone
 	test GifFileCanBeAddedToEditorAfterDisablingGifMimeTypeInAM {
-		property test.name.skip.portal.instance = "DMFileEntry#GifFileCanBeAddedToEditorAfterDisablingGifMimeTypeInAM";
+		property test.liferay.virtual.instance = "false";
 
 		SystemSettings.openSystemSettingsAdmin();
 
@@ -3746,7 +3746,7 @@ definition {
 	@description = "This a ticket for LPS-154955. Verify tree image is available when Liferay is deployed. Skip the instance for performance improvement."
 	@priority = 4
 	test VerifyTreeImageIsAvailable {
-		property test.name.skip.portal.instance = "DMFileEntry#VerifyTreeImageIsAvailable";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Go to Documents and Media Settings") {
 			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
@@ -3764,7 +3764,7 @@ definition {
 	@description = "This is a test for LPS-94829. It ensures that the wildcard can be defined with other file extensions."
 	@priority = 4
 	test WildcardCanBeDefinedWithOtherFileExtensions {
-		property test.name.skip.portal.instance = "DMFileEntry#WildcardCanBeDefinedWithOtherFileExtensions";
+		property test.liferay.virtual.instance = "false";
 
 		DMDocument.updateFileExtensions(
 			fieldValue = ".doc",

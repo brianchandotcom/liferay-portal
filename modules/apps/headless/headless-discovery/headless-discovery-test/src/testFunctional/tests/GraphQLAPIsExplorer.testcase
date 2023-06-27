@@ -12,9 +12,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
@@ -23,7 +23,7 @@ definition {
 	@priority = 5
 	test disableApiEplorer {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "GraphQLAPIsExplorer#disableApiEplorer";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -48,7 +48,7 @@ definition {
 	@priority = 5
 	test enableApiEplorer {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "GraphQLAPIsExplorer#enableApiEplorers";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 

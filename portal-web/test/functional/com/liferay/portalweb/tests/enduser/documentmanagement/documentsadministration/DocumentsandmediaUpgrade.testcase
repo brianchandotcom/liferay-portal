@@ -109,7 +109,7 @@ definition {
 	test ViewDMArchive72104 {
 		property data.archive.type = "data-archive-documents-and-media";
 		property portal.version = "7.2.10.4";
-		property test.name.skip.portal.instance = "DocumentsandmediaUpgrade#ViewDMArchive72104";
+		property test.liferay.virtual.instance = "false";
 
 		ValidateDocumentsAndMediaUpgrade.viewDocuments();
 
@@ -130,7 +130,7 @@ definition {
 	test ViewDMArchive73101 {
 		property data.archive.type = "data-archive-documents-and-media";
 		property portal.version = "7.3.10.1";
-		property test.name.skip.portal.instance = "DocumentsandmediaUpgrade#ViewDMArchive73101";
+		property test.liferay.virtual.instance = "false";
 
 		ValidateDocumentsAndMediaUpgrade.viewDocuments();
 
@@ -171,7 +171,7 @@ definition {
 	test ViewDMArchive701015 {
 		property data.archive.type = "data-archive-documents-and-media";
 		property portal.version = "7.0.10.15";
-		property test.name.skip.portal.instance = "DocumentsandmediaUpgrade#ViewDMArchive701015";
+		property test.liferay.virtual.instance = "false";
 
 		ValidateDocumentsAndMediaUpgrade.viewDocuments();
 

@@ -228,7 +228,7 @@ definition {
 	@description = "This is a test for LPS-109854. Cannot view the sitemap of staging site as Guest."
 	@priority = 4
 	test CannotViewSiteMapOfStagingSiteAsGuest {
-		property test.name.skip.portal.instance = "ContentPagesWithStaging#CannotViewSiteMapOfStagingSiteAsGuest";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add a content page") {
 			JSONLayout.addPublicLayout(

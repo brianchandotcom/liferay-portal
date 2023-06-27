@@ -25,9 +25,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -1065,7 +1065,7 @@ definition {
 	@priority = 5
 	test PreviewMappedContentOfCollectionItemOnDisplayPageTemplateForCategory {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CollectionDisplayWithRelatedItemsCollectionProviders#PreviewMappedContentOfCollectionItemOnDisplayPageTemplateForCategory";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Enable the DDMStructure and DLFileEntry feature via gogo shell") {
 			GogoShell.openGogoShellAdmin();
@@ -1273,7 +1273,7 @@ definition {
 	@description = "This is a test for LPS-127025. The DPT author can view the available mappable fields of collection item in DPT for Category."
 	@priority = 4
 	test ViewAvailableMappableFieldsOfCollectionItemOnDisplayPageTemplateForCategory {
-		property test.name.skip.portal.instance = "CollectionDisplayWithRelatedItemsCollectionProviders#ViewAvailableMappableFieldsOfCollectionItemOnDisplayPageTemplateForCategory";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Enable the DDMStructure and DLFileEntry feature via gogo shell") {
 			GogoShell.openGogoShellAdmin();
@@ -1664,7 +1664,7 @@ definition {
 	@priority = 5
 	test ViewCollectionItemsBasedOnBasicDocumentOnDisplayPageTemplateForCategory {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CollectionDisplayWithRelatedItemsCollectionProviders#ViewCollectionItemsBasedOnBasicDocumentOnDisplayPageTemplateForCategory";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Enable the DLFileEntry feature via gogo shell") {
 			GogoShell.openGogoShellAdmin();
@@ -1786,7 +1786,7 @@ definition {
 	@priority = 5
 	test ViewCollectionItemsBasedOnBasicWebContentOnDisplayPageTemplateForCategory {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CollectionDisplayWithRelatedItemsCollectionProviders#ViewCollectionItemsBasedOnBasicWebContentOnDisplayPageTemplateForCategory";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Enable the DDMStructure feature via gogo shell") {
 			GogoShell.openGogoShellAdmin();
@@ -2012,7 +2012,7 @@ definition {
 	@description = "This is a test for LPS-127025. The DPT author can use custom document type related item collection provider in DPT for Category."
 	@priority = 4
 	test ViewCollectionItemsBasedOnCustomDocumentTypeOnDisplayPageTemplateForCategory {
-		property test.name.skip.portal.instance = "CollectionDisplayWithRelatedItemsCollectionProviders#ViewCollectionItemsBasedOnCustomDocumentTypeOnDisplayPageTemplateForCategory";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Enable the DLFileEntry feature via gogo shell") {
 			GogoShell.openGogoShellAdmin();
@@ -2145,7 +2145,7 @@ definition {
 	@description = "This is a test for LPS-127025. The DPT author can use custom web content structure related item collection provider in DPT for Category."
 	@priority = 4
 	test ViewCollectionItemsBasedOnCustomWebContentStructureOnDisplayPageTemplateForCategory {
-		property test.name.skip.portal.instance = "CollectionDisplayWithRelatedItemsCollectionProviders#ViewCollectionItemsBasedOnCustomWebContentStructureOnDisplayPageTemplateForCategory";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Enable the DDMStructure feature via gogo shell") {
 			GogoShell.openGogoShellAdmin();

@@ -20,15 +20,15 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	test AssertSearchAdmin {
-		property test.name.skip.portal.instance = "Solr#AssertSearchAdmin";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -107,7 +107,7 @@ definition {
 	@description = "This smoke test is to ensure that Liferay is successfully running on a remote Solr by asserting the Solr administration dashboard and performing searches in portal. Note by default, an embedded Elasticsearch is deployed in portal."
 	@priority = 4
 	test SolrSmokeTest {
-		property test.name.skip.portal.instance = "Solr#SolrSmokeTest";
+		property test.liferay.virtual.instance = "false";
 
 		JSONMBMessage.addMessage(
 			groupName = "Guest",
@@ -157,7 +157,7 @@ definition {
 	@priority = 4
 	test SolrWithSolrCloudSmokeTest {
 		property solr.solrcloud.enabled = "true";
-		property test.name.skip.portal.instance = "Solr#SolrWithSolrCloudSmokeTest";
+		property test.liferay.virtual.instance = "false";
 
 		AssertConsoleTextPresent(value1 = "zkClient has connected");
 
@@ -223,7 +223,7 @@ definition {
 	@priority = 4
 	test SolrWithSSLAuthenticationSmokeTest {
 		property solr.ssl.authentication.enabled = "true";
-		property test.name.skip.portal.instance = "Solr#SolrWithSSLAuthenticationSmokeTest";
+		property test.liferay.virtual.instance = "false";
 
 		JSONMBMessage.addMessage(
 			groupName = "Guest",

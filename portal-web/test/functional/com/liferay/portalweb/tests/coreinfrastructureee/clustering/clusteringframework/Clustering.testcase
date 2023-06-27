@@ -17,9 +17,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -32,7 +32,7 @@ definition {
 	@priority = 4
 	test AddAndDeleteBlogEntriesOnSeparateNodes {
 		property portal.upstream = "quarantine";
-		property test.name.skip.portal.instance = "Clustering#AddAndDeleteBlogEntriesOnSeparateNodes";
+		property test.liferay.virtual.instance = "false";
 
 		Clustering.viewClusterStatusInConsole();
 
@@ -157,7 +157,7 @@ definition {
 
 	@priority = 3
 	test CanAccessGogoShellOnAnyClusteredNode {
-		property test.name.skip.portal.instance = "Clustering#CanAccessGogoShellOnAnyClusteredNode";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -191,7 +191,7 @@ definition {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.baker.com";
 		property database.partition.enabled = "true";
 		property liferay.online.properties = "true";
-		property test.name.skip.portal.instance = "Clustering#CanCreateVirtualInstanceWithClusterDBPartitioningAndLOLProperties";
+		property test.liferay.virtual.instance = "false";
 
 		Clustering.viewClusterStatusInConsole();
 
@@ -237,7 +237,7 @@ definition {
 	test CanCreateVirtualInstanceWithClustering {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Clustering#CanCreateVirtualInstanceWithClustering";
+		property test.liferay.virtual.instance = "false";
 
 		Clustering.viewClusterStatusInConsole();
 
@@ -282,7 +282,7 @@ definition {
 	test CanCreateVirtualInstanceWithClusteringSecondNode {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Clustering#CanCreateVirtualInstanceWithClusteringSecondNode";
+		property test.liferay.virtual.instance = "false";
 
 		Clustering.viewClusterStatusInConsole();
 
@@ -331,7 +331,7 @@ definition {
 
 	@priority = 4
 	test CanInvokeMethods {
-		property test.name.skip.portal.instance = "Clustering#CanInvokeMethods";
+		property test.liferay.virtual.instance = "false";
 
 		Groovy.runScriptViaGogoShell(
 			expectedOutput = "Result of invoke-method-portal: 9080",
@@ -392,7 +392,7 @@ definition {
 
 	@priority = 4
 	test CanUpdateLogLevelsForAllNodesFromMaster {
-		property test.name.skip.portal.instance = "Clustering#CanUpdateLogLevelsForAllNodesFromMaster";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -422,7 +422,7 @@ definition {
 	@priority = 4
 	test CanUpdateLogLevelsForAllNodesFromSlave {
 		property app.server.bundles.size = "2";
-		property test.name.skip.portal.instance = "Clustering#CanUpdateLogLevelsForAllNodesFromSlave";
+		property test.liferay.virtual.instance = "false";
 
 		User.logoutPG(
 			password = "test",
@@ -464,7 +464,7 @@ definition {
 		property custom.properties = "company.security.auth.type=emailAddress";
 		property portal.release = "true";
 		property portal.upstream = "quarantine";
-		property test.name.skip.portal.instance = "Clustering#CanUpdatePortalPropertiesWithMultipleClusters";
+		property test.liferay.virtual.instance = "false";
 
 		Clustering.viewClusterStatusInConsole();
 
@@ -593,7 +593,7 @@ definition {
 	@priority = 5
 	test ShutdownAndStartupNodes {
 		property portal.upstream = "quarantine";
-		property test.name.skip.portal.instance = "Clustering#ShutdownAndStartupNodes";
+		property test.liferay.virtual.instance = "false";
 
 		Clustering.viewClusterStatusInConsole();
 
@@ -655,7 +655,7 @@ definition {
 
 	@priority = 4
 	test SlaveNodeCanBecomeMasterNode {
-		property test.name.skip.portal.instance = "Clustering#SlaveNodeCanBecomeMasterNode";
+		property test.liferay.virtual.instance = "false";
 
 		Groovy.runScriptViaGogoShell(
 			expectedOutput = "This node is master node",
@@ -695,7 +695,7 @@ definition {
 	@priority = 4
 	test TCPControlChannelProperties {
 		property custom.properties = "cluster.link.channel.properties.control=tcp.xml";
-		property test.name.skip.portal.instance = "Clustering#TCPControlChannelProperties";
+		property test.liferay.virtual.instance = "false";
 
 		for (var serverPort : list "8080,9080") {
 			Clustering.viewTextPresentOnSpecificNode(
@@ -716,7 +716,7 @@ definition {
 	@priority = 4
 	test UDPControlChannelProperties {
 		property custom.properties = "cluster.link.channel.properties.control=udp.xml${line.separator}cluster.link.channel.properties.transport.0=udp.xml";
-		property test.name.skip.portal.instance = "Clustering#UDPControlChannelProperties";
+		property test.liferay.virtual.instance = "false";
 
 		for (var serverPort : list "8080,9080") {
 			Clustering.viewTextPresentOnSpecificNode(
@@ -736,7 +736,7 @@ definition {
 
 	@priority = 4
 	test ValidateDocumentOnSeparateNodes {
-		property test.name.skip.portal.instance = "Clustering#ValidateDocumentOnSeparateNodes";
+		property test.liferay.virtual.instance = "false";
 
 		Clustering.viewClusterStatusInConsole();
 
@@ -792,7 +792,7 @@ definition {
 	@priority = 4
 	test ValidateLiveUsers {
 		property custom.properties = "live.users.enabled=true";
-		property test.name.skip.portal.instance = "Clustering#ValidateLiveUsers";
+		property test.liferay.virtual.instance = "false";
 
 		Clustering.viewClusterStatusInConsole();
 
@@ -845,7 +845,7 @@ definition {
 	@description = "This is a use case for LPS-142472."
 	@priority = 4
 	test ValidatePublishOnTwoNodes {
-		property test.name.skip.portal.instance = "Clustering#ValidatePublishOnTwoNodes";
+		property test.liferay.virtual.instance = "false";
 
 		Clustering.viewClusterStatusInConsole();
 
@@ -943,7 +943,7 @@ definition {
 
 	@priority = 4
 	test ValidateSchedulerOnSeparateNodes {
-		property test.name.skip.portal.instance = "Clustering#ValidateSchedulerOnSeparateNodes";
+		property test.liferay.virtual.instance = "false";
 
 		var siteName = TestCase.getSiteName();
 

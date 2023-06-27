@@ -37,9 +37,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -250,7 +250,7 @@ definition {
 	@description = "This test sets the Allowed Account Type to only Business and assert that only Business Accounts display in Account Management Widget."
 	@priority = 4
 	test CanOnlyViewBusinessAccountsWhenAllowedAccountTypeIsBusiness {
-		property test.name.skip.portal.instance = "AccountManagementWidget#CanOnlyViewBusinessAccountsWhenAllowedAccountTypeIsBusiness";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given there is a Business account and a Person account the non admin user is a member of") {
 			JSONAccountEntry.addAccountEntry(

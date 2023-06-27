@@ -16,9 +16,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -104,7 +104,7 @@ definition {
 	@priority = 4
 	test AdminCanNotAddASubpageOfAChildPageLinkedToSiteTemplatePage {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "SitetemplatesUsecase#AdminCanNotAddASubpageOfAChildPageLinkedToSiteTemplatePage";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: User add a new Site template with a page") {
 			SiteTemplates.addCP(siteTemplateName = "Site Template Name");
@@ -175,7 +175,7 @@ definition {
 	@description = "This is a use case for LPS-81629. Newly created pages are visible next to the home page on site template and on the site created from that template."
 	@priority = 3
 	test AllPageIsVisibleAfterAddingNewPages {
-		property test.name.skip.portal.instance = "SitetemplatesUsecase#AllPageIsVisibleAfterAddingNewPages";
+		property test.liferay.virtual.instance = "false";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -226,7 +226,7 @@ definition {
 	@description = "This is a use case for LPS-180299. Change localization after Site Template is added in virtual instance."
 	@priority = 4
 	test ChangeLocalizationAfterSiteTemplateIsAddedInVirtualInstance {
-		property test.name.skip.portal.instance = "SitetemplatesUsecase#ChangeLocalizationAfterSiteTemplateIsAddedInVirtualInstance";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: Add virtual instance able.com") {
 			HeadlessPortalInstanceAPI.addPortalInstance(
@@ -317,7 +317,7 @@ definition {
 	@description = "Site templates with older versions can be imported."
 	@priority = 4
 	test ImportOldSchemaVersion {
-		property test.name.skip.portal.instance = "SitetemplatesUsecase#ImportOldSchemaVerion";
+		property test.liferay.virtual.instance = "false";
 
 		task ("When: User navigate to Site template admin page") {
 			SiteTemplatesNavigator.openSiteTemplatesAdmin();
@@ -606,7 +606,7 @@ definition {
 	@priority = 4
 	test SiteTemplatePageLinkInWebContentRedirectCorrectly {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "SitetemplatesUsecase#SiteTemplatePageLinkInWebContentRedirectCorrectly";
+		property test.liferay.virtual.instance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -692,7 +692,7 @@ definition {
 	@description = "This is a use case for LPS-74081. Site pages with numeric friendly URL's can be imported from LAR files."
 	@priority = 4
 	test ViewImportedSitePageWithNumericFriendlyURL {
-		property test.name.skip.portal.instance = "SitetemplatesUsecase#ViewImportedSitePageWithNumericFriendlyURL";
+		property test.liferay.virtual.instance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
 

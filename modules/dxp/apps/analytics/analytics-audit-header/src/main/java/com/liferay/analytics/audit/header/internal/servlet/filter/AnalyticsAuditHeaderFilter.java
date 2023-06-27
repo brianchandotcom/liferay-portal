@@ -47,7 +47,8 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = Filter.class
 )
-public class AnalyticsAuditHeaderFilter extends BaseFilter implements TryFilter {
+public class AnalyticsAuditHeaderFilter
+	extends BaseFilter implements TryFilter {
 
 	public static final String REQUEST_PARAMETER_X_LIFERAY_REQUEST =
 		"X-Liferay-Request";
@@ -99,7 +100,8 @@ public class AnalyticsAuditHeaderFilter extends BaseFilter implements TryFilter 
 			}
 		}
 
-		Boolean enabledScope = _analyticsAuditHeaderConfiguration.enabledScope();
+		Boolean enabledScope =
+			_analyticsAuditHeaderConfiguration.enabledScope();
 
 		if (enabledScope) {
 			long userId = _portal.getUserId(httpServletRequest);
@@ -138,8 +140,9 @@ public class AnalyticsAuditHeaderFilter extends BaseFilter implements TryFilter 
 	protected void activate(
 		BundleContext bundleContext, Map<String, Object> properties) {
 
-		_analyticsAuditHeaderConfiguration = ConfigurableUtil.createConfigurable(
-			AnalyticsAuditHeaderConfiguration.class, properties);
+		_analyticsAuditHeaderConfiguration =
+			ConfigurableUtil.createConfigurable(
+				AnalyticsAuditHeaderConfiguration.class, properties);
 	}
 
 	@Override
@@ -150,7 +153,8 @@ public class AnalyticsAuditHeaderFilter extends BaseFilter implements TryFilter 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AnalyticsAuditHeaderFilter.class);
 
-	private AnalyticsAuditHeaderConfiguration _analyticsAuditHeaderConfiguration;
+	private AnalyticsAuditHeaderConfiguration
+		_analyticsAuditHeaderConfiguration;
 
 	@Reference
 	private Portal _portal;

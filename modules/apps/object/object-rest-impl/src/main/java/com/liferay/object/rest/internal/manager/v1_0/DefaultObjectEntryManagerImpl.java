@@ -48,9 +48,7 @@ import com.liferay.object.rest.manager.v1_0.ObjectRelationshipElementsParserRegi
 import com.liferay.object.rest.petra.sql.dsl.expression.FilterPredicateFactory;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectEntryService;
-import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.ObjectRelationshipService;
 import com.liferay.object.system.SystemObjectDefinitionManager;
@@ -316,7 +314,7 @@ public class DefaultObjectEntryManagerImpl
 
 		_executeObjectAction(
 			dtoConverterContext, objectActionName, objectDefinition,
-			_objectEntryLocalService.getObjectEntry(objectEntryId));
+			objectEntryLocalService.getObjectEntry(objectEntryId));
 	}
 
 	@Override
@@ -328,7 +326,7 @@ public class DefaultObjectEntryManagerImpl
 
 		_executeObjectAction(
 			dtoConverterContext, objectActionName, objectDefinition,
-			_objectEntryLocalService.getObjectEntry(
+			objectEntryLocalService.getObjectEntry(
 				externalReferenceCode, companyId,
 				getGroupId(objectDefinition, scopeKey)));
 	}
@@ -501,7 +499,7 @@ public class DefaultObjectEntryManagerImpl
 				List<Facet.FacetValue> facetValues = new ArrayList<>();
 
 				Map<Object, Long> aggregationCounts =
-					_objectEntryLocalService.getAggregationCounts(
+					objectEntryLocalService.getAggregationCounts(
 						groupId, objectDefinition.getObjectDefinitionId(),
 						entry1.getKey(), predicate, start, end);
 
@@ -564,17 +562,17 @@ public class DefaultObjectEntryManagerImpl
 			).build(),
 			facets,
 			TransformUtil.transform(
-				_objectEntryLocalService.getValuesList(
+				objectEntryLocalService.getValuesList(
 					groupId, companyId, dtoConverterContext.getUserId(),
 					objectDefinition.getObjectDefinitionId(), predicate, search,
 					start, end,
 					OrderByExpressionUtil.getOrderByExpressions(
 						objectDefinition.getObjectDefinitionId(),
-						_objectFieldLocalService, sorts)),
+						objectFieldLocalService, sorts)),
 				values -> _getObjectEntry(
 					dtoConverterContext, objectDefinition, values)),
 			pagination,
-			_objectEntryLocalService.getValuesListCount(
+			objectEntryLocalService.getValuesListCount(
 				groupId, companyId, dtoConverterContext.getUserId(),
 				objectDefinition.getObjectDefinitionId(), predicate, search));
 	}
@@ -753,7 +751,7 @@ public class DefaultObjectEntryManagerImpl
 				dtoConverterContext.getUser());
 		}
 
-		return _objectEntryLocalService.getSystemModelAttributes(
+		return objectEntryLocalService.getSystemModelAttributes(
 			objectDefinition, primaryKey);
 	}
 
@@ -966,7 +964,7 @@ public class DefaultObjectEntryManagerImpl
 			}
 		}
 
-		return _objectEntryLocalService.getObjectEntry(primaryKey);
+		return objectEntryLocalService.getObjectEntry(primaryKey);
 	}
 
 	private void _checkObjectEntryObjectDefinitionId(
@@ -1473,11 +1471,11 @@ public class DefaultObjectEntryManagerImpl
 		Map<String, Serializable> values = new HashMap<>();
 
 		for (ObjectField objectField :
-				_objectFieldLocalService.getObjectFields(
+				objectFieldLocalService.getObjectFields(
 					objectDefinition.getObjectDefinitionId())) {
 
 			Object value = ObjectEntryValuesUtil.getValue(
-				_objectDefinitionLocalService, _objectEntryLocalService,
+				_objectDefinitionLocalService, objectEntryLocalService,
 				objectField, _objectFieldBusinessTypeRegistry, userId,
 				objectEntry.getProperties());
 
@@ -1580,9 +1578,6 @@ public class DefaultObjectEntryManagerImpl
 		_objectEntryDTOConverter;
 
 	@Reference
-	private ObjectEntryLocalService _objectEntryLocalService;
-
-	@Reference
 	private ObjectEntryManagerRegistry _objectEntryManagerRegistry;
 
 	@Reference
@@ -1590,9 +1585,6 @@ public class DefaultObjectEntryManagerImpl
 
 	@Reference
 	private ObjectFieldBusinessTypeRegistry _objectFieldBusinessTypeRegistry;
-
-	@Reference
-	private ObjectFieldLocalService _objectFieldLocalService;
 
 	@Reference
 	private ObjectRelatedModelsProviderRegistry

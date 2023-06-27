@@ -27,6 +27,23 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.get(${curl});
 	}
 
+	@summary = "Fill the date fields"
+	macro insertDate {
+		var currentDate = DateUtil.getFormattedDate(${dateRange}, "yyyy-MM-dd");
+
+		var nextDayDate = DateUtil.getFormattedDate("+2", "yyyy-MM-dd");
+		
+		Type.sendKeys(
+			key_fieldLabel = ${initialDateLabel},
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = ${currentDate});
+
+		Type.sendKeys(
+			key_fieldLabel = ${endDateLabel},
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = ${nextDayDate});
+	}
+
 	@summary = "Navigating to EVP needs an extra click on Sign In which will redirect to Okta"
 	macro gotoEVP {
 		Navigator.openSiteURL(siteName = "EVP Portal");

@@ -3099,8 +3099,8 @@ definition {
 		task ("Click on USER field type and assert if other properties are not displayed") {
 			LexiconEntry.gotoAdd();
 
-			for (var option : list "Country, Browser, Segment") {
-				AssertElementNotPresent(
+			for (var option : list "Country,Browser,Segment") {
+				AssertNotVisible(
 					key_propertyOption = ${option},
 					locator1 = "Segmentation#ADD_FIELD_TYPE");
 			}
@@ -3109,8 +3109,8 @@ definition {
 		task ("Click on ORGANIZATION field type and assert if other properties are not displayed") {
 			Segmentation.gotoSidebar(fieldType = "Organization");
 
-			for (var option : list "Date of Birth, Browser, Segment") {
-				AssertElementNotPresent(
+			for (var option : list "Date of Birth,Browser,Segment") {
+				AssertNotVisible(
 					key_propertyOption = ${option},
 					locator1 = "Segmentation#ADD_FIELD_TYPE");
 			}
@@ -3119,8 +3119,8 @@ definition {
 		task ("Click on SESSION field type and assert if other properties are not displayed") {
 			Segmentation.gotoSidebar(fieldType = "Session");
 
-			for (var option : list "Date of Birth, Country, Segment") {
-				AssertElementNotPresent(
+			for (var option : list "Date of Birth,Country,Segment") {
+				AssertNotVisible(
 					key_propertyOption = ${option},
 					locator1 = "Segmentation#ADD_FIELD_TYPE");
 			}
@@ -3129,8 +3129,8 @@ definition {
 		task ("Click on SEGMENTS field type and assert if other properties are not displayed") {
 			Segmentation.gotoSidebar(fieldType = "Segments");
 
-			for (var option : list "Date of Birth, Country, Browser") {
-				AssertElementNotPresent(
+			for (var option : list "Date of Birth,Country,Browser") {
+				AssertNotVisible(
 					key_propertyOption = ${option},
 					locator1 = "Segmentation#ADD_FIELD_TYPE");
 			}

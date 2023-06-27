@@ -714,7 +714,7 @@ public class TemplateInfoItemFieldSetProviderTest {
 			).put(
 				expectedKey2, RandomTestUtil.randomString()
 			).build(),
-			DDMFormFieldTypeConstants.SELECT);
+			DDMFormFieldTypeConstants.CHECKBOX_MULTIPLE);
 
 		JournalArticle journalArticle = JournalTestUtil.addJournalArticle(
 			_dataDefinitionResourceFactory, ddmFormField,

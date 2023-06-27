@@ -29,6 +29,7 @@ import com.liferay.info.collection.provider.ConfigurableInfoCollectionProvider;
 import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.type.CategoriesInfoFieldType;
+import com.liferay.info.field.type.MultiselectInfoFieldType;
 import com.liferay.info.field.type.SelectInfoFieldType;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.pagination.InfoPage;
@@ -596,7 +597,7 @@ public class
 			Assert.assertEquals(infoFields.toString(), 3, infoFields.size());
 
 			_assertInfoField(
-				infoFields.get(0), SelectInfoFieldType.class,
+				infoFields.get(0), MultiselectInfoFieldType.class,
 				_language.get(LocaleUtil.US, "item-type"), "item_types");
 			_assertInfoField(
 				infoFields.get(1), SelectInfoFieldType.class,

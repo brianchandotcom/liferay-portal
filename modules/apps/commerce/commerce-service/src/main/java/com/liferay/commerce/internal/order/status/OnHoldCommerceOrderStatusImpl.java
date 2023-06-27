@@ -19,6 +19,7 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.engine.CommerceOrderEngine;
 import com.liferay.commerce.order.status.CommerceOrderStatus;
 import com.liferay.commerce.order.status.CommerceOrderStatusRegistry;
+import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -47,18 +48,28 @@ public class OnHoldCommerceOrderStatusImpl implements CommerceOrderStatus {
 	public static final int PRIORITY = -1;
 
 	@Override
-	public CommerceOrder doTransition(CommerceOrder commerceOrder, long userId)
+	public CommerceOrder doTransition(
+			CommerceOrder commerceOrder, long userId, boolean secure)
 		throws PortalException {
 
 		if (commerceOrder.getOrderStatus() == KEY) {
 			return _commerceOrderEngine.transitionCommerceOrder(
 				commerceOrder, CommerceOrderConstants.ORDER_STATUS_PROCESSING,
-				userId);
+				userId, secure);
 		}
 
 		commerceOrder.setOrderStatus(KEY);
 
-		return _commerceOrderService.updateCommerceOrder(commerceOrder);
+		if (secure) {
+			commerceOrder = _commerceOrderService.updateCommerceOrder(
+				commerceOrder);
+		}
+		else {
+			commerceOrder = _commerceOrderLocalService.updateCommerceOrder(
+				commerceOrder);
+		}
+
+		return commerceOrder;
 	}
 
 	@Override
@@ -107,6 +118,9 @@ public class OnHoldCommerceOrderStatusImpl implements CommerceOrderStatus {
 
 	@Reference
 	private CommerceOrderEngine _commerceOrderEngine;
+
+	@Reference
+	private volatile CommerceOrderLocalService _commerceOrderLocalService;
 
 	@Reference(
 		policy = ReferencePolicy.DYNAMIC,

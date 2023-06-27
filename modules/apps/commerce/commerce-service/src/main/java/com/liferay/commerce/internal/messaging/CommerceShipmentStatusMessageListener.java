@@ -53,7 +53,7 @@ public class CommerceShipmentStatusMessageListener extends BaseMessageListener {
 
 		for (CommerceOrder commerceOrder : shippedCommerceOrders) {
 			_commerceOrderEngine.checkCommerceOrderShipmentStatus(
-				commerceOrder);
+				commerceOrder, true);
 		}
 	}
 

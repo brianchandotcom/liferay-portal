@@ -845,7 +845,8 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 			(commerceOrder.getOrderStatus() != order.getOrderStatus())) {
 
 			commerceOrder = _commerceOrderEngine.transitionCommerceOrder(
-				commerceOrder, order.getOrderStatus(), contextUser.getUserId());
+				commerceOrder, order.getOrderStatus(), contextUser.getUserId(),
+				true);
 		}
 
 		return commerceOrder;

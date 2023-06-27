@@ -45,6 +45,11 @@ interface MemberProfileProps {
 	userLogged?: UserLogged;
 }
 
+const finalPathUrl = {
+	'customer-dashboard': 'customer-gate',
+	'publisher-dashboard': 'loading',
+};
+
 export function MemberProfile({
 	memberUser,
 	renderToast,
@@ -53,11 +58,12 @@ export function MemberProfile({
 }: MemberProfileProps) {
 	const [{gravatarAPI}, _] = useAppContext();
 
-	const url =
-		Liferay.ThemeDisplay.getPortalURL() +
-		'/c/login?redirect=' +
-		getSiteURL() +
-		'/loading';
+	const paths = Liferay.ThemeDisplay.getLayoutURL().split('/');
+
+	const finalPath =
+		finalPathUrl[paths[paths.length - 1] as keyof typeof finalPathUrl];
+
+	const url = `${Liferay.ThemeDisplay.getPortalURL()}/c/login?redirect=${getSiteURL()}/${finalPath}`;
 
 	const handleInvitationResend = async (event: React.FormEvent) => {
 		event.preventDefault();

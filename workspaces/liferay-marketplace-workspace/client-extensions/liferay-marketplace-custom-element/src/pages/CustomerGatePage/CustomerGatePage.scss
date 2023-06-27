@@ -30,34 +30,34 @@
 			width: 40.5rem;
 
 			.form-control {
-				background-color: #ffffff;
+				background-color: #fff;
 				border-color: #898593;
+				border-radius: 0.5rem;
 				border-style: solid;
 				border-width: 0.0625rem;
-				border-bottom-width: 0.0625rem;
-				border-left-width: 0.0625rem;
-				border-right-width: 0.0625rem;
-				border-top-width: 0.0625rem;
-				border-radius: 0.5rem;
 				box-shadow: none;
 				color: #3f3851;
 				display: block;
 				font-size: 1rem;
 				font-weight: 500;
-				height: var(--form-input-height);
 				line-height: 24px;
-				min-width: 0;
-				padding-bottom: 0.6875rem;
-				padding-left: 1rem;
-				padding-right: 1rem;
-				padding-top: 0.6875rem;
-				transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
+				outline-color: #80acff;
+				outline-offset: 0;
+				padding: 0.6875rem 1rem;
+				transition: background-color 0.15s ease-in-out,
+					color 0.15s ease-in-out;
 				width: 100%;
 
 				&:disabled {
 					background-color: #f4f4f5;
 					border-color: #c9c9cf;
 					color: #74747b;
+				}
+				&:focus {
+					outline-offset: 4px;
+					outline-style: auto;
+					outline-width: 10px;
+					transition: outline-offset 0.2s ease;
 				}
 			}
 			.form-group {
@@ -70,7 +70,7 @@
 					.required {
 						&::after {
 							color: #da1414;
-							content: "9";
+							content: '9';
 						}
 					}
 				}
@@ -97,7 +97,7 @@
 			}
 			&.required::after {
 				color: #da1414;
-				content: "*";
+				content: '*';
 				font-size: 1rem;
 				font-weight: bold;
 				left: -10px;
@@ -120,10 +120,8 @@
 		}
 	}
 	&-divider {
-		margin-bottom: 1.5rem;
-		margin-top: 2rem;
+		margin-bottom: 2rem 0 1.5rem 0;
 	}
-
 	&-link {
 		font-size: 16px;
 	}
@@ -136,7 +134,7 @@
 	color: #54555f;
 }
 .label-tonal-info {
-	color: #2e5aac;
-	border-color: transparent;
 	background-color: #eaeff7;
+	border-color: transparent;
+	color: #2e5aac;
 }

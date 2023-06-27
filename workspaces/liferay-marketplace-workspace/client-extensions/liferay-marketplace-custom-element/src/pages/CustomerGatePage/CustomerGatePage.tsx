@@ -12,27 +12,29 @@
  * details.
  */
 
-import "./CustomerGatePage.scss";
-import { Footer } from "../../components/Footer/Footer";
-import { GateCard } from "../../components/Card/GateCard";
-import { getMyUserAccount } from "../../utils/api";
-import { Header } from "../../components/Header/Header";
-import { useEffect, useState } from "react";
-import ClayButton from "@clayui/button";
-import ClayLink from "@clayui/link";
-import CreateCustomerAccountForm from "./CustomerForm";
-import magnifyingGlass from "../../assets/images/magnifying_glass.svg";
-import menu from "../../assets/images/menu.svg";
+import './CustomerGatePage.scss';
+
+import ClayButton from '@clayui/button';
+import ClayLink from '@clayui/link';
+import {useEffect, useState} from 'react';
+
+import magnifyingGlass from '../../assets/images/magnifying_glass.svg';
+import menu from '../../assets/images/menu.svg';
+import {GateCard} from '../../components/Card/GateCard';
+import {Footer} from '../../components/Footer/Footer';
+import {Header} from '../../components/Header/Header';
+import {getMyUserAccount} from '../../utils/api';
+import CreateCustomerAccountForm from './CustomerForm';
 
 type Steps = {
-	page: "onboarding" | "customerGateForm";
+	page: 'onboarding' | 'customerGateForm';
 };
 
 export function CustomerGatePage() {
-	const [step, setStep] = useState({ page: "onboarding" });
+	const [step, setStep] = useState<Steps>({page: 'onboarding'});
 	const [myUser, setMyUser] = useState<UserAccount>();
 
-	const { origin } = window.location;
+	const {origin} = window.location;
 
 	useEffect(() => {
 		const getUserInfo = async () => {
@@ -45,7 +47,7 @@ export function CustomerGatePage() {
 
 	return (
 		<>
-			{step.page === "onboarding" && (
+			{step.page === 'onboarding' && (
 				<div className="customer-gate-page-container">
 					<div className="customer-gate-page-body">
 						<Header
@@ -56,7 +58,7 @@ export function CustomerGatePage() {
 						<GateCard
 							description="Explore over 800 apps available in the Liferay Marketplace from a variety of publishers. Apps allow you to accelerate your Liferay development get to market faster. "
 							image={{
-								description: "Magnifying Glass",
+								description: 'Magnifying Glass',
 								svg: magnifyingGlass,
 							}}
 							title="Discover and customize "
@@ -65,7 +67,7 @@ export function CustomerGatePage() {
 						<GateCard
 							description="Manage all your app purchases and subscriptions in one place, read other users reviews, get notifications when updates are available and get the most out of our Apps catalog."
 							image={{
-								description: "Menu ",
+								description: 'Menu ',
 								svg: menu,
 							}}
 							title="Manage All Your Apps in One Place"
@@ -77,7 +79,7 @@ export function CustomerGatePage() {
 							<ClayButton
 								className="customer-gate-page-button"
 								onClick={() => {
-									setStep({ page: "customerGateForm" });
+									setStep({page: 'customerGateForm'});
 								}}
 							>
 								Get Started
@@ -88,7 +90,8 @@ export function CustomerGatePage() {
 									className="customer-gate-page-link"
 									href={`${origin}/c/portal/login`}
 								>
-									Learn more about becoming a Liferay Customer.
+									Learn more about becoming a Liferay
+									Customer.
 								</ClayLink>
 							</div>
 						</div>
@@ -96,8 +99,8 @@ export function CustomerGatePage() {
 				</div>
 			)}
 
-			{step.page === "customerGateForm" && (
-				<CreateCustomerAccountForm user={myUser} setStep={setStep} />
+			{step.page === 'customerGateForm' && (
+				<CreateCustomerAccountForm setStep={setStep} user={myUser} />
 			)}
 
 			<Footer />

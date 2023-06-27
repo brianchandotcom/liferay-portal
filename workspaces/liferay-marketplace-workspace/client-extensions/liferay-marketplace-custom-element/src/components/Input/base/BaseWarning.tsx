@@ -12,19 +12,24 @@
  * details.
  */
 
-import ClayIcon from "@clayui/icon";
-import ClayLabel from "@clayui/label";
-import React, { ReactNode } from "react";
+import ClayIcon from '@clayui/icon';
+import ClayLabel from '@clayui/label';
+import React, {ReactNode} from 'react';
 
-const BaseWarning: React.FC<{ children: ReactNode }> = ({ children }) => {
+const BaseWarning: React.FC<{children: ReactNode}> = ({children}) => {
 	return (
 		<ClayLabel className="label-tonal-danger mt-1 mx-0 p-0 rounded w-100">
 			<div className="align-items-center badge d-flex m-0 warning">
 				<span className="inline-item inline-item-before">
-					<ClayIcon className="c-ml-2 c-mr-2" symbol="exclamation-full" />
+					<ClayIcon
+						className="c-ml-2 c-mr-2"
+						symbol="exclamation-full"
+					/>
 				</span>
 
-				<span className="font-weight-normal text-paragraph">{children}</span>
+				<span className="font-weight-normal text-paragraph">
+					{children}
+				</span>
 			</div>
 		</ClayLabel>
 	);

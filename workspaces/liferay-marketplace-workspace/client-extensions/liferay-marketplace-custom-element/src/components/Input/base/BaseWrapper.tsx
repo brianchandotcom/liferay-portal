@@ -12,10 +12,11 @@
  * details.
  */
 
-import ClayForm from "@clayui/form";
-import classNames from "classnames";
-import { ReactNode } from "react";
-import BaseWarning from "./BaseWarning";
+import ClayForm from '@clayui/form';
+import classNames from 'classnames';
+import {ReactNode} from 'react';
+
+import BaseWarning from './BaseWarning';
 
 type BaseWrapperProps = {
 	boldLabel?: boolean;
@@ -41,16 +42,19 @@ const BaseWrapper: React.FC<BaseWrapperProps> = ({
 	return (
 		<ClayForm.Group
 			className={classNames({
-				"has-error": error,
+				'has-error': error,
 			})}
 		>
 			{label && (
 				<label
-					className={classNames("font-weight-normal mb-1 mx-0 text-paragraph", {
-						"font-weight-bold": boldLabel,
-						disabled,
-						required,
-					})}
+					className={classNames(
+						'font-weight-normal mb-1 mx-0 text-paragraph',
+						{
+							disabled,
+							'font-weight-bold': boldLabel,
+							required,
+						}
+					)}
 					htmlFor={id}
 				>
 					{label}

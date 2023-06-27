@@ -12,14 +12,14 @@
  * details.
  */
 
-import { ReactNode } from "react";
+import {ReactNode} from 'react';
 
-import { AppProps } from "../../components/DashboardTable/DashboardTable";
-import { Footer } from "../../components/Footer/Footer";
-import { Header } from "../../components/Header/Header";
-import { AppDetailsPage } from "../AppDetailsPage/AppDetailsPage";
+import {AppProps} from '../../components/DashboardTable/DashboardTable';
+import {Footer} from '../../components/Footer/Footer';
+import {Header} from '../../components/Header/Header';
+import {AppDetailsPage} from '../AppDetailsPage/AppDetailsPage';
 
-import "./DashboardPage.scss";
+import './DashboardPage.scss';
 
 export interface DashboardListItems {
 	itemIcon: string;
@@ -77,10 +77,16 @@ export function DashboardPage({
 								/>
 
 								{buttonMessage && (
-									<a href={buttonHref ? `${buttonHref}` : "#"}>
+									<a
+										href={
+											buttonHref ? `${buttonHref}` : '#'
+										}
+									>
 										<button
 											className="dashboard-page-body-header-button"
-											onClick={() => onButtonClick && onButtonClick()}
+											onClick={() =>
+												onButtonClick && onButtonClick()
+											}
 										>
 											{buttonMessage}
 										</button>

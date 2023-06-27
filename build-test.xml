@@ -2912,6 +2912,17 @@ jdbc.default.password=${database.password}</echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="prepare-gcs-store-configuration">
+		<sequential>
+			<var name="serviceAccountKey" value="\{\n\ \ \&quot;type\&quot;:\ \&quot;service_account\&quot;,\n\ \ \&quot;project_id\&quot;:\ \&quot;liferay-qa-automated-tests\&quot;,\n\ \ \&quot;private_key_id\&quot;:\ \&quot;${gcs.private.key.id}\&quot;,\n\ \ \&quot;private_key\&quot;:\ \&quot;-----BEGIN\ PRIVATE\ KEY-----${gcs.private.key}-----END\ PRIVATE\ KEY-----\\n\&quot;,\n\ \ \&quot;client_email\&quot;:\ \&quot;liferay-qa-automated-tests@liferay-qa-automated-tests.iam.gserviceaccount.com\&quot;,\n\ \ \&quot;client_id\&quot;:\ \&quot;${gcs.client.id}\&quot;,\n\ \ \&quot;auth_uri\&quot;:\ \&quot;https://accounts.google.com/o/oauth2/auth\&quot;,\n\ \ \&quot;token_uri\&quot;:\ \&quot;https://oauth2.googleapis.com/token\&quot;,\n\ \ \&quot;auth_provider_x509_cert_url\&quot;:\ \&quot;https://www.googleapis.com/oauth2/v1/certs\&quot;,\n\ \ \&quot;client_x509_cert_url\&quot;:\ \&quot;https://www.googleapis.com/robot/v1/metadata/x509/liferay-qa-automated-tests%40liferay-qa-automated-tests.iam.gserviceaccount.com\&quot;\n\}" />
+
+			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.store.gcs.configuration.GCSStoreConfiguration.config">
+bucketName=&quot;lfr-qa-poshi-test-${gcs.bucket.id}&quot;
+serviceAccountKey=&quot;${serviceAccountKey}&quot;
+aes256Key=&quot;&quot;</echo>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="prepare-ibm-s3-configuration">
 		<sequential>
 			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.store.s3.configuration.S3StoreConfiguration.config">
@@ -11132,6 +11143,10 @@ ${update.properties}</echo>
 		</if>
 	</target>
 
+	<target name="prepare-gcs-store-configuration">
+		<prepare-gcs-store-configuration />
+	</target>
+
 	<target name="prepare-log4j-ext-xml">
 		<var name="dialect.detector.log.level" value="INFO" />
 
@@ -11573,6 +11588,18 @@ company.default.web.id=www.able.com</echo>
 
 		<if>
 			<or>
+				<equals arg1="gcs.store.enabled" arg2="" />
+				<not>
+					<isset property="gcs.store.enabled" />
+				</not>
+			</or>
+			<then>
+				<get-testcase-property property.name="gcs.store.enabled" />
+			</then>
+		</if>
+
+		<if>
+			<or>
 				<equals arg1="ibm.store.enabled" arg2="" />
 				<not>
 					<isset property="ibm.store.enabled" />
@@ -11612,6 +11639,14 @@ mail.session.mail.store.protocol=pop3s
 pop.server.subdomain=
 pop.server.notifications.enabled=true
 				</echo>
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${gcs.store.enabled}" arg2="true" />
+			<then>
+				<echo append="true" file="portal-impl/src/portal-ext.properties">
+dl.store.impl=com.liferay.portal.store.gcs.GCSStore</echo>
 			</then>
 		</if>
 
@@ -12372,6 +12407,15 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
 					digital.signature.rsa.private.key=${digital.signature.rsa.private.key}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="gcs.bucket.id" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					gcs.bucket.id=${gcs.bucket.id}
 				</echo>
 			</then>
 		</if>
@@ -15419,6 +15463,23 @@ mail.send.blacklist=</echo>
 			</then>
 		</if>
 
+		<get-testcase-property property.name="gcs.store.enabled" />
+
+		<if>
+			<equals arg1="${gcs.store.enabled}" arg2="true" />
+			<then>
+				<tstamp>
+					<format pattern="yyyyMMddkkmmssSSS" property="gcs.bucket.id" />
+				</tstamp>
+
+				<ant antfile="build-test-gcs-store.xml" target="configure-gcs-cli" />
+
+				<ant antfile="build-test-gcs-store.xml" target="create-gcs-bucket" />
+
+				<prepare-gcs-store-configuration />
+			</then>
+		</if>
+
 		<get-testcase-property property.name="ibm.store.enabled" />
 
 		<if>
@@ -16074,6 +16135,15 @@ mail.send.blacklist=</echo>
 			<equals arg1="${azure.store.enabled}" arg2="true" />
 			<then>
 				<ant antfile="build-test-azure.xml" target="delete-azure-container" />
+			</then>
+		</if>
+
+		<get-testcase-property property.name="gcs.store.enabled" />
+
+		<if>
+			<equals arg1="${gcs.store.enabled}" arg2="true" />
+			<then>
+				<ant antfile="build-test-gcs-store.xml" target="delete-gcs-bucket" />
 			</then>
 		</if>
 

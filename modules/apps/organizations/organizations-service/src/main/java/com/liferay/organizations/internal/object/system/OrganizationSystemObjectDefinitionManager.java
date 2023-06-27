@@ -138,6 +138,8 @@ public class OrganizationSystemObjectDefinitionManager
 				createLabelMap("name")
 			).name(
 				"name"
+			).required(
+				true
 			).system(
 				true
 			).build());

@@ -37,7 +37,7 @@ export default function VerticalNav({
 			active={active}
 			className={cssClass}
 			decorated={decorated}
-			defaultExpandedKeys={defaultExpandedKeys}
+			defaultExpandedKeys={new Set(defaultExpandedKeys)}
 			items={items}
 			large={large}
 			triggerLabel={triggerLabel}
@@ -45,6 +45,7 @@ export default function VerticalNav({
 		>
 			{(item) => (
 				<ClayVerticalNav.Item
+					active={active ? active === item.id : item.active}
 					href={item.href}
 					items={item.items}
 					key={item.id}

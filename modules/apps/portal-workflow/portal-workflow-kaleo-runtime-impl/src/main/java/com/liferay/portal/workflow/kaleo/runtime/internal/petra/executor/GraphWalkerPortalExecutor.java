@@ -26,7 +26,11 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.NamedThreadFactory;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PortalRunMode;
@@ -146,16 +150,24 @@ public class GraphWalkerPortalExecutor {
 
 	private void _walk(PathElement pathElement) {
 		String name = PrincipalThreadLocal.getName();
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
 
 		try {
 			ExecutionContext executionContext =
 				pathElement.getExecutionContext();
 
-			if (PrincipalThreadLocal.getUserId() == 0) {
-				ServiceContext serviceContext =
-					executionContext.getServiceContext();
+			ServiceContext serviceContext =
+				executionContext.getServiceContext();
 
+			if (PrincipalThreadLocal.getUserId() == 0) {
 				PrincipalThreadLocal.setName(serviceContext.getUserId());
+			}
+
+			if (permissionChecker == null) {
+				PermissionThreadLocal.setPermissionChecker(
+					_defaultPermissionCheckerFactory.create(
+						_userLocalService.getUser(serviceContext.getUserId())));
 			}
 
 			Queue<List<PathElement>> queue = new LinkedList<>();
@@ -184,11 +196,16 @@ public class GraphWalkerPortalExecutor {
 		}
 		finally {
 			PrincipalThreadLocal.setName(name);
+
+			PermissionThreadLocal.setPermissionChecker(permissionChecker);
 		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		GraphWalkerPortalExecutor.class);
+
+	@Reference
+	private PermissionCheckerFactory _defaultPermissionCheckerFactory;
 
 	@Reference
 	private GraphWalker _graphWalker;
@@ -199,5 +216,8 @@ public class GraphWalkerPortalExecutor {
 	private PortalExecutorManager _portalExecutorManager;
 
 	private ServiceRegistration<PortalExecutorConfig> _serviceRegistration;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

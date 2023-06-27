@@ -22,7 +22,9 @@ import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.io.IOException;
@@ -75,6 +77,18 @@ public class FDSViewItemSelectorView
 	@Override
 	public String getTitle(Locale locale) {
 		return _language.get(locale, "data-set-views");
+	}
+
+	@Override
+	public boolean isVisible(
+		InfoItemItemSelectorCriterion infoItemSelectorCriterion,
+		ThemeDisplay themeDisplay) {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-164563")) {
+			return false;
+		}
+
+		return isVisible(themeDisplay);
 	}
 
 	@Override

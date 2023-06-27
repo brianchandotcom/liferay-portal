@@ -450,8 +450,7 @@ public class DBTest {
 		_db.runSQL(_SQL_CREATE_TABLE_2);
 
 		_db.renameTables(
-			_connection,
-			new ObjectValuePair<>(_TABLE_NAME_1, _TABLE_NAME_3),
+			_connection, new ObjectValuePair<>(_TABLE_NAME_1, _TABLE_NAME_3),
 			new ObjectValuePair<>(_TABLE_NAME_2, _TABLE_NAME_1),
 			new ObjectValuePair<>(_TABLE_NAME_3, _TABLE_NAME_2));
 

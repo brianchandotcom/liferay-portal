@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -153,9 +152,15 @@ public class CommerceInventoryWarehousePermissionImpl
 			permissionChecker.isOmniadmin() ||
 			_portletResourcePermission.contains(
 				PermissionThreadLocal.getPermissionChecker(), null,
-				CommerceInventoryActionKeys.MANAGE_INVENTORY) ||
-			_hasSupplierPermission(
-				permissionChecker, commerceInventoryWarehouse, actionId)) {
+				CommerceInventoryActionKeys.MANAGE_INVENTORY)) {
+
+			return true;
+		}
+
+		if ((actionId.equals(ActionKeys.UPDATE) ||
+			 actionId.equals(ActionKeys.VIEW)) &&
+			_hasRoleAccountSupplier(
+				permissionChecker, commerceInventoryWarehouse)) {
 
 			return true;
 		}
@@ -166,7 +171,7 @@ public class CommerceInventoryWarehousePermissionImpl
 			actionId);
 	}
 
-	private boolean _hasSupplierAccount(
+	private boolean _hasRoleAccountSupplier(
 			PermissionChecker permissionChecker,
 			CommerceInventoryWarehouse commerceInventoryWarehouse)
 		throws PortalException {
@@ -206,7 +211,7 @@ public class CommerceInventoryWarehousePermissionImpl
 				commerceInventoryWarehouse.getCommerceInventoryWarehouseId());
 
 		if (commerceChannelRelsCount == 0) {
-			return true;
+			return false;
 		}
 
 		for (CommerceChannel commerceChannel : accountEntryCommerceChannels) {
@@ -220,23 +225,6 @@ public class CommerceInventoryWarehousePermissionImpl
 			if (commerceChannelRel != null) {
 				return true;
 			}
-		}
-
-		return false;
-	}
-
-	private boolean _hasSupplierPermission(
-			PermissionChecker permissionChecker,
-			CommerceInventoryWarehouse commerceInventoryWarehouse,
-			String actionId)
-		throws PortalException {
-
-		if ((actionId.equals(ActionKeys.UPDATE) ||
-			 actionId.equals(ActionKeys.VIEW)) &&
-			_hasSupplierAccount(
-				permissionChecker, commerceInventoryWarehouse)) {
-
-			return true;
 		}
 
 		return false;
@@ -259,9 +247,6 @@ public class CommerceInventoryWarehousePermissionImpl
 		target = "(resource.name=" + CommerceInventoryConstants.RESOURCE_NAME + ")"
 	)
 	private PortletResourcePermission _portletResourcePermission;
-
-	@Reference
-	private RoleLocalService _roleLocalService;
 
 	@Reference
 	private UserGroupRoleLocalService _userGroupRoleLocalService;

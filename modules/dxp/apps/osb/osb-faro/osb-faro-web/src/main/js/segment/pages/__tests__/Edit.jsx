@@ -5,7 +5,7 @@ import React from 'react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 import {Provider} from 'react-redux';
-import {render, waitForElementToBeRemoved} from '@testing-library/react';
+import {render} from '@testing-library/react';
 import {SegmentTypes} from 'shared/util/constants';
 import {StaticRouter} from 'react-router';
 
@@ -50,11 +50,9 @@ describe('Edit', () => {
 
 		const {container} = render(<DefaultComponent />);
 
-		await waitForElementToBeRemoved(() =>
-			container.querySelector('.loading-root')
-		).then(() => {
-			expect(container).toMatchSnapshot();
-		});
+		jest.runAllTimers();
+
+		expect(container).toMatchSnapshot();
 	});
 
 	it('should render a dynamic segment', async () => {

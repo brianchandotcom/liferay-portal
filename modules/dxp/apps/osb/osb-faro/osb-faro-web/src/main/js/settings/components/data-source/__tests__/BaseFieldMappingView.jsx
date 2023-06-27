@@ -44,7 +44,7 @@ describe('BaseFieldMappingView', () => {
 
 		jest.runAllTimers();
 
-		expect(container.querySelector('.spinner-root')).toBeNull();
+		expect(container.querySelector('.loading-root')).toBeNull();
 	});
 
 	it('should render w/ error display', () => {

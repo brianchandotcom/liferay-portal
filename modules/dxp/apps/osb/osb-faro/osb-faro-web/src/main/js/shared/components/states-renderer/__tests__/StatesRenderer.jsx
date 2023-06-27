@@ -77,7 +77,7 @@ describe('StatesRenderer', () => {
 			<MockComponent {...mockLoadingState} />
 		);
 
-		expect(container.querySelector('.spinner-root')).toBeInTheDocument();
+		expect(container.querySelector('.loading-root')).toBeInTheDocument();
 		expect(getByText('Loading State')).toBeInTheDocument();
 	});
 

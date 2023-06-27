@@ -119,12 +119,12 @@ describe('HOC Util', () => {
 			expect(container.querySelector('.loading-root')).toBeTruthy();
 		});
 
-		it('should render with a loading spinner', () => {
+		it('should render w/ loading', () => {
 			const WrappedComponent = withLoading()(jest.fn(() => 'test'));
 
 			const {container} = render(<WrappedComponent loading />);
 
-			expect(container.querySelector('.spinner-root')).toBeTruthy();
+			expect(container.querySelector('.loading-root')).toBeTruthy();
 		});
 
 		it('should return the passed component', () => {

@@ -39,12 +39,12 @@ export const waitForTable = async container => {
 };
 
 export const waitForLoading = async container => {
-	await waitForElement(() => container.querySelector('.spinner-root'));
+	await waitForElement(() => container.querySelector('.loading-root'));
 };
 
 export const waitForLoadingToBeRemoved = async container => {
 	await waitForElementToBeRemoved(() =>
-		container.querySelector('.spinner-root')
+		container.querySelector('.loading-root')
 	);
 };
 

@@ -45,7 +45,7 @@ describe('Activities', () => {
 	it('should render with error display', async () => {
 		API.activities.fetchHistory.mockReturnValueOnce(Promise.reject({}));
 
-		const {getByText} = render(<DefaultComponent />);
+		const {getByText} = render(<DefaultComponent pageDisplay />);
 
 		jest.runAllTimers();
 

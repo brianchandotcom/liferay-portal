@@ -90,7 +90,7 @@ describe('Table', () => {
 		expect(container.querySelector('.table-nowrap')).toBeTruthy();
 	});
 
-	it('should render with a loading spinner', () => {
+	it('should render w/ loading', () => {
 		const {container} = render(
 			<StaticRouter>
 				<Table
@@ -102,7 +102,7 @@ describe('Table', () => {
 			</StaticRouter>
 		);
 
-		expect(container.querySelector('.spinner-root')).toBeTruthy();
+		expect(container.querySelector('.loading-root')).toBeTruthy();
 	});
 
 	describe('getRowIdentifierValue', () => {

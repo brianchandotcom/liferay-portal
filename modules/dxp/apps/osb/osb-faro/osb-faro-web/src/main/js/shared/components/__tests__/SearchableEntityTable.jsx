@@ -97,6 +97,6 @@ describe('SearchableEntityTable', () => {
 		);
 
 		jest.runAllTimers();
-		expect(container.querySelector('.spinner-root')).toBeTruthy();
+		expect(container.querySelector('.loading-root')).toBeTruthy();
 	});
 });

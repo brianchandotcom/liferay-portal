@@ -43,7 +43,7 @@ describe('ActivitiesCard', () => {
 			</StaticRouter>
 		);
 
-		expect(container.querySelector('.spinner-root')).toBeTruthy();
+		expect(container.querySelector('.loading-root')).toBeTruthy();
 	});
 
 	it('should render w/ ErrorDisplay', () => {

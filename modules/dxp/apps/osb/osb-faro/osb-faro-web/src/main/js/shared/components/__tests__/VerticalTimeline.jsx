@@ -182,7 +182,7 @@ describe('VerticalTimeline', () => {
 	it('should render on loading state', () => {
 		const {container} = render(<DefaultComponent loading />);
 
-		expect(container.querySelector('.spinner-root')).toBeInTheDocument();
+		expect(container.querySelector('.loading-root')).toBeInTheDocument();
 	});
 
 	it('should expand TimelineItem when clicked', async () => {

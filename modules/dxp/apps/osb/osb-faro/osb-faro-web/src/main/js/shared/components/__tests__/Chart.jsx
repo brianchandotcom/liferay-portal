@@ -20,11 +20,11 @@ describe('Chart', () => {
 		expect(container.querySelector('.no-results-root')).toBeTruthy();
 	});
 
-	it('should render w/ loading spinner', () => {
+	it('should render w/ loading', () => {
 		const {container} = render(
 			<Chart data={[]} dataId='bar' id='foo' loading />
 		);
 
-		expect(container.querySelector('.spinner-root')).toBeTruthy();
+		expect(container.querySelector('.loading-root')).toBeTruthy();
 	});
 });

@@ -36,7 +36,7 @@ describe('AssociatedSegmentsCard', () => {
 			<DefaultComponent dataSourceFn={() => Promise.resolve({})} />
 		);
 
-		expect(container.querySelector('.spinner-overlay')).toBeTruthy();
+		expect(container.querySelector('.overlay')).toBeTruthy();
 	});
 
 	it('should render with an error display', () => {

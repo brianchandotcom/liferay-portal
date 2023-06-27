@@ -37,7 +37,7 @@
 </tr>
 <tr>
 	<td>GUIDE_VIDEOS_BUTTON</td>
-	<td>//div[contains(@class,"text-container")]//button[normalize-space()= 'Watch Tutorial Videos']</td>
+	<td>//div[contains(@class,"text-container")]//*[normalize-space()= 'Watch Tutorial Videos']</td>
 	<td></td>
 </tr>
 </tbody>

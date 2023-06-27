@@ -229,4 +229,103 @@ definition {
 		}
 	}
 
+	@description = "Assert that is possible to resolve a conflict by discarding Asset List within Publications"
+	@priority = 3
+	test CanResolveAssetListConflictByDiscarding {
+		task ("Create a manual asset list") {
+			JSONAssetlist.addManualAssetListEntry(
+				groupName = "Guest",
+				title = "Manual Asset List Test");
+		}
+
+		task ("Add new blog entry") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Guest");
+		}
+
+		task ("Add new Publication and use it") {
+			JSONPublications.addPublication(publicationName = "Publication Name 1");
+
+			JSONPublications.selectPublication(publicationName = "Publication Name 1");
+		}
+
+		task ("Select Blog Entry as item type and add the new blog to the Asset List") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "guest");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Manual Asset List Test");
+
+			AssetListsAdmin.configureItemTypeInManualCollection(itemType = "Blogs Entry");
+
+			AssetListsAdmin.selectAsset(
+				assetListTitle = "Manual Asset List Test",
+				assetType = "Blogs Entry",
+				entryList = "Blogs Entry Title");
+		}
+
+		task ("Add new Publication and use it") {
+			JSONPublications.addPublication(publicationName = "Publication Name 2");
+
+			JSONPublications.selectPublication(publicationName = "Publication Name 2");
+		}
+
+		task ("Add new Document") {
+			JSONDocument.addFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "DM Document Title",
+				groupName = "Guest");
+		}
+
+		task ("Select Document as item type and add the new Document to the Asset List") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "guest");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Manual Asset List Test");
+
+			AssetListsAdmin.configureItemTypeInManualCollection(
+				itemSubtype = "Basic Document",
+				itemType = "Document");
+
+			AssetListsAdmin.selectAsset(
+				assetListTitle = "Manual Asset List Test",
+				assetType = "Basic Document",
+				entryList = "DM Document Title");
+		}
+
+		task ("Publish Publication 2") {
+			PublicationsNavigator.gotoPublish(
+				gotoPublicationsAdmin = "true",
+				publicationName = "Publication Name 2");
+
+			Publications.publishPublication(publicationName = "Publication Name 2");
+
+			Publications.viewPublicationPublished(publicationName = "Publication Name 2");
+		}
+
+		task ("Try to publish Publication 1") {
+			PublicationsNavigator.gotoPublish(
+				gotoPublicationsAdmin = "true",
+				publicationName = "Publication Name 1");
+
+			Publications.viewConflictingChangesWarning(warningMessage = "This publication contains conflicting changes that must be manually resolved before publishing.");
+		}
+
+		task ("Discard Changes") {
+			PublicationsChanges.discardChanges(
+				changeCategory = "Asset List",
+				changeTitle = "Asset List",
+				conflictingChanges = "true");
+		}
+
+		task ("Assert that there's no conflict and pubish Publication") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#SUCCESS",
+				value1 = "No unresolved conflicts, ready to publish.");
+
+			JSONPublications.publishPublication(publicationName = "Publication Name 1");
+
+			Publications.viewPublicationPublished(publicationName = "Publication Name 1");
+		}
+	}
+
 }

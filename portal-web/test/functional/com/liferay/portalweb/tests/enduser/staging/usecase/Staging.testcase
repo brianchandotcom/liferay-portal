@@ -976,7 +976,7 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/search");
 
-		SearchPortlets.addWidgets(searchPortletList = "Search Results");
+		SearchPortlets.addWidgetsViaUI(searchPortletList = "Search Results");
 
 		JSONStaging.enableLocalStaging(groupName = "Site Name");
 

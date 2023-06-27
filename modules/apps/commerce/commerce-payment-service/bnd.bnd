@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Commerce Payment Service
 Bundle-SymbolicName: com.liferay.commerce.payment.service
 Bundle-Version: 4.0.59
-Liferay-Require-SchemaVersion: 1.4.0
+Liferay-Require-SchemaVersion: 1.5.0
 Liferay-Service: true
 -dsannotations-options: inherit

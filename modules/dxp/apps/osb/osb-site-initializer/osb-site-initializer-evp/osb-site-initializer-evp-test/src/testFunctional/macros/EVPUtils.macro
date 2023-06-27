@@ -44,6 +44,18 @@ definition {
 			value1 = ${nextDayDate});
 	}
 
+	@summary = "generate Financial Report for EVP"
+	macro generateFinancialReport {
+		LexiconCard.clickCardTitle(card = ${cardTitle});
+
+		EVPUtils.insertDate(
+            dateRange = ${dateRange},
+            endDateLabel = ${endDateLabel},
+            initialDateLabel = ${initialDateLabel});
+
+		Button.click(button = "Generate");
+	}
+
 	@summary = "Navigating to EVP needs an extra click on Sign In which will redirect to Okta"
 	macro gotoEVP {
 		Navigator.openSiteURL(siteName = "EVP Portal");

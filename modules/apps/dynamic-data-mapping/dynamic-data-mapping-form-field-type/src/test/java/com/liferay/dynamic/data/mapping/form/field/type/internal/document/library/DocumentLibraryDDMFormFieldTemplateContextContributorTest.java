@@ -16,15 +16,14 @@ package com.liferay.dynamic.data.mapping.form.field.type.internal.document.libra
 
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
-import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.dynamic.data.mapping.constants.DDMFormConstants;
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.form.field.type.BaseDDMFormFieldTypeSettingsTestCase;
+import com.liferay.dynamic.data.mapping.form.field.type.internal.security.permission.DDMPermissionCheckerRegistry;
 import com.liferay.dynamic.data.mapping.form.item.selector.criterion.DDMUserPersonalFolderItemSelectorCriterion;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
-import com.liferay.dynamic.data.mapping.security.permission.DDMFormsPortletPermissionChecker;
-import com.liferay.dynamic.data.mapping.security.permission.DDMFormsPortletPermissionCheckerRegistry;
+import com.liferay.dynamic.data.mapping.security.permission.DDMPermissionChecker;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion;
@@ -99,9 +98,8 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 
 		_setUpCompanyLocalService();
 		_setUpDDMFormInstanceLocalService();
-		_setUpDDMFormsPortletPermissionChecker();
+		_setUpDDMPermissionChecker();
 		_setUpDLAppLocalService();
-		_setUpDLAppService();
 		_setUpFileEntry();
 		_setUpGroupLocalService();
 		_setUpHtml();
@@ -230,7 +228,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 	@Test
 	public void testGetParametersForUserWithoutPermission() throws Exception {
 		Mockito.when(
-			_ddmFormsPortletPermissionChecker.containsPermission(
+			_ddmPermissionChecker.containsPermission(
 				Mockito.any(DDMFormFieldRenderingContext.class))
 		).thenReturn(
 			Boolean.FALSE
@@ -497,18 +495,6 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 		);
 	}
 
-	private PortletDisplay _mockPortletDisplay() {
-		PortletDisplay portletDisplay = Mockito.mock(PortletDisplay.class);
-
-		Mockito.when(
-			portletDisplay.getRootPortletId()
-		).thenReturn(
-			"portletId"
-		);
-
-		return portletDisplay;
-	}
-
 	private Repository _mockRepository() {
 		Repository repository = Mockito.mock(Repository.class);
 
@@ -542,7 +528,13 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 			"/my/theme/images/"
 		);
 
-		PortletDisplay portletDisplay = _mockPortletDisplay();
+		PortletDisplay portletDisplay = Mockito.mock(PortletDisplay.class);
+
+		Mockito.when(
+			portletDisplay.getRootPortletId()
+		).thenReturn(
+			DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM
+		);
 
 		Mockito.when(
 			themeDisplay.getPortletDisplay()
@@ -611,25 +603,27 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 		);
 	}
 
-	private void _setUpDDMFormsPortletPermissionChecker() throws Exception {
+	private void _setUpDDMPermissionChecker() throws Exception {
+		DDMPermissionCheckerRegistry ddmPermissionCheckerRegistry =
+			Mockito.mock(DDMPermissionCheckerRegistry.class);
+
+		ReflectionTestUtil.setFieldValue(
+			_documentLibraryDDMFormFieldTemplateContextContributor,
+			"_ddmPermissionCheckerRegistry", ddmPermissionCheckerRegistry);
+
 		Mockito.when(
-			_ddmFormsPortletPermissionChecker.containsPermission(
+			_ddmPermissionChecker.containsPermission(
 				Mockito.any(DDMFormFieldRenderingContext.class))
 		).thenReturn(
 			Boolean.TRUE
 		);
 
 		Mockito.when(
-			_ddmFormsPortletPermissionCheckerRegistry.
-				getDDMPortletPermissionChecker(Mockito.anyString())
+			ddmPermissionCheckerRegistry.getDDMPermissionChecker(
+				DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM)
 		).thenReturn(
-			_ddmFormsPortletPermissionChecker
+			_ddmPermissionChecker
 		);
-
-		ReflectionTestUtil.setFieldValue(
-			_documentLibraryDDMFormFieldTemplateContextContributor,
-			"_ddmFormsPortletPermissionCheckerRegistry",
-			_ddmFormsPortletPermissionCheckerRegistry);
 	}
 
 	private void _setUpDLAppLocalService() throws Exception {
@@ -643,17 +637,12 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 		).thenReturn(
 			_fileEntry
 		);
-	}
-
-	private void _setUpDLAppService() throws Exception {
-		ReflectionTestUtil.setFieldValue(
-			_documentLibraryDDMFormFieldTemplateContextContributor,
-			"_dlAppService", _dlAppService);
 
 		Folder folder = _mockFolder(_PRIVATE_FOLDER_ID);
 
 		Mockito.when(
-			_dlAppService.getFolder(_REPOSITORY_ID, _FORMS_FOLDER_ID, "Test")
+			_dlAppLocalService.getFolder(
+				_REPOSITORY_ID, _FORMS_FOLDER_ID, "Test")
 		).thenReturn(
 			folder
 		);
@@ -831,15 +820,10 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 
 	private static final long _REPOSITORY_ID = RandomTestUtil.randomLong();
 
-	private final DDMFormsPortletPermissionChecker
-		_ddmFormsPortletPermissionChecker = Mockito.mock(
-			DDMFormsPortletPermissionChecker.class);
-	private final DDMFormsPortletPermissionCheckerRegistry
-		_ddmFormsPortletPermissionCheckerRegistry = Mockito.mock(
-			DDMFormsPortletPermissionCheckerRegistry.class);
+	private final DDMPermissionChecker _ddmPermissionChecker = Mockito.mock(
+		DDMPermissionChecker.class);
 	private final DLAppLocalService _dlAppLocalService = Mockito.mock(
 		DLAppLocalService.class);
-	private final DLAppService _dlAppService = Mockito.mock(DLAppService.class);
 	private final DocumentLibraryDDMFormFieldTemplateContextContributor
 		_documentLibraryDDMFormFieldTemplateContextContributor =
 			new DocumentLibraryDDMFormFieldTemplateContextContributor();

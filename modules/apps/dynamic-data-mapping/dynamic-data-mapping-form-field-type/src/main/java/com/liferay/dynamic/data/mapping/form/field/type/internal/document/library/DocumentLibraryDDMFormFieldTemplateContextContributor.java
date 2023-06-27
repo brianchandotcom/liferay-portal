@@ -16,17 +16,16 @@ package com.liferay.dynamic.data.mapping.form.field.type.internal.document.libra
 
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
-import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.dynamic.data.mapping.constants.DDMFormConstants;
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTemplateContextContributor;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
+import com.liferay.dynamic.data.mapping.form.field.type.internal.security.permission.DDMPermissionCheckerRegistry;
 import com.liferay.dynamic.data.mapping.form.item.selector.criterion.DDMUserPersonalFolderItemSelectorCriterion;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
-import com.liferay.dynamic.data.mapping.security.permission.DDMFormsPortletPermissionChecker;
-import com.liferay.dynamic.data.mapping.security.permission.DDMFormsPortletPermissionCheckerRegistry;
+import com.liferay.dynamic.data.mapping.security.permission.DDMPermissionChecker;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
@@ -162,21 +161,19 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 	}
 
 	private boolean _containsPermission(
-		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext,
+		PortletDisplay portletDisplay) {
 
 		try {
-			ThemeDisplay themeDisplay = getThemeDisplay(
-				ddmFormFieldRenderingContext.getHttpServletRequest());
+			DDMPermissionChecker ddmPermissionChecker =
+				_ddmPermissionCheckerRegistry.getDDMPermissionChecker(
+					portletDisplay.getRootPortletId());
 
-			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+			if (ddmPermissionChecker == null) {
+				return true;
+			}
 
-			String portletId = portletDisplay.getRootPortletId();
-
-			DDMFormsPortletPermissionChecker ddmFormsPortletPermissionChecker =
-				_ddmFormsPortletPermissionCheckerRegistry.
-					getDDMPortletPermissionChecker(portletId);
-
-			return ddmFormsPortletPermissionChecker.containsPermission(
+			return ddmPermissionChecker.containsPermission(
 				ddmFormFieldRenderingContext);
 		}
 		catch (Exception exception) {
@@ -266,8 +263,9 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 		HttpServletRequest httpServletRequest, User user) {
 
 		try {
-			return _dlAppService.addFolder(
-				null, repositoryId, parentFolderId, user.getScreenName(),
+			return _dlAppLocalService.addFolder(
+				null, user.getUserId(), repositoryId, parentFolderId,
+				user.getScreenName(),
 				_language.get(
 					getResourceBundle(user.getLocale()),
 					"this-folder-was-automatically-created-by-forms-to-store-" +
@@ -569,7 +567,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 		Folder folder = null;
 
 		try {
-			folder = _dlAppService.getFolder(
+			folder = _dlAppLocalService.getFolder(
 				repositoryId, parentFolderId, user.getScreenName());
 		}
 		catch (PortalException portalException) {
@@ -650,7 +648,10 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 			return new HashMap<>();
 		}
 
-		if (!_containsPermission(ddmFormFieldRenderingContext)) {
+		if (!_containsPermission(
+				ddmFormFieldRenderingContext,
+				themeDisplay.getPortletDisplay())) {
+
 			return HashMapBuilder.<String, Object>put(
 				"showUploadPermissionMessage", true
 			).build();
@@ -744,14 +745,10 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 	private DDMFormInstanceLocalService _ddmFormInstanceLocalService;
 
 	@Reference
-	private DDMFormsPortletPermissionCheckerRegistry
-		_ddmFormsPortletPermissionCheckerRegistry;
+	private DDMPermissionCheckerRegistry _ddmPermissionCheckerRegistry;
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
-
-	@Reference
-	private DLAppService _dlAppService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

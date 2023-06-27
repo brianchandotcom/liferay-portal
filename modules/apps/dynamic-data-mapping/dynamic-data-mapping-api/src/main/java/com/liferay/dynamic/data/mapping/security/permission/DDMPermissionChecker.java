@@ -19,7 +19,7 @@ import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 /**
  * @author Roberto Díaz
  */
-public interface DDMFormsPortletPermissionChecker {
+public interface DDMPermissionChecker {
 
 	public boolean containsPermission(
 			DDMFormFieldRenderingContext ddmFormFieldRenderingContext)

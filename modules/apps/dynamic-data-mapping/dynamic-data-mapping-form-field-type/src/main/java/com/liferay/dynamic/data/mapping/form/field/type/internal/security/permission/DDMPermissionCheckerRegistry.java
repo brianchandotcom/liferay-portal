@@ -14,46 +14,41 @@
 
 package com.liferay.dynamic.data.mapping.form.field.type.internal.security.permission;
 
-import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
-import com.liferay.dynamic.data.mapping.security.permission.DDMFormsPortletPermissionChecker;
-import com.liferay.dynamic.data.mapping.security.permission.DDMFormsPortletPermissionCheckerRegistry;
+import com.liferay.dynamic.data.mapping.security.permission.DDMPermissionChecker;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Roberto Díaz
  */
-@Component(service = DDMFormsPortletPermissionCheckerRegistry.class)
-public class DDMFormsPortletPermissionCheckerRegistryImpl
-	implements DDMFormsPortletPermissionCheckerRegistry {
+@Component(service = DDMPermissionCheckerRegistry.class)
+public class DDMPermissionCheckerRegistry {
 
-	@Override
-	public DDMFormsPortletPermissionChecker getDDMPortletPermissionChecker(
-		String portletId) {
-
-		DDMFormsPortletPermissionChecker ddmFormsPortletPermissionChecker =
+	public DDMPermissionChecker getDDMPermissionChecker(String portletId) {
+		DDMPermissionChecker ddmPermissionChecker =
 			_serviceTrackerMap.getService(portletId);
 
-		if (ddmFormsPortletPermissionChecker == null) {
-			ddmFormsPortletPermissionChecker =
-				new DefaultDDMFormsPermissionChecker();
+		if (ddmPermissionChecker == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"No DDM permission checker specified for " + portletId);
+			}
 		}
 
-		return ddmFormsPortletPermissionChecker;
+		return ddmPermissionChecker;
 	}
 
 	@Activate
-	@Modified
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, DDMFormsPortletPermissionChecker.class,
-			"javax.portlet.name");
+			bundleContext, DDMPermissionChecker.class, "javax.portlet.name");
 	}
 
 	@Deactivate
@@ -61,19 +56,10 @@ public class DDMFormsPortletPermissionCheckerRegistryImpl
 		_serviceTrackerMap.close();
 	}
 
-	private volatile ServiceTrackerMap<String, DDMFormsPortletPermissionChecker>
+	private static final Log _log = LogFactoryUtil.getLog(
+		DDMPermissionCheckerRegistry.class);
+
+	private volatile ServiceTrackerMap<String, DDMPermissionChecker>
 		_serviceTrackerMap;
-
-	private class DefaultDDMFormsPermissionChecker
-		implements DDMFormsPortletPermissionChecker {
-
-		@Override
-		public boolean containsPermission(
-			DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
-
-			return true;
-		}
-
-	}
 
 }

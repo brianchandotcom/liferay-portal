@@ -18,7 +18,7 @@ import com.liferay.dynamic.data.mapping.constants.DDMActionKeys;
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
-import com.liferay.dynamic.data.mapping.security.permission.DDMFormsPortletPermissionChecker;
+import com.liferay.dynamic.data.mapping.security.permission.DDMPermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -32,11 +32,14 @@ import org.osgi.service.component.annotations.Reference;
  * @author Roberto Díaz
  */
 @Component(
-	property = "javax.portlet.name=" + DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM,
-	service = DDMFormsPortletPermissionChecker.class
+	property = {
+		"javax.portlet.name=" + DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM,
+		"javax.portlet.name=" + DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN
+	},
+	service = DDMPermissionChecker.class
 )
-public class DDMFormsDDMFormsPortletPermissionChecker
-	implements DDMFormsPortletPermissionChecker {
+public class DDMFormInstanceDDMPermissionChecker
+	implements DDMPermissionChecker {
 
 	@Override
 	public boolean containsPermission(
@@ -50,11 +53,9 @@ public class DDMFormsDDMFormsPortletPermissionChecker
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		long formInstanceId =
-			ddmFormFieldRenderingContext.getDDMFormInstanceId();
-
 		return _ddmFormInstanceModelResourcePermission.contains(
-			themeDisplay.getPermissionChecker(), formInstanceId,
+			themeDisplay.getPermissionChecker(),
+			ddmFormFieldRenderingContext.getDDMFormInstanceId(),
 			DDMActionKeys.ADD_FORM_INSTANCE_RECORD);
 	}
 

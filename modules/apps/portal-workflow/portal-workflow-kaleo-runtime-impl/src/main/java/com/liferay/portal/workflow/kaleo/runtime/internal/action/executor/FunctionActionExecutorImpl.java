@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -35,6 +34,7 @@ import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowTaskAssignee;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.workflow.kaleo.model.KaleoAction;
@@ -221,15 +221,16 @@ public class FunctionActionExecutorImpl implements ActionExecutor {
 		AssetRenderer<?> assetRenderer = workflowHandler.getAssetRenderer(
 			classPK);
 
-		BaseModel<?> baseModel = (BaseModel<?>)assetRenderer.getAssetObject();
+		Serializable assetObjectSerializable =
+			(Serializable)assetRenderer.getAssetObject();
 
-		if ((assetRenderer == null) || (baseModel == null)) {
+		if ((assetObjectSerializable == null) || (assetRenderer == null)) {
 			return null;
 		}
 
 		String dtoClassName = assetRenderer.getClassName();
 
-		if (baseModel instanceof ObjectEntry) {
+		if (assetObjectSerializable instanceof ObjectEntry) {
 			dtoClassName = ObjectEntry.class.getName();
 		}
 
@@ -237,18 +238,32 @@ public class FunctionActionExecutorImpl implements ActionExecutor {
 			(DTOConverter<Serializable, Serializable>)
 				_dtoConverterRegistry.getDTOConverter(dtoClassName);
 
+		if (dtoConverter == null) {
+			return null;
+		}
+
 		ServiceContext serviceContext = executionContext.getServiceContext();
 
-		Serializable serializable = dtoConverter.toDTO(
+		DTOConverterContext dtoConverterContext =
 			new DefaultDTOConverterContext(
-				false, null, null, null, serviceContext.getLocale(), null,
-				null),
-			baseModel);
+				false, null, null, assetRenderer.getClassPK(),
+				serviceContext.getLocale(), null, null);
+
+		Serializable dtoSerializable = dtoConverter.toDTO(dtoConverterContext);
+
+		if (dtoSerializable == null) {
+			dtoSerializable = dtoConverter.toDTO(
+				dtoConverterContext, assetObjectSerializable);
+		}
+
+		if (dtoSerializable == null) {
+			return null;
+		}
 
 		JSONObject entryDTOJSONObject = _jsonFactory.createJSONObject(
-			serializable.toString());
+			dtoSerializable.toString());
 
-		if (!(baseModel instanceof ObjectEntry)) {
+		if (!(assetObjectSerializable instanceof ObjectEntry)) {
 			return entryDTOJSONObject;
 		}
 

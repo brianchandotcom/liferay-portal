@@ -26,7 +26,7 @@ import com.liferay.commerce.payment.method.CommercePaymentMethod;
 import com.liferay.commerce.payment.request.CommercePaymentRequest;
 import com.liferay.commerce.payment.request.CommercePaymentRequestProvider;
 import com.liferay.commerce.payment.result.CommercePaymentResult;
-import com.liferay.commerce.payment.util.CommercePaymentUtils;
+import com.liferay.commerce.payment.util.CommercePaymentHelper;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceOrderPaymentLocalService;
 import com.liferay.commerce.service.CommerceSubscriptionEntryLocalService;
@@ -97,7 +97,7 @@ public class CommerceSubscriptionEngineImpl
 		CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
 
 		CommercePaymentMethod commercePaymentMethod =
-			_commercePaymentUtils.getCommercePaymentMethod(
+			_commercePaymentHelper.getCommercePaymentMethod(
 				commerceOrder.getCommerceOrderId());
 
 		if ((commercePaymentMethod == null) ||
@@ -107,7 +107,7 @@ public class CommerceSubscriptionEngineImpl
 		}
 
 		CommercePaymentRequestProvider commercePaymentRequestProvider =
-			_commercePaymentUtils.getCommercePaymentRequestProvider(
+			_commercePaymentHelper.getCommercePaymentRequestProvider(
 				commercePaymentMethod);
 
 		boolean activateSubscription =
@@ -156,7 +156,7 @@ public class CommerceSubscriptionEngineImpl
 		CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
 
 		CommercePaymentMethod commercePaymentMethod =
-			_commercePaymentUtils.getCommercePaymentMethod(
+			_commercePaymentHelper.getCommercePaymentMethod(
 				commerceOrder.getCommerceOrderId());
 
 		if ((commercePaymentMethod == null) ||
@@ -166,7 +166,7 @@ public class CommerceSubscriptionEngineImpl
 		}
 
 		CommercePaymentRequestProvider commercePaymentRequestProvider =
-			_commercePaymentUtils.getCommercePaymentRequestProvider(
+			_commercePaymentHelper.getCommercePaymentRequestProvider(
 				commercePaymentMethod);
 
 		boolean activateSubscription =
@@ -195,12 +195,12 @@ public class CommerceSubscriptionEngineImpl
 		throws Exception {
 
 		CommercePaymentMethod commercePaymentMethod =
-			_commercePaymentUtils.getCommercePaymentMethod(commerceOrderId);
+			_commercePaymentHelper.getCommercePaymentMethod(commerceOrderId);
 
 		if ((commercePaymentMethod == null) ||
 			!commercePaymentMethod.isCompleteRecurringEnabled()) {
 
-			return _commercePaymentUtils.emptyResult(
+			return _commercePaymentHelper.emptyResult(
 				commerceOrderId, transactionId);
 		}
 
@@ -208,7 +208,7 @@ public class CommerceSubscriptionEngineImpl
 			_commerceOrderLocalService.getCommerceOrder(commerceOrderId);
 
 		CommercePaymentRequest commercePaymentRequest =
-			_commercePaymentUtils.getCommercePaymentRequest(
+			_commercePaymentHelper.getCommercePaymentRequest(
 				commerceOrder, _portal.getLocale(httpServletRequest),
 				transactionId, null, httpServletRequest, commercePaymentMethod);
 
@@ -247,7 +247,7 @@ public class CommerceSubscriptionEngineImpl
 		throws Exception {
 
 		CommercePaymentMethod commercePaymentMethod =
-			_commercePaymentUtils.getCommercePaymentMethod(commerceOrderId);
+			_commercePaymentHelper.getCommercePaymentMethod(commerceOrderId);
 
 		if ((commercePaymentMethod == null) ||
 			!commercePaymentMethod.isProcessRecurringEnabled()) {
@@ -256,7 +256,7 @@ public class CommerceSubscriptionEngineImpl
 		}
 
 		CommercePaymentRequestProvider commercePaymentRequestProvider =
-			_commercePaymentUtils.getCommercePaymentRequestProvider(
+			_commercePaymentHelper.getCommercePaymentRequestProvider(
 				commercePaymentMethod);
 
 		CommerceOrder commerceOrder =
@@ -281,17 +281,17 @@ public class CommerceSubscriptionEngineImpl
 			_commerceOrderLocalService.getCommerceOrder(commerceOrderId);
 
 		CommercePaymentMethod commercePaymentMethod =
-			_commercePaymentUtils.getCommercePaymentMethod(commerceOrderId);
+			_commercePaymentHelper.getCommercePaymentMethod(commerceOrderId);
 
 		if ((commercePaymentMethod == null) ||
 			!commercePaymentMethod.isProcessRecurringEnabled()) {
 
-			return _commercePaymentUtils.emptyResult(
+			return _commercePaymentHelper.emptyResult(
 				commerceOrderId, StringPool.BLANK);
 		}
 
 		CommercePaymentRequest commercePaymentRequest =
-			_commercePaymentUtils.getCommercePaymentRequest(
+			_commercePaymentHelper.getCommercePaymentRequest(
 				commerceOrder, _portal.getLocale(httpServletRequest), null,
 				checkoutStepUrl, httpServletRequest, commercePaymentMethod);
 
@@ -359,7 +359,7 @@ public class CommerceSubscriptionEngineImpl
 		CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
 
 		CommercePaymentMethod commercePaymentMethod =
-			_commercePaymentUtils.getCommercePaymentMethod(
+			_commercePaymentHelper.getCommercePaymentMethod(
 				commerceOrder.getCommerceOrderId());
 
 		if ((commercePaymentMethod == null) ||
@@ -369,7 +369,7 @@ public class CommerceSubscriptionEngineImpl
 		}
 
 		CommercePaymentRequestProvider commercePaymentRequestProvider =
-			_commercePaymentUtils.getCommercePaymentRequestProvider(
+			_commercePaymentHelper.getCommercePaymentRequestProvider(
 				commercePaymentMethod);
 
 		boolean suspendSubscription =
@@ -398,7 +398,7 @@ public class CommerceSubscriptionEngineImpl
 	private CommerceOrderPaymentLocalService _commerceOrderPaymentLocalService;
 
 	@Reference
-	private CommercePaymentUtils _commercePaymentUtils;
+	private CommercePaymentHelper _commercePaymentHelper;
 
 	@Reference
 	private CommerceSubscriptionEntryLocalService

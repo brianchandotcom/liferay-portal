@@ -172,6 +172,8 @@ public class DDMFormViewFormInstanceRecordDisplayContext {
 
 		ddmFormRenderingContext.setContainerId(
 			"ddmForm".concat(StringUtil.randomString()));
+		ddmFormRenderingContext.setDDMFormInstanceId(
+			ddmFormInstanceRecord.getFormInstanceId());
 		ddmFormRenderingContext.setDDMFormValues(ddmFormValues);
 		ddmFormRenderingContext.setHttpServletRequest(
 			_ddmFormAdminRequestHelper.getRequest());

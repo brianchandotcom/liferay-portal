@@ -221,10 +221,14 @@ public class FunctionActionExecutorImpl implements ActionExecutor {
 		AssetRenderer<?> assetRenderer = workflowHandler.getAssetRenderer(
 			classPK);
 
+		if (assetRenderer == null) {
+			return null;
+		}
+
 		Serializable assetObjectSerializable =
 			(Serializable)assetRenderer.getAssetObject();
 
-		if ((assetObjectSerializable == null) || (assetRenderer == null)) {
+		if (assetObjectSerializable == null) {
 			return null;
 		}
 

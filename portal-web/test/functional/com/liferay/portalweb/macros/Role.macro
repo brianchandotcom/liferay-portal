@@ -156,11 +156,21 @@ definition {
 				locator1 = "RolesPermissionsNavigation#SEARCH_FIELD",
 				value1 = ${permissionNavItem});
 
-			AssertClick(
-				key_permissionNavHeader = ${permissionNavHeader},
-				key_permissionNavItem = ${permissionNavItem},
-				locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVIGATION",
-				value1 = ${permissionNavItem});
+			if (isSet(accountsPermission)) {
+				AssertClick(
+					key_indexNumber = 2,
+					key_permissionNavHeader = ${permissionNavHeader},
+					key_permissionNavItem = ${permissionNavItem},
+					locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVIGATION_N",
+					value1 = ${permissionNavItem});
+			}
+			else {
+				AssertClick(
+					key_permissionNavHeader = ${permissionNavHeader},
+					key_permissionNavItem = ${permissionNavItem},
+					locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVIGATION",
+					value1 = ${permissionNavItem});
+			}
 
 			AssertTextEquals(
 				locator1 = "RolesPermissions#PERMISSION_ITEM_HEADER",

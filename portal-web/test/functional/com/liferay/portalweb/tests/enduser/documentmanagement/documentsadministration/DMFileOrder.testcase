@@ -1,0 +1,204 @@
+@component-name = "portal-document-management"
+definition {
+
+	property custom.properties = "feature.flag.LPS-84424=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Document Management";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONDepot.deleteDepot(depotName = "Test Depot Name");
+
+			DMDocument.tearDownCP();
+
+			Site.tearDownCP();
+		}
+	}
+
+	@description = "This test ensures that user can configure the default order and sort for Documents and Media under Instance settings > File Order."
+	@priority = 4
+	test CanChangeSettingInInstanceSettings {
+		property test.name.skip.portal.instance = "DMFileOrder#CanChangeSettingInInstanceSettings";
+
+		JSONDepot.addDepot(depotName = "Test Depot Name");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		AssertElementPresent(locator1 = "DocumentsAndMedia#SORTED_DOWN_ICON");
+
+		ManagementBar.viewFilterAndOrder(menuItem = "Modified Date");
+
+		HeadlessSite.addSite(siteName = "Site Name");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "DM Document Title 1",
+			groupName = "Site Name",
+			mimeType = "text/plain",
+			sourceFileName = "Document_1.txt");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "DM Document Title 2",
+			groupName = "Site Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_3.jpg");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
+		AssertTextEquals.assertPartialText(
+			index = 1,
+			locator1 = "LexiconTable#TABLE_ROW",
+			value1 = "DM Document Title 2");
+
+		AssertTextEquals.assertPartialText(
+			index = 2,
+			locator1 = "LexiconTable#TABLE_ROW",
+			value1 = "DM Document Title 1");
+
+		DMDocument.updateFileOrder(
+			instanceSettings = "true",
+			orderBy = "Name",
+			siteURLKey = "guest",
+			sortDirection = "Ascending");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		AssertElementPresent(locator1 = "DocumentsAndMedia#SORTED_UP_ICON");
+
+		ManagementBar.viewFilterAndOrder(menuItem = "Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		AssertTextEquals.assertPartialText(
+			index = 1,
+			locator1 = "LexiconTable#TABLE_ROW",
+			value1 = "DM Document Title 1");
+
+		AssertTextEquals.assertPartialText(
+			index = 2,
+			locator1 = "LexiconTable#TABLE_ROW",
+			value1 = "DM Document Title 2");
+	}
+
+	@description = "This test ensures that when setting the DM File Order at different levels (Instance and System settings), the instance settings will take effect."
+	@priority = 4
+	test InstanceTakesEffectOverSystemFileOrderSetting {
+		property test.name.skip.portal.instance = "DMFileOrder#InstanceTakesEffectOverSystemFileOrderSetting";
+
+		DMDocument.updateFileOrder(orderBy = "Downloads");
+
+		DMDocument.updateFileOrder(
+			instanceSettings = "true",
+			orderBy = "Create Date",
+			sortDirection = "Ascending");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		AssertElementPresent(locator1 = "DocumentsAndMedia#SORTED_UP_ICON");
+
+		ManagementBar.viewFilterAndOrder(menuItem = "Create Date");
+	}
+
+	@description = "This test ensures that the site DM File Order setting only takes effect in the current site."
+	@priority = 4
+	test SiteSettingOnlyTakesEffectInCurrentSite {
+		for (var siteName : list "Site Name1,Site Name2") {
+			HeadlessSite.addSite(siteName = ${siteName});
+
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "DM Document Title 1",
+				groupName = ${siteName},
+				mimeType = "text/plain",
+				sourceFileName = "Document_1.txt");
+
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "DM Document Title 2",
+				groupName = ${siteName},
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_3.jpg");
+		}
+
+		DMDocument.updateFileOrder(
+			orderBy = "Size",
+			siteSettings = "true",
+			siteURLKey = "site-name1",
+			sortDirection = "Ascending");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name1");
+
+		AssertElementPresent(locator1 = "DocumentsAndMedia#SORTED_UP_ICON");
+
+		ManagementBar.viewFilterAndOrder(menuItem = "Size");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name1");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
+		AssertTextEquals.assertPartialText(
+			index = 1,
+			locator1 = "LexiconTable#TABLE_ROW",
+			value1 = "DM Document Title 1");
+
+		AssertTextEquals.assertPartialText(
+			index = 2,
+			locator1 = "LexiconTable#TABLE_ROW",
+			value1 = "DM Document Title 2");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name2");
+
+		AssertElementPresent(locator1 = "DocumentsAndMedia#SORTED_DOWN_ICON");
+
+		ManagementBar.viewFilterAndOrder(menuItem = "Modified Date");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name2");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
+		AssertTextEquals.assertPartialText(
+			index = 1,
+			locator1 = "LexiconTable#TABLE_ROW",
+			value1 = "DM Document Title 2");
+
+		AssertTextEquals.assertPartialText(
+			index = 2,
+			locator1 = "LexiconTable#TABLE_ROW",
+			value1 = "DM Document Title 1");
+	}
+
+	@description = "This test ensures that when setting the DM File Order at different levels (Site and Instance settings), the site settings will take effect."
+	@priority = 4
+	test SiteTakesEffectOverInstanceFileOrderSetting {
+		property test.name.skip.portal.instance = "DMFileOrder#SiteTakesEffectOverInstanceFileOrderSetting";
+
+		DMDocument.updateFileOrder(
+			instanceSettings = "true",
+			orderBy = "Create Date",
+			sortDirection = "Ascending");
+
+		DMDocument.updateFileOrder(
+			orderBy = "Name",
+			siteSettings = "true",
+			siteURLKey = "guest",
+			sortDirection = "Descending");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		AssertElementPresent(locator1 = "DocumentsAndMedia#SORTED_DOWN_ICON");
+
+		ManagementBar.viewFilterAndOrder(menuItem = "Name");
+	}
+
+}

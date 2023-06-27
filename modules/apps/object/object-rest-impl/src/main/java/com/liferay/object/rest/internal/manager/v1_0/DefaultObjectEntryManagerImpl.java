@@ -14,8 +14,6 @@
 
 package com.liferay.object.rest.internal.manager.v1_0;
 
-import com.liferay.account.service.AccountEntryLocalService;
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.object.action.engine.ObjectActionEngine;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectConstants;
@@ -1545,13 +1543,7 @@ public class DefaultObjectEntryManagerImpl
 		DefaultObjectEntryManagerImpl.class);
 
 	@Reference
-	private AccountEntryLocalService _accountEntryLocalService;
-
-	@Reference
 	private Aggregations _aggregations;
-
-	@Reference
-	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;

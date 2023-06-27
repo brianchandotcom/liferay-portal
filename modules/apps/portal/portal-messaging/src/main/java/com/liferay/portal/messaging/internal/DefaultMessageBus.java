@@ -138,15 +138,6 @@ public class DefaultMessageBus implements MessageBus {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_serviceRegistration = bundleContext.registerService(
-			ManagedServiceFactory.class,
-			new DefaultMessageBusManagedServiceFactory(),
-			HashMapDictionaryBuilder.put(
-				Constants.SERVICE_PID,
-				"com.liferay.portal.messaging.internal.configuration." +
-					"DestinationWorkerConfiguration"
-			).build());
-
 		_messageListenerServiceTracker = new ServiceTracker<>(
 			bundleContext, MessageListener.class,
 			new ServiceTrackerCustomizer
@@ -201,15 +192,24 @@ public class DefaultMessageBus implements MessageBus {
 
 		_messageListenerServiceTracker.open();
 
+		_serviceRegistration = bundleContext.registerService(
+			ManagedServiceFactory.class,
+			new DefaultMessageBusManagedServiceFactory(),
+			HashMapDictionaryBuilder.put(
+				Constants.SERVICE_PID,
+				"com.liferay.portal.messaging.internal.configuration." +
+					"DestinationWorkerConfiguration"
+			).build());
+
 		_serviceTrackerList = ServiceTrackerListFactory.open(
 			bundleContext, MessageBusInterceptor.class);
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_serviceRegistration.unregister();
-
 		_serviceTrackerList.close();
+
+		_serviceRegistration.unregister();
 
 		_messageListenerServiceTracker.close();
 
@@ -219,9 +219,9 @@ public class DefaultMessageBus implements MessageBus {
 			destination.destroy();
 		}
 
-		_messageBusEventListeners.clear();
-
 		_destinations.clear();
+
+		_messageBusEventListeners.clear();
 	}
 
 	@Reference(

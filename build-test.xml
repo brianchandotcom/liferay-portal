@@ -8588,6 +8588,15 @@ diff -y -B -W250 upgraded-@{upgraded.db.schema}.sql fresh-@{fresh.db.schema}.sql
 		</sequential>
 	</macrodef>
 
+	<target name="tar-test">
+		<tar destfile="/tmp/tar-test-1.tar">
+			<tarfileset dir="/home/me/dev/projects/liferay-portal/tools/release/ext/ext-impl/src/com/liferay/portal/license" 
+				prefix="license">
+			</tarfileset>	
+			<tarfileset dir="/home/me/dev/projects/liferay-portal/tools/release/ext/ext-impl/src/com/liferay/portal/ee" />
+		</tar>
+	</target>
+
 	<macrodef name="wait-for-docker-database">
 		<attribute name="shell.condition" />
 

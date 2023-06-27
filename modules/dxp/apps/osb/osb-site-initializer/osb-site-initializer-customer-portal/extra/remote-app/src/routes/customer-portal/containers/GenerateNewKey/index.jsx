@@ -14,6 +14,7 @@ import {Navigate, useOutletContext} from 'react-router-dom';
 import {useCustomerPortal} from '../../context';
 import {hasAdminOrPartnerManager} from '../ActivationKeysTable/utils/hasAdminOrPartnerManager';
 import GenerateNewKeySkeleton from './Skeleton';
+import ComplimentaryDate from './pages/ComplimentaryDate';
 import RequiredInformation from './pages/RequiredInformation';
 import SelectSubscription from './pages/SelectSubscription';
 import {STEP_TYPES} from './utils/constants/stepType';
@@ -56,6 +57,17 @@ const GenerateNewKey = ({productGroupName}) => {
 		),
 		[STEP_TYPES.selectDescriptions]: (
 			<SelectSubscription
+				accountKey={project?.accountKey}
+				infoSelectedKey={infoSelectedKey}
+				productGroupName={productGroupName}
+				sessionId={sessionId}
+				setInfoSelectedKey={setInfoSelectedKey}
+				setStep={setStep}
+				urlPreviousPage={urlPreviousPage}
+			/>
+		),
+		[STEP_TYPES.selectInfoComplementaryKey]: (
+			<ComplimentaryDate
 				accountKey={project?.accountKey}
 				infoSelectedKey={infoSelectedKey}
 				productGroupName={productGroupName}

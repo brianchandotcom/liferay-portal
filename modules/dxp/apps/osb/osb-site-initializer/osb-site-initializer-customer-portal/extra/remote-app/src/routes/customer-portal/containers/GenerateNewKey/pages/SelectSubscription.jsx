@@ -12,7 +12,7 @@
 import ClayAlert from '@clayui/alert';
 import {ClaySelect} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {Link} from 'react-router-dom';
 import i18n from '../../../../../common/I18n';
 import {Button} from '../../../../../common/components';
@@ -36,7 +36,7 @@ const SelectSubscription = ({
 	urlPreviousPage,
 }) => {
 	const [{subscriptionGroups}] = useCustomerPortal();
-	const {provisioningServerAPI} = useAppPropertiesContext();
+	const {featureFlags, provisioningServerAPI} = useAppPropertiesContext();
 
 	const [generateFormValues, setGenerateFormValues] = useState();
 
@@ -50,12 +50,37 @@ const SelectSubscription = ({
 		infoSelectedKey?.licenseEntryType
 	);
 
+	const [hasKeyComplementary, setHasKeyComplementary] = useState(false);
+
 	const doesNotAllowPermanentLicense = !generateFormValues?.allowPermanentLicenses;
+
+	const allowComplimentary = generateFormValues?.allowComplimentary;
 
 	const hasNotPermanentLicence =
 		selectedKeyType?.includes('Virtual Cluster') ||
 		selectedKeyType?.includes('OEM') ||
 		selectedKeyType?.includes('Enterprise');
+
+	const typesProduct = generateFormValues?.versions[0]?.types;
+
+	const handleProduct = useCallback(() => {
+		const filteredTypes = typesProduct?.find(
+			(type) =>
+				type.licenseEntryDisplayName ===
+				productGroupName + ' ' + selectedKeyType
+		);
+
+		return filteredTypes?.productKey;
+	}, [typesProduct, productGroupName, selectedKeyType]);
+
+	const mockedValuesForComplimentaryKeys = useMemo(() => {
+		return {
+			instanceSize: 4,
+			productKey: handleProduct(),
+			provisionedCount: 0,
+			quantity: 5,
+		};
+	}, [handleProduct]);
 
 	useEffect(() => {
 		const fetchGenerateFormData = async () => {
@@ -223,8 +248,7 @@ const SelectSubscription = ({
 									...selectedSubscription,
 								},
 							}));
-
-							setStep(1);
+							setStep(hasKeyComplementary ? 1 : 2);
 						}}
 					>
 						{i18n.translate('next')}
@@ -394,8 +418,8 @@ const SelectSubscription = ({
 											...event.target.value,
 											index,
 										});
-
 										setInfoSelectedKey(infoSelectedKey);
+										setHasKeyComplementary(false);
 									}}
 									selected={selected}
 									subtitle={i18n.sub('instance-size-x', [
@@ -406,6 +430,36 @@ const SelectSubscription = ({
 							);
 						})}
 					</div>
+
+					{featureFlags.includes('LPS-148342') && allowComplimentary && (
+						<>
+							<div>
+								<Radio
+									isActivationKeyAvailable={5}
+									label="Complimentary"
+									onChange={(event) => {
+										setSelectedSubscription({
+											...event.target.value,
+										});
+										setHasKeyComplementary(true);
+
+										const infoSelectedKey = {
+											licenseEntryType: selectedKeyType,
+											productType: productGroupName,
+											productVersion: selectedVersion,
+										};
+
+										setInfoSelectedKey(infoSelectedKey);
+									}}
+									selected={hasKeyComplementary}
+									subtitle={i18n.translate(
+										'chose-this-option-if-you-want-a-subscription-for-30-days'
+									)}
+									value={mockedValuesForComplimentaryKeys}
+								/>
+							</div>
+						</>
+					)}
 
 					<div className="dropdown-divider mt-3"></div>
 				</div>

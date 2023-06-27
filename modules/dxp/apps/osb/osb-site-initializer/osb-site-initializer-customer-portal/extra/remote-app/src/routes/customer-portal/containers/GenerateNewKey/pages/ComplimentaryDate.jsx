@@ -1,0 +1,189 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
+ */
+
+import ClayDatePicker from '@clayui/date-picker';
+import {ClayCheckbox} from '@clayui/form';
+import {useMemo, useState} from 'react';
+import {Link} from 'react-router-dom';
+import i18n from '../../../../../common/I18n';
+import {Button} from '../../../../../common/components';
+import Layout from '../../../../../common/containers/setup-forms/Layout';
+
+const now = new Date();
+const NAVIGATION_YEARS_RANGE = 2;
+
+const ComplimentaryDate = ({
+	infoSelectedKey,
+	setInfoSelectedKey,
+	setStep,
+	urlPreviousPage,
+}) => {
+	const [selectedSubscription] = useState(
+		infoSelectedKey?.selectedSubscription
+	);
+	const [expandedOnOrAfter, setExpandedOnOrAfter] = useState(false);
+	const [selectedStartDate, setSelectedStartDate] = useState('');
+	const [checkBoxConfirmationTerms, setCheckBoxConfirmationTerms] = useState(
+		false
+	);
+
+	const {endDate, startDate} = useMemo(() => {
+		const inputStartDate = new Date(selectedStartDate);
+		const timestamp = inputStartDate.getTime();
+		const timezoneOffset = inputStartDate.getTimezoneOffset() * 60000;
+		const startDateFormatted = new Date(timestamp + timezoneOffset);
+		const startDate = new Date(timestamp + timezoneOffset);
+		const endDate = new Date(
+			startDateFormatted.setDate(startDateFormatted.getDate() + 30)
+		);
+
+		return {
+			endDate,
+			inputStartDate,
+			startDate,
+			startDateFormatted,
+		};
+	}, [selectedStartDate]);
+
+	const updatedSelectedSubscription = useMemo(() => {
+		return {
+			...selectedSubscription,
+			complimentary: true,
+			endDate,
+			startDate,
+		};
+	}, [selectedSubscription, endDate, startDate]);
+
+	return (
+		<div>
+			<Layout
+				footerProps={{
+					footerClass: 'mx-5 mb-2',
+
+					leftButton: (
+						<Link to={urlPreviousPage}>
+							<Button
+								className="btn btn-borderless btn-style-neutral"
+								displayType="secondary"
+							>
+								{i18n.translate('cancel')}
+							</Button>
+						</Link>
+					),
+					middleButton: (
+						<div>
+							<Button
+								className="btn btn-secondary mr-3"
+								displayType="secundary"
+								onClick={() => setStep(0)}
+							>
+								{i18n.translate('previous')}
+							</Button>
+
+							<Button
+								disabled={
+									!checkBoxConfirmationTerms ||
+									!selectedStartDate
+								}
+								displayType="primary"
+								onClick={() => {
+									setInfoSelectedKey(
+										(previousInfoSelectedKey) => ({
+											...previousInfoSelectedKey,
+											selectedSubscription: updatedSelectedSubscription,
+										})
+									);
+
+									setStep(2);
+								}}
+							>
+								{i18n.translate('next')}
+							</Button>
+						</div>
+					),
+				}}
+				headerProps={{
+					headerClass: 'ml-5 mt-4 mb-3',
+					helper: i18n.translate(
+						'select-the-subscription-and-key-type-you-would-like-to-generate'
+					),
+					title: i18n.translate('generate-activation-keys'),
+				}}
+				layoutType="cp-generateKey"
+			>
+				<div className="h-50 mx-6">
+					<h2>{i18n.translate('complimentary')}</h2>
+
+					<p>
+						{i18n.translate(
+							'you-can-use-this-option-to-generate-complimentary-activation-keys-with-a-duration-of-30-days'
+						)}
+					</p>
+
+					<h5>{i18n.translate('start-date')}</h5>
+
+					<ClayDatePicker
+						dateFormat="yyyy-MM-dd"
+						disabled={false}
+						expanded={expandedOnOrAfter}
+						onExpandedChange={setExpandedOnOrAfter}
+						onValueChange={(value, eventType) => {
+							setSelectedStartDate(value);
+
+							if (eventType === 'click') {
+								setExpandedOnOrAfter(false);
+							}
+						}}
+						placeholder={i18n.translate('yyyy-mm-dd')}
+						value={selectedStartDate}
+						years={{
+							end: now.getFullYear() + NAVIGATION_YEARS_RANGE,
+							start: now.getFullYear() - NAVIGATION_YEARS_RANGE,
+						}}
+					/>
+
+					<p>
+						{i18n.translate(
+							'choose-the-date-you-would-like-this-option-to-start'
+						)}
+					</p>
+
+					<h5 className="mt-5">
+						{i18n.translate('confirmation-terms')}
+					</h5>
+
+					<div className="d-flex mt-4">
+						<div className="pr-2 pt-1">
+							<ClayCheckbox
+								checked={checkBoxConfirmationTerms}
+								id="expiration-checkbox"
+								onChange={() =>
+									setCheckBoxConfirmationTerms(
+										(checkedBoxSubcription) =>
+											!checkedBoxSubcription
+									)
+								}
+							/>
+						</div>
+
+						<label>
+							{i18n.translate(
+								'the-requested-activation-key-exceeds-the-purchased-subscriptions-for-this-liferay-project-in-case-of-unauthorized-use-liferay-can-request-financial-compensation-for-breach-of-use'
+							)}
+						</label>
+					</div>
+				</div>
+			</Layout>
+		</div>
+	);
+};
+
+export default ComplimentaryDate;

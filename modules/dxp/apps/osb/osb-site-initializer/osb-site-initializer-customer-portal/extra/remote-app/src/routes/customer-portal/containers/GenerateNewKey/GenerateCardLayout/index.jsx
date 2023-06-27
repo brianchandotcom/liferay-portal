@@ -16,11 +16,16 @@ import getDateCustomFormat from '../../../../../common/utils/getDateCustomFormat
 import {getLicenseKeyEndDatesByLicenseType} from '../utils/licenseKeyEndDateUtil';
 
 const GenerateCardLayout = ({infoSelectedKey}) => {
+	const startDate = infoSelectedKey?.selectedSubscription?.startDate;
+
+	const endDate = infoSelectedKey?.selectedSubscription?.endDate;
+	const licenseEndDate = getLicenseKeyEndDatesByLicenseType(infoSelectedKey);
+
 	const currentDate = `${getDateCustomFormat(
-		infoSelectedKey?.selectedSubscription?.startDate,
+		startDate,
 		FORMAT_DATE_TYPES.day2DMonthSYearN
 	)} - ${getDateCustomFormat(
-		getLicenseKeyEndDatesByLicenseType(infoSelectedKey),
+		licenseEndDate ?? endDate,
 		FORMAT_DATE_TYPES.day2DMonthSYearN
 	)}`;
 

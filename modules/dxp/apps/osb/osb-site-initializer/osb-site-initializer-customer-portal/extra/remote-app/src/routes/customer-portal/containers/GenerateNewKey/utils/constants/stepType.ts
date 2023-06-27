@@ -10,6 +10,7 @@
  */
 
 export const STEP_TYPES = {
-	generateKeys: 1,
+	generateKeys: 2,
 	selectDescriptions: 0,
+	selectInfoComplementaryKey: 1,
 };

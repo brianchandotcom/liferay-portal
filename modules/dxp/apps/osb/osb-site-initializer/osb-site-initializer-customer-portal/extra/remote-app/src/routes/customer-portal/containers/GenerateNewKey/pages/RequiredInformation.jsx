@@ -167,8 +167,11 @@ const RequiredInformation = ({
 		const licenseKey = {
 			accountKey,
 			active: true,
+			complimentary: infoSelectedKey?.selectedSubscription.complimentary,
 			description: values?.description,
-			expirationDate: getLicenseKeyEndDatesByLicenseType(infoSelectedKey),
+			expirationDate:
+				getLicenseKeyEndDatesByLicenseType(infoSelectedKey) ??
+				infoSelectedKey?.selectedSubscription.endDate,
 			licenseEntryType: getLicenseEntryTypeSelected(),
 			maxClusterNodes: values?.maxClusterNodes || 0,
 			name: values?.name,
@@ -221,27 +224,29 @@ const RequiredInformation = ({
 			setIsLoadingGenerateKey(false);
 		}
 
-		await client.mutate({
-			context: {
-				displaySuccess: false,
-			},
-			mutation: patchOrderItemByExternalReferenceCode,
-			variables: {
-				externalReferenceCode: licenseKey.productPurchaseKey,
-				orderItem: {
-					customFields: [
-						{
-							customValue: {
-								data:
-									infoSelectedKey.selectedSubscription
-										.provisionedCount + 1,
-							},
-							name: 'provisionedCount',
-						},
-					],
+		if (!licenseKey.complimentary) {
+			await client.mutate({
+				context: {
+					displaySuccess: false,
 				},
-			},
-		});
+				mutation: patchOrderItemByExternalReferenceCode,
+				variables: {
+					externalReferenceCode: licenseKey.productPurchaseKey,
+					orderItem: {
+						customFields: [
+							{
+								customValue: {
+									data:
+										infoSelectedKey.selectedSubscription
+											.provisionedCount + 1,
+								},
+								name: 'provisionedCount',
+							},
+						],
+					},
+				},
+			});
+		}
 
 		navigate(urlPreviousPage, {state: {newKeyGeneratedAlert: true}});
 	};
@@ -269,7 +274,7 @@ const RequiredInformation = ({
 
 						<label htmlFor="expiration-checkbox">
 							{i18n.sub(
-								'receive-expiration-notifications-through-email-when-this-activation-key-is-about-to-expire-x-days-before,-x-days-before,-and-on-the-day-of-expiration.-unsubscribe-at-any-time',
+								'receive-expiration-notifications-through-email-when-this-activation-key-is-about-to-expire-x-days-before-x-days-before-and-on-the-day-of-expiration-unsubscribe-at-any-time',
 								[30, 15]
 							)}
 						</label>

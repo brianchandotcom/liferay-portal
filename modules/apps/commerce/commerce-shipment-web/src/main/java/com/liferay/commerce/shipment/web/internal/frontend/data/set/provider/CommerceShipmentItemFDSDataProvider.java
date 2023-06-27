@@ -27,6 +27,8 @@ import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -75,15 +77,24 @@ public class CommerceShipmentItemFDSDataProvider
 			String commerceInventoryWarehouseName = StringPool.BLANK;
 
 			if (commerceShipmentItem.getCommerceInventoryWarehouseId() > 0) {
-				CommerceInventoryWarehouse commerceInventoryWarehouse =
-					_commerceInventoryWarehouseService.
-						getCommerceInventoryWarehouse(
-							commerceShipmentItem.
-								getCommerceInventoryWarehouseId());
+				try {
+					CommerceInventoryWarehouse commerceInventoryWarehouse =
+						_commerceInventoryWarehouseService.
+							fetchByCommerceInventoryWarehouse(
+								commerceShipmentItem.
+									getCommerceInventoryWarehouseId());
 
-				commerceInventoryWarehouseName =
-					commerceInventoryWarehouse.getName(
-						_portal.getLocale(httpServletRequest));
+					if (commerceInventoryWarehouse != null) {
+						commerceInventoryWarehouseName =
+							commerceInventoryWarehouse.getName(
+								_portal.getLocale(httpServletRequest));
+					}
+				}
+				catch (Exception exception) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(exception);
+					}
+				}
 			}
 
 			shipmentItems.add(
@@ -113,6 +124,9 @@ public class CommerceShipmentItemFDSDataProvider
 		return _commerceShipmentItemService.getCommerceShipmentItemsCount(
 			commerceShipmentId);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CommerceShipmentItemFDSDataProvider.class);
 
 	@Reference
 	private CommerceInventoryWarehouseService

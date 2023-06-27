@@ -15,7 +15,10 @@
 package com.liferay.ai.creator.openai.web.internal.client;
 
 import com.liferay.ai.creator.openai.web.internal.exception.AICreatorOpenAIClientException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
 
@@ -41,7 +44,16 @@ public class MockAICreatorOpenAIClient implements AICreatorOpenAIClient {
 		if (Objects.equals(apiKey, "VALID_API_KEY") &&
 			Objects.equals(content, "USER_CONTENT")) {
 
-			return "OPENAI_API_COMPLETION_RESPONSE_CONTENT";
+			return _getSampleCompletion(0);
+		}
+
+		if (Validator.isNotNull(content) &&
+			content.startsWith(_USER_CONTENT_SLEEP_MILLIS_PREFIX)) {
+
+			return _getSampleCompletion(
+				GetterUtil.getLong(
+					content.substring(
+						_USER_CONTENT_SLEEP_MILLIS_PREFIX.length())));
 		}
 
 		throw _getAICreatorOpenAIClientException(content);
@@ -80,5 +92,28 @@ public class MockAICreatorOpenAIClient implements AICreatorOpenAIClient {
 			new UnsupportedOperationException(
 				"Invalid Key to use MockAICreatorOpenAIClient, Key: " + key));
 	}
+
+	private String _getSampleCompletion(long sleepMillis) {
+		if (sleepMillis <= 0) {
+			return "OPENAI_API_COMPLETION_RESPONSE_CONTENT";
+		}
+
+		try {
+			Thread.sleep(sleepMillis);
+		}
+		catch (InterruptedException interruptedException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(interruptedException);
+			}
+		}
+
+		return "OPENAI_API_COMPLETION_RESPONSE_CONTENT";
+	}
+
+	private static final String _USER_CONTENT_SLEEP_MILLIS_PREFIX =
+		"USER_CONTENT_SLEEP_MILLIS_";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		MockAICreatorOpenAIClient.class);
 
 }

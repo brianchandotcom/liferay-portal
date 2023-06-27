@@ -104,7 +104,8 @@ definition {
 		JSONWebcontent.addFolder(
 			folderDescription = "WC Folder Description",
 			folderName = "WC Folder Name 1",
-			groupName = ${randomSiteName});
+			groupName = ${randomSiteName},
+			userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 
 		User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 
@@ -146,7 +147,7 @@ definition {
 		Permissions.removePermissionViaAPI(
 			resourceAction = "ADD_FOLDER",
 			resourceName = "com.liferay.journal",
-			roleTitle = "Roles Siterole Name",
+			roleTitle = ${randomRoleKey},
 			roleType = "site");
 
 		User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
@@ -223,7 +224,7 @@ definition {
 		Permissions.removePermissionViaAPI(
 			resourceAction = "ADD_STRUCTURE",
 			resourceName = "com.liferay.journal",
-			roleTitle = "Roles Siterole Name",
+			roleTitle = ${randomRoleKey},
 			roleType = "site");
 
 		User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
@@ -295,7 +296,7 @@ definition {
 		Permissions.removePermissionViaAPI(
 			resourceAction = "ADD_TEMPLATE",
 			resourceName = "com.liferay.journal",
-			roleTitle = "Roles Siterole Name",
+			roleTitle = ${randomRoleKey},
 			roleType = "site");
 
 		User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
@@ -370,7 +371,7 @@ definition {
 		Permissions.removePermissionViaAPI(
 			resourceAction = "ADD_ARTICLE",
 			resourceName = "com.liferay.journal",
-			roleTitle = "Roles Siterole Name",
+			roleTitle = ${randomRoleKey},
 			roleType = "site");
 
 		User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));

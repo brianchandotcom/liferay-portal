@@ -23,6 +23,7 @@ import com.liferay.dynamic.data.mapping.form.field.type.BaseDDMFormFieldTypeSett
 import com.liferay.dynamic.data.mapping.form.item.selector.criterion.DDMUserPersonalFolderItemSelectorCriterion;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
+import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion;
 import com.liferay.portal.json.JSONFactoryImpl;
@@ -95,6 +96,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 		super.setUp();
 
 		_setUpCompanyLocalService();
+		_setUpDDMFormInstanceLocalService();
 		_setUpDLAppLocalService();
 		_setUpDLAppService();
 		_setUpFileEntry();
@@ -571,6 +573,21 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 		ReflectionTestUtil.setFieldValue(
 			_documentLibraryDDMFormFieldTemplateContextContributor,
 			"_companyLocalService", companyLocalService);
+	}
+
+	private void _setUpDDMFormInstanceLocalService() throws Exception {
+		DDMFormInstanceLocalService ddmFormInstanceLocalService = Mockito.mock(
+			DDMFormInstanceLocalService.class);
+
+		ReflectionTestUtil.setFieldValue(
+			_documentLibraryDDMFormFieldTemplateContextContributor,
+			"_ddmFormInstanceLocalService", ddmFormInstanceLocalService);
+
+		Mockito.when(
+			ddmFormInstanceLocalService.getDDMFormInstance(_FORM_INSTANCE_ID)
+		).thenReturn(
+			null
+		);
 	}
 
 	private void _setUpDLAppLocalService() throws Exception {

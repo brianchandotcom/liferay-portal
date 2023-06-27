@@ -4,7 +4,7 @@
 .customer-gate-page {
 	&-body {
 		margin-top: 4.5rem;
-		width: 37.5rem;
+		width: 40.5rem;
 	}
 	&-button {
 		margin-bottom: 1.5rem;
@@ -22,11 +22,108 @@
 		flex-direction: column;
 		justify-content: center;
 		width: 100%;
+
+		.customer-gate-page-link {
+			color: #0b5fff;
+		}
+		form {
+			width: 40.5rem;
+
+			.form-control {
+				background-color: #ffffff;
+				border-color: #898593;
+				border-style: solid;
+				border-width: 0.0625rem;
+				border-bottom-width: 0.0625rem;
+				border-left-width: 0.0625rem;
+				border-right-width: 0.0625rem;
+				border-top-width: 0.0625rem;
+				border-radius: 0.5rem;
+				box-shadow: none;
+				color: #3f3851;
+				display: block;
+				font-size: 1rem;
+				font-weight: 500;
+				height: var(--form-input-height);
+				line-height: 24px;
+				min-width: 0;
+				padding-bottom: 0.6875rem;
+				padding-left: 1rem;
+				padding-right: 1rem;
+				padding-top: 0.6875rem;
+				transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
+				width: 100%;
+
+				&:disabled {
+					background-color: #f4f4f5;
+					border-color: #c9c9cf;
+					color: #74747b;
+				}
+			}
+			.form-group {
+				.control-label {
+					&::after {
+						color: unset;
+						content: unset;
+					}
+
+					.required {
+						&::after {
+							color: #da1414;
+							content: "9";
+						}
+					}
+				}
+			}
+			.sticker-xl {
+				height: 5rem;
+				width: 5rem;
+			}
+
+			.title-label {
+				font-size: 1.25rem !important;
+				margin-bottom: 0;
+			}
+		}
+		label {
+			display: flex;
+			font-size: 1rem;
+			font-weight: bold;
+			gap: 0.75rem;
+			margin-right: -5px;
+
+			&.disabled {
+				color: #272833;
+			}
+			&.required::after {
+				color: #da1414;
+				content: "*";
+				font-size: 1rem;
+				font-weight: bold;
+				left: -10px;
+				position: relative;
+				top: -5px;
+			}
+		}
+		.label-tonal-danger {
+			background-color: #fbe8e8;
+			border-color: transparent;
+			color: #da1414;
+			font-weight: 600;
+			height: 35px;
+			padding: 4px;
+			text-transform: none;
+
+			.text-paragraph {
+				font-size: 16px;
+			}
+		}
 	}
 	&-divider {
 		margin-bottom: 1.5rem;
 		margin-top: 2rem;
 	}
+
 	&-link {
 		font-size: 16px;
 	}
@@ -37,4 +134,9 @@
 }
 .header-description {
 	color: #54555f;
+}
+.label-tonal-info {
+	color: #2e5aac;
+	border-color: transparent;
+	background-color: #eaeff7;
 }

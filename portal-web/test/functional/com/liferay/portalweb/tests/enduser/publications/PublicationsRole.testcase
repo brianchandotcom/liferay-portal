@@ -26,7 +26,7 @@ definition {
 	}
 
 	@priority = 4
-	test PublishAnEditToDefinedPermissionsForARole {
+	test CanPublishEditedRoleWithDefinedPermissions {
 		JSONRole.addRegularRole(
 			roleKey = "Regrole Name",
 			roleTitle = "Regrole Name");
@@ -65,7 +65,7 @@ definition {
 	}
 
 	@priority = 4
-	test PublishANewRoleWithDefinedPermissions {
+	test CanPublishNewRoleWithDefinedPermissions {
 		JSONPublications.addPublication(publicationName = "Publication Name");
 
 		JSONPublications.selectPublication(publicationName = "Publication Name");

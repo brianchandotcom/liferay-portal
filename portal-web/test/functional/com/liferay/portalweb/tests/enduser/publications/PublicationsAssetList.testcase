@@ -74,16 +74,22 @@ definition {
 		task ("Assert that it's possible to publish it") {
 			PublicationsNavigator.gotoReviewChanges();
 
-			Check.checkToggleSwitch(
-				key_toggleSwitchLabel = "Show All Items",
-				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
-
 			PublicationsChanges.viewChanges(
 				changeCategory = "Asset List Entry",
 				changeSite = "Guest",
 				changeTitle = "Asset List Entry",
 				changeType = "Added",
-				changeUser = "Test Test");
+				changeUser = "Test Test",
+				showAllItems = "true");
+
+			PublicationsChanges.viewChanges(
+				changeCategory = "Asset List Entry",
+				changeOrder = 2,
+				changeSite = "Guest",
+				changeTitle = "Asset List Entry",
+				changeType = "Added",
+				changeUser = "Test Test",
+				showAllItems = "true");
 
 			Button.clickPublish();
 
@@ -133,16 +139,22 @@ definition {
 		task ("Assert that it's possible to publish it") {
 			PublicationsNavigator.gotoReviewChanges();
 
-			Check.checkToggleSwitch(
-				key_toggleSwitchLabel = "Show All Items",
-				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
-
 			PublicationsChanges.viewChanges(
 				changeCategory = "Asset List Entry",
 				changeSite = "Guest",
 				changeTitle = "Asset List Entry",
 				changeType = "Deleted",
-				changeUser = "Test Test");
+				changeUser = "Test Test",
+				showAllItems = "true");
+
+			PublicationsChanges.viewChanges(
+				changeCategory = "Asset List Entry",
+				changeOrder = 2,
+				changeSite = "Guest",
+				changeTitle = "Asset List Entry",
+				changeType = "Deleted",
+				changeUser = "Test Test",
+				showAllItems = "true");
 
 			Button.clickPublish();
 
@@ -182,16 +194,13 @@ definition {
 		task ("Assert that it's possible to publish it") {
 			PublicationsNavigator.gotoReviewChanges();
 
-			Check.checkToggleSwitch(
-				key_toggleSwitchLabel = "Show All Items",
-				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
-
 			PublicationsChanges.viewChanges(
 				changeCategory = "Asset List Entry",
 				changeSite = "Guest",
 				changeTitle = "Asset List Entry",
 				changeType = "Modified",
-				changeUser = "Test Test");
+				changeUser = "Test Test",
+				showAllItems = "true");
 
 			Button.clickPublish();
 

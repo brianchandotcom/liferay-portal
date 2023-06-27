@@ -137,4 +137,79 @@ definition {
 			userGroupName = "User Group Name");
 	}
 
+	@description = "Able to resolve team conflicting change by discarding"
+	@priority = 4
+	test CanResolveTeamConflictingChangeByDiscarding {
+		HeadlessSite.addSite(siteName = "Site Name");
+
+		Site.openSiteTeamsAdmin(siteURLKey = "site-name");
+
+		Team.addCP(
+			teamDescription = "Team Description",
+			teamName = "Team Name");
+
+		JSONPublications.addPublication(publicationName = "Publication 1 Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication 1 Name");
+
+		Site.openSiteTeamsAdmin(siteURLKey = "site-name");
+
+		Team.editCP(
+			teamDescriptionEdit = "Team Description Edit",
+			teamName = "Team Name",
+			teamNameEdit = "Team Name Edit");
+
+		PublicationsNavigator.gotoReviewChanges();
+
+		PublicationsChanges.viewChanges(
+			changeCategory = "Team",
+			changeSite = "Site Name",
+			changeTitle = "Team Name Edit",
+			changeType = "Modified",
+			changeUser = "Test Test");
+
+		JSONPublications.addPublication(publicationName = "Publication 2 Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication 2 Name");
+
+		Site.openSiteTeamsAdmin(siteURLKey = "site-name");
+
+		Team.deleteCP(
+			teamDescription = "Team Description",
+			teamName = "Team Name");
+
+		PublicationsNavigator.gotoReviewChanges();
+
+		PublicationsChanges.viewChanges(
+			changeCategory = "Team",
+			changeSite = "Site Name",
+			changeTitle = "Team Name",
+			changeType = "Deleted",
+			changeUser = "Test Test");
+
+		JSONPublications.publishPublication(publicationName = "Publication 2 Name");
+
+		Publications.viewPublicationPublished(publicationName = "Publication 2 Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication 1 Name");
+
+		PublicationsNavigator.gotoPublish(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication 1 Name");
+
+		Publications.viewNeedsManualResolution(
+			entryTitle = "Team",
+			warningMessage = "Deletion Modification Conflict: Modification conflicts with a deletion.");
+
+		PublicationsChanges.discardChanges(
+			changeCategory = "Team",
+			changeTitle = "Team Name Edit",
+			conflictingChanges = "true",
+			entryTitle = "Team");
+
+		JSONPublications.publishPublication(publicationName = "Publication 1 Name");
+
+		Publications.viewPublicationPublished(publicationName = "Publication 1 Name");
+	}
+
 }

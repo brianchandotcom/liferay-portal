@@ -12,24 +12,16 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.uad.constants;
+package com.liferay.portal.workflow.kaleo.uad.anonymizer;
+
+import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Brian Wing Shun Chan
- * @generated
  */
-public class KaleoUADConstants {
-
-	public static final String[] USER_ID_FIELD_NAMES_KALEO_INSTANCE_TOKEN = {
-		"userId"
-	};
-
-	public static final String[] USER_ID_FIELD_NAMES_KALEO_LOG = {"userId"};
-
-	public static final String[]
-		USER_ID_FIELD_NAMES_KALEO_TASK_ASSIGNMENT_INSTANCE = {"userId"};
-
-	public static final String[] USER_ID_FIELD_NAMES_KALEO_TASK_INSTANCE_TOKEN =
-		{"userId", "completionUserId"};
-
+@Component(service = UADAnonymizer.class)
+public class KaleoInstanceTokenUADAnonymizer
+	extends BaseKaleoInstanceTokenUADAnonymizer {
 }

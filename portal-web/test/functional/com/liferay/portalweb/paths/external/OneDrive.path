@@ -69,6 +69,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DOCUMENTS_SAVE_STATUS_DETAILS</td>
+	<td>//div[contains(@id,'saveStatusValue') and contains(text(), 'aved') and not(contains(text(),'Saving'))]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DOCUMENTS_TITLE</td>
 	<td>//div[@id='BreadcrumbTitle'] | //button[@id='documentTitle']</td>
 	<td></td>

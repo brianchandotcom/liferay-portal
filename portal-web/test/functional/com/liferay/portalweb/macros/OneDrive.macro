@@ -47,6 +47,10 @@ definition {
 
 		WaitForElementPresent(locator1 = "OneDrive#DOCUMENTS_SAVE_STATUS");
 
+		Click(locator1 = "OneDrive#DOCUMENTS_SAVE_STATUS");
+
+		VerifyElementPresent(locator1 = "OneDrive#DOCUMENTS_SAVE_STATUS_DETAILS");
+
 		Navigator.closeWindow();
 
 		SelectFrameTop();

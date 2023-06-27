@@ -24,7 +24,9 @@ import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTemplateCont
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.form.item.selector.criterion.DDMUserPersonalFolderItemSelectorCriterion;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
+import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
@@ -643,6 +645,14 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 		long groupId = GetterUtil.getLong(
 			ddmFormFieldRenderingContext.getProperty("groupId"));
 
+		DDMFormInstance ddmFormInstance =
+			_ddmFormInstanceLocalService.fetchDDMFormInstance(
+				ddmFormFieldRenderingContext.getDDMFormInstanceId());
+
+		if (ddmFormInstance != null) {
+			groupId = ddmFormInstance.getGroupId();
+		}
+
 		Repository repository = _getRepository(groupId, httpServletRequest);
 
 		if (repository == null) {
@@ -724,6 +734,9 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private DDMFormInstanceLocalService _ddmFormInstanceLocalService;
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;

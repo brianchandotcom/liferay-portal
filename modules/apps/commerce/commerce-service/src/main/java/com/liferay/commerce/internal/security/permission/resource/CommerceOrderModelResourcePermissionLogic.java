@@ -96,7 +96,7 @@ public class CommerceOrderModelResourcePermissionLogic
 
 		if ((actionId.equals(ActionKeys.UPDATE) ||
 			 actionId.equals(ActionKeys.VIEW)) &&
-			_hasSupplierPermission(permissionChecker, commerceOrder)) {
+			_hasRoleAccountSupplier(permissionChecker, commerceOrder)) {
 
 			return true;
 		}
@@ -481,10 +481,19 @@ public class CommerceOrderModelResourcePermissionLogic
 		return false;
 	}
 
-	private boolean _hasSupplierAccount(
-			PermissionChecker permissionChecker,
-			CommerceChannel commerceChannel)
+	private boolean _hasRoleAccountSupplier(
+			PermissionChecker permissionChecker, CommerceOrder commerceOrder)
 		throws PortalException {
+
+		CommerceChannel commerceChannel =
+			_commerceChannelLocalService.fetchCommerceChannelByGroupClassPK(
+				commerceOrder.getGroupId());
+
+		if ((commerceChannel != null) &&
+			(commerceChannel.getAccountEntryId() == 0)) {
+
+			return false;
+		}
 
 		List<AccountEntry> accountEntries =
 			_accountEntryLocalService.getUserAccountEntries(
@@ -502,24 +511,6 @@ public class CommerceOrderModelResourcePermissionLogic
 
 				return true;
 			}
-		}
-
-		return false;
-	}
-
-	private boolean _hasSupplierPermission(
-			PermissionChecker permissionChecker, CommerceOrder commerceOrder)
-		throws PortalException {
-
-		CommerceChannel commerceChannel =
-			_commerceChannelLocalService.fetchCommerceChannelByGroupClassPK(
-				commerceOrder.getGroupId());
-
-		if ((commerceChannel != null) &&
-			(commerceChannel.getAccountEntryId() > 0) &&
-			_hasSupplierAccount(permissionChecker, commerceChannel)) {
-
-			return true;
 		}
 
 		return false;

@@ -59,7 +59,7 @@ public class CommerceOrderSearchPermissionFilterContributor
 			TermsFilter groupsTermsFilter = new TermsFilter(Field.GROUP_ID);
 
 			for (long groupId : groupIds) {
-				if (_hasSupplierPermission(permissionChecker, groupId)) {
+				if (_hasRoleAccountSupplier(permissionChecker, groupId)) {
 					groupsTermsFilter.addValue(String.valueOf(groupId));
 				}
 			}
@@ -73,10 +73,19 @@ public class CommerceOrderSearchPermissionFilterContributor
 		}
 	}
 
-	private boolean _hasSupplierAccount(
-			PermissionChecker permissionChecker,
-			CommerceChannel commerceChannel)
+	private boolean _hasRoleAccountSupplier(
+			PermissionChecker permissionChecker, long groupId)
 		throws PortalException {
+
+		CommerceChannel commerceChannel =
+			_commerceChannelLocalService.fetchCommerceChannelByGroupClassPK(
+				groupId);
+
+		if ((commerceChannel != null) &&
+			(commerceChannel.getAccountEntryId() == 0)) {
+
+			return false;
+		}
 
 		List<AccountEntry> accountEntries =
 			_accountEntryLocalService.getUserAccountEntries(
@@ -94,24 +103,6 @@ public class CommerceOrderSearchPermissionFilterContributor
 
 				return true;
 			}
-		}
-
-		return false;
-	}
-
-	private boolean _hasSupplierPermission(
-			PermissionChecker permissionChecker, long groupId)
-		throws PortalException {
-
-		CommerceChannel commerceChannel =
-			_commerceChannelLocalService.fetchCommerceChannelByGroupClassPK(
-				groupId);
-
-		if ((commerceChannel != null) &&
-			(commerceChannel.getAccountEntryId() > 0) &&
-			_hasSupplierAccount(permissionChecker, commerceChannel)) {
-
-			return true;
 		}
 
 		return false;

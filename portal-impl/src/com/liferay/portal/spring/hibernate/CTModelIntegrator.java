@@ -17,6 +17,7 @@ package com.liferay.portal.spring.hibernate;
 import com.liferay.portal.change.tracking.registry.CTModelRegistration;
 import com.liferay.portal.change.tracking.registry.CTModelRegistry;
 import com.liferay.portal.internal.change.tracking.hibernate.CTSQLInterceptor;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -31,6 +32,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.hibernate.boot.Metadata;
 import org.hibernate.boot.spi.SessionFactoryOptions;
 import org.hibernate.engine.spi.SessionFactoryImplementor;
+import org.hibernate.event.service.spi.EventListenerRegistry;
+import org.hibernate.event.spi.EventType;
 import org.hibernate.integrator.spi.Integrator;
 import org.hibernate.mapping.Column;
 import org.hibernate.mapping.PersistentClass;
@@ -97,6 +100,35 @@ public class CTModelIntegrator implements Integrator {
 			(CTSQLInterceptor)sessionFactoryOptions.getInterceptor();
 
 		ctSQLInterceptor.setEnabled(containCTModel);
+
+		EventListenerRegistry eventListenerRegistry =
+			sessionFactoryServiceRegistry.getService(
+				EventListenerRegistry.class);
+
+		eventListenerRegistry.setListeners(
+			EventType.PRE_UPDATE,
+			preUpdateEvent -> {
+				long ctCollectionId =
+					CTCollectionThreadLocal.getCTCollectionId();
+
+				if (ctCollectionId ==
+						CTCollectionThreadLocal.CT_COLLECTION_ID_PRODUCTION) {
+
+					return false;
+				}
+
+				Object entity = preUpdateEvent.getEntity();
+
+				if (entity instanceof CTModel) {
+					CTModel<?> ctModel = (CTModel<?>)entity;
+
+					if (ctModel.getCtCollectionId() != ctCollectionId) {
+						return true;
+					}
+				}
+
+				return false;
+			});
 	}
 
 	private CTModelRegistration _createCTModelRegistration(

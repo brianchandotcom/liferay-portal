@@ -233,14 +233,16 @@ export const addAnalyticsCloudWorkspace = gql`
 				path: "/c/analyticscloudworkspaces/"
 			) {
 			accountKey
+			allowedEmailDomains
 			dataCenterLocation
 			id
 			ownerEmailAddress
+			timeZone
+			workspaceFriendlyUrl
 			workspaceName
 		}
 	}
 `;
-
 export const addIncidentReportAnalyticsCloud = gql`
 	mutation addIncidentReportAnalyticsCloud(
 		$IncidentReportContactAnalyticsCloud: InputC_IncidentReportContactAnalyticsCloud!

@@ -12,6 +12,7 @@ import {useQuery} from '@apollo/client';
 import ClayForm from '@clayui/form';
 import {FieldArray, Formik} from 'formik';
 import {useEffect, useMemo, useState} from 'react';
+import {useAppPropertiesContext} from '~/common/contexts/AppPropertiesContext';
 import {
 	addAnalyticsCloudWorkspace,
 	addIncidentReportAnalyticsCloud,
@@ -30,6 +31,7 @@ import {STATUS_TAG_TYPE_NAMES} from '../../../../routes/customer-portal/utils/co
 import i18n from '../../../I18n';
 import {Button, Input, Select} from '../../../components';
 import useBannedDomains from '../../../hooks/useBannedDomains';
+import NotificationQueueService from '../../../services/actions/notificationAction';
 import getInitialAnalyticsInvite from '../../../utils/getInitialAnalyticsInvite';
 import getKebabCase from '../../../utils/getKebabCase';
 import Layout from '../Layout';
@@ -70,6 +72,8 @@ const SetupAnalyticsCloudPage = ({
 			accountSubscriptionsFilter: `(accountKey eq '${project?.accountKey}') and (hasDisasterDataCenterRegion eq true)`,
 		},
 	});
+
+	const {featureFlags} = useAppPropertiesContext();
 
 	const analyticsDataCenterLocations = useMemo(
 		() =>
@@ -143,10 +147,14 @@ const SetupAnalyticsCloudPage = ({
 				variables: {
 					analyticsCloudWorkspace: {
 						accountKey: project.accountKey,
+						allowedEmailDomains: analyticsCloud.allowedEmailDomains,
 						dataCenterLocation: analyticsCloud.dataCenterLocation,
 						ownerEmailAddress: analyticsCloud.ownerEmailAddress,
 						r_accountEntryToAnalyticsCloudWorkspace_accountEntryId:
 							project?.id,
+						timeZone: analyticsCloud.timeZone,
+						workspaceFriendlyUrl:
+							analyticsCloud.workspaceFriendlyUrl,
 						workspaceName: analyticsCloud.workspaceName,
 					},
 				},
@@ -192,6 +200,56 @@ const SetupAnalyticsCloudPage = ({
 						});
 					})
 				);
+
+				if (featureFlags.includes('LPS-181031')) {
+					const emailIncidentReportContact = analyticsCloud?.incidentReportContact?.map(
+						({email}) => {
+							return email + ' ';
+						}
+					);
+
+					const currentDateAndTime = new Date().toUTCString();
+
+					const showWorkspaceFriendlyUrl =
+						analyticsCloud.workspaceFriendlyUrl !== '' &&
+						analyticsCloud.workspaceFriendlyUrl !== undefined
+							? analyticsCloud.workspaceFriendlyUrl
+							: '< none >';
+
+					const showAllowedEmailDomains =
+						analyticsCloud.workspaceFriendlyUrl !== '' &&
+						analyticsCloud.workspaceFriendlyUrl !== undefined
+							? analyticsCloud.allowedEmailDomains
+							: '< none >';
+
+					const showtimeZone =
+						analyticsCloud.workspaceFriendlyUrl !== '' &&
+						analyticsCloud.workspaceFriendlyUrl !== undefined
+							? analyticsCloud.timeZone
+							: '< none >';
+
+					const notificationTemplateService = new NotificationQueueService(
+						client
+					);
+
+					await notificationTemplateService.send(
+						'SETUP-ANALYTICS-CLOUD-ENVIRONMENT-NOTIFICATION-TEMPLATE',
+						{
+							'[%AC_DATA_CENTER_LOCATION]':
+								analyticsCloud.dataCenterLocation,
+							'[%AC_DATA_TIME]': currentDateAndTime,
+							'[%AC_EMAIL_DOMAINS]': showAllowedEmailDomains,
+							'[%AC_INCIDENT_REPORT_CONTACT]': emailIncidentReportContact,
+							'[%AC_OWNER_EMAIL]':
+								analyticsCloud.ownerEmailAddress,
+							'[%AC_TIME_ZONE]': showtimeZone,
+							'[%AC_WORKSPACE_FRIENDLY_URL]': showWorkspaceFriendlyUrl,
+							'[%AC_WORKSPACE_NAME]':
+								analyticsCloud.workspaceName,
+							'[%PROJECT_ID]': project?.code,
+						}
+					);
+				}
 			}
 			handlePage(true);
 		}
@@ -297,7 +355,7 @@ const SetupAnalyticsCloudPage = ({
 									'please-note-that-the-friendly-url-cannot-be-changed-once-added'
 								)}
 								label={i18n.translate('workspace-friendly-url')}
-								name="activations.workspaceURL"
+								name="activations.workspaceFriendlyUrl"
 								placeholder="/myurl"
 								type="text"
 								validations={[

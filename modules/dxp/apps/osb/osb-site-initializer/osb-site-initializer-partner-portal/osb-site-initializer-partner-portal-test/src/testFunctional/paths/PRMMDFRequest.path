@@ -135,6 +135,11 @@
 	<td>//button[contains(@*,'mdfRequestActivitiesPanel')]/div/*[contains(text(),'${key_activityName} (')]//following::*[contains(text(),'${key_statusType} Status: ')]/span[contains(text(),'${key_statusValue}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>ACTIVITY_PANEL</td>
+	<td>//button[contains(@*,'mdfRequestActivitiesPanel')][@aria-expanded='false']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

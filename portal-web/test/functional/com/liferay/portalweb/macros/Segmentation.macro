@@ -16,7 +16,7 @@ definition {
 		Click(locator1 = "Segmentation#PROPERTIES_SEARCH");
 
 		DragAndDrop.javaScriptDragAndDropToObject(
-			locator1 = "Segmentation#ADD_FIELD_TYPE",
+			locator1 = "Segmentation#ADD_FIELD_TYPE_VISIBLE",
 			locator2 = "Segmentation#ADD_FIELD_POSITION",
 			value1 = ${propertyOption});
 	}
@@ -28,13 +28,13 @@ definition {
 
 		if (IsElementPresent(locator1 = "Segmentation#ADD_FIELD_POSITION_EMPTY")) {
 			DragAndDrop.javaScriptDragAndDropToObject(
-				locator1 = "Segmentation#ADD_FIELD_TYPE",
+				locator1 = "Segmentation#ADD_FIELD_TYPE_VISIBLE",
 				locator2 = "Segmentation#ADD_FIELD_POSITION_EMPTY",
 				value1 = ${propertyOption});
 		}
 		else {
 			DragAndDrop.javaScriptDragAndDropToObject(
-				locator1 = "Segmentation#ADD_FIELD_TYPE",
+				locator1 = "Segmentation#ADD_FIELD_TYPE_VISIBLE",
 				locator2 = "Segmentation#ADD_FIELD_POSITION_EDIT",
 				value1 = ${propertyOption});
 		}

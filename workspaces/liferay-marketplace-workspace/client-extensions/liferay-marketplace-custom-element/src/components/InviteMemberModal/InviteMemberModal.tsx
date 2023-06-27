@@ -12,19 +12,19 @@
  * details.
  */
 
-import ClayButton from '@clayui/button';
-import ClayForm, {ClayCheckbox, ClayInput} from '@clayui/form';
-import ClayModal, {useModal} from '@clayui/modal';
-import {useCallback, useEffect, useMemo, useState} from 'react';
+import ClayButton from "@clayui/button";
+import ClayForm, { ClayCheckbox, ClayInput } from "@clayui/form";
+import ClayModal, { useModal } from "@clayui/modal";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
-import './inviteMemberModal.scss';
+import "./inviteMemberModal.scss";
 
-import {DisplayType} from '@clayui/alert';
-import ClayIcon from '@clayui/icon';
+import { DisplayType } from "@clayui/alert";
+import ClayIcon from "@clayui/icon";
 
-import {Liferay} from '../../liferay/liferay';
-import {getAccountGroup, getMyUserAccount} from '../../utils/api';
-import {createPassword} from '../../utils/createPassword';
+import { Liferay } from "../../liferay/liferay";
+import { getAccountGroup, getMyUserAccount } from "../../utils/api";
+import { createPassword } from "../../utils/createPassword";
 import {
 	addAdditionalInfo,
 	addAdminRegularRole,
@@ -34,7 +34,7 @@ import {
 	getSiteURL,
 	getUserByEmail,
 	sendRoleAccountUser,
-} from './services';
+} from "./services";
 
 interface InviteMemberModalProps {
 	handleClose: () => void;
@@ -44,6 +44,11 @@ interface InviteMemberModalProps {
 	selectedAccount: Account;
 }
 
+const finalPathUrl = {
+	"customer-dashboard": "customer-gate",
+	"publisher-dashboard": "loading",
+};
+
 export function InviteMemberModal({
 	handleClose,
 	listOfRoles,
@@ -51,21 +56,26 @@ export function InviteMemberModal({
 	rolesPermissionDescription,
 	selectedAccount,
 }: InviteMemberModalProps) {
-	const {observer, onClose} = useModal({
+	const { observer, onClose } = useModal({
 		onClose: () => handleClose(),
 	});
 
 	const [formFields, setFormFields] = useState({
-		email: '',
-		firstName: '',
-		lastName: '',
+		email: "",
+		firstName: "",
+		lastName: "",
 	});
 
 	const [checkboxRoles, setCheckboxRoles] = useState<CheckboxRole[]>([]);
 	const [formValid, setFormValid] = useState<boolean>(false);
 
 	const [accountRoles, setAccountRoles] = useState<AccountRole[]>();
-	const [userPassword, setUserPassword] = useState<string>('');
+	const [userPassword, setUserPassword] = useState<string>("");
+
+	const paths = Liferay.ThemeDisplay.getLayoutURL().split("/");
+
+	const finalPath =
+		finalPathUrl[paths[paths.length - 1] as keyof typeof finalPathUrl];
 
 	const getAccountRoles = useCallback(async () => {
 		const roles = await getAccountRolesOnAPI(selectedAccount.id);
@@ -75,7 +85,7 @@ export function InviteMemberModal({
 
 	useEffect(() => {
 		const mapRoles = listOfRoles.map((role) => {
-			return {isChecked: false, roleName: role};
+			return { isChecked: false, roleName: role };
 		});
 
 		setCheckboxRoles(mapRoles);
@@ -85,26 +95,21 @@ export function InviteMemberModal({
 
 	const jsonBody = useMemo(
 		() => ({
-			alternateName: formFields.email.replace('@', '-'),
+			alternateName: formFields.email.replace("@", "-"),
 			emailAddress: formFields.email,
 			familyName: formFields.lastName,
 			givenName: formFields.firstName,
 			password: userPassword,
 		}),
-		[
-			formFields.email,
-			formFields.firstName,
-			formFields.lastName,
-			userPassword,
-		]
+		[formFields.email, formFields.firstName, formFields.lastName, userPassword],
 	);
 
 	const getCheckedRoles = () => {
-		let checkedRole = '';
+		let checkedRole = "";
 
 		for (const checkboxRole of checkboxRoles) {
 			if (checkboxRole.isChecked) {
-				checkedRole = checkedRole + checkboxRole.roleName + '/';
+				checkedRole = checkedRole + checkboxRole.roleName + "/";
 			}
 		}
 
@@ -112,23 +117,20 @@ export function InviteMemberModal({
 	};
 
 	const checkIfUserIsInvited = (user: UserAccount, accountId: number) =>
-		!!user.accountBriefs.find(
-			(accountBrief) => accountBrief.id === accountId
-		);
+		!!user.accountBriefs.find((accountBrief) => accountBrief.id === accountId);
 
 	const addAccountRolesToUser = async (user: UserAccount) => {
 		for (const checkboxRole of checkboxRoles) {
 			if (checkboxRole.isChecked) {
 				const matchingAccountRole = accountRoles?.find(
-					(accountRole: AccountRole) =>
-						accountRole.name === 'Invited Member'
+					(accountRole: AccountRole) => accountRole.name === "Invited Member",
 				);
 
 				if (matchingAccountRole) {
 					await sendRoleAccountUser(
 						selectedAccount.id,
 						matchingAccountRole.id,
-						user.id
+						user.id,
 					);
 				}
 			}
@@ -148,9 +150,9 @@ export function InviteMemberModal({
 
 		if (!accountGroupERC) {
 			renderToast(
-				'To invite a member, the account must be associated with an accountGroup',
-				'',
-				'danger'
+				"To invite a member, the account must be associated with an accountGroup",
+				"",
+				"danger",
 			);
 
 			return onClose();
@@ -165,8 +167,8 @@ export function InviteMemberModal({
 		if (user && checkIfUserIsInvited(user, selectedAccount.id)) {
 			renderToast(
 				"There's already a user with this email invited to this account",
-				'',
-				'danger'
+				"",
+				"danger",
 			);
 
 			return onClose();
@@ -177,8 +179,7 @@ export function InviteMemberModal({
 		}
 		if (
 			checkboxRoles.some(
-				(role) =>
-					role.roleName === 'Account Administrator' && role.isChecked
+				(role) => role.roleName === "Account Administrator" && role.isChecked,
 			)
 		) {
 			await addAdminRegularRole(user.id);
@@ -192,25 +193,20 @@ export function InviteMemberModal({
 			accountGroupERC,
 			accountName: selectedAccount.name,
 			emailOfMember: formFields.email,
-			inviteURL:
-				Liferay.ThemeDisplay.getPortalURL() +
-				'/c/login?redirect=' +
-				getSiteURL() +
-				'/loading',
+			inviteURL: `${Liferay.ThemeDisplay.getPortalURL()}/c/login?redirect=${getSiteURL()}/${finalPath}`,
 			inviterName: myUser.givenName,
 			mothersName: userPassword,
-			r_accountEntryToUserAdditionalInfo_accountEntryId:
-				selectedAccount.id,
+			r_accountEntryToUserAdditionalInfo_accountEntryId: selectedAccount.id,
 			r_userToUserAddInfo_userId: user.id,
 			roles: getCheckedRoles(),
-			sendType: {key: 'shipping', name: 'Shipping'},
+			sendType: { key: "shipping", name: "Shipping" },
 			userFirstName: formFields.firstName,
 		});
 
 		renderToast(
-			'invited succesfully',
+			"invited succesfully",
 			`${user.givenName} ${user.familyName}`,
-			'success'
+			"success",
 		);
 
 		onClose();
@@ -218,7 +214,7 @@ export function InviteMemberModal({
 
 	const validateForm = (checkboxValues: CheckboxRole[]) => {
 		const isValid = checkboxValues.some(
-			(checkbox: CheckboxRole) => checkbox.isChecked
+			(checkbox: CheckboxRole) => checkbox.isChecked,
 		);
 
 		setFormValid(isValid);
@@ -255,10 +251,7 @@ export function InviteMemberModal({
 
 						<div className="d-flex justify-content-between pb-5">
 							<div className="form-group pr-3 w-50">
-								<label
-									className="control-label pb-1"
-									htmlFor="firstName"
-								>
+								<label className="control-label pb-1" htmlFor="firstName">
 									First Name
 								</label>
 
@@ -276,10 +269,7 @@ export function InviteMemberModal({
 							</div>
 
 							<div className="form-group pl-3 w-50">
-								<label
-									className="control-label pb-1"
-									htmlFor="lastName"
-								>
+								<label className="control-label pb-1" htmlFor="lastName">
 									Last Name
 								</label>
 
@@ -298,10 +288,7 @@ export function InviteMemberModal({
 						</div>
 
 						<div className="form-group">
-							<label
-								className="control-label pb-1"
-								htmlFor="emailAddress"
-							>
+							<label className="control-label pb-1" htmlFor="emailAddress">
 								Email
 							</label>
 
@@ -334,9 +321,7 @@ export function InviteMemberModal({
 							{listOfRoles.map((role, index) => {
 								return (
 									<ClayCheckbox
-										checked={
-											checkboxRoles[index]?.isChecked
-										}
+										checked={checkboxRoles[index]?.isChecked}
 										key={index}
 										label={role}
 										onChange={() => handleCheck(role)}
@@ -357,36 +342,24 @@ export function InviteMemberModal({
 
 						<hr className="solid"></hr>
 
-						{rolesPermissionDescription.map(
-							(rolePermission, index) => {
-								const showCheckIcon = checkboxRoles.some(
-									(checkedRole) =>
-										checkedRole.isChecked &&
-										rolePermission.permittedRoles.includes(
-											checkedRole.roleName
-										)
-								);
+						{rolesPermissionDescription.map((rolePermission, index) => {
+							const showCheckIcon = checkboxRoles.some(
+								(checkedRole) =>
+									checkedRole.isChecked &&
+									rolePermission.permittedRoles.includes(checkedRole.roleName),
+							);
 
-								return (
-									<div className="p-2 text-muted" key={index}>
-										<ClayIcon
-											className={
-												showCheckIcon
-													? 'text-success mr-2'
-													: 'mr-2'
-											}
-											symbol={
-												showCheckIcon
-													? 'check'
-													: 'block'
-											}
-										/>
+							return (
+								<div className="p-2 text-muted" key={index}>
+									<ClayIcon
+										className={showCheckIcon ? "text-success mr-2" : "mr-2"}
+										symbol={showCheckIcon ? "check" : "block"}
+									/>
 
-										{rolePermission.permissionName}
-									</div>
-								);
-							}
-						)}
+									{rolePermission.permissionName}
+								</div>
+							);
+						})}
 					</ClayForm.Group>
 
 					<ClayButton.Group

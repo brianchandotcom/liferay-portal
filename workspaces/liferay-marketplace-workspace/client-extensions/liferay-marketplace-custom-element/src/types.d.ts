@@ -11,12 +11,12 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-declare module '*.svg' {
+declare module "*.svg" {
 	const content: any;
 	export default content;
 }
 
-declare module 'warning';
+declare module "warning";
 
 type Account = {
 	customFields?: CustomField[];
@@ -168,7 +168,7 @@ type Channel = {
 	type: string;
 };
 
-interface CommerceAccount extends Omit<Account, 'description'> {
+interface CommerceAccount extends Omit<Account, "description"> {
 	active: boolean;
 	logoURL: string;
 	taxId: string;
@@ -198,7 +198,7 @@ interface Order {
 	createDate?: string;
 	creatorEmailAddress?: string;
 	currencyCode: string;
-	customFields?: {[key: string]: string};
+	customFields?: { [key: string]: string };
 	externalReferenceCode?: string;
 	id?: number;
 	marketplaceOrderType?: string;
@@ -208,7 +208,7 @@ interface Order {
 		{
 			skuId: number;
 			unitPriceWithTaxAmount: number;
-		}
+		},
 	];
 	orderStatus: number;
 	orderTypeExternalReferenceCode?: string;
@@ -221,19 +221,19 @@ interface OrderType {
 	displayOrder: number;
 	externalReferenceCode: string;
 	id: number;
-	name: {[key: string]: string};
+	name: { [key: string]: string };
 }
 
-type PaymentMethodMode = 'PayPal';
+type PaymentMethodMode = "PayPal";
 
-type PaymentMethodSelector = 'order' | 'pay' | 'trial' | null;
+type PaymentMethodSelector = "order" | "pay" | "trial" | null;
 
 interface PlacedOrder {
 	account: string;
 	accountId: number;
 	author: string;
 	createDate: string;
-	customFields: {[key: string]: string};
+	customFields: { [key: string]: string };
 	id: number;
 	orderStatusInfo: {
 		code: number;
@@ -303,12 +303,12 @@ interface Product {
 	attachments: ProductAttachment[];
 	catalogId: number;
 	categories: ProductCategories[];
-	description: {[key: string]: string};
+	description: { [key: string]: string };
 	externalReferenceCode: string;
 	id: number;
 	images: ProductImages[];
 	modifiedDate: string;
-	name: {[key: string]: string};
+	name: { [key: string]: string };
 	productChannels: Channel[];
 	productId: number;
 	productStatus: number;
@@ -328,7 +328,7 @@ interface ProductAttachment {
 	id: number;
 	priority: number;
 	src: string;
-	title: {[key: string]: string};
+	title: { [key: string]: string };
 }
 
 type ProductCategories = {
@@ -365,7 +365,7 @@ type SKU = {
 	id: number;
 	price: number;
 	sku: string;
-	skuOptions: {key: string; value: string}[];
+	skuOptions: { key: string; value: string }[];
 };
 
 type ProductSpecification = {
@@ -375,7 +375,7 @@ type ProductSpecification = {
 	productId: number;
 	specificationId: number;
 	specificationKey: string;
-	value: {[key: string]: string};
+	value: { [key: string]: string };
 };
 
 type UserAccount = {
@@ -386,8 +386,10 @@ type UserAccount = {
 	familyName: string;
 	givenName: string;
 	id: number;
+	image: string;
 	isCustomerAccount: boolean;
 	isPublisherAccount: boolean;
+	newsSubscription: boolean;
 	password: string;
 };
 

@@ -12,13 +12,14 @@
  * details.
  */
 interface ILiferay {
-	MarketplaceCustomerFlow: {appId: number};
+	MarketplaceCustomerFlow: { appId: number };
 	Service: Function;
 	ThemeDisplay: {
 		getCanonicalURL: () => string;
 		getCompanyGroupId: () => string;
 		getCompanyId: () => string;
 		getLanguageId: () => string;
+		getLayoutURL: () => string;
 		getLayoutRelativeURL: () => string;
 		getPathContext: () => string;
 		getPathThemeImages: () => string;
@@ -41,24 +42,25 @@ export const Liferay = window.Liferay || {
 	Service: {},
 	ThemeDisplay: {
 		getCanonicalURL: () => window.location.href,
-		getCompanyGroupId: () => '',
-		getCompanyId: () => '',
-		getLanguageId: () => '',
-		getLayoutRelativeURL: () => '',
-		getPathContext: () => '',
-		getPathThemeImages: () => '',
-		getPortalURL: () => '',
-		getUserId: () => '',
+		getCompanyGroupId: () => "",
+		getCompanyId: () => "",
+		getLanguageId: () => "",
+		getLayoutURL: () => "",
+		getLayoutRelativeURL: () => "",
+		getPathContext: () => "",
+		getPathThemeImages: () => "",
+		getPortalURL: () => "",
+		getUserId: () => "",
 		isSignedIn: () => {
 			return false;
 		},
 	},
 	detach: (
 		type: keyof WindowEventMap,
-		callback: EventListenerOrEventListenerObject
+		callback: EventListenerOrEventListenerObject,
 	) => window.removeEventListener(type, callback),
 	on: (
 		type: keyof WindowEventMap,
-		callback: EventListenerOrEventListenerObject
+		callback: EventListenerOrEventListenerObject,
 	) => window.addEventListener(type, callback),
 };

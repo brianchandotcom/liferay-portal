@@ -81,7 +81,7 @@ public class PoshiRunnerConsoleEvaluator {
 		PoshiProperties poshiProperties = PoshiProperties.getPoshiProperties();
 
 		_TEST_CONSOLE_SHUT_DOWN_FILE_NAME =
-			poshiProperties.testConsoleShutDownFileName;
+			poshiProperties.testLiferayConsoleShutDownFileName;
 
 		_TEST_POSHI_WARNINGS_FILE_NAME =
 			poshiProperties.testPoshiWarningsFileName;

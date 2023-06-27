@@ -155,12 +155,6 @@ public class PoshiProperties extends Properties {
 	public static final String TEST_CASE_REQUIRED_PROPERTY_NAMES =
 		"test.case.required.property.names";
 
-	public static final String TEST_CONSOLE_LOG_FILE_NAME =
-		"test.console.log.file.name";
-
-	public static final String TEST_CONSOLE_SHUT_DOWN_FILE_NAME =
-		"test.console.shut.down.file.name";
-
 	public static final String TEST_CSV_REPORT_PROPERTY_NAMES =
 		"test.csv.report.property.names";
 
@@ -170,6 +164,12 @@ public class PoshiProperties extends Properties {
 	public static final String TEST_DIRS = "test.dirs";
 
 	public static final String TEST_JVM_MAX_RETRIES = "test.jvm.max.retries";
+
+	public static final String TEST_LIFERAY_CONSOLE_LOG_FILE_NAME =
+		"test.liferay.console.log.file.name";
+
+	public static final String TEST_LIFERAY_CONSOLE_SHUT_DOWN_FILE_NAME =
+		"test.liferay.console.shut.down.file.name";
 
 	public static final String TEST_NAME = "test.name";
 
@@ -367,10 +367,6 @@ public class PoshiProperties extends Properties {
 		TEST_CASE_AVAILABLE_PROPERTY_NAMES);
 	public String testCaseRequiredPropertyNames = getProperty(
 		TEST_CASE_REQUIRED_PROPERTY_NAMES);
-	public String testConsoleLogFileName = getProperty(
-		TEST_CONSOLE_LOG_FILE_NAME);
-	public String testConsoleShutDownFileName = getProperty(
-		TEST_CONSOLE_SHUT_DOWN_FILE_NAME);
 	public String[] testCSVReportPropertyNames = StringUtil.split(
 		TEST_CSV_REPORT_PROPERTY_NAMES);
 	public String testDependenciesDirName = getProperty(
@@ -378,6 +374,10 @@ public class PoshiProperties extends Properties {
 	public String[] testDirs = StringUtil.split(getProperty(TEST_DIRS));
 	public int testJVMMaxRetries = GetterUtil.getInteger(
 		getProperty(TEST_JVM_MAX_RETRIES));
+	public String testLiferayConsoleLogFileName = getProperty(
+		TEST_LIFERAY_CONSOLE_LOG_FILE_NAME);
+	public String testLiferayConsoleShutDownFileName = getProperty(
+		TEST_LIFERAY_CONSOLE_LOG_FILE_NAME);
 	public String testName = getProperty(TEST_NAME);
 	public boolean testPoshiScriptValidation = GetterUtil.getBoolean(
 		getProperty(TEST_POSHI_SCRIPT_VALIDATION));

@@ -393,21 +393,22 @@ public class LiferaySeleniumUtil {
 	public static String getTestConsoleLogFileContent() throws Exception {
 		PoshiProperties poshiProperties = PoshiProperties.getPoshiProperties();
 
-		if (Validator.isNull(poshiProperties.testConsoleLogFileName)) {
+		if (Validator.isNull(poshiProperties.testLiferayConsoleLogFileName)) {
 			return "";
 		}
 
-		String baseDirName = poshiProperties.testConsoleLogFileName;
+		String baseDirName = poshiProperties.testLiferayConsoleLogFileName;
 
-		int x = poshiProperties.testConsoleLogFileName.lastIndexOf("/");
+		int x = poshiProperties.testLiferayConsoleLogFileName.lastIndexOf("/");
 
 		if (x != -1) {
-			baseDirName = poshiProperties.testConsoleLogFileName.substring(
-				0, x);
+			baseDirName =
+				poshiProperties.testLiferayConsoleLogFileName.substring(0, x);
 		}
 
 		List<URL> urls = FileUtil.getIncludedResourceURLs(
-			new String[] {poshiProperties.testConsoleLogFileName}, baseDirName);
+			new String[] {poshiProperties.testLiferayConsoleLogFileName},
+			baseDirName);
 
 		try {
 			urls.sort(
@@ -430,7 +431,7 @@ public class LiferaySeleniumUtil {
 		catch (RuntimeException runtimeException) {
 			throw new PoshiRunnerWarningException(
 				"Unable to get console log file content. Please check log " +
-					"file(s): " + poshiProperties.testConsoleLogFileName,
+					"file(s): " + poshiProperties.testLiferayConsoleLogFileName,
 				runtimeException);
 		}
 
@@ -445,8 +446,10 @@ public class LiferaySeleniumUtil {
 
 			if (consoleLogSize > _BYTES_MAX_SIZE_CONSOLE_LOG) {
 				String largeConsoleLogSizeMessage =
-					"Console log " + poshiProperties.testConsoleLogFileName +
-						" exceeded " + _BYTES_MAX_SIZE_CONSOLE_LOG + " bytes";
+					"Console log " +
+						poshiProperties.testLiferayConsoleLogFileName +
+							" exceeded " + _BYTES_MAX_SIZE_CONSOLE_LOG +
+								" bytes";
 
 				System.out.println(largeConsoleLogSizeMessage);
 

@@ -1,0 +1,166 @@
+<?xml version="1.0"?>
+
+<project basedir="." name="portal-test-gcs-store" xmlns:antelope="antlib:ise.antelope.tasks">
+	<import file="build-test.xml" />
+
+	<macrodef name="delete-gcs-buckets">
+		<sequential>
+			<local name="bucket.list" />
+
+			<exec executable="gcloud" outputproperty="bucket.list">
+				<arg line="storage ls --project=liferay-qa-automated-tests --json" />
+			</exec>
+
+			<script language="javascript"><![CDATA[
+				var bucketList = project.getProperty("bucket.list");
+
+				var expiredBuckets = [];
+
+				var json = JSON.parse(bucketList);
+
+				for (var i = 0; i < json.length; i++) {
+					var bucket = json[i];
+
+					var name = JSON.stringify(bucket.metadata.name);
+
+					if (name.indexOf('lfr-qa-poshi-test') > -1) {
+						var createDate = bucket.metadata.timeCreated;
+
+						createDate = createDate.replace(/\..*/,'');
+
+						var currentDate = new Date();
+						var bucketDate = new Date(createDate);
+
+						var diffHours = (currentDate - bucketDate) / (1000 * 60 * 60);
+
+						if (diffHours > 12) {
+							expiredBuckets.push(name);
+						}
+					}
+				}
+
+				project.setProperty("expired.buckets", expiredBuckets.toString());]]>
+			</script>
+
+			<for list="${expired.buckets}" param="delete.name">
+				<sequential>
+					<echo>Expired Bucket: @{delete.name}</echo>
+
+					<exec executable="gsutil">
+						<arg line="rm -r gs://@{delete.name}" />
+					</exec>
+				</sequential>
+			</for>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="generate-gcs-json">
+		<attribute default="${gcs.private.key.id}" name="gcs.private.key.id" />
+		<attribute default="${gcs.private.key.json}" name="gcs.private.key.json" />
+		<attribute default="${gcs.client.id}" name="gcs.client.id" />
+
+		<sequential>
+			<echo file="${liferay.home}/.gcs_key.json"><![CDATA[{
+	"type": "service_account",
+	"project_id": "liferay-qa-automated-tests",
+	"private_key_id": "${gcs.private.key.id}",
+	"private_key": "${gcs.private.key.json}",
+	"client_email": "liferay-qa-automated-tests@liferay-qa-automated-tests.iam.gserviceaccount.com",
+	"client_id": "${gcs.client.id}",
+	"auth_uri": "https://accounts.google.com/o/oauth2/auth",
+	"token_uri": "https://oauth2.googleapis.com/token",
+	"auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+	"client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/liferay-qa-automated-tests%40liferay-qa-automated-tests.iam.gserviceaccount.com"
+}]]></echo>
+		</sequential>
+	</macrodef>
+
+	<target name="assert-document-in-bucket">
+		<local name="bucket.objects" />
+
+		<exec executable="gcloud" outputproperty="bucket.objects">
+			<arg line="storage ls --recursive gs://lfr-qa-poshi-test-${gcs.bucket.id}//${company.id}/${group.id} --project=liferay-qa-automated-tests" />
+		</exec>
+
+		<echo>${bucket.objects}</echo>
+
+		<if>
+			<contains string="${bucket.objects}" substring="1.0" />
+			<then>
+				<echo>Document is in the bucket.</echo>
+			</then>
+			<else>
+				<fail>Document is not in the bucket.</fail>
+			</else>
+		</if>
+	</target>
+
+	<target name="assert-no-document-in-bucket">
+		<local name="bucket.objects" />
+
+		<exec executable="gcloud" outputproperty="bucket.objects">
+			<arg line="storage ls --recursive gs://lfr-qa-poshi-test-${gcs.bucket.id}//${company.id} --project=liferay-qa-automated-tests" />
+		</exec>
+
+		<echo>${bucket.objects}</echo>
+
+		<if>
+			<not>
+				<contains string="${bucket.objects}" substring="${group.id}" />
+			</not>
+			<then>
+				<echo>There is no document in bucket from Group ${group.id}</echo>
+			</then>
+			<else>
+				<fail>There is document in bucket from Group ${group.id}.</fail>
+			</else>
+		</if>
+	</target>
+
+	<target name="configure-gcs-cli">
+		<generate-gcs-json />
+
+		<exec executable="gcloud" outputproperty="configuration.output">
+			<arg line="auth activate-service-account liferay-qa-automated-tests@liferay-qa-automated-tests.iam.gserviceaccount.com --key-file=${liferay.home}/.gcs_key.json" />
+		</exec>
+
+		<if>
+			<contains string="${configuration.output}" substring="Activated service account credentials" />
+			<then>
+				<echo>Activated service account credentials.</echo>
+			</then>
+			<else>
+				<fail>Activation failed.</fail>
+			</else>
+		</if>
+	</target>
+
+	<target name="create-gcs-bucket">
+		<local name="bucket.create.output" />
+
+		<exec executable="gcloud" outputproperty="bucket.create.output">
+			<arg line="storage buckets create gs://lfr-qa-poshi-test-${gcs.bucket.id} --project=liferay-qa-automated-tests" />
+		</exec>
+
+		<echo>${bucket.create.output}</echo>
+
+		<if>
+			<not>
+				<contains string="${bucket.create.output}" substring="lfr-qa-poshi-test-${gcs.bucket.id}" />
+			</not>
+			<then>
+				<fail>Bucket was not created.</fail>
+			</then>
+		</if>
+	</target>
+
+	<target name="delete-gcs-bucket">
+		<exec executable="gsutil">
+			<arg line="rm -r gs://lfr-qa-poshi-test-${gcs.bucket.id}" />
+		</exec>
+
+		<delete-gcs-buckets />
+
+		<delete file="${liferay.home}/.gcs_key.json" />
+	</target>
+</project>

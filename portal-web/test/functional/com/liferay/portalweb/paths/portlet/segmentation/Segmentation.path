@@ -31,6 +31,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_FIELD_TYPE_VISIBLE</td>
+	<td>//div[contains(@class,'panel')][contains(@class,'show')]//*[contains(@class, 'criteria-sidebar-item-root') and (text()='${key_propertyOption}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ASSIGN_SITE_ROLES_DISABLED_WARNING</td>
 	<td>//*[contains(@class,'autofit-section') and contains(text(), '${textValue}')]</td>
 	<td></td>

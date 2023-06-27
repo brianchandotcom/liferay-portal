@@ -186,7 +186,7 @@ public class CommerceOrderStatusNotificationTest {
 
 		_commerceOrder = _commerceOrderEngine.transitionCommerceOrder(
 			_commerceOrder, CommerceOrderConstants.ORDER_STATUS_PROCESSING,
-			_user.getUserId());
+			_user.getUserId(), true);
 
 		Assert.assertEquals(
 			2,
@@ -238,7 +238,7 @@ public class CommerceOrderStatusNotificationTest {
 
 		_commerceOrder = _commerceOrderEngine.transitionCommerceOrder(
 			_commerceOrder, CommerceOrderConstants.ORDER_STATUS_COMPLETED,
-			_user.getUserId());
+			_user.getUserId(), true);
 
 		Assert.assertEquals(
 			4,

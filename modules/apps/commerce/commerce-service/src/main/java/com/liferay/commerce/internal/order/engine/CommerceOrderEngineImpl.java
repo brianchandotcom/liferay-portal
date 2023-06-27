@@ -106,7 +106,7 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 
 	@Override
 	public CommerceOrder checkCommerceOrderShipmentStatus(
-			CommerceOrder commerceOrder)
+			CommerceOrder commerceOrder, boolean secure)
 		throws PortalException {
 
 		return _executeInTransaction(
@@ -114,7 +114,8 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 
 				@Override
 				public CommerceOrder call() throws Exception {
-					return _checkCommerceOrderShipmentStatus(commerceOrder);
+					return _checkCommerceOrderShipmentStatus(
+						commerceOrder, secure);
 				}
 
 			});
@@ -217,7 +218,8 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 
 	@Override
 	public CommerceOrder transitionCommerceOrder(
-			CommerceOrder commerceOrder, int orderStatus, long userId)
+			CommerceOrder commerceOrder, int orderStatus, long userId,
+			boolean secure)
 		throws PortalException {
 
 		return _executeInTransaction(
@@ -226,7 +228,7 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 				@Override
 				public CommerceOrder call() throws Exception {
 					return _transitionCommerceOrder(
-						commerceOrder, orderStatus, userId);
+						commerceOrder, orderStatus, userId, secure);
 				}
 
 			});
@@ -313,7 +315,7 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 	}
 
 	private CommerceOrder _checkCommerceOrderShipmentStatus(
-			CommerceOrder commerceOrder)
+			CommerceOrder commerceOrder, boolean secure)
 		throws Exception {
 
 		CommerceOrderStatus partiallyShippedCommerceOrderStatus =
@@ -340,21 +342,23 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 				CommerceShipmentConstants.SHIPMENT_STATUS_DELIVERED)) {
 
 			commerceOrder = transitionCommerceOrder(
-				commerceOrder, CommerceOrderConstants.ORDER_STATUS_COMPLETED,
-				0);
+				commerceOrder, CommerceOrderConstants.ORDER_STATUS_COMPLETED, 0,
+				secure);
 		}
 		else if (shippedCommerceOrderStatus.isTransitionCriteriaMet(
 					commerceOrder)) {
 
 			commerceOrder = transitionCommerceOrder(
-				commerceOrder, CommerceOrderConstants.ORDER_STATUS_SHIPPED, 0);
+				commerceOrder, CommerceOrderConstants.ORDER_STATUS_SHIPPED, 0,
+				secure);
 		}
 		else if (partiallyShippedCommerceOrderStatus.isTransitionCriteriaMet(
 					commerceOrder)) {
 
 			commerceOrder = transitionCommerceOrder(
 				commerceOrder,
-				CommerceOrderConstants.ORDER_STATUS_PARTIALLY_SHIPPED, 0);
+				CommerceOrderConstants.ORDER_STATUS_PARTIALLY_SHIPPED, 0,
+				secure);
 		}
 
 		return commerceOrder;
@@ -461,12 +465,12 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 
 			return transitionCommerceOrder(
 				commerceOrder, CommerceOrderConstants.ORDER_STATUS_PENDING,
-				userId);
+				userId, true);
 		}
 
 		return transitionCommerceOrder(
 			commerceOrder, CommerceOrderConstants.ORDER_STATUS_IN_PROGRESS,
-			userId);
+			userId, true);
 	}
 
 	private CommerceOrder _executeInTransaction(
@@ -598,7 +602,8 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 	}
 
 	private CommerceOrder _transitionCommerceOrder(
-			CommerceOrder commerceOrder, int orderStatus, long userId)
+			CommerceOrder commerceOrder, int orderStatus, long userId,
+			boolean secure)
 		throws Exception {
 
 		CommerceOrderStatus commerceOrderStatus =
@@ -615,7 +620,8 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 			_sendOrderStatusMessage(
 				commerceOrder, commerceOrderStatus.getKey());
 
-			return commerceOrderStatus.doTransition(commerceOrder, userId);
+			return commerceOrderStatus.doTransition(
+				commerceOrder, userId, secure);
 		}
 
 		CommerceOrderStatus currentCommerceOrderStatus =
@@ -636,7 +642,7 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 
 		_sendOrderStatusMessage(commerceOrder, commerceOrderStatus.getKey());
 
-		return commerceOrderStatus.doTransition(commerceOrder, userId);
+		return commerceOrderStatus.doTransition(commerceOrder, userId, secure);
 	}
 
 	private void _updateCommerceDiscountUsageEntry(

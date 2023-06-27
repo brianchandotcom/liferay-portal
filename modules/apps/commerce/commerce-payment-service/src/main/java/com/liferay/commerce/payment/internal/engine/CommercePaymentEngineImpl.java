@@ -447,7 +447,7 @@ public class CommercePaymentEngineImpl implements CommercePaymentEngine {
 
 			commerceOrder = _commerceOrderEngine.transitionCommerceOrder(
 				commerceOrder, CommerceOrderConstants.ORDER_STATUS_PENDING,
-				userId);
+				userId, true);
 		}
 
 		return commerceOrder;

@@ -52,7 +52,7 @@ public class CommerceOrderItemModelListener
 					CommerceOrderConstants.ORDER_STATUS_PARTIALLY_SHIPPED) {
 
 				_commerceOrderEngine.checkCommerceOrderShipmentStatus(
-					commerceOrderItem.getCommerceOrder());
+					commerceOrderItem.getCommerceOrder(), true);
 			}
 		}
 		catch (PortalException portalException) {
@@ -76,7 +76,7 @@ public class CommerceOrderItemModelListener
 					CommerceOrderConstants.ORDER_STATUS_SHIPPED)) {
 
 				_commerceOrderEngine.checkCommerceOrderShipmentStatus(
-					commerceOrderItem.getCommerceOrder());
+					commerceOrderItem.getCommerceOrder(), true);
 			}
 
 			long customerCommerceOrderItemId =
@@ -150,7 +150,7 @@ public class CommerceOrderItemModelListener
 						customerCommerceOrderItem);
 
 					_commerceOrderEngine.checkCommerceOrderShipmentStatus(
-						customerCommerceOrderItem.getCommerceOrder());
+						customerCommerceOrderItem.getCommerceOrder(), false);
 				}
 			}
 		}

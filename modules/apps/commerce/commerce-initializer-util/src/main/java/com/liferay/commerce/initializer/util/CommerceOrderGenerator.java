@@ -225,7 +225,7 @@ public class CommerceOrderGenerator {
 
 		_commerceOrderEngine.transitionCommerceOrder(
 			commerceOrder, CommerceOrderConstants.ORDER_STATUS_IN_PROGRESS,
-			serviceContext.getUserId());
+			serviceContext.getUserId(), true);
 
 		// Update payment status
 

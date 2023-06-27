@@ -57,7 +57,8 @@ public class PendingCommerceOrderStatusImpl implements CommerceOrderStatus {
 	public static final int PRIORITY = 30;
 
 	@Override
-	public CommerceOrder doTransition(CommerceOrder commerceOrder, long userId)
+	public CommerceOrder doTransition(
+			CommerceOrder commerceOrder, long userId, boolean secure)
 		throws PortalException {
 
 		commerceOrder.setOrderStatus(KEY);

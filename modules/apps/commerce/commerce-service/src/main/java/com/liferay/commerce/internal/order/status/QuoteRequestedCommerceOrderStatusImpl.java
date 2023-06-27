@@ -50,7 +50,8 @@ public class QuoteRequestedCommerceOrderStatusImpl
 	public static final int PRIORITY = 20;
 
 	@Override
-	public CommerceOrder doTransition(CommerceOrder commerceOrder, long userId)
+	public CommerceOrder doTransition(
+			CommerceOrder commerceOrder, long userId, boolean secure)
 		throws PortalException {
 
 		commerceOrder.setOrderStatus(KEY);

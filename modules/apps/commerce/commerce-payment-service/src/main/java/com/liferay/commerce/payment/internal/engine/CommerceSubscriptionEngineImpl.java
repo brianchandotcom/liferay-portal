@@ -236,7 +236,7 @@ public class CommerceSubscriptionEngineImpl
 
 			_commerceOrderEngine.transitionCommerceOrder(
 				commerceOrder, CommerceOrderConstants.ORDER_STATUS_PENDING,
-				permissionChecker.getUserId());
+				permissionChecker.getUserId(), true);
 		}
 
 		return commercePaymentResult;

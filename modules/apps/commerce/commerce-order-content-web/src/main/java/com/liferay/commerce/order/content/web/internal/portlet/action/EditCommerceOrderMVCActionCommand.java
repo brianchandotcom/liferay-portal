@@ -466,7 +466,8 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			}
 
 			_commerceOrderEngine.transitionCommerceOrder(
-				commerceOrder, orderStatus, _portal.getUserId(actionRequest));
+				commerceOrder, orderStatus, _portal.getUserId(actionRequest),
+				true);
 		}
 
 		hideDefaultSuccessMessage(actionRequest);
@@ -514,7 +515,7 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 		_commerceOrderEngine.transitionCommerceOrder(
 			_commerceOrderService.getCommerceOrder(commerceOrderId),
 			CommerceOrderConstants.ORDER_STATUS_QUOTE_PROCESSED,
-			_portal.getUserId(actionRequest));
+			_portal.getUserId(actionRequest), true);
 	}
 
 	private CommerceOrder _reorderCommerceOrder(ActionRequest actionRequest)
@@ -553,7 +554,7 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 
 		_commerceOrderEngine.transitionCommerceOrder(
 			commerceOrder, CommerceOrderConstants.ORDER_STATUS_QUOTE_REQUESTED,
-			_portal.getUserId(actionRequest));
+			_portal.getUserId(actionRequest), true);
 
 		actionRequest.setAttribute(
 			WebKeys.REDIRECT,

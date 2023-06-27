@@ -330,7 +330,7 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			else {
 				_commerceOrderEngine.transitionCommerceOrder(
 					commerceOrder, orderStatus,
-					_portal.getUserId(actionRequest));
+					_portal.getUserId(actionRequest), true);
 			}
 		}
 	}

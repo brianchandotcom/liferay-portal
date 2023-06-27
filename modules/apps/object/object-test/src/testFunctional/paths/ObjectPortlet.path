@@ -222,7 +222,12 @@
 	</tr>
 	<tr>
 		<td>VIEW_EMPTY_LABEL_IN_DATE_ENTRY</td>
-		<td>//input[contains(@placeholder,'__/__/____')]</td>
+		<td>//input[(@placeholder='__/__/____')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>VIEW_EMPTY_LABEL_IN_DATE_TIME_ENTRY</td>
+		<td>//input[(@placeholder='__/__/____ __:__ _')]</td>
 		<td></td>
 	</tr>
 	<tr>

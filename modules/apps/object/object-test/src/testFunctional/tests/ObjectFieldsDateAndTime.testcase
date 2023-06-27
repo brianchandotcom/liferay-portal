@@ -163,7 +163,7 @@ definition {
 			ObjectPortlet.viewEntryDetails(entry = "Jun 1, 2023, 12:00 PM");
 
 			Type(
-				locator1 = "ObjectPortlet#VIEW_EMPTY_LABEL_IN_DATE_ENTRY",
+				locator1 = "ObjectPortlet#VIEW_EMPTY_LABEL_IN_DATE_TIME_ENTRY",
 				value1 = "07/02/2024 10:00 PM");
 
 			PortletEntry.save();

@@ -261,7 +261,9 @@ definition {
 				osgiConfigFileName = "com.liferay.exportimport.configuration.ExportImportServiceConfiguration.scoped~instance~level.config",
 				portalInstanceName = "www.able.com");
 
-			OSGiConfig.waitForOSGiConfig();
+			// Wait for OSGi configurations loading due to LPS-184978
+
+			Pause(locator1 = 15000);
 		}
 
 		task ("Then: The preconfigured value is present at Instance Settings.") {
@@ -301,7 +303,9 @@ definition {
 				osgiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/enduser/exportimport/dependencies",
 				osgiConfigFileName = "com.liferay.exportimport.configuration.ExportImportServiceConfiguration.scoped~webid.config");
 
-			OSGiConfig.waitForOSGiConfig();
+			// Wait for OSGi configurations loading due to LPS-184978
+
+			Pause(locator1 = 15000);
 		}
 
 		task ("When: The Instance Administrator opens the Export/Import settings at Instance level.") {

@@ -17,6 +17,8 @@ package com.liferay.commerce.payment.internal.util;
 import com.liferay.commerce.constants.CommercePaymentMethodConstants;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
+import com.liferay.commerce.payment.integration.CommercePaymentIntegration;
+import com.liferay.commerce.payment.integration.CommercePaymentIntegrationRegistry;
 import com.liferay.commerce.payment.method.CommercePaymentMethod;
 import com.liferay.commerce.payment.method.CommercePaymentMethodRegistry;
 import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel;
@@ -25,7 +27,9 @@ import com.liferay.commerce.payment.request.CommercePaymentRequestProvider;
 import com.liferay.commerce.payment.request.CommercePaymentRequestProviderRegistry;
 import com.liferay.commerce.payment.result.CommercePaymentResult;
 import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelLocalService;
-import com.liferay.commerce.payment.util.CommercePaymentUtils;
+import com.liferay.commerce.payment.util.CommercePaymentHelper;
+import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -50,8 +54,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Luca Pellizzon
  */
-@Component(service = CommercePaymentUtils.class)
-public class CommercePaymentUtilsImpl implements CommercePaymentUtils {
+@Component(service = CommercePaymentHelper.class)
+public class CommercePaymentHelperImpl implements CommercePaymentHelper {
 
 	@Override
 	public CommercePaymentResult emptyResult(
@@ -60,6 +64,30 @@ public class CommercePaymentUtilsImpl implements CommercePaymentUtils {
 		return new CommercePaymentResult(
 			transactionId, commerceOrderId, -1, false, null, null,
 			Collections.emptyList(), false);
+	}
+
+	@Override
+	public CommercePaymentIntegration getCommercePaymentIntegration(
+			long commerceChannelId, String paymentIntegrationKey)
+		throws PortalException {
+
+		CommerceChannel commerceChannel =
+			_commerceChannelLocalService.getCommerceChannel(commerceChannelId);
+
+		CommercePaymentMethodGroupRel commercePaymentMethodGroupRel =
+			_commercePaymentMethodGroupRelLocalService.
+				fetchCommercePaymentMethodGroupRel(
+					commerceChannel.getGroupId(), paymentIntegrationKey);
+
+		if ((commercePaymentMethodGroupRel != null) &&
+			commercePaymentMethodGroupRel.isActive()) {
+
+			return _commercePaymentIntegrationRegistry.
+				getCommercePaymentIntegration(
+					commercePaymentMethodGroupRel.getPaymentIntegrationKey());
+		}
+
+		return null;
 	}
 
 	@Override
@@ -85,7 +113,7 @@ public class CommercePaymentUtilsImpl implements CommercePaymentUtils {
 			commercePaymentMethodGroupRel.isActive()) {
 
 			return _commercePaymentMethodRegistry.getCommercePaymentMethod(
-				commercePaymentMethodGroupRel.getEngineKey());
+				commercePaymentMethodGroupRel.getPaymentIntegrationKey());
 		}
 
 		return null;
@@ -226,7 +254,14 @@ public class CommercePaymentUtilsImpl implements CommercePaymentUtils {
 	}
 
 	@Reference
+	private CommerceChannelLocalService _commerceChannelLocalService;
+
+	@Reference
 	private CommerceOrderLocalService _commerceOrderLocalService;
+
+	@Reference
+	private CommercePaymentIntegrationRegistry
+		_commercePaymentIntegrationRegistry;
 
 	@Reference
 	private CommercePaymentMethodGroupRelLocalService

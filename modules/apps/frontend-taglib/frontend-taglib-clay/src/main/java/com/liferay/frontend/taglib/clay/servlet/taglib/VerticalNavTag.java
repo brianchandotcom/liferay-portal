@@ -224,24 +224,30 @@ public class VerticalNavTag extends BaseContainerTag {
 			VerticalNavItemList items =
 				(VerticalNavItemList)verticalNavItem.get("items");
 
-			Boolean active = (Boolean)verticalNavItem.get("active");
+			Boolean active;
 
-			if (active == null) {
-				active = Boolean.FALSE;
+			if (_active != null) {
+				active = _active.equals(verticalNavItem.get("id"));
+			}
+			else {
+				active = (Boolean)verticalNavItem.get("active");
 
-				if (_active != null) {
-					active = _active.equals(verticalNavItem.get("id"));
+				if (active == null) {
+					active = Boolean.FALSE;
 				}
 			}
 
-			Boolean expanded = (Boolean)verticalNavItem.get("expanded");
+			Boolean expanded;
 
-			if (expanded == null) {
-				expanded = Boolean.FALSE;
+			if (_defaultExpandedKeys != null) {
+				expanded = _defaultExpandedKeys.contains(
+					(String)verticalNavItem.get("id"));
+			}
+			else {
+				expanded = (Boolean)verticalNavItem.get("expanded");
 
-				if (_defaultExpandedKeys != null) {
-					expanded = _defaultExpandedKeys.contains(
-						(String)verticalNavItem.get("id"));
+				if (expanded == null) {
+					expanded = Boolean.FALSE;
 				}
 			}
 

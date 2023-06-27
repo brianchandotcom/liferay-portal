@@ -14,6 +14,7 @@ exports[`OccurenceConjunctionInput should render 1`] = `
       role="combobox"
       style=""
       tabindex="0"
+      type="button"
     />
   </div>
   <div

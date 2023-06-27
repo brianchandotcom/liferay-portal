@@ -38,6 +38,7 @@ exports[`SessionInput should render 1`] = `
               role="combobox"
               style=""
               tabindex="0"
+              type="button"
             >
               is
             </button>
@@ -97,6 +98,7 @@ exports[`SessionInput should render 1`] = `
           role="combobox"
           style=""
           tabindex="0"
+          type="button"
         >
           on
         </button>
@@ -186,6 +188,7 @@ exports[`SessionInput should render with "ever" 1`] = `
               role="combobox"
               style=""
               tabindex="0"
+              type="button"
             >
               is
             </button>
@@ -245,6 +248,7 @@ exports[`SessionInput should render with "ever" 1`] = `
           role="combobox"
           style=""
           tabindex="0"
+          type="button"
         >
           ever
         </button>

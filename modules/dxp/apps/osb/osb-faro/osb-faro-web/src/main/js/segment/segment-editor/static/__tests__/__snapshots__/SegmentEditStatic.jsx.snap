@@ -148,14 +148,10 @@ exports[`SegmentEditStatic should render 1`] = `
     <div
       class="searchable-table-with-staged-root d-flex flex-column flex-grow-1 d-flex flex-column flex-grow-1"
     >
-      <div
-        class="loading-root"
-      >
-        <span
-          aria-hidden="true"
-          class="spinner-root spinner-fade-in loading-animation"
-        />
-      </div>
+      <span
+        aria-hidden="true"
+        class="loading-root center loading-animation"
+      />
     </div>
   </div>
 </div>

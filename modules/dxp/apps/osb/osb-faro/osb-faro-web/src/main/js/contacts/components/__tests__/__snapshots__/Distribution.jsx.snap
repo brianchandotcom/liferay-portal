@@ -84,7 +84,7 @@ exports[`SegmentDistribution should render 1`] = `
           </form>
           <span
             aria-hidden="true"
-            class="spinner-root spinner-spacer loading-animation"
+            class="loading-root center loading-animation"
           />
         </div>
       </div>

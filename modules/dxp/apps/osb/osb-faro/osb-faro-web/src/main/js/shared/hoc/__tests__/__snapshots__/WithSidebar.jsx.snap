@@ -2,14 +2,10 @@
 
 exports[`withSidebar should render loading 1`] = `
 <div>
-  <div
-    class="loading-root"
-  >
-    <span
-      aria-hidden="true"
-      class="spinner-root spinner-fade-in loading-animation"
-    />
-  </div>
+  <span
+    aria-hidden="true"
+    class="loading-root center loading-animation"
+  />
 </div>
 `;
 

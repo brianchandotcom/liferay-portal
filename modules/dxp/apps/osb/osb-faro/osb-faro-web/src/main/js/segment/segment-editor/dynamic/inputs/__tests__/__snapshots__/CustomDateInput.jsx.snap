@@ -30,6 +30,7 @@ exports[`CustomDateInput should render 1`] = `
           role="combobox"
           style=""
           tabindex="0"
+          type="button"
         >
           is after
         </button>

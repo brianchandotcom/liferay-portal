@@ -555,23 +555,23 @@ exports[`Event Analysis Edit should render 1`] = `
             </div>
           </div>
           <div
-            class="error-page-root page-container"
+            class="error-display-root flex-grow-1 error-spacer no-results-root flex-grow-1"
           >
-            <h1>
-              404
-            </h1>
-            <h3>
-              Page Not Found
-            </h3>
-            <p>
-              The page you are looking for does not exist.
-            </p>
-            <a
-              class="button-root btn btn-secondary"
-              href="/"
+            <div
+              class="no-results-content"
             >
-              Go to Home
-            </a>
+              <h4
+                class="no-results-title"
+              >
+                An unexpected error occurred.
+              </h4>
+              <button
+                class="button-root btn btn-secondary"
+                type="button"
+              >
+                Reload
+              </button>
+            </div>
           </div>
         </div>
       </span>

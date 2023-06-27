@@ -30,6 +30,7 @@ exports[`CustomNumberInput should render 1`] = `
           role="combobox"
           style=""
           tabindex="0"
+          type="button"
         >
           is equal to
         </button>
@@ -83,6 +84,7 @@ exports[`CustomNumberInput should render with data 1`] = `
           role="combobox"
           style=""
           tabindex="0"
+          type="button"
         >
           is equal to
         </button>

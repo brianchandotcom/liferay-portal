@@ -99,6 +99,7 @@ exports[`BehaviorInput should render 1`] = `
           role="combobox"
           style=""
           tabindex="0"
+          type="button"
         >
           at least
         </button>
@@ -138,6 +139,7 @@ exports[`BehaviorInput should render 1`] = `
           role="combobox"
           style=""
           tabindex="0"
+          type="button"
         >
           ever
         </button>
@@ -232,6 +234,7 @@ exports[`BehaviorInput should render w/ data 1`] = `
           class="form-control form-control-select form-control-select-secondary operator-input"
           role="combobox"
           tabindex="0"
+          type="button"
         >
           at least
         </button>
@@ -263,6 +266,7 @@ exports[`BehaviorInput should render w/ data 1`] = `
           data-testid="conjunction-input"
           role="combobox"
           tabindex="0"
+          type="button"
         >
           ever
         </button>

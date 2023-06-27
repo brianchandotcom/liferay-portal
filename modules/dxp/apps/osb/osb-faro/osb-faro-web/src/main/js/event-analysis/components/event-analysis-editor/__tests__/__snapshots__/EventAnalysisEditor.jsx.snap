@@ -144,7 +144,7 @@ exports[`Event Analysis Editor render 1`] = `
         </div>
         <span
           aria-hidden="true"
-          class="spinner-root spinner-inline loading-animation"
+          class="loading-root loading-animation"
         />
       </div>
     </div>

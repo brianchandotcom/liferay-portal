@@ -45,14 +45,10 @@ exports[`withAction should render error if the RemoteData has error 1`] = `
 `;
 
 exports[`withAction should render loading if the RemoteData is loading and data is null 1`] = `
-<div
-  class="loading-root"
->
-  <span
-    aria-hidden="true"
-    class="spinner-root spinner-fade-in loading-animation"
-  />
-</div>
+<span
+  aria-hidden="true"
+  class="loading-root center loading-animation"
+/>
 `;
 
 exports[`withAction should render the wrapped component 1`] = `

@@ -138,7 +138,7 @@ exports[`View Channel should render 1`] = `
             Sites Synced: 
             <span
               aria-hidden="true"
-              class="spinner-root loading-animation loading-animation-light loading-animation-sm"
+              class="loading-root center loading-animation"
             />
           </div>
           <div>

@@ -133,10 +133,14 @@ exports[`AccountOverview should render 1`] = `
               </tr>
             </thead>
           </table>
-          <span
-            aria-hidden="true"
-            class="display-card loading-root spinner-overlay spinner-root loading-animation"
-          />
+          <div
+            class="loading-root overlay"
+          >
+            <span
+              aria-hidden="true"
+              class="loading-root center loading-animation"
+            />
+          </div>
         </div>
         <div
           class="card-footer"

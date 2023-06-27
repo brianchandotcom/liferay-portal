@@ -15,7 +15,7 @@ exports[`LoadingModal should render 1`] = `
       >
         <span
           aria-hidden="true"
-          class="spinner-root loading-animation"
+          class="loading-root center loading-animation"
         />
       </div>
       <p

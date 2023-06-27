@@ -973,6 +973,8 @@ definition {
 
 		var slaName = "SLAName";
 
+		WorkflowMetrics.executeIndexActions(actionDescription = "Workflow Indexes");
+
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
 		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
@@ -1000,6 +1002,15 @@ definition {
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
 		Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_PENDING_ITEMS_TITLE");
+
+		Pause(locator1 = 80000);
+
+		while ((IsElementNotPresent(locator1 = "WorkflowAllItems#DETAIL_PAGE_SLA_NAME")) && (maxIterations = "25")) {
+
+				Refresh();
+
+				Click(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
+		}
 
 		WaitForElementPresent(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
 

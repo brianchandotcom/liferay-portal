@@ -1082,6 +1082,84 @@ definition {
 			locator1 = "Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX");
 	}
 
+	@description = "This is a use case for LPS-186677 - As a publication user, I would like to configure the context view to display production entities."
+	@priority = 4
+	test ConfigureContextViewToDisplayProductionEntities {
+		task ("Create a Publication and make a change to the Home Page") {
+			JSONPublications.addPublication(publicationName = "Publication Name");
+
+			JSONPublications.selectPublication(publicationName = "Publication Name");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Home Page",
+				siteName = "Guest");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button",
+				targetFragmentName = "Image");
+
+			PageEditor.publish();
+		}
+
+		task ("Go to review changes and view change to Home Page") {
+			PublicationsNavigator.gotoReviewChanges(
+				gotoPublicationsAdmin = "true",
+				publicationName = "Publication Name");
+
+			PublicationsChanges.viewChanges(
+				changeCategory = "Page",
+				changeSite = "Guest",
+				changeTitle = "Home",
+				changeType = "Modified",
+				changeUser = "Test Test");
+		}
+
+		task ("View Parents is available to view") {
+			PublicationsNavigator.gotoViewChangeDetails(
+				changeCategory = "Page",
+				changeTitle = "Home");
+
+			AssertElementPresent(
+				key_navBarTitle = "Parents",
+				locator1 = "Publications#MANAGE_PUBLICATIONS_NAVBAR_TITLE");
+		}
+
+		task ("Go to Publications System Settings and uncheck the Context View checkbox") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "System Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Publications",
+				configurationName = "Publications View Changes",
+				configurationScope = "Virtual Instance Scope");
+
+			FormFields.disableCheckbox(fieldName = "Context View Include Production");
+
+			SystemSettings.saveConfiguration();
+		}
+
+		task ("Assert that the Show All Items toggle shows up and Parents not") {
+			PublicationsNavigator.gotoReviewChanges(
+				gotoPublicationsAdmin = "true",
+				publicationName = "Publication Name");
+
+			PublicationsNavigator.gotoViewChangeDetails(
+				changeCategory = "Page",
+				changeTitle = "Home");
+
+			AssertElementPresent(
+				key_toggleSwitchLabel = "Show All Items",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			AssertElementNotPresent(
+				key_navBarTitle = "Parents",
+				locator1 = "Publications#MANAGE_PUBLICATIONS_NAVBAR_TITLE");
+		}
+	}
+
 	@description = "This is a use case for LPS-179997 - Content Page Editor Control Panel Preferences is not created in Production."
 	@priority = 2
 	test ContentPageEditorControlPanelPreferencesCannotBeCreatedInProduction {

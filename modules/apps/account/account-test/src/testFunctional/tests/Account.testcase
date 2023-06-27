@@ -1661,6 +1661,7 @@ definition {
 
 		task ("Select All permissions for Applications and Resource Permissions for Account Entries") {
 			Role.editPermissionCP(
+				accountsPermission = "true",
 				define = "true",
 				permissionNavHeader = "Accounts",
 				permissionNavItem = "Accounts",
@@ -1668,6 +1669,7 @@ definition {
 				permissionValues = "Action");
 
 			Role.editPermissionCP(
+				accountsPermission = "true",
 				define = "true",
 				permissionNavHeader = "Accounts",
 				permissionNavItem = "Accounts",

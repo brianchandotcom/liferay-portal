@@ -331,6 +331,7 @@ definition {
 				rowEntry = "New Account Role");
 
 			Role.editPermissionCP(
+				accountsPermission = "true",
 				define = "true",
 				permissionNavHeader = "Accounts",
 				permissionNavItem = "Accounts",

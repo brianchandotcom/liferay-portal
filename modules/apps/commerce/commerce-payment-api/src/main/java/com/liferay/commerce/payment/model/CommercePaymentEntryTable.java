@@ -19,6 +19,7 @@ import com.liferay.petra.sql.dsl.base.BaseTable;
 
 import java.math.BigDecimal;
 
+import java.sql.Clob;
 import java.sql.Types;
 
 import java.util.Date;
@@ -57,6 +58,9 @@ public class CommercePaymentEntryTable
 	public final Column<CommercePaymentEntryTable, Date> modifiedDate =
 		createColumn(
 			"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
+	public final Column<CommercePaymentEntryTable, Long> commerceChannelId =
+		createColumn(
+			"commerceChannelId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<CommercePaymentEntryTable, Long> classNameId =
 		createColumn(
 			"classNameId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
@@ -65,16 +69,26 @@ public class CommercePaymentEntryTable
 	public final Column<CommercePaymentEntryTable, BigDecimal> amount =
 		createColumn(
 			"amount", BigDecimal.class, Types.DECIMAL, Column.FLAG_DEFAULT);
+	public final Column<CommercePaymentEntryTable, Clob> callbackURL =
+		createColumn(
+			"callbackURL", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 	public final Column<CommercePaymentEntryTable, String> currencyCode =
 		createColumn(
 			"currencyCode", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<CommercePaymentEntryTable, String> paymentMethodName =
-		createColumn(
-			"paymentMethodName", String.class, Types.VARCHAR,
+	public final Column<CommercePaymentEntryTable, String>
+		paymentIntegrationKey = createColumn(
+			"paymentIntegrationKey", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
+	public final Column<CommercePaymentEntryTable, Integer>
+		paymentIntegrationType = createColumn(
+			"paymentIntegrationType", Integer.class, Types.INTEGER,
 			Column.FLAG_DEFAULT);
 	public final Column<CommercePaymentEntryTable, Integer> paymentStatus =
 		createColumn(
 			"paymentStatus", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
+	public final Column<CommercePaymentEntryTable, Clob> redirectURL =
+		createColumn(
+			"redirectURL", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 	public final Column<CommercePaymentEntryTable, String> transactionCode =
 		createColumn(
 			"transactionCode", String.class, Types.VARCHAR,

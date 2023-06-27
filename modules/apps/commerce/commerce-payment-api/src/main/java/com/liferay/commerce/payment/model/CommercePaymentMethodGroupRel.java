@@ -67,4 +67,7 @@ public interface CommercePaymentMethodGroupRel
 	public String getImageURL(
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay);
 
+	public com.liferay.portal.kernel.util.UnicodeProperties
+		getTypeSettingsUnicodeProperties();
+
 }

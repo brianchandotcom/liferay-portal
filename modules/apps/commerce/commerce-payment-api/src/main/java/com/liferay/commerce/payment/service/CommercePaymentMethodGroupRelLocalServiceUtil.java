@@ -91,14 +91,14 @@ public class CommercePaymentMethodGroupRelLocalServiceUtil {
 			addCommercePaymentMethodGroupRel(
 				long userId, long groupId,
 				Map<java.util.Locale, String> nameMap,
-				Map<java.util.Locale, String> descriptionMap,
-				java.io.File imageFile, String engineKey, double priority,
-				boolean active)
+				Map<java.util.Locale, String> descriptionMap, boolean active,
+				java.io.File imageFile, String paymentIntegrationKey,
+				double priority, String typeSettings)
 		throws PortalException {
 
 		return getService().addCommercePaymentMethodGroupRel(
-			userId, groupId, nameMap, descriptionMap, imageFile, engineKey,
-			priority, active);
+			userId, groupId, nameMap, descriptionMap, active, imageFile,
+			paymentIntegrationKey, priority, typeSettings);
 	}
 
 	/**
@@ -283,10 +283,11 @@ public class CommercePaymentMethodGroupRelLocalServiceUtil {
 	}
 
 	public static CommercePaymentMethodGroupRel
-		fetchCommercePaymentMethodGroupRel(long groupId, String engineKey) {
+		fetchCommercePaymentMethodGroupRel(
+			long groupId, String paymentIntegrationKey) {
 
 		return getService().fetchCommercePaymentMethodGroupRel(
-			groupId, engineKey);
+			groupId, paymentIntegrationKey);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
@@ -330,12 +331,13 @@ public class CommercePaymentMethodGroupRelLocalServiceUtil {
 	}
 
 	public static CommercePaymentMethodGroupRel
-			getCommercePaymentMethodGroupRel(long groupId, String engineKey)
+			getCommercePaymentMethodGroupRel(
+				long groupId, String paymentIntegrationKey)
 		throws com.liferay.commerce.payment.exception.
 			NoSuchPaymentMethodGroupRelException {
 
 		return getService().getCommercePaymentMethodGroupRel(
-			groupId, engineKey);
+			groupId, paymentIntegrationKey);
 	}
 
 	/**

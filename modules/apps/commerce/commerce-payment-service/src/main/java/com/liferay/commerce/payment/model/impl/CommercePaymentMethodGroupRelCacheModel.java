@@ -82,7 +82,7 @@ public class CommercePaymentMethodGroupRelCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -104,14 +104,16 @@ public class CommercePaymentMethodGroupRelCacheModel
 		sb.append(name);
 		sb.append(", description=");
 		sb.append(description);
-		sb.append(", imageId=");
-		sb.append(imageId);
-		sb.append(", engineKey=");
-		sb.append(engineKey);
-		sb.append(", priority=");
-		sb.append(priority);
 		sb.append(", active=");
 		sb.append(active);
+		sb.append(", imageId=");
+		sb.append(imageId);
+		sb.append(", paymentIntegrationKey=");
+		sb.append(paymentIntegrationKey);
+		sb.append(", priority=");
+		sb.append(priority);
+		sb.append(", typeSettings=");
+		sb.append(typeSettings);
 		sb.append("}");
 
 		return sb.toString();
@@ -166,17 +168,25 @@ public class CommercePaymentMethodGroupRelCacheModel
 			commercePaymentMethodGroupRelImpl.setDescription(description);
 		}
 
+		commercePaymentMethodGroupRelImpl.setActive(active);
 		commercePaymentMethodGroupRelImpl.setImageId(imageId);
 
-		if (engineKey == null) {
-			commercePaymentMethodGroupRelImpl.setEngineKey("");
+		if (paymentIntegrationKey == null) {
+			commercePaymentMethodGroupRelImpl.setPaymentIntegrationKey("");
 		}
 		else {
-			commercePaymentMethodGroupRelImpl.setEngineKey(engineKey);
+			commercePaymentMethodGroupRelImpl.setPaymentIntegrationKey(
+				paymentIntegrationKey);
 		}
 
 		commercePaymentMethodGroupRelImpl.setPriority(priority);
-		commercePaymentMethodGroupRelImpl.setActive(active);
+
+		if (typeSettings == null) {
+			commercePaymentMethodGroupRelImpl.setTypeSettings("");
+		}
+		else {
+			commercePaymentMethodGroupRelImpl.setTypeSettings(typeSettings);
+		}
 
 		commercePaymentMethodGroupRelImpl.resetOriginalValues();
 
@@ -184,7 +194,9 @@ public class CommercePaymentMethodGroupRelCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		mvccVersion = objectInput.readLong();
 
 		commercePaymentMethodGroupRelId = objectInput.readLong();
@@ -200,12 +212,13 @@ public class CommercePaymentMethodGroupRelCacheModel
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
 
+		active = objectInput.readBoolean();
+
 		imageId = objectInput.readLong();
-		engineKey = objectInput.readUTF();
+		paymentIntegrationKey = objectInput.readUTF();
 
 		priority = objectInput.readDouble();
-
-		active = objectInput.readBoolean();
+		typeSettings = (String)objectInput.readObject();
 	}
 
 	@Override
@@ -244,18 +257,25 @@ public class CommercePaymentMethodGroupRelCacheModel
 			objectOutput.writeUTF(description);
 		}
 
+		objectOutput.writeBoolean(active);
+
 		objectOutput.writeLong(imageId);
 
-		if (engineKey == null) {
+		if (paymentIntegrationKey == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
-			objectOutput.writeUTF(engineKey);
+			objectOutput.writeUTF(paymentIntegrationKey);
 		}
 
 		objectOutput.writeDouble(priority);
 
-		objectOutput.writeBoolean(active);
+		if (typeSettings == null) {
+			objectOutput.writeObject("");
+		}
+		else {
+			objectOutput.writeObject(typeSettings);
+		}
 	}
 
 	public long mvccVersion;
@@ -268,9 +288,10 @@ public class CommercePaymentMethodGroupRelCacheModel
 	public long modifiedDate;
 	public String name;
 	public String description;
-	public long imageId;
-	public String engineKey;
-	public double priority;
 	public boolean active;
+	public long imageId;
+	public String paymentIntegrationKey;
+	public double priority;
+	public String typeSettings;
 
 }

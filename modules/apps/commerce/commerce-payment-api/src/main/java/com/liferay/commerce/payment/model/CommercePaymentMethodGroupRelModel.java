@@ -409,49 +409,6 @@ public interface CommercePaymentMethodGroupRelModel
 		Map<Locale, String> descriptionMap, Locale defaultLocale);
 
 	/**
-	 * Returns the image ID of this commerce payment method group rel.
-	 *
-	 * @return the image ID of this commerce payment method group rel
-	 */
-	public long getImageId();
-
-	/**
-	 * Sets the image ID of this commerce payment method group rel.
-	 *
-	 * @param imageId the image ID of this commerce payment method group rel
-	 */
-	public void setImageId(long imageId);
-
-	/**
-	 * Returns the engine key of this commerce payment method group rel.
-	 *
-	 * @return the engine key of this commerce payment method group rel
-	 */
-	@AutoEscape
-	public String getEngineKey();
-
-	/**
-	 * Sets the engine key of this commerce payment method group rel.
-	 *
-	 * @param engineKey the engine key of this commerce payment method group rel
-	 */
-	public void setEngineKey(String engineKey);
-
-	/**
-	 * Returns the priority of this commerce payment method group rel.
-	 *
-	 * @return the priority of this commerce payment method group rel
-	 */
-	public double getPriority();
-
-	/**
-	 * Sets the priority of this commerce payment method group rel.
-	 *
-	 * @param priority the priority of this commerce payment method group rel
-	 */
-	public void setPriority(double priority);
-
-	/**
 	 * Returns the active of this commerce payment method group rel.
 	 *
 	 * @return the active of this commerce payment method group rel
@@ -471,6 +428,64 @@ public interface CommercePaymentMethodGroupRelModel
 	 * @param active the active of this commerce payment method group rel
 	 */
 	public void setActive(boolean active);
+
+	/**
+	 * Returns the image ID of this commerce payment method group rel.
+	 *
+	 * @return the image ID of this commerce payment method group rel
+	 */
+	public long getImageId();
+
+	/**
+	 * Sets the image ID of this commerce payment method group rel.
+	 *
+	 * @param imageId the image ID of this commerce payment method group rel
+	 */
+	public void setImageId(long imageId);
+
+	/**
+	 * Returns the payment integration key of this commerce payment method group rel.
+	 *
+	 * @return the payment integration key of this commerce payment method group rel
+	 */
+	@AutoEscape
+	public String getPaymentIntegrationKey();
+
+	/**
+	 * Sets the payment integration key of this commerce payment method group rel.
+	 *
+	 * @param paymentIntegrationKey the payment integration key of this commerce payment method group rel
+	 */
+	public void setPaymentIntegrationKey(String paymentIntegrationKey);
+
+	/**
+	 * Returns the priority of this commerce payment method group rel.
+	 *
+	 * @return the priority of this commerce payment method group rel
+	 */
+	public double getPriority();
+
+	/**
+	 * Sets the priority of this commerce payment method group rel.
+	 *
+	 * @param priority the priority of this commerce payment method group rel
+	 */
+	public void setPriority(double priority);
+
+	/**
+	 * Returns the type settings of this commerce payment method group rel.
+	 *
+	 * @return the type settings of this commerce payment method group rel
+	 */
+	@AutoEscape
+	public String getTypeSettings();
+
+	/**
+	 * Sets the type settings of this commerce payment method group rel.
+	 *
+	 * @param typeSettings the type settings of this commerce payment method group rel
+	 */
+	public void setTypeSettings(String typeSettings);
 
 	@Override
 	public String[] getAvailableLanguageIds();

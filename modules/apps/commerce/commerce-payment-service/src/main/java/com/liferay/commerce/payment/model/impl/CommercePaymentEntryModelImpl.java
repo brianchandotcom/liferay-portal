@@ -80,10 +80,14 @@ public class CommercePaymentEntryModelImpl
 		{"mvccVersion", Types.BIGINT}, {"commercePaymentEntryId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"classNameId", Types.BIGINT},
-		{"classPK", Types.BIGINT}, {"amount", Types.DECIMAL},
-		{"currencyCode", Types.VARCHAR}, {"paymentMethodName", Types.VARCHAR},
-		{"paymentStatus", Types.INTEGER}, {"transactionCode", Types.VARCHAR}
+		{"modifiedDate", Types.TIMESTAMP}, {"commerceChannelId", Types.BIGINT},
+		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
+		{"amount", Types.DECIMAL}, {"callbackURL", Types.CLOB},
+		{"currencyCode", Types.VARCHAR},
+		{"paymentIntegrationKey", Types.VARCHAR},
+		{"paymentIntegrationType", Types.INTEGER},
+		{"paymentStatus", Types.INTEGER}, {"redirectURL", Types.CLOB},
+		{"transactionCode", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -97,17 +101,21 @@ public class CommercePaymentEntryModelImpl
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("commerceChannelId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("amount", Types.DECIMAL);
+		TABLE_COLUMNS_MAP.put("callbackURL", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("currencyCode", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("paymentMethodName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("paymentIntegrationKey", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("paymentIntegrationType", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("paymentStatus", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("redirectURL", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("transactionCode", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommercePaymentEntry (mvccVersion LONG default 0 not null,commercePaymentEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,amount DECIMAL(30, 16) null,currencyCode VARCHAR(75) null,paymentMethodName VARCHAR(75) null,paymentStatus INTEGER,transactionCode VARCHAR(75) null)";
+		"create table CommercePaymentEntry (mvccVersion LONG default 0 not null,commercePaymentEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceChannelId LONG,classNameId LONG,classPK LONG,amount DECIMAL(30, 16) null,callbackURL TEXT null,currencyCode VARCHAR(75) null,paymentIntegrationKey VARCHAR(75) null,paymentIntegrationType INTEGER,paymentStatus INTEGER,redirectURL TEXT null,transactionCode VARCHAR(255) null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CommercePaymentEntry";
@@ -275,18 +283,28 @@ public class CommercePaymentEntryModelImpl
 			attributeGetterFunctions.put(
 				"modifiedDate", CommercePaymentEntry::getModifiedDate);
 			attributeGetterFunctions.put(
+				"commerceChannelId",
+				CommercePaymentEntry::getCommerceChannelId);
+			attributeGetterFunctions.put(
 				"classNameId", CommercePaymentEntry::getClassNameId);
 			attributeGetterFunctions.put(
 				"classPK", CommercePaymentEntry::getClassPK);
 			attributeGetterFunctions.put(
 				"amount", CommercePaymentEntry::getAmount);
 			attributeGetterFunctions.put(
+				"callbackURL", CommercePaymentEntry::getCallbackURL);
+			attributeGetterFunctions.put(
 				"currencyCode", CommercePaymentEntry::getCurrencyCode);
 			attributeGetterFunctions.put(
-				"paymentMethodName",
-				CommercePaymentEntry::getPaymentMethodName);
+				"paymentIntegrationKey",
+				CommercePaymentEntry::getPaymentIntegrationKey);
+			attributeGetterFunctions.put(
+				"paymentIntegrationType",
+				CommercePaymentEntry::getPaymentIntegrationType);
 			attributeGetterFunctions.put(
 				"paymentStatus", CommercePaymentEntry::getPaymentStatus);
+			attributeGetterFunctions.put(
+				"redirectURL", CommercePaymentEntry::getRedirectURL);
 			attributeGetterFunctions.put(
 				"transactionCode", CommercePaymentEntry::getTransactionCode);
 
@@ -337,6 +355,10 @@ public class CommercePaymentEntryModelImpl
 				(BiConsumer<CommercePaymentEntry, Date>)
 					CommercePaymentEntry::setModifiedDate);
 			attributeSetterBiConsumers.put(
+				"commerceChannelId",
+				(BiConsumer<CommercePaymentEntry, Long>)
+					CommercePaymentEntry::setCommerceChannelId);
+			attributeSetterBiConsumers.put(
 				"classNameId",
 				(BiConsumer<CommercePaymentEntry, Long>)
 					CommercePaymentEntry::setClassNameId);
@@ -349,17 +371,29 @@ public class CommercePaymentEntryModelImpl
 				(BiConsumer<CommercePaymentEntry, BigDecimal>)
 					CommercePaymentEntry::setAmount);
 			attributeSetterBiConsumers.put(
+				"callbackURL",
+				(BiConsumer<CommercePaymentEntry, String>)
+					CommercePaymentEntry::setCallbackURL);
+			attributeSetterBiConsumers.put(
 				"currencyCode",
 				(BiConsumer<CommercePaymentEntry, String>)
 					CommercePaymentEntry::setCurrencyCode);
 			attributeSetterBiConsumers.put(
-				"paymentMethodName",
+				"paymentIntegrationKey",
 				(BiConsumer<CommercePaymentEntry, String>)
-					CommercePaymentEntry::setPaymentMethodName);
+					CommercePaymentEntry::setPaymentIntegrationKey);
+			attributeSetterBiConsumers.put(
+				"paymentIntegrationType",
+				(BiConsumer<CommercePaymentEntry, Integer>)
+					CommercePaymentEntry::setPaymentIntegrationType);
 			attributeSetterBiConsumers.put(
 				"paymentStatus",
 				(BiConsumer<CommercePaymentEntry, Integer>)
 					CommercePaymentEntry::setPaymentStatus);
+			attributeSetterBiConsumers.put(
+				"redirectURL",
+				(BiConsumer<CommercePaymentEntry, String>)
+					CommercePaymentEntry::setRedirectURL);
 			attributeSetterBiConsumers.put(
 				"transactionCode",
 				(BiConsumer<CommercePaymentEntry, String>)
@@ -513,6 +547,21 @@ public class CommercePaymentEntryModelImpl
 		_modifiedDate = modifiedDate;
 	}
 
+	@JSON
+	@Override
+	public long getCommerceChannelId() {
+		return _commerceChannelId;
+	}
+
+	@Override
+	public void setCommerceChannelId(long commerceChannelId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_commerceChannelId = commerceChannelId;
+	}
+
 	@Override
 	public String getClassName() {
 		if (getClassNameId() <= 0) {
@@ -599,6 +648,26 @@ public class CommercePaymentEntryModelImpl
 
 	@JSON
 	@Override
+	public String getCallbackURL() {
+		if (_callbackURL == null) {
+			return "";
+		}
+		else {
+			return _callbackURL;
+		}
+	}
+
+	@Override
+	public void setCallbackURL(String callbackURL) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_callbackURL = callbackURL;
+	}
+
+	@JSON
+	@Override
 	public String getCurrencyCode() {
 		if (_currencyCode == null) {
 			return "";
@@ -619,22 +688,37 @@ public class CommercePaymentEntryModelImpl
 
 	@JSON
 	@Override
-	public String getPaymentMethodName() {
-		if (_paymentMethodName == null) {
+	public String getPaymentIntegrationKey() {
+		if (_paymentIntegrationKey == null) {
 			return "";
 		}
 		else {
-			return _paymentMethodName;
+			return _paymentIntegrationKey;
 		}
 	}
 
 	@Override
-	public void setPaymentMethodName(String paymentMethodName) {
+	public void setPaymentIntegrationKey(String paymentIntegrationKey) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_paymentMethodName = paymentMethodName;
+		_paymentIntegrationKey = paymentIntegrationKey;
+	}
+
+	@JSON
+	@Override
+	public int getPaymentIntegrationType() {
+		return _paymentIntegrationType;
+	}
+
+	@Override
+	public void setPaymentIntegrationType(int paymentIntegrationType) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_paymentIntegrationType = paymentIntegrationType;
 	}
 
 	@JSON
@@ -650,6 +734,26 @@ public class CommercePaymentEntryModelImpl
 		}
 
 		_paymentStatus = paymentStatus;
+	}
+
+	@JSON
+	@Override
+	public String getRedirectURL() {
+		if (_redirectURL == null) {
+			return "";
+		}
+		else {
+			return _redirectURL;
+		}
+	}
+
+	@Override
+	public void setRedirectURL(String redirectURL) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_redirectURL = redirectURL;
 	}
 
 	@JSON
@@ -738,12 +842,18 @@ public class CommercePaymentEntryModelImpl
 		commercePaymentEntryImpl.setUserName(getUserName());
 		commercePaymentEntryImpl.setCreateDate(getCreateDate());
 		commercePaymentEntryImpl.setModifiedDate(getModifiedDate());
+		commercePaymentEntryImpl.setCommerceChannelId(getCommerceChannelId());
 		commercePaymentEntryImpl.setClassNameId(getClassNameId());
 		commercePaymentEntryImpl.setClassPK(getClassPK());
 		commercePaymentEntryImpl.setAmount(getAmount());
+		commercePaymentEntryImpl.setCallbackURL(getCallbackURL());
 		commercePaymentEntryImpl.setCurrencyCode(getCurrencyCode());
-		commercePaymentEntryImpl.setPaymentMethodName(getPaymentMethodName());
+		commercePaymentEntryImpl.setPaymentIntegrationKey(
+			getPaymentIntegrationKey());
+		commercePaymentEntryImpl.setPaymentIntegrationType(
+			getPaymentIntegrationType());
 		commercePaymentEntryImpl.setPaymentStatus(getPaymentStatus());
+		commercePaymentEntryImpl.setRedirectURL(getRedirectURL());
 		commercePaymentEntryImpl.setTransactionCode(getTransactionCode());
 
 		commercePaymentEntryImpl.resetOriginalValues();
@@ -770,18 +880,26 @@ public class CommercePaymentEntryModelImpl
 			this.<Date>getColumnOriginalValue("createDate"));
 		commercePaymentEntryImpl.setModifiedDate(
 			this.<Date>getColumnOriginalValue("modifiedDate"));
+		commercePaymentEntryImpl.setCommerceChannelId(
+			this.<Long>getColumnOriginalValue("commerceChannelId"));
 		commercePaymentEntryImpl.setClassNameId(
 			this.<Long>getColumnOriginalValue("classNameId"));
 		commercePaymentEntryImpl.setClassPK(
 			this.<Long>getColumnOriginalValue("classPK"));
 		commercePaymentEntryImpl.setAmount(
 			this.<BigDecimal>getColumnOriginalValue("amount"));
+		commercePaymentEntryImpl.setCallbackURL(
+			this.<String>getColumnOriginalValue("callbackURL"));
 		commercePaymentEntryImpl.setCurrencyCode(
 			this.<String>getColumnOriginalValue("currencyCode"));
-		commercePaymentEntryImpl.setPaymentMethodName(
-			this.<String>getColumnOriginalValue("paymentMethodName"));
+		commercePaymentEntryImpl.setPaymentIntegrationKey(
+			this.<String>getColumnOriginalValue("paymentIntegrationKey"));
+		commercePaymentEntryImpl.setPaymentIntegrationType(
+			this.<Integer>getColumnOriginalValue("paymentIntegrationType"));
 		commercePaymentEntryImpl.setPaymentStatus(
 			this.<Integer>getColumnOriginalValue("paymentStatus"));
+		commercePaymentEntryImpl.setRedirectURL(
+			this.<String>getColumnOriginalValue("redirectURL"));
 		commercePaymentEntryImpl.setTransactionCode(
 			this.<String>getColumnOriginalValue("transactionCode"));
 
@@ -900,11 +1018,22 @@ public class CommercePaymentEntryModelImpl
 			commercePaymentEntryCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
+		commercePaymentEntryCacheModel.commerceChannelId =
+			getCommerceChannelId();
+
 		commercePaymentEntryCacheModel.classNameId = getClassNameId();
 
 		commercePaymentEntryCacheModel.classPK = getClassPK();
 
 		commercePaymentEntryCacheModel.amount = getAmount();
+
+		commercePaymentEntryCacheModel.callbackURL = getCallbackURL();
+
+		String callbackURL = commercePaymentEntryCacheModel.callbackURL;
+
+		if ((callbackURL != null) && (callbackURL.length() == 0)) {
+			commercePaymentEntryCacheModel.callbackURL = null;
+		}
 
 		commercePaymentEntryCacheModel.currencyCode = getCurrencyCode();
 
@@ -914,17 +1043,30 @@ public class CommercePaymentEntryModelImpl
 			commercePaymentEntryCacheModel.currencyCode = null;
 		}
 
-		commercePaymentEntryCacheModel.paymentMethodName =
-			getPaymentMethodName();
+		commercePaymentEntryCacheModel.paymentIntegrationKey =
+			getPaymentIntegrationKey();
 
-		String paymentMethodName =
-			commercePaymentEntryCacheModel.paymentMethodName;
+		String paymentIntegrationKey =
+			commercePaymentEntryCacheModel.paymentIntegrationKey;
 
-		if ((paymentMethodName != null) && (paymentMethodName.length() == 0)) {
-			commercePaymentEntryCacheModel.paymentMethodName = null;
+		if ((paymentIntegrationKey != null) &&
+			(paymentIntegrationKey.length() == 0)) {
+
+			commercePaymentEntryCacheModel.paymentIntegrationKey = null;
 		}
 
+		commercePaymentEntryCacheModel.paymentIntegrationType =
+			getPaymentIntegrationType();
+
 		commercePaymentEntryCacheModel.paymentStatus = getPaymentStatus();
+
+		commercePaymentEntryCacheModel.redirectURL = getRedirectURL();
+
+		String redirectURL = commercePaymentEntryCacheModel.redirectURL;
+
+		if ((redirectURL != null) && (redirectURL.length() == 0)) {
+			commercePaymentEntryCacheModel.redirectURL = null;
+		}
 
 		commercePaymentEntryCacheModel.transactionCode = getTransactionCode();
 
@@ -1004,12 +1146,16 @@ public class CommercePaymentEntryModelImpl
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
+	private long _commerceChannelId;
 	private long _classNameId;
 	private long _classPK;
 	private BigDecimal _amount;
+	private String _callbackURL;
 	private String _currencyCode;
-	private String _paymentMethodName;
+	private String _paymentIntegrationKey;
+	private int _paymentIntegrationType;
 	private int _paymentStatus;
+	private String _redirectURL;
 	private String _transactionCode;
 
 	public <T> T getColumnValue(String columnName) {
@@ -1048,12 +1194,18 @@ public class CommercePaymentEntryModelImpl
 		_columnOriginalValues.put("userName", _userName);
 		_columnOriginalValues.put("createDate", _createDate);
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
+		_columnOriginalValues.put("commerceChannelId", _commerceChannelId);
 		_columnOriginalValues.put("classNameId", _classNameId);
 		_columnOriginalValues.put("classPK", _classPK);
 		_columnOriginalValues.put("amount", _amount);
+		_columnOriginalValues.put("callbackURL", _callbackURL);
 		_columnOriginalValues.put("currencyCode", _currencyCode);
-		_columnOriginalValues.put("paymentMethodName", _paymentMethodName);
+		_columnOriginalValues.put(
+			"paymentIntegrationKey", _paymentIntegrationKey);
+		_columnOriginalValues.put(
+			"paymentIntegrationType", _paymentIntegrationType);
 		_columnOriginalValues.put("paymentStatus", _paymentStatus);
+		_columnOriginalValues.put("redirectURL", _redirectURL);
 		_columnOriginalValues.put("transactionCode", _transactionCode);
 	}
 
@@ -1082,19 +1234,27 @@ public class CommercePaymentEntryModelImpl
 
 		columnBitmasks.put("modifiedDate", 64L);
 
-		columnBitmasks.put("classNameId", 128L);
+		columnBitmasks.put("commerceChannelId", 128L);
 
-		columnBitmasks.put("classPK", 256L);
+		columnBitmasks.put("classNameId", 256L);
 
-		columnBitmasks.put("amount", 512L);
+		columnBitmasks.put("classPK", 512L);
 
-		columnBitmasks.put("currencyCode", 1024L);
+		columnBitmasks.put("amount", 1024L);
 
-		columnBitmasks.put("paymentMethodName", 2048L);
+		columnBitmasks.put("callbackURL", 2048L);
 
-		columnBitmasks.put("paymentStatus", 4096L);
+		columnBitmasks.put("currencyCode", 4096L);
 
-		columnBitmasks.put("transactionCode", 8192L);
+		columnBitmasks.put("paymentIntegrationKey", 8192L);
+
+		columnBitmasks.put("paymentIntegrationType", 16384L);
+
+		columnBitmasks.put("paymentStatus", 32768L);
+
+		columnBitmasks.put("redirectURL", 65536L);
+
+		columnBitmasks.put("transactionCode", 131072L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

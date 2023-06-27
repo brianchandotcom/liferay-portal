@@ -53,12 +53,16 @@ public class CommercePaymentEntryWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("commerceChannelId", getCommerceChannelId());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
 		attributes.put("amount", getAmount());
+		attributes.put("callbackURL", getCallbackURL());
 		attributes.put("currencyCode", getCurrencyCode());
-		attributes.put("paymentMethodName", getPaymentMethodName());
+		attributes.put("paymentIntegrationKey", getPaymentIntegrationKey());
+		attributes.put("paymentIntegrationType", getPaymentIntegrationType());
 		attributes.put("paymentStatus", getPaymentStatus());
+		attributes.put("redirectURL", getRedirectURL());
 		attributes.put("transactionCode", getTransactionCode());
 
 		return attributes;
@@ -109,6 +113,12 @@ public class CommercePaymentEntryWrapper
 			setModifiedDate(modifiedDate);
 		}
 
+		Long commerceChannelId = (Long)attributes.get("commerceChannelId");
+
+		if (commerceChannelId != null) {
+			setCommerceChannelId(commerceChannelId);
+		}
+
 		Long classNameId = (Long)attributes.get("classNameId");
 
 		if (classNameId != null) {
@@ -127,22 +137,42 @@ public class CommercePaymentEntryWrapper
 			setAmount(amount);
 		}
 
+		String callbackURL = (String)attributes.get("callbackURL");
+
+		if (callbackURL != null) {
+			setCallbackURL(callbackURL);
+		}
+
 		String currencyCode = (String)attributes.get("currencyCode");
 
 		if (currencyCode != null) {
 			setCurrencyCode(currencyCode);
 		}
 
-		String paymentMethodName = (String)attributes.get("paymentMethodName");
+		String paymentIntegrationKey = (String)attributes.get(
+			"paymentIntegrationKey");
 
-		if (paymentMethodName != null) {
-			setPaymentMethodName(paymentMethodName);
+		if (paymentIntegrationKey != null) {
+			setPaymentIntegrationKey(paymentIntegrationKey);
+		}
+
+		Integer paymentIntegrationType = (Integer)attributes.get(
+			"paymentIntegrationType");
+
+		if (paymentIntegrationType != null) {
+			setPaymentIntegrationType(paymentIntegrationType);
 		}
 
 		Integer paymentStatus = (Integer)attributes.get("paymentStatus");
 
 		if (paymentStatus != null) {
 			setPaymentStatus(paymentStatus);
+		}
+
+		String redirectURL = (String)attributes.get("redirectURL");
+
+		if (redirectURL != null) {
+			setRedirectURL(redirectURL);
 		}
 
 		String transactionCode = (String)attributes.get("transactionCode");
@@ -165,6 +195,16 @@ public class CommercePaymentEntryWrapper
 	@Override
 	public BigDecimal getAmount() {
 		return model.getAmount();
+	}
+
+	/**
+	 * Returns the callback url of this commerce payment entry.
+	 *
+	 * @return the callback url of this commerce payment entry
+	 */
+	@Override
+	public String getCallbackURL() {
+		return model.getCallbackURL();
 	}
 
 	/**
@@ -195,6 +235,16 @@ public class CommercePaymentEntryWrapper
 	@Override
 	public long getClassPK() {
 		return model.getClassPK();
+	}
+
+	/**
+	 * Returns the commerce channel ID of this commerce payment entry.
+	 *
+	 * @return the commerce channel ID of this commerce payment entry
+	 */
+	@Override
+	public long getCommerceChannelId() {
+		return model.getCommerceChannelId();
 	}
 
 	/**
@@ -258,13 +308,23 @@ public class CommercePaymentEntryWrapper
 	}
 
 	/**
-	 * Returns the payment method name of this commerce payment entry.
+	 * Returns the payment integration key of this commerce payment entry.
 	 *
-	 * @return the payment method name of this commerce payment entry
+	 * @return the payment integration key of this commerce payment entry
 	 */
 	@Override
-	public String getPaymentMethodName() {
-		return model.getPaymentMethodName();
+	public String getPaymentIntegrationKey() {
+		return model.getPaymentIntegrationKey();
+	}
+
+	/**
+	 * Returns the payment integration type of this commerce payment entry.
+	 *
+	 * @return the payment integration type of this commerce payment entry
+	 */
+	@Override
+	public int getPaymentIntegrationType() {
+		return model.getPaymentIntegrationType();
 	}
 
 	/**
@@ -285,6 +345,16 @@ public class CommercePaymentEntryWrapper
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
+	}
+
+	/**
+	 * Returns the redirect url of this commerce payment entry.
+	 *
+	 * @return the redirect url of this commerce payment entry
+	 */
+	@Override
+	public String getRedirectURL() {
+		return model.getRedirectURL();
 	}
 
 	/**
@@ -342,6 +412,16 @@ public class CommercePaymentEntryWrapper
 		model.setAmount(amount);
 	}
 
+	/**
+	 * Sets the callback url of this commerce payment entry.
+	 *
+	 * @param callbackURL the callback url of this commerce payment entry
+	 */
+	@Override
+	public void setCallbackURL(String callbackURL) {
+		model.setCallbackURL(callbackURL);
+	}
+
 	@Override
 	public void setClassName(String className) {
 		model.setClassName(className);
@@ -365,6 +445,16 @@ public class CommercePaymentEntryWrapper
 	@Override
 	public void setClassPK(long classPK) {
 		model.setClassPK(classPK);
+	}
+
+	/**
+	 * Sets the commerce channel ID of this commerce payment entry.
+	 *
+	 * @param commerceChannelId the commerce channel ID of this commerce payment entry
+	 */
+	@Override
+	public void setCommerceChannelId(long commerceChannelId) {
+		model.setCommerceChannelId(commerceChannelId);
 	}
 
 	/**
@@ -428,13 +518,23 @@ public class CommercePaymentEntryWrapper
 	}
 
 	/**
-	 * Sets the payment method name of this commerce payment entry.
+	 * Sets the payment integration key of this commerce payment entry.
 	 *
-	 * @param paymentMethodName the payment method name of this commerce payment entry
+	 * @param paymentIntegrationKey the payment integration key of this commerce payment entry
 	 */
 	@Override
-	public void setPaymentMethodName(String paymentMethodName) {
-		model.setPaymentMethodName(paymentMethodName);
+	public void setPaymentIntegrationKey(String paymentIntegrationKey) {
+		model.setPaymentIntegrationKey(paymentIntegrationKey);
+	}
+
+	/**
+	 * Sets the payment integration type of this commerce payment entry.
+	 *
+	 * @param paymentIntegrationType the payment integration type of this commerce payment entry
+	 */
+	@Override
+	public void setPaymentIntegrationType(int paymentIntegrationType) {
+		model.setPaymentIntegrationType(paymentIntegrationType);
 	}
 
 	/**
@@ -455,6 +555,16 @@ public class CommercePaymentEntryWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	 * Sets the redirect url of this commerce payment entry.
+	 *
+	 * @param redirectURL the redirect url of this commerce payment entry
+	 */
+	@Override
+	public void setRedirectURL(String redirectURL) {
+		model.setRedirectURL(redirectURL);
 	}
 
 	/**

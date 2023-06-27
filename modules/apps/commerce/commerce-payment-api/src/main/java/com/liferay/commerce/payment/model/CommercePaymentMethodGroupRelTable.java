@@ -17,6 +17,7 @@ package com.liferay.commerce.payment.model;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.base.BaseTable;
 
+import java.sql.Clob;
 import java.sql.Types;
 
 import java.util.Date;
@@ -62,17 +63,21 @@ public class CommercePaymentMethodGroupRelTable
 	public final Column<CommercePaymentMethodGroupRelTable, String>
 		description = createColumn(
 			"description", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<CommercePaymentMethodGroupRelTable, Long> imageId =
-		createColumn("imageId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<CommercePaymentMethodGroupRelTable, String> engineKey =
-		createColumn(
-			"engineKey", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<CommercePaymentMethodGroupRelTable, Double> priority =
-		createColumn(
-			"priority", Double.class, Types.DOUBLE, Column.FLAG_DEFAULT);
 	public final Column<CommercePaymentMethodGroupRelTable, Boolean> active =
 		createColumn(
 			"active_", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
+	public final Column<CommercePaymentMethodGroupRelTable, Long> imageId =
+		createColumn("imageId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<CommercePaymentMethodGroupRelTable, String>
+		paymentIntegrationKey = createColumn(
+			"paymentIntegrationKey", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
+	public final Column<CommercePaymentMethodGroupRelTable, Double> priority =
+		createColumn(
+			"priority", Double.class, Types.DOUBLE, Column.FLAG_DEFAULT);
+	public final Column<CommercePaymentMethodGroupRelTable, Clob> typeSettings =
+		createColumn(
+			"typeSettings", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 
 	private CommercePaymentMethodGroupRelTable() {
 		super(

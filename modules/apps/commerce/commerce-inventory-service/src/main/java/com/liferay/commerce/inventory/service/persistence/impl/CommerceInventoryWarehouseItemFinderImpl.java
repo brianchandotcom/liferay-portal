@@ -52,6 +52,10 @@ public class CommerceInventoryWarehouseItemFinderImpl
 		CommerceInventoryWarehouseItemFinder.class.getName() +
 			".countItemsByCompanyId";
 
+	public static final String COUNT_ITEMS_BY_C_G_S =
+		CommerceInventoryWarehouseItemFinder.class.getName() +
+			".countItemsByC_G_S";
+
 	public static final String COUNT_STOCK_QUANTITY_BY_C_S =
 		CommerceInventoryWarehouseItemFinder.class.getName() +
 			".countStockQuantityByC_S";
@@ -107,6 +111,52 @@ public class CommerceInventoryWarehouseItemFinderImpl
 			if (Validator.isNotNull(sku)) {
 				queryPos.add(keywords, 2);
 			}
+
+			Iterator<Long> iterator = sqlQuery.iterate();
+
+			if (iterator.hasNext()) {
+				Long count = iterator.next();
+
+				if (count != null) {
+					return count.intValue();
+				}
+			}
+
+			return 0;
+		}
+		catch (Exception exception) {
+			throw new SystemException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	@Override
+	public int countItemsByC_G_S(
+		long companyId, long commerceChannelGroupId, String sku) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = _customSQL.get(getClass(), COUNT_ITEMS_BY_C_G_S);
+
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+			sqlQuery.addScalar(COUNT_COLUMN_NAME, Type.LONG);
+
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+			queryPos.add(
+				_portal.getClassNameId(
+					CommerceInventoryWarehouse.class.getName()));
+			queryPos.add(
+				_portal.getClassNameId(CommerceChannel.class.getName()));
+			queryPos.add(companyId);
+			queryPos.add(commerceChannelGroupId);
+			queryPos.add(sku);
 
 			Iterator<Long> iterator = sqlQuery.iterate();
 

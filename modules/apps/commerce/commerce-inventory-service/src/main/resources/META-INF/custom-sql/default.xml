@@ -64,6 +64,33 @@
 				(LOWER(CIWarehouseItem.sku) LIKE ? [$AND_OR_NULL_CHECK$])
 		]]>
 	</sql>
+	<sql id="com.liferay.commerce.inventory.service.persistence.CommerceInventoryWarehouseItemFinder.countItemsByC_G_S">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT CIWarehouseItem.CIWarehouseItemId) AS COUNT_VALUE
+			FROM
+				CIWarehouseItem
+			INNER JOIN
+				CommerceChannelRel
+			ON
+				CommerceChannelRel.classNameId = ? AND
+				CIWarehouseItem.commerceInventoryWarehouseId = CommerceChannelRel.classPK
+			INNER JOIN
+				Group_
+			ON
+				Group_.classNameId = ? AND
+				CommerceChannelRel.commerceChannelId = Group_.classPK
+			INNER JOIN
+				CIWarehouse
+			ON
+				CIWarehouseItem.commerceInventoryWarehouseId = CIWarehouse.CIWarehouseId
+			WHERE
+				(CIWarehouseItem.companyId = ?) AND
+				(Group_.groupId = ?) AND
+				(CIWarehouseItem.sku = ?) AND
+				(CIWarehouse.active_ = [$TRUE$])
+		]]>
+	</sql>
 	<sql id="com.liferay.commerce.inventory.service.persistence.CommerceInventoryWarehouseItemFinder.countStockQuantityByC_S">
 		<![CDATA[
 			SELECT

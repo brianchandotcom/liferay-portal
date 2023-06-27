@@ -1,0 +1,13 @@
+{
+	"description": "",
+	"fragmentCompositionDefinitionPath": "page-definition.json",
+	"friendlyURL": "/customer-gate",
+	"hidden": true,
+	"name": "Customer Gate",
+	"name_i18n": {
+		"en_US": "Customer Gate"
+	},
+	"private": false,
+	"system": false,
+	"type": "content"
+}

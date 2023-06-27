@@ -2,8 +2,6 @@ assemble:
     - from: build/vite
       into: static
 liferay-marketplace-custom-element-create-app:
-    cssURLs:
-        - "**/*.css"
     friendlyURLMapping: liferay-marketplace-custom-element-create-app
     htmlElementName: liferay-marketplace-custom-element
     instanceable: false
@@ -13,11 +11,9 @@ liferay-marketplace-custom-element-create-app:
         route: create-app
     type: customElement
     urls:
-        - "*.js"
+        "*.js"
     useESM: true
 liferay-marketplace-custom-element-get-app:
-    cssURLs:
-        - "**/*.css"
     friendlyURLMapping: liferay-marketplace-custom-element-get-app
     htmlElementName: liferay-marketplace-custom-element
     instanceable: false
@@ -27,11 +23,9 @@ liferay-marketplace-custom-element-get-app:
         route: get-app
     type: customElement
     urls:
-        - "*.js"
+        "*.js"
     useESM: true
 liferay-marketplace-custom-element-next-steps:
-    cssURLs:
-        - "**/*.css"
     friendlyURLMapping: liferay-marketplace-custom-element-next-steps
     htmlElementName: liferay-marketplace-custom-element
     instanceable: false
@@ -41,11 +35,9 @@ liferay-marketplace-custom-element-next-steps:
         route: next-steps
     type: customElement
     urls:
-        - "*.js"
+        "*.js"
     useESM: true
 liferay-marketplace-custom-element-published-apps:
-    cssURLs:
-        - "**/*.css"
     friendlyURLMapping: liferay-marketplace-custom-element-published-apps
     htmlElementName: liferay-marketplace-custom-element
     instanceable: false
@@ -55,11 +47,9 @@ liferay-marketplace-custom-element-published-apps:
         route: published-apps
     type: customElement
     urls:
-        - "*.js"
+        "*.js"
     useESM: true
 liferay-marketplace-custom-element-purchased-apps:
-    cssURLs:
-        - "**/*.css"
     friendlyURLMapping: liferay-marketplace-custom-element-purchased-apps
     htmlElementName: liferay-marketplace-custom-element
     instanceable: false
@@ -69,5 +59,19 @@ liferay-marketplace-custom-element-purchased-apps:
         route: purchased-apps
     type: customElement
     urls:
-        - "*.js"
+        "*.js"
+    useESM: true
+liferay-marketplace-custom-element-customer-gate:
+    cssURLs:
+        - "**/*.css"
+    friendlyURLMapping: liferay-marketplace-custom-element-customer-gate
+    htmlElementName: liferay-marketplace-custom-element
+    instanceable: false
+    name: Liferay Marketplace Customer gate
+    portletCategoryName: category.client-extensions
+    properties:
+        route: customer-gate
+    type: customElement
+    urls:
+        "*.js"
     useESM: true

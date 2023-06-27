@@ -898,6 +898,40 @@ definition {
 		return ${entryId};
 	}
 
+	macro getObjectFieldId {
+		if (isSet(virtualHost)) {
+			if (!(isSet(port))) {
+				var port = 8080;
+			}
+
+			var portalURL = "http://${virtualHost}:${port}";
+		}
+		else {
+			var portalURL = JSONCompany.getPortalURL();
+		}
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
+		var curl = '''
+			${portalURL}/o/object-admin/v1.0/object-definitions/${objectId}/object-fields \
+				-u ${userEmailAddress}:${userPassword}
+		''';
+
+		if (isSet(token)) {
+			var curl = StringUtil.add(${curl}, " -H 'Authorization: Bearer ${token}'", "");
+		}
+
+		var objectFieldId = JSONCurlUtil.get(${curl}, "$.items[?(@['name'] == '${fieldName}')]['id']");
+
+		return ${objectFieldId};
+	}
+
 	macro getObjectId {
 		if (isSet(virtualHost)) {
 			if (!(isSet(port))) {
@@ -1088,6 +1122,35 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/object-admin/v1.0/object-definitions/${objectId} \
+				-H 'Content-Type: application/json' \
+				-u ${userEmailAddress}:${userPassword} \
+				-d '{
+					"${configKey}": "${configValue}"
+				}'
+		''';
+
+		JSONCurlUtil.patch(${curl});
+	}
+
+	@summary = "This calls the patchObjectField Headless API endpoint to update a configuration within an object field"
+	macro updateObjectField {
+		var portalURL = JSONCompany.getPortalURL();
+		var objectId = JSONObject.getObjectId(objectName = ${objectName});
+
+		var objectFieldId = JSONObject.getObjectFieldId(
+			fieldName = ${fieldName},
+			objectId = ${objectId});
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
+		var curl = '''
+			${portalURL}/o/object-admin/v1.0/object-fields/${objectFieldId} \
 				-H 'Content-Type: application/json' \
 				-u ${userEmailAddress}:${userPassword} \
 				-d '{

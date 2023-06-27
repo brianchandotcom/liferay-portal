@@ -29,6 +29,7 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -101,6 +102,14 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 
 	public String getLabel(Locale locale) {
 		return _language.get(locale, "data-set");
+	}
+
+	public boolean isSelectable(HttpServletRequest httpServletRequest) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-164563")) {
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override

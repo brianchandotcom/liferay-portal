@@ -208,6 +208,15 @@ public class CommerceInventoryWarehouseItemServiceWrapper
 
 	@Override
 	public int getCommerceInventoryWarehouseItemsCount(
+			long companyId, long groupId, String sku)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceInventoryWarehouseItemService.
+			getCommerceInventoryWarehouseItemsCount(companyId, groupId, sku);
+	}
+
+	@Override
+	public int getCommerceInventoryWarehouseItemsCount(
 			long companyId, String sku)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

@@ -973,81 +973,86 @@ definition {
 
 		var slaName = "SLAName";
 
-		WorkflowMetrics.executeIndexActions(actionDescription = "Workflow Indexes");
+		task ("Given a blog entry with an SLA and the account language is set to English") {
+			WorkflowMetrics.executeIndexActions(actionDescription = "Workflow Indexes");
 
-		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
+			WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
-		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
+			Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
 
-		WorkflowMetrics.fillSLAForm(
-			slaDefinitionDays = 1,
-			slaDefinitionDescription = "SLA Description",
-			slaDefinitionEnd = "Process Ends: Approved",
-			slaDefinitionHours = 0000,
-			slaDefinitionName = ${slaName},
-			slaDefinitionStart = "Process Begins");
+			WorkflowMetrics.fillSLAForm(
+				slaDefinitionDays = 1,
+				slaDefinitionDescription = "SLA Description",
+				slaDefinitionEnd = "Process Ends: Approved",
+				slaDefinitionHours = 0000,
+				slaDefinitionName = ${slaName},
+				slaDefinitionStart = "Process Begins");
 
-		Button.clickSave();
+			Button.clickSave();
 
-		Workflow.openWorkflowProcessBuilderConfiguration();
+			Workflow.openWorkflowProcessBuilderConfiguration();
 
-		Workflow.configureWorkflow(
-			workflowDefinition = "Single Approver",
-			workflowResourceValue = "Blogs Entry");
+			Workflow.configureWorkflow(
+				workflowDefinition = "Single Approver",
+				workflowResourceValue = "Blogs Entry");
 
-		JSONBlog.addEntry(
-			entryContent = "Test Content",
-			entryTitle = "Test Blog");
+			JSONBlog.addEntry(
+				entryContent = "Test Content",
+				entryTitle = "Test Blog");
 
-		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+			WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-		Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_PENDING_ITEMS_TITLE");
+			Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_PENDING_ITEMS_TITLE");
 
-		Pause(locator1 = 80000);
+			Pause(locator1 = 80000);
 
-		while ((IsElementNotPresent(locator1 = "WorkflowAllItems#DETAIL_PAGE_SLA_NAME")) && (maxIterations = "25")) {
-
+			while ((IsElementNotPresent(locator1 = "WorkflowAllItems#DETAIL_PAGE_SLA_NAME")) && (maxIterations = "25")) {
 				Refresh();
 
 				Click(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
+			}
+
+			WaitForElementPresent(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
+
+			var getInstanceId = selenium.getText("WorkflowAllItems#WORKFLOW_INSTANCE_ID");
+
+			Click(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
+
+			WaitForPageLoad();
+
+			AssertElementPresent(
+				key_slaName = ${slaName},
+				locator1 = "WorkflowAllItems#DETAIL_PAGE_SLA_ENGLISH_HOUR_FORMAT");
+
+			Click(locator1 = "WorkflowAllItems#DETAIL_PAGE_CLOSE");
 		}
 
-		WaitForElementPresent(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
+		task ("When the account changes to a language with a different time zone") {
+			UserBar.gotoDropdownItem(dropdownItem = "Account Settings");
 
-		var getInstanceId = selenium.getText("WorkflowAllItems#WORKFLOW_INSTANCE_ID");
+			MyAccount.changeUserLanguage(
+				languageName = "português (Brasil)",
+				saveButton = "Save");
+		}
 
-		Click(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
+		task ("Then the time on the SLA should reflect the language and timezone that the account is set to.") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Fluxo de trabalho",
+				panel = "Aplicativos",
+				portlet = "Métricas");
 
-		WaitForPageLoad();
+			Click(
+				key_workflowProcessName = "Aprovador Único",
+				locator1 = "WorkflowMetrics#METRICS_WORKFLOW_PROCESS_NAME");
 
-		AssertElementPresent(
-			key_slaName = ${slaName},
-			locator1 = "WorkflowAllItems#DETAIL_PAGE_SLA_ENGLISH_HOUR_FORMAT");
+			Click(
+				locator1 = "WorkflowMetrics#NEW_LANGUAGE_DASHBOARD_TOTAL_PENDING_ITEMS_TITLE",
+				newLanguageCardName = "Total pendente");
 
-		Click(locator1 = "WorkflowAllItems#DETAIL_PAGE_CLOSE");
+			WaitForElementPresent(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
 
-		UserBar.gotoDropdownItem(dropdownItem = "Account Settings");
-
-		MyAccount.changeUserLanguage(
-			languageName = "português (Brasil)",
-			saveButton = "Save");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Fluxo de trabalho",
-			panel = "Aplicativos",
-			portlet = "Métricas");
-
-		Click(
-			key_workflowProcessName = "Aprovador Único",
-			locator1 = "WorkflowMetrics#METRICS_WORKFLOW_PROCESS_NAME");
-
-		Click(
-			locator1 = "WorkflowMetrics#NEW_LANGUAGE_DASHBOARD_TOTAL_PENDING_ITEMS_TITLE",
-			newLanguageCardName = "Total pendente");
-
-		WaitForElementPresent(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
-
-		Click(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
+			Click(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
+		}
 	}
 
 	@description = "LPS-89014 - Verify that the table view of SLAs are ordered by last modified (Desc)"

@@ -12,10 +12,9 @@
  *
  */
 
-package com.liferay.portal.search.tuning.rankings.web.internal.index.creation.model.listener;
+package com.liferay.portal.search.tuning.rankings.web.internal.index.creation.instance.lifecycle;
 
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.engine.SearchEngineInformation;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingIndexCreator;
@@ -23,73 +22,47 @@ import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingIndex
 import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexNameBuilder;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.MockedStatic;
 import org.mockito.Mockito;
-
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Wade Cao
  */
-public class RankingIndexCreationCompanyModelListenerTest {
+public class RankingIndexPortalInstanceLifecycleListenerTest {
 
 	@ClassRule
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
-	@BeforeClass
-	public static void setUpClass() throws Exception {
-		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
-
-		Mockito.when(
-			FrameworkUtil.getBundle(Mockito.any())
-		).thenReturn(
-			bundleContext.getBundle()
-		);
-
-		_searchEngineInformationServiceRegistration =
-			bundleContext.registerService(
-				SearchEngineInformation.class,
-				Mockito.mock(SearchEngineInformation.class), null);
-	}
-
-	@AfterClass
-	public static void tearDownClass() {
-		_frameworkUtilMockedStatic.close();
-		_searchEngineInformationServiceRegistration.unregister();
-	}
-
 	@Before
 	public void setUp() throws Exception {
-		_rankingIndexCreationCompanyModelListener =
-			new RankingIndexCreationCompanyModelListener();
+		_rankingIndexPortalInstanceLifecycleListener =
+			new RankingIndexPortalInstanceLifecycleListener();
 
 		ReflectionTestUtil.setFieldValue(
-			_rankingIndexCreationCompanyModelListener, "_rankingIndexCreator",
-			_rankingIndexCreator);
+			_rankingIndexPortalInstanceLifecycleListener,
+			"_rankingIndexCreator", _rankingIndexCreator);
 		ReflectionTestUtil.setFieldValue(
-			_rankingIndexCreationCompanyModelListener,
+			_rankingIndexPortalInstanceLifecycleListener,
 			"_rankingIndexNameBuilder", _rankingIndexNameBuilder);
 		ReflectionTestUtil.setFieldValue(
-			_rankingIndexCreationCompanyModelListener, "_rankingIndexReader",
+			_rankingIndexPortalInstanceLifecycleListener, "_rankingIndexReader",
 			_rankingIndexReader);
+		ReflectionTestUtil.setFieldValue(
+			_rankingIndexPortalInstanceLifecycleListener,
+			"_searchEngineInformation", _searchEngineInformation);
 	}
 
 	@Test
-	public void testOnAfterCreateRankingIndexReaderFalse() {
+	public void testPortalInstanceRegisteredExistFalse() throws Exception {
 		_setUpRankingIndexReader(false);
 
-		_rankingIndexCreationCompanyModelListener.onAfterCreate(
+		_rankingIndexPortalInstanceLifecycleListener.portalInstanceRegistered(
 			Mockito.mock(Company.class));
 
 		Mockito.verify(
@@ -106,10 +79,10 @@ public class RankingIndexCreationCompanyModelListenerTest {
 	}
 
 	@Test
-	public void testOnAfterCreateRankingIndexReaderTrue() {
+	public void testPortalInstanceRegisteredExistTrue() throws Exception {
 		_setUpRankingIndexReader(true);
 
-		_rankingIndexCreationCompanyModelListener.onAfterCreate(
+		_rankingIndexPortalInstanceLifecycleListener.portalInstanceRegistered(
 			Mockito.mock(Company.class));
 
 		Mockito.verify(
@@ -126,10 +99,10 @@ public class RankingIndexCreationCompanyModelListenerTest {
 	}
 
 	@Test
-	public void testOnBeforeRemoveRankingIndexReaderExistsFalse() {
+	public void testPortalInstanceUnregisteredExistsFalse() throws Exception {
 		_setUpRankingIndexReader(false);
 
-		_rankingIndexCreationCompanyModelListener.onBeforeRemove(
+		_rankingIndexPortalInstanceLifecycleListener.portalInstanceUnregistered(
 			Mockito.mock(Company.class));
 
 		Mockito.verify(
@@ -146,10 +119,10 @@ public class RankingIndexCreationCompanyModelListenerTest {
 	}
 
 	@Test
-	public void testOnBeforeRemoveRankingIndexReaderExistsTrue() {
+	public void testPortalInstanceUnregisteredExistsTrue() throws Exception {
 		_setUpRankingIndexReader(true);
 
-		_rankingIndexCreationCompanyModelListener.onBeforeRemove(
+		_rankingIndexPortalInstanceLifecycleListener.portalInstanceUnregistered(
 			Mockito.mock(Company.class));
 
 		Mockito.verify(
@@ -175,18 +148,15 @@ public class RankingIndexCreationCompanyModelListenerTest {
 		);
 	}
 
-	private static final MockedStatic<FrameworkUtil>
-		_frameworkUtilMockedStatic = Mockito.mockStatic(FrameworkUtil.class);
-	private static ServiceRegistration<SearchEngineInformation>
-		_searchEngineInformationServiceRegistration;
-
-	private RankingIndexCreationCompanyModelListener
-		_rankingIndexCreationCompanyModelListener;
 	private final RankingIndexCreator _rankingIndexCreator = Mockito.mock(
 		RankingIndexCreator.class);
 	private final RankingIndexNameBuilder _rankingIndexNameBuilder =
 		Mockito.mock(RankingIndexNameBuilder.class);
+	private RankingIndexPortalInstanceLifecycleListener
+		_rankingIndexPortalInstanceLifecycleListener;
 	private final RankingIndexReader _rankingIndexReader = Mockito.mock(
 		RankingIndexReader.class);
+	private final SearchEngineInformation _searchEngineInformation =
+		Mockito.mock(SearchEngineInformation.class);
 
 }

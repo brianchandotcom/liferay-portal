@@ -134,17 +134,8 @@ public class SkuUtil {
 
 		DateConfig displayDateConfig = new DateConfig(displayCalendar);
 
-		Calendar expirationCalendar = CalendarFactoryUtil.getCalendar(
-			serviceContext.getTimeZone());
-
-		expirationCalendar.add(Calendar.MONTH, 1);
-
-		if (sku.getExpirationDate() != null) {
-			expirationCalendar = DateConfigUtil.convertDateToCalendar(
-				sku.getExpirationDate());
-		}
-
-		DateConfig expirationDateConfig = new DateConfig(expirationCalendar);
+		DateConfig expirationDateConfig = DateConfig.toExpirationDateConfig(
+			sku.getExpirationDate(), serviceContext.getTimeZone());
 
 		SkuSubscriptionConfiguration skuSubscriptionConfiguration =
 			sku.getSkuSubscriptionConfiguration();

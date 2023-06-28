@@ -406,28 +406,14 @@ public class SkuResourceImpl
 						contextUser.getTimeZone()),
 					cpInstance.getDisplayDate())));
 
-		int expirationDateMonth = 0;
-		int expirationDateDay = 0;
-		int expirationDateYear = 0;
-		int expirationDateHour = 0;
-		int expirationDateMinute = 0;
-
-		if (cpInstance.getExpirationDate() != null) {
-			DateConfig expirationDateConfig = new DateConfig(
-				DateConfigUtil.convertDateToCalendar(
-					GetterUtil.getDate(
-						sku.getExpirationDate(),
-						DateFormatFactoryUtil.getDate(
-							contextAcceptLanguage.getPreferredLocale(),
-							contextUser.getTimeZone()),
-						cpInstance.getExpirationDate())));
-
-			expirationDateMonth = expirationDateConfig.getMonth();
-			expirationDateDay = expirationDateConfig.getDay();
-			expirationDateYear = expirationDateConfig.getYear();
-			expirationDateHour = expirationDateConfig.getHour();
-			expirationDateMinute = expirationDateConfig.getMinute();
-		}
+		DateConfig expirationDateConfig = DateConfig.toExpirationDateConfig(
+			GetterUtil.getDate(
+				sku.getExpirationDate(),
+				DateFormatFactoryUtil.getDate(
+					contextAcceptLanguage.getPreferredLocale(),
+					contextUser.getTimeZone()),
+				cpInstance.getExpirationDate()),
+			contextUser.getTimeZone());
 
 		SkuSubscriptionConfiguration skuSubscriptionConfiguration =
 			sku.getSkuSubscriptionConfiguration();
@@ -535,9 +521,9 @@ public class SkuResourceImpl
 			GetterUtil.get(sku.getPublished(), cpInstance.isPublished()),
 			displayDateConfig.getMonth(), displayDateConfig.getDay(),
 			displayDateConfig.getYear(), displayDateConfig.getHour(),
-			displayDateConfig.getMinute(), expirationDateMonth,
-			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute,
+			displayDateConfig.getMinute(), expirationDateConfig.getMonth(),
+			expirationDateConfig.getDay(), expirationDateConfig.getYear(),
+			expirationDateConfig.getHour(), expirationDateConfig.getMinute(),
 			GetterUtil.get(
 				sku.getNeverExpire(),
 				(cpInstance.getExpirationDate() == null) ? true : false),

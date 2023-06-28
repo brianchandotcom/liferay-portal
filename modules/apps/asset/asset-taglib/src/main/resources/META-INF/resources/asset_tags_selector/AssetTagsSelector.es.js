@@ -139,7 +139,7 @@ function AssetTagsSelector({
 		const sub = (str, object) =>
 			str.replace(/\{([^}]+)\}/g, (_, m) => object[m]);
 
-		const url = sub(decodeURIComponent(portletURL), {
+		const url = sub(portletURL, {
 			selectedTagNames: selectedItems.map((item) => item.value).join(),
 		});
 
@@ -154,13 +154,15 @@ function AssetTagsSelector({
 
 				let [newValues, removedValues] = dialogSelectedItems.reduce(
 					([checked, unchecked], item) => {
+						const selectedValue = JSON.parse(item.value);
+
 						if (item.checked) {
 							return [
 								[
 									...checked,
 									{
-										label: item.value,
-										value: item.value,
+										label: selectedValue.tagName,
+										value: selectedValue.tagName,
 									},
 								],
 								unchecked,
@@ -172,8 +174,8 @@ function AssetTagsSelector({
 								[
 									...unchecked,
 									{
-										label: item.value,
-										value: item.value,
+										label: selectedValue.tagName,
+										value: selectedValue.tagName,
 									},
 								],
 							];

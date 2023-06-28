@@ -30,9 +30,10 @@ AssetCategoriesNavigationDisplayContext assetCategoriesNavigationDisplayContext 
 
 		</c:if>
 
-		<div class="alert alert-info">
-			<liferay-ui:message key="there-are-no-categories" />
-		</div>
+		<clay:alert
+			displayType="info"
+			message="there-are-no-categories"
+		/>
 	</c:when>
 	<c:otherwise>
 		<div class="categories-tree container-fluid container-fluid-max-xl" id="<%= assetCategoriesNavigationDisplayContext.getNamespace() %>categoriesContainer">

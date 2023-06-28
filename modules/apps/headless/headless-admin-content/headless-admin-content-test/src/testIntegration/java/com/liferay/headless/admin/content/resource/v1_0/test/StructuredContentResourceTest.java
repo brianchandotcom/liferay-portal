@@ -33,6 +33,7 @@ import com.liferay.headless.admin.content.client.pagination.Pagination;
 import com.liferay.headless.admin.content.client.serdes.v1_0.StructuredContentSerDes;
 import com.liferay.headless.delivery.client.resource.v1_0.StructuredContentResource;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -226,18 +227,55 @@ public class StructuredContentResourceTest
 			StructuredContentResource structuredContentResource =
 				_buildStructureContentResource(locale);
 
-		StructuredContent postStructuredContent =
+		StructuredContent postStructuredContent1 =
 			structuredContentResource.postSiteStructuredContentDraft(
 				testGetSiteStructuredContentsPage_getSiteId(),
 				randomStructuredContent);
 
-		StructuredContent getStructuredContent =
+		StructuredContent getStructuredContent1 =
 			structuredContentResource.getStructuredContentByVersion(
-				postStructuredContent.getId(), 1.0);
+				postStructuredContent1.getId(), 1.0);
 
-		assertEquals(postStructuredContent, getStructuredContent);
+		assertEquals(postStructuredContent1, getStructuredContent1);
 		Assert.assertEquals(
-			Double.valueOf(1.0), getStructuredContent.getPriority());
+			Double.valueOf(1.0), getStructuredContent1.getPriority());
+
+		StructuredContent postStructuredContent2 =
+			structuredContentResource.postSiteStructuredContentDraft(
+				testGetSiteStructuredContentsPage_getSiteId(),
+				randomStructuredContent);
+
+		structuredContentResource =
+			com.liferay.headless.admin.content.client.resource.v1_0.
+				StructuredContentResource.builder(
+				).authentication(
+					"test@liferay.com", "test"
+				).locale(
+					LocaleUtil.getDefault()
+				).parameters(
+					"restrictFields",
+					StringBundler.concat(
+						"actions,availableLanguages,contentFields,",
+						"contentStructureId,creator,customFields,",
+						"dateCreated,dateModified,datePublished,",
+						"description,externalReferenceCode,friendlyUrlPath,",
+						"id,key,keywords,numberOfComments,priority,",
+						"relatedContents,renderedContents,siteId,",
+						"structuredContentFolderId,subscribed,",
+						"taxonomyCategoryBriefs,uuid,version")
+				).build();
+
+		StructuredContent getStructuredContent2 =
+			structuredContentResource.getStructuredContentByVersion(
+				postStructuredContent2.getId(), 1.0);
+
+		assertEquals(
+			new StructuredContent() {
+				{
+					title = postStructuredContent2.getTitle();
+				}
+			},
+			getStructuredContent2);
 	}
 
 	@Override

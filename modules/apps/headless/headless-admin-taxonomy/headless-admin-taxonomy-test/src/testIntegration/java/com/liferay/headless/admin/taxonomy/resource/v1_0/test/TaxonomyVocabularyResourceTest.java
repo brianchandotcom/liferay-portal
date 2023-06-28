@@ -26,6 +26,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -384,59 +385,63 @@ public class TaxonomyVocabularyResourceTest
 			));
 
 		Assert.assertEquals(
-			String.valueOf(1),
-			taxonomyVocabulariesJSONObject.getJSONArray(
-				"facets"
-			).getJSONObject(
-				0
-			).getJSONArray(
-				"facetValues"
-			).getJSONObject(
-				0
-			).getString(
-				"numberOfOccurrences"
-			));
+			1,
+			GetterUtil.getInteger(
+				taxonomyVocabulariesJSONObject.getJSONArray(
+					"facets"
+				).getJSONObject(
+					0
+				).getJSONArray(
+					"facetValues"
+				).getJSONObject(
+					0
+				).getString(
+					"numberOfOccurrences"
+				)));
 
 		Assert.assertEquals(
-			String.valueOf(taxonomyVocabulary1.getId()),
-			taxonomyVocabulariesJSONObject.getJSONArray(
-				"facets"
-			).getJSONObject(
-				0
-			).getJSONArray(
-				"facetValues"
-			).getJSONObject(
-				0
-			).getString(
-				"term"
-			));
+			taxonomyVocabulary1.getId(),
+			Long.valueOf(
+				taxonomyVocabulariesJSONObject.getJSONArray(
+					"facets"
+				).getJSONObject(
+					0
+				).getJSONArray(
+					"facetValues"
+				).getJSONObject(
+					0
+				).getString(
+					"term"
+				)));
 
 		Assert.assertEquals(
-			String.valueOf(1),
-			taxonomyVocabulariesJSONObject.getJSONArray(
-				"facets"
-			).getJSONObject(
-				0
-			).getJSONArray(
-				"facetValues"
-			).getJSONObject(
-				1
-			).getString(
-				"numberOfOccurrences"
-			));
+			1,
+			GetterUtil.getInteger(
+				taxonomyVocabulariesJSONObject.getJSONArray(
+					"facets"
+				).getJSONObject(
+					0
+				).getJSONArray(
+					"facetValues"
+				).getJSONObject(
+					1
+				).getString(
+					"numberOfOccurrences"
+				)));
 		Assert.assertEquals(
-			String.valueOf(taxonomyVocabulary2.getId()),
-			taxonomyVocabulariesJSONObject.getJSONArray(
-				"facets"
-			).getJSONObject(
-				0
-			).getJSONArray(
-				"facetValues"
-			).getJSONObject(
-				1
-			).getString(
-				"term"
-			));
+			taxonomyVocabulary2.getId(),
+			Long.valueOf(
+				taxonomyVocabulariesJSONObject.getJSONArray(
+					"facets"
+				).getJSONObject(
+					0
+				).getJSONArray(
+					"facetValues"
+				).getJSONObject(
+					1
+				).getString(
+					"term"
+				)));
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(taxonomyVocabulary1, taxonomyVocabulary2),

@@ -52,10 +52,12 @@ public class UpgradeJavaFDSDataProviderCheck extends BaseFileCheck {
 			return content;
 		}
 
-		return _reorderParametersGetItemsAndGetItemsCount(content, javaClass);
+		return _formatMethodDefinitions(content, javaClass);
 	}
 
-	private String _checkMethodCalls(String content, String javaMethodContent) {
+	private String _formatMethodCalls(
+		String content, String javaMethodContent) {
+
 		Matcher methodCallGetItemsMatcher = _methodCallGetItemsPattern.matcher(
 			javaMethodContent);
 
@@ -105,7 +107,7 @@ public class UpgradeJavaFDSDataProviderCheck extends BaseFileCheck {
 		return javaMethodContent;
 	}
 
-	private String _checkMethods(String javaMethodContent) {
+	private String _formatMethodDefinition(String javaMethodContent) {
 		Matcher methodGetItemsMatcher = _methodGetItemsPattern.matcher(
 			javaMethodContent);
 
@@ -151,6 +153,35 @@ public class UpgradeJavaFDSDataProviderCheck extends BaseFileCheck {
 		return javaMethodContent;
 	}
 
+	private String _formatMethodDefinitions(
+		String content, JavaClass javaClass) {
+
+		List<String> implementedClassNames =
+			javaClass.getImplementedClassNames();
+
+		for (JavaTerm childJavaTerm : javaClass.getChildJavaTerms()) {
+			if (!childJavaTerm.isJavaMethod()) {
+				continue;
+			}
+
+			JavaMethod javaMethod = (JavaMethod)childJavaTerm;
+
+			String javaMethodContent = javaMethod.getContent();
+
+			if (implementedClassNames.contains("FDSDataProvider")) {
+				content = StringUtil.replace(
+					content, javaMethodContent,
+					_formatMethodDefinition(javaMethodContent));
+			}
+
+			content = StringUtil.replace(
+				content, javaMethodContent,
+				_formatMethodCalls(javaClass.getContent(), javaMethodContent));
+		}
+
+		return content;
+	}
+
 	private boolean _hasClassNameHttpServletRequest(
 		String content, String fileContent, String variableName) {
 
@@ -171,56 +202,25 @@ public class UpgradeJavaFDSDataProviderCheck extends BaseFileCheck {
 	}
 
 	private String _reorderParametersGetItems(
-		String methodCall, String orderParameters, List<String> parameterList) {
+		String methodCall, String parameters, List<String> parameterList) {
 
-		String newOrderParameters = StringBundler.concat(
+		String newParameters = StringBundler.concat(
 			parameterList.get(1), StringPool.COMMA_AND_SPACE,
 			parameterList.get(2), StringPool.COMMA_AND_SPACE,
 			parameterList.get(0), StringPool.COMMA_AND_SPACE,
 			parameterList.get(3));
 
-		return StringUtil.replace(
-			methodCall, orderParameters, newOrderParameters);
-	}
-
-	private String _reorderParametersGetItemsAndGetItemsCount(
-		String content, JavaClass javaClass) {
-
-		List<String> implementedClassNames =
-			javaClass.getImplementedClassNames();
-
-		for (JavaTerm childJavaTerm : javaClass.getChildJavaTerms()) {
-			if (!childJavaTerm.isJavaMethod()) {
-				continue;
-			}
-
-			JavaMethod javaMethod = (JavaMethod)childJavaTerm;
-
-			String javaMethodContent = javaMethod.getContent();
-
-			if (implementedClassNames.contains("FDSDataProvider")) {
-				content = StringUtil.replace(
-					content, javaMethodContent,
-					_checkMethods(javaMethodContent));
-			}
-
-			content = StringUtil.replace(
-				content, javaMethodContent,
-				_checkMethodCalls(javaClass.getContent(), javaMethodContent));
-		}
-
-		return content;
+		return StringUtil.replace(methodCall, parameters, newParameters);
 	}
 
 	private String _reorderParametersGetItemsCount(
-		String methodCall, String orderParameters, List<String> parameterList) {
+		String methodCall, String parameters, List<String> parameterList) {
 
-		String newOrderParameters = StringBundler.concat(
+		String newParameters = StringBundler.concat(
 			parameterList.get(1), StringPool.COMMA_AND_SPACE,
 			parameterList.get(0));
 
-		return StringUtil.replace(
-			methodCall, orderParameters, newOrderParameters);
+		return StringUtil.replace(methodCall, parameters, newParameters);
 	}
 
 	private static final Pattern _methodCallGetItemsCountPattern =

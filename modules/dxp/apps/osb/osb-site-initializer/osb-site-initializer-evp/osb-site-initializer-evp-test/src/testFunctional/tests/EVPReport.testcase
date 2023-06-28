@@ -53,6 +53,34 @@ definition {
 		}
 	}
 
+	@description = "LPS-172931 - Finance user can generate a report with filters applied"
+	@priority = 5
+	test FinanceCanGenerateReportWithFilters {
+		task ("Given the finance user are logged") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "finance@liferay.com",
+				userLoginFullName = "Finance User");
+		}
+
+		task ("And he goes to Reports Page") {
+			EVPUtils.gotoEVP();
+
+			EVPNavigator.goToNavItem(navItem = "Reports");
+		}
+
+		task ("When the finance user generate financial report") {
+			EVPUtils.generateFinancialReport(
+				cardTitle = "EVP Financial Report",
+				dateRange = "-1",
+				endDateLabel = "Final Payment Date",
+				initialDateLabel = "Initial Payment Date");
+		}
+
+		task ("The he can generate the CSV file") {
+			EVPUtils.downloadFileViaCurl(fileName = "payment-report.csv");
+		}
+	}
+
 	@description = "LPS-164731 - Finance user should be able to see the Report card through 'Reports' Tab on top menu"
 	@priority = 5
 	test ReportCardShouldBeVisibleForFinanceUsers {

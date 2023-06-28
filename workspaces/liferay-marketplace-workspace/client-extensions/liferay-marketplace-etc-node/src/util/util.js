@@ -15,8 +15,8 @@
 import {existsSync, readFileSync} from 'fs';
 import {join} from 'path';
 
-import config from './configTreePath';
-import log from './log';
+import config from './configTreePath.js';
+import log from './log.js';
 
 export function getExtInitMetadata(property, defaultValue) {
 	const configPath = join('/etc/liferay/lxc/ext-init-metadata', property);

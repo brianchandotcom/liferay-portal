@@ -90,4 +90,41 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-179484. The site administrater cannot enable OpenAI from site after disable it from instance settings."
+	@priority = 3
+	test CannotEnableOpenAIFromSiteSettingsAfterDisableItFromInstanceSettings {
+		property test.liferay.virtual.instance = "false";
+
+		task ("Given a site administrater disable the OpenAI from Instance Settings") {
+			HeadlessSite.addSite(siteName = ${randomSiteName});
+
+			PortalSettings.gotoConfiguration(
+				configurationCategory = "AI Creator",
+				configurationName = "OpenAI",
+				configurationScope = "Virtual Instance Scope");
+
+			FormFields.disableCheckbox(fieldName = "Enable OpenAI to Create Content");
+
+			PortletEntry.save();
+		}
+
+		task ("When the site administrater accesses to the OpenAI configuration page") {
+			Site.openSiteSettingsAdmin(siteURLKey = ${siteURLKey});
+
+			Click(
+				key_itemName = "AI Creator",
+				locator1 = "ListGroupItem#ITEM_TEXT");
+
+			Navigator.gotoNavTab(navTab = "OpenAI");
+		}
+
+		task ("Then the site administrater should see the Enable OpenAI to Create Content is disabled") {
+			AssertNotEditable.assertNotEditableNotVisible(
+				checkboxName = "Enable OpenAI to Create Content",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			Alert.viewInfoMessageSpecific(infoMessage = "To enable OpenAI in this site, it must also be enabled from instance settings.");
+		}
+	}
+
 }

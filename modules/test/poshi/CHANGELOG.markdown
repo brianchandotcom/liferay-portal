@@ -1,5 +1,53 @@
 # Poshi Runner Change Log
 
+## 1.0.438
+
+### Core
+
+* [POSHI-535](https://liferay.atlassian.net/browse/POSHI-535) - Refactor PropsValues and PropsUtil so that instances of properties can be stored per thread
+
+### Gradle
+
+* [POSHI-513](https://liferay.atlassian.net/browse/POSHI-513) - Even though Chrome 100 is being ran within the legacy database dump jobs, it is not displayed clearly
+
+### IDE
+
+* [POSHI-556](https://liferay.atlassian.net/browse/POSHI-556) - Bump the version for the VCSode Poshi extension to prepare for publish
+
+### Other
+
+* [LPS-188279](https://issues.liferay.com/browse/LPS-188279) - Add HEAD support to JSONCurlUtil for Poshi
+* [LRQA-80462](https://issues.liferay.com/browse/LRQA-80462) - Deprecated methods for Copy/Paste should be replaced
+* [LRQA-80464](https://issues.liferay.com/browse/LRQA-80464) - Deprecated method "selenium.antCommand" should be replaced
+
+### Runner
+
+* [POSHI-25](https://liferay.atlassian.net/browse/POSHI-25) - Support other data structures such as a Map or JSON
+* [POSHI-553](https://liferay.atlassian.net/browse/POSHI-553) - cannot be cast to java.lang.String in com.liferay.poshi.runner.util.HttpRequestUtilTest
+* [POSHI-555](https://liferay.atlassian.net/browse/POSHI-555) - Modify PoshiRunnerExecutor and LiferaySeleniumMethod to allow for other classes
+* [POSHI-566](https://liferay.atlassian.net/browse/POSHI-566) - Test methods that use Strings in BWDI but use other objests, i.e. ints, in Poshi Script
+
+### Script
+
+* [POSHI-270](https://liferay.atlassian.net/browse/POSHI-270) - Add required and optional variables as a method signature for macro commands
+* [POSHI-546](https://liferay.atlassian.net/browse/POSHI-546) - Add required and optional variables as a method signature for function commands
+* [POSHI-547](https://liferay.atlassian.net/browse/POSHI-547) - Add and enforce metadata for macro and function commands so Poshi code is more self explanatory
+* [POSHI-558](https://liferay.atlassian.net/browse/POSHI-558) - Investigate failure in com.liferay.poshi.runner.resources.PoshiResources70xTest
+
+### Utils
+
+* [POSHI-551](https://liferay.atlassian.net/browse/POSHI-551) - Make table var to be on a new line when it is the only one parameter
+* [POSHI-554](https://liferay.atlassian.net/browse/POSHI-554) - Create new util, MapUtil, that will handle maps
+
+### Validation
+
+* [POSHI-545](https://liferay.atlassian.net/browse/POSHI-545) - Enforce summary annotation for all macros
+
+### WebDriver
+
+* [POSHI-464](https://liferay.atlassian.net/browse/POSHI-464) - Investigate usage of Chrome DevTools Protocol methods into Poshi
+* [POSHI-552](https://liferay.atlassian.net/browse/POSHI-552) - When invoke macro, the variable will override the value of variable with same name
+
 ## 1.0.430
 
 ### Core

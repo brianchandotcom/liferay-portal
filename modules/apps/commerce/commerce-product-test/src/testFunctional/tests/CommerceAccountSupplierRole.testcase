@@ -503,8 +503,8 @@ definition {
 				locator1 = "CommerceNavigation#ENTRY_NAME");
 		}
 
-		task ("And cannot add/delete catalogs") {
-			AssertElementNotPresent(locator1 = "Button#PLUS");
+		task ("And can add but cannot delete catalogs") {
+			AssertElementPresent(locator1 = "Button#PLUS");
 
 			AssertElementNotPresent(
 				key_value = "Minium",

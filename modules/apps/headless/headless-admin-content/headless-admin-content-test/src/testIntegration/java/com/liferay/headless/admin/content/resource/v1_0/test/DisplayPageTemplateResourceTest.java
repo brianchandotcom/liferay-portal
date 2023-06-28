@@ -17,6 +17,9 @@ package com.liferay.headless.admin.content.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.headless.admin.content.client.dto.v1_0.DisplayPageTemplate;
+import com.liferay.headless.admin.content.client.pagination.Page;
+import com.liferay.headless.admin.content.client.pagination.Pagination;
+import com.liferay.headless.admin.content.client.resource.v1_0.DisplayPageTemplateResource;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
@@ -26,6 +29,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityField;
@@ -33,6 +37,7 @@ import com.liferay.portal.test.rule.Inject;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -55,6 +60,61 @@ public class DisplayPageTemplateResourceTest
 			displayPageTemplateResource.getSiteDisplayPageTemplate(
 				testGroup.getGroupId(),
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryKey()));
+	}
+
+	@Override
+	@Test
+	public void testGetSiteDisplayPageTemplatesPage() throws Exception {
+		super.testGetSiteDisplayPageTemplatesPage();
+
+		Page<DisplayPageTemplate> page =
+			displayPageTemplateResource.getSiteDisplayPageTemplatesPage(
+				testGroup.getGroupId(), Pagination.of(1, 10), null);
+
+		List<DisplayPageTemplate> displayPageTemplates =
+			(List<DisplayPageTemplate>)page.getItems();
+
+		for (DisplayPageTemplate displayPageTemplate : displayPageTemplates) {
+			LayoutPageTemplateEntry layoutPageTemplateEntry =
+				_layoutPageTemplateEntryLocalService.getLayoutPageTemplateEntry(
+					testGroup.getGroupId(),
+					displayPageTemplate.getDisplayPageTemplateKey());
+
+			_layoutPageTemplateEntryLocalService.deleteLayoutPageTemplateEntry(
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
+		}
+
+		DisplayPageTemplate displayPageTemplate =
+			testGetSiteDisplayPageTemplatesPage_addDisplayPageTemplate(
+				testGroup.getGroupId(), randomDisplayPageTemplate());
+
+		DisplayPageTemplateResource.Builder builder =
+			DisplayPageTemplateResource.builder();
+
+		displayPageTemplateResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
+			LocaleUtil.getDefault()
+		).parameters(
+			"nestedFields", "profileURL"
+		).build();
+
+		page = displayPageTemplateResource.getSiteDisplayPageTemplatesPage(
+			testGroup.getGroupId(), Pagination.of(1, 10), null);
+
+		Assert.assertEquals(1, page.getTotalCount());
+
+		Assert.assertEquals(
+			displayPageTemplate.getDisplayPageTemplateKey(),
+			page.fetchFirstItem(
+			).getDisplayPageTemplateKey());
+
+		Assert.assertNotNull(
+			page.fetchFirstItem(
+			).getCreator(
+			).getProfileURL());
+
+		assertValid(page);
 	}
 
 	@Override

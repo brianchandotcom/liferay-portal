@@ -31,7 +31,6 @@ import com.liferay.object.service.ObjectFieldSettingLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
@@ -191,6 +190,11 @@ public class ObjectFieldUtil {
 			return;
 		}
 
+		existingValues.put("currentUserId", PrincipalThreadLocal.getUserId());
+
+		Map<String, ObjectField> objectFieldsMap = toObjectFieldsMap(
+			objectFields);
+
 		for (ObjectField objectField : objectFields) {
 			if (existingValues.get(objectField.getName()) == null) {
 				existingValues.put(
@@ -199,28 +203,24 @@ public class ObjectFieldUtil {
 						null, objectField.getObjectFieldId(),
 						ObjectFieldSettingLocalServiceUtil.getService(), null));
 			}
-		}
 
-		existingValues.put("currentUserId", PrincipalThreadLocal.getUserId());
+			if (objectField.isLocalized()) {
+				objectFieldsMap.put(
+					objectField.getI18nObjectFieldName(), objectField);
+			}
+			else if (Objects.equals(
+						objectField.getRelationshipType(),
+						ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
 
-		Map<String, ObjectField> objectFieldsMap = toObjectFieldsMap(
-			objectFields);
+				String objectRelationshipERCObjectFieldName =
+					ObjectFieldSettingUtil.getValue(
+						ObjectFieldSettingConstants.
+							NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME,
+						objectField);
 
-		for (ObjectField objectField :
-				ListUtil.filter(
-					objectFields,
-					objectField1 -> Objects.equals(
-						objectField1.getRelationshipType(),
-						ObjectRelationshipConstants.TYPE_ONE_TO_MANY))) {
-
-			String objectRelationshipERCObjectFieldName =
-				ObjectFieldSettingUtil.getValue(
-					ObjectFieldSettingConstants.
-						NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME,
-					objectField);
-
-			objectFieldsMap.put(
-				objectRelationshipERCObjectFieldName, objectField);
+				objectFieldsMap.put(
+					objectRelationshipERCObjectFieldName, objectField);
+			}
 		}
 
 		for (Map.Entry<String, Object> entry : values.entrySet()) {

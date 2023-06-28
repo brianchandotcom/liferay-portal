@@ -65,9 +65,6 @@ public class UpdateObjectEntryObjectActionExecutorImpl
 
 		TransactionCommitCallbackUtil.registerCallback(
 			() -> {
-				ObjectEntryThreadLocal.setSkipReadOnlyObjectFieldsValidation(
-					true);
-
 				_execute(
 					objectDefinition,
 					GetterUtil.getLong(payloadJSONObject.getLong("classPK")),

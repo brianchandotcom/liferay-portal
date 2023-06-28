@@ -81,13 +81,13 @@ public class AnalyticsDownloadUserCommerceMLRecommendDispatchTaskExecutor
 		analyticsBatchExportImportManager.importFromAnalyticsCloud(
 			null, dispatchTrigger.getCompanyId(),
 			HashMapBuilder.put(
-				"assetCategoryIds", "assetCategoryIds"
-			).put(
 				"createDate", "createDate"
 			).put(
 				"entryClassPK", "productId"
 			).put(
 				"jobId", "jobId"
+			).put(
+				"rank", "rank"
 			).put(
 				"recommendedEntryClassPK", "recommendedProductId"
 			).put(

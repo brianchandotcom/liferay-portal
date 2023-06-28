@@ -30,7 +30,7 @@ import com.liferay.portal.search.facet.site.SiteFacetSearchContributor;
 import com.liferay.portal.search.facet.tag.TagFacetSearchContributor;
 import com.liferay.portal.search.facet.type.TypeFacetSearchContributor;
 import com.liferay.portal.search.facet.user.UserFacetSearchContributor;
-import com.liferay.portal.search.rest.dto.v1_0.Facet;
+import com.liferay.portal.search.rest.dto.v1_0.FacetConfiguration;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 
 import java.util.Arrays;
@@ -47,129 +47,153 @@ import org.osgi.service.component.annotations.Reference;
 public class FacetRequestContributor {
 
 	public void contribute(
-		Facet[] facets, SearchRequestBuilder searchRequestBuilder) {
+		FacetConfiguration[] facetConfigurations,
+		SearchRequestBuilder searchRequestBuilder) {
 
-		for (Facet facet : facets) {
-			_setProperties(facet);
+		for (FacetConfiguration facetConfiguration : facetConfigurations) {
+			_setProperties(facetConfiguration);
 
-			if (StringUtil.equals("category", facet.getName())) {
-				_contributeCategoryFacet(facet, searchRequestBuilder);
+			if (StringUtil.equals("category", facetConfiguration.getName()) ||
+				StringUtil.equals("vocabulary", facetConfiguration.getName())) {
+
+				_contributeCategoryFacet(
+					facetConfiguration, searchRequestBuilder);
 			}
-			else if (StringUtil.equals("custom", facet.getName())) {
-				_contributeCustomFacet(facet, searchRequestBuilder);
+			else if (StringUtil.equals(
+						"custom", facetConfiguration.getName())) {
+
+				_contributeCustomFacet(
+					facetConfiguration, searchRequestBuilder);
 			}
-			else if (StringUtil.equals("date-range", facet.getName())) {
-				_contributeDateRangeFacet(facet, searchRequestBuilder);
+			else if (StringUtil.equals(
+						"date-range", facetConfiguration.getName())) {
+
+				_contributeDateRangeFacet(
+					facetConfiguration, searchRequestBuilder);
 			}
-			else if (StringUtil.equals("folder", facet.getName())) {
-				_contributeFolderFacet(facet, searchRequestBuilder);
+			else if (StringUtil.equals(
+						"folder", facetConfiguration.getName())) {
+
+				_contributeFolderFacet(
+					facetConfiguration, searchRequestBuilder);
 			}
-			else if (StringUtil.equals("nested", facet.getName())) {
-				_contributeNestedFacet(facet, searchRequestBuilder);
+			else if (StringUtil.equals(
+						"nested", facetConfiguration.getName())) {
+
+				_contributeNestedFacet(
+					facetConfiguration, searchRequestBuilder);
 			}
-			else if (StringUtil.equals("site", facet.getName())) {
-				_contributeSiteFacet(facet, searchRequestBuilder);
+			else if (StringUtil.equals("site", facetConfiguration.getName())) {
+				_contributeSiteFacet(facetConfiguration, searchRequestBuilder);
 			}
-			else if (StringUtil.equals("tag", facet.getName())) {
-				_contributeTagFacet(facet, searchRequestBuilder);
+			else if (StringUtil.equals("tag", facetConfiguration.getName())) {
+				_contributeTagFacet(facetConfiguration, searchRequestBuilder);
 			}
-			else if (StringUtil.equals("type", facet.getName())) {
-				_contributeTypeFacet(facet, searchRequestBuilder);
+			else if (StringUtil.equals("type", facetConfiguration.getName())) {
+				_contributeTypeFacet(facetConfiguration, searchRequestBuilder);
 			}
-			else if (StringUtil.equals("user", facet.getName())) {
-				_contributeUserFacet(facet, searchRequestBuilder);
+			else if (StringUtil.equals("user", facetConfiguration.getName())) {
+				_contributeUserFacet(facetConfiguration, searchRequestBuilder);
 			}
 		}
 	}
 
 	private void _contributeCategoryFacet(
-		Facet facet, SearchRequestBuilder searchRequestBuilder) {
+		FacetConfiguration facetConfiguration,
+		SearchRequestBuilder searchRequestBuilder) {
 
 		_categoryFacetSearchContributor.contribute(
 			searchRequestBuilder,
 			categoryFacetBuilder -> categoryFacetBuilder.aggregationName(
-				facet.getAggregationName()
+				facetConfiguration.getAggregationName()
 			).frequencyThreshold(
-				facet.getFrequencyThreshold()
+				facetConfiguration.getFrequencyThreshold()
 			).maxTerms(
-				facet.getMaxTerms()
+				facetConfiguration.getMaxTerms()
 			).selectedCategoryIds(
-				_toLongArray(facet.getValues())
+				_toLongArray(facetConfiguration.getValues())
 			).vocabularyIds(
-				_getVocabularyIdsAttribute(facet)
+				_getVocabularyIdsAttribute(facetConfiguration)
 			));
 	}
 
 	private void _contributeCustomFacet(
-		Facet facet, SearchRequestBuilder searchRequestBuilder) {
+		FacetConfiguration facetConfiguration,
+		SearchRequestBuilder searchRequestBuilder) {
 
-		if (!_hasAttributes(facet, "field")) {
+		if (!_hasAttributes(facetConfiguration, "field")) {
 			return;
 		}
 
 		_customFacetSearchContributor.contribute(
 			searchRequestBuilder,
 			customFacetBuilder -> customFacetBuilder.aggregationName(
-				facet.getAggregationName()
+				facetConfiguration.getAggregationName()
 			).fieldToAggregate(
-				GetterUtil.getString(_getAttribute(facet, "field"))
+				GetterUtil.getString(_getAttribute(facetConfiguration, "field"))
 			).frequencyThreshold(
-				facet.getFrequencyThreshold()
+				facetConfiguration.getFrequencyThreshold()
 			).maxTerms(
-				facet.getMaxTerms()
+				facetConfiguration.getMaxTerms()
 			).selectedValues(
-				_toStringArray(facet.getValues())
+				_toStringArray(facetConfiguration.getValues())
 			));
 	}
 
 	private void _contributeDateRangeFacet(
-		Facet facet, SearchRequestBuilder searchRequestBuilder) {
+		FacetConfiguration facetConfiguration,
+		SearchRequestBuilder searchRequestBuilder) {
 
-		if (!_hasAttributes(facet, "field", "format", "ranges")) {
+		if (!_hasAttributes(facetConfiguration, "field", "format", "ranges")) {
 			return;
 		}
 
 		_dateRangeFacetSearchContributor.contribute(
 			searchRequestBuilder,
 			dateRangeFacetBuilder -> dateRangeFacetBuilder.aggregationName(
-				facet.getAggregationName()
+				facetConfiguration.getAggregationName()
 			).field(
-				GetterUtil.getString(_getAttribute(facet, "field"))
+				GetterUtil.getString(_getAttribute(facetConfiguration, "field"))
 			).format(
-				GetterUtil.getString(_getAttribute(facet, "format"))
+				GetterUtil.getString(
+					_getAttribute(facetConfiguration, "format"))
 			).frequencyThreshold(
-				facet.getFrequencyThreshold()
+				facetConfiguration.getFrequencyThreshold()
 			).maxTerms(
-				facet.getMaxTerms()
+				facetConfiguration.getMaxTerms()
 			).rangesJSONArray(
 				_jsonFactory.createJSONArray(
-					(List<Map<String, Object>>)_getAttribute(facet, "ranges"))
+					(List<Map<String, Object>>)_getAttribute(
+						facetConfiguration, "ranges"))
 			).selectedRanges(
-				_toStringArray(facet.getValues())
+				_toStringArray(facetConfiguration.getValues())
 			));
 	}
 
 	private void _contributeFolderFacet(
-		Facet facet, SearchRequestBuilder searchRequestBuilder) {
+		FacetConfiguration facetConfiguration,
+		SearchRequestBuilder searchRequestBuilder) {
 
 		_folderFacetSearchContributor.contribute(
 			searchRequestBuilder,
 			folderFacetBuilder -> folderFacetBuilder.aggregationName(
-				facet.getAggregationName()
+				facetConfiguration.getAggregationName()
 			).frequencyThreshold(
-				facet.getFrequencyThreshold()
+				facetConfiguration.getFrequencyThreshold()
 			).maxTerms(
-				facet.getMaxTerms()
+				facetConfiguration.getMaxTerms()
 			).selectedFolderIds(
-				_toLongArray(facet.getValues())
+				_toLongArray(facetConfiguration.getValues())
 			));
 	}
 
 	private void _contributeNestedFacet(
-		Facet facet, SearchRequestBuilder searchRequestBuilder) {
+		FacetConfiguration facetConfiguration,
+		SearchRequestBuilder searchRequestBuilder) {
 
 		if (!_hasAttributes(
-				facet, "field", "filterField", "filterValue", "path")) {
+				facetConfiguration, "field", "filterField", "filterValue",
+				"path")) {
 
 			return;
 		}
@@ -177,106 +201,118 @@ public class FacetRequestContributor {
 		_nestedFacetSearchContributor.contribute(
 			searchRequestBuilder,
 			nestedFacetBuilder -> nestedFacetBuilder.aggregationName(
-				facet.getAggregationName()
+				facetConfiguration.getAggregationName()
 			).fieldToAggregate(
-				GetterUtil.getString(_getAttribute(facet, "field"))
+				GetterUtil.getString(_getAttribute(facetConfiguration, "field"))
 			).filterField(
-				GetterUtil.getString(_getAttribute(facet, "filterField"))
+				GetterUtil.getString(
+					_getAttribute(facetConfiguration, "filterField"))
 			).filterValue(
-				GetterUtil.getString(_getAttribute(facet, "filterValue"))
+				GetterUtil.getString(
+					_getAttribute(facetConfiguration, "filterValue"))
 			).frequencyThreshold(
-				facet.getFrequencyThreshold()
+				facetConfiguration.getFrequencyThreshold()
 			).maxTerms(
-				facet.getMaxTerms()
+				facetConfiguration.getMaxTerms()
 			).path(
-				GetterUtil.getString(_getAttribute(facet, "path"))
+				GetterUtil.getString(_getAttribute(facetConfiguration, "path"))
 			).selectedValues(
-				_toStringArray(facet.getValues())
+				_toStringArray(facetConfiguration.getValues())
 			));
 	}
 
 	private void _contributeSiteFacet(
-		Facet facet, SearchRequestBuilder searchRequestBuilder) {
+		FacetConfiguration facetConfiguration,
+		SearchRequestBuilder searchRequestBuilder) {
 
 		_siteFacetSearchContributor.contribute(
 			searchRequestBuilder,
 			siteFacetBuilder -> siteFacetBuilder.aggregationName(
-				facet.getAggregationName()
+				facetConfiguration.getAggregationName()
 			).frequencyThreshold(
-				facet.getFrequencyThreshold()
+				facetConfiguration.getFrequencyThreshold()
 			).maxTerms(
-				facet.getMaxTerms()
+				facetConfiguration.getMaxTerms()
 			).selectedGroupIds(
-				_toStringArray(facet.getValues())
+				_toStringArray(facetConfiguration.getValues())
 			));
 	}
 
 	private void _contributeTagFacet(
-		Facet facet, SearchRequestBuilder searchRequestBuilder) {
+		FacetConfiguration facetConfiguration,
+		SearchRequestBuilder searchRequestBuilder) {
 
 		_tagFacetSearchContributor.contribute(
 			searchRequestBuilder,
 			tagFacetBuilder -> tagFacetBuilder.aggregationName(
-				facet.getAggregationName()
+				facetConfiguration.getAggregationName()
 			).frequencyThreshold(
-				facet.getFrequencyThreshold()
+				facetConfiguration.getFrequencyThreshold()
 			).maxTerms(
-				facet.getMaxTerms()
+				facetConfiguration.getMaxTerms()
 			).selectedTagNames(
-				_toStringArray(facet.getValues())
+				_toStringArray(facetConfiguration.getValues())
 			));
 	}
 
 	private void _contributeTypeFacet(
-		Facet facet, SearchRequestBuilder searchRequestBuilder) {
+		FacetConfiguration facetConfiguration,
+		SearchRequestBuilder searchRequestBuilder) {
 
 		_typeFacetSearchContributor.contribute(
 			searchRequestBuilder,
 			typeFacetBuilder -> typeFacetBuilder.aggregationName(
-				facet.getAggregationName()
+				facetConfiguration.getAggregationName()
 			).frequencyThreshold(
-				facet.getFrequencyThreshold()
+				facetConfiguration.getFrequencyThreshold()
 			).selectedEntryClassNames(
-				_toStringArray(facet.getValues())
+				_toStringArray(facetConfiguration.getValues())
 			));
 	}
 
 	private void _contributeUserFacet(
-		Facet facet, SearchRequestBuilder searchRequestBuilder) {
+		FacetConfiguration facetConfiguration,
+		SearchRequestBuilder searchRequestBuilder) {
 
 		_userFacetSearchContributor.contribute(
 			searchRequestBuilder,
 			userFacetBuilder -> userFacetBuilder.aggregationName(
-				facet.getAggregationName()
+				facetConfiguration.getAggregationName()
 			).frequencyThreshold(
-				facet.getFrequencyThreshold()
+				facetConfiguration.getFrequencyThreshold()
 			).maxTerms(
-				facet.getMaxTerms()
+				facetConfiguration.getMaxTerms()
 			).selectedUserNames(
-				_toStringArray(facet.getValues())
+				_toStringArray(facetConfiguration.getValues())
 			));
 	}
 
-	private Object _getAttribute(Facet facet, String key) {
-		Map<String, Object> attributes = facet.getAttributes();
+	private Object _getAttribute(
+		FacetConfiguration facetConfiguration, String key) {
+
+		Map<String, Object> attributes = facetConfiguration.getAttributes();
 
 		return attributes.get(key);
 	}
 
-	private String[] _getVocabularyIdsAttribute(Facet facet) {
-		if (!_hasAttributes(facet, "vocabularyIds")) {
+	private String[] _getVocabularyIdsAttribute(
+		FacetConfiguration facetConfiguration) {
+
+		if (!_hasAttributes(facetConfiguration, "vocabularyIds")) {
 			return new String[0];
 		}
 
-		Map<String, Object> attributes = facet.getAttributes();
+		Map<String, Object> attributes = facetConfiguration.getAttributes();
 
 		List<String> vocabularyIds = (List)attributes.get("vocabularyIds");
 
 		return vocabularyIds.toArray(new String[0]);
 	}
 
-	private boolean _hasAttributes(Facet facet, String... keys) {
-		Map<String, Object> attributes = facet.getAttributes();
+	private boolean _hasAttributes(
+		FacetConfiguration facetConfiguration, String... keys) {
+
+		Map<String, Object> attributes = facetConfiguration.getAttributes();
 
 		if (MapUtil.isEmpty(attributes)) {
 			return false;
@@ -291,14 +327,15 @@ public class FacetRequestContributor {
 		return true;
 	}
 
-	private void _setProperties(Facet facet) {
-		if (Validator.isBlank(facet.getAggregationName())) {
-			facet.setAggregationName(facet.getName());
+	private void _setProperties(FacetConfiguration facetConfiguration) {
+		if (Validator.isBlank(facetConfiguration.getAggregationName())) {
+			facetConfiguration.setAggregationName(facetConfiguration.getName());
 		}
 
-		facet.setFrequencyThreshold(
-			_toInt(1, facet.getFrequencyThreshold(), 0));
-		facet.setMaxTerms(_toInt(10, facet.getMaxTerms(), 0));
+		facetConfiguration.setFrequencyThreshold(
+			_toInt(1, facetConfiguration.getFrequencyThreshold(), 0));
+		facetConfiguration.setMaxTerms(
+			_toInt(10, facetConfiguration.getMaxTerms(), 0));
 	}
 
 	private int _toInt(int defaultValue, Integer value, int minValue) {

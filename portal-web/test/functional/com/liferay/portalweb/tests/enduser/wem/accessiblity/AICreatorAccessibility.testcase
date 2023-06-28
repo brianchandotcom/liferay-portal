@@ -1,0 +1,54 @@
+@component-name = "portal-wcm"
+definition {
+
+	property custom.properties = "feature.flag.LPS-179483=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testcase.url = "http://localhost:8080";
+	property testray.component.names = "Echo Accessibility";
+	property testray.main.component.name = "AI-Creator";
+
+	static var randomSiteName = StringUtil.randomString(8);
+
+	var siteURLKey = StringUtil.toLowerCase(${randomSiteName});
+
+	setUp {
+		task ("Sign in") {
+			User.firstLoginPG();
+		}
+	}
+
+	@description = "This is a test for LPS-181285. The screen reader should announce the popover message when OpenAI is not configured."
+	@priority = 4
+	test AnnouncePopoverMessageWhenOpenAINotConfigured {
+		task ("Given a site administrater doesn't configure the OpenAI") {
+			HeadlessSite.addSite(siteName = ${randomSiteName});
+		}
+
+		task ("When the site administrater clicks the AI Creator button in web content editor") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = ${siteURLKey});
+
+			WebContentNavigator.gotoAddCP();
+
+			Click.javaScriptClick(locator1 = "CKEditor#TOOLBAR_AI_CREATOR_BUTTON");
+		}
+
+		task ("Then the screen reader should announce the popover message") {
+			AssertAttributeValue(
+				attribute1 = "role",
+				locator1 = "//div[contains(@class,'popover-top')]",
+				value1 = "alert");
+
+			TestUtils.assertElementFocused(element = "//div[contains(@class,'popover-top')]");
+
+			AssertVisible(
+				key_header = "Configure OpenAI",
+				locator1 = "Tooltip#POPOVER_HEADER");
+
+			AssertVisible(
+				key_content = "API authentication is needed to use this feature. Add an API Key from the settings page or contact your administrator.",
+				locator1 = "Tooltip#POPOVER_BODY_CONTENT");
+		}
+	}
+
+}

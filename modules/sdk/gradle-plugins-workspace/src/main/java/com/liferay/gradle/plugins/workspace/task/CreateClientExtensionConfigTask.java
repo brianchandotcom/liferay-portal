@@ -14,6 +14,8 @@
 
 package com.liferay.gradle.plugins.workspace.task;
 
+import aQute.bnd.osgi.Constants;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
@@ -149,9 +151,12 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 			Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)
 		);
 
-		substitutionMap.put(
-			"__PROJECT_ID__",
-			StringUtil.toAlphaNumericLowerCase(_project.getName()));
+		String projectId = StringUtil.toAlphaNumericLowerCase(
+			_project.getName());
+
+		substitutionMap.put("__PROJECT_ID__", projectId);
+
+		pluginPackageProperties.put(Constants.BUNDLE_SYMBOLICNAME, projectId);
 
 		_writeToOutputFile(
 			classificationGrouping, getInputDockerfileFile(), getDockerFile(),

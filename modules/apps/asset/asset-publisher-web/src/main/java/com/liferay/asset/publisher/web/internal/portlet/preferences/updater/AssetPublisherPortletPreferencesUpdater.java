@@ -21,6 +21,7 @@ import com.liferay.asset.publisher.web.internal.helper.AssetPublisherWebHelper;
 import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.portlet.preferences.updater.PortletPreferencesUpdater;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -76,7 +77,7 @@ public class AssetPublisherPortletPreferencesUpdater
 
 		LayoutClassedModelUsage layoutClassedModelUsage =
 			_layoutClassedModelUsageLocalService.fetchLayoutClassedModelUsage(
-				classNameId, classPK, portletId,
+				classNameId, classPK, StringPool.BLANK, portletId,
 				_portal.getClassNameId(Portlet.class), layout.getPlid());
 
 		if (layoutClassedModelUsage != null) {
@@ -84,8 +85,8 @@ public class AssetPublisherPortletPreferencesUpdater
 		}
 
 		_layoutClassedModelUsageLocalService.addLayoutClassedModelUsage(
-			layout.getGroupId(), classNameId, classPK, portletId,
-			_portal.getClassNameId(Portlet.class), layout.getPlid(),
+			layout.getGroupId(), classNameId, classPK, StringPool.BLANK,
+			portletId, _portal.getClassNameId(Portlet.class), layout.getPlid(),
 			ServiceContextThreadLocal.getServiceContext());
 	}
 

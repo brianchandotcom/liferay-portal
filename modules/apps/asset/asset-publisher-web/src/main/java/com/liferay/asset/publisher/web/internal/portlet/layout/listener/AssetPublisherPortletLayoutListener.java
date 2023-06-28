@@ -256,7 +256,7 @@ public class AssetPublisherPortletLayoutListener
 
 				_layoutClassedModelUsageLocalService.addLayoutClassedModelUsage(
 					themeDisplay.getScopeGroupId(), classNameId,
-					assetEntry.getClassPK(), portletId,
+					assetEntry.getClassPK(), StringPool.BLANK, portletId,
 					_portal.getClassNameId(Portlet.class), plid,
 					serviceContext);
 			}

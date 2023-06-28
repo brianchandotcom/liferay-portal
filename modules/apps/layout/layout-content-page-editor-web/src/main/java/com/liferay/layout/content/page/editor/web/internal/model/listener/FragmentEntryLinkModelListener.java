@@ -275,6 +275,8 @@ public class FragmentEntryLinkModelListener
 					fetchLayoutClassedModelUsage(
 						layoutDisplayPageObjectProvider.getClassNameId(),
 						layoutDisplayPageObjectProvider.getClassPK(),
+						layoutDisplayPageObjectProvider.
+							getExternalReferenceCode(),
 						String.valueOf(
 							fragmentEntryLink.getFragmentEntryLinkId()),
 						_getFragmentEntryLinkClassNameId(),
@@ -295,6 +297,7 @@ public class FragmentEntryLinkModelListener
 				fragmentEntryLink.getGroupId(),
 				layoutDisplayPageObjectProvider.getClassNameId(),
 				layoutDisplayPageObjectProvider.getClassPK(),
+				layoutDisplayPageObjectProvider.getExternalReferenceCode(),
 				String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
 				_getFragmentEntryLinkClassNameId(), fragmentEntryLink.getPlid(),
 				serviceContext);

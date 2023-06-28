@@ -23,6 +23,7 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.portlet.preferences.updater.PortletPreferencesUpdater;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -80,7 +81,7 @@ public class JournalContentPortletPreferencesUpdater
 		LayoutClassedModelUsage layoutClassedModelUsage =
 			_layoutClassedModelUsageLocalService.fetchLayoutClassedModelUsage(
 				_portal.getClassNameId(JournalArticle.class),
-				article.getResourcePrimKey(), portletId,
+				article.getResourcePrimKey(), StringPool.BLANK, portletId,
 				_portal.getClassNameId(Portlet.class), layout.getPlid());
 
 		if (layoutClassedModelUsage != null) {
@@ -89,7 +90,7 @@ public class JournalContentPortletPreferencesUpdater
 
 		_layoutClassedModelUsageLocalService.addLayoutClassedModelUsage(
 			layout.getGroupId(), _portal.getClassNameId(JournalArticle.class),
-			article.getResourcePrimKey(), portletId,
+			article.getResourcePrimKey(), StringPool.BLANK, portletId,
 			_portal.getClassNameId(Portlet.class), layout.getPlid(),
 			ServiceContextThreadLocal.getServiceContext());
 	}

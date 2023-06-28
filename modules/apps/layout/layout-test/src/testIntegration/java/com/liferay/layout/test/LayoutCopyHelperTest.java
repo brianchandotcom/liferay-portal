@@ -217,9 +217,9 @@ public class LayoutCopyHelperTest {
 
 		_layoutClassedModelUsageLocalService.addLayoutClassedModelUsage(
 			_group.getGroupId(), RandomTestUtil.randomLong(),
-			RandomTestUtil.randomLong(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomLong(), sourceLayout.getPlid(),
-			new ServiceContext());
+			RandomTestUtil.randomLong(), StringPool.BLANK,
+			RandomTestUtil.randomString(), RandomTestUtil.randomLong(),
+			sourceLayout.getPlid(), new ServiceContext());
 
 		Layout targetLayout = LayoutTestUtil.addTypePortletLayout(_group);
 
@@ -237,9 +237,9 @@ public class LayoutCopyHelperTest {
 
 		_layoutClassedModelUsageLocalService.addLayoutClassedModelUsage(
 			_group.getGroupId(), RandomTestUtil.randomLong(),
-			RandomTestUtil.randomLong(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomLong(), sourceLayout.getPlid(),
-			new ServiceContext());
+			RandomTestUtil.randomLong(), StringPool.BLANK,
+			RandomTestUtil.randomString(), RandomTestUtil.randomLong(),
+			sourceLayout.getPlid(), new ServiceContext());
 
 		targetLayout = LayoutTestUtil.addTypeContentLayout(_group);
 

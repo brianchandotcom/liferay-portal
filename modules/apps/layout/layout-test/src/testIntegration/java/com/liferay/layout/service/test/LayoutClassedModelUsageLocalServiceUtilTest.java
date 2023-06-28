@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalServiceUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -69,8 +70,9 @@ public class LayoutClassedModelUsageLocalServiceUtilTest {
 	private void _addLayoutUsage() {
 		_layoutClassedModelUsageLocalService.addLayoutClassedModelUsage(
 			_group.getGroupId(), _layout.getClassNameId(), _layout.getClassPK(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomLong(),
-			RandomTestUtil.randomLong(), new ServiceContext());
+			StringPool.BLANK, RandomTestUtil.randomString(),
+			RandomTestUtil.randomLong(), RandomTestUtil.randomLong(),
+			new ServiceContext());
 	}
 
 	@DeleteAfterTestRun

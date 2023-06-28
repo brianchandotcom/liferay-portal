@@ -22,6 +22,7 @@ import {ReadOnlyContainer} from './ReadOnlyContainer';
 interface AdvancedTabProps {
 	creationLanguageId: Liferay.Language.Locale;
 	errors: ObjectFieldErrors;
+	isDefaultStorageType: boolean;
 	readOnlySidebarElements: SidebarCategory[];
 	setValues: (value: Partial<ObjectField>) => void;
 	sidebarElements: SidebarCategory[];
@@ -31,6 +32,7 @@ interface AdvancedTabProps {
 export function AdvancedTab({
 	creationLanguageId,
 	errors,
+	isDefaultStorageType,
 	readOnlySidebarElements,
 	setValues,
 	sidebarElements,
@@ -38,7 +40,7 @@ export function AdvancedTab({
 }: AdvancedTabProps) {
 	return (
 		<>
-			{Liferay.FeatureFlags['LPS-170122'] && (
+			{Liferay.FeatureFlags['LPS-170122'] && isDefaultStorageType && (
 				<ReadOnlyContainer
 					disabled={
 						values.system ||

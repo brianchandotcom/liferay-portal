@@ -148,6 +148,21 @@ export default function EditObjectField({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [objectFieldId]);
 
+	const showAdvancedTab = () => {
+		if (Liferay.FeatureFlags['LPS-170122'] && isDefaultStorageType) {
+			return true;
+		}
+
+		if (
+			Liferay.FeatureFlags['LPS-163716'] &&
+			values.businessType === 'Picklist'
+		) {
+			return true;
+		}
+
+		return false;
+	};
+
 	return (
 		<SidePanelForm
 			className="lfr-objects__edit-object-field"
@@ -155,9 +170,7 @@ export default function EditObjectField({
 			readOnly={readOnly}
 			title={Liferay.Language.get('field')}
 		>
-			{Liferay.FeatureFlags['LPS-170122'] ||
-			(Liferay.FeatureFlags['LPS-163716'] &&
-				values.businessType === 'Picklist') ? (
+			{showAdvancedTab() ? (
 				<>
 					<ClayTabs className="side-panel-iframe__tabs">
 						{TABS.map((label, index) => (
@@ -199,6 +212,7 @@ export default function EditObjectField({
 							<AdvancedTab
 								creationLanguageId={creationLanguageId}
 								errors={errors}
+								isDefaultStorageType={isDefaultStorageType}
 								readOnlySidebarElements={
 									readOnlySidebarElements
 								}

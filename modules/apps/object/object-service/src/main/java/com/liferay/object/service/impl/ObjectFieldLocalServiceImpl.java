@@ -277,16 +277,11 @@ public class ObjectFieldLocalServiceImpl
 			dbColumnName = name;
 		}
 
-		String readOnly = ObjectFieldConstants.READ_ONLY_FALSE;
-
-		if (_readOnlyObjectFieldNames.contains(name)) {
-			readOnly = ObjectFieldConstants.READ_ONLY_TRUE;
-		}
-
 		return _addObjectField(
 			null, userId, 0, objectDefinitionId, businessType, dbColumnName,
 			dbTableName, dbType, indexed, indexedAsKeyword, indexedLanguageId,
-			labelMap, false, name, readOnly, null, required, state, true);
+			labelMap, false, name, ObjectFieldConstants.READ_ONLY_FALSE, null,
+			required, state, true);
 	}
 
 	@Indexable(type = IndexableType.DELETE)
@@ -691,7 +686,10 @@ public class ObjectFieldLocalServiceImpl
 		newObjectField.setIndexedAsKeyword(indexedAsKeyword);
 		newObjectField.setIndexedLanguageId(indexedLanguageId);
 		newObjectField.setLabelMap(labelMap, LocaleUtil.getSiteDefault());
-		newObjectField.setReadOnly(_getReadOnly(businessType, readOnly));
+		newObjectField.setReadOnly(
+			_getReadOnly(
+				businessType, objectDefinition.isDefaultStorageType(), name,
+				readOnly, false));
 		newObjectField.setReadOnlyConditionExpression(
 			_getReadOnlyConditionExpression(
 				newObjectField.getReadOnly(), readOnlyConditionExpression));
@@ -828,7 +826,10 @@ public class ObjectFieldLocalServiceImpl
 		objectField.setLocalized(localized);
 		objectField.setLabelMap(labelMap, LocaleUtil.getSiteDefault());
 		objectField.setName(name);
-		objectField.setReadOnly(_getReadOnly(businessType, readOnly));
+		objectField.setReadOnly(
+			_getReadOnly(
+				businessType, objectDefinition.isDefaultStorageType(), name,
+				readOnly, system));
 		objectField.setReadOnlyConditionExpression(
 			_getReadOnlyConditionExpression(
 				objectField.getReadOnly(), readOnlyConditionExpression));
@@ -1081,7 +1082,18 @@ public class ObjectFieldLocalServiceImpl
 		return null;
 	}
 
-	private String _getReadOnly(String businessType, String readOnly) {
+	private String _getReadOnly(
+		String businessType, boolean defaultStorageType, String name,
+		String readOnly, boolean system) {
+
+		if (_readOnlyObjectFieldNames.contains(name)) {
+			return ObjectFieldConstants.READ_ONLY_TRUE;
+		}
+
+		if (!defaultStorageType && !system) {
+			return ObjectFieldConstants.READ_ONLY_FALSE;
+		}
+
 		if (Objects.equals(
 				businessType, ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION) ||
 			Objects.equals(

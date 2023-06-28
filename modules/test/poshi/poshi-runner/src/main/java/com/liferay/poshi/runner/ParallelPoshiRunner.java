@@ -142,7 +142,7 @@ public class ParallelPoshiRunner extends PoshiRunner {
 
 			testName = testName.replace("#", "_");
 
-			File file = new File("test-results/" + testName + "/output.log");
+			File file = new File("test-results/" + testName + "/console.txt");
 
 			File logFile = ParallelPrintStream.getLogFile();
 

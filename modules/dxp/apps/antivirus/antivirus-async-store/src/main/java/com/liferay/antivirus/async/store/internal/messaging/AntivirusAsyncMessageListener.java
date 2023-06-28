@@ -14,16 +14,11 @@
 
 package com.liferay.antivirus.async.store.internal.messaging;
 
+import com.liferay.antivirus.async.store.AntivirusScannerHelper;
 import com.liferay.antivirus.async.store.configuration.AntivirusAsyncConfiguration;
-import com.liferay.antivirus.async.store.constants.AntivirusAsyncConstants;
 import com.liferay.antivirus.async.store.constants.AntivirusAsyncDestinationNames;
-import com.liferay.antivirus.async.store.internal.event.AntivirusAsyncEventListenerManager;
 import com.liferay.antivirus.async.store.retry.AntivirusAsyncRetryScheduler;
 import com.liferay.antivirus.async.store.util.AntivirusAsyncUtil;
-import com.liferay.document.library.kernel.antivirus.AntivirusScanner;
-import com.liferay.document.library.kernel.antivirus.AntivirusScannerException;
-import com.liferay.document.library.kernel.antivirus.AntivirusVirusFoundException;
-import com.liferay.document.library.kernel.store.Store;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -35,8 +30,6 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.MessageRunnable;
 import com.liferay.portal.kernel.util.MapUtil;
-
-import java.io.InputStream;
 
 import java.util.Map;
 
@@ -61,13 +54,7 @@ public class AntivirusAsyncMessageListener implements MessageListener {
 
 	@Override
 	public void receive(Message message) {
-		try {
-			_receive(message);
-		}
-		catch (Exception exception) {
-			_antivirusAsyncEventListenerManager.onProcessingError(
-				message, exception);
-		}
+		_antivirusScannerHelper.processMessage(message);
 	}
 
 	@Activate
@@ -125,98 +112,18 @@ public class AntivirusAsyncMessageListener implements MessageListener {
 		}
 	}
 
-	private void _receive(Message message) throws Exception {
-		long companyId = message.getLong("companyId");
-		long repositoryId = message.getLong("repositoryId");
-		String fileName = message.getString("fileName");
-		String versionLabel = message.getString("versionLabel");
-
-		boolean fileExists = _store.hasFile(
-			companyId, repositoryId, fileName, versionLabel);
-
-		if (!fileExists) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					StringBundler.concat(
-						AntivirusAsyncUtil.getFileIdentifier(message),
-						" is no longer present: ", message.getValues()));
-			}
-
-			_antivirusAsyncEventListenerManager.onMissing(message);
-
-			return;
-		}
-
-		try {
-			InputStream inputStream = _store.getFileAsStream(
-				companyId, repositoryId, fileName, versionLabel);
-
-			_antivirusScanner.scan(inputStream);
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					StringBundler.concat(
-						AntivirusAsyncUtil.getFileIdentifier(message),
-						" was scanned successfully: ", message.getValues()));
-			}
-
-			_antivirusAsyncEventListenerManager.onSuccess(message);
-		}
-		catch (AntivirusScannerException antivirusScannerException) {
-			int type = antivirusScannerException.getType();
-
-			if (antivirusScannerException instanceof
-					AntivirusVirusFoundException) {
-
-				AntivirusVirusFoundException antivirusVirusFoundException =
-					(AntivirusVirusFoundException)antivirusScannerException;
-
-				// Quarantine original file
-
-				_store.addFile(
-					companyId, AntivirusAsyncConstants.REPOSITORY_ID_QUARANTINE,
-					fileName, versionLabel,
-					_store.getFileAsStream(
-						companyId, repositoryId, fileName, versionLabel));
-
-				// Delete original file
-
-				_store.deleteFile(
-					companyId, repositoryId, fileName, versionLabel);
-
-				_antivirusAsyncEventListenerManager.onVirusFound(
-					message, antivirusVirusFoundException,
-					antivirusVirusFoundException.getVirusName());
-			}
-			else if (type == AntivirusScannerException.SIZE_LIMIT_EXCEEDED) {
-				_antivirusAsyncEventListenerManager.onSizeExceeded(
-					message, antivirusScannerException);
-			}
-			else {
-				throw antivirusScannerException;
-			}
-		}
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		AntivirusAsyncMessageListener.class);
-
-	@Reference
-	private AntivirusAsyncEventListenerManager
-		_antivirusAsyncEventListenerManager;
 
 	@Reference
 	private AntivirusAsyncRetryScheduler _antivirusAsyncRetryScheduler;
 
 	@Reference
-	private AntivirusScanner _antivirusScanner;
+	private AntivirusScannerHelper _antivirusScannerHelper;
 
 	@Reference
 	private DestinationFactory _destinationFactory;
 
 	private ServiceRegistration<Destination> _destinationServiceRegistration;
-
-	@Reference(target = "(default=true)")
-	private Store _store;
 
 }

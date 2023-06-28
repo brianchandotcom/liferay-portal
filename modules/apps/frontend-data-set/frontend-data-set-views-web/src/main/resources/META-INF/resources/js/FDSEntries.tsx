@@ -388,7 +388,7 @@ const AddFDSEntryModalContent = ({
 		}
 	};
 
-	const isValidPath = (path: string, allowedParameters: string[]):boolean => {
+	const isPathValid = (path: string, allowedParameters: string[]):boolean => {
 		const paramsMatcher = RegExp('\{(.*?)\}', 'g');
 		let matches;
 	
@@ -420,7 +420,7 @@ const AddFDSEntryModalContent = ({
 
 			schemaNames.forEach((schemaName) => {
 				paths.forEach((path: string) => {
-					if (! isValidPath(path, ALLOWED_ENDPOINTS_PARAMETERS)){
+					if (! isPathValid(path, ALLOWED_ENDPOINTS_PARAMETERS)){
 						return;
 					}
 				

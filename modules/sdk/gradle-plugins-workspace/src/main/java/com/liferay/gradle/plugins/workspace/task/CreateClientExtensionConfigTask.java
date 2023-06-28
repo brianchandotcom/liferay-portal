@@ -14,6 +14,7 @@
 
 package com.liferay.gradle.plugins.workspace.task;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -217,6 +218,29 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 
 	private void _addRequiredDeploymentContexts(
 		Properties pluginPackageProperties, File lcpJsonFile) {
+
+		try {
+			JsonNode jsonNode = _objectMapper.readTree(lcpJsonFile);
+
+			if (jsonNode.has("dependencies")) {
+				List<String> dependencies = new ArrayList<>();
+
+				for (JsonNode dependency : jsonNode.get("dependencies")) {
+					dependencies.add(dependency.textValue());
+				}
+
+				pluginPackageProperties.put(
+					"required-deployment-contexts",
+					com.liferay.petra.string.StringUtil.merge(
+						dependencies, StringPool.COMMA));
+			}
+		}
+		catch (IOException ioException) {
+			throw new GradleException(
+				StringBundler.concat(
+					"Unable to parse ", lcpJsonFile.getName(), "."),
+				ioException);
+		}
 	}
 
 	private Provider<RegularFile> _addTaskOutputFile(String path) {
@@ -511,6 +535,7 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 	private final Set<ClientExtension> _clientExtensions = new HashSet<>();
 	private Object _dockerFile;
 	private Object _lcpJsonFile;
+	private final ObjectMapper _objectMapper = new ObjectMapper();
 	private final Object _pluginPackagePropertiesFile;
 	private final Project _project = getProject();
 	private String _type = "frontend";

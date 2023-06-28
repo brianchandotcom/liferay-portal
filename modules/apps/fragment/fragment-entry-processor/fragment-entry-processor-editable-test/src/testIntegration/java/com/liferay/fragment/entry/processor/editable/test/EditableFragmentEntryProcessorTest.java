@@ -149,7 +149,7 @@ public class EditableFragmentEntryProcessorTest {
 		LocaleThreadLocal.setThemeDisplayLocale(LocaleUtil.US);
 
 		ServiceContextThreadLocal.pushServiceContext(
-			new MockServiceContext(_layout, _getThemeDisplay()));
+			new MockServiceContext(_layout, _getThemeDisplay(LocaleUtil.US)));
 	}
 
 	@After
@@ -176,7 +176,10 @@ public class EditableFragmentEntryProcessorTest {
 		Assert.assertEquals(
 			_processedHTML,
 			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
-				fragmentEntryLink, _getFragmentEntryProcessorContext()));
+				fragmentEntryLink,
+				_getFragmentEntryProcessorContext(
+					LocaleUtil.getMostRelevantLocale(),
+					FragmentEntryLinkConstants.EDIT)));
 	}
 
 	@Test
@@ -247,7 +250,8 @@ public class EditableFragmentEntryProcessorTest {
 
 		Element element = _getElement(
 			"data-lfr-background-image-id", "background-image", editableValues,
-			"fragment_entry_background_image.html");
+			"fragment_entry_background_image.html", LocaleUtil.getSiteDefault(),
+			FragmentEntryLinkConstants.EDIT);
 
 		String style = element.attr("style");
 
@@ -269,7 +273,8 @@ public class EditableFragmentEntryProcessorTest {
 
 		Element element = _getElement(
 			"data-lfr-editable-id", "image-square", editableValues,
-			"fragment_entry_image.html");
+			"fragment_entry_image.html", LocaleUtil.getSiteDefault(),
+			FragmentEntryLinkConstants.EDIT);
 
 		Assert.assertEquals(
 			fileEntry.getFileEntryId(),
@@ -288,7 +293,8 @@ public class EditableFragmentEntryProcessorTest {
 
 		Element element = _getElement(
 			"data-lfr-background-image-id", "background-image", editableValues,
-			"fragment_entry_background_image.html");
+			"fragment_entry_background_image.html", LocaleUtil.getSiteDefault(),
+			FragmentEntryLinkConstants.EDIT);
 
 		String style = element.attr("style");
 
@@ -310,7 +316,8 @@ public class EditableFragmentEntryProcessorTest {
 
 		Element element = _getElement(
 			"data-lfr-editable-id", "image-square", editableValues,
-			"fragment_entry_image.html");
+			"fragment_entry_image.html", LocaleUtil.getSiteDefault(),
+			FragmentEntryLinkConstants.EDIT);
 
 		Assert.assertEquals(
 			fileEntry.getFileEntryId(),
@@ -343,7 +350,8 @@ public class EditableFragmentEntryProcessorTest {
 			_getProcessedHTML("processed_fragment_entry_empty_string.html"),
 			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
 				fragmentEntryLink,
-				_getFragmentEntryProcessorContext(LocaleUtil.US)));
+				_getFragmentEntryProcessorContext(
+					LocaleUtil.US, FragmentEntryLinkConstants.EDIT)));
 	}
 
 	@Test(expected = FragmentEntryContentException.class)
@@ -400,7 +408,8 @@ public class EditableFragmentEntryProcessorTest {
 		Assert.assertThat(
 			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
 				fragmentEntryLink,
-				_getFragmentEntryProcessorContext(LocaleUtil.US)),
+				_getFragmentEntryProcessorContext(
+					LocaleUtil.US, FragmentEntryLinkConstants.EDIT)),
 			CoreMatchers.containsString("en_US-alt"));
 
 		Locale currentLocale = LocaleThreadLocal.getThemeDisplayLocale();
@@ -412,7 +421,8 @@ public class EditableFragmentEntryProcessorTest {
 			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
 				fragmentEntryLink,
 				_getFragmentEntryProcessorContext(
-					LocaleUtil.fromLanguageId("es_ES"))),
+					LocaleUtil.fromLanguageId("es_ES"),
+					FragmentEntryLinkConstants.EDIT)),
 			CoreMatchers.containsString("es_ES-alt"));
 
 		LocaleThreadLocal.setThemeDisplayLocale(currentLocale);
@@ -437,7 +447,8 @@ public class EditableFragmentEntryProcessorTest {
 			_processedHTML,
 			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
 				fragmentEntryLink,
-				_getFragmentEntryProcessorContext(LocaleUtil.US)));
+				_getFragmentEntryProcessorContext(
+					LocaleUtil.US, FragmentEntryLinkConstants.EDIT)));
 	}
 
 	@Test(expected = FragmentEntryContentException.class)
@@ -475,7 +486,8 @@ public class EditableFragmentEntryProcessorTest {
 			_processedHTML,
 			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
 				fragmentEntryLink,
-				_getFragmentEntryProcessorContext(LocaleUtil.CHINESE)));
+				_getFragmentEntryProcessorContext(
+					LocaleUtil.CHINESE, FragmentEntryLinkConstants.EDIT)));
 	}
 
 	private DDMStructure _addDDMStructure(Group group, String content)

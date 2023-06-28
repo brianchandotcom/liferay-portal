@@ -137,8 +137,6 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 
 		_runUpgrade();
 
-		_assertDefaultLayoutClassedModelUsage(
-			_journalArticle.getResourcePrimKey());
 		_assertLayoutClassedModelUsagesCount(
 			_journalArticle.getResourcePrimKey(), 4);
 
@@ -198,12 +196,10 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 		_assertLayoutClassedModelUsagesCount(
 			_journalArticle.getResourcePrimKey(), 0);
 
-		_layoutClassedModelUsageLocalService.addDefaultLayoutClassedModelUsage(
+		_layoutClassedModelUsageLocalService.addLayoutClassedModelUsage(
 			_journalArticle.getGroupId(), _journalArticleClassNameId,
-			_journalArticle.getResourcePrimKey(), new ServiceContext());
-
-		_assertDefaultLayoutClassedModelUsage(
-			_journalArticle.getResourcePrimKey());
+			_journalArticle.getResourcePrimKey(), StringPool.BLANK,
+			StringPool.BLANK, 0, 0, new ServiceContext());
 
 		_runUpgrade();
 
@@ -256,10 +252,6 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 
 		_runUpgrade();
 
-		_assertDefaultLayoutClassedModelUsage(
-			_journalArticle.getResourcePrimKey(),
-			journalArticle1.getResourcePrimKey(),
-			journalArticle2.getResourcePrimKey());
 		_assertLayoutClassedModelUsagesCount(
 			_journalArticle.getResourcePrimKey(), 2);
 		_assertLayoutClassedModelUsagesCount(
@@ -332,15 +324,6 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 
 		Assert.assertEquals(
 			portletPreferences.toString(), count, portletPreferences.size());
-	}
-
-	private void _assertDefaultLayoutClassedModelUsage(long... classPKs) {
-		for (long classPK : classPKs) {
-			Assert.assertTrue(
-				_layoutClassedModelUsageLocalService.
-					hasDefaultLayoutClassedModelUsage(
-						_journalArticleClassNameId, classPK));
-		}
 	}
 
 	private void _assertJournalContentSearchesCount(

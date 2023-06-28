@@ -410,6 +410,37 @@
 		<field name="CPDefinitionOptionValueRelId" type="long" />
 		<field name="CPInstanceId" type="long" />
 	</model>
+	<model name="com.liferay.commerce.product.model.CPInstanceUnitOfMeasure">
+		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
+		<field name="uuid" type="String" />
+		<field name="CPInstanceUnitOfMeasureId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="active" type="boolean" />
+		<field name="CPInstanceId" type="long" />
+		<field name="incrementalOrderQuantity" type="BigDecimal">
+			<validator name="required" />
+		</field>
+		<field name="key" type="String">
+			<validator name="required" />
+		</field>
+		<field localized="true" name="name" type="String" />
+		<field name="precision" type="int">
+			<validator name="required" />
+		</field>
+		<field name="primary" type="boolean" />
+		<field name="priority" type="double" />
+		<field name="rate" type="BigDecimal">
+			<validator name="required" />
+		</field>
+		<field name="sku" type="String">
+			<validator name="required" />
+		</field>
+	</model>
 	<model name="com.liferay.commerce.product.model.CPMeasurementUnit">
 		<field name="mvccVersion" type="long" />
 		<field name="ctCollectionId" type="long" />

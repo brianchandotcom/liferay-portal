@@ -189,9 +189,6 @@ public class UpgradeJavaFDSDataProviderCheck extends BaseFileCheck {
 		List<String> implementedClassNames =
 			javaClass.getImplementedClassNames();
 
-		boolean implementsFDSDataProvider = implementedClassNames.contains(
-			"FDSDataProvider");
-
 		for (JavaTerm childJavaTerm : javaClass.getChildJavaTerms()) {
 			if (!childJavaTerm.isJavaMethod()) {
 				continue;
@@ -201,7 +198,7 @@ public class UpgradeJavaFDSDataProviderCheck extends BaseFileCheck {
 
 			String javaMethodContent = javaMethod.getContent();
 
-			if (implementsFDSDataProvider) {
+			if (implementedClassNames.contains("FDSDataProvider")) {
 				content = StringUtil.replace(
 					content, javaMethodContent,
 					_checkMethods(javaMethodContent));

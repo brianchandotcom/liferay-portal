@@ -161,6 +161,212 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-11608. Other account roles like a buyer who belongs to a supplier account cannot manage the channel page"
+	@priority = 4
+	test CannotManageChannelWhenUsersInOtherAccountRoles {
+		property portal.acceptance = "false";
+
+		task ("Given a Supplier account with a buyer user") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Commerce Supplier",
+				accountEntryType = "Supplier");
+
+			JSONAccountEntryUser.addAccountEntryUser(
+				accountEntryName = "Commerce Supplier",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userScreenName = "buyeruser");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com");
+
+			JSONAccountRole.associateUser(
+				accountEntryName = "Commerce Supplier",
+				accountRole = "Buyer",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And a channel is created and the supplier account is linked to it") {
+			var accountEntryId = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = "Commerce Supplier");
+
+			CommerceJSONChannelsAPI._addChannel(
+				accountId = ${accountEntryId},
+				channelName = "Supplier Channel",
+				channelType = "site",
+				currencyCode = "USD");
+		}
+
+		task ("When the buyer logs in") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "buyer@liferay.com",
+				userLoginFullName = "Buyer User");
+		}
+
+		task ("Then the buyer cannot reach the Channels Page on the Admin Menu") {
+			CommerceChannels.openChannelsAdmin();
+
+			AssertElementPresent(
+				locator1 = "Message#ERROR",
+				value1 = "You do not have the roles required to access this portlet.");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-11865. As a supplier account user, I cannot access the channel panel after removing the permissions for Access in Control Panel for Channel"
+	@priority = 4
+	test CannotSupplierUserAccessChannelPanelAfterRemovingPermissions {
+		property portal.acceptance = "false";
+
+		task ("Given a Supplier account with a supplier user") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Commerce Supplier",
+				accountEntryType = "Supplier");
+
+			JSONAccountEntryUser.addAccountEntryUser(
+				accountEntryName = "Commerce Supplier",
+				userEmailAddress = "supplieruser@liferay.com",
+				userFirstName = "Supplier",
+				userLastName = "User",
+				userScreenName = "supplieruser");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "supplieruser@liferay.com");
+
+			JSONAccountRole.associateUser(
+				accountEntryName = "Commerce Supplier",
+				accountRole = "Account Supplier",
+				userEmailAddress = "supplieruser@liferay.com");
+		}
+
+		task ("And a channel is created and the supplier account is linked to it") {
+			var accountEntryId = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = "Commerce Supplier");
+
+			CommerceJSONChannelsAPI._addChannel(
+				accountId = ${accountEntryId},
+				channelName = "Supplier Channel",
+				channelType = "site",
+				currencyCode = "USD");
+		}
+
+		task ("When admin removes the supplier's permission with Access in Control Panel for Channel") {
+			Permissions.removePermissionViaAPI(
+				resourceAction = "ACCESS_IN_CONTROL_PANEL",
+				resourceName = "com_liferay_commerce_channel_web_internal_portlet_CommerceChannelsPortlet",
+				roleTitle = "Supplier");
+		}
+
+		task ("And the supplier user logs in") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "supplieruser@liferay.com",
+				userLoginFullName = "Supplier User");
+		}
+
+		task ("Then the supplier user cannot view the Channel panel") {
+			ApplicationsMenuHelper.openApplicationsMenu();
+
+			ApplicationsMenu.gotoPanel(panel = "Commerce");
+
+			AssertElementNotPresent(
+				key_category = "Store Management",
+				key_portlet = "Channels",
+				locator1 = "ApplicationsMenu#PORTLET");
+		}
+
+		task ("And cannot navigate to the Channels panel by URL either") {
+			CommerceChannels.openChannelsAdmin();
+
+			AssertElementPresent(
+				locator1 = "Message#ERROR",
+				value1 = "You do not have the roles required to access this portlet.");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-11866. If a linked supplier account to a channel is removed, the supplier account user cannot view any channels"
+	@priority = 4
+	test CannotSupplierUserViewAUnlinkedChannel {
+		property portal.acceptance = "false";
+
+		task ("Given a Supplier account with a supplier user") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Commerce Supplier",
+				accountEntryType = "Supplier");
+
+			JSONAccountEntryUser.addAccountEntryUser(
+				accountEntryName = "Commerce Supplier",
+				userEmailAddress = "supplieruser@liferay.com",
+				userFirstName = "Supplier",
+				userLastName = "User",
+				userScreenName = "supplieruser");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "supplieruser@liferay.com");
+
+			JSONAccountRole.associateUser(
+				accountEntryName = "Commerce Supplier",
+				accountRole = "Account Supplier",
+				userEmailAddress = "supplieruser@liferay.com");
+		}
+
+		task ("And a channel is created and the supplier account is linked to it") {
+			var accountEntryId = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = "Commerce Supplier");
+
+			CommerceJSONChannelsAPI._addChannel(
+				accountId = ${accountEntryId},
+				channelName = "Supplier Channel",
+				channelType = "site",
+				currencyCode = "USD");
+		}
+
+		task ("When the supplier user logs in") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "supplieruser@liferay.com",
+				userLoginFullName = "Supplier User");
+		}
+
+		task ("Then the supplier user can view the Supplier Channel that the account is linked to") {
+			CommerceChannels.openChannelsAdmin();
+
+			AssertElementPresent(
+				key_entryName = "Supplier Channel",
+				locator1 = "CommerceNavigation#ENTRY_NAME");
+		}
+
+		task ("When admin unlinks the Supplier account for Supplier Channel") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Supplier Channel");
+
+			Select(
+				key_fieldLabel = "Link Channel to a Supplier",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "");
+
+			Button.clickSave();
+		}
+
+		task ("Then the supplier cannot see any channel entries displayed") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "supplieruser@liferay.com",
+				userLoginFullName = "Supplier User");
+
+			CommerceChannels.openChannelsAdmin();
+
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_STATE_INFO",
+				value1 = "No Results Found");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-11516. When a supplier account is deleted after being linked to a catalog, the account will not be shown as linked to the catalog"
 	@priority = 3
 	test CannotViewDeletedSupplierAccountLinkedToCatalogViaAPI {
@@ -333,6 +539,119 @@ definition {
 				catalogCurrency = "Euro",
 				catalogLanguage = "Catalan (Spain)",
 				catalogName = "Minium 2");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-11607. As a supplier account user, I want to be able to manage the channel the account is linked to"
+	@priority = 5
+	test CanSupplierUserManageChannel {
+		property portal.acceptance = "true";
+
+		task ("Given a Supplier account with a supplier user") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Commerce Supplier",
+				accountEntryType = "Supplier");
+
+			JSONAccountEntryUser.addAccountEntryUser(
+				accountEntryName = "Commerce Supplier",
+				userEmailAddress = "supplieruser@liferay.com",
+				userFirstName = "Supplier",
+				userLastName = "User",
+				userScreenName = "supplieruser");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "supplieruser@liferay.com");
+
+			JSONAccountRole.associateUser(
+				accountEntryName = "Commerce Supplier",
+				accountRole = "Account Supplier",
+				userEmailAddress = "supplieruser@liferay.com");
+		}
+
+		task ("And two channels are created and the supplier account is linked to Supplier Channel 1") {
+			var accountEntryId = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = "Commerce Supplier");
+
+			CommerceJSONChannelsAPI._addChannel(
+				accountId = ${accountEntryId},
+				channelName = "Supplier Channel 1",
+				channelType = "site",
+				currencyCode = "USD");
+
+			CommerceJSONChannelsAPI._addChannel(
+				channelName = "Supplier Channel 2",
+				channelType = "site",
+				currencyCode = "USD");
+		}
+
+		task ("When admin links the Supplier account for Supplier Channel 2") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Supplier Channel 2");
+
+			Select(
+				key_fieldLabel = "Link Channel to a Supplier",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Commerce Supplier");
+
+			Button.clickSave();
+		}
+
+		task ("Then an error alert 'A supplier account can be linked only to one channel' is shown") {
+			Alert.viewErrorMessage(errorMessage = "Error:A supplier account can be linked only to one channel.");
+		}
+
+		task ("When the supplier user logs in") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "supplieruser@liferay.com",
+				userLoginFullName = "Supplier User");
+		}
+
+		task ("Then the supplier user can view only the Supplier Channel 1 that the account is linked to") {
+			CommerceChannels.openChannelsAdmin();
+
+			AssertElementPresent(
+				key_entryName = "Supplier Channel 1",
+				locator1 = "CommerceNavigation#ENTRY_NAME");
+
+			for (var channelName : list "Supplier Channel 2,Minium Portal") {
+				AssertElementNotPresent(
+					key_entryName = ${channelName},
+					locator1 = "CommerceNavigation#ENTRY_NAME");
+			}
+		}
+
+		task ("And cannot add/delete channels, only can edit the channel") {
+			AssertElementNotPresent(locator1 = "Button#PLUS");
+
+			AssertElementNotPresent(
+				key_value = "Supplier Channel 1",
+				locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+			AssertElementPresent(
+				key_firstColumnValue = "Supplier Channel 1",
+				key_secondColumnValue = "Site",
+				key_table = "",
+				locator1 = "CommerceEntry#TABLE_ASSERT_TWO_COLUMNS_EDIT_BUTTON");
+		}
+
+		task ("When the supplier user navigates to the channel details") {
+			Click(
+				key_firstColumnValue = "Supplier Channel 1",
+				key_secondColumnValue = "Site",
+				key_table = "",
+				locator1 = "CommerceEntry#TABLE_ASSERT_TWO_COLUMNS_EDIT_BUTTON");
+		}
+
+		task ("Then the user is able to edit the channel fields") {
+			CommerceChannels.activatePaymentMethod(paymentMethod = "Money Order");
+
+			AssertElementPresent(
+				key_entryName = "Money Order",
+				key_entryStatus = "Active",
+				key_table = "Payment Methods",
+				locator1 = "CommerceEntry#TABLE_ENTRY_STATUS");
 		}
 	}
 

@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -41,17 +42,16 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Localization;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.Field;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
-import com.liferay.portal.search.rest.dto.v1_0.Facet;
-import com.liferay.portal.search.rest.dto.v1_0.SearchResponse;
+import com.liferay.portal.search.rest.dto.v1_0.FacetConfiguration;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
+import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
 
@@ -66,20 +66,15 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Petteri Karttunen
  */
-@Component(service = FacetResponseContributor.class)
-public class FacetResponseContributor {
+@Component(service = FacetResponseProcessor.class)
+public class FacetResponseProcessor {
 
-	public void contribute(
-		long companyId, Facet[] facets, Locale locale,
-		com.liferay.portal.search.searcher.SearchResponse portalSearchResponse,
+	public Map<String, Object> getTermJSONArrays(
+		long companyId, FacetConfiguration[] facetConfigurations, Locale locale,
 		SearchResponse searchResponse, long userId) {
 
-		Map<String, Object> termJSONArrays = _toTermJSONArrays(
-			companyId, facets, locale, portalSearchResponse, userId);
-
-		if (MapUtil.isNotEmpty(termJSONArrays)) {
-			searchResponse.setFacets(termJSONArrays);
-		}
+		return _toTermJSONArrays(
+			companyId, facetConfigurations, locale, searchResponse, userId);
 	}
 
 	private String _getAssetCategoryDisplayName(
@@ -99,22 +94,13 @@ public class FacetResponseContributor {
 		return null;
 	}
 
-	private Object _getAttribute(Facet facet, String key) {
-		Map<String, Object> attributes = facet.getAttributes();
-
-		if ((attributes == null) || !attributes.containsKey(key)) {
-			return null;
-		}
-
-		return attributes.get(key);
-	}
-
 	private String _getDisplayName(
-		long companyId, Facet facet, Locale locale,
-		com.liferay.portal.search.searcher.SearchResponse portalSearchResponse,
+		long companyId, FacetConfiguration facetConfiguration, Locale locale,
 		String term, long userId) {
 
-		if (StringUtil.equals("category", facet.getName())) {
+		if (StringUtil.equals("category", facetConfiguration.getName()) ||
+			StringUtil.equals("vocabulary", facetConfiguration.getName())) {
+
 			if (term.contains("-")) {
 				String[] termParts = term.split("-");
 
@@ -125,22 +111,14 @@ public class FacetResponseContributor {
 			return _getAssetCategoryDisplayName(
 				locale, GetterUtil.getLong(term));
 		}
-		else if (StringUtil.equals("folder", facet.getName())) {
+		else if (StringUtil.equals("folder", facetConfiguration.getName())) {
 			return _getFolderDisplayName(
 				companyId, locale, GetterUtil.getLong(term), userId);
 		}
-		else if (StringUtil.equals("site", facet.getName())) {
-			if (!portalSearchResponse.withSearchContextGet(
-					searchContext -> ArrayUtil.contains(
-						searchContext.getGroupIds(),
-						GetterUtil.getLong(term)))) {
-
-				return null;
-			}
-
+		else if (StringUtil.equals("site", facetConfiguration.getName())) {
 			return _getSiteDisplayName(GetterUtil.getLong(term), locale);
 		}
-		else if (StringUtil.equals("type", facet.getName())) {
+		else if (StringUtil.equals("type", facetConfiguration.getName())) {
 			return _getTypeDisplayName(locale, term);
 		}
 
@@ -154,8 +132,8 @@ public class FacetResponseContributor {
 			return null;
 		}
 
-		com.liferay.portal.search.searcher.SearchResponse searchResponse =
-			_searchFolder(companyId, folderId, locale, userId);
+		SearchResponse searchResponse = _searchFolder(
+			companyId, folderId, locale, userId);
 
 		SearchHits searchHits = searchResponse.getSearchHits();
 
@@ -207,8 +185,11 @@ public class FacetResponseContributor {
 		return null;
 	}
 
-	private String _getTerm(Facet facet, String term) {
-		if (StringUtil.equals("category", facet.getName()) &&
+	private String _getTerm(
+		FacetConfiguration facetConfiguration, String term) {
+
+		if ((StringUtil.equals("category", facetConfiguration.getName()) ||
+			 StringUtil.equals("vocabulary", facetConfiguration.getName())) &&
 			term.contains("-")) {
 
 			String[] termParts = term.split("-");
@@ -255,7 +236,7 @@ public class FacetResponseContributor {
 		}
 	}
 
-	private com.liferay.portal.search.searcher.SearchResponse _searchFolder(
+	private SearchResponse _searchFolder(
 		long companyId, long folderId, Locale locale, long userId) {
 
 		SearchRequestBuilder searchRequestBuilder =
@@ -285,16 +266,17 @@ public class FacetResponseContributor {
 	}
 
 	private JSONArray _toAssetCategoryTreeJSONArray(
-		Facet facet, Locale locale, List<TermCollector> termCollectors) {
+		FacetConfiguration facetConfiguration, Locale locale,
+		List<TermCollector> termCollectors) {
 
 		Map<Long, AssetCategoryTree> assetCategoryTrees = new HashMap<>();
 
 		for (int i = 0; i < termCollectors.size(); i++) {
 			TermCollector termCollector = termCollectors.get(i);
 
-			if ((facet.getFrequencyThreshold() >
+			if ((facetConfiguration.getFrequencyThreshold() >
 					termCollector.getFrequency()) ||
-				(i >= facet.getMaxTerms())) {
+				(i >= facetConfiguration.getMaxTerms())) {
 
 				continue;
 			}
@@ -334,17 +316,15 @@ public class FacetResponseContributor {
 	}
 
 	private JSONArray _toTermJSONArray(
-		long companyId, Facet facet, Locale locale,
-		com.liferay.portal.kernel.search.facet.Facet portalFacet,
-		com.liferay.portal.search.searcher.SearchResponse portalSearchResponse,
-		List<TermCollector> termCollectors, long userId) {
+		long companyId, FacetConfiguration facetConfiguration, Locale locale,
+		Facet facet, List<TermCollector> termCollectors, long userId) {
 
-		if (StringUtil.equals("category", facet.getName()) &&
+		if (StringUtil.equals("vocabulary", facetConfiguration.getName()) &&
 			StringUtil.equals(
-				portalFacet.getFieldName(), "assetVocabularyCategoryIds") &&
-			StringUtil.equals((String)_getAttribute(facet, "mode"), "tree")) {
+				facet.getFieldName(), "assetVocabularyCategoryIds")) {
 
-			return _toAssetCategoryTreeJSONArray(facet, locale, termCollectors);
+			return _toAssetCategoryTreeJSONArray(
+				facetConfiguration, locale, termCollectors);
 		}
 
 		JSONArray termJSONArray = _jsonFactory.createJSONArray();
@@ -352,16 +332,16 @@ public class FacetResponseContributor {
 		for (int i = 0; i < termCollectors.size(); i++) {
 			TermCollector termCollector = termCollectors.get(i);
 
-			if ((facet.getFrequencyThreshold() >
+			if ((facetConfiguration.getFrequencyThreshold() >
 					termCollector.getFrequency()) ||
-				(i >= facet.getMaxTerms())) {
+				(i >= facetConfiguration.getMaxTerms())) {
 
 				continue;
 			}
 
 			String displayName = _getDisplayName(
-				companyId, facet, locale, portalSearchResponse,
-				termCollector.getTerm(), userId);
+				companyId, facetConfiguration, locale, termCollector.getTerm(),
+				userId);
 
 			if (Validator.isBlank(displayName)) {
 				continue;
@@ -373,7 +353,8 @@ public class FacetResponseContributor {
 				).put(
 					"frequency", termCollector.getFrequency()
 				).put(
-					"term", _getTerm(facet, termCollector.getTerm())
+					"term",
+					_getTerm(facetConfiguration, termCollector.getTerm())
 				));
 		}
 
@@ -381,26 +362,25 @@ public class FacetResponseContributor {
 	}
 
 	private Map<String, Object> _toTermJSONArrays(
-		long companyId, Facet[] facets, Locale locale,
-		com.liferay.portal.search.searcher.SearchResponse portalSearchResponse,
-		long userId) {
+		long companyId, FacetConfiguration[] facetConfigurations, Locale locale,
+		SearchResponse searchResponse, long userId) {
 
-		if (ArrayUtil.isEmpty(facets)) {
+		if (ArrayUtil.isEmpty(facetConfigurations)) {
 			return null;
 		}
 
 		Map<String, Object> termJSONArrays = new HashMap<>();
 
-		for (Facet facet : facets) {
-			com.liferay.portal.kernel.search.facet.Facet portalFacet =
-				portalSearchResponse.withFacetContextGet(
-					facetContext -> facetContext.getFacet(facet.getName()));
+		for (FacetConfiguration facetConfiguration : facetConfigurations) {
+			Facet facet = searchResponse.withFacetContextGet(
+				facetContext -> facetContext.getFacet(
+					facetConfiguration.getName()));
 
-			if (portalFacet == null) {
+			if (facet == null) {
 				continue;
 			}
 
-			FacetCollector facetCollector = portalFacet.getFacetCollector();
+			FacetCollector facetCollector = facet.getFacetCollector();
 
 			List<TermCollector> termCollectors =
 				facetCollector.getTermCollectors();
@@ -410,11 +390,12 @@ public class FacetResponseContributor {
 			}
 
 			JSONArray termJSONArray = _toTermJSONArray(
-				companyId, facet, locale, portalFacet, portalSearchResponse,
-				termCollectors, userId);
+				companyId, facetConfiguration, locale, facet, termCollectors,
+				userId);
 
 			if (termJSONArray.length() > 0) {
-				termJSONArrays.put(facet.getAggregationName(), termJSONArray);
+				termJSONArrays.put(
+					facetConfiguration.getAggregationName(), termJSONArray);
 			}
 		}
 
@@ -422,7 +403,7 @@ public class FacetResponseContributor {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		FacetResponseContributor.class);
+		FacetResponseProcessor.class);
 
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;

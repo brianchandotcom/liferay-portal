@@ -761,6 +761,57 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-187444. Deleted experience resets widget configuration on default experience"
+	@priority = 4
+	test ViewDisplayedWebContentPersistedInAssetPublisherAfterDeleteExperience {
+		property asset.publisher.selection.style = "asset-list";
+
+		task ("Given a page designer has an experienced content page with an Asset Publisher widget") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = ${randomSiteName},
+				title = "Web Content Title 1");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+
+			PageEditor.addWidget(portletName = "Asset Publisher");
+
+			AssetPublisherPortlet.configureDynamicAssetSelectionPG(portletName = "Asset Publisher");
+
+			PageEditor.publish();
+
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+
+			AssetPublisherPortlet.viewAssetPG(
+				assetContent = "Web Content Content",
+				assetTitle = "Web Content Title 1");
+		}
+
+		task ("When the page designer deletes the experience") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+
+			PageEditor.addExperience(
+				experienceName = "New Experience",
+				segmentName = "Anyone");
+
+			PageEditor.deleteExperience(experienceName = "New Experience");
+
+			Refresh();
+		}
+
+		task ("Then the page designer still can see the web content displayed in Asset Publisher") {
+			AssetPublisherPortlet.viewAssetPG(
+				assetContent = "Web Content Content",
+				assetTitle = "Web Content Title 1");
+		}
+	}
+
 	@description = "This is a test for LPS-141773. Able to land in the experience selected at view mode in page editor."
 	@priority = 5
 	test ViewExperienceInViewMode {

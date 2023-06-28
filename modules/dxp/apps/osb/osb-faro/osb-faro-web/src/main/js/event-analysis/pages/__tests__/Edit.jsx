@@ -108,6 +108,8 @@ describe('Event Analysis Edit', () => {
 	it('should render event analysis with data', async () => {
 		const {container, getByText} = render(<WrappedComponent />);
 
+		jest.runAllTimers();
+
 		await waitForLoadingToBeRemoved(container);
 
 		expect(getByText('My First Event Analysis')).toBeTruthy();
@@ -137,6 +139,8 @@ describe('Event Analysis Edit', () => {
 	it('should enable the save button when name is changed', async () => {
 		const {container, getByText} = render(<WrappedComponent />);
 
+		jest.runAllTimers();
+
 		await waitForLoadingToBeRemoved(container);
 
 		const inputName = container.querySelector('input.title-input');
@@ -154,6 +158,8 @@ describe('Event Analysis Edit', () => {
 
 	it('should enable the save button when a new breakdown is added', async () => {
 		const {container, getByText} = render(<WrappedComponent />);
+
+		jest.runAllTimers();
 
 		await waitForLoadingToBeRemoved(container);
 
@@ -192,6 +198,8 @@ describe('Event Analysis Edit', () => {
 	it('should enable the save button when compareToPrevious checkbox is changed', async () => {
 		const {container, getByText} = render(<WrappedComponent />);
 
+		jest.runAllTimers();
+
 		await waitForLoadingToBeRemoved(container);
 
 		expect(getByText('Save Analysis')).toBeDisabled();
@@ -211,6 +219,8 @@ describe('Event Analysis Edit', () => {
 
 	it('should enable the save button when range selector is changed', async () => {
 		const {container, getByText} = render(<WrappedComponent />);
+
+		jest.runAllTimers();
 
 		await waitForLoadingToBeRemoved(container);
 

@@ -21,19 +21,26 @@ import com.liferay.commerce.inventory.exception.NoSuchInventoryWarehouseItemExce
 import com.liferay.commerce.inventory.model.CIWarehouseItem;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem;
+import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItemTable;
+import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseTable;
 import com.liferay.commerce.inventory.service.CommerceInventoryAuditLocalService;
 import com.liferay.commerce.inventory.service.base.CommerceInventoryWarehouseItemLocalServiceBaseImpl;
 import com.liferay.commerce.inventory.type.CommerceInventoryAuditType;
 import com.liferay.commerce.inventory.type.CommerceInventoryAuditTypeRegistry;
 import com.liferay.commerce.inventory.type.constants.CommerceInventoryAuditTypeConstants;
+import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.model.CommerceChannelRelTable;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.GroupTable;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
@@ -262,6 +269,53 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 
 		return commerceInventoryWarehouseItemPersistence.
 			countByCommerceInventoryWarehouseId(commerceInventoryWarehouseId);
+	}
+
+	@Override
+	public int getCommerceInventoryWarehouseItemsCount(
+		long companyId, long groupId, String sku) {
+
+		return dslQueryCount(
+			DSLQueryFactoryUtil.countDistinct(
+				CommerceInventoryWarehouseItemTable.INSTANCE.
+					commerceInventoryWarehouseItemId
+			).from(
+				CommerceInventoryWarehouseItemTable.INSTANCE
+			).innerJoinON(
+				CommerceChannelRelTable.INSTANCE,
+				CommerceChannelRelTable.INSTANCE.classNameId.eq(
+					_portal.getClassNameId(
+						CommerceInventoryWarehouse.class.getName())
+				).and(
+					CommerceChannelRelTable.INSTANCE.classPK.eq(
+						CommerceInventoryWarehouseItemTable.INSTANCE.
+							commerceInventoryWarehouseId)
+				)
+			).innerJoinON(
+				GroupTable.INSTANCE,
+				GroupTable.INSTANCE.classNameId.eq(
+					_portal.getClassNameId(CommerceChannel.class.getName())
+				).and(
+					GroupTable.INSTANCE.classPK.eq(
+						CommerceChannelRelTable.INSTANCE.commerceChannelId)
+				)
+			).innerJoinON(
+				CommerceInventoryWarehouseTable.INSTANCE,
+				CommerceInventoryWarehouseTable.INSTANCE.
+					commerceInventoryWarehouseId.eq(
+						CommerceInventoryWarehouseItemTable.INSTANCE.
+							commerceInventoryWarehouseId)
+			).where(
+				CommerceInventoryWarehouseItemTable.INSTANCE.companyId.eq(
+					companyId
+				).and(
+					CommerceInventoryWarehouseItemTable.INSTANCE.sku.eq(sku)
+				).and(
+					CommerceInventoryWarehouseTable.INSTANCE.active.eq(true)
+				).and(
+					GroupTable.INSTANCE.groupId.eq(groupId)
+				)
+			));
 	}
 
 	@Override
@@ -544,6 +598,9 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 	@Reference
 	private CommerceInventoryAuditTypeRegistry
 		_commerceInventoryAuditTypeRegistry;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private UserLocalService _userLocalService;

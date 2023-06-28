@@ -14,7 +14,6 @@
 
 package com.liferay.dispatch.talend.web.internal.frontend.taglib.servlet.taglib;
 
-import com.liferay.admin.kernel.util.Omniadmin;
 import com.liferay.dispatch.constants.DispatchWebKeys;
 import com.liferay.dispatch.metadata.DispatchTriggerMetadataProvider;
 import com.liferay.dispatch.model.DispatchTrigger;
@@ -24,6 +23,7 @@ import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portlet.admin.util.OmniadminUtil;
 
 import java.io.IOException;
 
@@ -58,7 +58,7 @@ public class DispatchTalendScreenNavigationEntry
 			!Objects.equals(
 				dispatchTrigger.getDispatchTaskExecutorType(),
 				TalendDispatchTaskExecutor.TALEND) ||
-			!_omniadmin.isOmniadmin(user)) {
+			!OmniadminUtil.isOmniadmin(user)) {
 
 			return false;
 		}
@@ -100,9 +100,6 @@ public class DispatchTalendScreenNavigationEntry
 
 	@Reference
 	private JSPRenderer _jspRenderer;
-
-	@Reference
-	private Omniadmin _omniadmin;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.dispatch.talend.web)"

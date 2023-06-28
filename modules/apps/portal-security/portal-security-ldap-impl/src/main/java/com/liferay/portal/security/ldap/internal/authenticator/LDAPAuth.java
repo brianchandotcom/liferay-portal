@@ -14,7 +14,6 @@
 
 package com.liferay.portal.security.ldap.internal.authenticator;
 
-import com.liferay.admin.kernel.util.Omniadmin;
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -48,6 +47,7 @@ import com.liferay.portal.security.ldap.exportimport.LDAPUserImporter;
 import com.liferay.portal.security.ldap.exportimport.configuration.LDAPImportConfiguration;
 import com.liferay.portal.security.ldap.util.LDAPUtil;
 import com.liferay.portal.security.ldap.validator.LDAPFilterValidator;
+import com.liferay.portlet.admin.util.OmniadminUtil;
 
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -608,7 +608,7 @@ public class LDAPAuth implements Authenticator {
 		}
 
 		if (userId > 0) {
-			if (_omniadmin.isOmniadmin(userId)) {
+			if (OmniadminUtil.isOmniadmin(userId)) {
 				return SUCCESS;
 			}
 		}
@@ -616,7 +616,7 @@ public class LDAPAuth implements Authenticator {
 			User user = _userLocalService.fetchUserByEmailAddress(
 				companyId, emailAddress);
 
-			if ((user != null) && _omniadmin.isOmniadmin(user)) {
+			if ((user != null) && OmniadminUtil.isOmniadmin(user)) {
 				return SUCCESS;
 			}
 		}
@@ -624,7 +624,7 @@ public class LDAPAuth implements Authenticator {
 			User user = _userLocalService.fetchUserByScreenName(
 				companyId, screenName);
 
-			if ((user != null) && _omniadmin.isOmniadmin(user)) {
+			if ((user != null) && OmniadminUtil.isOmniadmin(user)) {
 				return SUCCESS;
 			}
 		}
@@ -793,9 +793,6 @@ public class LDAPAuth implements Authenticator {
 		policyOption = ReferencePolicyOption.GREEDY
 	)
 	private volatile LDAPUserImporter _ldapUserImporter;
-
-	@Reference
-	private Omniadmin _omniadmin;
 
 	@Reference
 	private PasswordEncryptor _passwordEncryptor;

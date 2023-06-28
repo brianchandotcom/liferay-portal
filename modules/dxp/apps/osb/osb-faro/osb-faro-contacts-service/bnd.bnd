@@ -11,6 +11,7 @@ Import-Package:\
 	com.liferay.portal.kernel.model;version="[29.0.0,9999.0.0)",\
 	com.liferay.portal.kernel.search;version="[1.0.0,9999.0.0)",\
 	com.liferay.portal.kernel.security;version="[1.0.0,9999.0.0)",\
+	com.liferay.portal.kernel.security.auth;version="[6.0.0,9999.0.0)",\
 	com.liferay.portal.kernel.service;version="[22.0.0,9999.0.0)",\
 	com.liferay.portal.kernel.service.persistence;version="[21.0.0,9999.0.0)",\
 	com.liferay.portal.kernel.transaction;version="[1.0.0,9999.0.0)",\

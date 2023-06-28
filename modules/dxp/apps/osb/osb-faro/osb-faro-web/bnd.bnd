@@ -18,6 +18,7 @@ Import-Package:\
 	com.liferay.portal.kernel.portlet;version="[1.0.0,9999.0.0)",\
 	com.liferay.portal.kernel.repository;version="[1.0.0,9999.0.0)",\
 	com.liferay.portal.kernel.search;version="[1.0.0,9999.0.0)",\
+	com.liferay.portal.kernel.security.auth;version="[6.0.0,9999.0.0)",\
 	com.liferay.portal.kernel.service;version="[22.0.0,9999.0.0)",\
 	com.liferay.portal.kernel.servlet;version="[11.0.0,9999.0.0)",\
 	com.liferay.portal.kernel.upload;version="[10.0.0,9999.0.0)",\

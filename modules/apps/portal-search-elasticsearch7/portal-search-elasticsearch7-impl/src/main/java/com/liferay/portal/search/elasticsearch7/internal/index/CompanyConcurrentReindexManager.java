@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.ccr.CrossClusterReplicationHelper;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchConnectionManager;
@@ -28,11 +30,17 @@ import com.liferay.portal.search.index.IndexNameBuilder;
 import java.text.SimpleDateFormat;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 import org.elasticsearch.action.admin.indices.alias.IndicesAliasesRequest;
+import org.elasticsearch.action.admin.indices.alias.get.GetAliasesRequest;
+import org.elasticsearch.client.GetAliasesResponse;
 import org.elasticsearch.client.IndicesClient;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.cluster.metadata.AliasMetadata;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -108,39 +116,12 @@ public class CompanyConcurrentReindexManager
 			return;
 		}
 
-		RestHighLevelClient restHighLevelClient =
-			_elasticsearchConnectionManager.getRestHighLevelClient();
-
-		IndicesAliasesRequest indicesAliasesRequest =
-			new IndicesAliasesRequest();
-
-		IndicesAliasesRequest.AliasActions addAliasActions =
-			IndicesAliasesRequest.AliasActions.add();
+		Company company = _companyLocalService.getCompany(companyId);
 
 		String baseIndexName = _indexNameBuilder.getIndexName(companyId);
 
-		addAliasActions.alias(baseIndexName);
-
-		Company company = _companyLocalService.getCompany(companyId);
-
-		String indexNameNext = company.getIndexNameNext();
-
-		addAliasActions.index(indexNameNext);
-
-		indicesAliasesRequest.addAliasAction(addAliasActions);
-
-		String removeIndex = baseIndexName;
-
-		if (!Validator.isBlank(company.getIndexNameCurrent())) {
-			removeIndex = company.getIndexNameCurrent();
-		}
-
-		IndicesAliasesRequest.AliasActions removeIndexAliasActions =
-			IndicesAliasesRequest.AliasActions.removeIndex();
-
-		removeIndexAliasActions.index(removeIndex);
-
-		indicesAliasesRequest.addAliasAction(removeIndexAliasActions);
+		RestHighLevelClient restHighLevelClient =
+			_elasticsearchConnectionManager.getRestHighLevelClient();
 
 		IndicesClient indicesClient = restHighLevelClient.indices();
 
@@ -148,17 +129,90 @@ public class CompanyConcurrentReindexManager
 			_crossClusterReplicationHelperSnapshot.get();
 
 		if (crossClusterReplicationHelper != null) {
-			crossClusterReplicationHelper.unfollow(removeIndex);
+			if (!Validator.isBlank(company.getIndexNameCurrent())) {
+				crossClusterReplicationHelper.unfollow(
+					company.getIndexNameCurrent());
+			}
+			else {
+				crossClusterReplicationHelper.unfollow(baseIndexName);
+			}
 		}
+
+		_updateAliases(baseIndexName, company, indicesClient);
+
+		_companyLocalService.updateIndexNames(
+			companyId, company.getIndexNameNext(), null);
+
+		if (crossClusterReplicationHelper != null) {
+			crossClusterReplicationHelper.follow(company.getIndexNameNext());
+		}
+	}
+
+	private Set<String> _getBaseIndexAliasIndexNames(
+			String baseIndexName, IndicesClient indicesClient)
+		throws Exception {
+
+		GetAliasesResponse getAliasesResponse = indicesClient.getAlias(
+			new GetAliasesRequest(baseIndexName), RequestOptions.DEFAULT);
+
+		Map<String, Set<AliasMetadata>> aliases =
+			getAliasesResponse.getAliases();
+
+		Set<String> baseIndexAliasIndexNames = new HashSet<>();
+
+		if (MapUtil.isNotEmpty(aliases)) {
+			baseIndexAliasIndexNames.addAll(aliases.keySet());
+		}
+
+		return baseIndexAliasIndexNames;
+	}
+
+	private Set<String> _getRemoveIndexNames(
+			String baseIndexName, IndicesClient indicesClient)
+		throws Exception {
+
+		Set<String> removeIndexNames = _getBaseIndexAliasIndexNames(
+			baseIndexName, indicesClient);
+
+		if (removeIndexNames.isEmpty() &&
+			_companyIndexFactoryHelper.hasIndex(indicesClient, baseIndexName)) {
+
+			removeIndexNames.add(baseIndexName);
+		}
+
+		return removeIndexNames;
+	}
+
+	private void _updateAliases(
+			String baseIndexName, Company company, IndicesClient indicesClient)
+		throws Exception {
+
+		IndicesAliasesRequest indicesAliasesRequest =
+			new IndicesAliasesRequest();
+
+		Set<String> removeIndexNames = _getRemoveIndexNames(
+			baseIndexName, indicesClient);
+
+		if (!removeIndexNames.isEmpty()) {
+			indicesAliasesRequest.addAliasAction(
+				new IndicesAliasesRequest.AliasActions(
+					IndicesAliasesRequest.AliasActions.Type.REMOVE_INDEX
+				).indices(
+					ArrayUtil.toStringArray(removeIndexNames)
+				));
+		}
+
+		indicesAliasesRequest.addAliasAction(
+			new IndicesAliasesRequest.AliasActions(
+				IndicesAliasesRequest.AliasActions.Type.ADD
+			).alias(
+				baseIndexName
+			).index(
+				company.getIndexNameNext()
+			));
 
 		indicesClient.updateAliases(
 			indicesAliasesRequest, RequestOptions.DEFAULT);
-
-		_companyLocalService.updateIndexNames(companyId, indexNameNext, null);
-
-		if (crossClusterReplicationHelper != null) {
-			crossClusterReplicationHelper.follow(indexNameNext);
-		}
 	}
 
 	private static final Snapshot<CrossClusterReplicationHelper>

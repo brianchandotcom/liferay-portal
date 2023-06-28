@@ -222,7 +222,7 @@ public class SXPBlueprintInfoCollectionProvider
 
 		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
-		if (scopes == null) {
+		if (scopes[0].equals("null")) {
 			scopes = new String[] {
 				String.valueOf(themeDisplay.getScopeGroupId())
 			};

@@ -7,6 +7,7 @@ Export-Package:\
 	com.liferay.commerce.payment.constants,\
 	com.liferay.commerce.payment.exception,\
 	com.liferay.commerce.payment.gateway,\
+	com.liferay.commerce.payment.integration,\
 	com.liferay.commerce.payment.model,\
 	com.liferay.commerce.payment.service,\
 	com.liferay.commerce.payment.service.persistence,\

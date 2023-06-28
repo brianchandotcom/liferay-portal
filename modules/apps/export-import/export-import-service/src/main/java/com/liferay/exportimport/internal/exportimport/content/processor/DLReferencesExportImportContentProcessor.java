@@ -356,11 +356,24 @@ public class DLReferencesExportImportContentProcessor
 		return uuid;
 	}
 
+	private boolean _isCreoleReference(String content, int beginPos) {
+		if (content.regionMatches(
+				true, beginPos - 2, StringPool.DOUBLE_OPEN_BRACKET, 0, 2) ||
+			content.regionMatches(
+				true, beginPos - 2, StringPool.DOUBLE_OPEN_CURLY_BRACE, 0, 2)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private boolean _isExternalUrl(
 			long groupId, String content, int beginPos, int endPos)
 		throws PortalException {
 
 		if (((beginPos == 0) && (endPos == content.length())) ||
+			_isCreoleReference(content, beginPos) ||
 			_isHTMLReference(content, beginPos)) {
 
 			return false;
@@ -438,6 +451,7 @@ public class DLReferencesExportImportContentProcessor
 
 			if (substring.startsWith(hostName) &&
 				(((curBeginPos == 0) && (endPos == content.length())) ||
+				 _isCreoleReference(content, curBeginPos) ||
 				 _isHTMLReference(content, curBeginPos))) {
 
 				return false;

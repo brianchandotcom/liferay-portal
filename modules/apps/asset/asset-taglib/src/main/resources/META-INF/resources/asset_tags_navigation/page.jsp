@@ -47,9 +47,10 @@ String tagsNavigation = _buildTagsNavigation(scopeGroupId, tag, classNameId, dis
 		}
 		%>
 
-		<div class="alert alert-info">
-			<liferay-ui:message key="there-are-no-tags" />
-		</div>
+		<clay:alert
+			displayType="info"
+			message="there-are-no-tags"
+		/>
 	</c:otherwise>
 </c:choose>
 

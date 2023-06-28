@@ -496,6 +496,69 @@ public class EditableFragmentEntryProcessorTest {
 	}
 
 	@Test
+	public void testFragmentEntryProcessorEditableActionMappedActionOnSuccessNotification()
+		throws Exception {
+
+		long classNameId = _portal.getClassNameId(
+			ObjectDefinition.class.getName() + "#" +
+				RandomTestUtil.randomLong());
+
+		long classPK = RandomTestUtil.randomLong();
+
+		String fieldId =
+			ObjectAction.class.getSimpleName() + StringPool.UNDERLINE +
+				RandomTestUtil.randomLong();
+
+		String editableValues = _getEditableFieldValues(
+			classNameId, classPK, fieldId,
+			"action/editable_values_action_mapped_action_on_success_" +
+				"notification.json");
+
+		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink(
+			editableValues, "action/fragment_entry_action.html");
+
+		Element element = _getElement(
+			"data-lfr-editable-id", "editable_action", fragmentEntryLink,
+			LocaleUtil.US, FragmentEntryLinkConstants.VIEW);
+
+		Assert.assertEquals(
+			String.valueOf(classNameId),
+			element.attr("data-lfr-class-name-id"));
+		Assert.assertEquals(
+			String.valueOf(classPK), element.attr("data-lfr-class-pk"));
+		Assert.assertEquals(fieldId, element.attr("data-lfr-field-id"));
+		Assert.assertEquals(
+			"notification", element.attr("data-lfr-on-success-interaction"));
+		Assert.assertEquals("true", element.attr("data-lfr-on-success-reload"));
+		Assert.assertEquals(
+			"Success Text en_US", element.attr("data-lfr-on-success-text"));
+
+		_originalThemeDisplayDefaultLocale =
+			LocaleThreadLocal.getThemeDisplayLocale();
+
+		LocaleThreadLocal.setThemeDisplayLocale(LocaleUtil.SPAIN);
+
+		ServiceContextThreadLocal.pushServiceContext(
+			new MockServiceContext(
+				_layout, _getThemeDisplay(LocaleUtil.SPAIN)));
+
+		try {
+			element = _getElement(
+				"data-lfr-editable-id", "editable_action", fragmentEntryLink,
+				LocaleUtil.SPAIN, FragmentEntryLinkConstants.VIEW);
+		}
+		finally {
+			LocaleThreadLocal.setThemeDisplayLocale(
+				_originalThemeDisplayDefaultLocale);
+
+			ServiceContextThreadLocal.popServiceContext();
+		}
+
+		Assert.assertEquals(
+			"Success Text es_ES", element.attr("data-lfr-on-success-text"));
+	}
+
+	@Test
 	public void testFragmentEntryProcessorEditableActionMappedActionViewMode()
 		throws Exception {
 

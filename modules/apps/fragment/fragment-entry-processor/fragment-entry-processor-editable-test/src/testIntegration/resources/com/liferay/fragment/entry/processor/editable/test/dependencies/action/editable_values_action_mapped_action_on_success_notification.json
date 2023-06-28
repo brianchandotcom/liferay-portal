@@ -1,0 +1,23 @@
+{
+	"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor": {
+		"editable_action": {
+			"config": {
+				"mappedAction": {
+					"className": "com.liferay.object.model.ObjectDefinition#CLASS_NAME_ID",
+					"classNameId": "CLASS_NAME_ID",
+					"classPK": "CLASS_PK",
+					"fieldId": "FIELD_ID"
+				},
+				"onSuccess": {
+					"interaction": "notification",
+					"reload": true,
+					"text": {
+						"en_US": "Success Text en_US",
+						"es_ES": "Success Text es_ES"
+					}
+				}
+			},
+			"defaultValue": "Default Action Text"
+		}
+	}
+}

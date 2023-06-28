@@ -27,31 +27,14 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.get(${curl});
 	}
 
-	@summary = "Fill the date fields"
-	macro insertDate {
-		var currentDate = DateUtil.getFormattedDate(${dateRange}, "yyyy-MM-dd");
-
-		var nextDayDate = DateUtil.getFormattedDate("+2", "yyyy-MM-dd");
-		
-		Type.sendKeys(
-			key_fieldLabel = ${initialDateLabel},
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = ${currentDate});
-
-		Type.sendKeys(
-			key_fieldLabel = ${endDateLabel},
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = ${nextDayDate});
-	}
-
 	@summary = "generate Financial Report for EVP"
 	macro generateFinancialReport {
 		LexiconCard.clickCardTitle(card = ${cardTitle});
 
 		EVPUtils.insertDate(
-            dateRange = ${dateRange},
-            endDateLabel = ${endDateLabel},
-            initialDateLabel = ${initialDateLabel});
+			dateRange = ${dateRange},
+			endDateLabel = ${endDateLabel},
+			initialDateLabel = ${initialDateLabel});
 
 		Button.click(button = "Generate");
 	}
@@ -63,6 +46,22 @@ definition {
 		if (IsElementPresent(locator1 = "EVPUtils#SIGN_IN")) {
 			Click(locator1 = "EVPUtils#SIGN_IN");
 		}
+	}
+
+	@summary = "Fill the date fields"
+	macro insertDate {
+		var currentDate = DateUtil.getFormattedDate(${dateRange}, "yyyy-MM-dd");
+		var nextDayDate = DateUtil.getFormattedDate("+2", "yyyy-MM-dd");
+
+		Type.sendKeys(
+			key_fieldLabel = ${initialDateLabel},
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = ${currentDate});
+
+		Type.sendKeys(
+			key_fieldLabel = ${endDateLabel},
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = ${nextDayDate});
 	}
 
 }

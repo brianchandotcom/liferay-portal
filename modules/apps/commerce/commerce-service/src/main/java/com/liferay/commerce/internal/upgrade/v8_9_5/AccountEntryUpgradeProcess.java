@@ -49,8 +49,8 @@ public class AccountEntryUpgradeProcess extends UpgradeProcess {
 			"Group_.classPK from AccountEntry join ",
 			"CommercePaymentMethodGroupRel on ",
 			"AccountEntry.defaultCPaymentMethodKey = ",
-			"CommercePaymentMethodGroupRel.engineKey join Group_ on ",
-			"CommercePaymentMethodGroupRel.groupId = Group_.groupId where ",
+			"CommercePaymentMethodGroupRel.paymentIntegrationKey join Group_ ",
+			"on CommercePaymentMethodGroupRel.groupId = Group_.groupId where ",
 			"AccountEntry.defaultCPaymentMethodKey is not null and ",
 			"CommercePaymentMethodGroupRel.active_ = [$TRUE$]");
 

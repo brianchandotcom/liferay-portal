@@ -979,7 +979,7 @@ public class ContentManager {
 			).put(
 				"title", StringPool.BLANK
 			).put(
-				"type", StringPool.BLANK
+				"type", _language.get(httpServletRequest, "restricted-content")
 			).put(
 				"usagesCount",
 				_layoutClassedModelUsageLocalService.

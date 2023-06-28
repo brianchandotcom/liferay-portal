@@ -320,20 +320,18 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 			_resourcePermissionLocalService.addResourcePermission(
 				resourcePermission);
 
-			if (throwException) {
-				Assert.fail("UnsupportedOperationException should be thrown");
-			}
+			Assert.assertFalse(
+				"UnsupportedOperationException should be thrown",
+				throwException);
 
 			Assert.assertNotNull(
 				_resourcePermissionLocalService.fetchResourcePermission(
 					resourcePermissionId));
 		}
 		catch (Exception exception) {
-			if (!throwException) {
-				Assert.fail("No exception should be thrown");
-
-				return;
-			}
+			Assert.assertTrue(
+				"UnsupportedOperationException should be thrown",
+				throwException);
 
 			String message = exception.getMessage();
 

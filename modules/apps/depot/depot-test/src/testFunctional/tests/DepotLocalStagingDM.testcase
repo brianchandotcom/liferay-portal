@@ -1685,7 +1685,7 @@ definition {
 			pageName = "Test Page",
 			siteName = "Site Name");
 
-		SearchPortlets.addWidgets(searchPortletList = "Search Results,Search Bar");
+		SearchPortlets.addWidgetsViaUI(searchPortletList = "Search Results,Search Bar");
 
 		SearchPortlets.searchWidget(searchTerm = "DM Document Title");
 

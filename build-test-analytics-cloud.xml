@@ -210,14 +210,20 @@ networks:
 
 			<property location="${analytics.cloud.asah.dir}/docker-compose.test.yml" name="analytics.cloud.docker.test.yaml" />
 
+			<local name="analytics.cloud.faro.build.gradle" />
+
+			<condition else="${analytics.cloud.faro.dir}/build.gradle" property="analytics.cloud.faro.build.gradle" value="${analytics.cloud.faro.dir}/build-ext.gradle">
+				<available file="${analytics.cloud.faro.dir}/build-ext.gradle" />
+			</condition>
+
 			<replaceregexp
-				file="${analytics.cloud.faro.dir}/build-ext.gradle"
+				file="${analytics.cloud.faro.build.gradle}"
 				match="def dockerContainerId = \&quot;([^\&quot;]+)\&quot;"
 				replace="def dockerContainerId = \&quot;${analytics.cloud.faro.container.name}\&quot;"
 			/>
 
 			<replaceregexp
-				file="${analytics.cloud.faro.dir}/build-ext.gradle"
+				file="${analytics.cloud.faro.build.gradle}"
 				match="network \&quot;([^\&quot;]+)\&quot;"
 				replace="network \&quot;${analytics.cloud.project.name}_default\&quot;"
 			/>

@@ -370,12 +370,9 @@ public class StructuredContentResourceTest
 		List<StructuredContent> structuredContents =
 			(List<StructuredContent>)page.getItems();
 
-		Iterator<StructuredContent> iterator = structuredContents.iterator();
-
-		while (iterator.hasNext()) {
+		for (StructuredContent structuredContent : structuredContents) {
 			_structuredContentResource.deleteStructuredContent(
-				iterator.next(
-				).getId());
+				structuredContent.getId());
 		}
 
 		StructuredContent structuredContent1 = _postSiteStructuredContent(

@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -337,12 +336,9 @@ public class TaxonomyVocabularyResourceTest
 		List<TaxonomyVocabulary> taxonomyVocabularies =
 			(List<TaxonomyVocabulary>)page.getItems();
 
-		Iterator<TaxonomyVocabulary> iterator = taxonomyVocabularies.iterator();
-
-		while (iterator.hasNext()) {
+		for (TaxonomyVocabulary taxonomyVocabulary : taxonomyVocabularies) {
 			taxonomyVocabularyResource.deleteTaxonomyVocabulary(
-				iterator.next(
-				).getId());
+				taxonomyVocabulary.getId());
 		}
 
 		TaxonomyVocabulary taxonomyVocabulary1 =

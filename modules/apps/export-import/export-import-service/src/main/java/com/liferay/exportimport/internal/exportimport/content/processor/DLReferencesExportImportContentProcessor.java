@@ -462,12 +462,27 @@ public class DLReferencesExportImportContentProcessor
 	}
 
 	private boolean _isHTMLReference(String content, int beginPos) {
-		if (content.regionMatches(
-				true, beginPos - _OFFSET_HREF_ATTRIBUTE, "href=", 0, 5) ||
-			content.regionMatches(
-				true, beginPos - _OFFSET_SRC_ATTRIBUTE, "src=", 0, 4)) {
+		if (content.regionMatches(beginPos - 1, StringPool.APOSTROPHE, 0, 1) ||
+			content.regionMatches(beginPos - 1, StringPool.QUOTE, 0, 1)) {
 
-			return true;
+			beginPos = beginPos - 1;
+		}
+
+		if (content.regionMatches(
+				true, beginPos - 1, StringPool.BACK_SLASH, 0, 1)) {
+
+			beginPos = beginPos - 1;
+		}
+
+		String[] attributes = {"href=", "src="};
+
+		for (String attribute : attributes) {
+			if (content.regionMatches(
+					true, beginPos - attribute.length(), attribute, 0,
+					attribute.length())) {
+
+				return true;
+			}
 		}
 
 		return false;
@@ -922,10 +937,6 @@ public class DLReferencesExportImportContentProcessor
 	};
 
 	private static final int _OFFSET_COLON_PORT = 6;
-
-	private static final int _OFFSET_HREF_ATTRIBUTE = 6;
-
-	private static final int _OFFSET_SRC_ATTRIBUTE = 5;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLReferencesExportImportContentProcessor.class);

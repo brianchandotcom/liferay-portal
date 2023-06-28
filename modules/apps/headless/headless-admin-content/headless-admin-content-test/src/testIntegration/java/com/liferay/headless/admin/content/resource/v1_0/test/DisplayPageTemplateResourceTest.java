@@ -23,6 +23,7 @@ import com.liferay.headless.admin.content.client.resource.v1_0.DisplayPageTempla
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -113,6 +114,36 @@ public class DisplayPageTemplateResourceTest
 			page.fetchFirstItem(
 			).getCreator(
 			).getProfileURL());
+
+		assertValid(page);
+
+		displayPageTemplateResource = DisplayPageTemplateResource.builder(
+		).authentication(
+			"test@liferay.com", "test"
+		).locale(
+			LocaleUtil.getDefault()
+		).parameters(
+			"restrictFields",
+			StringBundler.concat(
+				"actions,availableLanguages,creator,customFields,dateCreated,",
+				"dateModified,displayPageTemplateKey,",
+				"displayPageTemplateSettings,",
+				"openGraphSettingsMapping,seoSettingsMapping,markedAsDefault,",
+				"pageDefinition,settings,siteId,uuid")
+		).build();
+
+		page = displayPageTemplateResource.getSiteDisplayPageTemplatesPage(
+			testGroup.getGroupId(), Pagination.of(1, 10), null);
+
+		Assert.assertEquals(1, page.getTotalCount());
+
+		assertEquals(
+			new DisplayPageTemplate() {
+				{
+					title = displayPageTemplate.getTitle();
+				}
+			},
+			page.fetchFirstItem());
 
 		assertValid(page);
 	}

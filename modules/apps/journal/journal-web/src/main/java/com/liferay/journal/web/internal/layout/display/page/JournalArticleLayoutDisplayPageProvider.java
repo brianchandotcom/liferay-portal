@@ -23,6 +23,8 @@ import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -92,8 +94,13 @@ public class JournalArticleLayoutDisplayPageProvider
 		try {
 			JournalArticle article = _getArticle(groupId, urlTitle, version);
 
+			PermissionChecker permissionChecker =
+				PermissionThreadLocal.getPermissionChecker();
+
 			if ((article == null) || article.isExpired() ||
-				article.isInTrash()) {
+				article.isInTrash() ||
+				(article.isPending() && (permissionChecker != null) &&
+				 !permissionChecker.isSignedIn())) {
 
 				return null;
 			}

@@ -14,7 +14,8 @@
 
 package com.liferay.questions.web.internal.portlet;
 
-import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.asset.tags.item.selector.AssetTagsItemSelectorReturnType;
+import com.liferay.asset.tags.item.selector.criterion.AssetTagsItemSelectorCriterion;
 import com.liferay.flags.taglib.servlet.taglib.util.FlagsTagUtil;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
@@ -32,12 +33,9 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
-import com.liferay.portal.kernel.portlet.PortletURLWrapper;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -208,33 +206,26 @@ public class QuestionsPortlet extends MVCPortlet {
 	private String _getTagSelectorURL(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		try {
-			PortletURL portletURL = PortletProviderUtil.getPortletURL(
-				renderRequest, AssetTag.class.getName(),
-				PortletProvider.Action.BROWSE);
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
-			PortletURLWrapper portletURLWrapper = new PortletURLWrapper(
-				portletURL);
+		AssetTagsItemSelectorCriterion assetTagsItemSelectorCriterion =
+			new AssetTagsItemSelectorCriterion();
 
-			if (portletURL == null) {
-				return null;
-			}
+		assetTagsItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			new AssetTagsItemSelectorReturnType());
+		assetTagsItemSelectorCriterion.setGroupIds(
+			new long[] {
+				_portal.getSiteGroupId(themeDisplay.getScopeGroupId())
+			});
+		assetTagsItemSelectorCriterion.setMultiSelection(true);
 
-			portletURLWrapper.setParameter(
-				"eventName", renderResponse.getNamespace() + "selectTag");
-			portletURLWrapper.setParameter(
-				"selectedTagNames", "{selectedTagNames}");
-			portletURLWrapper.setWindowState(LiferayWindowState.POP_UP);
-
-			return portletURLWrapper.toString();
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-
-			return null;
-		}
+		return PortletURLBuilder.create(
+			_itemSelector.getItemSelectorURL(
+				RequestBackedPortletURLFactoryUtil.create(renderRequest),
+				renderResponse.getNamespace() + "selectTag",
+				assetTagsItemSelectorCriterion)
+		).buildString();
 	}
 
 	private boolean _isTrustedUser(RenderRequest renderRequest) {

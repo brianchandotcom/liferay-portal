@@ -111,57 +111,6 @@
 					},
 					"listTypeDefinitionExternalReferenceCode": "liferayBundle",
 					"name": "liferayBundle",
-					"objectFieldSettings": [
-						{
-							"name": "stateFlow",
-							"value": {
-								"objectStates": [
-									{
-										"key": "dxpFixpackRelease",
-										"name": "DXP Fixpack Release",
-										"name_i18n": {
-											"en-US": "DXP Fixpack Release"
-										}
-									},
-									{
-										"key": "dxpHotfixRelease",
-										"name": "DXP Hotfix Release",
-										"name_i18n": {
-											"en-US": "DXP Hotfix Release"
-										}
-									},
-									{
-										"key": "dxpRelease",
-										"name": "DXP Release",
-										"name_i18n": {
-											"en-US": "DXP Release"
-										}
-									},
-									{
-										"key": "dxpSource",
-										"name": "DXP Source",
-										"name_i18n": {
-											"en-US": "DXP Source"
-										}
-									},
-									{
-										"key": "portalRelease",
-										"name": "Portal Release",
-										"name_i18n": {
-											"en-US": "Portal Release"
-										}
-									},
-									{
-										"key": "portalSource",
-										"name": "Portal Source",
-										"name_i18n": {
-											"en-US": "Portal Source"
-										}
-									}
-								]
-							}
-						}
-					],
 					"required": false,
 					"state": false,
 					"type": "String"
@@ -174,78 +123,6 @@
 					},
 					"listTypeDefinitionExternalReferenceCode": "liferayPortalBranch",
 					"name": "liferayPortalBranch",
-					"objectFieldSettings": [
-						{
-							"name": "stateFlow",
-							"value": {
-								"objectStates": [
-									{
-										"key": "73x",
-										"name": "7.3.x",
-										"name_i18n": {
-											"en-US": "7.3.x"
-										}
-									},
-									{
-										"key": "72x",
-										"name": "7.2.x",
-										"name_i18n": {
-											"en-US": "7.2.x"
-										}
-									},
-									{
-										"key": "71x",
-										"name": "7.1.x",
-										"name_i18n": {
-											"en-US": "7.1.x"
-										}
-									},
-									{
-										"key": "70x",
-										"name": "7.0.x",
-										"name_i18n": {
-											"en-US": "7.0.x"
-										}
-									},
-									{
-										"key": "master",
-										"name": "master",
-										"name_i18n": {
-											"en-US": "master"
-										}
-									},
-									{
-										"key": "ee62x",
-										"name": "ee62x",
-										"name_i18n": {
-											"en-US": "ee-6.2.x"
-										}
-									},
-									{
-										"key": "ee6210",
-										"name": "ee6210",
-										"name_i18n": {
-											"en-US": "ee-6.2.10"
-										}
-									},
-									{
-										"key": "ee61x",
-										"name": "ee61x",
-										"name_i18n": {
-											"en-US": "ee-6.1.x"
-										}
-									},
-									{
-										"key": "ee6130",
-										"name": "ee6130",
-										"name_i18n": {
-											"en-US": "ee-6.1.30"
-										}
-									}
-								]
-							}
-						}
-					],
 					"required": false,
 					"state": false,
 					"type": "String"
@@ -390,29 +267,6 @@
 					},
 					"listTypeDefinitionExternalReferenceCode": "jenkinsNodeType",
 					"name": "type",
-					"objectFieldSettings": [
-						{
-							"name": "stateFlow",
-							"value": {
-								"objectStates": [
-									{
-										"key": "master",
-										"name": "Master",
-										"name_i18n": {
-											"en-US": "Master"
-										}
-									},
-									{
-										"key": "slave",
-										"name": "Slave",
-										"name_i18n": {
-											"en-US": "Slave"
-										}
-									}
-								]
-							}
-						}
-					],
 					"required": true,
 					"state": false,
 					"type": "String"
@@ -484,50 +338,6 @@
 					},
 					"listTypeDefinitionExternalReferenceCode": "projectComparatorType",
 					"name": "type",
-					"objectFieldSettings": [
-						{
-							"name": "stateFlow",
-							"value": {
-								"objectStates": [
-									{
-										"key": "fifo",
-										"name": "First In First Out",
-										"name_i18n": {
-											"en-US": "First In First Out"
-										}
-									},
-									{
-										"key": "projectPriority",
-										"name": "Project Priority",
-										"name_i18n": {
-											"en-US": "Project Priority"
-										}
-									},
-									{
-										"key": "projectType",
-										"name": "Project Type",
-										"name_i18n": {
-											"en-US": "Project Type"
-										}
-									},
-									{
-										"key": "testSuiteName",
-										"name": "Test Suite Name",
-										"name_i18n": {
-											"en-US": "Test Suite Name"
-										}
-									},
-									{
-										"key": "upstreamGitBranchName",
-										"name": "Upstream Git Branch Name",
-										"name_i18n": {
-											"en-US": "Upstream Git Branch Name"
-										}
-									}
-								]
-							}
-						}
-					],
 					"required": true,
 					"state": false,
 					"type": "String"
@@ -580,29 +390,6 @@
 					},
 					"listTypeDefinitionExternalReferenceCode": "result",
 					"name": "result",
-					"objectFieldSettings": [
-						{
-							"name": "stateFlow",
-							"value": {
-								"objectStates": [
-									{
-										"key": "failed",
-										"name": "Failed",
-										"name_i18n": {
-											"en-US": "Failed"
-										}
-									},
-									{
-										"key": "passed",
-										"name": "Passed",
-										"name_i18n": {
-											"en-US": "Passed"
-										}
-									}
-								]
-							}
-						}
-					],
 					"required": true,
 					"state": false,
 					"type": "String"
@@ -808,57 +595,6 @@
 					},
 					"listTypeDefinitionExternalReferenceCode": "state",
 					"name": "state",
-					"objectFieldSettings": [
-						{
-							"name": "stateFlow",
-							"value": {
-								"objectStates": [
-									{
-										"key": "completed",
-										"name": "Completed",
-										"name_i18n": {
-											"en-US": "Completed"
-										}
-									},
-									{
-										"key": "evaluating",
-										"name": "Evaluating",
-										"name_i18n": {
-											"en-US": "Evaluating"
-										}
-									},
-									{
-										"key": "opened",
-										"name": "Opened",
-										"name_i18n": {
-											"en-US": "Opened"
-										}
-									},
-									{
-										"key": "preparing",
-										"name": "Preparing",
-										"name_i18n": {
-											"en-US": "Preparing"
-										}
-									},
-									{
-										"key": "queued",
-										"name": "Queued",
-										"name_i18n": {
-											"en-US": "Queued"
-										}
-									},
-									{
-										"key": "running",
-										"name": "Running",
-										"name_i18n": {
-											"en-US": "Running"
-										}
-									}
-								]
-							}
-						}
-					],
 					"required": true,
 					"state": true,
 					"type": "String"
@@ -1093,50 +829,6 @@
 					},
 					"listTypeDefinitionExternalReferenceCode": "projectType",
 					"name": "type",
-					"objectFieldSettings": [
-						{
-							"name": "stateFlow",
-							"value": {
-								"objectStates": [
-									{
-										"key": "defaultJob",
-										"name": "Default Job",
-										"name_i18n": {
-											"en-US": "Default Job"
-										}
-									},
-									{
-										"key": "maintenanceJob",
-										"name": "Maintenance Job",
-										"name_i18n": {
-											"en-US": "Maintenance Job"
-										}
-									},
-									{
-										"key": "pullRequestJob",
-										"name": "Pull Request Job",
-										"name_i18n": {
-											"en-US": "Pull Request Job"
-										}
-									},
-									{
-										"key": "upstreamJob",
-										"name": "Upstream Job",
-										"name_i18n": {
-											"en-US": "Upstream Job"
-										}
-									},
-									{
-										"key": "verificationJob",
-										"name": "Verification Job",
-										"name_i18n": {
-											"en-US": "Verification Job"
-										}
-									}
-								]
-							}
-						}
-					],
 					"required": true,
 					"state": false,
 					"type": "String"

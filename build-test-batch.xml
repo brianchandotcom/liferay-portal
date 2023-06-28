@@ -5705,15 +5705,15 @@ information. Make sure to commit in all format-javadoc results.
 				</for>
 			</test-action>
 		</run-batch-test>
-		<tar destfile="/tmp/gradle_plugins.tar">
-			<tarfileset dir="/opt/dev/projects/github/liferay-portal/modules/sdk/gradle-plugins-workspace/build/reports" 
+		<tar destfile="${project.dir}/tmp/gradle_plugins.tar">
+			<tarfileset dir="${project.dir}/modules/sdk/gradle-plugins-workspace/build/reports" 
 				prefix="gradle-plugins-workspace">
 			</tarfileset>
-			<tarfileset dir="/opt/dev/projects/github/liferay-portal/modules/sdk/gradle-plugins-target-platform/build/reports" 
+			<tarfileset dir="${project.dir}/modules/sdk/gradle-plugins-target-platform/build/reports" 
 				prefix="gradle-plugins-target-platform">
-			</tarfileset>	
+			</tarfileset>
 		</tar>
-		<gzip destfile="/tmp/gradle_plugins.tar.gz" src="/tmp/gradle_plugins.tar"/>
+		<gzip destfile="${project.dir}/tmp/gradle_plugins.tar.gz" src="${project.dir}/tmp/gradle_plugins.tar"/>
 	</target>
 
 	<target name="javadoc-jdk8">

@@ -157,6 +157,7 @@ public class ElasticsearchSearchEngineFixture implements SearchEngineFixture {
 		ReflectionTestUtil.setFieldValue(
 			_companyIndexFactory, "_companyIndexFactoryHelper",
 			_companyIndexFactoryHelper);
+
 		ReflectionTestUtil.setFieldValue(
 			_companyIndexFactory, "_elasticsearchConfigurationWrapper",
 			createElasticsearchConfigurationWrapper(properites));

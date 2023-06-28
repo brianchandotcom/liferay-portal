@@ -462,6 +462,40 @@ public class EditableFragmentEntryProcessorTest {
 	}
 
 	@Test
+	public void testFragmentEntryProcessorEditableActionMappedActionOnSuccessNone()
+		throws Exception {
+
+		long classNameId = _portal.getClassNameId(
+			ObjectDefinition.class.getName() + "#" +
+				RandomTestUtil.randomLong());
+
+		long classPK = RandomTestUtil.randomLong();
+
+		String fieldId =
+			ObjectAction.class.getSimpleName() + StringPool.UNDERLINE +
+				RandomTestUtil.randomLong();
+
+		String editableValues = _getEditableFieldValues(
+			classNameId, classPK, fieldId,
+			"action/editable_values_action_mapped_action_on_success_none.json");
+
+		Element element = _getElement(
+			"data-lfr-editable-id", "editable_action", editableValues,
+			"action/fragment_entry_action.html", LocaleUtil.US,
+			FragmentEntryLinkConstants.VIEW);
+
+		Assert.assertEquals(
+			String.valueOf(classNameId),
+			element.attr("data-lfr-class-name-id"));
+		Assert.assertEquals(
+			String.valueOf(classPK), element.attr("data-lfr-class-pk"));
+		Assert.assertEquals(fieldId, element.attr("data-lfr-field-id"));
+		Assert.assertEquals(
+			"none", element.attr("data-lfr-on-success-interaction"));
+		Assert.assertEquals("true", element.attr("data-lfr-on-success-reload"));
+	}
+
+	@Test
 	public void testFragmentEntryProcessorEditableActionMappedActionViewMode()
 		throws Exception {
 

@@ -7,6 +7,10 @@ definition {
 	property testcase.url = "http://localhost:8080";
 	property testray.main.component.name = "AI-Creator";
 
+	static var randomSiteName = StringUtil.randomString(8);
+
+	var siteURLKey = StringUtil.toLowerCase(${randomSiteName});
+
 	setUp {
 		task ("Sign in") {
 			User.firstLoginPG();
@@ -25,6 +29,44 @@ definition {
 				configurationCategory = "AI Creator",
 				configurationName = "OpenAI",
 				configurationScope = "Virtual Instance Scope");
+		}
+
+		task ("Then the site administrater should see OpenAI settings") {
+			FormFields.viewCheckboxChecked(fieldName = "Enable OpenAI to Create Content");
+
+			InputField.viewText(
+				fieldLabel = "API Key",
+				text = "");
+		}
+
+		task ("When the site administrater clicks the link of How do I get an API key?") {
+			Click(
+				key_text = "How do I get an API key?",
+				locator1 = "Link#ANY");
+		}
+
+		task ("Then the site administrater should see the OpenAI API page opened in a new tab") {
+			SelectWindow.selectPopUp(locator1 = "null");
+
+			AssertLocation.assertPartialLocation(value1 = "https://platform.openai.com/docs/api-reference/authentication");
+		}
+	}
+
+	@description = "This is a test for LPS-179484. The site administrater could access to the OpenAI configuration page of Site Settings."
+	@priority = 4
+	test AccessToOpenAIConfigurationPageOfSiteSettings {
+		task ("Given a site administrater goes to the Site Settings") {
+			HeadlessSite.addSite(siteName = ${randomSiteName});
+
+			Site.openSiteSettingsAdmin(siteURLKey = ${siteURLKey});
+		}
+
+		task ("When the site administrater accesses to the OpenAI configuration page") {
+			Click(
+				key_itemName = "AI Creator",
+				locator1 = "ListGroupItem#ITEM_TEXT");
+
+			Navigator.gotoNavTab(navTab = "OpenAI");
 		}
 
 		task ("Then the site administrater should see OpenAI settings") {

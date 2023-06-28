@@ -1,0 +1,13 @@
+{
+	"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor": {
+		"editable_action": {
+			"className": "com.liferay.object.model.ObjectDefinition#CLASS_NAME_ID",
+			"classNameId": "CLASS_NAME_ID",
+			"classPK": "CLASS_PK",
+			"config": {
+			},
+			"defaultValue": "Default Action Text",
+			"fieldId": "FIELD_ID"
+		}
+	}
+}

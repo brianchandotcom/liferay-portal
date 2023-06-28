@@ -14,6 +14,7 @@
 
 package com.liferay.layout.display.page;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.Locale;
@@ -36,6 +37,10 @@ public interface LayoutDisplayPageObjectProvider<T> {
 	public String getDescription(Locale locale);
 
 	public T getDisplayObject();
+
+	public default String getExternalReferenceCode() {
+		return StringPool.BLANK;
+	}
 
 	public long getGroupId();
 

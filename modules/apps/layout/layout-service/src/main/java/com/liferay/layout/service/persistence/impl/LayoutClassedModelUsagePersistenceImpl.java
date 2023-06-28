@@ -2611,6 +2611,669 @@ public class LayoutClassedModelUsagePersistenceImpl
 	private static final String _FINDER_COLUMN_CN_CPK_CLASSPK_2 =
 		"layoutClassedModelUsage.classPK = ? AND layoutClassedModelUsage.containerKey IS NOT NULL";
 
+	private FinderPath _finderPathWithPaginationFindByC_CN_CMERC;
+	private FinderPath _finderPathWithoutPaginationFindByC_CN_CMERC;
+	private FinderPath _finderPathCountByC_CN_CMERC;
+
+	/**
+	 * Returns all the layout classed model usages where companyId = &#63; and classNameId = &#63; and cmExternalReferenceCode = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param cmExternalReferenceCode the cm external reference code
+	 * @return the matching layout classed model usages
+	 */
+	@Override
+	public List<LayoutClassedModelUsage> findByC_CN_CMERC(
+		long companyId, long classNameId, String cmExternalReferenceCode) {
+
+		return findByC_CN_CMERC(
+			companyId, classNameId, cmExternalReferenceCode, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the layout classed model usages where companyId = &#63; and classNameId = &#63; and cmExternalReferenceCode = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutClassedModelUsageModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param cmExternalReferenceCode the cm external reference code
+	 * @param start the lower bound of the range of layout classed model usages
+	 * @param end the upper bound of the range of layout classed model usages (not inclusive)
+	 * @return the range of matching layout classed model usages
+	 */
+	@Override
+	public List<LayoutClassedModelUsage> findByC_CN_CMERC(
+		long companyId, long classNameId, String cmExternalReferenceCode,
+		int start, int end) {
+
+		return findByC_CN_CMERC(
+			companyId, classNameId, cmExternalReferenceCode, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the layout classed model usages where companyId = &#63; and classNameId = &#63; and cmExternalReferenceCode = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutClassedModelUsageModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param cmExternalReferenceCode the cm external reference code
+	 * @param start the lower bound of the range of layout classed model usages
+	 * @param end the upper bound of the range of layout classed model usages (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layout classed model usages
+	 */
+	@Override
+	public List<LayoutClassedModelUsage> findByC_CN_CMERC(
+		long companyId, long classNameId, String cmExternalReferenceCode,
+		int start, int end,
+		OrderByComparator<LayoutClassedModelUsage> orderByComparator) {
+
+		return findByC_CN_CMERC(
+			companyId, classNameId, cmExternalReferenceCode, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the layout classed model usages where companyId = &#63; and classNameId = &#63; and cmExternalReferenceCode = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutClassedModelUsageModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param cmExternalReferenceCode the cm external reference code
+	 * @param start the lower bound of the range of layout classed model usages
+	 * @param end the upper bound of the range of layout classed model usages (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching layout classed model usages
+	 */
+	@Override
+	public List<LayoutClassedModelUsage> findByC_CN_CMERC(
+		long companyId, long classNameId, String cmExternalReferenceCode,
+		int start, int end,
+		OrderByComparator<LayoutClassedModelUsage> orderByComparator,
+		boolean useFinderCache) {
+
+		cmExternalReferenceCode = Objects.toString(cmExternalReferenceCode, "");
+
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			LayoutClassedModelUsage.class);
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache && productionMode) {
+				finderPath = _finderPathWithoutPaginationFindByC_CN_CMERC;
+				finderArgs = new Object[] {
+					companyId, classNameId, cmExternalReferenceCode
+				};
+			}
+		}
+		else if (useFinderCache && productionMode) {
+			finderPath = _finderPathWithPaginationFindByC_CN_CMERC;
+			finderArgs = new Object[] {
+				companyId, classNameId, cmExternalReferenceCode, start, end,
+				orderByComparator
+			};
+		}
+
+		List<LayoutClassedModelUsage> list = null;
+
+		if (useFinderCache && productionMode) {
+			list = (List<LayoutClassedModelUsage>)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (LayoutClassedModelUsage layoutClassedModelUsage : list) {
+					if ((companyId != layoutClassedModelUsage.getCompanyId()) ||
+						(classNameId !=
+							layoutClassedModelUsage.getClassNameId()) ||
+						!cmExternalReferenceCode.equals(
+							layoutClassedModelUsage.
+								getCMExternalReferenceCode())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					5 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(5);
+			}
+
+			sb.append(_SQL_SELECT_LAYOUTCLASSEDMODELUSAGE_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_CN_CMERC_COMPANYID_2);
+
+			sb.append(_FINDER_COLUMN_C_CN_CMERC_CLASSNAMEID_2);
+
+			boolean bindCMExternalReferenceCode = false;
+
+			if (cmExternalReferenceCode.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_CN_CMERC_CMEXTERNALREFERENCECODE_3);
+			}
+			else {
+				bindCMExternalReferenceCode = true;
+
+				sb.append(_FINDER_COLUMN_C_CN_CMERC_CMEXTERNALREFERENCECODE_2);
+			}
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(LayoutClassedModelUsageModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(companyId);
+
+				queryPos.add(classNameId);
+
+				if (bindCMExternalReferenceCode) {
+					queryPos.add(cmExternalReferenceCode);
+				}
+
+				list = (List<LayoutClassedModelUsage>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache && productionMode) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first layout classed model usage in the ordered set where companyId = &#63; and classNameId = &#63; and cmExternalReferenceCode = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param cmExternalReferenceCode the cm external reference code
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout classed model usage
+	 * @throws NoSuchLayoutClassedModelUsageException if a matching layout classed model usage could not be found
+	 */
+	@Override
+	public LayoutClassedModelUsage findByC_CN_CMERC_First(
+			long companyId, long classNameId, String cmExternalReferenceCode,
+			OrderByComparator<LayoutClassedModelUsage> orderByComparator)
+		throws NoSuchLayoutClassedModelUsageException {
+
+		LayoutClassedModelUsage layoutClassedModelUsage =
+			fetchByC_CN_CMERC_First(
+				companyId, classNameId, cmExternalReferenceCode,
+				orderByComparator);
+
+		if (layoutClassedModelUsage != null) {
+			return layoutClassedModelUsage;
+		}
+
+		StringBundler sb = new StringBundler(8);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("companyId=");
+		sb.append(companyId);
+
+		sb.append(", classNameId=");
+		sb.append(classNameId);
+
+		sb.append(", cmExternalReferenceCode=");
+		sb.append(cmExternalReferenceCode);
+
+		sb.append("}");
+
+		throw new NoSuchLayoutClassedModelUsageException(sb.toString());
+	}
+
+	/**
+	 * Returns the first layout classed model usage in the ordered set where companyId = &#63; and classNameId = &#63; and cmExternalReferenceCode = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param cmExternalReferenceCode the cm external reference code
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout classed model usage, or <code>null</code> if a matching layout classed model usage could not be found
+	 */
+	@Override
+	public LayoutClassedModelUsage fetchByC_CN_CMERC_First(
+		long companyId, long classNameId, String cmExternalReferenceCode,
+		OrderByComparator<LayoutClassedModelUsage> orderByComparator) {
+
+		List<LayoutClassedModelUsage> list = findByC_CN_CMERC(
+			companyId, classNameId, cmExternalReferenceCode, 0, 1,
+			orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last layout classed model usage in the ordered set where companyId = &#63; and classNameId = &#63; and cmExternalReferenceCode = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param cmExternalReferenceCode the cm external reference code
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout classed model usage
+	 * @throws NoSuchLayoutClassedModelUsageException if a matching layout classed model usage could not be found
+	 */
+	@Override
+	public LayoutClassedModelUsage findByC_CN_CMERC_Last(
+			long companyId, long classNameId, String cmExternalReferenceCode,
+			OrderByComparator<LayoutClassedModelUsage> orderByComparator)
+		throws NoSuchLayoutClassedModelUsageException {
+
+		LayoutClassedModelUsage layoutClassedModelUsage =
+			fetchByC_CN_CMERC_Last(
+				companyId, classNameId, cmExternalReferenceCode,
+				orderByComparator);
+
+		if (layoutClassedModelUsage != null) {
+			return layoutClassedModelUsage;
+		}
+
+		StringBundler sb = new StringBundler(8);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("companyId=");
+		sb.append(companyId);
+
+		sb.append(", classNameId=");
+		sb.append(classNameId);
+
+		sb.append(", cmExternalReferenceCode=");
+		sb.append(cmExternalReferenceCode);
+
+		sb.append("}");
+
+		throw new NoSuchLayoutClassedModelUsageException(sb.toString());
+	}
+
+	/**
+	 * Returns the last layout classed model usage in the ordered set where companyId = &#63; and classNameId = &#63; and cmExternalReferenceCode = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param cmExternalReferenceCode the cm external reference code
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout classed model usage, or <code>null</code> if a matching layout classed model usage could not be found
+	 */
+	@Override
+	public LayoutClassedModelUsage fetchByC_CN_CMERC_Last(
+		long companyId, long classNameId, String cmExternalReferenceCode,
+		OrderByComparator<LayoutClassedModelUsage> orderByComparator) {
+
+		int count = countByC_CN_CMERC(
+			companyId, classNameId, cmExternalReferenceCode);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<LayoutClassedModelUsage> list = findByC_CN_CMERC(
+			companyId, classNameId, cmExternalReferenceCode, count - 1, count,
+			orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the layout classed model usages before and after the current layout classed model usage in the ordered set where companyId = &#63; and classNameId = &#63; and cmExternalReferenceCode = &#63;.
+	 *
+	 * @param layoutClassedModelUsageId the primary key of the current layout classed model usage
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param cmExternalReferenceCode the cm external reference code
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next layout classed model usage
+	 * @throws NoSuchLayoutClassedModelUsageException if a layout classed model usage with the primary key could not be found
+	 */
+	@Override
+	public LayoutClassedModelUsage[] findByC_CN_CMERC_PrevAndNext(
+			long layoutClassedModelUsageId, long companyId, long classNameId,
+			String cmExternalReferenceCode,
+			OrderByComparator<LayoutClassedModelUsage> orderByComparator)
+		throws NoSuchLayoutClassedModelUsageException {
+
+		cmExternalReferenceCode = Objects.toString(cmExternalReferenceCode, "");
+
+		LayoutClassedModelUsage layoutClassedModelUsage = findByPrimaryKey(
+			layoutClassedModelUsageId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			LayoutClassedModelUsage[] array =
+				new LayoutClassedModelUsageImpl[3];
+
+			array[0] = getByC_CN_CMERC_PrevAndNext(
+				session, layoutClassedModelUsage, companyId, classNameId,
+				cmExternalReferenceCode, orderByComparator, true);
+
+			array[1] = layoutClassedModelUsage;
+
+			array[2] = getByC_CN_CMERC_PrevAndNext(
+				session, layoutClassedModelUsage, companyId, classNameId,
+				cmExternalReferenceCode, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected LayoutClassedModelUsage getByC_CN_CMERC_PrevAndNext(
+		Session session, LayoutClassedModelUsage layoutClassedModelUsage,
+		long companyId, long classNameId, String cmExternalReferenceCode,
+		OrderByComparator<LayoutClassedModelUsage> orderByComparator,
+		boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				6 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(5);
+		}
+
+		sb.append(_SQL_SELECT_LAYOUTCLASSEDMODELUSAGE_WHERE);
+
+		sb.append(_FINDER_COLUMN_C_CN_CMERC_COMPANYID_2);
+
+		sb.append(_FINDER_COLUMN_C_CN_CMERC_CLASSNAMEID_2);
+
+		boolean bindCMExternalReferenceCode = false;
+
+		if (cmExternalReferenceCode.isEmpty()) {
+			sb.append(_FINDER_COLUMN_C_CN_CMERC_CMEXTERNALREFERENCECODE_3);
+		}
+		else {
+			bindCMExternalReferenceCode = true;
+
+			sb.append(_FINDER_COLUMN_C_CN_CMERC_CMEXTERNALREFERENCECODE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(LayoutClassedModelUsageModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		queryPos.add(companyId);
+
+		queryPos.add(classNameId);
+
+		if (bindCMExternalReferenceCode) {
+			queryPos.add(cmExternalReferenceCode);
+		}
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						layoutClassedModelUsage)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<LayoutClassedModelUsage> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the layout classed model usages where companyId = &#63; and classNameId = &#63; and cmExternalReferenceCode = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param cmExternalReferenceCode the cm external reference code
+	 */
+	@Override
+	public void removeByC_CN_CMERC(
+		long companyId, long classNameId, String cmExternalReferenceCode) {
+
+		for (LayoutClassedModelUsage layoutClassedModelUsage :
+				findByC_CN_CMERC(
+					companyId, classNameId, cmExternalReferenceCode,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
+			remove(layoutClassedModelUsage);
+		}
+	}
+
+	/**
+	 * Returns the number of layout classed model usages where companyId = &#63; and classNameId = &#63; and cmExternalReferenceCode = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param cmExternalReferenceCode the cm external reference code
+	 * @return the number of matching layout classed model usages
+	 */
+	@Override
+	public int countByC_CN_CMERC(
+		long companyId, long classNameId, String cmExternalReferenceCode) {
+
+		cmExternalReferenceCode = Objects.toString(cmExternalReferenceCode, "");
+
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			LayoutClassedModelUsage.class);
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByC_CN_CMERC;
+
+			finderArgs = new Object[] {
+				companyId, classNameId, cmExternalReferenceCode
+			};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		}
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_SQL_COUNT_LAYOUTCLASSEDMODELUSAGE_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_CN_CMERC_COMPANYID_2);
+
+			sb.append(_FINDER_COLUMN_C_CN_CMERC_CLASSNAMEID_2);
+
+			boolean bindCMExternalReferenceCode = false;
+
+			if (cmExternalReferenceCode.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_CN_CMERC_CMEXTERNALREFERENCECODE_3);
+			}
+			else {
+				bindCMExternalReferenceCode = true;
+
+				sb.append(_FINDER_COLUMN_C_CN_CMERC_CMEXTERNALREFERENCECODE_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(companyId);
+
+				queryPos.add(classNameId);
+
+				if (bindCMExternalReferenceCode) {
+					queryPos.add(cmExternalReferenceCode);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_C_CN_CMERC_COMPANYID_2 =
+		"layoutClassedModelUsage.companyId = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_CN_CMERC_CLASSNAMEID_2 =
+		"layoutClassedModelUsage.classNameId = ? AND ";
+
+	private static final String
+		_FINDER_COLUMN_C_CN_CMERC_CMEXTERNALREFERENCECODE_2 =
+			"layoutClassedModelUsage.cmExternalReferenceCode = ? AND layoutClassedModelUsage.containerKey IS NOT NULL";
+
+	private static final String
+		_FINDER_COLUMN_C_CN_CMERC_CMEXTERNALREFERENCECODE_3 =
+			"(layoutClassedModelUsage.cmExternalReferenceCode IS NULL OR layoutClassedModelUsage.cmExternalReferenceCode = '') AND layoutClassedModelUsage.containerKey IS NOT NULL";
+
 	private FinderPath _finderPathWithPaginationFindByC_CN_CT;
 	private FinderPath _finderPathWithoutPaginationFindByC_CN_CT;
 	private FinderPath _finderPathCountByC_CN_CT;
@@ -4462,14 +5125,723 @@ public class LayoutClassedModelUsagePersistenceImpl
 	private static final String _FINDER_COLUMN_CK_CT_P_PLID_2 =
 		"layoutClassedModelUsage.plid = ? AND layoutClassedModelUsage.containerKey IS NOT NULL";
 
-	private FinderPath _finderPathFetchByCN_CPK_CK_CT_P;
-	private FinderPath _finderPathCountByCN_CPK_CK_CT_P;
+	private FinderPath _finderPathWithPaginationFindByC_CN_CMERC_T;
+	private FinderPath _finderPathWithoutPaginationFindByC_CN_CMERC_T;
+	private FinderPath _finderPathCountByC_CN_CMERC_T;
 
 	/**
-	 * Returns the layout classed model usage where classNameId = &#63; and classPK = &#63; and containerKey = &#63; and containerType = &#63; and plid = &#63; or throws a <code>NoSuchLayoutClassedModelUsageException</code> if it could not be found.
+	 * Returns all the layout classed model usages where companyId = &#63; and classNameId = &#63; and cmExternalReferenceCode = &#63; and type = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param cmExternalReferenceCode the cm external reference code
+	 * @param type the type
+	 * @return the matching layout classed model usages
+	 */
+	@Override
+	public List<LayoutClassedModelUsage> findByC_CN_CMERC_T(
+		long companyId, long classNameId, String cmExternalReferenceCode,
+		int type) {
+
+		return findByC_CN_CMERC_T(
+			companyId, classNameId, cmExternalReferenceCode, type,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the layout classed model usages where companyId = &#63; and classNameId = &#63; and cmExternalReferenceCode = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutClassedModelUsageModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param cmExternalReferenceCode the cm external reference code
+	 * @param type the type
+	 * @param start the lower bound of the range of layout classed model usages
+	 * @param end the upper bound of the range of layout classed model usages (not inclusive)
+	 * @return the range of matching layout classed model usages
+	 */
+	@Override
+	public List<LayoutClassedModelUsage> findByC_CN_CMERC_T(
+		long companyId, long classNameId, String cmExternalReferenceCode,
+		int type, int start, int end) {
+
+		return findByC_CN_CMERC_T(
+			companyId, classNameId, cmExternalReferenceCode, type, start, end,
+			null);
+	}
+
+	/**
+	 * Returns an ordered range of all the layout classed model usages where companyId = &#63; and classNameId = &#63; and cmExternalReferenceCode = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutClassedModelUsageModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param cmExternalReferenceCode the cm external reference code
+	 * @param type the type
+	 * @param start the lower bound of the range of layout classed model usages
+	 * @param end the upper bound of the range of layout classed model usages (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layout classed model usages
+	 */
+	@Override
+	public List<LayoutClassedModelUsage> findByC_CN_CMERC_T(
+		long companyId, long classNameId, String cmExternalReferenceCode,
+		int type, int start, int end,
+		OrderByComparator<LayoutClassedModelUsage> orderByComparator) {
+
+		return findByC_CN_CMERC_T(
+			companyId, classNameId, cmExternalReferenceCode, type, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the layout classed model usages where companyId = &#63; and classNameId = &#63; and cmExternalReferenceCode = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutClassedModelUsageModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param cmExternalReferenceCode the cm external reference code
+	 * @param type the type
+	 * @param start the lower bound of the range of layout classed model usages
+	 * @param end the upper bound of the range of layout classed model usages (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching layout classed model usages
+	 */
+	@Override
+	public List<LayoutClassedModelUsage> findByC_CN_CMERC_T(
+		long companyId, long classNameId, String cmExternalReferenceCode,
+		int type, int start, int end,
+		OrderByComparator<LayoutClassedModelUsage> orderByComparator,
+		boolean useFinderCache) {
+
+		cmExternalReferenceCode = Objects.toString(cmExternalReferenceCode, "");
+
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			LayoutClassedModelUsage.class);
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache && productionMode) {
+				finderPath = _finderPathWithoutPaginationFindByC_CN_CMERC_T;
+				finderArgs = new Object[] {
+					companyId, classNameId, cmExternalReferenceCode, type
+				};
+			}
+		}
+		else if (useFinderCache && productionMode) {
+			finderPath = _finderPathWithPaginationFindByC_CN_CMERC_T;
+			finderArgs = new Object[] {
+				companyId, classNameId, cmExternalReferenceCode, type, start,
+				end, orderByComparator
+			};
+		}
+
+		List<LayoutClassedModelUsage> list = null;
+
+		if (useFinderCache && productionMode) {
+			list = (List<LayoutClassedModelUsage>)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (LayoutClassedModelUsage layoutClassedModelUsage : list) {
+					if ((companyId != layoutClassedModelUsage.getCompanyId()) ||
+						(classNameId !=
+							layoutClassedModelUsage.getClassNameId()) ||
+						!cmExternalReferenceCode.equals(
+							layoutClassedModelUsage.
+								getCMExternalReferenceCode()) ||
+						(type != layoutClassedModelUsage.getType())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					6 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(6);
+			}
+
+			sb.append(_SQL_SELECT_LAYOUTCLASSEDMODELUSAGE_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_CN_CMERC_T_COMPANYID_2);
+
+			sb.append(_FINDER_COLUMN_C_CN_CMERC_T_CLASSNAMEID_2);
+
+			boolean bindCMExternalReferenceCode = false;
+
+			if (cmExternalReferenceCode.isEmpty()) {
+				sb.append(
+					_FINDER_COLUMN_C_CN_CMERC_T_CMEXTERNALREFERENCECODE_3);
+			}
+			else {
+				bindCMExternalReferenceCode = true;
+
+				sb.append(
+					_FINDER_COLUMN_C_CN_CMERC_T_CMEXTERNALREFERENCECODE_2);
+			}
+
+			sb.append(_FINDER_COLUMN_C_CN_CMERC_T_TYPE_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(LayoutClassedModelUsageModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(companyId);
+
+				queryPos.add(classNameId);
+
+				if (bindCMExternalReferenceCode) {
+					queryPos.add(cmExternalReferenceCode);
+				}
+
+				queryPos.add(type);
+
+				list = (List<LayoutClassedModelUsage>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache && productionMode) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first layout classed model usage in the ordered set where companyId = &#63; and classNameId = &#63; and cmExternalReferenceCode = &#63; and type = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param cmExternalReferenceCode the cm external reference code
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout classed model usage
+	 * @throws NoSuchLayoutClassedModelUsageException if a matching layout classed model usage could not be found
+	 */
+	@Override
+	public LayoutClassedModelUsage findByC_CN_CMERC_T_First(
+			long companyId, long classNameId, String cmExternalReferenceCode,
+			int type,
+			OrderByComparator<LayoutClassedModelUsage> orderByComparator)
+		throws NoSuchLayoutClassedModelUsageException {
+
+		LayoutClassedModelUsage layoutClassedModelUsage =
+			fetchByC_CN_CMERC_T_First(
+				companyId, classNameId, cmExternalReferenceCode, type,
+				orderByComparator);
+
+		if (layoutClassedModelUsage != null) {
+			return layoutClassedModelUsage;
+		}
+
+		StringBundler sb = new StringBundler(10);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("companyId=");
+		sb.append(companyId);
+
+		sb.append(", classNameId=");
+		sb.append(classNameId);
+
+		sb.append(", cmExternalReferenceCode=");
+		sb.append(cmExternalReferenceCode);
+
+		sb.append(", type=");
+		sb.append(type);
+
+		sb.append("}");
+
+		throw new NoSuchLayoutClassedModelUsageException(sb.toString());
+	}
+
+	/**
+	 * Returns the first layout classed model usage in the ordered set where companyId = &#63; and classNameId = &#63; and cmExternalReferenceCode = &#63; and type = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param cmExternalReferenceCode the cm external reference code
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout classed model usage, or <code>null</code> if a matching layout classed model usage could not be found
+	 */
+	@Override
+	public LayoutClassedModelUsage fetchByC_CN_CMERC_T_First(
+		long companyId, long classNameId, String cmExternalReferenceCode,
+		int type,
+		OrderByComparator<LayoutClassedModelUsage> orderByComparator) {
+
+		List<LayoutClassedModelUsage> list = findByC_CN_CMERC_T(
+			companyId, classNameId, cmExternalReferenceCode, type, 0, 1,
+			orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last layout classed model usage in the ordered set where companyId = &#63; and classNameId = &#63; and cmExternalReferenceCode = &#63; and type = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param cmExternalReferenceCode the cm external reference code
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout classed model usage
+	 * @throws NoSuchLayoutClassedModelUsageException if a matching layout classed model usage could not be found
+	 */
+	@Override
+	public LayoutClassedModelUsage findByC_CN_CMERC_T_Last(
+			long companyId, long classNameId, String cmExternalReferenceCode,
+			int type,
+			OrderByComparator<LayoutClassedModelUsage> orderByComparator)
+		throws NoSuchLayoutClassedModelUsageException {
+
+		LayoutClassedModelUsage layoutClassedModelUsage =
+			fetchByC_CN_CMERC_T_Last(
+				companyId, classNameId, cmExternalReferenceCode, type,
+				orderByComparator);
+
+		if (layoutClassedModelUsage != null) {
+			return layoutClassedModelUsage;
+		}
+
+		StringBundler sb = new StringBundler(10);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("companyId=");
+		sb.append(companyId);
+
+		sb.append(", classNameId=");
+		sb.append(classNameId);
+
+		sb.append(", cmExternalReferenceCode=");
+		sb.append(cmExternalReferenceCode);
+
+		sb.append(", type=");
+		sb.append(type);
+
+		sb.append("}");
+
+		throw new NoSuchLayoutClassedModelUsageException(sb.toString());
+	}
+
+	/**
+	 * Returns the last layout classed model usage in the ordered set where companyId = &#63; and classNameId = &#63; and cmExternalReferenceCode = &#63; and type = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param cmExternalReferenceCode the cm external reference code
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout classed model usage, or <code>null</code> if a matching layout classed model usage could not be found
+	 */
+	@Override
+	public LayoutClassedModelUsage fetchByC_CN_CMERC_T_Last(
+		long companyId, long classNameId, String cmExternalReferenceCode,
+		int type,
+		OrderByComparator<LayoutClassedModelUsage> orderByComparator) {
+
+		int count = countByC_CN_CMERC_T(
+			companyId, classNameId, cmExternalReferenceCode, type);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<LayoutClassedModelUsage> list = findByC_CN_CMERC_T(
+			companyId, classNameId, cmExternalReferenceCode, type, count - 1,
+			count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the layout classed model usages before and after the current layout classed model usage in the ordered set where companyId = &#63; and classNameId = &#63; and cmExternalReferenceCode = &#63; and type = &#63;.
+	 *
+	 * @param layoutClassedModelUsageId the primary key of the current layout classed model usage
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param cmExternalReferenceCode the cm external reference code
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next layout classed model usage
+	 * @throws NoSuchLayoutClassedModelUsageException if a layout classed model usage with the primary key could not be found
+	 */
+	@Override
+	public LayoutClassedModelUsage[] findByC_CN_CMERC_T_PrevAndNext(
+			long layoutClassedModelUsageId, long companyId, long classNameId,
+			String cmExternalReferenceCode, int type,
+			OrderByComparator<LayoutClassedModelUsage> orderByComparator)
+		throws NoSuchLayoutClassedModelUsageException {
+
+		cmExternalReferenceCode = Objects.toString(cmExternalReferenceCode, "");
+
+		LayoutClassedModelUsage layoutClassedModelUsage = findByPrimaryKey(
+			layoutClassedModelUsageId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			LayoutClassedModelUsage[] array =
+				new LayoutClassedModelUsageImpl[3];
+
+			array[0] = getByC_CN_CMERC_T_PrevAndNext(
+				session, layoutClassedModelUsage, companyId, classNameId,
+				cmExternalReferenceCode, type, orderByComparator, true);
+
+			array[1] = layoutClassedModelUsage;
+
+			array[2] = getByC_CN_CMERC_T_PrevAndNext(
+				session, layoutClassedModelUsage, companyId, classNameId,
+				cmExternalReferenceCode, type, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected LayoutClassedModelUsage getByC_CN_CMERC_T_PrevAndNext(
+		Session session, LayoutClassedModelUsage layoutClassedModelUsage,
+		long companyId, long classNameId, String cmExternalReferenceCode,
+		int type, OrderByComparator<LayoutClassedModelUsage> orderByComparator,
+		boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				7 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(6);
+		}
+
+		sb.append(_SQL_SELECT_LAYOUTCLASSEDMODELUSAGE_WHERE);
+
+		sb.append(_FINDER_COLUMN_C_CN_CMERC_T_COMPANYID_2);
+
+		sb.append(_FINDER_COLUMN_C_CN_CMERC_T_CLASSNAMEID_2);
+
+		boolean bindCMExternalReferenceCode = false;
+
+		if (cmExternalReferenceCode.isEmpty()) {
+			sb.append(_FINDER_COLUMN_C_CN_CMERC_T_CMEXTERNALREFERENCECODE_3);
+		}
+		else {
+			bindCMExternalReferenceCode = true;
+
+			sb.append(_FINDER_COLUMN_C_CN_CMERC_T_CMEXTERNALREFERENCECODE_2);
+		}
+
+		sb.append(_FINDER_COLUMN_C_CN_CMERC_T_TYPE_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(LayoutClassedModelUsageModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		queryPos.add(companyId);
+
+		queryPos.add(classNameId);
+
+		if (bindCMExternalReferenceCode) {
+			queryPos.add(cmExternalReferenceCode);
+		}
+
+		queryPos.add(type);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						layoutClassedModelUsage)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<LayoutClassedModelUsage> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the layout classed model usages where companyId = &#63; and classNameId = &#63; and cmExternalReferenceCode = &#63; and type = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param cmExternalReferenceCode the cm external reference code
+	 * @param type the type
+	 */
+	@Override
+	public void removeByC_CN_CMERC_T(
+		long companyId, long classNameId, String cmExternalReferenceCode,
+		int type) {
+
+		for (LayoutClassedModelUsage layoutClassedModelUsage :
+				findByC_CN_CMERC_T(
+					companyId, classNameId, cmExternalReferenceCode, type,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
+			remove(layoutClassedModelUsage);
+		}
+	}
+
+	/**
+	 * Returns the number of layout classed model usages where companyId = &#63; and classNameId = &#63; and cmExternalReferenceCode = &#63; and type = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param cmExternalReferenceCode the cm external reference code
+	 * @param type the type
+	 * @return the number of matching layout classed model usages
+	 */
+	@Override
+	public int countByC_CN_CMERC_T(
+		long companyId, long classNameId, String cmExternalReferenceCode,
+		int type) {
+
+		cmExternalReferenceCode = Objects.toString(cmExternalReferenceCode, "");
+
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			LayoutClassedModelUsage.class);
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByC_CN_CMERC_T;
+
+			finderArgs = new Object[] {
+				companyId, classNameId, cmExternalReferenceCode, type
+			};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		}
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(5);
+
+			sb.append(_SQL_COUNT_LAYOUTCLASSEDMODELUSAGE_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_CN_CMERC_T_COMPANYID_2);
+
+			sb.append(_FINDER_COLUMN_C_CN_CMERC_T_CLASSNAMEID_2);
+
+			boolean bindCMExternalReferenceCode = false;
+
+			if (cmExternalReferenceCode.isEmpty()) {
+				sb.append(
+					_FINDER_COLUMN_C_CN_CMERC_T_CMEXTERNALREFERENCECODE_3);
+			}
+			else {
+				bindCMExternalReferenceCode = true;
+
+				sb.append(
+					_FINDER_COLUMN_C_CN_CMERC_T_CMEXTERNALREFERENCECODE_2);
+			}
+
+			sb.append(_FINDER_COLUMN_C_CN_CMERC_T_TYPE_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(companyId);
+
+				queryPos.add(classNameId);
+
+				if (bindCMExternalReferenceCode) {
+					queryPos.add(cmExternalReferenceCode);
+				}
+
+				queryPos.add(type);
+
+				count = (Long)query.uniqueResult();
+
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_C_CN_CMERC_T_COMPANYID_2 =
+		"layoutClassedModelUsage.companyId = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_CN_CMERC_T_CLASSNAMEID_2 =
+		"layoutClassedModelUsage.classNameId = ? AND ";
+
+	private static final String
+		_FINDER_COLUMN_C_CN_CMERC_T_CMEXTERNALREFERENCECODE_2 =
+			"layoutClassedModelUsage.cmExternalReferenceCode = ? AND ";
+
+	private static final String
+		_FINDER_COLUMN_C_CN_CMERC_T_CMEXTERNALREFERENCECODE_3 =
+			"(layoutClassedModelUsage.cmExternalReferenceCode IS NULL OR layoutClassedModelUsage.cmExternalReferenceCode = '') AND ";
+
+	private static final String _FINDER_COLUMN_C_CN_CMERC_T_TYPE_2 =
+		"layoutClassedModelUsage.type = ? AND layoutClassedModelUsage.containerKey IS NOT NULL";
+
+	private FinderPath _finderPathFetchByCN_CPK_CMERC_CK_CT_P;
+	private FinderPath _finderPathCountByCN_CPK_CMERC_CK_CT_P;
+
+	/**
+	 * Returns the layout classed model usage where classNameId = &#63; and classPK = &#63; and cmExternalReferenceCode = &#63; and containerKey = &#63; and containerType = &#63; and plid = &#63; or throws a <code>NoSuchLayoutClassedModelUsageException</code> if it could not be found.
 	 *
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
+	 * @param cmExternalReferenceCode the cm external reference code
 	 * @param containerKey the container key
 	 * @param containerType the container type
 	 * @param plid the plid
@@ -4477,16 +5849,18 @@ public class LayoutClassedModelUsagePersistenceImpl
 	 * @throws NoSuchLayoutClassedModelUsageException if a matching layout classed model usage could not be found
 	 */
 	@Override
-	public LayoutClassedModelUsage findByCN_CPK_CK_CT_P(
-			long classNameId, long classPK, String containerKey,
-			long containerType, long plid)
+	public LayoutClassedModelUsage findByCN_CPK_CMERC_CK_CT_P(
+			long classNameId, long classPK, String cmExternalReferenceCode,
+			String containerKey, long containerType, long plid)
 		throws NoSuchLayoutClassedModelUsageException {
 
-		LayoutClassedModelUsage layoutClassedModelUsage = fetchByCN_CPK_CK_CT_P(
-			classNameId, classPK, containerKey, containerType, plid);
+		LayoutClassedModelUsage layoutClassedModelUsage =
+			fetchByCN_CPK_CMERC_CK_CT_P(
+				classNameId, classPK, cmExternalReferenceCode, containerKey,
+				containerType, plid);
 
 		if (layoutClassedModelUsage == null) {
-			StringBundler sb = new StringBundler(12);
+			StringBundler sb = new StringBundler(14);
 
 			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
 
@@ -4495,6 +5869,9 @@ public class LayoutClassedModelUsagePersistenceImpl
 
 			sb.append(", classPK=");
 			sb.append(classPK);
+
+			sb.append(", cmExternalReferenceCode=");
+			sb.append(cmExternalReferenceCode);
 
 			sb.append(", containerKey=");
 			sb.append(containerKey);
@@ -4518,29 +5895,32 @@ public class LayoutClassedModelUsagePersistenceImpl
 	}
 
 	/**
-	 * Returns the layout classed model usage where classNameId = &#63; and classPK = &#63; and containerKey = &#63; and containerType = &#63; and plid = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the layout classed model usage where classNameId = &#63; and classPK = &#63; and cmExternalReferenceCode = &#63; and containerKey = &#63; and containerType = &#63; and plid = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
+	 * @param cmExternalReferenceCode the cm external reference code
 	 * @param containerKey the container key
 	 * @param containerType the container type
 	 * @param plid the plid
 	 * @return the matching layout classed model usage, or <code>null</code> if a matching layout classed model usage could not be found
 	 */
 	@Override
-	public LayoutClassedModelUsage fetchByCN_CPK_CK_CT_P(
-		long classNameId, long classPK, String containerKey, long containerType,
-		long plid) {
+	public LayoutClassedModelUsage fetchByCN_CPK_CMERC_CK_CT_P(
+		long classNameId, long classPK, String cmExternalReferenceCode,
+		String containerKey, long containerType, long plid) {
 
-		return fetchByCN_CPK_CK_CT_P(
-			classNameId, classPK, containerKey, containerType, plid, true);
+		return fetchByCN_CPK_CMERC_CK_CT_P(
+			classNameId, classPK, cmExternalReferenceCode, containerKey,
+			containerType, plid, true);
 	}
 
 	/**
-	 * Returns the layout classed model usage where classNameId = &#63; and classPK = &#63; and containerKey = &#63; and containerType = &#63; and plid = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the layout classed model usage where classNameId = &#63; and classPK = &#63; and cmExternalReferenceCode = &#63; and containerKey = &#63; and containerType = &#63; and plid = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
+	 * @param cmExternalReferenceCode the cm external reference code
 	 * @param containerKey the container key
 	 * @param containerType the container type
 	 * @param plid the plid
@@ -4548,10 +5928,12 @@ public class LayoutClassedModelUsagePersistenceImpl
 	 * @return the matching layout classed model usage, or <code>null</code> if a matching layout classed model usage could not be found
 	 */
 	@Override
-	public LayoutClassedModelUsage fetchByCN_CPK_CK_CT_P(
-		long classNameId, long classPK, String containerKey, long containerType,
-		long plid, boolean useFinderCache) {
+	public LayoutClassedModelUsage fetchByCN_CPK_CMERC_CK_CT_P(
+		long classNameId, long classPK, String cmExternalReferenceCode,
+		String containerKey, long containerType, long plid,
+		boolean useFinderCache) {
 
+		cmExternalReferenceCode = Objects.toString(cmExternalReferenceCode, "");
 		containerKey = Objects.toString(containerKey, "");
 
 		boolean productionMode = ctPersistenceHelper.isProductionMode(
@@ -4561,7 +5943,8 @@ public class LayoutClassedModelUsagePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			finderArgs = new Object[] {
-				classNameId, classPK, containerKey, containerType, plid
+				classNameId, classPK, cmExternalReferenceCode, containerKey,
+				containerType, plid
 			};
 		}
 
@@ -4569,7 +5952,7 @@ public class LayoutClassedModelUsagePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = finderCache.getResult(
-				_finderPathFetchByCN_CPK_CK_CT_P, finderArgs, this);
+				_finderPathFetchByCN_CPK_CMERC_CK_CT_P, finderArgs, this);
 		}
 
 		if (result instanceof LayoutClassedModelUsage) {
@@ -4578,6 +5961,9 @@ public class LayoutClassedModelUsagePersistenceImpl
 
 			if ((classNameId != layoutClassedModelUsage.getClassNameId()) ||
 				(classPK != layoutClassedModelUsage.getClassPK()) ||
+				!Objects.equals(
+					cmExternalReferenceCode,
+					layoutClassedModelUsage.getCMExternalReferenceCode()) ||
 				!Objects.equals(
 					containerKey, layoutClassedModelUsage.getContainerKey()) ||
 				(containerType != layoutClassedModelUsage.getContainerType()) ||
@@ -4588,28 +5974,41 @@ public class LayoutClassedModelUsagePersistenceImpl
 		}
 
 		if (result == null) {
-			StringBundler sb = new StringBundler(7);
+			StringBundler sb = new StringBundler(8);
 
 			sb.append(_SQL_SELECT_LAYOUTCLASSEDMODELUSAGE_WHERE);
 
-			sb.append(_FINDER_COLUMN_CN_CPK_CK_CT_P_CLASSNAMEID_2);
+			sb.append(_FINDER_COLUMN_CN_CPK_CMERC_CK_CT_P_CLASSNAMEID_2);
 
-			sb.append(_FINDER_COLUMN_CN_CPK_CK_CT_P_CLASSPK_2);
+			sb.append(_FINDER_COLUMN_CN_CPK_CMERC_CK_CT_P_CLASSPK_2);
+
+			boolean bindCMExternalReferenceCode = false;
+
+			if (cmExternalReferenceCode.isEmpty()) {
+				sb.append(
+					_FINDER_COLUMN_CN_CPK_CMERC_CK_CT_P_CMEXTERNALREFERENCECODE_3);
+			}
+			else {
+				bindCMExternalReferenceCode = true;
+
+				sb.append(
+					_FINDER_COLUMN_CN_CPK_CMERC_CK_CT_P_CMEXTERNALREFERENCECODE_2);
+			}
 
 			boolean bindContainerKey = false;
 
 			if (containerKey.isEmpty()) {
-				sb.append(_FINDER_COLUMN_CN_CPK_CK_CT_P_CONTAINERKEY_3);
+				sb.append(_FINDER_COLUMN_CN_CPK_CMERC_CK_CT_P_CONTAINERKEY_3);
 			}
 			else {
 				bindContainerKey = true;
 
-				sb.append(_FINDER_COLUMN_CN_CPK_CK_CT_P_CONTAINERKEY_2);
+				sb.append(_FINDER_COLUMN_CN_CPK_CMERC_CK_CT_P_CONTAINERKEY_2);
 			}
 
-			sb.append(_FINDER_COLUMN_CN_CPK_CK_CT_P_CONTAINERTYPE_2);
+			sb.append(_FINDER_COLUMN_CN_CPK_CMERC_CK_CT_P_CONTAINERTYPE_2);
 
-			sb.append(_FINDER_COLUMN_CN_CPK_CK_CT_P_PLID_2);
+			sb.append(_FINDER_COLUMN_CN_CPK_CMERC_CK_CT_P_PLID_2);
 
 			String sql = sb.toString();
 
@@ -4626,6 +6025,10 @@ public class LayoutClassedModelUsagePersistenceImpl
 
 				queryPos.add(classPK);
 
+				if (bindCMExternalReferenceCode) {
+					queryPos.add(cmExternalReferenceCode);
+				}
+
 				if (bindContainerKey) {
 					queryPos.add(containerKey);
 				}
@@ -4639,7 +6042,8 @@ public class LayoutClassedModelUsagePersistenceImpl
 				if (list.isEmpty()) {
 					if (useFinderCache && productionMode) {
 						finderCache.putResult(
-							_finderPathFetchByCN_CPK_CK_CT_P, finderArgs, list);
+							_finderPathFetchByCN_CPK_CMERC_CK_CT_P, finderArgs,
+							list);
 					}
 				}
 				else {
@@ -4668,42 +6072,47 @@ public class LayoutClassedModelUsagePersistenceImpl
 	}
 
 	/**
-	 * Removes the layout classed model usage where classNameId = &#63; and classPK = &#63; and containerKey = &#63; and containerType = &#63; and plid = &#63; from the database.
+	 * Removes the layout classed model usage where classNameId = &#63; and classPK = &#63; and cmExternalReferenceCode = &#63; and containerKey = &#63; and containerType = &#63; and plid = &#63; from the database.
 	 *
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
+	 * @param cmExternalReferenceCode the cm external reference code
 	 * @param containerKey the container key
 	 * @param containerType the container type
 	 * @param plid the plid
 	 * @return the layout classed model usage that was removed
 	 */
 	@Override
-	public LayoutClassedModelUsage removeByCN_CPK_CK_CT_P(
-			long classNameId, long classPK, String containerKey,
-			long containerType, long plid)
+	public LayoutClassedModelUsage removeByCN_CPK_CMERC_CK_CT_P(
+			long classNameId, long classPK, String cmExternalReferenceCode,
+			String containerKey, long containerType, long plid)
 		throws NoSuchLayoutClassedModelUsageException {
 
-		LayoutClassedModelUsage layoutClassedModelUsage = findByCN_CPK_CK_CT_P(
-			classNameId, classPK, containerKey, containerType, plid);
+		LayoutClassedModelUsage layoutClassedModelUsage =
+			findByCN_CPK_CMERC_CK_CT_P(
+				classNameId, classPK, cmExternalReferenceCode, containerKey,
+				containerType, plid);
 
 		return remove(layoutClassedModelUsage);
 	}
 
 	/**
-	 * Returns the number of layout classed model usages where classNameId = &#63; and classPK = &#63; and containerKey = &#63; and containerType = &#63; and plid = &#63;.
+	 * Returns the number of layout classed model usages where classNameId = &#63; and classPK = &#63; and cmExternalReferenceCode = &#63; and containerKey = &#63; and containerType = &#63; and plid = &#63;.
 	 *
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
+	 * @param cmExternalReferenceCode the cm external reference code
 	 * @param containerKey the container key
 	 * @param containerType the container type
 	 * @param plid the plid
 	 * @return the number of matching layout classed model usages
 	 */
 	@Override
-	public int countByCN_CPK_CK_CT_P(
-		long classNameId, long classPK, String containerKey, long containerType,
-		long plid) {
+	public int countByCN_CPK_CMERC_CK_CT_P(
+		long classNameId, long classPK, String cmExternalReferenceCode,
+		String containerKey, long containerType, long plid) {
 
+		cmExternalReferenceCode = Objects.toString(cmExternalReferenceCode, "");
 		containerKey = Objects.toString(containerKey, "");
 
 		boolean productionMode = ctPersistenceHelper.isProductionMode(
@@ -4715,38 +6124,52 @@ public class LayoutClassedModelUsagePersistenceImpl
 		Long count = null;
 
 		if (productionMode) {
-			finderPath = _finderPathCountByCN_CPK_CK_CT_P;
+			finderPath = _finderPathCountByCN_CPK_CMERC_CK_CT_P;
 
 			finderArgs = new Object[] {
-				classNameId, classPK, containerKey, containerType, plid
+				classNameId, classPK, cmExternalReferenceCode, containerKey,
+				containerType, plid
 			};
 
 			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
-			StringBundler sb = new StringBundler(6);
+			StringBundler sb = new StringBundler(7);
 
 			sb.append(_SQL_COUNT_LAYOUTCLASSEDMODELUSAGE_WHERE);
 
-			sb.append(_FINDER_COLUMN_CN_CPK_CK_CT_P_CLASSNAMEID_2);
+			sb.append(_FINDER_COLUMN_CN_CPK_CMERC_CK_CT_P_CLASSNAMEID_2);
 
-			sb.append(_FINDER_COLUMN_CN_CPK_CK_CT_P_CLASSPK_2);
+			sb.append(_FINDER_COLUMN_CN_CPK_CMERC_CK_CT_P_CLASSPK_2);
+
+			boolean bindCMExternalReferenceCode = false;
+
+			if (cmExternalReferenceCode.isEmpty()) {
+				sb.append(
+					_FINDER_COLUMN_CN_CPK_CMERC_CK_CT_P_CMEXTERNALREFERENCECODE_3);
+			}
+			else {
+				bindCMExternalReferenceCode = true;
+
+				sb.append(
+					_FINDER_COLUMN_CN_CPK_CMERC_CK_CT_P_CMEXTERNALREFERENCECODE_2);
+			}
 
 			boolean bindContainerKey = false;
 
 			if (containerKey.isEmpty()) {
-				sb.append(_FINDER_COLUMN_CN_CPK_CK_CT_P_CONTAINERKEY_3);
+				sb.append(_FINDER_COLUMN_CN_CPK_CMERC_CK_CT_P_CONTAINERKEY_3);
 			}
 			else {
 				bindContainerKey = true;
 
-				sb.append(_FINDER_COLUMN_CN_CPK_CK_CT_P_CONTAINERKEY_2);
+				sb.append(_FINDER_COLUMN_CN_CPK_CMERC_CK_CT_P_CONTAINERKEY_2);
 			}
 
-			sb.append(_FINDER_COLUMN_CN_CPK_CK_CT_P_CONTAINERTYPE_2);
+			sb.append(_FINDER_COLUMN_CN_CPK_CMERC_CK_CT_P_CONTAINERTYPE_2);
 
-			sb.append(_FINDER_COLUMN_CN_CPK_CK_CT_P_PLID_2);
+			sb.append(_FINDER_COLUMN_CN_CPK_CMERC_CK_CT_P_PLID_2);
 
 			String sql = sb.toString();
 
@@ -4762,6 +6185,10 @@ public class LayoutClassedModelUsagePersistenceImpl
 				queryPos.add(classNameId);
 
 				queryPos.add(classPK);
+
+				if (bindCMExternalReferenceCode) {
+					queryPos.add(cmExternalReferenceCode);
+				}
 
 				if (bindContainerKey) {
 					queryPos.add(containerKey);
@@ -4788,22 +6215,34 @@ public class LayoutClassedModelUsagePersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_CN_CPK_CK_CT_P_CLASSNAMEID_2 =
-		"layoutClassedModelUsage.classNameId = ? AND ";
+	private static final String
+		_FINDER_COLUMN_CN_CPK_CMERC_CK_CT_P_CLASSNAMEID_2 =
+			"layoutClassedModelUsage.classNameId = ? AND ";
 
-	private static final String _FINDER_COLUMN_CN_CPK_CK_CT_P_CLASSPK_2 =
+	private static final String _FINDER_COLUMN_CN_CPK_CMERC_CK_CT_P_CLASSPK_2 =
 		"layoutClassedModelUsage.classPK = ? AND ";
 
-	private static final String _FINDER_COLUMN_CN_CPK_CK_CT_P_CONTAINERKEY_2 =
-		"layoutClassedModelUsage.containerKey = ? AND ";
+	private static final String
+		_FINDER_COLUMN_CN_CPK_CMERC_CK_CT_P_CMEXTERNALREFERENCECODE_2 =
+			"layoutClassedModelUsage.cmExternalReferenceCode = ? AND ";
 
-	private static final String _FINDER_COLUMN_CN_CPK_CK_CT_P_CONTAINERKEY_3 =
-		"(layoutClassedModelUsage.containerKey IS NULL OR layoutClassedModelUsage.containerKey = '') AND ";
+	private static final String
+		_FINDER_COLUMN_CN_CPK_CMERC_CK_CT_P_CMEXTERNALREFERENCECODE_3 =
+			"(layoutClassedModelUsage.cmExternalReferenceCode IS NULL OR layoutClassedModelUsage.cmExternalReferenceCode = '') AND ";
 
-	private static final String _FINDER_COLUMN_CN_CPK_CK_CT_P_CONTAINERTYPE_2 =
-		"layoutClassedModelUsage.containerType = ? AND ";
+	private static final String
+		_FINDER_COLUMN_CN_CPK_CMERC_CK_CT_P_CONTAINERKEY_2 =
+			"layoutClassedModelUsage.containerKey = ? AND ";
 
-	private static final String _FINDER_COLUMN_CN_CPK_CK_CT_P_PLID_2 =
+	private static final String
+		_FINDER_COLUMN_CN_CPK_CMERC_CK_CT_P_CONTAINERKEY_3 =
+			"(layoutClassedModelUsage.containerKey IS NULL OR layoutClassedModelUsage.containerKey = '') AND ";
+
+	private static final String
+		_FINDER_COLUMN_CN_CPK_CMERC_CK_CT_P_CONTAINERTYPE_2 =
+			"layoutClassedModelUsage.containerType = ? AND ";
+
+	private static final String _FINDER_COLUMN_CN_CPK_CMERC_CK_CT_P_PLID_2 =
 		"layoutClassedModelUsage.plid = ?";
 
 	public LayoutClassedModelUsagePersistenceImpl() {
@@ -4846,10 +6285,11 @@ public class LayoutClassedModelUsagePersistenceImpl
 			layoutClassedModelUsage);
 
 		finderCache.putResult(
-			_finderPathFetchByCN_CPK_CK_CT_P,
+			_finderPathFetchByCN_CPK_CMERC_CK_CT_P,
 			new Object[] {
 				layoutClassedModelUsage.getClassNameId(),
 				layoutClassedModelUsage.getClassPK(),
+				layoutClassedModelUsage.getCMExternalReferenceCode(),
 				layoutClassedModelUsage.getContainerKey(),
 				layoutClassedModelUsage.getContainerType(),
 				layoutClassedModelUsage.getPlid()
@@ -4956,15 +6396,16 @@ public class LayoutClassedModelUsagePersistenceImpl
 		args = new Object[] {
 			layoutClassedModelUsageModelImpl.getClassNameId(),
 			layoutClassedModelUsageModelImpl.getClassPK(),
+			layoutClassedModelUsageModelImpl.getCMExternalReferenceCode(),
 			layoutClassedModelUsageModelImpl.getContainerKey(),
 			layoutClassedModelUsageModelImpl.getContainerType(),
 			layoutClassedModelUsageModelImpl.getPlid()
 		};
 
 		finderCache.putResult(
-			_finderPathCountByCN_CPK_CK_CT_P, args, Long.valueOf(1));
+			_finderPathCountByCN_CPK_CMERC_CK_CT_P, args, Long.valueOf(1));
 		finderCache.putResult(
-			_finderPathFetchByCN_CPK_CK_CT_P, args,
+			_finderPathFetchByCN_CPK_CMERC_CK_CT_P, args,
 			layoutClassedModelUsageModelImpl);
 	}
 
@@ -5648,6 +7089,7 @@ public class LayoutClassedModelUsagePersistenceImpl
 		ctIgnoreColumnNames.add("modifiedDate");
 		ctStrictColumnNames.add("classNameId");
 		ctStrictColumnNames.add("classPK");
+		ctStrictColumnNames.add("cmExternalReferenceCode");
 		ctStrictColumnNames.add("containerKey");
 		ctStrictColumnNames.add("containerType");
 		ctStrictColumnNames.add("plid");
@@ -5668,8 +7110,8 @@ public class LayoutClassedModelUsagePersistenceImpl
 
 		_uniqueIndexColumnNames.add(
 			new String[] {
-				"classNameId", "classPK", "containerKey", "containerType",
-				"plid"
+				"classNameId", "classPK", "cmExternalReferenceCode",
+				"containerKey", "containerType", "plid"
 			});
 	}
 
@@ -5775,6 +7217,40 @@ public class LayoutClassedModelUsagePersistenceImpl
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"classNameId", "classPK"}, false);
 
+		_finderPathWithPaginationFindByC_CN_CMERC = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_CN_CMERC",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				String.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			},
+			new String[] {
+				"companyId", "classNameId", "cmExternalReferenceCode"
+			},
+			true);
+
+		_finderPathWithoutPaginationFindByC_CN_CMERC = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_CN_CMERC",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				String.class.getName()
+			},
+			new String[] {
+				"companyId", "classNameId", "cmExternalReferenceCode"
+			},
+			true);
+
+		_finderPathCountByC_CN_CMERC = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_CN_CMERC",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				String.class.getName()
+			},
+			new String[] {
+				"companyId", "classNameId", "cmExternalReferenceCode"
+			},
+			false);
+
 		_finderPathWithPaginationFindByC_CN_CT = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_CN_CT",
 			new String[] {
@@ -5848,29 +7324,65 @@ public class LayoutClassedModelUsagePersistenceImpl
 			},
 			new String[] {"containerKey", "containerType", "plid"}, false);
 
-		_finderPathFetchByCN_CPK_CK_CT_P = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByCN_CPK_CK_CT_P",
+		_finderPathWithPaginationFindByC_CN_CMERC_T = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_CN_CMERC_T",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Long.class.getName(),
-				Long.class.getName()
+				String.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
 			},
 			new String[] {
-				"classNameId", "classPK", "containerKey", "containerType",
-				"plid"
+				"companyId", "classNameId", "cmExternalReferenceCode", "type_"
 			},
 			true);
 
-		_finderPathCountByCN_CPK_CK_CT_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCN_CPK_CK_CT_P",
+		_finderPathWithoutPaginationFindByC_CN_CMERC_T = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_CN_CMERC_T",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Long.class.getName(),
-				Long.class.getName()
+				String.class.getName(), Integer.class.getName()
 			},
 			new String[] {
-				"classNameId", "classPK", "containerKey", "containerType",
-				"plid"
+				"companyId", "classNameId", "cmExternalReferenceCode", "type_"
+			},
+			true);
+
+		_finderPathCountByC_CN_CMERC_T = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_CN_CMERC_T",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				String.class.getName(), Integer.class.getName()
+			},
+			new String[] {
+				"companyId", "classNameId", "cmExternalReferenceCode", "type_"
+			},
+			false);
+
+		_finderPathFetchByCN_CPK_CMERC_CK_CT_P = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByCN_CPK_CMERC_CK_CT_P",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				String.class.getName(), String.class.getName(),
+				Long.class.getName(), Long.class.getName()
+			},
+			new String[] {
+				"classNameId", "classPK", "cmExternalReferenceCode",
+				"containerKey", "containerType", "plid"
+			},
+			true);
+
+		_finderPathCountByCN_CPK_CMERC_CK_CT_P = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByCN_CPK_CMERC_CK_CT_P",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				String.class.getName(), String.class.getName(),
+				Long.class.getName(), Long.class.getName()
+			},
+			new String[] {
+				"classNameId", "classPK", "cmExternalReferenceCode",
+				"containerKey", "containerType", "plid"
 			},
 			false);
 

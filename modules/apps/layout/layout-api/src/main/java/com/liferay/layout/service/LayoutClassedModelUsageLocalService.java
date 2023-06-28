@@ -70,9 +70,6 @@ public interface LayoutClassedModelUsageLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.layout.service.impl.LayoutClassedModelUsageLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the layout classed model usage local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link LayoutClassedModelUsageLocalServiceUtil} if injection and service tracking are not available.
 	 */
-	public LayoutClassedModelUsage addDefaultLayoutClassedModelUsage(
-		long groupId, long classNameId, long classPK,
-		ServiceContext serviceContext);
 
 	/**
 	 * Adds the layout classed model usage to the database. Also notifies the appropriate model listeners.
@@ -89,8 +86,9 @@ public interface LayoutClassedModelUsageLocalService
 		LayoutClassedModelUsage layoutClassedModelUsage);
 
 	public LayoutClassedModelUsage addLayoutClassedModelUsage(
-		long groupId, long classNameId, long classPK, String containerKey,
-		long containerType, long plid, ServiceContext serviceContext);
+		long groupId, long classNameId, long classPK,
+		String cmExternalReferenceCode, String containerKey, long containerType,
+		long plid, ServiceContext serviceContext);
 
 	/**
 	 * Creates a new layout classed model usage with the primary key. Does not add the layout classed model usage to the database.
@@ -230,8 +228,8 @@ public interface LayoutClassedModelUsageLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LayoutClassedModelUsage fetchLayoutClassedModelUsage(
-		long classNameId, long classPK, String containerKey, long containerType,
-		long plid);
+		long classNameId, long classPK, String cmExternalReferenceCode,
+		String containerKey, long containerType, long plid);
 
 	/**
 	 * Returns the layout classed model usage matching the UUID and group.
@@ -376,10 +374,6 @@ public interface LayoutClassedModelUsageLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getUniqueLayoutClassedModelUsagesCount(
-		long classNameId, long classPK);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasDefaultLayoutClassedModelUsage(
 		long classNameId, long classPK);
 
 	/**

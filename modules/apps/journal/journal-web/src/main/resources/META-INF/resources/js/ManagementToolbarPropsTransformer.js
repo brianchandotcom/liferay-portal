@@ -83,16 +83,19 @@ export default function propsTransformer({
 			);
 		}
 
-		entrySelectorNodes.forEach((node) => {
-			if (node.checked) {
-				moveArticlesAndFoldersURL = addParams(
-					`${node.name}=${node.value}`,
-					moveArticlesAndFoldersURL
-				);
-			}
-		});
+		const articleIds = Array.from(entrySelectorNodes)
+			.filter((node) => node.checked)
+			.map((node) => node.value)
+			.join(',');
 
-		navigate(moveArticlesAndFoldersURL);
+		const url = new URL(moveArticlesAndFoldersURL);
+
+		url.searchParams.set(
+			`${portletNamespace}rowIdsJournalArticle`,
+			articleIds
+		);
+
+		navigate(url);
 	};
 
 	return {

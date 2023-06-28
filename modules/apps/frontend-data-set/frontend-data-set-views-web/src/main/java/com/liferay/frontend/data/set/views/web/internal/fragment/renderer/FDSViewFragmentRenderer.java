@@ -26,7 +26,6 @@ import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManagerProvider;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -239,27 +238,12 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 		return sb.toString();
 	}
 
-	private String _interpolateURL(String apiUrl, HttpServletRequest httpServletRequest){
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		apiUrl = StringUtil.replace(apiUrl, "{siteId}", String.valueOf(themeDisplay.getScopeGroupId()));
-		apiUrl = StringUtil.replace(apiUrl, "{scopeKey}", String.valueOf(themeDisplay.getScopeGroupId()));
-		apiUrl = StringUtil.replace(apiUrl, "{userId}", String.valueOf(themeDisplay.getUserId()));
-
-		if (StringUtil.contains(apiUrl, "{")) {
-			System.out.println("Unsupported parameter in API url: " + apiUrl);
-		}
-
-		return apiUrl;
-	}
-
-	private String _getAPIURL(ObjectEntry fdsEntryObjectEntry, HttpServletRequest httpServletRequest) {
+	private String _getAPIURL(
+		ObjectEntry fdsEntryObjectEntry,
+		HttpServletRequest httpServletRequest) {
 
 		Map<String, Object> properties = fdsEntryObjectEntry.getProperties();
-	
+
 		StringBundler sb = new StringBundler(3);
 
 		sb.append("/o");
@@ -268,7 +252,7 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 				String.valueOf(properties.get("restApplication")), "/v1.0",
 				StringPool.BLANK));
 		sb.append(String.valueOf(properties.get("restEndpoint")));
-		
+
 		return _interpolateURL(sb.toString(), httpServletRequest);
 	}
 
@@ -381,6 +365,28 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 
 	@Reference
 	private CETManager _cetManager;
+
+	private String _interpolateURL(
+		String apiUrl, HttpServletRequest httpServletRequest) {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		apiUrl = StringUtil.replace(
+			apiUrl, "{siteId}", String.valueOf(themeDisplay.getScopeGroupId()));
+		apiUrl = StringUtil.replace(
+			apiUrl, "{scopeKey}",
+			String.valueOf(themeDisplay.getScopeGroupId()));
+		apiUrl = StringUtil.replace(
+			apiUrl, "{userId}", String.valueOf(themeDisplay.getUserId()));
+
+		if (StringUtil.contains(apiUrl, "{")) {
+			System.out.println("Unsupported parameter in API url: " + apiUrl);
+		}
+
+		return apiUrl;
+	}
 
 	@Reference
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;

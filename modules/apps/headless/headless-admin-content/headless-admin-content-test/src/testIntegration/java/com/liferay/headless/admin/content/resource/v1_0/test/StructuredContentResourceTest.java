@@ -314,13 +314,45 @@ public class StructuredContentResourceTest
 
 		Assert.assertEquals(1L, structuredContentsVersionsPage.getTotalCount());
 
-		_structuredContentResource.putStructuredContent(
-			id, _toStructuredContent(structuredContent));
+		com.liferay.headless.delivery.client.dto.v1_0.StructuredContent
+			putStructuredContent =
+				_structuredContentResource.putStructuredContent(
+					id, _toStructuredContent(structuredContent));
 
 		structuredContentsVersionsPage =
 			structuredContentResource.getStructuredContentsVersionsPage(id);
 
 		Assert.assertEquals(2L, structuredContentsVersionsPage.getTotalCount());
+
+		structuredContentResource =
+			com.liferay.headless.admin.content.client.resource.v1_0.
+				StructuredContentResource.builder(
+				).authentication(
+					"test@liferay.com", "test"
+				).locale(
+					LocaleUtil.getDefault()
+				).parameters(
+					"fields", "id"
+				).build();
+
+		structuredContentsVersionsPage =
+			structuredContentResource.getStructuredContentsVersionsPage(id);
+
+		Assert.assertEquals(2L, structuredContentsVersionsPage.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(
+				new StructuredContent() {
+					{
+						id = structuredContent.getId();
+					}
+				},
+				new StructuredContent() {
+					{
+						id = putStructuredContent.getId();
+					}
+				}),
+			(List<StructuredContent>)structuredContentsVersionsPage.getItems());
 	}
 
 	@Override

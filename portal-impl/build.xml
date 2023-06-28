@@ -446,6 +446,44 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		</if>
 	</target>
 
+	<target name="format-copyright">
+		<if>
+			<available file="${project.dir}/modules/util/copyright-formatter" />
+			<then>
+				<gradle-execute dir="${project.dir}/modules/util/copyright-formatter" task="deploy" />
+
+				<path id="copyright.formatter.classpath">
+					<fileset
+						dir="${sdk.dir}/dependencies/com.liferay.copyright.formatter/lib"
+						includes="*.jar"
+					/>
+				</path>
+
+				<if>
+					<not>
+						<isset property="source.base.dir" />
+					</not>
+					<then>
+						<property name="source.base.dir" value="${project.dir}" />
+					</then>
+				</if>
+
+				<java
+					classname="com.liferay.copyright.formatter.CopyrightFormatter"
+					classpathref="copyright.formatter.classpath"
+					fork="true"
+					newenvironment="true"
+				>
+					<jvmarg if:true="${jvm.debug}" value="${jpda.settings}" />
+					<jvmarg value="-Dfile.encoding=UTF-8" />
+					<jvmarg value="-Duser.country=US" />
+					<jvmarg value="-Duser.language=en" />
+					<arg value="source.base.dir=${source.base.dir}" />
+				</java>
+			</then>
+		</if>
+	</target>
+
 	<target name="format-source">
 		<antcall target="format-source-files">
 			<param name="format.source.default.task" value="true" />

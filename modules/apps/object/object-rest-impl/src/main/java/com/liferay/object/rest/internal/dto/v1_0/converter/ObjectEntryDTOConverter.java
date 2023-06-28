@@ -71,6 +71,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -228,7 +229,7 @@ public class ObjectEntryDTOConverter
 									_systemObjectDefinitionManagerRegistry,
 									dtoConverterContext.getUser());
 
-							if (values != null) {
+							if (MapUtil.isNotEmpty(values)) {
 								ObjectField objectField =
 									_objectFieldLocalService.fetchObjectField(
 										objectDefinition.

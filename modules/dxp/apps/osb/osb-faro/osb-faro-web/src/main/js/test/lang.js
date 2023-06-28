@@ -9,7 +9,7 @@ import LanguageIgnoreList from './language-ignore-list';
 import path from 'path';
 import properties from 'properties';
 
-const LANG_PATH = path.resolve(
+const AC_LANG_PATH = path.resolve(
 	'src',
 	'main',
 	'resources',
@@ -17,15 +17,31 @@ const LANG_PATH = path.resolve(
 	'Language.properties'
 );
 
-let keys = {};
+const DXP_LANG_PATH = path.resolve(
+	'../../../../../',
+	'apps',
+	'portal-language',
+	'portal-language-lang',
+	'src',
+	'main',
+	'resources',
+	'content',
+	'Language.properties'
+);
 
-try {
-	const buffer = fs.readFileSync(LANG_PATH);
+function getKeys(langPath) {
+	let keys = {};
 
-	keys = properties.parse(buffer.toString('utf8'));
-} catch (e) {
-	// eslint-disable-next-line no-console
-	console.error(`Failed to read lang key file: ${LANG_PATH}`);
+	try {
+		const buffer = fs.readFileSync(langPath);
+
+		keys = properties.parse(buffer.toString('utf8'));
+	} catch (e) {
+		// eslint-disable-next-line no-console
+		console.error(`Failed to read lang key file: ${langPath}`);
+	}
+
+	return keys;
 }
 
 /**
@@ -35,7 +51,7 @@ try {
  * @returns {string} The language key's value
  */
 export default function lang(key) {
-	const value = keys[key];
+	const value = getKeys(AC_LANG_PATH)[key] || getKeys(DXP_LANG_PATH)[key];
 
 	if (!value) {
 		if (LanguageIgnoreList.includes(key)) {

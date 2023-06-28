@@ -35,7 +35,7 @@ exports[`GeoMapCard should render 1`] = `
           <td
             class="text-left font-weight-semibold "
           >
-            country.united-states
+            United States
           </td>
           <td
             class="text-right "
@@ -53,7 +53,7 @@ exports[`GeoMapCard should render 1`] = `
           <td
             class="text-left font-weight-semibold "
           >
-            country.brazil
+            Brazil
           </td>
           <td
             class="text-right "
@@ -71,7 +71,7 @@ exports[`GeoMapCard should render 1`] = `
           <td
             class="text-left font-weight-semibold "
           >
-            country.india
+            India
           </td>
           <td
             class="text-right "
@@ -89,7 +89,7 @@ exports[`GeoMapCard should render 1`] = `
           <td
             class="text-left font-weight-semibold "
           >
-            country.spain
+            Spain
           </td>
           <td
             class="text-right "
@@ -107,7 +107,7 @@ exports[`GeoMapCard should render 1`] = `
           <td
             class="text-left font-weight-semibold "
           >
-            country.italy
+            Italy
           </td>
           <td
             class="text-right "

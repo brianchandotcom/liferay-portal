@@ -43,8 +43,6 @@
 					},
 					{
 						"definition": {
-							"fragmentStyle": {
-							},
 							"indexed": true,
 							"layout": {
 								"opacity": 100,
@@ -243,21 +241,17 @@
 					{
 						"definition": {
 							"cssClasses": [
-								"fieldOrganizationForm"
+								"EVPRequestStatus"
 							],
-							"customCSS": ".fieldOrganizationForm{\n display:none;\n}",
+							"customCSS": ".EVPRequestStatus {\ndisplay:none\n}",
 							"fragment": {
 								"key": "INPUTS-select-from-list"
 							},
 							"fragmentConfig": {
-								"inputFieldId": "ObjectField_r_organization_c_evpOrganizationId",
-								"inputRequired": false
+								"inputFieldId": "ObjectField_requestStatus"
 							},
 							"fragmentFields": [
 							],
-							"fragmentStyle": {
-								"marginBottom": "3"
-							},
 							"indexed": true
 						},
 						"type": "Fragment"
@@ -303,8 +297,6 @@
 						"pageElements": [
 							{
 								"definition": {
-									"fragmentStyle": {
-									},
 									"indexed": true,
 									"layout": {
 										"contentDisplay": "FlexColumn",
@@ -572,8 +564,6 @@
 					},
 					{
 						"definition": {
-							"fragmentStyle": {
-							},
 							"indexed": true,
 							"layout": {
 								"opacity": 100,
@@ -663,8 +653,42 @@
 					},
 					{
 						"definition": {
-							"fragmentStyle": {
+							"fragment": {
+								"key": "evp-request-status-handler",
+								"siteKey": "[$GROUP_KEY$]"
 							},
+							"fragmentConfig": {
+							},
+							"fragmentFields": [
+							],
+							"indexed": true
+						},
+						"type": "Fragment"
+					},
+					{
+						"definition": {
+							"cssClasses": [
+								"fieldOrganizationForm"
+							],
+							"customCSS": ".fieldOrganizationForm{\n display:none;\n}",
+							"fragment": {
+								"key": "INPUTS-select-from-list"
+							},
+							"fragmentConfig": {
+								"inputFieldId": "ObjectField_r_organization_c_evpOrganizationId",
+								"inputRequired": false
+							},
+							"fragmentFields": [
+							],
+							"fragmentStyle": {
+								"marginBottom": "3"
+							},
+							"indexed": true
+						},
+						"type": "Fragment"
+					},
+					{
+						"definition": {
 							"indexed": true,
 							"layout": {
 								"contentDisplay": "FlexRow",

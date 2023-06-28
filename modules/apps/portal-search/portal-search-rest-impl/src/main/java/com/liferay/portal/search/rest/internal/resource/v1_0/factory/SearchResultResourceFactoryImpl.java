@@ -34,7 +34,7 @@ import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.search.rest.internal.security.permission.LiberalPermissionChecker;
-import com.liferay.portal.search.rest.resource.v1_0.SearchResponseResource;
+import com.liferay.portal.search.rest.resource.v1_0.SearchResultResource;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 
 import java.lang.reflect.Constructor;
@@ -62,24 +62,24 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @generated
  */
 @Component(
-	property = "resource.locator.key=/portal-search-rest/v1.0/SearchResponse",
-	service = SearchResponseResource.Factory.class
+	property = "resource.locator.key=/portal-search-rest/v1.0/SearchResult",
+	service = SearchResultResource.Factory.class
 )
 @Generated("")
-public class SearchResponseResourceFactoryImpl
-	implements SearchResponseResource.Factory {
+public class SearchResultResourceFactoryImpl
+	implements SearchResultResource.Factory {
 
 	@Override
-	public SearchResponseResource.Builder create() {
-		return new SearchResponseResource.Builder() {
+	public SearchResultResource.Builder create() {
+		return new SearchResultResource.Builder() {
 
 			@Override
-			public SearchResponseResource build() {
+			public SearchResultResource build() {
 				if (_user == null) {
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _searchResponseResourceProxyProviderFunction.apply(
+				return _searchResultResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -87,7 +87,7 @@ public class SearchResponseResourceFactoryImpl
 			}
 
 			@Override
-			public SearchResponseResource.Builder checkPermissions(
+			public SearchResultResource.Builder checkPermissions(
 				boolean checkPermissions) {
 
 				_checkPermissions = checkPermissions;
@@ -96,7 +96,7 @@ public class SearchResponseResourceFactoryImpl
 			}
 
 			@Override
-			public SearchResponseResource.Builder httpServletRequest(
+			public SearchResultResource.Builder httpServletRequest(
 				HttpServletRequest httpServletRequest) {
 
 				_httpServletRequest = httpServletRequest;
@@ -105,7 +105,7 @@ public class SearchResponseResourceFactoryImpl
 			}
 
 			@Override
-			public SearchResponseResource.Builder httpServletResponse(
+			public SearchResultResource.Builder httpServletResponse(
 				HttpServletResponse httpServletResponse) {
 
 				_httpServletResponse = httpServletResponse;
@@ -114,7 +114,7 @@ public class SearchResponseResourceFactoryImpl
 			}
 
 			@Override
-			public SearchResponseResource.Builder preferredLocale(
+			public SearchResultResource.Builder preferredLocale(
 				Locale preferredLocale) {
 
 				_preferredLocale = preferredLocale;
@@ -123,7 +123,7 @@ public class SearchResponseResourceFactoryImpl
 			}
 
 			@Override
-			public SearchResponseResource.Builder user(User user) {
+			public SearchResultResource.Builder user(User user) {
 				_user = user;
 
 				return this;
@@ -138,16 +138,16 @@ public class SearchResponseResourceFactoryImpl
 		};
 	}
 
-	private static Function<InvocationHandler, SearchResponseResource>
+	private static Function<InvocationHandler, SearchResultResource>
 		_getProxyProviderFunction() {
 
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			SearchResponseResource.class.getClassLoader(),
-			SearchResponseResource.class);
+			SearchResultResource.class.getClassLoader(),
+			SearchResultResource.class);
 
 		try {
-			Constructor<SearchResponseResource> constructor =
-				(Constructor<SearchResponseResource>)proxyClass.getConstructor(
+			Constructor<SearchResultResource> constructor =
+				(Constructor<SearchResultResource>)proxyClass.getConstructor(
 					InvocationHandler.class);
 
 			return invocationHandler -> {
@@ -189,38 +189,37 @@ public class SearchResponseResourceFactoryImpl
 				new LiberalPermissionChecker(user));
 		}
 
-		SearchResponseResource searchResponseResource =
+		SearchResultResource searchResultResource =
 			_componentServiceObjects.getService();
 
-		searchResponseResource.setContextAcceptLanguage(
+		searchResultResource.setContextAcceptLanguage(
 			new AcceptLanguageImpl(httpServletRequest, preferredLocale, user));
 
 		Company company = _companyLocalService.getCompany(user.getCompanyId());
 
-		searchResponseResource.setContextCompany(company);
+		searchResultResource.setContextCompany(company);
 
-		searchResponseResource.setContextHttpServletRequest(httpServletRequest);
-		searchResponseResource.setContextHttpServletResponse(
-			httpServletResponse);
-		searchResponseResource.setContextUser(user);
-		searchResponseResource.setExpressionConvert(_expressionConvert);
-		searchResponseResource.setFilterParserProvider(_filterParserProvider);
-		searchResponseResource.setGroupLocalService(_groupLocalService);
-		searchResponseResource.setResourceActionLocalService(
+		searchResultResource.setContextHttpServletRequest(httpServletRequest);
+		searchResultResource.setContextHttpServletResponse(httpServletResponse);
+		searchResultResource.setContextUser(user);
+		searchResultResource.setExpressionConvert(_expressionConvert);
+		searchResultResource.setFilterParserProvider(_filterParserProvider);
+		searchResultResource.setGroupLocalService(_groupLocalService);
+		searchResultResource.setResourceActionLocalService(
 			_resourceActionLocalService);
-		searchResponseResource.setResourcePermissionLocalService(
+		searchResultResource.setResourcePermissionLocalService(
 			_resourcePermissionLocalService);
-		searchResponseResource.setRoleLocalService(_roleLocalService);
-		searchResponseResource.setSortParserProvider(_sortParserProvider);
+		searchResultResource.setRoleLocalService(_roleLocalService);
+		searchResultResource.setSortParserProvider(_sortParserProvider);
 
 		try {
-			return method.invoke(searchResponseResource, arguments);
+			return method.invoke(searchResultResource, arguments);
 		}
 		catch (InvocationTargetException invocationTargetException) {
 			throw invocationTargetException.getTargetException();
 		}
 		finally {
-			_componentServiceObjects.ungetService(searchResponseResource);
+			_componentServiceObjects.ungetService(searchResultResource);
 
 			PrincipalThreadLocal.setName(name);
 
@@ -228,15 +227,15 @@ public class SearchResponseResourceFactoryImpl
 		}
 	}
 
-	private static final Function<InvocationHandler, SearchResponseResource>
-		_searchResponseResourceProxyProviderFunction =
+	private static final Function<InvocationHandler, SearchResultResource>
+		_searchResultResourceProxyProviderFunction =
 			_getProxyProviderFunction();
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<SearchResponseResource>
+	private ComponentServiceObjects<SearchResultResource>
 		_componentServiceObjects;
 
 	@Reference

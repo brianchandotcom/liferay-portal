@@ -17,9 +17,9 @@ package com.liferay.portal.search.rest.internal.graphql.servlet.v1_0;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.search.rest.internal.graphql.mutation.v1_0.Mutation;
 import com.liferay.portal.search.rest.internal.graphql.query.v1_0.Query;
-import com.liferay.portal.search.rest.internal.resource.v1_0.SearchResponseResourceImpl;
+import com.liferay.portal.search.rest.internal.resource.v1_0.SearchResultResourceImpl;
 import com.liferay.portal.search.rest.internal.resource.v1_0.SuggestionResourceImpl;
-import com.liferay.portal.search.rest.resource.v1_0.SearchResponseResource;
+import com.liferay.portal.search.rest.resource.v1_0.SearchResultResource;
 import com.liferay.portal.search.rest.resource.v1_0.SuggestionResource;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 
@@ -45,8 +45,8 @@ public class ServletDataImpl implements ServletData {
 
 	@Activate
 	public void activate(BundleContext bundleContext) {
-		Mutation.setSearchResponseResourceComponentServiceObjects(
-			_searchResponseResourceComponentServiceObjects);
+		Mutation.setSearchResultResourceComponentServiceObjects(
+			_searchResultResourceComponentServiceObjects);
 		Mutation.setSuggestionResourceComponentServiceObjects(
 			_suggestionResourceComponentServiceObjects);
 	}
@@ -86,9 +86,9 @@ public class ServletDataImpl implements ServletData {
 			new HashMap<String, ObjectValuePair<Class<?>, String>>() {
 				{
 					put(
-						"mutation#createSearch",
+						"mutation#createSearchPage",
 						new ObjectValuePair<>(
-							SearchResponseResourceImpl.class, "postSearch"));
+							SearchResultResourceImpl.class, "postSearchPage"));
 					put(
 						"mutation#createSuggestionsPage",
 						new ObjectValuePair<>(
@@ -98,8 +98,8 @@ public class ServletDataImpl implements ServletData {
 			};
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<SearchResponseResource>
-		_searchResponseResourceComponentServiceObjects;
+	private ComponentServiceObjects<SearchResultResource>
+		_searchResultResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<SuggestionResource>

@@ -15,11 +15,12 @@
 package com.liferay.portal.search.rest.client.resource.v1_0;
 
 import com.liferay.portal.search.rest.client.dto.v1_0.SearchRequestBody;
-import com.liferay.portal.search.rest.client.dto.v1_0.SearchResponse;
+import com.liferay.portal.search.rest.client.dto.v1_0.SearchResult;
 import com.liferay.portal.search.rest.client.http.HttpInvoker;
+import com.liferay.portal.search.rest.client.pagination.Page;
 import com.liferay.portal.search.rest.client.pagination.Pagination;
 import com.liferay.portal.search.rest.client.problem.Problem;
-import com.liferay.portal.search.rest.client.serdes.v1_0.SearchResponseSerDes;
+import com.liferay.portal.search.rest.client.serdes.v1_0.SearchResultSerDes;
 
 import java.util.LinkedHashMap;
 import java.util.Locale;
@@ -35,27 +36,21 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public interface SearchResponseResource {
+public interface SearchResultResource {
 
 	public static Builder builder() {
 		return new Builder();
 	}
 
-	public SearchResponse postSearch(
-			Boolean basicFacetSelection, String[] entryClassNames,
-			Boolean explain, Long[] groupIds, Boolean includeAssetSearchSummary,
-			Boolean includeAssetTitle, Boolean includeRequest,
-			Boolean includeResponse, String keywords, String[] resultFields,
-			Long scopeGroupId, Pagination pagination, String sortString,
+	public Page<SearchResult> postSearchPage(
+			String entryClassNames, String search, String filterString,
+			Pagination pagination, String sortString,
 			SearchRequestBody searchRequestBody)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse postSearchHttpResponse(
-			Boolean basicFacetSelection, String[] entryClassNames,
-			Boolean explain, Long[] groupIds, Boolean includeAssetSearchSummary,
-			Boolean includeAssetTitle, Boolean includeRequest,
-			Boolean includeResponse, String keywords, String[] resultFields,
-			Long scopeGroupId, Pagination pagination, String sortString,
+	public HttpInvoker.HttpResponse postSearchPageHttpResponse(
+			String entryClassNames, String search, String filterString,
+			Pagination pagination, String sortString,
 			SearchRequestBody searchRequestBody)
 		throws Exception;
 
@@ -72,8 +67,8 @@ public interface SearchResponseResource {
 			return header("Authorization", "Bearer " + token);
 		}
 
-		public SearchResponseResource build() {
-			return new SearchResponseResourceImpl(this);
+		public SearchResultResource build() {
+			return new SearchResultResourceImpl(this);
 		}
 
 		public Builder contextPath(String contextPath) {
@@ -161,24 +156,18 @@ public interface SearchResponseResource {
 
 	}
 
-	public static class SearchResponseResourceImpl
-		implements SearchResponseResource {
+	public static class SearchResultResourceImpl
+		implements SearchResultResource {
 
-		public SearchResponse postSearch(
-				Boolean basicFacetSelection, String[] entryClassNames,
-				Boolean explain, Long[] groupIds,
-				Boolean includeAssetSearchSummary, Boolean includeAssetTitle,
-				Boolean includeRequest, Boolean includeResponse,
-				String keywords, String[] resultFields, Long scopeGroupId,
+		public Page<SearchResult> postSearchPage(
+				String entryClassNames, String search, String filterString,
 				Pagination pagination, String sortString,
 				SearchRequestBody searchRequestBody)
 			throws Exception {
 
-			HttpInvoker.HttpResponse httpResponse = postSearchHttpResponse(
-				basicFacetSelection, entryClassNames, explain, groupIds,
-				includeAssetSearchSummary, includeAssetTitle, includeRequest,
-				includeResponse, keywords, resultFields, scopeGroupId,
-				pagination, sortString, searchRequestBody);
+			HttpInvoker.HttpResponse httpResponse = postSearchPageHttpResponse(
+				entryClassNames, search, filterString, pagination, sortString,
+				searchRequestBody);
 
 			String content = httpResponse.getContent();
 
@@ -228,7 +217,7 @@ public interface SearchResponseResource {
 			}
 
 			try {
-				return SearchResponseSerDes.toDTO(content);
+				return Page.of(content, SearchResultSerDes::toDTO);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -239,12 +228,8 @@ public interface SearchResponseResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse postSearchHttpResponse(
-				Boolean basicFacetSelection, String[] entryClassNames,
-				Boolean explain, Long[] groupIds,
-				Boolean includeAssetSearchSummary, Boolean includeAssetTitle,
-				Boolean includeRequest, Boolean includeResponse,
-				String keywords, String[] resultFields, Long scopeGroupId,
+		public HttpInvoker.HttpResponse postSearchPageHttpResponse(
+				String entryClassNames, String search, String filterString,
 				Pagination pagination, String sortString,
 				SearchRequestBody searchRequestBody)
 			throws Exception {
@@ -272,64 +257,17 @@ public interface SearchResponseResource {
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
-			if (basicFacetSelection != null) {
-				httpInvoker.parameter(
-					"basicFacetSelection", String.valueOf(basicFacetSelection));
-			}
-
 			if (entryClassNames != null) {
-				for (int i = 0; i < entryClassNames.length; i++) {
-					httpInvoker.parameter(
-						"entryClassNames", String.valueOf(entryClassNames[i]));
-				}
-			}
-
-			if (explain != null) {
-				httpInvoker.parameter("explain", String.valueOf(explain));
-			}
-
-			if (groupIds != null) {
-				for (int i = 0; i < groupIds.length; i++) {
-					httpInvoker.parameter(
-						"groupIds", String.valueOf(groupIds[i]));
-				}
-			}
-
-			if (includeAssetSearchSummary != null) {
 				httpInvoker.parameter(
-					"includeAssetSearchSummary",
-					String.valueOf(includeAssetSearchSummary));
+					"entryClassNames", String.valueOf(entryClassNames));
 			}
 
-			if (includeAssetTitle != null) {
-				httpInvoker.parameter(
-					"includeAssetTitle", String.valueOf(includeAssetTitle));
+			if (search != null) {
+				httpInvoker.parameter("search", String.valueOf(search));
 			}
 
-			if (includeRequest != null) {
-				httpInvoker.parameter(
-					"includeRequest", String.valueOf(includeRequest));
-			}
-
-			if (includeResponse != null) {
-				httpInvoker.parameter(
-					"includeResponse", String.valueOf(includeResponse));
-			}
-
-			if (keywords != null) {
-				httpInvoker.parameter("keywords", String.valueOf(keywords));
-			}
-
-			if (resultFields != null) {
-				for (int i = 0; i < resultFields.length; i++) {
-					httpInvoker.parameter(
-						"resultFields", String.valueOf(resultFields[i]));
-				}
-			}
-
-			if (scopeGroupId != null) {
-				httpInvoker.parameter(
-					"scopeGroupId", String.valueOf(scopeGroupId));
+			if (filterString != null) {
+				httpInvoker.parameter("filter", filterString);
 			}
 
 			if (pagination != null) {
@@ -354,12 +292,12 @@ public interface SearchResponseResource {
 			return httpInvoker.invoke();
 		}
 
-		private SearchResponseResourceImpl(Builder builder) {
+		private SearchResultResourceImpl(Builder builder) {
 			_builder = builder;
 		}
 
 		private static final Logger _logger = Logger.getLogger(
-			SearchResponseResource.class.getName());
+			SearchResultResource.class.getName());
 
 		private Builder _builder;
 

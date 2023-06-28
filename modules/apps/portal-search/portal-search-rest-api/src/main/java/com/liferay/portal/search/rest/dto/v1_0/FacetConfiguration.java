@@ -45,20 +45,20 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Facet")
+@GraphQLName("FacetConfiguration")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "Facet")
-public class Facet implements Serializable {
+@XmlRootElement(name = "FacetConfiguration")
+public class FacetConfiguration implements Serializable {
 
-	public static Facet toDTO(String json) {
-		return ObjectMapperUtil.readValue(Facet.class, json);
+	public static FacetConfiguration toDTO(String json) {
+		return ObjectMapperUtil.readValue(FacetConfiguration.class, json);
 	}
 
-	public static Facet unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(Facet.class, json);
+	public static FacetConfiguration unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(FacetConfiguration.class, json);
 	}
 
-	@Schema
+	@Schema(description = "The name of the aggregation.")
 	public String getAggregationName() {
 		return aggregationName;
 	}
@@ -82,11 +82,11 @@ public class Facet implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The name of the aggregation.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String aggregationName;
 
-	@Schema
+	@Schema(description = "Additional attributes for the facet.")
 	@Valid
 	public Map<String, Object> getAttributes() {
 		return attributes;
@@ -112,11 +112,11 @@ public class Facet implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "Additional attributes for the facet.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, Object> attributes;
 
-	@Schema
+	@Schema(description = "Frequency threshold for showing the terms.")
 	public Integer getFrequencyThreshold() {
 		return frequencyThreshold;
 	}
@@ -140,11 +140,11 @@ public class Facet implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "Frequency threshold for showing the terms.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer frequencyThreshold;
 
-	@Schema
+	@Schema(description = "Maximum number of terms to be shown.")
 	public Integer getMaxTerms() {
 		return maxTerms;
 	}
@@ -168,11 +168,11 @@ public class Facet implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "Maximum number of terms to be shown.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer maxTerms;
 
-	@Schema
+	@Schema(description = "The name of the facet.")
 	public String getName() {
 		return name;
 	}
@@ -194,11 +194,11 @@ public class Facet implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The name of the facet.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
-	@Schema
+	@Schema(description = "The values / selections to be filtered by.")
 	@Valid
 	public Object[] getValues() {
 		return values;
@@ -223,7 +223,7 @@ public class Facet implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The values / selections to be filtered by.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object[] values;
 
@@ -233,13 +233,13 @@ public class Facet implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof Facet)) {
+		if (!(object instanceof FacetConfiguration)) {
 			return false;
 		}
 
-		Facet facet = (Facet)object;
+		FacetConfiguration facetConfiguration = (FacetConfiguration)object;
 
-		return Objects.equals(toString(), facet.toString());
+		return Objects.equals(toString(), facetConfiguration.toString());
 	}
 
 	@Override
@@ -343,7 +343,7 @@ public class Facet implements Serializable {
 
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.portal.search.rest.dto.v1_0.Facet",
+		defaultValue = "com.liferay.portal.search.rest.dto.v1_0.FacetConfiguration",
 		name = "x-class-name"
 	)
 	public String xClassName;

@@ -14,7 +14,7 @@
 
 package com.liferay.portal.search.rest.client.serdes.v1_0;
 
-import com.liferay.portal.search.rest.client.dto.v1_0.Facet;
+import com.liferay.portal.search.rest.client.dto.v1_0.FacetConfiguration;
 import com.liferay.portal.search.rest.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -30,22 +30,24 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class FacetSerDes {
+public class FacetConfigurationSerDes {
 
-	public static Facet toDTO(String json) {
-		FacetJSONParser facetJSONParser = new FacetJSONParser();
+	public static FacetConfiguration toDTO(String json) {
+		FacetConfigurationJSONParser facetConfigurationJSONParser =
+			new FacetConfigurationJSONParser();
 
-		return facetJSONParser.parseToDTO(json);
+		return facetConfigurationJSONParser.parseToDTO(json);
 	}
 
-	public static Facet[] toDTOs(String json) {
-		FacetJSONParser facetJSONParser = new FacetJSONParser();
+	public static FacetConfiguration[] toDTOs(String json) {
+		FacetConfigurationJSONParser facetConfigurationJSONParser =
+			new FacetConfigurationJSONParser();
 
-		return facetJSONParser.parseToDTOs(json);
+		return facetConfigurationJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(Facet facet) {
-		if (facet == null) {
+	public static String toJSON(FacetConfiguration facetConfiguration) {
+		if (facetConfiguration == null) {
 			return "null";
 		}
 
@@ -53,7 +55,7 @@ public class FacetSerDes {
 
 		sb.append("{");
 
-		if (facet.getAggregationName() != null) {
+		if (facetConfiguration.getAggregationName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -62,42 +64,42 @@ public class FacetSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(facet.getAggregationName()));
+			sb.append(_escape(facetConfiguration.getAggregationName()));
 
 			sb.append("\"");
 		}
 
-		if (facet.getAttributes() != null) {
+		if (facetConfiguration.getAttributes() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"attributes\": ");
 
-			sb.append(_toJSON(facet.getAttributes()));
+			sb.append(_toJSON(facetConfiguration.getAttributes()));
 		}
 
-		if (facet.getFrequencyThreshold() != null) {
+		if (facetConfiguration.getFrequencyThreshold() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"frequencyThreshold\": ");
 
-			sb.append(facet.getFrequencyThreshold());
+			sb.append(facetConfiguration.getFrequencyThreshold());
 		}
 
-		if (facet.getMaxTerms() != null) {
+		if (facetConfiguration.getMaxTerms() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"maxTerms\": ");
 
-			sb.append(facet.getMaxTerms());
+			sb.append(facetConfiguration.getMaxTerms());
 		}
 
-		if (facet.getName() != null) {
+		if (facetConfiguration.getName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -106,12 +108,12 @@ public class FacetSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(facet.getName()));
+			sb.append(_escape(facetConfiguration.getName()));
 
 			sb.append("\"");
 		}
 
-		if (facet.getValues() != null) {
+		if (facetConfiguration.getValues() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -120,14 +122,14 @@ public class FacetSerDes {
 
 			sb.append("[");
 
-			for (int i = 0; i < facet.getValues().length; i++) {
+			for (int i = 0; i < facetConfiguration.getValues().length; i++) {
 				sb.append("\"");
 
-				sb.append(_escape(facet.getValues()[i]));
+				sb.append(_escape(facetConfiguration.getValues()[i]));
 
 				sb.append("\"");
 
-				if ((i + 1) < facet.getValues().length) {
+				if ((i + 1) < facetConfiguration.getValues().length) {
 					sb.append(", ");
 				}
 			}
@@ -141,116 +143,127 @@ public class FacetSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		FacetJSONParser facetJSONParser = new FacetJSONParser();
+		FacetConfigurationJSONParser facetConfigurationJSONParser =
+			new FacetConfigurationJSONParser();
 
-		return facetJSONParser.parseToMap(json);
+		return facetConfigurationJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(Facet facet) {
-		if (facet == null) {
+	public static Map<String, String> toMap(
+		FacetConfiguration facetConfiguration) {
+
+		if (facetConfiguration == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (facet.getAggregationName() == null) {
+		if (facetConfiguration.getAggregationName() == null) {
 			map.put("aggregationName", null);
 		}
 		else {
 			map.put(
-				"aggregationName", String.valueOf(facet.getAggregationName()));
+				"aggregationName",
+				String.valueOf(facetConfiguration.getAggregationName()));
 		}
 
-		if (facet.getAttributes() == null) {
+		if (facetConfiguration.getAttributes() == null) {
 			map.put("attributes", null);
 		}
 		else {
-			map.put("attributes", String.valueOf(facet.getAttributes()));
+			map.put(
+				"attributes",
+				String.valueOf(facetConfiguration.getAttributes()));
 		}
 
-		if (facet.getFrequencyThreshold() == null) {
+		if (facetConfiguration.getFrequencyThreshold() == null) {
 			map.put("frequencyThreshold", null);
 		}
 		else {
 			map.put(
 				"frequencyThreshold",
-				String.valueOf(facet.getFrequencyThreshold()));
+				String.valueOf(facetConfiguration.getFrequencyThreshold()));
 		}
 
-		if (facet.getMaxTerms() == null) {
+		if (facetConfiguration.getMaxTerms() == null) {
 			map.put("maxTerms", null);
 		}
 		else {
-			map.put("maxTerms", String.valueOf(facet.getMaxTerms()));
+			map.put(
+				"maxTerms", String.valueOf(facetConfiguration.getMaxTerms()));
 		}
 
-		if (facet.getName() == null) {
+		if (facetConfiguration.getName() == null) {
 			map.put("name", null);
 		}
 		else {
-			map.put("name", String.valueOf(facet.getName()));
+			map.put("name", String.valueOf(facetConfiguration.getName()));
 		}
 
-		if (facet.getValues() == null) {
+		if (facetConfiguration.getValues() == null) {
 			map.put("values", null);
 		}
 		else {
-			map.put("values", String.valueOf(facet.getValues()));
+			map.put("values", String.valueOf(facetConfiguration.getValues()));
 		}
 
 		return map;
 	}
 
-	public static class FacetJSONParser extends BaseJSONParser<Facet> {
+	public static class FacetConfigurationJSONParser
+		extends BaseJSONParser<FacetConfiguration> {
 
 		@Override
-		protected Facet createDTO() {
-			return new Facet();
+		protected FacetConfiguration createDTO() {
+			return new FacetConfiguration();
 		}
 
 		@Override
-		protected Facet[] createDTOArray(int size) {
-			return new Facet[size];
+		protected FacetConfiguration[] createDTOArray(int size) {
+			return new FacetConfiguration[size];
 		}
 
 		@Override
 		protected void setField(
-			Facet facet, String jsonParserFieldName,
+			FacetConfiguration facetConfiguration, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
 			if (Objects.equals(jsonParserFieldName, "aggregationName")) {
 				if (jsonParserFieldValue != null) {
-					facet.setAggregationName((String)jsonParserFieldValue);
+					facetConfiguration.setAggregationName(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "attributes")) {
 				if (jsonParserFieldValue != null) {
-					facet.setAttributes(
-						(Map)FacetSerDes.toMap((String)jsonParserFieldValue));
+					facetConfiguration.setAttributes(
+						(Map)FacetConfigurationSerDes.toMap(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(
 						jsonParserFieldName, "frequencyThreshold")) {
 
 				if (jsonParserFieldValue != null) {
-					facet.setFrequencyThreshold(
+					facetConfiguration.setFrequencyThreshold(
 						Integer.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "maxTerms")) {
 				if (jsonParserFieldValue != null) {
-					facet.setMaxTerms(
+					facetConfiguration.setMaxTerms(
 						Integer.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
-					facet.setName((String)jsonParserFieldValue);
+					facetConfiguration.setName((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "values")) {
 				if (jsonParserFieldValue != null) {
-					facet.setValues((Object[])jsonParserFieldValue);
+					facetConfiguration.setValues(
+						(Object[])jsonParserFieldValue);
 				}
 			}
 		}

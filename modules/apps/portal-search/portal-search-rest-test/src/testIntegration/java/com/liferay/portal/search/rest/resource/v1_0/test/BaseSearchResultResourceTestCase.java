@@ -40,11 +40,11 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.search.rest.client.dto.v1_0.SearchResponse;
+import com.liferay.portal.search.rest.client.dto.v1_0.SearchResult;
 import com.liferay.portal.search.rest.client.http.HttpInvoker;
 import com.liferay.portal.search.rest.client.pagination.Page;
-import com.liferay.portal.search.rest.client.resource.v1_0.SearchResponseResource;
-import com.liferay.portal.search.rest.client.serdes.v1_0.SearchResponseSerDes;
+import com.liferay.portal.search.rest.client.resource.v1_0.SearchResultResource;
+import com.liferay.portal.search.rest.client.serdes.v1_0.SearchResultSerDes;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -68,6 +68,8 @@ import javax.annotation.Generated;
 
 import javax.ws.rs.core.MultivaluedHashMap;
 
+import org.apache.commons.lang.time.DateUtils;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -81,7 +83,7 @@ import org.junit.Test;
  * @generated
  */
 @Generated("")
-public abstract class BaseSearchResponseResourceTestCase {
+public abstract class BaseSearchResultResourceTestCase {
 
 	@ClassRule
 	@Rule
@@ -102,12 +104,11 @@ public abstract class BaseSearchResponseResourceTestCase {
 		testCompany = CompanyLocalServiceUtil.getCompany(
 			testGroup.getCompanyId());
 
-		_searchResponseResource.setContextCompany(testCompany);
+		_searchResultResource.setContextCompany(testCompany);
 
-		SearchResponseResource.Builder builder =
-			SearchResponseResource.builder();
+		SearchResultResource.Builder builder = SearchResultResource.builder();
 
-		searchResponseResource = builder.authentication(
+		searchResultResource = builder.authentication(
 			"test@liferay.com", "test"
 		).locale(
 			LocaleUtil.getDefault()
@@ -138,13 +139,13 @@ public abstract class BaseSearchResponseResourceTestCase {
 			}
 		};
 
-		SearchResponse searchResponse1 = randomSearchResponse();
+		SearchResult searchResult1 = randomSearchResult();
 
-		String json = objectMapper.writeValueAsString(searchResponse1);
+		String json = objectMapper.writeValueAsString(searchResult1);
 
-		SearchResponse searchResponse2 = SearchResponseSerDes.toDTO(json);
+		SearchResult searchResult2 = SearchResultSerDes.toDTO(json);
 
-		Assert.assertTrue(equals(searchResponse1, searchResponse2));
+		Assert.assertTrue(equals(searchResult1, searchResult2));
 	}
 
 	@Test
@@ -164,10 +165,10 @@ public abstract class BaseSearchResponseResourceTestCase {
 			}
 		};
 
-		SearchResponse searchResponse = randomSearchResponse();
+		SearchResult searchResult = randomSearchResult();
 
-		String json1 = objectMapper.writeValueAsString(searchResponse);
-		String json2 = SearchResponseSerDes.toJSON(searchResponse);
+		String json1 = objectMapper.writeValueAsString(searchResult);
+		String json2 = SearchResultSerDes.toJSON(searchResult);
 
 		Assert.assertEquals(
 			objectMapper.readTree(json1), objectMapper.readTree(json2));
@@ -177,41 +178,35 @@ public abstract class BaseSearchResponseResourceTestCase {
 	public void testEscapeRegexInStringFields() throws Exception {
 		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
 
-		SearchResponse searchResponse = randomSearchResponse();
+		SearchResult searchResult = randomSearchResult();
 
-		String json = SearchResponseSerDes.toJSON(searchResponse);
+		searchResult.setDescription(regex);
+		searchResult.setItemURL(regex);
+		searchResult.setTitle(regex);
+
+		String json = SearchResultSerDes.toJSON(searchResult);
 
 		Assert.assertFalse(json.contains(regex));
 
-		searchResponse = SearchResponseSerDes.toDTO(json);
+		searchResult = SearchResultSerDes.toDTO(json);
+
+		Assert.assertEquals(regex, searchResult.getDescription());
+		Assert.assertEquals(regex, searchResult.getItemURL());
+		Assert.assertEquals(regex, searchResult.getTitle());
 	}
 
 	@Test
-	public void testPostSearch() throws Exception {
-		SearchResponse randomSearchResponse = randomSearchResponse();
-
-		SearchResponse postSearchResponse = testPostSearch_addSearchResponse(
-			randomSearchResponse);
-
-		assertEquals(randomSearchResponse, postSearchResponse);
-		assertValid(postSearchResponse);
-	}
-
-	protected SearchResponse testPostSearch_addSearchResponse(
-			SearchResponse searchResponse)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+	public void testPostSearchPage() throws Exception {
+		Assert.assertTrue(false);
 	}
 
 	protected void assertContains(
-		SearchResponse searchResponse, List<SearchResponse> searchResponses) {
+		SearchResult searchResult, List<SearchResult> searchResults) {
 
 		boolean contains = false;
 
-		for (SearchResponse item : searchResponses) {
-			if (equals(searchResponse, item)) {
+		for (SearchResult item : searchResults) {
+			if (equals(searchResult, item)) {
 				contains = true;
 
 				break;
@@ -219,7 +214,7 @@ public abstract class BaseSearchResponseResourceTestCase {
 		}
 
 		Assert.assertTrue(
-			searchResponses + " does not contain " + searchResponse, contains);
+			searchResults + " does not contain " + searchResult, contains);
 	}
 
 	protected void assertHttpResponseStatusCode(
@@ -231,38 +226,36 @@ public abstract class BaseSearchResponseResourceTestCase {
 	}
 
 	protected void assertEquals(
-		SearchResponse searchResponse1, SearchResponse searchResponse2) {
+		SearchResult searchResult1, SearchResult searchResult2) {
 
 		Assert.assertTrue(
-			searchResponse1 + " does not equal " + searchResponse2,
-			equals(searchResponse1, searchResponse2));
+			searchResult1 + " does not equal " + searchResult2,
+			equals(searchResult1, searchResult2));
 	}
 
 	protected void assertEquals(
-		List<SearchResponse> searchResponses1,
-		List<SearchResponse> searchResponses2) {
+		List<SearchResult> searchResults1, List<SearchResult> searchResults2) {
 
-		Assert.assertEquals(searchResponses1.size(), searchResponses2.size());
+		Assert.assertEquals(searchResults1.size(), searchResults2.size());
 
-		for (int i = 0; i < searchResponses1.size(); i++) {
-			SearchResponse searchResponse1 = searchResponses1.get(i);
-			SearchResponse searchResponse2 = searchResponses2.get(i);
+		for (int i = 0; i < searchResults1.size(); i++) {
+			SearchResult searchResult1 = searchResults1.get(i);
+			SearchResult searchResult2 = searchResults2.get(i);
 
-			assertEquals(searchResponse1, searchResponse2);
+			assertEquals(searchResult1, searchResult2);
 		}
 	}
 
 	protected void assertEqualsIgnoringOrder(
-		List<SearchResponse> searchResponses1,
-		List<SearchResponse> searchResponses2) {
+		List<SearchResult> searchResults1, List<SearchResult> searchResults2) {
 
-		Assert.assertEquals(searchResponses1.size(), searchResponses2.size());
+		Assert.assertEquals(searchResults1.size(), searchResults2.size());
 
-		for (SearchResponse searchResponse1 : searchResponses1) {
+		for (SearchResult searchResult1 : searchResults1) {
 			boolean contains = false;
 
-			for (SearchResponse searchResponse2 : searchResponses2) {
-				if (equals(searchResponse1, searchResponse2)) {
+			for (SearchResult searchResult2 : searchResults2) {
+				if (equals(searchResult1, searchResult2)) {
 					contains = true;
 
 					break;
@@ -270,85 +263,55 @@ public abstract class BaseSearchResponseResourceTestCase {
 			}
 
 			Assert.assertTrue(
-				searchResponses2 + " does not contain " + searchResponse1,
+				searchResults2 + " does not contain " + searchResult1,
 				contains);
 		}
 	}
 
-	protected void assertValid(SearchResponse searchResponse) throws Exception {
+	protected void assertValid(SearchResult searchResult) throws Exception {
 		boolean valid = true;
+
+		if (searchResult.getDateModified() == null) {
+			valid = false;
+		}
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
-			if (Objects.equals(
-					"aggregationResults", additionalAssertFieldName)) {
-
-				if (searchResponse.getAggregationResults() == null) {
+			if (Objects.equals("description", additionalAssertFieldName)) {
+				if (searchResult.getDescription() == null) {
 					valid = false;
 				}
 
 				continue;
 			}
 
-			if (Objects.equals("documents", additionalAssertFieldName)) {
-				if (searchResponse.getDocuments() == null) {
+			if (Objects.equals("embedded", additionalAssertFieldName)) {
+				if (searchResult.getEmbedded() == null) {
 					valid = false;
 				}
 
 				continue;
 			}
 
-			if (Objects.equals("facets", additionalAssertFieldName)) {
-				if (searchResponse.getFacets() == null) {
+			if (Objects.equals("itemURL", additionalAssertFieldName)) {
+				if (searchResult.getItemURL() == null) {
 					valid = false;
 				}
 
 				continue;
 			}
 
-			if (Objects.equals("maxScore", additionalAssertFieldName)) {
-				if (searchResponse.getMaxScore() == null) {
+			if (Objects.equals("score", additionalAssertFieldName)) {
+				if (searchResult.getScore() == null) {
 					valid = false;
 				}
 
 				continue;
 			}
 
-			if (Objects.equals("page", additionalAssertFieldName)) {
-				if (searchResponse.getPage() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("pageSize", additionalAssertFieldName)) {
-				if (searchResponse.getPageSize() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("request", additionalAssertFieldName)) {
-				if (searchResponse.getRequest() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("response", additionalAssertFieldName)) {
-				if (searchResponse.getResponse() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("totalHits", additionalAssertFieldName)) {
-				if (searchResponse.getTotalHits() == null) {
+			if (Objects.equals("title", additionalAssertFieldName)) {
+				if (searchResult.getTitle() == null) {
 					valid = false;
 				}
 
@@ -363,19 +326,19 @@ public abstract class BaseSearchResponseResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<SearchResponse> page) {
+	protected void assertValid(Page<SearchResult> page) {
 		assertValid(page, Collections.emptyMap());
 	}
 
 	protected void assertValid(
-		Page<SearchResponse> page,
+		Page<SearchResult> page,
 		Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
-		java.util.Collection<SearchResponse> searchResponses = page.getItems();
+		java.util.Collection<SearchResult> searchResults = page.getItems();
 
-		int size = searchResponses.size();
+		int size = searchResults.size();
 
 		if ((page.getLastPage() > 0) && (page.getPage() > 0) &&
 			(page.getPageSize() > 0) && (page.getTotalCount() > 0) &&
@@ -415,7 +378,7 @@ public abstract class BaseSearchResponseResourceTestCase {
 
 		for (java.lang.reflect.Field field :
 				getDeclaredFields(
-					com.liferay.portal.search.rest.dto.v1_0.SearchResponse.
+					com.liferay.portal.search.rest.dto.v1_0.SearchResult.
 						class)) {
 
 			if (!ArrayUtil.contains(
@@ -465,32 +428,19 @@ public abstract class BaseSearchResponseResourceTestCase {
 	}
 
 	protected boolean equals(
-		SearchResponse searchResponse1, SearchResponse searchResponse2) {
+		SearchResult searchResult1, SearchResult searchResult2) {
 
-		if (searchResponse1 == searchResponse2) {
+		if (searchResult1 == searchResult2) {
 			return true;
 		}
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
-			if (Objects.equals(
-					"aggregationResults", additionalAssertFieldName)) {
-
-				if (!equals(
-						(Map)searchResponse1.getAggregationResults(),
-						(Map)searchResponse2.getAggregationResults())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("documents", additionalAssertFieldName)) {
+			if (Objects.equals("dateModified", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						searchResponse1.getDocuments(),
-						searchResponse2.getDocuments())) {
+						searchResult1.getDateModified(),
+						searchResult2.getDateModified())) {
 
 					return false;
 				}
@@ -498,21 +448,10 @@ public abstract class BaseSearchResponseResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("facets", additionalAssertFieldName)) {
-				if (!equals(
-						(Map)searchResponse1.getFacets(),
-						(Map)searchResponse2.getFacets())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("maxScore", additionalAssertFieldName)) {
+			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						searchResponse1.getMaxScore(),
-						searchResponse2.getMaxScore())) {
+						searchResult1.getDescription(),
+						searchResult2.getDescription())) {
 
 					return false;
 				}
@@ -520,9 +459,10 @@ public abstract class BaseSearchResponseResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("page", additionalAssertFieldName)) {
+			if (Objects.equals("embedded", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						searchResponse1.getPage(), searchResponse2.getPage())) {
+						searchResult1.getEmbedded(),
+						searchResult2.getEmbedded())) {
 
 					return false;
 				}
@@ -530,10 +470,10 @@ public abstract class BaseSearchResponseResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("pageSize", additionalAssertFieldName)) {
+			if (Objects.equals("itemURL", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						searchResponse1.getPageSize(),
-						searchResponse2.getPageSize())) {
+						searchResult1.getItemURL(),
+						searchResult2.getItemURL())) {
 
 					return false;
 				}
@@ -541,10 +481,9 @@ public abstract class BaseSearchResponseResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("request", additionalAssertFieldName)) {
+			if (Objects.equals("score", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						searchResponse1.getRequest(),
-						searchResponse2.getRequest())) {
+						searchResult1.getScore(), searchResult2.getScore())) {
 
 					return false;
 				}
@@ -552,21 +491,9 @@ public abstract class BaseSearchResponseResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("response", additionalAssertFieldName)) {
+			if (Objects.equals("title", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						searchResponse1.getResponse(),
-						searchResponse2.getResponse())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("totalHits", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						searchResponse1.getTotalHits(),
-						searchResponse2.getTotalHits())) {
+						searchResult1.getTitle(), searchResult2.getTitle())) {
 
 					return false;
 				}
@@ -626,13 +553,13 @@ public abstract class BaseSearchResponseResourceTestCase {
 	protected java.util.Collection<EntityField> getEntityFields()
 		throws Exception {
 
-		if (!(_searchResponseResource instanceof EntityModelResource)) {
+		if (!(_searchResultResource instanceof EntityModelResource)) {
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
 		}
 
 		EntityModelResource entityModelResource =
-			(EntityModelResource)_searchResponseResource;
+			(EntityModelResource)_searchResultResource;
 
 		EntityModel entityModel = entityModelResource.getEntityModel(
 			new MultivaluedHashMap());
@@ -665,8 +592,7 @@ public abstract class BaseSearchResponseResourceTestCase {
 	}
 
 	protected String getFilterString(
-		EntityField entityField, String operator,
-		SearchResponse searchResponse) {
+		EntityField entityField, String operator, SearchResult searchResult) {
 
 		StringBundler sb = new StringBundler();
 
@@ -678,51 +604,71 @@ public abstract class BaseSearchResponseResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
-		if (entityFieldName.equals("aggregationResults")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
+		if (entityFieldName.equals("dateModified")) {
+			if (operator.equals("between")) {
+				sb = new StringBundler();
 
-		if (entityFieldName.equals("documents")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
+				sb.append("(");
+				sb.append(entityFieldName);
+				sb.append(" gt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(
+							searchResult.getDateModified(), -2)));
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(
+							searchResult.getDateModified(), 2)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
 
-		if (entityFieldName.equals("facets")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
 
-		if (entityFieldName.equals("maxScore")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
-		if (entityFieldName.equals("page")) {
-			sb.append(String.valueOf(searchResponse.getPage()));
+				sb.append(_dateFormat.format(searchResult.getDateModified()));
+			}
 
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("pageSize")) {
-			sb.append(String.valueOf(searchResponse.getPageSize()));
+		if (entityFieldName.equals("description")) {
+			sb.append("'");
+			sb.append(String.valueOf(searchResult.getDescription()));
+			sb.append("'");
 
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("request")) {
+		if (entityFieldName.equals("embedded")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("response")) {
+		if (entityFieldName.equals("itemURL")) {
+			sb.append("'");
+			sb.append(String.valueOf(searchResult.getItemURL()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("score")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("totalHits")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+		if (entityFieldName.equals("title")) {
+			sb.append("'");
+			sb.append(String.valueOf(searchResult.getTitle()));
+			sb.append("'");
+
+			return sb.toString();
 		}
 
 		throw new IllegalArgumentException(
@@ -766,27 +712,29 @@ public abstract class BaseSearchResponseResourceTestCase {
 			invoke(queryGraphQLField.toString()));
 	}
 
-	protected SearchResponse randomSearchResponse() throws Exception {
-		return new SearchResponse() {
+	protected SearchResult randomSearchResult() throws Exception {
+		return new SearchResult() {
 			{
-				page = RandomTestUtil.randomInt();
-				pageSize = RandomTestUtil.randomInt();
-				totalHits = RandomTestUtil.randomLong();
+				dateModified = RandomTestUtil.nextDate();
+				description = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				itemURL = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				title = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}
 		};
 	}
 
-	protected SearchResponse randomIrrelevantSearchResponse() throws Exception {
-		SearchResponse randomIrrelevantSearchResponse = randomSearchResponse();
+	protected SearchResult randomIrrelevantSearchResult() throws Exception {
+		SearchResult randomIrrelevantSearchResult = randomSearchResult();
 
-		return randomIrrelevantSearchResponse;
+		return randomIrrelevantSearchResult;
 	}
 
-	protected SearchResponse randomPatchSearchResponse() throws Exception {
-		return randomSearchResponse();
+	protected SearchResult randomPatchSearchResult() throws Exception {
+		return randomSearchResult();
 	}
 
-	protected SearchResponseResource searchResponseResource;
+	protected SearchResultResource searchResultResource;
 	protected Group irrelevantGroup;
 	protected Company testCompany;
 	protected Group testGroup;
@@ -972,12 +920,12 @@ public abstract class BaseSearchResponseResourceTestCase {
 	}
 
 	private static final com.liferay.portal.kernel.log.Log _log =
-		LogFactoryUtil.getLog(BaseSearchResponseResourceTestCase.class);
+		LogFactoryUtil.getLog(BaseSearchResultResourceTestCase.class);
 
 	private static DateFormat _dateFormat;
 
 	@Inject
-	private com.liferay.portal.search.rest.resource.v1_0.SearchResponseResource
-		_searchResponseResource;
+	private com.liferay.portal.search.rest.resource.v1_0.SearchResultResource
+		_searchResultResource;
 
 }

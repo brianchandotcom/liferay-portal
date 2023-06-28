@@ -24,8 +24,11 @@ import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.search.rest.dto.v1_0.SearchRequestBody;
-import com.liferay.portal.search.rest.dto.v1_0.SearchResponse;
+import com.liferay.portal.search.rest.dto.v1_0.SearchResult;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
+import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
+import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.Collections;
@@ -52,14 +55,11 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @Generated("")
 @ProviderType
-public interface SearchResponseResource {
+public interface SearchResultResource {
 
-	public SearchResponse postSearch(
-			Boolean basicFacetSelection, String[] entryClassNames,
-			Boolean explain, Long[] groupIds, Boolean includeAssetSearchSummary,
-			Boolean includeAssetTitle, Boolean includeRequest,
-			Boolean includeResponse, String keywords, String[] resultFields,
-			Long scopeGroupId, Pagination pagination, Sort[] sorts,
+	public Page<SearchResult> postSearchPage(
+			String entryClassNames, String search, Filter filter,
+			Pagination pagination, Sort[] sorts,
 			SearchRequestBody searchRequestBody)
 		throws Exception;
 
@@ -102,6 +102,14 @@ public interface SearchResponseResource {
 
 	public void setSortParserProvider(SortParserProvider sortParserProvider);
 
+	public void setVulcanBatchEngineExportTaskResource(
+		VulcanBatchEngineExportTaskResource
+			vulcanBatchEngineExportTaskResource);
+
+	public void setVulcanBatchEngineImportTaskResource(
+		VulcanBatchEngineImportTaskResource
+			vulcanBatchEngineImportTaskResource);
+
 	public default Filter toFilter(String filterString) {
 		return toFilter(
 			filterString, Collections.<String, List<String>>emptyMap());
@@ -120,7 +128,7 @@ public interface SearchResponseResource {
 	@ProviderType
 	public interface Builder {
 
-		public SearchResponseResource build();
+		public SearchResultResource build();
 
 		public Builder checkPermissions(boolean checkPermissions);
 

@@ -15,7 +15,7 @@
 package com.liferay.portal.search.rest.client.dto.v1_0;
 
 import com.liferay.portal.search.rest.client.function.UnsafeSupplier;
-import com.liferay.portal.search.rest.client.serdes.v1_0.FacetSerDes;
+import com.liferay.portal.search.rest.client.serdes.v1_0.FacetConfigurationSerDes;
 
 import java.io.Serializable;
 
@@ -29,10 +29,10 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class Facet implements Cloneable, Serializable {
+public class FacetConfiguration implements Cloneable, Serializable {
 
-	public static Facet toDTO(String json) {
-		return FacetSerDes.toDTO(json);
+	public static FacetConfiguration toDTO(String json) {
+		return FacetConfigurationSerDes.toDTO(json);
 	}
 
 	public String getAggregationName() {
@@ -161,8 +161,8 @@ public class Facet implements Cloneable, Serializable {
 	protected Object[] values;
 
 	@Override
-	public Facet clone() throws CloneNotSupportedException {
-		return (Facet)super.clone();
+	public FacetConfiguration clone() throws CloneNotSupportedException {
+		return (FacetConfiguration)super.clone();
 	}
 
 	@Override
@@ -171,13 +171,13 @@ public class Facet implements Cloneable, Serializable {
 			return true;
 		}
 
-		if (!(object instanceof Facet)) {
+		if (!(object instanceof FacetConfiguration)) {
 			return false;
 		}
 
-		Facet facet = (Facet)object;
+		FacetConfiguration facetConfiguration = (FacetConfiguration)object;
 
-		return Objects.equals(toString(), facet.toString());
+		return Objects.equals(toString(), facetConfiguration.toString());
 	}
 
 	@Override
@@ -188,7 +188,7 @@ public class Facet implements Cloneable, Serializable {
 	}
 
 	public String toString() {
-		return FacetSerDes.toJSON(this);
+		return FacetConfigurationSerDes.toJSON(this);
 	}
 
 }

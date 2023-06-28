@@ -17,15 +17,18 @@ package com.liferay.portal.search.rest.internal.graphql.mutation.v1_0;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.search.rest.dto.v1_0.SearchRequestBody;
-import com.liferay.portal.search.rest.dto.v1_0.SearchResponse;
+import com.liferay.portal.search.rest.dto.v1_0.SearchResult;
 import com.liferay.portal.search.rest.dto.v1_0.SuggestionsContributorConfiguration;
 import com.liferay.portal.search.rest.dto.v1_0.SuggestionsContributorResults;
-import com.liferay.portal.search.rest.resource.v1_0.SearchResponseResource;
+import com.liferay.portal.search.rest.resource.v1_0.SearchResultResource;
 import com.liferay.portal.search.rest.resource.v1_0.SuggestionResource;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
+import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -49,12 +52,12 @@ import org.osgi.service.component.ComponentServiceObjects;
 @Generated("")
 public class Mutation {
 
-	public static void setSearchResponseResourceComponentServiceObjects(
-		ComponentServiceObjects<SearchResponseResource>
-			searchResponseResourceComponentServiceObjects) {
+	public static void setSearchResultResourceComponentServiceObjects(
+		ComponentServiceObjects<SearchResultResource>
+			searchResultResourceComponentServiceObjects) {
 
-		_searchResponseResourceComponentServiceObjects =
-			searchResponseResourceComponentServiceObjects;
+		_searchResultResourceComponentServiceObjects =
+			searchResultResourceComponentServiceObjects;
 	}
 
 	public static void setSuggestionResourceComponentServiceObjects(
@@ -65,22 +68,11 @@ public class Mutation {
 			suggestionResourceComponentServiceObjects;
 	}
 
-	@GraphQLField(
-		description = "Search the company index for matching content. Using this endpoint requires a dev feature flag: set feature.flag.LPS-179669 to true."
-	)
-	public SearchResponse createSearch(
-			@GraphQLName("basicFacetSelection") Boolean basicFacetSelection,
-			@GraphQLName("entryClassNames") String[] entryClassNames,
-			@GraphQLName("explain") Boolean explain,
-			@GraphQLName("groupIds") Long[] groupIds,
-			@GraphQLName("includeAssetSearchSummary") Boolean
-				includeAssetSearchSummary,
-			@GraphQLName("includeAssetTitle") Boolean includeAssetTitle,
-			@GraphQLName("includeRequest") Boolean includeRequest,
-			@GraphQLName("includeResponse") Boolean includeResponse,
-			@GraphQLName("keywords") String keywords,
-			@GraphQLName("resultFields") String[] resultFields,
-			@GraphQLName("scopeGroupId") Long scopeGroupId,
+	@GraphQLField
+	public java.util.Collection<SearchResult> createSearchPage(
+			@GraphQLName("entryClassNames") String entryClassNames,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page,
 			@GraphQLName("sort") String sortsString,
@@ -89,15 +81,18 @@ public class Mutation {
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_searchResponseResourceComponentServiceObjects,
+			_searchResultResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			searchResponseResource -> searchResponseResource.postSearch(
-				basicFacetSelection, entryClassNames, explain, groupIds,
-				includeAssetSearchSummary, includeAssetTitle, includeRequest,
-				includeResponse, keywords, resultFields, scopeGroupId,
-				Pagination.of(page, pageSize),
-				_sortsBiFunction.apply(searchResponseResource, sortsString),
-				searchRequestBody));
+			searchResultResource -> {
+				Page paginationPage = searchResultResource.postSearchPage(
+					entryClassNames, search,
+					_filterBiFunction.apply(searchResultResource, filterString),
+					Pagination.of(page, pageSize),
+					_sortsBiFunction.apply(searchResultResource, sortsString),
+					searchRequestBody);
+
+				return paginationPage.getItems();
+			});
 	}
 
 	@GraphQLField
@@ -169,19 +164,24 @@ public class Mutation {
 	}
 
 	private void _populateResourceContext(
-			SearchResponseResource searchResponseResource)
+			SearchResultResource searchResultResource)
 		throws Exception {
 
-		searchResponseResource.setContextAcceptLanguage(_acceptLanguage);
-		searchResponseResource.setContextCompany(_company);
-		searchResponseResource.setContextHttpServletRequest(
-			_httpServletRequest);
-		searchResponseResource.setContextHttpServletResponse(
+		searchResultResource.setContextAcceptLanguage(_acceptLanguage);
+		searchResultResource.setContextCompany(_company);
+		searchResultResource.setContextHttpServletRequest(_httpServletRequest);
+		searchResultResource.setContextHttpServletResponse(
 			_httpServletResponse);
-		searchResponseResource.setContextUriInfo(_uriInfo);
-		searchResponseResource.setContextUser(_user);
-		searchResponseResource.setGroupLocalService(_groupLocalService);
-		searchResponseResource.setRoleLocalService(_roleLocalService);
+		searchResultResource.setContextUriInfo(_uriInfo);
+		searchResultResource.setContextUser(_user);
+		searchResultResource.setGroupLocalService(_groupLocalService);
+		searchResultResource.setRoleLocalService(_roleLocalService);
+
+		searchResultResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
+
+		searchResultResource.setVulcanBatchEngineImportTaskResource(
+			_vulcanBatchEngineImportTaskResource);
 	}
 
 	private void _populateResourceContext(SuggestionResource suggestionResource)
@@ -197,13 +197,14 @@ public class Mutation {
 		suggestionResource.setRoleLocalService(_roleLocalService);
 	}
 
-	private static ComponentServiceObjects<SearchResponseResource>
-		_searchResponseResourceComponentServiceObjects;
+	private static ComponentServiceObjects<SearchResultResource>
+		_searchResultResourceComponentServiceObjects;
 	private static ComponentServiceObjects<SuggestionResource>
 		_suggestionResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
 	private com.liferay.portal.kernel.model.Company _company;
+	private BiFunction<Object, String, Filter> _filterBiFunction;
 	private GroupLocalService _groupLocalService;
 	private HttpServletRequest _httpServletRequest;
 	private HttpServletResponse _httpServletResponse;
@@ -211,5 +212,9 @@ public class Mutation {
 	private BiFunction<Object, String, Sort[]> _sortsBiFunction;
 	private UriInfo _uriInfo;
 	private com.liferay.portal.kernel.model.User _user;
+	private VulcanBatchEngineExportTaskResource
+		_vulcanBatchEngineExportTaskResource;
+	private VulcanBatchEngineImportTaskResource
+		_vulcanBatchEngineImportTaskResource;
 
 }

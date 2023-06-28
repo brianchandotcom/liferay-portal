@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.test;
 
-import com.liferay.petra.function.UnsafeSupplier;
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -119,10 +119,10 @@ public class AssertUtils {
 
 	public static void assertFailure(
 		Class<?> clazz, String message,
-		UnsafeSupplier<Object, Exception> unsafeSupplier) {
+		UnsafeRunnable<Exception> unsafeRunnable) {
 
 		try {
-			unsafeSupplier.get();
+			unsafeRunnable.run();
 
 			Assert.fail();
 		}

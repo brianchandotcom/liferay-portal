@@ -18,12 +18,12 @@ import {Heading} from '@clayui/core';
 import ClayLayout from '@clayui/layout';
 import ClayModal from '@clayui/modal';
 import ClayNavigationBar from '@clayui/navigation-bar';
-import {fetch, openToast} from 'frontend-js-web';
+import {openToast} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import {APIApplicationManagementToolbar} from './APIApplicationManagementToolbar';
 import BaseAPIApplicationField from './baseComponents/BaseAPIApplicationFields';
-import {fetchJSON, headers} from './utils/fetchUtil';
+import {fetchJSON, updateData} from './utils/fetchUtil';
 import {getCurrentURLParamValue} from './utils/urlUtil';
 
 import '../../css/main.scss';
@@ -33,22 +33,9 @@ interface EditAPIApplicationProps {
 	portletId: string;
 }
 
-type ApplicationStatus = {
-	key: 'published' | 'unpublished';
-};
-
 type DataError = {
 	baseURL: boolean;
 	title: boolean;
-};
-
-type Data = {
-	actions: Actions;
-	applicationStatus: ApplicationStatus;
-	baseURL: string;
-	description: string;
-	title: string;
-	version: string;
 };
 
 export default function EditAPIApplication({
@@ -91,40 +78,6 @@ export default function EditAPIApplication({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	async function updateData(
-		dataToUpdate: Partial<Data>,
-		successMessage: string
-	) {
-		fetch(data!.actions.update.href, {
-			body: JSON.stringify(dataToUpdate),
-			headers,
-			method: data!.actions.update.method,
-		})
-			.then((response) => {
-				if (response.ok) {
-					openToast({
-						message: successMessage,
-						type: 'success',
-					});
-					fetchAPIApplication();
-				}
-				else {
-					return response.json();
-				}
-			})
-			.then((responseJson) => {
-				if (responseJson) {
-					throw new Error(responseJson.title);
-				}
-			})
-			.catch((error) => {
-				openToast({
-					message: error,
-					type: 'danger',
-				});
-			});
-	}
-
 	function validateData() {
 		let isDataValid = true;
 		const mandatoryFields = ['baseURL', 'title'];
@@ -140,7 +93,7 @@ export default function EditAPIApplication({
 		}
 		else {
 			mandatoryFields.forEach((field) => {
-				if (data![field as keyof Data]) {
+				if (data![field as keyof ItemData]) {
 					setDisplayError((previousErrors) => ({
 						...previousErrors,
 						[field]: false,
@@ -159,22 +112,38 @@ export default function EditAPIApplication({
 		return isDataValid;
 	}
 
-	const handleUpdate = (
-		applicationStatusKey: 'published' | 'unpublished',
-		successMessage: string
-	) => {
+	const handleUpdate = async ({
+		applicationStatusKey,
+		successMessage,
+	}: {
+		applicationStatusKey: 'published' | 'unpublished';
+		successMessage: string;
+	}) => {
 		const isDataValid = validateData();
 
 		if (data && isDataValid) {
-			updateData(
-				{
+			await updateData({
+				dataToUpdate: {
 					applicationStatus: {key: applicationStatusKey},
 					baseURL: data.baseURL,
 					description: data.description,
 					title: data.title,
 				},
-				successMessage
-			);
+				onError: (error: string) => {
+					openToast({
+						message: error,
+						type: 'danger',
+					});
+				},
+				onSuccess: () => {
+					openToast({
+						message: successMessage,
+						type: 'success',
+					});
+					fetchAPIApplication();
+				},
+				url: data.actions.update.href,
+			});
 		}
 	};
 
@@ -183,16 +152,20 @@ export default function EditAPIApplication({
 			<APIApplicationManagementToolbar
 				itemData={data}
 				onPublish={() =>
-					handleUpdate(
-						'published',
-						Liferay.Language.get('api-application-was-published')
-					)
+					handleUpdate({
+						applicationStatusKey: 'published',
+						successMessage: Liferay.Language.get(
+							'api-application-was-published'
+						),
+					})
 				}
 				onSave={() =>
-					handleUpdate(
-						'unpublished',
-						Liferay.Language.get('api-application-changes-were-saved')
-					)
+					handleUpdate({
+						applicationStatusKey: 'unpublished',
+						successMessage: Liferay.Language.get(
+							'api-application-changes-were-saved'
+						),
+					})
 				}
 				title={title}
 			/>
@@ -231,7 +204,7 @@ export default function EditAPIApplication({
 
 					<ClayCard.Body>
 						<BaseAPIApplicationField
-							data={data as Data}
+							data={data as ItemData}
 							displayError={displayError}
 							setData={setData as voidReturn}
 						/>

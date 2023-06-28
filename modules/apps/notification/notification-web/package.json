@@ -1,7 +1,7 @@
 {
 	"dependencies": {
 		"@clayui/button": "3.92.0",
-		"@clayui/form": "3.96.0",
+		"@clayui/form": "3.99.0",
 		"@clayui/label": "3.88.0",
 		"@clayui/management-toolbar": "3.93.0",
 		"@clayui/panel": "3.96.0",

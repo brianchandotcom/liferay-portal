@@ -108,8 +108,9 @@ const openModal = (optionBtn) => {
 						await layerForDendingUpdateStatus(
 							getMessage(),
 							getAttributeHidden(),
-							STATUS.AWAITING_MORE_INFO_FROM_EMPLOYEE.key,
-							STATUS.AWAITING_MORE_INFO_FROM_EMPLOYEE.value
+							REQUEST_STATUS.AWAITING_MORE_INFO_FROM_EMPLOYEE.key,
+							REQUEST_STATUS.AWAITING_MORE_INFO_FROM_EMPLOYEE
+								.value
 						);
 					},
 					type: 'submit',
@@ -121,8 +122,8 @@ const openModal = (optionBtn) => {
 						await layerForDendingUpdateStatus(
 							getMessage(),
 							getAttributeHidden(),
-							STATUS.REJECTED.key,
-							STATUS.REJECTED.value
+							REQUEST_STATUS.REJECTED.key,
+							REQUEST_STATUS.REJECTED.value
 						);
 					},
 					type: 'submit',
@@ -197,8 +198,10 @@ const openModal = (optionBtn) => {
 									await layerForDendingUpdateStatus(
 										getMessage(),
 										getAttributeHidden(),
-										STATUS.AWAITING_APPROVAL_ON_EVP.key,
-										STATUS.AWAITING_APPROVAL_ON_EVP.value
+										REQUEST_STATUS.AWAITING_APPROVAL_ON_EVP
+											.key,
+										REQUEST_STATUS.AWAITING_APPROVAL_ON_EVP
+											.value
 									);
 								},
 								type: 'submit',
@@ -220,8 +223,8 @@ const openModal = (optionBtn) => {
 									await layerForDendingUpdateStatus(
 										getMessage(),
 										getAttributeHidden(),
-										STATUS.REJECTED.key,
-										STATUS.REJECTED.value
+										REQUEST_STATUS.REJECTED.key,
+										REQUEST_STATUS.REJECTED.value
 									);
 								},
 								type: 'submit',

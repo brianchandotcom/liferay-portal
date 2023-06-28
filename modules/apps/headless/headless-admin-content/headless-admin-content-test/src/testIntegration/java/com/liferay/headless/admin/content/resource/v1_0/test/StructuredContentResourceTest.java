@@ -34,6 +34,8 @@ import com.liferay.headless.admin.content.client.serdes.v1_0.StructuredContentSe
 import com.liferay.headless.delivery.client.resource.v1_0.StructuredContentResource;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -353,6 +355,124 @@ public class StructuredContentResourceTest
 					}
 				}),
 			(List<StructuredContent>)structuredContentsVersionsPage.getItems());
+	}
+
+	@Test
+	public void testGraphQLGetSiteStructuredContentsPage() throws Exception {
+		super.testGraphQLGetSiteStructuredContentsPage();
+
+		Page<StructuredContent> page =
+			structuredContentResource.getSiteStructuredContentsPage(
+				testGroup.getGroupId(), null, null, null, null,
+				Pagination.of(1, 10), null);
+
+		List<StructuredContent> structuredContents =
+			(List<StructuredContent>)page.getItems();
+
+		Iterator<StructuredContent> iterator = structuredContents.iterator();
+
+		while (iterator.hasNext()) {
+			_structuredContentResource.deleteStructuredContent(
+				iterator.next(
+				).getId());
+		}
+
+		StructuredContent structuredContent1 = _postSiteStructuredContent(
+			testGroup.getGroupId(), randomStructuredContent());
+		StructuredContent structuredContent2 = _postSiteStructuredContent(
+			testGroup.getGroupId(), randomStructuredContent());
+
+		GraphQLField graphQLField = new GraphQLField(
+			"structuredContents",
+			HashMapBuilder.<String, Object>put(
+				"aggregation", "[\"id\"]"
+			).put(
+				"siteKey",
+				StringBundler.concat(
+					StringPool.QUOTE, testGroup.getGroupId(), StringPool.QUOTE)
+			).build(),
+			new GraphQLField(
+				"facets", new GraphQLField("facetCriteria"),
+				new GraphQLField(
+					"facetValues", new GraphQLField("numberOfOccurrences"),
+					new GraphQLField("term"))),
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("totalCount"));
+
+		JSONObject structuredContentsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/structuredContents");
+
+		Assert.assertEquals(
+			2, structuredContentsJSONObject.getLong("totalCount"));
+		Assert.assertEquals(
+			"id",
+			structuredContentsJSONObject.getJSONArray(
+				"facets"
+			).getJSONObject(
+				0
+			).getString(
+				"facetCriteria"
+			));
+		Assert.assertEquals(
+			String.valueOf(1),
+			structuredContentsJSONObject.getJSONArray(
+				"facets"
+			).getJSONObject(
+				0
+			).getJSONArray(
+				"facetValues"
+			).getJSONObject(
+				0
+			).getString(
+				"numberOfOccurrences"
+			));
+		Assert.assertEquals(
+			String.valueOf(structuredContent1.getId()),
+			structuredContentsJSONObject.getJSONArray(
+				"facets"
+			).getJSONObject(
+				0
+			).getJSONArray(
+				"facetValues"
+			).getJSONObject(
+				0
+			).getString(
+				"term"
+			));
+
+		Assert.assertEquals(
+			String.valueOf(1),
+			structuredContentsJSONObject.getJSONArray(
+				"facets"
+			).getJSONObject(
+				0
+			).getJSONArray(
+				"facetValues"
+			).getJSONObject(
+				1
+			).getString(
+				"numberOfOccurrences"
+			));
+		Assert.assertEquals(
+			String.valueOf(structuredContent2.getId()),
+			structuredContentsJSONObject.getJSONArray(
+				"facets"
+			).getJSONObject(
+				0
+			).getJSONArray(
+				"facetValues"
+			).getJSONObject(
+				1
+			).getString(
+				"term"
+			));
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(structuredContent1, structuredContent2),
+			Arrays.asList(
+				StructuredContentSerDes.toDTOs(
+					structuredContentsJSONObject.getString("items"))));
 	}
 
 	@Override

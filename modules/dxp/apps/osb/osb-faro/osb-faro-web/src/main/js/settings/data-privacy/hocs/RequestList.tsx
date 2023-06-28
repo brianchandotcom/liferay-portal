@@ -3,6 +3,7 @@ import ClayButton from '@clayui/button';
 import Constants, {OrderByDirections, Sizes} from 'shared/util/constants';
 import CrossPageSelect from 'shared/hoc/CrossPageSelect';
 import DataControlRequest from '../queries/DataControlRequestMutation';
+import getCN from 'classnames';
 import Label from 'shared/components/Label';
 import moment from 'moment';
 import Nav from 'shared/components/Nav';
@@ -426,10 +427,17 @@ const RequestList: React.FC<IRequestListProps> = ({
 						);
 					}
 
+					const classnames = getCN(
+						'btn btn-secondary btn-sm button-root',
+						{
+							disabled: selectedItems.size
+						}
+					);
+
 					return (
 						status === GDPRRequestStatuses.Completed && (
 							<a
-								className='btn btn-secondary btn-sm button-root'
+								className={classnames}
 								{...(!itemsSelected && {
 									href: `/o/proxy/download/data-control-tasks/${id}?projectGroupId=${groupId}`
 								})}
@@ -456,7 +464,7 @@ const RequestList: React.FC<IRequestListProps> = ({
 						<Nav.Item>
 							{selectedItems.size ? (
 								<a
-									className='button-root btn-primary nav-btn '
+									className='btn btn-primary button-root nav-btn '
 									href={`/o/proxy/download/data-control-tasks?projectGroupId=${groupId}&filter=(id eq ${selectedItems
 										.map(({id}) => id)
 										.join(' or id eq ')})`}

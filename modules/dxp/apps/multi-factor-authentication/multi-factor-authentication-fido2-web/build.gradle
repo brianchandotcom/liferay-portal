@@ -3,8 +3,6 @@ dependencies {
 	compileInclude group: "com.fasterxml.jackson.dataformat", name: "jackson-dataformat-cbor", version: "2.12.6"
 	compileInclude group: "com.fasterxml.jackson.datatype", name: "jackson-datatype-jdk8", version: "2.11.2"
 	compileInclude group: "com.github.peteroupc", name: "numbers", version: "1.7.4"
-	compileInclude group: "com.google.errorprone", name: "error_prone_annotations", version: "2.4.0"
-	compileInclude group: "com.google.guava", name: "failureaccess", version: "1.0.1"
 	compileInclude group: "com.upokecenter", name: "cbor", version: "4.5.2"
 	compileInclude group: "com.yubico", name: "webauthn-server-core", version: "1.12.2"
 	compileInclude group: "com.yubico", name: "webauthn-server-core-minimal", version: "1.12.2"
@@ -12,7 +10,6 @@ dependencies {
 	compileInclude group: "net.i2p.crypto", name: "eddsa", version: "0.3.0"
 	compileInclude group: "org.bouncycastle", name: "bcprov-jdk15on", version: "1.69"
 	compileInclude group: "org.bouncycastle", name: "bcutil-jdk15on", version: "1.69"
-	compileInclude group: "org.checkerframework", name: "checker-qual", version: "2.11.1"
 
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.13.4"

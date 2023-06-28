@@ -21,6 +21,257 @@ definition {
 		}
 	}
 
+	@description = "LPS-142175 - Verify the field values persist for object entries with 100 fields"
+	@priority = 3
+	test AssertFieldValuesPersist {
+		task ("Given a custom object with 100 fields") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 187390",
+				objectName = "CustomObject187390",
+				pluralLabelName = "Custom Objects 187390");
+
+			for (var textIndex : list "Simple,A,B,C,D,E,F,G,H,I") {
+				ObjectAdmin.addObjectFieldViaAPI(
+					fieldBusinessType = "Text",
+					fieldLabelName = "Text ${textIndex}",
+					fieldName = "text${textIndex}",
+					fieldType = "String",
+					isRequired = "false",
+					objectName = "CustomObject187390");
+			}
+
+			for (var integerIndex : list "Simple,A,B,C,D,E,F,G,H,I") {
+				ObjectAdmin.addObjectFieldViaAPI(
+					fieldBusinessType = "Integer",
+					fieldLabelName = "Integer ${integerIndex}",
+					fieldName = "integer${integerIndex}",
+					fieldType = "Integer",
+					isRequired = "false",
+					objectName = "CustomObject187390");
+			}
+
+			for (var precisionDecimalIndex : list "Label,A,B,C,D,E,F,G,H,I") {
+				ObjectAdmin.addObjectFieldViaAPI(
+					fieldBusinessType = "PrecisionDecimal",
+					fieldLabelName = "Precision Decimal ${precisionDecimalIndex}",
+					fieldName = "precisionDecimal${precisionDecimalIndex}",
+					fieldType = "BigDecimal",
+					isRequired = "false",
+					objectName = "CustomObject187390");
+			}
+
+			for (var booleanIndex : list "Label,A,B,C,D,E,F,G,H,I") {
+				ObjectAdmin.addObjectFieldViaAPI(
+					fieldBusinessType = "Boolean",
+					fieldLabelName = "Boolean ${booleanIndex}",
+					fieldName = "boolean${booleanIndex}",
+					fieldType = "Boolean",
+					isRequired = "false",
+					objectName = "CustomObject187390");
+			}
+
+			for (var dateIndex : list "Label,A,B,C,D,E,F,G,H,I") {
+				ObjectAdmin.addObjectFieldViaAPI(
+					fieldBusinessType = "Date",
+					fieldLabelName = "Date ${dateIndex}",
+					fieldName = "date${dateIndex}",
+					fieldType = "Date",
+					isRequired = "false",
+					objectName = "CustomObject187390");
+			}
+
+			for (var dateTimeIndex : list "Label,A,B,C,D,E,F,G,H,I") {
+				ObjectAdmin.addObjectFieldViaAPI(
+					fieldBusinessType = "DateTime",
+					fieldLabelName = "DateTime ${dateTimeIndex}",
+					fieldName = "dateTime${dateTimeIndex}",
+					fieldType = "DateTime",
+					isRequired = "false",
+					objectName = "CustomObject187390",
+					timeStorageOption = "convertToUTC");
+			}
+
+			for (var longTextIndex : list "Label,A,B,C,D,E,F,G,H,I") {
+				ObjectAdmin.addObjectFieldViaAPI(
+					fieldBusinessType = "LongText",
+					fieldLabelName = "LongText ${longTextIndex}",
+					fieldName = "longText${longTextIndex}",
+					fieldType = "Clob",
+					isRequired = "false",
+					objectName = "CustomObject187390");
+			}
+
+			for (var decimalIndex : list "Simple,A,B,C,D,E,F,G,H,I") {
+				ObjectAdmin.addObjectFieldViaAPI(
+					fieldBusinessType = "Decimal",
+					fieldLabelName = "Decimal ${decimalIndex}",
+					fieldName = "decimal${decimalIndex}",
+					fieldType = "Double",
+					isRequired = "false",
+					objectName = "CustomObject187390");
+			}
+
+			for (var longIntegerIndex : list "Label,A,B,C,D,E,F,G,H,I") {
+				ObjectAdmin.addObjectFieldViaAPI(
+					fieldBusinessType = "LongInteger",
+					fieldLabelName = "LongInteger ${longIntegerIndex}",
+					fieldName = "longInteger${longIntegerIndex}",
+					fieldType = "Long",
+					isRequired = "false",
+					objectName = "CustomObject187390");
+			}
+
+			for (var richTextIndex : list "Label,A,B,C,D,E,F,G,H,I") {
+				ObjectAdmin.addObjectFieldViaAPI(
+					fieldBusinessType = "RichText",
+					fieldLabelName = "RichText ${richTextIndex}",
+					fieldName = "richText${richTextIndex}",
+					fieldType = "Clob",
+					isRequired = "false",
+					objectName = "CustomObject187390");
+			}
+
+			Picklist.addPicklistViaAPI(picklistName = "Status");
+
+			for (var statusName : list "open,review,closed") {
+				Picklist.addPicklistItemViaAPI(
+					itemKey = ${statusName},
+					itemName = ${statusName},
+					picklistName = "Status");
+			}
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 187390");
+
+			ObjectAdmin.goToFieldsTab();
+
+			ObjectAdmin.addObjectFieldViaUI(
+				fieldLabel = "Picklist",
+				fieldPicklist = "Status",
+				fieldType = "Picklist");
+
+			ObjectAdmin.addObjectFieldViaUI(
+				fieldLabel = "Picklist State Manager",
+				fieldPicklist = "Status",
+				fieldType = "Picklist",
+				itemName = "open",
+				markAsState = "true");
+
+			ObjectAdmin.addObjectFieldViaUI(
+				fieldLabel = "Multiselect Picklist",
+				fieldPicklist = "Status",
+				fieldType = "Multiselect Picklist");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject187390");
+		}
+
+		task ("And given the object definition is exported") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectExportImport.exportObject(
+				objectLabel = "Custom Object 187390",
+				objectName = "CustomObject187390");
+		}
+
+		task ("And given the object definition is deleted in portal") {
+			ObjectAdmin.deleteObjectViaAPI(objectName = "CustomObject187390");
+		}
+
+		task ("And given the object definition is imported") {
+			ObjectExportImport.importObject(
+				objectFileName = "ImportedObjectWith100Fields",
+				objectName = "CustomObject187390");
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 187390");
+
+			ObjectAdmin.publishObjectViaUI();
+		}
+
+		task ("When the user creates an object entry with each field type filled") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject187390");
+
+			LexiconEntry.gotoAdd();
+
+			ObjectPortlet.typeCustomField(
+				customField = "Text Simple",
+				entry = "Simple text");
+
+			ObjectPortlet.typeCustomField(
+				customField = "Integer Simple",
+				entry = 24680);
+
+			ObjectPortlet.typeCustomField(
+				customField = "Precision Decimal Label",
+				entry = "1.23");
+
+			Click.clickAtNotVisible(locator1 = "ObjectAdmin#ENTRY_BOOLEAN_CHECKBOX");
+
+			Type(
+				locator1 = "ObjectPortlet#VIEW_EMPTY_LABEL_IN_DATE_ENTRY",
+				value1 = "01/01/2024");
+
+			Type(
+				locator1 = "ObjectPortlet#VIEW_EMPTY_LABEL_IN_DATE_TIME_ENTRY",
+				value1 = "10/10/2024 08:00 AM");
+
+			FormViewBuilder.editClobText(fieldLong = "Long text test");
+
+			ObjectPortlet.typeCustomField(
+				customField = "Decimal Simple",
+				entry = "13.579");
+
+			ObjectPortlet.typeCustomField(
+				customField = "LongInteger Label",
+				entry = 1234567890);
+
+			ObjectAutoGenerated.typeAndSelectTextOnRichText(text = "Rich text test");
+
+			Click(locator1 = "ObjectAdmin#ENTRY_CHOOSE_OPTIONS_MULTIPICKLIST");
+
+			for (var picklistOption : list "review,closed") {
+				MenuItem.clickNoError(menuItem = ${picklistOption});
+			}
+
+			PortletEntry.save();
+		}
+
+		task ("Then the field values persists on the page and on the table") {
+			for (var values : list "Simple text,24680,1.23,13.579,1234567890,open,01/01/2024,10/10/2024 08:00 AM") {
+				AssertElementPresent(
+					fieldLabel = ${values},
+					locator1 = "CreateObject#FIELD_VALUE");
+			}
+
+			AssertElementPresent(
+				checkboxName = "Boolean",
+				locator1 = "Checkbox#ANY_CHECKBOX_CHECKED");
+
+			AssertElementPresent(
+				key_clobType = "Long text test",
+				locator1 = "ObjectAdmin#VIEW_CLOB_TYPE_TEXT_ENTRY");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
+			ObjectAutoGenerated.assertFormatTypeOnRichText(
+				richText = "Rich text test",
+				specificType = ".",
+				type = "p");
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject187390");
+
+			for (var asserts : list "Simple text,24680,1.23,Yes,Long text test,13.579,Yes,1234567890,Rich text test,open") {
+				ObjectPortlet.viewEntry(entry = ${asserts});
+			}
+
+			ObjectPortlet.viewEntry(entry = "review, closed");
+
+			ObjectPortlet.viewEntry(entry = "Jan 1, 2024");
+
+			ObjectPortlet.viewEntry(entry = "Oct 10, 2024, 8:00 AM");
+		}
+	}
+
 	@description = "LPS-142175 - Verify it is possible to cancel importing an object"
 	@ignore = "Test Stub"
 	@priority = 4

@@ -36,7 +36,7 @@ definition {
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "Third Party",
 			configurationName = "Salesforce Integration",
-			configurationScope = "Punch Out");
+			configurationScope = "");
 
 		Navigator.gotoNavTab(navTab = "Salesforce Integration");
 

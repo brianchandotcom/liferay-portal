@@ -26,11 +26,11 @@ import React, {useState} from 'react';
 
 import '../css/FDSEntries.scss';
 import {
+	ALLOWED_ENDPOINTS_PARAMETERS,
 	API_URL,
 	FDS_DEFAULT_PROPS,
 	FUZZY_OPTIONS,
 	OBJECT_RELATIONSHIP,
-	ALLOWED_ENDPOINTS_PARAMETERS
 } from './Constants';
 import {FDSViewType} from './FDSViews';
 import RequiredMark from './components/RequiredMark';
@@ -388,18 +388,21 @@ const AddFDSEntryModalContent = ({
 		}
 	};
 
-	const isPathValid = (path: string, allowedParameters: string[]):boolean => {
-		const paramsMatcher = RegExp('\{(.*?)\}', 'g');
+	const isPathValid = (
+		path: string,
+		allowedParameters: string[]
+	): boolean => {
+		const paramsMatcher = RegExp('{(.*?)}', 'g');
 		let matches;
-	
+
 		while ((matches = paramsMatcher.exec(path)) !== null) {
-			if (! allowedParameters.includes(matches[1])){
+			if (!allowedParameters.includes(matches[1])) {
 				return false;
 			}
 		}
 
 		return true;
-	}	
+	};
 
 	const getRESTSchemas = async (restApplication: string) => {
 		if (!restApplication) {
@@ -420,10 +423,10 @@ const AddFDSEntryModalContent = ({
 
 			schemaNames.forEach((schemaName) => {
 				paths.forEach((path: string) => {
-					if (! isPathValid(path, ALLOWED_ENDPOINTS_PARAMETERS)){
+					if (!isPathValid(path, ALLOWED_ENDPOINTS_PARAMETERS)) {
 						return;
 					}
-				
+
 					if (
 						responseJson.paths[
 							path

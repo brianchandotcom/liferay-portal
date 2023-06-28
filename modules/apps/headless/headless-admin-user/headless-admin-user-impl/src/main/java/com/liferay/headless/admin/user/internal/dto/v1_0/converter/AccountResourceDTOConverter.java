@@ -22,9 +22,12 @@ import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.headless.admin.user.dto.v1_0.Account;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.AddressLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.webserver.WebServerServletToken;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
@@ -82,10 +85,18 @@ public class AccountResourceDTOConverter
 					accountEntry.getAccountEntryId(),
 					accountEntry.getCompanyId(),
 					dtoConverterContext.getLocale());
+				dateCreated = accountEntry.getCreateDate();
+				dateModified = accountEntry.getModifiedDate();
+				defaultBillingAddressId =
+					accountEntry.getDefaultBillingAddressId();
+				defaultShippingAddressId =
+					accountEntry.getDefaultShippingAddressId();
 				description = accountEntry.getDescription();
 				domains = StringUtil.split(accountEntry.getDomains());
 				externalReferenceCode = accountEntry.getExternalReferenceCode();
 				id = accountEntry.getAccountEntryId();
+				logoId = accountEntry.getLogoId();
+				logoURL = _getLogoURL(accountEntry.getLogoId());
 				name = accountEntry.getName();
 				numberOfUsers =
 					(int)
@@ -99,9 +110,16 @@ public class AccountResourceDTOConverter
 					AccountEntryOrganizationRel::getOrganizationId, Long.class);
 				parentAccountId = accountEntry.getParentAccountEntryId();
 				status = accountEntry.getStatus();
+				taxId = accountEntry.getTaxIdNumber();
 				type = Account.Type.create(accountEntry.getType());
 			}
 		};
+	}
+
+	private String _getLogoURL(long logoId) {
+		return StringBundler.concat(
+			"/image/organization_logo?img_id=", logoId, "&t=",
+			_webServerServletToken.getToken(logoId));
 	}
 
 	@Reference
@@ -113,5 +131,11 @@ public class AccountResourceDTOConverter
 
 	@Reference
 	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
+
+	@Reference
+	private AddressLocalService _addressLocalService;
+
+	@Reference
+	private WebServerServletToken _webServerServletToken;
 
 }

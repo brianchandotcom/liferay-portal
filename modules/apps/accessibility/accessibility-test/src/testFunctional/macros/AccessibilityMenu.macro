@@ -10,8 +10,4 @@ definition {
 			value1 = "\TAB");
 	}
 
-	//key_link = "Skip to Main Content",
-	//locator1 = "AccessibilityMenu#QUICK_LINK",
-
-
 }

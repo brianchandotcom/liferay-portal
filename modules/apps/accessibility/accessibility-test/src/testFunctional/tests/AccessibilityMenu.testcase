@@ -49,15 +49,9 @@ definition {
 
 			TestUtils.hardRefresh();
 
-			// Add clear browser cache
-
 		}
 		else {
 			TestUtils.hardRefresh();
-
-			PortalInstances.tearDownCP();
-
-			// Add clear browser cache
 
 		}
 	}
@@ -218,7 +212,6 @@ definition {
 	}
 
 	@description = "LPS-178192. Verifies accessibility menu modal can be accessed by keyboard."
-	@ignore = "Test Stub"
 	@priority = 5
 	test ModalIsKeyboardAccessible {
 		task ("When Accessibility Menu is focused with keyboard") {

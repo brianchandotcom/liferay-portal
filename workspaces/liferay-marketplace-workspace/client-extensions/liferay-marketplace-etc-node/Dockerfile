@@ -1,5 +1,5 @@
 FROM liferay/node-runner:latest
 
-COPY *.js package.json util /opt/liferay
+COPY . /opt/liferay
 
 RUN npm install

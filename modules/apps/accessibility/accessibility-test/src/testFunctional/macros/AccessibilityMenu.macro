@@ -1,5 +1,33 @@
 definition {
 
+	macro activateAccessibilityMenu {
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		Click(
+			key_itemName = "Accessibility",
+			locator1 = "ListGroupItem#ITEM_TEXT");
+
+		if (!(IsElementPresent(checkboxName = "Enable Accessibility Menu", locator1 = "Checkbox#ANY_CHECKBOX_CHECKED"))) {
+			Check.checkNotVisible(
+				checkboxName = "Enable Accessibility Menu",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			if (IsElementPresent(locator1 = "Button#SAVE")) {
+				Click(locator1 = "Button#SAVE");
+			}
+			else {
+				Click(locator1 = "Button#UPDATE");
+			}
+		}
+
+		task ("And navigate to home page") {
+			Navigator.openURL();
+		}
+	}
+
 	macro goAccessibilityMenu {
 		KeyPress(
 			locator1 = "//body",
@@ -8,34 +36,6 @@ definition {
 		KeyPress(
 			locator1 = "//body",
 			value1 = "\TAB");
-	}
-
-	macro activateAccessibilityMenu {
-					ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
-
-			Click(
-				key_itemName = "Accessibility",
-				locator1 = "ListGroupItem#ITEM_TEXT");
-
-			if (!(IsElementPresent(checkboxName = "Enable Accessibility Menu", locator1 = "Checkbox#ANY_CHECKBOX_CHECKED"))) {
-				Check.checkNotVisible(
-					checkboxName = "Enable Accessibility Menu",
-					locator1 = "Checkbox#ANY_CHECKBOX");
-
-				if (IsElementPresent(locator1 = "Button#SAVE")) {
-					Click(locator1 = "Button#SAVE");
-				}
-				else {
-					Click(locator1 = "Button#UPDATE");
-				}
-			}
-
-			task ("And navigate to home page") {
-				Navigator.openURL();
-			}
 	}
 
 }

@@ -22,14 +22,18 @@ import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
+import com.liferay.object.constants.ObjectActionExecutorConstants;
+import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.field.builder.AttachmentObjectFieldBuilder;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
+import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
+import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -47,6 +51,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -55,6 +60,8 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import java.io.Serializable;
 
 import java.util.Arrays;
+import java.util.Locale;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -66,7 +73,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Jürgen Kappler
  */
-@FeatureFlags("LPS-176083")
+@FeatureFlags({"LPS-169992", "LPS-176083"})
 @RunWith(Arquillian.class)
 public class ObjectEntryInfoItemFieldValuesProviderTest {
 
@@ -144,21 +151,28 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
 
+		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			_childObjectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"r_oneToManyRelationshipName_" +
+					_parentObjectDefinition.getPKObjectFieldName(),
+				parentObjectEntry.getObjectEntryId()
+			).put(
+				"attachmentObjectFieldName", fileEntry.getFileEntryId()
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		ObjectAction objectAction = _addObjectAction(objectEntry);
+
 		InfoItemFieldValues infoItemFieldValues =
-			infoItemFieldValuesProvider.getInfoItemFieldValues(
-				_objectEntryLocalService.addObjectEntry(
-					TestPropsValues.getUserId(), _group.getGroupId(),
-					_childObjectDefinition.getObjectDefinitionId(),
-					HashMapBuilder.<String, Serializable>put(
-						"r_oneToManyRelationshipName_" +
-							_parentObjectDefinition.getPKObjectFieldName(),
-						parentObjectEntry.getObjectEntryId()
-					).put(
-						"attachmentObjectFieldName", fileEntry.getFileEntryId()
-					).build(),
-					ServiceContextTestUtil.getServiceContext()));
+			infoItemFieldValuesProvider.getInfoItemFieldValues(objectEntry);
 
 		Assert.assertNotNull(infoItemFieldValues);
+
+		_assertActionInfoFieldValue(
+			infoItemFieldValues.getInfoFieldValue(objectAction.getName()),
+			objectAction);
 
 		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
 			_childObjectDefinition.getObjectDefinitionId(),
@@ -194,6 +208,23 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 			parentTextObjectFieldNameInfoFieldValue.getValue());
 	}
 
+	private ObjectAction _addObjectAction(ObjectEntry objectEntry)
+		throws Exception {
+
+		return _objectActionLocalService.addObjectAction(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			objectEntry.getObjectDefinitionId(), true, StringPool.BLANK,
+			RandomTestUtil.randomString(),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			RandomTestUtil.randomString(),
+			ObjectActionExecutorConstants.KEY_GROOVY,
+			ObjectActionTriggerConstants.KEY_STANDALONE,
+			UnicodePropertiesBuilder.put(
+				"script", StringPool.BLANK
+			).build());
+	}
+
 	private ObjectDefinition _addObjectDefinition(ObjectField objectField)
 		throws Exception {
 
@@ -205,6 +236,17 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 			true, ObjectDefinitionConstants.SCOPE_SITE,
 			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 			Arrays.asList(objectField));
+	}
+
+	private void _assertActionInfoFieldValue(
+		InfoFieldValue<Object> infoLocalizedValue, ObjectAction objectAction) {
+
+		Map<Locale, String> labelMap = objectAction.getLabelMap();
+
+		for (Map.Entry<Locale, String> entry : labelMap.entrySet()) {
+			Assert.assertEquals(
+				entry.getValue(), infoLocalizedValue.getValue(entry.getKey()));
+		}
 	}
 
 	private void _assertInfoFieldValue(
@@ -244,6 +286,9 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 
 	@Inject
 	private InfoItemServiceRegistry _infoItemServiceRegistry;
+
+	@Inject
+	private ObjectActionLocalService _objectActionLocalService;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

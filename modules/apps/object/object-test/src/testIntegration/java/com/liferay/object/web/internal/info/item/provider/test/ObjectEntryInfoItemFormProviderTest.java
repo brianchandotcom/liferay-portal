@@ -18,26 +18,33 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormProvider;
+import com.liferay.object.constants.ObjectActionExecutorConstants;
+import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.field.builder.AttachmentObjectFieldBuilder;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
+import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Arrays;
@@ -52,14 +59,16 @@ import org.junit.runner.RunWith;
 /**
  * @author Jürgen Kappler
  */
-@FeatureFlags("LPS-176083")
+@FeatureFlags({"LPS-169992", "LPS-176083"})
 @RunWith(Arquillian.class)
 public class ObjectEntryInfoItemFormProviderTest {
 
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
@@ -113,6 +122,8 @@ public class ObjectEntryInfoItemFormProviderTest {
 				InfoItemFormProvider.class,
 				_childObjectDefinition.getClassName());
 
+		ObjectAction objectAction = _addObjectAction(_childObjectDefinition);
+
 		InfoForm infoForm = infoItemFormProvider.getInfoForm(
 			String.valueOf(_childObjectDefinition.getObjectDefinitionId()), 0);
 
@@ -120,6 +131,8 @@ public class ObjectEntryInfoItemFormProviderTest {
 
 		Assert.assertNotNull(
 			infoForm.getInfoField("attachmentObjectFieldName"));
+
+		Assert.assertNotNull(infoForm.getInfoField(objectAction.getName()));
 
 		ObjectField objectField = _objectFieldLocalService.getObjectField(
 			_childObjectDefinition.getObjectDefinitionId(),
@@ -139,6 +152,23 @@ public class ObjectEntryInfoItemFormProviderTest {
 
 		Assert.assertNotNull(
 			infoForm.getInfoField("parentTextObjectFieldName"));
+	}
+
+	private ObjectAction _addObjectAction(ObjectDefinition objectDefinition)
+		throws Exception {
+
+		return _objectActionLocalService.addObjectAction(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId(), true, StringPool.BLANK,
+			RandomTestUtil.randomString(),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			RandomTestUtil.randomString(),
+			ObjectActionExecutorConstants.KEY_GROOVY,
+			ObjectActionTriggerConstants.KEY_STANDALONE,
+			UnicodePropertiesBuilder.put(
+				"script", StringPool.BLANK
+			).build());
 	}
 
 	private ObjectDefinition _addObjectDefinition(ObjectField objectField)
@@ -170,6 +200,9 @@ public class ObjectEntryInfoItemFormProviderTest {
 
 	@Inject
 	private InfoItemServiceRegistry _infoItemServiceRegistry;
+
+	@Inject
+	private ObjectActionLocalService _objectActionLocalService;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

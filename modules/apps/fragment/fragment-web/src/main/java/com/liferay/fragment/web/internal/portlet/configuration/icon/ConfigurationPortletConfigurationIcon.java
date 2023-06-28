@@ -15,7 +15,6 @@
 package com.liferay.fragment.web.internal.portlet.configuration.icon;
 
 import com.liferay.fragment.constants.FragmentPortletKeys;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
@@ -75,11 +74,7 @@ public class ConfigurationPortletConfigurationIcon
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
-		if (FeatureFlagManagerUtil.isEnabled("LPS-179532")) {
-			return true;
-		}
-
-		return false;
+		return true;
 	}
 
 	@Reference

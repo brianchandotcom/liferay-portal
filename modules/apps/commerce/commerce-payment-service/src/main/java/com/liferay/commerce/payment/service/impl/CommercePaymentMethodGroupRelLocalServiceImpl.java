@@ -88,11 +88,9 @@ public class CommercePaymentMethodGroupRelLocalServiceImpl
 	@Override
 	public CommercePaymentMethodGroupRel addCommercePaymentMethodGroupRel(
 			long userId, long groupId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, File imageFile,
-			String paymentIntegrationKey, double priority, boolean active)
+			Map<Locale, String> descriptionMap, boolean active, File imageFile,
+			String paymentIntegrationKey, double priority, String typeSettings)
 		throws PortalException {
-
-		// Commerce payment method
 
 		if ((imageFile != null) && !imageFile.exists()) {
 			imageFile = null;
@@ -124,6 +122,7 @@ public class CommercePaymentMethodGroupRelLocalServiceImpl
 		commercePaymentMethodGroupRel.setPaymentIntegrationKey(
 			paymentIntegrationKey);
 		commercePaymentMethodGroupRel.setPriority(priority);
+		commercePaymentMethodGroupRel.setTypeSettings(typeSettings);
 
 		commercePaymentMethodGroupRel =
 			commercePaymentMethodGroupRelPersistence.update(

@@ -24,11 +24,9 @@ definition {
 			PortalInstances.tearDownCP();
 
 			TestUtils.hardRefresh();
-
 		}
 		else {
 			TestUtils.hardRefresh();
-
 		}
 	}
 

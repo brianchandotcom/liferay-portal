@@ -1,10 +1,3 @@
-assemble:
-    - from: batch
-      into: batch
-liferay-jethr0-etc-spring-boot-batch:
-    name: Liferay Jethr0 Etc Spring Boot Batch
-    oAuthApplicationHeadlessServer: liferay-jethr0-etc-spring-boot-oauth-application-headless-server
-    type: batch
 liferay-jethr0-etc-spring-boot-oauth-application-headless-server:
     .serverAddress: localhost:58081
     .serviceScheme: http

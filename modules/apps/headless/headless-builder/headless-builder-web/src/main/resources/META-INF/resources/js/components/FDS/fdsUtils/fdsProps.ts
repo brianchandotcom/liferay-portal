@@ -48,14 +48,14 @@ export function getAPIApplicationsFDSProps(
 					openEditURL({editURL, id: itemData.id, portletId}),
 			},
 			{
-				data: {
-					id: 'delete',
-					method: 'delete',
-					permissionKey: 'delete',
-				},
 				icon: 'trash',
 				id: 'deleteAPIApplication',
 				label: Liferay.Language.get('delete'),
+			},
+			{
+				icon: 'change',
+				id: 'changePublicationStatus',
+				label: Liferay.Language.get('change-publication-status'),
 			},
 		],
 		pagination: {

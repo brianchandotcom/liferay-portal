@@ -13,11 +13,13 @@
  */
 
 import {FrontendDataSet} from '@liferay/frontend-data-set-web';
-import {openModal} from 'frontend-js-web';
+import {openModal, openToast} from 'frontend-js-web';
 import React from 'react';
 
+import {ConfirmUnpublishAPIApplicationModalContent} from '../modals/ConfirmUnpublishAPIApplicationModalContent';
 import {CreateAPIApplicationModalContent} from '../modals/CreateAPIApplicationModalContent';
 import {DeleteAPIApplicationModalContent} from '../modals/DeleteAPIApplicationModalContent';
+import {updateData} from '../utils/fetchUtil';
 import {getAPIApplicationsFDSProps} from './fdsUtils/fdsProps';
 
 interface APIApplicationsTableProps {
@@ -33,6 +35,69 @@ export default function APIApplicationsTable({
 	portletId,
 	readOnly,
 }: APIApplicationsTableProps) {
+	const changePublicationStatus = async (
+		itemData: ItemData,
+		loadData: voidReturn
+	) => {
+		const url = itemData.actions.update.href;
+		const onError = (error: string) => {
+			openToast({
+				message: error,
+				type: 'danger',
+			});
+		};
+
+		if (itemData.applicationStatus.key === 'unpublished') {
+			await updateData({
+				dataToUpdate: {
+					applicationStatus: {key: 'published'},
+				},
+				onError,
+				onSuccess: () => {
+					loadData();
+					openToast({
+						message: Liferay.Language.get(
+							'api-application-was-published'
+						),
+						type: 'success',
+					});
+				},
+				url,
+			});
+		}
+		else if (itemData.applicationStatus.key === 'published') {
+			openModal({
+				center: true,
+				contentComponent: ({closeModal}: {closeModal: voidReturn}) =>
+					ConfirmUnpublishAPIApplicationModalContent({
+						closeModal,
+						handlePublish: () => {
+							updateData({
+								dataToUpdate: {
+									applicationStatus: {key: 'unpublished'},
+								},
+								onError,
+								onSuccess: () => {
+									closeModal();
+									loadData();
+									openToast({
+										message: Liferay.Language.get(
+											'api-application-was-unpublished'
+										),
+										type: 'success',
+									});
+								},
+								url,
+							});
+						},
+					}),
+				id: 'ConfirmUnpublishAPIApplicationModal',
+				size: 'md',
+				status: 'warning',
+			});
+		}
+	};
+
 	const createAPIApplication = {
 		label: Liferay.Language.get('add-new-api-application'),
 		onClick: ({loadData}: {loadData: voidReturn}) => {
@@ -68,6 +133,9 @@ export default function APIApplicationsTable({
 	function onActionDropdownItemClick({action, itemData, loadData}: FDSItem) {
 		if (action.id === 'deleteAPIApplication') {
 			deleteAPIApplication(itemData, loadData);
+		}
+		else if (action.id === 'changePublicationStatus') {
+			changePublicationStatus(itemData, loadData);
 		}
 	}
 

@@ -68,7 +68,6 @@ import com.liferay.layout.util.structure.CommonStylesUtil;
 import com.liferay.layout.util.structure.DropZoneLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
@@ -97,7 +96,6 @@ import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
-import com.liferay.portal.kernel.service.ThemeLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermission;
@@ -267,22 +265,6 @@ public class ContentPageEditorDisplayContext {
 				"addPortletURL",
 				getFragmentEntryActionURL(
 					"/layout_content_page_editor/add_portlet")
-			).put(
-				"adminThemeSpritemap",
-				() -> {
-					Theme theme = ThemeLocalServiceUtil.fetchTheme(
-						themeDisplay.getCompanyId(),
-						PropsValues.CONTROL_PANEL_LAYOUT_REGULAR_THEME_ID);
-
-					if (theme == null) {
-						return themeDisplay.getPathThemeSpritemap();
-					}
-
-					return StringBundler.concat(
-						themeDisplay.getCDNBaseURL(),
-						theme.getStaticResourcePath(), theme.getImagesPath(),
-						"/clay/icons.svg");
-				}
 			).put(
 				"assetCategoryTreeNodeItemSelectorURL",
 				_getAssetCategoryTreeNodeItemSelectorURL()

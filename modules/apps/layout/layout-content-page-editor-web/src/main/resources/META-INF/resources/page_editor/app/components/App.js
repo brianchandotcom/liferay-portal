@@ -13,13 +13,13 @@
  */
 
 import {ClayIconSpriteContext} from '@clayui/icon';
+import {getControlPanelSpritemap} from '@liferay/frontend-icons-web';
 import PropTypes from 'prop-types';
 import React from 'react';
 
 import ConvertToPageTemplateModal from '../../plugins/convert_to_page_template_modal/components/ConvertToPageTemplateModal';
 import {StyleBookContextProvider} from '../../plugins/page_design_options/hooks/useStyleBook';
 import {INIT} from '../actions/types';
-import {config} from '../config/index';
 import {CollectionActiveItemContextProvider} from '../contexts/CollectionActiveItemContext';
 import {ControlsProvider} from '../contexts/ControlsContext';
 import {DisplayPagePreviewItemContextProvider} from '../contexts/DisplayPagePreviewItemContext';
@@ -52,7 +52,7 @@ export default function App({state}) {
 	const initialState = reducer(state, {type: INIT});
 
 	return (
-		<ClayIconSpriteContext.Provider value={config.adminThemeSpritemap}>
+		<ClayIconSpriteContext.Provider value={getControlPanelSpritemap()}>
 			<StoreContextProvider initialState={initialState} reducer={reducer}>
 				<ConvertToPageTemplateModal />
 

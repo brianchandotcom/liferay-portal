@@ -47,7 +47,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -62,10 +66,9 @@ import org.osgi.service.component.annotations.Reference;
 		"servlet-filter-name=Monitoring Filter", "url-pattern=/c/*",
 		"url-pattern=/group/*", "url-pattern=/user/*", "url-pattern=/web/*"
 	},
-	service = {Filter.class, PortalMonitoringControl.class}
+	service = Filter.class
 )
-public class MonitoringFilter
-	extends BaseFilter implements PortalMonitoringControl {
+public class MonitoringFilter extends BaseFilter {
 
 	@Override
 	public boolean isFilterEnabled() {
@@ -86,14 +89,16 @@ public class MonitoringFilter
 		return true;
 	}
 
-	@Override
-	public boolean isMonitorPortalRequest() {
-		return _monitorPortalRequest;
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceRegistration = bundleContext.registerService(
+			PortalMonitoringControl.class, new PortalMonitoringControlImpl(),
+			null);
 	}
 
-	@Override
-	public void setMonitorPortalRequest(boolean monitorPortalRequest) {
-		_monitorPortalRequest = monitorPortalRequest;
+	@Deactivate
+	protected void deactivate() {
+		_serviceRegistration.unregister();
 	}
 
 	@Override
@@ -248,5 +253,22 @@ public class MonitoringFilter
 
 	@Reference
 	private ServiceMonitoringControl _serviceMonitoringControl;
+
+	private ServiceRegistration<PortalMonitoringControl> _serviceRegistration;
+
+	private class PortalMonitoringControlImpl
+		implements PortalMonitoringControl {
+
+		@Override
+		public boolean isMonitorPortalRequest() {
+			return _monitorPortalRequest;
+		}
+
+		@Override
+		public void setMonitorPortalRequest(boolean monitorPortalRequest) {
+			_monitorPortalRequest = monitorPortalRequest;
+		}
+
+	}
 
 }

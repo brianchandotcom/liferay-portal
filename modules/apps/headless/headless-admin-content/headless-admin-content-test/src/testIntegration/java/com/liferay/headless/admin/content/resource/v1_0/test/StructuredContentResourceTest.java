@@ -276,6 +276,29 @@ public class StructuredContentResourceTest
 				}
 			},
 			getStructuredContent2);
+
+		structuredContentResource =
+			com.liferay.headless.admin.content.client.resource.v1_0.
+				StructuredContentResource.builder(
+				).authentication(
+					"test@liferay.com", "test"
+				).locale(
+					LocaleUtil.getDefault()
+				).parameters(
+					"fields", "id"
+				).build();
+
+		StructuredContent getStructuredContent3 =
+			structuredContentResource.getStructuredContentByVersion(
+				postStructuredContent2.getId(), 1.0);
+
+		assertEquals(
+			new StructuredContent() {
+				{
+					id = postStructuredContent2.getId();
+				}
+			},
+			getStructuredContent3);
 	}
 
 	@Override

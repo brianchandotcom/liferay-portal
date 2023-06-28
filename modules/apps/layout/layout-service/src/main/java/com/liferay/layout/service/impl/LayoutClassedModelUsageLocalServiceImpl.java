@@ -46,16 +46,6 @@ public class LayoutClassedModelUsageLocalServiceImpl
 	extends LayoutClassedModelUsageLocalServiceBaseImpl {
 
 	@Override
-	public LayoutClassedModelUsage addDefaultLayoutClassedModelUsage(
-		long groupId, long classNameId, long classPK,
-		ServiceContext serviceContext) {
-
-		return addLayoutClassedModelUsage(
-			groupId, classNameId, classPK, StringPool.BLANK, 0, 0,
-			serviceContext);
-	}
-
-	@Override
 	public LayoutClassedModelUsage addLayoutClassedModelUsage(
 		long groupId, long classNameId, long classPK,
 		String cmExternalReferenceCode, String containerKey, long containerType,
@@ -194,21 +184,6 @@ public class LayoutClassedModelUsageLocalServiceImpl
 					LayoutClassedModelUsageTable.INSTANCE.classPK.eq(classPK)
 				)
 			));
-	}
-
-	@Override
-	public boolean hasDefaultLayoutClassedModelUsage(
-		long classNameId, long classPK) {
-
-		LayoutClassedModelUsage layoutClassedModelUsage =
-			layoutClassedModelUsageLocalService.fetchLayoutClassedModelUsage(
-				classNameId, classPK, StringPool.BLANK, 0, 0);
-
-		if (layoutClassedModelUsage != null) {
-			return true;
-		}
-
-		return false;
 	}
 
 	private int _getType(long plid) {

@@ -119,7 +119,7 @@ public class SXPBlueprintInfoCollectionProvider
 			).attribute(
 				MultiselectInfoFieldType.OPTIONS, _getOptionInfoFieldTypes()
 			).labelInfoLocalizedValue(
-				InfoLocalizedValue.localize(getClass(), "Scope")
+				InfoLocalizedValue.localize(getClass(), "scope")
 			).localizable(
 				false
 			).build()
@@ -165,7 +165,7 @@ public class SXPBlueprintInfoCollectionProvider
 		List<OptionInfoFieldType> optionInfoFieldTypes = ListUtil.fromArray(
 			new OptionInfoFieldType(
 				true,
-				new ResourceBundleInfoLocalizedValue(getClass(), "This Site"),
+				new ResourceBundleInfoLocalizedValue(getClass(), "this-site"),
 				String.valueOf(serviceContext.getScopeGroupId())));
 
 		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();

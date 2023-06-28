@@ -405,7 +405,10 @@ AUI.add(
 								});
 
 								selectedItems.map((item) => {
-									instance.add(item.value);
+									const selectedValue = JSON.parse(
+										item.value
+									);
+									instance.add(selectedValue.tagName);
 								});
 							}
 						},

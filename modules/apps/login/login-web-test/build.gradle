@@ -3,6 +3,7 @@ dependencies {
 	testIntegrationCompile group: "org.osgi", name: "org.osgi.service.component", version: "1.4.0"
 	testIntegrationCompile group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	testIntegrationCompile project(":apps:login:login-web")
+	testIntegrationCompile project(":apps:portal-configuration:portal-configuration-test-util")
 	testIntegrationCompile project(":core:osgi-service-tracker-collections")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

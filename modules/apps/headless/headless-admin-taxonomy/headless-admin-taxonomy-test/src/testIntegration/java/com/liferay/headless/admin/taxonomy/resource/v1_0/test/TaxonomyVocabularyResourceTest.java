@@ -333,10 +333,10 @@ public class TaxonomyVocabularyResourceTest
 				testGroup.getGroupId(), null, null, null, Pagination.of(1, 10),
 				null);
 
-		List<TaxonomyVocabulary> structuredContents =
+		List<TaxonomyVocabulary> taxonomyVocabularies =
 			(List<TaxonomyVocabulary>)page.getItems();
 
-		Iterator<TaxonomyVocabulary> iterator = structuredContents.iterator();
+		Iterator<TaxonomyVocabulary> iterator = taxonomyVocabularies.iterator();
 
 		while (iterator.hasNext()) {
 			taxonomyVocabularyResource.deleteTaxonomyVocabulary(

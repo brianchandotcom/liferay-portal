@@ -323,6 +323,44 @@ public class EditableFragmentEntryProcessorTest {
 	}
 
 	@Test
+	public void testFragmentEntryProcessorEditableActionMappedActionOnErrorPage()
+		throws Exception {
+
+		long classNameId = _portal.getClassNameId(
+			ObjectDefinition.class.getName() + "#" +
+				RandomTestUtil.randomLong());
+
+		long classPK = RandomTestUtil.randomLong();
+
+		String fieldId =
+			ObjectAction.class.getSimpleName() + StringPool.UNDERLINE +
+				RandomTestUtil.randomLong();
+
+		String editableValues = _getEditableFieldValues(
+			classNameId, classPK, fieldId,
+			"action/editable_values_action_mapped_action_on_error_page.json",
+			_group.getGroupId(), _layout.getLayoutId());
+
+		Element element = _getElement(
+			"data-lfr-editable-id", "editable_action", editableValues,
+			"action/fragment_entry_action.html", LocaleUtil.getSiteDefault(),
+			FragmentEntryLinkConstants.VIEW);
+
+		Assert.assertEquals(
+			String.valueOf(classNameId),
+			element.attr("data-lfr-class-name-id"));
+		Assert.assertEquals(
+			String.valueOf(classPK), element.attr("data-lfr-class-pk"));
+		Assert.assertEquals(fieldId, element.attr("data-lfr-field-id"));
+		Assert.assertEquals(
+			"page", element.attr("data-lfr-on-error-interaction"));
+		Assert.assertEquals(
+			_portal.getLayoutURL(
+				_layout, _getThemeDisplay(LocaleUtil.getSiteDefault())),
+			element.attr("data-lfr-on-error-page-url"));
+	}
+
+	@Test
 	public void testFragmentEntryProcessorEditableActionMappedActionViewMode()
 		throws Exception {
 
@@ -913,6 +951,24 @@ public class EditableFragmentEntryProcessorTest {
 			});
 	}
 
+	private String _getEditableFieldValues(
+			long classNameId, long classPK, String fieldId, String fileName,
+			long groupId, long layoutId)
+		throws Exception {
+
+		String editableValues = _readJSONFileToString(fileName);
+
+		return StringUtil.replace(
+			editableValues,
+			new String[] {
+				"CLASS_NAME_ID", "CLASS_PK", "FIELD_ID", "GROUP_ID", "LAYOUT_ID"
+			},
+			new String[] {
+				String.valueOf(classNameId), String.valueOf(classPK), fieldId,
+				String.valueOf(groupId), String.valueOf(layoutId)
+			});
+	}
+
 	private Element _getElement(
 			String dataAttributeName, String editableId,
 			FragmentEntryLink fragmentEntryLink, Locale locale, String mode)
@@ -976,6 +1032,7 @@ public class EditableFragmentEntryProcessorTest {
 		themeDisplay.setRequest(mockHttpServletRequest);
 		themeDisplay.setResponse(new MockHttpServletResponse());
 		themeDisplay.setScopeGroupId(_group.getGroupId());
+		themeDisplay.setSiteGroupId(_group.getGroupId());
 		themeDisplay.setUser(TestPropsValues.getUser());
 
 		mockHttpServletRequest.setAttribute(
@@ -1043,6 +1100,7 @@ public class EditableFragmentEntryProcessorTest {
 		themeDisplay.setRealUser(TestPropsValues.getUser());
 		themeDisplay.setRequest(_getHttpServletRequest(locale));
 		themeDisplay.setResponse(new MockHttpServletResponse());
+		themeDisplay.setSiteGroupId(_group.getGroupId());
 		themeDisplay.setUser(TestPropsValues.getUser());
 
 		return themeDisplay;

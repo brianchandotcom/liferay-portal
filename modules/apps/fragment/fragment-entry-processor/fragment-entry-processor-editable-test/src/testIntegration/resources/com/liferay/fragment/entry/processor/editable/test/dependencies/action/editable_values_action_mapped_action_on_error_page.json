@@ -1,0 +1,23 @@
+{
+	"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor": {
+		"editable_action": {
+			"config": {
+				"mappedAction": {
+					"className": "com.liferay.object.model.ObjectDefinition#CLASS_NAME_ID",
+					"classNameId": "CLASS_NAME_ID",
+					"classPK": "CLASS_PK",
+					"fieldId": "FIELD_ID"
+				},
+				"onError": {
+					"interaction": "page",
+					"page": {
+						"groupId": "GROUP_ID",
+						"layoutId": "LAYOUT_ID",
+						"privateLayout": false
+					}
+				}
+			}
+		}
+	},
+	"defaultValue": "Default Action Text"
+}

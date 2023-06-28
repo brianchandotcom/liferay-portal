@@ -12,6 +12,7 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
+		<field name="CMExternalReferenceCode" type="String" />
 		<field name="containerKey" type="String">
 			<hint name="max-length">200</hint>
 		</field>

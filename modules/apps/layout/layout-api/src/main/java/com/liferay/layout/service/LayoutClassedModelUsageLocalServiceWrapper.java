@@ -43,16 +43,6 @@ public class LayoutClassedModelUsageLocalServiceWrapper
 			layoutClassedModelUsageLocalService;
 	}
 
-	@Override
-	public LayoutClassedModelUsage addDefaultLayoutClassedModelUsage(
-		long groupId, long classNameId, long classPK,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
-
-		return _layoutClassedModelUsageLocalService.
-			addDefaultLayoutClassedModelUsage(
-				groupId, classNameId, classPK, serviceContext);
-	}
-
 	/**
 	 * Adds the layout classed model usage to the database. Also notifies the appropriate model listeners.
 	 *
@@ -73,13 +63,14 @@ public class LayoutClassedModelUsageLocalServiceWrapper
 
 	@Override
 	public LayoutClassedModelUsage addLayoutClassedModelUsage(
-		long groupId, long classNameId, long classPK, String containerKey,
-		long containerType, long plid,
+		long groupId, long classNameId, long classPK,
+		String cmExternalReferenceCode, String containerKey, long containerType,
+		long plid,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 
 		return _layoutClassedModelUsageLocalService.addLayoutClassedModelUsage(
-			groupId, classNameId, classPK, containerKey, containerType, plid,
-			serviceContext);
+			groupId, classNameId, classPK, cmExternalReferenceCode,
+			containerKey, containerType, plid, serviceContext);
 	}
 
 	/**
@@ -292,12 +283,13 @@ public class LayoutClassedModelUsageLocalServiceWrapper
 
 	@Override
 	public LayoutClassedModelUsage fetchLayoutClassedModelUsage(
-		long classNameId, long classPK, String containerKey, long containerType,
-		long plid) {
+		long classNameId, long classPK, String cmExternalReferenceCode,
+		String containerKey, long containerType, long plid) {
 
 		return _layoutClassedModelUsageLocalService.
 			fetchLayoutClassedModelUsage(
-				classNameId, classPK, containerKey, containerType, plid);
+				classNameId, classPK, cmExternalReferenceCode, containerKey,
+				containerType, plid);
 	}
 
 	/**
@@ -529,14 +521,6 @@ public class LayoutClassedModelUsageLocalServiceWrapper
 
 		return _layoutClassedModelUsageLocalService.
 			getUniqueLayoutClassedModelUsagesCount(classNameId, classPK);
-	}
-
-	@Override
-	public boolean hasDefaultLayoutClassedModelUsage(
-		long classNameId, long classPK) {
-
-		return _layoutClassedModelUsageLocalService.
-			hasDefaultLayoutClassedModelUsage(classNameId, classPK);
 	}
 
 	/**

@@ -3,6 +3,8 @@ create index IX_2644723E on LayoutClassedModelUsage (classNameId, classPK, ctCol
 create index IX_C03C3E53 on LayoutClassedModelUsage (classNameId, classPK, type_, ctCollectionId);
 create index IX_60CAED43 on LayoutClassedModelUsage (classNameId, companyId, ctCollectionId);
 create index IX_D53CA505 on LayoutClassedModelUsage (classNameId, groupId, ctCollectionId);
+create index IX_B13DE480 on LayoutClassedModelUsage (companyId, classNameId, cmExternalReferenceCode[$COLUMN_LENGTH:75$], ctCollectionId);
+create index IX_A92C1DD1 on LayoutClassedModelUsage (companyId, classNameId, cmExternalReferenceCode[$COLUMN_LENGTH:75$], type_, ctCollectionId);
 create index IX_148A4E98 on LayoutClassedModelUsage (companyId, classNameId, containerType, ctCollectionId);
 create index IX_C5027D4F on LayoutClassedModelUsage (companyId, classNameId, ctCollectionId);
 create index IX_F1220AB7 on LayoutClassedModelUsage (containerKey[$COLUMN_LENGTH:200$], containerType, plid, ctCollectionId);

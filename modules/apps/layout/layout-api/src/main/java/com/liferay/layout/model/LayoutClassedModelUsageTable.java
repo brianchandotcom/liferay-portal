@@ -62,6 +62,10 @@ public class LayoutClassedModelUsageTable
 			"classNameId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<LayoutClassedModelUsageTable, Long> classPK =
 		createColumn("classPK", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<LayoutClassedModelUsageTable, String>
+		cmExternalReferenceCode = createColumn(
+			"cmExternalReferenceCode", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<LayoutClassedModelUsageTable, String> containerKey =
 		createColumn(
 			"containerKey", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);

@@ -44,13 +44,6 @@ public class LayoutClassedModelUsageLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.layout.service.impl.LayoutClassedModelUsageLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static LayoutClassedModelUsage addDefaultLayoutClassedModelUsage(
-		long groupId, long classNameId, long classPK,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
-
-		return getService().addDefaultLayoutClassedModelUsage(
-			groupId, classNameId, classPK, serviceContext);
-	}
 
 	/**
 	 * Adds the layout classed model usage to the database. Also notifies the appropriate model listeners.
@@ -69,13 +62,14 @@ public class LayoutClassedModelUsageLocalServiceUtil {
 	}
 
 	public static LayoutClassedModelUsage addLayoutClassedModelUsage(
-		long groupId, long classNameId, long classPK, String containerKey,
-		long containerType, long plid,
+		long groupId, long classNameId, long classPK,
+		String cmExternalReferenceCode, String containerKey, long containerType,
+		long plid,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 
 		return getService().addLayoutClassedModelUsage(
-			groupId, classNameId, classPK, containerKey, containerType, plid,
-			serviceContext);
+			groupId, classNameId, classPK, cmExternalReferenceCode,
+			containerKey, containerType, plid, serviceContext);
 	}
 
 	/**
@@ -257,11 +251,12 @@ public class LayoutClassedModelUsageLocalServiceUtil {
 	}
 
 	public static LayoutClassedModelUsage fetchLayoutClassedModelUsage(
-		long classNameId, long classPK, String containerKey, long containerType,
-		long plid) {
+		long classNameId, long classPK, String cmExternalReferenceCode,
+		String containerKey, long containerType, long plid) {
 
 		return getService().fetchLayoutClassedModelUsage(
-			classNameId, classPK, containerKey, containerType, plid);
+			classNameId, classPK, cmExternalReferenceCode, containerKey,
+			containerType, plid);
 	}
 
 	/**
@@ -463,13 +458,6 @@ public class LayoutClassedModelUsageLocalServiceUtil {
 		long classNameId, long classPK) {
 
 		return getService().getUniqueLayoutClassedModelUsagesCount(
-			classNameId, classPK);
-	}
-
-	public static boolean hasDefaultLayoutClassedModelUsage(
-		long classNameId, long classPK) {
-
-		return getService().hasDefaultLayoutClassedModelUsage(
 			classNameId, classPK);
 	}
 

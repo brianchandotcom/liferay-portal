@@ -21,6 +21,28 @@
 											"classPK": "${CLASS_PK}"
 										}
 									}
+								},
+								"onError": {
+									"type": "URL",
+									"value": {
+										"url": {
+											"value_i18n": {
+												"en_US": "http://example.com/en/error",
+												"es_ES": "http://example.com/es/error"
+											}
+										}
+									}
+								},
+								"onSuccess": {
+									"type": "URL",
+									"value": {
+										"url": {
+											"value_i18n": {
+												"en_US": "http://example.com/en/success",
+												"es_ES": "http://example.com/es/success"
+											}
+										}
+									}
 								}
 							}
 						}

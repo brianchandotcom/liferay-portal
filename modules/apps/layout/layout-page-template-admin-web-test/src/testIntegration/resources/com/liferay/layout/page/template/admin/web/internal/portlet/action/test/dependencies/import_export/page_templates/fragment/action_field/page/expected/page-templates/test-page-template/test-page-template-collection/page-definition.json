@@ -1,0 +1,84 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragment": {
+						"key": "test-action-fragment",
+						"siteKey": "£{SITE_KEY}"
+					},
+					"fragmentConfig": {
+					},
+					"fragmentFields": [
+						{
+							"id": "action",
+							"value": {
+								"action": {
+									"mapping": {
+										"fieldKey": "£{ACTION_NAME}",
+										"itemReference": {
+											"className": "£{CLASS_NAME}",
+											"classPK": "${CLASS_PK}"
+										}
+									}
+								},
+								"onError": {
+									"type": "Page",
+									"value": {
+										"itemReference": {
+											"className": "com.liferay.portal.kernel.model.Layout",
+											"fields": [
+												{
+													"fieldName": "friendlyURL",
+													"fieldValue": "£{ERROR_LAYOUT_FRIENDLY_URL}"
+												},
+												{
+													"fieldName": "privatePage",
+													"fieldValue": "false"
+												},
+												{
+													"fieldName": "siteKey",
+													"fieldValue": "£{SITE_KEY}"
+												}
+											]
+										}
+									}
+								},
+								"onSuccess": {
+									"type": "Page",
+									"value": {
+										"itemReference": {
+											"className": "com.liferay.portal.kernel.model.Layout",
+											"fields": [
+												{
+													"fieldName": "friendlyURL",
+													"fieldValue": "£{SUCCESS_LAYOUT_FRIENDLY_URL}"
+												},
+												{
+													"fieldName": "privatePage",
+													"fieldValue": "false"
+												},
+												{
+													"fieldName": "siteKey",
+													"fieldValue": "£{SITE_KEY}"
+												}
+											]
+										}
+									}
+								}
+							}
+						}
+					],
+					"indexed": true
+				},
+				"type": "Fragment"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"colorSchemeName": "01",
+		"themeName": "Classic"
+	},
+	"version": 1.1
+}

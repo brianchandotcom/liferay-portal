@@ -550,6 +550,41 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 
 	@FeatureFlags("LPS-169992")
 	@Test
+	public void testImportExportLayoutPageTemplateEntryFragmentActionFieldExternalURL()
+		throws Exception {
+
+		_addActionFragmentEntry();
+
+		ObjectEntry objectEntry = _addObjectEntry();
+
+		ObjectAction objectAction = _addObjectAction(objectEntry);
+
+		Map<String, String> numberValuesMap = HashMapBuilder.put(
+			"CLASS_PK", String.valueOf(objectEntry.getObjectEntryId())
+		).build();
+
+		Map<String, String> stringValuesMap = HashMapBuilder.put(
+			"ACTION_NAME",
+			ObjectAction.class.getSimpleName() + StringPool.DASH +
+				objectAction.getName()
+		).put(
+			"CLASS_NAME", objectEntry.getModelClassName()
+		).put(
+			"SITE_KEY", _group1.getGroupKey()
+		).build();
+
+		File expectedFile = _generateZipFile(
+			"fragment/action_field/external_url/expected", numberValuesMap,
+			stringValuesMap);
+		File inputFile = _generateZipFile(
+			"fragment/action_field/external_url/input", numberValuesMap,
+			stringValuesMap);
+
+		_validateImportExport(expectedFile, inputFile);
+	}
+
+	@FeatureFlags("LPS-169992")
+	@Test
 	public void testImportExportLayoutPageTemplateEntryFragmentActionFieldMappedAction()
 		throws Exception {
 
@@ -578,6 +613,84 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 			stringValuesMap);
 		File inputFile = _generateZipFile(
 			"fragment/action_field/mapped_value/input", numberValuesMap,
+			stringValuesMap);
+
+		_validateImportExport(expectedFile, inputFile);
+	}
+
+	@FeatureFlags("LPS-169992")
+	@Test
+	public void testImportExportLayoutPageTemplateEntryFragmentActionFieldNotification()
+		throws Exception {
+
+		_addActionFragmentEntry();
+
+		ObjectEntry objectEntry = _addObjectEntry();
+
+		ObjectAction objectAction = _addObjectAction(objectEntry);
+
+		Map<String, String> numberValuesMap = HashMapBuilder.put(
+			"CLASS_PK", String.valueOf(objectEntry.getObjectEntryId())
+		).build();
+
+		Map<String, String> stringValuesMap = HashMapBuilder.put(
+			"ACTION_NAME",
+			ObjectAction.class.getSimpleName() + StringPool.DASH +
+				objectAction.getName()
+		).put(
+			"CLASS_NAME", objectEntry.getModelClassName()
+		).put(
+			"SITE_KEY", _group1.getGroupKey()
+		).build();
+
+		File expectedFile = _generateZipFile(
+			"fragment/action_field/notification/expected", numberValuesMap,
+			stringValuesMap);
+		File inputFile = _generateZipFile(
+			"fragment/action_field/notification/input", numberValuesMap,
+			stringValuesMap);
+
+		_validateImportExport(expectedFile, inputFile);
+	}
+
+	@FeatureFlags("LPS-169992")
+	@Test
+	public void testImportExportLayoutPageTemplateEntryFragmentActionFieldPage()
+		throws Exception {
+
+		_addActionFragmentEntry();
+
+		ObjectEntry objectEntry = _addObjectEntry();
+
+		ObjectAction objectAction = _addObjectAction(objectEntry);
+
+		Layout successLayout = LayoutTestUtil.addTypeContentLayout(_group1);
+
+		Layout errorLayout = LayoutTestUtil.addTypeContentLayout(_group1);
+
+		Map<String, String> numberValuesMap = HashMapBuilder.put(
+			"CLASS_PK", String.valueOf(objectEntry.getObjectEntryId())
+		).build();
+
+		Map<String, String> stringValuesMap = HashMapBuilder.put(
+			"ACTION_NAME",
+			ObjectAction.class.getSimpleName() + StringPool.DASH +
+				objectAction.getName()
+		).put(
+			"CLASS_NAME", objectEntry.getModelClassName()
+		).put(
+			"ERROR_LAYOUT_FRIENDLY_URL", errorLayout.getFriendlyURL()
+		).put(
+			"SITE_KEY", _group1.getGroupKey()
+		).put(
+			"SUCCESS_LAYOUT_FRIENDLY_URL", successLayout.getFriendlyURL()
+		).build();
+
+		File expectedFile = _generateZipFile(
+			"fragment/action_field/page/expected", numberValuesMap,
+			stringValuesMap);
+		File inputFile = _generateZipFile(
+			"fragment/action_field/page/input", numberValuesMap,
 			stringValuesMap);
 
 		_validateImportExport(expectedFile, inputFile);

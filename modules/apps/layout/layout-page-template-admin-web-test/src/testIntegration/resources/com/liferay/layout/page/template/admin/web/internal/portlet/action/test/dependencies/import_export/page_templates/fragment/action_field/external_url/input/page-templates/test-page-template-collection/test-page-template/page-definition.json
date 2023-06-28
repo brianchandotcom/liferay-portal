@@ -21,6 +21,30 @@
 											"classPK": "${CLASS_PK}"
 										}
 									}
+								},
+								"onError": {
+									"type": "Notification",
+									"value": {
+										"reload": true,
+										"text": {
+											"value_i18n": {
+												"en_US": "error",
+												"es_ES": "fallo"
+											}
+										}
+									}
+								},
+								"onSuccess": {
+									"type": "Notification",
+									"value": {
+										"reload": true,
+										"text": {
+											"value_i18n": {
+												"en_US": "success",
+												"es_ES": "éxito"
+											}
+										}
+									}
 								}
 							}
 						}

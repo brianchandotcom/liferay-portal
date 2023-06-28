@@ -13,7 +13,7 @@
 						{
 							"id": "action",
 							"value": {
-								"text": {
+								"action": {
 									"mapping": {
 										"fieldKey": "£{ACTION_NAME}",
 										"itemReference": {

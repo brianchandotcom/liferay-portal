@@ -33,6 +33,27 @@ definition {
 			value1 = "${property} { method string default: ${method} href string default: ${portalURL}/o/${objectHref} }");
 	}
 
+	macro executeAllActionInSchema {
+		Variables.assertDefined(parameterList = "${schema},${actionsList}");
+
+		Click(
+			locator1 = "OpenAPI#SCHEMA_COLLAPSED",
+			schema = ${schema});
+
+		Click(
+			field = "actions",
+			locator1 = "OpenAPI#SCHEMA_FIELD_COLLAPSED",
+			schema = ${schema});
+
+		for (var property : list ${actionsList}) {
+			Click(
+				field = "actions",
+				locator1 = "OpenAPI#SCHEMA_PROPERTY_COLLAPSED",
+				property = ${property},
+				schema = ${schema});
+		}
+	}
+
 	macro executeAPIMethodWithParameters {
 		Variables.assertDefined(parameterList = "${service},${method},${parameter}");
 

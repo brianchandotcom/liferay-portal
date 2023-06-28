@@ -6,7 +6,6 @@ Import-Package:\
 	!com.google.appengine.api.datastore,\
 	!com.google.appengine.api.memcache,\
 	!com.google.appengine.api.urlfetch,\
-	!com.google.common.util.concurrent.*,\
 	!com.google.errorprone.annotations.*,\
 	\
 	!org.apache.avalon.framework.logger,\

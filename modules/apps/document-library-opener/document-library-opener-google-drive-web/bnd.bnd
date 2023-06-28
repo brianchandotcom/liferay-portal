@@ -3,7 +3,6 @@ Bundle-SymbolicName: com.liferay.document.library.opener.google.drive.web
 Bundle-Version: 3.0.42
 Import-Package:\
 	!com.google.api.client.json.gson,\
-	!com.google.common.util.concurrent.*,\
 	\
 	!javax.jdo.*,\
 	\

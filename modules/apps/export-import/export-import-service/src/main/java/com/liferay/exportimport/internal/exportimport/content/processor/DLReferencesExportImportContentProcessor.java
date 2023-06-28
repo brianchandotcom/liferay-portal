@@ -403,6 +403,10 @@ public class DLReferencesExportImportContentProcessor
 		int colonPos = 0;
 
 		for (int i = 1; i <= _OFFSET_COLON_PORT; i++) {
+			if (i > beginPos) {
+				break;
+			}
+
 			if (content.charAt(beginPos - i) == CharPool.COLON) {
 				colonPos = i;
 

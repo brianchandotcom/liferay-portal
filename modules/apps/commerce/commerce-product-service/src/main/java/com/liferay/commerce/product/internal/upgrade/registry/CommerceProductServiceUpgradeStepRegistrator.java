@@ -40,6 +40,7 @@ import com.liferay.commerce.product.internal.upgrade.v3_9_2.MiniumSiteInitialize
 import com.liferay.commerce.product.internal.upgrade.v4_0_0.util.CommerceChannelAccountEntryRelTable;
 import com.liferay.commerce.product.internal.upgrade.v4_0_2.CommerceRepositoryUpgradeProcess;
 import com.liferay.commerce.product.internal.upgrade.v5_4_0.CommercePermissionUpgradeProcess;
+import com.liferay.commerce.product.internal.upgrade.v5_5_0.util.CPInstanceUnitOfMeasureTable;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
@@ -380,6 +381,9 @@ public class CommerceProductServiceUpgradeStepRegistrator
 			"5.3.0", "5.4.0",
 			new CommercePermissionUpgradeProcess(
 				_resourceActionLocalService, _resourcePermissionLocalService));
+
+		registry.register(
+			"5.4.0", "5.5.0", CPInstanceUnitOfMeasureTable.create());
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce product upgrade step registrator finished");

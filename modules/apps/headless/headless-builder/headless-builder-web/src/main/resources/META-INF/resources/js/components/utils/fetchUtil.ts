@@ -37,3 +37,37 @@ export async function getItems<T>({url}: {url: string}) {
 
 	return items;
 }
+
+export async function updateData({
+	dataToUpdate,
+	onError,
+	onSuccess,
+	url,
+}: {
+	dataToUpdate: Partial<ItemData>;
+	onError: (error: string) => void;
+	onSuccess: voidReturn;
+	url: string;
+}) {
+	fetch(url, {
+		body: JSON.stringify(dataToUpdate),
+		headers,
+		method: 'PATCH',
+	})
+		.then((response) => {
+			if (response.ok) {
+				onSuccess();
+			}
+			else {
+				return response.json();
+			}
+		})
+		.then((errorResponse) => {
+			if (errorResponse) {
+				throw new Error(errorResponse.title);
+			}
+		})
+		.catch((error) => {
+			onError(error);
+		});
+}

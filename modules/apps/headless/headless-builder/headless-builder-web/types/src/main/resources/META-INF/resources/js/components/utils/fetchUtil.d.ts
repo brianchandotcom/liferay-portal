@@ -21,3 +21,14 @@ export declare function fetchJSON<T>({
 	input: RequestInfo;
 }): Promise<T>;
 export declare function getItems<T>({url}: {url: string}): Promise<T[]>;
+export declare function updateData({
+	dataToUpdate,
+	onError,
+	onSuccess,
+	url,
+}: {
+	dataToUpdate: Partial<ItemData>;
+	onError: (error: string) => void;
+	onSuccess: voidReturn;
+	url: string;
+}): Promise<void>;

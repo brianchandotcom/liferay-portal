@@ -30,6 +30,9 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -263,89 +266,6 @@ public class TaxonomyVocabularyResourceTest
 			).build());
 	}
 
-	@Test
-	public void testGraphQLGetAssetLibraryTaxonomyVocabulariesPage()
-		throws Exception {
-
-		TaxonomyVocabulary taxonomyVocabulary =
-			testGetAssetLibraryTaxonomyVocabulariesPage_addTaxonomyVocabulary(
-				testGetAssetLibraryTaxonomyVocabulariesPage_getAssetLibraryId(),
-				randomTaxonomyVocabulary());
-
-		GraphQLField graphQLField = new GraphQLField(
-			"assetLibraryTaxonomyVocabularies",
-			HashMapBuilder.<String, Object>put(
-				"aggregation", "[\"id\"]"
-			).put(
-				"assetLibraryId",
-				StringBundler.concat(
-					"\"", testDepotEntry.getDepotEntryId(), "\"")
-			).build(),
-			new GraphQLField(
-				"facets", new GraphQLField("facetCriteria"),
-				new GraphQLField(
-					"facetValues", new GraphQLField("numberOfOccurrences"),
-					new GraphQLField("term"))),
-			new GraphQLField(
-				"items", new GraphQLField("id"), new GraphQLField("name")),
-			new GraphQLField("totalCount"));
-
-		JSONObject taxonomyVocabulariesJSONObject =
-			JSONUtil.getValueAsJSONObject(
-				invokeGraphQLQuery(graphQLField), "JSONObject/data",
-				"JSONObject/assetLibraryTaxonomyVocabularies");
-
-		Assert.assertEquals(
-			1, taxonomyVocabulariesJSONObject.getLong("totalCount"));
-
-		Assert.assertEquals(
-			"id",
-			taxonomyVocabulariesJSONObject.getJSONArray(
-				"facets"
-			).getJSONObject(
-				0
-			).getString(
-				"facetCriteria"
-			));
-
-		Assert.assertEquals(
-			String.valueOf(1),
-			taxonomyVocabulariesJSONObject.getJSONArray(
-				"facets"
-			).getJSONObject(
-				0
-			).getJSONArray(
-				"facetValues"
-			).getJSONObject(
-				0
-			).getString(
-				"numberOfOccurrences"
-			));
-
-		Assert.assertEquals(
-			String.valueOf(taxonomyVocabulary.getId()),
-			taxonomyVocabulariesJSONObject.getJSONArray(
-				"facets"
-			).getJSONObject(
-				0
-			).getJSONArray(
-				"facetValues"
-			).getJSONObject(
-				0
-			).getString(
-				"term"
-			));
-
-		Assert.assertEquals(
-			1, taxonomyVocabulariesJSONObject.getLong("totalCount"));
-
-		Assert.assertEquals(
-			taxonomyVocabulary.getName(),
-			TaxonomyVocabularySerDes.toDTOs(
-				taxonomyVocabulariesJSONObject.getString("items"))[0].
-					getName());
-	}
-
 	@Override
 	@Test
 	public void testGetTaxonomyVocabulary() throws Exception {
@@ -401,6 +321,128 @@ public class TaxonomyVocabularyResourceTest
 					"method", "PATCH"
 				).build()
 			).build());
+	}
+
+	@Override
+	@Test
+	public void testGraphQLGetSiteTaxonomyVocabulariesPage() throws Exception {
+		super.testGraphQLGetSiteTaxonomyVocabulariesPage();
+
+		Page<TaxonomyVocabulary> page =
+			taxonomyVocabularyResource.getSiteTaxonomyVocabulariesPage(
+				testGroup.getGroupId(), null, null, null, Pagination.of(1, 10),
+				null);
+
+		List<TaxonomyVocabulary> structuredContents =
+			(List<TaxonomyVocabulary>)page.getItems();
+
+		Iterator<TaxonomyVocabulary> iterator = structuredContents.iterator();
+
+		while (iterator.hasNext()) {
+			taxonomyVocabularyResource.deleteTaxonomyVocabulary(
+				iterator.next(
+				).getId());
+		}
+
+		TaxonomyVocabulary taxonomyVocabulary1 =
+			testGraphQLGetSiteTaxonomyVocabulariesPage_addTaxonomyVocabulary();
+		TaxonomyVocabulary taxonomyVocabulary2 =
+			testGraphQLGetSiteTaxonomyVocabulariesPage_addTaxonomyVocabulary();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"taxonomyVocabularies",
+			HashMapBuilder.<String, Object>put(
+				"aggregation", "[\"id\"]"
+			).put(
+				"siteKey",
+				StringBundler.concat("\"", testGroup.getGroupId(), "\"")
+			).build(),
+			new GraphQLField(
+				"facets", new GraphQLField("facetCriteria"),
+				new GraphQLField(
+					"facetValues", new GraphQLField("numberOfOccurrences"),
+					new GraphQLField("term"))),
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("totalCount"));
+
+		JSONObject taxonomyVocabulariesJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/taxonomyVocabularies");
+
+		Assert.assertEquals(
+			2, taxonomyVocabulariesJSONObject.getLong("totalCount"));
+
+		Assert.assertEquals(
+			"id",
+			taxonomyVocabulariesJSONObject.getJSONArray(
+				"facets"
+			).getJSONObject(
+				0
+			).getString(
+				"facetCriteria"
+			));
+
+		Assert.assertEquals(
+			String.valueOf(1),
+			taxonomyVocabulariesJSONObject.getJSONArray(
+				"facets"
+			).getJSONObject(
+				0
+			).getJSONArray(
+				"facetValues"
+			).getJSONObject(
+				0
+			).getString(
+				"numberOfOccurrences"
+			));
+
+		Assert.assertEquals(
+			String.valueOf(taxonomyVocabulary1.getId()),
+			taxonomyVocabulariesJSONObject.getJSONArray(
+				"facets"
+			).getJSONObject(
+				0
+			).getJSONArray(
+				"facetValues"
+			).getJSONObject(
+				0
+			).getString(
+				"term"
+			));
+
+		Assert.assertEquals(
+			String.valueOf(1),
+			taxonomyVocabulariesJSONObject.getJSONArray(
+				"facets"
+			).getJSONObject(
+				0
+			).getJSONArray(
+				"facetValues"
+			).getJSONObject(
+				1
+			).getString(
+				"numberOfOccurrences"
+			));
+		Assert.assertEquals(
+			String.valueOf(taxonomyVocabulary2.getId()),
+			taxonomyVocabulariesJSONObject.getJSONArray(
+				"facets"
+			).getJSONObject(
+				0
+			).getJSONArray(
+				"facetValues"
+			).getJSONObject(
+				1
+			).getString(
+				"term"
+			));
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(taxonomyVocabulary1, taxonomyVocabulary2),
+			Arrays.asList(
+				TaxonomyVocabularySerDes.toDTOs(
+					taxonomyVocabulariesJSONObject.getString("items"))));
 	}
 
 	@Override

@@ -162,18 +162,7 @@ public class Page<T> {
 		return sb.toString();
 	}
 
-	private Page(
-		Map<String, Map<String, String>> actions, Collection<T> items) {
-
-		_actions = actions;
-		_items = items;
-
-		_page = 1;
-		_pageSize = items.size();
-		_totalCount = items.size();
-	}
-
-	private Page(
+	protected Page(
 		Map<String, Map<String, String>> actions, List<Facet> facets,
 		Collection<T> items, Pagination pagination, long totalCount) {
 
@@ -191,6 +180,17 @@ public class Page<T> {
 		}
 
 		_totalCount = totalCount;
+	}
+
+	private Page(
+		Map<String, Map<String, String>> actions, Collection<T> items) {
+
+		_actions = actions;
+		_items = items;
+
+		_page = 1;
+		_pageSize = items.size();
+		_totalCount = items.size();
 	}
 
 	private String _toString(Map<String, Object> map) {

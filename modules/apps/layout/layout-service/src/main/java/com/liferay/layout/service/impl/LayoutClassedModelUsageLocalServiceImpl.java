@@ -22,7 +22,6 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServ
 import com.liferay.layout.service.base.LayoutClassedModelUsageLocalServiceBaseImpl;
 import com.liferay.layout.util.constants.LayoutClassedModelUsageConstants;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -58,8 +57,9 @@ public class LayoutClassedModelUsageLocalServiceImpl
 
 	@Override
 	public LayoutClassedModelUsage addLayoutClassedModelUsage(
-		long groupId, long classNameId, long classPK, String containerKey,
-		long containerType, long plid, ServiceContext serviceContext) {
+		long groupId, long classNameId, long classPK,
+		String cmExternalReferenceCode, String containerKey, long containerType,
+		long plid, ServiceContext serviceContext) {
 
 		long layoutClassedModelUsageId = counterLocalService.increment();
 
@@ -82,6 +82,8 @@ public class LayoutClassedModelUsageLocalServiceImpl
 
 		layoutClassedModelUsage.setClassNameId(classNameId);
 		layoutClassedModelUsage.setClassPK(classPK);
+		layoutClassedModelUsage.setCMExternalReferenceCode(
+			cmExternalReferenceCode);
 		layoutClassedModelUsage.setContainerKey(containerKey);
 		layoutClassedModelUsage.setContainerType(containerType);
 		layoutClassedModelUsage.setPlid(plid);
@@ -111,11 +113,12 @@ public class LayoutClassedModelUsageLocalServiceImpl
 
 	@Override
 	public LayoutClassedModelUsage fetchLayoutClassedModelUsage(
-		long classNameId, long classPK, String containerKey, long containerType,
-		long plid) {
+		long classNameId, long classPK, String cmExternalReferenceCode,
+		String containerKey, long containerType, long plid) {
 
-		return layoutClassedModelUsagePersistence.fetchByCN_CPK_CK_CT_P(
-			classNameId, classPK, containerKey, containerType, plid);
+		return layoutClassedModelUsagePersistence.fetchByCN_CPK_CMERC_CK_CT_P(
+			classNameId, classPK, cmExternalReferenceCode, containerKey,
+			containerType, plid);
 	}
 
 	@Override

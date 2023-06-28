@@ -88,6 +88,11 @@ public class UserOrganizationsScreenNavigationEntry
 	}
 
 	@Override
+	public boolean isShowControls() {
+		return false;
+	}
+
+	@Override
 	public boolean isVisible(User user, User selUser) {
 		if (selUser == null) {
 			return false;

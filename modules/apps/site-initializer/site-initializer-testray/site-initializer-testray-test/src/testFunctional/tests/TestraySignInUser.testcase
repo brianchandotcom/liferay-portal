@@ -40,6 +40,8 @@ definition {
 	@description = "Story ID: LPS-146930 | Test Summary: Verify when filling the field, the field label is green."
 	@priority = 2
 	test CanFieldLabelBeGreen {
+		property test.liferay.virtual.instance = "false";
+
 		task ("Go to Testray and exit Testray") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
@@ -64,6 +66,8 @@ definition {
 	@description = "Story ID: LPS-146930 | Test Summary: Verify when deleting the field, the field label is red."
 	@priority = 2
 	test CanFieldLabelBeRed {
+		property test.liferay.virtual.instance = "false";
+
 		task ("Go to Testray and exit Testray") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
@@ -90,6 +94,8 @@ definition {
 	@description = "Story ID: LPS-146930 | Test Summary: Verify the user can enter with an valid email."
 	@priority = 5
 	test CanSignIn {
+		property test.liferay.virtual.instance = "false";
+
 		task ("Go to Testray and exit Testray") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
@@ -116,6 +122,8 @@ definition {
 	@description = "Story ID: LPS-146930 | Test Summary: Verify the user can enter with an valid email after getting the password wrong."
 	@priority = 4
 	test CanSignInAfterPasswordWrong {
+		property test.liferay.virtual.instance = "false";
+
 		task ("Go to Testray and exit Testray") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 

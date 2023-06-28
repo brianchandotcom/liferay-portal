@@ -60,7 +60,6 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.test.util.ObjectDefinitionTestUtil;
-import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -155,9 +154,7 @@ public class ObjectFieldLocalServiceTest {
 						true
 					).build())));
 
-		String algorithm = "AES";
-
-		KeyGenerator keyGenerator = KeyGenerator.getInstance(algorithm);
+		KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
 
 		keyGenerator.init(128);
 
@@ -167,49 +164,29 @@ public class ObjectFieldLocalServiceTest {
 			ObjectFieldBusinessTypeException.class,
 			"Business type encrypted can only be used in object definitions " +
 				"with a default storage type",
-			() -> _testWithEncryptedObjectFieldProperties(
-				algorithm, true, Base64.encode(key.getEncoded()),
-				() ->
-					ObjectDefinitionTestUtil.addObjectDefinitionWithStorageType(
-						_objectDefinitionLocalService,
-						ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE,
-						Arrays.asList(
-							new EncryptedObjectFieldBuilder(
-							).labelMap(
-								LocalizedMapUtil.getLocalizedMap(
-									RandomTestUtil.randomString())
-							).name(
-								"a" + RandomTestUtil.randomString()
-							).build()))));
-
-		UnsafeRunnable<Exception> unsafeRunnable =
-			() -> ObjectDefinitionTestUtil.addObjectDefinition(
-				false, _objectDefinitionLocalService,
-				Arrays.asList(
-					new EncryptedObjectFieldBuilder(
-					).labelMap(
-						LocalizedMapUtil.getLocalizedMap(
-							RandomTestUtil.randomString())
-					).name(
-						"a" + RandomTestUtil.randomString()
-					).build()));
+			() -> _testAddEncrypteObjectField(
+				"AES", true, Base64.encode(key.getEncoded()),
+				ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE));
 
 		AssertUtils.assertFailure(
 			ObjectFieldBusinessTypeException.class,
 			"Business type encrypted is disabled",
-			() -> _testWithEncryptedObjectFieldProperties(
-				"", false, "", unsafeRunnable));
+			() -> _testAddEncrypteObjectField(
+				"", false, "", ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT));
 
 		AssertUtils.assertFailure(
 			ObjectFieldBusinessTypeException.class,
 			"Encryption algorithm is required for business type encrypted",
-			() -> _testWithEncryptedObjectFieldProperties(
-				"", true, "", unsafeRunnable));
+			() -> _testAddEncrypteObjectField(
+				"", true, Base64.encode(key.getEncoded()),
+				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT));
+
 		AssertUtils.assertFailure(
 			ObjectFieldBusinessTypeException.class,
 			"Encryption key is required for business type encrypted",
-			() -> _testWithEncryptedObjectFieldProperties(
-				algorithm, true, "", unsafeRunnable));
+			() -> _testAddEncrypteObjectField(
+				"AES", false, "",
+				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT));
 
 		AssertUtils.assertFailure(
 			ObjectFieldListTypeDefinitionIdException.class,
@@ -1667,6 +1644,33 @@ public class ObjectFieldLocalServiceTest {
 			objectDefinition.getObjectDefinitionId());
 	}
 
+	private void _testAddEncrypteObjectField(
+			String algorithm, boolean enabled, String key, String storageType)
+		throws Exception {
+
+		try (SafeCloseable safeCloseable1 =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"OBJECT_ENCRYPTION_ALGORITHM", algorithm);
+			SafeCloseable safeCloseable2 =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"OBJECT_ENCRYPTION_ENABLED", enabled);
+			SafeCloseable safeCloseable3 =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"OBJECT_ENCRYPTION_KEY", key)) {
+
+			ObjectDefinitionTestUtil.addObjectDefinitionWithStorageType(
+				_objectDefinitionLocalService, storageType,
+				Arrays.asList(
+					new EncryptedObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"a" + RandomTestUtil.randomString()
+					).build()));
+		}
+	}
+
 	private void _testUpdateCustomObjectField(ObjectField expectedObjectField)
 		throws Exception {
 
@@ -1697,25 +1701,6 @@ public class ObjectFieldLocalServiceTest {
 			expectedObjectField.isRequired(), objectField.isRequired());
 		Assert.assertEquals(
 			expectedObjectField.isState(), objectField.isState());
-	}
-
-	private void _testWithEncryptedObjectFieldProperties(
-			String algorithm, Boolean enabled, String key,
-			UnsafeRunnable<Exception> unsafeRunnable)
-		throws Exception {
-
-		try (SafeCloseable safeCloseable1 =
-				PropsValuesTestUtil.swapWithSafeCloseable(
-					"OBJECT_ENCRYPTION_ALGORITHM", algorithm);
-			SafeCloseable safeCloseable2 =
-				PropsValuesTestUtil.swapWithSafeCloseable(
-					"OBJECT_ENCRYPTION_ENABLED", enabled);
-			SafeCloseable safeCloseable3 =
-				PropsValuesTestUtil.swapWithSafeCloseable(
-					"OBJECT_ENCRYPTION_KEY", key)) {
-
-			unsafeRunnable.run();
-		}
 	}
 
 	private ObjectField _updateCustomObjectField(ObjectField objectField)

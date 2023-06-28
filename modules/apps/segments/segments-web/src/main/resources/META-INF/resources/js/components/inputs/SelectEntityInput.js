@@ -80,11 +80,14 @@ function SelectEntityInput({
 
 						onChange({
 							displayValue:
-								valueJSON.name || valueJSON.segmentsEntryName,
+								valueJSON.name ||
+								valueJSON.segmentsEntryName ||
+								valueJSON.tagName,
 							value:
 								valueJSON.segmentsEntryId ||
 								valueJSON.teamId ||
-								valueJSON.userGroupId,
+								valueJSON.userGroupId ||
+								valueJSON.tagId,
 						});
 					}
 					catch {

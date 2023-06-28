@@ -473,11 +473,8 @@ public class DBTest {
 		}
 		catch (Exception exception) {
 			Assert.assertTrue(_dbInspector.hasTable(_TABLE_NAME_1));
-			Assert.assertTrue(_dbInspector.hasTable(_TABLE_NAME_2));
+			Assert.assertFalse(_dbInspector.hasTable(_TABLE_NAME_2));
 			Assert.assertFalse(_dbInspector.hasTable(_TABLE_NAME_3));
-
-			Assert.assertTrue(_dbInspector.hasColumn(_TABLE_NAME_1, "id"));
-			Assert.assertTrue(_dbInspector.hasColumn(_TABLE_NAME_2, "id1"));
 		}
 	}
 

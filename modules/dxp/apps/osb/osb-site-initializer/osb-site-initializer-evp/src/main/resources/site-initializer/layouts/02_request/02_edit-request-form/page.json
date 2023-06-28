@@ -2,7 +2,7 @@
 	"friendlyURL": "/edit-request-form",
 	"hidden": true,
 	"name_i18n": {
-		"en_US": "Request Form"
+		"en_US": "Edit Request Form"
 	},
 	"permissions": [
 		{

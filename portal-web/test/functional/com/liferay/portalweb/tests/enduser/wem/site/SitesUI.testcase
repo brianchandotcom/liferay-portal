@@ -50,49 +50,51 @@ definition {
 		}
 	}
 
-	@description = "Able to add multiple sites basing on different site template."
+	@description = "Able to add multiple sites based on different site template."
 	@priority = 4
 	@uitest
 	test AddSitesMultiple {
+		var randomSiteTemplateName = StringUtil.randomString(8);
+
 		task ("Add a blank site") {
 			Site.openSitesAdmin();
 
-			Site.addBlankCP(siteName = "Site1 Name");
+			Site.addBlankCP(siteName = "${randomSiteName}1");
 		}
 
 		task ("View blank site added") {
 			Site.openSitesAdmin();
 
-			Site.viewCP(siteName = "Site1 Name");
+			Site.viewCP(siteName = "${randomSiteName}1");
 		}
 
-		task ("Add a site tempalte and add a site basing on site template") {
-			SiteTemplates.addCP(siteTemplateName = "Site Template Name");
+		task ("Add a site template and add a site based on site template") {
+			JSONSiteTemplate.addSiteTemplate(siteTemplateName = ${randomSiteTemplateName});
 
-			HeadlessSite.addSite(
-				siteName = "Site2 Name",
-				templateName = "Site Template Name",
-				templateType = "Site Template");
+			Site.addSiteTemplateCP(
+				siteName = "${randomSiteName}2",
+				siteTemplateName = ${randomSiteTemplateName},
+				siteTemplateTab = "Custom Site Templates");
 		}
 
 		task ("View site added") {
 			Site.openSitesAdmin();
 
-			Site.viewCP(siteName = "Site2 Name");
+			Site.viewCP(siteName = "${randomSiteName}2");
 		}
 
-		task ("Add a site basing on Minium site template") {
+		task ("Add a site based on Minium site template") {
 			Site.openSitesAdmin();
 
 			Site.addSiteTemplateCP(
-				siteName = "Site3 Name",
+				siteName = "${randomSiteName}3",
 				siteTemplateName = "Minium");
 		}
 
 		task ("View site added") {
 			Site.openSitesAdmin();
 
-			Site.viewCP(siteName = "Site3 Name");
+			Site.viewCP(siteName = "${randomSiteName}3");
 		}
 	}
 

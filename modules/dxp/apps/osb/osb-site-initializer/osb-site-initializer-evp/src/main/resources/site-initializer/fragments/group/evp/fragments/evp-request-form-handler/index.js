@@ -264,12 +264,12 @@ const setDefaultUserInfo = async () => {
 	if (!editPage) {
 		fullNameInput.value = userInformation[0]?.name;
 		emailAddressInput.value = userInformation[0]?.emailAddress;
-		phoneInput.value = phoneNumber;
-
+		
 		if (phoneNumber) {
 			phoneInput.readOnly = true;
 			phoneInput.style.cursor = 'not-allowed';
 			phoneInput.style.color = '#b1b2b8';
+			phoneInput.value = phoneNumber;
 		}
 	}
 };

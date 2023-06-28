@@ -143,24 +143,10 @@ export async function sendRoleAccountUser(
 	);
 }
 
-type AdditionalInfoBody = {
-	acceptInviteStatus: boolean;
-	accountGroupERC: string;
-	accountName: string;
-	emailOfMember: string;
-	inviteURL: string;
-	inviterName: string;
-	mothersName: string;
-	r_accountEntryToUserAdditionalInfo_accountEntryId: number;
-	r_userToUserAddInfo_userId: string;
-	roles: string;
-	sendType: {key: string; name: string};
-	userFirstName: string;
-};
-
 export async function addAdditionalInfo(
 	additionalInfoBody: AdditionalInfoBody
 ) {
+	
 	return fetch(`/o/c/useradditionalinfos/`, {
 		body: JSON.stringify(additionalInfoBody),
 		headers: {

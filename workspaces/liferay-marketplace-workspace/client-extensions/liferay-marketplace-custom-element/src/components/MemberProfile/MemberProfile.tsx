@@ -18,6 +18,9 @@ import ClayIcon from '@clayui/icon';
 import {MemberProps} from '../../pages/PublishedAppsDashboardPage/PublishedDashboardPageUtil';
 
 import './MemberProfile.scss';
+
+import { useEffect, useState } from 'react';
+
 import catalogIcon from '../../assets/icons/catalog_icon.svg';
 import shieldCheckIcon from '../../assets/icons/shield_check_icon.svg';
 import userIcon from '../../assets/icons/user_icon.svg';
@@ -65,15 +68,32 @@ export function MemberProfile({
 
 	const url = `${Liferay.ThemeDisplay.getPortalURL()}/c/login?redirect=${getSiteURL()}/${finalPath}`;
 
+	const [checkInviteStatus, setCheckInviteStatus] = useState<boolean>(false);
+	const [userAdditionalInfo, setUserAdditionalInfo] = useState<AdditionalInfoBody[]>();
+
+	useEffect(() => {
+		const getUserInfo = async () => {
+			const myUserAdditionalInfos = await getMyUserAditionalInfos(
+				memberUser.userId
+			);
+			setUserAdditionalInfo(myUserAdditionalInfos?.items);
+			setCheckInviteStatus(myUserAdditionalInfos?.items?.some((item: AdditionalInfoBody)=> !item.acceptInviteStatus))
+		}
+		
+		getUserInfo();
+		
+	}, []);
+
+	const canViewRestrictedContent = userLogged?.isAdminAccount && checkInviteStatus;
+
 	const handleInvitationResend = async (event: React.FormEvent) => {
 		event.preventDefault();
 
-		const myUserAdditionalInfos = await getMyUserAditionalInfos(
-			memberUser.userId
-		);
+		
 		const newPassword = createPassword();
 
-		for (const userAdditionInfo of myUserAdditionalInfos.items || []) {
+		for (const userAdditionInfo of userAdditionalInfo || []) {
+			
 			const updatedUserInfos = await updateUserAdditionalInfos(
 				{sendType: {key: 'canceled', name: 'Canceled'}},
 				userAdditionInfo.id
@@ -101,6 +121,7 @@ export function MemberProfile({
 					accountGroupERC: updatedUserInfos.accountGroupERC,
 					accountName: updatedUserInfos.accountName,
 					emailOfMember: updatedUserInfos.emailOfMember,
+					id: updatedUserInfos.id,
 					inviteURL: url,
 					inviterName: updatedUserInfos.inviterName,
 					mothersName: newPassword,
@@ -112,7 +133,9 @@ export function MemberProfile({
 					sendType: {key: 'shipping', name: 'Shipping'},
 					userFirstName: updatedUserInfos.userFirstName,
 				});
-
+				
+				setUserAdditionalInfo([await newInvite.json()]);
+			
 				const toastMessage = newInvite.ok
 					? `invited again successfully`
 					: `Please contact Administrator`;
@@ -168,7 +191,7 @@ export function MemberProfile({
 					)}
 				</div>
 
-				{userLogged?.isAdminAccount && (
+				{canViewRestrictedContent && (
 					<div className="member-profile-resend-invitation ml-auto">
 						<button
 							className="h-50 member-profile-button-resend-invitation mr-3"

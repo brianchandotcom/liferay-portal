@@ -39,6 +39,54 @@ definition {
 		Button.click(button = "Generate");
 	}
 
+	@summary = "generate Requests listing for EVP"
+	macro generateRequestsListing {
+		LexiconCard.clickCard(card = ${cardTitle});
+
+		WaitForPageLoad();
+
+		EVPUtils.insertDate(
+			dateRange = ${dateRange},
+			endDateLabel = ${endDateLabel},
+			initialDateLabel = ${initialDateLabel});
+
+		if (isSet(fullName)) {
+			Type(
+				key_fieldLabel = "Full Name",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = ${fullName});
+		}
+
+		if (isSet(initialCompanyId)) {
+			Type(
+				inputFieldId = "initialCompanyId",
+				locator1 = "TextInput#INPUT_ID",
+				value1 = ${initialCompanyId});
+		}
+
+		if (isSet(finalCompanyId)) {
+			Type(
+				inputFieldId = "finalCompanyId",
+				locator1 = "TextInput#INPUT_ID",
+				value1 = ${finalCompanyId});
+		}
+
+		if (isSet(companyName)) {
+			Type(
+				key_fieldLabel = "Company Name",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = ${companyName});
+		}
+
+		for (var checkboxName : list ${listCheckbox}) {
+			Check.checkNotVisible(
+				checkboxName = ${checkboxName},
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		Button.click(button = "Generate");
+	}
+
 	@summary = "Navigating to EVP needs an extra click on Sign In which will redirect to Okta"
 	macro gotoEVP {
 		Navigator.openSiteURL(siteName = "EVP Portal");

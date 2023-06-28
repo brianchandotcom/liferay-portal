@@ -510,6 +510,23 @@ public class EditableFragmentEntryProcessorTest {
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 
+	private FragmentEntryLink _addFragmentEntryLink(
+			String editableValues, String htmlFileName)
+		throws Exception {
+
+		FragmentEntry fragmentEntry = _addFragmentEntry(htmlFileName);
+
+		return _fragmentEntryLinkLocalService.addFragmentEntryLink(
+			TestPropsValues.getUserId(), _group.getGroupId(), 0,
+			fragmentEntry.getFragmentEntryId(),
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				_layout.getPlid()),
+			TestPropsValues.getPlid(), fragmentEntry.getCss(),
+			fragmentEntry.getHtml(), fragmentEntry.getJs(), StringPool.BLANK,
+			editableValues, StringPool.BLANK, 0, null, fragmentEntry.getType(),
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+	}
+
 	private FileEntry _addImageFileEntry() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
@@ -613,28 +630,14 @@ public class EditableFragmentEntryProcessorTest {
 	}
 
 	private Element _getElement(
-			String dataAttributeName, String editableId, String editableValues,
-			String htmlFileName)
+			String dataAttributeName, String editableId,
+			FragmentEntryLink fragmentEntryLink, Locale locale, String mode)
 		throws Exception {
-
-		FragmentEntry fragmentEntry = _addFragmentEntry(htmlFileName);
-
-		FragmentEntryLink fragmentEntryLink =
-			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				TestPropsValues.getUserId(), _group.getGroupId(), 0,
-				fragmentEntry.getFragmentEntryId(),
-				_segmentsExperienceLocalService.
-					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
-				TestPropsValues.getPlid(), fragmentEntry.getCss(),
-				fragmentEntry.getHtml(), fragmentEntry.getJs(),
-				StringPool.BLANK, editableValues, StringPool.BLANK, 0, null,
-				fragmentEntry.getType(),
-				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		String processedFragmentEntryLinkHTML =
 			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
 				fragmentEntryLink,
-				_getFragmentEntryProcessorContext(LocaleUtil.getSiteDefault()));
+				_getFragmentEntryProcessorContext(locale, mode));
 
 		Document document = _getDocument(processedFragmentEntryLinkHTML);
 
@@ -644,6 +647,16 @@ public class EditableFragmentEntryProcessorTest {
 			dataAttributeName, editableId);
 
 		return elements.get(0);
+	}
+
+	private Element _getElement(
+			String dataAttributeName, String editableId, String editableValues,
+			String htmlFileName, Locale locale, String mode)
+		throws Exception {
+
+		return _getElement(
+			dataAttributeName, editableId,
+			_addFragmentEntryLink(editableValues, htmlFileName), locale, mode);
 	}
 
 	private FragmentEntryProcessorContext _getFragmentEntryProcessorContext(

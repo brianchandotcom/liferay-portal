@@ -200,6 +200,32 @@ public class EditableFragmentEntryProcessorTest {
 	}
 
 	@Test
+	public void testFragmentEntryProcessorEditableActionMappedActionEditMode()
+		throws Exception {
+
+		String editableValues = _getEditableFieldValues(
+			_portal.getClassNameId(
+				ObjectDefinition.class.getName() + "#" +
+					RandomTestUtil.randomLong()),
+			RandomTestUtil.randomLong(),
+			ObjectAction.class.getSimpleName() + StringPool.UNDERLINE +
+				RandomTestUtil.randomLong(),
+			"action/editable_values_action_mapped_action.json");
+
+		Element element = _getElement(
+			"data-lfr-editable-id", "editable_action", editableValues,
+			"action/fragment_entry_action.html", LocaleUtil.getSiteDefault(),
+			FragmentEntryLinkConstants.EDIT);
+
+		Assert.assertEquals(
+			StringPool.BLANK, element.attr("data-lfr-class-name-id"));
+		Assert.assertEquals(
+			StringPool.BLANK, element.attr("data-lfr-class-pk"));
+		Assert.assertEquals(
+			StringPool.BLANK, element.attr("data-lfr-field-id"));
+	}
+
+	@Test
 	public void testFragmentEntryProcessorEditableActionMappedActionViewMode()
 		throws Exception {
 

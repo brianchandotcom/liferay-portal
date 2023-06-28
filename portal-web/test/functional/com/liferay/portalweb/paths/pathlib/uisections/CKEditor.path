@@ -240,6 +240,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TOOLBAR_AI_CREATOR_BUTTON</td>
+	<td>//a[contains(@class,'cke_button') and contains(@class,'aicreator')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TOOLBAR_AUDIO_BUTTON</td>
 	<td>//a[contains(@class,'cke_button') and contains(@class,'audio')]</td>
 	<td></td>

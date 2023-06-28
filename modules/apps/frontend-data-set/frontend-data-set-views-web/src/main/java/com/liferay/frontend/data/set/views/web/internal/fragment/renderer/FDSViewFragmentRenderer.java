@@ -245,9 +245,9 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		apiUrl = StringUtil.replace(apiUrl, "{siteId}", Long.toString(themeDisplay.getScopeGroupId()));
-		apiUrl = StringUtil.replace(apiUrl, "{scopeKey}", Long.toString(themeDisplay.getScopeGroupId()));
-		apiUrl = StringUtil.replace(apiUrl, "{userId}", Long.toString(themeDisplay.getUserId()));
+		apiUrl = StringUtil.replace(apiUrl, "{siteId}", String.valueOf(themeDisplay.getScopeGroupId()));
+		apiUrl = StringUtil.replace(apiUrl, "{scopeKey}", String.valueOf(themeDisplay.getScopeGroupId()));
+		apiUrl = StringUtil.replace(apiUrl, "{userId}", String.valueOf(themeDisplay.getUserId()));
 
 		if (StringUtil.contains(apiUrl, "{")) {
 			System.out.println("Unsupported parameter in API url: " + apiUrl);

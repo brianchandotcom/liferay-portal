@@ -153,7 +153,7 @@ public class ObjectLayoutLocalServiceTest {
 						_addObjectLayoutBox(
 							ObjectLayoutBoxConstants.TYPE_CATEGORIZATION)));
 
-				return _objectLayoutLocalService.addObjectLayout(
+				_objectLayoutLocalService.addObjectLayout(
 					TestPropsValues.getUserId(),
 					_objectDefinition.getObjectDefinitionId(), false,
 					LocalizedMapUtil.getLocalizedMap(
@@ -188,7 +188,7 @@ public class ObjectLayoutLocalServiceTest {
 							ObjectLayoutBoxConstants.TYPE_CATEGORIZATION)));
 				objectLayoutTab.setPriority(0);
 
-				return _objectLayoutLocalService.addObjectLayout(
+				_objectLayoutLocalService.addObjectLayout(
 					TestPropsValues.getUserId(),
 					_objectDefinition.getObjectDefinitionId(), false,
 					LocalizedMapUtil.getLocalizedMap(
@@ -223,7 +223,7 @@ public class ObjectLayoutLocalServiceTest {
 				objectLayoutTab.setObjectLayoutBoxes(
 					Arrays.asList(_addObjectLayoutBox(), objectLayoutBox));
 
-				return _objectLayoutLocalService.addObjectLayout(
+				_objectLayoutLocalService.addObjectLayout(
 					TestPropsValues.getUserId(),
 					_objectDefinition.getObjectDefinitionId(), false,
 					LocalizedMapUtil.getLocalizedMap(
@@ -252,7 +252,7 @@ public class ObjectLayoutLocalServiceTest {
 					Arrays.asList(
 						_addObjectLayoutBox(), _addObjectLayoutBox(null)));
 
-				return _objectLayoutLocalService.addObjectLayout(
+				_objectLayoutLocalService.addObjectLayout(
 					TestPropsValues.getUserId(),
 					_objectDefinition.getObjectDefinitionId(), false,
 					LocalizedMapUtil.getLocalizedMap(
@@ -284,7 +284,7 @@ public class ObjectLayoutLocalServiceTest {
 
 				objectLayoutColumn.setSize(13);
 
-				return _objectLayoutLocalService.addObjectLayout(
+				_objectLayoutLocalService.addObjectLayout(
 					TestPropsValues.getUserId(),
 					_objectDefinition.getObjectDefinitionId(), false,
 					LocalizedMapUtil.getLocalizedMap(
@@ -327,7 +327,7 @@ public class ObjectLayoutLocalServiceTest {
 						_addObjectLayoutBox(
 							ObjectLayoutBoxConstants.TYPE_CATEGORIZATION)));
 
-				return _objectLayoutLocalService.addObjectLayout(
+				_objectLayoutLocalService.addObjectLayout(
 					TestPropsValues.getUserId(),
 					_objectDefinition.getObjectDefinitionId(), false,
 					LocalizedMapUtil.getLocalizedMap(
@@ -350,7 +350,7 @@ public class ObjectLayoutLocalServiceTest {
 						RandomTestUtil.randomString()),
 					Collections.singletonList(objectLayoutTab));
 
-				return _objectLayoutLocalService.addObjectLayout(
+				_objectLayoutLocalService.addObjectLayout(
 					TestPropsValues.getUserId(),
 					_objectDefinition.getObjectDefinitionId(), true,
 					LocalizedMapUtil.getLocalizedMap(

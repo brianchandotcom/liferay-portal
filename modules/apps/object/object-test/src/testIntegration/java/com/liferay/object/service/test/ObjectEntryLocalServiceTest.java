@@ -537,16 +537,16 @@ public class ObjectEntryLocalServiceTest {
 				_objectFieldSettingLocalService.updateObjectFieldSetting(
 					objectFieldSetting.getObjectFieldSettingId(), "jpg, png");
 
-				FileEntry fileEntry = _addTempFileEntry(
-					StringUtil.randomString());
-
-				return _addObjectEntry(
+				_addObjectEntry(
 					HashMapBuilder.<String, Serializable>put(
 						"emailAddressRequired", "peter@liferay.com"
 					).put(
 						"listTypeEntryKeyRequired", "listTypeEntryKey1"
 					).put(
-						"upload", fileEntry.getFileEntryId()
+						"upload",
+						_addTempFileEntry(
+							StringUtil.randomString()
+						).getFileEntryId()
 					).build());
 			});
 

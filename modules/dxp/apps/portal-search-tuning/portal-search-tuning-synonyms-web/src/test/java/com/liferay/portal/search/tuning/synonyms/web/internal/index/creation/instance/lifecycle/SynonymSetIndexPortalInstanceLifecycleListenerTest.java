@@ -34,7 +34,7 @@ import org.mockito.Mockito;
 /**
  * @author Wade Cao
  */
-public class SynonymSetIndexCreationPortalInstanceLifecycleListenerTest
+public class SynonymSetIndexPortalInstanceLifecycleListenerTest
 	extends BaseSynonymsWebTestCase {
 
 	@ClassRule
@@ -44,26 +44,26 @@ public class SynonymSetIndexCreationPortalInstanceLifecycleListenerTest
 
 	@Before
 	public void setUp() throws Exception {
-		_synonymSetIndexCreationPortalInstanceLifecycleListener =
-			new SynonymSetIndexCreationPortalInstanceLifecycleListener();
+		_synonymSetIndexPortalInstanceLifecycleListener =
+			new SynonymSetIndexPortalInstanceLifecycleListener();
 
 		ReflectionTestUtil.setFieldValue(
-			_synonymSetIndexCreationPortalInstanceLifecycleListener,
+			_synonymSetIndexPortalInstanceLifecycleListener,
 			"_filterToIndexSynchronizer", _filterToIndexSynchronizer);
 		ReflectionTestUtil.setFieldValue(
-			_synonymSetIndexCreationPortalInstanceLifecycleListener,
+			_synonymSetIndexPortalInstanceLifecycleListener,
 			"_indexNameBuilder", _indexNameBuilder);
 		ReflectionTestUtil.setFieldValue(
-			_synonymSetIndexCreationPortalInstanceLifecycleListener,
+			_synonymSetIndexPortalInstanceLifecycleListener,
 			"_searchEngineInformation", _searchEngineInformation);
 		ReflectionTestUtil.setFieldValue(
-			_synonymSetIndexCreationPortalInstanceLifecycleListener,
+			_synonymSetIndexPortalInstanceLifecycleListener,
 			"_synonymSetIndexCreator", _synonymSetIndexCreator);
 		ReflectionTestUtil.setFieldValue(
-			_synonymSetIndexCreationPortalInstanceLifecycleListener,
+			_synonymSetIndexPortalInstanceLifecycleListener,
 			"_synonymSetIndexNameBuilder", _synonymSetIndexNameBuilder);
 		ReflectionTestUtil.setFieldValue(
-			_synonymSetIndexCreationPortalInstanceLifecycleListener,
+			_synonymSetIndexPortalInstanceLifecycleListener,
 			"_synonymSetIndexReader", synonymSetIndexReader);
 	}
 
@@ -71,7 +71,7 @@ public class SynonymSetIndexCreationPortalInstanceLifecycleListenerTest
 	public void testPortalInstanceRegisteredExistFalse() throws Exception {
 		setUpSynonymSetIndexReader(false);
 
-		_synonymSetIndexCreationPortalInstanceLifecycleListener.
+		_synonymSetIndexPortalInstanceLifecycleListener.
 			portalInstanceRegistered(Mockito.mock(Company.class));
 
 		Mockito.verify(
@@ -90,7 +90,7 @@ public class SynonymSetIndexCreationPortalInstanceLifecycleListenerTest
 	public void testPortalInstanceRegisteredExistTrue() throws Exception {
 		setUpSynonymSetIndexReader(true);
 
-		_synonymSetIndexCreationPortalInstanceLifecycleListener.
+		_synonymSetIndexPortalInstanceLifecycleListener.
 			portalInstanceRegistered(Mockito.mock(Company.class));
 
 		Mockito.verify(
@@ -111,11 +111,11 @@ public class SynonymSetIndexCreationPortalInstanceLifecycleListenerTest
 		IndexNameBuilder.class);
 	private final SearchEngineInformation _searchEngineInformation =
 		Mockito.mock(SearchEngineInformation.class);
-	private SynonymSetIndexCreationPortalInstanceLifecycleListener
-		_synonymSetIndexCreationPortalInstanceLifecycleListener;
 	private final SynonymSetIndexCreator _synonymSetIndexCreator = Mockito.mock(
 		SynonymSetIndexCreator.class);
 	private final SynonymSetIndexNameBuilder _synonymSetIndexNameBuilder =
 		Mockito.mock(SynonymSetIndexNameBuilder.class);
+	private SynonymSetIndexPortalInstanceLifecycleListener
+		_synonymSetIndexPortalInstanceLifecycleListener;
 
 }

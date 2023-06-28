@@ -462,6 +462,26 @@ public class DBTest {
 	}
 
 	@Test
+	public void testRenameTablesRollback() throws Exception {
+		try {
+			_db.renameTables(
+				_connection,
+				new ObjectValuePair<>(_TABLE_NAME_1, _TABLE_NAME_3),
+				new ObjectValuePair<>(_TABLE_NAME_2, _TABLE_NAME_1));
+
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			Assert.assertTrue(_dbInspector.hasTable(_TABLE_NAME_1));
+			Assert.assertTrue(_dbInspector.hasTable(_TABLE_NAME_2));
+			Assert.assertFalse(_dbInspector.hasTable(_TABLE_NAME_3));
+
+			Assert.assertTrue(_dbInspector.hasColumn(_TABLE_NAME_1, "id"));
+			Assert.assertTrue(_dbInspector.hasColumn(_TABLE_NAME_2, "id1"));
+		}
+	}
+
+	@Test
 	public void testSyncTables() throws Exception {
 		_db.runSQL(
 			StringBundler.concat(

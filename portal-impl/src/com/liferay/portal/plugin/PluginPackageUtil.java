@@ -239,6 +239,12 @@ public class PluginPackageUtil {
 		String pluginType = Plugin.TYPE_PORTLET;
 
 		if (pos == -1) {
+			pos = displayName.indexOf("-client-extension");
+
+			pluginType = _TYPE_CLIENT_EXTENSION;
+		}
+
+		if (pos == -1) {
 			pos = displayName.indexOf("-ext");
 
 			pluginType = _TYPE_EXT;
@@ -659,6 +665,8 @@ public class PluginPackageUtil {
 		_installedPluginPackages.registerPluginPackageInstallation(
 			pluginPackage);
 	}
+
+	private static final String _TYPE_CLIENT_EXTENSION = "client-extension";
 
 	private static final String _TYPE_EXT = "ext";
 

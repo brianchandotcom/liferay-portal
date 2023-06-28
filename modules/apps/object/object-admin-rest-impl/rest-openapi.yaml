@@ -105,6 +105,8 @@ components:
                     items:
                         $ref: "#/components/schemas/ObjectField"
                     type: array
+                objectFolderExternalReferenceCode:
+                    type: string
                 objectLayouts:
                     items:
                         $ref: "#/components/schemas/ObjectLayout"
@@ -227,6 +229,35 @@ components:
                     type: integer
                 value:
                     type: object
+        ObjectFolder:
+            properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
+                dateCreated:
+                    format: date
+                    readOnly: true
+                    type: string
+                dateModified:
+                    format: date
+                    readOnly: true
+                    type: string
+                externalReferenceCode:
+                    type: string
+                id:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                label:
+                    additionalProperties:
+                        type: string
+                    type: object
+                name:
+                    type: string
         ObjectLayout:
             properties:
                 actions:
@@ -1760,6 +1791,194 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/ObjectField"
             tags: ["ObjectField"]
+    "/object-folders":
+        get:
+            operationId: getObjectFoldersPage
+            parameters:
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  schema:
+                      type: string
+                - in: header
+                  name: Accept-Language
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ObjectFolder"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ObjectFolder"
+                                type: array
+            tags: ["ObjectFolder"]
+        post:
+            operationId: postObjectFolder
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ObjectFolder"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ObjectFolder"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ObjectFolder"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ObjectFolder"
+            tags: ["ObjectFolder"]
+    "/object-folders/by-external-reference-code/{externalReferenceCode}":
+        get:
+            operationId: getObjectFolderByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ObjectFolder"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ObjectFolder"
+            tags: ["ObjectFolder"]
+        put:
+            operationId: putObjectFolderByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ObjectFolder"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ObjectFolder"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ObjectFolder"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ObjectFolder"
+            tags: ["ObjectFolder"]
+    "/object-folders/{objectFolderId}":
+        delete:
+            operationId: deleteObjectFolder
+            parameters:
+                - in: path
+                  name: objectFolderId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["ObjectFolder"]
+        get:
+            operationId: getObjectFolder
+            parameters:
+                - in: path
+                  name: objectFolderId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ObjectFolder"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ObjectFolder"
+            tags: ["ObjectFolder"]
+        patch:
+            operationId: patchObjectFolder
+            parameters:
+                - in: path
+                  name: objectFolderId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ObjectFolder"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ObjectFolder"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ObjectFolder"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ObjectFolder"
+            tags: ["ObjectFolder"]
+        put:
+            operationId: putObjectFolder
+            parameters:
+                - in: path
+                  name: objectFolderId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ObjectFolder"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ObjectFolder"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ObjectFolder"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ObjectFolder"
+            tags: ["ObjectFolder"]
     "/object-layouts/{objectLayoutId}":
         delete:
             operationId: deleteObjectLayout

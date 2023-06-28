@@ -10,7 +10,7 @@ dependencies {
 	compile group: "com.atlassian.sal", name: "sal-api", version: "4.4.0"
 	compile group: "com.google.cloud", name: "google-cloud-storage", version: "1.113.16"
 	compile group: "com.google.guava", name: "guava", version: "30.1.1-jre"
-	compile group: "com.liferay", name: "com.liferay.poshi.core", version: "1.0.116"
+	compile group: "com.liferay", name: "com.liferay.poshi.core", version: "1.0.122"
 	compile group: "com.sun.mail", name: "jakarta.mail", version: "1.6.6"
 	compile group: "commons-codec", name: "commons-codec", version: "1.15"
 	compile group: "commons-io", name: "commons-io", version: "2.11.0"

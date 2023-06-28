@@ -1,64 +1,74 @@
 components:
     schemas:
-        Facet:
+        FacetConfiguration:
             properties:
                 aggregationName:
+                    description:
+                        The name of the aggregation.
                     type: string
                 attributes:
                     additionalProperties:
                         type: object
+                    description:
+                        Additional attributes for the facet.
                     type: object
                 frequencyThreshold:
+                    description:
+                        Frequency threshold for showing the terms.
                     type: integer
                 maxTerms:
+                    description:
+                        Maximum number of terms to be shown.
                     type: integer
                 name:
+                    description:
+                        The name of the facet.
                     type: string
                 values:
+                    description:
+                        The values / selections to be filtered by.
                     items:
                         type: object
                     type: array
             type: object
         SearchRequestBody:
             properties:
-                facets:
-                    items:
-                        $ref: "#/components/schemas/Facet"
-                    type: array
-                searchContextAttributes:
+                attributes:
                     additionalProperties:
                         type: object
                     type: object
+                facetConfigurations:
+                    items:
+                        $ref: "#/components/schemas/FacetConfiguration"
+                    type: array
             type: object
-        SearchResponse:
+        SearchResult:
             properties:
-                aggregationResults:
-                    additionalProperties:
-                        type: object
+                dateModified:
+                    description:
+                        The last time the item was changed.
+                    format: date-time
+                    type: string
+                description:
+                    description:
+                        The item's description.
+                    type: string
+                embedded:
                     type: object
-                documents:
-                    items:
-                        type: object
-                    type: array
-                facets:
-                    additionalProperties:
-                        type: object
-                    type: object
-                maxScore:
+                itemURL:
+                    description:
+                        The link to the embedded item.
+                    format: uri
+                    type: string
+                score:
+                    description:
+                        The item's score.
                     format: float
                     type: number
-                page:
-                    type: integer
-                pageSize:
-                    type: integer
-                request:
-                    type: object
-                response:
-                    type: object
-                totalHits:
-                    format: int64
-                    type: integer
-            type: object
+                title:
+                    description:
+                        The item's title.
+                    type: string
         Suggestion:
             properties:
                 attributes:
@@ -104,62 +114,32 @@ openapi: 3.0.1
 paths:
     "/search":
         post:
-            description:
-                "Search the company index for matching content. Using this endpoint requires a dev feature flag: set feature.flag.LPS-179669 to true."
-            operationId: postSearch
+            operationId: postSearchPage
             parameters:
                 - in: query
-                  name: basicFacetSelection
-                  schema:
-                      type: boolean
-                - in: query
+                  description:
+                      Model class names to be searched for. Defaults to all.
                   name: entryClassNames
-                  schema:
-                      items:
-                          type: string
-                      type: array
-                - in: query
-                  name: explain
-                  schema:
-                      type: boolean
-                - in: query
-                  name: groupIds
-                  schema:
-                      items:
-                          format: int64
-                          type: integer
-                      type: array
-                - in: query
-                  name: includeAssetSearchSummary
-                  schema:
-                      type: boolean
-                - in: query
-                  name: includeAssetTitle
-                  schema:
-                      type: boolean
-                - in: query
-                  name: includeRequest
-                  schema:
-                      type: boolean
-                - in: query
-                  name: includeResponse
-                  schema:
-                      type: boolean
-                - in: query
-                  name: keywords
                   schema:
                       type: string
                 - in: query
-                  name: resultFields
+                  description:
+                      The list of fields to be returned.
+                  name: fields
                   schema:
-                      items:
-                          type: string
-                      type: array
+                      type: string
                 - in: query
-                  name: scopeGroupId
+                  name: nestedFields
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
                 - in: query
                   name: page
                   schema:
@@ -168,6 +148,10 @@ paths:
                   name: pageSize
                   schema:
                       type: integer
+                - in: query
+                  name: search
+                  schema:
+                      type: string
                 - in: query
                   name: sort
                   schema:
@@ -185,11 +169,15 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/SearchResponse"
+                                items:
+                                    $ref: "#/components/schemas/SearchResult"
+                                type: array
                         application/xml:
                             schema:
-                                $ref: "#/components/schemas/SearchResponse"
-            tags: ["SearchResponse"]
+                                items:
+                                    $ref: "#/components/schemas/SearchResult"
+                                type: array
+            tags: ["SearchResult"]
     /suggestions:
         post:
             operationId: postSuggestionsPage

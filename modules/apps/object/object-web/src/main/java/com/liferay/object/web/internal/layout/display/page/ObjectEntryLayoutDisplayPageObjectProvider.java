@@ -15,6 +15,7 @@
 package com.liferay.object.web.internal.layout.display.page;
 
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.petra.string.StringPool;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.Locale;
+import java.util.Objects;
 
 /**
  * @author Guilherme Camacho
@@ -66,6 +68,18 @@ public class ObjectEntryLayoutDisplayPageObjectProvider
 	@Override
 	public ObjectEntry getDisplayObject() {
 		return _objectEntry;
+	}
+
+	@Override
+	public String getExternalReferenceCode() {
+		if (Objects.equals(
+				_objectDefinition.getStorageType(),
+				ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE)) {
+
+			return _objectEntry.getExternalReferenceCode();
+		}
+
+		return StringPool.BLANK;
 	}
 
 	@Override

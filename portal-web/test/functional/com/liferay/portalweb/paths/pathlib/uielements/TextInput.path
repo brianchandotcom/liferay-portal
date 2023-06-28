@@ -422,27 +422,27 @@
 </tr>
 <tr>
 	<td>VIRTUAL_INSTANCE_SCREEN_NAME</td>
-	<td>//input[contains(@id,'screenNameAdmin')]</td>
+	<td>//input[contains(@id,'defaultAdminScreenName')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>VIRTUAL_INSTANCE_EMAIL</td>
-	<td>//input[contains(@id,'emailAdmin')]</td>
+	<td>//input[contains(@id,'defaultAdminEmailAddress')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>VIRTUAL_INSTANCE_PASSWORD</td>
-	<td>//input[contains(@id,'passwordAdmin')]</td>
+	<td>//input[contains(@id,'defaultAdminPassword')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>VIRTUAL_INSTANCE_FIRST_NAME</td>
-	<td>//input[contains(@id,'firstNameAdmin')]</td>
+	<td>//input[contains(@id,'defaultAdminFirstName')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>VIRTUAL_INSTANCE_LAST_NAME</td>
-	<td>//input[contains(@id,'lastNameAdmin')]</td>
+	<td>//input[contains(@id,'defaultAdminLastName')]</td>
 	<td></td>
 </tr>
 <tr>

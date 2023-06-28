@@ -25,7 +25,6 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-150388 TC-4: On-Demand Admin can change user information on created virtual instances"
-	@ignore = "true"
 	@priority = 5
 	test OnDemandAdminCanChangeInstanceAdminPassword {
 		property test.liferay.virtual.instance = "false";
@@ -50,7 +49,9 @@ definition {
 
 			User.editPassword(newPassword = "tester");
 
-			User.logoutPG(specificURL = "www.able.com:8080");
+			Navigator.openURL(baseURL = "http://www.able.com:8080");
+
+			User.logoutPG(specificURL = "http://www.able.com:8080");
 
 			User.firstLoginUI(
 				password = "tester",

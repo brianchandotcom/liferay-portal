@@ -369,7 +369,6 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-150388 TC-1/5: Admin password need to be set on first startup if the default admin password property is not set."
-	@ignore = "true"
 	@priority = 5
 	test UserSetNewPasswordWithoutPasswordProperty {
 		property custom.properties = "company.security.send.password.reset.link=true${line.separator}passwords.default.policy.change.required=false${line.separator}default.admin.password=${line.separator}jsonws.web.service.paths.excludes=";
@@ -419,7 +418,6 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-150388 TC-3: If the default admin password property is not given, virtual instances need to be defined with 3 extra informations: screen name, admin email and password."
-	@ignore = "true"
 	@priority = 5
 	test VirtualInstancesNeedExtraInformationWithoutPasswordProperty {
 		property custom.properties = "default.admin.password=";
@@ -464,7 +462,6 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-150388 TC-2: If the default admin password property is set, user doesn't need to define screen name, admin email and password upon virtual instance creation."
-	@ignore = "true"
 	@priority = 5
 	test VirtualInstancesNeedNoExtraInformationWithPasswordProperty {
 		property custom.properties = "company.security.send.password.reset.link=true${line.separator}passwords.default.policy.change.required=false";

@@ -35,7 +35,7 @@ interface Actions {
 
 interface ItemData {
 	actions: Actions;
-	applicationStatus: {key: string; name: string};
+	applicationStatus: {key: 'published' | 'unpublished'; name?: string};
 	baseURL: string;
 	createDate: string;
 	dateModified: string;

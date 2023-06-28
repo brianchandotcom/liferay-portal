@@ -5,7 +5,7 @@
 			"deploy": false
 		}
 	},
-	"id": "__CLIENT_EXTENSION_ID__",
+	"id": "__PROJECT_ID__",
 	"kind": "Job",
 	"memory": 10,
 	"scale": 1

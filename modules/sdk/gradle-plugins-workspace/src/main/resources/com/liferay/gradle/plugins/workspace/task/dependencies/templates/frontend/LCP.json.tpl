@@ -11,7 +11,7 @@
 			"deploy": false
 		}
 	},
-	"id": "__CLIENT_EXTENSION_ID__",
+	"id": "__PROJECT_ID__",
 	"kind": "Deployment",
 	"livenessProbe": {
 		"httpGet": {

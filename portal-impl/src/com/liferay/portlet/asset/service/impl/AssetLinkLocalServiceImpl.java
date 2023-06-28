@@ -16,15 +16,19 @@ package com.liferay.portlet.asset.service.impl;
 
 import com.liferay.asset.kernel.exception.NoSuchLinkException;
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetEntryTable;
 import com.liferay.asset.kernel.model.AssetLink;
 import com.liferay.asset.kernel.model.AssetLinkConstants;
+import com.liferay.asset.kernel.model.AssetLinkTable;
 import com.liferay.asset.kernel.model.adapter.StagedAssetLink;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.persistence.AssetEntryPersistence;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.expression.Predicate;
+import com.liferay.petra.sql.dsl.spi.expression.Scalar;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanReference;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -131,8 +135,36 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 
 	@Override
 	public void deleteGroupLinks(long groupId) {
-		List<AssetLink> assetLinks = assetLinkFinder.findByAssetEntryGroupId(
-			groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		AssetEntryTable assetEntryTable1 = AssetEntryTable.INSTANCE.as(
+			"AssetEntry1");
+		AssetEntryTable assetEntryTable2 = AssetEntryTable.INSTANCE.as(
+			"AssetEntry2");
+
+		List<AssetLink> assetLinks = assetLinkPersistence.dslQuery(
+			DSLQueryFactoryUtil.select(
+				AssetLinkTable.INSTANCE
+			).from(
+				AssetLinkTable.INSTANCE
+			).where(
+				(Predicate)DSLQueryFactoryUtil.select(
+					new Scalar<>(1L)
+				).from(
+					assetEntryTable1
+				).where(
+					AssetLinkTable.INSTANCE.entryId1.eq(
+						assetEntryTable1.entryId
+					).and(
+						AssetLinkTable.INSTANCE.entryId2.eq(
+							assetEntryTable2.entryId)
+					).and(
+						assetEntryTable1.groupId.eq(
+							groupId
+						).or(
+							assetEntryTable2.groupId.eq(groupId)
+						).withParentheses()
+					)
+				)
+			));
 
 		for (AssetLink assetLink : assetLinks) {
 			deleteAssetLink(assetLink);
@@ -285,8 +317,58 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 	public List<AssetLink> getLinks(
 		long groupId, Date startDate, Date endDate, int start, int end) {
 
-		return assetLinkFinder.findByG_C(
-			groupId, startDate, endDate, start, end);
+		AssetEntryTable assetEntryTable1 = AssetEntryTable.INSTANCE.as(
+			"AssetEntry1");
+		AssetEntryTable assetEntryTable2 = AssetEntryTable.INSTANCE.as(
+			"AssetEntry2");
+
+		return assetLinkPersistence.dslQuery(
+			DSLQueryFactoryUtil.select(
+				AssetLinkTable.INSTANCE
+			).from(
+				AssetLinkTable.INSTANCE
+			).where(
+				(Predicate)DSLQueryFactoryUtil.select(
+					new Scalar<>(1L)
+				).from(
+					assetEntryTable1
+				).where(
+					AssetLinkTable.INSTANCE.entryId1.eq(
+						assetEntryTable1.entryId
+					).and(
+						AssetLinkTable.INSTANCE.entryId2.eq(
+							assetEntryTable2.entryId)
+					).and(
+						assetEntryTable1.groupId.eq(
+							groupId
+						).or(
+							assetEntryTable2.groupId.eq(groupId)
+						).withParentheses()
+					).and(
+						() -> {
+							if ((startDate == null) && (endDate == null)) {
+								return null;
+							}
+
+							if ((startDate != null) && (endDate == null)) {
+								return AssetLinkTable.INSTANCE.createDate.gt(
+									startDate);
+							}
+
+							if (startDate == null) {
+								return AssetLinkTable.INSTANCE.createDate.lt(
+									startDate);
+							}
+
+							return AssetLinkTable.INSTANCE.createDate.gt(
+								startDate
+							).and(
+								AssetLinkTable.INSTANCE.createDate.lt(startDate)
+							);
+						}
+					)
+				)
+			));
 	}
 
 	/**
@@ -327,7 +409,38 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 	 */
 	@Override
 	public List<AssetLink> getLinks(long classNameId, long classPK) {
-		return assetLinkFinder.findByC_C(classNameId, classPK);
+		return assetLinkPersistence.dslQuery(
+			DSLQueryFactoryUtil.select(
+				AssetLinkTable.INSTANCE
+			).from(
+				AssetEntryTable.INSTANCE
+			).innerJoinON(
+				AssetLinkTable.INSTANCE,
+				AssetEntryTable.INSTANCE.entryId.eq(
+					AssetLinkTable.INSTANCE.entryId1)
+			).where(
+				AssetEntryTable.INSTANCE.classNameId.eq(
+					classNameId
+				).and(
+					AssetEntryTable.INSTANCE.classPK.eq(classPK)
+				)
+			).union(
+				DSLQueryFactoryUtil.select(
+					AssetLinkTable.INSTANCE
+				).from(
+					AssetEntryTable.INSTANCE
+				).innerJoinON(
+					AssetLinkTable.INSTANCE,
+					AssetEntryTable.INSTANCE.entryId.eq(
+						AssetLinkTable.INSTANCE.entryId2)
+				).where(
+					AssetEntryTable.INSTANCE.classNameId.eq(
+						classNameId
+					).and(
+						AssetEntryTable.INSTANCE.classPK.eq(classPK)
+					)
+				)
+			));
 	}
 
 	/**

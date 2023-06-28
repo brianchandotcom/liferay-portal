@@ -1,0 +1,146 @@
+@component-name = "portal-headless"
+definition {
+
+	property custom.properties = "feature.flag.LPS-180090=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Headless";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		task ("Given in Headless Admin Taxonomy of API Explorer") {
+			APIExplorer.navigateToOpenAPI(
+				api = "headless-admin-taxonomy",
+				version = "v1.0");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCPNoSelenium();
+		}
+	}
+
+	@priority = 4
+	test CanGetMethodAndHrefForKeywordActions {
+		task ("When I navigate to the Keyword Schema") {
+			APIExplorer.executeAllActionInSchema(
+				actionsList = "subscribe,unsubscribe,get,replace,delete",
+				schema = "Keyword");
+		}
+
+		task ("Then I can see method and href values for all available to an individual Keyword element actions ") {
+			APIExplorer.assertExposedActionsInSchema(
+				method = "PUT",
+				objectHref = "headless-admin-taxonomy/v1.0/keywords/{keywordId}/subscribe",
+				property = "subscribe",
+				schema = "Keyword");
+
+			APIExplorer.assertExposedActionsInSchema(
+				method = "PUT",
+				objectHref = "headless-admin-taxonomy/v1.0/keywords/{keywordId}/unsubscribe",
+				property = "unsubscribe",
+				schema = "Keyword");
+
+			APIExplorer.assertExposedActionsInSchema(
+				method = "GET",
+				objectHref = "headless-admin-taxonomy/v1.0/keywords/{keywordId}",
+				property = "get",
+				schema = "Keyword");
+
+			APIExplorer.assertExposedActionsInSchema(
+				method = "PUT",
+				objectHref = "headless-admin-taxonomy/v1.0/keywords/{keywordId}",
+				property = "replace",
+				schema = "Keyword");
+
+			APIExplorer.assertExposedActionsInSchema(
+				method = "DELETE",
+				objectHref = "headless-admin-taxonomy/v1.0/keywords/{keywordId}",
+				property = "delete",
+				schema = "Keyword");
+		}
+	}
+
+	@priority = 3
+	test CanGetMethodAndHrefForTaxonomyCategoryActions {
+		task ("When I navigate to the TaxonomyCategory Schema") {
+			APIExplorer.executeAllActionInSchema(
+				actionsList = "add-category,get,replace,update,delete",
+				schema = "TaxonomyCategory");
+		}
+
+		task ("Then I can see method and href values for all available to an individual TaxonomyCategory element actions") {
+			APIExplorer.assertExposedActionsInSchema(
+				method = "POST",
+				objectHref = "headless-admin-taxonomy/v1.0/taxonomy-categories/{parentTaxonomyCategoryId}/taxonomy-categories",
+				property = "add-category",
+				schema = "TaxonomyCategory");
+
+			APIExplorer.assertExposedActionsInSchema(
+				method = "GET",
+				objectHref = "headless-admin-taxonomy/v1.0/taxonomy-categories/{taxonomyCategoryId}",
+				property = "get",
+				schema = "TaxonomyCategory");
+
+			APIExplorer.assertExposedActionsInSchema(
+				method = "PUT",
+				objectHref = "headless-admin-taxonomy/v1.0/taxonomy-categories/{taxonomyCategoryId}",
+				property = "replace",
+				schema = "TaxonomyCategory");
+
+			APIExplorer.assertExposedActionsInSchema(
+				method = "PATCH",
+				objectHref = "headless-admin-taxonomy/v1.0/taxonomy-categories/{taxonomyCategoryId}",
+				property = "update",
+				schema = "TaxonomyCategory");
+
+			APIExplorer.assertExposedActionsInSchema(
+				method = "DELETE",
+				objectHref = "headless-admin-taxonomy/v1.0/taxonomy-categories/{taxonomyCategoryId}",
+				property = "delete",
+				schema = "TaxonomyCategory");
+		}
+	}
+
+	@priority = 3
+	test CanGetMethodAndHrefForTaxonomyVocabularyActions {
+		task ("When I navigate to the TaxonomyVocabulary Schema") {
+			APIExplorer.executeAllActionInSchema(
+				actionsList = "get,replace,update,delete",
+				schema = "TaxonomyVocabulary");
+		}
+
+		task ("Then I can see method and href values for all available to an individual TaxonomyVocabulary element actions") {
+			APIExplorer.assertExposedActionsInSchema(
+				method = "GET",
+				objectHref = "headless-admin-taxonomy/v1.0/taxonomy-vocabularies/{taxonomyVocabularyId}",
+				property = "get",
+				schema = "TaxonomyVocabulary");
+
+			APIExplorer.assertExposedActionsInSchema(
+				method = "PUT",
+				objectHref = "headless-admin-taxonomy/v1.0/taxonomy-vocabularies/{taxonomyVocabularyId}",
+				property = "replace",
+				schema = "TaxonomyVocabulary");
+
+			APIExplorer.assertExposedActionsInSchema(
+				method = "PATCH",
+				objectHref = "headless-admin-taxonomy/v1.0/taxonomy-vocabularies/{taxonomyVocabularyId}",
+				property = "update",
+				schema = "TaxonomyVocabulary");
+
+			APIExplorer.assertExposedActionsInSchema(
+				method = "DELETE",
+				objectHref = "headless-admin-taxonomy/v1.0/taxonomy-vocabularies/{taxonomyVocabularyId}",
+				property = "delete",
+				schema = "TaxonomyVocabulary");
+		}
+	}
+
+}

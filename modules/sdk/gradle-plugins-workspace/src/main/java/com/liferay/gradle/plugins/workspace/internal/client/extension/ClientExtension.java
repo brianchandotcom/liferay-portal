@@ -55,6 +55,7 @@ public class ClientExtension {
 		configMap.put(
 			"dxp.lxc.liferay.com.virtualInstanceId", virtualInstanceId);
 		configMap.put("name", name);
+		configMap.put("projectId", projectId);
 		configMap.put("projectName", projectName);
 		configMap.put("properties", _encode(properties));
 		configMap.put("sourceCodeURL", sourceCodeURL);
@@ -93,6 +94,7 @@ public class ClientExtension {
 	public String description = "";
 	public String id;
 	public String name = "";
+	public String projectId;
 	public String projectName;
 	public Map<String, Object> properties = Collections.emptyMap();
 	public String sourceCodeURL = "";

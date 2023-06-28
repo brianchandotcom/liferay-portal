@@ -191,6 +191,9 @@ public class ClientExtensionProjectConfigurator
 						clientExtension.classification = _getClassification(
 							clientExtension.id, clientExtension.type);
 
+						clientExtension.projectId =
+							StringUtil.toAlphaNumericLowerCase(
+								project.getName());
 						clientExtension.projectName = project.getName();
 
 						_validateClientExtension(clientExtension);

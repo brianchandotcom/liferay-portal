@@ -35,6 +35,8 @@ import com.liferay.asset.list.service.AssetListEntryLocalServiceUtil;
 import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalServiceUtil;
 import com.liferay.asset.list.util.comparator.ClassNameModelResourceComparator;
 import com.liferay.asset.list.web.internal.constants.AssetListWebKeys;
+import com.liferay.asset.tags.item.selector.AssetTagsItemSelectorReturnType;
+import com.liferay.asset.tags.item.selector.criterion.AssetTagsItemSelectorCriterion;
 import com.liferay.asset.util.AssetRendererFactoryClassProvider;
 import com.liferay.asset.util.comparator.AssetRendererFactoryTypeNameComparator;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
@@ -1008,18 +1010,19 @@ public class EditAssetListDisplayContext {
 	}
 
 	public String getTagSelectorURL() throws Exception {
+		AssetTagsItemSelectorCriterion assetTagsItemSelectorCriterion =
+			new AssetTagsItemSelectorCriterion();
+
+		assetTagsItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			new AssetTagsItemSelectorReturnType());
+		assetTagsItemSelectorCriterion.setGroupIds(getSelectedGroupIds());
+		assetTagsItemSelectorCriterion.setMultiSelection(true);
+
 		return PortletURLBuilder.create(
-			PortletProviderUtil.getPortletURL(
-				_httpServletRequest, AssetTag.class.getName(),
-				PortletProvider.Action.BROWSE)
-		).setParameter(
-			"eventName", _portletResponse.getNamespace() + "selectTag"
-		).setParameter(
-			"groupIds", StringUtil.merge(getSelectedGroupIds())
-		).setParameter(
-			"selectedTagNames", "{selectedTagNames}"
-		).setWindowState(
-			LiferayWindowState.POP_UP
+			_itemSelector.getItemSelectorURL(
+				RequestBackedPortletURLFactoryUtil.create(_httpServletRequest),
+				_portletResponse.getNamespace() + "selectTag",
+				assetTagsItemSelectorCriterion)
 		).buildString();
 	}
 

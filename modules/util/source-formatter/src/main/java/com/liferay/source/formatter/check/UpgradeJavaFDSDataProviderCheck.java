@@ -76,8 +76,7 @@ public class UpgradeJavaFDSDataProviderCheck extends BaseFileCheck {
 				javaMethodContent = StringUtil.replace(
 					javaMethodContent, methodCall,
 					_reorderParametersGetItems(
-						methodCall, methodCallGetItemsMatcher.group(1),
-						parameterList));
+						methodCall, methodCallGetItemsMatcher.group(1)));
 			}
 		}
 
@@ -99,8 +98,7 @@ public class UpgradeJavaFDSDataProviderCheck extends BaseFileCheck {
 				javaMethodContent = StringUtil.replace(
 					javaMethodContent, methodCall,
 					_reorderParametersGetItemsCount(
-						methodCall, methodCallGetItemsCountMatcher.group(1),
-						parameterList));
+						methodCall, methodCallGetItemsCountMatcher.group(1)));
 			}
 		}
 
@@ -115,18 +113,10 @@ public class UpgradeJavaFDSDataProviderCheck extends BaseFileCheck {
 			String methodCall = JavaSourceUtil.getMethodCall(
 				javaMethodContent, methodGetItemsMatcher.start());
 
-			List<String> parameterList = JavaSourceUtil.getParameterList(
-				methodCall);
-
-			String firstParameter = parameterList.get(0);
-
-			if (firstParameter.contains("HttpServletRequest")) {
-				javaMethodContent = StringUtil.replace(
-					javaMethodContent, methodCall,
-					_reorderParametersGetItems(
-						methodCall, methodGetItemsMatcher.group(1),
-						parameterList));
-			}
+			javaMethodContent = StringUtil.replace(
+				javaMethodContent, methodCall,
+				_reorderParametersGetItems(
+					methodCall, methodGetItemsMatcher.group(1)));
 		}
 
 		Matcher methodGetItemsCountMatcher =
@@ -136,18 +126,10 @@ public class UpgradeJavaFDSDataProviderCheck extends BaseFileCheck {
 			String methodCall = JavaSourceUtil.getMethodCall(
 				javaMethodContent, methodGetItemsCountMatcher.start());
 
-			List<String> parameterList = JavaSourceUtil.getParameterList(
-				methodCall);
-
-			String firstParameter = parameterList.get(0);
-
-			if (firstParameter.contains("HttpServletRequest")) {
-				javaMethodContent = StringUtil.replace(
-					javaMethodContent, methodCall,
-					_reorderParametersGetItemsCount(
-						methodCall, methodGetItemsCountMatcher.group(1),
-						parameterList));
-			}
+			javaMethodContent = StringUtil.replace(
+				javaMethodContent, methodCall,
+				_reorderParametersGetItemsCount(
+					methodCall, methodGetItemsCountMatcher.group(1)));
 		}
 
 		return javaMethodContent;
@@ -202,25 +184,31 @@ public class UpgradeJavaFDSDataProviderCheck extends BaseFileCheck {
 	}
 
 	private String _reorderParametersGetItems(
-		String methodCall, String parameters, List<String> parameterList) {
+		String methodCall, String parameters) {
 
-		String newParameters = StringBundler.concat(
-			parameterList.get(1), StringPool.COMMA_AND_SPACE,
-			parameterList.get(2), StringPool.COMMA_AND_SPACE,
-			parameterList.get(0), StringPool.COMMA_AND_SPACE,
-			parameterList.get(3));
+		List<String> parameterList = JavaSourceUtil.getParameterList(
+			methodCall);
 
-		return StringUtil.replace(methodCall, parameters, newParameters);
+		return StringUtil.replace(
+			methodCall, parameters,
+			StringBundler.concat(
+				parameterList.get(1), StringPool.COMMA_AND_SPACE,
+				parameterList.get(2), StringPool.COMMA_AND_SPACE,
+				parameterList.get(0), StringPool.COMMA_AND_SPACE,
+				parameterList.get(3)));
 	}
 
 	private String _reorderParametersGetItemsCount(
-		String methodCall, String parameters, List<String> parameterList) {
+		String methodCall, String parameters) {
 
-		String newParameters = StringBundler.concat(
-			parameterList.get(1), StringPool.COMMA_AND_SPACE,
-			parameterList.get(0));
+		List<String> parameterList = JavaSourceUtil.getParameterList(
+			methodCall);
 
-		return StringUtil.replace(methodCall, parameters, newParameters);
+		return StringUtil.replace(
+			methodCall, parameters,
+			StringBundler.concat(
+				parameterList.get(1), StringPool.COMMA_AND_SPACE,
+				parameterList.get(0)));
 	}
 
 	private static final Pattern _methodCallGetItemsCountPattern =
@@ -228,8 +216,9 @@ public class UpgradeJavaFDSDataProviderCheck extends BaseFileCheck {
 	private static final Pattern _methodCallGetItemsPattern = Pattern.compile(
 		"\\w+\\.getItems\\((\\s*.+,\\s*.+,\\s*.+,\\s*.+)\\s*\\)");
 	private static final Pattern _methodGetItemsCountPattern = Pattern.compile(
-		"getItemsCount\\((\\s*.+,\\s*.+)\\s*\\)");
+		"getItemsCount\\((\\s*HttpServletRequest\\s*.+,\\s*.+)\\s*\\)");
 	private static final Pattern _methodGetItemsPattern = Pattern.compile(
-		"getItems\\((\\s*.+,\\s*.+,\\s*.+,\\s*.+)\\s*\\)");
+		"getItems\\((\\s*HttpServletRequest\\s*.+,\\s*.+,\\s*.+,\\s*.+)" +
+			"\\s*\\)");
 
 }

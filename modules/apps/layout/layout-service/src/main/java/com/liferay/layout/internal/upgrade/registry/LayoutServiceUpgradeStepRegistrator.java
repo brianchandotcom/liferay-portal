@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutRevisionLocalService;
 import com.liferay.portal.kernel.service.LayoutSetBranchLocalService;
 import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
@@ -84,6 +85,12 @@ public class LayoutServiceUpgradeStepRegistrator
 			"1.3.0", "1.3.1",
 			new LayoutLocalizationUpgradeProcess(
 				_ctCollectionLocalService, _ctEntryLocalService, _portal));
+
+		registry.register(
+			"1.3.1", "1.4.0",
+			UpgradeProcessFactory.addColumns(
+				"LayoutClassedModelUsage",
+				"cmExternalReferenceCode VARCHAR(75) null"));
 	}
 
 	@Reference

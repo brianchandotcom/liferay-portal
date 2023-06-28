@@ -927,8 +927,7 @@ public class UserLocalServiceTest {
 			String reason = String.valueOf(
 				additionalInfoJSONObject.get("reason"));
 
-			Assert.assertEquals(
-				"User does not exist", reason);
+			Assert.assertEquals("User does not exist", reason);
 
 			Assert.assertEquals(
 				EventTypes.LOGIN_DNE, auditMessage.getEventType());

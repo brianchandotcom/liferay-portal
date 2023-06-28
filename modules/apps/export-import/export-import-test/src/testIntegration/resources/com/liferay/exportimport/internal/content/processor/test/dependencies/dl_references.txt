@@ -10,9 +10,9 @@ CREOLE image reference:
 {{/image/image_gallery?image_id=[$IMAGE_ID$][$TIMESTAMP$]}}
 {{/image/image_gallery?img_id=[$IMAGE_ID$][$TIMESTAMP$]}}
 {{/image/image_gallery?uuid=[$UUID$]&groupId=[$GROUP_ID$][$TIMESTAMP$]}}
-{{[$WEB_ID$]/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]}}
-{{[$WEB_ID$]/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$]}}
-{{[$WEB_ID$]/documents/portlet_file_entry/[$GROUP_ID$]/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]}}
+{{[$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]}}
+{{[$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$]}}
+{{[$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/portlet_file_entry/[$GROUP_ID$]/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]}}
 
 CREOLE link with text:
 
@@ -26,9 +26,9 @@ CREOLE link with text:
 [[/image/image_gallery?image_id=[$IMAGE_ID$][$TIMESTAMP$]|Link]]
 [[/image/image_gallery?img_id=[$IMAGE_ID$][$TIMESTAMP$]|Link]]
 [[/image/image_gallery?uuid=[$UUID$]&groupId=[$GROUP_ID$][$TIMESTAMP$]|Link]]
-[[[$WEB_ID$]/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]|Link]]
-[[[$WEB_ID$]/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$]|Link]]
-[[[$WEB_ID$]/documents/portlet_file_entry/[$GROUP_ID$]/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]|Link]]
+[[[$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]|Link]]
+[[[$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$]|Link]]
+[[[$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/portlet_file_entry/[$GROUP_ID$]/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]|Link]]
 
 CREOLE link without text:
 
@@ -42,9 +42,9 @@ CREOLE link without text:
 [[/image/image_gallery?image_id=[$IMAGE_ID$][$TIMESTAMP$]]]
 [[/image/image_gallery?img_id=[$IMAGE_ID$][$TIMESTAMP$]]]
 [[/image/image_gallery?uuid=[$UUID$]&groupId=[$GROUP_ID$][$TIMESTAMP$]]]
-[[[$WEB_ID$]/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]]]
-[[[$WEB_ID$]/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$]]]
-[[[$WEB_ID$]/documents/portlet_file_entry/[$GROUP_ID$]/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]]]
+[[[$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]]]
+[[[$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$]]]
+[[[$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/portlet_file_entry/[$GROUP_ID$]/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]]]
 
 HTML reference with no quotes:
 
@@ -58,9 +58,9 @@ HTML reference with no quotes:
 <a href=/image/image_gallery?image_id=[$IMAGE_ID$][$TIMESTAMP$]>Link</a>
 <a href=/image/image_gallery?img_id=[$IMAGE_ID$][$TIMESTAMP$]>Link</a>
 <a href=/image/image_gallery?uuid=[$UUID$]&groupId=[$GROUP_ID$][$TIMESTAMP$]>Link</a>
-<a href=[$WEB_ID$]/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]>Link</a>
-<a href=[$WEB_ID$]/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$]>Link</a>
-<a href=[$WEB_ID$]/documents/portlet_file_entry/[$GROUP_ID$]/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]>Link</a>
+<a href=[$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]>Link</a>
+<a href=[$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$]>Link</a>
+<a href=[$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/portlet_file_entry/[$GROUP_ID$]/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]>Link</a>
 
 HTML reference with no quotes but space:
 
@@ -74,9 +74,9 @@ HTML reference with no quotes but space:
 <a href=/image/image_gallery?image_id=[$IMAGE_ID$][$TIMESTAMP$] style=mustkeep>Link</a>
 <a href=/image/image_gallery?img_id=[$IMAGE_ID$][$TIMESTAMP$] style=mustkeep>Link</a>
 <a href=/image/image_gallery?uuid=[$UUID$]&groupId=[$GROUP_ID$][$TIMESTAMP$] style=mustkeep>Link</a>
-<a href=[$WEB_ID$]/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$] style=mustkeep>Link</a>
-<a href=[$WEB_ID$]/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$] style=mustkeep>Link</a>
-<a href=[$WEB_ID$]/documents/portlet_file_entry/[$GROUP_ID$]/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$] style=mustkeep>Link</a>
+<a href=[$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$] style=mustkeep>Link</a>
+<a href=[$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$] style=mustkeep>Link</a>
+<a href=[$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/portlet_file_entry/[$GROUP_ID$]/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$] style=mustkeep>Link</a>
 
 HTML reference with double quotes:
 
@@ -90,9 +90,9 @@ HTML reference with double quotes:
 <a href="/image/image_gallery?image_id=[$IMAGE_ID$][$TIMESTAMP$]">Link</a>
 <a href="/image/image_gallery?img_id=[$IMAGE_ID$][$TIMESTAMP$]">Link</a>
 <a href="/image/image_gallery?uuid=[$UUID$]&groupId=[$GROUP_ID$][$TIMESTAMP$]">Link</a>
-<a href="[$WEB_ID$]/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]">Link</a>
-<a href="[$WEB_ID$]/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$]">Link</a>
-<a href="[$WEB_ID$]/documents/portlet_file_entry/[$GROUP_ID$]/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]">Link</a>
+<a href="[$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]">Link</a>
+<a href="[$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$]">Link</a>
+<a href="[$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/portlet_file_entry/[$GROUP_ID$]/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]">Link</a>
 
 HTML reference with single quotes:
 
@@ -106,9 +106,9 @@ HTML reference with single quotes:
 <a href='/image/image_gallery?image_id=[$IMAGE_ID$][$TIMESTAMP$]'>Link</a>
 <a href='/image/image_gallery?img_id=[$IMAGE_ID$][$TIMESTAMP$]'>Link</a>
 <a href='/image/image_gallery?uuid=[$UUID$]&groupId=[$GROUP_ID$][$TIMESTAMP$]'>Link</a>
-<a href='[$WEB_ID$]/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]'>Link</a>
-<a href='[$WEB_ID$]/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$]'>Link</a>
-<a href='[$WEB_ID$]/documents/portlet_file_entry/[$GROUP_ID$]/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]'>Link</a>
+<a href='[$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]'>Link</a>
+<a href='[$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$]'>Link</a>
+<a href='[$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/portlet_file_entry/[$GROUP_ID$]/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]'>Link</a>
 
 Nonlegacy HTML reference with escaped double quotes:
 

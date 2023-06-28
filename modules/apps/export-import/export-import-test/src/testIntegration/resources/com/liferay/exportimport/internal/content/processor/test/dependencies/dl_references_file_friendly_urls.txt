@@ -1,44 +1,44 @@
 CREOLE image reference:
 
 {{/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]/}}
-{{[$WEB_ID$]/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]/}}
+{{[$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]/}}
 
 CREOLE link with text:
 
 [[/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]|Link]]
-[[[$WEB_ID$]/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]|Link]]
+[[[$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]|Link]]
 
 CREOLE link without text:
 
 [[/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]]]
-[[[$WEB_ID$]/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]]]
+[[[$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]]]
 
 HTML references with no quotes:
 
 <a href=/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]>Link</a>
-<a href=[$WEB_ID$]/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]>Link</a>
+<a href=[$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]>Link</a>
 
 # HTML references with no quotes but space:
 
 <a href=/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$] style=mustkeep>Link</a>
-<a href=[$WEB_ID$]/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$] style=mustkeep>Link</a>
+<a href=[$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$] style=mustkeep>Link</a>
 
 HTML references with double quotes:
 
 <a href="/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]">Link</a>
-<a href="[$WEB_ID$]/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]">Link</a>
+<a href="[$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]">Link</a>
 
 HTML references with single quotes:
 
 <a href='/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]'>Link</a>
-<a href='[$WEB_ID$]/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]'>Link</a>
+<a href='[$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]'>Link</a>
 
 Nonlegacy HTML reference with escaped double quotes:
 
 <a href=\"/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]\">Link</a>
-<a href=\"[$WEB_ID$]/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]\">Link</a>
+<a href=\"[$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]\">Link</a>
 
 Nonlegacy HTML reference with escaped single quotes:
 
 <a href=\'/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]\'>Link</a>
-<a href=\'[$WEB_ID$]/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]\'>Link</a>
+<a href=\'[$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]\'>Link</a>

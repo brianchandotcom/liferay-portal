@@ -646,23 +646,17 @@ public class EditableFragmentEntryProcessorTest {
 		return elements.get(0);
 	}
 
-	private FragmentEntryProcessorContext _getFragmentEntryProcessorContext()
-		throws Exception {
-
-		return _getFragmentEntryProcessorContext(
-			LocaleUtil.getMostRelevantLocale());
-	}
-
 	private FragmentEntryProcessorContext _getFragmentEntryProcessorContext(
-			Locale locale)
+			Locale locale, String mode)
 		throws Exception {
 
 		return new DefaultFragmentEntryProcessorContext(
-			_getHttpServletRequest(), null, FragmentEntryLinkConstants.EDIT,
-			locale);
+			_getHttpServletRequest(locale), null, mode, locale);
 	}
 
-	private HttpServletRequest _getHttpServletRequest() throws Exception {
+	private HttpServletRequest _getHttpServletRequest(Locale locale)
+		throws Exception {
+
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
@@ -673,6 +667,7 @@ public class EditableFragmentEntryProcessorTest {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		themeDisplay.setCompany(_company);
+		themeDisplay.setLanguageId(LocaleUtil.toLanguageId(locale));
 		themeDisplay.setLayout(_layout);
 
 		LayoutSet layoutSet = _group.getPublicLayoutSet();
@@ -730,10 +725,11 @@ public class EditableFragmentEntryProcessorTest {
 		return bodyElement.html();
 	}
 
-	private ThemeDisplay _getThemeDisplay() throws Exception {
+	private ThemeDisplay _getThemeDisplay(Locale locale) throws Exception {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		themeDisplay.setCompany(_company);
+		themeDisplay.setLanguageId(LocaleUtil.toLanguageId(locale));
 		themeDisplay.setLayout(_layout);
 
 		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
@@ -748,7 +744,7 @@ public class EditableFragmentEntryProcessorTest {
 				_company.getCompanyId(), layoutSet.getThemeId()),
 			null);
 		themeDisplay.setRealUser(TestPropsValues.getUser());
-		themeDisplay.setRequest(_getHttpServletRequest());
+		themeDisplay.setRequest(_getHttpServletRequest(locale));
 		themeDisplay.setResponse(new MockHttpServletResponse());
 		themeDisplay.setUser(TestPropsValues.getUser());
 

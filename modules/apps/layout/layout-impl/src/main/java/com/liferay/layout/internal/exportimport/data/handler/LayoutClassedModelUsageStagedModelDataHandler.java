@@ -229,6 +229,7 @@ public class LayoutClassedModelUsageStagedModelDataHandler
 		LayoutClassedModelUsage existingLayoutClassedModelUsage =
 			_layoutClassedModelUsageLocalService.fetchLayoutClassedModelUsage(
 				importedLayoutClassedModelUsage.getClassNameId(), classPK,
+				importedLayoutClassedModelUsage.getCMExternalReferenceCode(),
 				importedLayoutClassedModelUsage.getContainerKey(),
 				containerTypeClassNameId, plid);
 

@@ -20,6 +20,7 @@ import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase
 import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -147,7 +148,7 @@ public class LayoutClassedModelUsageStagedModelDataHandlerTest
 		return _layoutClassedModelUsageLocalService.addLayoutClassedModelUsage(
 			group.getGroupId(),
 			_classNameLocalService.getClassNameId(_CLASS_NAME), _classPK,
-			_containerKey,
+			StringPool.BLANK, _containerKey,
 			_classNameLocalService.getClassNameId(_CLASS_NAME_CONTAINER_TYPE),
 			layout.getPlid(),
 			ServiceContextTestUtil.getServiceContext(

@@ -345,8 +345,8 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 			Assert.assertNotNull(
 				_layoutClassedModelUsageLocalService.
 					fetchLayoutClassedModelUsage(
-						_journalArticleClassNameId, classPK, containerKey,
-						containerType, plid));
+						_journalArticleClassNameId, classPK, StringPool.BLANK,
+						containerKey, containerType, plid));
 		}
 	}
 

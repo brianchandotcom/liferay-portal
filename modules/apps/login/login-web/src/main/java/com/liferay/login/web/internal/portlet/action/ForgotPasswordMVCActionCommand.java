@@ -266,8 +266,6 @@ public class ForgotPasswordMVCActionCommand extends BaseMVCActionCommand {
 					"Inactive user " + user.getUuid());
 			}
 
-			_userLocalService.checkLockout(user);
-
 			return user;
 		}
 		catch (Exception exception) {

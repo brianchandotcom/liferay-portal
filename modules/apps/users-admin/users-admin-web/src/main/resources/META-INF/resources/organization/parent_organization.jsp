@@ -94,7 +94,7 @@ if (parentOrganizationId != OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID
 			).put(
 				"parentOrganizationId", (parentOrganization != null) ? parentOrganization.getOrganizationId() : ""
 			).put(
-				"selectOrganizationRenderURL", userDisplayContext.getOrganizationItemSelectorURL()
+				"selectOrganizationRenderURL", userDisplayContext.getOrganizationItemSelectorURL(false)
 			).build()
 		%>'
 	/>

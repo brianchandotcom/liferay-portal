@@ -154,25 +154,18 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 		if (selectOrganizationLink) {
 			selectOrganizationLink.on('click', (event) => {
 				Liferay.Util.openSelectionModal({
-					onSelect: (event) => {
-						if (event) {
-							const selectedItem = JSON.parse(event.value);
+					multiple: true,
+					onSelect(data) {
+						if (data.value && data.value.length) {
+							document.<portlet:namespace />fm.<portlet:namespace />addOrganizationIds.value = Array.from(
+								data.value
+							)
+								.map((selectedItem) => {
+									const organization = JSON.parse(selectedItem);
 
-							var addOrganizationIds = [];
-
-							var organizationValues =
-								document.<portlet:namespace />fm
-									.<portlet:namespace />addOrganizationIds.value;
-
-							if (organizationValues) {
-								addOrganizationIds.push(organizationValues);
-							}
-
-							addOrganizationIds.push(selectedItem.organizationId);
-
-							document.<portlet:namespace />fm.<portlet:namespace />addOrganizationIds.value = addOrganizationIds.join(
-								','
-							);
+									return organization.organizationId;
+								})
+								.join(',');
 
 							submitForm(document.<portlet:namespace />fm);
 						}
@@ -180,7 +173,8 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 					selectEventName: '<portlet:namespace />selectOrganization',
 					title:
 						'<liferay-ui:message arguments="organization" key="select-x" />',
-					url: '<%= userDisplayContext.getOrganizationItemSelectorURL() %>',
+					url:
+						'<%= userDisplayContext.getOrganizationItemSelectorURL(true) %>',
 				});
 			});
 		}

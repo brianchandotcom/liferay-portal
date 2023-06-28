@@ -137,7 +137,9 @@ public class UserDisplayContext {
 			_selUser.getUserId());
 	}
 
-	public String getOrganizationItemSelectorURL() throws PortalException {
+	public String getOrganizationItemSelectorURL(boolean multiSelection)
+		throws PortalException {
+
 		ItemSelector itemSelector =
 			(ItemSelector)_httpServletRequest.getAttribute(
 				ItemSelector.class.getName());
@@ -147,6 +149,7 @@ public class UserDisplayContext {
 
 		organizationItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new UUIDItemSelectorReturnType());
+		organizationItemSelectorCriterion.setMultiSelection(multiSelection);
 		organizationItemSelectorCriterion.setSelectedOrganizationIds(
 			_getSelectedOrganizationIds());
 

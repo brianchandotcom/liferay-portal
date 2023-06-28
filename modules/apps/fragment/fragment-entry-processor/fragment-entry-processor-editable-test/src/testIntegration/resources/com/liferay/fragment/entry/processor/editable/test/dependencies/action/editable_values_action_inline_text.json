@@ -1,0 +1,11 @@
+{
+	"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor": {
+		"editable_action": {
+			"config": {
+			},
+			"defaultValue": "Default Action Text",
+			"en_US": "Custom Action Text en_US",
+			"es_ES": "Custom Action Text es_ES"
+		}
+	}
+}

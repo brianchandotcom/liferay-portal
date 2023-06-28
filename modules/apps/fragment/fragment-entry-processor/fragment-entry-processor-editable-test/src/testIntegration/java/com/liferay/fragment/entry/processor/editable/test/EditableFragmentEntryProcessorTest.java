@@ -200,6 +200,44 @@ public class EditableFragmentEntryProcessorTest {
 	}
 
 	@Test
+	public void testFragmentEntryProcessorEditableActionInlineText()
+		throws Exception {
+
+		long classNameId = _portal.getClassNameId(
+			ObjectDefinition.class.getName() + "#" +
+				RandomTestUtil.randomLong());
+
+		long classPK = RandomTestUtil.randomLong();
+
+		String fieldId =
+			ObjectAction.class.getSimpleName() + StringPool.UNDERLINE +
+				RandomTestUtil.randomLong();
+
+		String editableValues = _getEditableFieldValues(
+			classNameId, classPK, fieldId,
+			"action/editable_values_action_inline_text.json");
+
+		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink(
+			editableValues, "action/fragment_entry_action.html");
+
+		Element element = _getElement(
+			"data-lfr-editable-id", "editable_action", fragmentEntryLink,
+			LocaleUtil.US, FragmentEntryLinkConstants.VIEW);
+
+		TextNode textNode = (TextNode)element.childNode(0);
+
+		Assert.assertEquals("Custom Action Text en_US", textNode.text());
+
+		element = _getElement(
+			"data-lfr-editable-id", "editable_action", fragmentEntryLink,
+			LocaleUtil.SPAIN, FragmentEntryLinkConstants.VIEW);
+
+		textNode = (TextNode)element.childNode(0);
+
+		Assert.assertEquals("Custom Action Text es_ES", textNode.text());
+	}
+
+	@Test
 	public void testFragmentEntryProcessorEditableActionMappedActionEditMode()
 		throws Exception {
 

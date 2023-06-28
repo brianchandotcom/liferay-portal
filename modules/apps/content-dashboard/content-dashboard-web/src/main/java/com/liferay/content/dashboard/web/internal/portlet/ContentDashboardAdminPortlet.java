@@ -169,7 +169,7 @@ public class ContentDashboardAdminPortlet extends MVCPortlet {
 					_assetCategoryLocalService, _assetVocabularyLocalService,
 					contentDashboardAdminDisplayContext,
 					_contentDashboardItemFilterProviderRegistry,
-					_groupLocalService,
+					_groupLocalService, _itemSelector,
 					_portal.getHttpServletRequest(renderRequest), _language,
 					liferayPortletRequest, liferayPortletResponse,
 					_portal.getLocale(renderRequest), _userLocalService);

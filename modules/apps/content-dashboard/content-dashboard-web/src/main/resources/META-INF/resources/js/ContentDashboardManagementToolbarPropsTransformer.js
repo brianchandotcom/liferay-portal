@@ -142,8 +142,9 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 					let redirectURL = itemData?.redirectURL;
 
 					assetTags.forEach((assetTag) => {
+						const selectedValue = JSON.parse(assetTag);
 						redirectURL = addParams(
-							`${portletNamespace}assetTagId=${assetTag}`,
+							`${portletNamespace}assetTagId=${selectedValue.tagName}`,
 							redirectURL
 						);
 					});

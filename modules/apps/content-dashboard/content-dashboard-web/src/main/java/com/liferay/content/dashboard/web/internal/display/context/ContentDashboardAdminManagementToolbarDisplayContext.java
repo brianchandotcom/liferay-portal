@@ -15,9 +15,10 @@
 package com.liferay.content.dashboard.web.internal.display.context;
 
 import com.liferay.asset.kernel.model.AssetCategory;
-import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
+import com.liferay.asset.tags.item.selector.AssetTagsItemSelectorReturnType;
+import com.liferay.asset.tags.item.selector.criterion.AssetTagsItemSelectorCriterion;
 import com.liferay.content.dashboard.item.action.exception.ContentDashboardItemActionException;
 import com.liferay.content.dashboard.item.filter.ContentDashboardItemFilter;
 import com.liferay.content.dashboard.item.filter.provider.ContentDashboardItemFilterProvider;
@@ -31,6 +32,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuil
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
 import com.liferay.info.item.InfoItemReference;
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -47,10 +49,12 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -80,7 +84,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 		ContentDashboardAdminDisplayContext contentDashboardAdminDisplayContext,
 		ContentDashboardItemFilterProviderRegistry
 			contentDashboardItemFilterProviderRegistry,
-		GroupLocalService groupLocalService,
+		GroupLocalService groupLocalService, ItemSelector itemSelector,
 		HttpServletRequest httpServletRequest, Language language,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse, Locale locale,
@@ -97,6 +101,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 		_contentDashboardItemFilterProviderRegistry =
 			contentDashboardItemFilterProviderRegistry;
 		_groupLocalService = groupLocalService;
+		_itemSelector = itemSelector;
 		_language = language;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
@@ -555,33 +560,28 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 		).buildPortletURL();
 	}
 
-	private PortletURL _getAssetTagSelectorURL() throws PortalException {
-		return PortletURLBuilder.create(
-			PortletProviderUtil.getPortletURL(
-				_liferayPortletRequest, AssetTag.class.getName(),
-				PortletProvider.Action.BROWSE)
-		).setParameter(
-			"eventName",
-			_liferayPortletResponse.getNamespace() + "selectedAssetTag"
-		).setParameter(
-			"groupIds",
-			() -> {
-				ThemeDisplay themeDisplay =
-					(ThemeDisplay)_liferayPortletRequest.getAttribute(
-						WebKeys.THEME_DISPLAY);
+	private PortletURL _getAssetTagSelectorURL() {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_liferayPortletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-				return StringUtil.merge(
-					_groupLocalService.getGroupIds(
-						themeDisplay.getCompanyId(), true),
-					StringPool.COMMA);
-			}
-		).setParameter(
-			"selectedTagNames",
-			StringUtil.merge(
-				_contentDashboardAdminDisplayContext.getAssetTagIds(),
-				StringPool.COMMA)
-		).setWindowState(
-			LiferayWindowState.POP_UP
+		AssetTagsItemSelectorCriterion assetTagsItemSelectorCriterion =
+			new AssetTagsItemSelectorCriterion();
+
+		assetTagsItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			new AssetTagsItemSelectorReturnType());
+		assetTagsItemSelectorCriterion.setGroupIds(
+			ArrayUtil.toLongArray(
+				_groupLocalService.getGroupIds(
+					themeDisplay.getCompanyId(), true)));
+		assetTagsItemSelectorCriterion.setMultiSelection(true);
+
+		return PortletURLBuilder.create(
+			_itemSelector.getItemSelectorURL(
+				RequestBackedPortletURLFactoryUtil.create(
+					_liferayPortletRequest),
+				_liferayPortletResponse.getNamespace() + "selectTag",
+				assetTagsItemSelectorCriterion)
 		).buildPortletURL();
 	}
 
@@ -929,6 +929,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 	private final ContentDashboardItemFilterProviderRegistry
 		_contentDashboardItemFilterProviderRegistry;
 	private final GroupLocalService _groupLocalService;
+	private final ItemSelector _itemSelector;
 	private final Language _language;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;

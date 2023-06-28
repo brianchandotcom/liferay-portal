@@ -20,13 +20,13 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portal.kernel.util.FileUtil;
 
 import java.io.InputStream;
 
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alicia García
@@ -43,7 +43,7 @@ public class FileEntryTextExtractor implements TextExtractor<FileEntry> {
 			try (InputStream inputStream = fileVersion.getContentStream(
 					false)) {
 
-				return FileUtil.extractText(inputStream);
+				return _textExtractor.extractText(inputStream, -1);
 			}
 		}
 		catch (Exception exception) {
@@ -60,5 +60,8 @@ public class FileEntryTextExtractor implements TextExtractor<FileEntry> {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FileEntryTextExtractor.class);
+
+	@Reference
+	private com.liferay.portal.kernel.util.TextExtractor _textExtractor;
 
 }

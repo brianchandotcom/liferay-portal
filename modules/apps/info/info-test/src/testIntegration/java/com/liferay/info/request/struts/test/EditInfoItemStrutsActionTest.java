@@ -72,7 +72,6 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.upload.FileItem;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -81,6 +80,7 @@ import com.liferay.portal.kernel.util.ProgressTracker;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TextExtractor;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -678,7 +678,8 @@ public class EditInfoItemStrutsActionTest {
 			Assert.assertEquals(
 				attachmentValue,
 				StringUtil.removeSubstring(
-					FileUtil.extractText(dlFileEntry.getContentStream()),
+					_textExtractor.extractText(
+						dlFileEntry.getContentStream(), -1),
 					StringPool.NEW_LINE));
 		}
 
@@ -834,6 +835,9 @@ public class EditInfoItemStrutsActionTest {
 
 	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
+
+	@Inject
+	private TextExtractor _textExtractor;
 
 	private User _user;
 

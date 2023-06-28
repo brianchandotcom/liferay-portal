@@ -36,11 +36,11 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TextExtractor;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.test.util.FieldValuesAssert;
 import com.liferay.portal.test.rule.Inject;
@@ -160,9 +160,10 @@ public class DLFileEntryIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 	}
 
 	private String _getContents(FileEntry fileEntry) throws Exception {
-		String contents = FileUtil.extractText(
+		String contents = _textExtractor.extractText(
 			_dlFileEntryLocalService.getFileAsStream(
-				fileEntry.getFileEntryId(), fileEntry.getVersion(), false));
+				fileEntry.getFileEntryId(), fileEntry.getVersion(), false),
+			-1);
 
 		return contents.trim();
 	}
@@ -416,5 +417,8 @@ public class DLFileEntryIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 	private DLFileEntryLocalService _dlFileEntryLocalService;
 
 	private FileEntrySearchFixture _fileEntrySearchFixture;
+
+	@Inject
+	private TextExtractor _textExtractor;
 
 }

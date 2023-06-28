@@ -86,10 +86,9 @@ public class SXPBlueprintInfoCollectionProvider
 		CollectionQuery collectionQuery) {
 
 		try {
-			Pagination pagination = collectionQuery.getPagination();
-
 			SearchRequestBuilder searchRequestBuilder =
-				_getSearchRequestBuilder(collectionQuery, pagination);
+				_getSearchRequestBuilder(
+					collectionQuery, collectionQuery.getPagination());
 
 			SearchResponse searchResponse = _searcher.search(
 				searchRequestBuilder.build());

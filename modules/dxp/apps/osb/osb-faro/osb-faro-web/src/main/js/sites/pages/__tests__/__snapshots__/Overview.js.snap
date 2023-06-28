@@ -547,6 +547,7 @@ exports[`Sites Dashboard Overview render 1`] = `
                   role="combobox"
                   style=""
                   tabindex="0"
+                  type="button"
                 >
                   All Visitors
                 </button>
@@ -570,6 +571,7 @@ exports[`Sites Dashboard Overview render 1`] = `
                   class="form-control form-control-select form-control-select-secondary interval-select"
                   role="combobox"
                   tabindex="0"
+                  type="button"
                 >
                   Day
                 </button>

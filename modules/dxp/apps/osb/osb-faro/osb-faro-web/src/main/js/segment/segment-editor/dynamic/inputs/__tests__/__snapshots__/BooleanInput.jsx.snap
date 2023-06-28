@@ -36,6 +36,7 @@ exports[`BooleanInput should render 1`] = `
           role="combobox"
           style=""
           tabindex="0"
+          type="button"
         >
           Select an option
         </button>
@@ -83,6 +84,7 @@ exports[`BooleanInput should render with data 1`] = `
           role="combobox"
           style=""
           tabindex="0"
+          type="button"
         >
           True
         </button>

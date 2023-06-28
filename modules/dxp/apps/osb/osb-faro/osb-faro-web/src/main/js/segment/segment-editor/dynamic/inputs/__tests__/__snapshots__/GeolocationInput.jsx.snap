@@ -34,6 +34,7 @@ exports[`GeolocationInput should render 1`] = `
           role="combobox"
           style=""
           tabindex="0"
+          type="button"
         >
           was
         </button>
@@ -115,6 +116,7 @@ exports[`GeolocationInput should render 1`] = `
           role="combobox"
           style=""
           tabindex="0"
+          type="button"
         >
           on
         </button>

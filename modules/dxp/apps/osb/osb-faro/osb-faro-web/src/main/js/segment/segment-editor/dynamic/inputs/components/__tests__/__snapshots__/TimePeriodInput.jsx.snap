@@ -12,6 +12,7 @@ exports[`TimePeriodInput should render 1`] = `
     role="combobox"
     style=""
     tabindex="0"
+    type="button"
   >
     Last 7 days
   </button>

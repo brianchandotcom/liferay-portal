@@ -108,6 +108,7 @@ exports[`AssignSegments should render 1`] = `
                     role="combobox"
                     style=""
                     tabindex="0"
+                    type="button"
                   >
                     Select an option
                   </button>
@@ -134,6 +135,7 @@ exports[`AssignSegments should render 1`] = `
                     required=""
                     role="combobox"
                     tabindex="0"
+                    type="button"
                   >
                     Select an option
                   </button>

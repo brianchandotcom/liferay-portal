@@ -84,6 +84,7 @@ exports[`Data Privacy Overview should render 1`] = `
                       role="combobox"
                       style=""
                       tabindex="0"
+                      type="button"
                     >
                       Select an option
                     </button>

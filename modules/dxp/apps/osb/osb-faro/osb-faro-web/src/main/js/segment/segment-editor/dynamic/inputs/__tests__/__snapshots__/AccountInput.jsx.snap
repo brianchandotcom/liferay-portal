@@ -30,6 +30,7 @@ exports[`AccountInput should render 1`] = `
           role="combobox"
           style=""
           tabindex="0"
+          type="button"
         >
           is
         </button>

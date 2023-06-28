@@ -66,6 +66,7 @@ exports[`CriteriaRow should render 1`] = `
                   role="combobox"
                   style=""
                   tabindex="0"
+                  type="button"
                 >
                   is not
                 </button>
@@ -123,6 +124,7 @@ exports[`CriteriaRow should render 1`] = `
               data-testid="conjunction-input"
               role="combobox"
               tabindex="0"
+              type="button"
             >
               after
             </button>

@@ -14,6 +14,7 @@ exports[`AttributeConjunctionInput should render 1`] = `
       role="combobox"
       style=""
       tabindex="0"
+      type="button"
     >
       displayName-1
     </button>
@@ -30,6 +31,7 @@ exports[`AttributeConjunctionInput should render 1`] = `
       class="form-control form-control-select form-control-select-secondary operator-input"
       role="combobox"
       tabindex="0"
+      type="button"
     />
   </div>
   <div

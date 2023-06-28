@@ -46,6 +46,7 @@ exports[`EventInput should render 1`] = `
           role="combobox"
           style=""
           tabindex="0"
+          type="button"
         />
       </div>
       <div
@@ -83,6 +84,7 @@ exports[`EventInput should render 1`] = `
           role="combobox"
           style=""
           tabindex="0"
+          type="button"
         >
           since
         </button>
@@ -102,6 +104,7 @@ exports[`EventInput should render 1`] = `
           role="combobox"
           style=""
           tabindex="0"
+          type="button"
         >
           Last 24 hours
         </button>
@@ -131,6 +134,7 @@ exports[`EventInput should render 1`] = `
           role="combobox"
           style=""
           tabindex="0"
+          type="button"
         >
           displayName-2
         </button>
@@ -147,6 +151,7 @@ exports[`EventInput should render 1`] = `
           class="form-control form-control-select form-control-select-secondary operator-input"
           role="combobox"
           tabindex="0"
+          type="button"
         />
       </div>
       <div

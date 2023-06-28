@@ -106,33 +106,33 @@ public class UpgradeJavaFDSDataProviderCheck extends BaseFileCheck {
 	}
 
 	private String _formatMethodDefinition(String javaMethodContent) {
-		Matcher methodGetItemsMatcher = _methodGetItemsPattern.matcher(
-			javaMethodContent);
+		Matcher matcher = _methodGetItemsPattern.matcher(javaMethodContent);
 
-		if (methodGetItemsMatcher.find()) {
-			String methodCall = JavaSourceUtil.getMethodCall(
-				javaMethodContent, methodGetItemsMatcher.start());
+		boolean matchedGetItems = matcher.find();
 
-			javaMethodContent = StringUtil.replace(
-				javaMethodContent, methodCall,
-				_reorderParametersGetItems(
-					methodCall, methodGetItemsMatcher.group(1)));
+		if (!matchedGetItems) {
+			matcher = _methodGetItemsCountPattern.matcher(javaMethodContent);
+
+			if (!matcher.find()) {
+				return javaMethodContent;
+			}
 		}
 
-		Matcher methodGetItemsCountMatcher =
-			_methodGetItemsCountPattern.matcher(javaMethodContent);
+		String methodCall = JavaSourceUtil.getMethodCall(
+			javaMethodContent, matcher.start());
 
-		if (methodGetItemsCountMatcher.find()) {
-			String methodCall = JavaSourceUtil.getMethodCall(
-				javaMethodContent, methodGetItemsCountMatcher.start());
+		String newMethodCall;
 
-			javaMethodContent = StringUtil.replace(
-				javaMethodContent, methodCall,
-				_reorderParametersGetItemsCount(
-					methodCall, methodGetItemsCountMatcher.group(1)));
+		if (matchedGetItems) {
+			newMethodCall = _reorderParametersGetItems(
+				methodCall, matcher.group(1));
+		}
+		else {
+			newMethodCall = _reorderParametersGetItemsCount(
+				methodCall, matcher.group(1));
 		}
 
-		return javaMethodContent;
+		return StringUtil.replace(javaMethodContent, methodCall, newMethodCall);
 	}
 
 	private String _formatMethodDefinitions(

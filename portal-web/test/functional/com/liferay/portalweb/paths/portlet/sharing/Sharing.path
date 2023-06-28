@@ -69,7 +69,7 @@
 
 <tr>
 	<td>MODAL_INVITE_TO_COLLABORATE_DROPDOWN</td>
-	<td>//div[contains(@class,'dropdown-menu')]//*[contains(@class,'dropdown-item')]</td>
+	<td>//div[contains(@class,'dropdown-menu')]//*[contains(@class,'dropdown-item')]//div[contains(@class,'autofit-row')]</td>
 	<td></td>
 </tr>
 <tr>

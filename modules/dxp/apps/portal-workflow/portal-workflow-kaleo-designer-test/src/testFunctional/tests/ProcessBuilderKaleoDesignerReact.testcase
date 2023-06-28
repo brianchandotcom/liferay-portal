@@ -1290,7 +1290,6 @@ definition {
 	@description = "Verify that the user can delete all notifications configurations"
 	@priority = 4
 	test CanDeleteMultipleNotifications {
-		property portal.upstream = "quarantine";
 		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
@@ -1418,7 +1417,6 @@ definition {
 	@description = "Verify that the user can delete a specific notification configuration"
 	@priority = 5
 	test CanDeleteSpecificNotification {
-		property portal.upstream = "quarantine";
 		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();

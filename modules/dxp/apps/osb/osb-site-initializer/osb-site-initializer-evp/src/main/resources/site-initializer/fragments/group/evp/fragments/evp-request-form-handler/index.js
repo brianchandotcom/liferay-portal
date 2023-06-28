@@ -246,15 +246,9 @@ const setDefaultUserInfo = async () => {
 		'[name="managerEmailAddress"]'
 	);
 
-	if (managerInformation) {
-		managerEmailAddress.readOnly = true;
-		managerEmailAddress.style.cursor = 'not-allowed';
-		managerEmailAddress.style.color = '#b1b2b8';
-		managerEmailAddress.value = managerInformation;
-	}
-	else {
-		managerEmailAddress.parentElement.style.display = 'none';
-	}
+	managerEmailAddress.readOnly = true;
+	managerEmailAddress.style.cursor = 'not-allowed';
+	managerEmailAddress.style.color = '#b1b2b8';
 
 	const phoneNumber =
 		userInformation[0]?.userAccountContactInformation?.telephones[0]
@@ -264,12 +258,16 @@ const setDefaultUserInfo = async () => {
 	if (!editPage) {
 		fullNameInput.value = userInformation[0]?.name;
 		emailAddressInput.value = userInformation[0]?.emailAddress;
-		
+
 		if (phoneNumber) {
 			phoneInput.readOnly = true;
 			phoneInput.style.cursor = 'not-allowed';
 			phoneInput.style.color = '#b1b2b8';
 			phoneInput.value = phoneNumber;
+		}
+
+		if (managerInformation) {
+			managerEmailAddress.value = managerInformation;
 		}
 	}
 };

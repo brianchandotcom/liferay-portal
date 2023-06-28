@@ -16,6 +16,8 @@ package com.liferay.commerce.payment.model.impl;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
 
 /**
@@ -35,5 +37,20 @@ public class CommercePaymentMethodGroupRelImpl
 			getImageId(), "&t=",
 			WebServerServletTokenUtil.getToken(getImageId()));
 	}
+
+	@Override
+	public UnicodeProperties getTypeSettingsUnicodeProperties() {
+		if (_typeSettingsUnicodeProperties == null) {
+			_typeSettingsUnicodeProperties = UnicodePropertiesBuilder.create(
+				true
+			).fastLoad(
+				getTypeSettings()
+			).build();
+		}
+
+		return _typeSettingsUnicodeProperties;
+	}
+
+	private transient UnicodeProperties _typeSettingsUnicodeProperties;
 
 }

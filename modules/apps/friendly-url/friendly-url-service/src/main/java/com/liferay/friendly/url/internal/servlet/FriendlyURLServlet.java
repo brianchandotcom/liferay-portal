@@ -118,7 +118,18 @@ public class FriendlyURLServlet extends HttpServlet {
 		int pos = path.indexOf(CharPool.SLASH, 1);
 
 		if (pos != -1) {
-			groupFriendlyURL = path.substring(0, pos);
+			String friendlyURL = path.substring(pos);
+
+			if (friendlyURL.startsWith(_PATH_DOCUMENTS)) {
+				String fileEntryFriendlyURL = friendlyURL.substring(
+					_PATH_DOCUMENTS.length() - 1);
+
+				groupFriendlyURL = fileEntryFriendlyURL.substring(
+					0, fileEntryFriendlyURL.indexOf(CharPool.SLASH, 1));
+			}
+			else {
+				groupFriendlyURL = path.substring(0, pos);
+			}
 		}
 
 		long companyId = PortalInstances.getCompanyId(httpServletRequest);
@@ -1003,6 +1014,8 @@ public class FriendlyURLServlet extends HttpServlet {
 
 		return groupLocale;
 	}
+
+	private static final String _PATH_DOCUMENTS = "/documents/d/";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FriendlyURLServlet.class);

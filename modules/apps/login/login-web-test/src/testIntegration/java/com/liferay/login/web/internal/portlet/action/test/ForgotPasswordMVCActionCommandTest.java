@@ -15,31 +15,35 @@
 package com.liferay.login.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.model.PasswordPolicy;
+import com.liferay.portal.kernel.model.Ticket;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.PasswordPolicyLocalServiceUtil;
-import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.TicketLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Date;
+import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import javax.portlet.PortletPreferences;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -51,6 +55,7 @@ import org.junit.runner.RunWith;
 
 /**
  * @author Alvaro Saugar
+ * @author Olivér Kecskeméty
  */
 @RunWith(Arquillian.class)
 public class ForgotPasswordMVCActionCommandTest {
@@ -62,87 +67,92 @@ public class ForgotPasswordMVCActionCommandTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		_companyId = TestPropsValues.getCompanyId();
-		_setUser();
-		_setMockLiferayPortletActionRequest();
+		_createUser();
+
+		_portletPreferences = PrefsPropsUtil.getPreferences(
+			TestPropsValues.getCompanyId());
+
+		_portletPreferences.setValue(
+			PropsKeys.USERS_REMINDER_QUERIES_ENABLED, Boolean.FALSE.toString());
+
+		_portletPreferences.store();
 	}
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
-		UserLocalServiceUtil.deleteUser(_forgotPasswordUser);
+		_portletPreferences.reset(PropsKeys.USERS_REMINDER_QUERIES_ENABLED);
 	}
 
 	@Test
-	public void testLockoutAnyUser() throws Exception {
-		_mvcActionCommand.processAction(
-			_mockLiferayPortletActionRequest,
-			new MockLiferayPortletActionResponse());
+	public void testSendPasswordReminderToLockedOutUser() throws Exception {
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					"com.liferay.captcha.configuration.CaptchaConfiguration",
+					HashMapDictionaryBuilder.<String, Object>put(
+						"sendPasswordCaptchaEnabled", false
+					).build())) {
 
-		User userReturn = (User)_mockLiferayPortletActionRequest.getAttribute(
-			WebKeys.FORGOT_PASSWORD_REMINDER_USER);
+			List<Ticket> ticketsBefore = _ticketLocalService.getTickets(
+				_user.getCompanyId(), User.class.getName(), _user.getUserId());
 
-		Assert.assertEquals(
-			userReturn.getEmailAddress(),
-			_forgotPasswordUser.getEmailAddress());
+			_mvcActionCommand.processAction(
+				_getMockLiferayPortletActionRequest(),
+				new MockLiferayPortletActionResponse());
+
+			List<Ticket> ticketsAfter = _ticketLocalService.getTickets(
+				_user.getCompanyId(), User.class.getName(), _user.getUserId());
+
+			Assert.assertTrue(
+				(ticketsBefore.size() + 1) == ticketsAfter.size());
+		}
 	}
 
-	private static ThemeDisplay _getThemeDisplay() throws Exception {
-		ThemeDisplay themeDisplay = new ThemeDisplay();
+	private static void _createUser() throws Exception {
+		_user = UserTestUtil.addUser();
 
-		themeDisplay.setCompany(
-			CompanyLocalServiceUtil.fetchCompany(_companyId));
+		_user.setLockout(true);
 
-		return themeDisplay;
-	}
+		_user.setLockoutDate(new Date());
 
-	private static void _setMockLiferayPortletActionRequest() throws Exception {
-		_mockLiferayPortletActionRequest =
-			new MockLiferayPortletActionRequest();
-
-		_mockLiferayPortletActionRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, _getThemeDisplay());
-
-		HttpServletRequest httpServletRequest =
-			_mockLiferayPortletActionRequest.getHttpServletRequest();
-
-		httpServletRequest.setAttribute(
-			JavaConstants.JAVAX_PORTLET_CONFIG, null);
-
-		HttpSession httpSession = httpServletRequest.getSession();
-
-		httpSession.setAttribute(WebKeys.CAPTCHA_TEXT, _CAPTCHA_TEXT);
-
-		_mockLiferayPortletActionRequest.addParameter(
-			"captchaText", _CAPTCHA_TEXT);
-
-		_mockLiferayPortletActionRequest.addParameter(
-			"login", _forgotPasswordUser.getEmailAddress());
-	}
-
-	private static void _setUser() throws Exception {
-		_forgotPasswordUser = UserTestUtil.addUser();
-
-		_forgotPasswordUser.setLockout(true);
-
-		_forgotPasswordUser.setLockoutDate(new Date());
-
-		PasswordPolicy passwordPolicy = _forgotPasswordUser.getPasswordPolicy();
+		PasswordPolicy passwordPolicy = _user.getPasswordPolicy();
 
 		passwordPolicy.setLockout(true);
 		passwordPolicy.setLockoutDuration(0);
 
 		PasswordPolicyLocalServiceUtil.updatePasswordPolicy(passwordPolicy);
 
-		UserLocalServiceUtil.updateUser(_forgotPasswordUser);
+		UserLocalServiceUtil.updateUser(_user);
 	}
 
-	private static final String _CAPTCHA_TEXT = StringUtil.toLowerCase(
-		RandomTestUtil.randomString());
+	private MockLiferayPortletActionRequest
+			_getMockLiferayPortletActionRequest()
+		throws Exception {
 
-	private static long _companyId;
-	private static User _forgotPasswordUser;
-	private static MockLiferayPortletActionRequest
-		_mockLiferayPortletActionRequest;
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			new MockLiferayPortletActionRequest();
+
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setCompany(
+			CompanyLocalServiceUtil.fetchCompany(
+				TestPropsValues.getCompanyId()));
+		themeDisplay.setUser(_user);
+
+		mockLiferayPortletActionRequest.setAttribute(
+			JavaConstants.JAVAX_PORTLET_CONFIG, null);
+		mockLiferayPortletActionRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
+
+		mockLiferayPortletActionRequest.addParameter(
+			"login", _user.getEmailAddress());
+
+		return mockLiferayPortletActionRequest;
+	}
+
+	private static PortletPreferences _portletPreferences;
+
+	@DeleteAfterTestRun
+	private static User _user;
 
 	@Inject(
 		filter = "mvc.command.name=/login/forgot_password",
@@ -151,7 +161,7 @@ public class ForgotPasswordMVCActionCommandTest {
 	private MVCActionCommand _mvcActionCommand;
 
 	@Inject
-	private RoleLocalService _roleLocalService;
+	private TicketLocalService _ticketLocalService;
 
 	@Inject
 	private UserLocalService _userLocalService;

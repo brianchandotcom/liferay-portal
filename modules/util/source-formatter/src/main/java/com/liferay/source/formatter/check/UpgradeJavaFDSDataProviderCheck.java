@@ -169,14 +169,14 @@ public class UpgradeJavaFDSDataProviderCheck extends BaseFileCheck {
 			String javaMethodContent = javaMethod.getContent();
 
 			if (implementedClassNames.contains("FDSDataProvider")) {
-				content = StringUtil.replace(
-					content, javaMethodContent,
-					_formatMethodDefinition(javaMethodContent));
+				javaMethodContent = _formatMethodDefinition(javaMethodContent);
 			}
 
+			javaMethodContent = _formatMethodCalls(
+				javaClass.getContent(), javaMethodContent);
+
 			content = StringUtil.replace(
-				content, javaMethodContent,
-				_formatMethodCalls(javaClass.getContent(), javaMethodContent));
+				content, javaMethod.getContent(), javaMethodContent);
 		}
 
 		return content;

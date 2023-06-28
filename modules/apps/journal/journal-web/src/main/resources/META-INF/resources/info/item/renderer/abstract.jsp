@@ -23,9 +23,10 @@ AssetRenderer<?> assetRenderer = (AssetRenderer)request.getAttribute(WebKeys.ASS
 
 <c:choose>
 	<c:when test="<%= (article != null) && article.isExpired() %>">
-		<div class="alert alert-warning">
-			<liferay-ui:message arguments="<%= HtmlUtil.escape(article.getTitle(locale)) %>" key="x-is-expired" />
-		</div>
+		<clay:alert
+			displayType="warning"
+			message='<%= LanguageUtil.format(request, "x-is-expired", HtmlUtil.escape(article.getTitle(locale))) %>'
+		/>
 	</c:when>
 	<c:otherwise>
 		<div class="asset-summary">

@@ -15,7 +15,7 @@
 package com.liferay.portal.workflow.kaleo.runtime.internal.action.executor;
 
 import com.liferay.portal.kernel.workflow.WorkflowException;
-import com.liferay.portal.kernel.workflow.WorkflowStatusManager;
+import com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil;
 import com.liferay.portal.workflow.kaleo.definition.ActionType;
 import com.liferay.portal.workflow.kaleo.model.KaleoAction;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
@@ -23,7 +23,6 @@ import com.liferay.portal.workflow.kaleo.runtime.action.executor.ActionExecutor;
 import com.liferay.portal.workflow.kaleo.runtime.action.executor.ActionExecutorException;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rafael Praxedes
@@ -37,7 +36,7 @@ public class UpdateStatusActionExecutor implements ActionExecutor {
 		throws ActionExecutorException {
 
 		try {
-			_workflowStatusManager.updateStatus(
+			WorkflowStatusManagerUtil.updateStatus(
 				kaleoAction.getStatus(), executionContext.getWorkflowContext());
 		}
 		catch (WorkflowException workflowException) {
@@ -49,8 +48,5 @@ public class UpdateStatusActionExecutor implements ActionExecutor {
 	public String getActionExecutorKey() {
 		return ActionType.UPDATE_STATUS.name();
 	}
-
-	@Reference
-	private WorkflowStatusManager _workflowStatusManager;
 
 }

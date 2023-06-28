@@ -32,6 +32,7 @@ import com.liferay.petra.string.StringPool;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
@@ -488,32 +489,34 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 		String classificationGrouping, File inputFile, File outputFile,
 		Map<String, String> substitutionMap) {
 
-		if (inputFile.exists()) {
-			_project.copy(
-				copy -> {
-					copy.from(inputFile);
-					copy.into(outputFile.getParentFile());
-				});
-
-			return;
-		}
-
 		String templatePath = String.format(
 			"dependencies/templates/%s/%s.tpl", classificationGrouping,
 			inputFile.getName());
 
-		try (InputStream inputStream =
-				CreateClientExtensionConfigTask.class.getResourceAsStream(
-					templatePath)) {
+		try {
+			InputStream inputStream1 = null;
 
-			String fileContent = StringUtil.read(inputStream);
-
-			for (Map.Entry<String, String> entry : substitutionMap.entrySet()) {
-				fileContent = fileContent.replace(
-					entry.getKey(), entry.getValue());
+			if (inputFile.exists()) {
+				inputStream1 = new FileInputStream(inputFile);
+			}
+			else {
+				inputStream1 =
+					CreateClientExtensionConfigTask.class.getResourceAsStream(
+						templatePath);
 			}
 
-			Files.write(outputFile.toPath(), fileContent.getBytes());
+			try (InputStream inputStream2 = inputStream1) {
+				String fileContent = StringUtil.read(inputStream2);
+
+				for (Map.Entry<String, String> entry :
+						substitutionMap.entrySet()) {
+
+					fileContent = fileContent.replace(
+						entry.getKey(), entry.getValue());
+				}
+
+				Files.write(outputFile.toPath(), fileContent.getBytes());
+			}
 		}
 		catch (IOException ioException) {
 			throw new GradleException(inputFile.getName() + " not specified");

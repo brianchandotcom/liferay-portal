@@ -65,6 +65,13 @@ public class PortalHotfixRelease {
 		}
 	}
 
+	public PortalHotfixRelease(URL portalHotfixReleaseURL) {
+		_portalHotfixReleaseURL = portalHotfixReleaseURL;
+
+		_portalFixpackRelease = null;
+		_portalRelease = null;
+	}
+
 	public PortalHotfixRelease(
 		URL portalHotfixReleaseURL, PortalFixpackRelease portalFixpackRelease,
 		PortalRelease portalRelease) {
@@ -97,29 +104,14 @@ public class PortalHotfixRelease {
 	}
 
 	public Set<String> getModifiedPackageNames() {
-		Set<String> packageNames = new HashSet<>();
+		Set<String> packageNames = _getJSONPackageNames();
 
-		PortalRelease portalRelease = getPortalRelease();
-
-		if (portalRelease == null) {
-			return packageNames;
-		}
-
-		String portalVersion = portalRelease.getPortalVersion();
-
-		if (portalVersion.startsWith("7.3") ||
-			portalVersion.startsWith("7.4")) {
-
-			packageNames = _getJSONPackageNames();
-		}
-		else if (portalVersion.startsWith("7.0") ||
-				 portalVersion.startsWith("7.1") ||
-				 portalVersion.startsWith("7.2")) {
-
+		if (packageNames == null) {
 			packageNames = _getXMLPackageNames();
 		}
-		else {
-			return packageNames;
+
+		if ((packageNames == null) || packageNames.isEmpty()) {
+			return new HashSet<>();
 		}
 
 		Set<String> modifiedPackageNames = new HashSet<>();
@@ -269,14 +261,14 @@ public class PortalHotfixRelease {
 	}
 
 	private Set<String> _getJSONPackageNames() {
-		Set<String> packageNames = new HashSet<>();
-
 		JSONObject fixpackDocumentationJSONObject =
 			_getFixpackDocumentationJSONObject();
 
 		if (fixpackDocumentationJSONObject == null) {
-			return packageNames;
+			return null;
 		}
+
+		Set<String> packageNames = new HashSet<>();
 
 		JSONObject filesJSONObject =
 			fixpackDocumentationJSONObject.getJSONObject("files");
@@ -320,13 +312,13 @@ public class PortalHotfixRelease {
 	}
 
 	private Set<String> _getXMLPackageNames() {
-		Set<String> packageNames = new HashSet<>();
-
 		Element fixpackDocumentationElement = _getFixpackDocumentationElement();
 
 		if (fixpackDocumentationElement == null) {
-			return packageNames;
+			return null;
 		}
+
+		Set<String> packageNames = new HashSet<>();
 
 		Element checksumsElement = fixpackDocumentationElement.element(
 			"checksums");

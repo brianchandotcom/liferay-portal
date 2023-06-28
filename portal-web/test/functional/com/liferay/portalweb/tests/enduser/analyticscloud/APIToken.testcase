@@ -1,0 +1,101 @@
+@component-name = "portal-analytics-cloud"
+definition {
+
+	property analytics.cloud.release = "true";
+	property analytics.cloud.upstream = "true";
+	property custom.properties = "jsonws.web.service.paths.excludes=";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property property.group = "analytics.cloud.profile";
+	property testray.main.component.name = "Analytics Cloud";
+
+	setUp {
+		task ("Copy the token from AC") {
+			ACUtils.launchAC();
+		}
+
+		task ("Navigate to settings > Api") {
+			ACNavigation.goToSettings();
+
+			ACSettings.goToApis();
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		ACUtils.tearDownDXP();
+
+		ACUtils.launchAC();
+
+		ACNavigation.goToSettings();
+
+		ACSettings.goToApis();
+
+		ACUtils.clickAnyButton(button = "Revoke");
+
+		ACUtils.clickAnyButton(button = "Continue");
+
+		// It is not possible to delete properties and data source after LRAC-13389. This functionality should return after LRAC-8040
+
+		//ACUtils.tearDownAC();
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONUser.tearDownNonAdminUsers();
+
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+		}
+	}
+
+	@description = "Feature ID: LRAC-13255 | Automation ID: LRAC-14071 | Test Summary: Add an Error Message When the API Token is Revoked or Nonexistent"
+	@priority = 3
+	test ErrorMessageAppearsWhenAPITokenIsRevokedOrNonexistent {
+		var type = "pages";
+
+		task ("Get the token value") {
+			var token = ACApi.getTokenValue();
+		}
+
+		task ("Revoke the token") {
+			ACUtils.clickAnyButton(button = "Revoke");
+
+			ACUtils.clickAnyButton(button = "Continue");
+		}
+
+		task ("Create a query using the revoked API token") {
+			var curl = '''
+				curl -i -H "Authorization: Bearer ${token}" -L ${analyticsCloudURL}/api/reports/${type}"
+			''';
+
+			var apiResponse = JSONCurlUtil.get(${curl});
+		}
+
+		task ("Assert that an error message appears in the API response") {
+			ACApi.assertApiResponse(
+				apiDataResponse = ${apiResponse},
+				expectedList = "HTTP/1.1 401");
+		}
+
+		task ("Get the token value") {
+			var token = ACApi.getTokenValue();
+		}
+
+		task ("Create a query using the API token") {
+			var curl = '''
+				curl -i -H "Authorization: Bearer ${token}" -L ${analyticsCloudURL}/api/reports/${type}"
+			''';
+
+			var apiResponse = JSONCurlUtil.get(${curl});
+		}
+
+		task ("Assert that an non-error message appears in the API response") {
+			ACApi.assertApiResponse(
+				apiDataResponse = ${apiResponse},
+				expectedList = "HTTP/1.1 200");
+		}
+	}
+
+}

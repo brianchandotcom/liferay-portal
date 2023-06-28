@@ -361,10 +361,7 @@ public class DLReferencesExportImportContentProcessor
 		throws PortalException {
 
 		if (((beginPos == 0) && (endPos == content.length())) ||
-			content.regionMatches(
-				true, beginPos - _OFFSET_HREF_ATTRIBUTE, "href=", 0, 5) ||
-			content.regionMatches(
-				true, beginPos - _OFFSET_SRC_ATTRIBUTE, "src=", 0, 4)) {
+			_isHTMLReference(content, beginPos)) {
 
 			return false;
 		}
@@ -441,18 +438,25 @@ public class DLReferencesExportImportContentProcessor
 
 			if (substring.startsWith(hostName) &&
 				(((curBeginPos == 0) && (endPos == content.length())) ||
-				 content.regionMatches(
-					 true, curBeginPos - _OFFSET_HREF_ATTRIBUTE, "href=", 0,
-					 5) ||
-				 content.regionMatches(
-					 true, curBeginPos - _OFFSET_SRC_ATTRIBUTE, "src=", 0,
-					 4))) {
+				 _isHTMLReference(content, curBeginPos))) {
 
 				return false;
 			}
 		}
 
 		return true;
+	}
+
+	private boolean _isHTMLReference(String content, int beginPos) {
+		if (content.regionMatches(
+				true, beginPos - _OFFSET_HREF_ATTRIBUTE, "href=", 0, 5) ||
+			content.regionMatches(
+				true, beginPos - _OFFSET_SRC_ATTRIBUTE, "src=", 0, 4)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private boolean _isLegacyURL(String content, int beginPos) {

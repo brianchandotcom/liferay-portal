@@ -118,7 +118,7 @@ public class StructuredContentResourceTest
 
 		Page<StructuredContent> page =
 			structuredContentResource.getSiteStructuredContentsPage(
-				testGroup.getGroupId(), true, null, null, "priority eq 3.0",
+				testGroup.getGroupId(), null, null, null, "priority eq 3.0",
 				Pagination.of(1, 10), null);
 
 		Assert.assertEquals(1, page.getTotalCount());
@@ -130,7 +130,7 @@ public class StructuredContentResourceTest
 		assertValid(page);
 
 		page = structuredContentResource.getSiteStructuredContentsPage(
-			testGroup.getGroupId(), true, null, null, null,
+			testGroup.getGroupId(), null, null, null, null,
 			Pagination.of(1, 10), null);
 
 		List<StructuredContent> structuredContents =
@@ -159,7 +159,7 @@ public class StructuredContentResourceTest
 			Double.valueOf(2.99));
 
 		page = structuredContentResource.getSiteStructuredContentsPage(
-			testGroup.getGroupId(), true, null, null, "priority ne 1.0",
+			testGroup.getGroupId(), null, null, null, "priority ne 1.0",
 			Pagination.of(1, 10), "priority:asc");
 
 		Assert.assertEquals(3, page.getTotalCount());
@@ -173,7 +173,7 @@ public class StructuredContentResourceTest
 		assertValid(page);
 
 		page = structuredContentResource.getSiteStructuredContentsPage(
-			testGroup.getGroupId(), true, null, null, "priority gt 0.99",
+			testGroup.getGroupId(), null, null, null, "priority gt 0.99",
 			Pagination.of(1, 10), "priority:desc");
 
 		Assert.assertEquals(3, page.getTotalCount());
@@ -187,7 +187,7 @@ public class StructuredContentResourceTest
 		assertValid(page);
 
 		page = structuredContentResource.getSiteStructuredContentsPage(
-			testGroup.getGroupId(), true, null, null, "priority ge 0.99",
+			testGroup.getGroupId(), null, null, null, "priority ge 0.99",
 			Pagination.of(1, 10), null);
 
 		Assert.assertEquals(4, page.getTotalCount());
@@ -201,7 +201,7 @@ public class StructuredContentResourceTest
 		assertValid(page);
 
 		page = structuredContentResource.getSiteStructuredContentsPage(
-			testGroup.getGroupId(), true, null, null, "priority gt 1.0",
+			testGroup.getGroupId(), null, null, null, "priority gt 1.0",
 			Pagination.of(1, 10), "priority");
 
 		Assert.assertEquals(2, page.getTotalCount());

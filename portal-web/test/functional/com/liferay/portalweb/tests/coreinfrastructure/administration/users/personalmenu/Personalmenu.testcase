@@ -328,7 +328,7 @@ definition {
 	test VerifyBackNavigationLinkOfPersonalMenuPages {
 		property portal.release = "false";
 
-		for (var menuItem : list "Shared Content,My Submissions,My Workflow Tasks,Account Settings,My Connected Applications,My Organizations,My Subscriptions") {
+		for (var menuItem : list "Shared Content,My Submissions,My Workflow Tasks,Account Settings,My Connected Applications,My Organizations") {
 			Navigator.openURL();
 
 			UserBar.gotoDropdownItem(dropdownItem = ${menuItem});

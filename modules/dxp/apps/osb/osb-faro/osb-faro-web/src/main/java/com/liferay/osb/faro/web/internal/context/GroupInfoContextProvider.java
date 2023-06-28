@@ -14,9 +14,13 @@
 
 package com.liferay.osb.faro.web.internal.context;
 
+import com.github.scribejava.core.exceptions.OAuthException;
+
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.oauth2.provider.model.OAuth2Authorization;
 import com.liferay.oauth2.provider.service.OAuth2AuthorizationLocalService;
+
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -52,6 +56,16 @@ public class GroupInfoContextProvider implements ContextProvider<GroupInfo> {
 				_oAuth2AuthorizationLocalService.
 					getOAuth2AuthorizationByAccessTokenContent(
 						authorization.substring(7));
+
+			Date currentDate = new Date(System.currentTimeMillis());
+
+			if (currentDate.after(
+					oAuth2Authorization.getAccessTokenExpirationDate())) {
+
+				throw new OAuthException(
+					"Your access token is invalid. Please check your token " +
+						"and try again.");
+			}
 
 			ExpandoBridge expandoBridge =
 				oAuth2Authorization.getExpandoBridge();

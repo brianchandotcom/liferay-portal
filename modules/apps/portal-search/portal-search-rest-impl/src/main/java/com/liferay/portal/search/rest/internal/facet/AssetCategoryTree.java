@@ -68,6 +68,10 @@ public class AssetCategoryTree {
 		}
 	}
 
+	public List<AssetCategoryNode> getChildren() {
+		return _rootAssetCategoryNode.getChildren();
+	}
+
 	public String getDisplayName() {
 		return _displayName;
 	}
@@ -120,6 +124,10 @@ public class AssetCategoryTree {
 
 		public void addToFrequency(int frequency) {
 			_frequency += frequency;
+		}
+
+		public List<AssetCategoryNode> getChildren() {
+			return _childrenAssetCategoryNodes;
 		}
 
 		public String getDisplayName() {

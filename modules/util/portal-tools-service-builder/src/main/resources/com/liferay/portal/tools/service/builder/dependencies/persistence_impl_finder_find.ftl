@@ -2277,13 +2277,9 @@ that may or may not be enforced with a unique index at the database level. Case
 			</#if>
 		</#list>
 
-		<#if entity.isChangeTrackingEnabled()>
-			boolean productionMode = ${ctPersistenceHelper}.isProductionMode(${entity.name}.class);
-		</#if>
-
 		Object[] finderArgs = null;
 
-		if (${useCache}) {
+		if (useFinderCache) {
 			finderArgs = new Object[] {
 				<#list entityColumns as entityColumn>
 					<#if stringUtil.equals(entityColumn.type, "Date")>
@@ -2301,9 +2297,13 @@ that may or may not be enforced with a unique index at the database level. Case
 
 		Object result = null;
 
-		if (${useCache}) {
+		if (useFinderCache) {
 			result = ${finderCache}.getResult(_finderPathFetchBy${entityFinder.name}, finderArgs, this);
 		}
+
+		<#if entity.isChangeTrackingEnabled()>
+			boolean productionMode = ${ctPersistenceHelper}.isProductionMode(${entity.name}.class);
+		</#if>
 
 		if (result instanceof ${entity.name}) {
 			${entity.name} ${entity.variableName} = (${entity.name})result;
@@ -2327,7 +2327,17 @@ that may or may not be enforced with a unique index at the database level. Case
 			) {
 				result = null;
 			}
+			<#if entity.isChangeTrackingEnabled()>
+				else if (!${ctPersistenceHelper}.isProductionMode(${entity.name}.class, ${entity.variableName}.getPrimaryKey())) {
+					result = null;
+				}
+			</#if>
 		}
+		<#if entity.isChangeTrackingEnabled()>
+			else if (!productionMode && result instanceof List<?>) {
+				result = null;
+			}
+		</#if>
 
 		if (result == null) {
 			StringBundler sb = new StringBundler(${entityColumns?size + 2});

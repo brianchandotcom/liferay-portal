@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Adam Brandizzi
  */
 @Component(service = PortalInstanceLifecycleListener.class)
-public class SynonymSetIndexCreationPortalInstanceLifecycleListener
+public class SynonymSetIndexPortalInstanceLifecycleListener
 	extends BasePortalInstanceLifecycleListener {
 
 	@Override
@@ -45,17 +45,36 @@ public class SynonymSetIndexCreationPortalInstanceLifecycleListener
 			return;
 		}
 
-		long companyId = company.getCompanyId();
-
 		SynonymSetIndexName synonymSetIndexName =
-			_synonymSetIndexNameBuilder.getSynonymSetIndexName(companyId);
+			_synonymSetIndexNameBuilder.getSynonymSetIndexName(
+				company.getCompanyId());
 
 		if (!_synonymSetIndexReader.isExists(synonymSetIndexName)) {
 			_synonymSetIndexCreator.create(synonymSetIndexName);
 
 			_filterToIndexSynchronizer.copyToIndex(
-				_indexNameBuilder.getIndexName(companyId), synonymSetIndexName);
+				_indexNameBuilder.getIndexName(company.getCompanyId()),
+				synonymSetIndexName);
 		}
+	}
+
+	@Override
+	public void portalInstanceUnregistered(Company company) throws Exception {
+		if (Objects.equals(
+				_searchEngineInformation.getVendorString(), "Solr")) {
+
+			return;
+		}
+
+		SynonymSetIndexName synonymSetIndexName =
+			_synonymSetIndexNameBuilder.getSynonymSetIndexName(
+				company.getCompanyId());
+
+		if (!_synonymSetIndexReader.isExists(synonymSetIndexName)) {
+			return;
+		}
+
+		_synonymSetIndexCreator.delete(synonymSetIndexName);
 	}
 
 	@Reference

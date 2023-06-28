@@ -601,11 +601,6 @@ public class ObjectDefinitionResourceImpl
 			_getAccountEntryRestrictedObjectRelationshipsNames(
 				serviceBuilderObjectDefinition, objectRelationships);
 
-		if (objectRelationships != null) {
-			_objectRelationshipLocalService.deleteObjectRelationships(
-				objectDefinitionId, false);
-		}
-
 		ObjectValidationRule[] objectValidationRules =
 			objectDefinition.getObjectValidationRules();
 
@@ -704,6 +699,8 @@ public class ObjectDefinitionResourceImpl
 		}
 
 		if (objectRelationships != null) {
+			ArrayList<String> objectRelationshipsNames = new ArrayList<>();
+
 			ObjectRelationshipResource.Builder builder =
 				_objectRelationshipResourceFactory.create();
 
@@ -713,17 +710,49 @@ public class ObjectDefinitionResourceImpl
 				).build();
 
 			for (ObjectRelationship objectRelationship : objectRelationships) {
-				objectRelationship =
-					objectRelationshipResource.
-						postObjectDefinitionObjectRelationship(
-							objectDefinitionId, objectRelationship);
+				String objectRelationshipName = objectRelationship.getName();
 
-				if (accountEntryRestrictedObjectRelationshipsNames.contains(
-						objectRelationship.getName())) {
+				objectRelationshipsNames.add(objectRelationshipName);
 
-					_objectDefinitionLocalService.enableAccountEntryRestricted(
-						_objectRelationshipLocalService.getObjectRelationship(
-							objectRelationship.getId()));
+				com.liferay.object.model.ObjectRelationship
+					oldObjectRelationship =
+						_objectRelationshipLocalService.
+							fetchObjectRelationshipByObjectDefinitionId(
+								objectDefinitionId, objectRelationshipName);
+
+				if (oldObjectRelationship == null) {
+					objectRelationship =
+						objectRelationshipResource.
+							postObjectDefinitionObjectRelationship(
+								objectDefinitionId, objectRelationship);
+
+					if (accountEntryRestrictedObjectRelationshipsNames.contains(
+							objectRelationshipName)) {
+
+						_objectDefinitionLocalService.
+							enableAccountEntryRestricted(
+								_objectRelationshipLocalService.
+									getObjectRelationship(
+										objectRelationship.getId()));
+					}
+				}
+				else {
+					objectRelationshipResource.putObjectRelationship(
+						oldObjectRelationship.getObjectRelationshipId(),
+						objectRelationship);
+				}
+			}
+
+			for (com.liferay.object.model.ObjectRelationship
+					oldObjectRelationship :
+						_objectRelationshipLocalService.getObjectRelationships(
+							objectDefinitionId)) {
+
+				if (!objectRelationshipsNames.contains(
+						oldObjectRelationship.getName())) {
+
+					_objectRelationshipLocalService.deleteObjectRelationship(
+						oldObjectRelationship.getObjectRelationshipId());
 				}
 			}
 		}

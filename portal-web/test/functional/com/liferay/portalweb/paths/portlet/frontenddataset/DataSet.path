@@ -245,6 +245,11 @@
 	<td>//div[contains(@class, 'date-picker-dropdown-menu show')]//div[@data-index="${key_line}"]//button[contains(text(), '${key_dateNumber}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SELECT_VALUE</td>
+	<td>//div[@class="form-group"]//input[contains(@aria-label,'${key_label}')]</td>
+	<td></td>
+</tr>
 
 <!-- DATA SET PAGINATION -->
 

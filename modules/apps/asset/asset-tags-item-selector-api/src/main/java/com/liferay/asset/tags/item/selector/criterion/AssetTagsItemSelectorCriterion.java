@@ -25,7 +25,7 @@ public class AssetTagsItemSelectorCriterion extends BaseItemSelectorCriterion {
 		return _groupIds;
 	}
 
-	public boolean getIsMultiple() {
+	public boolean isMultiple() {
 		return _multiple;
 	}
 

@@ -99,7 +99,7 @@ public class AssetTagsDisplayContext {
 	}
 
 	public boolean isMultiple() {
-		return _assetTagsItemSelectorCriterion.getIsMultiple();
+		return _assetTagsItemSelectorCriterion.isMultiple();
 	}
 
 	private long[] _getGroupIds() {

@@ -1,0 +1,16 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "int",
+					"defaultValue": "0",
+					"description": "search-blueprint-id",
+					"label": "Search Blueprint ID",
+					"name": "searchBlueprintId",
+					"type": "text"
+				}
+			]
+		}
+	]
+}

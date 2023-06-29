@@ -86,6 +86,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SEARCH_FILTER_LABEL_X</td>
+	<td>//span[contains(@class,'label-item') and contains(.,'${key_filter}')]/..//button</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SEARCH_RESULT_SUMMARY</td>
 	<td>//nav[contains(@class,'subnav-tbar')]//span[@class='text-truncate']</td>
 	<td></td>

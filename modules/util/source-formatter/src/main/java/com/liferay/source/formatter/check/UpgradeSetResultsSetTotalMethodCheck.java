@@ -54,7 +54,7 @@ public class UpgradeSetResultsSetTotalMethodCheck extends BaseFileCheck {
 				content, setTotalMatcher.start());
 
 			if (hasClassOrVariableName(
-					"SearchContainer", content, methodCall.trim())) {
+					"SearchContainer", content, methodCall)) {
 
 				String fullMethodCall = StringBundler.concat(
 					StringPool.NEW_LINE, methodCall, StringPool.SEMICOLON,
@@ -78,7 +78,7 @@ public class UpgradeSetResultsSetTotalMethodCheck extends BaseFileCheck {
 				content, setResultsMatcher.start());
 
 			if (hasClassOrVariableName(
-					"SearchContainer", content, methodCall.trim())) {
+					"SearchContainer", content, methodCall)) {
 
 				newContent = StringUtil.replace(
 					newContent, methodCall,

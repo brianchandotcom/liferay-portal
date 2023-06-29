@@ -123,7 +123,6 @@ public class SegmentsExperimentLocalServiceImpl
 		segmentsExperiment.setPlid(plid);
 		segmentsExperiment.setName(name);
 		segmentsExperiment.setDescription(description);
-
 		segmentsExperiment.setTypeSettings(
 			UnicodePropertiesBuilder.create(
 				true
@@ -132,7 +131,6 @@ public class SegmentsExperimentLocalServiceImpl
 			).put(
 				"goalTarget", goalTarget
 			).buildString());
-
 		segmentsExperiment.setStatus(status);
 
 		segmentsExperiment = segmentsExperimentPersistence.update(

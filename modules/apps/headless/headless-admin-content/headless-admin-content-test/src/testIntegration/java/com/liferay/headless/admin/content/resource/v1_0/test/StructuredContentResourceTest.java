@@ -429,7 +429,6 @@ public class StructuredContentResourceTest
 				).getString(
 					"term"
 				)));
-
 		Assert.assertEquals(
 			1,
 			structuredContentsJSONObject.getJSONArray(

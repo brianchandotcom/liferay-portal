@@ -778,6 +778,11 @@ definition {
 
 			PageEditor.addWidget(portletName = "Asset Publisher");
 
+			AssertVisible(
+				key_portletName = "Asset Publisher",
+				key_text = "Select a collection to make it visible.",
+				locator1 = "Portlet#PORTLET_SELECTOR");
+
 			AssetPublisherPortlet.configureDynamicAssetSelectionPG(portletName = "Asset Publisher");
 
 			PageEditor.publish();
@@ -786,12 +791,6 @@ definition {
 				pageName = "Test Page Name",
 				siteName = ${randomSiteName});
 
-			AssetPublisherPortlet.viewAssetPG(
-				assetContent = "Web Content Content",
-				assetTitle = "Web Content Title 1");
-		}
-
-		task ("When the page designer deletes the experience") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
 				siteName = ${randomSiteName});
@@ -799,7 +798,9 @@ definition {
 			PageEditor.addExperience(
 				experienceName = "New Experience",
 				segmentName = "Anyone");
+		}
 
+		task ("When the page designer deletes the experience") {
 			PageEditor.deleteExperience(experienceName = "New Experience");
 
 			Refresh();

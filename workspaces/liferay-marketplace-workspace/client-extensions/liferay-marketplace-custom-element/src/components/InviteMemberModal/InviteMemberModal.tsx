@@ -22,9 +22,9 @@ import './inviteMemberModal.scss';
 import {DisplayType} from '@clayui/alert';
 import ClayIcon from '@clayui/icon';
 
-import { Liferay } from "../../liferay/liferay";
-import { getMyUserAccount } from "../../utils/api";
-import { createPassword } from "../../utils/createPassword";
+import {Liferay} from '../../liferay/liferay';
+import {getMyUserAccount} from '../../utils/api';
+import {createPassword} from '../../utils/createPassword';
 import {
 	addAdditionalInfo,
 	addAdminRegularRole,
@@ -186,7 +186,7 @@ export function InviteMemberModal({
 		await addAdditionalInfo({
 			acceptInviteStatus: false,
 			accountName: selectedAccount.name,
-			dashboard: paths[paths.length-1],
+			dashboard: paths[paths.length - 1],
 			emailOfMember: formFields.email,
 			inviteURL: `${Liferay.ThemeDisplay.getPortalURL()}/c/login?redirect=${getSiteURL()}/${finalPath}`,
 			inviterName: myUser.givenName,

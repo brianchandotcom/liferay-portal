@@ -123,7 +123,7 @@ export function MemberProfile({
 				const newInvite = await addAdditionalInfo({
 					acceptInviteStatus: false,
 					accountName: updatedUserInfos.accountName,
-					dashboard: paths[paths.length-1],
+					dashboard: paths[paths.length - 1],
 					emailOfMember: updatedUserInfos.emailOfMember,
 					id: updatedUserInfos.id,
 					inviteURL: url,

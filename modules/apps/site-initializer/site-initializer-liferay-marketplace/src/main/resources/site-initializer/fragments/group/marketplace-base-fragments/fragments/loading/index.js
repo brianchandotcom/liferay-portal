@@ -16,7 +16,6 @@
 const baseURL = Liferay.ThemeDisplay.getPortalURL();
 const myUserId = Liferay.ThemeDisplay.getUserId();
 
-
 const fetcher = async (url, {method = 'GET', ...options} = {}) => {
 	const response = await fetch(`${baseURL}${url}`, {
 		headers: {
@@ -139,8 +138,7 @@ const main = async () => {
 					);
 
 					window.location.href = `${Liferay.ThemeDisplay.getPortalURL()}${getSiteURL()}/${
-						userAdditionalInfo.dashboard ??
-						'home'
+						userAdditionalInfo.dashboard ?? 'home'
 					}`;
 				}
 			}

@@ -346,8 +346,6 @@ if (portletTitleBasedNavigation) {
 								.createContextualFragment(response)
 						);
 
-						runScriptsInElement(messageContainer.parentElement);
-
 						var replyContainer = document.querySelector(
 							'#<portlet:namespace />messageContainer > .reply-container'
 						);

@@ -23,7 +23,6 @@ import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.Portal;
 
 import java.io.IOException;
 
@@ -64,7 +63,7 @@ public class AssetTagsItemSelectorView
 
 	@Override
 	public String getTitle(Locale locale) {
-		return _language.get(_portal.getResourceBundle(locale), "tags");
+		return _language.get(locale, "tags");
 	}
 
 	@Override
@@ -110,8 +109,5 @@ public class AssetTagsItemSelectorView
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private Portal _portal;
 
 }

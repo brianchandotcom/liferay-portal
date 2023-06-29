@@ -1,5 +1,36 @@
 definition {
 
+	macro confirmPayment {
+		var currentDate = DateUtil.getFormattedDate(${dateRange}, ${dateFormat});
+
+		if (${paymentDate} == "true") {
+			Type.sendKeys(
+				inputFieldId = "date-input",
+				locator1 = "TextInput#INPUT_ID",
+				value1 = ${currentDate});
+		}
+
+		if (isSet(paymentValue)) {
+			Type(
+				inputFieldId = "date-input",
+				locator1 = "TextInput#INPUT_ID",
+				value1 = ${paymentValue});
+		}
+
+		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+			locator1 = "TextInput#FILE",
+			value1 = ${document});
+
+		if (${cancelButton} == "true") {
+			Click(locator1 = "Button#CANCEL");
+		}
+		else {
+			Click(locator1 = "Button#SAVE");
+		}
+
+		EVPRequest.viewSuccessMessageRequest();
+	}
+
 	macro fillRequestForm {
 		WaitForPageLoad();
 
@@ -123,4 +154,103 @@ definition {
 		MenuItem.click(menuItem = ${key_option});
 	}
 
+	macro verifyFieldsName {
+		AssertElementPresent(
+			key_name = ${key_field},
+			locator1 = "EVPRequest#FIELD_NAME");
+	}
+
+	macro viewRequestDetails {
+		if (isSet(organizationName)) {
+			AssertElementPresent(
+				key_name = ${organizationName},
+				locator1 = "EVPRequest#DETAIL_FIELD_NAME");
+		}
+
+		if (isSet(dateCreated)) {
+			var dateCreated = DateUtil.getFormattedDate("+1", "M/dd/yy");
+
+			AssertElementPresent(
+				key_name = ${dateCreated},
+				locator1 = "EVPRequest#DETAIL_FIELD_NAME");
+		}
+
+		if (isSet(requestType)) {
+			AssertElementPresent(
+				key_name = ${requestType},
+				locator1 = "EVPRequest#DETAIL_FIELD_NAME");
+		}
+
+		if (isSet(requestDescription)) {
+			AssertElementPresent(
+				key_name = ${requestDescription},
+				locator1 = "EVPRequest#DETAIL_FIELD_NAME");
+		}
+
+		if (isSet(serviceHours)) {
+			AssertElementPresent(
+				key_name = ${serviceHours},
+				locator1 = "EVPRequest#DETAIL_FIELD_NAME");
+		}
+
+		if (isSet(serviceStart)) {
+			AssertElementPresent(
+				key_name = ${serviceStart},
+				locator1 = "EVPRequest#DETAIL_FIELD_NAME");
+		}
+
+		if (isSet(serviceEndDate)) {
+			AssertElementPresent(
+				key_name = ${serviceEndDate},
+				locator1 = "EVPRequest#DETAIL_FIELD_NAME");
+		}
+
+		if (isSet(grantType)) {
+			AssertElementPresent(
+				key_name = ${grantType},
+				locator1 = "EVPRequest#DETAIL_FIELD_NAME");
+		}
+
+		if (isSet(grantValue)) {
+			AssertElementPresent(
+				key_name = ${grantValue},
+				locator1 = "EVPRequest#DETAIL_FIELD_NAME");
+		}
+
+		if (isSet(paymentDate)) {
+			var dateValue = DateUtil.getFormattedDate(0, "MM/dd/yy");
+
+			AssertElementPresent(
+				key_name = ${paymentDate},
+				locator1 = "EVPRequest#DETAIL_FIELD_NAME");
+		}
+	}
+
+	macro viewSuccessMessageRequest {
+		while (IsElementPresent(locator1 = "Message#EMPTY_INFO")) {
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_INFO",
+				value1 = "Thank you. Your information was successfully received.");
+		}
+	}
+
+	macro changeStatusToAwaitingPaymentConfirmation {
+		for (var userApproval : list "Manager,Finance") {
+					User.logoutAndLoginPG(
+						userLoginEmailAddress = "${userApproval}@liferay.com",
+						userLoginFullName = "${userApproval} User");
+
+					EVPUtils.gotoEVP();
+
+					EVPNavigator.goToNavItem(navItem = "Request");
+
+					EVPRequest.goToRequestOption(
+						key_option = "Review",
+						organizationName = "Organization Test");
+
+					EVPUtils.changeStatus(
+						button = "Approve",
+						typeMessage = "Your organization has been approved!");
+		}
+	}
 }

@@ -16,6 +16,7 @@ package com.liferay.jethr0.entity.dalo;
 
 import com.liferay.jethr0.entity.Entity;
 import com.liferay.jethr0.entity.factory.EntityFactory;
+import com.liferay.jethr0.util.OAuth2AccessTokenSession;
 import com.liferay.jethr0.util.StringUtil;
 import com.liferay.jethr0.util.ThreadUtil;
 
@@ -33,7 +34,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
-import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.web.reactive.function.client.WebClient;
 
 /**
@@ -182,7 +182,7 @@ public abstract class BaseEntityRelationshipDALO
 					MediaType.APPLICATION_JSON
 				).header(
 					"Authorization",
-					"Bearer " + _oAuth2AccessToken.getTokenValue()
+					_oAuth2AccessTokenSession.getAuthorization()
 				).retrieve(
 				).bodyToMono(
 					String.class
@@ -235,7 +235,7 @@ public abstract class BaseEntityRelationshipDALO
 					MediaType.APPLICATION_JSON
 				).header(
 					"Authorization",
-					"Bearer " + _oAuth2AccessToken.getTokenValue()
+					_oAuth2AccessTokenSession.getAuthorization()
 				).retrieve(
 				).bodyToMono(
 					String.class
@@ -291,7 +291,7 @@ public abstract class BaseEntityRelationshipDALO
 						MediaType.APPLICATION_JSON
 					).header(
 						"Authorization",
-						"Bearer " + _oAuth2AccessToken.getTokenValue()
+						_oAuth2AccessTokenSession.getAuthorization()
 					).retrieve(
 					).bodyToMono(
 						String.class
@@ -374,6 +374,6 @@ public abstract class BaseEntityRelationshipDALO
 	private String _liferayPortalURL;
 
 	@Autowired
-	private OAuth2AccessToken _oAuth2AccessToken;
+	private OAuth2AccessTokenSession _oAuth2AccessTokenSession;
 
 }

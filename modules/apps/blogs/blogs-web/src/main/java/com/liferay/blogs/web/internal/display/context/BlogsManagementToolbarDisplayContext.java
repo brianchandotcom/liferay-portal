@@ -113,7 +113,11 @@ public class BlogsManagementToolbarDisplayContext
 
 	@Override
 	public String getClearResultsURL() {
-		return getSearchActionURL();
+		return PortletURLBuilder.createRenderURL(
+			liferayPortletResponse
+		).setMVCRenderCommandName(
+			"/blogs/view"
+		).buildString();
 	}
 
 	@Override
@@ -174,30 +178,32 @@ public class BlogsManagementToolbarDisplayContext
 		).setNavigation(
 			ParamUtil.getString(httpServletRequest, "navigation", "entries")
 		).setParameter(
-			"orderByCol",
-			() -> {
-				String mvcRenderCommandName = ParamUtil.getString(
-					httpServletRequest, "mvcRenderCommandName");
-
-				if (mvcRenderCommandName.equals("/blogs/search")) {
-					return getOrderByCol();
-				}
-
-				return null;
-			}
+			"orderByCol", "relevance"
 		).setParameter(
-			"orderByType",
-			() -> {
-				String mvcRenderCommandName = ParamUtil.getString(
-					httpServletRequest, "mvcRenderCommandName");
-
-				if (mvcRenderCommandName.equals("/blogs/search")) {
-					return getOrderByType();
-				}
-
-				return null;
-			}
+			"orderByType", "desc"
 		).buildString();
+	}
+
+	@Override
+	public String getSortingURL() {
+		PortletURL sortingURL = getPortletURL();
+
+		String orderByCol = getOrderByCol();
+
+		if (Validator.isNotNull(orderByCol)) {
+			sortingURL.setParameter(getOrderByColParam(), orderByCol);
+		}
+
+		if (Objects.equals(orderByCol, "relevance")) {
+			sortingURL.setParameter(getOrderByTypeParam(), "desc");
+		}
+		else {
+			sortingURL.setParameter(
+				getOrderByTypeParam(),
+				Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
+		}
+
+		return sortingURL.toString();
 	}
 
 	@Override
@@ -270,7 +276,8 @@ public class BlogsManagementToolbarDisplayContext
 				dropdownItem.setActive(
 					Objects.equals(getOrderByCol(), "relevance"));
 				dropdownItem.setHref(
-					_getCurrentSortingURL(), "orderByCol", "relevance");
+					_getCurrentSortingURL(), "orderByCol", "relevance",
+					"orderByType", "desc");
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "relevance"));
 			}

@@ -158,9 +158,14 @@ public class BlogsViewEntriesDisplayContext {
 			return _orderByCol;
 		}
 
-		_orderByCol = SearchOrderByUtil.getOrderByCol(
-			_httpServletRequest, BlogsPortletKeys.BLOGS_ADMIN,
-			"entries-order-by-col", _getDefaultOrderByCol());
+		if (_isOrderByColRelevance()) {
+			_orderByCol = "relevance";
+		}
+		else {
+			_orderByCol = SearchOrderByUtil.getOrderByCol(
+				_httpServletRequest, BlogsPortletKeys.BLOGS_ADMIN,
+				"entries-order-by-col", "title");
+		}
 
 		return _orderByCol;
 	}
@@ -170,9 +175,14 @@ public class BlogsViewEntriesDisplayContext {
 			return _orderByType;
 		}
 
-		_orderByType = SearchOrderByUtil.getOrderByType(
-			_httpServletRequest, BlogsPortletKeys.BLOGS_ADMIN,
-			"entries-order-by-type", "asc");
+		if (_isOrderByColRelevance()) {
+			_orderByType = "desc";
+		}
+		else {
+			_orderByType = SearchOrderByUtil.getOrderByType(
+				_httpServletRequest, BlogsPortletKeys.BLOGS_ADMIN,
+				"entries-order-by-type", "asc");
+		}
 
 		return _orderByType;
 	}
@@ -207,15 +217,17 @@ public class BlogsViewEntriesDisplayContext {
 		return entriesSearchContainer;
 	}
 
-	private String _getDefaultOrderByCol() {
-		String mvcRenderCommandName = ParamUtil.getString(
-			_httpServletRequest, "mvcRenderCommandName");
+	private boolean _isOrderByColRelevance() {
+		if (Objects.equals(
+				ParamUtil.getString(
+					_httpServletRequest,
+					SearchContainer.DEFAULT_ORDER_BY_COL_PARAM),
+				"relevance")) {
 
-		if (mvcRenderCommandName.equals("/blogs/search")) {
-			return "relevance";
+			return true;
 		}
 
-		return "title";
+		return false;
 	}
 
 	private void _populateResults(SearchContainer<BlogsEntry> searchContainer)
@@ -313,7 +325,7 @@ public class BlogsViewEntriesDisplayContext {
 					Field.DISPLAY_DATE, Sort.LONG_TYPE, !orderByAsc);
 			}
 			else if (Objects.equals(orderByCol, "relevance")) {
-				sort = new Sort(null, Sort.SCORE_TYPE, !orderByAsc);
+				sort = new Sort(null, Sort.SCORE_TYPE, false);
 			}
 			else {
 				sort = new Sort(orderByCol, !orderByAsc);

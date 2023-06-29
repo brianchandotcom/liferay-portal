@@ -15,7 +15,7 @@
 package com.liferay.asset.tags.item.selector.web.internal;
 
 import com.liferay.asset.kernel.model.AssetTag;
-import com.liferay.asset.tags.item.selector.web.internal.display.context.AssetTagsDisplayContext;
+import com.liferay.asset.tags.item.selector.criterion.AssetTagsItemSelectorCriterion;
 import com.liferay.item.selector.TableItemView;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchEntry;
@@ -40,16 +40,16 @@ public class AssetTagsTableItemView implements TableItemView {
 
 	public AssetTagsTableItemView(
 		AssetTag assetTag, ThemeDisplay themeDisplay,
-		AssetTagsDisplayContext assetTagsDisplayContext) {
+		AssetTagsItemSelectorCriterion assetTagsItemSelectorCriterion) {
 
 		_assetTag = assetTag;
 		_themeDisplay = themeDisplay;
-		_assetTagsDisplayContext = assetTagsDisplayContext;
+		_assetTagsItemSelectorCriterion = assetTagsItemSelectorCriterion;
 	}
 
 	@Override
 	public List<String> getHeaderNames() {
-		if (_assetTagsDisplayContext.isMultiple()) {
+		if (_assetTagsItemSelectorCriterion.isMultiSelection()) {
 			return ListUtil.fromArray("name", "site");
 		}
 
@@ -68,7 +68,7 @@ public class AssetTagsTableItemView implements TableItemView {
 
 		searchEntries.add(nameTextSearchEntry);
 
-		if (_assetTagsDisplayContext.isMultiple()) {
+		if (_assetTagsItemSelectorCriterion.isMultiSelection()) {
 			TextSearchEntry scopeTextSearchEntry = new TextSearchEntry();
 
 			scopeTextSearchEntry.setCssClass(
@@ -100,7 +100,8 @@ public class AssetTagsTableItemView implements TableItemView {
 		AssetTagsTableItemView.class);
 
 	private final AssetTag _assetTag;
-	private final AssetTagsDisplayContext _assetTagsDisplayContext;
+	private final AssetTagsItemSelectorCriterion
+		_assetTagsItemSelectorCriterion;
 	private final ThemeDisplay _themeDisplay;
 
 }

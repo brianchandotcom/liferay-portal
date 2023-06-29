@@ -57,7 +57,8 @@ public class AssetTagsItemSelectorViewDescriptor
 
 	@Override
 	public ItemDescriptor getItemDescriptor(AssetTag assetTag) {
-		return new AssetTagsItemDescriptor(assetTag, _assetTagsDisplayContext);
+		return new AssetTagsItemDescriptor(
+			assetTag, _assetTagsItemSelectorCriterion);
 	}
 
 	@Override
@@ -78,7 +79,7 @@ public class AssetTagsItemSelectorViewDescriptor
 	@Override
 	public TableItemView getTableItemView(AssetTag assetTag) {
 		return new AssetTagsTableItemView(
-			assetTag, _themeDisplay, _assetTagsDisplayContext);
+			assetTag, _themeDisplay, _assetTagsItemSelectorCriterion);
 	}
 
 	@Override

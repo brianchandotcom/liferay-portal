@@ -98,16 +98,12 @@ public class AssetTagsDisplayContext {
 		return _tagsSearchContainer;
 	}
 
-	public boolean isMultiple() {
-		return _assetTagsItemSelectorCriterion.isMultiSelection();
-	}
-
 	private long[] _getGroupIds() {
 		if (ArrayUtil.isNotEmpty(_groupIds)) {
 			return _groupIds;
 		}
 
-		if (isMultiple()) {
+		if (_assetTagsItemSelectorCriterion.isMultiSelection()) {
 			return _assetTagsItemSelectorCriterion.getGroupIds();
 		}
 

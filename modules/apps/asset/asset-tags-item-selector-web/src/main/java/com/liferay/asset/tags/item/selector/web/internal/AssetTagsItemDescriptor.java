@@ -15,7 +15,7 @@
 package com.liferay.asset.tags.item.selector.web.internal;
 
 import com.liferay.asset.kernel.model.AssetTag;
-import com.liferay.asset.tags.item.selector.web.internal.display.context.AssetTagsDisplayContext;
+import com.liferay.asset.tags.item.selector.criterion.AssetTagsItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -30,10 +30,11 @@ public class AssetTagsItemDescriptor
 	implements ItemSelectorViewDescriptor.ItemDescriptor {
 
 	public AssetTagsItemDescriptor(
-		AssetTag assetTag, AssetTagsDisplayContext assetTagsDisplayContext) {
+		AssetTag assetTag,
+		AssetTagsItemSelectorCriterion assetTagsItemSelectorCriterion) {
 
 		_assetTag = assetTag;
-		_assetTagsDisplayContext = assetTagsDisplayContext;
+		_assetTagsItemSelectorCriterion = assetTagsItemSelectorCriterion;
 	}
 
 	@Override
@@ -48,7 +49,7 @@ public class AssetTagsItemDescriptor
 
 	@Override
 	public String getPayload() {
-		if (_assetTagsDisplayContext.isMultiple()) {
+		if (_assetTagsItemSelectorCriterion.isMultiSelection()) {
 			return _assetTag.getName();
 		}
 
@@ -70,6 +71,7 @@ public class AssetTagsItemDescriptor
 	}
 
 	private final AssetTag _assetTag;
-	private final AssetTagsDisplayContext _assetTagsDisplayContext;
+	private final AssetTagsItemSelectorCriterion
+		_assetTagsItemSelectorCriterion;
 
 }

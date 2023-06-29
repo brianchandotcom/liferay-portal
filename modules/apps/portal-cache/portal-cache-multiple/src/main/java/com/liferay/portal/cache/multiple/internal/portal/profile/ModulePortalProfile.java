@@ -11,8 +11,10 @@ import com.liferay.portal.cache.multiple.internal.cluster.link.ClusterLinkPortal
 import com.liferay.portal.cache.multiple.internal.cluster.link.PortalCacheClusterLink;
 import com.liferay.portal.cache.multiple.internal.cluster.link.messaging.ClusterLinkMessagingConfigurator;
 import com.liferay.portal.cache.multiple.internal.cluster.link.messaging.ClusterLinkPortalCacheClusterListener;
-import com.liferay.portal.kernel.cluster.ClusterLink;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.Props;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.profile.BaseDSModulePortalProfile;
 import com.liferay.portal.profile.PortalProfile;
@@ -37,7 +39,7 @@ public class ModulePortalProfile extends BaseDSModulePortalProfile {
 	protected void activate(ComponentContext componentContext) {
 		List<String> supportedPortalProfileNames = null;
 
-		if (_clusterLink.isEnabled()) {
+		if (GetterUtil.getBoolean(_props.get(PropsKeys.CLUSTER_LINK_ENABLED))) {
 			supportedPortalProfileNames = new ArrayList<>();
 
 			supportedPortalProfileNames.add(
@@ -67,6 +69,6 @@ public class ModulePortalProfile extends BaseDSModulePortalProfile {
 	}
 
 	@Reference
-	private ClusterLink _clusterLink;
+	private Props _props;
 
 }

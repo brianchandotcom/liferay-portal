@@ -8,7 +8,9 @@ package com.liferay.portal.configuration.cluster.internal.portal.profile;
 import com.liferay.portal.configuration.cluster.internal.ConfigurationSynchronousConfigurationListener;
 import com.liferay.portal.configuration.cluster.internal.messaging.ConfigurationClusterConfigurator;
 import com.liferay.portal.configuration.cluster.internal.messaging.ConfigurationMessageListener;
-import com.liferay.portal.kernel.cluster.ClusterLink;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Props;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.profile.BaseDSModulePortalProfile;
 import com.liferay.portal.profile.PortalProfile;
 
@@ -31,7 +33,7 @@ public class ModulePortalProfile extends BaseDSModulePortalProfile {
 	protected void activate(ComponentContext componentContext) {
 		List<String> supportedPortalProfileNames = null;
 
-		if (_clusterLink.isEnabled()) {
+		if (GetterUtil.getBoolean(_props.get(PropsKeys.CLUSTER_LINK_ENABLED))) {
 			supportedPortalProfileNames = new ArrayList<>();
 
 			supportedPortalProfileNames.add(
@@ -51,6 +53,6 @@ public class ModulePortalProfile extends BaseDSModulePortalProfile {
 	}
 
 	@Reference
-	private ClusterLink _clusterLink;
+	private Props _props;
 
 }

@@ -53,12 +53,12 @@ public class UpgradeSetResultsSetTotalMethodCheck extends BaseFileCheck {
 			String methodCall = JavaSourceUtil.getMethodCall(
 				content, setTotalMatcher.start());
 
-			String fullMethodCall = StringBundler.concat(
-				StringPool.NEW_LINE, methodCall, StringPool.SEMICOLON,
-				StringPool.NEW_LINE);
-
 			if (hasClassOrVariableName(
 					"SearchContainer", content, methodCall.trim())) {
+
+				String fullMethodCall = StringBundler.concat(
+					StringPool.NEW_LINE, methodCall, StringPool.SEMICOLON,
+					StringPool.NEW_LINE);
 
 				newContent = StringUtil.removeSubstring(
 					newContent, fullMethodCall);

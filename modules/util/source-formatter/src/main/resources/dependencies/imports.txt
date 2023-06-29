@@ -346,6 +346,7 @@ com.liferay.portal.kernel.util.CharPool=com.liferay.petra.string.CharPool
 com.liferay.portal.kernel.util.ClassLoaderPool=com.liferay.petra.lang.ClassLoaderPool
 com.liferay.portal.kernel.util.ClassResolverUtil=com.liferay.petra.lang.ClassResolverUtil
 com.liferay.portal.kernel.util.Database=com.liferay.portal.tools.db.upgrade.client.Database
+com.liferay.portal.kernel.util.HashUtil=com.liferay.petra.lang.HashUtil
 com.liferay.portal.kernel.util.StringPool=com.liferay.petra.string.StringPool
 com.liferay.portal.kernel.util.UnsafeConsumer=com.liferay.petra.function.UnsafeConsumer
 com.liferay.portal.kernel.util.UnsafeFunction=com.liferay.petra.function.UnsafeFunction

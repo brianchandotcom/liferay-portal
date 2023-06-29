@@ -45,7 +45,7 @@ public class APIApplicationContextProvider
 	@Override
 	public APIApplication createContext(Message message) {
 		try {
-			return _getApiApplication(
+			return _fetchApiApplication(
 				(HttpServletRequest)message.getContextualProperty(
 					"HTTP.REQUEST"));
 		}
@@ -56,7 +56,7 @@ public class APIApplicationContextProvider
 		}
 	}
 
-	private APIApplication _getApiApplication(
+	private APIApplication _fetchApiApplication(
 			HttpServletRequest httpServletRequest)
 		throws Exception {
 
@@ -66,7 +66,7 @@ public class APIApplicationContextProvider
 			contextPath = contextPath.substring(3);
 		}
 
-		return _apiApplicationProvider.getAPIApplication(
+		return _apiApplicationProvider.fetchAPIApplication(
 			contextPath, _portal.getCompanyId(httpServletRequest));
 	}
 

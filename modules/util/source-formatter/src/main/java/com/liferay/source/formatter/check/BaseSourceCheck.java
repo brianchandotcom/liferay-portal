@@ -648,7 +648,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		String variableTypeName = getVariableTypeName(
 			content, content, variable.trim(), true);
 
-		if (variableTypeName.contains(className)) {
+		if (variableTypeName.startsWith(className)) {
 			return true;
 		}
 

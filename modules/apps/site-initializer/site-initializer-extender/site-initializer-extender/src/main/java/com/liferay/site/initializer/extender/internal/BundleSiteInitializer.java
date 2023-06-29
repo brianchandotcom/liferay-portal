@@ -15,6 +15,7 @@
 package com.liferay.site.initializer.extender.internal;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryModel;
@@ -202,14 +203,14 @@ import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 import com.liferay.style.book.zip.processor.StyleBookEntryZipProcessor;
 import com.liferay.template.model.TemplateEntry;
 import com.liferay.template.service.TemplateEntryLocalService;
-import org.osgi.framework.Bundle;
-import org.osgi.framework.wiring.BundleWiring;
 
-import javax.servlet.ServletContext;
 import java.io.Serializable;
+
 import java.net.URL;
 import java.net.URLConnection;
+
 import java.text.DateFormat;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -223,6 +224,11 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
+
+import javax.servlet.ServletContext;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.wiring.BundleWiring;
 
 /**
  * @author Brian Wing Shun Chan
@@ -1767,21 +1773,21 @@ public class BundleSiteInitializer implements SiteInitializer {
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		for (DDMTemplate ddmTemplate : ddmTemplates) {
+			TemplateEntry templateEntry =
+				_templateEntryLocalService.fetchTemplateEntryByDDMTemplateId(
+					ddmTemplate.getTemplateId());
 
-			TemplateEntry templateEntry = _templateEntryLocalService.fetchTemplateEntryByDDMTemplateId(ddmTemplate.getTemplateId());
-
-
-			if(templateEntry != null){
+			if (templateEntry != null) {
 				ddmTemplateIdsStringUtilReplaceValues.put(
 					"TEMPLATE_ENTRY_ID:" +
 						ddmTemplate.getName(LocaleUtil.getSiteDefault()),
 					String.valueOf(templateEntry.getTemplateEntryId()));
 			}
 
-				ddmTemplateIdsStringUtilReplaceValues.put(
-					"DDM_TEMPLATE_ID:" +
+			ddmTemplateIdsStringUtilReplaceValues.put(
+				"DDM_TEMPLATE_ID:" +
 					ddmTemplate.getName(LocaleUtil.getSiteDefault()),
-					String.valueOf(ddmTemplate.getTemplateId()));
+				String.valueOf(ddmTemplate.getTemplateId()));
 		}
 
 		Enumeration<URL> enumeration = _bundle.findEntries(
@@ -1839,21 +1845,22 @@ public class BundleSiteInitializer implements SiteInitializer {
 					SiteInitializerUtil.read(_bundle, "ddm-template.ftl", url),
 					false, false, null, null, serviceContext);
 
-
 				if (Objects.equals(
 						jsonObject.getString("className"),
 						TemplateEntry.class.getName())) {
 
-				 TemplateEntry templateEntry = _templateEntryLocalService.addTemplateEntry(
-						serviceContext.getUserId(),
-						serviceContext.getScopeGroupId(),
-						ddmTemplate.getTemplateId(),
-						jsonObject.getString("infoItemClassName"),
-						jsonObject.getString("infoItemKey"), serviceContext);
+					TemplateEntry templateEntry =
+						_templateEntryLocalService.addTemplateEntry(
+							serviceContext.getUserId(),
+							serviceContext.getScopeGroupId(),
+							ddmTemplate.getTemplateId(),
+							jsonObject.getString("infoItemClassName"),
+							jsonObject.getString("infoItemKey"),
+							serviceContext);
 
 					ddmTemplateIdsStringUtilReplaceValues.put(
 						"TEMPLATE_ENTRY_ID:" +
-						ddmTemplate.getName(LocaleUtil.getSiteDefault()),
+							ddmTemplate.getName(LocaleUtil.getSiteDefault()),
 						String.valueOf(templateEntry.getTemplateEntryId()));
 				}
 			}
@@ -1876,8 +1883,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 					ddmTemplate.getName(LocaleUtil.getSiteDefault()),
 				String.valueOf(ddmTemplate.getTemplateId()));
 		}
-
-
 
 		return ddmTemplateIdsStringUtilReplaceValues;
 	}

@@ -55,7 +55,7 @@ exports[`AddDataSource should render 1`] = `
         <div
           class="description"
         >
-          Add a Data Source to bring in data from various sources in to Analytics Cloud. Analytics Cloud automatic integration is supported for Liferay Portal version 7.0+. You can connect older versions of Liferay Portal by extracting data to a CSV and importing it as a CSV data source.
+          Add a Data Source to bring in data from various sources in to Analytics Cloud. Analytics Cloud automatic integration is supported for Liferay Portal version 7.0+.
         </div>
       </div>
       <div

@@ -600,7 +600,8 @@
 													{
 														"definition": {
 															"fragmentStyle": {
-																"backgroundColor": "whiteColor"
+																"backgroundColor": "whiteColor",
+																"hidden": true
 															},
 															"widgetInstance": {
 																"widgetConfig": {
@@ -621,7 +622,8 @@
 													{
 														"definition": {
 															"fragmentStyle": {
-																"backgroundColor": "whiteColor"
+																"backgroundColor": "whiteColor",
+																"hidden": true
 															},
 															"widgetInstance": {
 																"widgetConfig": {
@@ -677,7 +679,8 @@
 													{
 														"definition": {
 															"fragmentStyle": {
-																"backgroundColor": "whiteColor"
+																"backgroundColor": "whiteColor",
+																"hidden": true
 															},
 															"widgetInstance": {
 																"widgetConfig": {

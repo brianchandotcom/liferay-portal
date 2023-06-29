@@ -20,7 +20,6 @@ import com.liferay.item.selector.TableItemView;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchEntry;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -75,8 +74,7 @@ public class AssetTagsTableItemView implements TableItemView {
 			scopeTextSearchEntry.setCssClass(
 				"table-cell-expand-smaller table-cell-minw-150");
 			scopeTextSearchEntry.setName(
-				LanguageUtil.get(
-					locale, HtmlUtil.escape(_getGroupDescriptiveName())));
+				HtmlUtil.escape(_getGroupDescriptiveName()));
 
 			searchEntries.add(scopeTextSearchEntry);
 		}

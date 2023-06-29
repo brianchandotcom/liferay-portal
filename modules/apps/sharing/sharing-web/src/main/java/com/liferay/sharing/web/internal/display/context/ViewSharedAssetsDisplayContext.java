@@ -119,28 +119,24 @@ public class ViewSharedAssetsDisplayContext {
 		return NavigationItemListBuilder.add(
 			navigationItem -> {
 				navigationItem.setActive(_isIncoming());
-
 				navigationItem.setHref(
 					PortletURLBuilder.createRenderURL(
 						_liferayPortletResponse
 					).setParameter(
 						"incoming", true
 					).buildPortletURL());
-
 				navigationItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "shared-with-me"));
 			}
 		).add(
 			navigationItem -> {
 				navigationItem.setActive(!_isIncoming());
-
 				navigationItem.setHref(
 					PortletURLBuilder.createRenderURL(
 						_liferayPortletResponse
 					).setParameter(
 						"incoming", false
 					).buildPortletURL());
-
 				navigationItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "shared-by-me"));
 			}

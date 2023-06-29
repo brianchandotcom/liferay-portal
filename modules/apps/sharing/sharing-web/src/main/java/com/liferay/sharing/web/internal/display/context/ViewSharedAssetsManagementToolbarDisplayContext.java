@@ -160,7 +160,6 @@ public class ViewSharedAssetsManagementToolbarDisplayContext
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {
 				dropdownItem.setActive(Validator.isNull(className));
-
 				dropdownItem.setHref(
 					PortletURLBuilder.create(
 						PortletURLUtil.clone(
@@ -168,7 +167,6 @@ public class ViewSharedAssetsManagementToolbarDisplayContext
 					).setParameter(
 						"className", (String)null
 					).buildPortletURL());
-
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "all"));
 			}
@@ -186,7 +184,6 @@ public class ViewSharedAssetsManagementToolbarDisplayContext
 			dropdownItem -> {
 				dropdownItem.setActive(
 					Objects.equals(getOrderByCol(), "sharedDate"));
-
 				dropdownItem.setHref(
 					_getCurrentSortingURL(), "orderByCol", "sharedDate");
 				dropdownItem.setLabel(

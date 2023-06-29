@@ -33,8 +33,6 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
 
 /**
@@ -65,26 +63,6 @@ public class SoapExtender {
 	@Deactivate
 	protected void deactivate() {
 		_dependencyManager.clear();
-	}
-
-	@Reference(
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void setSoapDescriptorBuilder(
-		SoapDescriptorBuilder soapDescriptorBuilder) {
-
-		_soapDescriptorBuilder = soapDescriptorBuilder;
-
-		if (_dependencyManager != null) {
-			_dependencyManager.clear();
-
-			_enableComponent();
-		}
-	}
-
-	protected void unsetSoapDescriptorBuilder(
-		SoapDescriptorBuilder soapDescriptorBuilder) {
 	}
 
 	private void _addBusDependencies(org.apache.felix.dm.Component component) {
@@ -206,7 +184,10 @@ public class SoapExtender {
 	}
 
 	private DependencyManager _dependencyManager;
+
+	@Reference
 	private SoapDescriptorBuilder _soapDescriptorBuilder;
+
 	private volatile SoapExtenderConfiguration _soapExtenderConfiguration;
 
 }

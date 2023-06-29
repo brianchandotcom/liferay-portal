@@ -18,9 +18,12 @@ import java.util.Map;
 
 import javax.xml.namespace.QName;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Carlos Sierra Andrés
  */
+@ProviderType
 public interface SoapDescriptorBuilder {
 
 	public SoapDescriptor buildSoapDescriptor(

@@ -32,7 +32,7 @@
 </tr>
 <tr>
 	<td>PERMISSIONS_NAVITEM_SUBITEM</td>
-	<td>//*[contains(@data-qa-id,'editRolePermissionsNavigation')]//button[contains(.,'${key_navItem}') and contains(@role,'button')]/following-sibling::*//button[contains(.,'${key_subItem}') and contains(@role,'menuitem')]</td>
+	<td>//*[contains(@data-qa-id,'editRolePermissionsNavigation')]//button[contains(.,'${key_navItem}') and contains(@role,'button')]/following-sibling::*//button[contains(.,'${key_subItem}')]</td>
 	<td></td>
 </tr>
 <tr>

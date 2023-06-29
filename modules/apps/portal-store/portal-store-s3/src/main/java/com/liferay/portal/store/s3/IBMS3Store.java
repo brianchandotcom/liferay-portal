@@ -499,10 +499,10 @@ public class IBMS3Store implements Store {
 
 		clientConfiguration.setConnectionTimeout(
 			_s3StoreConfiguration.connectionTimeout());
-		clientConfiguration.setMaxErrorRetry(
-			_s3StoreConfiguration.httpClientMaxErrorRetry());
 		clientConfiguration.setMaxConnections(
 			_s3StoreConfiguration.httpClientMaxConnections());
+		clientConfiguration.setMaxErrorRetry(
+			_s3StoreConfiguration.httpClientMaxErrorRetry());
 
 		configureConnectionProtocol(clientConfiguration);
 		configureProxySettings(clientConfiguration);

@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.taglib.search.TextSearchEntry;
@@ -66,12 +65,6 @@ public class AssetTagsTableItemView implements TableItemView {
 
 		nameTextSearchEntry.setCssClass(
 			"table-cell-expand-smaller table-cell-minw-80");
-		nameTextSearchEntry.setData(
-			HashMapBuilder.<String, Object>put(
-				"entityid", _assetTag.getTagId()
-			).put(
-				"entityname", _assetTag.getName()
-			).build());
 		nameTextSearchEntry.setName(HtmlUtil.escape(_assetTag.getName()));
 
 		searchEntries.add(nameTextSearchEntry);

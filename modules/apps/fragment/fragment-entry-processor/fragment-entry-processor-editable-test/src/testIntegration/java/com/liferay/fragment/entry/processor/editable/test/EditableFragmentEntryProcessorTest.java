@@ -98,6 +98,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -136,6 +137,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 /**
  * @author Eudaldo Alonso
  */
+@FeatureFlags("LPS-169992")
 @RunWith(Arquillian.class)
 public class EditableFragmentEntryProcessorTest {
 

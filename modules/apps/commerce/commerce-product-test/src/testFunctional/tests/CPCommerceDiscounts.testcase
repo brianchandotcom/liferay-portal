@@ -227,6 +227,129 @@ definition {
 			value1 = "24.00");
 	}
 
+	@description = "COMMERCE-11821 | Discount is applied correctly when a tax category is enabled"
+	@priority = 4
+	test CanApplyDiscountWithTaxCategoryEnabled {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And an account associated with a buyer user") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And a discount with a rule is created") {
+			CommerceJSONDiscountsAPI._addDiscount(
+				active = "true",
+				level = "L1",
+				percentageLevel1 = 15,
+				target = "shipping",
+				title = "Discount 1",
+				usePercentage = "false");
+
+			CommerceNavigator.goToDiscountAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Discount 1");
+
+			CommerceDiscounts.addNewDiscountsRule(
+				name = "FREESHIPPING",
+				type = "Cart Total");
+
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Edit",
+				rowEntry = "FREESHIPPING");
+
+			CommerceDiscounts.editDiscountRule(
+				key_fieldLabel = "Cart Total Minimum Amount",
+				quantity = 200);
+		}
+
+		task ("And a Tax Categories entry is created") {
+			CommerceNavigator.goToTaxCategoriesAdmin();
+
+			CommerceEntry.addTaxCategory(
+				keyDescription = "Test Description",
+				keyName = "Test",
+				keyReferenceCode = "Test Reference");
+		}
+
+		task ("And Tax Rate is configurated") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			CommerceChannels.editTaxCalculation(
+				active = "true",
+				fieldLabel = "Rate",
+				percentage = "true",
+				quantity = 10,
+				taxCalculationName = "Fixed Tax Rate",
+				taxCategory = "Test");
+		}
+
+		task ("And product configuration is set with tax category") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "U-Joint");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Configuration");
+
+			Select(
+				key_title = "Tax Category",
+				locator1 = "CommerceEntry#CATALOGS_FORM",
+				value1 = "Test");
+
+			Button.clickPublish();
+		}
+
+		task ("And the buyer user logs in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("When a buyer user adds a product to the cart") {
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = 10);
+		}
+
+		task ("Then the user completes the checkout process and tax and discount are correctly applied") {
+			CommerceCheckout.gotoCheckoutViaMiniCart();
+
+			CommerceCheckout.initializersCheckout(
+				deliveryDiscountFixedAmount = 15,
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				productName = "U-Joint",
+				productQuantity = 10,
+				productUnitPrice = 24,
+				shippingMethod = "Standard",
+				taxValue = 24,
+				totalValue = 264);
+		}
+	}
+
 	@description = "COMMERCE-9787 | Apply a discount with eligibility only to account groups that are eligible"
 	@priority = 5
 	test CanApplySpecificAccountGroupCouponCodeDiscount {

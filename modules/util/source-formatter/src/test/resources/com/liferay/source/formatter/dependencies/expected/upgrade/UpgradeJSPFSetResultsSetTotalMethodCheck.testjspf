@@ -16,14 +16,10 @@
 
 <div class="entries">
 
-<%
-SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "cur1", announcementsDisplayContext.getPageDelta(), portletURL, null, "no-entries-were-found");
+	<%
+	SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "cur1", announcementsDisplayContext.getPageDelta(), portletURL, null, "no-entries-were-found");
 
-searchContainer.setResultsAndTotal(entries);
-%>
+	searchContainer.setResultsAndTotal(entries);
+	%>
 
 </div>
-
-
-
-

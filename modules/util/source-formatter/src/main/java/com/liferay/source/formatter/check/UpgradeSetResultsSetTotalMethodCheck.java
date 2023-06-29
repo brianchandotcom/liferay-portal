@@ -46,6 +46,7 @@ public class UpgradeSetResultsSetTotalMethodCheck extends BaseFileCheck {
 
 	private String _removeSetTotal(String content) {
 		String newContent = content;
+
 		Matcher setTotalMatcher = _setTotalPattern.matcher(content);
 
 		while (setTotalMatcher.find()) {
@@ -69,6 +70,7 @@ public class UpgradeSetResultsSetTotalMethodCheck extends BaseFileCheck {
 
 	private String _replaceSetResults(String content) {
 		String newContent = content;
+
 		Matcher setResultsMatcher = _setResultsPattern.matcher(content);
 
 		while (setResultsMatcher.find()) {

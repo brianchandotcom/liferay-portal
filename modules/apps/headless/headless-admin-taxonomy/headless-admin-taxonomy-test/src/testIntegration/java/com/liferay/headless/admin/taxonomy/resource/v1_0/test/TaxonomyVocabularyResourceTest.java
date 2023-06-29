@@ -26,7 +26,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -376,18 +375,17 @@ public class TaxonomyVocabularyResourceTest
 			));
 		Assert.assertEquals(
 			1,
-			GetterUtil.getInteger(
-				taxonomyVocabulariesJSONObject.getJSONArray(
-					"facets"
-				).getJSONObject(
-					0
-				).getJSONArray(
-					"facetValues"
-				).getJSONObject(
-					0
-				).getString(
-					"numberOfOccurrences"
-				)));
+			taxonomyVocabulariesJSONObject.getJSONArray(
+				"facets"
+			).getJSONObject(
+				0
+			).getJSONArray(
+				"facetValues"
+			).getJSONObject(
+				0
+			).getInt(
+				"numberOfOccurrences"
+			));
 		Assert.assertEquals(
 			taxonomyVocabulary1.getId(),
 			Long.valueOf(
@@ -404,18 +402,17 @@ public class TaxonomyVocabularyResourceTest
 				)));
 		Assert.assertEquals(
 			1,
-			GetterUtil.getInteger(
-				taxonomyVocabulariesJSONObject.getJSONArray(
-					"facets"
-				).getJSONObject(
-					0
-				).getJSONArray(
-					"facetValues"
-				).getJSONObject(
-					1
-				).getString(
-					"numberOfOccurrences"
-				)));
+			taxonomyVocabulariesJSONObject.getJSONArray(
+				"facets"
+			).getJSONObject(
+				0
+			).getJSONArray(
+				"facetValues"
+			).getJSONObject(
+				1
+			).getInt(
+				"numberOfOccurrences"
+			));
 		Assert.assertEquals(
 			taxonomyVocabulary2.getId(),
 			Long.valueOf(

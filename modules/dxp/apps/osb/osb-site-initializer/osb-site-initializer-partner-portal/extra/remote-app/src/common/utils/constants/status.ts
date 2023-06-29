@@ -10,6 +10,10 @@
  */
 
 export const Status = {
+	ACTIVE: {
+		key: 'active',
+		name: 'Active',
+	},
 	APPROVED: {
 		key: 'approved',
 		name: 'Approved',

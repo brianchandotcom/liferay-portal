@@ -44,6 +44,7 @@ const MiscellaneousMarketingPopFields = ({
 
 			<PRMFormik.Field
 				component={PRMForm.InputFile}
+				description="Only files with the following extensions wil beaccepted: doc, docx, jpeg, jpg, pdf, tif, tiff"
 				displayType="secondary"
 				label="Telemarketing Script"
 				name={`activities[${currentActivityIndex}].telemarketingScript`}
@@ -65,10 +66,10 @@ const MiscellaneousMarketingPopFields = ({
 			/>
 
 			<InputMultipleFilesListing
-				acceptedFilesExtensions="jpg, tif, tiff"
+				acceptedFilesExtensions="jpeg, jpg, pdf, tif, tiff"
 				description="Drag and drop your files here to upload."
 				label="Images"
-				name={`activities[${currentActivityIndex}].proofOfPerformance.eventPhotos`}
+				name={`activities[${currentActivityIndex}].proofOfPerformance.images`}
 				onAccept={async (value: LiferayFile[]) => {
 					const uploadedLiferayDocuments = await Promise.all(
 						value.map(async (liferayFile) => {
@@ -86,7 +87,7 @@ const MiscellaneousMarketingPopFields = ({
 					);
 
 					setFieldValue(
-						`activities[${currentActivityIndex}].proofOfPerformance.eventPhotos`,
+						`activities[${currentActivityIndex}].proofOfPerformance.images`,
 						activity.proofOfPerformance?.eventPhotos
 							? activity.proofOfPerformance.eventPhotos.concat(
 									uploadedLiferayDocuments as LiferayFile[]
@@ -94,7 +95,7 @@ const MiscellaneousMarketingPopFields = ({
 							: uploadedLiferayDocuments
 					);
 				}}
-				value={activity.proofOfPerformance?.eventPhotos}
+				value={activity.proofOfPerformance?.images}
 			/>
 
 			<InputMultipleFilesListing

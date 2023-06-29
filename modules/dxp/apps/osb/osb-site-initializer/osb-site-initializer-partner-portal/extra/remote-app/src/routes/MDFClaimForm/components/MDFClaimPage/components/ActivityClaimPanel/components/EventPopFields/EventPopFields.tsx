@@ -37,6 +37,7 @@ const EventPopFields = ({
 		<>
 			<PRMFormik.Field
 				component={PRMForm.InputFile}
+				description="Only files with the following extensions wil beaccepted: doc, docx, jpeg, jpg, pdf, tif, tiff"
 				displayType="secondary"
 				label="Event Program"
 				name={`activities[${currentActivityIndex}].eventProgram`}
@@ -91,7 +92,7 @@ const EventPopFields = ({
 			/>
 
 			<InputMultipleFilesListing
-				acceptedFilesExtensions="jpg, tif, tiff"
+				acceptedFilesExtensions="doc, docx, jpeg, jpg, pdf, tif, tiff"
 				description="Drag and drop your files here to upload."
 				label="Event Photos"
 				name={`activities[${currentActivityIndex}].proofOfPerformance.eventPhotos`}

@@ -496,7 +496,6 @@ public class S3Store implements Store {
 
 		clientConfiguration.setConnectionTimeout(
 			_s3StoreConfiguration.connectionTimeout());
-
 		clientConfiguration.setMaxErrorRetry(
 			_s3StoreConfiguration.httpClientMaxErrorRetry());
 		clientConfiguration.setMaxConnections(

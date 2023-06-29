@@ -115,6 +115,13 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testUpgradeJavaGetLayoutDisplayPageProviderCheck()
+		throws Exception {
+
+		test("upgrade/UpgradeJavaGetLayoutDisplayPageProviderCheck.testjava");
+	}
+
+	@Test
 	public void testUpgradeJavaModelPermissionsCheck() throws Exception {
 		test("upgrade/UpgradeJavaModelPermissionsCheck.testjava");
 	}

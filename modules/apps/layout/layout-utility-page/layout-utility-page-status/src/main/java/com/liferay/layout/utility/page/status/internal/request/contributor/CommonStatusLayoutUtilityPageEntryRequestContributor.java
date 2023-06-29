@@ -19,7 +19,6 @@ import com.liferay.layout.utility.page.kernel.request.contributor.StatusLayoutUt
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -61,10 +60,6 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributor
 	@Override
 	public void addAttributesAndParameters(
 		DynamicServletRequest dynamicServletRequest) {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-165914")) {
-			return;
-		}
 
 		String host = _portal.getHost(dynamicServletRequest);
 

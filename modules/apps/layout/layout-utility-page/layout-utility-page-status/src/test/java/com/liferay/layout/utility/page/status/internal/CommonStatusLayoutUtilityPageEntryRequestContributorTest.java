@@ -32,13 +32,10 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Props;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.servlet.I18nServlet;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.portal.util.PropsImpl;
 import com.liferay.portal.util.PropsValues;
 
 import org.junit.AfterClass;
@@ -73,25 +70,11 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 				StringPool.SLASH +
 					LocaleUtil.toLanguageId(LocaleUtil.getDefault()))
 		);
-
-		_originalProps = PropsUtil.getProps();
-
-		Props props = Mockito.mock(PropsImpl.class);
-
-		Mockito.when(
-			props.get("feature.flag.LPS-165914")
-		).thenReturn(
-			"true"
-		);
-
-		PropsUtil.setProps(props);
 	}
 
 	@AfterClass
 	public static void tearDownClass() {
 		_i18nServletMockedStatic.close();
-
-		PropsUtil.setProps(_originalProps);
 	}
 
 	@Before
@@ -564,7 +547,6 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 
 	private static final MockedStatic<I18nServlet> _i18nServletMockedStatic =
 		Mockito.mockStatic(I18nServlet.class);
-	private static Props _originalProps;
 
 	private CommonStatusLayoutUtilityPageEntryRequestContributor
 		_commonStatusLayoutUtilityPageEntryRequestContributor;

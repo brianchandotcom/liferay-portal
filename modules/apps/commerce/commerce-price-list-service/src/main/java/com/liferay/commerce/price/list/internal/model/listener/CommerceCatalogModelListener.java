@@ -15,6 +15,8 @@
 package com.liferay.commerce.price.list.internal.model.listener;
 
 import com.liferay.commerce.price.list.internal.helper.CommerceBasePriceListHelper;
+import com.liferay.commerce.price.list.model.CommercePriceList;
+import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
@@ -67,17 +69,8 @@ public class CommerceCatalogModelListener
 		}
 
 		try {
-			Indexer<CPInstance> indexer =
-				IndexerRegistryUtil.nullSafeGetIndexer(CPInstance.class);
-
-			List<CPInstance> cpInstances =
-				_cpInstanceLocalService.getCPInstances(
-					commerceCatalog.getGroupId(), WorkflowConstants.STATUS_ANY,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-
-			for (CPInstance cpInstance : cpInstances) {
-				indexer.reindex(cpInstance);
-			}
+			_reindexCPInstances(commerceCatalog);
+			_reindexPriceLists(commerceCatalog);
 		}
 		catch (Exception exception) {
 			throw new ModelListenerException(exception);
@@ -97,11 +90,52 @@ public class CommerceCatalogModelListener
 		}
 	}
 
+	private void _reindexCPInstances(CommerceCatalog commerceCatalog)
+		throws PortalException {
+
+		Indexer<CPInstance> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			CPInstance.class);
+
+		List<CPInstance> cpInstances = _cpInstanceLocalService.getCPInstances(
+			commerceCatalog.getGroupId(), WorkflowConstants.STATUS_ANY,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		for (CPInstance cpInstance : cpInstances) {
+			indexer.reindex(cpInstance);
+		}
+	}
+
+	private void _reindexPriceLists(CommerceCatalog commerceCatalog)
+		throws PortalException {
+
+		List<CommercePriceList> commercePriceLists =
+			_commercePriceListLocalService.getCommercePriceLists(
+				new long[] {commerceCatalog.getGroupId()},
+				commerceCatalog.getCompanyId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+		if (commercePriceLists.isEmpty()) {
+			return;
+		}
+
+		Indexer<CommercePriceList> indexer =
+			IndexerRegistryUtil.nullSafeGetIndexer(CommercePriceList.class);
+
+		for (CommercePriceList commercePriceList : commercePriceLists) {
+			indexer.reindex(
+				CommercePriceList.class.getName(),
+				commercePriceList.getCommercePriceListId());
+		}
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceCatalogModelListener.class);
 
 	@Reference
 	private CommerceBasePriceListHelper _commerceBasePriceListHelper;
+
+	@Reference
+	private CommercePriceListLocalService _commercePriceListLocalService;
 
 	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;

@@ -16,6 +16,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TOOLTIP_TEXT</td>
+	<td>//*[contains(@data-title,'${key_text}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

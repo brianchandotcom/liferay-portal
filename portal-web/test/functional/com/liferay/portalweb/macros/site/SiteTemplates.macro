@@ -95,15 +95,7 @@ definition {
 	}
 
 	macro addSitePageViaSiteTemplateCP {
-		SiteTemplatesNavigator.openSiteTemplatesAdmin();
-
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Manage",
-			rowEntry = ${siteTemplateName});
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+		SiteTemplatesNavigator.openPagesAdmin(siteTemplateName = ${siteTemplateName});
 
 		LexiconEntry.gotoAddMenuItem(menuItem = "Add Site Template Page");
 
@@ -714,6 +706,14 @@ definition {
 		AssertTextEquals(
 			locator1 = "SiteTemplates#SITE_TEMPLATE_TABLE_ACTIVE",
 			value1 = ${siteTemplateActiveEdit});
+	}
+
+	macro viewTooltipOfExclamationMark {
+		MouseOver(locator1 = "Icon#EXCLAMATION_MARK");
+
+		VerifyElementPresent(
+			key_text = "There is a page with the same friendly URL in the site template.",
+			locator1 = "SiteTemplates#TOOLTIP_TEXT");
 	}
 
 }

@@ -85,7 +85,7 @@ public class AssetTagsItemSelectorViewDescriptor
 
 	@Override
 	public boolean isMultipleSelection() {
-		return _assetTagsItemSelectorCriterion.isMultiple();
+		return _assetTagsItemSelectorCriterion.isMultiSelection();
 	}
 
 	@Override

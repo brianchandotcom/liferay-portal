@@ -25,19 +25,19 @@ public class AssetTagsItemSelectorCriterion extends BaseItemSelectorCriterion {
 		return _groupIds;
 	}
 
-	public boolean isMultiple() {
-		return _multiple;
+	public boolean isMultiSelection() {
+		return _multiSelection;
 	}
 
 	public void setGroupIds(long[] groupIds) {
 		_groupIds = groupIds;
 	}
 
-	public void setMultiple(boolean multiple) {
-		_multiple = multiple;
+	public void setMultiSelection(boolean multiSelection) {
+		_multiSelection = multiSelection;
 	}
 
 	private long[] _groupIds;
-	private boolean _multiple;
+	private boolean _multiSelection;
 
 }

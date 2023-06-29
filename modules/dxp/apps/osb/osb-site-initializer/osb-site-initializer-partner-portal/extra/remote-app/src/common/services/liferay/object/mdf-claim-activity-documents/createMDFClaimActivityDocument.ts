@@ -10,23 +10,16 @@
  */
 
 import {Liferay} from '../..';
-import LiferayFile from '../../../../interfaces/liferayFile';
-import {getDTOFromMDFClaimActivityDocument} from '../../../../utils/dto/mdf-claim-activiy-document/getDTOFromMDFClaimActivityDocument';
+import MDFClaimActivityDocumentDTO from '../../../../interfaces/dto/mdfClaimActivityDocumentDTO';
 import {LiferayAPIs} from '../../common/enums/apis';
 import liferayFetcher from '../../common/utils/fetcher';
 
 export default async function createMDFClaimActivityDocument(
-	allContentId: LiferayFile & number,
-	mdfClaimActivityId?: number,
-	companyId?: number
+	mdfClaimActivityDocumentDTO: MDFClaimActivityDocumentDTO[]
 ) {
 	return await liferayFetcher.post(
-		`/o/${LiferayAPIs.OBJECT}/mdfclaimactivitydocuments`,
+		`/o/${LiferayAPIs.OBJECT}/mdfclaimactivitydocuments/batch`,
 		Liferay.authToken,
-		getDTOFromMDFClaimActivityDocument(
-			allContentId,
-			mdfClaimActivityId,
-			companyId
-		)
+		mdfClaimActivityDocumentDTO
 	);
 }

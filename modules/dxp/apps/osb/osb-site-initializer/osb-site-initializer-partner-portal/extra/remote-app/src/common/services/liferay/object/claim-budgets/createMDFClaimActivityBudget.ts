@@ -17,8 +17,8 @@ import liferayFetcher from '../../common/utils/fetcher';
 
 export default async function createMDFClaimActivityBudget(
 	mdfClaimBudget: MDFClaimBudget,
-	mdfClaimActivityId?: number,
-	companyId?: number
+	mdfClaimActivityId: number,
+	companyId: number
 ) {
 	return await liferayFetcher.post(
 		`/o/${LiferayAPIs.OBJECT}/mdfclaimbudgets`,

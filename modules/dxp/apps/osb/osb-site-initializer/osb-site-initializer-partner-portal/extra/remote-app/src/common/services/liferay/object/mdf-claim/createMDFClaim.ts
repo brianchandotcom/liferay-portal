@@ -21,17 +21,11 @@ export default async function createMDFClaim(
 	apiOption: ResourceName,
 	mdfClaim: MDFClaim,
 	mdfRequest: MDFRequestDTO,
-	externalReferenceCode?: string,
-	externalReferenceCodeSF?: string
+	externalReferenceCodeFromSF?: string
 ) {
 	return await liferayFetcher.post(
 		`/o/${LiferayAPIs.OBJECT}/${apiOption}`,
 		Liferay.authToken,
-		getDTOFromMDFClaim(
-			mdfClaim,
-			mdfRequest,
-			externalReferenceCode,
-			externalReferenceCodeSF
-		)
+		getDTOFromMDFClaim(mdfClaim, mdfRequest, externalReferenceCodeFromSF)
 	);
 }

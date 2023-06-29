@@ -10,24 +10,16 @@
  */
 
 import {Liferay} from '../..';
-import MDFRequestDTO from '../../../../interfaces/dto/mdfRequestDTO';
-import LiferayFile from '../../../../interfaces/liferayFile';
-import MDFClaim from '../../../../interfaces/mdfClaim';
-import {getDTOFromMDFClaim} from '../../../../utils/dto/mdf-claim/getDTOFromMDFClaim';
+import MDFClaimActivityDocumentDTO from '../../../../interfaces/dto/mdfClaimActivityDocumentDTO';
 import {LiferayAPIs} from '../../common/enums/apis';
 import liferayFetcher from '../../common/utils/fetcher';
-import {ResourceName} from '../enum/resourceName';
 
-export default async function updateMDFClaimSF(
-	apiOption: ResourceName,
-	mdfClaim: MDFClaim,
-	mdfRequest: MDFRequestDTO,
-	reimbursementInvoiceDocumentId?: LiferayFile & number,
-	externalReferenceCode?: string
+export default async function updateMDFClaimActivityDocument(
+	mdfClaimActivityDocumentDTO: MDFClaimActivityDocumentDTO[]
 ) {
 	return await liferayFetcher.put(
-		`/o/${LiferayAPIs.OBJECT}/${apiOption}/by-external-reference-code/${externalReferenceCode}`,
+		`/o/${LiferayAPIs.OBJECT}/mdfclaimactivitydocuments/batch`,
 		Liferay.authToken,
-		getDTOFromMDFClaim(mdfClaim, mdfRequest)
+		mdfClaimActivityDocumentDTO
 	);
 }

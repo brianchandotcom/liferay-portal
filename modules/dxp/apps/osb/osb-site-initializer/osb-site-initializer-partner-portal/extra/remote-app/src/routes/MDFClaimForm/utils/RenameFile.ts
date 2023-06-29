@@ -9,11 +9,13 @@
  * distribution rights of the Software.
  */
 
-const renameFileKeepingExtention = (oldFile: File, name: string) => {
-	const oldName = oldFile.name.split('.');
-	const newName = `${name}.${oldName.slice(-1)}`;
+import LiferayFile from '../../../common/interfaces/liferayFile';
 
-	return new File([oldFile], newName, {
+const renameFileKeepingExtention = (oldFile: LiferayFile, name: string) => {
+	const oldName = oldFile.name?.split('.');
+	const newName = `${name}.${oldName?.slice(-1)}`;
+
+	return new File([oldFile as Blob], newName, {
 		lastModified: oldFile.lastModified,
 		type: oldFile.type,
 	});

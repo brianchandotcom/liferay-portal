@@ -16,6 +16,7 @@ export enum ResourceName {
 	BUDGET = 'budgets',
 	ACTIVITY_SALESFORCE = 'activitysfs',
 	DEAL_REGISTRATION_DXP = 'dealregistrations',
+	DOCUMENTS = 'documents',
 	MDF_CLAIM_DXP = 'mdfclaims',
 	MDF_CLAIM_SALESFORCE = 'mdfclaimsfs',
 	LEAD_NOTIFICATION = 'leadnotifications',

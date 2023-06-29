@@ -86,6 +86,129 @@
 			],
 			"required": false,
 			"type": "Long"
+		},
+		{
+			"DBType": "Long",
+			"businessType": "Attachment",
+			"externalReferenceCode": "abb2e42c-2ddc-4006-bade-593b8e7bf05e",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Event Program"
+			},
+			"name": "eventProgram",
+			"objectFieldSettings": [
+				{
+					"name": "acceptedFileExtensions",
+					"value": "doc, docx, jpeg, jpg, pdf, tif, tiff, txt"
+				},
+				{
+					"name": "maximumFileSize",
+					"value": "3"
+				},
+				{
+					"name": "fileSource",
+					"value": "userComputer"
+				},
+				{
+					"name": "showFilesInDocumentsAndMedia",
+					"value": "true"
+				},
+				{
+					"name": "storageDLFolderPath",
+					"value": "/MDFClaimActivityEventProgram"
+				}
+			],
+			"required": false,
+			"type": "Long"
+		},
+		{
+			"DBType": "Long",
+			"businessType": "Attachment",
+			"externalReferenceCode": "625cecf7-ed42-4758-9b0d-ee7ff7e9e345",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Telemarketing Script"
+			},
+			"name": "telemarketingScript",
+			"objectFieldSettings": [
+				{
+					"name": "acceptedFileExtensions",
+					"value": "doc, docx, jpeg, jpg, pdf, tif, tiff, txt"
+				},
+				{
+					"name": "maximumFileSize",
+					"value": "3"
+				},
+				{
+					"name": "fileSource",
+					"value": "userComputer"
+				},
+				{
+					"name": "showFilesInDocumentsAndMedia",
+					"value": "true"
+				},
+				{
+					"name": "storageDLFolderPath",
+					"value": "/MDFClaimActivityTelemarketingScript"
+				}
+			],
+			"required": false,
+			"type": "Long"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Picklist",
+			"externalReferenceCode": "fca15fd4-11ea-11ee-be56-0242ac120002",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Type Of Activity"
+			},
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Type Of Activity$]",
+			"name": "typeActivity",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "900f2f30-1881-4f45-81ff-4cfef19b8ad6",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Video Link"
+			},
+			"name": "videoLink",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "Clob",
+			"businessType": "LongText",
+			"externalReferenceCode": "64410925-d56a-4d3d-a88b-e96b1063afb7",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Telemarketing Metrics"
+			},
+			"name": "telemarketingMetrics",
+			"required": false,
+			"type": "Clob"
+		},
+		{
+			"DBType": "Clob",
+			"businessType": "LongText",
+			"externalReferenceCode": "38a33c1c-84d2-4e0d-accb-dfbd966f777b",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Metrics"
+			},
+			"name": "metrics",
+			"required": false,
+			"type": "Clob"
 		}
 	],
 	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:MDFClaimActivity$]"

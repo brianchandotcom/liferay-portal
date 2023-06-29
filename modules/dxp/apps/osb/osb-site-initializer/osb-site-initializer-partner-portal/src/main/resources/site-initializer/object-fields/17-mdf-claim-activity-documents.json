@@ -1,20 +1,15 @@
 {
-	"externalReferenceCode": "0bbb4632-e693-eae4-ee45-090b1592ec2f",
-	"label": {
-		"en_US": "MDF Claim Activity Document"
-	},
-	"name": "MDFClaimActivityDocument",
-	"objectFields": [
+	"object-fields": [
 		{
 			"DBType": "Long",
 			"businessType": "Attachment",
-			"externalReferenceCode": "5fbd6bf7-56be-4250-95da-ee0f7cfab5e4",
+			"externalReferenceCode": "ddeb5221-f4ba-481d-a715-03e8ddd15a4f",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "All Contents"
+				"en_US": "Proof Of Performance File"
 			},
-			"name": "allContents",
+			"name": "proofOfPerformanceFile",
 			"objectFieldSettings": [
 				{
 					"name": "acceptedFileExtensions",
@@ -34,17 +29,12 @@
 				},
 				{
 					"name": "storageDLFolderPath",
-					"value": "/MDFClaimActivityAllContents"
+					"value": "/MDFClaimActivityFiles"
 				}
 			],
 			"required": false,
 			"type": "Long"
 		}
 	],
-	"panelCategoryKey": "control_panel.object",
-	"pluralLabel": {
-		"en_US": "MDF Claim Activities Documents"
-	},
-	"portlet": true,
-	"scope": "company"
+	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:MDFClaimActivityDocument$]"
 }

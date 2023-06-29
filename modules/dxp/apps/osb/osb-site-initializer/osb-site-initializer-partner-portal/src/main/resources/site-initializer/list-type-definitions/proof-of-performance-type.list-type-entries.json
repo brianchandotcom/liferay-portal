@@ -1,0 +1,47 @@
+[
+	{
+		"externalReferenceCode": "2dd991e0-9304-4704-bc98-fdd3a0ec3080",
+		"key": "eventInvitations",
+		"name": "Event Invitations",
+		"name_i18n": {
+			"en-US": "Event Invitations"
+		},
+		"type": "string"
+	},
+	{
+		"externalReferenceCode": "3ec3ea90-9908-4e43-8bdc-ffb5b66ecc3b",
+		"key": "eventPhotos",
+		"name": "Event Photos",
+		"name_i18n": {
+			"en-US": "Event Photos"
+		},
+		"type": "string"
+	},
+	{
+		"externalReferenceCode": "cb6cab73-6ce9-4b1f-b906-36a35795793a",
+		"key": "eventCollaterals",
+		"name": "Event Collaterals",
+		"name_i18n": {
+			"en-US": "Event Collaterals"
+		},
+		"type": "string"
+	},
+	{
+		"externalReferenceCode": "9151f183-6a20-4fb1-b6d0-1c2deb416734",
+		"key": "images",
+		"name": "Images",
+		"name_i18n": {
+			"en-US": "Images"
+		},
+		"type": "string"
+	},
+	{
+		"externalReferenceCode": "a77653a5-a331-404c-851e-524f32d5a71b",
+		"key": "allContents",
+		"name": "All Contents",
+		"name_i18n": {
+			"en-US": "All Contents"
+		},
+		"type": "string"
+	}
+]

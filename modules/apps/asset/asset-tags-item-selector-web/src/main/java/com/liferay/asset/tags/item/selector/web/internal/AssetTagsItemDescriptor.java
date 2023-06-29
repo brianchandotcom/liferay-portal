@@ -23,8 +23,6 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 
 import java.util.Locale;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @author Stefan Tanasie
  */
@@ -32,11 +30,9 @@ public class AssetTagsItemDescriptor
 	implements ItemSelectorViewDescriptor.ItemDescriptor {
 
 	public AssetTagsItemDescriptor(
-		AssetTag assetTag, HttpServletRequest httpServletRequest,
-		AssetTagsDisplayContext assetTagsDisplayContext) {
+		AssetTag assetTag, AssetTagsDisplayContext assetTagsDisplayContext) {
 
 		_assetTag = assetTag;
-		_httpServletRequest = httpServletRequest;
 		_assetTagsDisplayContext = assetTagsDisplayContext;
 	}
 
@@ -75,6 +71,5 @@ public class AssetTagsItemDescriptor
 
 	private final AssetTag _assetTag;
 	private final AssetTagsDisplayContext _assetTagsDisplayContext;
-	private final HttpServletRequest _httpServletRequest;
 
 }

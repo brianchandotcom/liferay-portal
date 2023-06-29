@@ -39,7 +39,6 @@ public class AssetTagsItemSelectorViewDescriptor
 		AssetTagsDisplayContext assetTagsDisplayContext) {
 
 		_assetTagsItemSelectorCriterion = assetTagsItemSelectorCriterion;
-		_httpServletRequest = httpServletRequest;
 		_assetTagsDisplayContext = assetTagsDisplayContext;
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
@@ -58,8 +57,7 @@ public class AssetTagsItemSelectorViewDescriptor
 
 	@Override
 	public ItemDescriptor getItemDescriptor(AssetTag assetTag) {
-		return new AssetTagsItemDescriptor(
-			assetTag, _httpServletRequest, _assetTagsDisplayContext);
+		return new AssetTagsItemDescriptor(assetTag, _assetTagsDisplayContext);
 	}
 
 	@Override
@@ -101,7 +99,6 @@ public class AssetTagsItemSelectorViewDescriptor
 	private final AssetTagsDisplayContext _assetTagsDisplayContext;
 	private final AssetTagsItemSelectorCriterion
 		_assetTagsItemSelectorCriterion;
-	private final HttpServletRequest _httpServletRequest;
 	private final ThemeDisplay _themeDisplay;
 
 }

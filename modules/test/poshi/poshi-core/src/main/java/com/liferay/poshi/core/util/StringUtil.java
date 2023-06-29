@@ -77,6 +77,23 @@ public class StringUtil {
 		return s;
 	}
 
+	public static void assertContains(String s, String text) {
+		if (contains(s, text)) {
+			return;
+		}
+
+		throw new RuntimeException("Expected " + text + " in string: " + s);
+	}
+
+	public static void assertEquals(String s, String comparison) {
+		if (equals(s, comparison)) {
+			return;
+		}
+
+		throw new RuntimeException(
+			"Expected: " + s + "\n Actual: " + comparison);
+	}
+
 	public static String center(String s, String size) {
 		return StringUtils.center(s, GetterUtil.getInteger(size));
 	}

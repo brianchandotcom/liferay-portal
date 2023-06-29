@@ -47,16 +47,16 @@ public class PanelTag extends BaseContainerTag {
 		return _collapseClassNames;
 	}
 
-	public Boolean getDefaultExpanded() {
-		return _defaultExpanded;
-	}
-
 	public String getDisplayTitle() {
 		return _displayTitle;
 	}
 
 	public String getDisplayType() {
 		return _displayType;
+	}
+
+	public Boolean getExpanded() {
+		return _expanded;
 	}
 
 	public Boolean getShowCollapseIcon() {
@@ -71,16 +71,16 @@ public class PanelTag extends BaseContainerTag {
 		_collapseClassNames = collapseClassNames;
 	}
 
-	public void setDefaultExpanded(Boolean defaultExpanded) {
-		_defaultExpanded = defaultExpanded;
-	}
-
 	public void setDisplayTitle(String displayTitle) {
 		_displayTitle = displayTitle;
 	}
 
 	public void setDisplayType(String displayType) {
 		_displayType = displayType;
+	}
+
+	public void setExpanded(Boolean expanded) {
+		_expanded = expanded;
 	}
 
 	public void setShowCollapseIcon(Boolean showCollapseIcon) {
@@ -93,9 +93,9 @@ public class PanelTag extends BaseContainerTag {
 
 		_collapsable = true;
 		_collapseClassNames = null;
-		_defaultExpanded = false;
 		_displayTitle = null;
 		_displayType = "unstyled";
+		_expanded = false;
 		_showCollapseIcon = true;
 	}
 
@@ -108,9 +108,9 @@ public class PanelTag extends BaseContainerTag {
 	protected Map<String, Object> prepareProps(Map<String, Object> props) {
 		props.put("collapsable", _collapsable);
 		props.put("collapseClassNames", _collapseClassNames);
+		props.put("defaultExpanded", _expanded);
 		props.put("displayTitle", _displayTitle);
 		props.put("displayType", _displayType);
-		props.put("defaultExpanded", _defaultExpanded);
 		props.put("showCollapseIcon", _showCollapseIcon);
 
 		return super.prepareProps(props);
@@ -166,7 +166,7 @@ public class PanelTag extends BaseContainerTag {
 				panelTitleIcon = true;
 			}
 
-			if (_defaultExpanded) {
+			if (_expanded) {
 				panelContentCssClassesSB.append(" show");
 			}
 			else {
@@ -175,7 +175,7 @@ public class PanelTag extends BaseContainerTag {
 
 			panelTitleAttributesSB.append(
 				" aria-controls=\"collapsePanel\" aria-expanded=\"");
-			panelTitleAttributesSB.append(_defaultExpanded);
+			panelTitleAttributesSB.append(_expanded);
 			panelTitleAttributesSB.append("\" data-target=\"#");
 			panelTitleAttributesSB.append(panelTitleId);
 			panelTitleAttributesSB.append("\" data-toggle=\"liferay-collapse");
@@ -246,9 +246,9 @@ public class PanelTag extends BaseContainerTag {
 
 	private boolean _collapsable = true;
 	private String _collapseClassNames;
-	private boolean _defaultExpanded;
 	private String _displayTitle;
 	private String _displayType = "unstyled";
+	private boolean _expanded;
 	private boolean _showCollapseIcon = true;
 
 }

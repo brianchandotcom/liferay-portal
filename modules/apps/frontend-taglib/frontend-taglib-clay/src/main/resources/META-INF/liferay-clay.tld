@@ -2104,12 +2104,6 @@
 		</attribute>
 		<attribute>
 			<description></description>
-			<name>defaultExpanded</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description></description>
 			<name>displayTitle</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2117,6 +2111,12 @@
 		<attribute>
 			<description></description>
 			<name>displayType</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>expanded</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

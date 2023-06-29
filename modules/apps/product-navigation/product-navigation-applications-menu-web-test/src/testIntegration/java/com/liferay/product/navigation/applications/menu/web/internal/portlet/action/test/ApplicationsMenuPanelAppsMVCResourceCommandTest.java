@@ -409,8 +409,6 @@ public class ApplicationsMenuPanelAppsMVCResourceCommandTest {
 
 		themeDisplay.setCompany(
 			_companyLocalService.getCompany(_group.getCompanyId()));
-		themeDisplay.setCompany(
-			_companyLocalService.getCompany(_group.getCompanyId()));
 		themeDisplay.setLayout(layout);
 		themeDisplay.setLocale(
 			LocaleUtil.fromLanguageId(_group.getDefaultLanguageId()));

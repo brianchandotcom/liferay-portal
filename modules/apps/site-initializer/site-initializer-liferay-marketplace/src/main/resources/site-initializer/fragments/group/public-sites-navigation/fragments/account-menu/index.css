@@ -1,0 +1,111 @@
+.account {
+	cursor: pointer;
+}
+
+.account .account-info {
+	border-radius: var(--border-radius-sm);
+	transition-duration: 0.2s, 0.2s, 0.2s;
+	transition-property: background-color, color, opacity;
+	transition-timing-function: ease, ease, ease;
+}
+.account .account-info .user-icon {
+	height: 1rem;
+	margin-top: -5px;
+	width: 1rem;
+}
+
+.account .account-info:hover .user-icon,
+.account .account-info:hover .account-dropdown-icon,
+.account .account-info:hover .account-text,
+.account .account-info:focus .user-icon,
+.account .account-info:focus .account-dropdown-icon,
+.account .account-info:focus .account-text {
+	color: #0053f0 !important;
+}
+
+.account .account-info:hover .account-text,
+.account .account-info:focus .account-text,
+.account .account-info .account-text {
+	opacity: 1;
+}
+
+.account .account-info .account-dropdown {
+	display: block;
+}
+.account .account-info .user-icon {
+	opacity: 0.7;
+}
+
+.account
+	.account-info
+	.account-dropdown-icon {
+	opacity: 0.7;
+	transform: translate3d(0, 0, 0) scale3d(1, 1, 1) rotateX(180deg)
+		rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
+}
+
+.account .account-info:hover,
+.account .account-info:focus {
+	background-color: #edf3fe !important;
+}
+
+.account .account-info:hover .user-icon,
+.account .account-info:hover .account-dropdown-icon,
+.account .account-info:focus .user-icon,
+.account
+	.account-info:focus
+	.account-dropdown-icon {
+	opacity: 1;
+}
+
+.account .account-info .user-avatar {
+	height: 2rem;
+	width: 2rem;
+}
+
+.account .account-info .user-avatar img {
+	border-radius: 3.5rem;
+}
+
+.account .account-dropdown .account-configurables {
+	border-bottom: 1px solid var(--color-neutral-3);
+}
+
+.account .account-dropdown .settings {
+	color: var(--color-neutral-10);
+}
+
+.account .account-dropdown .sign-out {
+	border-radius: var(--border-radius);
+	color: var(--color-neutral-10);
+}
+
+.account .account-dropdown .sign-out:hover,
+.account .account-dropdown .sign-out:active,
+.account .account-dropdown .sign-out:focus {
+	background: #edf3fe !important;
+	color: #0053f0 !important;
+}
+
+.account .account-dropdown .sign-out:hover .sign-out-icon,
+.account .account-dropdown .sign-out:active .sign-out-icon,
+.account .account-dropdown .sign-out:focus .sign-out-icon {
+	opacity: 1;
+}
+
+.account .account-dropdown .sign-in {
+	border-radius: var(--border-radius);
+}
+
+.account .account-dropdown .sign-in:hover,
+.account .account-dropdown .sign-in:active,
+.account .account-dropdown .sign-in:focus {
+	background: #edf3fe !important;
+	border-radius: var(--border-radius);
+}
+
+.account .account-dropdown .sign-in:hover .sign-in-icon,
+.account .account-dropdown .sign-in:active .sign-in-icon,
+.account .account-dropdown .sign-in:focus .sign-in-icon {
+	opacity: 1;
+}

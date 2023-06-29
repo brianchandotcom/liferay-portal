@@ -778,12 +778,18 @@ public class LayoutServiceContextHelperImpl
 
 			themeDisplay.setPermissionChecker(permissionChecker);
 			themeDisplay.setPortalDomain(company.getVirtualHostname());
+
+			boolean secure = _isHttpsEnabled();
+
+			int portalServerPort = _portal.getPortalServerPort(secure);
+
 			themeDisplay.setPortalURL(
-				company.getPortalURL(_group.getGroupId()));
+				_portal.getPortalURL(
+					company.getVirtualHostname(), portalServerPort, secure));
+
 			themeDisplay.setRealUser(user);
 			themeDisplay.setScopeGroupId(_group.getGroupId());
-			themeDisplay.setServerPort(
-				_portal.getPortalServerPort(_isHttpsEnabled()));
+			themeDisplay.setServerPort(portalServerPort);
 			themeDisplay.setSiteGroupId(_group.getGroupId());
 			themeDisplay.setTimeZone(user.getTimeZone());
 			themeDisplay.setUser(user);

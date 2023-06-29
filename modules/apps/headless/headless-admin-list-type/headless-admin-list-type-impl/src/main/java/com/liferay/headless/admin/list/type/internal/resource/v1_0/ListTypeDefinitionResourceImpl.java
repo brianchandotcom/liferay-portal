@@ -201,6 +201,10 @@ public class ListTypeDefinitionResourceImpl
 		com.liferay.list.type.model.ListTypeDefinition
 			serviceBuilderListTypeDefinition) {
 
+		if (serviceBuilderListTypeDefinition == null) {
+			return null;
+		}
+
 		Locale locale = _getLocale();
 
 		return new ListTypeDefinition() {

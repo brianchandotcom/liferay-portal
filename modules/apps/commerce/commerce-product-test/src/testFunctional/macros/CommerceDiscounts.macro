@@ -1,0 +1,42 @@
+definition {
+
+	macro addNewDiscountsRule {
+		Click(locator1 = "Button#PLUS");
+
+		SelectFrameTop();
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		Type(
+			key_fieldLabel = "Name",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = ${name});
+
+		Select(
+			key_selectFieldLabel = "Rule Type",
+			locator1 = "Select#ANY",
+			value1 = ${type});
+
+		Button.clickSubmitButton();
+
+		Button.clickPublish();
+	}
+
+	macro editDiscountRule {
+		SelectFrameTop();
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Type(
+			key_fieldLabel = ${key_fieldLabel},
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = ${quantity});
+
+		Button.clickSave();
+
+		Click(locator1 = "Icon#CLOSE");
+
+		SelectFrameTop();
+	}
+
+}

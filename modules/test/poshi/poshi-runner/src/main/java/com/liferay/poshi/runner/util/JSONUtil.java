@@ -30,6 +30,12 @@ import org.json.JSONObject;
  */
 public class JSONUtil {
 
+	public static boolean equals(
+		JSONObject jsonObject, JSONObject comparisonjsonObject) {
+
+		return jsonObject.equals(comparisonjsonObject);
+	}
+
 	public static String formatJSONString(String json) {
 		JSONObject jsonObject = toJSONObject(json);
 
@@ -107,6 +113,12 @@ public class JSONUtil {
 		}
 
 		return object.toString();
+	}
+
+	public static boolean similar(
+		JSONObject jsonObject, JSONObject comparisonjsonObject) {
+
+		return jsonObject.similar(comparisonjsonObject);
 	}
 
 	public static JSONArray toJSONArray(String json) {

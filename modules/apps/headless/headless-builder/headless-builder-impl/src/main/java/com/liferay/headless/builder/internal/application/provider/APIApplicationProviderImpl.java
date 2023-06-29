@@ -204,6 +204,11 @@ public class APIApplicationProviderImpl implements APIApplicationProvider {
 					}
 
 					@Override
+					public String getExternalReferenceCode() {
+						return propertyObjectEntry.getExternalReferenceCode();
+					}
+
+					@Override
 					public String getName() {
 						return (String)properties.get("name");
 					}

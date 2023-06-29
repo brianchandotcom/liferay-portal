@@ -89,21 +89,24 @@ editDDMStructureURL.setParameter("structureKey", String.valueOf(ddmStructureKey)
 				<liferay-ui:error exception="<%= DDMStructureValidationModelListenerException.class %>" message="the-structure-key-cannot-be-modified" />
 
 				<c:if test="<%= (ddmStructure != null) && (DDMStorageLinkLocalServiceUtil.getStructureStorageLinksCount(journalEditDDMStructuresDisplayContext.getDDMStructureId()) > 0) %>">
-					<div class="alert alert-warning">
-						<liferay-ui:message key="there-are-content-references-to-this-structure.-you-may-lose-data-if-a-field-name-is-renamed-or-removed" />
-					</div>
+					<clay:alert
+						displayType="warning"
+						message="there-are-content-references-to-this-structure.-you-may-lose-data-if-a-field-name-is-renamed-or-removed"
+					/>
 				</c:if>
 
 				<c:if test="<%= (journalEditDDMStructuresDisplayContext.getDDMStructureId() > 0) && (DDMTemplateLocalServiceUtil.getTemplatesCount(null, PortalUtil.getClassNameId(DDMStructure.class), journalEditDDMStructuresDisplayContext.getDDMStructureId()) > 0) %>">
-					<div class="alert alert-info">
-						<liferay-ui:message key="there-are-template-references-to-this-structure.-please-update-them-if-a-field-name-is-renamed-or-removed" />
-					</div>
+					<clay:alert
+						displayType="info"
+						message="there-are-template-references-to-this-structure.-please-update-them-if-a-field-name-is-renamed-or-removed"
+					/>
 				</c:if>
 
 				<c:if test="<%= (ddmStructure != null) && (groupId != scopeGroupId) %>">
-					<div class="alert alert-warning">
-						<liferay-ui:message key="this-structure-does-not-belong-to-this-site.-you-may-affect-other-sites-if-you-edit-this-structure" />
-					</div>
+					<clay:alert
+						displayType="warning"
+						message="this-structure-does-not-belong-to-this-site.-you-may-affect-other-sites-if-you-edit-this-structure"
+					/>
 				</c:if>
 
 				<div class="contextual-sidebar-mr-n">

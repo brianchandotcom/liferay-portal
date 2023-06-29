@@ -15,6 +15,7 @@
 package com.liferay.batch.engine.internal.strategy;
 
 import com.liferay.batch.engine.action.ImportTaskPostAction;
+import com.liferay.batch.engine.action.ImportTaskPreAction;
 import com.liferay.batch.engine.internal.util.ItemIndexThreadLocal;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.petra.function.UnsafeFunction;
@@ -31,9 +32,11 @@ public class OnErrorContinueBatchEngineImportStrategy
 
 	public OnErrorContinueBatchEngineImportStrategy(
 		BatchEngineImportTask batchEngineImportTask,
-		List<ImportTaskPostAction> importTaskPostActions) {
+		List<ImportTaskPostAction> importTaskPostActions,
+		List<ImportTaskPreAction> importTaskPreActions) {
 
-		super(batchEngineImportTask, importTaskPostActions);
+		super(
+			batchEngineImportTask, importTaskPostActions, importTaskPreActions);
 	}
 
 	@Override

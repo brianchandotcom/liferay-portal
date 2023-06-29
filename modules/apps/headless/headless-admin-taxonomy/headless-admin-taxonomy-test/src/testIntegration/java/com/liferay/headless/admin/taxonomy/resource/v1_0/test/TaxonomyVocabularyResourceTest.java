@@ -369,7 +369,6 @@ public class TaxonomyVocabularyResourceTest
 
 		Assert.assertEquals(
 			2, taxonomyVocabulariesJSONObject.getLong("totalCount"));
-
 		Assert.assertEquals(
 			"id",
 			taxonomyVocabulariesJSONObject.getJSONArray(
@@ -379,7 +378,6 @@ public class TaxonomyVocabularyResourceTest
 			).getString(
 				"facetCriteria"
 			));
-
 		Assert.assertEquals(
 			1,
 			GetterUtil.getInteger(
@@ -394,7 +392,6 @@ public class TaxonomyVocabularyResourceTest
 				).getString(
 					"numberOfOccurrences"
 				)));
-
 		Assert.assertEquals(
 			taxonomyVocabulary1.getId(),
 			Long.valueOf(
@@ -409,7 +406,6 @@ public class TaxonomyVocabularyResourceTest
 				).getString(
 					"term"
 				)));
-
 		Assert.assertEquals(
 			1,
 			GetterUtil.getInteger(

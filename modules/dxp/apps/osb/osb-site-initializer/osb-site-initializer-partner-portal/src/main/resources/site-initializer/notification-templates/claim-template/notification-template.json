@@ -1,8 +1,8 @@
 {
 	"description": "",
 	"editorType": "richText",
-	"externalReferenceCode": "PARTNERPORTALNOTIFICATION-001",
-	"name": "Claim Submitted Notification Template",
+	"externalReferenceCode": "PRM-CLAIM-SUBMITTED-NOTIFICATION-TEMPLATE",
+	"name": "PRM Claim Submitted Notification Template",
 	"recipientType": "email",
 	"recipients": [
 		{

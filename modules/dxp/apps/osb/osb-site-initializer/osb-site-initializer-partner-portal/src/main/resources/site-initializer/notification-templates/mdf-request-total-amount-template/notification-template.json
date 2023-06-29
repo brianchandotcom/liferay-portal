@@ -1,8 +1,8 @@
 {
 	"description": "",
 	"editorType": "richText",
-	"externalReferenceCode": "PARTNERPORTALNOTIFICATION-004",
-	"name": "MDF Request Total Amount Template",
+	"externalReferenceCode": "PRM-MDF-REQUEST-TOTAL-AMOUNT-TEMPLATE",
+	"name": "PRM MDF Request Total Amount Template",
 	"recipientType": "email",
 	"recipients": [
 		{

@@ -164,28 +164,28 @@ public class ObjectFieldLocalServiceTest {
 			ObjectFieldBusinessTypeException.class,
 			"Business type encrypted can only be used in object definitions " +
 				"with a default storage type",
-			() -> _testAddEncrypteObjectField(
+			() -> _testAddEncryptedObjectField(
 				"AES", true, Base64.encode(key.getEncoded()),
 				ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE));
 
 		AssertUtils.assertFailure(
 			ObjectFieldBusinessTypeException.class,
 			"Business type encrypted is disabled",
-			() -> _testAddEncrypteObjectField(
+			() -> _testAddEncryptedObjectField(
 				"", false, "", ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT));
 
 		AssertUtils.assertFailure(
 			ObjectFieldBusinessTypeException.class,
 			"Encryption algorithm is required for business type encrypted",
-			() -> _testAddEncrypteObjectField(
+			() -> _testAddEncryptedObjectField(
 				"", true, Base64.encode(key.getEncoded()),
 				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT));
 
 		AssertUtils.assertFailure(
 			ObjectFieldBusinessTypeException.class,
 			"Encryption key is required for business type encrypted",
-			() -> _testAddEncrypteObjectField(
-				"AES", false, "",
+			() -> _testAddEncryptedObjectField(
+				"AES", true, "",
 				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT));
 
 		AssertUtils.assertFailure(
@@ -1644,7 +1644,7 @@ public class ObjectFieldLocalServiceTest {
 			objectDefinition.getObjectDefinitionId());
 	}
 
-	private void _testAddEncrypteObjectField(
+	private void _testAddEncryptedObjectField(
 			String algorithm, boolean enabled, String key, String storageType)
 		throws Exception {
 

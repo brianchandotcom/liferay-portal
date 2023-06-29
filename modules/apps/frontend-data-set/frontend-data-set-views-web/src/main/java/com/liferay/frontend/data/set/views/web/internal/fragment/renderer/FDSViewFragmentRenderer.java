@@ -364,9 +364,6 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 		return relatedObjectEntriesPage.getItems();
 	}
 
-	@Reference
-	private CETManager _cetManager;
-
 	private String _interpolateURL(
 		String apiUrl, HttpServletRequest httpServletRequest) {
 
@@ -391,6 +388,9 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FDSViewFragmentRenderer.class);
+
+	@Reference
+	private CETManager _cetManager;
 
 	@Reference
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;

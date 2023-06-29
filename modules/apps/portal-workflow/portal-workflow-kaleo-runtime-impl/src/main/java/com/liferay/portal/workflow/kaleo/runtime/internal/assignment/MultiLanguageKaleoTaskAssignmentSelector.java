@@ -17,6 +17,8 @@ package com.liferay.portal.workflow.kaleo.runtime.internal.assignment;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
+import com.liferay.portal.kernel.settings.SystemSettingsLocator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignment;
@@ -24,6 +26,8 @@ import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.assignment.BaseKaleoTaskAssignmentSelector;
 import com.liferay.portal.workflow.kaleo.runtime.assignment.KaleoTaskAssignmentSelector;
 import com.liferay.portal.workflow.kaleo.runtime.assignment.ScriptingAssigneeSelector;
+import com.liferay.portal.workflow.kaleo.runtime.internal.configuration.WorkflowTaskScriptConfiguration;
+import com.liferay.portal.workflow.kaleo.runtime.internal.util.KaleoScriptingCache;
 import com.liferay.portal.workflow.kaleo.runtime.internal.util.ServiceSelectorUtil;
 import com.liferay.portal.workflow.kaleo.service.KaleoInstanceLocalService;
 
@@ -64,10 +68,35 @@ public class MultiLanguageKaleoTaskAssignmentSelector
 					kaleoTaskAssignment.toString());
 		}
 
-		Collection<KaleoTaskAssignment> kaleoTaskAssignments =
-			getKaleoTaskAssignments(
+		Collection<KaleoTaskAssignment> kaleoTaskAssignments = null;
+
+		WorkflowTaskScriptConfiguration workflowTaskScriptConfiguration =
+			ConfigurationProviderUtil.getConfiguration(
+				WorkflowTaskScriptConfiguration.class,
+				new SystemSettingsLocator(
+					WorkflowTaskScriptConfiguration.class.getName()));
+
+		int scriptedAssignmentCacheExpirationTime =
+			workflowTaskScriptConfiguration.
+				scriptedAssignmentCacheExpirationTime();
+
+		if (scriptedAssignmentCacheExpirationTime > 0) {
+			kaleoTaskAssignments = _kaleoScriptingCache.getKaleoTaskAssignments(
+				kaleoTaskAssignment.getKaleoTaskAssignmentId());
+		}
+
+		if (kaleoTaskAssignments == null) {
+			kaleoTaskAssignments = getKaleoTaskAssignments(
 				scriptingAssigneeSelector.getAssignees(
 					executionContext, kaleoTaskAssignment));
+
+			if (scriptedAssignmentCacheExpirationTime > 0) {
+				_kaleoScriptingCache.putKaleoTaskAssignments(
+					kaleoTaskAssignment.getKaleoTaskAssignmentId(),
+					kaleoTaskAssignments,
+					scriptedAssignmentCacheExpirationTime * 60);
+			}
+		}
 
 		KaleoInstanceToken kaleoInstanceToken =
 			executionContext.getKaleoInstanceToken();
@@ -93,6 +122,9 @@ public class MultiLanguageKaleoTaskAssignmentSelector
 
 	@Reference
 	private KaleoInstanceLocalService _kaleoInstanceLocalService;
+
+	@Reference
+	private KaleoScriptingCache _kaleoScriptingCache;
 
 	private ServiceTrackerMap<String, List<ScriptingAssigneeSelector>>
 		_serviceTrackerMap;

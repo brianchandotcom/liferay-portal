@@ -21,6 +21,7 @@ interface IProps {
 }
 
 const InputMultipleFiles = ({
+	acceptedFilesExtensions,
 	description,
 	field,
 	label,
@@ -39,7 +40,7 @@ const InputMultipleFiles = ({
 	});
 
 	return (
-		<div className="d-flex flex-column">
+		<div className="d-flex flex-column pt-3">
 			{label && (
 				<label className="font-weight-semi-bold">
 					{label}
@@ -61,17 +62,19 @@ const InputMultipleFiles = ({
 					})}
 				/>
 
-				<div className="align-items-center d-flex flex-column p-3">
+				<div className="align-items-center d-flex flex-column p-3 row">
 					<p className="font-weight-bold text-neutral-10 text-paragraph">
 						{description}
 					</p>
 
-					<p className="text-neutral-7 w-75">
+					<p className="mb-0 text-neutral-7">
 						Only files with the following extensions wil be
-						accepted: doc, docx.jpeg, jpg, pdf, tif, tiff
+						accepted:
 					</p>
 
-					<p className="font-weight-bold text-neutral-7">Or</p>
+					<p className="font-weight-bold text-neutral-7">
+						{acceptedFilesExtensions}
+					</p>
 
 					<button
 						className="btn btn-secondary"

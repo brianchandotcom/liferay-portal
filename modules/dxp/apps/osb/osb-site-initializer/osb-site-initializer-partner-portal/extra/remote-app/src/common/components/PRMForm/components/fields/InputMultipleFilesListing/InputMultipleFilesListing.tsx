@@ -10,18 +10,21 @@
  */
 
 import PRMForm from '../../..';
+import LiferayFile from '../../../../../interfaces/liferayFile';
 import PRMFormik from '../../../../PRMFormik';
 import ListFiles from './components/ListFiles';
 
 interface IProps {
+	acceptedFilesExtensions: string;
 	description: string;
 	label: string;
 	name: string;
-	onAccept: (value: File[]) => void;
+	onAccept: (value: LiferayFile[]) => void;
 	value?: File[] | Object[];
 }
 
 const InputMultipleFilesListing = ({
+	acceptedFilesExtensions,
 	description,
 	label,
 	name,
@@ -30,6 +33,7 @@ const InputMultipleFilesListing = ({
 }: IProps) => (
 	<>
 		<PRMFormik.Field
+			acceptedFilesExtensions={acceptedFilesExtensions}
 			component={PRMForm.InputMultipleFiles}
 			description={description}
 			label={label}

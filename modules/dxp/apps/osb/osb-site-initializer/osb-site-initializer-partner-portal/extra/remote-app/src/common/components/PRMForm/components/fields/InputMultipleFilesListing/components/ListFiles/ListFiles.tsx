@@ -12,32 +12,60 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import {ArrayHelpers} from 'formik';
 
+import LiferayFile from '../../../../../../../interfaces/liferayFile';
+import deleteDocument from '../../../../../../../services/liferay/headless-delivery/deleteDocument';
+import {ResourceName} from '../../../../../../../services/liferay/object/enum/resourceName';
+import deleteMDFClaimActivityDocument from '../../../../../../../services/liferay/object/mdf-claim-activity-documents/deleteMDFClaimActivityDocument';
+
 interface IProps {
 	arrayHelpers: ArrayHelpers;
-	files: File[];
+	files: LiferayFile[];
 }
 
 const ListFiles = ({arrayHelpers, files}: IProps) => {
 	return (
 		<div>
-			{files.map((file, index) => (
-				<div
-					className="align-items-center bg-neutral-0 border border-neutral-4 d-flex justify-content-between mt-2 p-2 rounded-xs shadow-sm"
-					key={index}
-				>
-					<div className="font-weight-bold">
-						<div className="text-neutral-8">{file.name}</div>
-					</div>
+			{files.map(
+				(file, index) =>
+					file.name && (
+						<div
+							className="align-items-center bg-neutral-0 border border-neutral-4 d-flex justify-content-between mt-2 px-2 rounded-xs shadow-sm"
+							key={index}
+						>
+							<div className="font-weight-bold">
+								<div className="text-neutral-8">
+									{file.name}
+								</div>
+							</div>
 
-					<ClayButtonWithIcon
-						className="text-neutral-7"
-						displayType={null}
-						onClick={() => arrayHelpers.remove(index)}
-						small
-						symbol="times-circle"
-					/>
-				</div>
-			))}
+							<ClayButtonWithIcon
+								className="text-neutral-7"
+								displayType={null}
+								onClick={async () => {
+									if (file.documentId) {
+										const deletedDocument = await deleteDocument(
+											ResourceName.DOCUMENTS,
+											file.documentId
+										);
+
+										deletedDocument &&
+											arrayHelpers.remove(index);
+									} else {
+										arrayHelpers.remove(index);
+									}
+
+									if (file.id) {
+										await deleteMDFClaimActivityDocument(
+											file.id
+										);
+									}
+								}}
+								small
+								symbol="times-circle"
+							/>
+						</div>
+					)
+			)}
 		</div>
 	);
 };

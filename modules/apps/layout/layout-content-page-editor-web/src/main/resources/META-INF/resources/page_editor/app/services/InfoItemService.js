@@ -106,6 +106,7 @@ export default {
 	 * @param {object} options
 	 * @param {string} options.classNameId Asset's className
 	 * @param {string} options.classPK Asset's classPK
+	 * @param {string} options.externalReferenceCode Asset's externalReferenceCode
 	 * @param {string} options.fieldId
 	 * @param {string} [options.languageId]
 	 * @param {function} options.onNetworkStatus
@@ -119,17 +120,25 @@ export default {
 		languageId,
 		onNetworkStatus,
 	}) {
+		const body = {
+			classNameId,
+			editableTypeOptions: JSON.stringify(editableTypeOptions),
+			fieldId,
+			languageId,
+		};
+
+		if (classPK) {
+			body.classPK = classPK;
+		}
+
+		if (externalReferenceCode) {
+			body.externalReferenceCode = externalReferenceCode;
+		}
+
 		return serviceFetch(
 			config.getInfoItemFieldValueURL,
 			{
-				body: {
-					classNameId,
-					classPK,
-					editableTypeOptions: JSON.stringify(editableTypeOptions),
-					externalReferenceCode,
-					fieldId,
-					languageId,
-				},
+				body,
 			},
 			onNetworkStatus
 		);

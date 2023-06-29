@@ -402,13 +402,34 @@ public abstract class BaseDBProcess implements DBProcess {
 			String exceptionMessage)
 		throws Exception {
 
+		processConcurrently(
+			sql,
+			preparedStatement -> {
+			},
+			updateSQL, unsafeFunction, unsafeBiConsumer, exceptionMessage);
+	}
+
+	protected void processConcurrently(
+			String sql,
+			UnsafeConsumer<PreparedStatement, Exception> unsafeConsumer,
+			String updateSQL,
+			UnsafeFunction<ResultSet, Object[], Exception> unsafeFunction,
+			UnsafeBiConsumer<Object[], PreparedStatement, Exception>
+				unsafeBiConsumer,
+			String exceptionMessage)
+		throws Exception {
+
 		int fetchSize = GetterUtil.getInteger(
 			PropsUtil.get(PropsKeys.UPGRADE_CONCURRENT_FETCH_SIZE));
 
-		try (Statement statement = connection.createStatement()) {
-			statement.setFetchSize(fetchSize);
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				sql)) {
 
-			try (ResultSet resultSet = statement.executeQuery(sql)) {
+			preparedStatement.setFetchSize(fetchSize);
+
+			unsafeConsumer.accept(preparedStatement);
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				_processConcurrently(
 					updateSQL,
 					() -> {

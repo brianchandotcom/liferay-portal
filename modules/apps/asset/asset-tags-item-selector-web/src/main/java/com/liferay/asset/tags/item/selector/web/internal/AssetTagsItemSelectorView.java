@@ -86,8 +86,8 @@ public class AssetTagsItemSelectorView
 
 		AssetTagsDisplayContext assetTagsDisplayContext =
 			new AssetTagsDisplayContext(
-				httpServletRequest, portletURL, renderRequest, renderResponse,
-				assetTagsItemSelectorCriterion);
+				assetTagsItemSelectorCriterion, httpServletRequest, portletURL,
+				renderRequest, renderResponse);
 
 		_itemSelectorViewDescriptorRenderer.renderHTML(
 			httpServletRequest, servletResponse, assetTagsItemSelectorCriterion,

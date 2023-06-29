@@ -47,15 +47,15 @@ import javax.servlet.http.HttpServletRequest;
 public class AssetTagsDisplayContext {
 
 	public AssetTagsDisplayContext(
+		AssetTagsItemSelectorCriterion assetTagsItemSelectorCriterion,
 		HttpServletRequest httpServletRequest, PortletURL portletURL,
-		RenderRequest renderRequest, RenderResponse renderResponse,
-		AssetTagsItemSelectorCriterion assetTagsItemSelectorCriterion) {
+		RenderRequest renderRequest, RenderResponse renderResponse) {
 
+		_assetTagsItemSelectorCriterion = assetTagsItemSelectorCriterion;
 		_httpServletRequest = httpServletRequest;
 		_portletURL = portletURL;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
-		_assetTagsItemSelectorCriterion = assetTagsItemSelectorCriterion;
 	}
 
 	public SearchContainer<AssetTag> getTagSearchContainer() {

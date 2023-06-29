@@ -67,6 +67,83 @@ definition {
 		}
 	}
 
+	@description = "LPS-164742 - Finance user can cancel the Payment Confirmation"
+	@priority = 3
+	test CanCancelPaymentConfirmation {
+		task ("Given I have a created request in 'Awaiting Payment Confirmation' status") {
+			EVPRequest.changeStatusToAwaitingPaymentConfirmation();	
+		}
+
+		task ("And the Finance user are in the Payment Confirmation page") {
+			EVPRequest.goToRequestOption(
+				key_option = "Pay",
+				organizationName = "Organization Test");
+
+			EVPNavigator.assertActiveBreadcrumb(activeItem = "Payment Confirmation");
+		}
+
+		task ("When the financial user clicks on Cancel Button") {
+			EVPRequest.confirmPayment(
+				cancelButton = "true",
+				dateFormat = "MMddYYYY",
+				dateRange = 0,
+				document = "Document_1.pdf",
+				paymentDate = "true",
+				paymentValue = 100);
+		}
+
+		task ("Then he can see that the Payment Confirmation was not saved and the status is still 'Awaiting Payment Confirmation'") {
+			EVPUtils.viewStatus(
+				organizationName = "Organization Test",
+				status = "Awaiting Payment Confirmation");
+		}
+	}
+
+	@description = "LPS-164742 - Finance user should Confirm Payment on requests that are on 'Awaiting Payment Confirmation' Status"
+	@priority = 5
+	test CanConfirmPayment {
+		task ("Given I have a created request in 'Awaiting Payment Confirmation' status") {
+			EVPRequest.changeStatusToAwaitingPaymentConfirmation();	
+		}
+
+		task ("When the Finance user do the Payment Confirmation") {
+			EVPRequest.goToRequestOption(
+				key_option = "Pay",
+				organizationName = "Organization Test");
+
+			EVPNavigator.assertActiveBreadcrumb(activeItem = "Payment Confirmation");
+
+			for (var fieldName : list "Request ID,EVP Payment Date,Payment Value,Upload File") {
+				EVPRequest.verifyFieldsName(key_field = ${fieldName});
+			}
+
+			EVPRequest.confirmPayment(
+				dateFormat = "MMddYYYY",
+				dateRange = 0,
+				document = "Document_1.pdf",
+				paymentDate = "true",
+				paymentValue = 100);
+		}
+
+		task ("Then he can see that the status change to 'Closed'") {
+			EVPNavigator.goToNavItem(navItem = "Request");
+
+			EVPUtils.viewStatus(
+				organizationName = "Organization Test",
+				status = "Closed");
+		}
+
+		task ("When he goes to Request details page") {
+			EVPRequest.goToRequestOption(
+				key_option = "Details",
+				organizationName = "Organization Test");
+		}
+
+		task ("Then he can asset the Payment Confirmation date in details page") {
+			EVPRequest.viewRequestDetails(paymentDate = ${paymentDate});
+		}
+	}
+
 	@description = "LPS-181769 - Verify that a request of funds has 'Awaiting Approval on EVP' status when it's created"
 	@priority = 5
 	test VerifyStatusAfterCreatRequest {
@@ -100,6 +177,49 @@ definition {
 			EVPUtils.viewStatus(
 				organizationName = "Organization Test",
 				status = "Awaiting Approval On EVP");
+		}
+	}
+
+	@description = "LPS-164742 - The uploaded files are being stored on DM"
+	@priority = 3
+	test VerifyUploadedFileOnDM {
+		task ("Given I have a created request in 'Awaiting Payment Confirmation' status") {
+			EVPRequest.changeStatusToAwaitingPaymentConfirmation();	
+		}
+
+		task ("When the Finance user do the Payment Confirmation") {
+			EVPRequest.goToRequestOption(
+				key_option = "Pay",
+				organizationName = "Organization Test");
+
+			EVPNavigator.assertActiveBreadcrumb(activeItem = "Payment Confirmation");
+
+			for (var fieldName : list "Request ID,EVP Payment Date,Payment Value,Upload File") {
+				EVPRequest.verifyFieldsName(key_field = ${fieldName});
+			}
+
+			EVPRequest.confirmPayment(
+				dateFormat = "MMddYYYY",
+				dateRange = 0,
+				document = "Document_1.pdf",
+				paymentDate = "true",
+				paymentValue = 100);
+		}
+
+		task ("Then the Finance user can see the approved document in Documents and Media") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Documents and Media");
+
+			DMNavigator.gotoFolder(dmFolderName = "EVPPaymentConfirmation");
+
+			DMDocument.viewStatus(
+				dmDocumentStatus = "Approved",
+				dmDocumentTitle = "Document_1");
 		}
 	}
 

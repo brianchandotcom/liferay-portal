@@ -31,14 +31,18 @@ import com.liferay.object.exception.ObjectFieldLabelException;
 import com.liferay.object.exception.ObjectFieldListTypeDefinitionIdException;
 import com.liferay.object.exception.ObjectFieldLocalizedException;
 import com.liferay.object.exception.ObjectFieldNameException;
+import com.liferay.object.exception.ObjectFieldReadOnlyConditionExpressionException;
+import com.liferay.object.exception.ObjectFieldReadOnlyException;
 import com.liferay.object.exception.ObjectFieldRelationshipTypeException;
 import com.liferay.object.exception.ObjectFieldSettingNameException;
 import com.liferay.object.exception.ObjectFieldSettingValueException;
 import com.liferay.object.exception.ObjectFieldStateException;
 import com.liferay.object.exception.RequiredObjectFieldException;
+import com.liferay.object.field.builder.AggregationObjectFieldBuilder;
 import com.liferay.object.field.builder.AttachmentObjectFieldBuilder;
 import com.liferay.object.field.builder.DateObjectFieldBuilder;
 import com.liferay.object.field.builder.EncryptedObjectFieldBuilder;
+import com.liferay.object.field.builder.FormulaObjectFieldBuilder;
 import com.liferay.object.field.builder.IntegerObjectFieldBuilder;
 import com.liferay.object.field.builder.LongIntegerObjectFieldBuilder;
 import com.liferay.object.field.builder.MultiselectPicklistObjectFieldBuilder;
@@ -81,6 +85,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
@@ -102,6 +107,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.crypto.KeyGenerator;
 
@@ -567,6 +573,192 @@ public class ObjectFieldLocalServiceTest {
 					).state(
 						true
 					).build())));
+
+		// readOnly
+
+		AssertUtils.assertFailure(
+			ObjectFieldReadOnlyConditionExpressionException.class,
+			"Read only condition expression is required",
+			() -> ObjectDefinitionTestUtil.addObjectDefinition(
+				false, _objectDefinitionLocalService,
+				Arrays.asList(
+					_getTextObjectFieldWithReadOnlyProperties(
+						0, ObjectFieldConstants.READ_ONLY_CONDITIONAL, null))));
+
+		String invalidDDMScript = RandomTestUtil.randomString() + "()";
+
+		AssertUtils.assertFailure(
+			ObjectFieldReadOnlyConditionExpressionException.class,
+			"Syntax error in: " + invalidDDMScript,
+			() -> ObjectDefinitionTestUtil.addObjectDefinition(
+				false, _objectDefinitionLocalService,
+				Arrays.asList(
+					_getTextObjectFieldWithReadOnlyProperties(
+						0, ObjectFieldConstants.READ_ONLY_CONDITIONAL,
+						invalidDDMScript))));
+
+		String invalidReadOnly = RandomTestUtil.randomString();
+
+		AssertUtils.assertFailure(
+			ObjectFieldReadOnlyException.class,
+			"Unknown read only: " + invalidReadOnly,
+			() -> ObjectDefinitionTestUtil.addObjectDefinition(
+				false, _objectDefinitionLocalService,
+				Arrays.asList(
+					_getTextObjectFieldWithReadOnlyProperties(
+						0, invalidReadOnly, null))));
+
+		ObjectDefinition objectDefinition1 =
+			ObjectDefinitionTestUtil.addObjectDefinition(
+				false, _objectDefinitionLocalService, Collections.emptyList());
+
+		ObjectField objectField;
+
+		for (String objectFieldName : _readOnlyObjectFieldNames) {
+			objectField = _objectFieldLocalService.getObjectField(
+				objectDefinition1.getObjectDefinitionId(), objectFieldName);
+
+			_assertObjectFieldReadOnlyTrue(objectField);
+		}
+
+		objectField = _objectFieldLocalService.getObjectField(
+			objectDefinition1.getObjectDefinitionId(), "externalReferenceCode");
+
+		_assertObjectFieldReadOnlyFalse(objectField);
+
+		objectField = _addCustomObjectField(
+			_getTextObjectFieldWithReadOnlyProperties(
+				objectDefinition1.getObjectDefinitionId(), null, null));
+
+		_assertObjectFieldReadOnlyFalse(objectField);
+
+		String validDDMScript = "isEmpty(able)";
+
+		objectField = _addCustomObjectField(
+			_getTextObjectFieldWithReadOnlyProperties(
+				objectDefinition1.getObjectDefinitionId(),
+				ObjectFieldConstants.READ_ONLY_CONDITIONAL, validDDMScript));
+
+		Assert.assertEquals(
+			objectField.getReadOnly(),
+			ObjectFieldConstants.READ_ONLY_CONDITIONAL);
+		Assert.assertEquals(
+			validDDMScript, objectField.getReadOnlyConditionExpression());
+
+		objectField = _addCustomObjectField(
+			_getTextObjectFieldWithReadOnlyProperties(
+				objectDefinition1.getObjectDefinitionId(),
+				ObjectFieldConstants.READ_ONLY_FALSE, null));
+
+		_assertObjectFieldReadOnlyFalse(objectField);
+
+		objectField = _addCustomObjectField(
+			_getTextObjectFieldWithReadOnlyProperties(
+				objectDefinition1.getObjectDefinitionId(),
+				ObjectFieldConstants.READ_ONLY_TRUE, null));
+
+		_assertObjectFieldReadOnlyTrue(objectField);
+
+		objectField = _addFormulaObjectFieldWithReadOnlyProperties(
+			objectDefinition1.getObjectDefinitionId(),
+			ObjectFieldConstants.READ_ONLY_CONDITIONAL, null);
+
+		_assertObjectFieldReadOnlyTrue(objectField);
+
+		objectField = _addFormulaObjectFieldWithReadOnlyProperties(
+			objectDefinition1.getObjectDefinitionId(),
+			ObjectFieldConstants.READ_ONLY_CONDITIONAL, invalidDDMScript);
+
+		_assertObjectFieldReadOnlyTrue(objectField);
+
+		objectField = _addFormulaObjectFieldWithReadOnlyProperties(
+			objectDefinition1.getObjectDefinitionId(),
+			ObjectFieldConstants.READ_ONLY_CONDITIONAL, validDDMScript);
+
+		_assertObjectFieldReadOnlyTrue(objectField);
+
+		objectField = _addFormulaObjectFieldWithReadOnlyProperties(
+			objectDefinition1.getObjectDefinitionId(),
+			ObjectFieldConstants.READ_ONLY_FALSE, null);
+
+		_assertObjectFieldReadOnlyTrue(objectField);
+
+		objectField = _addFormulaObjectFieldWithReadOnlyProperties(
+			objectDefinition1.getObjectDefinitionId(),
+			RandomTestUtil.randomString(), null);
+
+		_assertObjectFieldReadOnlyTrue(objectField);
+
+		ObjectDefinition objectDefinition2 =
+			ObjectDefinitionTestUtil.addObjectDefinition(
+				false, _objectDefinitionLocalService,
+				Arrays.asList(
+					_getIntegerObjectField(0, Collections.emptyList())));
+
+		_objectRelationshipLocalService.addObjectRelationship(
+			TestPropsValues.getUserId(),
+			objectDefinition1.getObjectDefinitionId(),
+			objectDefinition2.getObjectDefinitionId(), 0,
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			"oneToManyRelationshipName",
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		objectField = _addAggregationObjectFieldWithReadOnlyProperties(
+			objectDefinition1.getObjectDefinitionId(),
+			ObjectFieldConstants.READ_ONLY_CONDITIONAL, null);
+
+		_assertObjectFieldReadOnlyTrue(objectField);
+
+		objectField = _addAggregationObjectFieldWithReadOnlyProperties(
+			objectDefinition1.getObjectDefinitionId(),
+			ObjectFieldConstants.READ_ONLY_CONDITIONAL, invalidDDMScript);
+
+		_assertObjectFieldReadOnlyTrue(objectField);
+
+		objectField = _addAggregationObjectFieldWithReadOnlyProperties(
+			objectDefinition1.getObjectDefinitionId(),
+			ObjectFieldConstants.READ_ONLY_CONDITIONAL, validDDMScript);
+
+		_assertObjectFieldReadOnlyTrue(objectField);
+
+		objectField = _addAggregationObjectFieldWithReadOnlyProperties(
+			objectDefinition1.getObjectDefinitionId(),
+			ObjectFieldConstants.READ_ONLY_FALSE, null);
+
+		_assertObjectFieldReadOnlyTrue(objectField);
+
+		objectField = _addAggregationObjectFieldWithReadOnlyProperties(
+			objectDefinition1.getObjectDefinitionId(),
+			RandomTestUtil.randomString(), null);
+
+		_assertObjectFieldReadOnlyTrue(objectField);
+
+		// readOnly with Proxy
+
+		objectDefinition1 =
+			_objectDefinitionLocalService.addCustomObjectDefinition(
+				TestPropsValues.getUserId(), false, false,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"Test", null, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				true, ObjectDefinitionConstants.SCOPE_COMPANY,
+				ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE,
+				Collections.emptyList());
+
+		objectField = _addCustomObjectField(
+			_getTextObjectFieldWithReadOnlyProperties(
+				objectDefinition1.getObjectDefinitionId(),
+				ObjectFieldConstants.READ_ONLY_CONDITIONAL, validDDMScript));
+
+		_assertObjectFieldReadOnlyFalse(objectField);
+
+		objectField = _addCustomObjectField(
+			_getTextObjectFieldWithReadOnlyProperties(
+				objectDefinition1.getObjectDefinitionId(),
+				ObjectFieldConstants.READ_ONLY_TRUE, null));
+
+		_assertObjectFieldReadOnlyFalse(objectField);
 	}
 
 	@Test
@@ -1007,22 +1199,15 @@ public class ObjectFieldLocalServiceTest {
 		// Business type integer
 
 		ObjectField integerObjectField = _addCustomObjectField(
-			new IntegerObjectFieldBuilder(
-			).labelMap(
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
-			).name(
-				"integer"
-			).objectDefinitionId(
-				objectDefinition.getObjectDefinitionId()
-			).objectFieldSettings(
+			_getIntegerObjectField(
+				objectDefinition.getObjectDefinitionId(),
 				Arrays.asList(
 					new ObjectFieldSettingBuilder(
 					).name(
 						ObjectFieldSettingConstants.NAME_UNIQUE_VALUES
 					).value(
 						"TRUE"
-					).build())
-			).build());
+					).build())));
 
 		_assertObjectFieldSettingsValues(
 			integerObjectField.getObjectFieldId(),
@@ -1420,6 +1605,72 @@ public class ObjectFieldLocalServiceTest {
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			relatedObjectDefinition);
+
+		// readOnly
+
+		objectDefinition = ObjectDefinitionTestUtil.addObjectDefinition(
+			false, _objectDefinitionLocalService, Collections.emptyList());
+
+		objectField = _addCustomObjectField(
+			new TextObjectFieldBuilder(
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).name(
+				"a" + RandomTestUtil.randomString()
+			).objectDefinitionId(
+				objectDefinition.getObjectDefinitionId()
+			).build());
+
+		ObjectField finalObjectField = objectField;
+
+		AssertUtils.assertFailure(
+			ObjectFieldReadOnlyConditionExpressionException.class,
+			"Read only condition expression is required",
+			() -> ObjectFieldUtil.updateObjectFieldReadOnlyProperties(
+				finalObjectField, ObjectFieldConstants.READ_ONLY_CONDITIONAL,
+				null));
+
+		String invalidDDMScript = RandomTestUtil.randomString() + "()";
+
+		AssertUtils.assertFailure(
+			ObjectFieldReadOnlyConditionExpressionException.class,
+			"Syntax error in: " + invalidDDMScript,
+			() -> ObjectFieldUtil.updateObjectFieldReadOnlyProperties(
+				finalObjectField, ObjectFieldConstants.READ_ONLY_CONDITIONAL,
+				invalidDDMScript));
+
+		String invalidReadOnly = RandomTestUtil.randomString();
+
+		AssertUtils.assertFailure(
+			ObjectFieldReadOnlyException.class,
+			"Unknown read only: " + invalidReadOnly,
+			() -> ObjectFieldUtil.updateObjectFieldReadOnlyProperties(
+				finalObjectField, invalidReadOnly, null));
+
+		relatedObjectDefinition = ObjectDefinitionTestUtil.addObjectDefinition(
+			false, _objectDefinitionLocalService,
+			Arrays.asList(_getIntegerObjectField(0, Collections.emptyList())));
+
+		_objectRelationshipLocalService.addObjectRelationship(
+			TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId(),
+			relatedObjectDefinition.getObjectDefinitionId(), 0,
+			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			"oneToManyRelationshipName",
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		objectField = _addAggregationObjectFieldWithReadOnlyProperties(
+			objectDefinition.getObjectDefinitionId(), null, null);
+
+		_assertAggregationAndFormulaObjectFieldReadOnlyBehavior(
+			invalidDDMScript, invalidReadOnly, objectField);
+
+		objectField = _addFormulaObjectFieldWithReadOnlyProperties(
+			objectDefinition.getObjectDefinitionId(), null, null);
+
+		_assertAggregationAndFormulaObjectFieldReadOnlyBehavior(
+			invalidDDMScript, invalidReadOnly, objectField);
 	}
 
 	@Test
@@ -1485,6 +1736,46 @@ public class ObjectFieldLocalServiceTest {
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition2);
 	}
 
+	private ObjectField _addAggregationObjectFieldWithReadOnlyProperties(
+			long objectDefinitionId, String readOnly,
+			String readOnlyConditionExpression)
+		throws Exception {
+
+		return _addCustomObjectField(
+			new AggregationObjectFieldBuilder(
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).name(
+				"a" + RandomTestUtil.randomString()
+			).objectDefinitionId(
+				objectDefinitionId
+			).objectFieldSettings(
+				Arrays.asList(
+					new ObjectFieldSettingBuilder(
+					).name(
+						"function"
+					).value(
+						"MAX"
+					).build(),
+					new ObjectFieldSettingBuilder(
+					).name(
+						"objectFieldName"
+					).value(
+						"integer"
+					).build(),
+					new ObjectFieldSettingBuilder(
+					).name(
+						"objectRelationshipName"
+					).value(
+						"oneToManyRelationshipName"
+					).build())
+			).readOnly(
+				readOnly
+			).readOnlyConditionExpression(
+				readOnlyConditionExpression
+			).build());
+	}
+
 	private void _addCustomObjectDefinitionWithEncryptedObjectField(
 			String algorithm, boolean enabled, String key, String storageType)
 		throws Exception {
@@ -1531,6 +1822,40 @@ public class ObjectFieldLocalServiceTest {
 			objectField.getReadOnlyConditionExpression(),
 			objectField.isRequired(), objectField.isState(),
 			objectField.getObjectFieldSettings());
+	}
+
+	private ObjectField _addFormulaObjectFieldWithReadOnlyProperties(
+			long objectDefinitionId, String readOnly,
+			String readOnlyConditionExpression)
+		throws Exception {
+
+		return _addCustomObjectField(
+			new FormulaObjectFieldBuilder(
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).name(
+				"a" + RandomTestUtil.randomString()
+			).objectDefinitionId(
+				objectDefinitionId
+			).objectFieldSettings(
+				Arrays.asList(
+					new ObjectFieldSettingBuilder(
+					).name(
+						"script"
+					).value(
+						"weight + 10"
+					).build(),
+					new ObjectFieldSettingBuilder(
+					).name(
+						"output"
+					).value(
+						ObjectFieldConstants.BUSINESS_TYPE_DECIMAL
+					).build())
+			).readOnly(
+				readOnly
+			).readOnlyConditionExpression(
+				readOnlyConditionExpression
+			).build());
 	}
 
 	private ObjectField _addPicklistObjectField(
@@ -1590,6 +1915,36 @@ public class ObjectFieldLocalServiceTest {
 			_objectDefinitionLocalService, Arrays.asList(objectFields));
 	}
 
+	private void _assertAggregationAndFormulaObjectFieldReadOnlyBehavior(
+			String invalidDDMScript, String invalidReadOnly,
+			ObjectField objectField)
+		throws Exception {
+
+		ObjectFieldUtil.updateObjectFieldReadOnlyProperties(
+			objectField, invalidReadOnly, null);
+
+		_assertObjectFieldReadOnlyTrue(objectField);
+
+		ObjectFieldUtil.updateObjectFieldReadOnlyProperties(
+			objectField, ObjectFieldConstants.READ_ONLY_CONDITIONAL,
+			invalidDDMScript);
+
+		_assertObjectFieldReadOnlyTrue(objectField);
+
+		String validDDMScript = "isEmpty(able)";
+
+		ObjectFieldUtil.updateObjectFieldReadOnlyProperties(
+			objectField, ObjectFieldConstants.READ_ONLY_CONDITIONAL,
+			validDDMScript);
+
+		_assertObjectFieldReadOnlyTrue(objectField);
+
+		ObjectFieldUtil.updateObjectFieldReadOnlyProperties(
+			objectField, ObjectFieldConstants.READ_ONLY_FALSE, null);
+
+		_assertObjectFieldReadOnlyTrue(objectField);
+	}
+
 	private void _assertDeleteObjectField(
 			boolean hasColumn, ObjectDefinition objectDefinition,
 			String objectFieldName)
@@ -1630,6 +1985,20 @@ public class ObjectFieldLocalServiceTest {
 			expectedDefaultValue, values.get(objectField.getName()));
 	}
 
+	private void _assertObjectFieldReadOnlyFalse(ObjectField objectField) {
+		Assert.assertEquals(
+			ObjectFieldConstants.READ_ONLY_FALSE, objectField.getReadOnly());
+		Assert.assertEquals(
+			StringPool.BLANK, objectField.getReadOnlyConditionExpression());
+	}
+
+	private void _assertObjectFieldReadOnlyTrue(ObjectField objectField) {
+		Assert.assertEquals(
+			ObjectFieldConstants.READ_ONLY_TRUE, objectField.getReadOnly());
+		Assert.assertEquals(
+			StringPool.BLANK, objectField.getReadOnlyConditionExpression());
+	}
+
 	private void _assertObjectFieldSettingsValues(
 			long objectFieldId, Map<String, String> objectFieldSettingsValues)
 		throws Exception {
@@ -1644,6 +2013,39 @@ public class ObjectFieldLocalServiceTest {
 			Assert.assertEquals(
 				entry.getValue(), objectFieldSetting.getValue());
 		}
+	}
+
+	private ObjectField _getIntegerObjectField(
+		long objectDefinitionId, List<ObjectFieldSetting> objectFieldSettings) {
+
+		return new IntegerObjectFieldBuilder(
+		).labelMap(
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+		).name(
+			"integer"
+		).objectDefinitionId(
+			objectDefinitionId
+		).objectFieldSettings(
+			objectFieldSettings
+		).build();
+	}
+
+	private ObjectField _getTextObjectFieldWithReadOnlyProperties(
+		long objectDefinitionId, String readOnly,
+		String readOnlyConditionExpression) {
+
+		return new TextObjectFieldBuilder(
+		).labelMap(
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+		).name(
+			"a" + RandomTestUtil.randomString()
+		).objectDefinitionId(
+			objectDefinitionId
+		).readOnly(
+			readOnly
+		).readOnlyConditionExpression(
+			readOnlyConditionExpression
+		).build();
 	}
 
 	private boolean _hasColumn(String tableName, String columnName)
@@ -1756,5 +2158,8 @@ public class ObjectFieldLocalServiceTest {
 
 	@Inject
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;
+
+	private final Set<String> _readOnlyObjectFieldNames = SetUtil.fromArray(
+		"createDate", "creator", "id", "modifiedDate", "status");
 
 }

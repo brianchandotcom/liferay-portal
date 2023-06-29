@@ -230,7 +230,8 @@ public class ObjectFieldUtil {
 
 			ObjectField objectField = objectFieldsMap.get(entry.getKey());
 
-			if (Objects.equals(
+			if ((objectField == null) ||
+				Objects.equals(
 					objectField.getReadOnly(),
 					ObjectFieldConstants.READ_ONLY_FALSE)) {
 

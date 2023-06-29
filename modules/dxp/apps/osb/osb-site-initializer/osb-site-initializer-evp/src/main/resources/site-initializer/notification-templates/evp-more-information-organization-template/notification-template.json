@@ -1,7 +1,7 @@
 {
 	"description": "",
 	"editorType": "richText",
-	"externalReferenceCode": "EVPNOTIFICATION-002",
+	"externalReferenceCode": "EVP-NEED-MORE-INFO-ORGANIZATION-TEMPLATE",
 	"name": "EVP Need More Info Organization Template",
 	"recipientType": "email",
 	"recipients": [

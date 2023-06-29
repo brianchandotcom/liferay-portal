@@ -1,7 +1,7 @@
 {
 	"description": "",
 	"editorType": "richText",
-	"externalReferenceCode": "EVPNOTIFICATION-001",
+	"externalReferenceCode": "EVP-APPROVED-ORGANIZATION-TEMPLATE",
 	"name": "EVP Approved Organization Template",
 	"recipientType": "email",
 	"recipients": [

@@ -82,9 +82,13 @@ export const AddDataSource: React.FC<IAddDataSourceProps> = ({
 			]}
 			className={getCN('add-data-source-root', className)}
 			groupId={groupId}
-			pageDescription={Liferay.Language.get(
-				'add-a-data-source-description'
-			)}
+			pageDescription={
+				ENABLE_CSVFILE
+					? Liferay.Language.get('add-a-data-source-description')
+					: Liferay.Language.get(
+							'add-a-data-source-description-no-csv'
+					  )
+			}
 			pageTitle={Liferay.Language.get('add-data-source')}
 		>
 			<SelectDataSource sections={getDataSourceSections()} />

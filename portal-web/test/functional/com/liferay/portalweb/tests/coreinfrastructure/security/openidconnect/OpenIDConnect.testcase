@@ -755,12 +755,14 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-72792. Users could login and logout using Azure as OpenID Connect provider."
+	@description = "This is a use case for LRQA-72792. Users could login and logout using Azure as OpenID Connect provider. Blocked by ISIT-35689"
+	@ignore = "true"
 	@priority = 5
 	test OpenIDConnectSmokeWithAzure {
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration.config";
 		property osgi.module.configurations = "enabled=\"true\"${line.separator}tokenRefreshOffset=\"120\"";
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 		property test.liferay.virtual.instance = "false";
 
 		var userEmailAddress = PropsUtil.get("openid.provider.azure.test.account.email.address");

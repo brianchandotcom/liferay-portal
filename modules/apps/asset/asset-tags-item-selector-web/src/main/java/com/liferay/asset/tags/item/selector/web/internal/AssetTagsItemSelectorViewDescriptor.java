@@ -22,10 +22,6 @@ import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
 import com.liferay.item.selector.TableItemView;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.WebKeys;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Stefan Tanasie
@@ -35,14 +31,10 @@ public class AssetTagsItemSelectorViewDescriptor
 
 	public AssetTagsItemSelectorViewDescriptor(
 		AssetTagsItemSelectorCriterion assetTagsItemSelectorCriterion,
-		HttpServletRequest httpServletRequest,
 		AssetTagsDisplayContext assetTagsDisplayContext) {
 
 		_assetTagsItemSelectorCriterion = assetTagsItemSelectorCriterion;
 		_assetTagsDisplayContext = assetTagsDisplayContext;
-
-		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
 	}
 
 	@Override
@@ -79,7 +71,7 @@ public class AssetTagsItemSelectorViewDescriptor
 	@Override
 	public TableItemView getTableItemView(AssetTag assetTag) {
 		return new AssetTagsTableItemView(
-			assetTag, _themeDisplay, _assetTagsItemSelectorCriterion);
+			assetTag, _assetTagsItemSelectorCriterion);
 	}
 
 	@Override
@@ -100,6 +92,5 @@ public class AssetTagsItemSelectorViewDescriptor
 	private final AssetTagsDisplayContext _assetTagsDisplayContext;
 	private final AssetTagsItemSelectorCriterion
 		_assetTagsItemSelectorCriterion;
-	private final ThemeDisplay _themeDisplay;
 
 }

@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.taglib.search.TextSearchEntry;
@@ -39,11 +38,10 @@ import java.util.Locale;
 public class AssetTagsTableItemView implements TableItemView {
 
 	public AssetTagsTableItemView(
-		AssetTag assetTag, ThemeDisplay themeDisplay,
+		AssetTag assetTag,
 		AssetTagsItemSelectorCriterion assetTagsItemSelectorCriterion) {
 
 		_assetTag = assetTag;
-		_themeDisplay = themeDisplay;
 		_assetTagsItemSelectorCriterion = assetTagsItemSelectorCriterion;
 	}
 
@@ -74,7 +72,7 @@ public class AssetTagsTableItemView implements TableItemView {
 			scopeTextSearchEntry.setCssClass(
 				"table-cell-expand-smaller table-cell-minw-150");
 			scopeTextSearchEntry.setName(
-				HtmlUtil.escape(_getGroupDescriptiveName()));
+				HtmlUtil.escape(_getGroupDescriptiveName(locale)));
 
 			searchEntries.add(scopeTextSearchEntry);
 		}
@@ -82,12 +80,12 @@ public class AssetTagsTableItemView implements TableItemView {
 		return searchEntries;
 	}
 
-	private String _getGroupDescriptiveName() {
+	private String _getGroupDescriptiveName(Locale locale) {
 		try {
 			Group group = GroupLocalServiceUtil.fetchGroup(
 				_assetTag.getGroupId());
 
-			return group.getDescriptiveName(_themeDisplay.getLocale());
+			return group.getDescriptiveName(locale);
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException);
@@ -102,6 +100,5 @@ public class AssetTagsTableItemView implements TableItemView {
 	private final AssetTag _assetTag;
 	private final AssetTagsItemSelectorCriterion
 		_assetTagsItemSelectorCriterion;
-	private final ThemeDisplay _themeDisplay;
 
 }

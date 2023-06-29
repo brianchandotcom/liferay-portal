@@ -31,7 +31,7 @@ definition {
 	@ignore = "true"
 	@priority = 5
 	test GCSStoreSmoke {
-		property test.name.skip.portal.instance = "GCSStore#GCSStoreSmoke";
+		property test.liferay.virtual.instance = "false";
 
 		var bucketId = PropsUtil.get("gcs.bucket.id");
 		var companyId = JSONCompany.getCompanyId();

@@ -14,8 +14,6 @@
 
 package com.liferay.source.formatter.check;
 
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.check.util.JavaSourceUtil;
 
@@ -50,18 +48,13 @@ public class UpgradeSetResultsSetTotalMethodCheck extends BaseFileCheck {
 		Matcher setTotalMatcher = _setTotalPattern.matcher(content);
 
 		while (setTotalMatcher.find()) {
-			String methodCall = JavaSourceUtil.getMethodCall(
-				content, setTotalMatcher.start());
-
 			if (hasClassOrVariableName(
-					"SearchContainer", content, methodCall)) {
-
-				String fullMethodCall = StringBundler.concat(
-					StringPool.NEW_LINE, methodCall, StringPool.SEMICOLON,
-					StringPool.NEW_LINE);
+					"SearchContainer", content,
+					JavaSourceUtil.getMethodCall(
+						content, setTotalMatcher.start()))) {
 
 				newContent = StringUtil.removeSubstring(
-					newContent, fullMethodCall);
+					newContent, setTotalMatcher.group());
 			}
 		}
 
@@ -93,6 +86,6 @@ public class UpgradeSetResultsSetTotalMethodCheck extends BaseFileCheck {
 	private static final Pattern _setResultsPattern = Pattern.compile(
 		"\\w+\\.setResults\\(");
 	private static final Pattern _setTotalPattern = Pattern.compile(
-		"\\t*?\\w+\\.setTotal\\(");
+		"(\\s*)\\w+\\.setTotal\\([^;]+;");
 
 }

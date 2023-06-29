@@ -237,7 +237,7 @@ const SelectSubscription = ({
 				),
 				middleButton: (
 					<Button
-						disabled={!selectedSubscription}
+						disabled={!Object.keys(selectedSubscription).length}
 						displayType="primary"
 						onClick={() => {
 							setInfoSelectedKey((previousInfoSelectedKey) => ({
@@ -299,9 +299,10 @@ const SelectSubscription = ({
 						<div className="position-relative">
 							<ClaySelect
 								className="mr-2"
-								onChange={({target}) =>
-									setSelectedVersion(target.value)
-								}
+								onChange={({target}) => {
+									setSelectedVersion(target.value);
+									setSelectedSubscription({});
+								}}
 								value={selectedVersion}
 							>
 								{productVersions?.map((version) => (

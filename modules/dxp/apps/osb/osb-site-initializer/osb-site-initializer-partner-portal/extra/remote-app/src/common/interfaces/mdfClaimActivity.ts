@@ -12,19 +12,25 @@
 import LiferayFile from './liferayFile';
 import LiferayObject from './liferayObject';
 import LiferayPicklist from './liferayPicklist';
+import MDFClaimActivityDocument from './mdfClaimActivityDocument';
 import MDFClaimBudget from './mdfClaimBudget';
 
 export default interface MDFClaimActivity extends Partial<LiferayObject> {
 	activityStatus?: LiferayPicklist;
-	allContents?: LiferayFile[];
 	budgets?: MDFClaimBudget[];
 	claimed?: boolean;
 	currency?: LiferayPicklist;
-	listOfQualifiedLeads?: LiferayFile & number;
+	eventProgram?: LiferayFile & number;
+	listOfQualifiedLeads?: LiferayFile;
 	metrics: string;
 	name?: string;
+	proofOfPerformance?: MDFClaimActivityDocument;
 	r_actToMDFClmActs_c_activityId?: number;
 	r_mdfClmToMDFClmActs_c_mdfClaimId?: number;
 	selected: boolean;
+	telemarketingMetrics?: string;
+	telemarketingScript?: LiferayFile;
 	totalCost: number;
+	typeActivity: LiferayPicklist;
+	videoLink?: string;
 }

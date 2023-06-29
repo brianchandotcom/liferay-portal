@@ -11,5 +11,13 @@
 
 export default interface LiferayDocument {
 	contentUrl?: string;
+	dateModified?: string;
+	encodingFormat?: string;
 	id?: number;
+	link?: string;
+	name?: string;
+	size?: number;
+	sizeInBytes?: number;
+	title?: string;
+	type?: string;
 }

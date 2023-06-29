@@ -11,8 +11,14 @@
 
 import LiferayFile from './liferayFile';
 import LiferayObject from './liferayObject';
+import LiferayPicklist from './liferayPicklist';
 
 export default interface MDFClaimActivityDocument
 	extends Partial<LiferayObject> {
-	allContents?: LiferayFile & number;
+	allContents?: LiferayFile[] & number[];
+	eventCollaterals?: LiferayFile[] & number[];
+	eventInvitations?: LiferayFile[] & number[];
+	eventPhotos?: LiferayFile[] & number[];
+	images?: LiferayFile[] & number[];
+	proofOfPerformanceType?: LiferayPicklist;
 }

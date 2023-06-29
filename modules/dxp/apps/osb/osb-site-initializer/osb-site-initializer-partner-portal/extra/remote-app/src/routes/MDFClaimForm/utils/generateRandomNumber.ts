@@ -9,8 +9,8 @@
  * distribution rights of the Software.
  */
 
-export default interface LiferayFile extends Partial<File> {
-	documentId?: number;
-	id?: number;
-	link?: Object;
-}
+const generateRandonNumber = () => {
+	return Math.floor(Math.random() * 999999) + 1;
+};
+
+export default generateRandonNumber;

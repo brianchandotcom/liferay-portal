@@ -9,17 +9,17 @@
  * distribution rights of the Software.
  */
 
-import MDFClaimActivityDocumentDTO from '../../../interfaces/dto/mdfClaimActivityDocumentDTO';
+import LiferayDocument from '../../../interfaces/liferayDocument';
 import LiferayFile from '../../../interfaces/liferayFile';
 
-export function getDTOFromMDFClaimActivityDocument(
-	allContentId: LiferayFile & number,
-	mdfClaimActivityId?: number,
-	companyId?: number
-): MDFClaimActivityDocumentDTO {
+export function getFileFromLiferayDocument(
+	liferayDocument: LiferayDocument
+): LiferayFile {
 	return {
-		allContents: allContentId,
-		r_accToMDFClmActDocs_accountEntryId: companyId,
-		r_mdfClmActToMDFActDocs_c_mdfClaimActivityId: mdfClaimActivityId,
+		documentId: liferayDocument.id,
+		link: liferayDocument.contentUrl,
+		name: liferayDocument.title?.split('#').reverse().splice(1).join(''),
+		size: liferayDocument.sizeInBytes,
+		type: liferayDocument.encodingFormat,
 	};
 }

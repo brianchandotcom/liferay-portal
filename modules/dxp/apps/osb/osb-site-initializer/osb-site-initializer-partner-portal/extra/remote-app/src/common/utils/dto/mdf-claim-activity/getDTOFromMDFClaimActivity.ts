@@ -10,18 +10,17 @@
  */
 
 import MDFClaimActivityDTO from '../../../interfaces/dto/mdfClaimActivityDTO';
-import LiferayFile from '../../../interfaces/liferayFile';
 import MDFClaimActivity from '../../../interfaces/mdfClaimActivity';
 
 export default function getDTOFromMDFClaimActivity(
 	mdfClaimActivity: MDFClaimActivity,
-	mdfClaimId?: number,
-	listOfQualifiedLeadsDocumentId?: LiferayFile & number,
-	companyId?: number
+	mdfClaimId: number,
+	companyId: number
 ): MDFClaimActivityDTO {
 	return {
 		currency: mdfClaimActivity.currency,
-		listOfQualifiedLeads: listOfQualifiedLeadsDocumentId,
+		eventProgram: mdfClaimActivity.eventProgram?.documentId,
+		listOfQualifiedLeads: mdfClaimActivity.listOfQualifiedLeads?.documentId,
 		metrics: mdfClaimActivity.metrics,
 		name: mdfClaimActivity.name,
 		r_accToMDFClmActs_accountEntryId: companyId,
@@ -29,6 +28,10 @@ export default function getDTOFromMDFClaimActivity(
 			mdfClaimActivity.r_actToMDFClmActs_c_activityId,
 		r_mdfClmToMDFClmActs_c_mdfClaimId: mdfClaimId,
 		selected: mdfClaimActivity.selected,
+		telemarketingMetrics: mdfClaimActivity.telemarketingMetrics,
+		telemarketingScript: mdfClaimActivity.telemarketingScript?.documentId,
 		totalCost: mdfClaimActivity.totalCost,
+		typeActivity: mdfClaimActivity.typeActivity,
+		videoLink: mdfClaimActivity.videoLink,
 	};
 }

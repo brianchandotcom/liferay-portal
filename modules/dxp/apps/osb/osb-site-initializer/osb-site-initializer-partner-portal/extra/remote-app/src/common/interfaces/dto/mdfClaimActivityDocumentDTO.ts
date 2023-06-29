@@ -9,10 +9,25 @@
  * distribution rights of the Software.
  */
 
+import LiferayFile from '../liferayFile';
 import MDFClaimActivityDocument from '../mdfClaimActivityDocument';
 
 export default interface MDFClaimActivityDocumentDTO
-	extends MDFClaimActivityDocument {
+	extends Omit<
+		MDFClaimActivityDocument,
+		| 'allContents'
+		| 'eventCollaterals'
+		| 'eventInvitations'
+		| 'eventPhotos'
+		| 'images'
+	> {
+	allContents?: LiferayFile & number;
+	eventCollaterals?: LiferayFile & number;
+	eventInvitations?: LiferayFile & number;
+	eventPhotos?: LiferayFile & number;
+	id?: number;
+	images?: LiferayFile & number;
+	proofOfPerformanceFile?: LiferayFile & number;
 	r_accToMDFClmActDocs_accountEntryId?: number;
 	r_mdfClmActToMDFActDocs_c_mdfClaimActivityId?: number;
 }

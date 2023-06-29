@@ -9,9 +9,11 @@
  * distribution rights of the Software.
  */
 
+import {ProofOfPerformanceType} from '../../../../routes/MDFClaimForm/constants/proofOfPerformanceType';
 import MDFClaimDTO from '../../../interfaces/dto/mdfClaimDTO';
 import LiferayFile from '../../../interfaces/liferayFile';
 import MDFClaim from '../../../interfaces/mdfClaim';
+import MDFClaimActivityDocument from '../../../interfaces/mdfClaimActivityDocument';
 
 export function getMDFClaimFromDTO(mdfClaim: MDFClaimDTO): MDFClaim {
 	return {
@@ -21,32 +23,27 @@ export function getMDFClaimFromDTO(mdfClaim: MDFClaimDTO): MDFClaim {
 			mdfClaim?.mdfClmToMDFClmActs?.map((activityItem) => {
 				const {
 					currency,
+					eventProgram,
+					externalReferenceCode,
 					id,
 					listOfQualifiedLeads,
 					metrics,
 					r_actToMDFClmActs_c_activityId,
 					r_mdfClmToMDFClmActs_c_mdfClaimId,
 					selected,
+					telemarketingMetrics,
+					telemarketingScript,
 					totalCost,
+					typeActivity,
+					videoLink,
 				} = activityItem;
 
 				return {
-					allContents: activityItem.mdfClmActToMDFActDocs?.map(
-						(allContentItem) =>
-							allContentItem.allContents &&
-							({
-								...(allContentItem.allContents as Object),
-								name: allContentItem.allContents.name
-									.split('#')
-									.reverse()
-									.splice(1)
-									.join(''),
-							} as LiferayFile & number)
-					) as LiferayFile[],
 					budgets: activityItem.mdfClmActToMDFClmBgts?.map(
 						(budgetItem) => {
 							const {
 								expenseName,
+								externalReferenceCode,
 								id,
 								invoice,
 								invoiceAmount,
@@ -56,16 +53,19 @@ export function getMDFClaimFromDTO(mdfClaim: MDFClaimDTO): MDFClaim {
 
 							return {
 								expenseName,
+								externalReferenceCode,
 								id,
 								invoice:
 									invoice &&
 									({
 										...(invoice as Object),
-										name: invoice.name
-											.split('#')
-											.reverse()
-											.splice(1)
-											.join(''),
+										name:
+											invoice.name &&
+											invoice.name
+												.split('#')
+												.reverse()
+												.splice(1)
+												.join(''),
 									} as LiferayFile & number),
 								invoiceAmount,
 								r_bgtToMDFClmBgts_c_budgetId,
@@ -74,34 +74,152 @@ export function getMDFClaimFromDTO(mdfClaim: MDFClaimDTO): MDFClaim {
 						}
 					),
 					currency,
+					eventProgram,
+					externalReferenceCode,
 					id,
 					listOfQualifiedLeads:
 						listOfQualifiedLeads &&
 						({
 							...(listOfQualifiedLeads as Object),
-							name: listOfQualifiedLeads.name
-								.split('#')
-								.reverse()
-								.splice(1)
-								.join(''),
+							name:
+								listOfQualifiedLeads.name &&
+								listOfQualifiedLeads.name
+									.split('#')
+									.reverse()
+									.splice(1)
+									.join(''),
 						} as LiferayFile & number),
 					metrics,
+					proofOfPerformance: activityItem.mdfClmActToMDFActDocs?.reduce(
+						(accumulatorDocuments, currentDocument) => {
+							if (
+								currentDocument.proofOfPerformanceType?.key ===
+								ProofOfPerformanceType.ALL_CONTENTS.key
+							) {
+								accumulatorDocuments.allContents?.push({
+									documentId:
+										currentDocument.proofOfPerformanceFile
+											?.id,
+									id: currentDocument.id,
+									link:
+										currentDocument.proofOfPerformanceFile
+											?.link,
+									name: currentDocument.proofOfPerformanceFile?.name
+										?.split('#')
+										.reverse()
+										.splice(1)
+										.join(''),
+								});
+							}
 
+							if (
+								currentDocument.proofOfPerformanceType?.key ===
+								ProofOfPerformanceType.EVENT_COLLATERALS.key
+							) {
+								accumulatorDocuments.eventCollaterals?.push({
+									documentId:
+										currentDocument.proofOfPerformanceFile
+											?.id,
+									id: currentDocument.id,
+									link:
+										currentDocument.proofOfPerformanceFile
+											?.link,
+									name: currentDocument.proofOfPerformanceFile?.name
+										?.split('#')
+										.reverse()
+										.splice(1)
+										.join(''),
+								});
+							}
+							if (
+								currentDocument.proofOfPerformanceType?.key ===
+								ProofOfPerformanceType.EVENT_INVITATIONS.key
+							) {
+								accumulatorDocuments.eventInvitations?.push({
+									documentId:
+										currentDocument.proofOfPerformanceFile
+											?.id,
+									id: currentDocument.id,
+									link:
+										currentDocument.proofOfPerformanceFile
+											?.link,
+									name: currentDocument.proofOfPerformanceFile?.name
+										?.split('#')
+										.reverse()
+										.splice(1)
+										.join(''),
+								});
+							}
+							if (
+								currentDocument.proofOfPerformanceType?.key ===
+								ProofOfPerformanceType.EVENT_PHOTOS.key
+							) {
+								accumulatorDocuments.eventPhotos?.push({
+									documentId:
+										currentDocument.proofOfPerformanceFile
+											?.id,
+									id: currentDocument.id,
+									link:
+										currentDocument.proofOfPerformanceFile
+											?.link,
+									name: currentDocument.proofOfPerformanceFile?.name
+										?.split('#')
+										.reverse()
+										.splice(1)
+										.join(''),
+								});
+							}
+							if (
+								currentDocument.proofOfPerformanceType?.key ===
+								ProofOfPerformanceType.IMAGES.key
+							) {
+								accumulatorDocuments.images?.push({
+									documentId:
+										currentDocument.proofOfPerformanceFile
+											?.id,
+									id: currentDocument.id,
+									link:
+										currentDocument.proofOfPerformanceFile
+											?.link,
+									name: currentDocument.proofOfPerformanceFile?.name
+										?.split('#')
+										.reverse()
+										.splice(1)
+										.join(''),
+								});
+							}
+
+							return accumulatorDocuments;
+						},
+						{
+							allContents: [],
+							eventCollaterals: [],
+							eventInvitations: [],
+							eventPhotos: [],
+							images: [],
+						} as MDFClaimActivityDocument
+					) as MDFClaimActivityDocument,
 					r_actToMDFClmActs_c_activityId,
 					r_mdfClmToMDFClmActs_c_mdfClaimId,
 					selected,
+					telemarketingMetrics,
+					telemarketingScript,
 					totalCost,
+					typeActivity,
+					videoLink,
 				};
 			}) || [],
 		reimbursementInvoice:
 			mdfClaim.reimbursementInvoice &&
 			({
 				...(mdfClaim.reimbursementInvoice as Object),
-				name: mdfClaim.reimbursementInvoice.name
-					.split('#')
-					.reverse()
-					.splice(1)
-					.join(''),
+				name:
+					mdfClaim.reimbursementInvoice.name &&
+					mdfClaim.reimbursementInvoice.name
+						.split('#')
+						.reverse()
+						.splice(1)
+						.join(''),
 			} as LiferayFile & number),
 	};
 }

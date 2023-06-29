@@ -9,8 +9,25 @@
  * distribution rights of the Software.
  */
 
-export default interface LiferayFile extends Partial<File> {
-	documentId?: number;
-	id?: number;
-	link?: Object;
-}
+export const ProofOfPerformanceType = {
+	ALL_CONTENTS: {
+		key: 'allContents',
+		name: 'All Contents',
+	},
+	EVENT_COLLATERALS: {
+		key: 'eventCollaterals',
+		name: 'Event Collaterals',
+	},
+	EVENT_INVITATIONS: {
+		key: 'eventInvitations',
+		name: 'Event Invitations',
+	},
+	EVENT_PHOTOS: {
+		key: 'eventPhotos',
+		name: 'Event Photos',
+	},
+	IMAGES: {
+		key: 'images',
+		name: 'Images',
+	},
+};

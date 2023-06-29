@@ -99,6 +99,7 @@ const getInitialFormValues = (
 			r_actToMDFClmActs_c_activityId: activity.id,
 			selected: false,
 			totalCost: 0,
+			typeActivity: activity.typeActivity,
 		};
 	}),
 	currency: mdfClaim?.currency ? mdfClaim?.currency : currency,

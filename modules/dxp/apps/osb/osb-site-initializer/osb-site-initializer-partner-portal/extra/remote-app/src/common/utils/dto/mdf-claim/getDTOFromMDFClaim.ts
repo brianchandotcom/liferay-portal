@@ -11,21 +11,17 @@
 
 import MDFClaimDTO from '../../../interfaces/dto/mdfClaimDTO';
 import MDFRequestDTO from '../../../interfaces/dto/mdfRequestDTO';
-import LiferayFile from '../../../interfaces/liferayFile';
 import MDFClaim from '../../../interfaces/mdfClaim';
 
 export function getDTOFromMDFClaim(
 	mdfClaim: MDFClaim,
 	mdfRequest: MDFRequestDTO,
-	externalReferenceCode?: string,
-	externalReferenceCodeSF?: string,
-	reimbursementInvoiceDocumentId?: LiferayFile & number
+	externalReferenceCodeFromSF?: string
 ): MDFClaimDTO {
 	return {
 		companyName: mdfRequest.r_accToMDFReqs_accountEntry?.name,
 		currency: mdfClaim.currency,
-		externalReferenceCode,
-		externalReferenceCodeSF,
+		externalReferenceCode: externalReferenceCodeFromSF,
 		mdfClaimStatus: mdfClaim.mdfClaimStatus,
 		mdfRequestExternalReferenceCode: mdfRequest?.externalReferenceCode,
 		mdfRequestTotalCostOfExpense: mdfRequest.totalCostOfExpense,
@@ -34,7 +30,7 @@ export function getDTOFromMDFClaim(
 			mdfRequest.r_accToMDFReqs_accountEntry?.id,
 		r_mdfReqToMDFClms_c_mdfRequestId:
 			mdfClaim.r_mdfReqToMDFClms_c_mdfRequestId,
-		reimbursementInvoice: reimbursementInvoiceDocumentId,
+		reimbursementInvoice: mdfClaim.reimbursementInvoice?.documentId,
 		totalClaimAmount: mdfClaim.totalClaimAmount,
 		totalMDFRequestedAmount: mdfClaim.totalMDFRequestedAmount,
 	};

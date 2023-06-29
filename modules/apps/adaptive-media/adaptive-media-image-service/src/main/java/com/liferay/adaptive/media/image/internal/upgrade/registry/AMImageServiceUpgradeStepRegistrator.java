@@ -15,12 +15,15 @@
 package com.liferay.adaptive.media.image.internal.upgrade.registry;
 
 import com.liferay.adaptive.media.image.internal.upgrade.v2_0_0.util.AMImageEntryTable;
+import com.liferay.adaptive.media.image.internal.upgrade.v2_2_1.AMImageConfigurationUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.BaseSQLServerDatetimeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
+import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author José Ángel Jiménez
@@ -49,6 +52,13 @@ public class AMImageServiceUpgradeStepRegistrator
 
 		registry.register(
 			"2.1.0", "2.2.0", new CTModelUpgradeProcess("AMImageEntry"));
+
+		registry.register(
+			"2.2.0", "2.2.1",
+			new AMImageConfigurationUpgradeProcess(_configurationAdmin));
 	}
+
+	@Reference
+	private ConfigurationAdmin _configurationAdmin;
 
 }

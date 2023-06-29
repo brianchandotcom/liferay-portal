@@ -235,13 +235,13 @@ public class StructuredContentResourceTest
 				testGetSiteStructuredContentsPage_getSiteId(),
 				randomStructuredContent);
 
-		StructuredContent getStructuredContent1 =
+		StructuredContent getStructuredContent =
 			structuredContentResource.getStructuredContentByVersion(
 				postStructuredContent1.getId(), 1.0);
 
-		assertEquals(postStructuredContent1, getStructuredContent1);
+		assertEquals(postStructuredContent1, getStructuredContent);
 		Assert.assertEquals(
-			Double.valueOf(1.0), getStructuredContent1.getPriority());
+			Double.valueOf(1.0), getStructuredContent.getPriority());
 
 		StructuredContent postStructuredContent2 =
 			structuredContentResource.postSiteStructuredContentDraft(
@@ -268,17 +268,14 @@ public class StructuredContentResourceTest
 						"taxonomyCategoryBriefs,uuid,version")
 				).build();
 
-		StructuredContent getStructuredContent2 =
-			structuredContentResource.getStructuredContentByVersion(
-				postStructuredContent2.getId(), 1.0);
-
 		assertEquals(
 			new StructuredContent() {
 				{
 					title = postStructuredContent2.getTitle();
 				}
 			},
-			getStructuredContent2);
+			structuredContentResource.getStructuredContentByVersion(
+				postStructuredContent2.getId(), 1.0));
 
 		structuredContentResource =
 			com.liferay.headless.admin.content.client.resource.v1_0.
@@ -291,17 +288,14 @@ public class StructuredContentResourceTest
 					"fields", "id"
 				).build();
 
-		StructuredContent getStructuredContent3 =
-			structuredContentResource.getStructuredContentByVersion(
-				postStructuredContent2.getId(), 1.0);
-
 		assertEquals(
 			new StructuredContent() {
 				{
 					id = postStructuredContent2.getId();
 				}
 			},
-			getStructuredContent3);
+			structuredContentResource.getStructuredContentByVersion(
+				postStructuredContent2.getId(), 1.0));
 	}
 
 	@Override
@@ -367,10 +361,7 @@ public class StructuredContentResourceTest
 				testGroup.getGroupId(), null, null, null, null,
 				Pagination.of(1, 10), null);
 
-		List<StructuredContent> structuredContents =
-			(List<StructuredContent>)page.getItems();
-
-		for (StructuredContent structuredContent : structuredContents) {
+		for (StructuredContent structuredContent : page.getItems()) {
 			_structuredContentResource.deleteStructuredContent(
 				structuredContent.getId());
 		}

@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -333,10 +332,7 @@ public class TaxonomyVocabularyResourceTest
 				testGroup.getGroupId(), null, null, null, Pagination.of(1, 10),
 				null);
 
-		List<TaxonomyVocabulary> taxonomyVocabularies =
-			(List<TaxonomyVocabulary>)page.getItems();
-
-		for (TaxonomyVocabulary taxonomyVocabulary : taxonomyVocabularies) {
+		for (TaxonomyVocabulary taxonomyVocabulary : page.getItems()) {
 			taxonomyVocabularyResource.deleteTaxonomyVocabulary(
 				taxonomyVocabulary.getId());
 		}

@@ -5,6 +5,7 @@
 	padding-left: calc(
 		var(--nesting-margin) * (var(--nesting-level) - 1) * 1px
 	);
+	position: relative;
 	width: 40ch;
 
 	&:focus,
@@ -123,5 +124,15 @@
 
 	[draggable='true'] {
 		cursor: grab;
+	}
+
+	.site-navigation__drag-preview + [role='menubar'] > &::before {
+		content: '';
+		display: block;
+		height: 100%;
+		left: -100vw;
+		position: absolute;
+		top: 0;
+		width: 200vw;
 	}
 }

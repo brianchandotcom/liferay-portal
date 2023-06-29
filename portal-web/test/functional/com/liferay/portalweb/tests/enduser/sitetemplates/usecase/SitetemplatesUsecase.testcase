@@ -188,7 +188,6 @@ definition {
 
 			SiteTemplatesNavigator.gotoSiteTemplatesPage(
 				pageName = "Home",
-				siteName = ${siteName},
 				siteTemplateName = "Site Template Name");
 
 			SiteTemplates.addSitePageViaSiteTemplateCP(
@@ -199,7 +198,6 @@ definition {
 		task ("When: Pages are visible on the Site template") {
 			SiteTemplatesNavigator.gotoSiteTemplatesPage(
 				pageName = "Page1 Name",
-				siteName = ${siteName},
 				siteTemplateName = "Site Template Name");
 		}
 
@@ -347,7 +345,6 @@ definition {
 		task ("And: Add a portlet on the created page") {
 			SiteTemplatesNavigator.gotoSiteTemplatesPage(
 				pageName = "Page1 Name",
-				siteName = ${siteName},
 				siteTemplateName = "Site Template Name");
 
 			Portlet.addPG(
@@ -544,7 +541,6 @@ definition {
 		task ("And: Add a DM portlet on the new template page and configure it to enable actions") {
 			SiteTemplatesNavigator.gotoSiteTemplatesPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName},
 				siteTemplateName = "Site Template Name");
 
 			Portlet.addPG(portletName = "Documents and Media");
@@ -555,7 +551,6 @@ definition {
 		task ("When: User add a new document to the DM portlet") {
 			SiteTemplatesNavigator.gotoSiteTemplatesPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName},
 				siteTemplateName = "Site Template Name");
 
 			DMDocument.addPG(
@@ -871,7 +866,6 @@ definition {
 		task ("When: User add a WCD portlet to the page") {
 			SiteTemplatesNavigator.gotoSiteTemplatesPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName},
 				siteTemplateName = "Site Template Name");
 
 			Portlet.addPG(
@@ -882,7 +876,6 @@ definition {
 		task ("Then: The portlet have view permission for guests by default") {
 			SiteTemplatesNavigator.gotoSiteTemplatesPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName},
 				siteTemplateName = "Site Template Name");
 
 			PermissionsInline.gotoConfigurationPG(

@@ -78,7 +78,6 @@ definition {
 		task ("When: User add a widget to the Site template") {
 			SiteTemplatesNavigator.gotoSiteTemplatesPage(
 				pageName = "Home",
-				siteName = ${siteName},
 				siteTemplateName = "Site Template Name");
 
 			ContentPages.gotoPageEditor();
@@ -170,7 +169,6 @@ definition {
 
 			SiteTemplatesNavigator.gotoSiteTemplatesPage(
 				pageName = "Home",
-				siteName = ${siteName},
 				siteTemplateName = "Site Template Name");
 
 			ContentPages.gotoPageEditor();
@@ -209,7 +207,6 @@ definition {
 
 			SiteTemplatesNavigator.gotoSiteTemplatesPage(
 				pageName = "Home",
-				siteName = ${siteName},
 				siteTemplateName = "Site Template Name");
 
 			ContentPages.gotoPageEditor();
@@ -277,7 +274,6 @@ definition {
 
 			SiteTemplatesNavigator.gotoSiteTemplatesPage(
 				pageName = "Home",
-				siteName = ${siteName},
 				siteTemplateName = "Site Template Name");
 		}
 
@@ -367,7 +363,6 @@ definition {
 
 			SiteTemplatesNavigator.gotoSiteTemplatesPage(
 				pageName = "Widget Page Name",
-				siteName = ${siteName},
 				siteTemplateName = "Site Template Name");
 
 			Portlet.addPG(portletName = "Asset Publisher");
@@ -395,7 +390,6 @@ definition {
 		task ("And: Adds a portlet on the widget page of the site template") {
 			SiteTemplatesNavigator.gotoSiteTemplatesPage(
 				pageName = "Widget Page Name",
-				siteName = ${siteName},
 				siteTemplateName = "Site Template Name");
 
 			Portlet.addPG(portletName = "Web Content Display");
@@ -435,7 +429,6 @@ definition {
 		task ("When: User adds a portlet to the home page of the template") {
 			SiteTemplatesNavigator.gotoSiteTemplatesPage(
 				pageName = "Home",
-				siteName = ${siteName},
 				siteTemplateName = "Site Template Name");
 
 			ContentPages.gotoPageEditor();
@@ -687,7 +680,6 @@ definition {
 		task ("When: User visits the Site Template and verifies that the page is not present on the Site via looking up the database") {
 			SiteTemplatesNavigator.gotoSiteTemplatesPage(
 				pageName = "Home",
-				siteName = ${siteName},
 				siteTemplateName = "Site Template Name");
 
 			var sqlResults = SQL.executeMySQLStatement(mysqlStatement = ${sQLStatement});
@@ -1247,14 +1239,12 @@ definition {
 		task ("And: Adds a portlet to the page then place it on the second column") {
 			SiteTemplatesNavigator.gotoSiteTemplatesPage(
 				pageName = "Site Page Name",
-				siteName = ${siteName},
 				siteTemplateName = "Site Template Name");
 
 			Portlet.addPG(portletName = "Asset Publisher");
 
 			SiteTemplatesNavigator.gotoSiteTemplatesPage(
 				pageName = "Site Page Name",
-				siteName = ${siteName},
 				siteTemplateName = "Site Template Name");
 
 			Portlet.dragAndDropPortletToColumnPG(
@@ -1359,7 +1349,6 @@ definition {
 		task ("When: Add an AP widget to home page in Site template and navigate to Site Name A for triggering the propagation") {
 			SiteTemplatesNavigator.gotoSiteTemplatesPage(
 				pageName = "Home",
-				siteName = ${siteName},
 				siteTemplateName = "Site Template Name");
 
 			ContentPages.gotoPageEditor();
@@ -1432,7 +1421,6 @@ definition {
 		task ("When: Add a WCD portlet to widget page in Site template and navigate to Site Name A for triggering the propagation") {
 			SiteTemplatesNavigator.gotoSiteTemplatesPage(
 				pageName = "Page A",
-				siteName = ${siteName},
 				siteTemplateName = "Site Template Name");
 
 			Portlet.addPG(portletName = "Web Content Display");
@@ -1525,7 +1513,6 @@ definition {
 		task ("And: Disables propagation of the template") {
 			SiteTemplatesNavigator.gotoSiteTemplatesPage(
 				pageName = "Home",
-				siteName = ${siteName},
 				siteTemplateName = "Site Template Name");
 
 			SiteTemplates.disablePropagationPG();
@@ -1552,7 +1539,6 @@ definition {
 		task ("When: User enables propagation of the template") {
 			SiteTemplatesNavigator.gotoSiteTemplatesPage(
 				pageName = "Home",
-				siteName = ${siteName},
 				siteTemplateName = "Site Template Name");
 
 			SiteTemplates.enablePropagationPG();

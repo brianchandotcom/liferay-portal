@@ -1461,7 +1461,6 @@ definition {
 
 		SiteTemplatesNavigator.gotoSiteTemplatesPage(
 			pageName = "MB Page",
-			siteName = ${siteName},
 			siteTemplateName = "Site Template Name");
 
 		Portlet.addPG(

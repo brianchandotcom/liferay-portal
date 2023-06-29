@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.runtime.internal.util;
+package com.liferay.portal.workflow.kaleo.runtime.internal.cache;
 
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.PortalCache;
@@ -29,8 +29,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Ricardo Couso
  */
-@Component(service = KaleoScriptingCache.class)
-public class KaleoScriptingCache {
+@Component(service = KaleoTaskScriptedAssignmentCache.class)
+public class KaleoTaskScriptedAssignmentCache {
 
 	public Collection<KaleoTaskAssignment> getKaleoTaskAssignments(
 		long kaleoTaskAssignmentId) {
@@ -52,12 +52,13 @@ public class KaleoScriptingCache {
 		_portalCache =
 			(PortalCache<Long, ArrayList<KaleoTaskAssignment>>)
 				_multiVMPool.getPortalCache(
-					KaleoScriptingCache.class.getName());
+					KaleoTaskScriptedAssignmentCache.class.getName());
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_multiVMPool.removePortalCache(KaleoScriptingCache.class.getName());
+		_multiVMPool.removePortalCache(
+			KaleoTaskScriptedAssignmentCache.class.getName());
 	}
 
 	@Reference

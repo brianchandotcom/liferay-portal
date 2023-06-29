@@ -26,8 +26,8 @@ import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.assignment.BaseKaleoTaskAssignmentSelector;
 import com.liferay.portal.workflow.kaleo.runtime.assignment.KaleoTaskAssignmentSelector;
 import com.liferay.portal.workflow.kaleo.runtime.assignment.ScriptingAssigneeSelector;
+import com.liferay.portal.workflow.kaleo.runtime.internal.cache.KaleoTaskScriptedAssignmentCache;
 import com.liferay.portal.workflow.kaleo.runtime.internal.configuration.WorkflowTaskScriptConfiguration;
-import com.liferay.portal.workflow.kaleo.runtime.internal.util.KaleoScriptingCache;
 import com.liferay.portal.workflow.kaleo.runtime.internal.util.ServiceSelectorUtil;
 import com.liferay.portal.workflow.kaleo.service.KaleoInstanceLocalService;
 
@@ -81,8 +81,9 @@ public class MultiLanguageKaleoTaskAssignmentSelector
 				scriptedAssignmentCacheExpirationTime();
 
 		if (scriptedAssignmentCacheExpirationTime > 0) {
-			kaleoTaskAssignments = _kaleoScriptingCache.getKaleoTaskAssignments(
-				kaleoTaskAssignment.getKaleoTaskAssignmentId());
+			kaleoTaskAssignments =
+				_kaleoTaskScriptedAssignmentCache.getKaleoTaskAssignments(
+					kaleoTaskAssignment.getKaleoTaskAssignmentId());
 		}
 
 		if (kaleoTaskAssignments == null) {
@@ -91,7 +92,7 @@ public class MultiLanguageKaleoTaskAssignmentSelector
 					executionContext, kaleoTaskAssignment));
 
 			if (scriptedAssignmentCacheExpirationTime > 0) {
-				_kaleoScriptingCache.putKaleoTaskAssignments(
+				_kaleoTaskScriptedAssignmentCache.putKaleoTaskAssignments(
 					kaleoTaskAssignment.getKaleoTaskAssignmentId(),
 					kaleoTaskAssignments,
 					scriptedAssignmentCacheExpirationTime * 60);
@@ -124,7 +125,7 @@ public class MultiLanguageKaleoTaskAssignmentSelector
 	private KaleoInstanceLocalService _kaleoInstanceLocalService;
 
 	@Reference
-	private KaleoScriptingCache _kaleoScriptingCache;
+	private KaleoTaskScriptedAssignmentCache _kaleoTaskScriptedAssignmentCache;
 
 	private ServiceTrackerMap<String, List<ScriptingAssigneeSelector>>
 		_serviceTrackerMap;

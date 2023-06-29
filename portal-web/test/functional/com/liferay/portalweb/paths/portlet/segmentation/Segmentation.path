@@ -32,7 +32,7 @@
 </tr>
 <tr>
 	<td>ADD_FIELD_TYPE_VISIBLE</td>
-	<td>//div[contains(@class,'panel')][contains(@class,'show')]//*[contains(@class, 'criteria-sidebar-item-root') and (text()='${key_propertyOption}')]</td>
+	<td>//button[contains(@class,'panel-header')][contains(@class,'show')]//following-sibling::div//*[contains(@class, 'criteria-sidebar-item-root') and (text()='${key_propertyOption}')]</td>
 	<td></td>
 </tr>
 <tr>

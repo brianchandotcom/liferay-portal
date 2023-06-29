@@ -1,0 +1,8 @@
+@default = "executeCDPCommand"
+definition {
+
+	function executeCDPCommand {
+		selenium.executeCDPCommand();
+	}
+
+}

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -197,6 +198,33 @@ public class OracleDB extends BaseDB {
 	@Override
 	public boolean isSupportsInlineDistinct() {
 		return _SUPPORTS_INLINE_DISTINCT;
+	}
+
+	@Override
+	public void renameTables(
+			Connection connection,
+			ObjectValuePair<String, String>... tableNamePairs)
+		throws Exception {
+
+		if (tableNamePairs.length == 0) {
+			return;
+		}
+
+		StringBundler sb = new StringBundler((tableNamePairs.length * 4) + 1);
+
+		sb.append("rename table ");
+
+		for (int i = 0; i < tableNamePairs.length; i++) {
+			if (i > 0) {
+				sb.append(", ");
+			}
+
+			sb.append(tableNamePairs[i].getKey());
+			sb.append(" to ");
+			sb.append(tableNamePairs[i].getValue());
+		}
+
+		runSQL(connection, sb.toString());
 	}
 
 	@Override

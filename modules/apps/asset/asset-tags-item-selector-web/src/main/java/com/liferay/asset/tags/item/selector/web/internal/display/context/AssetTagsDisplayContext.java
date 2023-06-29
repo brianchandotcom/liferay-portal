@@ -17,10 +17,8 @@ package com.liferay.asset.tags.item.selector.web.internal.display.context;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagServiceUtil;
 import com.liferay.asset.tags.item.selector.criterion.AssetTagsItemSelectorCriterion;
-import com.liferay.asset.tags.item.selector.web.internal.constants.AssetTagsSelectorPortletKeys;
 import com.liferay.asset.tags.item.selector.web.internal.search.EntriesChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.asset.util.comparator.AssetTagNameComparator;
@@ -56,7 +54,7 @@ public class AssetTagsDisplayContext {
 		SearchContainer<AssetTag> tagsSearchContainer = new SearchContainer<>(
 			_renderRequest, _portletURL, null, "there-are-no-tags");
 
-		tagsSearchContainer.setOrderByCol(_getOrderByCol());
+		tagsSearchContainer.setOrderByCol("name");
 
 		boolean orderByAsc = false;
 
@@ -97,26 +95,12 @@ public class AssetTagsDisplayContext {
 		return _keywords;
 	}
 
-	private String _getOrderByCol() {
-		if (Validator.isNotNull(_orderByCol)) {
-			return _orderByCol;
-		}
-
-		_orderByCol = SearchOrderByUtil.getOrderByCol(
-			_httpServletRequest,
-			AssetTagsSelectorPortletKeys.ASSET_TAGS_SELECTOR, "name");
-
-		return _orderByCol;
-	}
-
 	private String _getOrderByType() {
 		if (Validator.isNotNull(_orderByType)) {
 			return _orderByType;
 		}
 
-		_orderByType = SearchOrderByUtil.getOrderByType(
-			_httpServletRequest,
-			AssetTagsSelectorPortletKeys.ASSET_TAGS_SELECTOR, "asc");
+		_orderByType = ParamUtil.getString(_httpServletRequest, "asc");
 
 		return _orderByType;
 	}
@@ -125,7 +109,6 @@ public class AssetTagsDisplayContext {
 		_assetTagsItemSelectorCriterion;
 	private final HttpServletRequest _httpServletRequest;
 	private String _keywords;
-	private String _orderByCol;
 	private String _orderByType;
 	private final PortletURL _portletURL;
 	private final RenderRequest _renderRequest;

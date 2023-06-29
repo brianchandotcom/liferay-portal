@@ -44,14 +44,16 @@ function redirectTo(url = '', currentSiteName = getSiteName()) {
 	window.location.href = `${Liferay.ThemeDisplay.getPathContext()}${currentSiteName}/${url}${queryParams}`;
 }
 
-const searchIcon = document.querySelector("#searchSubmitBtn");
-const closeSearchButton = document.querySelector("#closeSearch");
+const searchIcon = document.querySelector('#searchSubmitBtn');
+const closeSearchButton = document.querySelector('#closeSearch');
 
-searchIcon.onclick = () => redirectTo("search");
+searchIcon.onclick = () => redirectTo('search');
 closeSearchButton.onclick = () => {
-	const dropdownContainer = document.querySelector(".dropdown-wide-container .dropdown-menu");
-	
-	dropdownContainer.classList.remove("show");
+	const dropdownContainer = document.querySelector(
+		'.dropdown-wide-container .dropdown-menu'
+	);
+
+	dropdownContainer.classList.remove('show');
 };
 
 function updateSearch() {

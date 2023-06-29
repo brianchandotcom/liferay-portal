@@ -94,7 +94,6 @@ import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.notification.rest.dto.v1_0.NotificationTemplate;
 import com.liferay.notification.rest.resource.v1_0.NotificationTemplateResource;
-import com.liferay.notification.service.NotificationTemplateLocalService;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectField;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectRelationship;
@@ -278,7 +277,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		ListTypeEntryLocalService listTypeEntryLocalService,
 		ListTypeEntryResource listTypeEntryResource,
 		ListTypeEntryResource.Factory listTypeEntryResourceFactory,
-		NotificationTemplateLocalService notificationTemplateLocalService,
 		NotificationTemplateResource.Factory
 			notificationTemplateResourceFactory,
 		ObjectActionLocalService objectActionLocalService,
@@ -361,7 +359,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_listTypeEntryLocalService = listTypeEntryLocalService;
 		_listTypeEntryResource = listTypeEntryResource;
 		_listTypeEntryResourceFactory = listTypeEntryResourceFactory;
-		_notificationTemplateLocalService = notificationTemplateLocalService;
 		_notificationTemplateResourceFactory =
 			notificationTemplateResourceFactory;
 		_objectActionLocalService = objectActionLocalService;
@@ -2852,14 +2849,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 				serviceContext.fetchUser()
 			).build();
 
-		com.liferay.notification.model.NotificationTemplate
-			serviceBuilderNotificationTemplate =
-				_notificationTemplateLocalService.
-					fetchNotificationTemplateByExternalReferenceCode(
-						notificationTemplate.getExternalReferenceCode(),
-						serviceContext.getCompanyId());
+		NotificationTemplate existingNotificationTemplate =
+			notificationTemplateResource.
+				getNotificationTemplateByExternalReferenceCode(
+					notificationTemplate.getExternalReferenceCode());
 
-		if (serviceBuilderNotificationTemplate == null) {
+		if (existingNotificationTemplate == null) {
 			notificationTemplate =
 				notificationTemplateResource.postNotificationTemplate(
 					notificationTemplate);
@@ -2868,8 +2863,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			notificationTemplate =
 				notificationTemplateResource.
 					putNotificationTemplateByExternalReferenceCode(
-						serviceBuilderNotificationTemplate.
-							getExternalReferenceCode(),
+						notificationTemplate.getExternalReferenceCode(),
 						notificationTemplate);
 		}
 
@@ -5172,8 +5166,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final ListTypeEntryLocalService _listTypeEntryLocalService;
 	private final ListTypeEntryResource _listTypeEntryResource;
 	private final ListTypeEntryResource.Factory _listTypeEntryResourceFactory;
-	private final NotificationTemplateLocalService
-		_notificationTemplateLocalService;
 	private final NotificationTemplateResource.Factory
 		_notificationTemplateResourceFactory;
 	private final ObjectActionLocalService _objectActionLocalService;

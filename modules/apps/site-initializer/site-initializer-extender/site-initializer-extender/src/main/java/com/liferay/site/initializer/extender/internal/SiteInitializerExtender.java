@@ -51,7 +51,6 @@ import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalServic
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.notification.rest.resource.v1_0.NotificationTemplateResource;
-import com.liferay.notification.service.NotificationTemplateLocalService;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectFieldResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectRelationshipResource;
@@ -159,7 +158,6 @@ public class SiteInitializerExtender
 				_listTypeDefinitionLocalService, _listTypeDefinitionResource,
 				_listTypeDefinitionResourceFactory, _listTypeEntryLocalService,
 				_listTypeEntryResource, _listTypeEntryResourceFactory,
-				_notificationTemplateLocalService,
 				_notificationTemplateResourceFactory, _objectActionLocalService,
 				_objectDefinitionLocalService, _objectDefinitionResourceFactory,
 				_objectEntryLocalService, _objectEntryManager,
@@ -280,7 +278,6 @@ public class SiteInitializerExtender
 				_listTypeDefinitionLocalService, _listTypeDefinitionResource,
 				_listTypeDefinitionResourceFactory, _listTypeEntryLocalService,
 				_listTypeEntryResource, _listTypeEntryResourceFactory,
-				_notificationTemplateLocalService,
 				_notificationTemplateResourceFactory, _objectActionLocalService,
 				_objectDefinitionLocalService, _objectDefinitionResourceFactory,
 				_objectEntryLocalService, _objectEntryManager,
@@ -439,9 +436,6 @@ public class SiteInitializerExtender
 
 	@Reference
 	private ListTypeEntryResource.Factory _listTypeEntryResourceFactory;
-
-	@Reference
-	private NotificationTemplateLocalService _notificationTemplateLocalService;
 
 	@Reference
 	private NotificationTemplateResource.Factory

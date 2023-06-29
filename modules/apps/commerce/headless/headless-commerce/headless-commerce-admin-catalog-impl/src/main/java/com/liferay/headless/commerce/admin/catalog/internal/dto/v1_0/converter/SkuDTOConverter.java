@@ -122,16 +122,24 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 
 							CPDefinitionOptionRel cpDefinitionOptionRel =
 								_cpDefinitionOptionRelLocalService.
-									getCPDefinitionOptionRel(
+									fetchCPDefinitionOptionRel(
 										cpInstanceOptionValueRel.
 											getCPDefinitionOptionRelId());
+
+							if (cpDefinitionOptionRel == null) {
+								continue;
+							}
 
 							CPDefinitionOptionValueRel
 								cpDefinitionOptionValueRel =
 									_cpDefinitionOptionValueRelLocalService.
-										getCPDefinitionOptionValueRel(
+										fetchCPDefinitionOptionValueRel(
 											cpInstanceOptionValueRel.
 												getCPDefinitionOptionValueRelId());
+
+							if (cpDefinitionOptionValueRel == null) {
+								continue;
+							}
 
 							SkuOption skuOption = new SkuOption() {
 								{

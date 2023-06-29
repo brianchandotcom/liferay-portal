@@ -165,6 +165,8 @@ public class SearchEngineInitializer implements Runnable {
 			Date date = null;
 
 			if (_isExecuteConcurrentReindex()) {
+				SearchEngineHelperUtil.initialize(_companyId);
+
 				_concurrentReindexManager.createNextIndex(_companyId);
 			}
 			else if (_isExecuteSyncReindex()) {

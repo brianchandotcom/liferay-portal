@@ -85,6 +85,9 @@ public class GetInfoItemFieldValueMVCResourceCommand
 				return _jsonFactory.createJSONObject();
 			}
 		).put(
+			"externalReferenceCode",
+			ParamUtil.getString(resourceRequest, "externalReferenceCode")
+		).put(
 			"fieldId", ParamUtil.getString(resourceRequest, "fieldId")
 		);
 

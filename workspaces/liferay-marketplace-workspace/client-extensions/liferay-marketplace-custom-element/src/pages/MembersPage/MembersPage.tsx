@@ -179,26 +179,26 @@ export function MembersPage({
         }
       );
 
-      membersList.forEach((member: MemberProps) => {
+      membersList.map( (member: MemberProps) => {
         const rolesList = member.role.split(', ');
+        if (isCustomerDashboard) {
+          member.isCustomerAccount = rolesList.some((role) =>
+            customerRoles.includes(role)
+          );
 
-        customerRoles.forEach((customerRole) => {
-          if (rolesList.find((role) => role === customerRole)) {
-            member.isCustomerAccount = true;
+          if (rolesList.find( (role) => role === 'Invited Member')) {
+            member.isInvitedMember = true;
           }
-        });
-
-        publisherRoles.forEach((publisherRole) => {
-          if (rolesList.find((role) => role === publisherRole)) {
-            member.isPublisherAccount = true;
+        }
+        if (isPublisherDashboard) {
+          member.isPublisherAccount = rolesList.some((role) =>
+            publisherRoles.includes(role)
+          );
+          if (rolesList.find((role) => role === 'Invited Member')) {
+            member.isInvitedMember = true;
           }
-        });
-
-        if (rolesList.find((role) => role === 'Invited Member')) {
-          member.isInvitedMember = true;
         }
       });
-
       let filteredMembersList: MemberProps[] = [];
 
       filteredMembersList = membersList.filter((member: MemberProps) => {

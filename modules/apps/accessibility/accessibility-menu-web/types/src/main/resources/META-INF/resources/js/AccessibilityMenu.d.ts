@@ -14,13 +14,8 @@
 
 /// <reference types="react" />
 
+import {CONSTANTS} from '@liferay/frontend-js-react-web';
 import PropTypes from 'prop-types';
-export declare const CONSTANTS: {
-	readonly ACCESSIBILITY_SETTING_EXPANDED_TEXT: 'ACCESSIBILITY_SETTING_EXPANDED_TEXT';
-	readonly ACCESSIBILITY_SETTING_INCREASED_TEXT_SPACING: 'ACCESSIBILITY_SETTING_INCREASED_TEXT_SPACING';
-	readonly ACCESSIBILITY_SETTING_REDUCED_MOTION: 'ACCESSIBILITY_SETTING_REDUCED_MOTION';
-	readonly ACCESSIBILITY_SETTING_UNDERLINED_LINKS: 'ACCESSIBILITY_SETTING_UNDERLINED_LINKS';
-};
 declare type KEYS = keyof typeof CONSTANTS;
 declare type Setting = {
 	className: string;
@@ -31,40 +26,6 @@ declare type Setting = {
 };
 declare type Props = {
 	settings: Array<Setting>;
-};
-export declare const accessibilityMenuAtom: {
-	readonly 'default': {
-		readonly ACCESSIBILITY_SETTING_EXPANDED_TEXT: {
-			readonly className: string;
-			readonly key: KEYS;
-			readonly label: string;
-			readonly updating?: boolean | undefined;
-			readonly value: boolean;
-		};
-		readonly ACCESSIBILITY_SETTING_INCREASED_TEXT_SPACING: {
-			readonly className: string;
-			readonly key: KEYS;
-			readonly label: string;
-			readonly updating?: boolean | undefined;
-			readonly value: boolean;
-		};
-		readonly ACCESSIBILITY_SETTING_REDUCED_MOTION: {
-			readonly className: string;
-			readonly key: KEYS;
-			readonly label: string;
-			readonly updating?: boolean | undefined;
-			readonly value: boolean;
-		};
-		readonly ACCESSIBILITY_SETTING_UNDERLINED_LINKS: {
-			readonly className: string;
-			readonly key: KEYS;
-			readonly label: string;
-			readonly updating?: boolean | undefined;
-			readonly value: boolean;
-		};
-	};
-	readonly 'key': string;
-	readonly 'Liferay.State.ATOM': true;
 };
 declare const AccessibilityMenu: {
 	(props: Props): JSX.Element;

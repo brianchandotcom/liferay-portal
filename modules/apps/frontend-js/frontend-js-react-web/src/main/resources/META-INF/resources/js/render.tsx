@@ -14,13 +14,11 @@
 
 import {Provider} from '@clayui/core';
 import {ClayIconSpriteContext} from '@clayui/icon';
-import {
-	CONSTANTS,
-	accessibilityMenuAtom,
-} from '@liferay/accessibility-menu-web';
 import {useLiferayState} from '@liferay/frontend-js-state-web';
 import React, {useMemo} from 'react';
 import ReactDOM from 'react-dom';
+
+import {CONSTANTS, accessibilityMenuAtom} from './accessibilityMenu';
 
 let counter = 0;
 
@@ -135,7 +133,7 @@ function LiferayProvider({children, spritemap}: Props) {
 		const reducedMotion =
 			accessibilityMenu[CONSTANTS.ACCESSIBILITY_SETTING_REDUCED_MOTION];
 
-		if (reducedMotion.value) {
+		if (reducedMotion?.value) {
 			return 'always';
 		}
 		else {

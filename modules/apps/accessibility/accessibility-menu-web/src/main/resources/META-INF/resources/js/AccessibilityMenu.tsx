@@ -16,7 +16,8 @@ import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayModal, {useModal} from '@clayui/modal';
 import {checkCookieConsentForTypes} from '@liferay/cookies-banner-web';
-import {State, useLiferayState} from '@liferay/frontend-js-state-web';
+import {CONSTANTS, accessibilityMenuAtom} from '@liferay/frontend-js-react-web';
+import {useLiferayState} from '@liferay/frontend-js-state-web';
 import {
 	COOKIE_TYPES,
 	checkConsent,
@@ -28,16 +29,6 @@ import React, {useCallback, useEffect, useState} from 'react';
 
 import AccessibilitySetting from './AccessibilitySetting';
 import {getSettingValue, toggleClassName} from './util';
-
-export const CONSTANTS = {
-	ACCESSIBILITY_SETTING_EXPANDED_TEXT: 'ACCESSIBILITY_SETTING_EXPANDED_TEXT',
-	ACCESSIBILITY_SETTING_INCREASED_TEXT_SPACING:
-		'ACCESSIBILITY_SETTING_INCREASED_TEXT_SPACING',
-	ACCESSIBILITY_SETTING_REDUCED_MOTION:
-		'ACCESSIBILITY_SETTING_REDUCED_MOTION',
-	ACCESSIBILITY_SETTING_UNDERLINED_LINKS:
-		'ACCESSIBILITY_SETTING_UNDERLINED_LINKS',
-} as const;
 
 type KEYS = keyof typeof CONSTANTS;
 
@@ -62,10 +53,6 @@ type Props = {
 };
 
 const OPEN_ACCESSIBILITY_MENU_EVENT_NAME = 'openAccessibilityMenu';
-
-export const accessibilityMenuAtom = State.atom<
-	Record<KEYS, AccessibilityMenuSetting>
->('accessibility-menu', {} as any);
 
 const AccessibilityMenu = (props: Props) => {
 	const [settings, setSettings] = useLiferayState(accessibilityMenuAtom);

@@ -21,15 +21,26 @@ import com.liferay.headless.builder.application.publisher.test.util.APIApplicati
 import com.liferay.headless.builder.test.BaseTestCase;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.Base64;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+import java.nio.charset.StandardCharsets;
+
+import javax.ws.rs.core.HttpHeaders;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -57,7 +68,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 	@Test
 	public void test() throws Exception {
 		APIApplication apiApplication1 = _addAPIApplication(
-			_API_APPLICATION_ERC_1, _API_APPLICATION_PATH_1);
+			_API_APPLICATION_ERC_1, RandomTestUtil.randomString(),
+			_API_APPLICATION_PATH_1);
 
 		String endpointPath1 =
 			apiApplication1.getBaseURL() + _API_APPLICATION_PATH_1;
@@ -67,7 +79,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			HTTPTestUtil.invokeHttpCode(null, endpointPath1, Http.Method.GET));
 
 		APIApplication apiApplication2 = _addAPIApplication(
-			_API_APPLICATION_ERC_2, _API_APPLICATION_PATH_2);
+			_API_APPLICATION_ERC_2, RandomTestUtil.randomString(),
+			_API_APPLICATION_PATH_2);
 
 		String endpointPath2 =
 			apiApplication2.getBaseURL() + _API_APPLICATION_PATH_2;
@@ -115,8 +128,41 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			HTTPTestUtil.invokeHttpCode(null, endpointPath2, Http.Method.GET));
 	}
 
+	@Test
+	public void testEndpointReturnsProperSchema() throws Exception {
+		JSONObject objectDefinitionJSONObject = _createCustomObjectDefinition();
+
+		_createCustomObjectEntry(objectDefinitionJSONObject);
+
+		APIApplication apiApplication = _addAPIApplication(
+			_API_APPLICATION_ERC_1,
+			objectDefinitionJSONObject.getString("externalReferenceCode"),
+			_API_APPLICATION_PATH_1);
+
+		APIApplicationPublisherUtil.publishApplications(
+			_apiApplicationPublisher, apiApplication);
+
+		String endpointPath =
+			apiApplication.getBaseURL() + _API_APPLICATION_PATH_1;
+
+		HttpURLConnection httpURLConnection = _createHttpURLConnection(
+			endpointPath, Http.Method.GET);
+
+		httpURLConnection.connect();
+
+		String actual = StringUtil.removeSubstrings(
+			StringUtil.read(httpURLConnection.getInputStream()),
+			StringPool.NEW_LINE, StringPool.SPACE);
+
+		String expected = String.format(
+			"[{\"name\":\"%s\"}]", _OBJECT_FIELD_VALUE);
+
+		Assert.assertEquals(expected, actual);
+	}
+
 	private APIApplication _addAPIApplication(
-			String externalReferenceCode, String path)
+			String externalReferenceCode,
+			String objectDefinitionExternalReferenceCode, String path)
 		throws Exception {
 
 		String apiEndpointExternalReferenceCode = RandomTestUtil.randomString();
@@ -152,14 +198,15 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 							).put(
 								"name", "name"
 							).put(
-								"objectFieldERC", "APPLICATION_STATUS"
+								"objectFieldERC", _OBJECT_FIELD_ERC
 							))
 					).put(
 						"description", "description"
 					).put(
 						"externalReferenceCode", apiSchemaExternalReferenceCode
 					).put(
-						"mainObjectDefinitionERC", "L_API_APPLICATION"
+						"mainObjectDefinitionERC",
+						objectDefinitionExternalReferenceCode
 					).put(
 						"name", "name"
 					))
@@ -195,6 +242,89 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			baseURL, TestPropsValues.getCompanyId());
 	}
 
+	private JSONObject _createCustomObjectDefinition() throws Exception {
+		return HTTPTestUtil.invoke(
+			JSONUtil.put(
+				"active", true
+			).put(
+				"label", JSONUtil.put("en-US", RandomTestUtil.randomString())
+			).put(
+				"name", "A" + RandomTestUtil.randomString()
+			).put(
+				"objectFields",
+				JSONUtil.put(
+					JSONUtil.put(
+						"DBType", "String"
+					).put(
+						"externalReferenceCode", _OBJECT_FIELD_ERC
+					).put(
+						"indexed", true
+					).put(
+						"indexedAsKeyword", false
+					).put(
+						"indexedLanguageId", ""
+					).put(
+						"label", JSONUtil.put("en_US", "Test field")
+					).put(
+						"listTypeDefinitionId", 0
+					).put(
+						"name", _OBJECT_FIELD_NAME
+					).put(
+						"required", false
+					).put(
+						"type", "String"
+					))
+			).put(
+				"pluralLabel",
+				JSONUtil.put("en-US", RandomTestUtil.randomString())
+			).put(
+				"portlet", true
+			).put(
+				"scope", "company"
+			).put(
+				"status", JSONUtil.put("code", 0)
+			).toString(),
+			"object-admin/v1.0/object-definitions", Http.Method.POST);
+	}
+
+	private void _createCustomObjectEntry(JSONObject objectDefinitionJSONObject)
+		throws Exception {
+
+		String restContextPath = objectDefinitionJSONObject.getString(
+			"restContextPath");
+
+		String endpoint = StringUtil.removeSubstring(restContextPath, "/o/");
+
+		HTTPTestUtil.invoke(
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME, _OBJECT_FIELD_VALUE
+			).toString(),
+			endpoint, Http.Method.POST);
+	}
+
+	private HttpURLConnection _createHttpURLConnection(
+			String endpoint, Http.Method method)
+		throws Exception {
+
+		URL url = new URL("http://localhost:8080/o/" + endpoint);
+
+		HttpURLConnection httpURLConnection =
+			(HttpURLConnection)url.openConnection();
+
+		httpURLConnection.setRequestMethod(method.toString());
+		httpURLConnection.setRequestProperty(HttpHeaders.ACCEPT, "*/*");
+		httpURLConnection.setRequestProperty(
+			HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
+
+		String encodedUserNameAndPassword = Base64.encode(
+			"test@liferay.com:test".getBytes(StandardCharsets.UTF_8));
+
+		httpURLConnection.setRequestProperty(
+			"Authorization", "Basic " + encodedUserNameAndPassword);
+
+		return httpURLConnection;
+	}
+
 	private static final String _API_APPLICATION_ERC_1 =
 		RandomTestUtil.randomString();
 
@@ -206,6 +336,15 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 	private static final String _API_APPLICATION_PATH_2 =
 		StringPool.SLASH + RandomTestUtil.randomString();
+
+	private static final String _OBJECT_FIELD_ERC =
+		RandomTestUtil.randomString();
+
+	private static final String _OBJECT_FIELD_NAME =
+		"x" + RandomTestUtil.randomString();
+
+	private static final String _OBJECT_FIELD_VALUE =
+		RandomTestUtil.randomString();
 
 	@Inject
 	private APIApplicationProvider _apiApplicationProvider;

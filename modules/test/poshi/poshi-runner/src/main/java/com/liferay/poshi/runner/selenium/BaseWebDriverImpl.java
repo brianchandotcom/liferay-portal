@@ -375,20 +375,9 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public void assertElementFocused(String locator) throws Exception {
-		WebElement element = getWebElement(locator);
+		Condition elementFocusedCondition = getElementFocusedCondition(locator);
 
-		WebDriver webDriver = getWebDriver();
-
-		TargetLocator targetLocator = webDriver.switchTo();
-
-		WebElement activeElement = targetLocator.activeElement();
-
-		if (element.equals(activeElement)) {
-			return;
-		}
-
-		throw new RuntimeException(
-			"Element from locator " + locator + " is not focused element");
+		elementFocusedCondition.assertTrue();
 	}
 
 	@Override
@@ -1606,6 +1595,13 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		Condition editableCondition = getEditableCondition(locator);
 
 		return editableCondition.evaluate();
+	}
+
+	@Override
+	public boolean isElementFocused(String locator) throws Exception {
+		Condition elementFocusedCondition = getElementFocusedCondition(locator);
+
+		return elementFocusedCondition.evaluate();
 	}
 
 	@Override
@@ -3658,6 +3654,28 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		}
 
 		return idAttribute;
+	}
+
+	protected Condition getElementFocusedCondition(String locator) {
+		String message =
+			"Element from locator " + locator + " is not focused element";
+
+		return new Condition(message) {
+
+			@Override
+			public boolean evaluate() throws Exception {
+				WebElement element = getWebElement(locator);
+
+				WebDriver webDriver = getWebDriver();
+
+				TargetLocator targetLocator = webDriver.switchTo();
+
+				WebElement activeElement = targetLocator.activeElement();
+
+				return element.equals(activeElement);
+			}
+
+		};
 	}
 
 	protected Condition getElementNotPresentCondition(String locator) {

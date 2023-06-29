@@ -37,7 +37,7 @@ definition {
 
 	@description = "LPS-164731 - Reports bar Should not be visible on top menu for Employee users."
 	@priority = 4
-	test EmployeeCanNotSeeReportPage {
+	test CanEmployeeNotSeeReportPage {
 		task ("Given the employee user are logged") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "employee@liferay.com",
@@ -55,7 +55,7 @@ definition {
 
 	@description = "LPS-172931 - Finance user can generate a report with filters applied"
 	@priority = 5
-	test FinanceCanGenerateReportWithFilters {
+	test CanFinanceGenerateReportWithFilters {
 		task ("Given the finance user are logged") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "finance@liferay.com",
@@ -83,7 +83,7 @@ definition {
 
 	@description = "LPS-172931 - Manager user can generate a report with filters applied"
 	@priority = 5
-	test ManagerCanGenerateReportWithFilters {
+	test CanManagerGenerateReportWithFilters {
 		task ("Given the manager user are logged") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "manager@liferay.com",
@@ -116,7 +116,7 @@ definition {
 
 	@description = "LPS-164731 - Finance user should be able to see the Report card through 'Reports' Tab on top menu"
 	@priority = 5
-	test ReportCardShouldBeVisibleForFinanceUsers {
+	test CanReportCardShouldBeVisibleForFinanceUsers {
 		task ("Given the finance user are logged") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "finance@liferay.com",
@@ -130,7 +130,7 @@ definition {
 		}
 
 		task ("Then he can see the cards present in the page") {
-			EVPUtils.assertCardTitle(listcardTitle = "EVP Requests Listing,EVP Financial Report");
+			EVPUtils.assertCardsTitle(listcardTitle = "EVP Requests Listing,EVP Financial Report");
 		}
 	}
 
@@ -150,7 +150,7 @@ definition {
 		}
 
 		task ("Then he can see the cards present in the page") {
-			EVPUtils.assertCardTitle(listcardTitle = "EVP Requests Listing,EVP Financial Report");
+			EVPUtils.assertCardsTitle(listcardTitle = "EVP Requests Listing,EVP Financial Report");
 		}
 	}
 

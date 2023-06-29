@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "Change status to organization page"
 	macro changeStatus {
 		Type(
 			key_fieldId = "messageDescribed",
@@ -10,7 +9,6 @@ definition {
 		Button.click(button = ${button});
 	}
 
-	@summary = "Fill in all required fields on the Organization Form"
 	macro fillOrganizationForm {
 		WaitForPageLoad();
 
@@ -112,26 +110,24 @@ definition {
 		if (${createRequest} == "true") {
 			Button.click(button = "Create a Request");
 		}
-		else {
+
+		if (${done} == "true") {
 			Button.click(button = "Done");
 		}
 	}
 
-	@summary = "Add a new organization"
 	macro goToCreateOrganization {
 		EVPNavigator.goToNavItem(navItem = "Organization");
 
 		Button.click(button = "Create an Organization");
 	}
 
-	@summary = "Click kebab menu in organization page"
 	macro kebabMenuOrganization {
 		Click(
 			key_name = ${organizationName},
 			locator1 = "EVPUtils#KEBAB_MENU_OPTION_ORGANIZATION");
 	}
 
-	@summary = "Assert status in Organization EVP"
 	macro viewStatus {
 		AssertElementPresent(
 			key_organizationName = ${organizationName},

@@ -8,7 +8,7 @@ definition {
 			siteTemplateName = "EVP");
 	}
 
-	macro assertCardTitle {
+	macro assertCardsTitle {
 		for (var cardTitle : list ${listcardTitle}) {
 			AssertElementPresent(
 				key_card = ${cardTitle},
@@ -27,7 +27,6 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.get(${curl});
 	}
 
-	@summary = "generate Financial Report for EVP"
 	macro generateFinancialReport {
 		LexiconCard.clickCardTitle(card = ${cardTitle});
 
@@ -39,7 +38,6 @@ definition {
 		Button.click(button = "Generate");
 	}
 
-	@summary = "generate Requests listing for EVP"
 	macro generateRequestsListing {
 		LexiconCard.clickCard(card = ${cardTitle});
 
@@ -87,7 +85,6 @@ definition {
 		Button.click(button = "Generate");
 	}
 
-	@summary = "Navigating to EVP needs an extra click on Sign In which will redirect to Okta"
 	macro gotoEVP {
 		Navigator.openSiteURL(siteName = "EVP Portal");
 
@@ -96,7 +93,6 @@ definition {
 		}
 	}
 
-	@summary = "Fill the date fields"
 	macro insertDate {
 		var currentDate = DateUtil.getFormattedDate(${dateRange}, "yyyy-MM-dd");
 		var nextDayDate = DateUtil.getFormattedDate("+2", "yyyy-MM-dd");

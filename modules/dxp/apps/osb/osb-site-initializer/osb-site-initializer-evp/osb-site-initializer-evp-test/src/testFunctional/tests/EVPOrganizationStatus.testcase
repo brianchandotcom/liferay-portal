@@ -33,6 +33,7 @@ definition {
 				contactName = "Contact Test",
 				contactPhone = 12345,
 				country = "Country Test",
+				done = "true",
 				organizationName = "Organization Test",
 				organizationSite = "www.test.com.br",
 				smallDescription = "Description Test",

@@ -30,6 +30,11 @@ export function getAPIApplicationsFDSProps(
 			itemPathRenderer,
 			itemStatusRenderer,
 		},
+		emptyState: {
+			description: '',
+			image: '/states/empty_state.gif',
+			title: Liferay.Language.get('no-api-application-found'),
+		},
 		filters: getAPIApplicationsFDSFilters(),
 		id: portletId,
 		itemsActions: [

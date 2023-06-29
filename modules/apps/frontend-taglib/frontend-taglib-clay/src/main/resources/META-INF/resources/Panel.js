@@ -32,9 +32,9 @@ export default function Panel({
 	collapseClassNames,
 	componentId: _componentId,
 	cssClass,
+	defaultExpanded,
 	displayTitle,
 	displayType,
-	expanded,
 	locale: _locale,
 	portletId: _portletId,
 	portletNamespace: _portletNamespace,
@@ -46,9 +46,9 @@ export default function Panel({
 			className={cssClass}
 			collapsable={collapsable}
 			collapseClassNames={collapseClassNames}
+			defaultExpanded={defaultExpanded}
 			displayTitle={displayTitle}
 			displayType={displayType}
-			expanded={expanded}
 			showCollapseIcon={showCollapseIcon}
 			{...otherProps}
 		>

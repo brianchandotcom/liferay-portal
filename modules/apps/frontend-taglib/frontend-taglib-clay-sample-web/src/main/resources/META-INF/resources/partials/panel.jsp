@@ -71,8 +71,8 @@
 >
 	<clay:col>
 		<clay:panel
+			defaultExpanded="<%= true %>"
 			displayTitle="Panel Title 4"
-			expanded="<%= true %>"
 		>
 			<div class="panel-body">Panel Content 4</div>
 		</clay:panel>

@@ -49,7 +49,6 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "This calls the JSON WS API to add an object"
 	macro addObject {
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -90,7 +89,6 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "This calls the JSON WS API to create an Objects entry with any number of fields"
 	macro addObjectEntryViaJSONAPI {
 		Variables.assertDefined(parameterList = ${objectName});
 
@@ -161,7 +159,6 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "This calls the JSON WS API to add a field in an object"
 	macro addObjectField {
 		var portalURL = JSONCompany.getPortalURL();
 		var objectId = JSONObject.getObjectId(
@@ -422,7 +419,6 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "This calls the JSON WS API to add a layout in an object"
 	macro addObjectLayout {
 		var portalURL = JSONCompany.getPortalURL();
 		var objectId = JSONObject.getObjectId(
@@ -454,7 +450,6 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "This calls the JSON WS API to add a relationship in an object"
 	macro addObjectRelationship {
 		var portalURL = JSONCompany.getPortalURL();
 		var objectID_1 = JSONObject.getObjectId(
@@ -498,7 +493,6 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "This calls the Headless API to add a single field entry in an object"
 	macro addObjectSingleFieldEntry {
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -527,7 +521,6 @@ definition {
 		return ${objectEntryId};
 	}
 
-	@summary = "This calls the JSON WS API to add a picklist"
 	macro addPicklist {
 		Variables.assertDefined(parameterList = ${picklistName});
 
@@ -561,7 +554,6 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "This calls the JSON WS API to add a picklist item"
 	macro addPicklistItem {
 		var portalURL = JSONCompany.getPortalURL();
 		var picklistId = JSONObject.getPicklistId(
@@ -593,7 +585,6 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "This calls the JSON WS API to delete all custom objects"
 	macro deleteAllCustomObjects {
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -624,7 +615,6 @@ definition {
 		}
 	}
 
-	@summary = "This calls the JSON WS API to delete all picklists"
 	macro deleteAllPicklists {
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -655,7 +645,6 @@ definition {
 		}
 	}
 
-	@summary = "This calls the JSON WS API to delete an object"
 	macro deleteObject {
 		if (isSet(virtualHost)) {
 			if (!(isSet(port))) {
@@ -695,7 +684,6 @@ definition {
 		JSONCurlUtil.delete(${curl});
 	}
 
-	@summary = "This calls the JSON WS API to delete an entry in an object"
 	macro deleteObjectEntry {
 		var portalURL = JSONCompany.getPortalURL();
 		var entryId = JSONObject.getObjectEntryId(
@@ -723,7 +711,6 @@ definition {
 		JSONCurlUtil.delete(${curl});
 	}
 
-	@summary = "This calls the JSON WS API to delete a picklist"
 	macro deletePicklist {
 		var portalURL = JSONCompany.getPortalURL();
 		var picklistId = JSONObject.getPicklistId(
@@ -768,7 +755,6 @@ definition {
 		JSONCurlUtil.delete(${curl});
 	}
 
-	@summary = "This calls the JSON WS API to filter an entry in an object"
 	macro filterObjectEntry {
 		var portalURL = JSONCompany.getPortalURL();
 		var entryId = JSONObject.getObjectEntryId(
@@ -794,7 +780,6 @@ definition {
 		''';
 	}
 
-	@summary = "Get a list of all Object Definitions"
 	macro getAllObjectDefinitionsId {
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -816,7 +801,6 @@ definition {
 		return ${objectDefinitionIdList};
 	}
 
-	@summary = "This macro calls the Headless API to return an object definition"
 	macro getObjectDefinition {
 		Variables.assertDefined(parameterList = ${objectName});
 
@@ -833,7 +817,6 @@ definition {
 		return ${objectDefinition};
 	}
 
-	@summary = "Get a objectDefinitionId by name"
 	macro getObjectDefinitionId {
 		Variables.assertDefined(parameterList = ${name});
 
@@ -949,7 +932,6 @@ definition {
 		return ${objectId};
 	}
 
-	@summary = "Get the list of an Object Definition based of its ID"
 	macro getObjectRelationships {
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -1042,7 +1024,6 @@ definition {
 		return ${picklistId};
 	}
 
-	@summary = "This calls the JSON WS API to publish an object"
 	macro publishObject {
 		var portalURL = JSONCompany.getPortalURL();
 		var objectId = JSONObject.getObjectId(
@@ -1067,7 +1048,6 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "This macro calls the Headless API to set the account restriction property to an object definition"
 	macro setAccountRestriction {
 		Variables.assertDefined(parameterList = ${objectName});
 
@@ -1094,7 +1074,6 @@ definition {
 		JSONCurlUtil.patch(${curl});
 	}
 
-	@summary = "This calls the patchObjectDefinition Headless API endpoint to update a configuration within an object definition"
 	macro updateObject {
 		var portalURL = JSONCompany.getPortalURL();
 		var objectId = JSONObject.getObjectId(objectName = ${objectName});

@@ -12,11 +12,13 @@
 		<permissions>
 			<supports>
 				<action-key>ADD_OBJECT_DEFINITION</action-key>
+				<action-key>ADD_OBJECT_FOLDER</action-key>
 				<action-key>EXTEND_SYSTEM_OBJECT_DEFINITION</action-key>
 				<action-key>PUBLISH_OBJECT_DEFINITION</action-key>
 			</supports>
 			<guest-unsupported>
 				<action-key>ADD_OBJECT_DEFINITION</action-key>
+				<action-key>ADD_OBJECT_FOLDER</action-key>
 				<action-key>EXTEND_SYSTEM_OBJECT_DEFINITION</action-key>
 				<action-key>PUBLISH_OBJECT_DEFINITION</action-key>
 			</guest-unsupported>
@@ -27,7 +29,7 @@
 		<portlet-ref>
 			<portlet-name>com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet</portlet-name>
 		</portlet-ref>
-		<weight>1</weight>
+		<weight>2</weight>
 		<permissions>
 			<supports>
 				<action-key>DELETE</action-key>
@@ -36,6 +38,28 @@
 				<action-key>VIEW</action-key>
 			</supports>
 			<guest-unsupported>
+				<action-key>DELETE</action-key>
+				<action-key>PERMISSIONS</action-key>
+				<action-key>UPDATE</action-key>
+			</guest-unsupported>
+		</permissions>
+	</model-resource>
+	<model-resource>
+		<model-name>com.liferay.object.model.ObjectFolder</model-name>
+		<portlet-ref>
+			<portlet-name>com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet</portlet-name>
+		</portlet-ref>
+		<weight>3</weight>
+		<permissions>
+			<supports>
+				<action-key>ADD_OBJECT_DEFINITION</action-key>
+				<action-key>DELETE</action-key>
+				<action-key>PERMISSIONS</action-key>
+				<action-key>UPDATE</action-key>
+				<action-key>VIEW</action-key>
+			</supports>
+			<guest-unsupported>
+				<action-key>ADD_OBJECT_DEFINITION</action-key>
 				<action-key>DELETE</action-key>
 				<action-key>PERMISSIONS</action-key>
 				<action-key>UPDATE</action-key>

@@ -56,8 +56,6 @@ public class AssetTagsDisplayContext {
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_assetTagsItemSelectorCriterion = assetTagsItemSelectorCriterion;
-
-		_rowChecker = false;
 	}
 
 	public SearchContainer<AssetTag> getTagSearchContainer() {
@@ -88,7 +86,7 @@ public class AssetTagsDisplayContext {
 				tagsSearchContainer.getOrderByComparator()),
 			AssetTagServiceUtil.getTagsCount(_getGroupIds(), _getKeywords()));
 
-		if (_rowChecker) {
+		if (_assetTagsItemSelectorCriterion.isMultiSelection()) {
 			tagsSearchContainer.setRowChecker(
 				new EntriesChecker(_renderRequest, _renderResponse));
 		}
@@ -192,7 +190,6 @@ public class AssetTagsDisplayContext {
 	private final PortletURL _portletURL;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final boolean _rowChecker;
 	private SearchContainer<AssetTag> _tagsSearchContainer;
 
 }

@@ -196,6 +196,12 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 		JobProperty jobProperty = getJobProperty(
 			"test.batch.run.property.query", testSuiteName, batchName);
 
+		File testPropertiesFile = new File(
+			portalGitWorkingDirectory.getWorkingDirectory(), "test.properties");
+
+		JenkinsResultsParserUtil.validatePQL(
+			jobProperty.getValue(), testPropertiesFile);
+
 		recordJobProperty(jobProperty);
 
 		return jobProperty.getValue();
@@ -449,6 +455,9 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 			!testBatchPropertyQuery.equals("false") &&
 			!concatedPQL.contains(testBatchPropertyQuery)) {
 
+			JenkinsResultsParserUtil.validatePQL(
+				testBatchPropertyQuery, testPropertiesFile);
+
 			recordJobProperty(jobProperty);
 
 			if (!concatedPQL.isEmpty()) {
@@ -525,6 +534,9 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 				testBaseDir, testSuiteName);
 		}
 
+		File testPropertiesFile = new File(
+			portalGitWorkingDirectory.getWorkingDirectory(), "test.properties");
+
 		StringBuilder sb = new StringBuilder();
 
 		for (File modifiedFile : getModifiedFiles()) {
@@ -553,6 +565,8 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(defaultPQL) &&
 			(sb.indexOf(defaultPQL) == -1)) {
 
+			JenkinsResultsParserUtil.validatePQL(defaultPQL, testBaseDir);
+
 			if (sb.length() > 0) {
 				sb.append(" OR ");
 			}
@@ -579,6 +593,9 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 				isStableTestSuiteBatch(batchName) &&
 				(sb.indexOf(jobPropertyValue) == -1)) {
 
+				JenkinsResultsParserUtil.validatePQL(
+					jobPropertyValue, testPropertiesFile);
+
 				recordJobProperty(jobProperty);
 
 				if (sb.length() > 0) {
@@ -599,6 +616,9 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 		String jobPropertyValue = jobProperty.getValue();
 
 		if (jobPropertyValue != null) {
+			JenkinsResultsParserUtil.validatePQL(
+				jobPropertyValue, testPropertiesFile);
+
 			recordJobProperty(jobProperty);
 
 			testBatchRunPropertyQuery = JenkinsResultsParserUtil.combine(

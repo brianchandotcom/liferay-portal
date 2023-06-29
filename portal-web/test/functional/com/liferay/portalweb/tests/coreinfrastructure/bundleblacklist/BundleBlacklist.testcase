@@ -169,7 +169,7 @@ definition {
 		}
 
 		task ("And the portal is restarted") {
-			Portlet.startServer(keepOsGiState = "true");
+			Portlet.startServer(deleteLiferayHome = "false");
 		}
 
 		task ("Then the portlet is enabled on startup") {
@@ -233,7 +233,7 @@ definition {
 
 		OSGiConfig.deleteOSGiConfigFile(osgiConfigFileName = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config");
 
-		Portlet.startServer(keepOsGiState = "true");
+		Portlet.startServer(deleteLiferayHome = "false");
 
 		AssertConsoleTextPresent(value1 = "STARTED ${symbolicName}");
 
@@ -273,7 +273,7 @@ definition {
 		}
 
 		task ("And the portal is restarted") {
-			Portlet.startServer(keepOsGiState = "true");
+			Portlet.startServer(deleteLiferayHome = "false");
 		}
 
 		task ("Then the portlet is enabled on startup") {
@@ -405,9 +405,7 @@ definition {
 		}
 
 		task ("And the portal is restarted") {
-			Portlet.startServer(
-				deleteLiferayHome = "false",
-				keepOsGiState = "true");
+			Portlet.startServer(deleteLiferayHome = "false");
 		}
 
 		task ("Then the module is enabled on startup") {
@@ -469,7 +467,7 @@ definition {
 
 		Portlet.shutdownServer();
 
-		Portlet.startServer(keepOsGiState = "true");
+		Portlet.startServer(deleteLiferayHome = "false");
 
 		Navigator.openURL();
 
@@ -521,7 +519,7 @@ definition {
 
 		Portlet.shutdownServer();
 
-		Portlet.startServer(keepOsGiState = "true");
+		Portlet.startServer(deleteLiferayHome = "false");
 
 		Navigator.openURL();
 
@@ -544,7 +542,7 @@ definition {
 
 		Portlet.shutdownServer();
 
-		Portlet.startServer(keepOsGiState = "true");
+		Portlet.startServer(deleteLiferayHome = "false");
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 

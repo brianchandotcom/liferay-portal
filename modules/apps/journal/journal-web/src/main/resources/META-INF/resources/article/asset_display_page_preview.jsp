@@ -21,7 +21,7 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 %>
 
 <p class="text-secondary">
-	<liferay-ui:message key="preview-this-web-content-through-the-display-page-templates-of-a-specific-site" />
+	<liferay-ui:message key="preview-this-web-content-through-the-display-page-templates-of-a-specific-site.-this-setting-is-only-for-preview-purposes" />
 </p>
 
 <div>

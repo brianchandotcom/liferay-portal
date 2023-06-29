@@ -319,7 +319,7 @@
 
 <tr>
 	<td>SEARCH_REPOSITORY_TAB</td>
-	<td>//div[contains(@class,'search-info')]/a[contains(.,'${dmRepositoryName}')]</td>
+	<td>//div[contains(@class,'search-info')]//a[contains(.,'${dmRepositoryName}')]</td>
 	<td></td>
 </tr>
 <tr>

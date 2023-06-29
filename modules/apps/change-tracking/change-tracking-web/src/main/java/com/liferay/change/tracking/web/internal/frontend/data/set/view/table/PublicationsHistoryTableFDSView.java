@@ -63,8 +63,8 @@ public class PublicationsHistoryTableFDSView extends BaseTableFDSView {
 			"status", "status",
 			fdsTableSchemaField ->
 				fdsTableSchemaField.setContentRendererModuleURL(
-					"change-tracking-web/publications/js/components" +
-						"/StatusRenderer")
+					_npmResolver.resolveModuleName("change-tracking-web") +
+						"/publications/js/components/StatusRenderer")
 		).build();
 	}
 

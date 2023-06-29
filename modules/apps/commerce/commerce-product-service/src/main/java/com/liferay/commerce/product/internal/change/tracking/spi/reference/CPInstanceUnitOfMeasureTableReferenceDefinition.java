@@ -17,61 +17,49 @@ package com.liferay.commerce.product.internal.change.tracking.spi.reference;
 import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
-import com.liferay.commerce.product.model.CPDefinitionTable;
-import com.liferay.commerce.product.model.CPInstanceOptionValueRelTable;
 import com.liferay.commerce.product.model.CPInstanceTable;
 import com.liferay.commerce.product.model.CPInstanceUnitOfMeasureTable;
-import com.liferay.commerce.product.service.persistence.CPInstancePersistence;
+import com.liferay.commerce.product.service.persistence.CPInstanceUnitOfMeasurePersistence;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Cheryl Tang
+ * @author Andrea Sbarra
  */
 @Component(service = TableReferenceDefinition.class)
-public class CPInstanceTableReferenceDefinition
-	implements TableReferenceDefinition<CPInstanceTable> {
+public class CPInstanceUnitOfMeasureTableReferenceDefinition
+	implements TableReferenceDefinition<CPInstanceUnitOfMeasureTable> {
 
 	@Override
 	public void defineChildTableReferences(
-		ChildTableReferenceInfoBuilder<CPInstanceTable>
+		ChildTableReferenceInfoBuilder<CPInstanceUnitOfMeasureTable>
 			childTableReferenceInfoBuilder) {
-
-		childTableReferenceInfoBuilder.singleColumnReference(
-			CPInstanceTable.INSTANCE.CPInstanceId,
-			CPInstanceOptionValueRelTable.INSTANCE.CPInstanceId
-		).singleColumnReference(
-			CPInstanceTable.INSTANCE.CPInstanceId,
-			CPInstanceUnitOfMeasureTable.INSTANCE.CPInstanceId
-		);
 	}
 
 	@Override
 	public void defineParentTableReferences(
-		ParentTableReferenceInfoBuilder<CPInstanceTable>
+		ParentTableReferenceInfoBuilder<CPInstanceUnitOfMeasureTable>
 			parentTableReferenceInfoBuilder) {
 
-		parentTableReferenceInfoBuilder.groupedModel(
-			CPInstanceTable.INSTANCE
-		).singleColumnReference(
-			CPInstanceTable.INSTANCE.CPDefinitionId,
-			CPDefinitionTable.INSTANCE.CPDefinitionId
-		);
+		parentTableReferenceInfoBuilder.singleColumnReference(
+			CPInstanceUnitOfMeasureTable.INSTANCE.CPInstanceId,
+			CPInstanceTable.INSTANCE.CPInstanceId);
 	}
 
 	@Override
 	public BasePersistence<?> getBasePersistence() {
-		return _cpInstancePersistence;
+		return _cpInstanceUnitOfMeasurePersistence;
 	}
 
 	@Override
-	public CPInstanceTable getTable() {
-		return CPInstanceTable.INSTANCE;
+	public CPInstanceUnitOfMeasureTable getTable() {
+		return CPInstanceUnitOfMeasureTable.INSTANCE;
 	}
 
 	@Reference
-	private CPInstancePersistence _cpInstancePersistence;
+	private CPInstanceUnitOfMeasurePersistence
+		_cpInstanceUnitOfMeasurePersistence;
 
 }

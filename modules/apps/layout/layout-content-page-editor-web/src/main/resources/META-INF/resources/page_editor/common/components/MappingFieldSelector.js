@@ -36,6 +36,7 @@ export default function MappingFieldSelector({
 	onValueSelect,
 	value,
 }) {
+	const fieldTypeId = useId();
 	const mappingSelectorFieldSelectId = useId();
 
 	const hasWarnings = fields && !fields.length;
@@ -52,6 +53,7 @@ export default function MappingFieldSelector({
 			<label htmlFor={mappingSelectorFieldSelectId}>{label}</label>
 
 			<ClaySelect
+				aria-describedby={fieldTypeId}
 				disabled={!(fields && !!fields.length)}
 				id={mappingSelectorFieldSelectId}
 				onChange={onValueSelect}
@@ -93,6 +95,14 @@ export default function MappingFieldSelector({
 					</>
 				)}
 			</ClaySelect>
+
+			{selectedField && (
+				<p className="mt-2 text-3" id={fieldTypeId}>
+					<b>{Liferay.Language.get('field-type')}: </b>
+
+					{` ${selectedField.typeLabel}`}
+				</p>
+			)}
 
 			{hasWarnings && (
 				<ClayForm.FeedbackGroup>

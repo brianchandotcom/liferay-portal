@@ -63,6 +63,8 @@ public interface APIApplication {
 
 		public String getDescription();
 
+		public String getExternalReferenceCode();
+
 		public String getName();
 
 		public Type getType();

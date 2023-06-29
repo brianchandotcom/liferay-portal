@@ -147,7 +147,7 @@ const Details = ({
 				</h3>
 
 				<ClayList className="flex-row flex-wrap">
-					<ClayList.Item className="border-0 col-12" flex>
+					<ClayList.Item className="border-0 col-12 col-sm-6" flex>
 						<ClayList.ItemField className="justify-content-center">
 							<ClayIcon symbol="api-web" />
 						</ClayList.ItemField>
@@ -182,7 +182,7 @@ const Details = ({
 						</ClayList.ItemField>
 					</ClayList.Item>
 
-					<ClayList.Item className="border-0 col-12 col-sm-6" flex>
+					<ClayList.Item className="border-0 col-12" flex>
 						<ClayList.ItemField className="justify-content-center">
 							<ClayIcon symbol="nodes" />
 						</ClayList.ItemField>

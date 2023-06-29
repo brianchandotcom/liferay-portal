@@ -20,19 +20,9 @@ import com.liferay.asset.tags.item.selector.criterion.AssetTagsItemSelectorCrite
 import com.liferay.asset.tags.item.selector.web.internal.constants.AssetTagsSelectorPortletKeys;
 import com.liferay.asset.tags.item.selector.web.internal.search.EntriesChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.asset.util.comparator.AssetTagNameComparator;
 
 import javax.portlet.PortletURL;
@@ -81,10 +71,11 @@ public class AssetTagsDisplayContext {
 		tagsSearchContainer.setOrderByType(orderByType);
 		tagsSearchContainer.setResultsAndTotal(
 			() -> AssetTagServiceUtil.getTags(
-				_getGroupIds(), _getKeywords(), tagsSearchContainer.getStart(),
-				tagsSearchContainer.getEnd(),
+				_assetTagsItemSelectorCriterion.getGroupIds(), _getKeywords(),
+				tagsSearchContainer.getStart(), tagsSearchContainer.getEnd(),
 				tagsSearchContainer.getOrderByComparator()),
-			AssetTagServiceUtil.getTagsCount(_getGroupIds(), _getKeywords()));
+			AssetTagServiceUtil.getTagsCount(
+				_assetTagsItemSelectorCriterion.getGroupIds(), _getKeywords()));
 
 		if (_assetTagsItemSelectorCriterion.isMultiSelection()) {
 			tagsSearchContainer.setRowChecker(
@@ -94,53 +85,6 @@ public class AssetTagsDisplayContext {
 		_tagsSearchContainer = tagsSearchContainer;
 
 		return _tagsSearchContainer;
-	}
-
-	private long[] _getGroupIds() {
-		if (ArrayUtil.isNotEmpty(_groupIds)) {
-			return _groupIds;
-		}
-
-		if (_assetTagsItemSelectorCriterion.isMultiSelection()) {
-			return _assetTagsItemSelectorCriterion.getGroupIds();
-		}
-
-		long[] groupIds = StringUtil.split(
-			ParamUtil.getString(_httpServletRequest, "groupIds"), 0L);
-
-		if (ArrayUtil.isEmpty(groupIds)) {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)_httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			groupIds = new long[] {themeDisplay.getScopeGroupId()};
-		}
-
-		for (long groupId : groupIds) {
-			Group group = GroupLocalServiceUtil.fetchGroup(groupId);
-
-			if ((group == null) || !group.isLayout() ||
-				ArrayUtil.contains(groupIds, group.getParentGroupId())) {
-
-				continue;
-			}
-
-			try {
-				groupIds = ArrayUtil.append(
-					groupIds,
-					PortalUtil.getCurrentAndAncestorSiteGroupIds(
-						group.getParentGroupId()));
-			}
-			catch (PortalException portalException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(portalException);
-				}
-			}
-		}
-
-		_groupIds = groupIds;
-
-		return _groupIds;
 	}
 
 	private String _getKeywords() {
@@ -177,12 +121,8 @@ public class AssetTagsDisplayContext {
 		return _orderByType;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		AssetTagsDisplayContext.class);
-
 	private final AssetTagsItemSelectorCriterion
 		_assetTagsItemSelectorCriterion;
-	private long[] _groupIds;
 	private final HttpServletRequest _httpServletRequest;
 	private String _keywords;
 	private String _orderByCol;

@@ -38,7 +38,6 @@ import com.liferay.portal.test.rule.Inject;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -72,10 +71,7 @@ public class DisplayPageTemplateResourceTest
 			displayPageTemplateResource.getSiteDisplayPageTemplatesPage(
 				testGroup.getGroupId(), Pagination.of(1, 10), null);
 
-		List<DisplayPageTemplate> displayPageTemplates =
-			(List<DisplayPageTemplate>)page.getItems();
-
-		for (DisplayPageTemplate displayPageTemplate : displayPageTemplates) {
+		for (DisplayPageTemplate displayPageTemplate : page.getItems()) {
 			LayoutPageTemplateEntry layoutPageTemplateEntry =
 				_layoutPageTemplateEntryLocalService.getLayoutPageTemplateEntry(
 					testGroup.getGroupId(),
@@ -89,10 +85,8 @@ public class DisplayPageTemplateResourceTest
 			testGetSiteDisplayPageTemplatesPage_addDisplayPageTemplate(
 				testGroup.getGroupId(), randomDisplayPageTemplate());
 
-		DisplayPageTemplateResource.Builder builder =
-			DisplayPageTemplateResource.builder();
-
-		displayPageTemplateResource = builder.authentication(
+		displayPageTemplateResource = DisplayPageTemplateResource.builder(
+		).authentication(
 			"test@liferay.com", "test"
 		).locale(
 			LocaleUtil.getDefault()
@@ -104,12 +98,10 @@ public class DisplayPageTemplateResourceTest
 			testGroup.getGroupId(), Pagination.of(1, 10), null);
 
 		Assert.assertEquals(1, page.getTotalCount());
-
 		Assert.assertEquals(
 			displayPageTemplate.getDisplayPageTemplateKey(),
 			page.fetchFirstItem(
 			).getDisplayPageTemplateKey());
-
 		Assert.assertNotNull(
 			page.fetchFirstItem(
 			).getCreator(

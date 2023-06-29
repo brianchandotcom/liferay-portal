@@ -63,7 +63,7 @@ public class AssetTagsDisplayContext {
 			return _tagsSearchContainer;
 		}
 
-		SearchContainer<AssetTag> tagsSearchContainer = new SearchContainer(
+		SearchContainer<AssetTag> tagsSearchContainer = new SearchContainer<>(
 			_renderRequest, _portletURL, null, "there-are-no-tags");
 
 		tagsSearchContainer.setOrderByCol(_getOrderByCol());

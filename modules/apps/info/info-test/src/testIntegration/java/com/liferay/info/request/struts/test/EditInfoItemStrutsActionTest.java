@@ -18,6 +18,13 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.info.exception.InfoFormException;
+import com.liferay.info.field.InfoField;
+import com.liferay.info.form.InfoForm;
+import com.liferay.info.item.InfoItemServiceRegistry;
+import com.liferay.info.item.provider.InfoItemFormProvider;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
@@ -33,7 +40,6 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
-import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.memory.DeleteFileFinalizeAction;
@@ -78,6 +84,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upload.UploadPortletRequestImpl;
@@ -230,6 +238,39 @@ public class EditInfoItemStrutsActionTest {
 	public void testEditInfoItemRoundedDoubleTooLong() throws Exception {
 		_testEditInfoItemDouble(
 			"999.99999999999991", "999.9999999999999", false);
+	}
+
+	@FeatureFlags({"LPS-183727", "LPS-187754"})
+	@Test
+	public void testEditInfoItemWithDisplayPageSuccessMessage()
+		throws Exception {
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				_group.getCreatorUserId(), _group.getGroupId(), 0,
+				_portal.getClassNameId(_objectDefinition.getClassName()), 0,
+				RandomTestUtil.randomString(),
+				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE, 0,
+				false, 0, 0, 0, WorkflowConstants.STATUS_APPROVED,
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		InfoItemFormProvider<?> infoItemFormProvider =
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemFormProvider.class, _objectDefinition.getClassName());
+
+		InfoForm infoForm = infoItemFormProvider.getInfoForm(
+			StringPool.BLANK, _group.getGroupId());
+
+		Assert.assertNotNull(infoForm);
+
+		InfoField infoField = infoForm.getInfoField(
+			layoutPageTemplateEntry.getName());
+
+		Assert.assertNotNull(infoField);
+
+		_testEditInfoItem(
+			null, null, null, null, infoField.getUniqueId(), null, null, false,
+			"123456", "123456", null, null, null, null);
 	}
 
 	@Test
@@ -646,6 +687,13 @@ public class EditInfoItemStrutsActionTest {
 				backURL, pipingServletResponse.getHeader("Location"));
 		}
 
+		if (Validator.isNotNull(displayPage)) {
+			String locationHeader = pipingServletResponse.getHeader("Location");
+
+			Assert.assertNotNull(locationHeader);
+			Assert.assertTrue(locationHeader.contains("/display-page/custom"));
+		}
+
 		if (doubleValueInput != null) {
 			DecimalFormat decimalFormat = new DecimalFormat(
 				"0", new DecimalFormatSymbols(LocaleUtil.ENGLISH));
@@ -747,10 +795,17 @@ public class EditInfoItemStrutsActionTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
+	@Inject
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
+
 	private Layout _layout;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;
+
+	@Inject
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
 
 	@Inject
 	private LayoutPageTemplateStructureLocalService
@@ -764,9 +819,6 @@ public class EditInfoItemStrutsActionTest {
 
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;
-
-	@Inject
-	private ObjectFieldLocalService _objectFieldLocalService;
 
 	@Inject
 	private ObjectFieldSettingLocalService _objectFieldSettingLocalService;

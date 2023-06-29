@@ -615,15 +615,42 @@ definition {
 				siteName = ${randomSiteName});
 		}
 
-		task ("When the page designer adds a fragment to page") {
-			PageEditor.addFragment(
-				collectionName = "Basic Components",
-				fragmentName = "Button");
+		task ("When the page designer adds a fragment with intercept requests") {
+			var map = MapUtil.newHashMap();
+
+			ExecuteCDPCommand(
+				value1 = "Fetch.enable",
+				value2 = ${map});
+
+			Navigator.gotoNavTab(navTab = "Fragments");
+
+			PageEditor.expandFragmentCollection(collectionName = "Basic Components");
+
+			DragAndDrop.javaScriptDragAndDropToObject(
+				key_collectionName = "Basic Components",
+				key_fragmentName = "Button",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
+				locator2 = "PageEditor#FRAGMENT_DROP_TARGET");
+		}
+
+		task ("Then the page designer see the styles of loading icon") {
+			MouseOver.javaScriptFocus(locator1 = "//span[@aria-label='Saving'][contains(@class,'loading-animation')]");
+
+			AssertVisible(
+				key_content = "Saving",
+				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+		}
+
+		task ("When the page designer forwards the request") {
+			var map = MapUtil.newHashMap();
+
+			ExecuteCDPCommand(
+				value1 = "Fetch.disable",
+				value2 = ${map});
 		}
 
 		task ("Then the page designer sees the styles of autosave icon") {
-
-			// View the tooltip for saving status wait for POSHI-464 implemented
+			PageEditor.waitForAutoSave();
 
 			MouseOver.javaScriptFocus(locator1 = "//*[name()='svg'][contains(@class,'lexicon-icon-check-circle')]");
 

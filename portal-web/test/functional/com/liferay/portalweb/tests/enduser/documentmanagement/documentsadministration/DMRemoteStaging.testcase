@@ -317,9 +317,7 @@ definition {
 
 		DMDocument.editFriendlyURL(friendlyURLEdit = "custom-url");
 
-		Navigator.gotoSitePage(
-			pageName = "Staging DM Page",
-			siteName = "Site Name");
+		ProductMenu.gotoStagingSite(site = "Site Name");
 
 		Staging.gotoPublishToLive();
 

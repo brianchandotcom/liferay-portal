@@ -31,6 +31,7 @@ export default function App({
 	propertiesViewURL,
 	script: initialScript = '',
 	showCacheableWarning = false,
+	showTemplateWarning = false,
 	showPropertiesPanel = false,
 	templateVariableGroups = [],
 }) {
@@ -50,6 +51,13 @@ export default function App({
 						'ddm_template_editor__App-content--sidebar-open': selectedSidebarPanelId,
 					})}
 				>
+					<ClosableAlert
+						message={Liferay.Language.get(
+							'this-template-does-not-belong-to-this-site.-you-may-affect-other-sites-if-you-edit-this-template'
+						)}
+						visible={showTemplateWarning}
+					/>
+
 					<ClosableAlert
 						id={`${portletNamespace}-cacheableWarningMessage`}
 						message={Liferay.Language.get(

@@ -133,7 +133,8 @@ public class JournalEditDDMTemplateDisplayContext {
 		return _ddmTemplate;
 	}
 
-	public HashMap<String, Object> getDDMTemplateEditorContext()
+	public HashMap<String, Object> getDDMTemplateEditorContext(
+			long scopeGroupId)
 		throws Exception {
 
 		return HashMapBuilder.<String, Object>put(
@@ -166,6 +167,9 @@ public class JournalEditDDMTemplateDisplayContext {
 
 				return false;
 			}
+		).put(
+			"showTemplateWarning",
+			(_ddmTemplate != null) && (getGroupId() != scopeGroupId)
 		).put(
 			"templateVariableGroups", getTemplateVariableGroupJSONArray()
 		).build();

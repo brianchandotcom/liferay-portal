@@ -67,12 +67,6 @@ renderResponse.setTitle(journalEditDDMTemplateDisplayContext.getTitle());
 		</clay:container-fluid>
 	</nav>
 
-	<c:if test="<%= (ddmTemplate != null) && (journalEditDDMTemplateDisplayContext.getGroupId() != scopeGroupId) %>">
-		<div class="alert alert-warning">
-			<liferay-ui:message key="this-template-does-not-belong-to-this-site.-you-may-affect-other-sites-if-you-edit-this-template" />
-		</div>
-	</c:if>
-
 	<div>
 		<div id="<portlet:namespace />ddmTemplateEditor">
 			<div class="inline-item my-5 p-5 w-100">
@@ -82,7 +76,7 @@ renderResponse.setTitle(journalEditDDMTemplateDisplayContext.getTitle());
 			<react:component
 				componentId="ddmTemplateEditor"
 				module="ddm_template_editor/components/TemplateEditor"
-				props="<%= journalEditDDMTemplateDisplayContext.getDDMTemplateEditorContext() %>"
+				props="<%= journalEditDDMTemplateDisplayContext.getDDMTemplateEditorContext(scopeGroupId) %>"
 			/>
 		</div>
 	</div>

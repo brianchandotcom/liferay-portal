@@ -49,7 +49,6 @@ import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -373,7 +372,7 @@ public class BreadcrumbUtil {
 				httpServletRequest, themeDisplay.getLocale());
 
 			if (Validator.isNotNull(infoItemName)) {
-				layoutName = HtmlUtil.escape(infoItemName);
+				layoutName = infoItemName;
 			}
 		}
 
@@ -415,16 +414,14 @@ public class BreadcrumbUtil {
 				infoItemFieldValues.getInfoFieldValue("title");
 
 			if (titleInfoFieldValue != null) {
-				return HtmlUtil.escape(
-					String.valueOf(titleInfoFieldValue.getValue(locale)));
+				return String.valueOf(titleInfoFieldValue.getValue(locale));
 			}
 
 			InfoFieldValue<Object> nameInfoFieldValue =
 				infoItemFieldValues.getInfoFieldValue("name");
 
 			if (nameInfoFieldValue != null) {
-				return HtmlUtil.escape(
-					String.valueOf(nameInfoFieldValue.getValue(locale)));
+				return String.valueOf(nameInfoFieldValue.getValue(locale));
 			}
 		}
 
@@ -432,7 +429,7 @@ public class BreadcrumbUtil {
 			WebKeys.LAYOUT_ASSET_ENTRY);
 
 		if (assetEntry != null) {
-			return HtmlUtil.escape(assetEntry.getTitle(locale));
+			return assetEntry.getTitle(locale);
 		}
 
 		return StringPool.BLANK;

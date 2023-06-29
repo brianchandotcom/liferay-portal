@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -405,18 +404,17 @@ public class StructuredContentResourceTest
 			));
 		Assert.assertEquals(
 			1,
-			GetterUtil.getInteger(
-				structuredContentsJSONObject.getJSONArray(
-					"facets"
-				).getJSONObject(
-					0
-				).getJSONArray(
-					"facetValues"
-				).getJSONObject(
-					0
-				).getString(
-					"numberOfOccurrences"
-				)));
+			structuredContentsJSONObject.getJSONArray(
+				"facets"
+			).getJSONObject(
+				0
+			).getJSONArray(
+				"facetValues"
+			).getJSONObject(
+				0
+			).getInt(
+				"numberOfOccurrences"
+			));
 		Assert.assertEquals(
 			structuredContent1.getId(),
 			Long.valueOf(
@@ -434,18 +432,17 @@ public class StructuredContentResourceTest
 
 		Assert.assertEquals(
 			1,
-			GetterUtil.getInteger(
-				structuredContentsJSONObject.getJSONArray(
-					"facets"
-				).getJSONObject(
-					0
-				).getJSONArray(
-					"facetValues"
-				).getJSONObject(
-					1
-				).getString(
-					"numberOfOccurrences"
-				)));
+			structuredContentsJSONObject.getJSONArray(
+				"facets"
+			).getJSONObject(
+				0
+			).getJSONArray(
+				"facetValues"
+			).getJSONObject(
+				1
+			).getInt(
+				"numberOfOccurrences"
+			));
 		Assert.assertEquals(
 			structuredContent2.getId(),
 			Long.valueOf(

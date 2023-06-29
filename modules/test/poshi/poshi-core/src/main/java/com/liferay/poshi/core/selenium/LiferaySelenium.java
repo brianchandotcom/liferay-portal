@@ -279,6 +279,8 @@ public interface LiferaySelenium {
 
 	public boolean isEditable(String locator) throws Exception;
 
+	public boolean isElementFocused(String locator) throws Exception;
+
 	public boolean isElementNotPresent(String locator) throws Exception;
 
 	public boolean isElementPresent(String locator) throws Exception;

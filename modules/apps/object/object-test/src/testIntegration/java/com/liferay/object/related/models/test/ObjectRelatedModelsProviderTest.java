@@ -1124,6 +1124,9 @@ public class ObjectRelatedModelsProviderTest {
 			() -> _objectEntryLocalService.deleteObjectEntry(objectEntry3));
 
 		_assertGetRelatedModels(objectEntry3.getObjectEntryId(), 1);
+
+		_objectRelationshipLocalService.deleteObjectRelationship(
+			_objectRelationship);
 	}
 
 	private ObjectEntry _updateObjectEntry(

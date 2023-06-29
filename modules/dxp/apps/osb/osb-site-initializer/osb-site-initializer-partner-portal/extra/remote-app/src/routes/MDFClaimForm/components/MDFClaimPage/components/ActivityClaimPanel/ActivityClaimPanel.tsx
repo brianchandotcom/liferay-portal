@@ -13,27 +13,39 @@ import ClayIcon from '@clayui/icon';
 import Link from '@clayui/link';
 import ClayPanel from '@clayui/panel';
 import {FormikContextType} from 'formik';
-import {useCallback, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 
 import PRMForm from '../../../../../../common/components/PRMForm';
-import InputMultipleFilesListing from '../../../../../../common/components/PRMForm/components/fields/InputMultipleFilesListing';
 import PRMFormik from '../../../../../../common/components/PRMFormik';
+import {TypeActivityKey} from '../../../../../../common/enums/TypeActivityKey';
 import LiferayFile from '../../../../../../common/interfaces/liferayFile';
 import MDFClaim from '../../../../../../common/interfaces/mdfClaim';
 import MDFClaimActivity from '../../../../../../common/interfaces/mdfClaimActivity';
 import {Liferay} from '../../../../../../common/services/liferay';
 import {Status} from '../../../../../../common/utils/constants/status';
+import {getFileFromLiferayDocument} from '../../../../../../common/utils/dto/mdf-claim/getFileFromLiferayDocument';
 import getIntlNumberFormat from '../../../../../../common/utils/getIntlNumberFormat';
+import uploadDocument from '../../../../utils/uploadDocument';
 import BudgetClaimPanel from './components/BudgetClaimPanel';
+import ContentMarketingPopFields from './components/ContentMarketingPopFields';
+import DigitalMarketingPopFields from './components/DigitalMarketingPopFields';
+import EventPopFields from './components/EventPopFields';
+import MiscellaneousMarketingPopFields from './components/MiscellaneousMarketingPopFields';
 import PanelBody from './components/PanelBody';
 import PanelHeader from './components/PanelHeader';
 import useBudgetsAmount from './hooks/useBudgetsAmount';
 
 interface IProps {
 	activity: MDFClaimActivity;
+	activityErrors: any;
 	activityIndex: number;
+	claimParentFolderId: number;
 	overallCampaignDescription: string;
 }
+
+type TypeActivityComponent = {
+	[key in string]?: JSX.Element;
+};
 
 const ActivityStatus = {
 	ACTIVE: 'active',
@@ -58,11 +70,14 @@ const activityClaimStatusClassName = {
 
 const ActivityClaimPanel = ({
 	activity,
+	activityErrors,
 	activityIndex,
+	claimParentFolderId,
 	overallCampaignDescription,
 	setFieldValue,
 }: IProps & Pick<FormikContextType<MDFClaim>, 'setFieldValue'>) => {
 	const [expanded, setExpanded] = useState<boolean>(!activity.selected);
+
 	const siteURL = Liferay.ThemeDisplay.getLayoutRelativeControlPanelURL().split(
 		'/'
 	)[2];
@@ -78,10 +93,81 @@ const ActivityClaimPanel = ({
 			[activityIndex, setFieldValue]
 		)
 	);
+	console.log(
+		Boolean(
+			activity.listOfQualifiedLeads &&
+				!activity.listOfQualifiedLeads.documentId &&
+				!activityErrors.listOfQualifiedLeads
+		)
+	);
+
+	useEffect(() => {
+		if (
+			activity.listOfQualifiedLeads &&
+			!activity.listOfQualifiedLeads.documentId &&
+			!activityErrors.listOfQualifiedLeads
+		) {
+			const setValue = async () => {
+				const uploadedLiferayDocument = await uploadDocument(
+					activity.listOfQualifiedLeads as LiferayFile,
+					claimParentFolderId
+				);
+
+				if (uploadedLiferayDocument) {
+					setFieldValue(
+						`activities[${activityIndex}].listOfQualifiedLeads`,
+						getFileFromLiferayDocument(uploadedLiferayDocument),
+						false
+					);
+				}
+			};
+
+			setValue();
+		}
+	}, [
+		activity.listOfQualifiedLeads,
+		activityErrors?.listOfQualifiedLeads,
+		activityIndex,
+		claimParentFolderId,
+		setFieldValue,
+	]);
+
 	const displayActivityClaimCheckbox =
-		(activity.activityStatus?.key !== Status.EXPIRED.key &&
+		((activity.activityStatus?.key === Status.APPROVED.key ||
+			activity.activityStatus?.key === Status.ACTIVE.key) &&
 			!activity.claimed) ||
 		(activity.id && activity.selected);
+
+	const typeActivityComponents: TypeActivityComponent = {
+		[TypeActivityKey.DIGITAL_MARKETING]: (
+			<DigitalMarketingPopFields
+				activity={activity}
+				claimParentFolderId={claimParentFolderId}
+				currentActivityIndex={activityIndex}
+			/>
+		),
+		[TypeActivityKey.CONTENT_MARKETING]: (
+			<ContentMarketingPopFields
+				activity={activity}
+				claimParentFolderId={claimParentFolderId}
+				currentActivityIndex={activityIndex}
+			/>
+		),
+		[TypeActivityKey.EVENT]: (
+			<EventPopFields
+				activity={activity}
+				claimParentFolderId={claimParentFolderId}
+				currentActivityIndex={activityIndex}
+			/>
+		),
+		[TypeActivityKey.MISCELLANEOUS_MARKETING]: (
+			<MiscellaneousMarketingPopFields
+				activity={activity}
+				claimParentFolderId={claimParentFolderId}
+				currentActivityIndex={activityIndex}
+			/>
+		),
+	};
 
 	return (
 		<>
@@ -177,17 +263,11 @@ const ActivityClaimPanel = ({
 								activityIndex={activityIndex}
 								budget={budget}
 								budgetIndex={index}
+								claimParentFolderId={claimParentFolderId}
 								key={`${budget.id}-${index}`}
 								setFieldValue={setFieldValue}
 							/>
 						))}
-
-						<PRMFormik.Field
-							component={PRMForm.InputText}
-							label="Metrics"
-							name={`activities[${activityIndex}].metrics`}
-							textArea
-						/>
 
 						<div className="align-items-center d-flex justify-content-between">
 							<PRMFormik.Field
@@ -196,12 +276,12 @@ const ActivityClaimPanel = ({
 								displayType="secondary"
 								label="List of Qualified Leads"
 								name={`activities[${activityIndex}].listOfQualifiedLeads`}
-								onAccept={(value: File) =>
+								onAccept={(value: LiferayFile) => {
 									setFieldValue(
 										`activities[${activityIndex}].listOfQualifiedLeads`,
 										value
-									)
-								}
+									);
+								}}
 								outline
 								small
 							/>
@@ -223,22 +303,11 @@ const ActivityClaimPanel = ({
 							</div>
 						</div>
 
-						<InputMultipleFilesListing
-							description="Drag and drop your files here to upload."
-							label="All Contents"
-							name={`activities[${activityIndex}].allContents`}
-							onAccept={(value: File[]) =>
-								setFieldValue(
-									`activities[${activityIndex}].allContents`,
-									activity.allContents
-										? activity.allContents.concat(
-												value as LiferayFile[]
-										  )
-										: value
-								)
-							}
-							value={activity.allContents}
-						/>
+						{
+							typeActivityComponents[
+								String(activity.typeActivity?.key) || ''
+							]
+						}
 					</ClayPanel.Body>
 				</PanelBody>
 			</ClayPanel>

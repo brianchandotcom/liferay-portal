@@ -29,15 +29,18 @@ import ActivityClaimPanel from './components/ActivityClaimPanel';
 import useActivitiesAmount from './hooks/useActivitiesAmount';
 
 interface IProps {
+	claimParentFolderId: number;
 	mdfRequest: MDFRequestDTO;
 }
 
 const MDFClaimPage = ({
+	claimParentFolderId,
 	mdfRequest,
 	onCancel,
 	onSaveAsDraft,
 }: PRMFormikPageProps & MDFClaimProps & IProps) => {
 	const {
+		errors,
 		isSubmitting,
 		isValid,
 		setFieldValue,
@@ -146,7 +149,9 @@ const MDFClaimPage = ({
 					{values.activities?.map((activity, index) => (
 						<ActivityClaimPanel
 							activity={activity}
+							activityErrors={errors.activities?.[index]}
 							activityIndex={index}
+							claimParentFolderId={claimParentFolderId}
 							key={`${activity.id}-${index}`}
 							overallCampaignDescription={
 								mdfRequest.overallCampaignDescription

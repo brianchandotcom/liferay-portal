@@ -151,7 +151,6 @@ const MDFClaimForm = () => {
 					values,
 					formikHelpers,
 					mdfRequest,
-					claimParentFolderId,
 					siteURL,
 					Status.PENDING,
 					mdfClaimId
@@ -165,6 +164,7 @@ const MDFClaimForm = () => {
 			}
 		>
 			<MDFClaimPage
+				claimParentFolderId={claimParentFolderId}
 				mdfRequest={mdfRequest}
 				onCancel={onCancel}
 				onSaveAsDraft={(values, formikHelpers) =>
@@ -172,7 +172,6 @@ const MDFClaimForm = () => {
 						values,
 						formikHelpers,
 						mdfRequest,
-						claimParentFolderId,
 						siteURL,
 						Status.DRAFT,
 						mdfClaimId

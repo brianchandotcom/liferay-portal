@@ -15,8 +15,11 @@ import {useState} from 'react';
 
 import PRMForm from '../../../../../../../../common/components/PRMForm';
 import PRMFormik from '../../../../../../../../common/components/PRMFormik';
+import LiferayFile from '../../../../../../../../common/interfaces/liferayFile';
 import MDFClaim from '../../../../../../../../common/interfaces/mdfClaim';
 import MDFClaimBudget from '../../../../../../../../common/interfaces/mdfClaimBudget';
+import {getFileFromLiferayDocument} from '../../../../../../../../common/utils/dto/mdf-claim/getFileFromLiferayDocument';
+import uploadDocument from '../../../../../../utils/uploadDocument';
 import PanelBody from '../PanelBody';
 import PanelHeader from '../PanelHeader';
 
@@ -24,12 +27,14 @@ interface IProps {
 	activityIndex: number;
 	budget: MDFClaimBudget;
 	budgetIndex: number;
+	claimParentFolderId: number;
 }
 
 const BudgetClaimPanel = ({
 	activityIndex,
 	budget,
 	budgetIndex,
+	claimParentFolderId,
 	setFieldValue,
 }: IProps & Pick<FormikContextType<MDFClaim>, 'setFieldValue'>) => {
 	const [expanded, setExpanded] = useState<boolean>(!budget.selected);
@@ -83,12 +88,21 @@ const BudgetClaimPanel = ({
 							displayType="secondary"
 							label="Third Party Invoice"
 							name={`${budgetFieldName}.invoice`}
-							onAccept={(value: File) =>
-								setFieldValue(
-									`${budgetFieldName}.invoice`,
-									value
-								)
-							}
+							onAccept={async (value: LiferayFile) => {
+								const uploadedLiferayDocument = await uploadDocument(
+									value,
+									claimParentFolderId
+								);
+
+								if (uploadedLiferayDocument) {
+									setFieldValue(
+										`${budgetFieldName}.invoice`,
+										getFileFromLiferayDocument(
+											uploadedLiferayDocument
+										)
+									);
+								}
+							}}
 							outline
 							required={budget.selected}
 							small

@@ -14,7 +14,6 @@
 
 package com.liferay.asset.tags.item.selector.web.internal;
 
-import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.tags.item.selector.AssetTagsItemSelectorReturnType;
 import com.liferay.asset.tags.item.selector.criterion.AssetTagsItemSelectorCriterion;
 import com.liferay.asset.tags.item.selector.web.internal.display.context.AssetTagsDisplayContext;
@@ -101,9 +100,6 @@ public class AssetTagsItemSelectorView
 	private static final List<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Collections.singletonList(
 			new AssetTagsItemSelectorReturnType());
-
-	@Reference
-	private AssetTagLocalService _assetTagLocalService;
 
 	@Reference
 	private ItemSelector _itemSelector;

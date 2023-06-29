@@ -453,6 +453,15 @@ public abstract class BaseTermOrderTypeResourceImpl
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<TermOrderType>,
+			 UnsafeFunction<TermOrderType, TermOrderType, Exception>, Exception>
+				contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
+	}
+
 	public void setContextBatchUnsafeConsumer(
 		UnsafeBiConsumer
 			<Collection<TermOrderType>,
@@ -712,6 +721,10 @@ public abstract class BaseTermOrderTypeResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<TermOrderType>,
+		 UnsafeFunction<TermOrderType, TermOrderType, Exception>, Exception>
+			contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<TermOrderType>, UnsafeConsumer<TermOrderType, Exception>,
 		 Exception> contextBatchUnsafeConsumer;

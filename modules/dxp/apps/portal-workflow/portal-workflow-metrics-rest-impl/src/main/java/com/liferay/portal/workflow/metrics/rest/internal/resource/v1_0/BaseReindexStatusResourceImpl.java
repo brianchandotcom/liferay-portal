@@ -251,6 +251,15 @@ public abstract class BaseReindexStatusResourceImpl
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<ReindexStatus>,
+			 UnsafeFunction<ReindexStatus, ReindexStatus, Exception>, Exception>
+				contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
+	}
+
 	public void setContextBatchUnsafeConsumer(
 		UnsafeBiConsumer
 			<Collection<ReindexStatus>,
@@ -510,6 +519,10 @@ public abstract class BaseReindexStatusResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<ReindexStatus>,
+		 UnsafeFunction<ReindexStatus, ReindexStatus, Exception>, Exception>
+			contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<ReindexStatus>, UnsafeConsumer<ReindexStatus, Exception>,
 		 Exception> contextBatchUnsafeConsumer;

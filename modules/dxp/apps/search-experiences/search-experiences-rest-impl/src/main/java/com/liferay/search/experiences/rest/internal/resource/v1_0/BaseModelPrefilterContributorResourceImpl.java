@@ -258,6 +258,17 @@ public abstract class BaseModelPrefilterContributorResourceImpl
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<ModelPrefilterContributor>,
+			 UnsafeFunction
+				 <ModelPrefilterContributor, ModelPrefilterContributor,
+				  Exception>,
+			 Exception> contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
+	}
+
 	public void setContextBatchUnsafeConsumer(
 		UnsafeBiConsumer
 			<Collection<ModelPrefilterContributor>,
@@ -517,6 +528,11 @@ public abstract class BaseModelPrefilterContributorResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<ModelPrefilterContributor>,
+		 UnsafeFunction
+			 <ModelPrefilterContributor, ModelPrefilterContributor, Exception>,
+		 Exception> contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<ModelPrefilterContributor>,
 		 UnsafeConsumer<ModelPrefilterContributor, Exception>, Exception>

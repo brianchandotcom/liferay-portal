@@ -376,6 +376,15 @@ public abstract class BaseWishListItemResourceImpl
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<WishListItem>,
+			 UnsafeFunction<WishListItem, WishListItem, Exception>, Exception>
+				contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
+	}
+
 	public void setContextBatchUnsafeConsumer(
 		UnsafeBiConsumer
 			<Collection<WishListItem>, UnsafeConsumer<WishListItem, Exception>,
@@ -634,6 +643,10 @@ public abstract class BaseWishListItemResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<WishListItem>,
+		 UnsafeFunction<WishListItem, WishListItem, Exception>, Exception>
+			contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<WishListItem>, UnsafeConsumer<WishListItem, Exception>,
 		 Exception> contextBatchUnsafeConsumer;

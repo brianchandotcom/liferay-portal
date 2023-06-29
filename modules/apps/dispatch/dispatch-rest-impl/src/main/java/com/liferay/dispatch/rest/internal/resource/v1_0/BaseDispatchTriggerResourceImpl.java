@@ -264,30 +264,34 @@ public abstract class BaseDispatchTriggerResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<DispatchTrigger, Exception>
-			dispatchTriggerUnsafeConsumer = null;
+		UnsafeFunction<DispatchTrigger, DispatchTrigger, Exception>
+			dispatchTriggerUnsafeFunction = null;
 
 		String createStrategy = (String)parameters.getOrDefault(
 			"createStrategy", "INSERT");
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
-			dispatchTriggerUnsafeConsumer =
+			dispatchTriggerUnsafeFunction =
 				dispatchTrigger -> postDispatchTrigger(dispatchTrigger);
 		}
 
-		if (dispatchTriggerUnsafeConsumer == null) {
+		if (dispatchTriggerUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
 					"\" is not supported for DispatchTrigger");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				dispatchTriggers, dispatchTriggerUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				dispatchTriggers, dispatchTriggerUnsafeConsumer);
+				dispatchTriggers, dispatchTriggerUnsafeFunction::apply);
 		}
 		else {
 			for (DispatchTrigger dispatchTrigger : dispatchTriggers) {
-				dispatchTriggerUnsafeConsumer.accept(dispatchTrigger);
+				dispatchTriggerUnsafeFunction.apply(dispatchTrigger);
 			}
 		}
 	}
@@ -372,6 +376,15 @@ public abstract class BaseDispatchTriggerResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<DispatchTrigger>,
+			 UnsafeFunction<DispatchTrigger, DispatchTrigger, Exception>,
+			 Exception> contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -633,6 +646,10 @@ public abstract class BaseDispatchTriggerResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<DispatchTrigger>,
+		 UnsafeFunction<DispatchTrigger, DispatchTrigger, Exception>, Exception>
+			contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<DispatchTrigger>,
 		 UnsafeConsumer<DispatchTrigger, Exception>, Exception>

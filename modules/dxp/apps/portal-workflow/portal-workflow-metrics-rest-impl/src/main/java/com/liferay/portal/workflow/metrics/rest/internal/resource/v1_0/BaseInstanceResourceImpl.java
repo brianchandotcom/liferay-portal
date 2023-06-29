@@ -536,14 +536,15 @@ public abstract class BaseInstanceResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<Instance, Exception> instanceUnsafeConsumer = null;
+		UnsafeFunction<Instance, Instance, Exception> instanceUnsafeFunction =
+			null;
 
 		String createStrategy = (String)parameters.getOrDefault(
 			"createStrategy", "INSERT");
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
 			if (parameters.containsKey("processId")) {
-				instanceUnsafeConsumer = instance -> postProcessInstance(
+				instanceUnsafeFunction = instance -> postProcessInstance(
 					_parseLong((String)parameters.get("processId")), instance);
 			}
 			else {
@@ -552,19 +553,23 @@ public abstract class BaseInstanceResourceImpl
 			}
 		}
 
-		if (instanceUnsafeConsumer == null) {
+		if (instanceUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
 					"\" is not supported for Instance");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				instances, instanceUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				instances, instanceUnsafeConsumer);
+				instances, instanceUnsafeFunction::apply);
 		}
 		else {
 			for (Instance instance : instances) {
-				instanceUnsafeConsumer.accept(instance);
+				instanceUnsafeFunction.apply(instance);
 			}
 		}
 	}
@@ -679,6 +684,15 @@ public abstract class BaseInstanceResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<Instance>,
+			 UnsafeFunction<Instance, Instance, Exception>, Exception>
+				contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -939,6 +953,9 @@ public abstract class BaseInstanceResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<Instance>, UnsafeFunction<Instance, Instance, Exception>,
+		 Exception> contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<Instance>, UnsafeConsumer<Instance, Exception>, Exception>
 			contextBatchUnsafeConsumer;

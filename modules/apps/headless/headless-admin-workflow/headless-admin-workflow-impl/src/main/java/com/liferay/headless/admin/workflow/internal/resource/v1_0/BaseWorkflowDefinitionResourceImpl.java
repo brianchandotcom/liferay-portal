@@ -631,31 +631,35 @@ public abstract class BaseWorkflowDefinitionResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<WorkflowDefinition, Exception>
-			workflowDefinitionUnsafeConsumer = null;
+		UnsafeFunction<WorkflowDefinition, WorkflowDefinition, Exception>
+			workflowDefinitionUnsafeFunction = null;
 
 		String createStrategy = (String)parameters.getOrDefault(
 			"createStrategy", "INSERT");
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
-			workflowDefinitionUnsafeConsumer =
+			workflowDefinitionUnsafeFunction =
 				workflowDefinition -> postWorkflowDefinition(
 					workflowDefinition);
 		}
 
-		if (workflowDefinitionUnsafeConsumer == null) {
+		if (workflowDefinitionUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
 					"\" is not supported for WorkflowDefinition");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				workflowDefinitions, workflowDefinitionUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				workflowDefinitions, workflowDefinitionUnsafeConsumer);
+				workflowDefinitions, workflowDefinitionUnsafeFunction::apply);
 		}
 		else {
 			for (WorkflowDefinition workflowDefinition : workflowDefinitions) {
-				workflowDefinitionUnsafeConsumer.accept(workflowDefinition);
+				workflowDefinitionUnsafeFunction.apply(workflowDefinition);
 			}
 		}
 	}
@@ -736,14 +740,14 @@ public abstract class BaseWorkflowDefinitionResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<WorkflowDefinition, Exception>
-			workflowDefinitionUnsafeConsumer = null;
+		UnsafeFunction<WorkflowDefinition, WorkflowDefinition, Exception>
+			workflowDefinitionUnsafeFunction = null;
 
 		String updateStrategy = (String)parameters.getOrDefault(
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-			workflowDefinitionUnsafeConsumer =
+			workflowDefinitionUnsafeFunction =
 				workflowDefinition -> putWorkflowDefinition(
 					workflowDefinition.getId() != null ?
 						workflowDefinition.getId() :
@@ -752,19 +756,23 @@ public abstract class BaseWorkflowDefinitionResourceImpl
 					workflowDefinition);
 		}
 
-		if (workflowDefinitionUnsafeConsumer == null) {
+		if (workflowDefinitionUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Update strategy \"" + updateStrategy +
 					"\" is not supported for WorkflowDefinition");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				workflowDefinitions, workflowDefinitionUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				workflowDefinitions, workflowDefinitionUnsafeConsumer);
+				workflowDefinitions, workflowDefinitionUnsafeFunction::apply);
 		}
 		else {
 			for (WorkflowDefinition workflowDefinition : workflowDefinitions) {
-				workflowDefinitionUnsafeConsumer.accept(workflowDefinition);
+				workflowDefinitionUnsafeFunction.apply(workflowDefinition);
 			}
 		}
 	}
@@ -787,6 +795,15 @@ public abstract class BaseWorkflowDefinitionResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<WorkflowDefinition>,
+			 UnsafeFunction<WorkflowDefinition, WorkflowDefinition, Exception>,
+			 Exception> contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -1048,6 +1065,10 @@ public abstract class BaseWorkflowDefinitionResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<WorkflowDefinition>,
+		 UnsafeFunction<WorkflowDefinition, WorkflowDefinition, Exception>,
+		 Exception> contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<WorkflowDefinition>,
 		 UnsafeConsumer<WorkflowDefinition, Exception>, Exception>

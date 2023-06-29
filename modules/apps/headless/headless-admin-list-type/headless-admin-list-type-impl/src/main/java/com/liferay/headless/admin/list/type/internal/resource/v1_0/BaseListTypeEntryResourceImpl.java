@@ -627,15 +627,15 @@ public abstract class BaseListTypeEntryResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<ListTypeEntry, Exception> listTypeEntryUnsafeConsumer =
-			null;
+		UnsafeFunction<ListTypeEntry, ListTypeEntry, Exception>
+			listTypeEntryUnsafeFunction = null;
 
 		String createStrategy = (String)parameters.getOrDefault(
 			"createStrategy", "INSERT");
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
 			if (parameters.containsKey("listTypeDefinitionId")) {
-				listTypeEntryUnsafeConsumer =
+				listTypeEntryUnsafeFunction =
 					listTypeEntry -> postListTypeDefinitionListTypeEntry(
 						_parseLong(
 							(String)parameters.get("listTypeDefinitionId")),
@@ -647,19 +647,23 @@ public abstract class BaseListTypeEntryResourceImpl
 			}
 		}
 
-		if (listTypeEntryUnsafeConsumer == null) {
+		if (listTypeEntryUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
 					"\" is not supported for ListTypeEntry");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				listTypeEntries, listTypeEntryUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				listTypeEntries, listTypeEntryUnsafeConsumer);
+				listTypeEntries, listTypeEntryUnsafeFunction::apply);
 		}
 		else {
 			for (ListTypeEntry listTypeEntry : listTypeEntries) {
-				listTypeEntryUnsafeConsumer.accept(listTypeEntry);
+				listTypeEntryUnsafeFunction.apply(listTypeEntry);
 			}
 		}
 	}
@@ -747,32 +751,36 @@ public abstract class BaseListTypeEntryResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<ListTypeEntry, Exception> listTypeEntryUnsafeConsumer =
-			null;
+		UnsafeFunction<ListTypeEntry, ListTypeEntry, Exception>
+			listTypeEntryUnsafeFunction = null;
 
 		String updateStrategy = (String)parameters.getOrDefault(
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-			listTypeEntryUnsafeConsumer = listTypeEntry -> putListTypeEntry(
+			listTypeEntryUnsafeFunction = listTypeEntry -> putListTypeEntry(
 				listTypeEntry.getId() != null ? listTypeEntry.getId() :
 					_parseLong((String)parameters.get("listTypeEntryId")),
 				listTypeEntry);
 		}
 
-		if (listTypeEntryUnsafeConsumer == null) {
+		if (listTypeEntryUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Update strategy \"" + updateStrategy +
 					"\" is not supported for ListTypeEntry");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				listTypeEntries, listTypeEntryUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				listTypeEntries, listTypeEntryUnsafeConsumer);
+				listTypeEntries, listTypeEntryUnsafeFunction::apply);
 		}
 		else {
 			for (ListTypeEntry listTypeEntry : listTypeEntries) {
-				listTypeEntryUnsafeConsumer.accept(listTypeEntry);
+				listTypeEntryUnsafeFunction.apply(listTypeEntry);
 			}
 		}
 	}
@@ -787,6 +795,15 @@ public abstract class BaseListTypeEntryResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<ListTypeEntry>,
+			 UnsafeFunction<ListTypeEntry, ListTypeEntry, Exception>, Exception>
+				contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -1048,6 +1065,10 @@ public abstract class BaseListTypeEntryResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<ListTypeEntry>,
+		 UnsafeFunction<ListTypeEntry, ListTypeEntry, Exception>, Exception>
+			contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<ListTypeEntry>, UnsafeConsumer<ListTypeEntry, Exception>,
 		 Exception> contextBatchUnsafeConsumer;

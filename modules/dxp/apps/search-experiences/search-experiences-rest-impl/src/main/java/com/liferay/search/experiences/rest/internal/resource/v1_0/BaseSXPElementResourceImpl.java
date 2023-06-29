@@ -582,13 +582,14 @@ public abstract class BaseSXPElementResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<SXPElement, Exception> sxpElementUnsafeConsumer = null;
+		UnsafeFunction<SXPElement, SXPElement, Exception>
+			sxpElementUnsafeFunction = null;
 
 		String createStrategy = (String)parameters.getOrDefault(
 			"createStrategy", "INSERT");
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
-			sxpElementUnsafeConsumer = sxpElement -> postSXPElement(sxpElement);
+			sxpElementUnsafeFunction = sxpElement -> postSXPElement(sxpElement);
 		}
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "UPSERT")) {
@@ -596,13 +597,15 @@ public abstract class BaseSXPElementResourceImpl
 				"updateStrategy", "UPDATE");
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-				sxpElementUnsafeConsumer = sxpElement -> {
+				sxpElementUnsafeFunction = sxpElement -> {
+					SXPElement persistedSXPElement = null;
+
 					try {
 						SXPElement getSXPElement =
 							getSXPElementByExternalReferenceCode(
 								sxpElement.getExternalReferenceCode());
 
-						patchSXPElement(
+						persistedSXPElement = patchSXPElement(
 							getSXPElement.getId() != null ?
 								getSXPElement.getId() :
 									_parseLong(
@@ -610,25 +613,31 @@ public abstract class BaseSXPElementResourceImpl
 							sxpElement);
 					}
 					catch (NoSuchModelException noSuchModelException) {
-						postSXPElement(sxpElement);
+						persistedSXPElement = postSXPElement(sxpElement);
 					}
+
+					return persistedSXPElement;
 				};
 			}
 		}
 
-		if (sxpElementUnsafeConsumer == null) {
+		if (sxpElementUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
 					"\" is not supported for SxpElement");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				sxpElements, sxpElementUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				sxpElements, sxpElementUnsafeConsumer);
+				sxpElements, sxpElementUnsafeFunction::apply);
 		}
 		else {
 			for (SXPElement sxpElement : sxpElements) {
-				sxpElementUnsafeConsumer.accept(sxpElement);
+				sxpElementUnsafeFunction.apply(sxpElement);
 			}
 		}
 	}
@@ -708,31 +717,36 @@ public abstract class BaseSXPElementResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<SXPElement, Exception> sxpElementUnsafeConsumer = null;
+		UnsafeFunction<SXPElement, SXPElement, Exception>
+			sxpElementUnsafeFunction = null;
 
 		String updateStrategy = (String)parameters.getOrDefault(
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-			sxpElementUnsafeConsumer = sxpElement -> patchSXPElement(
+			sxpElementUnsafeFunction = sxpElement -> patchSXPElement(
 				sxpElement.getId() != null ? sxpElement.getId() :
 					_parseLong((String)parameters.get("sxpElementId")),
 				sxpElement);
 		}
 
-		if (sxpElementUnsafeConsumer == null) {
+		if (sxpElementUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Update strategy \"" + updateStrategy +
 					"\" is not supported for SxpElement");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				sxpElements, sxpElementUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				sxpElements, sxpElementUnsafeConsumer);
+				sxpElements, sxpElementUnsafeFunction::apply);
 		}
 		else {
 			for (SXPElement sxpElement : sxpElements) {
-				sxpElementUnsafeConsumer.accept(sxpElement);
+				sxpElementUnsafeFunction.apply(sxpElement);
 			}
 		}
 	}
@@ -747,6 +761,15 @@ public abstract class BaseSXPElementResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<SXPElement>,
+			 UnsafeFunction<SXPElement, SXPElement, Exception>, Exception>
+				contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -1007,6 +1030,10 @@ public abstract class BaseSXPElementResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<SXPElement>,
+		 UnsafeFunction<SXPElement, SXPElement, Exception>, Exception>
+			contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<SXPElement>, UnsafeConsumer<SXPElement, Exception>,
 		 Exception> contextBatchUnsafeConsumer;

@@ -576,15 +576,16 @@ public abstract class BaseKnowledgeBaseAttachmentResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<KnowledgeBaseAttachment, Exception>
-			knowledgeBaseAttachmentUnsafeConsumer = null;
+		UnsafeFunction
+			<KnowledgeBaseAttachment, KnowledgeBaseAttachment, Exception>
+				knowledgeBaseAttachmentUnsafeFunction = null;
 
 		String createStrategy = (String)parameters.getOrDefault(
 			"createStrategy", "INSERT");
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
 			if (parameters.containsKey("knowledgeBaseArticleId")) {
-				knowledgeBaseAttachmentUnsafeConsumer =
+				knowledgeBaseAttachmentUnsafeFunction =
 					knowledgeBaseAttachment ->
 						postKnowledgeBaseArticleKnowledgeBaseAttachment(
 							_parseLong(
@@ -598,22 +599,27 @@ public abstract class BaseKnowledgeBaseAttachmentResourceImpl
 			}
 		}
 
-		if (knowledgeBaseAttachmentUnsafeConsumer == null) {
+		if (knowledgeBaseAttachmentUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
 					"\" is not supported for KnowledgeBaseAttachment");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				knowledgeBaseAttachments,
+				knowledgeBaseAttachmentUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
 				knowledgeBaseAttachments,
-				knowledgeBaseAttachmentUnsafeConsumer);
+				knowledgeBaseAttachmentUnsafeFunction::apply);
 		}
 		else {
 			for (KnowledgeBaseAttachment knowledgeBaseAttachment :
 					knowledgeBaseAttachments) {
 
-				knowledgeBaseAttachmentUnsafeConsumer.accept(
+				knowledgeBaseAttachmentUnsafeFunction.apply(
 					knowledgeBaseAttachment);
 			}
 		}
@@ -717,6 +723,16 @@ public abstract class BaseKnowledgeBaseAttachmentResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<KnowledgeBaseAttachment>,
+			 UnsafeFunction
+				 <KnowledgeBaseAttachment, KnowledgeBaseAttachment, Exception>,
+			 Exception> contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -978,6 +994,11 @@ public abstract class BaseKnowledgeBaseAttachmentResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<KnowledgeBaseAttachment>,
+		 UnsafeFunction
+			 <KnowledgeBaseAttachment, KnowledgeBaseAttachment, Exception>,
+		 Exception> contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<KnowledgeBaseAttachment>,
 		 UnsafeConsumer<KnowledgeBaseAttachment, Exception>, Exception>

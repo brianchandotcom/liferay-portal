@@ -250,6 +250,15 @@ public abstract class BaseTransitionResourceImpl
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<Transition>,
+			 UnsafeFunction<Transition, Transition, Exception>, Exception>
+				contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
+	}
+
 	public void setContextBatchUnsafeConsumer(
 		UnsafeBiConsumer
 			<Collection<Transition>, UnsafeConsumer<Transition, Exception>,
@@ -508,6 +517,10 @@ public abstract class BaseTransitionResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<Transition>,
+		 UnsafeFunction<Transition, Transition, Exception>, Exception>
+			contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<Transition>, UnsafeConsumer<Transition, Exception>,
 		 Exception> contextBatchUnsafeConsumer;

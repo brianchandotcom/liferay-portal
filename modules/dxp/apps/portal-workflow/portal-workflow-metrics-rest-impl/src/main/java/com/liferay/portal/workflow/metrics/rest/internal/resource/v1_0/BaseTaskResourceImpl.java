@@ -451,14 +451,14 @@ public abstract class BaseTaskResourceImpl
 			Collection<Task> tasks, Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<Task, Exception> taskUnsafeConsumer = null;
+		UnsafeFunction<Task, Task, Exception> taskUnsafeFunction = null;
 
 		String createStrategy = (String)parameters.getOrDefault(
 			"createStrategy", "INSERT");
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
 			if (parameters.containsKey("processId")) {
-				taskUnsafeConsumer = task -> postProcessTask(
+				taskUnsafeFunction = task -> postProcessTask(
 					_parseLong((String)parameters.get("processId")), task);
 			}
 			else {
@@ -467,18 +467,21 @@ public abstract class BaseTaskResourceImpl
 			}
 		}
 
-		if (taskUnsafeConsumer == null) {
+		if (taskUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
 					"\" is not supported for Task");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
-			contextBatchUnsafeConsumer.accept(tasks, taskUnsafeConsumer);
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(tasks, taskUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(tasks, taskUnsafeFunction::apply);
 		}
 		else {
 			for (Task task : tasks) {
-				taskUnsafeConsumer.accept(task);
+				taskUnsafeFunction.apply(task);
 			}
 		}
 	}
@@ -576,6 +579,14 @@ public abstract class BaseTaskResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<Task>, UnsafeFunction<Task, Task, Exception>, Exception>
+				contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -836,6 +847,9 @@ public abstract class BaseTaskResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<Task>, UnsafeFunction<Task, Task, Exception>, Exception>
+			contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<Task>, UnsafeConsumer<Task, Exception>, Exception>
 			contextBatchUnsafeConsumer;

@@ -878,14 +878,14 @@ public abstract class BaseDataDefinitionResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<DataDefinition, Exception> dataDefinitionUnsafeConsumer =
-			null;
+		UnsafeFunction<DataDefinition, DataDefinition, Exception>
+			dataDefinitionUnsafeFunction = null;
 
 		String updateStrategy = (String)parameters.getOrDefault(
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-			dataDefinitionUnsafeConsumer =
+			dataDefinitionUnsafeFunction =
 				dataDefinition -> patchDataDefinition(
 					dataDefinition.getId() != null ? dataDefinition.getId() :
 						_parseLong((String)parameters.get("dataDefinitionId")),
@@ -893,25 +893,29 @@ public abstract class BaseDataDefinitionResourceImpl
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-			dataDefinitionUnsafeConsumer = dataDefinition -> putDataDefinition(
+			dataDefinitionUnsafeFunction = dataDefinition -> putDataDefinition(
 				dataDefinition.getId() != null ? dataDefinition.getId() :
 					_parseLong((String)parameters.get("dataDefinitionId")),
 				dataDefinition);
 		}
 
-		if (dataDefinitionUnsafeConsumer == null) {
+		if (dataDefinitionUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Update strategy \"" + updateStrategy +
 					"\" is not supported for DataDefinition");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				dataDefinitions, dataDefinitionUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				dataDefinitions, dataDefinitionUnsafeConsumer);
+				dataDefinitions, dataDefinitionUnsafeFunction::apply);
 		}
 		else {
 			for (DataDefinition dataDefinition : dataDefinitions) {
-				dataDefinitionUnsafeConsumer.accept(dataDefinition);
+				dataDefinitionUnsafeFunction.apply(dataDefinition);
 			}
 		}
 	}
@@ -1089,6 +1093,15 @@ public abstract class BaseDataDefinitionResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<DataDefinition>,
+			 UnsafeFunction<DataDefinition, DataDefinition, Exception>,
+			 Exception> contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -1354,6 +1367,10 @@ public abstract class BaseDataDefinitionResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<DataDefinition>,
+		 UnsafeFunction<DataDefinition, DataDefinition, Exception>, Exception>
+			contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<DataDefinition>, UnsafeConsumer<DataDefinition, Exception>,
 		 Exception> contextBatchUnsafeConsumer;

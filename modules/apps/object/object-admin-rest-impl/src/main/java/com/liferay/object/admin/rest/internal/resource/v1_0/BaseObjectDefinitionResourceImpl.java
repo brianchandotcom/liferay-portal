@@ -715,14 +715,14 @@ public abstract class BaseObjectDefinitionResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<ObjectDefinition, Exception>
-			objectDefinitionUnsafeConsumer = null;
+		UnsafeFunction<ObjectDefinition, ObjectDefinition, Exception>
+			objectDefinitionUnsafeFunction = null;
 
 		String createStrategy = (String)parameters.getOrDefault(
 			"createStrategy", "INSERT");
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
-			objectDefinitionUnsafeConsumer =
+			objectDefinitionUnsafeFunction =
 				objectDefinition -> postObjectDefinition(objectDefinition);
 		}
 
@@ -731,7 +731,7 @@ public abstract class BaseObjectDefinitionResourceImpl
 				"updateStrategy", "UPDATE");
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				objectDefinitionUnsafeConsumer =
+				objectDefinitionUnsafeFunction =
 					objectDefinition ->
 						putObjectDefinitionByExternalReferenceCode(
 							objectDefinition.getExternalReferenceCode(),
@@ -739,13 +739,15 @@ public abstract class BaseObjectDefinitionResourceImpl
 			}
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-				objectDefinitionUnsafeConsumer = objectDefinition -> {
+				objectDefinitionUnsafeFunction = objectDefinition -> {
+					ObjectDefinition persistedObjectDefinition = null;
+
 					try {
 						ObjectDefinition getObjectDefinition =
 							getObjectDefinitionByExternalReferenceCode(
 								objectDefinition.getExternalReferenceCode());
 
-						patchObjectDefinition(
+						persistedObjectDefinition = patchObjectDefinition(
 							getObjectDefinition.getId() != null ?
 								getObjectDefinition.getId() :
 									_parseLong(
@@ -754,25 +756,32 @@ public abstract class BaseObjectDefinitionResourceImpl
 							objectDefinition);
 					}
 					catch (NoSuchModelException noSuchModelException) {
-						postObjectDefinition(objectDefinition);
+						persistedObjectDefinition = postObjectDefinition(
+							objectDefinition);
 					}
+
+					return persistedObjectDefinition;
 				};
 			}
 		}
 
-		if (objectDefinitionUnsafeConsumer == null) {
+		if (objectDefinitionUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
 					"\" is not supported for ObjectDefinition");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				objectDefinitions, objectDefinitionUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				objectDefinitions, objectDefinitionUnsafeConsumer);
+				objectDefinitions, objectDefinitionUnsafeFunction::apply);
 		}
 		else {
 			for (ObjectDefinition objectDefinition : objectDefinitions) {
-				objectDefinitionUnsafeConsumer.accept(objectDefinition);
+				objectDefinitionUnsafeFunction.apply(objectDefinition);
 			}
 		}
 	}
@@ -853,14 +862,14 @@ public abstract class BaseObjectDefinitionResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<ObjectDefinition, Exception>
-			objectDefinitionUnsafeConsumer = null;
+		UnsafeFunction<ObjectDefinition, ObjectDefinition, Exception>
+			objectDefinitionUnsafeFunction = null;
 
 		String updateStrategy = (String)parameters.getOrDefault(
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-			objectDefinitionUnsafeConsumer =
+			objectDefinitionUnsafeFunction =
 				objectDefinition -> patchObjectDefinition(
 					objectDefinition.getId() != null ?
 						objectDefinition.getId() :
@@ -870,7 +879,7 @@ public abstract class BaseObjectDefinitionResourceImpl
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-			objectDefinitionUnsafeConsumer =
+			objectDefinitionUnsafeFunction =
 				objectDefinition -> putObjectDefinition(
 					objectDefinition.getId() != null ?
 						objectDefinition.getId() :
@@ -879,19 +888,23 @@ public abstract class BaseObjectDefinitionResourceImpl
 					objectDefinition);
 		}
 
-		if (objectDefinitionUnsafeConsumer == null) {
+		if (objectDefinitionUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Update strategy \"" + updateStrategy +
 					"\" is not supported for ObjectDefinition");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				objectDefinitions, objectDefinitionUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				objectDefinitions, objectDefinitionUnsafeConsumer);
+				objectDefinitions, objectDefinitionUnsafeFunction::apply);
 		}
 		else {
 			for (ObjectDefinition objectDefinition : objectDefinitions) {
-				objectDefinitionUnsafeConsumer.accept(objectDefinition);
+				objectDefinitionUnsafeFunction.apply(objectDefinition);
 			}
 		}
 	}
@@ -906,6 +919,15 @@ public abstract class BaseObjectDefinitionResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<ObjectDefinition>,
+			 UnsafeFunction<ObjectDefinition, ObjectDefinition, Exception>,
+			 Exception> contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -1172,6 +1194,10 @@ public abstract class BaseObjectDefinitionResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<ObjectDefinition>,
+		 UnsafeFunction<ObjectDefinition, ObjectDefinition, Exception>,
+		 Exception> contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<ObjectDefinition>,
 		 UnsafeConsumer<ObjectDefinition, Exception>, Exception>

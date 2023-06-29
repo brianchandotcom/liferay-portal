@@ -205,6 +205,17 @@ public abstract class BaseSearchableAssetNameDisplayResourceImpl
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<SearchableAssetNameDisplay>,
+			 UnsafeFunction
+				 <SearchableAssetNameDisplay, SearchableAssetNameDisplay,
+				  Exception>,
+			 Exception> contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
+	}
+
 	public void setContextBatchUnsafeConsumer(
 		UnsafeBiConsumer
 			<Collection<SearchableAssetNameDisplay>,
@@ -464,6 +475,12 @@ public abstract class BaseSearchableAssetNameDisplayResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<SearchableAssetNameDisplay>,
+		 UnsafeFunction
+			 <SearchableAssetNameDisplay, SearchableAssetNameDisplay,
+			  Exception>,
+		 Exception> contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<SearchableAssetNameDisplay>,
 		 UnsafeConsumer<SearchableAssetNameDisplay, Exception>, Exception>

@@ -193,30 +193,34 @@ public abstract class BaseSamlProviderResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<SamlProvider, Exception> samlProviderUnsafeConsumer =
-			null;
+		UnsafeFunction<SamlProvider, SamlProvider, Exception>
+			samlProviderUnsafeFunction = null;
 
 		String createStrategy = (String)parameters.getOrDefault(
 			"createStrategy", "INSERT");
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
-			samlProviderUnsafeConsumer = samlProvider -> postSamlProvider(
+			samlProviderUnsafeFunction = samlProvider -> postSamlProvider(
 				samlProvider);
 		}
 
-		if (samlProviderUnsafeConsumer == null) {
+		if (samlProviderUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
 					"\" is not supported for SamlProvider");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				samlProviders, samlProviderUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				samlProviders, samlProviderUnsafeConsumer);
+				samlProviders, samlProviderUnsafeFunction::apply);
 		}
 		else {
 			for (SamlProvider samlProvider : samlProviders) {
-				samlProviderUnsafeConsumer.accept(samlProvider);
+				samlProviderUnsafeFunction.apply(samlProvider);
 			}
 		}
 	}
@@ -296,36 +300,49 @@ public abstract class BaseSamlProviderResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<SamlProvider, Exception> samlProviderUnsafeConsumer =
-			null;
+		UnsafeFunction<SamlProvider, SamlProvider, Exception>
+			samlProviderUnsafeFunction = null;
 
 		String updateStrategy = (String)parameters.getOrDefault(
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-			samlProviderUnsafeConsumer = samlProvider -> patchSamlProvider(
+			samlProviderUnsafeFunction = samlProvider -> patchSamlProvider(
 				samlProvider);
 		}
 
-		if (samlProviderUnsafeConsumer == null) {
+		if (samlProviderUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Update strategy \"" + updateStrategy +
 					"\" is not supported for SamlProvider");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				samlProviders, samlProviderUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				samlProviders, samlProviderUnsafeConsumer);
+				samlProviders, samlProviderUnsafeFunction::apply);
 		}
 		else {
 			for (SamlProvider samlProvider : samlProviders) {
-				samlProviderUnsafeConsumer.accept(samlProvider);
+				samlProviderUnsafeFunction.apply(samlProvider);
 			}
 		}
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<SamlProvider>,
+			 UnsafeFunction<SamlProvider, SamlProvider, Exception>, Exception>
+				contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -586,6 +603,10 @@ public abstract class BaseSamlProviderResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<SamlProvider>,
+		 UnsafeFunction<SamlProvider, SamlProvider, Exception>, Exception>
+			contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<SamlProvider>, UnsafeConsumer<SamlProvider, Exception>,
 		 Exception> contextBatchUnsafeConsumer;

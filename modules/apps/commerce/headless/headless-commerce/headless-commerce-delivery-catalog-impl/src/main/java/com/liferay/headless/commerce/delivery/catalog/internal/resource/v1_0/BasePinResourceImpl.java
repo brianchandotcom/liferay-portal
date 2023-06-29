@@ -233,6 +233,14 @@ public abstract class BasePinResourceImpl
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<Pin>, UnsafeFunction<Pin, Pin, Exception>, Exception>
+				contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
+	}
+
 	public void setContextBatchUnsafeConsumer(
 		UnsafeBiConsumer
 			<Collection<Pin>, UnsafeConsumer<Pin, Exception>, Exception>
@@ -491,6 +499,9 @@ public abstract class BasePinResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<Pin>, UnsafeFunction<Pin, Pin, Exception>, Exception>
+			contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<Pin>, UnsafeConsumer<Pin, Exception>, Exception>
 			contextBatchUnsafeConsumer;

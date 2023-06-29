@@ -593,31 +593,40 @@ public abstract class BasePriceEntryResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<PriceEntry, Exception> priceEntryUnsafeConsumer = null;
+		UnsafeFunction<PriceEntry, PriceEntry, Exception>
+			priceEntryUnsafeFunction = null;
 
 		String updateStrategy = (String)parameters.getOrDefault(
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-			priceEntryUnsafeConsumer = priceEntry -> patchPriceEntry(
-				priceEntry.getId() != null ? priceEntry.getId() :
-					_parseLong((String)parameters.get("priceEntryId")),
-				priceEntry);
+			priceEntryUnsafeFunction = priceEntry -> {
+				patchPriceEntry(
+					priceEntry.getId() != null ? priceEntry.getId() :
+						_parseLong((String)parameters.get("priceEntryId")),
+					priceEntry);
+
+				return null;
+			};
 		}
 
-		if (priceEntryUnsafeConsumer == null) {
+		if (priceEntryUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Update strategy \"" + updateStrategy +
 					"\" is not supported for PriceEntry");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				priceEntries, priceEntryUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				priceEntries, priceEntryUnsafeConsumer);
+				priceEntries, priceEntryUnsafeFunction::apply);
 		}
 		else {
 			for (PriceEntry priceEntry : priceEntries) {
-				priceEntryUnsafeConsumer.accept(priceEntry);
+				priceEntryUnsafeFunction.apply(priceEntry);
 			}
 		}
 	}
@@ -632,6 +641,15 @@ public abstract class BasePriceEntryResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<PriceEntry>,
+			 UnsafeFunction<PriceEntry, PriceEntry, Exception>, Exception>
+				contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -892,6 +910,10 @@ public abstract class BasePriceEntryResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<PriceEntry>,
+		 UnsafeFunction<PriceEntry, PriceEntry, Exception>, Exception>
+			contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<PriceEntry>, UnsafeConsumer<PriceEntry, Exception>,
 		 Exception> contextBatchUnsafeConsumer;

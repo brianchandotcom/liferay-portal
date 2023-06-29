@@ -717,14 +717,14 @@ public abstract class BaseRegionResourceImpl
 			Collection<Region> regions, Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<Region, Exception> regionUnsafeConsumer = null;
+		UnsafeFunction<Region, Region, Exception> regionUnsafeFunction = null;
 
 		String createStrategy = (String)parameters.getOrDefault(
 			"createStrategy", "INSERT");
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
 			if (parameters.containsKey("countryId")) {
-				regionUnsafeConsumer = region -> postCountryRegion(
+				regionUnsafeFunction = region -> postCountryRegion(
 					_parseLong((String)parameters.get("countryId")), region);
 			}
 			else {
@@ -733,18 +733,22 @@ public abstract class BaseRegionResourceImpl
 			}
 		}
 
-		if (regionUnsafeConsumer == null) {
+		if (regionUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
 					"\" is not supported for Region");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
-			contextBatchUnsafeConsumer.accept(regions, regionUnsafeConsumer);
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(regions, regionUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				regions, regionUnsafeFunction::apply);
 		}
 		else {
 			for (Region region : regions) {
-				regionUnsafeConsumer.accept(region);
+				regionUnsafeFunction.apply(region);
 			}
 		}
 	}
@@ -832,37 +836,41 @@ public abstract class BaseRegionResourceImpl
 			Collection<Region> regions, Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<Region, Exception> regionUnsafeConsumer = null;
+		UnsafeFunction<Region, Region, Exception> regionUnsafeFunction = null;
 
 		String updateStrategy = (String)parameters.getOrDefault(
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-			regionUnsafeConsumer = region -> patchRegion(
+			regionUnsafeFunction = region -> patchRegion(
 				region.getId() != null ? region.getId() :
 					_parseLong((String)parameters.get("regionId")),
 				region);
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-			regionUnsafeConsumer = region -> putRegion(
+			regionUnsafeFunction = region -> putRegion(
 				region.getId() != null ? region.getId() :
 					_parseLong((String)parameters.get("regionId")),
 				region);
 		}
 
-		if (regionUnsafeConsumer == null) {
+		if (regionUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Update strategy \"" + updateStrategy +
 					"\" is not supported for Region");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
-			contextBatchUnsafeConsumer.accept(regions, regionUnsafeConsumer);
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(regions, regionUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				regions, regionUnsafeFunction::apply);
 		}
 		else {
 			for (Region region : regions) {
-				regionUnsafeConsumer.accept(region);
+				regionUnsafeFunction.apply(region);
 			}
 		}
 	}
@@ -885,6 +893,14 @@ public abstract class BaseRegionResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<Region>, UnsafeFunction<Region, Region, Exception>,
+			 Exception> contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -1148,6 +1164,9 @@ public abstract class BaseRegionResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<Region>, UnsafeFunction<Region, Region, Exception>,
+		 Exception> contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<Region>, UnsafeConsumer<Region, Exception>, Exception>
 			contextBatchUnsafeConsumer;

@@ -454,38 +454,46 @@ public abstract class BaseAvailabilityEstimateResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<AvailabilityEstimate, Exception>
-			availabilityEstimateUnsafeConsumer = null;
+		UnsafeFunction<AvailabilityEstimate, AvailabilityEstimate, Exception>
+			availabilityEstimateUnsafeFunction = null;
 
 		String updateStrategy = (String)parameters.getOrDefault(
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-			availabilityEstimateUnsafeConsumer =
-				availabilityEstimate -> putAvailabilityEstimate(
+			availabilityEstimateUnsafeFunction = availabilityEstimate -> {
+				putAvailabilityEstimate(
 					availabilityEstimate.getId() != null ?
 						availabilityEstimate.getId() :
 							_parseLong(
 								(String)parameters.get(
 									"availabilityEstimateId")),
 					availabilityEstimate);
+
+				return null;
+			};
 		}
 
-		if (availabilityEstimateUnsafeConsumer == null) {
+		if (availabilityEstimateUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Update strategy \"" + updateStrategy +
 					"\" is not supported for AvailabilityEstimate");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				availabilityEstimates, availabilityEstimateUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				availabilityEstimates, availabilityEstimateUnsafeConsumer);
+				availabilityEstimates,
+				availabilityEstimateUnsafeFunction::apply);
 		}
 		else {
 			for (AvailabilityEstimate availabilityEstimate :
 					availabilityEstimates) {
 
-				availabilityEstimateUnsafeConsumer.accept(availabilityEstimate);
+				availabilityEstimateUnsafeFunction.apply(availabilityEstimate);
 			}
 		}
 	}
@@ -500,6 +508,16 @@ public abstract class BaseAvailabilityEstimateResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<AvailabilityEstimate>,
+			 UnsafeFunction
+				 <AvailabilityEstimate, AvailabilityEstimate, Exception>,
+			 Exception> contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -761,6 +779,10 @@ public abstract class BaseAvailabilityEstimateResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<AvailabilityEstimate>,
+		 UnsafeFunction<AvailabilityEstimate, AvailabilityEstimate, Exception>,
+		 Exception> contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<AvailabilityEstimate>,
 		 UnsafeConsumer<AvailabilityEstimate, Exception>, Exception>

@@ -638,37 +638,40 @@ public abstract class BaseCartResourceImpl
 			Collection<Cart> carts, Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<Cart, Exception> cartUnsafeConsumer = null;
+		UnsafeFunction<Cart, Cart, Exception> cartUnsafeFunction = null;
 
 		String updateStrategy = (String)parameters.getOrDefault(
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-			cartUnsafeConsumer = cart -> patchCart(
+			cartUnsafeFunction = cart -> patchCart(
 				cart.getId() != null ? cart.getId() :
 					_parseLong((String)parameters.get("cartId")),
 				cart);
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-			cartUnsafeConsumer = cart -> putCart(
+			cartUnsafeFunction = cart -> putCart(
 				cart.getId() != null ? cart.getId() :
 					_parseLong((String)parameters.get("cartId")),
 				cart);
 		}
 
-		if (cartUnsafeConsumer == null) {
+		if (cartUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Update strategy \"" + updateStrategy +
 					"\" is not supported for Cart");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
-			contextBatchUnsafeConsumer.accept(carts, cartUnsafeConsumer);
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(carts, cartUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(carts, cartUnsafeFunction::apply);
 		}
 		else {
 			for (Cart cart : carts) {
-				cartUnsafeConsumer.accept(cart);
+				cartUnsafeFunction.apply(cart);
 			}
 		}
 	}
@@ -683,6 +686,14 @@ public abstract class BaseCartResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<Cart>, UnsafeFunction<Cart, Cart, Exception>, Exception>
+				contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -946,6 +957,9 @@ public abstract class BaseCartResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<Cart>, UnsafeFunction<Cart, Cart, Exception>, Exception>
+			contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<Cart>, UnsafeConsumer<Cart, Exception>, Exception>
 			contextBatchUnsafeConsumer;

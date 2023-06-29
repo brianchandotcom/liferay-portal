@@ -302,6 +302,15 @@ public abstract class BaseProductOptionValueResourceImpl
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<ProductOptionValue>,
+			 UnsafeFunction<ProductOptionValue, ProductOptionValue, Exception>,
+			 Exception> contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
+	}
+
 	public void setContextBatchUnsafeConsumer(
 		UnsafeBiConsumer
 			<Collection<ProductOptionValue>,
@@ -561,6 +570,10 @@ public abstract class BaseProductOptionValueResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<ProductOptionValue>,
+		 UnsafeFunction<ProductOptionValue, ProductOptionValue, Exception>,
+		 Exception> contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<ProductOptionValue>,
 		 UnsafeConsumer<ProductOptionValue, Exception>, Exception>

@@ -703,32 +703,40 @@ public abstract class BaseWarehouseItemResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<WarehouseItem, Exception> warehouseItemUnsafeConsumer =
-			null;
+		UnsafeFunction<WarehouseItem, WarehouseItem, Exception>
+			warehouseItemUnsafeFunction = null;
 
 		String updateStrategy = (String)parameters.getOrDefault(
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-			warehouseItemUnsafeConsumer = warehouseItem -> patchWarehouseItem(
-				warehouseItem.getId() != null ? warehouseItem.getId() :
-					_parseLong((String)parameters.get("warehouseItemId")),
-				warehouseItem);
+			warehouseItemUnsafeFunction = warehouseItem -> {
+				patchWarehouseItem(
+					warehouseItem.getId() != null ? warehouseItem.getId() :
+						_parseLong((String)parameters.get("warehouseItemId")),
+					warehouseItem);
+
+				return null;
+			};
 		}
 
-		if (warehouseItemUnsafeConsumer == null) {
+		if (warehouseItemUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Update strategy \"" + updateStrategy +
 					"\" is not supported for WarehouseItem");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				warehouseItems, warehouseItemUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				warehouseItems, warehouseItemUnsafeConsumer);
+				warehouseItems, warehouseItemUnsafeFunction::apply);
 		}
 		else {
 			for (WarehouseItem warehouseItem : warehouseItems) {
-				warehouseItemUnsafeConsumer.accept(warehouseItem);
+				warehouseItemUnsafeFunction.apply(warehouseItem);
 			}
 		}
 	}
@@ -743,6 +751,15 @@ public abstract class BaseWarehouseItemResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<WarehouseItem>,
+			 UnsafeFunction<WarehouseItem, WarehouseItem, Exception>, Exception>
+				contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -1004,6 +1021,10 @@ public abstract class BaseWarehouseItemResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<WarehouseItem>,
+		 UnsafeFunction<WarehouseItem, WarehouseItem, Exception>, Exception>
+			contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<WarehouseItem>, UnsafeConsumer<WarehouseItem, Exception>,
 		 Exception> contextBatchUnsafeConsumer;

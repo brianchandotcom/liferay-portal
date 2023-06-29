@@ -557,15 +557,15 @@ public abstract class BaseObjectLayoutResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<ObjectLayout, Exception> objectLayoutUnsafeConsumer =
-			null;
+		UnsafeFunction<ObjectLayout, ObjectLayout, Exception>
+			objectLayoutUnsafeFunction = null;
 
 		String createStrategy = (String)parameters.getOrDefault(
 			"createStrategy", "INSERT");
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
 			if (parameters.containsKey("objectDefinitionId")) {
-				objectLayoutUnsafeConsumer =
+				objectLayoutUnsafeFunction =
 					objectLayout -> postObjectDefinitionObjectLayout(
 						_parseLong(
 							(String)parameters.get("objectDefinitionId")),
@@ -577,19 +577,23 @@ public abstract class BaseObjectLayoutResourceImpl
 			}
 		}
 
-		if (objectLayoutUnsafeConsumer == null) {
+		if (objectLayoutUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
 					"\" is not supported for ObjectLayout");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				objectLayouts, objectLayoutUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				objectLayouts, objectLayoutUnsafeConsumer);
+				objectLayouts, objectLayoutUnsafeFunction::apply);
 		}
 		else {
 			for (ObjectLayout objectLayout : objectLayouts) {
-				objectLayoutUnsafeConsumer.accept(objectLayout);
+				objectLayoutUnsafeFunction.apply(objectLayout);
 			}
 		}
 	}
@@ -677,32 +681,36 @@ public abstract class BaseObjectLayoutResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<ObjectLayout, Exception> objectLayoutUnsafeConsumer =
-			null;
+		UnsafeFunction<ObjectLayout, ObjectLayout, Exception>
+			objectLayoutUnsafeFunction = null;
 
 		String updateStrategy = (String)parameters.getOrDefault(
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-			objectLayoutUnsafeConsumer = objectLayout -> putObjectLayout(
+			objectLayoutUnsafeFunction = objectLayout -> putObjectLayout(
 				objectLayout.getId() != null ? objectLayout.getId() :
 					_parseLong((String)parameters.get("objectLayoutId")),
 				objectLayout);
 		}
 
-		if (objectLayoutUnsafeConsumer == null) {
+		if (objectLayoutUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Update strategy \"" + updateStrategy +
 					"\" is not supported for ObjectLayout");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				objectLayouts, objectLayoutUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				objectLayouts, objectLayoutUnsafeConsumer);
+				objectLayouts, objectLayoutUnsafeFunction::apply);
 		}
 		else {
 			for (ObjectLayout objectLayout : objectLayouts) {
-				objectLayoutUnsafeConsumer.accept(objectLayout);
+				objectLayoutUnsafeFunction.apply(objectLayout);
 			}
 		}
 	}
@@ -717,6 +725,15 @@ public abstract class BaseObjectLayoutResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<ObjectLayout>,
+			 UnsafeFunction<ObjectLayout, ObjectLayout, Exception>, Exception>
+				contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -977,6 +994,10 @@ public abstract class BaseObjectLayoutResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<ObjectLayout>,
+		 UnsafeFunction<ObjectLayout, ObjectLayout, Exception>, Exception>
+			contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<ObjectLayout>, UnsafeConsumer<ObjectLayout, Exception>,
 		 Exception> contextBatchUnsafeConsumer;

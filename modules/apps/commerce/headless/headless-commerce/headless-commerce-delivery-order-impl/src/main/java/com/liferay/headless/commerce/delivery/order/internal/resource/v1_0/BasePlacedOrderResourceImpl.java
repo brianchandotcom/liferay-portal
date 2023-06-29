@@ -293,6 +293,15 @@ public abstract class BasePlacedOrderResourceImpl
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<PlacedOrder>,
+			 UnsafeFunction<PlacedOrder, PlacedOrder, Exception>, Exception>
+				contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
+	}
+
 	public void setContextBatchUnsafeConsumer(
 		UnsafeBiConsumer
 			<Collection<PlacedOrder>, UnsafeConsumer<PlacedOrder, Exception>,
@@ -551,6 +560,10 @@ public abstract class BasePlacedOrderResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<PlacedOrder>,
+		 UnsafeFunction<PlacedOrder, PlacedOrder, Exception>, Exception>
+			contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<PlacedOrder>, UnsafeConsumer<PlacedOrder, Exception>,
 		 Exception> contextBatchUnsafeConsumer;

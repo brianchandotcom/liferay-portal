@@ -465,6 +465,15 @@ public abstract class BaseDiscountOrderTypeResourceImpl
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<DiscountOrderType>,
+			 UnsafeFunction<DiscountOrderType, DiscountOrderType, Exception>,
+			 Exception> contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
+	}
+
 	public void setContextBatchUnsafeConsumer(
 		UnsafeBiConsumer
 			<Collection<DiscountOrderType>,
@@ -724,6 +733,10 @@ public abstract class BaseDiscountOrderTypeResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<DiscountOrderType>,
+		 UnsafeFunction<DiscountOrderType, DiscountOrderType, Exception>,
+		 Exception> contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<DiscountOrderType>,
 		 UnsafeConsumer<DiscountOrderType, Exception>, Exception>

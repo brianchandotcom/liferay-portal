@@ -278,6 +278,15 @@ public abstract class BaseAttachmentResourceImpl
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<Attachment>,
+			 UnsafeFunction<Attachment, Attachment, Exception>, Exception>
+				contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
+	}
+
 	public void setContextBatchUnsafeConsumer(
 		UnsafeBiConsumer
 			<Collection<Attachment>, UnsafeConsumer<Attachment, Exception>,
@@ -536,6 +545,10 @@ public abstract class BaseAttachmentResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<Attachment>,
+		 UnsafeFunction<Attachment, Attachment, Exception>, Exception>
+			contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<Attachment>, UnsafeConsumer<Attachment, Exception>,
 		 Exception> contextBatchUnsafeConsumer;

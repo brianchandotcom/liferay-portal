@@ -956,6 +956,15 @@ public abstract class BaseWorkflowTaskResourceImpl
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<WorkflowTask>,
+			 UnsafeFunction<WorkflowTask, WorkflowTask, Exception>, Exception>
+				contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
+	}
+
 	public void setContextBatchUnsafeConsumer(
 		UnsafeBiConsumer
 			<Collection<WorkflowTask>, UnsafeConsumer<WorkflowTask, Exception>,
@@ -1214,6 +1223,10 @@ public abstract class BaseWorkflowTaskResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<WorkflowTask>,
+		 UnsafeFunction<WorkflowTask, WorkflowTask, Exception>, Exception>
+			contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<WorkflowTask>, UnsafeConsumer<WorkflowTask, Exception>,
 		 Exception> contextBatchUnsafeConsumer;

@@ -512,15 +512,15 @@ public abstract class BaseDataListViewResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<DataListView, Exception> dataListViewUnsafeConsumer =
-			null;
+		UnsafeFunction<DataListView, DataListView, Exception>
+			dataListViewUnsafeFunction = null;
 
 		String createStrategy = (String)parameters.getOrDefault(
 			"createStrategy", "INSERT");
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
 			if (parameters.containsKey("dataDefinitionId")) {
-				dataListViewUnsafeConsumer =
+				dataListViewUnsafeFunction =
 					dataListView -> postDataDefinitionDataListView(
 						_parseLong((String)parameters.get("dataDefinitionId")),
 						dataListView);
@@ -531,19 +531,23 @@ public abstract class BaseDataListViewResourceImpl
 			}
 		}
 
-		if (dataListViewUnsafeConsumer == null) {
+		if (dataListViewUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
 					"\" is not supported for DataListView");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				dataListViews, dataListViewUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				dataListViews, dataListViewUnsafeConsumer);
+				dataListViews, dataListViewUnsafeFunction::apply);
 		}
 		else {
 			for (DataListView dataListView : dataListViews) {
-				dataListViewUnsafeConsumer.accept(dataListView);
+				dataListViewUnsafeFunction.apply(dataListView);
 			}
 		}
 	}
@@ -631,32 +635,36 @@ public abstract class BaseDataListViewResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<DataListView, Exception> dataListViewUnsafeConsumer =
-			null;
+		UnsafeFunction<DataListView, DataListView, Exception>
+			dataListViewUnsafeFunction = null;
 
 		String updateStrategy = (String)parameters.getOrDefault(
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-			dataListViewUnsafeConsumer = dataListView -> putDataListView(
+			dataListViewUnsafeFunction = dataListView -> putDataListView(
 				dataListView.getId() != null ? dataListView.getId() :
 					_parseLong((String)parameters.get("dataListViewId")),
 				dataListView);
 		}
 
-		if (dataListViewUnsafeConsumer == null) {
+		if (dataListViewUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Update strategy \"" + updateStrategy +
 					"\" is not supported for DataListView");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				dataListViews, dataListViewUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				dataListViews, dataListViewUnsafeConsumer);
+				dataListViews, dataListViewUnsafeFunction::apply);
 		}
 		else {
 			for (DataListView dataListView : dataListViews) {
-				dataListViewUnsafeConsumer.accept(dataListView);
+				dataListViewUnsafeFunction.apply(dataListView);
 			}
 		}
 	}
@@ -671,6 +679,15 @@ public abstract class BaseDataListViewResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<DataListView>,
+			 UnsafeFunction<DataListView, DataListView, Exception>, Exception>
+				contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -931,6 +948,10 @@ public abstract class BaseDataListViewResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<DataListView>,
+		 UnsafeFunction<DataListView, DataListView, Exception>, Exception>
+			contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<DataListView>, UnsafeConsumer<DataListView, Exception>,
 		 Exception> contextBatchUnsafeConsumer;

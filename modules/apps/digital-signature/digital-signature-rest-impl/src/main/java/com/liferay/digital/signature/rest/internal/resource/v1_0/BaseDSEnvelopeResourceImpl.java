@@ -317,14 +317,15 @@ public abstract class BaseDSEnvelopeResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<DSEnvelope, Exception> dsEnvelopeUnsafeConsumer = null;
+		UnsafeFunction<DSEnvelope, DSEnvelope, Exception>
+			dsEnvelopeUnsafeFunction = null;
 
 		String createStrategy = (String)parameters.getOrDefault(
 			"createStrategy", "INSERT");
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
 			if (parameters.containsKey("siteId")) {
-				dsEnvelopeUnsafeConsumer = dsEnvelope -> postSiteDSEnvelope(
+				dsEnvelopeUnsafeFunction = dsEnvelope -> postSiteDSEnvelope(
 					(Long)parameters.get("siteId"), dsEnvelope);
 			}
 			else {
@@ -333,19 +334,23 @@ public abstract class BaseDSEnvelopeResourceImpl
 			}
 		}
 
-		if (dsEnvelopeUnsafeConsumer == null) {
+		if (dsEnvelopeUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
 					"\" is not supported for DsEnvelope");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				dsEnvelopes, dsEnvelopeUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				dsEnvelopes, dsEnvelopeUnsafeConsumer);
+				dsEnvelopes, dsEnvelopeUnsafeFunction::apply);
 		}
 		else {
 			for (DSEnvelope dsEnvelope : dsEnvelopes) {
-				dsEnvelopeUnsafeConsumer.accept(dsEnvelope);
+				dsEnvelopeUnsafeFunction.apply(dsEnvelope);
 			}
 		}
 	}
@@ -437,6 +442,15 @@ public abstract class BaseDSEnvelopeResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<DSEnvelope>,
+			 UnsafeFunction<DSEnvelope, DSEnvelope, Exception>, Exception>
+				contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -697,6 +711,10 @@ public abstract class BaseDSEnvelopeResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<DSEnvelope>,
+		 UnsafeFunction<DSEnvelope, DSEnvelope, Exception>, Exception>
+			contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<DSEnvelope>, UnsafeConsumer<DSEnvelope, Exception>,
 		 Exception> contextBatchUnsafeConsumer;

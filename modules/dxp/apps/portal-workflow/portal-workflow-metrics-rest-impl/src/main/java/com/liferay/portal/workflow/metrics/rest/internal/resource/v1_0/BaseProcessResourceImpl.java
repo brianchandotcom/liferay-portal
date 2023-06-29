@@ -353,27 +353,33 @@ public abstract class BaseProcessResourceImpl
 			Collection<Process> processes, Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<Process, Exception> processUnsafeConsumer = null;
+		UnsafeFunction<Process, Process, Exception> processUnsafeFunction =
+			null;
 
 		String createStrategy = (String)parameters.getOrDefault(
 			"createStrategy", "INSERT");
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
-			processUnsafeConsumer = process -> postProcess(process);
+			processUnsafeFunction = process -> postProcess(process);
 		}
 
-		if (processUnsafeConsumer == null) {
+		if (processUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
 					"\" is not supported for Process");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
-			contextBatchUnsafeConsumer.accept(processes, processUnsafeConsumer);
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				processes, processUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				processes, processUnsafeFunction::apply);
 		}
 		else {
 			for (Process process : processes) {
-				processUnsafeConsumer.accept(process);
+				processUnsafeFunction.apply(process);
 			}
 		}
 	}
@@ -452,30 +458,40 @@ public abstract class BaseProcessResourceImpl
 			Collection<Process> processes, Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<Process, Exception> processUnsafeConsumer = null;
+		UnsafeFunction<Process, Process, Exception> processUnsafeFunction =
+			null;
 
 		String updateStrategy = (String)parameters.getOrDefault(
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-			processUnsafeConsumer = process -> putProcess(
-				process.getId() != null ? process.getId() :
-					_parseLong((String)parameters.get("processId")),
-				process);
+			processUnsafeFunction = process -> {
+				putProcess(
+					process.getId() != null ? process.getId() :
+						_parseLong((String)parameters.get("processId")),
+					process);
+
+				return null;
+			};
 		}
 
-		if (processUnsafeConsumer == null) {
+		if (processUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Update strategy \"" + updateStrategy +
 					"\" is not supported for Process");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
-			contextBatchUnsafeConsumer.accept(processes, processUnsafeConsumer);
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				processes, processUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				processes, processUnsafeFunction::apply);
 		}
 		else {
 			for (Process process : processes) {
-				processUnsafeConsumer.accept(process);
+				processUnsafeFunction.apply(process);
 			}
 		}
 	}
@@ -490,6 +506,14 @@ public abstract class BaseProcessResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<Process>, UnsafeFunction<Process, Process, Exception>,
+			 Exception> contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -750,6 +774,9 @@ public abstract class BaseProcessResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<Process>, UnsafeFunction<Process, Process, Exception>,
+		 Exception> contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<Process>, UnsafeConsumer<Process, Exception>, Exception>
 			contextBatchUnsafeConsumer;

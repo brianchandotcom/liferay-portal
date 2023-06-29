@@ -626,14 +626,15 @@ public abstract class BaseSitePageResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<SitePage, Exception> sitePageUnsafeConsumer = null;
+		UnsafeFunction<SitePage, SitePage, Exception> sitePageUnsafeFunction =
+			null;
 
 		String createStrategy = (String)parameters.getOrDefault(
 			"createStrategy", "INSERT");
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
 			if (parameters.containsKey("siteId")) {
-				sitePageUnsafeConsumer = sitePage -> postSiteSitePage(
+				sitePageUnsafeFunction = sitePage -> postSiteSitePage(
 					(Long)parameters.get("siteId"), sitePage);
 			}
 			else {
@@ -642,19 +643,23 @@ public abstract class BaseSitePageResourceImpl
 			}
 		}
 
-		if (sitePageUnsafeConsumer == null) {
+		if (sitePageUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
 					"\" is not supported for SitePage");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				sitePages, sitePageUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				sitePages, sitePageUnsafeConsumer);
+				sitePages, sitePageUnsafeFunction::apply);
 		}
 		else {
 			for (SitePage sitePage : sitePages) {
-				sitePageUnsafeConsumer.accept(sitePage);
+				sitePageUnsafeFunction.apply(sitePage);
 			}
 		}
 	}
@@ -747,6 +752,15 @@ public abstract class BaseSitePageResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<SitePage>,
+			 UnsafeFunction<SitePage, SitePage, Exception>, Exception>
+				contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -1007,6 +1021,9 @@ public abstract class BaseSitePageResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<SitePage>, UnsafeFunction<SitePage, SitePage, Exception>,
+		 Exception> contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<SitePage>, UnsafeConsumer<SitePage, Exception>, Exception>
 			contextBatchUnsafeConsumer;

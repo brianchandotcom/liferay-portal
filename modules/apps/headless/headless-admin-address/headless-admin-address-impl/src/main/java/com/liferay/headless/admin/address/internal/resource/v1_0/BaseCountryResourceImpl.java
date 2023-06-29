@@ -659,27 +659,33 @@ public abstract class BaseCountryResourceImpl
 			Collection<Country> countries, Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<Country, Exception> countryUnsafeConsumer = null;
+		UnsafeFunction<Country, Country, Exception> countryUnsafeFunction =
+			null;
 
 		String createStrategy = (String)parameters.getOrDefault(
 			"createStrategy", "INSERT");
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
-			countryUnsafeConsumer = country -> postCountry(country);
+			countryUnsafeFunction = country -> postCountry(country);
 		}
 
-		if (countryUnsafeConsumer == null) {
+		if (countryUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
 					"\" is not supported for Country");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
-			contextBatchUnsafeConsumer.accept(countries, countryUnsafeConsumer);
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				countries, countryUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				countries, countryUnsafeFunction::apply);
 		}
 		else {
 			for (Country country : countries) {
-				countryUnsafeConsumer.accept(country);
+				countryUnsafeFunction.apply(country);
 			}
 		}
 	}
@@ -759,37 +765,43 @@ public abstract class BaseCountryResourceImpl
 			Collection<Country> countries, Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<Country, Exception> countryUnsafeConsumer = null;
+		UnsafeFunction<Country, Country, Exception> countryUnsafeFunction =
+			null;
 
 		String updateStrategy = (String)parameters.getOrDefault(
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-			countryUnsafeConsumer = country -> patchCountry(
+			countryUnsafeFunction = country -> patchCountry(
 				country.getId() != null ? country.getId() :
 					_parseLong((String)parameters.get("countryId")),
 				country);
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-			countryUnsafeConsumer = country -> putCountry(
+			countryUnsafeFunction = country -> putCountry(
 				country.getId() != null ? country.getId() :
 					_parseLong((String)parameters.get("countryId")),
 				country);
 		}
 
-		if (countryUnsafeConsumer == null) {
+		if (countryUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Update strategy \"" + updateStrategy +
 					"\" is not supported for Country");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
-			contextBatchUnsafeConsumer.accept(countries, countryUnsafeConsumer);
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				countries, countryUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				countries, countryUnsafeFunction::apply);
 		}
 		else {
 			for (Country country : countries) {
-				countryUnsafeConsumer.accept(country);
+				countryUnsafeFunction.apply(country);
 			}
 		}
 	}
@@ -812,6 +824,14 @@ public abstract class BaseCountryResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<Country>, UnsafeFunction<Country, Country, Exception>,
+			 Exception> contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -1075,6 +1095,9 @@ public abstract class BaseCountryResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<Country>, UnsafeFunction<Country, Country, Exception>,
+		 Exception> contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<Country>, UnsafeConsumer<Country, Exception>, Exception>
 			contextBatchUnsafeConsumer;

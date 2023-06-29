@@ -2528,6 +2528,16 @@ public abstract class BaseAccountChannelEntryResourceImpl
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<AccountChannelEntry>,
+			 UnsafeFunction
+				 <AccountChannelEntry, AccountChannelEntry, Exception>,
+			 Exception> contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
+	}
+
 	public void setContextBatchUnsafeConsumer(
 		UnsafeBiConsumer
 			<Collection<AccountChannelEntry>,
@@ -2787,6 +2797,10 @@ public abstract class BaseAccountChannelEntryResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<AccountChannelEntry>,
+		 UnsafeFunction<AccountChannelEntry, AccountChannelEntry, Exception>,
+		 Exception> contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<AccountChannelEntry>,
 		 UnsafeConsumer<AccountChannelEntry, Exception>, Exception>

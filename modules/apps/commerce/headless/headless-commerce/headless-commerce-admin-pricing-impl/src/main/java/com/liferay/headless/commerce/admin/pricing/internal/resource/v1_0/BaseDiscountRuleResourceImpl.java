@@ -492,32 +492,40 @@ public abstract class BaseDiscountRuleResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<DiscountRule, Exception> discountRuleUnsafeConsumer =
-			null;
+		UnsafeFunction<DiscountRule, DiscountRule, Exception>
+			discountRuleUnsafeFunction = null;
 
 		String updateStrategy = (String)parameters.getOrDefault(
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-			discountRuleUnsafeConsumer = discountRule -> patchDiscountRule(
-				discountRule.getId() != null ? discountRule.getId() :
-					_parseLong((String)parameters.get("discountRuleId")),
-				discountRule);
+			discountRuleUnsafeFunction = discountRule -> {
+				patchDiscountRule(
+					discountRule.getId() != null ? discountRule.getId() :
+						_parseLong((String)parameters.get("discountRuleId")),
+					discountRule);
+
+				return null;
+			};
 		}
 
-		if (discountRuleUnsafeConsumer == null) {
+		if (discountRuleUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Update strategy \"" + updateStrategy +
 					"\" is not supported for DiscountRule");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				discountRules, discountRuleUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				discountRules, discountRuleUnsafeConsumer);
+				discountRules, discountRuleUnsafeFunction::apply);
 		}
 		else {
 			for (DiscountRule discountRule : discountRules) {
-				discountRuleUnsafeConsumer.accept(discountRule);
+				discountRuleUnsafeFunction.apply(discountRule);
 			}
 		}
 	}
@@ -532,6 +540,15 @@ public abstract class BaseDiscountRuleResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<DiscountRule>,
+			 UnsafeFunction<DiscountRule, DiscountRule, Exception>, Exception>
+				contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -792,6 +809,10 @@ public abstract class BaseDiscountRuleResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<DiscountRule>,
+		 UnsafeFunction<DiscountRule, DiscountRule, Exception>, Exception>
+			contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<DiscountRule>, UnsafeConsumer<DiscountRule, Exception>,
 		 Exception> contextBatchUnsafeConsumer;

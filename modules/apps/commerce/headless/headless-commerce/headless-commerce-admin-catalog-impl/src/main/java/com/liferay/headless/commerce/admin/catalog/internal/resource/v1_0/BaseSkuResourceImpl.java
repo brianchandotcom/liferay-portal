@@ -704,30 +704,33 @@ public abstract class BaseSkuResourceImpl
 			Collection<Sku> skus, Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<Sku, Exception> skuUnsafeConsumer = null;
+		UnsafeFunction<Sku, Sku, Exception> skuUnsafeFunction = null;
 
 		String updateStrategy = (String)parameters.getOrDefault(
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-			skuUnsafeConsumer = sku -> patchSku(
+			skuUnsafeFunction = sku -> patchSku(
 				sku.getId() != null ? sku.getId() :
 					_parseLong((String)parameters.get("skuId")),
 				sku);
 		}
 
-		if (skuUnsafeConsumer == null) {
+		if (skuUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Update strategy \"" + updateStrategy +
 					"\" is not supported for Sku");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
-			contextBatchUnsafeConsumer.accept(skus, skuUnsafeConsumer);
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(skus, skuUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(skus, skuUnsafeFunction::apply);
 		}
 		else {
 			for (Sku sku : skus) {
-				skuUnsafeConsumer.accept(sku);
+				skuUnsafeFunction.apply(sku);
 			}
 		}
 	}
@@ -742,6 +745,14 @@ public abstract class BaseSkuResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<Sku>, UnsafeFunction<Sku, Sku, Exception>, Exception>
+				contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -1002,6 +1013,9 @@ public abstract class BaseSkuResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<Sku>, UnsafeFunction<Sku, Sku, Exception>, Exception>
+			contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<Sku>, UnsafeConsumer<Sku, Exception>, Exception>
 			contextBatchUnsafeConsumer;

@@ -477,28 +477,33 @@ public abstract class BaseDiscountResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<Discount, Exception> discountUnsafeConsumer = null;
+		UnsafeFunction<Discount, Discount, Exception> discountUnsafeFunction =
+			null;
 
 		String createStrategy = (String)parameters.getOrDefault(
 			"createStrategy", "INSERT");
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
-			discountUnsafeConsumer = discount -> postDiscount(discount);
+			discountUnsafeFunction = discount -> postDiscount(discount);
 		}
 
-		if (discountUnsafeConsumer == null) {
+		if (discountUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
 					"\" is not supported for Discount");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				discounts, discountUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				discounts, discountUnsafeConsumer);
+				discounts, discountUnsafeFunction::apply);
 		}
 		else {
 			for (Discount discount : discounts) {
-				discountUnsafeConsumer.accept(discount);
+				discountUnsafeFunction.apply(discount);
 			}
 		}
 	}
@@ -578,31 +583,40 @@ public abstract class BaseDiscountResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<Discount, Exception> discountUnsafeConsumer = null;
+		UnsafeFunction<Discount, Discount, Exception> discountUnsafeFunction =
+			null;
 
 		String updateStrategy = (String)parameters.getOrDefault(
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-			discountUnsafeConsumer = discount -> patchDiscount(
-				discount.getId() != null ? discount.getId() :
-					_parseLong((String)parameters.get("discountId")),
-				discount);
+			discountUnsafeFunction = discount -> {
+				patchDiscount(
+					discount.getId() != null ? discount.getId() :
+						_parseLong((String)parameters.get("discountId")),
+					discount);
+
+				return null;
+			};
 		}
 
-		if (discountUnsafeConsumer == null) {
+		if (discountUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Update strategy \"" + updateStrategy +
 					"\" is not supported for Discount");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				discounts, discountUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				discounts, discountUnsafeConsumer);
+				discounts, discountUnsafeFunction::apply);
 		}
 		else {
 			for (Discount discount : discounts) {
-				discountUnsafeConsumer.accept(discount);
+				discountUnsafeFunction.apply(discount);
 			}
 		}
 	}
@@ -617,6 +631,15 @@ public abstract class BaseDiscountResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<Discount>,
+			 UnsafeFunction<Discount, Discount, Exception>, Exception>
+				contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -877,6 +900,9 @@ public abstract class BaseDiscountResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<Discount>, UnsafeFunction<Discount, Discount, Exception>,
+		 Exception> contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<Discount>, UnsafeConsumer<Discount, Exception>, Exception>
 			contextBatchUnsafeConsumer;

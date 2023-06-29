@@ -246,6 +246,15 @@ public abstract class BaseCalendarResourceImpl
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<Calendar>,
+			 UnsafeFunction<Calendar, Calendar, Exception>, Exception>
+				contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
+	}
+
 	public void setContextBatchUnsafeConsumer(
 		UnsafeBiConsumer
 			<Collection<Calendar>, UnsafeConsumer<Calendar, Exception>,
@@ -504,6 +513,9 @@ public abstract class BaseCalendarResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<Calendar>, UnsafeFunction<Calendar, Calendar, Exception>,
+		 Exception> contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<Calendar>, UnsafeConsumer<Calendar, Exception>, Exception>
 			contextBatchUnsafeConsumer;

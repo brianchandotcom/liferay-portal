@@ -587,14 +587,15 @@ public abstract class BaseObjectViewResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<ObjectView, Exception> objectViewUnsafeConsumer = null;
+		UnsafeFunction<ObjectView, ObjectView, Exception>
+			objectViewUnsafeFunction = null;
 
 		String createStrategy = (String)parameters.getOrDefault(
 			"createStrategy", "INSERT");
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
 			if (parameters.containsKey("objectDefinitionId")) {
-				objectViewUnsafeConsumer =
+				objectViewUnsafeFunction =
 					objectView -> postObjectDefinitionObjectView(
 						_parseLong(
 							(String)parameters.get("objectDefinitionId")),
@@ -606,19 +607,23 @@ public abstract class BaseObjectViewResourceImpl
 			}
 		}
 
-		if (objectViewUnsafeConsumer == null) {
+		if (objectViewUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
 					"\" is not supported for ObjectView");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				objectViews, objectViewUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				objectViews, objectViewUnsafeConsumer);
+				objectViews, objectViewUnsafeFunction::apply);
 		}
 		else {
 			for (ObjectView objectView : objectViews) {
-				objectViewUnsafeConsumer.accept(objectView);
+				objectViewUnsafeFunction.apply(objectView);
 			}
 		}
 	}
@@ -706,31 +711,36 @@ public abstract class BaseObjectViewResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<ObjectView, Exception> objectViewUnsafeConsumer = null;
+		UnsafeFunction<ObjectView, ObjectView, Exception>
+			objectViewUnsafeFunction = null;
 
 		String updateStrategy = (String)parameters.getOrDefault(
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-			objectViewUnsafeConsumer = objectView -> putObjectView(
+			objectViewUnsafeFunction = objectView -> putObjectView(
 				objectView.getId() != null ? objectView.getId() :
 					_parseLong((String)parameters.get("objectViewId")),
 				objectView);
 		}
 
-		if (objectViewUnsafeConsumer == null) {
+		if (objectViewUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Update strategy \"" + updateStrategy +
 					"\" is not supported for ObjectView");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				objectViews, objectViewUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				objectViews, objectViewUnsafeConsumer);
+				objectViews, objectViewUnsafeFunction::apply);
 		}
 		else {
 			for (ObjectView objectView : objectViews) {
-				objectViewUnsafeConsumer.accept(objectView);
+				objectViewUnsafeFunction.apply(objectView);
 			}
 		}
 	}
@@ -745,6 +755,15 @@ public abstract class BaseObjectViewResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<ObjectView>,
+			 UnsafeFunction<ObjectView, ObjectView, Exception>, Exception>
+				contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -1005,6 +1024,10 @@ public abstract class BaseObjectViewResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<ObjectView>,
+		 UnsafeFunction<ObjectView, ObjectView, Exception>, Exception>
+			contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<ObjectView>, UnsafeConsumer<ObjectView, Exception>,
 		 Exception> contextBatchUnsafeConsumer;

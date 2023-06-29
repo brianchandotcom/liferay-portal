@@ -688,15 +688,15 @@ public abstract class BaseObjectValidationRuleResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<ObjectValidationRule, Exception>
-			objectValidationRuleUnsafeConsumer = null;
+		UnsafeFunction<ObjectValidationRule, ObjectValidationRule, Exception>
+			objectValidationRuleUnsafeFunction = null;
 
 		String createStrategy = (String)parameters.getOrDefault(
 			"createStrategy", "INSERT");
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
 			if (parameters.containsKey("objectDefinitionId")) {
-				objectValidationRuleUnsafeConsumer = objectValidationRule ->
+				objectValidationRuleUnsafeFunction = objectValidationRule ->
 					postObjectDefinitionObjectValidationRule(
 						_parseLong(
 							(String)parameters.get("objectDefinitionId")),
@@ -708,21 +708,26 @@ public abstract class BaseObjectValidationRuleResourceImpl
 			}
 		}
 
-		if (objectValidationRuleUnsafeConsumer == null) {
+		if (objectValidationRuleUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
 					"\" is not supported for ObjectValidationRule");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				objectValidationRules, objectValidationRuleUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				objectValidationRules, objectValidationRuleUnsafeConsumer);
+				objectValidationRules,
+				objectValidationRuleUnsafeFunction::apply);
 		}
 		else {
 			for (ObjectValidationRule objectValidationRule :
 					objectValidationRules) {
 
-				objectValidationRuleUnsafeConsumer.accept(objectValidationRule);
+				objectValidationRuleUnsafeFunction.apply(objectValidationRule);
 			}
 		}
 	}
@@ -812,14 +817,14 @@ public abstract class BaseObjectValidationRuleResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<ObjectValidationRule, Exception>
-			objectValidationRuleUnsafeConsumer = null;
+		UnsafeFunction<ObjectValidationRule, ObjectValidationRule, Exception>
+			objectValidationRuleUnsafeFunction = null;
 
 		String updateStrategy = (String)parameters.getOrDefault(
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-			objectValidationRuleUnsafeConsumer =
+			objectValidationRuleUnsafeFunction =
 				objectValidationRule -> patchObjectValidationRule(
 					objectValidationRule.getId() != null ?
 						objectValidationRule.getId() :
@@ -830,7 +835,7 @@ public abstract class BaseObjectValidationRuleResourceImpl
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-			objectValidationRuleUnsafeConsumer =
+			objectValidationRuleUnsafeFunction =
 				objectValidationRule -> putObjectValidationRule(
 					objectValidationRule.getId() != null ?
 						objectValidationRule.getId() :
@@ -840,21 +845,26 @@ public abstract class BaseObjectValidationRuleResourceImpl
 					objectValidationRule);
 		}
 
-		if (objectValidationRuleUnsafeConsumer == null) {
+		if (objectValidationRuleUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Update strategy \"" + updateStrategy +
 					"\" is not supported for ObjectValidationRule");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				objectValidationRules, objectValidationRuleUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				objectValidationRules, objectValidationRuleUnsafeConsumer);
+				objectValidationRules,
+				objectValidationRuleUnsafeFunction::apply);
 		}
 		else {
 			for (ObjectValidationRule objectValidationRule :
 					objectValidationRules) {
 
-				objectValidationRuleUnsafeConsumer.accept(objectValidationRule);
+				objectValidationRuleUnsafeFunction.apply(objectValidationRule);
 			}
 		}
 	}
@@ -869,6 +879,16 @@ public abstract class BaseObjectValidationRuleResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<ObjectValidationRule>,
+			 UnsafeFunction
+				 <ObjectValidationRule, ObjectValidationRule, Exception>,
+			 Exception> contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -1135,6 +1155,10 @@ public abstract class BaseObjectValidationRuleResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<ObjectValidationRule>,
+		 UnsafeFunction<ObjectValidationRule, ObjectValidationRule, Exception>,
+		 Exception> contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<ObjectValidationRule>,
 		 UnsafeConsumer<ObjectValidationRule, Exception>, Exception>

@@ -510,27 +510,31 @@ public abstract class BaseOrderResourceImpl
 			Collection<Order> orders, Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<Order, Exception> orderUnsafeConsumer = null;
+		UnsafeFunction<Order, Order, Exception> orderUnsafeFunction = null;
 
 		String createStrategy = (String)parameters.getOrDefault(
 			"createStrategy", "INSERT");
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
-			orderUnsafeConsumer = order -> postOrder(order);
+			orderUnsafeFunction = order -> postOrder(order);
 		}
 
-		if (orderUnsafeConsumer == null) {
+		if (orderUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
 					"\" is not supported for Order");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
-			contextBatchUnsafeConsumer.accept(orders, orderUnsafeConsumer);
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(orders, orderUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				orders, orderUnsafeFunction::apply);
 		}
 		else {
 			for (Order order : orders) {
-				orderUnsafeConsumer.accept(order);
+				orderUnsafeFunction.apply(order);
 			}
 		}
 	}
@@ -608,30 +612,38 @@ public abstract class BaseOrderResourceImpl
 			Collection<Order> orders, Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<Order, Exception> orderUnsafeConsumer = null;
+		UnsafeFunction<Order, Order, Exception> orderUnsafeFunction = null;
 
 		String updateStrategy = (String)parameters.getOrDefault(
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-			orderUnsafeConsumer = order -> patchOrder(
-				order.getId() != null ? order.getId() :
-					_parseLong((String)parameters.get("orderId")),
-				order);
+			orderUnsafeFunction = order -> {
+				patchOrder(
+					order.getId() != null ? order.getId() :
+						_parseLong((String)parameters.get("orderId")),
+					order);
+
+				return null;
+			};
 		}
 
-		if (orderUnsafeConsumer == null) {
+		if (orderUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Update strategy \"" + updateStrategy +
 					"\" is not supported for Order");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
-			contextBatchUnsafeConsumer.accept(orders, orderUnsafeConsumer);
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(orders, orderUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				orders, orderUnsafeFunction::apply);
 		}
 		else {
 			for (Order order : orders) {
-				orderUnsafeConsumer.accept(order);
+				orderUnsafeFunction.apply(order);
 			}
 		}
 	}
@@ -646,6 +658,14 @@ public abstract class BaseOrderResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<Order>, UnsafeFunction<Order, Order, Exception>,
+			 Exception> contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -906,6 +926,9 @@ public abstract class BaseOrderResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<Order>, UnsafeFunction<Order, Order, Exception>, Exception>
+			contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<Order>, UnsafeConsumer<Order, Exception>, Exception>
 			contextBatchUnsafeConsumer;

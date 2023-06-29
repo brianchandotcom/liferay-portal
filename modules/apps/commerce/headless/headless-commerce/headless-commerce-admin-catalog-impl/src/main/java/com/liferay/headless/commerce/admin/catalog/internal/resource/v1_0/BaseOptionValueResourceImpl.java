@@ -617,31 +617,40 @@ public abstract class BaseOptionValueResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<OptionValue, Exception> optionValueUnsafeConsumer = null;
+		UnsafeFunction<OptionValue, OptionValue, Exception>
+			optionValueUnsafeFunction = null;
 
 		String updateStrategy = (String)parameters.getOrDefault(
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-			optionValueUnsafeConsumer = optionValue -> patchOptionValue(
-				optionValue.getId() != null ? optionValue.getId() :
-					_parseLong((String)parameters.get("optionValueId")),
-				optionValue);
+			optionValueUnsafeFunction = optionValue -> {
+				patchOptionValue(
+					optionValue.getId() != null ? optionValue.getId() :
+						_parseLong((String)parameters.get("optionValueId")),
+					optionValue);
+
+				return null;
+			};
 		}
 
-		if (optionValueUnsafeConsumer == null) {
+		if (optionValueUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Update strategy \"" + updateStrategy +
 					"\" is not supported for OptionValue");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				optionValues, optionValueUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				optionValues, optionValueUnsafeConsumer);
+				optionValues, optionValueUnsafeFunction::apply);
 		}
 		else {
 			for (OptionValue optionValue : optionValues) {
-				optionValueUnsafeConsumer.accept(optionValue);
+				optionValueUnsafeFunction.apply(optionValue);
 			}
 		}
 	}
@@ -656,6 +665,15 @@ public abstract class BaseOptionValueResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<OptionValue>,
+			 UnsafeFunction<OptionValue, OptionValue, Exception>, Exception>
+				contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -916,6 +934,10 @@ public abstract class BaseOptionValueResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<OptionValue>,
+		 UnsafeFunction<OptionValue, OptionValue, Exception>, Exception>
+			contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<OptionValue>, UnsafeConsumer<OptionValue, Exception>,
 		 Exception> contextBatchUnsafeConsumer;

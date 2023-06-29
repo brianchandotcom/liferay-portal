@@ -266,6 +266,15 @@ public abstract class BaseSubscriptionResourceImpl
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<Subscription>,
+			 UnsafeFunction<Subscription, Subscription, Exception>, Exception>
+				contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
+	}
+
 	public void setContextBatchUnsafeConsumer(
 		UnsafeBiConsumer
 			<Collection<Subscription>, UnsafeConsumer<Subscription, Exception>,
@@ -524,6 +533,10 @@ public abstract class BaseSubscriptionResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<Subscription>,
+		 UnsafeFunction<Subscription, Subscription, Exception>, Exception>
+			contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<Subscription>, UnsafeConsumer<Subscription, Exception>,
 		 Exception> contextBatchUnsafeConsumer;

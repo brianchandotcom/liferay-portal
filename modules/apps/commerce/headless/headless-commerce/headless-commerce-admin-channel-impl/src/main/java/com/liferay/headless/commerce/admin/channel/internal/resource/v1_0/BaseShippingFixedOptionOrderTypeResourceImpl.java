@@ -364,6 +364,17 @@ public abstract class BaseShippingFixedOptionOrderTypeResourceImpl
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<ShippingFixedOptionOrderType>,
+			 UnsafeFunction
+				 <ShippingFixedOptionOrderType, ShippingFixedOptionOrderType,
+				  Exception>,
+			 Exception> contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
+	}
+
 	public void setContextBatchUnsafeConsumer(
 		UnsafeBiConsumer
 			<Collection<ShippingFixedOptionOrderType>,
@@ -623,6 +634,12 @@ public abstract class BaseShippingFixedOptionOrderTypeResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<ShippingFixedOptionOrderType>,
+		 UnsafeFunction
+			 <ShippingFixedOptionOrderType, ShippingFixedOptionOrderType,
+			  Exception>,
+		 Exception> contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<ShippingFixedOptionOrderType>,
 		 UnsafeConsumer<ShippingFixedOptionOrderType, Exception>, Exception>

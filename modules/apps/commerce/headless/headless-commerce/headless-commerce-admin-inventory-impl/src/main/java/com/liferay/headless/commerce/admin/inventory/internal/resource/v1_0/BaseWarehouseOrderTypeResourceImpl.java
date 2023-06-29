@@ -467,6 +467,15 @@ public abstract class BaseWarehouseOrderTypeResourceImpl
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<WarehouseOrderType>,
+			 UnsafeFunction<WarehouseOrderType, WarehouseOrderType, Exception>,
+			 Exception> contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
+	}
+
 	public void setContextBatchUnsafeConsumer(
 		UnsafeBiConsumer
 			<Collection<WarehouseOrderType>,
@@ -726,6 +735,10 @@ public abstract class BaseWarehouseOrderTypeResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<WarehouseOrderType>,
+		 UnsafeFunction<WarehouseOrderType, WarehouseOrderType, Exception>,
+		 Exception> contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<WarehouseOrderType>,
 		 UnsafeConsumer<WarehouseOrderType, Exception>, Exception>

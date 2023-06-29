@@ -599,15 +599,15 @@ public abstract class BaseObjectRelationshipResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<ObjectRelationship, Exception>
-			objectRelationshipUnsafeConsumer = null;
+		UnsafeFunction<ObjectRelationship, ObjectRelationship, Exception>
+			objectRelationshipUnsafeFunction = null;
 
 		String createStrategy = (String)parameters.getOrDefault(
 			"createStrategy", "INSERT");
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
 			if (parameters.containsKey("objectDefinitionId")) {
-				objectRelationshipUnsafeConsumer =
+				objectRelationshipUnsafeFunction =
 					objectRelationship ->
 						postObjectDefinitionObjectRelationship(
 							_parseLong(
@@ -620,19 +620,23 @@ public abstract class BaseObjectRelationshipResourceImpl
 			}
 		}
 
-		if (objectRelationshipUnsafeConsumer == null) {
+		if (objectRelationshipUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
 					"\" is not supported for ObjectRelationship");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				objectRelationships, objectRelationshipUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				objectRelationships, objectRelationshipUnsafeConsumer);
+				objectRelationships, objectRelationshipUnsafeFunction::apply);
 		}
 		else {
 			for (ObjectRelationship objectRelationship : objectRelationships) {
-				objectRelationshipUnsafeConsumer.accept(objectRelationship);
+				objectRelationshipUnsafeFunction.apply(objectRelationship);
 			}
 		}
 	}
@@ -720,14 +724,14 @@ public abstract class BaseObjectRelationshipResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<ObjectRelationship, Exception>
-			objectRelationshipUnsafeConsumer = null;
+		UnsafeFunction<ObjectRelationship, ObjectRelationship, Exception>
+			objectRelationshipUnsafeFunction = null;
 
 		String updateStrategy = (String)parameters.getOrDefault(
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-			objectRelationshipUnsafeConsumer =
+			objectRelationshipUnsafeFunction =
 				objectRelationship -> putObjectRelationship(
 					objectRelationship.getId() != null ?
 						objectRelationship.getId() :
@@ -736,19 +740,23 @@ public abstract class BaseObjectRelationshipResourceImpl
 					objectRelationship);
 		}
 
-		if (objectRelationshipUnsafeConsumer == null) {
+		if (objectRelationshipUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Update strategy \"" + updateStrategy +
 					"\" is not supported for ObjectRelationship");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				objectRelationships, objectRelationshipUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				objectRelationships, objectRelationshipUnsafeConsumer);
+				objectRelationships, objectRelationshipUnsafeFunction::apply);
 		}
 		else {
 			for (ObjectRelationship objectRelationship : objectRelationships) {
-				objectRelationshipUnsafeConsumer.accept(objectRelationship);
+				objectRelationshipUnsafeFunction.apply(objectRelationship);
 			}
 		}
 	}
@@ -763,6 +771,15 @@ public abstract class BaseObjectRelationshipResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<ObjectRelationship>,
+			 UnsafeFunction<ObjectRelationship, ObjectRelationship, Exception>,
+			 Exception> contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -1024,6 +1041,10 @@ public abstract class BaseObjectRelationshipResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<ObjectRelationship>,
+		 UnsafeFunction<ObjectRelationship, ObjectRelationship, Exception>,
+		 Exception> contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<ObjectRelationship>,
 		 UnsafeConsumer<ObjectRelationship, Exception>, Exception>

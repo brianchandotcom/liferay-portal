@@ -254,6 +254,15 @@ public abstract class BaseLowStockActionResourceImpl
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<LowStockAction>,
+			 UnsafeFunction<LowStockAction, LowStockAction, Exception>,
+			 Exception> contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
+	}
+
 	public void setContextBatchUnsafeConsumer(
 		UnsafeBiConsumer
 			<Collection<LowStockAction>,
@@ -513,6 +522,10 @@ public abstract class BaseLowStockActionResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<LowStockAction>,
+		 UnsafeFunction<LowStockAction, LowStockAction, Exception>, Exception>
+			contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<LowStockAction>, UnsafeConsumer<LowStockAction, Exception>,
 		 Exception> contextBatchUnsafeConsumer;

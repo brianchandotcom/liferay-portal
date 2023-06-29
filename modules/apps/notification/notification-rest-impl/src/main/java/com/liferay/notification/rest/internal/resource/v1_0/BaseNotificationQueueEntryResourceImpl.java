@@ -441,33 +441,39 @@ public abstract class BaseNotificationQueueEntryResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<NotificationQueueEntry, Exception>
-			notificationQueueEntryUnsafeConsumer = null;
+		UnsafeFunction
+			<NotificationQueueEntry, NotificationQueueEntry, Exception>
+				notificationQueueEntryUnsafeFunction = null;
 
 		String createStrategy = (String)parameters.getOrDefault(
 			"createStrategy", "INSERT");
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
-			notificationQueueEntryUnsafeConsumer =
+			notificationQueueEntryUnsafeFunction =
 				notificationQueueEntry -> postNotificationQueueEntry(
 					notificationQueueEntry);
 		}
 
-		if (notificationQueueEntryUnsafeConsumer == null) {
+		if (notificationQueueEntryUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
 					"\" is not supported for NotificationQueueEntry");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				notificationQueueEntries, notificationQueueEntryUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				notificationQueueEntries, notificationQueueEntryUnsafeConsumer);
+				notificationQueueEntries,
+				notificationQueueEntryUnsafeFunction::apply);
 		}
 		else {
 			for (NotificationQueueEntry notificationQueueEntry :
 					notificationQueueEntries) {
 
-				notificationQueueEntryUnsafeConsumer.accept(
+				notificationQueueEntryUnsafeFunction.apply(
 					notificationQueueEntry);
 			}
 		}
@@ -557,6 +563,16 @@ public abstract class BaseNotificationQueueEntryResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<NotificationQueueEntry>,
+			 UnsafeFunction
+				 <NotificationQueueEntry, NotificationQueueEntry, Exception>,
+			 Exception> contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -818,6 +834,11 @@ public abstract class BaseNotificationQueueEntryResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<NotificationQueueEntry>,
+		 UnsafeFunction
+			 <NotificationQueueEntry, NotificationQueueEntry, Exception>,
+		 Exception> contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<NotificationQueueEntry>,
 		 UnsafeConsumer<NotificationQueueEntry, Exception>, Exception>

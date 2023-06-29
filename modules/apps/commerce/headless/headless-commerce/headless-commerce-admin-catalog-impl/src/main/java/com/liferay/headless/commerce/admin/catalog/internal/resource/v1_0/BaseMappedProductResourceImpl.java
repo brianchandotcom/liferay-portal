@@ -540,32 +540,36 @@ public abstract class BaseMappedProductResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<MappedProduct, Exception> mappedProductUnsafeConsumer =
-			null;
+		UnsafeFunction<MappedProduct, MappedProduct, Exception>
+			mappedProductUnsafeFunction = null;
 
 		String updateStrategy = (String)parameters.getOrDefault(
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-			mappedProductUnsafeConsumer = mappedProduct -> patchMappedProduct(
+			mappedProductUnsafeFunction = mappedProduct -> patchMappedProduct(
 				mappedProduct.getId() != null ? mappedProduct.getId() :
 					_parseLong((String)parameters.get("mappedProductId")),
 				mappedProduct);
 		}
 
-		if (mappedProductUnsafeConsumer == null) {
+		if (mappedProductUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Update strategy \"" + updateStrategy +
 					"\" is not supported for MappedProduct");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				mappedProducts, mappedProductUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				mappedProducts, mappedProductUnsafeConsumer);
+				mappedProducts, mappedProductUnsafeFunction::apply);
 		}
 		else {
 			for (MappedProduct mappedProduct : mappedProducts) {
-				mappedProductUnsafeConsumer.accept(mappedProduct);
+				mappedProductUnsafeFunction.apply(mappedProduct);
 			}
 		}
 	}
@@ -580,6 +584,15 @@ public abstract class BaseMappedProductResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<MappedProduct>,
+			 UnsafeFunction<MappedProduct, MappedProduct, Exception>, Exception>
+				contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -841,6 +854,10 @@ public abstract class BaseMappedProductResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<MappedProduct>,
+		 UnsafeFunction<MappedProduct, MappedProduct, Exception>, Exception>
+			contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<MappedProduct>, UnsafeConsumer<MappedProduct, Exception>,
 		 Exception> contextBatchUnsafeConsumer;

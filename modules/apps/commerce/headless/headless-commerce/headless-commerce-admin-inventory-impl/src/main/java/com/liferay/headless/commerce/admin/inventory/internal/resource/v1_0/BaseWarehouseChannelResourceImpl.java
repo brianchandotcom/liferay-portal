@@ -466,6 +466,15 @@ public abstract class BaseWarehouseChannelResourceImpl
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<WarehouseChannel>,
+			 UnsafeFunction<WarehouseChannel, WarehouseChannel, Exception>,
+			 Exception> contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
+	}
+
 	public void setContextBatchUnsafeConsumer(
 		UnsafeBiConsumer
 			<Collection<WarehouseChannel>,
@@ -725,6 +734,10 @@ public abstract class BaseWarehouseChannelResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<WarehouseChannel>,
+		 UnsafeFunction<WarehouseChannel, WarehouseChannel, Exception>,
+		 Exception> contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<WarehouseChannel>,
 		 UnsafeConsumer<WarehouseChannel, Exception>, Exception>

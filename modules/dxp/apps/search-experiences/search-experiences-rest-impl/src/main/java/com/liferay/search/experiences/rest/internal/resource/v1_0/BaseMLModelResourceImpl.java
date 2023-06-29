@@ -218,6 +218,14 @@ public abstract class BaseMLModelResourceImpl
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<MLModel>, UnsafeFunction<MLModel, MLModel, Exception>,
+			 Exception> contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
+	}
+
 	public void setContextBatchUnsafeConsumer(
 		UnsafeBiConsumer
 			<Collection<MLModel>, UnsafeConsumer<MLModel, Exception>, Exception>
@@ -476,6 +484,9 @@ public abstract class BaseMLModelResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<MLModel>, UnsafeFunction<MLModel, MLModel, Exception>,
+		 Exception> contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<MLModel>, UnsafeConsumer<MLModel, Exception>, Exception>
 			contextBatchUnsafeConsumer;

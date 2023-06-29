@@ -440,7 +440,7 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 
 		return SearchPage.of(
 			null, _toAggregations(searchResponse.getAggregationResultsMap()),
-			_facetResponseProcessor.getTermJSONArrays(
+			_facetResponseProcessor.getTermsMap(
 				contextCompany.getCompanyId(), facetConfigurations,
 				contextAcceptLanguage.getPreferredLocale(), searchResponse,
 				contextUser.getUserId()),

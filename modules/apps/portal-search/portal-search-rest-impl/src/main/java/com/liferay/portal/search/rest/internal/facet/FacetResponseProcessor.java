@@ -55,6 +55,7 @@ import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -69,11 +70,11 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = FacetResponseProcessor.class)
 public class FacetResponseProcessor {
 
-	public Map<String, Object> getTermJSONArrays(
+	public Map<String, Object> getTermsMap(
 		long companyId, FacetConfiguration[] facetConfigurations, Locale locale,
 		SearchResponse searchResponse, long userId) {
 
-		return _toTermJSONArrays(
+		return _toTermsMap(
 			companyId, facetConfigurations, locale, searchResponse, userId);
 	}
 
@@ -265,7 +266,7 @@ public class FacetResponseProcessor {
 		return _searcher.search(searchRequestBuilder.build());
 	}
 
-	private JSONArray _toAssetCategoryTreeJSONArray(
+	private Collection<AssetCategoryTree> _toAssetCategoryTrees(
 		FacetConfiguration facetConfiguration, Locale locale,
 		List<TermCollector> termCollectors) {
 
@@ -312,20 +313,12 @@ public class FacetResponseProcessor {
 			}
 		}
 
-		return _jsonFactory.createJSONArray(assetCategoryTrees.values());
+		return assetCategoryTrees.values();
 	}
 
 	private JSONArray _toTermJSONArray(
 		long companyId, FacetConfiguration facetConfiguration, Locale locale,
-		Facet facet, List<TermCollector> termCollectors, long userId) {
-
-		if (StringUtil.equals("vocabulary", facetConfiguration.getName()) &&
-			StringUtil.equals(
-				facet.getFieldName(), "assetVocabularyCategoryIds")) {
-
-			return _toAssetCategoryTreeJSONArray(
-				facetConfiguration, locale, termCollectors);
-		}
+		List<TermCollector> termCollectors, long userId) {
 
 		JSONArray termJSONArray = _jsonFactory.createJSONArray();
 
@@ -361,7 +354,7 @@ public class FacetResponseProcessor {
 		return termJSONArray;
 	}
 
-	private Map<String, Object> _toTermJSONArrays(
+	private Map<String, Object> _toTermsMap(
 		long companyId, FacetConfiguration[] facetConfigurations, Locale locale,
 		SearchResponse searchResponse, long userId) {
 
@@ -369,7 +362,7 @@ public class FacetResponseProcessor {
 			return null;
 		}
 
-		Map<String, Object> termJSONArrays = new HashMap<>();
+		Map<String, Object> termsMap = new HashMap<>();
 
 		for (FacetConfiguration facetConfiguration : facetConfigurations) {
 			Facet facet = searchResponse.withFacetContextGet(
@@ -389,17 +382,34 @@ public class FacetResponseProcessor {
 				continue;
 			}
 
-			JSONArray termJSONArray = _toTermJSONArray(
-				companyId, facetConfiguration, locale, facet, termCollectors,
-				userId);
+			if (StringUtil.equals("vocabulary", facetConfiguration.getName()) &&
+				StringUtil.equals(
+					facet.getFieldName(), "assetVocabularyCategoryIds")) {
 
-			if (termJSONArray.length() > 0) {
-				termJSONArrays.put(
-					facetConfiguration.getAggregationName(), termJSONArray);
+				Collection<AssetCategoryTree> assetCategoryTrees =
+					_toAssetCategoryTrees(
+						facetConfiguration, locale, termCollectors);
+
+				if (!assetCategoryTrees.isEmpty()) {
+					termsMap.put(
+						facetConfiguration.getAggregationName(),
+						_toAssetCategoryTrees(
+							facetConfiguration, locale, termCollectors));
+				}
+			}
+			else {
+				JSONArray termJSONArray = _toTermJSONArray(
+					companyId, facetConfiguration, locale, termCollectors,
+					userId);
+
+				if (termJSONArray.length() > 0) {
+					termsMap.put(
+						facetConfiguration.getAggregationName(), termJSONArray);
+				}
 			}
 		}
 
-		return termJSONArrays;
+		return termsMap;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

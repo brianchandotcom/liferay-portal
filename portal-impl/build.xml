@@ -446,7 +446,23 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		</if>
 	</target>
 
-	<target name="format-copyright">
+	<target name="format-source">
+		<antcall target="format-source-files">
+			<param name="format.source.default.task" value="true" />
+		</antcall>
+	</target>
+
+	<target name="format-source-all">
+		<antcall target="format-source-files" />
+	</target>
+
+	<target name="format-source-bnd">
+		<antcall target="format-source-files">
+			<param name="source.file.extensions" value="bnd,gradle,json" />
+		</antcall>
+	</target>
+
+	<target name="format-source-change-copyrights">
 		<if>
 			<available file="${project.dir}/modules/util/copyright-formatter" />
 			<then>
@@ -482,22 +498,6 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 				</java>
 			</then>
 		</if>
-	</target>
-
-	<target name="format-source">
-		<antcall target="format-source-files">
-			<param name="format.source.default.task" value="true" />
-		</antcall>
-	</target>
-
-	<target name="format-source-all">
-		<antcall target="format-source-files" />
-	</target>
-
-	<target name="format-source-bnd">
-		<antcall target="format-source-files">
-			<param name="source.file.extensions" value="bnd,gradle,json" />
-		</antcall>
 	</target>
 
 	<target name="format-source-current-branch">

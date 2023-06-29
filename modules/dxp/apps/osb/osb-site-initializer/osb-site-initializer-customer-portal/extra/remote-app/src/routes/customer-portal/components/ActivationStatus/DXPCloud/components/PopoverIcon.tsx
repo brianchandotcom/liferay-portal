@@ -20,6 +20,7 @@ const PopoverIcon = ({
 	<ClayTooltipProvider>
 		<span>
 			<ClayButtonWithIcon
+				aria-label={i18n.translate(title)}
 				className="text-brand-primary-darken-2"
 				data-tooltip-align="right"
 				displayType={null}

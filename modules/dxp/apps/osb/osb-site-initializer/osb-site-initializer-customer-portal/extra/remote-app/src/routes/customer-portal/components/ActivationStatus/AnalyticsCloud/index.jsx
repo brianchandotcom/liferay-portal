@@ -235,6 +235,7 @@ const ActivationStatusAnalyticsCloud = ({
 					}
 				/>
 			)}
+
 			<ActivationStatusLayout
 				activationStatus={activationStatus}
 				activationStatusDate={activationStatusDate}
@@ -244,15 +245,16 @@ const ActivationStatusAnalyticsCloud = ({
 					subscriptionGroupActivationStatus
 				}
 			/>
+
 			{visible && (
 				<AnalyticsCloudStatusModal
 					groupIdValue={project?.acWorkspaceGroupId}
 					observer={observerStatusModal}
 					onClose={onCloseStatusModal}
-					project={project}
 					updateCardStatus={updateGroupId}
 				/>
 			)}
+
 			{hasFinishedUpdate && (
 				<ClayAlert.ToastContainer>
 					<ClayAlert

@@ -10,6 +10,7 @@
  */
 
 import {useMutation} from '@apollo/client';
+import SearchBuilder from '~/common/core/SearchBuilder';
 import NotificationQueueService from '../../../../../../../../../../../../../src/common/services/actions/notificationAction';
 import {useAppPropertiesContext} from '../../../../../../../../../../../../common/contexts/AppPropertiesContext';
 import {
@@ -51,7 +52,7 @@ export default function useSubmitLXCEnvironment(
 			const {data} = await client.query({
 				query: getLiferayExperienceCloudEnvironments,
 				variables: {
-					filter: `accountKey eq '${project.accountKey}'`,
+					filter: SearchBuilder.eq('accountKey', project.accountKey),
 				},
 			});
 			if (data) {

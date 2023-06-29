@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 import {useEffect, useState} from 'react';
+import SearchBuilder from '~/common/core/SearchBuilder';
 import {useAppPropertiesContext} from '../../../../../../common/contexts/AppPropertiesContext';
 import {getCommerceOrderItems} from '../../../../../../common/services/liferay/graphql/queries';
 import getActivationStatusDateRange from '../../../../../../common/utils/getActivationStatusDateRange';
@@ -19,12 +20,14 @@ export default function useActivationStatusDate(project) {
 
 	useEffect(() => {
 		const fetchCommerceOrderItems = async () => {
-			const filterAccountSubscriptionERC = `customFields/accountSubscriptionGroupERC eq '${project.accountKey}_liferay-experience-cloud'`;
 			const {data} = await client.query({
 				fetchPolicy: 'network-only',
 				query: getCommerceOrderItems,
 				variables: {
-					filter: filterAccountSubscriptionERC,
+					filter: SearchBuilder.eq(
+						'customFields/accountSubscriptionGroupERC',
+						`${project.accountKey}_liferay-experience-cloud`
+					),
 				},
 			});
 

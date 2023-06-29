@@ -31,7 +31,7 @@ const GET_ACCOUNT_ROLES_BY_ACCOUNT_EXTERNAL_REFERENCE_CODE = gql`
 `;
 
 export function useGetAccountRolesByAccountExternalReferenceCode(
-	externalReferenceCode,
+	externalReferenceCode: string,
 	options = {
 		filter: '',
 		notifyOnNetworkStatusChange: false,

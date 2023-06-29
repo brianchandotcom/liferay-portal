@@ -9,29 +9,6 @@
  * distribution rights of the Software.
  */
 
-export const accountRolesTypePolicy = {
-	AccountRole: {
-		fields: {
-			name: {
-				read(name) {
-					if (name === 'Account Member') {
-						return 'User';
-					}
-
-					if (name === 'Account Administrator') {
-						return 'Administrator';
-					}
-
-					return name;
-				},
-			},
-		},
-		keyFields: ['id'],
-	},
-};
-
-export const accountRolesQueryTypePolicy = {
-	accountAccountRolesByExternalReferenceCode: {
-		keyArgs: ['filter'],
-	},
-};
+export default function isAccountAdministrator(name: string) {
+	return ['Administrator', 'Partner Manager'].includes(name);
+}

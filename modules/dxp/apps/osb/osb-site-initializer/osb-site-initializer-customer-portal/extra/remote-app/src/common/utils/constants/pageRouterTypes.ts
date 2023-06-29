@@ -20,8 +20,8 @@ const LiferayURL = `${Liferay.ThemeDisplay.getPortalURL()}${siteURL.substring(
 )}`;
 
 export const PAGE_ROUTER_TYPES = {
-	onboarding: (externalReferenceCode) =>
+	onboarding: (externalReferenceCode: string) =>
 		`${LiferayURL}/${ROUTE_TYPES.onboarding}/#/${externalReferenceCode}`,
-	project: (externalReferenceCode) =>
+	project: (externalReferenceCode: string) =>
 		`${LiferayURL}/${ROUTE_TYPES.project}/#/${externalReferenceCode}`,
 };

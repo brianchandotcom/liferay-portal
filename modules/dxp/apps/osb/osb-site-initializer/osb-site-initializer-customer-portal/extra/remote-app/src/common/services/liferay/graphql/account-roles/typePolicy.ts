@@ -9,15 +9,29 @@
  * distribution rights of the Software.
  */
 
-import IconSVG from '@clayui/css/lib/images/icons/icons.svg';
-import {Liferay} from '../services/liferay';
+export const accountRolesTypePolicy = {
+	AccountRole: {
+		fields: {
+			name: {
+				read(name: string) {
+					if (name === 'Account Member') {
+						return 'User';
+					}
 
-export default function getIconSpriteMap() {
-	const pathThemeImages = Liferay.ThemeDisplay.getPathThemeImages();
+					if (name === 'Account Administrator') {
+						return 'Administrator';
+					}
 
-	if (pathThemeImages) {
-		return `${pathThemeImages}/clay/icons.svg`;
-	}
+					return name;
+				},
+			},
+		},
+		keyFields: ['id'],
+	},
+};
 
-	return IconSVG;
-}
+export const accountRolesQueryTypePolicy = {
+	accountAccountRolesByExternalReferenceCode: {
+		keyArgs: ['filter'],
+	},
+};

@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
-export default function isSupportSeatRole(name) {
-	return name === 'Administrator' || name === 'Requester';
-}
+const isSupportSeatRole = (name: string) =>
+	['Administrator', 'Requester'].includes(name);
+
+export default isSupportSeatRole;

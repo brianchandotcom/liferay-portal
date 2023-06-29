@@ -10,6 +10,7 @@
  */
 
 import {useMemo} from 'react';
+import SearchBuilder from '~/common/core/SearchBuilder';
 import {useGetListTypeDefinitions} from '../../../../../../../../../../../../common/services/liferay/graphql/list-type-definitions';
 import {LIST_TYPES} from '../../../../../../../../../../utils/constants';
 
@@ -17,14 +18,15 @@ const listTypePrimaryRegions = LIST_TYPES.lxcPrimaryRegion;
 
 export default function useGetPrimaryRegionList() {
 	const {data} = useGetListTypeDefinitions({
-		filter: `name eq '${listTypePrimaryRegions}'`,
+		filter: SearchBuilder.eq('name', listTypePrimaryRegions),
 	});
 
-	const items = data?.listTypeDefinitions?.items[0].listTypeEntries;
-
 	const primaryRegionList = useMemo(
-		() => items?.map(({name}) => ({label: name, value: name})) || [],
-		[items]
+		() =>
+			((data?.listTypeDefinitions?.items[0].listTypeEntries ?? []) as {
+				name: string;
+			}[]).map(({name}) => ({label: name, value: name})),
+		[data?.listTypeDefinitions?.items]
 	);
 
 	return primaryRegionList;

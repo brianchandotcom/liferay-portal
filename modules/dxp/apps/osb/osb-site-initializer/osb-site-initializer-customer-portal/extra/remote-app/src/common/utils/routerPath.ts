@@ -23,9 +23,9 @@ export default function routerPath() {
 
 	return {
 		home: () => `${Liferay.ThemeDisplay.getPortalURL()}${siteURL}`,
-		onboarding: (externalReferenceCode) =>
+		onboarding: (externalReferenceCode: string) =>
 			`${Liferay.ThemeDisplay.getPortalURL()}${siteURL}/onboarding/#/${externalReferenceCode}`,
-		project: (externalReferenceCode) =>
+		project: (externalReferenceCode: string) =>
 			`${Liferay.ThemeDisplay.getPortalURL()}${siteURL}/project/#/${externalReferenceCode}`,
 	};
 }

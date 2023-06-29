@@ -1,31 +1,14 @@
 {
-	"babel": {
-		"presets": [
-			"react-app"
-		]
-	},
-	"browserslist": {
-		"development": [
-			"last 1 chrome version",
-			"last 1 firefox version",
-			"last 1 safari version"
-		],
-		"production": [
-			">0.2%",
-			"not dead",
-			"not op_mini all"
-		]
-	},
 	"dependencies": {
 		"@apollo/client": "^3.6.10",
 		"@clayui/alert": "^3.40.0",
 		"@clayui/card": "^3.93.0",
-		"@clayui/core": "3.45.1",
-		"@clayui/css": "^3.36.0",
+		"@clayui/core": "3.58.1",
+		"@clayui/css": "^3.59.0",
 		"@clayui/date-picker": "^3.46.0",
 		"@clayui/drop-down": "^3.41.0",
 		"@clayui/form": "^3.36.0",
-		"@clayui/icon": "^3.32.0",
+		"@clayui/icon": "^3.56.0",
 		"@clayui/label": "^3.32.0",
 		"@clayui/layout": "^3.65.1",
 		"@clayui/loading-indicator": "^3.56.0",

@@ -9,6 +9,15 @@
  * distribution rights of the Software.
  */
 
-export default function isAccountAdministrator(name) {
-	return name === 'Administrator' || name === 'Partner Manager';
+import IconSVG from '@clayui/css/lib/images/icons/icons.svg';
+import {Liferay} from '../services/liferay';
+
+export default function getIconSpriteMap() {
+	const pathThemeImages = Liferay.ThemeDisplay.getPathThemeImages();
+
+	const spritemap = pathThemeImages
+		? `${pathThemeImages}/clay/icons.svg`
+		: IconSVG;
+
+	return spritemap;
 }

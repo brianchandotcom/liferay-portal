@@ -12,7 +12,13 @@
 import i18n from '../../../../../../../common/I18n';
 import {Button} from '../../../../../../../common/components';
 
-const ConfirmationMessageModal = ({onClose}) => (
+type ConfirmationMessageModalProps = {
+	onClose: (state: boolean) => void;
+};
+
+const ConfirmationMessageModal: React.FC<ConfirmationMessageModalProps> = ({
+	onClose,
+}) => (
 	<div className="d-flex flex-column p-4">
 		<div className="mb-4">
 			<p className="h2 mb-1">

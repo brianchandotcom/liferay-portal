@@ -16,6 +16,7 @@ package com.liferay.object.web.internal.object.entries.display.context;
 
 import com.liferay.dynamic.data.mapping.expression.CreateExpressionRequest;
 import com.liferay.dynamic.data.mapping.expression.DDMExpression;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionException;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
@@ -1230,18 +1231,24 @@ public class ObjectEntryDisplayContextImpl
 			existingValues.put("currentUserId", _themeDisplay.getUserId());
 		}
 
-		DDMExpression<Boolean> ddmExpression =
-			_ddmExpressionFactory.createExpression(
-				CreateExpressionRequest.Builder.newBuilder(
-					objectField.getReadOnlyConditionExpression()
-				).withDDMExpressionFieldAccessor(
-					new ObjectEntryDDMExpressionFieldAccessor(existingValues)
-				).build());
+		try {
+			DDMExpression<Boolean> ddmExpression =
+				_ddmExpressionFactory.createExpression(
+					CreateExpressionRequest.Builder.newBuilder(
+						objectField.getReadOnlyConditionExpression()
+					).withDDMExpressionFieldAccessor(
+						new ObjectEntryDDMExpressionFieldAccessor(
+							existingValues)
+					).build());
 
-		ddmExpression.setVariables(existingValues);
+			ddmExpression.setVariables(existingValues);
 
-		if (ddmExpression.evaluate()) {
-			return true;
+			if (ddmExpression.evaluate()) {
+				return true;
+			}
+		}
+		catch (DDMExpressionException ddmExpressionException) {
+			_log.error(ddmExpressionException);
 		}
 
 		return false;

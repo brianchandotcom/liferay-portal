@@ -16,6 +16,7 @@ package com.liferay.object.field.util;
 
 import com.liferay.dynamic.data.mapping.expression.CreateExpressionRequest;
 import com.liferay.dynamic.data.mapping.expression.DDMExpression;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionException;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
@@ -30,6 +31,8 @@ import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.object.service.ObjectFieldSettingLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -249,21 +252,26 @@ public class ObjectFieldUtil {
 				continue;
 			}
 
-			DDMExpression<Boolean> ddmExpression =
-				ddmExpressionFactory.createExpression(
-					CreateExpressionRequest.Builder.newBuilder(
-						objectField.getReadOnlyConditionExpression()
-					).withDDMExpressionFieldAccessor(
-						new ObjectEntryDDMExpressionFieldAccessor(
-							existingValues)
-					).build());
+			try {
+				DDMExpression<Boolean> ddmExpression =
+					ddmExpressionFactory.createExpression(
+						CreateExpressionRequest.Builder.newBuilder(
+							objectField.getReadOnlyConditionExpression()
+						).withDDMExpressionFieldAccessor(
+							new ObjectEntryDDMExpressionFieldAccessor(
+								existingValues)
+						).build());
 
-			ddmExpression.setVariables(existingValues);
+				ddmExpression.setVariables(existingValues);
 
-			if (ddmExpression.evaluate()) {
-				_validateNewValue(
-					existingValues.get(entry.getKey()), objectField.getName(),
-					entry.getValue());
+				if (ddmExpression.evaluate()) {
+					_validateNewValue(
+						existingValues.get(entry.getKey()),
+						objectField.getName(), entry.getValue());
+				}
+			}
+			catch (DDMExpressionException ddmExpressionException) {
+				_log.error(ddmExpressionException);
 			}
 		}
 	}
@@ -279,5 +287,8 @@ public class ObjectFieldUtil {
 				"Object field " + objectFieldName + " is read only");
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ObjectFieldUtil.class);
 
 }

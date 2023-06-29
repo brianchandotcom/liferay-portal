@@ -1029,6 +1029,15 @@ definition {
 
 		Navigator.gotoNavItem(navItem = "Define Permissions");
 
+		Click.clickAt(
+			key_permissionNavHeader = "Summary",
+			key_permissionNavItem = "Control Panel",
+			locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVIGATION");
+
+		Role.viewPermissionSubdirectory(
+			navItem = "User",
+			subItemList = "Notifications,My Submissions,My Workflow Tasks,Account Settings,My Organizations");
+
 		Role.viewPermissionSubdirectory(
 			navItem = "Control Panel",
 			subItemList = "General Permissions,Users,Sites,Configuration,Security,System,Marketplace,Accounts");
@@ -1036,10 +1045,6 @@ definition {
 		Role.viewPermissionSubdirectory(
 			navItem = "Site and Asset Library Administration",
 			subItemList = "Site Builder,Content & Data,Categorization,Recycle Bin,People,Configuration,Publishing,Applications");
-
-		Role.viewPermissionSubdirectory(
-			navItem = "User",
-			subItemList = "Notifications,My Submissions,My Workflow Tasks,Account Settings,My Organizations");
 
 		Role.viewPermissionSubdirectory(
 			navItem = "Applications Menu",

@@ -435,6 +435,170 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-11610. As a supplier account user, I can add and edit products in a catalog and delete them from the catalog the account is linked to."
+	@priority = 5
+	test CanSupplierManageOnlyLinkedCatalogProducts {
+		property portal.acceptance = "true";
+
+		task ("Given a Supplier account with a supplier user") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Commerce Supplier",
+				accountEntryType = "Supplier");
+
+			JSONAccountEntryUser.addAccountEntryUser(
+				accountEntryName = "Commerce Supplier",
+				userEmailAddress = "supplier@liferay.com",
+				userFirstName = "Supplier",
+				userLastName = "User",
+				userScreenName = "supplieruser");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "supplier@liferay.com");
+
+			JSONAccountRole.associateUser(
+				accountEntryName = "Commerce Supplier",
+				accountRole = "Account Supplier",
+				userEmailAddress = "supplier@liferay.com");
+		}
+
+		task ("And Supplier account is linked to Minium catalog") {
+			var accountId = CommerceJSONAccountsAPI.getAccountFieldByAccountName(
+				accountName = "Commerce Supplier",
+				field = "id");
+
+			CommerceJSONCatalogsAPI._patchCommerceCatalog(
+				accountId = ${accountId},
+				catalogName = "Minium");
+		}
+
+		task ("And a new Catalog is added") {
+			CommerceJSONCatalogsAPI._addCatalog(catalogName = "New Catalog");
+		}
+
+		task ("And the Supplier account is linked to Minium Portal Channel") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			Select(
+				key_fieldLabel = "Link Channel to a Supplier",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Commerce Supplier");
+
+			Button.clickSave();
+		}
+
+		task ("When the supplier user logs in") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "supplier@liferay.com",
+				userLoginFullName = "Supplier User");
+		}
+
+		task ("Then can add a new product in Minium Catalog") {
+			CommerceProducts.openProductsAdmin();
+
+			CPCommerceCatalog.newProductsEntry(
+				productCatalog = "Minium",
+				productName = "Simple T-Shirt",
+				productType = "Simple");
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Catalog",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Minium");
+		}
+
+		task ("And can edit the product") {
+			CommerceEntry.addProductDescription(
+				productFullDescription = "This is a Full Description",
+				productShortDescription = "This is a Short Description",
+				publishProduct = "true");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			CommerceProductOptions.createProductOption(key_optionName = "New Option");
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceNavigator.gotoEntry(entryName = "default");
+
+			CommerceEntry.editSkuPricingAndInventory(
+				basePrice = "20.00",
+				italyQuantity = 20,
+				publish = "true");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Product Relations");
+
+			CommerceRelations.addAnyProductRelation(
+				key_product = "U-Joint",
+				key_relation = "Up-Sell Product");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Subscription");
+
+			CommerceProducts.configureSubscription(
+				subscriptionExactDay = 1,
+				subscriptionLength = 5,
+				subscriptionMode = "Exact Day of Month",
+				subscriptionName = "Delivery Subscription",
+				subscriptionType = "Month");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Visibility");
+
+			AssertElementNotPresent(
+				key_name = "Channels",
+				locator1 = "ToggleSwitch#ENABLE_SPECIFIC_TOGGLE_SWITCH");
+		}
+
+		task ("But cannot add a new product in a different Catalog") {
+			Click(locator1 = "Icon#BACK");
+
+			Click(locator1 = "Button#PLUS");
+
+			Click(
+				key_menuItem = "Simple",
+				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+
+			WaitForElementPresent(locator1 = "IFrame#MODAL_BODY");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+			Type(
+				locator1 = "CommerceEntry#NAME_FIELD",
+				value1 = "New Product");
+
+			for (var entryName : list "Master,New Catalog") {
+				Type(
+					key_label = "Catalog",
+					locator1 = "CommerceEntry#ANY_AUTOCOMPLETE_TEXT_FIELD",
+					value1 = ${entryName});
+
+				AssertElementPresent(
+					key_text = "No items were found.",
+					locator1 = "CP2Utils#ANY_TEXT");
+			}
+
+			Click(locator1 = "Icon#CLOSE");
+
+			SelectFrame.selectFrameTop();
+		}
+
+		task ("When the supplier user deletes the product") {
+			CommerceNavigator.searchEntry(entryName = "Simple T-Shirt");
+
+			CommerceProducts.deleteProductsEntry(key_value = "Simple T-Shirt");
+		}
+
+		task ("Then can verify that Simple Product is deleted successfully") {
+			CommerceNavigator.searchEntry(entryName = "Simple T-Shirt");
+
+			AssertElementNotPresent(
+				key_entryName = "Simple T-Shirt",
+				locator1 = "CommerceNavigation#ENTRY_NAME");
+		}
+	}
+
 	@description = "COMMERCE-11604 | As a supplier account user, I want to be able to manage the catalogs the account is linked to"
 	@priority = 5
 	test CanSupplierUserManageCatalogs {
@@ -652,6 +816,91 @@ definition {
 				key_entryStatus = "Active",
 				key_table = "Payment Methods",
 				locator1 = "CommerceEntry#TABLE_ENTRY_STATUS");
+		}
+	}
+
+	@description = "COMMERCE-11611. As a supplier account user, I cannot view the products in a catalog the account is not linked to."
+	@priority = 4
+	test CanSupplierViewOnlyLinkedCatalogProducts {
+		property portal.acceptance = "false";
+
+		task ("Given a Supplier account with a supplier user") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Commerce Supplier",
+				accountEntryType = "Supplier");
+
+			JSONAccountEntryUser.addAccountEntryUser(
+				accountEntryName = "Commerce Supplier",
+				userEmailAddress = "supplier@liferay.com",
+				userFirstName = "Supplier",
+				userLastName = "User",
+				userScreenName = "supplieruser");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "supplier@liferay.com");
+
+			JSONAccountRole.associateUser(
+				accountEntryName = "Commerce Supplier",
+				accountRole = "Account Supplier",
+				userEmailAddress = "supplier@liferay.com");
+		}
+
+		task ("And a new Catalog with a product is added") {
+			CommerceJSONCatalogsAPI._addCatalog(catalogName = "Test Catalog");
+
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Test Catalog",
+				price = 5,
+				productName = "Simple Product",
+				productType = "simple",
+				sku = "TESTSKU");
+		}
+
+		task ("And a product is added to the Master catalog") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Master",
+				price = 25,
+				productName = "New Product",
+				productType = "simple",
+				sku = "NEWSKU");
+		}
+
+		task ("And Supplier account is linked to Test Catalog") {
+			var accountId = CommerceJSONAccountsAPI.getAccountFieldByAccountName(
+				accountName = "Commerce Supplier",
+				field = "id");
+
+			CommerceJSONCatalogsAPI._patchCommerceCatalog(
+				accountId = ${accountId},
+				catalogName = "Test Catalog");
+		}
+
+		task ("When the supplier user logs in") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "supplier@liferay.com",
+				userLoginFullName = "Supplier User");
+		}
+
+		task ("Then can view the product from Test Catalog") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.searchEntry(entryName = "Simple Product");
+
+			AssertElementPresent(
+				key_entryName = "Simple Product",
+				locator1 = "CommerceNavigation#ENTRY_NAME");
+		}
+
+		task ("But cannot view products from Minium and Master Catalogs") {
+			for (var productName : list "ABS Sensor,Brake Fluid,Hoses,Torque Converters,New Product") {
+				CommerceNavigator.searchEntry(entryName = ${productName});
+
+				AssertElementNotPresent(
+					key_entryName = ${productName},
+					locator1 = "CommerceNavigation#ENTRY_NAME");
+			}
 		}
 	}
 

@@ -56,10 +56,6 @@ definition {
 
 		RecycleBin.openRecycleBinAdmin(siteURLKey = "test-site-name");
 
-		ProductMenu.gotoPortlet(
-			category = "Recycle Bin",
-			portlet = "Recycle Bin");
-
 		RecycleBin.emptyCP();
 
 		AntCommands.runCommand("build-test-gcs-store.xml", "assert-no-document-in-bucket -Dgcs.bucket.id=${bucketId} -Dcompany.id=${companyId} -Dgroup.id=${groupId}");

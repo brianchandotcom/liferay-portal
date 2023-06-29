@@ -18,6 +18,7 @@ dependencies {
 	compileOnly project(":apps:asset:asset-info-api")
 	compileOnly project(":apps:asset:asset-info-display-api")
 	compileOnly project(":apps:asset:asset-taglib")
+	compileOnly project(":apps:asset:asset-tags-item-selector-api")
 	compileOnly project(":apps:bulk:bulk-selection-api")
 	compileOnly project(":apps:change-tracking:change-tracking-spi")
 	compileOnly project(":apps:comment:comment-taglib")

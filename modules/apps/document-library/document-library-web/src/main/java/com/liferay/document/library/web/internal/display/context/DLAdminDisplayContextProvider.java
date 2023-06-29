@@ -69,7 +69,7 @@ public class DLAdminDisplayContextProvider {
 
 		return new DLAdminManagementToolbarDisplayContext(
 			dlAdminDisplayContext, _dlTrashHelper, httpServletRequest,
-			dlRequestHelper.getLiferayPortletRequest(),
+			_itemSelector, dlRequestHelper.getLiferayPortletRequest(),
 			dlRequestHelper.getLiferayPortletResponse());
 	}
 

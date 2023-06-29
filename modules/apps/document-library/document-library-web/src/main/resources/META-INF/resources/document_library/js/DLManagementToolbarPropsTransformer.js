@@ -263,7 +263,9 @@ export default function propsTransformer({
 					const url = selectedItem.reduce(
 						(acc, item) =>
 							addParams(
-								`${portletNamespace}assetTagId=${item.value}`,
+								`${portletNamespace}assetTagId=${
+									JSON.parse(item.value)?.tagName
+								}`,
 								acc
 							),
 						selectAssetTagsURL

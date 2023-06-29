@@ -483,6 +483,10 @@ definition {
 		}
 
 		task ("When the user pin a result in the filter") {
+			WaitForElementPresent(
+				key_projectName = "Case 1",
+				locator1 = "Testray#ITEM_NAME");
+
 			TestrayFilter.pinResult();
 
 			Refresh();
@@ -552,6 +556,10 @@ definition {
 		property test.liferay.virtual.instance = "false";
 
 		task ("When the user pin a result without filtering") {
+			WaitForElementPresent(
+				key_projectName = "Case 1",
+				locator1 = "Testray#ITEM_NAME");
+
 			Click.javaScriptClick(locator1 = "TestrayFilter#PIN_ICON");
 		}
 

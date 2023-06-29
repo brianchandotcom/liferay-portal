@@ -320,10 +320,6 @@ definition {
 		}
 
 		task ("And the user is redirected to the routine page") {
-			WaitForElementPresent(
-				key_pageTabTitle = "Routines",
-				locator1 = "TestrayHeader#PAGE_TAB_TITLE");
-
 			TestrayLayout.assertTabPageTitle(pageTabTitle = "Routines");
 		}
 
